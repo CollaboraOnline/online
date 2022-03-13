@@ -376,17 +376,17 @@ td.jsdialog .jsdialog.cell.sidebar {
 	height: 16px;
 }
 
-#fliplabel {
+.sidebar #fliplabel {
 	position: relative;
 	bottom: 26px;
 }
 
-#rotationlabel {
+.sidebar #rotationlabel {
 	position: relative;
 	bottom: 15px;
 }
 
-#ratio {
+.sidebar #ratio {
 	position: relative;
 	left: 163px;
 }
@@ -403,24 +403,25 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	margin-right: 0;
 }
 
-#linetransparency {
+.sidebar #linetransparency {
 	position: relative;
 	left: -18px;
 }
 
-#horizontalpos,
-#verticalpos,
-#selectwidth,
-#selectheight {
+.sidebar #horizontalpos,
+.sidebar #verticalpos,
+.sidebar #selectwidth,
+.sidebar #selectheight {
 	position: relative;
 	right: 24px;
 }
 
-#fillgrad1 {
+.sidebar #fillgrad1 {
 	position: relative;
 	left: 7px;
 }
-#fillgrad2, #LB_SHADOW_COLOR {
+.sidebar #fillgrad2,
+.sidebar #LB_SHADOW_COLOR {
 	position: relative;
 	left: 5px;
 }
@@ -429,16 +430,21 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	background-color: var(--color-background-lighter);
 }
 
-#LB_GLOW_RADIUS, #SB_SOFTEDGE_RADIUS {
+.sidebar #LB_GLOW_RADIUS,
+.sidebar #SB_SOFTEDGE_RADIUS {
 	position: relative;
 	right: 20px;
 }
-#LB_GLOW_COLOR {
+.sidebar #LB_GLOW_COLOR {
 	position: relative;
 	left: 4px;
 }
-#LB_GLOW_TRANSPARENCY, #LB_DISTANCE, #LB_SHADOW_BLUR,
-#setbrightness, #setcontrast, #setgraphtransparency {
+.sidebar #LB_GLOW_TRANSPARENCY,
+.sidebar #LB_DISTANCE,
+.sidebar #LB_SHADOW_BLUR,
+.sidebar #setbrightness,
+.sidebar #setcontrast,
+.sidebar #setgraphtransparency {
 	position: relative;
 	right: 18px;
 }
@@ -446,10 +452,12 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 #TableEditPanelPanelExpander #grid1 > tr > td {
 	width: 176px;
 }
-#rowheight, #columnwidth {
+.sidebar #rowheight,
+.sidebar #columnwidth {
 	padding-left: 24px;
 }
-#SetMinimalRowHeight:not(.mobile-wizard), #SetMinimalColumnWidth:not(.mobile-wizard) {
+.sidebar #SetMinimalRowHeight,
+.sidebar #SetMinimalColumnWidth {
 	position: relative;
 	bottom: 28px;
 }
