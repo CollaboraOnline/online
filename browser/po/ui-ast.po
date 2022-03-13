@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-11 23:55+0100\n"
-"PO-Revision-Date: 2022-02-11 21:22+0000\n"
+"PO-Revision-Date: 2022-03-13 21:44+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -787,7 +787,6 @@ msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Fueya de cálculu d'Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:564
-#, fuzzy
 msgid "CSV file (.csv)"
 msgstr "Ficheru CSV (.csv)"
 
@@ -803,7 +802,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:1184 src/control/Control.StatusBar.js:512
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "Reafitar a la llingua predeterminada"
 
 #: src/control/Control.Menubar.js:1555
 msgid "Insert Shape"
@@ -821,13 +820,13 @@ msgstr "¿De xuru que quies desaniciar esta páxina?"
 
 #: src/control/Control.Menubar.js:1778
 msgid "file type icon"
-msgstr ""
+msgstr "iconu del tipu de ficheru"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:130
 #: src/control/Control.MobileBottomBar.js:197
 msgid "Show the search bar"
-msgstr ""
+msgstr "Amosar la barra de gueta"
 
 #: src/control/Control.MobileBottomBar.js:37
 #: src/control/Control.TopToolbar.js:155
@@ -840,15 +839,15 @@ msgstr "Aceutar"
 
 #: src/control/Control.MobileWizardBuilder.js:503
 msgid "Background Color"
-msgstr ""
+msgstr "Color de fondu"
 
 #: src/control/Control.MobileWizardBuilder.js:505
 msgid "Gradient Start"
-msgstr ""
+msgstr "Entamu del dilíu"
 
 #: src/control/Control.MobileWizardBuilder.js:507
 msgid "Gradient End"
-msgstr ""
+msgstr "Fin del dilíu"
 
 #: src/control/Control.NotebookbarBuilder.js:482
 #: src/control/Control.NotebookbarCalc.js:181
@@ -999,7 +998,7 @@ msgstr "Fraición"
 
 #: src/control/Control.NotebookbarCalc.js:492
 msgid "Boolean Value"
-msgstr ""
+msgstr "Valor booleanu"
 
 #: src/control/Control.NotebookbarCalc.js:493 src/control/Toolbar.js:702
 msgid "Text"
@@ -1129,7 +1128,7 @@ msgstr ""
 
 #: src/control/Control.SearchBar.js:20
 msgid "Hide the search bar"
-msgstr ""
+msgstr "Anubrir la barra de gueta"
 
 #: src/control/Control.SearchBar.js:31
 msgid "Clear the search field"
@@ -1157,7 +1156,7 @@ msgstr "Inxertar una fueya"
 
 #: src/control/Control.StatusBar.js:179
 msgid "Cancel the search"
-msgstr ""
+msgstr "Encaboxar la gueta"
 
 #: src/control/Control.StatusBar.js:279
 msgid "Number of Sheets"
@@ -1201,7 +1200,7 @@ msgstr ""
 
 #: src/control/Control.StatusBar.js:312
 msgid "Sum"
-msgstr ""
+msgstr "Suma"
 
 #: src/control/Control.StatusBar.js:313
 msgid "Selection count"
@@ -1224,7 +1223,6 @@ msgid "Permission Mode"
 msgstr ""
 
 #: src/control/Control.StatusBar.js:422
-#, fuzzy
 msgid "Read-only"
 msgstr "Namái de llectura"
 
@@ -1258,10 +1256,9 @@ msgstr ""
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Copiar la fueya..."
 
 #: src/control/Control.Tabs.js:303
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "¿De xuru que quies desaniciar la fueya «%sheet%»?"
 
@@ -1297,7 +1294,7 @@ msgstr "Inxertar formes"
 
 #: src/control/Control.TopToolbar.js:228
 msgid "Insert connectors"
-msgstr ""
+msgstr "Inxertar coneutores"
 
 #: src/control/Control.UserList.js:10
 msgid "%user has joined"
@@ -1316,9 +1313,8 @@ msgid "1 user"
 msgstr "1 usuariu"
 
 #: src/control/Control.UserList.js:36
-#, fuzzy
 msgid "0 users"
-msgstr "%n usuarios"
+msgstr "0 usuarios"
 
 #: src/control/Control.UserList.js:180 src/control/Control.UserList.js:346
 msgid "Always follow the editor"
@@ -1358,7 +1354,7 @@ msgstr "nome de ficheru"
 
 #: src/control/Permission.js:165
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Guardar nel formatu ODF"
 
 #: src/control/Permission.js:167
 msgid "Continue editing"
@@ -1376,11 +1372,11 @@ msgstr ""
 
 #: src/control/Ruler.js:364
 msgid "Left Margin"
-msgstr ""
+msgstr "Marxe izquierdu"
 
 #: src/control/Ruler.js:365
 msgid "Right Margin"
-msgstr ""
+msgstr "Marxe derechu"
 
 #: src/control/Ruler.js:626
 #, fuzzy
@@ -1505,9 +1501,8 @@ msgid "The signature is OK, but the certificate could not be validated."
 msgstr ""
 
 #: src/control/Signing.js:640
-#, fuzzy
 msgid "Signed but not validated"
-msgstr "Robláu y validáu"
+msgstr "Robláu pero non validáu"
 
 #: src/control/Signing.js:643
 msgid "The signature is OK, but the document is only partially signed."
@@ -1701,9 +1696,8 @@ msgid ""
 msgstr ""
 
 #: src/core/Socket.js:1514
-#, fuzzy
 msgid "Reconnecting..."
-msgstr "Coneutando…"
+msgstr "Reconeutando…"
 
 #: src/core/Socket.js:1520
 msgid "The server has been disconnected."
@@ -2036,9 +2030,8 @@ msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:29-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:40-7
-#, fuzzy
 msgid "Next"
-msgstr "Testu"
+msgstr "Siguiente"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
@@ -2054,11 +2047,11 @@ msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "Andechar"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/ (n'inglés)"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
