@@ -454,7 +454,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 }
 .ui-header-left {
 	margin-left: 4%;
-	min-width: 42% !important;
+	max-width: 62% !important;
 }
 .ui-header.level-1.mobile-wizard.ui-widget .ui-header-left span.menu-entry-with-icon {
 	vertical-align: middle;
