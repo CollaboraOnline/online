@@ -65,21 +65,21 @@ function onMessage(e) {
 }
 
 function getTranslatable(root, strings) {
-    var nodes = root.childNodes;
-    for (var it = 0; it < nodes.length; ++it) {
-        if (nodes[it].nodeType == Node.TEXT_NODE) {
-            strings[nodes[it].nodeValue] = '';
+    var children = root.children;
+    for (var i = 0; i < children.length; ++i) {
+        if (children[i].dataset.translate === 'true') {
+            strings[children[i].innerHTML.trim().replace('\n', '')] = '';
         }
-        getTranslatable(nodes[it], strings);
+        getTranslatable(children[i], strings);
     }
 }
 
 function setTranslatable(root, strings) {
-    var nodes = root.childNodes;
-    for (var it = 0; it < nodes.length; ++it) {
-        if (nodes[it].nodeType == Node.TEXT_NODE) {
-            nodes[it].nodeValue = strings[nodes[it].nodeValue];
+    var children = root.children;
+    for (var i = 0; i < children.length; ++i) {
+        if (children[i].dataset.translate === 'true') {
+            children[i].innerHTML = strings[children[i].innerHTML.trim().replace('\n', '')];
         }
-        setTranslatable(nodes[it], strings);
+        setTranslatable(children[i], strings);
     }
 }
