@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-11 23:55+0200\n"
-"PO-Revision-Date: 2022-02-23 10:58+0000\n"
+"PO-Revision-Date: 2022-03-13 21:44+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "help/he/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1771,7 +1771,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:373-5
 msgid "Document repair"
-msgstr ""
+msgstr "תיקון מסמכים"
 
 #: html/cool-help.html%2Bdiv.p:374-5
 msgid ""
@@ -1780,12 +1780,17 @@ msgid ""
 "Repair function allows users to undo other editor’s changes to the document "
 "to a previous state."
 msgstr ""
+"כאשר מספר אנשים עורכים את אותו המסמך בו־זמנית, יכול להיות שהשינויים שלהם "
+"סותרים ומצב כזה עלול לגרום לבלבול. פונקציית תיקון המסמכים מאפשרת למשתמשים "
+"לבטל שינויים למסמך של עורכים אחרים למצב קודם."
 
 #: html/cool-help.html%2Bdiv.p:375-5
 msgid ""
 "To jump back to the selected state, select it with the mouse and hit <span "
 "class=\"ui\">Jump to state</span>."
 msgstr ""
+"כדי לקפוץ חזרה למצב הנבחר, יש לבחור אותו עם העכבר וללחוץ על <span class=\"ui"
+"\">קפיצה למצב</span>."
 
 #: html/cool-help.html%2Bdiv.p:377-5
 msgid ""
