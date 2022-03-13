@@ -939,7 +939,7 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 	border-radius: var(--border-radius);
 	color: var(--color-primary-text) !important;
 	font-weight: bold;
-	background-color: var(--color-primary-lighter);
+	background-color: var(--color-primary);
 	border: 1px solid var(--color-primary);
 	margin: 5px 4%;
 	font-size: var(--default-font-size);
