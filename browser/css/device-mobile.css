@@ -163,7 +163,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	top: 0;
 	width: 70%;
 	float: right;
-	background-color: white;
+	background-color: var(--color-background-lighter);
 	height: 100%;
 }
 

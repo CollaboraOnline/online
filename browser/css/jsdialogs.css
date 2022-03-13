@@ -143,7 +143,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .jsdialog-tabs {
 	display: inline-flex;
 	width: 100%;
-	background: white;
 	background: var(--color-main-background);
 }
 
@@ -262,6 +261,9 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-treeview-body {
+	color: var(--color-main-text);
+	font-size: var(--default-font-size);
+	line-height: var(--default-height);
 	display: block;
 	min-height: 100px;
 	min-width: 100px;
@@ -373,10 +375,12 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 /* input text */
 
 .jsdialog.ui-edit {
+	color: var(--color-text-dark);
+	background-color: var(--color-background-dark);
 	line-height: 28px;
 	max-height: 32px;
 	width: 100%;
-	border: 1px solid var(--color-border);
+	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 }
 
@@ -544,8 +548,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .autofilter-container {
-	background-color: white;
-	border: solid 1px silver;
+	background-color: var(--color-main-background);
+	border: 1px solid var(--color-border);
 	position: absolute;
 	z-index: 1105;
 	padding: 0;
