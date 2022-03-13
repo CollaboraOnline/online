@@ -97,10 +97,10 @@
 	display: block;
 	width: 4px;
 	height: 4px;
-	border-radius: 2px;
+	border-radius: 20px;
 	filter: none !important;
 	background: var(--color-primary-lighter);
-	box-shadow: 1px -1px 0 2px var(--color-main-background);
+	box-shadow: 0 0 0 2px var(--color-main-background);
 	border: 1px solid var(--color-primary);
 	position: absolute;
 	top: 6px;
@@ -112,7 +112,7 @@
 	display: block;
 	width: 6px;
 	height: 6px;
-	border-radius: 3px;
+	border-radius: 30px;
 	filter: none !important;
 	background: var(--color-primary-lighter);
 	box-shadow: 0 0 0 2px var(--color-main-background);
