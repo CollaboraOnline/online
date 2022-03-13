@@ -327,6 +327,9 @@ noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
                  test/WOPIUploadConflictCommon.hpp \
                  test/helpers.hpp
 
+GIT_BRANCH := $(shell git symbolic-ref --short HEAD)
+GIT_HASH := $(shell git log -1 --format=%h)
+
 dist-hook:
 	git log -1 --format=%h > $(distdir)/dist_git_hash 2> /dev/null || rm $(distdir)/dist_git_hash
 	mkdir -p $(distdir)/bundled/include/LibreOfficeKit/
@@ -418,6 +421,8 @@ clean-local:
 	rm -rf "${top_srcdir}/loleaflet"
 	rm -rf loolconfig loolconvert loolforkit loolmap loolmount # kill old binaries
 	rm -rf loolwsd loolwsd_fuzzer coolwsd_fuzzer loolstress loolsocketdump
+	rm -rf ${abs_top_srcdir}/gcov
+	find . -iname "*.gc??" -delete
 
 if ENABLE_DEBUG
 # can write to /tmp/coolwsd.log
@@ -611,6 +616,23 @@ stress:
 		$(stress_file) $(trace_dir)/writer-mash-text-table.txt \
 		$(stress_file) $(trace_dir)/writer-hello-shape.txt \
 		$(stress_file) $(trace_dir)/writer-quick.txt
+
+if ENABLE_CODE_COVERAGE
+GEN_COVERAGE_COMMAND=mkdir -p ${abs_top_srcdir}/gcov && \
+lcov --no-external --capture --rc 'lcov_excl_line=' --rc 'lcov_excl_br_line=LOG_|TST_|LOK_|WSD_|TRANSITION|assert' \
+--compat libtool=on --directory ${abs_top_srcdir}/. --output-file ${abs_top_srcdir}/gcov/cool.coverage.test.info && \
+genhtml --prefix ${abs_top_srcdir}/. --ignore-errors source ${abs_top_srcdir}/gcov/cool.coverage.test.info \
+--legend --title "${GIT_BRANCH} @ ${GIT_HASH}" --output-directory=${abs_top_srcdir}/gcov/html && \
+echo "Code-Coverage report generated in ${abs_top_srcdir}/gcov/html"
+else
+GEN_COVERAGE_COMMAND=true
+endif
+
+check: check-recursive
+	$(GEN_COVERAGE_COMMAND)
+
+coverage-report:
+	$(GEN_COVERAGE_COMMAND)
 
 czech: check
 	@echo "This should do something much cooler"

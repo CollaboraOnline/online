@@ -117,7 +117,12 @@ public:
         if (::kill(_pid, 0) == 0)
         {
             LOG_INF("Killing child [" << _pid << "].");
-            if (!SigUtil::killChild(_pid, SIGKILL))
+#if CODE_COVERAGE
+            constexpr auto signal = SIGTERM;
+#else
+            constexpr auto signal = SIGKILL;
+#endif
+            if (!SigUtil::killChild(_pid, signal))
             {
                 LOG_ERR("Cannot terminate lokit [" << _pid << "]. Abandoning.");
             }

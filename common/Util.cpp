@@ -1095,6 +1095,11 @@ namespace Util
     {
         LOG_FTL("Forced Exit with code: " << code);
         Log::shutdown();
+
+#if CODE_COVERAGE
+        __gcov_dump();
+#endif
+
         std::_Exit(code);
     }
 

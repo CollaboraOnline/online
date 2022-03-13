@@ -499,6 +499,104 @@ namespace
         }
     }
 
+#if CODE_COVERAGE
+    std::string childRootForGCDAFiles;
+    std::string sourceForGCDAFiles;
+    std::string destForGCDAFiles;
+
+    int linkGCDAFilesFunction(const char* fpath, const struct stat*, int typeflag,
+                              struct FTW* /*ftwbuf*/)
+    {
+        if (strcmp(fpath, sourceForGCDAFiles.c_str()) == 0)
+        {
+            LOG_TRC("nftw: Skipping redundant path: " << fpath);
+            return FTW_CONTINUE;
+        }
+
+        if (Util::startsWith(fpath, childRootForGCDAFiles))
+        {
+            LOG_TRC("nftw: Skipping childRoot subtree: " << fpath);
+            return FTW_SKIP_SUBTREE;
+        }
+
+        assert(fpath[strlen(sourceForGCDAFiles.c_str())] == '/');
+        const char* relativeOldPath = fpath + strlen(sourceForGCDAFiles.c_str()) + 1;
+        const Poco::Path newPath(destForGCDAFiles, Poco::Path(relativeOldPath));
+
+        switch (typeflag)
+        {
+            case FTW_F:
+            case FTW_SLN:
+            {
+                const char* dot = strrchr(relativeOldPath, '.');
+                if (dot && !strcmp(dot, ".gcda"))
+                {
+                    Poco::File(newPath.parent()).createDirectories();
+                    if (link(fpath, newPath.toString().c_str()) != 0)
+                    {
+                        LOG_SYS("nftw: Failed to link [" << fpath << "] -> [" << newPath.toString()
+                                                         << ']');
+                    }
+                }
+            }
+            break;
+            case FTW_D:
+            case FTW_SL:
+                break;
+            case FTW_DNR:
+                LOG_ERR("nftw: Cannot read directory '" << fpath << '\'');
+                break;
+            case FTW_NS:
+                LOG_ERR("nftw: stat failed for '" << fpath << '\'');
+                break;
+            default:
+                LOG_FTL("nftw: unexpected typeflag: '" << typeflag);
+                assert(!"nftw: unexpected typeflag.");
+                break;
+        }
+
+        return FTW_CONTINUE;
+    }
+
+    /// Link .gcda (gcov) files from the src directory into the jail.
+    /// We need this so we can easily extract the profile data from within
+    /// the jail. Otherwise, we lose coverage info of the kit process.
+    void linkGCDAFiles(const std::string& destPath)
+    {
+        Poco::Path sourcePathInJail(destPath);
+        const auto sourcePath = std::string(DEBUG_ABSSRCDIR);
+        sourcePathInJail.append(sourcePath);
+        Poco::File(sourcePathInJail).createDirectories();
+        LOG_INF("Linking .gcda files from " << sourcePath << " -> " << sourcePathInJail.toString());
+
+        const auto childRootPtr = std::getenv("BASE_CHILD_ROOT");
+        if (childRootPtr == nullptr || strlen(childRootPtr) == 0)
+        {
+            LOG_ERR("Cannot collect code-coverage stats for the Kit processes. BASE_CHILD_ROOT "
+                    "envar missing.");
+            return;
+        }
+
+        // Trim the trailing /.
+        const std::string childRoot = childRootPtr;
+        const size_t last = childRoot.find_last_not_of('/');
+        if (last != std::string::npos)
+            childRootForGCDAFiles = childRoot.substr(0, last + 1);
+        else
+            childRootForGCDAFiles = childRoot;
+
+        sourceForGCDAFiles = sourcePath;
+        destForGCDAFiles = sourcePathInJail.toString() + '/';
+        LOG_INF("nftw .gcda files from " << sourceForGCDAFiles << " -> " << destForGCDAFiles << " ("
+                                         << childRootForGCDAFiles << ')');
+
+        if (nftw(sourcePath.c_str(), linkGCDAFilesFunction, 10, FTW_ACTIONRETVAL | FTW_PHYS) == -1)
+        {
+            LOG_ERR("linkGCDAFiles: nftw() failed for '" << sourcePath << '\'');
+        }
+    }
+#endif
+
 #ifndef __FreeBSD__
     void dropCapability(cap_value_t capability)
     {
@@ -2595,6 +2693,12 @@ void lokit_main(
             bool bindMount = JailUtil::isBindMountingEnabled();
             if (bindMount)
             {
+#if CODE_COVERAGE
+                // Code coverage is not supported with bind-mounting.
+                LOG_ERR("Mounting is not compatible with code-coverage.");
+                assert(!"Mounting is not compatible with code-coverage.");
+#endif // CODE_COVERAGE
+
                 if (!mountJail())
                 {
                     LOG_INF("Cleaning up jail before linking/copying.");
@@ -2617,6 +2721,11 @@ void lokit_main(
                 linkOrCopy(sysTemplate, jailPath, linkablePath, LinkOrCopyType::All);
 
                 linkOrCopy(loTemplate, loJailDestPath, linkablePath, LinkOrCopyType::LO);
+
+#if CODE_COVERAGE
+                // Link the .gcda files.
+                linkGCDAFiles(jailPathStr);
+#endif
 
                 // Update the dynamic files inside the jail.
                 if (!JailUtil::SysTemplate::updateDynamicFiles(jailPathStr))
