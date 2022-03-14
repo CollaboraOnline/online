@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-11 23:55+0100\n"
-"PO-Revision-Date: 2022-03-12 18:25+0000\n"
+"PO-Revision-Date: 2022-03-15 16:50+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
@@ -2062,6 +2062,10 @@ msgid ""
 "\" href=\"https://www.collaboraoffice.com/solutions/collabora-office-"
 "android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"מזמינים אותך ליהנות מכל הפיתוחים העדכניים ביותר בכלי הפקה מקוונים, ללא עלות, "
+"למטרות חקירה ושימוש בשיתוף עם אחרים דרך הדפדפן. ישנם גם מגוון <a target="
+"\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
+"collabora-office-android-ios/\">יישומונים</a> זמינים למכשירים ניידים."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:29-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:40-7
@@ -2079,14 +2083,17 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"ב<a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
+"code-21-11-release-notes/\">הערות ההפצה</a> אפשר ללמוד עוד על: מהדורת הפיתוח "
+"האחרונה של Collabora Online, שמיועדת למשתמשים ביתיים ולצוותים קטנים."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "לקחת חלק"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
@@ -2099,6 +2106,12 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"מעניין אותך לתרום ולא ברור לך מאיפה להתחיל? כדאי לגשת אל <a target=\"_blank\""
+" href=\"https://collaboraonline.github.io/post/build-code/\">ההנחיות "
+"המפורטות</a> ולבנות את CODE מאפס. אפשר גם לעזור עם <a target=\"_blank\" href="
+"\"https://collaboraonline.github.io/post/translate/\">תרגומים</a> או על ידי "
+"<a target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
+"\">הגשת דוח תקלה</a> עם כל הצעדים שדרושים כדי לשחזר אותה."
 
 #~ msgid "Menu"
 #~ msgstr "תפריט"
