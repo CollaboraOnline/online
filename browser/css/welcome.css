@@ -15,5 +15,5 @@
 	box-shadow: 0 0 3px var(--color-box-shadow);
 	border-width: 0;
 	border-radius: var(--border-radius-large);
-	background-color: var(--color-main-background);
+	background-color: var(--color-background-lighter);
 }
