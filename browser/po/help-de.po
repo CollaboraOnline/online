@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-11 23:55+0200\n"
-"PO-Revision-Date: 2021-12-14 04:32+0000\n"
+"PO-Revision-Date: 2022-03-15 16:50+0000\n"
 "Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "help/de/>\n"
@@ -12,15 +12,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
-msgstr "Tastenkombinationen"
+msgstr "Tastaturkürzel"
 
 #: html/cool-help.html%2Bdiv.div.h2:21-9
 msgid "General Keyboard Shortcuts"
-msgstr "Allgemeine Tastenkombinationen"
+msgstr "Allgemeine Tastaturkürzel"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:23-18
 msgid "Undo"
