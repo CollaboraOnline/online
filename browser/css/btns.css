@@ -4,10 +4,18 @@
 	text-transform: full-size-kana;
 }
 
+button.jsdialog {
+	color: var(--color-text);
+	background-color: var(--color-background);
+	border: 1px solid var(--color-btn-border);
+	border-radius: var(--border-radius);
+	box-sizing: border-box;
+}
 .jsdialog *[disabled] {
-	color: var(--color-text-lighter) !important;
-	background-color: var(--color-background-lighter) !important;
-	border: 1px solid var(--color-border-lighter) !important;
+	color: var(--color-text-lighter);
+	border: 1px solid var(--color-btn-border-dis);
+	filter: grayscale(1);
+	opacity: 0.7;
 }
 
 .cool-annotation-edit #annotation-cancel,

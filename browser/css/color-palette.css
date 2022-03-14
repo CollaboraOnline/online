@@ -28,6 +28,9 @@
 	--color-border-darker: #c0bfbc;  /* hover */
 	--color-border-lighter: #f1f1f1; /* disabled */
 
+	--color-btn-border: #b6b6b6;
+	--color-btn-border-dis: #c0bfbc;
+
 	--color-error: #e9322d;
 	--color-warning: #eca700;
 	--color-success: #46ba61;
