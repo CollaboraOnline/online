@@ -1029,7 +1029,9 @@ private:
         try
         {
             if (!load(session, renderOpts))
+            {
                 return false;
+            }
         }
         catch (const std::exception &exc)
         {
