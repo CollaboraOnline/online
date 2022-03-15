@@ -1,6 +1,6 @@
 /* global cy  require Cypress expect */
 
-const { clickOnIdle, typeIntoDocument, waitUntilIdle } = require('./helper');
+var helper = require('./helper');
 
 // Make the sidebar visible by clicking on the corresponding toolbar item.
 // We assume that the sidebar is hidden, when this method is called.
@@ -213,7 +213,7 @@ function zoomOut() {
 function selectZoomLevel(zoomLevel) {
 	makeZoomItemsVisible();
 
-	clickOnIdle('#tb_actionbar_item_zoom');
+	helper.clickOnIdle('#tb_actionbar_item_zoom');
 
 	cy.contains('.w2ui-drop-menu .menu-text', zoomLevel)
 		.click();
@@ -256,9 +256,9 @@ function insertImage(docType) {
 }
 
 function deleteImage() {
-	typeIntoDocument('{del}');
+	helper.typeIntoDocument('{del}');
 
-	waitUntilIdle('.leaflet-pane.leaflet-overlay-pane');
+	helper.waitUntilIdle('.leaflet-pane.leaflet-overlay-pane');
 
 	cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 		.should('not.exist');
@@ -358,9 +358,24 @@ function assertScrollbarPosition(type, lowerBound, upperBound) {
 
 function pressKey(n, key) {
 	for (let i=0; i<n; i++) {
-		typeIntoDocument('{' + key + '}');
+		helper.typeIntoDocument('{' + key + '}');
 		cy.wait(500);
 	}
+}
+
+
+function openReadOnlyFile(type, filename) {
+	var testFileName = helper.loadTestDocNoIntegration(filename, type, false, false, false);
+
+	//check doc is loaded
+	cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+
+	helper.canvasShouldNotBeFullWhite('.leaflet-canvas-container canvas');
+
+	cy.get('#PermissionMode').should('be.visible')
+		.should('have.text', ' Read-only ');
+
+	return testFileName;
 }
 
 module.exports.showSidebar = showSidebar;
@@ -383,3 +398,4 @@ module.exports.actionOnSelector = actionOnSelector;
 module.exports.assertScrollbarPosition = assertScrollbarPosition;
 module.exports.pressKey = pressKey;
 module.exports.assertImageSize = assertImageSize;
+module.exports.openReadOnlyFile = openReadOnlyFile;
