@@ -1,5 +1,5 @@
-/* global describe it cy require Cypress afterEach */
-const { assertImageSize } = require('../../common/desktop_helper');
+/* global describe it cy require afterEach */
+const { assertImageSize, openReadOnlyFile } = require('../../common/desktop_helper');
 var helper = require('../../common/helper');
 
 describe('Open different file types', function() {
@@ -15,18 +15,6 @@ describe('Open different file types', function() {
 	afterEach(function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
-
-	function openReadOnlyFile(filename) {
-		testFileName = helper.loadTestDocNoIntegration(filename, 'writer', false, false, false);
-
-		//check doc is loaded
-		cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
-
-		helper.canvasShouldNotBeFullWhite('.leaflet-canvas-container canvas');
-
-		cy.get('#PermissionMode').should('be.visible')
-			.should('have.text', ' Read-only ');
-	}
 
 	function assertData() {
 		//select all the content of doc
@@ -102,16 +90,14 @@ describe('Open different file types', function() {
 	});
 
 	it('Open dot file', function() {
-		before('testfile.dot');
-
-		assertData();
+		testFileName = openReadOnlyFile('writer', 'testfile.dot');
 	});
 
 	it('Open dotm file', function() {
-		openReadOnlyFile('testfile.dotm');
+		testFileName = openReadOnlyFile('writer', 'testfile.dotm');
 	});
 
 	it('Open dotx file', function() {
-		openReadOnlyFile('testfile.dotx');
+		testFileName = openReadOnlyFile('writer','testfile.dotx');
 	});
 });

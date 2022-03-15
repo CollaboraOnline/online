@@ -1,6 +1,6 @@
 /* global describe it cy require expect afterEach */
 var helper = require('../../common/helper');
-const { selectZoomLevel } = require('../../common/desktop_helper');
+const { selectZoomLevel, openReadOnlyFile } = require('../../common/desktop_helper');
 // const { selectTextShapeInTheCenter } = require('../../common/impress_helper');
 
 describe('Open different file types', function() {
@@ -80,21 +80,15 @@ describe('Open different file types', function() {
 	});
 
 	it('Open pot file', function() {
-		before('testfile.pot');
-
-		assertData();
+		testFileName = openReadOnlyFile('impress', 'testfile.pot');
 	});
 
 	it('Open potx file', function() {
-		before('testfile.potx');
-
-		assertData();
+		testFileName = openReadOnlyFile('impress', 'testfile.potx');
 	});
 
 	it('Open potm file', function() {
-		before('testfile.potm');
-
-		assertData();
+		testFileName = openReadOnlyFile('impress', 'testfile.potm');
 	});
 
 	it('Open fodp file', function() {
