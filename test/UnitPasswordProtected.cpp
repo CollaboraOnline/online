@@ -66,7 +66,8 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithout
         LOK_ASSERT_EQUAL(std::string("passwordrequired:to-view"), errorKind);
 
         response = helpers::getResponseString(socket, "error:", testname);
-        LOK_ASSERT_MESSAGE("Unexpected second error message", !response.size());
+        LOK_ASSERT_MESSAGE("Unexpected faileddocloading load error message",
+            response != "error: cmd=load kind=faileddocloading");
     }
     catch (const Poco::Exception& exc)
     {
