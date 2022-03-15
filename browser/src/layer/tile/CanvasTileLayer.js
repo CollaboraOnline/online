@@ -5195,8 +5195,10 @@ L.CanvasTileLayer = L.Layer.extend({
 					this._map.panTo(cursorPos);
 			}
 
-			if (heightIncreased || widthIncreased)
+			if (heightIncreased || widthIncreased) {
 				this._painter._sectionContainer.requestReDraw();
+				this._map.fire('sizeincreased');
+			}
 		}
 	},
 
