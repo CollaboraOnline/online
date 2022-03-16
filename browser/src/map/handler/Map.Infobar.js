@@ -16,7 +16,19 @@ L.Map.Infobar = L.Handler.extend({
 
 		if (viewInfo && !this.enabled() && viewInfo.userextrainfo &&
 		    viewInfo.userextrainfo.is_admin) {
-			this.enable();
+			var laterDate = new Date();
+			var currentDate = new Date();
+			var timeValue = window.localStorage.getItem('InfoBarLaterDate');
+			if (!timeValue || isNaN(timeValue)) {
+				/* - 5 seconds */
+				laterDate.setTime(currentDate.getTime() - 5000);
+			} else {
+				/* + 5 days (432,000,000 Milliseconds) */
+				laterDate.setTime(timeValue + 432000000);
+			}
+
+			if (currentDate > laterDate)
+				this.enable();
 		}
 	},
 
@@ -62,6 +74,8 @@ L.Map.Infobar = L.Handler.extend({
 		var data = e.data;
 
 		if (data === 'updatecheck-show') {
+			var currentDate = new Date();
+			window.localStorage.setItem('InfoBarLaterDate', currentDate.getTime());
 			this._iframeInfobar.show();
 		} else if (data === 'updatecheck-close') {
 			this._map.infobar.disable();
