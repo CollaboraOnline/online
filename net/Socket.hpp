@@ -1282,11 +1282,13 @@ protected:
         // FIXME: need to close input, but not output (?)
         bool closed = (events & (POLLHUP | POLLERR | POLLNVAL));
 
-        // Always try to read.
-        closed = !readIncomingData() || closed;
-
-        LOG_TRC('#' << getFD() << ": Incoming data buffer " << _inBuffer.size()
-                    << " bytes, closeSocket? " << closed << ", events: " << std::hex << events);
+        if (!EnableExperimental || events & POLLIN)
+        {
+            closed = !readIncomingData() || closed;
+            LOG_TRC('#' << getFD() << " Incoming data buffer " << _inBuffer.size()
+                        << " bytes, closeSocket? " << closed << ", events: " << std::hex << events
+                        << std::dec);
+        }
 
 #ifdef LOG_SOCKET_DATA
         if (!_inBuffer.empty())
