@@ -6550,8 +6550,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				var count = delta[i+1];
 				var srcRow = delta[i+2];
 				var destRow = delta[i+3];
+				console.log('[' + i + ']: copy ' + count + ' row(s) ' + srcRow + ' to ' + destRow);
 				i+= 4;
-				console.log('copy ' + count + ' row(s) ' + srcRow + ' to ' + destRow);
 				for (var cnt = 0; cnt < count; ++cnt)
 				{
 					var src = (srcRow + cnt) * canvas.width * 4;
@@ -6567,8 +6567,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				var destCol = delta[i+2];
 				var span = delta[i+3];
 				offset = destRow * canvas.width * 4 + destCol * 4;
+				console.log('[' + i + ']: apply new span of size ' + span + ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 				i += 4;
-				console.log('apply new span of size ' + span + ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 				span *= 4;
 				// imgData.data[offset + 1] = 256; // debug - greener start
 				while (span-- > 0) {
@@ -6577,8 +6577,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				// imgData.data[offset - 2] = 256; // debug - blue terminator
 				break;
 			default:
-				console.log('ERROR: Unknown code ' + delta[i] +
-					    ' at offset ' + i);
+				console.log('[' + i + ']: ERROR: Unknown code ' + delta[i]);
 				i = delta.length;
 				break;
 			}

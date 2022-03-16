@@ -226,7 +226,7 @@ class DeltaGenerator {
 
                 int diff;
                 for (diff = 0; diff + x < prev.getWidth() &&
-                         (prevRow.getPixels()[x+diff] == curRow.getPixels()[x+diff] || diff < 2) &&
+                         (prevRow.getPixels()[x+diff] != curRow.getPixels()[x+diff] || diff < 3) &&
                          diff < 254;)
                     ++diff;
                 if (diff > 0)
