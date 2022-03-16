@@ -119,7 +119,7 @@ class Comment {
 		if (!force && !this.convertRectanglesToCoreCoordinates())
 			return;
 
-		var button = L.DomUtil.create('div', '', this.sectionProperties.nodeModify);
+		var button = L.DomUtil.create('div', 'annotation-btns-container', this.sectionProperties.nodeModify);
 		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'blur', this.onLostFocus, this);
 		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'blur', this.onLostFocusReply, this);
 		this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, _('Cancel'), this.onCancelClick);
