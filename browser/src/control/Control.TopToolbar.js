@@ -97,6 +97,7 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'button',  id: 'formatpaintbrush',  img: 'copyformat', hint: _UNO('.uno:FormatPaintbrush'), uno: '.uno:FormatPaintbrush', mobile: false},
 			{type: 'button',  id: 'reset',  img: 'deleteformat', hint: _UNO('.uno:ResetAttributes', 'text'), hidden: true, uno: '.uno:ResetAttributes', mobile: false},
 			{type: 'button',  id: 'resetimpress',  img: 'deleteformat', hint: _UNO('.uno:SetDefault', 'presentation', 'true'), hidden: true, uno: '.uno:SetDefault', mobile: false},
+			{type: 'break', id: 'breakreset', mobile: false, tablet: false,},
 			{type: 'html', id: 'styles',
 				html: '<select id="styles-select" class="styles-select"><option>' + _('Default Style') + '</option></select>',
 				onRefresh: function (edata) {
@@ -131,6 +132,7 @@ L.Control.TopToolbar = L.Control.extend({
 						}});
 					}
 				}, mobile: false},
+			{type: 'break', id: 'breakfontsizes', mobile: false, tablet: false,},
 			{type: 'button', id: 'languagecode', desktop: false, mobile: true, tablet: false},
 			{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: '.uno:Bold'},
 			{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: '.uno:Italic'},
