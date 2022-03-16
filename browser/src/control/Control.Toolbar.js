@@ -53,7 +53,8 @@ function onClose() {
 	}
 }
 
-function onClick(e, id, item) {
+function getToolbarItemById(id) {
+	var item;
 	if (w2ui['editbar'].get(id) !== null) {
 		var toolbar = w2ui['editbar'];
 		item = toolbar.get(id);
@@ -69,6 +70,12 @@ function onClick(e, id, item) {
 	else {
 		throw new Error('unknown id: ' + id);
 	}
+	return item;
+}
+
+function onClick(e, id, item) {
+	// dont reassign the item if we already have it
+	item = item || getToolbarItemById(id);
 
 	if (id === 'sidebar' || id === 'modifypage' || id === 'slidechangewindow' || id === 'customanimation' || id === 'masterslidespanel') {
 		window.initSidebarState = true;
