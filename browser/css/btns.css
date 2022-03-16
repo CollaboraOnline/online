@@ -18,6 +18,13 @@ button.jsdialog {
 	opacity: 0.7;
 }
 
+.annotation-btns-container,
+.vex-dialog-buttons {
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
+}
+
 .cool-annotation-edit #annotation-cancel,
 .ui-pushbutton.jsdialog:not(#ok):not([id*='select_current']):not(.sidebar),
 .ui-button-box.jsdialog #cancel,
@@ -43,9 +50,6 @@ button.jsdialog {
 	border-radius: var(--border-radius);
 	margin: 5px;
 	vertical-align: middle;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 }
 
 .cool-annotation-edit #annotation-cancel:hover,
