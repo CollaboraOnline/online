@@ -379,16 +379,12 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 	min-height: 24px !important;
 }
 
-.vex-content.vex-3btns .vex-dialog-buttons {
+.vex-dialog-buttons {
 	flex-direction: column !important;
 }
 
 .vex-close:not(.vex-close-m) {
 	display: none;
-}
-
-.vex-content.vex-3btns .vex-dialog-buttons .vex-dialog-button-cancel {
-	display: block !important;
 }
 
 /* Related to toolbar.css */
