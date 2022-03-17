@@ -60,6 +60,7 @@
 #include "androidapp.hpp"
 #endif
 
+#if !defined(BUILDING_TESTS)
 bool StorageBase::FilesystemEnabled;
 bool StorageBase::WopiEnabled;
 bool StorageBase::SSLAsScheme = true;
@@ -68,6 +69,7 @@ Util::RegexListMatcher StorageBase::WopiHosts;
 std::map<std::string, std::string> StorageBase::AliasHosts;
 std::set<std::string> StorageBase::AllHosts;
 std::string StorageBase::FirstHost;
+#endif // !defined(BUILDING_TESTS)
 
 #if !MOBILEAPP
 
@@ -87,6 +89,7 @@ std::string StorageBase::getLocalRootPath() const
     return rootPath.toString();
 }
 
+#if !defined(BUILDING_TESTS)
 void StorageBase::parseWopiHost(Poco::Util::LayeredConfiguration& conf)
 {
     // Parse the WOPI settings.
@@ -201,6 +204,7 @@ std::string StorageBase::getNewUri(const Poco::URI& uri)
     }
     return newUri;
 }
+#endif // !defined(BUILDING_TESTS)
 
 #endif
 
