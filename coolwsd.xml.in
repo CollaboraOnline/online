@@ -180,7 +180,7 @@
     </watermark>
 
     <welcome>
-      <path desc="Path to 'welcome-$lang.html' files served on first start or when the version changes. When empty, defaults to the Release notes." type="path" relative="true" default="browser/welcome"></path>
+
     </welcome>
 
     <user_interface>

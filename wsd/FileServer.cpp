@@ -60,10 +60,6 @@ using Poco::Util::Application;
 
 std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHandler::FileHash;
 
-/// Place from where we serve the welcome-<lang>.html; defaults to
-/// welcome.html if no lang matches.
-#define WELCOME_ENDPOINT "/browser/dist/welcome"
-
 namespace {
 
 int functionConversation(int /*num_msg*/, const struct pam_message** /*msg*/,
@@ -547,37 +543,6 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             }
         }
 
-        // handling of the language in welcome-*.html - shorten the langtag as
-        // necessary, if we don't have the particular language version
-        if (Util::startsWith(relPath, WELCOME_ENDPOINT "/"))
-        {
-            bool found = true;
-            while (FileHash.find(relPath) == FileHash.end())
-            {
-                size_t dot = relPath.find_last_of('.');
-                if (dot == std::string::npos)
-                {
-                    found = false;
-                    break;
-                }
-
-                size_t dash = relPath.find_last_of("-_", dot);
-                if (dash == std::string::npos)
-                {
-                    found = false;
-                    break;
-                }
-
-                relPath = relPath.substr(0, dash) + relPath.substr(dot);
-                LOG_TRC("Shortening welcome file request to: " << relPath);
-            }
-
-            if (!found)
-                throw Poco::FileNotFoundException("Invalid URI welcome file request: [" + requestUri.toString() + "].");
-
-            endPoint = relPath.substr(sizeof(WELCOME_ENDPOINT));
-        }
-
         // Is this a file we read at startup - if not; it's not for serving.
         if (FileHash.find(relPath) == FileHash.end())
             throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
@@ -839,16 +804,6 @@ void FileServerRequestHandler::initialize()
         readDirToHash(COOLWSD::FileServerRoot, "/browser/dist");
     } catch (...) {
         LOG_ERR("Failed to read from directory " << COOLWSD::FileServerRoot);
-    }
-
-    // welcome / release notes files
-    if (!COOLWSD::WelcomeFilesRoot.empty())
-    {
-        try {
-            readDirToHash(COOLWSD::WelcomeFilesRoot, "", WELCOME_ENDPOINT);
-        } catch (...) {
-            LOG_ERR("Failed to read from directory " << COOLWSD::WelcomeFilesRoot);
-        }
     }
 }
 
