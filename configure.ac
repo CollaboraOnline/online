@@ -352,6 +352,10 @@ AC_ARG_ENABLE([feature-restriction],
               AS_HELP_STRING([--enable-feature-restriction],
                              [Enable control over which uno-commands/feature to disable completely.]))
 
+AC_ARG_ENABLE([experimental],
+              AS_HELP_STRING([--enable-experimental],
+                             [Enable experimental features and behavior]))
+
 
 # Handle options
 AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
@@ -369,6 +373,8 @@ COOLWSD_ANONYMIZE_USER_DATA=false
 BROWSER_LOGGING="false"
 debug_msg="secure mode: product build"
 anonym_msg=""
+ENABLE_EXPERIMENTAL=false
+experimental_msg="disabled by default"
 bundle_msg="using uglified bundled JS and CSS"
 LOK_LOG_ASSERTIONS=0
 log_asserts_msg="disabled"
@@ -442,6 +448,12 @@ AC_SUBST(LOK_LOG_ASSERTIONS)
 if test -z "$anonym_msg";  then
   anonym_msg="anonymization of user-data is disabled"
 fi
+
+if test "$enable_experimental" = "yes" ; then
+  ENABLE_EXPERIMENTAL=true
+  experimental_msg="enabled by default"
+fi
+AC_SUBST(ENABLE_EXPERIMENTAL)
 
 # macOS: When configuring for building the app itself, on macOS, we need these.
 # But not when just configuring for building the JS on Linux, for copying over
@@ -1531,6 +1543,7 @@ Configuration:
     LO integration tests      ${lo_msg}
     SSL support               $ssl_msg
     Debug & low security      $debug_msg
+    Experimental features     $experimental_msg
     Test assertion logging    $log_asserts_msg
     Uglification and bundling $bundle_msg
     Anonymization             $anonym_msg
