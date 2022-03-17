@@ -263,6 +263,11 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	border: 1px solid var(--color-border);
 	box-shadow: 0 0 1px 1px var(--color-primary);
 }
+#mobile-wizard-popup .cool-annotation-content,
+#mobile-wizard .cool-annotation-content {
+	margin: 3px 3px 3px 38px;
+	padding: 0px 10px;
+}
 .vex-dialog-message {
 	text-align: center;
 	font-family: var(--vex-font) !important;
