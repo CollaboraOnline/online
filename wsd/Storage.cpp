@@ -141,10 +141,19 @@ void StorageBase::parseAliases(Poco::Util::LayeredConfiguration& conf)
             continue;
         }
 
-        StringVector tokens = Util::tokenize(hostAndPort, ":");
         bool allow = conf.getBool(path + ".host[@allow]", false);
-        StorageBase::addWopiHost(tokens[0], allow);
-        AllHosts.insert(tokens[0]);
+        Poco::URI uriHostAndPort;
+        try
+        {
+            Poco::URI aUri(hostAndPort);
+            aUri.swap(uriHostAndPort);
+            StorageBase::addWopiHost(uriHostAndPort.getAuthority(), allow);
+            AllHosts.insert(uriHostAndPort.getAuthority());
+        }
+        catch (const Poco::Exception& exc)
+        {
+            LOG_WRN("parseAliases: " << exc.displayText());
+        }
 
         for (size_t j = 0;; j++)
         {
@@ -153,15 +162,18 @@ void StorageBase::parseAliases(Poco::Util::LayeredConfiguration& conf)
             {
                 break;
             }
-            const std::string aliasHostAndPort = conf.getString(aliasPath, "");
-            if (!aliasHostAndPort.empty())
-            {
-                AliasHosts.insert({ aliasHostAndPort, hostAndPort });
-            }
 
-            tokens = Util::tokenize(aliasHostAndPort, ":");
-            AllHosts.insert(tokens[0]);
-            StorageBase::addWopiHost(tokens[0], allow);
+            try
+            {
+                const Poco::URI uriAliasHostAndPort(conf.getString(aliasPath, ""));
+                AliasHosts.insert({ uriAliasHostAndPort.toString(), uriHostAndPort.toString() });
+                AllHosts.insert(uriAliasHostAndPort.toString());
+                StorageBase::addWopiHost(uriAliasHostAndPort.toString(), allow);
+            }
+            catch (const Poco::Exception& exc)
+            {
+                LOG_WRN("parseAliases: " << exc.displayText());
+            }
         }
     }
 }
