@@ -282,6 +282,7 @@ Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
     return uriPublic;
 }
 
+#if !defined(BUILDING_TESTS)
 std::string RequestDetails::getDocKey(const Poco::URI& uri)
 {
     std::string docKey;
@@ -296,5 +297,6 @@ std::string RequestDetails::getDocKey(const Poco::URI& uri)
     LOG_INF("DocKey from URI [" << uri.toString() << "] => [" << docKey << ']');
     return docKey;
 }
+#endif // !defined(BUILDING_TESTS)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
