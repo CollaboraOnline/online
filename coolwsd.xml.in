@@ -180,7 +180,7 @@
     </watermark>
 
     <welcome>
-
+      <!-- <custom desc="Custom Welcome URI">http://custom.com/welcome.html</custom> -->
     </welcome>
 
     <user_interface>

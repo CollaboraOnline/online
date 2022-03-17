@@ -1843,6 +1843,22 @@ void COOLWSD::innerInitialize(Application& self)
         Quarantine::createQuarantineMap();
     }
 
+    try
+    {
+        if (conf.hasProperty("welcome.custom"))
+        {
+            Poco::URI customURI(conf.getString("welcome.custom"));
+            if (customURI.getAuthority().empty())
+                throw Poco::Exception("Invalid Host:Port");
+
+            conf.setString("welcome.authority", customURI.getAuthority());
+        }
+    }
+    catch (const Poco::Exception& exc)
+    {
+        LOG_WRN("Invalid: " << exc.displayText());
+        conf.remove("welcome.custom");
+    }
 
     NumPreSpawnedChildren = getConfigValue<int>(conf, "num_prespawn_children", 1);
     if (NumPreSpawnedChildren < 1)

@@ -304,6 +304,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.postMessageOriginExt = '';
       window.coolLogging = 'true';
       window.enableWelcomeMessage = false;
+      window.wecolmeCustom = null;
       window.outOfFocusTimeoutSecs = 1000000;
       window.idleTimeoutSecs = 1000000;
       window.protocolDebug = false;
@@ -323,6 +324,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.coolLogging = '%BROWSER_LOGGING%';
       window.coolwsdVersion = '%COOLWSD_VERSION%';
       window.enableWelcomeMessage = %ENABLE_WELCOME_MSG%;
+      window.wecolmeCustom = '%WELCOME_CUSTOM%';
       window.userInterfaceMode = '%USER_INTERFACE_MODE%';
       window.useIntegrationTheme = '%USE_INTEGRATION_THEME%';
       window.enableMacrosExecution = '%ENABLE_MACROS_EXECUTION%';
