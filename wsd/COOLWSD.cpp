@@ -4648,7 +4648,7 @@ int COOLWSD::innerMain()
     ClientRequestDispatcher::InitStaticFileContentCache();
 
     // Allocate our port - passed to prisoners.
-    assert(Server && "No COOLWSD::Server instance exists.");
+    assert(Server && "The COOLWSDServer instance does not exist.");
     Server->findClientPort();
 
     // Start the internal prisoner server and spawn forkit,
