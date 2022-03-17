@@ -207,9 +207,9 @@
             </locking>
 
             <!-- <group>
-                <host desc="hostname to allow or deny." allow="true">hostname</host>
-                <alias>aliasname1</alias>
-                <alias>aliasname2</alias>
+                <host desc="hostname to allow or deny." allow="true">scheme://hostname:port</host>
+                <alias>scheme://aliasname1:port</alias>
+                <alias>scheme://aliasname2:port</alias>
             </group> -->
 
         </wopi>
