@@ -795,12 +795,6 @@ AC_DEFINE_UNQUOTED([FEEDBACK_LOCATION],["$FEEDBACK_LOCATION"],[User feedback URL
 AC_SUBST(ENABLE_FEEDBACK)
 AM_CONDITIONAL([ENABLE_FEEDBACK], [test "$ENABLE_FEEDBACK" = "true"])
 
-ENABLE_WELCOME_MESSAGE_BUTTON=false
-AS_IF([test "$enable_welcome_message_button" = "yes"],
-      [ENABLE_WELCOME_MESSAGE_BUTTON="true"])
-AC_DEFINE_UNQUOTED([ENABLE_WELCOME_MESSAGE_BUTTON],["$ENABLE_WELCOME_MESSAGE_BUTTON"],[Should the Release notes message on startup should have a dismiss button instead of an x button to close by default?])
-AC_SUBST(ENABLE_WELCOME_MESSAGE_BUTTON)
-
 VEREIGN_URL=
 if test "$enable_vereign" = "yes"; then
     VEREIGN_URL="https://app.vereign.com"
