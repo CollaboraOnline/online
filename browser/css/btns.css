@@ -31,14 +31,6 @@ button.jsdialog {
 .ui-button-box.autofilter #cancel,
 .cell.jsdialog > button:not(#ok),
 .ui-button-box.jsdialog button:not(#ok),
-.jsdialog-container #source-button,
-.jsdialog-container #destination-button,
-.jsdialog-container #refbutton,
-.jsdialog-container #assign,
-.jsdialog-container #input-range-button,
-.jsdialog-container #output-range-button,
-.jsdialog-container #variable1-range-button,
-.jsdialog-container #variable2-range-button,
 .vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-secondary {
 	height: 32px;
 	line-height: 0em;
@@ -58,14 +50,6 @@ button.jsdialog {
 .ui-button-box.autofilter #cancel:hover,
 .cell.jsdialog > button:not(#ok):hover,
 .ui-button-box.jsdialog button:not(#ok):hover,
-.jsdialog-container #source-button:hover,
-.jsdialog-container #destination-button:hover,
-.jsdialog-container #refbutton:hover,
-.jsdialog-container #assign:hover,
-.jsdialog-container #input-range-button:hover,
-.jsdialog-container #output-range-button:hover,
-.jsdialog-container #variable1-range-button:hover,
-.jsdialog-container #variable2-range-button:hover,
 .vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-secondary:hover {
 	cursor: pointer;
 	color: var(--color-text-darker) !important;
