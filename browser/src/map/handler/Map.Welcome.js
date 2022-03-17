@@ -14,7 +14,11 @@ L.Map.Welcome = L.Handler.extend({
 		L.Handler.prototype.initialize.call(this, map);
 		this._map.on('statusindicator', this.onStatusIndicator, this);
 
-		this._url = window.feedbackLocation.replace(/Rate\/feedback.html/g, 'Welcome/welcome.html');
+		if (window.wecolmeCustom)
+			this._url = window.wecolmeCustom;
+		else
+			this._url = window.feedbackLocation.replace(/Rate\/feedback.html/g, 'Welcome/welcome.html');
+
 		this._retries = 2;
 		this._fallback = false;
 	},
