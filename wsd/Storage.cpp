@@ -180,38 +180,14 @@ void StorageBase::parseAliases(Poco::Util::LayeredConfiguration& conf)
 
 std::string StorageBase::getNewUri(const Poco::URI& uri)
 {
-    std::string uriHost = uri.getHost();
-    std::string uriPort = std::to_string(uri.getPort());
-    const std::string uriScheme = uri.getScheme();
-    const std::string uriPath = uri.getPath();
-
-    const std::string key = uriHost + ":" + uriPort;
+    Poco::URI newUri(uri);
+    const std::string key = newUri.toString();
     if (AliasHosts.find(key) != AliasHosts.end())
     {
-        const std::string aliasDetails = AliasHosts[key];
-        StringVector tokens = Util::tokenize(aliasDetails, ':');
-
-        if (!tokens[0].empty())
-        {
-            uriHost = tokens[0];
-        }
-
-        if (!tokens[1].empty())
-        {
-            uriPort = tokens[1];
-        }
+        newUri.setAuthority(AliasHosts[key]);
     }
 
-    std::string newUri;
-    if (!uriScheme.empty() && !uriHost.empty() && !Util::iequal(uriPort, "0"))
-    {
-        newUri = uriScheme + "://" + uriHost + ":" + uriPort + uriPath;
-    }
-    else
-    {
-        newUri = uri.getPath();
-    }
-    return newUri;
+    return newUri.getPath();
 }
 
 #endif
@@ -304,22 +280,24 @@ bool StorageBase::allowedWopiHost(const std::string& host)
     {
         return false;
     }
+
+    Poco::URI uriHost(host);
     if (AliasHosts.empty())
     {
         if (FirstHost.empty())
         {
-            FirstHost = host;
+            FirstHost = uriHost.getAuthority();
         }
-        else if (FirstHost != host)
+        else if (FirstHost != uriHost.getAuthority())
         {
             LOG_ERR("Only allowed host is: " << FirstHost
                                              << ", no aliases groups are defined in configuration");
             return false;
         }
     }
-    else if (AllHosts.find(host) == AllHosts.end())
+    else if (AllHosts.find(uriHost.getAuthority()) == AllHosts.end())
     {
-        LOG_ERR("Host: " << host << " is not allowed, It is not part of aliases group");
+        LOG_ERR("Host: " << uriHost.getAuthority() << " is not allowed, It is not part of aliases group");
         return false;
     }
     return allow;
