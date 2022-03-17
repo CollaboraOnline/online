@@ -205,11 +205,17 @@
                 <refresh desc="How frequently we should re-acquire a lock with the storage server, in seconds (default 15 mins) or 0 for no refresh" type="int" default="900">900</refresh>
             </locking>
 
-            <!-- <group>
-                <host desc="hostname to allow or deny." allow="true">scheme://hostname:port</host>
-                <alias>scheme://aliasname1:port</alias>
-                <alias>scheme://aliasname2:port</alias>
-            </group> -->
+            <alias_groups desc="default mode is 'first' it allows only the first host when groups are not defined. set mode to 'groups' and define group to allow multiple host and its aliases" mode="first">
+            <!-- If you need to use multiple wopi hosts, please change the mode to "groups" and
+                    add the hosts below.  If one host is accessible under multiple ip addresses
+                    or names, add them as aliases. -->
+            <!--<group>
+                    <host desc="hostname to allow or deny." allow="true">scheme://hostname:port</host>
+                    <alias>scheme://aliasname1:port</alias>
+                    <alias>scheme://aliasname2:port</alias>
+            </group>-->
+            <!-- More "group"s possible here -->
+            </alias_groups>
 
         </wopi>
         <ssl desc="SSL settings">

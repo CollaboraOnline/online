@@ -125,30 +125,46 @@ void StorageBase::addWopiHost(std::string host, bool allow)
 
 void StorageBase::parseAliases(Poco::Util::LayeredConfiguration& conf)
 {
+    //set alias_groups mode to compat
+    if (!conf.has("storage.wopi.alias_groups"))
+    {
+        conf.setString("storage.wopi.alias_groups[@mode]", "compat");
+    }
+    else if (conf.has("storage.wopi.alias_groups.group[0]"))
+    {
+        // group defined in alias_groups
+        if (Util::iequal(config::getString("storage.wopi.alias_groups[@mode]", "first"), "first"))
+        {
+            LOG_ERR("Admins didnot set the alias_groups mode to 'groups'");
+            AliasHosts.clear();
+            AllHosts.clear();
+            return;
+        }
+    }
+
     AliasHosts.clear();
+    AllHosts.clear();
 
     for (size_t i = 0;; i++)
     {
-        const std::string path = "storage.wopi.group[" + std::to_string(i) + ']';
+        const std::string path = "storage.wopi.alias_groups.group[" + std::to_string(i) + ']';
         if (!conf.has(path + ".host"))
         {
             break;
         }
 
-        const std::string hostAndPort = conf.getString(path + ".host", "");
-        if (hostAndPort.empty())
+        const std::string uri = conf.getString(path + ".host", "");
+        if (uri.empty())
         {
             continue;
         }
-
         bool allow = conf.getBool(path + ".host[@allow]", false);
-        Poco::URI uriHostAndPort;
+
         try
         {
-            Poco::URI aUri(hostAndPort);
-            aUri.swap(uriHostAndPort);
-            StorageBase::addWopiHost(uriHostAndPort.getHost(), allow);
-            AllHosts.insert(uriHostAndPort.getAuthority());
+            const Poco::URI realUri(uri);
+            StorageBase::addWopiHost(realUri.getHost(), allow);
+            AllHosts.insert(realUri.getAuthority());
         }
         catch (const Poco::Exception& exc)
         {
@@ -165,10 +181,15 @@ void StorageBase::parseAliases(Poco::Util::LayeredConfiguration& conf)
 
             try
             {
-                const Poco::URI uriAliasHostAndPort(conf.getString(aliasPath, ""));
-                AliasHosts.insert({ uriAliasHostAndPort.getAuthority(), uriHostAndPort.getAuthority() });
-                AllHosts.insert(uriAliasHostAndPort.getAuthority());
-                StorageBase::addWopiHost(uriAliasHostAndPort.getHost(), allow);
+                const Poco::URI aliasUri(conf.getString(aliasPath, ""));
+                if (aliasUri.empty())
+                {
+                    continue;
+                }
+                const Poco::URI realUri(uri);
+                AliasHosts.insert({ aliasUri.getAuthority(), realUri.getAuthority() });
+                AllHosts.insert(aliasUri.getAuthority());
+                StorageBase::addWopiHost(aliasUri.getHost(), allow);
             }
             catch (const Poco::Exception& exc)
             {
@@ -180,6 +201,10 @@ void StorageBase::parseAliases(Poco::Util::LayeredConfiguration& conf)
 
 std::string StorageBase::getNewUri(const Poco::URI& uri)
 {
+    if (Util::iequal(config::getString("storage.wopi.alias_groups[@mode]", "first"), "compat"))
+    {
+        return uri.getPath();
+    }
     Poco::URI newUri(uri);
     const std::string key = newUri.getAuthority();
     if (AliasHosts.find(key) != AliasHosts.end())
@@ -285,6 +310,11 @@ bool StorageBase::allowedWopiHost(const std::string& host)
 
 bool StorageBase::allowedAlias(const Poco::URI& uri)
 {
+    if (Util::iequal(config::getString("storage.wopi.alias_groups[@mode]", "first"), "compat"))
+    {
+        return true;
+    }
+
     if (AllHosts.empty())
     {
         if (FirstHost.empty())
@@ -293,15 +323,14 @@ bool StorageBase::allowedAlias(const Poco::URI& uri)
         }
         else if (FirstHost != uri.getAuthority())
         {
-            LOG_ERR("Only allowed host is: " << FirstHost
-                                             << ", no aliases groups are defined in configuration");
+            LOG_ERR("Only allowed host is: " << FirstHost);
             return false;
         }
     }
     else if (AllHosts.find(uri.getAuthority()) == AllHosts.end())
     {
         LOG_ERR("Host: " << uri.getAuthority()
-                         << " is not allowed, It is not part of aliases group");
+                         << " is not allowed, It is not part of alias_groups configuration");
         return false;
     }
     return true;
