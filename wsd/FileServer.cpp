@@ -1040,9 +1040,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     std::string enableWelcomeMessage = stringifyBoolFromConfig(config, "welcome.enable", false);
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG%"), enableWelcomeMessage);
 
-    std::string enableWelcomeMessageButton = stringifyBoolFromConfig(config, "welcome.enable_button", false);
-    Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG_BTN%"), enableWelcomeMessageButton);
-
     // the config value of 'notebookbar' or 'classic' overrides the UIMode
     // from the WOPI
     std::string userInterfaceModeConfig = config.getString("user_interface.mode", "default");

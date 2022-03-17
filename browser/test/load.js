@@ -79,7 +79,6 @@ data = data.replace(/%ACCESS_HEADER%/g, '');
 data = data.replace(/%BROWSER_LOGGING%/g, 'true');
 data = data.replace(/%ENABLE_WELCOME_MSG%/g, 'false');
 data = data.replace(/%ENABLE_WELCOME_MSG%/g, 'false');
-data = data.replace(/%ENABLE_WELCOME_MSG_BTN%/g, 'false');
 data = data.replace(/%USER_INTERFACE_MODE%/g, '');
 data = data.replace(/%USE_INTEGRATION_THEME%/g, 'true');
 data = data.replace(/%OUT_OF_FOCUS_TIMEOUT_SECS%/g, '1000000');
