@@ -410,13 +410,16 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 
 .annotation-active.modify-annotation-container .cool-annotation-content-wrapper,
-.annotation-active.reply-annotation-container .cool-annotation-content-wrapper {
+.annotation-active.reply-annotation-container .cool-annotation-content-wrapper,
+.cool-annotation-collapsed.modalpopup {
 	width: 240px;
 }
 
 .cool-annotation-content {
 	margin: 3px;
 	line-height: 1.4;
+	max-height: 240px;
+	overflow: overlay;
 }
 
 .cool-annotation-reply-count-collapsed {
