@@ -338,6 +338,8 @@ public:
     /// is accessed using different aliases
     static std::string getNewUri(const Poco::URI& uri);
 
+    static bool allowedAlias(const Poco::URI& uri);
+
     static void addWopiHost(std::string host, bool allow);
 
 protected:

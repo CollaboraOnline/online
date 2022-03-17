@@ -147,7 +147,7 @@ void StorageBase::parseAliases(Poco::Util::LayeredConfiguration& conf)
         {
             Poco::URI aUri(hostAndPort);
             aUri.swap(uriHostAndPort);
-            StorageBase::addWopiHost(uriHostAndPort.getAuthority(), allow);
+            StorageBase::addWopiHost(uriHostAndPort.getHost(), allow);
             AllHosts.insert(uriHostAndPort.getAuthority());
         }
         catch (const Poco::Exception& exc)
@@ -166,9 +166,9 @@ void StorageBase::parseAliases(Poco::Util::LayeredConfiguration& conf)
             try
             {
                 const Poco::URI uriAliasHostAndPort(conf.getString(aliasPath, ""));
-                AliasHosts.insert({ uriAliasHostAndPort.toString(), uriHostAndPort.toString() });
-                AllHosts.insert(uriAliasHostAndPort.toString());
-                StorageBase::addWopiHost(uriAliasHostAndPort.toString(), allow);
+                AliasHosts.insert({ uriAliasHostAndPort.getAuthority(), uriHostAndPort.getAuthority() });
+                AllHosts.insert(uriAliasHostAndPort.getAuthority());
+                StorageBase::addWopiHost(uriAliasHostAndPort.getHost(), allow);
             }
             catch (const Poco::Exception& exc)
             {
@@ -181,13 +181,18 @@ void StorageBase::parseAliases(Poco::Util::LayeredConfiguration& conf)
 std::string StorageBase::getNewUri(const Poco::URI& uri)
 {
     Poco::URI newUri(uri);
-    const std::string key = newUri.toString();
+    const std::string key = newUri.getAuthority();
     if (AliasHosts.find(key) != AliasHosts.end())
     {
         newUri.setAuthority(AliasHosts[key]);
     }
 
-    return newUri.getPath();
+    if (newUri.getAuthority().empty())
+    {
+        return newUri.getPath();
+    }
+    return newUri.getScheme() + "://" + newUri.getHost() + ':' + std::to_string(newUri.getPort()) +
+           newUri.getPath();
 }
 
 #endif
@@ -275,32 +280,31 @@ void StorageBase::initialize()
 
 bool StorageBase::allowedWopiHost(const std::string& host)
 {
-    bool allow = WopiEnabled && WopiHosts.match(host);
-    if (!allow)
-    {
-        return false;
-    }
+    return WopiEnabled && WopiHosts.match(host);
+}
 
-    Poco::URI uriHost(host);
-    if (AliasHosts.empty())
+bool StorageBase::allowedAlias(const Poco::URI& uri)
+{
+    if (AllHosts.empty())
     {
         if (FirstHost.empty())
         {
-            FirstHost = uriHost.getAuthority();
+            FirstHost = uri.getAuthority();
         }
-        else if (FirstHost != uriHost.getAuthority())
+        else if (FirstHost != uri.getAuthority())
         {
             LOG_ERR("Only allowed host is: " << FirstHost
                                              << ", no aliases groups are defined in configuration");
             return false;
         }
     }
-    else if (AllHosts.find(uriHost.getAuthority()) == AllHosts.end())
+    else if (AllHosts.find(uri.getAuthority()) == AllHosts.end())
     {
-        LOG_ERR("Host: " << uriHost.getAuthority() << " is not allowed, It is not part of aliases group");
+        LOG_ERR("Host: " << uri.getAuthority()
+                         << " is not allowed, It is not part of aliases group");
         return false;
     }
-    return allow;
+    return true;
 }
 
 #if !MOBILEAPP
@@ -375,7 +379,8 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
         LOG_INF("Public URI [" << COOLWSD::anonymizeUrl(uri.toString()) << "] considered WOPI.");
         const auto& targetHost = uri.getHost();
         bool allowed(false);
-        if (StorageBase::allowedWopiHost(targetHost) || isLocalhost(targetHost))
+        if ((StorageBase::allowedWopiHost(targetHost) && StorageBase::allowedAlias(uri)) ||
+            isLocalhost(targetHost))
         {
             allowed = true;
         }
@@ -385,7 +390,8 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
             const auto hostAddresses(Poco::Net::DNS::resolve(targetHost));
             for (auto &address : hostAddresses.addresses())
             {
-                if (StorageBase::allowedWopiHost(address.toString()))
+                if (StorageBase::allowedWopiHost(address.toString()) &&
+                    StorageBase::allowedAlias(uri))
                 {
                     allowed = true;
                     break;
