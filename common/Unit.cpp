@@ -33,6 +33,9 @@ static std::thread TimeoutThread;
 static std::atomic<bool> TimeoutThreadRunning(false);
 std::timed_mutex TimeoutThreadMutex;
 
+/// Controls whether experimental features/behavior is enabled or not.
+bool EnableExperimental = false;
+
 UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibPath)
 {
 #if !MOBILEAPP
