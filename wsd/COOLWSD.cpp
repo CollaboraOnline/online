@@ -1387,6 +1387,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "child_root_path", "jails" },
         { "file_server_root_path", "browser/.." },
         { "hexify_embedded_urls", "false" },
+        { "experimental_features", "false" },
         { "lo_jail_subpath", "lo" },
         { "logging.protocol", "false" },
         { "logging.anonymize.filenames", "false" }, // Deprecated.
@@ -1543,6 +1544,9 @@ void COOLWSD::innerInitialize(Application& self)
 
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(config());
+
+    // Experimental features.
+    EnableExperimental = getConfigValue<bool>(conf, "experimental_features", false);
 
     // Setup user interface mode
     UserInterface = getConfigValue<std::string>(conf, "user_interface.mode", "default");

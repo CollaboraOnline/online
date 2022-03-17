@@ -77,8 +77,11 @@ constexpr const char UPLOADING_SUFFIX[] = "ing";
 /// The HTTP response Server. Used only in Responses.
 #define HTTP_SERVER_STRING "COOLWSD HTTP Server " COOLWSD_VERSION
 
-// The client port number, both coolwsd and the kits have this.
+/// The client port number, both coolwsd and the kits have this.
 extern int ClientPortNumber;
 extern std::string MasterLocation;
+
+/// Controls whether experimental features/behavior is enabled or not.
+extern bool EnableExperimental;
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
