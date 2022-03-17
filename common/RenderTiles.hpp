@@ -491,7 +491,7 @@ namespace RenderTiles
             const uint64_t hash = Png::hashSubBuffer(pixmap.data(), offsetX, offsetY,
                                                      pixelWidth, pixelHeight, pixmapWidth, pixmapHeight);
 
-#ifdef ENABLE_DELTAS
+#if !ENABLE_DELTAS
             TileWireId wireId = pngCache.hashToWireId(hash);
 #else
             static TileWireId nextId = 0;;
@@ -510,6 +510,8 @@ namespace RenderTiles
                 continue;
             }
 
+// FIXME: ignore old wire-ids ... they give a wrong base for the delta.
+#if ENABLE_DELTAS
             bool skipCompress = false;
             size_t imgSize = -1;
             if (pngCache.copyFromCache(hash, output, imgSize))
@@ -518,6 +520,7 @@ namespace RenderTiles
                 skipCompress = true;
             }
             else
+#endif
             {
                 LOG_TRC("PNG cache with hash " << hash << " missed.");
 
@@ -541,13 +544,17 @@ namespace RenderTiles
                 renderingIds.push_back(wireId);
 
                 // Queue to be executed later in parallel inside 'run'
-                pngPool.pushWork([=,&output,&pixmap,&tiles,&renderedTiles,&pngCache,&pngMutex](){
+                pngPool.pushWork([=,&output,&pixmap,&tiles,&renderedTiles,
+#if !ENABLE_DELTAS
+                                  &pngCache,
+#endif
+                                  &pngMutex](){
 
                     // FIXME: PngCache useless compared with DeltaCache (?)
 
                         PngCache::CacheData data(new std::vector< char >() );
                         data->reserve(pixmapWidth * pixmapHeight * 1);
-#ifdef ENABLE_DELTAS
+#if ENABLE_DELTAS
                         // FIXME: don't try to store & create deltas for read-only documents.
 
                         // Can we create a delta ?
@@ -574,7 +581,9 @@ namespace RenderTiles
                         LOG_TRC("Tile " << tileIndex << " is " << data->size() << " bytes.");
                         std::unique_lock<std::mutex> pngLock(pngMutex);
                         output.insert(output.end(), data->begin(), data->end());
+#if !ENABLE_DELTAS
                         pngCache.addToCache(data, wireId, hash);
+#endif
                         pushRendered(renderedTiles, tiles[tileIndex], wireId, data->size());
                     });
             }
