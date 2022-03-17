@@ -538,6 +538,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	box-sizing: border-box;
 }
 
+#new-mobile-comment-input-area.cool-annotation-textarea {
+	height: 240px;
+}
+
 .cool-div-layer {
 	position: absolute;
 	left: 0;
