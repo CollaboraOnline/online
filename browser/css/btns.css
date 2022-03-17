@@ -25,7 +25,7 @@ button.jsdialog {
 	justify-content: end;
 }
 
-.cool-annotation-edit #annotation-cancel,
+.cool-annotation-edit [id^='annotation-cancel'],
 .ui-pushbutton.jsdialog:not(#ok):not([id*='select_current']):not(.sidebar),
 .ui-button-box.jsdialog #cancel,
 .ui-button-box.autofilter #cancel,
@@ -52,7 +52,7 @@ button.jsdialog {
 	vertical-align: middle;
 }
 
-.cool-annotation-edit #annotation-cancel:hover,
+.cool-annotation-edit [id^='annotation-cancel']:hover,
 .ui-pushbutton.jsdialog:not(#ok):not(.sidebar):hover,
 .ui-button-box.jsdialog #cancel:hover,
 .ui-button-box.autofilter #cancel:hover,
