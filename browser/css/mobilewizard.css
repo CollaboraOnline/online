@@ -1060,12 +1060,6 @@ label.disabled {
 	width: initial !important;
 }
 
-#mobile-wizard-popup .cool-annotation-content,
-#mobile-wizard .cool-annotation-content {
-	margin: 3px 3px 3px 38px;
-	padding: 0px 10px;
-}
-
 #mobile-wizard-popup .cool-annotation-content-author,
 #mobile-wizard .cool-annotation-content-author {
 	font-weight: bold;
