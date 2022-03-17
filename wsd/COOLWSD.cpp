@@ -1475,7 +1475,6 @@ void COOLWSD::innerInitialize(Application& self)
         { "trace.path[@compress]", "true" },
         { "trace.path[@snapshot]", "false" },
         { "trace[@enable]", "false" },
-        { "welcome.enable", ENABLE_WELCOME_MESSAGE },
         { "welcome.path", "browser/welcome" },
 #ifdef ENABLE_FEATURE_LOCK
         { "feature_lock.locked_hosts[@allow]", "false"},
