@@ -1277,23 +1277,30 @@ public:
     {
         try
         {
-            Poco::JSON::Array::Ptr aliasGroups =
-                remoteJson->getObject("storage")->getObject("wopi")->getArray("alias_groups");
+            Poco::JSON::Object::Ptr aliasGroups =
+                remoteJson->getObject("storage")->getObject("wopi")->getObject("alias_groups");
 
-            if (aliasGroups->size() == 0)
+            Poco::JSON::Array::Ptr groups = aliasGroups->getArray("groups");
+
+            if (groups->size() == 0)
             {
                 LOG_WRN("Not overwriting any alias groups because alias_group array is empty");
                 return;
             }
 
+            std::string mode = "first";
+            JsonUtil::findJSONValue(aliasGroups, "mode", mode);
+            newAppConfig.insert(std::make_pair("storage.wopi.alias_groups[@mode]", mode));
+
             std::size_t i;
-            for (i = 0; i < aliasGroups->size(); i++)
+            for (i = 0; i < groups->size(); i++)
             {
-                Poco::JSON::Object::Ptr group = aliasGroups->getObject(i);
+                Poco::JSON::Object::Ptr group = groups->getObject(i);
                 std::string host;
                 JsonUtil::findJSONValue(group, "host", host);
                 Poco::Dynamic::Var allow = group->get("allow");
-                const std::string path = "storage.wopi.group[" + std::to_string(i) + ']';
+                const std::string path =
+                    "storage.wopi.alias_groups.group[" + std::to_string(i) + ']';
 
                 newAppConfig.insert(std::make_pair(path + ".host", host));
                 newAppConfig.insert(std::make_pair(path + ".host[@allow]", booleanToString(allow)));
@@ -1324,7 +1331,8 @@ public:
             //fetched from json, overwrite the remaining alias_groups from config file to empty strings and
             for (;; i++)
             {
-                const std::string path = "storage.wopi.group[" + std::to_string(i) + "].host";
+                const std::string path =
+                    "storage.wopi.alias_groups.group[" + std::to_string(i) + "].host";
                 if (!conf.has(path))
                 {
                     break;
@@ -1506,7 +1514,8 @@ void COOLWSD::innerInitialize(Application& self)
         { "quarantine_files.max_versions_to_maintain", "2" },
         { "quarantine_files.path", "quarantine" },
         { "quarantine_files.expiry_min", "30" },
-        { "remote_config.remote_url", ""}
+        { "remote_config.remote_url", ""},
+        { "storage.wopi.alias_groups[@mode]" , "first"}
     };
 
     // Set default values, in case they are missing from the config file.
