@@ -960,6 +960,7 @@ private:
 static std::unique_ptr<PrisonPoll> PrisonerPoll;
 
 /// The Web Server instance with the accept socket poll thread.
+class COOLWSDServer;
 static std::unique_ptr<COOLWSDServer> Server;
 
 /// Helper class to hold default configuration entries.

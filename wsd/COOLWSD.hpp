@@ -210,10 +210,6 @@ public:
 
 #endif
 
-// Forward declarations for classes defined in COOLWSD.cpp.
-class PrisonPoll;
-class COOLWSDServer;
-
 /// The Server class which is responsible for all
 /// external interactions.
 class COOLWSD : public Poco::Util::ServerApplication
