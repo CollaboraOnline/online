@@ -19,6 +19,7 @@
 /// A quick and dirty delta generator for last tile changes
 class DeltaGenerator {
 
+    /// Bitmap row with a CRC for quick vertical shift detection
     struct DeltaBitmapRow {
     private:
         uint64_t _crc;
@@ -43,6 +44,7 @@ class DeltaGenerator {
         }
     };
 
+    /// A bitmap tile with annotated rows and details on its location
     struct DeltaData {
         void setWid(TileWireId wid)
         {
@@ -90,6 +92,8 @@ class DeltaGenerator {
         int _height;
         std::vector<DeltaBitmapRow> _rows;
     };
+
+    /// The last several bitmap entries as a cache
     std::vector<std::shared_ptr<DeltaData>> _deltaEntries;
 
     bool makeDelta(
