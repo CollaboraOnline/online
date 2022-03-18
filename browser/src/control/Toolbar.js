@@ -325,6 +325,11 @@ L.Map.include({
 		// To exercise the Trace Event functionality, uncomment this
 		// app.socket.emitInstantTraceEvent('cool-unocommand:' + command);
 
+		// Used when new varsion of core uses different name for a command
+		var compatibilityAliases = {
+			'.uno:InsertZWNBSP': ['.uno:InsertWJ']
+		};
+
 		var isAllowedInReadOnly = false;
 		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog', '.uno:EditAnnotation',
 			'.uno:InsertAnnotation', '.uno:DeleteAnnotation', '.uno:Signature',
@@ -354,8 +359,16 @@ L.Map.include({
 		if (this.dialog.hasOpenedDialog())
 			this.dialog.blinkOpenDialog();
 		else if (this.isPermissionEdit() || isAllowedInReadOnly) {
-			if (!this.messageNeedsToBeRedirected(command))
+			if (!this.messageNeedsToBeRedirected(command)) {
 				app.socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
+
+				if (compatibilityAliases[command]) {
+					for (var i in compatibilityAliases[command]) {
+						command = compatibilityAliases[command][i];
+						app.socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
+					}
+				}
+			}
 		}
 	},
 

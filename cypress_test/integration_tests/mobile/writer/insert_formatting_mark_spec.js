@@ -75,6 +75,9 @@ describe('Insert formatting mark via insertion wizard.', function() {
 		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
+			.should('exist');
+
+		cy.get('#copy-paste-container p')
 			.should('contain.text', '\u2060');
 	});
 
