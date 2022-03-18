@@ -1283,7 +1283,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
         default:
         break;
     }
-
+#if !MOBILEAPP
     // Avoid multiple uploads during unloading if we know we need to save a new version.
     if (_docState.isUnloadRequested() && isPossiblyModified())
     {
@@ -1293,7 +1293,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
                                 "upload to save again before unloading.");
         return;
     }
-
+#endif
     if (needToUploadState != NeedToUpload::No)
     {
         uploadToStorage(sessionId, /*force=*/needToUploadState == NeedToUpload::Force);
