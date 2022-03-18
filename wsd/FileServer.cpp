@@ -993,7 +993,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%IDLE_TIMEOUT_SECS%"), std::to_string(idleTimeoutSecs));
 
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG%"), std::string(ENABLE_WELCOME_MESSAGE));
-    Poco::replaceInPlace(preprocess, std::string("%WELCOME_CUSTOM%"), config.getString("welcome.custom", ""));
+    Poco::replaceInPlace(preprocess, std::string("%WELCOME_CUSTOM%"), COOLWSD::WelcomeLocation);
 
     // the config value of 'notebookbar' or 'classic' overrides the UIMode
     // from the WOPI
@@ -1032,9 +1032,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     cspOss << "Content-Security-Policy: default-src 'none'; "
 #ifdef ENABLE_FEEDBACK
         "frame-src 'self' " << uriFeedback.getAuthority() << " "
-           << config.getString("welcome.authority", "") << " blob: " << documentSigningURL << "; "
+           << COOLWSD::WelcomeAuthority << " blob: " << documentSigningURL << "; "
 #else
-        "frame-src 'self' " << config.getString("welcome.authority", "") << " blob: " << documentSigningURL << "; "
+        "frame-src 'self' " << COOLWSD::WelcomeAuthority << " blob: " << documentSigningURL << "; "
 #endif
            "connect-src 'self' " << cnxDetails.getWebSocketUrl() << "; "
            "script-src 'unsafe-inline' 'self'; "

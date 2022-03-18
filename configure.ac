@@ -290,6 +290,10 @@ AC_ARG_WITH([feedback-location],
             AS_HELP_STRING([--with-feedback-location=<url>],
                            [User feedback URL location. Default to http://127.0.0.1:8000/Rate/feedback.html]))
 
+AC_ARG_WITH([welcome-location],
+            AS_HELP_STRING([--with-welcome-location=<url>],
+                           [User welcome dialog URL location.]))
+
 AC_ARG_ENABLE(welcome-message,
     AS_HELP_STRING([--enable-welcome-message],
         [Enables welcome message on version update. Can be changed later in coolwsd.xml.])
@@ -794,6 +798,15 @@ AC_DEFINE_UNQUOTED([ENABLE_FEEDBACK],["$ENABLE_FEEDBACK"],[User feedback rating]
 AC_DEFINE_UNQUOTED([FEEDBACK_LOCATION],["$FEEDBACK_LOCATION"],[User feedback URL location])
 AC_SUBST(ENABLE_FEEDBACK)
 AM_CONDITIONAL([ENABLE_FEEDBACK], [test "$ENABLE_FEEDBACK" = "true"])
+
+WELCOME_LOCATION=
+
+if test -n "$with_welcome_location"; then
+    WELCOME_LOCATION=$with_welcome_location
+fi
+
+AC_DEFINE_UNQUOTED([WELCOME_LOCATION],["$WELCOME_LOCATION"],[User welcome dialog URL location])
+AC_SUBST(WELCOME_LOCATION)
 
 VEREIGN_URL=
 if test "$enable_vereign" = "yes"; then
