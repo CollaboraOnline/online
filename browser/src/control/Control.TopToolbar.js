@@ -84,6 +84,9 @@ L.Control.TopToolbar = L.Control.extend({
 	// tablet:true means show it in normal Online from a tablet browser, and in a mobile app on a tablet
 	// tablet:false means hide it in normal Online used from a tablet browser, and in a mobile app on a tablet
 
+	// hidden means display:none
+	// invisible means visibility:hidden
+
 	getToolItems: function() {
 		var that = this;
 		return [
@@ -97,7 +100,7 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'button',  id: 'formatpaintbrush',  img: 'copyformat', hint: _UNO('.uno:FormatPaintbrush'), uno: '.uno:FormatPaintbrush', mobile: false},
 			{type: 'button',  id: 'reset',  img: 'deleteformat', hint: _UNO('.uno:ResetAttributes', 'text'), hidden: true, uno: '.uno:ResetAttributes', mobile: false},
 			{type: 'button',  id: 'resetimpress',  img: 'deleteformat', hint: _UNO('.uno:SetDefault', 'presentation', 'true'), hidden: true, uno: '.uno:SetDefault', mobile: false},
-			{type: 'break', id: 'breakreset', mobile: false, tablet: false,},
+			{type: 'break', id: 'breakreset', invisible: true, mobile: false, tablet: false,},
 			{type: 'html', id: 'styles',
 				html: '<select id="styles-select" class="styles-select"><option>' + _('Default Style') + '</option></select>',
 				onRefresh: function (edata) {
@@ -132,7 +135,7 @@ L.Control.TopToolbar = L.Control.extend({
 						}});
 					}
 				}, mobile: false},
-			{type: 'break', id: 'breakfontsizes', mobile: false, tablet: false,},
+			{type: 'break', id: 'breakfontsizes', invisible: true, mobile: false, tablet: false,},
 			{type: 'button', id: 'languagecode', desktop: false, mobile: true, tablet: false},
 			{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: '.uno:Bold'},
 			{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: '.uno:Italic'},
@@ -275,10 +278,15 @@ L.Control.TopToolbar = L.Control.extend({
 				window.hideTooltip(this, e.target);
 			},
 			onRefresh: function(event) {
-				if ((event.target === 'styles' || event.target === 'fonts' || event.target === 'fontsizes') && event.item) {
+				if (event.item && (event.target === 'styles' || event.target === 'fonts' || event.target === 'fontsizes'
+					|| event.item.invisible)) {
 					var toolItem = $(this.box).find('#tb_'+ this.name +'_item_'+ w2utils.escapeId(event.item.id));
-					if ((window.mode.isDesktop() && event.item.desktop == false)
-						|| (window.mode.isTablet() && event.item.tablet == false)) {
+
+					if (event.item.invisible === true) {
+						toolItem.css('visibility', 'hidden');
+					}
+					else if ((window.mode.isDesktop() && event.item.desktop == false)
+							|| (window.mode.isTablet() && event.item.tablet == false)) {
 						toolItem.css('display', 'none');
 					} else {
 						toolItem.css('display', '');
