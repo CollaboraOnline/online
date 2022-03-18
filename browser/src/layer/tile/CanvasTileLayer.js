@@ -1973,7 +1973,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			var wasVisibleSVG = this._graphicMarker._hasVisibleEmbeddedSVG();
 			this._graphicMarker.removeEmbeddedSVG();
 			this._graphicMarker.addEmbeddedSVG(textMsg);
-			if (wasVisibleSVG && this._graphicSelection.extraInfo.isWriterGraphic)
+			if (wasVisibleSVG)
 				this._graphicMarker._showEmbeddedSVG();
 		}
 	},
