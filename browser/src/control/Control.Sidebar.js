@@ -55,7 +55,12 @@ L.Control.Sidebar = L.Control.extend({
 		if (!this.container)
 			return;
 
-		var control = this.container.querySelector('[id=\'' + data.control.id + '\']');
+		var controlId = data.control.id;
+		var control = this.container.querySelector('[id=\'' + controlId + '\']');
+		if (!control) {
+			controlId = 'table-' + controlId;
+			control = this.container.querySelector('[id=\'' + controlId + '\']');
+		}
 		if (!control) {
 			window.app.console.warn('jsdialogupdate: not found control with id: "' + data.control.id + '"');
 			return;
@@ -76,10 +81,10 @@ L.Control.Sidebar = L.Control.extend({
 
 		var temporaryParent = L.DomUtil.create('div');
 		this.builder.build(temporaryParent, [data.control], false);
-		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
+		parent.insertBefore(temporaryParent.querySelector('[id=\'' + controlId + '\']'), control.nextSibling);
 		L.DomUtil.remove(control);
 
-		var newControl = this.container.querySelector('[id=\'' + data.control.id + '\']');
+		var newControl = this.container.querySelector('[id=\'' + controlId + '\']');
 		if (newControl)
 			newControl.scrollTop = scrollTop;
 
