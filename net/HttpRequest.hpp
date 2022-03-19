@@ -1307,9 +1307,8 @@ private:
         {
             std::shared_ptr<StreamSocket> socket = _socket.lock();
             const int fd = socket ? socket->getFD() : 0;
-            LOG_WRN("Socket #" << fd << " has timed out while requesting ["
-                               << _request.getVerb() << ' ' << _host << _request.getUrl()
-                               << "] after " << duration);
+            LOG_WRN('#' << fd << " has timed out while requesting [" << _request.getVerb() << ' '
+                        << _host << _request.getUrl() << "] after " << duration);
 
             // Flag that we timed out.
             _response->timeout();

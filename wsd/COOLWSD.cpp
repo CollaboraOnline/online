@@ -2371,7 +2371,7 @@ bool COOLWSD::checkAndRestoreForKit()
             }
             else
             {
-                LOG_WRN("Unknown status returned by waitpid: " << std::hex << status << '.');
+                LOG_WRN("Unknown status returned by waitpid: " << std::hex << status << std::dec);
             }
 
             return true;
@@ -4055,7 +4055,7 @@ private:
                             // Set WebSocketHandler's socket after its construction for shared_ptr goodness.
                             streamSocket->setHandler(ws);
 
-                            LOG_DBG("Socket #" << moveSocket->getFD() << " handler is " << clientSession->getName());
+                            LOG_DBG('#' << moveSocket->getFD() << " handler is " << clientSession->getName());
 
                             // Add and load the session.
                             docBroker->addSession(clientSession);
