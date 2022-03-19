@@ -8,6 +8,7 @@
 #pragma once
 
 #include <cerrno>
+#include <memory>
 #include <sstream>
 #include <string>
 
@@ -19,7 +20,7 @@
 class SslStreamSocket final : public StreamSocket
 {
 public:
-    SslStreamSocket(const std::string hostname, const int fd, bool isClient,
+    SslStreamSocket(std::string hostname, const int fd, bool isClient,
                     std::shared_ptr<ProtocolHandlerInterface> responseClient,
                     ReadType readType = NormalRead)
         : StreamSocket(std::move(hostname), fd, isClient, std::move(responseClient), readType)
@@ -262,16 +263,18 @@ private:
         {
         case SSL_ERROR_ZERO_RETURN:
             // Shutdown complete, we're disconnected.
-            LOG_TRC("Socket #" << getFD() << " SSL error: ZERO_RETURN (" << sslError << ").");
+            LOG_TRC('#' << getFD() << " SSL error: ZERO_RETURN (" << sslError
+                        << "): " << getBioError(rc));
             errno = last_errno; // Restore errno.
             return 0;
 
         case SSL_ERROR_WANT_READ:
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
-            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_READ (" << sslError <<
-                    ") has_pending " << SSL_has_pending(_ssl) << " bytes: " << SSL_pending(_ssl) << ".");
+            LOG_TRC('#' << getFD() << " SSL error: WANT_READ (" << sslError << ") has "
+                        << (SSL_has_pending(_ssl) ? "" : "no") << " pending data to read: "
+                        << SSL_pending(_ssl) << ". " << getBioError(rc));
 #else
-            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_READ (" << sslError << ").");
+            LOG_TRC('#' << getFD() << " SSL error: WANT_READ (" << sslError << ").");
 #endif
             _sslWantsTo = SslWantsTo::Read;
             errno = last_errno; // Restore errno.
@@ -279,28 +282,32 @@ private:
 
         case SSL_ERROR_WANT_WRITE:
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
-            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_WRITE (" << sslError <<
-                    ") has_pending " << SSL_has_pending(_ssl) << " bytes: " << SSL_pending(_ssl) << ".");
+            LOG_TRC('#' << getFD() << " SSL error: WANT_WRITE (" << sslError << ") has "
+                        << (SSL_has_pending(_ssl) ? "" : "no") << " pending data to read: "
+                        << SSL_pending(_ssl) << ". " << getBioError(rc));
 #else
-            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_WRITE (" << sslError << ").");
+            LOG_TRC('#' << getFD() << " SSL error: WANT_WRITE (" << sslError << ").");
 #endif
             _sslWantsTo = SslWantsTo::Write;
             errno = last_errno; // Restore errno.
             return rc;
 
         case SSL_ERROR_WANT_CONNECT:
-            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_CONNECT (" << sslError << ").");
+            LOG_TRC('#' << getFD() << " SSL error: WANT_CONNECT (" << sslError
+                        << "): " << getBioError(rc));
             errno = last_errno; // Restore errno.
             return rc;
 
         case SSL_ERROR_WANT_ACCEPT:
-            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_ACCEPT (" << sslError << ").");
+            LOG_TRC('#' << getFD() << " SSL error: WANT_ACCEPT (" << sslError
+                        << "): " << getBioError(rc));
             errno = last_errno; // Restore errno.
             return rc;
 
         case SSL_ERROR_WANT_X509_LOOKUP:
             // Unexpected.
-            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_X509_LOOKUP (" << sslError << ").");
+            LOG_TRC('#' << getFD() << " SSL error: WANT_X509_LOOKUP (" << sslError
+                        << "): " << getBioError(rc));
             errno = last_errno; // Restore errno.
             return rc;
 
@@ -308,9 +315,9 @@ private:
             if (last_errno != 0)
             {
                 // Posix API error, let the caller handle.
-                LOG_TRC("Socket #" << getFD() << " SSL error: SYSCALL error " << sslError << " ("
-                                   << Util::symbolicErrno(last_errno) << ": "
-                                   << std::strerror(last_errno) << ')');
+                LOG_TRC('#' << getFD() << " SSL error: SYSCALL error " << sslError << " ("
+                            << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
+                            << "): " << getBioError(rc));
                 errno = last_errno; // Restore errno.
                 return rc;
             }
@@ -322,69 +329,96 @@ private:
                 if (BIO_should_retry(_bio))
                 {
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
-                    LOG_TRC("Socket #" << getFD() << " BIO asks for retry - underlying EAGAIN? " <<
-                            SSL_get_error(_ssl, rc) << " has_pending " << SSL_has_pending(_ssl) <<
-                            " bytes: " << SSL_pending(_ssl) << ".");
+                    LOG_TRC('#' << getFD() << " BIO asks for retry - underlying EAGAIN? "
+                                << SSL_get_error(_ssl, rc) << " has_pending "
+                                << SSL_has_pending(_ssl) << " bytes: " << SSL_pending(_ssl) << ". "
+                                << getBioError(rc));
 #else
-                    LOG_TRC("Socket #" << getFD() << " BIO asks for retry - underlying EAGAIN? " <<
-                            SSL_get_error(_ssl, rc));
+                    LOG_TRC('#' << getFD() << " BIO asks for retry - underlying EAGAIN? "
+                                << SSL_get_error(_ssl, rc) << ". " << getBioError(rc));
 #endif
                     errno = last_errno ? last_errno : EAGAIN; // Restore errno.
                     return -1; // poll is used to detect real errors.
                 }
 
                 if (sslError == SSL_ERROR_SSL)
-                    LOG_TRC("Socket #" << getFD() << " SSL error: SSL (" << sslError << ").");
+                    LOG_TRC('#' << getFD() << " SSL error: SSL (" << sslError << ") "
+                                << getBioError(rc));
                 else if (sslError == SSL_ERROR_SYSCALL)
-                    LOG_TRC("Socket #" << getFD() << " SSL error: SYSCALL (" << sslError << ").");
-#if 0 // Recent OpenSSL only
+                    LOG_TRC('#' << getFD() << " SSL error: SYSCALL (" << sslError << ") "
+                                << getBioError(rc));
+#if OPENSSL_VERSION_NUMBER > 0x10100000L
                 else if (sslError == SSL_ERROR_WANT_ASYNC)
-                    LOG_TRC("Socket #" << getFD() << " SSL error: WANT_ASYNC (" << sslError << ").");
+                    LOG_TRC('#' << getFD() << " SSL error: WANT_ASYNC (" << sslError << ") "
+                                << getBioError(rc));
                 else if (sslError == SSL_ERROR_WANT_ASYNC_JOB)
-                    LOG_TRC("Socket #" << getFD() << " SSL error: WANT_ASYNC_JOB (" << sslError << ").");
+                    LOG_TRC('#' << getFD() << " SSL error: WANT_ASYNC_JOB (" << sslError << ") "
+                                << getBioError(rc));
 #endif
                 else
-                    LOG_TRC("Socket #" << getFD() << " SSL error: UNKNOWN (" << sslError << ").");
+                    LOG_TRC('#' << getFD() << " SSL error: UNKNOWN (" << sslError << ") "
+                                << getBioError(rc));
 
                 // The error is comming from BIO. Find out what happened.
                 const long bioError = ERR_get_error();
+
+                std::ostringstream oss;
+                oss << '#' << getFD();
+
                 if (bioError == 0)
                 {
                     if (rc == 0)
                     {
                         // Socket closed. Not an error.
-                        LOG_INF("Socket #" << getFD() << " SSL BIO error: closed (0).");
+                        oss << ": closed. " << getBioError(rc);
+                        LOG_INF(oss.str());
                         errno = last_errno; // Restore errno.
                         return 0;
                     }
                     else if (rc == -1)
                     {
-                        errno = last_errno; // Restore errno.
-                        throw std::runtime_error('#' + std::to_string(getFD()) +
-                                                 " SSL BIO error: socket closed unexpectedly (-1)");
+                        oss << ": socket closed unexpectedly. ";
                     }
                     else
                     {
-                        errno = last_errno; // Restore errno.
-                        throw std::runtime_error('#' + std::to_string(getFD()) +
-                                                 " SSL BIO error: unknown (" + std::to_string(rc) +
-                                                 ')');
+                        oss << ": unknown. ";
                     }
                 }
-                else
-                {
-                    char buf[512];
-                    ERR_error_string_n(bioError, buf, sizeof(buf));
-                    errno = last_errno; // Restore errno.
-                    throw std::runtime_error('#' + std::to_string(getFD()) +
-                                             " SSL BIO error: " + buf);
-                }
+
+                oss << getBioError(rc);
+                std::string msg = oss.str();
+                errno = last_errno; // Restore errno.
+                throw std::runtime_error(msg);
             }
             break;
         }
 
         errno = last_errno; // Restore errno.
         return rc;
+    }
+
+    std::string getBioError(const int rc) const
+    {
+        // The error is comming from BIO. Find out what happened.
+        const long bioError = ERR_get_error();
+
+        std::ostringstream oss;
+        oss << "BIO error: " << bioError << ", rc: " << rc;
+
+        char buf[512];
+        ERR_error_string_n(bioError, buf, sizeof(buf));
+
+        oss << ": " << buf << ':';
+
+        auto cb = [](const char* str, size_t len, void* u) -> int
+        {
+            std::ostringstream& os = *reinterpret_cast<std::ostringstream*>(u);
+            os << '\n' << std::string(str, len);
+            return 1; // Apparently 0 means failure here.
+        };
+
+        ERR_print_errors_cb(cb, &oss);
+        return oss.str();
     }
 
 private:

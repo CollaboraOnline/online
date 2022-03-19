@@ -180,7 +180,7 @@ protected:
 
         if (socket->isClosed())
         {
-            LOG_DBG("Socket #" << socket->getFD() << " is closed. Cannot send Close Frame.");
+            LOG_DBG('#' << socket->getFD() << " is closed. Cannot send Close Frame.");
             return;
         }
 
@@ -722,7 +722,7 @@ protected:
 
         if (socket->isClosed())
         {
-            LOG_DBG("Socket #" << socket->getFD() << " is closed. Cannot send WS frame.");
+            LOG_DBG('#' << socket->getFD() << " is closed. Cannot send WS frame.");
             return 0;
         }
 
@@ -790,7 +790,7 @@ protected:
                 socket->writeOutgoingData();
                 if (!out.empty())
                 {
-                    LOG_WRN("Socket #"
+                    LOG_WRN('#'
                             << socket->getFD() << " is shutting down but " << out.size()
                             << " bytes couldn't be flushed and still remain in the output buffer.");
                 }

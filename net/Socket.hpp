@@ -735,8 +735,8 @@ public:
     {
         if (newSocket)
         {
-            LOG_DBG("Inserting socket #" << newSocket->getFD() << ", address "
-                                         << newSocket->clientAddress() << ", into " << _name);
+            LOG_DBG("Inserting socket #" << newSocket->getFD() << ", address ["
+                                         << newSocket->clientAddress() << "], into " << _name);
             // sockets in transit are un-owned.
             newSocket->resetThreadOwner();
 
@@ -1117,15 +1117,18 @@ public:
                 len = readData(buf, sizeof(buf));
                 last_errno = errno;
 
-                LOG_TRC('#' << getFD() << ": Read incoming data " << len << " bytes in addition to "
-                            << _inBuffer.size() << " buffered bytes ("
-                            << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
-                            << ')');
-
-                if (len < 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
-                    LOG_SYS_ERRNO(last_errno, '#' << getFD() << ": Socket read returned " << len);
-            }
-            while (len < 0 && last_errno == EINTR);
+                if (len < 0)
+                    LOG_SYS_ERRNO(last_errno, '#' << getFD() << ": read failed, have "
+                                                  << _inBuffer.size() << " buffered bytes");
+                else // Success.
+                    LOG_TRC('#' << getFD() << " Read " << len << " bytes in addition to "
+                                << _inBuffer.size() << " buffered bytes"
+#ifdef LOG_SOCKET_DATA
+                                << ":\n"
+                                << Util::dumpHex(std::string(buf, len))
+#endif
+                    );
+            } while (len < 0 && last_errno == EINTR);
 
             if (len > 0)
             {
@@ -1158,7 +1161,6 @@ public:
         }
 #endif
 
-        LOG_TRC('#' << getFD() << " readIncomingData: " << len);
         return len != 0; // zero is eof / clean socket close.
     }
 
