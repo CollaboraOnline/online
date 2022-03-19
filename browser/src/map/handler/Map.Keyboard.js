@@ -273,7 +273,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 		var docLayer = this._map._docLayer;
-		if (!keyEventFn) {
+		if (!keyEventFn && docLayer.postKeyboardEvent) {
 			// default is to post keyboard events on the document
 			keyEventFn = L.bind(docLayer.postKeyboardEvent, docLayer);
 		}
@@ -339,8 +339,11 @@ L.Map.Keyboard = L.Handler.extend({
 		if (this.modifier) {
 			unoKeyCode |= this.modifier;
 			if (ev.type !== 'keyup' && (this.modifier !== shift || (keyCode === 32 && !this._map._isCursorVisible))) {
-				keyEventFn('input', charCode, unoKeyCode);
-				ev.preventDefault();
+				if (keyEventFn) {
+					keyEventFn('input', charCode, unoKeyCode);
+					ev.preventDefault();
+				}
+
 				return;
 			}
 		}
@@ -359,8 +362,10 @@ L.Map.Keyboard = L.Handler.extend({
 			else if (ev.type === 'keydown') {
 				// window.app.console.log(e);
 				if (this.handleOnKeyDownKeys[keyCode] && charCode === 0) {
-					keyEventFn('input', charCode, unoKeyCode);
-					ev.preventDefault();
+					if (keyEventFn) {
+						keyEventFn('input', charCode, unoKeyCode);
+						ev.preventDefault();
+					}
 				}
 			}
 			else if ((ev.type === 'keypress') && (!this.handleOnKeyDownKeys[keyCode] || charCode !== 0)) {
@@ -381,13 +386,17 @@ L.Map.Keyboard = L.Handler.extend({
 					docLayer._debugKeypressQueue.push(+new Date());
 				}
 
-				keyEventFn('input', charCode, unoKeyCode);
+				if (keyEventFn) {
+					keyEventFn('input', charCode, unoKeyCode);
+				}
 			}
 			else if (ev.type === 'keyup') {
 				if ((this.handleOnKeyDownKeys[keyCode] && charCode === 0) ||
 				    (this.modifier) ||
 				    unoKeyCode === UNOKey.RETURN) {
-					keyEventFn('up', charCode, unoKeyCode);
+					if (keyEventFn) {
+						keyEventFn('up', charCode, unoKeyCode);
+					}
 				} else {
 					// was handled as textinput
 				}
@@ -426,7 +435,9 @@ L.Map.Keyboard = L.Handler.extend({
 			else if (key in this._panKeys && ev.shiftKey &&
 					!docLayer._textCSelections.empty()) {
 				// if there is a selection and the user wants to modify it
-				keyEventFn('input', charCode, unoKeyCode);
+				if (keyEventFn) {
+					keyEventFn('input', charCode, unoKeyCode);
+				}
 			}
 			else if (key in this._zoomKeys) {
 				map.setZoom(map.getZoom() + (ev.shiftKey ? 3 : 1) * this._zoomKeys[key], null, true /* animate? */);
