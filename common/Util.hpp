@@ -522,20 +522,6 @@ namespace Util
         return trimmed(std::string(s));
     }
 
-    // Trim all type of whitespace from left and right
-    inline std::string trim_whitespace(std::string s)
-    {
-        auto last =
-            std::find_if(s.rbegin(), s.rend(), [](char ch) { return !std::isspace(ch); });
-        s.erase(last.base(), s.end()); //trim from right
-
-        auto first =
-            std::find_if(s.begin(), s.end(), [](char ch) { return !std::isspace(ch); });
-        s.erase(s.begin(), first); //trim from left
-
-        return s;
-    }
-
     /// Return true iff s starts with t.
     inline bool startsWith(const std::string& s, const std::string& t)
     {
