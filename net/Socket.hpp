@@ -848,6 +848,8 @@ private:
             _pollFds[i].fd = _pollSockets[i]->getFD();
             _pollFds[i].events = events;
             _pollFds[i].revents = 0;
+            LOG_TRC('#' << _pollFds[i].fd << ": setupPollFds getPollEvents: 0x" << std::hex
+                        << events << std::dec);
         }
 
         // Add the read-end of the wake pipe.
@@ -1275,6 +1277,8 @@ protected:
                     const int events) override
     {
         ASSERT_CORRECT_SOCKET_THREAD(this);
+
+        LOG_TRC('#' << getFD() << ": revents: 0x" << std::hex << events << std::dec);
 
         _socketHandler->checkTimeout(now);
 
