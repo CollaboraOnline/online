@@ -112,7 +112,7 @@ public:
     }
 
     /// Compares the nth token with string.
-    bool equals(std::size_t index, const char* string) const
+    template <typename T> bool equals(std::size_t index, const T& string) const
     {
         if (index >= _tokens.size())
         {
@@ -124,8 +124,7 @@ public:
     }
 
     /// Compares the nth token with string.
-    template <std::size_t N>
-    bool equals(std::size_t index, const char (&string)[N]) const
+    template <std::size_t N> bool equals(std::size_t index, const char (&string)[N]) const
     {
         if (index >= _tokens.size())
         {
@@ -133,7 +132,7 @@ public:
         }
 
         const StringToken& token = _tokens[index];
-        return _string.compare(token._index, token._length, string, N) == 0;
+        return _string.compare(token._index, token._length, string, N - 1) == 0;
     }
 
     // Checks if the token text at index starts with the given string
@@ -146,7 +145,7 @@ public:
         }
 
         const StringToken& token = _tokens[index];
-        const auto len = N - 1; // we don't want to compare the '\0'
+        constexpr auto len = N - 1; // we don't want to compare the '\0'
         return token._length >= len && _string.compare(token._index, len, string) == 0;
     }
 
