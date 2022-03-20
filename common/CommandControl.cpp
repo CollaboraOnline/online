@@ -35,9 +35,7 @@ void LockManager::generateLockedCommandList()
     std::string command;
     for (std::size_t i = 0; i < commandList.size(); i++)
     {
-        // just an extra check to make sure any whitespace does not sniff in command
-        // or else command will not be recognized
-        command = Util::trim_whitespace(commandList[i]);
+        command = commandList[i];
         if (!command.empty())
         {
             LockedCommandList.emplace(command);
@@ -134,9 +132,7 @@ void RestrictionManager::generateRestrictedCommandList()
     std::string command;
     for (std::size_t i = 0; i < commandList.size(); i++)
     {
-        // just an extra check to make sure any whitespace does not sniff in command
-        // or else command will not be recognized
-        command = Util::trim_whitespace(commandList[i]);
+        command = commandList[i];
         if (!command.empty())
         {
             RestrictedCommandList.emplace(command);
