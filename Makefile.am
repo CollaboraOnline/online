@@ -68,6 +68,7 @@ include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -
 AM_CPPFLAGS = -pthread -DCOOLWSD_DATADIR='"@COOLWSD_DATADIR@"' \
 	      -DCOOLWSD_CONFIGDIR='"@COOLWSD_CONFIGDIR@"' \
 	      -DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
+	      -DOPENSSL_NO_DEPRECATED \
 	      ${include_paths}
 
 if !ENABLE_DEBUG
