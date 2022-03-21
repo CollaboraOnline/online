@@ -866,8 +866,6 @@ std::string COOLWSD::LoTemplate = LO_PATH;
 std::string COOLWSD::ChildRoot;
 std::string COOLWSD::ServerName;
 std::string COOLWSD::FileServerRoot;
-std::string COOLWSD::WelcomeLocation;
-std::string COOLWSD::WelcomeAuthority;
 std::string COOLWSD::ServiceRoot;
 std::string COOLWSD::LOKitVersion;
 std::string COOLWSD::ConfigFile = COOLWSD_CONFIGDIR "/coolwsd.xml";
@@ -1847,16 +1845,19 @@ void COOLWSD::innerInitialize(Application& self)
 
     try
     {
-        Poco::URI customURI(WELCOME_LOCATION);
-        if (customURI.getAuthority().empty())
-            throw Poco::Exception("Invalid Host:Port");
+        if (conf.hasProperty("welcome.custom"))
+        {
+            Poco::URI customURI(conf.getString("welcome.custom"));
+            if (customURI.getAuthority().empty())
+                throw Poco::Exception("Invalid Host:Port");
 
-        WelcomeLocation = customURI.toString();
-        WelcomeAuthority = customURI.getAuthority();
+            conf.setString("welcome.authority", customURI.getAuthority());
+        }
     }
     catch (const Poco::Exception& exc)
     {
         LOG_WRN("Invalid: " << exc.displayText());
+        conf.remove("welcome.custom");
     }
 
     NumPreSpawnedChildren = getConfigValue<int>(conf, "num_prespawn_children", 1);
