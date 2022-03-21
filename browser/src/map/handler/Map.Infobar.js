@@ -2,6 +2,7 @@
 /*
  * L.Map.Infobar.
  */
+/* global app */
 
 L.Map.Infobar = L.Handler.extend({
 
@@ -73,10 +74,13 @@ L.Map.Infobar = L.Handler.extend({
 	onMessage: function (e) {
 		var data = e.data;
 
-		if (data === 'updatecheck-show') {
-			var currentDate = new Date();
-			window.localStorage.setItem('InfoBarLaterDate', currentDate.getTime());
-			this._iframeInfobar.show();
+		if (data.startsWith('updatecheck-show-')) {
+			var latestVersion = data.replace('updatecheck-show-', '');
+			if (latestVersion != app.socket.WSDServer.Version) {
+				var currentDate = new Date();
+				window.localStorage.setItem('InfoBarLaterDate', currentDate.getTime());
+				this._iframeInfobar.show();
+			}
 		} else if (data === 'updatecheck-close') {
 			this._map.infobar.disable();
 		}
