@@ -208,8 +208,8 @@
                     or names, add them as aliases. -->
             <!--<group>
                     <host desc="hostname to allow or deny." allow="true">scheme://hostname:port</host>
-                    <alias>scheme://aliasname1:port</alias>
-                    <alias>scheme://aliasname2:port</alias>
+                    <alias desc="regex pattern of aliasname">scheme://aliasname1:port</alias>
+                    <alias desc="regex pattern of aliasname">scheme://aliasname2:port</alias>
             </group>-->
             <!-- More "group"s possible here -->
             </alias_groups>
