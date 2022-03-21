@@ -716,8 +716,8 @@ L.Map.include({
 				_('Link') + '<input name="link" id="hyperlink-link-box" type="text" value="' + link + '"/>'
 			].join(''),
 			buttons: [
-				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
-				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
+				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
+				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') })
 			],
 			callback: function(data) {
 				if (data && data.link != '') {

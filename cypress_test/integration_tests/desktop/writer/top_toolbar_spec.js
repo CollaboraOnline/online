@@ -340,7 +340,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#hyperlink-link-box')
 			.type('www.something.com');
 
-		cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
+		cy.get('.vex-dialog-button-primary.vex-dialog-button')
 			.click();
 
 		writerHelper.selectAllTextOfDoc();
