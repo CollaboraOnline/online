@@ -1094,6 +1094,14 @@ int main(int argc, char**argv)
     /// Extract and return the filename given a url or path.
     std::string getFilenameFromURL(const std::string& url);
 
+    /// Return true if the subject matches in given set. It uses regex
+    /// Mainly used to match WOPI hosts patterns
+    bool matchRegex(const std::set<std::string>& set, const std::string& subject);
+
+    /// Return true if the subject matches in given map. It uses regex
+    /// Mainly used to match WOPI hosts patterns
+    bool matchRegex(const std::map<std::string, std::string>& map, const std::string& subject);
+
     /// Given one or more patterns to allow, and one or more to deny,
     /// the match member will return true if, and only if, the subject
     /// matches the allowed list, but not the deny.
@@ -1147,45 +1155,16 @@ int main(int argc, char**argv)
 
         bool match(const std::string& subject) const
         {
-            return (_allowByDefault || match(_allowed, subject)) && !match(_denied, subject);
+            return (_allowByDefault ||
+                    Util::matchRegex(_allowed, subject)) &&
+                   !Util::matchRegex(_denied, subject);
         }
 
         // whether a match exist within both _allowed and _denied
         bool matchExist(const std::string& subject) const
         {
-            return ( match(_allowed, subject) || match(_denied, subject) );
-        }
-
-    private:
-        static bool match(const std::set<std::string>& set, const std::string& subject)
-        {
-            if (set.find(subject) != set.end())
-            {
-                return true;
-            }
-
-            // Not a perfect match, try regex.
-            for (const auto& value : set)
-            {
-                try
-                {
-                    // Not performance critical to warrant caching.
-                    Poco::RegularExpression re(value, Poco::RegularExpression::RE_CASELESS);
-                    Poco::RegularExpression::Match reMatch;
-
-                    // Must be a full match.
-                    if (re.match(subject, reMatch) && reMatch.offset == 0 && reMatch.length == subject.size())
-                    {
-                        return true;
-                    }
-                }
-                catch (const std::exception& exc)
-                {
-                    // Nothing to do; skip.
-                }
-            }
-
-            return false;
+            return (Util::matchRegex(_allowed, subject) ||
+                    Util::matchRegex(_denied, subject));
         }
 
     private:

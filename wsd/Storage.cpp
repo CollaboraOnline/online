@@ -210,7 +210,7 @@ std::string StorageBase::getNewUri(const Poco::URI& uri)
     }
     Poco::URI newUri(uri);
     const std::string key = newUri.getAuthority();
-    if (AliasHosts.find(key) != AliasHosts.end())
+    if (Util::matchRegex(AliasHosts, key))
     {
         newUri.setAuthority(AliasHosts[key]);
     }
@@ -331,7 +331,7 @@ bool StorageBase::allowedAlias(const Poco::URI& uri)
             return false;
         }
     }
-    else if (AllHosts.find(uri.getAuthority()) == AllHosts.end())
+    else if (!Util::matchRegex(AllHosts, uri.getAuthority()))
     {
         LOG_ERR("Host: " << uri.getAuthority()
                          << " is not allowed, It is not part of alias_groups configuration");
