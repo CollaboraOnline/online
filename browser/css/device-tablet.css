@@ -98,7 +98,7 @@
 	-ms-flex-wrap: nowrap;
 	flex-wrap: nowrap;
 	word-wrap: nowrap;
-	max-width: 60%;
+	max-width: 50%;
 }
 
 .main-nav.readonly.hasnotebookbar .notebookbar-tabs-container {
