@@ -1136,6 +1136,53 @@ namespace Util
         Log::shutdown();
         std::_Exit(code);
     }
+
+    template <class Type, typename Getter>
+    static bool matchRegex(const Type& set, const std::string& subject, Getter& getter)
+    {
+        if (set.find(subject) != set.end())
+        {
+            return true;
+        }
+
+        // Not a perfect match, try regex.
+        for (const auto& value : set)
+        {
+            try
+            {
+                // Not performance critical to warrant caching.
+                Poco::RegularExpression re(getter(value), Poco::RegularExpression::RE_CASELESS);
+                Poco::RegularExpression::Match reMatch;
+
+                // Must be a full match.
+                if (re.match(subject, reMatch) && reMatch.offset == 0 &&
+                    reMatch.length == subject.size())
+                {
+                    return true;
+                }
+            }
+            catch (const std::exception& exc)
+            {
+                // Nothing to do; skip.
+            }
+        }
+
+        return false;
+    }
+
+    bool matchRegex(const std::set<std::string>& set, const std::string& subject)
+    {
+        auto lambda = [] (std::set<std::string>::key_type x) { return x; };
+
+        return matchRegex<std::set<std::string>>(set, subject, lambda);
+    }
+
+    bool matchRegex(const std::map<std::string, std::string>& map, const std::string& subject)
+    {
+        auto lambda = [] (std::map<std::string, std::string>::value_type x) { return x.first; };
+
+        return matchRegex<std::map<std::string, std::string>>(map, subject, lambda);
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
