@@ -1475,8 +1475,8 @@ void COOLWSD::innerInitialize(Application& self)
         { "trace.path[@compress]", "true" },
         { "trace.path[@snapshot]", "false" },
         { "trace[@enable]", "false" },
-        { "welcome.enable", ENABLE_WELCOME_MESSAGE },
-        { "welcome.enable_button", ENABLE_WELCOME_MESSAGE_BUTTON },
+        { "welcome.enable", "false" },
+        { "welcome.enable_button", "true" },
         { "welcome.path", "browser/welcome" },
 #ifdef ENABLE_FEATURE_LOCK
         { "feature_lock.locked_hosts[@allow]", "false"},
@@ -1847,6 +1847,11 @@ void COOLWSD::innerInitialize(Application& self)
         Quarantine::createQuarantineMap();
     }
 
+#if ENABLE_WELCOME_MESSAGE
+    conf.setString("welcome.enable", "true");
+    conf.setString("welcome.enable_Button", "false");
+    conf.setString("welcome.path", "browser/welcome");
+#endif
     WelcomeFilesRoot = getPathFromConfig("welcome.path");
     if (!getConfigValue<bool>(conf, "welcome.enable", true))
         WelcomeFilesRoot = "";
