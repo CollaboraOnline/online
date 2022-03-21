@@ -1849,7 +1849,7 @@ void COOLWSD::innerInitialize(Application& self)
 
 #if ENABLE_WELCOME_MESSAGE
     conf.setString("welcome.enable", "true");
-    conf.setString("welcome.enable_Button", "false");
+    conf.setString("welcome.enable_button", "false");
     conf.setString("welcome.path", "browser/welcome");
 #endif
     WelcomeFilesRoot = getPathFromConfig("welcome.path");
