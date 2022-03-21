@@ -294,11 +294,6 @@ AC_ARG_WITH([welcome-location],
             AS_HELP_STRING([--with-welcome-location=<url>],
                            [User welcome dialog URL location.]))
 
-AC_ARG_ENABLE(welcome-message,
-    AS_HELP_STRING([--enable-welcome-message],
-        [Enables welcome message on version update. Can be changed later in coolwsd.xml.])
-)
-
 AC_ARG_ENABLE(feedback,
     AS_HELP_STRING([--enable-feedback],
         [Enables feedback, user rating.])
@@ -774,12 +769,6 @@ AS_IF([test "$MAX_DOCUMENTS" -lt "2"],
       [MAX_DOCUMENTS="2"])
 AC_DEFINE_UNQUOTED([MAX_DOCUMENTS],[$MAX_DOCUMENTS],[Limit the maximum number of open documents])
 AC_SUBST(MAX_DOCUMENTS)
-
-ENABLE_WELCOME_MESSAGE="false"
-AS_IF([test "$enable_welcome_message" = "yes"],
-      [ENABLE_WELCOME_MESSAGE="true"])
-AC_DEFINE_UNQUOTED([ENABLE_WELCOME_MESSAGE],["$ENABLE_WELCOME_MESSAGE"],[Should the Release notes message on startup be enabled by default?])
-AC_SUBST(ENABLE_WELCOME_MESSAGE)
 
 ENABLE_FEEDBACK=
 FEEDBACK_LOCATION=

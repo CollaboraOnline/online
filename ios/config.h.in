@@ -19,10 +19,6 @@
 /* Whether to enable support key */
 #define ENABLE_SUPPORT_KEY 0
 
-/* Should the Release notes message on startup should be enabled be default?
-   */
-#define ENABLE_WELCOME_MESSAGE "false"
-
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 0
 
