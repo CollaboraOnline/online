@@ -2208,11 +2208,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (!name)
 			return '';
 
+		var iconURLAliases = {
+			'AlignLeft': 'LeftPara',
+			'AlignRight': 'RightPara',
+			'AlignHorizontalCenter': 'CenterPara',
+			'AlignBlock': 'JustifyPara'
+		};
 		var cleanName = name;
 		var prefixLength = '.uno:'.length;
 		if (name.substr(0, prefixLength) == '.uno:')
 			cleanName = name.substr(prefixLength);
 		cleanName = encodeURIComponent(cleanName).replace(/\%/g, '');
+
+		if (iconURLAliases[cleanName]) {
+			cleanName = iconURLAliases[cleanName];
+		}
 		return L.LOUtil.getImageURL('lc_' + cleanName.toLowerCase() + '.svg');
 	},
 
