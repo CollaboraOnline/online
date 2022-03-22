@@ -301,6 +301,8 @@ L.Control.UIManager = L.Control.extend({
 
 		document.body.setAttribute('data-userInterfaceMode', uiMode.mode);
 
+		this.map.fire('postMessage', {msgId: 'Action_ChangeUIMode_Resp', args: {Mode: uiMode}});
+
 		switch (window.userInterfaceMode) {
 		case 'classic':
 			this.removeClassicUI();
