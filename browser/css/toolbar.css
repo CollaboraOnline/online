@@ -343,6 +343,8 @@ td[id^='tb_editbar_item_sidebar']{
 }
 
 #closebuttonwrapper {
+	order: 99;
+	flex-shrink: 0;
 	width: 37px;
 	height: 32px;
 	background-color: transparent;
@@ -355,7 +357,7 @@ td[id^='tb_editbar_item_sidebar']{
 #closebutton {
 	width: 100%;
 	height: 100%;
-	background: url('images/closedoc.svg') no-repeat 6px 4px/24px !important;
+	background: url('images/closedoc.svg') no-repeat center/24px !important;
 }
 
 .main-nav:not(.hasnotebookbar) ~ #closebuttonwrapper #closebutton {
@@ -1161,6 +1163,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	position: relative;
 	background-color: transparent;
 	display: flex !important;
+	flex-grow: 1;
 	align-items: center;
 	font-family: var(--cool-font);
 	padding-right: 12px;
