@@ -111,8 +111,8 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action',},
 					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 					{type: 'separator'},
-					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
 					{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
+					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
 					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
 				]).concat([
 					{uno: '.uno:Sidebar'},
@@ -1439,7 +1439,7 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_beforeShow: function(e, menu) {
-		$('.main-nav.hasnotebookbar').css('overflow', 'visible');
+		$('.main-nav').css('overflow', 'visible');
 		$('.notebookbar-scroll-wrapper').css('overflow', 'visible');
 		var self = e.data.self;
 		var items = $(menu).children().children('a').not('.has-submenu');
@@ -1522,9 +1522,9 @@ L.Control.Menubar = L.Control.extend({
 
 					} else if (id === 'toggleuimode') {
 						if (window.userInterfaceMode === 'notebookbar') {
-							$(aItem).text(_('Use Classic UI'));
+							$(aItem).text(_('Use Classic view'));
 						} else {
-							$(aItem).text(_('Use Notebookbar UI'));
+							$(aItem).text(_('Use NotebookBar view'));
 						}
 
 					} else if (self._map.getDocType() === 'presentation' && (id === 'deletepage' || id === 'insertpage' || id === 'duplicatepage')) {
