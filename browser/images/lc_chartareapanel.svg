@@ -1,0 +1,27 @@
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path
+	 class="icn icn--shape-color" 
+     d="m 2.5,8.5 v 11 h 13 v -11 z"
+     fill="#fafafa" 
+	 stroke="#3a3a38" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+     />
+  <path
+	 class="icn icn--shape-color" 
+     d="m 16,2.5 c 3.5,0 5.5,3 5.5,5.5 0,3 -2.5,5.5 -5,5.5 -3.5,0 -6,-2.5 -6,-5.5 0,-3 2.5,-5.5 5.5,-5.5 z"
+     fill="#fafafa" 
+	 stroke="#3a3a38" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+     />
+  <path
+	 class="icn icn--shape-color" 
+     d="M 15,8.5 8.5,15 15,21.5 21.5,15 Z"
+     fill="#fafafa" 
+	 stroke="#3a3a38" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+     />
+</svg>
