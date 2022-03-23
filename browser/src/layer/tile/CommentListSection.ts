@@ -748,7 +748,9 @@ class CommentSection {
 	}
 
 	public getIndexOf (id: any): number {
-		const index = this.idIndexMap.get(id);
+		if (typeof id !== 'number') // todo: convert id to number type
+			console.error('getIndexOf: id is not a number!');
+		var index = this.idIndexMap.get(id);
 		return (index === undefined) ? -1 : index;
 	}
 
@@ -1052,7 +1054,7 @@ class CommentSection {
 				else
 					annotation = undefined;
 			}
-			id = obj[dataroot].id;
+			id = parseInt(obj[dataroot].id);
 			var removed = this.getComment(id);
 			if (removed) {
 				var parent = this.sectionProperties.commentList[this.getRootIndexOf(removed.sectionProperties.data.id)];
