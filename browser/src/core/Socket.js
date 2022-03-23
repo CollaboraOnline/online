@@ -526,7 +526,7 @@ app.definitions.Socket = L.Class.extend({
 			var h = this.WSDServer.Hash;
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				h = '<a href="javascript:void(window.open(\'https://github.com/CollaboraOnline/online/commits/' + h + '\'));">' + h + '</a>';
-				$('#coolwsd-version').html(this.WSDServer.Version + ' <span>git hash:&nbsp;' + h + '</span>');
+				$('#coolwsd-version').html(this.WSDServer.Version + ' <span>git hash:&nbsp;' + h + this.WSDServer.Options + '</span>');
 			}
 			else {
 				$('#coolwsd-version').text(this.WSDServer.Version);

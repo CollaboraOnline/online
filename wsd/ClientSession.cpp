@@ -515,7 +515,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         }
 
         // Send COOL version information
-        sendTextFrame("coolserver " + Util::getVersionJSON());
+        sendTextFrame("coolserver " + Util::getVersionJSON(EnableExperimental));
         // Send LOKit version information
         sendTextFrame("lokitversion " + COOLWSD::LOKitVersion);
 

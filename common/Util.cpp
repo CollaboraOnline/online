@@ -624,15 +624,16 @@ namespace Util
         return id;
     }
 
-    std::string getVersionJSON()
+    std::string getVersionJSON(bool enableExperimental)
     {
         std::string version, hash;
         Util::getVersionInfo(version, hash);
         return
             "{ \"Version\":  \"" + version + "\", "
-            "\"Hash\":     \"" + hash + "\", "
-            "\"Protocol\": \"" + COOLProtocol::GetProtocolVersion() + "\", "
-            "\"Id\":  \"" + Util::getProcessIdentifier() + "\" }";
+              "\"Hash\":     \"" + hash + "\", "
+              "\"Protocol\": \"" + COOLProtocol::GetProtocolVersion() + "\", "
+              "\"Id\":       \"" + Util::getProcessIdentifier() + "\", "
+              "\"Options\":  \"" + std::string(enableExperimental ? " (E)" : "") + "\" }";
     }
 
     std::string UniqueId()
