@@ -71,12 +71,21 @@ L.Map.Infobar = L.Handler.extend({
 		}
 	},
 
+	getTheVersionString: function (longVersionString) {
+		var parts = longVersionString.split('.');
+		var result = '';
+		for (var i = 0; i < 3; i++)
+			result += parts[i] + (i != 2 ? '.' : '');
+		return result;
+	},
+
 	onMessage: function (e) {
 		var data = e.data;
 
 		if (data.startsWith('updatecheck-show-')) {
-			var latestVersion = data.replace('updatecheck-show-', '');
-			if (latestVersion != app.socket.WSDServer.Version) {
+			var latestVersion = data.replace('updatecheck-show-', '').trim();
+			var coolVersion = this.getTheVersionString(app.socket.WSDServer.Version);
+			if (latestVersion != coolVersion) {
 				var currentDate = new Date();
 				window.localStorage.setItem('InfoBarLaterDate', currentDate.getTime());
 				this._iframeInfobar.show();
