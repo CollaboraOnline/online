@@ -1119,9 +1119,13 @@ public:
                 len = readData(buf, sizeof(buf));
                 last_errno = errno;
 
-                if (len < 0)
+                if (len < 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
                     LOG_SYS_ERRNO(last_errno, '#' << getFD() << ": read failed, have "
                                                   << _inBuffer.size() << " buffered bytes");
+                else if (len <= 0)
+                    LOG_TRC('#' << getFD() << ": Read failed, have " << _inBuffer.size()
+                                << " buffered bytes (" << Util::symbolicErrno(last_errno) << ": "
+                                << std::strerror(last_errno) << ')');
                 else // Success.
                     LOG_TRC('#' << getFD() << " Read " << len << " bytes in addition to "
                                 << _inBuffer.size() << " buffered bytes"
