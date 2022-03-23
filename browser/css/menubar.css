@@ -141,10 +141,6 @@
 	background: var(--color-main-background);
 	color: var(--color-text-lighter);
 }
-.lo-menu > li .disabled:hover {
-	color: var(--color-main-text);
-	background-color: var(--color-background-lighter);
-}
 .lo-menu > li > a:hover, .lo-menu > li > a:focus, .lo-menu > li > a:active, .lo-menu > li > a.highlighted {
 	background: var(--color-background-darker);
 	color: var(--color-text-darker);
