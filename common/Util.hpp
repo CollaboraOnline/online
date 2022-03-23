@@ -241,7 +241,7 @@ namespace Util
     ///< A random hex string that identifies the current process.
     std::string getProcessIdentifier();
 
-    std::string getVersionJSON();
+    std::string getVersionJSON(bool enableExperimental);
 
     /// Return a string that is unique across processes and calls.
     std::string UniqueId();
