@@ -423,7 +423,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 
 .cool-annotation-reply-count-collapsed {
-	background-color: var(--color-primary-lighter);
+	background-color: var(--color-primary);
 	color: var(--color-primary-text);
 	font-weight: bold;
 	font-family: var(--cool-font);
@@ -440,10 +440,6 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 
 #main-document-content {
 	z-index: 0;
-}
-
-#main-document-content .cool-annotation-reply-count-collapsed {
-	background: rgb(var(--color-primary));
 }
 
 .cool-annotation-collapsed {
