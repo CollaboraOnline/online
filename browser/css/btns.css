@@ -25,13 +25,12 @@ button.jsdialog {
 	justify-content: end;
 }
 
-.cool-annotation-edit [id^='annotation-cancel'],
 .ui-pushbutton.jsdialog:not(#ok):not([id*='select_current']):not(.sidebar),
 .ui-button-box.jsdialog #cancel,
 .ui-button-box.autofilter #cancel,
 .cell.jsdialog > button:not(#ok),
 .ui-button-box.jsdialog button:not(#ok),
-.vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-secondary {
+[class$='button-secondary'] {
 	height: 32px;
 	line-height: 0em;
 	color: var(--color-main-text);
@@ -44,26 +43,23 @@ button.jsdialog {
 	vertical-align: middle;
 }
 
-.cool-annotation-edit [id^='annotation-cancel']:hover,
 .ui-pushbutton.jsdialog:not(#ok):not(.sidebar):hover,
 .ui-button-box.jsdialog #cancel:hover,
 .ui-button-box.autofilter #cancel:hover,
 .cell.jsdialog > button:not(#ok):hover,
 .ui-button-box.jsdialog button:not(#ok):hover,
-.vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-secondary:hover {
+[class$='button-secondary']:hover {
 	cursor: pointer;
 	color: var(--color-text-darker) !important;
-	background-color: var(--color-background-darker) !important;
+	background-color: var(--color-background-lighter) !important;
 	border: 1px solid var(--color-border-darker);
 }
 
-.cool-annotation-edit .annotation-button,
-#annotation-reply,
 .ui-button-box.jsdialog #ok,
 .ui-button-box.autofilter #ok,
 .cell.jsdialog > button,
 .ui-button-box.jsdialog button,
-.vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-primary {
+[class$='button-primary'] {
 	height: 32px;
 	line-height: 0em;
 	color: var(--color-primary-text);
@@ -73,6 +69,10 @@ button.jsdialog {
 	border-radius: var(--border-radius);
 	margin: 5px;
 	vertical-align: middle;
+}
+
+[class$='button-primary']:hover {
+	background-color: var(--color-primary-lighter);
 }
 
 .vex.vex-theme-plain .vex-dialog-form .vex-dialog-buttons {

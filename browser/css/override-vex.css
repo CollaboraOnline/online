@@ -241,13 +241,6 @@ kbd,
 	text-shadow: 0 0 8px var(--color-primary-dark);
 }
 
-.vex.vex-theme-plain .vex-content.vex-locking .vex-dialog-button-primary:hover {
-	border-color: var(--color-primary-darker) !important;
-	background-color: var(--color-primary-darker);
-	color: var(--color-primary-text);
-	text-shadow: none;
-}
-
 .vex.vex-theme-plain .vex-content.vex-locking.mobile .container .item p {
 	font-size: 1.1em !important;
 	font-family: var(--jquery-ui-font);
