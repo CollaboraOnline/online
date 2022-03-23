@@ -28,7 +28,6 @@ button.jsdialog {
 .cool-annotation-edit [id^='annotation-cancel'],
 .ui-pushbutton.jsdialog:not(#ok):not([id*='select_current']):not(.sidebar),
 .ui-button-box.jsdialog #cancel,
-.ui-button-box.autofilter #cancel,
 .cell.jsdialog > button:not(#ok),
 .ui-button-box.jsdialog button:not(#ok),
 .vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-secondary {
@@ -47,7 +46,6 @@ button.jsdialog {
 .cool-annotation-edit [id^='annotation-cancel']:hover,
 .ui-pushbutton.jsdialog:not(#ok):not(.sidebar):hover,
 .ui-button-box.jsdialog #cancel:hover,
-.ui-button-box.autofilter #cancel:hover,
 .cell.jsdialog > button:not(#ok):hover,
 .ui-button-box.jsdialog button:not(#ok):hover,
 .vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-secondary:hover {
@@ -60,7 +58,6 @@ button.jsdialog {
 .cool-annotation-edit .annotation-button,
 #annotation-reply,
 .ui-button-box.jsdialog #ok,
-.ui-button-box.autofilter #ok,
 .cell.jsdialog > button,
 .ui-button-box.jsdialog button,
 .vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-primary {
