@@ -122,11 +122,11 @@ class Comment {
 		var button = L.DomUtil.create('div', 'annotation-btns-container', this.sectionProperties.nodeModify);
 		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'blur', this.onLostFocus, this);
 		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'blur', this.onLostFocusReply, this);
-		this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, _('Cancel'), this.onCancelClick);
-		this.createButton(button, 'annotation-save-' + this.sectionProperties.data.id, _('Save'), this.onSaveComment);
+		this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.onCancelClick);
+		this.createButton(button, 'annotation-save-' + this.sectionProperties.data.id, 'annotation-button button-primary',_('Save'), this.onSaveComment);
 		button = L.DomUtil.create('div', '', this.sectionProperties.nodeReply);
-		this.createButton(button, 'annotation-cancel-reply-' + this.sectionProperties.data.id, _('Cancel'), this.onCancelClick);
-		this.createButton(button, 'annotation-reply-' + this.sectionProperties.data.id, _('Reply'), this.onReplyClick);
+		this.createButton(button, 'annotation-cancel-reply-' + this.sectionProperties.data.id, 'annotation-button button-secondary', _('Cancel'), this.onCancelClick);
+		this.createButton(button, 'annotation-reply-' + this.sectionProperties.data.id, 'annotation-button button-primary', _('Reply'), this.onReplyClick);
 		L.DomEvent.disableScrollPropagation(this.sectionProperties.container);
 
 		this.sectionProperties.container.style.visibility = 'hidden';
@@ -289,8 +289,8 @@ class Comment {
 		}, this);
 	}
 
-	private createButton (container: any, id: any, value: any, handler: any) {
-		var button = L.DomUtil.create('input', 'annotation-button', container);
+	private createButton (container: any, id: any, cssClass: string, value: any, handler: any) {
+		var button = L.DomUtil.create('input', cssClass, container);
 		button.id = id;
 		button.type = 'button';
 		button.value = value;

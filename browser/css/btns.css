@@ -25,7 +25,7 @@ button.jsdialog {
 	justify-content: end;
 }
 
-.cool-annotation-edit [id^='annotation-cancel'],
+[class*='button-secondary'],
 .ui-pushbutton.jsdialog:not(#ok):not([id*='select_current']):not(.sidebar),
 .ui-button-box.jsdialog #cancel,
 .cell.jsdialog > button:not(#ok),
@@ -43,7 +43,7 @@ button.jsdialog {
 	vertical-align: middle;
 }
 
-.cool-annotation-edit [id^='annotation-cancel']:hover,
+[class*='button-secondary']:hover,
 .ui-pushbutton.jsdialog:not(#ok):not(.sidebar):hover,
 .ui-button-box.jsdialog #cancel:hover,
 .cell.jsdialog > button:not(#ok):hover,
@@ -55,9 +55,8 @@ button.jsdialog {
 	border: 1px solid var(--color-border-darker);
 }
 
-.cool-annotation-edit .annotation-button,
-#annotation-reply,
 .ui-button-box.jsdialog #ok,
+[class*='button-primary'],
 .cell.jsdialog > button,
 .ui-button-box.jsdialog button,
 .vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-primary {
