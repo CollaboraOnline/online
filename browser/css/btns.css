@@ -71,6 +71,13 @@ button.jsdialog {
 	vertical-align: middle;
 }
 
+button#ok:hover,
+.cell.jsdialog > button:hover,
+.ui-button-box.jsdialog button:hover,
+[class*='button-primary']:hover {
+	background-color: var(--color-primary-lighter);
+}
+
 .vex.vex-theme-plain .vex-dialog-form .vex-dialog-buttons {
 	margin-right: -5px; /* Account for child element (button)'s margin */
 }
