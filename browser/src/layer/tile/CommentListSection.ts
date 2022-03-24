@@ -576,6 +576,7 @@ class CommentSection {
 			}
 		}
 		else {
+			this.unselect();
 			annotation.reply();
 			this.select(annotation);
 			annotation.focus();
@@ -591,6 +592,7 @@ class CommentSection {
 				this.save(annotation);
 			}.bind(this), /* isMod */ true);
 		} else {
+			this.unselect();
 			annotation.edit();
 			this.select(annotation);
 			annotation.focus();
