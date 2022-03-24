@@ -10,6 +10,7 @@
 #include "COOLWSD.hpp"
 #include "ProofKey.hpp"
 #include "CommandControl.hpp"
+#include "HostUtil.hpp"
 
 /* Default host used in the start test URI */
 #define COOLWSD_TEST_HOST "localhost"
@@ -1149,13 +1150,13 @@ public:
         AutoPtr<AppConfigMap> newConfig(new AppConfigMap(newAppConfig));
         conf.addWriteable(newConfig, PRIO_JSON);
 
-        StorageBase::parseWopiHost(conf);
-
-        StorageBase::parseAliases(conf);
+        HostUtil::parseWopiHost(conf);
 
 #ifdef ENABLE_FEATURE_LOCK
         CommandControl::LockManager::parseLockedHost(conf);
 #endif
+
+        HostUtil::parseAliases(conf);
     }
 
     void fetchWopiHostPatterns(std::map<std::string, std::string>& newAppConfig,
@@ -2982,7 +2983,7 @@ public:
     {
         std::string addressToCheck = address;
         std::string hostToCheck = request.getHost();
-        bool allow = allowPostFrom(addressToCheck) || StorageBase::allowedWopiHost(hostToCheck);
+        bool allow = allowPostFrom(addressToCheck) || HostUtil::allowedWopiHost(hostToCheck);
 
         if(!allow)
         {
@@ -3008,7 +3009,7 @@ public:
                     if (!allowPostFrom(addressToCheck))
                     {
                         hostToCheck = Poco::Net::DNS::resolve(addressToCheck).name();
-                        allow &= StorageBase::allowedWopiHost(hostToCheck);
+                        allow &= HostUtil::allowedWopiHost(hostToCheck);
                     }
                 }
                 catch (const Poco::Exception& exc)

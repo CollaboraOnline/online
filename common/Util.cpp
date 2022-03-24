@@ -1139,7 +1139,7 @@ namespace Util
     }
 
     template <class Type, typename Getter>
-    static bool matchRegex(const Type& set, const std::string& subject, Getter& getter)
+    static bool matchRegex(const Type& set, const std::string& subject, const Getter& getter)
     {
         if (set.find(subject) != set.end())
         {
