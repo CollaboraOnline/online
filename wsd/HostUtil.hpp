@@ -47,6 +47,9 @@ public:
     static bool allowedWopiHost(const std::string& host);
 
     static bool isWopiEnabled() { return WopiEnabled; }
+
+    /// replace the authority of aliashost to realhost if it matches
+    static const Poco::URI getNewLockedUri(Poco::URI& uri);
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
