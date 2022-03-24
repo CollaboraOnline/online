@@ -486,7 +486,7 @@ namespace
 
         if (nftw(source.c_str(), linkOrCopyFunction, 10, FTW_ACTIONRETVAL|FTW_PHYS) == -1)
         {
-            LOG_SYS("linkOrCopy: nftw() failed for '" << source << '\'');
+            LOG_ERR("linkOrCopy: nftw() failed for '" << source << '\'');
         }
 
         if (linkOrCopyVerboseLogging)
