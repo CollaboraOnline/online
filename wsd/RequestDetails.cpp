@@ -10,7 +10,7 @@
 #include "COOLWSD.hpp"
 #include "RequestDetails.hpp"
 #include "common/Log.hpp"
-#include "Storage.hpp"
+#include "HostUtil.hpp"
 
 #include <Poco/URI.h>
 #include "Exceptions.hpp"
@@ -282,7 +282,6 @@ Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
     return uriPublic;
 }
 
-#if !defined(BUILDING_TESTS)
 std::string RequestDetails::getDocKey(const Poco::URI& uri)
 {
     std::string docKey;
@@ -290,13 +289,12 @@ std::string RequestDetails::getDocKey(const Poco::URI& uri)
 
     // resolve aliases
 #if !MOBILEAPP
-    newUri = StorageBase::getNewUri(uri);
+    newUri = HostUtil::getNewUri(uri);
 #endif
 
     Poco::URI::encode(newUri, "", docKey);
     LOG_INF("DocKey from URI [" << uri.toString() << "] => [" << docKey << ']');
     return docKey;
 }
-#endif // !defined(BUILDING_TESTS)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

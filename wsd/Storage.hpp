@@ -324,23 +324,8 @@ public:
     static std::unique_ptr<StorageBase> create(const Poco::URI& uri, const std::string& jailRoot,
                                                const std::string& jailPath, bool takeOwnership);
 
-    static bool allowedWopiHost(const std::string& host);
     static Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri);
     static std::shared_ptr<http::Session> getHttpSession(const Poco::URI& uri);
-
-    static void parseWopiHost(Poco::Util::LayeredConfiguration& conf);
-
-    static void parseAliases(Poco::Util::LayeredConfiguration& conf);
-
-    /// if request uri is an alias, replace request uri host and port with
-    /// original hostname and port defined by group tag from coolwsd.xml
-    /// to avoid possibility of opening the same file as two if the WOPI host
-    /// is accessed using different aliases
-    static std::string getNewUri(const Poco::URI& uri);
-
-    static bool allowedAlias(const Poco::URI& uri);
-
-    static void addWopiHost(std::string host, bool allow);
 
 protected:
 
@@ -395,19 +380,10 @@ private:
     std::string _extendedData;
 
     static bool FilesystemEnabled;
-    static bool WopiEnabled;
     /// If true, use only the WOPI URL for whether to use SSL to talk to storage server
     static bool SSLAsScheme;
     /// If true, force SSL communication with storage server
     static bool SSLEnabled;
-    /// Allowed/denied WOPI hosts, if any and if WOPI is enabled.
-    static Util::RegexListMatcher WopiHosts;
-    /// mapping of alias host and port to real host and port
-    static std::map<std::string, std::string> AliasHosts;
-    /// When group configuration is not defined only the firstHost gets access
-    static std::string FirstHost;
-    /// This contains all real and aliases host from group configuration
-    static std::set<std::string> AllHosts;
 };
 
 /// Trivial implementation of local storage that does not need do anything.
