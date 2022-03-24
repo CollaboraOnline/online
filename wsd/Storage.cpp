@@ -865,7 +865,8 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
         bool isReadOnly = false;
         isUserLocked = false;
 
-        const std::string host = uriObject.getHost();
+        Poco::URI newUri(HostUtil::getNewLockedUri(uriObject));
+        const std::string host = newUri.getHost();
 
         if (CommandControl::LockManager::hostExist(host))
         {

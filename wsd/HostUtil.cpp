@@ -72,7 +72,7 @@ bool HostUtil::allowedAlias(const Poco::URI& uri)
         }
         else if (FirstHost != uri.getAuthority())
         {
-            LOG_ERR("Only allowed host is: " << FirstHost);
+            LOG_ERR("Only allowed host is: " << FirstHost << ", To use multiple host/aliases check alias_groups tag in configuration");
             return false;
         }
     }
@@ -181,6 +181,20 @@ std::string HostUtil::getNewUri(const Poco::URI& uri)
     }
     return newUri.getScheme() + "://" + newUri.getHost() + ':' + std::to_string(newUri.getPort()) +
            newUri.getPath();
+}
+
+const Poco::URI HostUtil::getNewLockedUri(Poco::URI& uri)
+{
+    Poco::URI newUri(uri);
+    const std::string key = newUri.getAuthority();
+    if (Util::matchRegex(AliasHosts, key))
+    {
+        newUri.setAuthority(AliasHosts[key]);
+        LOG_WRN("The locked_host: " << uri.getAuthority() << " is alias of "
+                                    << newUri.getAuthority() << ",Applying "
+                                    << newUri.getAuthority() << " locked_host settings.");
+    }
+    return newUri;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
