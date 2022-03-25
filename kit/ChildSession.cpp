@@ -1785,6 +1785,32 @@ bool ChildSession::selectText(const StringVector& tokens,
     return true;
 }
 
+// FIXME: remove SpookyHash et. al.
+
+namespace {
+inline
+uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
+                       long width, long height, int bufferWidth, int bufferHeight)
+{
+    if (bufferWidth < width || bufferHeight < height)
+        return 0; // magic invalid hash.
+
+    // assume a consistent mode - RGBA vs. BGRA for process
+    SpookyHash hash;
+    hash.Init(1073741789, 1073741789); // Seeds can be anything.
+    for (long y = 0; y < height; ++y)
+    {
+        const size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
+        hash.Update(pixmap + position, width * 4);
+    }
+
+    uint64_t hash1;
+    uint64_t hash2;
+    hash.Final(&hash1, &hash2);
+    return hash1;
+}
+}
+
 bool ChildSession::renderWindow(const StringVector& tokens)
 {
     const unsigned winId = (tokens.size() > 1 ? std::stoul(tokens[1]) : 0);
@@ -1834,7 +1860,7 @@ bool ChildSession::renderWindow(const StringVector& tokens)
                                << " and rendered in " << elapsedMs << " (" << area / elapsedMics
                                << " MP/s).");
 
-    uint64_t pixmapHash = SpookyHash::hashSubBuffer(pixmap.data(), 0, 0, width, height, bufferWidth, bufferHeight) + getViewId();
+    uint64_t pixmapHash = hashSubBuffer(pixmap.data(), 0, 0, width, height, bufferWidth, bufferHeight) + getViewId();
 
     auto found = std::find(_pixmapCache.begin(), _pixmapCache.end(), pixmapHash);
 

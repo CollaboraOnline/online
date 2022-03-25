@@ -12,6 +12,8 @@
 #include <Log.hpp>
 #include <zlib.h>
 
+#define ENABLE_DELTAS 0
+
 #ifndef TILE_WIRE_ID
 #  define TILE_WIRE_ID
    typedef uint32_t TileWireId;
@@ -279,6 +281,10 @@ class DeltaGenerator {
         }
         LOG_TRC("Created delta of size " << output.size());
 
+#if !ENABLE_DELTAS
+        return false; // Disable transmission for now; just send keyframes.
+#endif
+
         z_stream zstr;
         memset((void *)&zstr, 0, sizeof (zstr));
 
@@ -360,7 +366,7 @@ class DeltaGenerator {
     DeltaGenerator() {}
 
     /**
-     * Creates a delta between @oldWid and pixmap if possible:
+     * Creates a delta if possible:
      *   if so - returns @true and appends the delta to @output
      * stores @pixmap, and other data to accelerate delta
      * creation in a limited size cache.
@@ -371,7 +377,7 @@ class DeltaGenerator {
         int bufferWidth, int bufferHeight,
         int tileLeft, int tileTop, int tilePart,
         std::vector<char>& output,
-        TileWireId wid, TileWireId oldWid,
+        TileWireId wid, bool forceKeyframe,
         std::mutex &pngMutex)
     {
         // FIXME: why duplicate this ? we could overwrite
@@ -401,29 +407,23 @@ class DeltaGenerator {
                     break;
                 }
             }
-        }
 
-        // no other thread can touch the same tile at the same time.
-        if (cacheEntry)
-        {
-            // zero to force key-frame
-            if (oldWid != 0)
+            if (!cacheEntry)
             {
-                makeDelta(*cacheEntry, *update, output);
-                cacheEntry->replace(update);
-                return true;
+                _deltaEntries.push_back(update);
+                return false;
             }
-            cacheEntry->replace(update);
-            return false;
-        }
-        else
-        {
-            // protect _deltaEntries
-            std::unique_lock<std::mutex> pngLock(pngMutex);
-            _deltaEntries.push_back(update);
         }
 
-        return false;
+        // interestingly cacheEntry may no longer be in the cache by here.
+        // no other thread can touch the same tile at the same time.
+        assert (cacheEntry);
+
+        bool delta = false;
+        if (!forceKeyframe)
+            delta = makeDelta(*cacheEntry, *update, output);
+        cacheEntry->replace(update);
+        return delta;
     }
 
     /**
@@ -436,14 +436,13 @@ class DeltaGenerator {
         int bufferWidth, int bufferHeight,
         int tileLeft, int tileTop, int tilePart,
         std::vector<char>& output,
-        TileWireId wid, TileWireId oldWid,
+        TileWireId wid, bool forceKeyframe,
         std::mutex &pngMutex)
     {
         if (!createDelta(pixmap, startX, startY, width, height, bufferWidth, bufferHeight,
-                         tileLeft, tileTop, tilePart, output, wid, oldWid, pngMutex))
+                         tileLeft, tileTop, tilePart, output, wid, forceKeyframe, pngMutex))
         {
             // FIXME: should stream it in =)
-
 
             // FIXME: get sizes right [!] ...
             z_stream zstr;
@@ -490,8 +489,8 @@ class DeltaGenerator {
             deflateEnd(&zstr);
 
             uLong compSize = maxCompressed - zstr.avail_out;
-            LOG_TRC("Compressed image of size " << (width * height * 4) << " to size " << compSize
-                    << Util::dumpHex(std::string((char *)compressed, compSize)));
+            LOG_TRC("Compressed image of size " << (width * height * 4) << " to size " << compSize);
+//                    << Util::dumpHex(std::string((char *)compressed, compSize)));
 
             // FIXME: get zlib to drop it directly into this buffer really.
             output.push_back('Z');

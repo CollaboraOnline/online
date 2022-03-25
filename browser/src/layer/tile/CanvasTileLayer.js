@@ -12,6 +12,8 @@ if (typeof String.prototype.startsWith !== 'function') {
 	};
 }
 
+/* eslint-disable */
+
 // debugging aid.
 function hex2string(inData)
 {
@@ -24,6 +26,8 @@ function hex2string(inData)
 	}
 	return hexified.join('');
 }
+
+/* eslint-enable */
 
 // CStyleData is used to obtain CSS property values from style data
 // stored in DOM elements in the form of custom CSS properties/variables.
@@ -1483,7 +1487,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onMessage: function (textMsg, img) {
 		this._saveMessageForReplay(textMsg);
 		// 'tile:' is the most common message type; keep this the first.
-		if (textMsg.startsWith('tile:')) {
+		if (textMsg.startsWith('tile:') || textMsg.startsWith('delta:')) {
 			this._onTileMsg(textMsg, img);
 		}
 		else if (textMsg.startsWith('commandvalues:')) {
@@ -6462,6 +6466,13 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_applyDelta: function(tile, rawDelta, isKeyframe) {
+		console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
+			    ' of length ' + rawDelta.length + '\n');
+		// hex: ' + hex2string(rawDelta));
+
+		if (rawDelta.length === 0)
+			return 0; // that was easy!
+
 		// decompress the delta.
 		var delta = window.pako.inflateRaw(rawDelta);
 
@@ -6487,18 +6498,28 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		// apply potentially several deltas in turn.
+		var i = 0;
 		var offset = 0;
 		while (offset < delta.length)
 		{
-			offset += this._applyChunk(canvas, tile, initCanvas, delta.subarray(offset), isKeyframe);
+			console.log('Apply chunk ' + i++ + ' at offset ' + offset);
+			offset += this._applyDeltaChunk(canvas, tile, initCanvas, delta.subarray(offset), isKeyframe);
 			initCanvas = false;
 			isKeyframe = false;
 		}
 	},
 
 	_applyDeltaChunk: function(canvas, tile, initCanvas, delta, isKeyframe) {
-		// FIXME: initial header is not compressed so (!?) ... how does that work [!?]
 		var ctx = canvas.getContext('2d');
+
+		var pixSize = canvas.width * canvas.height * 4;
+		console.log('Applying a ' + (isKeyframe ? 'keyframe' : 'delta') +
+			    ' of length ' + delta.length + ' pix size: ' + pixSize + '\n');
+		// + ' hex: ' + hex2string(delta));
+
+		if (delta.length === 0)
+			return 0; // that was easy!
+
 		if (isKeyframe)
 		{
 			// FIXME: zlib.js to de-compress directly into Uint8ClampedArray?
@@ -6506,7 +6527,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			// FIXME: subarray delta to only the 1st image pixels we want to add.
 			ctx.putImageData(new ImageData(new Uint8ClampedArray(delta),
 						       canvas.width, canvas.height), 0, 0);
-			return;
+			return canvas.width * canvas.height * 4;
 		}
 
 		if (initCanvas && tile.el) // render old image data to the canvas
@@ -6517,9 +6538,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		var oldData = new Uint8ClampedArray(imgData.data);
 
 		var offset = 0;
-
-		var pixSize = canvas.width * canvas.height * 4;
-		console.log('Applying a delta of length ' + delta.length + ' pix size: ' + pixSize + '\nhex: ' + hex2string(delta));
 
 		// Green-tinge the old-Data ...
 		if (0)
@@ -6544,7 +6562,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				var count = delta[i+1];
 				var srcRow = delta[i+2];
 				var destRow = delta[i+3];
-				console.log('[' + i + ']: copy ' + count + ' row(s) ' + srcRow + ' to ' + destRow);
+				// console.log('[' + i + ']: copy ' + count + ' row(s) ' + srcRow + ' to ' + destRow);
 				i+= 4;
 				for (var cnt = 0; cnt < count; ++cnt)
 				{
@@ -6561,7 +6579,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				var destCol = delta[i+2];
 				var span = delta[i+3];
 				offset = destRow * canvas.width * 4 + destCol * 4;
-				console.log('[' + i + ']: apply new span of size ' + span + ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
+				// console.log('[' + i + ']: apply new span of size ' + span + ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 				i += 4;
 				span *= 4;
 				// imgData.data[offset + 1] = 256; // debug - greener start
@@ -6579,7 +6597,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		ctx.putImageData(imgData, 0, 0);
 
-		console.log('set new image from delta');
+		return delta.length;
 	},
 
 	_onTileMsg: function (textMsg, img) {
@@ -6649,8 +6667,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				// browser/test/pixel-test.png - debugging pixel alignment.
 				tile.el.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5QEIChoQ0oROpwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACfklEQVR42u3dO67CQBBFwbnI+9/yJbCQLDIkPsZdFRAQjjiv3S8YZ63VNsl6aLvgop5+6vFzZ3QP/uQz2c0RIAAQAAzcASwAmAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACADGBnC8iQ5MABAACAB+zsVYjLZ9dOvd3zzg/QOYADByB/BvUCzBIAAQAFiCwQQAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAwIgAXb2ECgABAAPDaI7SLsZhs+79kvX8AEwDsAM8DASzBIAAQAFiCwQQAAYAAQAAgABAAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAI4LSSOAQBgABAAPDVR9C2ToGxNkfww623bZL98/ilUzIBwA4wbCAgABAACAAswWACgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAAAjAESAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAGAAEAAIAAQAAgABAACAAGAAEAAIAAQAAgAPiaJAEAAIAB48yNWW6fAWJsj4LRbb9sk++fxSxMA7AAMGwgCAAGAAMASDCYACAAEAAIAAYAAQAAgABAACAAEAAIAASAAR4AAQAAgABAACAAEANeW9e675sAEAAGAAODUO4AFgMnu7t9h2ahA0pgAAAAASUVORK5CYII=';
 
-			else if (tile && img.rawdata)
-				this._applyDelta(tile, img.rawdata, img.isKeyframe);
+			else if (tile && img.rawData)
+				this._applyDelta(tile, img.rawData, img.isKeyframe);
 
 			else
 				tile.el = img;

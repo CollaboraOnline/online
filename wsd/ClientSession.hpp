@@ -91,10 +91,30 @@ public:
         return false;
     }
 
-    bool sendTile(const std::string &header, const Tile &tile)
+    ClientDeltaTracker _tracker;
+
+    bool sendTile(const TileDesc &desc, const Tile &tile)
     {
-        // FIXME: this needs to send deltas based on a wid parameter in a range
-        return sendBlob(header, tile->keyframe());
+        TileWireId lastSentId = _tracker.updateTileSeq(desc);
+
+        std::string header;
+        if (tile->needsKeyframe(lastSentId) || tile->isPng())
+            header = desc.serialize("tile:", "\n");
+        else
+            header = desc.serialize("delta:", "\n");
+
+        LOG_TRC(getName() << " sending tile message: " << header << " lastSendId " << lastSentId);
+
+        // FIXME: performance - optimize away this copy ...
+        std::vector<char> output;
+
+        output.resize(header.size());
+        std::memcpy(output.data(), header.data(), header.size());
+        if (tile->appendChangesSince(output, tile->isPng() ? 0 : lastSentId))
+            return sendBinaryFrame(output.data(), output.size());
+
+        LOG_TRC("redundant tile request: " << lastSentId);
+        return true;
     }
 
     bool sendBlob(const std::string &header, const Blob &blob)
@@ -119,7 +139,6 @@ public:
 
         return false;
     }
-
 
     void enqueueSendMessage(const std::shared_ptr<Message>& data);
 

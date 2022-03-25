@@ -151,6 +151,7 @@ private:
     {
         if (_tokens.equals(0, "tile:") ||
             _tokens.equals(0, "tilecombine:") ||
+            _tokens.equals(0, "delta:") ||
             _tokens.equals(0, "renderfont:") ||
             _tokens.equals(0, "rendersearchresult:") ||
             _tokens.equals(0, "windowpaint:"))
