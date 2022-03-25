@@ -972,7 +972,7 @@ class Comment {
 		this.isCollapsed = true;
 
 		var isRootComment = this.sectionProperties.docLayer._docType !== 'text' || this.sectionProperties.data.parent === '0';
-		if (isRootComment)
+		if (isRootComment || this.sectionProperties.data.trackchange)
 			this.sectionProperties.collapsed.style.display = '';
 		else
 			this.sectionProperties.collapsed.style.display = 'none';
