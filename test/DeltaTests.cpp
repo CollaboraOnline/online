@@ -18,8 +18,10 @@ class DeltaTests : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(DeltaTests);
 
+#if ENABLE_DELTAS
     CPPUNIT_TEST(testDeltaSequence);
     CPPUNIT_TEST(testRandomDeltas);
+#endif
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -195,14 +197,14 @@ void DeltaTests::testDeltaSequence()
     LOK_ASSERT(gen.createDelta(
                        reinterpret_cast<unsigned char *>(&text[0]),
                        0, 0, width, height, width, height,
-                       1, 2, 0, delta, textWid, 0, dummy) == false);
+                       1, 2, 0, delta, textWid, false, dummy) == false);
     LOK_ASSERT(delta.size() == 0);
 
     // Build a delta between text2 & textWid
     LOK_ASSERT(gen.createDelta(
                        reinterpret_cast<unsigned char *>(&text2[0]),
                        0, 0, width, height, width, height,
-                       1, 2, 0, delta, text2Wid, textWid, dummy) == true);
+                       1, 2, 0, delta, text2Wid, false, dummy) == true);
     LOK_ASSERT(delta.size() > 0);
 
     // Apply it to move to the second frame
@@ -214,7 +216,7 @@ void DeltaTests::testDeltaSequence()
     LOK_ASSERT(gen.createDelta(
                        reinterpret_cast<unsigned char *>(&text[0]),
                        0, 0, width, height, width, height,
-                       1, 2, 0, two2one, textWid, text2Wid, dummy) == true);
+                       1, 2, 0, two2one, textWid, false, dummy) == true);
     LOK_ASSERT(two2one.size() > 0);
 
     // Apply it to get back to where we started

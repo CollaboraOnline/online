@@ -12,9 +12,11 @@
 #include <string>
 #include <thread>
 #include <unordered_map>
+#include <unordered_set>
 
 #include <Rectangle.hpp>
 
+#include "Log.hpp"
 #include "TileDesc.hpp"
 
 class ClientSession;
@@ -58,23 +60,117 @@ using BlobData = std::vector<char>;
 using Blob = std::shared_ptr<BlobData>;
 struct TileData
 {
-    TileData(TileWireId start, Blob &blob) :
-        _start(start), _deltas(1)
+    TileData(TileWireId start, const char *data, const size_t size)
     {
-        _deltas[0] = blob;
+        appendBlob(start, data, size);
     }
-    TileWireId _start;
+
+    // Add a frame or delta and - return the size change
+    ssize_t appendBlob(TileWireId id, const char *data, const size_t dataSize)
+    {
+        size_t oldSize = 0;
+
+        oldSize = size();
+
+        assert (dataSize >= 1); // kit provides us a 'Z' or a 'D' or a png
+        if (isKeyframe(data, dataSize))
+        {
+            _wids.clear();
+            _deltas.clear();
+        }
+        else
+            LOG_TRC("received delta of size " << dataSize << " - appending to existing " << _wids.size());
+
+        // too many/large deltas means we should reset -
+        // but not here - when requesting the tiles.
+        _wids.push_back(id);
+        _deltas.push_back(std::make_shared<BlobData>(dataSize - 1));
+        std::memcpy(_deltas.back()->data(), data + 1, dataSize - 1);
+
+        // FIXME: speed up sizing.
+        return size() - oldSize;
+    }
+
+    bool isPng() const { return (_deltas.size() == 1 &&
+                                 _deltas[0]->size() > 1 &&
+                                 (*_deltas[0])[0] == (char)0x89); }
+
+    static bool isKeyframe(const char *data, size_t dataSize)
+    {
+        // keyframe or png
+        return dataSize > 0 && (data[0] == 'Z' || data[0] == (char)0x89);
+    }
+
+    std::vector<TileWireId> _wids;
     std::vector<Blob> _deltas; // first item is a key-frame
     size_t size()
     {
         size_t size = 0;
         for (auto &b : _deltas)
-            size += b->size();
-        return size;
+            size += b->size() + sizeof(BlobData);
+        return size + sizeof(TileData);
     }
+
     Blob keyframe()
     {
-        return _deltas.size() > 0 ? _deltas[0] : nullptr;
+        assert(_deltas.size() > 0);
+        return _deltas[0];
+    }
+
+    /// if we send changes since this seq - do we need to first send the keyframe ?
+    bool needsKeyframe(TileWireId since)
+    {
+        return since < _wids[0];
+    }
+
+    bool appendChangesSince(std::vector<char> &output, TileWireId since)
+    {
+        size_t i;
+        for (i = 0; since != 0 && i < _wids.size() && _wids[i] <= since; ++i);
+
+        if (i >= _wids.size())
+        {
+            LOG_WRN("odd outcome - requested for a later id with no tile: " << since);
+            return false;
+        }
+        else
+        {
+            size_t start = i, extra = 0;
+            if (start != _deltas.size() - 1)
+                LOG_TRC("appending from " << start << " to " << (_deltas.size() - 1) <<
+                        " from wid: " << _wids[start] << " to wid: " << since);
+            for (i = start; i < _deltas.size(); ++i)
+                extra += _deltas[i]->size();
+
+            size_t offset = output.size();
+            output.resize(output.size() + extra);
+
+            // FIXME: better writev style interface in the end ?
+//            std::cerr << "added " << extra << " to array size " << offset << "\n";
+            for (i = start; i < _deltas.size(); ++i)
+            {
+                size_t toCopy = _deltas[i]->size();
+//                std::cerr << "copy " << toCopy << " bytes to array offset " << offset << ":\n"
+//                          << Util::dumpHex(std::string((char *)_deltas[i]->data(), toCopy)) << "\n";
+
+                std::memcpy(output.data() + offset, _deltas[i]->data(), toCopy);
+                offset += toCopy;
+            }
+        }
+        return true;
+    }
+
+    void dumpState(std::ostream& os)
+    {
+        if (_wids.size() < 2)
+            os << "keyframe";
+        else {
+            os << "deltas: ";
+            for (size_t i = 0; i < _wids.size(); ++i)
+            {
+                os << i << ": " << _wids[i] << " -> " << _deltas[i]->size() << " ";
+            }
+        }
     }
 };
 using Tile = std::shared_ptr<TileData>;
@@ -180,7 +276,7 @@ private:
     /// Extract location from fileName, and check if it intersects with [x, y, width, height].
     static bool intersectsTile(const TileDesc &tileDesc, int part, int x, int y, int width, int height, int normalizedViewId);
 
-    void saveDataToCache(const TileDesc& desc, const char* data, size_t size);
+    Tile saveDataToCache(const TileDesc& desc, const char* data, size_t size);
     void saveDataToStreamCache(StreamType type, const std::string& fileName, const char* data,
                                size_t size);
 
@@ -209,16 +305,50 @@ private:
     std::map<std::string, Blob> _streamCache[static_cast<int>(StreamType::Last)];
 };
 
+/// Tracks view-port area tiles to track which we last
+/// sent to avoid re-sending an existing delta causing grief
+class ClientDeltaTracker final {
+public:
+    // FIXME: could be a simple 2d TileWireId array for better packing.
+    std::unordered_set<TileDesc,
+                       TileDescCacheHasher,
+                       TileDescCacheCompareEq> _cache;
+    ClientDeltaTracker() {
+    }
+
+    // FIXME: only need to store this for the current viewports
+    void updateViewPort( /* ... */ )
+    {
+        // copy the set to another while filtering I guess.
+    }
+
+    /// return wire-id of last tile sent - or 0 if not present
+    /// update last-tile sent wire-id to curSeq if found.
+    TileWireId updateTileSeq(const TileDesc &desc)
+    {
+        auto it = _cache.find(desc);
+        if (it == _cache.end())
+        {
+            _cache.insert(desc);
+            return 0;
+        }
+        const TileWireId curSeq = desc.getWireId();
+        TileWireId last = it->getWireId();
+        // id is not included in the hash.
+        auto pDesc = const_cast<TileDesc *>(&(*it));
+        pDesc->setWireId(curSeq);
+        return last;
+    }
+};
+
 inline std::ostream& operator<< (std::ostream& os, const Tile& tile)
 {
     if (!tile)
         os << "nullptr";
-    else {
-        os << "start: " << tile->_start <<
-            " items " << tile->_deltas.size();
-        if (tile->_deltas.size() > 0)
-            os << " keyframe size " << tile->_deltas[0]->size();
-    }
+    else
+        os << "keyframe id " << tile->_wids[0] <<
+            " size: " << tile->_deltas[0]->size() <<
+            " deltas: " << (tile->_wids.size() - 1);
     return os;
 }
 
