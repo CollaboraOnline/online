@@ -31,6 +31,13 @@ L.Map.include({
 			return;
 		}
 
+		var notifyServer = function (part) {
+			// If this wasn't triggered from the server,
+			// then notify the server of the change.
+			if (!external)
+				app.socket.sendMessage('setclientpart part=' + part);
+		};
+
 		if (app.file.fileBasedView)
 		{
 			docLayer._selectedPart = docLayer._prevSelectedPart;
@@ -41,6 +48,7 @@ L.Map.include({
 			}
 			docLayer._preview._scrollViewToPartPosition(docLayer._selectedPart);
 			this._docLayer._checkSelectedPart();
+			notifyServer(part);
 			return;
 		}
 
@@ -52,11 +60,7 @@ L.Map.include({
 			app.socket.sendMessage('resetselection');
 		}
 
-		// If this wasn't triggered from the server,
-		// then notify the server of the change.
-		if (!external) {
-			app.socket.sendMessage('setclientpart part=' + docLayer._selectedPart);
-		}
+		notifyServer(docLayer._selectedPart);
 
 		this.fire('updateparts', {
 			selectedPart: docLayer._selectedPart,
