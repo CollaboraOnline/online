@@ -1303,6 +1303,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 					this._selectedPart = partToSelect;
 					this._preview._scrollToPart();
 					this.highlightCurrentPart(partToSelect);
+					app.socket.sendMessage('setclientpart part=' + this._selectedPart);
 				}
 			}
 

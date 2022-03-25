@@ -377,12 +377,13 @@ L.Control.PartsPreview = L.Control.extend({
 	_setPart: function (e) {
 		var part = this._findClickedPart(e.target.parentNode);
 		if (part !== null) {
+			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
+
 			if (app.file.fileBasedView) {
+				this._map.setPart(partId);
 				this._scrollViewToPartPosition(part - 1);
 				return;
 			}
-
-			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
 
 			if (e.ctrlKey) {
 				this._map.selectPart(partId, 2, false); // Toggle selection on ctrl+click.
