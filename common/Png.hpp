@@ -58,7 +58,6 @@
 #endif
 
 #include "Log.hpp"
-#include "SpookyV2.h"
 #include "TraceEvent.hpp"
 
 namespace Png
@@ -244,28 +243,6 @@ bool encodeBufferToPNG(unsigned char* pixmap, int width, int height,
                        std::vector<char>& output, LibreOfficeKitTileMode mode)
 {
     return encodeSubBufferToPNG(pixmap, 0, 0, width, height, width, height, output, mode);
-}
-
-inline
-uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
-                       long width, long height, int bufferWidth, int bufferHeight)
-{
-    if (bufferWidth < width || bufferHeight < height)
-        return 0; // magic invalid hash.
-
-    // assume a consistent mode - RGBA vs. BGRA for process
-    SpookyHash hash;
-    hash.Init(1073741789, 1073741789); // Seeds can be anything.
-    for (long y = 0; y < height; ++y)
-    {
-        const size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
-        hash.Update(pixmap + position, width * 4);
-    }
-
-    uint64_t hash1;
-    uint64_t hash2;
-    hash.Final(&hash1, &hash2);
-    return hash1;
 }
 
 static

@@ -166,83 +166,63 @@ Tile TileCache::lookupTile(const TileDesc& tile)
     return ret;
 }
 
-void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const size_t size)
+void TileCache::saveTileAndNotify(const TileDesc& desc, const char *data, const size_t size)
 {
     assertCorrectThread();
 
-    if (size > 0)
-    {
-        // Save to in-memory cache.
+    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(desc);
 
-        // Ignore if we can't save the tile, things will work anyway, but slower.
-        // An error indication is supposed to be sent to all users in that case.
-        saveDataToCache(tile, data, size);
-        LOG_TRC("Saved cache tile: " << cacheFileName(tile) << " of size " << size << " bytes");
+    if (size <= 0)
+    {
+        LOG_TRC("Zero sized cache tile: " << cacheFileName(desc));
+
+        // un-subscribe subscribers, if any.
+        if (tileBeingRendered)
+        {
+            LOG_DBG("STATISTICS: tile " << desc.getVersion() << " internal roundtrip to empty tile " <<
+                    tileBeingRendered->getElapsedTimeMs());
+            forgetTileBeingRendered(tileBeingRendered);
+        }
+        return;
     }
-    else
-        LOG_TRC("Zero sized cache tile: " << cacheFileName(tile));
+
+    // Save to in-memory cache.
+
+    // Ignore if we can't save the tile, things will work anyway, but slower.
+    // An error indication is supposed to be sent to all users in that case.
+    Tile tile = saveDataToCache(desc, data, size);
+    LOG_TRC("Saved cache tile: " << cacheFileName(desc) << " of size " << size << " bytes");
 
     // Notify subscribers, if any.
-    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
     if (tileBeingRendered)
     {
         const size_t subscriberCount = tileBeingRendered->getSubscribers().size();
+
+        // sendTile also does enqueueSendMessage underneath ...
         if (size > 0 && subscriberCount > 0)
         {
-            std::string response = tile.serialize("tile:");
-            LOG_DBG("Sending tile message to " << subscriberCount << " subscribers: " << response);
-
-            // Send to first subscriber as-is (without cache marker).
-            auto payload = std::make_shared<Message>(response,
-                                                     Message::Dir::Out,
-                                                     response.size() + 1 + size);
-            payload->append("\n", 1);
-            payload->append(data, size);
-
-            auto& firstSubscriber = tileBeingRendered->getSubscribers()[0];
-            std::shared_ptr<ClientSession> firstSession = firstSubscriber.lock();
-            if (firstSession)
+            for (size_t i = 0; i < subscriberCount; ++i)
             {
-                firstSession->enqueueSendMessage(payload);
-            }
-
-            if (subscriberCount > 1)
-            {
-                // All others must get served from the cache.
-                response += " renderid=cached\n";
-
-                // Create a new Payload.
-                payload.reset();
-                payload = std::make_shared<Message>(response,
-                                                    Message::Dir::Out,
-                                                    response.size() + size);
-                payload->append(data, size);
-
-                for (size_t i = 1; i < subscriberCount; ++i)
-                {
-                    auto& subscriber = tileBeingRendered->getSubscribers()[i];
-                    std::shared_ptr<ClientSession> session = subscriber.lock();
-                    if (session)
-                    {
-                        session->enqueueSendMessage(payload);
-                    }
-                }
+                auto& subscriber = tileBeingRendered->getSubscribers()[i];
+                std::shared_ptr<ClientSession> session = subscriber.lock();
+                if (session)
+                    session->sendTile(desc, tile);
             }
         }
         else if (subscriberCount == 0)
-            LOG_DBG("No subscribers for: " << cacheFileName(tile));
+            LOG_DBG("No subscribers for: " << cacheFileName(desc));
         // else zero sized
 
         // Remove subscriptions.
-        if (tileBeingRendered->getVersion() <= tile.getVersion())
+        if (tileBeingRendered->getVersion() <= desc.getVersion())
         {
-            LOG_DBG("STATISTICS: tile " << tile.getVersion() << " internal roundtrip " <<
+            LOG_DBG("STATISTICS: tile " << desc.getVersion() << " internal roundtrip " <<
                     tileBeingRendered->getElapsedTimeMs());
             forgetTileBeingRendered(tileBeingRendered);
         }
     }
     else
-        LOG_DBG("No subscribers for: " << cacheFileName(tile));
+        LOG_DBG("No subscribers for: " << cacheFileName(desc));
 }
 
 bool TileCache::getTextStream(StreamType type, const std::string& fileName, std::string& content)
@@ -299,7 +279,8 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height, i
     LOG_TRC("Removing invalidated tiles: part: " << part <<
             ", x: " << x << ", y: " << y <<
             ", width: " << width <<
-            ", height: " << height);
+            ", height: " << height <<
+            ", viewid: " << normalizedViewId);
 
     assertCorrectThread();
 
@@ -307,10 +288,17 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height, i
     {
         if (intersectsTile(it->first, part, x, y, width, height, normalizedViewId))
         {
+            // FIXME: only want to keep as invalid keyframes in the view area(s)
+            it->second->invalidate();
+            ++it;
+        }
+#if 0
+        {
             LOG_TRC("Removing tile: " << it->first.serialize());
             _cacheSize -= itemCacheSize(it->second);
             it = _cache.erase(it);
         }
+#endif
         else
         {
             ++it;
@@ -530,23 +518,28 @@ Tile TileCache::findTile(const TileDesc &desc)
     return Tile();
 }
 
-void TileCache::saveDataToCache(const TileDesc &desc, const char *data, const size_t size)
+Tile TileCache::saveDataToCache(const TileDesc &desc, const char *data, const size_t size)
 {
     if (_dontCache)
-        return;
+        return Tile();
 
     ensureCacheSize();
 
-    auto blob = std::make_shared<BlobData>(size);
-    std::memcpy(blob->data(), data, size);
-    Tile tile = std::make_shared<TileData>(0 /* FIXME */, blob);
-    auto res = _cache.emplace(desc, tile);
-    if (!res.second)
+    Tile tile = _cache[desc];
+    if (!tile)
     {
-        _cacheSize -= itemCacheSize(res.first->second);
+        LOG_TRC("new tile for " << desc.serialize() << " of size " << size);
+        tile = std::make_shared<TileData>(desc.getWireId(), data, size);
         _cache[desc] = tile;
+        _cacheSize += itemCacheSize(tile);
     }
-    _cacheSize += itemCacheSize(tile);
+    else
+    {
+        LOG_TRC("append blob to " << desc.serialize() << " of size " << size);
+        _cacheSize += tile->appendBlob(desc.getWireId(), data, size);
+    }
+
+    return tile;
 }
 
 size_t TileCache::itemCacheSize(const Tile &tile)
@@ -670,7 +663,9 @@ void TileCache::dumpState(std::ostream& os)
     {
         os << "    " << std::setw(4) << it.first.getWireId()
            << '\t' << std::setw(6) << it.second->size() << " bytes"
-           << "\t'" << it.first.serialize() << "'\n" ;
+           << "\t'" << it.first.serialize() << " ";
+        it.second->dumpState(os);
+        os << "\n";
     }
 
     int type = 0;

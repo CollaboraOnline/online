@@ -55,12 +55,6 @@ using namespace COOLProtocol;
 
 using Poco::JSON::Object;
 
-#if ENABLE_DEBUG
-#  define ADD_DEBUG_RENDERID (" renderid=cached\n")
-#else
-#  define ADD_DEBUG_RENDERID ("\n")
-#endif
-
 void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker)
 {
     assert(docBroker && "Invalid DocumentBroker instance.");
@@ -2666,13 +2660,18 @@ void DocumentBroker::handleTileRequest(const StringVector &tokens,
         return;
     }
 
+    LOG_TRC("forcing a keyframe for tilecombined tile");
+    session->resetTileSeq(tile);
+
     Tile cachedTile = _tileCache->lookupTile(tile);
-    if (cachedTile)
+    if (cachedTile && cachedTile->isValid())
     {
-        const std::string response = tile.serialize("tile:", ADD_DEBUG_RENDERID);
-        session->sendTile(response, cachedTile);
+        session->sendTile(tile, cachedTile);
         return;
     }
+
+    if (!cachedTile)
+        tile.forceKeyframe();
 
     auto now = std::chrono::steady_clock::now();
     if (tile.getBroadcast())
@@ -2718,10 +2717,18 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
     {
         tile.setVersion(++_tileVersion);
 
+        // combinedtiles requests all come direct from the browser to here
+        // the browser may have dropped / cleaned its cache, so we can't
+        // rely on what we think we have sent it to send a delta in this
+        // case; so forget what we last sent.
+        LOG_TRC("forcing a keyframe for tilecombined tile");
+        session->resetTileSeq(tile);
+
         Tile cachedTile = _tileCache->lookupTile(tile);
-        if(!cachedTile)
+        if(!cachedTile || !cachedTile->isValid())
         {
-            // Not cached, needs rendering.
+            if (!cachedTile)
+                tile.forceKeyframe();
             tilesNeedsRendering.push_back(tile);
             _debugRenderedTileCount++;
             tileCache().subscribeToTileRendering(tile, session, now);
@@ -2898,11 +2905,10 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
 
             // Satisfy as many tiles from the cache.
             Tile cachedTile = _tileCache->lookupTile(tile);
-            if (cachedTile)
+            if (cachedTile && cachedTile->isValid())
             {
-                //TODO: Combine the response to reduce latency.
-                const std::string response = tile.serialize("tile:", ADD_DEBUG_RENDERID);
-                session->sendTile(response, cachedTile);
+                // TODO: Combine the response to reduce latency.
+                session->sendTile(tile, cachedTile);
             }
             else
             {

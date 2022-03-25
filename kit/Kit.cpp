@@ -799,7 +799,7 @@ public:
             postMessage(buffer, length, WSOpCode::Binary);
         };
 
-        if (!RenderTiles::doRender(_loKitDocument, tileCombined, _pngCache, _pngPool, combined,
+        if (!RenderTiles::doRender(_loKitDocument, tileCombined, _pngPool, combined,
                                    blenderFunc, postMessageFunc, _mobileAppDocId))
         {
             LOG_DBG("All tiles skipped, not producing empty tilecombine: message");
@@ -1765,7 +1765,6 @@ public:
         // dumpState:
         // TODO: _websocketHandler - but this is an odd one.
         _tileQueue->dumpState(oss);
-        _pngCache.dumpState(oss);
         oss << "\tviewIdToCallbackDescr:";
         for (const auto &it : _viewIdToCallbackDescr)
         {
@@ -1827,8 +1826,6 @@ private:
 #endif
     std::shared_ptr<TileQueue> _tileQueue;
     std::shared_ptr<WebSocketHandler> _websocketHandler;
-
-    PngCache _pngCache;
 
     // Document password provided
     std::string _docPassword;
