@@ -6505,6 +6505,16 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		tile.el = canvas;
 
+		// apply potentially several deltas
+		var offset = 0;
+		while (offset < delta.length)
+		{
+			offset += this._applyChunk(canvas, tile, initCanvas, rawDelta.subarray(offset));
+			initCanvas = false;
+		}
+	}
+
+	_applyDeltaChunk: function(canvas, tile, initCanvas, rawDelta) {
 		var ctx = canvas.getContext('2d');
 		if (rawDelta[0] === 90 /* Z */)
 		{
