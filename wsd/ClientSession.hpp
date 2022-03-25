@@ -87,6 +87,8 @@ public:
         TileWireId lastSentId = _tracker.updateTileSeq(desc);
         const std::string response = desc.serialize("tile:", ADD_DEBUG_RENDERID);
 
+        LOG_DBG(getName() << " sending tile message " << response);
+
         // FIXME: performance - optimize away this copy ...
         std::vector<char> output;
 
