@@ -20,6 +20,7 @@
 #include <MessageQueue.hpp>
 #include <Png.hpp>
 #include <TileCache.hpp>
+#include <kit/Delta.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
 
@@ -70,7 +71,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testImpressTiles);
     CPPUNIT_TEST(testClientPartImpress);
     CPPUNIT_TEST(testClientPartCalc);
-    // FIXME CPPUNIT_TEST(testTilesRenderedJustOnce);
+    // CPPUNIT_TEST(testTilesRenderedJustOnce); // unreliable
     // CPPUNIT_TEST(testTilesRenderedJustOnceMultiClient); // always fails, seems complicated to fix
 #if ENABLE_DEBUG
     CPPUNIT_TEST(testSimultaneousTilesRenderedJustOnce);
@@ -143,7 +144,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void checkBlackTiles(std::shared_ptr<COOLWebSocket>& socket, const int part, const int docWidth,
                          const int docHeight, const std::string& testname);
 
-    void checkBlackTile(std::stringstream& tile);
+    void checkBlackTile(BlobData::const_iterator start, BlobData::const_iterator end);
 
     bool getPartFromInvalidateMessage(const std::string& message, int& part);
 
@@ -238,24 +239,28 @@ void TileCacheTests::testSimple()
 
     // No Cache
     Tile tileData = tc.lookupTile(tile);
-    LOK_ASSERT_MESSAGE("found tile when none was expected", !tileData);
+    LOK_ASSERT_MESSAGE("found tile when none was expected", !tileData || !tileData->isValid());
 
     // Cache Tile
     const int size = 1024;
-    const std::vector<char> data = genRandomData(size);
+    std::vector<char> data = genRandomData(size);
+    data[0] = 'Z'; // compressed pixels.
     tc.saveTileAndNotify(tile, data.data(), size);
 
     // Find Tile
     tileData = tc.lookupTile(tile);
-    LOK_ASSERT_MESSAGE("tile not found when expected", tileData);
-    LOK_ASSERT_MESSAGE("cached tile corrupted", data == *tileData->keyframe());
+    LOK_ASSERT_MESSAGE("tile not found when expected", tileData && tileData->isValid());
+    BlobData &keyframe = *tileData->keyframe();
+    LOK_ASSERT_MESSAGE("cached tile corrupted", keyframe.size() == data.size() - 1 /* dropped Z */);
+    for (size_t i = 0; i < data.size() - 1; ++i)
+        LOK_ASSERT_MESSAGE("cached tile data", data[i+1] == keyframe[i]);
 
     // Invalidate Tiles
     tc.invalidateTiles("invalidatetiles: EMPTY", nviewid);
 
     // No Cache
     tileData = tc.lookupTile(tile);
-    LOK_ASSERT_MESSAGE("found tile when none was expected", !tileData);
+    LOK_ASSERT_MESSAGE("found tile when none was expected", !tileData || !tileData->isValid());
 }
 
 void TileCacheTests::testSimpleCombine()
@@ -274,8 +279,8 @@ void TileCacheTests::testSimpleCombine()
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1a.empty());
     std::vector<char> tile1b = getResponseMessage(socket1, "tile:", testname + "1 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
-    sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
+    sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
     tile1a = getResponseMessage(socket1, "tile:", testname + "1 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1a.empty());
     tile1b = getResponseMessage(socket1, "tile:", testname + "1 ");
@@ -644,10 +649,10 @@ void TileCacheTests::testClientPartCalc()
 
 void TileCacheTests::testTilesRenderedJustOnce()
 {
-    const char* testname = "tilesRenderdJustOnce ";
+    const char* testname = "tilesRenderedJustOnce ";
 
     std::shared_ptr<http::WebSocketSession> socket
-        = loadDocAndGetSession(_socketPoll, "with_comment.odp", _uri, testname);
+        = loadDocAndGetSession(_socketPoll, "with_comment.odt", _uri, testname);
 
     assertResponseString(socket, "statechanged: .uno:AcceptTrackedChange=", testname);
 
@@ -680,19 +685,21 @@ void TileCacheTests::testTilesRenderedJustOnce()
         // Get same 3 tiles.
         sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname);
         const auto tile1 = assertResponseString(socket, "tile:", testname);
-        std::string renderId1;
-        COOLProtocol::getTokenStringFromMessage(tile1, "renderid", renderId1);
-        LOK_ASSERT_EQUAL(std::string("cached"), renderId1);
+
+        // monotonically increasing id.
+        std::string wid1;
+        COOLProtocol::getTokenStringFromMessage(tile1, "wid", wid1);
 
         const auto tile2 = assertResponseString(socket, "tile:", testname);
-        std::string renderId2;
-        COOLProtocol::getTokenStringFromMessage(tile2, "renderid", renderId2);
-        LOK_ASSERT_EQUAL(std::string("cached"), renderId2);
+
+        std::string wid2;
+        COOLProtocol::getTokenStringFromMessage(tile2, "wid", wid2);
+        LOK_ASSERT_EQUAL(wid1, wid2); // shouldn't have changed
 
         const auto tile3 = assertResponseString(socket, "tile:", testname);
-        std::string renderId3;
-        COOLProtocol::getTokenStringFromMessage(tile3, "renderid", renderId3);
-        LOK_ASSERT_EQUAL(std::string("cached"), renderId3);
+        std::string wid3;
+        COOLProtocol::getTokenStringFromMessage(tile3, "wid", wid3);
+        LOK_ASSERT_EQUAL(wid3, wid2);
 
         // Get new rendercount.
         sendTextFrame(socket, "ping", testname);
@@ -903,33 +910,25 @@ void TileCacheTests::testLoad12ods()
     }
 }
 
-void TileCacheTests::checkBlackTile(std::stringstream& tile)
+void TileCacheTests::checkBlackTile(BlobData::const_iterator start, BlobData::const_iterator end)
 {
     constexpr auto testname = __func__;
 
-    png_uint_32 height = 0;
-    png_uint_32 width = 0;
-    png_uint_32 rowBytes = 0;
+    size_t width = 256, height = 256, black = 0;
 
-    std::vector<png_bytep> rows = Png::decodePNG(tile, height, width, rowBytes);
+    Blob zimg = std::make_shared<BlobData>(start, end);
+    Blob img = DeltaGenerator::expand(zimg);
 
-    png_uint_32 black = 0;
-    for (png_uint_32 itRow = 0; itRow < height; ++itRow)
+    png_bytep rows = (png_bytep)img->data();
+
+    for (size_t i = 0; i < img->size(); i += 4)
     {
-        png_uint_32 itCol = 0;
-        while (itCol <= rowBytes)
-        {
-            png_byte R = rows[itRow][itCol + 0];
-            png_byte G = rows[itRow][itCol + 1];
-            png_byte B = rows[itRow][itCol + 2];
-            png_byte A = rows[itRow][itCol + 3];
-            if (R == 0x00 && G == 0x00 && B == 0x00 && A == 0xff)
-            {
-                ++black;
-            }
-
-            itCol += 4;
-        }
+        png_byte R = rows[i + 0];
+        png_byte G = rows[i + 1];
+        png_byte B = rows[i + 2];
+        png_byte A = rows[i + 3];
+        if (R == 0x00 && G == 0x00 && B == 0x00 && A == 0xff)
+            ++black;
     }
 
     LOK_ASSERT_MESSAGE("The tile is 100% black", black != height * width);
@@ -959,15 +958,12 @@ void TileCacheTests::checkBlackTiles(std::shared_ptr<http::WebSocketSession>& so
     const std::string firstLine = COOLProtocol::getFirstLine(tile);
 
 #if 0
-    std::fstream outStream("/tmp/black.png", std::ios::out);
+    std::fstream outStream("/tmp/black.z", std::ios::out);
     outStream.write(tile.data() + firstLine.size() + 1, tile.size() - firstLine.size() - 1);
     outStream.close();
 #endif
 
-    std::stringstream streamTile;
-    std::copy(tile.begin() + firstLine.size() + 1, tile.end(),
-              std::ostream_iterator<char>(streamTile));
-    checkBlackTile(streamTile);
+    checkBlackTile(tile.begin() + firstLine.size() + 1, tile.end());
 }
 
 void TileCacheTests::checkBlackTiles(std::shared_ptr<COOLWebSocket>& socket, const int /*part*/,
@@ -996,9 +992,7 @@ void TileCacheTests::checkBlackTiles(std::shared_ptr<COOLWebSocket>& socket, con
     outStream.close();
 #endif
 
-    std::stringstream streamTile;
-    std::copy(tile.begin() + firstLine.size() + 1, tile.end(), std::ostream_iterator<char>(streamTile));
-    checkBlackTile(streamTile);
+    checkBlackTile(tile.begin() + firstLine.size() + 1, tile.end());
 }
 
 void TileCacheTests::testTileInvalidateWriter()
@@ -1732,7 +1726,7 @@ void TileCacheTests::testTileProcessed()
     sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=10000 height=9000");
     sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200");
 
-    // Request a lots of tiles (more than wsd can send once)
+    // Request a lots of tiles ~25 ie. more than wsd can send back at once.
     sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800 tileposy=0,0,0,0,0,3200,3200,3200,3200,3200,6400,6400,6400,6400,6400,9600,9600,9600,9600,9600,12800,12800,12800,12800,12800 tilewidth=3200 tileheight=3200");
 
     std::vector<std::string> tileIDs;
@@ -1766,6 +1760,7 @@ void TileCacheTests::testTileProcessed()
         sendTextFrame(socket, "tileprocessed tile=" + tileID, testname);
     }
 
+#if 0 // not needed since deltas + wsd: always subscribe when proactively rendering tiles
     // Now we can get the remaining tiles
     int arrivedTile2 = 0;
     do
@@ -1781,6 +1776,7 @@ void TileCacheTests::testTileProcessed()
     } while(gotTile);
 
     LOK_ASSERT_MESSAGE("We expect one tile at least!", arrivedTile2 > 1);
+#endif
 
     socket->asyncShutdown();
     LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
