@@ -6515,6 +6515,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_applyDeltaChunk: function(canvas, tile, initCanvas, rawDelta) {
+		// FIXME: initial header is not compressed so (!?) ... how does that work [!?]
 		var ctx = canvas.getContext('2d');
 		if (rawDelta[0] === 90 /* Z */)
 		{
