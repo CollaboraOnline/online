@@ -58,20 +58,44 @@ using BlobData = std::vector<char>;
 using Blob = std::shared_ptr<BlobData>;
 struct TileData
 {
-    TileData(TileWireId start, Blob &blob) :
-        _ids(1), _deltas(1)
+    TileData(TileWireId start, const char *data, const size_t size)
     {
-        _ids[0] = start;
-        _deltas[0] = blob;
+        appendBlob(start, data, size);
     }
+
+    // Add a frame or delta and - return the size change
+    ssize_t appendBlob(TileWireId id, const char *data, const size_t size)
+    {
+        size_t oldSize = 0;
+        if (isKeyFrame(data, size))
+        {
+            oldSize = size();
+            _ids.clear();
+            _deltas.clear();
+        }
+
+        // too many/large deltas means we should reset -
+        // but not here - when requesting the tiles.
+        _ids.push_back(id);
+        _deltas.push_back(std::make_shared<BlobData>(size));
+        std::memcpy(_deltas.back()->data(), data, size);
+
+        return size - oldSize;
+    }
+
+    static bool isKeyframe(const char &data, size_t size)
+    {
+        return size > 0 && data[0] == 'D';
+    }
+
     std::vector<TileWireId> _ids;
     std::vector<Blob> _deltas; // first item is a key-frame
     size_t size()
     {
         size_t size = 0;
         for (auto &b : _deltas)
-            size += b->size();
-        return size;
+            size += b->size() + sizeof(BlobData);
+        return size + sizeof (Tile);
     }
 
     Blob keyframe()

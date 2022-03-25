@@ -186,6 +186,10 @@ void TileCache::saveTileAndNotify(const TileDesc& tile, const char *data, const 
     if (tileBeingRendered)
     {
         const size_t subscriberCount = tileBeingRendered->getSubscribers().size();
+
+
+        ** FIXME: needs completely re-writing **
+
         if (size > 0 && subscriberCount > 0)
         {
             std::string response = tile.serialize("tile:");
@@ -536,13 +540,17 @@ void TileCache::saveDataToCache(const TileDesc &desc, const char *data, const si
 
     ensureCacheSize();
 
-    auto blob = std::make_shared<BlobData>(size);
-    std::memcpy(blob->data(), data, size);
-    Tile tile = std::make_shared<TileData>(0 /* FIXME */, blob);
-    auto res = _cache.emplace(desc, tile);
-    if (!res.second)
+    Tile tile = _cache[desc];
+    if (!tile)
     {
-        _cacheSize -= itemCacheSize(res.first->second);
+        tile = std::make_shared<TileData>(desc.getId(), data, size);
+        _cache[desc] = tile;
+        _cacheSize += size;
+    }
+    else
+        _cacheSize += tile->appendBlob(desc.getId(), data, size);
+
+    _cacheSize -= itemCacheSize(res.first->second);
         _cache[desc] = tile;
     }
     _cacheSize += itemCacheSize(tile);
