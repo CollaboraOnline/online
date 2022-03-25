@@ -6512,7 +6512,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			offset += this._applyChunk(canvas, tile, initCanvas, rawDelta.subarray(offset));
 			initCanvas = false;
 		}
-	}
+	},
 
 	_applyDeltaChunk: function(canvas, tile, initCanvas, rawDelta) {
 		var ctx = canvas.getContext('2d');

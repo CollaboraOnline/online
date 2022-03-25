@@ -12,9 +12,11 @@
 #include <string>
 #include <thread>
 #include <unordered_map>
+#include <unordered_set>
 
 #include <Rectangle.hpp>
 
+#include "Log.hpp"
 #include "TileDesc.hpp"
 
 class ClientSession;
@@ -64,10 +66,10 @@ struct TileData
     }
 
     // Add a frame or delta and - return the size change
-    ssize_t appendBlob(TileWireId id, const char *data, const size_t size)
+    ssize_t appendBlob(TileWireId id, const char *data, const size_t dataSize)
     {
         size_t oldSize = 0;
-        if (isKeyFrame(data, size))
+        if (isKeyframe(data, dataSize))
         {
             oldSize = size();
             _ids.clear();
@@ -77,15 +79,15 @@ struct TileData
         // too many/large deltas means we should reset -
         // but not here - when requesting the tiles.
         _ids.push_back(id);
-        _deltas.push_back(std::make_shared<BlobData>(size));
-        std::memcpy(_deltas.back()->data(), data, size);
+        _deltas.push_back(std::make_shared<BlobData>(dataSize));
+        std::memcpy(_deltas.back()->data(), data, dataSize);
 
-        return size - oldSize;
+        return dataSize - oldSize;
     }
 
-    static bool isKeyframe(const char &data, size_t size)
+    static bool isKeyframe(const char *data, size_t dataSize)
     {
-        return size > 0 && data[0] == 'D';
+        return dataSize > 0 && data[0] == 'D';
     }
 
     std::vector<TileWireId> _ids;
@@ -95,7 +97,7 @@ struct TileData
         size_t size = 0;
         for (auto &b : _deltas)
             size += b->size() + sizeof(BlobData);
-        return size + sizeof (Tile);
+        return size + sizeof(TileData);
     }
 
     Blob keyframe()
@@ -112,19 +114,19 @@ struct TileData
         for (i = 0; since != 0 && i < _ids.size() && _ids[i] < since; ++i);
 
         if (i >= _ids.size())
-            LOG_TRC("odd outcome - requested for a later id with no tile: " + since);
+            LOG_TRC("odd outcome - requested for a later id with no tile: " << since);
         else
         {
             size_t start = i, extra = 0;
             if (start != _deltas.size() - 1)
-                LOG_TRC("appending from " << start << " to " << (deltas.size() - 1));
+                LOG_TRC("appending from " << start << " to " << (_deltas.size() - 1));
             for (i = start; i < _deltas.size(); ++i)
-                extra += _deltas[i].size();
+                extra += _deltas[i]->size();
 
             output.resize(output.size() + extra);
 
             // FIXME: better writev style interface in the end ?
-            size_t offset = output.size;
+            size_t offset = output.size();
             for (i = start; i < _deltas.size(); ++i)
             {
                 size_t toCopy = _deltas[i]->size();
@@ -288,14 +290,16 @@ public:
     TileWireId updateTileSeq(const TileDesc &desc)
     {
         auto it = _cache.find(desc);
-        if (it == _cache.end)
+        if (it == _cache.end())
         {
             _cache.insert(desc);
             return 0;
         }
         const TileWireId curSeq = desc.getId();
         TileWireId last = it->getId();
-        it->setId(curSeq);
+        // id is not included in the hash.
+        auto pDesc = const_cast<TileDesc *>(&(*it));
+        pDesc->setId(curSeq);
         return last;
     }
 };

@@ -85,17 +85,16 @@ public:
     bool sendTile(const TileDesc &desc, const Tile &tile)
     {
         TileWireId lastSentId = _tracker.updateTileSeq(desc);
-        const std::string response = desc.serialize("tile:", ADD_DEBUG_RENDERID);
+        const std::string header = desc.serialize("tile:");
 
-        LOG_DBG(getName() << " sending tile message " << response);
+        LOG_DBG(getName() << " sending tile message: " << header);
 
         // FIXME: performance - optimize away this copy ...
         std::vector<char> output;
 
-        output.resize(header.size() + blob->size());
+        output.resize(header.size());
         std::memcpy(output.data(), header.data(), header.size());
-        tile->appendChangeSince(output, curId);
-        std::memcpy(output.data() + header.size(), blob->data(), blob->size());
+        tile->appendChangesSince(output, lastSentId);
 
         return sendBinaryFrame(output.data(), output.size());
     }
