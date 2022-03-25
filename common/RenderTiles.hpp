@@ -494,7 +494,7 @@ namespace RenderTiles
 #if !ENABLE_DELTAS
             TileWireId wireId = pngCache.hashToWireId(hash);
 #else
-            static TileWireId nextId = 0;;
+            static TileWireId nextId = 0;
             TileWireId wireId = ++nextId;
 #endif
             TileWireId oldWireId = tiles[tileIndex].getOldWireId();

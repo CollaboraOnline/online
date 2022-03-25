@@ -59,11 +59,12 @@ using Blob = std::shared_ptr<BlobData>;
 struct TileData
 {
     TileData(TileWireId start, Blob &blob) :
-        _start(start), _deltas(1)
+        _ids(1), _deltas(1)
     {
+        _ids[0] = start;
         _deltas[0] = blob;
     }
-    TileWireId _start;
+    std::vector<TileWireId> _ids;
     std::vector<Blob> _deltas; // first item is a key-frame
     size_t size()
     {
@@ -72,9 +73,41 @@ struct TileData
             size += b->size();
         return size;
     }
+
     Blob keyframe()
     {
-        return _deltas.size() > 0 ? _deltas[0] : nullptr;
+        assert(_deltas.size() > 0);
+        return _deltas[0];
+    }
+
+    // FIXME: add-delta[!] ...
+
+    void appendChangesSince(std::vector<char> &output, TileWireId since)
+    {
+        size_t i;
+        for (i = 0; since != 0 && i < _ids.size() && _ids[i] < since; ++i);
+
+        if (i >= _ids.size())
+            LOG_TRC("odd outcome - requested for a later id with no tile: " + since);
+        else
+        {
+            size_t start = i, extra = 0;
+            if (start != _deltas.size() - 1)
+                LOG_TRC("appending from " << start << " to " << (deltas.size() - 1));
+            for (i = start; i < _deltas.size(); ++i)
+                extra += _deltas[i].size();
+
+            output.resize(output.size() + extra);
+
+            // FIXME: better writev style interface in the end ?
+            size_t offset = output.size;
+            for (i = start; i < _deltas.size(); ++i)
+            {
+                size_t toCopy = _deltas[i]->size();
+                std::memcpy(output.data() + offset, _deltas[i]->data(), toCopy);
+                offset += toCopy;
+            }
+        }
     }
 };
 using Tile = std::shared_ptr<TileData>;
@@ -209,16 +242,48 @@ private:
     std::map<std::string, Blob> _streamCache[static_cast<int>(StreamType::Last)];
 };
 
+/// Tracks view-port area tiles to track which we last
+/// sent to avoid re-sending an existing delta causing grief
+class ClientDeltaTracker final {
+public:
+    // FIXME: could be a simple 2d TileWireId array for better packing.
+    std::unordered_set<TileDesc,
+                       TileDescCacheHasher,
+                       TileDescCacheCompareEq> _cache;
+    ClientDeltaTracker() {
+    }
+
+    // FIXME: only need to store this for the current viewports
+    void updateViewPort( /* ... */ )
+    {
+        // copy the set to another while filtering I guess.
+    }
+
+    /// return wire-id of last tile sent - or 0 if not present
+    /// update last-tile sent wire-id to curSeq if found.
+    TileWireId updateTileSeq(const TileDesc &desc)
+    {
+        auto it = _cache.find(desc);
+        if (it == _cache.end)
+        {
+            _cache.insert(desc);
+            return 0;
+        }
+        const TileWireId curSeq = desc.getId();
+        TileWireId last = it->getId();
+        it->setId(curSeq);
+        return last;
+    }
+};
+
 inline std::ostream& operator<< (std::ostream& os, const Tile& tile)
 {
     if (!tile)
         os << "nullptr";
-    else {
-        os << "start: " << tile->_start <<
-            " items " << tile->_deltas.size();
-        if (tile->_deltas.size() > 0)
-            os << " keyframe size " << tile->_deltas[0]->size();
-    }
+    else
+        os << "keyframe id " << tile->_ids[0] <<
+            " size: " << tile->_deltas[0]->size() <<
+            " deltas: " << tile->_ids.size();
     return os;
 }
 

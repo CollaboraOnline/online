@@ -2576,8 +2576,7 @@ void DocumentBroker::handleTileRequest(const StringVector &tokens,
     Tile cachedTile = _tileCache->lookupTile(tile);
     if (cachedTile)
     {
-        const std::string response = tile.serialize("tile:", ADD_DEBUG_RENDERID);
-        session->sendTile(response, cachedTile);
+        session->sendTile(tile, cachedTile);
         return;
     }
 
@@ -2807,9 +2806,8 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
             Tile cachedTile = _tileCache->lookupTile(tile);
             if (cachedTile)
             {
-                //TODO: Combine the response to reduce latency.
-                const std::string response = tile.serialize("tile:", ADD_DEBUG_RENDERID);
-                session->sendTile(response, cachedTile);
+                // TODO: Combine the response to reduce latency.
+                session->sendTile(tile, cachedTile);
             }
             else
             {
