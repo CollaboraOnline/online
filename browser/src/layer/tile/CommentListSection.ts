@@ -279,13 +279,12 @@ class CommentSection {
 		var showResolved = this.sectionProperties.showResolved;
 
 		if (threadOnly) {
-			if (threadOnly.sectionProperties.data.parent !== '0')
+			if (!threadOnly.sectionProperties.data.trackchange && threadOnly.sectionProperties.data.parent !== '0')
 				threadOnly = commentList[this.getIndexOf(threadOnly.sectionProperties.data.parent)];
 		}
 
 		for (var i = 0; i < commentList.length; i++) {
-			if (commentList[i].sectionProperties.data.parent === '0') {
-
+			if (commentList[i].sectionProperties.data.parent === '0' || commentList[i].sectionProperties.data.trackchange) {
 				lastChild = this.getLastChildIndexOf(commentList[i].sectionProperties.data.id);
 				var commentThread = [];
 				while (true) {
@@ -303,11 +302,12 @@ class CommentSection {
 						commentThread.unshift(comment);
 					}
 
-					if (commentList[lastChild].sectionProperties.data.parent === '0')
+					if (commentList[lastChild].sectionProperties.data.parent === '0' || commentList[lastChild].sectionProperties.data.trackchange)
 						break;
 
 					lastChild = this.getIndexOf(commentList[lastChild].sectionProperties.data.parent);
 				}
+
 				if (commentThread.length > 0)
 				{
 					rootComment = {
