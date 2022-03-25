@@ -7,10 +7,6 @@
 	box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
 
-.div-infobar-wrap ~ #mobile-edit-button {
-	display: none;
-}
-
 .div-infobar-modal {
 	display: block;
 	height: 42px;
