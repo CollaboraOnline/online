@@ -22,15 +22,24 @@
     </iframe>
     <script>
         function constructWopiUrl() {
-            var wopiUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?";
-            wopiUrl = wopiUrl.replace("debug.html", "cool.html");
+            var localServer = window.location.protocol + "//" + window.location.host;
+            var localUrl = localServer + window.location.pathname + "?";
+            localUrl = localUrl.replace("debug.html", "cool.html");
             var params = new URLSearchParams(window.location.search);
-            var filePath = params.get('file_path').substr(1);
-            params.delete('file_path');
-            var wopiSrc = window.location.protocol + "//" + window.location.host + "/wopi/files/" + encodeURIComponent(filePath);
-            wopiUrl = wopiUrl + "WOPISrc=" + wopiSrc + '&' + params.toString();
-            return wopiUrl
-        }
+            var wopiSrc = params.get('WOPISrc');
+            if (wopiSrc)
+            {
+                params.delete('WOPISrc');
+                wopiSrc = encodeURIComponent(wopiSrc);
+            }
+            else
+            {
+                var filePath = params.get('file_path').substr(1);
+                params.delete('file_path');
+                var wopiSrc = localServer + "/wopi/files/" + encodeURIComponent(filePath);
+            }
+            return localUrl + "WOPISrc=" + wopiSrc + '&' + params.toString();
+         }
        var form = document.getElementById("form");
        form.action = constructWopiUrl();
        form.submit();
