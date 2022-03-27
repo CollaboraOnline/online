@@ -110,6 +110,7 @@ wsd_sources = \
 
 test_base_source = \
 	TileQueueTests.cpp \
+	RequestDetailsTests.cpp \
 	WhiteBoxTests.cpp \
 	HttpWhiteBoxTests.cpp \
 	DeltaTests.cpp \
