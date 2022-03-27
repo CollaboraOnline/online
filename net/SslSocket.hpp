@@ -20,10 +20,10 @@
 class SslStreamSocket final : public StreamSocket
 {
 public:
-    SslStreamSocket(std::string hostname, const int fd, bool isClient,
+    SslStreamSocket(const std::string& hostname, const int fd, bool isClient,
                     std::shared_ptr<ProtocolHandlerInterface> responseClient,
                     ReadType readType = NormalRead)
-        : StreamSocket(std::move(hostname), fd, isClient, std::move(responseClient), readType)
+        : StreamSocket(hostname, fd, isClient, std::move(responseClient), readType)
         , _bio(nullptr)
         , _ssl(nullptr)
         , _sslWantsTo(SslWantsTo::Neither)
@@ -48,8 +48,13 @@ public:
             throw std::runtime_error("Failed to create SSL.");
         }
 
-        if (!hostname.empty() && !SSL_set_tlsext_host_name(_ssl, hostname.c_str()))
-            LOG_WRN("Failed to set hostname for Server Name Indication [" << hostname << ']');
+        if (!hostname.empty())
+        {
+            if (!SSL_set_tlsext_host_name(_ssl, hostname.c_str()))
+                LOG_WRN("Failed to set hostname for Server Name Indication [" << hostname << ']');
+            else
+                LOG_TRC("Set [" << hostname << "] as TLS hostname.");
+        }
 
         SSL_set_bio(_ssl, _bio, _bio);
 

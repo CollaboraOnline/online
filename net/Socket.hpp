@@ -915,7 +915,7 @@ public:
     };
 
     /// Create a StreamSocket from native FD.
-    StreamSocket(const std::string hostname, const int fd, bool /* isClient */,
+    StreamSocket(std::string hostname, const int fd, bool /* isClient */,
                  std::shared_ptr<ProtocolHandlerInterface> socketHandler,
                  ReadType readType = NormalRead) :
         Socket(fd),
