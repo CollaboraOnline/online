@@ -8,13 +8,11 @@
 #include <config.h>
 
 #include "Authorization.hpp"
-#include "Protocol.hpp"
 #include "Log.hpp"
-#include <Exceptions.hpp>
+#include "Util.hpp"
 
-#include <cstdlib>
-#include <cassert>
-#include <regex>
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/URI.h>
 
 void Authorization::authorizeURI(Poco::URI& uri) const
 {
@@ -86,11 +84,11 @@ void Authorization::authorizeRequest(Poco::Net::HTTPRequest& request) const
     }
 }
 
-Authorization Authorization::create(const Poco::URI::QueryParameters& queryParams)
+Authorization Authorization::create(const Poco::URI& uri)
 {
     // prefer the access_token
     std::string decoded;
-    for (const auto& param : queryParams)
+    for (const auto& param : uri.getQueryParameters())
     {
         if (param.first == "access_token")
         {
@@ -107,5 +105,7 @@ Authorization Authorization::create(const Poco::URI::QueryParameters& queryParam
 
     return Authorization();
 }
+
+Authorization Authorization::create(const std::string& uri) { return create(Poco::URI(uri)); }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

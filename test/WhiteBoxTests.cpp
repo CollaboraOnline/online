@@ -23,7 +23,6 @@
 #include <JsonUtil.hpp>
 
 #include <common/Message.hpp>
-#include <common/Authorization.hpp>
 #include <wsd/FileServer.hpp>
 #include <net/Buffer.hpp>
 #include <net/NetUtil.hpp>
@@ -50,7 +49,6 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testEmptyCellCursor);
     CPPUNIT_TEST(testTileDesc);
     CPPUNIT_TEST(testRectanglesIntersect);
-    CPPUNIT_TEST(testAuthorization);
     CPPUNIT_TEST(testJson);
     CPPUNIT_TEST(testAnonymization);
     CPPUNIT_TEST(testIso8601Time);
@@ -83,7 +81,6 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testEmptyCellCursor();
     void testTileDesc();
     void testRectanglesIntersect();
-    void testAuthorization();
     void testJson();
     void testAnonymization();
     void testIso8601Time();
