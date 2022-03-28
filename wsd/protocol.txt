@@ -517,6 +517,10 @@ tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<
     be included by the client in the next 'tile' message requesting
     the same tile.
 
+delta: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [renderid=<id>] [wid=<wireId>]
+
+    A delta command is an incremental patch on top of a previous tile.
+
 commandresult: <payload>
     This is used to acknowledge the commands from the client.
     <payload> is { command: <command name>, success: 'true' }

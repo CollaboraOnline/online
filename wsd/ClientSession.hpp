@@ -85,7 +85,12 @@ public:
     bool sendTile(const TileDesc &desc, const Tile &tile)
     {
         TileWireId lastSentId = _tracker.updateTileSeq(desc);
-        const std::string header = desc.serialize("tile:");
+
+        std::string header;
+        if (tile->needsKeyframe(lastSentId))
+            header = desc.serialize("tile:");
+        else
+            header = desc.serialize("delta:");
 
         LOG_DBG(getName() << " sending tile message: " << header);
 

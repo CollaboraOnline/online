@@ -108,6 +108,12 @@ struct TileData
 
     // FIXME: add-delta[!] ...
 
+    /// if we send changes since this ide - do we first send a keyframe ?
+    bool needsKeyframe(TileWireId since)
+    {
+        return since < _ids[0];
+    }
+
     void appendChangesSince(std::vector<char> &output, TileWireId since)
     {
         size_t i;

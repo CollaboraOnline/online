@@ -420,10 +420,8 @@ app.definitions.Socket = L.Class.extend({
 			}
 		}
 		else
-		{
+		{ // FIXME: this code-path needs to die:
 			var data = e.imgBytes.subarray(e.imgIndex);
-			window.app.console.assert(data.length == 0 || data[0] != 68 /* D */ || data[0] == 90 /* Z */,
-						  'Socket: got a delta image, not supported !');
 			img = 'data:image/png;base64,' + window.btoa(this._strFromUint8(data));
 			if (L.Browser.cypressTest && localStorage.getItem('image_validation_test')) {
 				if (!window.imgDatas)
@@ -447,7 +445,9 @@ app.definitions.Socket = L.Class.extend({
 			return true;
 		};
 
-		if (!e.textMsg.startsWith('tile:') &&
+		var isTile = e.textMsg.startsWith('tile:');
+		var isDelta = e.textMsg.startsWith('delta:');
+		if (!isTile && !isDelta &&
 		    !e.textMsg.startsWith('renderfont:') &&
 		    !e.textMsg.startsWith('windowpaint:'))
 			return;
@@ -456,11 +456,11 @@ app.definitions.Socket = L.Class.extend({
 			return;
 
 		// pass deltas through quickly.
-		if (e.imgBytes && (e.imgBytes[e.imgIndex] === 68 /* D */ ||
-				   e.imgBytes[e.imgIndex] === 90 /* Z */))
+		if (e.imgBytes && (isTile || isDelta))
 		{
 			window.app.console.log('Passed through delta object');
-			e.image = e.imgBytes.subarray(e.imgIndex);
+			e.image = { rawData: e.imgBytes.subarray(e.imgIndex),
+				    isKeyframe: isTile };
 			e.imageIsComplete = true;
 			return;
 		}

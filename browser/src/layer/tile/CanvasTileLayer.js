@@ -6481,14 +6481,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	_applyDelta: function(tile, rawDelta) {
-
-		// degenerate - no change; just a 'D'
-		if (rawDelta.length < 2)
-			return;
-
+	_applyDelta: function(tile, rawDelta, isKeyframe) {
 		// decompress the delta.
-		var inflator = new Zlib.RawInflate(rawDelta.subarray(1));
+		var inflator = new Zlib.RawInflate(rawDelta);
 		var delta = inflator.decompress();
 
 		// 'Uint8Array' delta
@@ -6505,22 +6500,24 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		tile.el = canvas;
 
-		// apply potentially several deltas
+		// apply potentially several deltas in turn.
 		var offset = 0;
 		while (offset < delta.length)
 		{
-			offset += this._applyChunk(canvas, tile, initCanvas, rawDelta.subarray(offset));
+			offset += this._applyChunk(canvas, tile, initCanvas, delta.subarray(offset), isKeyframe);
 			initCanvas = false;
+			isKeyframe = false;
 		}
 	},
 
-	_applyDeltaChunk: function(canvas, tile, initCanvas, rawDelta) {
+	_applyDeltaChunk: function(canvas, tile, initCanvas, delta, isKeyframe) {
 		// FIXME: initial header is not compressed so (!?) ... how does that work [!?]
 		var ctx = canvas.getContext('2d');
-		if (rawDelta[0] === 90 /* Z */)
+		if (isKeyframe)
 		{
 			// FIXME: zlib.js to de-compress directly into Uint8ClampedArray?
 			// FIXME: re-use that same Uint8ClampedArray each time too ...
+			// FIXME: subarray delta to only the 1st image pixels we want to add.
 			ctx.putImageData(new ImageData(new Uint8ClampedArray(delta),
 						       canvas.width, canvas.height), 0, 0);
 			return;
@@ -6693,8 +6690,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				// browser/test/pixel-test.png - debugging pixel alignment.
 				tile.el.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5QEIChoQ0oROpwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACfklEQVR42u3dO67CQBBFwbnI+9/yJbCQLDIkPsZdFRAQjjiv3S8YZ63VNsl6aLvgop5+6vFzZ3QP/uQz2c0RIAAQAAzcASwAmAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACADGBnC8iQ5MABAACAB+zsVYjLZ9dOvd3zzg/QOYADByB/BvUCzBIAAQAFiCwQQAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAwIgAXb2ECgABAAPDaI7SLsZhs+79kvX8AEwDsAM8DASzBIAAQAFiCwQQAAYAAQAAgABAAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAI4LSSOAQBgABAAPDVR9C2ToGxNkfww623bZL98/ilUzIBwA4wbCAgABAACAAswWACgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAAAjAESAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAGAAEAAIAAQAAgABAACAAGAAEAAIAAQAAgAPiaJAEAAIAB48yNWW6fAWJsj4LRbb9sk++fxSxMA7AAMGwgCAAGAAMASDCYACAAEAAIAAYAAQAAgABAACAAEAAIAASAAR4AAQAAgABAACAAEANeW9e675sAEAAGAAODUO4AFgMnu7t9h2ahA0pgAAAAASUVORK5CYII=';
 
-			else if (tile && img && !img.src)
-				this._applyDelta(tile, img);
+			else if (tile && img.rawdata)
+				this._applyDelta(tile, img.rawdata, img.isKeyframe);
 
 			else
 				tile.el = img;
