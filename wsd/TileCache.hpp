@@ -82,7 +82,8 @@ struct TileData
         _deltas.push_back(std::make_shared<BlobData>(dataSize));
         std::memcpy(_deltas.back()->data(), data, dataSize);
 
-        return dataSize - oldSize;
+        // FIXME: speed up sizing.
+        return size() - oldSize;
     }
 
     static bool isKeyframe(const char *data, size_t dataSize)
@@ -129,13 +130,17 @@ struct TileData
             for (i = start; i < _deltas.size(); ++i)
                 extra += _deltas[i]->size();
 
+            size_t offset = output.size();
             output.resize(output.size() + extra);
 
             // FIXME: better writev style interface in the end ?
-            size_t offset = output.size();
+            std::cerr << "added " << extra << " to array size " << offset << "\n";
             for (i = start; i < _deltas.size(); ++i)
             {
                 size_t toCopy = _deltas[i]->size();
+                std::cerr << "copy " << toCopy << " bytes to array offset " << offset << ":\n"
+                          << Util::dumpHex(std::string((char *)_deltas[i]->data(), toCopy)) << "\n";
+
                 std::memcpy(output.data() + offset, _deltas[i]->data(), toCopy);
                 offset += toCopy;
             }

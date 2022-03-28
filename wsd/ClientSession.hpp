@@ -88,9 +88,9 @@ public:
 
         std::string header;
         if (tile->needsKeyframe(lastSentId))
-            header = desc.serialize("tile:");
+            header = desc.serialize("tile:", "\n");
         else
-            header = desc.serialize("delta:");
+            header = desc.serialize("delta:", "\n");
 
         LOG_DBG(getName() << " sending tile message: " << header);
 
