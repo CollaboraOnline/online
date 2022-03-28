@@ -63,6 +63,9 @@ console.log('\nTest running - connect to:\n\n\t' +
 let childNodes = [];
 
 let execArgs = [];
+
+process.env.NODE_PATH = `${top_builddir}/browser/node_modules`
+
 if (inspect === 'true')
 	execArgs.push('--inspect');
 childNodes.push(
