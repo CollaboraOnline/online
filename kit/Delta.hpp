@@ -125,6 +125,9 @@ class DeltaGenerator {
             uint32_t pix;
             uint8_t  alpha;
 
+            // FIXME: if we have the same data as last pixel -
+            // just re-use the last result =)
+
             std::memcpy (&pix, src + i, sizeof (uint32_t));
 
             alpha = (pix & 0xff000000) >> 24;
