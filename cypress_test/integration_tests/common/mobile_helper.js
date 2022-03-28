@@ -173,7 +173,7 @@ function executeCopyFromContextMenu(XPos, YPos) {
 		.click();
 
 	// Close warning about clipboard operations
-	cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
+	cy.get('.vex-dialog-button-primary.vex-dialog-button')
 		.click();
 
 	// Wait until it's closed
