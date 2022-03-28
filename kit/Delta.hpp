@@ -118,10 +118,24 @@ class DeltaGenerator {
 
     // Unpremultiplies data and converts native endian ARGB => RGBA bytes
     static void
-    unpremult_copy (unsigned char *dest, const unsigned char *src, unsigned int count)
+    unpremult_copy (unsigned char *dest, const unsigned char *srcBytes, unsigned int count)
     {
-        for (unsigned int i = 0; i < count; i += 4)
+        const uint32_t *src = reinterpret_cast<const uint32_t *>(srcBytes);
+
+        for (unsigned int i = 0; i < count; ++i)
         {
+            // Profile me: avoid math for runs of duplicate pixels
+            // possibly we should RLE earlier ?
+            if (i > 0 && src[i-1] == src[i])
+            {
+                dest[0] = dest[-4];
+                dest[1] = dest[-3];
+                dest[2] = dest[-2];
+                dest[3] = dest[-1];
+                dest += 4;
+                continue;
+            }
+
             uint32_t pix;
             uint8_t  alpha;
 
@@ -245,7 +259,7 @@ class DeltaGenerator {
 
                     unpremult_copy(reinterpret_cast<unsigned char *>(&output[dest]),
                                    (const unsigned char *)(&curRow.getPixels()[x]),
-                                   diff * 4);
+                                   diff);
 
                     LOG_TRC("different " << diff << "pixels");
                     x += diff;
@@ -452,7 +466,7 @@ class DeltaGenerator {
             // FIXME: should we RLE in pixels first ?
             for (int y = 0; y < height; ++y)
             {
-                unpremult_copy(fixedupLine, (Bytef *)pixmap + ((startY + y) * bufferWidth * 4) + (startX * 4), width * 4);
+                unpremult_copy(fixedupLine, (Bytef *)pixmap + ((startY + y) * bufferWidth * 4) + (startX * 4), width);
 
                 zstr.next_in = fixedupLine;
                 zstr.avail_in = width * 4;
