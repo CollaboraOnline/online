@@ -10,6 +10,7 @@
 #include <test/lokassert.hpp>
 
 #include <Common.hpp>
+#include <common/Authorization.hpp>
 #include <RequestDetails.hpp>
 
 /// RequestDetails unit-tests.
@@ -22,6 +23,7 @@ class RequestDetailsTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testLocal);
     CPPUNIT_TEST(testLocalHexified);
     CPPUNIT_TEST(testRequestDetails);
+    CPPUNIT_TEST(testAuthorization);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -30,6 +32,7 @@ class RequestDetailsTests : public CPPUNIT_NS::TestFixture
     void testLocal();
     void testLocalHexified();
     void testRequestDetails();
+    void testAuthorization();
 };
 
 void RequestDetailsTests::testDownloadURI()
@@ -749,6 +752,103 @@ void RequestDetailsTests::testRequestDetails()
         LOK_ASSERT(details.equals(RequestDetails::Field::Command, ""));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
         LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+    }
+}
+
+void RequestDetailsTests::testAuthorization()
+{
+    constexpr auto testname = __func__;
+
+    Authorization auth1(Authorization::Type::Token, "abc");
+    Poco::URI uri1("http://localhost");
+    auth1.authorizeURI(uri1);
+    LOK_ASSERT_EQUAL(std::string("http://localhost/?access_token=abc"), uri1.toString());
+    Poco::Net::HTTPRequest req1;
+    auth1.authorizeRequest(req1);
+    LOK_ASSERT_EQUAL(std::string("Bearer abc"), req1.get("Authorization"));
+
+    Authorization auth1modify(Authorization::Type::Token, "modified");
+    // still the same uri1, currently "http://localhost/?access_token=abc"
+    auth1modify.authorizeURI(uri1);
+    LOK_ASSERT_EQUAL(std::string("http://localhost/?access_token=modified"), uri1.toString());
+
+    Authorization auth2(Authorization::Type::Header, "def");
+    Poco::Net::HTTPRequest req2;
+    auth2.authorizeRequest(req2);
+    LOK_ASSERT(!req2.has("Authorization"));
+
+    Authorization auth3(Authorization::Type::Header, "Authorization: Basic huhu== ");
+    Poco::URI uri2("http://localhost");
+    auth3.authorizeURI(uri2);
+    // nothing added with the Authorization header approach
+    LOK_ASSERT_EQUAL(std::string("http://localhost"), uri2.toString());
+    Poco::Net::HTTPRequest req3;
+    auth3.authorizeRequest(req3);
+    LOK_ASSERT_EQUAL(std::string("Basic huhu=="), req3.get("Authorization"));
+
+    Authorization auth4(Authorization::Type::Header, "  Authorization: Basic blah== \n\rX-Something:   additional  ");
+    Poco::Net::HTTPRequest req4;
+    auth4.authorizeRequest(req4);
+    LOK_ASSERT_MESSAGE("Exected request to have Authorization header", req4.has("Authorization"));
+    LOK_ASSERT_EQUAL(std::string("Basic blah=="), req4.get("Authorization"));
+    LOK_ASSERT_MESSAGE("Exected request to have X-Something header", req4.has("X-Something"));
+    LOK_ASSERT_EQUAL(std::string("additional"), req4.get("X-Something"));
+
+    Authorization auth5(Authorization::Type::Header, "  Authorization: Basic huh== \n\rX-Something-More:   else  \n\r");
+    Poco::Net::HTTPRequest req5;
+    auth5.authorizeRequest(req5);
+    LOK_ASSERT_EQUAL(std::string("Basic huh=="), req5.get("Authorization"));
+    LOK_ASSERT_EQUAL(std::string("else"), req5.get("X-Something-More"));
+
+    Authorization auth6(Authorization::Type::None, "Authorization: basic huh==");
+    Poco::Net::HTTPRequest req6;
+    CPPUNIT_ASSERT_NO_THROW(auth6.authorizeRequest(req6));
+
+    {
+        const std::string WorkingDocumentURI
+            = "https://example.com:8443/rest/files/wopi/files/"
+              "8ac75551de4d89e60002?access_header=Authorization%3A%2520Bearer%25201hpoiuytrewq%"
+              "250D%250A%250D%250AX-Requested-With%3A%2520XMLHttpRequest&reuse_cookies=lang%3Den-"
+              "us%3A_xx_%3DGS1.1.%3APublicToken%"
+              "3DeyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4ODkxNzc3NCwiaWF0IjoxNTg4OTE2ODc0LCJqdGkiOiI4OGZhN2"
+              "E3ZC1lMzU5LTQ2OWEtYjg3Zi02NmFhNzI0ZGFkNTcifQ%3AZNPCQ003-32383700%3De9c71c3b%"
+              "3AJSESSIONID%3Dnode019djohorurnaf1eo6f57ejhg0520.node0&permission=edit";
+
+        const std::string AuthorizationParam = "Bearer 1hpoiuytrewq";
+
+        Authorization auth(Authorization::create(WorkingDocumentURI));
+        Poco::Net::HTTPRequest req;
+        auth.authorizeRequest(req);
+        LOK_ASSERT_EQUAL(AuthorizationParam, req.get("Authorization"));
+        LOK_ASSERT_EQUAL(std::string("XMLHttpRequest"), req.get("X-Requested-With"));
+    }
+
+    {
+        const std::string URI
+            = "https://example.com:8443/rest/files/wopi/files/"
+              "24e3f0a17230cca5017230fb6861000c?access_header=Authorization%3A%20Bearer%"
+              "201hpoiuytrewq%0D%0A%0D%0AX-Requested-With%3A%20XMLHttpRequest";
+
+        const std::string AuthorizationParam = "Bearer 1hpoiuytrewq";
+
+        Authorization auth7(Authorization::create(URI));
+        Poco::Net::HTTPRequest req7;
+        auth7.authorizeRequest(req7);
+        LOK_ASSERT_EQUAL(AuthorizationParam, req7.get("Authorization"));
+        LOK_ASSERT_EQUAL(std::string("XMLHttpRequest"), req7.get("X-Requested-With"));
+    }
+
+    {
+        const std::string URI
+            = "https://example.com:8443/rest/files/wopi/files/"
+              "8ac75551de4d89e60002?reuse_cookies=lang%3Den-us%3A_xx_%3DGS1.1.%3APublicToken%"
+              "3DeyJzdWIiOiJhZG1pbiIsImV4cCI6MTU4ODkxNzc3NCwiaWF0IjoxNTg4OTE2ODc0LCJqdGkiOiI4OGZhN2"
+              "E3ZC1lMzU5LTQ2OWEtYjg3Zi02NmFhNzI0ZGFkNTcifQ%3AZNPCQ003-32383700%3De9c71c3b%"
+              "3AJSESSIONID%3Dnode019djohorurnaf1eo6f57ejhg0520.node0&permission=edit";
+
+        Authorization auth7(Authorization::create(URI));
+        Poco::Net::HTTPRequest req;
+        auth7.authorizeRequest(req);
     }
 }
 
