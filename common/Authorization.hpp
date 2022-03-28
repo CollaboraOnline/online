@@ -10,9 +10,18 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/URI.h>
+namespace Poco
+{
+namespace Net
+{
+class HTTPRequest;
+}
+
+class URI;
+
+} // namespace Poco
 
 /// Class to keep the authorization data, which can be either access_token or access_header.
 class Authorization
@@ -43,9 +52,8 @@ public:
 
     /// Create an Authorization instance from the URI query parameters.
     /// Expects access_token (preferred) or access_header.
-    static Authorization create(const Poco::URI::QueryParameters& queryParams);
-    static Authorization create(const Poco::URI& uri) { return create(uri.getQueryParameters()); }
-    static Authorization create(const std::string& uri) { return create(Poco::URI(uri)); }
+    static Authorization create(const Poco::URI& uri);
+    static Authorization create(const std::string& uri);
 
     /// Set the access_token parametr to the given uri.
     void authorizeURI(Poco::URI& uri) const;
