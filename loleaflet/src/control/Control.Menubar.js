@@ -40,6 +40,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Cut'},
 				{uno: '.uno:Copy'},
 				{uno: '.uno:Paste'},
+				{uno: '.uno:PasteSpecial'},
 				{uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'},
@@ -287,6 +288,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Cut'},
 				{uno: '.uno:Copy'},
 				{uno: '.uno:Paste'},
+				{uno: '.uno:PasteSpecial'},
 				{uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
@@ -413,6 +415,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Cut'},
 				{uno: '.uno:Copy'},
 				{uno: '.uno:Paste'},
+				{uno: '.uno:PasteSpecial'},
 				{uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
@@ -524,6 +527,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Cut'},
 				{uno: '.uno:Copy'},
 				{uno: '.uno:Paste'},
+				{uno: '.uno:PasteSpecial'},
 				{uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}

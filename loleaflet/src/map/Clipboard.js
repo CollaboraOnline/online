@@ -710,6 +710,8 @@ L.Clipboard = L.Class.extend({
 			this._execCopyCutPaste('cut', cmd);
 		} else if (cmd === '.uno:Paste') {
 			this._execCopyCutPaste('paste', cmd);
+		} else if (cmd === '.uno:PasteSpecial') {
+			this._openPasteSpecialPopup();
 		} else {
 			return false;
 		}
@@ -966,6 +968,21 @@ L.Clipboard = L.Class.extend({
 		});
 	},
 
+	_openPasteSpecialPopup: function () {
+		var map = this._map;
+		var msg = _('<p>Your browser has very limited access to the clipboard</p><p>Please press now: <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd> to see more options</p><p class="vex-footnote">Close popup to ignore paste special</p>');
+		msg = L.Util.replaceCtrlInMac(msg);
+		map._clip.pasteSpecialVex = vex.open({
+			unsafeContent: msg,
+			showCloseButton: true,
+			escapeButtonCloses: true,
+			overlayClosesOnClick: false,
+			buttons: {},
+			afterOpen: function() {
+				map.focus();
+			}
+		});
+	},
 });
 
 L.clipboard = function(map) {

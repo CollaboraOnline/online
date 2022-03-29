@@ -347,6 +347,7 @@ var unoCommandsArray = {
 	'ParaspaceDecrease':{global:{context:_('Decrease Paragraph Spacing'),menu:_('Decrease Paragraph Spacing'),},},
 	'ParaspaceIncrease':{global:{context:_('Increase Paragraph Spacing'),menu:_('Increase Paragraph Spacing'),},},
 	'Paste':{global:{menu:_('~Paste'),},},
+	'PasteSpecial':{global:{menu:_('Paste ~Special...'),},presentation:{menu:_('Paste ~Special...'),},spreadsheet:{menu:_('Paste ~Special...'),},text:{menu:_('Paste ~Special...'),},},
 	'PickList':{global:{menu:_('~File'),},},
 	'PreviousTrackedChange':{text:{context:_('Previous Track Change'),menu:_('Pr~evious'),},},
 	'Print':{global:{menu:_('~Print...'),},},
