@@ -69,6 +69,8 @@ struct TileData
     ssize_t appendBlob(TileWireId id, const char *data, const size_t dataSize)
     {
         size_t oldSize = 0;
+
+        assert (dataSize >= 1); // kit provides us a 'Z' or a 'D'
         if (isKeyframe(data, dataSize))
         {
             oldSize = size();
@@ -79,8 +81,8 @@ struct TileData
         // too many/large deltas means we should reset -
         // but not here - when requesting the tiles.
         _wids.push_back(id);
-        _deltas.push_back(std::make_shared<BlobData>(dataSize));
-        std::memcpy(_deltas.back()->data(), data, dataSize);
+        _deltas.push_back(std::make_shared<BlobData>(dataSize - 1));
+        std::memcpy(_deltas.back()->data(), data + 1, dataSize - 1);
 
         // FIXME: speed up sizing.
         return size() - oldSize;
