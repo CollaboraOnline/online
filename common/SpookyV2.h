@@ -84,6 +84,9 @@ public:
         return (uint32)hash1;
     }
 
+    static uint64_t hashSubBuffer(unsigned char* pixmap, size_t startX, size_t startY,
+                                  long width, long height, int bufferWidth, int bufferHeight);
+
     //
     // Init: initialize the context of a SpookyHash
     //
@@ -97,7 +100,6 @@ public:
     void Update(
         const void *message,  // message fragment
         size_t length);       // length of message fragment in bytes
-
 
     //
     // Final: compute the hash for the current SpookyHash state
