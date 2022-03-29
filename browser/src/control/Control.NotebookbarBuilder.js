@@ -734,14 +734,36 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_clipboardButtonControl: function(parentContainer, data, builder) {
-		var control = builder._unoToolButton(parentContainer, data, builder);
+		var isPaste = data.command === '.uno:Paste';
+		var options = {hasDropdownArrow: isPaste};
+		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
 		if (builder.map._clip) {
-			$(control.container).unbind('click.toolbutton');
-			$(control.container).click(function () {
-				builder.map._clip.filterExecCopyPaste(data.command);
-			});
+			if (isPaste) {
+				var menu = [
+					{text: _UNO('.uno:Paste', 'text'), uno: 'Paste'},
+					{text: _UNO('.uno:PasteSpecial', 'spreadsheet'), uno: 'PasteSpecial'},
+				];
+
+				$(control.container).unbind('click.toolbutton');
+				$(control.container).click(function () {
+					$(control.container).w2menu({
+						name: 'pastemenu',
+						items: menu,
+						onSelect: function (event) {
+							if (event.item)
+								builder.map._clip.filterExecCopyPaste('.uno:' + event.item.uno);
+						}
+					});
+				});
+			} else {
+				$(control.container).unbind('click.toolbutton');
+				$(control.container).click(function () {
+					builder.map._clip.filterExecCopyPaste(data.command);
+				});
+			}
 		}
+
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
