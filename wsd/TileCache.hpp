@@ -72,13 +72,13 @@ struct TileData
         if (isKeyframe(data, dataSize))
         {
             oldSize = size();
-            _ids.clear();
+            _wids.clear();
             _deltas.clear();
         }
 
         // too many/large deltas means we should reset -
         // but not here - when requesting the tiles.
-        _ids.push_back(id);
+        _wids.push_back(id);
         _deltas.push_back(std::make_shared<BlobData>(dataSize));
         std::memcpy(_deltas.back()->data(), data, dataSize);
 
@@ -91,7 +91,7 @@ struct TileData
         return dataSize > 0 && data[0] == 'D';
     }
 
-    std::vector<TileWireId> _ids;
+    std::vector<TileWireId> _wids;
     std::vector<Blob> _deltas; // first item is a key-frame
     size_t size()
     {
@@ -112,15 +112,15 @@ struct TileData
     /// if we send changes since this ide - do we first send a keyframe ?
     bool needsKeyframe(TileWireId since)
     {
-        return since < _ids[0];
+        return since < _wids[0];
     }
 
     void appendChangesSince(std::vector<char> &output, TileWireId since)
     {
         size_t i;
-        for (i = 0; since != 0 && i < _ids.size() && _ids[i] < since; ++i);
+        for (i = 0; since != 0 && i < _wids.size() && _wids[i] < since; ++i);
 
-        if (i >= _ids.size())
+        if (i >= _wids.size())
             LOG_TRC("odd outcome - requested for a later id with no tile: " << since);
         else
         {
@@ -306,11 +306,11 @@ public:
             _cache.insert(desc);
             return 0;
         }
-        const TileWireId curSeq = desc.getId();
-        TileWireId last = it->getId();
+        const TileWireId curSeq = desc.getWireId();
+        TileWireId last = it->getWireId();
         // id is not included in the hash.
         auto pDesc = const_cast<TileDesc *>(&(*it));
-        pDesc->setId(curSeq);
+        pDesc->setWireId(curSeq);
         return last;
     }
 };
@@ -320,9 +320,9 @@ inline std::ostream& operator<< (std::ostream& os, const Tile& tile)
     if (!tile)
         os << "nullptr";
     else
-        os << "keyframe id " << tile->_ids[0] <<
+        os << "keyframe id " << tile->_wids[0] <<
             " size: " << tile->_deltas[0]->size() <<
-            " deltas: " << tile->_ids.size();
+            " deltas: " << (tile->_wids.size() - 1);
     return os;
 }
 

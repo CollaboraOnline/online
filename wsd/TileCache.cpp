@@ -550,12 +550,12 @@ Tile TileCache::saveDataToCache(const TileDesc &desc, const char *data, const si
     Tile tile = _cache[desc];
     if (!tile)
     {
-        tile = std::make_shared<TileData>(desc.getId(), data, size);
+        tile = std::make_shared<TileData>(desc.getWireId(), data, size);
         _cache[desc] = tile;
         _cacheSize += tile->size();
     }
     else
-        _cacheSize += tile->appendBlob(desc.getId(), data, size);
+        _cacheSize += tile->appendBlob(desc.getWireId(), data, size);
 
     return tile;
 }
