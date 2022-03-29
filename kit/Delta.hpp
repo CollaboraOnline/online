@@ -287,7 +287,7 @@ class DeltaGenerator {
 //                << Util::dumpHex(std::string((char *)compressed, compSize)));
 
         // FIXME: should get zlib to drop it directly in really.
-        outStream.push_back('D');
+        //outStream.push_back('D');
         size_t oldSize = outStream.size();
         outStream.resize(oldSize + compSize);
         memcpy(&outStream[oldSize], compressed, compSize);
@@ -477,7 +477,7 @@ class DeltaGenerator {
                     << Util::dumpHex(std::string((char *)compressed, compSize)));
 
             // FIXME: get zlib to drop it directly into this buffer really.
-            output.push_back('Z');
+            //output.push_back('Z');
             size_t oldSize = output.size();
             output.resize(oldSize + compSize);
             memcpy(&output[oldSize], compressed, compSize);
