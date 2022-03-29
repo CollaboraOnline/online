@@ -40,6 +40,7 @@
 #include <common/JsonUtil.hpp>
 #include <common/Authorization.hpp>
 #include <common/TraceEvent.hpp>
+#include <common/SpookyV2.h>
 #include "KitHelper.hpp"
 #include <Log.hpp>
 #include <Png.hpp>
@@ -1833,7 +1834,7 @@ bool ChildSession::renderWindow(const StringVector& tokens)
                                << " and rendered in " << elapsedMs << " (" << area / elapsedMics
                                << " MP/s).");
 
-    uint64_t pixmapHash = Png::hashSubBuffer(pixmap.data(), 0, 0, width, height, bufferWidth, bufferHeight) + getViewId();
+    uint64_t pixmapHash = SpookyHash::hashSubBuffer(pixmap.data(), 0, 0, width, height, bufferWidth, bufferHeight) + getViewId();
 
     auto found = std::find(_pixmapCache.begin(), _pixmapCache.end(), pixmapHash);
 

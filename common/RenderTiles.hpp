@@ -13,6 +13,7 @@
 #include <thread>
 #include <unordered_map>
 #include <vector>
+#include <common/SpookyV2.h>
 
 #include "Png.hpp"
 #include "Delta.hpp"
@@ -486,8 +487,8 @@ namespace RenderTiles
                            pixelWidth, pixelHeight,
                            mode);
 
-            const uint64_t hash = Png::hashSubBuffer(pixmap.data(), offsetX, offsetY,
-                                                     pixelWidth, pixelHeight, pixmapWidth, pixmapHeight);
+            const uint64_t hash = SpookyHash::hashSubBuffer(pixmap.data(), offsetX, offsetY,
+                                    pixelWidth, pixelHeight, pixmapWidth, pixmapHeight);
 
             TileWireId wireId = pngCache.hashToWireId(hash);
             TileWireId oldWireId = tiles[tileIndex].getOldWireId();
