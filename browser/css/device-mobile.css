@@ -916,6 +916,6 @@ div#fontstyletoolbox + div#style.mobile-wizard {
 	height: 100%;
 }
 
-.div-infobar-wrap ~ #mobile-edit-button {
+.div-infobar-wrap:not(.hidden) ~ #mobile-edit-button {
 	display: none;
 }
