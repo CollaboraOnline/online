@@ -7,7 +7,7 @@
  * at TextInput.
  */
 
-/* global app vex _ */
+/* global app */
 
 L.Map.mergeOptions({
 	keyboard: true,
@@ -479,19 +479,7 @@ L.Map.Keyboard = L.Handler.extend({
 		// Handles paste special. The "Your browser" thing seems to indicate that this code
 		// snippet is relevant in a browser only.
 		if (!window.ThisIsAMobileApp && e.ctrlKey && e.shiftKey && e.altKey && (e.key === 'v' || e.key === 'V')) {
-			var map = this._map;
-			var msg = _('<p>Your browser has very limited access to the clipboard</p><p>Please press now: <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd> to see more options</p><p class="vex-footnote">Close popup to ignore paste special</p>');
-			msg = L.Util.replaceCtrlInMac(msg);
-			this._map._clip.pasteSpecialVex = vex.open({
-				unsafeContent: msg,
-				showCloseButton: true,
-				escapeButtonCloses: true,
-				overlayClosesOnClick: false,
-				buttons: {},
-				afterOpen: function() {
-					map.focus();
-				}
-			});
+			this._map._clip._openPasteSpecialPopup();
 			return true;
 		}
 
