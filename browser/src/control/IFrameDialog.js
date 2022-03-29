@@ -24,7 +24,7 @@ L.IFrameDialog = L.Class.extend({
 			this._container = L.DomUtil.create('div', this.options.prefix + '-wrap');
 			content = L.DomUtil.create('div', this.options.prefix + '-content', this._container);
 		}
-		this._container.style.display = 'none';
+		this._container.classList.add('hidden');
 
 		form = L.DomUtil.create('form', '', content);
 
@@ -104,7 +104,7 @@ L.IFrameDialog = L.Class.extend({
 	},
 
 	show: function () {
-		this._container.style.display = '';
+		this._container.classList.remove('hidden');
 	}
 });
 
