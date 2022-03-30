@@ -24,7 +24,8 @@ L.IFrameDialog = L.Class.extend({
 			this._container = L.DomUtil.create('div', this.options.prefix + '-wrap');
 			content = L.DomUtil.create('div', this.options.prefix + '-content', this._container);
 		}
-		this._container.classList.add('hidden');
+
+		this._container.style.display = 'none';
 		// this should be set for making it focusable
 		this._container.tabIndex = -1;
 
@@ -112,7 +113,7 @@ L.IFrameDialog = L.Class.extend({
 	},
 
 	show: function () {
-		this._container.classList.remove('hidden');
+		this._container.style.display = '';
 		this.focus();
 	}
 });
