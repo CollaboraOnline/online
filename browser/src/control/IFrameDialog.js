@@ -25,6 +25,8 @@ L.IFrameDialog = L.Class.extend({
 			content = L.DomUtil.create('div', this.options.prefix + '-content', this._container);
 		}
 		this._container.classList.add('hidden');
+		// this should be set for making it focusable
+		this._container.tabIndex = -1;
 
 		form = L.DomUtil.create('form', '', content);
 
@@ -80,6 +82,12 @@ L.IFrameDialog = L.Class.extend({
 		clearTimeout(this._errorTimer);
 	},
 
+	focus: function() {
+		if (this._container) {
+			this._container.focus();
+		}
+	},
+
 	remove: function () {
 		L.DomEvent.off(this._iframe, 'load', this.onLoad, this);
 		L.DomUtil.remove(this._container);
@@ -105,6 +113,7 @@ L.IFrameDialog = L.Class.extend({
 
 	show: function () {
 		this._container.classList.remove('hidden');
+		this.focus();
 	}
 });
 
