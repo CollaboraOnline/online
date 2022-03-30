@@ -1,31 +1,44 @@
 window.onload = onLoaded;
 
 function onLoaded() {
+    var elem;
     window.addEventListener('message', onMessage, false);
 
-    document.getElementById('slide-1-button').onclick = function() {
-        onSlideClick('slide-2-indicator', true);
-    };
+    elem = document.getElementById('slide-1-button');
+    if (elem)
+	elem.onclick = function() {
+            onSlideClick('slide-2-indicator', true);
+	};
 
-    document.getElementById('slide-2-button').onclick = function() {
-        onSlideClick('slide-3-indicator', true);
-    };
+    elem = document.getElementById('slide-2-button');
+    if (elem)
+	elem.onclick = function() {
+            onSlideClick('slide-3-indicator', true);
+	};
 
-    document.getElementById('slide-3-button').onclick = function() {
-        onClose();
-    };
+    elem = document.getElementById('slide-3-button');
+    if (elem)
+	elem.onclick = function() {
+            onClose();
+	};
 
-    document.getElementById('slide-1-indicator').onclick = function() {
-        onSlideClick('slide-1-indicator');
-    };
+    elem = document.getElementById('slide-1-indicator');
+    if (elem)
+	elem.onclick = function() {
+            onSlideClick('slide-1-indicator');
+	};
 
-    document.getElementById('slide-2-indicator').onclick = function() {
-        onSlideClick('slide-2-indicator');
-    };
+    elem = document.getElementById('slide-2-indicator');
+    if (elem)
+	elem.onclick = function() {
+            onSlideClick('slide-2-indicator');
+	};
 
-    document.getElementById('slide-3-indicator').onclick = function() {
-        onSlideClick('slide-3-indicator');
-    };
+    elem = document.getElementById('slide-3-indicator');
+    if (elem)
+	elem.onclick = function() {
+            onSlideClick('slide-3-indicator');
+	};
 
     if (window.parent !== window.self) {
         var message = {

@@ -14,7 +14,8 @@ L.Map.Welcome = L.Handler.extend({
 		L.Handler.prototype.initialize.call(this, map);
 		this._map.on('statusindicator', this.onStatusIndicator, this);
 
-		this._url = window.feedbackLocation.replace(/Rate\/feedback.html/g, 'Welcome/welcome.html');
+		this._url = window.enableWelcomeMessage ? L.LOUtil.getURL('/welcome/welcome.html') :
+			window.welcomeUrl;
 		this._retries = 2;
 		this._fallback = false;
 	},
@@ -114,7 +115,7 @@ L.Map.Welcome = L.Handler.extend({
 	}
 });
 
-if (window.enableWelcomeMessage && window.feedbackLocation && window.isLocalStorageAllowed) {
+if ((window.enableWelcomeMessage || window.welcomeUrl) && window.isLocalStorageAllowed) {
 	L.Map.addInitHook('addHandler', 'welcome', L.Map.Welcome);
 }
 
