@@ -108,6 +108,13 @@ L.IFrameDialog = L.Class.extend({
 	}
 });
 
+// Close when pressing Escape
+window.addEventListener('keyup', function iframeKeyupListener (e) {
+	if (e.keyCode === 27 || e.key === 'Escape') {
+		window.postMessage('{"MessageId":"welcome-close"}', '*');
+	}
+});
+
 L.iframeDialog = function (url, params, element, options) {
 	return new L.IFrameDialog(url, params, element, options);
 };
