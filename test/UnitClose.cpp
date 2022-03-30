@@ -191,7 +191,7 @@ UnitBase::TestResult UnitClose::testAlertAllUsers()
         {
             const std::string response
                 = helpers::assertResponseString(socket[i], "error:", testname);
-            StringVector tokens(Util::tokenize(response.substr(6), ' '));
+            StringVector tokens(StringVector::tokenize(response.substr(6), ' '));
             std::string cmd;
             COOLProtocol::getTokenString(tokens, "cmd", cmd);
             LOK_ASSERT_EQUAL(std::string("internal"), cmd);

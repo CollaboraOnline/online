@@ -982,7 +982,7 @@ void ForKitProcWSHandler::handleMessage(const std::vector<char> &data)
 {
     LOG_TRC("ForKitProcWSHandler: handling incoming [" << COOLProtocol::getAbbreviatedMessage(&data[0], data.size()) << "].");
     const std::string firstLine = COOLProtocol::getFirstLine(&data[0], data.size());
-    const StringVector tokens = Util::tokenize(firstLine.data(), firstLine.size());
+    const StringVector tokens = StringVector::tokenize(firstLine.data(), firstLine.size());
 
     if (tokens.equals(0, "segfaultcount"))
     {
@@ -2992,7 +2992,7 @@ public:
         if(request.has("X-Forwarded-For"))
         {
             const std::string fowardedData = request.get("X-Forwarded-For");
-            StringVector tokens = Util::tokenize(fowardedData, ',');
+            StringVector tokens = StringVector::tokenize(fowardedData, ',');
             for (const auto& token : tokens)
             {
                 std::string param = tokens.getParam(token);

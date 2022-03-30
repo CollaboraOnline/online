@@ -30,7 +30,7 @@ void LockManager::generateLockedCommandList()
 
     LockedCommandListString = config::getString("feature_lock.locked_commands", "");
     Util::trim(LockedCommandListString);
-    StringVector commandList = Util::tokenize(LockedCommandListString);
+    StringVector commandList = StringVector::tokenize(LockedCommandListString);
 
     std::string command;
     for (std::size_t i = 0; i < commandList.size(); i++)
@@ -127,7 +127,7 @@ void RestrictionManager::generateRestrictedCommandList()
 #ifdef ENABLE_FEATURE_RESTRICTION
     RestrictedCommandListString = config::getString("restricted_commands", "");
     Util::trim(RestrictedCommandListString);
-    StringVector commandList = Util::tokenize(RestrictedCommandListString);
+    StringVector commandList = StringVector::tokenize(RestrictedCommandListString);
 
     std::string command;
     for (std::size_t i = 0; i < commandList.size(); i++)

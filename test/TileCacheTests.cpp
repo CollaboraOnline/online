@@ -189,7 +189,7 @@ public:
 
 bool TileCacheTests::getPartFromInvalidateMessage(const std::string& message, int& part)
 {
-    StringVector tokens = Util::tokenize(message);
+    StringVector tokens = StringVector::tokenize(message);
     if (tokens.size() == 2 && tokens.equals(1, "EMPTY"))
     {
         part = -1;
@@ -1308,7 +1308,7 @@ void TileCacheTests::checkTiles(std::shared_ptr<http::WebSocketSession>& socket,
         std::istringstream istr(response.substr(8));
         std::getline(istr, line);
 
-        StringVector tokens(Util::tokenize(line, ' '));
+        StringVector tokens(StringVector::tokenize(line, ' '));
 #if defined CPPUNIT_ASSERT_GREATEREQUAL
         if (docType == "presentation")
             CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7),
@@ -1425,7 +1425,7 @@ void TileCacheTests::requestTiles(std::shared_ptr<http::WebSocketSession>& socke
             sendTextFrame(socket, text, testname);
             tile = assertResponseString(socket, "tile:", testname);
             // expected tile: part= width= height= tileposx= tileposy= tilewidth= tileheight=
-            StringVector tokens(Util::tokenize(tile, ' '));
+            StringVector tokens(StringVector::tokenize(tile, ' '));
             LOK_ASSERT_EQUAL(std::string("tile:"), tokens[0]);
             LOK_ASSERT_EQUAL(0, std::stoi(tokens[1].substr(std::string("nviewid=").size())));
             LOK_ASSERT_EQUAL(part, std::stoi(tokens[2].substr(std::string("part=").size())));
@@ -1467,7 +1467,7 @@ void TileCacheTests::checkTiles(std::shared_ptr<COOLWebSocket>& socket, const st
         std::istringstream istr(response.substr(8));
         std::getline(istr, line);
 
-        StringVector tokens(Util::tokenize(line, ' '));
+        StringVector tokens(StringVector::tokenize(line, ' '));
 #if defined CPPUNIT_ASSERT_GREATEREQUAL
         if (docType == "presentation")
             CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7), tokens.size()); // We have an extra field.
@@ -1578,7 +1578,7 @@ void TileCacheTests::requestTiles(std::shared_ptr<COOLWebSocket>& socket,
             sendTextFrame(socket, text, testname);
             tile = assertResponseString(socket, "tile:", testname);
             // expected tile: part= width= height= tileposx= tileposy= tilewidth= tileheight=
-            StringVector tokens(Util::tokenize(tile, ' '));
+            StringVector tokens(StringVector::tokenize(tile, ' '));
             LOK_ASSERT_EQUAL(std::string("tile:"), tokens[0]);
             LOK_ASSERT_EQUAL(0, std::stoi(tokens[1].substr(std::string("nviewid=").size())));
             LOK_ASSERT_EQUAL(part, std::stoi(tokens[2].substr(std::string("part=").size())));
@@ -1747,7 +1747,7 @@ void TileCacheTests::testTileProcessed()
             ++arrivedTile;
 
             // Store tileID, so we can send it back
-            StringVector tokens(Util::tokenize(tile, ' '));
+            StringVector tokens(StringVector::tokenize(tile, ' '));
             std::string tileID = tokens[2].substr(std::string("part=").size()) + ':' +
                                  tokens[5].substr(std::string("tileposx=").size()) + ':' +
                                  tokens[6].substr(std::string("tileposy=").size()) + ':' +
@@ -1803,7 +1803,7 @@ void TileCacheTests::testTileInvalidatedOutside()
     // First wsd forwards the invalidation
     const std::string sInvalidate = assertResponseString(socket, "invalidatetiles:", testname);
     LOK_ASSERT_MESSAGE("Expected invalidatetiles message.", !sInvalidate.empty());
-    StringVector tokens(Util::tokenize(sInvalidate, ' '));
+    StringVector tokens(StringVector::tokenize(sInvalidate, ' '));
     LOK_ASSERT_MESSAGE("Expected at least 6 tokens.", tokens.size() >= 6);
     const int y = std::stoi(tokens[3].substr(std::string("y=").size()));
     const int height = std::stoi(tokens[5].substr(std::string("height=").size()));

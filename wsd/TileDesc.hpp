@@ -15,6 +15,7 @@
 
 #include "Exceptions.hpp"
 #include <Protocol.hpp>
+#include <StringVector.hpp>
 
 #define TILE_WIRE_ID
 using TileWireId = uint32_t;
@@ -248,7 +249,7 @@ public:
     /// Deserialize a TileDesc from a string format.
     static TileDesc parse(const std::string& message)
     {
-        return parse(Util::tokenize(message.data(), message.size()));
+        return parse(StringVector::tokenize(message.data(), message.size()));
     }
 
     std::string generateID() const
@@ -304,12 +305,12 @@ private:
             throw BadArgumentException("Invalid tilecombine descriptor.");
         }
 
-        StringVector positionXtokens(Util::tokenize(tilePositionsX, ','));
-        StringVector positionYtokens(Util::tokenize(tilePositionsY, ','));
-        StringVector imgSizeTokens(Util::tokenize(imgSizes, ','));
-        StringVector verTokens(Util::tokenize(vers, ','));
-        StringVector oldWireIdTokens(Util::tokenize(oldWireIds, ','));
-        StringVector wireIdTokens(Util::tokenize(wireIds, ','));
+        StringVector positionXtokens(StringVector::tokenize(tilePositionsX, ','));
+        StringVector positionYtokens(StringVector::tokenize(tilePositionsY, ','));
+        StringVector imgSizeTokens(StringVector::tokenize(imgSizes, ','));
+        StringVector verTokens(StringVector::tokenize(vers, ','));
+        StringVector oldWireIdTokens(StringVector::tokenize(oldWireIds, ','));
+        StringVector wireIdTokens(StringVector::tokenize(wireIds, ','));
 
         const std::size_t numberOfPositions = positionXtokens.size();
 
@@ -522,7 +523,7 @@ public:
     /// Deserialize a TileDesc from a string format.
     static TileCombined parse(const std::string& message)
     {
-        return parse(Util::tokenize(message.data(), message.size()));
+        return parse(StringVector::tokenize(message.data(), message.size()));
     }
 
     static TileCombined create(const std::vector<TileDesc>& tiles)

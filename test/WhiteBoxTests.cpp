@@ -125,7 +125,7 @@ void WhiteBoxTests::testCOOLProtocolFunctions()
     LOK_ASSERT_EQUAL(2, mumble);
 
     std::string message("hello x=1 y=2 foo=42 bar=hello-sailor mumble='goodbye' zip zap");
-    StringVector tokens(Util::tokenize(message));
+    StringVector tokens(StringVector::tokenize(message));
 
     LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "foo", foo));
     LOK_ASSERT_EQUAL(42, foo);
@@ -376,51 +376,52 @@ void WhiteBoxTests::testTokenizer()
 
     StringVector tokens;
 
-    tokens = Util::tokenize("");
+    tokens = StringVector::tokenize("");
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), tokens.size());
 
-    tokens = Util::tokenize("  ");
+    tokens = StringVector::tokenize("  ");
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), tokens.size());
 
-    tokens = Util::tokenize("A");
+    tokens = StringVector::tokenize("A");
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
-    tokens = Util::tokenize("  A");
+    tokens = StringVector::tokenize("  A");
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
-    tokens = Util::tokenize("A  ");
+    tokens = StringVector::tokenize("A  ");
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
-    tokens = Util::tokenize(" A ");
+    tokens = StringVector::tokenize(" A ");
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
-    tokens = Util::tokenize(" A  Z ");
+    tokens = StringVector::tokenize(" A  Z ");
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(2), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
-    tokens = Util::tokenize("\n");
+    tokens = StringVector::tokenize("\n");
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), tokens.size());
 
-    tokens = Util::tokenize(" A  \nZ ");
+    tokens = StringVector::tokenize(" A  \nZ ");
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
-    tokens = Util::tokenize(" A  Z\n ");
+    tokens = StringVector::tokenize(" A  Z\n ");
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(2), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
-    tokens = Util::tokenize(" A  Z  \n ");
+    tokens = StringVector::tokenize(" A  Z  \n ");
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(2), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
-    tokens = Util::tokenize("tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 ver=-1");
+    tokens = StringVector::tokenize("tile nviewid=0 part=0 width=256 height=256 tileposx=0 "
+                                    "tileposy=0 tilewidth=3840 tileheight=3840 ver=-1");
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(10), tokens.size());
     LOK_ASSERT_EQUAL(std::string("tile"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("nviewid=0"), tokens[1]);
@@ -434,11 +435,11 @@ void WhiteBoxTests::testTokenizer()
     LOK_ASSERT_EQUAL(std::string("ver=-1"), tokens[9]);
 
     // With custom delimiters
-    tokens = Util::tokenize(std::string("ABC:DEF"), ':');
+    tokens = StringVector::tokenize(std::string("ABC:DEF"), ':');
     LOK_ASSERT_EQUAL(std::string("ABC"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("DEF"), tokens[1]);
 
-    tokens = Util::tokenize(std::string("ABC,DEF,XYZ"), ',');
+    tokens = StringVector::tokenize(std::string("ABC,DEF,XYZ"), ',');
     LOK_ASSERT_EQUAL(std::string("ABC"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("DEF"), tokens[1]);
     LOK_ASSERT_EQUAL(std::string("XYZ"), tokens[2]);
@@ -455,7 +456,7 @@ void WhiteBoxTests::testTokenizer()
           "ws?WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%"
           "2Ffiles%2F593_ocqiesh0cngs&compat=/ws/b26112ab1b6f2ed98ce1329f0f344791/close/31";
 
-    tokens = Util::tokenize(URI, '/');
+    tokens = StringVector::tokenize(URI, '/');
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(7), tokens.size());
     LOK_ASSERT_EQUAL(std::string("31"), tokens[6]);
 
@@ -487,63 +488,63 @@ void WhiteBoxTests::testTokenizerTokenizeAnyOf()
     StringVector tokens;
     const char delimiters[] = "\n\r"; // any of these delimits; and we trim whitespace
 
-    tokens = Util::tokenizeAnyOf("", delimiters);
+    tokens = StringVector::tokenizeAnyOf("", delimiters);
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), tokens.size());
 
-    tokens = Util::tokenizeAnyOf("  ", delimiters);
+    tokens = StringVector::tokenizeAnyOf("  ", delimiters);
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), tokens.size());
 
-    tokens = Util::tokenizeAnyOf("A", delimiters);
+    tokens = StringVector::tokenizeAnyOf("A", delimiters);
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
-    tokens = Util::tokenizeAnyOf("  A", delimiters);
+    tokens = StringVector::tokenizeAnyOf("  A", delimiters);
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
-    tokens = Util::tokenizeAnyOf("A  ", delimiters);
+    tokens = StringVector::tokenizeAnyOf("A  ", delimiters);
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
-    tokens = Util::tokenizeAnyOf(" A ", delimiters);
+    tokens = StringVector::tokenizeAnyOf(" A ", delimiters);
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
 
-    tokens = Util::tokenizeAnyOf(" A  Z ", delimiters);
+    tokens = StringVector::tokenizeAnyOf(" A  Z ", delimiters);
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A  Z"), tokens[0]);
 
-    tokens = Util::tokenizeAnyOf("\n", delimiters);
+    tokens = StringVector::tokenizeAnyOf("\n", delimiters);
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), tokens.size());
 
-    tokens = Util::tokenizeAnyOf("\n\r\r\n", delimiters);
+    tokens = StringVector::tokenizeAnyOf("\n\r\r\n", delimiters);
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), tokens.size());
 
-    tokens = Util::tokenizeAnyOf(" A  \nZ ", delimiters);
+    tokens = StringVector::tokenizeAnyOf(" A  \nZ ", delimiters);
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(2), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
-    tokens = Util::tokenizeAnyOf(" A  Z\n ", delimiters);
+    tokens = StringVector::tokenizeAnyOf(" A  Z\n ", delimiters);
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A  Z"), tokens[0]);
 
-    tokens = Util::tokenizeAnyOf(" A  Z  \n\r\r\n ", delimiters);
+    tokens = StringVector::tokenizeAnyOf(" A  Z  \n\r\r\n ", delimiters);
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A  Z"), tokens[0]);
 
-    tokens = Util::tokenizeAnyOf(" A  \n\r\r\n  \r  \n  Z  \n ", delimiters);
+    tokens = StringVector::tokenizeAnyOf(" A  \n\r\r\n  \r  \n  Z  \n ", delimiters);
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(2), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
-    tokens = Util::tokenizeAnyOf("  \r A  \n  \r  \n  Z  \n ", delimiters);
+    tokens = StringVector::tokenizeAnyOf("  \r A  \n  \r  \n  Z  \n ", delimiters);
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(2), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("Z"), tokens[1]);
 
-    tokens = Util::tokenizeAnyOf(std::string("A\rB\nC\n\rD\r\nE\r\rF\n\nG\r\r\n\nH"),
-                                 delimiters);
+    tokens = StringVector::tokenizeAnyOf(std::string("A\rB\nC\n\rD\r\nE\r\rF\n\nG\r\r\n\nH"),
+                                         delimiters);
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(8), tokens.size());
     LOK_ASSERT_EQUAL(std::string("A"), tokens[0]);
     LOK_ASSERT_EQUAL(std::string("B"), tokens[1]);

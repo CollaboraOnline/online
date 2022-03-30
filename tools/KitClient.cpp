@@ -85,7 +85,7 @@ protected:
             std::string line;
             std::getline(std::cin, line);
 
-            StringVector tokens(Util::tokenize(line, ' '));
+            StringVector tokens(StringVector::tokenize(line, ' '));
 
             if (tokens.size() == 0)
                 continue;

@@ -61,7 +61,7 @@ UnitBase::TestResult UnitBadDocLoad::testBadDocLoadFail()
         helpers::sendTextFrame(socket, "load url=" + documentURL, testname);
 
         const auto response = helpers::getResponseString(socket, "error:", testname);
-        StringVector tokens(Util::tokenize(response, ' '));
+        StringVector tokens(StringVector::tokenize(response, ' '));
         LOK_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
 
         std::string errorCommand;
