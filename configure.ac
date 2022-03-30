@@ -208,6 +208,11 @@ AC_ARG_WITH(info-url,
         [Set the info url of the build.]),
 ,)
 
+AC_ARG_WITH(release-url,
+    AS_HELP_STRING([--with-release-url=""],
+        [Set the release url of the build.]),
+,)
+
 AC_ARG_ENABLE([seccomp],
               AS_HELP_STRING([--disable-seccomp],
                              [Disable use of linux/seccomp.h header when kernel on target system does not support it.
@@ -729,6 +734,13 @@ if test -n "$with_info_url" -a "$with_info_url" != "no"; then
     INFO_URL="$with_info_url"
 fi
 AC_SUBST(INFO_URL)
+
+RELEASE_URL='https://rating.collaboraonline.com'
+if test -n "$with_release_url" -a "$with_release_url" != "no"; then
+    RELEASE_URL="$with_release_url"
+fi
+AC_DEFINE_UNQUOTED([RELEASE_URL],["$RELEASE_URL"],["The release url of the build"])
+AC_SUBST(RELEASE_URL)
 
 ENABLE_IOSAPP=
 IOSAPP_BUNDLE_VERSION=

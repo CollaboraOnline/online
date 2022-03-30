@@ -1076,6 +1076,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_LOCATION%"), std::string(FEEDBACK_LOCATION));
 #endif
 
+    Poco::replaceInPlace(preprocess, std::string("%RELEASE_URL%"), std::string(RELEASE_URL));
+
     const std::string mimeType = "text/html";
 
     // Document signing: if endpoint URL is configured, whitelist that for
@@ -1083,9 +1085,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     std::ostringstream cspOss;
     cspOss << "Content-Security-Policy: default-src 'none'; "
 #ifdef ENABLE_FEEDBACK
-        "frame-src 'self' " << uriFeedback.getAuthority() << " blob: " << documentSigningURL << "; "
+        "frame-src 'self' " << RELEASE_URL << " " << uriFeedback.getAuthority() << " blob: " << documentSigningURL << "; "
 #else
-        "frame-src 'self' blob: " << documentSigningURL << "; "
+        "frame-src 'self' blob: " << RELEASE_URL << " " << documentSigningURL << "; "
 #endif
            "connect-src 'self' " << cnxDetails.getWebSocketUrl() << "; "
            "script-src 'unsafe-inline' 'self'; "
