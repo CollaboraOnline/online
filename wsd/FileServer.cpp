@@ -60,10 +60,6 @@ using Poco::Util::Application;
 
 std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHandler::FileHash;
 
-/// Place from where we serve the welcome-<lang>.html; defaults to
-/// welcome.html if no lang matches.
-#define WELCOME_ENDPOINT "/browser/dist/welcome"
-
 namespace {
 
 int functionConversation(int /*num_msg*/, const struct pam_message** /*msg*/,
@@ -546,43 +542,17 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             }
         }
 
-        // handling of the language in welcome-*.html - shorten the langtag as
-        // necessary, if we don't have the particular language version
-        if (Util::startsWith(relPath, WELCOME_ENDPOINT "/"))
-        {
-            bool found = true;
-            while (FileHash.find(relPath) == FileHash.end())
-            {
-                size_t dot = relPath.find_last_of('.');
-                if (dot == std::string::npos)
-                {
-                    found = false;
-                    break;
-                }
-
-                size_t dash = relPath.find_last_of("-_", dot);
-                if (dash == std::string::npos)
-                {
-                    found = false;
-                    break;
-                }
-
-                relPath = relPath.substr(0, dash) + relPath.substr(dot);
-                LOG_TRC("Shortening welcome file request to: " << relPath);
-            }
-
-            if (!found)
-                throw Poco::FileNotFoundException("Invalid URI welcome file request: [" + requestUri.toString() + "].");
-
-            endPoint = relPath.substr(sizeof(WELCOME_ENDPOINT));
-        }
-
         // Is this a file we read at startup - if not; it's not for serving.
         if (FileHash.find(relPath) == FileHash.end())
             throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
 
+        if (endPoint == "welcome.html")
+        {
+            preprocessWelcomeFile(request, requestDetails, message, socket);
+            return;
+        }
+
         if (endPoint == "cool.html" ||
-            endPoint == "welcome.html" ||
             endPoint == "help-localizations.json" ||
             endPoint == "localizations.json" ||
             endPoint == "locore-localizations.json" ||
@@ -839,16 +809,6 @@ void FileServerRequestHandler::initialize()
     } catch (...) {
         LOG_ERR("Failed to read from directory " << COOLWSD::FileServerRoot);
     }
-
-    // welcome / release notes files
-    if (!COOLWSD::WelcomeFilesRoot.empty())
-    {
-        try {
-            readDirToHash(COOLWSD::WelcomeFilesRoot, "", WELCOME_ENDPOINT);
-        } catch (...) {
-            LOG_ERR("Failed to read from directory " << COOLWSD::WelcomeFilesRoot);
-        }
-    }
 }
 
 const std::string *FileServerRequestHandler::getCompressedFile(const std::string &path)
@@ -1038,14 +998,11 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
 #if ENABLE_WELCOME_MESSAGE
     std::string enableWelcomeMessage = "true";
-    std::string enableWelcomeMessageButton = "false";
 #else // configurable
     std::string enableWelcomeMessage = stringifyBoolFromConfig(config, "welcome.enable", false);
-    std::string enableWelcomeMessageButton = stringifyBoolFromConfig(config, "welcome.enable_button", false);
 #endif
 
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG%"), enableWelcomeMessage);
-    Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG_BTN%"), enableWelcomeMessageButton);
 
     // the config value of 'notebookbar' or 'classic' overrides the UIMode
     // from the WOPI
@@ -1071,10 +1028,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     std::string enableMacrosExecution = stringifyBoolFromConfig(config, "security.enable_macros_execution", false);
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_MACROS_EXECUTION%"), enableMacrosExecution);
 
-#ifdef ENABLE_FEEDBACK
-    Poco::URI uriFeedback(FEEDBACK_LOCATION);
-    Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_LOCATION%"), std::string(FEEDBACK_LOCATION));
-#endif
+    Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_URL%"), std::string(FEEDBACK_URL));
+    Poco::replaceInPlace(preprocess, std::string("%WELCOME_URL%"), std::string(WELCOME_URL));
+    Poco::replaceInPlace(preprocess, std::string("%INFOBAR_URL%"), std::string(INFOBAR_URL));
 
     const std::string mimeType = "text/html";
 
@@ -1082,11 +1038,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     // iframe purposes.
     std::ostringstream cspOss;
     cspOss << "Content-Security-Policy: default-src 'none'; "
-#ifdef ENABLE_FEEDBACK
-        "frame-src 'self' " << uriFeedback.getAuthority() << " blob: " << documentSigningURL << "; "
-#else
-        "frame-src 'self' blob: " << documentSigningURL << "; "
-#endif
+        "frame-src 'self' " << WELCOME_URL << " " << FEEDBACK_URL << " " << INFOBAR_URL << " blob: " << documentSigningURL << "; "
            "connect-src 'self' " << cnxDetails.getWebSocketUrl() << "; "
            "script-src 'unsafe-inline' 'self'; "
            "style-src 'self' 'unsafe-inline'; "
@@ -1217,6 +1169,42 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     socket->send(oss.str());
     LOG_TRC("Sent file: " << relPath << ": " << preprocess);
+}
+
+
+void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
+                                                     const RequestDetails &/*requestDetails*/,
+                                                     Poco::MemoryInputStream& /*message*/,
+                                                     const std::shared_ptr<StreamSocket>& socket)
+{
+    Poco::Net::HTTPResponse response;
+    const std::string relPath = getRequestPathname(request);
+    LOG_DBG("Preprocessing file: " << relPath);
+    std::string templateWelcome = *getUncompressedFile(relPath);
+
+#if ENABLE_WELCOME_MESSAGE
+    std::string enableWelcomeMessage = "true";
+#else // configurable
+    const auto& config = Application::instance().config();
+    std::string enableWelcomeMessage = stringifyBoolFromConfig(config, "welcome.enable", false);
+#endif
+
+    // Ask UAs to block if they detect any XSS attempt
+    response.add("X-XSS-Protection", "1; mode=block");
+    // No referrer-policy
+    response.add("Referrer-Policy", "no-referrer");
+    response.add("X-Content-Type-Options", "nosniff");
+    response.set("Server", HTTP_SERVER_STRING);
+    response.set("Date", Util::getHttpTimeNow());
+
+    response.setContentType("text/html");
+    response.setChunkedTransferEncoding(false);
+
+    std::ostringstream oss;
+    response.write(oss);
+    oss << templateWelcome;
+    socket->send(oss.str());
+    LOG_TRC("Sent file: " << relPath);
 }
 
 void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,

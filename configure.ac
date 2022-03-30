@@ -208,6 +208,11 @@ AC_ARG_WITH(info-url,
         [Set the info url of the build.]),
 ,)
 
+AC_ARG_WITH(welcome-url,
+    AS_HELP_STRING([--with-welcome-url=<url>],
+        [Set the welcome url of the build.]),
+,)
+
 AC_ARG_ENABLE([seccomp],
               AS_HELP_STRING([--disable-seccomp],
                              [Disable use of linux/seccomp.h header when kernel on target system does not support it.
@@ -286,19 +291,13 @@ AC_ARG_WITH([max-documents],
              AS_HELP_STRING([--with-max-documents],
                            [Set the limit on the total number of documents. Def: 10, Min: 2.]))
 
-AC_ARG_WITH([feedback-location],
-            AS_HELP_STRING([--with-feedback-location=<url>],
-                           [User feedback URL location. Default to http://127.0.0.1:8000/Rate/feedback.html]))
+AC_ARG_WITH([feedback-url],
+            AS_HELP_STRING([--with-feedback-url=<url>],
+                           [User feedback URL.]))
 
-AC_ARG_ENABLE(welcome-message,
-    AS_HELP_STRING([--enable-welcome-message],
-        [Ensures welcome message is enabled on version update.])
-)
-
-AC_ARG_ENABLE(feedback,
-    AS_HELP_STRING([--enable-feedback],
-        [Enables feedback, user rating.])
-)
+AC_ARG_WITH([infobar-url],
+            AS_HELP_STRING([--with-infobar-url=<url>],
+                           [Infobar URL.]))
 
 AC_ARG_WITH([sanitizer],
              AS_HELP_STRING([--with-sanitizer],
@@ -783,36 +782,35 @@ AS_IF([test "$MAX_DOCUMENTS" -lt "2"],
 AC_DEFINE_UNQUOTED([MAX_DOCUMENTS],[$MAX_DOCUMENTS],[Limit the maximum number of open documents])
 AC_SUBST(MAX_DOCUMENTS)
 
-ENABLE_FEEDBACK=
-FEEDBACK_LOCATION=
+FEEDBACK_URL=
+
+if test -n "$with_feedback_url"; then
+   FEEDBACK_URL=$with_feedback_url
+fi
+
+AC_DEFINE_UNQUOTED([FEEDBACK_URL],["$FEEDBACK_URL"],[User feedback URL.])
+
+INFOBAR_URL=
+if test -n "$with_infobar_url"; then
+   INFOBAR_URL=$with_infobar_url
+fi
+
+AC_DEFINE_UNQUOTED([INFOBAR_URL],["$INFOBAR_URL"],[Infobar URL.])
 
 WELCOME_CONFIG_FRAGMENT=/dev/null
 ENABLE_WELCOME_MESSAGE=0
-
-if test "$enable_feedback" = "yes"; then
-   ENABLE_FEEDBACK="true"
-
-   if test -n "$with_feedback_location"; then
-       FEEDBACK_LOCATION=$with_feedback_location
-   else
-       FEEDBACK_LOCATION="http://127.0.0.1:8000/Rate/feedback.html"
-   fi
-
-   if test "$enable_welcome_message" = "yes"; then # allow configuration
-      ENABLE_WELCOME_MESSAGE=1
-   else
-      WELCOME_CONFIG_FRAGMENT=$srcdir/coolwsd-welcome.xml
-   fi
+WELCOME_URL=
+if test -n "$with_welcome_url"; then
+    WELCOME_URL=$with_welcome_url
+    ENABLE_WELCOME_MESSAGE=1
+else
+    WELCOME_CONFIG_FRAGMENT=$srcdir/coolwsd-welcome.xml
 fi
-
-AC_DEFINE_UNQUOTED([ENABLE_FEEDBACK],["$ENABLE_FEEDBACK"],[User feedback rating])
-AC_DEFINE_UNQUOTED([FEEDBACK_LOCATION],["$FEEDBACK_LOCATION"],[User feedback URL location])
-AC_SUBST(ENABLE_FEEDBACK)
-AM_CONDITIONAL([ENABLE_FEEDBACK], [test "$ENABLE_FEEDBACK" = "true"])
 
 AC_SUBST_FILE([WELCOME_CONFIG_FRAGMENT])
 AC_DEFINE_UNQUOTED([ENABLE_WELCOME_MESSAGE],$ENABLE_WELCOME_MESSAGE,[Should the Release notes message be shown on upgrade])
-AC_SUBST(ENABLE_WELCOME)
+AM_CONDITIONAL([ENABLE_WELCOME_MESSAGE], [test "$ENABLE_WELCOME_MESSAGE" = "1"])
+AC_DEFINE_UNQUOTED([WELCOME_URL],["$WELCOME_URL"],[The welcome url of the build.])
 
 VEREIGN_URL=
 if test "$enable_vereign" = "yes"; then

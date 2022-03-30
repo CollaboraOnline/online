@@ -37,7 +37,6 @@ L.Map.Infobar = L.Handler.extend({
 		this._map.off('updateviewslist', this.onUpdateList, this);
 		L.DomEvent.on(window, 'message', this.onMessage, this);
 
-		var url = window.feedbackLocation.replace(/Rate\/feedback.html/g, 'UpdateCheck/updatecheck.html');
 		this.remove();
 
 		var loolwsdHash = document.querySelector('#loolwsd-version a') || {};
@@ -54,7 +53,7 @@ L.Map.Infobar = L.Handler.extend({
 			method: 'post'
 		};
 
-		this._iframeInfobar = L.iframeDialog(url, params,
+		this._iframeInfobar = L.iframeDialog(window.infobarUrl, params,
 						     L.DomUtil.get('main-document-content'),
 						     options);
 	},
@@ -87,6 +86,6 @@ L.Map.Infobar = L.Handler.extend({
 	}
 });
 
-if (window.feedbackLocation) {
+if (window.infobarUrl && window.isLocalStorageAllowed) {
 	L.Map.addInitHook('addHandler', 'infobar', L.Map.Infobar);
 }

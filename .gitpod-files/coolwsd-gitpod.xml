@@ -128,8 +128,6 @@
 
     <welcome>
       <enable type="bool" desc="Controls whether the welcome screen should be shown to the users on new install and updates." default="false">false</enable>
-      <enable_button type="bool" desc="Controls whether the welcome screen should have an explanatory button instead of an X button to close the dialog." default="false">false</enable_button>
-      <path desc="Path to 'welcome-$lang.html' files served on first start or when the version changes. When empty, defaults to the Release notes." type="path" relative="true" default="browser/welcome"></path>
     </welcome>
 
     <user_interface>

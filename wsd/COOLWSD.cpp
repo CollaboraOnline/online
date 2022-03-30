@@ -867,7 +867,6 @@ std::string COOLWSD::LoTemplate = LO_PATH;
 std::string COOLWSD::ChildRoot;
 std::string COOLWSD::ServerName;
 std::string COOLWSD::FileServerRoot;
-std::string COOLWSD::WelcomeFilesRoot;
 std::string COOLWSD::ServiceRoot;
 std::string COOLWSD::LOKitVersion;
 std::string COOLWSD::ConfigFile = COOLWSD_CONFIGDIR "/coolwsd.xml";
@@ -1487,8 +1486,6 @@ void COOLWSD::innerInitialize(Application& self)
         { "trace.path[@snapshot]", "false" },
         { "trace[@enable]", "false" },
         { "welcome.enable", "false" },
-        { "welcome.enable_button", "true" },
-        { "welcome.path", "browser/welcome" },
 #ifdef ENABLE_FEATURE_LOCK
         { "feature_lock.locked_hosts[@allow]", "false"},
         { "feature_lock.locked_hosts.fallback[@read_only]", "false"},
@@ -1864,12 +1861,7 @@ void COOLWSD::innerInitialize(Application& self)
 
 #if ENABLE_WELCOME_MESSAGE
     conf.setString("welcome.enable", "true");
-    conf.setString("welcome.enable_button", "false");
-    conf.setString("welcome.path", "browser/welcome");
 #endif
-    WelcomeFilesRoot = getPathFromConfig("welcome.path");
-    if (!getConfigValue<bool>(conf, "welcome.enable", true))
-        WelcomeFilesRoot = "";
 
     NumPreSpawnedChildren = getConfigValue<int>(conf, "num_prespawn_children", 1);
     if (NumPreSpawnedChildren < 1)
@@ -4418,7 +4410,6 @@ public:
            << "\n  LoTemplate: " << COOLWSD::LoTemplate
            << "\n  ChildRoot: " << COOLWSD::ChildRoot
            << "\n  FileServerRoot: " << COOLWSD::FileServerRoot
-           << "\n  WelcomeFilesRoot: " << COOLWSD::WelcomeFilesRoot
            << "\n  ServiceRoot: " << COOLWSD::ServiceRoot
            << "\n  LOKitVersion: " << COOLWSD::LOKitVersion
            << "\n  HostIdentifier: " << Util::getProcessIdentifier()

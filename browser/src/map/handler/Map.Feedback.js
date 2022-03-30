@@ -86,7 +86,7 @@ L.Map.Feedback = L.Handler.extend({
 			id: 'iframe-feedback',
 		};
 
-		this._iframeDialog = L.iframeDialog(window.feedbackLocation, params, null, options);
+		this._iframeDialog = L.iframeDialog(window.feedbackUrl, params, null, options);
 	},
 
 	onError: function () {
@@ -124,6 +124,6 @@ L.Map.Feedback = L.Handler.extend({
 		}
 	}
 });
-if (window.feedbackLocation && window.isLocalStorageAllowed) {
+if (window.feedbackUrl && window.isLocalStorageAllowed) {
 	L.Map.addInitHook('addHandler', 'feedback', L.Map.Feedback);
 }

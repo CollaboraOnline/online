@@ -14,13 +14,13 @@ m4_define(_YEAR_,m4_esyscmd(date +%Y|tr -d '\n'))
 
 <script>
 m4_dnl# Define MOBILEAPP as true if this is either for the iOS app or for the gtk+ "app" testbed
+   window.welcomeUrl = '%WELCOME_URL%';
+   window.feedbackUrl = '%FEEDBACK_URL%';
+   window.infobarUrl = '%INFOBAR_URL%';
 m4_define([MOBILEAPP],[])
 m4_ifelse(IOSAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(ANDROIDAPP,[true],[m4_define([MOBILEAPP],[true])])
-
-m4_ifelse(ENABLE_FEEDBACK,[true],[  window.feedbackLocation = '%FEEDBACK_LOCATION%';])
-
 m4_ifelse(MOBILEAPP,[],
   // Start listening for Host_PostmessageReady message and save the
   // result for future
@@ -304,7 +304,6 @@ m4_ifelse(MOBILEAPP,[true],
       window.postMessageOriginExt = '';
       window.coolLogging = 'true';
       window.enableWelcomeMessage = false;
-      window.enableWelcomeMessageButton = false;
       window.outOfFocusTimeoutSecs = 1000000;
       window.idleTimeoutSecs = 1000000;
       window.protocolDebug = false;
@@ -324,7 +323,6 @@ m4_ifelse(MOBILEAPP,[true],
       window.coolLogging = '%BROWSER_LOGGING%';
       window.coolwsdVersion = '%COOLWSD_VERSION%';
       window.enableWelcomeMessage = %ENABLE_WELCOME_MSG%;
-      window.enableWelcomeMessageButton = %ENABLE_WELCOME_MSG_BTN%;
       window.userInterfaceMode = '%USER_INTERFACE_MODE%';
       window.useIntegrationTheme = '%USE_INTEGRATION_THEME%';
       window.enableMacrosExecution = '%ENABLE_MACROS_EXECUTION%';

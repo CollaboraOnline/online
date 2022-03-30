@@ -54,8 +54,10 @@ endif
 COOL_HTML_SRC = $(shell find $(srcdir)/html -name '*.html')
 COOL_HTML_DST = $(patsubst $(srcdir)/html/%.html,$(DIST_FOLDER)/%.html,$(COOL_HTML_SRC))
 
+if ENABLE_WELCOME_MESSAGE
 COOL_WELCOME_SRC = $(shell find $(srcdir)/welcome -name '*')
 COOL_WELCOME_DST = $(patsubst $(srcdir)/welcome/%,$(DIST_FOLDER)/welcome/%,$(COOL_WELCOME_SRC))
+endif
 
 COOL_ADMIN_SRC = $(shell find $(srcdir)/admin -name '*.html' -or -name '*.css' -or -name '*.ttf' -or -name 'OFL.txt' -or -name '*.svg')
 COOL_ADMIN_ALL = $(shell find $(srcdir)/admin -name '*')
@@ -130,12 +132,14 @@ COOL_CSS_LST =\
 	$(srcdir)/css/spreadsheet.css \
 	$(srcdir)/css/writer-mobile.css \
 	$(srcdir)/css/editor.css \
+	$(srcdir)/css/iframedialog.css \
 	$(builddir)/node_modules/jquery-contextmenu/dist/jquery.contextMenu.css \
 	$(builddir)/node_modules/vex-js/dist/css/vex.css \
 	$(builddir)/node_modules/vex-js/dist/css/vex-theme-plain.css \
 	$(builddir)/node_modules/vex-js/dist/css/vex-theme-bottom-right-corner.css \
 	$(builddir)/node_modules/smartmenus/dist/css/sm-core-css.css \
 	$(builddir)/node_modules/smartmenus/dist/css/sm-simple/sm-simple.css \
+	$(srcdir)/css/welcome.css \
 	$(srcdir)/css/menubar.css \
 	$(srcdir)/css/mobilewizard.css \
 	$(srcdir)/css/jsdialogs.css \
@@ -146,11 +150,6 @@ COOL_CSS_LST =\
 	$(srcdir)/css/override-smartmenus.css \
 	$(srcdir)/css/jquery-ui-lightness.css \
 	$(srcdir)/css/infobar.css
-
-if ENABLE_FEEDBACK
-COOL_CSS_LST += $(srcdir)/css/iframedialog.css \
-	$(srcdir)/css/welcome.css
-endif
 
 COOL_CSS = $(filter %,$(COOL_CSS_LST))
 
@@ -213,6 +212,7 @@ COOL_JS_LST =\
 	src/geo/projection/Projection.LonLat.js \
 	src/geo/crs/CRS.js \
 	src/geo/crs/CRS.Simple.js \
+	src/control/IFrameDialog.js \
 	src/map/Map.js \
 	src/map/Clipboard.js \
 	src/layer/Layer.js \
@@ -292,6 +292,9 @@ COOL_JS_LST =\
 	src/map/handler/Map.TouchGesture.js \
 	src/map/handler/Map.BoxZoom.js \
 	src/map/handler/Map.Keyboard.js \
+	src/map/handler/Map.Welcome.js \
+	src/map/handler/Map.Feedback.js \
+	src/map/handler/Map.Infobar.js \
 	src/dom/DomEvent.MultiClick.js \
 	src/map/handler/Map.Mouse.js \
 	src/map/handler/Map.Print.js \
@@ -321,7 +324,8 @@ COOL_JS_LST =\
 	src/control/Control.Selection.js \
 	src/control/Control.LokDialog.js \
 	src/control/Control.AlertDialog.js \
-	src/control/Control.Infobar.js src/control/ColorPicker.js \
+	src/control/Control.Infobar.js \
+	src/control/ColorPicker.js \
 	src/control/Control.JSDialog.js \
 	src/control/Control.JSDialogBuilder.js \
 	src/control/Control.MobileWizardBuilder.js \
@@ -364,17 +368,7 @@ COOL_JS_LST =\
 	src/map/anim/Map.PanAnimation.js \
 	src/dom/PosAnimation.Timer.js \
 	src/control/Control.Scroll.Annotation.js \
-	src/layer/marker/DivOverlay.js
-
-if ENABLE_FEEDBACK
-COOL_JS_LST +=\
-	src/control/IFrameDialog.js \
-	src/map/handler/Map.Infobar.js \
-	src/map/handler/Map.Feedback.js \
-	src/map/handler/Map.Welcome.js
-endif
-
-COOL_JS_LST +=\
+	src/layer/marker/DivOverlay.js \
 	src/main.js
 
 COOL_JS_WEBORDER = $(filter %,$(COOL_JS_LST))
@@ -534,7 +528,6 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 	$(DIST_FOLDER)/bundle.js
 	@echo "Generating cool.html..."
 	m4 -PE -DBUNDLE=$(IS_BUNDLE) \
-		-DENABLE_FEEDBACK=$(ENABLE_FEEDBACK) \
 		-DIOSAPP=$(ENABLE_IOSAPP) \
 		-DGTKAPP=$(ENABLE_GTKAPP) \
 		-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
@@ -583,6 +576,7 @@ $(DIST_FOLDER)/%.html: $(srcdir)/html/%.html
 		`ln -sf $(abs_srcdir)/$< $@`; \
 	fi
 
+if ENABLE_WELCOME_MESSAGE
 $(DIST_FOLDER)/welcome/%: $(srcdir)/welcome/%
 	@mkdir -p $(dir $@)
 	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
@@ -590,7 +584,7 @@ $(DIST_FOLDER)/welcome/%: $(srcdir)/welcome/%
 	else \
 		`ln -sf $(abs_srcdir)/$< $@`; \
 	fi
-
+endif
 
 if ENABLE_DEBUG
 SourceMap=--allowJs true --sourceMap true --inlineSources true
