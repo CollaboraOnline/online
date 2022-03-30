@@ -292,7 +292,7 @@ AC_ARG_WITH([feedback-location],
 
 AC_ARG_ENABLE(welcome-message,
     AS_HELP_STRING([--enable-welcome-message],
-        [Ensures welcome message is enabled on version update.])
+        [Enables welcome message on version update. Can be changed later in coolwsd.xml.])
 )
 
 AC_ARG_ENABLE(feedback,
@@ -783,11 +783,14 @@ AS_IF([test "$MAX_DOCUMENTS" -lt "2"],
 AC_DEFINE_UNQUOTED([MAX_DOCUMENTS],[$MAX_DOCUMENTS],[Limit the maximum number of open documents])
 AC_SUBST(MAX_DOCUMENTS)
 
+ENABLE_WELCOME_MESSAGE=false
+AS_IF([test "$enable_welcome_message" = "yes"],
+      [ENABLE_WELCOME_MESSAGE="true"])
+AC_DEFINE_UNQUOTED([ENABLE_WELCOME_MESSAGE],["$ENABLE_WELCOME_MESSAGE"],[Should the Release notes message on startup be enabled by default?])
+AC_SUBST(ENABLE_WELCOME_MESSAGE)
+
 ENABLE_FEEDBACK=
 FEEDBACK_LOCATION=
-
-WELCOME_CONFIG_FRAGMENT=/dev/null
-ENABLE_WELCOME_MESSAGE=0
 
 if test "$enable_feedback" = "yes"; then
    ENABLE_FEEDBACK="true"
@@ -797,12 +800,6 @@ if test "$enable_feedback" = "yes"; then
    else
        FEEDBACK_LOCATION="http://127.0.0.1:8000/Rate/feedback.html"
    fi
-
-   if test "$enable_welcome_message" = "yes"; then # allow configuration
-      ENABLE_WELCOME_MESSAGE=1
-   else
-      WELCOME_CONFIG_FRAGMENT=$srcdir/coolwsd-welcome.xml
-   fi
 fi
 
 AC_DEFINE_UNQUOTED([ENABLE_FEEDBACK],["$ENABLE_FEEDBACK"],[User feedback rating])
@@ -810,9 +807,11 @@ AC_DEFINE_UNQUOTED([FEEDBACK_LOCATION],["$FEEDBACK_LOCATION"],[User feedback URL
 AC_SUBST(ENABLE_FEEDBACK)
 AM_CONDITIONAL([ENABLE_FEEDBACK], [test "$ENABLE_FEEDBACK" = "true"])
 
-AC_SUBST_FILE([WELCOME_CONFIG_FRAGMENT])
-AC_DEFINE_UNQUOTED([ENABLE_WELCOME_MESSAGE],$ENABLE_WELCOME_MESSAGE,[Should the Release notes message be shown on upgrade])
-AC_SUBST(ENABLE_WELCOME)
+ENABLE_WELCOME_MESSAGE_BUTTON=false
+AS_IF([test "$enable_welcome_message_button" = "yes"],
+      [ENABLE_WELCOME_MESSAGE_BUTTON="true"])
+AC_DEFINE_UNQUOTED([ENABLE_WELCOME_MESSAGE_BUTTON],["$ENABLE_WELCOME_MESSAGE_BUTTON"],[Should the Release notes message on startup should have a dismiss button instead of an x button to close by default?])
+AC_SUBST(ENABLE_WELCOME_MESSAGE_BUTTON)
 
 VEREIGN_URL=
 if test "$enable_vereign" = "yes"; then
