@@ -6503,6 +6503,13 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		tile.el = canvas;
 
+		if (isKeyframe && delta.length != canvas.width * canvas.height * 4)
+		{
+			console.log('Broken keyframe - assuming it is a delta, size mismatch: ' +
+				    delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
+			isKeyframe = false;
+		}
+
 		// apply potentially several deltas in turn.
 		var offset = 0;
 		while (offset < delta.length)
