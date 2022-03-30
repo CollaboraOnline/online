@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CStyleData $ _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Zlib */
+/* global app L CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CStyleData $ _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -6485,8 +6485,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_applyDelta: function(tile, rawDelta, isKeyframe) {
 		// decompress the delta.
-		var inflator = new Zlib.RawInflate(rawDelta);
-		var delta = inflator.decompress();
+		var delta = window.pako.inflateRaw(rawDelta);
 
 		// 'Uint8Array' delta
 		var canvas;
