@@ -491,7 +491,7 @@ static void addStorageDebugCookie(Poco::Net::HTTPRequest& request)
     if (std::getenv("COOL_STORAGE_COOKIE"))
     {
         Poco::Net::NameValueCollection nvcCookies;
-        StringVector cookieTokens = Util::tokenize(std::string(std::getenv("COOL_STORAGE_COOKIE")), ':');
+        StringVector cookieTokens = StringVector::tokenize(std::string(std::getenv("COOL_STORAGE_COOKIE")), ':');
         if (cookieTokens.size() == 2)
         {
             nvcCookies.add(cookieTokens[0], cookieTokens[1]);

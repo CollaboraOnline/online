@@ -13,6 +13,7 @@
 #include <functional>
 
 #include "Protocol.hpp"
+#include "StringVector.hpp"
 #include "Log.hpp"
 
 /// The payload type used to send/receive data.
@@ -29,7 +30,7 @@ public:
             const enum Dir dir) :
         _forwardToken(getForwardToken(message.data(), message.size())),
         _data(copyDataAfterOffset(message.data(), message.size(), _forwardToken.size())),
-        _tokens(Util::tokenize(_data.data(), _data.size())),
+        _tokens(StringVector::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
         _type(detectType())
     {
@@ -44,7 +45,7 @@ public:
             const size_t reserve) :
         _forwardToken(getForwardToken(message.data(), message.size())),
         _data(copyDataAfterOffset(message.data(), message.size(), _forwardToken.size())),
-        _tokens(Util::tokenize(message.data() + _forwardToken.size(), message.size() - _forwardToken.size())),
+        _tokens(StringVector::tokenize(message.data() + _forwardToken.size(), message.size() - _forwardToken.size())),
         _id(makeId(dir)),
         _type(detectType())
     {
@@ -59,7 +60,7 @@ public:
             const enum Dir dir) :
         _forwardToken(getForwardToken(p, len)),
         _data(copyDataAfterOffset(p, len, _forwardToken.size())),
-        _tokens(Util::tokenize(_data.data(), _data.size())),
+        _tokens(StringVector::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
         _type(detectType())
     {

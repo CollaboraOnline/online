@@ -318,7 +318,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 {
     LOG_TRC(getName() << ": handling incoming [" << getAbbreviatedMessage(buffer, length) << "].");
     const std::string firstLine = getFirstLine(buffer, length);
-    const StringVector tokens = Util::tokenize(firstLine.data(), firstLine.size());
+    const StringVector tokens = StringVector::tokenize(firstLine.data(), firstLine.size());
 
     std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
     if (!docBroker || docBroker->isMarkedToDestroy())
@@ -1207,7 +1207,7 @@ bool ClientSession::forwardToChild(const std::string& message,
 bool ClientSession::filterMessage(const std::string& message) const
 {
     bool allowed = true;
-    StringVector tokens(Util::tokenize(message, ' '));
+    StringVector tokens(StringVector::tokenize(message, ' '));
 
     // Set allowed flag to false depending on if particular WOPI properties are set
     if (tokens.equals(0, "downloadas"))
@@ -1630,7 +1630,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 #endif
     else if (tokens.size() == 2 && tokens.equals(0, "statechanged:"))
     {
-        StringVector stateTokens(Util::tokenize(tokens[1], '='));
+        StringVector stateTokens(StringVector::tokenize(tokens[1], '='));
         if (stateTokens.size() == 2 && stateTokens.equals(0, ".uno:ModifiedStatus"))
         {
             // Always update the modified flag in the DocBroker faithfully.
@@ -1847,7 +1847,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 const Poco::Dynamic::Var result = parser.parse(stringJSON);
                 const auto& object = result.extract<Poco::JSON::Object::Ptr>();
                 const std::string rectangle = object->get("rectangle").toString();
-                StringVector rectangleTokens(Util::tokenize(rectangle, ','));
+                StringVector rectangleTokens(StringVector::tokenize(rectangle, ','));
                 int x = 0, y = 0, w = 0, h = 0;
                 if (rectangleTokens.size() > 2 &&
                     stringToInteger(rectangleTokens[0], x) &&

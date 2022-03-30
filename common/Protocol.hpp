@@ -17,6 +17,7 @@
 #include <string>
 #include <vector>
 
+#include <StringVector.hpp>
 #include <Util.hpp>
 
 #define LOK_USE_UNSTABLE_API
@@ -162,7 +163,7 @@ namespace COOLProtocol
 
     inline bool getTokenIntegerFromMessage(const std::string& message, const std::string& name, int& value)
     {
-        return getTokenInteger(Util::tokenize(message), name, value);
+        return getTokenInteger(StringVector::tokenize(message), name, value);
     }
 
     /// Returns the first token of a message.

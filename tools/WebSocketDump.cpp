@@ -142,7 +142,7 @@ private:
             LOG_INF("Incoming websocket request: " << request.getURI());
 
             const std::string& requestURI = request.getURI();
-            StringVector pathTokens(Util::tokenize(requestURI, '/'));
+            StringVector pathTokens(StringVector::tokenize(requestURI, '/'));
             if (request.find("Upgrade") != request.end()
                 && Util::iequal(request["Upgrade"], "websocket"))
             {

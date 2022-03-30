@@ -959,7 +959,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
                         ++outputs;
                     }
 
-                    StringVector args(Util::tokenize(commandLine, ' '));
+                    StringVector args(StringVector::tokenize(commandLine, ' '));
                     std::string command(args[0]);
                     args.erase(args.begin()); // strip the command
 
@@ -3038,7 +3038,7 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
     {
         assert(!_uriJailed.empty());
 
-        StringVector tokens = Util::tokenize(msg);
+        StringVector tokens = StringVector::tokenize(msg);
         if (tokens.size() > 1 && tokens.equals(1, "load"))
         {
             // The json options must come last.

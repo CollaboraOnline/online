@@ -25,7 +25,7 @@ namespace COOLProtocol
         int minor = -1;
         std::string patch;
 
-        StringVector firstTokens(Util::tokenize(version, '.'));
+        StringVector firstTokens(StringVector::tokenize(version, '.'));
         if (firstTokens.size() > 0)
         {
             major = std::stoi(firstTokens[0]);
@@ -33,7 +33,7 @@ namespace COOLProtocol
             StringVector secondTokens;
             if (firstTokens.size() > 1)
             {
-                secondTokens = Util::tokenize(firstTokens[1], '-');
+                secondTokens = StringVector::tokenize(firstTokens[1], '-');
             }
             if (secondTokens.size() > 0)
             {
@@ -171,7 +171,7 @@ namespace COOLProtocol
 
     bool getTokenKeywordFromMessage(const std::string& message, const std::string& name, const std::map<std::string, int>& map, int& value)
     {
-        return getTokenKeyword(Util::tokenize(message), name, map, value);
+        return getTokenKeyword(StringVector::tokenize(message), name, map, value);
     }
 };
 

@@ -143,7 +143,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 {
     LOG_TRC(getName() << ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
     const std::string firstLine = getFirstLine(buffer, length);
-    const StringVector tokens = Util::tokenize(firstLine.data(), firstLine.size());
+    const StringVector tokens = StringVector::tokenize(firstLine.data(), firstLine.size());
 
     if (COOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
     {
@@ -1796,7 +1796,7 @@ bool ChildSession::renderWindow(const StringVector& tokens)
         && paintRectangle != "undefined")
     {
         const StringVector rectParts
-            = Util::tokenize(paintRectangle.c_str(), paintRectangle.length(), ',');
+            = StringVector::tokenize(paintRectangle.c_str(), paintRectangle.length(), ',');
         if (rectParts.size() == 4)
         {
             startX = std::atoi(rectParts[0].c_str());
@@ -2720,7 +2720,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     {
     case LOK_CALLBACK_INVALIDATE_TILES:
         {
-            StringVector tokens(Util::tokenize(payload, ','));
+            StringVector tokens(StringVector::tokenize(payload, ','));
             if (tokens.size() == 5)
             {
                 int part, x, y, width, height;

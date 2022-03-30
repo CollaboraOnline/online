@@ -816,7 +816,7 @@ void parseDocSize(const std::string& message, const std::string& type,
                   int& part, int& parts, int& width, int& height, int& viewid,
                   const std::string& testname)
 {
-    StringVector tokens(Util::tokenize(message, ' '));
+    StringVector tokens(StringVector::tokenize(message, ' '));
 
     // Expected format is something like 'type= parts= current= width= height='.
     const std::string text = tokens[0].substr(std::string("type=").size());
@@ -851,7 +851,7 @@ std::vector<char> assertTileMessage(COOLWebSocket& ws, const std::string& testna
     const std::vector<char> response = getTileMessage(ws, testname);
 
     const std::string firstLine = COOLProtocol::getFirstLine(response);
-    StringVector tileTokens(Util::tokenize(firstLine, ' '));
+    StringVector tileTokens(StringVector::tokenize(firstLine, ' '));
     LOK_ASSERT_EQUAL(std::string("tile:"), tileTokens[0]);
     LOK_ASSERT_EQUAL(std::string("part="), tileTokens[1].substr(0, std::string("part=").size()));
     LOK_ASSERT_EQUAL(std::string("width="), tileTokens[2].substr(0, std::string("width=").size()));

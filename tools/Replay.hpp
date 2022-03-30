@@ -246,7 +246,7 @@ public:
     std::string rewriteMessage(const std::string &msg)
     {
         const std::string firstLine = COOLProtocol::getFirstLine(msg);
-        StringVector tokens = Util::tokenize(firstLine);
+        StringVector tokens = StringVector::tokenize(firstLine);
 
         std::string out = msg;
 
@@ -276,7 +276,7 @@ public:
         _stats->_bytesRecvd += data.size();
 
         const std::string firstLine = COOLProtocol::getFirstLine(data.data(), data.size());
-        StringVector tokens = Util::tokenize(firstLine);
+        StringVector tokens = StringVector::tokenize(firstLine);
         std::cerr << _logPre << "Got msg: " << firstLine << "\n";
 
         if (tokens.equals(0, "tile:")) {

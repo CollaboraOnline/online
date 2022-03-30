@@ -22,6 +22,7 @@
 #include "Protocol.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
+#include "StringVector.hpp"
 #include "FileUtil.hpp"
 
 /// Dumps commands and notification trace.
@@ -197,7 +198,7 @@ public:
             // Remap the URL to the snapshot.
             if (COOLProtocol::matchPrefix("load", data))
             {
-                StringVector tokens = Util::tokenize(data);
+                StringVector tokens = StringVector::tokenize(data);
                 if (tokens.size() >= 2)
                 {
                     std::string url;

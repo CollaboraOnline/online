@@ -172,7 +172,7 @@ UnitBase::TestResult UnitLoad::testExcelLoad()
         const auto status = helpers::assertResponseString(socket, "status:", testname);
 
         // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142 viewid=0\n...'.
-        StringVector tokens(Util::tokenize(status, ' '));
+        StringVector tokens(StringVector::tokenize(status, ' '));
         LOK_ASSERT_EQUAL(static_cast<size_t>(7), tokens.size());
     }
     catch (const Poco::Exception& exc)
