@@ -687,8 +687,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		if (builder.map._clip) {
 			if (isPaste) {
 				var menu = [
-					{text: _UNO('.uno:Paste', 'text'), uno: 'Paste'},
-					{text: _UNO('.uno:PasteSpecial', 'spreadsheet'), uno: 'PasteSpecial'},
+					{text: _UNO('.uno:Paste', 'text'), uno: 'Paste', hint: 'Ctrl + V'},
+					{text: _UNO('.uno:PasteSpecial', 'text'), uno: 'PasteSpecial', hint: 'Ctrl + Shift + Alt + V'},
 				];
 
 				$(control.container).unbind('click.toolbutton');
