@@ -347,7 +347,7 @@ L.Control.JSDialog = L.Control.extend({
 
 		var dialogInfo = this.dialogs[data.id];
 		if (!dialogInfo.invalidated && dialogInfo.setupPosFunc) {
-			setTimeout(dialogInfo.setupPosFunc(true), 100);
+			setTimeout(function () { dialogInfo.setupPosFunc(true); }, 100);
 			dialogInfo.invalidated = true;
 		}
 	},
