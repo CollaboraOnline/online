@@ -799,7 +799,11 @@ ENABLE_FEEDBACK=
 FEEDBACK_LOCATION=
 
 WELCOME_CONFIG_FRAGMENT=/dev/null
-ENABLE_WELCOME_MESSAGE=0
+ENABLE_WELCOME_MESSAGE="false"
+
+if test "$enable_welcome_message" = "yes"; then # allow configuration
+   ENABLE_WELCOME_MESSAGE="true"
+fi
 
 if test "$enable_feedback" = "yes"; then
    ENABLE_FEEDBACK="true"
@@ -808,12 +812,6 @@ if test "$enable_feedback" = "yes"; then
        FEEDBACK_LOCATION=$with_feedback_location
    else
        FEEDBACK_LOCATION="http://127.0.0.1:8000/Rate/feedback.html"
-   fi
-
-   if test "$enable_welcome_message" = "yes"; then # allow configuration
-      ENABLE_WELCOME_MESSAGE=1
-   else
-      WELCOME_CONFIG_FRAGMENT=$srcdir/coolwsd-welcome.xml
    fi
 fi
 
@@ -824,7 +822,8 @@ AM_CONDITIONAL([ENABLE_FEEDBACK], [test "$ENABLE_FEEDBACK" = "true"])
 
 AC_SUBST_FILE([WELCOME_CONFIG_FRAGMENT])
 AC_DEFINE_UNQUOTED([ENABLE_WELCOME_MESSAGE],$ENABLE_WELCOME_MESSAGE,[Should the Release notes message be shown on upgrade])
-AC_SUBST(ENABLE_WELCOME)
+AC_SUBST(ENABLE_WELCOME_MESSAGE)
+AM_CONDITIONAL([ENABLE_WELCOME_MESSAGE], [test "$ENABLE_WELCOME_MESSAGE" = "true"])
 
 VEREIGN_URL=
 if test "$enable_vereign" = "yes"; then

@@ -352,6 +352,7 @@ COOL_JS_LST =\
 	src/control/Control.AutofilterDropdown.js \
 	src/control/Control.Layers.js \
 	src/control/Control.Sidebar.js \
+	src/control/IFrameDialog.js \
 	src/control/Search.js \
 	src/control/Permission.js \
 	src/control/Toolbar.js \
@@ -366,12 +367,15 @@ COOL_JS_LST =\
 	src/control/Control.Scroll.Annotation.js \
 	src/layer/marker/DivOverlay.js
 
+if ENABLE_WELCOME_MESSAGE
+COOL_JS_LST +=\
+	src/map/handler/Map.Welcome.js
+endif
+
 if ENABLE_FEEDBACK
 COOL_JS_LST +=\
-	src/control/IFrameDialog.js \
 	src/map/handler/Map.Infobar.js \
-	src/map/handler/Map.Feedback.js \
-	src/map/handler/Map.Welcome.js
+	src/map/handler/Map.Feedback.js
 endif
 
 COOL_JS_LST +=\
