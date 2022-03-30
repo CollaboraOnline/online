@@ -24,6 +24,7 @@
 #include "ClientSession.hpp"
 #include <Common.hpp>
 #include <Protocol.hpp>
+#include <StringVector.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
 #include <common/FileUtil.hpp>
@@ -327,7 +328,7 @@ void TileCache::invalidateTiles(const std::string& tiles, int normalizedViewId)
 
 std::pair<int, Util::Rectangle> TileCache::parseInvalidateMsg(const std::string& tiles)
 {
-    StringVector tokens = Util::tokenize(tiles);
+    StringVector tokens = StringVector::tokenize(tiles);
 
     assert(!tokens.empty() && tokens.equals(0, "invalidatetiles:"));
 

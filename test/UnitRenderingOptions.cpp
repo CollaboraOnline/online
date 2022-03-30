@@ -54,7 +54,7 @@ void UnitRenderingOptions::invokeWSDTest()
 
         // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.
 
-        StringVector tokens(Util::tokenize(status, ' '));
+        StringVector tokens(StringVector::tokenize(status, ' '));
         LOK_ASSERT_EQUAL(static_cast<size_t>(8), tokens.size());
 
         const std::string token = tokens[5];

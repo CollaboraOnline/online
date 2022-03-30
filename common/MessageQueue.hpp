@@ -88,7 +88,7 @@ public:
 protected:
     virtual void put_impl(const Payload& value)
     {
-        StringVector tokens = Util::tokenize(value.data(), value.size());
+        StringVector tokens = StringVector::tokenize(value.data(), value.size());
         if (tokens.equals(1, "textinput"))
         {
             const std::string newMsg = combineTextInput(tokens);
@@ -144,7 +144,7 @@ protected:
             auto& it = getQueue()[i];
 
             const std::string queuedMessage(it.data(), it.size());
-            StringVector queuedTokens = Util::tokenize(it.data(), it.size());
+            StringVector queuedTokens = StringVector::tokenize(it.data(), it.size());
 
             // If any messages of these types are present before the current ("textinput") message,
             // no combination is possible.
@@ -203,7 +203,7 @@ protected:
             auto& it = getQueue()[i];
 
             const std::string queuedMessage(it.data(), it.size());
-            StringVector queuedTokens = Util::tokenize(it.data(), it.size());
+            StringVector queuedTokens = StringVector::tokenize(it.data(), it.size());
 
             // If any messages of these types are present before the current (removetextcontext)
             // message, no combination is possible.

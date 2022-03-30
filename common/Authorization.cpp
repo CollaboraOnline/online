@@ -9,7 +9,7 @@
 
 #include "Authorization.hpp"
 #include "Log.hpp"
-#include "Util.hpp"
+#include "StringVector.hpp"
 
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
@@ -50,7 +50,7 @@ void Authorization::authorizeRequest(Poco::Net::HTTPRequest& request) const
             //   X-Something-Custom: Huh
             // Split based on \n's or \r's and trim, to avoid nonsense in the
             // headers
-            StringVector tokens(Util::tokenizeAnyOf(_data, "\n\r"));
+            StringVector tokens(StringVector::tokenizeAnyOf(_data, "\n\r"));
             for (auto it = tokens.begin(); it != tokens.end(); ++it)
             {
                 std::string token = tokens.getParam(*it);

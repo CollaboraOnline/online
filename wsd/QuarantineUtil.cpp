@@ -41,7 +41,7 @@ namespace Quarantine
         for (const auto& file : files)
         {
 
-            Util::tokenize(file.c_str(), file.size(), '_', tokens);
+            StringVector::tokenize(file.c_str(), file.size(), '_', tokens);
             Poco::URI::decode(file.substr(tokens[2]._index), decoded);
             COOLWSD::QuarantineMap[decoded].emplace_back(COOLWSD::QuarantinePath + file);
 

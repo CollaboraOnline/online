@@ -172,7 +172,7 @@ UnitBase::TestResult UnitSession::testSlideShow()
         LOK_ASSERT_MESSAGE("did not receive a downloadas: message as expected",
                                !response.empty());
 
-        StringVector tokens(Util::tokenize(response.substr(11), ' '));
+        StringVector tokens(StringVector::tokenize(response.substr(11), ' '));
         // "downloadas: downloadId= port= id=slideshow"
         const std::string downloadId = tokens[0].substr(std::string("downloadId=").size());
         const int port = std::stoi(tokens[1].substr(std::string("port=").size()));

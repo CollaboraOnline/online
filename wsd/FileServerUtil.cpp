@@ -7,9 +7,11 @@
 
 #include <config.h>
 
-#include <Poco/JSON/Object.h>
-
 #include "FileServer.hpp"
+#include "StringVector.hpp"
+#include "Util.hpp"
+
+#include <Poco/JSON/Object.h>
 
 std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefaults, std::string& uiMode)
 {
@@ -31,10 +33,10 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
     Poco::JSON::Object drawingDefs;
 
     uiMode = "";
-    StringVector tokens(Util::tokenize(uiDefaults, ';'));
+    StringVector tokens(StringVector::tokenize(uiDefaults, ';'));
     for (const auto& token : tokens)
     {
-        StringVector keyValue(Util::tokenize(tokens.getParam(token), '='));
+        StringVector keyValue(StringVector::tokenize(tokens.getParam(token), '='));
         Poco::JSON::Object* currentDef = nullptr;
         std::string key;
 
@@ -142,10 +144,10 @@ std::string FileServerRequestHandler::cssVarsToStyle(const std::string& cssVars)
 
     std::ostringstream styleOSS;
     styleOSS << "<style>:root {";
-    StringVector tokens(Util::tokenize(cssVars, ';'));
+    StringVector tokens(StringVector::tokenize(cssVars, ';'));
     for (const auto& token : tokens)
     {
-        StringVector keyValue(Util::tokenize(tokens.getParam(token), '='));
+        StringVector keyValue(StringVector::tokenize(tokens.getParam(token), '='));
         if (keyValue.size() < 2)
         {
             LOG_ERR("Skipping the token [" << tokens.getParam(token) << "] since it does not have '='");

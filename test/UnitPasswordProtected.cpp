@@ -55,7 +55,7 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithout
         helpers::sendTextFrame(socket, "load url=" + documentURL);
 
         auto response = helpers::getResponseString(socket, "error:", testname);
-        StringVector tokens(Util::tokenize(response, ' '));
+        StringVector tokens(StringVector::tokenize(response, ' '));
         LOK_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
 
         std::string errorCommand;
@@ -94,7 +94,7 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithWro
         helpers::sendTextFrame(socket, "load url=" + documentURL + " password=2");
 
         const auto response = helpers::getResponseString(socket, "error:", testname);
-        StringVector tokens(Util::tokenize(response, ' '));
+        StringVector tokens(StringVector::tokenize(response, ' '));
         LOK_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
 
         std::string errorCommand;

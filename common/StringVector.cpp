@@ -79,4 +79,50 @@ bool StringVector::getNameIntegerPair(std::size_t index, std::string& name, int&
     return value > std::numeric_limits<int>::min() && value < std::numeric_limits<int>::max();
 }
 
+StringVector StringVector::tokenizeAnyOf(const std::string& s, const char* delimiters,
+                                         const std::size_t delimitersLength)
+{
+    // trim from the end so that we do not have to check this exact case
+    // later
+    std::size_t length = s.length();
+    while (length > 0 && s[length - 1] == ' ')
+        --length;
+
+    if (length == 0 || delimiters == nullptr || delimitersLength == 0)
+        return StringVector();
+
+    std::size_t start = 0;
+
+    std::vector<StringToken> tokens;
+    tokens.reserve(16);
+
+    while (start < length)
+    {
+        // ignore the leading whitespace
+        while (start < length && s[start] == ' ')
+            ++start;
+
+        // anything left?
+        if (start == length)
+            break;
+
+        std::size_t end = s.find_first_of(delimiters, start, delimitersLength);
+        if (end == std::string::npos)
+            end = length;
+
+        // trim the trailing whitespace
+        std::size_t trimEnd = end;
+        while (start < trimEnd && s[trimEnd - 1] == ' ')
+            --trimEnd;
+
+        // add only non-empty tokens
+        if (start < trimEnd)
+            tokens.emplace_back(start, trimEnd - start);
+
+        start = end + 1;
+    }
+
+    return StringVector(s, std::move(tokens));
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
