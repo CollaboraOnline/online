@@ -495,7 +495,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 /* Icon View */
 
 .ui-iconview {
-	overflow: overlay;
+	overflow: auto;
 	display: inline-flex;
 	display: -ms-inline-flexbox;
 	flex-wrap: wrap;
