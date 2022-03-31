@@ -958,8 +958,7 @@ private:
             os << indent << "last upload time: " << Util::getTimeForLog(now, getLastUploadTime());
             os << indent << "last upload was successful: " << lastUploadSuccessful();
             os << indent << "upload failure count: " << uploadFailureCount();
-            os << indent << "last modified time: " << _lastModifiedTime;
-            os << indent << "last upload time: " << Util::getTimeForLog(now, _lastUploadTime);
+            os << indent << "last modified time (on server): " << _lastModifiedTime;
             os << indent
                << "file last modified: " << Util::getTimeForLog(now, _lastUploadedFileModifiedTime);
         }
