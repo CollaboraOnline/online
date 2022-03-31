@@ -1017,6 +1017,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:HyperlinkDialog'
 			},
 			{
+				'id': 'Insert-Section-NameRangesTable-Ext',
+				'type': 'container',
 				'children': [
 					{
 						'type': 'toolbox',
