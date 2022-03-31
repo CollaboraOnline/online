@@ -2961,13 +2961,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (!parent || !data || !data.id || data.id === '')
 			return;
 
+		var control = parent.querySelector('[id=\'' + data.id + '\']');
 		if (data.visible === 'false' || data.visible === false) {
-			var control = parent.querySelector('[id=\'' + data.id + '\']');
 			if (control)
 				L.DomUtil.addClass(control, 'hidden');
 			else if (parent.id === data.id)
 				L.DomUtil.addClass(parent, 'hidden');
 		}
+
+		// natural tab-order when using keyboard navigation
+		if (control && !control.hasAttribute('tabIndex'))
+			control.setAttribute('tabIndex', '0');
 	},
 
 	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
