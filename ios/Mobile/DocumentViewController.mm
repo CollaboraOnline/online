@@ -564,7 +564,7 @@ static IMP standardImpOfInputAccessoryView = nil;
 }
 
 - (void)fontPickerViewControllerDidPickFont:(UIFontPickerViewController *)viewController {
-    NSLog(@"Picked font: %@", [viewController selectedFontDescriptor]);
+    // NSLog(@"Picked font: %@", [viewController selectedFontDescriptor]);
     NSDictionary<UIFontDescriptorAttributeName, id> *attribs = [[viewController selectedFontDescriptor] fontAttributes];
     NSString *family = attribs[UIFontDescriptorFamilyAttribute];
     if (family && [family length] > 0) {
