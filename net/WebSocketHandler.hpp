@@ -15,6 +15,7 @@
 #include "common/Log.hpp"
 #include "common/TraceEvent.hpp"
 #include "common/Unit.hpp"
+#include "common/Util.hpp"
 #include "Socket.hpp"
 #include <net/HttpRequest.hpp>
 
@@ -732,6 +733,21 @@ protected:
         LOG_TRC("WebSocketHandler::sendFrame: Writing to #"
                 << socket->getFD() << ' ' << len << " bytes in addition to " << out.size()
                 << " bytes buffered.");
+
+#if ENABLE_DEBUG
+        if ((flags & 0xf) == (int)WSOpCode::Text) // utf8 validate
+        {
+            size_t offset = Util::isValidUtf8((unsigned char*)data, len);
+            if (offset < len)
+            {
+                std::string raw(data, len);
+                std::cerr << "attempting to send invalid UTF-8 message '" << raw << "' "
+                          << " error at offset " << len
+                          << "string: " << Util::dumpHex(raw) << "\n";
+                assert("invalid utf-8" && false);
+            }
+        }
+#endif
 
         // This would generate huge amounts of "instant" Trace Events. Is that what we want? If so,
         // it would be good to include in the args some identificating information about the sender
