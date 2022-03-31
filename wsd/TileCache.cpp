@@ -552,7 +552,7 @@ Tile TileCache::saveDataToCache(const TileDesc &desc, const char *data, const si
     {
         tile = std::make_shared<TileData>(desc.getWireId(), data, size);
         _cache[desc] = tile;
-        _cacheSize += tile->size();
+        _cacheSize += itemCacheSize(tile);
     }
     else
         _cacheSize += tile->appendBlob(desc.getWireId(), data, size);
@@ -567,7 +567,7 @@ size_t TileCache::itemCacheSize(const Tile &tile)
 
 void TileCache::assertCacheSize()
 {
-#if 0 // FIXME: ENABLE_DEBUG
+#if ENABLE_DEBUG
     size_t recalcSize = 0;
     for (const auto& it : _cache)
     {

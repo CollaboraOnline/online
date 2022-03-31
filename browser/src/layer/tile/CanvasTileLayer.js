@@ -45,8 +45,6 @@ v.prototype.u=function(c){var d,a=this.input.length/this.d+1|0,b,e,f,g=this.inpu
 v.prototype.m=function(){var c=0,d=this.b,a=this.g,b,e=new (r?Uint8Array:Array)(this.k+(this.a-32768)),f,g,h,k;if(0===a.length)return r?this.b.subarray(32768,this.a):this.b.slice(32768,this.a);f=0;for(g=a.length;f<g;++f){b=a[f];h=0;for(k=b.length;h<k;++h)e[c++]=b[h]}f=32768;for(g=this.a;f<g;++f)e[c++]=d[f];this.g=[];return this.buffer=e};
 v.prototype.r=function(){var c,d=this.a;r?this.p?(c=new Uint8Array(d),c.set(this.b.subarray(0,d))):c=this.b.subarray(0,d):(this.b.length>d&&(this.b.length=d),c=this.b);return this.buffer=c};q("Zlib.RawInflate",v);q("Zlib.RawInflate.prototype.decompress",v.prototype.t);var T={ADAPTIVE:w,BLOCK:x},U,V,W,X;if(Object.keys)U=Object.keys(T);else for(V in U=[],W=0,T)U[W++]=V;W=0;for(X=U.length;W<X;++W)V=U[W],q("Zlib.RawInflate.BufferType."+V,T[V]);}).call(this); //@ sourceMappingURL=rawinflate.min.js.map
 
-/* eslint-enable */
-
 // debugging aid.
 function hex2string(inData)
 {
@@ -59,6 +57,8 @@ function hex2string(inData)
 	}
 	return hexified.join('');
 }
+
+/* eslint-enable */
 
 // CStyleData is used to obtain CSS property values from style data
 // stored in DOM elements in the form of custom CSS properties/variables.
@@ -6483,7 +6483,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_applyDelta: function(tile, rawDelta, isKeyframe) {
 		console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
-			    ' of length ' + rawDelta.length + '\nhex: ' + hex2string(rawDelta));
+			    ' of length ' + rawDelta.length + '\n');
+		// hex: ' + hex2string(rawDelta));
 
 		// decompress the delta.
 		var inflator = new Zlib.RawInflate(rawDelta);
@@ -6525,7 +6526,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var pixSize = canvas.width * canvas.height * 4;
 		console.log('Applying a ' + (isKeyframe ? 'keyframe' : 'delta') +
-			    ' of length ' + delta.length + ' pix size: ' + pixSize + '\nhex: ' + hex2string(delta));
+			    ' of length ' + delta.length + ' pix size: ' + pixSize + '\n');
+		// + ' hex: ' + hex2string(delta));
 
 		if (isKeyframe)
 		{

@@ -70,10 +70,11 @@ struct TileData
     {
         size_t oldSize = 0;
 
+        oldSize = size();
+
         assert (dataSize >= 1); // kit provides us a 'Z' or a 'D'
         if (isKeyframe(data, dataSize))
         {
-            oldSize = size();
             _wids.clear();
             _deltas.clear();
         }
@@ -109,9 +110,7 @@ struct TileData
         return _deltas[0];
     }
 
-    // FIXME: add-delta[!] ...
-
-    /// if we send changes since this ide - do we first send a keyframe ?
+    /// if we send changes since this seq - do we need to first send the keyframe ?
     bool needsKeyframe(TileWireId since)
     {
         return since < _wids[0];
@@ -136,12 +135,12 @@ struct TileData
             output.resize(output.size() + extra);
 
             // FIXME: better writev style interface in the end ?
-            std::cerr << "added " << extra << " to array size " << offset << "\n";
+//            std::cerr << "added " << extra << " to array size " << offset << "\n";
             for (i = start; i < _deltas.size(); ++i)
             {
                 size_t toCopy = _deltas[i]->size();
-                std::cerr << "copy " << toCopy << " bytes to array offset " << offset << ":\n"
-                          << Util::dumpHex(std::string((char *)_deltas[i]->data(), toCopy)) << "\n";
+//                std::cerr << "copy " << toCopy << " bytes to array offset " << offset << ":\n"
+//                          << Util::dumpHex(std::string((char *)_deltas[i]->data(), toCopy)) << "\n";
 
                 std::memcpy(output.data() + offset, _deltas[i]->data(), toCopy);
                 offset += toCopy;

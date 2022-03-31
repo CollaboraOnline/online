@@ -92,7 +92,7 @@ public:
         else
             header = desc.serialize("delta:", "\n");
 
-        LOG_DBG(getName() << " sending tile message: " << header);
+        LOG_TRC(getName() << " sending tile message: " << header << " lastSendId " << lastSentId);
 
         // FIXME: performance - optimize away this copy ...
         std::vector<char> output;
