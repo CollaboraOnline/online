@@ -24,7 +24,6 @@ ARG type
 ARG secret_key
 
 # Environment variables
-ENV domain localhost
 ENV LC_CTYPE C.UTF-8
 
 # Setup scripts for Collabora Online
@@ -34,6 +33,7 @@ RUN rm -rf /install-collabora-online-rhel8.sh
 
 # Start script for Collabora Online
 ADD /scripts/start-collabora-online.sh /
+ADD /scripts/start-collabora-online.pl /
 
 EXPOSE 9980
 
