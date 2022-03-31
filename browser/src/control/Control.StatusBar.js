@@ -360,13 +360,32 @@ L.Control.StatusBar = L.Control.extend({
 			break;
 
 		case 'presentation':
-		case 'drawing':
 			if (!window.mode.isMobile()) {
 				statusbar.insert('left', [
 					{type: 'break', id: 'break1'},
 					{
 						type: 'html', id: 'PageStatus',
 						html: '<div id="PageStatus" class="cool-font" title="' + _('Number of Slides') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
+					},
+					{type: 'break', id: 'break2', mobile: false, tablet: false},
+					{type: 'menu-radio', id: 'LanguageStatus',
+						mobile: false
+					},
+					{type: 'break', id: 'break8', mobile: false},
+					{
+						type: 'html', id: 'PermissionMode', mobile: false, tablet: false,
+						html: this._getPermissionModeHtml(isReadOnly)
+					}
+				]);
+			}
+			break;
+		case 'drawing':
+			if (!window.mode.isMobile()) {
+				statusbar.insert('left', [
+					{type: 'break', id: 'break1'},
+					{
+						type: 'html', id: 'PageStatus',
+						html: '<div id="PageStatus" class="cool-font" title="' + _('Number of Pages') + '" style="padding: 5px 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp</div>'
 					},
 					{type: 'break', id: 'break2', mobile: false, tablet: false},
 					{type: 'menu-radio', id: 'LanguageStatus',
@@ -498,7 +517,10 @@ L.Control.StatusBar = L.Control.extend({
 			this.updateToolbarItem(statusbar, 'StateWordCount', $('#StateWordCount').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 		}
 		else if (commandName === '.uno:PageStatus') {
-			state = this.toLocalePattern('Slide %1 of %2', 'Slide (\\d+) of (\\d+)', state, '%1', '%2');
+			if (this.map.getDocType() === 'presentation')
+				state = this.toLocalePattern('Slide %1 of %2', 'Slide (\\d+) of (\\d+)', state, '%1', '%2');
+			else
+				state = this.toLocalePattern('Page %1 of %2', 'Slide (\\d+) of (\\d+)', state, '%1', '%2');
 			this.updateToolbarItem(statusbar, 'PageStatus', $('#PageStatus').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 		}
 	},

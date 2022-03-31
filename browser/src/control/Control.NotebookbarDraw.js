@@ -1040,6 +1040,48 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 		return this.getTabPage('Insert', content);
 	},
 
+	getFormatTab: function() {
+		var content = [
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FontDialog'),
+				'command': '.uno:FontDialog'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:ParagraphDialog'),
+				'command': '.uno:ParagraphDialog'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:OutlineBullet'),
+				'command': '.uno:OutlineBullet'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:PageSetup', 'presentation'),
+				'command': '.uno:PageSetup'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FormatLine'),
+				'command': '.uno:FormatLine'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FormatArea'),
+				'command': '.uno:FormatArea'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:TransformDialog'),
+				'command': '.uno:TransformDialog'
+			}
+		];
+
+		return this.getTabPage('Format', content);
+	},
+
 });
 
 L.control.notebookbarDraw = function (options) {
