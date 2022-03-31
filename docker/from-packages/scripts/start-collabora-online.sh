@@ -36,7 +36,11 @@ fi
 
 # Replace trusted host and set admin username and password - only if they are set
 if test -n "${domain}"; then
-    perl -pi -e "s/localhost<\/host>/${domain}<\/host>/g" /etc/coolwsd/coolwsd.xml
+    echo -e "ERR: Use of domain variable is not supported. First host/domain who tries to connect to COOL is always allowed.\nTo allow multiple host and its aliases use something like this and pass it as env variable:\naliasgroup1=https://domain1:443,https://its-alias|its-second-alias:443 \naliasgroup2=https://domain2:443,https://its-alias:443 \nFor more info: https://sdk.collaboraonline.com/docs/installation/CODE_Docker_image.html"
+    exit 1
+fi
+if test -n "${aliasgroup1}"; then
+    perl -w /start-collabora-online.pl
 fi
 if test -n "${username}"; then
     perl -pi -e "s/<username (.*)>.*<\/username>/<username \1>${username}<\/username>/" /etc/coolwsd/coolwsd.xml
