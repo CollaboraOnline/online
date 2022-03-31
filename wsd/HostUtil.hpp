@@ -50,6 +50,9 @@ public:
 
     /// replace the authority of aliashost to realhost if it matches
     static const Poco::URI getNewLockedUri(Poco::URI& uri);
+
+    /// set FirstHost
+    static void setFirstHost(const Poco::URI& uri);
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
