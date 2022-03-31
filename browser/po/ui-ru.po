@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -115,7 +115,7 @@ msgstr "Изменено"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "Хост WOPI"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -348,7 +348,7 @@ msgstr " с"
 
 #: js/w2ui-1.5.rc1.js:2920
 msgid "Recent"
-msgstr ""
+msgstr "Недавние"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
@@ -372,7 +372,7 @@ msgstr "Сервер столкнулся с ошибкой %0 при анали
 
 #: src/control/Control.Command.js:91
 msgid "Unlock"
-msgstr ""
+msgstr "Разблокировать"
 
 #: src/control/Control.ContextMenu.js:181
 msgid "Delete"
@@ -384,7 +384,7 @@ msgstr "Вставить как"
 
 #: src/control/Control.DocumentNameInput.js:77
 msgid "Path"
-msgstr ""
+msgstr "Путь"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -418,8 +418,7 @@ msgstr "Отметка времени"
 msgid "Jump to state"
 msgstr "Перейти в состояние"
 
-#: src/control/Control.DocumentRepair.js:95
-#: src/control/Control.UserList.js:288
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:288
 msgid "You"
 msgstr "Вы"
 
@@ -437,7 +436,7 @@ msgstr "Мастер функций"
 
 #: src/control/Control.FormulaBar.js:46
 msgid "cell address"
-msgstr ""
+msgstr "адрес ячейки"
 
 #: src/control/Control.JSDialogBuilder.js:391
 msgid "Solid"
@@ -690,7 +689,7 @@ msgstr "Ориентация текста"
 #: src/control/Control.Menubar.js:302
 #: src/control/Control.NotebookbarWriter.js:256
 msgid "Forum"
-msgstr ""
+msgstr "Форум"
 
 #: src/control/Control.Menubar.js:303 src/control/Control.Menubar.js:432
 #: src/control/Control.Menubar.js:543 src/control/Control.Menubar.js:756
@@ -724,7 +723,7 @@ msgstr "Последние обновления"
 #: src/control/Control.Menubar.js:918 src/control/Control.Menubar.js:988
 #: src/control/Control.NotebookbarWriter.js:313
 msgid "Send Feedback"
-msgstr ""
+msgstr "Отправить отзыв"
 
 #: src/control/Control.Menubar.js:308 src/control/Control.Menubar.js:437
 #: src/control/Control.Menubar.js:548 src/control/Control.Menubar.js:761
@@ -828,7 +827,7 @@ msgstr "Действительно удалить эту страницу?"
 
 #: src/control/Control.Menubar.js:1778
 msgid "file type icon"
-msgstr ""
+msgstr "значок типа файла"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:130
@@ -869,23 +868,23 @@ msgstr "Вставить изображение с компьютера"
 
 #: src/control/Control.NotebookbarBuilder.js:766
 msgid "Very Tight"
-msgstr ""
+msgstr "Очень плотно"
 
 #: src/control/Control.NotebookbarBuilder.js:767
 msgid "Tight"
-msgstr ""
+msgstr "Плотно"
 
 #: src/control/Control.NotebookbarBuilder.js:768
 msgid "Normal"
-msgstr ""
+msgstr "Нормально"
 
 #: src/control/Control.NotebookbarBuilder.js:769
 msgid "Loose"
-msgstr ""
+msgstr "Неплотно"
 
 #: src/control/Control.NotebookbarBuilder.js:770
 msgid "Very Loose"
-msgstr ""
+msgstr "Очень свободно"
 
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarDraw.js:55
@@ -944,7 +943,7 @@ msgstr "~Рисование"
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:60
 msgid "~View"
-msgstr ""
+msgstr "~Просмотр"
 
 #: src/control/Control.NotebookbarCalc.js:59
 #: src/control/Control.NotebookbarDraw.js:103
@@ -1064,12 +1063,12 @@ msgstr "Удалить столбцы"
 #: src/control/Control.NotebookbarImpress.js:342
 #: src/control/Control.NotebookbarWriter.js:1017
 msgid "Toggle Status Bar"
-msgstr ""
+msgstr "Переключить строку состояния"
 
 #: src/control/Control.NotebookbarDraw.js:39
 #: src/control/Control.NotebookbarDraw.js:734
 msgid "Page layout"
-msgstr ""
+msgstr "Разметка страницы"
 
 #: src/control/Control.NotebookbarDraw.js:86
 #: src/control/Control.NotebookbarImpress.js:98
@@ -1088,7 +1087,7 @@ msgstr "Презентация ODF (.odp)"
 #: src/control/Control.NotebookbarImpress.js:291
 #: src/control/Control.NotebookbarImpress.js:750
 msgid "Presentation"
-msgstr ""
+msgstr "Презентация"
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
@@ -1117,11 +1116,11 @@ msgstr "Заголовок"
 
 #: src/control/Control.NotebookbarWriter.js:1006
 msgid "Toggle Ruler"
-msgstr ""
+msgstr "Переключить линейку"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
-msgstr ""
+msgstr "предпросмотр страницы "
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1225,10 +1224,9 @@ msgstr "Число слайдов"
 
 #: src/control/Control.StatusBar.js:422 src/control/Control.StatusBar.js:423
 msgid "Permission Mode"
-msgstr ""
+msgstr "Режим разрешения"
 
 #: src/control/Control.StatusBar.js:422
-#, fuzzy
 msgid "Read-only"
 msgstr "Только чтение"
 
@@ -1262,10 +1260,9 @@ msgstr "Переместить лист вправо"
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Копировать лист..."
 
 #: src/control/Control.Tabs.js:303
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Действительно удалить лист %sheet% ?"
 
@@ -1287,8 +1284,7 @@ msgstr "Следующий слайд"
 
 #: src/control/Control.Toolbar.js:1032
 msgid ""
-"Conflict Undo/Redo with multiple users. Please use document repair to "
-"resolve"
+"Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Конфликт Отмены/Повторения с несколькими пользователями. Пожалуйста, "
 "воспользуйтесь восстановлением документа для разрешения конфликта"
@@ -1371,7 +1367,7 @@ msgstr "Продолжить редактирование"
 
 #: src/control/Permission.js:167
 msgid "Continue read only"
-msgstr ""
+msgstr "Продолжить только для чтения"
 
 #: src/control/Permission.js:170
 msgid ""
@@ -1526,10 +1522,12 @@ msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
+"Подпись в порядке, но сертификат не может быть проверен, и документ подписан "
+"только частично."
 
 #: src/control/Signing.js:650
 msgid "Signed but not validated and not all files are signed"
-msgstr ""
+msgstr "Подписано, но не проверено, и не все файлы подписаны"
 
 #: src/control/Toolbar.js:45
 msgid "Font"
@@ -1568,21 +1566,20 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Упс, неполадки при подключении к %productName: "
 
 #: src/core/Socket.js:512
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "Сервер был перезагружен. Необходимо обновить страницу."
+msgstr "Сервер теперь доступен. Теперь нужно обновить страницу."
 
 #: src/core/Socket.js:514
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "Сервер теперь доступен..."
 
 #: src/core/Socket.js:518
 msgid "RELOAD"
-msgstr ""
+msgstr "ПЕРЕЗАГРУЗИТЬ"
 
 #: src/core/Socket.js:525
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "Версия COOLWSD:"
 
 #: src/core/Socket.js:537
 msgid "Served by:"
@@ -1594,7 +1591,7 @@ msgstr "Версия сервера не поддерживается."
 
 #: src/core/Socket.js:547
 msgid "LOKit version:"
-msgstr ""
+msgstr "Версия LOKit:"
 
 #: src/core/Socket.js:662
 msgid "Session terminated by document owner"
@@ -1642,7 +1639,7 @@ msgstr ""
 
 #: src/core/Socket.js:725
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "Перезагрузка документа после переименования"
 
 #: src/core/Socket.js:848
 msgid "Discard"
@@ -1658,7 +1655,7 @@ msgstr "Сохранить в новый файл"
 
 #: src/core/Socket.js:897
 msgid "Document has been changed"
-msgstr ""
+msgstr "Документ был изменен"
 
 #: src/core/Socket.js:897
 msgid ""
@@ -1686,15 +1683,15 @@ msgstr "Неправильный пароль. Попробуйте снова."
 
 #: src/core/Socket.js:1086
 msgid "Someone"
-msgstr ""
+msgstr "Кто-то"
 
 #: src/core/Socket.js:1088
 msgid " saved this document as "
-msgstr ""
+msgstr " сохранил этот документ как "
 
 #: src/core/Socket.js:1088
 msgid ". Do you want to join?"
-msgstr ""
+msgstr ". Вы хотите присоединиться?"
 
 #: src/core/Socket.js:1097
 msgid "Loading..."
@@ -1715,13 +1712,12 @@ msgid ""
 msgstr "Не удалось подключиться к документу. Попробуйте снова."
 
 #: src/core/Socket.js:1514
-#, fuzzy
 msgid "Reconnecting..."
-msgstr "Соединение..."
+msgstr "Переподключение..."
 
 #: src/core/Socket.js:1520
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "Сервер был отключен."
 
 #: src/errormessages.js:13
 msgid ""
@@ -1742,8 +1738,8 @@ msgstr ""
 #: src/errormessages.js:15
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
-"that it is suitable for deployment in enterprises, this message appears "
-"when more than {docs} documents or {connections} connections are in use "
+"that it is suitable for deployment in enterprises, this message appears when "
+"more than {docs} documents or {connections} connections are in use "
 "concurrently"
 msgstr ""
 "Это неподдерживаемая версия {productname}. Чтобы избежать впечатления о том, "
@@ -1815,11 +1811,10 @@ msgid "Invalid link: '%url'"
 msgstr "Неправильная ссылка: '%url'"
 
 #: src/errormessages.js:25
-#, fuzzy
 msgid ""
-"You are leaving the editor, are you sure you want to visit the following "
-"URL?"
-msgstr "Вы выходите из редактора, вы уверены, что хотите посетить %url?"
+"You are leaving the editor, are you sure you want to visit the following URL?"
+msgstr ""
+"Вы выходите из редактора, вы уверены, что хотите перейти по этой ссылке?"
 
 #: src/errormessages.js:26
 msgid ""
@@ -1831,13 +1826,13 @@ msgstr ""
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "Очистка документа с последней сессии."
 
 #: src/errormessages.js:28
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
-msgstr ""
+msgstr "Мы очищаем этот документ с последнего сеанса, повторите попытку позже."
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -1901,9 +1896,10 @@ msgstr ""
 
 #: src/errormessages.js:45
 msgid ""
-"Document cannot be exported. Please contact the storage server "
-"administrator."
+"Document cannot be exported. Please contact the storage server administrator."
 msgstr ""
+"Документ не может быть экспортирован. Обратитесь к администратору сервера "
+"хранения."
 
 #: src/errormessages.js:50
 msgid "Uploading file to server failed, file not found."
@@ -1968,16 +1964,15 @@ msgstr "Отклонить изменение"
 
 #: src/main.js:88
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "Внимание! Используемый вами браузер не поддерживается."
 
 #: src/map/Clipboard.js:120
-msgid ""
-"To paste outside %productName, please first click the 'download' button"
+msgid "To paste outside %productName, please first click the 'download' button"
 msgstr "Чтобы вставить вне %productName, сначала нажмите кнопку \"загрузить\""
 
 #: src/map/Clipboard.js:130
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Копирование из документа отключено"
 
 #: src/map/Clipboard.js:292
 msgid "Failed to download clipboard, please re-copy"
@@ -1997,12 +1992,11 @@ msgid ""
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
 "<p>Доступ браузера к буферу обмена ограничен, используйте следующие "
-"комбинации клавиш:</p><table class=\"warn-copy-paste\""
-"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</spa"
-"n><kbd>V</kbd></td></tr><tr><td>Копировать</td><td>Вырезать</td><td>Вставить<"
-"/td></tr></table>"
+"комбинации клавиш:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></"
+"tr><tr><td>Копировать</td><td>Вырезать</td><td>Вставить</td></tr></table>"
 
 #: src/map/Clipboard.js:871
 msgid ""
@@ -2015,8 +2009,8 @@ msgstr ""
 "<p>Для обмена крупными частями документа с другими приложениями необходимо "
 "сначала загрузить их на ваше устройство. Для этого нажмите кнопку \"Начать "
 "загрузку\" внизу, а по завершении нажмите \"Подтвердить копирование в буфер "
-"обмена\".</p><p>Для копирования и вставки между документами внутри %"
-"productName загрузка не требуется.</p>"
+"обмена\".</p><p>Для копирования и вставки между документами внутри "
+"%productName загрузка не требуется.</p>"
 
 #: src/map/Clipboard.js:887
 msgid ""
@@ -2033,15 +2027,15 @@ msgstr "Инициализация…"
 
 #: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428 src/map/Map.js:431
 msgid "Last saved:"
-msgstr ""
+msgstr "Последнее сохранение:"
 
 #: src/map/Map.js:1459
 msgid "Inactive document"
-msgstr ""
+msgstr "Неактивный документ"
 
 #: src/map/Map.js:1460
 msgid "Please click to resume editing"
-msgstr ""
+msgstr "Нажмите, чтобы продолжить редактирование"
 
 #: src/map/handler/Map.FileInserter.js:104
 #, javascript-format
@@ -2071,6 +2065,10 @@ msgid ""
 "more options</p><p class=\"vex-footnote\">Close popup to ignore paste "
 "special</p>"
 msgstr ""
+"<p>Ваш браузер имеет очень ограниченный доступ к буферу обмена</"
+"p><p>Нажмите: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</"
+"kbd>для просмотра дополнительных опций</p><p class=\"vex-footnote\">Закройте "
+"всплывающее окно для игнорирования специальной вставки</p>"
 
 #: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
@@ -2082,34 +2080,37 @@ msgstr "Создать копию..."
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "Добро пожаловать в Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New %coolVersion"
-msgstr ""
+msgstr "Узнайте о новой %coolVersion"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora Online Development Edition"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
 "Enjoy the latest developments in online productivity, free for you to use, "
 "to explore and to use with others in the browser. Various <a target=\"_blank"
-"\" href=\"https://www.collaboraoffice.com/solutions/collabora-office-"
-"android-ios/\">apps</a> are also available for mobile."
+"\" href=\"https://www.collaboraoffice.com/solutions/collabora-office-android-"
+"ios/\">apps</a> are also available for mobile."
 msgstr ""
+"Наслаждайтесь последними достижениями в области онлайн-продуктивности, "
+"бесплатно для изучения и использования с другими в браузере. Различные <a "
+"target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/collabora-"
+"office-android-ios/\"> приложения</a> также доступны для мобильных устройств."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:29-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:40-7
-#, fuzzy
 msgid "Next"
-msgstr "Текст"
+msgstr "Далее"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
-msgstr ""
+msgstr "Узнать обо всех изменениях"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -2118,26 +2119,36 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"Ознакомьтесь с <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
+"code-21-11-release-notes/\">примечаниями к выпуску</a> и узнайте все о: "
+"новейшей версии Collabora Online Development Edition, предназначенной для "
+"домашних пользователей и небольших команд."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "Принять участие"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
 "Are you interested in contributing but don’t know where to start? Head over "
 "to the <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
-"build-code/\">step-by-step instructions</a> and build CODE from scratch. "
-"You can also help out with <a target=\"_blank\" href=\"https://"
-"collaboraonline.github.io/post/translate/\">translations</a> or by <a "
-"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
-"\">filing a bug report</a> with all the essential steps on how to reproduce "
-"it."
+"build-code/\">step-by-step instructions</a> and build CODE from scratch. You "
+"can also help out with <a target=\"_blank\" href=\"https://collaboraonline."
+"github.io/post/translate/\">translations</a> or by <a target=\"_blank\" href="
+"\"https://collaboraonline.github.io/post/filebugs/\">filing a bug report</a> "
+"with all the essential steps on how to reproduce it."
 msgstr ""
+"Вы хотите внести свой вклад, но не знаете, с чего начать? Перейдите к <a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/"
+"\">пошаговым инструкциям</a> и соберите CODE с нуля. Вы также можете помочь "
+"с <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
+"translate/\"> переводами</a> или <a target=\"_blank\" href=\"https://"
+"collaboraonline.github.io/post/filebugs/\"> подачей сообщения об ошибке</a> "
+"со всеми необходимыми шагами по ее воспроизведению."
 
 #~ msgid "Menu"
 #~ msgstr "Меню"
@@ -2174,15 +2185,15 @@ msgstr ""
 #~ msgstr "%d минут назад"
 
 #~ msgid ""
-#~ "IE11 has reached its maximum number of connections. Please see this document "
-#~ "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
-#~ "versions/windows/internet-explorer/ie-developer/general-info/"
+#~ "IE11 has reached its maximum number of connections. Please see this "
+#~ "document to increase this limit if needed: https://docs.microsoft.com/en-"
+#~ "us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
 #~ "ee330736(v=vs.85)#websocket-maximum-server-connections"
 #~ msgstr ""
 #~ "IE11 достиг максимального количества подключений. Пожалуйста, прочитайте "
-#~ "этот документ, чтобы увеличить лимит, если это необходимо: "
-#~ "https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/"
-#~ "ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-"
+#~ "этот документ, чтобы увеличить лимит, если это необходимо: https://docs."
+#~ "microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-"
+#~ "developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-"
 #~ "connections"
 
 #~ msgid "Start upload"
@@ -2215,19 +2226,19 @@ msgstr ""
 #~ "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 #~ msgstr ""
 #~ "<p>У вашего браузера очень ограниченный доступ к буферу обмена, так что "
-#~ "используйте сочетания клавиш:<ul><li><b>Ctrl+C</b>: Для "
-#~ "копирования.</li><li><b>Ctrl+X</b>: Для вырезания.</li><li><b>Ctrl+V</b>: "
-#~ "Для вставки.</li></ul></p>"
+#~ "используйте сочетания клавиш:<ul><li><b>Ctrl+C</b>: Для копирования.</"
+#~ "li><li><b>Ctrl+X</b>: Для вырезания.</li><li><b>Ctrl+V</b>: Для вставки.</"
+#~ "li></ul></p>"
 
 #~ msgid "Subtitle"
 #~ msgstr "Подзаголовок"
 
 #~ msgid ""
-#~ "The Personal edition is supported by volunteers and intended for individual "
-#~ "use."
+#~ "The Personal edition is supported by volunteers and intended for "
+#~ "individual use."
 #~ msgstr ""
-#~ "Издание Personal поддерживается волонтёрами и рассчитано для индивидуального "
-#~ "использования."
+#~ "Издание Personal поддерживается волонтёрами и рассчитано для "
+#~ "индивидуального использования."
 
 #~ msgid "Server is recycling and will be available shortly"
 #~ msgstr "Сервер перезапускается и вскоре будет доступен"
@@ -2269,6 +2280,5 @@ msgstr ""
 #~ msgstr "Альбомная"
 
 #, fuzzy
-#~| msgid "Text orientation"
 #~ msgid "Toggle Page Orientation"
 #~ msgstr "Ориентация текста"
