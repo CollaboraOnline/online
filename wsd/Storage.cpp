@@ -235,6 +235,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
         LOG_INF("Public URI [" << COOLWSD::anonymizeUrl(uri.toString()) << "] considered WOPI.");
         const auto& targetHost = uri.getHost();
         bool allowed(false);
+        HostUtil::setFirstHost(uri);
         if ((HostUtil::allowedWopiHost(targetHost) && HostUtil::allowedAlias(uri)) ||
             isLocalhost(targetHost))
         {
