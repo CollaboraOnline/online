@@ -292,6 +292,32 @@ namespace Util
             return -1;
     }
 
+#if ENABLE_DEBUG
+    // for debugging validation only.
+    inline size_t isValidUtf8(const unsigned char *data, size_t len)
+    {
+        for (size_t i = 0; i < len; ++i)
+        {
+            if (data[i] < 0x80)
+                continue;
+            if (data[i] >> 6 != 0x3)
+                return i;
+            int chunkLen = 1;
+            for (; data[i] & (1 << (7-chunkLen)); chunkLen++);
+            for (; chunkLen > 1; --chunkLen)
+                if (data[++i] >> 6 != 0x2)
+                    return i;
+        }
+        return len + 1;
+    }
+
+    // for debugging validation only.
+    inline bool isValidUtf8(const std::string& s)
+    {
+        return Util::isValidUtf8((unsigned char *)s.c_str(), s.size()) > s.size();
+    }
+#endif
+
     inline std::string hexStringToBytes(const uint8_t* data, size_t size)
     {
         assert(data && (size % 2 == 0) && "Invalid hex digits to convert.");
