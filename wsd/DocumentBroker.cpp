@@ -68,6 +68,11 @@ void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docB
 
     // Add the prisoner socket to the docBroker poll.
     docBroker->addSocketToPoll(getSocket());
+
+    if (UnitWSD::isUnitTesting())
+    {
+        UnitWSD::get().onDocBrokerAttachKitProcess(docBroker->getDocKey(), getPid());
+    }
 }
 
 void DocumentBroker::broadcastLastModificationTime(
@@ -1177,6 +1182,13 @@ bool DocumentBroker::isStorageOutdated() const
 {
     // Get the modified-time of the file on disk.
     const auto st = FileUtil::Stat(_storage->getRootFilePathUploading());
+    if (!st.exists())
+    {
+        LOG_TRC("File to upload to storage [" << _storage->getRootFilePathUploading()
+                                              << "] does not exist.");
+        return false;
+    }
+
     const std::chrono::system_clock::time_point currentModifiedTime = st.modifiedTimepoint();
     const std::chrono::system_clock::time_point lastModifiedTime =
         _storageManager.getLastUploadedFileModifiedTime();
@@ -1249,6 +1261,8 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
 // there was nothing to save and want to check for uploading.
 void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
 {
+    LOG_TRC("checkAndUploadToStorage with session " << sessionId);
+
     // See if we have anything to upload.
     NeedToUpload needToUploadState = needToUploadToStorage();
 
@@ -1901,6 +1915,13 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     if (_saveManager.isSaving() || isAsyncUploading())
     {
         LOG_TRC("Async saving/uploading in progress for docKey [" << getDocKey() << ']');
+        return;
+    }
+
+    if (_docState.isDisconnected() && !isStorageOutdated())
+    {
+        LOG_DBG("Disconnected from Kit and nothing to upload. Stopping");
+        stop(reason);
         return;
     }
 
