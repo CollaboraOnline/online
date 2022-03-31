@@ -3433,7 +3433,7 @@ bool RenderSearchResultBroker::handleInput(const std::vector<char>& payload)
         auto message = std::make_shared<Message>(payload.data(), payload.size(), Message::Dir::Out);
         auto const& messageData = message->data();
 
-        static std::string commandString = "rendersearchresult:";
+        static std::string commandString = "rendersearchresult:\n";
         static std::vector<char> commandStringVector(commandString.begin(), commandString.end());
 
         if (messageData.size() >= commandStringVector.size())

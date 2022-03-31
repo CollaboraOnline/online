@@ -1650,7 +1650,7 @@ bool ChildSession::renderSearchResult(const char* buffer, int length, const Stri
 
         if (Png::encodeBufferToPNG(pBitmapBuffer, nWidth, nHeight, aOutput, eTileMode))
         {
-            static const std::string aHeader = "rendersearchresult:";
+            static const std::string aHeader = "rendersearchresult:\n";
             size_t nResponseSize = aHeader.size() + aOutput.size();
             std::vector<char> aResponse(nResponseSize);
             std::copy(aHeader.begin(), aHeader.end(), aResponse.begin());
