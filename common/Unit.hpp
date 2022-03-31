@@ -413,6 +413,9 @@ public:
     /// Useful to detect track the beginning of a document's life cycle.
     virtual void onDocBrokerCreate(const std::string&) {}
 
+    /// Called when the Kit process is attached to a DocBroker.
+    virtual void onDocBrokerAttachKitProcess(const std::string&, int) {}
+
     /// Called when a new client session is added to a DocumentBroker.
     virtual void onDocBrokerAddSession(const std::string&, const std::shared_ptr<ClientSession>&) {}
 
