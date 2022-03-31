@@ -66,13 +66,11 @@ bool HostUtil::allowedAlias(const Poco::URI& uri)
 
     if (AllHosts.empty())
     {
-        if (FirstHost.empty())
+        if (FirstHost != uri.getAuthority())
         {
-            FirstHost = uri.getAuthority();
-        }
-        else if (FirstHost != uri.getAuthority())
-        {
-            LOG_ERR("Only allowed host is: " << FirstHost << ", To use multiple host/aliases check alias_groups tag in configuration");
+            LOG_ERR("Only allowed host is: "
+                    << FirstHost
+                    << ", To use multiple host/aliases check alias_groups tag in configuration");
             return false;
         }
     }
@@ -195,6 +193,15 @@ const Poco::URI HostUtil::getNewLockedUri(Poco::URI& uri)
                                     << newUri.getAuthority() << " locked_host settings.");
     }
     return newUri;
+}
+
+void HostUtil::setFirstHost(const Poco::URI& uri)
+{
+    if (AllHosts.empty() && FirstHost.empty())
+    {
+        FirstHost = uri.getAuthority();
+        addWopiHost(uri.getHost(), true);
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
