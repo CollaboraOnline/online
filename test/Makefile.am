@@ -61,6 +61,7 @@ all_la_unit_tests = \
 	unit_wopi_watermark.la \
 	unit-wopi-saveas-with-encoded-file-name.la \
 	unit-wopi-saveas.la \
+	unit-wopi-crash-modified.la \
 	unit-typing.la \
 	unit-wopi-httpredirectloop.la \
 	unit-wopi-httpredirect.la \
@@ -203,6 +204,8 @@ unit_wopi_async_upload_modifyclose_la_SOURCES = UnitWOPIAsyncUpload_ModifyClose.
 unit_wopi_async_upload_modifyclose_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_async_slow_la_SOURCES = UnitWOPISlow.cpp
 unit_wopi_async_slow_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_crash_modified_la_SOURCES = UnitWOPICrashModified.cpp
+unit_wopi_crash_modified_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_saveas_la_SOURCES = UnitWOPISaveAs.cpp
 unit_wopi_saveas_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_saveas_with_encoded_file_name_la_SOURCES = UnitWOPISaveAsWithEncodedFileName.cpp
