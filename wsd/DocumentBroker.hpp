@@ -495,11 +495,6 @@ private:
 
     std::unique_lock<std::mutex> getDeferredLock() { return std::unique_lock<std::mutex>(_mutex, std::defer_lock); }
 
-    /// Called by the ChildProcess object to notify
-    /// that it has terminated on its own.
-    /// This happens either when the child exists
-    /// or upon failing to process an incoming message.
-    void childSocketTerminated();
     void handleTileResponse(const std::vector<char>& payload);
     void handleDialogPaintResponse(const std::vector<char>& payload, bool child);
     void handleTileCombinedResponse(const std::vector<char>& payload);
