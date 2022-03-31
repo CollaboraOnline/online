@@ -491,7 +491,9 @@ class UnitTool : public UnitBase
 {
 public:
     explicit UnitTool(std::string name = std::string())
-        : UnitBase(name, UnitType::Tool) {}
+        : UnitBase(std::move(name), UnitType::Tool)
+    {
+    }
     virtual ~UnitTool() {}
 };
 

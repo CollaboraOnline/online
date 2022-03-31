@@ -45,6 +45,7 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(HttpRequestTests);
 
+    CPPUNIT_TEST(testSslHostname);
     CPPUNIT_TEST(testInvalidURI);
     CPPUNIT_TEST(testBadResponse);
     CPPUNIT_TEST(testGoodResponse);
@@ -62,6 +63,7 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE_END();
 
+    void testSslHostname();
     void testInvalidURI();
     void testBadResponse();
     void testGoodResponse();
@@ -80,12 +82,14 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     std::string _localUri;
     SocketPoll _pollServerThread;
     std::shared_ptr<ServerSocket> _socket;
+    int _port;
 
     static const int SimulatedLatencyMs = 0;
 
 public:
     HttpRequestTests()
         : _pollServerThread("HttpServerPoll")
+        , _port(0)
     {
 #if ENABLE_SSL
         Poco::Net::initializeSSL();
@@ -134,21 +138,21 @@ public:
     {
         LOG_INF("HttpRequestTests::setUp");
         std::shared_ptr<SocketFactory> factory = std::make_shared<ServerSocketFactory>();
-        int port = 9990;
-        for (int i = 0; i < 40; ++i, ++port)
+        _port = 9990;
+        for (int i = 0; i < 40; ++i, ++_port)
         {
             // Try listening on this port.
-            LOG_INF("HttpRequestTests::setUp: creating socket to listen on port " << port);
-            _socket = ServerSocket::create(ServerSocket::Type::Local, port, Socket::Type::IPv4,
+            LOG_INF("HttpRequestTests::setUp: creating socket to listen on port " << _port);
+            _socket = ServerSocket::create(ServerSocket::Type::Local, _port, Socket::Type::IPv4,
                                            _pollServerThread, factory);
             if (_socket)
                 break;
         }
 
         if (helpers::haveSsl())
-            _localUri = "https://127.0.0.1:" + std::to_string(port);
+            _localUri = "https://127.0.0.1:" + std::to_string(_port);
         else
-            _localUri = "http://127.0.0.1:" + std::to_string(port);
+            _localUri = "http://127.0.0.1:" + std::to_string(_port);
 
         _pollServerThread.startThread();
         _pollServerThread.insertNewSocket(_socket);
@@ -163,6 +167,19 @@ public:
 };
 
 constexpr std::chrono::seconds HttpRequestTests::DefTimeoutSeconds;
+
+void HttpRequestTests::testSslHostname()
+{
+    constexpr auto testname = __func__;
+
+    if (helpers::haveSsl())
+    {
+        const std::string host = "localhost";
+        std::shared_ptr<SslStreamSocket> socket = StreamSocket::create<SslStreamSocket>(
+            host, _port, false, std::make_shared<ServerRequestHandler>());
+        LOK_ASSERT_EQUAL(host, socket->getSslServername());
+    }
+}
 
 void HttpRequestTests::testInvalidURI()
 {
