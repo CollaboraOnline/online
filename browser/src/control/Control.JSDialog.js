@@ -280,6 +280,8 @@ L.Control.JSDialog = L.Control.extend({
 				container.querySelector('[id=\'' + focusWidgetId + '\']') : null;
 			if (focusWidget)
 				focusWidget.focus();
+			if (focusWidget && document.activeElement !== focusWidget)
+				console.error('cannot get focus for widget: "' + focusWidgetId + '"');
 		};
 
 		this.dialogs[data.id] = {
