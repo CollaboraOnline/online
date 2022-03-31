@@ -3116,20 +3116,6 @@ void DocumentBroker::shutdownClients(const std::string& closeReason)
     }
 }
 
-void DocumentBroker::childSocketTerminated()
-{
-    assertCorrectThread();
-
-    if (!_childProcess->isAlive())
-    {
-        LOG_ERR("Child for doc [" << _docKey << "] terminated prematurely.");
-    }
-
-    // We could restore the kit if this was unexpected.
-    // For now, close the connections to cleanup.
-    shutdownClients("terminated");
-}
-
 void DocumentBroker::terminateChild(const std::string& closeReason)
 {
     assertCorrectThread();
