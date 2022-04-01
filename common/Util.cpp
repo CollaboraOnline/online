@@ -1138,8 +1138,7 @@ namespace Util
         std::_Exit(code);
     }
 
-    template <class Type, typename Getter>
-    static bool matchRegex(const Type& set, const std::string& subject, const Getter& getter)
+    bool matchRegex(const std::set<std::string>& set, const std::string& subject)
     {
         if (set.find(subject) != set.end())
         {
@@ -1152,7 +1151,7 @@ namespace Util
             try
             {
                 // Not performance critical to warrant caching.
-                Poco::RegularExpression re(getter(value), Poco::RegularExpression::RE_CASELESS);
+                Poco::RegularExpression re(value, Poco::RegularExpression::RE_CASELESS);
                 Poco::RegularExpression::Match reMatch;
 
                 // Must be a full match.
@@ -1171,18 +1170,36 @@ namespace Util
         return false;
     }
 
-    bool matchRegex(const std::set<std::string>& set, const std::string& subject)
+    std::string getValue(const std::map<std::string, std::string>& map, const std::string& subject)
     {
-        auto lambda = [] (std::set<std::string>::key_type x) { return x; };
+        if (map.find(subject) != map.end())
+        {
+            return map.at(subject);
+        }
 
-        return matchRegex<std::set<std::string>>(set, subject, lambda);
-    }
+        // Not a perfect match, try regex.
+        for (const auto& value : map)
+        {
+            try
+            {
+                // Not performance critical to warrant caching.
+                Poco::RegularExpression re(value.first, Poco::RegularExpression::RE_CASELESS);
+                Poco::RegularExpression::Match reMatch;
 
-    bool matchRegex(const std::map<std::string, std::string>& map, const std::string& subject)
-    {
-        auto lambda = [] (std::map<std::string, std::string>::value_type x) { return x.first; };
+                // Must be a full match.
+                if (re.match(subject, reMatch) && reMatch.offset == 0 &&
+                    reMatch.length == subject.size())
+                {
+                    return value.second;
+                }
+            }
+            catch (const std::exception& exc)
+            {
+                // Nothing to do; skip.
+            }
+        }
 
-        return matchRegex<std::map<std::string, std::string>>(map, subject, lambda);
+        return std::string();
     }
 }
 
