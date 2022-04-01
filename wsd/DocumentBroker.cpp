@@ -1731,6 +1731,8 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         const std::size_t activeClients = broadcastMessage(message);
         broadcastSaveResult(false, "Conflict: Document changed in storage",
                             uploadResult.getReason());
+        LOG_TRC("There are " << activeClients
+                             << " active clients after broadcasting documentconflict");
         if (activeClients == 0)
         {
             // No clients were contacted; we will never resolve this conflict.
@@ -2981,7 +2983,7 @@ std::size_t DocumentBroker::countActiveSessions() const
     std::size_t count = 0;
     for (const auto& it : _sessions)
     {
-        if (it.second->isViewLoaded() && !it.second->inWaitDisconnected())
+        if (it.second->isLive())
         {
             ++count;
         }

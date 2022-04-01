@@ -61,6 +61,10 @@ public:
     void setDocumentOwner(const bool documentOwner) { _isDocumentOwner = documentOwner; }
     bool isDocumentOwner() const { return _isDocumentOwner; }
 
+    /// Returns true iff the view is loaded and not disconnected
+    /// from either the client or the Kit.
+    bool isLive() const { return _state == SessionState::LIVE && !isCloseFrame(); }
+
     /// Handle kit-to-client message.
     bool handleKitToClientMessage(const char* data, const int size);
 
