@@ -75,6 +75,7 @@ struct TileData
         assert (dataSize >= 1); // kit provides us a 'Z' or a 'D' or a png
         if (isKeyframe(data, dataSize))
         {
+            LOG_TRC("received key-frame - clearing tile");
             _wids.clear();
             _deltas.clear();
         }
@@ -86,6 +87,9 @@ struct TileData
         _wids.push_back(id);
         _deltas.push_back(std::make_shared<BlobData>(dataSize - 1));
         std::memcpy(_deltas.back()->data(), data + 1, dataSize - 1);
+
+        // FIXME: possible race - should store a seq. from the invalidation(s) ?
+        _valid = true;
 
         // FIXME: speed up sizing.
         return size() - oldSize;
@@ -101,8 +105,13 @@ struct TileData
         return dataSize > 0 && (data[0] == 'Z' || data[0] == (char)0x89);
     }
 
+    bool isValid() const { return _valid; }
+    void invalidate() { _valid = false; }
+
+    bool _valid; // not true - waiting for a new tile if in view.
     std::vector<TileWireId> _wids;
     std::vector<Blob> _deltas; // first item is a key-frame
+
     size_t size()
     {
         size_t size = 0;
