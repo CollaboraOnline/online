@@ -163,6 +163,9 @@ Tile TileCache::lookupTile(const TileDesc& tile)
                               tile.getTilePosX(), tile.getTilePosY(),
                               tile.getTileWidth(), tile.getTileHeight(), ret);
 
+    if (ret && !ret->isValid())
+        return nullptr;
+
     return ret;
 }
 
@@ -310,7 +313,8 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height, i
     LOG_TRC("Removing invalidated tiles: part: " << part <<
             ", x: " << x << ", y: " << y <<
             ", width: " << width <<
-            ", height: " << height);
+            ", height: " << height <<
+            ", viewid: " << normalizedViewId);
 
     assertCorrectThread();
 
@@ -318,10 +322,17 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height, i
     {
         if (intersectsTile(it->first, part, x, y, width, height, normalizedViewId))
         {
+            // FIXME: only want to keep as invalid keyframes in the view area(s)
+            it->second->invalidate();
+            ++it;
+        }
+#if 0
+        {
             LOG_TRC("Removing tile: " << it->first.serialize());
             _cacheSize -= itemCacheSize(it->second);
             it = _cache.erase(it);
         }
+#endif
         else
         {
             ++it;
@@ -551,12 +562,16 @@ Tile TileCache::saveDataToCache(const TileDesc &desc, const char *data, const si
     Tile tile = _cache[desc];
     if (!tile)
     {
+        LOG_TRC("new tile for " << desc.serialize() << " of size " << size);
         tile = std::make_shared<TileData>(desc.getWireId(), data, size);
         _cache[desc] = tile;
         _cacheSize += itemCacheSize(tile);
     }
     else
+    {
+        LOG_TRC("append blob to " << desc.serialize() << " of size " << size);
         _cacheSize += tile->appendBlob(desc.getWireId(), data, size);
+    }
 
     return tile;
 }
