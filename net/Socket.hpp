@@ -1355,9 +1355,12 @@ protected:
             if ((events & POLLOUT) && !_outBuffer.empty())
             {
                 writeOutgoingData();
-                if (errno == EPIPE)
+                const int last_errno = errno;
+                if (last_errno == EPIPE || (EnableExperimental && last_errno == ECONNRESET))
                 {
-                    LOG_DBG('#' << getFD() << ": Disconnected while writing (EPIPE).");
+                    LOG_DBG('#' << getFD() << ": Disconnected while writing ("
+                                << Util::symbolicErrno(last_errno)
+                                << "): " << std::strerror(last_errno) << ')');
                     closed = true;
                     break;
                 }
