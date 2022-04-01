@@ -763,7 +763,12 @@ private:
         std::size_t saveFailureCount() const { return _request.lastRequestFailureCount(); }
 
         /// Sets whether the last save was successful or not.
-        void setLastSaveResult(bool success) { _request.setLastRequestResult(success); }
+        void setLastSaveResult(bool success)
+        {
+            LOG_DBG("Save " << (success ? "succeeded" : "failed") << " after "
+                            << _request.timeSinceLastRequest());
+            _request.setLastRequestResult(success);
+        }
 
         /// Returns the last save request time.
         std::chrono::steady_clock::time_point lastSaveRequestTime() const
@@ -924,7 +929,12 @@ private:
         bool lastUploadSuccessful() const { return _request.lastRequestSuccessful(); }
 
         /// Sets whether the last upload was successful or not.
-        void setLastUploadResult(bool success) { _request.setLastRequestResult(success); }
+        void setLastUploadResult(bool success)
+        {
+            LOG_DBG("Upload " << (success ? "succeeded" : "failed") << " after "
+                              << _request.timeSinceLastRequest());
+            _request.setLastRequestResult(success);
+        }
 
         /// Returns the number of previous upload failures. 0 for success.
         std::size_t uploadFailureCount() const { return _request.lastRequestFailureCount(); }
