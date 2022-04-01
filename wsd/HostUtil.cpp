@@ -79,7 +79,7 @@ bool HostUtil::allowedAlias(const Poco::URI& uri)
     else if (!Util::matchRegex(AllHosts, uri.getAuthority()))
     {
         LOG_ERR("Host: " << uri.getAuthority()
-                         << " is not allowed, It is not part of alias_groups configuration");
+                         << " is denied, It is not defined in alias_groups configuration");
         return false;
     }
     return true;
@@ -149,10 +149,18 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
                 {
                     continue;
                 }
+                const std::string host = aliasUri.getHost();
+
+                std::vector<std::string> strVec = Util::splitStringToVector(host, '|');
                 const Poco::URI realUri(uri);
-                AliasHosts.insert({ aliasUri.getAuthority(), realUri.getAuthority() });
-                AllHosts.insert(aliasUri.getAuthority());
-                HostUtil::addWopiHost(aliasUri.getHost(), allow);
+                for (auto& x : strVec)
+                {
+                    const Poco::URI aUri(aliasUri.getScheme() + "://" + x + ':' +
+                                         std::to_string(aliasUri.getPort()));
+                    AliasHosts.insert({ aUri.getAuthority(), realUri.getAuthority() });
+                    AllHosts.insert(aUri.getAuthority());
+                    HostUtil::addWopiHost(aUri.getHost(), allow);
+                }
             }
             catch (const Poco::Exception& exc)
             {
@@ -169,10 +177,10 @@ std::string HostUtil::getNewUri(const Poco::URI& uri)
         return uri.getPath();
     }
     Poco::URI newUri(uri);
-    const std::string key = newUri.getAuthority();
-    if (Util::matchRegex(AliasHosts, key))
+    const std::string value = Util::getValue(AliasHosts, newUri.getAuthority());
+    if (!value.empty())
     {
-        newUri.setAuthority(AliasHosts[key]);
+        newUri.setAuthority(value);
     }
 
     if (newUri.getAuthority().empty())
@@ -186,10 +194,10 @@ std::string HostUtil::getNewUri(const Poco::URI& uri)
 const Poco::URI HostUtil::getNewLockedUri(Poco::URI& uri)
 {
     Poco::URI newUri(uri);
-    const std::string key = newUri.getAuthority();
-    if (Util::matchRegex(AliasHosts, key))
+    const std::string value = Util::getValue(AliasHosts, newUri.getAuthority());
+    if (!value.empty())
     {
-        newUri.setAuthority(AliasHosts[key]);
+        newUri.setAuthority(value);
         LOG_WRN("The locked_host: " << uri.getAuthority() << " is alias of "
                                     << newUri.getAuthority() << ",Applying "
                                     << newUri.getAuthority() << " locked_host settings.");
