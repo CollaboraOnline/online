@@ -2059,7 +2059,9 @@ void ClientSession::dumpState(std::ostream& os)
 {
     Session::dumpState(os);
 
-    os << "\t\tisReadOnly: " << isReadOnly()
+    os << "\t\tisLive: " << isLive()
+       << "\n\t\tisReadOnly: " << isReadOnly()
+       << "\n\t\tisAllowChangeComments: " << isAllowChangeComments()
        << "\n\t\tisDocumentOwner: " << isDocumentOwner()
        << "\n\t\tstate: " << name(_state)
        << "\n\t\tkeyEvents: " << _keyEvents
