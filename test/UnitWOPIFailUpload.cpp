@@ -33,6 +33,7 @@ class UnitWOPIFailUpload : public WOPIUploadConflictCommon
     bool _unloadingModifiedDocDetected;
 
     static constexpr std::size_t LimitStoreFailures = 2;
+    static constexpr bool SaveOnExit = true;
 
 public:
     UnitWOPIFailUpload()
@@ -47,28 +48,23 @@ public:
 
         // Small value to shorten the test run time.
         config.setUInt("per_document.limit_store_failures", LimitStoreFailures);
-        config.setBool("per_document.always_save_on_exit", true);
+        config.setBool("per_document.always_save_on_exit", SaveOnExit);
     }
 
     void onDocBrokerCreate(const std::string& docKey) override
     {
         Base::onDocBrokerCreate(docKey);
 
-        // With always_save_on_exit=true and limit_store_failures=LimitStoreFailures,
-        // we expect exactly two PutFile requests per document.
         if (_scenario == Scenario::VerifyOverwrite)
         {
             // By default, we don't upload when verifying (unless always_save_on_exit is set).
-            setExpectedPutFile(0);
-        }
-        else if (_scenario == Scenario::Disconnect)
-        {
-            //FIXME: this should be 2, but is currently broken.
-            setExpectedPutFile(1);
+            //FIXME: we exit too soon without considering always_save_on_exit.
+            setExpectedPutFile(/*SaveOnExit*/ 0);
         }
         else
         {
-            // With conflicts, we will retry PutFile as many as LimitStoreFailures.
+            // With always_save_on_exit=true and limit_store_failures=LimitStoreFailures,
+            // we expect exactly two PutFile requests per document.
             setExpectedPutFile(LimitStoreFailures);
         }
     }
@@ -99,13 +95,21 @@ public:
 
         switch (_scenario)
         {
+            case Scenario::Disconnect:
+                // When we disconnect, we unload the document. So SaveOnExit kicks in.
+                LOK_ASSERT_EQUAL_MESSAGE("Unexpected overwritting the document in storage",
+                                         SaveOnExit, force);
+                break;
+            case Scenario::CloseDiscard:
             case Scenario::SaveDiscard:
+                break;
             case Scenario::SaveOverwrite:
+            case Scenario::VerifyOverwrite:
                 if (getCountPutFile() < getExpectedPutFile())
                 {
                     // These are regular saves.
-                    // LOK_ASSERT_EQUAL_MESSAGE("Unexpected overwritting the document in storage",
-                    //                          false, force);
+                    LOK_ASSERT_EQUAL_MESSAGE("Unexpected overwritting the document in storage",
+                                             false, force);
                 }
                 else
                 {
@@ -113,12 +117,6 @@ public:
                     LOK_ASSERT_EQUAL_MESSAGE("Expected forced overwritting the document in storage",
                                              true, force);
                 }
-                break;
-            case Scenario::Disconnect:
-            case Scenario::CloseDiscard:
-            case Scenario::VerifyOverwrite:
-                // LOK_ASSERT_EQUAL_MESSAGE("Unexpected overwritting the document in storage", true,
-                //                          force);
                 break;
         }
 
