@@ -334,6 +334,16 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 
+		// don't trigger browser reload on F5, launch slideshow in Impress
+		if (ev.type === 'keydown' && keyCode === 116) {
+			ev.preventDefault();
+			if (this._map._docLayer._docType === 'presentation')
+			{
+				this._map.fire('fullscreen');
+			}
+			return;
+		}
+
 		var unoKeyCode = this._toUNOKeyCode(keyCode);
 
 		if (this.modifier) {
