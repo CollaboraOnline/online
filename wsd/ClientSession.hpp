@@ -65,6 +65,9 @@ public:
     /// from either the client or the Kit.
     bool isLive() const { return _state == SessionState::LIVE && !isCloseFrame(); }
 
+    /// Returns true iff the view is either not readonly or can change comments.
+    bool isWritable() const { return !isReadOnly() || isAllowChangeComments(); }
+
     /// Handle kit-to-client message.
     bool handleKitToClientMessage(const char* data, const int size);
 
