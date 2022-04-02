@@ -452,9 +452,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         updateLastActivityTime();
         docBroker->updateLastActivityTime();
 
-        if (!isReadOnly() && isViewLoaded())
+        if (isWritable() && isViewLoaded())
         {
-            assert(!inWaitDisconnected() && "A loaded view can't also be waiting disconnection.");
+            assert(!inWaitDisconnected() && "A writable view can't be waiting disconnection.");
             docBroker->updateEditingSessionId(getId());
         }
     }
@@ -2060,8 +2060,10 @@ void ClientSession::dumpState(std::ostream& os)
     Session::dumpState(os);
 
     os << "\t\tisLive: " << isLive()
+       << "\n\t\tisViewLoaded: " << isViewLoaded()
        << "\n\t\tisReadOnly: " << isReadOnly()
        << "\n\t\tisAllowChangeComments: " << isAllowChangeComments()
+       << "\n\t\tisWritable: " << isWritable()
        << "\n\t\tisDocumentOwner: " << isDocumentOwner()
        << "\n\t\tstate: " << name(_state)
        << "\n\t\tkeyEvents: " << _keyEvents
