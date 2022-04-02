@@ -1834,7 +1834,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
 
     LOG_TRC("autoSave(): forceful? " << force
                                      << ", dontSaveIfUnmodified: " << dontSaveIfUnmodified);
-    if (_sessions.empty() || _storage == nullptr || !isLoaded() || (!isModified() && !force))
+    if (_sessions.empty() || !isLoaded() || (!isModified() && !force))
     {
         // Nothing to do.
         LOG_TRC("Nothing to autosave [" << _docKey << "].");
@@ -2075,10 +2075,15 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         // arguments end
         oss << '}';
 
-        assert(_storage);
-        _storage->setIsAutosave(isAutosave || UnitWSD::get().isAutosave());
-        _storage->setIsExitSave(isExitSave);
-        _storage->setExtendedData(extendedData);
+        if (_storage)
+        {
+            // If we can't upload, we will quarantine.
+            //FIXME: these must be tracked in DocBroker as they will
+            // get clobbered when uploading fails and we save again.
+            _storage->setIsAutosave(isAutosave || UnitWSD::get().isAutosave());
+            _storage->setIsExitSave(isExitSave);
+            _storage->setExtendedData(extendedData);
+        }
 
         const std::string saveArgs = oss.str();
         LOG_TRC(".uno:Save arguments: " << saveArgs);
