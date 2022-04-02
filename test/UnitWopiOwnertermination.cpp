@@ -17,7 +17,7 @@
 
 class UnitWopiOwnertermination : public WopiTestServer
 {
-    STATES_ENUM(Phase, _phase, Load, WaitLoadStatus, WaitDocClose);
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitDocClose) _phase;
 
     static constexpr int RepeatCount = 2;
 

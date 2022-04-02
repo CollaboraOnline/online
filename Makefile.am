@@ -275,6 +275,7 @@ shared_headers = common/Common.hpp \
                  common/JailUtil.hpp \
                  common/Log.hpp \
                  common/Protocol.hpp \
+                 common/StateEnum.hpp \
                  common/StringVector.hpp \
                  common/Seccomp.hpp \
                  common/Session.hpp \

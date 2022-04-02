@@ -16,7 +16,7 @@
 /// Test crashing a document after modifications.
 class UnitWOPICrashModified : public WopiTestServer
 {
-    STATES_ENUM(Phase, _phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose);
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose) _phase;
 
     /// The PID of the Kit process.
     int _pid;

@@ -42,11 +42,11 @@ private:
     std::size_t _expectedPutFile;
 
 protected:
-    STATES_ENUM(Phase, _phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose);
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose) _phase;
 
     /// The different test scenarios. All but VerifyOverwrite modify the document.
-    STATES_ENUM(Scenario, _scenario, Disconnect, SaveDiscard, CloseDiscard, SaveOverwrite,
-                VerifyOverwrite);
+    STATE_ENUM(Scenario, Disconnect, SaveDiscard, CloseDiscard, SaveOverwrite, VerifyOverwrite)
+    _scenario;
 
     static constexpr auto OriginalDocContent = "Original contents";
     static constexpr auto ModifiedOriginalDocContent = "\ufeffaOriginal contents\n";

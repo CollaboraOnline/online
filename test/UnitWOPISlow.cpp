@@ -38,7 +38,7 @@
 /// Modify, Save, Modify, Close -> No data loss.
 class UnitWOPISlow : public WopiTestServer
 {
-    STATES_ENUM(Phase, _phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitPutFile);
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitPutFile) _phase;
 
     static constexpr auto LargeDocumentFilename = "large-six-hundred.odt";
 
