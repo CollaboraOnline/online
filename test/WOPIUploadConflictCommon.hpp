@@ -160,8 +160,8 @@ public:
         if (getExpectedPutFile() < getCountPutFile())
         {
             //FIXME: unreliable in SaveOnExit, which sometimes does 2 PutFile requests.
-            // LOK_ASSERT_EQUAL_MESSAGE("Too many PutFile requests", getExpectedPutFile(),
-            //                          getCountPutFile());
+            LOK_ASSERT_EQUAL_MESSAGE("Too many PutFile requests", getExpectedPutFile(),
+                                     getCountPutFile());
         }
     }
 
@@ -281,7 +281,7 @@ public:
         LOK_ASSERT_EQUAL(getExpectedCheckFileInfo(), getCountCheckFileInfo());
         LOK_ASSERT_EQUAL(getExpectedGetFile(), getCountGetFile());
         LOK_ASSERT_EQUAL(getExpectedPutRelative(), getCountPutRelative());
-        // LOK_ASSERT_EQUAL(getExpectedPutFile(), getCountPutFile()); //FIXME: unreliable for some tests.
+        LOK_ASSERT_EQUAL(getExpectedPutFile(), getCountPutFile());
 
         switch (_scenario)
         {

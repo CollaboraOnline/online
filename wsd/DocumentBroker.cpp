@@ -1366,11 +1366,6 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
         constexpr bool isRename = false;
         uploadToStorageInternal(sessionId, /*saveAsPath*/ std::string(),
                                 /*saveAsFilename*/ std::string(), isRename, force);
-
-        // If marked to destroy, or session is disconnected, remove.
-        const auto it = _sessions.find(sessionId);
-        if (_docState.isMarkedToDestroy() || (it != _sessions.end() && it->second->isCloseFrame()))
-            disconnectSessionInternal(sessionId);
     }
     else
     {
