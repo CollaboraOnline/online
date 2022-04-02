@@ -1832,16 +1832,18 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
 
     LOG_TRC("autoSave(): forceful? " << force
                                      << ", dontSaveIfUnmodified: " << dontSaveIfUnmodified);
-    if (_sessions.empty() || !isLoaded() || (!isModified() && !force))
+
+    const CanSave canSave = canSaveToDisk();
+    if (canSave != CanSave::Yes)
     {
-        // Nothing to do.
-        LOG_TRC("Nothing to autosave [" << _docKey << "].");
+        LOG_DBG("Cannot save to disk: " << name(canSave));
         return false;
     }
 
-    if (_docState.isDisconnected())
+    if (!isModified() && !force)
     {
-        LOG_DBG("Cannot autosave when disconnected from Kit.");
+        // Nothing to do.
+        LOG_TRC("Nothing to autosave [" << _docKey << "].");
         return false;
     }
 
@@ -3514,6 +3516,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  thread start: " << Util::getTimeForLog(now, _threadStart);
     os << "\n  modified?: " << isModified();
     os << "\n  possibly-modified: " << isPossiblyModified();
+    os << "\n  canSave: " << name(canSaveToDisk());
     os << "\n  canUpload: " << name(canUploadToStorage());
     os << "\n  needToUpload: " << name(needToUploadToStorage());
     os << "\n  haveActivityAfterSaveRequest: " << haveActivityAfterSaveRequest();
