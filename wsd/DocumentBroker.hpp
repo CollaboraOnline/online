@@ -514,12 +514,12 @@ private:
     void terminateChild(const std::string& closeReason);
 
     /// Encodes whether or not uploading is needed.
-    enum class NeedToUpload
-    {
+    STATE_ENUM(
+        NeedToUpload,
         No, //< No need to upload, data up-to-date.
         Yes, //< Data is out of date.
         Force //< Force uploading, typically because always_save_on_exit is set.
-    };
+    );
 
     /// Returns true if, for any reason, we need to upload.
     /// This includes out-of-date Document in Storage or
@@ -1015,66 +1015,26 @@ private:
         /// Strictly speaking, these are phases that are directional.
         /// A document starts as New and progresses towards Unloaded.
         /// Upon error, intermediary states may be skipped.
-        enum class Status
-        {
-            None, //< Doesn't exist, pending downloading.
-            Downloading, //< Download from Storage to disk. Synchronous.
-            Loading, //< Loading the document in Core.
-            Live, //< General availability for viewing/editing.
-            Destroying, //< End-of-life, marked to destroy.
-            Destroyed //< Unloading complete, destruction pending.
-        };
+        STATE_ENUM(Status,
+                   None, //< Doesn't exist, pending downloading.
+                   Downloading, //< Download from Storage to disk. Synchronous.
+                   Loading, //< Loading the document in Core.
+                   Live, //< General availability for viewing/editing.
+                   Destroying, //< End-of-life, marked to destroy.
+                   Destroyed //< Unloading complete, destruction pending.
+        );
 
         /// The current activity taking place.
         /// Meaningful only when Status is Status::Live, but
         /// we may Save and Upload during Status::Destroying.
-        enum class Activity
-        {
-            None, //< No particular activity.
-            Rename, //< The document is being renamed.
-            SaveAs, //< The document format is being converted.
-            Conflict, //< The document is conflicted in storaged.
-            Save, //< The document is being saved, manually or auto-save.
-            Upload, //< The document is being uploaded to storage.
-        };
-
-        static std::string toString(Status status)
-        {
-#define CASE(X)                                                                                    \
-    case X:                                                                                        \
-        return #X;
-            switch (status)
-            {
-                CASE(Status::None);
-                CASE(Status::Downloading);
-                CASE(Status::Loading);
-                CASE(Status::Live);
-                CASE(Status::Destroying);
-                CASE(Status::Destroyed);
-            }
-
-#undef CASE
-            return "Unknown Document Status";
-        }
-
-        static std::string toString(Activity activity)
-        {
-#define CASE(X)                                                                                    \
-    case X:                                                                                        \
-        return #X;
-            switch (activity)
-            {
-                CASE(Activity::None);
-                CASE(Activity::Rename);
-                CASE(Activity::SaveAs);
-                CASE(Activity::Conflict);
-                CASE(Activity::Save);
-                CASE(Activity::Upload);
-            }
-
-#undef CASE
-            return "Unknown Document Activity";
-        }
+        STATE_ENUM(Activity,
+                   None, //< No particular activity.
+                   Rename, //< The document is being renamed.
+                   SaveAs, //< The document format is being converted.
+                   Conflict, //< The document is conflicted in storaged.
+                   Save, //< The document is being saved, manually or auto-save.
+                   Upload, //< The document is being uploaded to storage.
+        );
 
         DocumentState()
             : _status(Status::None)
