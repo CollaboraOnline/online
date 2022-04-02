@@ -514,6 +514,38 @@ private:
     /// with the child and cleans up ChildProcess etc.
     void terminateChild(const std::string& closeReason);
 
+    /// Encodes whether or not saving is possible
+    /// (regardless of whether we need to or not).
+    STATE_ENUM(
+        CanSave,
+        Yes, //< Saving is possible.
+        NoKit, //< There is no Kit.
+        NotLoaded, //< No document is loaded.
+        NoWriteSession, //< No available session can write.
+    );
+
+    /// Returns the state of whether saving is possible.
+    /// (regardless of whether we need to or not).
+    CanSave canSaveToDisk() const
+    {
+        if (_docState.isDisconnected() || getPid() <= 0)
+        {
+            return CanSave::NoKit;
+        }
+
+        if (!isLoaded())
+        {
+            return CanSave::NotLoaded;
+        }
+
+        if (_sessions.empty() || getWriteableSessionId().empty())
+        {
+            return CanSave::NoWriteSession;
+        }
+
+        return CanSave::Yes;
+    }
+
     /// Encodes whether or not uploading is possible.
     /// (regardless of whether we need to or not).
     STATE_ENUM(
