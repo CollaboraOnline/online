@@ -160,8 +160,8 @@ public:
         if (getExpectedPutFile() < getCountPutFile())
         {
             //FIXME: unreliable in SaveOnExit, which sometimes does 2 PutFile requests.
-            // LOK_ASSERT_EQUAL_MESSAGE("Too many PutFile requests", getExpectedPutFile(),
-            //                          getCountPutFile());
+            LOK_ASSERT_EQUAL_MESSAGE("Too many PutFile requests", getExpectedPutFile(),
+                                     getCountPutFile());
         }
     }
 
