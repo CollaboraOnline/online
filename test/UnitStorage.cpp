@@ -14,12 +14,12 @@ using namespace helpers;
 
 class UnitStorage : public WopiTestServer
 {
-    STATES_ENUM(Phase, _phase,
-                Load, // load the document
-                Filter, // throw filter exception
-                Reload, // re-load the document
-                Done
-    );
+    STATE_ENUM(Phase,
+               Load, // load the document
+               Filter, // throw filter exception
+               Reload, // re-load the document
+               Done)
+    _phase;
 
 public:
     UnitStorage()

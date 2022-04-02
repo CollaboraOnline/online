@@ -18,7 +18,7 @@
 
 class UnitWopiLock : public WopiTestServer
 {
-    STATES_ENUM(Phase, _phase, Load, LockDocument, UnlockDocument, Done);
+    STATE_ENUM(Phase, Load, LockDocument, UnlockDocument, Done) _phase;
 
     std::string _lockState;
     std::string _lockString;
