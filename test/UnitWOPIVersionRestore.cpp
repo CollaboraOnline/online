@@ -26,7 +26,7 @@
  */
 class UnitWOPIVersionRestore : public WopiTestServer
 {
-    STATES_ENUM(Phase, _phase, Load, WaitLoadStatus, WaitPutFile);
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitPutFile) _phase;
 
     bool _isDocumentSaved = false;
 

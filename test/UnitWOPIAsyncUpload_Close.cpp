@@ -26,8 +26,9 @@
 // Modify, Save, Upload fails, close -> Upload.
 class UnitWOPIAsyncUpload_Close : public WopiTestServer
 {
-    STATES_ENUM(Phase, _phase, Load, WaitLoadStatus, Modify, WaitModifiedStatus, WaitFirstPutFile,
-                Close, WaitSecondPutFile, Polling);
+    STATE_ENUM(Phase, Load, WaitLoadStatus, Modify, WaitModifiedStatus, WaitFirstPutFile, Close,
+               WaitSecondPutFile, Polling)
+    _phase;
 
 public:
     UnitWOPIAsyncUpload_Close()
