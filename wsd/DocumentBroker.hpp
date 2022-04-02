@@ -514,6 +514,26 @@ private:
     /// with the child and cleans up ChildProcess etc.
     void terminateChild(const std::string& closeReason);
 
+    /// Encodes whether or not uploading is possible.
+    /// (regardless of whether we need to or not).
+    STATE_ENUM(
+        CanUpload,
+        Yes, //< Uploading is possible.
+        NoStorage, //< Storage instance missing.
+    );
+
+    /// Returns the state of whether uploading is possible.
+    /// (regardless of whether we need to or not).
+    CanUpload canUploadToStorage() const
+    {
+        if (!_storage)
+        {
+            return CanUpload::NoStorage;
+        }
+
+        return CanUpload::Yes;
+    }
+
     /// Encodes whether or not uploading is needed.
     STATE_ENUM(
         NeedToUpload,
@@ -522,7 +542,7 @@ private:
         Force //< Force uploading, typically because always_save_on_exit is set.
     );
 
-    /// Returns true if, for any reason, we need to upload.
+    /// Returns the state of the need to upload.
     /// This includes out-of-date Document in Storage or
     /// always_save_on_exit.
     NeedToUpload needToUploadToStorage() const;
@@ -1092,7 +1112,7 @@ private:
         void setInteractive(bool value) { _interactive = value; }
         bool isInteractive() const { return _interactive; }
 
-        /// Flag to unload the document. May be reset when a new view is opened.
+        /// Flag to unload the document. Irreversible.
         void setUnloadRequested() { _unloadRequested = true; }
         bool isUnloadRequested() const { return _unloadRequested; }
 

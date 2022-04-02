@@ -1133,9 +1133,11 @@ bool DocumentBroker::attemptLock(const ClientSession& session, std::string& fail
 
 DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
 {
-    if (_storage == nullptr)
+    const CanUpload canUpload = canUploadToStorage();
+    if (canUpload != CanUpload::Yes)
     {
         // This can happen when we reject the connection (unauthorized).
+        LOG_TRC("Cannot upload to storage: " << name(canUpload));
         return NeedToUpload::No;
     }
 
@@ -1269,14 +1271,11 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
     LOG_TRC("checkAndUploadToStorage with session " << sessionId);
 
     // See if we have anything to upload.
-    NeedToUpload needToUploadState = needToUploadToStorage();
+    const NeedToUpload needToUploadState = needToUploadToStorage();
 
     // Handle activity-specific logic.
     switch (_docState.activity())
     {
-        case DocumentState::Activity::None:
-            break;
-
         case DocumentState::Activity::Rename:
         {
             // If we have nothing to upload, do the rename now.
@@ -3515,6 +3514,8 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  thread start: " << Util::getTimeForLog(now, _threadStart);
     os << "\n  modified?: " << isModified();
     os << "\n  possibly-modified: " << isPossiblyModified();
+    os << "\n  canUpload: " << name(canUploadToStorage());
+    os << "\n  needToUpload: " << name(needToUploadToStorage());
     os << "\n  haveActivityAfterSaveRequest: " << haveActivityAfterSaveRequest();
     os << "\n  isViewFileExtension: " << _isViewFileExtension;
 
