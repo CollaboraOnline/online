@@ -478,6 +478,7 @@ public:
 
 private:
     /// get the session id of a session that can write the document for save / locking.
+    /// Note that if there is no loaded and writable session, the first will be returned.
     std::string getWriteableSessionId() const;
 
     void refreshLock();
