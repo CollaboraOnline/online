@@ -274,6 +274,12 @@ void DocumentBroker::pollThread()
         _poll->poll(unloading ? SocketPoll::DefaultPollTimeoutMicroS / 16
                               : SocketPoll::DefaultPollTimeoutMicroS);
 
+        if (EnableExperimental && _stop)
+        {
+            LOG_DBG("Doc [" << _docKey << "] is flagged to stop after returning from poll.");
+            break;
+        }
+
 #if !MOBILEAPP
         const auto now = std::chrono::steady_clock::now();
 
