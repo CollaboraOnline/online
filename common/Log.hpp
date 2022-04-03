@@ -393,4 +393,33 @@ namespace Log
         }                                                                                          \
     } while (false)
 
+/// Assert the truth of a condition, with a custom message.
+#define LOG_ASSERT_INTERNAL(condition, message, LOG)                                               \
+    do                                                                                             \
+    {                                                                                              \
+        auto&& cond##__LINE__ = !!(condition);                                                     \
+        if (!cond##__LINE__)                                                                       \
+        {                                                                                          \
+            std::ostringstream oss##__LINE__;                                                      \
+            oss##__LINE__ << message;                                                              \
+            const auto msg##__LINE__ = oss##__LINE__.str();                                        \
+            LOG("ERROR: Assertion failure: "                                                       \
+                << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ". ")                             \
+                << "Condition: " << (#condition));                                                 \
+            assert(cond##__LINE__);                                                                \
+        }                                                                                          \
+    } while (false)
+
+/// Assert the truth of a condition.
+#if defined(NDEBUG)
+// In release mode assertions are logged as debug-level, since they are for developers.
+#define LOG_ASSERT_MSG(condition, message)                                                         \
+    LOG_ASSERT_INTERNAL(condition, "Precondition failed", LOG_DBG)
+#define LOG_ASSERT(condition) LOG_ASSERT_MSG(condition, "Precondition failed")
+#else
+// In debug mode assertions are errors.
+#define LOG_ASSERT_MSG(condition, message) LOG_ASSERT_INTERNAL(condition, message, LOG_ERR)
+#define LOG_ASSERT(condition) LOG_ASSERT_MSG(condition, "Precondition failed")
+#endif
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
