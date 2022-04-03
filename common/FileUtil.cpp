@@ -81,7 +81,7 @@ namespace FileUtil
 {
     std::string createRandomDir(const std::string& path)
     {
-        const std::string name = Util::rng::getFilename(64);
+        std::string name = Util::rng::getFilename(64);
 #if HAVE_STD_FILESYSTEM
         filesystem::create_directory(path + '/' + name);
 #else

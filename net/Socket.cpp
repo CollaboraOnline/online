@@ -1054,7 +1054,8 @@ bool StreamSocket::parseHeader(const char *clientName,
                               marker.begin(), marker.end());
     if (itBody == _inBuffer.end())
     {
-        LOG_TRC('#' << getFD() << " doesn't have enough data for the header yet.");
+        LOG_TRC('#' << getFD() << ": " << clientName
+                    << " doesn't have enough data for the header yet.");
         return false;
     }
 
