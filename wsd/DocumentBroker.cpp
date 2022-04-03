@@ -1301,9 +1301,10 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
         default:
         break;
     }
+
 #if !MOBILEAPP
     // Avoid multiple uploads during unloading if we know we need to save a new version.
-    if (_docState.isUnloadRequested() && isPossiblyModified())
+    if (_docState.isUnloadRequested() && needToSaveToDisk() != NeedToSave::No)
     {
         // We are unloading but have possible modifications. Save again (done in poll).
         LOG_DBG("Document [" << getDocKey()
@@ -1312,6 +1313,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
         return;
     }
 #endif
+
     if (needToUploadState != NeedToUpload::No)
     {
         uploadToStorage(sessionId, /*force=*/needToUploadState == NeedToUpload::Force);
@@ -1824,6 +1826,41 @@ void DocumentBroker::refreshLock()
     }
 }
 
+DocumentBroker::NeedToSave DocumentBroker::needToSaveToDisk() const
+{
+    // Cannot save without a kit, a loaded doc, and a valid session.
+    if (canSaveToDisk() == CanSave::Yes)
+    {
+        if (!_saveManager.lastSaveSuccessful())
+        {
+            // When saving is attempted and fails, we have no file on disk.
+            return NeedToSave::Yes_LastSaveFailed;
+        }
+
+        if (isModified())
+        {
+            // ViewFileExtensions do not update the ModifiedStatus, but,
+            // we expect a successful save anyway (including unmodified).
+            if (!_isViewFileExtension)
+            {
+                return NeedToSave::Yes_Modified;
+            }
+
+            assert(_isViewFileExtension && "Not a view-file");
+            // Fallback to check for activity post-saving.
+        }
+
+        assert(_saveManager.lastSaveSuccessful() && "Last save failed");
+
+        if (haveActivityAfterSaveRequest())
+        {
+            return NeedToSave::Maybe;
+        }
+    }
+
+    return NeedToSave::No;
+}
+
 bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
 {
     assertCorrectThread();
@@ -1929,15 +1966,16 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         return;
     }
 
-    if (_docState.isDisconnected() && !isStorageOutdated())
+    const NeedToSave needToSave = needToSaveToDisk();
+    const NeedToUpload needToUpload = needToUploadToStorage();
+    bool canStop = (needToSave == NeedToSave::No && needToUpload == NeedToUpload::No);
+
+    if (!canStop && needToSave == NeedToSave::No && !isStorageOutdated())
     {
-        LOG_DBG("Disconnected from Kit and nothing to upload. Stopping");
-        stop(reason);
-        return;
+        canStop = true;
     }
 
-    bool canStop = false;
-    if (needToUploadToStorage() == NeedToUpload::No)
+    if (!canStop && needToUpload == NeedToUpload::No)
     {
         // Here we don't check for the modified flag because it can come in
         // very late, or not at all. We care that there is nothing to upload
