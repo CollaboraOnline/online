@@ -1473,10 +1473,9 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
             {
                 const unsigned coolStatusCode
                     = JsonUtil::getJSONValue<unsigned>(object, "COOLStatusCode");
-                const unsigned loolStatusCode
-                    = JsonUtil::getJSONValue<unsigned>(object, "LOOLStatusCode");
                 if (coolStatusCode == static_cast<unsigned>(COOLStatusCode::DOC_CHANGED) ||
-                    loolStatusCode == static_cast<unsigned>(COOLStatusCode::DOC_CHANGED))
+                    JsonUtil::getJSONValue<unsigned>(object, "LOOLStatusCode") ==
+                        static_cast<unsigned>(COOLStatusCode::DOC_CHANGED))
                 {
                     result.setResult(StorageBase::UploadResult::Result::DOC_CHANGED);
                 }
