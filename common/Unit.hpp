@@ -514,6 +514,6 @@ public:
 
 #define LOK_ASSERT_STATE(VAR, STATE)                                                               \
     LOK_ASSERT_MESSAGE("Expected " #VAR " to be in " #STATE " but was " + toString(VAR),           \
-                       _phase == STATE)
+                       VAR == STATE)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
