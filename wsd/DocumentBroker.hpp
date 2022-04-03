@@ -609,6 +609,18 @@ private:
         return _saveManager.lastSaveRequestTime() < _lastActivityTime;
     }
 
+    /// Encodes whether or not saving is needed.
+    STATE_ENUM(NeedToSave,
+               No, //< No need to save, data up-to-date.
+               Maybe, //< We have activity post saving.
+               Yes_Modified, //< Data is out of date.
+               Yes_LastSaveFailed, //< Yes, need to produce file on disk.
+               Force //< Force saving, typically because the user requested.
+    );
+
+    /// Returns the state of the need to save.
+    NeedToSave needToSaveToDisk() const;
+
     /// True if we know the doc is modified or
     /// if there has been activity from a client after we last *requested* saving,
     /// since there are race conditions vis-a-vis user activity while saving.
