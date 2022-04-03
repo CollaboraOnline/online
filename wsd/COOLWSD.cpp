@@ -1642,7 +1642,8 @@ void COOLWSD::innerInitialize(Application& self)
     }
 
     ServerName = config().getString("server_name");
-    LOG_INF("Initializing coolwsd server [" << ServerName << "].");
+    LOG_INF("Initializing coolwsd server [" << ServerName << "]. Experimental features are "
+                                            << (EnableExperimental ? "enabled." : "disabled."));
 
     // Get anonymization settings.
 #if COOLWSD_ANONYMIZE_USER_DATA
