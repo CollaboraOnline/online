@@ -933,7 +933,7 @@ void TileCacheTests::checkBlackTile(std::stringstream& tile)
     }
 
     LOK_ASSERT_MESSAGE("The tile is 100% black", black != height * width);
-    assert(height * width != 0);
+    LOK_ASSERT(height * width != 0);
     LOK_ASSERT_MESSAGE("The tile is 90% black", (black * 100) / (height * width) < 90);
 }
 

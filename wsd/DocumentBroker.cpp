@@ -659,7 +659,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         firstInstance = true;
     }
 
-    assert(_storage != nullptr);
+    LOG_ASSERT(_storage);
 
     // Call the storage specific fileinfo functions
     std::string userId, username;
@@ -2254,8 +2254,8 @@ std::size_t DocumentBroker::removeSession(const std::string& id)
         }
         else if (activeSessionCount > 0)
         {
-            assert(!_docState.isMarkedToDestroy() &&
-                   "Have active sessions while marked to destroy.");
+            LOG_ASSERT_MSG(!_docState.isMarkedToDestroy(),
+                           "Have active sessions while marked to destroy");
         }
     }
     catch (const std::exception& ex)
@@ -2283,7 +2283,8 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
             if (_docState.isUnloadRequested())
             {
                 // We must be the last session, flag to destroy if unload is requested.
-                assert(countActiveSessions() <= 1 && "Unload-requested with multiple sessions.");
+                LOG_ASSERT_MSG(countActiveSessions() <= 1,
+                               "Unload-requested with multiple sessions");
                 _docState.markToDestroy();
                 LOG_TRC("Unload requested while disconnecting session ["
                         << id << "], having " << _sessions.size()
