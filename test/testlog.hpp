@@ -74,7 +74,7 @@ inline void tstLog(const std::ostringstream& stream) { writeTestLog(stream.str()
 #define TST_LOG_END_X(OSS)                                                                         \
     do                                                                                             \
     {                                                                                              \
-        OSS << "| " __FILE__ ":" << __LINE__ << '\n';                                              \
+        OSS << "| " __FILE__ ":" STRING(__LINE__) "\n";                                            \
         tstLog(OSS);                                                                               \
     } while (false)
 
