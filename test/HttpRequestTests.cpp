@@ -44,8 +44,9 @@
 class HttpRequestTests final : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(HttpRequestTests);
-
+#if ENABLE_SSL
     CPPUNIT_TEST(testSslHostname);
+#endif
     CPPUNIT_TEST(testInvalidURI);
     CPPUNIT_TEST(testBadResponse);
     CPPUNIT_TEST(testGoodResponse);
@@ -62,8 +63,9 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testOnFinished_Timeout);
 
     CPPUNIT_TEST_SUITE_END();
-
+#if ENABLE_SSL
     void testSslHostname();
+#endif
     void testInvalidURI();
     void testBadResponse();
     void testGoodResponse();
@@ -168,6 +170,7 @@ public:
 
 constexpr std::chrono::seconds HttpRequestTests::DefTimeoutSeconds;
 
+#if ENABLE_SSL
 void HttpRequestTests::testSslHostname()
 {
     constexpr auto testname = __func__;
@@ -180,6 +183,7 @@ void HttpRequestTests::testSslHostname()
         LOK_ASSERT_EQUAL(host, socket->getSslServername());
     }
 }
+#endif
 
 void HttpRequestTests::testInvalidURI()
 {
