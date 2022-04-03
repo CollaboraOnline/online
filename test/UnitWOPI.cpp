@@ -10,29 +10,13 @@
 #include "lokassert.hpp"
 
 #include <WopiTestServer.hpp>
-#include <Log.hpp>
-#include <Unit.hpp>
-#include <UnitHTTP.hpp>
-#include <helpers.hpp>
 #include <Poco/Net/HTTPRequest.h>
-#include <Poco/Util/LayeredConfiguration.h>
 
 class UnitWOPI : public WopiTestServer
 {
-    enum class Phase
-    {
-        Load,
-        WaitLoadStatus,
-        Modify,
-        WaitModifiedStatus,
-        Polling
-    } _phase;
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus, Done) _phase;
 
-    enum class SavingPhase
-    {
-        Unmodified,
-        Modified
-    } _savingPhase;
+    STATE_ENUM(SavingPhase, Unmodified, Modified) _savingPhase;
 
     bool _finishedSaveUnmodified;
     bool _finishedSaveModified;
@@ -49,6 +33,8 @@ public:
 
     bool isAutosave() override
     {
+        LOG_TST("In SavingPhase " << name(_savingPhase));
+
         // we fake autosave when saving the modified document
         const bool res = _savingPhase == SavingPhase::Modified;
         LOG_TST("isAutosave: " << std::boolalpha << res);
@@ -58,9 +44,11 @@ public:
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
+        LOG_TST("In SavingPhase " << name(_savingPhase));
+
         if (_savingPhase == SavingPhase::Unmodified)
         {
-            LOG_TST("assertPutFileRequest: SavingPhase::Unmodified");
+            LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
             // the document is not modified
             LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsModifiedByUser"));
@@ -69,10 +57,15 @@ public:
             LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
 
             _finishedSaveUnmodified = true;
+
+            // Modify to test the modified phase.
+            TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
+            WSD_CMD("key type=input char=97 key=0");
+            WSD_CMD("key type=up char=0 key=512");
         }
         else if (_savingPhase == SavingPhase::Modified)
         {
-            LOG_TST("assertPutFileRequest: SavingPhase::Modified");
+            LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
             // the document is modified
             LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
@@ -85,6 +78,8 @@ public:
                              request.get("X-COOL-WOPI-ExtendedData"));
 
             _finishedSaveModified = true;
+
+            TRANSITION_STATE(_phase, Phase::Done);
         }
 
         if (_finishedSaveUnmodified && _finishedSaveModified)
@@ -95,35 +90,25 @@ public:
 
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded: [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus",
-                           _phase == Phase::WaitLoadStatus);
+        LOG_TST("In SavingPhase " << name(_savingPhase) << ": [" << message << ']');
+        LOK_ASSERT_STATE(_savingPhase, SavingPhase::Unmodified);
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
-        LOG_TST("onDocumentModified: Switching to Phase::Modify, SavingPhase::Unmodified");
-        _savingPhase = SavingPhase::Unmodified;
-        _phase = Phase::Modify;
-
+        // Save unmodified.
         WSD_CMD("save dontTerminateEdit=1 dontSaveIfUnmodified=0");
-
-        SocketPoll::wakeupWorld();
         return true;
     }
 
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("onDocumentModified: Doc (WaitModifiedStatus): [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitModified",
-                           _phase == Phase::WaitModifiedStatus);
-        {
-            LOG_TST("onDocumentModified: Switching to Phase::Polling, SavingPhase::Modified");
-            _phase = Phase::Polling;
-            _savingPhase = SavingPhase::Modified;
+        LOG_TST("In SavingPhase " << name(_savingPhase) << ": [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
-            WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
-                    "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue");
+        TRANSITION_STATE(_savingPhase, SavingPhase::Modified);
 
-            SocketPoll::wakeupWorld();
-        }
+        // Save modified.
+        WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
+                "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue");
 
         return true;
     }
@@ -134,26 +119,18 @@ public:
         {
             case Phase::Load:
             {
-                _phase = Phase::WaitLoadStatus;
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
                 LOG_TST("Load: initWebsocket.");
                 initWebsocket("/wopi/files/0?access_token=anything");
 
                 WSD_CMD("load url=" + getWopiSrc());
-                break;
             }
-            case Phase::Modify:
-            {
-                LOG_TST("Modify => WaitModified");
-                _phase = Phase::WaitModifiedStatus;
+            break;
 
-                WSD_CMD("key type=input char=97 key=0");
-                WSD_CMD("key type=up char=0 key=512");
-                break;
-            }
             case Phase::WaitLoadStatus:
             case Phase::WaitModifiedStatus:
-            case Phase::Polling:
+            case Phase::Done:
             {
                 // just wait for the results
                 break;
