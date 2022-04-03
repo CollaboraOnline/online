@@ -170,6 +170,7 @@ constexpr std::chrono::seconds HttpRequestTests::DefTimeoutSeconds;
 
 void HttpRequestTests::testSslHostname()
 {
+#if ENABLE_SSL
     constexpr auto testname = __func__;
 
     if (helpers::haveSsl())
@@ -179,6 +180,7 @@ void HttpRequestTests::testSslHostname()
             host, _port, false, std::make_shared<ServerRequestHandler>());
         LOK_ASSERT_EQUAL(host, socket->getSslServername());
     }
+#endif
 }
 
 void HttpRequestTests::testInvalidURI()
