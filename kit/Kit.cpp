@@ -1551,8 +1551,11 @@ private:
         }
 
         // By default we enable spell-checking, unless it's disabled explicitly.
-        const bool bSet = (spellOnline != "false");
-        renderOptsObj->set(".uno:SpellOnline", makePropertyValue("boolean", bSet));
+        if (!spellOnline.empty())
+        {
+            const bool bSet = (spellOnline != "false");
+            renderOptsObj->set(".uno:SpellOnline", makePropertyValue("boolean", bSet));
+        }
 
         if (renderOptsObj)
         {
