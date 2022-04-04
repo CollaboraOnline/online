@@ -47,7 +47,6 @@
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
 	line-height: var(--default-height);
-	text-align: left;
 }
 #glowframe > div.ui-frame.jsdialog.sidebar > span,
 #softedgeframe > div.ui-frame.jsdialog.sidebar > span {
