@@ -3263,7 +3263,7 @@ std::size_t DocumentBroker::broadcastMessage(const std::string& message) const
     std::size_t count = 0;
     for (const auto& sessionIt : _sessions)
     {
-        count += sessionIt.second->sendTextFrame(message);
+        count += (!sessionIt.second->isCloseFrame() && sessionIt.second->sendTextFrame(message));
     }
 
     return count;

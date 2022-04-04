@@ -1923,6 +1923,12 @@ bool ClientSession::forwardToClient(const std::shared_ptr<Message>& payload)
 
 void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
 {
+    if (isCloseFrame())
+    {
+        LOG_TRC(getName() << ": Connection closed, dropping message " << data->id());
+        return;
+    }
+
     const std::shared_ptr<DocumentBroker> docBroker = _docBroker.lock();
     LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
     docBroker->assertCorrectThread();
