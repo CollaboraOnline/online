@@ -127,8 +127,8 @@ static const char *stateToString(ClientSession::SessionState s)
 
 void ClientSession::setState(SessionState newState)
 {
-    LOG_TRC("ClientSession: transition from " << stateToString(_state) <<
-            " to " << stateToString(newState));
+    LOG_TRC(getName() << ": transition from " << stateToString(_state) << " to "
+                      << stateToString(newState));
 
     // we can get incoming messages while our disconnection is in transit.
     if (_state == SessionState::WAIT_DISCONNECT)
@@ -1333,7 +1333,7 @@ bool ClientSession::hasQueuedMessages() const
 
 void ClientSession::writeQueuedMessages(std::size_t capacity)
 {
-    LOG_TRC(getName() << " ClientSession: performing writes, up to " << capacity << " bytes.");
+    LOG_TRC(getName() << ": ClientSession: performing writes, up to " << capacity << " bytes.");
 
     std::shared_ptr<Message> item;
     std::size_t wrote = 0;
@@ -1356,17 +1356,17 @@ void ClientSession::writeQueuedMessages(std::size_t capacity)
             }
 
             wrote += size;
-            LOG_TRC(getName() << " ClientSession: wrote " << size << ", total " << wrote
+            LOG_TRC(getName() << ": ClientSession: wrote " << size << ", total " << wrote
                               << " bytes.");
         }
     }
     catch (const std::exception& ex)
     {
-        LOG_ERR(getName() << " Failed to send message " << (item ? item->abbr() : "<empty-item>")
+        LOG_ERR(getName() << ": Failed to send message " << (item ? item->abbr() : "<empty-item>")
                           << " to client: " << ex.what());
     }
 
-    LOG_TRC(getName() << " ClientSession: performed write, wrote " << wrote << " bytes.");
+    LOG_TRC(getName() << ": ClientSession: performed write, wrote " << wrote << " bytes.");
 }
 
 // NB. also see browser/src/map/Clipboard.js that does this in JS for stubs.
@@ -1936,12 +1936,13 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
         auto iter = _oldWireIds.find(tile->generateID());
         if(iter != _oldWireIds.end() && tile->getWireId() != 0 && tile->getWireId() == iter->second)
         {
-            LOG_INF("WSD filters out a tile with the same wireID: " <<  tile->serialize("tile:"));
+            LOG_INF(getName() << ": WSD filters out a tile with the same wireID: "
+                              << tile->serialize("tile:"));
             return;
         }
     }
 
-    LOG_TRC(getName() << " enqueueing client message " << data->id());
+    LOG_TRC(getName() << ": Enqueueing client message " << data->id());
     std::size_t sizeBefore = _senderQueue.size();
     std::size_t newSize = _senderQueue.enqueue(data);
 
@@ -2007,7 +2008,8 @@ Util::Rectangle ClientSession::getNormalizedVisibleArea() const
 
 void ClientSession::onDisconnect()
 {
-    LOG_INF(getName() << " Disconnected, current number of connections: " << COOLWSD::NumConnections);
+    LOG_INF(getName() << ": Disconnected, current global number of connections (inclusive): "
+                      << COOLWSD::NumConnections);
 
     const std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
     LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
@@ -2020,28 +2022,28 @@ void ClientSession::onDisconnect()
     try
     {
         // Connection terminated. Destroy session.
-        LOG_DBG(getName() << " on docKey [" << docKey << "] terminated. Cleaning up.");
+        LOG_DBG(getName() << ": on docKey [" << docKey << "] terminated. Cleaning up.");
 
         docBroker->removeSession(getId());
     }
     catch (const UnauthorizedRequestException& exc)
     {
-        LOG_ERR("Error in client request handler: " << exc.toString());
+        LOG_ERR(getName() << ": Error in client request handler: " << exc.toString());
         const std::string status = "error: cmd=internal kind=unauthorized";
-        LOG_TRC("Sending to Client [" << status << "].");
+        LOG_TRC(getName() << ": Sending to Client [" << status << "].");
         sendMessage(status);
         // We are disconnecting, no need to close the socket here.
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("Error in client request handler: " << exc.what());
+        LOG_ERR(getName() << ": Error in client request handler: " << exc.what());
     }
 
     try
     {
         if (isCloseFrame())
         {
-            LOG_TRC("Normal close handshake.");
+            LOG_TRC(getName() << ": Normal close handshake.");
             // Client initiated close handshake
             // respond with close frame
             shutdownNormal();
@@ -2049,13 +2051,13 @@ void ClientSession::onDisconnect()
         else if (!SigUtil::getShutdownRequestFlag())
         {
             // something wrong, with internal exceptions
-            LOG_TRC("Abnormal close handshake.");
+            LOG_TRC(getName() << ": Abnormal close handshake.");
             closeFrame();
             shutdownGoingAway();
         }
         else
         {
-            LOG_TRC("Server recycling.");
+            LOG_TRC(getName() << ": Server recycling.");
             closeFrame();
             shutdownGoingAway();
         }
