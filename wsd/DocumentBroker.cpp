@@ -479,15 +479,23 @@ void DocumentBroker::pollThread()
             _poll->continuePolling() << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag() <<
             ", TerminationFlag: " << SigUtil::getTerminationFlag() << ", closeReason: " << _closeReason << ". Flushing socket.");
 
-    // If the document is modified at exit, dump the state and warn.
-    // Unless, that is, the user discarded the changes.
-    if (isModified() && !(_docState.isCloseRequested() && _documentChangedInStorage))
+    // If we are exiting because the owner discarded conflict changes, don't detect data loss.
+    if (!(_docState.isCloseRequested() && _documentChangedInStorage))
     {
-        std::stringstream state;
-        dumpState(state);
-        LOG_WRN("DocumentBroker stopping although flagged as modified " << state.str());
-        if (UnitWSD::isUnitTesting())
-            UnitWSD::get().fail("Unsaved data detected while exiting DocBroker [" + _docKey + ']');
+        // If the document is modified, or not uploaded, at exit, dump the state and warn.
+        const std::string reason = isModified()          ? "flagged as modified"
+                                   : isStorageOutdated() ? "not uploaded to storage"
+                                                         : "";
+        if (!reason.empty())
+        {
+            std::stringstream state;
+            dumpState(state);
+            LOG_WRN("DocumentBroker stopping although " << reason << ". State: " << state.str());
+            if (UnitWSD::isUnitTesting())
+            {
+                UnitWSD::get().fail("Data-loss detected while exiting DocBroker [" + _docKey + ']');
+            }
+        }
     }
     else if (UnitWSD::isUnitTesting() && UnitWSD::get().isFinished() && UnitWSD::get().failed())
     {
@@ -1187,6 +1195,11 @@ DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
 
 bool DocumentBroker::isStorageOutdated() const
 {
+    if (!_storage)
+    {
+        return false;
+    }
+
     // Get the modified-time of the file on disk.
     const auto st = FileUtil::Stat(_storage->getRootFilePathUploading());
     if (!st.exists())
@@ -1746,15 +1759,12 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         if (activeClients == 0)
         {
             // No clients were contacted; we will never resolve this conflict.
-            stop("conflict");
-            std::stringstream state;
-            dumpState(state);
             LOG_WRN("The document ["
                     << _docKey
                     << "] could not be uploaded to storage because there is a newer version there, "
                        "and no active clients exist to resolve the conflict. The document should "
-                       "be recoverable from the quarantine. State:\n"
-                    << state.str());
+                       "be recoverable from the quarantine. Stopping.");
+            stop("conflict");
         }
     }
 }
@@ -2049,14 +2059,11 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
                 // There is nothing to do here except to detect data-loss and stop.
                 if (isStorageOutdated())
                 {
-                    std::stringstream state;
-                    dumpState(state);
                     LOG_WRN("The document ["
                             << _docKey
                             << "] could not be uploaded to storage because there are no writable "
                                "sessions to upload. The document should be recoverable from the "
-                               "quarantine. Stopping. State:\n"
-                            << state.str());
+                               "quarantine. Stopping.");
                 }
 
                 canStop = true;
