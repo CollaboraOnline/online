@@ -20,7 +20,7 @@ L.Control.ContextMenu = L.Control.extend({
 			 * in following list is just for reference and ease of locating uno command
 			 * from context menu structure.
 			 */
-			general: ['Cut', 'Copy', 'Paste', 'Delete',
+			general: ['Cut', 'Copy', 'Paste', 'PasteSpecial', 'Delete',
 					  'FormatPaintbrush', 'ResetAttributes',
 					  'NumberingStart', 'ContinueNumbering', 'IncrementLevel', 'DecrementLevel',
 					  'OpenHyperlinkOnCursor', 'EditHyperlink', 'CopyHyperlinkLocation', 'RemoveHyperlink',
@@ -195,6 +195,15 @@ L.Control.ContextMenu = L.Control.extend({
 				continue;
 			}
 
+			// reduce Paste Special submenu
+			if (item.type === 'menu' && item.text.replace('~', '') === 'Paste Special'
+				&& item.menu && item.menu.length) {
+				item.text = _('Paste Special');
+				item.command = '.uno:PasteSpecial';
+				item.type = item.menu[0].type;
+				item.menu = undefined;
+			}
+
 			if (item.type === 'separator') {
 				if (isLastItemText) {
 					contextMenu['sep' + sepIdx++] = this.options.SEPARATOR;
@@ -256,10 +265,6 @@ L.Control.ContextMenu = L.Control.extend({
 				isLastItemText = true;
 			} else if (item.type === 'menu') {
 				itemName = item.text;
-				if (itemName.replace('~', '') === 'Paste Special') {
-					itemName = _('Paste Special');
-					continue; // Kill paste special for now.
-				}
 				var submenu = this._createContextMenuStructure(item);
 				// ignore submenus with all items disabled
 				if (Object.keys(submenu).length === 0) {
