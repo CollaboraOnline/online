@@ -279,6 +279,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 
 #mobile-wizard.menuwizard {
 	z-index: 1001;
+	background-color: var(--color-background-lighter);
 }
 
 #mobile-wizard-content *{
