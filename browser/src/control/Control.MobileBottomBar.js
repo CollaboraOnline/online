@@ -281,6 +281,14 @@ L.Control.MobileBottomBar = L.Control.extend({
 	create: function() {
 		var toolItems = this.getToolItems(this.options.docType);
 
+		for (var i = 0; i < toolItems.length; i++) {
+			if (toolItems[i].type === 'menu' && toolItems[i].items) {
+				for (var j = 0; j < toolItems[i].items.length; j++) {
+					toolItems[i].items[j].text = toolItems[i].items[j].text || toolItems[i].items[j].hint;
+				}
+			}
+		}
+
 		var toolbar = $('#toolbar-down');
 		toolbar.w2toolbar({
 			name: 'editbar',
