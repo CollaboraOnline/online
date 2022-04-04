@@ -1,6 +1,9 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Control.AutofilterDropdown
+ * L.Control.AutofilterDropdown - DEPRECATED
+ * handles autofilter dropdown in core versions < 22.05
+ * in newer core autofilter is a regular popup handled in Control.JSDialog.js
+ * TODO: remove this file when co-2021 support will be not needed
  */
 
 /* global app $ */
@@ -169,8 +172,8 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		var width = $(mainContainer).width();
 		if (left + width > $('#document-container').width()) {
 			var newLeftPosition = left - width;
-			if (newTopPosition < 0)
-				newTopPosition = 0;
+			if (newLeftPosition < 0)
+				newLeftPosition = 0;
 			L.DomUtil.setStyle(mainContainer, 'margin-left', newLeftPosition + 'px');
 			this.position.x = newLeftPosition;
 		}
