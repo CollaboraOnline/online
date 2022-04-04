@@ -205,7 +205,7 @@ public:
         LOG_DBG("Storage ctor: " << COOLWSD::anonymizeUrl(_uri.toString()));
     }
 
-    virtual ~StorageBase() {}
+    virtual ~StorageBase() { LOG_TRC("~StorageBase " << _uri.toString()); }
 
     const Poco::URI& getUri() const { return _uri; }
 
