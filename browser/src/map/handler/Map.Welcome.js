@@ -14,8 +14,7 @@ L.Map.Welcome = L.Handler.extend({
 		L.Handler.prototype.initialize.call(this, map);
 		this._map.on('statusindicator', this.onStatusIndicator, this);
 
-		this._url = window.enableWelcomeMessage ? L.LOUtil.getURL('/welcome/welcome.html') :
-			window.welcomeUrl;
+		this._url = window.welcomeUrl ? window.welcomeUrl: L.LOUtil.getURL('/welcome/welcome.html');
 		this._retries = 2;
 		this._fallback = false;
 	},
