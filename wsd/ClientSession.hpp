@@ -82,9 +82,13 @@ public:
 
     bool sendBinaryFrame(const char* buffer, int length) override
     {
-        auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
-        enqueueSendMessage(payload);
-        return true;
+        if (!isCloseFrame())
+        {
+            enqueueSendMessage(std::make_shared<Message>(buffer, length, Message::Dir::Out));
+            return true;
+        }
+
+        return false;
     }
 
     bool sendTile(const std::string &header, const TileCache::Tile &tile)
@@ -101,9 +105,13 @@ public:
 
     bool sendTextFrame(const char* buffer, const int length) override
     {
-        auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
-        enqueueSendMessage(payload);
-        return true;
+        if (!isCloseFrame())
+        {
+            enqueueSendMessage(std::make_shared<Message>(buffer, length, Message::Dir::Out));
+            return true;
+        }
+
+        return false;
     }
 
 
