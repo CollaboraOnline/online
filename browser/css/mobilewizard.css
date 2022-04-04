@@ -1229,11 +1229,11 @@ label.disabled {
 }
 
 /* Paragraph properties */
-#mobile-wizard #paraspacing + #image6,
-#mobile-wizard #aboveparaspacing + #image7,
-#mobile-wizard #indent + #image8,
-#mobile-wizard #beforetextindent + #image9,
-#mobile-wizard #aftertextindent + #image10 {
+#mobile-wizard #paraspacingimg,
+#mobile-wizard #aboveparaspacingimg,
+#mobile-wizard #indentimg,
+#mobile-wizard #beforetextindentimg,
+#mobile-wizard #aftertextindentimg {
 	display: none;
 }
 
