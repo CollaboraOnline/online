@@ -264,8 +264,8 @@ public:
     {
         // We expect this to happen only with the disonnection test,
         // because only in that case there is no user input.
-        LOK_ASSERT_MESSAGE("Expected reason to be 'Unsaved data detected'",
-                           Util::startsWith(reason, "Unsaved data detected"));
+        LOK_ASSERT_MESSAGE("Expected reason to be 'Data-loss detected'",
+                           Util::startsWith(reason, "Data-loss detected"));
         LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitDocClose but was " + toString(_phase),
                            _phase == Phase::WaitDocClose);
         LOK_ASSERT_MESSAGE("Expected to be in Scenario::Disconnect but was " + toString(_scenario),
