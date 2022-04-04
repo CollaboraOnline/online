@@ -724,7 +724,7 @@ a.leaflet-control-zoom-in {
 	float: left;
 	padding: 20px !important;
 }
-#mobile-wizard #belowparaspacing, #mobile-wizard #spacinglabel, #mobile-wizard #OutlineRight,
+#mobile-wizard #spacinglabel, #mobile-wizard #OutlineRight,
 #mobile-wizard #DefaultBullet, #mobile-wizard #CellVertTop, #mobile-wizard #rowheight,
 #mobile-wizard #columnwidth {
 	float: left;
@@ -1231,6 +1231,7 @@ label.disabled {
 /* Paragraph properties */
 #mobile-wizard #paraspacingimg,
 #mobile-wizard #aboveparaspacingimg,
+#mobile-wizard #belowparaspacingimg,
 #mobile-wizard #indentimg,
 #mobile-wizard #beforetextindentimg,
 #mobile-wizard #aftertextindentimg {
