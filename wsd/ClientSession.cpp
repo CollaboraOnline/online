@@ -1863,6 +1863,13 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             docBroker->setInteractive(false);
             docBroker->setLoaded();
 
+            if (UnitWSD::isUnitTesting())
+            {
+                UnitWSD::get().onDocBrokerViewLoaded(
+                    docBroker->getDocKey(),
+                    std::dynamic_pointer_cast<ClientSession>(shared_from_this()));
+            }
+
 #if !MOBILEAPP
             Admin::instance().setViewLoadDuration(docBroker->getDocKey(), getId(), std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - _viewLoadStart));
 #endif

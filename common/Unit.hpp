@@ -416,6 +416,9 @@ public:
     /// Useful to detect when unloading was clean and to (re)load again.
     virtual void onDocBrokerDestroy(const std::string&) {}
 
+    /// Called when a new view is loaded.
+    virtual void onDocBrokerViewLoaded(const std::string&, const std::shared_ptr<ClientSession>&) {}
+
     // ---------------- TileCache events ----------------
     virtual void onTileCacheHit(int /*part*/, int /*mode*/,
                                 int /*width*/, int /*height*/,
