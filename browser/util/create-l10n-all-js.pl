@@ -45,6 +45,8 @@ if (underscore > 0) {
 
 if (false) {
     ;
+} else if (onlylang == 'ar') {
+    window.LOCALIZATIONS = " . insert('ar') . ";
 } else if (onlylang == 'cs') {
     window.LOCALIZATIONS = " . insert('cs') . ";
 } else if (onlylang == 'da') {
@@ -59,6 +61,8 @@ if (false) {
     window.LOCALIZATIONS = " . insert('es') . ";
 } else if (onlylang == 'fr') {
     window.LOCALIZATIONS = " . insert('fr') . ";
+} else if (onlylang == 'he') {
+    window.LOCALIZATIONS = " . insert('he') . ";
 } else if (onlylang == 'hu') {
     window.LOCALIZATIONS = " . insert('hu') . ";
 } else if (onlylang == 'is') {
@@ -85,6 +89,8 @@ if (false) {
     window.LOCALIZATIONS = " . insert('ru') . ";
 } else if (onlylang == 'sk') {
     window.LOCALIZATIONS = " . insert('sk') . ";
+} else if (onlylang == 'sl') {
+    window.LOCALIZATIONS = " . insert('sl') . ";
 } else if (onlylang == 'sv') {
     window.LOCALIZATIONS = " . insert('sv') . ";
 } else if (onlylang == 'tr') {
