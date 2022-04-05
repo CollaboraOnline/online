@@ -186,7 +186,7 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_hideKeyboard: function() {
-		document.activeElement.blur();
+		this.map.blur();
 	},
 
 	_updateToolbarItemStateByClose: function() {
