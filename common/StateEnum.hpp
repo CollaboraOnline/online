@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <iosfwd>
+#include <type_traits>
 #include <string>
 
 /// Enum macro specifically for state-machines.
@@ -48,17 +50,26 @@
 /// NAME is the name of the state enum followed by the state names.
 #define STATE_ENUM(NAME, ...)                                                                      \
     enum class NAME : char;                                                                        \
-    static const char* name(NAME e)                                                                \
+    static inline const char* name(NAME e)                                                         \
     {                                                                                              \
         static const char* const NAME##_names[] = { FOR_EACH(STRINGIFY2, NAME, __VA_ARGS__) };     \
         assert(static_cast<unsigned>(e) < sizeof(NAME##_names) / sizeof(NAME##_names[0]) &&        \
                "Enum value is out of range.");                                                     \
         return NAME##_names[static_cast<int>(e)];                                                  \
     }                                                                                              \
-    static std::string toString(NAME e) { return name(e); }                                        \
+    static inline std::string toString(NAME e) { return name(e); }                                 \
     enum class NAME : char                                                                         \
     {                                                                                              \
         __VA_ARGS__                                                                                \
     }
+
+/// Support seemless serialization of STATE_ENUM to ostream.
+template <typename T, typename std::enable_if<
+                          std::is_same<decltype(name(T())), const char*>::value>::type* = nullptr>
+inline std::ostream& operator<<(std::ostream& os, const T state)
+{
+    os << name(state);
+    return os;
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
