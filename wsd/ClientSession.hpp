@@ -42,12 +42,12 @@ public:
 
     void setLockFailed(const std::string& sReason);
 
-    enum SessionState {
-        DETACHED,        // initial
-        LOADING,         // attached to a DocBroker & waiting for load
-        LIVE,            // Document is loaded & editable or viewable.
-        WAIT_DISCONNECT  // closed and waiting for Kit's disconnected message
-    };
+    STATE_ENUM(SessionState,
+               DETACHED, // initial
+               LOADING, // attached to a DocBroker & waiting for load
+               LIVE, // Document is loaded & editable or viewable.
+               WAIT_DISCONNECT // closed and waiting for Kit's disconnected message
+    );
 
     /// Returns true if this session has loaded a view (i.e. we got status message).
     bool isViewLoaded() const { return _state == SessionState::LIVE; }

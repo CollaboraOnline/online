@@ -113,30 +113,16 @@ ClientSession::~ClientSession()
     GlobalSessionMap.erase(getId());
 }
 
-static const char *stateToString(ClientSession::SessionState s)
-{
-    switch (s)
-    {
-    case ClientSession::SessionState::DETACHED:        return "detached";
-    case ClientSession::SessionState::LOADING:         return "loading";
-    case ClientSession::SessionState::LIVE:            return "live";
-    case ClientSession::SessionState::WAIT_DISCONNECT: return "wait_disconnect";
-    }
-    return "invalid";
-}
-
 void ClientSession::setState(SessionState newState)
 {
-    LOG_TRC(getName() << ": transition from " << stateToString(_state) << " to "
-                      << stateToString(newState));
+    LOG_TRC(getName() << ": transition from " << name(_state) << " to " << name(newState));
 
     // we can get incoming messages while our disconnection is in transit.
     if (_state == SessionState::WAIT_DISCONNECT)
     {
         if (newState != SessionState::WAIT_DISCONNECT)
-            LOG_WRN("Unusual race - attempts to transition from " <<
-                    stateToString(_state) << " to " <<
-                    stateToString(newState));
+            LOG_WRN("Unusual race - attempts to transition from " << name(_state) << " to "
+                                                                  << name(newState));
         return;
     }
 
@@ -1699,8 +1685,9 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         // 'download' and/or providing our helpful / user page.
 
         // for now just for remote sockets.
-        LOG_TRC("Got clipboard content of size " << payload->size() << " to send to " <<
-                _clipSockets.size() << " sockets in state " << stateToString(_state));
+        LOG_TRC("Got clipboard content of size " << payload->size() << " to send to "
+                                                 << _clipSockets.size() << " sockets in state "
+                                                 << name(_state));
 
         postProcessCopyPayload(payload);
 
@@ -2074,7 +2061,7 @@ void ClientSession::dumpState(std::ostream& os)
 
     os << "\t\tisReadOnly: " << isReadOnly()
        << "\n\t\tisDocumentOwner: " << isDocumentOwner()
-       << "\n\t\tstate: " << stateToString(_state)
+       << "\n\t\tstate: " << name(_state)
        << "\n\t\tkeyEvents: " << _keyEvents
 //       << "\n\t\tvisibleArea: " << _clientVisibleArea
        << "\n\t\tclientSelectedPart: " << _clientSelectedPart
