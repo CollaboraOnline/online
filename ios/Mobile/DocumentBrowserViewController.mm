@@ -89,6 +89,7 @@
     DocumentViewController *documentViewController = [storyBoard instantiateViewControllerWithIdentifier:@"DocumentViewController"];
     documentViewController.document = [[CODocument alloc] initWithFileURL:documentURL];
     documentViewController.document->fakeClientFd = -1;
+    documentViewController.document->readOnly = false;
     documentViewController.document.viewController = documentViewController;
     [self presentViewController:documentViewController animated:YES completion:nil];
 }
