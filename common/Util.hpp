@@ -303,7 +303,14 @@ namespace Util
             if (data[i] >> 6 != 0x3)
                 return i;
             int chunkLen = 1;
-            for (; data[i] & (1 << (7-chunkLen)); chunkLen++);
+            for (; data[i] & (1 << (7-chunkLen)); chunkLen++)
+                if (chunkLen > 4)
+                    return i;
+
+            // Allow equality as the lower limit of the loop below is not zero.
+            if (i + chunkLen > len)
+                return i;
+
             for (; chunkLen > 1; --chunkLen)
                 if (data[++i] >> 6 != 0x2)
                     return i;
