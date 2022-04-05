@@ -74,7 +74,7 @@ static std::atomic<unsigned> appDocIdCounter(1);
     DocumentData::allocate(appDocId).coDocument = self;
     components.queryItems = @[ [NSURLQueryItem queryItemWithName:@"file_path" value:[copyFileURL absoluteString]],
                                [NSURLQueryItem queryItemWithName:@"closebutton" value:@"1"],
-                               [NSURLQueryItem queryItemWithName:@"permission" value:@"edit"],
+                               [NSURLQueryItem queryItemWithName:@"permission" value:(readOnly ? @"readonly" : @"edit")],
                                [NSURLQueryItem queryItemWithName:@"lang" value:app_locale],
                                [NSURLQueryItem queryItemWithName:@"appdocid" value:[NSString stringWithFormat:@"%u", appDocId]],
                                [NSURLQueryItem queryItemWithName:@"userinterfacemode" value:([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad ? @"notebookbar" : @"classic")],

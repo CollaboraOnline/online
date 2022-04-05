@@ -18,6 +18,7 @@
     int fakeClientFd;
     NSURL *copyFileURL;
     unsigned appDocId;
+    bool readOnly;
 }
 
 @property (weak) DocumentViewController *viewController;
