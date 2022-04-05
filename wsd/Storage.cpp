@@ -236,7 +236,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
         const auto& targetHost = uri.getHost();
         bool allowed(false);
         HostUtil::setFirstHost(uri);
-        if ((HostUtil::allowedWopiHost(targetHost) && HostUtil::allowedAlias(uri)) ||
+        if ((HostUtil::allowedAlias(uri) && HostUtil::allowedWopiHost(targetHost)) ||
             isLocalhost(targetHost))
         {
             allowed = true;
@@ -247,8 +247,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
             const auto hostAddresses(Poco::Net::DNS::resolve(targetHost));
             for (auto &address : hostAddresses.addresses())
             {
-                if (HostUtil::allowedWopiHost(address.toString()) &&
-                    HostUtil::allowedAlias(uri))
+                if (HostUtil::allowedAlias(uri) && HostUtil::allowedWopiHost(address.toString()))
                 {
                     allowed = true;
                     break;
