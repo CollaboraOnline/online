@@ -16,7 +16,7 @@ static UIViewController *bottomPresentedViewController(UIViewController *vc) {
     return bottomPresentedViewController([vc presentedViewController]);
 }
 
-static UIViewController *newDocumentViewControllerFor(NSURL *url) {
+static DocumentViewController *newDocumentViewControllerFor(NSURL *url) {
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     DocumentViewController *documentViewController = [storyBoard instantiateViewControllerWithIdentifier:@"DocumentViewController"];
     documentViewController.document = [[CODocument alloc] initWithFileURL:url];
