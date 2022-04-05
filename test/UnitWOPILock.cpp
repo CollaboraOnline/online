@@ -10,11 +10,10 @@
 #include "lokassert.hpp"
 #include <WopiTestServer.hpp>
 #include <Log.hpp>
-#include <Unit.hpp>
-#include <UnitHTTP.hpp>
 #include <helpers.hpp>
+#include <wsd/ClientSession.hpp>
+
 #include <Poco/Net/HTTPRequest.h>
-#include <Poco/Util/LayeredConfiguration.h>
 
 class UnitWopiLock : public WopiTestServer
 {
@@ -22,12 +21,14 @@ class UnitWopiLock : public WopiTestServer
 
     std::string _lockState;
     std::string _lockString;
+    std::size_t _sessionCount;
 
 public:
     UnitWopiLock()
         : WopiTestServer("UnitWopiLock")
         , _phase(Phase::Load)
         , _lockState("UNLOCK")
+        , _sessionCount(0)
     {
     }
 
@@ -113,10 +114,8 @@ public:
             LOK_ASSERT_EQUAL_MESSAGE("Expected X-WOPI-Override:LOCK", std::string("LOCK"),
                                      newLockState);
             LOK_ASSERT_MESSAGE("Lock String cannot be empty", !lock.empty());
-            TRANSITION_STATE(_phase, Phase::UnlockDocument);
             _lockState = newLockState;
             _lockString = lock;
-
         }
         else if (_phase == Phase::UnlockDocument)
         {
@@ -131,6 +130,40 @@ public:
         {
             LOK_ASSERT_FAIL("Unexpected lock-state change while in " + toString(_phase));
         }
+    }
+
+    /// Called when a new client session is added to a DocumentBroker.
+    void onDocBrokerAddSession(const std::string&,
+                               const std::shared_ptr<ClientSession>& session) override
+    {
+        ++_sessionCount;
+        LOG_TST("New Session [" << session->getName() << "] added. Have " << _sessionCount
+                                << " sessions.");
+    }
+
+    void onDocBrokerViewLoaded(const std::string&,
+                               const std::shared_ptr<ClientSession>& session) override
+    {
+        LOG_TST("View for session [" << session->getName() << "] loaded.");
+
+        if (_sessionCount == 2)
+        {
+            // Transition before disconnecting.
+            TRANSITION_STATE(_phase, Phase::UnlockDocument);
+
+            // force kill the session with edit permission
+            LOG_TST("Disconnecting first connection with edit permission");
+            deleteSocketAt(0);
+        }
+    }
+
+    /// Called when a client session is removed to a DocumentBroker.
+    void onDocBrokerRemoveSession(const std::string&,
+                                  const std::shared_ptr<ClientSession>& session) override
+    {
+        --_sessionCount;
+        LOG_TST("Session [" << session->getName() << "] removed. Have " << _sessionCount
+                            << " sessions.");
     }
 
     void invokeWSDTest() override
@@ -155,14 +188,8 @@ public:
                 break;
             }
             case Phase::LockDocument:
-                break;
             case Phase::UnlockDocument:
-            {
-                // force kill the session with edit permission
-                LOG_TST("Disconnecting first connection with edit permission");
-                deleteSocketAt(0);
                 break;
-            }
             case Phase::Done:
             {
                 // just wait for the results
