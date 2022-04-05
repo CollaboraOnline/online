@@ -274,6 +274,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:EntireRow'},
 					{uno: '.uno:EntireColumn'},
 					{uno: '.uno:EntireCell'}]},
+				{uno: '.uno:SplitCell'},
 				{uno: '.uno:MergeCells'},
 				{type: 'separator'},
 				{uno: '.uno:TableDialog'}
