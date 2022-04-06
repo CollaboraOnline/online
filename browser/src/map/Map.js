@@ -1113,6 +1113,13 @@ L.Map = L.Evented.extend({
 		this._textInput.focus(acceptInput);
 	},
 
+	// just set the keyboard state for mobile
+	// we dont want to change the focus, we know that keyboard is closed
+	// and we are just setting the state here
+	setAcceptInput: function (acceptInput) {
+		this._textInput._setAcceptInput(acceptInput);
+	},
+
 	// Lose focus to stop accepting keyboard input.
 	// On mobile, it will hide the virtual keyboard.
 	blur: function () {
