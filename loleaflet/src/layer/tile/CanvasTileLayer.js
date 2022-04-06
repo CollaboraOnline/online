@@ -802,7 +802,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			if (window.mode.isMobile()) {
 				if (heightIncreased) {
 					// if the keyboard is hidden - be sure we setup correct state in TextInput
-					this._map.focus(false);
+					this._map.setAcceptInput(false);
 				} else
 					this._onUpdateCursor(true);
 			}
