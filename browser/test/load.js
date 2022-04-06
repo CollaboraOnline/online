@@ -91,6 +91,7 @@ data = data.replace(/%SOCKET_PROXY%/g, 'false');
 data = data.replace(/%UI_DEFAULTS%/g, '{}');
 data = data.replace(/%HEXIFY_URL%/g, '""');
 data = data.replace(/%GROUP_DOWNLOAD_AS%/g, 'false');
+data = data.replace(/%DOCUMENT_SIGNING_URL%/g, '');
 
 window = new JSDOM(data, {
 				runScripts: 'dangerously',
