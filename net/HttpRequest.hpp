@@ -18,8 +18,9 @@
 #include <sys/socket.h>
 #include <netdb.h>
 
-#include "Common.hpp"
-#include "NetUtil.hpp"
+#include <Common.hpp>
+#include <common/StateEnum.hpp>
+#include <NetUtil.hpp>
 #include <net/Socket.hpp>
 #include <utility>
 #if ENABLE_SSL
@@ -136,13 +137,12 @@ static_assert(false, "config.h must be included in the .cpp being compiled");
 namespace http
 {
 /// The parse-state of a field.
-enum class FieldParseState
-{
-    Unknown, //< Not yet parsed.
-    Incomplete, //< Not enough data to parse this field. Need more data.
-    Invalid, //< The field is invalid/unexpected/long.
-    Valid //< The field is both complete and valid.
-};
+STATE_ENUM(FieldParseState,
+           Unknown, //< Not yet parsed.
+           Incomplete, //< Not enough data to parse this field. Need more data.
+           Invalid, //< The field is invalid/unexpected/long.
+           Valid //< The field is both complete and valid.
+);
 
 /// Returns the Reason Phrase for a given HTTP Status Code.
 /// If not defined, "Unknown" is returned.
@@ -257,14 +257,12 @@ public:
     static constexpr int64_t MaxHeaderLen = MaxNumberFields * MaxFieldLen; // ~1.18 MB.
 
     /// Describes the header state during parsing.
-    enum class State
-    {
-        New,
-        Incomplete, //< Haven't reached the end yet.
-        InvalidField, //< Too long, no colon, etc.
-        TooManyFields, //< Too many fields to accept.
-        Complete //< Header is complete and valid.
-    };
+    STATE_ENUM(State, New,
+               Incomplete, //< Haven't reached the end yet.
+               InvalidField, //< Too long, no colon, etc.
+               TooManyFields, //< Too many fields to accept.
+               Complete //< Header is complete and valid.
+    );
 
     using Container = std::vector<std::pair<std::string, std::string>>;
     using ConstIterator = std::vector<std::pair<std::string, std::string>>::const_iterator;
@@ -425,12 +423,11 @@ public:
     static constexpr const char* VERS_1_1 = "HTTP/1.1";
 
     /// The stages of processing the request.
-    enum class Stage
-    {
-        Header, //< Communicate the header.
-        Body, //< Communicate the body (if any).
-        Finished //< Done.
-    };
+    STATE_ENUM(Stage,
+               Header, //< Communicate the header.
+               Body, //< Communicate the body (if any).
+               Finished //< Done.
+    );
 
     /// Create a Request given a @url, http @verb, @header, and http @version.
     /// All are optional, since they can be overwritten later.
@@ -610,15 +607,14 @@ public:
 
     /// The Status Code class of the response.
     /// None of these implies complete receipt of the response.
-    enum class StatusCodeClass
-    {
-        Invalid,
-        Informational, //< Request being processed, not final response.
-        Successful, //< Successfully processed request, response on the way.
-        Redirection, //< Redirected to a different resource.
-        Client_Error, //< Bad request, cannot respond.
-        Server_Error //< Bad server, cannot respond.
-    };
+    STATE_ENUM(StatusCodeClass,
+               Invalid, //< Not a valid Status Code.
+               Informational, //< Request being processed, not final response.
+               Successful, //< Successfully processed request, response on the way.
+               Redirection, //< Redirected to a different resource.
+               Client_Error, //< Bad request, cannot respond.
+               Server_Error //< Bad server, cannot respond.
+    );
 
     StatusCodeClass statusCategory() const
     {
@@ -699,14 +695,13 @@ public:
     }
 
     /// The state of an incoming response, when parsing.
-    enum class State
-    {
-        New, //< Valid but meaningless.
-        Incomplete, //< In progress, no errors.
-        Error, //< This is for protocol errors, not 400 and 500 reponses.
-        Timeout, //< The request has exceeded the time allocated.
-        Complete //< Successfully completed (does *not* imply 200 OK).
-    };
+    STATE_ENUM(State,
+               New, //< Valid but meaningless.
+               Incomplete, //< In progress, no errors.
+               Error, //< This is for protocol errors, not 400 and 500 reponses.
+               Timeout, //< The request has exceeded the time allocated.
+               Complete //< Successfully completed (does *not* imply 200 OK).
+    );
 
     /// The state of the Response (for the server's response use statusLine).
     State state() const { return _state; }
@@ -839,13 +834,7 @@ private:
     }
 
     /// The stage we're at in consuming the received data.
-    enum class ParserStage
-    {
-        StatusLine,
-        Header,
-        Body,
-        Finished
-    };
+    STATE_ENUM(ParserStage, StatusLine, Header, Body, Finished);
 
     StatusLine _statusLine;
     Header _header;
@@ -863,11 +852,7 @@ private:
 class Session final : public ProtocolHandlerInterface
 {
 public:
-    enum class Protocol
-    {
-        HttpUnencrypted,
-        HttpSsl,
-    };
+    STATE_ENUM(Protocol, HttpUnencrypted, HttpSsl, );
 
 private:
     /// Construct a Session instance from a hostname, protocol and port.
@@ -1355,47 +1340,22 @@ get(const std::string& url, const std::string& path,
 
 } // namespace http
 
-#define CASE(X)                                                                                    \
-    case X:                                                                                        \
-        os << #X;                                                                                  \
-        break;
-
 inline std::ostream& operator<<(std::ostream& os, const http::FieldParseState& fieldParseState)
 {
-    switch (fieldParseState)
-    {
-        CASE(http::FieldParseState::Unknown);
-        CASE(http::FieldParseState::Incomplete);
-        CASE(http::FieldParseState::Invalid);
-        CASE(http::FieldParseState::Valid);
-    }
+    os << http::name(fieldParseState);
     return os;
 }
 
 inline std::ostream& operator<<(std::ostream& os, const http::Request::Stage& stage)
 {
-    switch (stage)
-    {
-        CASE(http::Request::Stage::Body);
-        CASE(http::Request::Stage::Finished);
-        CASE(http::Request::Stage::Header);
-    }
+    os << http::Request::name(stage);
     return os;
 }
 
 inline std::ostream& operator<<(std::ostream& os, const http::Response::State& state)
 {
-    switch (state)
-    {
-        CASE(http::Response::State::New);
-        CASE(http::Response::State::Incomplete);
-        CASE(http::Response::State::Error);
-        CASE(http::Response::State::Timeout);
-        CASE(http::Response::State::Complete);
-    }
+    os << http::Response::name(state);
     return os;
 }
-
-#undef CASE
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
