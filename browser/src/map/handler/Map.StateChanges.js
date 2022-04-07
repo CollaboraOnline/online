@@ -50,6 +50,13 @@ L.Map.StateChangeHandler = L.Handler.extend({
 			this._map._docLayer._onMessage('invalidatetiles: EMPTY', null);
 		}
 
+		if (e.commandName === '.uno:FormatPaintbrush') {
+			if (state === 'true')
+				$('.leaflet-pane.leaflet-map-pane').addClass('bucket-cursor');
+			else
+				$('.leaflet-pane.leaflet-map-pane').removeClass('bucket-cursor');
+		}
+
 		$('#document-container').removeClass('slide-master-mode');
 		$('#document-container').addClass('slide-normal-mode');
 		if (slideMasterPageItem) {
