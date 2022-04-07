@@ -1488,6 +1488,11 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
         else
         {
             // Internal server error, and other failures.
+            if (responseString.empty())
+            {
+                responseString = "No response received. Connection terminated or timed-out.";
+            }
+
             LOG_ERR("Unexpected response to "
                     << wopiLog << ". Cannot upload file to WOPI storage uri [" << details.uriAnonym
                     << "]: " << details.httpResponseCode << ' ' << details.httpResponseReason

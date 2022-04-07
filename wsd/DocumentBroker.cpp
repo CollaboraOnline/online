@@ -1723,7 +1723,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED
              || uploadResult.getResult() == StorageBase::UploadResult::Result::CONFLICT)
     {
-        LOG_ERR("PutFile says that Document changed in storage");
+        LOG_ERR("PutFile says that Document [" << _docKey << "] changed in storage");
         _documentChangedInStorage = true;
         const std::string message
             = isPossiblyModified() ? "error: cmd=storage kind=documentconflict" : "close: documentconflict";
@@ -3541,7 +3541,7 @@ void DocumentBroker::dumpState(std::ostream& os)
 
 #if !MOBILEAPP
     // Bit nasty - need a cleaner way to dump state.
-    os << "\n  Sessions:";
+    os << "\n  Sessions [" << _sessions.size() << "]:";
     for (const auto &it : _sessions)
     {
         auto proto = it.second->getProtocol();
@@ -3552,6 +3552,8 @@ void DocumentBroker::dumpState(std::ostream& os)
             std::static_pointer_cast<MessageHandlerInterface>(it.second)->dumpState(os);
     }
 #endif
+
+    os << '\n';
 }
 
 bool DocumentBroker::isAsyncUploading() const
