@@ -181,6 +181,10 @@ L.Control.Header = L.Class.extend({
 		}
 	},
 
+	_rowHeight: function() {
+		this._map.sendUnoCommand('.uno:RowHeight');
+	},
+
 	_optimalHeight: function() {
 		var index = this._lastMouseOverIndex;
 		if (index !== undefined) {
@@ -331,6 +335,10 @@ L.Control.Header = L.Class.extend({
 		if (index !== undefined) {
 			this.deleteColumn.call(this, index);
 		}
+	},
+
+	_columnWidth: function() {
+		this._map.sendUnoCommand('.uno:ColumnWidth');
 	},
 
 	_optimalWidth: function() {

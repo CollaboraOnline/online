@@ -55,6 +55,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 				name: _UNO('.uno:DeleteColumns', 'spreadsheet', true),
 				callback: (this._deleteSelectedCol).bind(this)
 			},
+			'.uno:ColumnWidth': {
+				name: _UNO('.uno:ColumnWidth', 'spreadsheet', true),
+				callback: (this._columnWidth).bind(this)
+			},
 			'.uno:SetOptimalColumnWidth': {
 				name: _UNO('.uno:SetOptimalColumnWidth', 'spreadsheet', true),
 				callback: (this._optimalWidth).bind(this)

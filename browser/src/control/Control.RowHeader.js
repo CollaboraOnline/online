@@ -55,6 +55,10 @@ L.Control.RowHeader = L.Control.Header.extend({
 				name: _UNO('.uno:DeleteRows', 'spreadsheet', true),
 				callback: (this._deleteSelectedRow).bind(this)
 			},
+			'.uno:RowHeight': {
+				name: _UNO('.uno:RowHeight', 'spreadsheet', true),
+				callback: (this._rowHeight).bind(this)
+			},
 			'.uno:SetOptimalRowHeight': {
 				name: _UNO('.uno:SetOptimalRowHeight', 'spreadsheet', true),
 				callback: (this._optimalHeight).bind(this)
