@@ -53,13 +53,19 @@ L.Control.JSDialog = L.Control.extend({
 			builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
 	},
 
+	// sendCloseEvent means that we only send a command to the server
+	// we want to kill HTML popup when we receive feedback from the server
 	closePopover: function(id, sendCloseEvent) {
-		if (!id || !this.dialogs[id])
+		if (!id || !this.dialogs[id]) {
+			console.warn('missing popover data');
 			return;
+		}
 
-		L.DomUtil.remove(this.dialogs[id].overlay);
+		if (!sendCloseEvent)
+			L.DomUtil.remove(this.dialogs[id].overlay);
+
 		var clickToClose = this.dialogs[id].clickToClose;
-		var builder = this.clearDialog(id);
+		var builder = this.dialogs[id].builder;
 
 		if (sendCloseEvent) {
 			if (clickToClose && L.DomUtil.hasClass(clickToClose, 'menubutton'))
@@ -67,6 +73,8 @@ L.Control.JSDialog = L.Control.extend({
 			else
 				builder.callback('popover', 'close', {id: '__POPOVER__'}, null, builder);
 		}
+		else
+			this.clearDialog(id);
 	},
 
 	setTabs: function(tabs, builder) {
