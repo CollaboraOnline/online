@@ -41,12 +41,12 @@ L.Map.Feedback = L.Handler.extend({
 			docCount = isNaN(docCount) ? 1 : docCount + 1;
 			window.localStorage.setItem('WSDFeedbackCount', docCount);
 
-			timeValue = Number(timeValue);
-			if (isNaN(timeValue)) {
+			if (!timeValue || isNaN(timeValue)) {
 				/* - 5 seconds */
 				laterDate.setTime(currentDate.getTime() - 5000);
 			} else {
 				/* + 5 days (432,000,000 Milliseconds) */
+				timeValue = Number(timeValue);
 				laterDate.setTime(timeValue + 432000000);
 			}
 
