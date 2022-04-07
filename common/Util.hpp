@@ -1062,6 +1062,11 @@ int main(int argc, char**argv)
                     Util::matchRegex(_denied, subject));
         }
 
+        bool empty() const
+        {
+            return _allowed.empty() && _denied.empty();
+        }
+
     private:
         const bool _allowByDefault;
         std::set<std::string> _allowed;

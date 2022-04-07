@@ -21,8 +21,6 @@ private:
     static std::map<std::string, std::string> AliasHosts;
     /// When group configuration is not defined only the firstHost gets access
     static std::string FirstHost;
-    /// This contains all real and aliases host from group configuration
-    static std::set<std::string> AllHosts;
 
     static bool WopiEnabled;
 
@@ -42,8 +40,6 @@ public:
     /// add host to WopiHosts
     static void addWopiHost(std::string host, bool allow);
 
-    static bool allowedAlias(const Poco::URI& uri);
-
     static bool allowedWopiHost(const std::string& host);
 
     static bool isWopiEnabled() { return WopiEnabled; }
@@ -51,7 +47,6 @@ public:
     /// replace the authority of aliashost to realhost if it matches
     static const Poco::URI getNewLockedUri(Poco::URI& uri);
 
-    /// set FirstHost
     static void setFirstHost(const Poco::URI& uri);
 };
 

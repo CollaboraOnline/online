@@ -11,7 +11,6 @@
 
 Util::RegexListMatcher HostUtil::WopiHosts;
 std::map<std::string, std::string> HostUtil::AliasHosts;
-std::set<std::string> HostUtil::AllHosts;
 std::string HostUtil::FirstHost;
 bool HostUtil::WopiEnabled;
 
@@ -57,32 +56,6 @@ bool HostUtil::allowedWopiHost(const std::string& host)
     return WopiEnabled && WopiHosts.match(host);
 }
 
-bool HostUtil::allowedAlias(const Poco::URI& uri)
-{
-    if (Util::iequal(config::getString("storage.wopi.alias_groups[@mode]", "first"), "compat"))
-    {
-        return true;
-    }
-
-    if (AllHosts.empty())
-    {
-        if (FirstHost != uri.getAuthority())
-        {
-            LOG_ERR("Only allowed host is: "
-                    << FirstHost
-                    << ", To use multiple host/aliases check alias_groups tag in configuration");
-            return false;
-        }
-    }
-    else if (!Util::matchRegex(AllHosts, uri.getAuthority()))
-    {
-        LOG_ERR("Host: " << uri.getAuthority()
-                         << " is denied, It is not defined in alias_groups configuration");
-        return false;
-    }
-    return true;
-}
-
 void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
 {
     //set alias_groups mode to compat
@@ -97,13 +70,11 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
         {
             LOG_ERR("Admins didnot set the alias_groups mode to 'groups'");
             AliasHosts.clear();
-            AllHosts.clear();
             return;
         }
     }
 
     AliasHosts.clear();
-    AllHosts.clear();
 
     for (size_t i = 0;; i++)
     {
@@ -124,8 +95,6 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
         {
             const Poco::URI realUri(uri);
             HostUtil::addWopiHost(realUri.getHost(), allow);
-
-            AllHosts.insert(realUri.getAuthority());
         }
         catch (const Poco::Exception& exc)
         {
@@ -156,7 +125,6 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
                     const Poco::URI aUri(aliasUri.getScheme() + "://" + x + ':' +
                                          std::to_string(aliasUri.getPort()));
                     AliasHosts.insert({ aUri.getAuthority(), realUri.getAuthority() });
-                    AllHosts.insert(aUri.getAuthority());
                     HostUtil::addWopiHost(aUri.getHost(), allow);
                 }
             }
@@ -205,10 +173,24 @@ const Poco::URI HostUtil::getNewLockedUri(Poco::URI& uri)
 
 void HostUtil::setFirstHost(const Poco::URI& uri)
 {
-    if (AllHosts.empty() && FirstHost.empty())
+    if (Util::iequal(config::getString("storage.wopi.alias_groups[@mode]", "first"), "compat"))
     {
-        FirstHost = uri.getAuthority();
-        addWopiHost(uri.getHost(), true);
+        return;
+    }
+
+    if (WopiHosts.empty())
+    {
+        if (FirstHost.empty())
+        {
+            FirstHost = uri.getAuthority();
+            addWopiHost(uri.getHost(), true);
+        }
+    }
+    else if(!FirstHost.empty() && FirstHost != uri.getAuthority())
+    {
+        LOG_ERR("Only allowed host is: "
+                << FirstHost
+                << ", To use multiple host/aliases check alias_groups tag in configuration");
     }
 }
 
