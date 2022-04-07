@@ -285,7 +285,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 }
 
 /* non selected */
-#clearFormatting, #FormatPaintbrush,
+#clearFormatting
 .hasnotebookbar .ui-content.unotoolbutton.has-label,
 .hasnotebookbar .ui-content.unotoolbutton.inline,
 .hasnotebookbar .ui-content.unotoolbutton:not(.has-label):not(.inline),

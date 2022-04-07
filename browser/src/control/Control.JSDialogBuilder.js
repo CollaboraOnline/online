@@ -128,7 +128,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._toolitemHandlers['.uno:FillColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:ResetAttributes'] = this._formattingControl;
 		this._toolitemHandlers['.uno:SetDefault'] = this._formattingControl;
-		this._toolitemHandlers['.uno:FormatPaintbrush'] = this._formattingControl;
 
 		this._toolitemHandlers['.uno:InsertFormula'] = function () {};
 		this._toolitemHandlers['.uno:SetBorderStyle'] = function () {};
@@ -2565,10 +2564,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_formattingControl: function(parentContainer, data, builder) {
 		var iconPath = builder._createIconURL(data.command);
 		var sectionTitle = L.DomUtil.create('div', 'ui-header ' + builder.options.cssClass + ' level-' + builder._currentDepth + ' mobile-wizard-widebutton ui-widget', parentContainer);
-		if (data.command === '.uno:FormatPaintbrush')
-			sectionTitle.id = 'FormatPaintbrush';
-		else
-			sectionTitle.id = 'clearFormatting';
+		sectionTitle.id = 'clearFormatting';
 		$(sectionTitle).css('justify-content', 'space-between');
 
 		if (data && data.id)

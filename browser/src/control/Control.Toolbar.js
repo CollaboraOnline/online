@@ -911,12 +911,7 @@ function processStateChangedCommand(commandName, state) {
 			toolbar.disable('repair');
 		}
 	}
-	else if (commandName === '.uno:FormatPaintbrush') {
-		if (state === 'true')
-			$('.leaflet-pane.leaflet-map-pane').addClass('bucket-cursor');
-		else
-			$('.leaflet-pane.leaflet-map-pane').removeClass('bucket-cursor');
-	}
+
 	if (commandName === '.uno:SpacePara1' || commandName === '.uno:SpacePara15'
 		|| commandName === '.uno:SpacePara2') {
 		toolbar.refresh();
