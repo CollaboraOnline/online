@@ -777,7 +777,7 @@ inline void SocketProcessor(const std::string& testname,
     const Poco::Timespan waitTime(std::chrono::microseconds(timeoutMs).count());
     int flags = 0;
     int n = 0;
-    char buffer[READ_BUFFER_SIZE];
+    char buffer[READ_BUFFER_SIZE * 8];
     do
     {
         if (!socket->poll(waitTime, Poco::Net::Socket::SELECT_READ))
