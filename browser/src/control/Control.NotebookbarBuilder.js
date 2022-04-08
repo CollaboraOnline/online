@@ -403,7 +403,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		data.command = data.id;
 
-		var isDownloadAsGroup = data.id === 'downloadas2';
+		var isDownloadAsGroup = data.id === 'downloadas';
 		var options = {};
 		if (isDownloadAsGroup) {
 			options.hasDropdownArrow = true;
