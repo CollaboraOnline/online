@@ -236,13 +236,6 @@
 	padding: 0px 5px !important;
 }
 
-/*Adjust arrow for statistics menu (has icon, label stacked up)*/
-.unospan-Data-StatisticsMenu .unoarrow {
-	display: block;
-	float: right;
-	margin-top: -28px;
-}
-
 .unotoolbutton.notebookbar:hover .unoarrow {
 	border-top: 5px solid var(--color-border-darker);
 }
