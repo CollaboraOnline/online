@@ -239,6 +239,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			{text: _UNO('.uno:JumpUpThisLevel', 'text'), uno: 'JumpUpThisLevel'},
 			{text: _UNO('.uno:ContinueNumbering', 'text'), uno: 'ContinueNumbering'}
 		];
+		this._menus['DownloadAs'] = [
+			{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action', docType: []},
+			{name: _('ODF text document (.odt)'), id: 'downloadas-odt', type: 'action', docType: ['text']},
+			{name: _('Word 2003 Document (.doc)'), id: 'downloadas-doc', type: 'action', docType: ['text']},
+			{name: _('Word Document (.docx)'), id: 'downloadas-docx', type: 'action', docType: ['text']},
+			{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action', docType: ['text']},
+			{name: _('EPUB (.epub)'), id: 'downloadas-epub', type: 'action', docType: ['text']},
+			{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action', docType: ['presentation']},
+			{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action', docType: ['presentation']},
+			{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action', docType: ['presentation']},
+			{name: _('ODF Drawing (.odg)'), id: 'downloadas-odg', type: 'action', docType: ['drawing']},
+			{name: _('ODF spreadsheet (.ods)'), id: 'downloadas-ods', type: 'action', docType: ['spreadsheet']},
+			{name: _('Excel 2003 Spreadsheet (.xls)'), id: 'downloadas-xls', type: 'action', docType: ['spreadsheet']},
+			{name: _('Excel Spreadsheet (.xlsx)'), id: 'downloadas-xlsx', type: 'action', docType: ['spreadsheet']},
+			{name: _('CSV file (.csv)'), id: 'downloadas-csv', type: 'action', docType: ['spreadsheet']}
+		];
 
 		this._currentDepth = 0;
 	},
@@ -2207,13 +2223,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var options = {hasDropdownArrow: true};
 			var control = builder._unoToolButton(parentContainer, data, builder, options);
+			var filterApp = function(menu, docType) {
+				var filteredMenu = [];
+				for (var index in menu) {
+					if (menu[index].docType.length === 0 || menu[index].docType.indexOf(docType) === 0) {
+						filteredMenu.push(menu[index]);
+					}
+				}
+				return filteredMenu;
+			};
 
 			$(control.container).tooltip({disabled: true});
 
 			$(control.container).unbind('click');
 			$(control.container).click(function () {
 				$(control.container).w2menu({
-					items: builder._menus[menuId],
+					items: filterApp(builder._menus[menuId], builder.map.getDocType()),
 					onSelect: function (event) {
 						builder.map.sendUnoCommand('.uno:' + event.item.uno);
 					}
