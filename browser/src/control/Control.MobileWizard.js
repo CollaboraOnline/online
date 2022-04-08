@@ -21,6 +21,7 @@ L.Control.MobileWizard = L.Control.extend({
 	_currentPath: [],
 	_tabs: [],
 	_currentScrollPosition: 0,
+	_isPopup: false,
 
 	initialize: function (options) {
 		L.setOptions(this, options);
@@ -72,6 +73,7 @@ L.Control.MobileWizard = L.Control.extend({
 		this._currentPath = [];
 		this._tabs = [];
 		this._currentScrollPosition = 0;
+		this._isPopup = false;
 	},
 
 	_setupBackButton: function() {
@@ -85,7 +87,7 @@ L.Control.MobileWizard = L.Control.extend({
 		if (this.snackBarTimout)
 			clearTimeout(this.snackBarTimout);
 
-		var docType = this._map.getDocType();
+		var docType = this.map.getDocType();
 		//window.app.console.log('ContentsLength: ' + ContentsLength + ' | docType: ' + docType + '$(#mobile-wizard-content).scrollTop();'  + 'this._isTabMode: ' + this._isTabMode + ' | _tabs: ' + this._tabs);
 		var maxScrolled = 52;
 		if ((ContentsLength > 5 || this._tabs) && !window.mobileMenuWizard) {
@@ -126,11 +128,18 @@ L.Control.MobileWizard = L.Control.extend({
 			this._refreshSidebar();
 	},
 
-	_hideWizard: function() {
+	_hideWizard: function(sendCloseEvent) {
+		// popup
+		if (this._isPopup && this._builder && sendCloseEvent !== false) {
+			this._builder.callback('popover', 'close', {id: '__POPOVER__'}, null, this._builder);
+			return; // wait for server response to close and remove HTML elements
+		}
+
 		$('.jsdialog-overlay').remove();
 
 		// dialog
 		if (this.map.dialog.hasDialogInMobilePanelOpened()) {
+			// TODO: use jsdialog approach
 			this.map.dialog._onDialogClose(window.mobileDialogId, true);
 			window.mobileDialogId = undefined;
 		}
@@ -169,7 +178,7 @@ L.Control.MobileWizard = L.Control.extend({
 		if (window.pageMobileWizard === true)
 			window.pageMobilewizard = false;
 
-		if (this._map.getDocType() === 'presentation' || this._map.getDocType() === 'drawing')
+		if (this.map.getDocType() === 'presentation' || this.map.getDocType() === 'drawing')
 			this._hideSlideSorter();
 
 		if (window.commentWizard === true)
@@ -418,7 +427,14 @@ L.Control.MobileWizard = L.Control.extend({
 
 			this._inBuilding = true;
 
-			var isPopup = data.type === 'modalpopup' || data.type === 'snackbar';
+			var isDocumentAreaPopup = data.popupParent === '_POPOVER_'
+				&& data.posx !== undefined && data.posy !== undefined;
+			var isCalc = this.map._docLayer ? (this.map._docLayer._docType === 'spreadsheet') : false;
+			var isAutofilter = isDocumentAreaPopup && isCalc;
+
+			var isPopupJson = (data.type === 'modalpopup' || data.type === 'snackbar');
+			// show autofilter as regular mobile wizard for compatibility with older version
+			var isPopup = !isAutofilter && isPopupJson;
 			var isSidebar = false;
 			if (data.children) {
 				for (var i in data.children) {
@@ -468,7 +484,7 @@ L.Control.MobileWizard = L.Control.extend({
 					this._inBuilding = false;
 					return;
 				} else if (data.action === 'close' || data.action === 'fadeout') {
-					this._hideWizard();
+					this._hideWizard(false);
 					return;
 				} else {
 					// normal popup - continue to open mobile wizard
@@ -477,6 +493,7 @@ L.Control.MobileWizard = L.Control.extend({
 			}
 
 			this._reset();
+			this._isPopup = isPopupJson;
 
 			var mWizardContentLength = 0;
 			if (data.children.length > 0) {
@@ -486,7 +503,7 @@ L.Control.MobileWizard = L.Control.extend({
 			}
 
 			this._showWizard(mWizardContentLength);
-			if (this._map._docLayer && !this._map._docLayer.isCalc()) {
+			if (this.map._docLayer && !this.map._docLayer.isCalc()) {
 				// In Calc, the wizard is used for the formulas,
 				// and it's easier to allow the user to search
 				// for a formula by typing the first few characters.
@@ -549,7 +566,7 @@ L.Control.MobileWizard = L.Control.extend({
 				if (data.type === 'snackbar') {
 					var that = this;
 					$('#mobile-wizard').addClass('snackbar');
-					this.snackBarTimout = setTimeout(function () { that._hideWizard(); }, this.options.snackbarTimeout);
+					this.snackBarTimout = setTimeout(function () { that._hideWizard(false); }, this.options.snackbarTimeout);
 				}
 			}
 
