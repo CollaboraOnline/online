@@ -193,6 +193,7 @@ COOL_LIBS_JS_DST = $(patsubst %.js,$(DIST_FOLDER)/%.js,$(COOL_LIBS_JS))
 # this list includes both Javascript and Typescript generated files
 # in a rather precise order.
 COOL_JS_LST =\
+	src/docstate.js \
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
