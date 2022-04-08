@@ -21,7 +21,7 @@
 	z-index: 2001;
 }
 
-.jsdialog.root-container {
+.jsdialog.root-container:not(.autofilter):not(.sidebar) {
 	margin: .5em 1em; /*same as in .ui-dialog */
 }
 
@@ -197,9 +197,10 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-expander-label::before,
 .ui-treeview-expandable.collapsed > .ui-treeview-expander::before {
+	display: inline-block;
 	content: 'V';
 	color: transparent;
-	margin-right: 7px;
+	margin-inline-end: 7px;
 	background: transparent url('images/lc_menu_chevron.svg') no-repeat center right;
 	filter: brightness(0.5);
 }
@@ -208,19 +209,16 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .ui-treeview-expandable:not(.collapsed) > .ui-treeview-expander::before  {
 	content: 'V';
 	color: transparent;
-	margin: 0px;
-	position: absolute;
+	margin-inline-end: 7px;
 	transform: rotate(90deg);
-	left: 16px;
 	background: transparent url('images/lc_menu_chevron.svg') no-repeat center;
 	filter: brightness(0.5);
 }
 
 .ui-treeview-expandable > .ui-treeview-expander::before {
-	margin-right: 6px !important;
+	margin-inline-end: 7px !important;
 	display: inline-block;
 	position: relative !important;
-	left: 0px !important;
 }
 
 .ui-expander-label.expanded {
