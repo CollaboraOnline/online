@@ -679,6 +679,12 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:ConditionalFormatManagerDialog'}]},
 				{type: 'separator'},
 				{uno: '.uno:FormatCellDialog'},
+				{name: _UNO('.uno:RowFormatMenu', 'spreadsheet'), type: 'menu', menu: [
+					{uno: '.uno:RowHeight'},
+					{uno: '.uno:SetOptimalRowHeight'}]},
+				{name: _UNO('.uno:ColumnFormatMenu', 'spreadsheet'), type: 'menu', menu: [
+					{uno: '.uno:ColumnWidth'},
+					{uno: '.uno:SetOptimalColumnWidth'}]},
 				{uno: '.uno:FontDialog'},
 				{uno: '.uno:ParagraphDialog'},
 				{uno: '.uno:PageFormatDialog'},
