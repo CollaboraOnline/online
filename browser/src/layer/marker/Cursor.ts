@@ -66,7 +66,7 @@ class Cursor {
 	}
 
 	setMouseCursor() {
-		if (this.container.querySelector('.blinking-cursor') !== null) {
+		if (this.domAttached && this.container && this.container.querySelector('.blinking-cursor') !== null) {
 			if (this.map._docLayer._docType === 'presentation') {
 				$('.leaflet-interactive').css('cursor', 'text');
 			} else {
