@@ -152,18 +152,9 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 
 		if (hasGroupedDownloadAs) {
 			content.push({
-				'id': 'downloadas-container',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'downloadas',
-						'type': 'menubartoolitem',
-						'text': _('Download'),
-						'command': '.uno:InsertGraphic'
-					}
-				]
+				'id': 'downloadas',
+				'type': 'bigmenubartoolitem',
+				'text': _('Download')
 			});
 
 			content.push({
