@@ -149,6 +149,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			{text: _UNO('.uno:ChiSquareTestDialog', 'spreadsheet'), uno: '.uno:ChiSquareTestDialog'},
 			{text: _UNO('.uno:FourierAnalysisDialog', 'spreadsheet'), uno: '.uno:FourierAnalysisDialog'}
 		];
+		this._menus['MenuRowHeight'] = [
+			{text: _UNO('.uno:RowHeight', 'spreadsheet'), uno: '.uno:RowHeight'},
+			{text: _UNO('.uno:SetOptimalRowHeight', 'spreadsheet'), uno: '.uno:SetOptimalRowHeight'},
+		];
+		this._menus['MenuColumnWidth'] = [
+			{text: _UNO('.uno:ColumnWidth', 'spreadsheet'), uno: '.uno:ColumnWidth'},
+			{text: _UNO('.uno:SetOptimalColumnWidth', 'spreadsheet'), uno: '.uno:SetOptimalColumnWidth'},
+		];
 		this._menus['FormattingMarkMenu'] = [
 			{text: _UNO('.uno:InsertNonBreakingSpace', 'text'), uno: 'InsertNonBreakingSpace'},
 			{text: _UNO('.uno:InsertHardHyphen', 'text'), uno: 'InsertHardHyphen'},
