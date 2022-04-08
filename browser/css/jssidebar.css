@@ -117,8 +117,12 @@
 .sidebar.ui-expander {
 	display: flex;
 	justify-content: space-between;
-	width: 290px;
+	width: calc(100% - 10px);
 	align-items: center;
+}
+
+.sidebar.ui-expander-content {
+	width: calc(100% - 10px);
 }
 
 #selectcolor {
@@ -234,12 +238,6 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 	padding-right: 8px; /* for RTL mode */
 }
 
-.sidebar.ui-expander-label:before {
-	position: absolute;
-	margin-inline-start: -16px;
-	left: unset !important;
-}
-
 .sidebar.root-container.jsdialog > .jsdialog.sidebar {
 	width: 100%;
 }
@@ -257,7 +255,7 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 }
 
 td.jsdialog .jsdialog.cell.sidebar {
-	padding: 2px;
+	padding: 2px 0px;
 	width: auto;
 }
 
@@ -399,7 +397,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 
 .sidebar #linetransparency {
 	position: relative;
-	left: -18px;
+	margin-inline-end: 18px;
 }
 
 .sidebar #horizontalpos,
@@ -407,7 +405,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 .sidebar #selectwidth,
 .sidebar #selectheight {
 	position: relative;
-	right: 24px;
+	margin-inline-end: 24px;
 }
 
 .sidebar #fillgrad1 {
