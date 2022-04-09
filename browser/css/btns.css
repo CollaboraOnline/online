@@ -18,6 +18,11 @@ button.jsdialog {
 	opacity: 0.7;
 }
 
+/*limit icon to button height*/
+button.jsdialog img {
+	max-height: 100%;
+}
+
 .annotation-btns-container,
 .vex-dialog-buttons {
 	display: flex;
