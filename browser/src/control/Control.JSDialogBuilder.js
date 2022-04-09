@@ -1436,6 +1436,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		} else if (data.image) {
 			var image = L.DomUtil.create('img', '', pushbutton);
 			image.src = data.image;
+		} else if (data.symbol) {
+			var image = L.DomUtil.create('img', '', pushbutton);
+			image.src = L.LOUtil.getImageURL('symbol_' + data.symbol + '.svg');
 		} else {
 			pushbutton.innerText = pushbuttonText;
 		}
