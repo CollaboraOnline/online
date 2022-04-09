@@ -1414,12 +1414,30 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled === 'false' || data.enabled === false)
 			$(edit).prop('disabled', true);
 
+		// todo: change -> keyup to provide real-time updates
 		edit.addEventListener('change', function() {
 			if (callback)
 				callback(this.value);
-			else
+			if (data.rawKeyEvents) {
+				// here event.keyCode has some non-ascii code
+			} else
 				builder.callback('edit', 'change', edit, this.value, builder);
 		});
+
+		edit.addEventListener('keypress', function(event) {
+			if (data.rawKeyEvents) {
+				builder.callback('edit', 'keypress', edit, event.keyCode, builder);
+			}
+		});
+
+		if (data.rawKeyEvents) {
+			'select click'.split(' ').forEach(function(eventName) {
+				edit.addEventListener(eventName, function(event) {
+					var selection = event.target.selectionStart + ';' + event.target.selectionEnd;
+					builder.callback('edit', 'textselection', edit, selection, builder);
+				});
+			});
+		}
 
 		if (data.hidden)
 			$(edit).hide();
@@ -2985,6 +3003,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		case 'hide':
 			$(control).addClass('hidden');
+			break;
+
+		case 'setText':
+			control.value = this._cleanText(data.text);
+			break;
+
+		default:
+			console.error('unknown action: "' + data.action_type + '"');
 			break;
 		}
 	},

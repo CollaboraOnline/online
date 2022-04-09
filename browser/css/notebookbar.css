@@ -201,7 +201,7 @@
 .hasnotebookbar .ui-content .unobutton {
 	width: 32px;
 	height: 32px;
-	margin-right: 5px;
+	margin-inline-end: 5px;
 	vertical-align: middle;
 }
 
@@ -222,7 +222,7 @@
 .unotoolbutton.notebookbar .unobutton {
 	width: 24px !important;
 	height: 24px !important;
-	margin-right: 0px !important;
+	margin-inline-end: 0px !important;
 }
 
 .has-dropdown--color.notebookbar {

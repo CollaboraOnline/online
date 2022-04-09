@@ -1430,6 +1430,10 @@ app.definitions.Socket = L.Class.extend({
 		if (window.mode.isMobile()) {
 			if (msgData.type == 'borderwindow')
 				return;
+			if (msgData.jsontype === 'formulabar') {
+				this._map.fire('formulabar', {data: msgData});
+				return;
+			}
 			if (msgData.enabled || msgData.type === 'modalpopup' || msgData.type === 'snackbar') {
 				this._map.fire('mobilewizard', {data: msgData, callback: callback});
 			} else {
@@ -1441,6 +1445,8 @@ app.definitions.Socket = L.Class.extend({
 			this._map.fire('jsdialog', {data: msgData, callback: callback});
 		} else if (msgData.jsontype === 'sidebar') {
 			this._map.fire('sidebar', {data: msgData});
+		} else if (msgData.jsontype === 'formulabar') {
+			this._map.fire('formulabar', {data: msgData});
 		} else if (msgData.jsontype === 'notebookbar') {
 			if (msgData.children) {
 				for (var i = 0; i < msgData.children.length; i++) {

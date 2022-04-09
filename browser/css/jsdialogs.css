@@ -21,7 +21,7 @@
 	z-index: 2001;
 }
 
-.jsdialog.root-container:not(.autofilter):not(.sidebar) {
+.jsdialog.root-container:not(.autofilter):not(.sidebar):not(.formulabar) {
 	margin: .5em 1em; /*same as in .ui-dialog */
 }
 
@@ -101,7 +101,7 @@ td.jsdialog:hover *,
 	vertical-align: middle;
 }
 
-td.jsdialog .jsdialog.cell:not(.sidebar),
+td.jsdialog .jsdialog.cell:not(.sidebar):not(.formulabar),
 [id^='table-dialog-action_area'] .jsdialog.cell{
 	padding: 4px;
 }
@@ -127,7 +127,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 /* Scrollwindow - used eg. in accessibility check in writer */
-.jsdialog.ui-scrollwindow {
+.jsdialog.ui-scrollwindow:not(.formulabar) {
 	overflow: scroll;
 	max-height: 500px;
 	max-width: 700px;
@@ -1143,7 +1143,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .jsdialog .ui-content.unobutton {
 	width: 24px;
 	height: 24px;
-	margin-right: 5px;
+	margin-inline-end: 5px;
 	vertical-align: middle;
 }
 
@@ -1173,4 +1173,23 @@ input[type='number']:hover::-webkit-outer-spin-button {
 @-webkit-keyframes fade {
 	from { opacity: 1 }
 	to { opacity: 0 }
+}
+
+/* formulabar */
+#sc_input_window.formulabar {
+	border: 1px solid var(--color-border);
+	width: 95% !important;
+	resize: none !important;
+	max-width: unset !important;
+	font-size: var(--default-font-size) !important;
+}
+
+.formulabar.unotoolbutton {
+	margin-inline-end: 4px !important;
+}
+
+.formulabar.unotoolbutton:not(.has-dropdown), .formulabar.unotoolbutton img, .formulabar.ui-pushbutton {
+	height: 24px !important;
+	width: 24px !important;
+	min-width: unset !important;
 }
