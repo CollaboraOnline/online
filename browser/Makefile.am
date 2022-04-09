@@ -340,6 +340,7 @@ COOL_JS_LST =\
 	src/control/Control.MobileBottomBar.js \
 	src/control/Control.UserList.js \
 	src/control/Control.FormulaBar.js \
+	src/control/Control.FormulaBarJSDialog.js \
 	src/control/Control.SheetsBar.js \
 	src/control/Control.PresentationBar.js \
 	src/control/Control.SigningBar.js \
@@ -671,6 +672,7 @@ pot:
 		src/control/Control.DocumentRepair.js \
 		src/control/Control.DownloadProgress.js \
 		src/control/Control.FormulaBar.js \
+		src/control/Control.FormulaBarJSDialog.js \
 		src/control/Control.JSDialogBuilder.js \
 		src/control/Control.LanguageDialog.js \
 		src/control/Control.Menubar.js \
