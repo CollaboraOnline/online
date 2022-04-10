@@ -187,6 +187,8 @@ coolwsd_fuzzer_SOURCES = $(coolwsd_sources) \
                          $(shared_sources) \
                          kit/DummyLibreOfficeKit.cpp
 
+if ENABLE_LIBFUZZER
+
 admin_fuzzer_CPPFLAGS = \
 			-DKIT_IN_PROCESS=1 \
 			$(AM_CPPFLAGS)
@@ -216,6 +218,8 @@ httpresponse_fuzzer_SOURCES = \
 			       $(shared_sources) \
 			       fuzzer/HttpResponse.cpp
 httpresponse_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
+
+endif # ENABLE_LIBFUZZER
 
 clientnb_SOURCES = net/clientnb.cpp \
                    common/DummyTraceEventEmitter.cpp \
