@@ -377,7 +377,9 @@ experimental_msg="disabled by default"
 bundle_msg="using uglified bundled JS and CSS"
 LOK_LOG_ASSERTIONS=0
 log_asserts_msg="disabled"
+AC_MSG_CHECKING([whether to enable debug build])
 if test "$enable_debug" = "yes"; then
+   AC_MSG_RESULT([yes])
    AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces])
    ENABLE_DEBUG=true
    ENABLE_DEBUG_PROTOCOL=true
@@ -388,16 +390,26 @@ if test "$enable_debug" = "yes"; then
    COOLWSD_ANONYMIZE_USER_DATA=false
    BROWSER_LOGGING="true"
    debug_msg="low security debugging mode"
+
+   AC_MSG_CHECKING([whether to bundle JS and CSS files])
    if test "$enable_bundle" != "yes"; then
       ENABLE_BUNDLE=false
       bundle_msg="using individual JS and CSS files"
+      AC_MSG_RESULT([no ($bundle_msg)])
+   else
+      AC_MSG_RESULT([yes])
    fi
+
+   AC_MSG_CHECKING([whether to enable log passing test assertions in debug build (default)])
    if test "$enable_logging_test_asserts" != "no"; then
       LOK_LOG_ASSERTIONS=1
       log_asserts_msg="enabled"
-      AC_MSG_RESULT([Enabling logging of passing test assertions in debug build (default), override with --disable-logging-test-asserts])
+      AC_MSG_RESULT([yes (override with --disable-logging-test-asserts)])
+    else
+      AC_MSG_RESULT([no (to enable --enable-logging-test-asserts)])
     fi
 else
+    AC_MSG_RESULT([no (Release build)])
     AC_DEFINE([ENABLE_DEBUG],0,[Whether to compile in some extra debugging support code and disable some security pieces])
 fi
 AC_SUBST(ENABLE_DEBUG)
@@ -835,12 +847,34 @@ else
     AC_MSG_RESULT([no])
 fi
 
+# Fuzzing.
+AC_MSG_CHECKING([whether to build fuzzers])
+if test "$enable_fuzzers" = "yes"; then
+    AC_MSG_RESULT([yes])
+    AC_MSG_CHECKING([whether sanitizers are enabled])
+    if test "x$with_sanitizer" != "x"; then
+    AC_MSG_RESULT([yes ($with_sanitizer)])
+    with_sanitizer="$with_sanitizer,fuzzer-no-link"
+    else
+    AC_MSG_RESULT([no])
+    with_sanitizer="fuzzer-no-link"
+    fi
+    LIBFUZZER=1
+else
+    AC_MSG_RESULT([no])
+    LIBFUZZER=0
+fi
+AC_DEFINE_UNQUOTED([LIBFUZZER],[$LIBFUZZER],[Define to 1 if this is a libfuzzer build.])
+AM_CONDITIONAL([ENABLE_LIBFUZZER], [test "$LIBFUZZER" = "1"])
+
+# Sanitizers.
+CXXFLAGS_CXXSTD=
 AC_MSG_CHECKING([whether to turn sanitizers on])
 if test "x$with_sanitizer" != "x"; then
     AC_MSG_RESULT([yes ($with_sanitizer)])
-    AC_MSG_CHECKING([whether to use libasan or libsan])
     LIBSAN=-static-libasan
     for flag in -static-libasan -static-libsan ; do
+        AC_MSG_CHECKING([whether to use $flag])
         save_CXXFLAGS=$CXXFLAGS
         CXXFLAGS="$CXXFLAGS -O1 -fno-omit-frame-pointer -fsanitize=$with_sanitizer -frtti $flag -Werror"
         AC_LANG_PUSH([C++])
@@ -850,7 +884,10 @@ if test "x$with_sanitizer" != "x"; then
         CXXFLAGS=$save_CXXFLAGS
         if test -n "$CXXFLAGS_CXXSTD"; then
             LIBSAN=$flag
+            AC_MSG_RESULT([yes ($LIBSAN)])
             break
+        else
+            AC_MSG_RESULT([no])
         fi
     done
     SANITIZER_FLAGS="-O1 -fno-omit-frame-pointer -fsanitize=$with_sanitizer -frtti $LIBSAN"
@@ -860,22 +897,9 @@ else
     AC_MSG_RESULT([no])
 fi
 
-AC_MSG_CHECKING([whether to build fuzzers])
-if test "$enable_fuzzers" = "yes"; then
-    AC_MSG_RESULT([yes])
-    LIBFUZZER_FLAGS="-fsanitize=fuzzer-no-link"
-    CXXFLAGS="$CXXFLAGS $LIBFUZZER_FLAGS"
-    CFLAGS="$CFLAGS $LIBFUZZER_FLAGS"
-    LIBFUZZER=1
-else
-    AC_MSG_RESULT([no])
-    LIBFUZZER=0
-fi
-AC_DEFINE_UNQUOTED([LIBFUZZER],[$LIBFUZZER],[Define to 1 if this is a libfuzzer build.])
-AM_CONDITIONAL([ENABLE_LIBFUZZER], [test "$LIBFUZZER" = "1"])
-
-# check for C++11 support
+# Check for C++17 support.
 HAVE_CXXSTD=
+CXXFLAGS_CXXSTD=
 AC_MSG_CHECKING([whether $CXX supports C++17])
 for flag in -std=c++17 -std=c++1z ; do
     save_CXXFLAGS=$CXXFLAGS
@@ -899,14 +923,15 @@ done
 if test "$HAVE_CXXSTD" = TRUE; then
     AC_MSG_RESULT([yes ($CXXFLAGS_CXXSTD)])
 else
-    AC_MSG_ERROR(no)
+    AC_MSG_RESULT([no])
+    AC_MSG_ERROR(Compiler doesn't support C++17)
 fi
 
 AS_IF([test "$ENABLE_GTKAPP" != true],
 [CXXFLAGS="$CXXFLAGS $CXXFLAGS_CXXSTD"])
 
 STD_FILESYSTEM=
-if test "$CXXFLAGS_CXXSTD" = "-std=c++17" -a "$ENABLE_ANDROIDAPP" != "true" ; then
+if test "$HAVE_CXXSTD" = TRUE -a "$ENABLE_ANDROIDAPP" != "true" ; then
     save_CXXFLAGS=$CXXFLAGS
     CXXFLAGS="$CXXFLAGS -Werror"
     save_LIBS=$LIBS
@@ -1549,6 +1574,7 @@ Configuration:
     Set capabilities          $setcap_msg
     Browsersync               $browsersync_msg
     cypress                   $cypress_msg
+    C++ compiler flags        $CXXFLAGS
 
     \$ make # to compile"
 if test -n "$with_lo_path"; then
