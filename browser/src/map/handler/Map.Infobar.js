@@ -75,11 +75,22 @@ L.Map.Infobar = L.Handler.extend({
 		var data = e.data;
 
 		if (data.startsWith('updatecheck-show-')) {
-			var latestVersion = data.replace('updatecheck-show-', '');
-			if (latestVersion != app.socket.WSDServer.Version) {
-				var currentDate = new Date();
-				window.localStorage.setItem('InfoBarLaterDate', currentDate.getTime());
-				this._iframeInfobar.show();
+			var latestVersion = data.replace('updatecheck-show-', '').split('.');
+			var currentVersion = app.socket.WSDServer.Version.split('.');
+			var length = Math.max(latestVersion.length, currentVersion.length);
+			for (var i = 0; i < length; i++) {
+				var v1 = i < latestVersion.length ? parseInt(latestVersion[i]) : 0;
+				var v2 = i < currentVersion.length ? parseInt(currentVersion[i]) : 0;
+
+				if (v1 > v2) {
+					var currentDate = new Date();
+					window.localStorage.setItem('InfoBarLaterDate', currentDate.getTime());
+					this._iframeInfobar.show();
+					break;
+				}
+				if (v1 < v2) {
+					break;
+				}
 			}
 		} else if (data === 'updatecheck-close') {
 			this._map.infobar.disable();
