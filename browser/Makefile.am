@@ -166,7 +166,7 @@ NODE_MODULES_JS =\
 	node_modules/jquery-contextmenu/dist/jquery.contextMenu.js \
 	node_modules/jquery-ui-dist/jquery-ui.js \
 	node_modules/smartmenus/dist/jquery.smartmenus.js \
-	node_modules/pako/dist/pako_inflate.js
+	node_modules/pako/dist/pako_inflate.es5.js
 
 COOL_LIBS_JS =\
 	ResizeObserverPolyfill.js \
@@ -774,7 +774,7 @@ typing_speed=100
 # The duration of the typing (in miliseconds)
 typing_duration=30000
 # By default 6 views are spawned in the document.
-single_view="false"
+single_view="true"
 # --inspect flag for the first view. Ideally should be used with single_view=true
 node_inspect="false"
 # Record tile stats and dump it into the file "test/tilestats.txt"
