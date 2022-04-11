@@ -2994,7 +2994,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		// natural tab-order when using keyboard navigation
-		if (control && !control.hasAttribute('tabIndex'))
+		if (control && !control.hasAttribute('tabIndex')
+			&& data.type !== 'container'
+			&& data.type !== 'grid'
+			&& data.type !== 'toolbox')
 			control.setAttribute('tabIndex', '0');
 	},
 
