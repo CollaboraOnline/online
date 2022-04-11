@@ -1,5 +1,6 @@
 /// <reference path="./refs/globals.ts"/>
 /// <reference path="../src/geometry/Point.ts" />
+/// <reference path="../src/geometry/Bounds.ts" />
 /// <reference path="../src/layer/vector/CPointSet.ts" />
 
 var assert = require('assert');
