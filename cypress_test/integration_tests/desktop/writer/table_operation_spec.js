@@ -28,7 +28,7 @@ describe('Table operations', function() {
 
 	it('Insert row before.', function() {
 
-		helper.clickOnIdle('#table-insert .unoInsertRowsBefore');
+		helper.clickOnIdle('#insert .unoInsertRowsBefore');
 
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
@@ -48,7 +48,7 @@ describe('Table operations', function() {
 
 	it('Insert row after.', function() {
 
-		helper.clickOnIdle('#table-insert .unoInsertRowsAfter');
+		helper.clickOnIdle('#insert .unoInsertRowsAfter');
 
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
@@ -68,7 +68,7 @@ describe('Table operations', function() {
 
 	it('Insert column before.', function() {
 
-		helper.clickOnIdle('#table-insert .unoInsertColumnsBefore');
+		helper.clickOnIdle('#insert .unoInsertColumnsBefore');
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
@@ -88,7 +88,7 @@ describe('Table operations', function() {
 	});
 
 	it('Insert column after.', function() {
-		helper.clickOnIdle('#table-insert .unoInsertColumnsAfter');
+		helper.clickOnIdle('#insert .unoInsertColumnsAfter');
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
@@ -107,7 +107,7 @@ describe('Table operations', function() {
 	});
 
 	it('Delete row.', function() {
-		helper.clickOnIdle('#table-delete .unoDeleteRows');
+		helper.clickOnIdle('#delete .unoDeleteRows');
 
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 2);
@@ -127,20 +127,20 @@ describe('Table operations', function() {
 
 	it('Delete column.', function() {
 		// Insert column first
-		helper.clickOnIdle('#table-insert .unoInsertColumnsBefore');
+		helper.clickOnIdle('#insert .unoInsertColumnsBefore');
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
 
 		// Then delete it
-		helper.clickOnIdle('#table-delete .unoDeleteColumns');
+		helper.clickOnIdle('#delete .unoDeleteColumns');
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
 	});
 
 	it('Delete table.', function() {
-		helper.clickOnIdle('#table-delete .unoDeleteTable');
+		helper.clickOnIdle('#delete .unoDeleteTable');
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('not.exist');
@@ -155,7 +155,7 @@ describe('Table operations', function() {
 		// We use cursor position as the indicator of layout change.
 		helper.getCursorPos('top', 'origCursorPos');
 
-		helper.clickOnIdle('#table-split_merge .unoMergeCells');
+		helper.clickOnIdle('#split_merge .unoMergeCells');
 
 		// Cursor was in the second row originally.
 		// With merging two rows, the cursor is moved into the first row.
@@ -212,7 +212,7 @@ describe('Table operations', function() {
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		helper.clickOnIdle('#table-rowsizing .unoSetMinimalRowHeight');
+		helper.clickOnIdle('#rowsizing .unoSetMinimalRowHeight');
 
 		selectFullTable();
 
@@ -228,7 +228,7 @@ describe('Table operations', function() {
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		helper.clickOnIdle('#table-rowsizing .unoSetOptimalRowHeight');
+		helper.clickOnIdle('#rowsizing .unoSetOptimalRowHeight');
 
 		selectFullTable();
 
@@ -251,7 +251,7 @@ describe('Table operations', function() {
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		helper.clickOnIdle('#table-rowsizing .unoDistributeRows');
+		helper.clickOnIdle('#rowsizing .unoDistributeRows');
 
 		selectFullTable();
 
@@ -274,7 +274,7 @@ describe('Table operations', function() {
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		helper.clickOnIdle('#table-columnsizing .unoSetMinimalColumnWidth');
+		helper.clickOnIdle('#columnsizing .unoSetMinimalColumnWidth');
 
 		selectFullTable();
 
@@ -288,7 +288,7 @@ describe('Table operations', function() {
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		helper.clickOnIdle('#table-columnsizing .unoSetOptimalColumnWidth');
+		helper.clickOnIdle('#columnsizing .unoSetOptimalColumnWidth');
 
 		selectFullTable();
 
@@ -304,7 +304,7 @@ describe('Table operations', function() {
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		helper.clickOnIdle('#table-columnsizing .unoDistributeColumns');
+		helper.clickOnIdle('#columnsizing .unoDistributeColumns');
 
 		selectFullTable();
 
