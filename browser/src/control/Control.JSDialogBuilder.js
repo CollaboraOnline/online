@@ -2296,11 +2296,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var isUnoCommand = data.command && data.command.indexOf('.uno:') >= 0;
 			if (isUnoCommand)
 				id = encodeURIComponent(data.command.substr('.uno:'.length));
-			else {
-				if (data.command)
-					id = data.command;
+			else
 				isRealUnoCommand = false;
-			}
 
 			if (id)
 				id.replace(/\%/g, '').replace(/\./g, '-').replace(' ', '');
