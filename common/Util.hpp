@@ -316,6 +316,11 @@ namespace Util
     {
         return Util::isValidUtf8((unsigned char *)s.c_str(), s.size()) > s.size();
     }
+#else
+    inline bool isValidUtf8(const std::string&)
+    {
+        return true;
+    }
 #endif
 
     inline std::string hexStringToBytes(const uint8_t* data, size_t size)
