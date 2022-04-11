@@ -303,7 +303,7 @@ class Comment {
 	}
 
 	public updateResolvedField (state: string) {
-		this.sectionProperties.resolvedTextElement.innerText = state === 'true' ? 'Resolved' : '';
+		this.sectionProperties.resolvedTextElement.innerText = state === 'true' ? _('Resolved') : '';
 	}
 
 	private updateContent () {
