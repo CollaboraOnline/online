@@ -1899,6 +1899,10 @@ msgstr ""
 msgid "Reject change"
 msgstr ""
 
+#: src/layer/tile/CommentSection.ts:306
+msgid "Resolved"
+msgstr ""
+
 #: src/main.js:88
 msgid "Warning! The browser you are using is not supported."
 msgstr ""
