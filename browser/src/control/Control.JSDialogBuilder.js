@@ -245,6 +245,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				window.app.console.warn('Unsupported toolitem type: "' + data.command + '"');
 		}
 
+		builder.postProcess(parentContainer, data);
+
 		return false;
 	},
 
@@ -2292,7 +2294,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var isRealUnoCommand = true;
 
 		if (data.command || data.postmessage === true) {
-			var id = data.id;
+			var id = data.id ? data.id : (data.text && data.text !== '') ? data.text : data.command;
 			var isUnoCommand = data.command && data.command.indexOf('.uno:') >= 0;
 			if (isUnoCommand)
 				id = encodeURIComponent(data.command.substr('.uno:'.length));
@@ -2306,9 +2308,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			L.DomUtil.addClass(div, 'uno' + id);
 
-			id = builder._makeIdUnique(id);
+			if (isRealUnoCommand)
+				id = builder._makeIdUnique(id);
 
 			div.id = id;
+			data.id = id; // change in input data for postprocess
 
 			var icon = data.icon ? data.icon : builder._createIconURL(data.command);
 			var buttonId = id + 'img';
