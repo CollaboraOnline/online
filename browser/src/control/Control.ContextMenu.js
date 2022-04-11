@@ -54,7 +54,8 @@ L.Control.ContextMenu = L.Control.extend({
 				   'SpellCheckIgnore'],
 
 			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable',
-				      'FormatCellDialog', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize'],
+				      'FormatCellDialog', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize', 
+				      'FormatSparklineMenu', 'InsertSparkline', 'DeleteSparkline', 'DeleteSparklineGroup', 'EditSparklineGroup', 'EditSparkline', 'GroupSparklines', 'UngroupSparklines'],
 
 			presentation: ['SetDefault'],
 			drawing: []
