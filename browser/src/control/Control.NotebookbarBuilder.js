@@ -257,7 +257,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_createiOsFontButton: function(parentContainer, data, builder) {
-		var table = L.DomUtil.createWithId('div', 'table-fontnamecombobox', parentContainer);
+		var table = L.DomUtil.createWithId('div', 'fontnamecombobox', parentContainer);
 		var row = L.DomUtil.create('div', 'notebookbar row', table);
 		var button = L.DomUtil.createWithId('button', data.id, row);
 
@@ -1066,7 +1066,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 			var hasManyChildren = childData.children && childData.children.length > 1;
 			if (hasManyChildren) {
-				var tableId = childData.id ? 'table-' + childData.id.replace(' ', '') : '';
+				var tableId = childData.id ? childData.id.replace(' ', '') : '';
 				var table = L.DomUtil.createWithId('div', tableId, td);
 				$(table).addClass(this.options.cssClass);
 				$(table).addClass('vertical');

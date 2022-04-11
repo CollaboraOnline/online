@@ -37,7 +37,7 @@ describe('Row Column Operation', function() {
 	it('Insert/Delete row' , function() {
 		//Insert row above
 		mode === 'notebookbar' ?
-			cy.get('#table-Home-Section-Cell1 #InsertRowsBefore').click() :
+			cy.get('#Home-Section-Cell1 #InsertRowsBefore').click() :
 			selectOption('Insert Rows', 'Rows Above');
 
 		calcHelper.selectEntireSheet();
@@ -48,7 +48,7 @@ describe('Row Column Operation', function() {
 		calcHelper.clickOnFirstCell(true, false);
 
 		mode === 'notebookbar' ?
-			cy.get('#table-Home-Section-Cell1 #DeleteRows').click() :
+			cy.get('#Home-Section-Cell1 #DeleteRows').click() :
 			selectOption('Delete Rows');
 
 		calcHelper.selectEntireSheet();
@@ -59,7 +59,7 @@ describe('Row Column Operation', function() {
 		calcHelper.clickOnFirstCell(true, false);
 
 		mode === 'notebookbar' ?
-			cy.get('#table-Home-Section-Cell1 #InsertRowsAfter').click() :
+			cy.get('#Home-Section-Cell1 #InsertRowsAfter').click() :
 			selectOption('Insert Rows', 'Rows Below');
 
 		calcHelper.selectEntireSheet();
@@ -70,7 +70,7 @@ describe('Row Column Operation', function() {
 	it('Insert/Delete Column', function() {
 		//insert column before
 		mode === 'notebookbar' ?
-			cy.get('#table-Home-Section-Cell1 #InsertColumnsBefore').click() :
+			cy.get('#Home-Section-Cell1 #InsertColumnsBefore').click() :
 			selectOption('Insert Columns', 'Columns Before');
 
 		calcHelper.selectEntireSheet();
@@ -81,7 +81,7 @@ describe('Row Column Operation', function() {
 
 		//delete column
 		mode === 'notebookbar' ?
-			cy.get('#table-Home-Section-Cell1 #DeleteColumns').click() :
+			cy.get('#Home-Section-Cell1 #DeleteColumns').click() :
 			selectOption('Delete Columns');
 
 		calcHelper.selectEntireSheet();
@@ -94,7 +94,7 @@ describe('Row Column Operation', function() {
 
 		//insert column after
 		mode === 'notebookbar' ?
-			cy.get('#table-Home-Section-Cell1 #InsertColumnsAfter').click() :
+			cy.get('#Home-Section-Cell1 #InsertColumnsAfter').click() :
 			selectOption('Insert Columns', 'Columns After');
 
 		calcHelper.selectEntireSheet();
