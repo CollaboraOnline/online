@@ -430,7 +430,7 @@ class DeltaGenerator {
      * Compress the relevant pixmap data either to a delta if we can
      * or a plain deflated stream if we cannot.
      */
-    void compressOrDelta(
+    size_t compressOrDelta(
         unsigned char* pixmap, size_t startX, size_t startY,
         int width, int height,
         int bufferWidth, int bufferHeight,
@@ -453,7 +453,7 @@ class DeltaGenerator {
                               -MAX_WBITS, 8, Z_DEFAULT_STRATEGY) != Z_OK)
             {
                 LOG_ERR("Failed to init deflate");
-                return;
+                return 0;
             }
 
             uLong maxCompressed = compressBound(width * height * 4);
@@ -461,7 +461,7 @@ class DeltaGenerator {
             if (!compressed)
             {
                 LOG_ERR("Failed to allocate buffer of size " << maxCompressed << " to compress into");
-                return;
+                return 0;
             }
 
             zstr.next_out = compressed;
@@ -483,7 +483,7 @@ class DeltaGenerator {
                 if (deflate(&zstr,  flushFlag) != expected)
                 {
                     LOG_ERR("failed to compress image ");
-                    return;
+                    return 0;
                 }
             }
 
@@ -500,6 +500,8 @@ class DeltaGenerator {
             memcpy(&output[oldSize], compressed, compSize);
             free (compressed);
         }
+
+        return output.size();
     }
 };
 
