@@ -296,6 +296,10 @@ L.Control.Notebookbar = L.Control.extend({
 				return;
 		}
 
+		var isUnoCommand = button.unoCommand && button.unoCommand.indexOf('.uno:') >= 0;
+		if (button.unoCommand && !isUnoCommand)
+			button.unoCommand = '.uno:' + button.unoCommand;
+
 		this.additionalShortcutButtons.push(
 			{
 				id: button.id,
