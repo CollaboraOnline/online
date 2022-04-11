@@ -111,7 +111,7 @@ if [ "$CORE_BRANCH" == "distro/collabora/co-22.05" ]; then
 else
   ( cd core && ./autogen.sh --with-distro=LibreOfficeOnline ) || exit 1
 fi
-( cd core && make -j $(nproc) $CORE_BUILD_TARGET ) || exit 1
+( cd core && make $CORE_BUILD_TARGET ) || exit 1
 
 # copy stuff
 mkdir -p "$INSTDIR"/opt/
