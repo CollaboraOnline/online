@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-12 09:03+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
-"Language: \n"
+"PO-Revision-Date: 2022-04-12 07:41+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Frisian <https://hosted.weblate.org/projects/collabora-online/"
+"ui/fy/>\n"
+"Language: fy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1901,7 +1903,7 @@ msgstr ""
 
 #: src/layer/tile/CommentSection.ts:306
 msgid "Resolved"
-msgstr ""
+msgstr "Oplost"
 
 #: src/main.js:88
 msgid "Warning! The browser you are using is not supported."

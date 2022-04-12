@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-12 09:03+0200\n"
-"PO-Revision-Date: 2022-03-17 21:49+0000\n"
-"Last-Translator: SC <lalocas@protonmail.com>\n"
+"PO-Revision-Date: 2022-04-12 07:41+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1965,9 +1965,8 @@ msgid "Reject change"
 msgstr "Rejeitar alteração"
 
 #: src/layer/tile/CommentSection.ts:306
-#, fuzzy
 msgid "Resolved"
-msgstr "Resolver"
+msgstr "Resolvido"
 
 #: src/main.js:88
 msgid "Warning! The browser you are using is not supported."

@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-12 09:03+0200\n"
-"PO-Revision-Date: 2020-10-08 21:00+0000\n"
+"PO-Revision-Date: 2022-04-12 07:41+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Upper Sorbian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hsb/>\n"
-"Language: \n"
+"Language: hsb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : "
 "((n % 100 == 3 || n % 100 == 4) ? 2 : 3));\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1968,9 +1968,8 @@ msgid "Reject change"
 msgstr "Změnu wotpokazać"
 
 #: src/layer/tile/CommentSection.ts:306
-#, fuzzy
 msgid "Resolved"
-msgstr "Rozrisać"
+msgstr "Rozrisany"
 
 #: src/main.js:88
 msgid "Warning! The browser you are using is not supported."
