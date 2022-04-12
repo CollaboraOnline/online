@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-12 09:03+0200\n"
-"PO-Revision-Date: 2020-07-08 12:37+0000\n"
-"Last-Translator: Andrew Lee (李健秋) <alee@collabora.com>\n"
-"Language-Team: Chinese (Traditional) <https://weblate.documentfoundation.org/"
-"projects/libo_online/cool-ui/zh_Hant/>\n"
-"Language: \n"
+"PO-Revision-Date: 2022-04-12 07:41+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
+"collabora-online/ui/zh_Hant/>\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1933,9 +1933,8 @@ msgid "Reject change"
 msgstr "拒絕更改"
 
 #: src/layer/tile/CommentSection.ts:306
-#, fuzzy
 msgid "Resolved"
-msgstr "解決"
+msgstr "已解決"
 
 #: src/main.js:88
 msgid "Warning! The browser you are using is not supported."

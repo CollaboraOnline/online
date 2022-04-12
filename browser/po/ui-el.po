@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-12 09:03+0200\n"
-"PO-Revision-Date: 2022-04-09 11:07+0000\n"
-"Last-Translator: Theo <tbousiou@gmail.com>\n"
+"PO-Revision-Date: 2022-04-12 07:41+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
 "ui/el/>\n"
-"Language: \n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1982,9 +1982,8 @@ msgid "Reject change"
 msgstr "Απόρριψη αλλαγής"
 
 #: src/layer/tile/CommentSection.ts:306
-#, fuzzy
 msgid "Resolved"
-msgstr "Επίλυση"
+msgstr "Επιλύθηκε"
 
 #: src/main.js:88
 msgid "Warning! The browser you are using is not supported."
