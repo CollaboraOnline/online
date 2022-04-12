@@ -5,19 +5,22 @@ test $# -eq 2 || { echo "Usage: $0 <chroot template directory for system libs to
 
 # No provision for spaces or other weird characters in pathnames. So sue me.
 
-CHROOT=$1
+# First parameter is the pathname where this script will create the "systemplate" tree
+SYSTEMPLATE=$1
+
+# Second parameter is the instdir directory of the LibreOffice installation to be used
 INSTDIR=$2
 
 test -d "$INSTDIR" || { echo "$0: No such directory: $INSTDIR"; exit 1; }
 
-mkdir -p $CHROOT || exit 1
+mkdir -p $SYSTEMPLATE || exit 1
 
 # Resolve the real paths, in case they are relative and/or symlinked.
 # INSTDIR_LOGICAL will contain the logical path, if there are symlinks,
 # while INSTDIR is the physical one. Both will most likely be the same,
 # except on systems that have symlinks in the path. We must create
 # both paths (if they are different) inside the jail, hence we need both.
-CHROOT=`cd $CHROOT && /bin/pwd`
+SYSTEMPLATE=`cd $SYSTEMPLATE && /bin/pwd`
 INSTDIR_LOGICAL=`cd $INSTDIR && /bin/pwd -L`
 INSTDIR=`cd $INSTDIR && /bin/pwd -P`
 
@@ -73,48 +76,48 @@ grep -v dynamic | cut -s -d " " -f 3 | grep -E '^(/lib|/usr)' | sort -u | sed -e
 
 # Can't use -l because then symlinks won't be handled well enough.
 # This will now copy the file a symlink points to, but whatever.
-cpio -p -d -L $CHROOT
+cpio -p -d -L $SYSTEMPLATE
 
 # Link the dynamic files, replacing any existing.
-rm -f $CHROOT/etc/copied
-mkdir -p $CHROOT/etc/
+rm -f $SYSTEMPLATE/etc/copied
+mkdir -p $SYSTEMPLATE/etc/
 for file in hosts nsswitch.conf resolv.conf passwd group host.conf timezone localtime
 do
     # echo "Linking/Copying /etc/$file"
-    # Prefer hard-linking, fallback to just copying (do *not* use soft-linking because that would be relative to the jail).
+    # Prefer hard-linking, fallback to just copying (do *not* use symlinking because that would be relative to the jail).
     # When copying, we must make sure that we copy the source and not a symlink. Otherwise, the source won't be accessible from the jail.
     # In addition, we flag that at least one file is copied by creating the 'copied' file, so that we do check for updates.
-    ln -f `${REALPATH} /etc/$file` $CHROOT/etc/$file 2> /dev/null || (${CP} --dereference --preserve=all /etc/$file $CHROOT/etc/$file && touch $CHROOT/etc/copied) || echo "$0: Failed to link or copy /etc/$file"
+    ln -f `${REALPATH} /etc/$file` $SYSTEMPLATE/etc/$file 2> /dev/null || (${CP} --dereference --preserve=all /etc/$file $SYSTEMPLATE/etc/$file && touch $SYSTEMPLATE/etc/copied) || echo "$0: Failed to link or copy /etc/$file"
 done
 
 # Link dev/random and dev/urandom to ../tmp/dev/.
 # The jail then creates the random device nodes in its /tmp/dev/.
-mkdir -p $CHROOT/dev
-mkdir -p $CHROOT/tmp/dev
+mkdir -p $SYSTEMPLATE/dev
+mkdir -p $SYSTEMPLATE/tmp/dev
 for file in random urandom
 do
-    # This link is relative anyway, so can be soft.
-    ln -f ../tmp/dev/$file $CHROOT/dev/ 2> /dev/null || ln -f -s ../tmp/dev/$file $CHROOT/dev/ || echo "$0: Failed to link dev/$file"
+    # This link is relative anyway, so can be symbolic.
+    ln -f ../tmp/dev/$file $SYSTEMPLATE/dev/ 2> /dev/null || ln -f -s ../tmp/dev/$file $SYSTEMPLATE/dev/ || echo "$0: Failed to link dev/$file"
 done
 
 # Create a relative symbolic link within systemplate that points from
 # the path of $INSTDIR (as seen from the jail as an absolute path)
 # to the /lo path, where the instdir of LO will really reside.
-mkdir -p $CHROOT/lo
+mkdir -p $SYSTEMPLATE/lo
 # In case the original path is different from
 for path in $INSTDIR $INSTDIR_LOGICAL
 do
-    # Create a soft-link, as it's a relative directory path (can't be a hard-link).
-    INSTDIR_PARENT="$(dirname "$CHROOT/$path")"
+    # Create a symlink, as it's a relative directory path (can't be a hard-link).
+    INSTDIR_PARENT="$(dirname "$SYSTEMPLATE/$path")"
     mkdir -p $INSTDIR_PARENT
-    ln -f -s `${REALPATH} --relative-to=$INSTDIR_PARENT $CHROOT/lo` $CHROOT/$path
+    ln -f -s `${REALPATH} --relative-to=$INSTDIR_PARENT $SYSTEMPLATE/lo` $SYSTEMPLATE/$path
 done
 
 # /usr/share/fonts needs to be taken care of separately because the
 # directory time stamps must be preserved for fontconfig to trust
 # its cache.
 
-cd $CHROOT || exit 1
+cd $SYSTEMPLATE || exit 1
 
 mkdir -p $LOCALBASE/share || exit 1
 ${CP} -r -p -L /${LOCALBASE}/share/fonts $LOCALBASE/share
@@ -131,8 +134,8 @@ find $LOCALBASE/share -name '*.pcf.gz' | xargs rm -f
 # Debugging only hackery to avoid confusion.
 if test "z$ENABLE_DEBUG" != "z" -a "z$HOME" != "z"; then
     echo "$0: Copying development users's fonts into systemplate"
-    mkdir -p $CHROOT/$HOME
-    test -d $HOME/.fonts && ${CP} -r -p -L $HOME/.fonts $CHROOT/$HOME
+    mkdir -p $SYSTEMPLATE/$HOME
+    test -d $HOME/.fonts && ${CP} -r -p -L $HOME/.fonts $SYSTEMPLATE/$HOME
 fi
 
 exit 0
