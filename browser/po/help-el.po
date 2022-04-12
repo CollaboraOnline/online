@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-11 23:55+0200\n"
-"PO-Revision-Date: 2021-09-20 17:51+0000\n"
-"Last-Translator: george kitsoukakis <norhorn@gmail.com>\n"
+"PO-Revision-Date: 2022-04-09 11:07+0000\n"
+"Last-Translator: Theo <tbousiou@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
 "help/el/>\n"
 "Language: el\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1158,7 +1158,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "Μετακινεί ένα φύλλο προς τα αριστερά."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-73
 #, fuzzy
@@ -1167,7 +1167,7 @@ msgstr "Μετατόπιση</kbd><span class=\"kbd--plus\">+</span><kbd>Σελ�
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "Μετακινεί μία σελίδα οθόνης προς τα δεξιά."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-80
 #, fuzzy
@@ -1240,7 +1240,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr ""
+msgstr "Διαγραφή κελιών (όπως στο μενού Επεξεργασία - Διαγραφή κελιών)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-90
 #, fuzzy
