@@ -937,6 +937,15 @@ class CommentSection {
 		if (this.isCollapsed)
 			annotation.setCollapsed();
 
+		// check if we are the author
+		// then select it so it does not get lost in a long list of comments and replies.
+		const authorName = this.map.getViewName(this.sectionProperties.docLayer._viewId);
+		const newComment = annotation.sectionProperties.data.id === 'new';
+		if (!newComment && (authorName === annotation.sectionProperties.data.author)) {
+			this.unselect();
+			this.select(annotation);
+		}
+
 		return annotation;
 	}
 
