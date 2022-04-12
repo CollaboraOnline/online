@@ -149,6 +149,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			{text: _UNO('.uno:ChiSquareTestDialog', 'spreadsheet'), uno: '.uno:ChiSquareTestDialog'},
 			{text: _UNO('.uno:FourierAnalysisDialog', 'spreadsheet'), uno: '.uno:FourierAnalysisDialog'}
 		];
+		this._menus['FormatSparklineMenu'] = [
+			{text: _UNO('.uno:InsertSparkline', 'spreadsheet'), uno: '.uno:InsertSparkline'},
+			{text: _UNO('.uno:DeleteSparkline', 'spreadsheet'), uno: '.uno:DeleteSparkline'},
+			{text: _UNO('.uno:DeleteSparklineGroup', 'spreadsheet'), uno: '.uno:DeleteSparklineGroup'},
+			{text: _UNO('.uno:EditSparklineGroup', 'spreadsheet'), uno: '.uno:EditSparklineGroup'},
+			{text: _UNO('.uno:EditSparkline', 'spreadsheet'), uno: '.uno:EditSparkline'},
+			{text: _UNO('.uno:GroupSparklines', 'spreadsheet'), uno: '.uno:GroupSparklines'},
+			{text: _UNO('.uno:UngroupSparklines', 'spreadsheet'), uno: '.uno:UngroupSparklines'}
+		];
 		this._menus['MenuPrintRanges'] = [
 			{text: _UNO('.uno:DefinePrintArea', 'spreadsheet'), uno: '.uno:DefinePrintArea'},
 			{text: _UNO('.uno:DeletePrintArea', 'spreadsheet'), uno: '.uno:DeletePrintArea'}
