@@ -1001,6 +1001,18 @@ private:
             _request.setLastRequestResult(success);
         }
 
+        /// The duration elapsed since we sent the last upload request to storage.
+        std::chrono::milliseconds timeSinceLastUploadRequest() const
+        {
+            return _request.timeSinceLastRequest();
+        }
+
+        /// The duration elapsed since we received the last upload response from storage.
+        std::chrono::milliseconds timeSinceLastUploadResponse() const
+        {
+            return _request.timeSinceLastResponse();
+        }
+
         /// Returns the number of previous upload failures. 0 for success.
         std::size_t uploadFailureCount() const { return _request.lastRequestFailureCount(); }
 
@@ -1029,6 +1041,8 @@ private:
             os << indent << "last upload was successful: " << lastUploadSuccessful();
             os << indent << "upload failure count: " << uploadFailureCount();
             os << indent << "last modified time (on server): " << _lastModifiedTime;
+            os << indent << "since last upload request: " << timeSinceLastUploadRequest();
+            os << indent << "since last upload response: " << timeSinceLastUploadResponse();
             os << indent
                << "file last modified: " << Util::getTimeForLog(now, _lastUploadedFileModifiedTime);
         }
