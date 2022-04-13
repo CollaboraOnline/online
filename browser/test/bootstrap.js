@@ -40,7 +40,9 @@ let ssl_args = [
 if (ssl_flag === 'true')
 	args = [...args, ...ssl_args];
 
-const coolwsd = spawn(`${top_builddir}/coolwsd`, args);
+
+var coolwsd_options = debug ? {} : { stdio: 'ignore'};
+const coolwsd = spawn(`${top_builddir}/coolwsd`, args, coolwsd_options);
 
 if (debug)
 {
