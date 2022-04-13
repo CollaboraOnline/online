@@ -227,6 +227,7 @@ public:
     static bool NoSeccomp;
     static bool AdminEnabled;
     static bool UnattendedRun; //< True when run from an unattended test, not interactive.
+    static bool SignalParent;
 #if ENABLE_DEBUG
     static bool SingleKit;
 #endif
