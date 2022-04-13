@@ -2920,7 +2920,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	executeAction: function(container, data) {
 		var control = container.querySelector('[id=\'' + data.control_id + '\']');
 		if (!control)
-			control = container.querySelector('[id=\'table-' + data.control.id + '\']');
+			control = container.querySelector('[id=\'table-' + data.control_id + '\']');
 		if (!control) {
 			window.app.console.warn('executeAction: not found control with id: "' + data.control_id + '"');
 			return;
