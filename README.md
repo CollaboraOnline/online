@@ -34,7 +34,10 @@
 For many more details, build instructions, downloads and more please visit https://collaboraonline.github.io/
 
 ## Developer assistance
-Please ask your questions on `irc.libera.chat` in our `#cool-dev` channel
+Please ask your questions on any of the bridged IRC/Matrix/Telegram rooms
+* IRC: `#cool-dev` on `irc.libera.chat` 
+* Matrix: [#cool-dev:libera.chat](https://app.element.io/#/room/#cool-dev:libera.chat)
+* Telegram: [CollaboraOnline](https://t.me/CollaboraOnline)
 
 Join the conversation on our Discourse server at https://forum.collaboraonline.com/
 
