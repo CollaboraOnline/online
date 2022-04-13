@@ -850,6 +850,7 @@ bool COOLWSD::NoCapsForKit = false;
 bool COOLWSD::NoSeccomp = false;
 bool COOLWSD::AdminEnabled = true;
 bool COOLWSD::UnattendedRun = false;
+bool COOLWSD::SignalParent = false;
 #if ENABLE_DEBUG
 bool COOLWSD::SingleKit = false;
 #endif
@@ -2443,6 +2444,10 @@ void COOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false));
 
+    optionSet.addOption(Option("signal", "", "Send signal SIGUSR2 to parent process when server is ready to accept connections")
+                        .required(false)
+                        .repeatable(false));
+
 #if ENABLE_DEBUG
     optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
                         .required(false)
@@ -2503,6 +2508,9 @@ void COOLWSD::handleOption(const std::string& optionName,
         ConfigDir = value;
     else if (optionName == "lo-template-path")
         LoTemplate = value;
+    else if (optionName == "signal")
+        SignalParent = true;
+
 #if ENABLE_DEBUG
     else if (optionName == "unitlib")
         UnitTestLibrary = value;
@@ -4926,6 +4934,10 @@ int COOLWSD::innerMain()
 
 #if !MOBILEAPP
     std::cerr << "Ready to accept connections on port " << ClientPortNumber <<  ".\n" << std::endl;
+    if (SignalParent)
+    {
+        kill(getppid(), SIGUSR2);
+    }
 #endif
 
 #if !MOBILEAPP
