@@ -398,6 +398,8 @@ INTERMEDIATE_DIR ?= $(if $(IS_SEPARATE),$(abs_builddir)/debug,$(abs_builddir)/re
 
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' -not -path './node_modules/*' | sed 's/.\///')
 
+COOL_JS_BUNDLE = $(patsubst %.ts,%.js,$(COOL_JS_WEBORDER))
+
 define bundle_cool
 	$(if $(IS_SEPARATE),\
 		@touch $@,
@@ -407,7 +409,7 @@ define bundle_cool
 			-DMOBILEAPPNAME="$(APP_NAME)" \
 			-DVERSION=$(COOL_VERSION) \
 			-DCOPYRIGHT=$(srcdir)/src/copyright.js \
-			-DCOOL_JS=$(subst $(SPACE),$(COMMA),$(patsubst src/%.ts,$(DIST_FOLDER)/src/%.js,$(COOL_JS_WEBORDER))) \
+			-DCOOL_JS=$(subst $(SPACE),$(COMMA),$(patsubst src/%,$(DIST_FOLDER)/src/%,$(COOL_JS_BUNDLE))) \
 			$(srcdir)/cool-src.js.m4 > $@)
 endef
 
