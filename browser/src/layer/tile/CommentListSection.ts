@@ -611,14 +611,37 @@ class CommentSection {
 
 			this.sectionProperties.selectedComment = this.sectionProperties.commentList[idx];
 
-			if (this.sectionProperties.selectedComment && !$(this.sectionProperties.selectedComment.sectionProperties.container).hasClass('annotation-active'))
+			if (this.sectionProperties.selectedComment && !$(this.sectionProperties.selectedComment.sectionProperties.container).hasClass('annotation-active')) {
 				$(this.sectionProperties.selectedComment.sectionProperties.container).addClass('annotation-active');
+				if (this.sectionProperties.docLayer._docType === 'text') {
+					// check it is visible in the screen and not a new comment
+					const id = this.sectionProperties.selectedComment.sectionProperties.data.id;
+					if (id.indexOf('new') < 0 && !this.isInViewPort(this.sectionProperties.selectedComment)) {
+						const scrollToPos = this.sectionProperties.selectedComment.position[1];
+						this.map.scrollTop(scrollToPos < 0 ? 0 : scrollToPos);
+					}
+				}
+			}
 
 			this.update();
 
 			if (!(<any>window).mode.isMobile() && annotation.isCollapsed && this.sectionProperties.docLayer._docType !== 'spreadsheet')
 				this.openMobileWizardPopup(annotation);
 		}
+	}
+
+	private isInViewPort(annotation: any) {
+		const rect = annotation.sectionProperties.container.getBoundingClientRect();
+		const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+		const screenTop = scrollSection.containerObject.getDocumentTopLeft()[1];
+		const screenBottom = screenTop + (window.innerHeight || document.documentElement.clientHeight);
+		const annotationTop = annotation.position[1];
+		const annotationBottom = annotation.position[1] + rect.bottom - rect.top;
+
+		return (
+			screenTop <= annotationTop &&
+			screenBottom >= annotationBottom
+		);
 	}
 
 	public unselect () {
