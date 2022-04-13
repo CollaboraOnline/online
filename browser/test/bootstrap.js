@@ -100,6 +100,7 @@ function exitHandler(options, exitCode) {
 	if (options.exit) {
 		vacuumCleaner('SIGINT', 'exiting...', exitCode)
 	}
+	process.exit();
 }
 
 //do something when app is closing
