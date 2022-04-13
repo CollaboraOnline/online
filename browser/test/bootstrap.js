@@ -1,4 +1,5 @@
 const https = require("https");
+const http = require("http");
 
 const { spawn, fork } = require('child_process');
 if (process.argv.length < 5 || process.argv[2] == '--help') {
@@ -82,9 +83,8 @@ function serverReady() {
 		);
 	}
     }
+    setInterval(dumpMemoryUse, 3000);
 }
-
-
 
 function vacuumCleaner(kill, message, code) {
 		console.log(message);
@@ -132,10 +132,14 @@ function parseStats(content) {
 	return stats;
 }
 
+function getHttpProtocol() {
+    return ssl_flag === 'true' ? https : http;
+}
+
 function dumpMemoryUse() {
-	var url = 'https://admin:admin@localhost:' + port + '/cool/getMetrics/';
+	var url = (ssl_flag === 'true' ? 'https' : 'http') + '://admin:admin@localhost:' + port + '/cool/getMetrics/';
 	console.log('Fetching stats from ' + url);
-	var req = https.request(
+	var req = getHttpProtocol().request(
 		url,
 		{
 			rejectUnauthorized: false,
@@ -163,5 +167,3 @@ function dumpMemoryUse() {
 		});
 	req.end();
 }
-
-setInterval(dumpMemoryUse, 3000);
