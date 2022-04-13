@@ -1347,14 +1347,24 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
         _storage->forceSave();
     }
 
-    constexpr bool isRename = false;
-    uploadToStorageInternal(sessionId, /*saveAsPath*/ std::string(),
-                            /*saveAsFilename*/ std::string(), isRename, force);
+    if (force || _storageManager.lastUploadSuccessful() ||
+        (_storageManager.timeSinceLastUploadRequest() > std::chrono::seconds(5) &&
+         _storageManager.timeSinceLastUploadResponse() > std::chrono::seconds(5)))
+    {
+        constexpr bool isRename = false;
+        uploadToStorageInternal(sessionId, /*saveAsPath*/ std::string(),
+                                /*saveAsFilename*/ std::string(), isRename, force);
 
-    // If marked to destroy, or session is disconnected, remove.
-    const auto it = _sessions.find(sessionId);
-    if (_docState.isMarkedToDestroy() || (it != _sessions.end() && it->second->isCloseFrame()))
-        disconnectSessionInternal(sessionId);
+        // If marked to destroy, or session is disconnected, remove.
+        const auto it = _sessions.find(sessionId);
+        if (_docState.isMarkedToDestroy() || (it != _sessions.end() && it->second->isCloseFrame()))
+            disconnectSessionInternal(sessionId);
+    }
+    else
+    {
+        LOG_TRC("Last upload had failed and it's only been "
+                << _storageManager.timeSinceLastUploadResponse() << " since. ");
+    }
 }
 
 void DocumentBroker::uploadAsToStorage(const std::string& sessionId,
@@ -3243,7 +3253,7 @@ std::size_t DocumentBroker::broadcastMessage(const std::string& message) const
 {
     assertCorrectThread();
 
-    LOG_DBG("Broadcasting message [" << message << "] to all " << _sessions.size() <<  " sessions.");
+    LOG_DBG("Broadcasting message [" << message << "] to all " << _sessions.size() << " sessions.");
     std::size_t count = 0;
     for (const auto& sessionIt : _sessions)
     {
