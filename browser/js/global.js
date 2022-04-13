@@ -1,6 +1,10 @@
 /* -*- js-indent-level: 8 -*- */
 /* global Uint8Array */
 
+/*
+	For extending window.app object, please see "docstate.js" file.
+	Below definition is only for the properties that this (global.js) file needs at initialization.
+*/
 window.app = {
 	socket: null,
 	console: {}
