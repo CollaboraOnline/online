@@ -717,13 +717,13 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			{
 				'id': 'Data-RowMenu:MenuRowHeight',
 				'type': 'menubutton',
-				'text': _UNO('.uno:RowHeightMenu', 'spreadsheet'),
+				'text': _('Row Width'),
 				'enabled': 'true'
 			},
 			{
 				'id': 'Data-RowMenu:MenuColumnWidth',
 				'type': 'menubutton',
-				'text': _UNO('.uno:ColumnWidthMenu', 'spreadsheet'),
+				'text': _('Column Width'),
 				'enabled': 'true'
 			},
 			{
