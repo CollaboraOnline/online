@@ -81,7 +81,8 @@ bool StreamSocket::simulateSocketError(bool read)
 {
     if ((socketErrorCount++ % 7) == 0)
     {
-        LOG_TRC("Simulating socket error during " << (read ? "read." : "write."));
+        LOG_TRC('#' << getFD() << ": Simulating socket error during "
+                    << (read ? "read." : "write."));
         errno = EAGAIN;
         return true;
     }
@@ -432,9 +433,9 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         std::vector<int> toErase;
 
         size_t i = _pollStartIndex;
-        LOG_TRC("Starting handling poll results of "
-                << _name << " #" << _pollFds[i].fd << " at index " << _pollStartIndex << " (of "
-                << size << "): " << std::hex << _pollFds[i].revents << std::dec);
+        LOG_TRC('#' << _pollFds[i].fd << ": Starting handling poll results of " << _name
+                    << " at index " << _pollStartIndex << " (of " << size << "): " << std::hex
+                    << _pollFds[i].revents << std::dec);
 
         size_t previ = size;
         while (previ != _pollStartIndex)
@@ -447,7 +448,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             }
             catch (const std::exception& exc)
             {
-                LOG_ERR('#' << _pollFds[i].fd << " Error while handling poll at " << i << " in "
+                LOG_ERR('#' << _pollFds[i].fd << ": Error while handling poll at " << i << " in "
                             << _name << ": " << exc.what());
                 disposition.setClosed();
                 rc = -1;
@@ -467,10 +468,10 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         if (!toErase.empty())
         {
             std::sort(toErase.begin(), toErase.end(), [](int a, int b) { return a > b; });
-            for (int eraseIndex : toErase)
+            for (const int eraseIndex : toErase)
             {
-                LOG_TRC("Removing socket #" << _pollFds[eraseIndex].fd << " (at " << eraseIndex
-                                            << " of " << _pollSockets.size() << ") from " << _name);
+                LOG_TRC('#' << _pollFds[eraseIndex].fd << ": Removing socket (at " << eraseIndex
+                            << " of " << _pollSockets.size() << ") from " << _name);
                 _pollSockets.erase(_pollSockets.begin() + eraseIndex);
             }
         }
