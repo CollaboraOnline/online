@@ -190,7 +190,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'command': '.uno:Print'
 				} : {}
 		];
-		 
+
 		if (hasGroupedDownloadAs) {
 			content.push({
 				'id': 'downloadas-container',
@@ -201,7 +201,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					{
 						'id': 'downloadas',
 						'type': 'menubartoolitem',
-						'text': _('Download as'),
+						'text': _('Download'),
 						'command': '.uno:InsertGraphic'
 					}
 				]
