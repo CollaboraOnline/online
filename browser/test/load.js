@@ -118,7 +118,7 @@ Object.defineProperty(window.HTMLElement.prototype, "clientHeight", {
 	}
 });
 
-console.log('Finished bootstrapping: ' + window.L.Browser.mobile + ' desktop ' + window.mode.isDesktop() + ' now running');
+process.stderr.write('Finished bootstrapping: mobile=' + window.L.Browser.mobile + ' desktop=' + window.mode.isDesktop() + ' now running\n');
 console.debug('Window size ' + window.innerWidth + 'x' + window.innerHeight);
 
 window.HTMLElement.prototype.getBoundingClientRect = function() {
@@ -173,7 +173,7 @@ function dumpStats() {
 		if (err) console.log('tilestats: error dumping stats to file!', err);
 		else console.log('tilestats: finished dumping the stats to file!');
 	});
-	console.log(output);
+	process.stderr.write(output);
 }
 
 window.onload = function() {
