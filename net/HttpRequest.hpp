@@ -1066,8 +1066,10 @@ public:
                 return false;
             }
 
-            assert(_socket.lock() && "Connect must set the _socket member.");
-            LOG_TRC("Connected");
+            LOG_ASSERT_MSG(_socket.lock(), "Connect must set the _socket member.");
+            LOG_ASSERT_MSG(_socket.lock()->getFD() == socket->getFD(),
+                           "Socket FD's mismatch after connect().");
+            LOG_TRC('#' << socket->getFD() << ": Connected");
             poll.insertNewSocket(socket);
         }
         else
@@ -1244,23 +1246,24 @@ private:
         if (socket)
         {
             Buffer& out = socket->getOutBuffer();
-            LOG_TRC("performWrites: " << out.size() << " bytes, capacity: " << capacity);
+            LOG_TRC('#' << socket->getFD() << ": performWrites: " << out.size()
+                        << " bytes, capacity: " << capacity);
 
             if (!socket->send(_request))
             {
-                LOG_ERR('#' << socket->getFD() << " Error while writing to socket.");
+                LOG_ERR('#' << socket->getFD() << ": Error while writing to socket.");
             }
         }
     }
 
     void onDisconnect() override
     {
-        LOG_TRC("onDisconnect");
-
         // Make sure the socket is disconnected and released.
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
         {
+            LOG_TRC('#' << socket->getFD() << ": onDisconnect");
+
             socket->shutdown(); // Flag for shutdown for housekeeping in SocketPoll.
             socket->closeConnection(); // Immediately disconnect.
             _socket.reset();
