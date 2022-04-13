@@ -1294,10 +1294,19 @@ protected:
 
         if (!EnableExperimental || events & POLLIN)
         {
-            closed = !readIncomingData() || closed;
+            // readIncomingData returns false only if the read len is 0 (closed).
+            // Oddly enough, we don't necessarily get POLLHUP after read(2) returns 0.
+            const bool reading = readIncomingData();
+            closed = !reading || closed;
             LOG_TRC('#' << getFD() << " Incoming data buffer " << _inBuffer.size()
                         << " bytes, closeSocket? " << closed << ", events: " << std::hex << events
                         << std::dec);
+            if (EnableExperimental && closed && reading)
+            {
+                // We might have outstanding data to read, wait until readIncomingData returns false.
+                LOG_DBG('#' << getFD() << ": Closed but will drain incoming data per POLLIN.");
+                closed = false;
+            }
         }
 
 #ifdef LOG_SOCKET_DATA
