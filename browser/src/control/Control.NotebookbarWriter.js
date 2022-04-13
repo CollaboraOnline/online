@@ -216,25 +216,38 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			]);
 		}
 
-		content.push({
-			'type': 'container',
-			'children': [
-				{
-					'id': 'repair',
-					'type': 'menubartoolitem',
-					'text': _('Repair'),
-					'command': _('Repair')
-				},
-				hasSigning ?
+		if (hasSigning === false) {
+			content.push({
+				'type': 'container',
+				'children': [
+					{
+						'id': 'repair',
+						'type': 'bigmenubartoolitem',
+						'text': _('Repair'),
+						'command': _('Repair')
+					}
+				]
+			});
+		} else {
+			content.push({
+				'type': 'container',
+				'children': [
+					{
+						'id': 'repair',
+						'type': 'menubartoolitem',
+						'text': _('Repair'),
+						'command': _('Repair')
+					},
 					{
 						'id': 'signdocument',
 						'type': 'menubartoolitem',
 						'text': _('Sign document'),
 						'command': ''
-					} : {},
-			],
-			'vertical': 'true'
-		});
+					}
+				],
+				'vertical': 'true'
+			});
+		}
 
 		return this.getTabPage('File', content);
 	},
