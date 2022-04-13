@@ -28,7 +28,8 @@ let args = [
 	'--o:admin_console.password=admin',
 	'--o:logging.file[@enable]=true --o:logging.level=' + (debug ? 'trace' : 'warning'),
 	'--o:trace_event[@enable]=true',
-	`--port=${port}`
+	`--port=${port}`,
+	'--signal'
 ];
 
 let ssl_args = [
@@ -40,6 +41,7 @@ let ssl_args = [
 if (ssl_flag === 'true')
 	args = [...args, ...ssl_args];
 
+process.on('SIGUSR2', serverReady);
 
 var coolwsd_options = debug ? {} : { stdio: 'ignore'};
 const coolwsd = spawn(`${top_builddir}/coolwsd`, args, coolwsd_options);
@@ -58,27 +60,28 @@ coolwsd.on('exit', (code) => {
 	console.log(`coolwsd process exited with code ${code}`);
 });
 
-console.log('\nTest running - connect to:\n\n\t' +
-	    'https://localhost:9999/browser/1234/cool.html?file_path=file://' +
-	    top_builddir + '/test/data/perf-test-edit.odt\n\n');
-
+process.env.NODE_PATH = `${top_builddir}/browser/node_modules`
 let childNodes = [];
 
-let execArgs = [];
+function serverReady() {
+    console.log('\nTest running - connect to:\n\n\t' +
+		'https://localhost:9999/browser/1234/cool.html?file_path=file://' +
+		top_builddir + '/test/data/perf-test-edit.odt\n\n');
 
-process.env.NODE_PATH = `${top_builddir}/browser/node_modules`
+    let execArgs = [];
 
-if (inspect === 'true')
+    if (inspect === 'true')
 	execArgs.push('--inspect');
-childNodes.push(
+    childNodes.push(
 	fork(`${srcdir}/test/load.js`, [ssl_flag, top_builddir, `${top_builddir}/test/data/perf-test-edit.odt`, `testEdit_1`, `${port}`, `${typing_speed}`, `${typing_duration}`, `${recordStats}`, `${single_view}`], {execArgv: execArgs})
 );
-if(single_view !== "true") {
+    if(single_view !== "true") {
 	for (let i = 2; i <= 6; i++) {
-		childNodes.push(
-			fork(`${srcdir}/test/load.js`, [ssl_flag, top_builddir, `${top_builddir}/test/data/perf-test-edit.odt`, `testEdit_${i}`, `${port}`, `${typing_speed}`, `${typing_duration}`, 'false', 'false'])
+	    childNodes.push(
+		fork(`${srcdir}/test/load.js`, [ssl_flag, top_builddir, `${top_builddir}/test/data/perf-test-edit.odt`, `testEdit_${i}`, `${port}`, `${typing_speed}`, `${typing_duration}`, 'false', 'false'])
 		);
 	}
+    }
 }
 
 
