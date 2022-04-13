@@ -428,7 +428,7 @@ define bundle_all
 			$(srcdir)/bundle.js.m4 > $(INTERMEDIATE_DIR)/bundle.js
 		@$(NODE) node_modules/uglify-js/bin/uglifyjs \
 			$(INTERMEDIATE_DIR)/bundle.js \
-			--output $@)
+			--source-map --output $@)
 endef
 
 define prereq_all
