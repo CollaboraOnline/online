@@ -79,12 +79,9 @@ AM_LDFLAGS = -pthread -Wl,-E -lpam $(ZLIB_LIBS)
 if ENABLE_SSL
 AM_LDFLAGS += -lssl -lcrypto
 else
-coolwsd_fuzzer_LDADD = -lssl -lcrypto
 coolwsd_LDADD = -lssl -lcrypto
 coolconfig_LDADD = -lssl -lcrypto
 endif
-
-coolwsd_fuzzer_CPPFLAGS = -DKIT_IN_PROCESS=1 -DFUZZER=1 -DTDOC=\"$(abs_top_srcdir)/test/data\" $(AM_CPPFLAGS)
 
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes --exclude=browser *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
@@ -154,8 +151,6 @@ noinst_PROGRAMS += \
 		   admin_fuzzer \
 		   clientsession_fuzzer \
 		   httpresponse_fuzzer
-else
-noinst_PROGRAMS += coolwsd_fuzzer
 endif
 
 connect_SOURCES = tools/Connect.cpp \
@@ -181,11 +176,6 @@ coolforkit_json = $(patsubst %.cpp,%.cmd,$(coolforkit_sources))
 
 coolforkit_SOURCES = $(coolforkit_sources) \
                      $(shared_sources)
-
-coolwsd_fuzzer_SOURCES = $(coolwsd_sources) \
-                         $(coolforkit_sources) \
-                         $(shared_sources) \
-                         kit/DummyLibreOfficeKit.cpp
 
 if ENABLE_LIBFUZZER
 
@@ -425,7 +415,7 @@ clean-local:
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
 	rm -rf "${top_srcdir}/loleaflet"
 	rm -rf loolconfig loolconvert loolforkit loolmap loolmount # kill old binaries
-	rm -rf loolwsd loolwsd_fuzzer loolstress loolsocketdump
+	rm -rf loolwsd loolwsd_fuzzer coolwsd_fuzzer loolstress loolsocketdump
 
 if ENABLE_DEBUG
 # can write to /tmp/coolwsd.log

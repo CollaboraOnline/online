@@ -129,11 +129,7 @@ inline void getDocumentPathAndURL(const std::string& docFilename, std::string& d
 inline
 void sendTextFrame(COOLWebSocket& socket, const std::string& string, const std::string& testname)
 {
-#ifndef FUZZER
     TST_LOG("Sending " << string.size() << " bytes: " << COOLProtocol::getAbbreviatedMessage(string));
-#else
-    (void) testname;
-#endif
     socket.sendFrame(string.data(), string.size());
 }
 
@@ -146,12 +142,8 @@ void sendTextFrame(const std::shared_ptr<COOLWebSocket>& socket, const std::stri
 inline void sendTextFrame(const std::shared_ptr<http::WebSocketSession>& ws,
                           const std::string& string, const std::string& testname = std::string())
 {
-#ifndef FUZZER
     TST_LOG("Sending " << string.size()
                        << " bytes: " << COOLProtocol::getAbbreviatedMessage(string));
-#else
-    (void)testname;
-#endif
     ws->sendMessage(string);
 }
 
