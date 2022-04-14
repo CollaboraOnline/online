@@ -15,7 +15,7 @@
 #import "L10n.h"
 
 char *app_translate(
-#if (LIBO_VERSION_MAJOR > 7 && LIBO_VERSION_MAJOR < 21) || (LIBO_VERSION_MAJOR == 7 && LIBO_VERSION_MINOR >= 3)
+#if (LIBO_VERSION_MAJOR > 7 && LIBO_VERSION_MAJOR < 21) || (LIBO_VERSION_MAJOR >= 22) || (LIBO_VERSION_MAJOR == 7 && LIBO_VERSION_MINOR >= 3)
                     TranslateId id,
 #else
                     const char *id,
