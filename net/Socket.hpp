@@ -1128,18 +1128,18 @@ public:
                     last_errno = errno; // Save only on error.
 
                 if (len < 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
-                    LOG_SYS_ERRNO(last_errno, '#' << getFD() << ": read failed, have "
-                                                  << _inBuffer.size() << " buffered bytes");
+                    LOG_SYS_ERRNO(last_errno,
+                                  "Read failed, have " << _inBuffer.size() << " buffered bytes");
                 else if (len <= 0)
-                    LOG_TRC("Read failed, have " << _inBuffer.size() << " buffered bytes ("
-                                                 << Util::symbolicErrno(last_errno) << ": "
-                                                 << std::strerror(last_errno) << ')');
+                    LOG_TRC("Read failed ("
+                            << len << "), have " << _inBuffer.size() << " buffered bytes ("
+                            << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
+                            << ')');
                 else // Success.
                     LOG_TRC("Read " << len << " bytes in addition to " << _inBuffer.size()
                                     << " buffered bytes"
 #ifdef LOG_SOCKET_DATA
-                                << ":\n"
-                                << Util::dumpHex(std::string(buf, len))
+                            << (len ? Util::dumpHex(std::string(buf, len), ":\n") : std::string())
 #endif
                     );
             } while (len < 0 && last_errno == EINTR);
@@ -1298,7 +1298,6 @@ protected:
         if (!events && _inBuffer.empty())
             return;
 
-        // FIXME: need to close input, but not output (?)
         bool closed = (events & (POLLHUP | POLLERR | POLLNVAL));
 
         if (events & POLLIN)
@@ -1307,9 +1306,14 @@ protected:
             // Oddly enough, we don't necessarily get POLLHUP after read(2) returns 0.
             const int read = readIncomingData();
             const int last_errno = errno;
-            LOG_TRC("Incoming data buffer " << _inBuffer.size() << " bytes, read result: " << read
-                                            << ", events: " << std::hex << events << std::dec
-                                            << " (" << (closed ? "closed" : "not closed") << ')');
+            LOG_TRC("Incoming data buffer "
+                    << _inBuffer.size() << " bytes, read result: " << read
+                    << ", events: " << std::hex << events << std::dec << " ("
+                    << (closed ? "closed" : "not closed") << ')'
+#ifdef LOG_SOCKET_DATA
+                    << (!_inBuffer.empty() ? Util::dumpHex(_inBuffer, ":\n") : std::string())
+#endif
+            );
             if (read > 0 && closed)
             {
                 // We might have outstanding data to read, wait until readIncomingData returns closed state.
@@ -1430,8 +1434,8 @@ public:
                 else // Success.
                     LOG_TRC("Wrote " << len << " bytes of " << _outBuffer.size() << " buffered data"
 #ifdef LOG_SOCKET_DATA
-                                << ":\n"
-                                << Util::dumpHex(std::string(_outBuffer.getBlock(), len))
+                            << (len ? Util::dumpHex(std::string(_outBuffer.getBlock(), len), ":\n")
+                                    : std::string())
 #endif
                     );
             }
