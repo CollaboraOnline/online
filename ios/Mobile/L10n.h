@@ -8,7 +8,7 @@
 
 #define _(id, catalog) app_translate(id, catalog)
 
-#if (LIBO_VERSION_MAJOR > 7 && LIBO_VERSION_MAJOR < 21) || (LIBO_VERSION_MAJOR == 7 && LIBO_VERSION_MINOR >= 3)
+#if (LIBO_VERSION_MAJOR > 7 && LIBO_VERSION_MAJOR < 21) || (LIBO_VERSION_MAJOR >= 22) || (LIBO_VERSION_MAJOR == 7 && LIBO_VERSION_MINOR >= 3)
 
 #define LIBO_INTERNAL_ONLY
 

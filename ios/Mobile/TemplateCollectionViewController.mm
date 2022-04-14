@@ -4,8 +4,6 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-#import "svtools/strings.hrc"
-
 #import <LibreOfficeKit/LibreOfficeKitInit.h>
 
 #import "ios.h"
@@ -13,6 +11,8 @@
 #import "L10n.h"
 #import "TemplateCollectionViewController.h"
 #import "TemplateSectionHeaderView.h"
+
+#import "svtools/strings.hrc"
 
 static NSString *mapTemplateExtensionToActual(NSString *templateName) {
     NSString *baseName = [templateName stringByDeletingPathExtension];
