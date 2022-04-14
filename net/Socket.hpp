@@ -1544,7 +1544,7 @@ protected:
 protected:
 #if ENABLE_DEBUG
     /// Return true and set errno to simulate an error
-    virtual bool simulateSocketError(bool read);
+    bool simulateSocketError(bool read);
 #endif
 
 private:

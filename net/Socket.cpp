@@ -88,22 +88,6 @@ bool StreamSocket::simulateSocketError(bool read)
 
     return false;
 }
-
-#if !MOBILEAPP && ENABLE_SSL
-bool SslStreamSocket::simulateSocketError(bool read)
-{
-    if ((socketErrorCount++ % 7) == 0)
-    {
-        LOG_TRC("Simulating socket error during " << (read ? "read." : "write."));
-        // Note: maintain the _sslWantsTo state so we poll on
-        // the right event as that requested by the last ssl API.
-        errno = EAGAIN;
-        return true;
-    }
-
-    return false;
-}
-#endif
 #endif //ENABLE_DEBUG
 
 #if ENABLE_SSL
