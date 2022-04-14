@@ -30,6 +30,8 @@ describe('Image Operation Tests', function() {
 		//when Keep ratio is unchecked
 		assertImageSize(248, 63);
 
+		helper.waitUntilIdle('.ui-expander-label');
+
 		cy.contains('.ui-expander-label', 'Position and Size')
 			.click();
 
