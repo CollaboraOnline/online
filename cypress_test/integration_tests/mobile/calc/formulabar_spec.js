@@ -183,7 +183,7 @@ describe('Formula bar tests.', function() {
 	});
 
 	it.skip('Check formula help', function() {
-		cy.get('#tb_formulabar_item_functiondialog')
+		cy.get('.unoFunctionDialog')
 			.click();
 
 		cy.get('#mobile-wizard-content')
@@ -212,7 +212,7 @@ describe('Formula bar tests.', function() {
 	it.skip('Add formula to cell', function() {
 		calcHelper.clickOnFirstCell();
 
-		cy.get('#tb_formulabar_item_functiondialog')
+		cy.get('.unoFunctionDialog')
 			.click();
 
 		cy.get('#mobile-wizard-content')

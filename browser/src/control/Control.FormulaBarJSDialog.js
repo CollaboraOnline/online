@@ -3,7 +3,7 @@
  * L.Control.FormulaBarJSDialog
  */
 
-/* global _UNO */
+/* global _ _UNO */
 L.Control.FormulaBarJSDialog = L.Control.extend({
 	container: null,
 	builder: null,
@@ -35,13 +35,27 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 			{
 				type: 'toolbox',
 				children: [
-					// on mobile we show buttons on the top bar
+					{
+						id: 'functiondialog',
+						type: 'toolitem',
+						text: _('Function Wizard'),
+						command: '.uno:FunctionDialog'
+					},
+					// on mobile we show other buttons on the top bar
 					(!window.mode.isMobile()) ? (
 						{
-							id: 'cancel',
-							type: 'toolitem',
-							command: '.uno:Cancel',
-							text: _UNO('.uno:Cancel', 'spreadsheet')
+							id: 'acceptformula',
+							type: 'customtoolitem',
+							text: _('Accept'),
+							visible: false
+						}
+					) : {},
+					(!window.mode.isMobile()) ? (
+						{
+							id: 'cancelformula',
+							type: 'customtoolitem',
+							text: _UNO('.uno:Cancel', 'spreadsheet'),
+							visible: false
 						}
 					) : {},
 					{
@@ -71,6 +85,28 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 			objectType = 'drawingarea';
 
 		builder._defaultCallbackHandler(objectType, eventType, object, data, builder);
+	},
+
+	show: function(action) {
+		this.showButton(action, true);
+	},
+
+	hide: function(action) {
+		this.showButton(action, false);
+	},
+
+	showButton: function(action, show) {
+		this.onJSAction(
+			{
+				data: {
+					jsontype: 'formulabar',
+					id: this.builder.windowId,
+					data: {
+						'control_id': action,
+						'action_type': show ? 'show' : 'hide'
+					}
+				}
+			});
 	},
 
 	onFormulaBar: function(e) {
