@@ -201,11 +201,6 @@ public:
     }
 
 private:
-#if ENABLE_DEBUG
-    /// Return true and set errno to simulate an error
-    virtual bool simulateSocketError(bool read) override;
-#endif
-
     /// The possible next I/O operation that SSL want to do.
     enum class SslWantsTo
     {
