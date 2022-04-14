@@ -1578,11 +1578,8 @@ L.Map = L.Evented.extend({
 	// The editor got focus (probably a dialog closed or user clicked to edit).
 	_onEditorGotFocus: function() {
 		this._changeFocusWidget(null, 0);
-		if (this.dialog && this.dialog._calcInputBar) {
-			var inputBarId = this.dialog._calcInputBar.id;
-			this.dialog._updateTextSelection(inputBarId);
+		if (this.formulabar)
 			this.onFormulaBarBlur();
-		}
 	},
 
 	// Our browser tab got focus.

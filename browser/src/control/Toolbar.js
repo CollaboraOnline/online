@@ -783,6 +783,16 @@ L.Map.include({
 				}
 			}
 			break;
+		case 'functiondialog':
+			{
+				if (window.mode.isMobile() && this._functionWizardData) {
+					this._docLayer._closeMobileWizard();
+					this._docLayer._openMobileWizard(this._functionWizardData);
+				} else {
+					this.sendUnoCommand('.uno:FunctionDialog');
+				}
+			}
+			break;
 		}
 	},
 });

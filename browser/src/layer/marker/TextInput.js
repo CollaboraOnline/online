@@ -432,7 +432,7 @@ L.TextInput = L.Layer.extend({
 		this.update();
 		// shape handlers hidden (if selected)
 		this._map.fire('handlerstatus', {hidden: true});
-		if (window.mode.isMobile() && this._map._docLoaded && this._map.getDocType() === 'spreadsheet')
+		if (this._map._docLoaded && this._map.getDocType() === 'spreadsheet')
 			this._map.onFormulaBarFocus();
 	},
 
