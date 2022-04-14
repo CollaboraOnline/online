@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-12 09:03+0200\n"
-"PO-Revision-Date: 2022-04-12 07:41+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2022-04-14 14:41+0000\n"
+"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -350,7 +350,7 @@ msgstr " s"
 
 #: js/w2ui-1.5.rc1.js:2920
 msgid "Recent"
-msgstr ""
+msgstr "Recente"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
@@ -382,7 +382,7 @@ msgstr "Colar especial"
 
 #: src/control/Control.DocumentNameInput.js:77
 msgid "Path"
-msgstr ""
+msgstr "Caminho"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -688,7 +688,7 @@ msgstr "Orientação do texto"
 #: src/control/Control.Menubar.js:307
 #: src/control/Control.NotebookbarWriter.js:256
 msgid "Forum"
-msgstr ""
+msgstr "Fórum"
 
 #: src/control/Control.Menubar.js:308 src/control/Control.Menubar.js:440
 #: src/control/Control.Menubar.js:552 src/control/Control.Menubar.js:774
@@ -942,7 +942,7 @@ msgstr "~Desenho"
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:60
 msgid "~View"
-msgstr ""
+msgstr "~Ver"
 
 #: src/control/Control.NotebookbarCalc.js:59
 #: src/control/Control.NotebookbarDraw.js:103
@@ -1062,12 +1062,12 @@ msgstr "Excluir colunas"
 #: src/control/Control.NotebookbarImpress.js:342
 #: src/control/Control.NotebookbarWriter.js:1017
 msgid "Toggle Status Bar"
-msgstr ""
+msgstr "Barra de Estado"
 
 #: src/control/Control.NotebookbarDraw.js:39
 #: src/control/Control.NotebookbarDraw.js:734
 msgid "Page layout"
-msgstr ""
+msgstr "Layout da página"
 
 #: src/control/Control.NotebookbarDraw.js:86
 #: src/control/Control.NotebookbarImpress.js:98
@@ -1086,7 +1086,7 @@ msgstr "Apresentação ODF (.odp)"
 #: src/control/Control.NotebookbarImpress.js:291
 #: src/control/Control.NotebookbarImpress.js:750
 msgid "Presentation"
-msgstr ""
+msgstr "Apresentação"
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
