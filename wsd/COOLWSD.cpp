@@ -144,10 +144,6 @@ using Poco::Net::PartHandler;
 #include <common/ConfigUtil.hpp>
 #include <common/TraceEvent.hpp>
 
-#ifdef FUZZER
-#  include <tools/Replay.hpp>
-#endif
-
 #include <common/SigUtil.hpp>
 
 #include <ServerSocket.hpp>
@@ -857,10 +853,6 @@ bool COOLWSD::UnattendedRun = false;
 #if ENABLE_DEBUG
 bool COOLWSD::SingleKit = false;
 #endif
-#endif
-#ifdef FUZZER
-bool COOLWSD::DummyLOK = false;
-std::string COOLWSD::FuzzFileName;
 #endif
 std::string COOLWSD::SysTemplate;
 std::string COOLWSD::LoTemplate = LO_PATH;
@@ -2329,15 +2321,6 @@ void COOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false));
 #endif
 
-#ifdef FUZZER
-    optionSet.addOption(Option("dummy-lok", "", "Use empty (dummy) LibreOfficeKit implementation instead a real LibreOffice.")
-                        .required(false)
-                        .repeatable(false));
-    optionSet.addOption(Option("fuzz", "", "Read input from the specified file for fuzzing.")
-                        .required(false)
-                        .repeatable(false)
-                        .argument("trace_file_name"));
-#endif
 #endif
 }
 
@@ -2401,13 +2384,6 @@ void COOLWSD::handleOption(const std::string& optionName,
     static const char* latencyMs = std::getenv("COOL_DELAY_SOCKET_MS");
     if (latencyMs)
         SimulatedLatencyMs = std::stoi(latencyMs);
-#endif
-
-#ifdef FUZZER
-    if (optionName == "dummy-lok")
-        DummyLOK = true;
-    else if (optionName == "fuzz")
-        FuzzFileName = value;
 #endif
 #endif
 }
@@ -2586,26 +2562,7 @@ void PrisonPoll::wakeupHook()
     {
         // No children have died.
         // Make sure we have sufficient reserves.
-        if (prespawnChildren())
-        {
-            // Nothing more to do this round, unless we are fuzzing
-#if FUZZER
-            if (!COOLWSD::FuzzFileName.empty())
-            {
-                StressSocketHandler::replaySync(
-#if ENABLE_SSL
-                        "wss://127.0.0.1:" + std::to_string(ClientPortNumber),
-#else
-                        "ws://127.0.0.1:" + std::to_string(ClientPortNumber),
-#endif
-                        "" /* FIXME: what local path are these traces replayed into ? */,
-                        COOLWSD::FuzzFileName);
-
-                LOG_INF("Setting TerminationFlag");
-                SigUtil::setTerminationFlag();
-            }
-#endif
-        }
+        prespawnChildren();
     }
 #endif
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex, std::defer_lock);
@@ -4687,7 +4644,7 @@ std::string COOLWSD::getServerURL()
 
 int COOLWSD::innerMain()
 {
-#if !defined FUZZER && !MOBILEAPP
+#if !MOBILEAPP
     SigUtil::setUserSignals();
     SigUtil::setFatalSignals("wsd " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
     SigUtil::setTerminationSignals();

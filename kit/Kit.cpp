@@ -83,11 +83,6 @@
 #include <utility>
 #endif
 
-#ifdef FUZZER
-#include <kit/DummyLibreOfficeKit.hpp>
-#include <wsd/COOLWSD.hpp>
-#endif
-
 #if MOBILEAPP
 #include "COOLWSD.hpp"
 #endif
@@ -1867,7 +1862,7 @@ private:
     bool _inputProcessingEnabled;
 };
 
-#if !defined FUZZER && !defined BUILDING_TESTS && !MOBILEAPP
+#if !defined BUILDING_TESTS && !MOBILEAPP
 
 // When building the fuzzer we link COOLWSD.cpp into the same executable so the
 // Protected::emitOneRecording() there gets used. When building the unit tests the one in
@@ -2468,10 +2463,8 @@ void lokit_main(
 {
 #if !MOBILEAPP
 
-#ifndef FUZZER
     SigUtil::setFatalSignals("kit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
     SigUtil::setTerminationSignals();
-#endif
 
     Util::setThreadName("kit_spare_" + Util::encodeId(numericIdentifier, 3));
 
@@ -2687,10 +2680,6 @@ void lokit_main(
             kit = UnitKit::get().lok_init(instdir, userdir);
 #else
             kit = nullptr;
-#ifdef FUZZER
-            if (COOLWSD::DummyLOK)
-                kit = dummy_lok_init_2(instdir, userdir);
-#endif
 #endif
             if (!kit)
             {
@@ -2927,10 +2916,6 @@ std::string anonymizeUrl(const std::string& url)
 /// Initializes LibreOfficeKit for cross-fork re-use.
 bool globalPreinit(const std::string &loTemplate)
 {
-#ifdef FUZZER
-    if (COOLWSD::DummyLOK)
-        return true;
-#endif
     const std::string libSofficeapp = loTemplate + "/program/" LIB_SOFFICEAPP;
     const std::string libMerged = loTemplate + "/program/" LIB_MERGED;
 
