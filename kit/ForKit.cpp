@@ -543,10 +543,8 @@ int main(int argc, char** argv)
         }
     }
 
-#ifndef FUZZER
     SigUtil::setFatalSignals("forkit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
     SigUtil::setTerminationSignals();
-#endif
 
     Util::setApplicationPath(Poco::Path(argv[0]).parent().toString());
 

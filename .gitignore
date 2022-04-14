@@ -88,7 +88,6 @@ loolconfig
 coolforkit-nocaps
 loadtest
 unittest
-coolwsd_fuzzer
 clientnb
 
 # Fuzzer
