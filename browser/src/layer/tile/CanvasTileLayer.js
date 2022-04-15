@@ -3543,10 +3543,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 
 			var hasMobileWizardOpened = this._map.uiManager.mobileWizard ? this._map.uiManager.mobileWizard.isOpen() : false;
+			var hasIframeModalOpened = $('.iframe-dialog-modal').is(':visible');
 			// Don't show the keyboard when the Wizard is visible.
 			if (!window.mobileWizard && !window.pageMobileWizard &&
 				!window.insertionMobileWizard && !hasMobileWizardOpened &&
-				!this._isAnyInputFocused()) {
+				!this._isAnyInputFocused() && !hasIframeModalOpened) {
 				// If the user is editing, show the keyboard, but don't change
 				// anything if nothing is changed.
 
@@ -5167,7 +5168,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 
 			var hasMobileWizardOpened = this._map.uiManager.mobileWizard ? this._map.uiManager.mobileWizard.isOpen() : false;
-			if (window.mode.isMobile() && !hasMobileWizardOpened) {
+			var hasIframeModalOpened = $('.iframe-dialog-modal').is(':visible');
+			if (window.mode.isMobile() && !hasMobileWizardOpened && !hasIframeModalOpened) {
 				if (heightIncreased) {
 					// if the keyboard is hidden - be sure we setup correct state in TextInput
 					this._map.setAcceptInput(false);
