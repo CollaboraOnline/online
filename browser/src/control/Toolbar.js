@@ -3,7 +3,7 @@
  * Toolbar handler
  */
 
-/* global app $ window vex sanitizeUrl brandProductName brandProductURL _ Hammer */
+/* global app $ w2ui window vex sanitizeUrl brandProductName brandProductURL _ Hammer */
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
@@ -768,5 +768,34 @@ L.Map.include({
 	openSaveAs: function () {
 		var map = this;
 		map.fire('postMessage', {msgId: 'UI_SaveAs'});
+	},
+
+	// map.dispatch() will be used to call some actions so we can share the code
+	dispatch: function(action) {
+		switch (action) {
+		case 'acceptformula':
+			{
+				// focus on map, and press enter
+				this.focus();
+				this._docLayer.postKeyboardEvent('input',
+					this.keyboard.keyCodes.enter,
+					this.keyboard._toUNOKeyCode(this.keyboard.keyCodes.enter));
+
+				if (window.mode.isMobile()) {
+					w2ui['actionbar'].hide('acceptformula', 'cancelformula');
+					w2ui['actionbar'].show('undo', 'redo');
+				}
+			}
+			break;
+		case 'cancelformula':
+			{
+				this.sendUnoCommand('.uno:Cancel');
+				if (window.mode.isMobile()) {
+					w2ui['actionbar'].hide('acceptformula', 'cancelformula');
+					w2ui['actionbar'].show('undo', 'redo');
+				}
+			}
+			break;
+		}
 	},
 });
