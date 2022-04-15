@@ -3,7 +3,7 @@
  * L.Control.FormulaBarJSDialog
  */
 
-/* global _ _UNO */
+/* global _ _UNO UNOKey */
 L.Control.FormulaBarJSDialog = L.Control.extend({
 	container: null,
 	builder: null,
@@ -81,10 +81,26 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 
 	callback: function(objectType, eventType, object, data, builder) {
 		// in the core we have DrawingArea not TextView
-		if (object.id.indexOf('sc_input_window') === 0)
+		if (object.id.indexOf('sc_input_window') === 0) {
 			objectType = 'drawingarea';
+			if (eventType === 'keypress' && data === UNOKey.RETURN || data === UNOKey.ESCAPE)
+				builder.map.focus();
+		}
 
 		builder._defaultCallbackHandler(objectType, eventType, object, data, builder);
+	},
+
+	focus: function() {
+		setTimeout(function() {
+			var input = document.getElementById('sc_input_window');
+			if (document.activeElement !== input)
+				input.focus();
+		}, 0);
+	},
+
+	hasFocus: function() {
+		var input = document.getElementById('sc_input_window');
+		return document.activeElement === input;
 	},
 
 	show: function(action) {
@@ -138,9 +154,14 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 
 		this.builder.setWindowId(data.id);
 
-		if (this.container)
+		if (this.container) {
+			var keepFocus = this.hasFocus();
+
 			this.builder.executeAction(this.container, data.data);
-		else
+
+			if (keepFocus)
+				this.focus();
+		} else
 			this.createFormulabar(data.data.text);
 	},
 });
