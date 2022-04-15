@@ -959,7 +959,7 @@ L.Map = L.Evented.extend({
 
 	// Returns true iff the formula-bar has the focus.
 	calcInputBarHasFocus: function () {
-		return !this.editorHasFocus() && this._activeDialog && this._activeDialog.isCalcInputBar(this.getWinId());
+		return !this.editorHasFocus() && this.formulabar.hasFocus();
 	},
 
 	// TODO replace with universal implementation after refactoring projections

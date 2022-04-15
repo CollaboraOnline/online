@@ -3522,7 +3522,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_isAnyInputFocused: function() {
-		return $('input:focus').length > 0;
+		return $('input:focus').length > 0 || $('textarea.jsdialog:focus').length > 0;
 	},
 
 	// enable or disable blinking cursor and  the cursor overlay depending on
