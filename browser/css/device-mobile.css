@@ -846,8 +846,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	bottom: 0;
 }
 @media  only screen
-	and (max-height: 500px)
-	and (orientation: landscape)  {
+	and (max-height: 500px) {
 	.iframe-dialog-content {
 		height: 100%;
 	}
