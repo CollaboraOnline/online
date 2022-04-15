@@ -118,19 +118,10 @@ L.Control.MobileTopBar = L.Control.extend({
 			}
 		}
 		else if (id === 'cancelformula') {
-			this.map.sendUnoCommand('.uno:Cancel');
-			w2ui['actionbar'].hide('acceptformula', 'cancelformula');
-			w2ui['actionbar'].show('undo', 'redo');
+			this.map.dispatch('cancelformula');
 		}
 		else if (id === 'acceptformula') {
-			// focus on map, and press enter
-			this.map.focus();
-			this.map._docLayer.postKeyboardEvent('input',
-				this.map.keyboard.keyCodes.enter,
-				this.map.keyboard._toUNOKeyCode(this.map.keyboard.keyCodes.enter));
-
-			w2ui['actionbar'].hide('acceptformula', 'cancelformula');
-			w2ui['actionbar'].show('undo', 'redo');
+			this.map.dispatch('acceptformula');
 		}
 		else if (id === 'comment_wizard') {
 			if (window.commentWizard) {
