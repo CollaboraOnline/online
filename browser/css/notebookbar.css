@@ -236,10 +236,6 @@
 	padding: 0px 5px !important;
 }
 
-.unotoolbutton.notebookbar:hover .unoarrow {
-	border-top: 5px solid var(--color-border-darker);
-}
-
 #table-HomeTab .unospan-uptoolbar:not(.disabled) {
 	border-top-left-radius: 12px;
 	border-bottom-left-radius: 12px;
