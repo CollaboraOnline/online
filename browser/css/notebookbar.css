@@ -58,6 +58,13 @@
 	border-spacing: 0px;
 }
 
+/* scroll buttons */
+.hasnotebookbar .w2ui-scroll-left,
+.hasnotebookbar .w2ui-scroll-right {
+	top: 9px;
+	margin-right: 5px;
+}
+
 /* shortcuts bar */
 
 .notebookbar-shortcuts-bar {

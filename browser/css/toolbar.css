@@ -194,6 +194,30 @@ w2ui-toolbar {
 .w2ui-scroll-left,
 .w2ui-scroll-right {
 	z-index: 1001;
+	background-color: var(--color-background-lighter) !important;
+	box-shadow: var(--color-box-shadow);
+	border: 1px solid var(--color-border-dark);
+	height: 30px;
+	width: 30px;
+	top: 6px;
+}
+.w2ui-scroll-left:hover,
+.w2ui-scroll-right:hover {
+	background-color: var(--color-background-dark) !important;
+}
+
+.w2ui-scroll-left {
+	background: url('images/lc_prevrecord.svg') center;
+	border-top-left-radius: 100%;
+	border-bottom-left-radius: 100%;
+	right: 29px;
+	left: auto;
+}
+.w2ui-scroll-right {
+	background: url('images/lc_nextrecord.svg') center;
+	border-top-right-radius: 100%;
+	border-bottom-right-radius: 100%;
+	right: 0px;
 }
 
 /* center the toolbar */
