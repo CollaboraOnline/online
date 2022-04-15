@@ -4,7 +4,7 @@
  * from the JSON description provided by the server.
  */
 
-/* global app $ w2ui _ _UNO L */
+/* global app $ w2ui _ _UNO UNOKey L */
 
 L.Control.JSDialogBuilder = L.Control.extend({
 
@@ -1411,6 +1411,58 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			else
 				builder.callback('edit', 'change', edit, this.value, builder);
 		});
+
+		edit.addEventListener('keydown', function(event) {
+			if (data.rawKeyEvents) {
+				if (event.key === 'Enter') {
+					builder.callback('edit', 'keypress', edit, UNOKey.RETURN, builder);
+					event.preventDefault();
+				} else if (event.key === 'Escape' || event.key === 'Esc') {
+					builder.callback('edit', 'keypress', edit, UNOKey.ESCAPE, builder);
+					event.preventDefault();
+				} else if (event.key === 'Left' || event.key === 'ArrowLeft') {
+					builder.callback('edit', 'keypress', edit, UNOKey.LEFT, builder);
+					event.preventDefault();
+				} else if (event.key === 'Right' || event.key === 'ArrowRight') {
+					builder.callback('edit', 'keypress', edit, UNOKey.RIGHT, builder);
+					event.preventDefault();
+				} else if (event.key === 'Backspace') {
+					builder.callback('edit', 'keypress', edit, UNOKey.BACKSPACE, builder);
+					event.preventDefault();
+				} else if (event.key === 'Space') {
+					builder.callback('edit', 'keypress', edit, UNOKey.SPACE, builder);
+					event.preventDefault();
+				}
+			}
+		});
+
+		edit.addEventListener('keypress', function(event) {
+			if (data.rawKeyEvents) {
+				if (event.key === 'Enter' ||
+					event.key === 'Escape' ||
+					event.key === 'Esc' ||
+					event.key === 'Left' ||
+					event.key === 'ArrowLeft' ||
+					event.key === 'Right' ||
+					event.key === 'ArrowRight' ||
+					event.key === 'Backspace' ||
+					event.key === 'Space') {
+					// skip
+				} else
+					builder.callback('edit', 'keypress', edit, event.keyCode, builder);
+
+				event.preventDefault();
+			}
+		});
+
+		if (data.rawKeyEvents) {
+			'select click'.split(' ').forEach(function(eventName) {
+				edit.addEventListener(eventName, function(event) {
+					var selection = event.target.selectionStart + ';' + event.target.selectionEnd;
+					builder.callback('edit', 'textselection', edit, selection, builder);
+				});
+			});
+		}
 
 		if (data.hidden)
 			$(edit).hide();
