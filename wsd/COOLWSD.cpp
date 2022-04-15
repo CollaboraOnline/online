@@ -1392,7 +1392,7 @@ public:
                 LOG_WRN("Element in fonts array is not a string");
             else
             {
-                fonts[std::string(fontPtr)].active = true;
+                fonts[fontPtr.toString()].active = true;
             }
         }
 
