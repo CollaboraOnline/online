@@ -400,6 +400,7 @@
 #stylesview .ui-iconview-entry {
 	width: 30%;
 	box-sizing: border-box;
+	padding-top: 0px;
 }
 
 #stylesview .ui-iconview-entry.selected {
