@@ -232,6 +232,10 @@ namespace Log
     }
 }
 
+/// A default implementation that is a NOP.
+/// Any context can implement this to prefix its log entries.
+inline constexpr void logPrefix(std::ostream&) {}
+
 #ifndef IOS
 #define LOG_FILE_NAME(f) f
 #else
@@ -256,6 +260,7 @@ namespace Log
 #define LOG_BODY_(LOG, PRIO, LVL, X, FILEP)                                                        \
     char b_[1024];                                                                                 \
     std::ostringstream oss_(Log::prefix<sizeof(b_) - 1>(b_, LVL), std::ostringstream::ate);        \
+    logPrefix(oss_);                                                                               \
     oss_ << std::boolalpha << X;                                                                   \
     LOG_END(oss_, FILEP);                                                                          \
     ((void)__android_log_print(ANDROID_LOG_DEBUG, "coolwsd", "%s %s", LVL, oss_.str().c_str()))
@@ -265,6 +270,7 @@ namespace Log
 #define LOG_BODY_(LOG, PRIO, LVL, X, FILEP)                                                        \
     char b_[1024];                                                                                 \
     std::ostringstream oss_(Log::prefix<sizeof(b_) - 1>(b_, LVL), std::ostringstream::ate);        \
+    logPrefix(oss_);                                                                               \
     oss_ << std::boolalpha << X;                                                                   \
     LOG_END(oss_, FILEP);                                                                          \
     LOG.log(Poco::Message(LOG.name(), oss_.str(), Poco::Message::PRIO_##PRIO));
