@@ -21,7 +21,7 @@
 
 .slider,
 .slides > div {
-  width: 600px;
+  width: 96%;
 }
 
 .slider {
@@ -141,9 +141,15 @@ body {
   color: #222;
 }
 
+.slides a {
+  text-decoration: none;
+  color: #0b87e7;
+}
+
 .slides fig {
   height: 232px;
   display: block;
+  margin: 16px auto 12px auto;
 }
 
 #slide-1 fig {
@@ -187,7 +193,6 @@ body {
   background: url("slide3.png") no-repeat center;
   box-shadow: 0 0 8px 1px #e5e5e5;
   width: 342px;
-  margin: 12px auto;
   border-radius: 8px;
 }
 
@@ -312,6 +317,11 @@ button:hover .arrow.left.close {
     border-bottom-right-radius: 0;
   }
 
+  .slides p {
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+
   .arrow {
     padding: 4px;
   }
@@ -358,6 +368,11 @@ button:hover .arrow.left.close {
   html,
   body {
     overflow-y: scroll;
+  }
+
+  .slides p {
+    margin-left: 14px;
+    margin-right: 14px;
   }
 
   .slides fig {
