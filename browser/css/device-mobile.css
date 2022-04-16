@@ -903,14 +903,3 @@ div#fontstyletoolbox + div#style.mobile-wizard {
 	margin: 2px;
 	font-size: 29px;
 }
-
-/* Welcome Dialog */
-.iframe-welcome-modal {
-	display: block;
-	border-radius: 0;
-}
-.iframe-welcome-modal,
-.iframe-welcome-content {
-	width: 100%;
-	height: 100%;
-}

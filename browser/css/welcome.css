@@ -1,4 +1,5 @@
-.iframe-welcome-wrap {
+.iframe-welcome-wrap,
+.iframe-welcome-content {
 	position: absolute;
 	z-index: 1106;
 	display: flex;
@@ -6,11 +7,17 @@
 	height: 100%;
 	justify-content: center;
 	align-items: center;
+	background-color: var(--color-overlay);
 }
 
 .iframe-welcome-modal {
-	height: 512px;
-	width: 700px;
+	display: flex;
+	width: 95%;
+	height: 95%;
+	max-width: 700px;
+	max-height: 512px;
+	justify-content: center;
+	align-items: center;
 	-webkit-box-shadow: 0 0 3px var(--color-box-shadow);
 	box-shadow: 0 0 3px var(--color-box-shadow);
 	border-width: 0;
