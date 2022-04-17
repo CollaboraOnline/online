@@ -33,6 +33,8 @@
 	color: var(--color-text-dark);
 	background-color: var(--color-background-dark);
 }
+
+#fontsizecombobox > .sidebar.jsdialog.ui-listbox,
 #TableEditPanelPanelExpander .sidebar .spinfieldcontainer input,
 #ParaPropertyPanelPanelExpander .sidebar .spinfieldcontainer input {
 	width: 85px;
@@ -110,28 +112,21 @@
 	width: 10px;
 }
 
-#fontsizecombobox > .sidebar.jsdialog.ui-listbox {
-	min-width: 86px;
-}
-
 .sidebar.ui-expander {
 	display: flex;
 	justify-content: space-between;
-	width: calc(100% - 10px);
 	align-items: center;
 }
 
 .sidebar.ui-expander-content {
-	width: calc(100% - 10px);
+	width: calc(100% - 16px);
+	padding-left: 8px;
+	padding-right: 8px;
 }
 
 #selectcolor {
 	display: flex;
 	justify-content: flex-end;
-}
-
-.sidebar.jsdialog.cell > #table-box3 {
-	width: 292px;
 }
 
 .sidebar.jsdialog.cell > #table-box3,
@@ -164,7 +159,6 @@
 #ParaPropertyPanelPanelExpander #grid4 > tr:last-child {
 	display: flex;
 	justify-content: space-between;
-	width: 275px;
 }
 
 .sidebar #orientationdegrees {
@@ -330,6 +324,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 	display: block;
 	width: 10px;
 	height: 10px;
+	margin-right: 10px;
 }
 
 .ui-expander.jsdialog.sidebar .ui-expander-icon-right img {
