@@ -274,18 +274,17 @@ private:
         {
         case SSL_ERROR_ZERO_RETURN:
             // Shutdown complete, we're disconnected.
-            LOG_TRC('#' << getFD() << " SSL error: ZERO_RETURN (" << sslError
-                        << "): " << getBioError(rc));
+            LOG_TRC("SSL error: ZERO_RETURN (" << sslError << "): " << getBioError(rc));
             errno = last_errno; // Restore errno.
             return 0;
 
         case SSL_ERROR_WANT_READ:
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
-            LOG_TRC('#' << getFD() << " SSL error: WANT_READ (" << sslError << ") has "
-                        << (SSL_has_pending(_ssl) ? "" : "no") << " pending data to read: "
-                        << SSL_pending(_ssl) << ". " << getBioError(rc));
+            LOG_TRC("SSL error: WANT_READ ("
+                    << sslError << ") has " << (SSL_has_pending(_ssl) ? "" : "no")
+                    << " pending data to read: " << SSL_pending(_ssl) << ". " << getBioError(rc));
 #else
-            LOG_TRC('#' << getFD() << " SSL error: WANT_READ (" << sslError << ").");
+            LOG_TRC("SSL error: WANT_READ (" << sslError << ").");
 #endif
             _sslWantsTo = SslWantsTo::Read;
             errno = last_errno; // Restore errno.
@@ -293,32 +292,29 @@ private:
 
         case SSL_ERROR_WANT_WRITE:
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
-            LOG_TRC('#' << getFD() << " SSL error: WANT_WRITE (" << sslError << ") has "
-                        << (SSL_has_pending(_ssl) ? "" : "no") << " pending data to read: "
-                        << SSL_pending(_ssl) << ". " << getBioError(rc));
+            LOG_TRC("SSL error: WANT_WRITE ("
+                    << sslError << ") has " << (SSL_has_pending(_ssl) ? "" : "no")
+                    << " pending data to read: " << SSL_pending(_ssl) << ". " << getBioError(rc));
 #else
-            LOG_TRC('#' << getFD() << " SSL error: WANT_WRITE (" << sslError << ").");
+            LOG_TRC("SSL error: WANT_WRITE (" << sslError << ").");
 #endif
             _sslWantsTo = SslWantsTo::Write;
             errno = last_errno; // Restore errno.
             return rc;
 
         case SSL_ERROR_WANT_CONNECT:
-            LOG_TRC('#' << getFD() << " SSL error: WANT_CONNECT (" << sslError
-                        << "): " << getBioError(rc));
+            LOG_TRC("SSL error: WANT_CONNECT (" << sslError << "): " << getBioError(rc));
             errno = last_errno; // Restore errno.
             return rc;
 
         case SSL_ERROR_WANT_ACCEPT:
-            LOG_TRC('#' << getFD() << " SSL error: WANT_ACCEPT (" << sslError
-                        << "): " << getBioError(rc));
+            LOG_TRC("SSL error: WANT_ACCEPT (" << sslError << "): " << getBioError(rc));
             errno = last_errno; // Restore errno.
             return rc;
 
         case SSL_ERROR_WANT_X509_LOOKUP:
             // Unexpected.
-            LOG_TRC('#' << getFD() << " SSL error: WANT_X509_LOOKUP (" << sslError
-                        << "): " << getBioError(rc));
+            LOG_TRC("SSL error: WANT_X509_LOOKUP (" << sslError << "): " << getBioError(rc));
             errno = last_errno; // Restore errno.
             return rc;
 
@@ -326,9 +322,9 @@ private:
             if (last_errno != 0)
             {
                 // Posix API error, let the caller handle.
-                LOG_TRC('#' << getFD() << " SSL error: SYSCALL error " << sslError << " ("
-                            << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
-                            << "): " << getBioError(rc));
+                LOG_TRC("SSL error: SYSCALL error "
+                        << sslError << " (" << Util::symbolicErrno(last_errno) << ": "
+                        << std::strerror(last_errno) << "): " << getBioError(rc));
                 errno = last_errno; // Restore errno.
                 return rc;
             }
@@ -340,35 +336,29 @@ private:
                 if (BIO_should_retry(_bio))
                 {
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
-                    LOG_TRC('#' << getFD() << " BIO asks for retry - underlying EAGAIN? "
-                                << SSL_get_error(_ssl, rc) << " has_pending "
-                                << SSL_has_pending(_ssl) << " bytes: " << SSL_pending(_ssl) << ". "
-                                << getBioError(rc));
+                    LOG_TRC("BIO asks for retry - underlying EAGAIN? "
+                            << SSL_get_error(_ssl, rc) << " has_pending " << SSL_has_pending(_ssl)
+                            << " bytes: " << SSL_pending(_ssl) << ". " << getBioError(rc));
 #else
-                    LOG_TRC('#' << getFD() << " BIO asks for retry - underlying EAGAIN? "
-                                << SSL_get_error(_ssl, rc) << ". " << getBioError(rc));
+                    LOG_TRC("BIO asks for retry - underlying EAGAIN? " << SSL_get_error(_ssl, rc)
+                                                                       << ". " << getBioError(rc));
 #endif
                     errno = last_errno ? last_errno : EAGAIN; // Restore errno.
                     return -1; // poll is used to detect real errors.
                 }
 
                 if (sslError == SSL_ERROR_SSL)
-                    LOG_TRC('#' << getFD() << " SSL error: SSL (" << sslError << ") "
-                                << getBioError(rc));
+                    LOG_TRC("SSL error: SSL (" << sslError << ") " << getBioError(rc));
                 else if (sslError == SSL_ERROR_SYSCALL)
-                    LOG_TRC('#' << getFD() << " SSL error: SYSCALL (" << sslError << ") "
-                                << getBioError(rc));
+                    LOG_TRC("SSL error: SYSCALL (" << sslError << ") " << getBioError(rc));
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
                 else if (sslError == SSL_ERROR_WANT_ASYNC)
-                    LOG_TRC('#' << getFD() << " SSL error: WANT_ASYNC (" << sslError << ") "
-                                << getBioError(rc));
+                    LOG_TRC("SSL error: WANT_ASYNC (" << sslError << ") " << getBioError(rc));
                 else if (sslError == SSL_ERROR_WANT_ASYNC_JOB)
-                    LOG_TRC('#' << getFD() << " SSL error: WANT_ASYNC_JOB (" << sslError << ") "
-                                << getBioError(rc));
+                    LOG_TRC("SSL error: WANT_ASYNC_JOB (" << sslError << ") " << getBioError(rc));
 #endif
                 else
-                    LOG_TRC('#' << getFD() << " SSL error: UNKNOWN (" << sslError << ") "
-                                << getBioError(rc));
+                    LOG_TRC("SSL error: UNKNOWN (" << sslError << ") " << getBioError(rc));
 
                 // The error is comming from BIO. Find out what happened.
                 const long bioError = ERR_get_error();
