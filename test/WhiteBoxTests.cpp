@@ -39,6 +39,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testCOOLProtocolFunctions);
     CPPUNIT_TEST(testSplitting);
     CPPUNIT_TEST(testMessage);
+    CPPUNIT_TEST(testPathPrefixTrimming);
     CPPUNIT_TEST(testMessageAbbreviation);
     CPPUNIT_TEST(testReplace);
     CPPUNIT_TEST(testRegexListMatcher);
@@ -68,6 +69,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testCOOLProtocolFunctions();
     void testSplitting();
     void testMessage();
+    void testPathPrefixTrimming();
     void testMessageAbbreviation();
     void testReplace();
     void testRegexListMatcher();
@@ -350,6 +352,58 @@ void WhiteBoxTests::testMessage()
     memcpy(dest, msg, sizeof (msg) - 1);
     Message overrun(dest, sizeof (msg) - 1, Message::Dir::Out);
     free(big);
+}
+
+void WhiteBoxTests::testPathPrefixTrimming()
+{
+    constexpr auto testname = __func__;
+
+    // These helpers are used by the logging macros.
+    // See Log.hpp for details.
+
+#ifdef IOS
+
+    LOK_ASSERT_EQUAL(std::size_t(23), skipPathToFilename("./path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(std::size_t(21), skipPathToFilename("path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(std::size_t(22), skipPathToFilename("/path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(std::size_t(24), skipPathToFilename("../path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(std::size_t(0), skipPathToFilename(""));
+    LOK_ASSERT_EQUAL(std::size_t(0), skipPathToFilename("/"));
+    LOK_ASSERT_EQUAL(std::size_t(0), skipPathToFilename("."));
+
+    LOK_ASSERT_EQUAL(std::string("filename.cpp"),
+                     std::string(LOG_FILE_NAME("./path/to/a/looooooong/filename.cpp")));
+    LOK_ASSERT_EQUAL(std::string("filename.cpp"),
+                     std::string(LOG_FILE_NAME("path/to/a/looooooong/filename.cpp")));
+    LOK_ASSERT_EQUAL(std::string("filename.cpp"),
+                     std::string(LOG_FILE_NAME("/path/to/a/looooooong/filename.cpp")));
+    LOK_ASSERT_EQUAL(std::string(), std::string(LOG_FILE_NAME("")));
+    LOK_ASSERT_EQUAL(std::string(), std::string(LOG_FILE_NAME("/")));
+    LOK_ASSERT_EQUAL(std::string(), std::string(LOG_FILE_NAME(".")));
+
+#else
+
+    LOK_ASSERT_EQUAL(std::size_t(2), skipPathPrefix("./path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(std::size_t(0), skipPathPrefix("path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(std::size_t(1), skipPathPrefix("/path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(std::size_t(3), skipPathPrefix("../path/to/a/looooooong/filename.cpp"));
+    LOK_ASSERT_EQUAL(std::size_t(0), skipPathPrefix(""));
+    LOK_ASSERT_EQUAL(std::size_t(1), skipPathPrefix("/"));
+    LOK_ASSERT_EQUAL(std::size_t(1), skipPathPrefix("."));
+
+    LOK_ASSERT_EQUAL(std::string("path/to/a/looooooong/filename.cpp"),
+                     std::string(LOG_FILE_NAME("./path/to/a/looooooong/filename.cpp")));
+    LOK_ASSERT_EQUAL(std::string("path/to/a/looooooong/filename.cpp"),
+                     std::string(LOG_FILE_NAME("path/to/a/looooooong/filename.cpp")));
+    LOK_ASSERT_EQUAL(std::string("path/to/a/looooooong/filename.cpp"),
+                     std::string(LOG_FILE_NAME("/path/to/a/looooooong/filename.cpp")));
+    LOK_ASSERT_EQUAL(std::string("path/to/a/looooooong/filename.cpp"),
+                     std::string(LOG_FILE_NAME("../path/to/a/looooooong/filename.cpp")));
+    LOK_ASSERT_EQUAL(std::string(), std::string(LOG_FILE_NAME("")));
+    LOK_ASSERT_EQUAL(std::string(), std::string(LOG_FILE_NAME("/")));
+    LOK_ASSERT_EQUAL(std::string(), std::string(LOG_FILE_NAME(".")));
+
+#endif
 }
 
 void WhiteBoxTests::testMessageAbbreviation()
