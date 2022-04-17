@@ -790,17 +790,17 @@ bool ServerSocket::bind(Type type, int port)
 
         const int ipv6only = (_type == Socket::Type::All ? 0 : 1);
         if (::setsockopt(getFD(), IPPROTO_IPV6, IPV6_V6ONLY, (char*)&ipv6only, sizeof(ipv6only)) == -1)
-            LOG_SYS('#' << getFD() << " Failed set ipv6 socket to " << ipv6only);
+            LOG_SYS("Failed set ipv6 socket to " << ipv6only);
 
         rc = ::bind(getFD(), (const sockaddr *)&addrv6, sizeof(addrv6));
     }
 
     if (rc)
-        LOG_SYS('#' << getFD() << " Failed to bind to: "
-                    << (_type == Socket::Type::IPv4 ? "IPv4" : "IPv6") << " port: " << port);
+        LOG_SYS("Failed to bind to: " << (_type == Socket::Type::IPv4 ? "IPv4" : "IPv6")
+                                      << " port: " << port);
     else
-        LOG_TRC('#' << getFD() << " bind to: " << (_type == Socket::Type::IPv4 ? "IPv4" : "IPv6")
-                    << " port: " << port);
+        LOG_TRC("Bind to: " << (_type == Socket::Type::IPv4 ? "IPv4" : "IPv6")
+                            << " port: " << port);
 
     return rc == 0;
 #else
@@ -988,8 +988,7 @@ std::string LocalServerSocket::bind()
         memcpy(addrunix.sun_path + socketAbstractUnixName.length(), rand.c_str(), 8);
 
         rc = ::bind(getFD(), (const sockaddr *)&addrunix, sizeof(struct sockaddr_un));
-        LOG_SYS('#' << getFD() << " Bind to location " << std::string(&addrunix.sun_path[1])
-                    << " result - " << rc);
+        LOG_SYS("Bind to location " << std::string(&addrunix.sun_path[1]) << " result - " << rc);
     } while (rc < 0 && errno == EADDRINUSE);
 
     if (rc >= 0)
@@ -1038,8 +1037,7 @@ bool StreamSocket::parseHeader(const char *clientName,
                               marker.begin(), marker.end());
     if (itBody == _inBuffer.end())
     {
-        LOG_TRC('#' << getFD() << ": " << clientName
-                    << " doesn't have enough data for the header yet.");
+        LOG_TRC(clientName << " doesn't have enough data for the header yet.");
         return false;
     }
 
@@ -1077,8 +1075,8 @@ bool StreamSocket::parseHeader(const char *clientName,
 
         if (contentLength != Poco::Net::HTTPMessage::UNKNOWN_CONTENT_LENGTH && available < contentLength)
         {
-            LOG_DBG('#' << getFD() << ": Not enough content yet: ContentLength: " << contentLength
-                        << ", available: " << available);
+            LOG_DBG("Not enough content yet: ContentLength: " << contentLength
+                                                              << ", available: " << available);
             return false;
         }
         if (map)
@@ -1088,7 +1086,7 @@ bool StreamSocket::parseHeader(const char *clientName,
         const bool getExpectContinue = Util::iequal(expect, "100-continue");
         if (getExpectContinue && !_sentHTTPContinue)
         {
-            LOG_TRC('#' << getFD() << " got Expect: 100-continue, sending Continue");
+            LOG_TRC("Got Expect: 100-continue, sending Continue");
             // FIXME: should validate authentication headers early too.
             send("HTTP/1.1 100 Continue\r\n\r\n",
                  sizeof("HTTP/1.1 100 Continue\r\n\r\n") - 1);
@@ -1170,16 +1168,16 @@ bool StreamSocket::parseHeader(const char *clientName,
     }
     catch (const Poco::Exception& exc)
     {
-        LOG_DBG('#' << getFD() << ": parseHeader exception caught with " << _inBuffer.size()
-                    << " bytes: " << exc.displayText());
+        LOG_DBG("parseHeader exception caught with " << _inBuffer.size()
+                                                     << " bytes: " << exc.displayText());
         // Probably don't have enough data just yet.
         // TODO: timeout if we never get enough.
         return false;
     }
     catch (const std::exception& exc)
     {
-        LOG_DBG('#' << getFD() << ": parseHeader std::exception caught with " << _inBuffer.size()
-                    << " bytes: " << exc.what());
+        LOG_DBG("parseHeader std::exception caught with " << _inBuffer.size()
+                                                          << " bytes: " << exc.what());
         // Probably don't have enough data just yet.
         // TODO: timeout if we never get enough.
         return false;
@@ -1219,7 +1217,7 @@ bool StreamSocket::compactChunks(MessageMap *map)
 #if ENABLE_DEBUG
     std::ostringstream oss;
     dumpState(oss);
-    LOG_TRC('#' << getFD() << " Socket state: " << oss.str());
+    LOG_TRC("Socket state: " << oss.str());
 #endif
 
     return true;
