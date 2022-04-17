@@ -247,35 +247,29 @@ inline constexpr void logPrefix(std::ostream&) {}
 #define STRINGIFY(X) #X
 #define STRING(X) STRINGIFY(X)
 
-#define LOG_END(LOG, FILEP)                                                                        \
-    do                                                                                             \
-    {                                                                                              \
-        if (FILEP)                                                                                 \
-            LOG << "| " LOG_FILE_NAME(__FILE__) ":" STRING(__LINE__);                              \
-        LOG.flush();                                                                               \
-    } while (false)
-
 #ifdef __ANDROID__
 
-#define LOG_BODY_(LOG, PRIO, LVL, X, FILEP)                                                        \
-    char b_[1024];                                                                                 \
-    std::ostringstream oss_(Log::prefix<sizeof(b_) - 1>(b_, LVL), std::ostringstream::ate);        \
-    logPrefix(oss_);                                                                               \
-    oss_ << std::boolalpha << X;                                                                   \
-    LOG_END(oss_, FILEP);                                                                          \
-    ((void)__android_log_print(ANDROID_LOG_DEBUG, "coolwsd", "%s %s", LVL, oss_.str().c_str()))
+#define LOG_LOG(LOG, PRIO, LVL, STR)                                                               \
+    ((void)__android_log_print(ANDROID_LOG_DEBUG, "coolwsd", "%s %s", LVL, STR.c_str()))
 
 #else
 
-#define LOG_BODY_(LOG, PRIO, LVL, X, FILEP)                                                        \
+#define LOG_LOG(LOG, PRIO, LVL, STR)                                                               \
+    LOG.log(Poco::Message(LOG.name(), STR, Poco::Message::PRIO_##PRIO))
+
+#endif
+
+#define LOG_END_NOFILE(LOG) (void)0
+
+#define LOG_END(LOG) LOG << "| " LOG_FILE_NAME(__FILE__) ":" STRING(__LINE__)
+
+#define LOG_BODY_(LOG, PRIO, LVL, X, END)                                                          \
     char b_[1024];                                                                                 \
     std::ostringstream oss_(Log::prefix<sizeof(b_) - 1>(b_, LVL), std::ostringstream::ate);        \
     logPrefix(oss_);                                                                               \
     oss_ << std::boolalpha << X;                                                                   \
-    LOG_END(oss_, FILEP);                                                                          \
-    LOG.log(Poco::Message(LOG.name(), oss_.str(), Poco::Message::PRIO_##PRIO));
-
-#endif
+    END(oss_);                                                                                     \
+    LOG_LOG(LOG, PRIO, LVL, oss_.str())
 
 #define LOG_TRC(X)                                                                                 \
     do                                                                                             \
@@ -283,7 +277,7 @@ inline constexpr void logPrefix(std::ostream&) {}
         auto& log_ = Log::logger();                                                                \
         if (!Log::isShutdownCalled() && log_.trace())                                              \
         {                                                                                          \
-            LOG_BODY_(log_, TRACE, "TRC", X, true);                                                \
+            LOG_BODY_(log_, TRACE, "TRC", X, LOG_END);                                             \
         }                                                                                          \
     } while (false)
 
@@ -293,7 +287,7 @@ inline constexpr void logPrefix(std::ostream&) {}
         auto& log_ = Log::logger();                                                                \
         if (!Log::isShutdownCalled() && log_.trace())                                              \
         {                                                                                          \
-            LOG_BODY_(log_, TRACE, "TRC", X, false);                                               \
+            LOG_BODY_(log_, TRACE, "TRC", X, LOG_END_NOFILE);                                      \
         }                                                                                          \
     } while (false)
 
@@ -303,7 +297,7 @@ inline constexpr void logPrefix(std::ostream&) {}
         auto& log_ = Log::logger();                                                                \
         if (!Log::isShutdownCalled() && log_.debug())                                              \
         {                                                                                          \
-            LOG_BODY_(log_, DEBUG, "DBG", X, true);                                                \
+            LOG_BODY_(log_, DEBUG, "DBG", X, LOG_END);                                             \
         }                                                                                          \
     } while (false)
 
@@ -313,7 +307,7 @@ inline constexpr void logPrefix(std::ostream&) {}
         auto& log_ = Log::logger();                                                                \
         if (!Log::isShutdownCalled() && log_.information())                                        \
         {                                                                                          \
-            LOG_BODY_(log_, INFORMATION, "INF", X, true);                                          \
+            LOG_BODY_(log_, INFORMATION, "INF", X, LOG_END);                                       \
         }                                                                                          \
     } while (false)
 
@@ -323,7 +317,7 @@ inline constexpr void logPrefix(std::ostream&) {}
         auto& log_ = Log::logger();                                                                \
         if (!Log::isShutdownCalled() && log_.information())                                        \
         {                                                                                          \
-            LOG_BODY_(log_, INFORMATION, "INF", X, false);                                         \
+            LOG_BODY_(log_, INFORMATION, "INF", X, LOG_END_NOFILE);                                \
         }                                                                                          \
     } while (false)
 
@@ -333,7 +327,7 @@ inline constexpr void logPrefix(std::ostream&) {}
         auto& log_ = Log::logger();                                                                \
         if (!Log::isShutdownCalled() && log_.warning())                                            \
         {                                                                                          \
-            LOG_BODY_(log_, WARNING, "WRN", X, true);                                              \
+            LOG_BODY_(log_, WARNING, "WRN", X, LOG_END);                                           \
         }                                                                                          \
     } while (false)
 
@@ -343,7 +337,7 @@ inline constexpr void logPrefix(std::ostream&) {}
         auto& log_ = Log::logger();                                                                \
         if (!Log::isShutdownCalled() && log_.error())                                              \
         {                                                                                          \
-            LOG_BODY_(log_, ERROR, "ERR", X, true);                                                \
+            LOG_BODY_(log_, ERROR, "ERR", X, LOG_END);                                             \
         }                                                                                          \
     } while (false)
 
@@ -367,7 +361,7 @@ inline constexpr void logPrefix(std::ostream&) {}
         auto& log_ = Log::logger();                                                                \
         if (!Log::isShutdownCalled() && log_.fatal())                                              \
         {                                                                                          \
-            LOG_BODY_(log_, FATAL, "FTL", X, true);                                                \
+            LOG_BODY_(log_, FATAL, "FTL", X, LOG_END);                                             \
         }                                                                                          \
     } while (false)
 
