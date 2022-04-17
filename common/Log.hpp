@@ -236,12 +236,28 @@ namespace Log
 /// Any context can implement this to prefix its log entries.
 inline constexpr void logPrefix(std::ostream&) {}
 
-#ifndef IOS
-#define LOG_FILE_NAME(f) f
-#else
+#ifdef IOS
 // We know that when building with Xcode, __FILE__ will always be a full path, with several slashes,
 // so this will always work. We want just the file name, they are unique anyway.
-#define LOG_FILE_NAME(f) << (strrchr(f, '/') + 1) <<
+/// Strip the path and leave only the filename.
+template <std::size_t N>
+static constexpr std::size_t skipPathToFilename(const char (&s)[N], std::size_t n = N - 1)
+{
+    return n == 0 ? 0 : s[n] == '/' ? n + 1 : skipPathToFilename(s, n - 1);
+}
+
+#define LOG_FILE_NAME(f) (&f[skipPathToFilename(f)])
+
+#else
+
+/// Strip the path prefix ("./") that is noisy.
+template <std::size_t N>
+static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 0)
+{
+    return s[n] == '.' || s[n] == '/' ? skipPathPrefix(s, n + 1) : n;
+}
+
+#define LOG_FILE_NAME(f) (&f[skipPathPrefix(f)])
 #endif
 
 #define STRINGIFY(X) #X
@@ -261,7 +277,7 @@ inline constexpr void logPrefix(std::ostream&) {}
 
 #define LOG_END_NOFILE(LOG) (void)0
 
-#define LOG_END(LOG) LOG << "| " LOG_FILE_NAME(__FILE__) ":" STRING(__LINE__)
+#define LOG_END(LOG) LOG << "| " << LOG_FILE_NAME(__FILE__) << ":" STRING(__LINE__)
 
 #define LOG_BODY_(LOG, PRIO, LVL, X, END)                                                          \
     char b_[1024];                                                                                 \
