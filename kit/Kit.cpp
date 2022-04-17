@@ -2207,7 +2207,7 @@ protected:
                 logger << tokens.getParam(token) << ' ';
             }
 
-            LOG_END(logger, true);
+            LOG_END(logger);
         }
 
         // Note: Syntax or parsing errors here are unexpected and fatal.

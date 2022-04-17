@@ -400,7 +400,7 @@ void cleanupDocBrokers()
                 logger << "DocumentBroker [" << pair.first << "].\n";
             }
 
-            LOG_END(logger, true);
+            LOG_END(logger);
         }
 
 #if !MOBILEAPP && ENABLE_DEBUG
