@@ -1413,6 +1413,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		});
 
 		edit.addEventListener('keydown', function(event) {
+			if (edit.disabled)
+				return;
+
 			if (data.rawKeyEvents) {
 				if (event.key === 'Enter') {
 					builder.callback('edit', 'keypress', edit, UNOKey.RETURN, builder);
@@ -1437,6 +1440,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		});
 
 		edit.addEventListener('keypress', function(event) {
+			if (edit.disabled)
+				return;
+
 			if (data.rawKeyEvents) {
 				if (event.key === 'Enter' ||
 					event.key === 'Escape' ||
@@ -1458,6 +1464,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.rawKeyEvents) {
 			'select click'.split(' ').forEach(function(eventName) {
 				edit.addEventListener(eventName, function(event) {
+					if (edit.disabled)
+						return;
 					var selection = event.target.selectionStart + ';' + event.target.selectionEnd;
 					builder.callback('edit', 'textselection', edit, selection, builder);
 				});
@@ -3027,6 +3035,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		case 'hide':
 			$(control).addClass('hidden');
+			break;
+
+		case 'setText':
+			control.value = this._cleanText(data.text);
+			if (data.selection) {
+				var selection = data.selection.split(';');
+				if (selection.length === 2)
+					control.setSelectionRange(parseInt(selection[0]), parseInt(selection[1]));
+			}
+			break;
+
+		default:
+			console.error('unknown action: "' + data.action_type + '"');
 			break;
 		}
 	},
