@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-14 16:43+0200\n"
-"PO-Revision-Date: 2022-04-12 07:41+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2022-04-16 17:07+0000\n"
+"Last-Translator: Егор Ермаков <eg.ermakov2016@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
-"Language: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.12-dev\n"
 
 #: admin/admin.strings.js:6
@@ -966,7 +966,7 @@ msgstr "Просмотр истории"
 #: src/control/Control.NotebookbarImpress.js:204
 #: src/control/Control.NotebookbarWriter.js:155
 msgid "Download"
-msgstr ""
+msgstr "Скачать"
 
 #: src/control/Control.NotebookbarCalc.js:175
 msgid "ODF Spreadsheet (.ods)"
@@ -1038,11 +1038,11 @@ msgstr "Bad"
 
 #: src/control/Control.NotebookbarCalc.js:720
 msgid "Row Width"
-msgstr ""
+msgstr "Ширина строки"
 
 #: src/control/Control.NotebookbarCalc.js:726
 msgid "Column Width"
-msgstr ""
+msgstr "Ширина колонки"
 
 #: src/control/Control.NotebookbarCalc.js:737
 msgid "Insert Rows Above"
