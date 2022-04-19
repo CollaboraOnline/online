@@ -269,7 +269,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			{
 				'id': 'showstatusbar',
 				'type': 'menubartoolitem',
-				'text': _('Toggle Status Bar'),
+				'text': _('Status Bar'),
 				'command': _('Show Status Bar')
 			}
 		];

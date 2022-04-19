@@ -951,7 +951,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			{
 				'id': 'showstatusbar',
 				'type': 'menubartoolitem',
-				'text': _('Toggle Status Bar'),
+				'text': _('Status Bar'),
 				'command': _('Show Status Bar')
 			}
 		];
