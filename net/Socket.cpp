@@ -7,7 +7,6 @@
 
 #include <config.h>
 
-#include "NetUtil.hpp"
 #include "Socket.hpp"
 
 #include <cstring>
@@ -25,9 +24,6 @@
 #include <sys/ucred.h>
 #endif
 
-#include <Poco/DateTime.h>
-#include <Poco/DateTimeFormat.h>
-#include <Poco/DateTimeFormatter.h>
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
@@ -44,6 +40,8 @@
 #endif
 #include "WebSocketHandler.hpp"
 #include <net/HttpRequest.hpp>
+#include <NetUtil.hpp>
+#include <Log.hpp>
 
 // Bug in pre C++17 where static constexpr must be defined. Fixed in C++17.
 constexpr std::chrono::microseconds SocketPoll::DefaultPollTimeoutMicroS;
@@ -976,6 +974,17 @@ std::string LocalServerSocket::bind()
     if (snapInstanceName && snapInstanceName[0])
         socketAbstractUnixName = std::string("0snap.") + snapInstanceName + ".coolwsd-";
 
+    LOG_INF("Binding to Unix socket for local server with base name: " << socketAbstractUnixName);
+
+    constexpr auto RandomSuffixLength = 8;
+    constexpr auto MaxSocketAbstractUnixNameLength =
+        sizeof(addrunix.sun_path) - RandomSuffixLength - 1; // 1 byte for null termination.
+    LOG_ASSERT_MSG(socketAbstractUnixName.size() < MaxSocketAbstractUnixNameLength,
+                   "SocketAbstractUnixName is too long. Max: " << MaxSocketAbstractUnixNameLength
+                                                               << ", actual: "
+                                                               << socketAbstractUnixName.size());
+
+    int last_errno = 0;
     do
     {
         std::memset(&addrunix, 0, sizeof(addrunix));
@@ -985,11 +994,18 @@ std::string LocalServerSocket::bind()
         addrunix.sun_path[0] = '\0'; // abstract name
 #endif
 
-        const std::string rand = Util::rng::getFilename(8);
-        memcpy(addrunix.sun_path + socketAbstractUnixName.length(), rand.c_str(), 8);
+        const std::string rand = Util::rng::getFilename(RandomSuffixLength);
+        memcpy(addrunix.sun_path + socketAbstractUnixName.size(), rand.c_str(), RandomSuffixLength);
+        LOG_ASSERT_MSG(addrunix.sun_path[sizeof(addrunix.sun_path) - 1] == '\0',
+                       "addrunix.sun_path is not null terminated");
 
         rc = ::bind(getFD(), (const sockaddr *)&addrunix, sizeof(struct sockaddr_un));
-        LOG_SYS("Bind to location " << std::string(&addrunix.sun_path[1]) << " result - " << rc);
+        last_errno = errno;
+        LOG_TRC("Binding to Unix socket location ["
+                << &addrunix.sun_path[1] << "], result: " << rc
+                << ((rc >= 0) ? std::string()
+                              : '\t' + Util::symbolicErrno(last_errno) + ": " +
+                                    std::strerror(last_errno)));
     } while (rc < 0 && errno == EADDRINUSE);
 
     if (rc >= 0)
@@ -998,6 +1014,7 @@ std::string LocalServerSocket::bind()
         return std::string(&addrunix.sun_path[1]);
     }
 
+    LOG_SYS_ERRNO(last_errno, "Failed to bind to Unix socket at [" << &addrunix.sun_path[1] << ']');
     return std::string();
 }
 
