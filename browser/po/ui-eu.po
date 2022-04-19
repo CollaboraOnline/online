@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-14 16:43+0200\n"
-"PO-Revision-Date: 2022-04-12 07:41+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2022-04-19 07:46+0000\n"
+"Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "ui/eu/>\n"
-"Language: \n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -114,7 +114,7 @@ msgstr "Aldatua"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "WOPI ostalaria"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -344,7 +344,7 @@ msgstr " s"
 
 #: js/w2ui-1.5.rc1.js:2920
 msgid "Recent"
-msgstr ""
+msgstr "Azkenak"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
@@ -364,7 +364,7 @@ msgstr "Zerbitzariak %0 errore bat aurkitu du %1 komandoa analizatzean."
 
 #: src/control/Control.Command.js:91
 msgid "Unlock"
-msgstr ""
+msgstr "Desblokeatu"
 
 #: src/control/Control.ContextMenu.js:182
 msgid "Delete"
@@ -376,7 +376,7 @@ msgstr "Itsatsi berezia"
 
 #: src/control/Control.DocumentNameInput.js:77
 msgid "Path"
-msgstr ""
+msgstr "Bidea"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -429,7 +429,7 @@ msgstr "Funtzioen morroia"
 
 #: src/control/Control.FormulaBar.js:46
 msgid "cell address"
-msgstr ""
+msgstr "gelaxkaren helbidea"
 
 #: src/control/Control.JSDialogBuilder.js:402
 msgid "Solid"
@@ -681,7 +681,7 @@ msgstr "Testu-orientazioa"
 #: src/control/Control.Menubar.js:307
 #: src/control/Control.NotebookbarWriter.js:256
 msgid "Forum"
-msgstr ""
+msgstr "Foroa"
 
 #: src/control/Control.Menubar.js:308 src/control/Control.Menubar.js:440
 #: src/control/Control.Menubar.js:552 src/control/Control.Menubar.js:777
@@ -715,7 +715,7 @@ msgstr "Azken eguneraketak"
 #: src/control/Control.Menubar.js:939 src/control/Control.Menubar.js:1009
 #: src/control/Control.NotebookbarWriter.js:313
 msgid "Send Feedback"
-msgstr ""
+msgstr "Bidali iruzkinak"
 
 #: src/control/Control.Menubar.js:313 src/control/Control.Menubar.js:445
 #: src/control/Control.Menubar.js:557 src/control/Control.Menubar.js:782
@@ -819,7 +819,7 @@ msgstr "Ziur orri hau ezabatu nahi duzula?"
 
 #: src/control/Control.Menubar.js:1803
 msgid "file type icon"
-msgstr ""
+msgstr "fitxategi motaren ikonoa"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:130
@@ -860,23 +860,23 @@ msgstr "Txertatu irudi lokala"
 
 #: src/control/Control.NotebookbarBuilder.js:788
 msgid "Very Tight"
-msgstr ""
+msgstr "Oso estua"
 
 #: src/control/Control.NotebookbarBuilder.js:789
 msgid "Tight"
-msgstr ""
+msgstr "Estua"
 
 #: src/control/Control.NotebookbarBuilder.js:790
 msgid "Normal"
-msgstr ""
+msgstr "Normala"
 
 #: src/control/Control.NotebookbarBuilder.js:791
 msgid "Loose"
-msgstr ""
+msgstr "Zabala"
 
 #: src/control/Control.NotebookbarBuilder.js:792
 msgid "Very Loose"
-msgstr ""
+msgstr "Oso zabala"
 
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarDraw.js:55
@@ -935,7 +935,7 @@ msgstr "~Marraztu"
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:60
 msgid "~View"
-msgstr ""
+msgstr "~Ikusi"
 
 #: src/control/Control.NotebookbarCalc.js:59
 #: src/control/Control.NotebookbarDraw.js:103
@@ -962,7 +962,7 @@ msgstr "Ikusi historia"
 #: src/control/Control.NotebookbarImpress.js:204
 #: src/control/Control.NotebookbarWriter.js:155
 msgid "Download"
-msgstr ""
+msgstr "Deskargatu"
 
 #: src/control/Control.NotebookbarCalc.js:175
 msgid "ODF Spreadsheet (.ods)"
@@ -1034,11 +1034,11 @@ msgstr "Txarra"
 
 #: src/control/Control.NotebookbarCalc.js:720
 msgid "Row Width"
-msgstr ""
+msgstr "Errenkadaren zabalera"
 
 #: src/control/Control.NotebookbarCalc.js:726
 msgid "Column Width"
-msgstr ""
+msgstr "Zutabearen zabalera"
 
 #: src/control/Control.NotebookbarCalc.js:737
 msgid "Insert Rows Above"
@@ -1069,12 +1069,12 @@ msgstr "Ezabatu zutabeak"
 #: src/control/Control.NotebookbarImpress.js:342
 #: src/control/Control.NotebookbarWriter.js:1017
 msgid "Toggle Status Bar"
-msgstr ""
+msgstr "Aldatu egoera barra"
 
 #: src/control/Control.NotebookbarDraw.js:39
 #: src/control/Control.NotebookbarDraw.js:734
 msgid "Page layout"
-msgstr ""
+msgstr "Orriaren diseinua"
 
 #: src/control/Control.NotebookbarDraw.js:86
 #: src/control/Control.NotebookbarImpress.js:98
@@ -1093,7 +1093,7 @@ msgstr "ODF aurkezpena (.odp)"
 #: src/control/Control.NotebookbarImpress.js:291
 #: src/control/Control.NotebookbarImpress.js:750
 msgid "Presentation"
-msgstr ""
+msgstr "Aurkezpena"
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
@@ -1122,11 +1122,11 @@ msgstr "Izenburua"
 
 #: src/control/Control.NotebookbarWriter.js:1006
 msgid "Toggle Ruler"
-msgstr ""
+msgstr "Aldatu erregela"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
-msgstr ""
+msgstr "orriaren aurreikuspena "
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1230,7 +1230,7 @@ msgstr "Diapositiba kopurua"
 
 #: src/control/Control.StatusBar.js:422 src/control/Control.StatusBar.js:423
 msgid "Permission Mode"
-msgstr ""
+msgstr "Baimen modua"
 
 #: src/control/Control.StatusBar.js:422
 #, fuzzy
@@ -1271,7 +1271,7 @@ msgstr "Mugitu orria eskuinera"
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Kopiatu orria..."
 
 #: src/control/Control.Tabs.js:303
 #, fuzzy
@@ -1381,7 +1381,7 @@ msgstr "Jarraitu editatzen"
 
 #: src/control/Permission.js:167
 msgid "Continue read only"
-msgstr ""
+msgstr "Jarraitu soilik irakurtzeko"
 
 #: src/control/Permission.js:170
 msgid ""
@@ -1538,10 +1538,12 @@ msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
+"Sinadura ondo dago, baina ziurtagiria ezin izan da balioztatu eta dokumentua "
+"partzialki sinatuta dago."
 
 #: src/control/Signing.js:650
 msgid "Signed but not validated and not all files are signed"
-msgstr ""
+msgstr "Sinatuta baina balioztatu gabe eta fitxategi guztiak ez daude sinatuta"
 
 #: src/control/Toolbar.js:45
 msgid "Font"
@@ -1585,15 +1587,15 @@ msgstr "Zerbitzaria eskuragarri dago orain. Orria freskatu behar da orain."
 
 #: src/core/Socket.js:514
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "Zerbitzaria eskura daiteke orain..."
 
 #: src/core/Socket.js:518
 msgid "RELOAD"
-msgstr ""
+msgstr "BIRKARGATU"
 
 #: src/core/Socket.js:525
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "COOLWSD bertsioa:"
 
 #: src/core/Socket.js:537
 msgid "Served by:"
@@ -1605,7 +1607,7 @@ msgstr "Euskarririk gabeko zerbitzari bertsioa."
 
 #: src/core/Socket.js:547
 msgid "LOKit version:"
-msgstr ""
+msgstr "LOKit bertsioa:"
 
 #: src/core/Socket.js:662
 msgid "Session terminated by document owner"
@@ -1652,7 +1654,7 @@ msgstr ""
 
 #: src/core/Socket.js:725
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "Dokumentua birkargatu izena aldatu ondoren"
 
 #: src/core/Socket.js:848
 msgid "Discard"
@@ -1668,7 +1670,7 @@ msgstr "Gorde fitxategi berrian"
 
 #: src/core/Socket.js:897
 msgid "Document has been changed"
-msgstr ""
+msgstr "Dokumentu aldatu egin da"
 
 #: src/core/Socket.js:897
 msgid ""
@@ -1696,15 +1698,15 @@ msgstr "Pasahitz okerra. Saiatu berriro."
 
 #: src/core/Socket.js:1086
 msgid "Someone"
-msgstr ""
+msgstr "Norbaitek"
 
 #: src/core/Socket.js:1088
 msgid " saved this document as "
-msgstr ""
+msgstr " gorde du dokumentu hau "
 
 #: src/core/Socket.js:1088
 msgid ". Do you want to join?"
-msgstr ""
+msgstr ". Sartu nahi duzu?"
 
 #: src/core/Socket.js:1097
 msgid "Loading..."
@@ -1727,13 +1729,12 @@ msgstr ""
 "berriro."
 
 #: src/core/Socket.js:1514
-#, fuzzy
 msgid "Reconnecting..."
-msgstr "Konektatzen..."
+msgstr "Birkonektatzen..."
 
 #: src/core/Socket.js:1520
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "Zerbitzaria deskonektatu da."
 
 #: src/errormessages.js:13
 msgid ""
