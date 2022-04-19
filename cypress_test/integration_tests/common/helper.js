@@ -391,7 +391,8 @@ function checkIfDocIsLoaded(frameId) {
 
 			// Check also that the inputbar is drawn in Calc.
 			doIfInCalc(function() {
-				canvasShouldNotBeFullWhite('#calc-inputbar .inputbar_canvas', frameId);
+				cy.customGet('#sc_input_window.formulabar', frameId)
+					.should('exist');
 			}, frameId);
 		});
 	}

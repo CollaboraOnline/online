@@ -14,17 +14,11 @@ function clickFormulaBar() {
 	// N.B. Setting the width of the inputbar_container
 	// is futile because it messes the size of the canvas.
 	helper.doIfOnMobile(function() {
-		helper.waitUntilIdle('.inputbar_container');
+		helper.waitUntilIdle('#sc_input_window.formulabar');
 	});
 
-	cy.get('.inputbar_canvas')
-		.then(function(items) {
-			expect(items).to.have.lengthOf(1);
-			var XPos = items[0].getBoundingClientRect().width / 2;
-			var YPos = items[0].getBoundingClientRect().height / 2;
-			cy.get('.inputbar_container')
-				.click(XPos, YPos);
-		});
+	cy.get('#sc_input_window.formulabar')
+		.focus();
 
 	cy.get('body').trigger('mouseover');
 }
@@ -111,17 +105,22 @@ function typeIntoFormulabar(text) {
 			}
 		});
 
-	// TODO: check if cursor is in formulabar
-	// with core cp-6.4 it was possible with:
-	// cy.get('#calc-inputbar .lokdialog-cursor')
-	//	 .should('be.visible');
-	// with core co-2021 cursor is rendered on the canvas
+	cy.get('#calc-inputbar .lokdialog-cursor')
+		 .should('have.focus');
 
 	helper.doIfOnMobile(function() {
 		cy.get('#tb_actionbar_item_acceptformula')
 			.should('be.visible');
 
 		cy.get('#tb_actionbar_item_cancelformula')
+			.should('be.visible');
+	});
+
+	helper.doIfOnDesktop(function() {
+		cy.get('#acceptformula')
+			.should('be.visible');
+
+		cy.get('#cancelformula')
 			.should('be.visible');
 	});
 
