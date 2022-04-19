@@ -1474,13 +1474,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		});
 
 		if (data.rawKeyEvents) {
-			'select click'.split(' ').forEach(function(eventName) {
-				edit.addEventListener(eventName, function(event) {
-					if (edit.disabled)
-						return;
-					var selection = event.target.selectionStart + ';' + event.target.selectionEnd;
-					builder.callback('edit', 'textselection', edit, selection, builder);
-				});
+			edit.addEventListener('mouseup', function(event) {
+				if (edit.disabled)
+					return;
+				var selection = event.target.selectionStart + ';' + event.target.selectionEnd;
+				builder.callback('edit', 'textselection', edit, selection, builder);
 			});
 		}
 
