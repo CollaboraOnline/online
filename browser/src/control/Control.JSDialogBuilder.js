@@ -2232,7 +2232,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'AlignLeft': 'LeftPara',
 			'AlignRight': 'RightPara',
 			'AlignHorizontalCenter': 'CenterPara',
-			'AlignBlock': 'JustifyPara'
+			'AlignBlock': 'JustifyPara',
+			'FormatSparklineMenu': 'InsertSparkline',
 		};
 		var cleanName = name;
 		var prefixLength = '.uno:'.length;
