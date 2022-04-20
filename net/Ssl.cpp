@@ -214,6 +214,10 @@ void SslContext::dynlockDestroy(struct CRYPTO_dynlock_value* lock, const char* /
 void SslContext::initDH()
 {
 #ifndef OPENSSL_NO_DH
+// On OpenSSL 1.1 and newer use the auto parameters.
+#if OPENSSL_VERSION_NUMBER >= 0x10100003L
+    SSL_CTX_set_dh_auto(_ctx, 1);
+#else
     // 2048-bit MODP Group with 256-bit prime order subgroup (RFC5114)
 
     static const unsigned char dh2048_p[] =
@@ -297,6 +301,7 @@ void SslContext::initDH()
     SSL_CTX_set_tmp_dh(_ctx, dh);
     SSL_CTX_set_options(_ctx, SSL_OP_SINGLE_DH_USE);
     DH_free(dh);
+#endif
 #endif
 }
 
