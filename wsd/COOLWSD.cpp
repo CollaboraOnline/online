@@ -1378,13 +1378,75 @@ public:
             it.second.active = false;
 
         // Just pick up new fonts.
-        for (auto& fontPtr : *remoteJson->getArray("fonts"))
+        auto fontsPtr = remoteJson->getArray("fonts");
+        if (!fontsPtr)
         {
-            if (!fontPtr.isString())
-                LOG_WRN("Element in fonts array is not a string");
+            LOG_WRN("The 'fonts' property does not exist or is not an array");
+            return;
+        }
+
+        for (std::size_t i = 0; i < fontsPtr->size(); i++)
+        {
+            if (!fontsPtr->isObject(i))
+                LOG_WRN("Element " << i << " in fonts array is not an object");
             else
             {
-                fonts[fontPtr.toString()].active = true;
+                const auto fontPtr = fontsPtr->getObject(i);
+                const auto uriPtr = fontPtr->get("uri");
+                if (uriPtr.isEmpty() || !uriPtr.isString())
+                    LOG_WRN("Element in fonts array does not have an 'uri' property or it is not a string");
+                else
+                {
+                    const std::string uri = uriPtr.toString();
+                    const auto stampPtr = fontPtr->get("stamp");
+
+                    if (!stampPtr.isEmpty() && !stampPtr.isString())
+                        LOG_WRN("Element in fonts array with uri '" << uri << "' has a stamp property that is not a string, ignored");
+                    else if (fonts.count(uri) == 0)
+                    {
+                        // First case: This font has not been downloaded.
+                        if (!stampPtr.isEmpty())
+                        {
+                            if (downloadPlain(uri))
+                            {
+                                fonts[uri].stamp = stampPtr.toString();
+                                fonts[uri].active = true;
+                            }
+                        }
+                        else
+                        {
+                            if (downloadWithETag(uri, ""))
+                            {
+                                fonts[uri].active = true;
+                            }
+                        }
+                    }
+                    else if (!stampPtr.isEmpty() && stampPtr.toString() != fonts[uri].stamp)
+                    {
+                        // Second case: Font has been downloaded already, has a "stamp" property,
+                        // and that has been changed in the JSON since it was downloaded.
+                        if (downloadPlain(uri))
+                        {
+                            fonts[uri].stamp = stampPtr.toString();
+                            fonts[uri].active = true;
+                        }
+                    }
+                    else if (!stampPtr.isEmpty())
+                    {
+                        // Third case: Font has been downloaded already, has a "stamp" property, and
+                        // that has *not* changed in the JSON since it was downloaded.
+                        fonts[uri].active = true;
+                    }
+                    else
+                    {
+                        // Last case: Font has been downloaded but does not have a "stamp" property.
+                        // Use ETag.
+                        if (downloadWithETag(uri, fonts[uri].eTag))
+                        {
+                            fonts[uri].active = true;
+                        }
+                    }
+                }
             }
         }
 
@@ -1411,57 +1473,127 @@ public:
         // Iterate over the fonts that were mentioned in the JSON file when it was last downloaded.
         for (auto& it : fonts)
         {
-            const Poco::URI fontURI{it.first};
-            std::shared_ptr<http::Session> httpSession(StorageBase::getHttpSession(fontURI));
-            http::Request request(fontURI.getPathAndQuery());
+            // If the JSON has a "stamp" for the font, and we have already downloaded it, by
+            // definition we don't need to do anything when the JSON file has not changed.
+            if (it.second.stamp != "" && it.second.pathName != "")
+                continue;
 
-            if (!it.second.eTag.empty())
+            // If the JSON has a "stamp" it must have been downloaded already. Should we even
+            // assert() that?
+            if (it.second.stamp != "" && it.second.pathName == "")
             {
-                request.set("If-None-Match", it.second.eTag);
+                LOG_WRN("Font at " << it.first << " was not downloaded, should have been");
+                continue;
             }
 
-            request.set("User-Agent", WOPI_AGENT_STRING);
-
-            const std::shared_ptr<const http::Response> httpResponse
-                = httpSession->syncRequest(request);
-
-            unsigned int statusCode = httpResponse->statusLine().statusCode();
-
-            if (statusCode == Poco::Net::HTTPResponse::HTTP_NOT_MODIFIED)
-                LOG_DBG("Not modified since last time: " << it.first);
-            else if (statusCode != Poco::Net::HTTPResponse::HTTP_OK)
-                LOG_WRN("Could not fetch " << it.first);
-            else
-            {
-                it.second.eTag = httpResponse->get("ETag");
-
-                const std::string body = httpResponse->getBody();
-
-                const std::string fontFile = COOLWSD::TmpFontDir + "/" + Util::encodeId(Util::rng::getNext()) + ".ttf";
-                std::ofstream fontStream(fontFile);
-                fontStream.write(body.data(), body.size());
-                if (fontStream.good())
-                {
-                    LOG_DBG("Got " << body.size() << " bytes for " << it.first << " and wrote to " << fontFile);
-
-                    it.second.pathName = fontFile;
-                    COOLWSD::sendMessageToForKit("addfont " + fontFile);
-                }
-                else
-                    LOG_ERR("Could not write to " << fontFile);
-            }
+            // Otherwise use the ETag to check if the font file needs re-downloading.
+            downloadWithETag(it.first, it.second.eTag);
         }
     }
 
 private:
+    bool downloadPlain(const std::string& uri)
+    {
+        const Poco::URI fontUri{uri};
+        std::shared_ptr<http::Session> httpSession(StorageBase::getHttpSession(fontUri));
+        http::Request request(fontUri.getPathAndQuery());
+
+        request.set("User-Agent", WOPI_AGENT_STRING);
+
+        const std::shared_ptr<const http::Response> httpResponse
+            = httpSession->syncRequest(request);
+
+        return finishDownload(uri, httpResponse);
+    }
+
+    bool downloadWithETag(const std::string& uri, const std::string& oldETag)
+    {
+        const Poco::URI fontUri{uri};
+        std::shared_ptr<http::Session> httpSession(StorageBase::getHttpSession(fontUri));
+        http::Request request(fontUri.getPathAndQuery());
+
+        if (!oldETag.empty())
+        {
+            request.set("If-None-Match", oldETag);
+        }
+
+        request.set("User-Agent", WOPI_AGENT_STRING);
+
+        const std::shared_ptr<const http::Response> httpResponse
+            = httpSession->syncRequest(request);
+
+        const unsigned int statusCode = httpResponse->statusLine().statusCode();
+
+        if (statusCode == Poco::Net::HTTPResponse::HTTP_NOT_MODIFIED)
+        {
+            LOG_DBG("Not modified since last time: " << uri);
+            return true;
+        }
+
+        if (!finishDownload(uri, httpResponse))
+            return false;
+
+        fonts[uri].eTag = httpResponse->get("ETag");
+        return true;
+    }
+
+    bool finishDownload(const std::string& uri, const std::shared_ptr<const http::Response> httpResponse)
+    {
+        const unsigned int statusCode = httpResponse->statusLine().statusCode();
+
+        if (statusCode != Poco::Net::HTTPResponse::HTTP_OK)
+        {
+            LOG_WRN("Could not fetch " << uri);
+            return false;
+        }
+
+        const std::string body = httpResponse->getBody();
+
+        std::string fontFile;
+
+        // We intentionally use a new file name also when an updated version of a font is
+        // downloaded. It causes trouble to rewrite the same file, in case it is in use in some Kit
+        // process at the moment.
+
+        // We don't remove the old file either as that also causes problems.
+
+        // And in reality, it is a bit unclear how likely it even is that fonts downloaded through
+        // this mechanism even will be updated.
+        fontFile = COOLWSD::TmpFontDir + "/" + Util::encodeId(Util::rng::getNext()) + ".ttf";
+
+        std::ofstream fontStream(fontFile);
+        fontStream.write(body.data(), body.size());
+        if (!fontStream.good())
+        {
+                LOG_ERR("Could not write to " << fontFile);
+                return false;
+        }
+
+        LOG_DBG("Got " << body.size() << " bytes for " << uri << " and wrote to " << fontFile);
+        fonts[uri].pathName = fontFile;
+
+        COOLWSD::sendMessageToForKit("addfont " + fontFile);
+
+        return true;
+    }
+
     struct FontData
     {
+        // Each font can have a "stamp" in the JSON that we treat just as a string. In practice it
+        // can be some timestamp, but we don't parse it. If the stamp is changed, we re-download the
+        // font file.
+        std::string stamp;
+
+        // If the font has no "stamp" property, we use the ETag mechanism to see if the font file
+        // needs to be re-downloaded.
         std::string eTag;
 
         // Where the font has been stored
         std::string pathName;
 
         // Flag that tells whether the font is mentioned in the JSON file that is being handled.
+        // Used only in handleJSON() when the JSON has been (re-)downloaded, not when the JSON was
+        // unchanged in handleUnchangedJSON().
         bool active;
     };
 
