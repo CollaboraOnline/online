@@ -175,7 +175,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			{text: _UNO('.uno:InsertHardHyphen', 'text'), uno: 'InsertHardHyphen'},
 			{text: _UNO('.uno:InsertSoftHyphen', 'text'), uno: 'InsertSoftHyphen'},
 			{text: _UNO('.uno:InsertZWSP', 'text'), uno: 'InsertZWSP'},
-			{text: _UNO('.uno:InsertZWNBSP', 'text'), uno: 'InsertZWNBSP'},
+			{text: _UNO('.uno:InsertWJ', 'text'), uno: 'InsertWJ'},
 			{text: _UNO('.uno:InsertLRM', 'text'), uno: 'InsertLRM'},
 			{text: _UNO('.uno:InsertRLM', 'text'), uno: 'InsertRLM'}
 		];

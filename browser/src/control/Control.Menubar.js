@@ -161,7 +161,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:InsertHardHyphen'},
 					{uno: '.uno:InsertSoftHyphen'},
 					{uno: '.uno:InsertZWSP'},
-					{uno: '.uno:InsertZWNBSP'},
+					{uno: '.uno:InsertWJ'},
 					{uno: '.uno:InsertLRM'},
 					{uno: '.uno:InsertRLM'}]},
 				{name: _UNO('.uno:IndexesMenu', 'text'), type: 'menu', menu: [
@@ -1058,7 +1058,7 @@ L.Control.Menubar = L.Control.extend({
 						{uno: '.uno:InsertHardHyphen'},
 						{uno: '.uno:InsertSoftHyphen'},
 						{uno: '.uno:InsertZWSP'},
-						{uno: '.uno:InsertZWNBSP'},
+						{uno: '.uno:InsertWJ'},
 						{uno: '.uno:InsertLRM'},
 						{uno: '.uno:InsertRLM'}]},
 				]
