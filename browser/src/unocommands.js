@@ -302,7 +302,7 @@ var unoCommandsArray = {
 	'InsertTrendline':{global:{menu:_('Insert Tre~nd Line...'),},},
 	'InsertXErrorBars':{global:{menu:_('Insert X Error ~Bars...'),},},
 	'InsertYErrorBars':{global:{menu:_('Insert Y Error ~Bars...'),},},
-	'InsertZWNBSP':{global:{menu:_('No-width No ~Break'),},},
+	'InsertWJ':{global:{menu:_('No-width No ~Break'),},},
 	'InsertZWSP':{global:{menu:_('No-~width Optional Break'),},},
 	'Italic':{global:{menu:_('Italic'),},},
 	'JumpDownThisLevel':{text:{menu:_('To Next Paragraph in Level'),},},
