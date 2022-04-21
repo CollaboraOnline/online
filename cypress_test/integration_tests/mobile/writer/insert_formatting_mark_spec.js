@@ -68,8 +68,8 @@ describe('Insert formatting mark via insertion wizard.', function() {
 			.should('contain.text', '\u200b');
 	});
 
-	it('Insert no-width no break.', function() {
-		cy.contains('.menu-entry-with-icon', 'No-width No Break')
+	it('Insert word joiner.', function() {
+		cy.contains('.menu-entry-with-icon', 'Word Joiner')
 			.click();
 
 		writerHelper.selectAllTextOfDoc();
