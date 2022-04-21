@@ -161,7 +161,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						} : {},
 					hasRevisionHistory ?
 						{
-							'id': 'rev-history',
+							'id': 'Rev-History',
 							'type': 'menubartoolitem',
 							'text': _('See history'),
 							'command': '.uno:rev-history'

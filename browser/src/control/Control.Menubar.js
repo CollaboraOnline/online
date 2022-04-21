@@ -1736,7 +1736,7 @@ L.Control.Menubar = L.Control.extend({
 			this._map.showHyperlinkDialog();
 		} else if (id === 'keyboard-shortcuts' || id === 'online-help') {
 			this._map.showHelp(id);
-		} else if (L.Params.revHistoryEnabled && (id === 'rev-history' || id === 'last-mod')) {
+		} else if (L.Params.revHistoryEnabled && (id === 'rev-history' || id === 'Rev-History' || id === 'last-mod')) {
 			this._map.openRevisionHistory();
 		} else if (id === 'closedocument') {
 			window.onClose();
@@ -1890,7 +1890,7 @@ L.Control.Menubar = L.Control.extend({
 			return false;
 
 		if (menuItem.type === 'action') {
-			if ((menuItem.id === 'rev-history' && !L.Params.revHistoryEnabled) ||
+			if (((menuItem.id === 'rev-history' || menuItem.id === 'Rev-History') && !L.Params.revHistoryEnabled) ||
 				(menuItem.id === 'closedocument' && !L.Params.closeButtonEnabled) ||
 				(menuItem.id === 'latestupdates' && !window.enableWelcomeMessage)) {
 				return false;
