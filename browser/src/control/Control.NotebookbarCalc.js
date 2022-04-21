@@ -111,7 +111,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'children': [
 					hasShare ?
 						{
-							'id': 'shareas',
+							'id': 'ShareAs',
 							'type': 'menubartoolitem',
 							'text': _('Share'),
 							'command': '.uno:shareas'
