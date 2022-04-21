@@ -333,10 +333,6 @@ AC_ARG_WITH([help-url],
                 [Set the base URL of the online help. Default is https://help.collaboraoffice.com/help.html?])
                 [--without-help-url Help buttons of dialogs will be disabled, external help website will not be used.],,)
 
-AC_ARG_WITH([core-icon-theme],
-            AS_HELP_STRING([--with-core-icon-theme=<theme>],
-                [Set the icon theme coming from core (tunneled sidebar, tunneled dialogs). The default is colibre.]))
-
 AC_ARG_WITH([dictionaries],
             AS_HELP_STRING([--with-dictionaries=<language list>],
                 [List of supported languages of Writing Aids (spell checker, grammar checker, thesaurus, hyphenation)
@@ -1352,16 +1348,6 @@ else
     AC_MSG_RESULT([default: $HELP_URL])
 fi
 AC_SUBST(HELP_URL)
-
-AC_MSG_CHECKING([for icon theme from core (tunneled sidebar, tunneled dialogs)])
-if test -n "$with_core_icon_theme" -a "$with_core_icon_theme" != "no"; then
-    ICON_THEME="$with_core_icon_theme"
-    AC_MSG_RESULT([custom: $ICON_THEME])
-else
-    ICON_THEME="colibre"
-    AC_MSG_RESULT([default: $ICON_THEME])
-fi
-AC_SUBST(ICON_THEME)
 
 AC_MSG_CHECKING([for allowed languages for Writing Aids])
 if test -n "$with_dictionaries" -a "$with_dictionaries" != "no"; then
