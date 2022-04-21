@@ -26,8 +26,9 @@ class UnitTileCache: public UnitWSD
     } _phase;
     std::unique_ptr<UnitWebSocket> _ws;
 public:
-    UnitTileCache() :
-        _phase(Phase::Load)
+    UnitTileCache()
+        : UnitWSD("UnitTileCache")
+        , _phase(Phase::Load)
     {
     }
 

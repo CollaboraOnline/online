@@ -113,14 +113,14 @@ protected:
     }
 
     /// Construct a UnitBase instance with a default name.
-    explicit UnitBase(std::string name, UnitType type)
+    explicit UnitBase(const std::string& name, UnitType type)
         : _dlHandle(nullptr)
         , _setRetValue(false)
         , _retValue(0)
         , _timeoutMilliSeconds(std::chrono::seconds(30))
         , _type(type)
         , _socketPoll(std::make_shared<SocketPoll>(name))
-        , testname(std::move(name))
+        , testname(name)
     {
     }
 
@@ -307,7 +307,7 @@ class UnitWSD : public UnitBase
     bool _hasKitHooks;
 
 public:
-    UnitWSD(std::string testname = std::string());
+    UnitWSD(const std::string& testname);
 
     virtual ~UnitWSD();
 
@@ -448,7 +448,7 @@ private:
 class UnitKit : public UnitBase
 {
 public:
-    explicit UnitKit(std::string testname = std::string());
+    explicit UnitKit(const std::string& testname);
     virtual ~UnitKit();
     static UnitKit& get();
 
@@ -491,11 +491,10 @@ public:
 class UnitTool : public UnitBase
 {
 public:
-    explicit UnitTool(std::string name = std::string())
-        : UnitBase(std::move(name), UnitType::Tool)
+    explicit UnitTool(const std::string& name)
+        : UnitBase(name, UnitType::Tool)
     {
     }
-    virtual ~UnitTool() {}
 };
 
 /// Transition the test state of VAR to STATE, with a prefix message, and resume the test.
