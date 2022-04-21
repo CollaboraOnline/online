@@ -21,7 +21,8 @@ class UnitTimeout : public UnitWSD
     std::atomic<bool> _timedOut;
 public:
     UnitTimeout()
-        : _timedOut(false)
+        : UnitWSD("UnitTimeout")
+        , _timedOut(false)
     {
         setTimeout(std::chrono::milliseconds(10));
     }

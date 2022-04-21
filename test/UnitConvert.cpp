@@ -111,6 +111,7 @@ class UnitKitConvert : public UnitKit
 {
 public:
     UnitKitConvert()
+        : UnitKit("UnitKitConvert")
     {
         setTimeout(std::chrono::hours(1));
     }
