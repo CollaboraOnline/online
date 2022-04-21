@@ -20,7 +20,8 @@ class UnitPrefork : public UnitWSD
 
 public:
     UnitPrefork()
-        : _childSockets(0)
+        : UnitWSD("UnitPrefork")
+        , _childSockets(0)
     {
         setTimeout(std::chrono::seconds(60));
     }

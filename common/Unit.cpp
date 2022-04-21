@@ -123,13 +123,13 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
         switch (type)
         {
         case UnitType::Wsd:
-            rememberInstance(UnitType::Wsd, new UnitWSD());
+            rememberInstance(UnitType::Wsd, new UnitWSD("UnitWSD"));
             break;
         case UnitType::Kit:
-            rememberInstance(UnitType::Kit, new UnitKit());
+            rememberInstance(UnitType::Kit, new UnitKit("UnitKit"));
             break;
         case UnitType::Tool:
-            rememberInstance(UnitType::Tool, new UnitTool());
+            rememberInstance(UnitType::Tool, new UnitTool("UnitTool"));
             break;
         default:
             assert(false);
@@ -205,8 +205,8 @@ UnitBase::~UnitBase()
     _socketPoll->joinThread();
 }
 
-UnitWSD::UnitWSD(std::string name)
-    : UnitBase(std::move(name), UnitType::Wsd)
+UnitWSD::UnitWSD(const std::string& name)
+    : UnitBase(name, UnitType::Wsd)
     , _hasKitHooks(false)
 {
 }
@@ -247,8 +247,8 @@ UnitWSD& UnitWSD::get()
     return *GlobalWSD;
 }
 
-UnitKit::UnitKit(std::string name)
-    : UnitBase(std::move(name), UnitType::Kit)
+UnitKit::UnitKit(const std::string& name)
+    : UnitBase(name, UnitType::Kit)
 {
 }
 
@@ -260,7 +260,7 @@ UnitKit& UnitKit::get()
 {
 #if MOBILEAPP
     if (!GlobalKit)
-        GlobalKit = new UnitKit();
+        GlobalKit = new UnitKit("UnitKit");
 #endif
 
     assert(GlobalKit);

@@ -83,8 +83,8 @@ protected:
         return _fileLastModifiedTime;
     }
 
-    WopiTestServer(std::string name, const std::string& fileContent = "Hello, world")
-        : UnitWSD(std::move(name))
+    WopiTestServer(const std::string& name, const std::string& fileContent = "Hello, world")
+        : UnitWSD(name)
         , _countCheckFileInfo(0)
         , _countGetFile(0)
         , _countPutRelative(0)
