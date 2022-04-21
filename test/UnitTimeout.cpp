@@ -35,9 +35,10 @@ public:
 
     virtual void returnValue(int & retValue) override
     {
+        UnitWSD::returnValue(retValue); // Always call base.
         if (!_timedOut)
         {
-            LOG_INF("Failed to timeout");
+            LOG_TST("ERROR: Failed to timeout");
             retValue = EX_SOFTWARE;
         }
         else
@@ -45,6 +46,7 @@ public:
             assert(_setRetValue);
             assert(_retValue == EX_SOFTWARE);
             // we wanted a timeout.
+            LOG_TST("Test passed by timing-out as expected");
             retValue = EX_OK;
         }
     }

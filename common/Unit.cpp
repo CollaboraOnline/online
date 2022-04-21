@@ -198,6 +198,8 @@ void UnitBase::setTimeout(std::chrono::milliseconds timeoutMilliSeconds)
 
 UnitBase::~UnitBase()
 {
+    LOG_TST(getTestname() << ": ~UnitBase");
+
 // FIXME: we should really clean-up properly.
 //    if (_dlHandle)
 //        dlclose(_dlHandle);
