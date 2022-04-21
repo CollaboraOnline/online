@@ -171,7 +171,7 @@ void DocumentBroker::setupPriorities()
 void DocumentBroker::setupTransfer(SocketDisposition &disposition,
                                    SocketDisposition::MoveFunction transferFn)
 {
-    disposition.setTransfer(*_poll, transferFn);
+    disposition.setTransfer(*_poll, std::move(transferFn));
 }
 
 void DocumentBroker::assertCorrectThread() const

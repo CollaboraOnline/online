@@ -234,7 +234,7 @@ namespace Log
 
 /// A default implementation that is a NOP.
 /// Any context can implement this to prefix its log entries.
-inline constexpr void logPrefix(std::ostream&) {}
+inline void logPrefix(std::ostream&) {}
 
 #ifdef IOS
 // We know that when building with Xcode, __FILE__ will always be a full path, with several slashes,
