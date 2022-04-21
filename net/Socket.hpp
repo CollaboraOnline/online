@@ -742,7 +742,7 @@ public:
     {
         if (newSocket)
         {
-            LOG_DBG("Inserting socket #" << newSocket->getFD() << ", address ["
+            LOG_TRC("Inserting socket #" << newSocket->getFD() << ", address ["
                                          << newSocket->clientAddress() << "], into " << _name);
             // sockets in transit are un-owned.
             newSocket->resetThreadOwner();
