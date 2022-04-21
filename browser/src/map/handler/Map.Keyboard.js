@@ -551,7 +551,7 @@ L.Map.Keyboard = L.Handler.extend({
 					return true;
 				case 67: // c
 				case 77: // m
-					app.socket.sendMessage('uno .uno:InsertAnnotation');
+					this._map.insertComment();
 					return true;
 				case 68: // d
 					app.socket.sendMessage('uno .uno:InsertEndnote');
