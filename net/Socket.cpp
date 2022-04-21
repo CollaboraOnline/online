@@ -432,8 +432,8 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         std::vector<int> toErase;
 
         size_t i = _pollStartIndex;
-        LOG_TRC('#' << _pollFds[i].fd << ": Starting handling poll results of " << _name
-                    << " at index " << i << " (of " << size << "): " << std::hex
+        LOG_TRC('#' << _pollFds[i].fd << ": Starting handling poll events of " << _name
+                    << " at index " << i << " (of " << size << "): 0x" << std::hex
                     << _pollFds[i].revents << std::dec);
 
         for (std::size_t j = 0; j < size; ++j)
