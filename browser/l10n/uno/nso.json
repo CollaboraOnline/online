@@ -33,6 +33,7 @@
 "Chevron Up":"Šeferone godimo",
 "Circle (Curve)":"Kgokolo (kgopamiša)",
 "Circle (Pour)":"Kgokolo (tšhela)",
+"Column ~Width...":"~Bophara bja kholomo...",
 "Comme~nt":"~Tshwaotshwao",
 "Comm~ent":"Tshw~aotshwao",
 "Condition...":"Boemo",
@@ -169,6 +170,7 @@
 "Restart Numbering":"Thomiša nomorofatšo ka leswa",
 "Right":"La go ja",
 "Right-To-Left":"Go la go ja go ya go la nngele",
+"Row ~Height...":"Bop~hagamo bja mothalo...",
 "R~un Macro...":"Š~omiša makhro...",
 "Save ~As...":"Boloka ~e le...",
 "Select Column":"Kgetha kholomo",
@@ -227,6 +229,7 @@
 "~Data Ranges...":"Mehuta ya ~tsebišo...",
 "~Date":"~Letšatšikgwedi",
 "~Date (fixed)":"~Letšatšikgwedi (le beilwego)",
+"~Define":"~Hlalosa",
 "~Delete":"~Phumola",
 "~Edit":"~Lokiša",
 "~Edit Contour...":"~Lokiša sedirišwa...",
@@ -239,6 +242,7 @@
 "~Group and Outline":"~Hlopha gomme o akaretše",
 "~Group...":"~Hlopha...",
 "~Header and Footer...":"~Hlogwana ya godimo le ya tlase...",
+"~Height...":"~Bophagamo...",
 "~Help":"~Thušo",
 "~Hide":"~Fihla",
 "~Hide AutoFilter":"~Fihla filthara-boitirišo",
@@ -284,5 +288,6 @@
 "~Validity...":"~Tiišetšo...",
 "~View":"~Tebelelo",
 "~While Typing":"~Mola o tlanya",
+"~Width...":"~Bophara...",
 "~Wrap":"~Phuthela"
 }

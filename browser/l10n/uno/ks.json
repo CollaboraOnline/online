@@ -31,6 +31,7 @@
 "Chevron Up":"شیوران اوپر",
 "Circle (Curve)":"Circle (Curve)",
 "Circle (Pour)":" (دائرہ  (انڈیلنا",
+"Column ~Width...":"کالمك كَھجر",
 "Comme~nt":"NOT",
 "Condition...":"شرط  ",
 "Co~lumns...":"کالمز",
@@ -170,6 +171,7 @@
 "~Contour":"قنطور",
 "~Date":"تاریخ",
 "~Date (fixed)":"(تاریخ(مقررہ",
+"~Define":"واضح کرو",
 "~Delete":"خارج کرو",
 "~Edit":"ایڈیٹ",
 "~Edit Contour...":"قنطورکومرتب کرو",
@@ -181,6 +183,7 @@
 "~Group":"گروپ",
 "~Group...":"گروپ",
 "~Header and Footer...":"صفحہ کا اوپر اور نیچے",
+"~Height...":"اونچائی",
 "~Help":"مدد",
 "~Hide":"چھپاؤ",
 "~Hide AutoFilter":"خودکارفلٹرچھپاؤ",
@@ -227,6 +230,7 @@
 "~Validity...":"تقویت",
 "~View":"منظر",
 "~While Typing":"ٹائپینگ کےدوران",
+"~Width...":"چوڑائی",
 "~Wrap":"لپیٹنا",
 "~lowercase":"لوورکیس"
 }

@@ -12,6 +12,7 @@
 "Caption...":"Tshobokanyo...",
 "Center":"Bogare",
 "Center Horizontal":"Bogare tsamaisomoja",
+"Column ~Width...":"Kholomo ~Bophara...",
 "Condition...":"Maemo",
 "Co~lumns...":"D~khplomo...",
 "Cross-reference...":"Gare-tshwantshanyo...",
@@ -81,6 +82,7 @@
 "~Date (fixed)":"~Letlha (baakantswe)",
 "~Edit Contour...":"~kwala Baakanya...",
 "~Enter Group":"~Tsenya Setlhopha",
+"~Height...":"~Boleele...",
 "~Help":"~Thuso",
 "~Hyphenation":"~Hyphernation",
 "~Insert":"~Tsenya",
@@ -94,5 +96,6 @@
 "~Time (fixed)":"~Nako (bakantswe)",
 "~Top":"~Godimo",
 "~Update All":"~Baakanya Tsotlhe",
-"~While Typing":"~Fa ontse o thaepa"
+"~While Typing":"~Fa ontse o thaepa",
+"~Width...":"~Bophara..."
 }

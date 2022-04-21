@@ -24,6 +24,7 @@
 "Chevron Up":"Sheveronela Hodimo",
 "Circle (Curve)":"Sekele (Sokamisa)",
 "Circle (Pour)":"Sekele (Tshela)",
+"Column ~Width...":"Kholomo ~Bophara...",
 "Co~lumns...":"Di~kholomo...",
 "Cross-reference...":"Tshupetso e paroletsang...",
 "Currency":"Boemo ba jwale",
@@ -115,6 +116,7 @@
 "~Contour":"~Sebopeho",
 "~Date":"~Letsatsi",
 "~Date (fixed)":"~Letsatsi (beilweng)",
+"~Define":"~Hlalosa",
 "~Edit Contour...":"~Lokisa Sebopeho...",
 "~Enter Group":"~Kenya Sehlopha",
 "~First Paragraph":"~Serapa sa Pele",
@@ -122,6 +124,7 @@
 "~Goal Seek...":"~Ho Batla Pakane...",
 "~Group...":"~Sehlopha...",
 "~Header and Footer...":"~Hloohwana le Hloohwana ya tlase...",
+"~Height...":"~Bophahamo...",
 "~Hide AutoFilter":"~Pata Filthara e Iketsahallang",
 "~Hide Details":"~Pata Dintlha",
 "~Hyphenation":"~Kgokahano kapa karohantsho ya mantswe",
@@ -146,5 +149,6 @@
 "~Update All":"~Bea Tsohle Nakong",
 "~Validity...":"~Ho Sebetsa...",
 "~While Typing":"~Ha o ntse o Tlanya",
+"~Width...":"~Bophara...",
 "~Wrap":"~Phuthela"
 }

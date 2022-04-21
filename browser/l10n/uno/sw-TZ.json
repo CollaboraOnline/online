@@ -33,6 +33,7 @@
 "Circle (Curve)":"Circle (Curve)",
 "Circle (Pour)":"Circle (Pour)",
 "Column":"Safu-wima",
+"Column ~Width...":"Upana...",
 "Comme~nt":"Kielezo",
 "Condition...":"Condition",
 "Co~lumns...":"Safu-wima...",
@@ -125,6 +126,7 @@
 "Restart Numbering":"Rudia Unambasishaji",
 "Right":"Kulia",
 "Right-To-Left":"Kulia-Kwenda-Kushoto",
+"Row ~Height...":"Kimo...",
 "R~un Macro...":"R~un Macro...",
 "Save ~As...":"Hifadhi Kama...",
 "Select Column":"Teua Safu-wima",
@@ -192,6 +194,7 @@
 "~Group and Outline":"Orodhesha",
 "~Group...":"Kundisha...",
 "~Header and Footer...":"~Header and Footer...",
+"~Height...":"Kimo...",
 "~Help":"Msaada",
 "~Hide AutoFilter":"Ficha ChujioOtomati",
 "~Hide Details":"Ficha Utondoti",
@@ -233,6 +236,7 @@
 "~Validity...":"Uhalali...",
 "~View":"~View",
 "~While Typing":"Unapochapa",
+"~Width...":"Upana...",
 "~Wrap":"Fungasha",
 "~lowercase":"Herufi ndogo"
 }

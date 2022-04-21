@@ -24,6 +24,7 @@
 "Chevron Up":"Chevuroni Nṱha",
 "Circle (Curve)":"Gumba (Kheve)",
 "Circle (Pour)":"Gumba (Shelani)",
+"Column ~Width...":"~Vhuphara ha Kholomu...",
 "Co~lumns...":"Dzikho~ḽomu...",
 "Cross-reference...":"Mahumbulwa...",
 "Currency":"Kharentsi",
@@ -114,6 +115,7 @@
 "~Contour":"~Khonthuwa",
 "~Date":"~Datumu",
 "~Date (fixed)":"~Datumu (khwaṱhaho)",
+"~Define":"~Ṱalusani",
 "~Edit Contour...":"~Lulamisani Contour...",
 "~Enter Group":"~Dzhenisani Tshigwada",
 "~First Paragraph":"~Ndima ya u Thoma",
@@ -121,6 +123,7 @@
 "~Goal Seek...":"~U Ṱoḓa Nḓivho...",
 "~Group...":"~Tshigwada...",
 "~Header and Footer...":"~Heda na Futha...",
+"~Height...":"~Vhulapfu...",
 "~Hide AutoFilter":"~Dzumbani Othofiḽitha",
 "~Hide Details":"~Dzumbani Zwidodombedzwa",
 "~Hyphenation":"~Haifanesheni",
@@ -144,5 +147,6 @@
 "~Update All":"~Khwinifhadzani Zwoṱhe",
 "~Validity...":"~Vhukwae...",
 "~While Typing":"~Musi ni tshi khou Thaipha",
+"~Width...":"~Vhuphara...",
 "~Wrap":"~Putelani"
 }

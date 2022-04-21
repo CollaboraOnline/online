@@ -24,6 +24,7 @@
 "Chevron Up":"Xevhuroni yo ya Ehenhla",
 "Circle (Curve)":"Ndzhendzeleko (Khotseka)",
 "Circle (Pour)":"Ndzhendzeleko (Chela)",
+"Column ~Width...":"Kholomu ~Vuanamo...",
 "Co~lumns...":"Ti~kholomu...",
 "Cross-reference...":"Xikombo lexi yelanaka...",
 "Currency":"Nkarhi",
@@ -118,6 +119,7 @@
 "~Contour":"~Nhlelo",
 "~Date":"~Siku",
 "~Date (fixed)":"~Siku (vekiweke)",
+"~Define":"~Fungha",
 "~Edit Contour...":"~Nhlelo wo Tsala...",
 "~Enter Group":"~Nghena eka Ntlawa",
 "~First Paragraph":"~Sungula Ndzima",
@@ -125,6 +127,7 @@
 "~Goal Seek...":"~Lavisisa Xikongomelo...",
 "~Group...":"~Ntlawa...",
 "~Header and Footer...":"~Marito ya Eka ya le Henhla ni ya le Hansi...",
+"~Height...":"~Vuhenhla...",
 "~Hide AutoFilter":"~Fihla Xisefo xo Tiendlekela",
 "~Hide Details":"~Fihla Vuxokoxoko",
 "~Hyphenation":"~Khwatihato",
@@ -150,5 +153,6 @@
 "~Update All":"~Pfuxeta Hinkwaswo",
 "~Validity...":"~Vutirhiseki...",
 "~While Typing":"~Ri Karhi U Thayipa",
+"~Width...":"~Vuanamo...",
 "~Wrap":"~Phutsa"
 }

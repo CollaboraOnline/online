@@ -24,6 +24,7 @@
 "Chevron Up":"Tjhevroni Phezulu",
 "Circle (Curve)":"Ndulungu (Kheva)",
 "Circle (Pour)":"Indulungu (Thela)",
+"Column ~Width...":"Ububanzi ~Bekholomu...",
 "Co~lumns...":"Am~akholomu...",
 "Cross-reference...":"Ukuqala komunye umtlolo...",
 "Currency":"Ikharensi",
@@ -118,6 +119,7 @@
 "~Contour":"~Ilayini yokuhlanganisa",
 "~Date":"~Ilanga",
 "~Date (fixed)":"~Ilanga (sibekiwe)",
+"~Define":"~Hlathulula",
 "~Edit Contour...":"~Hlela Ilayini yokuhlanganisa...",
 "~Enter Group":"~Faka Isiqhema",
 "~First Paragraph":"~Indima Yokuthoma",
@@ -125,6 +127,7 @@
 "~Goal Seek...":"~Zuma Ihloso...",
 "~Group...":"~Isiqhema...",
 "~Header and Footer...":"~Heda Nefuta...",
+"~Height...":"~Ukuphakama...",
 "~Hide AutoFilter":"~Fihla ihlelo lekhompyutha elisebenza umtlolo elizenzakalelako",
 "~Hide Details":"~Fihla Imininingwana",
 "~Hyphenation":"~Ukufakwa kwehayifeni",
@@ -150,5 +153,6 @@
 "~Update All":"~Letha Koke ebujameni banjesi",
 "~Validity...":"~Ukusebenza...",
 "~While Typing":"~Ngesikhathi Uthayipha",
+"~Width...":"~Ububanzi...",
 "~Wrap":"~Dlulisa igama"
 }

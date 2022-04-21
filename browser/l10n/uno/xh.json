@@ -24,6 +24,7 @@
 "Chevron Up":"Igophe Eligoba Macala Phezulu",
 "Circle (Curve)":"Yenza Isangqa (Igophe)",
 "Circle (Pour)":"Yenza Isangqa (Zolisa)",
+"Column ~Width...":"~Ububanzi Boluhlu Olwehlayo...",
 "Condition...":"Imeko",
 "Co~lumns...":"Izi~ntlu ezehlayo...",
 "Cross-reference...":"Isalathiso-esinqamlezayo...",
@@ -121,6 +122,7 @@
 "~Contour":"~Ikhonto",
 "~Date":"~Umhla",
 "~Date (fixed)":"~Umhla (osisigxina)",
+"~Define":"~Chaza",
 "~Edit Contour...":"~Hlela Ikhonto...",
 "~Enter Group":"~Ngenisa Iqela",
 "~First Paragraph":"~Umhlathi Wokuqala",
@@ -128,6 +130,7 @@
 "~Goal Seek...":"~Ukulandela Injongo...",
 "~Group...":"~Iqela...",
 "~Header and Footer...":"~Okubhalwe Ngentla Nangezantsi Kwekhasi...",
+"~Height...":"~Ukuphakama...",
 "~Hide AutoFilter":"~Fihla Isihluzi Esizenzekelayo",
 "~Hide Details":"~Fihla Iinkcukacha",
 "~Hyphenation":"~Ukufakwa kwekhonkco",
@@ -153,5 +156,6 @@
 "~Update All":"~Hlaziya Konke",
 "~Validity...":"~Ukunyaniseka...",
 "~While Typing":"~Xa Kuchwethezwa",
+"~Width...":"~Ububanzi...",
 "~Wrap":"~Ukugqithela Kumgca Ongezantsi"
 }

@@ -26,6 +26,7 @@
 "Chevron Up":"Ishevroni etulu",
 "Circle (Curve)":"Indilinga (Goba)",
 "Circle (Pour)":"Indilinga (Tsela)",
+"Column ~Width...":"~Bubanti bekholamu...",
 "Condition...":"Simo",
 "Co~lumns...":"Emakho~lamu...",
 "Cross-reference...":"Kuphambanisa emarefarensi...",
@@ -124,6 +125,7 @@
 "~Contour":"~Umkhondovu",
 "~Date":"~Lusuku",
 "~Date (fixed)":"~Lusuku (lubekiwe)",
+"~Define":"~Chaza",
 "~Edit Contour...":"~Editha Umkhondovu...",
 "~Enter Group":"~Ngena Ecenjini",
 "~First Paragraph":"~Ipharagrafu Yekucala",
@@ -131,6 +133,7 @@
 "~Goal Seek...":"~Kufuna umgomo...",
 "~Group...":"~Licembu...",
 "~Header and Footer...":"~Inhloko nemhambi...",
+"~Height...":"~Kuphakama...",
 "~Help":"~Sita",
 "~Hide AutoFilter":"~Fihla kutihlutekela",
 "~Hide Details":"~Fihla Imininingwane",
@@ -156,5 +159,6 @@
 "~Update All":"~Buyeketa Konkhe",
 "~Validity...":"~Buciniso...",
 "~While Typing":"~Ngesikhatsi Usathayipha",
+"~Width...":"~Bubanti...",
 "~Wrap":"~Gocotela"
 }

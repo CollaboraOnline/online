@@ -23,6 +23,7 @@
 "Ce~lls...":"Ka~taklar...",
 "Chart T~ype...":"Diagramma t~uri...",
 "Circle (Curve)":"Aylana (Egri)",
+"Column ~Width...":"Ustunning ~eni...",
 "Comme~nt":"Tarkibi",
 "Comm~ent":"Tarkibi",
 "Condition...":"Shart",
@@ -118,6 +119,7 @@
 "Restart Numbering":"Raqamlashni qaytadan boshlash",
 "Right":"Oʻngda",
 "Right-To-Left":"Oʻngdan ~chapga",
+"Row ~Height...":"Satrning u~zunasi...",
 "R~un Macro...":"Makroni ~bajarish",
 "Save ~As...":"Boshqacha s~aqlash...",
 "Select Column":"Ustunni tanlash",
@@ -175,6 +177,7 @@
 "~Data Ranges...":"Maʼlumot ~oraliqlari...",
 "~Date":"~Sana",
 "~Date (fixed)":"~Sana (oʻrnatilgan)",
+"~Define":"~Aniqlash",
 "~Delete":"~Olib tashlash",
 "~Edit":"~Tahrirlash",
 "~Edit Contour...":"Konturni ~tahrirlash...",
@@ -186,6 +189,7 @@
 "~Group and Outline":"~Guruh va tuzilma",
 "~Group...":"~Guruhlash",
 "~Header and Footer...":"~Ustgi va ostgi kolontitul...",
+"~Height...":"~Balandligi...",
 "~Help":"~Yordam",
 "~Hide":"~Bekitish",
 "~Hide AutoFilter":"Avto filtrni ~bekitish",
@@ -231,5 +235,6 @@
 "~Validity...":"~Tekshirish...",
 "~View":"~Koʻrinish",
 "~While Typing":"~Kiritishda",
+"~Width...":"~Eni",
 "~lowercase":"Ki~chik harf"
 }
