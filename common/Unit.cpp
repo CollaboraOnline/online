@@ -552,17 +552,14 @@ UnitWSD::~UnitWSD()
 {
 }
 
-void UnitWSD::configure(Poco::Util::LayeredConfiguration &config)
+void UnitWSD::defaultConfigure(Poco::Util::LayeredConfiguration& config)
 {
-    if (isUnitTesting())
-    {
-        // Force HTTP - helps stracing.
-        config.setBool("ssl.enable", false);
-        // Use http:// everywhere.
-        config.setBool("ssl.termination", false);
-        // Force console output - easier to debug.
-        config.setBool("logging.file[@enable]", false);
-    }
+    // Force HTTP - helps stracing.
+    config.setBool("ssl.enable", false);
+    // Use http:// everywhere.
+    config.setBool("ssl.termination", false);
+    // Force console output - easier to debug.
+    config.setBool("logging.file[@enable]", false);
 }
 
 void UnitWSD::lookupTile(int part, int mode, int width, int height, int tilePosX, int tilePosY,

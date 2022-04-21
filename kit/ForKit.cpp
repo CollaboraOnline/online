@@ -675,8 +675,7 @@ int main(int argc, char** argv)
         return EX_USAGE;
     }
 
-    if (!UnitBase::init(UnitBase::UnitType::Kit,
-                        UnitTestLibrary))
+    if (!UnitBase::init(UnitBase::UnitType::Kit, UnitTestLibrary))
     {
         LOG_FTL("Failed to load kit unit test library");
         return EX_USAGE;
