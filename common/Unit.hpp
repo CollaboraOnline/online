@@ -351,6 +351,10 @@ public:
 
     static UnitWSD& get();
 
+    /// Applies the default config.
+    /// This is needed to initialize the logging subsystem early.
+    static void defaultConfigure(Poco::Util::LayeredConfiguration& /* config */);
+
     enum class TestRequest
     {
         Client,
@@ -365,7 +369,7 @@ public:
     // ---------------- WSD hooks ----------------
 
     /// Manipulate and modify the configuration before any usage.
-    virtual void configure(Poco::Util::LayeredConfiguration& /* config */);
+    virtual void configure(Poco::Util::LayeredConfiguration& /* config */) {}
 
     /// Main-loop reached, time for testing.
     /// Invoked from coolwsd's main thread.
