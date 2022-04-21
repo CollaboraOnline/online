@@ -96,7 +96,6 @@
 
 using Poco::Exception;
 using Poco::File;
-using Poco::JSON::Array;
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
 using Poco::URI;
@@ -2163,7 +2162,7 @@ public:
         _socketName(socketName),
         _loKit(loKit),
         _jailId(jailId),
-        _ksPoll(ksPoll),
+        _ksPoll(std::move(ksPoll)),
         _mobileAppDocId(mobileAppDocId)
     {
     }
