@@ -671,7 +671,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:FormatPaintbrush'},
 				{uno: '.uno:ResetAttributes'},
-				{name: _UNO('.uno:PrintRangesFormatMenu', 'spreadsheet'), type: 'menu', menu: [
+				{name: _UNO('.uno:PrintRangesMenu', 'spreadsheet'), type: 'menu', menu: [
 					{uno: '.uno:DefinePrintArea'},
 					{uno: '.uno:DeletePrintArea'}]},
 				{name: _UNO('.uno:FormatSparklineMenu', 'spreadsheet'), type: 'menu', menu: [

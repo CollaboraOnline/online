@@ -711,7 +711,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			{
 				'id': 'Data-PrintRangesMenu:MenuPrintRanges',
 				'type': 'menubutton',
-				'text': _UNO('.uno:PrintRangesFormatMenu', 'spreadsheet'),
+				'text': _UNO('.uno:PrintRangesMenu', 'spreadsheet'),
 				'enabled': 'true'
 			},
 			{

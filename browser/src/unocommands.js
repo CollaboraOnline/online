@@ -364,7 +364,7 @@ var unoCommandsArray = {
 	'PickList':{global:{menu:_('~File'),},},
 	'PreviousTrackedChange':{text:{context:_('Previous Track Change'),menu:_('Pr~evious'),},},
 	'Print':{global:{menu:_('~Print...'),},},
-	'PrintRangesFormatMenu':{spreadsheet:{menu:_('Prin~t Ranges'),},},
+	'PrintRangesMenu':{spreadsheet:{menu:_('Prin~t Ranges'),},},
 	'RecalcPivotTable':{spreadsheet:{menu:_('~Refresh'),},},
 	'Redo':{global:{menu:_('~Redo'),},},
 	'RegressionDialog':{spreadsheet:{menu:_('~Regression...'),},},
