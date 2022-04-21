@@ -118,7 +118,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						} : {},
 					hasRevisionHistory ?
 						{
-							'id': 'rev-history',
+							'id': 'Rev-History',
 							'type': 'menubartoolitem',
 							'text': _('See history'),
 							'command': '.uno:rev-history'
