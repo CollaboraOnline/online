@@ -160,6 +160,7 @@ UnitBase::TestResult UnitEachView::testGraphicViewSelectionImpress()
 }
 
 UnitEachView::UnitEachView()
+    : UnitWSD("UnitEachView")
 {
     // 8 times larger then the default.
     setTimeout(std::chrono::seconds(240));

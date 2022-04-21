@@ -65,6 +65,11 @@ class UnitUNOCommand : public UnitWSD
     TestResult testStateUnoCommandImpress();
 
 public:
+    UnitUNOCommand()
+        : UnitWSD("UnitUNOCommand")
+    {
+    }
+
     void invokeWSDTest() override;
 };
 
