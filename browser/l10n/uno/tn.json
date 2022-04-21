@@ -12,9 +12,9 @@
 "Caption...":"Tshobokanyo...",
 "Center":"Bogare",
 "Center Horizontal":"Bogare tsamaisomoja",
+"Column ~Width...":"Kholomo ~Bophara...",
 "Condition...":"Maemo",
 "Co~lumns...":"D~khplomo...",
-"Cross-reference...":"Gare-tshwantshanyo...",
 "Currency":"Bojaanong 3D",
 "Dat~e (variable)":"Le~tlha (pharologano)",
 "Decrease Indent":"Fokotsa Kgarametso",
@@ -43,9 +43,7 @@
 "Line Spacing: 1":"Mola Pulophatlha: 1",
 "Manual ~Break...":"Tiro ~Boikhutso...",
 "Number":"Palo",
-"Numbering Off":"Tsenyopalo Fedile/tsamaile/feditse/tima",
 "Open Hyperlink":"Pulo Kopanyo kgolo",
-"Outline":"Molantle",
 "Position and Si~ze...":"Maemo le Bo~golo...",
 "Restart Numbering":"Simololagape Go tsenya dipalo",
 "Right":"Moja",
@@ -81,6 +79,7 @@
 "~Date (fixed)":"~Letlha (baakantswe)",
 "~Edit Contour...":"~kwala Baakanya...",
 "~Enter Group":"~Tsenya Setlhopha",
+"~Height...":"~Boleele...",
 "~Help":"~Thuso",
 "~Hyphenation":"~Hyphernation",
 "~Insert":"~Tsenya",
@@ -94,5 +93,6 @@
 "~Time (fixed)":"~Nako (bakantswe)",
 "~Top":"~Godimo",
 "~Update All":"~Baakanya Tsotlhe",
-"~While Typing":"~Fa ontse o thaepa"
+"~While Typing":"~Fa ontse o thaepa",
+"~Width...":"~Bophara..."
 }
