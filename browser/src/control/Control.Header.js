@@ -83,6 +83,10 @@ L.Control.Header = L.Class.extend({
 		}
 	},
 
+	_isRowColumnInSelectedRange: function (index) {
+		return (!!this._headerInfo.getElementData(index).isCurrent) || (!!this._headerInfo.getElementData(index).isHighlighted);
+	},
+
 	onLongPress: function () {
 		if (this._map.isPermissionEdit()) {
 			window.contextMenuWizard = true;
@@ -98,7 +102,7 @@ L.Control.Header = L.Class.extend({
 	},
 
 	optimalHeight: function(index) {
-		if (!this._headerInfo.getElementData(index).isCurrent) {
+		if (!this._isRowColumnInSelectedRange(index)) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:SetOptimalRowHeight');
@@ -108,37 +112,35 @@ L.Control.Header = L.Class.extend({
 		// First select the corresponding row because
 		// .uno:InsertRows doesn't accept any row number
 		// as argument and just inserts before the selected row
-		if (!this._headerInfo.getElementData(index).isCurrent) {
+		if (!this._isRowColumnInSelectedRange(index)) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertRows');
 	},
 
 	insertRowBelow: function(index) {
-		if (!this._headerInfo.getElementData(index).isCurrent) {
+		if (!this._isRowColumnInSelectedRange(index)) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertRowsAfter');
 	},
 
 	deleteRow: function(index) {
-		if (!this._headerInfo.getElementData(index).isHighlighted) {
+		if (!this._isRowColumnInSelectedRange(index)) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:DeleteRows');
 	},
 
 	hideRow: function(index) {
-		if (!this._headerInfo.getElementData(index).isCurrent
-		&& !this._headerInfo.getElementData(index).isHighlighted) {
+		if (!this._isRowColumnInSelectedRange(index)) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:HideRow');
 	},
 
 	showRow: function(index) {
-		if (!this._headerInfo.getElementData(index).isCurrent
-		&& !this._headerInfo.getElementData(index).isHighlighted) {
+		if (!this._isRowColumnInSelectedRange(index)) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:ShowRow');
@@ -218,7 +220,7 @@ L.Control.Header = L.Class.extend({
 	},
 
 	optimalWidth: function(index) {
-		if (!this._headerInfo.getElementData(index).isCurrent) {
+		if (!this._isRowColumnInSelectedRange(index)) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:SetOptimalColumnWidth');
@@ -228,7 +230,7 @@ L.Control.Header = L.Class.extend({
 		// First select the corresponding column because
 		// .uno:InsertColumn doesn't accept any column number
 		// as argument and just inserts before the selected column
-		if (!this._headerInfo.getElementData(index).isCurrent) {
+		if (!this._isRowColumnInSelectedRange(index)) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertColumns');
@@ -236,7 +238,7 @@ L.Control.Header = L.Class.extend({
 	},
 
 	insertColumnAfter: function(index) {
-		if (!this._headerInfo.getElementData(index).isCurrent) {
+		if (!this._isRowColumnInSelectedRange(index)) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertColumnsAfter');
@@ -244,7 +246,7 @@ L.Control.Header = L.Class.extend({
 	},
 
 	deleteColumn: function(index) {
-		if (!this._headerInfo.getElementData(index).isHighlighted) {
+		if (!this._isRowColumnInSelectedRange(index)) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:DeleteColumns');
@@ -252,8 +254,7 @@ L.Control.Header = L.Class.extend({
 	},
 
 	hideColumn: function(index) {
-		if (!this._headerInfo.getElementData(index).isCurrent
-		&& !this._headerInfo.getElementData(index).isHighlighted) {
+		if (!this._isRowColumnInSelectedRange(index)) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:HideColumn');
@@ -261,8 +262,7 @@ L.Control.Header = L.Class.extend({
 	},
 
 	showColumn: function(index) {
-		if (!this._headerInfo.getElementData(index).isCurrent
-		&& !this._headerInfo.getElementData(index).isHighlighted) {
+		if (!this._isRowColumnInSelectedRange(index)) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:ShowColumn');
