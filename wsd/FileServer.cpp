@@ -516,8 +516,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         if (requestSegments.size() < 1)
             throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
 
-        std::string relPath = getRequestPathname(request);
-        std::string endPoint = requestSegments[requestSegments.size() - 1];
+        const std::string relPath = getRequestPathname(request);
+        const std::string endPoint = requestSegments[requestSegments.size() - 1];
 
         static std::string etagString = "\"" COOLWSD_VERSION_HASH +
             config.getString("ver_suffix", "") + "\"";
@@ -844,8 +844,9 @@ constexpr char BRANDING[] = "branding";
 constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 #endif
 
-namespace {
-    bool isRtlLanguage(std::string language)
+namespace
+{
+    bool isRtlLanguage(const std::string& language)
     {
         if (language.rfind("ar", 0) == 0 ||
             language.rfind("arc", 0) == 0 ||
