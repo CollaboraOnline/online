@@ -1661,7 +1661,7 @@ L.Control.Menubar = L.Control.extend({
 					this._map.save(false, false);
 				}
 			}
-		} else if (id === 'shareas') {
+		} else if (id === 'shareas' || id === 'ShareAs') {
 			this._map.openShare();
 		} else if (id === 'print') {
 			this._map.print();
@@ -1916,7 +1916,7 @@ L.Control.Menubar = L.Control.extend({
 		if (menuItem.id === 'saveas' && this._map['wopi'].UserCanNotWriteRelative)
 			return false;
 
-		if (menuItem.id === 'shareas' && !this._map['wopi'].EnableShare)
+		if ((menuItem.id === 'shareas' || menuItem.id === 'ShareAs') && !this._map['wopi'].EnableShare)
 			return false;
 
 		if (menuItem.id === 'insertgraphicremote' && !this._map['wopi'].EnableInsertRemoteImage)
