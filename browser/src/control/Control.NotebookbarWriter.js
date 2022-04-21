@@ -242,6 +242,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getHelpTab: function() {
 		var hasLatestUpdates = window.enableWelcomeMessage;
 		var hasFeedback = this._map.feedback;
+		var hasAbout = L.DomUtil.get('about-dialog') !== null;
 
 		var content = [
 			{
@@ -315,17 +316,18 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								}
 							]
 						} : {},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'about',
-								'type': 'bigtoolitem',
-								'text': _('About'),
-								'command': '.uno:About'
-							}
-						]
-					}
+					hasAbout ?
+						{
+							'type': 'toolbox',
+							'children': [
+								{
+									'id': 'about',
+									'type': 'bigtoolitem',
+									'text': _('About'),
+									'command': '.uno:About'
+								}
+							]
+						} : {}
 				]
 			}
 		];
