@@ -139,7 +139,7 @@
 .leaflet-right .leaflet-control {
 	float: right;
 	margin-right: 10px;
-	line-height: 28px;
+	line-height: 1;
 
 }
 .leaflet-top .leaflet-control {
