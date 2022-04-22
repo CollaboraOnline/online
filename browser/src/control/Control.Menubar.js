@@ -353,6 +353,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				{type: 'separator'},
+				{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
+				{type: 'separator'},
 				{uno: '.uno:SlideMasterPage'},
 				{type: 'separator'},
 				{uno: '.uno:ModifyPage'},
@@ -483,6 +485,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 				{type: 'separator'},
+				{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
+				{type: 'separator'},
 				{uno: '.uno:Sidebar'},
 				{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'}
 			]},
@@ -595,6 +599,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:ZoomPlus', 'text'), id: 'zoomin', type: 'action'},
 				{name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action',},
 				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
+				{type: 'separator'},
+				{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 				{type: 'separator'},
 				{name: _UNO('.uno:FreezePanes', 'spreadsheet', true), id: 'FreezePanes', type: 'action', uno: '.uno:FreezePanes'},
 				{name: _UNO('.uno:FreezeCellsMenu', 'spreadsheet', true), id: 'FreezeCellsMenu', type: 'menu', uno: '.uno:FreezeCellsMenu', menu: [
