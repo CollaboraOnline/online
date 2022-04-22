@@ -145,19 +145,7 @@ L.Control.UIManager = L.Control.extend({
 			this.map.addControl(L.control.mobileTopBar(docType));
 			this.map.addControl(L.control.searchBar());
 		} else if (enableNotebookbar) {
-			if (docType === 'spreadsheet') {
-				var notebookbar = L.control.notebookbarCalc();
-			} else if (docType === 'presentation') {
-				notebookbar = L.control.notebookbarImpress();
-			} else if (docType === 'drawing') {
-				notebookbar = L.control.notebookbarDraw();
-			} else {
-				notebookbar = L.control.notebookbarWriter();
-			}
-
-			this.notebookbar = notebookbar;
-			this.map.addControl(notebookbar);
-
+			this.createNotebookbarControl(docType);
 			// makeSpaceForNotebookbar call in onUpdatePermission
 		}
 
@@ -256,12 +244,12 @@ L.Control.UIManager = L.Control.extend({
 		this.map.topToolbar.updateControlsState();
 	},
 
-	addNotebookbarUI: function() {
-		if (this.map.getDocType() === 'spreadsheet') {
+	createNotebookbarControl: function(docType) {
+		if (docType === 'spreadsheet') {
 			var notebookbar = L.control.notebookbarCalc();
-		} else if (this.map.getDocType() === 'presentation') {
+		} else if (docType === 'presentation') {
 			notebookbar = L.control.notebookbarImpress();
-		} else if (this.map.getDocType() === 'drawing') {
+		} else if (docType === 'drawing') {
 			notebookbar = L.control.notebookbarDraw();
 		} else {
 			notebookbar = L.control.notebookbarWriter();
@@ -269,9 +257,13 @@ L.Control.UIManager = L.Control.extend({
 
 		this.notebookbar = notebookbar;
 		this.map.addControl(notebookbar);
+	},
 
-		notebookbar._showNotebookbar = true;
-		notebookbar.showTabs();
+	addNotebookbarUI: function() {
+		this.createNotebookbarControl(this.map.getDocType());
+
+		this.notebookbar._showNotebookbar = true;
+		this.notebookbar.showTabs();
 		$('.main-nav').removeClass('readonly');
 
 		$('#map').addClass('notebookbar-opened');
