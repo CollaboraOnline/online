@@ -1004,9 +1004,15 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG%"), enableWelcomeMessage);
 
-    // the config value of 'notebookbar' or 'classic' overrides the UIMode
+    // the config value of 'notebookbar/tabbed' or 'classic/compact' overrides the UIMode
     // from the WOPI
     std::string userInterfaceModeConfig = config.getString("user_interface.mode", "default");
+    if (userInterfaceModeConfig == "compact")
+        userInterfaceModeConfig = "classic";
+
+    if (userInterfaceModeConfig == "tabbed")
+        userInterfaceModeConfig = "notebookbar";
+
     if (userInterfaceModeConfig == "classic" || userInterfaceModeConfig == "notebookbar" || userInterfaceMode.empty())
         userInterfaceMode = userInterfaceModeConfig;
 
