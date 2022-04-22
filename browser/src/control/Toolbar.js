@@ -333,7 +333,8 @@ L.Map.include({
 		var isAllowedInReadOnly = false;
 		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog', '.uno:EditAnnotation',
 			'.uno:InsertAnnotation', '.uno:DeleteAnnotation', '.uno:Signature',
-			'.uno:ShowResolvedAnnotations'];
+			'.uno:ShowResolvedAnnotations', '.uno:ToolbarMode?Mode:string=notebookbar_online.ui',
+			'.uno:ToolbarMode?Mode:string=Default'];
 
 		for (var i in allowedCommands) {
 			if (allowedCommands[i] === command) {

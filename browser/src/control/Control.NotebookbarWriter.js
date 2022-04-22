@@ -593,18 +593,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			{
 				'id': 'stylesview',
 				'type': 'iconview',
-				'entries': [
-					{
-						'text': _('Default Style'),
-						'selected': 'true'
-					},
-					{
-						'text': _('Text Body'),
-					},
-					{
-						'text': _('Title'),
-					}
-				],
+				'entries': [],
 				'vertical': 'false'
 			},
 			{
