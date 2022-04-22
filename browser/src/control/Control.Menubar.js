@@ -1159,9 +1159,12 @@ L.Control.Menubar = L.Control.extend({
 		map.on('addmenu', this._addMenu, this);
 		map.on('commandvalues', this._onInitLanguagesMenu, this);
 		map.on('updatetoolbarcommandvalues', this._onStyleMenu, this);
+
+		this._resetOverflow();
 	},
 
 	onRemove: function() {
+
 		this._map.off('doclayerinit', this._onDocLayerInit, this);
 		this._map.off('updatepermission', this._onRefresh, this);
 		this._map.off('addmenu', this._addMenu, this);
@@ -1170,6 +1173,8 @@ L.Control.Menubar = L.Control.extend({
 
 		this._menubarCont.remove();
 		this._menubarCont = null;
+
+		this._resetOverflow();
 	},
 
 	_addMenu: function (e) {
@@ -1432,10 +1437,22 @@ L.Control.Menubar = L.Control.extend({
 		}
 	},
 
-	_onMouseOut: function() {
-		$('.main-nav.hasnotebookbar').css('overflow', 'scroll hidden');
+	// needed for smartmenus to work inside notebookbar
+	_setupOverflow: function() {
+		$('.main-nav.hasnotebookbar').css('overflow', 'visible');
+		$('.notebookbar-scroll-wrapper').css('overflow', 'visible');
+	},
+
+	_resetOverflow: function() {
+		$('.main-nav').css('overflow', '');
 		$('.notebookbar-scroll-wrapper').css('overflow', '');
 	},
+
+	_onMouseOut: function(e) {
+		var self = e.data.self;
+		self._resetOverflow();
+	},
+
 	_checkedMenu: function(uno, item) {
 		var constChecked = 'lo-menu-item-checked';
 		var state = this._map['stateChangeHandler'].getItemValue(uno);
@@ -1449,9 +1466,8 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_beforeShow: function(e, menu) {
-		$('.main-nav').css('overflow', 'visible');
-		$('.notebookbar-scroll-wrapper').css('overflow', 'visible');
 		var self = e.data.self;
+		self._setupOverflow();
 		var items = $(menu).children().children('a').not('.has-submenu');
 		$(items).each(function() {
 			var aItem = this;
