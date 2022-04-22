@@ -211,6 +211,7 @@ w2ui-toolbar {
 	width: 100px;
 	padding: 2px 4px;
 	margin-top: 1px;
+	margin-left: 5px;
 }
 
 #formulaInput {
