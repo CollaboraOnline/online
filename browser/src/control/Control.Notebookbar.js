@@ -49,6 +49,7 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.on('statusbarchanged', this.onStatusbarChange, this);
 		this.map.on('rulerchanged', this.onRulerChange, this);
 
+		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
 
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
 		$('.main-nav').addClass('hasnotebookbar');
