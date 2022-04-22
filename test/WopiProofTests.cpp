@@ -74,7 +74,7 @@ void WopiProofTests::verifySignature(const std::string &access,
                                      const std::string &testname)
 {
     (void)testname; // unused
-#if OPENSSL_VERSION_NUMBER > 0x10100000L
+#if OPENSSL_VERSION_NUMBER > 0x10100000L && OPENSSL_VERSION_NUMBER < 0x30000000L
     std::vector<unsigned char> proof = Proof::GetProof(access, uri, ticks);
 
     BIGNUM *modulus = Base64ToNum(discoveryModulus);
@@ -100,7 +100,8 @@ void WopiProofTests::verifySignature(const std::string &access,
     (void)access; (void)uri; (void)ticks;
     (void)discoveryModulus; (void)discoveryExponent;
     (void)msgProofStr;
-    std::cerr << "OpenSSL too old to verify keys easily " << OPENSSL_VERSION_TEXT << " needs to be 1.1.0 at least\n";
+    LOG_TST("OpenSSL too old/new to verify keys easily "
+            << OPENSSL_VERSION_TEXT << " needs to be at least 1.1.0, but not 3.0\n");
 #endif
 }
 
