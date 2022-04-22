@@ -152,10 +152,16 @@ w2ui-toolbar {
 	height: 30px;
 }
 
-#tb_formulabar_item_address, #tb_formulabar_item_item_2, #tb_formulabar_item_functiondialog {
-	padding-top: 2px;
+.inputbar_multiline #tb_formulabar_item_address,
+.inputbar_multiline #tb_formulabar_item_item_2,
+.inputbar_multiline #tb_formulabar_item_functiondialog {
 	vertical-align: top;
 }
+
+.inputbar_multiline #tb_formulabar_item_functiondialog {
+	padding-top: 4px;
+}
+
 
 #presentation-toolbar {
 	bottom: 0;
@@ -201,8 +207,10 @@ w2ui-toolbar {
 }
 
 #addressInput {
-	height: 29px;
+	height: 22px;
 	width: 100px;
+	padding: 2px 4px;
+	margin-top: 1px;
 }
 
 #formulaInput {
