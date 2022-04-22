@@ -43,10 +43,15 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
         // detect the UIMode or component
         if (keyValue.equals(0, "UIMode"))
         {
-            if (keyValue.equals(1, "classic") || keyValue.equals(1, "notebookbar"))
+            if (keyValue.equals(1, "compact") || keyValue.equals(1, "classic"))
             {
-                json.set("uiMode", keyValue[1]);
-                uiMode = keyValue[1];
+                json.set("uiMode", "classic");
+                uiMode = "classic";
+            }
+            else if(keyValue.equals(1, "tabbed") || keyValue.equals(1, "notebookbar"))
+            {
+                json.set("uiMode", "notebookbar");
+                uiMode = "notebookbar";
             }
             else
                 LOG_ERR("unknown UIMode value " << keyValue[1]);
