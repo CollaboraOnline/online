@@ -1667,6 +1667,12 @@ void COOLWSD::innerInitialize(Application& self)
     // Setup user interface mode
     UserInterface = getConfigValue<std::string>(conf, "user_interface.mode", "default");
 
+    if (UserInterface == "compact")
+        UserInterface = "classic";
+
+    if (UserInterface == "tabbed")
+        UserInterface = "notebookbar";
+
     // Set the log-level after complete initialization to force maximum details at startup.
     LogLevel = getConfigValue<std::string>(conf, "logging.level", "trace");
     MostVerboseLogLevelSettableFromClient = getConfigValue<std::string>(conf, "logging.most_verbose_level_settable_from_client", "notice");
