@@ -802,15 +802,18 @@ private:
     class SaveManager final
     {
     public:
-        SaveManager()
-            : _autosaveInterval(std::chrono::seconds(30))
+        SaveManager(std::chrono::milliseconds autosaveInterval)
+            : _autosaveInterval(autosaveInterval)
             , _lastAutosaveCheckTime(RequestManager::now())
-            , _isAutosaveEnabled(std::getenv("COOL_NO_AUTOSAVE") == nullptr)
         {
+            LOG_TRC("Created SaveManager with auto-save interval of " << _autosaveInterval);
         }
 
-        /// Return true iff auto save is enabled.
-        bool isAutosaveEnabled() const { return _isAutosaveEnabled; }
+        /// Returns true iff auto save is enabled.
+        bool isAutosaveEnabled() const { return _autosaveInterval > std::chrono::seconds::zero(); }
+
+        /// Returns the autosave interval.
+        std::chrono::milliseconds autosaveInterval() const { return _autosaveInterval; }
 
         /// Returns true if we should issue an auto-save.
         bool needAutosaveCheck() const
@@ -924,7 +927,7 @@ private:
         {
             const auto now = std::chrono::steady_clock::now();
             os << indent << "isSaving now: " << std::boolalpha << isSaving();
-            os << indent << "auto-save enabled: " << std::boolalpha << _isAutosaveEnabled;
+            os << indent << "auto-save enabled: " << std::boolalpha << isAutosaveEnabled();
             os << indent << "auto-save interval: " << _autosaveInterval;
             os << indent
                << "last auto-save check time: " << Util::getTimeForLog(now, _lastAutosaveCheckTime);
@@ -950,14 +953,11 @@ private:
         /// The document's last-modified time.
         std::chrono::system_clock::time_point _lastModifiedTime;
 
-        /// The number of seconds between autosave checks for modification.
-        const std::chrono::seconds _autosaveInterval;
+        /// The number of milliseconds between autosave checks for modification.
+        const std::chrono::milliseconds _autosaveInterval;
 
         /// The last autosave check time.
         std::chrono::steady_clock::time_point _lastAutosaveCheckTime;
-
-        /// Whether auto-saving is enabled at all or not.
-        const bool _isAutosaveEnabled;
     };
 
     /// Represents an upload request.
