@@ -1576,7 +1576,6 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         {
             // Saved and stored; update flags.
             _saveManager.setLastModifiedTime(_uploadRequest->newFileModifiedTime());
-            _storageManager.markLastUploadTime();
 
             // Save the storage timestamp.
             _storageManager.setLastModifiedTime(_storage->getFileInfo().getLastModifiedTime());
@@ -1971,11 +1970,11 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
         const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         const std::chrono::milliseconds inactivityTimeMs
             = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime);
-        const auto timeSinceLastSaveMs = std::chrono::duration_cast<std::chrono::milliseconds>(
-            now - _storageManager.getLastUploadTime());
-        LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSaveMs
-                                                   << " and most recent activity was "
-                                                   << inactivityTimeMs << " ago.");
+        const auto timeSinceLastSave = std::min(_saveManager.timeSinceLastSaveRequest(),
+                                                _storageManager.timeSinceLastUploadResponse());
+        LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSave
+                                                     << " and most recent activity was "
+                                                     << inactivityTimeMs << " ago.");
 
         bool save = false;
         // Zero or negative config value disables save.
@@ -1986,8 +1985,9 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
             save = true;
         }
 
+        // Save if it's been long enough since the last save and/or upload.
         if (_saveManager.isAutosaveEnabled() &&
-            timeSinceLastSaveMs >= _saveManager.autosaveInterval())
+            timeSinceLastSave >= _saveManager.autosaveInterval())
         {
             save = true;
         }
