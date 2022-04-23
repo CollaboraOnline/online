@@ -1914,6 +1914,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "per_document.limit_stack_mem_kb", "8000" },
         { "per_document.limit_virt_mem_mb", "0" },
         { "per_document.max_concurrency", "4" },
+        { "per_document.min_time_between_saves_ms", "500" },
         { "per_document.batch_priority", "5" },
         { "per_document.pdf_resolution_dpi", "96" },
         { "per_document.redlining_as_comments", "false" },
