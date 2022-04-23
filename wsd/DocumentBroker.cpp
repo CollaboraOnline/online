@@ -1366,9 +1366,11 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
         _storage->forceSave();
     }
 
+    static const auto minTimeBetweenUploads = std::chrono::milliseconds(
+        COOLWSD::getConfigValue<int>("per_document.min_time_between_uploads_ms", 5000));
+
     if (force || _storageManager.lastUploadSuccessful() ||
-        (_storageManager.timeSinceLastUploadRequest() > std::chrono::seconds(5) &&
-         _storageManager.timeSinceLastUploadResponse() > std::chrono::seconds(5)))
+        _storageManager.canUploadNow(minTimeBetweenUploads))
     {
         constexpr bool isRename = false;
         uploadToStorageInternal(sessionId, /*saveAsPath*/ std::string(),
@@ -1382,7 +1384,8 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
     else
     {
         LOG_TRC("Last upload had failed and it's only been "
-                << _storageManager.timeSinceLastUploadResponse() << " since. ");
+                << _storageManager.timeSinceLastUploadResponse()
+                << " since. Min time between uploads: " << minTimeBetweenUploads);
     }
 }
 

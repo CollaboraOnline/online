@@ -699,9 +699,10 @@ private:
 
         /// How much time passed since the last request,
         /// regardless of whether we got a response or not.
-        const std::chrono::milliseconds timeSinceLastRequest() const
+        const std::chrono::milliseconds timeSinceLastRequest(
+            const std::chrono::steady_clock::time_point now = RequestManager::now()) const
         {
-            return std::chrono::duration_cast<std::chrono::milliseconds>(now() - _lastRequestTime);
+            return std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastRequestTime);
         }
 
         /// True iff there is an active request and it has timed out.
@@ -727,15 +728,26 @@ private:
 
         /// How much time passed since the last response,
         /// regardless of whether there is a newer request or not.
-        const std::chrono::milliseconds timeSinceLastResponse() const
+        const std::chrono::milliseconds timeSinceLastResponse(
+            const std::chrono::steady_clock::time_point now = RequestManager::now()) const
         {
-            return std::chrono::duration_cast<std::chrono::milliseconds>(now() - _lastResponseTime);
+            return std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastResponseTime);
         }
 
 
         /// Returns true iff there is an active request in progress.
         bool isActive() const { return _lastResponseTime < _lastRequestTime; }
 
+        /// Checks whether or not we can issue a new request now.
+        /// Returns true iff there is no active request and sufficient
+        /// time has elapsed since the last request, including that
+        /// more time than the last request's duration has passe.
+        bool canRequestNow(std::chrono::milliseconds minTime) const
+        {
+            const auto now = RequestManager::now();
+            return !isActive() && std::min(timeSinceLastRequest(now), timeSinceLastResponse(now)) >=
+                                      std::max(minTime, _lastRequestDuration);
+        }
 
         /// Sets the last request's result, either to success or failure.
         /// And marks the last response time.
@@ -913,12 +925,7 @@ private:
         /// True if we aren't saving and the minimum time since last save has elapsed.
         bool canSaveNow(std::chrono::milliseconds minTime) const
         {
-            // Can't save if save is in progress, or when it the time elapsed
-            // since the last response, or request, hasn't been that long, or
-            // if it hasn't been longer than the time the last save took.
-            return !isSaving() &&
-                   std::min(_request.timeSinceLastRequest(), _request.timeSinceLastResponse()) >=
-                       std::max(minTime, lastSaveDuration());
+            return _request.canRequestNow(minTime);
         }
 
         void dumpState(std::ostream& os, const std::string& indent = "\n  ")
@@ -1033,6 +1040,9 @@ private:
             _request.setLastRequestResult(success);
         }
 
+        /// True iff an upload is in progress (requested but not completed).
+        bool isUploading() const { return _request.isActive(); }
+
         /// The duration elapsed since we sent the last upload request to storage.
         std::chrono::milliseconds timeSinceLastUploadRequest() const
         {
@@ -1066,9 +1076,23 @@ private:
         /// Returns the last modified time of the document.
         const std::string& getLastModifiedTime() const { return _lastModifiedTime; }
 
+        /// Returns how long the last upload took.
+        std::chrono::milliseconds lastUploadDuration() const
+        {
+            return _request.lastRequestDuration();
+        }
+
+        /// True if we aren't uploading and the minimum time since last upload has elapsed.
+        bool canUploadNow(std::chrono::milliseconds minTime) const
+        {
+            return _request.canRequestNow(minTime);
+        }
+
+
         void dumpState(std::ostream& os, const std::string& indent = "\n  ")
         {
             const auto now = std::chrono::steady_clock::now();
+            os << indent << "isUploading now: " << std::boolalpha << isUploading();
             os << indent << "last upload time: " << Util::getTimeForLog(now, getLastUploadTime());
             os << indent << "last upload was successful: " << lastUploadSuccessful();
             os << indent << "upload failure count: " << uploadFailureCount();
