@@ -363,6 +363,15 @@ public:
         return getConfigValue(Application::instance().config(), name, def);
     }
 
+    /// Returns the value of the specified application configuration,
+    /// or the default, if one doesn't exist.
+    template <typename T> static T getConfigValueNonZero(const std::string& name, const T def)
+    {
+        static_assert(std::is_integral<T>::value, "Meaningless on non-integral types");
+        const T res = getConfigValue(Application::instance().config(), name, def);
+        return res <= T(0) ? T(0) : res;
+    }
+
     /// Reads and processes path entries with the given property
     /// from the configuration.
     /// Converts relative paths to absolute.

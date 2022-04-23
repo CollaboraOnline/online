@@ -122,6 +122,10 @@ DocumentBroker::DocumentBroker(ChildType type,
     _docId(Util::encodeId(DocBrokerId++, 3)),
     _documentChangedInStorage(false),
     _isViewFileExtension(false),
+    _saveManager(std::chrono::seconds(
+          std::getenv("COOL_NO_AUTOSAVE") != nullptr
+              ? 0
+              : COOLWSD::getConfigValueNonZero<int>("per_document.autosave_duration_secs", 300))),
     _isModified(false),
     _cursorPosX(0),
     _cursorPosY(0),
@@ -1966,10 +1970,6 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
         static const std::chrono::milliseconds MaxIdleSaveDurationMs = std::chrono::seconds(
             COOLWSD::getConfigValue<int>("per_document.idlesave_duration_secs", 30));
 
-        // The configured maximum duration before saving. Zero to disable.
-        static const std::chrono::milliseconds MaxAutoSaveDurationMs = std::chrono::seconds(
-            COOLWSD::getConfigValue<int>("per_document.autosave_duration_secs", 300));
-
         const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         const std::chrono::milliseconds inactivityTimeMs
             = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime);
@@ -1988,8 +1988,8 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
             save = true;
         }
 
-        if (MaxAutoSaveDurationMs > std::chrono::milliseconds::zero()
-            && timeSinceLastSaveMs >= MaxAutoSaveDurationMs)
+        if (_saveManager.isAutosaveEnabled() &&
+            timeSinceLastSaveMs >= _saveManager.autosaveInterval())
         {
             save = true;
         }
