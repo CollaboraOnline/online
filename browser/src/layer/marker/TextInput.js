@@ -664,10 +664,7 @@ L.TextInput = L.Layer.extend({
 
 		this._lastContent = content;
 
-		if (this._linebreakHint && this._map.dialog._calcInputBar &&
-			this._map.getWinId() === this._map.dialog._calcInputBar.id) {
-			this._sendKeyEvent(13, 5376);
-		} else if (newText.length > 0) {
+		if (newText.length > 0) {
 			this._sendText(this.codePointsToString(newText));
 		}
 

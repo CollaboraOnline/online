@@ -1321,41 +1321,13 @@ L.Map = L.Evented.extend({
 		if (this.sidebar)
 			this.sidebar.onResize();
 
-		var deckOffset = 0;
-		var sidebar = L.DomUtil.get('#sidebar-dock-wrapper');
-		if (sidebar)
-			deckOffset = sidebar.width;
-
-		this.showCalcInputBar(deckOffset);
+		this.showCalcInputBar();
 	},
 
-	showCalcInputBar: function(deckOffset) {
-		if (this.dialog && this.dialog._calcInputBar && !this.dialog._calcInputBar.isPainting) {
-			var id = this.dialog._calcInputBar.id;
-			var calcInputbar = L.DomUtil.get('calc-inputbar');
-			if (calcInputbar) {
-				var calcInputbarContainer = calcInputbar.children[0];
-				if (calcInputbarContainer) {
-					var sizeChanged = true;
-					var width = calcInputbarContainer.clientWidth - deckOffset;
-					var height = calcInputbarContainer.clientHeight;
-					if (calcInputbarContainer.children && calcInputbarContainer.children.length) {
-						var inputbarCanvas = calcInputbarContainer.children[0];
-						var currentWidth = inputbarCanvas.clientWidth;
-						var currentHeight = inputbarCanvas.clientHeight;
-						sizeChanged = (currentWidth !== width || currentHeight !== height);
-					}
-					if (width > 0 && height > 0 && sizeChanged) {
-						window.app.console.log('_onResize: container width: ' + width + ', container height: ' + height + ', _calcInputBar width: ' + this.dialog._calcInputBar.width);
-						if (width != this.dialog._calcInputbarContainerWidth || height != this.dialog._calcInputbarContainerHeight) {
-							app.socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
-							this.dialog._calcInputbarContainerWidth = width;
-							this.dialog._calcInputbarContainerHeight = height;
-						}
-					}
-				}
-			}
-		}
+	showCalcInputBar: function() {
+		var wrapper = document.getElementById('calc-inputbar-wrapper');
+		if (wrapper)
+			wrapper.style.display = 'block';
 	},
 
 	makeActive: function() {

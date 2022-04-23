@@ -4163,10 +4163,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onUpdateCellCursor: function (horizontalDirection, verticalDirection, onPgUpDn) {
 		this._onUpdateCellResizeMarkers();
 		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
-			if (this._map.dialog._calcInputBar && !this._cellCursorXY.equals(this._prevCellCursorXY)) {
-				var inputBarId = this._map.dialog._calcInputBar.id;
-				this._map.dialog._updateTextSelection(inputBarId);
-			}
 			var mapBounds = this._map.getBounds();
 			if (!this._cellCursorXY.equals(this._prevCellCursorXY) &&
 			    !this._map.calcInputBarHasFocus()) {
