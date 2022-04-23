@@ -353,7 +353,6 @@ COOL_JS_LST =\
 	src/control/Control.NotebookbarImpress.js \
 	src/control/Control.NotebookbarDraw.js \
 	src/control/Control.NotebookbarBuilder.js \
-	src/control/Control.AutofilterDropdown.js \
 	src/control/Control.Layers.js \
 	src/control/Control.Sidebar.js \
 	src/control/Search.js \
