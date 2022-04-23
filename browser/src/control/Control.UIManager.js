@@ -80,7 +80,6 @@ L.Control.UIManager = L.Control.extend({
 		this.map.addControl(L.control.alertDialog());
 		this.mobileWizard = L.control.mobileWizard();
 		this.map.addControl(this.mobileWizard);
-		this.map.addControl(L.control.autofilterDropdown());
 		this.map.addControl(L.control.languageDialog());
 		this.map.dialog = L.control.lokDialog();
 		this.map.addControl(this.map.dialog);
