@@ -194,6 +194,19 @@ w2ui-toolbar {
 .w2ui-scroll-left,
 .w2ui-scroll-right {
 	z-index: 1001;
+	width: 32px;
+	background-color: var(--color-background-lighter) !important;
+	box-shadow: none;
+}
+.w2ui-scroll-left {
+	border-right: 1px solid var(--color-border-dark);
+}
+.w2ui-scroll-right {
+	border-left: 1px solid var(--color-border-dark);
+}
+.w2ui-scroll-left:hover,
+.w2ui-scroll-right:hover {
+	background-color: var(--color-background-dark) !important;
 }
 
 /* center the toolbar */
