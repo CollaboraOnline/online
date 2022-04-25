@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-14 16:43+0200\n"
-"PO-Revision-Date: 2022-04-12 07:41+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2022-04-25 18:26+0000\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.12.1-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:6
@@ -963,7 +963,7 @@ msgstr "Glej zgodovino"
 #: src/control/Control.NotebookbarImpress.js:204
 #: src/control/Control.NotebookbarWriter.js:155
 msgid "Download"
-msgstr ""
+msgstr "Prenesi"
 
 #: src/control/Control.NotebookbarCalc.js:175
 msgid "ODF Spreadsheet (.ods)"
@@ -1035,11 +1035,11 @@ msgstr "Slabo"
 
 #: src/control/Control.NotebookbarCalc.js:720
 msgid "Row Width"
-msgstr ""
+msgstr "Širina vrstice"
 
 #: src/control/Control.NotebookbarCalc.js:726
 msgid "Column Width"
-msgstr ""
+msgstr "Širina stolpca"
 
 #: src/control/Control.NotebookbarCalc.js:737
 msgid "Insert Rows Above"
