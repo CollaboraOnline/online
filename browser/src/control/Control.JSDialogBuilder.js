@@ -3018,11 +3018,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(control).children('.selected').removeClass('selected');
 
 			var pos = parseInt(data.position);
-			var entry = $(control).children().eq(pos);
+			var entry = control.children.length > pos ? control.children[pos] : null;
 
-			entry.addClass('selected');
-			var blockOption = this._scrollIntoViewBlockOption('nearest');
-			$(entry).get(0).scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
+			if (entry) {
+				L.DomUtil.addClass(entry, 'selected');
+				var blockOption = this._scrollIntoViewBlockOption('nearest');
+				entry.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
+			} else
+				console.warn('not found entry: "' + pos + '" in: "' + data.control_id + '"');
 
 			break;
 
