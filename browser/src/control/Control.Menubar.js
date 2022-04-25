@@ -1550,7 +1550,7 @@ L.Control.Menubar = L.Control.extend({
 						}
 
 					} else if (id === 'toggleuimode') {
-						if (window.userInterfaceMode === 'notebookbar') {
+						if (self._map.uiManager.useNotebookbarMode()) {
 							$(aItem).text(_('Use Compact view'));
 						} else {
 							$(aItem).text(_('Use Tabbed view'));
@@ -1694,7 +1694,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'showruler') {
 			this._map.uiManager.toggleRuler();
 		} else if (id === 'toggleuimode') {
-			if (window.userInterfaceMode === 'notebookbar') {
+			if (this._map.uiManager.useNotebookbarMode()) {
 				this._map.uiManager.onChangeUIMode({mode: 'classic', force: true});
 			} else {
 				this._map.uiManager.onChangeUIMode({mode: 'notebookbar', force: true});
