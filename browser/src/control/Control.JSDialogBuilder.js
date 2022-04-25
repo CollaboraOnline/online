@@ -3121,7 +3121,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			var hasManyChildren = childData.children && childData.children.length > 1;
-			if (hasManyChildren && childData.type !== 'buttonbox' && childData.type !== 'treelistbox') {
+			var isContainer = childData.type !== 'buttonbox' && childData.type !== 'treelistbox'
+				&& childData.type !== 'iconview';
+			if (hasManyChildren && isContainer) {
 				var table = L.DomUtil.createWithId('div', childData.id, td);
 				$(table).addClass(this.options.cssClass);
 				$(table).addClass('vertical');
