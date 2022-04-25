@@ -40,8 +40,17 @@ L.Control.UIManager = L.Control.extend({
 
 	// UI initialization
 
+	getCurrentMode: function() {
+		return this.useNotebookbarMode() ? 'notebookbar' : 'classic';
+	},
+
+	useNotebookbarMode: function() {
+		var forceCompact = this.getSavedStateOrDefault('CompactMode');
+		return window.userInterfaceMode === 'notebookbar' && !forceCompact;
+	},
+
 	initializeBasicUI: function() {
-		var enableNotebookbar = window.userInterfaceMode === 'notebookbar';
+		var enableNotebookbar = this.useNotebookbarMode();
 		var that = this;
 
 		if (window.mode.isMobile() || !enableNotebookbar) {
@@ -135,9 +144,9 @@ L.Control.UIManager = L.Control.extend({
 
 	initializeSpecializedUI: function(docType) {
 		var isDesktop = window.mode.isDesktop();
-		var enableNotebookbar = window.userInterfaceMode === 'notebookbar';
+		var enableNotebookbar = this.useNotebookbarMode();
 
-		document.body.setAttribute('data-userInterfaceMode', window.userInterfaceMode);
+		document.body.setAttribute('data-userInterfaceMode', this.getCurrentMode());
 
 		if (window.mode.isMobile()) {
 			$('#mobile-edit-button').show();
@@ -242,6 +251,8 @@ L.Control.UIManager = L.Control.extend({
 		this.map._docLayer._requestNewTiles();
 
 		this.map.topToolbar.updateControlsState();
+
+		this.setSavedState('CompactMode', true);
 	},
 
 	createNotebookbarControl: function(docType) {
@@ -271,6 +282,8 @@ L.Control.UIManager = L.Control.extend({
 		this.map.sendInitUNOCommands();
 		this.map._docLayer._resetClientVisArea();
 		this.map._docLayer._requestNewTiles();
+
+		this.setSavedState('CompactMode', false);
 	},
 
 	removeNotebookbarUI: function() {
@@ -285,7 +298,7 @@ L.Control.UIManager = L.Control.extend({
 		if (window.mode.isMobile())
 			return;
 
-		if (uiMode.mode === window.userInterfaceMode && !uiMode.force)
+		if (uiMode.mode === this.getCurrentMode() && !uiMode.force)
 			return;
 
 		if (uiMode.mode !== 'classic' && uiMode.mode !== 'notebookbar')
@@ -295,7 +308,7 @@ L.Control.UIManager = L.Control.extend({
 
 		this.map.fire('postMessage', {msgId: 'Action_ChangeUIMode_Resp', args: {Mode: uiMode}});
 
-		switch (window.userInterfaceMode) {
+		switch (this.getCurrentMode()) {
 		case 'classic':
 			this.removeClassicUI();
 			break;
@@ -307,7 +320,7 @@ L.Control.UIManager = L.Control.extend({
 
 		window.userInterfaceMode = uiMode.mode;
 
-		switch (window.userInterfaceMode) {
+		switch (uiMode.mode) {
 		case 'classic':
 			this.addClassicUI();
 			break;
@@ -559,7 +572,7 @@ L.Control.UIManager = L.Control.extend({
 			}
 		}
 
-		var enableNotebookbar = window.userInterfaceMode === 'notebookbar';
+		var enableNotebookbar = this.useNotebookbarMode();
 		if (enableNotebookbar && !window.mode.isMobile()) {
 			if (e.perm === 'edit') {
 				if (this.map.menubar) {
