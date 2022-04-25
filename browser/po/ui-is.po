@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-14 16:43+0200\n"
-"PO-Revision-Date: 2022-04-12 07:41+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2022-04-22 22:27+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/ui/is/>\n"
-"Language: \n"
+"Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.12.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -959,7 +959,7 @@ msgstr "Skoða feril"
 #: src/control/Control.NotebookbarImpress.js:204
 #: src/control/Control.NotebookbarWriter.js:155
 msgid "Download"
-msgstr ""
+msgstr "Sækja"
 
 #: src/control/Control.NotebookbarCalc.js:175
 msgid "ODF Spreadsheet (.ods)"
@@ -1031,11 +1031,11 @@ msgstr "Slæmt"
 
 #: src/control/Control.NotebookbarCalc.js:720
 msgid "Row Width"
-msgstr ""
+msgstr "Breidd raðar"
 
 #: src/control/Control.NotebookbarCalc.js:726
 msgid "Column Width"
-msgstr ""
+msgstr "Breidd dálks"
 
 #: src/control/Control.NotebookbarCalc.js:737
 msgid "Insert Rows Above"
@@ -2157,6 +2157,14 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"Hefurðu áhuga á að leggja þitt af mörkum en veist ekki hvar þú getur byrjað? "
+"Skoðaðu vel <a target=\"_blank\" href=\"https://collaboraonline.github.io/"
+"post/build-code/\">skref-fyrir-skref leiðbeiningarnar</a> og byggðu KÓÐANN "
+"frá grunni. Þú getur líka hjálpað til við <a target=\"_blank\" href=\"https"
+"://collaboraonline.github.io/post/translate/\">þýðingar</a> eða með því að "
+"<a target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
+"\">senda inn villuskýrslur</a> með öllum upplýsingum um hvernig hægt er að "
+"framkalla viðkomandi villur."
 
 #~ msgid "Next"
 #~ msgstr "Næsta"
