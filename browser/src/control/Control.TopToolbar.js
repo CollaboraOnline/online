@@ -262,6 +262,7 @@ L.Control.TopToolbar = L.Control.extend({
 	},
 
 	create: function() {
+		$().w2destroy('editbar');
 		var toolbar = L.DomUtil.get('toolbar-up');
 		// In case it contains garbage
 		if (toolbar)
