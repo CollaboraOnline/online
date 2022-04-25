@@ -448,9 +448,7 @@ L.Map.WOPI = L.Handler.extend({
 			}
 		}
 		else if (msg.MessageId === 'Action_ChangeUIMode') {
-			if (msg.Values && msg.Values.Mode !== null && msg.Values.Mode !== undefined) {
-				this._map.fire('changeuimode', {mode: msg.Values.Mode, force: false});
-			}
+			this._map.uiManager.onChangeUIMode({mode: msg.Values.Mode, force: true});
 		}
 	},
 
