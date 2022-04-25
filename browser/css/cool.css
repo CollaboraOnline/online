@@ -183,7 +183,7 @@ body {
 	display: none;
 	background: var(--color-main-background);
 	position: relative;
-	border-left: 1px solid var(--color-border);
+	border-inline-start: 1px solid var(--color-border);
 	overflow: hidden;
 	z-index: 990;
 }
