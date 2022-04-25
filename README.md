@@ -42,7 +42,7 @@ Please ask your questions on any of the bridged IRC/Matrix/Telegram rooms
 Join the conversation on our Discourse server at https://forum.collaboraonline.com/
 
 Watch the tinderbox status (if it's green) at
-https://cpci.cbg.collabora.co.uk:8080/view/Tinderbox/job/Tinderbox%20for%20online%20master/
+https://cpci.cbg.collabora.co.uk:8080/job/Tinderbox%20for%20online%20master%20against%20co-22.05/
 
 ## Development bits
 
