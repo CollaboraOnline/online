@@ -1072,6 +1072,8 @@ public:
 
                     std::string body = httpResponse->getBody();
 
+                    LOG_DBG("Got " << body.size() << " bytes for " << remoteServerURI.toString());
+
                     Poco::JSON::Object::Ptr remoteJson;
                     if (JsonUtil::parseJSON(body, remoteJson))
                     {
@@ -1083,8 +1085,8 @@ public:
                         }
                         else
                         {
-                            LOG_ERR("Make sure that remote config JSON contains kind property with "
-                                    "value 'configuration'");
+                            LOG_ERR("Make sure that " << remoteServerURI.toString() << " contains a property 'kind' with "
+                                    "value '" << expectedKind << "'");
                         }
                     }
                     else
@@ -1094,8 +1096,7 @@ public:
                 }
                 else if (statusCode == Poco::Net::HTTPResponse::HTTP_NOT_MODIFIED)
                 {
-                    LOG_WRN("Remote config server has response status code: " +
-                            std::to_string(statusCode) + ", JSON has not been changed");
+                    LOG_DBG("Not modified since last time: " << remoteServerURI.toString());
                     handleUnchangedJSON();
                 }
                 else
@@ -1114,11 +1115,11 @@ public:
 
 protected:
     LayeredConfiguration& conf;
+    std::string eTagValue;
 
 private:
     Poco::URI remoteServerURI;
     std::string expectedKind;
-    std::string eTagValue;
 };
 
 class RemoteConfigPoll : public RemoteJSONPoll
@@ -1425,11 +1426,8 @@ public:
                     {
                         // Second case: Font has been downloaded already, has a "stamp" property,
                         // and that has been changed in the JSON since it was downloaded.
-                        if (downloadPlain(uri))
-                        {
-                            fonts[uri].stamp = stampPtr.toString();
-                            fonts[uri].active = true;
-                        }
+                        restartForKitAndReDownloadConfigFile();
+                        break;
                     }
                     else if (!stampPtr.isEmpty())
                     {
@@ -1441,30 +1439,26 @@ public:
                     {
                         // Last case: Font has been downloaded but does not have a "stamp" property.
                         // Use ETag.
-                        if (downloadWithETag(uri, fonts[uri].eTag))
+                        if (!eTagUnchanged(uri, fonts[uri].eTag))
                         {
-                            fonts[uri].active = true;
+                            restartForKitAndReDownloadConfigFile();
+                            break;
                         }
+                        fonts[uri].active = true;
                     }
                 }
             }
         }
 
         // Any font that has been deleted from the JSON needs to be removed on this side, too.
-        for (auto it = fonts.begin(); it != fonts.end();)
+        for (const auto &it : fonts)
         {
-            if (!it->second.active)
+            if (!it.second.active)
             {
-                LOG_DBG("Font no longer mentioned in the remote font config: " << it->first);
-                // FIXME: Removing the font file will make it unusable, but sadly it is not possible
-                // for ForKit to remove knowledge of it from core, so it would still show up in the
-                // font menu. Not sure what to do here.
-                // COOLWSD::sendMessageToForKit("removefont " + it->second.active);
-                // Oh well, at least remove it from our map.
-                it = fonts.erase(it);
+                LOG_DBG("Font no longer mentioned in the remote font config: " << it.first);
+                restartForKitAndReDownloadConfigFile();
+                break;
             }
-            else
-                ++it;
         }
     }
 
@@ -1487,7 +1481,11 @@ public:
             }
 
             // Otherwise use the ETag to check if the font file needs re-downloading.
-            downloadWithETag(it.first, it.second.eTag);
+            if (!eTagUnchanged(it.first, it.second.eTag))
+            {
+                restartForKitAndReDownloadConfigFile();
+                break;
+            }
         }
     }
 
@@ -1504,6 +1502,33 @@ private:
             = httpSession->syncRequest(request);
 
         return finishDownload(uri, httpResponse);
+    }
+
+    bool eTagUnchanged(const std::string& uri, const std::string& oldETag)
+    {
+        const Poco::URI fontUri{uri};
+        std::shared_ptr<http::Session> httpSession(StorageBase::getHttpSession(fontUri));
+        http::Request request(fontUri.getPathAndQuery());
+
+        if (!oldETag.empty())
+        {
+            request.set("If-None-Match", oldETag);
+        }
+
+        request.set("User-Agent", WOPI_AGENT_STRING);
+
+        const std::shared_ptr<const http::Response> httpResponse
+            = httpSession->syncRequest(request);
+
+        const unsigned int statusCode = httpResponse->statusLine().statusCode();
+
+        if (statusCode == Poco::Net::HTTPResponse::HTTP_NOT_MODIFIED)
+        {
+            LOG_DBG("Not modified since last time: " << uri);
+            return true;
+        }
+
+        return false;
     }
 
     bool downloadWithETag(const std::string& uri, const std::string& oldETag)
@@ -1575,6 +1600,16 @@ private:
         COOLWSD::sendMessageToForKit("addfont " + fontFile);
 
         return true;
+    }
+
+    void restartForKitAndReDownloadConfigFile()
+    {
+        LOG_DBG("Downloaded font has been updated or a font has been removed. ForKit must be restarted.");
+        fonts.clear();
+        // Clear the saved ETag of the remote font configuration file so that it will be
+        // re-downloaded, and all fonts mentioned in it re-downloaded and fed to ForKit.
+        eTagValue = "";
+        COOLWSD::sendMessageToForKit("exit");
     }
 
     struct FontData
