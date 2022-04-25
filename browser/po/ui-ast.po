@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-14 16:43+0200\n"
-"PO-Revision-Date: 2022-04-12 07:41+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2022-04-20 11:14+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -703,7 +703,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:938 src/control/Control.Menubar.js:1008
 #: src/control/Control.NotebookbarWriter.js:301
 msgid "Latest Updates"
-msgstr "Caberes actualizaciones"
+msgstr "Caberos anovamientos"
 
 #: src/control/Control.Menubar.js:312 src/control/Control.Menubar.js:444
 #: src/control/Control.Menubar.js:556 src/control/Control.Menubar.js:781
@@ -959,7 +959,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:204
 #: src/control/Control.NotebookbarWriter.js:155
 msgid "Download"
-msgstr ""
+msgstr "Baxar"
 
 #: src/control/Control.NotebookbarCalc.js:175
 msgid "ODF Spreadsheet (.ods)"
@@ -1031,11 +1031,11 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:720
 msgid "Row Width"
-msgstr ""
+msgstr "Anchor de la filera"
 
 #: src/control/Control.NotebookbarCalc.js:726
 msgid "Column Width"
-msgstr ""
+msgstr "Anchor de la columna"
 
 #: src/control/Control.NotebookbarCalc.js:737
 #, fuzzy
@@ -1572,9 +1572,8 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr ""
 
 #: src/core/Socket.js:512
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "Reanicióse'l sirvidor. La páxina tien d'actualizase agora."
+msgstr "Agora'l sirvidor pue utilizase. La páxina tien d'anovar."
 
 #: src/core/Socket.js:514
 msgid "Server is now reachable..."
@@ -2036,7 +2035,7 @@ msgstr ""
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora Online, edición de desarrollu"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
