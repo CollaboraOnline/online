@@ -584,11 +584,12 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_onlineHelpControl: function(parentContainer, data, builder) {
+		var originalDataId = data.id; // builder can change this
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
 		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
-			L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
+			L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: originalDataId});
 		});
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
