@@ -1366,7 +1366,7 @@ app.definitions.Socket = L.Class.extend({
 			this._map._docLayer._requestNewTiles();
 			this._map.fire('statusindicator', {statusType: 'reconnected'});
 			this._map._isNotebookbarLoadedOnCore = false;
-			var uiMode = this._map.uiManager.useNotebookbarMode() ? 'notebookbar' : 'classic';
+			var uiMode = this._map.uiManager.getCurrentMode();
 			this._map.fire('changeuimode', {mode: uiMode, force: true});
 			this._map.setPermission(this._map.options.permission);
 		}
