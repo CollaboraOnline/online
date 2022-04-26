@@ -93,9 +93,15 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 	focus: function() {
 		setTimeout(function() {
 			var input = document.getElementById('sc_input_window');
-			if (document.activeElement !== input)
+			if (input && document.activeElement !== input)
 				input.focus();
 		}, 0);
+	},
+
+	blur: function() {
+		var input = document.getElementById('sc_input_window');
+		if (input)
+			input.blur();
 	},
 
 	hasFocus: function() {

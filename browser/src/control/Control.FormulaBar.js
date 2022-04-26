@@ -148,6 +148,9 @@ L.Map.include({
 
 		mobileTopBar.hide('undo');
 		mobileTopBar.hide('redo');
+
+		jsdialogFormulabar.hide('startformula');
+		jsdialogFormulabar.hide('AutoSumMenu');
 	},
 
 	onFormulaBarBlur: function() {
@@ -156,6 +159,7 @@ L.Map.include({
 		// once hidden, click event won't be processed.
 		// TODO: Some better way to do it ?
 		var map = this;
+
 		setTimeout(function() {
 			if ($('.leaflet-cursor').is(':visible'))
 				return;
@@ -168,6 +172,9 @@ L.Map.include({
 
 			mobileTopBar.show('undo');
 			mobileTopBar.show('redo');
+
+			jsdialogFormulabar.show('startformula');
+			jsdialogFormulabar.show('AutoSumMenu');
 		}, 250);
 	}
 });
