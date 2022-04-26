@@ -11,7 +11,10 @@
 
 /* Whether to compile in some extra debugging support code and disable some
    security pieces */
+/* When building with Xcode we define ENABLE_DEBUG when debugging, but not otherwise */
+#if !defined ENABLE_DEBUG
 #define ENABLE_DEBUG 0
+#endif
 
 /* Whether to enable SSL */
 #define ENABLE_SSL 0
