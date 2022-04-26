@@ -41,16 +41,17 @@ L.Control.UIManager = L.Control.extend({
 	// UI initialization
 
 	getCurrentMode: function() {
-		return this.useNotebookbarMode() ? 'notebookbar' : 'classic';
+		return this.shouldUseNotebookbarMode() ? 'notebookbar' : 'classic';
 	},
 
-	useNotebookbarMode: function() {
-		var forceCompact = this.getSavedStateOrDefault('CompactMode');
-		return window.userInterfaceMode === 'notebookbar' && !forceCompact;
+	shouldUseNotebookbarMode: function() {
+		var forceCompact = this.getSavedStateOrDefault('CompactMode', null);
+		return (window.userInterfaceMode === 'notebookbar' && forceCompact === null)
+			|| forceCompact === false;
 	},
 
 	initializeBasicUI: function() {
-		var enableNotebookbar = this.useNotebookbarMode();
+		var enableNotebookbar = this.shouldUseNotebookbarMode();
 		var that = this;
 
 		if (window.mode.isMobile() || !enableNotebookbar) {
@@ -143,9 +144,10 @@ L.Control.UIManager = L.Control.extend({
 
 	initializeSpecializedUI: function(docType) {
 		var isDesktop = window.mode.isDesktop();
-		var enableNotebookbar = this.useNotebookbarMode();
+		var currentMode = this.getCurrentMode();
+		var enableNotebookbar = currentMode === 'notebookbar';
 
-		document.body.setAttribute('data-userInterfaceMode', this.getCurrentMode());
+		document.body.setAttribute('data-userInterfaceMode', currentMode);
 
 		if (window.mode.isMobile()) {
 			$('#mobile-edit-button').show();
@@ -253,8 +255,6 @@ L.Control.UIManager = L.Control.extend({
 		this.map._docLayer._requestNewTiles();
 
 		this.map.topToolbar.updateControlsState();
-
-		this.setSavedState('CompactMode', true);
 	},
 
 	createNotebookbarControl: function(docType) {
@@ -284,8 +284,6 @@ L.Control.UIManager = L.Control.extend({
 		this.map.sendInitUNOCommands();
 		this.map._docLayer._resetClientVisArea();
 		this.map._docLayer._requestNewTiles();
-
-		this.setSavedState('CompactMode', false);
 	},
 
 	removeNotebookbarUI: function() {
@@ -300,7 +298,9 @@ L.Control.UIManager = L.Control.extend({
 		if (window.mode.isMobile())
 			return;
 
-		if (uiMode.mode === this.getCurrentMode() && !uiMode.force)
+		var currentMode = this.getCurrentMode();
+
+		if (uiMode.mode === currentMode && !uiMode.force)
 			return;
 
 		if (uiMode.mode !== 'classic' && uiMode.mode !== 'notebookbar')
@@ -310,7 +310,7 @@ L.Control.UIManager = L.Control.extend({
 
 		this.map.fire('postMessage', {msgId: 'Action_ChangeUIMode_Resp', args: {Mode: uiMode}});
 
-		switch (this.getCurrentMode()) {
+		switch (currentMode) {
 		case 'classic':
 			this.removeClassicUI();
 			break;
@@ -332,6 +332,7 @@ L.Control.UIManager = L.Control.extend({
 			break;
 		}
 
+		this.setSavedState('CompactMode', uiMode.mode === 'classic');
 		this.initializeSidebar();
 	},
 
@@ -574,7 +575,8 @@ L.Control.UIManager = L.Control.extend({
 			}
 		}
 
-		var enableNotebookbar = this.useNotebookbarMode();
+		var enableNotebookbar = this.shouldUseNotebookbarMode();
+		console.error(enableNotebookbar);
 		if (enableNotebookbar && !window.mode.isMobile()) {
 			if (e.perm === 'edit') {
 				if (this.map.menubar) {
@@ -705,13 +707,15 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	setSavedState: function(name, state) {
+		var docType = (name === 'CompactMode') ? null : this.map.getDocType();
 		if (window.isLocalStorageAllowed)
-			localStorage.setItem('UIDefaults_' + this.map.getDocType() + '_' + name, state);
+			localStorage.setItem('UIDefaults_' + docType + '_' + name, state);
 	},
 
-	getSavedStateOrDefault: function(name) {
-		var retval = true;
-		var docType = this.map.getDocType();
+	getSavedStateOrDefault: function(name, forcedDefault) {
+		var retval = forcedDefault !== undefined ? forcedDefault : true;
+		// we request CompactMode very early, no info about doctype so unify all the calls
+		var docType = (name === 'CompactMode') ? null : this.map.getDocType();
 		var state = null;
 		if (window.isLocalStorageAllowed)
 			state = localStorage.getItem('UIDefaults_' + docType + '_' + name);
@@ -725,9 +729,12 @@ L.Control.UIManager = L.Control.extend({
 			if (window.uiDefaults && window.uiDefaults[docType])
 				retval = window.uiDefaults[docType][name];
 
-			if (retval === undefined || retval === null)
-				return true;
-			else
+			if (retval === undefined || retval === null) {
+				if (forcedDefault !== undefined)
+					return forcedDefault;
+				else
+					return true;
+			} else
 				return retval;
 		}
 	},
