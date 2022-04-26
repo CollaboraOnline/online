@@ -757,30 +757,43 @@ L.Map.include({
 		map.fire('postMessage', {msgId: 'UI_SaveAs'});
 	},
 
+	formulabarBlur: function() {
+		if (!window.mode.isMobile()) {
+			var hasJSDialogOpened = this.jsdialog && this.jsdialog.hasDialogOpened();
+			var hasVexOpened = Object.keys(vex.getAll()).length > 0;
+			if (!hasVexOpened && !hasJSDialogOpened)
+				this.focus();
+		}
+	},
+
+	formulabarFocus: function() {
+		if (!window.mode.isMobile())
+			this.formulabar.focus();
+	},
+
 	// map.dispatch() will be used to call some actions so we can share the code
 	dispatch: function(action) {
 		switch (action) {
 		case 'acceptformula':
 			{
-				// focus on map, and press enter
-				this.focus();
-				this._docLayer.postKeyboardEvent('input',
-					this.keyboard.keyCodes.enter,
-					this.keyboard._toUNOKeyCode(this.keyboard.keyCodes.enter));
-
 				if (window.mode.isMobile()) {
-					w2ui['actionbar'].hide('acceptformula', 'cancelformula');
-					w2ui['actionbar'].show('undo', 'redo');
+					this.focus();
+					this._docLayer.postKeyboardEvent('input',
+						this.keyboard.keyCodes.enter,
+						this.keyboard._toUNOKeyCode(this.keyboard.keyCodes.enter));
+				} else {
+					this.sendUnoCommand('.uno:AcceptFormula');
 				}
+
+				this.onFormulaBarBlur();
+				this.formulabarBlur();
 			}
 			break;
 		case 'cancelformula':
 			{
 				this.sendUnoCommand('.uno:Cancel');
-				if (window.mode.isMobile()) {
-					w2ui['actionbar'].hide('acceptformula', 'cancelformula');
-					w2ui['actionbar'].show('undo', 'redo');
-				}
+				this.onFormulaBarBlur();
+				this.formulabarBlur();
 			}
 			break;
 		case 'functiondialog':
