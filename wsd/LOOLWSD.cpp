@@ -1743,14 +1743,14 @@ void LOOLWSD::handleOption(const std::string& optionName,
     if (optionName == "help")
     {
         displayHelp();
-        std::exit(EX_OK);
+        Util::forcedExit(EX_OK);
     }
     else if (optionName == "version-hash")
     {
         std::string version, hash;
         Util::getVersionInfo(version, hash);
         std::cout << hash << std::endl;
-        std::exit(EX_OK);
+        Util::forcedExit(EX_OK);
     }
     else if (optionName == "version")
         ; // ignore for compatibility
