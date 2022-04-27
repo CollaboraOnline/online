@@ -1151,7 +1151,7 @@ void AdminModel::getMetrics(std::ostringstream &oss)
     oss << std::endl;
     PrintDocActExpMetrics(oss, "sent_to_clients", "bytes", docStats._bytesSentToClients);
     oss << std::endl;
-    PrintDocActExpMetrics(oss, "received_from_client", "bytes", docStats._bytesRecvFromClients);
+    PrintDocActExpMetrics(oss, "received_from_clients", "bytes", docStats._bytesRecvFromClients);
     oss << std::endl;
     PrintDocActExpMetrics(oss, "wopi_upload_duration", "milliseconds", docStats._wopiUploadDuration);
     oss << std::endl;
