@@ -401,9 +401,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 }
 
 .sidebar #horizontalpos,
-.sidebar #verticalpos,
-.sidebar #selectwidth,
-.sidebar #selectheight {
+.sidebar #verticalpos {
 	position: relative;
 	margin-inline-end: 24px;
 }
@@ -435,10 +433,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 .sidebar #leftindent,
 .sidebar #LB_GLOW_TRANSPARENCY,
 .sidebar #LB_DISTANCE,
-.sidebar #LB_SHADOW_BLUR,
-.sidebar #setbrightness,
-.sidebar #setcontrast,
-.sidebar #setgraphtransparency {
+.sidebar #LB_SHADOW_BLUR {
 	position: relative;
 	right: 18px;
 }
