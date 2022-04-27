@@ -135,6 +135,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._toolitemHandlers['.uno:TableCellBackgroundColor'] = function () {};
 
 		this._menus = {};
+		this._menus['AutoSumMenu'] = [
+			{text: _('Sum'), uno: '.uno:AutoSum'},
+			{text: _('Average'), uno: '.uno:AutoSum?Function:string=average'},
+			{text: _('Min'), uno: '.uno:AutoSum?Function:string=min'},
+			{text: _('Max'), uno: '.uno:AutoSum?Function:string=max'},
+			{text: _('Count'), uno: '.uno:AutoSum?Function:string=count'}
+		];
 		this._menus['Menu Statistic'] = [
 			{text: _UNO('.uno:SamplingDialog', 'spreadsheet'), uno: '.uno:SamplingDialog'},
 			{text: _UNO('.uno:DescriptiveStatisticsDialog', 'spreadsheet'), uno: '.uno:DescriptiveStatisticsDialog'},

@@ -3,7 +3,7 @@
  * Toolbar handler
  */
 
-/* global app $ w2ui window vex sanitizeUrl brandProductName brandProductURL _ Hammer */
+/* global app $ window vex sanitizeUrl brandProductName brandProductURL _ Hammer */
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
@@ -794,6 +794,13 @@ L.Map.include({
 				this.sendUnoCommand('.uno:Cancel');
 				this.onFormulaBarBlur();
 				this.formulabarBlur();
+			}
+			break;
+		case 'startformula':
+			{
+				this.sendUnoCommand('.uno:StartFormula');
+				this.onFormulaBarFocus();
+				this.formulabarFocus();
 			}
 			break;
 		case 'functiondialog':
