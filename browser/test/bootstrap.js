@@ -124,7 +124,7 @@ function parseStats(content) {
 	for (let l of lines) {
 		var keyval = l.split(' ');
 		if (keyval.length >= 2)
-			stats[keyval[0]] = keyval[1];
+			stats[keyval[0]] = Number(keyval[1]);
 	}
 	if (stats.size < 8)
 		return undefined; // not our stats
