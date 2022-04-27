@@ -70,6 +70,7 @@ public:
     void setVersion(const int ver) { _ver = ver; }
     int getImgSize() const { return _imgSize; }
     void setImgSize(const int imgSize) { _imgSize = imgSize; }
+    /// if non-zero: a preview.
     int getId() const { return _id; }
     bool getBroadcast() const { return _broadcast; }
     void setOldWireId(TileWireId id) { _oldWireId = id; }
