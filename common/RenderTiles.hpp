@@ -28,6 +28,8 @@
 #  define ADD_DEBUG_RENDERID ("\n")
 #endif
 
+// FIXME: remove PngCache - we don't use these hashes anymore.
+
 /// A quick & dirty cache of the last few PNGs
 /// and their hashes to avoid re-compression
 /// wherever possible.
@@ -512,8 +514,8 @@ namespace RenderTiles
             }
 
 // FIXME: ignore old wire-ids ... they give a wrong base for the delta.
-#if !ENABLE_DELTAS
             bool skipCompress = false;
+#if !ENABLE_DELTAS
             size_t imgSize = -1;
             if (pngCache.copyFromCache(hash, output, imgSize))
             {
@@ -521,7 +523,6 @@ namespace RenderTiles
                 skipCompress = true;
             }
             else
-#endif
             {
                 LOG_TRC("PNG cache with hash " << hash << " missed.");
 
@@ -539,10 +540,14 @@ namespace RenderTiles
                     }
                 }
             }
+#endif
 
             if (!skipCompress)
             {
                 renderingIds.push_back(wireId);
+
+                LOG_TRC("Queued encoding of tile #" << tileIndex << " at (" << positionX << ',' << positionY << ") with oldWireId=" <<
+                    tiles[tileIndex].getOldWireId() << ", hash=" << hash << " wireId: " << wireId);
 
                 // Queue to be executed later in parallel inside 'run'
                 pngPool.pushWork([=,&output,&pixmap,&tiles,&renderedTiles,
@@ -588,9 +593,6 @@ namespace RenderTiles
                         pushRendered(renderedTiles, tiles[tileIndex], wireId, data->size());
                     });
             }
-
-            LOG_TRC("Encoded tile #" << tileIndex << " at (" << positionX << ',' << positionY << ") with oldWireId=" <<
-                    tiles[tileIndex].getOldWireId() << ", hash=" << hash << " wireId: " << wireId << " in " << imgSize << " bytes.");
             tileIndex++;
         }
 
