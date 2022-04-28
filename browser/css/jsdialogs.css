@@ -475,9 +475,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	font-family: var(--jquery-ui-font);
 	border: 1px solid #CCC;
 	border-radius: var(--border-radius);
-	padding-right: 2em;
-	padding-left: 0.4em;
-	margin: 2px 0px;
+	padding: 0 4px;
 	background-color: #F1F1F1;
 }
 
