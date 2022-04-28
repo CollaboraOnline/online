@@ -40,23 +40,6 @@
 
 .sidebar.spinfield {
 	max-width: 121px;
-	padding: 4px 0 4px 4px;
-	height: 28px;
-	box-sizing: border-box;
-	margin-right: 1px;
-}
-.sidebar .spinfieldcontainer input:hover {
-	border: 1px solid var(--color-border-darker);
-	color: var(--color-text-darker);
-	background-color: var(--color-background-lighter);
-}
-
-.spinfieldunit {
-	font-size: var(--default-font-size);
-	color: var(--color-text-dark);
-	margin: 5px;
-	position: absolute;
-	margin-inline-start: calc(-40px);
 }
 
 .sidebar.ui-listbox {
