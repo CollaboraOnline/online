@@ -475,11 +475,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background: url('images/jquery-ui-lightness/ui-icons_222222_256x240.png') no-repeat transparent;
 	background-position: -67px -18px;
 	display: inline-block;
-	position: relative;
+	position: absolute;
 	width: 11px;
 	height: 11px;
 	cursor: pointer;
 	pointer-events: none;
+	margin-block-start: 8px;
 	margin-inline-start: -16px;
 }
 
