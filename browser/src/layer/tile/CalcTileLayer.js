@@ -18,7 +18,11 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	newAnnotation: function (comment) {
-		var commentList = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).sectionProperties.commentList;
+		var commentListSection = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+		if (!commentListSection)
+			return;
+
+		var commentList = commentListSection.sectionProperties.commentList;
 		var comment = null;
 
 		for (var i = 0; i < commentList.length; i++) {
@@ -39,10 +43,10 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				dateTime: new Date().toDateString(),
 				author: this._map.getViewName(this._viewId)
 			};
-			comment = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(newComment);
+			comment = commentListSection.add(newComment);
 			comment.show();
 		}
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(comment);
+		commentListSection.modify(comment);
 		comment.focus();
 	},
 
@@ -219,7 +223,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._replayPrintTwipsMsgAllViews('cellviewcursor');
 			this._replayPrintTwipsMsgAllViews('textviewselection');
 			// Hide previous tab's shown comment (if any).
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).hideAllComments();
+			var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+			if (section)
+				section.hideAllComments();
 		}
 	},
 
@@ -553,14 +559,19 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				columnGroupSection.anchor = ['top', [L.CSections.CornerGroup.name, '-left', 'right']];
 			}
 
-			cornerHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, '-left', 'right']];
+			if (cornerHeaderSection)
+				cornerHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, '-left', 'right']];
 
-			rowHeaderSection.anchor = [[L.CSections.CornerHeader.name, 'bottom', 'top'], [L.CSections.RowGroup.name, '-left', 'right']];
+			if (rowHeaderSection)
+				rowHeaderSection.anchor = [[L.CSections.CornerHeader.name, 'bottom', 'top'], [L.CSections.RowGroup.name, '-left', 'right']];
 
-			columnHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, '-left', 'right']];
-			columnHeaderSection.expand = ['left'];
+			if (columnHeaderSection) {
+				columnHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, '-left', 'right']];
+				columnHeaderSection.expand = ['left'];
+			}
 
-			tilesSection.anchor = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, '-left', 'right']];
+			if (tilesSection)
+				tilesSection.anchor = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, '-left', 'right']];
 
 			this._layoutIsRTL = true;
 
@@ -592,14 +603,19 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				columnGroupSection.anchor = ['top', [L.CSections.CornerGroup.name, 'right', 'left']];
 			}
 
-			cornerHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']];
+			if (cornerHeaderSection)
+				cornerHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']];
 
-			rowHeaderSection.anchor = [[L.CSections.CornerHeader.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']];
+			if (rowHeaderSection)
+				rowHeaderSection.anchor = [[L.CSections.CornerHeader.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']];
 
-			columnHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, 'right', 'left']];
-			columnHeaderSection.expand = ['right'];
+			if (columnHeaderSection) {
+				columnHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, 'right', 'left']];
+				columnHeaderSection.expand = ['right'];
+			}
 
-			tilesSection.anchor = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, 'right', 'left']];
+			if (tilesSection)
+				tilesSection.anchor = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, 'right', 'left']];
 
 			sectionContainer.reNewAllSections(true);
 
@@ -801,6 +817,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			return;
 		}
 
+		var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
 		var comment;
 		if (values.commandName === '.uno:ViewRowColumnHeaders') {
 			this._updateHeadersGridLines(values);
@@ -809,10 +826,11 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._handleSheetGeometryDataMsg(values);
 
 		} else if (values.comments) {
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).clearList();
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
+			if (section) {
+				section.clearList();
+				section.importComments(values.comments);
+			}
 		} else if (values.commentsPos) {
-			var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
 			// invalidate all comments
 			section.sectionProperties.commentList.forEach(function (comment) {
 				comment.valid = false;
