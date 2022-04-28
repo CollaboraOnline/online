@@ -29,6 +29,7 @@ class TilesSection {
 	map: any;
 	offscreenCanvases: Array<any> = new Array(0);
 	oscCtxs: Array<any> = new Array(0);
+	isJSDOM: boolean = false; // testing
 
 	isCalcRTL: () => boolean;
 
@@ -52,6 +53,7 @@ class TilesSection {
 		this.sectionProperties.pageBackgroundFillColorWriter = 'white';
 		this.sectionProperties.pageBackgroundTextColor = 'grey';
 		this.sectionProperties.pageBackgroundFont = String(40 * app.roundedDpiScale) + 'px Arial';
+		this.isJSDOM = typeof window === 'object' && window.name === 'nodejs';
 	}
 
 	public onInitialize () {
@@ -427,7 +429,13 @@ class TilesSection {
 
 			// Ensure tile is loaded and is within document bounds.
 			if (tile && tile.loaded && docLayer._isValidTile(coords)) {
-				this.paint(tile, ctx, false /* async? */);
+				if (this.isJSDOM) // perf-test code
+				{
+					if (tile.el && (tile.el instanceof HTMLCanvasElement))
+						this.paint(tile, ctx, false /* async? */);
+				}
+				else
+					this.paint(tile, ctx, false /* async? */);
 			}
 			doneTiles.add(coords.key());
 			return true; // continue with remaining tiles.
