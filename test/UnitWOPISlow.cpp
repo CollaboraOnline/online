@@ -83,7 +83,6 @@ public:
 
             assertCheckFileInfoRequest(request);
 
-            Poco::LocalDateTime now;
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
             fileInfo->set("BaseFileName", LargeDocumentFilename);
             fileInfo->set("Size", getFileContent().size());
@@ -101,6 +100,7 @@ public:
             fileInfo->stringify(jsonStream);
 
             http::Response httpResponse(http::StatusLine(200));
+            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
             httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
             socket->sendAndShutdown(httpResponse);
 
@@ -149,7 +149,7 @@ public:
                 LOG_TST("Fake wopi host (default) response to POST " << uriReq.getPath()
                                                                      << ": 200 OK " << body);
                 http::Response httpResponse(http::StatusLine(200));
-                httpResponse.setBody(body);
+                httpResponse.setBody(body, "application/json; charset=utf-8");
                 socket->sendAndShutdown(httpResponse);
             }
 
