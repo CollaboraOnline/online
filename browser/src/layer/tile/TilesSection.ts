@@ -427,7 +427,11 @@ class TilesSection {
 
 			// Ensure tile is loaded and is within document bounds.
 			if (tile && tile.loaded && docLayer._isValidTile(coords)) {
-				this.paint(tile, ctx, false /* async? */);
+				if (typeof navigator === 'object' && navigator.userAgent.indexOf('jsdom') === -1)
+					if (tile.el && (tile.el instanceof HTMLCanvasElement))
+						this.paint(tile, ctx, false /* async? */);
+				else
+					this.paint(tile, ctx, false /* async? */);
 			}
 			doneTiles.add(coords.key());
 			return true; // continue with remaining tiles.
