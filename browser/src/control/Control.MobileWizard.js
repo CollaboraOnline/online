@@ -136,7 +136,9 @@ L.Control.MobileWizard = L.Control.extend({
 		}
 
 		if (window.commentWizard === true && app.sectionContainer) {
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).removeHighlighters();
+			var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+			if (section)
+				section.removeHighlighters();
 		}
 
 		$('#mobile-wizard').hide();
@@ -331,7 +333,9 @@ L.Control.MobileWizard = L.Control.extend({
 				}
 			}
 			if (window.commentWizard === true) {
-				app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).removeHighlighters();
+				var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+				if (section)
+					section.removeHighlighters();
 			}
 		}
 	},

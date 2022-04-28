@@ -135,7 +135,9 @@ L.Control.MobileTopBar = L.Control.extend({
 		else if (id === 'comment_wizard') {
 			if (window.commentWizard) {
 				window.commentWizard = false;
-				app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).removeHighlighters();
+				var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+				if (section)
+					section.removeHighlighters();
 				this.map.fire('closemobilewizard');
 				toolbar.uncheck(id);
 			}

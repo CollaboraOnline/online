@@ -1673,15 +1673,21 @@ L.CanvasTileLayer = L.Layer.extend({
 				cellPos = this._convertToTileTwipsSheetArea(cellPos);
 				obj.comment.cellPos = cellPos.toCoreString();
 			}
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+			var commentSection = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+			if (commentSection)
+				commentSection.onACKComment(obj);
 		}
 		else if (textMsg.startsWith('redlinetablemodified:')) {
 			obj = JSON.parse(textMsg.substring('redlinetablemodified:'.length + 1));
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+			commentSection = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+			if (commentSection)
+				commentSection.onACKComment(obj);
 		}
 		else if (textMsg.startsWith('redlinetablechanged:')) {
 			obj = JSON.parse(textMsg.substring('redlinetablechanged:'.length + 1));
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+			commentSection = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+			if (commentSection)
+				commentSection.onACKComment(obj);
 		}
 		else if (textMsg.startsWith('documentbackgroundcolor:')) {
 			if (this.isCalc()) {
@@ -3504,7 +3510,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			We want to keep the cursor position at the same point relative to screen.
 			*/
 			var y = this._cursorCorePixels.min.y - this._cursorPreviousPositionCorePixels.min.y;
-			this._painter._sectionContainer.getSectionWithName(L.CSections.Scroll.name).scrollVerticalWithOffset(y);
+			var section = this._painter._sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+			if (section)
+				section.scrollVerticalWithOffset(y);
 		}
 
 		this._updateCursorAndOverlay();
@@ -4945,7 +4953,9 @@ L.CanvasTileLayer = L.Layer.extend({
 				menuStructure['customTitle'] = customTitleBar;
 		}
 
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).createCommentStructure(menuStructure, onlyThread);
+		var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+		if (section)
+			section.createCommentStructure(menuStructure, onlyThread);
 
 		if (menuStructure.children.length === 0) {
 			var noComments = {
@@ -5157,10 +5167,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			var widthIncreased = oldSize.x < newSize.x;
 
 			if (this._docType === 'spreadsheet') {
-				if (this._painter._sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
+				if (this._painter._sectionContainer.doesSectionExist(L.CSections.RowHeader.name))
 					this._painter._sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
+				if (this._painter._sectionContainer.doesSectionExist(L.CSections.ColumnHeader.name))
 					this._painter._sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
-				}
 			}
 
 			if (oldSize.x !== newSize.x || oldSize.y !== newSize.y) {

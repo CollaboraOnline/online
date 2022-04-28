@@ -1029,7 +1029,7 @@ L.Map = L.Evented.extend({
 		var mapPanePos = this._getMapPanePos();
 		var result = L.point(point).clone();
 		var pointX = point.x;
-		if (this._docLayer.isCalcRTL()) {
+		if (this._docLayer.isCalcRTL && this._docLayer.isCalcRTL()) {
 			pointX = this._container.clientWidth - pointX;
 			result.x = pointX;
 		}
@@ -1379,7 +1379,7 @@ L.Map = L.Evented.extend({
 				app.socket.sendMessage('useractive');
 				this._active = true;
 				var docLayer = this._docLayer;
-				if (docLayer.isCalc() && docLayer.options.sheetGeometryDataEnabled) {
+				if (docLayer.isCalc && docLayer.isCalc() && docLayer.options.sheetGeometryDataEnabled) {
 					docLayer.requestSheetGeometryData();
 				}
 				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
