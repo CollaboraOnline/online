@@ -172,9 +172,8 @@ protected:
 
     /// Here we act as a WOPI server, so that we have a server that responds to
     /// the wopi requests without additional expensive setup.
-    virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request,
-                                   Poco::MemoryInputStream& message,
-                                   std::shared_ptr<StreamSocket>& socket) override
+    bool handleHttpRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
+                           std::shared_ptr<StreamSocket>& socket) override
     {
         Poco::URI uriReq(request.getURI());
 
@@ -205,21 +204,22 @@ protected:
             const std::string fileName(uriReq.getPath() == "/wopi/files/3" ? "he%llo.txt" : "hello.txt");
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
             fileInfo->set("BaseFileName", fileName);
-            fileInfo->set("Size", _fileContent.size());
+            fileInfo->set("Size", getFileContent().size());
             fileInfo->set("Version", "1.0");
             fileInfo->set("OwnerId", "test");
             fileInfo->set("UserId", "test");
             fileInfo->set("UserFriendlyName", "test");
             fileInfo->set("UserCanWrite", "true");
             fileInfo->set("PostMessageOrigin", "localhost");
-            fileInfo->set("LastModifiedTime", Util::getIso8601FracformatTime(_fileLastModifiedTime));
+            fileInfo->set("LastModifiedTime",
+                          Util::getIso8601FracformatTime(getFileLastModifiedTime()));
             fileInfo->set("EnableOwnerTermination", "true");
 
             std::ostringstream jsonStream;
             fileInfo->stringify(jsonStream);
 
             http::Response httpResponse(http::StatusLine(200));
-            httpResponse.set("Last-Modified", Util::getHttpTime(_fileLastModifiedTime));
+            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
             httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
             socket->sendAndShutdown(httpResponse);
 
@@ -235,8 +235,8 @@ protected:
             assertGetFileRequest(request);
 
             http::Response httpResponse(http::StatusLine(200));
-            httpResponse.set("Last-Modified", Util::getHttpTime(_fileLastModifiedTime));
-            httpResponse.setBody(_fileContent, "text/plain; charset=utf-8");
+            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
+            httpResponse.setBody(getFileContent(), "application/octet-stream");
             socket->sendAndShutdown(httpResponse);
 
             return true;
@@ -267,7 +267,7 @@ protected:
             }
 
             http::Response httpResponse(http::StatusLine(200));
-            httpResponse.set("Last-Modified", Util::getHttpTime(_fileLastModifiedTime));
+            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
             httpResponse.setBody(content, "application/json; charset=utf-8");
             socket->sendAndShutdown(httpResponse);
 
@@ -282,8 +282,8 @@ protected:
             const std::string wopiTimestamp = request.get("X-COOL-WOPI-Timestamp", std::string());
             if (!wopiTimestamp.empty())
             {
-
-                const std::string fileModifiedTime = Util::getIso8601FracformatTime(_fileLastModifiedTime);
+                const std::string fileModifiedTime =
+                    Util::getIso8601FracformatTime(getFileLastModifiedTime());
                 if (wopiTimestamp != fileModifiedTime)
                 {
                     http::Response httpResponse(http::StatusLine(409));
@@ -318,7 +318,7 @@ protected:
             {
                 // By default we return success.
                 const std::string body = "{\"LastModifiedTime\": \"" +
-                                         Util::getIso8601FracformatTime(_fileLastModifiedTime) +
+                                         Util::getIso8601FracformatTime(getFileLastModifiedTime()) +
                                          "\" }";
                 LOG_TST("Fake wopi host (default) response to POST " << uriReq.getPath()
                                                                      << ": 200 OK " << body);
