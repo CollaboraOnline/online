@@ -422,6 +422,28 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 .jsdialog input[type='radio'][disabled='disabled'] ~ label {
 	color: var(--color-text-lighter);
 }
+/* spinfield */
+
+.spinfieldcontainer input:hover {
+	border: 1px solid var(--color-border-darker);
+	color: var(--color-text-darker);
+	background-color: var(--color-background-lighter);
+}
+
+.spinfield {
+	padding: 4px 0 4px 4px;
+	height: 28px;
+	box-sizing: border-box;
+	margin-right: 1px;
+}
+
+.spinfieldunit {
+	font-size: var(--default-font-size);
+	color: var(--color-text-dark);
+	margin: 5px;
+	position: absolute;
+	margin-inline-start: calc(-40px);
+}
 /* spinfield (number) */
 input[type='number'] {
 	padding-top: 0 !important;
