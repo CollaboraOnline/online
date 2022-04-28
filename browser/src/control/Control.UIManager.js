@@ -574,7 +574,6 @@ L.Control.UIManager = L.Control.extend({
 		}
 
 		var enableNotebookbar = this.shouldUseNotebookbarMode();
-		console.error(enableNotebookbar);
 		if (enableNotebookbar && !window.mode.isMobile()) {
 			if (e.perm === 'edit') {
 				if (this.map.menubar) {
