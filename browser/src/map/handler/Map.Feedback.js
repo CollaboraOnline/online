@@ -3,6 +3,8 @@
  * L.Map.Feedback.
  */
 
+/* global _ */
+
 L.Map.mergeOptions({
 	feedback: true,
 	feedbackTimeout: 30000
@@ -11,6 +13,8 @@ L.Map.mergeOptions({
 L.Map.Feedback = L.Handler.extend({
 
 	addHooks: function () {
+		this.initialized = false;
+
 		if (this._map.wopi)
 			this._map.on('updateviewslist', this.onUpdateList, this);
 		else
@@ -31,6 +35,11 @@ L.Map.Feedback = L.Handler.extend({
 	},
 
 	onDocLoaded: function () {
+		if (this.initialized)
+			return;
+
+		this.initialized = true;
+
 		if (window.localStorage.getItem('WSDFeedbackEnabled') !== 'false') {
 			var laterDate = new Date();
 			var currentDate = new Date();
@@ -64,8 +73,15 @@ L.Map.Feedback = L.Handler.extend({
 		if (this._map.welcome && this._map.welcome.isVisible())
 			setTimeout(L.bind(this.onFeedback, this), 3000);
 		else {
-			this.showFeedbackDialog();
+			this.askForFeedbackDialog();
 		}
+	},
+
+	askForFeedbackDialog: function () {
+		this._map.uiManager.showSnackbar(
+			_('Please send us your feedback'),
+			_('OK'),
+			this.showFeedbackDialog.bind(this));
 	},
 
 	showFeedbackDialog: function () {
