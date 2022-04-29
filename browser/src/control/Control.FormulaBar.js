@@ -175,6 +175,9 @@ L.Map.include({
 
 			jsdialogFormulabar.show('startformula');
 			jsdialogFormulabar.show('AutoSumMenu');
+
+			// clear reference marks
+			map._docLayer._clearReferences();
 		}, 250);
 	}
 });
