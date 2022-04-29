@@ -1146,7 +1146,8 @@ public:
 
             if (len > 0)
             {
-                assert (len <= ssize_t(sizeof(buf)));
+                LOG_ASSERT_MSG(len <= ssize_t(sizeof(buf)),
+                               "Read more data than the buffer size");
                 _bytesRecvd += len;
                 _inBuffer.append(&buf[0], len);
             }
@@ -1189,7 +1190,7 @@ public:
     /// We need this helper since the handler needs a shared_ptr to the socket
     /// but we can't have a shared_ptr in the ctor.
     template <typename TSocket>
-    static std::shared_ptr<TSocket> create(const std::string hostname, const int fd, bool isClient,
+    static std::shared_ptr<TSocket> create(std::string hostname, const int fd, bool isClient,
                                            std::shared_ptr<ProtocolHandlerInterface> handler,
                                            ReadType readType = NormalRead)
     {
@@ -1416,7 +1417,7 @@ public:
             do
             {
                 // Writing much more than we can absorb in the kernel causes wastage.
-                const auto size = std::min((int)_outBuffer.getBlockSize(), getSendBufferSize());
+                const int size = std::min((int)_outBuffer.getBlockSize(), getSendBufferSize());
                 if (size == 0)
                     break;
 
@@ -1443,6 +1444,8 @@ public:
 
             if (len > 0)
             {
+                LOG_ASSERT_MSG(len <= ssize_t(_outBuffer.size()),
+                               "Consumed more data than available");
                 _bytesSent += len;
                 _outBuffer.eraseFirst(len);
             }

@@ -1745,6 +1745,8 @@ public:
     void dumpState(std::ostream& oss)
     {
         oss << "Kit Document:\n"
+            << std::boolalpha
+            << "\n\tpid: " << getpid()
             << "\n\tstop: " << _stop
             << "\n\tjailId: " << _jailId
             << "\n\tdocKey: " << _docKey
