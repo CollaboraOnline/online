@@ -940,6 +940,22 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					}
 				],
 				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertContentControl', 'text'),
+								'command': '.uno:InsertContentControl'
+							}
+						]
+					},
+				],
+				'vertical': 'true'
 			}
 		];
 

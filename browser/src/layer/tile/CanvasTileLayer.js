@@ -1703,6 +1703,14 @@ L.CanvasTileLayer = L.Layer.extend({
 				this.coreDocBGColor = textMsg.substring('documentbackgroundcolor:'.length + 1).trim();
 				app.sectionContainer.setClearColor('#' + this.coreDocBGColor);
 			}
+		} else if (textMsg.startsWith('contentcontrol:')) {
+			//this._onContentControlMsg(textMsg);
+			textMsg = textMsg.substring('contentcontrol:'.length + 1);
+			if (!app.sectionContainer.doesSectionExist(L.CSections.ContentControl.name)) {
+				app.sectionContainer.addSection(new app.definitions.ContentControlSection());
+			}
+			var section = app.sectionContainer.getSectionWithName(L.CSections.ContentControl.name);
+			section.drawContentControl(JSON.parse(textMsg));
 		}
 		else if (textMsg.startsWith('infobar:')) {
 			obj = JSON.parse(textMsg.substring('infobar:'.length + 1));

@@ -492,6 +492,7 @@ var unoCommandsArray = {
 	'ZTestDialog':{spreadsheet:{menu:_('~Z-test...'),},},
 	'ZoomMinus':{global:{menu:_('Zoom Out'),},},
 	'ZoomPlus':{global:{menu:_('Zoom In'),},},
+	'InsertContentControl':{text:{menu:_('~Insert Rich Text'),},},
 };
 
 window._UNO = function(string, component, isContext) {
