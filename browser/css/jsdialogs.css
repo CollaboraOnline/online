@@ -733,35 +733,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	font-size: var(--default-font-size);
 }
 
-#MacroSelectorDialog #table-box2 {
-	width: auto;
-}
-
-#MacroSelectorDialog #table-box2 > .row > .cell.jsdialog {
-	width: auto;
-}
-
-#MacroSelectorDialog #table-box2 > .row > .cell.jsdialog:first-of-type {
-	width: 47%;
-}
-
-#MacroSelectorDialog #table-frame1 {
-	width: auto;
-	margin-left: 47%;
-}
-
 #MacroSelectorDialog #description {
 	text-transform: none;
-}
-
-#MacroSelectorDialog #table-frame3 {
-	width: 100%;
-}
-
-#MacroSelectorDialog #table-frame3 .jsdialog.ui-alignment,
-#MacroSelectorDialog #table-frame2,
-#MacroSelectorDialog #table-frame2 .vertical.jsdialog.ui-alignment {
-	width: auto;
 }
 
 #MacroSelectorDialog #commands,
@@ -806,10 +779,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #MacroSelectorDialog #categories .ui-treeview-entry:hover, .ui-treeview-entry.selected:hover, .ui-listview-entry:hover, .ui-listview-entry.selected:hover {
 	background-color: var(--color-background-darker);
 	color: var(--color-text-darker);
-}
-
-#MacroSelectorDialog #table-frame3 .jsdialog.ui-treeview-entry {
-	padding-left: 12px;
 }
 
 /* color selector */
