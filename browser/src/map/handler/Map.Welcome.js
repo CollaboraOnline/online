@@ -21,7 +21,8 @@ L.Map.Welcome = L.Handler.extend({
 		L.Handler.prototype.initialize.call(this, map);
 		this._map.on('statusindicator', this.onStatusIndicator, this);
 
-		this._url = window.welcomeUrl ? window.welcomeUrl: this._getLocalWelcomeUrl();
+		// temporarily use only local welcome dialog
+		this._url = /*window.welcomeUrl ? window.welcomeUrl:*/ this._getLocalWelcomeUrl();
 		this._retries = 2;
 		this._fallback = false;
 	},
