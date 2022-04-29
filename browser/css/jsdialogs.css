@@ -100,11 +100,6 @@ td.jsdialog:hover * {
 	vertical-align: middle;
 }
 
-td.jsdialog .jsdialog.cell:not(.sidebar),
-[id^='table-dialog-action_area'] .jsdialog.cell{
-	padding: 4px;
-}
-
 .jsdialog.vertical:not(.sidebar) {
 	width: 100%;
 }
