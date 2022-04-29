@@ -87,8 +87,7 @@
 	padding-top: 6px;
 }
 
-td.jsdialog:hover *,
-#table-box3:hover p {
+td.jsdialog:hover * {
 	color: var(--color-text-darker);
 }
 
