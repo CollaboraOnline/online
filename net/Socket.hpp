@@ -1106,7 +1106,7 @@ public:
 #if !MOBILEAPP
         // SSL decodes blocks of 16Kb, so for efficiency we use the same.
         char buf[16 * 1024];
-        ssize_t len;
+        ssize_t len = 0;
         int last_errno = 0;
         do
         {
@@ -1117,7 +1117,8 @@ public:
             do
             {
                 len = readData(buf, sizeof(buf));
-                last_errno = errno;
+                if (len < 0)
+                    last_errno = errno; // Save only on error.
 
                 if (len < 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
                     LOG_SYS_ERRNO(last_errno, '#' << getFD() << ": read failed, have "
@@ -1363,15 +1364,17 @@ protected:
             // Write if we can and have data to write.
             if ((events & POLLOUT) && !_outBuffer.empty())
             {
-                writeOutgoingData();
-                const int last_errno = errno;
-                if (last_errno == EPIPE || (EnableExperimental && last_errno == ECONNRESET))
+                if (writeOutgoingData() < 0)
                 {
-                    LOG_DBG('#' << getFD() << ": Disconnected while writing ("
-                                << Util::symbolicErrno(last_errno)
-                                << "): " << std::strerror(last_errno) << ')');
-                    closed = true;
-                    break;
+                    const int last_errno = errno;
+                    if (last_errno == EPIPE || (EnableExperimental && last_errno == ECONNRESET))
+                    {
+                        LOG_DBG('#' << getFD() << ": Disconnected while writing ("
+                                    << Util::symbolicErrno(last_errno)
+                                    << "): " << std::strerror(last_errno) << ')');
+                        closed = true;
+                        break;
+                    }
                 }
             }
         }
@@ -1390,14 +1393,15 @@ protected:
 
 public:
     /// Override to write data out to socket.
-    virtual void writeOutgoingData()
+    /// Returns the last return from writeData.
+    virtual int writeOutgoingData()
     {
         ASSERT_CORRECT_SOCKET_THREAD(this);
         assert(!_outBuffer.empty());
+        ssize_t len = 0;
         int last_errno = 0;
         do
         {
-            ssize_t len = 0;
             do
             {
                 // Writing much more than we can absorb in the kernel causes wastage.
@@ -1406,7 +1410,8 @@ public:
                     break;
 
                 len = writeData(_outBuffer.getBlock(), size);
-                last_errno = errno; // Save right after the syscall.
+                if (len < 0)
+                    last_errno = errno; // Save only on error.
 
                 // 0 len is unspecified result, according to man write(2).
                 if (len < 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
@@ -1441,6 +1446,7 @@ public:
 
         // Restore errno from the write call.
         errno = last_errno;
+        return len;
     }
 
     /// Does it look like we have some TLS / SSL where we don't expect it ?

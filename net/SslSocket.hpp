@@ -125,18 +125,18 @@ public:
         return StreamSocket::readIncomingData();
     }
 
-    void writeOutgoingData() override
+    int writeOutgoingData() override
     {
         ASSERT_CORRECT_SOCKET_THREAD(this);
 
         const int rc = doHandshake();
         if (rc <= 0)
         {
-            return;
+            return rc;
         }
 
         // Default implementation.
-        StreamSocket::writeOutgoingData();
+        return StreamSocket::writeOutgoingData();
     }
 
     virtual int readData(char* buf, int len) override
