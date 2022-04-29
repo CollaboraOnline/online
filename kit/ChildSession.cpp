@@ -3000,6 +3000,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_DOCUMENT_BACKGROUND_COLOR:
         sendTextFrame("documentbackgroundcolor: " + payload);
         break;
+    case LOK_CALLBACK_CONTENT_CONTROL:
+        sendTextFrame("contentcontrol: " + payload);
+        break;
     case LOK_COMMAND_BLOCKED:
         {
 #if defined(ENABLE_FEATURE_LOCK) || defined(ENABLE_FEATURE_RESTRICTION)

@@ -223,6 +223,7 @@ COOL_JS_LST =\
 	src/layer/tile/CanvasSectionProps.js \
 	src/layer/tile/CanvasSectionContainer.ts \
 	src/layer/tile/CommentSection.ts \
+	src/layer/tile/ContentControlSection.ts \
 	src/layer/tile/CommentListSection.ts \
 	src/layer/tile/TilesSection.ts \
 	src/layer/tile/AutoFillMarkerSection.ts \

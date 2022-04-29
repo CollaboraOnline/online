@@ -32,6 +32,7 @@ L.CSections.Comment =				{ name: 'comment'			, zIndex: 9	}; // This class is for
 
 L.CSections.AutoFillMarker = 		{ name: 'auto fill marker'	, zIndex: 10};
 
+L.CSections.ContentControl =        { name: 'content control'   , zIndex: 11 };
 /* Processing and drawing orders are meaningful between sections with the same zIndex. */
 /* Processing order	: Important for locations and sizes of sections. */
 /* Drawing order	: Highest with the same zIndex will be drawn on top. */
@@ -82,3 +83,9 @@ L.CSections.Comment.drawingOrder =					1; // Writer & Imnpress & Calc.
 L.CSections.AutoFillMarker.processingOrder =		1; // Calc.
 
 L.CSections.AutoFillMarker.drawingOrder =			1; // Calc.
+
+
+/* zIndex = 11  */
+L.CSections.ContentControl.processingOrder =		1; // Writer.
+
+L.CSections.ContentControl.drawingOrder =			1; // Writer.
