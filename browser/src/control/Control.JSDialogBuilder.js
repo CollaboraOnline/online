@@ -4,7 +4,7 @@
  * from the JSON description provided by the server.
  */
 
-/* global app $ w2ui _ _UNO UNOKey L */
+/* global app $ w2ui _ _UNO UNOKey UNOModifier L */
 
 L.Control.JSDialogBuilder = L.Control.extend({
 
@@ -1431,11 +1431,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder.callback('edit', 'change', edit, this.value, builder);
 		});
 
-		edit.addEventListener('keydown', function(event) {
-			if (edit.disabled)
-				return;
+		if (data.rawKeyEvents) {
+			var modifier = 0;
 
-			if (data.rawKeyEvents) {
+			edit.addEventListener('keydown', function(event) {
+				if (edit.disabled)
+					return;
+
 				if (event.key === 'Enter') {
 					builder.callback('edit', 'keypress', edit, UNOKey.RETURN, builder);
 					event.preventDefault();
@@ -1443,10 +1445,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					builder.callback('edit', 'keypress', edit, UNOKey.ESCAPE, builder);
 					event.preventDefault();
 				} else if (event.key === 'Left' || event.key === 'ArrowLeft') {
-					builder.callback('edit', 'keypress', edit, UNOKey.LEFT, builder);
+					builder.callback('edit', 'keypress', edit, UNOKey.LEFT | modifier, builder);
 					event.preventDefault();
 				} else if (event.key === 'Right' || event.key === 'ArrowRight') {
-					builder.callback('edit', 'keypress', edit, UNOKey.RIGHT, builder);
+					builder.callback('edit', 'keypress', edit, UNOKey.RIGHT | modifier, builder);
 					event.preventDefault();
 				} else if (event.key === 'Backspace') {
 					builder.callback('edit', 'keypress', edit, UNOKey.BACKSPACE, builder);
@@ -1454,15 +1456,32 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				} else if (event.key === 'Space') {
 					builder.callback('edit', 'keypress', edit, UNOKey.SPACE, builder);
 					event.preventDefault();
+				} else if (event.key === 'Shift') {
+					modifier = modifier | UNOModifier.SHIFT;
+					event.preventDefault();
+				} else if (event.key === 'Control') {
+					modifier = modifier | UNOModifier.CTRL;
+					event.preventDefault();
 				}
-			}
-		});
+			});
 
-		edit.addEventListener('keypress', function(event) {
-			if (edit.disabled)
-				return;
+			edit.addEventListener('keyup', function(event) {
+				if (edit.disabled)
+					return;
 
-			if (data.rawKeyEvents) {
+				if (event.key === 'Shift') {
+					modifier = modifier & (~UNOModifier.SHIFT);
+					event.preventDefault();
+				} else if (event.key === 'Control') {
+					modifier = modifier & (~UNOModifier.CTRL);
+					event.preventDefault();
+				}
+			});
+
+			edit.addEventListener('keypress', function(event) {
+				if (edit.disabled)
+					return;
+
 				if (event.key === 'Enter' ||
 					event.key === 'Escape' ||
 					event.key === 'Esc' ||
@@ -1477,10 +1496,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					builder.callback('edit', 'keypress', edit, event.keyCode, builder);
 
 				event.preventDefault();
-			}
-		});
+			});
 
-		if (data.rawKeyEvents) {
 			edit.addEventListener('mouseup', function(event) {
 				if (edit.disabled)
 					return;
