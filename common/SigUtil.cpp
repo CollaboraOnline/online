@@ -65,11 +65,16 @@ namespace SigUtil
 
     void setTerminationFlag()
     {
+#if !MOBILEAPP
+        // Request shutting down first. Otherwise, we can race with
+        // getTerminationFlag, which asserts ShutdownRequestFlag.
+        ShutdownRequestFlag = true;
+#endif
         // Set the forced-termination flag.
         TerminationFlag = true;
 #if !MOBILEAPP
-        // And request shutting down and wake-up the thread.
-        requestShutdown();
+        // And wake-up the thread.
+        SocketPoll::wakeupWorld();
 #endif
     }
 
