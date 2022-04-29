@@ -21,7 +21,7 @@
 	z-index: 2001;
 }
 
-.jsdialog.root-container:not(.autofilter):not(.sidebar) {
+.lokdialog > .jsdialog.root-container:not(.autofilter) {
 	margin: .5em 1em; /*same as in .ui-dialog */
 }
 
