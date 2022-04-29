@@ -758,17 +758,14 @@ L.Map.include({
 	},
 
 	formulabarBlur: function() {
-		if (!window.mode.isMobile()) {
-			var hasJSDialogOpened = this.jsdialog && this.jsdialog.hasDialogOpened();
-			var hasVexOpened = Object.keys(vex.getAll()).length > 0;
-			if (!hasVexOpened && !hasJSDialogOpened)
-				this.focus();
-		}
+		var hasJSDialogOpened = this.jsdialog && this.jsdialog.hasDialogOpened();
+		var hasVexOpened = Object.keys(vex.getAll()).length > 0;
+		if (!hasVexOpened && !hasJSDialogOpened)
+			this.focus();
 	},
 
 	formulabarFocus: function() {
-		if (!window.mode.isMobile())
-			this.formulabar.focus();
+		this.formulabar.focus();
 	},
 
 	// map.dispatch() will be used to call some actions so we can share the code

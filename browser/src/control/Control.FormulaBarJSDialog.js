@@ -41,11 +41,13 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 						text: _('Function Wizard'),
 						command: '.uno:FunctionDialog'
 					},
-					{
-						id: 'autosummenu:AutoSumMenu',
-						type: 'menubutton',
-						command: '.uno:AutoSumMenu'
-					},
+					(!window.mode.isMobile()) ? (
+						{
+							id: 'autosummenu:AutoSumMenu',
+							type: 'menubutton',
+							command: '.uno:AutoSumMenu'
+						}
+					) : {},
 					{
 						id: 'startformula',
 						type: 'customtoolitem',
