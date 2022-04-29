@@ -37,7 +37,7 @@
 }
 
 .jsdialog-container .ui-dialog-content {
-	background-color: var(--color-main-background) !important;
+	background-color: var(--color-background-lighter) !important;
 	font-family: var(--jquery-ui-font);
 	line-height: 1.5;
 }
