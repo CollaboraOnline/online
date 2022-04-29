@@ -10,11 +10,18 @@ L.Map.mergeOptions({
 
 L.Map.Welcome = L.Handler.extend({
 
+	_getLocalWelcomeUrl: function() {
+		var welcomeLocation = L.LOUtil.getURL('/welcome/welcome.html');
+		if (window.socketProxy)
+			welcomeLocation = window.makeWsUrl(welcomeLocation);
+		return welcomeLocation;
+	},
+
 	initialize: function (map) {
 		L.Handler.prototype.initialize.call(this, map);
 		this._map.on('statusindicator', this.onStatusIndicator, this);
 
-		this._url = window.welcomeUrl ? window.welcomeUrl: L.LOUtil.getURL('/welcome/welcome.html');
+		this._url = window.welcomeUrl ? window.welcomeUrl: this._getLocalWelcomeUrl();
 		this._retries = 2;
 		this._fallback = false;
 	},
@@ -105,11 +112,7 @@ L.Map.Welcome = L.Handler.extend({
 				this.remove();
 			} else {
 				// fallback
-				var welcomeLocation = L.LOUtil.getURL('/welcome/welcome.html');
-				if (window.socketProxy)
-					welcomeLocation = window.makeWsUrl(welcomeLocation);
-
-				this._url = welcomeLocation;
+				this._url = this._getLocalWelcomeUrl();
 				this._fallback = true;
 				setTimeout(L.bind(this.showWelcomeDialog, this), 200);
 			}
