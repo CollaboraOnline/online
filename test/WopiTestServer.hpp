@@ -183,30 +183,59 @@ protected:
         config.setBool("storage.ssl.as_scheme", false);
     }
 
-    /// Here we act as a WOPI server, so that we have a server that responds to
-    /// the wopi requests without additional expensive setup.
-    bool handleHttpRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
-                           std::shared_ptr<StreamSocket>& socket) override
+    /// Handles WOPI CheckFileInfo requests.
+    virtual bool handleCheckFileInfoRequest(const Poco::Net::HTTPRequest& request,
+                                            std::shared_ptr<StreamSocket>& socket)
     {
-        Poco::URI uriReq(request.getURI());
+        const Poco::URI uriReq(request.getURI());
 
-        {
-            std::ostringstream oss;
-            oss << "Fake wopi host " << request.getMethod() << " request URI [" << uriReq.toString()
-                << "]:\n";
-            for (const auto& pair : request)
-            {
-                oss << '\t' << pair.first << ": " << pair.second << " / ";
-            }
+        Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
+        fileInfo->set("BaseFileName", getFilename(uriReq));
+        fileInfo->set("Size", getFileContent().size());
+        fileInfo->set("Version", "1.0");
+        fileInfo->set("OwnerId", "test");
+        fileInfo->set("UserId", "test");
+        fileInfo->set("UserFriendlyName", "test");
+        fileInfo->set("UserCanWrite", "true");
+        fileInfo->set("PostMessageOrigin", "localhost");
+        fileInfo->set("LastModifiedTime",
+                      Util::getIso8601FracformatTime(getFileLastModifiedTime()));
+        fileInfo->set("EnableOwnerTermination", "true");
 
-            LOG_TST(oss.str());
-        }
+        std::ostringstream jsonStream;
+        fileInfo->stringify(jsonStream);
+
+        http::Response httpResponse(http::StatusLine(200));
+        httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
+        httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
+        socket->sendAndShutdown(httpResponse);
+
+        return true;
+    }
+
+    virtual bool handleGetFileRequest(const Poco::Net::HTTPRequest&,
+                                      std::shared_ptr<StreamSocket>& socket)
+    {
+        http::Response httpResponse(http::StatusLine(200));
+        httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
+        httpResponse.setBody(getFileContent(), "application/octet-stream");
+        socket->sendAndShutdown(httpResponse);
+
+        return true;
+    }
+
+    virtual bool handleHttpGetRequest(const Poco::Net::HTTPRequest& request,
+                                      std::shared_ptr<StreamSocket>& socket)
+    {
+        LOG_ASSERT_MSG(request.getMethod() == "GET", "Expect an HTTP GET request");
 
         static const Poco::RegularExpression regInfo("/wopi/files/[0-9]");
         static const Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
 
+        const Poco::URI uriReq(request.getURI());
+
         // CheckFileInfo
-        if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
+        if (regInfo.match(uriReq.getPath()))
         {
             ++_countCheckFileInfo;
             LOG_TST("Fake wopi host request, handling CheckFileInfo (#"
@@ -214,31 +243,9 @@ protected:
 
             assertCheckFileInfoRequest(request);
 
-            Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
-            fileInfo->set("BaseFileName", getFilename(uriReq));
-            fileInfo->set("Size", getFileContent().size());
-            fileInfo->set("Version", "1.0");
-            fileInfo->set("OwnerId", "test");
-            fileInfo->set("UserId", "test");
-            fileInfo->set("UserFriendlyName", "test");
-            fileInfo->set("UserCanWrite", "true");
-            fileInfo->set("PostMessageOrigin", "localhost");
-            fileInfo->set("LastModifiedTime",
-                          Util::getIso8601FracformatTime(getFileLastModifiedTime()));
-            fileInfo->set("EnableOwnerTermination", "true");
-
-            std::ostringstream jsonStream;
-            fileInfo->stringify(jsonStream);
-
-            http::Response httpResponse(http::StatusLine(200));
-            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-            httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
-            socket->sendAndShutdown(httpResponse);
-
-            return true;
+            return handleCheckFileInfoRequest(request, socket);
         }
-        // GetFile
-        else if (request.getMethod() == "GET" && regContent.match(uriReq.getPath()))
+        else if (regContent.match(uriReq.getPath())) // GetFile
         {
             ++_countGetFile;
             LOG_TST("Fake wopi host request, handling GetFile (#" << _countGetFile
@@ -246,14 +253,23 @@ protected:
 
             assertGetFileRequest(request);
 
-            http::Response httpResponse(http::StatusLine(200));
-            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-            httpResponse.setBody(getFileContent(), "application/octet-stream");
-            socket->sendAndShutdown(httpResponse);
-
-            return true;
+            return handleGetFileRequest(request, socket);
         }
-        else if (request.getMethod() == "POST" && regInfo.match(uriReq.getPath()))
+
+        return false;
+    }
+
+    virtual bool handleHttpPostRequest(const Poco::Net::HTTPRequest& request,
+                                       Poco::MemoryInputStream& message,
+                                       std::shared_ptr<StreamSocket>& socket)
+    {
+        LOG_ASSERT_MSG(request.getMethod() == "POST", "Expect an HTTP POST request");
+
+        static const Poco::RegularExpression regInfo("/wopi/files/[0-9]");
+        static const Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
+
+        const Poco::URI uriReq(request.getURI());
+        if (regInfo.match(uriReq.getPath()))
         {
             ++_countPutRelative;
             LOG_TST("Fake wopi host request, handling PutRelativeFile (#"
@@ -285,7 +301,7 @@ protected:
 
             return true;
         }
-        else if (request.getMethod() == "POST" && regContent.match(uriReq.getPath()))
+        else if (regContent.match(uriReq.getPath()))
         {
             ++_countPutFile;
             LOG_TST("Fake wopi host request, handling PutFile (#" << _countPutFile
@@ -340,6 +356,40 @@ protected:
             }
 
             return true;
+        }
+
+        return false;
+    }
+
+    /// Here we act as a WOPI server, so that we have a server that responds to
+    /// the wopi requests without additional expensive setup.
+    bool handleHttpRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
+                           std::shared_ptr<StreamSocket>& socket) override
+    {
+        Poco::URI uriReq(request.getURI());
+
+        {
+            std::ostringstream oss;
+            oss << "Fake wopi host " << request.getMethod() << " request URI [" << uriReq.toString()
+                << "]:\n";
+            for (const auto& pair : request)
+            {
+                oss << '\t' << pair.first << ": " << pair.second << " / ";
+            }
+
+            LOG_TST(oss.str());
+        }
+
+        static const Poco::RegularExpression regInfo("/wopi/files/[0-9]");
+        static const Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
+
+        if (request.getMethod() == "GET")
+        {
+            return handleHttpGetRequest(request, socket);
+        }
+        else if (request.getMethod() == "POST")
+        {
+            return handleHttpPostRequest(request, message, socket);
         }
         else if (!Util::startsWith(uriReq.getPath(), "/cool/")) // Skip requests to the websrv.
         {
