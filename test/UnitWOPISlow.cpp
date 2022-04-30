@@ -66,28 +66,18 @@ public:
     /// Given a URI, returns the filename.
     std::string getFilename(const Poco::URI& uri) const override
     {
-        if (uri.getPath() == (getRootPath() + LargeDocumentFilename))
-        {
-            return LargeDocumentFilename;
-        }
-
-        return WopiTestServer::getFilename(uri);
+        return extractFilenameFromWopiUri(uri.getPath());
     }
 
     bool handleHttpRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
                            std::shared_ptr<StreamSocket>& socket) override
     {
-        static const std::string rootPath = "/wopi/files/";
-        static const std::string contentsSuffix = "/contents";
-
         Poco::URI uriReq(request.getURI());
 
         LOG_INF("Fake wopi host " << request.getMethod() << " request URI [" << uriReq.toString()
                                   << "], path: [" << uriReq.getPath() << ']');
 
-        if (request.getMethod() == "GET" &&
-            Util::startsWith(uriReq.getPath(), rootPath + LargeDocumentFilename) &&
-            !Util::endsWith(uriReq.getPath(), contentsSuffix))
+        if (request.getMethod() == "GET" && isWopiInfoRequest(uriReq.getPath()))
         {
             LOG_INF("Fake wopi host request, handling large-document CheckFileInfo: "
                     << uriReq.getPath());
@@ -117,9 +107,7 @@ public:
 
             return true;
         }
-        else if (request.getMethod() == "GET" &&
-                 Util::startsWith(uriReq.getPath(), rootPath + LargeDocumentFilename) &&
-                 Util::endsWith(uriReq.getPath(), contentsSuffix))
+        else if (request.getMethod() == "GET" && isWopiContentRequest(uriReq.getPath()))
         {
             LOG_TST("Fake wopi host request, handling GetFile: " << uriReq.getPath());
 
@@ -131,9 +119,7 @@ public:
 
             return true;
         }
-        else if (request.getMethod() == "POST" &&
-                 Util::startsWith(uriReq.getPath(), rootPath + LargeDocumentFilename) &&
-                 Util::endsWith(uriReq.getPath(), contentsSuffix))
+        else if (request.getMethod() == "POST" && isWopiContentRequest(uriReq.getPath()))
         {
             LOG_TST("Fake wopi host request, handling PutFile: " << uriReq.getPath());
 

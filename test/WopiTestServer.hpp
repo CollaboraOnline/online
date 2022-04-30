@@ -166,14 +166,40 @@ protected:
     /// Given a URI, returns the filename.
     virtual std::string getFilename(const Poco::URI& uri) const
     {
-        return uri.getPath() == (getRootPath() + "3") ? "he%llo.txt" : "hello.txt";
+        // Note: This is a fake implementation.
+        return uri.getPath() == (getURIRootPath() + "3") ? "he%llo.txt" : "hello.txt";
     }
 
     /// Returns the virtual root-path that we serve.
-    static const std::string& getRootPath()
+    static const std::string& getURIRootPath()
     {
         static const std::string RootPath = "/wopi/files/";
         return RootPath;
+    }
+
+    /// Given a wopi URI, extracts the filename.
+    static std::string extractFilenameFromWopiUri(const std::string& uriPath)
+    {
+        if (Util::startsWith(uriPath, getURIRootPath()))
+        {
+            const auto first = getURIRootPath().size();
+            const auto it = uriPath.find_first_of('/', first);
+            return uriPath.substr(first, it);
+        }
+
+        return std::string();
+    }
+
+    /// Returns true iff @uriPath is a Wopi path but not to the contents.
+    static bool isWopiInfoRequest(const std::string& uriPath)
+    {
+        return Util::startsWith(uriPath, getURIRootPath()) && !Util::endsWith(uriPath, "/contents");
+    }
+
+    /// Returns true iff @uriPath is a Wopi path to the contents of a file.
+    static bool isWopiContentRequest(const std::string& uriPath)
+    {
+        return Util::startsWith(uriPath, getURIRootPath()) && Util::endsWith(uriPath, "/contents");
     }
 
     void configure(Poco::Util::LayeredConfiguration& config) override
@@ -229,13 +255,9 @@ protected:
     {
         LOG_ASSERT_MSG(request.getMethod() == "GET", "Expect an HTTP GET request");
 
-        static const Poco::RegularExpression regInfo("/wopi/files/[0-9]");
-        static const Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
-
         const Poco::URI uriReq(request.getURI());
 
-        // CheckFileInfo
-        if (regInfo.match(uriReq.getPath()))
+        if (isWopiInfoRequest(uriReq.getPath())) // CheckFileInfo
         {
             ++_countCheckFileInfo;
             LOG_TST("Fake wopi host request, handling CheckFileInfo (#"
@@ -245,7 +267,7 @@ protected:
 
             return handleCheckFileInfoRequest(request, socket);
         }
-        else if (regContent.match(uriReq.getPath())) // GetFile
+        else if (isWopiContentRequest(uriReq.getPath())) // GetFile
         {
             ++_countGetFile;
             LOG_TST("Fake wopi host request, handling GetFile (#" << _countGetFile
@@ -265,11 +287,8 @@ protected:
     {
         LOG_ASSERT_MSG(request.getMethod() == "POST", "Expect an HTTP POST request");
 
-        static const Poco::RegularExpression regInfo("/wopi/files/[0-9]");
-        static const Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
-
         const Poco::URI uriReq(request.getURI());
-        if (regInfo.match(uriReq.getPath()))
+        if (isWopiInfoRequest(uriReq.getPath()))
         {
             ++_countPutRelative;
             LOG_TST("Fake wopi host request, handling PutRelativeFile (#"
@@ -301,7 +320,7 @@ protected:
 
             return true;
         }
-        else if (regContent.match(uriReq.getPath()))
+        else if (isWopiContentRequest(uriReq.getPath()))
         {
             ++_countPutFile;
             LOG_TST("Fake wopi host request, handling PutFile (#" << _countPutFile
@@ -379,9 +398,6 @@ protected:
 
             LOG_TST(oss.str());
         }
-
-        static const Poco::RegularExpression regInfo("/wopi/files/[0-9]");
-        static const Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
 
         if (request.getMethod() == "GET")
         {
