@@ -111,6 +111,9 @@ L.Map.Feedback = L.Handler.extend({
 	},
 
 	onMessage: function (e) {
+		if (e.data.startsWith('updatecheck-show'))
+			return;
+
 		var data = e.data;
 		data = JSON.parse(data).MessageId;
 

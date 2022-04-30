@@ -85,6 +85,9 @@ L.Map.Welcome = L.Handler.extend({
 	},
 
 	onMessage: function (e) {
+		if (e.data.startsWith('updatecheck-show'))
+			return;
+
 		var data = JSON.parse(e.data);
 
 		if (data.MessageId === 'welcome-show') {
