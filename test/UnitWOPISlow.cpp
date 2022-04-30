@@ -63,6 +63,17 @@ public:
         setFileContent(Util::toString(data));
     }
 
+    /// Given a URI, returns the filename.
+    std::string getFilename(const Poco::URI& uri) const override
+    {
+        if (uri.getPath() == (getRootPath() + LargeDocumentFilename))
+        {
+            return LargeDocumentFilename;
+        }
+
+        return WopiTestServer::getFilename(uri);
+    }
+
     bool handleHttpRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
                            std::shared_ptr<StreamSocket>& socket) override
     {
@@ -84,7 +95,7 @@ public:
             assertCheckFileInfoRequest(request);
 
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
-            fileInfo->set("BaseFileName", LargeDocumentFilename);
+            fileInfo->set("BaseFileName", getFilename(uriReq));
             fileInfo->set("Size", getFileContent().size());
             fileInfo->set("Version", "1.0");
             fileInfo->set("OwnerId", "test");

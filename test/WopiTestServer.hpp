@@ -163,6 +163,19 @@ protected:
     {
     }
 
+    /// Given a URI, returns the filename.
+    virtual std::string getFilename(const Poco::URI& uri) const
+    {
+        return uri.getPath() == (getRootPath() + "3") ? "he%llo.txt" : "hello.txt";
+    }
+
+    /// Returns the virtual root-path that we serve.
+    static const std::string& getRootPath()
+    {
+        static const std::string RootPath = "/wopi/files/";
+        return RootPath;
+    }
+
     void configure(Poco::Util::LayeredConfiguration& config) override
     {
         UnitWSD::configure(config);
@@ -201,9 +214,8 @@ protected:
 
             assertCheckFileInfoRequest(request);
 
-            const std::string fileName(uriReq.getPath() == "/wopi/files/3" ? "he%llo.txt" : "hello.txt");
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
-            fileInfo->set("BaseFileName", fileName);
+            fileInfo->set("BaseFileName", getFilename(uriReq));
             fileInfo->set("Size", getFileContent().size());
             fileInfo->set("Version", "1.0");
             fileInfo->set("OwnerId", "test");
