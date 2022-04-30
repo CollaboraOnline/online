@@ -1529,8 +1529,6 @@ class CanvasSectionContainer {
 				var targetSection: CanvasSectionObject = null;
 				var targetEdge: string = null;
 				for (var i: number = 0; i < count - 1; i++) {
-					if (!this.doesSectionExist(section.anchor[index][i]))
-						continue;
 					targetSection = this.getSectionWithName(section.anchor[index][i]);
 					if (targetSection) {
 						targetEdge = section.anchor[index][i + 1];

@@ -20,9 +20,7 @@ L.Map.include({
 	showResolvedComments: function(on: any) {
 		var unoCommand = '.uno:ShowResolvedAnnotations';
 		this.sendUnoCommand(unoCommand);
-		var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
-		if (section)
-			section.setViewResolved(on);
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).setViewResolved(on);
 		this.uiManager.setSavedState('ShowResolved', on ? true : false);
 	}
 });

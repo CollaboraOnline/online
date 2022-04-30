@@ -16,11 +16,8 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			comment.anchorPos = [temp.x, temp.y];
 		}
 
-		var commentListSection = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
-		if (commentListSection) {
-			var annotation = commentListSection.add(comment);
-			commentListSection.modify(annotation);
-		}
+		var annotation = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(comment);
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(annotation);
 	},
 
 	beforeAdd: function (map) {
@@ -38,19 +35,15 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			return;
 		}
 
-		var commentListSection = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
-
 		if (values.comments) {
 			values.comments.forEach(function(comment) {
 				comment.id = comment.id.toString();
 				comment.parent = comment.parent.toString();
 			});
-			if (commentListSection)
-				commentListSection.importComments(values.comments);
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
 		}
 		else if (values.redlines && values.redlines.length > 0) {
-			if (commentListSection)
-				commentListSection.importChanges(values.redlines);
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importChanges(values.redlines);
 		}
 		else {
 			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
