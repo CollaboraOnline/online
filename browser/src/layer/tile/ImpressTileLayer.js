@@ -75,11 +75,8 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		comment.rectangle = [docTopLeft[0], docTopLeft[1], 566, 566];
 
 		comment.parthash = this._partHashes[this._selectedPart];
-		var commentListSection = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
-		if (commentListSection) {
-			var annotation = commentListSection.add(comment);
-			commentListSection.modify(annotation);
-		}
+		var annotation = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(comment);
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(annotation);
 	},
 
 	beforeAdd: function (map) {
@@ -139,9 +136,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		if (isAnyVexDialogActive()) // Need this check else vex loses focus
 			return;
 
-		var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
-		if (section)
-			section.onPartChange();
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onPartChange();
 	},
 
 	onUpdatePermission: function (e) {
@@ -167,11 +162,8 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (values.comments) {
-			var commentListSection = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
-			if (commentListSection) {
-				commentListSection.clearList();
-				commentListSection.importComments(values.comments);
-			}
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).clearList();
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
 		} else {
 			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
