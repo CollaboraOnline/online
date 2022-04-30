@@ -45,6 +45,7 @@ all_la_unit_tests = \
 	unit-wopi-temp.la \
 	unit-cursor.la \
 	unit-session.la \
+	unit-wopi-languages.la \
 	unit-render-shape.la \
 	unit-wopi-versionrestore.la \
 	unit-wopi-async-upload-close.la \
@@ -223,6 +224,8 @@ unit_wopi_fail_upload_la_SOURCES = UnitWOPIFailUpload.cpp
 unit_wopi_fail_upload_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_renamefile_la_SOURCES = UnitWOPIRenameFile.cpp
 unit_wopi_renamefile_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_languages_la_SOURCES = UnitWOPILanguages.cpp
+unit_wopi_languages_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_lock_la_SOURCES = UnitWOPILock.cpp
 unit_wopi_lock_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_watermark_la_SOURCES = UnitWOPIWatermark.cpp
