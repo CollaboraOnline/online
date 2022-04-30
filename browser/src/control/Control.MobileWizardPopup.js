@@ -55,7 +55,7 @@ L.Control.MobileWizardPopup = L.Control.extend({
 	_hideWizard: function () {
 		this.removeContainer();
 
-		if (app.sectionContainer) {
+		if (window.commentWizard === true && app.sectionContainer) {
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).removeHighlighters();
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).layout();
 		}
