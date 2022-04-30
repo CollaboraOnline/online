@@ -24,6 +24,8 @@
 #include <sstream>
 #include <vector>
 
+/// Simulates a WOPI server for testing purposes.
+/// Currently only serves one file contents.
 class WopiTestServer : public UnitWSD
 {
 private:
