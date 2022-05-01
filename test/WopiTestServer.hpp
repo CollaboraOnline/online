@@ -27,6 +27,9 @@
 
 /// Simulates a WOPI server for testing purposes.
 /// Currently only serves one file contents.
+/// Furthermore, the file URI doesn't contain the
+/// real filename (in most tests), instead filenames
+/// 1 to 9 are considered special.
 class WopiTestServer : public UnitWSD
 {
 private:
@@ -45,6 +48,9 @@ private:
     /// Content of the file.
     std::string _fileContent;
 
+    /// The filename. TODO: Support multiple ones.
+    std::string _filename;
+
     /// Last modified time of the file
     std::chrono::system_clock::time_point _fileLastModifiedTime;
 
@@ -56,6 +62,9 @@ private:
     std::size_t _countPutRelative;
     /// The number of upload invocations.
     std::size_t _countPutFile;
+
+    /// The default filename when only content is given.
+    static constexpr auto DefaultFilename = "hello.txt";
 
 protected:
 
@@ -88,6 +97,7 @@ protected:
 
     WopiTestServer(const std::string& name, const std::string& filenameOrContents = "Hello, world")
         : UnitWSD(name)
+        , _filename(DefaultFilename)
         , _countCheckFileInfo(0)
         , _countGetFile(0)
         , _countPutRelative(0)
@@ -102,6 +112,7 @@ protected:
             // That was a filename, set its contents.
             LOG_TST("WopiTestServer created with " << data.size() << " bytes from file ["
                                                    << filenameOrContents << "]");
+            _filename = filenameOrContents; // Capture the real filename.
             setFileContent(Util::toString(data));
         }
         else
@@ -183,10 +194,28 @@ protected:
     }
 
     /// Given a URI, returns the filename.
+    ///FIXME: this should be remove when we support multiple files properly.
     virtual std::string getFilename(const Poco::URI& uri) const
     {
+        std::string filename = extractFilenameFromWopiUri(uri.getPath());
+
         // Note: This is a fake implementation.
-        return uri.getPath() == (getURIRootPath() + "3") ? "he%llo.txt" : "hello.txt";
+        if (filename == "3")
+        {
+            // Test '%' in the filename.
+            //FIXME: pass this in the URI.
+            return "he%llo.txt";
+        }
+
+        const auto number = std::stoi(filename);
+        if (number >=1 && number <= 9)
+        {
+            // Fake filename, depends on implicit filename.
+            return DefaultFilename;
+        }
+
+        // Return the filename given in the URI.
+        return filename;
     }
 
     /// Returns the virtual root-path that we serve.
