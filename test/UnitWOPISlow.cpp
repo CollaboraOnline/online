@@ -55,12 +55,6 @@ public:
         setTimeout(std::chrono::minutes(10));
     }
 
-    /// Given a URI, returns the filename.
-    std::string getFilename(const Poco::URI& uri) const override
-    {
-        return extractFilenameFromWopiUri(uri.getPath());
-    }
-
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
