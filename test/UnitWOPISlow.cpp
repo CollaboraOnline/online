@@ -42,25 +42,17 @@ class UnitWOPISlow : public WopiTestServer
 
     static constexpr auto LargeDocumentFilename = "large-six-hundred.odt";
 
-    /// The delay to simulate a slow server.
-    std::chrono::milliseconds _serverResponseDelay;
-
     /// The number of key input sent.
     std::size_t _inputCount;
 
 public:
     UnitWOPISlow()
-        : WopiTestServer("UnitWOPISlow")
+        : WopiTestServer("UnitWOPISlow", LargeDocumentFilename)
         , _phase(Phase::Load)
-        , _serverResponseDelay(std::chrono::seconds(5))
         , _inputCount(0)
     {
         // We need more time than the default.
         setTimeout(std::chrono::minutes(10));
-
-        // Read the document data and store as string in memory.
-        const auto data = helpers::readDataFromFile(LargeDocumentFilename);
-        setFileContent(Util::toString(data));
     }
 
     /// Given a URI, returns the filename.
