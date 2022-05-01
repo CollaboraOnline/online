@@ -4,6 +4,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
+#include "Protocol.hpp"
 #include "config.h"
 
 #include "HttpRequest.hpp"
@@ -75,7 +76,7 @@ protected:
     /// Sets the file content to a given value and update the last file modified time
     void setFileContent(const std::string& fileContent)
     {
-        LOG_TST("setFileContent: [" << fileContent << ']');
+        LOG_TST("setFileContent: [" << COOLProtocol::getAbbreviatedMessage(fileContent ) << ']');
         _fileContent = fileContent;
         _fileLastModifiedTime = std::chrono::system_clock::now();
     }
@@ -85,7 +86,7 @@ protected:
         return _fileLastModifiedTime;
     }
 
-    WopiTestServer(const std::string& name, const std::string& fileContent = "Hello, world")
+    WopiTestServer(const std::string& name, const std::string& filenameOrContents = "Hello, world")
         : UnitWSD(name)
         , _countCheckFileInfo(0)
         , _countGetFile(0)
@@ -93,7 +94,23 @@ protected:
         , _countPutFile(0)
     {
         LOG_TST("WopiTestServer created for [" << getTestname() << ']');
-        setFileContent(fileContent);
+
+        // Read the document data and store as string in memory.
+        const auto data = helpers::readDataFromFile(filenameOrContents);
+        if (!data.empty())
+        {
+            // That was a filename, set its contents.
+            LOG_TST("WopiTestServer created with " << data.size() << " bytes from file ["
+                                                   << filenameOrContents << "]");
+            setFileContent(Util::toString(data));
+        }
+        else
+        {
+            // Not a valid filename, assume it's some data.
+            LOG_TST("WopiTestServer created with " << filenameOrContents.size()
+                                                   << " bytes from data.");
+            setFileContent(filenameOrContents);
+        }
     }
 
     std::size_t getCountCheckFileInfo() const { return _countCheckFileInfo; }
