@@ -1199,12 +1199,20 @@ public:
         }
         try
         {
-            Poco::JSON::Array::Ptr wopiHostPatterns =
-                remoteJson->getObject("storage")->getObject("wopi")->getArray("hosts");
+            Poco::JSON::Array::Ptr wopiHostPatterns;
+            try
+            {
+                wopiHostPatterns = remoteJson->getObject("storage")->getObject("wopi")->getArray("hosts");
+            }
+            catch (const Poco::NullPointerException&)
+            {
+                LOG_INF("Not overwriting any wopi host pattern because the storage->wopi->hosts section does not exist");
+                return;
+            }
 
             if (wopiHostPatterns->size() == 0)
             {
-                LOG_WRN("Not overwriting any wopi host pattern because JSON contains empty array");
+                LOG_INF("Not overwriting any wopi host pattern because JSON contains empty array");
                 return;
             }
 
@@ -1308,14 +1316,23 @@ public:
     {
         try
         {
-            Poco::JSON::Object::Ptr aliasGroups =
-                remoteJson->getObject("storage")->getObject("wopi")->getObject("alias_groups");
+            Poco::JSON::Object::Ptr aliasGroups;
+            Poco::JSON::Array::Ptr groups;
 
-            Poco::JSON::Array::Ptr groups = aliasGroups->getArray("groups");
+            try
+            {
+                aliasGroups = remoteJson->getObject("storage")->getObject("wopi")->getObject("alias_groups");
+                groups = aliasGroups->getArray("groups");
+            }
+            catch (const Poco::NullPointerException&)
+            {
+                LOG_INF("Not overwriting any alias groups because storage->wopi->alias_groups->groups array does not exist");
+                return;
+            }
 
             if (groups->size() == 0)
             {
-                LOG_WRN("Not overwriting any alias groups because alias_group array is empty");
+                LOG_INF("Not overwriting any alias groups because alias_group array is empty");
                 return;
             }
 
@@ -1375,7 +1392,7 @@ public:
         catch (const std::exception& exc)
         {
             LOG_ERR("Fetching of alias groups failed with error: " << exc.what()
-                                                                   << "please check JSON format");
+                                                                   << ", please check JSON format");
         }
     }
 
@@ -1390,9 +1407,13 @@ public:
             if (JsonUtil::findJSONValue(remoteFontConfig, "url", url))
                 newAppConfig.insert(std::make_pair("remote_font_config.url", url));
         }
+        catch (const Poco::NullPointerException&)
+        {
+            LOG_INF("Not overwriting the remote font config URL because the remove_font_config entry does not exist");
+        }
         catch (const std::exception& exc)
         {
-            LOG_ERR("Fetching of remote font config failed with error: " << exc.what() << "please check JSON format");
+            LOG_ERR("Failed to fetch remote_font_config, please check JSON format: " << exc.what());
         }
     }
 
