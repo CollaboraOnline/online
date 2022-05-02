@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-25 20:41+0200\n"
-"PO-Revision-Date: 2022-04-19 07:46+0000\n"
+"PO-Revision-Date: 2022-05-02 03:16+0000\n"
 "Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "ui/eu/>\n"
-"Language: \n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -663,7 +663,7 @@ msgstr "Berrezarri zooma"
 #: src/control/Control.NotebookbarImpress.js:343
 #: src/control/Control.NotebookbarWriter.js:1005
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Aldatu erabiltzailearen interfaze-modua"
 
 #: src/control/Control.Menubar.js:115
 #: src/control/Control.NotebookbarWriter.js:1017
@@ -822,11 +822,11 @@ msgstr "Leheneratu hizkuntza lehenetsira"
 
 #: src/control/Control.Menubar.js:1554
 msgid "Use Compact view"
-msgstr ""
+msgstr "Erabili ikuspegi trinkoa"
 
 #: src/control/Control.Menubar.js:1556
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Erabili fitxen ikuspegia"
 
 #: src/control/Control.Menubar.js:1617
 msgid "Insert Shape"
@@ -1090,18 +1090,18 @@ msgstr "Ezabatu zutabeak"
 #: src/control/Control.NotebookbarImpress.js:342
 #: src/control/Control.NotebookbarWriter.js:1004
 msgid "Compact view"
-msgstr ""
+msgstr "Ikuspegi trinkoa"
 
 #: src/control/Control.NotebookbarCalc.js:960
 #: src/control/Control.NotebookbarDraw.js:278
 #: src/control/Control.NotebookbarImpress.js:348
 #: src/control/Control.NotebookbarWriter.js:1027
 msgid "Status Bar"
-msgstr ""
+msgstr "Egoera-barra"
 
 #: src/control/Control.NotebookbarCalc.js:1011
 msgid "Sparkline"
-msgstr ""
+msgstr "Grafiko txikia"
 
 #: src/control/Control.NotebookbarDraw.js:39
 #: src/control/Control.NotebookbarDraw.js:740
@@ -1141,7 +1141,7 @@ msgstr "EPUB dokumentua (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:1016
 msgid "Ruler"
-msgstr ""
+msgstr "Erregela"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1866,13 +1866,13 @@ msgstr ""
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "Azken saioko dokumentuaren garbitzea."
 
 #: src/errormessages.js:28
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
-msgstr ""
+msgstr "Azken saioko dokumentu hau garbitzen ari gara. Saiatu berriro geroago."
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -1939,6 +1939,8 @@ msgid ""
 "Document cannot be exported. Please contact the storage server "
 "administrator."
 msgstr ""
+"Ezin da dokumentua esportatu. Jarri harremanetan biltegiratze-zerbitzariaren "
+"administratzailearekin."
 
 #: src/errormessages.js:50
 msgid "Uploading file to server failed, file not found."
@@ -2009,7 +2011,7 @@ msgstr "Ebatzia"
 
 #: src/main.js:88
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "Abisua! Erabiltzen ari zaren nabigatzailea ez da onartzen."
 
 #: src/map/Clipboard.js:120
 msgid ""
@@ -2018,7 +2020,7 @@ msgstr "%productName kanpora itsasteko, lehenago egin klik 'deskarga' botoian"
 
 #: src/map/Clipboard.js:130
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Dokumentutik kopiatzea desgaituta dago"
 
 #: src/map/Clipboard.js:292
 msgid "Failed to download clipboard, please re-copy"
@@ -2077,6 +2079,10 @@ msgid ""
 "more options</p><p class=\"vex-footnote\">Close popup to ignore paste "
 "special</p>"
 msgstr ""
+"<p>Zure nabigatzaileak arbelerako sarbide oso mugatua du</p><p>Mesedez, "
+"sakatu orain: <kbd>Ktrl</kbd><span class=\"kbd--plus\">+</span><kbd> V</kbd> "
+"aukera gehiago ikusteko</p><p class=\"vex-footnote\">Itxi pop-up leihoa "
+"Itsatsi Berezia ez ikusteko</p>"
 
 #: src/map/Map.js:233
 msgid "Initializing..."
@@ -2084,15 +2090,15 @@ msgstr "Hasieratzen..."
 
 #: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428 src/map/Map.js:431
 msgid "Last saved:"
-msgstr ""
+msgstr "Gordetako azkenak:"
 
 #: src/map/Map.js:1438
 msgid "Inactive document"
-msgstr ""
+msgstr "Dokumentu inaktiboa"
 
 #: src/map/Map.js:1439
 msgid "Please click to resume editing"
-msgstr ""
+msgstr "Egin klik editatzen segitzeko"
 
 #: src/map/handler/Map.FileInserter.js:104
 #, javascript-format
@@ -2124,16 +2130,16 @@ msgstr "Kopia sortzen..."
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "Collabora Online-ren ongi etorria"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New %coolVersion"
-msgstr ""
+msgstr "Begiratu %coolVersion berria"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora Online Garapen Edizioa"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
@@ -2142,10 +2148,15 @@ msgid ""
 "\" href=\"https://www.collaboraoffice.com/solutions/collabora-office-"
 "android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"Gozatu sareko produktibitatearen azken aurrerapenak, doan erabili, arakatu "
+"eta besteekin partekatu nabigatzailearen bidez. Gainera, mugikorrerako "
+"hainbat <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
+"solutions/collabora-office-android-ios/\">aplikazio</a> ere eskuragarri "
+"daude."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
-msgstr ""
+msgstr "Ezagutu aldaketa guztiak"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -2154,14 +2165,19 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"Begiratu <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
+"code-21-11-release-notes/\">argitalpen-oharrak</a> eta ikasi guztia azken "
+"Collabora Online Garapen Edizioaz, etxeko erabiltzaileei eta talde txikiei "
+"zuzenduta."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "Parte hartu"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
+#, fuzzy
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
@@ -2174,6 +2190,15 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"Ekarpenak egin nahi dituzu baina ez dakizu nondik hasi? Joan <a target="
+"\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\""
+">urratsez urratseko argibideetara</a> eta sortu CODEa hutsetik. Halaber, <a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/translate/\""
+">itzulpenetan</a> edo \n"
+"<a target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
+"\">erroreen txostenak bidaltzen</a> berauek erreproduzitzeko ezinbesteko "
+"pauso\n"
+" guztiekin."
 
 #~ msgid "Toggle Status Bar"
 #~ msgstr "Aldatu egoera barra"
