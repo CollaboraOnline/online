@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-25 20:41+0200\n"
-"PO-Revision-Date: 2022-04-14 19:15+0000\n"
-"Last-Translator: William Gathoye <william+weblate@gathoye.be>\n"
+"PO-Revision-Date: 2022-04-29 08:13+0000\n"
+"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.12.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -668,7 +668,7 @@ msgstr "Ré-initialiser le zoom"
 #: src/control/Control.NotebookbarImpress.js:343
 #: src/control/Control.NotebookbarWriter.js:1005
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Modifier le mode d'affichage"
 
 #: src/control/Control.Menubar.js:115
 #: src/control/Control.NotebookbarWriter.js:1017
@@ -827,11 +827,11 @@ msgstr "Rétablir la langue par défaut"
 
 #: src/control/Control.Menubar.js:1554
 msgid "Use Compact view"
-msgstr ""
+msgstr "Utiliser la vue compacte"
 
 #: src/control/Control.Menubar.js:1556
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Utiliser la vue en onglets"
 
 #: src/control/Control.Menubar.js:1617
 msgid "Insert Shape"
@@ -1095,14 +1095,14 @@ msgstr "Supprimer des colonnes"
 #: src/control/Control.NotebookbarImpress.js:342
 #: src/control/Control.NotebookbarWriter.js:1004
 msgid "Compact view"
-msgstr ""
+msgstr "Vue compacte"
 
 #: src/control/Control.NotebookbarCalc.js:960
 #: src/control/Control.NotebookbarDraw.js:278
 #: src/control/Control.NotebookbarImpress.js:348
 #: src/control/Control.NotebookbarWriter.js:1027
 msgid "Status Bar"
-msgstr ""
+msgstr "Barre d'état"
 
 #: src/control/Control.NotebookbarCalc.js:1011
 msgid "Sparkline"
@@ -1146,7 +1146,7 @@ msgstr "Document EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:1016
 msgid "Ruler"
-msgstr ""
+msgstr "Gomme"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
