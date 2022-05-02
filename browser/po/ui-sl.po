@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-25 20:41+0200\n"
-"PO-Revision-Date: 2022-04-25 18:26+0000\n"
+"PO-Revision-Date: 2022-05-02 03:16+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 4.12.1-dev\n"
+"X-Generator: Weblate 4.12.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:6
@@ -664,7 +664,7 @@ msgstr "Ponastavi povečavo"
 #: src/control/Control.NotebookbarImpress.js:343
 #: src/control/Control.NotebookbarWriter.js:1005
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Preklopi med načini vmesnika"
 
 #: src/control/Control.Menubar.js:115
 #: src/control/Control.NotebookbarWriter.js:1017
@@ -823,11 +823,11 @@ msgstr "Ponastavi na privzeti jezik"
 
 #: src/control/Control.Menubar.js:1554
 msgid "Use Compact view"
-msgstr ""
+msgstr "Uporabi strnjeni pogled"
 
 #: src/control/Control.Menubar.js:1556
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Uporabi pogled v zavihkih"
 
 #: src/control/Control.Menubar.js:1617
 msgid "Insert Shape"
@@ -1091,18 +1091,18 @@ msgstr "Izbriši stolpce"
 #: src/control/Control.NotebookbarImpress.js:342
 #: src/control/Control.NotebookbarWriter.js:1004
 msgid "Compact view"
-msgstr ""
+msgstr "Strnjeni pogled"
 
 #: src/control/Control.NotebookbarCalc.js:960
 #: src/control/Control.NotebookbarDraw.js:278
 #: src/control/Control.NotebookbarImpress.js:348
 #: src/control/Control.NotebookbarWriter.js:1027
 msgid "Status Bar"
-msgstr ""
+msgstr "Vrstica stanja"
 
 #: src/control/Control.NotebookbarCalc.js:1011
 msgid "Sparkline"
-msgstr ""
+msgstr "Mini grafikon"
 
 #: src/control/Control.NotebookbarDraw.js:39
 #: src/control/Control.NotebookbarDraw.js:740
@@ -1142,7 +1142,7 @@ msgstr "Dokument EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:1016
 msgid "Ruler"
-msgstr ""
+msgstr "Ravnilo"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
