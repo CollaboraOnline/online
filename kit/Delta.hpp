@@ -47,6 +47,17 @@ class DeltaGenerator {
 
     /// A bitmap tile with annotated rows and details on its location
     struct DeltaData {
+        DeltaData () {};
+        DeltaData (TileWireId wid, int width, int height,
+                   int tileLeft, int tileTop, int tilePart, int size) :
+            _left(tileLeft),
+            _top(tileTop),
+            _part(tilePart),
+            _wid(wid),
+            _width(width),
+            _height(height),
+            _rows(size) {};
+
         void setWid(TileWireId wid)
         {
             _wid = wid;
@@ -314,8 +325,8 @@ class DeltaGenerator {
         int tileLeft, int tileTop, int tilePart,
         int bufferWidth, int bufferHeight)
     {
-        auto data = std::make_shared<DeltaData>();
-        data->setWid(wid);
+        auto data = std::make_shared<DeltaData>(wid, width, height, tileLeft, tileTop,
+                                                tilePart, height);
 
         assert (startX + width <= (size_t)bufferWidth);
         assert (startY + height <= (size_t)bufferHeight);
@@ -326,11 +337,6 @@ class DeltaGenerator {
                 << (width * height * 4) << " width " << width
                 << " height " << height);
 
-        // FIXME: switch to constructor and remove set methods
-        data->setWidth(width);
-        data->setHeight(height);
-        data->setTilePos(tileLeft, tileTop, tilePart);
-        data->getRows().resize(height);
         for (int y = 0; y < height; ++y)
         {
             DeltaBitmapRow &row = data->getRows()[y];
