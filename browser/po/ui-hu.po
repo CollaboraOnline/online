@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-25 20:41+0200\n"
-"PO-Revision-Date: 2022-04-14 19:15+0000\n"
+"PO-Revision-Date: 2022-04-26 17:15+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.12.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -665,7 +665,7 @@ msgstr "Alaphelyzet"
 #: src/control/Control.NotebookbarImpress.js:343
 #: src/control/Control.NotebookbarWriter.js:1005
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Felhasználói felület módjának váltása"
 
 #: src/control/Control.Menubar.js:115
 #: src/control/Control.NotebookbarWriter.js:1017
@@ -824,11 +824,11 @@ msgstr "Vissza az alapértelmezett nyelvre"
 
 #: src/control/Control.Menubar.js:1554
 msgid "Use Compact view"
-msgstr ""
+msgstr "Kompakt nézet használata"
 
 #: src/control/Control.Menubar.js:1556
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Lapos nézet használata"
 
 #: src/control/Control.Menubar.js:1617
 msgid "Insert Shape"
@@ -1092,18 +1092,18 @@ msgstr "Oszlopok törlése"
 #: src/control/Control.NotebookbarImpress.js:342
 #: src/control/Control.NotebookbarWriter.js:1004
 msgid "Compact view"
-msgstr ""
+msgstr "Kompakt nézet"
 
 #: src/control/Control.NotebookbarCalc.js:960
 #: src/control/Control.NotebookbarDraw.js:278
 #: src/control/Control.NotebookbarImpress.js:348
 #: src/control/Control.NotebookbarWriter.js:1027
 msgid "Status Bar"
-msgstr ""
+msgstr "Állapotsor"
 
 #: src/control/Control.NotebookbarCalc.js:1011
 msgid "Sparkline"
-msgstr ""
+msgstr "Értékgörbe"
 
 #: src/control/Control.NotebookbarDraw.js:39
 #: src/control/Control.NotebookbarDraw.js:740
@@ -1143,7 +1143,7 @@ msgstr "EPUB dokumentum (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:1016
 msgid "Ruler"
-msgstr ""
+msgstr "Vonalzó"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
