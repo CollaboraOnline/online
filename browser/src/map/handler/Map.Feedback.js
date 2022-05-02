@@ -65,12 +65,12 @@ L.Map.Feedback = L.Handler.extend({
 	},
 
 	onFeedback: function () {
-		if (this._map.welcome && this._map.welcome.isVisible()) {
+		if (this._map.welcome && this._map.welcome.isVisible && this._map.welcome.isVisible()) {
 			setTimeout(L.bind(this.onFeedback, this), this._map.options.feedbackTimeout);
 			return;
 		}
 
-		if (this._map.welcome && this._map.welcome.isVisible())
+		if (this._map.welcome && this._map.welcome.isVisible && this._map.welcome.isVisible())
 			setTimeout(L.bind(this.onFeedback, this), 3000);
 		else {
 			this.askForFeedbackDialog();
