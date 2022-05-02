@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-25 20:41+0200\n"
-"PO-Revision-Date: 2022-04-12 07:41+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2022-04-26 17:15+0000\n"
+"Last-Translator: sebastiaanveld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.12.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -665,7 +665,7 @@ msgstr "Zoom herstellen"
 #: src/control/Control.NotebookbarImpress.js:343
 #: src/control/Control.NotebookbarWriter.js:1005
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "UI modus in-/uitschakelen"
 
 #: src/control/Control.Menubar.js:115
 #: src/control/Control.NotebookbarWriter.js:1017
@@ -824,11 +824,11 @@ msgstr "Herstellen naar standaard taal"
 
 #: src/control/Control.Menubar.js:1554
 msgid "Use Compact view"
-msgstr ""
+msgstr "Compacte weergave gebruiken"
 
 #: src/control/Control.Menubar.js:1556
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Tabbladen weergave gebruiken"
 
 #: src/control/Control.Menubar.js:1617
 msgid "Insert Shape"
@@ -985,7 +985,7 @@ msgstr "Geschiedenis tonen"
 #: src/control/Control.NotebookbarImpress.js:204
 #: src/control/Control.NotebookbarWriter.js:155
 msgid "Download"
-msgstr ""
+msgstr "Downloaden"
 
 #: src/control/Control.NotebookbarCalc.js:175
 msgid "ODF Spreadsheet (.ods)"
@@ -1057,11 +1057,11 @@ msgstr "Fout"
 
 #: src/control/Control.NotebookbarCalc.js:720
 msgid "Row Width"
-msgstr ""
+msgstr "Rijbreedte"
 
 #: src/control/Control.NotebookbarCalc.js:726
 msgid "Column Width"
-msgstr ""
+msgstr "Kolombreedte"
 
 #: src/control/Control.NotebookbarCalc.js:737
 msgid "Insert Rows Above"
@@ -1092,18 +1092,18 @@ msgstr "Kolommen verwijderen"
 #: src/control/Control.NotebookbarImpress.js:342
 #: src/control/Control.NotebookbarWriter.js:1004
 msgid "Compact view"
-msgstr ""
+msgstr "Compacte weergave"
 
 #: src/control/Control.NotebookbarCalc.js:960
 #: src/control/Control.NotebookbarDraw.js:278
 #: src/control/Control.NotebookbarImpress.js:348
 #: src/control/Control.NotebookbarWriter.js:1027
 msgid "Status Bar"
-msgstr ""
+msgstr "Statusbalk"
 
 #: src/control/Control.NotebookbarCalc.js:1011
 msgid "Sparkline"
-msgstr ""
+msgstr "Sparkline"
 
 #: src/control/Control.NotebookbarDraw.js:39
 #: src/control/Control.NotebookbarDraw.js:740
@@ -1143,7 +1143,7 @@ msgstr "EPUB-document (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:1016
 msgid "Ruler"
-msgstr ""
+msgstr "Liniaal"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -2153,11 +2153,15 @@ msgid ""
 "\" href=\"https://www.collaboraoffice.com/solutions/collabora-office-"
 "android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"Geniet van de nieuwste ontwikkelingen op het gebied van online "
+"productiviteit, vrij voor u om te gebruiken, te ontdekken met anderen te "
+"gebruiken in een browser. Diverse <a target=\"_blank\" href=\"https://www."
+"collaboraoffice.com/solutions/collabora-office-android-ios/\">apps</a> zijn "
+"ook voor mobiele devices beschikbaar."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
-#, fuzzy
 msgid "Discover All The Changes"
-msgstr "Ontdek alle veranderingen"
+msgstr "Ontdek veranderingen"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -2166,14 +2170,18 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"Lees de <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
+"code-21-11-release-notes/\">opmerkingen bij deze uitgave</a> en leer alles "
+"over: De meest recente Collabora Online Development Edition, gericht op "
+"thuisgebruikers en kleine teams."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "Doe mee"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
@@ -2186,6 +2194,14 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"Ben je geïnteresseerd om bij te dragen, maar weet je niet waar je moet "
+"beginnen? Ga naar de <a target=\"_blank\" href=\"https://collaboraonline."
+"github.io/post/build-code/\">stap-voor-stap instructies</a> en bouw CODE "
+"helemaal opnieuw. Je kunt ook helpen met <a target=\"_blank\" href=\"https"
+"://collaboraonline.github.io/post/translate/\">vertalen</a> of met het <a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/\""
+">rapporteren van fouten</a> met alle essentiële stappen om het te "
+"reproduceren."
 
 #~ msgid "Toggle Status Bar"
 #~ msgstr "Toggle Statusbalk"
