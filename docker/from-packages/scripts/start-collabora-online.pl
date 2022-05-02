@@ -13,11 +13,14 @@ use strict;
 # create the part of the config that contains aliases based on the aliasgroupN envvars
 sub generate_aliases() {
     my $output = '';
+    if ($ENV{'domain'} && $ENV{'aliasgroup1'}) {
+        print "WARNING: Both aliasgroupX and domain are provided, aliasgroupX takes the precedence where X=1,2,3...\n";
+    }
+
     foreach (sort keys(%ENV)) {
         if (/^aliasgroup/) {
             my $value = $ENV{$_};
             my @aliases = split(',', $value);
-
             if (@aliases) {
                 $output .= "                <group>\n";
 
@@ -31,12 +34,55 @@ sub generate_aliases() {
                         $output .= "                    <alias desc=\"regex pattern of aliasname\">$_</alias>\n";
                     }
                 }
-
                 $output .= "                </group>\n";
             }
         }
     }
+    if ($output ne "") {
+        return $output;
+    }
 
+    my $message = '';
+    my $domain = $ENV{'domain'};
+    if ($domain) {
+        $message .= "WARNING: The 'domain=$domain' is deprecated.\n For your convenience, we interpret it as the following:\n";
+        my @hosts = split('\|', $domain);
+        if (@hosts) {
+            my $i = 0;
+            foreach (@hosts) {
+                if ($_ =~ /[^a-zA-Z0-9\_.\-\/]/)
+                {
+                    print "WARNING: $_ seems to be regex, If you want to use regex please use aliasgroupX env variable where X=1,2,3... \nMore information:\n    https://sdk.collaboraonline.com/docs/installation/CODE_Docker_image.html\n";
+                    exit 1;
+                }
+                $i++;
+                $message .= "   aliasgroup".$i."=https://$_:443\n";
+                $output .= "                <group>\n";
+                $output .= "                    <host desc=\"hostname to allow or deny.\" allow=\"true\">https://$_:443</host>\n";
+                $output .= "                </group>\n";
+            }
+            if (@hosts >= 2) {
+                $message .= "This means that people from $hosts[0] will not be able to access documents from ";
+                for ($b = 1; $b < @hosts; $b = $b + 1)
+                {
+                    $message .= "$hosts[$b], ";
+                }
+                $message .= " and vice versa";
+            }
+            $message .= ". If you want to allow the access instead, use this configuration instead:\n     aliasgroup1=";
+            $i = 0;
+            foreach(@hosts) {
+                $i++;
+                $message .= "https://$_:443";
+                if ($i != @hosts)
+                {
+                    $message .= ",";
+                }
+            }
+        }
+        $message .= "\nPlease update your Docker configuration to stop seeing this message.\nMore information:\n    https://sdk.collaboraonline.com/docs/installation/CODE_Docker_image.html\n" ;
+    }
+    print $message;
     return $output;
 }
 
