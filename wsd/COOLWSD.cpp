@@ -1008,15 +1008,21 @@ COOLWSD::~COOLWSD()
 
 #if !MOBILEAPP
 
-// A custom socket poll to fetch remote config every 60 seconds
-// if config changes it applies the new config using LayeredConfiguration
+/**
+  A custom socket poll to fetch remote config every 60 seconds.
+  If config changes it applies the new config using LayeredConfiguration.
+
+  The URI to fetch is read from the configuration too - it is either the
+  remote config itself, or the font configuration.  It si passed via the
+  uriConfigKey param.
+*/
 class RemoteJSONPoll : public SocketPoll
 {
 public:
-    RemoteJSONPoll(LayeredConfiguration& config, Poco::URI uri, const std::string& name, const std::string& kind)
+    RemoteJSONPoll(LayeredConfiguration& config, const std::string& uriConfigKey, const std::string& name, const std::string& kind)
         : SocketPoll(name)
         , conf(config)
-        , remoteServerURI(uri)
+        , configKey(uriConfigKey)
         , expectedKind(kind)
     { }
 
@@ -1029,18 +1035,23 @@ public:
 
     void start()
     {
-        if (remoteServerURI.empty())
+        Poco::URI remoteServerURI(conf.getString(configKey));
+
+        if (expectedKind == "configuration")
         {
-            LOG_INF("Remote " << expectedKind << " is not specified in coolwsd.xml");
-            return; // no remote config server setup.
-        }
+            if (remoteServerURI.empty())
+            {
+                LOG_INF("Remote " << expectedKind << " is not specified in coolwsd.xml");
+                return; // no remote config server setup.
+            }
 #if !ENABLE_DEBUG
-        if (Util::iequal(remoteServerURI.getScheme(),"http"))
-        {
-            LOG_ERR("Remote config url should only use HTTPS protocol: " << remoteServerURI.toString());
-            return;
-        }
+            if (Util::iequal(remoteServerURI.getScheme(), "http"))
+            {
+                LOG_ERR("Remote config url should only use HTTPS protocol: " << remoteServerURI.toString());
+                return;
+            }
 #endif
+        }
 
         startThread();
     }
@@ -1049,65 +1060,81 @@ public:
     {
         while (!isStop() && !SigUtil::getTerminationFlag() && !SigUtil::getShutdownRequestFlag())
         {
-            try
+            Poco::URI remoteServerURI(conf.getString(configKey));
+
+            // don't try to fetch from an empty URI
+            bool valid = !remoteServerURI.empty();
+
+#if !ENABLE_DEBUG
+            if (Util::iequal(remoteServerURI.getScheme(), "http"))
             {
-                std::shared_ptr<http::Session> httpSession(
-                    StorageBase::getHttpSession(remoteServerURI));
-                http::Request request(remoteServerURI.getPathAndQuery());
+                LOG_ERR("Remote config url should only use HTTPS protocol: " << remoteServerURI.toString());
+                valid = false;
+            }
+#endif
 
-                //we use ETag header to check whether JSON is modified or not
-                if (!eTagValue.empty())
+            if (valid)
+            {
+                try
                 {
-                    request.set("If-None-Match", eTagValue);
-                }
+                    std::shared_ptr<http::Session> httpSession(
+                            StorageBase::getHttpSession(remoteServerURI));
+                    http::Request request(remoteServerURI.getPathAndQuery());
 
-                const std::shared_ptr<const http::Response> httpResponse =
-                    httpSession->syncRequest(request);
-
-                unsigned int statusCode = httpResponse->statusLine().statusCode();
-
-                if (statusCode == Poco::Net::HTTPResponse::HTTP_OK)
-                {
-                    eTagValue = httpResponse->get("ETag");
-
-                    std::string body = httpResponse->getBody();
-
-                    LOG_DBG("Got " << body.size() << " bytes for " << remoteServerURI.toString());
-
-                    Poco::JSON::Object::Ptr remoteJson;
-                    if (JsonUtil::parseJSON(body, remoteJson))
+                    //we use ETag header to check whether JSON is modified or not
+                    if (!eTagValue.empty())
                     {
-                        std::string kind;
-                        JsonUtil::findJSONValue(remoteJson, "kind", kind);
-                        if (kind == expectedKind)
+                        request.set("If-None-Match", eTagValue);
+                    }
+
+                    const std::shared_ptr<const http::Response> httpResponse =
+                        httpSession->syncRequest(request);
+
+                    unsigned int statusCode = httpResponse->statusLine().statusCode();
+
+                    if (statusCode == Poco::Net::HTTPResponse::HTTP_OK)
+                    {
+                        eTagValue = httpResponse->get("ETag");
+
+                        std::string body = httpResponse->getBody();
+
+                        LOG_DBG("Got " << body.size() << " bytes for " << remoteServerURI.toString());
+
+                        Poco::JSON::Object::Ptr remoteJson;
+                        if (JsonUtil::parseJSON(body, remoteJson))
                         {
-                            handleJSON(remoteJson);
+                            std::string kind;
+                            JsonUtil::findJSONValue(remoteJson, "kind", kind);
+                            if (kind == expectedKind)
+                            {
+                                handleJSON(remoteJson);
+                            }
+                            else
+                            {
+                                LOG_ERR("Make sure that " << remoteServerURI.toString() << " contains a property 'kind' with "
+                                        "value '" << expectedKind << "'");
+                            }
                         }
                         else
                         {
-                            LOG_ERR("Make sure that " << remoteServerURI.toString() << " contains a property 'kind' with "
-                                    "value '" << expectedKind << "'");
+                            LOG_ERR("Could not parse the remote config JSON");
                         }
+                    }
+                    else if (statusCode == Poco::Net::HTTPResponse::HTTP_NOT_MODIFIED)
+                    {
+                        LOG_DBG("Not modified since last time: " << remoteServerURI.toString());
+                        handleUnchangedJSON();
                     }
                     else
                     {
-                        LOG_ERR("Could not parse the remote config JSON");
+                        LOG_ERR("Remote config server has response status code: " +
+                                std::to_string(statusCode));
                     }
                 }
-                else if (statusCode == Poco::Net::HTTPResponse::HTTP_NOT_MODIFIED)
+                catch (...)
                 {
-                    LOG_DBG("Not modified since last time: " << remoteServerURI.toString());
-                    handleUnchangedJSON();
+                    LOG_ERR("Failed to fetch remote config JSON, Please check JSON format");
                 }
-                else
-                {
-                    LOG_ERR("Remote config server has response status code: " +
-                            std::to_string(statusCode));
-                }
-            }
-            catch (...)
-            {
-                LOG_ERR("Failed to fetch remote config JSON, Please check JSON format");
             }
             poll(std::chrono::seconds(60));
         }
@@ -1118,7 +1145,7 @@ protected:
     std::string eTagValue;
 
 private:
-    Poco::URI remoteServerURI;
+    std::string configKey;
     std::string expectedKind;
 };
 
@@ -1126,7 +1153,7 @@ class RemoteConfigPoll : public RemoteJSONPoll
 {
 public:
     RemoteConfigPoll(LayeredConfiguration& config) :
-        RemoteJSONPoll(config, Poco::URI(config.getString("remote_config.remote_url")), "remoteconfig_poll", "configuration")
+        RemoteJSONPoll(config, "remote_config.remote_url", "remoteconfig_poll", "configuration")
     {
     }
 
@@ -1145,6 +1172,8 @@ public:
 #ifdef ENABLE_FEATURE_LOCK
         fetchLockedHostPatterns(newAppConfig, remoteJson);
 #endif
+
+        fetchRemoteFontConfig(newAppConfig, remoteJson);
 
         AutoPtr<AppConfigMap> newConfig(new AppConfigMap(newAppConfig));
         conf.addWriteable(newConfig, PRIO_JSON);
@@ -1349,6 +1378,23 @@ public:
         }
     }
 
+    void fetchRemoteFontConfig(std::map<std::string, std::string>& newAppConfig,
+                               Poco::JSON::Object::Ptr remoteJson)
+    {
+        try
+        {
+            Poco::JSON::Object::Ptr remoteFontConfig = remoteJson->getObject("remote_font_config");
+
+            std::string url;
+            if (JsonUtil::findJSONValue(remoteFontConfig, "url", url))
+                newAppConfig.insert(std::make_pair("remote_font_config.url", url));
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Fetching of remote font config failed with error: " << exc.what() << "please check JSON format");
+        }
+    }
+
     //sets property to false if it is missing from JSON
     //and returns std::string
     std::string booleanToString(Poco::Dynamic::Var& booleanFlag)
@@ -1365,7 +1411,7 @@ class RemoteFontConfigPoll : public RemoteJSONPoll
 {
 public:
     RemoteFontConfigPoll(LayeredConfiguration& config)
-        : RemoteJSONPoll(config, Poco::URI(config.getString("remote_font_config.url")), "remotefontconfig_poll", "fontconfiguration")
+        : RemoteJSONPoll(config, "remote_font_config.url", "remotefontconfig_poll", "fontconfiguration")
     {
     }
 
