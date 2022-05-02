@@ -6,7 +6,7 @@
 /* global Hammer app */
 L.Control.JSDialog = L.Control.extend({
 	options: {
-		snackbarTimeout: 6000
+		snackbarTimeout: 10000
 	},
 	dialogs: {},
 	draggingObject: null,
