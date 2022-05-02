@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-25 20:41+0200\n"
-"PO-Revision-Date: 2021-09-27 23:28+0000\n"
+"PO-Revision-Date: 2022-05-02 03:16+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/help/ast/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -291,7 +291,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:51-18
 msgid "Apply Heading 1 paragraph style"
-msgstr "Aplicar estilu de párrafu Testera 1"
+msgstr "Aplicar l'estilu de párrafu Títulu 1"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:51-76
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1"
@@ -299,7 +299,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:52-18
 msgid "Apply Heading 2 paragraph style"
-msgstr "Aplicar estilu de párrafu Testera 2"
+msgstr "Aplicar l'estilu de párrafu Títulu 2"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:52-76
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2"
@@ -307,7 +307,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:53-18
 msgid "Apply Heading 3 paragraph style"
-msgstr "Aplicar estilu de párrafu Testera 3"
+msgstr "Aplicar l'estilu de párrafu Títulu 3"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:53-76
 #: html/cool-help.html%2Bdiv.div.table.tr.td:169-69
@@ -317,7 +317,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:54-18
 msgid "Apply Heading 4 paragraph style"
-msgstr "Aplicar estilu de párrafu Testera 4"
+msgstr "Aplicar l'estilu de párrafu Títulu 4"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:54-76
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4"
@@ -325,7 +325,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:55-18
 msgid "Apply Heading 5 paragraph style"
-msgstr "Aplicar estilu de párrafu Testera 5"
+msgstr "Aplicar l'estilu de párrafu Títulu 5"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:55-76
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5"
@@ -931,7 +931,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:114-18
 msgid "Insert footnote"
-msgstr ""
+msgstr "Inxertar una nota al pie"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:114-60
 #, fuzzy
@@ -944,7 +944,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:115-18
 msgid "Insert endnote"
-msgstr ""
+msgstr "Inxertar una nota a lo cabero"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:115-59
 #, fuzzy
@@ -958,7 +958,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.table.tr.td:116-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:161-18
 msgid "Insert comment"
-msgstr ""
+msgstr "Inxertar un comentariu"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:116-59
 #: html/cool-help.html%2Bdiv.div.table.tr.td:161-59
