@@ -337,6 +337,17 @@ public:
 
     void work()
     {
+#if ENABLE_DEBUG
+        pid_t tid =
+#ifdef __linux__
+            syscall(SYS_gettid);
+#elif defined(__FreeBSD__)
+            pthread_getthreadid_np();
+#else
+            0;
+#endif
+        Util::setThreadName("worker_" + std::to_string(tid));
+#endif
         std::unique_lock< std::mutex > lock(_mutex);
         while (!_shutdown)
         {
