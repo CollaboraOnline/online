@@ -5233,7 +5233,7 @@ int COOLWSD::innerMain()
     int returnValue = EX_OK;
     UnitWSD::get().returnValue(returnValue);
 
-    LOG_INF("Process [loolwsd] finished with exit status: " << returnValue);
+    LOG_INF("Process [coolwsd] finished with exit status: " << returnValue);
 
     // At least on centos7, Poco deadlocks while
     // cleaning up its SSL context singleton.
