@@ -15,6 +15,7 @@
 #include <vector>
 
 #include <common/StateEnum.hpp>
+#include "Util.hpp"
 #include "net/Socket.hpp"
 
 #include <test/testlog.hpp>
@@ -153,33 +154,7 @@ public:
     /// Message that is about to be sent via the websocket.
     /// To override, handle onFilterSendMessage or any of the onDocument...() handlers.
     bool filterSendMessage(const char* data, const std::size_t len, const WSOpCode code,
-                           const bool flush, int& unitReturn)
-    {
-        const std::string message(data, len);
-
-        if (Util::startsWith(message, "status:"))
-        {
-            if (onDocumentLoaded(message))
-                return false;
-        }
-        else if (message == "statechanged: .uno:ModifiedStatus=true")
-        {
-            if (onDocumentModified(message))
-                return false;
-        }
-        else if (Util::startsWith(message, "statechanged:"))
-        {
-            if (onDocumentStateChanged(message))
-                return false;
-        }
-        else if (Util::startsWith(message, "error:"))
-        {
-            if (onDocumentError(message))
-                return false;
-        }
-
-        return onFilterSendMessage(data, len, code, flush, unitReturn);
-    }
+                           const bool flush, int& unitReturn);
 
     /// Hook the disk space check
     virtual bool filterCheckDiskSpace(const std::string & /* path */,
@@ -214,7 +189,7 @@ public:
 
     /// Called when the document has been saved.
     /// Return true to stop further handling of messages.
-    virtual bool onDocumentSaved(const std::string&) { return false; }
+    virtual bool onDocumentSaved(const std::string&, bool, const std::string&) { return false; }
 
     /// Called when the document issues a 'statechanged:' message.
     /// Return true to stop further handling of messages.
