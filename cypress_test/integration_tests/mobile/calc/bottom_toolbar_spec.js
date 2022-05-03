@@ -133,7 +133,7 @@ describe('Interact with bottom toolbar.', function() {
 			.should('have.attr', 'colspan', '1024');
 	});
 
-	it('Enable text wrapping.', function() {
+	it.skip('Enable text wrapping.', function() {
 		before('bottom_toolbar.ods');
 
 		helper.initAliasToNegative('originalTextEndPos');
