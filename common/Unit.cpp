@@ -17,6 +17,8 @@
 #include <sysexits.h>
 #include <thread>
 
+#include <Poco/JSON/Object.h>
+#include <Poco/JSON/Parser.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
 #include "Log.hpp"
@@ -205,6 +207,71 @@ UnitBase::~UnitBase()
 //        dlclose(_dlHandle);
     _dlHandle = nullptr;
     _socketPoll->joinThread();
+}
+
+bool UnitBase::filterSendMessage(const char* data, const std::size_t len, const WSOpCode code,
+                                 const bool flush, int& unitReturn)
+{
+    const std::string message(data, len);
+    if (Util::startsWith(message, "unocommandresult:"))
+    {
+        const std::size_t index = message.find_first_of('{');
+        if (index != std::string::npos)
+        {
+            try
+            {
+                const std::string stringJSON = message.substr(index);
+                Poco::JSON::Parser parser;
+                const Poco::Dynamic::Var parsedJSON = parser.parse(stringJSON);
+                const auto& object = parsedJSON.extract<Poco::JSON::Object::Ptr>();
+                if (object->get("commandName").toString() == ".uno:Save")
+                {
+                    const bool success = object->get("success").toString() == "true";
+                    std::string result;
+                    if (object->has("result"))
+                    {
+                        const Poco::Dynamic::Var parsedResultJSON = object->get("result");
+                        const auto& resultObj = parsedResultJSON.extract<Poco::JSON::Object::Ptr>();
+                        if (resultObj->get("type").toString() == "string")
+                            result = resultObj->get("value").toString();
+                    }
+
+                    if (onDocumentSaved(message, success, result))
+                        return false;
+                }
+            }
+            catch (const std::exception& exception)
+            {
+                LOG_TST("unocommandresult parsing failure: " << exception.what());
+            }
+        }
+        else
+        {
+            LOG_TST("Expected json unocommandresult. Ignoring: " << message);
+        }
+    }
+    else if (Util::startsWith(message, "status:"))
+    {
+        if (onDocumentLoaded(message))
+            return false;
+    }
+    else if (message == "statechanged: .uno:ModifiedStatus=true")
+    {
+        if (onDocumentModified(message))
+            return false;
+    }
+    else if (Util::startsWith(message, "statechanged:"))
+    {
+        if (onDocumentStateChanged(message))
+            return false;
+    }
+    else if (Util::startsWith(message, "error:"))
+    {
+        if (onDocumentError(message))
+            return false;
+    }
+
+    return onFilterSendMessage(data, len, code, flush, unitReturn);
 }
 
 UnitWSD::UnitWSD(const std::string& name)
