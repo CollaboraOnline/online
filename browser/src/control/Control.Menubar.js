@@ -1737,7 +1737,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'latestupdates' && this._map.welcome) {
 			this._map.welcome.showWelcomeDialog();
 		} else if (id === 'feedback' && this._map.feedback) {
-			this._map.feedback.askForFeedbackDialog();
+			this._map.feedback.showFeedbackDialog();
 		} else if (id === 'report-an-issue') {
 			window.open('https://github.com/CollaboraOnline/online/issues', '_blank');
 		} else if (id === 'forum') {
