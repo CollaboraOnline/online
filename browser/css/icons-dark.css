@@ -1,0 +1,47 @@
+@media (prefers-color-scheme: dark) {
+	.w2ui-icon.bold{ background: url('images/dark/lc_bold.svg') no-repeat center !important; }
+
+	.w2ui-icon.bold,
+	.w2ui-button .w2ui-icon.bold,
+	#tb_editbar_item_bold .w2ui-icon,
+	#tb_actionbar_item_bold .w2ui-icon {
+		background-image: url('images/dark/lc_bold.svg') !important;
+		background-size: 24px !important;
+	}
+	#NotebookBar .unobold > img,
+	#NotebookBar .unoBold > img,
+	#NotebookBar #Bold #Boldimg {
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		width: 24px !important;
+		height: 24px !important;
+		padding-left: 24px;
+		/* Equal to width of new image */
+		background: url('images/dark/lc_bold.svg') no-repeat center !important;
+		background-size: 24px !important;
+	}
+	.unoBold:not(.ui-expander-icon-right) > img.unobutton,
+	.unospan-Bold > img.unobutton,
+	#Bold #Boldimg,
+	#Bold img.menu-entry-icon {
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		width: 24px !important;
+		height: 24px !important;
+		padding-left: 24px;
+		/* Equal to width of new image */
+		background: url('images/dark/lc_bold.svg') no-repeat center;
+		background-size: 24px !important;
+	}
+	.menu-entry-icon.bold img {
+		display: inline;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		width: 24px !important;
+		height: 24px !important;
+		padding-left: 24px;
+		/* Equal to width of new image */
+		background: url('images/dark/lc_bold.svg') no-repeat center;
+		background-size: 24px !important;
+	}
+}
