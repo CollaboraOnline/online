@@ -169,7 +169,9 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:InsertIndexesEntry'},
 					{uno: '.uno:InsertAuthoritiesEntry'},
 					{uno: '.uno:InsertMultiIndex'}]},
-				{uno: '.uno:InsertContentControl'},
+				{name: _UNO('.uno:ContentControlsMenu', 'text'), type: 'menu', menu: [
+					{uno: '.uno:InsertContentControl'},
+					{uno: '.uno:InsertCheckboxContentControl'}]},
 			]},
 			{name: _UNO('.uno:FormatMenu', 'text'), id: 'format', type: 'menu', menu: [
 				{name: _UNO('.uno:FormatTextMenu', 'text'), type: 'menu', menu: [
@@ -1066,7 +1068,9 @@ L.Control.Menubar = L.Control.extend({
 						{uno: '.uno:InsertWJ'},
 						{uno: '.uno:InsertLRM'},
 						{uno: '.uno:InsertRLM'}]},
-					{name: _UNO('.uno:InsertContentControl', 'text'), uno: '.uno:InsertContentControl'},
+					{name: _UNO('.uno:ContentControlsMenu', 'text'), type: 'menu', menu: [
+						{uno: '.uno:InsertContentControl'},
+						{uno: '.uno:InsertCheckboxContentControl'}]},
 				]
 			},
 			spreadsheet : {

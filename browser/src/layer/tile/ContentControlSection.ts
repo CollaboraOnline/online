@@ -23,10 +23,12 @@ class ContentControlSection {
 
 	public onInitialize() {
 		this.sectionProperties.rectangles = [];
+		this.sectionProperties.strokeStyle = '#000000';
 	}
 
 	constructor() {
 		this.sectionProperties.rectangles = null;
+		this.sectionProperties.strokeStyle = null;
 	}
 
 	drawContentControl(json: any) {
@@ -39,7 +41,7 @@ class ContentControlSection {
 					this.sectionProperties.rectangles.push([parseInt(matches[i]), parseInt(matches[i + 1]), parseInt(matches[i + 2]), parseInt(matches[i + 3])]);
 				}
 			}
-		} else if (json.action == 'hide') {
+		} else if (json.action === 'hide') {
 			this.sectionProperties.rectangles = [];
 		}
 		app.sectionContainer.requestReDraw();
@@ -93,7 +95,7 @@ class ContentControlSection {
 			xMax = Math.round(xMax * ratio);
 			yMax = Math.round(yMax * ratio);
 
-			this.context.strokeStyle = '#000000';
+			this.context.strokeStyle = this.sectionProperties.strokeStyle;
 			this.context.strokeRect(xMin - this.position[0], yMin - this.position[1], xMax - xMin, yMax - yMin);
 		}
 	}
