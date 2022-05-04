@@ -1704,7 +1704,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				app.sectionContainer.setClearColor('#' + this.coreDocBGColor);
 			}
 		} else if (textMsg.startsWith('contentcontrol:')) {
-			//this._onContentControlMsg(textMsg);
 			textMsg = textMsg.substring('contentcontrol:'.length + 1);
 			if (!app.sectionContainer.doesSectionExist(L.CSections.ContentControl.name)) {
 				app.sectionContainer.addSection(new app.definitions.ContentControlSection());

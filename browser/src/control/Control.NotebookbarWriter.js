@@ -954,6 +954,16 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							}
 						]
 					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertCheckboxContentControl', 'text'),
+								'command': '.uno:InsertCheckboxContentControl'
+							}
+						]
+					},
 				],
 				'vertical': 'true'
 			}
