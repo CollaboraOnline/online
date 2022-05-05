@@ -4954,6 +4954,9 @@ int COOLWSD::innerMain()
 
     LOG_DBG("Initializing DelaySocket with " << SimulatedLatencyMs << "ms.");
     Delay delay(SimulatedLatencyMs);
+
+    const auto fetchUpdateCheck = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::hours(std::max(getConfigValue<int>("fetch_update_check", 10), 0)));
 #endif
 
     ClientRequestDispatcher::InitStaticFileContentCache();
@@ -5056,6 +5059,9 @@ int COOLWSD::innerMain()
 #endif
 
     const auto startStamp = std::chrono::steady_clock::now();
+#if !MOBILEAPP
+    auto stampFetch = startStamp - (fetchUpdateCheck - std::chrono::milliseconds(60000));
+#endif
 
     while (!SigUtil::getTerminationFlag() && !SigUtil::getShutdownRequestFlag())
     {
@@ -5077,15 +5083,23 @@ int COOLWSD::innerMain()
         // Wake the prisoner poll to spawn some children, if necessary.
         PrisonerPoll->wakeup();
 
+        const auto timeNow = std::chrono::steady_clock::now();
         const std::chrono::milliseconds timeSinceStartMs
-            = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()
-                                                                    - startStamp);
-
+            = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - startStamp);
         // Unit test timeout
         if (UnitWSD::isUnitTesting())
         {
             UnitWSD::get().checkTimeout(timeSinceStartMs);
         }
+
+#if !MOBILEAPP
+        const std::chrono::milliseconds durationFetch
+            = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - stampFetch);
+        if (fetchUpdateCheck > std::chrono::milliseconds::zero() && durationFetch > fetchUpdateCheck)
+        {
+            stampFetch = timeNow;
+        }
+#endif
 
 #if ENABLE_DEBUG && !MOBILEAPP
         if (careerSpanMs > std::chrono::milliseconds::zero() && timeSinceStartMs > careerSpanMs)
