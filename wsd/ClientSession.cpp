@@ -952,6 +952,18 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         return forwardToChild(std::string(buffer, length), docBroker);
     }
+    else if (tokens.equals(0, "resetaccesstoken"))
+    {
+        if (tokens.size() != 2)
+        {
+            LOG_ERR("Bad syntax for: " << tokens[0]);
+            sendTextFrameAndLogError("error: cmd=resetaccesstoken kind=syntax");
+            return false;
+        }
+
+        _auth.resetAccessToken(tokens[1]);
+        return true;
+    }
     else if (tokens.equals(0, "outlinestate") ||
              tokens.equals(0, "downloadas") ||
              tokens.equals(0, "getchildid") ||
