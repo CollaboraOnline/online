@@ -5,12 +5,6 @@
 /* global app */
 
 L.Map.Infobar = L.Handler.extend({
-
-	initialize: function (map) {
-		L.Handler.prototype.initialize.call(this, map);
-		map.on('updateviewslist', this.onUpdateList, this);
-	},
-
 	onUpdateList: function () {
 		var docLayer = this._map._docLayer || {};
 		var viewInfo = this._map._viewInfo[docLayer._viewId];
@@ -31,43 +25,6 @@ L.Map.Infobar = L.Handler.extend({
 
 			if (currentDate > laterDate)
 				this.enable();
-		}
-	},
-
-	addHooks: function () {
-		this._map.off('updateviewslist', this.onUpdateList, this);
-		L.DomEvent.on(window, 'message', this.onMessage, this);
-
-		this.remove();
-
-		var loolwsdHash = document.querySelector('#loolwsd-version a') || {};
-		var lokitHash = document.querySelector('#lokit-version a') || {};
-
-		loolwsdHash = loolwsdHash ? loolwsdHash.innerText : '';
-		lokitHash = lokitHash ? lokitHash.innerText : '';
-
-		var params = [{ 'loolwsd_git_hash': loolwsdHash },
-			      { 'lokit_git_hash': lokitHash }];
-
-		var options = {
-			prefix: 'div-infobar',
-			method: 'post'
-		};
-
-		this._iframeInfobar = L.iframeDialog(window.infobarUrl, params,
-						     L.DomUtil.get('main-document-content'),
-						     options);
-	},
-
-	removeHooks: function () {
-		L.DomEvent.off(window, 'message', this.onMessage, this);
-		this.remove();
-	},
-
-	remove: function () {
-		if (this._iframeInfobar && this._iframeInfobar.hasLoaded()) {
-			this._iframeInfobar.remove();
-			delete this._iframeInfobar;
 		}
 	},
 
