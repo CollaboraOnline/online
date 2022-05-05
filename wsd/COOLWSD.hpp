@@ -271,6 +271,8 @@ public:
     static std::string OverrideWatermark;
     static std::set<const Poco::Util::AbstractConfiguration*> PluginConfigurations;
     static std::chrono::steady_clock::time_point StartTime;
+    static std::string LatestVersion;
+    static std::mutex FetchUpdateMutex;
 #if MOBILEAPP
 #ifndef IOS
     /// This is used to be able to wait until the lokit main thread has finished (and it is safe to load a new document).
@@ -478,6 +480,9 @@ private:
     static Util::RuntimeConstant<bool> SSLTermination;
 #endif
 
+#if !MOBILEAPP
+    void processFetchUpdate();
+#endif
     void initializeSSL();
     void displayHelp();
 
