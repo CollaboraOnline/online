@@ -20,12 +20,12 @@ using Poco::Net::OAuth20Credentials;
 
 class UnitOAuth : public WopiTestServer
 {
-    enum class Phase
-    {
-        LoadToken,  // loading the document with Bearer token
-        LoadHeader, // loading the document with Basic auth
-        Polling     // just wait for the results
-    } _phase;
+    STATE_ENUM(Phase,
+               LoadToken, // loading the document with Bearer token
+               LoadHeader, // loading the document with Basic auth
+               Polling // just wait for the results
+               )
+    _phase;
 
     bool _finishedToken;
     bool _finishedHeader;
@@ -43,7 +43,8 @@ public:
     void assertRequest(const Poco::Net::HTTPRequest& request, int fileIndex)
     {
         // check that the request contains the Authorization: header
-        try {
+        try
+        {
             if (fileIndex == 0)
             {
                 OAuth20Credentials creds(request);
@@ -55,17 +56,17 @@ public:
                 LOK_ASSERT_EQUAL(std::string("basic=="), creds.getBearerToken());
             }
         }
-        catch (const std::exception&)
+        catch (const std::exception& ex)
         {
             // fail as fast as possible
-            exit(1);
+            failTest(std::string("Exception: ") + ex.what());
         }
     }
 
     void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& request) override
     {
         std::string path = Poco::URI(request.getURI()).getPath();
-        assertRequest(request, (path == "/wopi/files/0")? 0: 1);
+        assertRequest(request, (path == "/wopi/files/0") ? 0 : 1);
     }
 
     void assertGetFileRequest(const Poco::Net::HTTPRequest& request) override
@@ -88,8 +89,6 @@ public:
 
     void invokeWSDTest() override
     {
-        constexpr char testName[] = "UnitOAuth";
-
         switch (_phase)
         {
             case Phase::LoadToken:
@@ -100,13 +99,12 @@ public:
                 else
                     initWebsocket("/wopi/files/1?access_header=Authorization: Basic basic==");
 
-                helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), "load url=" + getWopiSrc(), testName);
-                SocketPoll::wakeupWorld();
+                WSD_CMD("load url=" + getWopiSrc());
 
                 if (_phase == Phase::LoadToken)
-                    _phase = Phase::LoadHeader;
+                    TRANSITION_STATE(_phase, Phase::LoadHeader);
                 else
-                    _phase = Phase::Polling;
+                    TRANSITION_STATE(_phase, Phase::Polling);
                 break;
             }
             case Phase::Polling:
@@ -118,9 +116,6 @@ public:
     }
 };
 
-UnitBase *unit_create_wsd(void)
-{
-    return new UnitOAuth();
-}
+UnitBase* unit_create_wsd(void) { return new UnitOAuth(); }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
