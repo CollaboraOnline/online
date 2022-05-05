@@ -86,8 +86,8 @@
 
       function ShowMenubar(visible) {
         var messageId = visible ? 'Show_Menubar' : 'Hide_Menubar';
-        window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
-        window.frames[0].postMessage(JSON.stringify({'MessageId': messageId}), '*');
+        post({'MessageId': 'Host_PostmessageReady'});
+        post({'MessageId': messageId});
       }
 
       function ShowInsertButton() {
@@ -98,9 +98,8 @@
 
       function ShowNotebookbar(notebookbar) {
         var value = notebookbar ? 'notebookbar' : 'classic';
-        window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
-        window.frames[0].postMessage(JSON.stringify({'MessageId': 'Action_ChangeUIMode',
-            'Values': {'Mode': value}}), '*');
+        post({'MessageId': 'Host_PostmessageReady'});
+        post({'MessageId': 'Action_ChangeUIMode', 'Values': {'Mode': value}});
       }
 
       // This function is invoked when the iframe posts a message back.
@@ -114,7 +113,7 @@
         if (msg.MessageId == 'App_LoadingStatus') {
           if (msg.Values) {
             if (msg.Values.Status == 'Document_Loaded') {
-              window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
+              post({'MessageId': 'Host_PostmessageReady'});
             }
           }
         } else if (msg.MessageId == 'Doc_ModifiedStatus') {
