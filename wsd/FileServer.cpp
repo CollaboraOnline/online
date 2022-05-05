@@ -1036,7 +1036,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_URL%"), std::string(FEEDBACK_URL));
     Poco::replaceInPlace(preprocess, std::string("%WELCOME_URL%"), std::string(WELCOME_URL));
-    Poco::replaceInPlace(preprocess, std::string("%INFOBAR_URL%"), std::string(INFOBAR_URL));
 
     const std::string mimeType = "text/html";
 
@@ -1044,7 +1043,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     // iframe purposes.
     std::ostringstream cspOss;
     cspOss << "Content-Security-Policy: default-src 'none'; "
-        "frame-src 'self' " << WELCOME_URL << " " << FEEDBACK_URL << " " << INFOBAR_URL << " blob: " << documentSigningURL << "; "
+        "frame-src 'self' " << WELCOME_URL << " " << FEEDBACK_URL << " blob: " << documentSigningURL << "; "
            "connect-src 'self' " << cnxDetails.getWebSocketUrl() << "; "
            "script-src 'unsafe-inline' 'self'; "
            "style-src 'self' 'unsafe-inline'; "
