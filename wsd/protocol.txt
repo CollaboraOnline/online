@@ -350,6 +350,16 @@ loggingleveloverride <default|max|verbose|terse|none|fatal|critical|error|warnin
     "logging.least_verbose_level_settable_from_client" configuration
     setting).
 
+paintwindow <id> rectangle=<x>,<y>,<width>,<height> dpiscale=<scale>
+
+    Requests painting the area of a window.
+
+    <id> is the window's int ID.
+
+    <x>,<y>,<width>,<height> is the area of the dialog to be rendered.
+
+    <scale> is a scaling factor, e.g. 1 for non-HiDPI.
+
 
 server -> client
 ================
@@ -646,6 +656,23 @@ mobile: <event>
     Available only in the mobile (Android and iOS) apps.  When you send
     'mobile: eventname', the socket code will fire a 'eventname' event on the
     map.
+
+windowpaint: id=<id> width=<width> height=<height> rectangle=<x>,<y>,<width>,<height> hash=<hash> nopng
+
+    Sent to the client when the server rendered the bitmap of a dialog.
+
+    <id> is the window's int ID.
+
+    <width> is the pixel width of the returned bitmap.
+
+    <height> is the pixel height of the returned bitmap.
+
+    <x>,<y>,<width>,<height> is the rendered area of the dialog
+
+    <hash> is the hash key of this bitmap in the pixmap cache
+
+    nopng appears when the the bitmap was already in the cache, so no PNG
+    encoding happened.
 
 
 child -> parent
