@@ -196,6 +196,9 @@ ServerSocket::Type ClientListenAddr = ServerSocket::Type::Public;
 #if !MOBILEAPP
 /// UDS address for kits to connect to.
 std::string MasterLocation;
+
+std::string COOLWSD::LatestVersion;
+std::mutex COOLWSD::FetchUpdateMutex;
 #endif
 
 // Tracks the set of prisoners / children waiting to be used.
@@ -4880,6 +4883,50 @@ private:
 };
 
 #if !MOBILEAPP
+void COOLWSD::processFetchUpdate()
+{
+    try
+    {
+        Poco::URI uriFetch(std::string(INFOBAR_URL));
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("update");
+        std::shared_ptr<http::Session> sessionFetch = StorageBase::getHttpSession(uriFetch);
+        http::Request request(uriFetch.getPathAndQuery());
+
+        if (!sessionFetch || !socketPoll)
+            return;
+
+        request.add("Accept", "application/json");
+        http::Session::FinishedCallback fetchCallback =
+            [sessionFetch, socketPoll](const std::shared_ptr<http::Session>& httpSession)
+        {
+            const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
+            if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_OK)
+            {
+                std::lock_guard<std::mutex> lock(COOLWSD::FetchUpdateMutex);
+                COOLWSD::LatestVersion = httpResponse->getBody();
+            }
+
+            socketPoll->stop();
+        };
+
+        sessionFetch->setFinishedHandler(fetchCallback);
+        sessionFetch->asyncRequest(request, *socketPoll);
+        socketPoll->startThread();
+    }
+    catch(const Poco::Exception& exc)
+    {
+        LOG_DBG("FetchUpdate: " << exc.displayText());
+    }
+    catch(std::exception& exc)
+    {
+        LOG_DBG("FetchUpdate: " << exc.what());
+    }
+    catch(...)
+    {
+        LOG_DBG("FetchUpdate: Unknown exception");
+    }
+}
+
 #if ENABLE_DEBUG
 std::string COOLWSD::getServerURL()
 {
@@ -5097,6 +5144,7 @@ int COOLWSD::innerMain()
             = std::chrono::duration_cast<std::chrono::milliseconds>(timeNow - stampFetch);
         if (fetchUpdateCheck > std::chrono::milliseconds::zero() && durationFetch > fetchUpdateCheck)
         {
+            processFetchUpdate();
             stampFetch = timeNow;
         }
 #endif
