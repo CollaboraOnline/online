@@ -1732,6 +1732,10 @@ L.CanvasTileLayer = L.Layer.extend({
 				app.sectionContainer.setClearColor('#' + this.coreDocBGColor);
 			}
 		}
+		else if (textMsg.startsWith('infobar:')) {
+			obj = JSON.parse(textMsg.substring('infobar:'.length + 1));
+			this._map.fire('infobar', obj);
+		}
 	},
 
 	_onTabStopListUpdate: function (textMsg) {
