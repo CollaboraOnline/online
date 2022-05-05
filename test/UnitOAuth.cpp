@@ -21,39 +21,44 @@ using Poco::Net::OAuth20Credentials;
 class UnitOAuth : public WopiTestServer
 {
     STATE_ENUM(Phase,
+               Start, // Initial phase
                LoadToken, // loading the document with Bearer token
                LoadHeader, // loading the document with Basic auth
-               Polling // just wait for the results
-               )
+               Done // just wait for the results
+    )
     _phase;
 
-    bool _finishedToken;
-    bool _finishedHeader;
+    bool _checkFileInfoCalled;
+    bool _getFileCalled;
 
 public:
     UnitOAuth()
         : WopiTestServer("UnitOAuth")
-        , _phase(Phase::LoadToken)
-        , _finishedToken(false)
-        , _finishedHeader(false)
+        , _phase(Phase::Start)
+        , _checkFileInfoCalled(false)
+        , _getFileCalled(false)
     {
     }
 
     /// The actual assert of the authentication.
-    void assertRequest(const Poco::Net::HTTPRequest& request, int fileIndex)
+    void assertRequest(const Poco::Net::HTTPRequest& request)
     {
         // check that the request contains the Authorization: header
         try
         {
-            if (fileIndex == 0)
+            if (_phase == Phase::LoadToken)
             {
                 OAuth20Credentials creds(request);
                 LOK_ASSERT_EQUAL(std::string("s3hn3ct0k3v"), creds.getBearerToken());
             }
-            else
+            else if (_phase == Phase::LoadHeader)
             {
                 OAuth20Credentials creds(request, "Basic");
                 LOK_ASSERT_EQUAL(std::string("basic=="), creds.getBearerToken());
+            }
+            else
+            {
+                LOK_ASSERT_FAIL("Unexpected phase: " + toString(_phase));
             }
         }
         catch (const std::exception& ex)
@@ -65,49 +70,61 @@ public:
 
     void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& request) override
     {
-        std::string path = Poco::URI(request.getURI()).getPath();
-        assertRequest(request, (path == "/wopi/files/0") ? 0 : 1);
+        _checkFileInfoCalled = true;
+        assertRequest(request);
     }
 
     void assertGetFileRequest(const Poco::Net::HTTPRequest& request) override
     {
-        std::string path = Poco::URI(request.getURI()).getPath();
-        if (path == "/wopi/files/0/contents")
+        _getFileCalled = true;
+        assertRequest(request);
+    }
+
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        LOG_TST("Doc (" << name(_phase) << "): [" << message << ']');
+
+        LOK_ASSERT_EQUAL_MESSAGE("CheckFileInfo was not invoked", true, _checkFileInfoCalled);
+        _checkFileInfoCalled = false;
+        LOK_ASSERT_EQUAL_MESSAGE("GetFile was not invoked", true, _getFileCalled);
+        _getFileCalled = false;
+
+        // Close the document after loading.
+        WSD_CMD("closedocument");
+        switch (_phase)
         {
-            assertRequest(request, 0);
-            _finishedToken = true;
-        }
-        else
-        {
-            assertRequest(request, 1);
-            _finishedHeader = true;
+            case Phase::LoadToken:
+                TRANSITION_STATE(_phase, Phase::LoadHeader);
+
+                initWebsocket("/wopi/files/1?access_header=Authorization: Basic basic==");
+                WSD_CMD("load url=" + getWopiSrc());
+                break;
+            case Phase::LoadHeader:
+                TRANSITION_STATE(_phase, Phase::Done);
+                passTest("Finished all cases successfully");
+                break;
+            default:
+                LOK_ASSERT_FAIL("Unexpected phase: " + toString(_phase));
         }
 
-        if (_finishedToken && _finishedHeader)
-            exitTest(TestResult::Ok);
+        return true;
     }
 
     void invokeWSDTest() override
     {
         switch (_phase)
         {
-            case Phase::LoadToken:
-            case Phase::LoadHeader:
+            case Phase::Start:
             {
-                if (_phase == Phase::LoadToken)
-                    initWebsocket("/wopi/files/0?access_token=s3hn3ct0k3v");
-                else
-                    initWebsocket("/wopi/files/1?access_header=Authorization: Basic basic==");
+                TRANSITION_STATE(_phase, Phase::LoadToken);
+                initWebsocket("/wopi/files/0?access_token=s3hn3ct0k3v");
 
                 WSD_CMD("load url=" + getWopiSrc());
-
-                if (_phase == Phase::LoadToken)
-                    TRANSITION_STATE(_phase, Phase::LoadHeader);
-                else
-                    TRANSITION_STATE(_phase, Phase::Polling);
-                break;
             }
-            case Phase::Polling:
+            break;
+            case Phase::LoadToken:
+            case Phase::LoadHeader:
+            case Phase::Done:
             {
                 // just wait for the results
                 break;
