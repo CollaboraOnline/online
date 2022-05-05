@@ -355,6 +355,9 @@ L.Map.WOPI = L.Handler.extend({
 		else if (msg.MessageId === 'Get_Views') {
 			this._postViewsMessage('Get_Views_Resp');
 		}
+		else if (msg.MessageId === 'Reset_Access_Token') {
+			app.socket.sendMessage('resetaccesstoken ' + msg.Values.token);
+		}
 		else if (msg.MessageId === 'Action_Save') {
 			var dontTerminateEdit = msg.Values && msg.Values['DontTerminateEdit'];
 			var dontSaveIfUnmodified = msg.Values && msg.Values['DontSaveIfUnmodified'];

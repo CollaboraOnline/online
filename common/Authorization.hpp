@@ -35,8 +35,8 @@ public:
     };
 
 private:
-    const Type _type;
-    const std::string _data;
+    Type _type;
+    std::string _data;
 
 public:
     Authorization()
@@ -54,6 +54,12 @@ public:
     /// Expects access_token (preferred) or access_header.
     static Authorization create(const Poco::URI& uri);
     static Authorization create(const std::string& uri);
+
+    void resetAccessToken(std::string accessToken)
+    {
+        _type = Type::Token;
+        _data = std::move(accessToken);
+    }
 
     /// Set the access_token parametr to the given uri.
     void authorizeURI(Poco::URI& uri) const;

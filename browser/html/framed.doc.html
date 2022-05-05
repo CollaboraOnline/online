@@ -99,7 +99,14 @@
       function ShowNotebookbar(notebookbar) {
         var value = notebookbar ? 'notebookbar' : 'classic';
         post({'MessageId': 'Host_PostmessageReady'});
-        post({'MessageId': 'Action_ChangeUIMode', 'Values': {'Mode': value}});
+        post({'MessageId': 'Action_ChangeUIMode',
+              'Values': {'Mode': value}});
+      }
+
+      function reset_access_token(accesstoken) {
+        post({'MessageId': 'Reset_Access_Token',
+              'Values': { 'token': accesstoken, }
+            });
       }
 
       // This function is invoked when the iframe posts a message back.
@@ -184,6 +191,9 @@
       <button onclick="show_commands('print'); return false;">Show Print Commands</button></br></br>
       <button onclick="disable_default_uiaction('UI_Save', true); return false;">Disable default save action</button></br>
       <button onclick="disable_default_uiaction('UI_Save', false); return false;">Enable default save action</button></br></br>
+      <label for="new-access-token"><b>New Access-Token</b>: </label><br>
+      <textarea name="new-access-token" id="new-access-token" value="" rows="1" cols="30">123456789AA</textarea><br>
+      <button onclick="reset_access_token(document.getElementById('new-access-token').value); return false;">Reset Access-Token</button>
     </form>
 
     <h3>Modified Status: <span id="ModifiedStatus">Saved</span></h3>
