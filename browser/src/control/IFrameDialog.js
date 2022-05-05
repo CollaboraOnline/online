@@ -16,14 +16,8 @@ L.IFrameDialog = L.Class.extend({
 		this._loading = false;
 		L.setOptions(this, options);
 
-		if (this.options.prefix==='div-infobar') {
-			this._container = L.DomUtil.create('div', this.options.prefix + '-wrap snackbar jsdialog-container');
-			content = L.DomUtil.create('div', this.options.prefix + '-content lokdialog ui-dialog-content', this._container);
-		}
-		else {
-			this._container = L.DomUtil.create('div', this.options.prefix + '-wrap');
-			content = L.DomUtil.create('div', this.options.prefix + '-content', this._container);
-		}
+		this._container = L.DomUtil.create('div', this.options.prefix + '-wrap');
+		content = L.DomUtil.create('div', this.options.prefix + '-content', this._container);
 
 		this._container.style.display = 'none';
 		// this should be set for making it focusable
