@@ -257,7 +257,7 @@ private:
     const Poco::URI _uriPublic;
 
     /// Authorization data - either access_token or access_header.
-    const Authorization _auth;
+    Authorization _auth;
 
     /// Whether this session is the owner of currently opened document
     bool _isDocumentOwner;

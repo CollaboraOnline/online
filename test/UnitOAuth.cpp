@@ -23,11 +23,14 @@ class UnitOAuth : public WopiTestServer
     STATE_ENUM(Phase,
                Start, // Initial phase
                LoadToken, // loading the document with Bearer token
-               LoadHeader, // loading the document with Basic auth
+               ModifyAccessToken, // Modify the access-token after loading
+               LoadHeader, // load the document with Basic auth
+               LoadingHeader, // loading the document with Basic auth
                Done // just wait for the results
     )
     _phase;
 
+    std::string _credential;
     bool _checkFileInfoCalled;
     bool _getFileCalled;
 
@@ -46,15 +49,15 @@ public:
         // check that the request contains the Authorization: header
         try
         {
-            if (_phase == Phase::LoadToken)
+            if (_phase == Phase::LoadToken || _phase == Phase::ModifyAccessToken)
             {
                 OAuth20Credentials creds(request);
-                LOK_ASSERT_EQUAL(std::string("s3hn3ct0k3v"), creds.getBearerToken());
+                LOK_ASSERT_EQUAL(_credential, creds.getBearerToken());
             }
-            else if (_phase == Phase::LoadHeader)
+            else if (_phase == Phase::LoadingHeader)
             {
                 OAuth20Credentials creds(request, "Basic");
-                LOK_ASSERT_EQUAL(std::string("basic=="), creds.getBearerToken());
+                LOK_ASSERT_EQUAL(_credential, creds.getBearerToken());
             }
             else
             {
@@ -80,6 +83,16 @@ public:
         assertRequest(request);
     }
 
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
+    {
+        LOK_ASSERT_STATE(_phase, Phase::ModifyAccessToken);
+        assertRequest(request);
+
+        TRANSITION_STATE(_phase, Phase::LoadHeader);
+        return nullptr;
+    }
+
     bool onDocumentLoaded(const std::string& message) override
     {
         LOG_TST("Doc (" << name(_phase) << "): [" << message << ']');
@@ -94,13 +107,20 @@ public:
         switch (_phase)
         {
             case Phase::LoadToken:
-                TRANSITION_STATE(_phase, Phase::LoadHeader);
-
-                initWebsocket("/wopi/files/1?access_header=Authorization: Basic basic==");
-                WSD_CMD("load url=" + getWopiSrc());
+                TRANSITION_STATE(_phase, Phase::ModifyAccessToken);
+                _credential = "abcdefg123456_newtoken";
+                WSD_CMD("resetaccesstoken " + _credential);
+                WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+                break;
+            case Phase::ModifyAccessToken:
                 break;
             case Phase::LoadHeader:
-                TRANSITION_STATE(_phase, Phase::Done);
+                TRANSITION_STATE(_phase, Phase::LoadingHeader);
+                _credential = "basic==";
+                initWebsocket("/wopi/files/1?access_header=Authorization: Basic " + _credential);
+                WSD_CMD("load url=" + getWopiSrc());
+                break;
+            case Phase::LoadingHeader:
                 passTest("Finished all cases successfully");
                 break;
             default:
@@ -117,13 +137,24 @@ public:
             case Phase::Start:
             {
                 TRANSITION_STATE(_phase, Phase::LoadToken);
-                initWebsocket("/wopi/files/0?access_token=s3hn3ct0k3v");
+                _credential = "s3hn3ct0k3v";
+                initWebsocket("/wopi/files/0?access_token=" + _credential);
 
                 WSD_CMD("load url=" + getWopiSrc());
             }
             break;
             case Phase::LoadToken:
+            case Phase::ModifyAccessToken:
+                break;
             case Phase::LoadHeader:
+            {
+                TRANSITION_STATE(_phase, Phase::LoadingHeader);
+                _credential = "basic==";
+                initWebsocket("/wopi/files/1?access_header=Authorization: Basic " + _credential);
+                WSD_CMD("load url=" + getWopiSrc());
+            }
+            break;
+            case Phase::LoadingHeader:
             case Phase::Done:
             {
                 // just wait for the results
