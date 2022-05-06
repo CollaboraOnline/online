@@ -147,10 +147,8 @@
 }
 
 /* options section */
-.notebookbar-options-section {
-	display: inline;
-	height: 32px;
-	padding: 2px;
+.notebookbar-options-section .cell.notebookbar {
+	padding: 0;
 }
 
 /* root container */
