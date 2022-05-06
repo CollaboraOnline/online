@@ -485,11 +485,15 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .ui-listbox::-ms-expand {
 	display: none;
 }
-
+@media (prefers-color-scheme: dark) {
+	.ui-listbox-arrow {
+		background: url('images/jquery-ui-lightness/ui-icons_ffffff_256x240.png') no-repeat transparent !important;
+	}
+}
 .ui-listbox-arrow {
 	content: '';
 	background: url('images/jquery-ui-lightness/ui-icons_222222_256x240.png') no-repeat transparent;
-	background-position: -67px -18px;
+	background-position: -67px -18px !important;
 	display: inline-block;
 	position: absolute;
 	width: 11px;
