@@ -199,6 +199,12 @@ w2ui-toolbar {
 .w2ui-scroll-left,
 .w2ui-scroll-right {
 	z-index: 1001;
+	background-color: var(--color-background-dark);
+	box-shadow: 0px 0px 7px var(--color-box-shadow);
+}
+.w2ui-scroll-left:hover,
+.w2ui-scroll-right:hover {
+	background-color: var(--color-background-darker);
 }
 
 /* center the toolbar */
