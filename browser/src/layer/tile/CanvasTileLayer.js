@@ -1022,6 +1022,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._map.on('move', this._syncTilePanePos, this);
 
 		this._map.on('viewrowcolumnheaders', this._painter.update, this._painter);
+		this._map.on('messagesdone', this._sendProcessedResponse, this);
+		this._queuedProcessed = [];
 
 		if (this._docType === 'spreadsheet') {
 			this._painter._addGridSection();
@@ -6599,9 +6601,18 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		L.Log.log(textMsg, 'INCOMING', key);
 
-		// Send acknowledgment, that the tile message arrived
+		// Queue acknowledgment, that the tile message arrived
 		var tileID = tileMsgObj.part + ':' + tileMsgObj.x + ':' + tileMsgObj.y + ':' + tileMsgObj.tileWidth + ':' + tileMsgObj.tileHeight + ':' + tileMsgObj.nviewid;
-		app.socket.sendMessage('tileprocessed tile=' + tileID);
+		this._queuedProcessed.push(tileID);
+	},
+
+	_sendProcessedResponse: function() {
+		var toSend = this._queuedProcessed;
+		this._queuedProcessed = [];
+		// FIXME: new multi-tile-processed message.
+		for (var i = 0; i < toSend.length; i++) {
+			app.socket.sendMessage('tileprocessed tile=' + toSend[i]);
+		}
 	},
 
 	_coordsToPixBounds: function (coords) {
