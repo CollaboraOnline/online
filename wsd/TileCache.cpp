@@ -190,46 +190,6 @@ void TileCache::saveTileAndNotify(const TileDesc& desc, const char *data, const 
     std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(desc);
     if (tileBeingRendered)
     {
-#if 0
-    // FIXME: what is that renderid=cache thing ? ...
-
-            // Send to first subscriber as-is (without cache marker).
-            auto payload = std::make_shared<Message>(response,
-                                                     Message::Dir::Out,
-                                                     response.size() + 1 + size);
-            payload->append("\n", 1);
-            payload->append(data, size);
-
-            auto& firstSubscriber = tileBeingRendered->getSubscribers()[0];
-            std::shared_ptr<ClientSession> firstSession = firstSubscriber.lock();
-            if (firstSession)
-            {
-                firstSession->enqueueSendMessage(payload);
-            }
-
-            if (subscriberCount > 1)
-            {
-                // All others must get served from the cache.
-                response += " renderid=cached\n";
-
-                // Create a new Payload.
-                payload.reset();
-                payload = std::make_shared<Message>(response,
-                                                    Message::Dir::Out,
-                                                    response.size() + size);
-                payload->append(data, size);
-
-                for (size_t i = 1; i < subscriberCount; ++i)
-                {
-                    auto& subscriber = tileBeingRendered->getSubscribers()[i];
-                    std::shared_ptr<ClientSession> session = subscriber.lock();
-                    if (session)
-                    {
-                        session->enqueueSendMessage(payload);
-                    }
-                }
-            }
-#endif
         const size_t subscriberCount = tileBeingRendered->getSubscribers().size();
 
         // sendTile also does enqueueSendMessage underneath ...

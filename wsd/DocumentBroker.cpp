@@ -55,12 +55,6 @@ using namespace COOLProtocol;
 
 using Poco::JSON::Object;
 
-#if ENABLE_DEBUG
-#  define ADD_DEBUG_RENDERID (" renderid=cached\n")
-#else
-#  define ADD_DEBUG_RENDERID ("\n")
-#endif
-
 void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker)
 {
     assert(docBroker && "Invalid DocumentBroker instance.");

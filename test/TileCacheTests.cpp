@@ -70,7 +70,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testImpressTiles);
     CPPUNIT_TEST(testClientPartImpress);
     CPPUNIT_TEST(testClientPartCalc);
-    // FIXME CPPUNIT_TEST(testTilesRenderedJustOnce);
+    CPPUNIT_TEST(testTilesRenderedJustOnce); // TESTME: reliable ?
     // CPPUNIT_TEST(testTilesRenderedJustOnceMultiClient); // always fails, seems complicated to fix
 #if ENABLE_DEBUG
     CPPUNIT_TEST(testSimultaneousTilesRenderedJustOnce);
@@ -680,19 +680,21 @@ void TileCacheTests::testTilesRenderedJustOnce()
         // Get same 3 tiles.
         sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname);
         const auto tile1 = assertResponseString(socket, "tile:", testname);
-        std::string renderId1;
-        COOLProtocol::getTokenStringFromMessage(tile1, "renderid", renderId1);
-        LOK_ASSERT_EQUAL(std::string("cached"), renderId1);
+
+        // monotonically increasing id.
+        std::string wid1;
+        COOLProtocol::getTokenStringFromMessage(tile1, "wid", wid1);
 
         const auto tile2 = assertResponseString(socket, "tile:", testname);
-        std::string renderId2;
-        COOLProtocol::getTokenStringFromMessage(tile2, "renderid", renderId2);
-        LOK_ASSERT_EQUAL(std::string("cached"), renderId2);
+
+        std::string wid2;
+        COOLProtocol::getTokenStringFromMessage(tile2, "wid", wid2);
+        LOK_ASSERT_EQUAL(wid1, wid2); // shouldn't have changed
 
         const auto tile3 = assertResponseString(socket, "tile:", testname);
-        std::string renderId3;
-        COOLProtocol::getTokenStringFromMessage(tile3, "renderid", renderId3);
-        LOK_ASSERT_EQUAL(std::string("cached"), renderId3);
+        std::string wid3;
+        COOLProtocol::getTokenStringFromMessage(tile3, "wid", wid3);
+        LOK_ASSERT_EQUAL(wid3, wid2);
 
         // Get new rendercount.
         sendTextFrame(socket, "ping", testname);
