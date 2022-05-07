@@ -20,12 +20,6 @@
 #include "Rectangle.hpp"
 #include "TileDesc.hpp"
 
-#if ENABLE_DEBUG
-#  define ADD_DEBUG_RENDERID (" renderid=" + Util::UniqueId() + '\n')
-#else
-#  define ADD_DEBUG_RENDERID ("\n")
-#endif
-
 class ThreadPool {
     std::mutex _mutex;
     std::condition_variable _cond;
@@ -353,7 +347,7 @@ namespace RenderTiles
         std::string tileMsg;
         if (combined)
         {
-            tileMsg = tileCombined.serialize("tilecombine:", ADD_DEBUG_RENDERID, renderedTiles);
+            tileMsg = tileCombined.serialize("tilecombine:", "\n", renderedTiles);
 
             LOG_TRC("Sending back painted tiles for " << tileMsg << " of size " << output.size() << " bytes) for: " << tileMsg);
 
@@ -369,7 +363,7 @@ namespace RenderTiles
             size_t outputOffset = 0;
             for (auto &i : renderedTiles)
             {
-                tileMsg = i.serialize("tile:", ADD_DEBUG_RENDERID);
+                tileMsg = i.serialize("tile:", "\n");
                 const size_t responseSize = tileMsg.size() + i.getImgSize();
                 std::unique_ptr<char[]> response;
                 response.reset(new char[responseSize]);

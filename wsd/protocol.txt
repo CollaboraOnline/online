@@ -515,21 +515,22 @@ complexselection:
     Complex selections with embedded objects and large text selections need special export handling.
     This response signifies that the payload is large and/or complex and needs to be retrieved via the clipboard API.
 
-tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [renderid=<id>] [wid=<wireId>]
+tile: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [wid=<wireId>]
 <binaryPngImage>
 
     The parameters from the corresponding 'tile' command.
 
-    In a debug build, the renderid is either a unique identifier,
-    different for each actual call to LibreOfficeKit to render a tile,
-    or the string 'cached' if the tile was found in the cache. WireId
-    is a unique reference to a hashed tile on the server, and can
-    be included by the client in the next 'tile' message requesting
-    the same tile.
+    WireId is a monotonically incrementing, unique reference to a
+    state of the document on the server, and can be included by
+    the client in the next 'tile' message requesting the same tile.
 
-delta: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [renderid=<id>] [wid=<wireId>]
+    the tile message has at least one keyframe, followed by any
+    number of concatentated compressed deltas.
 
-    A delta command is an incremental patch on top of a previous tile.
+delta: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [wid=<wireId>]
+
+    A delta command is like a tile: command but the payload is purely
+    an incremental patch on top of a previous tile.
 
 commandresult: <payload>
     This is used to acknowledge the commands from the client.

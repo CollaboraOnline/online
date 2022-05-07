@@ -6490,12 +6490,15 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		tile.el = canvas;
 
+		// FIXME: remove this ...
 		if (isKeyframe && delta.length != canvas.width * canvas.height * 4)
 		{
-			console.log('Broken keyframe - assuming it is a delta, size mismatch: ' +
-				    delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
+			console.debug('Broken keyframe - assuming it is a delta, size mismatch: ' +
+				      delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
 			isKeyframe = false;
 		}
+
+		tile.lastKeyframe = isKeyframe;
 
 		// apply potentially several deltas in turn.
 		var i = 0;
@@ -6658,9 +6661,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			});
 		}
 		else if (tile) {
-			if (this._tiles[key]._invalidCount > 0) {
+			tile.lastKeyframe = false;
+
+			if (this._tiles[key]._invalidCount > 0)
 				this._tiles[key]._invalidCount -= 1;
-			}
 
 			tile.wireId = tileMsgObj.wireId;
 			if (this._map._canvasDevicePixelGrid)

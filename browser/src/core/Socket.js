@@ -1642,9 +1642,6 @@ app.definitions.Socket = L.Class.extend({
 			else if (tokens[i].substring(0, 7) === 'params=') {
 				command.params = tokens[i].substring(7).split(',');
 			}
-			else if (tokens[i].substring(0, 9) === 'renderid=') {
-				command.renderid = tokens[i].substring(9);
-			}
 			else if (tokens[i].substring(0, 12) === 'rendercount=') {
 				command.rendercount = parseInt(tokens[i].substring(12));
 			}
