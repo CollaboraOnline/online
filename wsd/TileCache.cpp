@@ -163,9 +163,6 @@ Tile TileCache::lookupTile(const TileDesc& tile)
                               tile.getTilePosX(), tile.getTilePosY(),
                               tile.getTileWidth(), tile.getTileHeight(), ret);
 
-    if (ret && !ret->isValid())
-        return nullptr;
-
     return ret;
 }
 

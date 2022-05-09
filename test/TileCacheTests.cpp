@@ -238,7 +238,7 @@ void TileCacheTests::testSimple()
 
     // No Cache
     Tile tileData = tc.lookupTile(tile);
-    LOK_ASSERT_MESSAGE("found tile when none was expected", !tileData);
+    LOK_ASSERT_MESSAGE("found tile when none was expected", !tileData || !tileData->isValid());
 
     // Cache Tile
     const int size = 1024;
@@ -247,7 +247,7 @@ void TileCacheTests::testSimple()
 
     // Find Tile
     tileData = tc.lookupTile(tile);
-    LOK_ASSERT_MESSAGE("tile not found when expected", tileData);
+    LOK_ASSERT_MESSAGE("tile not found when expected", tileData && tileData->isValid());
     LOK_ASSERT_MESSAGE("cached tile corrupted", data == *tileData->keyframe());
 
     // Invalidate Tiles
@@ -255,7 +255,7 @@ void TileCacheTests::testSimple()
 
     // No Cache
     tileData = tc.lookupTile(tile);
-    LOK_ASSERT_MESSAGE("found tile when none was expected", !tileData);
+    LOK_ASSERT_MESSAGE("found tile when none was expected", !tileData || !tileData->isValid());
 }
 
 void TileCacheTests::testSimpleCombine()
