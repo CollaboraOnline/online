@@ -610,3 +610,5 @@ stress:
 		$(stress_file) $(trace_dir)/writer-hello-shape.txt \
 		$(stress_file) $(trace_dir)/writer-quick.txt
 
+czech: check
+	@echo "This should do something much cooler"
