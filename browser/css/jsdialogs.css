@@ -1164,11 +1164,16 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* formulabar */
 #sc_input_window.formulabar {
-	border: 1px solid var(--color-border);
 	width: 95% !important;
 	resize: none !important;
+	outline: none;
 	max-width: unset !important;
-	font-size: var(--default-font-size) !important;
+	font-size: var(--header-font-size) !important;
+	color: var(--color-main-text);
+	background-color: var(--color-background-lighter);
+	border: 1px solid var(--color-border);
+	border-radius: 0px;
+	margin-right: 5px;
 }
 
 .formulabar.unotoolbutton {
