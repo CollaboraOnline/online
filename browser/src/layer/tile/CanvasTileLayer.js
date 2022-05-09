@@ -6529,43 +6529,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		console.log('set new image');
 	},
 
-	_onTileMsgFileBasedView: function (textMsg, img) {
-		var tileMsgObj = app.socket.parseServerCmd(textMsg);
-		var coords = this._tileMsgToCoords(tileMsgObj);
-		var tile = this._tiles[this._tileCoordsToKey(coords)];
-
-		if (tileMsgObj.id !== undefined) {
-			this._map.fire('tilepreview', {
-				tile: img,
-				id: tileMsgObj.id,
-				width: tileMsgObj.width,
-				height: tileMsgObj.height,
-				part: tileMsgObj.part,
-				docType: this._docType
-			});
-		}
-		else if (tile) {
-			if (tile._invalidCount > 0) {
-				tile._invalidCount -= 1;
-			}
-
-			tile.el = img;
-			tile.wireId = tileMsgObj.wireId;
-			tile.loaded = true;
-			this._tileReady(coords, null, tile);
-		}
-
-		// Send acknowledgment, that the tile message arrived
-		var tileID = tileMsgObj.part + ':' + tileMsgObj.x + ':' + tileMsgObj.y + ':' + tileMsgObj.tileWidth + ':' + tileMsgObj.tileHeight + ':' + tileMsgObj.nviewid;
-		app.socket.sendMessage('tileprocessed tile=' + tileID);
-	},
-
 	_onTileMsg: function (textMsg, img) {
-		if (app.file.fileBasedView) {
-			this._onTileMsgFileBasedView(textMsg, img);
-			return;
-		}
-
 		var tileMsgObj = app.socket.parseServerCmd(textMsg);
 		this._checkTileMsgObject(tileMsgObj);
 		var coords = this._tileMsgToCoords(tileMsgObj);
