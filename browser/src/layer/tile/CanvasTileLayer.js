@@ -4724,7 +4724,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_debugShowTileData: function() {
 		this._debugData['loadCount'].setPrefix('Total of requested tiles: ' +
-				this._debugInvalidateCount + ', received: ' + this._debugLoadCount +
+				this._debugInvalidateCount + ', recv-tiles: ' + this._debugLoadTile +
+				', recv-delta: ' + this._debugLoadDelta +
 				', cancelled: ' + this._debugCancelledTiles);
 	},
 
@@ -4735,7 +4736,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugTimeout();
 		this._debugId = 0;
 		this._debugCancelledTiles = 0;
-		this._debugLoadCount = 0;
+		this._debugLoadTile = 0;
+		this._debugLoadDelta = 0;
 		this._debugInvalidateCount = 0;
 		this._debugRenderCount = 0;
 		if (!this._debugData) {
@@ -6576,13 +6578,22 @@ L.CanvasTileLayer = L.Layer.extend({
 		var key = this._tileCoordsToKey(coords);
 		var tile = this._tiles[key];
 		if (this._debug && tile) {
-			if (tile._debugLoadCount) {
-				tile._debugLoadCount++;
-				this._debugLoadCount++;
-			} else {
-				tile._debugLoadCount = 1;
-				tile._debugInvalidateCount = 1;
+			if (tile._debugLoadTile === undefined) {
+				tile._debugLoadTile = 0;
+				tile._debugLoadDelta = 0;
+				tile._debugInvalidateCount = 0;
 			}
+			if (img.rawData && !img.isKeyframe)
+			{
+				tile._debugLoadDelta++;
+				this._debugLoadDelta++;
+			}
+			else
+			{
+				tile._debugLoadTile++;
+				this._debugLoadTile++;
+			}
+
 			if (!tile._debugPopup) {
 				var tileBound = this._keyToBounds(key);
 				tile._debugPopup = L.popup({ className: 'debug', offset: new L.Point(0, 0), autoPan: false, closeButton: false, closeOnClick: false })
@@ -6596,15 +6607,15 @@ L.CanvasTileLayer = L.Layer.extend({
 				tile._debugTime = this._debugGetTimeArray();
 				this._debugInfo.addLayer(tile._debugTile);
 			}
-			if (tile._debugTime.date === 0) {
-				tile._debugPopup.setContent('requested: ' + this._tiles[key]._debugInvalidateCount + '<br>received: ' + this._tiles[key]._debugLoadCount);
-			} else {
-				tile._debugPopup.setContent('requested: ' + this._tiles[key]._debugInvalidateCount + '<br>received: ' + this._tiles[key]._debugLoadCount +
-					'<br>' + this._debugSetTimes(tile._debugTime, +new Date() - tile._debugTime.date).replace(/, /g, '<br>'));
-			}
-			if (tile._debugTile) {
-				tile._debugTile.setStyle({ fillOpacity: (tileMsgObj.renderid === 'cached') ? 0.1 : 0, fillColor: 'yellow' });
-			}
+
+			var msg = 'requested: ' + this._tiles[key]._debugInvalidateCount + '<br>rec-tiles: ' + this._tiles[key]._debugLoadTile + '<br>recv-delta: ' + this._tiles[key]._debugLoadDelta;
+			if (tile._debugTime.date !== 0)
+				msg += '<br>' + this._debugSetTimes(tile._debugTime, +new Date() - tile._debugTime.date).replace(/, /g, '<br>');
+			tile._debugPopup.setContent(msg);
+
+			if (tile._debugTile) // deltas in yellow
+				tile._debugTile.setStyle({ fillOpacity: tile.lastKeyframe ? 0 : 0.1, fillColor: 'yellow' });
+
 			this._debugShowTileData();
 		}
 		if (tileMsgObj.id !== undefined) {
