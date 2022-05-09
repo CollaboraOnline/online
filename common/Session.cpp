@@ -9,20 +9,6 @@
 
 #include "Session.hpp"
 
-#include <sys/types.h>
-#include <ftw.h>
-#include <utime.h>
-
-#include <cassert>
-#include <cstring>
-#include <fstream>
-#include <iostream>
-#include <iterator>
-#include <map>
-#include <memory>
-#include <mutex>
-#include <set>
-
 #include <Poco/Exception.h>
 #include <Poco/Path.h>
 #include <Poco/String.h>
@@ -31,9 +17,7 @@
 #include "Common.hpp"
 #include "Protocol.hpp"
 #include "Log.hpp"
-#include <TileCache.hpp>
 #include "Util.hpp"
-#include "Unit.hpp"
 
 using namespace COOLProtocol;
 
