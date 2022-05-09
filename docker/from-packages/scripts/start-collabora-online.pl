@@ -95,7 +95,17 @@ sub rewrite_config($) {
 
     my $in_aliases = 0;
     while (<CONFIG>) {
-        if (/<alias_groups/) {
+        if (/<remote_url (.*)>.*<\/remote_url>/) {
+            my $remoteurl = $ENV{'remoteconfigurl'};
+            if ($remoteurl) {
+                s/<remote_url (.*)>.*<\/remote_url>/<remote_url $1>$remoteurl<\/remote_url>/;
+                $output .= $_;
+            }
+            else {
+                $output .= $_;
+            }
+        }
+        elsif (/<alias_groups/) {
             $in_aliases = 1;
 
             my $groups = generate_aliases();
