@@ -4,18 +4,22 @@
  */
 /* global app _ */
 
+L.Map.mergeOptions({
+	infobar: true
+});
+
 L.Map.Infobar = L.Handler.extend({
 	addHooks: function () {
-		this._map.on('updateviewslist', this.onUpdateList, this);
+		this._intervalInfo = setInterval(L.bind(this.onUpdateInfo, this), 1800000);
 		this._map.on('infobar', this.onInfobar, this);
 	},
 
 	removeHooks: function () {
-		this._map.off('updateviewslist', this.onUpdateList, this);
+		clearInterval(this._intervalInfo);
 		this._map.off('infobar', this.onInfobar, this);
 	},
 
-	onUpdateList: function () {
+	onUpdateInfo: function () {
 		var docLayer = this._map._docLayer || {};
 		var viewInfo = this._map._viewInfo[docLayer._viewId];
 
@@ -53,6 +57,7 @@ L.Map.Infobar = L.Handler.extend({
 					window.localStorage.setItem('InfoBarLaterDate', currentDate.getTime());
 					snackbarMessage = snackbarMessage.replace('%0', latestVersion);
 					this._map.uiManager.showSnackbar(snackbarMessage);
+					clearInterval(this._intervalInfo);
 					break;
 				}
 				if (v1 < v2) {
