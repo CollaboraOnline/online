@@ -892,33 +892,34 @@ app.definitions.Socket = L.Class.extend({
 							}})
 					);
 				}
-
-				vex.dialog.open({
-					unsafeMessage: '<h1 class="vex-dialog-title">' + vex._escapeHtml(_('Document has been changed')) + '</h1><p class="vex-dialog-message">' + vex._escapeHtml(_('Document has been changed in storage. What would you like to do with your unsaved changes?')) + '</p>',
-					escapeButtonCloses: false,
-					overlayClosesOnClick: false,
-					contentClassName: 'vex-content vex-3btns',
-					buttons: dialogButtons,
-					showCloseButton: true,
-					callback: function(value) {
-						if (value === 'discard') {
-							// They want to refresh the page and load document again for all
-							that.sendMessage('closedocument');
-						} else if (value === 'overwrite') {
-							// They want to overwrite
-							that.sendMessage('savetostorage force=1');
-						} else if (value === 'saveas') {
-							var filename = that._map['wopi'].BaseFileName;
-							if (filename) {
-								filename = L.LOUtil.generateNewFileName(filename, '_new');
-								that._map.saveAs(filename);
+				if (!this._map.isPermissionReadOnly()) {
+					vex.dialog.open({
+						unsafeMessage: '<h1 class="vex-dialog-title">' + vex._escapeHtml(_('Document has been changed')) + '</h1><p class="vex-dialog-message">' + vex._escapeHtml(_('Document has been changed in storage. What would you like to do with your unsaved changes?')) + '</p>',
+						escapeButtonCloses: false,
+						overlayClosesOnClick: false,
+						contentClassName: 'vex-content vex-3btns',
+						buttons: dialogButtons,
+						showCloseButton: true,
+						callback: function(value) {
+							if (value === 'discard') {
+								// They want to refresh the page and load document again for all
+								that.sendMessage('closedocument');
+							} else if (value === 'overwrite') {
+								// They want to overwrite
+								that.sendMessage('savetostorage force=1');
+							} else if (value === 'saveas') {
+								var filename = that._map['wopi'].BaseFileName;
+								if (filename) {
+									filename = L.LOUtil.generateNewFileName(filename, '_new');
+									that._map.saveAs(filename);
+								}
 							}
+						},
+						afterOpen: function() {
+							this.contentEl.style.width = '600px';
 						}
-					},
-					afterOpen: function() {
-						this.contentEl.style.width = '600px';
-					}
-				});
+					});
+				}
 
 				return;
 			}
