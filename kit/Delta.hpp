@@ -456,7 +456,7 @@ class DeltaGenerator {
                 return 0;
             }
 
-            uLong maxCompressed = compressBound(width * height * 4);
+            uLong maxCompressed = compressBound((uLong)width * height * 4);
             Bytef *compressed = (Bytef *)malloc(maxCompressed);
             if (!compressed)
             {
