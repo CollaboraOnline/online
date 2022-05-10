@@ -294,7 +294,7 @@ namespace RenderTiles
                                                      pixelWidth, pixelHeight,
                                                      pixmapWidth, pixmapHeight,
                                                      tileRect.getLeft(), tileRect.getTop(),
-                                                     tileCombined.getPart(),
+                                                     tileRect.getWidth(), tileCombined.getPart(),
                                                      *data, wireId, forceKeyframe, pngMutex);
                         }
                         else

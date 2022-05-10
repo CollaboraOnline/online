@@ -6533,12 +6533,13 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		tile.el = canvas;
 
-		// FIXME: remove this ...
-		if (isKeyframe && delta.length != canvas.width * canvas.height * 4)
+		// Debugging paranoia: if we get this wrong bad things happen.
+		if ((isKeyframe && delta.length != canvas.width * canvas.height * 4) ||
+		    (!isKeyframe && delta.length == canvas.width * canvas.height * 4))
 		{
-			console.debug('Broken keyframe - assuming it is a delta, size mismatch: ' +
-				      delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
-			isKeyframe = false;
+			console.log('Unusual ' + (isKeyframe ? 'keyframe' : 'delta') +
+				    ' possibly mis-tagged, suspicious size vs. type ' +
+				    delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
 		}
 
 		tile.lastKeyframe = isKeyframe;
@@ -6560,7 +6561,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var pixSize = canvas.width * canvas.height * 4;
 		console.log('Applying a ' + (isKeyframe ? 'keyframe' : 'delta') +
-			    ' of length ' + delta.length + ' pix size: ' + pixSize + '\n');
+			    ' of length ' + delta.length + ' canvas size: ' + pixSize + '\n');
 		// + ' hex: ' + hex2string(delta));
 
 		if (delta.length === 0)
@@ -6608,7 +6609,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				var count = delta[i+1];
 				var srcRow = delta[i+2];
 				var destRow = delta[i+3];
-				// console.log('[' + i + ']: copy ' + count + ' row(s) ' + srcRow + ' to ' + destRow);
+				console.log('[' + i + ']: copy ' + count + ' row(s) ' + srcRow + ' to ' + destRow);
 				i+= 4;
 				for (var cnt = 0; cnt < count; ++cnt)
 				{
@@ -6625,7 +6626,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				var destCol = delta[i+2];
 				var span = delta[i+3];
 				offset = destRow * canvas.width * 4 + destCol * 4;
-				// console.log('[' + i + ']: apply new span of size ' + span + ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
+				console.log('[' + i + ']: apply new span of size ' + span + ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 				i += 4;
 				span *= 4;
 				// imgData.data[offset + 1] = 256; // debug - greener start
