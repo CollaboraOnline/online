@@ -163,7 +163,7 @@ class CanvasSectionObject {
 	size: Array<number> = new Array(0);
 	origSizeHint: undefined | Array<number> = undefined; // This is used to preserve the original size provided on construct.
 	expand: Array<string> = new Array(0);
-	isLocated: boolean = false; // location and size of the section computed yet ?
+	isLocated: boolean = false; // Location and size of the section computed yet?
 	processingOrder: number = null;
 	drawingOrder: number = null;
 	zIndex: number = null;
