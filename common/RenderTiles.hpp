@@ -320,19 +320,7 @@ namespace RenderTiles
             tileIndex++;
         }
 
-        // empty ones come first
-        size_t zeroCheckStart = renderedTiles.size();
-
         pngPool.run();
-
-        for (size_t i = zeroCheckStart; i < renderedTiles.size(); ++i)
-        {
-            if (renderedTiles[i].getImgSize() == 0)
-            {
-                LOG_TRC("Encoded 0-sized tile in slot !" << i);
-                assert(!"0-sized tile enocded!");
-            }
-        }
 
         duration = std::chrono::steady_clock::now() - start;
         const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(duration);

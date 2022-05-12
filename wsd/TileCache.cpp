@@ -170,9 +170,19 @@ void TileCache::saveTileAndNotify(const TileDesc& desc, const char *data, const 
 {
     assertCorrectThread();
 
+    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(desc);
+
     if (size <= 0)
     {
         LOG_TRC("Zero sized cache tile: " << cacheFileName(desc));
+
+        // un-subscribe subscribers, if any.
+        if (tileBeingRendered)
+        {
+            LOG_DBG("STATISTICS: tile " << desc.getVersion() << " internal roundtrip to empty tile " <<
+                    tileBeingRendered->getElapsedTimeMs());
+            forgetTileBeingRendered(tileBeingRendered);
+        }
         return;
     }
 
@@ -184,7 +194,6 @@ void TileCache::saveTileAndNotify(const TileDesc& desc, const char *data, const 
     LOG_TRC("Saved cache tile: " << cacheFileName(desc) << " of size " << size << " bytes");
 
     // Notify subscribers, if any.
-    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(desc);
     if (tileBeingRendered)
     {
         const size_t subscriberCount = tileBeingRendered->getSubscribers().size();
