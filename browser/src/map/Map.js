@@ -334,7 +334,7 @@ L.Map = L.Evented.extend({
 
 	addView: function(viewInfo) {
 		this._viewInfo[viewInfo.id] = viewInfo;
-		if (viewInfo.userextrainfo !== undefined && viewInfo.userextrainfo.avatar !== undefined) {
+		if (viewInfo.userextrainfo !== undefined) {
 			this._viewInfoByUserName[viewInfo.username] = viewInfo;
 		}
 		this.fire('postMessage', {msgId: 'View_Added', args: {Deprecated: true, ViewId: viewInfo.id, UserId: viewInfo.userid, UserName: viewInfo.username, UserExtraInfo: viewInfo.userextrainfo, Color: L.LOUtil.rgbToHex(viewInfo.color), ReadOnly: viewInfo.readonly}});

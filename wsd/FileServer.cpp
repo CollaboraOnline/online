@@ -378,7 +378,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             std::string postMessageOrigin;
             config::isSslEnabled() ? postMessageOrigin = "https://" : postMessageOrigin = "http://";
             postMessageOrigin += requestDetails.getHostUntrusted();
-
+            std::string userExtraInfo = "{ \"federatedId\" : \"" + userNameString + "@cloud.example.com" + "\" }";
             fileInfo->set("BaseFileName", localFile.fileName);
             fileInfo->set("Size", localFile.size);
             fileInfo->set("Version", "1.0");
@@ -387,6 +387,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             fileInfo->set("UserFriendlyName", userNameString);
             fileInfo->set("UserCanWrite", "true");
             fileInfo->set("PostMessageOrigin", postMessageOrigin);
+            fileInfo->set("UserExtraInfo", userExtraInfo);
             fileInfo->set("LastModifiedTime", Util::getIso8601FracformatTime(localFile.fileLastModifiedTime));
             fileInfo->set("EnableOwnerTermination", "true");
 

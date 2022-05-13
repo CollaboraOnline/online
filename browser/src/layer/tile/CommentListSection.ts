@@ -3,9 +3,11 @@
 L.Map.include({
 	insertComment: function() {
 		var avatar = undefined;
+		var federatedId = undefined;
 		var author = this.getViewName(this._docLayer._viewId);
 		if (author in this._viewInfoByUserName) {
 			avatar = this._viewInfoByUserName[author].userextrainfo.avatar;
+			federatedId = this._viewInfoByUserName[author].userextrainfo.federatedId;
 		}
 		this._docLayer.newAnnotation({
 			text: '',
@@ -13,7 +15,8 @@ L.Map.include({
 			author: author,
 			dateTime: new Date().toDateString(),
 			id: 'new', // 'new' only when added by us
-			avatar: avatar
+			avatar: avatar,
+			federatedId: federatedId
 		});
 	},
 
@@ -505,6 +508,10 @@ class CommentSection {
 				Author: {
 					type: 'string',
 					value: annotation.sectionProperties.data.author
+				},
+				FederatedId: {
+					type: 'string',
+					value: annotation.sectionProperties.data.federatedId
 				}
 			};
 			if (app.file.fileBasedView) {
