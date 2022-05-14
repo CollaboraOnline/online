@@ -427,6 +427,26 @@ L.TileSectionManager = L.Class.extend({
 			return isRTL ? sectionWidth - xcoord : xcoord;
 		};
 
+		// This is called just before and after the dashed line drawing.
+		var startEndDash = function (ctx2D, end) {
+			// Style the dashed lines.
+			var dashLen = 5;
+			var gapLen = 5;
+
+			// Restart the path to apply the dashed line style.
+			ctx2D.closePath();
+			ctx2D.beginPath();
+			ctx2D.setLineDash(end ? [] : [dashLen, gapLen]);
+		};
+
+		var docLayer = this.sectionProperties.docLayer;
+		var currentPart = docLayer._selectedPart;
+		// Draw the print range with dashed line if singleton to match desktop Calc.
+		var printRange = [];
+		if (docLayer._printRanges && docLayer._printRanges.length > currentPart
+			&& docLayer._printRanges[currentPart].length == 1)
+			printRange = docLayer._printRanges[currentPart][0];
+
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
 			// co-ordinates of this pane in core document pixels
 			var paneBounds = ctx.paneBoundsList[i];
@@ -454,6 +474,7 @@ L.TileSectionManager = L.Class.extend({
 			// as horizontal line rendering: due to cache effects - so to
 			// help our poor CPU renderers - render in horizontal strips.
 			var bandSize = 256;
+			var clearDash = false;
 			for (var miny = repaintArea.min.y; miny < repaintArea.max.y; miny += bandSize)
 			{
 				var maxy = Math.min(repaintArea.max.y, miny + bandSize);
@@ -463,17 +484,36 @@ L.TileSectionManager = L.Class.extend({
 				// vertical lines
 				this.sectionProperties.docLayer.sheetGeometry._columns.forEachInCorePixelRange(
 					repaintArea.min.x, repaintArea.max.x,
-					function(pos) {
+					function(pos, colIndex) {
 						var xcoord = xTransform(Math.floor(scale * (pos - paneOffset.x)) - 0.5);
+
+						clearDash = false;
+						if (printRange.length === 4
+							&& (printRange[0] === colIndex || printRange[2] + 1 === colIndex)) {
+							clearDash = true;
+							startEndDash(context, false /* end? */);
+						}
+
 						context.moveTo(xcoord, Math.floor(scale * (miny - paneOffset.y)) + 0.5);
 						context.lineTo(xcoord, Math.floor(scale * (maxy - paneOffset.y)) - 0.5);
 						context.stroke();
+
+						if (clearDash)
+							startEndDash(context, true /* end? */);
 					});
 
 				// horizontal lines
 				this.sectionProperties.docLayer.sheetGeometry._rows.forEachInCorePixelRange(
 					miny, maxy,
-					function(pos) {
+					function(pos, rowIndex) {
+
+						clearDash = false;
+						if (printRange.length === 4
+							&& (printRange[1] === rowIndex || printRange[3] + 1 === rowIndex)) {
+							clearDash = true;
+							startEndDash(context, false /* end? */);
+						}
+
 						context.moveTo(
 							xTransform(Math.floor(scale * (repaintArea.min.x - paneOffset.x)) + 0.5),
 							Math.floor(scale * (pos - paneOffset.y)) - 0.5);
@@ -481,6 +521,9 @@ L.TileSectionManager = L.Class.extend({
 							xTransform(Math.floor(scale * (repaintArea.max.x - paneOffset.x)) - 0.5),
 							Math.floor(scale * (pos - paneOffset.y)) - 0.5);
 						context.stroke();
+
+						if (clearDash)
+							startEndDash(context, true /* end? */);
 					});
 
 				context.closePath();
