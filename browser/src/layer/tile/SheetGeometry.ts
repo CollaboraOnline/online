@@ -629,8 +629,8 @@ export class SheetDimension {
 		}.bind(this));
 	}
 
-	// callback with a position for each grid line in this pixel range
-	public forEachInCorePixelRange(startPix: number, endPix: number, callback: ((startPosCorePx: number) => void)): void {
+	// callback with a position and index for each grid line in this pixel range
+	public forEachInCorePixelRange(startPix: number, endPix: number, callback: ((startPosCorePx: number, index: number) => void)): void {
 		this._visibleSizes.forEachSpan(function (spanData: any) {
 			// do we overlap ?
 			var spanFirstCorePx = spanData.data.poscorepx -
@@ -642,8 +642,10 @@ export class SheetDimension {
 					((startPix - spanFirstCorePx) % spanData.data.sizecore));
 				var lastCorePx = Math.min(endPix, spanData.data.poscorepx);
 
+				var index = spanData.start + Math.floor((firstCorePx - spanFirstCorePx) / spanData.data.sizecore);
 				for (var pos = firstCorePx; pos <= lastCorePx; pos += spanData.data.sizecore) {
-					callback(pos);
+					callback(pos, index);
+					index += 1;
 				}
 			}
 		});

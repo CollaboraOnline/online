@@ -129,9 +129,33 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				flags[param] = true;
 			});
 			this.requestSheetGeometryData(flags);
+		} else if (textMsg.startsWith('printranges:')) {
+			this._onPrintRangesMsg(textMsg);
 		} else {
 			L.CanvasTileLayer.prototype._onMessage.call(this, textMsg, img);
 		}
+	},
+
+	// This is used to read and parse printranges so that the next
+	// canvas grid paint will show the visual indication of the print range
+	// in the current sheet if any.
+	_onPrintRangesMsg: function (textMsg) {
+		textMsg = textMsg.substr('printranges:'.length);
+		var msgData = JSON.parse(textMsg);
+		if (!msgData['printranges'] || !Array.isArray(msgData['printranges']))
+			return;
+
+		if (!this._printRanges) {
+			this._printRanges = [];
+		}
+
+		msgData['printranges'].forEach(function (sheetPrintRange) {
+			if (typeof sheetPrintRange['sheet'] !== 'number' || !Array.isArray(sheetPrintRange['ranges'])) {
+				return;
+			}
+
+			this._printRanges[sheetPrintRange['sheet']] = sheetPrintRange['ranges'];
+		}, this);
 	},
 
 	_onInvalidateTilesMsg: function (textMsg) {
