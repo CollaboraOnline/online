@@ -3,17 +3,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-25 20:41+0200\n"
-"PO-Revision-Date: 2022-04-22 22:27+0000\n"
-"Last-Translator: Максим Белозеров <mxite@ya.ru>\n"
+"PO-Revision-Date: 2022-05-15 12:15+0000\n"
+"Last-Translator: Mikhail Pershin <mikhail@frcdr.org>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "help/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.13-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1066,13 +1066,12 @@ msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:139-18
-#, fuzzy
 msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
 "Выбирает ячейки от текущей ячейки до одной страницы в текущем столбце или "
-"расширяет существующую область на одну страницу вверх."
+"расширяет существующее выделение на одну страницу вниз."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:139-168
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
@@ -1141,6 +1140,10 @@ msgid ""
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
 msgstr ""
+"Выбирает все ячейки, содержащие данные, от текущей ячейки до конца "
+"беспрерывного диапазона ячеек данных в направлении нажатой стрелки. Если "
+"используется для выбора и строк, и столбцов сразу, выбирается прямоугольный "
+"диапазон ячеек."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-272
 msgid ""
@@ -1152,7 +1155,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "Перемещает на один лист влево."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-73
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
@@ -1160,7 +1163,7 @@ msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "Перемещает на одну страницу экрана вправо."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-80
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
@@ -1172,6 +1175,9 @@ msgid ""
 "sheets in a spreadsheet are selected, this shortcut key combination only "
 "selects the previous sheet. Makes the previous sheet the current sheet."
 msgstr ""
+"Добавляет предыдущий лист к текущим выбранным листам. Если выбраны все листы "
+"в таблице, то эта комбинация клавиш выбирает только предыдущий лист. Делает "
+"предыдущий лист текущим листом."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-260
 msgid ""
@@ -1187,6 +1193,9 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
+"Добавляет следующий лист к текущим выбранным листам. Если выбраны все листы "
+"электронной таблицы, то эта комбинация клавиш выбирает только следующий "
+"лист. Делает следующий лист текущим листом."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-248
 msgid ""
@@ -1202,6 +1211,9 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"где (*) — знак умножения на цифровой клавиатуре. Выбирает находящийся под "
+"курсором диапазон данных. Границы диапазона определяются пустыми строками и "
+"столбцами."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-249
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
@@ -1212,6 +1224,8 @@ msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
 msgstr ""
+"где (/) — знак деления на цифровой клавиатуре. Выбирает находящийся под "
+"курсором диапазон матричных формул."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-158
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
@@ -1219,7 +1233,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "Вставить ячейки (как в меню Вставить - Ячейки)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-85
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
@@ -1227,7 +1241,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Клавиша плюс
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr ""
+msgstr "Удалить ячейки (как в меню Правка - Удалить ячейки)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-90
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
@@ -1366,7 +1380,7 @@ msgstr "Переход к концу поля с выделением"
 
 #: html/cool-help.html%2Bdiv.div.h2:226-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "Комбинации клавиш для слайдов"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:228-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:285-18
@@ -1398,7 +1412,7 @@ msgstr "Переход к следующему текстовому объект
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:232-18
 msgid "Select all in slide"
-msgstr ""
+msgstr "Выбрать всё на слайде"
 
 #: html/cool-help.html%2Bdiv.div.h2:283-9
 msgid "Draw page keyboard shortcuts"
@@ -1415,7 +1429,7 @@ msgstr "Выбрать всё на слайде / странице"
 
 #: html/cool-help.html%2Bdiv.h1:294-5
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
+msgstr "Помощь с <span class=\"productname\">%productName</span>"
 
 #: html/cool-help.html%2Bdiv.p:295-5
 #: html/cool-help.html%2Bdiv.h3:333-5
@@ -1426,6 +1440,7 @@ msgstr "Совместное редактирование"
 #: html/cool-help.html%2Bdiv.h3:340-5
 msgid "<span class=\"productname\">%productName</span> user interface"
 msgstr ""
+"Пользовательский интерфейс <span class=\"productname\">%productName</span>"
 
 #: html/cool-help.html%2Bdiv.p:297-5
 #: html/cool-help.html%2Bdiv.h3:360-5
@@ -1444,12 +1459,12 @@ msgstr "Редактирование документов"
 #: html/cool-help.html%2Bdiv.div.h3:434-5
 #: html/cool-help.html%2Bdiv.div.h3:514-5
 msgid "Advanced features"
-msgstr ""
+msgstr "Расширенные функции"
 
 #: html/cool-help.html%2Bdiv.div.p:301-9
 #: html/cool-help.html%2Bdiv.div.h2:419-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr ""
+msgstr "Таблицы <span class=\"productname\">%productName</span>"
 
 #: html/cool-help.html%2Bdiv.div.p:302-9
 #: html/cool-help.html%2Bdiv.div.h3:421-5
@@ -1469,7 +1484,7 @@ msgstr "Форматирование таблиц"
 #: html/cool-help.html%2Bdiv.div.p:308-9
 #: html/cool-help.html%2Bdiv.div.h2:467-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr ""
+msgstr "Текстовые документы <span class=\"productname\">%productName</span>"
 
 #: html/cool-help.html%2Bdiv.div.p:309-9
 #: html/cool-help.html%2Bdiv.div.h3:469-5
@@ -1489,7 +1504,7 @@ msgstr "Дополнительные возможности редактора �
 #: html/cool-help.html%2Bdiv.div.p:314-9
 #: html/cool-help.html%2Bdiv.div.h2:501-5
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr ""
+msgstr "Презентации <span class=\"productname\">%productName</span>"
 
 #: html/cool-help.html%2Bdiv.div.p:315-9
 #: html/cool-help.html%2Bdiv.div.h3:503-5
@@ -1504,12 +1519,12 @@ msgstr "Слайдшоу"
 #: html/cool-help.html%2Bdiv.div.p:317-9
 #: html/cool-help.html%2Bdiv.div.h3:510-5
 msgid "Slide pane"
-msgstr ""
+msgstr "Панель слайдов"
 
 #: html/cool-help.html%2Bdiv.p:320-5
 #: html/cool-help.html%2Bdiv.h2:523-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Часто задаваемые вопросы"
 
 #: html/cool-help.html%2Bdiv.p:321-5
 msgid "General"
