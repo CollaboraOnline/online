@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-25 20:41+0200\n"
-"PO-Revision-Date: 2022-05-02 03:16+0000\n"
+"PO-Revision-Date: 2022-05-04 14:13+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/help/ast/>\n"
@@ -51,11 +51,12 @@ msgid "Paste as unformatted text"
 msgstr "Apegar como testu ensin formatu"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:26-70
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>V"
-msgstr "Ctrl + Mayús + P"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Mayús</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>V"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Paste special"
@@ -88,9 +89,8 @@ msgstr "Ctrl + Mayús + ?"
 #: html/cool-help.html%2Bdiv.div.h2:33-9
 #: html/cool-help.html%2Bdiv.div.h2:179-9
 #: html/cool-help.html%2Bdiv.div.h2:236-9
-#, fuzzy
 msgid "Text formatting"
-msgstr "Formatu de testu"
+msgstr "Formatu del testu"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:35-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:156-18
@@ -103,7 +103,6 @@ msgstr "Negrina"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:156-49
 #: html/cool-help.html%2Bdiv.div.table.tr.td:181-49
 #: html/cool-help.html%2Bdiv.div.table.tr.td:238-49
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B"
 
@@ -118,7 +117,6 @@ msgstr "Cursiva"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:157-51
 #: html/cool-help.html%2Bdiv.div.table.tr.td:182-51
 #: html/cool-help.html%2Bdiv.div.table.tr.td:239-51
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I"
 
@@ -133,7 +131,6 @@ msgstr "Sorrayáu"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:158-54
 #: html/cool-help.html%2Bdiv.div.table.tr.td:183-54
 #: html/cool-help.html%2Bdiv.div.table.tr.td:240-54
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>U"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>U"
 
@@ -143,7 +140,6 @@ msgstr "Sorrayáu doble"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:38-61
 #: html/cool-help.html%2Bdiv.div.table.tr.td:163-54
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D"
 
@@ -176,11 +172,12 @@ msgstr "Superíndiz"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:40-56
 #: html/cool-help.html%2Bdiv.div.table.tr.td:185-56
 #: html/cool-help.html%2Bdiv.div.table.tr.td:242-56
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>P"
-msgstr "Ctrl + Mayús + P"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Mayús</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>P"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:41-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:186-18
@@ -191,12 +188,11 @@ msgstr "Subíndiz"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:41-54
 #: html/cool-help.html%2Bdiv.div.table.tr.td:186-54
 #: html/cool-help.html%2Bdiv.div.table.tr.td:243-54
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>B"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Mayús</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>B"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:42-18
@@ -214,15 +210,13 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M"
 #: html/cool-help.html%2Bdiv.div.h2:44-9
 #: html/cool-help.html%2Bdiv.div.h2:189-9
 #: html/cool-help.html%2Bdiv.div.h2:246-9
-#, fuzzy
 msgid "Paragraph formatting"
-msgstr "Formatu de párrafu"
+msgstr "Formatu de los párrafos"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:46-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:165-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:191-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:248-18
-#, fuzzy
 msgid "Align Center"
 msgstr "Alliniar al centru"
 
@@ -230,7 +224,6 @@ msgstr "Alliniar al centru"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:165-57
 #: html/cool-help.html%2Bdiv.div.table.tr.td:191-57
 #: html/cool-help.html%2Bdiv.div.table.tr.td:248-57
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 
@@ -238,7 +231,6 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:166-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:192-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:249-18
-#, fuzzy
 msgid "Align Left"
 msgstr "Alliniar a la izquierda"
 
@@ -246,7 +238,6 @@ msgstr "Alliniar a la izquierda"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:166-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:192-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:249-55
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
 
@@ -254,15 +245,13 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:167-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:193-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:250-18
-#, fuzzy
 msgid "Align Right"
-msgstr "Alliniar a la drecha"
+msgstr "Alliniar a la derecha"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:48-56
 #: html/cool-help.html%2Bdiv.div.table.tr.td:167-56
 #: html/cool-help.html%2Bdiv.div.table.tr.td:193-56
 #: html/cool-help.html%2Bdiv.div.table.tr.td:250-56
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R"
 
@@ -277,7 +266,6 @@ msgstr "Xustificar"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:168-52
 #: html/cool-help.html%2Bdiv.div.table.tr.td:194-52
 #: html/cool-help.html%2Bdiv.div.table.tr.td:251-52
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
 
@@ -311,7 +299,6 @@ msgstr "Aplicar l'estilu de párrafu Títulu 3"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:53-76
 #: html/cool-help.html%2Bdiv.div.table.tr.td:169-69
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3"
 
@@ -353,7 +340,6 @@ msgstr "Esbillalo too"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:244-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:257-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:289-71
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
 
@@ -422,28 +408,28 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.table.tr.td:262-18
 #, fuzzy
 msgid "Move cursor to the right"
-msgstr "Mover el punteru a la drecha"
+msgstr "Mover el punteru a la derecha"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:64-69
 #: html/cool-help.html%2Bdiv.div.table.tr.td:205-69
 #: html/cool-help.html%2Bdiv.div.table.tr.td:262-69
 #, fuzzy
 msgid "Arrow Right"
-msgstr "Flecha drecha"
+msgstr "Flecha derecha"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:65-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:206-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:263-18
 #, fuzzy
 msgid "Move cursor with selection to the right"
-msgstr "Mover el punteru cola seleición a la drecha"
+msgstr "Mover el punteru cola seleición a la derecha"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:65-84
 #: html/cool-help.html%2Bdiv.div.table.tr.td:206-84
 #: html/cool-help.html%2Bdiv.div.table.tr.td:263-84
 #, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right"
-msgstr "Mayús+Flecha drecha"
+msgstr "Mayús+Flecha derecha"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:66-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:207-18
@@ -457,14 +443,14 @@ msgstr "Dir al principiu de la palabra siguiente"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:264-73
 #, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Flecha a la drecha"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Flecha a la derecha"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:67-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:208-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:265-18
 #, fuzzy
 msgid "Select to the right word by word"
-msgstr "Seleicionar a la drecha palabra por palabra"
+msgstr "Seleicionar a la derecha palabra por palabra"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:67-77
 #: html/cool-help.html%2Bdiv.div.table.tr.td:208-77
@@ -475,7 +461,7 @@ msgid ""
 "--plus\">+</span><kbd>Arrow Right"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Mayús</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Flecha a la drecha"
+"--plus\">+</span><kbd>Flecha a la derecha"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:68-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:209-18
@@ -2630,7 +2616,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h4:619-5
 msgid "How can I select data to print?"
-msgstr ""
+msgstr "¿Cómo esbillar los datos pa imprentar?"
 
 #: html/cool-help.html%2Bdiv.div.p:620-5
 msgid ""
