@@ -367,7 +367,6 @@ COOL_JS_LST =\
 	src/map/anim/Map.PanAnimation.js \
 	src/dom/PosAnimation.Timer.js \
 	src/control/Control.Scroll.Annotation.js \
-	src/layer/marker/DivOverlay.js \
 	src/main.js
 
 COOL_JS_WEBORDER = $(filter %,$(COOL_JS_LST))
