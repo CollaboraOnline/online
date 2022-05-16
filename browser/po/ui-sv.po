@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-25 20:41+0200\n"
-"PO-Revision-Date: 2022-04-12 07:41+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2022-05-04 14:13+0000\n"
+"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -662,7 +662,7 @@ msgstr "Återställ zoomning"
 #: src/control/Control.NotebookbarImpress.js:343
 #: src/control/Control.NotebookbarWriter.js:1005
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Växla UI-läge"
 
 #: src/control/Control.Menubar.js:115
 #: src/control/Control.NotebookbarWriter.js:1017
@@ -821,11 +821,11 @@ msgstr "Återställ till standardspråk"
 
 #: src/control/Control.Menubar.js:1554
 msgid "Use Compact view"
-msgstr ""
+msgstr "Använd kompakt vy"
 
 #: src/control/Control.Menubar.js:1556
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Använd flikvy"
 
 #: src/control/Control.Menubar.js:1617
 msgid "Insert Shape"
@@ -982,7 +982,7 @@ msgstr "Se historik"
 #: src/control/Control.NotebookbarImpress.js:204
 #: src/control/Control.NotebookbarWriter.js:155
 msgid "Download"
-msgstr ""
+msgstr "Ladda ner"
 
 #: src/control/Control.NotebookbarCalc.js:175
 msgid "ODF Spreadsheet (.ods)"
@@ -1054,11 +1054,11 @@ msgstr "Dålig"
 
 #: src/control/Control.NotebookbarCalc.js:720
 msgid "Row Width"
-msgstr ""
+msgstr "Radbredd"
 
 #: src/control/Control.NotebookbarCalc.js:726
 msgid "Column Width"
-msgstr ""
+msgstr "Kolumnbredd"
 
 #: src/control/Control.NotebookbarCalc.js:737
 msgid "Insert Rows Above"
@@ -1089,18 +1089,18 @@ msgstr "Ta bort kolumner"
 #: src/control/Control.NotebookbarImpress.js:342
 #: src/control/Control.NotebookbarWriter.js:1004
 msgid "Compact view"
-msgstr ""
+msgstr "Kompakt vy"
 
 #: src/control/Control.NotebookbarCalc.js:960
 #: src/control/Control.NotebookbarDraw.js:278
 #: src/control/Control.NotebookbarImpress.js:348
 #: src/control/Control.NotebookbarWriter.js:1027
 msgid "Status Bar"
-msgstr ""
+msgstr "Statusrad"
 
 #: src/control/Control.NotebookbarCalc.js:1011
 msgid "Sparkline"
-msgstr ""
+msgstr "Sparkline"
 
 #: src/control/Control.NotebookbarDraw.js:39
 #: src/control/Control.NotebookbarDraw.js:740
@@ -1140,7 +1140,7 @@ msgstr "EPUB dokument (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:1016
 msgid "Ruler"
-msgstr ""
+msgstr "Linjal"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -2136,6 +2136,10 @@ msgid ""
 "\" href=\"https://www.collaboraoffice.com/solutions/collabora-office-"
 "android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"Använd det senaste inom online-produktivitet, fritt att använda,utforska och "
+"använda tillsammans med andra i webbläsaren. Olika <a target=\"_blank\" href="
+"\"https://www.collaboraoffice.com/solutions/collabora-office-android-ios/\""
+">appar</a> finns också för mobilanvändning."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
@@ -2148,6 +2152,9 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"Kolla <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
+"code-21-11-release-notes/\">släppanteckningarna</a> och ta del av senaste "
+"Collabora Online Development Edition, för hemanvändare och små arbetsgrupper."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
@@ -2168,6 +2175,13 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"Är du intresserad av att bidra men vet inte var börja? Följ <a target="
+"\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\">steg-"
+"för-steg-instruktionerna</a> och bygg CODE från grunden. Du kan också bidra "
+"med <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
+"translate/\">översättningar</a> eller <a target=\"_blank\" href=\"https"
+"://collaboraonline.github.io/post/filebugs/\">skriva buggrapporter</a> med "
+"nödvändig information och steg för att reproducera felet."
 
 #~ msgid "Toggle Status Bar"
 #~ msgstr "Växla statusfältet"
