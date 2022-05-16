@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="failed_to_load_file">लोड गर्न फाइल निर्धारण गर्न असफल</string>
+    <string name="temp_file_saving_disabled">यो फाइल पढ्ने मात्र हो, बचत अक्षम छ।</string>
+    <string name="storage_permission_required">भण्डारण अनुमति आवश्यक छ</string>
+    <string name="later">पछि</string>
+    <string name="rate_our_app_text">यदि तपाईंलाई यो मनपर्छ भने, कृपया हामीलाई गुगल प्ले मा ५ ताराहरू दिनुहोस्। तपाईंको राम्रो समीक्षा हाम्रो सबै भन्दा राम्रो प्रेरणा हो।</string>
+    <string name="loading">लोडहुँदै छ...</string>
+    <string name="exiting">बाहिर निस्कँदै...</string>
+    <string name="restarting">पुन: सुरु गर्दै...</string>
+    <string name="cant_open_the_document">कागजात खोल्न सकेन</string>
+    <string name="view_only">हेर्नुहोस मात्र</string>
+    <string name="edit_copy">प्रतिलिपि सम्पादन गर्नुहोस्</string>
+    <string name="ask_for_copy">यो कागजात पढ्ने मात्र हो। के तपाइँ सम्पादनको लागि प्रतिलिपि बनाउन चाहनुहुन्छ\?</string>
+    <string name="use_text">शब्द ढाँचा प्रयोग गर्नुहोस्</string>
+    <string name="use_odf">ODF ढाँचा प्रयोग गर्नुहोस्</string>
+    <string name="ask_for_convert_odf">फाइल ढाँचा पुष्टि गर्नुहोस्</string>
+    <string name="convert_odf_message">यस कागजातमा ढाँचा वा सामग्री हुन सक्छ जुन हाल चयन गरिएको फाइल ढाँचा \"पाठ\" मा बचत गर्न सकिँदैन।</string>
+    <string name="file_chromeos_read_only">यो फाइल यस स्थानमा बचत गर्न सकिँदैन, यसलाई पढ्न-मात्र खोल्दै। पूर्ण पढ्न/लेखन पहुँचको लागि यसलाई प्ले फाइलहरूमा सार्नुहोस्।</string>
+    <string name="failed_to_insert_image">छवि सम्मिलित गर्न असफल भयो</string>
+    <string name="rate_now">अहिले मूल्याङ्कन गर्नुहोस्</string>
+    <string name="rate_our_app_title">%1$s प्रयोग गर्नुभएकोमा धन्यवाद!</string>
+    <string name="cannot_open_file_chooser">फाइल चयनकर्ता खोल्न सकिँदैन</string>
+    <string name="preparing_for_the_first_start_after_an_update">अपडेट पछि पहिलो सुरुवातको लागि तयारी गर्दै।</string>
+</resources>
