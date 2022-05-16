@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-25 20:41+0200\n"
-"PO-Revision-Date: 2022-04-20 11:14+0000\n"
+"PO-Revision-Date: 2022-05-04 14:13+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -665,7 +665,7 @@ msgstr "Reinicia el zoom"
 #: src/control/Control.NotebookbarImpress.js:343
 #: src/control/Control.NotebookbarWriter.js:1005
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Commuta el mode de la interfície"
 
 #: src/control/Control.Menubar.js:115
 #: src/control/Control.NotebookbarWriter.js:1017
@@ -824,11 +824,11 @@ msgstr "Reinicialitza a la llengua predeterminada"
 
 #: src/control/Control.Menubar.js:1554
 msgid "Use Compact view"
-msgstr ""
+msgstr "Utilitza la visualització compacta"
 
 #: src/control/Control.Menubar.js:1556
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Utilitza la visualització en pestanyes"
 
 #: src/control/Control.Menubar.js:1617
 msgid "Insert Shape"
@@ -1099,11 +1099,11 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:348
 #: src/control/Control.NotebookbarWriter.js:1027
 msgid "Status Bar"
-msgstr ""
+msgstr "Barra d'estat"
 
 #: src/control/Control.NotebookbarCalc.js:1011
 msgid "Sparkline"
-msgstr ""
+msgstr "Minidiagrama"
 
 #: src/control/Control.NotebookbarDraw.js:39
 #: src/control/Control.NotebookbarDraw.js:740
@@ -1143,7 +1143,7 @@ msgstr "Document EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:1016
 msgid "Ruler"
-msgstr ""
+msgstr "Regle"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "

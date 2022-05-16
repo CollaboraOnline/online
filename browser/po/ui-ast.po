@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-25 20:41+0200\n"
-"PO-Revision-Date: 2022-04-20 11:14+0000\n"
+"PO-Revision-Date: 2022-05-04 14:13+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -771,7 +771,7 @@ msgstr "Presentación a pantalla completa"
 
 #: src/control/Control.Menubar.js:430
 msgid "Present current slide"
-msgstr ""
+msgstr "Presentar la diapositiva actual"
 
 #: src/control/Control.Menubar.js:462 src/control/Control.Menubar.js:870
 #: src/control/Control.Menubar.js:922
@@ -1096,11 +1096,11 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:348
 #: src/control/Control.NotebookbarWriter.js:1027
 msgid "Status Bar"
-msgstr ""
+msgstr "Barra d'estáu"
 
 #: src/control/Control.NotebookbarCalc.js:1011
 msgid "Sparkline"
-msgstr ""
+msgstr "Minigráfica"
 
 #: src/control/Control.NotebookbarDraw.js:39
 #: src/control/Control.NotebookbarDraw.js:740
@@ -1124,7 +1124,7 @@ msgstr "Presentación ODF (.odp)"
 #: src/control/Control.NotebookbarImpress.js:291
 #: src/control/Control.NotebookbarImpress.js:756
 msgid "Presentation"
-msgstr ""
+msgstr "Presentación"
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
@@ -1140,7 +1140,7 @@ msgstr "Documentu EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:1016
 msgid "Ruler"
-msgstr ""
+msgstr "Regla"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -2049,7 +2049,7 @@ msgstr ""
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "Afáyate en Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New %coolVersion"

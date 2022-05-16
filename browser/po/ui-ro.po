@@ -8,14 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-25 20:41+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2022-05-04 14:13+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"Language-Team: Romanian <https://hosted.weblate.org/projects/"
+"collabora-online/ui/ro/>\n"
+"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1119,7 +1122,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1011
 msgid "Sparkline"
-msgstr ""
+msgstr "Diagramă sparkline"
 
 #: src/control/Control.NotebookbarDraw.js:39
 #: src/control/Control.NotebookbarDraw.js:740
