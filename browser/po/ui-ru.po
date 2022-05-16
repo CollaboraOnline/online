@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-25 20:41+0200\n"
-"PO-Revision-Date: 2022-05-04 14:13+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2022-05-15 11:51+0000\n"
+"Last-Translator: Mikhail Pershin <mikhail@frcdr.org>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
 "Language: ru\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.13-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -607,7 +607,7 @@ msgstr "Документ Word (.docx)"
 #: src/control/Control.NotebookbarBuilder.js:465
 #: src/control/Control.NotebookbarWriter.js:174
 msgid "Rich Text (.rtf)"
-msgstr "Rich Text (.rtf)"
+msgstr "Форматированный текст (.rtf)"
 
 #: src/control/Control.Menubar.js:75 src/control/Control.Menubar.js:818
 #: src/control/Control.NotebookbarBuilder.js:477
@@ -667,7 +667,7 @@ msgstr "Сбросить масштаб"
 #: src/control/Control.NotebookbarImpress.js:343
 #: src/control/Control.NotebookbarWriter.js:1005
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Переключить режим интерфейса"
 
 #: src/control/Control.Menubar.js:115
 #: src/control/Control.NotebookbarWriter.js:1017
@@ -826,11 +826,11 @@ msgstr "Установить язык по умолчанию"
 
 #: src/control/Control.Menubar.js:1554
 msgid "Use Compact view"
-msgstr ""
+msgstr "Использовать компактный вид"
 
 #: src/control/Control.Menubar.js:1556
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Использовать представление вкладками"
 
 #: src/control/Control.Menubar.js:1617
 msgid "Insert Shape"
@@ -1047,7 +1047,7 @@ msgstr "Заголовок 2"
 
 #: src/control/Control.NotebookbarCalc.js:647
 msgid "Good"
-msgstr "Good"
+msgstr "Хорошо"
 
 #: src/control/Control.NotebookbarCalc.js:652
 msgid "Neutral"
@@ -1055,7 +1055,7 @@ msgstr "Neutral"
 
 #: src/control/Control.NotebookbarCalc.js:657
 msgid "Bad"
-msgstr "Bad"
+msgstr "Плохо"
 
 #: src/control/Control.NotebookbarCalc.js:720
 msgid "Row Width"
@@ -1094,14 +1094,14 @@ msgstr "Удалить столбцы"
 #: src/control/Control.NotebookbarImpress.js:342
 #: src/control/Control.NotebookbarWriter.js:1004
 msgid "Compact view"
-msgstr ""
+msgstr "Компактный вид"
 
 #: src/control/Control.NotebookbarCalc.js:960
 #: src/control/Control.NotebookbarDraw.js:278
 #: src/control/Control.NotebookbarImpress.js:348
 #: src/control/Control.NotebookbarWriter.js:1027
 msgid "Status Bar"
-msgstr ""
+msgstr "Строка состояния"
 
 #: src/control/Control.NotebookbarCalc.js:1011
 msgid "Sparkline"
@@ -1145,7 +1145,7 @@ msgstr "Документ EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:1016
 msgid "Ruler"
-msgstr ""
+msgstr "Линейка"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1589,7 +1589,7 @@ msgstr "Эта версия %productName работает на"
 
 #: src/control/Toolbar.js:577
 msgid "\"Slow Proxy\""
-msgstr "\"Slow Proxy\""
+msgstr "\"Медленный прокси\""
 
 #: src/control/Toolbar.js:700
 msgid "Insert hyperlink"
@@ -2135,7 +2135,7 @@ msgstr "Узнайте о новой %coolVersion"
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr "Collabora Online Development Edition"
+msgstr "Collabora Online для разработчиков"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
