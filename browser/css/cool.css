@@ -179,38 +179,6 @@ body {
 	display: none;
 }
 
-#sidebar-dock-wrapper {
-	display: none;
-	background: var(--color-main-background);
-	position: relative;
-	border-inline-start: 1px solid var(--color-border);
-	overflow: hidden;
-	z-index: 990;
-}
-nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
-	bottom: 72px;
-}
-#sidebar-panel {
-	padding: 0px;
-	margin: 0px;
-	position: relative;
-	width: auto;
-	height: 100%;
-	overflow-x: hidden;
-	overflow-y: auto;
-	z-index: 1200;
-	scrollbar-width: auto;
-	scrollbar-color: var(--color-border) transparent;
-}
-
-#sidebar-panel::-webkit-scrollbar {
-	width: 8px;
-}
-
-#sidebar-panel::-webkit-scrollbar-thumb {
-	background-color: var(--color-border);
-}
-
 #toolbar-wrapper {
 	table-layout: fixed;
 	border-collapse: separate;

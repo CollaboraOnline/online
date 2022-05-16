@@ -1,7 +1,132 @@
+/* sizing */
+
+#sidebar-dock-wrapper {
+	display: none;
+	background: var(--color-main-background);
+	position: relative;
+	border-inline-start: 1px solid var(--color-border);
+	overflow: hidden;
+	z-index: 990;
+}
+#sidebar-panel {
+	padding: 0px;
+	width: 330px;
+	margin-inline: 8px;
+	position: relative;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	z-index: 1200;
+	scrollbar-width: auto;
+	scrollbar-color: var(--color-border) transparent;
+}
+
+.sidebar ~ .cell:last-child,
+.sidebar > table > tr > td:nth-child(2),
+.sidebar #FIELD_TRANSPARENCY {
+	float: inline-end;
+}
+
+.sidebar.ui-expander {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.sidebar.ui-expander-label {
+	font-size: var(--header-font-size);
+	line-height: var(--header-height);
+	padding-inline: 4px;
+}
+.ui-expander.jsdialog.sidebar .ui-expander-icon-right img {
+	display: block;
+	width: 10px;
+}
+
+#fontheight {
+	display: flex;
+	justify-content: flex-end;
+}
+
+nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
+	bottom: 72px;
+}
+
+#writedirection {
+	justify-content: flex-end;
+}
+
+/* Scrollbar */
+
+#sidebar-panel::-webkit-scrollbar {
+	width: 8px;
+}
+
+#sidebar-panel::-webkit-scrollbar-thumb {
+	background-color: var(--color-border);
+}
+
+/* Labels */
+
 .sidebar * {
 	font-family: var(--jquery-ui-font);
 	text-transform: none !important;
+	font-size: var(--default-font-size);
+	line-height: var(--default-height);
+	color: var(--color-main-text);
 }
+
+#fliplabel,
+#orientationcontrol,
+#rotation,
+#misc_label {
+	visibility: hidden;
+	height: 0;
+}
+
+/* widgets */
+
+.sidebar .ui-listbox {
+	width: 100%;
+	min-width: 124px;
+	max-width: 186px;
+	height: 28px;
+}
+
+.sidebar .spinfieldcontainer input {
+	width: 124px;
+	border: 1px solid var(--color-border-dark);
+	border-radius: var(--border-radius);
+	height: 28px;
+	position: relative;
+	margin-inline-start: 8px;
+	padding-inline-start: 8px;
+	color: var(--color-text-dark);
+	background-color: var(--color-background-dark);
+}
+
+td.jsdialog .jsdialog.cell.sidebar {
+	padding: 2px 0px;
+}
+
+.sidebar.ui-drawing-area {
+	width: 100%;
+}
+
+.sidebar #applystyle {
+	width: 186px;
+}
+
+.sidebar .menubutton {
+	min-width: 126px;
+	font-size: var(--default-font-size);
+}
+
+.sidebar #ChartElementsPanel #grid1,
+.sidebar #subtype {
+	width: calc(330px - 8px);
+}
+
+/* button */
 
 .sidebar .ui-content .unobutton {
 	margin: 0;
@@ -10,249 +135,21 @@
 	vertical-align: middle;
 }
 
-#document-container:not(.mobile) + #sidebar-dock-wrapper {
-	width: 330px;
-	padding: 0;
-	margin-top: 0 !important;
-	box-sizing: border-box;
-}
-
-[data-userinterfacemode='classic'] #document-container:not(.mobile) + #sidebar-dock-wrapper,
-#document-container.spreadsheet-doctype:not(.mobile) + #sidebar-dock-wrapper {
-	border-inline-start: 1px solid var(--color-border) !important;
-}
-
-.sidebar .spinfieldcontainer input {
-	width: 121px;
-	border: 1px solid var(--color-border-dark);
-	border-radius: var(--border-radius);
-	height: 28px;
-	padding-inline-start: 4px;
-	position: relative;
-	margin-inline-start: 8px;
-	color: var(--color-text-dark);
-	background-color: var(--color-background-dark);
-}
-#TableEditPanelPanelExpander .sidebar .spinfieldcontainer input,
-#ParaPropertyPanelPanelExpander .sidebar .spinfieldcontainer input {
-	width: 85px;
-}
-
-.sidebar.spinfield {
-	max-width: 121px;
-}
-
-.sidebar.jsdialog.ui-listbox,
-.sidebar.jsdialog.menubutton {
-	min-width: 121px;
-	max-width: 121px;
-}
-
-.menubutton.sidebar span {
-	display: none;
-	font-size: var(--default-font-size);
-}
-
-.menubutton.sidebar:hover span {
-	position: absolute;
-	display: block;
-	width: auto;
-	background-color: var(--color-background-darker);
-	color: var(--color-text-darker);
-	padding: 2px 4px;
-	border-radius: var(--border-radius);
-	white-space: nowrap;
-	margin-inline-start: -14px;
-}
-
-#fontnamecombobox > .sidebar.jsdialog.ui-listbox,
-#applystyle > .sidebar.jsdialog.ui-listbox {
-	min-width: 186px;
-}
-
-#table-style {
-	padding-left: 4px;
-}
-
-#gradientstyle > .sidebar.jsdialog.ui-listbox {
-	width: 74px;
-}
-
-#table-grid3.sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.jsdialog.ui-grid > tr.sidebar.jsdialog > td.sidebar.jsdialog > .sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.jsdialog.ui-grid {
-	width: 10px;
-}
-
-#fontsizecombobox > .sidebar.jsdialog.ui-listbox {
-	min-width: 86px;
-}
-
-.sidebar.ui-expander {
-	display: flex;
-	justify-content: space-between;
-	width: calc(100% - 10px);
-	align-items: center;
-}
-
-.sidebar.ui-expander-content {
-	width: calc(100% - 10px);
-}
-
-#selectcolor {
-	display: flex;
-	justify-content: flex-end;
-}
-
-.sidebar.jsdialog.cell > #table-box3 {
-	width: 292px;
-}
-
-.sidebar.jsdialog.cell > #table-box3,
-.sidebar.jsdialog.cell > #table-box4 {
-	display: flex;
-	justify-content: flex-end;
-}
-
-#ShadowPropertyPanel div#table-grid3 table#grid3 td:nth-child(1) {
-	justify-content: flex-start;
-	width: 294px;
-}
-
-.sidebar #FIELD_TRANSPARENCY {
-	height: 0;
-	position: relative;
-	bottom: 10px;
-	right: 17px;
-}
-
-.sidebar #transparency_label {
-	position: relative;
-	top: 12px;
-}
-
-.sidebar #table-indentfieldbox {
-	text-align: left;
-}
-
-#ParaPropertyPanelPanelExpander #grid4 > tr:last-child {
-	display: flex;
-	justify-content: space-between;
-	width: 275px;
-}
-
-.sidebar #orientationdegrees {
-	position: relative;
-	right: 21px;
-}
-#textorientbox {
-	position: relative;
-	left: 15px;
-	display: flex;
-	justify-content: space-between;
-}
-
-#table-box4.sidebar.jsdialog.vertical {
-	width: auto;
-}
-
-#btnEditChart,
-#masterslidebutton {
-	line-height: 22px;
-	min-width: 121px;
-	border: 1px solid var(--color-border);
-	border-radius: var(--border-radius);
-	color: var(--color-main-text);
-}
-
-div#negativenumbersred.checkbutton.jsdialog.sidebar,
-div#thousandseparator.checkbutton.jsdialog.sidebar {
-	height: 24px;
-}
-
-#settransparency, #fontheight,
-#document-container ~ #sidebar-dock-wrapper .sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.ui-grid > tr.sidebar > td.sidebar:last-child:not(:first-child),
-.sidebar.jsdialog.cell > #table-box3 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:last-child,
-.sidebar.jsdialog.cell > #table-box4 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:last-child,
-.sidebar.jsdialog.cell > #table-box4 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:nth-child(4) {
-	display: flex;
-	justify-content: flex-end;
-}
-
-#table-paperformat, #table-orientation, #table-fillstyle, #table-masterslide,
-#table-marginLB, #displaymasterbackground, #displaymasterobjects, #table-box1 {
-	width: 100%;
-}
-
-#TableEditPanel #table-grid1 #grid1 > tr > td:nth-child(2) {
-	display: inherit;
-}
-
-.sidebar.ui-drawing-area {
-	max-width: 290px;
-}
-
-#NumberFormatPropertyPanel > tr > td > div > div > div > div > div > div {
-	text-align: right;
-}
-#NumberFormatPropertyPanel #table-box2,
-#NumberFormatPropertyPanel #leadingzeroes {
-	position: relative;
-	left: 9px;
-}
-#NumberFormatPropertyPanel #leadingzeroeslabel {
-	margin-left: 2px;
-}
-
-.sidebar.ui-expander-label {
-	color: var(--color-main-text);
-	font-size: var(--header-font-size);
-	line-height: var(--header-height);
-	padding-left: 8px;
-	padding-right: 8px; /* for RTL mode */
-}
-
-.sidebar.root-container.jsdialog > .jsdialog.sidebar {
-	width: 100%;
-}
-
-#ScCellAppearancePropertyPanelPanelExpander #CellAppearancePropertyPanel table.jsdialog.sidebar.ui-grid,
-#CellAppearancePropertyPanel table.jsdialog.sidebar.ui-grid tr.jsdialog.sidebar {
-	display: flex;
-}
-#ScCellAppearancePropertyPanelPanelExpander #CellAppearancePropertyPanel table.jsdialog.sidebar.ui-grid {
-	justify-content: space-between;
-}
-
-.sidebar-container > .root-container.jsdialog.sidebar {
-	margin: 0;
-}
-
-td.jsdialog .jsdialog.cell.sidebar {
-	padding: 2px 0px;
-	width: auto;
-}
-
-.sidebar.jsdialog.checkbutton {
-	font-size: var(--default-font-size);
-}
-
-.sidebar .menu-entry-icon {
-	width: 24px;
-	height: 24px;
-}
-
-.ui-expander-icon-right .sidebar.unotoolbutton {
-	margin: 0px !important;
-}
-
-.sidebar.unotoolbutton,
-.sidebar #resetattr,
-.sidebar #FormatPaintbrush{
+.sidebar.unotoolbutton {
 	border: 1px solid transparent;
 	margin-right: 5px;
 }
-#table-textorientbox.sidebar .jsdialog .radiobutton {
-	border: 1px solid transparent;
+
+.jsdialog.toolbox div:last-child {
+	margin-right: 0px;
 }
+
+.sidebar #clearFormatting div img {
+	width: 24px !important;
+	height: 24px !important;
+}
+
+/* icons */
 
 /* non selected */
 #clearFormatting,
@@ -290,139 +187,4 @@ td.jsdialog .jsdialog.cell.sidebar {
 	border: 1px solid var(--color-border-darker);
 	color: var(--color-text-darker);
 	border-radius: var(--border-radius);
-}
-
-.sidebar #font select,
-.sidebar #fontsizecombobox select {
-	margin: 0;
-}
-
-.ui-expander.jsdialog.sidebar .ui-expander-icon-right,
-.ui-expander.jsdialog.sidebar .ui-expander-icon-right * {
-	display: block;
-	width: 10px;
-	height: 10px;
-}
-
-.ui-expander.jsdialog.sidebar .ui-expander-icon-right img {
-	filter: brightness(2);
-}
-
-.ui-expander.jsdialog.sidebar .ui-expander-icon-right:hover img {
-	filter: none;
-}
-
-#table-textorientbox.sidebar .jsdialog input[type='radio'] {
-	background: none !important;
-	width: auto;
-	height: auto;
-}
-
-#table-fillattrhb {
-	display: none;
-}
-
-#fillattrhb {
-	margin-left: 4px;
-	position: relative;
-	left: 38px;
-}
-
-
-#gradangle > .spinfield {
-	margin-left: 0;
-}
-
-#orientationcontrol,
-#rotation,
-#misc_label {
-	visibility: hidden;
-	height: 16px;
-}
-
-.sidebar #fliplabel {
-	position: relative;
-	bottom: 26px;
-}
-
-.sidebar #rotationlabel {
-	position: relative;
-	bottom: 15px;
-}
-
-.sidebar #ratio {
-	position: relative;
-	left: 163px;
-}
-
-button#button2.ui-pushbutton.jsdialog.sidebar {
-	width: 151px;
-	padding: 4px;
-	position: relative;
-	left: -10px;
-}
-
-#writedirection, #backgroundcolor {
-	justify-content: end;
-	margin-right: 0;
-}
-
-.sidebar #linetransparency {
-	position: relative;
-	margin-inline-end: 18px;
-}
-
-.sidebar #horizontalpos,
-.sidebar #verticalpos {
-	position: relative;
-	margin-inline-end: 24px;
-}
-
-.sidebar #fillgrad1 {
-	position: relative;
-	left: 7px;
-}
-.sidebar #fillgrad2,
-.sidebar #LB_SHADOW_COLOR {
-	position: relative;
-	left: 5px;
-}
-#LB_SHADOW_COLOR {
-	border: 1px solid var(--color-border-lighter);
-	background-color: var(--color-background-lighter);
-}
-
-.sidebar #LB_GLOW_RADIUS,
-.sidebar #SB_SOFTEDGE_RADIUS {
-	position: relative;
-	right: 20px;
-}
-.sidebar #LB_GLOW_COLOR {
-	position: relative;
-	left: 4px;
-}
-
-.sidebar #leftindent,
-.sidebar #LB_GLOW_TRANSPARENCY,
-.sidebar #LB_DISTANCE,
-.sidebar #LB_SHADOW_BLUR {
-	position: relative;
-	right: 18px;
-}
-
-.sidebar #leftindent {
-	line-height: 32px;
-}
-
-#TableEditPanelPanelExpander #grid1 > tr > td {
-	width: 176px;
-}
-.sidebar #rowheight,
-.sidebar #columnwidth {
-	padding-left: 24px;
-}
-.sidebar #SetMinimalRowHeight,
-.sidebar #SetMinimalColumnWidth {
-	position: relative;
-	bottom: 28px;
 }

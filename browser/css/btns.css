@@ -12,6 +12,8 @@ button.jsdialog {
 	box-sizing: border-box;
 }
 .jsdialog *[disabled] {
+	height: 32px;
+	line-height: 0em;
 	color: var(--color-text-lighter);
 	border: 1px solid var(--color-btn-border-dis);
 	filter: grayscale(1);
@@ -21,6 +23,7 @@ button.jsdialog {
 /*limit icon to button height*/
 button.jsdialog img {
 	max-height: 100%;
+	vertical-align: middle;
 }
 
 .annotation-btns-container,
@@ -49,6 +52,7 @@ button.jsdialog img {
 }
 
 [class*='button-secondary']:hover,
+.sidebar.ui-pushbutton.jsdialog#btnEditChart:hover,
 .ui-pushbutton.jsdialog:not(#ok):not(.sidebar):hover,
 .ui-button-box.jsdialog #cancel:hover,
 .cell.jsdialog > button:not(#ok):hover,
@@ -62,6 +66,7 @@ button.jsdialog img {
 
 .ui-button-box.jsdialog #ok,
 [class*='button-primary'],
+.sidebar.ui-pushbutton.jsdialog#btnEditChart,
 .cell.jsdialog > button,
 .ui-button-box.jsdialog button,
 .vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-primary {

@@ -48,13 +48,6 @@
 	font-size: var(--default-font-size);
 	line-height: var(--default-height);
 }
-#glowframe > div.ui-frame.jsdialog.sidebar > span,
-#softedgeframe > div.ui-frame.jsdialog.sidebar > span {
-	color: var(--color-main-text);
-	font-size: var(--header-font-size);
-	line-height: var(--header-height);
-	margin: 4px;
-}
 
 #accessibilityCheckBox .jsdialog.ui-text {
 	margin: 0;
@@ -186,7 +179,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-expander-label {
-	color: #666;
+	color: var(--color-main-text);
 }
 
 .ui-expander-label::before,
@@ -233,7 +226,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-expander-content > .root-container.jsdialog {
-	margin: 4px;
+	margin: 4px 0;
 }
 /* TreeView */
 
@@ -311,6 +304,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 .ui-treeview-entry span {
 	width: 100%;
+	margin-inline-start: 8px;
 }
 
 .ui-treeview-entry.mobile-wizard {
