@@ -292,7 +292,6 @@ COOL_JS_LST =\
 	src/map/handler/Map.DoubleClickZoom.js \
 	src/dom/DomEvent.Pointer.js \
 	src/map/handler/Map.TouchGesture.js \
-	src/map/handler/Map.BoxZoom.js \
 	src/map/handler/Map.Keyboard.js \
 	src/map/handler/Map.Welcome.js \
 	src/map/handler/Map.Feedback.js \

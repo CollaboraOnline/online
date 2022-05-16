@@ -152,7 +152,6 @@ L.Map = L.Evented.extend({
 			this.addHandler('touchGesture', L.Map.TouchGesture);
 		} else {
 			this.addHandler('mouse', L.Map.Mouse);
-			this.addHandler('boxZoom', L.Map.BoxZoom);
 			this.addHandler('scrollHandler', L.Map.Scroll);
 			this.addHandler('doubleClickZoom', L.Map.DoubleClickZoom);
 		}
@@ -1701,7 +1700,7 @@ L.Map = L.Evented.extend({
 
 	_draggableMoved: function (obj) {
 		obj = obj.options.draggable ? obj : this;
-		return (obj.dragging && obj.dragging.moved()) || (this.boxZoom && this.boxZoom.moved());
+		return obj.dragging && obj.dragging.moved();
 	},
 
 	_clearHandlers: function () {
