@@ -17,8 +17,12 @@ function selectFirstRow() {
 	cy.get('.spreadsheet-cell-resize-marker:nth-of-type(2)')
 		.should('not.be.visible');
 
+	var regex = /^A1:(AMJ|XFD)1$/;
 	cy.get('input#addressInput')
-		.should('have.prop', 'value', 'A1:AMJ1');
+		.should('have.prop', 'value')
+		.then(function(value) {
+			return regex.test(value);
+		});
 }
 
 module.exports.selectFirstRow = selectFirstRow;

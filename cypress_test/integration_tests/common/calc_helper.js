@@ -149,7 +149,7 @@ function removeTextSelection() {
 					.click(posX, posY + moveY);
 
 				moveY += 1.0;
-				var regex = /A([0-9]+):AMJ\1$/;
+				var regex = /A([0-9]+):(AMJ|XFD)\1$/;
 				return cy.get('input#addressInput')
 					.should('have.prop', 'value')
 					.then(function(value) {
@@ -188,8 +188,12 @@ function selectEntireSheet() {
 			.should('be.visible');
 	});
 
+	var regex = /^A1:(AMJ|XFD)1048576$/;
 	cy.get('input#addressInput')
-		.should('have.prop', 'value', 'A1:AMJ1048576');
+		.should('have.prop', 'value')
+		.then(function(value) {
+			return regex.test(value);
+		});
 
 	cy.log('Selecting entire sheet - end.');
 }
