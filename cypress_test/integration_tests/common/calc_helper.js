@@ -248,6 +248,12 @@ function assertDataClipboardTable(expectedData) {
 	}).then(() => expect(data).to.deep.eq(expectedData));
 }
 
+function selectCellsInRange(range) {
+	cy.get('#tb_formulabar_item_address #addressInput')
+		.clear()
+		.type(range + '{enter}');
+}
+
 module.exports.clickOnFirstCell = clickOnFirstCell;
 module.exports.dblClickOnFirstCell = dblClickOnFirstCell;
 module.exports.clickFormulaBar = clickFormulaBar;
@@ -257,3 +263,4 @@ module.exports.selectEntireSheet = selectEntireSheet;
 module.exports.selectFirstColumn = selectFirstColumn;
 module.exports.ensureViewContainsCellCursor = ensureViewContainsCellCursor;
 module.exports.assertDataClipboardTable = assertDataClipboardTable;
+module.exports.selectCellsInRange = selectCellsInRange;
