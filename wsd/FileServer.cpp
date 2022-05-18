@@ -1188,13 +1188,6 @@ void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
     LOG_DBG("Preprocessing file: " << relPath);
     std::string templateWelcome = *getUncompressedFile(relPath);
 
-#if ENABLE_WELCOME_MESSAGE
-    std::string enableWelcomeMessage = "true";
-#else // configurable
-    const auto& config = Application::instance().config();
-    std::string enableWelcomeMessage = stringifyBoolFromConfig(config, "welcome.enable", false);
-#endif
-
     // Ask UAs to block if they detect any XSS attempt
     response.add("X-XSS-Protection", "1; mode=block");
     // No referrer-policy
