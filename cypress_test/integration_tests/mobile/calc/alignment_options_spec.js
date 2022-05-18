@@ -3,7 +3,6 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
-var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Change alignment settings.', function() {
 	var origTestFileName = 'alignment_options.ods';
@@ -256,8 +255,8 @@ describe('Change alignment settings.', function() {
 	});
 
 	it('Merge cells.', function() {
-		// Select the full row
-		calcMobileHelper.selectFirstRow();
+		// Select the 100 cells in 1st row
+		calcHelper.selectCellsInRange('A1:CV1');
 
 		// Despite the selection is there, merge cells needs more time here.
 		cy.wait(1000);
@@ -282,9 +281,9 @@ describe('Change alignment settings.', function() {
 			.should('have.prop', 'checked', true);
 
 		// Check content
-		calcHelper.selectEntireSheet();
+		calcHelper.selectCellsInRange('A1:CV1');
 
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'colspan', '1024');
+			.should('have.attr', 'colspan', '100');
 	});
 });

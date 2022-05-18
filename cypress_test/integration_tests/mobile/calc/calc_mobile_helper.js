@@ -1,5 +1,7 @@
 /* global cy expect */
 
+//warning: after jumbo sheet patch, number of columns become 16000 so if you select whole row and do some operation
+//cypress timeout
 function selectFirstRow() {
 	cy.get('[id="test-div-row header"]')
 		.then(function(items) {

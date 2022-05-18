@@ -3,7 +3,6 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
-var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Interact with bottom toolbar.', function() {
 	var testFileName;
@@ -118,8 +117,8 @@ describe('Interact with bottom toolbar.', function() {
 	it('Merge cells', function() {
 		before('bottom_toolbar.ods');
 
-		// Select the full row
-		calcMobileHelper.selectFirstRow();
+		// Select 100 cells in first row
+		calcHelper.selectCellsInRange('A1:CV1');
 
 		// Despite the selection is there, merge cells needs more time here.
 		cy.wait(1000);
@@ -127,10 +126,10 @@ describe('Interact with bottom toolbar.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.togglemergecells')
 			.click();
 
-		calcHelper.selectEntireSheet();
+		calcHelper.selectCellsInRange('A1:CV1');
 
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'colspan', '1024');
+			.should('have.attr', 'colspan', '100');
 	});
 
 	it.skip('Enable text wrapping.', function() {
