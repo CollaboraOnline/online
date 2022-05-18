@@ -309,7 +309,6 @@ L.Map = L.Evented.extend({
 		app.socket.connect(socket);
 		if (this._clip)
 			this._clip.clearSelection();
-		this.removeObjectFocusDarkOverlay();
 	},
 
 	sendInitUNOCommands: function() {
@@ -1878,24 +1877,6 @@ L.Map = L.Evented.extend({
 			args: {FollowedViewId: this._docLayer._followThis,
 				IsFollowUser: followUser,
 				IsFollowEditor: followEditor}});
-	},
-
-	hasObjectFocusDarkOverlay: function() {
-		return !!this.focusLayer;
-	},
-
-	addObjectFocusDarkOverlay: function(xTwips, yTwips, wTwips, hTwips) {
-		if (!this.hasObjectFocusDarkOverlay()) {
-			this.focusLayer = new L.ObjectFocusDarkOverlay().addTo(this);
-			this.focusLayer.show({x: xTwips, y: yTwips, w: wTwips, h: hTwips});
-		}
-	},
-
-	removeObjectFocusDarkOverlay: function() {
-		if (this.hasObjectFocusDarkOverlay()) {
-			this.removeLayer(this.focusLayer);
-			this.focusLayer = null;
-		}
 	},
 
 	getSplitPanesContext: function () {
