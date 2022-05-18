@@ -35,18 +35,23 @@ public:
 
     virtual void returnValue(int & retValue) override
     {
+        bool timedOut = _timedOut;
+        bool setRetValue = _setRetValue;
+        int retVal = _retValue;
+
         UnitWSD::returnValue(retValue); // Always call base.
-        if (!_timedOut)
+        // Note that at this point 'this' is deleted.
+        if (!timedOut)
         {
             LOG_TST("ERROR: Failed to timeout");
             retValue = EX_SOFTWARE;
         }
         else
         {
-            assert(_setRetValue);
-            assert(_retValue == EX_SOFTWARE);
+            assert(setRetValue);
+            assert(retVal == EX_SOFTWARE);
             // we wanted a timeout.
-            LOG_TST("Test passed by timing-out as expected");
+            // Test passed by timing-out as expected.
             retValue = EX_OK;
         }
     }
