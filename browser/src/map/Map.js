@@ -1724,11 +1724,6 @@ L.Map = L.Evented.extend({
 		return L.DomUtil.getPosition(this._mapPane) || new L.Point(0, 0);
 	},
 
-	_moved: function () {
-		var pos = this._getMapPanePos();
-		return pos && !pos.equals([0, 0]);
-	},
-
 	_getTopLeftPoint: function (center, zoom) {
 		var pixelOrigin = center && zoom !== undefined ?
 			this._getNewPixelOrigin(center, zoom) :
