@@ -1137,11 +1137,12 @@ bool ChildSession::getTextSelection(const StringVector& tokens)
         return true;
     }
 
-    std::string selection;
     getLOKitDocument()->setView(_viewId);
-    const int selectionType = getLOKitDocument()->getSelectionType();
-    if (selectionType == LOK_SELTYPE_LARGE_TEXT || selectionType == LOK_SELTYPE_COMPLEX ||
-        (selection = getTextSelectionInternal(mimeType)).size() >= 1024 * 1024) // Don't return huge data.
+    char* textSelection = nullptr;
+    const int selectionType = getLOKitDocument()->getSelectionTypeAndText(mimeType.c_str(), &textSelection);
+    std::string selection(textSelection ? textSelection : "");
+    free(textSelection);
+    if (selectionType == LOK_SELTYPE_LARGE_TEXT || selectionType == LOK_SELTYPE_COMPLEX)
     {
         // Flag complex data so the client will download async.
         sendTextFrame("complexselection:");
