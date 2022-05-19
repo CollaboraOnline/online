@@ -57,7 +57,7 @@ void DocumentBroker::handleProxyRequest(
             "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
             "User-Agent: " WOPI_AGENT_STRING "\r\n"
             "Content-Length: " << sessionId.size() << "\r\n"
-            "Content-Type: application/json\r\n"
+            "Content-Type: application/json; charset=utf-8\r\n"
             "X-Content-Type-Options: nosniff\r\n"
             "\r\n" << sessionId;
 
@@ -342,7 +342,7 @@ bool ProxyProtocolHandler::flushQueueTo(const std::shared_ptr<StreamSocket> &soc
         "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
         "User-Agent: " WOPI_AGENT_STRING "\r\n"
         "Content-Length: " << totalSize << "\r\n"
-        "Content-Type: application/json\r\n"
+        "Content-Type: application/json; charset=utf-8\r\n"
         "X-Content-Type-Options: nosniff\r\n"
         "\r\n";
     socket->send(oss.str());
