@@ -104,7 +104,7 @@ describe('Table Operation', function() {
 			.should('have.attr', 'y', '5644');
 	});
 
-	it('Insert column before.', function() {
+	it.skip('Insert column before.', function() {
 		selectFullTable();
 
 		clickOnTableOperation('insertcolumnsbefore');
@@ -130,7 +130,7 @@ describe('Table Operation', function() {
 			.should('have.attr', 'y', '5644');
 	});
 
-	it('Insert column after.', function() {
+	it.skip('Insert column after.', function() {
 		selectFullTable();
 
 		clickOnTableOperation('insertcolumnsafter');
