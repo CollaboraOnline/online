@@ -680,6 +680,7 @@ app.definitions.Socket = L.Class.extend({
 					msg = _('Idle document - please tap to reload and resume editing');
 				}
 				this._map._documentIdle = true;
+				this._map._docLayer._documentInfo = undefined;
 				postMsgData['Reason'] = 'DocumentIdle';
 				if (textMsg === 'oom')
 					postMsgData['Reason'] = 'OOM';
