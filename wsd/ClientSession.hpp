@@ -93,6 +93,11 @@ public:
 
     ClientDeltaTracker _tracker;
 
+    void resetTileSeq(const TileDesc &desc)
+    {
+        _tracker.resetTileSeq(desc);
+    }
+
     bool sendTile(const TileDesc &desc, const Tile &tile)
     {
         TileWireId lastSentId = _tracker.updateTileSeq(desc);
@@ -103,16 +108,16 @@ public:
         else
             header = desc.serialize("delta:", "\n");
 
-        LOG_TRC(getName() << " sending tile message: " << header << " lastSendId " << lastSentId);
-
         // FIXME: performance - optimize away this copy ...
         std::vector<char> output;
 
         output.resize(header.size());
         std::memcpy(output.data(), header.data(), header.size());
         if (tile->appendChangesSince(output, tile->isPng() ? 0 : lastSentId))
+        {
+            LOG_TRC(getName() << " sending tile message: " << header << " lastSendId " << lastSentId);
             return sendBinaryFrame(output.data(), output.size());
-
+        }
         LOG_TRC("redundant tile request: " << lastSentId);
         return true;
     }

@@ -20,6 +20,7 @@
 #include <Png.hpp>
 #include <Unit.hpp>
 #include <helpers.hpp>
+#include <kit/Delta.hpp>
 
 class COOLWebSocket;
 
@@ -106,18 +107,22 @@ UnitBase::TestResult UnitCalc::testCalcEditRendering()
     helpers::getServerVersion(socket, major, minor, testname);
 
     const std::string firstLine = COOLProtocol::getFirstLine(tile);
-    std::vector<char> res(tile.begin() + firstLine.size() + 1, tile.end());
-    std::stringstream streamRes;
-    std::copy(res.begin(), res.end(), std::ostream_iterator<char>(streamRes));
+    Blob zimg = std::make_shared<BlobData>(tile.begin() + firstLine.size() + 1, tile.end());
 
-    std::fstream outStream("/tmp/res.png", std::ios::out);
-    outStream.write(res.data(), res.size());
+    std::fstream outStream("/tmp/res.z", std::ios::out);
+    outStream.write(zimg->data(), zimg->size());
     outStream.close();
 
-    png_uint_32 height = 0;
-    png_uint_32 width = 0;
-    png_uint_32 rowBytes = 0;
-    std::vector<png_bytep> rows = Png::decodePNG(streamRes, height, width, rowBytes);
+    Blob img = DeltaGenerator::expand(zimg, false);
+
+    png_uint_32 height = 512;
+    png_uint_32 width = 512;
+    png_uint_32 rowBytes = 512 * 4;
+    LOK_ASSERT_EQUAL(img->size(), (size_t)rowBytes * height);
+
+    std::vector<png_bytep> rows;
+    for (png_uint_32 i = 0; i < height; ++i)
+        rows.push_back((png_bytep)img->data() + rowBytes * i);
 
     const std::vector<char> exp
         = helpers::readDataFromFile("calc_render_0_512x512.3840,0.7680x7680.png");

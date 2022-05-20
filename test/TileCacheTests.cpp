@@ -70,7 +70,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testImpressTiles);
     CPPUNIT_TEST(testClientPartImpress);
     CPPUNIT_TEST(testClientPartCalc);
-    CPPUNIT_TEST(testTilesRenderedJustOnce); // TESTME: reliable ?
+    // CPPUNIT_TEST(testTilesRenderedJustOnce); // unreliable
     // CPPUNIT_TEST(testTilesRenderedJustOnceMultiClient); // always fails, seems complicated to fix
 #if ENABLE_DEBUG
     CPPUNIT_TEST(testSimultaneousTilesRenderedJustOnce);
@@ -242,13 +242,17 @@ void TileCacheTests::testSimple()
 
     // Cache Tile
     const int size = 1024;
-    const std::vector<char> data = genRandomData(size);
+    std::vector<char> data = genRandomData(size);
+    data[0] = 'Z'; // compressed pixels.
     tc.saveTileAndNotify(tile, data.data(), size);
 
     // Find Tile
     tileData = tc.lookupTile(tile);
     LOK_ASSERT_MESSAGE("tile not found when expected", tileData && tileData->isValid());
-    LOK_ASSERT_MESSAGE("cached tile corrupted", data == *tileData->keyframe());
+    BlobData &keyframe = *tileData->keyframe();
+    LOK_ASSERT_MESSAGE("cached tile corrupted", keyframe.size() == data.size() - 1 /* dropped Z */);
+    for (size_t i = 0; i < data.size() - 1; ++i)
+        LOK_ASSERT_MESSAGE("cached tile data", data[i+1] == keyframe[i]);
 
     // Invalidate Tiles
     tc.invalidateTiles("invalidatetiles: EMPTY", nviewid);
@@ -274,8 +278,8 @@ void TileCacheTests::testSimpleCombine()
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1a.empty());
     std::vector<char> tile1b = getResponseMessage(socket1, "tile:", testname + "1 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
-    sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
+    sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
     tile1a = getResponseMessage(socket1, "tile:", testname + "1 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1a.empty());
     tile1b = getResponseMessage(socket1, "tile:", testname + "1 ");
@@ -644,10 +648,10 @@ void TileCacheTests::testClientPartCalc()
 
 void TileCacheTests::testTilesRenderedJustOnce()
 {
-    const char* testname = "tilesRenderdJustOnce ";
+    const char* testname = "tilesRenderedJustOnce ";
 
     std::shared_ptr<http::WebSocketSession> socket
-        = loadDocAndGetSession(_socketPoll, "with_comment.odp", _uri, testname);
+        = loadDocAndGetSession(_socketPoll, "with_comment.odt", _uri, testname);
 
     assertResponseString(socket, "statechanged: .uno:AcceptTrackedChange=", testname);
 

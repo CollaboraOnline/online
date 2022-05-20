@@ -17,6 +17,7 @@
 #include <Rectangle.hpp>
 
 #include "Log.hpp"
+#include "Common.hpp"
 #include "TileDesc.hpp"
 
 class ClientSession;
@@ -56,8 +57,6 @@ struct TileDescCacheHasher final
     }
 };
 
-using BlobData = std::vector<char>;
-using Blob = std::shared_ptr<BlobData>;
 struct TileData
 {
     TileData(TileWireId start, const char *data, const size_t size)
@@ -120,7 +119,7 @@ struct TileData
         return size + sizeof(TileData);
     }
 
-    Blob keyframe()
+    Blob &keyframe()
     {
         assert(_deltas.size() > 0);
         return _deltas[0];
@@ -347,6 +346,16 @@ public:
         auto pDesc = const_cast<TileDesc *>(&(*it));
         pDesc->setWireId(curSeq);
         return last;
+    }
+
+    void resetTileSeq(const TileDesc &desc)
+    {
+        auto it = _cache.find(desc);
+        if (it == _cache.end())
+            return;
+        // id is not included in the hash.
+        auto pDesc = const_cast<TileDesc *>(&(*it));
+        pDesc->setWireId(0);
     }
 };
 

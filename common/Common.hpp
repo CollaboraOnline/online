@@ -8,6 +8,8 @@
 #pragma once
 
 #include <string>
+#include <vector>
+#include <memory>
 
 // Default values and other shared data between processes.
 
@@ -83,5 +85,9 @@ extern std::string MasterLocation;
 
 /// Controls whether experimental features/behavior is enabled or not.
 extern bool EnableExperimental;
+
+/// More efficient use of vectors
+using BlobData = std::vector<char>;
+using Blob = std::shared_ptr<BlobData>;
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
