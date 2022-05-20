@@ -9,10 +9,6 @@
 
 L.Control.Header = L.Class.extend({
 
-	_setConverter: function() {
-		this.converter = this._map._docLayer._twipsToCorePixels.bind(this._map._docLayer);
-	},
-
 	_initHeaderEntryStyles: function (className) {
 		var baseElem = document.getElementsByTagName('body')[0];
 		var elem = L.DomUtil.create('div', className, baseElem);
@@ -208,17 +204,6 @@ L.Control.Header = L.Class.extend({
 		}
 	},
 
-	_getHorzLatLng: function (start, offset, e) {
-		var size = this._map.getSize();
-		var drag = this._map.mouseEventToContainerPoint(e);
-		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / app.dpiScale;
-		var ypos = Math.max(drag.y, entryStart);
-		return [
-			this._map.unproject(new L.Point(0, ypos)),
-			this._map.unproject(new L.Point(size.x, ypos)),
-		];
-	},
-
 	optimalWidth: function(index) {
 		if (!this._isRowColumnInSelectedRange(index)) {
 			this._selectColumn(index, 0);
@@ -302,18 +287,6 @@ L.Control.Header = L.Class.extend({
 
 		this._map.wholeColumnSelected = true; // This variable is set early, state change will set this again.
 		this._map.sendUnoCommand('.uno:SelectColumn ', command);
-	},
-
-	_getVertLatLng: function (start, offset, e) {
-		var size = this._map.getSize();
-		var drag = this._map.mouseEventToContainerPoint(e);
-		var isRTL = this.isCalcRTL();
-		var entryStart = (isRTL ? this.size[0] - this._dragEntry.pos + this._dragEntry.size : this._dragEntry.pos - this._dragEntry.size) / app.dpiScale;
-		var xpos = isRTL ? Math.min(drag.x, entryStart) : Math.max(drag.x, entryStart);
-		return [
-			this._map.unproject(new L.Point(xpos, 0)),
-			this._map.unproject(new L.Point(xpos, size.y)),
-		];
 	},
 
 	_insertColBefore: function() {
@@ -523,13 +496,6 @@ L.Control.Header = L.Class.extend({
 			this.onDragEnd(this.containerObject.dragDistance);
 			this._dragEntry = null;
 		}
-	},
-
-	_twipsToPixels: function (twips) {
-		if (!this.converter)
-			return 0;
-		var point = new L.Point(twips, twips);
-		return Math.round(this._getParallelPos(this.converter(point)));
 	},
 
 	onNewDocumentTopLeft: function () {
