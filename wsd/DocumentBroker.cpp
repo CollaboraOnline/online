@@ -2660,6 +2660,9 @@ void DocumentBroker::handleTileRequest(const StringVector &tokens,
         return;
     }
 
+    LOG_TRC("forcing a keyframe for tilecombined tile");
+    session->resetTileSeq(tile);
+
     Tile cachedTile = _tileCache->lookupTile(tile);
     if (cachedTile && cachedTile->isValid())
     {
