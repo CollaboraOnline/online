@@ -113,7 +113,7 @@ UnitBase::TestResult UnitCalc::testCalcEditRendering()
     outStream.write(zimg->data(), zimg->size());
     outStream.close();
 
-    Blob img = DeltaGenerator::expand(zimg, false);
+    Blob img = DeltaGenerator::expand(zimg);
 
     png_uint_32 height = 512;
     png_uint_32 width = 512;

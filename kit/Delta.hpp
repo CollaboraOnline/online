@@ -520,10 +520,8 @@ class DeltaGenerator {
         return output.size();
     }
 
-    static Blob expand(const Blob &blob, bool delta)
+    static Blob expand(const Blob &blob)
     {
-        assert(!delta);
-
         Blob img = std::make_shared<BlobData>();
         img->resize(1024*1024*4); // lots of extra space.
 
