@@ -1037,10 +1037,16 @@ private:
     class StorageManager final
     {
     public:
-        StorageManager()
-            : _request(std::chrono::seconds(300))
+        StorageManager(std::chrono::milliseconds minTimeBetweenUploads)
+            : _request(minTimeBetweenUploads)
             , _lastUploadTime(RequestManager::now())
         {
+            if (Log::traceEnabled())
+            {
+                std::ostringstream oss;
+                dumpState(oss, ", ");
+                LOG_TRC("Created StorageManager: " << oss.str());
+            }
         }
 
         /// Marks the last time we attempted to upload, regardless of outcome, to now.
@@ -1102,6 +1108,12 @@ private:
             return _request.lastRequestDuration();
         }
 
+        /// Returns the minimum time between uploads.
+        std::chrono::milliseconds minTimeBetweenUploads() const
+        {
+            return _request.minTimeBetweenRequests();
+        }
+
         /// True if we aren't uploading and the minimum time since last upload has elapsed.
         bool canUploadNow() const { return _request.canRequestNow(); }
 
@@ -1115,6 +1127,7 @@ private:
             os << indent << "last modified time (on server): " << _lastModifiedTime;
             os << indent << "since last upload request: " << timeSinceLastUploadRequest();
             os << indent << "since last upload response: " << timeSinceLastUploadResponse();
+            os << indent << "min time between uploads: " << minTimeBetweenUploads();
             os << indent
                << "file last modified: " << Util::getTimeForLog(now, _lastUploadedFileModifiedTime);
         }
