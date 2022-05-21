@@ -109,35 +109,33 @@ public:
 
 std::atomic<unsigned> DocumentBroker::DocBrokerId(1);
 
-DocumentBroker::DocumentBroker(ChildType type,
-                               const std::string& uri,
-                               const Poco::URI& uriPublic,
-                               const std::string& docKey,
-                               unsigned mobileAppDocId) :
-    _limitLifeSeconds(std::chrono::seconds::zero()),
-    _uriOrig(uri),
-    _type(type),
-    _uriPublic(uriPublic),
-    _docKey(docKey),
-    _docId(Util::encodeId(DocBrokerId++, 3)),
-    _documentChangedInStorage(false),
-    _isViewFileExtension(false),
-    _saveManager(std::chrono::seconds(
+DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
+                               const std::string& docKey, unsigned mobileAppDocId)
+    : _limitLifeSeconds(std::chrono::seconds::zero())
+    , _uriOrig(uri)
+    , _type(type)
+    , _uriPublic(uriPublic)
+    , _docKey(docKey)
+    , _docId(Util::encodeId(DocBrokerId++, 3))
+    , _documentChangedInStorage(false)
+    , _isViewFileExtension(false)
+    , _saveManager(std::chrono::seconds(
           std::getenv("COOL_NO_AUTOSAVE") != nullptr
               ? 0
-              : COOLWSD::getConfigValueNonZero<int>("per_document.autosave_duration_secs", 300))),
-    _isModified(false),
-    _cursorPosX(0),
-    _cursorPosY(0),
-    _cursorWidth(0),
-    _cursorHeight(0),
-    _poll(new DocumentBrokerPoll("doc" SHARED_DOC_THREADNAME_SUFFIX + _docId, *this)),
-    _stop(false),
-    _lockCtx(new LockContext()),
-    _tileVersion(0),
-    _debugRenderedTileCount(0),
-    _wopiDownloadDuration(0),
-    _mobileAppDocId(mobileAppDocId)
+              : COOLWSD::getConfigValueNonZero<int>("per_document.autosave_duration_secs", 300)))
+    , _isModified(false)
+    , _cursorPosX(0)
+    , _cursorPosY(0)
+    , _cursorWidth(0)
+    , _cursorHeight(0)
+    , _poll(
+          Util::make_unique<DocumentBrokerPoll>("doc" SHARED_DOC_THREADNAME_SUFFIX + _docId, *this))
+    , _stop(false)
+    , _lockCtx(Util::make_unique<LockContext>())
+    , _tileVersion(0)
+    , _debugRenderedTileCount(0)
+    , _wopiDownloadDuration(0)
+    , _mobileAppDocId(mobileAppDocId)
 {
     assert(!_docKey.empty());
     assert(!COOLWSD::ChildRoot.empty());
