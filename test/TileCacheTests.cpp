@@ -1726,7 +1726,7 @@ void TileCacheTests::testTileProcessed()
     sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=10000 height=9000");
     sendTextFrame(socket, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3200 tiletwipheight=3200");
 
-    // Request a lots of tiles (more than wsd can send once)
+    // Request a lots of tiles ~25 ie. more than wsd can send back at once.
     sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800,0,3200,6400,9600,12800 tileposy=0,0,0,0,0,3200,3200,3200,3200,3200,6400,6400,6400,6400,6400,9600,9600,9600,9600,9600,12800,12800,12800,12800,12800 tilewidth=3200 tileheight=3200");
 
     std::vector<std::string> tileIDs;
@@ -1760,6 +1760,7 @@ void TileCacheTests::testTileProcessed()
         sendTextFrame(socket, "tileprocessed tile=" + tileID, testname);
     }
 
+#if 0 // not needed since deltas + wsd: always subscribe when proactively rendering tiles
     // Now we can get the remaining tiles
     int arrivedTile2 = 0;
     do
@@ -1775,6 +1776,7 @@ void TileCacheTests::testTileProcessed()
     } while(gotTile);
 
     LOK_ASSERT_MESSAGE("We expect one tile at least!", arrivedTile2 > 1);
+#endif
 
     socket->asyncShutdown();
     LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
