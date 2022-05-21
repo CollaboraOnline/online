@@ -16,6 +16,7 @@
 #include <map>
 #include <memory>
 #include <mutex>
+#include <sstream>
 #include <string>
 #include <thread>
 #include <utility>
@@ -683,8 +684,9 @@ private:
     class RequestManager
     {
     public:
-        RequestManager()
-            : _lastRequestTime(now())
+        RequestManager(std::chrono::milliseconds minTimeBetweenRequests)
+            : _minTimeBetweenRequests(minTimeBetweenRequests)
+            , _lastRequestTime(now())
             , _lastResponseTime(now())
             , _lastRequestDuration(0)
             , _lastRequestFailureCount(0)
@@ -738,15 +740,18 @@ private:
         /// Returns true iff there is an active request in progress.
         bool isActive() const { return _lastResponseTime < _lastRequestTime; }
 
+        /// The minimum time to wait between requests.
+        std::chrono::milliseconds minTimeBetweenRequests() const { return _minTimeBetweenRequests; }
+
         /// Checks whether or not we can issue a new request now.
         /// Returns true iff there is no active request and sufficient
         /// time has elapsed since the last request, including that
         /// more time than the last request's duration has passe.
-        bool canRequestNow(std::chrono::milliseconds minTime) const
+        bool canRequestNow() const
         {
             const auto now = RequestManager::now();
             return !isActive() && std::min(timeSinceLastRequest(now), timeSinceLastResponse(now)) >=
-                                      std::max(minTime, _lastRequestDuration);
+                                      std::max(_minTimeBetweenRequests, _lastRequestDuration);
         }
 
         /// Sets the last request's result, either to success or failure.
@@ -778,6 +783,9 @@ private:
         }
 
     private:
+        /// The minimum time between requests.
+        const std::chrono::milliseconds _minTimeBetweenRequests;
+
         /// The last time we started an a request.
         std::chrono::steady_clock::time_point _lastRequestTime;
 
@@ -802,11 +810,18 @@ private:
     class SaveManager final
     {
     public:
-        SaveManager(std::chrono::milliseconds autosaveInterval)
-            : _autosaveInterval(autosaveInterval)
+        SaveManager(std::chrono::milliseconds autosaveInterval,
+                    std::chrono::milliseconds minTimeBetweenSaves)
+            : _request(minTimeBetweenSaves)
+            , _autosaveInterval(autosaveInterval)
             , _lastAutosaveCheckTime(RequestManager::now())
         {
-            LOG_TRC("Created SaveManager with auto-save interval of " << _autosaveInterval);
+            if (Log::traceEnabled())
+            {
+                std::ostringstream oss;
+                dumpState(oss, ", ");
+                LOG_TRC("Created SaveManager: " << oss.str());
+            }
         }
 
         /// Returns true iff auto save is enabled.
@@ -917,11 +932,14 @@ private:
             return _request.lastRequestDuration();
         }
 
-        /// True if we aren't saving and the minimum time since last save has elapsed.
-        bool canSaveNow(std::chrono::milliseconds minTime) const
+        /// Returns the minimum time between saves.
+        std::chrono::milliseconds minTimeBetweenSaves() const
         {
-            return _request.canRequestNow(minTime);
+            return _request.minTimeBetweenRequests();
         }
+
+        /// True if we aren't saving and the minimum time since last save has elapsed.
+        bool canSaveNow() const { return _request.canRequestNow(); }
 
         void dumpState(std::ostream& os, const std::string& indent = "\n  ")
         {
@@ -938,6 +956,7 @@ private:
             os << indent
                << "last save response: " << Util::getTimeForLog(now, lastSaveResponseTime());
             os << indent << "last save duration: " << lastSaveDuration();
+            os << indent << "min time between saves: " << minTimeBetweenSaves();
 
             os << indent
                << "file last modified time: " << Util::getTimeForLog(now, _lastModifiedTime);
@@ -1007,7 +1026,8 @@ private:
     {
     public:
         StorageManager()
-            : _lastUploadTime(RequestManager::now())
+            : _request(std::chrono::seconds(300))
+            , _lastUploadTime(RequestManager::now())
         {
         }
 
@@ -1071,11 +1091,7 @@ private:
         }
 
         /// True if we aren't uploading and the minimum time since last upload has elapsed.
-        bool canUploadNow(std::chrono::milliseconds minTime) const
-        {
-            return _request.canRequestNow(minTime);
-        }
-
+        bool canUploadNow() const { return _request.canRequestNow(); }
 
         void dumpState(std::ostream& os, const std::string& indent = "\n  ")
         {
