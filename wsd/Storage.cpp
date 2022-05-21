@@ -1458,7 +1458,7 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
         }
         else if (details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_REQUEST_ENTITY_TOO_LARGE)
         {
-            result.setResult(StorageBase::UploadResult::Result::DISKFULL);
+            result.setResult(StorageBase::UploadResult::Result::TOO_LARGE);
         }
         else if (details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED
                  || details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_FORBIDDEN)

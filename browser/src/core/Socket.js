@@ -825,6 +825,9 @@ app.definitions.Socket = L.Class.extend({
 			if (command.errorKind === 'savediskfull') {
 				storageError = errorMessages.storage.savediskfull;
 			}
+			else if (command.errorKind === 'savetoolarge') {
+				storageError = errorMessages.storage.savetoolarge;
+			}
 			else if (command.errorKind === 'savefailed') {
 				storageError = errorMessages.storage.savefailed;
 			}

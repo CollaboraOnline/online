@@ -1687,6 +1687,22 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
 
         return;
     }
+    else if (uploadResult.getResult() == StorageBase::UploadResult::Result::TOO_LARGE)
+    {
+        LOG_WRN("Got Entitity Too Large while uploading docKey ["
+                << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
+                << "]. If a reverse-proxy is used, it might be misconfigured. Alternatively, the "
+                   "WOPI host might be low on disk or hitting a quota limit. Making all sessions "
+                   "on doc read-only and notifying clients.");
+
+        // Make everyone readonly and tell everyone that storage is low on diskspace.
+        for (const auto& sessionIt : _sessions)
+        {
+            sessionIt.second->sendTextFrameAndLogError("error: cmd=storage kind=savetoolarge");
+        }
+
+        broadcastSaveResult(false, "Too large", uploadResult.getReason());
+    }
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::DISKFULL)
     {
         LOG_WRN("Disk full while uploading docKey ["
