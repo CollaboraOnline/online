@@ -111,9 +111,10 @@ public:
         {
             OK = 0,
             DISKFULL,
-            UNAUTHORIZED,
+            TOO_LARGE, //< 413
+            UNAUTHORIZED, //< 401, 403
             DOC_CHANGED, /**< Document changed in storage */
-            CONFLICT,
+            CONFLICT, //< 409
             FAILED
         };
 
