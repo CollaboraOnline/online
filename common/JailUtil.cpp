@@ -60,7 +60,8 @@ bool remountReadonly(const std::string& source, const std::string& target)
     return res;
 }
 
-bool unmount(const std::string& target)
+/// Unmount a bind-mounted jail directory.
+static bool unmount(const std::string& target)
 {
     LOG_DBG("Unmounting [" << target << ']');
     const bool res = coolmount("-u", "", target);
@@ -98,7 +99,7 @@ bool isJailCopied(const std::string& root)
     return delFileStat.exists();
 }
 
-bool safeRemoveDir(const std::string& path)
+static bool safeRemoveDir(const std::string& path)
 {
     // Always unmount, just in case.
     unmount(path);
