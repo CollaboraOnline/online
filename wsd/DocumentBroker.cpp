@@ -273,7 +273,7 @@ void DocumentBroker::pollThread()
         _poll->poll(unloading ? SocketPoll::DefaultPollTimeoutMicroS / 16
                               : SocketPoll::DefaultPollTimeoutMicroS);
 
-        if (EnableExperimental && _stop)
+        if (_stop)
         {
             LOG_DBG("Doc [" << _docKey << "] is flagged to stop after returning from poll.");
             break;

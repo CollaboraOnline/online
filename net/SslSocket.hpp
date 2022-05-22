@@ -177,7 +177,7 @@ public:
         // SSL's needs. Only when SSL is done negotiating
         // (i.e. wants neither to read, nor to write) do we see
         // what data activity we have.
-        if (EnableExperimental && _doHandshake)
+        if (_doHandshake)
         {
             if (_sslWantsTo == SslWantsTo::Write)
             {
@@ -229,18 +229,12 @@ private:
                     return rc != 0;
             }
 
-            if (!EnableExperimental)
-                _doHandshake = false;
-
             if (rc == 1)
             {
                 // Successful handshake; TLS/SSL connection established.
                 LOG_TRC("SSL handshake completed successfully");
-                if (EnableExperimental)
-                {
-                    _doHandshake = false;
-                    _sslWantsTo = SslWantsTo::Neither; // Reset until we are told otherwise.
-                }
+                _doHandshake = false;
+                _sslWantsTo = SslWantsTo::Neither; // Reset until we are told otherwise.
 
                 if (!verifyCertificate())
                 {
