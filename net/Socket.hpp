@@ -1293,7 +1293,7 @@ protected:
         // FIXME: need to close input, but not output (?)
         bool closed = (events & (POLLHUP | POLLERR | POLLNVAL));
 
-        if (!EnableExperimental || events & POLLIN)
+        if (events & POLLIN)
         {
             // readIncomingData returns false only if the read len is 0 (closed).
             // Oddly enough, we don't necessarily get POLLHUP after read(2) returns 0.
@@ -1302,7 +1302,7 @@ protected:
             LOG_TRC('#' << getFD() << " Incoming data buffer " << _inBuffer.size()
                         << " bytes, closeSocket? " << closed << ", events: " << std::hex << events
                         << std::dec);
-            if (EnableExperimental && closed && reading)
+            if (closed && reading)
             {
                 // We might have outstanding data to read, wait until readIncomingData returns false.
                 LOG_DBG('#' << getFD() << ": Closed but will drain incoming data per POLLIN.");
@@ -1367,7 +1367,7 @@ protected:
                 if (writeOutgoingData() < 0)
                 {
                     const int last_errno = errno;
-                    if (last_errno == EPIPE || (EnableExperimental && last_errno == ECONNRESET))
+                    if (last_errno == EPIPE || last_errno == ECONNRESET)
                     {
                         LOG_DBG('#' << getFD() << ": Disconnected while writing ("
                                     << Util::symbolicErrno(last_errno)
