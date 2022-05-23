@@ -75,6 +75,12 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 						type: 'multilineedit',
 						text: text ? text : '',
 						rawKeyEvents: true
+					},
+					{
+						id: 'expand',
+						type: 'pushbutton',
+						text: '',
+						symbol: 'SPIN_DOWN',
 					}
 				]
 			}
@@ -91,7 +97,48 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 		this.builder.build(this.container, data);
 	},
 
+	toggleMultiLine: function(input) {
+		if (L.DomUtil.hasClass(input, 'expanded')) {
+			L.DomUtil.removeClass(input, 'expanded');
+			this.onJSUpdate({
+				data: {
+					jsontype: 'formulabar',
+					id: this.builder.windowId,
+					'control_id': 'expand',
+					control: {
+						id: 'expand',
+						type: 'pushbutton',
+						text: '',
+						symbol: 'SPIN_DOWN'
+					}
+				}
+			});
+		} else {
+			L.DomUtil.addClass(input, 'expanded');
+			this.onJSUpdate({
+				data: {
+					jsontype: 'formulabar',
+					id: this.builder.windowId,
+					'control_id': 'expand',
+					control: {
+						id: 'expand',
+						type: 'pushbutton',
+						text: '',
+						symbol: 'SPIN_UP'
+					}
+				}
+			});
+		}
+	},
+
 	callback: function(objectType, eventType, object, data, builder) {
+		if (object.id === 'expand') {
+			var input = document.getElementById('sc_input_window');
+			if (input)
+				this.toggleMultiLine(input);
+			return;
+		}
+
 		// in the core we have DrawingArea not TextView
 		if (object.id.indexOf('sc_input_window') === 0) {
 			objectType = 'drawingarea';
@@ -157,8 +204,24 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 		if (data.jsontype !== 'formulabar')
 			return;
 
-		console.warn('formulabar: old style formulabar update - to fix in core');
-		return;
+		if (!this.container)
+			return;
+
+		var control = this.container.querySelector('[id=\'' + data.control.id + '\']');
+		if (!control) {
+			window.app.console.warn('jsdialogupdate: not found control with id: "' + data.control.id + '"');
+			return;
+		}
+
+		var parent = control.parentNode;
+		if (!parent)
+			return;
+
+		control.style.visibility = 'hidden';
+		var temporaryParent = L.DomUtil.create('div');
+		this.builder.build(temporaryParent, [data.control], false);
+		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
+		L.DomUtil.remove(control);
 	},
 
 	onJSAction: function (e) {

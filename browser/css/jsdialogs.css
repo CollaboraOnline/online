@@ -1175,6 +1175,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	font-size: var(--default-font-size) !important;
 }
 
+#sc_input_window.formulabar.expanded {
+	height: 72px !important;
+}
+
 .formulabar.unotoolbutton {
 	margin-inline-end: 4px !important;
 }
