@@ -949,7 +949,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertContentControl', 'text'),
+								'text':  _('Rich Text'),
 								'command': '.uno:InsertContentControl'
 							}
 						]
@@ -959,7 +959,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertCheckboxContentControl', 'text'),
+								'text': _('Checkbox'),
 								'command': '.uno:InsertCheckboxContentControl'
 							}
 						]
