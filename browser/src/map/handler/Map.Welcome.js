@@ -19,7 +19,7 @@ L.Map.Welcome = L.Handler.extend({
 
 	initialize: function (map) {
 		L.Handler.prototype.initialize.call(this, map);
-		this._map.on('statusindicator', this.onStatusIndicator, this);
+		this._map.on('updateviewslist', this.onUpdateList, this);
 
 		// temporarily use only local welcome dialog
 		this._url = /*window.welcomeUrl ? window.welcomeUrl:*/ this._getLocalWelcomeUrl();
@@ -32,9 +32,13 @@ L.Map.Welcome = L.Handler.extend({
 		this.remove();
 	},
 
-	onStatusIndicator: function (e) {
-		if (e.statusType === 'alltilesloaded' && this.shouldWelcome()) {
-			this._map.off('statusindicator', this.onStatusIndicator, this);
+	onUpdateList: function () {
+		var docLayer = this._map._docLayer || {};
+		var viewInfo = this._map._viewInfo[docLayer._viewId];
+		var isGuest  = viewInfo && viewInfo.userextrainfo &&
+		    viewInfo.userextrainfo.is_guest;
+
+		if (!isGuest && this.shouldWelcome()) {
 			this.showWelcomeDialog();
 		}
 	},
