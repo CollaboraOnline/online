@@ -125,6 +125,8 @@ done
 # pathname both in the ForKit process and in the Kit processes.
 
 mkdir -p $CHROOT/tmpfonts
+chmod a+w,+t $CHROOT/tmpfonts
+sudo chown root $CHROOT/tmpfonts || exit 1
 mkdir -p $CHROOT$CHROOT
 ln -f -s `${REALPATH} --relative-to=$CHROOT$CHROOT $CHROOT/tmpfonts` $CHROOT$CHROOT
 

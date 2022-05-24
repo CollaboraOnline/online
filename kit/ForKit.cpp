@@ -175,6 +175,12 @@ protected:
             // Tell core to use that font file
             std::string fontFile = tokens[1];
 
+            if (chown(fontFile.c_str(), 0, 0) == -1)
+            {
+                LOG_SYS("chown(" << fontFile.c_str() << ",0,0) failed");
+                return;
+            }
+
             assert(loKitPtr);
             loKitPtr->pClass->setOption(loKitPtr, "addfont", Poco::URI(Poco::Path(fontFile)).toString().c_str());
         }

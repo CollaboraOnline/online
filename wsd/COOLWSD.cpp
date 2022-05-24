@@ -1668,6 +1668,13 @@ private:
         LOG_DBG("Got " << body.size() << " bytes for " << uri << " and wrote to " << fontFile);
         fonts[uri].pathName = fontFile;
 
+        // Make the file read-only
+        if (chmod(fontFile.c_str(), S_IRUSR | S_IRGRP | S_IROTH) == -1)
+        {
+            LOG_SYS("chmod of " << fontFile.c_str() << " failed");
+            return false;
+        }
+
         COOLWSD::sendMessageToForKit("addfont " + fontFile);
 
         return true;
