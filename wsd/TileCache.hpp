@@ -154,12 +154,13 @@ struct TileData
             output.resize(output.size() + extra);
 
             // FIXME: better writev style interface in the end ?
-//            std::cerr << "added " << extra << " to array size " << offset << "\n";
+//            LOG_TRC("added " << extra << " to array size " << offset);
             for (i = start; i < _deltas.size(); ++i)
             {
                 size_t toCopy = _deltas[i]->size();
-//                std::cerr << "copy " << toCopy << " bytes to array offset " << offset << ":\n"
-//                          << Util::dumpHex(std::string((char *)_deltas[i]->data(), toCopy)) << "\n";
+/*                LOG_TRC("copy item " << i << "/" << _deltas.size() << " of " << toCopy <<
+                        " bytes to array offset " << offset << ":\n"
+                        << Util::dumpHex(std::string((char *)_deltas[i]->data(), toCopy))); */
 
                 std::memcpy(output.data() + offset, _deltas[i]->data(), toCopy);
                 offset += toCopy;
