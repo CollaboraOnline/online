@@ -78,6 +78,8 @@ L.Control.AutofilterDropdown = L.Control.extend({
 
 			this.builder.setWindowId(null);
 			this.subMenuBuilder.setWindowId(null);
+
+			this.map.focus();
 			return;
 		}
 
@@ -174,6 +176,27 @@ L.Control.AutofilterDropdown = L.Control.extend({
 			L.DomUtil.setStyle(mainContainer, 'margin-left', newLeftPosition + 'px');
 			this.position.x = newLeftPosition;
 		}
+
+		var okButton = mainContainer.querySelector('#ok');
+		if (okButton)
+			okButton.focus();
+
+		// close when focus goes out using 'tab' key
+		var that = this;
+
+		var beginMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-begin-marker');
+		var endMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-end-marker');
+
+		beginMarker.tabIndex = 0;
+		endMarker.tabIndex = 0;
+
+		mainContainer.insertBefore(beginMarker, mainContainer.firstChild);
+		mainContainer.appendChild(endMarker);
+
+		mainContainer.addEventListener('focusin', function(event) {
+			if (event.target == beginMarker || event.target == endMarker)
+				that.onClosePopup();
+		});
 	},
 
 	onJSUpdate: function (e) {
@@ -216,18 +239,8 @@ L.Control.AutofilterDropdown = L.Control.extend({
 	},
 
 	onClosePopup: function() {
-		if (this.container)
-			L.DomUtil.remove(this.container);
-		if (this.subMenu)
-			L.DomUtil.remove(this.subMenu);
-
-		this.container = null;
-		this.subMenu = null;
-
 		if (this.builder.windowId)
 			this.builder.callback('pushbutton', 'click', {id: 'cancel'}, null, this.builder);
-		this.builder.setWindowId(null);
-		this.subMenuBuilder.setWindowId(null);
 	}
 });
 
