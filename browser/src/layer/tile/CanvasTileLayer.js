@@ -6509,15 +6509,11 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_applyDelta: function(tile, rawDelta, isKeyframe) {
-		console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
-			    ' of length ' + rawDelta.length + '\n');
-		// hex: ' + hex2string(rawDelta));
+		// console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
+		//	    ' of length ' + rawDelta.length + ' hex: ' + hex2string(rawDelta));
 
 		if (rawDelta.length === 0)
 			return 0; // that was easy!
-
-		// decompress the delta.
-		var delta = window.pako.inflateRaw(rawDelta);
 
 		// 'Uint8Array' delta
 		var canvas;
@@ -6532,27 +6528,36 @@ L.CanvasTileLayer = L.Layer.extend({
 			initCanvas = true;
 		}
 		tile.el = canvas;
-
-		// Debugging paranoia: if we get this wrong bad things happen.
-		if ((isKeyframe && delta.length != canvas.width * canvas.height * 4) ||
-		    (!isKeyframe && delta.length == canvas.width * canvas.height * 4))
-		{
-			console.log('Unusual ' + (isKeyframe ? 'keyframe' : 'delta') +
-				    ' possibly mis-tagged, suspicious size vs. type ' +
-				    delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
-		}
-
 		tile.lastKeyframe = isKeyframe;
 
 		// apply potentially several deltas in turn.
-		var i = 0;
-		var offset = 0;
-		while (offset < delta.length)
+		// var i = 0;
+		var offset = 0, nextOffset = 0;
+		while (offset < rawDelta.length)
 		{
-			console.log('Apply chunk ' + i++ + ' at offset ' + offset);
-			offset += this._applyDeltaChunk(canvas, tile, initCanvas, delta.subarray(offset), isKeyframe);
+			var inflator = new window.pako.Inflate({ raw: true });
+			inflator.push(offset > 0 ? rawDelta.subarray(offset) : rawDelta);
+			if (inflator.err) throw inflator.msg;
+
+			var delta = inflator.result;
+			nextOffset = rawDelta.length - inflator.strm.avail_in;
+			console.log('Next delta at ' + nextOffset);
+
+			// Debugging paranoia: if we get this wrong bad things happen.
+			if ((isKeyframe && delta.length != canvas.width * canvas.height * 4) ||
+			    (!isKeyframe && delta.length == canvas.width * canvas.height * 4))
+			{
+				console.log('Unusual ' + (isKeyframe ? 'keyframe' : 'delta') +
+					    ' possibly mis-tagged, suspicious size vs. type ' +
+					    delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
+			}
+
+			// console.log('Apply chunk ' + i++ + ' of size ' + delta.length +
+			//	    ' at compressed stream offset ' + offset + ' compressed size ' + (nextOffset - offset));
+			this._applyDeltaChunk(canvas, tile, initCanvas, delta, isKeyframe);
 			initCanvas = false;
 			isKeyframe = false;
+			offset = nextOffset;
 		}
 	},
 
@@ -6565,7 +6570,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// + ' hex: ' + hex2string(delta));
 
 		if (delta.length === 0)
-			return 0; // that was easy!
+			return; // that was easy!
 
 		if (isKeyframe)
 		{
@@ -6574,7 +6579,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			// FIXME: subarray delta to only the 1st image pixels we want to add.
 			ctx.putImageData(new ImageData(new Uint8ClampedArray(delta),
 						       canvas.width, canvas.height), 0, 0);
-			return canvas.width * canvas.height * 4;
 		}
 
 		if (initCanvas && tile.el) // render old image data to the canvas
@@ -6643,8 +6647,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		ctx.putImageData(imgData, 0, 0);
-
-		return delta.length;
 	},
 
 	_onTileMsg: function (textMsg, img) {
