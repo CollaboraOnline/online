@@ -198,4 +198,72 @@ describe('Fullscreen Presentation.', function() {
 			});
 	});
 
+	it('Animation: Emphasis: Spin.', function() {
+		before('anim-spin.odp');
+
+		cy.wait(3000);
+
+		getSlideShowContent().find('#id1')
+			.should('have.class', 'Slide');
+		getSlideShowContent().find('#id1 > g').its('1')
+			.should('have.class', 'Page');
+		getSlideShowContent().find('#id3')
+			.then((shape) => {
+				const matrix = shape.prop('transform').baseVal.getItem(0).matrix;
+				expect(matrix.a).to.eq(1);
+				expect(matrix.b).to.eq(0);
+				expect(matrix.c).to.eq(0);
+				expect(matrix.d).to.eq(1);
+				expect(matrix.e).to.eq(0);
+				expect(matrix.f).to.eq(0);
+			})
+			.click();
+
+		cy.wait(3000);
+		getSlideShowContent().find('#id3')
+			.then((shape) => {
+				const matrix = shape.prop('transform').baseVal.getItem(0).matrix;
+				expect(Math.round(matrix.a)).to.eq(0);
+				expect(matrix.b).to.eq(1);
+				expect(matrix.c).to.eq(-1);
+				expect(Math.round(matrix.d)).to.eq(0);
+				expect(matrix.e).to.eq(22501);
+				expect(matrix.f).to.eq(-5500);
+			});
+	});
+
+	it('Animation: Emphasis: Grow and Shrink.', function() {
+		before('anim-grow-and-shrink.odp');
+
+		cy.wait(3000);
+
+		getSlideShowContent().find('#id1')
+			.should('have.class', 'Slide');
+		getSlideShowContent().find('#id1 > g').its('1')
+			.should('have.class', 'Page');
+		getSlideShowContent().find('#id3')
+			.then((shape) => {
+				const matrix = shape.prop('transform').baseVal.getItem(0).matrix;
+				expect(matrix.a).to.eq(1);
+				expect(matrix.b).to.eq(0);
+				expect(matrix.c).to.eq(0);
+				expect(matrix.d).to.eq(1);
+				expect(matrix.e).to.eq(0);
+				expect(matrix.f).to.eq(0);
+			})
+			.click();
+
+		cy.wait(3000);
+		getSlideShowContent().find('#id3')
+			.then((shape) => {
+				const matrix = shape.prop('transform').baseVal.getItem(0).matrix;
+				expect(matrix.a).to.eq(2.5);
+				expect(matrix.b).to.eq(0);
+				expect(matrix.c).to.eq(0);
+				expect(matrix.d).to.eq(2.5);
+				expect(matrix.e).to.eq(-21000.75);
+				expect(matrix.f).to.eq(-12750.75);
+			});
+	});
+
 });
