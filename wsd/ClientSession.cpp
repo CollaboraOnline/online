@@ -1193,7 +1193,7 @@ bool ClientSession::sendTile(const char * /*buffer*/, int /*length*/, const Stri
 {
     try
     {
-        docBroker->handleTileRequest(tokens, client_from_this());
+        docBroker->handleTileRequest(tokens, true, client_from_this());
     }
     catch (const std::exception& exc)
     {
@@ -1211,7 +1211,7 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, co
     {
         TileCombined tileCombined = TileCombined::parse(tokens);
         tileCombined.setNormalizedViewId(getCanonicalViewId());
-        docBroker->handleTileCombinedRequest(tileCombined, client_from_this());
+        docBroker->handleTileCombinedRequest(tileCombined, true, client_from_this());
     }
     catch (const std::exception& exc)
     {
@@ -2218,7 +2218,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     {
         TileCombined tileCombined = TileCombined::create(invalidTiles);
         tileCombined.setNormalizedViewId(normalizedViewId);
-        docBroker->handleTileCombinedRequest(tileCombined, client_from_this());
+        docBroker->handleTileCombinedRequest(tileCombined, false, client_from_this());
     }
 }
 

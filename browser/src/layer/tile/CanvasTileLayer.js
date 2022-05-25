@@ -12,8 +12,6 @@ if (typeof String.prototype.startsWith !== 'function') {
 	};
 }
 
-/* eslint-disable */
-
 // debugging aid.
 function hex2string(inData)
 {
@@ -26,8 +24,6 @@ function hex2string(inData)
 	}
 	return hexified.join('');
 }
-
-/* eslint-enable */
 
 // CStyleData is used to obtain CSS property values from style data
 // stored in DOM elements in the form of custom CSS properties/variables.
@@ -4798,6 +4794,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugLoadDelta = 0;
 		this._debugInvalidateCount = 0;
 		this._debugRenderCount = 0;
+		this._debugDeltas = 0;
 		if (!this._debugData) {
 			this._debugData = {};
 			this._debugDataNames = ['tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount', 'postMessage'];
@@ -6509,8 +6506,9 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_applyDelta: function(tile, rawDelta, isKeyframe) {
-		// console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
-		//	    ' of length ' + rawDelta.length + ' hex: ' + hex2string(rawDelta));
+		if (this._debugDeltas)
+			window.app.console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
+					       ' of length ' + rawDelta.length + ' hex: ' + hex2string(rawDelta));
 
 		if (rawDelta.length === 0)
 			return 0; // that was easy!
@@ -6531,7 +6529,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		tile.lastKeyframe = isKeyframe;
 
 		// apply potentially several deltas in turn.
-		// var i = 0;
+		var i = 0;
 		var offset = 0, nextOffset = 0;
 		while (offset < rawDelta.length)
 		{
@@ -6541,19 +6539,21 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			var delta = inflator.result;
 			nextOffset = rawDelta.length - inflator.strm.avail_in;
-			console.log('Next delta at ' + nextOffset);
+			if (this._debugDeltas)
+				window.app.console.log('Next delta at ' + nextOffset);
 
 			// Debugging paranoia: if we get this wrong bad things happen.
 			if ((isKeyframe && delta.length != canvas.width * canvas.height * 4) ||
 			    (!isKeyframe && delta.length == canvas.width * canvas.height * 4))
 			{
-				console.log('Unusual ' + (isKeyframe ? 'keyframe' : 'delta') +
-					    ' possibly mis-tagged, suspicious size vs. type ' +
-					    delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
+				window.app.console.log('Unusual ' + (isKeyframe ? 'keyframe' : 'delta') +
+						       ' possibly mis-tagged, suspicious size vs. type ' +
+						       delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
 			}
 
-			// console.log('Apply chunk ' + i++ + ' of size ' + delta.length +
-			//	    ' at compressed stream offset ' + offset + ' compressed size ' + (nextOffset - offset));
+			if (this._debugDeltas)
+				window.app.console.log('Apply chunk ' + i++ + ' of size ' + delta.length +
+						       ' at compressed stream offset ' + offset + ' compressed size ' + (nextOffset - offset));
 			this._applyDeltaChunk(canvas, tile, initCanvas, delta, isKeyframe);
 			initCanvas = false;
 			isKeyframe = false;
@@ -6565,9 +6565,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		var ctx = canvas.getContext('2d');
 
 		var pixSize = canvas.width * canvas.height * 4;
-		console.log('Applying a ' + (isKeyframe ? 'keyframe' : 'delta') +
-			    ' of length ' + delta.length + ' canvas size: ' + pixSize + '\n');
-		// + ' hex: ' + hex2string(delta));
+		if (this._debugDeltas)
+			window.app.console.log('Applying a ' + (isKeyframe ? 'keyframe' : 'delta') +
+					       ' of length ' + delta.length + ' canvas size: ' + pixSize);
+			// + ' hex: ' + hex2string(delta));
 
 		if (delta.length === 0)
 			return; // that was easy!
@@ -6613,7 +6614,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				var count = delta[i+1];
 				var srcRow = delta[i+2];
 				var destRow = delta[i+3];
-				console.log('[' + i + ']: copy ' + count + ' row(s) ' + srcRow + ' to ' + destRow);
+				if (this._debugDeltas)
+					window.app.console.log('[' + i + ']: copy ' + count + ' row(s) ' + srcRow + ' to ' + destRow);
 				i+= 4;
 				for (var cnt = 0; cnt < count; ++cnt)
 				{
@@ -6630,7 +6632,9 @@ L.CanvasTileLayer = L.Layer.extend({
 				var destCol = delta[i+2];
 				var span = delta[i+3];
 				offset = destRow * canvas.width * 4 + destCol * 4;
-				console.log('[' + i + ']: apply new span of size ' + span + ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
+				if (this._debugDeltas)
+					window.app.console.log('[' + i + ']: apply new span of size ' + span +
+							       ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 				i += 4;
 				span *= 4;
 				// imgData.data[offset + 1] = 256; // debug - greener start
@@ -6640,7 +6644,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				// imgData.data[offset - 2] = 256; // debug - blue terminator
 				break;
 			default:
-				console.log('[' + i + ']: ERROR: Unknown code ' + delta[i]);
+				console.log('[' + i + ']: ERROR: Unknown delta code ' + delta[i]);
 				i = delta.length;
 				break;
 			}
