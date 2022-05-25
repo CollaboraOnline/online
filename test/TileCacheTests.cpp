@@ -30,6 +30,13 @@
 #include <sstream>
 #include <random>
 
+// For when we get a delta.
+#if ENABLE_DELTAS
+#  define DELTA_MSG "delta:"
+#else
+#  define DELTA_MSG "tile:"
+#endif
+
 using namespace helpers;
 
 namespace CPPUNIT_NS
@@ -1691,7 +1698,7 @@ void TileCacheTests::testTileWireIDHandling()
 
     // For the second input wsd will send one tile, since some of them are identical.
     const int arrivedTiles
-        = countMessages(socket, "tile:", testname, std::chrono::milliseconds(500));
+        = countMessages(socket, DELTA_MSG, testname, std::chrono::milliseconds(500));
     if (arrivedTiles == 1)
         return;
 
@@ -1704,7 +1711,7 @@ void TileCacheTests::testTileWireIDHandling()
     assertResponseString(socket, "invalidatetiles:", testname);
 
     LOK_ASSERT_MESSAGE("Expected exactly one tile.",
-                       countMessages(socket, "tile:", testname, std::chrono::milliseconds(500))
+                       countMessages(socket, DELTA_MSG, testname, std::chrono::milliseconds(500))
                            == 1);
 
     socket->asyncShutdown();
@@ -1864,7 +1871,7 @@ void TileCacheTests::testTileBeingRenderedHandling()
         assertResponseString(socket, "invalidatetiles:", testname);
 
         const int arrivedTiles
-            = countMessages(socket, "tile:", testname, std::chrono::milliseconds(500));
+            = countMessages(socket, DELTA_MSG, testname, std::chrono::milliseconds(500));
         if (arrivedTiles != 1)
         {
             // Or, at most 2. The reason is that sometimes we get line antialiasing differences that
@@ -1879,7 +1886,7 @@ void TileCacheTests::testTileBeingRenderedHandling()
 
             LOK_ASSERT_MESSAGE(
                 "Expected exactly one tile.",
-                countMessages(socket, "tile:", testname, std::chrono::milliseconds(500)) == 1);
+                countMessages(socket, DELTA_MSG, testname, std::chrono::milliseconds(500)) == 1);
         }
     }
 
@@ -1941,7 +1948,7 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     assertResponseString(socket1, "invalidatetiles:", testname);
 
     LOK_ASSERT_MESSAGE("Expected exactly one tile.",
-                       countMessages(socket1, "tile:", testname, std::chrono::seconds(1)) == 1);
+                       countMessages(socket1, DELTA_MSG, testname, std::chrono::seconds(1)) == 1);
 
     //2. Now request the same tiles by the other client (e.g. scroll to the same view)
 

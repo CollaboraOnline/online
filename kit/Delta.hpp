@@ -13,7 +13,7 @@
 #include <Log.hpp>
 #include <Common.hpp>
 
-#define ENABLE_DELTAS 0
+#define ENABLE_DELTAS 1
 
 #ifndef TILE_WIRE_ID
 #  define TILE_WIRE_ID

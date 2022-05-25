@@ -463,14 +463,14 @@ app.definitions.Socket = L.Class.extend({
 		// pass deltas through quickly.
 		if (e.imgBytes && (isTile || isDelta) && e.imgBytes[e.imgIndex] != 80 /* P(ng) */)
 		{
-			window.app.console.log('Passed through delta object');
+			// window.app.console.log('Passed through delta object');
 			e.image = { rawData: e.imgBytes.subarray(e.imgIndex),
 				    isKeyframe: isTile };
 			e.imageIsComplete = true;
 			return;
 		}
 
-		console.log('PNG preview');
+		// window.app.console.log('PNG preview');
 
 		// lazy-loaded PNG slide previews
 		var img = this._extractImage(e);
