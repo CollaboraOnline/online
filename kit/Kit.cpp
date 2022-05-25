@@ -114,6 +114,9 @@ class Document;
 static Document *singletonDocument = nullptr;
 #endif
 
+static const std::thread::id nullThreadId;
+static std::thread::id mainKitSocketPollThread;
+
 _LibreOfficeKit* loKitPtr = nullptr;
 
 /// Used for test code to accelerating waiting until idle and to
@@ -1866,11 +1869,16 @@ private:
 
 static constexpr int traceEventRecordingsCapacity = 100;
 static std::vector<std::string> traceEventRecordings;
+static std::mutex traceEventRecordingsMutex;
 
 static void flushTraceEventRecordings()
 {
     if (traceEventRecordings.size() == 0)
         return;
+
+    assert(mainKitSocketPollThread == std::this_thread::get_id());
+
+    std::unique_lock<std::mutex> lock(traceEventRecordingsMutex);
 
     std::size_t totalLength = 0;
     for (const auto& i: traceEventRecordings)
@@ -1907,7 +1915,8 @@ void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
     if (singletonDocument == nullptr)
         return;
 
-    singletonDocument->sendTextFrame("forcedtraceevent: \n" + recording);
+    std::unique_lock<std::mutex> lock(traceEventRecordingsMutex);
+    traceEventRecordings.emplace_back(recording + "\n");
 }
 
 void TraceEvent::emitOneRecording(const std::string &recording)
@@ -1922,10 +1931,17 @@ void TraceEvent::emitOneRecording(const std::string &recording)
     if (singletonDocument == nullptr)
         return;
 
-    if (traceEventRecordings.size() >= traceEventRecordingsCapacity)
-        flushTraceEventRecordings();
-    else if (traceEventRecordings.size() == 0 && traceEventRecordings.capacity() < traceEventRecordingsCapacity)
-        traceEventRecordings.reserve(traceEventRecordingsCapacity);
+    if (mainKitSocketPollThread == std::this_thread::get_id())
+    {
+        if (traceEventRecordings.size() >= traceEventRecordingsCapacity)
+            flushTraceEventRecordings();
+        else if (traceEventRecordings.size() == 0 && traceEventRecordings.capacity() < traceEventRecordingsCapacity)
+        {
+            std::unique_lock<std::mutex> lock(traceEventRecordingsMutex);
+            traceEventRecordings.reserve(traceEventRecordingsCapacity);
+        }
+    }
+    std::unique_lock<std::mutex> lock(traceEventRecordingsMutex);
     traceEventRecordings.emplace_back(recording + "\n");
 }
 
@@ -1962,6 +1978,7 @@ class KitSocketPoll final : public SocketPoll
         terminationFlag = false;
 #endif
         mainPoll = this;
+        mainKitSocketPollThread = mainPoll->getThreadOwner();
     }
 
 public:
@@ -1969,6 +1986,7 @@ public:
     {
         // Just to make it easier to set a breakpoint
         mainPoll = nullptr;
+        mainKitSocketPollThread = nullThreadId;
     }
 
     static void dumpGlobalState(std::ostream &oss)

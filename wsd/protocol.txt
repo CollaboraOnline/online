@@ -720,15 +720,11 @@ clipboardcontent:
      ...
 
 traceevent:
-forcedtraceevent:
 
      Followed by a number of lines consisting of Chrome Trace Event
      formatted data recorded by the comphelper::TraceEvent API in the
      core parts of the kit process.
 
-     The forcedtraceevent variant causes the data to be written to the
-     output file even if Trace Event recording is not turned on at the
-     moment. This is for metadata information.
 
 parent -> child
 ===============

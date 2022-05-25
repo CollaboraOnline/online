@@ -2634,16 +2634,6 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
                     COOLWSD::writeTraceEventRecording(newLine + 1, payload.size() - (newLine + 1 - payload.data()));
             }
         }
-        else if (message->firstTokenMatches("forcedtraceevent:"))
-        {
-            LOG_CHECK_RET(message->tokens().size() == 1, false);
-            if (COOLWSD::TraceEventFile != NULL)
-            {
-                const auto newLine = static_cast<const char*>(memchr(payload.data(), '\n', payload.size()));
-                if (newLine)
-                    COOLWSD::writeTraceEventRecording(newLine + 1, payload.size() - (newLine + 1 - payload.data()));
-            }
-        }
         else
         {
             LOG_ERR("Unexpected message: [" << message->abbr() << "].");
