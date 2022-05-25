@@ -6575,11 +6575,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (isKeyframe)
 		{
-			// FIXME: zlib.js to de-compress directly into Uint8ClampedArray?
-			// FIXME: re-use that same Uint8ClampedArray each time too ...
-			// FIXME: subarray delta to only the 1st image pixels we want to add.
+			// FIXME: tweak Pako to de-compress directly into a Uint8ClampedArray
 			ctx.putImageData(new ImageData(new Uint8ClampedArray(delta),
 						       canvas.width, canvas.height), 0, 0);
+			return;
 		}
 
 		if (initCanvas && tile.el) // render old image data to the canvas
