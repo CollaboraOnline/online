@@ -267,6 +267,9 @@ void DocumentBroker::pollThread()
         _poll->poll(unloading ? SocketPoll::DefaultPollTimeoutMicroS / 16
                               : SocketPoll::DefaultPollTimeoutMicroS);
 
+        // Consolidate updates across multiple processed events.
+        processBatchUpdates();
+
         if (_stop)
         {
             LOG_DBG("Doc [" << _docKey << "] is flagged to stop after returning from poll.");
@@ -519,6 +522,8 @@ void DocumentBroker::pollThread()
             = std::min(flushTimeoutMicroS - elapsedMicroS,
                        std::chrono::microseconds(POLL_TIMEOUT_MICRO_S / 5));
         _poll->poll(timeoutMicroS);
+
+        processBatchUpdates();
     }
 
     LOG_INF("Finished flushing socket for doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
@@ -3312,8 +3317,21 @@ void DocumentBroker::broadcastMessageToOthers(const std::string& message, const 
 void DocumentBroker::updateLastActivityTime()
 {
     _lastActivityTime = std::chrono::steady_clock::now();
+    // posted to admin console in the main polling loop.
+}
+
+void DocumentBroker::processBatchUpdates()
+{
 #if !MOBILEAPP
-    Admin::instance().updateLastActivityTime(_docKey);
+    const auto timeSinceLastNotifyMs =
+        std::chrono::duration_cast<std::chrono::milliseconds>(
+            _lastActivityTime - _lastNotifiedActivityTime).count();
+
+    if (timeSinceLastNotifyMs > 250)
+    {
+        Admin::instance().updateLastActivityTime(_docKey);
+        _lastNotifiedActivityTime = _lastActivityTime;
+    }
 #endif
 }
 
