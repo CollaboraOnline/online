@@ -274,6 +274,22 @@ L.Control.JSDialog = L.Control.extend({
 		setupPosition();
 		this.updatePosition(container, posX, posY);
 
+		if (isModalPopup) {
+			// close when focus goes out using 'tab' key
+			var beginMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-begin-marker');
+			var endMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-end-marker');
+
+			beginMarker.tabIndex = 0;
+			endMarker.tabIndex = 0;
+
+			container.addEventListener('focusin', function(event) {
+				if (event.target == beginMarker || event.target == endMarker) {
+					that.close(data.id, true);
+					that.map.focus();
+				}
+			});
+		}
+
 		// after some updates, eg. drawing areas window can be bigger than initially
 		// update possition according to that with small delay
 
@@ -282,6 +298,18 @@ L.Control.JSDialog = L.Control.extend({
 			setupPosition(force);
 			that.updatePosition(container, posX, posY);
 			container.style.visibility = '';
+
+			// setup initial focus and helper elements for closing popup
+			var initialFocusElement =
+				container.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker)');
+
+			if (isModalPopup) {
+				container.insertBefore(beginMarker, container.firstChild);
+				container.appendChild(endMarker);
+			}
+
+			initialFocusElement.focus();
+
 			if (toRemove)
 				L.DomUtil.remove(toRemove);
 			var focusWidget = focusWidgetId ?
