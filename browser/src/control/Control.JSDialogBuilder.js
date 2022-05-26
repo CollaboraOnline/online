@@ -1725,6 +1725,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', span);
 		text.innerText = entry.text;
+		text.tabIndex = 0;
 
 		if (entry.children) {
 			var ul = L.DomUtil.create('ul', builder.options.cssClass, li);
@@ -1738,6 +1739,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (!disabled) {
 				if (entry.ondemand) {
+					expander.tabIndex = 0;
 					L.DomEvent.on(expander, 'click', function() {
 						if (entry.ondemand && L.DomUtil.hasClass(span, 'collapsed'))
 							builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
@@ -1758,7 +1760,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (!disabled && entry.state == null) {
 			var singleClick = treeViewData.singleclickactivate === 'true' || treeViewData.singleclickactivate === true;
-			$(text).click(function() {
+			var clickFunction = function() {
 				$('#' + treeViewData.id + ' .ui-treeview-entry').removeClass('selected');
 				$(span).addClass('selected');
 
@@ -1766,6 +1768,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (singleClick) {
 					builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
 				}
+			};
+
+			text.addEventListener('click', clickFunction);
+			text.addEventListener('keypress', function onEvent(event) {
+				if (event.key === 'Enter')
+					clickFunction();
 			});
 
 			if (!singleClick) {
