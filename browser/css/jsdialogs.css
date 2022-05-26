@@ -1168,6 +1168,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* formulabar */
 #sc_input_window.formulabar {
+	height: 29px;
 	border: 1px solid var(--color-border);
 	flex-grow: 1;
 	resize: none !important;
