@@ -769,8 +769,10 @@ public:
     void addCallback(const CallbackFn& fn)
     {
         std::lock_guard<std::mutex> lock(_mutex);
+        bool wasEmpty = _newCallbacks.empty();
         _newCallbacks.emplace_back(fn);
-        wakeup();
+        if (wasEmpty)
+            wakeup();
     }
 
     virtual void dumpState(std::ostream& os);
