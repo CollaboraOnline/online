@@ -1229,6 +1229,9 @@ private:
         _docState.setActivity(DocumentState::Activity::None);
     }
 
+    /// Performs aggregated work after servicing all client sessions
+    void processBatchUpdates();
+
     /// The main state of the document.
     DocumentState _docState;
 
@@ -1278,6 +1281,7 @@ private:
 
     int _debugRenderedTileCount;
 
+    std::chrono::steady_clock::time_point _lastNotifiedActivityTime;
     std::chrono::steady_clock::time_point _lastActivityTime;
     std::chrono::steady_clock::time_point _threadStart;
     std::chrono::milliseconds _loadDuration;
