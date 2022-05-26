@@ -308,9 +308,11 @@ namespace Util
 
 #if !MOBILEAPP
 
-    static const char *startsWith(const char *line, const char *tag)
+    static const char *startsWith(const char *line, const char *tag, std::size_t tagLen)
     {
-        std::size_t len = std::strlen(tag);
+        assert(strlen(tag) == tagLen);
+
+        std::size_t len = tagLen;
         if (!strncmp(line, tag, len))
         {
             while (!isdigit(line[len]) && line[len] != '\0')
@@ -358,7 +360,7 @@ namespace Util
             while (fgets(line, sizeof(line), file))
             {
                 const char* value;
-                if ((value = startsWith(line, "MemTotal:")))
+                if ((value = startsWith(line, "MemTotal:", 9)))
                 {
                     totalMemKb = atoi(value);
                     break;
@@ -379,13 +381,17 @@ namespace Util
             char line[4096] = { 0 };
             while (fgets(line, sizeof (line), file))
             {
+                if (line[0] != 'P')
+                    continue;
+
                 const char *value;
+
                 // Shared_Dirty is accounted for by forkit's RSS
-                if ((value = startsWith(line, "Private_Dirty:")))
+                if ((value = startsWith(line, "Private_Dirty:", 14)))
                 {
                     numDirtyKb += atoi(value);
                 }
-                else if ((value = startsWith(line, "Pss:")))
+                else if ((value = startsWith(line, "Pss:", 4)))
                 {
                     numPSSKb += atoi(value);
                 }
