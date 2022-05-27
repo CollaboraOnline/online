@@ -287,11 +287,19 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     END(oss_);                                                                                     \
     LOG_LOG(LOG, PRIO, LVL, oss_.str())
 
+#if defined __GNUC__ || defined __clang__
+#  define LOG_CONDITIONAL(log,type)                                                                \
+    __builtin_expect((!Log::isShutdownCalled() && log.type()), 0)
+#else
+#  define LOG_CONDITIONAL(log,type)                                                                \
+    (!Log::isShutdownCalled() && log.type())
+#endif
+
 #define LOG_TRC(X)                                                                                 \
     do                                                                                             \
     {                                                                                              \
         auto& log_ = Log::logger();                                                                \
-        if (!Log::isShutdownCalled() && log_.trace())                                              \
+        if (LOG_CONDITIONAL(log_, trace))                                                          \
         {                                                                                          \
             LOG_BODY_(log_, TRACE, "TRC", X, LOG_END);                                             \
         }                                                                                          \
@@ -301,7 +309,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     do                                                                                             \
     {                                                                                              \
         auto& log_ = Log::logger();                                                                \
-        if (!Log::isShutdownCalled() && log_.trace())                                              \
+        if (LOG_CONDITIONAL(log_, trace))                                                          \
         {                                                                                          \
             LOG_BODY_(log_, TRACE, "TRC", X, LOG_END_NOFILE);                                      \
         }                                                                                          \
@@ -311,7 +319,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     do                                                                                             \
     {                                                                                              \
         auto& log_ = Log::logger();                                                                \
-        if (!Log::isShutdownCalled() && log_.debug())                                              \
+        if (LOG_CONDITIONAL(log_, debug))                                                          \
         {                                                                                          \
             LOG_BODY_(log_, DEBUG, "DBG", X, LOG_END);                                             \
         }                                                                                          \
@@ -321,7 +329,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     do                                                                                             \
     {                                                                                              \
         auto& log_ = Log::logger();                                                                \
-        if (!Log::isShutdownCalled() && log_.information())                                        \
+        if (LOG_CONDITIONAL(log_, information))                                                          \
         {                                                                                          \
             LOG_BODY_(log_, INFORMATION, "INF", X, LOG_END);                                       \
         }                                                                                          \
@@ -331,7 +339,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     do                                                                                             \
     {                                                                                              \
         auto& log_ = Log::logger();                                                                \
-        if (!Log::isShutdownCalled() && log_.information())                                        \
+        if (LOG_CONDITIONAL(log_, information))                                                          \
         {                                                                                          \
             LOG_BODY_(log_, INFORMATION, "INF", X, LOG_END_NOFILE);                                \
         }                                                                                          \
@@ -341,7 +349,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     do                                                                                             \
     {                                                                                              \
         auto& log_ = Log::logger();                                                                \
-        if (!Log::isShutdownCalled() && log_.warning())                                            \
+        if (LOG_CONDITIONAL(log_, warning))                                                              \
         {                                                                                          \
             LOG_BODY_(log_, WARNING, "WRN", X, LOG_END);                                           \
         }                                                                                          \
@@ -351,7 +359,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     do                                                                                             \
     {                                                                                              \
         auto& log_ = Log::logger();                                                                \
-        if (!Log::isShutdownCalled() && log_.error())                                              \
+        if (LOG_CONDITIONAL(log_, error))                                                          \
         {                                                                                          \
             LOG_BODY_(log_, ERROR, "ERR", X, LOG_END);                                             \
         }                                                                                          \
@@ -375,7 +383,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     {                                                                                              \
         std::cerr << X << std::endl;                                                               \
         auto& log_ = Log::logger();                                                                \
-        if (!Log::isShutdownCalled() && log_.fatal())                                              \
+        if (LOG_CONDITIONAL(log_, fatal))                                                          \
         {                                                                                          \
             LOG_BODY_(log_, FATAL, "FTL", X, LOG_END);                                             \
         }                                                                                          \
