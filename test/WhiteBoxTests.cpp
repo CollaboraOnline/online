@@ -46,6 +46,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testRegexListMatcher_Init);
     CPPUNIT_TEST(testEmptyCellCursor);
     CPPUNIT_TEST(testTileDesc);
+    CPPUNIT_TEST(testTileData);
     CPPUNIT_TEST(testRectanglesIntersect);
     CPPUNIT_TEST(testJson);
     CPPUNIT_TEST(testAnonymization);
@@ -78,6 +79,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testRegexListMatcher_Init();
     void testEmptyCellCursor();
     void testTileDesc();
+    void testTileData();
     void testRectanglesIntersect();
     void testJson();
     void testAnonymization();
@@ -626,6 +628,52 @@ void WhiteBoxTests::testTileDesc()
     TileCombined combined = TileCombined::parse(
         "tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504 tileposy=0,0,0,0,0,0,0,0,3072,3072,3072,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360,15360,15360,15360,18432,18432,18432,18432,18432,18432,18432,18432 oldwid=2,3,4,5,6,7,8,8,9,10,11,12,13,14,15,16,17,18,19,20,21,0,0,0,24,25,26,27,28,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3072 tileheight=3072");
     (void)combined; // exception in parse if we have problems.
+}
+
+void WhiteBoxTests::testTileData()
+{
+    constexpr auto testname = __func__;
+
+    TileData data(42, "Zfoo", 4);
+    size_t withFoo = data.size();
+
+    // replace keyframe
+    data.appendBlob(43, "Zfoo", 4);
+    LOK_ASSERT_EQUAL(data.size(), withFoo);
+
+    // append a delta
+    data.appendBlob(44, "Dbaa", 4);
+    LOK_ASSERT_EQUAL(data.size(), withFoo + 4 + sizeof (BlobData) - 1);
+
+    LOK_ASSERT_EQUAL(data.isPng(), false);
+
+    // validation.
+    LOK_ASSERT_EQUAL(data.isValid(), true);
+    data.invalidate();
+    LOK_ASSERT_EQUAL(data.isValid(), false);
+
+    std::vector<char> out;
+    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 128), false);
+    LOK_ASSERT_EQUAL(out.size(), size_t(0));
+
+    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 42), true);
+    LOK_ASSERT_EQUAL(std::string("foobaa"), Util::toString(out));
+
+    out.clear();
+    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 43), true);
+    LOK_ASSERT_EQUAL(std::string("baa"), Util::toString(out));
+
+    // append another delta
+    data.appendBlob(47, "Dbaz", 4);
+    LOK_ASSERT_EQUAL(data.size(), withFoo + (4 - 1 + sizeof (BlobData)) * 2);
+
+    out.clear();
+    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 1), true);
+    LOK_ASSERT_EQUAL(std::string("foobaabaz"), Util::toString(out));
+
+    out.clear();
+    LOK_ASSERT_EQUAL(data.appendChangesSince(out, 43), true);
+    LOK_ASSERT_EQUAL(std::string("baabaz"), Util::toString(out));
 }
 
 void WhiteBoxTests::testRectanglesIntersect()
