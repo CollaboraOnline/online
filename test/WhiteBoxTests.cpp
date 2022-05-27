@@ -635,15 +635,14 @@ void WhiteBoxTests::testTileData()
     constexpr auto testname = __func__;
 
     TileData data(42, "Zfoo", 4);
-    size_t withFoo = data.size();
 
     // replace keyframe
     data.appendBlob(43, "Zfoo", 4);
-    LOK_ASSERT_EQUAL(data.size(), withFoo);
+    LOK_ASSERT_EQUAL(size_t(3), data.size());
 
     // append a delta
     data.appendBlob(44, "Dbaa", 4);
-    LOK_ASSERT_EQUAL(data.size(), withFoo + 4 + sizeof (BlobData) - 1);
+    LOK_ASSERT_EQUAL(size_t(6), data.size());
 
     LOK_ASSERT_EQUAL(data.isPng(), false);
 
@@ -665,7 +664,7 @@ void WhiteBoxTests::testTileData()
 
     // append another delta
     data.appendBlob(47, "Dbaz", 4);
-    LOK_ASSERT_EQUAL(data.size(), withFoo + (4 - 1 + sizeof (BlobData)) * 2);
+    LOK_ASSERT_EQUAL(data.size(), size_t(9));
 
     out.clear();
     LOK_ASSERT_EQUAL(data.appendChangesSince(out, 1), true);
