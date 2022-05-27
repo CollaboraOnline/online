@@ -257,7 +257,7 @@ void TileCacheTests::testSimple()
     // Find Tile
     tileData = tc.lookupTile(tile);
     LOK_ASSERT_MESSAGE("tile not found when expected", tileData && tileData->isValid());
-    BlobData &keyframe = *tileData->keyframe();
+    const BlobData &keyframe = tileData->data();
     LOK_ASSERT_MESSAGE("cached tile corrupted", keyframe.size() == data.size() - 1 /* dropped Z */);
     for (size_t i = 0; i < data.size() - 1; ++i)
         LOK_ASSERT_MESSAGE("cached tile data", data[i+1] == keyframe[i]);

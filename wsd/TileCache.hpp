@@ -67,36 +67,36 @@ struct TileData
     // Add a frame or delta and - return the size change
     ssize_t appendBlob(TileWireId id, const char *data, const size_t dataSize)
     {
-        size_t oldSize = 0;
-
-        oldSize = size();
+        size_t oldCacheSize = size();
 
         assert (dataSize >= 1); // kit provides us a 'Z' or a 'D' or a png
         if (isKeyframe(data, dataSize))
         {
             LOG_TRC("received key-frame - clearing tile");
             _wids.clear();
+            _offsets.clear();
             _deltas.clear();
         }
         else
             LOG_TRC("received delta of size " << dataSize << " - appending to existing " << _wids.size());
 
-        // too many/large deltas means we should reset -
+        size_t oldSize = size();
+
+        // FIXME: too many/large deltas means we should reset -
         // but not here - when requesting the tiles.
         _wids.push_back(id);
-        _deltas.push_back(std::make_shared<BlobData>(dataSize - 1));
-        std::memcpy(_deltas.back()->data(), data + 1, dataSize - 1);
+        _offsets.push_back(_deltas.size());
+        _deltas.resize(oldSize + dataSize - 1);
+        std::memcpy(_deltas.data() + oldSize, data + 1, dataSize - 1);
 
         // FIXME: possible race - should store a seq. from the invalidation(s) ?
         _valid = true;
 
-        // FIXME: speed up sizing.
-        return size() - oldSize;
+        return size() - oldCacheSize;
     }
 
-    bool isPng() const { return (_deltas.size() == 1 &&
-                                 _deltas[0]->size() > 1 &&
-                                 (*_deltas[0])[0] == (char)0x89); }
+    bool isPng() const { return (_deltas.size() > 1 &&
+                                 _deltas[0] == (char)0x89); }
 
     static bool isKeyframe(const char *data, size_t dataSize)
     {
@@ -109,20 +109,17 @@ struct TileData
 
     bool _valid; // not true - waiting for a new tile if in view.
     std::vector<TileWireId> _wids;
-    std::vector<Blob> _deltas; // first item is a key-frame
+    std::vector<size_t> _offsets; // offset of the start of data
+    BlobData _deltas; // first item is a key-frame, followed by deltas at _offsets
 
     size_t size()
     {
-        size_t size = 0;
-        for (auto &b : _deltas)
-            size += b->size() + sizeof(BlobData);
-        return size + sizeof(TileData);
+        return _deltas.size();
     }
 
-    Blob &keyframe()
+    const BlobData &data()
     {
-        assert(_deltas.size() > 0);
-        return _deltas[0];
+        return _deltas;
     }
 
     /// if we send changes since this seq - do we need to first send the keyframe ?
@@ -143,30 +140,19 @@ struct TileData
         }
         else
         {
-            size_t start = i, extra = 0;
-            if (start != _deltas.size() - 1)
-                LOG_TRC("appending from " << start << " to " << (_deltas.size() - 1) <<
-                        " from wid: " << _wids[start] << " to wid: " << since);
-            for (i = start; i < _deltas.size(); ++i)
-                extra += _deltas[i]->size();
+            size_t offset = _offsets[i];
+            if (i != _offsets.size() - 1)
+                LOG_TRC("appending from " << i << " to " << (_offsets.size() - 1) <<
+                        " from wid: " << _wids[i] << " to wid: " << since <<
+                        " from offset: " << offset << " to " << _deltas.size());
 
-            size_t offset = output.size();
+            size_t extra = _deltas.size() - offset;
+            size_t dest = output.size();
             output.resize(output.size() + extra);
 
-            // FIXME: better writev style interface in the end ?
-//            LOG_TRC("added " << extra << " to array size " << offset);
-            for (i = start; i < _deltas.size(); ++i)
-            {
-                size_t toCopy = _deltas[i]->size();
-/*                LOG_TRC("copy item " << i << "/" << _deltas.size() << " of " << toCopy <<
-                        " bytes to array offset " << offset << ":\n"
-                        << Util::dumpHex(std::string((char *)_deltas[i]->data(), toCopy))); */
-
-                std::memcpy(output.data() + offset, _deltas[i]->data(), toCopy);
-                offset += toCopy;
-            }
+            std::memcpy(output.data() + dest, _deltas.data() + offset, extra);
+            return true;
         }
-        return true;
     }
 
     void dumpState(std::ostream& os)
@@ -177,7 +163,7 @@ struct TileData
             os << "deltas: ";
             for (size_t i = 0; i < _wids.size(); ++i)
             {
-                os << i << ": " << _wids[i] << " -> " << _deltas[i]->size() << " ";
+                os << i << ": " << _wids[i] << " -> " << _offsets[i] << " ";
             }
         }
     }
@@ -366,7 +352,7 @@ inline std::ostream& operator<< (std::ostream& os, const Tile& tile)
         os << "nullptr";
     else
         os << "keyframe id " << tile->_wids[0] <<
-            " size: " << tile->_deltas[0]->size() <<
+            " size: " << tile->_deltas.size() <<
             " deltas: " << (tile->_wids.size() - 1);
     return os;
 }
