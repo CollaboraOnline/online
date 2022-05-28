@@ -465,7 +465,7 @@ class DeltaGenerator {
             z_stream zstr;
             memset((void *)&zstr, 0, sizeof (zstr));
 
-            if (deflateInit2 (&zstr, Z_DEFAULT_COMPRESSION, Z_DEFLATED,
+            if (deflateInit2 (&zstr, Z_BEST_SPEED + 1, Z_DEFLATED,
                               -MAX_WBITS, 8, Z_DEFAULT_STRATEGY) != Z_OK)
             {
                 LOG_ERR("Failed to init deflate");
