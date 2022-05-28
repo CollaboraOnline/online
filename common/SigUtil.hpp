@@ -67,9 +67,6 @@ namespace SigUtil
 
     /// Register a wakeup function when changing
 
-    /// Trap signals to cleanup and exit the process gracefully.
-    void setTerminationSignals();
-
     /// Trap all fatal signals to assist debugging.
     void setFatalSignals(const std::string &versionInfo);
 

@@ -241,20 +241,6 @@ namespace SigUtil
         SocketPoll::wakeupWorld();
     }
 
-    void setTerminationSignals()
-    {
-        struct sigaction action;
-
-        sigemptyset(&action.sa_mask);
-        action.sa_flags = 0;
-        action.sa_handler = handleTerminationSignal;
-
-        sigaction(SIGINT, &action, nullptr);
-        sigaction(SIGTERM, &action, nullptr);
-        sigaction(SIGQUIT, &action, nullptr);
-        sigaction(SIGHUP, &action, nullptr);
-    }
-
     static char *VersionInfo = nullptr;
     static char FatalGdbString[256] = { '\0' };
 
@@ -369,6 +355,7 @@ namespace SigUtil
 
         setVersionInfo(versionInfo);
 
+        // Set up the fatal-signal handler. (N.B. three-argument handler)
         sigemptyset(&action.sa_mask);
         action.sa_flags = SA_SIGINFO;
         action.sa_sigaction = handleFatalSignal;
@@ -378,6 +365,16 @@ namespace SigUtil
         sigaction(SIGABRT, &action, nullptr);
         sigaction(SIGILL, &action, nullptr);
         sigaction(SIGFPE, &action, nullptr);
+
+        // Set up the terminatio-signal handler. (N.B. single-argument handler)
+        sigemptyset(&action.sa_mask);
+        action.sa_flags = 0;
+        action.sa_handler = handleTerminationSignal;
+
+        sigaction(SIGINT, &action, nullptr);
+        sigaction(SIGTERM, &action, nullptr);
+        sigaction(SIGQUIT, &action, nullptr);
+        sigaction(SIGHUP, &action, nullptr);
 
         // Prepare this in advance just in case.
         std::ostringstream stream;
