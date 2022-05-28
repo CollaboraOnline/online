@@ -541,7 +541,6 @@ int main(int argc, char** argv)
     }
 
     SigUtil::setFatalSignals("forkit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
-    SigUtil::setTerminationSignals();
 
     Util::setApplicationPath(Poco::Path(argv[0]).parent().toString());
 
