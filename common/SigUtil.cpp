@@ -418,6 +418,13 @@ namespace SigUtil
         action.sa_handler = handleUserSignal;
 
         sigaction(SIGUSR1, &action, nullptr);
+
+#if !defined(__ANDROID__)
+        // Prime backtrace to make sure libgcc is loaded.
+        constexpr int maxSlots = 1;
+        void* backtraceBuffer[maxSlots + 1];
+        backtrace(backtraceBuffer, maxSlots);
+#endif
     }
 
     void setDebuggerSignal()
