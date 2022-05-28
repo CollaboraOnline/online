@@ -109,6 +109,57 @@ namespace SigUtil
     }
 
 #if !MOBILEAPP
+    void signalLogPrefix()
+    {
+        char buffer[1024];
+        Log::prefix<sizeof(buffer) - 1>(buffer, "SIG");
+        signalLog(buffer);
+    }
+
+    // We need a signal safe means of writing messages
+    //   $ man 7 signal
+    void signalLog(const char *message)
+    {
+        while (true)
+        {
+            const int length = std::strlen(message);
+            const int written = write(STDERR_FILENO, message, length);
+            if (written < 0)
+            {
+                if (errno == EINTR)
+                    continue; // ignore.
+                else
+                    break;
+            }
+
+            message += written;
+            if (message[0] == '\0')
+                break;
+        }
+    }
+
+    // We need a signal safe means of writing messages
+    //   $ man 7 signal
+    void signalLogNumber(std::size_t num, int base)
+    {
+        int i;
+        char buf[22];
+        if (num == 0)
+        {
+            signalLog("0");
+            return;
+        }
+        buf[21] = '\0';
+        assert (base == 10 || base == 16);
+        for (i = 20; i > 0 && num > 0; --i)
+        {
+            int d = num % base;
+            buf[i] = (d < 10) ? ('0' + d) : ('a' + d - 10);
+            num /= base;
+        }
+        signalLog(buf + i + 1);
+    }
+
     /// This traps the signal-handler so we don't _Exit
     /// while dumping stack trace. It's re-entrant.
     /// Used to safely increment and decrement the signal-handler trap.
@@ -221,10 +272,10 @@ namespace SigUtil
             domain = " ok, ok - hard-termination signal received: ";
             hardExit = true;
         }
-        Log::signalLogPrefix();
-        Log::signalLog(domain);
-        Log::signalLog(signalName(signal));
-        Log::signalLog("\n");
+        signalLogPrefix();
+        signalLog(domain);
+        signalLog(signalName(signal));
+        signalLog("\n");
 
         if (!hardExit)
             SocketPoll::wakeupWorld();
@@ -250,33 +301,33 @@ namespace SigUtil
         SigHandlerTrap guard;
         bool bReEntered = !guard.isExclusive();
 
-        Log::signalLogPrefix();
+        signalLogPrefix();
 
         // Heap corruption can re-enter through backtrace.
         if (bReEntered)
-            Log::signalLog(" Fatal double signal received: ");
+            signalLog(" Fatal double signal received: ");
         else
-            Log::signalLog(" Fatal signal received: ");
-        Log::signalLog(signalName(signal));
+            signalLog(" Fatal signal received: ");
+        signalLog(signalName(signal));
         if (info)
         {
-            Log::signalLog(" code: ");
-            Log::signalLogNumber(info->si_code);
-            Log::signalLog(" for address: 0x");
-            Log::signalLogNumber((size_t)info->si_addr, 16);
+            signalLog(" code: ");
+            signalLogNumber(info->si_code);
+            signalLog(" for address: 0x");
+            signalLogNumber((size_t)info->si_addr, 16);
         }
-        Log::signalLog("\n");
+        signalLog("\n");
 
-        Log::signalLog("Recent activity:\n");
+        signalLog("Recent activity:\n");
         for (size_t i = 0; i < ActivityStrings.size(); ++i)
         {
             size_t idx = (ActivityStringIndex + i) % ActivityStrings.size();
             if (!ActivityStrings[idx].empty())
             {
                 // no plausible impl. will heap allocate in c_str.
-                Log::signalLog("\t");
-                Log::signalLog(ActivityStrings[idx].c_str());
-                Log::signalLog("\n");
+                signalLog("\t");
+                signalLog(ActivityStrings[idx].c_str());
+                signalLog("\n");
             }
         }
 
@@ -298,14 +349,14 @@ namespace SigUtil
     void dumpBacktrace()
     {
 #if !defined(__ANDROID__)
-        Log::signalLog("\nBacktrace ");
-        Log::signalLogNumber(getpid());
+        signalLog("\nBacktrace ");
+        signalLogNumber(getpid());
         if (VersionInfo)
         {
-            Log::signalLog(" - ");
-            Log::signalLog(VersionInfo);
+            signalLog(" - ");
+            signalLog(VersionInfo);
         }
-        Log::signalLog(":\n");
+        signalLog(":\n");
 
         const int maxSlots = 50;
         void *backtraceBuffer[maxSlots];
@@ -332,7 +383,7 @@ namespace SigUtil
             }
             else
             {
-                Log::signalLog(FatalGdbString);
+                signalLog(FatalGdbString);
                 LOG_ERR("Sleeping 60s to allow debugging: attach " << getpid());
                 std::cerr << "Sleeping 60s to allow debugging: attach " << getpid() << '\n';
                 sleep(60);
@@ -391,10 +442,10 @@ namespace SigUtil
     static
     void handleUserSignal(const int signal)
     {
-        Log::signalLogPrefix();
-        Log::signalLog(" User signal received: ");
-        Log::signalLog(signalName(signal));
-        Log::signalLog("\n");
+        signalLogPrefix();
+        signalLog(" User signal received: ");
+        signalLog(signalName(signal));
+        signalLog("\n");
         if (signal == SIGUSR1)
         {
             DumpGlobalState = true;

@@ -58,6 +58,13 @@ namespace SigUtil
     void setUnattended();
 
 #if !MOBILEAPP
+    /// Signal safe prefix logging
+    void signalLogPrefix();
+    /// Signal safe logging
+    void signalLog(const char* message);
+    /// Signal log number
+    void signalLogNumber(std::size_t num, int base = 10);
+
     /// Wait for the signal handler, if any,
     /// and prevent _Exit while collecting backtrace.
     void waitSigHandlerTrap();
