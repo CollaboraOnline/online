@@ -109,6 +109,8 @@ namespace SigUtil
     }
 
 #if !MOBILEAPP
+    static int SignalLogFD(STDERR_FILENO); //< The FD where signalLogs are dumped.
+
     void signalLogPrefix()
     {
         char buffer[1024];
@@ -123,7 +125,7 @@ namespace SigUtil
         while (true)
         {
             const int length = std::strlen(message);
-            const int written = write(STDERR_FILENO, message, length);
+            const int written = write(SignalLogFD, message, length);
             if (written < 0)
             {
                 if (errno == EINTR)
@@ -363,7 +365,7 @@ namespace SigUtil
         const int numSlots = backtrace(backtraceBuffer, maxSlots);
         if (numSlots > 0)
         {
-            backtrace_symbols_fd(backtraceBuffer, numSlots, STDERR_FILENO);
+            backtrace_symbols_fd(backtraceBuffer, numSlots, SignalLogFD);
         }
 #else
         LOG_INF("Backtrace not available on Android.");
