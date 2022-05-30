@@ -1180,6 +1180,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	height: 72px !important;
 }
 
+.expanded .formulabar.unotoolbutton {
+	margin-block-start: 2px;
+}
+
 .formulabar.unotoolbutton {
 	margin-inline-end: 4px !important;
 }
