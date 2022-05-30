@@ -1184,7 +1184,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin-inline-end: 4px !important;
 }
 
-.formulabar.unotoolbutton:not(.has-dropdown), .formulabar.unotoolbutton img, .formulabar.ui-pushbutton {
+.formulabar.unotoolbutton img, .formulabar.ui-pushbutton {
 	height: 24px !important;
 	width: 24px !important;
 	min-width: unset !important;
