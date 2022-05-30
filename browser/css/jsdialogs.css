@@ -1193,3 +1193,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	width: 24px !important;
 	min-width: unset !important;
 }
+
+#expand.formulabar {
+	height: 29px !important;
+	margin: 0 5px 0 0 !important;
+	border-radius: 0 !important;
+	border-inline-start-color: transparent;
+}
