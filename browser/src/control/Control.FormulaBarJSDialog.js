@@ -100,6 +100,7 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 	toggleMultiLine: function(input) {
 		if (L.DomUtil.hasClass(input, 'expanded')) {
 			L.DomUtil.removeClass(input, 'expanded');
+			L.DomUtil.removeClass(L.DomUtil.get('calc-inputbar-wrapper'), 'expanded');
 			this.onJSUpdate({
 				data: {
 					jsontype: 'formulabar',
@@ -115,6 +116,7 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 			});
 		} else {
 			L.DomUtil.addClass(input, 'expanded');
+			L.DomUtil.addClass(L.DomUtil.get('calc-inputbar-wrapper'), 'expanded');
 			this.onJSUpdate({
 				data: {
 					jsontype: 'formulabar',
