@@ -45,6 +45,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'name': 'Format',
 			},
 			{
+				'text': _('Form'),
+				'id': 'Form',
+				'name': 'Form',
+			},
+			{
 				'text': _('~Table'),
 				'id': '-8',
 				'name': 'Table',
@@ -79,6 +84,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				this.getReferencesTab(),
 				this.getReviewTab(),
 				this.getFormatTab(),
+				this.getFormTab(),
 				this.getTableTab(),
 				this.getDrawTab(),
 				this.getViewTab(),
@@ -941,6 +947,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
+		];
+
+		return this.getTabPage('Insert', content);
+	},
+
+	getFormTab: function() {
+		var content = [
 			{
 				'type': 'container',
 				'children': [
@@ -966,10 +979,36 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					},
 				],
 				'vertical': 'true'
-			}
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text':  _('Dropdown'),
+								'command': '.uno:InsertDropdownContentControl'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _('Content Control Properties'),
+								'command': '.uno:ContentControlProperties'
+							}
+						]
+					},
+				],
+				'vertical': 'true'
+			},
 		];
 
-		return this.getTabPage('Insert', content);
+		return this.getTabPage('Form', content);
 	},
 
 	getViewTab: function() {

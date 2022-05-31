@@ -132,6 +132,7 @@ COOL_CSS_LST =\
 	$(srcdir)/css/impress-mobile.css \
 	$(srcdir)/css/spreadsheet.css \
 	$(srcdir)/css/writer-mobile.css \
+	$(srcdir)/css/writer.css \
 	$(srcdir)/css/editor.css \
 	$(srcdir)/css/iframedialog.css \
 	$(builddir)/node_modules/jquery-contextmenu/dist/jquery.contextMenu.css \
@@ -223,7 +224,6 @@ COOL_JS_LST =\
 	src/layer/tile/CanvasSectionProps.js \
 	src/layer/tile/CanvasSectionContainer.ts \
 	src/layer/tile/CommentSection.ts \
-	src/layer/tile/ContentControlSection.ts \
 	src/layer/tile/CommentListSection.ts \
 	src/layer/tile/TilesSection.ts \
 	src/layer/tile/AutoFillMarkerSection.ts \
@@ -247,6 +247,7 @@ COOL_JS_LST =\
 	src/layer/tile/WriterTileLayer.js \
 	src/layer/tile/ImpressTileLayer.js \
 	src/layer/tile/CalcTileLayer.js \
+	src/layer/tile/ContentControlSection.ts \
 	src/layer/BackgroundColor.js \
 	src/layer/ImageOverlay.js \
 	src/layer/marker/ProgressOverlay.js \
