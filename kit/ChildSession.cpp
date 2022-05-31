@@ -343,7 +343,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens.equals(0, "formfieldevent") ||
                tokens.equals(0, "traceeventrecording") ||
                tokens.equals(0, "sallogoverride") ||
-               tokens.equals(0, "rendersearchresult"));
+               tokens.equals(0, "rendersearchresult") ||
+               tokens.equals(0, "contentcontrolevent"));
 
         std::string pzName("ChildSession::_handleInput:" + tokens[0]);
         ProfileZone pz(pzName.c_str());
@@ -496,6 +497,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens.equals(0, "formfieldevent"))
         {
             return formFieldEvent(buffer, length, tokens);
+        }
+        else if (tokens.equals(0, "contentcontrolevent"))
+        {
+            return contentControlEvent(buffer, length, tokens);
         }
         else if (tokens.equals(0, "traceeventrecording"))
         {
@@ -1616,6 +1621,23 @@ bool ChildSession::formFieldEvent(const char* buffer, int length, const StringVe
 
     getLOKitDocument()->setView(_viewId);
     getLOKitDocument()->sendFormFieldEvent(sArguments.c_str());
+
+    return true;
+}
+
+bool ChildSession::contentControlEvent(const char* buffer, int length, const StringVector& /*tokens*/)
+{
+    std::string sFirstLine = getFirstLine(buffer, length);
+    std::string sArguments = sFirstLine.substr(std::string("contentcontrolevent ").size());
+
+    if (sArguments.empty())
+    {
+        sendTextFrameAndLogError("error: cmd=contentcontrolevent kind=syntax");
+        return false;
+    }
+
+    getLOKitDocument()->setView(_viewId);
+    getLOKitDocument()->sendContentControlEvent(sArguments.c_str());
 
     return true;
 }

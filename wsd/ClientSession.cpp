@@ -855,7 +855,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "dialogevent") ||
              tokens.equals(0, "formfieldevent") ||
-             tokens.equals(0, "sallogoverride"))
+             tokens.equals(0, "sallogoverride") ||
+             tokens.equals(0, "contentcontrolevent"))
     {
         return forwardToChild(firstLine, docBroker);
     }

@@ -169,9 +169,6 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:InsertIndexesEntry'},
 					{uno: '.uno:InsertAuthoritiesEntry'},
 					{uno: '.uno:InsertMultiIndex'}]},
-				{name: _UNO('.uno:ContentControlsMenu', 'text'), type: 'menu', menu: [
-					{uno: '.uno:InsertContentControl'},
-					{uno: '.uno:InsertCheckboxContentControl'}]},
 			]},
 			{name: _UNO('.uno:FormatMenu', 'text'), id: 'format', type: 'menu', menu: [
 				{name: _UNO('.uno:FormatTextMenu', 'text'), type: 'menu', menu: [
@@ -282,6 +279,12 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:MergeCells'},
 				{type: 'separator'},
 				{uno: '.uno:TableDialog'}
+			]},
+			{name: _UNO('.uno:FormatFormMenu', 'text'), id: 'form', type: 'menu', menu: [
+				{uno: '.uno:InsertContentControl'},
+				{uno: '.uno:InsertCheckboxContentControl'},
+				{uno: '.uno:InsertDropdownContentControl'},
+				{uno: '.uno:ContentControlProperties'},
 			]},
 			{name: _UNO('.uno:ToolsMenu', 'text'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellingAndGrammarDialog'},
