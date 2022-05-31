@@ -189,10 +189,7 @@ class DeltaGenerator {
             // possibly we should RLE earlier ?
             if (i > 0 && src[i-1] == src[i])
             {
-                dest[0] = dest[-4];
-                dest[1] = dest[-3];
-                dest[2] = dest[-2];
-                dest[3] = dest[-1];
+                std::memcpy (dest, dest - 4, 4);
                 dest += 4;
                 continue;
             }
