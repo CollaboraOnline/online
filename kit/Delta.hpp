@@ -51,9 +51,12 @@ class DeltaGenerator {
     /// A bitmap tile with annotated rows and details on its location
     struct DeltaData {
         DeltaData () {};
-        DeltaData (TileWireId wid, int width, int height,
-                   int tileLeft, int tileTop, int tileSize,
-                   int tilePart, int size) :
+        DeltaData (TileWireId wid,
+                   unsigned char* pixmap, size_t startX, size_t startY,
+                   int width, int height,
+                   int tileLeft, int tileTop, int tileSize, int tilePart,
+                   int bufferWidth, int bufferHeight
+            ) :
             // in TWIPS
             _left(tileLeft),
             _top(tileTop),
@@ -63,7 +66,33 @@ class DeltaGenerator {
             // in Pixels
             _width(width),
             _height(height),
-            _rows(size) {};
+            _rows(height)
+        {
+            assert (startX + width <= (size_t)bufferWidth);
+            assert (startY + height <= (size_t)bufferHeight);
+
+            (void)bufferHeight;
+
+            LOG_TRC("Converting pixel data to delta data of size "
+                    << (width * height * 4) << " width " << width
+                    << " height " << height);
+
+            for (int y = 0; y < height; ++y)
+            {
+                DeltaBitmapRow &row = _rows[y];
+                size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
+                int32_t *src = reinterpret_cast<int32_t *>(pixmap + position);
+
+                // We get the hash ~for free as we copy - with a cheap hash.
+                uint64_t crc = 0x7fffffff - 1;
+                row.getPixels().resize(width);
+                for (int x = 0; x < width; ++x)
+                {
+                    crc = (crc << 7) + crc + src[x];
+                    row.getPixels()[x] = src[x];
+                }
+            }
+        }
 
         void setWid(TileWireId wid)
         {
@@ -102,14 +131,9 @@ class DeltaGenerator {
             _part = part;
         }
 
-        const std::vector<DeltaBitmapRow>& getRows() const
+        const DeltaBitmapRow& getRow(int y) const
         {
-            return _rows;
-        }
-
-        std::vector<DeltaBitmapRow>& getRows()
-        {
-            return _rows;
+            return _rows[y];
         }
 
         void replace(const std::shared_ptr<DeltaData> &repl)
@@ -214,7 +238,7 @@ class DeltaGenerator {
         for (int y = 0; y < prev.getHeight(); ++y)
         {
             // Life is good where rows match:
-            if (prev.getRows()[y].identical(cur.getRows()[y]))
+            if (prev.getRow(y).identical(cur.getRow(y)))
                 continue;
 
             // Hunt for other rows
@@ -222,7 +246,7 @@ class DeltaGenerator {
             for (int yn = 0; yn < prev.getHeight() && !matched; ++yn)
             {
                 size_t match = (y + lastMatchOffset + yn) % prev.getHeight();
-                if (prev.getRows()[match].identical(cur.getRows()[y]))
+                if (prev.getRow(match).identical(cur.getRow(y)))
                 {
                     // TODO: if offsets are >256 - use 16bits?
                     if (lastCopy > 0)
@@ -252,8 +276,8 @@ class DeltaGenerator {
                 continue;
 
             // Our row is just that different:
-            const DeltaBitmapRow &curRow = cur.getRows()[y];
-            const DeltaBitmapRow &prevRow = prev.getRows()[y];
+            const DeltaBitmapRow &curRow = cur.getRow(y);
+            const DeltaBitmapRow &prevRow = prev.getRow(y);
             for (int x = 0; x < prev.getWidth();)
             {
                 int same;
@@ -340,46 +364,6 @@ class DeltaGenerator {
         return true;
     }
 
-    std::shared_ptr<DeltaData> dataToDeltaData(
-        TileWireId wid,
-        unsigned char* pixmap, size_t startX, size_t startY,
-        int width, int height,
-        int tileLeft, int tileTop, int tileSize, int tilePart,
-        int bufferWidth, int bufferHeight)
-    {
-        auto data = std::make_shared<DeltaData>(wid, width, height,
-                                                tileLeft, tileTop,
-                                                tileSize, tilePart,
-                                                height);
-
-        assert (startX + width <= (size_t)bufferWidth);
-        assert (startY + height <= (size_t)bufferHeight);
-
-        (void)bufferHeight;
-
-        LOG_TRC("Converting pixel data to delta data of size "
-                << (width * height * 4) << " width " << width
-                << " height " << height);
-
-        for (int y = 0; y < height; ++y)
-        {
-            DeltaBitmapRow &row = data->getRows()[y];
-            size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
-            int32_t *src = reinterpret_cast<int32_t *>(pixmap + position);
-
-            // We get the hash ~for free as we copy - with a cheap hash.
-            uint64_t crc = 0x7fffffff - 1;
-            row.getPixels().resize(width);
-            for (int x = 0; x < width; ++x)
-            {
-                crc = (crc << 7) + crc + src[x];
-                row.getPixels()[x] = src[x];
-            }
-        }
-
-        return data;
-    }
-
   public:
     DeltaGenerator() {}
 
@@ -398,14 +382,20 @@ class DeltaGenerator {
         TileWireId wid, bool forceKeyframe,
         std::mutex &pngMutex)
     {
+        if ((width & 0x1) != 0) // power of two - RGBA
+        {
+            LOG_TRC("Bad width to create deltas " << width);
+            return false;
+        }
+
         // FIXME: why duplicate this ? we could overwrite
         // as we make the delta into an existing cache entry,
         // and just do this as/when there is no entry.
-        std::shared_ptr<DeltaData> update =
-            dataToDeltaData(wid, pixmap, startX, startY, width, height,
-                            tileLeft, tileTop, tileSize, tilePart,
-                            bufferWidth, bufferHeight);
-
+        std::shared_ptr<DeltaData> update(
+            new DeltaData(
+                wid, pixmap, startX, startY, width, height,
+                tileLeft, tileTop, tileSize, tilePart,
+                bufferWidth, bufferHeight));
         std::shared_ptr<DeltaData> cacheEntry;
 
         {
