@@ -26,6 +26,7 @@ class UnitFuzz : public UnitWSD
     std::uniform_int_distribution<> _dist;
 public:
     UnitFuzz() :
+        UnitWSD("fuzz"),
         _mt(_rd()),
         _dist(0, 1000)
     {
@@ -118,7 +119,7 @@ public:
 class UnitKitFuzz : public UnitKit
 {
 public:
-    UnitKitFuzz()
+    UnitKitFuzz() : UnitKit("fuzz")
     {
         std::cerr << "\n\nYour Kit process has fuzzing hooks\n\n\n";
         setTimeout(std::chrono::hours(1));
