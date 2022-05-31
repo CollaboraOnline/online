@@ -40,6 +40,24 @@ class DeltaGenerator {
 
     /// A bitmap tile with annotated rows and details on its location
     struct DeltaData {
+
+        static inline uint64_t copyWithCrc(uint32_t *to, const uint32_t *from, unsigned int width)
+        {
+            assert ((width & 0x1) == 0); // copy 64bits at a time.
+
+            const uint64_t *src = reinterpret_cast<const uint64_t *>(from);
+            uint64_t *dest = reinterpret_cast<uint64_t *>(to);
+
+            // We get the hash ~for free as we copy - with a cheap hash.
+            uint64_t crc = 0x7fffffff - 1;
+            for (unsigned int x = 0; x < (width>>1); ++x)
+            {
+                crc = (crc << 7) + crc + src[x];
+                dest[x] = src[x];
+            }
+            return crc;
+        }
+
         DeltaData (TileWireId wid,
                    unsigned char* pixmap, size_t startX, size_t startY,
                    int width, int height,
@@ -69,21 +87,13 @@ class DeltaGenerator {
             _pixels = (uint32_t *)malloc(width * height * 4);
             for (int y = 0; y < height; ++y)
             {
-                DeltaBitmapRow &row = _rows[y];
                 size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
-                uint32_t *src = reinterpret_cast<uint32_t *>(pixmap + position);
-                uint32_t *dest = _pixels + width * y;
-
-                // We get the hash ~for free as we copy - with a cheap hash.
-                uint64_t crc = 0x7fffffff - 1;
-                row._pixels = dest;
+                DeltaBitmapRow &row = _rows[y];
+                row._pixels = _pixels + width * y;
                 row._pixSize = width;
-                for (int x = 0; x < width; ++x)
-                {
-                    crc = (crc << 7) + crc + src[x];
-                    dest[x] = src[x];
-                }
-                row._crc = crc;
+                row._crc = copyWithCrc(
+                    const_cast<uint32_t *>(row._pixels),
+                    reinterpret_cast<uint32_t *>(pixmap + position), width);
             }
         }
 
