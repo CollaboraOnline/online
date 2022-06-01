@@ -1454,8 +1454,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					event.key === 'Backspace' ||
 					event.key === 'Space') {
 					// skip
-				} else
-					builder.callback('edit', 'keypress', edit, event.keyCode, builder);
+				} else {
+					var keyCode = event.keyCode;
+					if (event.ctrlKey) {
+						keyCode = event.key.toUpperCase().charCodeAt(0);
+						keyCode = builder.map.keyboard._toUNOKeyCode(keyCode);
+						keyCode |= UNOModifier.CTRL;
+					}
+
+					builder.callback('edit', 'keypress', edit, keyCode, builder);
+				}
 
 				event.preventDefault();
 			}
