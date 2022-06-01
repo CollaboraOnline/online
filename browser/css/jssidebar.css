@@ -3,6 +3,11 @@
 	text-transform: none !important;
 }
 
+#sidebar-panel {
+	padding: 0px;
+	margin-inline: 8px;
+}
+
 .sidebar .ui-content .unobutton {
 	margin: 0;
 	width: 24px;
@@ -89,12 +94,7 @@
 .sidebar.ui-expander {
 	display: flex;
 	justify-content: space-between;
-	width: calc(100% - 10px);
 	align-items: center;
-}
-
-.sidebar.ui-expander-content {
-	width: calc(100% - 10px);
 }
 
 #selectcolor {
@@ -206,8 +206,7 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 	color: var(--color-main-text);
 	font-size: var(--header-font-size);
 	line-height: var(--header-height);
-	padding-left: 8px;
-	padding-right: 8px; /* for RTL mode */
+	padding-inline: 4px;
 }
 
 .sidebar.root-container.jsdialog > .jsdialog.sidebar {
