@@ -498,6 +498,7 @@ var unoCommandsArray = {
 	'InsertCheckboxContentControl':{text:{menu:_('~Insert Checkbox'),},},
 	'InsertDropdownContentControl':{text:{menu:_('~Insert Dropdown'),},},
 	'ContentControlProperties':{text:{menu:_('~Content Control Properties'),},},
+	'InsertPictureContentControl': {text:{menu:_('~Insert Picture'),},},
 };
 
 window._UNO = function(string, component, isContext) {
