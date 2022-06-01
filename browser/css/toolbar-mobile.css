@@ -2,7 +2,6 @@
 	#formulabar #formulaInput, #formulabar #addressInput{
 		margin-left: 5px;
 		color: var(--color-main-text);
-		background-color: var(--color-main-background);
 		border: 1px solid var(--color-border) !important;
 		border-radius: 0px;
 	}

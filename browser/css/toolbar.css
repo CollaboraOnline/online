@@ -210,6 +210,8 @@ w2ui-toolbar {
 #addressInput {
 	height: 29px;
 	width: 100px;
+	color: var(--color-main-text);
+	background-color: var(--color-background-lighter);
 }
 
 #tb_formulabar_item_formula {
