@@ -465,7 +465,7 @@ L.TileSectionManager = L.Class.extend({
 				paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
 				paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
 			} else {
-				// do only for the predefined pane (paneOffset/repaintArea)
+				// do only for the predefined pane (paneOffset / repaintArea)
 				doOnePane = true;
 				paneOffset = paneTopLeft.clone();
 			}
