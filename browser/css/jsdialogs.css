@@ -1174,6 +1174,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	resize: none !important;
 	max-width: unset !important;
 	font-size: var(--default-font-size) !important;
+	color: var(--color-main-text);
+	background-color: var(--color-background-lighter);
 }
 
 #sc_input_window.formulabar.expanded {
