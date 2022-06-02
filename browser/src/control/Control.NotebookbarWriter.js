@@ -99,6 +99,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var hasSaveAs = !this._map['wopi'].UserCanNotWriteRelative;
 		var hasShare = this._map['wopi'].EnableShare;
 		var hasGroupedDownloadAs = !!window.groupDownloadAsForNb;
+		var hasRunMacro = !(window.enableMacrosExecution  === 'false');
 
 		var content = [
 			{
@@ -145,6 +146,18 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:Print', 'text'),
 					'command': '.uno:Print'
+				} : {},
+			hasRunMacro ?
+				{
+					'type': 'toolbox',
+					'children': [
+						{
+							'id': 'runmacro',
+							'type': 'bigtoolitem',
+							'text': _UNO('.uno:RunMacro', 'text'),
+							'command': '.uno:RunMacro'
+						}
+					]
 				} : {}
 		];
 
