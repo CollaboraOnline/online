@@ -501,8 +501,9 @@ var unoCommandsArray = {
 	'InsertContentControl':{text:{menu:_('~Insert Rich Text'),},},
 	'InsertCheckboxContentControl':{text:{menu:_('~Insert Checkbox'),},},
 	'InsertDropdownContentControl':{text:{menu:_('~Insert Dropdown'),},},
-	'ContentControlProperties':{text:{menu:_('~Content Control Properties'),},},
+	'ContentControlProperties':{text:{menu:_('Properties'),},},
 	'InsertPictureContentControl': {text:{menu:_('~Insert Picture'),},},
+	'InsertDateContentControl': {text:{menu:_('Insert Date'),},},
 };
 
 window._UNO = function(string, component, isContext) {

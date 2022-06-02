@@ -1027,8 +1027,18 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _('Content Control Properties'),
+								'text': _('Properties'),
 								'command': '.uno:ContentControlProperties'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _('Date'),
+								'command': '.uno:InsertDateContentControl'
 							}
 						]
 					},
