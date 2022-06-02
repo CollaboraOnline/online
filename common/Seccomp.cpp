@@ -68,6 +68,7 @@ static void handleSysSignal(int /* signal */,
 {
 	ucontext_t *uctx = static_cast<ucontext_t *>(context);
 
+    SigUtil::signalLogOpen();
     SigUtil::signalLogPrefix();
     SigUtil::signalLog("SIGSYS trapped with code: ");
     SigUtil::signalLogNumber(info->si_code);
@@ -86,6 +87,7 @@ static void handleSysSignal(int /* signal */,
     SigUtil::signalLog("\n");
 
     SigUtil::dumpBacktrace();
+    SigUtil::signalLogClose();
 
     Log::shutdown();
     _exit(1);
