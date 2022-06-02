@@ -290,6 +290,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertCheckboxContentControl'},
 				{uno: '.uno:InsertDropdownContentControl'},
 				{uno: '.uno:InsertPictureContentControl'},
+				{uno: '.uno:InsertDateContentControl'},
 				{uno: '.uno:ContentControlProperties'},
 			]},
 			{name: _UNO('.uno:ToolsMenu', 'text'), id: 'tools', type: 'menu', menu: [

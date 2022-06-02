@@ -34,6 +34,11 @@ class ContentControlSection {
 		});
 		this.onClickDropdown = this.onClickDropdown.bind(this);
 		this.sectionProperties.dropdownButton.addEventListener('click', this.onClickDropdown, false);
+		var container = L.DomUtil.createWithId('div', 'datepicker');
+		container.style.zIndex = '12';
+		container.style.position = 'absolute';
+		document.getElementById('document-container').appendChild(container);
+		this.sectionProperties.datePicker = false;
 	}
 
 	constructor() {
@@ -41,12 +46,30 @@ class ContentControlSection {
 		this.sectionProperties.rectangles = null;
 		this.sectionProperties.strokeStyle = null;
 		this.sectionProperties.json = null;
+		this.sectionProperties.datePicker = null;
 	}
 
 	public drawContentControl(json: any) {
 		this.sectionProperties.json = json;
+		this.sectionProperties.datePicker = false;
 		if (this.sectionProperties.dropdownButton)
 			this.map.removeLayer(this.sectionProperties.dropdownButton);
+
+		if (json.date) {
+			this.sectionProperties.datePicker = true;
+			$('#datepicker').datepicker({
+				onSelect: function (date: any, datepicker: any) {
+					if (date != '') {
+						var message = 'contentcontrolevent {"type": "date",' +
+								'"selected": "' + date + '"}';
+						app.socket.sendMessage(message);
+					}
+				}
+			});
+			$('#datepicker').hide();
+		} else {
+			$('#datepicker').datepicker('destroy');
+		}
 
 		if (json.action === 'show')	{
 			//convert string to number coordinates
@@ -65,6 +88,7 @@ class ContentControlSection {
 			else
 				this.map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
 		}
+
 		this.setPositionAndSize();
 		app.sectionContainer.requestReDraw();
 	}
@@ -114,7 +138,7 @@ class ContentControlSection {
 			this.context.strokeStyle = this.sectionProperties.strokeStyle;
 			this.context.strokeRect(x - this.position[0], y - this.position[1], w, h);
 		}
-		if (this.sectionProperties.json.items) {
+		if (this.sectionProperties.json.items || this.sectionProperties.datePicker) {
 			this.addDropDownBtn();
 		}
 	}
@@ -238,7 +262,22 @@ class ContentControlSection {
 	}
 
 	private onClickDropdown(event: any) {
-		this.map.fire('jsdialog', {data: this.openDropdownJson(), callback: this.callback});
+		if (this.sectionProperties.datePicker) {
+			this.showDatePicker();
+		} else if (this.sectionProperties.json.items) {
+			this.map.fire('jsdialog', {data: this.openDropdownJson(), callback: this.callback});
+		}
 		L.DomEvent.stopPropagation(event);
+	}
+
+	private showDatePicker() {
+		if ($('#datepicker').is(':visible')) {
+			$('#datepicker').hide();
+		} else {
+			var datePicker = document.getElementById('datepicker');
+			datePicker.style.left = this.sectionProperties.framePos.x + this.sectionProperties.frameWidth + 'px';
+			datePicker.style.top = this.sectionProperties.framePos.y + this.sectionProperties.frameHeight + 'px';
+			$('#datepicker').show();
+		}
 	}
 };
