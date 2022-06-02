@@ -418,6 +418,8 @@ var unoCommandsArray = {
 	'Sidebar':{global:{menu:_('Sidebar'),},},
 	'SlideChangeWindow':{presentation:{menu:_('Slide Transition'),},},
 	'SlideMasterPage':{presentation:{menu:_('~Master Slide'),},},
+	'CloseMasterView':{presentation:{menu:_('Close Master View'),},},
+	'RenameMasterPage':{presentation:{menu:_('Rename Master Slide'),},},
 	'SlideMenu':{presentation:{menu:_('S~lide'),},},
 	'SlideSetup':{presentation:{menu:_('Slide Properties...'),},},
 	'SmallCaps':{global:{menu:_('Small capitals'),},},
