@@ -903,7 +903,7 @@ std::unique_ptr<ClipboardCache> COOLWSD::SavedClipboards;
 /// This thread polls basic web serving, and handling of
 /// websockets before upgrade: when upgraded they go to the
 /// relevant DocumentBroker poll instead.
-static std::unique_ptr<TerminatingPoll> WebServerPoll;
+static std::shared_ptr<TerminatingPoll> WebServerPoll;
 
 class PrisonPoll : public TerminatingPoll
 {
@@ -5302,6 +5302,11 @@ int COOLWSD::innerMain()
     Util::forcedExit(returnValue);
 
     return returnValue;
+}
+
+std::shared_ptr<TerminatingPoll> COOLWSD:: getWebServerPoll ()
+{
+    return WebServerPoll;
 }
 
 void COOLWSD::cleanup()
