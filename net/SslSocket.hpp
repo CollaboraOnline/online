@@ -113,13 +113,13 @@ public:
         Socket::shutdown();
     }
 
-    bool readIncomingData() override
+    int readIncomingData() override
     {
         ASSERT_CORRECT_SOCKET_THREAD(this);
 
         const int rc = doHandshake();
         if (rc <= 0)
-            return rc != 0;
+            return rc;
 
         // Default implementation.
         return StreamSocket::readIncomingData();
