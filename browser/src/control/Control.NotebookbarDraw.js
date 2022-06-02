@@ -595,7 +595,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:BasicShapes'),
+								'text': _('Shapes'),
 								'command': '.uno:BasicShapes'
 							}
 						]
@@ -965,7 +965,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:BasicShapes'),
+								'text': _('Shapes'),
 								'command': '.uno:BasicShapes'
 							}
 						]
