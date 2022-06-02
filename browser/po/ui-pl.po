@@ -13,18 +13,18 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-18 12:28+0200\n"
-"PO-Revision-Date: 2022-04-26 17:15+0000\n"
+"PO-Revision-Date: 2022-05-19 21:16+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<"
-"12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) ||"
-" (n%100>=12 && n%100<=14) ? 2 : 3);\n"
-"X-Generator: Weblate 4.12.1-dev\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Weblate 4.13-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -438,7 +438,7 @@ msgstr "Kreator funkcji"
 
 #: src/control/Control.FormulaBarJSDialog.js:54
 msgid "Formula"
-msgstr ""
+msgstr "Formuła"
 
 #: src/control/Control.FormulaBarJSDialog.js:61
 #: src/control/Control.MobileTopBar.js:40
@@ -457,11 +457,11 @@ msgstr "Średnia"
 
 #: src/control/Control.JSDialogBuilder.js:141
 msgid "Min"
-msgstr ""
+msgstr "Min"
 
 #: src/control/Control.JSDialogBuilder.js:142
 msgid "Max"
-msgstr ""
+msgstr "Maks"
 
 #: src/control/Control.JSDialogBuilder.js:143
 #: src/control/Control.StatusBar.js:309
