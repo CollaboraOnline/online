@@ -528,6 +528,13 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             return;
         }
 #endif
+
+        if (Util::startsWith(relPath, std::string("/browser/dist/remote/lokit-extra-img.svg")))
+        {
+            processLogo(socket);
+            return;
+        }
+
         if (request.getMethod() == HTTPRequest::HTTP_POST && endPoint == "logging.html")
         {
             const std::string coolLogging = config.getString("browser_logging", "false");
@@ -1177,6 +1184,29 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     LOG_TRC("Sent file: " << relPath << ": " << preprocess);
 }
 
+void FileServerRequestHandler::processLogo(const std::shared_ptr<StreamSocket>& socket)
+{
+    if (!LogoData.empty())
+    {
+        std::ostringstream oss;
+        Poco::Net::HTTPResponse response;
+
+        response.add("X-XSS-Protection", "1; mode=block");
+        response.add("Referrer-Policy", "no-referrer");
+        response.add("X-Content-Type-Options", "nosniff");
+        response.set("Server", HTTP_SERVER_STRING);
+        response.set("Date", Util::getHttpTimeNow());
+        response.setContentType("image/svg+xml");
+        response.setChunkedTransferEncoding(false);
+        response.write(oss);
+        oss << LogoData;
+        socket->send(oss.str());
+    }
+    else
+    {
+        HttpHelper::sendError(404, socket, "", "");
+    }
+}
 
 void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
                                                      const RequestDetails &/*requestDetails*/,
