@@ -311,6 +311,8 @@ public:
 #endif
     }
 
+    static std::shared_ptr<TerminatingPoll> getWebServerPoll();
+
     /// Return true if extension is marked as view action in discovery.xml.
     static bool IsViewFileExtension(const std::string& extension)
     {
