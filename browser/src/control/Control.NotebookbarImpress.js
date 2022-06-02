@@ -107,6 +107,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork'
 			},
 			{
+				'text': _('~Master'),
+				'id': '-15',
+				'name': 'MasterPage',
+				'context': 'MasterPage'
+			},
+			{
 				'text': _('~View'),
 				'id': 'View',
 				'name': 'View',
@@ -130,6 +136,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				this.getFormatTab(),
 				this.getTableTab(),
 				this.getDrawTab(),
+				this.getMasterTab(),
 				this.getViewTab(),
 				this.getHelpTab()
 			], selectedId);
@@ -355,6 +362,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'type': 'menubartoolitem',
 				'text': _('Status Bar'),
 				'command': _('Show Status Bar')
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:SlideMasterPage', 'presentation'),
+				'command': '.uno:SlideMasterPage'
 			},
 			{
 				'type': 'bigtoolitem',
@@ -1204,6 +1216,33 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 		];
 
 		return this.getTabPage('Layout', content);
+	},
+
+	getMasterTab: function() {
+		var content = [
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:SlideSetup', 'presentation'),
+				'command': '.uno:PageSetup'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:HeaderAndFooter', 'presentation'),
+				'command': '.uno:HeaderAndFooter'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:RenameMasterPage', 'presentation'),
+				'command': '.uno:RenameMasterPage'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:CloseMasterView', 'presentation'),
+				'command': '.uno:CloseMasterView'
+			}
+		];
+
+		return this.getTabPage('MasterPage', content);
 	},
 
 	getReviewTab: function() {
