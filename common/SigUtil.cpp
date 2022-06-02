@@ -13,6 +13,9 @@
 #  include <execinfo.h>
 #endif
 #include <csignal>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <sys/poll.h>
 #include <sys/uio.h>
 #include <unistd.h>
@@ -109,7 +112,21 @@ namespace SigUtil
     }
 
 #if !MOBILEAPP
+
     static int SignalLogFD(STDERR_FILENO); //< The FD where signalLogs are dumped.
+
+    /// Open the signalLog file.
+    void signalLogOpen()
+    {
+        // Always default to stderr.
+        SignalLogFD = STDERR_FILENO;
+    }
+
+    /// Close the signalLog file.
+    void signalLogClose()
+    {
+        fsync(SignalLogFD);
+    }
 
     void signalLogPrefix()
     {
@@ -274,10 +291,13 @@ namespace SigUtil
             domain = " ok, ok - hard-termination signal received: ";
             hardExit = true;
         }
+
+        signalLogOpen();
         signalLogPrefix();
         signalLog(domain);
         signalLog(signalName(signal));
         signalLog("\n");
+        signalLogClose();
 
         if (!hardExit)
             SocketPoll::wakeupWorld();
@@ -301,7 +321,10 @@ namespace SigUtil
     void handleFatalSignal(const int signal, siginfo_t *info, void * /* uctxt */)
     {
         SigHandlerTrap guard;
-        bool bReEntered = !guard.isExclusive();
+        const bool bReEntered = !guard.isExclusive();
+
+        if (!bReEntered)
+            signalLogOpen();
 
         signalLogPrefix();
 
@@ -342,7 +365,10 @@ namespace SigUtil
         sigaction(signal, &action, nullptr);
 
         if (!bReEntered)
+        {
             dumpBacktrace();
+            signalLogClose();
+        }
 
         // let default handler process the signal
         ::raise(signal);
@@ -444,6 +470,7 @@ namespace SigUtil
     static
     void handleUserSignal(const int signal)
     {
+        signalLogOpen();
         signalLogPrefix();
         signalLog(" User signal received: ");
         signalLog(signalName(signal));
@@ -453,6 +480,16 @@ namespace SigUtil
             DumpGlobalState = true;
             SocketPoll::wakeupWorld();
         }
+        else if (signal == SIGUSR2)
+        {
+            constexpr int maxSlots = 250;
+            void* backtraceBuffer[maxSlots];
+            const int numSlots = backtrace(backtraceBuffer, maxSlots);
+            if (numSlots > 0)
+                backtrace_symbols_fd(backtraceBuffer, numSlots, SignalLogFD);
+        }
+
+        signalLogClose();
     }
 
     static
@@ -468,6 +505,7 @@ namespace SigUtil
         action.sa_handler = handleUserSignal;
 
         sigaction(SIGUSR1, &action, nullptr);
+        sigaction(SIGUSR2, &action, nullptr);
 
 #if !defined(__ANDROID__)
         // Prime backtrace to make sure libgcc is loaded.

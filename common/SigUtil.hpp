@@ -58,6 +58,12 @@ namespace SigUtil
     void setUnattended();
 
 #if !MOBILEAPP
+
+    /// Open the signalLog file.
+    void signalLogOpen();
+    /// Close the signalLog file.
+    void signalLogClose();
+
     /// Signal safe prefix logging
     void signalLogPrefix();
     /// Signal safe logging
