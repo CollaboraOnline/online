@@ -1094,8 +1094,8 @@ public:
     }
 
     /// Reads data by invoking readData() and buffering.
-    /// Return false iff the socket is closed.
-    virtual bool readIncomingData()
+    /// Returns the last return from writeData. 0 implies socket is closed.
+    virtual int readIncomingData()
     {
         ASSERT_CORRECT_SOCKET_THREAD(this);
 
@@ -1170,7 +1170,7 @@ public:
         }
 #endif
 
-        return len != 0; // zero is eof / clean socket close.
+        return len;
     }
 
     /// Replace the existing SocketHandler with a new one.
@@ -1297,18 +1297,23 @@ protected:
 
         if (events & POLLIN)
         {
-            // readIncomingData returns false only if the read len is 0 (closed).
+            // readIncomingData returns 0 on closed sockets.
             // Oddly enough, we don't necessarily get POLLHUP after read(2) returns 0.
-            const bool reading = readIncomingData();
-            closed = !reading || closed;
+            const int read = readIncomingData();
+            const int last_errno = errno;
             LOG_TRC('#' << getFD() << " Incoming data buffer " << _inBuffer.size()
-                        << " bytes, closeSocket? " << closed << ", events: " << std::hex << events
-                        << std::dec);
-            if (closed && reading)
+                        << " bytes, read result: " << read << ", events: " << std::hex << events
+                        << std::dec << " (" << (closed ? "closed" : "not closed") << ')');
+            if (read > 0 && closed)
             {
-                // We might have outstanding data to read, wait until readIncomingData returns false.
-                LOG_DBG('#' << getFD() << ": Closed but will drain incoming data per POLLIN.");
+                // We might have outstanding data to read, wait until readIncomingData returns closed state.
+                LOG_DBG('#' << getFD() << ": Closed but will drain incoming data per POLLIN");
                 closed = false;
+            }
+            else if (read == 0 || (read < 0 && (last_errno == EPIPE || last_errno == ECONNRESET)))
+            {
+                LOG_DBG('#' << getFD() << ": Closed after reading");
+                closed = true;
             }
         }
 
