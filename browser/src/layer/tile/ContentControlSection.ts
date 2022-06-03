@@ -60,7 +60,10 @@ class ContentControlSection {
 		} else if (json.action === 'hide') {
 			this.sectionProperties.rectangles = [];
 		} else if (json.action === 'change-picture') {
-			this.map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
+			if (!this.map.wopi.EnableInsertRemoteImage)
+				L.DomUtil.get('insertgraphic').click();
+			else
+				this.map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
 		}
 		this.setPositionAndSize();
 		app.sectionContainer.requestReDraw();
