@@ -104,8 +104,15 @@ describe('Table Operation', function() {
 			.should('have.attr', 'y', '5644');
 	});
 
-	it.skip('Insert column before.', function() {
+	it('Insert column before.', function() {
 		selectFullTable();
+
+		helper.typeIntoDocument('{downarrow}');
+
+		clickOnTableOperation('deleterows');
+
+		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+			.should('have.length', 2);
 
 		clickOnTableOperation('insertcolumnsbefore');
 
@@ -120,7 +127,7 @@ describe('Table Operation', function() {
 		//assert the number of cells
 		cy.get('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
-				expect(cells).to.have.lengthOf(9);
+				expect(cells).to.have.lengthOf(6);
 			});
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
@@ -130,8 +137,15 @@ describe('Table Operation', function() {
 			.should('have.attr', 'y', '5644');
 	});
 
-	it.skip('Insert column after.', function() {
+	it('Insert column after.', function() {
 		selectFullTable();
+
+		helper.typeIntoDocument('{downarrow}');
+
+		clickOnTableOperation('deleterows');
+
+		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+			.should('have.length', 2);
 
 		clickOnTableOperation('insertcolumnsafter');
 
@@ -146,7 +160,7 @@ describe('Table Operation', function() {
 		//assert the number of cells
 		cy.get('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
-				expect(cells).to.have.lengthOf(9);
+				expect(cells).to.have.lengthOf(6);
 			});
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
