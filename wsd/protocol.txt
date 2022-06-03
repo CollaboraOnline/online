@@ -360,6 +360,12 @@ paintwindow <id> rectangle=<x>,<y>,<width>,<height> dpiscale=<scale>
 
     <scale> is a scaling factor, e.g. 1 for non-HiDPI.
 
+contentcontrolevent <JSON>
+    *Properties:
+    type - date,drop-down
+    selected:
+        - for drop-down: zero based index of item that is selected
+        - for date: date which is selected by date picker
 
 server -> client
 ================
@@ -678,6 +684,13 @@ windowpaint: id=<id> width=<width> height=<height> rectangle=<x>,<y>,<width>,<he
 
     nopng appears when the the bitmap was already in the cache, so no PNG
     encoding happened.
+
+contentcontrol: <JSON>
+    *Properties
+        - action - show, hide, change-picture
+        - rectangles - rectangle coordinates (x-coordinate, y-coordinate, width, height)
+        - date - boolean to indicate date content control
+        - items - array of items for dropdown
 
 
 child -> parent
