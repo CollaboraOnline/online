@@ -108,12 +108,12 @@ ChildSession::ChildSession(
     _isDocLoaded(false),
     _copyToClipboard(false)
 {
-    LOG_INF("ChildSession ctor [" << getName() << "]. JailRoot: [" << _jailRoot << "].");
+    LOG_INF("ChildSession ctor [" << getName() << "]. JailRoot: [" << _jailRoot << ']');
 }
 
 ChildSession::~ChildSession()
 {
-    LOG_INF("~ChildSession dtor [" << getName() << "].");
+    LOG_INF("~ChildSession dtor [" << getName() << ']');
 
     disconnect();
 }
@@ -142,7 +142,7 @@ void ChildSession::disconnect()
 
 bool ChildSession::_handleInput(const char *buffer, int length)
 {
-    LOG_TRC(getName() << ": handling [" << getAbbreviatedMessage(buffer, length) << "].");
+    LOG_TRC("handling [" << getAbbreviatedMessage(buffer, length) << ']');
     const std::string firstLine = getFirstLine(buffer, length);
     const StringVector tokens = StringVector::tokenize(firstLine.data(), firstLine.size());
 
@@ -658,7 +658,8 @@ bool ChildSession::uploadSignedDocument(const char* buffer, int length, const St
         if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK &&
             response.getStatus() != Poco::Net::HTTPResponse::HTTP_CREATED)
         {
-            LOG_ERR("Upload signed document HTTP Response Error: " << response.getStatus() << ' ' << response.getReason());
+            LOG_ERR("Upload signed document HTTP Response Error: " << response.getStatus() << ' '
+                                                                   << response.getReason());
 
             sendTextFrameAndLogError("error: cmd=uploadsigneddocument kind=httpresponse");
 
@@ -719,12 +720,13 @@ bool ChildSession::loadDocument(const StringVector& tokens)
     const bool loaded = _docManager->onLoad(getId(), getJailedFilePathAnonym(), renderOpts);
     if (!loaded || _viewId < 0)
     {
-        LOG_ERR("Failed to get LoKitDocument instance for [" << getJailedFilePathAnonym() << "].");
+        LOG_ERR("Failed to get LoKitDocument instance for [" << getJailedFilePathAnonym() << ']');
         return false;
     }
 
-    LOG_INF("Created new view with viewid: [" << _viewId << "] for username: [" <<
-            getUserNameAnonym() << "] in session: [" << getId() << "].");
+    LOG_INF("Created new view with viewid: [" << _viewId << "] for username: ["
+                                              << getUserNameAnonym() << "] in session: [" << getId()
+                                              << ']');
 
     if (!doctemplate.empty())
     {
@@ -744,12 +746,12 @@ bool ChildSession::loadDocument(const StringVector& tokens)
         else
             url += getJailedFilePath();
 
-        LOG_INF("Saving the template document after loading to [" << url << "].");
+        LOG_INF("Saving the template document after loading to [" << url << ']');
 
         const bool success = getLOKitDocument()->saveAs(url.c_str(), nullptr, "TakeOwnership");
         if (!success)
         {
-            LOG_ERR("Failed to save template [" << url << "].");
+            LOG_ERR("Failed to save template [" << url << ']');
             return false;
         }
 
@@ -782,7 +784,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
     const std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
     if (status.empty() || !sendTextFrame("status: " + status))
     {
-        LOG_ERR("Failed to get/forward document status [" << status << "].");
+        LOG_ERR("Failed to get/forward document status [" << status << ']');
         return false;
     }
 
@@ -2734,8 +2736,8 @@ std::string ChildSession::getBlockedCommandType(std::string command)
 void ChildSession::loKitCallback(const int type, const std::string& payload)
 {
     const char* const typeName = lokCallbackTypeToString(type);
-    LOG_TRC("ChildSession::loKitCallback [" << getName() << "]: " <<
-            typeName << " [" << payload << "].");
+    LOG_TRC("ChildSession::loKitCallback [" << getName() << "]: " << typeName << " [" << payload
+                                            << ']');
 
 #if !MOBILEAPP
     if (UnitKit::get().filterLoKitCallback(type, payload))

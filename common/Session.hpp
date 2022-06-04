@@ -258,6 +258,8 @@ protected:
 
     void dumpState(std::ostream& os) override;
 
+    inline void logPrefix(std::ostream& os) const { os << _name << ": "; }
+
 private:
 
     void shutdown(bool goingAway = false, const std::string& statusMessage = std::string());
