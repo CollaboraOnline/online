@@ -115,7 +115,7 @@ public:
         std::memcpy(output.data(), header.data(), header.size());
         if (tile->appendChangesSince(output, tile->isPng() ? 0 : lastSentId))
         {
-            LOG_TRC(getName() << " sending tile message: " << header << " lastSendId " << lastSentId);
+            LOG_TRC(" Sending tile message: " << header << " lastSendId " << lastSentId);
             return sendBinaryFrame(output.data(), output.size());
         }
         LOG_TRC("redundant tile request: " << lastSentId);
@@ -286,7 +286,7 @@ private:
 
     /// Removes the <meta name="origin" ...> tag which was added in
     /// ClientSession::postProcessCopyPayload().
-    static void preProcessSetClipboardPayload(std::string& payload);
+    void preProcessSetClipboardPayload(std::string& payload);
 
 private:
     std::weak_ptr<DocumentBroker> _docBroker;

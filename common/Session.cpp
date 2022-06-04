@@ -48,11 +48,12 @@ bool Session::sendTextFrame(const char* buffer, const int length)
 {
     if (!_protocol)
     {
-        LOG_TRC("ERR - missing protocol " << getName() << ": Send: [" << getAbbreviatedMessage(buffer, length) << "].");
+        LOG_TRC("ERR - missing protocol " << getName() << ": Send: ["
+                                          << getAbbreviatedMessage(buffer, length) << ']');
         return false;
     }
 
-    LOG_TRC(getName() << ": Send: [" << getAbbreviatedMessage(buffer, length) << "].");
+    LOG_TRC("Send: [" << getAbbreviatedMessage(buffer, length) << ']');
     return _protocol->sendTextMessage(buffer, length) >= length;
 }
 
@@ -60,11 +61,12 @@ bool Session::sendBinaryFrame(const char *buffer, int length)
 {
     if (!_protocol)
     {
-        LOG_TRC("ERR - missing protocol " << getName() << ": Send: " << std::to_string(length) << " binary bytes.");
+        LOG_TRC("ERR - missing protocol " << getName() << ": Send: " << std::to_string(length)
+                                          << " binary bytes");
         return false;
     }
 
-    LOG_TRC(getName() << ": Send: " << std::to_string(length) << " binary bytes.");
+    LOG_TRC("Send: " << std::to_string(length) << " binary bytes");
     return _protocol->sendBinaryMessage(buffer, length) >= length;
 }
 
@@ -219,9 +221,8 @@ void Session::disconnect()
 
 void Session::shutdown(bool goingAway, const std::string& statusMessage)
 {
-    LOG_TRC("Shutting down WS [" << getName() << "] " <<
-            (goingAway ? "going" : "normal") <<
-            " and reason [" << statusMessage << "].");
+    LOG_TRC("Shutting down WS [" << getName() << "] " << (goingAway ? "going" : "normal")
+                                 << " and reason [" << statusMessage << ']');
 
     // See protocol.txt for this application-level close frame.
     if (_protocol)
