@@ -135,7 +135,8 @@ struct TileData
 
         if (i >= _wids.size())
         {
-            LOG_WRN("odd outcome - requested for a later id with no tile: " << since);
+            LOG_WRN("odd outcome - requested for a later id " << since <<
+                    "than the last known: " << ((_wids.size() > 0) ? _wids.back() : -1));
             return false;
         }
         else
