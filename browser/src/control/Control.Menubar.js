@@ -131,14 +131,16 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:VerticalText'), uno: '.uno:VerticalText'},
 				{type: 'separator'},
 				{uno: '.uno:InsertSection', id: 'insertsection'},
-				{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
+				{name: _UNO('.uno:InsertFieldCtrl', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertPageNumberField'},
 					{uno: '.uno:InsertPageCountField'},
 					{uno: '.uno:InsertDateField'},
 					{uno: '.uno:InsertTimeField'},
 					{uno: '.uno:InsertTitleField'},
 					{uno: '.uno:InsertAuthorField'},
-					{uno: '.uno:InsertTopicField'}
+					{uno: '.uno:InsertTopicField'},
+					{type: 'separator'},
+					{uno: '.uno:InsertField'},
 				]},
 				{name: _UNO('.uno:InsertHeaderFooterMenu', 'text'), type: 'menu', menu: [
 					{name: _UNO('.uno:InsertPageHeader', 'text'), type: 'menu', menu: [
