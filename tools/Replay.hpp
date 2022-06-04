@@ -10,6 +10,7 @@
 #include <math.h>
 #include <chrono>
 #include <cstring>
+#include <unordered_map>
 
 #include "Socket.hpp"
 #include "WebSocketHandler.hpp"
@@ -91,6 +92,26 @@ struct Stats {
     size_t _tileCount;
     Histogram _pingLatency;
     Histogram _tileLatency;
+
+    // message size breakdown
+    struct MessageStat {
+        size_t size;
+        size_t count;
+    };
+    std::unordered_map<std::string, MessageStat> _recvd;
+    void accumulate(const std::string &token, size_t size)
+    {
+        _bytesRecvd += size;
+
+        auto it = _recvd.find(token);
+        MessageStat st = { 0, 0 };
+        if (it != _recvd.end())
+            st = it->second;
+        st.size += size;
+        st.count++;
+        _recvd[token] = st;
+    }
+
     void dump()
     {
         const auto now = std::chrono::steady_clock::now();
@@ -101,7 +122,20 @@ struct Stats {
         _tileLatency.dump("tile latency:");
         std::cout << "  we sent " << Util::getHumanizedBytes(_bytesSent) <<
             " server sent " << Util::getHumanizedBytes(_bytesRecvd) << "\n";
+
+        // how much from each command ?
+        std::vector<std::string> sortKeys;
+        for(auto it : _recvd)
+            sortKeys.push_back(it.first);
+        std::sort(sortKeys.begin(), sortKeys.end(),
+                  [&](const std::string &a, const std::string &b)
+                      { return _recvd[a].size > _recvd[b].size; } );
+        std::cout << "size\tcount\tcommand\n";
+        for (auto it : sortKeys)
+            std::cout << _recvd[it].size << "\t"
+                      << _recvd[it].count << "\t" << it << "\n";
     }
+
 };
 
 // Avoid a MessageHandler for now.
@@ -273,11 +307,11 @@ public:
     {
         const auto now = std::chrono::steady_clock::now();
 
-        _stats->_bytesRecvd += data.size();
-
         const std::string firstLine = COOLProtocol::getFirstLine(data.data(), data.size());
         StringVector tokens = StringVector::tokenize(firstLine);
         std::cerr << _logPre << "Got msg: " << firstLine << "\n";
+
+        _stats->accumulate(tokens[0], data.size());
 
         if (tokens.equals(0, "tile:")) {
             // accumulate latencies
