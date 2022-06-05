@@ -256,12 +256,13 @@ bool TileCache::getTextStream(StreamType type, const std::string& fileName, std:
     return true;
 }
 
-void TileCache::saveTextStream(StreamType type, const std::string& text, const std::string& fileName)
+void TileCache::saveTextStream(StreamType type, const std::string& fileName,
+                               const std::vector<char>& data)
 {
-    LOG_INF("Saving '" << COOLProtocol::getAbbreviatedMessage(text.c_str(), text.size()) <<
-            "' to " << fileName << " of size " << text.size() << " bytes");
+    LOG_INF("Saving '" << COOLProtocol::getAbbreviatedMessage(data.data(), data.size()) << "' to " << fileName
+                       << " of size " << data.size() << " bytes");
 
-    saveDataToStreamCache(type, fileName, text.c_str(), text.size());
+    saveDataToStreamCache(type, fileName, data.data(), data.size());
 }
 
 void TileCache::saveStream(StreamType type, const std::string& name, const char *data, std::size_t size)

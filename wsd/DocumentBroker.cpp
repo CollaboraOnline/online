@@ -2595,9 +2595,8 @@ void DocumentBroker::unregisterDownloadId(const std::string& downloadId)
 }
 
 /// Handles input from the prisoner / child kit process
-bool DocumentBroker::handleInput(const std::vector<char>& payload)
+bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
 {
-    auto message = std::make_shared<Message>(payload.data(), payload.size(), Message::Dir::Out);
     LOG_TRC("DocumentBroker handling child message: [" << message->abbr() << "].");
 
 #if !MOBILEAPP
@@ -2613,11 +2612,11 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     {
         if (message->firstTokenMatches("tile:"))
         {
-            handleTileResponse(payload);
+            handleTileResponse(message);
         }
         else if (message->firstTokenMatches("tilecombine:"))
         {
-            handleTileCombinedResponse(payload);
+            handleTileCombinedResponse(message);
         }
         else if (message->firstTokenMatches("errortoall:"))
         {
@@ -2645,9 +2644,10 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
             LOG_CHECK_RET(message->tokens().size() == 1, false);
             if (COOLWSD::TraceEventFile != NULL && TraceEvent::isRecordingOn())
             {
-                const auto newLine = static_cast<const char*>(memchr(payload.data(), '\n', payload.size()));
-                if (newLine)
-                    COOLWSD::writeTraceEventRecording(newLine + 1, payload.size() - (newLine + 1 - payload.data()));
+                const auto firstLine = message->firstLine();
+                if (firstLine.size() < message->size())
+                    COOLWSD::writeTraceEventRecording(message->data().data() + firstLine.size() + 1,
+                                                      message->size() - firstLine.size() - 1);
             }
         }
         else if (message->firstTokenMatches("forcedtraceevent:"))
@@ -2655,9 +2655,10 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
             LOG_CHECK_RET(message->tokens().size() == 1, false);
             if (COOLWSD::TraceEventFile != NULL)
             {
-                const auto newLine = static_cast<const char*>(memchr(payload.data(), '\n', payload.size()));
-                if (newLine)
-                    COOLWSD::writeTraceEventRecording(newLine + 1, payload.size() - (newLine + 1 - payload.data()));
+                const auto firstLine = message->firstLine();
+                if (firstLine.size() < message->size())
+                    COOLWSD::writeTraceEventRecording(message->data().data() + firstLine.size() + 1,
+                                                      message->size() - firstLine.size() - 1);
             }
         }
         else
@@ -3017,18 +3018,18 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
     }
 }
 
-void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
+void DocumentBroker::handleTileResponse(const std::shared_ptr<Message>& message)
 {
-    const std::string firstLine = getFirstLine(payload);
+    const std::string firstLine = message->firstLine();
     LOG_DBG("Handling tile: " << firstLine);
 
     try
     {
-        const std::size_t length = payload.size();
+        const std::size_t length = message->size();
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
             const TileDesc tile = TileDesc::parse(firstLine);
-            const char* buffer = payload.data();
+            const char* buffer = message->data().data();
             const std::size_t offset = firstLine.size() + 1;
 
             std::unique_lock<std::mutex> lock(_mutex);
@@ -3047,18 +3048,18 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
     }
 }
 
-void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload)
+void DocumentBroker::handleTileCombinedResponse(const std::shared_ptr<Message>& message)
 {
-    const std::string firstLine = getFirstLine(payload);
+    const std::string firstLine = message->firstLine();
     LOG_DBG("Handling tile combined: " << firstLine);
 
     try
     {
-        const std::size_t length = payload.size();
+        const std::size_t length = message->size();
         if (firstLine.size() <= static_cast<std::string::size_type>(length) - 1)
         {
             const TileCombined tileCombined = TileCombined::parse(firstLine);
-            const char* buffer = payload.data();
+            const char* buffer = message->data().data();
             std::size_t offset = firstLine.size() + 1;
 
             std::unique_lock<std::mutex> lock(_mutex);
@@ -3198,9 +3199,6 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
     std::string sid;
     if (COOLProtocol::parseNameValuePair(payload->forwardToken(), name, sid, '-') && name == "client")
     {
-        const auto& data = payload->data().data();
-        const auto& size = payload->size();
-
         if (sid == "all")
         {
             // Broadcast to all.
@@ -3209,7 +3207,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
             for (const auto& it : _sessions)
             {
                 if (!it.second->inWaitDisconnected())
-                    it.second->handleKitToClientMessage(data, size);
+                    it.second->handleKitToClientMessage(payload);
             }
         }
         else
@@ -3220,7 +3218,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
                 // Take a ref as the session could be removed from _sessions
                 // if it's the save confirmation keeping a stopped session alive.
                 std::shared_ptr<ClientSession> session = it->second;
-                return session->handleKitToClientMessage(data, size);
+                return session->handleKitToClientMessage(payload);
             }
             else
             {
@@ -3568,13 +3566,12 @@ void RenderSearchResultBroker::dispose()
     }
 }
 
-bool RenderSearchResultBroker::handleInput(const std::vector<char>& payload)
+bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& message)
 {
-    bool bResult = DocumentBroker::handleInput(payload);
+    bool bResult = DocumentBroker::handleInput(message);
 
     if (bResult)
     {
-        auto message = std::make_shared<Message>(payload.data(), payload.size(), Message::Dir::Out);
         auto const& messageData = message->data();
 
         static std::string commandString = "rendersearchresult:\n";
