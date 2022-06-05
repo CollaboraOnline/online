@@ -3247,20 +3247,20 @@ private:
         if (UnitWSD::get().filterChildMessage(data))
             return;
 
-        const std::string abbr = getAbbreviatedMessage(data);
+        auto message = std::make_shared<Message>(data.data(), data.size(), Message::Dir::Out);
         std::shared_ptr<StreamSocket> socket = getSocket().lock();
         if (socket)
-            LOG_TRC('#' << socket->getFD() << " Prisoner message [" << abbr << "].");
+            LOG_TRC('#' << socket->getFD() << " Prisoner message [" << message->abbr() << ']');
         else
             LOG_WRN("Message handler called but without valid socket.");
 
         std::shared_ptr<ChildProcess> child = _childProcess.lock();
         std::shared_ptr<DocumentBroker> docBroker = child ? child->getDocumentBroker() : nullptr;
         if (docBroker)
-            docBroker->handleInput(data);
+            docBroker->handleInput(message);
         else
             LOG_WRN("Child " << child->getPid() <<
-                    " has no DocumentBroker to handle message: [" << abbr << "].");
+                    " has no DocumentBroker to handle message: [" << message->abbr() << ']');
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
