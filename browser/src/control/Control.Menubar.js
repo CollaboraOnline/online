@@ -278,6 +278,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:SplitCell'},
 				{uno: '.uno:MergeCells'},
 				{type: 'separator'},
+				{uno: '.uno:Protect'},
+				{uno: '.uno:UnsetCellsReadOnly'},
+				{type: 'separator'},
 				{uno: '.uno:TableDialog'}
 			]},
 			{name: _UNO('.uno:ToolsMenu', 'text'), id: 'tools', type: 'menu', menu: [
