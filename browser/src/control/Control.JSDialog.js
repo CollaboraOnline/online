@@ -118,6 +118,7 @@ L.Control.JSDialog = L.Control.extend({
 		var callback = e.callback;
 		var isSnackbar = data.type === 'snackbar';
 		var isModalPopup = data.type === 'modalpopup' || isSnackbar;
+		var canHaveFocus = !isSnackbar && data.id !== 'busypopup';
 		var focusWidgetId = data.init_focus_id;
 
 		if (data.action === 'fadeout')
@@ -308,7 +309,8 @@ L.Control.JSDialog = L.Control.extend({
 				container.appendChild(endMarker);
 			}
 
-			initialFocusElement.focus();
+			if (canHaveFocus)
+				initialFocusElement.focus();
 
 			if (toRemove)
 				L.DomUtil.remove(toRemove);
