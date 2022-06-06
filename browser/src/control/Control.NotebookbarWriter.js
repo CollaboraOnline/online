@@ -1810,6 +1810,32 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Protect', 'text'),
+								'command': '.uno:Protect'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:UnsetCellsReadOnly', 'text'),
+								'command': '.uno:UnsetCellsReadOnly'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:EntireCell', 'text'),
 				'command': '.uno:EntireCell'
