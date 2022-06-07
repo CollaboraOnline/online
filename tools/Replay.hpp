@@ -83,13 +83,15 @@ struct Stats {
         _start(std::chrono::steady_clock::now()),
         _bytesSent(0),
         _bytesRecvd(0),
-        _tileCount(0)
+        _tileCount(0),
+        _connections(0)
     {
     }
     std::chrono::steady_clock::time_point _start;
     size_t _bytesSent;
     size_t _bytesRecvd;
     size_t _tileCount;
+    size_t _connections;
     Histogram _pingLatency;
     Histogram _tileLatency;
 
@@ -99,17 +101,57 @@ struct Stats {
         size_t count;
     };
     std::unordered_map<std::string, MessageStat> _recvd;
-    void accumulate(const std::string &token, size_t size)
-    {
-        _bytesRecvd += size;
+    std::unordered_map<std::string, MessageStat> _sent;
 
-        auto it = _recvd.find(token);
+    void accumulate(std::unordered_map<std::string, MessageStat> &map,
+                    const std::string token, size_t size)
+    {
+        auto it = map.find(token);
         MessageStat st = { 0, 0 };
-        if (it != _recvd.end())
+        if (it != map.end())
             st = it->second;
         st.size += size;
         st.count++;
-        _recvd[token] = st;
+        map[token] = st;
+    }
+
+    void accumulateRecv(const std::string &token, size_t size)
+    {
+        _bytesRecvd += size;
+        accumulate(_recvd, token, size);
+    }
+
+    void accumulateSend(const char* msg, const size_t len, bool /* flush */)
+    {
+        _bytesSent += len;
+        size_t i;
+        for (i = 0; i < len && msg[i] != ' '; ++i);
+        accumulate(_sent, std::string(msg, std::min(i, size_t(len))), len);
+    }
+
+    void addConnection() { _connections++; }
+
+    void dumpMap(std::unordered_map<std::string, MessageStat> &map)
+    {
+        // how much from each command ?
+        std::vector<std::string> sortKeys;
+        size_t total = 0;
+        for(auto it : map)
+        {
+            sortKeys.push_back(it.first);
+            total += it.second.size;
+        }
+        std::sort(sortKeys.begin(), sortKeys.end(),
+                  [&](const std::string &a, const std::string &b)
+                      { return map[a].size > map[b].size; } );
+        std::cout << "size\tcount\tcommand\n";
+        for (auto it : sortKeys)
+        {
+            std::cout << map[it].size << "\t"
+                      << map[it].count << "\t" << it << "\n";
+            if (map[it].size < (total / 100))
+                break;
+        }
     }
 
     void dump()
@@ -120,22 +162,19 @@ struct Stats {
         std::cout << "  tiles: " << _tileCount << " => TPS: " << ((_tileCount * 1000.0)/runMs) << "\n";
         _pingLatency.dump("ping latency:");
         _tileLatency.dump("tile latency:");
+        size_t recvKbps = (_bytesRecvd * 1000) / (_connections * runMs * 1024);
+        size_t sentKbps = (_bytesSent * 1000) / (_connections * runMs * 1024);
         std::cout << "  we sent " << Util::getHumanizedBytes(_bytesSent) <<
-            " server sent " << Util::getHumanizedBytes(_bytesRecvd) << "\n";
+            " (" << sentKbps << " kB/s) " <<
+            " server sent " << Util::getHumanizedBytes(_bytesRecvd) <<
+            " (" << recvKbps << " kB/s)\n";
 
-        // how much from each command ?
-        std::vector<std::string> sortKeys;
-        for(auto it : _recvd)
-            sortKeys.push_back(it.first);
-        std::sort(sortKeys.begin(), sortKeys.end(),
-                  [&](const std::string &a, const std::string &b)
-                      { return _recvd[a].size > _recvd[b].size; } );
-        std::cout << "size\tcount\tcommand\n";
-        for (auto it : sortKeys)
-            std::cout << _recvd[it].size << "\t"
-                      << _recvd[it].count << "\t" << it << "\n";
+        std::cout << "we sent:\n";
+        dumpMap(_sent);
+
+        std::cout << "server sent us:\n";
+        dumpMap(_recvd);
     }
-
 };
 
 // Avoid a MessageHandler for now.
@@ -155,7 +194,6 @@ class StressSocketHandler : public WebSocketHandler
     std::chrono::steady_clock::time_point _lastTile;
 
 public:
-
     StressSocketHandler(SocketPoll &poll, /* bad style */
                         const std::shared_ptr<Stats> stats,
                         const std::string &uri, const std::string &trace,
@@ -311,7 +349,7 @@ public:
         StringVector tokens = StringVector::tokenize(firstLine);
         std::cerr << _logPre << "Got msg: " << firstLine << "\n";
 
-        _stats->accumulate(tokens[0], data.size());
+        _stats->accumulateRecv(tokens[0], data.size());
 
         if (tokens.equals(0, "tile:")) {
             // accumulate latencies
@@ -366,7 +404,7 @@ public:
     /// override ProtocolHandlerInterface piece
     int sendTextMessage(const char* msg, const size_t len, bool flush = false) const override
     {
-        _stats->_bytesSent += len;
+        _stats->accumulateSend(msg, len, flush);
         return WebSocketHandler::sendTextMessage(msg, len, flush);
     }
 
@@ -382,6 +420,9 @@ public:
 
         auto handler = std::make_shared<StressSocketHandler>(poll, optStats, file, tracePath);
         poll.insertNewWebSocketSync(Poco::URI(uri), handler);
+
+        if (optStats)
+            optStats->addConnection();
     }
 
     /// Attach to @server, load @filePath and replace @tracePath
