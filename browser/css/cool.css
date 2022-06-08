@@ -892,17 +892,6 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	background-size: 82px;
 	background-position: right center;
 }
-
-#lokit-logo {
-	align-items: center;
-	justify-content: right;
-	flex-grow: 1;
-	background-repeat: no-repeat;
-	background-size: 82px;
-	background-position: right center;
-	background-image: url('remote/lokit-extra-img.svg');
-}
-
 #about-dialog-info-container {
 	align-items: center;
 	justify-content: flex-start;
