@@ -73,8 +73,10 @@ L.Control.JSDialog = L.Control.extend({
 			else
 				builder.callback('popover', 'close', {id: '__POPOVER__'}, null, builder);
 		}
-		else
+		else {
 			this.clearDialog(id);
+			this.map.focus();
+		}
 	},
 
 	setTabs: function(tabs, builder) {
