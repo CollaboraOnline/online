@@ -167,7 +167,7 @@ struct Stats {
         std::cout << "  we sent " << Util::getHumanizedBytes(_bytesSent) <<
             " (" << sentKbps << " kB/s) " <<
             " server sent " << Util::getHumanizedBytes(_bytesRecvd) <<
-            " (" << recvKbps << " kB/s)\n";
+            " (" << recvKbps << " kB/s) to " << _connections << " connections.\n";
 
         std::cout << "we sent:\n";
         dumpMap(_sent);
