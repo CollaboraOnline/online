@@ -998,13 +998,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     const unsigned int idleTimeoutSecs = config.getUInt("per_view.idle_timeout_secs", 900);
     Poco::replaceInPlace(preprocess, std::string("%IDLE_TIMEOUT_SECS%"), std::to_string(idleTimeoutSecs));
 
-#if ENABLE_WELCOME_MESSAGE
-    std::string enableWelcomeMessage = "true";
-#else // configurable
-    std::string enableWelcomeMessage = stringifyBoolFromConfig(config, "welcome.enable", false);
-#endif
-
-    Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG%"), enableWelcomeMessage);
+    std::string autoShowWelcome = stringifyBoolFromConfig(config, "welcome.enable", false);
+    Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_WELCOME%"), autoShowWelcome);
 
     // the config value of 'notebookbar/tabbed' or 'classic/compact' overrides the UIMode
     // from the WOPI

@@ -1838,7 +1838,11 @@ void COOLWSD::innerInitialize(Application& self)
         { "trace.path[@compress]", "true" },
         { "trace.path[@snapshot]", "false" },
         { "trace[@enable]", "false" },
+#if ENABLE_WELCOME_MESSAGE
+        { "welcome.enable", "true"},
+#else
         { "welcome.enable", "false" },
+#endif
 #ifdef ENABLE_FEATURE_LOCK
         { "feature_lock.locked_hosts[@allow]", "false"},
         { "feature_lock.locked_hosts.fallback[@read_only]", "false"},
@@ -2224,10 +2228,6 @@ void COOLWSD::innerInitialize(Application& self)
         Quarantine::createQuarantineMap();
     }
 
-#if ENABLE_WELCOME_MESSAGE
-    conf.setString("welcome.enable", "true");
-#endif
-
     NumPreSpawnedChildren = getConfigValue<int>(conf, "num_prespawn_children", 1);
     if (NumPreSpawnedChildren < 1)
     {
@@ -2257,8 +2257,18 @@ void COOLWSD::innerInitialize(Application& self)
     setenv("SAL_DISABLE_OPENCL", "true", 1);
 
     // Log the connection and document limits.
-    COOLWSD::MaxConnections = MAX_CONNECTIONS;
-    COOLWSD::MaxDocuments = MAX_DOCUMENTS;
+#if ENABLE_WELCOME_MESSAGE
+    if (!getConfigValue<bool>(conf, "welcome.enable", false))
+    {
+        COOLWSD::MaxConnections = 20;
+        COOLWSD::MaxDocuments = 5;
+    }
+    else
+#endif
+    {
+        COOLWSD::MaxConnections = MAX_CONNECTIONS;
+        COOLWSD::MaxDocuments = MAX_DOCUMENTS;
+    }
 
 #if !MOBILEAPP
     NoSeccomp = !getConfigValue<bool>(conf, "security.seccomp", true);
