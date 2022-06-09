@@ -68,6 +68,13 @@ L.Control.JSDialog = L.Control.extend({
 		var builder = this.dialogs[id].builder;
 
 		if (sendCloseEvent) {
+			// try to toggle the dropdown first
+			if (clickToClose && L.DomUtil.hasClass(clickToClose, 'has-dropdown')) {
+				var dropdownArrow = clickToClose.querySelector('.arrowbackground');
+				dropdownArrow.click();
+				return;
+			}
+
 			if (clickToClose && L.DomUtil.hasClass(clickToClose, 'menubutton'))
 				clickToClose.click();
 			else
@@ -239,6 +246,8 @@ L.Control.JSDialog = L.Control.extend({
 		if (clickToCloseId && clickToCloseId.indexOf('.uno:') === 0)
 			clickToCloseId = clickToCloseId.substr('.uno:'.length);
 
+		var popupParent = data.popupParent ? L.DomUtil.get(data.popupParent) : null;
+
 		var setupPosition = function(force) {
 			if (isModalPopup && data.popupParent) {
 				// in case of toolbox we want to create popup positioned by toolitem not toolbox
@@ -324,13 +333,24 @@ L.Control.JSDialog = L.Control.extend({
 				console.error('cannot get focus for widget: "' + focusWidgetId + '"');
 		};
 
+		var clickToCloseElement = null;
+		if (clickToCloseId && popupParent) {
+			clickToCloseElement = popupParent.querySelector('[id=\'' + clickToCloseId + '\']');
+			// we avoid duplicated ids in unotoolbuttons - try with class
+			if (!clickToCloseElement)
+				clickToCloseElement = popupParent.querySelector('.uno' + clickToCloseId);
+		} else if (clickToCloseId) {
+			// fallback
+			clickToCloseElement = L.DomUtil.get(clickToCloseId);
+		}
+
 		this.dialogs[data.id] = {
 			container: container,
 			builder: builder,
 			tabs: tabs,
 			startX: posX,
 			startY: posY,
-			clickToClose: clickToCloseId ? L.DomUtil.get(clickToCloseId) : null,
+			clickToClose: clickToCloseElement,
 			overlay: overlay,
 			isPopup: isModalPopup,
 			invalidated: false,
