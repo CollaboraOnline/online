@@ -2120,6 +2120,7 @@ void ClientSession::dumpState(std::ostream& os)
     os << '\n';
     _senderQueue.dumpState(os);
 
+    // FIXME: need to dump the _tilesOnFly and other bits ...
 }
 
 const std::string &ClientSession::getOrCreateProxyAccess()
