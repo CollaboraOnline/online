@@ -2727,6 +2727,8 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
 {
     std::unique_lock<std::mutex> lock(_mutex);
 
+    assert(!tileCombined.hasDuplicates());
+
     LOG_TRC("TileCombined request for " << tileCombined.serialize());
     if (!hasTileCache())
     {
@@ -2766,6 +2768,8 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
     if (!tilesNeedsRendering.empty())
     {
         TileCombined newTileCombined = TileCombined::create(tilesNeedsRendering);
+
+        assert(!newTileCombined.hasDuplicates());
 
         // Forward to child to render.
         const std::string req = newTileCombined.serialize("tilecombine");
@@ -2957,6 +2961,8 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
         if (!tilesNeedsRendering.empty())
         {
             TileCombined newTileCombined = TileCombined::create(tilesNeedsRendering);
+
+            assert(!newTileCombined.hasDuplicates());
 
             // Forward to child to render.
             const std::string req = newTileCombined.serialize("tilecombine");

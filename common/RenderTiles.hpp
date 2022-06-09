@@ -181,6 +181,9 @@ namespace RenderTiles
     {
         const auto& tiles = tileCombined.getTiles();
 
+        // Otherwise our delta-building & threading goes badly wrong
+        assert(!tileCombined.hasDuplicates());
+
         // Calculate the area we cover
         Util::Rectangle renderArea;
         std::vector<Util::Rectangle> tileRecs;
@@ -209,6 +212,7 @@ namespace RenderTiles
         const size_t tilesByY = renderArea.getHeight() / tileCombined.getTileHeight();
         const int pixelWidth = tileCombined.getWidth();
         const int pixelHeight = tileCombined.getHeight();
+        assert (pixelWidth > 0 && pixelHeight > 0);
         const size_t pixmapWidth = tilesByX * pixelWidth;
         const size_t pixmapHeight = tilesByY * pixelHeight;
 
@@ -257,6 +261,8 @@ namespace RenderTiles
 
             const int offsetX = positionX * pixelWidth;
             const int offsetY = positionY * pixelHeight;
+
+            // FIXME: should this be in the delta / compression thread ?
             blendWatermark(pixmap.data(), offsetX, offsetY,
                            pixmapWidth, pixmapHeight,
                            pixelWidth, pixelHeight,
@@ -283,8 +289,8 @@ namespace RenderTiles
 
                     auto data = std::shared_ptr<std::vector< char >>(new std::vector< char >());
                     data->reserve(pixmapWidth * pixmapHeight * 1);
-                        // FIXME: don't try to store & create deltas for read-only documents.
 
+                        // FIXME: don't try to store & create deltas for read-only documents.
                         if (tiles[tileIndex].getId() < 0) // not a preview
                         {
                             // Can we create a delta ?

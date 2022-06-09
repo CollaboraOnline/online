@@ -39,7 +39,10 @@ class DeltaGenerator {
     };
 
     /// A bitmap tile with annotated rows and details on its location
-    struct DeltaData {
+    struct DeltaData final {
+        // no careless copying
+        DeltaData(const DeltaData&) = delete;
+        DeltaData& operator=(const DeltaData&) = delete;
 
         static inline uint64_t copyWithCrc(uint32_t *to, const uint32_t *from, unsigned int width)
         {
@@ -69,6 +72,7 @@ class DeltaGenerator {
             _top(tileTop),
             _size(tileSize),
             _part(tilePart),
+            _inUse(false),
             _wid(wid),
             // in Pixels
             _width(width),
@@ -150,6 +154,11 @@ class DeltaGenerator {
         {
             assert (_left == repl->_left && _top == repl->_top &&
                     _size == repl->_size && _part == repl->_part);
+            if (repl.get() == this)
+            {
+                assert("replacing with yourself should never happen");
+                return;
+            }
             _wid = repl->_wid;
             _width = repl->_width;
             _height = repl->_height;
@@ -162,11 +171,24 @@ class DeltaGenerator {
             repl.reset();
         }
 
+        inline void use()
+        {
+            const bool wasInUse = _inUse.exchange(true); (void)wasInUse;
+            assert(!wasInUse && "Error: delta was already in use by another thread");
+        }
+
+        inline void unuse()
+        {
+            const bool wasInUse = _inUse.exchange(false); (void)wasInUse;
+            assert(wasInUse && "Error: delta was already un-used by another thread");
+        }
+
         int _left;
         int _top;
         int _size;
         int _part;
     private:
+        std::atomic<bool> _inUse; // thread debugging check.
         TileWireId _wid;
         int _width;
         int _height;
@@ -434,6 +456,7 @@ class DeltaGenerator {
                 _deltaEntries.push_back(update);
                 return false;
             }
+            cacheEntry->use();
         }
 
         // interestingly cacheEntry may no longer be in the cache by here.
@@ -446,6 +469,8 @@ class DeltaGenerator {
 
         // no two threads can be working on the same DeltaData.
         cacheEntry->replaceAndFree(update);
+
+        cacheEntry->unuse();
         return delta;
     }
 

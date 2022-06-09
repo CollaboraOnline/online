@@ -390,6 +390,35 @@ public:
         _normalizedViewId = nViewId;
     }
 
+    bool hasDuplicates() const
+    {
+#if ENABLE_DEBUG
+        if (_tiles.size() < 2)
+            return false;
+        for (size_t i = 0; i < _tiles.size() - 1; ++i)
+        {
+            const auto &a = _tiles[i];
+            assert(a.getPart() == _part);
+            assert(a.getWidth() == _width);
+            assert(a.getHeight() == _height);
+            assert(a.getTileWidth() == _tileWidth);
+            assert(a.getTileHeight() == _tileHeight);
+            for (size_t j = i + 1; j < _tiles.size(); ++j)
+            {
+                const auto &b = _tiles[j];
+                if (a.getTilePosX() == b.getTilePosX() &&
+                    a.getTilePosY() == b.getTilePosY())
+                {
+                    assert(false && "duplicate entries in tilecombine");
+                    return true;
+                }
+            }
+        }
+        return false;
+#else
+        return false;
+#endif
+    }
 
     /// Serialize this instance into a string.
     /// Optionally prepend a prefix.
