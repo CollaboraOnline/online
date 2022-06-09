@@ -565,6 +565,31 @@ TileQueue::Payload TileQueue::get_impl()
         return Payload(msg.data(), msg.data() + msg.size());
     }
 
+    // n^2 but lists are short.
+    for (size_t i = 0; i < tiles.size() - 1; ++i)
+    {
+        const auto &a = tiles[i];
+        for (size_t j = i + 1; j < tiles.size();)
+        {
+            const auto &b = tiles[j];
+            assert(a.getPart() == b.getPart());
+            assert(a.getWidth() == b.getWidth());
+            assert(a.getHeight() == b.getHeight());
+            assert(a.getTileWidth() == b.getTileWidth());
+            assert(a.getTileHeight() == b.getTileHeight());
+            if (a.getTilePosX() == b.getTilePosX() &&
+                a.getTilePosY() == b.getTilePosY())
+            {
+                LOG_TRC("MessageQueue: dropping duplicate tile: " <<
+                        j << " vs. " << i << " at: " <<
+                        a.getTilePosX() << "," << a.getTilePosY());
+                tiles.erase(tiles.begin() + j);
+            }
+            else
+                j++;
+        }
+    }
+
     std::string tileCombined = TileCombined::create(tiles).serialize("tilecombine");
     LOG_TRC("MessageQueue res: " << COOLProtocol::getAbbreviatedMessage(tileCombined));
     return Payload(tileCombined.data(), tileCombined.data() + tileCombined.size());
@@ -572,27 +597,27 @@ TileQueue::Payload TileQueue::get_impl()
 
 void TileQueue::dumpState(std::ostream& oss)
 {
-oss << "\ttileQueue:"
-    << "\n\t\tcursorPositions:";
-for (const auto &it : _cursorPositions)
-{
-    oss << "\n\t\t\tviewId: "
-    << it.first
-    << " part: " << it.second.getPart()
-    << " x: " << it.second.getX()
-    << " y: " << it.second.getY()
-    << " width: " << it.second.getWidth()
-    << " height: " << it.second.getHeight();
-}
+    oss << "\ttileQueue:"
+        << "\n\t\tcursorPositions:";
+    for (const auto &it : _cursorPositions)
+    {
+        oss << "\n\t\t\tviewId: "
+            << it.first
+            << " part: " << it.second.getPart()
+            << " x: " << it.second.getX()
+            << " y: " << it.second.getY()
+            << " width: " << it.second.getWidth()
+            << " height: " << it.second.getHeight();
+    }
 
-oss << "\n\t\tviewOrder: [";
-std::string separator;
-for (const auto& viewId : _viewOrder)
-{
-    oss << separator << viewId;
-    separator = ", ";
-}
-oss << "]\n";
+    oss << "\n\t\tviewOrder: [";
+    std::string separator;
+    for (const auto& viewId : _viewOrder)
+    {
+        oss << separator << viewId;
+        separator = ", ";
+    }
+    oss << "]\n";
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
