@@ -997,6 +997,8 @@ int main(int argc, char**argv)
     /// Mainly used to match WOPI hosts patterns
     std::string getValue(const std::map<std::string, std::string>& map, const std::string& subject);
 
+    std::string getValue(const std::set<std::string>& set, const std::string& subject);
+
     /// Given one or more patterns to allow, and one or more to deny,
     /// the match member will return true if, and only if, the subject
     /// matches the allowed list, but not the deny.
