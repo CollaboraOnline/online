@@ -21,6 +21,8 @@ private:
     static std::map<std::string, std::string> AliasHosts;
     /// When group configuration is not defined only the firstHost gets access
     static std::string FirstHost;
+    /// list of host (not aliases) in alias_groups
+    static std::set<std::string> hostList;
 
     static bool WopiEnabled;
 

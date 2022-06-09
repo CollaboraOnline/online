@@ -11,6 +11,7 @@
 
 Util::RegexListMatcher HostUtil::WopiHosts;
 std::map<std::string, std::string> HostUtil::AliasHosts;
+std::set<std::string> HostUtil::hostList;
 std::string HostUtil::FirstHost;
 bool HostUtil::WopiEnabled;
 
@@ -94,6 +95,7 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
         try
         {
             const Poco::URI realUri(uri);
+            HostUtil::hostList.insert(realUri.getHost());
             HostUtil::addWopiHost(realUri.getHost(), allow);
         }
         catch (const Poco::Exception& exc)
@@ -147,6 +149,18 @@ std::string HostUtil::getNewUri(const Poco::URI& uri)
     if (!value.empty())
     {
         newUri.setAuthority(value);
+    }
+    else
+    {
+        // It is allowed for the host to be a regex.
+        // In that case, the first who connects is treated as the 'host', and stored to the AliasHosts here
+        const std::string val = Util::getValue(hostList, newUri.getHost());
+        // compare incoming request's host with existing hostList , if they are not equal it is regex and we store
+        // the pair in AliasHosts
+        if (val.compare(newUri.getHost()) != 0)
+        {
+            AliasHosts.insert({ val, newUri.getHost() });
+        }
     }
 
     if (newUri.getAuthority().empty())
