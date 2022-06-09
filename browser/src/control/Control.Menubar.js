@@ -1078,9 +1078,14 @@ L.Control.Menubar = L.Control.extend({
 						{uno: '.uno:InsertWJ'},
 						{uno: '.uno:InsertLRM'},
 						{uno: '.uno:InsertRLM'}]},
-					{name: _UNO('.uno:ContentControlsMenu', 'text'), type: 'menu', menu: [
+					{name: _UNO('.uno:FormatFormMenu', 'text'), type: 'menu', menu: [
 						{uno: '.uno:InsertContentControl'},
-						{uno: '.uno:InsertCheckboxContentControl'}]},
+						{uno: '.uno:InsertCheckboxContentControl'},
+						{uno: '.uno:InsertDropdownContentControl'},
+						{uno: '.uno:InsertPictureContentControl'},
+						{uno: '.uno:InsertDateContentControl'},
+						{uno: '.uno:ContentControlProperties'},
+					]},
 				]
 			},
 			spreadsheet : {

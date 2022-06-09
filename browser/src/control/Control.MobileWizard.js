@@ -488,7 +488,10 @@ L.Control.MobileWizard = L.Control.extend({
 					return;
 				} else {
 					// normal popup - continue to open mobile wizard
-					L.DomUtil.create('div', 'mobile-wizard jsdialog-overlay', document.body);
+					var overlay = L.DomUtil.create('div', 'mobile-wizard jsdialog-overlay ' + (data.cancellable ? 'cancellable' : ''), document.body);
+					var that = this;
+					if (data.cancellable)
+						overlay.onclick = function () { that._hideWizard(false); };
 				}
 			}
 

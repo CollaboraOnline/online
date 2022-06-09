@@ -34,6 +34,7 @@ class ContentControlSection {
 		});
 		this.onClickDropdown = this.onClickDropdown.bind(this);
 		this.sectionProperties.dropdownButton.addEventListener('click', this.onClickDropdown, false);
+		this.map.on('dropdownmarkertapped', this.onClickDropdown, this);
 		var container = L.DomUtil.createWithId('div', 'datepicker');
 		container.style.zIndex = '12';
 		container.style.position = 'absolute';
@@ -148,6 +149,10 @@ class ContentControlSection {
 	}
 
 	private callback(objectType:any , eventType:any, object:any, data:any, builder:any) {
+		var fireEvent: string = 'jsdialog';
+		if ((<any>window).mode.isMobile()) {
+			fireEvent = 'mobilewizard';
+		}
 		var closeDropdownJson = {
 			'jsontype': 'dialog',
 			'type': 'modalpopup',
@@ -156,12 +161,12 @@ class ContentControlSection {
 		};
 
 		if (eventType === 'close') {
-			this.map.fire('jsdialog', {data: closeDropdownJson, callback: undefined});
+			this.map.fire(fireEvent, {data: closeDropdownJson, callback: undefined});
 		} else if (eventType === 'select') {
 			var message = 'contentcontrolevent {"type": "drop-down",' +
 					'"selected": "' + data + '"}';
 			app.socket.sendMessage(message);
-			this.map.fire('jsdialog', {data: closeDropdownJson, callback: undefined});
+			this.map.fire(fireEvent, {data: closeDropdownJson, callback: undefined});
 		}
 	}
 
@@ -208,7 +213,6 @@ class ContentControlSection {
 	private openDropdownJson() {
 		if (!this.sectionProperties.json.items)
 			return;
-
 		var json: any = {
 			'children': [
 				{
@@ -218,7 +222,7 @@ class ContentControlSection {
 					'enabled': true,
 					'children': [
 						{
-							'id': 'dropdownlist',
+							'id': 'list',
 							'type': 'treelistbox',
 							'text': '',
 							'enabled': true,
@@ -265,7 +269,11 @@ class ContentControlSection {
 		if (this.sectionProperties.datePicker) {
 			this.showDatePicker();
 		} else if (this.sectionProperties.json.items) {
-			this.map.fire('jsdialog', {data: this.openDropdownJson(), callback: this.callback});
+			var fireEvent: string = 'jsdialog';
+			if ((<any>window).mode.isMobile()) {
+				fireEvent = 'mobilewizard';
+			}
+			this.map.fire(fireEvent, {data: this.openDropdownJson(), callback: this.callback});
 		}
 		L.DomEvent.stopPropagation(event);
 	}
