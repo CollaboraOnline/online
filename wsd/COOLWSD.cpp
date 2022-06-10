@@ -1858,7 +1858,11 @@ void COOLWSD::innerInitialize(Application& self)
         { "quarantine_files.path", "quarantine" },
         { "quarantine_files.expiry_min", "30" },
         { "remote_config.remote_url", ""},
-        { "storage.wopi.alias_groups[@mode]" , "first"}
+        { "storage.wopi.alias_groups[@mode]" , "first"},
+        { "languagetool.base_url", ""},
+        { "languagetool.api_key", ""},
+        { "languagetool.user_name", ""},
+        { "languagetool.enabled", "false"},
     };
 
     // Set default values, in case they are missing from the config file.
@@ -2251,6 +2255,15 @@ void COOLWSD::innerInitialize(Application& self)
     NoCapsForKit = !getConfigValue<bool>(conf, "security.capabilities", true);
     AdminEnabled = getConfigValue<bool>(conf, "admin_console.enable", true);
 #endif
+
+    bool enableLanguageTool = getConfigValue<bool>(conf, "languagetool.enabled", false);
+    setenv("LANGUAGETOOL_ENABLED", enableLanguageTool ? "true" : "false", 1);
+    const std::string baseAPIUrl = getConfigValue<std::string>(conf, "languagetool.base_url", "");
+    setenv("LANGUAGETOOL_BASEURL", baseAPIUrl.c_str(), 1);
+    const std::string userName = getConfigValue<std::string>(conf, "languagetool.user_name", "");
+    setenv("LANGUAGETOOL_USERNAME", userName.c_str(), 1);
+    const std::string apiKey = getConfigValue<std::string>(conf, "languagetool.api_key", "");
+    setenv("LANGUAGETOOL_APIKEY", apiKey.c_str(), 1);
 
 #if ENABLE_SUPPORT_KEY
     const std::string supportKeyString = getConfigValue<std::string>(conf, "support_key", "");
