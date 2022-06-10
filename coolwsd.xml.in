@@ -9,6 +9,18 @@
 
     <allowed_languages desc="List of supported languages of Writing Aids (spell checker, grammar checker, thesaurus, hyphenation) on this instance. Allowing too many has negative effect on startup performance." default="de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru">@ALLOWED_LANGUAGES@</allowed_languages>
 
+    <!--
+        This is LanguageTool.org API settings. To turn it on, please set "enabled" property to true.
+        "base_url" may be https://api.languagetoolplus.com/v2 if the cloud version is used.
+        However, your data in the document e.g. the text part of it will be sent to the cloud API. Please read the privacy policy: https://languagetool.org/legal/privacy
+    -->
+    <languagetool desc="LanguageTool Remote API settings for grammar checking">
+        <enabled desc="Enable LanguageTool Remote Grammar Checker" type="bool" default="false">false</enabled>
+        <base_url desc="Http endpoint for the LanguageTool API server, without /check or /languages postfix at the end." type="string" default=""></base_url>
+        <user_name desc="LangueTool account username for premium usage." type="string" default=""></user_name>
+        <api_key desc="Api key provided by LanguageTool account for premium usage." type="string" default=""></api_key>
+    </languagetool>
+
     <sys_template_path desc="Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes." type="path" relative="true" default="systemplate"></sys_template_path>
     <child_root_path desc="Path to the directory under which the chroot jails for the child processes will be created. Should be on the same file system as systemplate and lotemplate. Must be an empty directory." type="path" relative="true" default="jails"></child_root_path>
     <mount_jail_tree desc="Controls whether the systemplate and lotemplate contents are mounted or not, which is much faster than the default of linking/copying each file." type="bool" default="true"></mount_jail_tree>
