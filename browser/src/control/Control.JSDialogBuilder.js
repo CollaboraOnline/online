@@ -56,6 +56,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		this._colorPickers = [];
 
+		// list of types which can have multiple children but are not considered as containers
+		this._nonContainerType = ['buttonbox', 'treelistbox', 'iconview', 'combobox'];
+
 		this._controlHandlers = {};
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
 		this._controlHandlers['checkbox'] = this._checkboxControl;
@@ -237,6 +240,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		];
 
 		this._currentDepth = 0;
+	},
+
+	isContainerType: function(type) {
+		return this._nonContainerType.indexOf(type) < 0;
 	},
 
 	_clearColorPickers: function() {
@@ -3174,8 +3181,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			var hasManyChildren = childData.children && childData.children.length > 1;
-			var isContainer = childData.type !== 'buttonbox' && childData.type !== 'treelistbox'
-				&& childData.type !== 'iconview';
+			var isContainer = this.isContainerType(childData.type);
 			if (hasManyChildren && isContainer) {
 				var table = L.DomUtil.createWithId('div', childData.id, td);
 				$(table).addClass(this.options.cssClass);
