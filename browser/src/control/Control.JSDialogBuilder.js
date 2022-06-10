@@ -4,7 +4,7 @@
  * from the JSON description provided by the server.
  */
 
-/* global app $ w2ui _ _UNO UNOKey L */
+/* global app $ w2ui _ _UNO UNOKey UNOModifier L */
 
 L.Control.JSDialogBuilder = L.Control.extend({
 
