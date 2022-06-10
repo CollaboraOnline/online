@@ -40,6 +40,9 @@ L.Control.JSDialog = L.Control.extend({
 
 	close: function(id, sendCloseEvent) {
 		if (id && this.dialogs[id]) {
+			if (!sendCloseEvent && this.dialogs[id].overlay)
+				L.DomUtil.remove(this.dialogs[id].overlay);
+
 			if (this.dialogs[id].isPopup)
 				this.closePopover(id, sendCloseEvent);
 			else
@@ -61,24 +64,25 @@ L.Control.JSDialog = L.Control.extend({
 			return;
 		}
 
-		if (!sendCloseEvent)
-			L.DomUtil.remove(this.dialogs[id].overlay);
-
 		var clickToClose = this.dialogs[id].clickToClose;
 		var builder = this.dialogs[id].builder;
 
 		if (sendCloseEvent) {
+			var isDropdownToolItem =
+				clickToClose && L.DomUtil.hasClass(clickToClose, 'has-dropdown');
+
 			// try to toggle the dropdown first
-			if (clickToClose && L.DomUtil.hasClass(clickToClose, 'has-dropdown')) {
+			if (isDropdownToolItem) {
 				var dropdownArrow = clickToClose.querySelector('.arrowbackground');
 				dropdownArrow.click();
-				return;
 			}
 
-			if (clickToClose && L.DomUtil.hasClass(clickToClose, 'menubutton'))
+			if (clickToClose && !isDropdownToolItem && L.DomUtil.hasClass(clickToClose, 'menubutton'))
 				clickToClose.click();
-			else
+			else if (builder)
 				builder.callback('popover', 'close', {id: '__POPOVER__'}, null, builder);
+			else
+				console.warn('closePopover: no builder');
 		}
 		else {
 			this.clearDialog(id);
@@ -199,10 +203,13 @@ L.Control.JSDialog = L.Control.extend({
 		var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'jsdialog', callback: callback});
 
 		if (isModalPopup && !isSnackbar) {
-			var overlay = L.DomUtil.create('div', builder.options.cssClass + ' jsdialog-overlay ' + (data.cancellable ? 'cancellable' : ''), document.body);
-			overlay.id = data.id + '-overlay';
-			if (data.cancellable)
-				overlay.onclick = function () { that.closePopover(data.id, true); };
+			var existingOverlay = L.DomUtil.get(data.id + '-overlay');
+			if (!existingOverlay) {
+				var overlay = L.DomUtil.create('div', builder.options.cssClass + ' jsdialog-overlay ' + (data.cancellable ? 'cancellable' : ''), document.body);
+				overlay.id = data.id + '-overlay';
+				if (data.cancellable)
+					overlay.onclick = function () { that.closePopover(data.id, true); };
+			}
 		}
 
 		builder.build(content, [data]);
