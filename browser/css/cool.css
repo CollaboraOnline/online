@@ -900,3 +900,14 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 #about-dialog-info {
 	flex-direction: column;
 }
+
+#tb_actionbar_item_right {
+	text-align: right;
+}
+#saved-status-label {
+	background-image: url("data:image/svg+xml,%3Csvg id='Icons' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%235cb82a;%7D.cls-2%7Bfill:%23fff;%7D%3C/style%3E%3C/defs%3E%3Ctitle%3E_%3C/title%3E%3Cg id='Funktions-Icons_24' data-name='Funktions-Icons 24'%3E%3Ccircle class='cls-1' cx='10' cy='10' r='10'/%3E%3Crect class='cls-2' x='3.36' y='10.52' width='6.75' height='2.5' rx='0.5' ry='0.5' transform='translate(10.29 -1.31) rotate(45)'/%3E%3Crect class='cls-2' x='5.63' y='8.75' width='11.75' height='2.5' rx='0.5' ry='0.5' transform='translate(-3.7 11.06) rotate(-45)'/%3E%3C/g%3E%3C/svg%3E");
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding-left: 18px;
+	margin-left: 15px;
+}

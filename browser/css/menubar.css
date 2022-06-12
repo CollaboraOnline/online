@@ -313,17 +313,6 @@
 	background-position: center;
 }
 
-#menu-last-mod a {
-	color: var(--color-text-lighter);
-	padding: 8px 15px 7px;
-	z-index: 400;
-	border: 1px solid transparent;
-}
-
-#menu-last-mod a:hover {
-	color: var(--color-text-darker);
-}
-
 /* For classic mode */
 #main-menu .locking-disabled, #menu-nb-hamburger .locking-disabled {
 	color: var(--color-text-lighter) !important;

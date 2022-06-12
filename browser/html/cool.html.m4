@@ -328,6 +328,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.enableMacrosExecution = '%ENABLE_MACROS_EXECUTION%';
       window.outOfFocusTimeoutSecs = %OUT_OF_FOCUS_TIMEOUT_SECS%;
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
+      window.minSavedMessageTimeoutSecs = %MIN_SAVED_MESSAGE_TIMEOUT_SECS%;
       window.protocolDebug = %PROTOCOL_DEBUG%;
       window.frameAncestors = decodeURIComponent('%FRAME_ANCESTORS%');
       window.socketProxy = %SOCKET_PROXY%;

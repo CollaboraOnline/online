@@ -261,12 +261,19 @@ L.Map = L.Evented.extend({
 
 		this._isNotebookbarLoadedOnCore = false;
 
+		// can be '', 'SAVING', 'MODIFIED' or 'SAVED'
+		this._docStatus = '';
+
 		this.on('commandstatechanged', function(e) {
 			if (e.commandName === '.uno:ModifiedStatus') {
 				this._everModified = this._everModified || (e.state === 'true');
 
 				// Fire an event to let the client know whether the document needs saving or not.
 				this.fire('postMessage', {msgId: 'Doc_ModifiedStatus', args: { Modified: e.state === 'true' }});
+
+				if (this._everModified) {
+					this.setDocumentStatus(e.state === 'true' ? 'MODIFIED' : 'SAVED');
+				}
 			}
 		}, this);
 
@@ -303,6 +310,44 @@ L.Map = L.Evented.extend({
 				this._docLoadedOnce = this._docLoaded;
 			}
 		}, this);
+	},
+
+
+	// can be '', 'SAVING', 'MODIFIED' or 'SAVED'
+	setDocumentStatus: function(status) {
+		this._docStatus = status;
+
+		if (this._docStatus === 'SAVING' && this.lastModElement) {
+			this.lastModElement.textContent = _('Saving...');
+			this.toggleDocumentSavedMsg(false);
+			return;
+		}
+
+		if (this._docStatus === 'MODIFIED') {
+			this.lastModElement.textContent = '';
+			this.toggleDocumentSavedMsg(false);
+			return;
+		}
+
+		if (this._docStatus === 'SAVED') {
+			this.toggleDocumentSavedMsg(true);
+			return;
+		}
+	},
+
+	toggleDocumentSavedMsg: function(shouldShow) {
+		var savedStatusElId = 'saved-status-label';
+		var savedStatusEl = document.getElementById(savedStatusElId);
+
+		if (!savedStatusEl) {
+			savedStatusEl = document.createElement('span');
+			savedStatusEl.id = savedStatusElId;
+			savedStatusEl.textContent = _('Document saved');
+
+			document.getElementById('tb_actionbar_item_right').appendChild(savedStatusEl);
+		}
+
+		savedStatusEl.style.display = (shouldShow === false) ? 'none' : 'inline';
 	},
 
 	loadDocument: function(socket) {
@@ -376,29 +421,44 @@ L.Map = L.Evented.extend({
 	},
 
 	initializeModificationIndicator: function() {
-		var lastModButton = L.DomUtil.get('menu-last-mod');
-		if (lastModButton !== null && lastModButton !== undefined
-			&& lastModButton.firstChild.innerHTML !== null
-			&& lastModButton.firstChild.childElementCount == 0) {
-			if (this._lastmodtime == null) {
-				// No modification time -> hide the indicator
-				L.DomUtil.setStyle(lastModButton, 'display', 'none');
-				return;
-			}
-			var mainSpan = document.createElement('span');
-			this.lastModIndicator = document.createElement('span');
-			mainSpan.appendChild(this.lastModIndicator);
-
-			this.updateModificationIndicator(this._lastmodtime);
-
-			// Replace menu button body with new content
-			lastModButton.firstChild.innerHTML = '';
-			lastModButton.firstChild.appendChild(mainSpan);
-
-			if (L.Params.revHistoryEnabled) {
-				L.DomUtil.setStyle(lastModButton, 'cursor', 'pointer');
-			}
+		var lastModElementId = 'last-mod';
+		if (document.getElementById(lastModElementId)) {
+			return;
 		}
+
+		var lastModElement = document.createElement('span');
+		lastModElement.id = lastModElementId;
+		lastModElement.setAttribute('title', _('Your changes have been saved') + '.');
+		var actionBarItemRightElement = document.getElementById('tb_actionbar_item_right');
+		actionBarItemRightElement.appendChild(lastModElement);
+
+		var that = this;
+		var timeout = null;
+
+		// Create an observer that will look for mutations of the container element.
+		// After the bottom toolbar is beeing initialized it should be ok.
+		var observer = new MutationObserver(function() {
+			observer.disconnect();
+
+			clearTimeout(timeout);
+			timeout = setTimeout(function() {
+				if (!document.getElementById(lastModElementId)) {
+					that.initializeModificationIndicator();
+				}
+			}, 0);
+		});
+
+		observer.observe(actionBarItemRightElement, { attributes: true, childList: true, subtree: true });
+
+		this.lastModElement = lastModElement;
+
+		if (this._lastmodtime === null) {
+			// No modification time -> hide the indicator
+			L.DomUtil.setStyle(lastModElement, 'display', 'none');
+			return;
+		}
+
+		this.updateModificationIndicator(this._lastmodtime);
 	},
 
 	updateModificationIndicator: function(newModificationTime) {
@@ -410,13 +470,17 @@ L.Map = L.Evented.extend({
 
 		clearTimeout(this._modTimeout);
 
-		if (this.lastModIndicator !== null && this.lastModIndicator !== undefined) {
+		if (this.lastModElement) {
 			var dateTime = new Date(this._lastmodtime.replace(/,.*/, 'Z'));
 			var dateValue;
 
 			var elapsed = Date.now() - dateTime;
 			var rtf1 = new Intl.RelativeTimeFormat(String.locale, { style: 'narrow' });
-			if (elapsed < 60000) {
+
+			if (('minSavedMessageTimeoutSecs' in window) && (elapsed < (window.minSavedMessageTimeoutSecs * 1000))) {
+				timeout = window.minSavedMessageTimeoutSecs * 1000;
+				dateValue = '';
+			} else if (elapsed < 60000) {
 				dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 1000), 'second');
 				timeout = 6000;
 			} else if (elapsed < 3600000) {
@@ -431,7 +495,7 @@ L.Map = L.Evented.extend({
 				timeout = 60000;
 			}
 
-			this.lastModIndicator.innerHTML = dateValue;
+			this.lastModElement.textContent = dateValue;
 
 			if (timeout) {
 				this._modTimeout = setTimeout(L.bind(this.updateModificationIndicator, this, -1), timeout);
