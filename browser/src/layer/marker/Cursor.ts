@@ -99,9 +99,9 @@ class Cursor {
 
 	addCursorClass(visible: boolean) {
 		if (visible)
-			$('.leaflet-cursor').removeClass('blinking-cursor-hidden');
+			L.DomUtil.removeClass(this.cursor, 'blinking-cursor-hidden');
 		else
-			$('.leaflet-cursor').addClass('blinking-cursor-hidden');
+			L.DomUtil.addClass(this.cursor, 'blinking-cursor-hidden');
 	}
 
 	isVisible(): boolean {
