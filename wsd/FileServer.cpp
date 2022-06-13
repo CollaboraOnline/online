@@ -533,7 +533,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         }
 #endif
 
-        if (Util::startsWith(relPath, std::string("/browser/dist/remote/lokit-extra-img.svg")))
+        if (Util::endsWith(relPath, std::string("/remote/lokit-extra-img.svg")))
         {
             processLogo(socket);
             return;
