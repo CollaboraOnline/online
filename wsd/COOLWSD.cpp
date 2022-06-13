@@ -511,8 +511,11 @@ static bool prespawnChildren()
 
 #endif
 
-static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
+static size_t addNewChild(std::shared_ptr<ChildProcess> child)
 {
+    assert(child && "Adding null child");
+    const auto pid = child->getPid();
+
     std::unique_lock<std::mutex> lock(NewChildrenMutex);
 
     --OutstandingForks;
@@ -523,14 +526,14 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
     // Reset the child-spawn timeout to the default, now that we're set.
     ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS;
 
-    LOG_TRC("Adding one child to NewChildren");
-    NewChildren.emplace_back(child);
+    LOG_TRC("Adding a new child " << pid << " to NewChildren");
+    NewChildren.emplace_back(std::move(child));
     const size_t count = NewChildren.size();
-    LOG_INF("Have " << count << " spare " <<
-            (count == 1 ? "child" : "children") << " after adding [" << child->getPid() << "].");
     lock.unlock();
 
-    LOG_TRC("Notifying NewChildrenCV");
+    LOG_INF("Have " << count << " spare " << (count == 1 ? "child" : "children")
+                    << " after adding [" << pid << "]. Notifying.");
+
     NewChildrenCV.notify_one();
     return count;
 }

@@ -176,9 +176,9 @@ void DocumentBroker::assertCorrectThread() const
 // The inner heart of the DocumentBroker - our poll loop.
 void DocumentBroker::pollThread()
 {
-    LOG_INF("Starting docBroker polling thread for docKey [" << _docKey << "].");
-
     _threadStart = std::chrono::steady_clock::now();
+
+    LOG_INF("Starting docBroker polling thread for docKey [" << _docKey << ']');
 
     // Request a kit process for this doc.
 #if !MOBILEAPP

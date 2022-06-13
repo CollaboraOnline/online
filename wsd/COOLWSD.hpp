@@ -30,6 +30,7 @@
 #include "RequestDetails.hpp"
 #include "WebSocketHandler.hpp"
 #include "QuarantineUtil.hpp"
+
 class ChildProcess;
 class TraceFileWriter;
 class DocumentBroker;
