@@ -352,7 +352,7 @@ L.Map.include({
 
 		if (this.uiManager.isUIBlocked())
 			return;
-		if (this.dialog.hasOpenedDialog())
+		if (this.dialog.hasOpenedDialog() && !command.startsWith('.uno:ToolbarMode'))
 			this.dialog.blinkOpenDialog();
 		else if (this.isPermissionEdit() || isAllowedInReadOnly) {
 			if (!this.messageNeedsToBeRedirected(command))
