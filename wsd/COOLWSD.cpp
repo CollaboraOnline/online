@@ -4894,6 +4894,7 @@ void COOLWSD::processFetchUpdate()
     {
         Poco::URI uriFetch(std::string(INFOBAR_URL));
         uriFetch.addQueryParameter("product", APP_NAME);
+        uriFetch.addQueryParameter("version", COOLWSD_VERSION);
         std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("update");
         std::shared_ptr<http::Session> sessionFetch = StorageBase::getHttpSession(uriFetch);
         http::Request request(uriFetch.getPathAndQuery());
