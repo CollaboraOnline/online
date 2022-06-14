@@ -631,7 +631,8 @@ public:
     int sendMessage(const char* data, const size_t len, const WSOpCode code, const bool flush) const
     {
         int unitReturn = -1;
-        if (!Util::isFuzzing() && UnitBase::get().filterSendMessage(data, len, code, flush, unitReturn))
+        if (!Util::isFuzzing() &&
+            UnitBase::get().filterSendWebSocketMessage(data, len, code, flush, unitReturn))
             return unitReturn;
 
         //TODO: Support fragmented messages.
