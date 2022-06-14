@@ -989,13 +989,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _('Properties'),
-				'command': '.uno:ContentControlProperties'
+				'text': _('Date'),
+				'command': '.uno:InsertDateContentControl'
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _('Date'),
-				'command': '.uno:InsertDateContentControl'
+				'text': _('Properties'),
+				'command': '.uno:ContentControlProperties'
 			}
 		];
 
