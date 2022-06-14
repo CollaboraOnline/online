@@ -1020,20 +1020,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _('Content Control Properties'),
-								'command': '.uno:ContentControlProperties'
-							}
-						]
-					},
-				],
-				'vertical': 'true'
+				'id': 'ContentControlProperties',
+				'type': 'bigtoolitem',
+				'text': _('Content Control Properties'),
+				'command': '.uno:ContentControlProperties'
 			},
 		];
 
