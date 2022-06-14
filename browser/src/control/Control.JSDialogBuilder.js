@@ -2350,6 +2350,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'AlignHorizontalCenter': 'CenterPara',
 			'AlignBlock': 'JustifyPara',
 			'FormatSparklineMenu': 'InsertSparkline',
+			'InsertDateContentControl': 'InsertDateField'
 		};
 		var cleanName = name;
 		var prefixLength = '.uno:'.length;
