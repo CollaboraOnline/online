@@ -23,7 +23,7 @@
  *
  * The way this works is as follows:
  * 1. Load a document.
- * 2. When we get 'status:' in onFilterSendMessage, we modify it.
+ * 2. When we get 'status:' in onFilterSendWebSocketMessage, we modify it.
  * 3. Simulate content-change in storage and attempt to save it.
  *  4a. Disconnect and the modified data must be discarded.
  *  4b. Save and, on getting the documentconflict error, discard.

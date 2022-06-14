@@ -152,9 +152,10 @@ public:
     }
 
     /// Message that is about to be sent via the websocket.
-    /// To override, handle onFilterSendMessage or any of the onDocument...() handlers.
-    bool filterSendMessage(const char* data, const std::size_t len, const WSOpCode code,
-                           const bool flush, int& unitReturn);
+    /// To override, handle onFilterSendWebSocketMessage or any of the onDocument...() handlers.
+    /// Returns true to stop processing the message further.
+    bool filterSendWebSocketMessage(const char* data, const std::size_t len, const WSOpCode code,
+                                    const bool flush, int& unitReturn);
 
     /// Hook the disk space check
     virtual bool filterCheckDiskSpace(const std::string & /* path */,
@@ -178,7 +179,7 @@ public:
     }
 
     /// Called when the document has been loaded,
-    /// based on the "status:" message, in the context of filterSendMessage.
+    /// based on the "status:" message, in the context of filterSendWebSocketMessage.
     /// Return true to stop further handling of messages.
     virtual bool onDocumentLoaded(const std::string&) { return false; }
 
@@ -248,9 +249,9 @@ private:
     static UnitBase *linkAndCreateUnit(UnitType type, const std::string& unitLibPath);
 
     /// Handles messages sent via WebSocket.
-    virtual bool onFilterSendMessage(const char* /*data*/, const std::size_t /*len*/,
-                                     const WSOpCode /* code */, const bool /* flush */,
-                                     int& /*unitReturn*/)
+    virtual bool onFilterSendWebSocketMessage(const char* /*data*/, const std::size_t /*len*/,
+                                              const WSOpCode /* code */, const bool /* flush */,
+                                              int& /*unitReturn*/)
     {
         return false;
     }
