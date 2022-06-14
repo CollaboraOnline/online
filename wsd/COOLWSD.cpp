@@ -213,7 +213,11 @@ static std::map<std::string, std::shared_ptr<DocumentBroker> > DocBrokers;
 static std::mutex DocBrokersMutex;
 static Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
 
-extern "C" { void dump_state(void); /* easy for gdb */ }
+extern "C"
+{
+    void dump_state(void); /* easy for gdb */
+    void forwardSigUsr2();
+}
 
 #if ENABLE_DEBUG
 static std::chrono::milliseconds careerSpanMs(std::chrono::milliseconds::zero());
@@ -367,7 +371,6 @@ void COOLWSD::checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
 
 /// Remove dead and idle DocBrokers.
 /// The client of idle document should've greyed-out long ago.
-/// Returns true if at least one is removed.
 void cleanupDocBrokers()
 {
     Util::assertIsLocked(DocBrokersMutex);
@@ -2838,7 +2841,10 @@ void PrisonPoll::wakeupHook()
 #endif
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex, std::defer_lock);
     if (docBrokersLock.try_lock())
+    {
         cleanupDocBrokers();
+        SigUtil::checkForwardSigUsr2(forwardSigUsr2);
+    }
 }
 
 #if !MOBILEAPP
@@ -5485,6 +5491,43 @@ void dump_state()
     const std::string msg = oss.str();
     fprintf(stderr, "%s\n", msg.c_str());
     LOG_TRC(msg);
+}
+
+void forwardSigUsr2()
+{
+    LOG_TRC("forwardSigUsr2");
+
+    Util::assertIsLocked(DocBrokersMutex);
+    std::lock_guard<std::mutex> newChildLock(NewChildrenMutex);
+
+#if !MOBILEAPP
+#ifndef KIT_IN_PROCESS
+    if (COOLWSD::ForKitProcId > 0)
+    {
+        LOG_INF("Sending SIGUSR2 to forkit " << COOLWSD::ForKitProcId);
+        ::kill(COOLWSD::ForKitProcId, SIGUSR2);
+    }
+#endif
+#endif
+
+    for (const auto& child : NewChildren)
+    {
+        if (child && child->getPid() > 0)
+        {
+            LOG_INF("Sending SIGUSR2 to child " << child->getPid());
+            ::kill(child->getPid(), SIGUSR2);
+        }
+    }
+
+    for (const auto& pair : DocBrokers)
+    {
+        std::shared_ptr<DocumentBroker> docBroker = pair.second;
+        if (docBroker)
+        {
+            LOG_INF("Sending SIGUSR2 to docBroker " << docBroker->getPid());
+            ::kill(docBroker->getPid(), SIGUSR2);
+        }
+    }
 }
 
 // Avoid this in the Util::isFuzzing() case because libfuzzer defines its own main().

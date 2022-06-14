@@ -42,6 +42,7 @@
 #ifndef IOS
 static std::atomic<bool> TerminationFlag(false);
 static std::atomic<bool> DumpGlobalState(false);
+static std::atomic<bool> ForwardSigUsr2Flag(false); //< Flags to forward SIG_USR2 to children.
 static std::atomic<bool> ShutdownRequestFlag(false);
 #endif
 
@@ -93,10 +94,23 @@ namespace SigUtil
     void checkDumpGlobalState(GlobalDumpStateFn dumpState)
     {
 #if !MOBILEAPP
+        assert(dumpState && "Invalid callback for checkDumpGlobalState");
         if (DumpGlobalState)
         {
-            dumpState();
             DumpGlobalState = false;
+            dumpState();
+        }
+#endif
+    }
+
+    void checkForwardSigUsr2(ForwardSigUsr2Fn forwardSigUsr2)
+    {
+#if !MOBILEAPP
+        assert(forwardSigUsr2 && "Invalid callback for checkForwardSigUsr2");
+        if (ForwardSigUsr2Flag)
+        {
+            ForwardSigUsr2Flag = false;
+            forwardSigUsr2();
         }
 #endif
     }
@@ -478,7 +492,6 @@ namespace SigUtil
         if (signal == SIGUSR1)
         {
             DumpGlobalState = true;
-            SocketPoll::wakeupWorld();
         }
         else if (signal == SIGUSR2)
         {
@@ -487,9 +500,12 @@ namespace SigUtil
             const int numSlots = backtrace(backtraceBuffer, maxSlots);
             if (numSlots > 0)
                 backtrace_symbols_fd(backtraceBuffer, numSlots, SignalLogFD);
+
+            ForwardSigUsr2Flag = true;
         }
 
         signalLogClose();
+        SocketPoll::wakeupWorld();
     }
 
     static
