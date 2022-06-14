@@ -1446,10 +1446,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					return;
 
 				if (event.key === 'Enter') {
-					builder.callback('edit', 'keypress', edit, UNOKey.RETURN, builder);
+					builder.callback('edit', 'keypress', edit, UNOKey.RETURN | modifier, builder);
 					event.preventDefault();
 				} else if (event.key === 'Escape' || event.key === 'Esc') {
-					builder.callback('edit', 'keypress', edit, UNOKey.ESCAPE, builder);
+					builder.callback('edit', 'keypress', edit, UNOKey.ESCAPE | modifier, builder);
 					event.preventDefault();
 				} else if (event.key === 'Left' || event.key === 'ArrowLeft') {
 					builder.callback('edit', 'keypress', edit, UNOKey.LEFT | modifier, builder);
@@ -1458,10 +1458,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					builder.callback('edit', 'keypress', edit, UNOKey.RIGHT | modifier, builder);
 					event.preventDefault();
 				} else if (event.key === 'Backspace') {
-					builder.callback('edit', 'keypress', edit, UNOKey.BACKSPACE, builder);
+					builder.callback('edit', 'keypress', edit, UNOKey.BACKSPACE | modifier, builder);
 					event.preventDefault();
 				} else if (event.key === 'Space') {
-					builder.callback('edit', 'keypress', edit, UNOKey.SPACE, builder);
+					builder.callback('edit', 'keypress', edit, UNOKey.SPACE | modifier, builder);
 					event.preventDefault();
 				} else if (event.key === 'Shift') {
 					modifier = modifier | UNOModifier.SHIFT;
