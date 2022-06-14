@@ -968,83 +968,35 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getFormTab: function() {
 		var content = [
 			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text':  _('Rich Text'),
-								'command': '.uno:InsertContentControl'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _('Checkbox'),
-								'command': '.uno:InsertCheckboxContentControl'
-							}
-						]
-					},
-				],
-				'vertical': 'true'
+				'type': 'bigtoolitem',
+				'text':  _('Rich Text'),
+				'command': '.uno:InsertContentControl'
 			},
 			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text':  _('Dropdown'),
-								'command': '.uno:InsertDropdownContentControl'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _('Picture'),
-								'command': '.uno:InsertPictureContentControl'
-							}
-						]
-					},
-				],
-				'vertical': 'true'
+				'type': 'bigtoolitem',
+				'text': _('Checkbox'),
+				'command': '.uno:InsertCheckboxContentControl'
 			},
 			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _('Properties'),
-								'command': '.uno:ContentControlProperties'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _('Date'),
-								'command': '.uno:InsertDateContentControl'
-							}
-						]
-					},
-				],
-				'vertical': 'true'
+				'type': 'bigtoolitem',
+				'text':  _('Dropdown'),
+				'command': '.uno:InsertDropdownContentControl'
 			},
+			{
+				'type': 'bigtoolitem',
+				'text': _('Picture'),
+				'command': '.uno:InsertPictureContentControl'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _('Properties'),
+				'command': '.uno:ContentControlProperties'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _('Date'),
+				'command': '.uno:InsertDateContentControl'
+			}
 		];
 
 		return this.getTabPage('Form', content);
