@@ -49,6 +49,10 @@ namespace SigUtil
 
     void checkDumpGlobalState(GlobalDumpStateFn dumpState);
 
+    extern "C" { typedef void (*ForwardSigUsr2Fn)(void); }
+
+    void checkForwardSigUsr2(ForwardSigUsr2Fn forwardSigUsr2);
+
     /// Add a message to a round-robin buffer to be dumped on fatal signal
     void addActivity(const std::string &message);
 
