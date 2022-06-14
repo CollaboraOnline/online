@@ -287,6 +287,23 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     END(oss_);                                                                                     \
     LOG_LOG(LOG, PRIO, LVL, oss_.str())
 
+#define LOG_ANY(X)                                                                                 \
+    char b_[1024];                                                                                 \
+    std::ostringstream oss_(Log::prefix<sizeof(b_) - 1>(b_, "INF"), std::ostringstream::ate);      \
+    logPrefix(oss_);                                                                               \
+    oss_ << std::boolalpha << X;                                                                   \
+    LOG_END(oss_);                                                                                 \
+    Poco::AutoPtr<Poco::Channel> channel = Log::logger().getChannel();                             \
+    channel->log(Poco::Message("", oss_.str(), Poco::Message::Priority::PRIO_INFORMATION))
+
+#if defined __GNUC__ || defined __clang__
+#  define LOG_CONDITIONAL(log,type)                                                                \
+    __builtin_expect((!Log::isShutdownCalled() && log.type()), 0)
+#else
+#  define LOG_CONDITIONAL(log,type)                                                                \
+    (!Log::isShutdownCalled() && log.type())
+#endif
+
 #define LOG_TRC(X)                                                                                 \
     do                                                                                             \
     {                                                                                              \
