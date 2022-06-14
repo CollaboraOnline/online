@@ -3598,7 +3598,14 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_isAnyInputFocused: function() {
-		return $('input:focus').length > 0 || $('textarea.jsdialog:focus').length > 0;
+		var hasTunneledDialogOpened = this._map.dialog ? this._map.dialog.hasOpenedDialog() : false;
+		var hasJSDialogOpened = this._map.jsdialog ? this._map.jsdialog.hasDialogOpened() : false;
+		var hasJSDialogFocused = L.DomUtil.hasClass(document.activeElement, 'jsdialog');
+		var commentHasFocus = app.view.commentHasFocus;
+		var inputHasFocus = $('input:focus').length > 0 || $('textarea.jsdialog:focus').length > 0;
+
+		return hasTunneledDialogOpened || hasJSDialogOpened || hasJSDialogFocused
+			|| commentHasFocus || inputHasFocus;
 	},
 
 	// enable or disable blinking cursor and  the cursor overlay depending on
@@ -4289,10 +4296,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			this._addDropDownMarker();
 
-			var hasTunneledDialogOpened = this._map.dialog ? this._map.dialog.hasOpenedDialog() : false;
-			var hasJSDialogOpened = this._map.jsdialog ? this._map.jsdialog.hasDialogOpened() : false;
-
-			var dontFocusDocument = hasTunneledDialogOpened || hasJSDialogOpened || app.view.commentHasFocus || this._isAnyInputFocused();
+			var dontFocusDocument = this._isAnyInputFocused();
 
 			// when the cell cursor is moving, the user is in the document,
 			// and the focus should leave the cell input bar
