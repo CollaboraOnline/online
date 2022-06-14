@@ -195,8 +195,7 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 	color: var(--color-main-text);
 	font-size: var(--header-font-size);
 	line-height: var(--header-height);
-	padding-left: 8px;
-	padding-right: 8px; /* for RTL mode */
+	padding-inline: 8px;
 }
 
 .sidebar.root-container.jsdialog > .jsdialog.sidebar {
