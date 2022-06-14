@@ -209,8 +209,8 @@ UnitBase::~UnitBase()
     _socketPoll->joinThread();
 }
 
-bool UnitBase::filterSendMessage(const char* data, const std::size_t len, const WSOpCode code,
-                                 const bool flush, int& unitReturn)
+bool UnitBase::filterSendWebSocketMessage(const char* data, const std::size_t len,
+                                          const WSOpCode code, const bool flush, int& unitReturn)
 {
     const std::string message(data, len);
     if (Util::startsWith(message, "unocommandresult:"))
@@ -271,7 +271,7 @@ bool UnitBase::filterSendMessage(const char* data, const std::size_t len, const 
             return false;
     }
 
-    return onFilterSendMessage(data, len, code, flush, unitReturn);
+    return onFilterSendWebSocketMessage(data, len, code, flush, unitReturn);
 }
 
 UnitWSD::UnitWSD(const std::string& name)
