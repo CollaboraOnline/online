@@ -23,7 +23,7 @@
 /// We modify the document, save, and attempt to upload,
 /// which fails. We close the document and verify
 /// that the document is uploaded upon closing.
-// Modify, Save, Upload fails, close -> Upload.
+/// Modify, Save, Upload fails, close -> Upload.
 class UnitWOPIAsyncUpload_Close : public WopiTestServer
 {
     STATE_ENUM(Phase, Load, WaitLoadStatus, Modify, WaitModifiedStatus, WaitFirstPutFile, Close,
@@ -92,8 +92,8 @@ public:
                            _phase == Phase::WaitModifiedStatus);
         TRANSITION_STATE(_phase, Phase::WaitFirstPutFile);
 
-            WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
-                    "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue");
+        WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
+                "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue");
 
         return true;
     }
