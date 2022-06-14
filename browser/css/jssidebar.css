@@ -120,8 +120,7 @@
 .sidebar #FIELD_TRANSPARENCY {
 	height: 0;
 	position: relative;
-	bottom: 10px;
-	right: 17px;
+	bottom: 18px;
 }
 
 .sidebar #transparency_label {
@@ -308,17 +307,6 @@ td.jsdialog .jsdialog.cell.sidebar {
 	height: auto;
 }
 
-#table-fillattrhb {
-	display: none;
-}
-
-#fillattrhb {
-	margin-left: 4px;
-	position: relative;
-	left: 38px;
-}
-
-
 #gradangle > .spinfield {
 	margin-left: 0;
 }
@@ -357,39 +345,14 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	margin-right: 0;
 }
 
-.sidebar #linetransparency {
-	position: relative;
-	margin-inline-end: 18px;
+#softedgeframe .sidebar.ui-expander-content,
+#glowframe .sidebar.ui-expander-content {
+	width: 100% !important; /* frame inside frame */
 }
 
-.sidebar #horizontalpos,
-.sidebar #verticalpos {
-	position: relative;
-	margin-inline-end: 24px;
-}
-
-.sidebar #fillgrad1 {
-	position: relative;
-	left: 7px;
-}
-.sidebar #fillgrad2,
-.sidebar #LB_SHADOW_COLOR {
-	position: relative;
-	left: 5px;
-}
 #LB_SHADOW_COLOR {
 	border: 1px solid var(--color-border-lighter);
 	background-color: var(--color-background-lighter);
-}
-
-.sidebar #LB_GLOW_RADIUS,
-.sidebar #SB_SOFTEDGE_RADIUS {
-	position: relative;
-	right: 20px;
-}
-.sidebar #LB_GLOW_COLOR {
-	position: relative;
-	left: 4px;
 }
 
 .sidebar #leftindent {
