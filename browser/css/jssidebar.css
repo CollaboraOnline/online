@@ -89,12 +89,11 @@
 .sidebar.ui-expander {
 	display: flex;
 	justify-content: space-between;
-	width: calc(100% - 10px);
 	align-items: center;
 }
 
 .sidebar.ui-expander-content {
-	width: calc(100% - 10px);
+	padding-inline: 10px;
 }
 
 #selectcolor {
@@ -290,6 +289,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 	display: block;
 	width: 10px;
 	height: 10px;
+	margin-inline-end: 10px;
 }
 
 .ui-expander.jsdialog.sidebar .ui-expander-icon-right img {
