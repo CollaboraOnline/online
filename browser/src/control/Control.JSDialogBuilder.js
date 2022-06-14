@@ -1457,8 +1457,23 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				} else if (event.key === 'Right' || event.key === 'ArrowRight') {
 					builder.callback('edit', 'keypress', edit, UNOKey.RIGHT | modifier, builder);
 					event.preventDefault();
+				} else if (event.key === 'Up' || event.key === 'ArrowUp') {
+					builder.callback('edit', 'keypress', edit, UNOKey.UP | modifier, builder);
+					event.preventDefault();
+				} else if (event.key === 'Down' || event.key === 'ArrowDown') {
+					builder.callback('edit', 'keypress', edit, UNOKey.DOWN | modifier, builder);
+					event.preventDefault();
+				} else if (event.key === 'Home') {
+					builder.callback('edit', 'keypress', edit, UNOKey.HOME | modifier, builder);
+					event.preventDefault();
+				} else if (event.key === 'End') {
+					builder.callback('edit', 'keypress', edit, UNOKey.END | modifier, builder);
+					event.preventDefault();
 				} else if (event.key === 'Backspace') {
 					builder.callback('edit', 'keypress', edit, UNOKey.BACKSPACE | modifier, builder);
+					event.preventDefault();
+				} else if (event.key === 'Delete') {
+					builder.callback('edit', 'keypress', edit, UNOKey.DELETE | modifier, builder);
 					event.preventDefault();
 				} else if (event.key === 'Space') {
 					builder.callback('edit', 'keypress', edit, UNOKey.SPACE | modifier, builder);
@@ -1496,7 +1511,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					event.key === 'ArrowLeft' ||
 					event.key === 'Right' ||
 					event.key === 'ArrowRight' ||
+					event.key === 'Up' ||
+					event.key === 'ArrowUp' ||
+					event.key === 'Down' ||
+					event.key === 'ArrowDown' ||
+					event.key === 'Home' ||
+					event.key === 'End' ||
 					event.key === 'Backspace' ||
+					event.key === 'Delete' ||
 					event.key === 'Space') {
 					// skip
 				} else {
@@ -1516,7 +1538,31 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			edit.addEventListener('mouseup', function(event) {
 				if (edit.disabled)
 					return;
-				var selection = event.target.selectionStart + ';' + event.target.selectionEnd;
+
+				var currentText = event.target.value;
+
+				var startPos = event.target.selectionStart;
+				var endPos = event.target.selectionEnd;
+				var startPara = 0;
+				var endPara = 0;
+
+				if (currentText.indexOf('\n') >= 0) {
+					var currentPos = 0;
+					while (startPos >= currentPos + currentText.indexOf('\n', currentPos)) {
+						currentPos += currentText.indexOf('\n', currentPos) + 1;
+						startPos -= currentPos;
+						startPara++;
+					}
+
+					currentPos = 0;
+					while (endPos >= currentPos + currentText.indexOf('\n', currentPos)) {
+						currentPos += currentText.indexOf('\n', currentPos) + 1;
+						endPos -= currentPos;
+						endPara++;
+					}
+				}
+
+				var selection = startPos + ';' + endPos + ';' + startPara + ';' + endPara;
 				builder.callback('edit', 'textselection', edit, selection, builder);
 			});
 		}
@@ -3100,11 +3146,36 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			break;
 
 		case 'setText':
-			control.value = this._cleanText(data.text);
+			var currentText = this._cleanText(data.text);
+			control.value = currentText;
 			if (data.selection) {
 				var selection = data.selection.split(';');
-				if (selection.length === 2)
-					control.setSelectionRange(parseInt(selection[0]), parseInt(selection[1]));
+				if (selection.length === 2) {
+					var start = parseInt(selection[0]);
+					var end = parseInt(selection[1]);
+					control.setSelectionRange(start, end);
+				} else if (selection.length === 4) {
+					var startPos = parseInt(selection[0]);
+					var endPos = parseInt(selection[1]);
+					var startPara = parseInt(selection[2]);
+					var endPara = parseInt(selection[3]);
+					var start = 0;
+					var end = 0;
+
+					var row = 0;
+					for (;row < startPara; row++)
+						start += currentText.indexOf('\n', start) + 1;
+
+					start += startPos;
+
+					row = 0;
+					for (;row < endPara; row++)
+						end += currentText.indexOf('\n', end) + 1;
+
+					end += endPos;
+
+					control.setSelectionRange(start, end);
+				}
 			}
 			break;
 
