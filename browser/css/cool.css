@@ -14,6 +14,31 @@
 	/* Shared color for cell and selection border */
 	--cell-cursor-selection-border-color: var(--color-primary);
 }
+
+/* Flexbox */
+.d-flex {
+	display: flex;
+}
+.flex-column {
+	/* Initial value */
+	flex-direction: column;
+}
+.flex-row {
+	flex-direction: row;
+}
+.align-items-center {
+	align-items: center;
+}
+.justify-items-center {
+	justify-items: center;
+}
+.align-content-center {
+	align-content: center;
+}
+.justify-content-center {
+	justify-content: center;
+}
+
 /* clip technique: hide visually but keep it available to screen readers */
 .visuallyhidden {
 	border: 0;

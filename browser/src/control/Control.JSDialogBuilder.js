@@ -1506,14 +1506,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var pushbuttonText = builder._customPushButtonTextForId(data.id) !== '' ? builder._customPushButtonTextForId(data.id) : builder._cleanText(data.text);
 
 		if (data.image && pushbuttonText !== '') {
+			L.DomUtil.addClass(pushbutton, 'has-img d-flex align-content-center justify-content-center align-items-center');
 			var image = L.DomUtil.create('img', '', pushbutton);
 			image.src = data.image;
 			var text = L.DomUtil.create('span', '', pushbutton);
 			text.innerText = pushbuttonText;
 		} else if (data.image) {
+			L.DomUtil.addClass(pushbutton, 'has-img d-flex align-content-center justify-content-center align-items-center');
 			var image = L.DomUtil.create('img', '', pushbutton);
 			image.src = data.image;
 		} else if (data.symbol) {
+			L.DomUtil.addClass(pushbutton, 'has-img d-flex align-content-center justify-content-center align-items-center');
 			var image = L.DomUtil.create('img', '', pushbutton);
 			image.src = L.LOUtil.getImageURL('symbol_' + data.symbol + '.svg');
 		} else {
