@@ -1768,6 +1768,8 @@ void COOLWSD::innerInitialize(Application& self)
         { "logging.file[@enable]", "false" },
         { "logging.level", "trace" },
         { "logging.lokit_sal_log", "-INFO-WARN" },
+        { "logging.docstats", "false" },
+        { "logging.userstats", "false" },
         { "browser_logging", "false" },
         { "mount_jail_tree", "true" },
         { "net.connection_timeout_secs", "30" },
@@ -1862,7 +1864,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "languagetool.base_url", ""},
         { "languagetool.api_key", ""},
         { "languagetool.user_name", ""},
-        { "languagetool.enabled", "false"},
+        { "languagetool.enabled", "false"}
     };
 
     // Set default values, in case they are missing from the config file.
