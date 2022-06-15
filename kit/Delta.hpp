@@ -8,6 +8,7 @@
 #pragma once
 
 #include <vector>
+#include <unordered_set>
 #include <assert.h>
 #include <zlib.h>
 #include <Log.hpp>
@@ -196,8 +197,43 @@ class DeltaGenerator {
         DeltaBitmapRow *_rows;
     };
 
+    struct DeltaHasher {
+        std::size_t operator()(const std::shared_ptr<DeltaData> &t) const
+        {
+            return (t->_left << 20) ^ t->_top ^ (t->_part << 15) ^ (t->_size << 7);
+        }
+    };
+
+    struct DeltaCompare {
+        bool operator()(const std::shared_ptr<DeltaData> &a,
+                        const std::shared_ptr<DeltaData> &b) const
+            {
+                return a->_left == b->_left && a->_top == b->_top &&
+                    a->_size == b->_size && a->_part == b->_part;
+            }
+    };
+
     /// The last several bitmap entries as a cache
-    std::vector<std::shared_ptr<DeltaData>> _deltaEntries;
+    std::unordered_set<std::shared_ptr<DeltaData>, DeltaHasher, DeltaCompare> _deltaEntries;
+    size_t _maxEntries;
+
+    void rebalanceDeltasT()
+    {
+        if (_deltaEntries.size() > _maxEntries)
+        {
+            size_t toRemove = _deltaEntries.size() - (_maxEntries * 3 / 4);
+            std::vector<std::shared_ptr<DeltaData>> entries;
+            entries.insert(entries.end(), _deltaEntries.begin(), _deltaEntries.end());
+            std::sort(entries.begin(), entries.end(),
+                      [](const std::shared_ptr<DeltaData> &a,
+                         const std::shared_ptr<DeltaData> &b)
+                          {
+                              return a->getWid() < b->getWid();
+                          });
+            for (size_t i = 0; i < toRemove; ++i)
+                _deltaEntries.erase(entries[i]);
+        }
+    }
 
     // Unpremultiplies data and converts native endian ARGB => RGBA bytes
     static void
@@ -441,21 +477,13 @@ class DeltaGenerator {
             if (_deltaEntries.size() > 16) // FIXME: hard-coded & not per-view
                 _deltaEntries.erase(_deltaEntries.begin());
 
-            for (auto &old : _deltaEntries)
+            auto it = _deltaEntries.find(update);
+            if (it == _deltaEntries.end())
             {
-                if (old->_left == tileLeft && old->_top == tileTop &&
-                    old->_size == tileSize && old->_part == tilePart)
-                {
-                    cacheEntry = old;
-                    break;
-                }
-            }
-
-            if (!cacheEntry)
-            {
-                _deltaEntries.push_back(update);
+                _deltaEntries.insert(update);
                 return false;
             }
+            cacheEntry = *it;
             cacheEntry->use();
         }
 
