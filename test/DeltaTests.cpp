@@ -190,21 +190,19 @@ void DeltaTests::testDeltaSequence()
     LOK_ASSERT(height == 256 && width == 256 && rowBytes == 256*4);
     LOK_ASSERT_EQUAL(size_t(256 * 256 * 4), text2.size());
 
-    std::mutex dummy;
-
     std::vector<char> delta;
     // Stash it in the cache
     LOK_ASSERT(gen.createDelta(
                        reinterpret_cast<unsigned char *>(&text[0]),
                        0, 0, width, height, width, height,
-                       1, 2, 3, 0, delta, textWid, false, dummy) == false);
+                       1, 2, 3, 0, delta, textWid, false) == false);
     LOK_ASSERT(delta.size() == 0);
 
     // Build a delta between text2 & textWid
     LOK_ASSERT(gen.createDelta(
                        reinterpret_cast<unsigned char *>(&text2[0]),
                        0, 0, width, height, width, height,
-                       1, 2, 3, 0, delta, text2Wid, false, dummy) == true);
+                       1, 2, 3, 0, delta, text2Wid, false) == true);
     LOK_ASSERT(delta.size() > 0);
 
     // Apply it to move to the second frame
@@ -216,7 +214,7 @@ void DeltaTests::testDeltaSequence()
     LOK_ASSERT(gen.createDelta(
                        reinterpret_cast<unsigned char *>(&text[0]),
                        0, 0, width, height, width, height,
-                       1, 2, 3, 0, two2one, textWid, false, dummy) == true);
+                       1, 2, 3, 0, two2one, textWid, false) == true);
     LOK_ASSERT(two2one.size() > 0);
 
     // Apply it to get back to where we started
