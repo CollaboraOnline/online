@@ -455,6 +455,13 @@ class DeltaGenerator {
         rebalanceDeltas(std::min(count, size_t(1)) * 24);
     }
 
+    void dumpState(std::ostream& oss)
+    {
+        oss << "\tdelta generator with " << _deltaEntries.size() << " entries vs. max " << _maxEntries << "\n";
+        for (auto &it : _deltaEntries)
+            oss << "\t\t" << it->_size << "," << it->_part << "," << it->_left << "," << it->_top << " wid: " << it->getWid() << "\n";
+    }
+
     /**
      * Creates a delta if possible:
      *   if so - returns @true and appends the delta to @output
