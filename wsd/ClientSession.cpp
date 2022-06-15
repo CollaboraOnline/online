@@ -1212,6 +1212,11 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, co
     {
         TileCombined tileCombined = TileCombined::parse(tokens);
         tileCombined.setNormalizedViewId(getCanonicalViewId());
+        if (tileCombined.hasDuplicates())
+        {
+            LOG_ERR("Dangerous, tilecombine with duplicates is not acceptable");
+            return sendTextFrameAndLogError("error: cmd=tile kind=invalid");
+        }
         docBroker->handleTileCombinedRequest(tileCombined, true, client_from_this());
     }
     catch (const std::exception& exc)

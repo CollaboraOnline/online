@@ -182,6 +182,7 @@ namespace RenderTiles
         const auto& tiles = tileCombined.getTiles();
 
         // Otherwise our delta-building & threading goes badly wrong
+        // external sources of tilecombine are checked at the perimeter
         assert(!tileCombined.hasDuplicates());
 
         // Calculate the area we cover
