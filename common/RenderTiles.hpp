@@ -168,6 +168,7 @@ namespace RenderTiles
     }
 
     bool doRender(std::shared_ptr<lok::Document> document,
+                  DeltaGenerator &deltaGen,
                   TileCombined &tileCombined,
                   ThreadPool &pngPool,
                   bool combined,
@@ -286,23 +287,22 @@ namespace RenderTiles
 
                 // Queue to be executed later in parallel inside 'run'
                 pngPool.pushWork([=,&output,&pixmap,&tiles,&renderedTiles,
-                                  &pngMutex](){
-
-                    auto data = std::shared_ptr<std::vector< char >>(new std::vector< char >());
-                    data->reserve(pixmapWidth * pixmapHeight * 1);
+                                  &pngMutex,&deltaGen]()
+                    {
+                        auto data = std::shared_ptr<std::vector< char >>(new std::vector< char >());
+                        data->reserve(pixmapWidth * pixmapHeight * 1);
 
                         // FIXME: don't try to store & create deltas for read-only documents.
                         if (tiles[tileIndex].getId() < 0) // not a preview
                         {
                             // Can we create a delta ?
-                            static DeltaGenerator deltaGen;
                             LOG_TRC("Compress new tile #" << tileIndex);
                             deltaGen.compressOrDelta(pixmap.data(), offsetX, offsetY,
                                                      pixelWidth, pixelHeight,
                                                      pixmapWidth, pixmapHeight,
                                                      tileRect.getLeft(), tileRect.getTop(),
                                                      tileRect.getWidth(), tileCombined.getPart(),
-                                                     *data, wireId, forceKeyframe, pngMutex);
+                                                     *data, wireId, forceKeyframe);
                         }
                         else
                         {
@@ -368,6 +368,9 @@ namespace RenderTiles
                 outputOffset += i.getImgSize();
             }
         }
+
+        // Should we do this more frequently? and/orshould we defer it?
+        deltaGen.rebalanceDeltas();
         return true;
     }
 }

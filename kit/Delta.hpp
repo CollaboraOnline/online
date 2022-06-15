@@ -21,7 +21,7 @@
    typedef uint32_t TileWireId;
 #endif
 
-/// A quick and dirty delta generator for last tile changes
+/// A quick and dirty, thread-safe delta generator for last tile changes
 class DeltaGenerator {
 
     /// Bitmap row with a CRC for quick vertical shift detection
@@ -213,6 +213,7 @@ class DeltaGenerator {
             }
     };
 
+    std::mutex _deltaGuard;
     /// The last several bitmap entries as a cache
     std::unordered_set<std::shared_ptr<DeltaData>, DeltaHasher, DeltaCompare> _deltaEntries;
     size_t _maxEntries;
@@ -439,6 +440,21 @@ class DeltaGenerator {
   public:
     DeltaGenerator() {}
 
+    /// Re-balances the cache size to fit the number of sessions
+    void rebalanceDeltas(ssize_t limit = -1)
+    {
+        std::unique_lock<std::mutex> guard(_deltaGuard);
+        if (limit > 0)
+            _maxEntries = limit;
+        rebalanceDeltasT();
+    }
+
+    /// Adapts cache sizing to the number of sessions
+    void setSessionCount(size_t count)
+    {
+        rebalanceDeltas(std::min(count, size_t(1)) * 24);
+    }
+
     /**
      * Creates a delta if possible:
      *   if so - returns @true and appends the delta to @output
@@ -451,8 +467,7 @@ class DeltaGenerator {
         int bufferWidth, int bufferHeight,
         int tileLeft, int tileTop, int tileSize, int tilePart,
         std::vector<char>& output,
-        TileWireId wid, bool forceKeyframe,
-        std::mutex &pngMutex)
+        TileWireId wid, bool forceKeyframe)
     {
         if ((width & 0x1) != 0) // power of two - RGBA
         {
@@ -472,10 +487,7 @@ class DeltaGenerator {
 
         {
             // protect _deltaEntries
-            std::unique_lock<std::mutex> pngLock(pngMutex);
-
-            if (_deltaEntries.size() > 16) // FIXME: hard-coded & not per-view
-                _deltaEntries.erase(_deltaEntries.begin());
+            std::unique_lock<std::mutex> guard(_deltaGuard);
 
             auto it = _deltaEntries.find(update);
             if (it == _deltaEntries.end())
@@ -512,11 +524,10 @@ class DeltaGenerator {
         int bufferWidth, int bufferHeight,
         int tileLeft, int tileTop, int tileSize, int tilePart,
         std::vector<char>& output,
-        TileWireId wid, bool forceKeyframe,
-        std::mutex &pngMutex)
+        TileWireId wid, bool forceKeyframe)
     {
         if (!createDelta(pixmap, startX, startY, width, height, bufferWidth, bufferHeight,
-                         tileLeft, tileTop, tileSize, tilePart, output, wid, forceKeyframe, pngMutex))
+                         tileLeft, tileTop, tileSize, tilePart, output, wid, forceKeyframe))
         {
             // FIXME: should stream it in =)
 

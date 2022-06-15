@@ -114,7 +114,6 @@ ChildSession::ChildSession(
 ChildSession::~ChildSession()
 {
     LOG_INF("~ChildSession dtor [" << getName() << ']');
-
     disconnect();
 }
 

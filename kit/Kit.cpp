@@ -651,6 +651,7 @@ public:
                 _websocketHandler, sessionId,
                 _jailId, JailRoot, *this);
             _sessions.emplace(sessionId, session);
+            _deltaGen.setSessionCount(_sessions.size());
             session->setCanonicalViewId(canonicalViewId);
 
             const int viewId = session->getViewId();
@@ -799,8 +800,8 @@ public:
             postMessage(buffer, length, WSOpCode::Binary);
         };
 
-        if (!RenderTiles::doRender(_loKitDocument, tileCombined, _pngPool, combined,
-                                   blenderFunc, postMessageFunc, _mobileAppDocId))
+        if (!RenderTiles::doRender(_loKitDocument, _deltaGen, tileCombined, _pngPool,
+                                   combined, blenderFunc, postMessageFunc, _mobileAppDocId))
         {
             LOG_DBG("All tiles skipped, not producing empty tilecombine: message");
             return;
@@ -1467,6 +1468,8 @@ private:
                     LOG_DBG("Have " << count << " child" << (count == 1 ? "" : "ren") <<
                             " after removing ChildSession [" << sessionId << "].");
 
+                    _deltaGen.setSessionCount(count);
+
                     // No longer needed, and allow session dtor to take it.
                     session.reset();
                     return true;
@@ -1841,6 +1844,7 @@ private:
     std::atomic<bool> _stop;
 
     ThreadPool _pngPool;
+    DeltaGenerator _deltaGen;
 
     std::condition_variable _cvLoading;
     int _editorId;
