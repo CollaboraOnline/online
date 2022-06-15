@@ -165,6 +165,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 		this.map.showSidebar = false;
 		this._isActive = false;
+		this._dialogid = '';
 		this._currentPath = [];
 
 		window.pageMobileWizard = false;
@@ -455,6 +456,9 @@ L.Control.MobileWizard = L.Control.extend({
 			if (isMobileDialog) {
 				// id is a number - remember window id for interaction
 				window.mobileDialogId = data.id;
+				//dialogid is string - name of the dialog in json
+				if (data.dialogid)
+					this._dialogid = data.dialogid;
 			}
 
 			this._isActive = true;

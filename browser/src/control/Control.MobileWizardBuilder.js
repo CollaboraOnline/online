@@ -715,6 +715,11 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 				childObject = dialog;
 			}
 
+			if (this.wizard._dialogid === 'ContentControlDialog' && childData.id !== '') {
+				var div = L.DomUtil.createWithId('div', childData.id, childObject);
+				childObject = div;
+			}
+
 			var handler = this._controlHandlers[childType];
 
 			if (childData.children && this._countVisiblePanels(childData.children) == 1) {
