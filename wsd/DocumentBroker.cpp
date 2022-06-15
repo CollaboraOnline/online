@@ -786,6 +786,22 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
             session->setDocumentOwner(true);
         }
 
+        if (config::getBool("logging.userstats", false))
+        {
+            // using json because fetching details from json string is easier and will be consistent
+            Object::Ptr userStats = new Object();
+            userStats->set("PostMessageOrigin", wopifileinfo->getPostMessageOrigin());
+            userStats->set("UserID", COOLWSD::anonymizeUsername(userId));
+            userStats->set("BaseFileName", wopiStorage->getFileInfo().getFilename());
+            userStats->set("UserCanWrite", wopifileinfo->getUserCanWrite());
+
+            std::ostringstream ossUserStats;
+            userStats->stringify(ossUserStats);
+            const std::string userStatsString = ossUserStats.str();
+
+            LOG_ANY("User stats: " << userStatsString);
+        }
+
         // Pass the ownership to client session
         session->setWopiFileInfo(wopifileinfo);
     }
