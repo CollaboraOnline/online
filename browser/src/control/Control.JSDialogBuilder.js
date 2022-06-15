@@ -800,8 +800,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_generateMenuIconName: function(commandName) {
 		// command has no parameter
-		if (commandName.indexOf('?') === -1)
+		if (commandName.indexOf('?') === -1) {
+			if (commandName.indexOf('InsertDateContentControl') !== -1)
+				return 'insertdatefield';
 			return commandName.toLowerCase();
+		}
 
 		if (commandName.indexOf('SpellCheckIgnoreAll') !== -1)
 			return 'spellcheckignoreall';

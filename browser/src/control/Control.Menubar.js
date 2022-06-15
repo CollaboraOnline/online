@@ -1078,7 +1078,7 @@ L.Control.Menubar = L.Control.extend({
 						{uno: '.uno:InsertWJ'},
 						{uno: '.uno:InsertLRM'},
 						{uno: '.uno:InsertRLM'}]},
-					{name: _UNO('.uno:FormatFormMenu', 'text'), type: 'menu', menu: [
+					{name: _UNO('.uno:FormatFormMenu', 'text'), id: 'formatformmenu', type: 'menu', menu: [
 						{uno: '.uno:InsertContentControl'},
 						{uno: '.uno:InsertCheckboxContentControl'},
 						{uno: '.uno:InsertDropdownContentControl'},
