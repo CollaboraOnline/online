@@ -2205,15 +2205,34 @@ void ClientSession::handleTileInvalidation(const std::string& message,
                     Util::Rectangle tileRect (j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips);
                     if(invalidateRect.intersects(tileRect))
                     {
-                        invalidTiles.emplace_back(normalizedViewId, part, _tileWidthPixel, _tileHeightPixel, j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false);
+                        TileDesc desc(normalizedViewId, part, _tileWidthPixel, _tileHeightPixel,
+                                      j * _tileWidthTwips, i * _tileHeightTwips,
+                                      _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false);
 
-                        TileWireId oldWireId = 0;
-                        auto iter = _oldWireIds.find(invalidTiles.back().generateID());
-                        if(iter != _oldWireIds.end())
-                            oldWireId = iter->second;
+                        bool dup = false;
+                        // Check we don't have duplicates
+                        for (const auto &it : invalidTiles)
+                        {
+                            if (it == desc)
+                            {
+                                LOG_TRC("Duplicate tile skipped from invalidation " << desc.debugName());
+                                dup = true;
+                                break;
+                            }
+                        }
 
-                        invalidTiles.back().setOldWireId(oldWireId);
-                        invalidTiles.back().setWireId(0);
+                        if (!dup)
+                        {
+                            invalidTiles.push_back(desc);
+
+                            TileWireId oldWireId = 0;
+                            auto iter = _oldWireIds.find(invalidTiles.back().generateID());
+                            if(iter != _oldWireIds.end())
+                                oldWireId = iter->second;
+
+                            invalidTiles.back().setOldWireId(oldWireId);
+                            invalidTiles.back().setWireId(0);
+                        }
                     }
                 }
             }
