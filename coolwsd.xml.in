@@ -100,6 +100,7 @@
             <anonymization_salt type="uint" desc="The salt used to anonymize/obfuscate user-data in logs. Use a secret 64-bit random number." default="82589933">82589933</anonymization_salt>
         </anonymize>
         <docstats type="bool" desc="Enable to see document handling information in logs." default="false">false</docstats>
+        <userstats desc="Enable user stats. i.e: logs the details of a file and user" type="bool" default="false">false</userstats>
     </logging>
 
     <!--
