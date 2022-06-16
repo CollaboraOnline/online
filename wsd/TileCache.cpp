@@ -588,6 +588,7 @@ void TileCache::ensureCacheSize()
     if (wids.back()._wid - wids.front()._wid > 256 * 256 * 256)
     {
         maxToRemove = wids.back()._wid;
+        LOG_TRC("Rare wid wrap-around detected, clear tile cache");
     }
     else
     {
@@ -608,9 +609,20 @@ void TileCache::ensureCacheSize()
     {
         if (it->first.getWireId() <= maxToRemove)
         {
-            LOG_TRC("cleaned out tile: " << it->first.serialize());
-            _cacheSize -= itemCacheSize(it->second);
-            it = _cache.erase(it);
+            auto rit = _tilesBeingRendered.find(it->first);
+            if (rit != _tilesBeingRendered.end())
+            {
+                // avoid getting a delta instead of a keyframe at the bottom.
+                LOG_TRC("skip cleaning tile we are waiting on: " << it->first.serialize() <<
+                        " which has " << rit->second->getSubscribers().size() << " waiting");
+                ++it;
+            }
+            else
+            {
+                LOG_TRC("cleaned out tile: " << it->first.serialize());
+                _cacheSize -= itemCacheSize(it->second);
+                it = _cache.erase(it);
+            }
         }
         else
         {
