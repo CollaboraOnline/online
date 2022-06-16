@@ -210,7 +210,7 @@ void TileCache::saveTileAndNotify(const TileDesc& desc, const char *data, const 
         const size_t subscriberCount = tileBeingRendered->getSubscribers().size();
 
         // sendTile also does enqueueSendMessage underneath ...
-        if (size > 0 && subscriberCount > 0)
+        if (tile && size > 0 && subscriberCount > 0)
         {
             for (size_t i = 0; i < subscriberCount; ++i)
             {
@@ -509,17 +509,30 @@ Tile TileCache::findTile(const TileDesc &desc)
 Tile TileCache::saveDataToCache(const TileDesc &desc, const char *data, const size_t size)
 {
     if (_dontCache)
-        return Tile();
+        return std::make_shared<TileData>(desc.getWireId(), data, size);
 
     ensureCacheSize();
 
     Tile tile = _cache[desc];
     if (!tile)
     {
-        LOG_TRC("new tile for " << desc.serialize() << " of size " << size);
-        tile = std::make_shared<TileData>(desc.getWireId(), data, size);
-        _cache[desc] = tile;
-        _cacheSize += itemCacheSize(tile);
+        if (!TileData::isKeyframe(data, size))
+        {
+            // canceltiles removes all subscribers - which allows the
+            // TileCache re-balancing to remove the in-process delta's
+            // underlying keyframe.
+            LOG_TRC("rare race between canceltiles and delta rendering - "
+                    "discarding delta for " << desc.serialize());
+            _cache.erase(desc);
+            return Tile();
+        }
+        else
+        {
+            LOG_TRC("new tile for " << desc.serialize() << " of size " << size);
+            tile = std::make_shared<TileData>(desc.getWireId(), data, size);
+            _cache[desc] = tile;
+            _cacheSize += itemCacheSize(tile);
+        }
     }
     else
     {
