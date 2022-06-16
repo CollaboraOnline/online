@@ -232,7 +232,9 @@ public:
     /// Parse invalidateTiles message to a part number and a rectangle of the invalidated area
     static std::pair<int, Util::Rectangle> parseInvalidateMsg(const std::string& tiles);
 
-    void forgetTileBeingRendered(const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered);
+    /// Forget the tile being rendered if it is the latest version we expect.
+    void forgetTileBeingRendered(const TileDesc& descForKitReply,
+                                 const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered);
 
     size_t countTilesBeingRenderedForSession(const std::shared_ptr<ClientSession>& session,
                                              const std::chrono::steady_clock::time_point& now);
