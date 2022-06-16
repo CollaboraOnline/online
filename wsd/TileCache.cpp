@@ -73,6 +73,10 @@ struct TileCache::TileBeingRendered
         : _startTime(now), _tile(tile) { }
 
     const TileDesc& getTile() const { return _tile; }
+
+    /// The version is used to ensure that if we have two in-progress
+    /// renders sent to the kit, racing each other that the completion of
+    /// the first does not remove the subscribers waiting for the second.
     int getVersion() const { return _tile.getVersion(); }
     void setVersion(int version) { _tile.setVersion(version); }
 
@@ -136,14 +140,21 @@ std::shared_ptr<TileCache::TileBeingRendered> TileCache::findTileBeingRendered(c
     return tile != _tilesBeingRendered.end() ? tile->second : nullptr;
 }
 
-void TileCache::forgetTileBeingRendered(const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered)
+void TileCache::forgetTileBeingRendered(const TileDesc &descForKitReply,
+                                        const std::shared_ptr<TileCache::TileBeingRendered>& tileBeingRendered)
 {
     assertCorrectThread();
     assert(tileBeingRendered);
     assert(hasTileBeingRendered(tileBeingRendered->getTile()));
 
-    LOG_TRC("Removing all subscribers for " << tileBeingRendered->getTile().serialize());
-    _tilesBeingRendered.erase(tileBeingRendered->getTile());
+    if (tileBeingRendered->getVersion() <= descForKitReply.getVersion())
+    {
+        LOG_TRC("Removing all subscribers for " << tileBeingRendered->getTile().serialize());
+        _tilesBeingRendered.erase(tileBeingRendered->getTile());
+    }
+    else
+        LOG_TRC("Racing renderings for tile " << tileBeingRendered->getTile().serialize() <<
+                " waiting for ver " << tileBeingRendered->getVersion() << " but have " << descForKitReply.getVersion());
 }
 
 int TileCache::getTileBeingRenderedVersion(const TileDesc& tile)
@@ -181,7 +192,7 @@ void TileCache::saveTileAndNotify(const TileDesc& desc, const char *data, const 
         {
             LOG_DBG("STATISTICS: tile " << desc.getVersion() << " internal roundtrip to empty tile " <<
                     tileBeingRendered->getElapsedTimeMs());
-            forgetTileBeingRendered(tileBeingRendered);
+            forgetTileBeingRendered(desc, tileBeingRendered);
         }
         return;
     }
@@ -214,12 +225,9 @@ void TileCache::saveTileAndNotify(const TileDesc& desc, const char *data, const 
         // else zero sized
 
         // Remove subscriptions.
-        if (tileBeingRendered->getVersion() <= desc.getVersion())
-        {
-            LOG_DBG("STATISTICS: tile " << desc.getVersion() << " internal roundtrip " <<
-                    tileBeingRendered->getElapsedTimeMs());
-            forgetTileBeingRendered(tileBeingRendered);
-        }
+        LOG_DBG("STATISTICS: tile " << desc.getVersion() << " internal roundtrip " <<
+                tileBeingRendered->getElapsedTimeMs());
+        forgetTileBeingRendered(desc, tileBeingRendered);
     }
     else
         LOG_DBG("No subscribers for: " << cacheFileName(desc));
@@ -405,6 +413,7 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
             if (s.lock().get() == subscriber.get())
             {
                 LOG_TRC("Redundant request to subscribe on tile " << tile.debugName());
+                // the version stops us unsubscribing when we get there.
                 tileBeingRendered->setVersion(tile.getVersion());
                 return;
             }
