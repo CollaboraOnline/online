@@ -78,7 +78,10 @@ struct TileData
             _deltas.clear();
         }
         else
+        {
             LOG_TRC("received delta of size " << dataSize << " - appending to existing " << _wids.size());
+            assert(_wids.size() > 0 && "no underlying keyframe!");
+        }
 
         size_t oldSize = size();
 
@@ -136,7 +139,7 @@ struct TileData
         if (i >= _wids.size())
         {
             LOG_WRN("odd outcome - requested for a later id " << since <<
-                    "than the last known: " << ((_wids.size() > 0) ? _wids.back() : -1));
+                    " than the last known: " << ((_wids.size() > 0) ? _wids.back() : -1));
             return false;
         }
         else
