@@ -407,10 +407,7 @@ public:
                 const auto &b = _tiles[j];
                 if (a.getTilePosX() == b.getTilePosX() &&
                     a.getTilePosY() == b.getTilePosY())
-                {
-                    assert(false && "duplicate entries in tilecombine");
                     return true;
-                }
             }
         }
         return false;
