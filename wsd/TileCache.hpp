@@ -197,11 +197,6 @@ public:
     void subscribeToTileRendering(const TileDesc& tile, const std::shared_ptr<ClientSession>& subscriber,
                                   const std::chrono::steady_clock::time_point& now);
 
-    /// Create the TileBeingRendered object for the given tile indicating that the tile was sent to
-    /// the kit for rendering. Note: subscribeToTileRendering calls this internally, so you don't need
-    /// to call this method if you need also to subscribe for the rendered tile.
-    void registerTileBeingRendered(const TileDesc& tile);
-
     /// Cancels all tile requests by the given subscriber.
     std::string cancelTiles(const std::shared_ptr<ClientSession>& subscriber);
 

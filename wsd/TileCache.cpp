@@ -427,27 +427,6 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
     }
 }
 
-void TileCache::registerTileBeingRendered(const TileDesc& tile)
-{
-    std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(tile);
-    auto now = std::chrono::steady_clock::now();
-    if (tileBeingRendered)
-    {
-        if (tileBeingRendered->isStale(&now))
-        {
-            // Tile painting has stalled. Reissue.
-            tileBeingRendered->setVersion(tile.getVersion());
-        }
-    }
-    else
-    {
-        assert(_tilesBeingRendered.find(tile) == _tilesBeingRendered.end());
-
-        tileBeingRendered = std::make_shared<TileBeingRendered>(tile, now);
-        _tilesBeingRendered[tile] = tileBeingRendered;
-    }
-}
-
 std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscriber)
 {
     assert(subscriber && "cancelTiles expects valid subscriber");
