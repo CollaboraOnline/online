@@ -23,8 +23,14 @@ class ContentControlSection {
 	setPosition: (x: number, y: number) => void;
 
 	public onInitialize() {
-		this.sectionProperties.rectangles = [];
-		this.sectionProperties.strokeStyle = '#000000';
+		this.sectionProperties.polyAttri = {
+			stroke: true,
+			fill: false,
+			pointerEvents: 'none',
+			color: 'black',
+			weight: 1,
+		};
+
 		this.sectionProperties.dropdownButton = L.marker(new L.LatLng(0, 0), {
 			icon: L.divIcon({
 				className: 'writer-drop-down-marker',
@@ -32,9 +38,11 @@ class ContentControlSection {
 			}),
 			interactive: true
 		});
+
 		this.onClickDropdown = this.onClickDropdown.bind(this);
 		this.sectionProperties.dropdownButton.addEventListener('click', this.onClickDropdown, false);
 		this.map.on('dropdownmarkertapped', this.onClickDropdown, this);
+
 		var container = L.DomUtil.createWithId('div', 'datepicker');
 		container.style.zIndex = '12';
 		container.style.position = 'absolute';
@@ -44,8 +52,6 @@ class ContentControlSection {
 
 	constructor() {
 		this.map = L.Map.THIS;
-		this.sectionProperties.rectangles = null;
-		this.sectionProperties.strokeStyle = null;
 		this.sectionProperties.json = null;
 		this.sectionProperties.datePicker = null;
 	}
@@ -73,16 +79,10 @@ class ContentControlSection {
 		}
 
 		if (json.action === 'show')	{
-			//convert string to number coordinates
-			var matches = this.sectionProperties.json.rectangles.match(/\d+/g);
-			this.sectionProperties.rectangles = [];
-			if (matches !== null) {
-				for (var i: number = 0; i < matches.length; i += 4) {
-					this.sectionProperties.rectangles.push([parseInt(matches[i]), parseInt(matches[i + 1]), parseInt(matches[i + 2]), parseInt(matches[i + 3])]);
-				}
-			}
+			this.drawPolygon();
 		} else if (json.action === 'hide') {
-			this.sectionProperties.rectangles = [];
+			if (this.sectionProperties.frame)
+				this.sectionProperties.frame.setPointSet(new CPointSet());
 		} else if (json.action === 'change-picture') {
 			if (!this.map.wopi.EnableInsertRemoteImage)
 				L.DomUtil.get('insertgraphic').click();
@@ -95,7 +95,18 @@ class ContentControlSection {
 	}
 
 	private setPositionAndSize () {
-		var rectangles = this.sectionProperties.rectangles;
+		if (!this.sectionProperties.json || !this.sectionProperties.json.rectangles)
+			return;
+
+		var rectangles: Array<number>[] = [];
+		//convert string to number coordinates
+		var matches = this.sectionProperties.json.rectangles.match(/\d+/g);
+		if (matches !== null) {
+			for (var i: number = 0; i < matches.length; i += 4) {
+				rectangles.push([parseInt(matches[i]), parseInt(matches[i + 1]), parseInt(matches[i + 2]), parseInt(matches[i + 3])]);
+			}
+		}
+
 		var xMin: number = Infinity, yMin: number = Infinity, xMax: number = 0, yMax: number = 0;
 		for (var i = 0; i < rectangles.length; i++) {
 			if (rectangles[i][0] < xMin)
@@ -127,18 +138,31 @@ class ContentControlSection {
 		this.setPositionAndSize();
 	}
 
-	public onDraw() {
-		var rectangles = this.sectionProperties.rectangles;
-		for (var i: number = 0; i < rectangles.length; i++) {
-			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
-			var x: number = rectangles[i][0] * ratio;
-			var y: number = rectangles[i][1] * ratio;
-			var w: number = rectangles[i][2] * ratio;
-			var h: number = rectangles[i][3] * ratio;
+	public drawPolygon() {
+		var rectArray = L.Bounds.parseArray(this.sectionProperties.json.rectangles);
+		var rectangles = rectArray.map(function (rect: any) {
+			return rect.getPointArray();
+		});
 
-			this.context.strokeStyle = this.sectionProperties.strokeStyle;
-			this.context.strokeRect(x - this.position[0], y - this.position[1], w, h);
+		var docLayer = this.map._docLayer;
+		this.sectionProperties.pointSet = CPolyUtil.rectanglesToPointSet(rectangles,
+			function (twipsPoint) {
+				var corePxPt = docLayer._twipsToCorePixels(twipsPoint);
+				corePxPt.round();
+				return corePxPt;
+			});
+
+		if (!this.sectionProperties.frame) {
+			this.sectionProperties.frame = new CPolygon(this.sectionProperties.pointSet, this.sectionProperties.polyAttri);
+			this.map._docLayer._canvasOverlay.initPath(this.sectionProperties.frame);
 		}
+		this.sectionProperties.frame.setPointSet(this.sectionProperties.pointSet);
+	}
+
+	public onDraw() {
+		if (!this.sectionProperties.json)
+			return;
+
 		if (this.sectionProperties.json.items || this.sectionProperties.datePicker) {
 			this.addDropDownBtn();
 		}

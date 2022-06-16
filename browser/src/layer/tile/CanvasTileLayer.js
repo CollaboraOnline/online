@@ -5069,6 +5069,9 @@ L.CanvasTileLayer = L.Layer.extend({
 				'graphicselection'
 			];
 
+			if (this.isWriter())
+				ownViewTypes.push('contentcontrol');
+
 			var otherViewTypes = this.isCalc() ? [
 				'cellviewcursor',
 				'textviewselection',
