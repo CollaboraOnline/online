@@ -6128,6 +6128,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			var tilePositionsX = '';
 			var tilePositionsY = '';
+			var added = {};
 
 			for (i = 0; i < queue.length; i++) {
 				coords = queue[i];
@@ -6152,6 +6153,11 @@ L.CanvasTileLayer = L.Layer.extend({
 				}
 
 				if (!this._tileCache[key]) {
+					// request each tile just once in these tilecombines
+					if (added[key])
+						continue;
+					added[key] = true;
+
 					var twips = this._coordsToTwips(coords);
 					if (tilePositionsX !== '') {
 						tilePositionsX += ',';
