@@ -2964,6 +2964,11 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
                     tileCache().getTileBeingRenderedVersion(tile) < tile.getVersion()) // We need a newer version
                 {
                     tile.setVersion(++_tileVersion);
+                    if (!cachedTile) // forceKeyframe
+                    {
+                        LOG_TRC("Forcing keyframe for tile was oldwid " << tile.getOldWireId());
+                        tile.setOldWireId(0);
+                    }
                     tilesNeedsRendering.push_back(tile);
                     _debugRenderedTileCount++;
                 }
