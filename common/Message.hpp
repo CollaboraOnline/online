@@ -8,6 +8,7 @@
 #pragma once
 
 #include <atomic>
+#include <cstring>
 #include <string>
 #include <vector>
 #include <functional>
@@ -15,6 +16,7 @@
 #include "Protocol.hpp"
 #include "StringVector.hpp"
 #include "Log.hpp"
+#include "Util.hpp"
 
 /// The payload type used to send/receive data.
 class Message
@@ -75,6 +77,15 @@ public:
     std::string firstToken() const { return _tokens[0]; }
     bool firstTokenMatches(const std::string& target) const { return _tokens[0] == target; }
     std::string operator[](size_t index) const { return _tokens[index]; }
+
+    /// Find a subarray in the raw message.
+    int find(const char* sub, const std::size_t subLen) const
+    {
+        return Util::findSubArray(&_data[0], _data.size(), sub, subLen);
+    }
+
+    /// Returns true iff the subarray exists in the raw message.
+    bool contains(const char* p, const std::size_t len) const { return find(p, len) >= 0; }
 
     const std::string& firstLine()
     {
