@@ -56,6 +56,7 @@ all_la_unit_tests = \
 	unit-wopi-async-upload-modifyclose.la \
 	unit-convert.la \
 	unit-storage.la \
+	unit-wopi-stuck-save.la \
 	unit-rendering-options.la \
 	unit-paste.la \
 	unit-large-paste.la \
@@ -220,6 +221,8 @@ unit_wopi_documentconflict_la_SOURCES = UnitWOPIDocumentConflict.cpp
 unit_wopi_documentconflict_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_save_on_exit_la_SOURCES = UnitWOPISaveOnExit.cpp
 unit_wopi_save_on_exit_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_stuck_save_la_SOURCES = UnitWOPIStuckSave.cpp
+unit_wopi_stuck_save_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_fail_upload_la_SOURCES = UnitWOPIFailUpload.cpp
 unit_wopi_fail_upload_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_renamefile_la_SOURCES = UnitWOPIRenameFile.cpp
