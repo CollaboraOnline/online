@@ -288,6 +288,7 @@ void HttpRequestTests::testSimpleGet()
         }
 
         auto httpSession = http::Session::create(_localUri);
+        httpSession->setTimeout(DefTimeoutSeconds);
 
         std::condition_variable cv;
         std::mutex mutex;
@@ -374,7 +375,7 @@ void HttpRequestTests::testChunkedGetSync()
     http::Request httpRequest(URL);
 
     auto httpSession = http::Session::create(_localUri);
-    httpSession->setTimeout(std::chrono::seconds(5));
+    httpSession->setTimeout(DefTimeoutSeconds);
 
     for (int i = 0; i < 5; ++i)
     {
@@ -410,7 +411,7 @@ void HttpRequestTests::testChunkedGetSync_External()
     http::Request httpRequest(URL);
 
     auto httpSession = http::Session::create(hostname);
-    httpSession->setTimeout(std::chrono::seconds(5));
+    httpSession->setTimeout(DefTimeoutSeconds);
 
     for (int i = 0; i < 5; ++i)
     {
