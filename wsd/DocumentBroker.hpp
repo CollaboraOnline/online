@@ -865,11 +865,16 @@ private:
         /// True iff a save is in progress (requested but not completed).
         bool isSaving() const { return _request.isActive(); }
 
-        /// True iff the last save request has timed out.
-        bool hasSavingTimedOut(std::chrono::milliseconds timeoutMs
-                               = std::chrono::milliseconds(COMMAND_TIMEOUT_MS)) const
+        /// Set the maximum time to wait for saving to finish.
+        void setSavingTimeout(std::chrono::seconds savingTimeout)
         {
-            return _request.hasLastRequestTimedOut(timeoutMs);
+            _savingTimeout = savingTimeout;
+        }
+
+        /// True iff the last save request has timed out.
+        bool hasSavingTimedOut() const
+        {
+            return _request.hasLastRequestTimedOut(_savingTimeout);
         }
 
         /// The duration elapsed since we sent the last save request to Core.
@@ -925,6 +930,9 @@ private:
 
         /// The number of seconds between autosave checks for modification.
         const std::chrono::seconds _autosaveInterval;
+
+        /// The maximum time to wait for saving to finish.
+        std::chrono::seconds _savingTimeout;
 
         /// The last autosave check time.
         std::chrono::steady_clock::time_point _lastAutosaveCheckTime;
