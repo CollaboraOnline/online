@@ -536,6 +536,9 @@ void HttpRequestTests::test500GetStatuses()
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
         cv.wait_for(lock, DefTimeoutSeconds, [&]() { return httpResponse->done(); });
+        TST_LOG("Finished async GET: " << url);
+
+        httpSession->asyncShutdown(); // Request to shutdown.
 
         LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
