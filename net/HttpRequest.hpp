@@ -1083,6 +1083,27 @@ public:
         return true;
     }
 
+    void asyncShutdown()
+    {
+        LOG_TRC("asyncShutdown");
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+        {
+            socket->shutdown();
+        }
+    }
+
+    void disconnect()
+    {
+        LOG_TRC("disconnect");
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+        {
+            socket->closeConnection();
+        }
+    }
+
+
 private:
     /// Make a synchronous request.
     bool syncRequestImpl(SocketPoll& poller)
