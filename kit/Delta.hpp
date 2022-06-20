@@ -28,18 +28,23 @@ struct TileLocation {
     int _top;
     int _size;
     int _part;
-    TileLocation(int left, int top, int size, int part)
-        : _left(left), _top(top), _size(size), _part(part)
+    int _canonicalViewId;
+    TileLocation(int left, int top, int size, int part,
+                 int canonicalViewId)
+        : _left(left), _top(top), _size(size), _part(part),
+          _canonicalViewId(canonicalViewId)
     {
     }
     size_t hash() const
     {
-        return (_left << 20) ^ _top ^ (_part << 15) ^ (_size << 7);
+        return (_left << 20) ^ _top ^ (_part << 15) ^ (_size << 7) ^
+               (_canonicalViewId << 24);
     }
     bool operator==(const TileLocation& other) const
     {
         return _left == other._left && _top == other._top &&
-               _size == other._size && _part == other._part;
+               _size == other._size && _part == other._part &&
+               _canonicalViewId == other._canonicalViewId;
     }
 };
 
