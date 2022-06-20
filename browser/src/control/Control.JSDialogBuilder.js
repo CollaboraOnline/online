@@ -3127,6 +3127,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		switch (data.action_type) {
+		case 'grab_focus':
+			control.focus();
+			break;
 		case 'select':
 			$(control).children('.selected').removeClass('selected');
 
