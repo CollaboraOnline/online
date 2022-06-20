@@ -925,3 +925,41 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 #about-dialog-info {
 	flex-direction: column;
 }
+
+/* ovveride some jquery css for contentcontrol datepicker */
+#datepicker .ui-state-highlight {
+	background: var(--color-background-dark) !important;
+	font-weight: bold !important;
+}
+
+#datepicker .ui-state-default {
+	background: var(--color-main-background);
+	font-weight: normal;
+	color: var(--color-main-text);
+	border: 1px solid var(--color-border-lighter);
+}
+
+#datepicker .ui-state-active {
+	border: 1px solid var(--color-border-dark);
+}
+
+#datepicker .ui-state-hover {
+	border: 1px solid var(--color-border-darker);
+	background: var(--color-background-lighter);
+}
+
+#datepicker .ui-datepicker-next span {
+	background-image: url('images/lc_nextrecord.svg');
+}
+
+#datepicker .ui-icon-circle-triangle-e {
+	background-position: 0;
+}
+
+#datepicker .ui-datepicker-prev span {
+	background-image: url('images/lc_prevrecord.svg');
+}
+
+#datepicker .ui-icon-circle-triangle-w {
+	background-position: 0;
+}
