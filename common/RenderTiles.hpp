@@ -300,8 +300,11 @@ namespace RenderTiles
                             deltaGen.compressOrDelta(pixmap.data(), offsetX, offsetY,
                                                      pixelWidth, pixelHeight,
                                                      pixmapWidth, pixmapHeight,
-                                                     tileRect.getLeft(), tileRect.getTop(),
-                                                     tileRect.getWidth(), tileCombined.getPart(),
+                                                     TileLocation(
+                                                         tileRect.getLeft(),
+                                                         tileRect.getTop(),
+                                                         tileRect.getWidth(),
+                                                         tileCombined.getPart()),
                                                      *data, wireId, forceKeyframe);
                         }
                         else

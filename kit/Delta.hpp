@@ -21,6 +21,28 @@
    typedef uint32_t TileWireId;
 #endif
 
+/// Unique location of a tile
+struct TileLocation {
+    // in TWIPS
+    int _left;
+    int _top;
+    int _size;
+    int _part;
+    TileLocation(int left, int top, int size, int part)
+        : _left(left), _top(top), _size(size), _part(part)
+    {
+    }
+    size_t hash() const
+    {
+        return (_left << 20) ^ _top ^ (_part << 15) ^ (_size << 7);
+    }
+    bool operator==(const TileLocation& other) const
+    {
+        return _left == other._left && _top == other._top &&
+               _size == other._size && _part == other._part;
+    }
+};
+
 /// A quick and dirty, thread-safe delta generator for last tile changes
 class DeltaGenerator {
 
@@ -65,14 +87,9 @@ class DeltaGenerator {
         DeltaData (TileWireId wid,
                    unsigned char* pixmap, size_t startX, size_t startY,
                    int width, int height,
-                   int tileLeft, int tileTop, int tileSize, int tilePart,
-                   int bufferWidth, int bufferHeight
+                   const TileLocation &loc, int bufferWidth, int bufferHeight
             ) :
-            // in TWIPS
-            _left(tileLeft),
-            _top(tileTop),
-            _size(tileSize),
-            _part(tilePart),
+            _loc(loc),
             _inUse(false),
             _wid(wid),
             // in Pixels
@@ -139,13 +156,6 @@ class DeltaGenerator {
             return _height;
         }
 
-        void setTilePos(int left, int top, int part)
-        {
-            _left = left;
-            _top = top;
-            _part = part;
-        }
-
         const DeltaBitmapRow& getRow(int y) const
         {
             return _rows[y];
@@ -153,8 +163,7 @@ class DeltaGenerator {
 
         void replaceAndFree(std::shared_ptr<DeltaData> &repl)
         {
-            assert (_left == repl->_left && _top == repl->_top &&
-                    _size == repl->_size && _part == repl->_part);
+            assert (_loc == repl->_loc);
             if (repl.get() == this)
             {
                 assert("replacing with yourself should never happen");
@@ -184,10 +193,7 @@ class DeltaGenerator {
             assert(wasInUse && "Error: delta was already un-used by another thread");
         }
 
-        int _left;
-        int _top;
-        int _size;
-        int _part;
+        TileLocation _loc;
     private:
         std::atomic<bool> _inUse; // thread debugging check.
         TileWireId _wid;
@@ -200,17 +206,16 @@ class DeltaGenerator {
     struct DeltaHasher {
         std::size_t operator()(const std::shared_ptr<DeltaData> &t) const
         {
-            return (t->_left << 20) ^ t->_top ^ (t->_part << 15) ^ (t->_size << 7);
+            return t->_loc.hash();
         }
     };
 
     struct DeltaCompare {
         bool operator()(const std::shared_ptr<DeltaData> &a,
                         const std::shared_ptr<DeltaData> &b) const
-            {
-                return a->_left == b->_left && a->_top == b->_top &&
-                    a->_size == b->_size && a->_part == b->_part;
-            }
+        {
+            return a->_loc == b->_loc;
+        }
     };
 
     std::mutex _deltaGuard;
@@ -459,7 +464,7 @@ class DeltaGenerator {
     {
         oss << "\tdelta generator with " << _deltaEntries.size() << " entries vs. max " << _maxEntries << "\n";
         for (auto &it : _deltaEntries)
-            oss << "\t\t" << it->_size << "," << it->_part << "," << it->_left << "," << it->_top << " wid: " << it->getWid() << "\n";
+            oss << "\t\t" << it->_loc._size << "," << it->_loc._part << "," << it->_loc._left << "," << it->_loc._top << " wid: " << it->getWid() << "\n";
     }
 
     /**
@@ -472,7 +477,7 @@ class DeltaGenerator {
         unsigned char* pixmap, size_t startX, size_t startY,
         int width, int height,
         int bufferWidth, int bufferHeight,
-        int tileLeft, int tileTop, int tileSize, int tilePart,
+        const TileLocation &loc,
         std::vector<char>& output,
         TileWireId wid, bool forceKeyframe)
     {
@@ -488,8 +493,7 @@ class DeltaGenerator {
         std::shared_ptr<DeltaData> update(
             new DeltaData(
                 wid, pixmap, startX, startY, width, height,
-                tileLeft, tileTop, tileSize, tilePart,
-                bufferWidth, bufferHeight));
+                loc, bufferWidth, bufferHeight));
         std::shared_ptr<DeltaData> cacheEntry;
 
         {
@@ -529,12 +533,13 @@ class DeltaGenerator {
         unsigned char* pixmap, size_t startX, size_t startY,
         int width, int height,
         int bufferWidth, int bufferHeight,
-        int tileLeft, int tileTop, int tileSize, int tilePart,
+        const TileLocation &loc,
         std::vector<char>& output,
         TileWireId wid, bool forceKeyframe)
     {
-        if (!createDelta(pixmap, startX, startY, width, height, bufferWidth, bufferHeight,
-                         tileLeft, tileTop, tileSize, tilePart, output, wid, forceKeyframe))
+        if (!createDelta(pixmap, startX, startY, width, height,
+                         bufferWidth, bufferHeight,
+                         loc, output, wid, forceKeyframe))
         {
             // FIXME: should stream it in =)
 
