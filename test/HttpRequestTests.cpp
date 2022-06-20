@@ -268,7 +268,7 @@ void HttpRequestTests::testSimpleGet()
     constexpr auto URL = "/";
 
     // Start the polling thread.
-    SocketPoll pollThread("HttpAsyncReqPoll");
+    SocketPoll pollThread("AsyncReqPoll");
     pollThread.startThread();
 
     http::Request httpRequest(URL);
@@ -478,31 +478,39 @@ void HttpRequestTests::test500GetStatuses()
 {
     constexpr auto testname = "test500GetStatuses ";
 
-    // Start the polling thread.
-    SocketPoll pollThread("HttpAsyncReqPoll");
-    pollThread.startThread();
-
-    auto httpSession = http::Session::create(_localUri);
-    httpSession->setTimeout(DefTimeoutSeconds);
-
+    // These should live longer than the pollThread,
+    // in case the socket isn't removed by the time we
+    // join (at the end of this function) and these
+    // by-then should still be in scope.
     std::condition_variable cv;
     std::mutex mutex;
     bool timedout = true;
-    httpSession->setFinishedHandler([&](const std::shared_ptr<http::Session>&) {
+    auto onFinished = [&](const std::shared_ptr<http::Session>&)
+    {
         std::lock_guard<std::mutex> lock(mutex);
         timedout = false;
         cv.notify_all();
-    });
+    };
 
-    http::StatusLine::StatusCodeClass statusCodeClasses[]
-        = { http::StatusLine::StatusCodeClass::Informational,
-            http::StatusLine::StatusCodeClass::Successful,
-            http::StatusLine::StatusCodeClass::Redirection,
-            http::StatusLine::StatusCodeClass::Client_Error,
-            http::StatusLine::StatusCodeClass::Server_Error };
+    // Start the polling thread.
+    SocketPoll pollThread("AsyncReqPoll");
+    pollThread.startThread();
+
+    constexpr http::StatusLine::StatusCodeClass statusCodeClasses[] = {
+        http::StatusLine::StatusCodeClass::Informational,
+        http::StatusLine::StatusCodeClass::Successful,
+        http::StatusLine::StatusCodeClass::Redirection,
+        http::StatusLine::StatusCodeClass::Client_Error,
+        http::StatusLine::StatusCodeClass::Server_Error
+    };
+
     int curStatusCodeClass = -1;
     for (unsigned statusCode = 100; statusCode < 512; ++statusCode)
     {
+        auto httpSession = http::Session::create(_localUri);
+        httpSession->setTimeout(DefTimeoutSeconds);
+        httpSession->setFinishedHandler(onFinished);
+
         const std::string url = "/status/" + std::to_string(statusCode);
 
         http::Request httpRequest;
@@ -570,7 +578,7 @@ void HttpRequestTests::testSimplePost_External()
     const char* URL = "/post";
 
     // Start the polling thread.
-    SocketPoll pollThread("HttpAsyncReqPoll");
+    SocketPoll pollThread("AsyncReqPoll");
     pollThread.startThread();
 
     http::Request httpRequest(URL, http::Request::VERB_POST);

@@ -1130,7 +1130,12 @@ private:
         Response::FinishedCallback onFinished = [&]()
         {
             LOG_TRC("onFinished");
-            assert(_response && _response->done() && "Must have response and must be done");
+            assert(_response && "Must have response object");
+            assert(_response->state() != Response::State::New &&
+                   "Unexpected response in New state");
+            assert(_response->state() != Response::State::Incomplete &&
+                   "Unexpected response in Incomplete state");
+            assert(_response->done() && "Must have response in done state");
             if (_onFinished)
             {
                 LOG_TRC("onFinished calling client");
@@ -1279,6 +1284,7 @@ private:
         _socket.reset(); // Reset to make sure we are disconnected.
         std::shared_ptr<StreamSocket> socket =
             net::connect(_host, _port, isSecure(), shared_from_this());
+        assert(socket && "Unexpected nullptr returned from net::connect");
         _socket = socket; // Hold a weak pointer to it.
         return socket; // Return the shared pointer.
     }
