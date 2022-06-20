@@ -59,6 +59,8 @@ bool HostUtil::allowedWopiHost(const std::string& host)
 
 void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
 {
+    WopiEnabled = conf.getBool("storage.wopi[@allow]", false);
+
     //set alias_groups mode to compat
     if (!conf.has("storage.wopi.alias_groups"))
     {
