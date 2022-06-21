@@ -244,17 +244,18 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	getShortcutsBarData: function() {
+		var hasSave = !this._map['wopi'].HideSaveOption;
 		return [
 			{
 				'id': 'shortcutstoolbox',
 				'type': 'toolbox',
 				'children': [
-					{
+					hasSave ? {
 						'id': 'save',
 						'type': 'toolitem',
 						'text': _('Save'),
 						'command': '.uno:Save'
-					}
+					} : {}
 				]
 			}
 		];
