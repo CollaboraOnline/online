@@ -233,7 +233,7 @@ describe('Change cell appearance.', function() {
 		cy.get('.w2ui-tb-image.w2ui-icon.frame02').click();
 
 		// Then apply border color
-		helper.clickOnIdle('#FrameLineColor');
+		helper.clickOnIdle('#FrameLineColor.sidebar .unoarrow');
 
 		desktopHelper.selectColorFromPalette('006CE7');
 
