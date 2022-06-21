@@ -2938,7 +2938,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			button.id = buttonId;
 			button.setAttribute('alt', id);
 
-			L.DomUtil.create('i', 'unoarrow', div);
+			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
+			L.DomUtil.create('i', 'unoarrow', arrowbackground);
 			$(div).addClass('has-dropdown--color');
 
 			var valueNode =  L.DomUtil.create('div', 'selected-color', div);
@@ -2948,30 +2949,39 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var updateFunction = function (color) {
 				selectedColor = builder._getCurrentColor(data, builder);
 				valueNode.style.backgroundColor = color ? color : selectedColor;
+				selectedColor = color ? color : selectedColor;
 				builder.setPickerOutline(valueNode);
 			};
 
 			updateFunction();
 
-			builder.map.on('commandstatechanged', function(e) {
-				if (e.commandName === data.command)
-					updateFunction();
-			}, this);
-
 			var noColorControl = (data.command !== '.uno:FontColor' && data.command !== '.uno:Color');
 
-			$(div).click(function() {
-				$(div).w2color({ color: selectedColor, transparent: noColorControl }, function (color) {
-					if (color != null) {
-						if (color) {
-							updateFunction('#' + color);
-							builder._sendColorCommand(builder, data, color);
-						} else {
-							updateFunction('#FFFFFF');
-							builder._sendColorCommand(builder, data, 'transparent');
+			var applyFunction = function() {
+				if (!selectedColor || selectedColor === '#')
+					return;
+
+				var color = selectedColor.indexOf('#') === 0 ? selectedColor.substr(1) : selectedColor;
+				builder._sendColorCommand(builder, data, color);
+			};
+
+			$(button).click(applyFunction);
+			$(valueNode).click(applyFunction);
+
+			$(arrowbackground).click(function() {
+				if (!$(div).hasClass('disabled')) {
+					$(div).w2color({ color: selectedColor, transparent: noColorControl }, function (color) {
+						if (color != null) {
+							if (color) {
+								updateFunction('#' + color);
+								builder._sendColorCommand(builder, data, color);
+							} else {
+								updateFunction('#FFFFFF');
+								builder._sendColorCommand(builder, data, 'transparent');
+							}
 						}
-					}
-				});
+					});
+				}
 			});
 			builder._preventDocumentLosingFocusOnClick(div);
 		}
