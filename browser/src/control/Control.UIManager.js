@@ -246,6 +246,9 @@ L.Control.UIManager = L.Control.extend({
 		this.map.topToolbar = L.control.topToolbar();
 		this.map.addControl(this.map.topToolbar);
 
+		//update the toolbar according to CheckFileInfo
+		this.map.topToolbar.onWopiProps(this.map.wopi);
+
 		this.map.menubar._onDocLayerInit();
 		this.map.topToolbar.onDocLayerInit();
 		this.map.sendInitUNOCommands();
