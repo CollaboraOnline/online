@@ -1481,6 +1481,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				} else if (event.key === 'Space') {
 					builder.callback('edit', 'keypress', edit, UNOKey.SPACE | modifier, builder);
 					event.preventDefault();
+				} else if (event.key === 'Tab') {
+					builder.callback('edit', 'keypress', edit, UNOKey.TAB | modifier, builder);
+					event.preventDefault();
 				} else if (event.key === 'Shift') {
 					modifier = modifier | UNOModifier.SHIFT;
 					event.preventDefault();
@@ -1522,7 +1525,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					event.key === 'End' ||
 					event.key === 'Backspace' ||
 					event.key === 'Delete' ||
-					event.key === 'Space') {
+					event.key === 'Space' ||
+					event.key === 'Tab') {
 					// skip
 				} else {
 					var keyCode = event.keyCode;
