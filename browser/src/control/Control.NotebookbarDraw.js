@@ -7,19 +7,21 @@
 L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 
 	getShortcutsBarData: function() {
+		var hasSave = !this._map['wopi'].HideSaveOption;
 		return [
-			{
-				'id': 'shortcutstoolbox',
-				'type': 'toolbox',
-				'children': [
-					{
-						'id': 'save',
-						'type': 'toolitem',
-						'text': _('Save'),
-						'command': '.uno:Save'
-					}
-				]
-			}
+			hasSave ?
+				{
+					'id': 'shortcutstoolbox',
+					'type': 'toolbox',
+					'children': [
+						{
+							'id': 'save',
+							'type': 'toolitem',
+							'text': _('Save'),
+							'command': '.uno:Save'
+						}
+					]
+				} : {}
 		];
 	},
 
@@ -128,19 +130,21 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 		var hasPrint = !this._map['wopi'].HidePrintOption;
 		var hasSaveAs = !this._map['wopi'].UserCanNotWriteRelative;
 		var hasShare = this._map['wopi'].EnableShare;
+		var hasSave = !this._map['wopi'].HideSaveOption;
 
 		var content = [
-			{
-				'type': 'toolbox',
-				'children': [
-					{
-						'id': 'file-save',
-						'type': 'bigtoolitem',
-						'text': _('Save'),
-						'command': '.uno:Save'
-					}
-				]
-			},
+			hasSave ?
+				{
+					'type': 'toolbox',
+					'children': [
+						{
+							'id': 'file-save',
+							'type': 'bigtoolitem',
+							'text': _('Save'),
+							'command': '.uno:Save'
+						}
+					]
+				} : {},
 			hasSaveAs ?
 				{
 					'id': 'file-saveas',

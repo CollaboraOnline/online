@@ -86,19 +86,21 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 		var hasShare = this._map['wopi'].EnableShare;
 		var hasGroupedDownloadAs = !!window.groupDownloadAsForNb;
 		var hasRunMacro = !(window.enableMacrosExecution  === 'false');
+		var hasSave = !this._map['wopi'].HideSaveOption;
 
 		var content = [
-			{
-				'type': 'toolbox',
-				'children': [
-					{
-						'id': 'file-save',
-						'type': 'bigtoolitem',
-						'text': _('Save'),
-						'command': '.uno:Save'
-					}
-				]
-			},
+			hasSave ?
+				{
+					'type': 'toolbox',
+					'children': [
+						{
+							'id': 'file-save',
+							'type': 'bigtoolitem',
+							'text': _('Save'),
+							'command': '.uno:Save'
+						}
+					]
+				} : {},
 			hasSaveAs ?
 				{
 					'id': 'file-saveas',
