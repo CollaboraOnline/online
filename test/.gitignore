@@ -10,3 +10,4 @@ Makefile.in
 *.o
 test
 run_unit.sh
+run_unit_standalone.sh

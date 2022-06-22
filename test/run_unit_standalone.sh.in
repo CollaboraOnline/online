@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+#
+# DO NOT EDIT - this file is generated from run_unit.sh.in.
+#
+
+cmd_line="$0 $@"
+
+# substituted variables in one place:
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+abs_top_builddir="${DIR}/.."
+systemplate_path="@SYSTEMPLATE_PATH@"
+enable_debug="@ENABLE_DEBUG@"
+if test -z "@ENABLE_SETCAP@"; then
+    capabilities=false
+else
+    capabilities=true
+fi
+jails_path="@JAILS_PATH@"
+lo_path="@LO_PATH@"
+valgrind_cmd="valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes"
+verbose=''
+capabilities="@ENABLE_SETCAP@"
+
+if test "h$capabilities" != "htrue"; then
+    capabilities=false
+fi
+
+# Note that these options are used by commands in the Makefile that
+# Automake generates. Don't be mislead by 'git grep' not showing any
+# use of --test-name for instance.
+
+print_help ()
+{
+    echo "Usage: run_unit_standalone.sh [OPTIONS]"
+    echo "Runs a specified unit test"
+    echo ""
+    echo "   --log-file <file>   Log output to this file - default /dev/stderr"
+    echo "   --trs-file <file>   Records the results of a test for automake (default /dev/stderr)"
+    echo "   --gdb               Run under gdb if enabled"
+    echo "   --valgrind          Run under valgrind if enabled"
+    exit 1
+}
+
+tst=
+tst_log=/dev/stderr
+tst_output=/dev/stderr
+while test $# -gt 0; do
+  case $1 in
+      --test-name) tst=$2; shift;;
+      --log-file)  tst_log=$2; shift;;
+      --trs-file)  test_output=$2; shift;;
+      --gdb)       trace='gdb --args'; shift;;
+      --valgrind)  trace=$valgrind_cmd; shift;;
+      --help)      print_help ;;
+  -*) ;; # ignore
+  esac
+  shift
+done
+
+# drop .la suffix
+tst=`echo $tst | sed "s/\.la//"`;
+
+# result logging
+echo > $test_output
+
+printf "\nRunning $tst | $tst_log | $test_output $cmd_line\n";
+echo > $tst_log
+if ${trace} \
+       ${abs_top_builddir}/test/${tst} --verbose 2> "$tst_log" 1>&2; then
+	echo "Test $tst passed. Finished in ${SECONDS}s."
+	echo ":test-result: PASS $tst" >> $test_output
+else
+	echo "Test $tst FAILED. Finished in ${SECONDS}s."
+	cat $tst_log
+	echo "============================================================="
+	echo "Test failed on unit: $tst re-run with:"
+	echo "   $ gdb --args ${abs_top_builddir}/test/$tst"
+	echo ""
+	echo "   $ less $tst_log # for detailed failure log files"
+	echo "============================================================="
+	echo ":test-result: FAIL $tst" >> $test_output
+fi
+
+# vim:set shiftwidth=4 expandtab:
