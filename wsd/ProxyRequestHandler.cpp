@@ -14,10 +14,19 @@
 #include <net/HttpRequest.hpp>
 #include <net/HttpHelper.hpp>
 
+std::map<std::string, std::shared_ptr<http::Response>> ProxyRequestHandler::CacheFileHash;
+
 void ProxyRequestHandler::handleRequest(const std::string& relPath,
                                         const std::shared_ptr<StreamSocket>& socket)
 {
     Poco::URI uriProxy(ProxyServer);
+
+    const auto cacheEntry = CacheFileHash.find(relPath);
+    if (cacheEntry != CacheFileHash.end())
+    {
+        socket->sendAndShutdown(*cacheEntry->second);
+        return;
+    }
 
     uriProxy.setPath(relPath);
     auto sessionProxy = http::Session::create(uriProxy.getHost(),
@@ -33,6 +42,7 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
                     std::shared_ptr<http::Response> httpResponse = httpSession->response();
                     if (httpResponse->statusLine().statusCode() == 200)
                     {
+                        CacheFileHash[httpSession->getUrl()] = httpResponse;
                         socket->sendAndShutdown(*httpResponse);
                     }
                     else
