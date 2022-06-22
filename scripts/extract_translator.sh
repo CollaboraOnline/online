@@ -20,6 +20,8 @@ INPUT_FILE=""
 CSV_FILE=""
 OUTPUT_FILE=""
 
+echo "Search for: $TEXT"
+
 set -ef
 
 print_help(){
