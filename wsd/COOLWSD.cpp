@@ -123,6 +123,7 @@ using Poco::Net::PartHandler;
 #include "DocumentBroker.hpp"
 #include "Exceptions.hpp"
 #include "FileServer.hpp"
+#include "ProxyRequestHandler.hpp"
 #include <common/JsonUtil.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JailUtil.hpp>
@@ -3441,8 +3442,19 @@ private:
             {
                 // File server
                 assert(socket && "Must have a valid socket");
-                FileServerRequestHandler::handleRequest(request, requestDetails, message, socket);
-                socket->shutdown();
+                constexpr auto ProxyRemote = "/remote/";
+                constexpr auto ProxyRemoteLen = sizeof(ProxyRemote) - 1;
+                const auto uri = requestDetails.getURI();
+                const auto pos = uri.find(ProxyRemote);
+                if (pos != std::string::npos)
+                {
+                    ProxyRequestHandler::handleRequest(uri.substr(pos + ProxyRemoteLen), socket);
+                }
+                else
+                {
+                    FileServerRequestHandler::handleRequest(request, requestDetails, message, socket);
+                    socket->shutdown();
+                }
             }
             else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                      requestDetails.equals(1, "adminws"))
