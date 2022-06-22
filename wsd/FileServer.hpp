@@ -62,10 +62,6 @@ public:
 
     static void readDirToHash(const std::string &basePath, const std::string &path, const std::string &prefix = std::string());
 
-    static void fetchExternal();
-
-    static std::string LogoData;
-
     static const std::string *getCompressedFile(const std::string &path);
 
     static const std::string *getUncompressedFile(const std::string &path);
