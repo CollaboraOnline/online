@@ -12,6 +12,12 @@
 
 class ProxyRequestHandler
 {
+public:
+    static void handleRequest(const std::string& relPath,
+                              const std::shared_ptr<StreamSocket>& socket);
+
+private:
+    static constexpr auto ProxyServer = "https://www.collaboraoffice.com";
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
