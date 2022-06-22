@@ -1488,6 +1488,7 @@ if test "$enable_androidapp" = "yes"; then
 fi
 
 AC_CONFIG_FILES([test/run_unit.sh],[chmod +x test/run_unit.sh])
+AC_CONFIG_FILES([test/run_unit_standalone.sh],[chmod +x test/run_unit_standalone.sh])
 AC_CONFIG_FILES([jsstress],[chmod +x jsstress])
 
 AC_OUTPUT
