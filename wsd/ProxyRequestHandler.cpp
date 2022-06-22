@@ -14,4 +14,22 @@
 #include <net/HttpRequest.hpp>
 #include <net/HttpHelper.hpp>
 
+void ProxyRequestHandler::handleRequest(const std::string& relPath,
+                                        const std::shared_ptr<StreamSocket>& socket)
+{
+    Poco::URI uriProxy(ProxyServer);
+
+    uriProxy.setPath(relPath);
+    auto sessionProxy = http::Session::create(uriProxy.getHost(),
+                                              http::Session::Protocol::HttpSsl,
+                                              uriProxy.getPort());
+    sessionProxy->setTimeout(std::chrono::seconds(10));
+    http::Request requestProxy(uriProxy.getPathAndQuery());
+
+    if (!sessionProxy->asyncRequest(requestProxy, *COOLWSD::getWebServerPoll()))
+    {
+        HttpHelper::sendErrorAndShutdown(400, socket);
+    }
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
