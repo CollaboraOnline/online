@@ -17,6 +17,7 @@ public:
                               const std::shared_ptr<StreamSocket>& socket);
 
 private:
+    static std::chrono::system_clock::time_point MaxAge;
     static constexpr auto ProxyServer = "https://www.collaboraoffice.com";
     static std::map<std::string, std::shared_ptr<http::Response>> CacheFileHash;
 };
