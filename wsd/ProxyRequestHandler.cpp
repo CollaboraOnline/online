@@ -25,7 +25,29 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
                                               uriProxy.getPort());
     sessionProxy->setTimeout(std::chrono::seconds(10));
     http::Request requestProxy(uriProxy.getPathAndQuery());
+    http::Session::FinishedCallback proxyCallback =
+        [socket](const std::shared_ptr<http::Session>& httpSession)
+            {
+                try
+                {
+                    std::shared_ptr<http::Response> httpResponse = httpSession->response();
+                    if (httpResponse->statusLine().statusCode() == 200)
+                    {
+                        socket->sendAndShutdown(*httpResponse);
+                    }
+                    else
+                    {
+                        HttpHelper::sendErrorAndShutdown(400, socket);
+                    }
+                }
+                catch(...)
+                {
+                    LOG_DBG("ProxyCallback: Unknown exception");
+                    HttpHelper::sendErrorAndShutdown(400, socket);
+                }
+            };
 
+    sessionProxy->setFinishedHandler(proxyCallback);
     if (!sessionProxy->asyncRequest(requestProxy, *COOLWSD::getWebServerPoll()))
     {
         HttpHelper::sendErrorAndShutdown(400, socket);
