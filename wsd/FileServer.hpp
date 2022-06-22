@@ -21,8 +21,6 @@ class FileServerRequestHandler
 
     static std::string getRequestPathname(const Poco::Net::HTTPRequest& request);
 
-    static void processLogo(const std::shared_ptr<StreamSocket>& socket);
-
     static void preprocessFile(const Poco::Net::HTTPRequest& request,
                                const RequestDetails &requestDetails,
                                Poco::MemoryInputStream& message,
