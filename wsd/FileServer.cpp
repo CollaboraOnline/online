@@ -58,10 +58,6 @@ using Poco::Net::HTTPResponse;
 using Poco::Net::NameValueCollection;
 using Poco::Util::Application;
 
-#define DEFAULT_LOGO "https://www.collaboraoffice.com/downloads/images/lokit-extra-img.svg"
-
-std::string FileServerRequestHandler::LogoData;
-
 std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHandler::FileHash;
 
 namespace {
@@ -812,43 +808,6 @@ void FileServerRequestHandler::initialize()
         readDirToHash(COOLWSD::FileServerRoot, "/browser/dist");
     } catch (...) {
         LOG_ERR("Failed to read from directory " << COOLWSD::FileServerRoot);
-    }
-}
-
-void FileServerRequestHandler::fetchExternal()
-{
-    try {
-        Poco::URI uriLogo(DEFAULT_LOGO);
-        auto sessionLogo = http::Session::create(uriLogo.getHost(),
-                                                 http::Session::Protocol::HttpSsl,
-                                                 uriLogo.getPort());
-        sessionLogo->setTimeout(std::chrono::seconds(10));
-        http::Request requestLogo(uriLogo.getPathAndQuery());
-
-        http::Session::FinishedCallback logoCallback =
-            [](const std::shared_ptr<http::Session>& httpSession)
-                {
-                    const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
-                    if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_OK)
-                    {
-                        LogoData = httpResponse->getBody();
-                    }
-                };
-
-        sessionLogo->setFinishedHandler(logoCallback);
-        sessionLogo->asyncRequest(requestLogo, *COOLWSD::getWebServerPoll());
-    }
-    catch(const Poco::Exception& exc)
-    {
-        LOG_DBG("Fetch External: " << exc.displayText());
-    }
-    catch(std::exception& exc)
-    {
-        LOG_DBG("Fetch External: " << exc.what());
-    }
-    catch(...)
-    {
-        LOG_DBG("Fetch External: Unknown exception");
     }
 }
 
