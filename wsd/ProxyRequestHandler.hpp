@@ -18,6 +18,7 @@ public:
 
 private:
     static constexpr auto ProxyServer = "https://www.collaboraoffice.com";
+    static std::map<std::string, std::shared_ptr<http::Response>> CacheFileHash;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
