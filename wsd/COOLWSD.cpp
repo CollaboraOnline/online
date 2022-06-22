@@ -2411,12 +2411,10 @@ void COOLWSD::innerInitialize(Application& self)
                   << getServiceURI("/hosting/discovery") << '\n';
 
     std::cerr << std::endl;
+#else
+    // ---------------- from here on we start getting external messages ----------------
+    FileServerRequestHandler::fetchExternal();
 #endif
-    if (!UnitWSD::isUnitTesting())
-    {
-        // ---------------- from here on we start getting external messages ----------------
-        FileServerRequestHandler::fetchExternal();
-    }
 
 #endif
 }
