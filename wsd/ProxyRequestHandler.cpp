@@ -15,11 +15,19 @@
 #include <net/HttpHelper.hpp>
 
 std::map<std::string, std::shared_ptr<http::Response>> ProxyRequestHandler::CacheFileHash;
+std::chrono::system_clock::time_point ProxyRequestHandler::MaxAge;
 
 void ProxyRequestHandler::handleRequest(const std::string& relPath,
                                         const std::shared_ptr<StreamSocket>& socket)
 {
     Poco::URI uriProxy(ProxyServer);
+    const auto timeNow = std::chrono::system_clock::now();
+
+    if (MaxAge > std::chrono::system_clock::time_point() && timeNow > MaxAge)
+    {
+        CacheFileHash.clear();
+        MaxAge = std::chrono::system_clock::time_point();
+    }
 
     const auto cacheEntry = CacheFileHash.find(relPath);
     if (cacheEntry != CacheFileHash.end())
@@ -39,9 +47,15 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
             {
                 try
                 {
+                    const auto callbackNow = std::chrono::system_clock::now();
                     std::shared_ptr<http::Response> httpResponse = httpSession->response();
                     if (httpResponse->statusLine().statusCode() == 200)
                     {
+                        if (MaxAge == std::chrono::system_clock::time_point())
+                        {
+                            MaxAge = callbackNow + std::chrono::hours(10);
+                        }
+
                         CacheFileHash[httpSession->getUrl()] = httpResponse;
                         socket->sendAndShutdown(*httpResponse);
                     }
