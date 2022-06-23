@@ -19,7 +19,7 @@ public:
 private:
     static std::chrono::system_clock::time_point MaxAge;
     static constexpr auto ProxyServer = "https://www.collaboraoffice.com";
-    static std::map<std::string, std::shared_ptr<http::Response>> CacheFileHash;
+    static std::unordered_map<std::string, std::shared_ptr<http::Response>> CacheFileHash;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
