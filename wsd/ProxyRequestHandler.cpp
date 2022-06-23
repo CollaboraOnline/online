@@ -14,7 +14,7 @@
 #include <net/HttpRequest.hpp>
 #include <net/HttpHelper.hpp>
 
-std::map<std::string, std::shared_ptr<http::Response>> ProxyRequestHandler::CacheFileHash;
+std::unordered_map<std::string, std::shared_ptr<http::Response>> ProxyRequestHandler::CacheFileHash;
 std::chrono::system_clock::time_point ProxyRequestHandler::MaxAge;
 
 void ProxyRequestHandler::handleRequest(const std::string& relPath,
