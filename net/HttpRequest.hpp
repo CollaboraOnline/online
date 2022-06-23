@@ -971,6 +971,7 @@ public:
     std::chrono::microseconds getTimeout() const { return _timeout; }
 
     std::shared_ptr<const Response> response() const { return _response; }
+    const std::string& getUrl() const { return _request.getUrl(); }
 
     /// The onFinished callback handler signature.
     using FinishedCallback = std::function<void(const std::shared_ptr<Session>& session)>;
