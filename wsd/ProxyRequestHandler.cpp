@@ -68,9 +68,14 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
                         HttpHelper::sendErrorAndShutdown(400, socket);
                     }
                 }
+                catch(std::exception& exc)
+                {
+                    LOG_ERR("ProxyCallback: " << exc.what());
+                    HttpHelper::sendErrorAndShutdown(400, socket);
+                }
                 catch(...)
                 {
-                    LOG_DBG("ProxyCallback: Unknown exception");
+                    LOG_ERR("ProxyCallback: Unknown exception");
                     HttpHelper::sendErrorAndShutdown(400, socket);
                 }
             };
