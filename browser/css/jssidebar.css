@@ -165,7 +165,9 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 #document-container ~ #sidebar-dock-wrapper .sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.ui-grid > tr.sidebar > td.sidebar:last-child:not(:first-child),
 .sidebar.jsdialog.cell > #table-box3 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:last-child,
 .sidebar.jsdialog.cell > #table-box4 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:last-child,
-.sidebar.jsdialog.cell > #table-box4 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:nth-child(4) {
+.sidebar.jsdialog.cell > #table-box4 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:nth-child(4),
+.sidebar.cell:not(:nth-child(1)) > .vertical > .row > .toolbox,
+.sidebar.cell:not(:nth-child(1)) > .toolbox {
 	display: flex;
 	justify-content: flex-end;
 }
