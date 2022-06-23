@@ -21,12 +21,13 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
                                         const std::shared_ptr<StreamSocket>& socket)
 {
     Poco::URI uriProxy(ProxyServer);
+    constexpr const auto zero = std::chrono::system_clock::time_point();
     const auto timeNow = std::chrono::system_clock::now();
 
-    if (MaxAge > std::chrono::system_clock::time_point() && timeNow > MaxAge)
+    if (MaxAge > zero && timeNow > MaxAge)
     {
         CacheFileHash.clear();
-        MaxAge = std::chrono::system_clock::time_point();
+        MaxAge = zero;
     }
 
     const auto cacheEntry = CacheFileHash.find(relPath);
@@ -43,7 +44,7 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
     sessionProxy->setTimeout(std::chrono::seconds(10));
     http::Request requestProxy(uriProxy.getPathAndQuery());
     http::Session::FinishedCallback proxyCallback =
-        [socket](const std::shared_ptr<http::Session>& httpSession)
+        [socket, zero](const std::shared_ptr<http::Session>& httpSession)
             {
                 try
                 {
@@ -51,7 +52,7 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
                     std::shared_ptr<http::Response> httpResponse = httpSession->response();
                     if (httpResponse->statusLine().statusCode() == 200)
                     {
-                        if (MaxAge == std::chrono::system_clock::time_point())
+                        if (MaxAge == zero)
                         {
                             MaxAge = callbackNow + std::chrono::hours(10);
                         }
