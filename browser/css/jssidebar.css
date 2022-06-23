@@ -93,7 +93,16 @@
 }
 
 .sidebar.ui-expander-content {
+	width: 309px;
 	padding-inline: 10px;
+}
+
+/* frame inside frame */
+#ChartElementsPanel .sidebar.ui-expander-content,
+#softedgeframe .sidebar.ui-expander-content,
+#glowframe .sidebar.ui-expander-content {
+	width: 100% !important;
+	padding-inline: 0px;
 }
 
 #selectcolor {
@@ -342,11 +351,6 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 #writedirection, #backgroundcolor {
 	justify-content: end;
 	margin-right: 0;
-}
-
-#softedgeframe .sidebar.ui-expander-content,
-#glowframe .sidebar.ui-expander-content {
-	width: 100% !important; /* frame inside frame */
 }
 
 #LB_SHADOW_COLOR {
