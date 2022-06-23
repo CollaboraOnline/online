@@ -326,8 +326,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		controls['container'] = div;
 
 		var spinfield = L.DomUtil.create('input', builder.options.cssClass + ' spinfield', div);
+		spinfield.id = data.id + '-input';
 		spinfield.type = 'number';
 		spinfield.dir = document.documentElement.dir;
+		spinfield.tabIndex = '0';
 		controls['spinfield'] = spinfield;
 
 		if (data.unit) {
@@ -753,9 +755,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (data.children[0].text && data.children[0].text !== '') {
 				var expander = L.DomUtil.create('div', 'ui-expander ' + builder.options.cssClass, container);
+				expander.tabIndex = '0';
 				var label = L.DomUtil.create('span', 'ui-expander-label ' + builder.options.cssClass, expander);
 				label.innerText = builder._cleanText(data.children[0].text);
-				label.id = data.children[0].id;
+				label.id = data.children[0].id ? data.children[0].id : data.id + '-label';
 				if (data.children[0].visible === false)
 					L.DomUtil.addClass(label, 'hidden');
 				builder.postProcess(expander, data.children[0]);
@@ -763,13 +766,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (data.children.length > 1)
 					$(label).addClass('expanded');
 
-				$(expander).click(function () {
+				var toggleFunction = function () {
 					if (customCallback)
 						customCallback();
 					else
 						builder.callback('expander', 'toggle', data, null, builder);
 					$(label).toggleClass('expanded');
 					$(expander).siblings().toggleClass('expanded');
+				};
+
+				$(expander).click(toggleFunction);
+				$(expander).keypress(function (event) {
+					if (event.which === 13) {
+						toggleFunction();
+						event.preventDefault();
+					}
 				});
 			}
 
@@ -1149,6 +1160,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var radiobutton = L.DomUtil.create('input', '', container);
 		radiobutton.type = 'radio';
+		radiobutton.id = data.id + '-input';
+		radiobutton.tabIndex = '0';
 
 		if (data.image) {
 			var image = L.DomUtil.create('img', '', radiobutton);
@@ -1193,6 +1206,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var checkbox = L.DomUtil.create('input', builder.options.cssClass, div);
 		checkbox.type = 'checkbox';
+		checkbox.id = data.id + '-input';
+		checkbox.tabIndex = '0';
 		var checkboxLabel = L.DomUtil.create('label', builder.options.cssClass, div);
 		checkboxLabel.textContent = builder._cleanText(data.text);
 		checkboxLabel.for = data.id;
@@ -1742,6 +1757,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		container.id = data.id;
 
 		var listbox = L.DomUtil.create('select', builder.options.cssClass + ' ui-listbox ', container);
+		listbox.id = data.id + '-input';
+		listbox.tabIndex = '0';
 		var listboxArrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', container);
 		listboxArrow.id = 'listbox-arrow-' + data.id;
 
@@ -3222,7 +3239,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (control && !control.hasAttribute('tabIndex')
 			&& data.type !== 'container'
 			&& data.type !== 'grid'
-			&& data.type !== 'toolbox')
+			&& data.type !== 'toolbox'
+			&& data.type !== 'listbox'
+			&& data.type !== 'combobox'
+			&& data.type !== 'radiobutton'
+			&& data.type !== 'checkbox'
+			&& data.type !== 'spinfield'
+			&& data.type !== 'metricfield'
+			&& data.type !== 'formattedfield'
+			&& data.type !== 'fixedtext'
+			&& data.type !== 'frame'
+			&& data.type !== 'expander'
+			&& data.type !== 'panel'
+			&& data.type !== 'buttonbox')
 			control.setAttribute('tabIndex', '0');
 	},
 
