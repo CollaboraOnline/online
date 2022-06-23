@@ -39,7 +39,7 @@ span#main-menu-btn-icon {
 	display: flex;
 }
 
-#fontsizecombobox {
+#fontsizecombobox.mobile-wizard {
 	width: 100%;
 }
 
