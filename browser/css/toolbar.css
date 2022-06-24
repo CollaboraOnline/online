@@ -153,9 +153,8 @@ w2ui-toolbar {
 	height: 30px;
 }
 
-#tb_formulabar_item_address, #tb_formulabar_item_item_2 {
-	padding-top: 2px;
 #tb_formulabar_item_address {
+	padding-block-start: 2px;
 	padding-inline-end: 5px;
 	vertical-align: top;
 }
