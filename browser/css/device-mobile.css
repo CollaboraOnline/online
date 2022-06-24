@@ -183,7 +183,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	display: none;
 }
 
-#tb_formulabar_item_address, #tb_formulabar_item_item_2 {
+#tb_formulabar_item_address {
 	vertical-align: middle;
 }
 /* Related to selectionMarkers.css */
