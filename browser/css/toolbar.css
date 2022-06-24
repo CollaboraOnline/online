@@ -155,6 +155,8 @@ w2ui-toolbar {
 
 #tb_formulabar_item_address, #tb_formulabar_item_item_2 {
 	padding-top: 2px;
+#tb_formulabar_item_address {
+	padding-inline-end: 5px;
 	vertical-align: top;
 }
 
