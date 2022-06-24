@@ -30,7 +30,6 @@ L.Control.FormulaBar = L.Control.extend({
 			items: [
 				{type: 'html',  id: 'left'},
 				{type: 'html', id: 'address', html: '<input id="addressInput" type="text">'},
-				{type: 'break'},
 				{type: 'button', id: 'functiondialog', img: 'functiondialog', hint: _('Function Wizard')},
 				{type: 'html', id: 'formula', html: '<div id="calc-inputbar-wrapper"><div id="calc-inputbar"></div></div>'}
 			],
