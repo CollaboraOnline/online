@@ -154,7 +154,9 @@ w2ui-toolbar {
 
 .inputbar_multiline #tb_formulabar_item_address,
 .inputbar_multiline #tb_formulabar_item_item_2,
-.inputbar_multiline #tb_formulabar_item_functiondialog {
+.inputbar_multiline #tb_formulabar_item_functiondialog,
+#tb_formulabar_item_address {
+	padding-inline-end: 5px;
 	vertical-align: top;
 }
 
@@ -1321,4 +1323,3 @@ html[dir='rtl'] #userListPopover::after {
 	font-size: var(--default-font-size);
 	color: var(--color-main-text);
 }
-
