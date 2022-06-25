@@ -40,6 +40,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_menuItemHandlers: null,
 	_menus: null,
 	_colorPickers: null,
+	_colorLastSelection: {},
 
 	_currentDepth: 0,
 
@@ -2969,21 +2970,31 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var selectedColor;
 
 			var updateFunction = function (color) {
-				selectedColor = builder._getCurrentColor(data, builder);
+				if (builder._colorLastSelection[data.command] !== undefined)
+					selectedColor = builder._colorLastSelection[data.command];
+				else
+					selectedColor = builder._getCurrentColor(data, builder);
+
 				valueNode.style.backgroundColor = color ? color : selectedColor;
-				selectedColor = color ? color : selectedColor;
+				builder._colorLastSelection[data.command] = color ? color : selectedColor;
 				builder.setPickerOutline(valueNode);
 			};
 
 			updateFunction();
 
+			builder.map.on('commandstatechanged', function(e) {
+				if (e.commandName === data.command)
+					updateFunction();
+			}, this);
+
 			var noColorControl = (data.command !== '.uno:FontColor' && data.command !== '.uno:Color');
 
 			var applyFunction = function() {
-				if (!selectedColor || selectedColor === '#')
+				var colorToApply = builder._colorLastSelection[data.command];
+				if (!colorToApply || colorToApply === '#')
 					return;
 
-				var color = selectedColor.indexOf('#') === 0 ? selectedColor.substr(1) : selectedColor;
+				var color = colorToApply.indexOf('#') === 0 ? colorToApply.substr(1) : colorToApply;
 				builder._sendColorCommand(builder, data, color);
 			};
 
@@ -2992,7 +3003,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			$(arrowbackground).click(function() {
 				if (!$(div).hasClass('disabled')) {
-					$(div).w2color({ color: selectedColor, transparent: noColorControl }, function (color) {
+					$(div).w2color({ color: builder._colorLastSelection[data.command], transparent: noColorControl }, function (color) {
 						if (color != null) {
 							if (color) {
 								updateFunction('#' + color);
