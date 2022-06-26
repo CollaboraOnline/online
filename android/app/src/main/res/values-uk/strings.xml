@@ -21,7 +21,7 @@
     <string name="file_exists_warning">Файл з такою назвою вже існує і буде перезаписаний.</string>
     <string name="temp_file_saving_disabled">Цей файл лише для читання, збереження неможливе.</string>
     <string name="no_items">Немає елементів</string>
-    <string name="no_recent_items">Відкрийте файл за допомогою піктограми папки на панелі інструментів.</string>
+    <string name="no_recent_items">Відкрийте файл за допомогою піктограми теки на панелі інструментів.</string>
     <string name="app_vendor">Цей випуск надано $VENDOR.</string>
     <string name="app_description">$APP_NAME це сучасний, простий у використанні набір програм з відкритим кодом для обробки текстів, електронних таблиць, презентацій тощо.</string>
     <string name="app_version">Версія: %1$s, збірка: %2$s</string>
