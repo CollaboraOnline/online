@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-02 12:16+0200\n"
-"PO-Revision-Date: 2022-06-04 18:12+0000\n"
-"Last-Translator: Mathieu B. <mathieu.bousquet2@gmail.com>\n"
+"PO-Revision-Date: 2022-06-07 11:20+0000\n"
+"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
 "Language: fr\n"
@@ -1164,9 +1164,8 @@ msgid "Reference~s"
 msgstr "Référence~s"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "Form"
-msgstr "Forum"
+msgstr "Formulaire"
 
 #: src/control/Control.NotebookbarWriter.js:174
 msgid "ODF Text Document (.odt)"
@@ -1178,19 +1177,19 @@ msgstr "Document EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:965
 msgid "Rich Text"
-msgstr ""
+msgstr "Texte enrichi"
 
 #: src/control/Control.NotebookbarWriter.js:975
 msgid "Checkbox"
-msgstr ""
+msgstr "Case à cocher"
 
 #: src/control/Control.NotebookbarWriter.js:991
 msgid "Dropdown"
-msgstr ""
+msgstr "Menu déroulant"
 
 #: src/control/Control.NotebookbarWriter.js:1001
 msgid "Picture"
-msgstr ""
+msgstr "Image"
 
 #: src/control/Control.NotebookbarWriter.js:1017
 msgid "Content Control Properties"
@@ -1935,6 +1934,8 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"Le document est trop lourd ou il n'y a plus suffisamment d'espace disque "
+"pour l'enregistrer. Le document sera désormais en lecture seule."
 
 #: src/errormessages.js:35 src/errormessages.js:44
 msgid "Document cannot be saved due to expired or invalid access token."
