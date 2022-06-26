@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-02 12:16+0200\n"
-"PO-Revision-Date: 2022-05-19 21:16+0000\n"
+"PO-Revision-Date: 2022-06-04 18:12+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 4.13-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -1160,9 +1160,8 @@ msgid "Reference~s"
 msgstr "Skli~ci"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "Form"
-msgstr "Forum"
+msgstr "Obrazec"
 
 #: src/control/Control.NotebookbarWriter.js:174
 msgid "ODF Text Document (.odt)"
@@ -1174,23 +1173,23 @@ msgstr "Dokument EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:965
 msgid "Rich Text"
-msgstr ""
+msgstr "Obogateno besedilo"
 
 #: src/control/Control.NotebookbarWriter.js:975
 msgid "Checkbox"
-msgstr ""
+msgstr "Potrditveno polje"
 
 #: src/control/Control.NotebookbarWriter.js:991
 msgid "Dropdown"
-msgstr ""
+msgstr "Spustni meni"
 
 #: src/control/Control.NotebookbarWriter.js:1001
 msgid "Picture"
-msgstr ""
+msgstr "Slika"
 
 #: src/control/Control.NotebookbarWriter.js:1017
 msgid "Content Control Properties"
-msgstr ""
+msgstr "Lastnosti kontrolnika vsebine"
 
 #: src/control/Control.NotebookbarWriter.js:1097
 msgid "Ruler"
@@ -1923,6 +1922,8 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"Dokument je prevelik ali pa ni dovolj prostora za njegovo shranjevanje. "
+"Dovoljeno bo samo branje dokumenta."
 
 #: src/errormessages.js:35 src/errormessages.js:44
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -1966,6 +1967,10 @@ msgid ""
 "preserve a copy locally. Please contact the server (%storageserver) "
 "administrator to resolve the issue."
 msgstr ""
+"Shranjevanje je spodletelo, ker je dokument prevelik ali pa je prostor na "
+"disku presežen. Dokument bo zdaj namenjen samo branju, še vedno pa ga lahko "
+"prenesete k sebi in tako ohranite krajevno kopijo. Stopite v stik s "
+"skrbnikom strežnika (%storageserver), da razrešite težavo."
 
 #: src/errormessages.js:45
 msgid ""
