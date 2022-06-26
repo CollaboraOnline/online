@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-02 12:16+0200\n"
-"PO-Revision-Date: 2022-05-28 20:14+0000\n"
+"PO-Revision-Date: 2022-06-16 08:18+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1156,9 +1156,8 @@ msgid "Reference~s"
 msgstr "ה~פניות"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "Form"
-msgstr "פורום"
+msgstr "טופס"
 
 #: src/control/Control.NotebookbarWriter.js:174
 msgid "ODF Text Document (.odt)"
@@ -1170,23 +1169,23 @@ msgstr "מסמך EPUB‏ (‎.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:965
 msgid "Rich Text"
-msgstr ""
+msgstr "טקסט עשיר"
 
 #: src/control/Control.NotebookbarWriter.js:975
 msgid "Checkbox"
-msgstr ""
+msgstr "תיבת סימון"
 
 #: src/control/Control.NotebookbarWriter.js:991
 msgid "Dropdown"
-msgstr ""
+msgstr "רשימה נגללת"
 
 #: src/control/Control.NotebookbarWriter.js:1001
 msgid "Picture"
-msgstr ""
+msgstr "תמונה"
 
 #: src/control/Control.NotebookbarWriter.js:1017
 msgid "Content Control Properties"
-msgstr ""
+msgstr "מאפייני בקרת תוכן"
 
 #: src/control/Control.NotebookbarWriter.js:1097
 msgid "Ruler"
@@ -1894,6 +1893,7 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"המסמך גדול מדי או שלא נותר מספיק מקום לשמירה. המסמך יהיה מעתה לקריאה בלבד."
 
 #: src/errormessages.js:35 src/errormessages.js:44
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -1934,6 +1934,9 @@ msgid ""
 "preserve a copy locally. Please contact the server (%storageserver) "
 "administrator to resolve the issue."
 msgstr ""
+"השמירה נכשלה כיוון שהמסמך גדול מדי או שהגעת למכסת הכונן. המסמך יהיה לקריאה "
+"בלבד אך עדיין ניתן להוריד אותו כדי לשמור עותק מקומית. נא ליצור קשר עם הנהלת "
+"השרת (%storageserver) כדי לפתור את התקלה."
 
 #: src/errormessages.js:45
 msgid ""
