@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-27 15:48+0200\n"
+"POT-Creation-Date: 2022-06-27 17:25+0200\n"
 "PO-Revision-Date: 2022-05-23 11:40+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
@@ -724,6 +724,32 @@ msgstr "Tot"
 msgid "Text orientation"
 msgstr "Orientació del text"
 
+#: src/control/Control.Menubar.js:289 src/control/Control.Menubar.js:1082
+msgid "Insert Rich Text"
+msgstr ""
+
+#: src/control/Control.Menubar.js:290 src/control/Control.Menubar.js:1083
+msgid "Insert Checkbox"
+msgstr ""
+
+#: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1084
+msgid "Insert Dropdown"
+msgstr ""
+
+#: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1085
+msgid "Insert Picture"
+msgstr ""
+
+#: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1086
+#, fuzzy
+msgid "Insert Date"
+msgstr "Insereix una taula"
+
+#: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1087
+#: src/control/Control.NotebookbarWriter.js:999
+msgid "Properties"
+msgstr ""
+
 #: src/control/Control.Menubar.js:321
 #: src/control/Control.NotebookbarWriter.js:291
 msgid "Forum"
@@ -1205,10 +1231,6 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:989
 msgid "Picture"
-msgstr ""
-
-#: src/control/Control.NotebookbarWriter.js:999
-msgid "Properties"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:1069

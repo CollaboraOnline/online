@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-27 15:48+0200\n"
+"POT-Creation-Date: 2022-06-27 17:25+0200\n"
 "PO-Revision-Date: 2022-06-27 15:24+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: hu\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -724,6 +724,32 @@ msgstr "Összes"
 msgid "Text orientation"
 msgstr "Szöveg iránya"
 
+#: src/control/Control.Menubar.js:289 src/control/Control.Menubar.js:1082
+msgid "Insert Rich Text"
+msgstr ""
+
+#: src/control/Control.Menubar.js:290 src/control/Control.Menubar.js:1083
+msgid "Insert Checkbox"
+msgstr ""
+
+#: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1084
+msgid "Insert Dropdown"
+msgstr ""
+
+#: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1085
+msgid "Insert Picture"
+msgstr ""
+
+#: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1086
+#, fuzzy
+msgid "Insert Date"
+msgstr "Táblázat beszúrása"
+
+#: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1087
+#: src/control/Control.NotebookbarWriter.js:999
+msgid "Properties"
+msgstr "Tulajdonságok"
+
 #: src/control/Control.Menubar.js:321
 #: src/control/Control.NotebookbarWriter.js:291
 msgid "Forum"
@@ -1204,10 +1230,6 @@ msgstr "Legördülő lista"
 #: src/control/Control.NotebookbarWriter.js:989
 msgid "Picture"
 msgstr "Kép"
-
-#: src/control/Control.NotebookbarWriter.js:999
-msgid "Properties"
-msgstr "Tulajdonságok"
 
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Ruler"
