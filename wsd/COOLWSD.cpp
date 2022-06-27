@@ -3442,10 +3442,11 @@ private:
             {
                 // File server
                 assert(socket && "Must have a valid socket");
-                constexpr auto ProxyRemote = "/remote/static/";
+                constexpr auto ProxyRemote = "/remote/";
                 constexpr auto ProxyRemoteLen = sizeof(ProxyRemote) - 1;
+                constexpr auto ProxyRemoteStatic = "/remote/static/";
                 const auto uri = requestDetails.getURI();
-                const auto pos = uri.find(ProxyRemote);
+                const auto pos = uri.find(ProxyRemoteStatic);
                 if (pos != std::string::npos)
                 {
                     ProxyRequestHandler::handleRequest(uri.substr(pos + ProxyRemoteLen), socket);
