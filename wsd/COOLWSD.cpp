@@ -3442,7 +3442,7 @@ private:
             {
                 // File server
                 assert(socket && "Must have a valid socket");
-                constexpr auto ProxyRemote = "/remote/";
+                constexpr auto ProxyRemote = "/remote/static/";
                 constexpr auto ProxyRemoteLen = sizeof(ProxyRemote) - 1;
                 const auto uri = requestDetails.getURI();
                 const auto pos = uri.find(ProxyRemote);
