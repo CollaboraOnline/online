@@ -18,7 +18,7 @@ public:
 
 private:
     static std::chrono::system_clock::time_point MaxAge;
-    static constexpr auto ProxyServer = "https://www.collaboraoffice.com";
+    static constexpr auto ProxyServer = "https://rating.collaboraonline.com";
     static std::unordered_map<std::string, std::shared_ptr<http::Response>> CacheFileHash;
 };
 
