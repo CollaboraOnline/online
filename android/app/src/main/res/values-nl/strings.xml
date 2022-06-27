@@ -69,7 +69,7 @@
     <string name="new_spreadsheet">Nieuw werkblad</string>
     <string name="new_presentation">Nieuwe presentatie</string>
     <string name="new_textdocument">Nieuw tekstdocument</string>
-    <string name="about_moreinfo">Meer info</string>
+    <string name="about_moreinfo">Meer informatie</string>
     <string name="about_notice">Kennisgeving tonen</string>
     <string name="about_license">Licentie tonen</string>
     <string name="pref_show_debug_info_summary">Schakel foutopsporingsinformatie in documentviewer weergeven in</string>
@@ -91,7 +91,7 @@
     <string name="file_exists_warning">Er bestaat al een bestand met deze naam en zal overschreven worden.</string>
     <string name="temp_file_saving_disabled">Dit bestand is alleen-lezen; opslaan is uitgeschakeld.</string>
     <string name="no_items">Geen items</string>
-    <string name="no_recent_items">Open een bestand met het mappictogram op de werkbalk.</string>
+    <string name="no_recent_items">Open een bestand met behulp van het mappictogram in de werkbalk.</string>
     <string name="app_vendor">Deze versie is geleverd door $VENDOR.</string>
     <string name="app_description">$APP_NAME is een moderne, gebruiksvriendelijke, open source productiviteitssuite voor tekstverwerking, werkbladen, presentaties en meer.</string>
     <string name="app_version">Versie: %1$s
@@ -103,7 +103,7 @@
     <string name="pref_enable_chrome_debugger_info">Gebruik Chrome\'s hulpmiddel voor foutopsporing in dit document</string>
     <string name="remove_from_list">Van de lijst verwijderen</string>
     <string name="file_actions_icon_desc">Bestandsacties</string>
-    <string name="pref_category_editor">Editor-instellingen</string>
+    <string name="pref_category_editor">Editor instellingen</string>
     <string name="app_version_and_hash">Versie: %1$s
 \nonline git-hash: %2$s
 \ncore git-hash: %3$s</string>
