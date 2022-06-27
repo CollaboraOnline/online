@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-27 15:48+0200\n"
-"PO-Revision-Date: 2022-06-03 07:09+0000\n"
+"PO-Revision-Date: 2022-06-27 15:24+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1143,7 +1143,7 @@ msgstr "Értékgörbe"
 #: src/control/Control.NotebookbarWriter.js:889
 #: src/control/Control.NotebookbarWriter.js:2194
 msgid "Shapes"
-msgstr ""
+msgstr "Alakzatok"
 
 #: src/control/Control.NotebookbarDraw.js:41
 #: src/control/Control.NotebookbarDraw.js:744
@@ -1162,7 +1162,7 @@ msgstr "Kép (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Master"
-msgstr ""
+msgstr "Diasablon"
 
 #: src/control/Control.NotebookbarImpress.js:255
 msgid "ODF Presentation (.odp)"
@@ -1207,7 +1207,7 @@ msgstr "Kép"
 
 #: src/control/Control.NotebookbarWriter.js:999
 msgid "Properties"
-msgstr ""
+msgstr "Tulajdonságok"
 
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Ruler"
