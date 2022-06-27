@@ -13,18 +13,18 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-27 15:48+0200\n"
-"PO-Revision-Date: 2022-06-03 07:09+0000\n"
+"PO-Revision-Date: 2022-06-27 15:24+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<"
-"12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) ||"
-" (n%100>=12 && n%100<=14) ? 2 : 3);\n"
-"X-Generator: Weblate 4.13-dev\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1146,7 +1146,7 @@ msgstr "Wykres przebiegu w czasie"
 #: src/control/Control.NotebookbarWriter.js:889
 #: src/control/Control.NotebookbarWriter.js:2194
 msgid "Shapes"
-msgstr ""
+msgstr "Kształty"
 
 #: src/control/Control.NotebookbarDraw.js:41
 #: src/control/Control.NotebookbarDraw.js:744
@@ -1165,7 +1165,7 @@ msgstr "Obraz (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Master"
-msgstr ""
+msgstr "~Wzorzec"
 
 #: src/control/Control.NotebookbarImpress.js:255
 msgid "ODF Presentation (.odp)"
@@ -1210,7 +1210,7 @@ msgstr "Obraz"
 
 #: src/control/Control.NotebookbarWriter.js:999
 msgid "Properties"
-msgstr ""
+msgstr "Właściwości"
 
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Ruler"
