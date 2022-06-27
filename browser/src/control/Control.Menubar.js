@@ -286,12 +286,12 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:TableDialog'}
 			]},
 			{name: _UNO('.uno:FormatFormMenu', 'text'), id: 'form', type: 'menu', menu: [
-				{uno: '.uno:InsertContentControl'},
-				{uno: '.uno:InsertCheckboxContentControl'},
-				{uno: '.uno:InsertDropdownContentControl'},
-				{uno: '.uno:InsertPictureContentControl'},
-				{uno: '.uno:InsertDateContentControl'},
-				{uno: '.uno:ContentControlProperties'},
+				{name: _('Insert Rich Text'), uno: '.uno:InsertContentControl'},
+				{name: _('Insert Checkbox'), uno: '.uno:InsertCheckboxContentControl'},
+				{name: _('Insert Dropdown'), uno: '.uno:InsertDropdownContentControl'},
+				{name: _('Insert Picture'), uno: '.uno:InsertPictureContentControl'},
+				{name: _('Insert Date'), uno: '.uno:InsertDateContentControl'},
+				{name: _('Properties'), uno: '.uno:ContentControlProperties'},
 			]},
 			{name: _UNO('.uno:ToolsMenu', 'text'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellingAndGrammarDialog'},
@@ -1079,12 +1079,12 @@ L.Control.Menubar = L.Control.extend({
 						{uno: '.uno:InsertLRM'},
 						{uno: '.uno:InsertRLM'}]},
 					{name: _UNO('.uno:FormatFormMenu', 'text'), id: 'formatformmenu', type: 'menu', menu: [
-						{uno: '.uno:InsertContentControl'},
-						{uno: '.uno:InsertCheckboxContentControl'},
-						{uno: '.uno:InsertDropdownContentControl'},
-						{uno: '.uno:InsertPictureContentControl'},
-						{uno: '.uno:InsertDateContentControl'},
-						{uno: '.uno:ContentControlProperties'},
+						{name: _('Insert Rich Text'), uno: '.uno:InsertContentControl'},
+						{name: _('Insert Checkbox'), uno: '.uno:InsertCheckboxContentControl'},
+						{name: _('Insert Dropdown'), uno: '.uno:InsertDropdownContentControl'},
+						{name: _('Insert Picture'), uno: '.uno:InsertPictureContentControl'},
+						{name: _('Insert Date'), uno: '.uno:InsertDateContentControl'},
+						{name: _('Properties'), uno: '.uno:ContentControlProperties'},
 					]},
 				]
 			},
