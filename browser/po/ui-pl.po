@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-27 17:25+0200\n"
-"PO-Revision-Date: 2022-06-27 15:24+0000\n"
+"PO-Revision-Date: 2022-06-27 18:10+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<"
-"12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) ||"
-" (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 4.13.1-dev\n"
 
 #: admin/admin.strings.js:6
@@ -729,24 +729,23 @@ msgstr "Orientacja tekstu"
 
 #: src/control/Control.Menubar.js:289 src/control/Control.Menubar.js:1082
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Wstaw tekst sformatowany"
 
 #: src/control/Control.Menubar.js:290 src/control/Control.Menubar.js:1083
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Wstaw pole wyboru"
 
 #: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1084
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Wstaw listę rozwijaną"
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1085
 msgid "Insert Picture"
-msgstr ""
+msgstr "Wstaw obraz"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1086
-#, fuzzy
 msgid "Insert Date"
-msgstr "Wstaw tabelę"
+msgstr "Wstaw datę"
 
 #: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1087
 #: src/control/Control.NotebookbarWriter.js:999
