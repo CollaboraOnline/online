@@ -2594,8 +2594,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var arrow = L.DomUtil.create('i', 'unoarrow', arrowbackground);
 			controls['arrow'] = arrow;
 			$(arrowbackground).click(function (event) {
+				var isOpened = $(div).hasClass('menu-opened');
 				if (!$(div).hasClass('disabled')) {
-					builder.callback('toolbox', 'togglemenu', parentContainer, data.command, builder);
+					if (isOpened) {
+						$(div).removeClass('menu-opened');
+						builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
+					} else {
+						$(div).addClass('menu-opened');
+						builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
+					}
+
 					event.stopPropagation();
 				}
 			});
