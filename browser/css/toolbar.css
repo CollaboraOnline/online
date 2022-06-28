@@ -1190,7 +1190,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	z-index: 1;
 	top: 38px;
 	color: var(--color-main-text);
-	background-color: var(--color-background-lighter);
+	background-color: var(--color-main-background);
 	border-radius: var(--border-radius);
 	filter: drop-shadow(0 1px 3px var(--color-box-shadow));
 	min-width: 150px;
