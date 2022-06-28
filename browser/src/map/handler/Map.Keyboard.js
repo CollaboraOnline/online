@@ -140,18 +140,18 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	keyCodes: {
-		pageUp:   33,
-		pageDown: 34,
-		enter:    13
+		pageUp:   UNOKey.PAGEUP,
+		pageDown: UNOKey.PAGEDOWN,
+		enter:    UNOKey.RETURN
 	},
 
 	navigationKeyCodes: {
-		left:    [37],
-		right:   [39],
-		down:    [40],
-		up:      [38],
-		zoomIn:  [187, 107, 61, 171],
-		zoomOut: [189, 109, 173]
+		left:    [UNOKey.LEFT],
+		right:   [UNOKey.RIGHT],
+		down:    [UNOKey.DOWN],
+		up:      [UNOKey.UP],
+		zoomIn:  [UNOKey.EQUAL, UNOKey.ADD, 61, 171],
+		zoomOut: [UNOKey.SUBTRACT, UNOKey.SUBTRACT, UNOKey.SUBTRACT]
 	},
 
 	initialize: function (map) {
@@ -180,7 +180,7 @@ L.Map.Keyboard = L.Handler.extend({
 
 	_ignoreKeyEvent: function(ev) {
 		var shift = ev.shiftKey ? UNOModifier.SHIFT : 0;
-		if (shift && (ev.keyCode === 45 || ev.keyCode === 46)) {
+		if (shift && (ev.keyCode === UNOKey.INSERT || ev.keyCode === UNOKey.DELETE)) {
 			// don't handle shift+insert, shift+delete
 			// These are converted to 'cut', 'paste' events which are
 			// automatically handled by us, so avoid double-handling
@@ -320,7 +320,7 @@ L.Map.Keyboard = L.Handler.extend({
 		var keyCode = ev.keyCode;
 
 		if ((this.modifier == UNOModifier.ALT || this.modifier == UNOModifier.SHIFT + UNOModifier.ALT) &&
-		    keyCode >= 48) {
+		    keyCode >= UNOKey.NUM0) {
 			// Presumably a Mac or iOS client accessing a "special character". Just ignore the alt modifier.
 			// But don't ignore it for Alt + non-printing keys.
 			this.modifier -= alt;
@@ -328,14 +328,14 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		// handle help - F1
-		if (ev.type === 'keydown' && !shift && !ctrl && !alt && !cmd && keyCode === 112) {
+		if (ev.type === 'keydown' && !shift && !ctrl && !alt && !cmd && keyCode === UNOKey.F1) {
 			this._map.showHelp('online-help');
 			ev.preventDefault();
 			return;
 		}
 
 		// don't trigger browser reload on F5, launch slideshow in Impress
-		if (ev.type === 'keydown' && keyCode === 116) {
+		if (ev.type === 'keydown' && keyCode === UNOKey.F5) {
 			ev.preventDefault();
 			if (this._map._docLayer._docType === 'presentation')
 			{
@@ -348,7 +348,7 @@ L.Map.Keyboard = L.Handler.extend({
 
 		if (this.modifier) {
 			unoKeyCode |= this.modifier;
-			if (ev.type !== 'keyup' && (this.modifier !== shift || (keyCode === 32 && !this._map._isCursorVisible))) {
+			if (ev.type !== 'keyup' && (this.modifier !== shift || (keyCode === UNOKey.SPACE && !this._map._isCursorVisible))) {
 				if (keyEventFn) {
 					keyEventFn('input', charCode, unoKeyCode);
 					ev.preventDefault();
@@ -379,13 +379,13 @@ L.Map.Keyboard = L.Handler.extend({
 				}
 			}
 			else if ((ev.type === 'keypress') && (!this.handleOnKeyDownKeys[keyCode] || charCode !== 0)) {
-				if (keyCode === 8 || keyCode === 46 || keyCode === 13)
+				if (keyCode === UNOKey.BACKSPACE || keyCode === UNOKey.DELETE || keyCode === UNOKey.RETURN)
 				{
 					// handled generically in TextInput.js
 					window.app.console.log('Ignore backspace/delete/enter keypress');
 					return;
 				}
-				if (charCode === keyCode && charCode !== 13) {
+				if (charCode === keyCode && charCode !== UNOKey.RETURN) {
 					// Chrome sets keyCode = charCode for printable keys
 					// while LO requires it to be 0
 					keyCode = 0;
@@ -411,23 +411,23 @@ L.Map.Keyboard = L.Handler.extend({
 					// was handled as textinput
 				}
 			}
-			if (keyCode === 9) {
+			if (keyCode === UNOKey.TAB) {
 				// tab would change focus to other DOM elements
 				ev.preventDefault();
 			}
 		}
-		else if (!this.modifier && (keyCode === 33 || keyCode === 34) && ev.type === 'keydown') {
+		else if (!this.modifier && (keyCode === UNOKey.PAGEUP || keyCode === UNOKey.PAGEDOWN) && ev.type === 'keydown') {
 			if (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') {
-				var partToSelect = keyCode === 33 ? 'prev' : 'next';
+				var partToSelect = keyCode === UNOKey.PAGEUP ? 'prev' : 'next';
 				this._map._docLayer._preview._scrollViewByDirection(partToSelect);
 				if (app.file.fileBasedView)
 					this._map._docLayer._checkSelectedPart();
 			}
 			return;
 		}
-		else if (!this.modifier && (keyCode === 35 || keyCode === 36) && ev.type === 'keydown') {
+		else if (!this.modifier && (keyCode === UNOKey.END || keyCode === UNOKey.HOME) && ev.type === 'keydown') {
 			if (this._map._docLayer._docType === 'drawing' && app.file.fileBasedView === true) {
-				partToSelect = keyCode === 36 ? 0 : this._map._docLayer._parts -1;
+				partToSelect = keyCode === UNOKey.HOME ? 0 : this._map._docLayer._parts -1;
 				this._map._docLayer._preview._scrollViewToPartPosition(partToSelect);
 				this._map._docLayer._checkSelectedPart();
 			}
@@ -475,13 +475,13 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 
 		if (e.type !== 'keydown' && e.key !== 'c' && e.key !== 'v' && e.key !== 'x' &&
-		/* Safari */ e.keyCode !== 99 && e.keyCode !== 118 && e.keyCode !== 120) {
+		/* Safari */ e.keyCode !== UNOKey.NUM3 && e.keyCode !== UNOKey.F7 && e.keyCode !== UNOKey.F9) {
 			e.preventDefault();
 			return true;
 		}
 
-		if (e.keyCode !== 67 && e.keyCode !== 86 && e.keyCode !== 88 &&
-		/* Safari */ e.keyCode !== 99 && e.keyCode !== 118 && e.keyCode !== 120 &&
+		if (e.keyCode !== UNOKey.C && e.keyCode !== UNOKey.V && e.keyCode !== UNOKey.X &&
+		/* Safari */ e.keyCode !== UNOKey.NUM3 && e.keyCode !== UNOKey.F7 && e.keyCode !== UNOKey.F9 &&
 			e.key !== 'c' && e.key !== 'v' && e.key !== 'x') {
 			// not copy or paste
 			e.preventDefault();
@@ -543,23 +543,23 @@ L.Map.Keyboard = L.Handler.extend({
 			// Ctrl + Alt
 			if (!e.shiftKey) {
 				switch (e.keyCode) {
-				case 53: // 5
+				case UNOKey.NUM5: // 5
 					app.socket.sendMessage('uno .uno:Strikeout');
 					return true;
-				case 70: // f
+				case UNOKey.F: // f
 					app.socket.sendMessage('uno .uno:InsertFootnote');
 					return true;
-				case 67: // c
-				case 77: // m
+				case UNOKey.C: // c
+				case UNOKey.M: // m
 					this._map.insertComment();
 					return true;
-				case 68: // d
+				case UNOKey.D: // d
 					app.socket.sendMessage('uno .uno:InsertEndnote');
 					return true;
 				}
 			} else if (e.altKey) {
 				switch (e.keyCode) {
-				case 68: // Ctrl + Shift + Alt + d for tile debugging mode
+				case UNOKey.D: // Ctrl + Shift + Alt + d for tile debugging mode
 					this._map._docLayer.toggleTileDebugMode();
 				}
 			}
@@ -585,33 +585,33 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		switch (e.keyCode) {
-		case 51: // 3
+		case UNOKey.NUM3: // 3
 			if (this._map.getDocType() === 'spreadsheet') {
 				app.socket.sendMessage('uno .uno:SetOptimalColumnWidthDirect');
 				app.socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
 				return true;
 			}
 			return false;
-		case 53: // 5
+		case UNOKey.NUM5: // 5
 			if (this._map.getDocType() === 'spreadsheet') {
 				app.socket.sendMessage('uno .uno:Strikeout');
 				return true;
 			}
 			return false;
-		case 67: // 'C'
-		case 88: // 'X'
+		case UNOKey.C: // 'C'
+		case UNOKey.X: // 'X'
 		case 99: // 'c'
-		case 120: // 'x'
+		case UNOKey.F9: // 'x'
 		case 91: // Left Cmd (Safari)
 		case 93: // Right Cmd (Safari)
 			// we prepare for a copy or cut event
 			this._map.focus();
 			this._map._textInput.select();
 			return true;
-		case 80: // p
+		case UNOKey.P: // p
 			this._map.print();
 			return true;
-		case 83: // s
+		case UNOKey.S: // s
 			// Save only when not read-only.
 			if (!this._map.isPermissionReadOnly()) {
 				this._map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'keyboard' }});
@@ -621,10 +621,10 @@ L.Map.Keyboard = L.Handler.extend({
 				}
 			}
 			return true;
-		case 86: // v
-		case 118: // v (Safari)
+		case UNOKey.V: // v
+		case UNOKey.F7: // v (Safari)
 			return true;
-		case 112: // f1
+		case UNOKey.F1: // f1
 			app.socket.sendMessage('uno .uno:NoteVisible');
 			return true;
 		case 188: // ,
