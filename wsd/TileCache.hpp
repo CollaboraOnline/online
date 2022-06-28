@@ -138,8 +138,10 @@ struct TileData
 
         if (i >= _wids.size())
         {
-            LOG_WRN("odd outcome - requested for a later id " << since <<
-                    " than the last known: " << ((_wids.size() > 0) ? _wids.back() : -1));
+            // We don't throttle delta sending - yet the code thinks we do still.
+            // We just send all the deltas we have on top of the keyframe.
+            // LOG_WRN("odd outcome - requested for a later id " << since <<
+            //        " than the last known: " << ((_wids.size() > 0) ? _wids.back() : -1));
             return false;
         }
         else
