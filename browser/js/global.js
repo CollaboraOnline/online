@@ -648,7 +648,12 @@ window.app = {
 					if (img.startsWith('url("images/'))
 					{
 						rules[r].style.backgroundImage =
-							img.replace('url("images/', replaceBase);
+							img.replace('url("images/', replaceBase + '/images/');
+					}
+					if (img.startsWith('url("remote/'))
+					{
+						rules[r].style.backgroundImage =
+							img.replace('url("remote/', replaceBase + '/remote/');
 					}
 				}
 			};
@@ -656,7 +661,7 @@ window.app = {
 			for (var i = 0; i < sheets.length; ++i) {
 				var relBases = sheets[i].href.split('/');
 				relBases.pop(); // bin last - css name.
-				var replaceBase = 'url("' + relBases.join('/') + '/images/';
+				var replaceBase = 'url("' + relBases.join('/');
 
 				var rules;
 				try {
