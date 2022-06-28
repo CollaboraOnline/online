@@ -1221,6 +1221,11 @@ html[dir='rtl'] #userListPopover::after {
 	padding: 4px 8px;
 }
 
+#userListPopover .user-list-item:hover {
+	cursor: pointer;
+	background-color: var(--color-background-dark);
+}
+
 #userListPopover .user-list-item--name {
 	display: flex;
 	flex-grow: 1;
