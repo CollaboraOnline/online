@@ -155,11 +155,17 @@ L.Control.UserList = L.Control.extend({
 			var userLabel = L.DomUtil.create('div', 'user-list-item--name');
 			userLabel.innerText = user.userName;
 
+			var userFollowingLabel = L.DomUtil.create('div', 'user-list-item--following-label');
+			userFollowingLabel.innerText = _('Following');
+			var userLabelContainer = L.DomUtil.create('div', 'user-list-item--name-container');
+			userLabelContainer.appendChild(userLabel);
+			userLabelContainer.appendChild(userFollowingLabel);
+
 			var listItem = L.DomUtil.create('div', 'user-list-item');
 			listItem.setAttribute('data-view-id', user.viewId);
 			listItem.setAttribute('role', 'button');
 			listItem.appendChild(L.control.createAvatar(user.viewId, user.userName, user.extraInfo, user.color));
-			listItem.appendChild(userLabel);
+			listItem.appendChild(userLabelContainer);
 			listItem.addEventListener('click', function () {
 				that.followUser(user.viewId);
 			}, false);
