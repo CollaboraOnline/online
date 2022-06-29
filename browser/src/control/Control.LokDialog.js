@@ -895,7 +895,8 @@ L.Control.LokDialog = L.Control.extend({
 			this._onEditorGotFocus();
 		} else {
 			this.focus(e.winId, e.acceptInput);
-			this._map.onFormulaBarFocus();
+			if (this._map.formulabar)
+				this._map.onFormulaBarFocus();
 		}
 	},
 
