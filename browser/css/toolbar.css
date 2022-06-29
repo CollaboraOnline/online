@@ -1239,7 +1239,7 @@ html[dir='rtl'] #userListPopover::after {
 }
 
 #userListPopover #follow-editor {
-	padding: 6px 4px;
+	padding: 8px;
 }
 
 #userListPopover #follow-editor .follow-editor-checkbox {
