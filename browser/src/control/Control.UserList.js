@@ -60,6 +60,7 @@ L.Control.UserList = L.Control.extend({
 	},
 
 	followUser: function(viewId) {
+		$('#userListPopover').hide();
 		var docLayer = this.map._docLayer;
 		this.map._goToViewId(viewId);
 
