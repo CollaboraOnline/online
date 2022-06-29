@@ -776,7 +776,7 @@ fi
 AC_SUBST(ENABLE_GTKAPP)
 AM_CONDITIONAL([ENABLE_GTKAPP], [test "$ENABLE_GTKAPP" = "true"])
 
-MAX_CONNECTIONS=20
+MAX_CONNECTIONS=9999
 AS_IF([test -n "$with_max_connections" && test "$with_max_connections" -gt "0"],
       [MAX_CONNECTIONS="$with_max_connections"])
 AS_IF([test "$MAX_CONNECTIONS" -lt "3"],
@@ -784,7 +784,7 @@ AS_IF([test "$MAX_CONNECTIONS" -lt "3"],
 AC_DEFINE_UNQUOTED([MAX_CONNECTIONS],[$MAX_CONNECTIONS],[Limit the maximum number of open connections])
 AC_SUBST(MAX_CONNECTIONS)
 
-MAX_DOCUMENTS=10
+MAX_DOCUMENTS=9999
 AS_IF([test -n "$with_max_documents" && test "$with_max_documents" -gt "0"],
       [MAX_DOCUMENTS="$with_max_documents"])
 AS_IF([test "$MAX_DOCUMENTS" -gt "$MAX_CONNECTIONS"],
