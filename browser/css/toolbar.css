@@ -1234,6 +1234,8 @@ html[dir='rtl'] #userListPopover::after {
 
 #userListPopover .user-list-item.selected-user {
 	background-color: var(--color-background-dark);
+	display: grid;
+	grid-template-columns: 0fr 1fr;
 }
 
 #userListPopover #follow-editor {
@@ -1248,6 +1250,22 @@ html[dir='rtl'] #userListPopover::after {
 	width: 16px;
 	box-shadow: none !important;
 	background-position: center;
+}
+
+#userListPopover .user-list-item:not(.selected-user) .user-list-item--following-label {
+	display: none;
+}
+
+#userListPopover .user-list-item.selected-user .user-list-item--following-label {
+	display: flex;
+	padding-inline-start: 8px;
+	font-size: var(--default-font-size);
+	padding-block-end: 4px;
+	color: var(--color-text-lighter);
+}
+
+#userListPopover .user-list-item.selected-user .user-list-item--name {
+	padding: 4px 0 0 8px;
 }
 
 @media only screen and (max-width: 600px) {
