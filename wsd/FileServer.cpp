@@ -997,13 +997,20 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     const unsigned int idleTimeoutSecs = config.getUInt("per_view.idle_timeout_secs", 900);
     Poco::replaceInPlace(preprocess, std::string("%IDLE_TIMEOUT_SECS%"), std::to_string(idleTimeoutSecs));
 
-#if ENABLE_WELCOME_MESSAGE
-    std::string enableWelcomeMessage = "true";
-#else // configurable
-    std::string enableWelcomeMessage = stringifyBoolFromConfig(config, "welcome.enable", false);
-#endif
+    #if ENABLE_WELCOME_MESSAGE
+        std::string enableWelcomeMessage = "true";
+        std::string autoShowWelcome = "true";
+        if (config.getBool("home_mode.enable", false))
+        {
+            autoShowWelcome = stringifyBoolFromConfig(config, "welcome.enable", false);
+        }
+    #else // configurable
+        std::string enableWelcomeMessage = stringifyBoolFromConfig(config, "welcome.enable", false);
+        std::string autoShowWelcome = stringifyBoolFromConfig(config, "welcome.enable", false);
+    #endif
 
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG%"), enableWelcomeMessage);
+    Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_WELCOME%"), autoShowWelcome);
 
     // the config value of 'notebookbar/tabbed' or 'classic/compact' overrides the UIMode
     // from the WOPI
@@ -1035,6 +1042,14 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     std::string enableMacrosExecution = stringifyBoolFromConfig(config, "security.enable_macros_execution", false);
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_MACROS_EXECUTION%"), enableMacrosExecution);
 
+    if (!config.getBool("feedback.show", true) && config.getBool("home_mode.enable", false))
+    {
+        Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_FEEDBACK%"), (std::string)"false");
+    }
+    else
+    {
+        Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_FEEDBACK%"), (std::string)"true");
+    }
     Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_URL%"), std::string(FEEDBACK_URL));
     Poco::replaceInPlace(preprocess, std::string("%WELCOME_URL%"), std::string(WELCOME_URL));
 

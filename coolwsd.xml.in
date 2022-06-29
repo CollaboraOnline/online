@@ -248,6 +248,10 @@
         <url desc="URL of optional JSON file that lists fonts to be included in Online" type="string" default=""></url>
     </remote_font_config>
 
+    <home_mode>
+        <enable desc="Enable more configuration options for home users" type="bool" default="false">false</enable>
+    </home_mode>
+
     @LOCK_CONFIGURATION@
 
     @FEATURE_RESTRICTION_CONFIGURATION@
