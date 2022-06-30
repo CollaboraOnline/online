@@ -373,7 +373,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 
 .context-menu-hover {
-	background-color: var(--color-background-lighter) !important;
+	background-color: var(--color-background-darker) !important;
 	color: var(--color-text-darker) !important;
 }
 
