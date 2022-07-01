@@ -871,6 +871,9 @@ private:
             _savingTimeout = savingTimeout;
         }
 
+        /// Get the maximum time to wait for saving to finish.
+        std::chrono::seconds getSavingTimeout() const { return _savingTimeout; }
+
         /// True iff the last save request has timed out.
         bool hasSavingTimedOut() const
         {
@@ -916,6 +919,7 @@ private:
 
             os << indent
                << "file last modified time: " << Util::getTimeForLog(now, _lastModifiedTime);
+            os << indent << "saving-timeout: " << getSavingTimeout();
             os << indent << "last save timed-out: " << std::boolalpha << hasSavingTimedOut();
             os << indent << "last save successful: " << lastSaveSuccessful();
             os << indent << "save failure count: " << saveFailureCount();
