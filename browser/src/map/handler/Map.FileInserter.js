@@ -94,6 +94,7 @@ L.Map.FileInserter = L.Handler.extend({
 	_sendFile: function (name, file, type) {
 		var socket = app.socket;
 		var map = this._map;
+		var sectionContainer = app.sectionContainer;
 		var url = this.getWopiUrl(map);
 
 		if ('processCoolUrl' in window) {
@@ -139,7 +140,16 @@ L.Map.FileInserter = L.Handler.extend({
 				if (xmlHttp.readyState === 4) {
 					map.hideBusy();
 					if (xmlHttp.status === 200) {
-						socket.sendMessage('insertfile name=' + name + ' type=' + type);
+						var sectionName = L.CSections.ContentControl.name;
+						var section;
+						if (sectionContainer.doesSectionExist(sectionName)) {
+							section = sectionContainer.getSectionWithName(sectionName);
+						}
+						if (section && section.sectionProperties.picturePicker && type === 'graphic') {
+							socket.sendMessage('contentcontrolevent type=picture' + ' name=' + name);
+						} else {
+							socket.sendMessage('insertfile name=' + name + ' type=' + type);
+						}
 					}
 					else if (xmlHttp.status === 404) {
 						map.fire('error', {msg: errorMessages.uploadfile.notfound});
@@ -175,7 +185,17 @@ L.Map.FileInserter = L.Handler.extend({
 	},
 
 	_sendURL: function (name, url) {
-		app.socket.sendMessage('insertfile name=' + encodeURIComponent(url) + ' type=graphicurl');
+		var sectionName = L.CSections.ContentControl.name;
+		var section;
+		if (app.sectionContainer.doesSectionExist(sectionName)) {
+			section = app.sectionContainer.getSectionWithName(sectionName);
+		}
+
+		if (section && section.sectionProperties.picturePicker) {
+			app.socket.sendMessage('contentcontrolevent type=pictureurl' + ' name=' + encodeURIComponent(url));
+		} else {
+			app.socket.sendMessage('insertfile name=' + encodeURIComponent(url) + ' type=graphicurl');
+		}
 	}
 });
 

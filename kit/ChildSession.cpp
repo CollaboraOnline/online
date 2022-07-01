@@ -499,7 +499,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens.equals(0, "contentcontrolevent"))
         {
-            return contentControlEvent(buffer, length, tokens);
+            return contentControlEvent(tokens);
         }
         else if (tokens.equals(0, "traceeventrecording"))
         {
@@ -1627,19 +1627,51 @@ bool ChildSession::formFieldEvent(const char* buffer, int length, const StringVe
     return true;
 }
 
-bool ChildSession::contentControlEvent(const char* buffer, int length, const StringVector& /*tokens*/)
+bool ChildSession::contentControlEvent(const StringVector& tokens)
 {
-    std::string sFirstLine = getFirstLine(buffer, length);
-    std::string sArguments = sFirstLine.substr(std::string("contentcontrolevent ").size());
-
-    if (sArguments.empty())
+    std::string type;
+    if (tokens.size() != 3 || !getTokenString(tokens[1], "type", type))
     {
         sendTextFrameAndLogError("error: cmd=contentcontrolevent kind=syntax");
         return false;
     }
+    std::string arguments = "{\"type\":\"" + type + "\",";
+
+    if (type == "picture")
+    {
+        std::string name;
+        if (getTokenString(tokens[2], "name", name))
+        {
+            std::string jailDoc = JAILED_DOCUMENT_ROOT;
+            if (NoCapsForKit)
+            {
+                jailDoc = Poco::URI(getJailedFilePath()).getPath();
+                jailDoc =
+                    jailDoc.substr(0, jailDoc.find(JAILED_DOCUMENT_ROOT)) + JAILED_DOCUMENT_ROOT;
+            }
+            std::string url = "file://" + jailDoc + "insertfile/" + name;
+            arguments += "\"changed\":\"" + url + "\"}";
+        }
+    }
+    else if (type == "pictureurl")
+    {
+        std::string name;
+        if (getTokenString(tokens[2], "name", name))
+        {
+            std::string url;
+            URI::decode(name, url);
+            arguments = "{\"type\":\"picture\",\"changed\":\"" + url + "\"}";
+        }
+    }
+    else if (type == "date" || type == "drop-down")
+    {
+        std::string data;
+        getTokenString(tokens[2], "selected", data);
+        arguments += "\"selected\":\"" + data + "\"" + "}";
+    }
 
     getLOKitDocument()->setView(_viewId);
-    getLOKitDocument()->sendContentControlEvent(sArguments.c_str());
+    getLOKitDocument()->sendContentControlEvent(arguments.c_str());
 
     return true;
 }
