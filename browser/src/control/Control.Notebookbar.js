@@ -23,6 +23,7 @@ L.Control.Notebookbar = L.Control.extend({
 	onAdd: function (map) {
 		// log and test window.ThisIsTheiOSApp = true;
 		this.map = map;
+		this.additionalShortcutButtons = [];
 		this._currentScrollPosition = 0;
 		var docType = this._map.getDocType();
 
