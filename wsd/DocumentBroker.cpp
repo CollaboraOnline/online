@@ -1795,10 +1795,11 @@ void DocumentBroker::setLoaded()
         _docState.setLive();
         _loadDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
                                 std::chrono::steady_clock::now() - _threadStart);
+        const auto minTimeoutSecs = ((_loadDuration * 4).count() + 500) / 1000;
         _saveManager.setSavingTimeout(
-            std::max(std::chrono::seconds(((_loadDuration * 2).count() + 500) / 1000),
-                     std::chrono::seconds(5)));
-        LOG_TRC("Document loaded in " << _loadDuration);
+            std::max(std::chrono::seconds(minTimeoutSecs), std::chrono::seconds(5)));
+        LOG_TRC("Document loaded in " << _loadDuration << ", saving-timeout set to "
+                                      << _saveManager.getSavingTimeout());
     }
 }
 
