@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-27 17:25+0200\n"
-"PO-Revision-Date: 2022-06-26 12:16+0000\n"
+"PO-Revision-Date: 2022-07-02 13:18+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -609,12 +609,12 @@ msgstr "Exporteren als"
 #: src/control/Control.NotebookbarImpress.js:293
 #: src/control/Control.NotebookbarWriter.js:225
 msgid "PDF Document (.pdf)"
-msgstr "PDF-bestand (.pdf)"
+msgstr "PDF document (.pdf)"
 
 #: src/control/Control.Menubar.js:71 src/control/Control.Menubar.js:827
 #: src/control/Control.NotebookbarBuilder.js:460
 msgid "ODF text document (.odt)"
-msgstr "ODF tekstdocument (.odt)"
+msgstr "ODF tekst document (.odt)"
 
 #: src/control/Control.Menubar.js:72 src/control/Control.Menubar.js:828
 #: src/control/Control.NotebookbarBuilder.js:472
@@ -726,29 +726,28 @@ msgstr "Tekstoriëntatie"
 
 #: src/control/Control.Menubar.js:289 src/control/Control.Menubar.js:1082
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Rich Text invoegen"
 
 #: src/control/Control.Menubar.js:290 src/control/Control.Menubar.js:1083
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Selectievakje invoegen"
 
 #: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1084
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Vervolgkeuzemenu invoegen"
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1085
 msgid "Insert Picture"
-msgstr ""
+msgstr "Plaatje invoegen"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1086
-#, fuzzy
 msgid "Insert Date"
-msgstr "Tabel invoegen"
+msgstr "Datum invoegen"
 
 #: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1087
 #: src/control/Control.NotebookbarWriter.js:999
 msgid "Properties"
-msgstr ""
+msgstr "Eigenschappen"
 
 #: src/control/Control.Menubar.js:321
 #: src/control/Control.NotebookbarWriter.js:291
@@ -759,7 +758,7 @@ msgstr "Forum"
 #: src/control/Control.Menubar.js:568 src/control/Control.Menubar.js:804
 #: src/control/Control.NotebookbarWriter.js:302
 msgid "Online Help"
-msgstr "Online Hulp"
+msgstr "Online hulp"
 
 #: src/control/Control.Menubar.js:323 src/control/Control.Menubar.js:456
 #: src/control/Control.Menubar.js:569 src/control/Control.Menubar.js:805
@@ -869,7 +868,7 @@ msgstr "Zoeken"
 
 #: src/control/Control.Menubar.js:860
 msgid "Page Setup"
-msgstr "Pagina-instellingen"
+msgstr "Pagina instellingen"
 
 #: src/control/Control.Menubar.js:1245 src/control/Control.StatusBar.js:534
 msgid "Reset to Default Language"
@@ -1169,12 +1168,12 @@ msgstr "Sparkline"
 #: src/control/Control.NotebookbarWriter.js:889
 #: src/control/Control.NotebookbarWriter.js:2194
 msgid "Shapes"
-msgstr ""
+msgstr "Vormen"
 
 #: src/control/Control.NotebookbarDraw.js:41
 #: src/control/Control.NotebookbarDraw.js:744
 msgid "Page layout"
-msgstr "Pagina lay-out"
+msgstr "Pagina layout"
 
 #: src/control/Control.NotebookbarDraw.js:88
 #: src/control/Control.NotebookbarImpress.js:100
@@ -1188,7 +1187,7 @@ msgstr "Afbeelding (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Master"
-msgstr ""
+msgstr "~Hoofddocument"
 
 #: src/control/Control.NotebookbarImpress.js:255
 msgid "ODF Presentation (.odp)"
@@ -1209,7 +1208,7 @@ msgstr "Formulier"
 
 #: src/control/Control.NotebookbarWriter.js:189
 msgid "ODF Text Document (.odt)"
-msgstr "ODF tekstbestand (.odt)"
+msgstr "ODF tekst bestand (.odt)"
 
 #: src/control/Control.NotebookbarWriter.js:231
 msgid "EPUB Document (.epub)"
@@ -1475,7 +1474,7 @@ msgstr "Bestandsnaam"
 
 #: src/control/Permission.js:165
 msgid "Save as ODF format"
-msgstr "Opslaan als ODF formaat"
+msgstr "Opslaan als ODF indeling"
 
 #: src/control/Permission.js:167
 msgid "Continue editing"
@@ -1571,7 +1570,7 @@ msgstr "Selecteer wachtwoord"
 
 #: src/control/Signing.js:602
 msgid "Passport: N/A"
-msgstr "Paspoort: n.v.t."
+msgstr "Paspoort: niet beschikbaar"
 
 #: src/control/Signing.js:604
 msgid "Sign"
