@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-27 17:25+0200\n"
-"PO-Revision-Date: 2022-04-12 07:41+0000\n"
+"PO-Revision-Date: 2022-06-28 00:19+0000\n"
 "Last-Translator: Eric <alchemillatruth@purelymail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -735,9 +735,8 @@ msgid "Insert Picture"
 msgstr ""
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1086
-#, fuzzy
 msgid "Insert Date"
-msgstr "插入表格"
+msgstr "插入日期"
 
 #: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1087
 #: src/control/Control.NotebookbarWriter.js:999
