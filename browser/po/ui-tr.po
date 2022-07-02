@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-27 17:25+0200\n"
-"PO-Revision-Date: 2022-06-07 11:20+0000\n"
+"PO-Revision-Date: 2022-06-29 12:18+0000\n"
 "Last-Translator: PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -727,29 +727,28 @@ msgstr "Metin yönlendirme"
 
 #: src/control/Control.Menubar.js:289 src/control/Control.Menubar.js:1082
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Zengin Metin Ekle"
 
 #: src/control/Control.Menubar.js:290 src/control/Control.Menubar.js:1083
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Onay Kutusu Ekle"
 
 #: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1084
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Açılır Menü Ekle"
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1085
 msgid "Insert Picture"
-msgstr ""
+msgstr "Resim Ekle"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1086
-#, fuzzy
 msgid "Insert Date"
-msgstr "Tablo Ekle"
+msgstr "Tarih Ekle"
 
 #: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1087
 #: src/control/Control.NotebookbarWriter.js:999
 msgid "Properties"
-msgstr ""
+msgstr "Özellikler"
 
 #: src/control/Control.Menubar.js:321
 #: src/control/Control.NotebookbarWriter.js:291
@@ -1170,7 +1169,7 @@ msgstr "Mini Grafik"
 #: src/control/Control.NotebookbarWriter.js:889
 #: src/control/Control.NotebookbarWriter.js:2194
 msgid "Shapes"
-msgstr ""
+msgstr "Şekiller"
 
 #: src/control/Control.NotebookbarDraw.js:41
 #: src/control/Control.NotebookbarDraw.js:744
