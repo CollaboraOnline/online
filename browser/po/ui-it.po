@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-27 17:25+0200\n"
-"PO-Revision-Date: 2022-04-12 07:41+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2022-07-01 04:20+0000\n"
+"Last-Translator: AbsurdUsername <sgso@pm.me>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/it/>\n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -352,7 +352,7 @@ msgstr " s"
 
 #: js/w2ui-1.5.rc1.js:2920
 msgid "Recent"
-msgstr ""
+msgstr "Recente"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
@@ -384,7 +384,7 @@ msgstr "Incolla speciale"
 
 #: src/control/Control.DocumentNameInput.js:77
 msgid "Path"
-msgstr ""
+msgstr "Percorso"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -441,7 +441,7 @@ msgstr "Procedura guidata Funzione"
 
 #: src/control/Control.FormulaBarJSDialog.js:54
 msgid "Formula"
-msgstr ""
+msgstr "Formula"
 
 #: src/control/Control.FormulaBarJSDialog.js:61
 #: src/control/Control.MobileTopBar.js:40
@@ -460,11 +460,11 @@ msgstr "Media"
 
 #: src/control/Control.JSDialogBuilder.js:146
 msgid "Min"
-msgstr ""
+msgstr "Min"
 
 #: src/control/Control.JSDialogBuilder.js:147
 msgid "Max"
-msgstr ""
+msgstr "Max"
 
 #: src/control/Control.JSDialogBuilder.js:148
 #: src/control/Control.StatusBar.js:309
@@ -698,7 +698,7 @@ msgstr "Azzera ingrandimento"
 #: src/control/Control.NotebookbarImpress.js:362
 #: src/control/Control.NotebookbarWriter.js:1058
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Abilita Modalità UI"
 
 #: src/control/Control.Menubar.js:115
 #: src/control/Control.NotebookbarWriter.js:1070
@@ -732,34 +732,33 @@ msgstr "Orientazione del testo"
 
 #: src/control/Control.Menubar.js:289 src/control/Control.Menubar.js:1082
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Inserisci rich text"
 
 #: src/control/Control.Menubar.js:290 src/control/Control.Menubar.js:1083
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Inserisci checkbox"
 
 #: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1084
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Inserisci dropdown"
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1085
 msgid "Insert Picture"
-msgstr ""
+msgstr "Inserisci immagine"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1086
-#, fuzzy
 msgid "Insert Date"
-msgstr "Inserisci tabella"
+msgstr "Inserisci data"
 
 #: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1087
 #: src/control/Control.NotebookbarWriter.js:999
 msgid "Properties"
-msgstr ""
+msgstr "Proprietà"
 
 #: src/control/Control.Menubar.js:321
 #: src/control/Control.NotebookbarWriter.js:291
 msgid "Forum"
-msgstr ""
+msgstr "Forum"
 
 #: src/control/Control.Menubar.js:322 src/control/Control.Menubar.js:455
 #: src/control/Control.Menubar.js:568 src/control/Control.Menubar.js:804
@@ -883,11 +882,11 @@ msgstr "Ripristina la lingua predefinita"
 
 #: src/control/Control.Menubar.js:1575
 msgid "Use Compact view"
-msgstr ""
+msgstr "Usa la vista compatta"
 
 #: src/control/Control.Menubar.js:1577
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Usa la vista a schede"
 
 #: src/control/Control.Menubar.js:1638
 msgid "Insert Shape"
@@ -1017,7 +1016,7 @@ msgstr "~Disegno"
 #: src/control/Control.NotebookbarImpress.js:118
 #: src/control/Control.NotebookbarWriter.js:65
 msgid "~View"
-msgstr ""
+msgstr "~Vista"
 
 #: src/control/Control.NotebookbarCalc.js:59
 #: src/control/Control.NotebookbarDraw.js:105
@@ -1044,7 +1043,7 @@ msgstr "Vedi la cronologia"
 #: src/control/Control.NotebookbarImpress.js:228
 #: src/control/Control.NotebookbarWriter.js:176
 msgid "Download"
-msgstr ""
+msgstr "Scarica"
 
 #: src/control/Control.NotebookbarCalc.js:190
 msgid "ODF Spreadsheet (.ods)"
@@ -1117,11 +1116,11 @@ msgstr "Cattivo"
 
 #: src/control/Control.NotebookbarCalc.js:735
 msgid "Row Width"
-msgstr ""
+msgstr "Larghezza della riga"
 
 #: src/control/Control.NotebookbarCalc.js:741
 msgid "Column Width"
-msgstr ""
+msgstr "Larghezza della colonna"
 
 #: src/control/Control.NotebookbarCalc.js:752
 msgid "Insert Rows Above"
@@ -1152,18 +1151,18 @@ msgstr "Elimina colonne"
 #: src/control/Control.NotebookbarImpress.js:361
 #: src/control/Control.NotebookbarWriter.js:1057
 msgid "Compact view"
-msgstr ""
+msgstr "Vista compatta"
 
 #: src/control/Control.NotebookbarCalc.js:970
 #: src/control/Control.NotebookbarDraw.js:277
 #: src/control/Control.NotebookbarImpress.js:367
 #: src/control/Control.NotebookbarWriter.js:1080
 msgid "Status Bar"
-msgstr ""
+msgstr "Barra di stato"
 
 #: src/control/Control.NotebookbarCalc.js:1026
 msgid "Sparkline"
-msgstr ""
+msgstr "Grafico sparkline"
 
 #: src/control/Control.NotebookbarCalc.js:1105
 #: src/control/Control.NotebookbarCalc.js:1752
@@ -1175,12 +1174,12 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:889
 #: src/control/Control.NotebookbarWriter.js:2194
 msgid "Shapes"
-msgstr ""
+msgstr "Forme"
 
 #: src/control/Control.NotebookbarDraw.js:41
 #: src/control/Control.NotebookbarDraw.js:744
 msgid "Page layout"
-msgstr ""
+msgstr "Disposizione pagina"
 
 #: src/control/Control.NotebookbarDraw.js:88
 #: src/control/Control.NotebookbarImpress.js:100
@@ -1194,7 +1193,7 @@ msgstr "Immagine (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Master"
-msgstr ""
+msgstr "~Master"
 
 #: src/control/Control.NotebookbarImpress.js:255
 msgid "ODF Presentation (.odp)"
@@ -1203,7 +1202,7 @@ msgstr "Presentazione ODF (.odp)"
 #: src/control/Control.NotebookbarImpress.js:315
 #: src/control/Control.NotebookbarImpress.js:785
 msgid "Presentation"
-msgstr ""
+msgstr "Presentazione"
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
@@ -1211,7 +1210,7 @@ msgstr "Riferimen~ti"
 
 #: src/control/Control.NotebookbarWriter.js:48
 msgid "Form"
-msgstr ""
+msgstr "Form"
 
 #: src/control/Control.NotebookbarWriter.js:189
 msgid "ODF Text Document (.odt)"
@@ -1223,23 +1222,23 @@ msgstr "Documento EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:974
 msgid "Rich Text"
-msgstr ""
+msgstr "Rich Text"
 
 #: src/control/Control.NotebookbarWriter.js:979
 msgid "Checkbox"
-msgstr ""
+msgstr "Checkbox"
 
 #: src/control/Control.NotebookbarWriter.js:984
 msgid "Dropdown"
-msgstr ""
+msgstr "Dropdown"
 
 #: src/control/Control.NotebookbarWriter.js:989
 msgid "Picture"
-msgstr ""
+msgstr "Immagine"
 
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Ruler"
-msgstr ""
+msgstr "Righello"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1375,7 +1374,7 @@ msgstr "Sposta il foglio a destra"
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Copia foglio..."
 
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
@@ -1489,7 +1488,7 @@ msgstr "Continua a modificare"
 
 #: src/control/Permission.js:167
 msgid "Continue read only"
-msgstr ""
+msgstr "Continua solo lettura"
 
 #: src/control/Permission.js:170
 msgid ""
@@ -1701,7 +1700,7 @@ msgstr "RICARICA"
 
 #: src/core/Socket.js:551
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "Versione COOLWSD:"
 
 #: src/core/Socket.js:563
 msgid "Served by:"
@@ -1713,7 +1712,7 @@ msgstr "Versione del server non supportata."
 
 #: src/core/Socket.js:573
 msgid "LOKit version:"
-msgstr ""
+msgstr "Versione LOKit:"
 
 #: src/core/Socket.js:688
 msgid "Session terminated by document owner"
@@ -1773,7 +1772,7 @@ msgstr "Salva in un nuovo file"
 
 #: src/core/Socket.js:924
 msgid "Document has been changed"
-msgstr ""
+msgstr "Il documento è stato modificato"
 
 #: src/core/Socket.js:924
 msgid ""
@@ -1968,6 +1967,8 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"Il documento è troppo grande o non c'è più spazio su disco per salvare. Il "
+"documento ora sarà di sola lettura."
 
 #: src/errormessages.js:35 src/errormessages.js:44
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -2011,6 +2012,10 @@ msgid ""
 "preserve a copy locally. Please contact the server (%storageserver) "
 "administrator to resolve the issue."
 msgstr ""
+"Salvataggio non riuscito perché il documento è troppo grande o la quota del "
+"disco è stata superata. Il documento sarà ora di sola lettura, ma si può "
+"ancora scaricare per preservare una copia localmente. Contattare "
+"l'amministratore del server (%storageserver) per risolvere il problema."
 
 #: src/errormessages.js:45
 msgid ""
@@ -2034,6 +2039,8 @@ msgid ""
 "Document cannot be exported. Please contact the storage server "
 "administrator."
 msgstr ""
+"Il documento non può essere esportato. Contattare l'amministratore del "
+"server di archiviazione."
 
 #: src/errormessages.js:52
 msgid "Uploading file to server failed, file not found."
@@ -2223,16 +2230,16 @@ msgstr "Creazione della copia..."
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "Benvenuto su Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New %coolVersion"
-msgstr ""
+msgstr "Esplora la nuova %coolVersion"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora Online Edizione di Sviluppo"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
@@ -2241,10 +2248,15 @@ msgid ""
 "\" href=\"https://www.collaboraoffice.com/solutions/collabora-office-"
 "android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"Goditi gli ultimi sviluppi della produttività online, gratuito per "
+"l'utilizzo, per esplorare e da utilizzare con gli altri nel browser. Varie "
+"<a target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
+"collabora-office-android-ios/\">app</a> sono disponibili anche per i "
+"dispositivi mobili."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
-msgstr ""
+msgstr "Scopri tutti i cambiamenti"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -2253,14 +2265,18 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"Controlla le <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
+"code-22-05-release-notes/\">note di rilascio</a> e scopri tutto riguardo: "
+"L'ultima edizione di sviluppo di Collabora Online, rivolto agli utenti "
+"domestici e ai piccoli team."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "Partecipa"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
@@ -2273,6 +2289,13 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"Sei interessato a contribuire ma non sai da dove iniziare? Vai alle <a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\""
+">istruzioni passo-passo</a> e costruisci CODE da zero. Puoi anche aiutare "
+"con le <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
+"translate/\">traduzioni</a> o <a target=\"_blank\" href=\"https"
+"://collaboraonline.github.io/post/filebugs/\">compilando una segnalazione di "
+"bug</a> con tutti i passi essenziali su come riprodurlo."
 
 #~ msgid "Text Body"
 #~ msgstr "Corpo del testo"
