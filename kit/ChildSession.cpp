@@ -1762,7 +1762,7 @@ bool ChildSession::selectText(const StringVector& tokens,
 {
     std::string swap;
     unsigned winId = 0;
-    int type, x, y;
+    int type = 0, x = 0, y = 0;
     if (target == LokEventTargetEnum::Window)
     {
         if (tokens.size() != 5 ||
