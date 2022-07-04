@@ -1865,7 +1865,8 @@ void COOLWSD::innerInitialize(Application& self)
         { "languagetool.base_url", ""},
         { "languagetool.api_key", ""},
         { "languagetool.user_name", ""},
-        { "languagetool.enabled", "false"}
+        { "languagetool.enabled", "false"},
+        { "languagetool.ssl_verification", "true"},
     };
 
     // Set default values, in case they are missing from the config file.
@@ -2267,6 +2268,8 @@ void COOLWSD::innerInitialize(Application& self)
     setenv("LANGUAGETOOL_USERNAME", userName.c_str(), 1);
     const std::string apiKey = getConfigValue<std::string>(conf, "languagetool.api_key", "");
     setenv("LANGUAGETOOL_APIKEY", apiKey.c_str(), 1);
+    bool sslVerification = getConfigValue<bool>(conf, "languagetool.ssl_verification", "");
+    setenv("LANGUAGETOOL_SSL_VERIFICATION", sslVerification ? "true" : "false", 1);
 
 #if ENABLE_SUPPORT_KEY
     const std::string supportKeyString = getConfigValue<std::string>(conf, "support_key", "");
