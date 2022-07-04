@@ -28,6 +28,7 @@ button.jsdialog img {
 	display: flex;
 	flex-direction: row;
 	justify-content: end;
+	flex-wrap: wrap;
 }
 
 [class*='button-secondary'],
