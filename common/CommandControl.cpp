@@ -21,6 +21,7 @@ std::string LockManager::LockedCommandListString;
 Util::RegexListMatcher LockManager::readOnlyWopiHosts;
 Util::RegexListMatcher LockManager::disabledCommandWopiHosts;
 bool LockManager::lockHostEnabled = false;
+std::string LockManager::translationPath = std::string();
 
 LockManager::LockManager() {}
 
@@ -114,6 +115,26 @@ bool LockManager::isHostCommandDisabled(const std::string& host)
 bool LockManager::hostExist(const std::string& host)
 {
     return LockManager::lockHostEnabled && LockManager::readOnlyWopiHosts.matchExist(host);
+}
+
+void LockManager::setTranslationPath(const std::string& lockedDialogLang)
+{
+    for (size_t i = 0;; ++i)
+    {
+        const std::string path =
+            "feature_lock.translations.language[" + std::to_string(i) + "][@name]";
+
+        if (!config::has(path))
+        {
+            return;
+        }
+        if (config::getString(path, "") == lockedDialogLang)
+        {
+            LockManager::translationPath =
+                "feature_lock.translations.language[" + std::to_string(i) + ']';
+            return;
+        }
+    }
 }
 
 bool RestrictionManager::_isRestrictedUser = false;

@@ -18,6 +18,7 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
+#include <Poco/JSON/Object.h>
 
 #include "DocumentBroker.hpp"
 #include "COOLWSD.hpp"
@@ -28,6 +29,8 @@
 #include <common/Session.hpp>
 #include <common/TraceEvent.hpp>
 #include <common/Util.hpp>
+#include <common/CommandControl.hpp>
+
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
 #endif
@@ -1139,7 +1142,9 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         {
             oss << " batch=" << getBatchMode();
         }
-
+#ifdef ENABLE_FEATURE_LOCK
+        sendLockedInfo();
+#endif
         return forwardToChild(oss.str(), docBroker);
     }
     catch (const Poco::SyntaxException&)
@@ -1149,6 +1154,39 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
 
     return false;
 }
+
+#ifdef ENABLE_FEATURE_LOCK
+void ClientSession::sendLockedInfo()
+{
+    Poco::JSON::Object::Ptr lockInfo = new Poco::JSON::Object();
+    CommandControl::LockManager::setTranslationPath(getLang());
+    lockInfo->set("IsLockedUser", CommandControl::LockManager::isLockedUser());
+    lockInfo->set("IsLockReadOnly", CommandControl::LockManager::isLockReadOnly());
+
+    // Poco:Dynamic:Var does not support std::unordred_set so converted to std::vector
+    std::vector<std::string> lockedCommandList(
+        CommandControl::LockManager::getLockedCommandList().begin(),
+        CommandControl::LockManager::getLockedCommandList().end());
+    lockInfo->set("LockedCommandList", lockedCommandList);
+    lockInfo->set("UnlockTitle", CommandControl::LockManager::getUnlockTitle());
+    lockInfo->set("UnlockLink", CommandControl::LockManager::getUnlockLink());
+    lockInfo->set("UnlockDescription", CommandControl::LockManager::getUnlockDescription());
+    lockInfo->set("WriterHighlights", CommandControl::LockManager::getWriterHighlights());
+    lockInfo->set("CalcHighlights", CommandControl::LockManager::getCalcHighlights());
+    lockInfo->set("ImpressHighlights", CommandControl::LockManager::getImpressHighlights());
+    lockInfo->set("DrawHighlights", CommandControl::LockManager::getDrawHighlights());
+
+    const Poco::URI unlockImageUri = CommandControl::LockManager::getUnlockImageUri();
+    if (!unlockImageUri.empty())
+        lockInfo->set("UnlockImageUrlPath", unlockImageUri.getPath());
+    CommandControl::LockManager::resetTransalatioPath();
+    std::ostringstream ossLockInfo;
+    lockInfo->stringify(ossLockInfo);
+    const std::string lockInfoString = ossLockInfo.str();
+    LOG_TRC("Sending feature locking info to client: " << lockInfoString);
+    sendTextFrame("featurelock: " + lockInfoString);
+}
+#endif
 
 bool ClientSession::getCommandValues(const char *buffer, int length, const StringVector& tokens,
                                      const std::shared_ptr<DocumentBroker>& docBroker)
