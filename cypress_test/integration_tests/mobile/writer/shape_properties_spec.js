@@ -189,7 +189,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	it('Vertical mirroring', function() {
 		openPosSizePanel();
 
-		helper.clickOnIdle('#FlipVertical');
+		helper.clickOnIdle('.mobile-wizard.unoFlipVertical');
 		cy.wait(1000);
 
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, defaultAltitude, false /* horiz mirroring */, true /* vert mirroring */);
@@ -200,7 +200,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	it('Horizontal mirroring', function() {
 		openPosSizePanel();
 
-		helper.clickOnIdle('#FlipHorizontal');
+		helper.clickOnIdle('.mobile-wizard.unoFlipHorizontal');
 		triggerNewSVG();
 
 		cy.wait(1000);
