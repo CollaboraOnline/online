@@ -1177,10 +1177,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	font-size: var(--default-font-size) !important;
 	color: var(--color-main-text);
 	background-color: var(--color-background-lighter);
+	border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
 
 #sc_input_window.formulabar.expanded {
 	height: 72px !important;
+	border-radius: var(--border-radius) 0 var(--border-radius) var(--border-radius) !important;
 }
 
 .expanded .formulabar.unotoolbutton {
@@ -1205,6 +1207,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #expand.formulabar {
 	height: 29px !important;
 	margin: 0 5px 0 0 !important;
-	border-radius: 0 !important;
-	border-inline-start-color: transparent;
+	border-radius: 0 var(--border-radius) var(--border-radius) 0 !important;
+	border-inline-start: none !important;
+	background-color: var(--color-main-background) !important;
 }
