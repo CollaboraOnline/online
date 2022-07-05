@@ -17,11 +17,7 @@
 
 class UnitWOPISaveAs : public WopiTestServer
 {
-    enum class Phase
-    {
-        LoadAndSaveAs,
-        Polling
-    } _phase;
+    STATE_ENUM(Phase, LoadAndSaveAs, Polling) _phase;
 
 public:
     UnitWOPISaveAs()
@@ -60,19 +56,16 @@ public:
 
     void invokeWSDTest() override
     {
-        constexpr char testName[] = "UnitWOPISaveAs";
-
         switch (_phase)
         {
             case Phase::LoadAndSaveAs:
             {
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), "load url=" + getWopiSrc(), testName);
-                helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), "saveas url=wopi:///jan/hole%C5%A1ovsk%C3%BD/hello%20world%251.pdf", testName);
-                SocketPoll::wakeupWorld();
+                TRANSITION_STATE(_phase, Phase::Polling);
 
-                _phase = Phase::Polling;
+                WSD_CMD("load url=" + getWopiSrc());
+                WSD_CMD("saveas url=wopi:///jan/hole%C5%A1ovsk%C3%BD/hello%20world%251.pdf");
                 break;
             }
             case Phase::Polling:
