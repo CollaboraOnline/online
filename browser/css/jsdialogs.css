@@ -1189,6 +1189,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .formulabar.unotoolbutton {
 	margin-inline-end: 4px !important;
+	opacity: 0.8;
+}
+
+.formulabar.unotoolbutton:hover {
+	opacity: 1;
 }
 
 .formulabar.unotoolbutton img, .formulabar.ui-pushbutton {
