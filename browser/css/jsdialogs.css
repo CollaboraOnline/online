@@ -1174,7 +1174,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	flex-grow: 1;
 	resize: none !important;
 	max-width: unset !important;
-	font-size: var(--default-font-size) !important;
+	font-size: calc(var(--default-font-size)*1.2) !important;
+	line-height: calc(var(--default-font-size)*1.6);
 	color: var(--color-main-text);
 	background-color: var(--color-background-lighter);
 	border-radius: var(--border-radius) 0 0 var(--border-radius);
