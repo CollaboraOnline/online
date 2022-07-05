@@ -1191,7 +1191,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .expanded .formulabar.unotoolbutton {
-	margin-block-start: 2px;
+	margin-block-start: 5px;
 }
 
 .formulabar.unotoolbutton {
