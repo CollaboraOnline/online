@@ -1181,6 +1181,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
 
+#sc_input_window.formulabar:focus {
+	outline-offset: -1px;
+}
+
 #sc_input_window.formulabar.expanded {
 	height: 72px !important;
 	border-radius: var(--border-radius) 0 var(--border-radius) var(--border-radius) !important;
