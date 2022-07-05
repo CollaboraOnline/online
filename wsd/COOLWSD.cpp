@@ -1182,6 +1182,8 @@ public:
 
 #ifdef ENABLE_FEATURE_LOCK
         fetchLockedHostPatterns(newAppConfig, remoteJson);
+        fetchLockedTranslations(newAppConfig, remoteJson);
+        fetchUnlockImageUrl(newAppConfig, remoteJson);
 #endif
 
         fetchRemoteFontConfig(newAppConfig, remoteJson);
@@ -1424,6 +1426,104 @@ public:
         catch (const std::exception& exc)
         {
             LOG_ERR("Failed to fetch remote_font_config, please check JSON format: " << exc.what());
+        }
+    }
+
+    void fetchLockedTranslations(std::map<std::string, std::string>& newAppConfig,
+                                 Poco::JSON::Object::Ptr remoteJson)
+    {
+        Poco::JSON::Array::Ptr lockedTranslations;
+        try
+        {
+            lockedTranslations = remoteJson->getObject("feature_locking")->getArray("translations");
+            std::size_t i;
+            for (i = 0; i < lockedTranslations->size(); i++)
+            {
+                Poco::JSON::Object::Ptr translation = lockedTranslations->getObject(i);
+                std::string language;
+                //default values if the one of the entry is missing in json
+                std::string title = conf.getString("feature_lock.unlock_title", "");
+                std::string description = conf.getString("feature_lock.unlock_description", "");
+                std::string writerHighlights =
+                    conf.getString("feature_lock.writer_unlock_highlights", "");
+                std::string impressHighlights =
+                    conf.getString("feature_lock.impress_unlock_highlights", "");
+                std::string calcHighlights =
+                    conf.getString("feature_lock.calc_unlock_highlights", "");
+                std::string drawHighlights =
+                    conf.getString("feature_lock.draw_unlock_highlights", "");
+
+                JsonUtil::findJSONValue(translation, "language", language);
+                JsonUtil::findJSONValue(translation, "unlock_title", title);
+                JsonUtil::findJSONValue(translation, "unlock_description", description);
+                JsonUtil::findJSONValue(translation, "writer_unlock_highlights", writerHighlights);
+                JsonUtil::findJSONValue(translation, "calc_unlock_highlights", calcHighlights);
+                JsonUtil::findJSONValue(translation, "impress_unlock_highlights",
+                                        impressHighlights);
+                JsonUtil::findJSONValue(translation, "draw_unlock_highlights", drawHighlights);
+
+                const std::string path =
+                    "feature_lock.translations.language[" + std::to_string(i) + ']';
+
+                newAppConfig.insert(std::make_pair(path + "[@name]", language));
+                newAppConfig.insert(std::make_pair(path + ".unlock_title", title));
+                newAppConfig.insert(std::make_pair(path + ".unlock_description", description));
+                newAppConfig.insert(
+                    std::make_pair(path + ".writer_unlock_highlights", writerHighlights));
+                newAppConfig.insert(
+                    std::make_pair(path + ".calc_unlock_highlights", calcHighlights));
+                newAppConfig.insert(
+                    std::make_pair(path + ".impress_unlock_highlights", impressHighlights));
+                newAppConfig.insert(
+                    std::make_pair(path + ".draw_unlock_highlights", drawHighlights));
+            }
+
+            //if number of translations defined in configuration are greater than number of translation
+            //fetched from json, overwrite the remaining translations from config file to empty strings
+            for (;; i++)
+            {
+                const std::string path =
+                    "feature_lock.translations.language[" + std::to_string(i) + "][@name]";
+                if (!conf.has(path))
+                {
+                    break;
+                }
+                newAppConfig.insert(std::make_pair(path, ""));
+            }
+        }
+        catch (const Poco::NullPointerException&)
+        {
+            LOG_INF("Not overwriting any translations because feature_locking->translations array "
+                    "does not exist");
+            return;
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Failed to fetch remote_font_config, please check JSON format: " << exc.what());
+        }
+    }
+
+    void fetchUnlockImageUrl(std::map<std::string, std::string>& newAppConfig,
+                             Poco::JSON::Object::Ptr remoteJson)
+    {
+        try
+        {
+            Poco::JSON::Object::Ptr featureLocking = remoteJson->getObject("feature_locking");
+
+            std::string unlockImage;
+            if (JsonUtil::findJSONValue(featureLocking, "unlock_image", unlockImage))
+            {
+                newAppConfig.insert(std::make_pair("feature_lock.unlock_image", unlockImage));
+            }
+        }
+        catch (const Poco::NullPointerException&)
+        {
+            LOG_INF("Not overwriting the unlock_image URL because the unlock_image entry does not "
+                    "exist");
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Failed to fetch unlock_image, please check JSON format: " << exc.what());
         }
     }
 
@@ -3475,7 +3575,26 @@ private:
                 const auto pos = uri.find(ProxyRemoteStatic);
                 if (pos != std::string::npos)
                 {
-                    ProxyRequestHandler::handleRequest(uri.substr(pos + ProxyRemoteLen), socket);
+                    if (Util::endsWith(uri, "lokit-extra-img.svg"))
+                    {
+                        ProxyRequestHandler::handleRequest(
+                            uri.substr(pos + ProxyRemoteLen), socket,
+                            ProxyRequestHandler::getProxyRatingServer());
+                    }
+#ifdef ENABLE_FEATURE_LOCK
+                    else
+                    {
+                        const Poco::URI unlockImageUri =
+                            CommandControl::LockManager::getUnlockImageUri();
+                        if (!unlockImageUri.empty())
+                        {
+                            const std::string& serverUri =
+                                unlockImageUri.getScheme() + "://" + unlockImageUri.getAuthority();
+                            ProxyRequestHandler::handleRequest(uri.substr(pos + ProxyRemoteLen),
+                                                               socket, serverUri);
+                        }
+                    }
+#endif
                 }
                 else
                 {

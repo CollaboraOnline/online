@@ -30,7 +30,7 @@ L.Map.include({
 		this.Locking.calcHighlights = _(lockInfo['CalcHighlights']);
 		this.Locking.impressHighlights = _(lockInfo['ImpressHighlights']);
 		this.Locking.drawHighlights = _(lockInfo['DrawHighlights']);
-
+		this.Locking.unlockImageUrlPath = lockInfo['UnlockImageUrlPath'];
 	},
 
 	// We mark the element disabled for the feature locking
@@ -68,7 +68,7 @@ L.Map.include({
 		vex.dialog.confirm({
 			unsafeMessage: [
 				'<div class="container">',
-				'<div class="item illustration"></div>',
+				'<div id="unlock-image" class="item illustration"></div>',
 				'<div class="item">',
 				'<h1>' + this.Locking.unlockTitle + '</h1>',
 				'<p>' + this.Locking.unlockDescription + '<p>',
@@ -92,6 +92,13 @@ L.Map.include({
 				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
 			]
 		});
+
+		var unlockImage = L.DomUtil.get('unlock-image');
+		if (this.Locking.unlockImageUrlPath) {
+			unlockImage.style.backgroundImage = 'url(remote' + this.Locking.unlockImageUrlPath + ')';
+		} else {
+			unlockImage.style.backgroundImage = 'url(images/lock-illustration.svg)';
+		}
 	},
 
 	isLockedItem: function(item) {

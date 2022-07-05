@@ -18,9 +18,11 @@ std::unordered_map<std::string, std::shared_ptr<http::Response>> ProxyRequestHan
 std::chrono::system_clock::time_point ProxyRequestHandler::MaxAge;
 
 void ProxyRequestHandler::handleRequest(const std::string& relPath,
-                                        const std::shared_ptr<StreamSocket>& socket)
+                                        const std::shared_ptr<StreamSocket>& socket,
+                                        const std::string& serverUri)
 {
-    Poco::URI uriProxy(ProxyServer);
+
+    Poco::URI uriProxy(serverUri);
     constexpr const auto zero = std::chrono::system_clock::time_point();
     const auto timeNow = std::chrono::system_clock::now();
 

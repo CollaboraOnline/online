@@ -11,6 +11,9 @@
 #include <unordered_set>
 #include "ConfigUtil.hpp"
 #include <Poco/Util/LayeredConfiguration.h>
+#include <Poco/URI.h>
+#include <Poco/Exception.h>
+#include <Log.hpp>
 
 namespace CommandControl
 {
@@ -20,6 +23,7 @@ class LockManager
     static bool _isLockedUser;
     static bool _isHostReadOnly;
     static std::string LockedCommandListString;
+    static std::string translationPath;
 
     static void generateLockedCommandList();
 
@@ -49,31 +53,67 @@ public:
 
     static void setLockedUser(bool isLocked) { _isLockedUser = isLocked; }
     static void setHostReadOnly(bool isReadOnly) { _isHostReadOnly = isReadOnly; }
-
+    static void setTranslationPath(const std::string& lockedDialogLang);
     static std::string getUnlockTitle()
     {
+        if (config::has(translationPath + ".unlock_title"))
+            return config::getString(translationPath + ".unlock_title", "");
         return config::getString("feature_lock.unlock_title", "");
     }
-    static std::string getUnlockLink() { return config::getString("feature_lock.unlock_link", ""); }
+    static std::string getUnlockLink()
+    {
+        return config::getString("feature_lock.unlock_link", "");
+    }
     static std::string getUnlockDescription()
     {
+        if (config::has(translationPath + ".unlock_description"))
+            return config::getString(translationPath + ".unlock_description", "");
         return config::getString("feature_lock.unlock_description", "");
     }
     static std::string getWriterHighlights()
     {
+        if (config::has(translationPath + ".writer_unlock_highlights"))
+            return config::getString(translationPath + ".writer_unlock_highlights", "");
         return config::getString("feature_lock.writer_unlock_highlights", "");
     }
     static std::string getCalcHighlights()
     {
+        if (config::has(translationPath + ".calc_unlock_highlights"))
+            return config::getString(translationPath + ".calc_unlock_highlights", "");
         return config::getString("feature_lock.calc_unlock_highlights", "");
     }
     static std::string getImpressHighlights()
     {
+        if (config::has(translationPath + ".impress_unlock_highlights"))
+            return config::getString(translationPath + ".impress_unlock_highlights", "");
         return config::getString("feature_lock.impress_unlock_highlights", "");
     }
     static std::string getDrawHighlights()
     {
+        if (config::has(translationPath + ".draw_unlock_highlights"))
+            return config::getString(translationPath + ".draw_unlock_highlights", "");
         return config::getString("feature_lock.draw_unlock_highlights", "");
+    }
+    static const Poco::URI getUnlockImageUri()
+    {
+        const std::string unlockImageUrl = config::getString("feature_lock.unlock_image", "");
+        if (!unlockImageUrl.empty())
+        {
+            try
+            {
+                const Poco::URI unlockImageUri(unlockImageUrl);
+                return unlockImageUri;
+            }
+            catch (Poco::SyntaxException& exc)
+            {
+                LOG_ERR("Parsing of unlock_image url failed with " << exc.what());
+            }
+        }
+        return Poco::URI();
+    }
+    static void resetTransalatioPath()
+    {
+        translationPath = std::string();
     }
 };
 

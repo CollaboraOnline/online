@@ -233,6 +233,11 @@ public:
     /// Generate an access token for this session via proxy protocol.
     const std::string &getOrCreateProxyAccess();
 
+#ifdef ENABLE_FEATURE_LOCK
+    void sendLockedInfo();
+#endif
+
+
 private:
     std::shared_ptr<ClientSession> client_from_this()
     {
