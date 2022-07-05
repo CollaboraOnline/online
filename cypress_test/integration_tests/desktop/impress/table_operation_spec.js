@@ -300,6 +300,8 @@ describe('Table operations', function() {
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 3);
 
+		helper.waitUntilIdle('.unospan-Table.unoSplitCell');
+
 		selectOptionNotebookbar('.unospan-Table.unoSplitCell');
 
 		cy.get('.lokdialog_canvas').should('exist');
