@@ -214,6 +214,7 @@ w2ui-toolbar {
 	color: var(--color-main-text);
 	background-color: var(--color-background-lighter);
 	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius);
 }
 
 #tb_formulabar_item_formula {
