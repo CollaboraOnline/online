@@ -182,10 +182,6 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 #document-name-input {
 	display: none;
 }
-
-#tb_formulabar_item_address {
-	vertical-align: middle;
-}
 /* Related to selectionMarkers.css */
 .inputbar_multiline #tb_formulabar_item_formula > div,
 .inputbar_multiline #tb_formulabar_item_address > div {
