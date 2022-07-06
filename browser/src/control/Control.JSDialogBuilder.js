@@ -3225,14 +3225,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					var end = 0;
 
 					var row = 0;
-					for (;row < startPara; row++)
-						start += currentText.indexOf('\n', start) + 1;
+					for (;row < startPara; row++) {
+						var found = currentText.indexOf('\n', start);
+						if (found === -1)
+							break;
+						start += found + 1;
+					}
 
 					start += startPos;
 
 					row = 0;
-					for (;row < endPara; row++)
-						end += currentText.indexOf('\n', end) + 1;
+					for (;row < endPara; row++) {
+						found = currentText.indexOf('\n', end);
+						if (found === -1)
+							break;
+						end += found + 1;
+					}
 
 					end += endPos;
 
