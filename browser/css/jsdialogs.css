@@ -1211,7 +1211,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 #expand.formulabar {
 	height: 29px !important;
-	margin: 0 5px 0 0 !important;
+	margin: 0 !important;
 	border-radius: 0 var(--border-radius) var(--border-radius) 0 !important;
 	border-inline-start: none !important;
 	background-color: var(--color-main-background) !important;
