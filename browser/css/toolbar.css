@@ -163,6 +163,10 @@ w2ui-toolbar {
 	vertical-align: top;
 }
 
+#formulabar.expanded #tb_formulabar_item_address * {
+	vertical-align: top;
+}
+
 #presentation-toolbar {
 	bottom: 0;
 	background-color: var(--color-main-background);
