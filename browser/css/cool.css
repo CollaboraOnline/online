@@ -249,6 +249,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 #toolbar-wrapper:not(.mobile) {
 	padding: 3px 0;
 }
+/* Remove bottom padding in calc as it affects formulabar*/
+#toolbar-wrapper.spreadsheet:not(.mobile) {
+	padding-block-end: 0;
+}
 
 #toolbar-logo {
 	width: 0;
