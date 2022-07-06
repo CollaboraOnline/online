@@ -1169,7 +1169,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* formulabar */
 #sc_input_window.formulabar {
-	height: 29px;
+	height: 28px;
 	border: 1px solid var(--color-border);
 	flex-grow: 1;
 	resize: none !important;
@@ -1190,10 +1190,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-radius: var(--border-radius) 0 var(--border-radius) var(--border-radius) !important;
 }
 
-.expanded .formulabar.unotoolbutton {
-	margin-block-start: 5px;
-}
-
 .formulabar.unotoolbutton {
 	margin-inline-end: 4px !important;
 	opacity: 0.8;
@@ -1210,7 +1206,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 #expand.formulabar {
-	height: 29px !important;
+	height: 28px !important;
 	margin: 0 !important;
 	border-radius: 0 var(--border-radius) var(--border-radius) 0 !important;
 	border-inline-start: none !important;
