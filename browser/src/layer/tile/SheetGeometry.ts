@@ -1162,16 +1162,13 @@ class SpanList {
 			return;
 		}
 
-		var startId = this._searchByIndex(start);
-		var endId = this._searchByIndex(end);
-
-		if (startId == -1 || endId == -1) {
+		var id = this._searchByIndex(start);
+		if (id == -1)
 			return;
-		}
-
-		for (var id = startId; id <= endId; ++id) {
-			callback(this._getSpanData(id));
-		}
+		do {
+			var span = this._getSpanData(id++);
+			callback(span);
+		} while (id < this._spanlist.length && span.index <= end);
 	}
 
 	public forEachSpan(callback: ((span: SpanViewData) => void)) {
