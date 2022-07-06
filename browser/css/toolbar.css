@@ -154,8 +154,11 @@ w2ui-toolbar {
 	padding: 0 4px;
 }
 
+#formulabar.expanded {
+	padding-block: 5px;
+}
+
 #tb_formulabar_item_address {
-	padding-block-start: 2px;
 	padding-inline-end: 5px;
 	vertical-align: top;
 }
@@ -210,7 +213,7 @@ w2ui-toolbar {
 }
 
 #addressInput {
-	height: 29px;
+	height: 28px;
 	width: 100px;
 	color: var(--color-main-text);
 	background-color: var(--color-background-lighter);
@@ -220,7 +223,6 @@ w2ui-toolbar {
 
 #tb_formulabar_item_formula {
 	width: 100%;
-	padding-top: 4px;
 }
 
 #tb_formulabar_item_formula div table {
