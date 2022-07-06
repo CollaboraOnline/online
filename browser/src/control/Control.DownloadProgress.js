@@ -32,7 +32,7 @@ L.Control.DownloadProgress = L.Control.extend({
 		this._container.style.visibility = 'hidden';
 		this._ignoreEvents(this._container);
 
-		var closeButton = L.DomUtil.create('a', 'leaflet-popup-close-button', this._container);
+		var closeButton = L.DomUtil.create('a', 'leaflet-popup-close-button download-popup', this._container);
 		closeButton.href = '#close';
 		closeButton.innerHTML = '&#215;';
 		L.DomEvent.on(closeButton, 'click', this._onClose, this);

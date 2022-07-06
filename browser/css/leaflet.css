@@ -565,6 +565,15 @@ a.leaflet-control-buttons:hover:first-child {
 	border: 1px solid transparent;
 	border-radius: 50%;
 }
+.leaflet-container a.leaflet-popup-close-button.download-popup {
+	font-size: 20px;
+	width: 20px;
+	height: 20px;
+	right: -8px;
+	top: -8px;
+	background: var(--color-background-darker);
+	border: 1px solid var(--color-btn-border);
+}
 .leaflet-container a.leaflet-popup-close-button:hover {
 	background-color: var(--color-background-darker);
 	border: 1px solid var(--color-border-darker);
