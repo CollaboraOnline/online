@@ -10,11 +10,13 @@ L.Map.mergeOptions({
 
 L.Map.Infobar = L.Handler.extend({
 	addHooks: function () {
+		this._map.on('updateviewslist', this.onUpdateInfo, this);
 		this._map.on('infobar', this.onInfobar, this);
 	},
 
 	removeHooks: function () {
 		this._map.off('infobar', this.onInfobar, this);
+		this._map.off('updateviewlist', this.onUpdateInfo, this);
 	},
 
 	onUpdateInfo: function () {
