@@ -238,11 +238,12 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 		this.builder.setWindowId(data.id);
 
 		if (this.container) {
-			var keepFocus = this.hasFocus();
+			var keepInputFocus = data.data && data.data.control_id === 'sc_input_window'
+				&& this.hasFocus();
 
 			this.builder.executeAction(this.container, data.data);
 
-			if (keepFocus)
+			if (keepInputFocus)
 				this.focus();
 		} else
 			this.createFormulabar(data.data.text);

@@ -3215,7 +3215,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (selection.length === 2) {
 					var start = parseInt(selection[0]);
 					var end = parseInt(selection[1]);
-					control.setSelectionRange(start, end);
+					if (document.activeElement === control) // Safari/Gnome Web compatibility
+						control.setSelectionRange(start, end);
 				} else if (selection.length === 4) {
 					var startPos = parseInt(selection[0]);
 					var endPos = parseInt(selection[1]);
@@ -3244,7 +3245,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 					end += endPos;
 
-					control.setSelectionRange(start, end);
+					if (document.activeElement === control) // Safari/Gnome Web compatibility
+						control.setSelectionRange(start, end);
 				}
 			}
 			break;
