@@ -7,13 +7,13 @@ Dependencies
 Collabora Online WebSocket server has the following dependencies:
 
 * libpng
-* Poco library: http://pocoproject.org/
-* libcap-progs
+* Poco library: https://pocoproject.org/
+* libcap-dev (Debian/Ubuntu) / libcap-progs (SUSE/openSUSE) / libcap-devel (RedHat/CentOS)
+* libpam-dev (Debian/Ubuntu) / pam-devel (RedHat/CentOS/SUSE/openSUSE)
 
 If your Linux distro doesn't provide a Poco package (versions 1.7.5 and
 newer should work), you can build it yourself and install in a
-location of your choice, or you can download packages from Collabora's
-website.
+location of your choice.
 
 On openSUSE Leap 15.1, you can use:
 
@@ -21,11 +21,6 @@ On openSUSE Leap 15.1, you can use:
     zypper in poco-devel libcap-progs python3-polib libcap-devel npm
 
 Similar repos exist for other openSUSE and SLE releases.
-
-Collabora provides Poco packages for Debian 8, Debian 9, Ubuntu 16.04 LTS,
-and CentOS 7 via the CODE (Collabora Online Development Edition) repositories.
-
-See: https://www.collaboraoffice.com/code/linux-packages/
 
 Building
 --------
