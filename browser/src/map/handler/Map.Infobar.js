@@ -17,6 +17,7 @@ L.Map.Infobar = L.Handler.extend({
 	removeHooks: function () {
 		clearInterval(this._intervalInfo);
 		this._map.off('infobar', this.onInfobar, this);
+		this._map.off('updateviewlist', this.onUpdateInfo, this);
 	},
 
 	onUpdateInfo: function () {
