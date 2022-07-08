@@ -48,8 +48,8 @@ void UnitRenderingOptions::invokeWSDTest()
         std::shared_ptr<COOLWebSocket> socket = helpers::connectLOKit(
             Poco::URI(helpers::getTestServerURI()), request, response, testname);
 
-        helpers::sendTextFrame(socket, "load url=" + documentURL + " options=" + options);
-        helpers::sendTextFrame(socket, "status");
+        helpers::sendTextFrame(socket, "load url=" + documentURL + " options=" + options, testname);
+        helpers::sendTextFrame(socket, "status", testname);
         const auto status = helpers::assertResponseString(socket, "status:", testname);
 
         // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.

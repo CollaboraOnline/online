@@ -133,10 +133,10 @@ void sendTextFrame(COOLWebSocket& socket, const std::string& string, const std::
     socket.sendFrame(string.data(), string.size());
 }
 
-inline
-void sendTextFrame(const std::shared_ptr<COOLWebSocket>& socket, const std::string& string, const std::string& name = "")
+inline void sendTextFrame(const std::shared_ptr<COOLWebSocket>& socket, const std::string& string,
+                          const std::string& testname)
 {
-    sendTextFrame(*socket, string, name);
+    sendTextFrame(*socket, string, testname);
 }
 
 inline void sendTextFrame(const std::shared_ptr<http::WebSocketSession>& ws,

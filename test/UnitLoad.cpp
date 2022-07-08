@@ -147,7 +147,7 @@ UnitBase::TestResult UnitLoad::testBadLoad()
             = helpers::connectLOKit(uri, request, response, testname);
 
         // Before loading request status.
-        helpers::sendTextFrame(socket, "status");
+        helpers::sendTextFrame(socket, "status", testname);
 
         const auto line = helpers::assertResponseString(socket, "error:", testname);
         LOK_ASSERT_EQUAL(std::string("error: cmd=status kind=nodocloaded"), line);

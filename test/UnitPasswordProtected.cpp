@@ -52,7 +52,7 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithout
             Poco::URI(helpers::getTestServerURI()), request, httpResponse, testname);
 
         // Send a load request without password first
-        helpers::sendTextFrame(socket, "load url=" + documentURL);
+        helpers::sendTextFrame(socket, "load url=" + documentURL, testname);
 
         auto response = helpers::getResponseString(socket, "error:", testname);
         StringVector tokens(StringVector::tokenize(response, ' '));
@@ -91,7 +91,7 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithWro
             Poco::URI(helpers::getTestServerURI()), request, httpResponse, testname);
 
         // Send a load request with incorrect password
-        helpers::sendTextFrame(socket, "load url=" + documentURL + " password=2");
+        helpers::sendTextFrame(socket, "load url=" + documentURL + " password=2", testname);
 
         const auto response = helpers::getResponseString(socket, "error:", testname);
         StringVector tokens(StringVector::tokenize(response, ' '));
@@ -126,7 +126,7 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithCor
             Poco::URI(helpers::getTestServerURI()), request, response, testname);
 
         // Send a load request with correct password
-        helpers::sendTextFrame(socket, "load url=" + documentURL + " password=1");
+        helpers::sendTextFrame(socket, "load url=" + documentURL + " password=1", testname);
 
         LOK_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL,
                                helpers::isDocumentLoaded(socket, testname));
@@ -158,7 +158,7 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedOOXMLDocument()
             Poco::URI(helpers::getTestServerURI()), request, response, testname);
 
         // Send a load request with correct password
-        helpers::sendTextFrame(socket, "load url=" + documentURL + " password=abc");
+        helpers::sendTextFrame(socket, "load url=" + documentURL + " password=abc", testname);
 
         LOK_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL,
                                helpers::isDocumentLoaded(socket, testname));
@@ -185,7 +185,7 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedBinaryMSOfficeD
             Poco::URI(helpers::getTestServerURI()), request, response, testname);
 
         // Send a load request with correct password
-        helpers::sendTextFrame(socket, "load url=" + documentURL + " password=abc");
+        helpers::sendTextFrame(socket, "load url=" + documentURL + " password=abc", testname);
 
         LOK_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL,
                                helpers::isDocumentLoaded(socket, testname));

@@ -40,7 +40,10 @@ void UnitRenderSearchResult::invokeWSDTest()
 
         std::shared_ptr<COOLWebSocket> socket = helpers::loadDocAndGetSocket(Poco::URI(helpers::getTestServerURI()), documentURL, testname);
 
-        helpers::sendTextFrame(socket, "rendersearchresult <indexing><paragraph node_type=\"writer\" index=\"19\"/></indexing>");
+        helpers::sendTextFrame(socket,
+                               "rendersearchresult <indexing><paragraph node_type=\"writer\" "
+                               "index=\"19\"/></indexing>",
+                               testname);
         std::vector<char> responseMessage = helpers::getResponseMessage(socket, "rendersearchresult:", testname);
 
        // LOK_ASSERT(responseMessage.size() >= 100);

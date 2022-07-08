@@ -109,13 +109,13 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         std::shared_ptr<COOLWebSocket> socket
             = helpers::connectLOKit(uri, request, httpResponse, testname);
 
-        helpers::sendTextFrame(socket, "load url=" + documentURL);
+        helpers::sendTextFrame(socket, "load url=" + documentURL, testname);
         LOK_ASSERT_MESSAGE("cannot load the document " + documentURL,
                                helpers::isDocumentLoaded(socket, testname));
 
         // check total slides 1
         TST_LOG("Expecting 1 slide.");
-        helpers::sendTextFrame(socket, "status");
+        helpers::sendTextFrame(socket, "status", testname);
         response = helpers::getResponseString(socket, "status:", testname);
         LOK_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         getPartHashCodes(testname, response.substr(7), parts);
@@ -127,7 +127,7 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         TST_LOG("Inserting 10 slides.");
         for (size_t it = 1; it <= 10; it++)
         {
-            helpers::sendTextFrame(socket, "uno .uno:InsertPage");
+            helpers::sendTextFrame(socket, "uno .uno:InsertPage", testname);
             response = helpers::getResponseString(socket, "status:", testname);
             LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
@@ -144,8 +144,8 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         for (size_t it = 1; it <= 10; it++)
         {
             // Explicitly delete the nth slide.
-            helpers::sendTextFrame(socket, "setclientpart part=" + std::to_string(it));
-            helpers::sendTextFrame(socket, "uno .uno:DeletePage");
+            helpers::sendTextFrame(socket, "setclientpart part=" + std::to_string(it), testname);
+            helpers::sendTextFrame(socket, "uno .uno:DeletePage", testname);
             response = helpers::getResponseString(socket, "status:", testname);
             LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
@@ -160,7 +160,7 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         TST_LOG("Undoing 10 slide deletes.");
         for (size_t it = 1; it <= 10; it++)
         {
-            helpers::sendTextFrame(socket, "uno .uno:Undo");
+            helpers::sendTextFrame(socket, "uno .uno:Undo", testname);
             response = helpers::getResponseString(socket, "status:", testname);
             LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
@@ -178,7 +178,7 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         TST_LOG("Redoing 10 slide deletes.");
         for (size_t it = 1; it <= 10; it++)
         {
-            helpers::sendTextFrame(socket, "uno .uno:Redo");
+            helpers::sendTextFrame(socket, "uno .uno:Redo", testname);
             response = helpers::getResponseString(socket, "status:", testname);
             LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
@@ -191,7 +191,7 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
 
         // check total slides 1
         TST_LOG("Expecting 1 slide.");
-        helpers::sendTextFrame(socket, "status");
+        helpers::sendTextFrame(socket, "status", testname);
         response = helpers::getResponseString(socket, "status:", testname);
         LOK_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         getPartHashCodes(testname, response.substr(7), parts);
