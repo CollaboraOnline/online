@@ -1080,12 +1080,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #mobile-wizard.popup.snackbar,
 .snackbar.jsdialog-container .ui-dialog-content {
 	min-width: 200px;
-	background-color: #565f77 !important;
-	border-radius: var(--border-radius) !important;
-}
-
-.snackbar.jsdialog-container .lokdialog.ui-dialog-content.ui-widget-content {
-	border-radius: 0 !important;
+	background-color: #323232 !important;
 }
 
 #mobile-wizard.popup.snackbar #label,
@@ -1127,10 +1122,15 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	padding-right: 0;
 }
 
-#mobile-wizard.popup.snackbar #button span,
-.snackbar.jsdialog-container #button span {
-	color: #c8e7f9ff;
-	font-weight: bold;
+#mobile-wizard.popup.snackbar #button,
+#snackbar.jsdialog-container #button {
+	color: #469cff !important;
+	font-weight: 600;
+	font-size: var(--header-font-size) !important;
+	padding: 8px;
+}
+#snackbar.jsdialog-container #button:hover {
+	background-color: #ffffff15 !important;
 }
 
 /* toolbuttons */
