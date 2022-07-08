@@ -34,13 +34,13 @@ describe('Repair Document', function() {
 
 		helper.selectAllText(frameId2);
 
-		helper.expectTextForClipboard('\nHello \n', frameId2);
+		helper.expectTextForClipboard('Hello \n', frameId2);
 
 		cy.customGet('.leaflet-layer', frameId1).click();
 
 		helper.selectAllText(frameId1);
 
-		helper.expectTextForClipboard('\nHello \n', frameId1);
+		helper.expectTextForClipboard('Hello \n', frameId1);
 	}
 
 	it('Repair by user-2', function() {

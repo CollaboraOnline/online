@@ -89,6 +89,6 @@ describe('Track Changes', function () {
 
 		helper.selectAllText();
 
-		helper.expectTextForClipboard('\nHello World');
+		helper.expectTextForClipboard('Hello World');
 	});
 });
