@@ -1074,6 +1074,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 /* snackbar */
+#snackbar {
+	border: none !important;
+}
 #mobile-wizard.popup.snackbar,
 .snackbar.jsdialog-container .ui-dialog-content {
 	min-width: 200px;
