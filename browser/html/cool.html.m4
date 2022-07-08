@@ -354,8 +354,8 @@ brandingLink.setAttribute("type", "text/css");
 
 var theme_name = document.getElementsByName("theme")[[0]] ? document.getElementsByName("theme")[[0]].value : '';
 var theme_prefix = '';
-if(window.useIntegrationTheme === 'true' && theme_name.includes("nextcloud")) {
-    theme_prefix = 'nextcloud/';
+if(window.useIntegrationTheme === 'true' && theme_name !== '') {
+    theme_prefix = theme_name + '/';
 }
 
 if (window.mode.isMobile()) {
