@@ -65,7 +65,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.wait(1000);
 
-		helper.expectTextForClipboard('\nnew');
+		helper.expectTextForClipboard('new');
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
@@ -81,7 +81,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 
-		helper.expectTextForClipboard('\nnew');
+		helper.expectTextForClipboard('new');
 	});
 
 	it('Print', function() {
