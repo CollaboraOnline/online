@@ -321,8 +321,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Insert hyperlink.', function() {
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\ntext text1');
+		helper.expectTextForClipboard('text text1');
 
 		mode === 'notebookbar' ? cy.get('#Insert-tab-label').click() : '';
 
@@ -345,8 +344,7 @@ describe('Top toolbar tests.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\ntext text1link');
+		helper.expectTextForClipboard('text text1link');
 
 		cy.get('#copy-paste-container p a')
 			.should('have.attr', 'href', 'http://www.something.com/');
