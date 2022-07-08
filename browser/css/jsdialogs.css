@@ -68,7 +68,7 @@
 	border: 1px solid var(--color-border-dark);
 	-webkit-box-shadow: 0 0 3px var(--color-border);
 	box-shadow: 0 0 3px var(--color-box-shadow);
-	border-radius: calc(var(--border-radius)/2);
+	border-radius: var(--border-radius);
 	background: var(--color-background-darker);
 }
 
