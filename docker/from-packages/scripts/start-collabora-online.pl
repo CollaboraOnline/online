@@ -50,11 +50,6 @@ sub generate_aliases() {
         if (@hosts) {
             my $i = 0;
             foreach (@hosts) {
-                if ($_ =~ /[^a-zA-Z0-9\_.\-\/]/)
-                {
-                    print "WARNING: $_ seems to be regex, If you want to use regex please use aliasgroupX env variable where X=1,2,3... \nMore information:\n    https://sdk.collaboraonline.com/docs/installation/CODE_Docker_image.html\n";
-                    exit 1;
-                }
                 $i++;
                 $message .= "   aliasgroup".$i."=https://$_:443\n";
                 $output .= "                <group>\n";
