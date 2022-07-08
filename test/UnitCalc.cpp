@@ -274,7 +274,7 @@ UnitBase::TestResult UnitCalc::testColumnRowResize()
             = helpers::loadDocAndGetSocket(uri, documentURL, testname);
 
         const std::string commandValues = "commandvalues command=.uno:ViewRowColumnHeaders";
-        helpers::sendTextFrame(socket, commandValues);
+        helpers::sendTextFrame(socket, commandValues, testname);
         response = helpers::getResponseMessage(socket, "commandvalues:", testname);
         LOK_ASSERT_MESSAGE("did not receive a commandvalues: message as expected",
                                !response.empty());

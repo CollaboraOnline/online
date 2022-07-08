@@ -134,7 +134,7 @@ UnitBase::TestResult UnitEachView::testViewCursorVisible()
 
 UnitBase::TestResult UnitEachView::testCellViewCursor()
 {
-    testEachView("empty.ods", "spreadsheet", "cellcursor:", "cellviewcursor:", "cellViewCursor");
+    testEachView("empty.ods", "spreadsheet", "cellcursor:", "cellviewcursor:", "cellViewCursor ");
     return TestResult::Ok;
 }
 

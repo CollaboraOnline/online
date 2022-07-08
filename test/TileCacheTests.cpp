@@ -982,7 +982,7 @@ void TileCacheTests::checkBlackTiles(std::shared_ptr<COOLWebSocket>& socket, con
     // Current cap of table size ends at 257280 twips (for load12.ods),
     // otherwise 2035200 should be rendered successfully.
     const char* req = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840";
-    sendTextFrame(socket, req);
+    sendTextFrame(socket, req, testname);
 
     const std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
     if (!tile.size())

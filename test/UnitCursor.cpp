@@ -143,7 +143,7 @@ UnitBase::TestResult UnitCursor::testMaxColumn()
                 const std::string text = "key type=input char=0 key=1027";
                 while (cursorX <= docWidth)
                 {
-                    helpers::sendTextFrame(socket, text);
+                    helpers::sendTextFrame(socket, text, testname);
                     cursorX += cursorWidth;
                 }
             },
@@ -179,7 +179,7 @@ UnitBase::TestResult UnitCursor::testMaxRow()
                 const std::string text = "key type=input char=0 key=1024";
                 while (cursorY <= docHeight)
                 {
-                    helpers::sendTextFrame(socket, text);
+                    helpers::sendTextFrame(socket, text, testname);
                     cursorY += cursorHeight;
                 }
             },
