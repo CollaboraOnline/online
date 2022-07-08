@@ -25,7 +25,7 @@ describe('Scroll through document', function() {
 
 		desktopHelper.pressKey(3,'pagedown');
 
-		desktopHelper.assertScrollbarPosition('vertical', 191, 224);
+		desktopHelper.assertScrollbarPosition('vertical', 191, 230);
 
 		desktopHelper.pressKey(3,'pageup');
 
