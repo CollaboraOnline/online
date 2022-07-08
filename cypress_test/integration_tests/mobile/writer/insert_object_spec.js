@@ -291,8 +291,7 @@ describe('Insert objects via insertion wizard.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\nsome text');
+		helper.expectTextForClipboard('some text');
 
 		cy.get('#copy-paste-container p a')
 			.should('have.attr', 'href', 'http://www.something.com/');
