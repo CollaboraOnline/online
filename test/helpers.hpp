@@ -988,9 +988,8 @@ inline std::vector<char> getTileAndSave(std::shared_ptr<COOLWebSocket>& socket,
     return res;
 }
 
-inline void getServerVersion(COOLWebSocket& socket,
-                             int& major, int& minor,
-                             const std::string& testname)
+template <typename T>
+inline void getServerVersion(T& socket, int& major, int& minor, const std::string& testname)
 {
     const std::string clientVersion = "coolclient 0.1";
     sendTextFrame(socket, clientVersion, testname);
