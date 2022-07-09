@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-27 17:25+0200\n"
-"PO-Revision-Date: 2022-05-23 11:40+0000\n"
+"PO-Revision-Date: 2022-07-06 11:21+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -431,7 +431,7 @@ msgstr "dirección de celda"
 
 #: src/control/Control.FormulaBarJSDialog.js:41
 msgid "Function Wizard"
-msgstr "Asistente de funciones"
+msgstr "Asistente para funciones"
 
 #: src/control/Control.FormulaBarJSDialog.js:54
 msgid "Formula"
@@ -726,29 +726,28 @@ msgstr "Orientación de texto"
 
 #: src/control/Control.Menubar.js:289 src/control/Control.Menubar.js:1082
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Insertar texto enriquecido"
 
 #: src/control/Control.Menubar.js:290 src/control/Control.Menubar.js:1083
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Insertar casilla"
 
 #: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1084
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Insertar desplegable"
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1085
 msgid "Insert Picture"
-msgstr ""
+msgstr "Insertar imagen"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1086
-#, fuzzy
 msgid "Insert Date"
-msgstr "Insertar tabla"
+msgstr "Insertar fecha"
 
 #: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1087
 #: src/control/Control.NotebookbarWriter.js:999
 msgid "Properties"
-msgstr ""
+msgstr "Propiedades"
 
 #: src/control/Control.Menubar.js:321
 #: src/control/Control.NotebookbarWriter.js:291
@@ -1169,7 +1168,7 @@ msgstr "Minigráfico"
 #: src/control/Control.NotebookbarWriter.js:889
 #: src/control/Control.NotebookbarWriter.js:2194
 msgid "Shapes"
-msgstr ""
+msgstr "Formas"
 
 #: src/control/Control.NotebookbarDraw.js:41
 #: src/control/Control.NotebookbarDraw.js:744
@@ -1188,7 +1187,7 @@ msgstr "Imagen (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Master"
-msgstr ""
+msgstr "~Patrón"
 
 #: src/control/Control.NotebookbarImpress.js:255
 msgid "ODF Presentation (.odp)"
@@ -1204,9 +1203,8 @@ msgid "Reference~s"
 msgstr "Referencia~s"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "Form"
-msgstr "Foro"
+msgstr "Formulario"
 
 #: src/control/Control.NotebookbarWriter.js:189
 msgid "ODF Text Document (.odt)"
@@ -1218,19 +1216,19 @@ msgstr "Documento EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:974
 msgid "Rich Text"
-msgstr ""
+msgstr "Texto enriquecido"
 
 #: src/control/Control.NotebookbarWriter.js:979
 msgid "Checkbox"
-msgstr ""
+msgstr "Casilla"
 
 #: src/control/Control.NotebookbarWriter.js:984
 msgid "Dropdown"
-msgstr ""
+msgstr "Desplegable"
 
 #: src/control/Control.NotebookbarWriter.js:989
 msgid "Picture"
-msgstr ""
+msgstr "Imagen"
 
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Ruler"
@@ -1967,6 +1965,8 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"El documento es demasiado grande o ya no queda espacio en el disco para "
+"guardarlo. El documento ahora es de solo lectura."
 
 #: src/errormessages.js:35 src/errormessages.js:44
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -2010,6 +2010,10 @@ msgid ""
 "preserve a copy locally. Please contact the server (%storageserver) "
 "administrator to resolve the issue."
 msgstr ""
+"No se pudo guardar porque el documento es demasiado grande o se excedió el "
+"cupo del disco. El documento ahora es de solo lectura pero puede descargarlo "
+"para conservar una copia local. Póngase en contacto con el personal "
+"administrativo del servidor (%storageserver) para solucionar el problema."
 
 #: src/errormessages.js:45
 msgid ""

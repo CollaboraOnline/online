@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-27 17:25+0200\n"
-"PO-Revision-Date: 2022-05-23 11:40+0000\n"
+"PO-Revision-Date: 2022-07-06 11:21+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -421,11 +421,11 @@ msgstr ""
 
 #: src/control/Control.FormulaBar.js:44
 msgid "cell address"
-msgstr ""
+msgstr "señes de la caxella"
 
 #: src/control/Control.FormulaBarJSDialog.js:41
 msgid "Function Wizard"
-msgstr ""
+msgstr "Encontu de funciones"
 
 #: src/control/Control.FormulaBarJSDialog.js:54
 msgid "Formula"
@@ -732,17 +732,16 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1085
 msgid "Insert Picture"
-msgstr ""
+msgstr "Inxertar una imaxe"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1086
-#, fuzzy
 msgid "Insert Date"
-msgstr "Inxertar una forma"
+msgstr "Inxertar una data"
 
 #: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1087
 #: src/control/Control.NotebookbarWriter.js:999
 msgid "Properties"
-msgstr ""
+msgstr "Propiedaes"
 
 #: src/control/Control.Menubar.js:321
 #: src/control/Control.NotebookbarWriter.js:291
@@ -1166,7 +1165,7 @@ msgstr "Minigráfica"
 #: src/control/Control.NotebookbarWriter.js:889
 #: src/control/Control.NotebookbarWriter.js:2194
 msgid "Shapes"
-msgstr ""
+msgstr "Formes"
 
 #: src/control/Control.NotebookbarDraw.js:41
 #: src/control/Control.NotebookbarDraw.js:744
@@ -1201,9 +1200,8 @@ msgid "Reference~s"
 msgstr "Referencie~s"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "Form"
-msgstr "Foru"
+msgstr "Formulariu"
 
 #: src/control/Control.NotebookbarWriter.js:189
 msgid "ODF Text Document (.odt)"
@@ -1227,7 +1225,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:989
 msgid "Picture"
-msgstr ""
+msgstr "Imaxe"
 
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Ruler"
@@ -1920,6 +1918,8 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"El documentu ye grande enforma o yá nun queda espaciu nel discu pa guardalu. "
+"El documentu agora ye namái de llectura."
 
 #: src/errormessages.js:35 src/errormessages.js:44
 msgid "Document cannot be saved due to expired or invalid access token."

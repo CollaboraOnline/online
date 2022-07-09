@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-27 17:25+0200\n"
-"PO-Revision-Date: 2022-05-23 11:40+0000\n"
+"PO-Revision-Date: 2022-07-06 11:21+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -726,11 +726,11 @@ msgstr "Orientació del text"
 
 #: src/control/Control.Menubar.js:289 src/control/Control.Menubar.js:1082
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Insereix text enriquit"
 
 #: src/control/Control.Menubar.js:290 src/control/Control.Menubar.js:1083
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Insereix una casella de selecció"
 
 #: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1084
 msgid "Insert Dropdown"
@@ -738,17 +738,16 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1085
 msgid "Insert Picture"
-msgstr ""
+msgstr "Insereix una imatge"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1086
-#, fuzzy
 msgid "Insert Date"
-msgstr "Insereix una taula"
+msgstr "Insereix una data"
 
 #: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1087
 #: src/control/Control.NotebookbarWriter.js:999
 msgid "Properties"
-msgstr ""
+msgstr "Propietats"
 
 #: src/control/Control.Menubar.js:321
 #: src/control/Control.NotebookbarWriter.js:291
@@ -1145,9 +1144,8 @@ msgstr "Suprimeix les columnes"
 #: src/control/Control.NotebookbarDraw.js:271
 #: src/control/Control.NotebookbarImpress.js:361
 #: src/control/Control.NotebookbarWriter.js:1057
-#, fuzzy
 msgid "Compact view"
-msgstr "Utilitza la visualització compacta"
+msgstr "Visualització compacta"
 
 #: src/control/Control.NotebookbarCalc.js:970
 #: src/control/Control.NotebookbarDraw.js:277
@@ -1170,7 +1168,7 @@ msgstr "Minidiagrama"
 #: src/control/Control.NotebookbarWriter.js:889
 #: src/control/Control.NotebookbarWriter.js:2194
 msgid "Shapes"
-msgstr ""
+msgstr "Formes"
 
 #: src/control/Control.NotebookbarDraw.js:41
 #: src/control/Control.NotebookbarDraw.js:744
@@ -1189,7 +1187,7 @@ msgstr "Imatge (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Master"
-msgstr ""
+msgstr "~Mestre"
 
 #: src/control/Control.NotebookbarImpress.js:255
 msgid "ODF Presentation (.odp)"
@@ -1205,9 +1203,8 @@ msgid "Reference~s"
 msgstr "Referèncie~s"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "Form"
-msgstr "Fòrum"
+msgstr "Formulari"
 
 #: src/control/Control.NotebookbarWriter.js:189
 msgid "ODF Text Document (.odt)"
@@ -1219,11 +1216,11 @@ msgstr "Document EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:974
 msgid "Rich Text"
-msgstr ""
+msgstr "Text enriquit"
 
 #: src/control/Control.NotebookbarWriter.js:979
 msgid "Checkbox"
-msgstr ""
+msgstr "Casella de selecció"
 
 #: src/control/Control.NotebookbarWriter.js:984
 msgid "Dropdown"
@@ -1231,7 +1228,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:989
 msgid "Picture"
-msgstr ""
+msgstr "Imatge"
 
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Ruler"
@@ -1969,6 +1966,8 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"El document és massa gran o ja no queda espai en el disc per a desar-lo. El "
+"document ara és només de lectura."
 
 #: src/errormessages.js:35 src/errormessages.js:44
 msgid "Document cannot be saved due to expired or invalid access token."
