@@ -257,7 +257,9 @@ public:
             std::unique_lock<std::mutex> lock(_outMutex);
             if (_outQueue.isEmpty())
             {
-                shutdownWS();
+                LOG_DBG(
+                    "WebSocketSession: closing gracefully after sending all the data, as flagged.");
+                sendCloseFrame();
             }
             else
             {
@@ -336,8 +338,9 @@ private:
 
             if (_shutdown && _outQueue.isEmpty())
             {
-                LOG_DBG("WebSocketSession: shutting down after sending all the data, as flagged.");
-                shutdownWS();
+                LOG_DBG(
+                    "WebSocketSession: closing gracefully after sending all the data, as flagged.");
+                sendCloseFrame();
             }
         }
         catch (const std::exception& ex)

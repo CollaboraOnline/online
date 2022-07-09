@@ -60,46 +60,24 @@ UnitBase::TestResult UnitClose::testCloseAfterClose()
     {
         TST_LOG("Connecting and loading.");
         Poco::URI uri(helpers::getTestServerURI());
-        std::shared_ptr<COOLWebSocket> socket
-            = helpers::loadDocAndGetSocket("hello.odt", uri, testname);
+
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("ClosePoll");
+        socketPoll->startThread();
+
+        std::shared_ptr<http::WebSocketSession> socket =
+            helpers::loadDocAndGetSession(socketPoll, "hello.odt", uri, testname);
 
         // send normal socket shutdown
-        TST_LOG("Disconnecting.");
-        socket->shutdown();
+        TST_LOG("Disconnecting gracefully.");
+        socket->asyncShutdown();
 
         // 5 seconds timeout
-        socket->setReceiveTimeout(5000000);
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
+                           socket->waitForDisconnection(std::chrono::seconds(5)));
 
-        // receive close frame handshake
-        int bytes;
-        int flags;
-        char buffer[READ_BUFFER_SIZE];
-        do
-        {
-            bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
-            TST_LOG("Received [" << std::string(buffer, bytes) << "], flags: " << std::hex << flags
-                                 << std::dec);
-        } while (bytes > 0
-                 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK)
-                        != Poco::Net::WebSocket::FRAME_OP_CLOSE);
-
-        TST_LOG("Received " << bytes << " bytes, flags: " << std::hex << flags << std::dec);
-
-        try
-        {
-            // no more messages is received.
-            bytes = socket->receiveFrame(buffer, sizeof(buffer), flags);
-            TST_LOG("Received " << bytes << " bytes, flags: " << std::hex << flags << std::dec);
-            LOK_ASSERT_EQUAL(0, bytes);
-            LOK_ASSERT_EQUAL(0, flags);
-        }
-        catch (const Poco::Exception& exc)
-        {
-            // This is not unexpected, since WSD will close the socket after
-            // echoing back the shutdown status code. However, if it doesn't
-            // we assert above that it doesn't send any more data.
-            TST_LOG("Error: " << exc.displayText());
-        }
+        // Verify that we get back a close frame.
+        LOK_ASSERT_EQUAL(static_cast<int>(Poco::Net::WebSocket::FRAME_OP_CLOSE),
+                         (socket->lastFlags() & Poco::Net::WebSocket::FRAME_OP_BITMASK));
     }
     catch (const Poco::Exception& exc)
     {
@@ -114,8 +92,12 @@ UnitBase::TestResult UnitClose::testFontList()
     {
         // Load a document
         Poco::URI uri(helpers::getTestServerURI());
-        std::shared_ptr<COOLWebSocket> socket
-            = helpers::loadDocAndGetSocket("setclientpart.odp", uri, testname);
+
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("ClosePoll");
+        socketPoll->startThread();
+
+        std::shared_ptr<http::WebSocketSession> socket =
+            helpers::loadDocAndGetSession(socketPoll, "setclientpart.odp", uri, testname);
 
         helpers::sendTextFrame(socket, "commandvalues command=.uno:CharFontName", testname);
         const std::vector<char> response
@@ -141,8 +123,12 @@ UnitBase::TestResult UnitClose::testGraphicInvalidate()
     {
         // Load a document.
         Poco::URI uri(helpers::getTestServerURI());
-        std::shared_ptr<COOLWebSocket> socket
-            = helpers::loadDocAndGetSocket("shape.ods", uri, testname);
+
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("ClosePoll");
+        socketPoll->startThread();
+
+        std::shared_ptr<http::WebSocketSession> socket =
+            helpers::loadDocAndGetSession(socketPoll, "shape.ods", uri, testname);
 
         // Send click message
         helpers::sendTextFrame(
@@ -177,11 +163,15 @@ UnitBase::TestResult UnitClose::testAlertAllUsers()
     static_assert(MAX_DOCUMENTS >= 2, "MAX_DOCUMENTS must be at least 2");
     try
     {
-        std::shared_ptr<COOLWebSocket> socket[4];
 
         Poco::URI uri(helpers::getTestServerURI());
-        socket[0] = helpers::loadDocAndGetSocket("hello.odt", uri, testname);
-        socket[1] = helpers::loadDocAndGetSocket("Example.odt", uri, testname);
+
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("ClosePoll");
+        socketPoll->startThread();
+
+        std::shared_ptr<http::WebSocketSession> socket[4];
+        socket[0] = helpers::loadDocAndGetSession(socketPoll, "hello.odt", uri, testname);
+        socket[1] = helpers::loadDocAndGetSession(socketPoll, "Example.odt", uri, testname);
 
         // Simulate disk full.
         helpers::sendTextFrame(socket[0], "uno .uno:fakeDiskFull", testname);
