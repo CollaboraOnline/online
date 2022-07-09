@@ -165,8 +165,12 @@ UnitBase::TestResult UnitLoad::testExcelLoad()
     {
         // Load a document and get status.
         Poco::URI uri(helpers::getTestServerURI());
-        std::shared_ptr<COOLWebSocket> socket
-            = helpers::loadDocAndGetSocket("timeline.xlsx", uri, testname);
+
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("LoadPoll");
+        socketPoll->startThread();
+
+        std::shared_ptr<http::WebSocketSession> socket =
+            helpers::loadDocAndGetSession(socketPoll, "timeline.xlsx", uri, testname);
 
         helpers::sendTextFrame(socket, "status", testname);
         const auto status = helpers::assertResponseString(socket, "status:", testname);
