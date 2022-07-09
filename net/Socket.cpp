@@ -436,8 +436,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
                 << _name << " #" << _pollFds[i].fd << " at index " << _pollStartIndex << " (of "
                 << size << "): " << std::hex << _pollFds[i].revents << std::dec);
 
-        size_t previ = size;
-        while (previ != _pollStartIndex)
+        for (std::size_t j = 0; j < size; ++j)
         {
             SocketDisposition disposition(_pollSockets[i]);
             try
@@ -458,7 +457,6 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
             disposition.execute();
 
-            previ = i;
             if (i == 0)
                 i = size - 1;
             else
@@ -475,7 +473,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             }
         }
 
-        // In case we remved sockets the new _pollStartIndex might be out of bounds, but we check it
+        // In case we removed sockets the new _pollStartIndex might be out of bounds, but we check it
         // before using it above anyway.
         _pollStartIndex = (_pollStartIndex + 1) % size;
     }
