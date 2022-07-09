@@ -30,15 +30,22 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
     const std::string view = testname + "view %d -> ";
     const std::string error = testname + "view %d, did not receive a %s message as expected";
 
+    TST_LOG("testEachView for " << testname);
+
+    std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("UnitEachView");
+    socketPoll->startThread();
+
     try
     {
         // Load a document
         std::string documentPath, documentURL;
         helpers::getDocumentPathAndURL(doc, documentPath, documentURL, testname);
 
+        TST_LOG("Loading " << documentURL);
         int itView = 0;
-        std::shared_ptr<COOLWebSocket> socket = helpers::loadDocAndGetSocket(
-            Poco::URI(helpers::getTestServerURI()), documentURL, Poco::format(view, itView));
+        std::shared_ptr<http::WebSocketSession> socket =
+            helpers::loadDocAndGetSession(socketPoll, Poco::URI(helpers::getTestServerURI()),
+                                          documentURL, Poco::format(view, itView));
 
         // Check document size
         helpers::sendTextFrame(socket, "status", Poco::format(view, itView));
@@ -68,13 +75,15 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
         LOK_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
 
         // Connect and load 0..N Views, where N<=limit
-        std::vector<std::shared_ptr<COOLWebSocket>> views;
+        std::vector<std::shared_ptr<http::WebSocketSession>> views;
         static_assert(MAX_DOCUMENTS >= 2, "MAX_DOCUMENTS must be at least 2");
         const int limit = std::min(4, MAX_DOCUMENTS - 1); // +1 connection above
         for (itView = 0; itView < limit; ++itView)
         {
-            views.emplace_back(helpers::loadDocAndGetSocket(
-                Poco::URI(helpers::getTestServerURI()), documentURL, Poco::format(view, itView)));
+            TST_LOG("loadDocAndGetSession #" << (itView + 1) << ": " << documentURL);
+            views.emplace_back(
+                helpers::loadDocAndGetSession(socketPoll, Poco::URI(helpers::getTestServerURI()),
+                                              documentURL, Poco::format(view, itView)));
         }
 
         // main view should receive response each view
@@ -86,6 +95,7 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
         itView = 0;
         for (const auto& socketView : views)
         {
+            TST_LOG("getResponse #" << (itView + 1) << ": " << protocolView);
             response = helpers::getResponseString(socket, protocolView, Poco::format(view, itView), timeoutMs);
             LOK_ASSERT_MESSAGE(Poco::format(error, itView, protocolView), !response.empty());
             ++itView;
@@ -100,6 +110,8 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
     {
         LOK_ASSERT_FAIL(exc.what());
     }
+
+    TST_LOG("Done testEachView for " << testname);
 }
 }
 
