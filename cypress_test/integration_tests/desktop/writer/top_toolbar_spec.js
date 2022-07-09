@@ -587,7 +587,7 @@ describe('Top toolbar tests.', function() {
 		helper.selectAllText();
 
 		var data = [];
-		var expectedData = ['\ntext \n', '\ntext1'];
+		var expectedData = ['text ', 'text1'];
 
 		helper.waitUntilIdle('#copy-paste-container');
 
@@ -598,7 +598,16 @@ describe('Top toolbar tests.', function() {
 					data.push(text);
 				});
 			cy.log(data);
-		}).then(() => expect(data).to.deep.eq(expectedData));
+		}).then(() => {
+			expect(data.length).eq(expectedData.length);
+			var isEqual = true;
+			for (var i = 0; i < data.length; i++) {
+				isEqual = isEqual && ((data[i] == expectedData[i]) ||
+					(data[i] == '\n' + expectedData[i]) ||
+					(data[i] == '\n' + expectedData[i] + '\n'));
+			}
+			expect(isEqual).to.be.true;
+		});
 
 	});
 
