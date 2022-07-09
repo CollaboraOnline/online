@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-27 17:25+0200\n"
-"PO-Revision-Date: 2022-05-15 11:51+0000\n"
-"Last-Translator: Mikhail Pershin <mikhail@frcdr.org>\n"
+"PO-Revision-Date: 2022-07-09 18:15+0000\n"
+"Last-Translator: Егор Ермаков <eg.ermakov2016@yandex.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
-"Language: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -437,7 +437,7 @@ msgstr "Мастер функций"
 
 #: src/control/Control.FormulaBarJSDialog.js:54
 msgid "Formula"
-msgstr ""
+msgstr "Формула"
 
 #: src/control/Control.FormulaBarJSDialog.js:61
 #: src/control/Control.MobileTopBar.js:40
@@ -456,11 +456,11 @@ msgstr "Среднее"
 
 #: src/control/Control.JSDialogBuilder.js:146
 msgid "Min"
-msgstr ""
+msgstr "Минимальное"
 
 #: src/control/Control.JSDialogBuilder.js:147
 msgid "Max"
-msgstr ""
+msgstr "Максимальное"
 
 #: src/control/Control.JSDialogBuilder.js:148
 #: src/control/Control.StatusBar.js:309
@@ -728,29 +728,28 @@ msgstr "Ориентация текста"
 
 #: src/control/Control.Menubar.js:289 src/control/Control.Menubar.js:1082
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Вставить форматированный текст"
 
 #: src/control/Control.Menubar.js:290 src/control/Control.Menubar.js:1083
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Вставить флажок"
 
 #: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1084
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Вставить выпадающий список"
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1085
 msgid "Insert Picture"
-msgstr ""
+msgstr "Вставить изображение"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1086
-#, fuzzy
 msgid "Insert Date"
-msgstr "Вставить таблицу"
+msgstr "Вставить дату"
 
 #: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1087
 #: src/control/Control.NotebookbarWriter.js:999
 msgid "Properties"
-msgstr ""
+msgstr "Свойства"
 
 #: src/control/Control.Menubar.js:321
 #: src/control/Control.NotebookbarWriter.js:291
@@ -1171,7 +1170,7 @@ msgstr "Спарклайн"
 #: src/control/Control.NotebookbarWriter.js:889
 #: src/control/Control.NotebookbarWriter.js:2194
 msgid "Shapes"
-msgstr ""
+msgstr "Фигуры"
 
 #: src/control/Control.NotebookbarDraw.js:41
 #: src/control/Control.NotebookbarDraw.js:744
@@ -1190,7 +1189,7 @@ msgstr "Изображение (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Master"
-msgstr ""
+msgstr "~Master"
 
 #: src/control/Control.NotebookbarImpress.js:255
 msgid "ODF Presentation (.odp)"
@@ -1206,9 +1205,8 @@ msgid "Reference~s"
 msgstr "~Ссылки"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "Form"
-msgstr "Форум"
+msgstr "Форма"
 
 #: src/control/Control.NotebookbarWriter.js:189
 msgid "ODF Text Document (.odt)"
@@ -1220,19 +1218,19 @@ msgstr "Документ EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:974
 msgid "Rich Text"
-msgstr ""
+msgstr "Форматированный текст"
 
 #: src/control/Control.NotebookbarWriter.js:979
 msgid "Checkbox"
-msgstr ""
+msgstr "Флажок"
 
 #: src/control/Control.NotebookbarWriter.js:984
 msgid "Dropdown"
-msgstr ""
+msgstr "Выпадающий список"
 
 #: src/control/Control.NotebookbarWriter.js:989
 msgid "Picture"
-msgstr ""
+msgstr "Изображение"
 
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Ruler"
@@ -1967,6 +1965,8 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"Документ слишком большой или на диске не осталось места для сохранения. "
+"Теперь документ будет доступен только для чтения."
 
 #: src/errormessages.js:35 src/errormessages.js:44
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -2010,6 +2010,10 @@ msgid ""
 "preserve a copy locally. Please contact the server (%storageserver) "
 "administrator to resolve the issue."
 msgstr ""
+"Сохранение не удалось, поскольку документ слишком большой или превышена "
+"квота. Документ теперь будет доступен только для чтения, но вы можете "
+"загрузить его сейчас, чтобы сохранить копию локально. Пожалуйста, свяжитесь "
+"с администратором сервера (%storageserver) для решения проблемы."
 
 #: src/errormessages.js:45
 msgid ""
