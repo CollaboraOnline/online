@@ -38,7 +38,12 @@ void UnitRenderSearchResult::invokeWSDTest()
         std::string documentURL;
         helpers::getDocumentPathAndURL("RenderSearchResultTest.odt", documentPath, documentURL, testname);
 
-        std::shared_ptr<COOLWebSocket> socket = helpers::loadDocAndGetSocket(Poco::URI(helpers::getTestServerURI()), documentURL, testname);
+        std::shared_ptr<SocketPoll> socketPoll =
+            std::make_shared<SocketPoll>("RenderSearchResultPoll");
+        socketPoll->startThread();
+
+        std::shared_ptr<http::WebSocketSession> socket = helpers::loadDocAndGetSession(
+            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
 
         helpers::sendTextFrame(socket,
                                "rendersearchresult <indexing><paragraph node_type=\"writer\" "
