@@ -1308,9 +1308,9 @@ protected:
             const int read = readIncomingData();
             const int last_errno = errno;
             LOG_TRC("Incoming data buffer "
-                    << _inBuffer.size() << " bytes, read result: " << read
-                    << ", events: " << std::hex << events << std::dec << " ("
-                    << (closed ? "closed" : "not closed") << ')'
+                    << _inBuffer.size() << " bytes, read result: " << read << ", events: 0x"
+                    << std::hex << events << std::dec << " (" << (closed ? "closed" : "not closed")
+                    << ')'
 #ifdef LOG_SOCKET_DATA
                     << (!_inBuffer.empty() ? Util::dumpHex(_inBuffer, ":\n") : std::string())
 #endif

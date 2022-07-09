@@ -79,8 +79,7 @@ bool StreamSocket::simulateSocketError(bool read)
 {
     if ((socketErrorCount++ % 7) == 0)
     {
-        LOG_TRC('#' << getFD() << ": Simulating socket error during "
-                    << (read ? "read." : "write."));
+        LOG_TRC("Simulating socket error during " << (read ? "read." : "write."));
         errno = EAGAIN;
         return true;
     }
@@ -432,7 +431,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
         size_t i = _pollStartIndex;
         LOG_TRC('#' << _pollFds[i].fd << ": Starting handling poll results of " << _name
-                    << " at index " << _pollStartIndex << " (of " << size << "): " << std::hex
+                    << " at index " << i << " (of " << size << "): " << std::hex
                     << _pollFds[i].revents << std::dec);
 
         for (std::size_t j = 0; j < size; ++j)
