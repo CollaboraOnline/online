@@ -41,6 +41,7 @@ private:
 
     std::vector<char> _wsPayload;
     std::atomic<bool> _shuttingDown;
+    unsigned char _lastFlags; //< The flags in the last frame.
     const bool _isClient;
 
 protected:
@@ -68,6 +69,7 @@ public:
         _key(isClient ? PublicComputeAccept::generateKey() : std::string()),
 #endif
         _shuttingDown(false),
+        _lastFlags(0),
         _isClient(isClient)
     {
     }
@@ -89,6 +91,7 @@ public:
         , _key(std::string())
 #endif
         , _shuttingDown(false)
+        , _lastFlags(0)
         , _isClient(false)
     {
         if (!socket)
@@ -121,6 +124,9 @@ public:
 
     /// Returns the Web-Socket Security Key generated for this instance.
     const std::string& getWebSocketKey() const { return _key; }
+
+    /// Returns the flags of the last received WS frame.
+    unsigned char lastFlags() const { return _lastFlags; }
 
     /// Create a WebSocket connection to the given @host
     /// and @port and add the socket to @poll.
@@ -260,8 +266,9 @@ private:
         }
 
         unsigned char *p = reinterpret_cast<unsigned char*>(&socket->getInBuffer()[0]);
-        const bool fin = p[0] & 0x80;
-        const WSOpCode code = static_cast<WSOpCode>(p[0] & 0x0f);
+        _lastFlags = p[0];
+        const bool fin = _lastFlags & 0x80;
+        const WSOpCode code = static_cast<WSOpCode>(_lastFlags & 0x0f);
         const bool hasMask = p[1] & 0x80;
         size_t payloadLen = p[1] & 0x7f;
         size_t headerLen = 2;
