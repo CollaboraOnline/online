@@ -966,10 +966,9 @@ inline void saveTileAs(const std::vector<char> &tileResponse,
     TST_LOG("Saved [" << firstLine << "] to [" << filename << ']');
 }
 
-inline std::vector<char> getTileAndSave(std::shared_ptr<COOLWebSocket>& socket,
-                                        const std::string& req,
-                                        const std::string& filename,
-                                        const std::string& testname)
+template <typename T>
+std::vector<char> getTileAndSave(T& socket, const std::string& req, const std::string& filename,
+                                 const std::string& testname)
 {
     TST_LOG("Requesting: " << req);
     sendTextFrame(socket, req, testname);
