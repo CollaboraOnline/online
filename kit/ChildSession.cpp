@@ -12,6 +12,7 @@
 
 #include <climits>
 #include <fstream>
+#include <memory>
 #include <sstream>
 
 #define LOK_USE_UNSTABLE_API
@@ -1239,10 +1240,10 @@ bool ChildSession::setClipboard(const char* buffer, int length, const StringVect
         data.read(stream);
 //        data.dumpState(std::cerr);
 
-        size_t nInCount = data.size();
-        size_t pInSizes[nInCount];
-        const char *pInMimeTypes[nInCount];
-        const char *pInStreams[nInCount];
+        const size_t nInCount = data.size();
+        std::vector<size_t> pInSizes(nInCount);
+        std::vector<const char*> pInMimeTypes(nInCount);
+        std::vector<const char*> pInStreams(nInCount);
 
         for (size_t i = 0; i < nInCount; ++i)
         {
@@ -1253,7 +1254,8 @@ bool ChildSession::setClipboard(const char* buffer, int length, const StringVect
 
         getLOKitDocument()->setView(_viewId);
 
-        if (!getLOKitDocument()->setClipboard(nInCount, pInMimeTypes, pInSizes, pInStreams))
+        if (!getLOKitDocument()->setClipboard(nInCount, pInMimeTypes.data(), pInSizes.data(),
+                                              pInStreams.data()))
             LOG_ERR("set clipboard returned failure");
         else
             LOG_TRC("set clipboard succeeded");
