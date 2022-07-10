@@ -24,8 +24,6 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
-class COOLWebSocket;
-
 namespace
 {
 int findInDOM(Poco::XML::Document* doc, const char* string, bool checkName,

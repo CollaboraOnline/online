@@ -652,55 +652,6 @@ connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri
     throw std::runtime_error("Cannot connect to [" + uri.toString() + "].");
 }
 
-inline
-std::shared_ptr<COOLWebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL, const std::string& testname, bool isView = true, bool isAssert = true)
-{
-    try
-    {
-        // Load a document and get its status.
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::HTTPResponse response;
-        std::shared_ptr<COOLWebSocket> socket = connectLOKit(uri, request, response, testname);
-
-        sendTextFrame(socket, "load url=" + documentURL, testname);
-        bool isLoaded = isDocumentLoaded(*socket, testname, isView);
-        if (!isLoaded && !isAssert)
-        {
-            return nullptr;
-        }
-
-        LOK_ASSERT_MESSAGE("Failed to load the document " + documentURL, isLoaded);
-
-        TST_LOG("Loaded document [" << documentURL << "].");
-        return socket;
-    }
-    catch (const Poco::Exception& exc)
-    {
-        LOK_ASSERT_FAIL(exc.displayText());
-    }
-
-    // Really couldn't reach here, but the compiler doesn't know any better.
-    return nullptr;
-}
-
-inline
-std::shared_ptr<COOLWebSocket> loadDocAndGetSocket(const std::string& docFilename, const Poco::URI& uri, const std::string& testname, bool isView = true, bool isAssert = true)
-{
-    try
-    {
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL(docFilename, documentPath, documentURL, testname);
-        return loadDocAndGetSocket(uri, documentURL, testname, isView, isAssert);
-    }
-    catch (const Poco::Exception& exc)
-    {
-        LOK_ASSERT_FAIL(exc.displayText());
-    }
-
-    // Really couldn't reach here, but the compiler doesn't know any better.
-    return nullptr;
-}
-
 inline std::shared_ptr<http::WebSocketSession>
 loadDocAndGetSession(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri,
                      const std::string& documentURL, const std::string& testname,
@@ -896,32 +847,6 @@ inline int getCharKey(char ch, SpecialKey specialKeys)
     return result | specialKeys;
 }
 
-inline void sendKeyEvent(std::shared_ptr<COOLWebSocket>& socket, const char* type, int chr, int key, const std::string& testname)
-{
-    std::ostringstream ssIn;
-    ssIn << "key type=" << type << " char=" << chr << " key=" << key;
-    sendTextFrame(socket, ssIn.str(), testname);
-}
-
-inline void sendKeyPress(std::shared_ptr<COOLWebSocket>& socket, int chr, int key, const std::string& testname)
-{
-    sendKeyEvent(socket, "input", chr, key, testname);
-    sendKeyEvent(socket, "up", chr, key, testname);
-}
-
-inline void sendChar(std::shared_ptr<COOLWebSocket>& socket, char ch, SpecialKey specialKeys, const std::string& testname)
-{
-    sendKeyPress(socket, getCharChar(ch, specialKeys), getCharKey(ch, specialKeys), testname);
-}
-
-inline void sendText(std::shared_ptr<COOLWebSocket>& socket, const std::string& text, const std::string& testname)
-{
-    for (char ch : text)
-    {
-        sendChar(socket, ch, skNone, testname);
-    }
-}
-
 inline void sendKeyEvent(std::shared_ptr<http::WebSocketSession>& socket, const char* type, int chr,
                          int key, const std::string& testname)
 {
@@ -1013,13 +938,6 @@ inline void getServerVersion(T& socket, int& major, int& minor, const std::strin
     TST_LOG("Client [" << major << '.' << minor << "].");
 }
 
-inline void getServerVersion(std::shared_ptr<COOLWebSocket>& socket,
-                             int& major, int& minor,
-                             const std::string& testname)
-{
-    getServerVersion(*socket, major, minor, testname);
-}
-
 inline bool svgMatch(const std::string& testname, const std::vector<char>& response,
                      const char* templateFile)
 {
@@ -1044,17 +962,6 @@ inline bool svgMatch(const std::string& testname, const std::vector<char>& respo
         return false;
     }
     return true;
-}
-
-/// Select all and wait for the text selection update.
-inline void selectAll(const std::shared_ptr<COOLWebSocket>& socket, const std::string& testname, int repeat = COMMAND_RETRY_COUNT)
-{
-    for (int i = 0; i < repeat; ++i)
-    {
-        sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        if (!getResponseString(socket, "textselection:", testname).empty())
-            break;
-    }
 }
 
 /// Sends a command and waits for an event in response, with retrying.
@@ -1130,42 +1037,6 @@ inline std::string getAllText(const std::shared_ptr<http::WebSocketSession>& soc
     {
         TST_LOG("getAllText attempt #" << i);
 
-        selectAll(socket, testname);
-
-        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        std::string text = getResponseString(socket, prefix, testname);
-        if (!text.empty())
-        {
-            if (expected.empty() || (prefix + expected) == text)
-                return text;
-        }
-    }
-
-    return std::string();
-}
-
-/// Delete all and wait for the text selection update.
-inline void deleteAll(const std::shared_ptr<COOLWebSocket>& socket, const std::string& testname, int repeat = COMMAND_RETRY_COUNT)
-{
-    selectAll(socket, testname);
-
-    for (int i = 0; i < repeat; ++i)
-    {
-        sendTextFrame(socket, "uno .uno:Delete", testname);
-        if (!getResponseString(socket, "textselection:", testname).empty())
-            break;
-    }
-}
-
-inline std::string getAllText(const std::shared_ptr<COOLWebSocket>& socket,
-                              const std::string& testname,
-                              const std::string& expected = std::string(),
-                              int retry = COMMAND_RETRY_COUNT)
-{
-    static const std::string prefix = "textselectioncontent: ";
-
-    for (int i = 0; i < retry; ++i)
-    {
         selectAll(socket, testname);
 
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);

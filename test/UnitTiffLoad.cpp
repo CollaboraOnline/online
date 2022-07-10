@@ -17,8 +17,6 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
-class COOLWebSocket;
-
 /// TIFF load testcase.
 class UnitTiffLoad : public UnitWSD
 {

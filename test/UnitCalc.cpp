@@ -9,11 +9,9 @@
 
 #include <memory>
 #include <ostream>
-#include <set>
 #include <string>
 
 #include <Poco/Exception.h>
-#include <Poco/RegularExpression.h>
 #include <Poco/URI.h>
 #include <test/lokassert.hpp>
 
@@ -22,8 +20,6 @@
 #include <helpers.hpp>
 #include <kit/Delta.hpp>
 #include <net/WebSocketSession.hpp>
-
-class COOLWebSocket;
 
 namespace
 {

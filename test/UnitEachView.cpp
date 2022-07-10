@@ -17,11 +17,6 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
-// Include config.h last, so the test server URI is still HTTP, even in SSL builds.
-#include <config.h>
-
-class COOLWebSocket;
-
 namespace
 {
 void testEachView(const std::string& doc, const std::string& type, const std::string& protocol,

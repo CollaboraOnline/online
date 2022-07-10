@@ -17,8 +17,6 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
-class COOLWebSocket;
-
 /// Large paste testcase.
 class UnitLargePaste : public UnitWSD
 {

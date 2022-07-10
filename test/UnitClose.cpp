@@ -10,22 +10,14 @@
 #include <chrono>
 #include <memory>
 #include <ostream>
-#include <set>
 #include <string>
 
 #include <Poco/Exception.h>
-#include <Poco/RegularExpression.h>
 #include <Poco/URI.h>
 #include <test/lokassert.hpp>
 
-#include <Png.hpp>
 #include <Unit.hpp>
 #include <helpers.hpp>
-
-// Include config.h last, so the test server URI is still HTTP, even in SSL builds.
-#include <config.h>
-
-class COOLWebSocket;
 
 namespace
 {
