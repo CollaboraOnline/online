@@ -279,6 +279,8 @@ L.TextInput = L.Layer.extend({
 
 	getValue: function() {
 		var value = this._textArea.value;
+		if (this._map.formulabar && this._map.formulabar.hasFocus())
+			value = this._map.formulabar.getValue();
 		return value;
 	},
 
@@ -557,6 +559,10 @@ L.TextInput = L.Layer.extend({
 		}
 	},
 
+	setupLastContent: function(oldContent) {
+		this._lastContent = oldContent;
+	},
+
 	// Fired when text has been inputed, *during* and after composing/spellchecking
 	_onInput: function(ev) {
 		if (this._map.uiManager.isUIBlocked())
@@ -671,6 +677,22 @@ L.TextInput = L.Layer.extend({
 		// was a 'delete' and we need to reset world.
 		if (removeAfter > 0)
 			this._emptyArea();
+
+		// special handling for formulabar
+		if (content.length) {
+			var contentString = this.codePointsToString(content);
+			if (contentString[matchTo] === '\n' || contentString.charCodeAt(matchTo) === 13)
+				this._finishFormulabarEditing();
+		}
+	},
+
+	_finishFormulabarEditing: function() {
+		// now we use that only on touch devices
+		if (window.mode.isDesktop())
+			return;
+
+		if (this._map && this._map.formulabar && this._map.formulabar.hasFocus())
+			this._map.dispatch('acceptformula');
 	},
 
 	// Sends the given (UTF-8) string of text to coolwsd, as IME (text composition)
@@ -736,6 +758,8 @@ L.TextInput = L.Layer.extend({
 		this._lastContent = [];
 
 		this._textArea.value = this._preSpaceChar + this._postSpaceChar;
+		if (this._map && this._map.formulabar && this._map.formulabar.hasFocus())
+			this._map.formulabar.setValue('');
 
 		// avoid setting the focus keyboard
 		if (!noSelect) {
@@ -780,7 +804,8 @@ L.TextInput = L.Layer.extend({
 		this._fancyLog('abort-composition', ev.type);
 		if (this._isComposing)
 			this._isComposing = false;
-		this._emptyArea(document.activeElement !== this._textArea);
+		this._emptyArea((document.activeElement !== this._textArea)
+			&& (!this._map.formulabar || !this._map.formulabar.hasFocus()));
 	},
 
 	_onKeyDown: function(ev) {
