@@ -417,8 +417,3 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 #TableEditPanelPanelExpander #grid1 > tr > td {
 	width: 176px;
 }
-.sidebar #SetMinimalRowHeight,
-.sidebar #SetMinimalColumnWidth {
-	position: relative;
-	bottom: 28px;
-}
