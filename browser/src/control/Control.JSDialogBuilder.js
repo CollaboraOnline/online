@@ -1452,18 +1452,25 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		edit.addEventListener('change', function() {
 			if (callback)
 				callback(this.value);
-			if (data.rawKeyEvents) {
+			if (data.rawKeyEvents || data.useTextInput) {
 				// here event.keyCode has some non-ascii code
 			} else
 				builder.callback('edit', 'change', edit, this.value, builder);
 		});
 
-		if (data.rawKeyEvents) {
+		if (data.useTextInput) {
+			// uses TextInput.js logic and events handling (IME for mobile/touch devices)
+			edit.addEventListener('input', builder.map._textInput._onInput.bind(builder.map._textInput));
+			edit.addEventListener('beforeinput', builder.map._textInput._onBeforeInput.bind(builder.map._textInput));
+		} else if (data.rawKeyEvents) {
+			// sends key events over jsdialog
 			var modifier = 0;
 
 			edit.addEventListener('keydown', function(event) {
-				if (edit.disabled)
+				if (edit.disabled) {
+					event.preventDefault();
 					return;
+				}
 
 				if (event.key === 'Enter') {
 					builder.callback('edit', 'keypress', edit, UNOKey.RETURN | modifier, builder);
@@ -1511,8 +1518,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			});
 
 			edit.addEventListener('keyup', function(event) {
-				if (edit.disabled)
+				if (edit.disabled) {
+					event.preventDefault();
 					return;
+				}
 
 				if (event.key === 'Shift') {
 					modifier = modifier & (~UNOModifier.SHIFT);
@@ -1524,8 +1533,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			});
 
 			edit.addEventListener('keypress', function(event) {
-				if (edit.disabled)
+				if (edit.disabled) {
+					event.preventDefault();
 					return;
+				}
 
 				if (event.key === 'Enter' ||
 					event.key === 'Escape' ||
@@ -1558,10 +1569,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				event.preventDefault();
 			});
+		}
 
+		if (data.rawKeyEvents || data.useTextInput) {
 			edit.addEventListener('mouseup', function(event) {
-				if (edit.disabled)
+				if (edit.disabled) {
+					event.preventDefault();
 					return;
+				}
+
+				builder.callback('edit', 'grab_focus', edit, null, builder);
 
 				var currentText = event.target.value;
 
@@ -1588,6 +1605,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				var selection = startPos + ';' + endPos + ';' + startPara + ';' + endPara;
 				builder.callback('edit', 'textselection', edit, selection, builder);
+				event.preventDefault();
 			});
 		}
 

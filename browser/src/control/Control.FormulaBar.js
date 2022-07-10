@@ -18,6 +18,7 @@ L.Control.FormulaBar = L.Control.extend({
 				// if the user is not editing the address field
 				L.DomUtil.get('addressInput').value = e.address;
 			}
+			map.formulabarSetDirty();
 		});
 	},
 
