@@ -103,15 +103,11 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         std::string documentPath, documentURL;
         helpers::getDocumentPathAndURL("insert-delete.odp", documentPath, documentURL, testname);
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::URI uri(helpers::getTestServerURI());
-        Poco::Net::HTTPResponse httpResponse;
-        std::shared_ptr<COOLWebSocket> socket
-            = helpers::connectLOKit(uri, request, httpResponse, testname);
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>(testname);
+        socketPoll->startThread();
 
-        helpers::sendTextFrame(socket, "load url=" + documentURL, testname);
-        LOK_ASSERT_MESSAGE("cannot load the document " + documentURL,
-                               helpers::isDocumentLoaded(socket, testname));
+        std::shared_ptr<http::WebSocketSession> socket = helpers::loadDocAndGetSession(
+            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
 
         // check total slides 1
         TST_LOG("Expecting 1 slide.");
@@ -213,7 +209,6 @@ UnitBase::TestResult UnitInsertDelete::testPasteBlank()
         helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
         std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>(testname);
-
         socketPoll->startThread();
 
         std::shared_ptr<http::WebSocketSession> wsSession = helpers::loadDocAndGetSession(
