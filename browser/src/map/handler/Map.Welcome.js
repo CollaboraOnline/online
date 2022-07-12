@@ -125,6 +125,6 @@ L.Map.Welcome = L.Handler.extend({
 	}
 });
 
-if (window.isLocalStorageAllowed) {
+if (window.enableWelcomeMessage && window.isLocalStorageAllowed) {
 	L.Map.addInitHook('addHandler', 'welcome', L.Map.Welcome);
 }

@@ -303,6 +303,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.accessHeader = '';
       window.postMessageOriginExt = '';
       window.coolLogging = 'true';
+      window.enableWelcomeMessage = false;
       window.autoShowWelcome = false;
       window.outOfFocusTimeoutSecs = 1000000;
       window.idleTimeoutSecs = 1000000;
@@ -322,6 +323,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.postMessageOriginExt = '%POSTMESSAGE_ORIGIN%';
       window.coolLogging = '%BROWSER_LOGGING%';
       window.coolwsdVersion = '%COOLWSD_VERSION%';
+      window.enableWelcomeMessage = %ENABLE_WELCOME_MSG%;
       window.autoShowWelcome = %AUTO_SHOW_WELCOME%;
       window.userInterfaceMode = '%USER_INTERFACE_MODE%';
       window.useIntegrationTheme = '%USE_INTEGRATION_THEME%';
