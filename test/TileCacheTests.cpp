@@ -135,21 +135,14 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 
     void checkTiles(std::shared_ptr<http::WebSocketSession>& socket, const std::string& docType,
                     const std::string& testname);
-    void checkTiles(std::shared_ptr<COOLWebSocket>& socket, const std::string& type,
-                    const std::string& testname);
 
     void requestTiles(std::shared_ptr<http::WebSocketSession>& socket, const std::string& docType,
-                      const int part, const int docWidth, const int docHeight,
-                      const std::string& testname);
-    void requestTiles(std::shared_ptr<COOLWebSocket>& socket, const std::string& docType,
                       const int part, const int docWidth, const int docHeight,
                       const std::string& testname);
 
     void checkBlackTiles(std::shared_ptr<http::WebSocketSession>& socket, const int /*part*/,
                          const int /*docWidth*/, const int /*docHeight*/,
                          const std::string& testname);
-    void checkBlackTiles(std::shared_ptr<COOLWebSocket>& socket, const int part, const int docWidth,
-                         const int docHeight, const std::string& testname);
 
     void checkBlackTile(BlobData::const_iterator start, BlobData::const_iterator end);
 
@@ -973,35 +966,6 @@ void TileCacheTests::checkBlackTiles(std::shared_ptr<http::WebSocketSession>& so
     checkBlackTile(tile.begin() + firstLine.size() + 1, tile.end());
 }
 
-void TileCacheTests::checkBlackTiles(std::shared_ptr<COOLWebSocket>& socket, const int /*part*/,
-                                     const int /*docWidth*/, const int /*docHeight*/,
-                                     const std::string& testname)
-{
-    // Check the last row of tiles to verify that the tiles
-    // render correctly and there are no black tiles.
-    // Current cap of table size ends at 257280 twips (for load12.ods),
-    // otherwise 2035200 should be rendered successfully.
-    const char* req = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840";
-    sendTextFrame(socket, req, testname);
-
-    const std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
-    if (!tile.size())
-    {
-        LOK_ASSERT_FAIL("No tile returned to checkBlackTiles - failed load ?");
-        return;
-    }
-
-    const std::string firstLine = COOLProtocol::getFirstLine(tile);
-
-#if 0
-    std::fstream outStream("/tmp/black.png", std::ios::out);
-    outStream.write(tile.data() + firstLine.size() + 1, tile.size() - firstLine.size() - 1);
-    outStream.close();
-#endif
-
-    checkBlackTile(tile.begin() + firstLine.size() + 1, tile.end());
-}
-
 void TileCacheTests::testTileInvalidateWriter()
 {
     const char* testname = "tileInvalidateWriter ";
@@ -1444,153 +1408,6 @@ void TileCacheTests::requestTiles(std::shared_ptr<http::WebSocketSession>& socke
     }
 
     TST_LOG("requestTiles for " << testname << " finished.");
-}
-
-void TileCacheTests::checkTiles(std::shared_ptr<COOLWebSocket>& socket, const std::string& docType,
-                                const std::string& testname)
-{
-    const std::string current = "current=";
-    const std::string height = "height=";
-    const std::string parts = "parts=";
-    const std::string type = "type=";
-    const std::string width = "width=";
-
-    int currentPart = -1;
-    int totalParts = 0;
-    int docHeight = 0;
-    int docWidth = 0;
-
-    // check total slides 10
-    sendTextFrame(socket, "status", testname);
-    const auto response = assertResponseString(socket, "status:", testname);
-    {
-        std::string line;
-        std::istringstream istr(response.substr(8));
-        std::getline(istr, line);
-
-        StringVector tokens(StringVector::tokenize(line, ' '));
-#if defined CPPUNIT_ASSERT_GREATEREQUAL
-        if (docType == "presentation")
-            CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7), tokens.size()); // We have an extra field.
-        else
-            CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(6), tokens.size());
-#else
-        if (docType == "presentation")
-            LOK_ASSERT_EQUAL(static_cast<size_t>(7), tokens.size()); // We have an extra field.
-        else
-            LOK_ASSERT_EQUAL(static_cast<size_t>(6), tokens.size());
-#endif
-
-        // Expected format is something like 'type= parts= current= width= height='.
-        const std::string text = tokens[0].substr(type.size());
-        totalParts = std::stoi(tokens[1].substr(parts.size()));
-        currentPart = std::stoi(tokens[2].substr(current.size()));
-        docWidth = std::stoi(tokens[3].substr(width.size()));
-        docHeight = std::stoi(tokens[4].substr(height.size()));
-        LOK_ASSERT_EQUAL(docType, text);
-        LOK_ASSERT_EQUAL(10, totalParts);
-        LOK_ASSERT(currentPart > -1);
-        LOK_ASSERT(docWidth > 0);
-        LOK_ASSERT(docHeight > 0);
-    }
-
-    if (docType == "presentation")
-    {
-        // request tiles
-        TST_LOG("Requesting Impress tiles.");
-        requestTiles(socket, docType, currentPart, docWidth, docHeight, testname);
-    }
-
-    // random setclientpart
-    std::vector<int> vParts = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    std::mt19937 random;
-    random.seed(std::time(nullptr));
-    std::shuffle(vParts.begin(), vParts.end(), random);
-    int requests = 0;
-    for (int it : vParts)
-    {
-        if (currentPart != it)
-        {
-            // change part
-            const std::string text = Poco::format("setclientpart part=%d", it);
-            sendTextFrame(socket, text, testname);
-            // Wait for the change to take effect otherwise we get invalidatetile
-            // which removes our next tile request subscription (expecting us to
-            // issue a new tile request as a response, which a real client would do).
-            assertResponseString(socket, "setpart:", testname);
-
-            requestTiles(socket, docType, it, docWidth, docHeight, testname);
-
-            if (++requests >= 3)
-            {
-                // No need to test all parts.
-                break;
-            }
-        }
-
-        currentPart = it;
-    }
-}
-
-void TileCacheTests::requestTiles(std::shared_ptr<COOLWebSocket>& socket,
-                                  const std::string& , const int part, const int docWidth,
-                                  const int docHeight, const std::string& testname)
-{
-    // twips
-    const int tileSize = 3840;
-    // pixel
-    const int pixTileSize = 256;
-
-    int rows;
-    int cols;
-    int tileX;
-    int tileY;
-    int tileWidth;
-    int tileHeight;
-
-    std::string text;
-    std::string tile;
-
-    rows = docHeight / tileSize;
-    cols = docWidth / tileSize;
-
-    // Note: this code tests tile requests in the wrong way.
-
-    // This code does NOT match what was the idea how the COOL protocol should/could be used. The
-    // intent was never that the protocol would need to be, or should be, used in a strict
-    // request/reply fashion. If a client needs n tiles, it should just send the requests, one after
-    // another. There is no need to do n roundtrips. A client should all the time be reading
-    // incoming messages, and handle incoming tiles as appropriate. There should be no expectation
-    // that tiles arrive at the client in the same order that they were requested.
-
-    // But, whatever.
-
-    for (int itRow = 0; itRow < rows; ++itRow)
-    {
-        for (int itCol = 0; itCol < cols; ++itCol)
-        {
-            tileWidth = tileSize;
-            tileHeight = tileSize;
-            tileX = tileSize * itCol;
-            tileY = tileSize * itRow;
-            text = Poco::format("tile nviewid=0 part=%d width=%d height=%d tileposx=%d tileposy=%d tilewidth=%d tileheight=%d",
-                                part, pixTileSize, pixTileSize, tileX, tileY, tileWidth, tileHeight);
-
-            sendTextFrame(socket, text, testname);
-            tile = assertResponseString(socket, "tile:", testname);
-            // expected tile: part= width= height= tileposx= tileposy= tilewidth= tileheight=
-            StringVector tokens(StringVector::tokenize(tile, ' '));
-            LOK_ASSERT_EQUAL(std::string("tile:"), tokens[0]);
-            LOK_ASSERT_EQUAL(0, std::stoi(tokens[1].substr(std::string("nviewid=").size())));
-            LOK_ASSERT_EQUAL(part, std::stoi(tokens[2].substr(std::string("part=").size())));
-            LOK_ASSERT_EQUAL(pixTileSize, std::stoi(tokens[3].substr(std::string("width=").size())));
-            LOK_ASSERT_EQUAL(pixTileSize, std::stoi(tokens[4].substr(std::string("height=").size())));
-            LOK_ASSERT_EQUAL(tileX, std::stoi(tokens[5].substr(std::string("tileposx=").size())));
-            LOK_ASSERT_EQUAL(tileY, std::stoi(tokens[6].substr(std::string("tileposy=").size())));
-            LOK_ASSERT_EQUAL(tileWidth, std::stoi(tokens[7].substr(std::string("tileWidth=").size())));
-            LOK_ASSERT_EQUAL(tileHeight, std::stoi(tokens[8].substr(std::string("tileHeight=").size())));
-        }
-    }
 }
 
 void TileCacheTests::testTileRequestByInvalidation()
