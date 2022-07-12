@@ -1838,11 +1838,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "trace.path[@compress]", "true" },
         { "trace.path[@snapshot]", "false" },
         { "trace[@enable]", "false" },
-#if ENABLE_WELCOME_MESSAGE
-        { "welcome.enable", "true"},
-#else
         { "welcome.enable", "false" },
-#endif
 #ifdef ENABLE_FEATURE_LOCK
         { "feature_lock.locked_hosts[@allow]", "false"},
         { "feature_lock.locked_hosts.fallback[@read_only]", "false"},
@@ -2258,17 +2254,20 @@ void COOLWSD::innerInitialize(Application& self)
 
     // Log the connection and document limits.
 #if ENABLE_WELCOME_MESSAGE
-    if (!getConfigValue<bool>(conf, "welcome.enable", false))
+    if (getConfigValue<bool>(conf, "home_mode.enable", false))
     {
         COOLWSD::MaxConnections = 20;
         COOLWSD::MaxDocuments = 5;
     }
-    else
-#endif
+    else {
+        conf.setString("welcome.enable", "true");
+    }
+#else
     {
         COOLWSD::MaxConnections = MAX_CONNECTIONS;
         COOLWSD::MaxDocuments = MAX_DOCUMENTS;
     }
+#endif
 
 #if !MOBILEAPP
     NoSeccomp = !getConfigValue<bool>(conf, "security.seccomp", true);
