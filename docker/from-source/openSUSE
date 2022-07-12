@@ -6,10 +6,11 @@ FROM opensuse/leap
 
 # refresh repos otherwise installations later may fail
 # install LibreOffice run-time dependencies
+# install timezone data to accept the TZ environment variable
 # install an editor
 # tdf#117557 - Add CJK Fonts to Collabora Online Docker Image
 RUN zypper ref && \
-    zypper --non-interactive install libcap-progs libpng16-16 fontconfig nano openssh inotify-tools
+    zypper --non-interactive install libcap-progs libpng16-16 fontconfig nano openssh inotify-tools timezone
 
 # copy freshly built LOKit and Collabora Online
 COPY /instdir /
