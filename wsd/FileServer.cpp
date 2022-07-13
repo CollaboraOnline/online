@@ -896,7 +896,13 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     LOG_TRC("ui_defaults=" << uiDefaults);
     const std::string cssVars = form.get("css_variables", "");
     LOG_TRC("css_variables=" << cssVars);
-    const std::string buyProduct = form.get("buy_product", "");
+    std::string buyProduct;
+    {
+        std::lock_guard<std::mutex> lock(COOLWSD::RemoteConfigMutex);
+        buyProduct = COOLWSD::BuyProductUrl;
+    }
+    if (buyProduct.empty())
+        buyProduct = form.get("buy_product", "");
     LOG_TRC("buy_product=" << buyProduct);
     const std::string postMessageOrigin = form.get("postmessage_origin", "");
     LOG_TRC("postmessage_origin" << postMessageOrigin);
