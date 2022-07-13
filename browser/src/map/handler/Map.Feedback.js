@@ -30,7 +30,7 @@ L.Map.Feedback = L.Handler.extend({
 	onUpdateList: function () {
 		var docLayer = this._map._docLayer || {};
 
-		if (docLayer && docLayer._viewId == 0)
+		if (window.feedbackUrl && docLayer && docLayer._viewId == 0)
 			this.onDocLoaded();
 	},
 
@@ -143,6 +143,7 @@ L.Map.Feedback = L.Handler.extend({
 		}
 	}
 });
-if (window.feedbackUrl && window.isLocalStorageAllowed) {
+
+if (window.isLocalStorageAllowed) {
 	L.Map.addInitHook('addHandler', 'feedback', L.Map.Feedback);
 }
