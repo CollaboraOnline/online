@@ -1041,9 +1041,9 @@ class RemoteJSONPoll : public SocketPoll
 public:
     RemoteJSONPoll(LayeredConfiguration& config, const std::string& uriConfigKey, const std::string& name, const std::string& kind)
         : SocketPoll(name)
-        , conf(config)
-        , configKey(uriConfigKey)
-        , expectedKind(kind)
+        , _conf(config)
+        , _configKey(uriConfigKey)
+        , _expectedKind(kind)
     { }
 
     virtual ~RemoteJSONPoll() { }
@@ -1055,13 +1055,13 @@ public:
 
     void start()
     {
-        Poco::URI remoteServerURI(conf.getString(configKey));
+        Poco::URI remoteServerURI(_conf.getString(_configKey));
 
-        if (expectedKind == "configuration")
+        if (_expectedKind == "configuration")
         {
             if (remoteServerURI.empty())
             {
-                LOG_INF("Remote " << expectedKind << " is not specified in coolwsd.xml");
+                LOG_INF("Remote " << _expectedKind << " is not specified in coolwsd.xml");
                 return; // no remote config server setup.
             }
 #if !ENABLE_DEBUG
@@ -1080,7 +1080,7 @@ public:
     {
         while (!isStop() && !SigUtil::getTerminationFlag() && !SigUtil::getShutdownRequestFlag())
         {
-            Poco::URI remoteServerURI(conf.getString(configKey));
+            Poco::URI remoteServerURI(_conf.getString(_configKey));
 
             // don't try to fetch from an empty URI
             bool valid = !remoteServerURI.empty();
@@ -1102,9 +1102,9 @@ public:
                     http::Request request(remoteServerURI.getPathAndQuery());
 
                     //we use ETag header to check whether JSON is modified or not
-                    if (!eTagValue.empty())
+                    if (!_eTagValue.empty())
                     {
-                        request.set("If-None-Match", eTagValue);
+                        request.set("If-None-Match", _eTagValue);
                     }
 
                     const std::shared_ptr<const http::Response> httpResponse =
@@ -1114,7 +1114,7 @@ public:
 
                     if (statusCode == Poco::Net::HTTPResponse::HTTP_OK)
                     {
-                        eTagValue = httpResponse->get("ETag");
+                        _eTagValue = httpResponse->get("ETag");
 
                         std::string body = httpResponse->getBody();
 
@@ -1125,14 +1125,14 @@ public:
                         {
                             std::string kind;
                             JsonUtil::findJSONValue(remoteJson, "kind", kind);
-                            if (kind == expectedKind)
+                            if (kind == _expectedKind)
                             {
                                 handleJSON(remoteJson);
                             }
                             else
                             {
                                 LOG_ERR("Make sure that " << remoteServerURI.toString() << " contains a property 'kind' with "
-                                        "value '" << expectedKind << "'");
+                                        "value '" << _expectedKind << "'");
                             }
                         }
                         else
@@ -1161,12 +1161,12 @@ public:
     }
 
 protected:
-    LayeredConfiguration& conf;
-    std::string eTagValue;
+    LayeredConfiguration& _conf;
+    std::string _eTagValue;
 
 private:
-    std::string configKey;
-    std::string expectedKind;
+    std::string _configKey;
+    std::string _expectedKind;
 };
 
 class RemoteConfigPoll : public RemoteJSONPoll
@@ -1198,22 +1198,22 @@ public:
         fetchRemoteFontConfig(newAppConfig, remoteJson);
 
         AutoPtr<AppConfigMap> newConfig(new AppConfigMap(newAppConfig));
-        conf.addWriteable(newConfig, PRIO_JSON);
+        _conf.addWriteable(newConfig, PRIO_JSON);
 
-        HostUtil::parseWopiHost(conf);
+        HostUtil::parseWopiHost(_conf);
 
 #if ENABLE_FEATURE_LOCK
-        CommandControl::LockManager::parseLockedHost(conf);
+        CommandControl::LockManager::parseLockedHost(_conf);
 #endif
 
-        HostUtil::parseAliases(conf);
+        HostUtil::parseAliases(_conf);
     }
 
     void fetchWopiHostPatterns(std::map<std::string, std::string>& newAppConfig,
                                Poco::JSON::Object::Ptr remoteJson)
     {
         //wopi host patterns
-        if (!conf.getBool("storage.wopi[@allow]", false))
+        if (!_conf.getBool("storage.wopi[@allow]", false))
         {
             LOG_INF("WOPI host feature is disabled in configuration");
             return;
@@ -1257,7 +1257,7 @@ public:
             for (;; ++i)
             {
                 const std::string path = "storage.wopi.host[" + std::to_string(i) + "]";
-                if (!conf.has(path))
+                if (!_conf.has(path))
                 {
                     break;
                 }
@@ -1274,7 +1274,7 @@ public:
     void fetchLockedHostPatterns(std::map<std::string, std::string>& newAppConfig,
                                  Poco::JSON::Object::Ptr remoteJson)
     {
-        if (!conf.getBool("feature_lock.locked_hosts[@allow]", false))
+        if (!_conf.getBool("feature_lock.locked_hosts[@allow]", false))
         {
             LOG_INF("locked_hosts feature is disabled from configuration");
             return;
@@ -1317,7 +1317,7 @@ public:
             {
                 const std::string path =
                     "feature_lock.locked_hosts.host[" + std::to_string(i) + "]";
-                if (!conf.has(path))
+                if (!_conf.has(path))
                 {
                     break;
                 }
@@ -1395,7 +1395,7 @@ public:
                 for (;; j++)
                 {
                     const std::string aliasPath = path + ".alias[" + std::to_string(j) + ']';
-                    if (!conf.has(aliasPath))
+                    if (!_conf.has(aliasPath))
                     {
                         break;
                     }
@@ -1409,7 +1409,7 @@ public:
             {
                 const std::string path =
                     "storage.wopi.alias_groups.group[" + std::to_string(i) + "].host";
-                if (!conf.has(path))
+                if (!_conf.has(path))
                 {
                     break;
                 }
@@ -1458,16 +1458,16 @@ public:
                 Poco::JSON::Object::Ptr translation = lockedTranslations->getObject(i);
                 std::string language;
                 //default values if the one of the entry is missing in json
-                std::string title = conf.getString("feature_lock.unlock_title", "");
-                std::string description = conf.getString("feature_lock.unlock_description", "");
+                std::string title = _conf.getString("feature_lock.unlock_title", "");
+                std::string description = _conf.getString("feature_lock.unlock_description", "");
                 std::string writerHighlights =
-                    conf.getString("feature_lock.writer_unlock_highlights", "");
+                    _conf.getString("feature_lock.writer_unlock_highlights", "");
                 std::string impressHighlights =
-                    conf.getString("feature_lock.impress_unlock_highlights", "");
+                    _conf.getString("feature_lock.impress_unlock_highlights", "");
                 std::string calcHighlights =
-                    conf.getString("feature_lock.calc_unlock_highlights", "");
+                    _conf.getString("feature_lock.calc_unlock_highlights", "");
                 std::string drawHighlights =
-                    conf.getString("feature_lock.draw_unlock_highlights", "");
+                    _conf.getString("feature_lock.draw_unlock_highlights", "");
 
                 JsonUtil::findJSONValue(translation, "language", language);
                 JsonUtil::findJSONValue(translation, "unlock_title", title);
@@ -1500,7 +1500,7 @@ public:
             {
                 const std::string path =
                     "feature_lock.translations.language[" + std::to_string(i) + "][@name]";
-                if (!conf.has(path))
+                if (!_conf.has(path))
                 {
                     break;
                 }
@@ -1802,7 +1802,7 @@ private:
         fonts.clear();
         // Clear the saved ETag of the remote font configuration file so that it will be
         // re-downloaded, and all fonts mentioned in it re-downloaded and fed to ForKit.
-        eTagValue = "";
+        _eTagValue = "";
         COOLWSD::sendMessageToForKit("exit");
     }
 
