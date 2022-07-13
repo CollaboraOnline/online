@@ -290,7 +290,8 @@ L.Map = L.Evented.extend({
 					commentSection.clearList();
 			}
 
-			this.initializeModificationIndicator();
+			if (!window.mode.isMobile())
+				this.initializeModificationIndicator();
 
 			// Show sidebar.
 			if (this._docLayer && !this._docLoadedOnce) {
