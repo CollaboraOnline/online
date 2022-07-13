@@ -199,8 +199,10 @@ ServerSocket::Type ClientListenAddr = ServerSocket::Type::Public;
 /// UDS address for kits to connect to.
 std::string MasterLocation;
 
+std::string COOLWSD::BuyProductUrl;
 std::string COOLWSD::LatestVersion;
 std::mutex COOLWSD::FetchUpdateMutex;
+std::mutex COOLWSD::RemoteConfigMutex;
 #endif
 
 // Tracks the set of prisoners / children waiting to be used.
@@ -1207,6 +1209,8 @@ public:
 #endif
 
         HostUtil::parseAliases(_conf);
+
+        handleOptions(remoteJson);
     }
 
     void fetchWopiHostPatterns(std::map<std::string, std::string>& newAppConfig,
@@ -1540,6 +1544,24 @@ public:
         catch (const std::exception& exc)
         {
             LOG_ERR("Failed to fetch unlock_image, please check JSON format: " << exc.what());
+        }
+    }
+
+    void handleOptions(Poco::JSON::Object::Ptr remoteJson)
+    {
+        try
+        {
+            std::string buyProduct;
+            JsonUtil::findJSONValue(remoteJson, "buy_product_url", buyProduct);
+            Poco::URI buyProductUri(buyProduct);
+            {
+                std::lock_guard<std::mutex> lock(COOLWSD::RemoteConfigMutex);
+                COOLWSD::BuyProductUrl = buyProductUri.toString();
+            }
+        }
+        catch(const Poco::Exception& exc)
+        {
+            LOG_ERR("handleOptions: Exception " << exc.what());
         }
     }
 
