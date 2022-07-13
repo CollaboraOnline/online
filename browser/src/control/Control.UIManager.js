@@ -166,6 +166,7 @@ L.Control.UIManager = L.Control.extend({
 			var formulabar = L.control.formulaBarJSDialog();
 			this.map.formulabar = formulabar;
 			this.map.addControl(formulabar);
+			$('#toolbar-wrapper').addClass('spreadsheet');
 
 			// remove unused elements
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
