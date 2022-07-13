@@ -1839,6 +1839,8 @@ void COOLWSD::innerInitialize(Application& self)
         { "trace.path[@snapshot]", "false" },
         { "trace[@enable]", "false" },
         { "welcome.enable", "false" },
+        { "home_mode.enable", "false" },
+        { "feedback.show", "true" },
 #ifdef ENABLE_FEATURE_LOCK
         { "feature_lock.locked_hosts[@allow]", "false"},
         { "feature_lock.locked_hosts.fallback[@read_only]", "false"},
@@ -2260,6 +2262,7 @@ void COOLWSD::innerInitialize(Application& self)
         COOLWSD::MaxDocuments = 5;
     }
     else {
+        conf.setString("feedback.show", "true");
         conf.setString("welcome.enable", "true");
         COOLWSD::MaxConnections = MAX_CONNECTIONS;
         COOLWSD::MaxDocuments = MAX_DOCUMENTS;

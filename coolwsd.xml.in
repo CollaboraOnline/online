@@ -261,7 +261,7 @@
     </remote_font_config>
 
     <home_mode>
-        <enable desc="" type="bool" default="false"></enable>
+        <enable desc="" type="bool" default="false">false</enable>
     </home_mode>
 
     @LOCK_CONFIGURATION@

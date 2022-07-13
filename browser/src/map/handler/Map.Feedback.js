@@ -59,7 +59,7 @@ L.Map.Feedback = L.Handler.extend({
 				laterDate.setTime(timeValue + 432000000);
 			}
 
-			if (docCount > 15 && currentDate > laterDate)
+			if (docCount > 15 && currentDate > laterDate && window.autoShowFeedback)
 				setTimeout(L.bind(this.onFeedback, this), this._map.options.feedbackTimeout);
 		}
 	},
