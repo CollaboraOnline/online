@@ -2261,6 +2261,8 @@ void COOLWSD::innerInitialize(Application& self)
     }
     else {
         conf.setString("welcome.enable", "true");
+        COOLWSD::MaxConnections = MAX_CONNECTIONS;
+        COOLWSD::MaxDocuments = MAX_DOCUMENTS;
     }
 #else
     {
