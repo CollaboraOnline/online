@@ -23,6 +23,8 @@ global:
       internalPort: 9980
   ingress:
     name: collabora-online
+  configmap:
+    name: collabora-online
 
 replicaCount: 3 # This is the amount of how many instances of coolwsd will run
 
