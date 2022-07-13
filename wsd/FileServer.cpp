@@ -1036,7 +1036,14 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     std::string enableMacrosExecution = stringifyBoolFromConfig(config, "security.enable_macros_execution", false);
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_MACROS_EXECUTION%"), enableMacrosExecution);
 
-    Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_URL%"), std::string(FEEDBACK_URL));
+    std::string feedbackUrl;
+    {
+        std::lock_guard<std::mutex> lock(COOLWSD::RemoteConfigMutex);
+        feedbackUrl = COOLWSD::FeedbackUrl;
+    }
+
+    Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_URL%"),
+                         COOLWSD::getConfigValue<bool>("home_mode.feedback", true) ? feedbackUrl : "");
     Poco::replaceInPlace(preprocess, std::string("%WELCOME_URL%"), std::string(WELCOME_URL));
 
     const std::string mimeType = "text/html";
@@ -1045,7 +1052,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     // iframe purposes.
     std::ostringstream cspOss;
     cspOss << "Content-Security-Policy: default-src 'none'; "
-        "frame-src 'self' " << WELCOME_URL << " " << FEEDBACK_URL << " blob: " << documentSigningURL << "; "
+        "frame-src 'self' " << WELCOME_URL << " " << feedbackUrl << " blob: " << documentSigningURL << "; "
            "connect-src 'self' " << cnxDetails.getWebSocketUrl() << "; "
            "script-src 'unsafe-inline' 'self'; "
            "style-src 'self' 'unsafe-inline'; "

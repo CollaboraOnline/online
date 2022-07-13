@@ -198,8 +198,10 @@ ServerSocket::Type ClientListenAddr = ServerSocket::Type::Public;
 /// UDS address for kits to connect to.
 std::string MasterLocation;
 
+std::string COOLWSD::FeedbackUrl;
 std::string COOLWSD::LatestVersion;
 std::mutex COOLWSD::FetchUpdateMutex;
+std::mutex COOLWSD::RemoteConfigMutex;
 #endif
 
 // Tracks the set of prisoners / children waiting to be used.
@@ -1196,6 +1198,8 @@ public:
 #endif
 
         HostUtil::parseAliases(_conf);
+
+        handleOptions(remoteJson);
     }
 
     void fetchWopiHostPatterns(std::map<std::string, std::string>& newAppConfig,
@@ -1424,6 +1428,24 @@ public:
         catch (const std::exception& exc)
         {
             LOG_ERR("Failed to fetch remote_font_config, please check JSON format: " << exc.what());
+        }
+    }
+
+    void handleOptions(Poco::JSON::Object::Ptr remoteJson)
+    {
+        try
+        {
+            std::string feedback;
+            JsonUtil::findJSONValue(remoteJson, "feedback_url", feedback);
+            Poco::URI feedbackUri(feedback);
+            {
+                std::lock_guard<std::mutex> lock(COOLWSD::RemoteConfigMutex);
+                COOLWSD::FeedbackUrl = feedbackUri.toString();
+            }
+        }
+        catch(const Poco::Exception& exc)
+        {
+            LOG_ERR("handleOptions: Exception " << exc.what());
         }
     }
 
@@ -2366,6 +2388,11 @@ void COOLWSD::innerInitialize(Application& self)
     }
 
 #if !MOBILEAPP
+    {
+        Poco::URI feedbackUri(FEEDBACK_URL);
+        FeedbackUrl = feedbackUri.toString();
+    }
+
     SavedClipboards = Util::make_unique<ClipboardCache>();
 
     LOG_TRC("Initialize FileServerRequestHandler");
