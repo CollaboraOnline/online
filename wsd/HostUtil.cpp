@@ -8,6 +8,8 @@
 #include "HostUtil.hpp"
 #include <common/ConfigUtil.hpp>
 #include <common/Log.hpp>
+#include <common/CommandControl.hpp>
+#include <config.h>
 
 Util::RegexListMatcher HostUtil::WopiHosts;
 std::map<std::string, std::string> HostUtil::AliasHosts;
@@ -78,6 +80,9 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
     }
 
     AliasHosts.clear();
+#ifdef ENABLE_FEATURE_LOCK
+    CommandControl::LockManager::unlockLinkMap.clear();
+#endif
 
     for (size_t i = 0;; i++)
     {
@@ -97,6 +102,9 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
         try
         {
             const Poco::URI realUri(uri);
+#ifdef ENABLE_FEATURE_LOCK
+            CommandControl::LockManager::mapUnlockLink(realUri.getHost(), path);
+#endif
             HostUtil::hostList.insert(realUri.getHost());
             HostUtil::addWopiHost(realUri.getHost(), allow);
         }
@@ -129,6 +137,9 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
                     const Poco::URI aUri(aliasUri.getScheme() + "://" + x + ':' +
                                          std::to_string(aliasUri.getPort()));
                     AliasHosts.insert({ aUri.getAuthority(), realUri.getAuthority() });
+#ifdef ENABLE_FEATURE_LOCK
+                    CommandControl::LockManager::mapUnlockLink(aUri.getHost(), path);
+#endif
                     HostUtil::addWopiHost(aUri.getHost(), allow);
                 }
             }

@@ -20,8 +20,10 @@ std::unordered_set<std::string> LockManager::LockedCommandList;
 std::string LockManager::LockedCommandListString;
 Util::RegexListMatcher LockManager::readOnlyWopiHosts;
 Util::RegexListMatcher LockManager::disabledCommandWopiHosts;
+std::map<std::string, std::string> LockManager::unlockLinkMap;
 bool LockManager::lockHostEnabled = false;
 std::string LockManager::translationPath = std::string();
+std::string LockManager::unlockLink = std::string();
 
 LockManager::LockManager() {}
 
@@ -134,6 +136,18 @@ void LockManager::setTranslationPath(const std::string& lockedDialogLang)
                 "feature_lock.translations.language[" + std::to_string(i) + ']';
             return;
         }
+    }
+}
+void LockManager::mapUnlockLink(const std::string& host, const std::string& path)
+{
+    if (!config::has(path + ".unlock_link"))
+    {
+        return;
+    }
+    const std::string link = config::getString(path + ".unlock_link" , "");
+    if (!link.empty())
+    {
+        unlockLinkMap.insert({host, link });
     }
 }
 
