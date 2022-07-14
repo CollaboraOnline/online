@@ -35,6 +35,8 @@ public:
     // Allow/deny Locked hosts
     static Util::RegexListMatcher readOnlyWopiHosts;
     static Util::RegexListMatcher disabledCommandWopiHosts;
+    static std::map<std::string, std::string> unlockLinkMap;
+    static std::string unlockLink;
     static bool lockHostEnabled;
 
     static void parseLockedHost(Poco::Util::LayeredConfiguration& conf);
@@ -62,6 +64,8 @@ public:
     }
     static std::string getUnlockLink()
     {
+        if (!unlockLink.empty())
+            return unlockLink;
         return config::getString("feature_lock.unlock_link", "");
     }
     static std::string getUnlockDescription()
@@ -111,9 +115,11 @@ public:
         }
         return Poco::URI();
     }
-    static void resetTransalatioPath()
+    static void resetTransalatioPath() { translationPath = std::string(); }
+    static void mapUnlockLink(const std::string& host, const std::string& path);
+    static void setUnlockLink(const std::string& host)
     {
-        translationPath = std::string();
+        unlockLink = Util::getValue(unlockLinkMap, host);
     }
 };
 
