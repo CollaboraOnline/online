@@ -24,7 +24,7 @@
 
 /* Should the Release notes message on startup should be enabled be default?
    */
-#define ENABLE_WELCOME_MESSAGE "false"
+#define ENABLE_WELCOME_MESSAGE 0
 
 /* Should the Release notes message on startup have a dismiss button instead of an x button to close by default?
    */
