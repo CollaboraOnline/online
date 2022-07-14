@@ -205,6 +205,7 @@
                     <host desc="hostname to allow or deny." allow="true">scheme://hostname:port</host>
                     <alias desc="regex pattern of aliasname">scheme://aliasname1:port</alias>
                     <alias desc="regex pattern of aliasname">scheme://aliasname2:port</alias>
+                    @UNLOCK_LINK_PER_HOST@
             </group>-->
             <!-- More "group"s possible here -->
             </alias_groups>

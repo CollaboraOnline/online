@@ -1358,7 +1358,11 @@ public:
 
                 newAppConfig.insert(std::make_pair(path + ".host", host));
                 newAppConfig.insert(std::make_pair(path + ".host[@allow]", booleanToString(allow)));
-
+#ifdef ENABLE_FEATURE_LOCK
+                std::string unlockLink;
+                JsonUtil::findJSONValue(group, "unlock_link", unlockLink);
+                newAppConfig.insert(std::make_pair(path + ".unlock_link", unlockLink));
+#endif
                 Poco::JSON::Array::Ptr aliases = group->getArray("aliases");
 
                 auto it = aliases->begin();
