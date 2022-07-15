@@ -901,7 +901,8 @@ int main(int argc, char**argv)
     inline int findSubArray(const char* data, const std::size_t dataLen, const char* sub,
                             const std::size_t subLen)
     {
-        assert(subLen < std::numeric_limits<int>::max() && "Invalid sub-array length to find");
+        assert(subLen < std::numeric_limits<unsigned int>::max() &&
+               "Invalid sub-array length to find");
         if (sub && subLen && dataLen >= subLen)
         {
             for (std::size_t i = 0; i < dataLen; ++i)
