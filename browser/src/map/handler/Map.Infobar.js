@@ -55,7 +55,7 @@ L.Map.Infobar = L.Handler.extend({
 				if (v1 > v2) {
 					var currentDate = new Date();
 					window.localStorage.setItem('InfoBarLaterDate', currentDate.getTime());
-					snackbarMessage = snackbarMessage.replace('%0', latestVersion);
+					snackbarMessage = snackbarMessage.replace('%0', e.coolwsd_version);
 					this._map.uiManager.showSnackbar(snackbarMessage);
 					clearInterval(this._intervalInfo);
 					break;
