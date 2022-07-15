@@ -9,8 +9,9 @@ metadata:
       balance leastconn
       stick store-request url_param(WOPISrc)
       stick-table type string len 2048 size 1k store conn_cur
+      http-request set-var(txn.wopisrcconns) url_param(WOPISrc),table_conn_cur(collabora_collabora-online_collabora-online)
       http-request track-sc1 url_param(WOPISrc)
-      stick match url_param(WOPISrc) if { sc1_conn_cur gt 1 }
+      stick match url_param(WOPISrc) if { var(txn.wopisrcconns) -m int gt 0 }
 spec:
   rules:
   - host: {{ .Values.hosts.host }}
