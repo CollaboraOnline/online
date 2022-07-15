@@ -411,39 +411,38 @@ app.definitions.Socket = L.Class.extend({
 
 	_extractImage: function(e) {
 		var img;
-		// FIXME: almost certainly we broke iOS with the deltas change.
-		if (window.ThisIsTheiOSApp) {
-			// In the iOS app, the native code sends us the PNG tile already as a data: URL after the newline
-			var newlineIndex = e.textMsg.indexOf('\n');
-			if (newlineIndex > 0) {
-				img = e.textMsg.substring(newlineIndex+1);
-				e.textMsg = e.textMsg.substring(0, newlineIndex);
-			}
-		}
-		else
-		{
-			var data = e.imgBytes.subarray(e.imgIndex);
-			var prefix = '';
-			// FIXME: so we prepend the PNG pre-byte here having removed it in TileCache::appendBlob
-			if (data[0] != 0x89)
-				prefix = String.fromCharCode(0x89);
-			img = 'data:image/png;base64,' + window.btoa(this._strFromUint8(prefix,data));
-			if (L.Browser.cypressTest && localStorage.getItem('image_validation_test')) {
-				if (!window.imgDatas)
-					window.imgDatas = [];
-				window.imgDatas.push(img);
-			}
+		var data = e.imgBytes.subarray(e.imgIndex);
+		var prefix = '';
+		// FIXME: so we prepend the PNG pre-byte here having removed it in TileCache::appendBlob
+		if (data[0] != 0x89)
+			prefix = String.fromCharCode(0x89);
+		img = 'data:image/png;base64,' + window.btoa(this._strFromUint8(prefix,data));
+		if (L.Browser.cypressTest && localStorage.getItem('image_validation_test')) {
+			if (!window.imgDatas)
+				window.imgDatas = [];
+			window.imgDatas.push(img);
 		}
 		return img;
 	},
 
 	_extractTextImg: function (e) {
 
-		if (typeof (e.data) === 'string')
+		if (window.ThisIsTheiOSApp && typeof (e.data) === 'string') {
+			var index;
+			index = e.data.indexOf('\n');
+			if (index < 0)
+				index = e.data.length;
+			e.imgBytes = new Uint8Array(e.data.length);
+			for (var i = 0; i < e.data.length; i++) {
+				e.imgBytes[i] = e.data.charCodeAt(i);
+			}
+			e.imgIndex = index + 1;
+			e.textMsg = e.data.substring(0, index);
+		} else if (typeof (e.data) === 'string') {
 			e.textMsg = e.data;
-		else if (typeof (e.data) === 'object')
+		} else if (typeof (e.data) === 'object') {
 			this._extractCopyObject(e);
-
+		}
 		e.isComplete = function () {
 			if (this.image)
 				return !!this.imageIsComplete;
