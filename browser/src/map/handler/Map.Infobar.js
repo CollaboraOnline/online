@@ -10,12 +10,12 @@ L.Map.mergeOptions({
 
 L.Map.Infobar = L.Handler.extend({
 	addHooks: function () {
-		this._intervalInfo = setInterval(L.bind(this.onUpdateInfo, this), 1800000);
+		this._map.on('updateviewslist', this.onUpdateInfo, this);
 		this._map.on('infobar', this.onInfobar, this);
 	},
 
 	removeHooks: function () {
-		clearInterval(this._intervalInfo);
+		this._map.off('updateviewslist', this.onInfobar, this);
 		this._map.off('infobar', this.onInfobar, this);
 	},
 
@@ -57,7 +57,6 @@ L.Map.Infobar = L.Handler.extend({
 					window.localStorage.setItem('InfoBarLaterDate', currentDate.getTime());
 					snackbarMessage = snackbarMessage.replace('%0', e.coolwsd_version);
 					this._map.uiManager.showSnackbar(snackbarMessage);
-					clearInterval(this._intervalInfo);
 					break;
 				}
 				if (v1 < v2) {
