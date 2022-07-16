@@ -352,8 +352,7 @@ namespace
         if (!FileUtil::copy(fpath, newPath.c_str(), /*log=*/false, /*throw_on_error=*/false))
         {
             LOG_FTL("Failed to copy or link [" << fpath << "] to [" << newPath << "]. Exiting.");
-            Log::shutdown();
-            std::_Exit(EX_SOFTWARE);
+            Util::forcedExit(EX_SOFTWARE);
         }
     }
 
@@ -427,8 +426,7 @@ namespace
                 if (written <= 0 || static_cast<std::size_t>(written) > size)
                 {
                     LOG_SYS("nftw: readlink(\"" << fpath << "\") failed");
-                    Log::shutdown();
-                    std::_Exit(EX_SOFTWARE);
+                    Util::forcedExit(EX_SOFTWARE);
                 }
                 target[written] = '\0';
 
@@ -511,8 +509,7 @@ namespace
         if (caps == nullptr)
         {
             LOG_SFL("cap_get_proc() failed");
-            Log::shutdown();
-            std::_Exit(1);
+            Util::forcedExit(EX_SOFTWARE);
         }
 
         char *capText = cap_to_text(caps, nullptr);
@@ -523,15 +520,13 @@ namespace
             cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
         {
             LOG_SFL("cap_set_flag() failed");
-            Log::shutdown();
-            std::_Exit(1);
+            Util::forcedExit(EX_SOFTWARE);
         }
 
         if (cap_set_proc(caps) == -1)
         {
             LOG_SFL("cap_set_proc() failed");
-            Log::shutdown();
-            std::_Exit(1);
+            Util::forcedExit(EX_SOFTWARE);
         }
 
         capText = cap_to_text(caps, nullptr);
@@ -705,8 +700,7 @@ public:
             {
                 LOG_FTL("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
                 flushTraceEventRecordings();
-                Log::shutdown();
-                std::_Exit(EX_OK);
+                Util::forcedExit(EX_OK);
             }
 #endif
         }
@@ -1071,8 +1065,7 @@ private:
             {
                 LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
                 flushTraceEventRecordings();
-                Log::shutdown();
-                std::_Exit(EX_OK);
+                Util::forcedExit(EX_OK);
             }
 #endif
             LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, but has " <<
@@ -1704,8 +1697,7 @@ public:
             LOG_FTL("drainQueue: Exception: " << exc.what());
 #if !MOBILEAPP
             flushTraceEventRecordings();
-            Log::shutdown();
-            std::_Exit(EX_SOFTWARE);
+            Util::forcedExit(EX_SOFTWARE);
 #endif
         }
         catch (...)
@@ -1713,8 +1705,7 @@ public:
             LOG_FTL("drainQueue: Unknown exception");
 #if !MOBILEAPP
             flushTraceEventRecordings();
-            Log::shutdown();
-            std::_Exit(EX_SOFTWARE);
+            Util::forcedExit(EX_SOFTWARE);
 #endif
         }
     }
@@ -2280,8 +2271,7 @@ protected:
 #if !MOBILEAPP
             LOG_INF("Terminating immediately due to parent 'exit' command.");
             flushTraceEventRecordings();
-            Log::shutdown();
-            std::_Exit(EX_SOFTWARE);
+            Util::forcedExit(EX_SOFTWARE);
 #else
 #ifdef IOS
             LOG_INF("Setting our KitSocketPoll's termination flag due to 'exit' command.");
@@ -2663,15 +2653,13 @@ void lokit_main(
             if (chroot(jailPathStr.c_str()) == -1)
             {
                 LOG_SFL("chroot(\"" << jailPathStr << "\") failed");
-                Log::shutdown();
-                std::_Exit(EX_SOFTWARE);
+                Util::forcedExit(EX_SOFTWARE);
             }
 
             if (chdir("/") == -1)
             {
                 LOG_SFL("chdir(\"/\") in jail failed");
-                Log::shutdown();
-                std::_Exit(EX_SOFTWARE);
+                Util::forcedExit(EX_SOFTWARE);
             }
 
 #ifndef __FreeBSD__
@@ -2715,8 +2703,7 @@ void lokit_main(
             if (!loKit)
             {
                 LOG_FTL("LibreOfficeKit initialization failed. Exiting.");
-                Log::shutdown();
-                std::_Exit(EX_SOFTWARE);
+                Util::forcedExit(EX_SOFTWARE);
             }
         }
 
@@ -2726,8 +2713,7 @@ void lokit_main(
             if (!noSeccomp)
             {
                 LOG_FTL("LibreOfficeKit seccomp security lockdown failed. Exiting.");
-                Log::shutdown();
-                std::_Exit(EX_SOFTWARE);
+                Util::forcedExit(EX_SOFTWARE);
             }
 
             LOG_ERR("LibreOfficeKit seccomp security lockdown failed, but configured to continue. "
@@ -2851,7 +2837,7 @@ void lokit_main(
         {
             LOG_FTL("Kit is missing Unipoll API");
             std::cout << "Fatal: out of date LibreOfficeKit - no Unipoll API\n";
-            std::_Exit(EX_SOFTWARE);
+            Util::forcedExit(EX_SOFTWARE);
         }
 
         LOG_INF("Kit unipoll loop run");
@@ -2866,7 +2852,6 @@ void lokit_main(
         // Trap the signal handler, if invoked,
         // to prevent exiting.
         LOG_INF("Kit process for Jail [" << jailId << "] finished.");
-        Log::shutdown();
 
         // Let forkit handle the jail cleanup.
 #endif
@@ -2890,10 +2875,9 @@ void lokit_main(
 
     LOG_INF("Kit process for Jail [" << jailId << "] finished.");
     flushTraceEventRecordings();
-    Log::shutdown();
     // Wait for the signal handler, if invoked, to prevent exiting until done.
     SigUtil::waitSigHandlerTrap();
-    std::_Exit(EX_OK);
+    Util::forcedExit(EX_OK);
 
 #endif
 }
