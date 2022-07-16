@@ -11,6 +11,7 @@
 
 #include <config.h>
 
+#include <sysexits.h>
 #include "Seccomp.hpp"
 
 #include <dlfcn.h>
@@ -89,8 +90,7 @@ static void handleSysSignal(int /* signal */,
     SigUtil::dumpBacktrace();
     SigUtil::signalLogClose();
 
-    Log::shutdown();
-    _exit(1);
+    Util::forcedExit(EX_SOFTWARE);
 }
 
 } // extern "C"

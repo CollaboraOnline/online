@@ -394,7 +394,7 @@ public:
                 return;
             }
             else
-                exit(1);
+                Util::forcedExit(EX_SOFTWARE);
         }
 
         // FIXME: implement code to send new view-ports based
