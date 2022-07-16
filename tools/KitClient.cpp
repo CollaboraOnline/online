@@ -158,7 +158,7 @@ protected:
         }
 
         // Safest to just bluntly exit
-        std::_Exit(EX_OK);
+        Util::forcedExit(EX_OK);
     }
 };
 

@@ -271,8 +271,7 @@ namespace Util
             int ret = execvp(params[0], &params[0]);
             if (ret < 0)
                 LOG_SFL("Failed to exec command '" << cmd << '\'');
-            Log::shutdown();
-            _exit(42);
+            Util::forcedExit(42);
         }
         // else spawning process still
         if (stdInput)
@@ -1094,6 +1093,7 @@ namespace Util
 
     void forcedExit(int code)
     {
+        LOG_FTL("Forced Exit with code: " << code);
         Log::shutdown();
         std::_Exit(code);
     }

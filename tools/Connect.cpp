@@ -111,7 +111,7 @@ public:
                 std::cout << "CLOSE frame received" << std::endl;
             }
             if (!closeExpected)
-                std::_Exit(EX_SOFTWARE);
+                Util::forcedExit(EX_SOFTWARE);
         }
         catch (WebSocketException& exc)
         {

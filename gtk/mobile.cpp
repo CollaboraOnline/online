@@ -7,6 +7,7 @@
 
 #include <config.h>
 
+#include <sysexits.h>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
@@ -275,7 +276,7 @@ int main(int argc, char* argv[])
     if (argc != 2)
     {
         fprintf(stderr, "Usage: %s document\n", argv[0]);
-        _exit(1); // avoid log cleanup
+        Util::forcedExit(EX_SOFTWARE); // avoid log cleanup
     }
 
     Log::initialize("Mobile", "trace", false, false, {});

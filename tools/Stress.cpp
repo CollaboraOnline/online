@@ -45,12 +45,12 @@ void Stress::handleOption(const std::string& optionName,
     if (optionName == "help")
     {
         printHelp();
-        std::exit(EX_OK);
+        Util::forcedExit(EX_OK);
     }
     else
     {
         std::cout << "Unknown option: " << optionName << std::endl;
-        exit(1);
+        Util::forcedExit(EX_SOFTWARE);
     }
 }
 
