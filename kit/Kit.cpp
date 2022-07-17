@@ -2598,6 +2598,9 @@ void lokit_main(
                 LOG_INF("Mounting is disabled, will link/copy " << sysTemplate << " -> "
                                                                 << jailPathStr);
 
+                // Create a file to mark this a copied jail.
+                JailUtil::markJailCopied(jailPathStr);
+
                 const std::string linkablePath = childRoot + "/linkable";
 
                 linkOrCopy(sysTemplate, jailPath, linkablePath, LinkOrCopyType::All);
@@ -2614,9 +2617,6 @@ void lokit_main(
                            "read-only, running the installation scripts with the owner's account "
                            "should update these files. Some functionality may be missing.");
                 }
-
-                // Create a file to mark this a copied jail.
-                JailUtil::markJailCopied(jailPathStr);
             }
 
             // Setup the devices inside /tmp and set TMPDIR.
