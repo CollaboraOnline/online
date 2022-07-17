@@ -547,7 +547,8 @@ inline bool isDocumentLoaded(const std::shared_ptr<http::WebSocketSession>& ws,
                              const std::string& testname, bool isView = true)
 {
     const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
-    constexpr auto timeout = std::chrono::seconds(20); // Allow 20 secs to load
+    constexpr auto timeout =
+        std::chrono::seconds(COMMAND_TIMEOUT_SECS * 4); // Allow longer for loading.
     const std::string message = getResponseString(ws, prefix, testname, timeout);
 
     const bool success = COOLProtocol::matchPrefix(prefix, message);

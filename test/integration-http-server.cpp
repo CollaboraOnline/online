@@ -254,7 +254,7 @@ void HTTPServerTest::testConvertTo()
     const char *testname = "testConvertTo";
     const std::string srcPath = FileUtil::getTempFileCopyPath(TDOC, "hello.odt", "convertTo_");
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-    session->setTimeout(Poco::Timespan(5, 0)); // 5 seconds.
+    session->setTimeout(Poco::Timespan(COMMAND_TIMEOUT_SECS, 0)); // 5 seconds.
 
     TST_LOG("Convert-to odt -> txt");
 
@@ -271,7 +271,7 @@ void HTTPServerTest::testConvertTo()
     catch (const std::exception& ex)
     {
         // In case the server is still starting up.
-        sleep(5);
+        sleep(COMMAND_TIMEOUT_SECS);
         form.write(session->sendRequest(request));
     }
 
@@ -300,7 +300,7 @@ void HTTPServerTest::testConvertTo2()
     const char *testname = "testConvertTo2";
     const std::string srcPath = FileUtil::getTempFileCopyPath(TDOC, "convert-to.xlsx", "convertTo_");
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-    session->setTimeout(Poco::Timespan(10, 0)); // 10 seconds.
+    session->setTimeout(Poco::Timespan(COMMAND_TIMEOUT_SECS * 2, 0)); // 10 seconds.
 
     TST_LOG("Convert-to #2 xlsx -> png");
 
@@ -317,7 +317,7 @@ void HTTPServerTest::testConvertTo2()
     catch (const std::exception& ex)
     {
         // In case the server is still starting up.
-        sleep(5);
+        sleep(COMMAND_TIMEOUT_SECS);
         form.write(session->sendRequest(request));
     }
 
@@ -340,7 +340,7 @@ void HTTPServerTest::testConvertTo2()
 void HTTPServerTest::testConvertToWithForwardedIP_Deny()
 {
     const std::string testname = "convertToWithForwardedClientIP-Deny";
-    constexpr int TimeoutSeconds = 10; // Sometimes dns resolving is slow.
+    constexpr int TimeoutSeconds = COMMAND_TIMEOUT_SECS * 2; // Sometimes dns resolving is slow.
 
     // Test a forwarded IP which is not allowed to use convert-to feature
     try
@@ -366,7 +366,7 @@ void HTTPServerTest::testConvertToWithForwardedIP_Deny()
         catch (const std::exception& ex)
         {
             // In case the server is still starting up.
-            sleep(2);
+            sleep(COMMAND_TIMEOUT_SECS);
             form.write(session->sendRequest(request));
         }
 
@@ -390,7 +390,7 @@ void HTTPServerTest::testConvertToWithForwardedIP_Deny()
 void HTTPServerTest::testConvertToWithForwardedIP_Allow()
 {
     const std::string testname = "convertToWithForwardedClientIP-Allow";
-    constexpr int TimeoutSeconds = 10; // Sometimes dns resolving is slow.
+    constexpr int TimeoutSeconds = COMMAND_TIMEOUT_SECS * 2; // Sometimes dns resolving is slow.
 
     // Test a forwarded IP which is allowed to use convert-to feature
     try
@@ -416,7 +416,7 @@ void HTTPServerTest::testConvertToWithForwardedIP_Allow()
         catch (const std::exception& ex)
         {
             // In case the server is still starting up.
-            sleep(5);
+            sleep(COMMAND_TIMEOUT_SECS);
             form.write(session->sendRequest(request));
         }
 
@@ -448,7 +448,7 @@ void HTTPServerTest::testConvertToWithForwardedIP_Allow()
 void HTTPServerTest::testConvertToWithForwardedIP_DenyMulti()
 {
     const std::string testname = "convertToWithForwardedClientIP-DenyMulti";
-    constexpr int TimeoutSeconds = 10; // Sometimes dns resolving is slow.
+    constexpr int TimeoutSeconds = COMMAND_TIMEOUT_SECS * 2; // Sometimes dns resolving is slow.
 
     // Test a forwarded header with three IPs, one is not allowed -> request is denied.
     try
@@ -476,7 +476,7 @@ void HTTPServerTest::testConvertToWithForwardedIP_DenyMulti()
         catch (const std::exception& ex)
         {
             // In case the server is still starting up.
-            sleep(5);
+            sleep(COMMAND_TIMEOUT_SECS);
             form.write(session->sendRequest(request));
         }
 
@@ -503,7 +503,7 @@ void HTTPServerTest::testRenderSearchResult()
     const std::string srcPathDoc = FileUtil::getTempFileCopyPath(TDOC, "RenderSearchResultTest.odt", testname);
     const std::string srcPathXml = FileUtil::getTempFileCopyPath(TDOC, "RenderSearchResultFragment.xml", testname);
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
-    session->setTimeout(Poco::Timespan(10, 0)); // 10 seconds.
+    session->setTimeout(Poco::Timespan(COMMAND_TIMEOUT_SECS * 2, 0)); // 10 seconds.
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/render-search-result");
     Poco::Net::HTMLForm form;
@@ -518,7 +518,7 @@ void HTTPServerTest::testRenderSearchResult()
     catch (const std::exception& ex)
     {
         // In case the server is still starting up.
-        sleep(5);
+        sleep(COMMAND_TIMEOUT_SECS);
         form.write(session->sendRequest(request));
     }
 
