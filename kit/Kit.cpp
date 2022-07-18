@@ -44,6 +44,7 @@
 #include <string>
 #include <sstream>
 #include <thread>
+#include <mutex>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
@@ -1875,31 +1876,39 @@ private:
 // Protected::emitOneRecording() there gets used. When building the unit tests the one in
 // TraceEvent.cpp gets used.
 
-static constexpr int traceEventRecordingsCapacity = 100;
-static std::vector<std::string> traceEventRecordings;
+static std::mutex traceEventLock;
+static std::vector<std::string> traceEventRecords[2];
 
 static void flushTraceEventRecordings()
 {
-    if (traceEventRecordings.size() == 0)
-        return;
+    std::unique_lock<std::mutex> lock(traceEventLock);
 
-    std::size_t totalLength = 0;
-    for (const auto& i: traceEventRecordings)
-        totalLength += i.length();
+    for (size_t n = 0; n < 2; ++n)
+    {
+        std::vector<std::string> &r = traceEventRecords[n];
 
-    std::string recordings;
-    recordings.reserve(totalLength);
+        if (r.size() == 0)
+            return;
 
-    for (const auto& i: traceEventRecordings)
-        recordings += i;
+        std::size_t totalLength = 0;
+        for (const auto& i: r)
+            totalLength += i.length();
 
-    singletonDocument->sendTextFrame("traceevent: \n" + recordings);
-    traceEventRecordings.clear();
+        std::string recordings;
+        recordings.reserve(totalLength);
+
+        for (const auto& i: r)
+            recordings += i;
+
+        std::string name = "forcetraceevent: \n";
+        if (n == 1 )
+            name = "traceevent: \n";
+        singletonDocument->sendTextFrame(name + recordings);
+        r.clear();
+    }
 }
 
-// The checks for singletonDocument below are to catch if this gets called in the ForKit process.
-
-void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
+static void addRecording(const std::string &recording, bool force)
 {
     // This can be called before the config system is initialized. Guard against that, as calling
     // config::getBool() would cause an assertion failure.
@@ -1915,29 +1924,26 @@ void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
     if (configChecked && !traceEventsEnabled)
         return;
 
+    // catch if this gets called in the ForKit process & skip.
     if (singletonDocument == nullptr)
         return;
 
-    singletonDocument->sendTextFrame("forcedtraceevent: \n" + recording);
+    if (!TraceEvent::isRecordingOn() && !force)
+        return;
+
+    std::unique_lock<std::mutex> lock(traceEventLock);
+
+    traceEventRecords[force ? 0 : 1].push_back(recording + "\n");
+}
+
+void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
+{
+    addRecording(recording, true);
 }
 
 void TraceEvent::emitOneRecording(const std::string &recording)
 {
-    static const bool traceEventsEnabled = config::getBool("trace_event[@enable]", false);
-    if (!traceEventsEnabled)
-        return;
-
-    if (!TraceEvent::isRecordingOn())
-        return;
-
-    if (singletonDocument == nullptr)
-        return;
-
-    if (traceEventRecordings.size() >= traceEventRecordingsCapacity)
-        flushTraceEventRecordings();
-    else if (traceEventRecordings.size() == 0 && traceEventRecordings.capacity() < traceEventRecordingsCapacity)
-        traceEventRecordings.reserve(traceEventRecordingsCapacity);
-    traceEventRecordings.emplace_back(recording + "\n");
+    addRecording(recording, false);
 }
 
 #elif !MOBILEAPP
@@ -2093,6 +2099,8 @@ public:
         drainQueue();
 
 #if !MOBILEAPP
+        flushTraceEventRecordings();
+
         if (_document && _document->purgeSessions() == 0)
         {
             LOG_INF("Last session discarded. Setting TerminationFlag");
