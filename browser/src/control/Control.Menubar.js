@@ -350,24 +350,28 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
 			]},
-			{name: _UNO('.uno:ViewMenu', 'presentation'), id: 'view', type: 'menu', menu: [
-				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action'},
-				{type: 'separator'},
-				{name: _UNO('.uno:ZoomPlus', 'presentation'), id: 'zoomin', type: 'action'},
-				{name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
-				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
-				{type: 'separator'},
-				{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
-				{uno: '.uno:SlideMasterPage'},
-				{type: 'separator'},
-				{uno: '.uno:ModifyPage'},
-				{uno: '.uno:SlideChangeWindow'},
-				{uno: '.uno:CustomAnimation'},
-				{uno: '.uno:MasterSlidesPanel'},
-				{type: 'separator'},
-				{uno: '.uno:Sidebar'},
-				{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'}]
-			},
+			{name: _UNO('.uno:ViewMenu', 'presentation'), id: 'view', type: 'menu',
+			 menu: (window.mode.isTablet() ? [
+					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
+				] : [
+				   {name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action'},
+				   {type: 'separator'},
+				   {name: _UNO('.uno:ZoomPlus', 'presentation'), id: 'zoomin', type: 'action'},
+				   {name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
+				   {name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
+				]).concat([
+				   {type: 'separator'},
+				   {name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
+				   {name: _('Show Ruler'), id: 'showruler', type: 'action'},
+				   {name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
+				   {uno: '.uno:Sidebar'},
+				   {type: 'separator'},
+				   {uno: '.uno:SlideMasterPage'},
+				   {uno: '.uno:ModifyPage'},
+				   {uno: '.uno:SlideChangeWindow'},
+				   {uno: '.uno:CustomAnimation'},
+				   {uno: '.uno:MasterSlidesPanel'},
+				])},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
@@ -481,17 +485,21 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
 			]},
-			{name: _UNO('.uno:ViewMenu', 'presentation'), id: 'view', type: 'menu', menu: [
-				{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action'},
-				{type: 'separator'},
-				{name: _UNO('.uno:ZoomPlus', 'presentation'), id: 'zoomin', type: 'action'},
-				{name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
-				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
-				{type: 'separator'},
-				{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
-				{uno: '.uno:Sidebar'},
-				{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'}
-			]},
+			{name: _UNO('.uno:ViewMenu', 'presentation'), id: 'view', type: 'menu',
+			 menu: (window.mode.isTablet() ? [
+					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
+				] : [
+					{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action'},
+					{type: 'separator'},
+					{name: _UNO('.uno:ZoomPlus', 'presentation'), id: 'zoomin', type: 'action'},
+					{name: _UNO('.uno:ZoomMinus', 'presentation'), id: 'zoomout', type: 'action'},
+					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
+				]).concat([
+					{type: 'separator'},
+					{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
+					{uno: '.uno:Sidebar'},
+					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'}
+				])},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
@@ -595,23 +603,26 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
 			]},
-			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu', menu: [
-				{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action'},
-				{type: 'separator'},
-				{name: _UNO('.uno:ZoomPlus', 'text'), id: 'zoomin', type: 'action'},
-				{name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action',},
-				{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
-				{type: 'separator'},
-				{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
-				{name: _UNO('.uno:FreezePanes', 'spreadsheet', true), id: 'FreezePanes', type: 'action', uno: '.uno:FreezePanes'},
-				{name: _UNO('.uno:FreezeCellsMenu', 'spreadsheet', true), id: 'FreezeCellsMenu', type: 'menu', uno: '.uno:FreezeCellsMenu', menu: [
-					{name: _UNO('.uno:FreezePanesColumn', 'spreadsheet', true), id: 'FreezePanesColumn', type: 'action', uno: '.uno:FreezePanesColumn'},
-					{name: _UNO('.uno:FreezePanesRow', 'spreadsheet', true), id: 'FreezePanesRow', type: 'action', uno: '.uno:FreezePanesRow'}
-				]},
-				{type: 'separator'},
-				{uno: '.uno:Sidebar'},
-				{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'}
-			]},
+			{name: _UNO('.uno:ViewMenu', 'spreadsheet'), id: 'view', type: 'menu',
+			 menu: (window.mode.isTablet() ? [
+					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
+				] : [
+				   {name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action'},
+				   {type: 'separator'},
+				   {name: _UNO('.uno:ZoomPlus', 'text'), id: 'zoomin', type: 'action'},
+				   {name: _UNO('.uno:ZoomMinus', 'text'), id: 'zoomout', type: 'action',},
+				   {name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
+				]).concat([
+				   {type: 'separator'},
+				   {name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
+				   {name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
+				   {uno: '.uno:Sidebar'},
+				   {name: _UNO('.uno:FreezePanes', 'spreadsheet', true), id: 'FreezePanes', type: 'action', uno: '.uno:FreezePanes'},
+				   {name: _UNO('.uno:FreezeCellsMenu', 'spreadsheet', true), id: 'FreezeCellsMenu', type: 'menu', uno: '.uno:FreezeCellsMenu', menu: [
+					   {name: _UNO('.uno:FreezePanesColumn', 'spreadsheet', true), id: 'FreezePanesColumn', type: 'action', uno: '.uno:FreezePanesColumn'},
+					   {name: _UNO('.uno:FreezePanesRow', 'spreadsheet', true), id: 'FreezePanesRow', type: 'action', uno: '.uno:FreezePanesRow'}
+				   ]},
+				])},
 			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), id: 'insertgraphicremote', type: 'action'},
