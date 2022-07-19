@@ -326,7 +326,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.coolwsdVersion = '%COOLWSD_VERSION%';
       window.enableWelcomeMessage = %ENABLE_WELCOME_MSG%;
       window.autoShowWelcome = %AUTO_SHOW_WELCOME%;
-	  window.autoShowFeedback = %AUTO_SHOW_FEEDBACK%;
+      window.autoShowFeedback = %AUTO_SHOW_FEEDBACK%;
       window.userInterfaceMode = '%USER_INTERFACE_MODE%';
       window.useIntegrationTheme = '%USE_INTEGRATION_THEME%';
       window.enableMacrosExecution = '%ENABLE_MACROS_EXECUTION%';
