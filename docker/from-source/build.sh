@@ -107,7 +107,7 @@ fi
 
 # build
 if [ "$CORE_BRANCH" == "distro/collabora/co-22.05" ]; then
-  ( cd core && ./autogen.sh --with-distro=CPLinux-LOKit --disable-epm --without-package-format ) || exit 1
+  ( cd core && ./autogen.sh --with-distro=CPLinux-LOKit --disable-epm --without-package-format --disable-symbols ) || exit 1
 else
   ( cd core && ./autogen.sh --with-distro=LibreOfficeOnline ) || exit 1
 fi
