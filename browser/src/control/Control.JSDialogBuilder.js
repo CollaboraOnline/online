@@ -1523,6 +1523,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				}
 			});
 
+			edit.addEventListener('blur', function() {
+				modifier = 0;
+			});
+
 			edit.addEventListener('keypress', function(event) {
 				if (edit.disabled)
 					return;
