@@ -68,11 +68,13 @@ public:
             {
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), "load url=" + getWopiSrc(), testName);
+                helpers::sendTextFrame(getWs()->getWebSocket(), "load url=" + getWopiSrc(),
+                                       testName);
 
                 // file name we want to save as is = hello%20world.pdf -> it is not encoded! and in the end we must expect like this.
                 // we would send it encoded like hello%2520world.pdf
-                helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), "saveas url=wopi:///path/to/hello%2520world.pdf", testName);
+                helpers::sendTextFrame(getWs()->getWebSocket(),
+                                       "saveas url=wopi:///path/to/hello%2520world.pdf", testName);
                 SocketPoll::wakeupWorld();
 
                 _phase = Phase::Polling;

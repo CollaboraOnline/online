@@ -347,7 +347,6 @@ private:
     using WebSocketHandler::sendBinaryMessage;
     using WebSocketHandler::sendMessage;
     using WebSocketHandler::sendTextMessage;
-    using WebSocketHandler::shutdown;
 
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {

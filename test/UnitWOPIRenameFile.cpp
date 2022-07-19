@@ -64,13 +64,15 @@ public:
             {
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), "load url=" + getWopiSrc(), testName);
+                helpers::sendTextFrame(getWs()->getWebSocket(), "load url=" + getWopiSrc(),
+                                       testName);
                 _phase = Phase::RenameFile;
                 break;
             }
             case Phase::RenameFile:
             {
-                helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), "renamefile filename=hello", testName);
+                helpers::sendTextFrame(getWs()->getWebSocket(), "renamefile filename=hello",
+                                       testName);
                 _phase = Phase::Polling;
                 break;
             }

@@ -16,9 +16,12 @@
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/SocketAddress.h>
 #include <Poco/Version.h>
+#include <Poco/URI.h>
 
 #include "Common.hpp"
 #include <tools/COOLWebSocket.hpp>
+#include <helpers.hpp>
+#include <net/WebSocketSession.hpp>
 
 using Poco::Net::SocketAddress;
 using Poco::Net::HTTPServerParams;
@@ -121,37 +124,19 @@ namespace UnitHTTP
 
 class UnitWebSocket
 {
-    Poco::Net::HTTPClientSession* _session;
-    COOLWebSocket* _socket;
+    std::shared_ptr<http::WebSocketSession> _httpSocket;
 
 public:
     /// Get a websocket connected for a given URL
-    UnitWebSocket(const std::string& docURL)
+    UnitWebSocket(const std::shared_ptr<SocketPoll>& socketPoll, const std::string& documentURL)
     {
-        try {
-            UnitHTTPServerResponse response;
-            UnitHTTPServerRequest request(response, docURL);
-
-            _session = UnitHTTP::createSession();
-
-            // FIXME: leaking the session - hey ho ... do we need a UnitSocket ?
-            _socket = new COOLWebSocket(*_session, request, response);
-        } catch (const Poco::Exception &ex) {
-            std::cerr << "Exception creating websocket " << ex.displayText() << std::endl;
-            throw;
-        }
+        Poco::URI uri(helpers::getTestServerURI());
+        _httpSocket = helpers::connectLOKit(socketPoll, uri, documentURL, "UnitWebSocket");
     }
 
-    ~UnitWebSocket()
-    {
-        delete _socket;
-        delete _session;
-    }
+    ~UnitWebSocket() { _httpSocket->shutdown(); }
 
-    COOLWebSocket* getCOOLWebSocket() const
-    {
-        return _socket;
-    }
+    const std::shared_ptr<http::WebSocketSession>& getWebSocket() { return _httpSocket; }
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
