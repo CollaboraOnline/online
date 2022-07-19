@@ -103,6 +103,16 @@ fi
 
 ( cd online && git fetch --all && git checkout -f $COLLABORA_ONLINE_BRANCH && git clean -f -d && git pull -r ) || exit 1
 
+
+# brand repo
+if test ! -d online-branding ; then
+  git clone git@gitlab.collabora.com:productivity/online-branding.git online-branding || echo "Could not clone this proprietary repo"
+fi
+
+if test -d online-branding ; then
+  ( cd online-branding && git pull -r ) || exit 1
+fi
+
 ##### LOKit (core) #####
 
 # build
@@ -126,6 +136,14 @@ cp -a core/instdir "$INSTDIR"/opt/lokit
 
 # copy stuff
 ( cd online && DESTDIR="$INSTDIR" make install ) || exit 1
+
+##### online branding #####
+if test -d online-branding ; then
+  cd online-branding
+  ./brand.sh $INSTDIR/opt/lokit $INSTDIR/usr/share/coolwsd/browser/dist 6 # CODE
+  ./brand.sh $INSTDIR/opt/lokit $INSTDIR/usr/share/coolwsd/browser/dist 7 # Nextcloud Office
+  cd ..
+fi
 
 # Create new docker image
 if [ -z "$NO_DOCKER_IMAGE" ]; then
