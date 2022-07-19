@@ -279,6 +279,7 @@ public:
     static std::chrono::steady_clock::time_point StartTime;
     static std::string LatestVersion;
     static std::mutex FetchUpdateMutex;
+    static bool IsBindMountingEnabled;
 #if MOBILEAPP
 #ifndef IOS
     /// This is used to be able to wait until the lokit main thread has finished (and it is safe to load a new document).
