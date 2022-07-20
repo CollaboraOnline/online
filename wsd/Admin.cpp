@@ -168,7 +168,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             std::set<pid_t> pids = model.getDocumentPids();
             if (pids.find(pid) != pids.end())
             {
-                SigUtil::killChild(pid);
+                SigUtil::killChild(pid, SIGKILL);
             }
             else
             {

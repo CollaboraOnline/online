@@ -108,7 +108,7 @@ namespace SigUtil
     /// Kills a child process and returns true when
     /// child pid is removed from the process table
     /// after a certain (short) timeout.
-    bool killChild(const int pid, const int signal = SIGKILL);
+    bool killChild(const int pid, const int signal);
 
     /// Dump a signal-safe back-trace
     void dumpBacktrace();
