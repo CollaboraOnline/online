@@ -107,7 +107,7 @@
 	margin-left: 11px;
 }
 
-#Save1.savemodified:after {
+#File .unoSave.savemodified:after {
 	content: '';
 	display: block;
 	width: 6px;
