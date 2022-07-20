@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-27 17:25+0200\n"
-"PO-Revision-Date: 2022-05-02 03:16+0000\n"
-"Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
+"PO-Revision-Date: 2022-07-20 05:15+0000\n"
+"Last-Translator: Gontzal Manuel Pujana Onaindia <thadahdenyse@gmail.com>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "ui/eu/>\n"
-"Language: \n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -433,7 +433,7 @@ msgstr "Funtzioen morroia"
 
 #: src/control/Control.FormulaBarJSDialog.js:54
 msgid "Formula"
-msgstr ""
+msgstr "Formula"
 
 #: src/control/Control.FormulaBarJSDialog.js:61
 #: src/control/Control.MobileTopBar.js:40
@@ -452,11 +452,11 @@ msgstr "Batez bestekoa"
 
 #: src/control/Control.JSDialogBuilder.js:146
 msgid "Min"
-msgstr ""
+msgstr "Min"
 
 #: src/control/Control.JSDialogBuilder.js:147
 msgid "Max"
-msgstr ""
+msgstr "Max"
 
 #: src/control/Control.JSDialogBuilder.js:148
 #: src/control/Control.StatusBar.js:309
@@ -724,29 +724,28 @@ msgstr "Testu-orientazioa"
 
 #: src/control/Control.Menubar.js:289 src/control/Control.Menubar.js:1082
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Txertatu testu aberastua"
 
 #: src/control/Control.Menubar.js:290 src/control/Control.Menubar.js:1083
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Txertatu kontrol-laukia"
 
 #: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1084
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Txertatu goitibehera-menua"
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1085
 msgid "Insert Picture"
-msgstr ""
+msgstr "Txertatu irudia"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1086
-#, fuzzy
 msgid "Insert Date"
-msgstr "Txertatu taula"
+msgstr "Txertatu data"
 
 #: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1087
 #: src/control/Control.NotebookbarWriter.js:999
 msgid "Properties"
-msgstr ""
+msgstr "Propietateak"
 
 #: src/control/Control.Menubar.js:321
 #: src/control/Control.NotebookbarWriter.js:291
@@ -1167,7 +1166,7 @@ msgstr "Grafiko txikia"
 #: src/control/Control.NotebookbarWriter.js:889
 #: src/control/Control.NotebookbarWriter.js:2194
 msgid "Shapes"
-msgstr ""
+msgstr "Formak"
 
 #: src/control/Control.NotebookbarDraw.js:41
 #: src/control/Control.NotebookbarDraw.js:744
@@ -1186,7 +1185,7 @@ msgstr "Irudia (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Master"
-msgstr ""
+msgstr "~Eredua"
 
 #: src/control/Control.NotebookbarImpress.js:255
 msgid "ODF Presentation (.odp)"
@@ -1202,9 +1201,8 @@ msgid "Reference~s"
 msgstr "E~rreferentziak"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "Form"
-msgstr "Foroa"
+msgstr "Formularioa"
 
 #: src/control/Control.NotebookbarWriter.js:189
 msgid "ODF Text Document (.odt)"
@@ -1216,19 +1214,19 @@ msgstr "EPUB dokumentua (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:974
 msgid "Rich Text"
-msgstr ""
+msgstr "Testu aberastua"
 
 #: src/control/Control.NotebookbarWriter.js:979
 msgid "Checkbox"
-msgstr ""
+msgstr "Kontrol-laukia"
 
 #: src/control/Control.NotebookbarWriter.js:984
 msgid "Dropdown"
-msgstr ""
+msgstr "Goitibeherakoa"
 
 #: src/control/Control.NotebookbarWriter.js:989
 msgid "Picture"
-msgstr ""
+msgstr "Irudia"
 
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Ruler"
@@ -1331,7 +1329,6 @@ msgid "Permission Mode"
 msgstr "Baimen modua"
 
 #: src/control/Control.StatusBar.js:441
-#, fuzzy
 msgid "Read-only"
 msgstr "Irakurtzeko soilik"
 
@@ -1372,7 +1369,6 @@ msgid "Copy Sheet..."
 msgstr "Kopiatu orria..."
 
 #: src/control/Control.Tabs.js:303
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Ziur zaude %sheet% orria ezabatu nahi duzula?"
 
@@ -1398,7 +1394,7 @@ msgid ""
 "resolve"
 msgstr ""
 "Hainbat erabiltzaileen arteko desegin/berrekin talka. Erabili dokumentu-"
-"konponketa ebazteko."
+"konponketa ebazteko mesedez"
 
 #: src/control/Control.TopToolbar.js:105
 msgid "Default Style"
@@ -1610,9 +1606,8 @@ msgid "Signature broken"
 msgstr "Sinadura hautsia"
 
 #: src/control/Signing.js:633
-#, fuzzy
 msgid "The signature was valid, but the document has been modified."
-msgstr "Sinadura baliozkoa da, baina dokumentua aldatua izan da"
+msgstr "Sinadura baliozkoa da, baina dokumentua aldatua izan da."
 
 #: src/control/Signing.js:635
 msgid "Signed but document modified"
@@ -1627,7 +1622,6 @@ msgid "Signed but not validated"
 msgstr "Sinatua baina balioztatu gabea"
 
 #: src/control/Signing.js:643
-#, fuzzy
 msgid "The signature is OK, but the document is only partially signed."
 msgstr "Sinadura ondo dago, baina dokumentua partzialki sinatuta dago."
 
@@ -1752,7 +1746,7 @@ msgid ""
 "history"
 msgstr ""
 "Aurreko bertsioa berreskuratzen. Gorde gabeko aldaketak bertsioen "
-"historialean aurkitu ahal izango dira."
+"historialean aurkitu ahal izango dira"
 
 #: src/core/Socket.js:752
 msgid "Reloading the document after rename"
@@ -1863,7 +1857,7 @@ msgid ""
 msgstr ""
 "{productname} bertsio honek ez du euskarririk. Enpresetan instalatzeko prest "
 "dagoela inork pentsa ez dezan, mezu hau agertzen da {docs} dokumentu edo "
-"{connections} konexio baino gehiago aldi berean erabiltzen direnean."
+"{connections} konexio baino gehiago aldi berean erabiltzen direnean"
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -1890,7 +1884,7 @@ msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"Baimenik gabeko WOPI ostalaria. Saiatu berriro geroago  eta jakinarazi zure "
+"Baimenik gabeko WOPI ostalaria. Saiatu berriro geroago eta jakinarazi zure "
 "administratzaileari arazoak jarraitzen badu."
 
 #: src/errormessages.js:20
@@ -1928,11 +1922,10 @@ msgid "Invalid link: '%url'"
 msgstr "Baliogabeko esteka: '%url'"
 
 #: src/errormessages.js:25
-#, fuzzy
 msgid ""
 "You are leaving the editor, are you sure you want to visit the following "
 "URL?"
-msgstr "Editorea uzten ari zara, ziur zaude %url bisitatu nahi duzula?"
+msgstr "Editorea uzten ari zara, ziur zaude hurrengo URLa bisitatu nahi duzula?"
 
 #: src/errormessages.js:26
 msgid ""
@@ -1968,6 +1961,8 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"Dokumentua handiegia da edo ez da biltegiratze lekurik gelditzen gordetzeko. "
+"Dokumentua irakurtzeko soilik da orain."
 
 #: src/errormessages.js:35 src/errormessages.js:44
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -2011,6 +2006,10 @@ msgid ""
 "preserve a copy locally. Please contact the server (%storageserver) "
 "administrator to resolve the issue."
 msgstr ""
+"Gordetzeak huts egin du dokumentua handiegia delako edo diskoaren kuota-muga "
+"gainditu delako. Dokumentua irakurtzeko soilik izango da baina kopia lokala "
+"izateko deskargatu dezakezu. Jarri harremanetan (%storageserver) "
+"zerbitzariaren administratzaileekin arazoa konpontzeko mesedez."
 
 #: src/errormessages.js:45
 msgid ""
@@ -2269,7 +2268,6 @@ msgid "Get Involved"
 msgstr "Parte hartu"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
-#, fuzzy
 msgid "https://collaboraonline.github.io/"
 msgstr "https://collaboraonline.github.io/"
 
@@ -2284,15 +2282,13 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
-"Ekarpenak egin nahi dituzu baina ez dakizu nondik hasi? Joan <a target=\""
-"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\">"
-"urratsez urratseko argibideetara</a> eta sortu CODEa hutsetik. Halaber, <a "
+"Ekarpenak egin nahi dituzu baina ez dakizu nondik hasi? Joan <a target="
+"\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\""
+">urratsez urratseko argibideetara</a> eta sortu CODEa hutsetik. Halaber, <a "
 "target=\"_blank\" href=\"https://collaboraonline.github.io/post/translate/\""
-">itzulpenetan</a> edo \n"
-"<a target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/"
-"\">erroreen txostenak bidaltzen</a> berauek erreproduzitzeko ezinbesteko "
-"pauso\n"
-" guztiekin."
+">itzulpenetan</a> edo <a target=\"_blank\" href=\"https://collaboraonline."
+"github.io/post/filebugs/\">erroreen txostenak bidaltzen</a> berauek "
+"erreproduzitzeko ezinbesteko pauso guztiekin."
 
 #~ msgid "Toggle Status Bar"
 #~ msgstr "Aldatu egoera barra"
