@@ -107,6 +107,9 @@
 	margin-left: 11px;
 }
 
+#File .unoSave.savemodified {
+	position: relative;
+}
 #File .unoSave.savemodified:after {
 	content: '';
 	display: block;
@@ -118,7 +121,7 @@
 	box-shadow: 0 0 0 2px var(--color-main-background);
 	border: 1px solid var(--color-primary);
 	position: absolute;
-	top: 18px;
+	top: 0;
 	margin-left: 28px;
 }
 
