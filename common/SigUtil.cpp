@@ -227,6 +227,7 @@ namespace SigUtil
 
     const char *signalName(const int signo)
     {
+        // LCOV_EXCL_START Coverage for these is not very useful.
         switch (signo)
         {
 #define CASE(x) case SIG##x: return "SIG" #x
@@ -283,6 +284,7 @@ namespace SigUtil
         default:
             return "unknown";
         }
+        // LCOV_EXCL_STOP Coverage for these is not very useful.
     }
 
     static
@@ -561,8 +563,8 @@ namespace SigUtil
 
         LOG_SYS("Error when trying to kill PID: " << pid << ". Will wait for termination.");
 
-        const int sleepMs = 50;
-        const int count = std::max(CHILD_REBALANCE_INTERVAL_MS / sleepMs, 2);
+        constexpr int sleepMs = 50;
+        constexpr int count = std::max(CHILD_REBALANCE_INTERVAL_MS / sleepMs, 2);
         for (int i = 0; i < count; ++i)
         {
             if (kill(pid, 0) == 0 || errno == ESRCH)

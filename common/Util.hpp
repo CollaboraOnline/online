@@ -668,6 +668,7 @@ int main(int argc, char**argv)
     /// Return the symbolic name for an errno value, or in decimal if not handled here.
     inline std::string symbolicErrno(int e)
     {
+        // LCOV_EXCL_START Coverage for these is not very useful.
         // Errnos from <asm-generic/errno-base.h> and <asm-generic/errno.h> on Linux.
         switch (e)
         {
@@ -892,6 +893,7 @@ int main(int argc, char**argv)
 #endif
         default: return std::to_string(e);
         }
+        // LCOV_EXCL_STOP Coverage for these is not very useful.
     }
 
     inline size_t getDelimiterPosition(const char* message, const int length, const char delim)

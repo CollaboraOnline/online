@@ -201,7 +201,7 @@ void UnitBase::setTimeout(std::chrono::milliseconds timeoutMilliSeconds)
 
 UnitBase::~UnitBase()
 {
-    LOG_TST(getTestname() << ": ~UnitBase");
+    LOG_TST(getTestname() << ": ~UnitBase: " << (_retValue ? "FAILED" : "SUCCESS"));
 
 // FIXME: we should really clean-up properly.
 //    if (_dlHandle)
@@ -359,7 +359,8 @@ void UnitBase::exitTest(TestResult result)
     _setRetValue = true;
     _retValue = result == TestResult::Ok ? EX_OK : EX_SOFTWARE;
 #if !MOBILEAPP
-    LOG_INF("Setting ShutdownRequestFlag: " << getTestname() << " test has finished.");
+    LOG_INF("Setting ShutdownRequestFlag: " << getTestname() << " test has finished: "
+                                            << (_retValue ? "FAILED" : "SUCCESS"));
     SigUtil::setTerminationFlag(); // And wakupWorld.
 #else
     SocketPoll::wakeupWorld();
