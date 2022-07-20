@@ -5436,7 +5436,7 @@ int COOLWSD::innerMain()
 #if !defined(KIT_IN_PROCESS) && !MOBILEAPP
     // Terminate child processes
     LOG_INF("Requesting forkit process " << ForKitProcId << " to terminate.");
-    SigUtil::killChild(ForKitProcId);
+    SigUtil::killChild(ForKitProcId, SIGKILL);
 #endif
 
     Server->stopPrisoners();
