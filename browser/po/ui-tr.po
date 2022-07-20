@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-27 17:25+0200\n"
-"PO-Revision-Date: 2022-06-29 12:18+0000\n"
+"PO-Revision-Date: 2022-07-19 03:04+0000\n"
 "Last-Translator: PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1188,7 +1188,7 @@ msgstr "Resim (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Master"
-msgstr ""
+msgstr "~Ana"
 
 #: src/control/Control.NotebookbarImpress.js:255
 msgid "ODF Presentation (.odp)"
