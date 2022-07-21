@@ -607,10 +607,9 @@ connectLOKit(const Poco::URI& uri,
 // jobs to establish the bridge connection between the Client and Kit process,
 // The result, it is mostly time outs to get messages in the unit test and it could fail.
 // connectLOKit ensures the websocket is connected to a kit process.
-inline std::shared_ptr<http::WebSocketSession> connectLOKit(std::shared_ptr<SocketPoll> socketPoll,
-                                                            const Poco::URI& uri,
-                                                            const std::string& url,
-                                                            const std::string& testname)
+inline std::shared_ptr<http::WebSocketSession>
+connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri,
+             const std::string& url, const std::string& testname)
 {
     TST_LOG("Connecting to " << uri.toString());
     constexpr int max_retries = 11;
@@ -626,7 +625,7 @@ inline std::shared_ptr<http::WebSocketSession> connectLOKit(std::shared_ptr<Sock
                                      << (ws->secure() ? "secure" : "plain"));
 
             http::Request req(url);
-            ws->asyncRequest(req, std::move(socketPoll));
+            ws->asyncRequest(req, socketPoll);
 
             const char* expected_response = "statusindicator: ready";
 
@@ -702,17 +701,17 @@ std::shared_ptr<COOLWebSocket> loadDocAndGetSocket(const std::string& docFilenam
 }
 
 inline std::shared_ptr<http::WebSocketSession>
-loadDocAndGetSession(std::shared_ptr<SocketPoll> socketPoll, const Poco::URI& uri,
+loadDocAndGetSession(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri,
                      const std::string& documentURL, const std::string& testname,
                      bool isView = true, bool isAssert = true,
-                     const std::string &loadParams = "")
+                     const std::string& loadParams = std::string())
 {
     try
     {
         // Load a document and get its status.
         auto ws = http::WebSocketSession::create(uri.toString());
         http::Request req(documentURL);
-        ws->asyncRequest(req, std::move(socketPoll));
+        ws->asyncRequest(req, socketPoll);
 
         sendTextFrame(ws, "load url=" + documentURL + loadParams, testname);
         const bool isLoaded = isDocumentLoaded(ws, testname, isView);

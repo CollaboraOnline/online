@@ -112,7 +112,7 @@ public:
     }
 
     /// Create a WebSocketSession and make a request to given @url.
-    static std::shared_ptr<WebSocketSession> create(std::shared_ptr<SocketPoll> socketPoll,
+    static std::shared_ptr<WebSocketSession> create(const std::shared_ptr<SocketPoll>& socketPoll,
                                                     const std::string& uri, const std::string& url)
     {
         auto session = create(uri);
@@ -147,7 +147,7 @@ public:
     Protocol protocol() const { return _protocol; }
     bool secure() const { return _protocol == Protocol::HttpSsl; }
 
-    bool asyncRequest(http::Request& req, std::shared_ptr<SocketPoll> socketPoll)
+    bool asyncRequest(http::Request& req, const std::shared_ptr<SocketPoll>& socketPoll)
     {
         LOG_TRC("asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                  << req.getUrl());
@@ -258,6 +258,11 @@ public:
             if (_outQueue.isEmpty())
             {
                 shutdownWS();
+            }
+            else
+            {
+                LOG_TRC(
+                    "Flagged for async shutdown as there is outstanding data in the output buffer");
             }
         }
     }
