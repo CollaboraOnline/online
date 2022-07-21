@@ -230,7 +230,7 @@ kbd,
 }
 .vex.vex-theme-plain .vex-content.vex-locking .container .item.illustration {
 	flex: 1.3;
-	background: transparent url('images/lock-illustration.svg') no-repeat left 4px /contain;
+	background: transparent  no-repeat left 4px /contain;
 	height: 288px;
 }
 

@@ -52,6 +52,12 @@ bool getBool(const std::string& key, const bool def)
     return Config ? Config->getBool(key, def) : def;
 }
 
+bool has(const std::string& key)
+{
+    assert(Config && "Config is not initialized.");
+    return Config ? Config->has(key) : false;
+}
+
 bool isSslEnabled()
 {
 #if ENABLE_SSL
