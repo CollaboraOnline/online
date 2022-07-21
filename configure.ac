@@ -1451,10 +1451,25 @@ if test "$enable_feature_lock" = "yes"; then
         <unlock_title desc=\"Title to show user when prompting the unlock popup\" default=\"$UNLOCK_TITLE\">$UNLOCK_TITLE</unlock_title>
         <unlock_link desc=\"Link from where user can unlock the features\" default=\"$UNLOCK_LINK\">$UNLOCK_LINK</unlock_link>
         <unlock_description desc=\"Description about unlocking features\" default=\"$UNLOCK_DESCRIPTION\">$UNLOCK_DESCRIPTION</unlock_description>
+        <unlock_image desc=\"URL of image shown when unlock dialog get displayed\" default=\"\"></unlock_image><!-- URL structure - https://<hostname>/static/<image_path> -->
         <writer_unlock_highlights desc=\"Short note about Writer benefits of unlocking\" default=\"$WRITER_UNLOCK_HIGHLIGHTS\">$WRITER_UNLOCK_HIGHLIGHTS</writer_unlock_highlights>
         <calc_unlock_highlights desc=\"Short note about Calc benefits of unlocking\" default=\"$CALC_UNLOCK_HIGHLIGHTS\">$CALC_UNLOCK_HIGHLIGHTS</calc_unlock_highlights>
         <impress_unlock_highlights desc=\"Short note about Impress benefits of unlocking\" default=\"$IMPRESS_UNLOCK_HIGHLIGHTS\">$IMPRESS_UNLOCK_HIGHLIGHTS</impress_unlock_highlights>
         <draw_unlock_highlights desc=\"Short note about Draw benefits of unlocking\" default=\"$DRAW_UNLOCK_HIGHLIGHTS\">$DRAW_UNLOCK_HIGHLIGHTS</draw_unlock_highlights>
+
+        <translations>
+            <!--
+            Example to add german language for feature lock dialog
+            <language name=\"de\">
+                <unlock_title desc=\"Title to show user when prompting the unlock popup\" default=\"Entfesseln Sie Ihr Potenzial\">Entfesseln Sie Ihr Potenzial</unlock_title>
+                <unlock_description desc=\"Description about unlocking features\" default=\"Gehen Sie zur Detailseite und entdecken Sie alle Funktionen:\">Gehen Sie zur Detailseite und entdecken Sie alle Funktionen:</unlock_description>
+                <writer_unlock_highlights desc=\"Short note about Writer benefits of unlocking\" default=\"Überprüfen und schreiben Sie mit Leichtigkeit\">Überprüfen und schreiben Sie mit Leichtigkeit</writer_unlock_highlights>
+                <calc_unlock_highlights desc=\"Short note about Calc benefits of unlocking\" default=\"Machen Sie sich ein besseres Bild von Ihren Daten\">Machen Sie sich ein besseres Bild von Ihren Daten</calc_unlock_highlights>
+                <impress_unlock_highlights desc=\"Short note about Impress benefits of unlocking\" default=\"Bringen Sie Ihre nächste Präsentation auf den Punkt\">Bringen Sie Ihre nächste Präsentation auf den Punkt</impress_unlock_highlights>
+                <draw_unlock_highlights desc=\"Short note about Draw benefits of unlocking\" default=\"Zeichne und organisiere dich\">Zeichne und organisiere dich</draw_unlock_highlights>
+            </language>
+            -->
+        </translations>
     </feature_lock>"
 fi
 

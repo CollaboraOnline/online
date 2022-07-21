@@ -829,31 +829,6 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         }
     }
 
-#ifdef ENABLE_FEATURE_LOCK
-    Object::Ptr lockInfo = new Object();
-    lockInfo->set("IsLockedUser", CommandControl::LockManager::isLockedUser());
-    lockInfo->set("IsLockReadOnly", CommandControl::LockManager::isLockReadOnly());
-
-    // Poco:Dynamic:Var does not support std::unordred_set so converted to std::vector
-    std::vector<std::string> lockedCommandList(
-        CommandControl::LockManager::getLockedCommandList().begin(),
-        CommandControl::LockManager::getLockedCommandList().end());
-    lockInfo->set("LockedCommandList", lockedCommandList);
-    lockInfo->set("UnlockTitle", CommandControl::LockManager::getUnlockTitle());
-    lockInfo->set("UnlockLink", CommandControl::LockManager::getUnlockLink());
-    lockInfo->set("UnlockDescription", CommandControl::LockManager::getUnlockDescription());
-    lockInfo->set("WriterHighlights", CommandControl::LockManager::getWriterHighlights());
-    lockInfo->set("CalcHighlights", CommandControl::LockManager::getCalcHighlights());
-    lockInfo->set("ImpressHighlights", CommandControl::LockManager::getImpressHighlights());
-    lockInfo->set("DrawHighlights", CommandControl::LockManager::getDrawHighlights());
-
-    std::ostringstream ossLockInfo;
-    lockInfo->stringify(ossLockInfo);
-    const std::string lockInfoString = ossLockInfo.str();
-    LOG_TRC("Sending feature locking info to client: " << lockInfoString);
-    session->sendMessage("featurelock: " + lockInfoString);
-#endif
-
 #ifdef ENABLE_FEATURE_RESTRICTION
     Object::Ptr restrictionInfo = new Object();
     restrictionInfo->set("IsRestrictedUser", CommandControl::RestrictionManager::isRestrictedUser());

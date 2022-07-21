@@ -36,6 +36,9 @@ bool isInitialized();
 /// Returns the value of an entry as string or @def if it is not found.
 std::string getString(const std::string& key, const std::string& def);
 
+/// Returns true if and only if the property with the given key exists.
+bool has(const std::string& key);
+
 /// Returns the value of an entry as string or @def if it is not found.
 bool getBool(const std::string& key, const bool def);
 
