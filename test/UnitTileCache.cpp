@@ -15,19 +15,20 @@
 #include <UnitHTTP.hpp>
 #include <Util.hpp>
 #include <helpers.hpp>
+#include <WopiTestServer.hpp>
 
 using namespace helpers;
 
-class UnitTileCache: public UnitWSD
+class UnitTileCache: public WopiTestServer
 {
-    enum class Phase {
-        Load,             // load the document
-        Tile,             // lookup tile method
-    } _phase;
-    std::unique_ptr<UnitWebSocket> _ws;
+    STATE_ENUM(Phase,
+               Load, // load the document
+               Tile, // lookup tile method
+    )
+    _phase;
 public:
     UnitTileCache()
-        : UnitWSD("UnitTileCache")
+        : WopiTestServer("UnitTileCache")
         , _phase(Phase::Load)
     {
     }
@@ -52,12 +53,12 @@ public:
         {
         case Phase::Load:
         {
-            _phase = Phase::Tile;
-            std::string docPath;
-            std::string docURL;
-            getDocumentPathAndURL("empty.odt", docPath, docURL, "unitTileCache ");
-            _ws = std::unique_ptr<UnitWebSocket>(new UnitWebSocket(docURL));
-            assert(_ws.get());
+            TRANSITION_STATE(_phase, Phase::Tile);
+
+            LOG_TST("Load: initWebsocket");
+            initWebsocket("/wopi/files/0?access_token=anything");
+
+            WSD_CMD("load url=" + getWopiSrc());
 
             // FIXME: need to invoke the tile lookup ...
             exitTest(TestResult::Ok);

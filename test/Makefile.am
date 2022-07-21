@@ -76,10 +76,10 @@ all_la_unit_tests = \
 	unit-prefork.la \
 	unit-hosting.la \
 	unit-bad-doc-load.la \
-	unit-tilecache.la \
 	unit-timeout.la \
 	unit-base.la
 #	unit-admin.la
+#	unit-tilecache.la # Empty test.
 
 if ENABLE_LIBFUZZER
 all_la_unit_tests += unit-fuzz.la
@@ -194,7 +194,8 @@ unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_prefork_la_SOURCES = UnitPrefork.cpp
 unit_storage_la_SOURCES = UnitStorage.cpp
 unit_storage_la_LIBADD = $(CPPUNIT_LIBS)
-unit_tilecache_la_SOURCES = UnitTileCache.cpp
+# unit_tilecache_la_SOURCES = UnitTileCache.cpp
+# unit_tilecache_la_LIBADD = $(CPPUNIT_LIBS)
 unit_oauth_la_SOURCES = UnitOAuth.cpp
 unit_oauth_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_la_SOURCES = UnitWOPI.cpp
