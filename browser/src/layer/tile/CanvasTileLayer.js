@@ -3109,7 +3109,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			return false; // Selection doesn't start at first column.
 
 		var rangeEnd = this._getStringPart(startEnd[1]);
-		if (rangeEnd === 'AMJ') // Last column's code.
+		if (rangeEnd === 'XFD') // Last column's code.
 			return true;
 		else
 			return false;
