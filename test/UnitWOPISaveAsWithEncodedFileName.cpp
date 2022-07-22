@@ -17,11 +17,8 @@
 
 class UnitWOPISaveAsWithEncodedFileName : public WopiTestServer
 {
-    enum class Phase
-    {
-        LoadAndSaveAs,
-        Polling
-    } _phase;
+    STATE_ENUM(Phase, LoadAndSaveAs, Done)
+    _phase;
 
 public:
     UnitWOPISaveAsWithEncodedFileName()
@@ -60,27 +57,22 @@ public:
 
     void invokeWSDTest() override
     {
-        constexpr char testName[] = "UnitWOPISaveAsWithEncodedFilename";
-
         switch (_phase)
         {
             case Phase::LoadAndSaveAs:
             {
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                helpers::sendTextFrame(getWs()->getWebSocket(), "load url=" + getWopiSrc(),
-                                       testName);
+                WSD_CMD("load url=" + getWopiSrc());
 
                 // file name we want to save as is = hello%20world.pdf -> it is not encoded! and in the end we must expect like this.
                 // we would send it encoded like hello%2520world.pdf
-                helpers::sendTextFrame(getWs()->getWebSocket(),
-                                       "saveas url=wopi:///path/to/hello%2520world.pdf", testName);
-                SocketPoll::wakeupWorld();
+                WSD_CMD("saveas url=wopi:///path/to/hello%2520world.pdf");
 
-                _phase = Phase::Polling;
+                TRANSITION_STATE(_phase, Phase::Done);
                 break;
             }
-            case Phase::Polling:
+            case Phase::Done:
             {
                 // just wait for the results
                 break;

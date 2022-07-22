@@ -17,11 +17,8 @@
 
 class UnitWopiHttpHeaders : public WopiTestServer
 {
-    enum class Phase
-    {
-        Load,
-        Polling
-    } _phase;
+    STATE_ENUM(Phase, Load, Done)
+    _phase;
 
 protected:
     void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& request) override
@@ -78,12 +75,12 @@ public:
 
     void invokeWSDTest() override
     {
-        constexpr char testName[] = "UnitWopiHttpHeaders";
-
         switch (_phase)
         {
             case Phase::Load:
             {
+                TRANSITION_STATE(_phase, Phase::Done);
+
                 // Technically, having an empty line in the header
                 // is invalid (it signifies the end of headers), but
                 // this is to illustrate that we are able to overcome
@@ -96,14 +93,11 @@ public:
 
                 initWebsocket("/wopi/files/0?" + params);
 
-                helpers::sendTextFrame(getWs()->getWebSocket(), "load url=" + getWopiSrc(),
-                                       testName);
-                SocketPoll::wakeupWorld();
+                WSD_CMD("load url=" + getWopiSrc());
 
-                _phase = Phase::Polling;
                 break;
             }
-            case Phase::Polling:
+            case Phase::Done:
             {
                 // Just wait for the results.
                 break;
