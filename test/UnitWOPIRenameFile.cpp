@@ -17,12 +17,8 @@
 
 class UnitWOPIRenameFile : public WopiTestServer
 {
-    enum class Phase
-    {
-        Load,
-        RenameFile,
-        Polling
-    } _phase;
+    STATE_ENUM(Phase, Load, RenameFile, Done)
+    _phase;
 
 public:
     UnitWOPIRenameFile()
@@ -56,27 +52,25 @@ public:
 
     void invokeWSDTest() override
     {
-        constexpr char testName[] = "UnitWOPIRenameFile";
-
         switch (_phase)
         {
             case Phase::Load:
             {
+                TRANSITION_STATE(_phase, Phase::RenameFile);
+
                 initWebsocket("/wopi/files/0?access_token=anything");
 
-                helpers::sendTextFrame(getWs()->getWebSocket(), "load url=" + getWopiSrc(),
-                                       testName);
-                _phase = Phase::RenameFile;
+                WSD_CMD("load url=" + getWopiSrc());
                 break;
             }
             case Phase::RenameFile:
             {
-                helpers::sendTextFrame(getWs()->getWebSocket(), "renamefile filename=hello",
-                                       testName);
-                _phase = Phase::Polling;
+                TRANSITION_STATE(_phase, Phase::Done);
+
+                WSD_CMD("renamefile filename=hello");
                 break;
             }
-            case Phase::Polling:
+            case Phase::Done:
             {
                 // just wait for the results
                 break;

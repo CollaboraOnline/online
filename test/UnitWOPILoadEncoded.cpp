@@ -16,12 +16,8 @@
 
 class UnitWOPILoadEncoded : public WopiTestServer
 {
-    enum class Phase
-    {
-        LoadEncoded,
-        CloseDoc,
-        Polling
-    } _phase;
+    STATE_ENUM(Phase, LoadEncoded, CloseDoc, Done)
+    _phase;
 
 public:
     UnitWOPILoadEncoded()
@@ -32,28 +28,26 @@ public:
 
     void invokeWSDTest() override
     {
-        constexpr char testName[] = "UnitWOPILoadEncoded";
-
         switch (_phase)
         {
             case Phase::LoadEncoded:
             {
+                TRANSITION_STATE(_phase, Phase::CloseDoc);
+
                 initWebsocket("/wopi/files/3?access_token=anything");
 
-                helpers::sendTextFrame(getWs()->getWebSocket(), "load url=" + getWopiSrc(),
-                                       testName);
-                SocketPoll::wakeupWorld();
+                WSD_CMD("load url=" + getWopiSrc());
 
-                _phase = Phase::CloseDoc;
                 break;
             }
             case Phase::CloseDoc:
             {
-                helpers::sendTextFrame(getWs()->getWebSocket(), "closedocument", testName);
-                _phase = Phase::Polling;
+                TRANSITION_STATE(_phase, Phase::Done);
+
+                WSD_CMD("closedocument");
                 break;
             }
-            case Phase::Polling:
+            case Phase::Done:
             {
                 exitTest(TestResult::Ok);
                 break;
