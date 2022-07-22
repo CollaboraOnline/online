@@ -232,7 +232,14 @@ class AutoFillMarkerSection {
 
 	public onMouseWheel () { return; }
 	public onClick () { return; }
-	public onDoubleClick () { return; }
+	public onDoubleClick (point: Array<number>, e: MouseEvent) {
+		this.sectionProperties.dragStartPosition = this.sectionProperties.docLayer._cellAutoFillAreaPixels.getCenter();
+		var pos = new L.Point(this.sectionProperties.dragStartPosition[0], this.sectionProperties.dragStartPosition[1]);
+		pos = this.sectionProperties.docLayer._corePixelsToTwips(pos);
+		this.sectionProperties.docLayer._postMouseEvent('buttondown', pos.x, pos.y, 2, 1, 0);
+		this.stopPropagating(); // Stop propagating to sections.
+		e.stopPropagation(); // Stop native event.
+	}
 	public onContextMenu () { return; }
 	public onLongPress () { return; }
 	public onMultiTouchStart () { return; }
