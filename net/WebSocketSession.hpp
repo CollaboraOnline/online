@@ -20,6 +20,7 @@
 #include "Common.hpp"
 #include <common/MessageQueue.hpp>
 #include "NetUtil.hpp"
+#include "SigUtil.hpp"
 #include <net/Socket.hpp>
 #include <net/HttpRequest.hpp>
 #include <net/WebSocketHandler.hpp>
@@ -185,8 +186,13 @@ public:
                     return message;
             }
 
+            if (SigUtil::getShutdownRequestFlag())
+                break;
+
             // Timed wait, if we must.
-        } while (_inCv.wait_for(lock, timeout, [this]() { return !_inQueue.isEmpty(); }));
+        } while (_inCv.wait_for(
+            lock, timeout,
+            [this]() { return !_inQueue.isEmpty() || SigUtil::getShutdownRequestFlag(); }));
 
         LOG_DBG(context << "Giving up polling after " << timeout);
         return std::vector<char>();

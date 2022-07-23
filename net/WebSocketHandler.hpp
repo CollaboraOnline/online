@@ -386,7 +386,6 @@ private:
                     {
                         // Peer-initiated shutdown must be echoed.
                         // Otherwise, this is the echo to _our_ shutdown message, which we should ignore.
-                        LOG_TRC('#' << socket->getFD() << ": Peer initiated socket shutdown. Code: " << static_cast<int>(statusCode));
                         if (ctrlPayload.size())
                         {
                             statusCode = static_cast<StatusCodes>((((uint64_t)(unsigned char)ctrlPayload[0]) << 8) +
@@ -394,6 +393,9 @@ private:
                             if (ctrlPayload.size() > 2)
                                 message.assign(&ctrlPayload[2], &ctrlPayload[2] + ctrlPayload.size() - 2);
                         }
+
+                        LOG_TRC('#' << socket->getFD() << ": Peer initiated socket shutdown. Code: "
+                                    << static_cast<int>(statusCode));
                     }
                     shutdown(statusCode, message);
                     return true;
