@@ -780,6 +780,8 @@ protected:
         const size_t size = out.size();
 #endif
 
+        assert(size >= len && "Expected to have data in outBuffer to send");
+
         if (flush || _shuttingDown)
         {
             socket->writeOutgoingData();
