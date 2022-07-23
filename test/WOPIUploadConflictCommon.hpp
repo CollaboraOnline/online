@@ -268,8 +268,13 @@ public:
                            Util::startsWith(reason, "Data-loss detected"));
         LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitDocClose but was " + toString(_phase),
                            _phase == Phase::WaitDocClose);
-        LOK_ASSERT_MESSAGE("Expected to be in Scenario::Disconnect but was " + toString(_scenario),
-                           _scenario == Scenario::Disconnect);
+        // In SaveOverwrite, we should not be in modified state, because we do save
+        // and upload. But because we don't wait for the modified=false, we can end-up
+        // here. Since we will verify after reloading that we have no data-loss, it's OK.
+        LOK_ASSERT_MESSAGE(
+            "Expected to be in Scenario::Disconnect OR Scenario::SaveOverwrite but was " +
+                toString(_scenario),
+            (_scenario == Scenario::Disconnect) || (_scenario == Scenario::SaveOverwrite));
     }
 
     // Wait for clean unloading.
