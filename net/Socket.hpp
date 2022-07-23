@@ -344,8 +344,9 @@ public:
         const bool sameThread = (_owner == std::thread::id() || std::this_thread::get_id() == _owner);
         if (!sameThread)
             LOG_ERR("Invoked from foreign thread. Expected: "
-                    << Log::to_string(_owner) << " but called from " << std::this_thread::get_id()
-                    << " (" << Util::getThreadId() << ")"
+                    << Log::to_string(_owner) << " but called from "
+                    << Log::to_string(std::this_thread::get_id()) << " (" << Util::getThreadId()
+                    << ")"
                     << " (" << fileName << ":" << lineNo << ")");
 
         // assert(sameThread);
