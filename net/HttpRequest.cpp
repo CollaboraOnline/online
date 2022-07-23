@@ -116,7 +116,7 @@ static inline int64_t findEndOfToken(const char* p, int64_t off, int64_t len)
 
 int64_t Header::parse(const char* p, int64_t len)
 {
-    LOG_TRC("Reading header given " << len << " bytes: " << std::string(p, std::min(len, 80L)));
+    LOG_TRC("Parsing header given " << len << " bytes: " << std::string(p, std::min(len, 80L)));
     if (len < 4)
     {
         // Incomplete; we need at least \r\n\r\n.
@@ -615,7 +615,8 @@ int64_t Response::readData(const char* p, int64_t len)
             const int64_t wrote = _onBodyWriteCb(p, available);
             if (wrote < 0)
             {
-                LOG_ERR("Error writing http response payload. Write handler returned "
+                LOG_ERR("Error writing received http response payload into the body-callback. "
+                        "Write handler returned "
                         << wrote << " instead of " << available);
                 return wrote;
             }
@@ -626,7 +627,7 @@ int64_t Response::readData(const char* p, int64_t len)
                 _recvBodySize += wrote;
                 if (_header.hasContentLength() && _recvBodySize >= _header.getContentLength())
                 {
-                    LOG_TRC("Wrote all content, finished.");
+                    LOG_TRC("Wrote all received content into the body-callback, finished.");
                     _parserStage = ParserStage::Finished;
                 }
             }
