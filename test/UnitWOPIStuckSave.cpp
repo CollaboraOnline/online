@@ -36,7 +36,7 @@ public:
         , _phase(Phase::Load)
     {
         // We need more time to retry saving.
-        setTimeout(std::chrono::seconds(60));
+        setTimeout(std::chrono::seconds(90));
     }
 
     void configure(Poco::Util::LayeredConfiguration& config) override
