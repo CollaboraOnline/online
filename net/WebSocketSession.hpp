@@ -260,17 +260,16 @@ public:
         _shutdown = true;
         if (!_disconnected)
         {
-            std::unique_lock<std::mutex> lock(_outMutex);
-            if (_outQueue.isEmpty())
+            const auto pollPtr = _socketPoll.lock();
+            if (pollPtr && pollPtr->isAlive())
             {
-                LOG_DBG(
-                    "WebSocketSession: closing gracefully after sending all the data, as flagged.");
-                sendCloseFrame();
+                pollPtr->wakeup();
             }
             else
             {
-                LOG_TRC(
-                    "Flagged for async shutdown as there is outstanding data in the output buffer");
+                LOG_WRN("WebSocketSession: No SocketPoll to issue asyncShutdown. Shutting down "
+                        "directly.");
+                shutdown(true, "Async shutting down");
             }
         }
     }
@@ -315,7 +314,7 @@ private:
                       int64_t& /*timeoutMaxMicroS*/) override
     {
         std::unique_lock<std::mutex> lock(_outMutex);
-        if (!_outQueue.isEmpty())
+        if (!_outQueue.isEmpty() || _shutdown) // Graceful disconnection needs to send a frame.
             return POLLIN | POLLOUT;
         return POLLIN;
     }
