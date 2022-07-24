@@ -288,6 +288,15 @@ void DocumentBroker::pollThread()
 
         if (isInteractive())
         {
+            // It is possible to dismiss the interactive dialog,
+            // exit the Kit process, or even crash. We would deadlock.
+            if (isUnloading())
+            {
+                // We expect to have either isMarkedToDestroy() or
+                // isCloseRequested() in that case.
+                stop("abortedinteractive");
+            }
+
             // Extend the deadline while we are interactiving with the user.
             loadDeadline = now + std::chrono::seconds(limit_load_secs);
             continue;
