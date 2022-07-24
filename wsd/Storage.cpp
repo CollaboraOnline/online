@@ -387,13 +387,17 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
 #endif
 }
 
-StorageBase::UploadResult
-LocalStorage::uploadLocalFileToStorage(const Authorization& /*auth*/, LockContext& /*lockCtx*/,
-                                       const std::string& /*saveAsPath*/,
-                                       const std::string& /*saveAsFilename*/, bool /*isRename*/)
+void LocalStorage::uploadLocalFileToStorageAsync(const Authorization& /*auth*/,
+                                                 LockContext& /*lockCtx*/,
+                                                 const std::string& /*saveAsPath*/,
+                                                 const std::string& /*saveAsFilename*/,
+                                                 bool /*isRename*/, SocketPoll&,
+                                                 const AsyncUploadCallback& asyncUploadCallback)
 {
     const std::string path = getUri().getPath();
 
+    // Assume failure by default.
+    UploadResult res = UploadResult(UploadResult::Result::FAILED, "Internal error");
     try
     {
         LOG_TRC("Copying local file to local file storage (isCopy: " << _isCopy << ") for "
@@ -408,15 +412,17 @@ LocalStorage::uploadLocalFileToStorage(const Authorization& /*auth*/, LockContex
         getFileInfo().setLastModifiedTime(
             Util::getIso8601FracformatTime(FileUtil::Stat(path).modifiedTimepoint()));
         LOG_TRC("New FileInfo modified time in storage " << getFileInfo().getLastModifiedTime());
+        res = UploadResult(UploadResult::Result::OK);
     }
     catch (const Poco::Exception& exc)
     {
         LOG_ERR("copyTo(\"" << getRootFilePathAnonym() << "\", \"" << COOLWSD::anonymizeUrl(path)
                             << "\") failed: " << exc.displayText());
-        return UploadResult(UploadResult::Result::FAILED, "Internal error.");
+        // Default UploadResult is failure.
     }
 
-    return UploadResult(UploadResult::Result::OK);
+    if (asyncUploadCallback)
+        asyncUploadCallback(AsyncUpload(AsyncUpload::State::Complete, res));
 }
 
 #if !MOBILEAPP
@@ -1364,13 +1370,6 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
 
     scopedInvokeCallback.setArg(AsyncUpload(
         AsyncUpload::State::Error, UploadResult(UploadResult::Result::FAILED, "Internal error.")));
-}
-
-StorageBase::UploadResult WopiStorage::uploadLocalFileToStorage(const Authorization&, LockContext&,
-                                                                const std::string&,
-                                                                const std::string&, const bool)
-{
-    return UploadResult(UploadResult::Result::FAILED);
 }
 
 StorageBase::UploadResult
