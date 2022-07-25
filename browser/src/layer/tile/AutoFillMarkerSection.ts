@@ -40,6 +40,7 @@ class AutoFillMarkerSection {
 		this.sectionProperties.docLayer = this.map._docLayer;
 		this.sectionProperties.selectedAreaPoint = null;
 		this.sectionProperties.cellCursorPoint = null;
+		this.sectionProperties.inMouseDown = false;
 
 		this.sectionProperties.draggingStarted = false;
 		this.sectionProperties.dragStartPosition = null;
@@ -172,6 +173,9 @@ class AutoFillMarkerSection {
 	}
 
 	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
+		if ((<any>window).mode.isDesktop())
+			return;
+
 		if (dragDistance === null || !this.sectionProperties.docLayer._cellAutoFillAreaPixels)
 			return; // No dragging or no event handling or auto fill marker is not visible.
 
@@ -212,10 +216,32 @@ class AutoFillMarkerSection {
 	}
 
 	public onMouseDown (point: Array<number>, e: MouseEvent) {
+		if ((<any>window).mode.isDesktop()) {
+			if (this.sectionProperties.inMouseDown)
+				return;
+
+			this.sectionProperties.inMouseDown = true;
+
+			// revert coordinates to global and fire event again with position in the center
+			var canvasClientRect = this.containerObject.canvas.getBoundingClientRect();
+			point[0] = this.myTopLeft[0] / app.dpiScale + this.size[0] * 0.5 + 1 + canvasClientRect.left;
+			point[1] = this.myTopLeft[1] / app.dpiScale + this.size[1] * 0.5 + 1 + canvasClientRect.top;
+
+			var newPoint = {
+				clientX: point[0],
+				clientY: point[1],
+			};
+
+			var newEvent = this.sectionProperties.docLayer._createNewMouseEvent('mousedown', newPoint);
+			this.sectionProperties.mapPane.dispatchEvent(newEvent);
+		}
+
 		// Just to be safe. We don't need this, but it makes no harm.
 		this.stopPropagating();
 		e.stopPropagation();
 		(<any>window).IgnorePanning = true; // We'll keep this until we have consistent sections and remove map element.
+
+		this.sectionProperties.inMouseDown = false;
 	}
 
 	public onMouseEnter () {
