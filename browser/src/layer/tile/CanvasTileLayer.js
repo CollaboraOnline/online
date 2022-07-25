@@ -2990,6 +2990,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		marks = marks.marks;
 		var references = [];
 		this._referencesAll = [];
+		var boundsTwips = null;
+		var topLeftTwips = null;
+		if (this.referenceScrollTimeout)
+			clearTimeout(this.referenceScrollTimeout);
 
 		for (var mark = 0; mark < marks.length; mark++) {
 			var strTwips = marks[mark].rectangle.match(/\d+/g);
@@ -2999,9 +3003,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (strTwips != null) {
 				var rectangles = [];
 				for (var i = 0; i < strTwips.length; i += 4) {
-					var topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
+					topLeftTwips = new L.Point(parseInt(strTwips[i]), parseInt(strTwips[i + 1]));
 					var offset = new L.Point(parseInt(strTwips[i + 2]), parseInt(strTwips[i + 3]));
-					var boundsTwips = this._convertToTileTwipsSheetArea(
+					boundsTwips = this._convertToTileTwipsSheetArea(
 						new L.Bounds(topLeftTwips, topLeftTwips.add(offset)));
 					rectangles.push([boundsTwips.getBottomLeft(), boundsTwips.getBottomRight(),
 						boundsTwips.getTopLeft(), boundsTwips.getTopRight()]);
@@ -3029,6 +3033,24 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		this._updateReferenceMarks();
+
+		var isCurrentSelectionOnly = (marks.length === 1 && strColor === 'ef0fff');
+		if (isCurrentSelectionOnly && boundsTwips) {
+			var oldSelection = new L.LatLngBounds(
+				this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+				this._twipsToLatLng(topLeftTwips, this._map.getZoom()));
+
+			var bottomRightTwips = boundsTwips.getBottomRight();
+			var newSelection = new L.LatLngBounds(
+				this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
+				this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+
+			// schedule scroll update - works if we reached end of the visible area
+			var that = this;
+			this.referenceScrollTimeout = setTimeout(function () {
+				that._updateScrollOnCellSelection(oldSelection, newSelection);
+			}, 10);
+		}
 	},
 
 	_getStringPart: function (string) {
