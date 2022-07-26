@@ -2174,6 +2174,7 @@ class KitWebSocketHandler final : public WebSocketHandler
     std::string _socketName;
     std::shared_ptr<lok::Office> _loKit;
     std::string _jailId;
+    std::string _docKey; //< When we get it while creating a new view.
     std::shared_ptr<Document> _document;
     std::shared_ptr<KitSocketPoll> _ksPoll;
     const unsigned _mobileAppDocId;
@@ -2235,14 +2236,14 @@ protected:
         else if (tokens.equals(0, "session"))
         {
             const std::string& sessionId = tokens[1];
-            const std::string& docKey = tokens[2];
+            _docKey = tokens[2];
             const std::string& docId = tokens[3];
             const int canonicalViewId = std::stoi(tokens[4]);
-            const std::string fileId = Util::getFilenameFromURL(docKey);
+            const std::string fileId = Util::getFilenameFromURL(_docKey);
             Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 
             std::string url;
-            URI::decode(docKey, url);
+            URI::decode(_docKey, url);
             LOG_INF("New session [" << sessionId << "] request on url [" << url << "] with viewId " << canonicalViewId);
 #ifndef IOS
             Util::setThreadName("kit" SHARED_DOC_THREADNAME_SUFFIX + docId);
@@ -2250,7 +2251,7 @@ protected:
             if (!_document)
             {
                 _document = std::make_shared<Document>(
-                    _loKit, _jailId, docKey, docId, url, _queue,
+                    _loKit, _jailId, _docKey, docId, url, _queue,
                     std::static_pointer_cast<WebSocketHandler>(shared_from_this()),
                     _mobileAppDocId);
                 _ksPoll->setDocument(_document);
@@ -2343,7 +2344,10 @@ protected:
     void onDisconnect() override
     {
 #if !MOBILEAPP
-        LOG_ERR("Kit connection lost without exit arriving from wsd. Setting TerminationFlag");
+        //FIXME: We could try to recover.
+        LOG_ERR("Kit for DocBroker ["
+                << _docKey
+                << "] connection lost without exit arriving from wsd. Setting TerminationFlag");
         SigUtil::setTerminationFlag();
 #endif
 #ifdef IOS
