@@ -3309,7 +3309,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
 
 void DocumentBroker::disconnectedFromKit()
 {
-    LOG_DBG("DocBroker " << _docKey << " Disconnected from Kit. Flagging to close.");
+    LOG_INF("DocBroker " << _docKey << " Disconnected from Kit. Flagging to close.");
     _docState.setDisconnected();
     closeDocument("docdisconnected");
 }
@@ -3620,7 +3620,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     const auto now = std::chrono::steady_clock::now();
 
     os << std::boolalpha;
-    os << " Broker: " << COOLWSD::anonymizeUrl(_filename) << " pid: " << getPid();
+    os << " Broker: " << getDocKey() << " pid: " << getPid();
     if (_docState.isMarkedToDestroy())
         os << " *** Marked to destroy ***";
     else
@@ -3630,6 +3630,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     else
         os << "\n  still loading... "
            << std::chrono::duration_cast<std::chrono::seconds>(now - _threadStart);
+    os << "\n  child PID: " << (_childProcess ? _childProcess->getPid() : 0);
     os << "\n  sent: " << sent;
     os << "\n  recv: " << recv;
     os << "\n  jail id: " << _jailId;
@@ -3640,6 +3641,8 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();
     os << "\n  thread start: " << Util::getTimeForLog(now, _threadStart);
+    os << "\n  stop: " << _stop;
+    os << "\n  closeReason: " << _closeReason;
     os << "\n  modified?: " << isModified();
     os << "\n  possibly-modified: " << isPossiblyModified();
     os << "\n  canSave: " << name(canSaveToDisk());

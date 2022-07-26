@@ -3229,9 +3229,15 @@ private:
         std::shared_ptr<DocumentBroker> docBroker = child ? child->getDocumentBroker() : nullptr;
         if (docBroker)
         {
+            LOG_WRN("DocBroker [" << docBroker->getDocKey() << "] got disconnected from its Kit ("
+                                  << child->getPid() << "). Closing.");
             std::unique_lock<std::mutex> lock = docBroker->getLock();
             docBroker->disconnectedFromKit();
         }
+        else if (child)
+            LOG_WRN("Kit (" << child->getPid() << ") disconnected. No DocBroker associated.");
+        else
+            LOG_WRN("An unassociated Kit disconnected.");
     }
 
     /// Called after successful socket reads.
