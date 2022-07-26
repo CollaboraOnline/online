@@ -757,6 +757,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	display: none;
 }
 
+.ui-dialog-title {
+	min-height: 1em;
+}
+
 .lokdialog_container.ui-dialog.ui-widget-content {
 	padding: 0px;
 	overflow: visible;
