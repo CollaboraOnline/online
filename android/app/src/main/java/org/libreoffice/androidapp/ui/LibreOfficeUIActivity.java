@@ -743,6 +743,7 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                 "application/vnd.visio.xml",
                 "application/x-mspublisher",
                 "application/vnd.ms-excel.sheet.binary.macroenabled.12",
+                "application/vnd.ms-excel.sheet.macroenabled.12",
 
                 // OOXML
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
