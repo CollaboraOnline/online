@@ -2405,9 +2405,11 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
                     // csv import dialogs), it will wait for their
                     // dismissal indefinetely. Neither would our
                     // load-timeout kick in, since we would be gone.
+#if !MOBILEAPP
                     LOG_INF("Session [" << id << "] disconnected but DocKey [" << _docKey
                                         << "] isn't loaded yet. Terminating the child roughly.");
                     _childProcess->terminate();
+#endif
                 }
             }
 
