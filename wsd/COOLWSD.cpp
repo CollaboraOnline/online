@@ -1989,6 +1989,8 @@ void COOLWSD::innerInitialize(Application& self)
         { "languagetool.user_name", ""},
         { "languagetool.enabled", "false"},
         { "languagetool.ssl_verification", "true"},
+        { "deepl.api_url", ""},
+        { "deepl.auth_key", ""},
     };
 
     // Set default values, in case they are missing from the config file.
@@ -2407,6 +2409,7 @@ void COOLWSD::innerInitialize(Application& self)
     AdminEnabled = getConfigValue<bool>(conf, "admin_console.enable", true);
 #endif
 
+    // LanguageTool configuration
     bool enableLanguageTool = getConfigValue<bool>(conf, "languagetool.enabled", false);
     setenv("LANGUAGETOOL_ENABLED", enableLanguageTool ? "true" : "false", 1);
     const std::string baseAPIUrl = getConfigValue<std::string>(conf, "languagetool.base_url", "");
@@ -2417,6 +2420,12 @@ void COOLWSD::innerInitialize(Application& self)
     setenv("LANGUAGETOOL_APIKEY", apiKey.c_str(), 1);
     bool sslVerification = getConfigValue<bool>(conf, "languagetool.ssl_verification", "");
     setenv("LANGUAGETOOL_SSL_VERIFICATION", sslVerification ? "true" : "false", 1);
+
+    // DeepL configuration
+    const std::string apiURL = getConfigValue<std::string>(conf, "deepl.api_url", "");
+    const std::string authKey = getConfigValue<std::string>(conf, "deepl.auth_key", "");
+    setenv("DEEPL_API_URL", apiURL.c_str(), 1);
+    setenv("DEEPL_AUTH_KEY", authKey.c_str(), 1);
 
 #if ENABLE_SUPPORT_KEY
     const std::string supportKeyString = getConfigValue<std::string>(conf, "support_key", "");
