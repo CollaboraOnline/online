@@ -173,9 +173,13 @@ UnitBase::TestResult UnitLoadTorture::testLoadTortureODP()
     const int sum_view_ids = loadTorture(testname, "empty.odp", thread_count, max_jitter_ms);
 
     // For ODP the view-id is always odd, and we expect not to skip any ids.
+    // one additional view is for rendering previews
+    // TODO: after core change merge - remove old value
     const int number_of_loads = thread_count;
+    const int number_of_loads_new = thread_count + 1;
     const int exp_sum_view_ids = number_of_loads * (number_of_loads - 1) / 2; // 0-based view-ids.
-    LOK_ASSERT_EQUAL(exp_sum_view_ids, sum_view_ids);
+    const int exp_sum_view_ids_new = number_of_loads_new * (number_of_loads_new - 1) / 2; // 0-based view-ids.
+    LOK_ASSERT(sum_view_ids == exp_sum_view_ids || sum_view_ids == exp_sum_view_ids_new);
     return TestResult::Ok;
 }
 
