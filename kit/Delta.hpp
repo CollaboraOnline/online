@@ -467,7 +467,7 @@ class DeltaGenerator {
     /// Adapts cache sizing to the number of sessions
     void setSessionCount(size_t count)
     {
-        rebalanceDeltas(std::min(count, size_t(1)) * 24);
+        rebalanceDeltas(std::max(count, size_t(1)) * 24);
     }
 
     void dumpState(std::ostream& oss)
