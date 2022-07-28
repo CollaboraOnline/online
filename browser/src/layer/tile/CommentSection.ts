@@ -482,20 +482,43 @@ class Comment {
 		} else if (this.sectionProperties.data.trackchange && this.sectionProperties.data.anchorPos) {
 			// For redline comments there are no 'rectangles' or 'rectangleOriginal' properties in sectionProperties.data
 			// So use the comment rectangle stored in anchorPos (in display? twips).
-			var anchorPos = this.sectionProperties.data.anchorPos;
-			pos = [
-				Math.round(anchorPos[0] * ratio),
-				Math.round(anchorPos[1] * ratio)
-			];
-			size = [
-				Math.round(anchorPos[2] * ratio),
-				Math.round(anchorPos[3] * ratio)
-			];
+			pos = this.getPosition();
+			size = this.getSize();
 
 			intersectsVisibleArea = Comment.doesRectIntersectView(pos, size, viewContext);
 		}
 
 		return intersectsVisibleArea;
+	}
+
+	public getPosition () {
+		// For redline comments there are no 'rectangles' or 'rectangleOriginal' properties in sectionProperties.data
+		// So use the comment rectangle stored in anchorPos (in display? twips).
+		if (this.sectionProperties.data.trackchange && this.sectionProperties.data.anchorPos) {
+			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+			var anchorPos = this.sectionProperties.data.anchorPos;
+			return [
+				Math.round(anchorPos[0] * ratio),
+				Math.round(anchorPos[1] * ratio)
+			];
+		} else {
+			return this.position;
+		}
+	}
+
+	public getSize() {
+		// For redline comments there are no 'rectangles' or 'rectangleOriginal' properties in sectionProperties.data
+		// So use the comment rectangle stored in anchorPos (in display? twips).
+		if (this.sectionProperties.data.trackchange && this.sectionProperties.data.anchorPos) {
+			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+			var anchorPos = this.sectionProperties.data.anchorPos;
+			return [
+				Math.round(anchorPos[2] * ratio),
+				Math.round(anchorPos[3] * ratio)
+			];
+		} else {
+			return this.size;
+		}
 	}
 
 	private updatePosition () {

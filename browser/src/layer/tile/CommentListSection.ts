@@ -616,9 +616,9 @@ class CommentSection {
 				if (this.sectionProperties.docLayer._docType === 'text') {
 					// check it is visible in the screen and not a new comment
 					const id = this.sectionProperties.selectedComment.sectionProperties.data.id;
-					if (id.indexOf('new') < 0 && !this.isInViewPort(this.sectionProperties.selectedComment)) {
-						const scrollToPos = this.sectionProperties.selectedComment.position[1];
-						this.map.scrollTop(scrollToPos < 0 ? 0 : scrollToPos);
+					const position = this.sectionProperties.selectedComment.getPosition();
+					if (id.indexOf('new') < 0 && !this.isInViewPort(this.sectionProperties.selectedComment) && position[1] !== 0) {
+						this.map.scrollTop(position[1] < 0 ? 0 : position[1]);
 					}
 				}
 			}
@@ -635,8 +635,9 @@ class CommentSection {
 		const scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
 		const screenTop = scrollSection.containerObject.getDocumentTopLeft()[1];
 		const screenBottom = screenTop + (window.innerHeight || document.documentElement.clientHeight);
-		const annotationTop = annotation.position[1];
-		const annotationBottom = annotation.position[1] + rect.bottom - rect.top;
+		const position = annotation.getPosition();
+		const annotationTop = position[1];
+		const annotationBottom = position[1] + rect.bottom - rect.top;
 
 		return (
 			screenTop <= annotationTop &&
