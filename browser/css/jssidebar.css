@@ -311,8 +311,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 }
 
 #orientationcontrol,
-#rotation,
-#misc_label {
+#rotation {
 	visibility: hidden;
 	height: 16px;
 }
