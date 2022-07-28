@@ -741,7 +741,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:TransformDialog'),
 				'command': '.uno:TransformDialog'
-			}
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Translate'),
+				'command': '.uno:Translate'
+			},
 		];
 
 		return this.getTabPage('Format', content);

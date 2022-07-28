@@ -466,6 +466,7 @@ var unoCommandsArray = {
 	'ToolsMenu':{global:{menu:_('~Tools'),},},
 	'TrackChanges':{text:{context:_('Record Track Changes'),menu:_('~Record'),},},
 	'TransformDialog':{global:{menu:_('Position and Si~ze...'),},},
+	'Translate':{text:{menu:_('Translate...'),},},
 	'Underline':{global:{menu:_('Underline'),},},
 	'UnderlineDouble':{global:{menu:_('Double Underline'),},},
 	'Undo':{global:{menu:_('~Undo'),},},
