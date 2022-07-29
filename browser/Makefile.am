@@ -122,7 +122,6 @@ COOL_CSS_LST =\
 	$(srcdir)/css/leaflet-spinner.css \
 	$(srcdir)/css/selectionMarkers.css \
 	$(srcdir)/css/color-palette.css \
-	$(srcdir)/css/color-palette-dark.css \
 	$(srcdir)/css/cool.css \
 	$(srcdir)/css/toolbar.css \
 	$(srcdir)/css/toolbar-mobile.css \
