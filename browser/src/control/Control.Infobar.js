@@ -14,7 +14,7 @@ L.Control.Infobar = L.Control.extend({
 			return;
 
 		var product = function () {
-			var integratorUrl = encodeURIComponent('http://192.168.0.1/fakebuy.html');
+			var integratorUrl = encodeURIComponent(window.buyProductUrl);
 			var productUrl = window.feedbackUrl;
 			productUrl = productUrl.substring(0, productUrl.lastIndexOf('/')) +
 				    '/product.html?integrator='+ integratorUrl;
