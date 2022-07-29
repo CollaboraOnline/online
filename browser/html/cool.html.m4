@@ -16,6 +16,7 @@ m4_define(_YEAR_,m4_esyscmd(date +%Y|tr -d '\n'))
 m4_dnl# Define MOBILEAPP as true if this is either for the iOS app or for the gtk+ "app" testbed
    window.welcomeUrl = '%WELCOME_URL%';
    window.feedbackUrl = '%FEEDBACK_URL%';
+   window.buyProductUrl = '%BUYPRODUCT_URL%';
 m4_define([MOBILEAPP],[])
 m4_ifelse(IOSAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])
