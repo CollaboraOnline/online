@@ -141,7 +141,7 @@ protected:
 
     void initWebsocket(const std::string& wopiName)
     {
-        Poco::URI wopiURL(helpers::getTestServerURI() + wopiName);
+        Poco::URI wopiURL(helpers::getTestServerURI() + wopiName + "&testname=" + getTestname());
 
         _wopiSrc.clear();
         Poco::URI::encode(wopiURL.toString(), ":/?", _wopiSrc);
@@ -454,6 +454,11 @@ protected:
 
             LOG_TST(oss.str());
         }
+
+        // In some very rare cases we are getting requests from other tests.
+        LOK_ASSERT_MESSAGE("Request belongs to a different test",
+                           uriReq.toString().find("testname=" + getTestname()) !=
+                               std::string::npos);
 
         if (request.getMethod() == "GET")
         {
