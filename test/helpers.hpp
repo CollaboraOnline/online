@@ -502,7 +502,7 @@ connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri
         }
 
         std::this_thread::sleep_for(std::chrono::microseconds(POLL_TIMEOUT_MICRO_S));
-    } while (retries--);
+    } while (retries-- && !SigUtil::getShutdownRequestFlag());
 
     TST_LOG("ERROR: Giving up connecting to " << uri.toString());
     throw std::runtime_error("Cannot connect to [" + uri.toString() + "].");
