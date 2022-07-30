@@ -191,21 +191,24 @@ protected:
             return;
         }
 
-        LOG_TRC('#' << socket->getFD() << ": Shutdown websocket, code: " <<
-                static_cast<unsigned>(statusCode) << ", message: " << statusMessage);
-        _shuttingDown = true;
+        // Don't send close-frame more than once.
+        if (!_shuttingDown)
+        {
+            LOG_TRC('#' << socket->getFD() << ": Shutdown websocket, code: "
+                        << static_cast<unsigned>(statusCode) << ", message: " << statusMessage);
+            _shuttingDown = true;
 
 #if !MOBILEAPP
-        const size_t len = statusMessage.size();
-        std::vector<char> buf(2 + len);
-        buf[0] = ((((int)statusCode) >> 8) & 0xff);
-        buf[1] = ((((int)statusCode) >> 0) & 0xff);
-        std::copy(statusMessage.begin(), statusMessage.end(), buf.begin() + 2);
-        const unsigned char flags = WSFrameMask::Fin
-                                  | static_cast<char>(WSOpCode::Close);
+            const size_t len = statusMessage.size();
+            std::vector<char> buf(2 + len);
+            buf[0] = ((((int)statusCode) >> 8) & 0xff);
+            buf[1] = ((((int)statusCode) >> 0) & 0xff);
+            std::copy(statusMessage.begin(), statusMessage.end(), buf.begin() + 2);
+            const unsigned char flags = WSFrameMask::Fin | static_cast<char>(WSOpCode::Close);
 
-        sendFrame(socket, buf.data(), buf.size(), flags);
+            sendFrame(socket, buf.data(), buf.size(), flags);
 #endif
+        }
     }
 
     void shutdown(bool goingAway, const std::string &statusMessage) override
