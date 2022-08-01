@@ -17,7 +17,7 @@
     <languagetool desc="LanguageTool Remote API settings for grammar checking">
         <enabled desc="Enable LanguageTool Remote Grammar Checker" type="bool" default="false"></enabled>
         <base_url desc="Http endpoint for the LanguageTool API server, without /check or /languages postfix at the end." type="string" default=""></base_url>
-        <user_name desc="LangueTool account username for premium usage." type="string" default=""></user_name>
+        <user_name desc="LanguageTool account username for premium usage." type="string" default=""></user_name>
         <api_key desc="Api key provided by LanguageTool account for premium usage." type="string" default=""></api_key>
         <ssl_verification desc="Enable or disable SSL verification" type="string" default="true"></ssl_verification>
     </languagetool>
