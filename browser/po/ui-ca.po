@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-26 10:50+0200\n"
-"PO-Revision-Date: 2022-07-06 11:21+0000\n"
+"PO-Revision-Date: 2022-07-31 07:16+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -736,7 +736,7 @@ msgstr "Insereix una casella de selecció"
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1096
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Insereix un desplegable"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1097
 msgid "Insert Picture"
@@ -1226,7 +1226,7 @@ msgstr "Casella de selecció"
 
 #: src/control/Control.NotebookbarWriter.js:984
 msgid "Dropdown"
-msgstr ""
+msgstr "Desplegable"
 
 #: src/control/Control.NotebookbarWriter.js:989
 msgid "Picture"
@@ -1438,7 +1438,7 @@ msgstr "0 usuaris"
 
 #: src/control/Control.UserList.js:159
 msgid "Following"
-msgstr ""
+msgstr "Seguint"
 
 #: src/control/Control.UserList.js:187 src/control/Control.UserList.js:353
 msgid "Always follow the editor"

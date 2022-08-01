@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-26 10:50+0200\n"
-"PO-Revision-Date: 2022-07-06 11:21+0000\n"
+"PO-Revision-Date: 2022-07-31 07:16+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -233,7 +233,7 @@ msgstr ""
 
 #: admin/admin.strings.js:56
 msgid "Version Information"
-msgstr ""
+msgstr "Información tocante a la versión"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -531,7 +531,7 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:2435
 msgid "Insert Comment"
-msgstr ""
+msgstr "Inxertar un comentariu"
 
 #: src/control/Control.JSDialogBuilder.js:2939
 msgid "Cell borders"
@@ -548,9 +548,8 @@ msgid "Columns"
 msgstr "Columnes"
 
 #: src/control/Control.JSDialogBuilder.js:3171
-#, fuzzy
 msgid "Insert Table"
-msgstr "Inxertar una data"
+msgstr "Inxertar una tabla"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:303
 #: src/control/Control.Menubar.js:305 src/control/Control.Menubar.js:307
@@ -1216,15 +1215,15 @@ msgstr "Documentu EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:974
 msgid "Rich Text"
-msgstr ""
+msgstr "Testu enriquecíu"
 
 #: src/control/Control.NotebookbarWriter.js:979
 msgid "Checkbox"
-msgstr ""
+msgstr "Caxella"
 
 #: src/control/Control.NotebookbarWriter.js:984
 msgid "Dropdown"
-msgstr ""
+msgstr "Estenderexable"
 
 #: src/control/Control.NotebookbarWriter.js:989
 msgid "Picture"
