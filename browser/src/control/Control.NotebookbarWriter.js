@@ -270,6 +270,29 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			});
 		}
 
+		content.push({
+			'type': 'container',
+			'children': [
+				{
+					'id': 'properties',
+					'type': 'bigtoolitem',
+					'text': _('Properties'),
+					'command': '.uno:SetDocumentProperties'
+				},
+				{
+					'type': 'toolbox',
+					'children': [
+						{
+							'id': 'keyboard-shortcuts',
+							'type': 'bigtoolitem',
+							'text': _('Keyboard shortcuts'),
+							'command': '.uno:KeyboardShortcuts'
+						}
+					]
+				},
+			]
+		});
+
 		return this.getTabPage('File', content);
 	},
 
