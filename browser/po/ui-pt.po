@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-26 10:50+0200\n"
-"PO-Revision-Date: 2022-07-19 03:04+0000\n"
+"PO-Revision-Date: 2022-07-29 17:18+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1437,11 +1437,11 @@ msgstr "0 utilizadores"
 
 #: src/control/Control.UserList.js:159
 msgid "Following"
-msgstr ""
+msgstr "A seguirem"
 
 #: src/control/Control.UserList.js:187 src/control/Control.UserList.js:353
 msgid "Always follow the editor"
-msgstr "Seguir sempre o edito"
+msgstr "Seguir sempre o editor"
 
 #: src/control/Control.UserList.js:301
 msgid "Readonly"
@@ -1473,11 +1473,11 @@ msgstr "Introduza o nome do ficheiro"
 
 #: src/control/Permission.js:143
 msgid "filename"
-msgstr "nome_do_ficheiro"
+msgstr "nome do ficheiro"
 
 #: src/control/Permission.js:165
 msgid "Save as ODF format"
-msgstr "Guardar como formato ODF"
+msgstr "Guardar no formato ODF"
 
 #: src/control/Permission.js:167
 msgid "Continue editing"
