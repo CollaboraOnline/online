@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-26 10:50+0200\n"
-"PO-Revision-Date: 2022-04-26 17:15+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2022-08-01 14:47+0000\n"
+"Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -439,7 +439,7 @@ msgstr "Funktions-Assistent"
 
 #: src/control/Control.FormulaBarJSDialog.js:55
 msgid "Formula"
-msgstr ""
+msgstr "Formel"
 
 #: src/control/Control.FormulaBarJSDialog.js:62
 #: src/control/Control.MobileTopBar.js:40
@@ -458,11 +458,11 @@ msgstr "Mittelwert"
 
 #: src/control/Control.JSDialogBuilder.js:146
 msgid "Min"
-msgstr ""
+msgstr "Min"
 
 #: src/control/Control.JSDialogBuilder.js:147
 msgid "Max"
-msgstr ""
+msgstr "Max"
 
 #: src/control/Control.JSDialogBuilder.js:148
 #: src/control/Control.StatusBar.js:309
@@ -732,29 +732,28 @@ msgstr "Textausrichtung"
 
 #: src/control/Control.Menubar.js:290 src/control/Control.Menubar.js:1094
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Rich Text einfügen"
 
 #: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1095
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Checkbox einfügen"
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1096
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Dropdown-Liste einfügen"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1097
 msgid "Insert Picture"
-msgstr ""
+msgstr "Bild einfügen"
 
 #: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1098
-#, fuzzy
 msgid "Insert Date"
-msgstr "Tabelle einfügen"
+msgstr "Datum einfügen"
 
 #: src/control/Control.Menubar.js:295 src/control/Control.Menubar.js:1099
 #: src/control/Control.NotebookbarWriter.js:999
 msgid "Properties"
-msgstr ""
+msgstr "Einstellungen"
 
 #: src/control/Control.Menubar.js:322
 #: src/control/Control.NotebookbarWriter.js:291
@@ -1175,7 +1174,7 @@ msgstr "Sparkline"
 #: src/control/Control.NotebookbarWriter.js:889
 #: src/control/Control.NotebookbarWriter.js:2194
 msgid "Shapes"
-msgstr ""
+msgstr "Formen"
 
 #: src/control/Control.NotebookbarDraw.js:41
 #: src/control/Control.NotebookbarDraw.js:744
@@ -1194,7 +1193,7 @@ msgstr "Bild (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Master"
-msgstr ""
+msgstr "~Master"
 
 #: src/control/Control.NotebookbarImpress.js:255
 msgid "ODF Presentation (.odp)"
@@ -1210,9 +1209,8 @@ msgid "Reference~s"
 msgstr "~Bezüge"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "Form"
-msgstr "Forum"
+msgstr "Formular"
 
 #: src/control/Control.NotebookbarWriter.js:189
 msgid "ODF Text Document (.odt)"
@@ -1224,19 +1222,19 @@ msgstr "EPUB-Dokument (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:974
 msgid "Rich Text"
-msgstr ""
+msgstr "Rich Text"
 
 #: src/control/Control.NotebookbarWriter.js:979
 msgid "Checkbox"
-msgstr ""
+msgstr "Checkbox"
 
 #: src/control/Control.NotebookbarWriter.js:984
 msgid "Dropdown"
-msgstr ""
+msgstr "Dropdown-Liste"
 
 #: src/control/Control.NotebookbarWriter.js:989
 msgid "Picture"
-msgstr ""
+msgstr "Bild"
 
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Ruler"
@@ -1444,7 +1442,7 @@ msgstr "0 Benutzer"
 
 #: src/control/Control.UserList.js:159
 msgid "Following"
-msgstr ""
+msgstr "Folgend"
 
 #: src/control/Control.UserList.js:187 src/control/Control.UserList.js:353
 msgid "Always follow the editor"
@@ -1988,6 +1986,8 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"Das Dokument ist zu groß oder es ist kein Speicherplatz mehr vorhanden, um "
+"es zu speichern. Das Dokument ist jetzt nur im Nur-Lesezugriff-Modus."
 
 #: src/errormessages.js:35 src/errormessages.js:44
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -2032,6 +2032,11 @@ msgid ""
 "preserve a copy locally. Please contact the server (%storageserver) "
 "administrator to resolve the issue."
 msgstr ""
+"Das Speichern ist fehlgeschlagen, da das Dokument zu groß ist oder das "
+"Speicherplatzkontingent überschritten wurde. Das Dokument ist jetzt im Nur-"
+"Lesezugriff-Modus, aber Sie können es weiterhin herunterladen, um eine Kopie "
+"lokal zu speichern. Bitte wenden Sie sich an den Administrator des Servers "
+"(%storageserver), um das Problem zu beheben."
 
 #: src/errormessages.js:45
 msgid ""
