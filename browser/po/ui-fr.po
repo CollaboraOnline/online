@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-26 10:50+0200\n"
-"PO-Revision-Date: 2022-08-01 10:05+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2022-08-01 11:22+0000\n"
+"Last-Translator: William Gathoye <william+weblate@gathoye.be>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
 "Language: fr\n"
@@ -1192,7 +1192,7 @@ msgstr "Image (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Master"
-msgstr ""
+msgstr "Diapo ~maîtresse"
 
 #: src/control/Control.NotebookbarImpress.js:255
 msgid "ODF Presentation (.odp)"
@@ -1441,7 +1441,7 @@ msgstr "0 utilisateur"
 
 #: src/control/Control.UserList.js:159
 msgid "Following"
-msgstr "Abonné"
+msgstr "Suivi"
 
 #: src/control/Control.UserList.js:187 src/control/Control.UserList.js:353
 msgid "Always follow the editor"
@@ -2023,6 +2023,11 @@ msgid ""
 "preserve a copy locally. Please contact the server (%storageserver) "
 "administrator to resolve the issue."
 msgstr ""
+"L'enregistrement a échoué, car le document est trop lourd ou le quota de "
+"disque a été dépassé. Le document est désormais en lecture seule, mais vous "
+"pouvez toujours le télécharger maintenant pour en conserver une copie "
+"localement. Veuillez contacter l'administrateur du serveur (%storageserver) "
+"pour résoudre ce problème."
 
 #: src/errormessages.js:45
 msgid ""
