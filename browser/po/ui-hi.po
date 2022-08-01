@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-07-26 10:50+0200\n"
-"PO-Revision-Date: 2022-08-01 10:24+0000\n"
-"Last-Translator: Rashesh Padia <rasheshpadia419@gmail.com>\n"
+"PO-Revision-Date: 2022-08-01 11:22+0000\n"
+"Last-Translator: Pranam Lashkari <plashkari628@gmail.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/collabora-online/"
 "ui/hi/>\n"
 "Language: hi\n"
@@ -53,27 +53,24 @@ msgstr "नियंत्रण-पट्ट"
 
 #: admin/admin.strings.js:14
 msgid "Users online"
-msgstr "ऑनलाइन उपयोगकर्तां "
+msgstr "ऑनलाइन उपयोगकर्तां"
 
 #: admin/admin.strings.js:15
 msgid "User Name"
 msgstr "उपयोगकर्ता का नाम"
 
 #: admin/admin.strings.js:16
-#, fuzzy
 msgid "Documents open"
 msgstr "खुले दस्तावेज़"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:122 admin/src/AdminSocketOverview.js:341
-#, fuzzy
 msgid " user(s)."
-msgstr "० उपयोक्ता"
+msgstr " उपयोक्ता"
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:195
-#, fuzzy
 msgid " document(s) open."
-msgstr "खुले दस्तावेज़"
+msgstr " खुले दस्तावेज़"
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -85,7 +82,7 @@ msgstr "मेमोरी खपत"
 
 #: admin/admin.strings.js:21
 msgid "Bytes sent"
-msgstr "भेजे गये बाइट्स "
+msgstr "भेजे गये बाइट्स"
 
 #: admin/admin.strings.js:22
 msgid "Bytes received"
@@ -117,7 +114,7 @@ msgstr "संशोधित"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "WOPI होस्ट"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -169,7 +166,7 @@ msgstr "सीपीयू सांख्यिकी का समय अं�
 
 #: admin/admin.strings.js:40 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "सत्र ख़त्म करे"
 
 #: admin/admin.strings.js:41
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -187,7 +184,7 @@ msgstr ""
 
 #: admin/admin.strings.js:44
 msgid "Documents:"
-msgstr "दस्तावेज़"
+msgstr "दस्तावेज़:"
 
 #: admin/admin.strings.js:45
 msgid "Expired:"
@@ -199,11 +196,11 @@ msgstr "ताजा करें"
 
 #: admin/admin.strings.js:47
 msgid "Shutdown Server"
-msgstr ""
+msgstr "सर्वर बंद करे"
 
 #: admin/admin.strings.js:48
 msgid "Server uptime"
-msgstr ""
+msgstr "सर्वर सक्रियता समय"
 
 #: admin/admin.strings.js:49
 #, fuzzy
@@ -231,7 +228,7 @@ msgstr ""
 #: src/control/Parts.js:428 src/control/Signing.js:611
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
-msgstr ""
+msgstr "बंद करे"
 
 #: admin/admin.strings.js:55
 msgid "Update Log Levels"
@@ -1409,7 +1406,7 @@ msgstr "नये पृष्ठ का नाम डालें"
 
 #: src/control/Control.Toolbar.js:248 src/control/Control.Toolbar.js:276
 msgid "More..."
-msgstr ""
+msgstr "और..."
 
 #: src/control/Control.Toolbar.js:972
 msgid "Previous slide"
@@ -1425,20 +1422,19 @@ msgid ""
 "resolve"
 msgstr ""
 "एकाधिक उपयोगकर्ता के कारण अंडु-रीडु टकराव पाया गया है। ठीक करने के लीये "
-"कृप्या दस्तावेज़ मरम्मत का उपयोग करें।"
+"कृप्या दस्तावेज़ ठीक का उपयोग करें।"
 
 #: src/control/Control.TopToolbar.js:105
 msgid "Default Style"
-msgstr ""
+msgstr "पूर्वनिर्धारित शैली"
 
 #: src/control/Control.TopToolbar.js:223
 msgid "Insert table"
 msgstr "तालिका डालें"
 
 #: src/control/Control.TopToolbar.js:231
-#, fuzzy
 msgid "Insert shapes"
-msgstr "पन्ना डालें"
+msgstr "आकार डालें"
 
 #: src/control/Control.TopToolbar.js:233
 msgid "Insert connectors"
@@ -1466,7 +1462,7 @@ msgstr "० उपयोक्ता"
 
 #: src/control/Control.UserList.js:159
 msgid "Following"
-msgstr "अनुसरण"
+msgstr "अनुगमन"
 
 #: src/control/Control.UserList.js:187 src/control/Control.UserList.js:353
 msgid "Always follow the editor"
