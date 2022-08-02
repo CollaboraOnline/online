@@ -51,6 +51,38 @@ L.Control.UIManager = L.Control.extend({
 			|| forceCompact === false;
 	},
 
+	toggleDarkMode: function() {
+		// the initial theme is 'light' unless it is already set to 'dark'
+		var initialScheme = 'light';
+
+		if (localStorage.getItem('colorTheme')) {
+			if (localStorage.getItem('colorTheme') === 'dark') {
+				initialScheme = 'dark';
+			}
+		}
+		else {
+			localStorage.setItem('colorTheme','light');
+		}
+
+		// perform the switch
+		if (initialScheme === 'light') {
+			localStorage.setItem('colorTheme','dark');
+			document.documentElement.setAttribute('data-theme','dark');
+		}
+		else if (initialScheme === 'dark') {
+			localStorage.setItem('colorTheme','light');
+			document.documentElement.setAttribute('data-theme','light');
+		}
+	},
+
+	isDarkModeOn: function() {
+		var flag = false;
+		if (localStorage.getItem('colorTheme') === 'dark') {
+			flag = true;
+		}
+		return flag;
+	},
+
 	initializeBasicUI: function() {
 		var enableNotebookbar = this.shouldUseNotebookbarMode();
 		var that = this;
