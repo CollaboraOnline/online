@@ -276,7 +276,7 @@ int main(int argc, char* argv[])
     if (argc != 2)
     {
         fprintf(stderr, "Usage: %s document\n", argv[0]);
-        Util::forcedExit(EX_SOFTWARE); // avoid log cleanup
+        _exit(1); // avoid log cleanup
     }
 
     Log::initialize("Mobile", "trace", false, false, {});
