@@ -9,6 +9,8 @@
 
 #include "Util.hpp"
 
+#include <limits>
+
 bool StringVector::equals(std::size_t index, const StringVector& other, std::size_t otherIndex)
 {
     if (index >= _tokens.size())

@@ -10,6 +10,7 @@
 #include <test/testlog.hpp>
 
 #include <cstdlib>
+#include <iomanip>
 #include <mutex>
 #include <thread>
 

@@ -7,9 +7,9 @@
 
 #pragma once
 
-#include <atomic>
-#include <mutex>
+#include <cstddef>
 #include <signal.h>
+#include <string>
 
 namespace SigUtil
 {

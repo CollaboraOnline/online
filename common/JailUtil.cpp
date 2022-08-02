@@ -9,21 +9,25 @@
 
 #include "FileUtil.hpp"
 #include "JailUtil.hpp"
+#include "Log.hpp"
 
-#include <sys/types.h>
+#include <Poco/File.h>
+#include <Poco/Path.h>
+
 #include <fcntl.h>
 #include <unistd.h>
 #ifdef __linux__
 #include <sys/sysmacros.h>
+#include <sys/stat.h>
 #endif
 
-#include <cstdio>
+#include <cerrno>
 #include <cstdlib>
 #include <cstring>
+#include <exception>
+#include <initializer_list>
 #include <string>
-
-#include "Log.hpp"
-#include <SigUtil.hpp>
+#include <vector>
 
 namespace JailUtil
 {

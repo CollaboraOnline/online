@@ -16,6 +16,8 @@
 #include <unordered_map>
 
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/File.h>
+#include <Poco/Path.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
 #include <Poco/JSON/Object.h>

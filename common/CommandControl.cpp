@@ -6,11 +6,15 @@
  */
 
 #include <config.h>
-#include <string>
-#include <unordered_set>
+
 #include "ConfigUtil.hpp"
 #include "Util.hpp"
 #include "CommandControl.hpp"
+
+#include <Poco/Util/LayeredConfiguration.h>
+
+#include <string>
+#include <unordered_set>
 
 namespace CommandControl
 {

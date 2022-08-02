@@ -9,35 +9,28 @@
 
 #include "SigUtil.hpp"
 
+#include "Common.hpp"
+#include "Log.hpp"
+#include <net/Socket.hpp>
+
 #if !defined(__ANDROID__)
 #  include <execinfo.h>
 #endif
-#include <csignal>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/poll.h>
-#include <sys/uio.h>
 #include <unistd.h>
 
+#include <algorithm>
+#include <array>
 #include <atomic>
 #include <cassert>
+#include <cerrno>
 #include <chrono>
+#include <csignal>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <fstream>
-#include <iomanip>
 #include <iostream>
-#include <mutex>
-#include <sstream>
 #include <string>
 #include <thread>
-#include <array>
-
-#include <Socket.hpp>
-#include "Common.hpp"
-#include "Log.hpp"
 
 #ifndef IOS
 static std::atomic<bool> TerminationFlag(false);

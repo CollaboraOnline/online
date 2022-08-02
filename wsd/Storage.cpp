@@ -20,6 +20,8 @@
 #include <string>
 
 #include <Poco/Exception.h>
+#include <Poco/File.h>
+#include <Poco/Path.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 

@@ -7,21 +7,19 @@
 
 #pragma once
 
-#include <sys/syscall.h>
-#include <unistd.h>
+#include <Poco/LocalDateTime.h>
+#include <Poco/Logger.h>
+#include <Poco/Message.h>
 
+#include <cassert>
 #include <cerrno>
-#include <cstddef>
+#include <chrono>
 #include <functional>
 #include <iostream>
-#include <thread>
-#include <sstream>
+#include <map>
 #include <string>
-
-#include <Poco/LocalDateTime.h>
-#include <Poco/DateTimeFormat.h>
-#include <Poco/DateTimeFormatter.h>
-#include <Poco/Logger.h>
+#include <thread>
+#include <utility>
 
 #ifdef __ANDROID__
 #include <android/log.h>

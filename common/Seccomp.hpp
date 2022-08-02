@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <Protocol.hpp>
+class StringVector;
 
 namespace Seccomp {
     enum Type { KIT, WSD };

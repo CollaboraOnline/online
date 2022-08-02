@@ -7,40 +7,42 @@
 
 #pragma once
 
+#include <config.h>
+
+#include <sys/types.h>
+#include <algorithm>
+#include <atomic>
 #include <cassert>
+#include <cctype>
 #include <cerrno>
 #include <chrono>
 #include <cinttypes>
 #include <cstddef>
 #include <cstdint>
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
-#include <algorithm>
-#include <atomic>
-#include <functional>
+#include <initializer_list>
+#include <limits>
+#include <map>
 #include <memory>
 #include <mutex>
 #include <set>
 #include <sstream>
+#include <stdexcept>
 #include <string>
-#include <map>
+#include <tuple>
 #include <utility>
-#include <inttypes.h>
-#include <cctype>
-
-#include <memory.h>
+#include <vector>
 
 #ifndef __linux__
 #include <thread>
 #endif
 
-#include <Poco/File.h>
-#include <Poco/Path.h>
-#include <Poco/RegularExpression.h>
+class StringVector;
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
-
-#include <StringVector.hpp>
 
 /// Format seconds with the units suffix until we migrate to C++20.
 inline std::ostream& operator<<(std::ostream& os, const std::chrono::seconds& s)

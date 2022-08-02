@@ -5,17 +5,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <config.h>
-
 #include "Protocol.hpp"
+#include "StringVector.hpp"
 
-#include <cassert>
-#include <cstring>
 #include <map>
 #include <string>
-
-#define LOK_USE_UNSTABLE_API
-#include <LibreOfficeKit/LibreOfficeKitEnums.h>
+#include <utility>
 
 namespace COOLProtocol
 {

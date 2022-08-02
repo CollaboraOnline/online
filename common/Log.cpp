@@ -7,30 +7,21 @@
 
 #include <config.h>
 
-#ifdef __linux__
-#include <sys/prctl.h>
-#include <sys/syscall.h>
-#endif
-#include <unistd.h>
-
-#include <atomic>
-#include <cassert>
-#include <cstring>
-#include <ctime>
-#include <iomanip>
-#include <iostream>
-#include <sstream>
-#include <string>
+#include "Log.hpp"
+#include "Util.hpp"
 
 #include <Poco/AutoPtr.h>
 #include <Poco/ConsoleChannel.h>
 #include <Poco/FileChannel.h>
-#include <Poco/FormattingChannel.h>
-#include <Poco/PatternFormatter.h>
-#include <Poco/SplitterChannel.h>
 
-#include "Log.hpp"
-#include "Util.hpp"
+#include <unistd.h>
+
+#include <atomic>
+#include <cstdio>
+#include <ctime>
+#include <iomanip>
+#include <iostream>
+#include <string>
 
 namespace Log
 {

@@ -75,6 +75,7 @@
 #include "Watermark.hpp"
 #include "RenderTiles.hpp"
 #include "SetupKitEnvironment.hpp"
+#include "WebSocketHandler.hpp"
 #include <common/ConfigUtil.hpp>
 #include <common/TraceEvent.hpp>
 

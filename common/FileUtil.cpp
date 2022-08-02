@@ -8,9 +8,13 @@
 #include <config.h>
 
 #include "FileUtil.hpp"
+#include "Log.hpp"
+#include "Util.hpp"
+#include "Unit.hpp"
+
+#include <Poco/File.h>
 
 #include <dirent.h>
-#include <exception>
 #include <ftw.h>
 #include <stdexcept>
 #include <sys/time.h>
@@ -25,6 +29,7 @@
 
 #include <fcntl.h>
 #include <chrono>
+#include <cstddef>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -43,13 +48,6 @@ namespace filesystem = ::std::filesystem;
 #else
 # include <Poco/TemporaryFile.h>
 #endif
-
-#include <Poco/File.h>
-#include <Poco/Path.h>
-
-#include "Log.hpp"
-#include "Util.hpp"
-#include "Unit.hpp"
 
 namespace
 {

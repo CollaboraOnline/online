@@ -9,23 +9,24 @@
 
 #include "Unit.hpp"
 
-#include <iostream>
-#include <cassert>
-#include <dlfcn.h>
-#include <fstream>
-#include <sstream>
-#include <sysexits.h>
-#include <thread>
+#include "Log.hpp"
+#include "Util.hpp"
+#include <common/SigUtil.hpp>
+#include <net/Socket.hpp>
 
+#include <Poco/Dynamic/Var.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
-#include "Log.hpp"
-#include "Util.hpp"
-
-#include <common/SigUtil.hpp>
-#include <common/Message.hpp>
+#include <atomic>
+#include <cassert>
+#include <cstring>
+#include <dlfcn.h>
+#include <fstream>
+#include <mutex>
+#include <sysexits.h>
+#include <thread>
 
 UnitBase *UnitBase::Global = nullptr;
 UnitKit *GlobalKit = nullptr;

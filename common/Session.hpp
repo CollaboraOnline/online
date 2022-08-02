@@ -7,24 +7,24 @@
 
 #pragma once
 
+#include "Log.hpp"
+#include "WebSocketHandler.hpp"
+
 #include <atomic>
 #include <cassert>
+#include <chrono>
+#include <cstring>
+#include <cstdint>
 #include <memory>
 #include <map>
 #include <ostream>
+#include <string>
 #include <type_traits>
-
-#include <Poco/Path.h>
-#include <Poco/Types.h>
-
-#include "Protocol.hpp"
-#include "Log.hpp"
-#include "MessageQueue.hpp"
-#include "Message.hpp"
-#include "TileCache.hpp"
-#include "WebSocketHandler.hpp"
+#include <utility>
+#include <vector>
 
 class Session;
+class StringVector;
 
 template<class T>
 class SessionMap : public std::map<std::string, std::shared_ptr<T> >

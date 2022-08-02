@@ -23,6 +23,7 @@
 #include <Poco/URI.h>
 
 #include "Log.hpp"
+#include "TileCache.hpp"
 #include "TileDesc.hpp"
 #include "Util.hpp"
 #include "net/Socket.hpp"

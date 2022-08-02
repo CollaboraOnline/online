@@ -9,6 +9,7 @@
 
 #include "Session.hpp"
 #include "Storage.hpp"
+#include "Message.hpp"
 #include "MessageQueue.hpp"
 #include "SenderQueue.hpp"
 #include "ServerURL.hpp"

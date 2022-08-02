@@ -5,19 +5,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <config.h>
-
 #include "Session.hpp"
 
-#include <Poco/Exception.h>
-#include <Poco/Path.h>
-#include <Poco/String.h>
-#include <Poco/URI.h>
-
-#include "Common.hpp"
 #include "Protocol.hpp"
 #include "Log.hpp"
+#include "StringVector.hpp"
+#include "Unit.hpp"
 #include "Util.hpp"
+
+#include <Poco/Exception.h>
+#include <Poco/URI.h>
 
 using namespace COOLProtocol;
 

@@ -17,6 +17,7 @@
 
 #include "Common.hpp"
 #include "Kit.hpp"
+#include "MessageQueue.hpp"
 #include "Session.hpp"
 #include "Watermark.hpp"
 

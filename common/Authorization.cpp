@@ -5,14 +5,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <config.h>
-
 #include "Authorization.hpp"
 #include "Log.hpp"
 #include "StringVector.hpp"
 
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
+
+#include <vector>
 
 void Authorization::authorizeURI(Poco::URI& uri) const
 {

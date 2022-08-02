@@ -12,17 +12,19 @@
 #include <config.h>
 
 #include "Seccomp.hpp"
+#include "StringVector.hpp"
 
-#include <dlfcn.h>
-#include <ftw.h>
+#include <common/Log.hpp>
+#include <common/SigUtil.hpp>
+
 #ifdef __linux__
 #include <linux/audit.h>
 #include <linux/filter.h>
 #if DISABLE_SECCOMP == 0
 #include <linux/seccomp.h>
 #endif
-#include <malloc.h>
 #include <signal.h>
+#include <string>
 #include <sys/capability.h>
 #include <sys/prctl.h>
 #include <sys/syscall.h>
@@ -30,10 +32,6 @@
 #include <sys/resource.h>
 #include <sys/time.h>
 #include <unistd.h>
-#include <utime.h>
-
-#include <common/Log.hpp>
-#include <common/SigUtil.hpp>
 
 #if DISABLE_SECCOMP == 0
 #ifndef SYS_SECCOMP

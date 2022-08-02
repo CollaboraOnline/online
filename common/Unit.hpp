@@ -7,18 +7,20 @@
 
 #pragma once
 
-#include <atomic>
-#include <cassert>
-#include <chrono>
-#include <memory>
-#include <string>
-#include <vector>
-
-#include <common/StateEnum.hpp>
+#include "Log.hpp"
 #include "Util.hpp"
 #include "net/Socket.hpp"
 
 #include <test/testlog.hpp>
+
+#include <Poco/Exception.h>
+
+#include <cassert>
+#include <chrono>
+#include <exception>
+#include <memory>
+#include <string>
+#include <vector>
 
 class UnitBase;
 class UnitWSD;
@@ -36,8 +38,7 @@ namespace Poco
 
     namespace Net
     {
-        class HTTPServerRequest;
-        class HTTPServerResponse;
+        class HTTPRequest;
     }
 
     namespace Util

@@ -9,9 +9,6 @@
 
 #include <string>
 
-#include <Poco/File.h>
-#include <Poco/Path.h>
-
 namespace JailUtil
 {
 

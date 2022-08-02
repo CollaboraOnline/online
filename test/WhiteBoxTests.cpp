@@ -24,6 +24,7 @@
 
 #include <common/Message.hpp>
 #include <wsd/FileServer.hpp>
+#include <wsd/TileCache.hpp>
 #include <net/Buffer.hpp>
 #include <net/NetUtil.hpp>
 

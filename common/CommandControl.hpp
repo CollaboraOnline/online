@@ -7,13 +7,17 @@
 
 #pragma once
 
-#include <string>
-#include <unordered_set>
 #include "ConfigUtil.hpp"
-#include <Poco/Util/LayeredConfiguration.h>
+#include <Log.hpp>
+
 #include <Poco/URI.h>
 #include <Poco/Exception.h>
-#include <Log.hpp>
+
+#include <map>
+#include <string>
+#include <unordered_set>
+
+namespace Poco { namespace Util { class LayeredConfiguration; } }
 
 namespace CommandControl
 {

@@ -16,6 +16,7 @@
 
 #include <Poco/Util/AbstractConfiguration.h>
 #include <Poco/Util/XMLConfiguration.h>
+#include <Poco/AutoPtr.h>
 
 namespace config
 {

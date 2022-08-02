@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <algorithm>
+#include <cstdint>
 #include <cstring>
 #include <string>
 #include <utility>
