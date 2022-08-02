@@ -1031,6 +1031,12 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': _('Show Status Bar')
 			},
 			{
+				'id':'toggledarktheme',
+				'type': 'bigmenubartoolitem',
+				'text': _('Dark Mode'),
+				'command':_('Dark Mode')
+			},
+			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Sidebar'),
 				'command': '.uno:Sidebar'

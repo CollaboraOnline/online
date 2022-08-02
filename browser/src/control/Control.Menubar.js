@@ -127,6 +127,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
 					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
+					{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 					{uno: '.uno:Sidebar'},
 					{type: 'separator'},
 					{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
@@ -412,6 +413,7 @@ L.Control.Menubar = L.Control.extend({
 				   {name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 				   {name: _('Show Ruler'), id: 'showruler', type: 'action'},
 				   {name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
+				   {name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 				   {uno: '.uno:Sidebar'},
 				   {type: 'separator'},
 				   {uno: '.uno:SlideMasterPage'},
@@ -550,6 +552,7 @@ L.Control.Menubar = L.Control.extend({
 				]).concat([
 					{type: 'separator'},
 					{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
+					{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 					{uno: '.uno:Sidebar'},
 					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'}
 				])},
@@ -678,6 +681,7 @@ L.Control.Menubar = L.Control.extend({
 				   {type: 'separator'},
 				   {name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 				   {name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
+				   {name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 				   {uno: '.uno:Sidebar'},
 				   {name: _UNO('.uno:FreezePanes', 'spreadsheet', true), id: 'FreezePanes', type: 'action', uno: '.uno:FreezePanes'},
 				   {name: _UNO('.uno:FreezeCellsMenu', 'spreadsheet', true), id: 'FreezeCellsMenu', type: 'menu', uno: '.uno:FreezeCellsMenu', menu: [
@@ -1239,7 +1243,7 @@ L.Control.Menubar = L.Control.extend({
 			'downloadas-odt', 'downloadas-doc', 'downloadas-docx', 'downloadas-rtf', // file menu
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'downloadas-odg', 'exportpdf', 'exportepub', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'downloadas-csv', 'closedocument', // file menu
-			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'showresolved', // view menu
+			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'showresolved', 'toggledarktheme', // view menu
 			'about', 'keyboard-shortcuts', 'latestupdates', 'feedback', 'online-help', 'report-an-issue', // help menu
 			'insertcomment'
 		]
@@ -1651,7 +1655,12 @@ L.Control.Menubar = L.Control.extend({
 						} else {
 							$(aItem).removeClass(constChecked);
 						}
-
+					} else if (id == 'toggledarktheme') {
+						if (self._map.uiManager.getDarkModeState()) {
+							$(aItem).addClass(constChecked);
+						} else {
+							$(aItem).removeClass(constChecked);
+						}
 					} else if (id === 'showstatusbar') {
 						if (self._map.uiManager.isStatusBarVisible()) {
 							$(aItem).addClass(constChecked);
@@ -1665,7 +1674,6 @@ L.Control.Menubar = L.Control.extend({
 						} else {
 							$(aItem).text(_('Use Tabbed view'));
 						}
-
 					} else if (self._map.getDocType() === 'presentation' && (id === 'deletepage' || id === 'insertpage' || id === 'duplicatepage')) {
 						if (id === 'deletepage') {
 							itemState = self._map['stateChangeHandler'].getItemValue('.uno:DeletePage');
@@ -1813,6 +1821,8 @@ L.Control.Menubar = L.Control.extend({
 			L.toggleFullScreen();
 		} else if (id === 'showruler') {
 			this._map.uiManager.toggleRuler();
+		} else if (id == 'toggledarktheme') {
+			this._map.uiManager.toggleDarkMode();
 		} else if (id === 'toggleuimode') {
 			if (this._map.uiManager.shouldUseNotebookbarMode()) {
 				this._map.uiManager.onChangeUIMode({mode: 'classic', force: true});
