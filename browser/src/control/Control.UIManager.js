@@ -51,9 +51,50 @@ L.Control.UIManager = L.Control.extend({
 			|| forceCompact === false;
 	},
 
+	// Dark mode toggle
+
+	loadLightMode: function() {
+		document.documentElement.setAttribute('data-theme','light');
+		this.map.fire('darkmodechanged');
+	},
+
+	loadDarkMode: function() {
+		document.documentElement.setAttribute('data-theme','dark');
+		this.map.fire('darkmodechanged');
+	},
+
+	getDarkModeState: function() {
+		return this.getSavedStateOrDefault('darkTheme', false);
+	},
+
+	toggleDarkMode: function() {
+		// get the initial mode
+		var selectedMode = this.getDarkModeState();
+		// swap them by invoking the appropriate load function and saving the state
+		if (selectedMode) {
+			this.setSavedState('darkTheme',false);
+			this.loadLightMode();
+		}
+		else {
+			this.setSavedState('darkTheme',true);
+			this.loadDarkMode();
+		}
+	},
+
+	initDarkModeFromSettings: function() {
+		var selectedMode = this.getDarkModeState();
+		if (selectedMode) {
+			this.loadDarkMode();
+		}
+		else {
+			this.loadLightMode();
+		}
+	},
+
 	initializeBasicUI: function() {
 		var enableNotebookbar = this.shouldUseNotebookbarMode();
 		var that = this;
+
 
 		if (window.mode.isMobile() || !enableNotebookbar) {
 			var menubar = L.control.menubar();
@@ -159,6 +200,8 @@ L.Control.UIManager = L.Control.extend({
 			this.createNotebookbarControl(docType);
 			// makeSpaceForNotebookbar call in onUpdatePermission
 		}
+
+		this.initDarkModeFromSettings();
 
 		if (docType === 'spreadsheet') {
 			this.map.addControl(L.control.sheetsBar({shownavigation: isDesktop || window.mode.isTablet()}));
@@ -340,6 +383,8 @@ L.Control.UIManager = L.Control.extend({
 		this.setSavedState('CompactMode', uiMode.mode === 'classic');
 		this.initializeSidebar();
 		this.insertCustomButtons();
+
+		this.map.fire('darkmodechanged');
 	},
 
 	// UI modification

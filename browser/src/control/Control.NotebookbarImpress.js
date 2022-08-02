@@ -373,6 +373,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:SlideMasterPage'
 			},
 			{
+				'id':'toggledarktheme',
+				'type': 'bigmenubartoolitem',
+				'text': _('Dark Mode'),
+				'command':_('Dark Mode')
+			},
+			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Sidebar'),
 				'command': '.uno:Sidebar'
