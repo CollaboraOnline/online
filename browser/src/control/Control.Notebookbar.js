@@ -48,6 +48,7 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.on('jsdialogaction', this.onJSAction, this);
 		this.map.on('statusbarchanged', this.onStatusbarChange, this);
 		this.map.on('rulerchanged', this.onRulerChange, this);
+		this.map.on('darkmodechanged', this.onDarkModeToggleChange, this);
 
 		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
 
@@ -472,6 +473,15 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 		else {
 			$('#showruler').removeClass('selected');
+		}
+	},
+
+	onDarkModeToggleChange: function() {
+		if (this.map.uiManager.getDarkModeState()) {
+			$('#toggledarktheme').addClass('selected');
+		}
+		else {
+			$('#toggledarktheme').removeClass('selected');
 		}
 	},
 

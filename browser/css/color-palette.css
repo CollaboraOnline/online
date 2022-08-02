@@ -1,5 +1,6 @@
 :root {
 	/*LibreOffice Colors: https://wiki.documentfoundation.org/Marketing/Branding#Colors
+	 * this is the color prefab for light mode
 	----------------------------------[to do]*/
 	--blue1-txt-primary-color: 3, 105, 163;
 	--green0-txt-primary-color: 16, 104, 2; /*green1 lacks contrast against white*/
