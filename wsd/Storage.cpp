@@ -96,7 +96,7 @@ void StorageBase::initialize()
         HostUtil::parseWopiHost(app.config());
     }
 
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
     CommandControl::LockManager::parseLockedHost(app.config());
 #endif
 
@@ -860,7 +860,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
     JsonUtil::findJSONValue(object, "BreadcrumbDocName", _breadcrumbDocName);
     JsonUtil::findJSONValue(object, "FileUrl", _fileUrl);
 
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
     bool isUserLocked = false;
     JsonUtil::findJSONValue(object, "IsUserLocked", isUserLocked);
 

@@ -866,7 +866,7 @@ private:
     {
         assert(!_host.empty() && portNumber > 0 && !_port.empty() &&
                "Invalid hostname and portNumber for http::Sesssion");
-#ifdef ENABLE_DEBUG
+#if ENABLE_DEBUG
         std::string scheme;
         std::string hostString;
         std::string portString;

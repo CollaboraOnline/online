@@ -80,7 +80,7 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
     }
 
     AliasHosts.clear();
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
     CommandControl::LockManager::unlockLinkMap.clear();
 #endif
 
@@ -102,7 +102,7 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
         try
         {
             const Poco::URI realUri(uri);
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
             CommandControl::LockManager::mapUnlockLink(realUri.getHost(), path);
 #endif
             HostUtil::hostList.insert(realUri.getHost());
@@ -137,7 +137,7 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
                     const Poco::URI aUri(aliasUri.getScheme() + "://" + x + ':' +
                                          std::to_string(aliasUri.getPort()));
                     AliasHosts.insert({ aUri.getAuthority(), realUri.getAuthority() });
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
                     CommandControl::LockManager::mapUnlockLink(aUri.getHost(), path);
 #endif
                     HostUtil::addWopiHost(aUri.getHost(), allow);

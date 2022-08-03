@@ -267,7 +267,7 @@ namespace SigUtil
 #ifdef SIGSTKFLT
             CASE(STKFLT);
 #endif
-#if defined(SIGIO) && SIGIO != SIGPOLL
+#if defined(SIGIO) && defined(SIGPOLL) && SIGIO != SIGPOLL
             CASE(IO);
 #endif
 #ifdef SIGPWR
@@ -277,7 +277,7 @@ namespace SigUtil
             CASE(LOST);
 #endif
             CASE(WINCH);
-#if defined(SIGINFO) && SIGINFO != SIGPWR
+#if defined(SIGINFO) && defined(SIGPWR) && SIGINFO != SIGPWR
             CASE(INFO);
 #endif
 #undef CASE
