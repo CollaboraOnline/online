@@ -233,7 +233,7 @@ public:
     /// Generate an access token for this session via proxy protocol.
     const std::string &getOrCreateProxyAccess();
 
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
     void sendLockedInfo();
 #endif
 

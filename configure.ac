@@ -835,7 +835,7 @@ AC_SUBST(VEREIGN_URL)
 # Test for build environment
 
 AS_IF([test "$ENABLE_GTKAPP" != true],
-[CXXFLAGS="$CXXFLAGS -Wall -Wextra -Wshadow"])
+[CXXFLAGS="$CXXFLAGS -Wall -Wextra -Wshadow -Wundef"])
 
 CFLAGS="$CFLAGS -Wall -Wextra"
 
@@ -1379,7 +1379,8 @@ else
 fi
 
 AS_IF([test "$enable_feature_lock" = "yes"],
-      [AC_DEFINE([ENABLE_FEATURE_LOCK],1,[Whether to compile and enable feature locking])])
+      [AC_DEFINE([ENABLE_FEATURE_LOCK],1,[Whether to compile and enable feature locking])],
+      [AC_DEFINE([ENABLE_FEATURE_LOCK],0,[Whether to compile and enable feature locking])])
 
 LOCKED_COMMANDS=
 if test "$enable_feature_lock" = "yes"; then
@@ -1493,7 +1494,8 @@ AC_SUBST(UNLOCK_LINK_PER_HOST)
 AM_SUBST_NOTMAKE(UNLOCK_LINK_PER_HOST)
 
 AS_IF([test "$enable_feature_restriction" = "yes"],
-    [AC_DEFINE([ENABLE_FEATURE_RESTRICTION],1,[Whether to compile and enable feature restrictions])])
+    [AC_DEFINE([ENABLE_FEATURE_RESTRICTION],1,[Whether to compile and enable feature restrictions])],
+    [AC_DEFINE([ENABLE_FEATURE_RESTRICTION],0,[Whether to compile and enable feature restrictions])])
 
 FEATURE_RESTRICTION_CONFIGURATION=
 if test "$enable_feature_restriction" = "yes"; then

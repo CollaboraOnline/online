@@ -1185,7 +1185,7 @@ public:
 
         fetchAliasGroups(newAppConfig, remoteJson);
 
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
         fetchLockedHostPatterns(newAppConfig, remoteJson);
         fetchLockedTranslations(newAppConfig, remoteJson);
         fetchUnlockImageUrl(newAppConfig, remoteJson);
@@ -1198,7 +1198,7 @@ public:
 
         HostUtil::parseWopiHost(conf);
 
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
         CommandControl::LockManager::parseLockedHost(conf);
 #endif
 
@@ -1369,7 +1369,7 @@ public:
 
                 newAppConfig.insert(std::make_pair(path + ".host", host));
                 newAppConfig.insert(std::make_pair(path + ".host[@allow]", booleanToString(allow)));
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
                 std::string unlockLink;
                 JsonUtil::findJSONValue(group, "unlock_link", unlockLink);
                 newAppConfig.insert(std::make_pair(path + ".unlock_link", unlockLink));
@@ -1950,7 +1950,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "welcome.enable", "false" },
         { "home_mode.enable", "false" },
         { "feedback.show", "true" },
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
         { "feature_lock.locked_hosts[@allow]", "false"},
         { "feature_lock.locked_hosts.fallback[@read_only]", "false"},
         { "feature_lock.locked_hosts.fallback[@disabled_commands]", "false"},
@@ -1967,7 +1967,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "feature_lock.impress_unlock_highlights", IMPRESS_UNLOCK_HIGHLIGHTS },
         { "feature_lock.draw_unlock_highlights", DRAW_UNLOCK_HIGHLIGHTS },
 #endif
-#ifdef ENABLE_FEATURE_RESTRICTION
+#if ENABLE_FEATURE_RESTRICTION
         { "restricted_commands", "" },
 #endif
         { "user_interface.mode", "default" },
@@ -3608,7 +3608,7 @@ private:
                             uri.substr(pos + ProxyRemoteLen), socket,
                             ProxyRequestHandler::getProxyRatingServer());
                     }
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
                     else
                     {
                         const Poco::URI unlockImageUri =

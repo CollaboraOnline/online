@@ -845,7 +845,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         }
     }
 
-#ifdef ENABLE_FEATURE_RESTRICTION
+#if ENABLE_FEATURE_RESTRICTION
     Object::Ptr restrictionInfo = new Object();
     restrictionInfo->set("IsRestrictedUser", CommandControl::RestrictionManager::isRestrictedUser());
 
