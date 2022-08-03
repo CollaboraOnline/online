@@ -730,13 +730,13 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'enabled': 'true'
 			},
 			{
-				'id': 'Data-RowMenu:MenuRowHeight',
+				'id': 'Data-RowMenuHeight:MenuRowHeight',
 				'type': 'menubutton',
-				'text': _('Row Width'),
+				'text': _('Row Height'),
 				'enabled': 'true'
 			},
 			{
-				'id': 'Data-RowMenu:MenuColumnWidth',
+				'id': 'Data-ColumnMenuWidth:MenuColumnWidth',
 				'type': 'menubutton',
 				'text': _('Column Width'),
 				'enabled': 'true'
