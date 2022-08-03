@@ -637,16 +637,19 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'StyleApplyDefault',
 								'type': 'toolitem',
 								'text': _('Default'),
 								'command': '.uno:StyleApply?Style:string=Default&FamilyName:string=CellStyles'
 							},
 							{
+								'id': 'StyleApplyHeading1',
 								'type': 'toolitem',
 								'text': _('Heading 1'),
 								'command': '.uno:StyleApply?Style:string=Heading 1&FamilyName:string=CellStyles'
 							},
 							{
+								'id': 'StyleApplyHeading2',
 								'type': 'toolitem',
 								'text': _('Heading 2'),
 								'command': '.uno:StyleApply?Style:string=Heading 2&FamilyName:string=CellStyles'
@@ -658,16 +661,19 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'StyleApplyGood',
 								'type': 'toolitem',
 								'text': _('Good'),
 								'command': '.uno:StyleApply?Style:string=Good&FamilyName:string=CellStyles'
 							},
 							{
+								'id': 'StyleApplyNeutral',
 								'type': 'toolitem',
 								'text': _('Neutral'),
 								'command': '.uno:StyleApply?Style:string=Neutral&FamilyName:string=CellStyles'
 							},
 							{
+								'id': 'StyleApplyBad',
 								'type': 'toolitem',
 								'text': _('Bad'),
 								'command': '.uno:StyleApply?Style:string=Bad&FamilyName:string=CellStyles'
