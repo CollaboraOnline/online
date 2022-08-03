@@ -27,7 +27,7 @@ describe('Editing Operations', function() {
 
 		helper.selectAllText();
 
-		helper.expectTextForClipboard('\nHello \n');
+		helper.expectTextForClipboard('Hello \n');
 	}
 
 	it('Undo', function() {
@@ -41,7 +41,7 @@ describe('Editing Operations', function() {
 
 		helper.selectAllText();
 
-		helper.expectTextForClipboard('\nHello World');
+		helper.expectTextForClipboard('Hello World');
 	});
 
 	it('Repair Document', function() {
@@ -63,6 +63,6 @@ describe('Editing Operations', function() {
 
 		helper.selectAllText();
 
-		helper.expectTextForClipboard('\nHello \n');
+		helper.expectTextForClipboard('Hello \n');
 	});
 });

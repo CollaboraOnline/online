@@ -22,8 +22,7 @@ describe('Searching via search bar' ,function() {
 		// Part of the text should be selected
 		helper.textSelectionShouldExist();
 
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\na');
+		helper.expectTextForClipboard('a');
 	});
 
 	it('Search not existing word.', function() {
@@ -53,8 +52,7 @@ describe('Searching via search bar' ,function() {
 
 		helper.textSelectionShouldExist();
 
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\na');
+		helper.expectTextForClipboard('a');
 
 		cy.get('#copy-paste-container p b')
 			.should('not.exist');
@@ -67,8 +65,7 @@ describe('Searching via search bar' ,function() {
 
 		helper.textSelectionShouldExist();
 
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\na');
+		helper.expectTextForClipboard('a');
 
 		// Search prev instance
 		searchHelper.searchPrevDesktop();
@@ -78,16 +75,14 @@ describe('Searching via search bar' ,function() {
 
 		helper.textSelectionShouldExist();
 
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\na');
+		helper.expectTextForClipboard('a');
 	});
 	it('Search wrap at document end.', function() {
 		searchHelper.typeIntoSearchFieldDesktop('a');
 
 		helper.textSelectionShouldExist();
 
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\na');
+		helper.expectTextForClipboard('a');
 
 		cy.get('#copy-paste-container p b')
 			.should('not.exist');
@@ -100,8 +95,7 @@ describe('Searching via search bar' ,function() {
 
 		helper.textSelectionShouldExist();
 
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\na');
+		helper.expectTextForClipboard('a');
 
 		// Search next instance, which is in the beginning of the document.
 		searchHelper.searchNextDesktop();
@@ -111,8 +105,7 @@ describe('Searching via search bar' ,function() {
 
 		helper.textSelectionShouldExist();
 
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\na');
+		helper.expectTextForClipboard('a');
 	});
 
 	it('Cancel search.', function() {
@@ -121,8 +114,7 @@ describe('Searching via search bar' ,function() {
 		// Part of the text should be selected
 		helper.textSelectionShouldExist();
 
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\na');
+		helper.expectTextForClipboard('a');
 
 		// Cancel search -> selection removed
 		searchHelper.cancelSearchDesktop();

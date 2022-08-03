@@ -213,7 +213,11 @@ static std::map<std::string, std::shared_ptr<DocumentBroker> > DocBrokers;
 static std::mutex DocBrokersMutex;
 static Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
 
-extern "C" { void dump_state(void); /* easy for gdb */ }
+extern "C"
+{
+    void dump_state(void); /* easy for gdb */
+    void forwardSigUsr2();
+}
 
 #if ENABLE_DEBUG
 static std::chrono::milliseconds careerSpanMs(std::chrono::milliseconds::zero());
@@ -367,7 +371,6 @@ void COOLWSD::checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
 
 /// Remove dead and idle DocBrokers.
 /// The client of idle document should've greyed-out long ago.
-/// Returns true if at least one is removed.
 void cleanupDocBrokers()
 {
     Util::assertIsLocked(DocBrokersMutex);
@@ -428,8 +431,7 @@ static int forkChildren(const int number)
         COOLWSD::checkDiskSpaceAndWarnClients(false);
 
 #ifdef KIT_IN_PROCESS
-        forkLibreOfficeKit(COOLWSD::ChildRoot, COOLWSD::SysTemplate, COOLWSD::LoTemplate,
-                           LO_JAIL_SUBPATH, number);
+        forkLibreOfficeKit(COOLWSD::ChildRoot, COOLWSD::SysTemplate, COOLWSD::LoTemplate, number);
 #else
         const std::string aMessage = "spawn " + std::to_string(number) + '\n';
         LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
@@ -512,8 +514,11 @@ static bool prespawnChildren()
 
 #endif
 
-static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
+static size_t addNewChild(std::shared_ptr<ChildProcess> child)
 {
+    assert(child && "Adding null child");
+    const auto pid = child->getPid();
+
     std::unique_lock<std::mutex> lock(NewChildrenMutex);
 
     --OutstandingForks;
@@ -521,17 +526,21 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
     if (OutstandingForks < 0)
         ++OutstandingForks;
 
-    // Reset the child-spawn timeout to the default, now that we're set.
-    ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS;
+    if (COOLWSD::IsBindMountingEnabled)
+    {
+        // Reset the child-spawn timeout to the default, now that we're set.
+        // But only when mounting is enabled. Otherwise, copying is always slow.
+        ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS;
+    }
 
-    LOG_TRC("Adding one child to NewChildren");
-    NewChildren.emplace_back(child);
+    LOG_TRC("Adding a new child " << pid << " to NewChildren");
+    NewChildren.emplace_back(std::move(child));
     const size_t count = NewChildren.size();
-    LOG_INF("Have " << count << " spare " <<
-            (count == 1 ? "child" : "children") << " after adding [" << child->getPid() << "].");
     lock.unlock();
 
-    LOG_TRC("Notifying NewChildrenCV");
+    LOG_INF("Have " << count << " spare " << (count == 1 ? "child" : "children")
+                    << " after adding [" << pid << "]. Notifying.");
+
     NewChildrenCV.notify_one();
     return count;
 }
@@ -663,10 +672,10 @@ public:
         if (!params.has("filename"))
             return;
 
-        // The temporary directory is child-root/<JAIL_TMP_INCOMING_PATH>.
+        // The temporary directory is child-root/<CHILDROOT_TMP_INCOMING_PATH>.
         // Always create a random sub-directory to avoid file-name collision.
         Path tempPath = Path::forDirectory(
-            FileUtil::createRandomTmpDir(COOLWSD::ChildRoot + JailUtil::JAIL_TMP_INCOMING_PATH)
+            FileUtil::createRandomTmpDir(COOLWSD::ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH)
             + '/');
         LOG_TRC("Created temporary convert-to/insert path: " << tempPath.toString());
 
@@ -735,9 +744,10 @@ public:
 
             // The temporary directory is child-root/<JAIL_TMP_INCOMING_PATH>.
             // Always create a random sub-directory to avoid file-name collision.
-            Path tempPath = Path::forDirectory(
-                FileUtil::createRandomTmpDir(COOLWSD::ChildRoot + JailUtil::JAIL_TMP_INCOMING_PATH)
-                + '/');
+            Path tempPath =
+                Path::forDirectory(FileUtil::createRandomTmpDir(
+                                       COOLWSD::ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH) +
+                                   '/');
 
             LOG_TRC("Created temporary render-search-result file path: " << tempPath.toString());
 
@@ -888,6 +898,7 @@ unsigned COOLWSD::MaxDocuments;
 std::string COOLWSD::OverrideWatermark;
 std::set<const Poco::Util::AbstractConfiguration*> COOLWSD::PluginConfigurations;
 std::chrono::steady_clock::time_point COOLWSD::StartTime;
+bool COOLWSD::IsBindMountingEnabled = true;
 
 // If you add global state please update dumpState below too
 
@@ -1176,6 +1187,8 @@ public:
 
 #ifdef ENABLE_FEATURE_LOCK
         fetchLockedHostPatterns(newAppConfig, remoteJson);
+        fetchLockedTranslations(newAppConfig, remoteJson);
+        fetchUnlockImageUrl(newAppConfig, remoteJson);
 #endif
 
         fetchRemoteFontConfig(newAppConfig, remoteJson);
@@ -1356,7 +1369,11 @@ public:
 
                 newAppConfig.insert(std::make_pair(path + ".host", host));
                 newAppConfig.insert(std::make_pair(path + ".host[@allow]", booleanToString(allow)));
-
+#ifdef ENABLE_FEATURE_LOCK
+                std::string unlockLink;
+                JsonUtil::findJSONValue(group, "unlock_link", unlockLink);
+                newAppConfig.insert(std::make_pair(path + ".unlock_link", unlockLink));
+#endif
                 Poco::JSON::Array::Ptr aliases = group->getArray("aliases");
 
                 auto it = aliases->begin();
@@ -1418,6 +1435,104 @@ public:
         catch (const std::exception& exc)
         {
             LOG_ERR("Failed to fetch remote_font_config, please check JSON format: " << exc.what());
+        }
+    }
+
+    void fetchLockedTranslations(std::map<std::string, std::string>& newAppConfig,
+                                 Poco::JSON::Object::Ptr remoteJson)
+    {
+        Poco::JSON::Array::Ptr lockedTranslations;
+        try
+        {
+            lockedTranslations = remoteJson->getObject("feature_locking")->getArray("translations");
+            std::size_t i;
+            for (i = 0; i < lockedTranslations->size(); i++)
+            {
+                Poco::JSON::Object::Ptr translation = lockedTranslations->getObject(i);
+                std::string language;
+                //default values if the one of the entry is missing in json
+                std::string title = conf.getString("feature_lock.unlock_title", "");
+                std::string description = conf.getString("feature_lock.unlock_description", "");
+                std::string writerHighlights =
+                    conf.getString("feature_lock.writer_unlock_highlights", "");
+                std::string impressHighlights =
+                    conf.getString("feature_lock.impress_unlock_highlights", "");
+                std::string calcHighlights =
+                    conf.getString("feature_lock.calc_unlock_highlights", "");
+                std::string drawHighlights =
+                    conf.getString("feature_lock.draw_unlock_highlights", "");
+
+                JsonUtil::findJSONValue(translation, "language", language);
+                JsonUtil::findJSONValue(translation, "unlock_title", title);
+                JsonUtil::findJSONValue(translation, "unlock_description", description);
+                JsonUtil::findJSONValue(translation, "writer_unlock_highlights", writerHighlights);
+                JsonUtil::findJSONValue(translation, "calc_unlock_highlights", calcHighlights);
+                JsonUtil::findJSONValue(translation, "impress_unlock_highlights",
+                                        impressHighlights);
+                JsonUtil::findJSONValue(translation, "draw_unlock_highlights", drawHighlights);
+
+                const std::string path =
+                    "feature_lock.translations.language[" + std::to_string(i) + ']';
+
+                newAppConfig.insert(std::make_pair(path + "[@name]", language));
+                newAppConfig.insert(std::make_pair(path + ".unlock_title", title));
+                newAppConfig.insert(std::make_pair(path + ".unlock_description", description));
+                newAppConfig.insert(
+                    std::make_pair(path + ".writer_unlock_highlights", writerHighlights));
+                newAppConfig.insert(
+                    std::make_pair(path + ".calc_unlock_highlights", calcHighlights));
+                newAppConfig.insert(
+                    std::make_pair(path + ".impress_unlock_highlights", impressHighlights));
+                newAppConfig.insert(
+                    std::make_pair(path + ".draw_unlock_highlights", drawHighlights));
+            }
+
+            //if number of translations defined in configuration are greater than number of translation
+            //fetched from json, overwrite the remaining translations from config file to empty strings
+            for (;; i++)
+            {
+                const std::string path =
+                    "feature_lock.translations.language[" + std::to_string(i) + "][@name]";
+                if (!conf.has(path))
+                {
+                    break;
+                }
+                newAppConfig.insert(std::make_pair(path, ""));
+            }
+        }
+        catch (const Poco::NullPointerException&)
+        {
+            LOG_INF("Not overwriting any translations because feature_locking->translations array "
+                    "does not exist");
+            return;
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Failed to fetch remote_font_config, please check JSON format: " << exc.what());
+        }
+    }
+
+    void fetchUnlockImageUrl(std::map<std::string, std::string>& newAppConfig,
+                             Poco::JSON::Object::Ptr remoteJson)
+    {
+        try
+        {
+            Poco::JSON::Object::Ptr featureLocking = remoteJson->getObject("feature_locking");
+
+            std::string unlockImage;
+            if (JsonUtil::findJSONValue(featureLocking, "unlock_image", unlockImage))
+            {
+                newAppConfig.insert(std::make_pair("feature_lock.unlock_image", unlockImage));
+            }
+        }
+        catch (const Poco::NullPointerException&)
+        {
+            LOG_INF("Not overwriting the unlock_image URL because the unlock_image entry does not "
+                    "exist");
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Failed to fetch unlock_image, please check JSON format: " << exc.what());
         }
     }
 
@@ -1833,6 +1948,8 @@ void COOLWSD::innerInitialize(Application& self)
         { "trace.path[@snapshot]", "false" },
         { "trace[@enable]", "false" },
         { "welcome.enable", "false" },
+        { "home_mode.enable", "false" },
+        { "feedback.show", "true" },
 #ifdef ENABLE_FEATURE_LOCK
         { "feature_lock.locked_hosts[@allow]", "false"},
         { "feature_lock.locked_hosts.fallback[@read_only]", "false"},
@@ -1865,7 +1982,8 @@ void COOLWSD::innerInitialize(Application& self)
         { "languagetool.base_url", ""},
         { "languagetool.api_key", ""},
         { "languagetool.user_name", ""},
-        { "languagetool.enabled", "false"}
+        { "languagetool.enabled", "false"},
+        { "languagetool.ssl_verification", "true"},
     };
 
     // Set default values, in case they are missing from the config file.
@@ -2049,8 +2167,7 @@ void COOLWSD::innerInitialize(Application& self)
             std::cerr << "\nIf you have used 'make run', edit coolwsd.xml and make sure you have removed "
                          "'--o:logging.level=trace' from the command line in Makefile.am.\n" << std::endl;
 #endif
-            Log::shutdown();
-            _exit(EX_SOFTWARE);
+            Util::forcedExit(EX_SOFTWARE);
         }
     }
 
@@ -2156,6 +2273,10 @@ void COOLWSD::innerInitialize(Application& self)
         if (ChildRoot[ChildRoot.size() - 1] != '/')
             ChildRoot += '/';
 
+#if CODE_COVERAGE
+        ::setenv("BASE_CHILD_ROOT", Poco::Path(ChildRoot).absolute().toString().c_str(), 1);
+#endif
+
         // Create a custom sub-path for parallelized unit tests.
         if (UnitBase::isUnitTesting())
         {
@@ -2195,9 +2316,18 @@ void COOLWSD::innerInitialize(Application& self)
     // Initialize the config subsystem too.
     config::initialize(&config());
 
+    IsBindMountingEnabled = getConfigValue<bool>(conf, "mount_jail_tree", true);
+#if CODE_COVERAGE
+    // Code coverage is not supported with bind-mounting.
+    if (IsBindMountingEnabled)
+    {
+        LOG_WRN("Mounting is not compatible with code-coverage. Disabling.");
+        IsBindMountingEnabled = false;
+    }
+#endif // CODE_COVERAGE
+
     // Setup the jails.
-    JailUtil::setupJails(getConfigValue<bool>(conf, "mount_jail_tree", true), ChildRoot,
-                         SysTemplate);
+    JailUtil::setupChildRoot(IsBindMountingEnabled, ChildRoot, SysTemplate);
 
     LOG_DBG("FileServerRoot before config: " << FileServerRoot);
     FileServerRoot = getPathFromConfig("file_server_root_path");
@@ -2216,10 +2346,6 @@ void COOLWSD::innerInitialize(Application& self)
 
         Quarantine::createQuarantineMap();
     }
-
-#if ENABLE_WELCOME_MESSAGE
-    conf.setString("welcome.enable", "true");
-#endif
 
     NumPreSpawnedChildren = getConfigValue<int>(conf, "num_prespawn_children", 1);
     if (NumPreSpawnedChildren < 1)
@@ -2250,8 +2376,25 @@ void COOLWSD::innerInitialize(Application& self)
     setenv("SAL_DISABLE_OPENCL", "true", 1);
 
     // Log the connection and document limits.
-    COOLWSD::MaxConnections = MAX_CONNECTIONS;
-    COOLWSD::MaxDocuments = MAX_DOCUMENTS;
+#if ENABLE_WELCOME_MESSAGE
+    if (getConfigValue<bool>(conf, "home_mode.enable", false))
+    {
+        COOLWSD::MaxConnections = 20;
+        COOLWSD::MaxDocuments = 10;
+    }
+    else
+    {
+        conf.setString("feedback.show", "true");
+        conf.setString("welcome.enable", "true");
+        COOLWSD::MaxConnections = MAX_CONNECTIONS;
+        COOLWSD::MaxDocuments = MAX_DOCUMENTS;
+    }
+#else
+    {
+        COOLWSD::MaxConnections = MAX_CONNECTIONS;
+        COOLWSD::MaxDocuments = MAX_DOCUMENTS;
+    }
+#endif
 
 #if !MOBILEAPP
     NoSeccomp = !getConfigValue<bool>(conf, "security.seccomp", true);
@@ -2267,6 +2410,8 @@ void COOLWSD::innerInitialize(Application& self)
     setenv("LANGUAGETOOL_USERNAME", userName.c_str(), 1);
     const std::string apiKey = getConfigValue<std::string>(conf, "languagetool.api_key", "");
     setenv("LANGUAGETOOL_APIKEY", apiKey.c_str(), 1);
+    bool sslVerification = getConfigValue<bool>(conf, "languagetool.ssl_verification", "");
+    setenv("LANGUAGETOOL_SSL_VERIFICATION", sslVerification ? "true" : "false", 1);
 
 #if ENABLE_SUPPORT_KEY
     const std::string supportKeyString = getConfigValue<std::string>(conf, "support_key", "");
@@ -2832,7 +2977,10 @@ void PrisonPoll::wakeupHook()
 #endif
     std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex, std::defer_lock);
     if (docBrokersLock.try_lock())
+    {
         cleanupDocBrokers();
+        SigUtil::checkForwardSigUsr2(forwardSigUsr2);
+    }
 }
 
 #if !MOBILEAPP
@@ -2873,7 +3021,6 @@ bool COOLWSD::createForKit()
     FileUtil::copy(parentPath + "coolforkit", nocapsCopy, true, true);
     args.push_back(nocapsCopy);
 #endif
-    args.push_back("--losubpath=" + std::string(LO_JAIL_SUBPATH));
     args.push_back("--systemplate=" + SysTemplate);
     args.push_back("--lotemplate=" + LoTemplate);
     args.push_back("--childroot=" + ChildRoot);
@@ -3099,9 +3246,15 @@ private:
         std::shared_ptr<DocumentBroker> docBroker = child ? child->getDocumentBroker() : nullptr;
         if (docBroker)
         {
+            LOG_WRN("DocBroker [" << docBroker->getDocKey() << "] got disconnected from its Kit ("
+                                  << child->getPid() << "). Closing.");
             std::unique_lock<std::mutex> lock = docBroker->getLock();
             docBroker->disconnectedFromKit();
         }
+        else if (child)
+            LOG_WRN("Kit (" << child->getPid() << ") disconnected. No DocBroker associated.");
+        else
+            LOG_WRN("An unassociated Kit disconnected.");
     }
 
     /// Called after successful socket reads.
@@ -3221,20 +3374,20 @@ private:
         if (UnitWSD::get().filterChildMessage(data))
             return;
 
-        const std::string abbr = getAbbreviatedMessage(data);
+        auto message = std::make_shared<Message>(data.data(), data.size(), Message::Dir::Out);
         std::shared_ptr<StreamSocket> socket = getSocket().lock();
         if (socket)
-            LOG_TRC('#' << socket->getFD() << " Prisoner message [" << abbr << "].");
+            LOG_TRC('#' << socket->getFD() << " Prisoner message [" << message->abbr() << ']');
         else
             LOG_WRN("Message handler called but without valid socket.");
 
         std::shared_ptr<ChildProcess> child = _childProcess.lock();
         std::shared_ptr<DocumentBroker> docBroker = child ? child->getDocumentBroker() : nullptr;
         if (docBroker)
-            docBroker->handleInput(data);
+            docBroker->handleInput(message);
         else
             LOG_WRN("Child " << child->getPid() <<
-                    " has no DocumentBroker to handle message: [" << abbr << "].");
+                    " has no DocumentBroker to handle message: [" << message->abbr() << ']');
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
@@ -3449,7 +3602,26 @@ private:
                 const auto pos = uri.find(ProxyRemoteStatic);
                 if (pos != std::string::npos)
                 {
-                    ProxyRequestHandler::handleRequest(uri.substr(pos + ProxyRemoteLen), socket);
+                    if (Util::endsWith(uri, "lokit-extra-img.svg"))
+                    {
+                        ProxyRequestHandler::handleRequest(
+                            uri.substr(pos + ProxyRemoteLen), socket,
+                            ProxyRequestHandler::getProxyRatingServer());
+                    }
+#ifdef ENABLE_FEATURE_LOCK
+                    else
+                    {
+                        const Poco::URI unlockImageUri =
+                            CommandControl::LockManager::getUnlockImageUri();
+                        if (!unlockImageUri.empty())
+                        {
+                            const std::string& serverUri =
+                                unlockImageUri.getScheme() + "://" + unlockImageUri.getAuthority();
+                            ProxyRequestHandler::handleRequest(uri.substr(pos + ProxyRemoteLen),
+                                                               socket, serverUri);
+                        }
+                    }
+#endif
                 }
                 else
                 {
@@ -4590,6 +4762,9 @@ private:
         // Set the product name
         capabilities->set("productName", APP_NAME);
 
+        // Set the Server ID
+        capabilities->set("serverId", Util::getProcessIdentifier());
+
         std::string version, hash;
         Util::getVersionInfo(version, hash);
 
@@ -4829,16 +5004,14 @@ private:
         if (!location.length())
         {
             LOG_FTL("Failed to create local unix domain socket. Exiting.");
-            Log::shutdown();
-            _exit(EX_SOFTWARE);
+            Util::forcedExit(EX_SOFTWARE);
             return nullptr;
         }
 
         if (!socket->listen())
         {
             LOG_FTL("Failed to listen on local unix domain socket at " << location << ". Exiting.");
-            Log::shutdown();
-            _exit(EX_SOFTWARE);
+            Util::forcedExit(EX_SOFTWARE);
         }
 
         LOG_INF("Listening to prisoner connections on " << location);
@@ -4847,8 +5020,7 @@ private:
         if(!socket->link(COOLWSD::SysTemplate + "/0" + MasterLocation))
         {
             LOG_FTL("Failed to hardlink local unix domain socket into a jail. Exiting.");
-            Log::shutdown();
-            _exit(EX_SOFTWARE);
+            Util::forcedExit(EX_SOFTWARE);
         }
 #endif
 #else
@@ -4896,7 +5068,7 @@ private:
         {
             LOG_FTL("Failed to listen on Server port(s) (" <<
                     ClientPortNumber << '-' << port << "). Exiting.");
-            _exit(EX_SOFTWARE);
+            Util::forcedExit(EX_SOFTWARE);
         }
 
         ClientPortNumber = port;
@@ -4970,7 +5142,6 @@ int COOLWSD::innerMain()
 #if !MOBILEAPP
     SigUtil::setUserSignals();
     SigUtil::setFatalSignals("wsd " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
-    SigUtil::setTerminationSignals();
 #endif
 
 #if !MOBILEAPP
@@ -5283,7 +5454,12 @@ int COOLWSD::innerMain()
 #if !defined(KIT_IN_PROCESS) && !MOBILEAPP
     // Terminate child processes
     LOG_INF("Requesting forkit process " << ForKitProcId << " to terminate.");
-    SigUtil::killChild(ForKitProcId);
+#if CODE_COVERAGE
+    constexpr auto signal = SIGTERM;
+#else
+    constexpr auto signal = SIGKILL;
+#endif
+    SigUtil::killChild(ForKitProcId, signal);
 #endif
 
     Server->stopPrisoners();
@@ -5406,6 +5582,11 @@ int COOLWSD::main(const std::vector<std::string>& /*args*/)
     UnitWSD::get().returnValue(returnValue);
 
     LOG_INF("Process [coolwsd] finished with exit status: " << returnValue);
+
+#if CODE_COVERAGE
+    __gcov_dump();
+#endif
+
     return returnValue;
 }
 
@@ -5481,6 +5662,43 @@ void dump_state()
     const std::string msg = oss.str();
     fprintf(stderr, "%s\n", msg.c_str());
     LOG_TRC(msg);
+}
+
+void forwardSigUsr2()
+{
+    LOG_TRC("forwardSigUsr2");
+
+    Util::assertIsLocked(DocBrokersMutex);
+    std::lock_guard<std::mutex> newChildLock(NewChildrenMutex);
+
+#if !MOBILEAPP
+#ifndef KIT_IN_PROCESS
+    if (COOLWSD::ForKitProcId > 0)
+    {
+        LOG_INF("Sending SIGUSR2 to forkit " << COOLWSD::ForKitProcId);
+        ::kill(COOLWSD::ForKitProcId, SIGUSR2);
+    }
+#endif
+#endif
+
+    for (const auto& child : NewChildren)
+    {
+        if (child && child->getPid() > 0)
+        {
+            LOG_INF("Sending SIGUSR2 to child " << child->getPid());
+            ::kill(child->getPid(), SIGUSR2);
+        }
+    }
+
+    for (const auto& pair : DocBrokers)
+    {
+        std::shared_ptr<DocumentBroker> docBroker = pair.second;
+        if (docBroker)
+        {
+            LOG_INF("Sending SIGUSR2 to docBroker " << docBroker->getPid());
+            ::kill(docBroker->getPid(), SIGUSR2);
+        }
+    }
 }
 
 // Avoid this in the Util::isFuzzing() case because libfuzzer defines its own main().

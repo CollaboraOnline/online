@@ -41,6 +41,7 @@ private:
 
     std::vector<char> _wsPayload;
     std::atomic<bool> _shuttingDown;
+    unsigned char _lastFlags; //< The flags in the last frame.
     const bool _isClient;
 
 protected:
@@ -68,6 +69,7 @@ public:
         _key(isClient ? PublicComputeAccept::generateKey() : std::string()),
 #endif
         _shuttingDown(false),
+        _lastFlags(0),
         _isClient(isClient)
     {
     }
@@ -89,6 +91,7 @@ public:
         , _key(std::string())
 #endif
         , _shuttingDown(false)
+        , _lastFlags(0)
         , _isClient(false)
     {
         if (!socket)
@@ -121,6 +124,9 @@ public:
 
     /// Returns the Web-Socket Security Key generated for this instance.
     const std::string& getWebSocketKey() const { return _key; }
+
+    /// Returns the flags of the last received WS frame.
+    unsigned char lastFlags() const { return _lastFlags; }
 
     /// Create a WebSocket connection to the given @host
     /// and @port and add the socket to @poll.
@@ -185,21 +191,24 @@ protected:
             return;
         }
 
-        LOG_TRC('#' << socket->getFD() << ": Shutdown websocket, code: " <<
-                static_cast<unsigned>(statusCode) << ", message: " << statusMessage);
-        _shuttingDown = true;
+        // Don't send close-frame more than once.
+        if (!_shuttingDown)
+        {
+            LOG_TRC('#' << socket->getFD() << ": Shutdown websocket, code: "
+                        << static_cast<unsigned>(statusCode) << ", message: " << statusMessage);
+            _shuttingDown = true;
 
 #if !MOBILEAPP
-        const size_t len = statusMessage.size();
-        std::vector<char> buf(2 + len);
-        buf[0] = ((((int)statusCode) >> 8) & 0xff);
-        buf[1] = ((((int)statusCode) >> 0) & 0xff);
-        std::copy(statusMessage.begin(), statusMessage.end(), buf.begin() + 2);
-        const unsigned char flags = WSFrameMask::Fin
-                                  | static_cast<char>(WSOpCode::Close);
+            const size_t len = statusMessage.size();
+            std::vector<char> buf(2 + len);
+            buf[0] = ((((int)statusCode) >> 8) & 0xff);
+            buf[1] = ((((int)statusCode) >> 0) & 0xff);
+            std::copy(statusMessage.begin(), statusMessage.end(), buf.begin() + 2);
+            const unsigned char flags = WSFrameMask::Fin | static_cast<char>(WSOpCode::Close);
 
-        sendFrame(socket, buf.data(), buf.size(), flags);
+            sendFrame(socket, buf.data(), buf.size(), flags);
 #endif
+        }
     }
 
     void shutdown(bool goingAway, const std::string &statusMessage) override
@@ -260,8 +269,9 @@ private:
         }
 
         unsigned char *p = reinterpret_cast<unsigned char*>(&socket->getInBuffer()[0]);
-        const bool fin = p[0] & 0x80;
-        const WSOpCode code = static_cast<WSOpCode>(p[0] & 0x0f);
+        _lastFlags = p[0];
+        const bool fin = _lastFlags & 0x80;
+        const WSOpCode code = static_cast<WSOpCode>(_lastFlags & 0x0f);
         const bool hasMask = p[1] & 0x80;
         size_t payloadLen = p[1] & 0x7f;
         size_t headerLen = 2;
@@ -379,7 +389,6 @@ private:
                     {
                         // Peer-initiated shutdown must be echoed.
                         // Otherwise, this is the echo to _our_ shutdown message, which we should ignore.
-                        LOG_TRC('#' << socket->getFD() << ": Peer initiated socket shutdown. Code: " << static_cast<int>(statusCode));
                         if (ctrlPayload.size())
                         {
                             statusCode = static_cast<StatusCodes>((((uint64_t)(unsigned char)ctrlPayload[0]) << 8) +
@@ -387,6 +396,9 @@ private:
                             if (ctrlPayload.size() > 2)
                                 message.assign(&ctrlPayload[2], &ctrlPayload[2] + ctrlPayload.size() - 2);
                         }
+
+                        LOG_TRC('#' << socket->getFD() << ": Peer initiated socket shutdown. Code: "
+                                    << static_cast<int>(statusCode));
                     }
                     shutdown(statusCode, message);
                     return true;
@@ -770,6 +782,8 @@ protected:
         out.append(data, len);
         const size_t size = out.size();
 #endif
+
+        assert(size >= len && "Expected to have data in outBuffer to send");
 
         if (flush || _shuttingDown)
         {

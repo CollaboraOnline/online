@@ -18,6 +18,7 @@
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
+#include <Poco/JSON/Object.h>
 
 #include "DocumentBroker.hpp"
 #include "COOLWSD.hpp"
@@ -28,6 +29,8 @@
 #include <common/Session.hpp>
 #include <common/TraceEvent.hpp>
 #include <common/Util.hpp>
+#include <common/CommandControl.hpp>
+
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
 #endif
@@ -1139,7 +1142,9 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         {
             oss << " batch=" << getBatchMode();
         }
-
+#ifdef ENABLE_FEATURE_LOCK
+        sendLockedInfo();
+#endif
         return forwardToChild(oss.str(), docBroker);
     }
     catch (const Poco::SyntaxException&)
@@ -1149,6 +1154,39 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
 
     return false;
 }
+
+#ifdef ENABLE_FEATURE_LOCK
+void ClientSession::sendLockedInfo()
+{
+    Poco::JSON::Object::Ptr lockInfo = new Poco::JSON::Object();
+    CommandControl::LockManager::setTranslationPath(getLang());
+    lockInfo->set("IsLockedUser", CommandControl::LockManager::isLockedUser());
+    lockInfo->set("IsLockReadOnly", CommandControl::LockManager::isLockReadOnly());
+
+    // Poco:Dynamic:Var does not support std::unordred_set so converted to std::vector
+    std::vector<std::string> lockedCommandList(
+        CommandControl::LockManager::getLockedCommandList().begin(),
+        CommandControl::LockManager::getLockedCommandList().end());
+    lockInfo->set("LockedCommandList", lockedCommandList);
+    lockInfo->set("UnlockTitle", CommandControl::LockManager::getUnlockTitle());
+    lockInfo->set("UnlockLink", CommandControl::LockManager::getUnlockLink());
+    lockInfo->set("UnlockDescription", CommandControl::LockManager::getUnlockDescription());
+    lockInfo->set("WriterHighlights", CommandControl::LockManager::getWriterHighlights());
+    lockInfo->set("CalcHighlights", CommandControl::LockManager::getCalcHighlights());
+    lockInfo->set("ImpressHighlights", CommandControl::LockManager::getImpressHighlights());
+    lockInfo->set("DrawHighlights", CommandControl::LockManager::getDrawHighlights());
+
+    const Poco::URI unlockImageUri = CommandControl::LockManager::getUnlockImageUri();
+    if (!unlockImageUri.empty())
+        lockInfo->set("UnlockImageUrlPath", unlockImageUri.getPath());
+    CommandControl::LockManager::resetTransalatioPath();
+    std::ostringstream ossLockInfo;
+    lockInfo->stringify(ossLockInfo);
+    const std::string lockInfoString = ossLockInfo.str();
+    LOG_TRC("Sending feature locking info to client: " << lockInfoString);
+    sendTextFrame("featurelock: " + lockInfoString);
+}
+#endif
 
 bool ClientSession::getCommandValues(const char *buffer, int length, const StringVector& tokens,
                                      const std::shared_ptr<DocumentBroker>& docBroker)
@@ -1414,10 +1452,8 @@ void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& paylo
         });
 }
 
-bool ClientSession::handleKitToClientMessage(const char* buffer, const int length)
+bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& payload)
 {
-    const auto payload = std::make_shared<Message>(buffer, length, Message::Dir::Out);
-
     LOG_TRC("handling kit-to-client [" << payload->abbr() << ']');
     const std::string& firstLine = payload->firstLine();
 
@@ -1437,14 +1473,12 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
     const auto& tokens = payload->tokens();
     if (tokens.equals(0, "unocommandresult:"))
     {
-        const std::string stringMsg(buffer, length);
-        LOG_INF("Command: " << stringMsg);
-        const std::size_t index = stringMsg.find_first_of('{');
-        if (index != std::string::npos)
+        LOG_INF("Command: " << firstLine);
+        const std::string stringJSON = payload->jsonString();
+        if (!stringJSON.empty())
         {
             try
             {
-                const std::string stringJSON = stringMsg.substr(index);
                 Poco::JSON::Parser parser;
                 const Poco::Dynamic::Var parsedJSON = parser.parse(stringJSON);
                 const auto& object = parsedJSON.extract<Poco::JSON::Object::Ptr>();
@@ -1476,7 +1510,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         }
         else
         {
-            LOG_WRN("Expected json unocommandresult. Ignoring: " << stringMsg);
+            LOG_WRN("Expected json unocommandresult. Ignoring: " << firstLine);
         }
     }
     else if (tokens.equals(0, "error:"))
@@ -1831,13 +1865,11 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         }
         else if (tokens.equals(0, "commandvalues:"))
         {
-            const std::string stringMsg(buffer, length);
-            const std::size_t index = stringMsg.find_first_of('{');
-            if (index != std::string::npos)
+            const std::string stringJSON = payload->jsonString();
+            if (!stringJSON.empty())
             {
                 try
                 {
-                    const std::string stringJSON = stringMsg.substr(index);
                     Poco::JSON::Parser parser;
                     const Poco::Dynamic::Var result = parser.parse(stringJSON);
                     const auto& object = result.extract<Poco::JSON::Object::Ptr>();
@@ -1846,7 +1878,8 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                         commandName == ".uno:StyleApply")
                     {
                         // other commands should not be cached
-                        docBroker->tileCache().saveTextStream(TileCache::StreamType::CmdValues, stringMsg, commandName);
+                        docBroker->tileCache().saveTextStream(TileCache::StreamType::CmdValues,
+                                                              commandName, payload->data());
                     }
                 }
                 catch (const std::exception& exception)
@@ -1857,7 +1890,8 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         }
         else if (tokens.equals(0, "invalidatetiles:"))
         {
-            assert(firstLine.size() == static_cast<std::string::size_type>(length));
+            assert(firstLine.size() == payload->size() &&
+                   "Unexpected multiline data in invalidatetiles");
 
             // First forward invalidation
             bool ret = forwardToClient(payload);
@@ -1867,10 +1901,10 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         }
         else if (tokens.equals(0, "invalidatecursor:"))
         {
-            assert(firstLine.size() == static_cast<std::string::size_type>(length));
+            assert(firstLine.size() == payload->size() &&
+                   "Unexpected multiline data in invalidatecursor");
 
-            const std::size_t index = firstLine.find_first_of('{');
-            const std::string stringJSON = firstLine.substr(index);
+            const std::string stringJSON = payload->jsonString();
             Poco::JSON::Parser parser;
             try
             {
@@ -1912,9 +1946,10 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             }
 
             getTokenString(tokens[2], "char", text);
-            assert(firstLine.size() < static_cast<std::string::size_type>(length));
-            docBroker->tileCache().saveStream(TileCache::StreamType::Font, font+text,
-                                              buffer + firstLine.size() + 1, length - firstLine.size() - 1);
+            assert(firstLine.size() < payload->size() && "Missing multiline data in renderfont");
+            docBroker->tileCache().saveStream(TileCache::StreamType::Font, font + text,
+                                              payload->data().data() + firstLine.size() + 1,
+                                              payload->data().size() - firstLine.size() - 1);
             return forwardToClient(payload);
         }
     }

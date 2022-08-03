@@ -94,7 +94,7 @@ static std::atomic<unsigned> appDocIdCounter(1);
     const unsigned char *ubufp = (const unsigned char *)buffer;
     std::vector<char> data;
     for (int i = 0; i < length; i++) {
-        if (ubufp[i] < ' ' || ubufp[i] == '\'' || ubufp[i] == '\\') {
+        if (ubufp[i] < ' ' || ubufp[i] >= 0x80 || ubufp[i] == '\'' || ubufp[i] == '\\') {
             data.push_back('\\');
             data.push_back('x');
             data.push_back("0123456789abcdef"[(ubufp[i] >> 4) & 0x0F]);

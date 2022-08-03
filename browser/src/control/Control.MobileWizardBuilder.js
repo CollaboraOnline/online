@@ -8,7 +8,7 @@
 
 L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 	_customizeOptions: function() {
-		this.options.noLabelsForUnoButtons = false;
+		this.options.noLabelsForUnoButtons = true;
 		this.options.useInLineLabelsForUnoButtons = false;
 		this.options.cssClass = 'mobile-wizard';
 	},

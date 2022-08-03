@@ -103,19 +103,15 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         std::string documentPath, documentURL;
         helpers::getDocumentPathAndURL("insert-delete.odp", documentPath, documentURL, testname);
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::URI uri(helpers::getTestServerURI());
-        Poco::Net::HTTPResponse httpResponse;
-        std::shared_ptr<COOLWebSocket> socket
-            = helpers::connectLOKit(uri, request, httpResponse, testname);
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>(testname);
+        socketPoll->startThread();
 
-        helpers::sendTextFrame(socket, "load url=" + documentURL);
-        LOK_ASSERT_MESSAGE("cannot load the document " + documentURL,
-                               helpers::isDocumentLoaded(socket, testname));
+        std::shared_ptr<http::WebSocketSession> socket = helpers::loadDocAndGetSession(
+            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
 
         // check total slides 1
         TST_LOG("Expecting 1 slide.");
-        helpers::sendTextFrame(socket, "status");
+        helpers::sendTextFrame(socket, "status", testname);
         response = helpers::getResponseString(socket, "status:", testname);
         LOK_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         getPartHashCodes(testname, response.substr(7), parts);
@@ -127,7 +123,7 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         TST_LOG("Inserting 10 slides.");
         for (size_t it = 1; it <= 10; it++)
         {
-            helpers::sendTextFrame(socket, "uno .uno:InsertPage");
+            helpers::sendTextFrame(socket, "uno .uno:InsertPage", testname);
             response = helpers::getResponseString(socket, "status:", testname);
             LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
@@ -144,8 +140,8 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         for (size_t it = 1; it <= 10; it++)
         {
             // Explicitly delete the nth slide.
-            helpers::sendTextFrame(socket, "setclientpart part=" + std::to_string(it));
-            helpers::sendTextFrame(socket, "uno .uno:DeletePage");
+            helpers::sendTextFrame(socket, "setclientpart part=" + std::to_string(it), testname);
+            helpers::sendTextFrame(socket, "uno .uno:DeletePage", testname);
             response = helpers::getResponseString(socket, "status:", testname);
             LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
@@ -160,7 +156,7 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         TST_LOG("Undoing 10 slide deletes.");
         for (size_t it = 1; it <= 10; it++)
         {
-            helpers::sendTextFrame(socket, "uno .uno:Undo");
+            helpers::sendTextFrame(socket, "uno .uno:Undo", testname);
             response = helpers::getResponseString(socket, "status:", testname);
             LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
@@ -178,7 +174,7 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         TST_LOG("Redoing 10 slide deletes.");
         for (size_t it = 1; it <= 10; it++)
         {
-            helpers::sendTextFrame(socket, "uno .uno:Redo");
+            helpers::sendTextFrame(socket, "uno .uno:Redo", testname);
             response = helpers::getResponseString(socket, "status:", testname);
             LOK_ASSERT_MESSAGE("did not receive a status: message as expected",
                                    !response.empty());
@@ -191,7 +187,7 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
 
         // check total slides 1
         TST_LOG("Expecting 1 slide.");
-        helpers::sendTextFrame(socket, "status");
+        helpers::sendTextFrame(socket, "status", testname);
         response = helpers::getResponseString(socket, "status:", testname);
         LOK_ASSERT_MESSAGE("did not receive a status: message as expected", !response.empty());
         getPartHashCodes(testname, response.substr(7), parts);
@@ -213,7 +209,6 @@ UnitBase::TestResult UnitInsertDelete::testPasteBlank()
         helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
         std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>(testname);
-
         socketPoll->startThread();
 
         std::shared_ptr<http::WebSocketSession> wsSession = helpers::loadDocAndGetSession(
@@ -249,10 +244,15 @@ UnitBase::TestResult UnitInsertDelete::testGetTextSelection()
         helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
         Poco::URI uri(helpers::getTestServerURI());
-        std::shared_ptr<COOLWebSocket> socket
-            = helpers::loadDocAndGetSocket(uri, documentURL, testname);
-        std::shared_ptr<COOLWebSocket> socket2
-            = helpers::loadDocAndGetSocket(uri, documentURL, testname);
+
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("InsertDeletePoll");
+        socketPoll->startThread();
+
+        std::shared_ptr<http::WebSocketSession> socket =
+            helpers::loadDocAndGetSession(socketPoll, uri, documentURL, testname);
+
+        std::shared_ptr<http::WebSocketSession> socket2 =
+            helpers::loadDocAndGetSession(socketPoll, uri, documentURL, testname);
 
         static const std::string expected = "Hello world";
         const std::string selection = helpers::getAllText(socket, testname, expected);
@@ -271,13 +271,17 @@ UnitBase::TestResult UnitInsertDelete::testCursorPosition()
     {
         // Load a document.
         std::string docPath;
-        std::string docURL;
+        std::string documentURL;
         std::string response;
 
-        helpers::getDocumentPathAndURL("Example.odt", docPath, docURL, testname);
+        helpers::getDocumentPathAndURL("Example.odt", docPath, documentURL, testname);
         Poco::URI uri(helpers::getTestServerURI());
-        std::shared_ptr<COOLWebSocket> socket0
-            = helpers::loadDocAndGetSocket(uri, docURL, testname);
+
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("InsertDeletePoll");
+        socketPoll->startThread();
+
+        std::shared_ptr<http::WebSocketSession> socket0 =
+            helpers::loadDocAndGetSession(socketPoll, uri, documentURL, testname);
 
         // receive cursor position
         response = helpers::getResponseString(socket0, "invalidatecursor:", testname);
@@ -292,8 +296,8 @@ UnitBase::TestResult UnitInsertDelete::testCursorPosition()
         LOK_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.size());
 
         // Create second view
-        std::shared_ptr<COOLWebSocket> socket1
-            = helpers::loadDocAndGetSocket(uri, docURL, testname);
+        std::shared_ptr<http::WebSocketSession> socket1 =
+            helpers::loadDocAndGetSession(socketPoll, uri, documentURL, testname);
 
         //receive view cursor position
         response = helpers::getResponseString(socket1, "invalidateviewcursor:", testname);

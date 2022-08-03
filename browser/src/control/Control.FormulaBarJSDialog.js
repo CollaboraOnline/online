@@ -7,6 +7,7 @@
 L.Control.FormulaBarJSDialog = L.Control.extend({
 	container: null,
 	builder: null,
+	dirty: true, // if we should allow to update based on servers setText
 
 	onAdd: function (map) {
 		this.map = map;
@@ -74,7 +75,8 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 						id: 'sc_input_window',
 						type: 'multilineedit',
 						text: text ? text : '',
-						rawKeyEvents: true
+						rawKeyEvents: window.mode.isDesktop() ? true : undefined,
+						useTextInput: window.mode.isDesktop() ? undefined : true
 					},
 					{
 						id: 'expand',
@@ -95,12 +97,20 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 		this.container.style.width = '100%';
 
 		this.builder.build(this.container, data);
+
+		var inputField = this.getInputField();
+		inputField.setAttribute('autocapitalize', 'off');
+		inputField.setAttribute('autocorrect', 'off');
+		inputField.setAttribute('autocomplete', 'off');
+		inputField.setAttribute('spellcheck', 'false');
+		inputField.setAttribute('wrap', 'off');
 	},
 
 	toggleMultiLine: function(input) {
 		if (L.DomUtil.hasClass(input, 'expanded')) {
 			L.DomUtil.removeClass(input, 'expanded');
 			L.DomUtil.removeClass(L.DomUtil.get('calc-inputbar-wrapper'), 'expanded');
+			L.DomUtil.removeClass(L.DomUtil.get('formulabar'), 'expanded');
 			this.onJSUpdate({
 				data: {
 					jsontype: 'formulabar',
@@ -117,6 +127,7 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 		} else {
 			L.DomUtil.addClass(input, 'expanded');
 			L.DomUtil.addClass(L.DomUtil.get('calc-inputbar-wrapper'), 'expanded');
+			L.DomUtil.addClass(L.DomUtil.get('formulabar'), 'expanded');
 			this.onJSUpdate({
 				data: {
 					jsontype: 'formulabar',
@@ -135,7 +146,7 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 
 	callback: function(objectType, eventType, object, data, builder) {
 		if (object.id === 'expand') {
-			var input = document.getElementById('sc_input_window');
+			var input = this.getInputField();
 			if (input)
 				this.toggleMultiLine(input);
 			return;
@@ -146,27 +157,36 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 			objectType = 'drawingarea';
 			if (eventType === 'keypress' && data === UNOKey.RETURN || data === UNOKey.ESCAPE)
 				builder.map.focus();
+			else if (eventType === 'grab_focus')
+				builder.map.onFormulaBarFocus();
 		}
 
 		builder._defaultCallbackHandler(objectType, eventType, object, data, builder);
 	},
 
 	focus: function() {
+		var that = this;
 		setTimeout(function() {
-			var input = document.getElementById('sc_input_window');
+			var input = that.getInputField();
 			if (input && document.activeElement !== input)
 				input.focus();
 		}, 0);
 	},
 
 	blur: function() {
-		var input = document.getElementById('sc_input_window');
+		if (!window.mode.isDesktop()) {
+			var textInput = this.map && this.map._textInput;
+			if (textInput && textInput._isComposing)
+				textInput._abortComposition();
+		}
+
+		var input = this.getInputField();
 		if (input)
 			input.blur();
 	},
 
 	hasFocus: function() {
-		var input = document.getElementById('sc_input_window');
+		var input = this.getInputField();
 		return document.activeElement === input;
 	},
 
@@ -192,6 +212,37 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 			});
 	},
 
+	getControl: function(controlId) {
+		if (!this.container)
+			return;
+
+		var control = this.container.querySelector('[id=\'' + controlId + '\']');
+		if (!control)
+			window.app.console.warn('formulabar update: not found control with id: "' + controlId + '"');
+
+		return control;
+	},
+
+	getInputField: function() {
+		return this.getControl('sc_input_window');
+	},
+
+	getValue: function() {
+		var control = this.getInputField();
+		if (!control)
+			return;
+
+		return this.map._textInput._preSpaceChar + control.value + this.map._textInput._postSpaceChar;
+	},
+
+	setValue: function(newValue) {
+		var control = this.getInputField();
+		if (!control)
+			return;
+
+		control.value = newValue;
+	},
+
 	onFormulaBar: function(e) {
 		var data = e.data;
 		if (data.jsontype !== 'formulabar')
@@ -206,14 +257,9 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 		if (data.jsontype !== 'formulabar')
 			return;
 
-		if (!this.container)
+		var control = this.getControl(data.control.id);
+		if (!control)
 			return;
-
-		var control = this.container.querySelector('[id=\'' + data.control.id + '\']');
-		if (!control) {
-			window.app.console.warn('jsdialogupdate: not found control with id: "' + data.control.id + '"');
-			return;
-		}
 
 		var parent = control.parentNode;
 		if (!parent)
@@ -237,15 +283,35 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 
 		this.builder.setWindowId(data.id);
 
+		var innerData = data ? data.data : null;
+
 		if (this.container) {
-			var keepFocus = this.hasFocus();
+			var messageForInputField = innerData && innerData.control_id === 'sc_input_window';
+			var isSetTextMessage = innerData && innerData.action_type === 'setText';
+			var keepInputFocus = messageForInputField && this.hasFocus();
+			var textInput = this.map._textInput;
 
-			this.builder.executeAction(this.container, data.data);
+			// on desktop we display what we get from the server
+			// on touch devices we allow to type into the field directly, so we cannot update always
+			var allowUpdate = window.mode.isDesktop()
+				|| !this.hasFocus() || (this.hasFocus() && this.dirty);
 
-			if (keepFocus)
+			if (!allowUpdate && messageForInputField && isSetTextMessage)
+				return;
+
+			this.dirty = false;
+
+			this.builder.executeAction(this.container, innerData);
+
+			if (!window.mode.isDesktop() && messageForInputField && this.hasFocus()) {
+				var newContent = textInput.getValueAsCodePoints().slice(1, -1);
+				textInput.setupLastContent(newContent);
+			}
+
+			if (keepInputFocus)
 				this.focus();
 		} else
-			this.createFormulabar(data.data.text);
+			this.createFormulabar(innerData.text);
 	},
 });
 

@@ -768,6 +768,11 @@ L.Map.include({
 		this.formulabar.focus();
 	},
 
+	formulabarSetDirty: function() {
+		if (this.formulabar)
+			this.formulabar.dirty = true;
+	},
+
 	// map.dispatch() will be used to call some actions so we can share the code
 	dispatch: function(action) {
 		switch (action) {
@@ -784,6 +789,7 @@ L.Map.include({
 
 				this.onFormulaBarBlur();
 				this.formulabarBlur();
+				this.formulabarSetDirty();
 			}
 			break;
 		case 'cancelformula':
@@ -791,6 +797,7 @@ L.Map.include({
 				this.sendUnoCommand('.uno:Cancel');
 				this.onFormulaBarBlur();
 				this.formulabarBlur();
+				this.formulabarSetDirty();
 			}
 			break;
 		case 'startformula':
@@ -798,6 +805,7 @@ L.Map.include({
 				this.sendUnoCommand('.uno:StartFormula');
 				this.onFormulaBarFocus();
 				this.formulabarFocus();
+				this.formulabarSetDirty();
 			}
 			break;
 		case 'functiondialog':
@@ -805,6 +813,7 @@ L.Map.include({
 				if (window.mode.isMobile() && this._functionWizardData) {
 					this._docLayer._closeMobileWizard();
 					this._docLayer._openMobileWizard(this._functionWizardData);
+					this.formulabarSetDirty();
 				} else {
 					this.sendUnoCommand('.uno:FunctionDialog');
 				}

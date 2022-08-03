@@ -48,17 +48,20 @@ class ContentControlSection {
 		container.style.position = 'absolute';
 		document.getElementById('document-container').appendChild(container);
 		this.sectionProperties.datePicker = false;
+		this.sectionProperties.picturePicker = false;
 	}
 
 	constructor() {
 		this.map = L.Map.THIS;
 		this.sectionProperties.json = null;
 		this.sectionProperties.datePicker = null;
+		this.sectionProperties.picturePicker = null;
 	}
 
 	public drawContentControl(json: any) {
 		this.sectionProperties.json = json;
 		this.sectionProperties.datePicker = false;
+		this.sectionProperties.picturePicker = false;
 		if (this.sectionProperties.dropdownButton)
 			this.map.removeLayer(this.sectionProperties.dropdownButton);
 
@@ -67,9 +70,7 @@ class ContentControlSection {
 			$('#datepicker').datepicker({
 				onSelect: function (date: any, datepicker: any) {
 					if (date != '') {
-						var message = 'contentcontrolevent {"type": "date",' +
-								'"selected": "' + date + '"}';
-						app.socket.sendMessage(message);
+						app.socket.sendMessage('contentcontrolevent type=date selected=' + date);
 					}
 				}
 			});
@@ -84,6 +85,7 @@ class ContentControlSection {
 			if (this.sectionProperties.frame)
 				this.sectionProperties.frame.setPointSet(new CPointSet());
 		} else if (json.action === 'change-picture') {
+			this.sectionProperties.picturePicker = true;
 			if (!this.map.wopi.EnableInsertRemoteImage)
 				L.DomUtil.get('insertgraphic').click();
 			else
@@ -187,9 +189,7 @@ class ContentControlSection {
 		if (eventType === 'close') {
 			this.map.fire(fireEvent, {data: closeDropdownJson, callback: undefined});
 		} else if (eventType === 'select') {
-			var message = 'contentcontrolevent {"type": "drop-down",' +
-					'"selected": "' + data + '"}';
-			app.socket.sendMessage(message);
+			app.socket.sendMessage('contentcontrolevent type=drop-down selected='+ data);
 			this.map.fire(fireEvent, {data: closeDropdownJson, callback: undefined});
 		}
 	}

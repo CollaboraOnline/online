@@ -101,14 +101,14 @@ describe('Track Changes', function () {
 		helper.selectAllText(frameId1);
 
 		//assert for user-1/2 depending on parameters
-		helper.expectTextForClipboard('\nHello World', frameId1);
+		helper.expectTextForClipboard('Hello World', frameId1);
 
 		//assert for user-2/1 depending on parameters
 		cy.customGet('.leaflet-layer', frameId2).click();
 
 		helper.selectAllText(frameId2);
 
-		helper.expectTextForClipboard('\nHello World', frameId2);
+		helper.expectTextForClipboard('Hello World', frameId2);
 	}
 
 

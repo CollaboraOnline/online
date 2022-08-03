@@ -43,13 +43,14 @@ void UnitRenderingOptions::invokeWSDTest()
         const std::string options
             = "{\"rendering\":{\".uno:HideWhitespace\":{\"type\":\"boolean\",\"value\":\"true\"}}}";
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::HTTPResponse response;
-        std::shared_ptr<COOLWebSocket> socket = helpers::connectLOKit(
-            Poco::URI(helpers::getTestServerURI()), request, response, testname);
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("WithoutPasswordPoll");
+        socketPoll->startThread();
 
-        helpers::sendTextFrame(socket, "load url=" + documentURL + " options=" + options);
-        helpers::sendTextFrame(socket, "status");
+        std::shared_ptr<http::WebSocketSession> socket = helpers::connectLOKit(
+            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
+
+        helpers::sendTextFrame(socket, "load url=" + documentURL + " options=" + options, testname);
+        helpers::sendTextFrame(socket, "status", testname);
         const auto status = helpers::assertResponseString(socket, "status:", testname);
 
         // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142'.

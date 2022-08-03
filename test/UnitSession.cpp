@@ -24,8 +24,6 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
-class COOLWebSocket;
-
 namespace
 {
 int findInDOM(Poco::XML::Document* doc, const char* string, bool checkName,
@@ -156,14 +154,11 @@ UnitBase::TestResult UnitSession::testSlideShow()
         std::string response;
         helpers::getDocumentPathAndURL("setclientpart.odp", documentPath, documentURL, testname);
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        Poco::Net::HTTPResponse httpResponse;
-        std::shared_ptr<COOLWebSocket> socket = helpers::connectLOKit(
-            Poco::URI(helpers::getTestServerURI()), request, httpResponse, testname);
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>(testname);
+        socketPoll->startThread();
 
-        helpers::sendTextFrame(socket, "load url=" + documentURL, testname);
-        LOK_ASSERT_MESSAGE("cannot load the document " + documentURL,
-                               helpers::isDocumentLoaded(socket, testname));
+        std::shared_ptr<http::WebSocketSession> socket = helpers::loadDocAndGetSession(
+            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
 
         // request slide show
         helpers::sendTextFrame(

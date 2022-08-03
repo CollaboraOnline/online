@@ -1452,18 +1452,25 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		edit.addEventListener('change', function() {
 			if (callback)
 				callback(this.value);
-			if (data.rawKeyEvents) {
+			if (data.rawKeyEvents || data.useTextInput) {
 				// here event.keyCode has some non-ascii code
 			} else
 				builder.callback('edit', 'change', edit, this.value, builder);
 		});
 
-		if (data.rawKeyEvents) {
+		if (data.useTextInput) {
+			// uses TextInput.js logic and events handling (IME for mobile/touch devices)
+			edit.addEventListener('input', builder.map._textInput._onInput.bind(builder.map._textInput));
+			edit.addEventListener('beforeinput', builder.map._textInput._onBeforeInput.bind(builder.map._textInput));
+		} else if (data.rawKeyEvents) {
+			// sends key events over jsdialog
 			var modifier = 0;
 
 			edit.addEventListener('keydown', function(event) {
-				if (edit.disabled)
+				if (edit.disabled) {
+					event.preventDefault();
 					return;
+				}
 
 				if (event.key === 'Enter') {
 					builder.callback('edit', 'keypress', edit, UNOKey.RETURN | modifier, builder);
@@ -1511,8 +1518,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			});
 
 			edit.addEventListener('keyup', function(event) {
-				if (edit.disabled)
+				if (edit.disabled) {
+					event.preventDefault();
 					return;
+				}
 
 				if (event.key === 'Shift') {
 					modifier = modifier & (~UNOModifier.SHIFT);
@@ -1523,9 +1532,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				}
 			});
 
+			edit.addEventListener('blur', function() {
+				modifier = 0;
+			});
+
 			edit.addEventListener('keypress', function(event) {
-				if (edit.disabled)
+				if (edit.disabled) {
+					event.preventDefault();
 					return;
+				}
 
 				if (event.key === 'Enter' ||
 					event.key === 'Escape' ||
@@ -1558,10 +1573,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				event.preventDefault();
 			});
+		}
 
+		if (data.rawKeyEvents || data.useTextInput) {
 			edit.addEventListener('mouseup', function(event) {
-				if (edit.disabled)
+				if (edit.disabled) {
+					event.preventDefault();
 					return;
+				}
+
+				builder.callback('edit', 'grab_focus', edit, null, builder);
 
 				var currentText = event.target.value;
 
@@ -1588,6 +1609,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				var selection = startPos + ';' + endPos + ';' + startPara + ';' + endPara;
 				builder.callback('edit', 'textselection', edit, selection, builder);
+				event.preventDefault();
 			});
 		}
 
@@ -2419,24 +2441,132 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (!name)
 			return '';
 
-		var iconURLAliases = {
-			'AlignLeft': 'LeftPara',
-			'AlignRight': 'RightPara',
-			'AlignHorizontalCenter': 'CenterPara',
-			'AlignBlock': 'JustifyPara',
-			'FormatSparklineMenu': 'InsertSparkline',
-			'InsertDateContentControl': 'InsertDateField'
-		};
+
 		var cleanName = name;
 		var prefixLength = '.uno:'.length;
 		if (name.substr(0, prefixLength) == '.uno:')
 			cleanName = name.substr(prefixLength);
 		cleanName = encodeURIComponent(cleanName).replace(/\%/g, '');
+		cleanName = cleanName.toLowerCase();
 
+		var iconURLAliases = {
+			'alignleft': 'leftpara',
+			'alignright': 'rightpara',
+			'alignhorizontalcenter': 'centerpara',
+			'alignblock': 'justifypara',
+			'formatsparklinemenu': 'insertsparkline',
+			'insertdatecontentcontrol': 'datefield',
+			'editheaderandfooter': 'headerandfooter',
+			'insertheaderfooter': 'headerandfooter',
+			'previoustrackedchange': 'prevrecord',
+			'fieldtransparency': 'linetransparency',
+			'lb_glow_transparency': 'linetransparency',
+			'settransparency': 'linetransparency',
+			'selectionlanugagedefault': 'updateall',
+			'connectortoolbox': 'connectorlines',
+			'conditionalformatdialog': 'conditionalformatmenu',
+			'groupoutlinemenu': 'group',
+			'paperwidth': 'pagewidth',
+			'charspacing': 'spacing',
+			'fontworkcharacterspacingfloater': 'spacing',
+			'tablesort': 'datasort',
+			'spellcheckignoreall': 'spelling',
+			'deleterowbreak': 'delbreakmenu',
+			'alignmentpropertypanel': 'alignvcenter',
+			'cellvertcenter': 'alignvcenter',
+			'charbackcolor': 'backcolor',
+			'charmapcontrol': 'insertsymbol',
+			'insertrowsafter': 'insertrowsmenu',
+			'insertobjectchart': 'drawchart',
+			'textpropertypanel': 'sidebartextpanel',
+			'spacepara15': 'linespacing',
+			'orientationdegrees': 'rotation',
+			'clearoutline': 'delete',
+			'docsign': 'editdoc',
+			'editmenu': 'editdoc',
+			'drawtext': 'text',
+			'inserttextbox': 'text',
+			'accepttrackedchanges': 'acceptchanges',
+			'accepttrackedchange': 'acceptchanges',
+			'chartlinepanel': 'linestyle',
+			'linepropertypanel': 'linestyle',
+			'xlinestyle': 'linestyle',
+			'listspropertypanel': 'outlinebullet',
+			'shadowpropertypanel': 'shadowed',
+			'incrementlevel': 'outlineleft',
+			'menurowheight': 'rowheight',
+			'setoptimalrowheight': 'rowheight',
+			'cellverttop': 'aligntop',
+			'scalignmentpropertypanel': 'aligntop',
+			'hyperlinkdialog': 'inserthyperlink',
+			'openhyperlinkoncursor': 'inserthyperlink',
+			'pageformatdialog': 'pagedialog',
+			'backgroundcolor': 'fillcolor',
+			'cellappearancepropertypanel': 'fillcolor',
+			'formatarea': 'fillcolor',
+			'glowcolor': 'fillcolor',
+			'sccellappearancepropertypanel': 'fillcolor',
+			'insertcolumnsafter': 'insertcolumnsmenu',
+			'insertnonbreakingspace': 'formattingmark',
+			'insertcurrentdate': 'datefield',
+			'insertdatefieldfix': 'datefield',
+			'insertdatefield': 'datefield',
+			'insertdatefieldvar': 'datefield',
+			'setparagraphlanguagemenu': 'spelldialog',
+			'spellingandgrammardialog': 'spelldialog',
+			'spellonline': 'spelldialog',
+			'styleapply3fstyle3astring3ddefault26familyname3astring3dcellstyles': 'fontcolor',
+			'fontworkgalleryfloater': 'fontworkpropertypanel',
+			'insertfieldctrl': 'insertfield',
+			'entirerow': 'fromrow',
+			'insertcheckboxcontentcontrol': 'checkbox',
+			'cellvertbottom': 'alignbottom',
+			'insertcurrenttime': 'inserttimefield',
+			'inserttimefieldfix': 'inserttimefield',
+			'inserttimefieldvar': 'inserttimefield',
+			'cancelformula': 'cancel',
+			'resetattributes': 'setdefault',
+			'tabledialog': 'tablemenu',
+			'insertindexesentry': 'insertmultiindex',
+			'paperheight': 'pageheight',
+			'masterslidespanel': 'masterslide',
+			'slidemasterpage': 'masterslide',
+			'tabledeletemenu': 'deletetable',
+			'tracechangemode': 'trackchanges',
+			'deleteallannotation': 'deleteallnotes',
+			'sdtabledesignpanel': 'tabledesign',
+			'tableeditpanel': 'tabledesign',
+			'tableautofitmenu': 'columnwidth',
+			'menucolumnwidth': 'columnwidth',
+			'hyphenation': 'hyphenate',
+			'onlinehelp': 'feedback',
+			'objectbackone': 'behindobject',
+			'deleteannotation': 'deletenote',
+			'areapropertypanel': 'chartareapanel',
+			'downloadas-png': 'insertgraphic',
+			'decrementlevel': 'outlineright',
+			'acceptformula': 'ok',
+			'insertannotation': 'shownote',
+			'incrementindent': 'leftindent',
+			'outlineup': 'moveup',
+			'charttypepanel': 'diagramtype',
+			'arrangeframemenu': 'arrangemenu',
+			'bringtofront': 'arrangemenu',
+			'scnumberformatpropertypanel': 'numberformatincdecimals',
+			'graphicpropertypanel': 'graphicdialog',
+			'rotateflipmenu': 'rotateleft',
+			'outlinedown': 'movedown',
+			'nexttrackedchange': 'nextrecord',
+			'toggleorientation': 'orientation',
+			'configuredialog': 'sidebar',
+			'modifypage': 'sidebar',
+			'parapropertypanel': 'paragraphdialog',
+		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
 		}
-		return L.LOUtil.getImageURL('lc_' + cleanName.toLowerCase() + '.svg');
+
+		return L.LOUtil.getImageURL('lc_' + cleanName + '.svg');
 	},
 
 	// make a class identifier from parent's id by walking up the tree
@@ -2593,9 +2723,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
 			var arrow = L.DomUtil.create('i', 'unoarrow', arrowbackground);
 			controls['arrow'] = arrow;
+			var menuIsOpened = false;
 			$(arrowbackground).click(function (event) {
 				if (!$(div).hasClass('disabled')) {
-					builder.callback('toolbox', 'togglemenu', parentContainer, data.command, builder);
+					if (menuIsOpened) {
+						builder.callback('toolbox', 'closemenu', parentContainer, data.command, builder);
+						menuIsOpened = false;
+						$(div).removeClass('menu-opened');
+					} else {
+						menuIsOpened = true;
+						builder.callback('toolbox', 'openmenu', parentContainer, data.command, builder);
+						$(div).addClass('menu-opened');
+					}
+
 					event.stopPropagation();
 				}
 			});
@@ -3205,7 +3345,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (selection.length === 2) {
 					var start = parseInt(selection[0]);
 					var end = parseInt(selection[1]);
-					control.setSelectionRange(start, end);
+
+					if (start > end) {
+						var tmp = start;
+						start = end;
+						end = tmp;
+					}
+
+					if (document.activeElement === control) // Safari/Gnome Web compatibility
+						control.setSelectionRange(start, end);
 				} else if (selection.length === 4) {
 					var startPos = parseInt(selection[0]);
 					var endPos = parseInt(selection[1]);
@@ -3215,18 +3363,33 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					var end = 0;
 
 					var row = 0;
-					for (;row < startPara; row++)
-						start += currentText.indexOf('\n', start) + 1;
+					for (;row < startPara; row++) {
+						var found = currentText.indexOf('\n', start);
+						if (found === -1)
+							break;
+						start += found + 1;
+					}
 
 					start += startPos;
 
 					row = 0;
-					for (;row < endPara; row++)
-						end += currentText.indexOf('\n', end) + 1;
+					for (;row < endPara; row++) {
+						found = currentText.indexOf('\n', end);
+						if (found === -1)
+							break;
+						end += found + 1;
+					}
 
 					end += endPos;
 
-					control.setSelectionRange(start, end);
+					if (start > end) {
+						var tmp = start;
+						start = end;
+						end = tmp;
+					}
+
+					if (document.activeElement === control) // Safari/Gnome Web compatibility
+						control.setSelectionRange(start, end);
 				}
 			}
 			break;

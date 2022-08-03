@@ -91,50 +91,6 @@ namespace Log
 
     bool IsShutdown = false;
 
-    // We need a signal safe means of writing messages
-    //   $ man 7 signal
-    void signalLog(const char *message)
-    {
-        while (true)
-        {
-            const int length = std::strlen(message);
-            const int written = write(STDERR_FILENO, message, length);
-            if (written < 0)
-            {
-                if (errno == EINTR)
-                    continue; // ignore.
-                else
-                    break;
-            }
-
-            message += written;
-            if (message[0] == '\0')
-                break;
-        }
-    }
-
-    // We need a signal safe means of writing messages
-    //   $ man 7 signal
-    void signalLogNumber(std::size_t num, int base)
-    {
-        int i;
-        char buf[22];
-        if (num == 0)
-        {
-            signalLog("0");
-            return;
-        }
-        buf[21] = '\0';
-        assert (base == 10 || base == 16);
-        for (i = 20; i > 0 && num > 0; --i)
-        {
-            int d = num % base;
-            buf[i] = (d < 10) ? ('0' + d) : ('a' + d - 10);
-            num /= base;
-        }
-        signalLog(buf + i + 1);
-    }
-
     /// Convert an unsigned number to ascii with 0 padding.
     template <int Width> void to_ascii_fixed(char* buf, std::size_t num)
     {
@@ -306,13 +262,6 @@ namespace Log
         pos[2] = '\0';
 
         return buffer;
-    }
-
-    void signalLogPrefix()
-    {
-        char buffer[1024];
-        prefix<sizeof(buffer) - 1>(buffer, "SIG");
-        signalLog(buffer);
     }
 
     void initialize(const std::string& name,

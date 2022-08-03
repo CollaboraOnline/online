@@ -223,7 +223,7 @@ public:
     bool getTextStream(StreamType type, const std::string& fileName, std::string& content);
 
     // Save some text into a file in the cache directory
-    void saveTextStream(StreamType type, const std::string& text, const std::string& fileName);
+    void saveTextStream(StreamType type, const std::string& fileName, const std::vector<char>& data);
 
     // Saves a font / style / etc rendering
     void saveStream(StreamType type, const std::string& name, const char* data, size_t size);

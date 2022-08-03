@@ -17,8 +17,6 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
-class COOLWebSocket;
-
 class UnitRenderSearchResult : public UnitWSD
 {
 public:
@@ -38,9 +36,17 @@ void UnitRenderSearchResult::invokeWSDTest()
         std::string documentURL;
         helpers::getDocumentPathAndURL("RenderSearchResultTest.odt", documentPath, documentURL, testname);
 
-        std::shared_ptr<COOLWebSocket> socket = helpers::loadDocAndGetSocket(Poco::URI(helpers::getTestServerURI()), documentURL, testname);
+        std::shared_ptr<SocketPoll> socketPoll =
+            std::make_shared<SocketPoll>("RenderSearchResultPoll");
+        socketPoll->startThread();
 
-        helpers::sendTextFrame(socket, "rendersearchresult <indexing><paragraph node_type=\"writer\" index=\"19\"/></indexing>");
+        std::shared_ptr<http::WebSocketSession> socket = helpers::loadDocAndGetSession(
+            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
+
+        helpers::sendTextFrame(socket,
+                               "rendersearchresult <indexing><paragraph node_type=\"writer\" "
+                               "index=\"19\"/></indexing>",
+                               testname);
         std::vector<char> responseMessage = helpers::getResponseMessage(socket, "rendersearchresult:", testname);
 
        // LOK_ASSERT(responseMessage.size() >= 100);

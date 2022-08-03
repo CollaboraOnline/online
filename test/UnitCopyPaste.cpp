@@ -48,15 +48,10 @@ public:
 
     std::string getRawClipboard(const std::string &clipURIstr)
     {
-        Poco::URI clipURI(clipURIstr);
-
-        HTTPResponse response;
-        HTTPRequest request(HTTPRequest::HTTP_GET, clipURI.getPathAndQuery());
-        std::unique_ptr<HTTPClientSession> session(helpers::createSession(clipURI));
-        session->setTimeout(Poco::Timespan(10, 0)); // 10 seconds.
-        session->sendRequest(request);
-        std::istream& responseStream = session->receiveResponse(response);
-        return std::string(std::istreambuf_iterator<char>(responseStream), {});
+        auto httpSession = http::Session::create(clipURIstr);
+        std::shared_ptr<const http::Response> httpResponse =
+            httpSession->syncRequest(http::Request(Poco::URI(clipURIstr).getPathAndQuery()));
+        return httpResponse->getBody();
     }
 
     std::shared_ptr<ClipboardData> getClipboard(const std::string &clipURIstr,
@@ -65,28 +60,28 @@ public:
         LOG_TST("getClipboard: connect to " << clipURIstr);
         Poco::URI clipURI(clipURIstr);
 
-        HTTPResponse response;
-        HTTPRequest request(HTTPRequest::HTTP_GET, clipURI.getPathAndQuery());
-        std::unique_ptr<HTTPClientSession> session(helpers::createSession(clipURI));
-        session->setTimeout(Poco::Timespan(10, 0)); // 10 seconds.
-        session->sendRequest(request);
+        auto httpSession = http::Session::create(clipURIstr);
+        std::shared_ptr<const http::Response> httpResponse =
+            httpSession->syncRequest(http::Request(Poco::URI(clipURIstr).getPathAndQuery()));
+
         LOG_TST("getClipboard: sent request: " << clipURI.getPathAndQuery());
 
         try {
-            std::istream& responseStream = session->receiveResponse(response);
-            LOG_TST("getClipboard: HTTP get request returned reason: " << response.getReason());
+            std::istringstream responseStream(httpResponse->getBody());
+            LOG_TST("getClipboard: HTTP get request returned reason: " << httpResponse->statusLine().reasonPhrase());
 
-            if (response.getStatus() != expected)
+            if (httpResponse->statusLine().statusCode() != expected)
             {
-                LOK_ASSERT_EQUAL_MESSAGE("clipboard status mismatches expected", expected,
-                                         response.getStatus());
+                LOK_ASSERT_EQUAL_MESSAGE("clipboard status mismatches expected",
+                                         static_cast<unsigned int>(expected),
+                                         httpResponse->statusLine().statusCode());
                 exitTest(TestResult::Failed);
                 return std::shared_ptr<ClipboardData>();
             }
 
             LOK_ASSERT_EQUAL_MESSAGE("getClipboard: clipboard content-type mismatches expected",
                                      std::string("application/octet-stream"),
-                                     response.getContentType());
+                                     httpResponse->header().getContentType());
 
             auto clipboard = std::make_shared<ClipboardData>();
             clipboard->read(responseStream);

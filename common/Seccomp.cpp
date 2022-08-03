@@ -11,6 +11,7 @@
 
 #include <config.h>
 
+#include <sysexits.h>
 #include "Seccomp.hpp"
 
 #include <dlfcn.h>
@@ -68,27 +69,28 @@ static void handleSysSignal(int /* signal */,
 {
 	ucontext_t *uctx = static_cast<ucontext_t *>(context);
 
-    Log::signalLogPrefix();
-    Log::signalLog("SIGSYS trapped with code: ");
-    Log::signalLogNumber(info->si_code);
-    Log::signalLog(" and context ");
-    Log::signalLogNumber(reinterpret_cast<size_t>(context));
-    Log::signalLog("\n");
+    SigUtil::signalLogOpen();
+    SigUtil::signalLogPrefix();
+    SigUtil::signalLog("SIGSYS trapped with code: ");
+    SigUtil::signalLogNumber(info->si_code);
+    SigUtil::signalLog(" and context ");
+    SigUtil::signalLogNumber(reinterpret_cast<size_t>(context));
+    SigUtil::signalLog("\n");
 
 	if (info->si_code != SYS_SECCOMP || !uctx)
 		return;
 
     unsigned int syscall = SECCOMP_SYSCALL (uctx);
 
-    Log::signalLogPrefix();
-    Log::signalLog(" seccomp trapped signal, un-authorized sys-call: ");
-    Log::signalLogNumber(syscall);
-    Log::signalLog("\n");
+    SigUtil::signalLogPrefix();
+    SigUtil::signalLog(" seccomp trapped signal, un-authorized sys-call: ");
+    SigUtil::signalLogNumber(syscall);
+    SigUtil::signalLog("\n");
 
     SigUtil::dumpBacktrace();
+    SigUtil::signalLogClose();
 
-    Log::shutdown();
-    _exit(1);
+    Util::forcedExit(EX_SOFTWARE);
 }
 
 } // extern "C"

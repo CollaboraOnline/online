@@ -249,6 +249,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 #toolbar-wrapper:not(.mobile) {
 	padding: 3px 0;
 }
+/* Remove bottom padding in calc as it affects formulabar*/
+#toolbar-wrapper.spreadsheet:not(.mobile) {
+	padding-block-end: 0;
+}
 
 #toolbar-logo {
 	width: 0;
@@ -373,7 +377,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 
 .context-menu-hover {
-	background-color: var(--color-background-lighter) !important;
+	background-color: var(--color-background-darker) !important;
 	color: var(--color-text-darker) !important;
 }
 
@@ -751,6 +755,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 
 .lokdialog_container.lokdialog_notitle .ui-dialog-titlebar {
 	display: none;
+}
+
+.ui-dialog-title {
+	min-height: 1em;
 }
 
 .lokdialog_container.ui-dialog.ui-widget-content {

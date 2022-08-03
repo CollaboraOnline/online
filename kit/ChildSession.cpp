@@ -12,6 +12,7 @@
 
 #include <climits>
 #include <fstream>
+#include <memory>
 #include <sstream>
 
 #define LOK_USE_UNSTABLE_API
@@ -499,7 +500,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens.equals(0, "contentcontrolevent"))
         {
-            return contentControlEvent(buffer, length, tokens);
+            return contentControlEvent(tokens);
         }
         else if (tokens.equals(0, "traceeventrecording"))
         {
@@ -1239,10 +1240,10 @@ bool ChildSession::setClipboard(const char* buffer, int length, const StringVect
         data.read(stream);
 //        data.dumpState(std::cerr);
 
-        size_t nInCount = data.size();
-        size_t pInSizes[nInCount];
-        const char *pInMimeTypes[nInCount];
-        const char *pInStreams[nInCount];
+        const size_t nInCount = data.size();
+        std::vector<size_t> pInSizes(nInCount);
+        std::vector<const char*> pInMimeTypes(nInCount);
+        std::vector<const char*> pInStreams(nInCount);
 
         for (size_t i = 0; i < nInCount; ++i)
         {
@@ -1253,7 +1254,8 @@ bool ChildSession::setClipboard(const char* buffer, int length, const StringVect
 
         getLOKitDocument()->setView(_viewId);
 
-        if (!getLOKitDocument()->setClipboard(nInCount, pInMimeTypes, pInSizes, pInStreams))
+        if (!getLOKitDocument()->setClipboard(nInCount, pInMimeTypes.data(), pInSizes.data(),
+                                              pInStreams.data()))
             LOG_ERR("set clipboard returned failure");
         else
             LOG_TRC("set clipboard succeeded");
@@ -1627,19 +1629,51 @@ bool ChildSession::formFieldEvent(const char* buffer, int length, const StringVe
     return true;
 }
 
-bool ChildSession::contentControlEvent(const char* buffer, int length, const StringVector& /*tokens*/)
+bool ChildSession::contentControlEvent(const StringVector& tokens)
 {
-    std::string sFirstLine = getFirstLine(buffer, length);
-    std::string sArguments = sFirstLine.substr(std::string("contentcontrolevent ").size());
-
-    if (sArguments.empty())
+    std::string type;
+    if (tokens.size() != 3 || !getTokenString(tokens[1], "type", type))
     {
         sendTextFrameAndLogError("error: cmd=contentcontrolevent kind=syntax");
         return false;
     }
+    std::string arguments = "{\"type\":\"" + type + "\",";
+
+    if (type == "picture")
+    {
+        std::string name;
+        if (getTokenString(tokens[2], "name", name))
+        {
+            std::string jailDoc = JAILED_DOCUMENT_ROOT;
+            if (NoCapsForKit)
+            {
+                jailDoc = Poco::URI(getJailedFilePath()).getPath();
+                jailDoc =
+                    jailDoc.substr(0, jailDoc.find(JAILED_DOCUMENT_ROOT)) + JAILED_DOCUMENT_ROOT;
+            }
+            std::string url = "file://" + jailDoc + "insertfile/" + name;
+            arguments += "\"changed\":\"" + url + "\"}";
+        }
+    }
+    else if (type == "pictureurl")
+    {
+        std::string name;
+        if (getTokenString(tokens[2], "name", name))
+        {
+            std::string url;
+            URI::decode(name, url);
+            arguments = "{\"type\":\"picture\",\"changed\":\"" + url + "\"}";
+        }
+    }
+    else if (type == "date" || type == "drop-down")
+    {
+        std::string data;
+        getTokenString(tokens[2], "selected", data);
+        arguments += "\"selected\":\"" + data + "\"" + "}";
+    }
 
     getLOKitDocument()->setView(_viewId);
-    getLOKitDocument()->sendContentControlEvent(sArguments.c_str());
+    getLOKitDocument()->sendContentControlEvent(arguments.c_str());
 
     return true;
 }
@@ -1762,7 +1796,7 @@ bool ChildSession::selectText(const StringVector& tokens,
 {
     std::string swap;
     unsigned winId = 0;
-    int type, x, y;
+    int type = 0, x = 0, y = 0;
     if (target == LokEventTargetEnum::Window)
     {
         if (tokens.size() != 5 ||

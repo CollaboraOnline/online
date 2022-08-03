@@ -23,6 +23,7 @@
 #include <string>
 
 #include "Log.hpp"
+#include <SigUtil.hpp>
 
 namespace JailUtil
 {
@@ -60,7 +61,8 @@ bool remountReadonly(const std::string& source, const std::string& target)
     return res;
 }
 
-bool unmount(const std::string& target)
+/// Unmount a bind-mounted jail directory.
+static bool unmount(const std::string& target)
 {
     LOG_DBG("Unmounting [" << target << ']');
     const bool res = coolmount("-u", "", target);
@@ -98,7 +100,7 @@ bool isJailCopied(const std::string& root)
     return delFileStat.exists();
 }
 
-bool safeRemoveDir(const std::string& path)
+static bool safeRemoveDir(const std::string& path)
 {
     // Always unmount, just in case.
     unmount(path);
@@ -121,7 +123,7 @@ bool safeRemoveDir(const std::string& path)
 
 void removeJail(const std::string& root)
 {
-    LOG_INF("Removing jail [" << root << "].");
+    LOG_INF("Removing jail [" << root << ']');
 
     // Unmount the tmp directory. Don't care if we fail.
     const std::string tmpPath = Poco::Path(root, "tmp").toString();
@@ -155,8 +157,7 @@ void cleanupJails(const std::string& root)
         return;
     }
 
-    // FIXME: technically, the loTemplate directory may have any name.
-    if (FileUtil::Stat(root + "/lo").exists())
+    if (FileUtil::Stat(root + '/' + LO_JAIL_SUBPATH).exists())
     {
         // This is a jail.
         removeJail(root);
@@ -195,11 +196,11 @@ void cleanupJails(const std::string& root)
         LOG_WRN("Jails root directory [" << root << "] is not empty. Will not remove it.");
 }
 
-void setupJails(bool bindMount, const std::string& jailRoot, const std::string& sysTemplate)
+void setupChildRoot(bool bindMount, const std::string& childRoot, const std::string& sysTemplate)
 {
     // Start with a clean slate.
-    cleanupJails(jailRoot);
-    Poco::File(jailRoot + JAIL_TMP_INCOMING_PATH).createDirectories();
+    cleanupJails(childRoot);
+    Poco::File(childRoot + CHILDROOT_TMP_INCOMING_PATH).createDirectories();
 
     disableBindMounting(); // Clear to avoid surprises.
 
@@ -208,7 +209,7 @@ void setupJails(bool bindMount, const std::string& jailRoot, const std::string& 
     {
         // Test mounting to verify it actually works,
         // as it might not function in some systems.
-        const std::string target = Poco::Path(jailRoot, "cool_test_mount").toString();
+        const std::string target = Poco::Path(childRoot, "cool_test_mount").toString();
         if (bind(sysTemplate, target))
         {
             enableBindMounting();

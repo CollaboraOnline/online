@@ -290,7 +290,8 @@ L.Map = L.Evented.extend({
 					commentSection.clearList();
 			}
 
-			this.initializeModificationIndicator();
+			if (!window.mode.isMobile())
+				this.initializeModificationIndicator();
 
 			// Show sidebar.
 			if (this._docLayer && !this._docLoadedOnce) {
@@ -946,18 +947,20 @@ L.Map = L.Evented.extend({
 
 	// Getter for the winId, see setWinId() for more.
 	getWinId: function () {
+		if (this.formulabar && this.formulabar.hasFocus())
+			return 0;
 		return this._winId;
 	},
 
 	// Returns true iff the document has input focus,
 	// as opposed to a dialog, sidebar, formula bar, etc.
 	editorHasFocus: function () {
-		return this.getWinId() === 0;
+		return this.getWinId() === 0 && !this.calcInputBarHasFocus();
 	},
 
 	// Returns true iff the formula-bar has the focus.
 	calcInputBarHasFocus: function () {
-		return !this.editorHasFocus() && this.formulabar.hasFocus();
+		return this.formulabar && this.formulabar.hasFocus();
 	},
 
 	// TODO replace with universal implementation after refactoring projections

@@ -9,6 +9,9 @@ apt-get update
 # Install HTTPS transport
 apt-get -y install apt-transport-https
 
+# Install tzdata to accept the TZ environment variable
+apt-get -y install tzdata
+
 # Install some more fonts
 apt-get -y install fonts-open-sans
 

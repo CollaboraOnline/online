@@ -470,14 +470,22 @@ function clearAllText(frameId) {
 function expectTextForClipboard(expectedPlainText, frameId) {
 	cy.log('Text:' + expectedPlainText ,  'FrameID:' + frameId);
 	doIfInWriter(function() {
+		// for backward compatibility allow '/nTEXT' and 'TEXT'
+		const expectedRegex = RegExp('/^(\n' + expectedPlainText + ')|(' + expectedPlainText + ')$/');
 		cy.customGet('#copy-paste-container p', frameId)
 			.then(function(pItem) {
 				if (pItem.children('font').length !== 0) {
 					cy.customGet('#copy-paste-container p font', frameId)
-						.should('have.text', expectedPlainText);
+						.invoke('text')
+						.then(function(value) {
+							return expectedRegex.test(value);
+						});
 				} else {
 					cy.customGet('#copy-paste-container p', frameId)
-						.should('have.text', expectedPlainText);
+						.invoke('text')
+						.then(function(value) {
+							return expectedRegex.test(value);
+						});
 				}
 			});
 	}, frameId);

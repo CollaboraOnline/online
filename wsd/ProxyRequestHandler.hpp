@@ -14,11 +14,13 @@ class ProxyRequestHandler
 {
 public:
     static void handleRequest(const std::string& relPath,
-                              const std::shared_ptr<StreamSocket>& socket);
+                              const std::shared_ptr<StreamSocket>& socket,
+                              const std::string& serverUri);
+    static std::string getProxyRatingServer() { return ProxyRatingServer; }
 
 private:
     static std::chrono::system_clock::time_point MaxAge;
-    static constexpr auto ProxyServer = "https://rating.collaboraonline.com";
+    static constexpr auto ProxyRatingServer = "https://rating.collaboraonline.com";
     static std::unordered_map<std::string, std::shared_ptr<http::Response>> CacheFileHash;
 };
 

@@ -307,7 +307,7 @@ private:
     std::string getBlockedCommandType(std::string command);
 #endif
     bool formFieldEvent(const char* buffer, int length, const StringVector& tokens);
-    bool contentControlEvent(const char* buffer, int length, const StringVector& tokens);
+    bool contentControlEvent(const StringVector& tokens);
     bool renderSearchResult(const char* buffer, int length, const StringVector& tokens);
 
     void rememberEventsForInactiveUser(const int type, const std::string& payload);

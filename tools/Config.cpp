@@ -181,7 +181,7 @@ void Config::handleOption(const std::string& optionName, const std::string& opti
     if (optionName == "help")
     {
         displayHelp();
-        std::exit(EX_OK);
+        Util::forcedExit(EX_OK);
     }
     else if (optionName == "config-file")
     {
@@ -254,9 +254,9 @@ int Config::main(const std::vector<std::string>& args)
     if (args[0] == "set-admin-password")
     {
 #if HAVE_PKCS5_PBKDF2_HMAC
-        unsigned char pwdhash[_adminConfig.getPwdHashLength()];
-        unsigned char salt[_adminConfig.getPwdSaltLength()];
-        RAND_bytes(salt, _adminConfig.getPwdSaltLength());
+        std::vector<unsigned char> pwdhash(_adminConfig.getPwdHashLength());
+        std::vector<unsigned char> salt(_adminConfig.getPwdSaltLength());
+        RAND_bytes(salt.data(), _adminConfig.getPwdSaltLength());
         std::stringstream stream;
 
         // Ask for admin username
@@ -292,10 +292,10 @@ int Config::main(const std::vector<std::string>& args)
 
         // Do the magic !
         PKCS5_PBKDF2_HMAC(adminPwd.c_str(), -1,
-                          salt, _adminConfig.getPwdSaltLength(),
+                          salt.data(), _adminConfig.getPwdSaltLength(),
                           _adminConfig.getPwdIterations(),
                           EVP_sha512(),
-                          _adminConfig.getPwdHashLength(), pwdhash);
+                          _adminConfig.getPwdHashLength(), pwdhash.data());
 
         // Make salt randomness readable
         for (unsigned j = 0; j < _adminConfig.getPwdSaltLength(); ++j)

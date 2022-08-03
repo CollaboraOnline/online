@@ -176,9 +176,9 @@ void DocumentBroker::assertCorrectThread() const
 // The inner heart of the DocumentBroker - our poll loop.
 void DocumentBroker::pollThread()
 {
-    LOG_INF("Starting docBroker polling thread for docKey [" << _docKey << "].");
-
     _threadStart = std::chrono::steady_clock::now();
+
+    LOG_INF("Starting docBroker polling thread for docKey [" << _docKey << ']');
 
     // Request a kit process for this doc.
 #if !MOBILEAPP
@@ -285,6 +285,15 @@ void DocumentBroker::pollThread()
 
         if (isInteractive())
         {
+            // It is possible to dismiss the interactive dialog,
+            // exit the Kit process, or even crash. We would deadlock.
+            if (isUnloading())
+            {
+                // We expect to have either isMarkedToDestroy() or
+                // isCloseRequested() in that case.
+                stop("abortedinteractive");
+            }
+
             // Extend the deadline while we are interactiving with the user.
             loadDeadline = now + std::chrono::seconds(limit_load_secs);
             continue;
@@ -835,31 +844,6 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
             session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
         }
     }
-
-#ifdef ENABLE_FEATURE_LOCK
-    Object::Ptr lockInfo = new Object();
-    lockInfo->set("IsLockedUser", CommandControl::LockManager::isLockedUser());
-    lockInfo->set("IsLockReadOnly", CommandControl::LockManager::isLockReadOnly());
-
-    // Poco:Dynamic:Var does not support std::unordred_set so converted to std::vector
-    std::vector<std::string> lockedCommandList(
-        CommandControl::LockManager::getLockedCommandList().begin(),
-        CommandControl::LockManager::getLockedCommandList().end());
-    lockInfo->set("LockedCommandList", lockedCommandList);
-    lockInfo->set("UnlockTitle", CommandControl::LockManager::getUnlockTitle());
-    lockInfo->set("UnlockLink", CommandControl::LockManager::getUnlockLink());
-    lockInfo->set("UnlockDescription", CommandControl::LockManager::getUnlockDescription());
-    lockInfo->set("WriterHighlights", CommandControl::LockManager::getWriterHighlights());
-    lockInfo->set("CalcHighlights", CommandControl::LockManager::getCalcHighlights());
-    lockInfo->set("ImpressHighlights", CommandControl::LockManager::getImpressHighlights());
-    lockInfo->set("DrawHighlights", CommandControl::LockManager::getDrawHighlights());
-
-    std::ostringstream ossLockInfo;
-    lockInfo->stringify(ossLockInfo);
-    const std::string lockInfoString = ossLockInfo.str();
-    LOG_TRC("Sending feature locking info to client: " << lockInfoString);
-    session->sendMessage("featurelock: " + lockInfoString);
-#endif
 
 #ifdef ENABLE_FEATURE_RESTRICTION
     Object::Ptr restrictionInfo = new Object();
@@ -1826,10 +1810,11 @@ void DocumentBroker::setLoaded()
         _docState.setLive();
         _loadDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
                                 std::chrono::steady_clock::now() - _threadStart);
+        const auto minTimeoutSecs = ((_loadDuration * 4).count() + 500) / 1000;
         _saveManager.setSavingTimeout(
-            std::max(std::chrono::seconds(((_loadDuration * 2).count() + 500) / 1000),
-                     std::chrono::seconds(5)));
-        LOG_TRC("Document loaded in " << _loadDuration);
+            std::max(std::chrono::seconds(minTimeoutSecs), std::chrono::seconds(5)));
+        LOG_TRC("Document loaded in " << _loadDuration << ", saving-timeout set to "
+                                      << _saveManager.getSavingTimeout());
     }
 }
 
@@ -2447,9 +2432,11 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
                     // csv import dialogs), it will wait for their
                     // dismissal indefinetely. Neither would our
                     // load-timeout kick in, since we would be gone.
+#if !MOBILEAPP
                     LOG_INF("Session [" << id << "] disconnected but DocKey [" << _docKey
                                         << "] isn't loaded yet. Terminating the child roughly.");
                     _childProcess->terminate();
+#endif
                 }
             }
 
@@ -2606,9 +2593,8 @@ void DocumentBroker::unregisterDownloadId(const std::string& downloadId)
 }
 
 /// Handles input from the prisoner / child kit process
-bool DocumentBroker::handleInput(const std::vector<char>& payload)
+bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
 {
-    auto message = std::make_shared<Message>(payload.data(), payload.size(), Message::Dir::Out);
     LOG_TRC("DocumentBroker handling child message: [" << message->abbr() << "].");
 
 #if !MOBILEAPP
@@ -2627,11 +2613,11 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     {
         if (message->firstTokenMatches("tile:"))
         {
-            handleTileResponse(payload);
+            handleTileResponse(message);
         }
         else if (message->firstTokenMatches("tilecombine:"))
         {
-            handleTileCombinedResponse(payload);
+            handleTileCombinedResponse(message);
         }
         else if (message->firstTokenMatches("errortoall:"))
         {
@@ -2659,9 +2645,10 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
             LOG_CHECK_RET(message->tokens().size() == 1, false);
             if (COOLWSD::TraceEventFile != NULL && TraceEvent::isRecordingOn())
             {
-                const auto newLine = static_cast<const char*>(memchr(payload.data(), '\n', payload.size()));
-                if (newLine)
-                    COOLWSD::writeTraceEventRecording(newLine + 1, payload.size() - (newLine + 1 - payload.data()));
+                const auto firstLine = message->firstLine();
+                if (firstLine.size() < message->size())
+                    COOLWSD::writeTraceEventRecording(message->data().data() + firstLine.size() + 1,
+                                                      message->size() - firstLine.size() - 1);
             }
         }
         else if (message->firstTokenMatches("forcedtraceevent:"))
@@ -2669,9 +2656,10 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
             LOG_CHECK_RET(message->tokens().size() == 1, false);
             if (COOLWSD::TraceEventFile != NULL)
             {
-                const auto newLine = static_cast<const char*>(memchr(payload.data(), '\n', payload.size()));
-                if (newLine)
-                    COOLWSD::writeTraceEventRecording(newLine + 1, payload.size() - (newLine + 1 - payload.data()));
+                const auto firstLine = message->firstLine();
+                if (firstLine.size() < message->size())
+                    COOLWSD::writeTraceEventRecording(message->data().data() + firstLine.size() + 1,
+                                                      message->size() - firstLine.size() - 1);
             }
         }
         else
@@ -3031,18 +3019,18 @@ void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& se
     }
 }
 
-void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
+void DocumentBroker::handleTileResponse(const std::shared_ptr<Message>& message)
 {
-    const std::string firstLine = getFirstLine(payload);
+    const std::string firstLine = message->firstLine();
     LOG_DBG("Handling tile: " << firstLine);
 
     try
     {
-        const std::size_t length = payload.size();
+        const std::size_t length = message->size();
         if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
         {
             const TileDesc tile = TileDesc::parse(firstLine);
-            const char* buffer = payload.data();
+            const char* buffer = message->data().data();
             const std::size_t offset = firstLine.size() + 1;
 
             std::unique_lock<std::mutex> lock(_mutex);
@@ -3061,18 +3049,18 @@ void DocumentBroker::handleTileResponse(const std::vector<char>& payload)
     }
 }
 
-void DocumentBroker::handleTileCombinedResponse(const std::vector<char>& payload)
+void DocumentBroker::handleTileCombinedResponse(const std::shared_ptr<Message>& message)
 {
-    const std::string firstLine = getFirstLine(payload);
+    const std::string firstLine = message->firstLine();
     LOG_DBG("Handling tile combined: " << firstLine);
 
     try
     {
-        const std::size_t length = payload.size();
+        const std::size_t length = message->size();
         if (firstLine.size() <= static_cast<std::string::size_type>(length) - 1)
         {
             const TileCombined tileCombined = TileCombined::parse(firstLine);
-            const char* buffer = payload.data();
+            const char* buffer = message->data().data();
             std::size_t offset = firstLine.size() + 1;
 
             std::unique_lock<std::mutex> lock(_mutex);
@@ -3212,9 +3200,6 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
     std::string sid;
     if (COOLProtocol::parseNameValuePair(payload->forwardToken(), name, sid, '-') && name == "client")
     {
-        const auto& data = payload->data().data();
-        const auto& size = payload->size();
-
         if (sid == "all")
         {
             // Broadcast to all.
@@ -3223,7 +3208,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
             for (const auto& it : _sessions)
             {
                 if (!it.second->inWaitDisconnected())
-                    it.second->handleKitToClientMessage(data, size);
+                    it.second->handleKitToClientMessage(payload);
             }
         }
         else
@@ -3234,7 +3219,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
                 // Take a ref as the session could be removed from _sessions
                 // if it's the save confirmation keeping a stopped session alive.
                 std::shared_ptr<ClientSession> session = it->second;
-                return session->handleKitToClientMessage(data, size);
+                return session->handleKitToClientMessage(payload);
             }
             else
             {
@@ -3326,7 +3311,7 @@ void DocumentBroker::closeDocument(const std::string& reason)
 
 void DocumentBroker::disconnectedFromKit()
 {
-    LOG_DBG("DocBroker " << _docKey << " Disconnected from Kit. Flagging to close.");
+    LOG_INF("DocBroker " << _docKey << " Disconnected from Kit. Flagging to close.");
     _docState.setDisconnected();
     closeDocument("docdisconnected");
 }
@@ -3582,13 +3567,12 @@ void RenderSearchResultBroker::dispose()
     }
 }
 
-bool RenderSearchResultBroker::handleInput(const std::vector<char>& payload)
+bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& message)
 {
-    bool bResult = DocumentBroker::handleInput(payload);
+    bool bResult = DocumentBroker::handleInput(message);
 
     if (bResult)
     {
-        auto message = std::make_shared<Message>(payload.data(), payload.size(), Message::Dir::Out);
         auto const& messageData = message->data();
 
         static std::string commandString = "rendersearchresult:\n";
@@ -3638,7 +3622,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     const auto now = std::chrono::steady_clock::now();
 
     os << std::boolalpha;
-    os << " Broker: " << COOLWSD::anonymizeUrl(_filename) << " pid: " << getPid();
+    os << " Broker: " << getDocKey() << " pid: " << getPid();
     if (_docState.isMarkedToDestroy())
         os << " *** Marked to destroy ***";
     else
@@ -3648,6 +3632,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     else
         os << "\n  still loading... "
            << std::chrono::duration_cast<std::chrono::seconds>(now - _threadStart);
+    os << "\n  child PID: " << (_childProcess ? _childProcess->getPid() : 0);
     os << "\n  sent: " << sent;
     os << "\n  recv: " << recv;
     os << "\n  jail id: " << _jailId;
@@ -3658,6 +3643,8 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();
     os << "\n  thread start: " << Util::getTimeForLog(now, _threadStart);
+    os << "\n  stop: " << _stop;
+    os << "\n  closeReason: " << _closeReason;
     os << "\n  modified?: " << isModified();
     os << "\n  possibly-modified: " << isPossiblyModified();
     os << "\n  canSave: " << name(canSaveToDisk());

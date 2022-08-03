@@ -42,6 +42,15 @@
 
 #include <StringVector.hpp>
 
+#if CODE_COVERAGE
+extern "C"
+{
+    void __gcov_reset(void);
+    void __gcov_flush(void);
+    void __gcov_dump(void);
+}
+#endif
+
 /// Format seconds with the units suffix until we migrate to C++20.
 inline std::ostream& operator<<(std::ostream& os, const std::chrono::seconds& s)
 {
@@ -659,6 +668,7 @@ int main(int argc, char**argv)
     /// Return the symbolic name for an errno value, or in decimal if not handled here.
     inline std::string symbolicErrno(int e)
     {
+        // LCOV_EXCL_START Coverage for these is not very useful.
         // Errnos from <asm-generic/errno-base.h> and <asm-generic/errno.h> on Linux.
         switch (e)
         {
@@ -883,6 +893,7 @@ int main(int argc, char**argv)
 #endif
         default: return std::to_string(e);
         }
+        // LCOV_EXCL_STOP Coverage for these is not very useful.
     }
 
     inline size_t getDelimiterPosition(const char* message, const int length, const char delim)
@@ -901,7 +912,8 @@ int main(int argc, char**argv)
     inline int findSubArray(const char* data, const std::size_t dataLen, const char* sub,
                             const std::size_t subLen)
     {
-        assert(subLen < std::numeric_limits<int>::max() && "Invalid sub-array length to find");
+        assert(subLen < std::numeric_limits<unsigned int>::max() &&
+               "Invalid sub-array length to find");
         if (sub && subLen && dataLen >= subLen)
         {
             for (std::size_t i = 0; i < dataLen; ++i)

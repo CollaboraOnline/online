@@ -407,7 +407,7 @@ public:
 
     bool isMarkedToDestroy() const { return _docState.isMarkedToDestroy() || _stop; }
 
-    virtual bool handleInput(const std::vector<char>& payload);
+    virtual bool handleInput(const std::shared_ptr<Message>& message);
 
     /// Forward a message from client session to its respective child session.
     bool forwardToChild(const std::string& viewId, const std::string& message);
@@ -496,9 +496,9 @@ private:
 
     std::unique_lock<std::mutex> getDeferredLock() { return std::unique_lock<std::mutex>(_mutex, std::defer_lock); }
 
-    void handleTileResponse(const std::vector<char>& payload);
+    void handleTileResponse(const std::shared_ptr<Message>& message);
     void handleDialogPaintResponse(const std::vector<char>& payload, bool child);
-    void handleTileCombinedResponse(const std::vector<char>& payload);
+    void handleTileCombinedResponse(const std::shared_ptr<Message>& message);
     void handleDialogRequest(const std::string& dialogCmd);
 
     /// Invoked to issue a save before renaming the document filename.
@@ -871,6 +871,9 @@ private:
             _savingTimeout = savingTimeout;
         }
 
+        /// Get the maximum time to wait for saving to finish.
+        std::chrono::seconds getSavingTimeout() const { return _savingTimeout; }
+
         /// True iff the last save request has timed out.
         bool hasSavingTimedOut() const
         {
@@ -916,6 +919,7 @@ private:
 
             os << indent
                << "file last modified time: " << Util::getTimeForLog(now, _lastModifiedTime);
+            os << indent << "saving-timeout: " << getSavingTimeout();
             os << indent << "last save timed-out: " << std::boolalpha << hasSavingTimedOut();
             os << indent << "last save successful: " << lastSaveSuccessful();
             os << indent << "save failure count: " << saveFailureCount();
@@ -1384,7 +1388,7 @@ public:
     void dispose() override;
 
     /// Override to filter out the data that is returned by a command
-    bool handleInput(const std::vector<char>& payload) override;
+    bool handleInput(const std::shared_ptr<Message>& message) override;
 
     /// How many instances are running.
     static std::size_t getInstanceCount();

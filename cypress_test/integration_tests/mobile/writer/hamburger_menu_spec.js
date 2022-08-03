@@ -65,7 +65,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.wait(1000);
 
-		helper.expectTextForClipboard('\nnew');
+		helper.expectTextForClipboard('new');
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
@@ -81,7 +81,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 
-		helper.expectTextForClipboard('\nnew');
+		helper.expectTextForClipboard('new');
 	});
 
 	it('Print', function() {
@@ -253,8 +253,7 @@ describe('Trigger hamburger menu options.', function() {
 		helper.textSelectionShouldExist();
 
 		// We should have 'q' selected.
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\nq');
+		helper.expectTextForClipboard('q');
 
 		// Then disable recording.
 		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Record']);
@@ -266,8 +265,7 @@ describe('Trigger hamburger menu options.', function() {
 		helper.textSelectionShouldExist();
 
 		// We should have 'q' selected.
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\nq');
+		helper.expectTextForClipboard('q');
 	});
 
 	it('Show track changes.', function() {
@@ -283,8 +281,7 @@ describe('Trigger hamburger menu options.', function() {
 		writerHelper.selectAllTextOfDoc();
 
 		// No actual text sent from core because of the removal.
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\n\n\n');
+		helper.expectTextForClipboard('\n\n');
 
 		// We have a multiline selection
 		cy.get('.leaflet-selection-marker-start')
@@ -349,8 +346,7 @@ describe('Trigger hamburger menu options.', function() {
 		writerHelper.selectAllTextOfDoc();
 
 		// We don't have actual text content.
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\n\n\n');
+		helper.expectTextForClipboard('\n\n');
 
 		// Reject removal.
 		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Reject All']);
@@ -374,20 +370,17 @@ describe('Trigger hamburger menu options.', function() {
 		// Find second change using prev.
 		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Previous']);
 
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\nw');
+		helper.expectTextForClipboard('w');
 
 		// Find first change using prev.
 		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Previous']);
 
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\nq');
+		helper.expectTextForClipboard('q');
 
 		// Find second change using next.
 		mobileHelper.selectHamburgerMenuItem(['Track Changes', 'Next']);
 
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\nw');
+		helper.expectTextForClipboard('w');
 	});
 
 	it('Search some word.', function() {
@@ -408,8 +401,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Part of the text should be selected
 		helper.textSelectionShouldExist();
 
-		cy.get('#copy-paste-container p')
-			.should('have.text', '\na');
+		helper.expectTextForClipboard('a');
 
 		cy.get('#copy-paste-container p b')
 			.should('not.exist');

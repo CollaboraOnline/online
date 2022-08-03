@@ -507,7 +507,9 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 
         if (requestUri.getPath().find("browser/" COOLWSD_VERSION_HASH "/") == std::string::npos)
         {
-            LOG_WRN("client - server version mismatch, disabling browser cache. Expected: " COOLWSD_VERSION_HASH);
+            LOG_WRN("Client - server version mismatch, disabling browser cache. "
+                    "Expected: " COOLWSD_VERSION_HASH "; Actual URI path with version hash: "
+                    << requestUri.getPath());
             noCache = true;
         }
 
@@ -955,7 +957,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
 
     bool useIntegrationTheme = config.getBool("user_interface.use_integration_theme", true);
-    const std::string themePreFix = (theme == "nextcloud") && useIntegrationTheme ? theme + "/" : "";
+    bool hasIntegrationTheme = (theme != "") && FileUtil::Stat(COOLWSD::FileServerRoot + "/browser/dist/" + theme).exists();
+    const std::string themePreFix = hasIntegrationTheme && useIntegrationTheme ? theme + "/" : "";
     const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/browser/" COOLWSD_VERSION_HASH "/" + themePreFix + "%s.css\">");
     const std::string scriptJS("<script src=\"%s/browser/" COOLWSD_VERSION_HASH "/" + themePreFix + "%s.js\"></script>");
 
@@ -997,13 +1000,20 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     const unsigned int idleTimeoutSecs = config.getUInt("per_view.idle_timeout_secs", 900);
     Poco::replaceInPlace(preprocess, std::string("%IDLE_TIMEOUT_SECS%"), std::to_string(idleTimeoutSecs));
 
-#if ENABLE_WELCOME_MESSAGE
-    std::string enableWelcomeMessage = "true";
-#else // configurable
-    std::string enableWelcomeMessage = stringifyBoolFromConfig(config, "welcome.enable", false);
-#endif
+    #if ENABLE_WELCOME_MESSAGE
+        std::string enableWelcomeMessage = "true";
+        std::string autoShowWelcome = "true";
+        if (config.getBool("home_mode.enable", false))
+        {
+            autoShowWelcome = stringifyBoolFromConfig(config, "welcome.enable", false);
+        }
+    #else // configurable
+        std::string enableWelcomeMessage = stringifyBoolFromConfig(config, "welcome.enable", false);
+        std::string autoShowWelcome = stringifyBoolFromConfig(config, "welcome.enable", false);
+    #endif
 
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG%"), enableWelcomeMessage);
+    Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_WELCOME%"), autoShowWelcome);
 
     // the config value of 'notebookbar/tabbed' or 'classic/compact' overrides the UIMode
     // from the WOPI
@@ -1029,12 +1039,20 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         uiRtlSettings = " dir=\"rtl\" ";
     Poco::replaceInPlace(preprocess, std::string("%UI_RTL_SETTINGS%"), uiRtlSettings);
 
-    const std::string useIntegrationThemeString = useIntegrationTheme ? "true" : "false";
+    const std::string useIntegrationThemeString = useIntegrationTheme && hasIntegrationTheme ? "true" : "false";
     Poco::replaceInPlace(preprocess, std::string("%USE_INTEGRATION_THEME%"), useIntegrationThemeString);
 
     std::string enableMacrosExecution = stringifyBoolFromConfig(config, "security.enable_macros_execution", false);
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_MACROS_EXECUTION%"), enableMacrosExecution);
 
+    if (!config.getBool("feedback.show", true) && config.getBool("home_mode.enable", false))
+    {
+        Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_FEEDBACK%"), (std::string)"false");
+    }
+    else
+    {
+        Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_FEEDBACK%"), (std::string)"true");
+    }
     Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_URL%"), std::string(FEEDBACK_URL));
     Poco::replaceInPlace(preprocess, std::string("%WELCOME_URL%"), std::string(WELCOME_URL));
 
@@ -1187,13 +1205,6 @@ void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
     const std::string relPath = getRequestPathname(request);
     LOG_DBG("Preprocessing file: " << relPath);
     std::string templateWelcome = *getUncompressedFile(relPath);
-
-#if ENABLE_WELCOME_MESSAGE
-    std::string enableWelcomeMessage = "true";
-#else // configurable
-    const auto& config = Application::instance().config();
-    std::string enableWelcomeMessage = stringifyBoolFromConfig(config, "welcome.enable", false);
-#endif
 
     // Ask UAs to block if they detect any XSS attempt
     response.add("X-XSS-Protection", "1; mode=block");

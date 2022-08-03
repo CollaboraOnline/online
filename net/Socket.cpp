@@ -79,8 +79,7 @@ bool StreamSocket::simulateSocketError(bool read)
 {
     if ((socketErrorCount++ % 7) == 0)
     {
-        LOG_TRC('#' << getFD() << ": Simulating socket error during "
-                    << (read ? "read." : "write."));
+        LOG_TRC("Simulating socket error during " << (read ? "read." : "write."));
         errno = EAGAIN;
         return true;
     }
@@ -432,11 +431,10 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
         size_t i = _pollStartIndex;
         LOG_TRC('#' << _pollFds[i].fd << ": Starting handling poll results of " << _name
-                    << " at index " << _pollStartIndex << " (of " << size << "): " << std::hex
+                    << " at index " << i << " (of " << size << "): " << std::hex
                     << _pollFds[i].revents << std::dec);
 
-        size_t previ = size;
-        while (previ != _pollStartIndex)
+        for (std::size_t j = 0; j < size; ++j)
         {
             SocketDisposition disposition(_pollSockets[i]);
             try
@@ -457,7 +455,6 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
             disposition.execute();
 
-            previ = i;
             if (i == 0)
                 i = size - 1;
             else
@@ -474,7 +471,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             }
         }
 
-        // In case we remved sockets the new _pollStartIndex might be out of bounds, but we check it
+        // In case we removed sockets the new _pollStartIndex might be out of bounds, but we check it
         // before using it above anyway.
         _pollStartIndex = (_pollStartIndex + 1) % size;
     }

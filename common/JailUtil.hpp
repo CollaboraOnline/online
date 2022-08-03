@@ -15,17 +15,20 @@
 namespace JailUtil
 {
 
+/// General temporary directory owned by us.
+constexpr const char CHILDROOT_TMP_PATH[] = "/tmp";
+
 /// Files uploaded by users are stored in this sub-directory of child-root.
-constexpr const char JAIL_TMP_INCOMING_PATH[] = "/tmp/incoming";
+constexpr const char CHILDROOT_TMP_INCOMING_PATH[] = "/tmp/incoming";
+
+/// The LO installation directory with jail.
+constexpr const char LO_JAIL_SUBPATH[] = "lo";
 
 /// Bind mount a jail directory.
 bool bind(const std::string& source, const std::string& target);
 
 /// Remount a bound mount point as readonly.
 bool remountReadonly(const std::string& source, const std::string& target);
-
-/// Unmount a bind-mounted jail directory.
-bool unmount(const std::string& target);
 
 /// Marks a jail as having been copied instead of mounted.
 void markJailCopied(const std::string& root);
@@ -39,8 +42,8 @@ void removeJail(const std::string& root);
 /// Remove all jails.
 void cleanupJails(const std::string& jailRoot);
 
-/// Setup the jails.
-void setupJails(bool bindMount, const std::string& jailRoot, const std::string& sysTemplate);
+/// Setup the Child-Root directory.
+void setupChildRoot(bool bindMount, const std::string& jailRoot, const std::string& sysTemplate);
 
 /// Setup /dev/random and /dev/urandom in the given jail path.
 void setupJailDevNodes(const std::string& root);

@@ -44,21 +44,24 @@ sub generate_aliases() {
 
     my $message = '';
     my $domain = $ENV{'domain'};
+    my $extra_params = $ENV{'extra_params'};
+    my $scheme = "https";
+    my $port = "443";
+    if (index($extra_params, "ssl.enable=false") != -1) {
+        $scheme = "http";
+        $port = "80";
+    }
+
     if ($domain) {
-        $message .= "WARNING: The 'domain=$domain' is deprecated.\n For your convenience, we interpret it as the following:\n";
+        $message .= "WARNING: The 'domain=$domain' is deprecated.\n Use alias_groupX instead, for your convenience, we interpret it as the following:\n";
         my @hosts = split('\|', $domain);
         if (@hosts) {
             my $i = 0;
             foreach (@hosts) {
-                if ($_ =~ /[^a-zA-Z0-9\_.\-\/]/)
-                {
-                    print "WARNING: $_ seems to be regex, If you want to use regex please use aliasgroupX env variable where X=1,2,3... \nMore information:\n    https://sdk.collaboraonline.com/docs/installation/CODE_Docker_image.html\n";
-                    exit 1;
-                }
                 $i++;
-                $message .= "   aliasgroup".$i."=https://$_:443\n";
+                $message .= "   aliasgroup$i=$scheme://$_:$port\n";
                 $output .= "                <group>\n";
-                $output .= "                    <host desc=\"hostname to allow or deny.\" allow=\"true\">https://$_:443</host>\n";
+                $output .= "                    <host desc=\"hostname to allow or deny.\" allow=\"true\">$scheme://$_:$port</host>\n";
                 $output .= "                </group>\n";
             }
             if (@hosts >= 2) {
@@ -68,15 +71,15 @@ sub generate_aliases() {
                     $message .= "$hosts[$b], ";
                 }
                 $message .= " and vice versa";
-            }
-            $message .= ". If you want to allow the access instead, use this configuration instead:\n     aliasgroup1=";
-            $i = 0;
-            foreach(@hosts) {
-                $i++;
-                $message .= "https://$_:443";
-                if ($i != @hosts)
-                {
-                    $message .= ",";
+                $message .= ". If you want to allow the access instead, use this configuration instead:\n     aliasgroup1=";
+                $i = 0;
+                foreach(@hosts) {
+                    $i++;
+                    $message .= "$scheme://$_:$port";
+                    if ($i != @hosts)
+                    {
+                        $message .= ",";
+                    }
                 }
             }
         }

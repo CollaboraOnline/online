@@ -60,8 +60,14 @@ cscope*
 *.orig
 coolwsd.log
 *.log.*.gz
+.log
 *.lo
 *.mo
+
+gcov/*
+*.gcno
+*.gcda
+*.gcov
 
 # browser
 browser/debug

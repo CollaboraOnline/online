@@ -69,7 +69,7 @@ public:
     bool isWritable() const { return !isReadOnly() || isAllowChangeComments(); }
 
     /// Handle kit-to-client message.
-    bool handleKitToClientMessage(const char* data, const int size);
+    bool handleKitToClientMessage(const std::shared_ptr<Message>& payload);
 
     /// Integer id of the view in the kit process, or -1 if unknown
     int getKitViewId() const { return _kitViewId; }
@@ -232,6 +232,11 @@ public:
 
     /// Generate an access token for this session via proxy protocol.
     const std::string &getOrCreateProxyAccess();
+
+#ifdef ENABLE_FEATURE_LOCK
+    void sendLockedInfo();
+#endif
+
 
 private:
     std::shared_ptr<ClientSession> client_from_this()

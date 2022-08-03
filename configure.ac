@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.63])
 
-AC_INIT([coolwsd], [22.05.3.1], [https://github.com/CollaboraOnline/online/issues], [coolwsd], [https://collaboraonline.github.io/])
+AC_INIT([coolwsd], [22.05.5.1], [https://github.com/CollaboraOnline/online/issues], [coolwsd], [https://collaboraonline.github.io/])
 LT_INIT([shared, disable-static, dlopen])
 
 AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
@@ -298,6 +298,11 @@ AC_ARG_WITH([feedback-url],
 AC_ARG_WITH([infobar-url],
             AS_HELP_STRING([--with-infobar-url=<url>],
                            [Infobar URL.]))
+
+AC_ARG_WITH([coverage],
+             AS_HELP_STRING([--with-coverage=<gcov>],
+                            [Enable a code-coverage method. Currently only gcov is supported (works with both gcc and clang).
+                            Output HTML in gcov/ directory.]))
 
 AC_ARG_WITH([sanitizer],
              AS_HELP_STRING([--with-sanitizer],
@@ -772,7 +777,7 @@ fi
 AC_SUBST(ENABLE_GTKAPP)
 AM_CONDITIONAL([ENABLE_GTKAPP], [test "$ENABLE_GTKAPP" = "true"])
 
-MAX_CONNECTIONS=20
+MAX_CONNECTIONS=9999
 AS_IF([test -n "$with_max_connections" && test "$with_max_connections" -gt "0"],
       [MAX_CONNECTIONS="$with_max_connections"])
 AS_IF([test "$MAX_CONNECTIONS" -lt "3"],
@@ -780,7 +785,7 @@ AS_IF([test "$MAX_CONNECTIONS" -lt "3"],
 AC_DEFINE_UNQUOTED([MAX_CONNECTIONS],[$MAX_CONNECTIONS],[Limit the maximum number of open connections])
 AC_SUBST(MAX_CONNECTIONS)
 
-MAX_DOCUMENTS=10
+MAX_DOCUMENTS=9999
 AS_IF([test -n "$with_max_documents" && test "$with_max_documents" -gt "0"],
       [MAX_DOCUMENTS="$with_max_documents"])
 AS_IF([test "$MAX_DOCUMENTS" -gt "$MAX_CONNECTIONS"],
@@ -842,6 +847,23 @@ if test -z "$enable_werror" -o "$enable_werror" = "yes"; then
 else
     AC_MSG_RESULT([no])
 fi
+
+# Code Coverage.
+AC_MSG_CHECKING([whether code-coverage is enabled])
+if test "x$with_coverage" != "x"; then
+    AC_MSG_RESULT([yes ($with_coverage)])
+    CODE_COVERAGE=1
+    CXXFLAGS="$CXXFLAGS --coverage"
+    CFLAGS="$CFLAGS --coverage"
+    LDFLAGS="$LDFLAGS -Wl,--dynamic-list-data --coverage"
+    coverage_msg="Code-Coverage is enabled"
+else
+    AC_MSG_RESULT([no])
+    CODE_COVERAGE=0
+    coverage_msg="Code-Coverage is disabled"
+fi
+AC_DEFINE_UNQUOTED([CODE_COVERAGE],[$CODE_COVERAGE],[Define to 1 if this is a code-coverage build.])
+AM_CONDITIONAL([ENABLE_CODE_COVERAGE], [test "$CODE_COVERAGE" = "1"])
 
 # Fuzzing.
 AC_MSG_CHECKING([whether to build fuzzers])
@@ -1437,15 +1459,38 @@ if test "$enable_feature_lock" = "yes"; then
         <unlock_title desc=\"Title to show user when prompting the unlock popup\" default=\"$UNLOCK_TITLE\">$UNLOCK_TITLE</unlock_title>
         <unlock_link desc=\"Link from where user can unlock the features\" default=\"$UNLOCK_LINK\">$UNLOCK_LINK</unlock_link>
         <unlock_description desc=\"Description about unlocking features\" default=\"$UNLOCK_DESCRIPTION\">$UNLOCK_DESCRIPTION</unlock_description>
+        <unlock_image desc=\"URL of image shown when unlock dialog get displayed\" default=\"\"></unlock_image><!-- URL structure - https://<hostname>/static/<image_endpoint> -->
         <writer_unlock_highlights desc=\"Short note about Writer benefits of unlocking\" default=\"$WRITER_UNLOCK_HIGHLIGHTS\">$WRITER_UNLOCK_HIGHLIGHTS</writer_unlock_highlights>
         <calc_unlock_highlights desc=\"Short note about Calc benefits of unlocking\" default=\"$CALC_UNLOCK_HIGHLIGHTS\">$CALC_UNLOCK_HIGHLIGHTS</calc_unlock_highlights>
         <impress_unlock_highlights desc=\"Short note about Impress benefits of unlocking\" default=\"$IMPRESS_UNLOCK_HIGHLIGHTS\">$IMPRESS_UNLOCK_HIGHLIGHTS</impress_unlock_highlights>
         <draw_unlock_highlights desc=\"Short note about Draw benefits of unlocking\" default=\"$DRAW_UNLOCK_HIGHLIGHTS\">$DRAW_UNLOCK_HIGHLIGHTS</draw_unlock_highlights>
+
+        <translations>
+            <!-- Example to add german language for feature lock dialog -->
+            <!--
+            <language name=\"de\">
+                <unlock_title desc=\"Title to show user when prompting the unlock popup\" default=\"Entfesseln Sie Ihr Potenzial\">Entfesseln Sie Ihr Potenzial</unlock_title>
+                <unlock_description desc=\"Description about unlocking features\" default=\"Gehen Sie zur Detailseite und entdecken Sie alle Funktionen:\">Gehen Sie zur Detailseite und entdecken Sie alle Funktionen:</unlock_description>
+                <writer_unlock_highlights desc=\"Short note about Writer benefits of unlocking\" default=\"Überprüfen und schreiben Sie mit Leichtigkeit\">Überprüfen und schreiben Sie mit Leichtigkeit</writer_unlock_highlights>
+                <calc_unlock_highlights desc=\"Short note about Calc benefits of unlocking\" default=\"Machen Sie sich ein besseres Bild von Ihren Daten\">Machen Sie sich ein besseres Bild von Ihren Daten</calc_unlock_highlights>
+                <impress_unlock_highlights desc=\"Short note about Impress benefits of unlocking\" default=\"Bringen Sie Ihre nächste Präsentation auf den Punkt\">Bringen Sie Ihre nächste Präsentation auf den Punkt</impress_unlock_highlights>
+                <draw_unlock_highlights desc=\"Short note about Draw benefits of unlocking\" default=\"Zeichne und organisiere dich\">Zeichne und organisiere dich</draw_unlock_highlights>
+            </language>
+            -->
+        </translations>
     </feature_lock>"
 fi
 
 AC_SUBST(LOCK_CONFIGURATION)
 AM_SUBST_NOTMAKE(LOCK_CONFIGURATION)
+
+UNLOCK_LINK_PER_HOST=
+if test "$enable_feature_lock" = "yes"; then
+    UNLOCK_LINK_PER_HOST="<unlock_link desc=\"Link from where user can unlock the features, which will get mapped with alias_group. According to hostname coolwsd will set the unlock link for feature unlock dialog. If not specified it will fallback to feature_lock.unlock_link entry\" default=\"\"></unlock_link>"
+fi
+
+AC_SUBST(UNLOCK_LINK_PER_HOST)
+AM_SUBST_NOTMAKE(UNLOCK_LINK_PER_HOST)
 
 AS_IF([test "$enable_feature_restriction" = "yes"],
     [AC_DEFINE([ENABLE_FEATURE_RESTRICTION],1,[Whether to compile and enable feature restrictions])])
@@ -1562,6 +1607,7 @@ Configuration:
     Browsersync               $browsersync_msg
     cypress                   $cypress_msg
     C++ compiler flags        $CXXFLAGS
+    Code-Coverage             $coverage_msg
 
     \$ make # to compile"
 if test -n "$with_lo_path"; then

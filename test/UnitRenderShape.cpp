@@ -17,8 +17,6 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
-class COOLWebSocket;
-
 namespace
 {
 /**
@@ -89,8 +87,11 @@ UnitBase::TestResult UnitRenderShape::testRenderShapeSelectionImpress()
         std::string documentPath, documentURL;
         helpers::getDocumentPathAndURL("shapes.odp", documentPath, documentURL, testname);
 
-        std::shared_ptr<COOLWebSocket> socket = helpers::loadDocAndGetSocket(
-            Poco::URI(helpers::getTestServerURI()), documentURL, testname);
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("RenderShapePoll");
+        socketPoll->startThread();
+
+        std::shared_ptr<http::WebSocketSession> socket = helpers::loadDocAndGetSession(
+            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
 
         int major = 0;
         int minor = 0;
@@ -131,8 +132,11 @@ UnitBase::TestResult UnitRenderShape::testRenderShapeSelectionWriterImage()
         std::string documentPath, documentURL;
         helpers::getDocumentPathAndURL("non-shape-image.odt", documentPath, documentURL, testname);
 
-        std::shared_ptr<COOLWebSocket> socket = helpers::loadDocAndGetSocket(
-            Poco::URI(helpers::getTestServerURI()), documentURL, testname);
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("RenderShapePoll");
+        socketPoll->startThread();
+
+        std::shared_ptr<http::WebSocketSession> socket = helpers::loadDocAndGetSession(
+            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
 
         // Select the shape with SHIFT + F4
         helpers::sendKeyPress(socket, 0, 771 | helpers::SpecialKey::skShift, testname);

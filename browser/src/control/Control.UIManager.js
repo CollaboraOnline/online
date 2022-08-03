@@ -9,6 +9,7 @@ L.Control.UIManager = L.Control.extend({
 	mobileWizard: null,
 	blockedUI: false,
 	busyPopupTimer: null,
+	customButtons: [], // added by WOPI InsertButton
 
 	onAdd: function (map) {
 		this.map = map;
@@ -165,6 +166,7 @@ L.Control.UIManager = L.Control.extend({
 			var formulabar = L.control.formulaBarJSDialog();
 			this.map.formulabar = formulabar;
 			this.map.addControl(formulabar);
+			$('#toolbar-wrapper').addClass('spreadsheet');
 
 			// remove unused elements
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
@@ -337,6 +339,7 @@ L.Control.UIManager = L.Control.extend({
 
 		this.setSavedState('CompactMode', uiMode.mode === 'classic');
 		this.initializeSidebar();
+		this.insertCustomButtons();
 	},
 
 	// UI modification
@@ -380,11 +383,30 @@ L.Control.UIManager = L.Control.extend({
 		}
 	},
 
+	// called by the WOPI API to register new custom button
 	insertButton: function(button) {
+		for (var i in this.customButtons) {
+			var item = this.customButtons[i];
+			if (item.id === button.id)
+				return;
+		}
+
+		this.customButtons.push(button);
+		this.insertCustomButton(button);
+	},
+
+	// insert custom button to the current UI
+	insertCustomButton: function(button) {
 		if (!this.notebookbar)
 			this.insertButtonToClassicToolbar(button);
 		else
 			this.notebookbar.insertButtonToShortcuts(button);
+	},
+
+	// add all custom buttons to the current UI - on view mode change
+	insertCustomButtons: function() {
+		for (var i in this.customButtons)
+			this.insertCustomButton(this.customButtons[i]);
 	},
 
 	showButtonInClassicToolbar: function(buttonId, show) {

@@ -17,8 +17,6 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
-class COOLWebSocket;
-
 /// Paste testcase.
 class UnitPaste : public UnitWSD
 {
@@ -37,8 +35,12 @@ void UnitPaste::invokeWSDTest()
     std::string documentPath;
     std::string documentURL;
     helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
-    std::shared_ptr<COOLWebSocket> socket = helpers::loadDocAndGetSocket(
-        Poco::URI(helpers::getTestServerURI()), documentURL, testname);
+
+    std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("PastePoll");
+    socketPoll->startThread();
+
+    std::shared_ptr<http::WebSocketSession> socket = helpers::loadDocAndGetSession(
+        socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
 
     for (int i = 0; i < 5; ++i)
     {

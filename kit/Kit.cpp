@@ -44,6 +44,7 @@
 #include <string>
 #include <sstream>
 #include <thread>
+#include <mutex>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
@@ -163,7 +164,7 @@ namespace
     };
     LinkOrCopyType linkOrCopyType;
     std::string sourceForLinkOrCopy;
-    Path destinationForLinkOrCopy;
+    Poco::Path destinationForLinkOrCopy;
     bool forceInitialCopy; // some stackable file-systems have very slow first hard link creation
     std::string linkableForLinkOrCopy; // Place to stash copies that we can hard-link from
     std::chrono::time_point<std::chrono::steady_clock> linkOrCopyStartTime;
@@ -351,8 +352,7 @@ namespace
         if (!FileUtil::copy(fpath, newPath.c_str(), /*log=*/false, /*throw_on_error=*/false))
         {
             LOG_FTL("Failed to copy or link [" << fpath << "] to [" << newPath << "]. Exiting.");
-            Log::shutdown();
-            std::_Exit(EX_SOFTWARE);
+            Util::forcedExit(EX_SOFTWARE);
         }
     }
 
@@ -382,13 +382,13 @@ namespace
 
         assert(fpath[strlen(sourceForLinkOrCopy.c_str())] == '/');
         const char *relativeOldPath = fpath + strlen(sourceForLinkOrCopy.c_str()) + 1;
-        const Path newPath(destinationForLinkOrCopy, Path(relativeOldPath));
+        const Poco::Path newPath(destinationForLinkOrCopy, Poco::Path(relativeOldPath));
 
         switch (typeflag)
         {
         case FTW_F:
         case FTW_SLN:
-            File(newPath.parent()).createDirectories();
+            Poco::File(newPath.parent()).createDirectories();
 
             if (shouldLinkFile(relativeOldPath))
                 linkOrCopyFile(fpath, newPath.toString());
@@ -406,7 +406,8 @@ namespace
                     LOG_TRC("nftw: Skipping redundant path: " << relativeOldPath);
                     return FTW_SKIP_SUBTREE;
                 }
-                File(newPath).createDirectories();
+
+                Poco::File(newPath).createDirectories();
                 struct utimbuf ut;
                 ut.actime = st.st_atime;
                 ut.modtime = st.st_mtime;
@@ -420,20 +421,19 @@ namespace
         case FTW_SL:
             {
                 const std::size_t size = sb->st_size;
-                char target[size + 1];
-                const ssize_t written = readlink(fpath, target, size);
+                std::vector<char> target(size + 1);
+                const ssize_t written = readlink(fpath, target.data(), size);
                 if (written <= 0 || static_cast<std::size_t>(written) > size)
                 {
                     LOG_SYS("nftw: readlink(\"" << fpath << "\") failed");
-                    Log::shutdown();
-                    std::_Exit(EX_SOFTWARE);
+                    Util::forcedExit(EX_SOFTWARE);
                 }
                 target[written] = '\0';
 
-                File(newPath.parent()).createDirectories();
-                if (symlink(target, newPath.toString().c_str()) == -1)
+                Poco::File(newPath.parent()).createDirectories();
+                if (symlink(target.data(), newPath.toString().c_str()) == -1)
                 {
-                    LOG_SYS("nftw: symlink(\"" << target << "\", \"" << newPath.toString()
+                    LOG_SYS("nftw: symlink(\"" << target.data() << "\", \"" << newPath.toString()
                                                << "\") failed");
                     return FTW_STOP;
                 }
@@ -455,7 +455,7 @@ namespace
     }
 
     void linkOrCopy(std::string source,
-                    const Path& destination,
+                    const Poco::Path& destination,
                     std::string linkable,
                     LinkOrCopyType type)
     {
@@ -499,6 +499,104 @@ namespace
         }
     }
 
+#if CODE_COVERAGE
+    std::string childRootForGCDAFiles;
+    std::string sourceForGCDAFiles;
+    std::string destForGCDAFiles;
+
+    int linkGCDAFilesFunction(const char* fpath, const struct stat*, int typeflag,
+                              struct FTW* /*ftwbuf*/)
+    {
+        if (strcmp(fpath, sourceForGCDAFiles.c_str()) == 0)
+        {
+            LOG_TRC("nftw: Skipping redundant path: " << fpath);
+            return FTW_CONTINUE;
+        }
+
+        if (Util::startsWith(fpath, childRootForGCDAFiles))
+        {
+            LOG_TRC("nftw: Skipping childRoot subtree: " << fpath);
+            return FTW_SKIP_SUBTREE;
+        }
+
+        assert(fpath[strlen(sourceForGCDAFiles.c_str())] == '/');
+        const char* relativeOldPath = fpath + strlen(sourceForGCDAFiles.c_str()) + 1;
+        const Poco::Path newPath(destForGCDAFiles, Poco::Path(relativeOldPath));
+
+        switch (typeflag)
+        {
+            case FTW_F:
+            case FTW_SLN:
+            {
+                const char* dot = strrchr(relativeOldPath, '.');
+                if (dot && !strcmp(dot, ".gcda"))
+                {
+                    Poco::File(newPath.parent()).createDirectories();
+                    if (link(fpath, newPath.toString().c_str()) != 0)
+                    {
+                        LOG_SYS("nftw: Failed to link [" << fpath << "] -> [" << newPath.toString()
+                                                         << ']');
+                    }
+                }
+            }
+            break;
+            case FTW_D:
+            case FTW_SL:
+                break;
+            case FTW_DNR:
+                LOG_ERR("nftw: Cannot read directory '" << fpath << '\'');
+                break;
+            case FTW_NS:
+                LOG_ERR("nftw: stat failed for '" << fpath << '\'');
+                break;
+            default:
+                LOG_FTL("nftw: unexpected typeflag: '" << typeflag);
+                assert(!"nftw: unexpected typeflag.");
+                break;
+        }
+
+        return FTW_CONTINUE;
+    }
+
+    /// Link .gcda (gcov) files from the src directory into the jail.
+    /// We need this so we can easily extract the profile data from within
+    /// the jail. Otherwise, we lose coverage info of the kit process.
+    void linkGCDAFiles(const std::string& destPath)
+    {
+        Poco::Path sourcePathInJail(destPath);
+        const auto sourcePath = std::string(DEBUG_ABSSRCDIR);
+        sourcePathInJail.append(sourcePath);
+        Poco::File(sourcePathInJail).createDirectories();
+        LOG_INF("Linking .gcda files from " << sourcePath << " -> " << sourcePathInJail.toString());
+
+        const auto childRootPtr = std::getenv("BASE_CHILD_ROOT");
+        if (childRootPtr == nullptr || strlen(childRootPtr) == 0)
+        {
+            LOG_ERR("Cannot collect code-coverage stats for the Kit processes. BASE_CHILD_ROOT "
+                    "envar missing.");
+            return;
+        }
+
+        // Trim the trailing /.
+        const std::string childRoot = childRootPtr;
+        const size_t last = childRoot.find_last_not_of('/');
+        if (last != std::string::npos)
+            childRootForGCDAFiles = childRoot.substr(0, last + 1);
+        else
+            childRootForGCDAFiles = childRoot;
+
+        sourceForGCDAFiles = sourcePath;
+        destForGCDAFiles = sourcePathInJail.toString() + '/';
+        LOG_INF("nftw .gcda files from " << sourceForGCDAFiles << " -> " << destForGCDAFiles << " ("
+                                         << childRootForGCDAFiles << ')');
+
+        if (nftw(sourcePath.c_str(), linkGCDAFilesFunction, 10, FTW_ACTIONRETVAL | FTW_PHYS) == -1)
+        {
+            LOG_ERR("linkGCDAFiles: nftw() failed for '" << sourcePath << '\'');
+        }
+    }
+#endif
+
 #ifndef __FreeBSD__
     void dropCapability(cap_value_t capability)
     {
@@ -509,8 +607,7 @@ namespace
         if (caps == nullptr)
         {
             LOG_SFL("cap_get_proc() failed");
-            Log::shutdown();
-            std::_Exit(1);
+            Util::forcedExit(EX_SOFTWARE);
         }
 
         char *capText = cap_to_text(caps, nullptr);
@@ -521,15 +618,13 @@ namespace
             cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
         {
             LOG_SFL("cap_set_flag() failed");
-            Log::shutdown();
-            std::_Exit(1);
+            Util::forcedExit(EX_SOFTWARE);
         }
 
         if (cap_set_proc(caps) == -1)
         {
             LOG_SFL("cap_set_proc() failed");
-            Log::shutdown();
-            std::_Exit(1);
+            Util::forcedExit(EX_SOFTWARE);
         }
 
         capText = cap_to_text(caps, nullptr);
@@ -539,10 +634,10 @@ namespace
         cap_free(caps);
     }
 #endif // __FreeBSD__
-#endif
-}
+#endif // BUILDING_TESTS
+} // namespace
 
-#endif
+#endif // !MOBILEAPP
 
 /// A document container.
 /// Owns LOKitDocument instance and connections.
@@ -615,6 +710,7 @@ public:
 #ifdef IOS
         DocumentData::deallocate(_mobileAppDocId);
 #endif
+
     }
 
     const std::string& getUrl() const { return _url; }
@@ -702,8 +798,7 @@ public:
             {
                 LOG_FTL("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
                 flushTraceEventRecordings();
-                Log::shutdown();
-                std::_Exit(EX_OK);
+                Util::forcedExit(EX_OK);
             }
 #endif
         }
@@ -1068,8 +1163,7 @@ private:
             {
                 LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
                 flushTraceEventRecordings();
-                Log::shutdown();
-                std::_Exit(EX_OK);
+                Util::forcedExit(EX_OK);
             }
 #endif
             LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, but has " <<
@@ -1701,8 +1795,7 @@ public:
             LOG_FTL("drainQueue: Exception: " << exc.what());
 #if !MOBILEAPP
             flushTraceEventRecordings();
-            Log::shutdown();
-            std::_Exit(EX_SOFTWARE);
+            Util::forcedExit(EX_SOFTWARE);
 #endif
         }
         catch (...)
@@ -1710,8 +1803,7 @@ public:
             LOG_FTL("drainQueue: Unknown exception");
 #if !MOBILEAPP
             flushTraceEventRecordings();
-            Log::shutdown();
-            std::_Exit(EX_SOFTWARE);
+            Util::forcedExit(EX_SOFTWARE);
 #endif
         }
     }
@@ -1814,6 +1906,13 @@ public:
                 << " readOnly: " << it.second.isReadOnly();
         }
         oss << "\n";
+
+        char *pState = nullptr;
+        _loKit->dumpState("", &pState);
+        oss << "lok state:\n";
+        if (pState)
+            oss << pState;
+        oss << "\n";
     }
 
 private:
@@ -1873,31 +1972,39 @@ private:
 // Protected::emitOneRecording() there gets used. When building the unit tests the one in
 // TraceEvent.cpp gets used.
 
-static constexpr int traceEventRecordingsCapacity = 100;
-static std::vector<std::string> traceEventRecordings;
+static std::mutex traceEventLock;
+static std::vector<std::string> traceEventRecords[2];
 
 static void flushTraceEventRecordings()
 {
-    if (traceEventRecordings.size() == 0)
-        return;
+    std::unique_lock<std::mutex> lock(traceEventLock);
 
-    std::size_t totalLength = 0;
-    for (const auto& i: traceEventRecordings)
-        totalLength += i.length();
+    for (size_t n = 0; n < 2; ++n)
+    {
+        std::vector<std::string> &r = traceEventRecords[n];
 
-    std::string recordings;
-    recordings.reserve(totalLength);
+        if (r.size() == 0)
+            return;
 
-    for (const auto& i: traceEventRecordings)
-        recordings += i;
+        std::size_t totalLength = 0;
+        for (const auto& i: r)
+            totalLength += i.length();
 
-    singletonDocument->sendTextFrame("traceevent: \n" + recordings);
-    traceEventRecordings.clear();
+        std::string recordings;
+        recordings.reserve(totalLength);
+
+        for (const auto& i: r)
+            recordings += i;
+
+        std::string name = "forcetraceevent: \n";
+        if (n == 1 )
+            name = "traceevent: \n";
+        singletonDocument->sendTextFrame(name + recordings);
+        r.clear();
+    }
 }
 
-// The checks for singletonDocument below are to catch if this gets called in the ForKit process.
-
-void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
+static void addRecording(const std::string &recording, bool force)
 {
     // This can be called before the config system is initialized. Guard against that, as calling
     // config::getBool() would cause an assertion failure.
@@ -1913,29 +2020,26 @@ void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
     if (configChecked && !traceEventsEnabled)
         return;
 
+    // catch if this gets called in the ForKit process & skip.
     if (singletonDocument == nullptr)
         return;
 
-    singletonDocument->sendTextFrame("forcedtraceevent: \n" + recording);
+    if (!TraceEvent::isRecordingOn() && !force)
+        return;
+
+    std::unique_lock<std::mutex> lock(traceEventLock);
+
+    traceEventRecords[force ? 0 : 1].push_back(recording + "\n");
+}
+
+void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
+{
+    addRecording(recording, true);
 }
 
 void TraceEvent::emitOneRecording(const std::string &recording)
 {
-    static const bool traceEventsEnabled = config::getBool("trace_event[@enable]", false);
-    if (!traceEventsEnabled)
-        return;
-
-    if (!TraceEvent::isRecordingOn())
-        return;
-
-    if (singletonDocument == nullptr)
-        return;
-
-    if (traceEventRecordings.size() >= traceEventRecordingsCapacity)
-        flushTraceEventRecordings();
-    else if (traceEventRecordings.size() == 0 && traceEventRecordings.capacity() < traceEventRecordingsCapacity)
-        traceEventRecordings.reserve(traceEventRecordingsCapacity);
-    traceEventRecordings.emplace_back(recording + "\n");
+    addRecording(recording, false);
 }
 
 #elif !MOBILEAPP
@@ -2091,6 +2195,8 @@ public:
         drainQueue();
 
 #if !MOBILEAPP
+        flushTraceEventRecordings();
+
         if (_document && _document->purgeSessions() == 0)
         {
             LOG_INF("Last session discarded. Setting TerminationFlag");
@@ -2157,6 +2263,7 @@ class KitWebSocketHandler final : public WebSocketHandler
     std::string _socketName;
     std::shared_ptr<lok::Office> _loKit;
     std::string _jailId;
+    std::string _docKey; //< When we get it while creating a new view.
     std::shared_ptr<Document> _document;
     std::shared_ptr<KitSocketPoll> _ksPoll;
     const unsigned _mobileAppDocId;
@@ -2218,14 +2325,14 @@ protected:
         else if (tokens.equals(0, "session"))
         {
             const std::string& sessionId = tokens[1];
-            const std::string& docKey = tokens[2];
+            _docKey = tokens[2];
             const std::string& docId = tokens[3];
             const int canonicalViewId = std::stoi(tokens[4]);
-            const std::string fileId = Util::getFilenameFromURL(docKey);
+            const std::string fileId = Util::getFilenameFromURL(_docKey);
             Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 
             std::string url;
-            URI::decode(docKey, url);
+            URI::decode(_docKey, url);
             LOG_INF("New session [" << sessionId << "] request on url [" << url << "] with viewId " << canonicalViewId);
 #ifndef IOS
             Util::setThreadName("kit" SHARED_DOC_THREADNAME_SUFFIX + docId);
@@ -2233,7 +2340,7 @@ protected:
             if (!_document)
             {
                 _document = std::make_shared<Document>(
-                    _loKit, _jailId, docKey, docId, url, _queue,
+                    _loKit, _jailId, _docKey, docId, url, _queue,
                     std::static_pointer_cast<WebSocketHandler>(shared_from_this()),
                     _mobileAppDocId);
                 _ksPoll->setDocument(_document);
@@ -2262,8 +2369,7 @@ protected:
 #if !MOBILEAPP
             LOG_INF("Terminating immediately due to parent 'exit' command.");
             flushTraceEventRecordings();
-            Log::shutdown();
-            std::_Exit(EX_SOFTWARE);
+            Util::forcedExit(EX_SOFTWARE);
 #else
 #ifdef IOS
             LOG_INF("Setting our KitSocketPoll's termination flag due to 'exit' command.");
@@ -2326,7 +2432,10 @@ protected:
     void onDisconnect() override
     {
 #if !MOBILEAPP
-        LOG_ERR("Kit connection lost without exit arriving from wsd. Setting TerminationFlag");
+        //FIXME: We could try to recover.
+        LOG_ERR("Kit for DocBroker ["
+                << _docKey
+                << "] connection lost without exit arriving from wsd. Setting TerminationFlag");
         SigUtil::setTerminationFlag();
 #endif
 #ifdef IOS
@@ -2454,7 +2563,6 @@ void lokit_main(
                 const std::string& jailId,
                 const std::string& sysTemplate,
                 const std::string& loTemplate,
-                const std::string& loSubPath,
                 bool noCapabilities,
                 bool noSeccomp,
                 bool queryVersion,
@@ -2469,7 +2577,7 @@ void lokit_main(
 #if !MOBILEAPP
 
     SigUtil::setFatalSignals("kit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
-    SigUtil::setTerminationSignals();
+    SigUtil::setUserSignals();
 
     Util::setThreadName("kit_spare_" + Util::encodeId(numericIdentifier, 3));
 
@@ -2506,7 +2614,6 @@ void lokit_main(
     assert(!childRoot.empty());
     assert(!sysTemplate.empty());
     assert(!loTemplate.empty());
-    assert(!loSubPath.empty());
 
     LOG_INF("Kit process for Jail [" << jailId << "] started.");
 
@@ -2536,9 +2643,9 @@ void lokit_main(
                 = std::chrono::steady_clock::now();
 
             userdir_url = "file:///tmp/user";
-            instdir_path = '/' + loSubPath + "/program";
+            instdir_path = '/' + std::string(JailUtil::LO_JAIL_SUBPATH) + "/program";
 
-            Poco::Path jailLOInstallation(jailPath, loSubPath);
+            Poco::Path jailLOInstallation(jailPath, JailUtil::LO_JAIL_SUBPATH);
             jailLOInstallation.makeDirectory();
             const std::string loJailDestPath = jailLOInstallation.toString();
 
@@ -2586,6 +2693,12 @@ void lokit_main(
             bool bindMount = JailUtil::isBindMountingEnabled();
             if (bindMount)
             {
+#if CODE_COVERAGE
+                // Code coverage is not supported with bind-mounting.
+                LOG_ERR("Mounting is not compatible with code-coverage.");
+                assert(!"Mounting is not compatible with code-coverage.");
+#endif // CODE_COVERAGE
+
                 if (!mountJail())
                 {
                     LOG_INF("Cleaning up jail before linking/copying.");
@@ -2600,11 +2713,19 @@ void lokit_main(
                 LOG_INF("Mounting is disabled, will link/copy " << sysTemplate << " -> "
                                                                 << jailPathStr);
 
+                // Create a file to mark this a copied jail.
+                JailUtil::markJailCopied(jailPathStr);
+
                 const std::string linkablePath = childRoot + "/linkable";
 
                 linkOrCopy(sysTemplate, jailPath, linkablePath, LinkOrCopyType::All);
 
                 linkOrCopy(loTemplate, loJailDestPath, linkablePath, LinkOrCopyType::LO);
+
+#if CODE_COVERAGE
+                // Link the .gcda files.
+                linkGCDAFiles(jailPathStr);
+#endif
 
                 // Update the dynamic files inside the jail.
                 if (!JailUtil::SysTemplate::updateDynamicFiles(jailPathStr))
@@ -2616,9 +2737,6 @@ void lokit_main(
                            "read-only, running the installation scripts with the owner's account "
                            "should update these files. Some functionality may be missing.");
                 }
-
-                // Create a file to mark this a copied jail.
-                JailUtil::markJailCopied(jailPathStr);
             }
 
             // Setup the devices inside /tmp and set TMPDIR.
@@ -2644,15 +2762,13 @@ void lokit_main(
             if (chroot(jailPathStr.c_str()) == -1)
             {
                 LOG_SFL("chroot(\"" << jailPathStr << "\") failed");
-                Log::shutdown();
-                std::_Exit(EX_SOFTWARE);
+                Util::forcedExit(EX_SOFTWARE);
             }
 
             if (chdir("/") == -1)
             {
                 LOG_SFL("chdir(\"/\") in jail failed");
-                Log::shutdown();
-                std::_Exit(EX_SOFTWARE);
+                Util::forcedExit(EX_SOFTWARE);
             }
 
 #ifndef __FreeBSD__
@@ -2696,8 +2812,7 @@ void lokit_main(
             if (!loKit)
             {
                 LOG_FTL("LibreOfficeKit initialization failed. Exiting.");
-                Log::shutdown();
-                std::_Exit(EX_SOFTWARE);
+                Util::forcedExit(EX_SOFTWARE);
             }
         }
 
@@ -2707,8 +2822,7 @@ void lokit_main(
             if (!noSeccomp)
             {
                 LOG_FTL("LibreOfficeKit seccomp security lockdown failed. Exiting.");
-                Log::shutdown();
-                std::_Exit(EX_SOFTWARE);
+                Util::forcedExit(EX_SOFTWARE);
             }
 
             LOG_ERR("LibreOfficeKit seccomp security lockdown failed, but configured to continue. "
@@ -2832,10 +2946,11 @@ void lokit_main(
         {
             LOG_FTL("Kit is missing Unipoll API");
             std::cout << "Fatal: out of date LibreOfficeKit - no Unipoll API\n";
-            std::_Exit(EX_SOFTWARE);
+            Util::forcedExit(EX_SOFTWARE);
         }
 
         LOG_INF("Kit unipoll loop run");
+
         loKit->runLoop(pollCallback, wakeCallback, mainKit.get());
 
         LOG_INF("Kit unipoll loop run terminated.");
@@ -2846,7 +2961,6 @@ void lokit_main(
         // Trap the signal handler, if invoked,
         // to prevent exiting.
         LOG_INF("Kit process for Jail [" << jailId << "] finished.");
-        Log::shutdown();
 
         // Let forkit handle the jail cleanup.
 #endif
@@ -2870,10 +2984,9 @@ void lokit_main(
 
     LOG_INF("Kit process for Jail [" << jailId << "] finished.");
     flushTraceEventRecordings();
-    Log::shutdown();
     // Wait for the signal handler, if invoked, to prevent exiting until done.
     SigUtil::waitSigHandlerTrap();
-    std::_Exit(EX_OK);
+    Util::forcedExit(EX_OK);
 
 #endif
 }
@@ -2963,6 +3076,7 @@ bool globalPreinit(const std::string &loTemplate)
         LOG_FTL("No lok_preinit_2 symbol in " << loadedLibrary << ": " << dlerror());
         return false;
     }
+
     initFunction = reinterpret_cast<LokHookFunction2 *>(dlsym(handle, "libreofficekit_hook_2"));
     if (!initFunction)
     {

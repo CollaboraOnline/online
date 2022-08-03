@@ -23,63 +23,63 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
 # 'Finished in' in the `make check` output.
 # When adding new tests, please maintain order.
 all_la_unit_tests = \
-	unit-wopi-async-slow.la \
-	unit-tiletest.la \
-	unit-each-view.la \
-	unit-httpws.la \
+	unit-wopi-stuck-save.la \
 	unit-insert-delete.la \
-	unit-uno-command.la \
-	unit-wopi-fail-upload.la \
-	unit-wopi-documentconflict.la \
-	unit-load-torture.la \
-	unit-wopi-save-on-exit.la \
-	unit-crash.la \
-	unit-integration.la \
-	unit-close.la \
-	unit-calc.la \
+	unit-tiletest.la \
+	unit-httpws.la \
 	unit-password-protected.la \
+	unit-wopi-fail-upload.la \
+	unit-wopi-ownertermination.la \
+	unit-crash.la \
+	unit-wopi-save-on-exit.la \
+	unit-wopi-documentconflict.la \
 	unit-wopi-fileurl.la \
+	unit-each-view.la \
+	unit-close.la \
+	unit-integration.la \
+	unit-uno-command.la \
+	unit-load-torture.la \
 	unit-copy-paste.la \
-	unit-http.la \
 	unit-wopi-async-upload-modify.la \
+	unit-http.la \
 	unit-wopi-temp.la \
-	unit-cursor.la \
-	unit-session.la \
-	unit-wopi-languages.la \
-	unit-render-shape.la \
-	unit-wopi-versionrestore.la \
 	unit-wopi-async-upload-close.la \
 	unit-wopi.la \
-	unit-render-search-result.la \
-	unit-tiff-load.la \
+	unit-storage.la \
+	unit-wopi-saveas-with-encoded-file-name.la \
+	unit_wopi_watermark.la \
+	unit-wopi-crash-modified.la \
+	unit-oauth.la \
+	unit-wopi-saveas.la \
+	unit-calc.la \
+	unit-wopi-languages.la \
+	unit-wopi-versionrestore.la \
 	unit_wopi_renamefile.la \
 	unit-wopi-async-upload-modifyclose.la \
 	unit-convert.la \
-	unit-storage.la \
-	unit-wopi-stuck-save.la \
 	unit-rendering-options.la \
 	unit-paste.la \
 	unit-large-paste.la \
-	unit_wopi_watermark.la \
-	unit-wopi-saveas-with-encoded-file-name.la \
-	unit-wopi-saveas.la \
-	unit-wopi-crash-modified.la \
 	unit-typing.la \
 	unit-wopi-httpredirectloop.la \
-	unit-wopi-httpredirect.la \
-	unit-wopi-loadencoded.la \
+	unit-render-shape.la \
+	unit-cursor.la \
+	unit-session.la \
+	unit-wopi-httpheaders.la \
 	unit-load.la \
 	unit-wopi-lock.la \
-	unit-oauth.la \
-	unit-wopi-httpheaders.la \
-	unit-wopi-ownertermination.la \
+	unit-wopi-httpredirect.la \
+	unit-wopi-loadencoded.la \
 	unit-prefork.la \
-	unit-hosting.la \
+	unit-wopi-async-slow.la \
+	unit-render-search-result.la \
+	unit-tiff-load.la \
 	unit-bad-doc-load.la \
-	unit-tilecache.la \
+	unit-hosting.la \
 	unit-timeout.la \
 	unit-base.la
 #	unit-admin.la
+#	unit-tilecache.la # Empty test.
 
 if ENABLE_LIBFUZZER
 all_la_unit_tests += unit-fuzz.la
@@ -194,7 +194,8 @@ unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_prefork_la_SOURCES = UnitPrefork.cpp
 unit_storage_la_SOURCES = UnitStorage.cpp
 unit_storage_la_LIBADD = $(CPPUNIT_LIBS)
-unit_tilecache_la_SOURCES = UnitTileCache.cpp
+# unit_tilecache_la_SOURCES = UnitTileCache.cpp
+# unit_tilecache_la_LIBADD = $(CPPUNIT_LIBS)
 unit_oauth_la_SOURCES = UnitOAuth.cpp
 unit_oauth_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_la_SOURCES = UnitWOPI.cpp

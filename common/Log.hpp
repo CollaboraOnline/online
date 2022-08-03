@@ -74,13 +74,6 @@ namespace Log
 
     const std::string& getLevel();
 
-    /// Signal safe prefix logging
-    void signalLogPrefix();
-    /// Signal safe logging
-    void signalLog(const char* message);
-    /// Signal log number
-    void signalLogNumber(std::size_t num, int base = 10);
-
     /// The following is to write streaming logs.
     /// Log::info() << "Value: 0x" << std::hex << value
     ///             << ", pointer: " << this << Log::end;

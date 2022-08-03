@@ -37,8 +37,13 @@ struct TileLocation {
     }
     size_t hash() const
     {
-        return (_left << 20) ^ _top ^ (_part << 15) ^ (_size << 7) ^
-               (_canonicalViewId << 24);
+        size_t left = _left;
+        size_t top = _top;
+        size_t part = _part;
+        size_t size = _size;
+        size_t canonicalViewId = _canonicalViewId;
+        return (left << 20) ^ top ^ (part << 15) ^ (size << 7) ^
+               (canonicalViewId << 24);
     }
     bool operator==(const TileLocation& other) const
     {
@@ -462,7 +467,7 @@ class DeltaGenerator {
     /// Adapts cache sizing to the number of sessions
     void setSessionCount(size_t count)
     {
-        rebalanceDeltas(std::min(count, size_t(1)) * 24);
+        rebalanceDeltas(std::max(count, size_t(1)) * 24);
     }
 
     void dumpState(std::ostream& oss)

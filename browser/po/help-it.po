@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-27 17:25+0200\n"
-"PO-Revision-Date: 2020-10-16 03:24+0000\n"
-"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"POT-Creation-Date: 2022-07-26 10:50+0200\n"
+"PO-Revision-Date: 2022-06-29 12:18+0000\n"
+"Last-Translator: AbsurdUsername <sgso@pm.me>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
 "help/it/>\n"
 "Language: it\n"
@@ -785,15 +785,14 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
 "Inserisce una tabulazione (solo nelle tabelle). A seconda del gestore "
-"finestre in uso, potrebbe essere usato Alt</kbd><span class=\"kbd--plus\""
-">+</span><kbd>Tab."
+"finestre in uso, potrebbe essere usato al suo posto <kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Tab</kbd>."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
@@ -848,29 +847,27 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ins"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
-"Tre secondi in modo inserimento, il tasto freccia inserisce una riga/"
-"colonna, Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>tasto freccia "
-"inserisce una cella"
+"Tre secondi in modalità inserimento, il tasto freccia inserisce una riga/"
+"colonna, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>tasto "
+"freccia</kbd> inserisce una cella"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Canc"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"Tre secondi in modo eliminazione, il tasto freccia elimina una riga/colonna, "
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>tasto freccia unisce celle "
-"adiacenti"
+"Tre secondi in modalità eliminazione, il tasto freccia elimina una riga/"
+"colonna, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>tasto "
+"freccia</kbd> unisce celle adiacenti"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
@@ -1036,42 +1033,45 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Navigazione nei fogli di calcolo"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Sposta il cursore sulla prima cella del foglio (A1)."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "Sposta il cursore sull'ultima cella del foglio che contiene i dati."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:134-18
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "Sposta il cursore sulla prima cella della riga corrente."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:135-18
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "Sposta il cursore sull'ultima cella della riga corrente."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:136-18
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
 msgstr ""
+"Seleziona le celle dalla cella corrente alla prima cella della riga corrente."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
 msgstr ""
+"Seleziona le celle dalla cella corrente all'ultima cella della riga corrente."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
+"Seleziona le celle dalla cella corrente fino a una pagina nella colonna "
+"corrente o estende la selezione esistente di una pagina verso l'alto."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-164
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 msgstr "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>PagSu"
 
@@ -1080,9 +1080,10 @@ msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
+"Seleziona le celle dalla cella corrente fino a una pagina nella colonna "
+"corrente o estende la selezione esistente di una pagina verso il basso."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:139-168
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 msgstr "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>PagGiù"
 
@@ -1092,11 +1093,13 @@ msgid ""
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
+"Sposta il cursore sul bordo sinistro dell'intervallo di dati corrente. Se la "
+"colonna a sinistra della cella che contiene il cursore è vuota, il cursore "
+"si sposta sulla colonna successiva a sinistra che contiene i dati"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:140-245
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Invio"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Freccia a Sinistra"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-18
 msgid ""
@@ -1104,11 +1107,13 @@ msgid ""
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
 msgstr ""
+"Sposta il cursore sul bordo destro dell'intervallo di dati corrente. Se la "
+"colonna a destra della cella che contiene il cursore è vuota, il cursore si "
+"sposta sulla colonna successiva a destra che contiene i dati."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Invio"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Freccia a Destra"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-18
 msgid ""
@@ -1116,11 +1121,13 @@ msgid ""
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
 msgstr ""
+"Sposta il cursore sul bordo superiore dell'intervallo di dati corrente. Se "
+"la riga sopra la cella che contiene il cursore è vuota, il cursore si sposta "
+"fino alla riga successiva che contiene i dati."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-221
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Freccia su"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Freccia Su"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-18
 msgid ""
@@ -1128,11 +1135,13 @@ msgid ""
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
+"Sposta il cursore sul bordo inferiore dell'intervallo di dati corrente. Se "
+"la riga sotto la cella che contiene il cursore è vuota, il cursore si sposta "
+"verso il basso fino alla riga successiva che contiene i dati."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-226
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Invio"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Freccia Giù"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-18
 msgid ""
@@ -1141,33 +1150,34 @@ msgid ""
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
 msgstr ""
+"Seleziona tutte le celle contenenti dati dalla cella corrente alla fine "
+"dell'intervallo continuo di celle di dati, nella direzione della freccia "
+"premuta. Se utilizzato per selezionare righe e colonne insieme, viene "
+"selezionato un intervallo di celle rettangolare."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-272
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Arrow"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
-"kbd--plus\">+</span><kbd>Freccia su"
+"kbd--plus\">+</span><kbd>Freccia"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "Sposta un foglio a sinistra."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-73
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>PagSu"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>PagSu"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "Sposta una pagina dello schermo a destra."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-80
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>PagGiù"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>PagGiù"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-18
 msgid ""
@@ -1175,15 +1185,18 @@ msgid ""
 "sheets in a spreadsheet are selected, this shortcut key combination only "
 "selects the previous sheet. Makes the previous sheet the current sheet."
 msgstr ""
+"Aggiunge il foglio precedente alla selezione corrente dei fogli. Se tutti i "
+"fogli in un foglio di calcolo sono selezionati, questa combinazione di tasti "
+"di scelta rapida seleziona solo il foglio precedente. Rende il foglio "
+"precedente il foglio corrente."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-260
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Up"
 msgstr ""
 "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\""
-"kbd--plus\">+</span><kbd>Canc"
+"kbd--plus\">+</span><kbd>PagSu"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-18
 msgid ""
@@ -1191,15 +1204,18 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
+"Aggiunge il foglio successivo alla selezione corrente dei fogli. Se tutti i "
+"fogli in un foglio di calcolo sono selezionati, questa combinazione di tasti "
+"seleziona solo il foglio successivo. Rende il foglio successivo il foglio "
+"corrente."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-248
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Down"
 msgstr ""
 "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\""
-"kbd--plus\">+</span><kbd>Canc"
+"kbd--plus\">+</span><kbd>PagGiù"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""
@@ -1207,40 +1223,41 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"dove (*) è il segno di moltiplicazione sul tastierino numerico. Seleziona "
+"l'intervallo di dati che contiene il cursore. Un intervallo è un intervallo "
+"di celle contiguo che contiene dati ed è limitato da righe e colonne vuote."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-18
 msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
 msgstr ""
+"dove (/) è il segno di divisione sul tastierino numerico. Seleziona "
+"l'intervallo di formule della matrice che contiene il cursore."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-158
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "Inserisci le celle (come nel menu Inserisci - Celle)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-85
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tasto più"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr ""
+msgstr "Elimina le celle (come nel menu Modifica - Elimina celle)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-90
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Invio"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tasto meno"
 
 #: html/cool-help.html%2Bdiv.div.h2:154-9
 msgid "Cell formatting"
@@ -1375,7 +1392,7 @@ msgstr "Vai e seleziona il testo fino alla fine della casella di testo"
 
 #: html/cool-help.html%2Bdiv.div.h2:226-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "Scorciatoie da tastiera per diapositiva"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:228-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:285-18
@@ -1403,30 +1420,24 @@ msgstr ""
 "Seleziona gli oggetti nell'ordine inverso a quello in cui sono stati creati"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:231-18
-#, fuzzy
 msgid "Move to next text object on slide"
-msgstr ""
-"Sposta al prossimo oggetto di testo sulla diapositiva / pagina di disegno"
+msgstr "Sposta al prossimo oggetto di testo sulla diapositiva"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:232-18
 msgid "Select all in slide"
-msgstr ""
+msgstr "Seleziona tutto nella diapositiva"
 
 #: html/cool-help.html%2Bdiv.div.h2:283-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
-msgstr "Scorciatoie di tastiera per diapositive e pagine di disegno"
+msgstr "Scorciatoie di tastiera per pagine di disegno"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:288-18
-#, fuzzy
 msgid "Move to next text object on drawing page"
-msgstr ""
-"Sposta al prossimo oggetto di testo sulla diapositiva / pagina di disegno"
+msgstr "Sposta al prossimo oggetto di testo sulla pagina di disegno"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:289-18
-#, fuzzy
 msgid "Select all in drawing page"
-msgstr "Seleziona tutto nella diapositiva / pagina di disegno"
+msgstr "Seleziona tutto nella pagina di disegno"
 
 #: html/cool-help.html%2Bdiv.h1:294-5
 msgid "<span class=\"productname\">%productName</span> Help"
@@ -2135,7 +2146,6 @@ msgstr ""
 "Valgono tutte le regole matematiche e le funzioni dei fogli elettronici."
 
 #: html/cool-help.html%2Bdiv.div.p:428-5
-#, fuzzy
 msgid ""
 "The formula language should be extremely familiar to any spreadsheet user, "
 "and is specified in great detail in the <a href=\"https://www.oasis-open.org/"
@@ -2143,9 +2153,10 @@ msgid ""
 "_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
 msgstr ""
 "Il linguaggio delle formule dovrebbe essere familiare a qualsiasi utente che "
-"utilizzi fogli elettronici, ed è specificato in modo molto dettagliato nelle "
-"<a href=\"https://www.oasis-open.org/committees/download.php/16826/"
-"openformula-spec-20060221.html\">specifiche di OASIS OpenFormula</a>."
+"utilizzi fogli di calcolo, ed è specificato in modo molto dettagliato nelle <"
+"a href=\"https://www.oasis-open.org/committees/download.php/16826/"
+"openformula-spec-20060221.html\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">specifiche di OASIS OpenFormula</a>."
 
 #: html/cool-help.html%2Bdiv.div.p:431-5
 msgid ""
@@ -2318,15 +2329,15 @@ msgid ""
 "tables and charts, are similar to a desktop word processor. Use the "
 "keyboard, menus and toolbars to interact with your document."
 msgstr ""
-"<span class=\"productname\">%productName</span> lavora i documenti di testo "
-"allo stesso modo di un documento nel computer. Fornisce un layout WYSIWYG ("
-"What You See Is What You Get, «Quel che vedi è che che ottieni»), che "
-"presenta il documento nell'aspetto col quale verrà stampato. Le operazioni "
-"di digitazione e selezione del testo, copia, taglia e incolla di contenuti, "
-"inserimento, ridimensionamento e ancoraggio delle immagini, aggiunta e "
-"gestione di tabelle e grafici, sono simili a quelle di un elaboratore di "
-"testi desktop. Usa la tastiera, i menu e le barre degli strumenti per "
-"interagire col documento."
+"<span class=\"productname\">%productName</span> modifica i documenti di "
+"testo allo stesso modo di un documento nel computer. Fornisce un layout "
+"WYSIWYG (What You See Is What You Get, «Quel che vedi è ciò che ottieni»), "
+"che presenta il documento nell'aspetto col quale verrà stampato. Le "
+"operazioni di digitazione e selezione del testo, copia, taglia e incolla di "
+"contenuti, inserimento, ridimensionamento e ancoraggio delle immagini, "
+"aggiunta e gestione di tabelle e grafici, sono simili a quelle di un "
+"elaboratore di testi desktop. Usa la tastiera, i menu e le barre degli "
+"strumenti per interagire col documento."
 
 #: html/cool-help.html%2Bdiv.div.p:473-5
 msgid ""
@@ -2975,7 +2986,7 @@ msgstr "Imposta i margini della pagina nella finestra di dialogo."
 msgid "How do I change the page orientation to landscape inside my document"
 msgstr ""
 "Come posso cambiare l'orientazione della pagina in orizzontale nel mio "
-"documento?"
+"documento"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:594-11
 msgid ""

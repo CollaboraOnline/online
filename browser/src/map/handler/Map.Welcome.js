@@ -38,7 +38,7 @@ L.Map.Welcome = L.Handler.extend({
 		var isGuest  = viewInfo && viewInfo.userextrainfo &&
 		    viewInfo.userextrainfo.is_guest;
 
-		if (!isGuest && this.shouldWelcome()) {
+		if (!isGuest && window.autoShowWelcome && this.shouldWelcome()) {
 			this.showWelcomeDialog();
 		}
 	},
@@ -125,7 +125,6 @@ L.Map.Welcome = L.Handler.extend({
 	}
 });
 
-if ((window.enableWelcomeMessage || window.welcomeUrl) && window.isLocalStorageAllowed) {
+if (window.enableWelcomeMessage && window.isLocalStorageAllowed) {
 	L.Map.addInitHook('addHandler', 'welcome', L.Map.Welcome);
 }
-

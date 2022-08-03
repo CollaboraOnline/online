@@ -5,6 +5,9 @@ working docker container with Collabora Online.
 
 Docker image can be built from packages or from source code.
 
+All docker images built from this directory can be run with a TZ environment variable
+to set the server timezone to something other than UTC.
+
 Examples:
 
 1. Build latest CODE based on Ubuntu 18.04 LTS

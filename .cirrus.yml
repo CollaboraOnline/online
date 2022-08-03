@@ -7,7 +7,7 @@ task:
     - sed -i.bak -e 's/quarterly/latest/' /etc/pkg/FreeBSD.conf
     - env ASSUME_ALWAYS_YES=yes pkg update -f
     - env ASSUME_ALWAYS_YES=yes pkg remove -y python27 python2 python37
-    - env ASSUME_ALWAYS_YES=yes pkg install -y python3 python38 py38-polib py38-lxml
+    - env ASSUME_ALWAYS_YES=yes pkg install -y python3 python39 py39-polib py39-lxml
     - env ASSUME_ALWAYS_YES=yes pkg install -y gmake pkgconf poco cppunit autotools coreutils git bash npm png pango
     - mkdir libreoffice-src
     - cd libreoffice-src

@@ -2313,8 +2313,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Remove input help if there is any:
 		this._removeInputHelpMarker();
 
+		var commentHasFocus = app.view.commentHasFocus;
 		// unselect if anything is selected already
-		if (app.sectionContainer.doesSectionExist(L.CSections.CommentList.name)) {
+		if (!commentHasFocus && app.sectionContainer.doesSectionExist(L.CSections.CommentList.name)) {
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).unselect();
 		}
 	},
@@ -3108,7 +3109,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			return false; // Selection doesn't start at first column.
 
 		var rangeEnd = this._getStringPart(startEnd[1]);
-		if (rangeEnd === 'AMJ') // Last column's code.
+		if (rangeEnd === 'XFD') // Last column's code.
 			return true;
 		else
 			return false;

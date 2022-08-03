@@ -7,6 +7,7 @@
 
 #include <config.h>
 
+#include <sysexits.h>
 #include <cstdlib>
 #include <cstring>
 #include <iostream>

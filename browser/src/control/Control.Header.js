@@ -560,7 +560,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 		this._docVisStart = startPx;
 		var endPx = startPx + (this._isColumn === true ? section.size[0]: section.size[1]);
 		var startIdx = this._dimGeom.getIndexFromPos(startPx, 'corepixels');
-		var endIdx = this._dimGeom.getIndexFromPos(endPx - 1, 'corepixels');
+		var endIdx = Math.min(this._dimGeom.getIndexFromPos(endPx - 1, 'corepixels'), 1048576 - 1);
 		this._elements = [];
 
 		var splitPosContext = this._map.getSplitPanesContext();

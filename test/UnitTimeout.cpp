@@ -24,7 +24,7 @@ public:
         : UnitWSD("UnitTimeout")
         , _timedOut(false)
     {
-        setTimeout(std::chrono::milliseconds(10));
+        setTimeout(std::chrono::seconds(1));
     }
 
     virtual void timeout() override

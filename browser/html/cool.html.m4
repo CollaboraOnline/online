@@ -304,6 +304,8 @@ m4_ifelse(MOBILEAPP,[true],
       window.postMessageOriginExt = '';
       window.coolLogging = 'true';
       window.enableWelcomeMessage = false;
+      window.autoShowWelcome = false;
+	  window.autoShowFeedback = true;
       window.outOfFocusTimeoutSecs = 1000000;
       window.idleTimeoutSecs = 1000000;
       window.protocolDebug = false;
@@ -323,6 +325,8 @@ m4_ifelse(MOBILEAPP,[true],
       window.coolLogging = '%BROWSER_LOGGING%';
       window.coolwsdVersion = '%COOLWSD_VERSION%';
       window.enableWelcomeMessage = %ENABLE_WELCOME_MSG%;
+      window.autoShowWelcome = %AUTO_SHOW_WELCOME%;
+      window.autoShowFeedback = %AUTO_SHOW_FEEDBACK%;
       window.userInterfaceMode = '%USER_INTERFACE_MODE%';
       window.useIntegrationTheme = '%USE_INTEGRATION_THEME%';
       window.enableMacrosExecution = '%ENABLE_MACROS_EXECUTION%';
@@ -354,8 +358,8 @@ brandingLink.setAttribute("type", "text/css");
 
 var theme_name = document.getElementsByName("theme")[[0]] ? document.getElementsByName("theme")[[0]].value : '';
 var theme_prefix = '';
-if(window.useIntegrationTheme === 'true' && theme_name.includes("nextcloud")) {
-    theme_prefix = 'nextcloud/';
+if(window.useIntegrationTheme === 'true' && theme_name !== '') {
+    theme_prefix = theme_name + '/';
 }
 
 if (window.mode.isMobile()) {

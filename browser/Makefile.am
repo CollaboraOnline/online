@@ -125,7 +125,6 @@ COOL_CSS_LST =\
 	$(srcdir)/css/color-palette-dark.css \
 	$(srcdir)/css/cool.css \
 	$(srcdir)/css/toolbar.css \
-	$(srcdir)/css/toolbar-mobile.css \
 	$(srcdir)/css/partsPreviewControl.css \
 	$(srcdir)/css/searchControl.css \
 	$(srcdir)/css/impress.css \

@@ -18,4 +18,9 @@
     <string name="edit_copy">Modifica una copia</string>
     <string name="view_only">Visualizza solo</string>
     <string name="restarting">Riavvio…</string>
+    <string name="use_text">Utilizza il formato di testo</string>
+    <string name="use_odf">Utilizza il formato ODF</string>
+    <string name="ask_for_convert_odf">Conferma il formato del file</string>
+    <string name="convert_odf_message">Questo documento può contenere formattazione o contenuto che non può essere salvato nel formato di file attualmente selezionato \"testo\".</string>
+    <string name="cant_open_the_document">Impossibile aprire il documento</string>
 </resources>

@@ -21,7 +21,7 @@
 
 **LibreOffice in the Cloud on your own Terms**
 
-![](https://raw.githubusercontent.com/CollaboraOnline/CollaboraOnline.github.io/source/static/images/homepage-image.jpg)
+![](https://raw.githubusercontent.com/CollaboraOnline/CollaboraOnline.github.io/master/static/images/homepage-image.png)
 
 ## Key features
 * View and edit text documents, spreadsheets, presentations & more
@@ -63,14 +63,14 @@ This project has several components:
 ## Further recommended reading with build details
 
 Please consult the README files in the component's directory for more details:
-- wsd/README
-- browser/README
+- **[wsd/README](wsd)**
+- **[browser/README](browser)**
 
 ## iOS and Android apps
 
 See the corresponding READMEs:
-* **ios/README**
-* **android/README**
+* **[ios/README](ios)**
+* **[android/README](android)**
 
 ## GitPod
 

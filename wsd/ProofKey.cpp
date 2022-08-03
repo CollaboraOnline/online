@@ -184,7 +184,11 @@ std::vector<unsigned char> Proof::RSA2CapiBlob(const std::vector<unsigned char>&
     if (exponent.size() > 4)
         throw ParseError("Proof key public exponent is longer than 4 bytes.");
     // make sure exponent length is correct; assume we are passed big-endian vectors
-    std::vector<unsigned char> exponent32LE(4);
+    // GCC 12 doesn't like it when the capacity of exponent is > ours.
+    // std::copy gives the following compile-time error:
+    // error: writing 16 bytes into a region of size 4
+    std::vector<unsigned char> exponent32LE(exponent.capacity());
+    exponent32LE.resize(4);
     std::copy(exponent.rbegin(), exponent.rend(), exponent32LE.begin());
 
     std::vector<unsigned char> capiBlob = {
