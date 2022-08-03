@@ -568,7 +568,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		}
 
-		for (var i = 0; i < data.children.length; i++) {
+		for (var i = 0; i < (data.children || []).length; i++) {
 			child = data.children[i];
 			if (processedChildren.indexOf(child) === -1) {
 				rowNode = L.DomUtil.create('tr', builder.options.cssClass, table);
