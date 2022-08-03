@@ -19,7 +19,7 @@
 
 [data-userinterfacemode='classic'] #document-container:not(.mobile) + #sidebar-dock-wrapper,
 #document-container.spreadsheet-doctype:not(.mobile) + #sidebar-dock-wrapper {
-	border-inline-start: 1px solid var(--color-border) !important;
+	border-inline-start: 1px solid var(--color-border);
 }
 
 .sidebar .spinfieldcontainer input {
