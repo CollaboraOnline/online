@@ -20,7 +20,6 @@
     <string name="view_only">View only</string>
     <string name="edit_copy">Edit a copy</string>
     <string name="ask_for_copy">This document is read-only. Do you want to make a copy for editing\?</string>
-
     <string name="use_text">Use Text Format</string>
     <string name="use_odf">Use ODF Format</string>
     <string name="ask_for_convert_odf">Confirm File Format</string>
