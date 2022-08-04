@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-26 10:50+0200\n"
+"POT-Creation-Date: 2022-08-04 14:31+0200\n"
 "PO-Revision-Date: 2022-08-01 11:22+0000\n"
 "Last-Translator: William Gathoye <william+weblate@gathoye.be>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: fr\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -214,7 +214,7 @@ msgstr "Actualiser le journal"
 msgid "Channel Filter:"
 msgstr "Filtre de canal :"
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:429
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:428
 #: src/control/Control.StatusBar.js:314
 msgid "None"
 msgstr "Aucun(e)"
@@ -396,10 +396,10 @@ msgid "Index"
 msgstr "Index"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2373
+#: src/control/Control.JSDialogBuilder.js:2372
 #: src/layer/tile/CanvasTileLayer.js:5008
 #: src/layer/tile/CanvasTileLayer.js:5018
-#: src/layer/tile/CommentListSection.ts:856
+#: src/layer/tile/CommentListSection.ts:857
 msgid "Comment"
 msgstr "Commentaire"
 
@@ -445,118 +445,118 @@ msgstr "Formule"
 msgid "Accept"
 msgstr "Accepter"
 
-#: src/control/Control.JSDialogBuilder.js:144
+#: src/control/Control.JSDialogBuilder.js:143
 #: src/control/Control.StatusBar.js:312
 msgid "Sum"
 msgstr "Somme"
 
-#: src/control/Control.JSDialogBuilder.js:145
+#: src/control/Control.JSDialogBuilder.js:144
 #: src/control/Control.StatusBar.js:307
 msgid "Average"
 msgstr "Moyenne"
 
-#: src/control/Control.JSDialogBuilder.js:146
+#: src/control/Control.JSDialogBuilder.js:145
 msgid "Min"
 msgstr "Min"
 
-#: src/control/Control.JSDialogBuilder.js:147
+#: src/control/Control.JSDialogBuilder.js:146
 msgid "Max"
 msgstr "Max"
 
-#: src/control/Control.JSDialogBuilder.js:148
+#: src/control/Control.JSDialogBuilder.js:147
 #: src/control/Control.StatusBar.js:309
 msgid "Count"
 msgstr "NB"
 
-#: src/control/Control.JSDialogBuilder.js:432
+#: src/control/Control.JSDialogBuilder.js:431
 msgid "Solid"
 msgstr "Plein"
 
-#: src/control/Control.JSDialogBuilder.js:435
+#: src/control/Control.JSDialogBuilder.js:434
 msgid "Linear"
 msgstr "Linéaire"
 
-#: src/control/Control.JSDialogBuilder.js:438
+#: src/control/Control.JSDialogBuilder.js:437
 msgid "Axial"
 msgstr "Axial"
 
-#: src/control/Control.JSDialogBuilder.js:441
+#: src/control/Control.JSDialogBuilder.js:440
 msgid "Radial"
 msgstr "Radial"
 
-#: src/control/Control.JSDialogBuilder.js:444
+#: src/control/Control.JSDialogBuilder.js:443
 msgid "Ellipsoid"
 msgstr "Ellipsoide"
 
-#: src/control/Control.JSDialogBuilder.js:448
+#: src/control/Control.JSDialogBuilder.js:447
 msgid "Quadratic"
 msgstr "Quadratique"
 
-#: src/control/Control.JSDialogBuilder.js:451
+#: src/control/Control.JSDialogBuilder.js:450
 msgid "Square"
 msgstr "Carré"
 
-#: src/control/Control.JSDialogBuilder.js:454
+#: src/control/Control.JSDialogBuilder.js:453
 msgid "Fixed size"
 msgstr "Taille fixe"
 
-#: src/control/Control.JSDialogBuilder.js:1330
+#: src/control/Control.JSDialogBuilder.js:1329
 msgid "From"
 msgstr "De"
 
-#: src/control/Control.JSDialogBuilder.js:1333
+#: src/control/Control.JSDialogBuilder.js:1332
 msgid "To"
 msgstr "À"
 
-#: src/control/Control.JSDialogBuilder.js:1336
+#: src/control/Control.JSDialogBuilder.js:1335
 msgid "Color"
 msgstr "Couleur"
 
-#: src/control/Control.JSDialogBuilder.js:1624
+#: src/control/Control.JSDialogBuilder.js:1623
 msgid "Select range"
 msgstr "Sélectionner la plage"
 
-#: src/control/Control.JSDialogBuilder.js:1673
+#: src/control/Control.JSDialogBuilder.js:1672
 #: src/control/Control.NotebookbarBuilder.js:238
 msgid "Font Name"
 msgstr "Nom de la police"
 
-#: src/control/Control.JSDialogBuilder.js:1675 src/control/Toolbar.js:123
+#: src/control/Control.JSDialogBuilder.js:1674 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "Taille de la police"
 
-#: src/control/Control.JSDialogBuilder.js:1677
+#: src/control/Control.JSDialogBuilder.js:1676
 #: src/control/Control.TopToolbar.js:499
 msgid "Style"
 msgstr "Style"
 
-#: src/control/Control.JSDialogBuilder.js:2359
+#: src/control/Control.JSDialogBuilder.js:2358
 msgid "reply"
 msgstr "réponse"
 
-#: src/control/Control.JSDialogBuilder.js:2362
+#: src/control/Control.JSDialogBuilder.js:2361
 msgid "replies"
 msgstr "réponses"
 
-#: src/control/Control.JSDialogBuilder.js:2435
+#: src/control/Control.JSDialogBuilder.js:2434
 msgid "Insert Comment"
 msgstr "Ajouter un commentaire"
 
-#: src/control/Control.JSDialogBuilder.js:2939
+#: src/control/Control.JSDialogBuilder.js:3047
 msgid "Cell borders"
 msgstr "Bordures de cellule"
 
-#: src/control/Control.JSDialogBuilder.js:3150
+#: src/control/Control.JSDialogBuilder.js:3258
 #: src/control/Control.Menubar.js:725
 msgid "Rows"
 msgstr "Lignes"
 
-#: src/control/Control.JSDialogBuilder.js:3151
+#: src/control/Control.JSDialogBuilder.js:3259
 #: src/control/Control.Menubar.js:728
 msgid "Columns"
 msgstr "Colonnes"
 
-#: src/control/Control.JSDialogBuilder.js:3171
+#: src/control/Control.JSDialogBuilder.js:3279
 msgid "Insert Table"
 msgstr "Insérer un tableau"
 
@@ -1114,8 +1114,8 @@ msgid "Bad"
 msgstr "Mauvais"
 
 #: src/control/Control.NotebookbarCalc.js:735
-msgid "Row Width"
-msgstr "Largeur de ligne"
+msgid "Row Height"
+msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:741
 msgid "Column Width"
@@ -2072,36 +2072,36 @@ msgstr "Fonctions"
 msgid "No Comments"
 msgstr "Aucun commentaire"
 
-#: src/layer/tile/CommentListSection.ts:803
+#: src/layer/tile/CommentListSection.ts:804
 msgid "Modify"
 msgstr "Modifier"
 
-#: src/layer/tile/CommentListSection.ts:809
+#: src/layer/tile/CommentListSection.ts:810
 #: src/layer/tile/CommentSection.ts:129
 msgid "Reply"
 msgstr "Répondre"
 
-#: src/layer/tile/CommentListSection.ts:815
+#: src/layer/tile/CommentListSection.ts:816
 msgid "Remove"
 msgstr "Supprimer"
 
-#: src/layer/tile/CommentListSection.ts:821
+#: src/layer/tile/CommentListSection.ts:822
 msgid "Remove Thread"
 msgstr "Supprimer le fil"
 
-#: src/layer/tile/CommentListSection.ts:827
+#: src/layer/tile/CommentListSection.ts:828
 msgid "Resolve"
 msgstr "Résoudre"
 
-#: src/layer/tile/CommentListSection.ts:827
+#: src/layer/tile/CommentListSection.ts:828
 msgid "Unresolve"
 msgstr "Annuler la résolution"
 
-#: src/layer/tile/CommentListSection.ts:833
+#: src/layer/tile/CommentListSection.ts:834
 msgid "Unresolve Thread"
 msgstr "Annuler la résolution du fil"
 
-#: src/layer/tile/CommentListSection.ts:833
+#: src/layer/tile/CommentListSection.ts:834
 msgid "Resolve Thread"
 msgstr "Résoudre le fil"
 
@@ -2316,6 +2316,9 @@ msgstr ""
 "target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/\">"
 "rapportant un rapport de bogue</a> en y détaillant les étapes essentielles "
 "sur la façon dont le reproduire."
+
+#~ msgid "Row Width"
+#~ msgstr "Largeur de ligne"
 
 #~ msgid "Toggle Status Bar"
 #~ msgstr "Activer/Désactiver la barre de statut"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-26 10:50+0200\n"
+"POT-Creation-Date: 2022-08-04 14:31+0200\n"
 "PO-Revision-Date: 2022-05-04 14:13+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Uzbek <https://hosted.weblate.org/projects/collabora-online/"
@@ -213,7 +213,7 @@ msgstr ""
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:429
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:428
 #: src/control/Control.StatusBar.js:314
 msgid "None"
 msgstr "Yo‘q"
@@ -392,10 +392,10 @@ msgid "Index"
 msgstr "Indeks"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2373
+#: src/control/Control.JSDialogBuilder.js:2372
 #: src/layer/tile/CanvasTileLayer.js:5008
 #: src/layer/tile/CanvasTileLayer.js:5018
-#: src/layer/tile/CommentListSection.ts:856
+#: src/layer/tile/CommentListSection.ts:857
 msgid "Comment"
 msgstr "Sharh"
 
@@ -442,121 +442,121 @@ msgstr ""
 msgid "Accept"
 msgstr "Qabul qilish"
 
-#: src/control/Control.JSDialogBuilder.js:144
+#: src/control/Control.JSDialogBuilder.js:143
 #: src/control/Control.StatusBar.js:312
 msgid "Sum"
 msgstr "Sum"
 
-#: src/control/Control.JSDialogBuilder.js:145
+#: src/control/Control.JSDialogBuilder.js:144
 #: src/control/Control.StatusBar.js:307
 msgid "Average"
 msgstr "O‘rtacha"
 
-#: src/control/Control.JSDialogBuilder.js:146
+#: src/control/Control.JSDialogBuilder.js:145
 msgid "Min"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:147
+#: src/control/Control.JSDialogBuilder.js:146
 msgid "Max"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:148
+#: src/control/Control.JSDialogBuilder.js:147
 #: src/control/Control.StatusBar.js:309
 msgid "Count"
 msgstr "Hisob"
 
-#: src/control/Control.JSDialogBuilder.js:432
+#: src/control/Control.JSDialogBuilder.js:431
 msgid "Solid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:435
+#: src/control/Control.JSDialogBuilder.js:434
 msgid "Linear"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:438
+#: src/control/Control.JSDialogBuilder.js:437
 msgid "Axial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:441
+#: src/control/Control.JSDialogBuilder.js:440
 msgid "Radial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:444
+#: src/control/Control.JSDialogBuilder.js:443
 msgid "Ellipsoid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:448
+#: src/control/Control.JSDialogBuilder.js:447
 msgid "Quadratic"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:451
+#: src/control/Control.JSDialogBuilder.js:450
 msgid "Square"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:454
+#: src/control/Control.JSDialogBuilder.js:453
 msgid "Fixed size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1330
+#: src/control/Control.JSDialogBuilder.js:1329
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1333
+#: src/control/Control.JSDialogBuilder.js:1332
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1336
+#: src/control/Control.JSDialogBuilder.js:1335
 msgid "Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1624
+#: src/control/Control.JSDialogBuilder.js:1623
 #, fuzzy
 msgid "Select range"
 msgstr "Kataklarning tanlangan oralig‘i"
 
-#: src/control/Control.JSDialogBuilder.js:1673
+#: src/control/Control.JSDialogBuilder.js:1672
 #: src/control/Control.NotebookbarBuilder.js:238
 #, fuzzy
 msgid "Font Name"
 msgstr "Shrift"
 
-#: src/control/Control.JSDialogBuilder.js:1675 src/control/Toolbar.js:123
+#: src/control/Control.JSDialogBuilder.js:1674 src/control/Toolbar.js:123
 #, fuzzy
 msgid "Font Size"
 msgstr "Shrift"
 
-#: src/control/Control.JSDialogBuilder.js:1677
+#: src/control/Control.JSDialogBuilder.js:1676
 #: src/control/Control.TopToolbar.js:499
 msgid "Style"
 msgstr "Uslub"
 
-#: src/control/Control.JSDialogBuilder.js:2359
+#: src/control/Control.JSDialogBuilder.js:2358
 msgid "reply"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2362
+#: src/control/Control.JSDialogBuilder.js:2361
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2435
+#: src/control/Control.JSDialogBuilder.js:2434
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2939
+#: src/control/Control.JSDialogBuilder.js:3047
 msgid "Cell borders"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3150
+#: src/control/Control.JSDialogBuilder.js:3258
 #: src/control/Control.Menubar.js:725
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3151
+#: src/control/Control.JSDialogBuilder.js:3259
 #: src/control/Control.Menubar.js:728
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3171
+#: src/control/Control.JSDialogBuilder.js:3279
 #, fuzzy
 msgid "Insert Table"
 msgstr "Jadval kiritish"
@@ -1124,7 +1124,7 @@ msgid "Bad"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:735
-msgid "Row Width"
+msgid "Row Height"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:741
@@ -2032,36 +2032,36 @@ msgstr "Funksiya"
 msgid "No Comments"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:803
+#: src/layer/tile/CommentListSection.ts:804
 msgid "Modify"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:809
+#: src/layer/tile/CommentListSection.ts:810
 #: src/layer/tile/CommentSection.ts:129
 msgid "Reply"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:815
+#: src/layer/tile/CommentListSection.ts:816
 msgid "Remove"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:821
+#: src/layer/tile/CommentListSection.ts:822
 msgid "Remove Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:827
+#: src/layer/tile/CommentListSection.ts:828
 msgid "Resolve"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:827
+#: src/layer/tile/CommentListSection.ts:828
 msgid "Unresolve"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:833
+#: src/layer/tile/CommentListSection.ts:834
 msgid "Unresolve Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:833
+#: src/layer/tile/CommentListSection.ts:834
 msgid "Resolve Thread"
 msgstr ""
 
