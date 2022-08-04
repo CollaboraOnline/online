@@ -533,11 +533,12 @@
 	text-align: center;
 }
 
-#style1 img ~ .ui-drawing-area-placeholder-container .ui-drawing-area-placeholder {
-	font-family: Liberation Serif;
-	font-size: var(--default-font-size);
+#style img ~ .ui-drawing-area-placeholder-container .ui-drawing-area-placeholder {
+	font-family: Liberation Sans;
+	font-size: calc(var(--default-font-size)*2);
+	font-weight: bold;
 }
-
+/* 
 #style2 img ~ .ui-drawing-area-placeholder-container .ui-drawing-area-placeholder {
 	font-family: Liberation Serif;
 	font-size: var(--default-font-size);
@@ -552,7 +553,7 @@
 #style4 img ~ .ui-drawing-area-placeholder-container .ui-drawing-area-placeholder {
 	font-family: Liberation Sans;
 	font-size: calc(var(--default-font-size)*1.5);
-}
+} */
 
 .downloadas-odt-submenu-icon {
 	background: url('images/lc_downloadas-odt.svg') center;
