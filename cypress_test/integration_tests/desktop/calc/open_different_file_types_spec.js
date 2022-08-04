@@ -72,8 +72,7 @@ describe('Open different file types', function () {
 		cy.get('form.jsdialog-container.lokdialog_container')
 			.should('exist');
 
-		cy.contains('.ui-pushbutton', 'OK')
-			.click();
+		helper.clickOnIdle('.ui-pushbutton', 'OK');
 
 		//check doc is loaded
 		cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
