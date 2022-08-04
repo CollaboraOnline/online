@@ -1,15 +1,13 @@
-Collabora Online WebSocket server
-=================================
+# Collabora Online WebSocket server
 
-Dependencies
-------------
+## Dependencies
 
 Collabora Online WebSocket server has the following dependencies:
 
-* libpng
-* Poco library: https://pocoproject.org/
-* libcap-dev (Debian/Ubuntu) / libcap-progs (SUSE/openSUSE) / libcap-devel (RedHat/CentOS)
-* libpam-dev (Debian/Ubuntu) / pam-devel (RedHat/CentOS/SUSE/openSUSE)
+- libpng
+- Poco library: https://pocoproject.org/
+- libcap-dev (Debian/Ubuntu) / libcap-progs (SUSE/openSUSE) / libcap-devel (RedHat/CentOS)
+- libpam-dev (Debian/Ubuntu) / pam-devel (RedHat/CentOS/SUSE/openSUSE)
 
 If your Linux distro doesn't provide a Poco package (versions 1.7.5 and
 newer should work), you can build it yourself and install in a
@@ -22,8 +20,7 @@ On openSUSE Leap 15.1, you can use:
 
 Similar repos exist for other openSUSE and SLE releases.
 
-Building
---------
+## Building
 
 coolwsd uses autoconf/automake, so especially when building from .git
 (as opposed to from a distribution tarball) you need to run:
@@ -35,7 +32,6 @@ and then
     ./configure --enable-silent-rules --with-lokit-path=${MASTER}/include \
     		--with-lo-path=${MASTER}/instdir --enable-debug
     make
-
 
 where ${MASTER} is the location of the LibreOffice source tree.
 
@@ -62,8 +58,7 @@ For Windows, a proper VS2013 project is needed.
 There is still unconditional debugging output etc. This is a work in
 progress.
 
-Running
--------
+## Running
 
 You can just do:
 
@@ -72,12 +67,10 @@ You can just do:
 and follow the link that recommends (see browser/README for more info).
 
 Again, ${MASTER} is location of the LibreOffice source tree with a built
-LibreOffice.  This is work in progress, and consequently needs the latest
+LibreOffice. This is work in progress, and consequently needs the latest
 LibreOffice master.
 
-
-Running manually
-----------------
+## Running manually
 
 If you want to do the 'make run' yourself, you need to set up a minimal
 chroot system, and directory for the jails:
@@ -111,7 +104,7 @@ system as ${ROOTFORJAILS}.
 
 Leaflet files are served itself by coolwsd internal file server. You
 can specify the root of this fileserver using the --o:file_server_root_path
-flag in coolwsd commandline.  By default, if you do not specify this
+flag in coolwsd commandline. By default, if you do not specify this
 flag, the parent directory of coolwsd/ is assumed to be the
 file_server_root_path. So, for development purposes, you can access the
 COOL files (using /browser/), but it is advised to explicitly set
@@ -130,7 +123,7 @@ ${sysconfdir}/coolwsd/coolwsd.xml. Dummy self-signed cert.pem,
 ca-chain.cert.pem and key.pem are already included, but it is better
 to replace those with your own files.
 
-To generate the new self-signed certificate, you can do the following.  Maybe
+To generate the new self-signed certificate, you can do the following. Maybe
 there is a less verbose way, but this worked for me:
 
     # create tha ca-chain.cert.pem
@@ -176,9 +169,7 @@ test program.
 For interactive testing, you can use the 'connect' program. It accepts
 "commands" from the protocol on standard input.
 
-
-Test running with integration for developers
---------------------------------------------
+## Test running with integration for developers
 
 Unless you want to test SSL itself, it is easier to go for the non-SSL option.
 
@@ -196,8 +187,7 @@ Then in the build tree, edit the generated coolwsd.xml and set ssl setting to
 false. You can run make run, and test coolwsd with the ownCloud or Nextcloud
 integration.
 
-Admin Panel
------------
+## Admin Panel
 
 You can access the admin panel by directly accessing the admin.html file
 from browser directory. See browser/README for more details.
@@ -206,7 +196,7 @@ Websocket connections to admin console can be made at path: /adminws/ on the
 same url and port as coolwsd is running on. However, one needs a JWT token to
 authenticate to the admin console websocket. This is stored as a cookie with
 `Path: /adminws/` when user successfully authenticates when trying to access
-/browser/dist/admin/admin*html files (HTTP Basic authentication). Token
+/browser/dist/admin/admin\*html files (HTTP Basic authentication). Token
 is expired after every half an hour, so websocket connection to admin console
 must be established within this period.
 
@@ -215,15 +205,15 @@ documents that are open for more than 10 hours etc. See protocol.txt for
 various commands. Only tricky thing here is getting the JWT token which can
 be obtained as described above.
 
-Debugging
----------
+## Debugging
 
-When debugging, you want to add --o:num_prespawn_children=1 to the coolwsd parameters to
+When debugging, you want to add `--o:num_prespawn_children=1` to the coolwsd parameters to
 limit the amount of concurrently running processes.
 
 When the crash happens too early, you also want to
 
     export SLEEPFORDEBUGGER=<number of seconds>
+
 or
     export PAUSEFORDEBUGGER=1
 
@@ -241,11 +231,11 @@ effectively debug the LibreOffice code as used through LibreOfficeKit
 by a child coolwsd process, you need to symlink the "lo" subdirectory
 of a running child coolwsd process's chroot jail as /lo. Something like:
 
-sudo ln -s ~/libreoffice/master/cool-child-roots/1046829984599121011/lo /lo
+`sudo ln -s ~/libreoffice/master/cool-child-roots/1046829984599121011/lo /lo`
 
 Use the ps command to find out exactly the path to use.
 
-Set COOL_DEBUG=1 to trap SIGSEGV and SEGBUS and prompt for debugger.
+Set `COOL_DEBUG=1` to trap SIGSEGV and SEGBUS and prompt for debugger.
 
 if you choose PAUSEFORDEBUGGER send the signal SIGUSR1 to resume the process
 
@@ -254,14 +244,12 @@ when the test fails. To run one single CppUnit test from a suite, additionally u
 
     CPPUNIT_TEST_NAME="HTTPWSTest::testCalcEditRendering" <printed commandline>
 
-Protocol description
---------------------
+## Protocol description
 
 See protocol.txt for a description of the protocol to be used over the
 websocket.
 
-Architecture
-------------
+## Architecture
 
 There are three processes: CoolWSD, CoolForKit, and CoolKit.
 
@@ -293,14 +281,13 @@ the client and Kit by tunnelling the traffic between the two
 sockets (that which is between the client and WSD and the one
 between WSD and Kit).
 
-File System
------------
+## File System
 
 WSD is given childroot argument on the command line. This is
 the root directory of jailed FS. This path can be anywhere, but
 here we'll designate it as:
 
-/childroot
+`/childroot`
 
 Before spawning a ForKit instance, WSD needs to generate a random
 Jail-ID to use as the jail directory name. This JailID is then
@@ -312,7 +299,7 @@ ForKit per WSD instance, there is also one JailID between them.
 
 The ForKit creates a chroot in this directory (the jail directory):
 
-/childroot/jailid/
+`/childroot/jailid/`
 
 ForKit copies the LO instdir (essentially installs LO in the chroot),
 then copies the Kit binary into the jail directory upon startup.
@@ -328,7 +315,7 @@ in a dedicated directory within the jail directory. The document
 root within the jail is /user/docs. The absolute path on the system
 (which isn't accessible to the Kit process as it's jailed) is:
 
-/childroot/jailid/user/docs
+`/childroot/jailid/user/docs`
 
 Within this path, each document gets its own sub-directory based on
 another random Child-ID (which could be the Process ID of the Kit).
@@ -336,8 +323,7 @@ This ChildId will be given out to clients to facilitate the insertion
 and downloading of documents. (Although strictly speaking the client
 can use the main document URI as key, this is the current design.)
 
-/childroot/jailid/user/docs/childid
-
+`/childroot/jailid/user/docs/childid`
 
 A request from a client to load a document will trigger the following
 chain of events.
@@ -357,9 +343,7 @@ chain of events.
 - MasterProcessSession (ToClient) and MasterProcessSession (ToPrisoner)
   tunnel the traffic between client and Kit both ways.
 
-
-Coding style
-------------
+## Coding style
 
 There is not really any serious rationale why the code ended up being
 written in the style it is... but unless you plan to change some style
