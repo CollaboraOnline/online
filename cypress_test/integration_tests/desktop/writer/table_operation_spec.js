@@ -312,7 +312,7 @@ describe('Table operations', function() {
 			.should('have.attr', 'width', '50%');
 	});
 
-	it('Split Cells', function() {
+	/*it('Split Cells', function() {
 		helper.typeIntoDocument('{downarrow}');
 
 		helper.typeIntoDocument('{ctrl}{a}');
@@ -346,5 +346,7 @@ describe('Table operations', function() {
 
 		cy.get('#copy-paste-container tbody').find('tr')
 			.should('have.length', 4);
-	});
+	});*/
+	// TODO: Rewrite this test to use the new JSDialogs dialog as opposed to this tunneled dialog
+	// Blocked by https://gerrit.libreoffice.org/c/core/+/137791
 });
