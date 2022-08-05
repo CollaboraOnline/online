@@ -13,24 +13,11 @@ L.Control.Infobar = L.Control.extend({
 		if (!e.msg)
 			return;
 
-		var product = function () {
-			var integratorUrl = encodeURIComponent(window.buyProductUrl);
-			var productUrl = window.feedbackUrl;
-			productUrl = productUrl.substring(0, productUrl.lastIndexOf('/')) +
-				    '/product.html?integrator='+ integratorUrl;
-			var newWin = window.open(productUrl, '_blank');
-			newWin.focus();
-		};
 
 		var buttons = [];
 		var callback = function() {};
 		if (e.actionLabel && e.action) {
 			buttons.push($.extend({}, vex.dialog.buttons.YES, { text: e.actionLabel }));
-			if (window.feedbackUrl)
-				buttons.push($.extend({}, vex.dialog.buttons.YES, {
-					text: 'Buy Product',
-					click: product
-				}));
 			callback = function (value) {
 				if (value === false) // close btn clicked
 					return;
