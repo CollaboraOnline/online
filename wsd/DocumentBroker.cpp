@@ -1964,8 +1964,8 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
         bool save = false;
         // Zero or negative config value disables save.
         // Either we've been idle long enough, or it's auto-save time.
-        if (MaxIdleSaveDurationMs > std::chrono::milliseconds::zero()
-            && inactivityTimeMs >= MaxIdleSaveDurationMs)
+        if (MaxIdleSaveDurationMs > std::chrono::milliseconds::zero() &&
+            inactivityTimeMs >= MaxIdleSaveDurationMs)
         {
             save = true;
         }
@@ -2112,14 +2112,15 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         // Invalidate the timestamp to force persisting.
         _saveManager.setLastModifiedTime(std::chrono::system_clock::time_point());
 
-        // We do not want save to terminate editing mode if we are in edit mode now
-
         std::ostringstream oss;
         // arguments init
         oss << '{';
 
         if (dontTerminateEdit)
         {
+            // We do not want save to terminate editing mode if we are in edit mode now.
+            //TODO: Perhaps we want to terminate if forced by the user,
+            // otherwise autosave doesn't terminate?
             oss << "\"DontTerminateEdit\":"
                    "{"
                    "\"type\":\"boolean\","

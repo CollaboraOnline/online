@@ -425,6 +425,8 @@ public:
 
     std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_mutex); }
 
+    /// Update the last activity time to now.
+    /// Best to be inlined as it's called frequently.
     void updateLastActivityTime();
 
     /// Sets the last activity timestamp that is most likely to modify the document.
@@ -916,7 +918,7 @@ private:
         {
             const auto now = std::chrono::steady_clock::now();
             os << indent << "isSaving now: " << std::boolalpha << isSaving();
-            os << indent << "auto-save enabled: " << std::boolalpha << _isAutosaveEnabled;
+            os << indent << "auto-save enabled: " << std::boolalpha << isAutosaveEnabled();
             os << indent << "auto-save interval: " << _autosaveInterval;
             os << indent
                << "last auto-save check time: " << Util::getTimeForLog(now, _lastAutosaveCheckTime);
@@ -1062,14 +1064,16 @@ private:
         void dumpState(std::ostream& os, const std::string& indent = "\n  ")
         {
             const auto now = std::chrono::steady_clock::now();
-            os << indent << "last upload time: " << Util::getTimeForLog(now, getLastUploadTime());
-            os << indent << "last upload was successful: " << lastUploadSuccessful();
-            os << indent << "upload failure count: " << uploadFailureCount();
-            os << indent << "last modified time (on server): " << _lastModifiedTime;
-            os << indent << "since last upload request: " << timeSinceLastUploadRequest();
-            os << indent << "since last upload response: " << timeSinceLastUploadResponse();
+            os << indent << "last upload request time: "
+               << Util::getTimeForLog(now, _request.lastRequestTime());
+            os << indent << "last upload response time: "
+               << Util::getTimeForLog(now, _request.lastResponseTime());
+            os << indent << "last modified time (on server): " << getLastModifiedTime();
             os << indent
                << "file last modified: " << Util::getTimeForLog(now, _lastUploadedFileModifiedTime);
+            os << indent << "last upload was successful: " << std::boolalpha
+               << lastUploadSuccessful();
+            os << indent << "upload failure count: " << uploadFailureCount();
         }
 
     private:
@@ -1303,6 +1307,7 @@ private:
 
     int _debugRenderedTileCount;
 
+    /// Time of the last interactive event received.
     std::chrono::steady_clock::time_point _lastActivityTime;
 
     /// Time of the last interactive event that very likely modified the document.
