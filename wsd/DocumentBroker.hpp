@@ -428,6 +428,12 @@ public:
 
     void updateLastActivityTime();
 
+    /// Sets the last activity timestamp that is most likely to modify the document.
+    void updateLastModifyingActivityTime()
+    {
+        _lastModifyActivityTime = std::chrono::steady_clock::now();
+    }
+
     /// This updates the editing sessionId which is used for auto-saving.
     void updateEditingSessionId(const std::string& viewId)
     {
@@ -608,6 +614,13 @@ private:
     bool haveActivityAfterSaveRequest() const
     {
         return _saveManager.lastSaveRequestTime() < _lastActivityTime;
+    }
+
+    /// True if there has been potentially *document-modifying* activity from a client
+    /// after we last *requested* saving, since there are race conditions while saving.
+    bool haveModifyActivityAfterSaveRequest() const
+    {
+        return _saveManager.lastSaveRequestTime() < _lastModifyActivityTime;
     }
 
     /// Encodes whether or not saving is needed.
@@ -1352,6 +1365,10 @@ private:
 
     std::chrono::steady_clock::time_point _lastNotifiedActivityTime;
     std::chrono::steady_clock::time_point _lastActivityTime;
+
+    /// Time of the last interactive event that very likely modified the document.
+    std::chrono::steady_clock::time_point _lastModifyActivityTime;
+
     std::chrono::steady_clock::time_point _threadStart;
     std::chrono::milliseconds _loadDuration;
     std::chrono::milliseconds _wopiDownloadDuration;

@@ -3652,7 +3652,10 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  canSave: " << name(canSaveToDisk());
     os << "\n  canUpload: " << name(canUploadToStorage());
     os << "\n  needToUpload: " << name(needToUploadToStorage());
+    os << "\n  lastActivityTime: " << Util::getTimeForLog(now, _lastActivityTime);
     os << "\n  haveActivityAfterSaveRequest: " << haveActivityAfterSaveRequest();
+    os << "\n  lastModifyActivityTime: " << Util::getTimeForLog(now, _lastModifyActivityTime);
+    os << "\n  haveModifyActivityAfterSaveRequest: " << haveModifyActivityAfterSaveRequest();
     os << "\n  isViewFileExtension: " << _isViewFileExtension;
 
     if (_limitLifeSeconds > std::chrono::seconds::zero())
