@@ -3,6 +3,8 @@
  * L.Util contains various utility functions used throughout Leaflet code.
  */
 
+/* global brandProductFAQURL */
+
 L.Util = {
 	// extend an object with properties of one or more other objects
 	extend: function (dest) {
@@ -189,6 +191,18 @@ L.Util = {
 		context.font = font;
 		var metrics = context.measureText(text);
 		return Math.floor(metrics.width);
+	},
+
+	getProduct: function () {
+		var brandFAQURL = (typeof brandProductFAQURL !== 'undefined') ?
+		    brandProductFAQURL : 'https://collaboraonline.github.io/post/faq/';
+		if (window.feedbackUrl && window.buyProductUrl) {
+			var integratorUrl = encodeURIComponent(window.buyProductUrl);
+			brandFAQURL = window.feedbackUrl;
+			brandFAQURL = brandFAQURL.substring(0, brandFAQURL.lastIndexOf('/')) +
+				'/product.html?integrator='+ integratorUrl;
+		}
+		return brandFAQURL;
 	},
 
 	replaceCtrlAltInMac: function(msg) {
