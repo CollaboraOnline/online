@@ -230,6 +230,29 @@ namespace COOLProtocol
                 token != "userinactive");
     }
 
+    /// Returns true if the token is a likely document modifying command.
+    /// This is never 100% accurate, but it is needed to filter out tokens
+    /// that certainly do not modify the document, such as 'load' and 'save'
+    /// commands. Some commands are certainly modifying, e.g. 'key', others
+    /// can only potentially be modifying, e.g. 'mouse' while dragging.
+    /// Note: this is only used when we don't have the modified flag from
+    /// Core so we flag the document as user-modified more accurately.
+    inline bool tokenIndicatesDocumentModification(const std::string& token)
+    {
+        // These keywords are chosen to cover the largest set of
+        // commands that may potentially modify the document.
+        // We need to assume modification rather than not.
+        return (
+            token.find("mouse") != std::string::npos || token.find("key") != std::string::npos ||
+            token.find("command") != std::string::npos ||
+            token.find("select") != std::string::npos || token.find("set") != std::string::npos ||
+            token.find("uno") != std::string::npos || token.find("input") != std::string::npos ||
+            token.find("move") != std::string::npos || token.find("paste") != std::string::npos ||
+            token.find("insert") != std::string::npos ||
+            token.find("resize") != std::string::npos ||
+            token.find("remove") != std::string::npos || token.find("sign") != std::string::npos);
+    }
+
     /// Returns the first line of a message.
     inline
     std::string getFirstLine(const char *message, const int length)
