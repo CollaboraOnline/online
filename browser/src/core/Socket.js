@@ -3,7 +3,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app _ vex $ errorMessages Uint8Array brandProductName brandProductFAQURL */
+/* global app _ vex $ errorMessages Uint8Array brandProductName */
 
 app.definitions.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
@@ -1085,12 +1085,10 @@ app.definitions.Socket = L.Class.extend({
 				textMsg = textMsg.replace(/{connections}/g, command.params[1]);
 				textMsg = textMsg.replace(/{productname}/g, (typeof brandProductName !== 'undefined' ?
 					brandProductName : 'Collabora Online Development Edition'));
-				var brandFAQURL = (typeof brandProductFAQURL !== 'undefined') ?
-					brandProductFAQURL : 'https://collaboraonline.github.io/post/faq/';
 				this._map.fire('infobar',
 					{
 						msg: textMsg,
-						action: brandFAQURL,
+						action: L.Util.getProduct(),
 						actionLabel: errorMessages.infoandsupport
 					});
 			}
