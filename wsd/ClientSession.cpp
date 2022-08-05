@@ -454,6 +454,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // Keep track of timestamps of incoming client messages that indicate user activity.
         updateLastActivityTime();
         docBroker->updateLastActivityTime();
+        if (COOLProtocol::tokenIndicatesDocumentModification(tokens[0]))
+        {
+            docBroker->updateLastModifyingActivityTime();
+        }
 
         if (isWritable() && isViewLoaded())
         {
