@@ -312,7 +312,7 @@ describe('Table operations', function() {
 			.should('have.attr', 'width', '50%');
 	});
 
-	/*it('Split Cells', function() {
+	it('Split Cells', function() {
 		helper.typeIntoDocument('{downarrow}');
 
 		helper.typeIntoDocument('{ctrl}{a}');
@@ -330,12 +330,13 @@ describe('Table operations', function() {
 		cy.get('.unospan-split_merge.unoSplitCell')
 			.click();
 
-		cy.get('.lokdialog_canvas').should('exist');
+		cy.get('.lokdialog.ui-dialog-content.ui-widget-content').should('exist');
 
-		cy.get('.lokdialog_canvas').click();
+		cy.get('.lokdialog.ui-dialog-content.ui-widget-content').click();
 
-		//to close the lokdialog
-		helper.typeIntoDocument('{shift}{enter}');
+		cy.get('#ok.ui-pushbutton.jsdialog').should('exist');
+
+		cy.get('#ok.ui-pushbutton.jsdialog').click();
 
 		helper.typeIntoDocument('{ctrl}{a}');
 
@@ -346,7 +347,5 @@ describe('Table operations', function() {
 
 		cy.get('#copy-paste-container tbody').find('tr')
 			.should('have.length', 4);
-	});*/
-	// TODO: Rewrite this test to use the new JSDialogs dialog as opposed to this tunneled dialog
-	// Blocked by https://gerrit.libreoffice.org/c/core/+/137791
+	});
 });
