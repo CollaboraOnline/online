@@ -934,7 +934,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         // Only lock the document on storage for editing sessions
         // FIXME: why not lock before downloadStorageFileToLocal? Would also prevent race conditions
         if (!session->isReadOnly() &&
-            !_storage->updateLockState(session->getAuthorization(), *_lockCtx, true))
+            !_storage->updateLockState(session->getAuthorization(), *_lockCtx, true,
+                                       _currentStorageAttrs))
         {
             LOG_ERR("Failed to lock!");
             session->setLockFailed(_lockCtx->_lockFailureReason);
@@ -1141,7 +1142,8 @@ void DocumentBroker::endRenameFileCommand()
 
 bool DocumentBroker::attemptLock(const ClientSession& session, std::string& failReason)
 {
-    const bool bResult = _storage->updateLockState(session.getAuthorization(), *_lockCtx, true);
+    const bool bResult = _storage->updateLockState(session.getAuthorization(), *_lockCtx, true,
+                                                   _currentStorageAttrs);
     if (!bResult)
         failReason = _lockCtx->_lockFailureReason;
     return bResult;
@@ -1268,6 +1270,16 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     // Record that we got a response to avoid timing out on saving.
     _saveManager.setLastSaveResult(success || result == "unmodified");
 
+    if (success && !isAsyncUploading())
+    {
+        // Update the storage attributes to capture what's
+        // new and applies to this new version and reset.
+        // These are the attributes of the next version to be uploaded.
+        // Note: these are owned by us and this is thread-safe.
+        _currentStorageAttrs.merge(_nextStorageAttrs);
+        _nextStorageAttrs.reset();
+    }
+
     // The the clients know of any save failures.
     if (!success && result != "unmodified")
     {
@@ -1362,9 +1374,11 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
 {
     assertCorrectThread();
 
-    if (force && _storage)
+    if (force)
     {
-        _storage->forceSave();
+        // Don't reset the force flag if it was set
+        // (which would imply we failed to upload).
+        _currentStorageAttrs.setForced(force);
     }
 
     if (force || _storageManager.lastUploadSuccessful() ||
@@ -1531,7 +1545,8 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId,
     };
 
     _storage->uploadLocalFileToStorageAsync(session->getAuthorization(), *_lockCtx, saveAsPath,
-                                            saveAsFilename, isRename, *_poll, asyncUploadCallback);
+                                            saveAsFilename, isRename, _currentStorageAttrs, *_poll,
+                                            asyncUploadCallback);
 }
 
 void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResult& uploadResult)
@@ -1582,6 +1597,9 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
 
             // After a successful save, we are sure that document in the storage is same as ours
             _documentChangedInStorage = false;
+
+            // Reset the storage attributes; They've been used and we can discard them.
+            _currentStorageAttrs.reset();
 
             LOG_DBG("Uploaded docKey ["
                     << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
@@ -1853,7 +1871,8 @@ void DocumentBroker::refreshLock()
     else
     {
         std::shared_ptr<ClientSession> session = it->second;
-        if (!session || !_storage->updateLockState(session->getAuthorization(), *_lockCtx, true))
+        if (!session || !_storage->updateLockState(session->getAuthorization(), *_lockCtx, true,
+                                                   _currentStorageAttrs))
             LOG_ERR("Failed to refresh lock");
     }
 }
@@ -2143,15 +2162,13 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         // arguments end
         oss << '}';
 
-        if (_storage)
-        {
-            // If we can't upload, we will quarantine.
-            //FIXME: these must be tracked in DocBroker as they will
-            // get clobbered when uploading fails and we save again.
-            _storage->setIsAutosave(isAutosave || UnitWSD::get().isAutosave());
-            _storage->setIsExitSave(isExitSave);
-            _storage->setExtendedData(extendedData);
-        }
+        // At this point, if we have any potential modifications, we need to capture the fact.
+        _nextStorageAttrs.setUserModified(isModified() || haveModifyActivityAfterSaveRequest());
+
+        //FIXME: It's odd to capture these here, but this function is used from ClientSession too.
+        _nextStorageAttrs.setIsAutosave(isAutosave || UnitWSD::get().isAutosave());
+        _nextStorageAttrs.setIsExitSave(isExitSave);
+        _nextStorageAttrs.setExtendedData(extendedData);
 
         const std::string saveArgs = oss.str();
         LOG_TRC(".uno:Save arguments: " << saveArgs);
@@ -2388,7 +2405,8 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
             // Unlock the document, if last editable sessions, before we lose a token that can unlock.
             if (lastEditableSession && _lockCtx->_isLocked && _storage)
             {
-                if (!_storage->updateLockState(it->second->getAuthorization(), *_lockCtx, false))
+                if (!_storage->updateLockState(it->second->getAuthorization(), *_lockCtx, false,
+                                               _currentStorageAttrs))
                     LOG_ERR("Failed to unlock!");
             }
 
@@ -3081,13 +3099,6 @@ void DocumentBroker::setModified(const bool value)
     }
 #endif
 
-    if (value || _storageManager.lastUploadSuccessful())
-    {
-        // Set the X-COOL-WOPI-IsModifiedByUser header flag sent to storage.
-        // But retain the last value if we failed to upload, so we don't clobber it.
-        _storage->setUserModified(value);
-    }
-
     LOG_DBG("Modified state set to " << value << " for Doc [" << _docId << ']');
     _isModified = value;
 }
@@ -3615,6 +3626,11 @@ void DocumentBroker::dumpState(std::ostream& os)
 
     os << "\n  StorageManager:";
     _storageManager.dumpState(os, "\n    ");
+
+    os << "\n    Current StorageAttributes:";
+    _currentStorageAttrs.dumpState(os, "\n      ");
+    os << "\n    Next StorageAttributes:";
+    _nextStorageAttrs.dumpState(os, "\n      ");
 
     _lockCtx->dumpState(os);
 
