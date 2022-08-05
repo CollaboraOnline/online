@@ -101,6 +101,92 @@ public:
         std::string _modifiedTime; //< Opaque modified timestamp as received from the server.
     };
 
+    /// Represents attributes of interest to the storage.
+    /// These are typically set in the PUT headers.
+    /// They include flags to indicate auto-save, exit-save,
+    /// forced-uploading, and whether or not the document
+    /// had been modified, amongst others.
+    /// The reason for this class is to avoid clobbering
+    /// these attributes when uploading fails--or indeed
+    /// racing with uploading.
+    class Attributes
+    {
+    public:
+        Attributes()
+            : _forced(false)
+            , _isUserModified(false)
+            , _isAutosave(false)
+            , _isExitSave(false)
+        {}
+
+        /// Reset the attributes to clear them after using them.
+        void reset()
+        {
+            _forced = false;
+            _isUserModified = false;
+            _isAutosave = false;
+            _isExitSave = false;
+            _extendedData.clear();
+        }
+
+        void merge(const Attributes& lhs)
+        {
+            // Whichever is true.
+            _forced = lhs._forced ? true : _forced;
+            _isUserModified = lhs._isUserModified ? true : _isUserModified;
+            _isAutosave = lhs._isAutosave ? true : _isAutosave;
+            _isExitSave = lhs._isExitSave ? true : _isExitSave;
+
+            // Clobber with the lhs, assuming it's newer.
+            if (!lhs._extendedData.empty())
+                _extendedData = lhs._extendedData;
+        }
+
+        /// Asks the storage object to force overwrite
+        /// even if document turned out to be changed in storage.
+        /// Used to resolve storage conflicts by clobbering.
+        void setForced(bool forced = true) { _forced = forced; }
+        bool isForced() const { return _forced; }
+
+        /// To be able to set the WOPI extension header appropriately.
+        void setUserModified(bool userModified) { _isUserModified = userModified; }
+        bool isUserModified() const { return _isUserModified; }
+
+        /// To be able to set the WOPI 'is autosave/is exitsave?' headers appropriately.
+        void setIsAutosave(bool newIsAutosave) { _isAutosave = newIsAutosave; }
+        bool isAutosave() const { return _isAutosave; }
+
+        /// Set only when saving on exit.
+        void setIsExitSave(bool exitSave) { _isExitSave = exitSave; }
+        bool isExitSave() const { return _isExitSave; }
+
+        /// Misc extended data.
+        void setExtendedData(const std::string& extendedData) { _extendedData = extendedData; }
+        const std::string& getExtendedData() const { return _extendedData; }
+
+        /// Dump the internals of this instance.
+        void dumpState(std::ostream& os, const std::string& indent = "\n  ")
+        {
+            os << indent << "forced: " << std::boolalpha << isForced();
+            os << indent << "user-modified: " << std::boolalpha << isUserModified();
+            os << indent << "auto-save: " << std::boolalpha << isAutosave();
+            os << indent << "exit-save: " << std::boolalpha << isExitSave();
+            os << indent << "extended-data: " << getExtendedData();
+        }
+
+    private:
+        /// Whether or not we want to force uploading.
+        bool _forced;
+        /// The document has been modified by the user.
+        bool _isUserModified;
+        /// This save operation is an autosave.
+        bool _isAutosave;
+        /// Saving on exit (when the document is cleaned up from memory)
+        bool _isExitSave;
+        /// The client-provided saving extended data to send to the WOPI host.
+        std::string _extendedData;
+    };
+
     /// Represents the upload request result, with a Result code
     /// and a reason message (typically for errors).
     /// Note: the reason message may be displayed to the clients.
@@ -196,11 +282,7 @@ public:
         _localStorePath(localStorePath),
         _jailPath(jailPath),
         _fileInfo(std::string(), "cool", std::string()),
-        _isDownloaded(false),
-        _forceSave(false),
-        _isUserModified(false),
-        _isAutosave(false),
-        _isExitSave(false)
+        _isDownloaded(false)
     {
         setUri(uri);
         LOG_DBG("Storage ctor: " << COOLWSD::anonymizeUrl(_uri.toString()));
@@ -243,24 +325,6 @@ public:
 
     bool isDownloaded() const { return _isDownloaded; }
 
-    /// Asks the storage object to force overwrite to storage upon next save
-    /// even if document turned out to be changed in storage
-    void forceSave(bool newSave = true) { _forceSave = newSave; }
-
-    bool getForceSave() const { return _forceSave; }
-
-    /// To be able to set the WOPI extension header appropriately.
-    void setUserModified(bool userModified) { _isUserModified = userModified; }
-
-    bool isUserModified() const { return _isUserModified; }
-
-    /// To be able to set the WOPI 'is autosave/is exitsave?' headers appropriately.
-    void setIsAutosave(bool newIsAutosave) { _isAutosave = newIsAutosave; }
-    bool isAutosave() const { return _isAutosave; }
-    void setIsExitSave(bool exitSave) { _isExitSave = exitSave; }
-    bool isExitSave() const { return _isExitSave; }
-    void setExtendedData(const std::string& extendedData) { _extendedData = extendedData; }
-
     void setFileInfo(const FileInfo& fileInfo) { _fileInfo = fileInfo; }
 
     /// Returns the basic information about the file.
@@ -270,7 +334,8 @@ public:
     std::string getFileExtension() const { return Poco::Path(_fileInfo.getFilename()).getExtension(); }
 
     /// Update the locking state (check-in/out) of the associated file
-    virtual bool updateLockState(const Authorization& auth, LockContext& lockCtx, bool lock) = 0;
+    virtual bool updateLockState(const Authorization& auth, LockContext& lockCtx, bool lock,
+                                 const Attributes& attribs) = 0;
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
@@ -286,7 +351,7 @@ public:
     virtual void uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
                                                const std::string& saveAsPath,
                                                const std::string& saveAsFilename,
-                                               const bool isRename, SocketPoll&,
+                                               const bool isRename, const Attributes&, SocketPoll&,
                                                const AsyncUploadCallback& asyncUploadCallback) = 0;
 
     /// Get the progress state of an asynchronous LocalFileToStorage upload.
@@ -343,9 +408,6 @@ protected:
     /// Returns the root path of the jail directory of docs.
     std::string getLocalRootPath() const;
 
-    /// Returns the client-provided extended data to send to the WOPI host.
-    const std::string& getExtendedData() const { return _extendedData; }
-
 private:
     Poco::URI _uri;
     const std::string _localStorePath;
@@ -354,17 +416,6 @@ private:
     std::string _jailedFilePathAnonym;
     FileInfo _fileInfo;
     bool _isDownloaded;
-    bool _forceSave;
-
-    /// The document has been modified by the user.
-    bool _isUserModified;
-
-    /// This save operation is an autosave.
-    bool _isAutosave;
-    /// Saving on exit (when the document is cleaned up from memory)
-    bool _isExitSave;
-    /// The client-provided saving extended data to send to the WOPI host.
-    std::string _extendedData;
 
     static bool FilesystemEnabled;
     /// If true, use only the WOPI URL for whether to use SSL to talk to storage server
@@ -410,7 +461,7 @@ public:
     /// obtained using getFileInfo method
     std::unique_ptr<LocalFileInfo> getLocalFileInfo();
 
-    bool updateLockState(const Authorization&, LockContext&, bool) override
+    bool updateLockState(const Authorization&, LockContext&, bool, const Attributes&) override
     {
         return true;
     }
@@ -421,7 +472,7 @@ public:
     void uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
                                        const std::string& saveAsPath,
                                        const std::string& saveAsFilename, const bool isRename,
-                                       SocketPoll&,
+                                       const Attributes&, SocketPoll&,
                                        const AsyncUploadCallback& asyncUploadCallback) override;
 
 private:
@@ -572,7 +623,8 @@ public:
                                                         unsigned redirectLimit);
 
     /// Update the locking state (check-in/out) of the associated file
-    bool updateLockState(const Authorization& auth, LockContext& lockCtx, bool lock) override;
+    bool updateLockState(const Authorization& auth, LockContext& lockCtx, bool lock,
+                         const Attributes& attribs) override;
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
@@ -581,7 +633,7 @@ public:
     void uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
                                        const std::string& saveAsPath,
                                        const std::string& saveAsFilename, const bool isRename,
-                                       SocketPoll& socketPoll,
+                                       const Attributes&, SocketPoll& socketPoll,
                                        const AsyncUploadCallback& asyncUploadCallback) override;
 
     /// Total time taken for making WOPI calls during uploading.
