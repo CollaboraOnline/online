@@ -119,6 +119,7 @@ private:
                 const std::string bytes = Util::hexStringToBytes(
                     reinterpret_cast<const uint8_t*>(hex.data()), hex.size());
                 socket->send(bytes);
+                socket->shutdown();
             }
             else
             {

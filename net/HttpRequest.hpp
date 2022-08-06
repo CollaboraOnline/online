@@ -825,7 +825,7 @@ private:
     {
         if (!done())
         {
-            LOG_TRC("Finishing");
+            LOG_TRC("Finishing: " << name(newState));
             _bodyFile.close();
             _state = newState;
             if (_finishedCallback)
