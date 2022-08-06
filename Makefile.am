@@ -180,7 +180,11 @@ coolforkit_SOURCES = $(coolforkit_sources) \
                      $(shared_sources)
 
 if ENABLE_LIBFUZZER
+coolforkit_SOURCES += \
+		       common/DummyTraceEventEmitter.cpp
+
 common_fuzzer_sources = \
+		       common/DummyTraceEventEmitter.cpp \
 		       $(coolwsd_sources) \
 		       $(coolforkit_sources) \
 		       $(shared_sources)
@@ -197,7 +201,7 @@ clientsession_fuzzer_CPPFLAGS = \
 				-DKIT_IN_PROCESS=1 \
 				$(AM_CPPFLAGS)
 clientsession_fuzzer_SOURCES = \
-		         $(common_fuzzer_sources) \
+			       $(common_fuzzer_sources) \
 			       fuzzer/ClientSession.cpp
 clientsession_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 
@@ -205,7 +209,7 @@ httpresponse_fuzzer_CPPFLAGS = \
 				-DKIT_IN_PROCESS=1 \
 				$(AM_CPPFLAGS)
 httpresponse_fuzzer_SOURCES = \
-		         $(common_fuzzer_sources) \
+			       $(common_fuzzer_sources) \
 			       fuzzer/HttpResponse.cpp
 httpresponse_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 
@@ -214,7 +218,7 @@ httpecho_fuzzer_CPPFLAGS = \
 				$(AM_CPPFLAGS) \
         -I${top_srcdir}/test
 httpecho_fuzzer_SOURCES = \
-		         $(common_fuzzer_sources) \
+			       $(common_fuzzer_sources) \
 			       fuzzer/HttpEcho.cpp
 httpecho_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 
