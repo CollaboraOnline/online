@@ -1,0 +1,10 @@
+HTTP/1.1 402 PAYMENT REQUIRED
+Date: Wed, 02 Jun 2021 02:32:38 GMT
+Content-Length: 17
+Connection: close
+Server: gunicorn/19.9.0
+x-more-info: http://vimeo.com/22053820
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+
+Fuck you, pay me!
