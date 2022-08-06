@@ -180,14 +180,16 @@ coolforkit_SOURCES = $(coolforkit_sources) \
                      $(shared_sources)
 
 if ENABLE_LIBFUZZER
+common_fuzzer_sources = \
+		       $(coolwsd_sources) \
+		       $(coolforkit_sources) \
+		       $(shared_sources)
 
 admin_fuzzer_CPPFLAGS = \
 			-DKIT_IN_PROCESS=1 \
 			$(AM_CPPFLAGS)
 admin_fuzzer_SOURCES = \
-		       $(coolwsd_sources) \
-		       $(coolforkit_sources) \
-		       $(shared_sources) \
+		       $(common_fuzzer_sources) \
 		       fuzzer/Admin.cpp
 admin_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 
@@ -195,9 +197,7 @@ clientsession_fuzzer_CPPFLAGS = \
 				-DKIT_IN_PROCESS=1 \
 				$(AM_CPPFLAGS)
 clientsession_fuzzer_SOURCES = \
-			       $(coolwsd_sources) \
-			       $(coolforkit_sources) \
-			       $(shared_sources) \
+		         $(common_fuzzer_sources) \
 			       fuzzer/ClientSession.cpp
 clientsession_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 
@@ -205,9 +205,7 @@ httpresponse_fuzzer_CPPFLAGS = \
 				-DKIT_IN_PROCESS=1 \
 				$(AM_CPPFLAGS)
 httpresponse_fuzzer_SOURCES = \
-			       $(coolwsd_sources) \
-			       $(coolforkit_sources) \
-			       $(shared_sources) \
+		         $(common_fuzzer_sources) \
 			       fuzzer/HttpResponse.cpp
 httpresponse_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 
@@ -216,9 +214,7 @@ httpecho_fuzzer_CPPFLAGS = \
 				$(AM_CPPFLAGS) \
         -I${top_srcdir}/test
 httpecho_fuzzer_SOURCES = \
-			       $(loolwsd_sources) \
-			       $(loolforkit_sources) \
-			       $(shared_sources) \
+		         $(common_fuzzer_sources) \
 			       fuzzer/HttpEcho.cpp
 httpecho_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 
