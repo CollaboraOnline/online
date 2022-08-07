@@ -6,6 +6,7 @@
  */
 
 #include <config.h>
+#include <config_version.h>
 
 #include <iomanip>
 #include <string>

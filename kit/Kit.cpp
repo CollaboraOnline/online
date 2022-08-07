@@ -10,6 +10,7 @@
  */
 
 #include <config.h>
+#include <config_version.h>
 
 #include <dlfcn.h>
 #ifdef __linux__
