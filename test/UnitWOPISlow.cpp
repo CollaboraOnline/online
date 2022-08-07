@@ -168,11 +168,7 @@ public:
         // Triggered while closing.
         LOK_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsAutosave"));
 
-        // Unfortunately, we clobber the modified flag when uploading.
-        // So, if we had a user-modified upload that failed, the subsequent
-        // try will have dropped the modified flag, and this assertion will fail.
-        //FIXME: do not clobber the storage flags (modified, forced, etc.) when retrying.
-        // LOK_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
+        LOK_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
 
         passTest("Document uploaded on closing as expected.");
         return nullptr;
