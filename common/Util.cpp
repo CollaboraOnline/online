@@ -6,6 +6,7 @@
  */
 
 #include <config.h>
+#include <config_version.h>
 
 #include "Util.hpp"
 

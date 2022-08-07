@@ -6,6 +6,7 @@
  */
 
 #include <config.h>
+#include <config_version.h>
 #include <stdexcept>
 #include "COOLWSD.hpp"
 #include "ProofKey.hpp"

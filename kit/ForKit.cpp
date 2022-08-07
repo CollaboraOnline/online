@@ -10,6 +10,7 @@
  */
 
 #include <config.h>
+#include <config_version.h>
 
 #ifndef __FreeBSD__
 #include <sys/capability.h>

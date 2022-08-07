@@ -20,7 +20,9 @@ coolwsd.xml
 aclocal.m4
 autom4te.cache
 config.h
-config.h.in
+config_unused.h
+config_unused.h.in
+config_version.h
 ios/config.h
 config.log
 config.guess

@@ -1,0 +1,104 @@
+/* Variables that usually don't change once configured */
+
+/* The user-visible name of the app you build. */
+#undef APP_NAME
+
+/* Default value of feature_lock.calc_unlock_highlights */
+#undef CALC_UNLOCK_HIGHLIGHTS
+
+/* Define to 1 if this is a code-coverage build. */
+#undef CODE_COVERAGE
+
+/* Enable permanent anonymization in logs */
+#undef COOLWSD_ANONYMIZE_USER_DATA
+
+/* Destination for Trace Event output */
+#undef COOLWSD_TRACEEVENTFILE
+
+/* The user-name which is allowed to run coolwsd and its tools */
+#undef COOL_USER_ID
+
+/* Whether to disable SECCOMP */
+#undef DISABLE_SECCOMP
+
+/* Default value of feature_lock.draw_unlock_highlights */
+#undef DRAW_UNLOCK_HIGHLIGHTS
+
+/* Whether to compile in some extra debugging support code and disable some
+   security pieces */
+#undef ENABLE_DEBUG
+
+/* Whether to compile and enable feature locking */
+#undef ENABLE_FEATURE_LOCK
+
+/* Whether to compile and enable feature restrictions */
+#undef ENABLE_FEATURE_RESTRICTION
+
+/* Whether to enable SSL */
+#undef ENABLE_SSL
+
+/* Whether to enable support key */
+#undef ENABLE_SUPPORT_KEY
+
+/* Should the Release notes message be shown on upgrade */
+#undef ENABLE_WELCOME_MESSAGE
+
+/* User feedback URL. */
+#undef FEEDBACK_URL
+
+/* Whether OpenSSL has PKCS5_PBKDF2_HMAC() */
+#undef HAVE_PKCS5_PBKDF2_HMAC
+
+/* Define to 1 if you have the `ppoll' function. */
+#undef HAVE_PPOLL
+
+/* Whether the used C++ has support for std::filesystem. */
+#undef HAVE_STD_FILESYSTEM
+
+/* Whether the std::filesystem is in the experimental header. */
+#undef HAVE_STD_FILESYSTEM_EXPERIMENTAL
+
+/* Default value of feature_lock.impress_unlock_highlights */
+#undef IMPRESS_UNLOCK_HIGHLIGHTS
+
+/* Infobar URL. */
+#undef INFOBAR_URL
+
+/* Define to 1 if this is a libfuzzer build. */
+#undef LIBFUZZER
+
+/* Default value of feature_lock.locked_commands */
+#undef LOCKED_COMMANDS
+
+/* Enable logging of test assertions */
+#undef LOK_LOG_ASSERTIONS
+
+/* Path to LibreOffice installation */
+#undef LO_PATH
+
+/* Limit the maximum number of open connections */
+#undef MAX_CONNECTIONS
+
+/* Limit the maximum number of open documents */
+#undef MAX_DOCUMENTS
+
+/* Define to 1 if this is a mobileapp (eg. Android) build. */
+#undef MOBILEAPP
+
+/* Default value of feature_lock.unlock_description */
+#undef UNLOCK_DESCRIPTION
+
+/* Default value of feature_lock.unlock_link */
+#undef UNLOCK_LINK
+
+/* Default value of feature_lock.unlock_title */
+#undef UNLOCK_TITLE
+
+/* Default value of per_documents.document_signing_url */
+#undef VEREIGN_URL
+
+/* The welcome url of the build. */
+#undef WELCOME_URL
+
+/* Default value of feature_lock.writer_unlock_highlights */
+#undef WRITER_UNLOCK_HIGHLIGHTS
