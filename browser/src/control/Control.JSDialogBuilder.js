@@ -2560,7 +2560,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'configuredialog': 'sidebar',
 			'modifypage': 'sidebar',
 			'parapropertypanel': 'paragraphdialog',
-			'tablecellbackgroundcolor': 'fillcolor'
+			'tablecellbackgroundcolor': 'fillcolor',
+			'basicshapes.circle': 'circle',
+			'basicshapes.ellipse': 'ellipse',
+			'insertshape': 'ellipse',
+			'flowchartshapes.flowchart-data': 'basicshapes.parallelogram',
+			'rect': 'basicshapes.rectangle'
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
