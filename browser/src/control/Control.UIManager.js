@@ -384,7 +384,11 @@ L.Control.UIManager = L.Control.extend({
 		this.initializeSidebar();
 		this.insertCustomButtons();
 
+		// this code ensures that elements in the notebookbar have their "selected" status
+		// displayed correctly
 		this.map.fire('darkmodechanged');
+		this.map.fire('rulerchanged');
+		this.map.fire('statusbarchanged');
 	},
 
 	// UI modification
