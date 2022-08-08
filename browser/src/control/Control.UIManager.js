@@ -450,6 +450,8 @@ L.Control.UIManager = L.Control.extend({
 		if (typeof window.initializedUI === 'function')
 			window.initializedUI();
 		this.map.fire('darkmodechanged');
+		this.map.fire('rulerchanged');
+		this.map.fire('statusbarchanged');
 	},
 
 	// UI modification
