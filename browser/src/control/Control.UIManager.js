@@ -147,8 +147,12 @@ L.Control.UIManager = L.Control.extend({
 		var isDesktop = window.mode.isDesktop();
 		var currentMode = this.getCurrentMode();
 		var enableNotebookbar = currentMode === 'notebookbar';
+		var hasShare = this.map.wopi.EnableShare;
 
 		document.body.setAttribute('data-userInterfaceMode', currentMode);
+
+		if (hasShare)
+			document.body.setAttribute('data-integratorSidebar', 'true');
 
 		if (window.mode.isMobile()) {
 			$('#mobile-edit-button').show();
