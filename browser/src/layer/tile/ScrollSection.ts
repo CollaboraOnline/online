@@ -449,6 +449,15 @@ class ScrollSection {
 		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
 		const startX = this.isCalcRTL() ? docWidth - scrollProps.startX - sizeX : scrollProps.startX;
 
+		if (this.sectionProperties.drawScrollBarRailway) {
+			this.context.globalAlpha = this.sectionProperties.scrollBarRailwayOpacity;
+			this.context.fillStyle = this.sectionProperties.scrollBarRailwayColor;
+			this.context.fillRect(this.sectionProperties.xMin, startY, this.sectionProperties.xMax - this.sectionProperties.yMax, this.sectionProperties.scrollBarRailwayThickness);
+		}
+
+		this.context.fillStyle = '#7E8182';
+
+
 		this.context.fillRect(startX, startY, sizeX, this.sectionProperties.scrollBarThickness);
 
 		this.context.globalAlpha = 1.0;
