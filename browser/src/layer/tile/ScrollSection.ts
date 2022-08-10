@@ -75,6 +75,11 @@ class ScrollSection {
 		this.sectionProperties.scrollBarThickness = 12 * app.roundedDpiScale;
 		this.sectionProperties.edgeOffset = 10 * app.roundedDpiScale;
 
+		this.sectionProperties.drawScrollBarRailway = true;
+		this.sectionProperties.scrollBarRailwayThickness = 12 * app.roundedDpiScale;
+		this.sectionProperties.scrollBarRailwayOpacity = 1;
+		this.sectionProperties.scrollBarRailwayColor = '#ffffff';
+
 		this.sectionProperties.drawVerticalScrollBar = ((<any>window).mode.isDesktop() ? true: false);
 		this.sectionProperties.drawHorizontalScrollBar = ((<any>window).mode.isDesktop() ? true: false);
 
@@ -393,14 +398,22 @@ class ScrollSection {
 	private drawVerticalScrollBar () {
 		var scrollProps: any = this.getVerticalScrollProperties();
 
-		if (this.sectionProperties.animatingVerticalScrollBar)
+		var startX = this.isCalcRTL() ? this.sectionProperties.edgeOffset : this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
+
+		if (this.sectionProperties.drawScrollBarRailway) {
+			this.context.globalAlpha = this.sectionProperties.scrollBarRailwayOpacity;
+			this.context.fillStyle = this.sectionProperties.scrollBarRailwayColor;
+			this.context.fillRect(startX, this.sectionProperties.yMin, this.sectionProperties.scrollBarRailwayThickness, this.sectionProperties.yMax - this.sectionProperties.yMin);
+		}
+
+		if (this.sectionProperties.animatingVerticalScrollBar) {
 			this.context.globalAlpha = this.sectionProperties.currentAlpha;
-		else
+		} else {
 			this.context.globalAlpha = this.sectionProperties.clickScrollVertical ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
+		}
 
 		this.context.fillStyle = '#7E8182';
 
-		var startX = this.isCalcRTL() ? this.sectionProperties.edgeOffset : this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
 
 		this.context.fillRect(startX, scrollProps.startY, this.sectionProperties.scrollBarThickness, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness);
 
