@@ -6231,7 +6231,36 @@ w2utils.event = {
             var img  = '<td>&#160;</td>';
             var text = item.text;
             if (typeof text == 'function') text = text.call(this, item);
-            if (item.img)  img = '<td><div class="w2ui-tb-image w2ui-icon '+ item.img +'"></div></td>';
+
+            if (item.img) {
+                // color indicator container for classic mode
+                var colorContainer = '<div class="selected-color-classic"></div>';
+
+                /**
+                 * @css class="textcolor" used in:
+                 *  - Writer, Calc, Impress, Draw
+                 *  - as "Font Color"
+                 *
+                 * @css class="backcolor" used in:
+                 *  - Writer, Impress, Draw
+                 *  - as "Character Highlighting Color"
+                 *
+                 * @css class="backgroundcolor" used in:
+                 *  - Calc
+                 *  - as "Background Color"
+                 *  - (on mobile Calc uses "backcolor")
+                 *
+                 * It would be appropriate to place color indicator to below
+                 * of those classes' container.
+                 *
+                 * We have to filter where to add the color indicator,
+                 * otherwise it will be added to below of each toolbar
+                 * elements.
+                 */
+                img = (item.img == 'textcolor' || item.img == 'backcolor' || item.img == 'backgroundcolor') ?
+                '<td><div class="w2ui-tb-image w2ui-icon '+ item.img +'"></div>' + colorContainer + '</td>' :
+                '<td><div class="w2ui-tb-image w2ui-icon '+ item.img +'"></div></td>';
+            }
             if (item.icon) img = '<td><div class="w2ui-tb-image"><span class="'+ item.icon +'"></span></div></td>';
 
             if (html === '') switch (item.type) {
