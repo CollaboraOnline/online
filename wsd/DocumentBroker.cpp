@@ -1256,7 +1256,7 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
         LOG_DBG("Save result from Core: saved (during "
                 << DocumentState::toString(_docState.activity()) << ')');
     else
-        LOG_INF("Save result from Core (failure): "
+        LOG_WRN("Save result from Core (failure): "
                 << result << " (during " << DocumentState::toString(_docState.activity()) << ')');
 
 #if !MOBILEAPP
@@ -1270,7 +1270,7 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     {
         // It's not an error if there was no file to rename, when the document isn't modified.
         const auto onrre = errno;
-        LOG_TRC("Failed to renamed [" << oldName << "] to [" << newName << "] ("
+        LOG_DBG("Failed to renamed [" << oldName << "] to [" << newName << "] ("
                                       << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre)
                                       << ')');
     }
@@ -1301,7 +1301,7 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
         const auto it = _sessions.find(sessionId);
         if (it != _sessions.end())
         {
-            LOG_DBG("Failed to save docKey ["
+            LOG_INF("Failed to save docKey ["
                     << _docKey << "] as .uno:Save has failed in LOK. Notifying client "
                     << sessionId);
             it->second->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
