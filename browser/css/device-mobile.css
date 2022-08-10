@@ -517,6 +517,22 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 #toolbar-down table.w2ui-button .w2ui-tb-image {
 	margin: 5px 9px !important;
 }
+#toolbar-down table.w2ui-button .textcolor {
+	margin-bottom: 0px !important;
+}
+#toolbar-down table.w2ui-button .backcolor {
+	margin-bottom: 0px !important;
+}
+#toolbar-down table.w2ui-button .selected-color-classic {
+	height: 5px;
+	width: 26px;
+	margin: auto;
+	position: relative;
+	top: -6px;
+	border: 1px solid var(--color-border-dark);
+	border-radius: 7px;
+	outline: 1px solid var(--color-background-lighter);
+}
 .w2ui-toolbar .w2ui-break{
 	background-image: none;
 	background-color: #dae6f3;

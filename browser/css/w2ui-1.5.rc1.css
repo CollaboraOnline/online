@@ -2943,6 +2943,15 @@ button.w2ui-btn-small:focus:before {
   border: 1px solid transparent;
   background-color: transparent;
 }
+.w2ui-toolbar table.w2ui-button .selected-color-classic {
+  height: 7px;
+  width: 26px;
+  position: relative;
+  top: -6px;
+  border: 1px solid var(--color-border-dark);
+  border-radius: 7px;
+  outline: 1px solid var(--color-background-lighter);
+}
 .w2ui-toolbar table.w2ui-button .w2ui-tb-image {
   width: 22px;
   height: 16px;
