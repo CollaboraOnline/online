@@ -77,7 +77,7 @@ class ScrollSection {
 
 		this.sectionProperties.drawScrollBarRailway = true;
 		this.sectionProperties.scrollBarRailwayThickness = 12 * app.roundedDpiScale;
-		this.sectionProperties.scrollBarRailwayOpacity = 1;
+		this.sectionProperties.scrollBarRailwayAlpha = this.map._docLayer._docType === 'spreadsheet' ? 1.0 : 0.5;
 		this.sectionProperties.scrollBarRailwayColor = '#ffffff';
 
 		this.sectionProperties.drawVerticalScrollBar = ((<any>window).mode.isDesktop() ? true: false);
@@ -401,7 +401,7 @@ class ScrollSection {
 		var startX = this.isCalcRTL() ? this.sectionProperties.edgeOffset : this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
 
 		if (this.sectionProperties.drawScrollBarRailway) {
-			this.context.globalAlpha = this.sectionProperties.scrollBarRailwayOpacity;
+			this.context.globalAlpha = this.sectionProperties.scrollBarRailwayAlpha;
 			this.context.fillStyle = this.sectionProperties.scrollBarRailwayColor;
 			this.context.fillRect(startX, this.sectionProperties.yMin, this.sectionProperties.scrollBarRailwayThickness, this.sectionProperties.yMax - this.sectionProperties.yMin);
 		}
@@ -450,7 +450,7 @@ class ScrollSection {
 		const startX = this.isCalcRTL() ? docWidth - scrollProps.startX - sizeX : scrollProps.startX;
 
 		if (this.sectionProperties.drawScrollBarRailway) {
-			this.context.globalAlpha = this.sectionProperties.scrollBarRailwayOpacity;
+			this.context.globalAlpha = this.sectionProperties.scrollBarRailwayAlpha;
 			this.context.fillStyle = this.sectionProperties.scrollBarRailwayColor;
 			this.context.fillRect(this.sectionProperties.xMin, startY, this.sectionProperties.xMax - this.sectionProperties.yMax, this.sectionProperties.scrollBarRailwayThickness);
 		}
