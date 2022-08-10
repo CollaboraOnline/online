@@ -462,7 +462,7 @@ L.Control.JSDialog = L.Control.extend({
 	onJSUpdate: function (e) {
 		var data = e.data;
 
-		if (data.jsontype !== 'dialog')
+		if (data.jsontype !== 'dialog' && data.jsontype !== 'popup')
 			return;
 
 		var dialog = this.dialogs[data.id] ? this.dialogs[data.id].container : null;
@@ -512,7 +512,7 @@ L.Control.JSDialog = L.Control.extend({
 	onJSAction: function (e) {
 		var data = e.data;
 
-		if (data.jsontype !== 'dialog')
+		if (data.jsontype !== 'dialog' && data.jsontype !== 'popup')
 			return;
 
 		var builder = this.dialogs[data.id] ? this.dialogs[data.id].builder : null;
