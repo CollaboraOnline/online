@@ -77,7 +77,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Print', 'text'), L.Control.MenubarShortcuts.shortcuts.PRINT), id: 'print', type: 'action'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'},
-				{name: _UNO('.uno:SetDocumentProperties', 'text'), id: 'setdocumentproperties', type: 'action'}
+				{ uno: '.uno:SetDocumentProperties', id: 'properties' }
 			]},
 			{name: _UNO('.uno:EditMenu', 'text'), id: 'editmenu', type: 'menu', menu: [
 				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Undo', 'text'), L.Control.MenubarShortcuts.shortcuts.UNDO), uno: '.uno:Undo'},

@@ -278,18 +278,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'type': 'bigtoolitem',
 					'text': _('Properties'),
 					'command': '.uno:SetDocumentProperties'
-				},
-				{
-					'type': 'toolbox',
-					'children': [
-						{
-							'id': 'keyboard-shortcuts',
-							'type': 'bigtoolitem',
-							'text': _('Keyboard shortcuts'),
-							'command': '.uno:KeyboardShortcuts'
-						}
-					]
-				},
+				}
 			]
 		});
 
