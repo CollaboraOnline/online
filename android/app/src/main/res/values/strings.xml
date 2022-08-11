@@ -1,11 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--string name="app_name" definition is deliberately missing here, it is filled in in build.gradle.-->
-
     <string name="app_name_settings">Settings</string>
     <string name="app_version_and_hash">Version: %1$s\nonline git-hash: %2$s\ncore git-hash: %3$s</string>
     <string name="app_description">$APP_NAME is a modern, easy-to-use, open source productivity suite for word processing, spreadsheets, presentations and more.</string>
     <string name="app_vendor">This release was supplied by $VENDOR.</string>
-
     <string name="no_recent_items">Please open a file using the folder icon in the toolbar.</string>
     <string name="no_items">No items</string>
     <string name="temp_file_saving_disabled">This file is read-only, saving is disabled.</string>
@@ -13,7 +12,6 @@
     <string name="file_creation_failed">File creation failed</string>
     <string name="storage_permission_required">Storage permission is required</string>
     <string name="failed_to_load_file">Failed to determine the file to load</string>
-
     <string name="list_view">List</string>
     <string name="grid_view">Grid</string>
     <string name="pref_category_explorer">File Manager Settings</string>
@@ -33,16 +31,13 @@
     <string name="pref_user_name_guest">Guest User</string>
     <string name="pref_enable_chrome_debugger">Chrome Debugging</string>
     <string name="pref_enable_chrome_debugger_info">Enable to use Chrome\'s debugging tool in the document</string>
-
     <string name="about_license">Show License</string>
     <string name="about_notice">Show Notice</string>
     <string name="about_moreinfo">More Info</string>
-
     <string name="new_textdocument">New Text Document</string>
     <string name="new_presentation">New Presentation</string>
     <string name="new_spreadsheet">New Spreadsheet</string>
     <string name="default_document_name">untitled</string>
-
     <string name="filter">Filter by</string>
     <string name="sort">Sort by</string>
     <string name="sort_smallest">Smallest first</string>
@@ -56,20 +51,17 @@
     <string name="title_recents">Recent files</string>
     <string name="title_browser">All files</string>
     <!-- Pref keys as resources ; Not currently used -->
-
     <string name="action_about">About</string>
     <string name="action_settings">Settings</string>
     <string name="open">Open</string>
     <string name="share">Share</string>
     <string name="remove_from_list">Remove from the list</string>
     <string name="share_via">Share via</string>
-
     <!-- Document browser filters -->
     <string name="filter_everything">Everything</string>
     <string name="filter_documents">Documents</string>
     <string name="filter_spreadsheets">Spreadsheets</string>
     <string name="filter_presentations">Presentations</string>
-
     <!-- Document provider names -->
     <string name="document_locations">Document locations</string>
     <string name="close_document_locations">Close document locations</string>
@@ -79,18 +71,13 @@
     <string name="otg_file_system">OTG device (experimental)</string>
     <string name="remote_server">Remote server</string>
     <string name="usb_connected_configure">USB connected, configure your device.</string>
-
     <string name="owncloud_wrong_connection">Cannot connect to the cloud server. Check your configuration.</string>
     <string name="owncloud_unauthorized">Cannot log in to the cloud server. Check your configuration.</string>
     <string name="owncloud_unspecified_error">Unspecified error connecting to the cloud server. Check your configuration and/or try later.</string>
-
     <string name="ext_document_provider_error">Invalid root file. Check your sd card configuration.</string>
     <string name="otg_missing_error">Invalid root file. Check your OTG device and/or configuration.</string>
-
     <!-- Edit action names -->
-
     <!-- Feedback messages -->
-
     <!-- Document provider settings -->
     <string name="storage_provider_settings">Storage provider settings</string>
     <string name="owncloud_settings">Cloud server settings</string>
@@ -102,7 +89,6 @@
     <string name="server_url_and_port">URL and port of the cloud server.</string>
     <string name="user_name">User name</string>
     <string name="password">Password</string>
-
     <!-- Directory browser strings -->
     <string name="up_description">To parent directory</string>
     <string name="confirm_label">Confirm</string>
@@ -111,44 +97,32 @@
     <string name="directory_browser_label">Choose Directory</string>
     <string name="bad_directory">Invalid directory path</string>
     <string name="current_dir">Current Directory: %1$s</string>
-
     <!-- Permission rationale alert dialog strings -->
     <string name="title_permission_required">Permission Required</string>
     <string name="reason_required_to_read_documents">Storage permission is required for reading your documents.</string>
     <string name="positive_ok">OK</string>
     <string name="negative_im_sure">I\'m sure</string>
     <string name="negative_cancel">Cancel</string>
-
     <!-- Save Alert dialog strings -->
     <string name="action_cancel">Cancel</string>
-
     <!-- Create New Document Dialog Strings -->
     <string name="create_new_document_title">Create New Document</string>
     <string name="enter_filename">Please enter the file name:</string>
     <string name="action_create">Create</string>
     <string name="action_overwrite">Overwrite</string>
-
     <!-- Loading SlideShow Dialog Strings -->
     <string name="loading">Loading...</string>
-
     <string name="share_document">Share Document</string>
-
     <!-- Presentation Mode Strings -->
-
     <!-- Calc Header Menu Strings -->
-
     <!-- Password dialog strings -->
-
     <!-- Insert Image Strings -->
-
     <!-- Clipboard Actions -->
-
     <!-- UNO cmd controller Strings -->
     <string name="unable_to_go_further">Unable to go further.</string>
     <string name="bmp_null">Bmp is null!</string>
     <string name="directory_not_saved">Directory not saved.</string>
     <string name="title_activity_show_html">About</string>
-
     <!-- Theme settings -->
     <string name="theme">Theme</string>
     <string name="choose_theme">Choose theme</string>

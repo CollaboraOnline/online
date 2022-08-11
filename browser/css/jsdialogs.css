@@ -1198,6 +1198,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	opacity: 0.8;
 }
 
+#acceptformula {
+	margin-inline-start: 3px;
+}
+
 .formulabar.unotoolbutton:hover {
 	opacity: 1;
 }

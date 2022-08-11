@@ -10,8 +10,7 @@ describe('macro dialog tests', function() {
 		cy.get('#MacroWarnMedium.jsdialog')
 			.should('exist');
 
-		cy.get('#MacroWarnMedium.jsdialog #ok')
-			.click();
+		helper.clickOnIdle('#MacroWarnMedium.jsdialog #ok');
 	}
 
 	beforeEach(function() {

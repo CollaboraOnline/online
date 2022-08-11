@@ -137,7 +137,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		this._toolitemHandlers['.uno:InsertFormula'] = function () {};
 		this._toolitemHandlers['.uno:SetBorderStyle'] = function () {};
-		this._toolitemHandlers['.uno:TableCellBackgroundColor'] = function () {};
 
 		this._menus = {};
 		this._menus['AutoSumMenu'] = [
@@ -2561,6 +2560,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'configuredialog': 'sidebar',
 			'modifypage': 'sidebar',
 			'parapropertypanel': 'paragraphdialog',
+			'tablecellbackgroundcolor': 'fillcolor'
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];

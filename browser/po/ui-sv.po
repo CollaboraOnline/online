@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-26 10:50+0200\n"
+"POT-Creation-Date: 2022-08-04 14:31+0200\n"
 "PO-Revision-Date: 2022-08-01 11:22+0000\n"
 "Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: sv\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -210,7 +210,7 @@ msgstr "Uppdatera logg"
 msgid "Channel Filter:"
 msgstr "Kanalfilter:"
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:429
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:428
 #: src/control/Control.StatusBar.js:314
 msgid "None"
 msgstr "Ingen"
@@ -390,10 +390,10 @@ msgid "Index"
 msgstr "Förteckning"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2373
+#: src/control/Control.JSDialogBuilder.js:2372
 #: src/layer/tile/CanvasTileLayer.js:5008
 #: src/layer/tile/CanvasTileLayer.js:5018
-#: src/layer/tile/CommentListSection.ts:856
+#: src/layer/tile/CommentListSection.ts:857
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -439,118 +439,118 @@ msgstr ""
 msgid "Accept"
 msgstr "Acceptera"
 
-#: src/control/Control.JSDialogBuilder.js:144
+#: src/control/Control.JSDialogBuilder.js:143
 #: src/control/Control.StatusBar.js:312
 msgid "Sum"
 msgstr "Summa"
 
-#: src/control/Control.JSDialogBuilder.js:145
+#: src/control/Control.JSDialogBuilder.js:144
 #: src/control/Control.StatusBar.js:307
 msgid "Average"
 msgstr "Medelvärde"
 
-#: src/control/Control.JSDialogBuilder.js:146
+#: src/control/Control.JSDialogBuilder.js:145
 msgid "Min"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:147
+#: src/control/Control.JSDialogBuilder.js:146
 msgid "Max"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:148
+#: src/control/Control.JSDialogBuilder.js:147
 #: src/control/Control.StatusBar.js:309
 msgid "Count"
 msgstr "Antal"
 
-#: src/control/Control.JSDialogBuilder.js:432
+#: src/control/Control.JSDialogBuilder.js:431
 msgid "Solid"
 msgstr "Stabil"
 
-#: src/control/Control.JSDialogBuilder.js:435
+#: src/control/Control.JSDialogBuilder.js:434
 msgid "Linear"
 msgstr "Linjär"
 
-#: src/control/Control.JSDialogBuilder.js:438
+#: src/control/Control.JSDialogBuilder.js:437
 msgid "Axial"
 msgstr "Axial"
 
-#: src/control/Control.JSDialogBuilder.js:441
+#: src/control/Control.JSDialogBuilder.js:440
 msgid "Radial"
 msgstr "Radiell"
 
-#: src/control/Control.JSDialogBuilder.js:444
+#: src/control/Control.JSDialogBuilder.js:443
 msgid "Ellipsoid"
 msgstr "Ellipsoid"
 
-#: src/control/Control.JSDialogBuilder.js:448
+#: src/control/Control.JSDialogBuilder.js:447
 msgid "Quadratic"
 msgstr "Kvadratisk"
 
-#: src/control/Control.JSDialogBuilder.js:451
+#: src/control/Control.JSDialogBuilder.js:450
 msgid "Square"
 msgstr "Kvadrat"
 
-#: src/control/Control.JSDialogBuilder.js:454
+#: src/control/Control.JSDialogBuilder.js:453
 msgid "Fixed size"
 msgstr "Fixerad storlek"
 
-#: src/control/Control.JSDialogBuilder.js:1330
+#: src/control/Control.JSDialogBuilder.js:1329
 msgid "From"
 msgstr "Från"
 
-#: src/control/Control.JSDialogBuilder.js:1333
+#: src/control/Control.JSDialogBuilder.js:1332
 msgid "To"
 msgstr "Till"
 
-#: src/control/Control.JSDialogBuilder.js:1336
+#: src/control/Control.JSDialogBuilder.js:1335
 msgid "Color"
 msgstr "Färg"
 
-#: src/control/Control.JSDialogBuilder.js:1624
+#: src/control/Control.JSDialogBuilder.js:1623
 msgid "Select range"
 msgstr "Välj intervall"
 
-#: src/control/Control.JSDialogBuilder.js:1673
+#: src/control/Control.JSDialogBuilder.js:1672
 #: src/control/Control.NotebookbarBuilder.js:238
 msgid "Font Name"
 msgstr "Teckensnitt"
 
-#: src/control/Control.JSDialogBuilder.js:1675 src/control/Toolbar.js:123
+#: src/control/Control.JSDialogBuilder.js:1674 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "Teckensnittsstorlek"
 
-#: src/control/Control.JSDialogBuilder.js:1677
+#: src/control/Control.JSDialogBuilder.js:1676
 #: src/control/Control.TopToolbar.js:499
 msgid "Style"
 msgstr "Format"
 
-#: src/control/Control.JSDialogBuilder.js:2359
+#: src/control/Control.JSDialogBuilder.js:2358
 msgid "reply"
 msgstr "svara"
 
-#: src/control/Control.JSDialogBuilder.js:2362
+#: src/control/Control.JSDialogBuilder.js:2361
 msgid "replies"
 msgstr "svar"
 
-#: src/control/Control.JSDialogBuilder.js:2435
+#: src/control/Control.JSDialogBuilder.js:2434
 msgid "Insert Comment"
 msgstr "Infoga kommentar"
 
-#: src/control/Control.JSDialogBuilder.js:2939
+#: src/control/Control.JSDialogBuilder.js:3047
 msgid "Cell borders"
 msgstr "Kantlinjer"
 
-#: src/control/Control.JSDialogBuilder.js:3150
+#: src/control/Control.JSDialogBuilder.js:3258
 #: src/control/Control.Menubar.js:725
 msgid "Rows"
 msgstr "Rader"
 
-#: src/control/Control.JSDialogBuilder.js:3151
+#: src/control/Control.JSDialogBuilder.js:3259
 #: src/control/Control.Menubar.js:728
 msgid "Columns"
 msgstr "Kolumner"
 
-#: src/control/Control.JSDialogBuilder.js:3171
+#: src/control/Control.JSDialogBuilder.js:3279
 msgid "Insert Table"
 msgstr "Infoga Tabell"
 
@@ -1109,8 +1109,8 @@ msgid "Bad"
 msgstr "Dålig"
 
 #: src/control/Control.NotebookbarCalc.js:735
-msgid "Row Width"
-msgstr "Radbredd"
+msgid "Row Height"
+msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:741
 msgid "Column Width"
@@ -2045,36 +2045,36 @@ msgstr "Funktioner"
 msgid "No Comments"
 msgstr "Inga kommentarer"
 
-#: src/layer/tile/CommentListSection.ts:803
+#: src/layer/tile/CommentListSection.ts:804
 msgid "Modify"
 msgstr "Ändra"
 
-#: src/layer/tile/CommentListSection.ts:809
+#: src/layer/tile/CommentListSection.ts:810
 #: src/layer/tile/CommentSection.ts:129
 msgid "Reply"
 msgstr "Svara"
 
-#: src/layer/tile/CommentListSection.ts:815
+#: src/layer/tile/CommentListSection.ts:816
 msgid "Remove"
 msgstr "Ta bort"
 
-#: src/layer/tile/CommentListSection.ts:821
+#: src/layer/tile/CommentListSection.ts:822
 msgid "Remove Thread"
 msgstr "Ta bort tråd"
 
-#: src/layer/tile/CommentListSection.ts:827
+#: src/layer/tile/CommentListSection.ts:828
 msgid "Resolve"
 msgstr "Lös"
 
-#: src/layer/tile/CommentListSection.ts:827
+#: src/layer/tile/CommentListSection.ts:828
 msgid "Unresolve"
 msgstr "Lämnat olöst"
 
-#: src/layer/tile/CommentListSection.ts:833
+#: src/layer/tile/CommentListSection.ts:834
 msgid "Unresolve Thread"
 msgstr "Markera tråden olöst"
 
-#: src/layer/tile/CommentListSection.ts:833
+#: src/layer/tile/CommentListSection.ts:834
 msgid "Resolve Thread"
 msgstr "Lös tråd"
 
@@ -2283,6 +2283,9 @@ msgstr ""
 "translate/\">översättningar</a> eller <a target=\"_blank\" href=\""
 "https://collaboraonline.github.io/post/filebugs/\">skriva buggrapporter</a> "
 "med nödvändig information och steg för att reproducera felet."
+
+#~ msgid "Row Width"
+#~ msgstr "Radbredd"
 
 #~ msgid "Toggle Status Bar"
 #~ msgstr "Växla statusfältet"

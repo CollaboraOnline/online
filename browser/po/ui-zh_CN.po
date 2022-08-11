@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-26 10:50+0200\n"
+"POT-Creation-Date: 2022-08-04 14:31+0200\n"
 "PO-Revision-Date: 2022-06-28 00:19+0000\n"
 "Last-Translator: Eric <alchemillatruth@purelymail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -208,7 +208,7 @@ msgstr "刷新日志"
 msgid "Channel Filter:"
 msgstr "信道滤波器："
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:429
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:428
 #: src/control/Control.StatusBar.js:314
 msgid "None"
 msgstr "无"
@@ -387,10 +387,10 @@ msgid "Index"
 msgstr "索引"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2373
+#: src/control/Control.JSDialogBuilder.js:2372
 #: src/layer/tile/CanvasTileLayer.js:5008
 #: src/layer/tile/CanvasTileLayer.js:5018
-#: src/layer/tile/CommentListSection.ts:856
+#: src/layer/tile/CommentListSection.ts:857
 msgid "Comment"
 msgstr "批注"
 
@@ -436,118 +436,118 @@ msgstr ""
 msgid "Accept"
 msgstr "接受"
 
-#: src/control/Control.JSDialogBuilder.js:144
+#: src/control/Control.JSDialogBuilder.js:143
 #: src/control/Control.StatusBar.js:312
 msgid "Sum"
 msgstr "求和"
 
-#: src/control/Control.JSDialogBuilder.js:145
+#: src/control/Control.JSDialogBuilder.js:144
 #: src/control/Control.StatusBar.js:307
 msgid "Average"
 msgstr "平均值"
 
-#: src/control/Control.JSDialogBuilder.js:146
+#: src/control/Control.JSDialogBuilder.js:145
 msgid "Min"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:147
+#: src/control/Control.JSDialogBuilder.js:146
 msgid "Max"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:148
+#: src/control/Control.JSDialogBuilder.js:147
 #: src/control/Control.StatusBar.js:309
 msgid "Count"
 msgstr "计数"
 
-#: src/control/Control.JSDialogBuilder.js:432
+#: src/control/Control.JSDialogBuilder.js:431
 msgid "Solid"
 msgstr "均匀"
 
-#: src/control/Control.JSDialogBuilder.js:435
+#: src/control/Control.JSDialogBuilder.js:434
 msgid "Linear"
 msgstr "线性"
 
-#: src/control/Control.JSDialogBuilder.js:438
+#: src/control/Control.JSDialogBuilder.js:437
 msgid "Axial"
 msgstr "轴向"
 
-#: src/control/Control.JSDialogBuilder.js:441
+#: src/control/Control.JSDialogBuilder.js:440
 msgid "Radial"
 msgstr "放射状"
 
-#: src/control/Control.JSDialogBuilder.js:444
+#: src/control/Control.JSDialogBuilder.js:443
 msgid "Ellipsoid"
 msgstr "椭圆形"
 
-#: src/control/Control.JSDialogBuilder.js:448
+#: src/control/Control.JSDialogBuilder.js:447
 msgid "Quadratic"
 msgstr "正方形"
 
-#: src/control/Control.JSDialogBuilder.js:451
+#: src/control/Control.JSDialogBuilder.js:450
 msgid "Square"
 msgstr "方形"
 
-#: src/control/Control.JSDialogBuilder.js:454
+#: src/control/Control.JSDialogBuilder.js:453
 msgid "Fixed size"
 msgstr "固定大小"
 
-#: src/control/Control.JSDialogBuilder.js:1330
+#: src/control/Control.JSDialogBuilder.js:1329
 msgid "From"
 msgstr "从"
 
-#: src/control/Control.JSDialogBuilder.js:1333
+#: src/control/Control.JSDialogBuilder.js:1332
 msgid "To"
 msgstr "到"
 
-#: src/control/Control.JSDialogBuilder.js:1336
+#: src/control/Control.JSDialogBuilder.js:1335
 msgid "Color"
 msgstr "颜色"
 
-#: src/control/Control.JSDialogBuilder.js:1624
+#: src/control/Control.JSDialogBuilder.js:1623
 msgid "Select range"
 msgstr "选择范围"
 
-#: src/control/Control.JSDialogBuilder.js:1673
+#: src/control/Control.JSDialogBuilder.js:1672
 #: src/control/Control.NotebookbarBuilder.js:238
 msgid "Font Name"
 msgstr "字体名称"
 
-#: src/control/Control.JSDialogBuilder.js:1675 src/control/Toolbar.js:123
+#: src/control/Control.JSDialogBuilder.js:1674 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "字体大小"
 
-#: src/control/Control.JSDialogBuilder.js:1677
+#: src/control/Control.JSDialogBuilder.js:1676
 #: src/control/Control.TopToolbar.js:499
 msgid "Style"
 msgstr "样式"
 
-#: src/control/Control.JSDialogBuilder.js:2359
+#: src/control/Control.JSDialogBuilder.js:2358
 msgid "reply"
 msgstr "回复"
 
-#: src/control/Control.JSDialogBuilder.js:2362
+#: src/control/Control.JSDialogBuilder.js:2361
 msgid "replies"
 msgstr "回复"
 
-#: src/control/Control.JSDialogBuilder.js:2435
+#: src/control/Control.JSDialogBuilder.js:2434
 msgid "Insert Comment"
 msgstr "插入评论"
 
-#: src/control/Control.JSDialogBuilder.js:2939
+#: src/control/Control.JSDialogBuilder.js:3047
 msgid "Cell borders"
 msgstr "单元格边框"
 
-#: src/control/Control.JSDialogBuilder.js:3150
+#: src/control/Control.JSDialogBuilder.js:3258
 #: src/control/Control.Menubar.js:725
 msgid "Rows"
 msgstr "行"
 
-#: src/control/Control.JSDialogBuilder.js:3151
+#: src/control/Control.JSDialogBuilder.js:3259
 #: src/control/Control.Menubar.js:728
 msgid "Columns"
 msgstr "列"
 
-#: src/control/Control.JSDialogBuilder.js:3171
+#: src/control/Control.JSDialogBuilder.js:3279
 msgid "Insert Table"
 msgstr "插入表格"
 
@@ -1105,7 +1105,7 @@ msgid "Bad"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:735
-msgid "Row Width"
+msgid "Row Height"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:741
@@ -1992,36 +1992,36 @@ msgstr "函数"
 msgid "No Comments"
 msgstr "暂无评论"
 
-#: src/layer/tile/CommentListSection.ts:803
+#: src/layer/tile/CommentListSection.ts:804
 msgid "Modify"
 msgstr "修改"
 
-#: src/layer/tile/CommentListSection.ts:809
+#: src/layer/tile/CommentListSection.ts:810
 #: src/layer/tile/CommentSection.ts:129
 msgid "Reply"
 msgstr "回复"
 
-#: src/layer/tile/CommentListSection.ts:815
+#: src/layer/tile/CommentListSection.ts:816
 msgid "Remove"
 msgstr "删除"
 
-#: src/layer/tile/CommentListSection.ts:821
+#: src/layer/tile/CommentListSection.ts:822
 msgid "Remove Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:827
+#: src/layer/tile/CommentListSection.ts:828
 msgid "Resolve"
 msgstr "解决"
 
-#: src/layer/tile/CommentListSection.ts:827
+#: src/layer/tile/CommentListSection.ts:828
 msgid "Unresolve"
 msgstr "未解决"
 
-#: src/layer/tile/CommentListSection.ts:833
+#: src/layer/tile/CommentListSection.ts:834
 msgid "Unresolve Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:833
+#: src/layer/tile/CommentListSection.ts:834
 msgid "Resolve Thread"
 msgstr ""
 

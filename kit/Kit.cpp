@@ -1715,16 +1715,10 @@ public:
                     {
                         bool broadcast = false;
                         int viewId = -1;
-                        int exceptViewId = -1;
 
                         const std::string& target = tokens[1];
                         if (target == "all")
                         {
-                            broadcast = true;
-                        }
-                        else if (COOLProtocol::matchPrefix("except-", target))
-                        {
-                            exceptViewId = std::stoi(target.substr(7));
                             broadcast = true;
                         }
                         else
@@ -1747,8 +1741,7 @@ public:
                                 continue;
 
                             ChildSession& session = *it.second;
-                            if ((broadcast && (session.getViewId() != exceptViewId))
-                                || (!broadcast && (session.getViewId() == viewId)))
+                            if (broadcast || (!broadcast && (session.getViewId() == viewId)))
                             {
                                 if (!session.isCloseFrame())
                                 {

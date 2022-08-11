@@ -109,31 +109,37 @@ public:
 
 std::atomic<unsigned> DocumentBroker::DocBrokerId(1);
 
-DocumentBroker::DocumentBroker(ChildType type,
-                               const std::string& uri,
-                               const Poco::URI& uriPublic,
-                               const std::string& docKey,
-                               unsigned mobileAppDocId) :
-    _limitLifeSeconds(std::chrono::seconds::zero()),
-    _uriOrig(uri),
-    _type(type),
-    _uriPublic(uriPublic),
-    _docKey(docKey),
-    _docId(Util::encodeId(DocBrokerId++, 3)),
-    _documentChangedInStorage(false),
-    _isViewFileExtension(false),
-    _isModified(false),
-    _cursorPosX(0),
-    _cursorPosY(0),
-    _cursorWidth(0),
-    _cursorHeight(0),
-    _poll(new DocumentBrokerPoll("doc" SHARED_DOC_THREADNAME_SUFFIX + _docId, *this)),
-    _stop(false),
-    _lockCtx(new LockContext()),
-    _tileVersion(0),
-    _debugRenderedTileCount(0),
-    _wopiDownloadDuration(0),
-    _mobileAppDocId(mobileAppDocId)
+DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
+                               const std::string& docKey, unsigned mobileAppDocId)
+    : _limitLifeSeconds(std::chrono::seconds::zero())
+    , _uriOrig(uri)
+    , _type(type)
+    , _uriPublic(uriPublic)
+    , _docKey(docKey)
+    , _docId(Util::encodeId(DocBrokerId++, 3))
+    , _documentChangedInStorage(false)
+    , _isViewFileExtension(false)
+    , _saveManager(std::chrono::seconds(std::getenv("COOL_NO_AUTOSAVE") != nullptr
+                                            ? 0
+                                            : COOLWSD::getConfigValueNonZero<int>(
+                                                  "per_document.autosave_duration_secs", 300)),
+                   std::chrono::milliseconds(COOLWSD::getConfigValueNonZero<int>(
+                       "per_document.min_time_between_saves_ms", 500)))
+    , _storageManager(std::chrono::milliseconds(
+          COOLWSD::getConfigValueNonZero<int>("per_document.min_time_between_uploads_ms", 5000)))
+    , _isModified(false)
+    , _cursorPosX(0)
+    , _cursorPosY(0)
+    , _cursorWidth(0)
+    , _cursorHeight(0)
+    , _poll(
+          Util::make_unique<DocumentBrokerPoll>("doc" SHARED_DOC_THREADNAME_SUFFIX + _docId, *this))
+    , _stop(false)
+    , _lockCtx(Util::make_unique<LockContext>())
+    , _tileVersion(0)
+    , _debugRenderedTileCount(0)
+    , _wopiDownloadDuration(0)
+    , _mobileAppDocId(mobileAppDocId)
 {
     assert(!_docKey.empty());
     assert(!COOLWSD::ChildRoot.empty());
@@ -1366,9 +1372,7 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
         _storage->forceSave();
     }
 
-    if (force || _storageManager.lastUploadSuccessful() ||
-        (_storageManager.timeSinceLastUploadRequest() > std::chrono::seconds(5) &&
-         _storageManager.timeSinceLastUploadResponse() > std::chrono::seconds(5)))
+    if (force || _storageManager.lastUploadSuccessful() || _storageManager.canUploadNow())
     {
         constexpr bool isRename = false;
         uploadToStorageInternal(sessionId, /*saveAsPath*/ std::string(),
@@ -1382,7 +1386,8 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
     else
     {
         LOG_TRC("Last upload had failed and it's only been "
-                << _storageManager.timeSinceLastUploadResponse() << " since. ");
+                << _storageManager.timeSinceLastUploadResponse()
+                << " since. Min time between uploads: " << _storageManager.minTimeBetweenUploads());
     }
 }
 
@@ -1571,7 +1576,6 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         {
             // Saved and stored; update flags.
             _saveManager.setLastModifiedTime(_uploadRequest->newFileModifiedTime());
-            _storageManager.markLastUploadTime();
 
             // Save the storage timestamp.
             _storageManager.setLastModifiedTime(_storage->getFileInfo().getLastModifiedTime());
@@ -1963,18 +1967,14 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
         static const std::chrono::milliseconds MaxIdleSaveDurationMs = std::chrono::seconds(
             COOLWSD::getConfigValue<int>("per_document.idlesave_duration_secs", 30));
 
-        // The configured maximum duration before saving. Zero to disable.
-        static const std::chrono::milliseconds MaxAutoSaveDurationMs = std::chrono::seconds(
-            COOLWSD::getConfigValue<int>("per_document.autosave_duration_secs", 300));
-
         const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         const std::chrono::milliseconds inactivityTimeMs
             = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime);
-        const auto timeSinceLastSaveMs = std::chrono::duration_cast<std::chrono::milliseconds>(
-            now - _storageManager.getLastUploadTime());
-        LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSaveMs
-                                                   << " and most recent activity was "
-                                                   << inactivityTimeMs << " ago.");
+        const auto timeSinceLastSave = std::min(_saveManager.timeSinceLastSaveRequest(),
+                                                _storageManager.timeSinceLastUploadResponse());
+        LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSave
+                                                     << " and most recent activity was "
+                                                     << inactivityTimeMs << " ago.");
 
         bool save = false;
         // Zero or negative config value disables save.
@@ -1985,8 +1985,9 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
             save = true;
         }
 
-        if (MaxAutoSaveDurationMs > std::chrono::milliseconds::zero()
-            && timeSinceLastSaveMs >= MaxAutoSaveDurationMs)
+        // Save if it's been long enough since the last save and/or upload.
+        if (_saveManager.isAutosaveEnabled() &&
+            timeSinceLastSave >= _saveManager.autosaveInterval())
         {
             save = true;
         }
@@ -2060,7 +2061,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     }
 
     // Don't hammer on saving.
-    if (!canStop && _saveManager.canSaveNow(std::chrono::milliseconds(500)))
+    if (!canStop && _saveManager.canSaveNow())
     {
         // Stop if there is nothing to save.
         const bool possiblyModified = isPossiblyModified();
@@ -2102,7 +2103,8 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         LOG_TRC("Too soon to issue another save on ["
                 << getDocKey() << "]: " << _saveManager.timeSinceLastSaveRequest()
                 << " since last save request and " << _saveManager.timeSinceLastSaveRequest()
-                << " since last save response");
+                << " since last save response. Min time between saves: "
+                << _saveManager.minTimeBetweenSaves());
     }
 
     if (canStop)
