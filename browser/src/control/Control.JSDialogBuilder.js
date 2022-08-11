@@ -998,9 +998,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				var title = builder._cleanText(item.text);
 
-				var tab = L.DomUtil.create('div', 'ui-tab ' + builder.options.cssClass, tabsContainer);
+				var tab = L.DomUtil.create('button', 'ui-tab ' + builder.options.cssClass, tabsContainer);
 				tab.id = item.name + '-tab-label';
 				tab.number = item.id - 1;
+				tab.setAttribute('tabindex', 0);
 
 				var isSelectedTab = data.selected == item.id;
 				if (isSelectedTab) {
@@ -1046,6 +1047,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						};
 					};
 					$(tabs[t]).click(fn(t));
+					$(tabs[t]).on('keypress',function(e) {
+						if (e.which == 13) {
+							(fn(t));
+						}
+					});
+
 				}
 			} else {
 				window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
