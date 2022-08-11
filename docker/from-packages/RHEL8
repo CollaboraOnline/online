@@ -8,8 +8,8 @@ FROM registry.access.redhat.com/ubi8/ubi:8.1
 # Optional. The default is 'repos'.
 ARG repo
 
-# version: can be '21.11'
-# Optional. The default is '21.11'.
+# version: can be '22.05' and '21.11'
+# Optional. The default is '22.05'.
 ARG version
 
 # type: can be
