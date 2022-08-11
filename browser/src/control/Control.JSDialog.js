@@ -415,7 +415,7 @@ L.Control.JSDialog = L.Control.extend({
 				container.appendChild(endMarker);
 			}
 
-			if (canHaveFocus)
+			if (canHaveFocus && initialFocusElement)
 				initialFocusElement.focus();
 
 			if (toRemove)
