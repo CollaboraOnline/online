@@ -32,4 +32,6 @@ module.exports.list = {
 	backColor: ['#Home #BackColor .arrowbackground', '#tb_editbar_item_backcolor'],
 	borderStyle: ['#SetBorderStyle', '#tb_editbar_item_setborderstyle'],
 	backgroundColor: ['#Home #BackgroundColor .arrowbackground','#tb_editbar_item_backgroundcolor'],
+	fileTab: ['#File-tab-label', '#menu-file'],
+	documentProperties: ['#SetDocumentProperties', '#menu-properties'],
 };
