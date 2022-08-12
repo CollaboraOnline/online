@@ -2017,7 +2017,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (entry.image)
 			img.src = entry.image;
 		img.alt = entry.text;
-		img.title = entry.text;
+		if (entry.tooltip)
+			img.title = entry.tooltip;
+		else
+			img.title = entry.text;
 
 		if (!disabled) {
 			var singleClick = parentData.singleclickactivate === 'true' || parentData.singleclickactivate === true;
