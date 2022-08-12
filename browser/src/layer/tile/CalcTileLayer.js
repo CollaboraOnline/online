@@ -378,6 +378,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				this._switchSplitPanesContext();
 			}
 		}
+
+		var scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+		scrollSection.stepByStepScrolling = true;
 	},
 
 	// This initiates a selective repainting of row/col headers and
