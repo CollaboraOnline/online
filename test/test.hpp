@@ -13,7 +13,7 @@
 bool isStandalone();
 
 /// Run the set of client tests we have
-bool runClientTests(bool standalone, bool verbose);
+bool runClientTests(const char* cmd, bool standalone, bool verbose);
 
 // ---- Abstraction for standalone vs. WSD ----
 

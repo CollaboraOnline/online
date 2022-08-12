@@ -58,7 +58,7 @@ public:
         _workerStarted = true;
 
         _worker = std::thread([this]{
-                if (runClientTests(false, true))
+                if (runClientTests("", false, true))
                     exitTest(TestResult::Ok);
                 else
                     exitTest(TestResult::Failed);
