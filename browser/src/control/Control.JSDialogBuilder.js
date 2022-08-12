@@ -115,6 +115,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['image'] = this._imageHandler;
 		this._controlHandlers['scrollwindow'] = this._scrollWindowControl;
 		this._controlHandlers['customtoolitem'] = this._mapDispatchToolItem;
+		this._controlHandlers['bigcustomtoolitem'] = this._mapBigDispatchToolItem;
 
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
@@ -2864,6 +2865,25 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			data.command = data.id;
 
 		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		$(control.container).unbind('click.toolbutton');
+		if (!builder.map.isLockedItem(data)) {
+			$(control.container).click(function () {
+				builder.map.dispatch(data.command);
+			});
+		}
+	},
+
+	_mapBigDispatchToolItem: function (parentContainer, data, builder) {
+		if (!data.command)
+			data.command = data.id;
+
+		var noLabels = builder.options.noLabelsForUnoButtons;
+		builder.options.noLabelsForUnoButtons = false;
+
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		builder.options.noLabelsForUnoButtons = noLabels;
 
 		$(control.container).unbind('click.toolbutton');
 		if (!builder.map.isLockedItem(data)) {
