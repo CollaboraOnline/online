@@ -2020,14 +2020,20 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		img.title = entry.text;
 
 		if (!disabled) {
+			var singleClick = parentData.singleclickactivate === 'true' || parentData.singleclickactivate === true;
 			$(parentContainer).click(function() {
 				$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
 				builder.callback('iconview', 'select', parentData, entry.row, builder);
+				if (singleClick) {
+					builder.callback('iconview', 'activate', parentData, entry.row, builder);
+				}
 			});
-			$(parentContainer).dblclick(function() {
-				$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
-				builder.callback('iconview', 'activate', parentData, entry.row, builder);
-			});
+			if (!singleClick) {
+				$(parentContainer).dblclick(function() {
+					$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
+					builder.callback('iconview', 'activate', parentData, entry.row, builder);
+				});
+			}
 			builder._preventDocumentLosingFocusOnClick(parentContainer);
 		}
 	},
