@@ -132,6 +132,7 @@ var unoCommandsArray = {
 	'EntireColumn':{presentation:{menu:_('Select Column'),},text:{menu:_('~Column'),},},
 	'EntireRow':{presentation:{menu:_('Select Row'),},text:{menu:_('~Row'),},},
 	'ExponentialSmoothingDialog':{spreadsheet:{menu:_('~Exponential Smoothing...'),},},
+	'ExportToPDF':{global:{context:_('Export as PDF'),menu:_('Export as PDF'),},},
 	'FTestDialog':{spreadsheet:{menu:_('~F-test...'),},},
 	'FillColor':{global:{menu:_('Fill Color'),},},
 	'FilterMenu':{spreadsheet:{menu:_('More ~Filters'),},},

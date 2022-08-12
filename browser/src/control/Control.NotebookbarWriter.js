@@ -270,6 +270,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'type': 'bigtoolitem',
 					'text': _('Properties'),
 					'command': '.uno:SetDocumentProperties'
+				},
+				{
+					'type': 'bigcustomtoolitem',
+					'text': _UNO('.uno:ExportToPDF'),
+					'command': 'exportpdf'
 				}
 			]
 		});
