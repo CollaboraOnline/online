@@ -636,7 +636,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 
 .cool-redline-accept-button {
-	background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important;
+	background: url('images/lc_acceptchanges.svg') no-repeat center !important;
 }
 
 .cool-redline-reject-button {
