@@ -43,6 +43,7 @@ class ScrollSection {
 	map: any;
 	autoScrollTimer: any;
 	pendingScrollEvent: any = null;
+	stepByStepScrolling: boolean = false; // quick scroll will move "page up/down" not "jump to"
 
 	constructor () {
 		this.name = L.CSections.Scroll.name;
@@ -274,6 +275,8 @@ class ScrollSection {
 		result.ratio = app.view.size.pixels[1] / result.scrollLength; // 1px scrolling = xpx document height.
 		result.startY = Math.round(this.documentTopLeft[1] / result.ratio + this.sectionProperties.yOffset);
 
+		result.verticalScrollStep = this.size[1] / 2;
+
 		return result;
 	}
 
@@ -336,6 +339,8 @@ class ScrollSection {
 
 		result.ratio = app.view.size.pixels[0] / result.scrollLength;
 		result.startX = Math.round(this.documentTopLeft[0] / result.ratio + this.sectionProperties.xOffset);
+
+		result.horizontalScrollStep = this.size[0] / 2;
 
 		return result;
 	}
@@ -809,7 +814,14 @@ class ScrollSection {
 
 		var props = this.getVerticalScrollProperties();
 		var midY = (props.startY + props.startY + props.scrollSize - this.sectionProperties.scrollBarThickness) * 0.5;
-		var offset = Math.round((point[1] - midY) * props.ratio);
+
+		if (this.stepByStepScrolling) {
+			var sign = (point[1] - midY) > 0 ? 1 : -1;
+			var offset = props.verticalScrollStep * sign;
+		} else {
+			offset = Math.round((point[1] - midY) * props.ratio);
+		}
+
 		this.scrollVerticalWithOffset(offset);
 	}
 
@@ -827,7 +839,14 @@ class ScrollSection {
 		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
 		const startX = this.isCalcRTL() ? docWidth - props.startX - sizeX : props.startX;
 		var midX = startX + sizeX * 0.5;
-		var offset = Math.round((point[0] - midX) * props.ratio);
+
+		if (this.stepByStepScrolling) {
+			var sign = (point[0] - midX) > 0 ? 1 : -1;
+			var offset = props.horizontalScrollStep * sign;
+		} else {
+			offset = Math.round((point[0] - midX) * props.ratio);
+		}
+
 		this.scrollHorizontalWithOffset(offset);
 	}
 
