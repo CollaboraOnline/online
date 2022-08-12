@@ -96,7 +96,7 @@ std::string inline lokFormatAssertEq(const std::string& expected, const char*,
                     << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ". ")                         \
                     << "Condition: " << (#condition));                                             \
             LOK_ASSERT_IMPL(cond##__LINE__);                                                       \
-            CPPUNIT_ASSERT_MESSAGE((msg##__LINE__), cond##__LINE__);                               \
+            CPPUNIT_ASSERT_MESSAGE((msg##__LINE__), condition);                                    \
         }                                                                                          \
         else                                                                                       \
         {                                                                                          \
