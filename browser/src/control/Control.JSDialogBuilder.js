@@ -850,7 +850,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 			var iconName = builder._generateMenuIconName(commandName);
 			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + iconName, sectionTitle);
-			var iconURL = L.LOUtil.getImageURL('lc_' + iconName + '.svg');
+			var iconURL = builder._createIconURL(iconName, true);
 			icon = L.DomUtil.create('img', '', iconSpan);
 			icon.src = iconURL;
 			icon.alt = '';
@@ -2436,17 +2436,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
-	_createIconURL: function(name) {
+	_createIconURL: function(name, noCommad) {
 		if (!name)
 			return '';
 
 
+		var alreadyClean = noCommad;
 		var cleanName = name;
-		var prefixLength = '.uno:'.length;
-		if (name.substr(0, prefixLength) == '.uno:')
-			cleanName = name.substr(prefixLength);
-		cleanName = encodeURIComponent(cleanName).replace(/\%/g, '');
-		cleanName = cleanName.toLowerCase();
+
+
+		if (!alreadyClean || alreadyClean !== true) {
+			var prefixLength = '.uno:'.length;
+			if (name.substr(0, prefixLength) == '.uno:')
+				cleanName = name.substr(prefixLength);
+			cleanName = encodeURIComponent(cleanName).replace(/\%/g, '');
+			cleanName = cleanName.toLowerCase();
+		}
 
 		var iconURLAliases = {
 			'alignleft': 'leftpara',
