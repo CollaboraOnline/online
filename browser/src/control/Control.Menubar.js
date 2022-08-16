@@ -74,10 +74,10 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action'},
 					{name: _('EPUB (.epub)'), id: 'downloadas-epub', type: 'action'}]},
 				{name: _('Sign document'), id: 'signdocument', type: 'action'},
+				{name: _UNO('.uno:SetDocumentProperties', 'text'), uno: '.uno:SetDocumentProperties', id: 'properties'},
 				{type: 'separator'},
 				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Print', 'text'), L.Control.MenubarShortcuts.shortcuts.PRINT), id: 'print', type: 'action'},
-				{name: _('Close document'), id: 'closedocument', type: 'action'},
-				{ uno: '.uno:SetDocumentProperties', id: 'properties' }
+				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'text'), id: 'editmenu', type: 'menu', menu: [
 				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Undo', 'text'), L.Control.MenubarShortcuts.shortcuts.UNDO), uno: '.uno:Undo'},
