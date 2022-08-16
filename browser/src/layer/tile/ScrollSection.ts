@@ -436,13 +436,6 @@ class ScrollSection {
 	private drawHorizontalScrollBar () {
 		var scrollProps: any = this.getHorizontalScrollProperties();
 
-		if (this.sectionProperties.animatingHorizontalScrollBar)
-			this.context.globalAlpha = this.sectionProperties.currentAlpha;
-		else
-			this.context.globalAlpha = this.sectionProperties.clickScrollHorizontal ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
-
-		this.context.fillStyle = '#7E8182';
-
 		var startY = this.size[1] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
 
 		const sizeX = scrollProps.scrollSize - this.sectionProperties.scrollBarThickness;
@@ -454,6 +447,11 @@ class ScrollSection {
 			this.context.fillStyle = this.sectionProperties.scrollBarRailwayColor;
 			this.context.fillRect(this.sectionProperties.xMin, startY, this.sectionProperties.xMax - this.sectionProperties.yMax, this.sectionProperties.scrollBarRailwayThickness);
 		}
+
+		if (this.sectionProperties.animatingHorizontalScrollBar)
+			this.context.globalAlpha = this.sectionProperties.currentAlpha;
+		else
+			this.context.globalAlpha = this.sectionProperties.clickScrollHorizontal ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
 
 		this.context.fillStyle = '#7E8182';
 
