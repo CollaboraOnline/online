@@ -272,7 +272,7 @@ class ScrollSection {
 		}
 
 		result.ratio = app.view.size.pixels[1] / result.scrollLength; // 1px scrolling = xpx document height.
-		result.startY = Math.round(this.documentTopLeft[1] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.yOffset);
+		result.startY = Math.round(this.documentTopLeft[1] / result.ratio + this.sectionProperties.yOffset);
 
 		return result;
 	}
@@ -335,7 +335,7 @@ class ScrollSection {
 		}
 
 		result.ratio = app.view.size.pixels[0] / result.scrollLength;
-		result.startX = Math.round(this.documentTopLeft[0] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.xOffset);
+		result.startX = Math.round(this.documentTopLeft[0] / result.ratio + this.sectionProperties.xOffset);
 
 		return result;
 	}
