@@ -78,7 +78,7 @@ class ScrollSection {
 		this.sectionProperties.drawScrollBarRailway = true;
 		this.sectionProperties.scrollBarRailwayThickness = 12 * app.roundedDpiScale;
 		this.sectionProperties.scrollBarRailwayAlpha = this.map._docLayer._docType === 'spreadsheet' ? 1.0 : 0.5;
-		this.sectionProperties.scrollBarRailwayColor = '#ffffff';
+		this.sectionProperties.scrollBarRailwayColor = '#EFEFEF';
 
 		this.sectionProperties.drawVerticalScrollBar = ((<any>window).mode.isDesktop() ? true: false);
 		this.sectionProperties.drawHorizontalScrollBar = ((<any>window).mode.isDesktop() ? true: false);
