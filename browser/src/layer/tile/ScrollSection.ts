@@ -403,7 +403,12 @@ class ScrollSection {
 		if (this.sectionProperties.drawScrollBarRailway) {
 			this.context.globalAlpha = this.sectionProperties.scrollBarRailwayAlpha;
 			this.context.fillStyle = this.sectionProperties.scrollBarRailwayColor;
-			this.context.fillRect(startX, this.sectionProperties.yMin, this.sectionProperties.scrollBarRailwayThickness, this.sectionProperties.yMax - this.sectionProperties.yMin);
+			this.context.fillRect(
+				startX,
+				this.sectionProperties.yMin + this.sectionProperties.yOffset,
+				this.sectionProperties.scrollBarRailwayThickness,
+				this.sectionProperties.yMax - this.sectionProperties.yMin - this.sectionProperties.yOffset
+			);
 		}
 
 		if (this.sectionProperties.animatingVerticalScrollBar) {
@@ -445,7 +450,12 @@ class ScrollSection {
 		if (this.sectionProperties.drawScrollBarRailway) {
 			this.context.globalAlpha = this.sectionProperties.scrollBarRailwayAlpha;
 			this.context.fillStyle = this.sectionProperties.scrollBarRailwayColor;
-			this.context.fillRect(this.sectionProperties.xMin, startY, this.sectionProperties.xMax - this.sectionProperties.yMax, this.sectionProperties.scrollBarRailwayThickness);
+			this.context.fillRect(
+				this.sectionProperties.xMin + this.sectionProperties.xOffset,
+				startY,
+				this.sectionProperties.xMax - this.sectionProperties.xMin - this.sectionProperties.xOffset,
+				this.sectionProperties.scrollBarRailwayThickness
+			);
 		}
 
 		if (this.sectionProperties.animatingHorizontalScrollBar)
