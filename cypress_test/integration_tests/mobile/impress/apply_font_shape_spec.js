@@ -197,7 +197,7 @@ describe('Apply font on selected shape.', function() {
 		// Remove direct formatting
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#defaultattr #clearFormatting');
+		helper.clickOnIdle('#defaultattr .unoSetDefault');
 
 		triggerNewSVG();
 
