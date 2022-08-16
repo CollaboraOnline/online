@@ -15,7 +15,7 @@ describe('File Property Tests', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it.skip('Add File Description.', function() {
+	it('Add File Description.', function() {
 		writerHelper.openFileProperties();
 
 		cy.get('#description-tab-label').click();
