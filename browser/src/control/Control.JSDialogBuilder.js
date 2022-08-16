@@ -132,8 +132,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._toolitemHandlers['.uno:FrameLineColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:Color'] = this._colorControl;
 		this._toolitemHandlers['.uno:FillColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:ResetAttributes'] = this._formattingControl;
-		this._toolitemHandlers['.uno:SetDefault'] = this._formattingControl;
 
 		this._toolitemHandlers['.uno:InsertFormula'] = function () {};
 		this._toolitemHandlers['.uno:SetBorderStyle'] = function () {};
@@ -2931,56 +2929,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			selectedColor = '#' + selectedColor;
 
 		return selectedColor;
-	},
-
-	_formattingControl: function(parentContainer, data, builder) {
-		var iconPath = builder._createIconURL(data.command);
-		var sectionTitle = L.DomUtil.create('div', 'ui-header ' + builder.options.cssClass + ' level-' + builder._currentDepth + ' mobile-wizard-widebutton ui-widget', parentContainer);
-		sectionTitle.id = 'clearFormatting';
-		$(sectionTitle).css('justify-content', 'space-between');
-
-		if (data && data.id)
-			sectionTitle.id = data.id;
-
-		var leftDiv = L.DomUtil.create('div', 'ui-header-left', sectionTitle);
-		var titleClass = '';
-		if (iconPath) {
-			var icon = L.DomUtil.create('img', 'menu-entry-icon', leftDiv);
-			icon.src = iconPath;
-			icon.alt = '';
-			titleClass = 'menu-entry-with-icon';
-		}
-
-		sectionTitle.title = data.text;
-		builder.map.uiManager.enableTooltip(sectionTitle);
-
-		var updateFunction = function() {
-			var items = builder.map['stateChangeHandler'];
-			var state = items.getItemValue(data.command);
-
-			if (state && state === 'disabled')
-				$(sectionTitle).addClass('disabled');
-			else
-				$(sectionTitle).removeClass('disabled');
-		};
-
-		updateFunction();
-
-		builder.map.on('commandstatechanged', function(e) {
-			if (e.commandName === data.command)
-				updateFunction();
-		}, this);
-
-		if (builder.options.noLabelsForUnoButtons !== true) {
-			var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
-			titleSpan.textContent =  builder._cleanText(_UNO(data.command));
-		}
-
-		$(sectionTitle).click(function () {
-			builder.callback('toolbutton', 'click', sectionTitle, data.command, builder);
-		});
-		builder._preventDocumentLosingFocusOnClick(sectionTitle);
-		return false;
 	},
 
 	_getCurrentBorderNumber: function(builder) {
