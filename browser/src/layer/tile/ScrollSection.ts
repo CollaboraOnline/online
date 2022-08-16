@@ -72,7 +72,7 @@ class ScrollSection {
 		this.sectionProperties.previousDragDistance = null;
 
 		this.sectionProperties.usableThickness = 20 * app.roundedDpiScale;
-		this.sectionProperties.scrollBarThickness = 12 * app.roundedDpiScale;
+		this.sectionProperties.scrollBarThickness = 6 * app.roundedDpiScale;
 		this.sectionProperties.edgeOffset = 0;
 
 		this.sectionProperties.drawScrollBarRailway = true;
