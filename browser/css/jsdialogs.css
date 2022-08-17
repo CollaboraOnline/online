@@ -136,7 +136,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .jsdialog-tabs {
 	display: flex;
 	width: 100%;
-	background: var(--color-main-background);
+	background: var(--color-background-lighter);
 }
 
 .jsdialog-tabs:empty {
@@ -149,7 +149,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	font-family: var(--cool-font);
 	line-height: normal;
 	color: dimgray;
-	color: var(--color-text-lighter);
+	color: var(--color-text-dark);
 	height: 32px;
 	display: flex;
 	align-items: center;
@@ -167,7 +167,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-tab.selected.jsdialog {
 	background-color: var(--color-background-lighter);
-	color: var(--color-text-lighter);
+	color: var(--color-text-darker);
 	box-shadow: 0 0 2px 1px #cfcfcf;
 }
 
