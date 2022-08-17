@@ -1,3 +1,9 @@
+coolwsd (22.05.5.4-1) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-22.05.5-4
+
+ -- Aron Budea <aron.budea@collabora.com>  Wed, 17 Aug 2022 02:30:00 +0200
+
 coolwsd (22.05.5.3-1) unstable; urgency=medium
 
   * https://github.com/CollaboraOnline/online/releases/tag/cp-22.05.5-3
