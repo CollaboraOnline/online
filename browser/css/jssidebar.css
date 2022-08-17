@@ -270,7 +270,6 @@ td.jsdialog .jsdialog.cell.sidebar {
 #FormatPaintbrush:hover,
 .sidebar.unotoolbutton:hover,
 .sidebar.unotoolbutton.selected:hover,
-.sidebar #resetattr:hover,
 .sidebar #FormatPaintbrush:hover,
 #table-textorientbox.sidebar .jsdialog .radiobutton:hover {
 	background-color: var(--color-background-darker) !important;
