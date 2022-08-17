@@ -936,7 +936,7 @@ private:
         const std::chrono::seconds _autosaveInterval;
 
         /// The maximum time to wait for saving to finish.
-        std::chrono::seconds _savingTimeout;
+        std::chrono::seconds _savingTimeout{};
 
         /// The last autosave check time.
         std::chrono::steady_clock::time_point _lastAutosaveCheckTime;
