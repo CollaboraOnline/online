@@ -134,17 +134,13 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 /* Tabs */
 .jsdialog-tabs {
-	display: inline-flex;
+	display: flex;
 	width: 100%;
 	background: var(--color-main-background);
 }
 
 .jsdialog-tabs:empty {
 	display: none;
-}
-
-.jsdialog-tabs .ui-tabs.jsdialog {
-	display: inline-block;
 }
 
 .ui-tab.jsdialog {
