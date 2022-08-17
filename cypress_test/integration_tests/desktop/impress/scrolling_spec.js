@@ -45,7 +45,7 @@ describe('Scroll through document', function() {
 		desktopHelper.pressKey(9,'uparrow');
 
 		cy.get('#test-div-vertical-scrollbar')
-			.should('have.text', '6');
+			.should('have.text', '0');
 
 		desktopHelper.pressKey(18,'downarrow');
 
@@ -66,7 +66,7 @@ describe('Scroll through document', function() {
 		helper.typeIntoDocument('{home}');
 
 		cy.get('#test-div-horizontal-scrollbar')
-			.should('have.text', '6').wait(500);
+			.should('have.text', '0').wait(500);
 
 		helper.typeIntoDocument('{end}');
 
