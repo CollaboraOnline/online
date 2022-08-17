@@ -21,7 +21,7 @@ describe('Scroll through document', function() {
 	});
 
 	it('Scrolling to bottom/top', function() {
-		desktopHelper.assertScrollbarPosition('vertical', 26, 29);
+		desktopHelper.assertScrollbarPosition('vertical', 19, 21);
 
 		desktopHelper.pressKey(3,'pagedown');
 
@@ -29,7 +29,7 @@ describe('Scroll through document', function() {
 
 		desktopHelper.pressKey(3,'pageup');
 
-		desktopHelper.assertScrollbarPosition('vertical', 26, 29);
+		desktopHelper.assertScrollbarPosition('vertical', 19, 21);
 	});
 
 	it('Scrolling to left/right', function() {
@@ -37,12 +37,12 @@ describe('Scroll through document', function() {
 
 		helper.typeIntoDocument('{home}');
 
-		desktopHelper.assertScrollbarPosition('horizontal', 55, 68);
+		desktopHelper.assertScrollbarPosition('horizontal', 48, 60);
 
 		helper.typeIntoDocument('{end}');
 
 		cy.wait(500);
 
-		desktopHelper.assertScrollbarPosition('horizontal', 129, 155);
+		desktopHelper.assertScrollbarPosition('horizontal', 121, 148);
 	});
 });
