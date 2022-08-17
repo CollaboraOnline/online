@@ -154,6 +154,11 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: flex;
 	align-items: center;
 	padding: 0px 1em;
+	border-radius: var(--border-radius);
+}
+
+.ui-tab.jsdialog:first-child.selected {
+	margin-inline-start: 12px;
 }
 
 .ui-tab.hidden.jsdialog {
@@ -163,6 +168,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .ui-tab.selected.jsdialog {
 	background-color: var(--color-background-lighter);
 	color: var(--color-text-lighter);
+	box-shadow: 0 0 2px 1px #cfcfcf;
 }
 
 .ui-tab.jsdialog:hover {
