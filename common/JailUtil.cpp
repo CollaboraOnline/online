@@ -68,7 +68,17 @@ static bool unmount(const std::string& target)
     if (res)
         LOG_TRC("Unmounted [" << target << "] successfully.");
     else
-        LOG_ERR("Failed to unmount [" << target << ']');
+    {
+        // If bind-mounting is enabled, noisily log failures.
+        // Otherwise, it's a cleanup attempt of earlier mounts,
+        // which may be left-over and now the config has changed.
+        // This happens more often in dev labs than in prod.
+        if (JailUtil::isBindMountingEnabled())
+            LOG_ERR("Failed to unmount [" << target << ']');
+        else
+            LOG_DBG("Failed to unmount [" << target << ']');
+    }
+
     return res;
 }
 
