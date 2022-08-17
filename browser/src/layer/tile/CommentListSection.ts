@@ -1616,7 +1616,7 @@ class CommentSection {
 		}
 
 		var commentsData = this.map._docLayer.getCommentWizardStructure(undefined, annotation); // thread only
-		if (commentsData.children.length) {
+		if (commentsData.children.length && commentsData.children[0].id !== 'emptyWizard') {
 			commentsData.popupParent = annotation.sectionProperties.container.id;
 			this.map.fire('mobilewizardpopup', {data: commentsData});
 		} else {
