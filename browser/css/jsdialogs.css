@@ -257,7 +257,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	color: var(--color-text-lighter) !important;
 }
 
-.ui-treeview-body {
+.ui-treeview-body,
+#custom_animation_label_parent {
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
 	line-height: var(--default-height);
