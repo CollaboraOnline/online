@@ -116,6 +116,10 @@ class ScrollSection {
 		this.sectionProperties.pointerSyncWithVerticalScrollBar = true;
 		this.sectionProperties.pointerSyncWithHorizontalScrollBar = true;
 		this.sectionProperties.pointerReCaptureSpacer = null; // Clicked point of the scroll bar.
+
+		// Step by step scrolling interval in ms
+		this.sectionProperties.stepDuration = 50;
+		this.sectionProperties.quickScrollHorizontalTimer = null;
 	}
 
 	public completePendingScroll() {
@@ -807,7 +811,7 @@ class ScrollSection {
 		When user presses the button while the mouse pointer is on the railway of the scroll bar but not on the scroll bar directly,
 		we quickly scroll the document to that position.
 	*/
-	private quickScrollVertical (point: Array<number>) {
+	private quickScrollVertical (point: Array<number>, originalSign?: number) {
 		// Desktop only for now.
 		if (!(<any>window).mode.isDesktop())
 			return;
@@ -816,8 +820,18 @@ class ScrollSection {
 		var midY = (props.startY + props.startY + props.scrollSize - this.sectionProperties.scrollBarThickness) * 0.5;
 
 		if (this.stepByStepScrolling) {
-			var sign = (point[1] - midY) > 0 ? 1 : -1;
+			var sign = (point[1] - (props.startY + props.scrollSize)) > 0
+				? 1 : ((point[1] - props.startY) < 0 ? -1 : 0);
 			var offset = props.verticalScrollStep * sign;
+
+			if (this.sectionProperties.quickScrollVerticalTimer)
+				clearTimeout(this.sectionProperties.quickScrollVerticalTimer);
+			if (this.sectionProperties.clickScrollVertical)
+				this.sectionProperties.quickScrollVerticalTimer = setTimeout(() => {
+					if (!originalSign || originalSign === sign) {
+						this.quickScrollVertical(point, sign);
+					}
+				}, this.sectionProperties.stepDuration);
 		} else {
 			offset = Math.round((point[1] - midY) * props.ratio);
 		}
@@ -829,7 +843,7 @@ class ScrollSection {
 		When user presses the button while the mouse pointer is on the railway of the scroll bar but not on the scroll bar directly,
 		we quickly scroll the document to that position.
 	*/
-	private quickScrollHorizontal (point: Array<number>) {
+	private quickScrollHorizontal (point: Array<number>, originalSign?: number) {
 		// Desktop only for now.
 		if (!(<any>window).mode.isDesktop())
 			return;
@@ -841,8 +855,18 @@ class ScrollSection {
 		var midX = startX + sizeX * 0.5;
 
 		if (this.stepByStepScrolling) {
-			var sign = (point[0] - midX) > 0 ? 1 : -1;
+			var sign = (point[0] - (startX + sizeX)) > 0
+				? 1 : ((point[0] - startX) < 0 ? -1 : 0);
 			var offset = props.horizontalScrollStep * sign;
+
+			if (this.sectionProperties.quickScrollHorizontalTimer)
+				clearTimeout(this.sectionProperties.quickScrollHorizontalTimer);
+			if (this.sectionProperties.clickScrollHorizontal)
+				this.sectionProperties.quickScrollHorizontalTimer = setTimeout(() => {
+					if (!originalSign || originalSign === sign) {
+						this.quickScrollHorizontal(point, sign);
+					}
+				}, this.sectionProperties.stepDuration);
 		} else {
 			offset = Math.round((point[0] - midX) * props.ratio);
 		}
@@ -860,7 +884,19 @@ class ScrollSection {
 		return point[0] - props.startX;
 	}
 
+	private clearQuickScrollTimeout() {
+		if (this.sectionProperties.quickScrollVerticalTimer) {
+			clearTimeout(this.sectionProperties.quickScrollVerticalTimer);
+			this.sectionProperties.quickScrollVerticalTimer = null;
+		}
+		if (this.sectionProperties.quickScrollHorizontalTimer) {
+			clearTimeout(this.sectionProperties.quickScrollHorizontalTimer);
+			this.sectionProperties.quickScrollHorizontalTimer = null;
+		}
+	}
+
 	public onMouseDown (point: Array<number>, e: MouseEvent) {
+		this.clearQuickScrollTimeout();
 		this.onMouseMove(point, null, e);
 		this.isMouseOnScrollBar(point);
 
@@ -909,6 +945,8 @@ class ScrollSection {
 
 	public onMouseUp (point: Array<number>, e: MouseEvent) {
 		this.map.scrollingIsHandled = false;
+		this.clearQuickScrollTimeout();
+
 		if (this.sectionProperties.clickScrollVertical) {
 			e.stopPropagation(); // Don't propagate to map.
 			this.stopPropagating(); // Don't propagate to bound sections.
