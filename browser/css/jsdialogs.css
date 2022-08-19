@@ -91,10 +91,6 @@
 	padding-top: 6px;
 }
 
-td.jsdialog:hover * {
-	color: var(--color-text-darker);
-}
-
 .jsdialog.row {
 	display: table-row;
 }
