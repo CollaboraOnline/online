@@ -59,7 +59,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		// list of types which can have multiple children but are not considered as containers
 		this._nonContainerType = ['buttonbox', 'treelistbox', 'iconview', 'combobox', 'listbox',
-			'scrollwindow', 'grid'];
+			'scrollwindow', 'grid', 'tabcontrol'];
 
 		this._controlHandlers = {};
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
