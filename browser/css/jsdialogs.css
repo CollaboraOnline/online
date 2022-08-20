@@ -560,6 +560,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: var(--color-background-darker);
 }
 
+.ui-iconview-separator {
+	flex: 0 0 99%;
+}
+
 /* Autofilter dropdown */
 
 .autofilter.row {

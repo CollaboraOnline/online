@@ -2009,10 +2009,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_iconViewEntry: function (parentContainer, parentData, entry, builder) {
 		var disabled = parentData.enabled === 'false' || parentData.enabled === false;
 
-		if (entry.selected && (entry.selected === 'true' || entry.selected === true))
-			$(parentContainer).addClass('selected');
+		if (entry.separator && (entry.separator === 'true' || entry.separator === true)) {
+			L.DomUtil.create('hr', builder.options.cssClass + ' ui-iconview-separator', parentContainer);
+			return;
+		}
 
-		var icon = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-icon', parentContainer);
+		var entryContainer = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-entry', parentContainer);
+		if (entry.selected && (entry.selected === 'true' || entry.selected === true))
+			$(entryContainer).addClass('selected');
+
+		var icon = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-icon', entryContainer);
 		var img = L.DomUtil.create('img', builder.options.cssClass, icon);
 		if (entry.image)
 			img.src = entry.image;
@@ -2024,7 +2030,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (!disabled) {
 			var singleClick = parentData.singleclickactivate === 'true' || parentData.singleclickactivate === true;
-			$(parentContainer).click(function() {
+			$(entryContainer).click(function() {
 				$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
 				builder.callback('iconview', 'select', parentData, entry.row, builder);
 				if (singleClick) {
@@ -2032,12 +2038,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				}
 			});
 			if (!singleClick) {
-				$(parentContainer).dblclick(function() {
+				$(entryContainer).dblclick(function() {
 					$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
 					builder.callback('iconview', 'activate', parentData, entry.row, builder);
 				});
 			}
-			builder._preventDocumentLosingFocusOnClick(parentContainer);
+			builder._preventDocumentLosingFocusOnClick(entryContainer);
 		}
 	},
 
@@ -2062,8 +2068,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			L.DomUtil.addClass(container, 'disabled');
 
 		for (var i in data.entries) {
-			var entry = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-entry', container);
-			builder._iconViewEntry(entry, data, data.entries[i], builder);
+			builder._iconViewEntry(container, data, data.entries[i], builder);
 		}
 
 		var firstSelected = $(container).children('.selected').get(0);
