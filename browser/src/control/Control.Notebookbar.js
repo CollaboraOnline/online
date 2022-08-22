@@ -458,7 +458,7 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 	},
 
-	getOptionsSectionData: function() {
+	buildOptionsSectionData: function(childrenArray) {
 		return [
 			{
 				'id': 'optionscontainer',
@@ -468,21 +468,25 @@ L.Control.Notebookbar = L.Control.extend({
 					{
 						'id': 'optionstoolboxdown',
 						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:Sidebar', '', true),
-								'command': '.uno:Sidebar'
-							},
-							{
-								'type': 'toolitem',
-								// dummy node to avoid creating labels
-							}
-						]
+						'children': childrenArray
 					}
 				]
 			}
 		];
+	},
+
+	getOptionsSectionData: function() {
+		return this.buildOptionsSectionData([
+			{
+				'type': 'toolitem',
+				'text': _UNO('.uno:Sidebar', '', true),
+				'command': '.uno:Sidebar'
+			},
+			{
+				'type': 'toolitem',
+				// dummy node to avoid creating labels
+			}
+		]);
 	},
 
 	createOptionsSection: function() {
