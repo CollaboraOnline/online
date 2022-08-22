@@ -3305,6 +3305,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			break;
 
 		case 'setText':
+			// eg. in mobile wizard input is inside spin button div
+			var innerInput = control.querySelector('input');
+			if (innerInput)
+				control = innerInput;
+
 			var currentText = this._cleanText(data.text);
 			control.value = currentText;
 			if (data.selection) {
