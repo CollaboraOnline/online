@@ -26,41 +26,28 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 	},
 
 	getOptionsSectionData: function() {
-		return [
+		return this.buildOptionsSectionData([
 			{
-				'id': 'optionscontainer',
-				'type': 'container',
-				'vertical': 'true',
-				'children': [
-					{
-						'id': 'optionstoolboxdown',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:ModifyPage', 'presentation', true),
-								'command': '.uno:ModifyPage'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:SlideChangeWindow', 'presentation', true),
-								'command': '.uno:SlideChangeWindow'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:CustomAnimation', 'presentation', true),
-								'command': '.uno:CustomAnimation'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:MasterSlidesPanel', 'presentation', true),
-								'command': '.uno:MasterSlidesPanel'
-							}
-						]
-					}
-				]
+				'type': 'toolitem',
+				'text': _UNO('.uno:ModifyPage', 'presentation', true),
+				'command': '.uno:ModifyPage'
+			},
+			{
+				'type': 'toolitem',
+				'text': _UNO('.uno:SlideChangeWindow', 'presentation', true),
+				'command': '.uno:SlideChangeWindow'
+			},
+			{
+				'type': 'toolitem',
+				'text': _UNO('.uno:CustomAnimation', 'presentation', true),
+				'command': '.uno:CustomAnimation'
+			},
+			{
+				'type': 'toolitem',
+				'text': _UNO('.uno:MasterSlidesPanel', 'presentation', true),
+				'command': '.uno:MasterSlidesPanel'
 			}
-		];
+		]);
 	},
 
 	getTabs: function() {
