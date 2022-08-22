@@ -1294,7 +1294,7 @@ int main(int argc, char**argv)
 #endif
 
     /// Convert a string to 32-bit signed int.
-    /// Returns the parsed value and a boolean indiciating success or failure.
+    /// Returns the parsed value and a boolean indicating success or failure.
     inline std::pair<std::int32_t, bool> i32FromString(const std::string& input)
     {
         const char* str = input.data();
@@ -1314,7 +1314,7 @@ int main(int argc, char**argv)
     }
 
     /// Convert a string to 64-bit unsigned int.
-    /// Returns the parsed value and a boolean indiciating success or failure.
+    /// Returns the parsed value and a boolean indicating success or failure.
     inline std::pair<std::uint64_t, bool> u64FromString(const std::string& input)
     {
         const char* str = input.data();
@@ -1324,7 +1324,7 @@ int main(int argc, char**argv)
         return std::make_pair(value, endptr > str && errno != ERANGE);
     }
 
-    /// Convert a string to 64-bit usigned int. On failure, returns the default
+    /// Convert a string to 64-bit unsigned int. On failure, returns the default
     /// value, and sets the bool to false (to signify that parsing had failed).
     inline std::pair<std::uint64_t, bool> u64FromString(const std::string& input,
                                                         const std::uint64_t def)
@@ -1362,7 +1362,7 @@ int main(int argc, char**argv)
         return iequal(lhs.c_str(), lhs.size(), rhs.c_str(), rhs.size());
     }
 
-    /// Get system_clock now in miliseconds.
+    /// Get system_clock now in milliseconds.
     inline int64_t getNowInMS()
     {
         return std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()).time_since_epoch().count();

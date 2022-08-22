@@ -39,7 +39,7 @@ static_assert(false, "config.h must be included in the .cpp being compiled");
 //
 // There is no attempt to support all possible
 // features of the RFC. However, we do attempt
-// to be maximally compatible and accomodating
+// to be maximally compatible and accommodating
 // to server and client implementations in the
 // wild. This code is designed to work primarily
 // on the client side, with provision for being
@@ -125,7 +125,7 @@ static_assert(false, "config.h must be included in the .cpp being compiled");
 // which contains the status code, reason,
 // and a convenient status category.
 //
-// Finally, if a syncronous request is needed,
+// Finally, if a synchronous request is needed,
 // http::Session provides syncRequest that
 // blocks until the request completes. However,
 // the onFinished callback is still triggered

@@ -2281,7 +2281,7 @@ public:
 protected:
     void handleMessage(const std::vector<char>& data) override
     {
-        // To get A LOT of Trace Events, to exercide their handling, uncomment this:
+        // To get A LOT of Trace Events, to exercise their handling, uncomment this:
         // ProfileZone profileZone("KitWebSocketHandler::handleMessage");
 
         std::string message(data.data(), data.size());

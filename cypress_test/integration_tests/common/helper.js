@@ -112,7 +112,7 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 	cy.log('Param - subFolder: ' + subFolder);
 	cy.log('Param - subsequentLoad: ' + subsequentLoad);
 
-	// Ignore exceptions comming from nextlcoud.
+	// Ignore exceptions coming from nextcloud.
 	Cypress.on('uncaught:exception', function() {
 		return false;
 	});

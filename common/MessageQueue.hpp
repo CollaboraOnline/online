@@ -181,7 +181,7 @@ protected:
     }
 
     /// Search the queue for a previous removetextcontext message (which actually means "remove text
-    /// content", the word "context" is becaue of some misunderstanding lost in history) and if
+    /// content", the word "context" is because of some misunderstanding lost in history) and if
     /// found, remove it and combine its input with that in the current removetextcontext message.
     /// We check that there aren't any interesting messages inbetween that would make it wrong to
     /// merge the removetextcontext messages.

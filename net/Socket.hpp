@@ -1270,7 +1270,7 @@ public:
     void enableProcessInput(bool enable = true){ _inputProcessingEnabled = enable; }
 
     /// The available number of bytes in the socket
-    /// buffer for an optimal transmition.
+    /// buffer for an optimal transmission.
     int getSendBufferCapacity() const
     {
 #if !MOBILEAPP
