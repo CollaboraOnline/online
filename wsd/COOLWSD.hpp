@@ -368,6 +368,12 @@ public:
     template <typename T> static T getConfigValueNonZero(const std::string& name, const T def)
     {
         static_assert(std::is_integral<T>::value, "Meaningless on non-integral types");
+
+        if (Util::isFuzzing())
+        {
+            return def;
+        }
+
         const T res = getConfigValue(Application::instance().config(), name, def);
         return res <= T(0) ? T(0) : res;
     }
