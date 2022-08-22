@@ -360,7 +360,7 @@ private:
                 else
                     LOG_TRC("SSL error: UNKNOWN (" << sslError << ") " << getBioError(rc));
 
-                // The error is comming from BIO. Find out what happened.
+                // The error is coming from BIO. Find out what happened.
                 const long bioError = ERR_get_error();
 
                 std::ostringstream oss;
@@ -400,7 +400,7 @@ private:
 
     std::string getBioError(const int rc) const
     {
-        // The error is comming from BIO. Find out what happened.
+        // The error is coming from BIO. Find out what happened.
         const long bioError = ERR_get_error();
 
         std::ostringstream oss;

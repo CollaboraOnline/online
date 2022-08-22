@@ -52,7 +52,7 @@ class ChildProcess : public WSProcess
 {
 public:
     /// @param pid is the process ID of the child.
-    /// @param socket is the underlying Sockeet to the child.
+    /// @param socket is the underlying Socket to the child.
     ChildProcess(const pid_t pid,
                  const std::string& jailId,
                  const std::shared_ptr<StreamSocket>& socket,
@@ -154,7 +154,7 @@ class ClientSession;
 /// activity). Once we get the save result from Core
 /// (and ideally with success), we upload the document
 /// immediately. Previously, this was a synchronous
-/// process, which is now being reworked into an asynch.
+/// process, which is now being reworked into an async.
 ///
 /// The user can invoke both Save and Upload operations
 /// however, and in more than one way.
@@ -746,7 +746,7 @@ private:
         /// Checks whether or not we can issue a new request now.
         /// Returns true iff there is no active request and sufficient
         /// time has elapsed since the last request, including that
-        /// more time than the last request's duration has passe.
+        /// more time than the last request's duration has passed.
         bool canRequestNow() const
         {
             const auto now = RequestManager::now();
@@ -796,7 +796,7 @@ private:
         std::chrono::milliseconds _lastRequestDuration;
 
         /// Counts the number of previous requests that failed.
-        /// Note that this is interpretted by the request in question.
+        /// Note that this is interpreted by the request in question.
         /// For example, Core's Save operation turns 'false' for success
         /// when the file is unmodified, but that is still a successful result.
         std::size_t _lastRequestFailureCount;
