@@ -375,7 +375,7 @@ private:
     /// Store last sent payload of form field button, so we can filter out redundant messages.
     std::string _lastSentFormFielButtonMessage;
 
-    /// Epoch of the client's performance.now() function, as microseconds sinze Unix epoch
+    /// Epoch of the client's performance.now() function, as microseconds since Unix epoch
     uint64_t _performanceCounterEpoch;
 };
 

@@ -141,7 +141,7 @@ public:
     /** Tokenize based on any of the characters in 'delimiters'.
 
         Ie. when there is '\n\r' in there, any of them means a delimiter.
-        In addition, trim the values so there are no leadiding or trailing spaces.
+        In addition, trim the values so there are no leading or trailing spaces.
     */
     static StringVector tokenizeAnyOf(const std::string& s, const char* delimiters,
                                       const std::size_t delimitersLength);

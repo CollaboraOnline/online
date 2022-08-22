@@ -176,7 +176,7 @@ void RequestDetails::processURI()
     if (_pathSegs.equals(0, "cool"))
     {
         //FIXME: For historic reasons the DocumentURI includes the WOPISrc.
-        // This is problematic because decoding a URI that embedds not one, but
+        // This is problematic because decoding a URI that embeds not one, but
         // *two* encoded URIs within it is bound to produce an invalid URI.
         // Potentially three '?' might exist in the result (after decoding).
         std::size_t end = uriRes.rfind("/ws?");

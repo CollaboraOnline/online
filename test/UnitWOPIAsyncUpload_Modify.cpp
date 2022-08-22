@@ -22,7 +22,7 @@
 /// Test Async uploading with simulated failing.
 /// We modify the document, save, and attempt to upload,
 /// which fails. We then modify the document again
-/// and save. We expect another upload attemp,
+/// and save. We expect another upload attempt,
 /// which will succeed.
 /// Modify, Save, Upload fails, Modify, Save -> Upload.
 class UnitWOPIAsyncUpload_Modify : public WopiTestServer

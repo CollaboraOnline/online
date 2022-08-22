@@ -12,7 +12,7 @@
 
 // This file hosts network related common functionality
 // and helper/utility functions and classes.
-// HTTP-specific helpers are in HttpHeler.hpp.
+// HTTP-specific helpers are in HttpHelper.hpp.
 
 class StreamSocket;
 class ProtocolHandlerInterface;
