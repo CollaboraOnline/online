@@ -26,29 +26,16 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 	},
 
 	getOptionsSectionData: function() {
-		return [
+		return this.buildOptionsSectionData([
 			{
-				'id': 'optionscontainer',
-				'type': 'container',
-				'vertical': 'true',
-				'children': [
-					{
-						'id': 'optionstoolboxdown',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _('Page layout'),
-								'command': '.uno:ModifyPage'
-							},
-							{
-								'type': 'toolitem',
-							}
-						]
-					}
-				]
+				'type': 'toolitem',
+				'text': _('Page layout'),
+				'command': '.uno:ModifyPage'
+			},
+			{
+				'type': 'toolitem',
 			}
-		];
+		]);
 	},
 
 	getTabs: function() {
