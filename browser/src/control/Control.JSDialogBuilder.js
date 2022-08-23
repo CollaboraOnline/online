@@ -1850,7 +1850,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (entry.selected && (entry.selected === 'true' || entry.selected === true))
 			$(span).addClass('selected');
 
-		if (entry.state) {
+		if (entry.state !== undefined) {
 			var checkbox = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', span);
 			checkbox.type = 'checkbox';
 
