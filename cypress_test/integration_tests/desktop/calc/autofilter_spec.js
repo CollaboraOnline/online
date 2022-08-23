@@ -81,10 +81,10 @@ describe('AutoFilter', function() {
 
 		cy.get('.autofilter .vertical').should('be.visible');
 
-		cy.get('.autofilter .ui-treeview-checkbox').eq(0)
+		cy.get('.autofilter .ui-treeview-checkbox').eq(1)
 			.uncheck();
 
-		cy.get('.autofilter .ui-treeview-checkbox').eq(1)
+		cy.get('.autofilter .ui-treeview-checkbox').eq(0)
 			.uncheck();
 
 		cy.get('.autofilter .ui-button-box-right #ok')
