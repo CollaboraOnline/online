@@ -27,9 +27,6 @@
 	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 	height: 28px;
-	padding-inline-start: 4px;
-	position: relative;
-	margin-inline-start: 8px;
 	color: var(--color-text-dark);
 	background-color: var(--color-background-dark);
 }
@@ -90,15 +87,6 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-}
-
-.sidebar.ui-expander-content {
-	padding-inline: 10px;
-}
-
-#selectcolor {
-	display: flex;
-	justify-content: flex-end;
 }
 
 .sidebar.jsdialog.cell > #table-box3 {
@@ -183,28 +171,19 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 	max-width: 290px;
 }
 
-#NumberFormatPropertyPanel > tr > td > div > div > div > div > div > div {
-	text-align: right;
-}
 #NumberFormatPropertyPanel #leadingzeroeslabel {
 	margin-left: 2px;
 }
 
+.sidebar.ui-expander-container {
+	padding-inline: 8px 0;
+}
 .sidebar.ui-expander-label {
 	color: var(--color-main-text);
 	font-size: var(--header-font-size);
 	line-height: var(--header-height);
-	padding-inline: 8px;
 }
 
-.sidebar.root-container.jsdialog > .jsdialog.sidebar {
-	width: 100%;
-}
-
-#ScCellAppearancePropertyPanelPanelExpander #CellAppearancePropertyPanel table.jsdialog.sidebar.ui-grid,
-#CellAppearancePropertyPanel table.jsdialog.sidebar.ui-grid tr.jsdialog.sidebar {
-	display: flex;
-}
 #ScCellAppearancePropertyPanelPanelExpander #CellAppearancePropertyPanel table.jsdialog.sidebar.ui-grid {
 	justify-content: space-between;
 }
@@ -214,7 +193,7 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 }
 
 td.jsdialog .jsdialog.cell.sidebar {
-	padding: 2px 0px;
+	padding: 2px;
 	width: auto;
 }
 

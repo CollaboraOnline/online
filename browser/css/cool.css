@@ -38,6 +38,9 @@
 .justify-content-center {
 	justify-content: center;
 }
+.flex-grow-1 {
+	flex-grow: 1;
+}
 
 /* clip technique: hide visually but keep it available to screen readers */
 .visuallyhidden {

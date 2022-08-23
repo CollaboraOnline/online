@@ -93,6 +93,7 @@
 
 .jsdialog.row {
 	display: table-row;
+	width: 100%;
 }
 
 .jsdialog.cell {
@@ -104,7 +105,7 @@
 	width: 100%;
 }
 
-.jsdialog.vertical:not([id^='table-dialog-action_area']) > .jsdialog.row,
+.jsdialog.vertical:not([id^='table-dialog-action_area']) > .jsdialog.row:not(.sidebar),
 td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: table;
 	width: 100%;
@@ -117,6 +118,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .jsdialog.ui-grid {
 	border-spacing: 0px;
+	display: table;
 	width: 100%;
 }
 
@@ -218,12 +220,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-expander-label.expanded {
-	padding-left: 14px; /*adding extra padding to account for image absolute position*/
 	color: #444;
-}
-
-.ui-expander-content.expanded {
-	display: block;
 }
 
 .ui-expander-content:not(.expanded) {
@@ -232,10 +229,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-expander:hover {
 	cursor: pointer;
-}
-
-.ui-expander-content > .root-container.jsdialog {
-	margin: 4px;
 }
 /* TreeView */
 

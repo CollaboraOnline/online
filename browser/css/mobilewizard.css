@@ -28,7 +28,7 @@ span.menu-entry-icon img {
 span#main-menu-btn-icon {
 	filter: none !important;
 }
-#fontnamecombobox {
+#fontnamecombobox:not(.sidebar) {
 	padding-right: 0px;
 }
 #fontheight {
@@ -235,7 +235,11 @@ p.mobile-wizard.ui-combobox-text.selected {
 	flex-wrap: wrap !important;
 	margin-top: 25px;
 }
-#rotationlabel, #cellbackgroundlabel, #NumberFormatCurrency > .unolabel, #NumberFormatPercent > .unolabel, #NumberFormatDecimal > .unolabel{
+#rotationlabel.mobile-wizard,
+#cellbackgroundlabel.mobile-wizard,
+#NumberFormatCurrency.mobile-wizard > .unolabel,
+#NumberFormatPercent.mobile-wizard > .unolabel,
+#NumberFormatDecimal.mobile-wizard > .unolabel{
 	display: none;
 }
 #mobile-wizard #NumberFormatDecimal, #mobile-wizard #NumberFormatPercent{

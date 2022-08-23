@@ -748,7 +748,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_expanderHandler: function(parentContainer, data, builder, customCallback) {
 		if (data.children.length > 0) {
-			var container = L.DomUtil.create('div', 'ui-expander-container ' + builder.options.cssClass, parentContainer);
+			var container = L.DomUtil.create('div', 'ui-expander-container d-flex flex-column flex-grow-1 ' + builder.options.cssClass, parentContainer);
 			container.id = data.id;
 
 			if (data.children[0].text && data.children[0].text !== '') {
@@ -782,7 +782,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				});
 			}
 
-			var expanderChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, container);
+			var expanderChildren = L.DomUtil.create('div', 'ui-expander-content d-flex flex-row justify-content-center flex-grow-1 ' + builder.options.cssClass, container);
 			$(expanderChildren).addClass('expanded');
 
 			var children = [];
@@ -2151,7 +2151,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		L.DomUtil.addClass(parentContainer, 'ui-separator');
 		if (data.orientation && data.orientation === 'vertical') {
-			L.DomUtil.addClass(parentContainer, 'vertical');
+			L.DomUtil.addClass(parentContainer, 'vertical d-flex flex-row justify-content-center flex-grow-1 ');
 		} else {
 			L.DomUtil.addClass(parentContainer, 'horizontal');
 		}
@@ -3301,6 +3301,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			break;
 
 		case 'hide':
+			// hide parent instead!
+			console.warn(control);
 			$(control).addClass('hidden');
 			break;
 
@@ -3409,8 +3411,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
 
 		if (hasVerticalParent === undefined) {
-			parent = L.DomUtil.create('div', 'root-container ' + this.options.cssClass, parent);
-			parent = L.DomUtil.create('div', 'vertical ' + this.options.cssClass, parent);
+			parent = L.DomUtil.create('div', 'root-container d-flex flex-grow-1 ' + this.options.cssClass, parent);
+			parent = L.DomUtil.create('div', 'vertical d-flex flex-row justify-content-center flex-grow-1 ' + this.options.cssClass, parent);
 		}
 
 		var containerToInsert = parent;
@@ -3451,7 +3453,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (hasManyChildren && isContainer) {
 				var table = L.DomUtil.createWithId('div', childData.id, td);
 				$(table).addClass(this.options.cssClass);
-				$(table).addClass('vertical');
+				$(table).addClass('vertical d-flex flex-row justify-content-center flex-grow-1 ');
 				var childObject = L.DomUtil.create('div', 'row ' + this.options.cssClass, table);
 
 				this.postProcess(td, childData);
