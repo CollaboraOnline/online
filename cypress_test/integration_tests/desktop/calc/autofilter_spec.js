@@ -74,7 +74,7 @@ describe('AutoFilter', function() {
 			});
 	}
 
-	it.skip('Enable/Disable autofilter', function() {
+	it('Enable/Disable autofilter', function() {
 		//it gets enable before the test body starts
 		//filter by pass
 		openAutoFilterMenu(true);
