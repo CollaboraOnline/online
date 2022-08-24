@@ -87,10 +87,6 @@
 	padding-top: 6px;
 }
 
-td.jsdialog:hover * {
-	color: var(--color-text-darker);
-}
-
 .jsdialog.row {
 	display: table-row;
 }
@@ -152,8 +148,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	font-size: var(--default-font-size);
 	font-family: var(--cool-font);
 	line-height: normal;
-	color: dimgray;
-	color: var(--color-text-lighter);
+	color: var(--color-main-text);
 	height: 32px;
 	display: flex;
 	align-items: center;
