@@ -231,7 +231,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		openTablePanel();
 
 		cy.get('#rowheight .spinfield')
-			.should('have.attr', 'value', '0');
+			.should('have.value', '0');
 
 		helper.typeIntoInputField('#rowheight .spinfield', '1.4', true, false);
 

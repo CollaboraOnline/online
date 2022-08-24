@@ -1345,7 +1345,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			else if (data.children && data.children.length)
 				value = data.children[0].text;
 
-			$(controls.spinfield).attr('value', builder._cleanValueFromUnits(value));
+			$(controls.spinfield).val(builder._cleanValueFromUnits(value));
 		};
 
 		controls.spinfield.addEventListener('change', function() {
@@ -1379,7 +1379,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder.listenNumericChanges(data, builder, controls, customCallback);
 
 		value = parseFloat(data.value);
-		$(controls.spinfield).attr('value', value);
+		$(controls.spinfield).val(value);
 
 		return false;
 	},
@@ -1391,7 +1391,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder.listenNumericChanges(data, builder, controls, customCallback);
 
 		value = parseFloat(data.value);
-		$(controls.spinfield).attr('value', value);
+		$(controls.spinfield).val(value);
 
 		return false;
 	},

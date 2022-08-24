@@ -1220,8 +1220,7 @@ function overlayItemHasDifferentBoundsThan(itemDivId, bounds) {
 // selector - selector to find the correct input item in the DOM.
 // text - string to type in (can contain cypress command strings).
 // clearBefore - whether clear the existing content or not.
-// prop - whether the value is set as property or attribute (depends on implementation).
-function typeIntoInputField(selector, text, clearBefore = true, prop = true)
+function typeIntoInputField(selector, text, clearBefore = true)
 {
 	cy.log('Typing into input field - start.');
 
@@ -1235,13 +1234,8 @@ function typeIntoInputField(selector, text, clearBefore = true, prop = true)
 			.type(text + '{enter}');
 	}
 
-	if (prop) {
-		cy.get(selector)
-			.should('have.prop', 'value', text);
-	} else {
-		cy.get(selector)
-			.should('have.attr', 'value', text);
-	}
+	cy.get(selector)
+		.should('have.value', text);
 
 	cy.log('Typing into input field - end.');
 }
