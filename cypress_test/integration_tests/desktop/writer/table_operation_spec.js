@@ -180,7 +180,7 @@ describe('Table operations', function() {
 	it('Change row height.', function() {
 		if (mode === 'classic') {
 			cy.get('#rowheight .spinfield')
-				.should('have.attr', 'value', '0');
+				.should('have.value', '0');
 
 			helper.typeIntoInputField('#rowheight .spinfield', '1.4', true, false);
 

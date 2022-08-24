@@ -41,10 +41,10 @@ describe('Apply number formatting.', function() {
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
-			.should('have.attr', 'value', '2');
+			.should('have.value', '2');
 
 		cy.get('#leadingzeroes input')
-			.should('have.attr', 'value', '1');
+			.should('have.value', '1');
 
 		calcHelper.selectEntireSheet();
 
@@ -68,10 +68,10 @@ describe('Apply number formatting.', function() {
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
-			.should('have.attr', 'value', '2');
+			.should('have.value', '2');
 
 		cy.get('#leadingzeroes input')
-			.should('have.attr', 'value', '1');
+			.should('have.value', '1');
 
 		calcHelper.selectEntireSheet();
 
@@ -92,10 +92,10 @@ describe('Apply number formatting.', function() {
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
-			.should('have.attr', 'value', '2');
+			.should('have.value', '2');
 
 		cy.get('#leadingzeroes input')
-			.should('have.attr', 'value', '1');
+			.should('have.value', '1');
 
 		calcHelper.selectEntireSheet();
 
@@ -119,10 +119,10 @@ describe('Apply number formatting.', function() {
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
-			.should('have.attr', 'value', '2');
+			.should('have.value', '2');
 
 		cy.get('#leadingzeroes input')
-			.should('have.attr', 'value', '1');
+			.should('have.value', '1');
 
 		calcHelper.selectEntireSheet();
 
@@ -144,10 +144,10 @@ describe('Apply number formatting.', function() {
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
-			.should('have.attr', 'value', '2');
+			.should('have.value', '2');
 
 		cy.get('#leadingzeroes input')
-			.should('have.attr', 'value', '1');
+			.should('have.value', '1');
 
 		calcHelper.selectEntireSheet();
 
@@ -194,10 +194,10 @@ describe('Apply number formatting.', function() {
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
-			.should('have.attr', 'value', '0');
+			.should('have.value', '0');
 
 		cy.get('#leadingzeroes input')
-			.should('have.attr', 'value', '0');
+			.should('have.value', '0');
 
 		calcHelper.selectEntireSheet();
 
@@ -218,10 +218,10 @@ describe('Apply number formatting.', function() {
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
-			.should('have.attr', 'value', '0');
+			.should('have.value', '0');
 
 		cy.get('#leadingzeroes input')
-			.should('have.attr', 'value', '0');
+			.should('have.value', '0');
 
 		calcHelper.selectEntireSheet();
 
@@ -242,10 +242,10 @@ describe('Apply number formatting.', function() {
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
-			.should('have.attr', 'value', '2');
+			.should('have.value', '2');
 
 		cy.get('#leadingzeroes input')
-			.should('have.attr', 'value', '1');
+			.should('have.value', '1');
 
 		calcHelper.selectEntireSheet();
 
@@ -263,10 +263,10 @@ describe('Apply number formatting.', function() {
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
-			.should('have.attr', 'value', '1');
+			.should('have.value', '1');
 
 		cy.get('#leadingzeroes input')
-			.should('have.attr', 'value', '0');
+			.should('have.value', '0');
 
 		calcHelper.selectEntireSheet();
 
@@ -284,10 +284,10 @@ describe('Apply number formatting.', function() {
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
-			.should('have.attr', 'value', '0');
+			.should('have.value', '0');
 
 		cy.get('#leadingzeroes input')
-			.should('have.attr', 'value', '0');
+			.should('have.value', '0');
 
 		calcHelper.selectEntireSheet();
 
@@ -305,10 +305,10 @@ describe('Apply number formatting.', function() {
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
-			.should('have.attr', 'value', '0');
+			.should('have.value', '0');
 
 		cy.get('#leadingzeroes input')
-			.should('have.attr', 'value', '0');
+			.should('have.value', '0');
 
 		calcHelper.selectEntireSheet();
 
@@ -324,7 +324,7 @@ describe('Apply number formatting.', function() {
 	it('Change decimal places.', function() {
 		// Check default value
 		cy.get('#decimalplaces input')
-			.should('have.attr', 'value', '0');
+			.should('have.value', '0');
 
 		// Type in a new value
 		helper.typeIntoInputField('#decimalplaces input', '2', true, false);
@@ -343,7 +343,7 @@ describe('Apply number formatting.', function() {
 	it('Change leading zeros.', function() {
 		// Check default value
 		cy.get('#leadingzeroes input')
-			.should('have.attr', 'value', '1');
+			.should('have.value', '1');
 
 		// Type in a new value
 		helper.typeIntoInputField('#leadingzeroes input', '6', true, false);
