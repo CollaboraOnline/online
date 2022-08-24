@@ -481,7 +481,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'User');
 
 		cy.get('#paperwidth .spinfield')
-			.should('have.attr', 'value', '12');
+			.should('have.value', '12');
 	});
 
 	it('Page setup: change paper height.', function() {
@@ -501,7 +501,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('have.text', 'User');
 
 		cy.get('#paperheight .spinfield')
-			.should('have.attr', 'value', '3');
+			.should('have.value', '3');
 	});
 
 	it('Page setup: change orientation.', function() {

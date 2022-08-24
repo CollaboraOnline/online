@@ -326,7 +326,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		helper.inputOnIdle('#gradangle .spinfield', '100');
 
 		cy.get('#gradangle .spinfield')
-			.should('have.attr', 'value', '100');
+			.should('have.value', '100');
 
 		// Select To color
 		helper.clickOnIdle('#fillgrad2');
@@ -460,7 +460,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		helper.inputOnIdle('#settransparency .spinfield', '50');
 
 		cy.get('#settransparency .spinfield')
-			.should('have.attr', 'value', '50');
+			.should('have.value', '50');
 
 		cy.get('#transtype .ui-header-left')
 			.should('have.text', 'Solid');
