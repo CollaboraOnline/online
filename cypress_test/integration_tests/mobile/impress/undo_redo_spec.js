@@ -3,6 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
+var repairHelper = require('../../common/repair_document_helper');
 
 describe('Editing Operations', function() {
 	var testFileName = 'undo_redo.odp';
@@ -70,20 +71,7 @@ describe('Editing Operations', function() {
 		helper.typeIntoDocument('Overwrite');
 		helper.typeIntoDocument('{esc}');
 
-		// Now trigger the "repair" function and revert to the first change
-		cy.get('#toolbar-hamburger')
-			.click()
-			.get('.menu-entry-icon.editmenu').parent()
-			.click()
-			.get('.menu-entry-icon.repair').parent()
-			.click();
-
-		cy.get('.leaflet-popup-content table').should('exist');
-
-		cy.contains('.leaflet-popup-content table tbody tr','Undo').eq(0)
-			.click();
-
-		cy.get('.leaflet-popup-content > input').click();
+		repairHelper.rollbackPastChange('Undo', undefined, true);
 
 		// Check the text in the shape reverted to "Hello World"
 		impressHelper.selectTextShapeInTheCenter();

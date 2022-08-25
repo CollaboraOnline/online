@@ -3,6 +3,7 @@
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
 var mobileHelper = require('../../common/mobile_helper');
+var repairHelper = require('../../common/repair_document_helper');
 
 describe('Trigger hamburger menu options.', function() {
 	var testFileName = '';
@@ -165,20 +166,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.text', 'Xq');
 
-		// Revert one undo step via Repair
-		mobileHelper.selectHamburgerMenuItem(['Edit', 'Repair']);
-
-		cy.get('.leaflet-popup-content')
-			.should('be.visible');
-
-		cy.get('.leaflet-popup-content table tr:nth-of-type(2)')
-			.should('contain.text', 'Undo');
-
-		cy.get('.leaflet-popup-content table tr:nth-of-type(2)')
-			.click();
-
-		cy.get('.leaflet-popup-content input[value=\'Jump to state\']')
-			.click();
+		repairHelper.rollbackPastChange('Undo', undefined, true);
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
