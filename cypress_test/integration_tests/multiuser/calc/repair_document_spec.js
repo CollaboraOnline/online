@@ -16,54 +16,39 @@ describe.skip('Repair Document', function() {
 	});
 
 	function repairDoc(frameId1, frameId2) {
-		cy.wait(1000);
 
 		helper.typeIntoDocument('Hello World{enter}', frameId1);
 
-		//wait for the popup to disappear
-		cy.wait(5000);
+		calcHelper.selectEntireSheet(frameId2);
 
-		cy.customGet('.leaflet-layer', frameId2)
-			.click('center', {force:true})
-			.wait(500);
+		calcHelper.assertDataClipboardTable(['Hello World\n'], frameId2);
 
-		calcHelper.dblClickOnFirstCell(frameId2);
+		calcHelper.selectEntireSheet(frameId1);
 
-		helper.clearAllText(frameId2);
-
-		helper.typeIntoDocument('Hello{enter}', frameId2);
-
-		cy.wait(1000);
+		calcHelper.assertDataClipboardTable(['Hello World\n'], frameId1);
 
 		cy.customGet('#menu-editmenu', frameId2).click()
 			.customGet('#menu-repair', frameId2).click();
 
-		cy.customGet('.leaflet-popup-content table', frameId2).should('exist');
+		cy.customGet('#DocumentRepairDialog', frameId2).should('exist');
+		cy.customGet('#versions', frameId2).should('exist');
 
-		cy.iframe(frameId2).contains('.leaflet-popup-content table tbody tr','Undo').eq(0)
+		cy.iframe(frameId2).contains('#versions .ui-treeview-body .ui-listview-entry td','Input')
 			.click();
 
-		cy.customGet('.leaflet-popup-content > input', frameId2)
-			.click()
-			.wait(1000);
+		cy.customGet('#ok.ui-pushbutton.jsdialog', frameId2).should('exist');
 
-		calcHelper.dblClickOnFirstCell(frameId2);
+		cy.customGet('#ok.ui-pushbutton.jsdialog', frameId2).click();
 
-		helper.selectAllText(frameId2);
+		cy.wait(500);
 
-		helper.expectTextForClipboard('Hello World', frameId2);
+		calcHelper.selectEntireSheet(frameId2);
 
-		cy.customGet('.leaflet-layer', frameId1)
-			.click('center', {force:true})
-			.wait(500);
+		helper.expectTextForClipboard('', frameId2);
 
-		helper.typeIntoDocument('{end}{enter}', frameId1);
+		calcHelper.selectEntireSheet(frameId1);
 
-		calcHelper.dblClickOnFirstCell(frameId1);
-
-		helper.selectAllText(frameId1);
-
-		helper.expectTextForClipboard('Hello World', frameId1);
+		helper.expectTextForClipboard('', frameId1);
 	}
 
 	it('Repair by user-2', function() {

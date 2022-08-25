@@ -32,17 +32,18 @@ describe.skip('Repair Document', function() {
 
 		cy.customGet('#menu-editmenu', frameId2).click()
 			.customGet('#menu-repair', frameId2).click();
-		cy.customGet('.leaflet-popup-content table', frameId2).should('exist');
 
-		cy.iframe(frameId2).contains('.leaflet-popup-content table tbody tr','Undo').eq(0).click();
 
-		cy.customGet('.leaflet-popup-content > input', frameId2).click();
+		cy.customGet('#DocumentRepairDialog', frameId2).should('exist');
+		cy.customGet('#versions', frameId2).should('exist');
 
-		cy.customGet('.leaflet-layer', frameId2).click('center', {force:true});
+		cy.iframe(frameId2).contains('#versions .ui-treeview-body .ui-listview-entry td','Typing: “World”')
+			.click();
 
-		cy.customGet('g.leaflet-control-buttons-disabled svg', frameId2).dblclick({force:true});
+		cy.customGet('#ok.ui-pushbutton.jsdialog', frameId2).should('exist');
 
-		cy.wait(1000);
+		cy.customGet('#ok.ui-pushbutton.jsdialog', frameId2).click();
+
 
 		helper.typeIntoDocument('{ctrl}{a}', frameId2);
 

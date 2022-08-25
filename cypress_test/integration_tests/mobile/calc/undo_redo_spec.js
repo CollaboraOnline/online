@@ -3,6 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('../../common/calc_helper');
+var repairHelper = require('../../common/repair_document_helper');
 
 describe('Editing Operations', function() {
 	var testFileName = 'undo_redo.ods';
@@ -78,17 +79,7 @@ describe('Editing Operations', function() {
 
 		cy.get('#tb_actionbar_item_acceptformula').click();
 
-		cy.get('#toolbar-hamburger')
-			.click()
-			.get('.menu-entry-icon.editmenu').parent()
-			.click()
-			.get('.menu-entry-icon.repair').parent()
-			.click();
-
-		cy.contains('.leaflet-popup-content table tbody tr','Undo').eq(0)
-			.click();
-
-		cy.get('.leaflet-popup-content > input').click();
+		repairHelper.rollbackPastChange('Undo', undefined, true);
 
 		calcHelper.dblClickOnFirstCell();
 

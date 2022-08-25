@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach */
 
 var helper = require('../../common/helper');
+var repairHelper = require('../../common/repair_document_helper');
 
 describe('Repair Document', function() {
 	var origTestFileName = 'repair_doc.odt';
@@ -20,13 +21,9 @@ describe('Repair Document', function() {
 
 		helper.typeIntoDocument('Hello World', frameId1);
 
-		cy.customGet('#menu-editmenu', frameId2).click()
-			.customGet('#menu-repair', frameId2).click();
+		cy.wait(2000);
 
-		cy.customGet('.leaflet-popup-content table', frameId2).should('exist');
-
-		cy.iframe(frameId2).contains('.leaflet-popup-content table tbody tr','Typing: “World”')
-			.dblclick();
+		repairHelper.rollbackPastChange('Typing: “World”', frameId2);
 
 		cy.customGet('.leaflet-layer', frameId2).click();
 
@@ -50,5 +47,4 @@ describe('Repair Document', function() {
 	it('Repair by user-1', function() {
 		repairDoc('#iframe2', '#iframe1');
 	});
-
 });
