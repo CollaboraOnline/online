@@ -3,6 +3,7 @@
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
 var desktopHelper = require('../../common/desktop_helper');
+var repairHelper = require('../../common/repair_document_helper');
 
 describe('Editing Operations', function() {
 	var testFileName = 'undo_redo.odp';
@@ -63,15 +64,7 @@ describe('Editing Operations', function() {
 
 		cy.wait(1000);
 
-		cy.get('#menu-editmenu').click()
-			.get('#menu-repair').click();
-
-		cy.get('.leaflet-popup-content table').should('exist');
-
-		cy.contains('.leaflet-popup-content table tbody tr','Undo').eq(0)
-			.click();
-
-		cy.get('.leaflet-popup-content > input').click();
+		repairHelper.rollbackPastChange('Undo');
 
 		impressHelper.selectTextShapeInTheCenter();
 

@@ -400,7 +400,9 @@ L.Control.JSDialog = L.Control.extend({
 		var builder = new L.control.jsDialogBuilder({windowId: data.id,
 			mobileWizard: this,
 			map: this.map,
-			cssClass: 'jsdialog'});
+			cssClass: 'jsdialog',
+			callback: e.callback
+		});
 
 		var temporaryParent = L.DomUtil.create('div');
 		builder.build(temporaryParent, [data.control], false);
