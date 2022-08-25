@@ -433,8 +433,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	font-size: var(--default-font-size);
 	color: var(--color-text-dark);
 	margin: 5px;
-	position: absolute;
-	margin-inline-start: calc(-40px);
+	margin-inline-start: -40px;
 }
 /* spinfield (number) */
 input[type='number'] {
