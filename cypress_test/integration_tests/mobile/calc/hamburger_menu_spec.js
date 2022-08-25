@@ -3,6 +3,7 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
+var repairHelper = require('../../common/repair_document_helper');
 
 describe('Trigger hamburger menu options.', function() {
 	var testFileName;
@@ -148,7 +149,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('contain.text', 'q');
 	});
 
-	it('Repair.', function() {
+	it('Repair Document', function() {
 		before('hamburger_menu.ods');
 
 		// Type a new character
@@ -164,17 +165,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Revert one undo step via Repair
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Repair']);
 
-		cy.get('.leaflet-popup-content')
-			.should('be.visible');
-
-		cy.get('.leaflet-popup-content table tr:nth-of-type(2)')
-			.should('contain.text', 'Undo');
-
-		cy.get('.leaflet-popup-content table tr:nth-of-type(2)')
-			.click();
-
-		cy.get('.leaflet-popup-content input[value=\'Jump to state\']')
-			.click();
+		repairHelper.rollbackPastChange('Undo', undefined, true);
 
 		cy.get('input#addressInput')
 			.should('have.prop', 'value', 'A1');

@@ -3,6 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
+var repairHelper = require('../../common/repair_document_helper');
 
 describe('Trigger hamburger menu options.', function() {
 	var origTestFileName = 'hamburger_menu.odt';
@@ -171,6 +172,17 @@ describe('Trigger hamburger menu options.', function() {
 
 		cy.get('#copy-paste-container p')
 			.should('contain.text', 'q');
+	});
+
+
+	it('Repair Document', function() {
+		helper.typeIntoDocument('Hello World');
+		
+		repairHelper.rollbackPastChange('Typing: “World”', undefined, true);
+
+		helper.selectAllText();
+
+		helper.expectTextForClipboard('Hello \n');
 	});
 
 	it('Cut.', function() {

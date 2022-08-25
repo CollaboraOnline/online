@@ -1,7 +1,8 @@
-/* global describe it cy beforeEach require afterEach*/
+/* global describe it beforeEach require afterEach*/
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
+var repairHelper = require('../../common/repair_document_helper');
 
 describe('Editing Operations', function() {
 	var testFileName = 'undo_redo.ods';
@@ -51,15 +52,7 @@ describe('Editing Operations', function() {
 
 		helper.typeIntoDocument('{enter}');
 
-		cy.get('#menu-editmenu').click()
-			.get('#menu-repair').click();
-
-		cy.get('.leaflet-popup-content table').should('exist');
-
-		cy.contains('.leaflet-popup-content table tbody tr','Undo').eq(0)
-			.click();
-
-		cy.get('.leaflet-popup-content > input').click();
+		repairHelper.rollbackPastChange('Undo');
 
 		calcHelper.dblClickOnFirstCell();
 

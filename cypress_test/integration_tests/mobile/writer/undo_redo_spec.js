@@ -2,6 +2,7 @@
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
+var repairHelper = require('../../common/repair_document_helper');
 
 describe('Editing Operations', function() {
 	var testFileName = 'undo_redo.odt';
@@ -47,19 +48,7 @@ describe('Editing Operations', function() {
 	it('Repair Document', function() {
 		helper.typeIntoDocument('Hello World');
 
-		cy.get('#toolbar-hamburger')
-			.click()
-			.get('.menu-entry-icon.editmenu').parent()
-			.click()
-			.get('.menu-entry-icon.repair').parent()
-			.click();
-
-		cy.get('.leaflet-popup-content table').should('exist');
-
-		cy.contains('.leaflet-popup-content table tbody tr','Typing: “World”')
-			.click();
-
-		cy.get('.leaflet-popup-content > input').click();
+		repairHelper.rollbackPastChange('Typing: “World”', undefined, true);
 
 		helper.selectAllText();
 
