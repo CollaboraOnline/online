@@ -296,7 +296,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         if (data.get())
         {
             preProcessSetClipboardPayload(*data);
-            docBroker->forwardToChild(getId(), "setclipboard\n" + *data);
+            docBroker->forwardToChild(getId(), "setclipboard\n" + *data, true);
 
             // FIXME: work harder for error detection ?
             std::ostringstream oss;
