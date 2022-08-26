@@ -7,6 +7,11 @@ metadata:
     app: {{ template "name" . }}
     chart: {{ template "chartname" . }}
     release: {{ .Release.Name }}
+  annotations:
+    haproxy.org/timeout-tunnel: "3600s"
+    haproxy.org/backend-config-snippet: |
+      balance url_param WOPISrc check_post
+      hash-type consistent
 spec:
   type: {{ .Values.global.app.service.type }}
   ports:
