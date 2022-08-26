@@ -411,7 +411,7 @@ public:
     virtual bool handleInput(const std::shared_ptr<Message>& message);
 
     /// Forward a message from client session to its respective child session.
-    bool forwardToChild(const std::string& viewId, const std::string& message);
+    bool forwardToChild(const std::string& viewId, const std::string& message, bool binary = false);
 
     int getRenderedTileCount() { return _debugRenderedTileCount; }
 
