@@ -407,6 +407,24 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	onContextChange: function(event) {
+		if (event.appId !== event.oldAppId) {
+			var childrenArray = undefined; // Use buttons provided by specific Control.Notebookbar implementation by default
+			if (event.appId === 'com.sun.star.formula.FormulaProperties') {
+				childrenArray = [
+					{
+						'type': 'toolitem',
+						'text': _UNO('.uno:SidebarDeck.ElementsDeck', '', true),
+						'command': '.uno:SidebarDeck.ElementsDeck'
+					},
+					{
+						'type': 'toolitem',
+						// dummy node to avoid creating labels
+					}
+				];
+			}
+			this.createOptionsSection(childrenArray);
+		}
+
 		if (event.context === this.lastContext)
 			return;
 
@@ -489,7 +507,7 @@ L.Control.Notebookbar = L.Control.extend({
 		]);
 	},
 
-	createOptionsSection: function() {
+	createOptionsSection: function(childrenArray) {
 		$('.notebookbar-options-section').remove();
 
 		var optionsSection = L.DomUtil.create('div', 'notebookbar-options-section');
@@ -502,6 +520,8 @@ L.Control.Notebookbar = L.Control.extend({
 		};
 
 		var builder = new L.control.notebookbarBuilder(builderOptions);
-		builder.build(optionsSection, this.getOptionsSectionData());
+		if (childrenArray === undefined)
+			childrenArray = this.getOptionsSectionData();
+		builder.build(optionsSection, childrenArray);
 	},
 });

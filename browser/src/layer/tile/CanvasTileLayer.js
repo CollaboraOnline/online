@@ -1716,8 +1716,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			var message = textMsg.substring('context:'.length + 1);
 			message = message.split(' ');
 			if (message.length > 1) {
-				this._map.context = {context: message[1]};
-				this._map.fire('contextchange', {context: message[1]});
+				var old = this._map.context || {};
+				this._map.context = {appId: message[0], context: message[1]};
+				this._map.fire('contextchange', {appId: message[0], context: message[1], oldAppId: old.appId, oldContext: old.context});
 			}
 		}
 		else if (textMsg.startsWith('formfieldbutton:')) {
