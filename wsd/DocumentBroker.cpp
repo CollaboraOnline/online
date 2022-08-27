@@ -30,11 +30,13 @@
 #include "JailUtil.hpp"
 #include "COOLWSD.hpp"
 #include "SenderQueue.hpp"
+#include "Socket.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
 #include "ProxyProtocol.hpp"
 #include "Util.hpp"
 #include "QuarantineUtil.hpp"
+#include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Message.hpp>
 #include <common/Clipboard.hpp>
@@ -2923,6 +2925,46 @@ void DocumentBroker::handleClipboardRequest(ClipboardRequest type,  const std::s
         LOG_ERR("Could not find matching session to handle clipboard request for " << viewId << " tag: " << tag);
 }
 
+void DocumentBroker::handleMediaRequest(const std::shared_ptr<Socket>& socket,
+                                        const std::string& tag)
+{
+    LOG_DBG("handleMediaRequest: " << tag);
+
+    auto streamSocket = std::static_pointer_cast<StreamSocket>(socket);
+    if (!streamSocket)
+    {
+        LOG_ERR("Invalid socket to handle media request in Doc [" << _docId << "] with tag [" << tag
+                                                                  << ']');
+        return;
+    }
+
+    const auto it = _embeddedMedia.find(tag);
+    if (it == _embeddedMedia.end())
+    {
+        LOG_ERR("Invalid media request in Doc [" << _docId << "] with tag [" << tag << ']');
+        return;
+    }
+
+    LOG_ERR("Media: " << it->second);
+    Poco::JSON::Object::Ptr object;
+    if (JsonUtil::parseJSON(it->second, object))
+    {
+        LOG_ASSERT(JsonUtil::getJSONValue<std::string>(object, "id") == tag);
+        const std::string url = JsonUtil::getJSONValue<std::string>(object, "url");
+        LOG_ASSERT(!url.empty());
+        if (Util::startsWith(Util::toLower(url), "file://"))
+        {
+            // For now, we only support file:// schemes.
+            // In the future, we may/should support http.
+            const std::string path = getJailRoot() + url.substr(sizeof("file://") - 1);
+            auto session = std::make_shared<http::server::Session>();
+            session->asyncUpload(path, "video/mp4");
+            auto handler = std::static_pointer_cast<ProtocolHandlerInterface>(session);
+            streamSocket->setHandler(handler);
+        }
+    }
+}
+
 void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& session)
 {
     std::unique_lock<std::mutex> lock(_mutex);
@@ -3727,6 +3769,66 @@ bool DocumentBroker::isAsyncUploading() const
     StorageBase::AsyncUpload::State state = _storage->queryLocalFileToStorageAsyncUploadState().state();
 
     return state == StorageBase::AsyncUpload::State::Running;
+}
+
+std::string DocumentBroker::addEmbeddedMedia(const std::string& json)
+{
+    Poco::JSON::Object::Ptr object;
+    if (JsonUtil::parseJSON(json, object))
+    {
+        const std::string id = JsonUtil::getJSONValue<std::string>(object, "id");
+        if (id.empty())
+        {
+            LOG_ERR("Invalid embeddedmedia json without id: " << json);
+        }
+        else
+        {
+            LOG_TRC("Adding embeddedmedia with id [" << id << "]: " << json);
+
+            // Store the original json with the internal, temporary, file URI.
+            _embeddedMedia[id] = json;
+
+            std::string wopiSrc;
+            Poco::URI::encode(Util::split(_uriPublic.toString(), '?').first, ":?#/=&", wopiSrc);
+
+            Poco::URI uri("/cool/media");
+            uri.setScheme(_uriPublic.getScheme());
+            uri.setHost(_uriPublic.getHost());
+            uri.setPort(COOLWSD::getClientPortNumber());
+            uri.addQueryParameter("ServerId", Util::getProcessIdentifier());
+            uri.addQueryParameter("Tag", id);
+            uri.addQueryParameter("WOPISrc", wopiSrc);
+
+            std::string mediaUrl;
+            Poco::URI::encode(uri.toString(), "&", mediaUrl); // '&' is reserved in xml/html/svg.
+            object->set("url", mediaUrl);
+            object->set("mimeType", "video/mp4");
+
+            std::ostringstream mediaStr;
+            object->stringify(mediaStr);
+            return mediaStr.str();
+        }
+    }
+
+    return std::string();
+}
+
+void DocumentBroker::removeEmbeddedMedia(const std::string& json)
+{
+    Poco::JSON::Object::Ptr object;
+    if (JsonUtil::parseJSON(json, object))
+    {
+        const std::string id = JsonUtil::getJSONValue<std::string>(object, "id");
+        if (id.empty())
+        {
+            LOG_ERR("Invalid embeddedmedia json without id: " << json);
+        }
+        else
+        {
+            LOG_TRC("Removing embeddedmedia with id [" << id << "]: " << json);
+            _embeddedMedia.erase(id);
+        }
+    }
 }
 
 // not beautiful - but neither is editing mobile project files.
