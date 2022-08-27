@@ -75,21 +75,11 @@ std::vector<char> DeltaTests::applyDelta(
     std::vector<char> delta;
     delta.resize(1024*1024*4); // lots of extra space.
 
-    z_stream zstr;
-    memset((void *)&zstr, 0, sizeof (zstr));
+    size_t compSize = ZSTD_decompress( delta.data(), delta.size(),
+                                       zDelta.data() + 1, zDelta.size() - 1);
+    LOK_ASSERT_EQUAL(ZSTD_isError(compSize), (unsigned)false);
 
-    zstr.next_in = (Bytef *)zDelta.data() + 1;
-    zstr.avail_in = zDelta.size() - 1;
-    zstr.next_out = (Bytef *)delta.data();
-    zstr.avail_out = delta.size();
-
-    LOK_ASSERT(inflateInit2 (&zstr, -MAX_WBITS) == Z_OK);
-
-    LOK_ASSERT(inflate (&zstr, Z_SYNC_FLUSH) == Z_STREAM_END);
-
-    LOK_ASSERT(inflateEnd(&zstr) == Z_OK);
-
-    delta.resize(delta.size() - zstr.avail_out);
+    delta.resize(compSize);
 
     // start with the same state.
     std::vector<char> output = pixmap;
@@ -133,6 +123,10 @@ std::vector<char> DeltaTests::applyDelta(
                 *dest++ = delta[i++];
             break;
         }
+        case 't': // termination
+            LOK_ASSERT(i == delta.size() - 1);
+            i++;
+            break;
         default:
             std::cout << "Unknown delta code " << delta[i] << '\n';
             LOK_ASSERT(false);
