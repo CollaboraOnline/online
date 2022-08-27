@@ -1083,7 +1083,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
            "style-src 'self' 'unsafe-inline'; "
            "font-src 'self' data:; "
            "object-src 'self' blob:; "
-           "media-src 'self' https://www.w3schools.com/;";
+           "media-src 'self'; ";
 
     // Frame ancestors: Allow coolwsd host, wopi host and anything configured.
     std::string configFrameAncestor = config.getString("net.frame_ancestors", "");

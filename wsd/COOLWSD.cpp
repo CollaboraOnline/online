@@ -3704,6 +3704,11 @@ private:
                 handleRobotsTxtRequest(request, socket);
 
             else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
+                     requestDetails.equals(1, "media"))
+            {
+                handleMediaRequest(request, disposition, socket);
+            }
+            else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                      requestDetails.equals(1, "clipboard"))
             {
 //              Util::dumpHex(std::cerr, socket->getInBuffer(), "clipboard:\n"); // lots of data ...
@@ -4003,6 +4008,86 @@ private:
 
         socket->shutdown();
         LOG_INF("Sent robots.txt response successfully.");
+    }
+
+    static void handleMediaRequest(const Poco::Net::HTTPRequest& request,
+                                   SocketDisposition& /*disposition*/,
+                                   const std::shared_ptr<StreamSocket>& socket)
+    {
+        assert(socket && "Must have a valid socket");
+
+        LOG_DBG("Media request: " << request.getURI());
+
+        std::string decoded;
+        Poco::URI::decode(request.getURI(), decoded);
+        Poco::URI requestUri(decoded);
+        Poco::URI::QueryParameters params = requestUri.getQueryParameters();
+        std::string WOPISrc, serverId, viewId, tag, mime;
+        for (const auto& it : params)
+        {
+            if (it.first == "WOPISrc")
+                WOPISrc = it.second;
+            else if (it.first == "ServerId")
+                serverId = it.second;
+            else if (it.first == "ViewId")
+                viewId = it.second;
+            else if (it.first == "Tag")
+                tag = it.second;
+            else if (it.first == "MimeType")
+                mime = it.second;
+        }
+        LOG_TRC("Media request for us: " << serverId << " with tag " << tag);
+
+        if (serverId != Util::getProcessIdentifier())
+        {
+            const std::string errMsg = "Cluster configuration error: mis-matching "
+                                       "serverid ["
+                                       + serverId + "] vs. [" + Util::getProcessIdentifier()
+                                       + "] on request to URL: " + request.getURI();
+            LOG_ERR(errMsg);
+
+            // we got the wrong request.
+            http::Response httpResponse(http::StatusLine(400));
+            httpResponse.set("Content-Length", "0");
+            socket->sendAndShutdown(httpResponse);
+            socket->ignoreInput();
+            return;
+        }
+
+        const auto docKey = RequestDetails::getDocKey(WOPISrc);
+
+        std::shared_ptr<DocumentBroker> docBroker;
+        {
+            std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+            auto it = DocBrokers.find(docKey);
+            if (it == DocBrokers.end())
+            {
+                const std::string errMsg =
+                    "Unknown DocBroker reference in media URL: " + request.getURI();
+                LOG_ERR(errMsg);
+
+                http::Response httpResponse(http::StatusLine(400));
+                httpResponse.set("Content-Length", "0");
+                socket->sendAndShutdown(httpResponse);
+                socket->ignoreInput();
+                return;
+            }
+
+            docBroker = it->second;
+        }
+
+        // If we have a valid docBroker, use it.
+        // Note: there is a race here as DocBroker may
+        // have already exited its SocketPoll, but we
+        // haven't cleaned up the DocBrokers container.
+        // Since we don't care about creating a new one,
+        // we simply go to the fallback below.
+        if (docBroker && docBroker->isAlive())
+        {
+            // Do things in the right thread.
+            LOG_TRC("Move media request " << tag << " to docbroker thread");
+            docBroker->handleMediaRequest(socket, tag);
+        }
     }
 
     static std::string getContentType(const std::string& fileName)
@@ -5594,6 +5679,11 @@ int COOLWSD::main(const std::vector<std::string>& /*args*/)
     return returnValue;
 }
 
+int COOLWSD::getClientPortNumber()
+{
+    return ClientPortNumber;
+}
+
 #if !MOBILEAPP
 
 std::vector<std::shared_ptr<DocumentBroker>> COOLWSD::getBrokersTestOnly()
@@ -5605,11 +5695,6 @@ std::vector<std::shared_ptr<DocumentBroker>> COOLWSD::getBrokersTestOnly()
     for (auto& brokerIt : DocBrokers)
         result.push_back(brokerIt.second);
     return result;
-}
-
-int COOLWSD::getClientPortNumber()
-{
-    return ClientPortNumber;
 }
 
 std::set<pid_t> COOLWSD::getKitPids()

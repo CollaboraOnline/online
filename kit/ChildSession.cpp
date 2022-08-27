@@ -792,7 +792,6 @@ bool ChildSession::loadDocument(const StringVector& tokens)
     _docManager->notifyViewInfo();
     sendTextFrame("editor: " + std::to_string(_docManager->getEditorId()));
 
-
     LOG_INF("Loaded session " << getId());
     return true;
 }
@@ -3103,6 +3102,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_DOCUMENT_BACKGROUND_COLOR:
         sendTextFrame("documentbackgroundcolor: " + payload);
+        break;
+    case LOK_CALLBACK_MEDIA_SHAPE:
+        sendTextFrame("mediashape: " + payload);
         break;
     case LOK_CALLBACK_CONTENT_CONTROL:
         sendTextFrame("contentcontrol: " + payload);
