@@ -11,6 +11,7 @@
 #include <unordered_set>
 #include <assert.h>
 #include <zlib.h>
+#include <zstd.h>
 #include <Log.hpp>
 #include <Common.hpp>
 
@@ -413,41 +414,31 @@ class DeltaGenerator {
         return false; // Disable transmission for now; just send keyframes.
 #endif
 
-        z_stream zstr;
-        memset((void *)&zstr, 0, sizeof (zstr));
-
-        if (deflateInit2 (&zstr, Z_DEFAULT_COMPRESSION, Z_DEFLATED,
-                          -MAX_WBITS, 8, Z_DEFAULT_STRATEGY) != Z_OK) {
-            LOG_ERR("Failed to init deflate");
-            return false;
-        }
+        // terminating this delta so we can detect the next one.
+        output.push_back('t');
 
         // FIXME: avoid allocation & make this more efficient.
-        uLong maxCompressed = compressBound(output.size());
-        Bytef *compressed = (Bytef *)malloc(maxCompressed);
+        size_t maxCompressed = ZSTD_COMPRESSBOUND(output.size());
+        std::unique_ptr<char, void (*)(void*)> compressed((char*)malloc(maxCompressed), free);
 
-        zstr.next_in = (Bytef *)output.data();
-        zstr.avail_in = output.size();
-        zstr.next_out = compressed;
-        zstr.avail_out = maxCompressed;
-
-        if (!compressed || deflate(&zstr, Z_FINISH) != Z_STREAM_END) {
-            LOG_ERR("Failed to compress delta of size " << output.size());
+        // compress for speed, not size - and trust to deltas.
+        size_t compSize = ZSTD_compress(compressed.get(), maxCompressed,
+                                       output.data(), output.size(),
+                                       ZSTD_minCLevel());
+        if (ZSTD_isError(compSize))
+        {
+            LOG_ERR("Failed to compress delta of size " << output.size() << " with " << ZSTD_getErrorName(compSize));
             return false;
         }
 
-        deflateEnd(&zstr);
-
-        uLong compSize = maxCompressed - zstr.avail_out;
         LOG_TRC("Compressed delta of size " << output.size() << " to size " << compSize);
 //                << Util::dumpHex(std::string((char *)compressed, compSize)));
 
-        // FIXME: should get zlib to drop it directly in really.
+        // FIXME: should get zstd to drop it directly in-place really.
         outStream.push_back('D');
         size_t oldSize = outStream.size();
         outStream.resize(oldSize + compSize);
-        memcpy(&outStream[oldSize], compressed, compSize);
-        free (compressed);
+        memcpy(&outStream[oldSize], compressed.get(), compSize);
 
         return true;
     }
@@ -552,61 +543,57 @@ class DeltaGenerator {
                          loc, output, wid, forceKeyframe))
         {
             // FIXME: should stream it in =)
+            size_t maxCompressed = ZSTD_COMPRESSBOUND((size_t)width * height * 4);
 
-            // FIXME: get sizes right [!] ...
-            z_stream zstr;
-            memset((void *)&zstr, 0, sizeof (zstr));
-
-            if (deflateInit2 (&zstr, Z_BEST_SPEED + 1, Z_DEFLATED,
-                              -MAX_WBITS, 8, Z_DEFAULT_STRATEGY) != Z_OK)
-            {
-                LOG_ERR("Failed to init deflate");
-                return 0;
-            }
-
-            uLong maxCompressed = compressBound((uLong)width * height * 4);
-            Bytef *compressed = (Bytef *)malloc(maxCompressed);
+            std::unique_ptr<char, void (*)(void*)> compressed((char*)malloc(maxCompressed), free);
             if (!compressed)
             {
                 LOG_ERR("Failed to allocate buffer of size " << maxCompressed << " to compress into");
                 return 0;
             }
 
-            zstr.next_out = compressed;
-            zstr.avail_out = maxCompressed;
+            ZSTD_CCtx *cctx = ZSTD_createCCtx();
+
+            ZSTD_outBuffer outb;
+            outb.dst = compressed.get();
+            outb.size = maxCompressed;
+            outb.pos = 0;
 
             unsigned char fixedupLine[width * 4];
 
             // FIXME: should we RLE in pixels first ?
             for (int y = 0; y < height; ++y)
             {
-                unpremult_copy(fixedupLine, (Bytef *)pixmap + ((startY + y) * bufferWidth * 4) + (startX * 4), width);
+                unpremult_copy(fixedupLine, pixmap + ((startY + y) * bufferWidth * 4) + (startX * 4), width);
 
-                zstr.next_in = fixedupLine;
-                zstr.avail_in = width * 4;
+                ZSTD_inBuffer inb;
+                inb.src = fixedupLine;
+                inb.size = width * 4;
+                inb.pos = 0;
 
                 bool lastRow = (y == height - 1);
-                int flushFlag = lastRow ? Z_FINISH : Z_NO_FLUSH;
-                int expected = lastRow ? Z_STREAM_END : Z_OK;
-                if (deflate(&zstr,  flushFlag) != expected)
+
+                ZSTD_EndDirective endOp = lastRow ? ZSTD_e_end : ZSTD_e_continue;
+                size_t compSize = ZSTD_compressStream2(cctx, &outb, &inb, endOp);
+                if (ZSTD_isError(compSize))
                 {
-                    LOG_ERR("failed to compress image ");
+                    LOG_ERR("failed to compress image: " << compSize << " is: " << ZSTD_getErrorName(compSize));
+                    ZSTD_freeCCtx(cctx);
                     return 0;
                 }
             }
 
-            deflateEnd(&zstr);
+            ZSTD_freeCCtx(cctx);
 
-            uLong compSize = maxCompressed - zstr.avail_out;
+            size_t compSize = outb.pos;
             LOG_TRC("Compressed image of size " << (width * height * 4) << " to size " << compSize);
 //                    << Util::dumpHex(std::string((char *)compressed, compSize)));
 
-            // FIXME: get zlib to drop it directly into this buffer really.
+            // FIXME: get zstd to compress directly into this buffer.
             output.push_back('Z');
             size_t oldSize = output.size();
             output.resize(oldSize + compSize);
-            memcpy(&output[oldSize], compressed, compSize);
-            free (compressed);
+            memcpy(&output[oldSize], compressed.get(), compSize);
         }
 
         return output.size();
