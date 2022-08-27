@@ -4884,7 +4884,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugLoadDelta = 0;
 		this._debugInvalidateCount = 0;
 		this._debugRenderCount = 0;
-		this._debugDeltas = 0;
+		this._debugDeltas = true; // FIXME - turn me off before pushing ...
 		if (!this._debugData) {
 			this._debugData = {};
 			this._debugDataNames = ['tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount', 'postMessage'];
@@ -6649,17 +6649,16 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// apply potentially several deltas in turn.
 		var i = 0;
-		var offset = 0, nextOffset = 0;
-		while (offset < rawDelta.length)
-		{
-			var inflator = new window.pako.Inflate({ raw: true });
-			inflator.push(offset > 0 ? rawDelta.subarray(offset) : rawDelta);
-			if (inflator.err) throw inflator.msg;
+		var offset = 0;
 
-			var delta = inflator.result;
-			nextOffset = rawDelta.length - inflator.strm.avail_in;
+		// FIXME:used clamped array ... as a 2nd parameter
+		var allDeltas = window.fzstd.decompress(rawDelta);
+
+		while (offset < allDeltas.length)
+		{
 			if (this._debugDeltas)
-				window.app.console.log('Next delta at ' + nextOffset);
+				window.app.console.log('Next delta at ' + offset + ' length ' + (allDeltas.length - offset));
+			var delta = allDeltas.subarray(offset);
 
 			// Debugging paranoia: if we get this wrong bad things happen.
 			if ((isKeyframe && delta.length != canvas.width * canvas.height * 4) ||
@@ -6670,13 +6669,16 @@ L.CanvasTileLayer = L.Layer.extend({
 						       delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
 			}
 
+			// FIXME: it is a nonsense to keep fetching the data from the canvas
+			// and putting it back if we apply multiple deltas - horribly wasteful.
+			// we should move that outside the loop.
+			var len = this._applyDeltaChunk(canvas, tile, initCanvas, delta, isKeyframe);
 			if (this._debugDeltas)
-				window.app.console.log('Apply chunk ' + i++ + ' of size ' + delta.length +
-						       ' at compressed stream offset ' + offset + ' compressed size ' + (nextOffset - offset));
-			this._applyDeltaChunk(canvas, tile, initCanvas, delta, isKeyframe);
+				window.app.console.log('Applied chunk ' + i++ + ' of total size ' + delta.length +
+						       ' at stream offset ' + offset + ' size ' + len);
 			initCanvas = false;
 			isKeyframe = false;
-			offset = nextOffset;
+			offset += len;
 		}
 	},
 
@@ -6694,10 +6696,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (isKeyframe)
 		{
-			// FIXME: tweak Pako to de-compress directly into a Uint8ClampedArray
-			ctx.putImageData(new ImageData(new Uint8ClampedArray(delta),
+			// FIXME: use zstd to de-compress directly into a Uint8ClampedArray
+			ctx.putImageData(new ImageData(new Uint8ClampedArray(delta.subarray(0, pixSize)),
 						       canvas.width, canvas.height), 0, 0);
-			return;
+			return pixSize;
 		}
 
 		if (initCanvas && tile.el) // render old image data to the canvas
@@ -6705,6 +6707,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// FIXME; can we operate directly on the image ?
 		var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		// FIXME: can we just keep a ptr to imgData.data (?) ... =)
 		var oldData = new Uint8ClampedArray(imgData.data);
 
 		var offset = 0;
@@ -6724,7 +6727,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		// Apply delta.
-		for (var i = 0; i < delta.length;)
+		var stop = false;
+		for (var i = 0; i < delta.length && !stop;)
 		{
 			switch (delta[i])
 			{
@@ -6761,6 +6765,10 @@ L.CanvasTileLayer = L.Layer.extend({
 				}
 				// imgData.data[offset - 2] = 256; // debug - blue terminator
 				break;
+			case 116: // 't': // terminate delta new one next
+				stop = true;
+				i++;
+				break;
 			default:
 				console.log('[' + i + ']: ERROR: Unknown delta code ' + delta[i]);
 				i = delta.length;
@@ -6769,6 +6777,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		ctx.putImageData(imgData, 0, 0);
+
+		return i;
 	},
 
 	_onTileMsg: function (textMsg, img) {
