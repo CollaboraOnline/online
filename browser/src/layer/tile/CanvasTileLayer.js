@@ -1557,6 +1557,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		else if (textMsg.startsWith('graphicselection:')) {
 			this._onGraphicSelectionMsg(textMsg);
 		}
+		else if (textMsg.startsWith('mediashape:')) {
+			this._onMediaShapeMsg(textMsg);
+		}
 		else if (textMsg.startsWith('cellcursor:')) {
 			this._onCellCursorMsg(textMsg);
 		}
@@ -2047,18 +2050,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_onShapeSelectionContent: function (textMsg) {
-		// for the demo - use selection to inject video...
-
-		var videoJSON = {
-			url: 'https://www.w3schools.com/tags/movie.mp4',
-			mimeType: 'video/mp4'
-		};
-
-		if (textMsg !== undefined) { // dummy condition always true for testing
-			this._onEmbeddedVideoContent(JSON.stringify(videoJSON));
-			return;
-		}
-
 		textMsg = textMsg.substring('shapeselectioncontent:'.length + 1);
 		if (this._graphicMarker) {
 			var extraInfo = this._graphicSelection.extraInfo;
@@ -2071,6 +2062,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (wasVisibleSVG)
 				this._graphicMarker._showEmbeddedSVG();
 		}
+	},
+
+	_onMediaShapeMsg: function (textMsg) {
+		textMsg = textMsg.substring('mediashape:'.length + 1);
+		this._onEmbeddedVideoContent(textMsg);
 	},
 
 	// shows the video inside current selection marker

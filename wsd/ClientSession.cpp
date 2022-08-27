@@ -23,6 +23,7 @@
 #include "DocumentBroker.hpp"
 #include "COOLWSD.hpp"
 #include <common/Common.hpp>
+#include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
 #include <common/Clipboard.hpp>
@@ -1808,6 +1809,13 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
         LOG_INF("End of disconnection handshake for " << getId());
         docBroker->finalRemoveSession(getId());
+        return true;
+    }
+    else if (tokens.equals(0, "mediashape:"))
+    {
+        const std::string newJson = docBroker->addEmbeddedMedia(payload->jsonString());
+        if (!newJson.empty())
+            forwardToClient(std::make_shared<Message>("mediashape: " + newJson, Message::Dir::Out));
         return true;
     }
     else if (tokens.equals(0, "formfieldbutton:")) {

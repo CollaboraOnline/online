@@ -9,6 +9,11 @@
 
 #include <config_version.h>
 
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/stat.h>
+
 #include <chrono>
 #include <cstdint>
 #include <iostream>
@@ -16,8 +21,6 @@
 #include <memory>
 #include <sstream>
 #include <string>
-#include <sys/types.h>
-#include <sys/socket.h>
 #include <netdb.h>
 
 #include <Common.hpp>
@@ -1375,6 +1378,245 @@ get(const std::string& url, const std::string& path,
 {
     auto httpSession = http::Session::create(url);
     return httpSession->syncRequest(http::Request(path), timeout);
+}
+
+namespace server
+{
+
+/// A server http Session to make asynchronous HTTP responses.
+class Session final : public ProtocolHandlerInterface
+{
+public:
+    /// Construct a Session instance.
+    Session()
+        : _timeout(getDefaultTimeout())
+        , _pos(-1)
+        , _size(0)
+        , _fd(-1)
+        , _connected(false)
+    {
+    }
+
+    /// Returns the default timeout.
+    static constexpr std::chrono::milliseconds getDefaultTimeout()
+    {
+        return std::chrono::seconds(30);
+    }
+
+    bool isConnected() const { return _connected; };
+
+    /// Set the timeout, in microseconds.
+    void setTimeout(const std::chrono::microseconds timeout) { _timeout = timeout; }
+    /// Get the timeout, in microseconds.
+    std::chrono::microseconds getTimeout() const { return _timeout; }
+
+    /// The onFinished callback handler signature.
+    using FinishedCallback = std::function<void(const std::shared_ptr<Session>& session)>;
+
+    /// Set a callback to handle onFinished events from this session.
+    /// onFinished is triggered whenever a request has finished,
+    /// regardless of the reason (error, timeout, completion).
+    void setFinishedHandler(FinishedCallback onFinished) { _onFinished = std::move(onFinished); }
+
+    /// Start an asynchronous upload from a file.
+    /// Return true when it dispatches the socket to the SocketPoll.
+    /// Note: when reusing this Session, it is assumed that the socket
+    /// is already added to the SocketPoll on a previous call (do not
+    /// use multiple SocketPoll instances on the same Session).
+    bool asyncUpload(std::string fromFile, std::string mimeType)
+    {
+        LOG_TRC("asyncUpload from file [" << fromFile << ']');
+
+        _fd = open(fromFile.c_str(), O_RDONLY);
+        if (_fd == -1)
+        {
+            LOG_ERR("Failed to open file [" << fromFile << "] for uploading");
+            return false;
+        }
+
+        struct stat sb;
+        const int res = fstat(_fd, &sb);
+        if (res == -1)
+        {
+            LOG_SYS("Failed to stat file [" << fromFile);
+            close(_fd);
+            _fd = -1;
+            return false;
+        }
+
+        _size = sb.st_size;
+        _data = std::move(fromFile);
+        _mimeType = std::move(mimeType);
+        return true;
+    }
+
+    void asyncShutdown()
+    {
+        LOG_TRC("asyncShutdown");
+        if (_socket)
+        {
+            _socket->shutdown();
+        }
+    }
+
+    void disconnect()
+    {
+        LOG_TRC("disconnect");
+        if (_socket)
+        {
+            _socket->closeConnection();
+        }
+    }
+
+private:
+    void onConnect(const std::shared_ptr<StreamSocket>& socket) override
+    {
+        _connected = false; // Assume disconnected by default.
+        _socket = socket;
+        if (socket)
+        {
+            if (_fd >= 0 || _pos >= 0)
+            {
+                LOG_TRC('#' << socket->getFD() << " Connected");
+                _connected = true;
+
+                LOG_DBG('#' << socket->getFD() << " Sending header with size " << _size);
+                http::Response httpResponse(http::StatusLine(200));
+                httpResponse.set("Content-Length", std::to_string(_size));
+                httpResponse.set("Content-Type", _mimeType);
+                httpResponse.set("accept-ranges", "bytes");
+                httpResponse.set("Content-Range", "bytes 0-" + std::to_string(_size - 1) + '/' +
+                                                      std::to_string(_size));
+
+                socket->send(httpResponse);
+                return;
+            }
+
+            LOG_DBG('#' << socket->getFD() << " Has no data to send back");
+            http::Response httpResponse(http::StatusLine(400));
+            httpResponse.set("Content-Length", "0");
+            socket->sendAndShutdown(httpResponse);
+        }
+        else
+        {
+            LOG_DBG("Error: onConnect without a valid socket");
+        }
+    }
+
+    void shutdown(bool /*goingAway*/, const std::string& /*statusMessage*/) override
+    {
+        LOG_TRC("shutdown");
+    }
+
+    void getIOStats(uint64_t& sent, uint64_t& recv) override
+    {
+        LOG_TRC("getIOStats");
+        if (_socket)
+            _socket->getIOStats(sent, recv);
+        else
+        {
+            sent = 0;
+            recv = 0;
+        }
+    }
+
+    int getPollEvents(std::chrono::steady_clock::time_point /*now*/,
+                      int64_t& /*timeoutMaxMicroS*/) override
+    {
+        int events = POLLIN;
+        if (_fd >= 0 || _pos >= 0)
+            events |= POLLOUT;
+        return events;
+    }
+
+    virtual void handleIncomingMessage(SocketDisposition& /*disposition*/) override
+    {
+        // std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (!isConnected())
+        {
+            LOG_ERR("handleIncomingMessage called when not connected.");
+            assert(!_socket && "Expected no socket when not connected.");
+            return;
+        }
+
+        assert(_socket && "No valid socket to handleIncomingMessage.");
+        LOG_TRC('#' << _socket->getFD() << " handleIncomingMessage.");
+    }
+
+    void performWrites(std::size_t capacity) override
+    {
+        // We may get called after disconnecting and freeing the Socket instance.
+        if (_socket)
+        {
+            const Buffer& out = _socket->getOutBuffer();
+            LOG_TRC('#' << _socket->getFD() << ": performWrites: " << out.size()
+                        << " bytes, capacity: " << capacity);
+
+            while (_fd >= 0 && capacity > 0)
+            {
+                //FIXME: replace with in-place read into the output buffer.
+                char buffer[64 * 1024];
+                const auto size = std::min(sizeof(buffer), capacity);
+                int n;
+                while ((n = ::read(_fd, buffer, size)) < 0 && errno == EINTR)
+                    LOG_TRC("EINTR reading from " << _data);
+
+                if (n <= 0)
+                {
+                    if (n == 0)
+                    {
+                        LOG_TRC('#' << _socket->getFD() << ": performWrites finished uploading");
+                    }
+                    else
+                    {
+                        LOG_SYS('#' << _socket->getFD() << ": failed to upload file");
+                    }
+
+                    close(_fd);
+                    _fd = -1;
+                    onDisconnect();
+                    break;
+                }
+
+                _socket->send(buffer, n);
+                LOG_ASSERT(static_cast<std::size_t>(n) <= capacity);
+                capacity -= n;
+                LOG_TRC('#' << _socket->getFD() << ": performWrites wrote " << n
+                            << " bytes, capacity: " << capacity);
+            }
+        }
+    }
+
+    void onDisconnect() override
+    {
+        // Make sure the socket is disconnected and released.
+        if (_socket)
+        {
+            LOG_TRC('#' << _socket->getFD() << ": onDisconnect");
+
+            _socket->shutdown(); // Flag for shutdown for housekeeping in SocketPoll.
+            _socket->closeConnection(); // Immediately disconnect.
+            _socket.reset();
+        }
+
+        _connected = false;
+    }
+
+    int sendTextMessage(const char*, const size_t, bool) const override { return 0; }
+    int sendBinaryMessage(const char*, const size_t, bool) const override { return 0; }
+
+private:
+    std::chrono::microseconds _timeout;
+    std::chrono::steady_clock::time_point _startTime;
+    std::string _data; //< Data to upload, if not from a file, OR, the filename (if _pos == -1).
+    std::string _mimeType; //< The data Content-Type.
+    int _pos; //< The current position in the data string.
+    int _size; //< The size of the data in bytes.
+    int _fd; //< The descriptor of the file to upload.
+    bool _connected;
+    FinishedCallback _onFinished;
+    std::shared_ptr<StreamSocket> _socket; //< Must be the last member.
+};
 }
 
 } // namespace http

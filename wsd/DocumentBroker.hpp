@@ -398,6 +398,8 @@ public:
     static bool lookupSendClipboardTag(const std::shared_ptr<StreamSocket> &socket,
                                        const std::string &tag, bool sendError = false);
 
+    void handleMediaRequest(const std::shared_ptr<Socket>& socket, const std::string& tag);
+
     /// True if any flag to unload or terminate is set.
     bool isUnloading() const
     {
@@ -488,6 +490,11 @@ public:
 
     /// Remove download id mapping
     void unregisterDownloadId(const std::string& downloadId);
+
+    /// Add embedded media objects. Returns json with external URL.
+    std::string addEmbeddedMedia(const std::string& json);
+    /// Remove embedded media objects.
+    void removeEmbeddedMedia(const std::string& json);
 
 private:
     /// get the session id of a session that can write the document for save / locking.
@@ -1401,6 +1408,9 @@ private:
 
     // Maps download id -> URL
     std::map<std::string, std::string> _registeredDownloadLinks;
+
+    /// Embedded media map [id, json].
+    std::map<std::string, std::string> _embeddedMedia;
 };
 
 #if !MOBILEAPP
