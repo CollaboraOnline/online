@@ -13,8 +13,6 @@ L.Control.Notebookbar = L.Control.extend({
 	container: null,
 	builder: null,
 
-	lastContext: 'Text',
-
 	HOME_TAB_ID: '-10',
 
 	additionalShortcutButtons: [],
@@ -425,7 +423,7 @@ L.Control.Notebookbar = L.Control.extend({
 			this.createOptionsSection(childrenArray);
 		}
 
-		if (event.context === this.lastContext)
+		if (event.context === event.oldContext)
 			return;
 
 		var tabs = this.getTabs();
@@ -454,8 +452,6 @@ L.Control.Notebookbar = L.Control.extend({
 			contextTab.click();
 		else if (defaultTab)
 			defaultTab.click();
-
-		this.lastContext = event.context;
 	},
 
 	onStatusbarChange: function() {
