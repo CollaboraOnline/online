@@ -136,7 +136,7 @@ protected:
                 logger << tokens.getParam(token) << ' ';
             }
 
-            LOG_END(logger);
+            LOG_END_FLUSH(logger);
         }
 
         // Note: Syntax or parsing errors here are unexpected and fatal.

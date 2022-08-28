@@ -634,7 +634,7 @@ WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& aut
                 logger << '\t' << pair.first << ": " << pair.second << " / ";
             }
 
-            LOG_END(logger);
+            LOG_END_FLUSH(logger);
         }
 
         const std::shared_ptr<const http::Response> httpResponse
@@ -682,7 +682,7 @@ WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& aut
             if (failed)
                 logRes << "\tBody: [" << wopiResponse << "]";
 
-            LOG_END(logRes);
+            LOG_END_FLUSH(logRes);
         }
 
         if (failed)
@@ -1110,7 +1110,7 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
                 logger << '\t' << pair.first << ": " << pair.second << " / ";
             }
 
-            LOG_END(logger);
+            LOG_END_FLUSH(logger);
         }
     }
     else if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_FOUND ||
