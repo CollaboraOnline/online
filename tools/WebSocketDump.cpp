@@ -112,7 +112,7 @@ private:
                     logger << " / " << it.first << ": " << it.second;
                 }
 
-                LOG_END(logger);
+                LOG_END_FLUSH(logger);
             }
 
             const std::streamsize contentLength = request.getContentLength();
