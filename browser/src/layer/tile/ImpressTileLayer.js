@@ -285,6 +285,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			this._documentInfo = textMsg;
 			this._viewId = parseInt(command.viewid);
 			this._selectedPart = command.selectedPart;
+			this._selectedMode = (command.mode !== undefined) ? command.mode : 0;
 			this._selectedParts = command.selectedParts || [command.selectedPart];
 			this._resetPreFetching(true);
 			this._update();
