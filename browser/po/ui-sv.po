@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-04 14:31+0200\n"
-"PO-Revision-Date: 2022-08-01 11:22+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2022-08-07 14:29+0000\n"
+"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -432,7 +432,7 @@ msgstr "Funktionsguide"
 
 #: src/control/Control.FormulaBarJSDialog.js:55
 msgid "Formula"
-msgstr ""
+msgstr "Formula"
 
 #: src/control/Control.FormulaBarJSDialog.js:62
 #: src/control/Control.MobileTopBar.js:40
@@ -451,11 +451,11 @@ msgstr "Medelvärde"
 
 #: src/control/Control.JSDialogBuilder.js:145
 msgid "Min"
-msgstr ""
+msgstr "Min"
 
 #: src/control/Control.JSDialogBuilder.js:146
 msgid "Max"
-msgstr ""
+msgstr "Max"
 
 #: src/control/Control.JSDialogBuilder.js:147
 #: src/control/Control.StatusBar.js:309
@@ -725,11 +725,11 @@ msgstr "Textriktning"
 
 #: src/control/Control.Menubar.js:290 src/control/Control.Menubar.js:1094
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Infoga Rich Text"
 
 #: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1095
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Infoga kryssruta"
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1096
 msgid "Insert Dropdown"
@@ -737,17 +737,16 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1097
 msgid "Insert Picture"
-msgstr ""
+msgstr "Infoga bild"
 
 #: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1098
-#, fuzzy
 msgid "Insert Date"
-msgstr "Infoga Tabell"
+msgstr "Infoga datum"
 
 #: src/control/Control.Menubar.js:295 src/control/Control.Menubar.js:1099
 #: src/control/Control.NotebookbarWriter.js:999
 msgid "Properties"
-msgstr ""
+msgstr "Egenskaper"
 
 #: src/control/Control.Menubar.js:322
 #: src/control/Control.NotebookbarWriter.js:291
@@ -1110,7 +1109,7 @@ msgstr "Dålig"
 
 #: src/control/Control.NotebookbarCalc.js:735
 msgid "Row Height"
-msgstr ""
+msgstr "Radhöjd"
 
 #: src/control/Control.NotebookbarCalc.js:741
 msgid "Column Width"
@@ -1168,7 +1167,7 @@ msgstr "Sparkline"
 #: src/control/Control.NotebookbarWriter.js:889
 #: src/control/Control.NotebookbarWriter.js:2194
 msgid "Shapes"
-msgstr ""
+msgstr "Former"
 
 #: src/control/Control.NotebookbarDraw.js:41
 #: src/control/Control.NotebookbarDraw.js:744
@@ -1217,11 +1216,11 @@ msgstr "EPUB dokument (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:974
 msgid "Rich Text"
-msgstr ""
+msgstr "Rich Text"
 
 #: src/control/Control.NotebookbarWriter.js:979
 msgid "Checkbox"
-msgstr ""
+msgstr "Kryssruta"
 
 #: src/control/Control.NotebookbarWriter.js:984
 msgid "Dropdown"
@@ -1229,7 +1228,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:989
 msgid "Picture"
-msgstr ""
+msgstr "Bild"
 
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Ruler"
@@ -1436,7 +1435,6 @@ msgid "0 users"
 msgstr "Inga användare"
 
 #: src/control/Control.UserList.js:159
-#, fuzzy
 msgid "Following"
 msgstr "Följer"
 
@@ -1963,6 +1961,8 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"Dokumentet är för stort eller inget diskutrymme kvar för att spara. "
+"Dokumentet kommer nu att vara skrivskyddat."
 
 #: src/errormessages.js:35 src/errormessages.js:44
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -2005,6 +2005,10 @@ msgid ""
 "preserve a copy locally. Please contact the server (%storageserver) "
 "administrator to resolve the issue."
 msgstr ""
+"Det gick inte att spara eftersom dokumentet är för stort eller diskkvoten "
+"överskrids. Dokumentet kommer nu att vara skrivskyddat men du kan "
+"fortfarande ladda ner det nu för att bevara en kopia lokalt. Kontakta "
+"serveradministratören (%storageserver) för att lösa problemet."
 
 #: src/errormessages.js:45
 msgid ""
