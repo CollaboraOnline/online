@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-04 14:31+0200\n"
-"PO-Revision-Date: 2022-08-01 14:47+0000\n"
-"Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
+"PO-Revision-Date: 2022-08-12 15:19+0000\n"
+"Last-Translator: Sargon-Isa <Sargon_isa@hotmail.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -740,7 +740,7 @@ msgstr "Checkbox einfügen"
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1096
 msgid "Insert Dropdown"
-msgstr "Dropdown-Liste einfügen"
+msgstr "Auswahlliste einfügen"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1097
 msgid "Insert Picture"
@@ -753,7 +753,7 @@ msgstr "Datum einfügen"
 #: src/control/Control.Menubar.js:295 src/control/Control.Menubar.js:1099
 #: src/control/Control.NotebookbarWriter.js:999
 msgid "Properties"
-msgstr "Einstellungen"
+msgstr "Eigenschaften"
 
 #: src/control/Control.Menubar.js:322
 #: src/control/Control.NotebookbarWriter.js:291
@@ -1116,7 +1116,7 @@ msgstr "Schlecht"
 
 #: src/control/Control.NotebookbarCalc.js:735
 msgid "Row Height"
-msgstr ""
+msgstr "Zeilenhöhe"
 
 #: src/control/Control.NotebookbarCalc.js:741
 msgid "Column Width"
@@ -1226,11 +1226,11 @@ msgstr "Rich Text"
 
 #: src/control/Control.NotebookbarWriter.js:979
 msgid "Checkbox"
-msgstr "Checkbox"
+msgstr "Kontrollkästchen"
 
 #: src/control/Control.NotebookbarWriter.js:984
 msgid "Dropdown"
-msgstr "Dropdown-Liste"
+msgstr "Aufklappmenü"
 
 #: src/control/Control.NotebookbarWriter.js:989
 msgid "Picture"
@@ -1986,8 +1986,8 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
-"Das Dokument ist zu groß oder es ist kein Speicherplatz mehr vorhanden, um "
-"es zu speichern. Das Dokument ist jetzt nur im Nur-Lesezugriff-Modus."
+"Das Dokument ist zu groß oder kein Speicherplatz zum speichern verfügbar. "
+"Das Dokument ist jetzt schreibgeschützt."
 
 #: src/errormessages.js:35 src/errormessages.js:44
 msgid "Document cannot be saved due to expired or invalid access token."
