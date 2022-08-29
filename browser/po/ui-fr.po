@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-04 14:31+0200\n"
-"PO-Revision-Date: 2022-08-01 11:22+0000\n"
-"Last-Translator: William Gathoye <william+weblate@gathoye.be>\n"
+"PO-Revision-Date: 2022-08-10 08:22+0000\n"
+"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1115,7 +1115,7 @@ msgstr "Mauvais"
 
 #: src/control/Control.NotebookbarCalc.js:735
 msgid "Row Height"
-msgstr ""
+msgstr "Hauteur de la ligne"
 
 #: src/control/Control.NotebookbarCalc.js:741
 msgid "Column Width"
