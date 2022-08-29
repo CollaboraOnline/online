@@ -68,6 +68,7 @@ var CSelections = L.Class.extend({
 		this._isOle = selectionType === 'ole';
 		this._selection = undefined;
 		this._updateSelection();
+		this._selectedMode = 0;
 	},
 
 	empty: function () {
@@ -202,11 +203,12 @@ var CReferences = L.Class.extend({
 
 L.TileCoordData = L.Class.extend({
 
-	initialize: function (left, top, zoom, part) {
+	initialize: function (left, top, zoom, part, mode) {
 		this.x = left;
 		this.y = top;
 		this.z = zoom;
 		this.part = part;
+		this.mode = (mode !== undefined) ? mode : 0;
 	},
 
 	getPos: function () {
@@ -214,12 +216,13 @@ L.TileCoordData = L.Class.extend({
 	},
 
 	key: function () {
-		return this.x + ':' + this.y + ':' + this.z + ':' + this.part;
+		return this.x + ':' + this.y + ':' + this.z + ':' + this.part + ':'
+			+ ((this.mode !== undefined) ? this.mode : 0);
 	},
 
 	toString: function () {
 		return '{ left : ' + this.x + ', top : ' + this.y +
-			', z : ' + this.z + ', part : ' + this.part + ' }';
+			', z : ' + this.z + ', part : ' + this.part + ', mode : ' + this.mode + ' }';
 	}
 });
 
@@ -227,8 +230,9 @@ L.TileCoordData.parseKey = function (keyString) {
 
 	window.app.console.assert(typeof keyString === 'string', 'key should be a string');
 	var k = keyString.split(':');
-	window.app.console.assert(k.length >= 4, 'invalid key format');
-	return new L.TileCoordData(+k[0], +k[1], +k[2], +k[3]);
+	var mode = (k.length === 4) ? +k[4] : 0;
+	window.app.console.assert(k.length >= 5, 'invalid key format');
+	return new L.TileCoordData(+k[0], +k[1], +k[2], +k[3], mode);
 };
 
 L.TileSectionManager = L.Class.extend({
@@ -1175,12 +1179,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	_retainParent: function (x, y, z, part, minZoom) {
+	_retainParent: function (x, y, z, part, mode, minZoom) {
 		var x2 = Math.floor(x / 1.2),
 		    y2 = Math.floor(y / 1.2),
 		    z2 = z - 1;
 
-		var key = x2 + ':' + y2 + ':' + z2 + ':' + part,
+		var key = x2 + ':' + y2 + ':' + z2 + ':' + part + ':' + mode,
 		    tile = this._tiles[key];
 
 		if (tile && tile.active) {
@@ -1192,19 +1196,19 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		if (z2 > minZoom) {
-			return this._retainParent(x2, y2, z2, part, minZoom);
+			return this._retainParent(x2, y2, z2, part, mode, minZoom);
 		}
 
 		return false;
 	},
 
-	_retainChildren: function (x, y, z, part, maxZoom) {
+	_retainChildren: function (x, y, z, part, mode, maxZoom) {
 
 		for (var i = 1.2 * x; i < 1.2 * x + 2; i++) {
 			for (var j = 1.2 * y; j < 1.2 * y + 2; j++) {
 
 				var key = Math.floor(i) + ':' + Math.floor(j) + ':' +
-					(z + 1) + ':' + part,
+					(z + 1) + ':' + part + ':' + mode,
 				    tile = this._tiles[key];
 
 				if (tile && tile.active) {
@@ -1216,7 +1220,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				}
 
 				if (z + 1 < maxZoom) {
-					this._retainChildren(i, j, z + 1, part, maxZoom);
+					this._retainChildren(i, j, z + 1, part, mode, maxZoom);
 				}
 			}
 		}
@@ -1424,10 +1428,11 @@ L.CanvasTileLayer = L.Layer.extend({
 		return true;
 	},
 
-	_sendTileCombineRequest: function(part, tilePositionsX, tilePositionsY) {
+	_sendTileCombineRequest: function(part, mode, tilePositionsX, tilePositionsY) {
 		var msg = 'tilecombine ' +
 			'nviewid=0 ' +
 			'part=' + part + ' ' +
+			((mode !== 0) ? ('mode=' + mode + ' ') : '') +
 			'width=' + this._tileWidthPx + ' ' +
 			'height=' + this._tileHeightPx + ' ' +
 			'tileposx=' + tilePositionsX + ' '	+
@@ -1578,8 +1583,14 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (this.isWriter()) {
 					msg += 'part=0 ';
 				} else {
-					var partNumber = parseInt(payload.substring('EMPTY'.length + 1));
-					msg += 'part=' + (isNaN(partNumber) ? this._selectedPart : partNumber) + ' ';
+					var tokens = payload.substring('EMPTY'.length + 1);
+					tokens = tokens.split(' ');
+					var part = parseInt(tokens[0] ? tokens[0] : '');
+					var mode = parseInt(tokens[1] ? tokens[1] : '');
+					mode = (isNaN(mode) ? this._selectedMode : mode);
+					msg += 'part=' + (isNaN(part) ? this._selectedPart : part)
+						+ ((mode !== 0) ? (' mode=' + mode) : '')
+						+ ' ';
 				}
 				msg += 'x=0 y=0 ';
 				msg += 'width=' + this._docWidthTwips + ' ';
@@ -5593,8 +5604,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			tile = this._tiles[key];
 			if (tile.current && !tile.active) {
 				var coords = tile.coords;
-				if (!this._retainParent(coords.x, coords.y, coords.z, coords.part, coords.z - 5)) {
-					this._retainChildren(coords.x, coords.y, coords.z, coords.part, coords.z + 2);
+				if (!this._retainParent(coords.x, coords.y, coords.z, coords.part, coords.mode, coords.z - 5)) {
+					this._retainChildren(coords.x, coords.y, coords.z, coords.part, coords.mode, coords.z + 2);
 				}
 			}
 		}
@@ -5621,7 +5632,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._wrapX ? L.Util.wrapNum(coords.x, this._wrapX) : coords.x,
 			this._wrapY ? L.Util.wrapNum(coords.y, this._wrapY) : coords.y,
 			coords.z,
-			coords.part);
+			coords.part,
+			coords.mode);
 	},
 
 	_pxBoundsToTileRanges: function (bounds) {
@@ -5793,9 +5805,11 @@ L.CanvasTileLayer = L.Layer.extend({
 		return mostVisiblePart;
 	},
 
-	_doesQueueIncludeTileInfo: function (queue, part, x, y) {
+	// TODO: unused method?
+	_doesQueueIncludeTileInfo: function (queue, part, mode, x, y) {
 		for (var i = 0; i < queue.length; i++) {
-			if (queue[i].part === part && queue[i].x === x && queue[i].y === y)
+			if (queue[i].part === part && queue[i].mode === mode &&
+				queue[i].x === x && queue[i].y === y)
 				return true;
 		}
 		return false;
@@ -5881,6 +5895,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var ratio = this._tileSize * relScale / this._tileHeightTwips;
 		var partHeightPixels = Math.round((this._partHeightTwips + this._spaceBetweenParts) * ratio);
 		var partWidthPixels = Math.round((this._partWidthTwips) * ratio);
+		var mode = 0; // mode is different only in Impress MasterPage mode so far
 
 		var intersectionAreaRectangle = L.LOUtil._getIntersectionRectangle(app.file.viewedRectangle, [0, 0, partWidthPixels, partHeightPixels * this._parts]);
 
@@ -5904,7 +5919,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				for (var j = minLocalX; j <= maxLocalX; j += app.tile.size.pixels[0]) {
 					for (var k = 0; k <= vTileCountPerPart * app.tile.size.pixels[0]; k += app.tile.size.pixels[1])
 						if ((i !== startPart || k >= startY) && (i !== endPart || k <= endY))
-							queue.push(new L.TileCoordData(j, k, zoom, i));
+							queue.push(new L.TileCoordData(j, k, zoom, i, mode));
 				}
 			}
 
@@ -5952,11 +5967,11 @@ L.CanvasTileLayer = L.Layer.extend({
 						tile.el = this._tileCache[key];
 					}
 					else {
-						this._sendTileCombineRequest(queue[i].part, (queue[i].x / this._tileSize) * this._tileWidthTwips, (queue[i].y / this._tileSize) * this._tileHeightTwips);
+						this._sendTileCombineRequest(queue[i].part, queue[i].mode, (queue[i].x / this._tileSize) * this._tileWidthTwips, (queue[i].y / this._tileSize) * this._tileHeightTwips);
 					}
 				}
 				else if (!tile.loaded) {
-					this._sendTileCombineRequest(queue[i].part, (queue[i].x / this._tileSize) * this._tileWidthTwips, (queue[i].y / this._tileSize) * this._tileHeightTwips);
+					this._sendTileCombineRequest(queue[i].part, queue[i].mode, (queue[i].x / this._tileSize) * this._tileWidthTwips, (queue[i].y / this._tileSize) * this._tileHeightTwips);
 				}
 			}
 		}
@@ -5994,7 +6009,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		for (var key in this._tiles) {
 			var thiscoords = this._keyToTileCoords(key);
 			if (thiscoords.z !== zoom ||
-				thiscoords.part !== this._selectedPart) {
+				thiscoords.part !== this._selectedPart ||
+				thiscoords.mode !== this._selectedMode) {
 				this._tiles[key].current = false;
 			}
 		}
@@ -6012,7 +6028,8 @@ L.CanvasTileLayer = L.Layer.extend({
 						i * this._tileSize,
 						j * this._tileSize,
 						zoom,
-						this._selectedPart);
+						this._selectedPart,
+						this._selectedMode);
 
 					if (!this._isValidTile(coords)) { continue; }
 
@@ -6109,7 +6126,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		for (key in this._tiles) {
 			var thiscoords = this._keyToTileCoords(key);
 			if (thiscoords.z !== zoom ||
-				thiscoords.part !== this._selectedPart) {
+				thiscoords.part !== this._selectedPart ||
+				thiscoords.mode !== this._selectedMode) {
 				this._tiles[key].current = false;
 			}
 		}
@@ -6127,7 +6145,8 @@ L.CanvasTileLayer = L.Layer.extend({
 						i * this._tileSize,
 						j * this._tileSize,
 						zoom,
-						this._selectedPart);
+						this._selectedPart,
+						this._selectedMode);
 
 					if (!this._isValidTile(coords)) { continue; }
 
@@ -6161,7 +6180,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				coords = queue[i];
 				key = this._tileCoordsToKey(coords);
 				tile = undefined;
-				if (coords.part === this._selectedPart) {
+				if (coords.part === this._selectedPart && coords.mode === this._selectedMode) {
 					var tileImg = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
 
 					// if createTile is defined with a second argument ("done" callback),
@@ -6202,7 +6221,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 
 			if (tilePositionsX !== '' && tilePositionsY !== '') {
-				this._sendTileCombineRequest(this._selectedPart, tilePositionsX, tilePositionsY);
+				this._sendTileCombineRequest(this._selectedPart, this._selectedMode, tilePositionsX, tilePositionsY);
 			}
 			else {
 				// We have all necessary tile images in the cache, schedule a paint..
@@ -6261,7 +6280,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			key = this._tileCoordsToKey(coords);
 
-			if (coords.part === this._selectedPart) {
+			if (coords.part === this._selectedPart && coords.mode === this._selectedMode) {
 				if (!this._tiles[key]) {
 					var tileImg = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
 
@@ -6304,7 +6323,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			// tiles that do not interest us
 			key = this._tileCoordsToKey(coords);
-			if (this._tileCache[key] || coords.part !== this._selectedPart) {
+			if (this._tileCache[key]
+				|| coords.part !== this._selectedPart
+				|| coords.mode !== this._selectedMode) {
 				coordsQueue.splice(0, 1);
 				continue;
 			}
@@ -6391,7 +6412,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 
 			twips = this._coordsToTwips(coords);
-			this._sendTileCombineRequest(coords.part, tilePositionsX, tilePositionsY);
+			this._sendTileCombineRequest(coords.part, this._selectedMode, tilePositionsX, tilePositionsY);
 		}
 	},
 
@@ -6409,7 +6430,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			var dropTile = !tile.loaded;
 			var coords = tile.coords;
-			if (coords.part === this._selectedPart) {
+			if (coords.part === this._selectedPart && coords.mode === this._selectedMode) {
 
 				var tileBounds;
 				if (!this._splitPanesContext) {
@@ -6452,7 +6473,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			typeof msgObj.y !== 'number' ||
 			typeof msgObj.tileWidth !== 'number' ||
 			typeof msgObj.tileHeight !== 'number' ||
-			typeof msgObj.part !== 'number') {
+			typeof msgObj.part !== 'number' ||
+			(typeof msgObj.mode !== 'number' && typeof msgObj.mode !== 'undefined')) {
 			window.app.console.error('Unexpected content in the parsed tile message.');
 		}
 	},
@@ -6461,6 +6483,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var coords = this._twipsToCoords(tileMsg);
 		coords.z = tileMsg.zoom;
 		coords.part = tileMsg.part;
+		coords.mode = tileMsg.mode;
 		return coords;
 	},
 
@@ -6750,6 +6773,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				width: tileMsgObj.width,
 				height: tileMsgObj.height,
 				part: tileMsgObj.part,
+				mode: (tileMsgObj.mode !== undefined) ? tileMsgObj.mode : 0,
 				docType: this._docType
 			});
 		}
@@ -6775,7 +6799,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		L.Log.log(textMsg, 'INCOMING', key);
 
 		// Queue acknowledgment, that the tile message arrived
-		var tileID = tileMsgObj.part + ':' + tileMsgObj.x + ':' + tileMsgObj.y + ':' + tileMsgObj.tileWidth + ':' + tileMsgObj.tileHeight + ':' + tileMsgObj.nviewid;
+		var mode = (tileMsgObj.mode !== undefined) ? tileMsgObj.mode : 0;
+		var tileID = tileMsgObj.part + ':' + mode + ':' + tileMsgObj.x + ':' + tileMsgObj.y + ':'
+			+ tileMsgObj.tileWidth + ':' + tileMsgObj.tileHeight + ':' + tileMsgObj.nviewid;
 		this._queuedProcessed.push(tileID);
 	},
 
@@ -6890,6 +6916,7 @@ L.TilesPreFetcher = L.Class.extend({
 		var center = this._map.getCenter();
 		var zoom = this._map.getZoom();
 		var part = this._docLayer._selectedPart;
+		var mode = this._docLayer._selectedMode;
 		var hasEditPerm = this._map.isPermissionEdit();
 
 		if (this._zoom === undefined) {
@@ -6898,6 +6925,10 @@ L.TilesPreFetcher = L.Class.extend({
 
 		if (this._preFetchPart === undefined) {
 			this._preFetchPart = part;
+		}
+
+		if (this._preFetchMode === undefined) {
+			this._preFetchMode = mode;
 		}
 
 		if (this._hasEditPerm === undefined) {
@@ -6934,12 +6965,14 @@ L.TilesPreFetcher = L.Class.extend({
 			!this._borders || this._borders.length === 0 ||
 			zoom !== this._zoom ||
 			part !== this._preFetchPart ||
+			mode !== this._preFetchMode ||
 			hasEditPerm !== this._hasEditPerm ||
 			!pixelBounds.equals(this._pixelBounds) ||
 			!splitPos.equals(this._splitPos)) {
 
 			this._zoom = zoom;
 			this._preFetchPart = part;
+			this._preFetchMode = mode;
 			this._hasEditPerm = hasEditPerm;
 			this._pixelBounds = pixelBounds;
 			this._splitPos = splitPos;
@@ -7051,6 +7084,7 @@ L.TilesPreFetcher = L.Class.extend({
 					coords = queue[i];
 					coords.z = zoom;
 					coords.part = this._preFetchPart;
+					coords.mode = this._preFetchMode;
 					var key = this._docLayer._tileCoordsToKey(coords);
 
 					if (!this._docLayer._isValidTile(coords) ||
@@ -7137,6 +7171,7 @@ L.TilesPreFetcher = L.Class.extend({
 		var interval = 750;
 		var idleTime = 5000;
 		this._preFetchPart = this._docLayer._selectedPart;
+		this._preFetchMode = this._docLayer._selectedMode;
 		this._preFetchIdle = setTimeout(L.bind(function () {
 			this._tilesPreFetcher = setInterval(L.bind(this.preFetchTiles, this), interval);
 			this._preFetchIdle = undefined;
