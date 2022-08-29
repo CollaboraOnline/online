@@ -1589,6 +1589,9 @@ app.definitions.Socket = L.Class.extend({
 			else if (tokens[i].substring(0, 6) === 'parts=') {
 				command.parts = parseInt(tokens[i].substring(6));
 			}
+			else if (tokens[i].substring(0, 5) === 'mode=') {
+				command.mode = parseInt(tokens[i].substring(5));
+			}
 			else if (tokens[i].substring(0, 8) === 'current=') {
 				command.selectedPart = parseInt(tokens[i].substring(8));
 			}
