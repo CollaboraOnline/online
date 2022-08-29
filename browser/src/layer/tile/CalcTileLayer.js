@@ -336,6 +336,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._docType = command.type;
 			this._parts = command.parts;
 			this._selectedPart = command.selectedPart;
+			this._selectedMode = (command.mode !== undefined) ? command.mode : 0;
 			if (this.sheetGeometry && this._selectedPart != this.sheetGeometry.getPart()) {
 				// Core initiated sheet switch, need to get full sheetGeometry data for the selected sheet.
 				this.requestSheetGeometryData();

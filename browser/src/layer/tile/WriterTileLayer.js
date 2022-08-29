@@ -147,6 +147,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 		this._documentInfo = textMsg;
 		this._selectedPart = 0;
+		this._selectedMode = (command.mode !== undefined) ? command.mode : 0;
 		this._parts = 1;
 		this._currentPage = command.selectedPart;
 		this._pages = command.parts;
