@@ -2207,6 +2207,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var strTwips = obj.selection.match(/\d+/g);
 		this._graphicViewMarkers[viewId] = this._graphicViewMarkers[viewId] || {};
 		this._graphicViewMarkers[viewId].part = parseInt(obj.part);
+		this._graphicViewMarkers[viewId].mode = (obj.mode !== undefined) ? parseInt(obj.mode) : 0;
 		if (strTwips != null) {
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
@@ -2489,6 +2490,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._twipsToLatLng(rectangle.getBottomRight(), this._map.getZoom())),
 		this._viewCursors[viewId].corepxBounds = this._twipsToCorePixelsBounds(rectangle);
 		this._viewCursors[viewId].part = parseInt(obj.part);
+		this._viewCursors[viewId].mode = (obj.mode !== undefined) ? parseInt(obj.mode) : 0;
 
 		// FIXME. Server not sending view visible cursor
 		if (typeof this._viewCursors[viewId].visible === 'undefined') {
@@ -2556,8 +2558,11 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var cellViewCursorMarker = this._cellViewCursors[viewId].marker;
 		var viewPart = this._cellViewCursors[viewId].part;
+		var viewMode = this._cellViewCursors[viewId].mode;
 
-		if (!this._isEmptyRectangle(this._cellViewCursors[viewId].bounds) && this._selectedPart === viewPart && this._map.hasInfoForView(viewId)) {
+		if (!this._isEmptyRectangle(this._cellViewCursors[viewId].bounds)
+			&& this._selectedPart === viewPart && this._selectedMode === viewMode
+			&& this._map.hasInfoForView(viewId)) {
 			if (!cellViewCursorMarker) {
 				var backgroundColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
 				cellViewCursorMarker = new CCellCursor(this._cellViewCursors[viewId].corePixelBounds, {
@@ -2940,6 +2945,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var obj = JSON.parse(textMsg.substring('textviewselection:'.length + 1));
 		var viewId = parseInt(obj.viewId);
 		var viewPart = parseInt(obj.part);
+		var viewMode = (obj.mode !== undefined) ? parseInt(obj.mode) : 0;
 
 		// Ignore if viewid is same as ours or not in our db
 		if (viewId === this._viewId || !this._map._viewInfo[viewId]) {
@@ -2956,6 +2962,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			});
 
 			this._viewSelections[viewId].part = viewPart;
+			this._viewSelections[viewId].mode = viewMode;
 			var docLayer = this;
 			this._viewSelections[viewId].pointSet = CPolyUtil.rectanglesToPointSet(rectangles,
 				function (twipsPoint) {
@@ -3665,12 +3672,13 @@ L.CanvasTileLayer = L.Layer.extend({
 		var viewCursorMarker = this._viewCursors[viewId].marker;
 		var viewCursorVisible = this._viewCursors[viewId].visible;
 		var viewPart = this._viewCursors[viewId].part;
+		var viewMode = this._viewCursors[viewId].mode;
 
 		if (!this._map.isViewReadOnly(viewId) &&
 		    viewCursorVisible &&
 		    !this._isZooming &&
 		    !this._isEmptyRectangle(this._viewCursors[viewId].bounds) &&
-		    (this.isWriter() || this._selectedPart === viewPart)) {
+		    (this.isWriter() || (this._selectedPart === viewPart && this._selectedMode === viewMode))) {
 			if (!viewCursorMarker) {
 				var viewCursorOptions = {
 					color: L.LOUtil.rgbToHex(this._map.getViewColor(viewId)),
@@ -3699,9 +3707,15 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	updateAllViewCursors: function() {
-		for (var key in this._viewCursors) {
-			this._onUpdateViewCursor(key);
-		}
+		this.eachView(this._viewCursors, this._onUpdateViewCursor, this, false);
+	},
+
+	updateAllTextViewSelection: function() {
+		this.eachView(this._viewSelections, this._onUpdateTextViewSelection, this, false);
+	},
+
+	updateAllGraphicViewSelections: function () {
+		this.eachView(this._graphicViewMarkers, this._onUpdateGraphicViewSelection, this, false);
 	},
 
 	isCursorVisible: function() {
@@ -3734,9 +3748,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		var viewPointSet = this._viewSelections[viewId].pointSet;
 		var viewSelection = this._viewSelections[viewId].selection;
 		var viewPart = this._viewSelections[viewId].part;
+		var viewMode = this._viewSelections[viewId].mode;
 
 		if (viewPointSet &&
-		    (this.isWriter() || this._selectedPart === viewPart)) {
+		    (this.isWriter() || (this._selectedPart === viewPart && this._selectedMode === viewMode))) {
 
 			if (viewSelection) {
 				if (!this._map.hasInfoForView(viewId)) {
@@ -3760,9 +3775,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		var viewBounds = this._graphicViewMarkers[viewId].bounds;
 		var viewMarker = this._graphicViewMarkers[viewId].marker;
 		var viewPart = this._graphicViewMarkers[viewId].part;
+		var viewMode = this._graphicViewMarkers[viewId].mode;
 
 		if (!this._isEmptyRectangle(viewBounds) &&
-		   (this.isWriter() || this._selectedPart === viewPart)) {
+		   (this.isWriter() || (this._selectedPart === viewPart && this._selectedMode === viewMode))) {
 			if (!viewMarker) {
 				var color = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
 				viewMarker = L.rectangle(viewBounds, {
