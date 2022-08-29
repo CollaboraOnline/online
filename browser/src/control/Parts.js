@@ -192,9 +192,11 @@ L.Map.include({
 		}
 
 		if (fetchThumbnail) {
+			var mode = docLayer._selectedMode;
 			this._addPreviewToQueue(part, 'tile ' +
 							'nviewid=0' + ' ' +
 							'part=' + part + ' ' +
+							((mode !== 0) ? ('mode=' + mode + ' ') : '') +
 							'width=' + maxWidth * app.roundedDpiScale + ' ' +
 							'height=' + maxHeight * app.roundedDpiScale + ' ' +
 							'tileposx=' + tilePosX + ' ' +
@@ -220,9 +222,11 @@ L.Map.include({
 		this._docPreviews[id] = {id: id, part: part, width: width, height: height, tilePosX: tilePosX,
 			tilePosY: tilePosY, tileWidth: tileWidth, tileHeight: tileHeight, autoUpdate: autoUpdate, invalid: false};
 
+		var mode = this._docLayer._selectedMode;
 		this._addPreviewToQueue(part, 'tile ' +
 							'nviewid=0' + ' ' +
 							'part=' + part + ' ' +
+							((mode !== 0) ? ('mode=' + mode + ' ') : '') +
 							'width=' + width * app.roundedDpiScale + ' ' +
 							'height=' + height * app.roundedDpiScale + ' ' +
 							'tileposx=' + tilePosX + ' ' +
