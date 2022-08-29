@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-04 14:31+0200\n"
-"PO-Revision-Date: 2022-08-07 14:29+0000\n"
-"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
+"PO-Revision-Date: 2022-08-18 14:19+0000\n"
+"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
 "Language: sv\n"
@@ -432,7 +432,7 @@ msgstr "Funktionsguide"
 
 #: src/control/Control.FormulaBarJSDialog.js:55
 msgid "Formula"
-msgstr "Formula"
+msgstr "Formel"
 
 #: src/control/Control.FormulaBarJSDialog.js:62
 #: src/control/Control.MobileTopBar.js:40
@@ -733,7 +733,7 @@ msgstr "Infoga kryssruta"
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1096
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "infoga rullgardinsmeny"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1097
 msgid "Insert Picture"
@@ -1186,7 +1186,7 @@ msgstr "Bild (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:112
 msgid "~Master"
-msgstr ""
+msgstr "~Master"
 
 #: src/control/Control.NotebookbarImpress.js:255
 msgid "ODF Presentation (.odp)"
@@ -1199,20 +1199,19 @@ msgstr "Presentation"
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
-msgstr "Referen~ser"
+msgstr "Referens~er"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "Form"
-msgstr "Forum"
+msgstr "Formulär"
 
 #: src/control/Control.NotebookbarWriter.js:189
 msgid "ODF Text Document (.odt)"
-msgstr "ODF textdokument (.odt)"
+msgstr "ODF-textdokument (.odt)"
 
 #: src/control/Control.NotebookbarWriter.js:231
 msgid "EPUB Document (.epub)"
-msgstr "EPUB dokument (.epub)"
+msgstr "EPUB-dokument (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:974
 msgid "Rich Text"
@@ -1224,7 +1223,7 @@ msgstr "Kryssruta"
 
 #: src/control/Control.NotebookbarWriter.js:984
 msgid "Dropdown"
-msgstr ""
+msgstr "Rullgardinsmeny"
 
 #: src/control/Control.NotebookbarWriter.js:989
 msgid "Picture"
@@ -2232,7 +2231,7 @@ msgstr "Utforska den nya %coolVersion"
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr "Collabora Online Development Edition"
+msgstr "Collabora Online-utvecklingsversion"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
