@@ -275,6 +275,9 @@ L.Control.JSDialog = L.Control.extend({
 		}
 
 		builder.build(content, [data]);
+		var primaryBtn = L.DomUtil.get(defaultButtonId);
+		if (primaryBtn)
+			L.DomUtil.addClass(primaryBtn, 'button-primary');
 		if (isAutofilter)
 			content.firstChild.dir = document.documentElement.dir;
 
