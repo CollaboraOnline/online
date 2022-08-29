@@ -168,6 +168,10 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			command.height = parseInt(strTwips[3]);
 			command.part = this._selectedPart;
 		}
+
+		if (command.mode === undefined)
+			command.mode = this._selectedMode;
+
 		var topLeftTwips = new L.Point(command.x, command.y);
 		var offset = new L.Point(command.width, command.height);
 		var bottomRightTwips = topLeftTwips.add(offset);
@@ -190,7 +194,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		for (var key in this._tiles) {
 			var coords = this._tiles[key].coords;
 			var bounds = this._coordsToTileBounds(coords);
-			if (coords.part === command.part && invalidBounds.intersects(bounds)) {
+			if (coords.part === command.part && coords.mode === command.mode &&
+				invalidBounds.intersects(bounds)) {
 				if (this._tiles[key]._invalidCount) {
 					this._tiles[key]._invalidCount += 1;
 				}
@@ -211,7 +216,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			}
 		}
 
-		if (needsNewTiles && command.part === this._selectedPart && this._debug)
+		if (needsNewTiles && command.part === this._selectedPart
+			&& command.mode === this._selectedMode && this._debug)
 		{
 			this._debugAddInvalidationMessage(textMsg);
 		}
@@ -220,7 +226,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			// compute the rectangle that each tile covers in the document based
 			// on the zoom level
 			coords = this._keyToTileCoords(key);
-			if (coords.part !== command.part) {
+			if (coords.part !== command.part || coords.mode !== command.mode) {
 				continue;
 			}
 

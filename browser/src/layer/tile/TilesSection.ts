@@ -249,7 +249,7 @@ class TilesSection {
 			this.paintSimple(tile, ctx, async);
 	}
 
-	private forEachTileInView(zoom: number, part: number, ctx: any,
+	private forEachTileInView(zoom: number, part: number, mode: number, ctx: any,
 		callback: (tile: any, coords: any) => boolean) {
 		var docLayer = this.sectionProperties.docLayer;
 		var tileRanges = ctx.paneBoundsList.map(docLayer._pxBoundsToTileRange, docLayer);
@@ -273,7 +273,8 @@ class TilesSection {
 							i * ctx.tileSize.x,
 							j * ctx.tileSize.y,
 							zoom,
-							part);
+							part,
+							mode);
 
 						var key = coords.key();
 						var tile = docLayer._tiles[key];
@@ -286,13 +287,13 @@ class TilesSection {
 		}
 	}
 
-	public haveAllTilesInView(zoom?: number, part?: number, ctx?: any): boolean {
+	public haveAllTilesInView(zoom?: number, part?: number, mode?: number, ctx?: any): boolean {
 		zoom = zoom || Math.round(this.map.getZoom());
 		part = part || this.sectionProperties.docLayer._selectedPart;
 		ctx = ctx || this.sectionProperties.tsManager._paintContext();
 
 		var allTilesLoaded = true;
-		this.forEachTileInView(zoom, part, ctx, function (tile: any): boolean {
+		this.forEachTileInView(zoom, part, mode, ctx, function (tile: any): boolean {
 			// Ensure tile is loaded.
 			if (!tile || !tile.loaded) {
 				allTilesLoaded = false;
@@ -403,12 +404,13 @@ class TilesSection {
 
 		var zoom = Math.round(this.map.getZoom());
 		var part = this.sectionProperties.docLayer._selectedPart;
+		var mode = this.sectionProperties.docLayer._selectedMode;
 
 		// Calculate all this here intead of doing it per tile.
 		var ctx = this.sectionProperties.tsManager._paintContext();
 
 		if (this.sectionProperties.tsManager.waitForTiles()) {
-			if (!this.haveAllTilesInView(zoom, part, ctx))
+			if (!this.haveAllTilesInView(zoom, part, mode, ctx))
 				return;
 		} else if (!this.containerObject.isZoomChanged()) {
 			// Don't show page border and page numbers (drawn by drawPageBackgrounds) if zoom is changing
@@ -423,7 +425,7 @@ class TilesSection {
 
 		var docLayer = this.sectionProperties.docLayer;
 		var doneTiles = new Set();
-		this.forEachTileInView(zoom, part, ctx, function (tile: any, coords: any): boolean {
+		this.forEachTileInView(zoom, part, mode, ctx, function (tile: any, coords: any): boolean {
 			if (doneTiles.has(coords.key()))
 				return true;
 
@@ -462,7 +464,7 @@ class TilesSection {
 		return Math.max(0, interSize.x) * Math.max(0, interSize.y) / (size.x * size.y);
 	}
 
-	private forEachTileInArea(area: any, zoom: number, part: number, ctx: any,
+	private forEachTileInArea(area: any, zoom: number, part: number, mode: number, ctx: any,
 		callback: (tile: any, coords: any) => boolean) {
 		var docLayer = this.sectionProperties.docLayer;
 
@@ -492,7 +494,8 @@ class TilesSection {
 					i * ctx.tileSize.x,
 					j * ctx.tileSize.y,
 					zoom,
-					part);
+					part,
+					mode);
 
 				var key = coords.key();
 				var tile = docLayer._tiles[key];
@@ -516,7 +519,7 @@ class TilesSection {
 	 * @returns the zoom-level with maximum tile content.
 	 */
 	private zoomLevelWithMaxContentInArea(area: any,
-		areaZoom: number, part: number, ctx: any): number {
+		areaZoom: number, part: number, mode: number, ctx: any): number {
 
 		var frameScale = this.sectionProperties.tsManager._zoomFrameScale;
 		var docLayer = this.sectionProperties.docLayer;
@@ -544,7 +547,7 @@ class TilesSection {
 			//console.log('DEBUG:: areaAtZoom = ' + areaAtZoom);
 			var relScale = this.map.getZoomScale(zoom, areaZoom);
 
-			this.forEachTileInArea(areaAtZoom, zoom, part, ctx, function(tile, coords) {
+			this.forEachTileInArea(areaAtZoom, zoom, part, mode, ctx, function(tile, coords) {
 				if (tile && tile.el) {
 					var tilePos = coords.getPos();
 
@@ -598,6 +601,7 @@ class TilesSection {
 		var docLayer = this.sectionProperties.docLayer;
 		var zoom = Math.round(this.map.getZoom());
 		var part = docLayer._selectedPart;
+		var mode = docLayer._selectedMode;
 		var splitPos = ctx.splitPos;
 
 		this.containerObject.setPenPosition(this);
@@ -648,7 +652,7 @@ class TilesSection {
 			var useSheetGeometry = false;
 			if (scale < 1.0) {
 				useSheetGeometry = !!sheetGeometry;
-				bestZoomSrc = this.zoomLevelWithMaxContentInArea(docRange, zoom, part, ctx);
+				bestZoomSrc = this.zoomLevelWithMaxContentInArea(docRange, zoom, part, mode, ctx);
 			}
 
 			var docRangeScaled = (bestZoomSrc == zoom) ? docRange : this.scaleBoundsForZoom(docRange, bestZoomSrc, zoom);
@@ -656,7 +660,7 @@ class TilesSection {
 			var relScale = (bestZoomSrc == zoom) ? 1 : this.map.getZoomScale(bestZoomSrc, zoom);
 
 			this.beforeDraw(canvasContext);
-			this.forEachTileInArea(docRangeScaled, bestZoomSrc, part, ctx, function (tile: any, coords: any): boolean {
+			this.forEachTileInArea(docRangeScaled, bestZoomSrc, part, mode, ctx, function (tile: any, coords: any): boolean {
 				if (!tile || !tile.loaded || !docLayer._isValidTile(coords))
 					return false;
 

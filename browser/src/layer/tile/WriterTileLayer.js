@@ -60,6 +60,10 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			command.height = parseInt(strTwips[3]);
 			command.part = this._selectedPart;
 		}
+
+		if (command.mode === undefined)
+			command.mode = this._selectedMode;
+
 		command.part = 0;
 		var topLeftTwips = new L.Point(command.x, command.y);
 		var offset = new L.Point(command.width, command.height);
@@ -75,7 +79,8 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		for (var key in this._tiles) {
 			var coords = this._tiles[key].coords;
 			var bounds = this._coordsToTileBounds(coords);
-			if (coords.part === command.part && invalidBounds.intersects(bounds)) {
+			if (coords.part === command.part && coords.mode === command.mode &&
+				invalidBounds.intersects(bounds)) {
 				if (this._tiles[key]._invalidCount) {
 					this._tiles[key]._invalidCount += 1;
 				}
