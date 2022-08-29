@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-04 14:31+0200\n"
-"PO-Revision-Date: 2022-08-03 15:20+0000\n"
-"Last-Translator: Marco Cecchetti <mrcekets@gmail.com>\n"
+"PO-Revision-Date: 2022-08-18 14:19+0000\n"
+"Last-Translator: atilluF <atilluf@outlook.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/it/>\n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -70,7 +70,7 @@ msgstr "Documenti aperti"
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:122 admin/src/AdminSocketOverview.js:341
 msgid " user(s)."
-msgstr " utenti."
+msgstr " utente(i)."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:195
 msgid " document(s) open."
@@ -1118,7 +1118,7 @@ msgstr "Cattivo"
 
 #: src/control/Control.NotebookbarCalc.js:735
 msgid "Row Height"
-msgstr ""
+msgstr "Altezza delle righe"
 
 #: src/control/Control.NotebookbarCalc.js:741
 msgid "Column Width"
@@ -2216,7 +2216,7 @@ msgstr ""
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "Il file di tipo: %0 non può essere caricato sul server dato che è vuoto"
+msgstr "Il file di tipo: %0 non può essere caricato sul server poiché è vuoto"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
