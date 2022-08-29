@@ -3,7 +3,7 @@
     <string name="loading">Učitavanje …</string>
     <string name="preparing_for_the_first_start_after_an_update">Priprema za prvo pokretanje nakon aktualiziranja.</string>
     <string name="saving">Spremanje …</string>
-    <string name="cannot_open_file_chooser">Nije moguće otvoriti izbornika datoteka</string>
+    <string name="cannot_open_file_chooser">Nije moguće otvoriti izbornik datoteka</string>
     <string name="failed_to_insert_image">Neuspjelo umetanje slike</string>
     <string name="failed_to_load_file">Neuspjelo određivanje datoteke za učitavanje</string>
     <string name="storage_permission_required">Potrebna je dozvola za spremište</string>
