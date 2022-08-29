@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-04 14:31+0200\n"
-"PO-Revision-Date: 2022-05-04 14:13+0000\n"
+"PO-Revision-Date: 2022-08-29 11:24+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/help/ast/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -2302,7 +2302,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.p:536-5
 msgid "A copy of the document is saved with the new name in the same folder."
-msgstr ""
+msgstr "Créase una copia del documentu col nome nuevu na mesma carpeta."
 
 #: html/cool-help.html%2Bdiv.h4:537-5
 msgid ""

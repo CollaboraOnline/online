@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-04 14:31+0200\n"
-"PO-Revision-Date: 2022-07-31 07:16+0000\n"
+"PO-Revision-Date: 2022-08-29 11:24+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -340,7 +340,7 @@ msgstr " s"
 
 #: js/w2ui-1.5.rc1.js:2920
 msgid "Recent"
-msgstr ""
+msgstr "Recién"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
@@ -722,15 +722,15 @@ msgstr "Orientación del testu"
 
 #: src/control/Control.Menubar.js:290 src/control/Control.Menubar.js:1094
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Inxertar un testu enriquecíu"
 
 #: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1095
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Inxertar una caxella"
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1096
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Inxertar un estenderexable"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1097
 msgid "Insert Picture"
@@ -927,7 +927,7 @@ msgstr "Ficheru CSV (.csv)"
 #: src/control/Control.NotebookbarBuilder.js:724
 #: src/control/Control.TopToolbar.js:227
 msgid "Insert Local Image"
-msgstr ""
+msgstr "Inxertar una imaxe llocal"
 
 #: src/control/Control.NotebookbarBuilder.js:806
 msgid "Very Tight"
@@ -1107,7 +1107,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:735
 msgid "Row Height"
-msgstr ""
+msgstr "Altor de la filera"
 
 #: src/control/Control.NotebookbarCalc.js:741
 msgid "Column Width"
@@ -1178,7 +1178,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:100
 #: src/control/Control.NotebookbarWriter.js:53
 msgid "~Table"
-msgstr ""
+msgstr "~Tabla"
 
 #: src/control/Control.NotebookbarDraw.js:196
 msgid "Image (.png)"

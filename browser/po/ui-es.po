@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-04 14:31+0200\n"
-"PO-Revision-Date: 2022-08-08 23:34+0000\n"
-"Last-Translator: Eloy Crespo <eloy.crespo@collabora.com>\n"
+"PO-Revision-Date: 2022-08-29 11:24+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
 "Language: es\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1112,7 +1112,7 @@ msgstr "Malo"
 
 #: src/control/Control.NotebookbarCalc.js:735
 msgid "Row Height"
-msgstr "Altura de la fila"
+msgstr "Altura de fila"
 
 #: src/control/Control.NotebookbarCalc.js:741
 msgid "Column Width"
