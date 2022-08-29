@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-04 14:31+0200\n"
-"PO-Revision-Date: 2022-07-28 16:23+0000\n"
+"PO-Revision-Date: 2022-08-18 14:19+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1112,7 +1112,7 @@ msgstr "Fout"
 
 #: src/control/Control.NotebookbarCalc.js:735
 msgid "Row Height"
-msgstr ""
+msgstr "Rij hoogte"
 
 #: src/control/Control.NotebookbarCalc.js:741
 msgid "Column Width"
@@ -1158,7 +1158,7 @@ msgstr "Statusbalk"
 
 #: src/control/Control.NotebookbarCalc.js:1026
 msgid "Sparkline"
-msgstr "Sparkline"
+msgstr "Vonklijn"
 
 #: src/control/Control.NotebookbarCalc.js:1105
 #: src/control/Control.NotebookbarCalc.js:1752
