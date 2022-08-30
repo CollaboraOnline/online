@@ -196,7 +196,7 @@ bool TileCacheTests::getPartFromInvalidateMessage(const std::string& message, in
         part = -1;
         return true;
     }
-    if (tokens.size() == 3 && tokens.equals(1, "EMPTY,"))
+    if ((tokens.size() == 3 || tokens.size() == 4) && tokens.equals(1, "EMPTY,"))
         return COOLProtocol::stringToInteger(tokens[2], part);
     return COOLProtocol::getTokenInteger(tokens, "part", part);
 }
@@ -205,8 +205,8 @@ void TileCacheTests::testDesc()
 {
     constexpr auto testname = __func__;
 
-    TileDesc descA = TileDesc(0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 0, 1234, 1, true);
-    TileDesc descB = TileDesc(0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 1, 1235, 2, false);
+    TileDesc descA = TileDesc(0, 0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 0, 1234, 1, true);
+    TileDesc descB = TileDesc(0, 0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 1, 1235, 2, false);
 
     TileDescCacheCompareEq pred;
     LOK_ASSERT_MESSAGE("TileDesc versions do match", descA.getVersion() != descB.getVersion());
@@ -229,13 +229,14 @@ void TileCacheTests::testSimple()
 
     int nviewid = 0;
     int part = 0;
+    int mode = 0;
     int width = 256;
     int height = 256;
     int tilePosX = 0;
     int tilePosY = 0;
     int tileWidth = 3840;
     int tileHeight = 3840;
-    TileDesc tile(nviewid, part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, -1, 0, -1, false);
+    TileDesc tile(nviewid, part, mode, width, height, tilePosX, tilePosY, tileWidth, tileHeight, -1, 0, -1, false);
 
     // No Cache
     Tile tileData = tc.lookupTile(tile);
@@ -317,6 +318,7 @@ void TileCacheTests::testSize()
 
     int nviewid = 0;
     int part = 0;
+    int mode = 0;
     int width = 256;
     int height = 256;
     int tilePosX = 0;
@@ -330,7 +332,7 @@ void TileCacheTests::testSize()
     tc.setMaxCacheSize(maxSize);
     for (int tilePosY = 0; tilePosY < 20; tilePosY++)
     {
-        TileDesc tile(nviewid, part, width, height, tilePosX, tilePosY * tileHeight,
+        TileDesc tile(nviewid, part, mode, width, height, tilePosX, tilePosY * tileHeight,
                       tileWidth, tileHeight, -1, 0, -1, false);
         tile.setWireId(id++);
         tc.saveTileAndNotify(tile, data.data(), data.size());

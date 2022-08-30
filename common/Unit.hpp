@@ -364,7 +364,7 @@ public:
 
     // ---------------- TileCache hooks ----------------
     /// Called before the lookupTile call returns. Should always be called to fire events.
-    virtual void lookupTile(int part, int width, int height, int tilePosX, int tilePosY,
+    virtual void lookupTile(int part, int mode, int width, int height, int tilePosX, int tilePosY,
                             int tileWidth, int tileHeight,
                             std::shared_ptr<TileData> &tile);
 
@@ -417,13 +417,16 @@ public:
     virtual void onDocBrokerDestroy(const std::string&) {}
 
     // ---------------- TileCache events ----------------
-    virtual void onTileCacheHit(int /*part*/, int /*width*/, int /*height*/,
+    virtual void onTileCacheHit(int /*part*/, int /*mode*/,
+                                int /*width*/, int /*height*/,
                                 int /*tilePosX*/, int /*tilePosY*/,
                                 int /*tileWidth*/, int /*tileHeight*/) {}
-    virtual void onTileCacheMiss(int /*part*/, int /*width*/, int /*height*/,
+    virtual void onTileCacheMiss(int /*part*/, int /*mode*/,
+                                 int /*width*/, int /*height*/,
                                  int /*tilePosX*/, int /*tilePosY*/,
                                  int /*tileWidth*/, int /*tileHeight*/) {}
-    virtual void onTileCacheSubscribe(int /*part*/, int /*width*/, int /*height*/,
+    virtual void onTileCacheSubscribe(int /*part*/, int /*mode*/,
+                                      int /*width*/, int /*height*/,
                                       int /*tilePosX*/, int /*tilePosY*/,
                                       int /*tileWidth*/, int /*tileHeight*/) {}
 private:

@@ -170,7 +170,8 @@ Tile TileCache::lookupTile(const TileDesc& tile)
 
     Tile ret = findTile(tile);
 
-    UnitWSD::get().lookupTile(tile.getPart(), tile.getWidth(), tile.getHeight(),
+    UnitWSD::get().lookupTile(tile.getPart(), tile.getEditMode(),
+                              tile.getWidth(), tile.getHeight(),
                               tile.getTilePosX(), tile.getTilePosY(),
                               tile.getTileWidth(), tile.getTileHeight(), ret);
 
@@ -283,9 +284,9 @@ Blob TileCache::lookupCachedStream(StreamType type, const std::string& name)
     return Blob();
 }
 
-void TileCache::invalidateTiles(int part, int x, int y, int width, int height, int normalizedViewId)
+void TileCache::invalidateTiles(int part, int mode, int x, int y, int width, int height, int normalizedViewId)
 {
-    LOG_TRC("Removing invalidated tiles: part: " << part <<
+    LOG_TRC("Removing invalidated tiles: part: " << part << ", mode: " << mode <<
             ", x: " << x << ", y: " << y <<
             ", width: " << width <<
             ", height: " << height <<
@@ -295,7 +296,7 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height, i
 
     for (auto it = _cache.begin(); it != _cache.end();)
     {
-        if (intersectsTile(it->first, part, x, y, width, height, normalizedViewId))
+        if (intersectsTile(it->first, part, mode, x, y, width, height, normalizedViewId))
         {
             // FIXME: only want to keep as invalid keyframes in the view area(s)
             it->second->invalidate();
@@ -317,13 +318,15 @@ void TileCache::invalidateTiles(int part, int x, int y, int width, int height, i
 
 void TileCache::invalidateTiles(const std::string& tiles, int normalizedViewId)
 {
-    const std::pair<int, Util::Rectangle> result = TileCache::parseInvalidateMsg(tiles);
+    const std::pair<TileCache::PartModePair, Util::Rectangle> result = TileCache::parseInvalidateMsg(tiles);
     const Util::Rectangle& invalidateRect = result.second;
-    invalidateTiles(result.first, invalidateRect.getLeft(), invalidateRect.getTop(),
+    int part = result.first.first;
+    int mode = result.first.second;
+    invalidateTiles(part, mode, invalidateRect.getLeft(), invalidateRect.getTop(),
                     invalidateRect.getWidth(), invalidateRect.getHeight(), normalizedViewId);
 }
 
-std::pair<int, Util::Rectangle> TileCache::parseInvalidateMsg(const std::string& tiles)
+std::pair<TileCache::PartModePair, Util::Rectangle> TileCache::parseInvalidateMsg(const std::string& tiles)
 {
     StringVector tokens = StringVector::tokenize(tiles);
 
@@ -331,18 +334,31 @@ std::pair<int, Util::Rectangle> TileCache::parseInvalidateMsg(const std::string&
 
     if (tokens.size() == 2 && tokens.equals(1, "EMPTY"))
     {
-        return std::pair<int, Util::Rectangle>(-1, Util::Rectangle(0, 0, INT_MAX, INT_MAX));
+        return std::pair<PartModePair, Util::Rectangle>(
+            std::make_pair<int, int>(-1, 0), Util::Rectangle(0, 0, INT_MAX, INT_MAX));
     }
 
+    int mode = 0;
+    int part = 0;
     if (tokens.size() == 3 && tokens.equals(1, "EMPTY,"))
     {
-        int part = 0;
         if (stringToInteger(tokens[2], part))
-            return std::pair<int, Util::Rectangle>(part, Util::Rectangle(0, 0, INT_MAX, INT_MAX));
+            return std::pair<PartModePair, Util::Rectangle>(
+                std::make_pair(part, mode), Util::Rectangle(0, 0, INT_MAX, INT_MAX));
+    }
+    else if (tokens.size() == 4 && tokens.equals(1, "EMPTY,"))
+    {
+        if (stringToInteger(tokens[2], part))
+        {
+            if (stringToInteger(tokens[3], mode))
+            {
+                return std::pair<PartModePair, Util::Rectangle>(
+                    std::make_pair(part, mode), Util::Rectangle(0, 0, INT_MAX, INT_MAX));
+            }
+        }
     }
     else
     {
-        int part = 0;
         int x = 0;
         int y = 0;
         int width = 0;
@@ -354,35 +370,52 @@ std::pair<int, Util::Rectangle> TileCache::parseInvalidateMsg(const std::string&
             getNonNegTokenInteger(tokens[4], "width", width) &&
             getNonNegTokenInteger(tokens[5], "height", height))
         {
-            return std::pair<int, Util::Rectangle>(part, Util::Rectangle(x, y, width, height));
+            return std::pair<PartModePair, Util::Rectangle>(
+                std::make_pair(part, mode), Util::Rectangle(x, y, width, height));
+        }
+        else if (tokens.size() == 7 &&
+            getTokenInteger(tokens[1], "part", part) &&
+            getTokenInteger(tokens[2], "mode", mode) &&
+            getNonNegTokenInteger(tokens[3], "x", x) &&
+            getNonNegTokenInteger(tokens[4], "y", y) &&
+            getNonNegTokenInteger(tokens[5], "width", width) &&
+            getNonNegTokenInteger(tokens[6], "height", height))
+        {
+            return std::pair<PartModePair, Util::Rectangle>(
+                std::make_pair(part, mode), Util::Rectangle(x, y, width, height));
         }
     }
 
     LOG_ERR("Unexpected invalidatetiles request [" << tiles << "].");
-    return std::pair<int, Util::Rectangle>(-1, Util::Rectangle(0, 0, 0, 0));
+    return std::pair<PartModePair, Util::Rectangle>(
+        std::make_pair<int, int>(-1, 0), Util::Rectangle(0, 0, 0, 0));
 }
 
 std::string TileCache::cacheFileName(const TileDesc& tile)
 {
     std::ostringstream oss;
-    oss << tile.getNormalizedViewId() << '_' << tile.getPart() << '_' << tile.getWidth() << 'x' << tile.getHeight() << '.'
+    oss << tile.getNormalizedViewId() << '_' << tile.getPart() << '_' << tile.getEditMode() << '_'
+        << tile.getWidth() << 'x' << tile.getHeight() << '.'
         << tile.getTilePosX() << ',' << tile.getTilePosY() << '.'
         << tile.getTileWidth() << 'x' << tile.getTileHeight() << ".png";
     return oss.str();
 }
 
-bool TileCache::parseCacheFileName(const std::string& fileName, int& part, int& width, int& height,
+bool TileCache::parseCacheFileName(const std::string& fileName, int& part, int& mode, int& width, int& height,
                                    int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight,
                                    int& nviewid)
 {
-    return std::sscanf(fileName.c_str(), "%d_%d_%dx%d.%d,%d.%dx%d.png", &nviewid, &part, &width,
-                       &height, &tilePosX, &tilePosY, &tileWidth, &tileHeight)
+    return std::sscanf(fileName.c_str(), "%d_%d_%d_%dx%d.%d,%d.%dx%d.png", &nviewid, &part, &mode,
+                       &width, &height, &tilePosX, &tilePosY, &tileWidth, &tileHeight)
            == 8;
 }
 
-bool TileCache::intersectsTile(const TileDesc &tileDesc, int part, int x, int y, int width, int height, int normalizedViewId)
+bool TileCache::intersectsTile(const TileDesc &tileDesc, int part, int mode, int x, int y, int width, int height, int normalizedViewId)
 {
     if (part != -1 && tileDesc.getPart() != part)
+        return false;
+
+    if (mode != tileDesc.getEditMode())
         return false;
 
     if (normalizedViewId != tileDesc.getNormalizedViewId())

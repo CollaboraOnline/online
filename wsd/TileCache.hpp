@@ -34,7 +34,8 @@ struct TileDescCacheCompareEq final
                l.getTilePosY() == r.getTilePosY() &&
                l.getTileWidth() == r.getTileWidth() &&
                l.getTileHeight() == r.getTileHeight() &&
-               l.getNormalizedViewId() == r.getNormalizedViewId();
+               l.getNormalizedViewId() == r.getNormalizedViewId() &&
+               l.getEditMode() == r.getEditMode();
     }
 };
 
@@ -45,6 +46,7 @@ struct TileDescCacheHasher final
     {
         size_t hash = t.getPart();
 
+        hash = (hash << 5) + hash + t.getEditMode();
         hash = (hash << 5) + hash + t.getWidth();
         hash = (hash << 5) + hash + t.getHeight();
         hash = (hash << 5) + hash + t.getTilePosX();
@@ -184,6 +186,8 @@ class TileCache
     std::shared_ptr<TileBeingRendered> findTileBeingRendered(const TileDesc& tile);
 
 public:
+    typedef std::pair<int, int> PartModePair;
+
     /// When the docURL is a non-file:// url, the timestamp has to be provided by the caller.
     /// For file:// url's, it's ignored.
     /// When it is missing for non-file:// url, it is assumed the document must be read, and no cached value used.
@@ -235,7 +239,7 @@ public:
     void invalidateTiles(const std::string& tiles, int normalizedViewId);
 
     /// Parse invalidateTiles message to a part number and a rectangle of the invalidated area
-    static std::pair<int, Util::Rectangle> parseInvalidateMsg(const std::string& tiles);
+    static std::pair<PartModePair, Util::Rectangle> parseInvalidateMsg(const std::string& tiles);
 
     /// Forget the tile being rendered if it is the latest version we expect.
     void forgetTileBeingRendered(const TileDesc& descForKitReply,
@@ -263,16 +267,19 @@ private:
     void ensureCacheSize();
     static size_t itemCacheSize(const Tile &tile);
 
-    void invalidateTiles(int part, int x, int y, int width, int height, int normalizedViewId);
+    void invalidateTiles(int part, int mode, int x, int y, int width, int height, int normalizedViewId);
 
     /// Lookup tile in our cache.
     Tile findTile(const TileDesc &desc);
 
     static std::string cacheFileName(const TileDesc& tileDesc);
-    static bool parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight, int& nviewid);
+    static bool parseCacheFileName(const std::string& fileName, int& part, int& mode,
+                                   int& width, int& height, int& tilePosX, int& tilePosY,
+                                   int& tileWidth, int& tileHeight, int& nviewid);
 
     /// Extract location from fileName, and check if it intersects with [x, y, width, height].
-    static bool intersectsTile(const TileDesc &tileDesc, int part, int x, int y, int width, int height, int normalizedViewId);
+    static bool intersectsTile(const TileDesc &tileDesc, int part, int mode, int x, int y,
+                               int width, int height, int normalizedViewId);
 
     Tile saveDataToCache(const TileDesc& desc, const char* data, size_t size);
     void saveDataToStreamCache(StreamType type, const std::string& fileName, const char* data,
