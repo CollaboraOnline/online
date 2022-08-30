@@ -395,8 +395,8 @@ class CommentSection {
 				'<textarea name="comment" id="new-mobile-comment-input-area" class="cool-annotation-textarea" required>' + (commentData.text && isMod ? commentData.text: '') + '</textarea>'
 			].join(''),
 			buttons: [
-				$.extend({}, vex.dialog.buttons.YES, { text: _('Save') }),
-				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
+				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
+				$.extend({}, vex.dialog.buttons.YES, { text: _('Save') })
 			],
 			callback: function (data: any) {
 				if (data) {
