@@ -4,13 +4,6 @@
 	text-transform: full-size-kana;
 }
 
-button.jsdialog {
-	color: var(--color-main-text);
-	background-color: var(--color-main-background);
-	border: 1px solid var(--color-btn-border);
-	border-radius: var(--border-radius);
-	box-sizing: border-box;
-}
 .jsdialog *[disabled] {
 	color: var(--color-text-lighter);
 	border: 1px solid var(--color-btn-border-dis);
@@ -32,17 +25,15 @@ button.jsdialog img {
 }
 
 [class*='button-secondary'],
-.ui-pushbutton.jsdialog:not(#ok):not([id*='select_current']):not(.sidebar),
-.ui-button-box.jsdialog #cancel,
-.cell.jsdialog > button:not(#ok),
-.ui-button-box.jsdialog button:not(#ok),
 .vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-secondary {
+	box-sizing: border-box;
 	height: 32px;
 	line-height: 0em;
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
 	min-width: 62px;
 	background-color: var(--color-background-dark);
+	border: 1px solid var(--color-btn-border);
 	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 	margin: 5px;
@@ -61,10 +52,7 @@ button.jsdialog img {
 	border: 1px solid var(--color-border-darker);
 }
 
-.ui-button-box.jsdialog #ok,
 [class*='button-primary'],
-.cell.jsdialog > button,
-.ui-button-box.jsdialog button,
 .vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-primary {
 	height: 32px;
 	line-height: 0em;
@@ -77,9 +65,6 @@ button.jsdialog img {
 	vertical-align: middle;
 }
 
-button#ok:hover,
-.cell.jsdialog > button:hover,
-.ui-button-box.jsdialog button:hover,
 [class*='button-primary']:hover {
 	background-color: var(--color-primary-lighter);
 }
