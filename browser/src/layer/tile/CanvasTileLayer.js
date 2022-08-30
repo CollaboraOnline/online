@@ -5004,9 +5004,11 @@ L.CanvasTileLayer = L.Layer.extend({
 	/// onlyThread - takes annotation indicating which thread will be generated
 	getCommentWizardStructure: function(menuStructure, onlyThread) {
 		var customTitleBar = L.DomUtil.create('div');
+		L.DomUtil.addClass(customTitleBar, 'mobile-wizard-titlebar-btn-container');
 		var title = L.DomUtil.create('span', '', customTitleBar);
 		title.innerText = _('Comment');
 		var button = L.DomUtil.createWithId('button', 'insert_comment', customTitleBar);
+		L.DomUtil.addClass(button, 'mobile-wizard-titlebar-btn');
 		button.innerText = '+';
 		button.onclick = this._map.insertComment.bind(this._map);
 

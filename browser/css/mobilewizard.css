@@ -1049,14 +1049,6 @@ label.disabled {
 
 /* Annotations - comments */
 
-#insert_comment {
-	right: 0px;
-	position: absolute;
-	top: 20%;
-	height: initial !important;
-	width: initial !important;
-}
-
 #mobile-wizard-popup .cool-annotation-content-author,
 #mobile-wizard .cool-annotation-content-author {
 	font-weight: bold;
