@@ -67,6 +67,7 @@ ClientSession::ClientSession(
     _splitX(0),
     _splitY(0),
     _clientSelectedPart(-1),
+    _clientSelectedMode(0),
     _tileWidthPixel(0),
     _tileHeightPixel(0),
     _tileWidthTwips(0),
@@ -1851,6 +1852,10 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                     resetWireIdMap();
                 }
 
+                int mode = 0;
+                if(getTokenInteger(tokens.getParam(token), "mode", mode))
+                    _clientSelectedMode = mode;
+
                 // Get document type too
                 std::string docType;
                 if(getTokenString(tokens.getParam(token), "type", docType))
@@ -2152,7 +2157,8 @@ void ClientSession::dumpState(std::ostream& os)
        << "\n\t\tclipboardKeys[0]: " << _clipboardKeys[0]
        << "\n\t\tclipboardKeys[1]: " << _clipboardKeys[1]
        << "\n\t\tclip sockets: " << _clipSockets.size()
-       << "\n\t\tproxy access:: " << _proxyAccess;
+       << "\n\t\tproxy access:: " << _proxyAccess
+       << "\n\t\tclientSelectedMode: " << _clientSelectedMode;
 
     if (_protocol)
     {
@@ -2195,8 +2201,9 @@ void ClientSession::handleTileInvalidation(const std::string& message,
         return;
     }
 
-    std::pair<int, Util::Rectangle> result = TileCache::parseInvalidateMsg(message);
-    int part = result.first;
+    std::pair<TileCache::PartModePair, Util::Rectangle> result = TileCache::parseInvalidateMsg(message);
+    int part = result.first.first;
+    int mode = result.first.second;
     Util::Rectangle& invalidateRect = result.second;
 
     constexpr SplitPaneName panes[4] = {
@@ -2228,7 +2235,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
     int normalizedViewId = getCanonicalViewId();
 
     std::vector<TileDesc> invalidTiles;
-    if(part == _clientSelectedPart || _isTextDocument)
+    if((part == _clientSelectedPart && mode == _clientSelectedMode) || _isTextDocument)
     {
         for(int paneIdx = 0; paneIdx < numPanes; ++paneIdx)
         {
@@ -2244,7 +2251,8 @@ void ClientSession::handleTileInvalidation(const std::string& message,
                     Util::Rectangle tileRect (j * _tileWidthTwips, i * _tileHeightTwips, _tileWidthTwips, _tileHeightTwips);
                     if(invalidateRect.intersects(tileRect))
                     {
-                        TileDesc desc(normalizedViewId, part, _tileWidthPixel, _tileHeightPixel,
+                        TileDesc desc(normalizedViewId, part, mode,
+                                      _tileWidthPixel, _tileHeightPixel,
                                       j * _tileWidthTwips, i * _tileHeightTwips,
                                       _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false);
 

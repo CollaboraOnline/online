@@ -153,13 +153,14 @@ std::string extractUnoCommand(const std::string& command)
 }
 
 /// Extract rectangle from the invalidation callback
-bool extractRectangle(const StringVector& tokens, int& x, int& y, int& w, int& h, int& part)
+bool extractRectangle(const StringVector& tokens, int& x, int& y, int& w, int& h, int& part, int& mode)
 {
     x = 0;
     y = 0;
     w = INT_MAX;
     h = INT_MAX;
     part = 0;
+    mode = 0;
 
     if (tokens.size() < 5)
         return false;
@@ -178,6 +179,9 @@ bool extractRectangle(const StringVector& tokens, int& x, int& y, int& w, int& h
     w = std::atoi(tokens[5].c_str());
     h = std::atoi(tokens[6].c_str());
     part = std::atoi(tokens[7].c_str());
+
+    if (tokens.size() == 9)
+        mode = std::atoi(tokens[8].c_str());
 
     return true;
 }
@@ -204,9 +208,9 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
     {
         case LOK_CALLBACK_INVALIDATE_TILES: // invalidation
         {
-            int msgX, msgY, msgW, msgH, msgPart;
+            int msgX, msgY, msgW, msgH, msgPart, msgMode;
 
-            if (!extractRectangle(tokens, msgX, msgY, msgW, msgH, msgPart))
+            if (!extractRectangle(tokens, msgX, msgY, msgW, msgH, msgPart, msgMode))
                 return std::string();
 
             bool performedMerge = false;
@@ -232,15 +236,21 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                     continue;
                 }
 
-                int queuedX, queuedY, queuedW, queuedH, queuedPart;
+                int queuedX, queuedY, queuedW, queuedH, queuedPart, queuedMode;
 
-                if (!extractRectangle(queuedTokens, queuedX, queuedY, queuedW, queuedH, queuedPart))
+                if (!extractRectangle(queuedTokens, queuedX, queuedY, queuedW, queuedH, queuedPart, queuedMode))
                 {
                     ++i;
                     continue;
                 }
 
                 if (msgPart != queuedPart)
+                {
+                    ++i;
+                    continue;
+                }
+
+                if (msgMode != queuedMode)
                 {
                     ++i;
                     continue;
@@ -254,7 +264,7 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                     LOG_TRC("Removing smaller invalidation: "
                             << std::string(it.data(), it.size()) << " -> " << tokens[0] << ' '
                             << tokens[1] << ' ' << tokens[2] << ' ' << msgX << ' ' << msgY << ' '
-                            << msgW << ' ' << msgH << ' ' << msgPart);
+                            << msgW << ' ' << msgH << ' ' << msgPart << ' ' << msgMode);
 
                     // remove from the queue
                     getQueue().erase(getQueue().begin() + i);
@@ -280,11 +290,13 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                     }
 
                     LOG_TRC("Merging invalidations: "
-                            << std::string(it.data(), it.size()) << " and " << tokens[0] << ' '
-                            << tokens[1] << ' ' << tokens[2] << ' ' << msgX << ' ' << msgY << ' '
-                            << msgW << ' ' << msgH << ' ' << msgPart << " -> " << tokens[0] << ' '
-                            << tokens[1] << ' ' << tokens[2] << ' ' << joinX << ' ' << joinY << ' '
-                            << joinW << ' ' << joinH << ' ' << msgPart);
+                            << std::string(it.data(), it.size()) << " and "
+                            << tokens[0] << ' ' << tokens[1] << ' ' << tokens[2] << ' '
+                            << msgX << ' ' << msgY << ' ' << msgW << ' ' << msgH << ' '
+                            << msgPart << ' ' << msgMode << " -> "
+                            << tokens[0] << ' ' << tokens[1] << ' ' << tokens[2] << ' '
+                            << joinX << ' ' << joinY << ' ' << joinW << ' ' << joinH << ' '
+                            << msgPart << ' ' << msgMode);
 
                     msgX = joinX;
                     msgY = joinY;
@@ -573,6 +585,7 @@ TileQueue::Payload TileQueue::get_impl()
         {
             const auto &b = tiles[j];
             assert(a.getPart() == b.getPart());
+            assert(a.getEditMode() == b.getEditMode());
             assert(a.getWidth() == b.getWidth());
             assert(a.getHeight() == b.getHeight());
             assert(a.getTileWidth() == b.getTileWidth());

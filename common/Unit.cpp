@@ -303,16 +303,16 @@ void UnitWSD::configure(Poco::Util::LayeredConfiguration &config)
     }
 }
 
-void UnitWSD::lookupTile(int part, int width, int height, int tilePosX, int tilePosY,
+void UnitWSD::lookupTile(int part, int mode, int width, int height, int tilePosX, int tilePosY,
                          int tileWidth, int tileHeight,
                          std::shared_ptr<TileData> &tile)
 {
     if (isUnitTesting())
     {
         if (tile)
-            onTileCacheHit(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+            onTileCacheHit(part, mode, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
         else
-            onTileCacheMiss(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+            onTileCacheMiss(part, mode, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
     }
 }
 
