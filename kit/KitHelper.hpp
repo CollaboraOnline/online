@@ -66,6 +66,7 @@ namespace LOKitHelper
             std::ostringstream hposs;
             std::ostringstream sposs;
             std::ostringstream rtlposs;
+            std::string mode;
             for (int i = 0; i < parts; ++i)
             {
                 ptrValue = loKitDocument->pClass->getPartInfo(loKitDocument, i);
@@ -89,8 +90,17 @@ namespace LOKitHelper
                         if (prop.second == "1")
                             rtlposs << i << ',';
                     }
+                    else if (name == "mode" && mode.empty())
+                    {
+                        std::ostringstream modess;
+                        modess << prop.second;
+                        mode = modess.str();
+                    }
                 }
             }
+
+            if (!mode.empty())
+                oss << " mode=" << mode;
 
             std::string hiddenparts = hposs.str();
             if (!hiddenparts.empty())

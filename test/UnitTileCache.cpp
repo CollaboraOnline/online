@@ -33,12 +33,12 @@ public:
     {
     }
 
-    virtual void lookupTile(int part, int width, int height, int tilePosX, int tilePosY,
+    virtual void lookupTile(int part, int mode, int width, int height, int tilePosX, int tilePosY,
                             int tileWidth, int tileHeight,
                             std::shared_ptr<TileData> &tile)
     {
         // Call base to fire events.
-        UnitWSD::lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, tile);
+        UnitWSD::lookupTile(part, mode, width, height, tilePosX, tilePosY, tileWidth, tileHeight, tile);
 
         // Fail the lookup to force subscription and rendering.
         tile.reset();
