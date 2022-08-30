@@ -151,9 +151,6 @@
 #masterslidebutton {
 	line-height: 22px;
 	min-width: 121px;
-	border: 1px solid var(--color-border);
-	border-radius: var(--border-radius);
-	color: var(--color-main-text);
 }
 
 div#negativenumbersred.checkbutton.jsdialog.sidebar,
