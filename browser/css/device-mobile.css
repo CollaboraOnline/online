@@ -941,3 +941,22 @@ div#fontstyletoolbox + div#style.mobile-wizard {
 	margin: 2px;
 	font-size: 29px;
 }
+
+/* Mobile specific buttons */
+.mobile-wizard-titlebar-btn {
+	height: 24px !important;
+	display: block;
+	text-align: center;
+	margin: 0 8px 0 0 !important;
+	padding: 0 !important;
+	min-width: 24px !important;
+	width: 24px !important;
+	border-radius: 50% !important;
+	background-color: var(--color-primary) !important;
+}
+
+.mobile-wizard-titlebar-btn-container{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
