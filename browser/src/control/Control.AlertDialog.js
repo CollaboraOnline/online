@@ -24,7 +24,7 @@ L.Control.AlertDialog = L.Control.extend({
 				buttonsList.push({
 					text: _('Close'),
 					type: 'button',
-					className: 'vex-dialog-button-primary',
+					className: 'button-primary',
 					click: function() {
 						window.postMobileMessage('BYE');
 						vex.closeAll();
@@ -65,7 +65,7 @@ L.Control.AlertDialog = L.Control.extend({
 				buttonsList.push({
 					text: _('Open link'),
 					type: 'button',
-					className: 'vex-dialog-button-primary',
+					className: 'button-primary',
 					click: function() {
 						if ('processCoolUrl' in window) {
 							url = window.processCoolUrl({ url: url, type: 'doc' });

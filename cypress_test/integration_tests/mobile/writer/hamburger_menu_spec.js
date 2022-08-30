@@ -186,7 +186,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('.vex-dialog-message')
 			.should('have.text', 'Please use the copy/paste buttons on your on-screen keyboard.');
 
-		cy.get('.vex-dialog-button-primary.vex-dialog-button')
+		cy.get('.vex-dialog-buttons .button-primary')
 			.click();
 
 		cy.get('.vex-dialog-form')
@@ -206,7 +206,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('.vex-dialog-message')
 			.should('have.text', 'Please use the copy/paste buttons on your on-screen keyboard.');
 
-		cy.get('.vex-dialog-button-primary.vex-dialog-button.vex-first')
+		cy.get('.vex-dialog-buttons .button-primary.vex-first')
 			.click();
 
 		cy.get('.vex-dialog-form')
@@ -226,7 +226,7 @@ describe('Trigger hamburger menu options.', function() {
 		cy.get('.vex-dialog-message')
 			.should('have.text', 'Please use the copy/paste buttons on your on-screen keyboard.');
 
-		cy.get('.vex-dialog-button-primary.vex-dialog-button')
+		cy.get('.vex-dialog-buttons .button-primary')
 			.click();
 
 		cy.get('.vex-dialog-form')
@@ -598,4 +598,3 @@ describe('Trigger hamburger menu options.', function() {
 			.should('not.exist');
 	});
 });
-

@@ -173,7 +173,7 @@ function executeCopyFromContextMenu(XPos, YPos) {
 		.click();
 
 	// Close warning about clipboard operations
-	cy.get('.vex-dialog-button-primary.vex-dialog-button')
+	cy.get('.vex-dialog-buttons .button-primary')
 		.click();
 
 	// Wait until it's closed
@@ -337,7 +337,7 @@ function insertComment() {
 
 	cy.get('#new-mobile-comment-input-area').type('some text');
 
-	cy.get('.vex-dialog-button-primary').click();
+	cy.get('.vex-dialog-buttons .button-primary').click();
 
 	cy.get('#comment-container-1').should('exist')
 		.wait(300);

@@ -1076,7 +1076,6 @@ var buttonsToDOM = function buttonsToDOM (buttons) {
     domButton.type = button.type
     domButton.textContent = button.text
     domButton.className = button.className
-    domButton.classList.add('vex-dialog-button')
     if (i === 0) {
       domButton.classList.add('vex-first')
     } else if (i === buttons.length - 1) {
@@ -1213,7 +1212,7 @@ var plugin = function plugin (vex) {
     YES: {
       text: 'OK',
       type: 'submit',
-      className: 'vex-dialog-button-primary',
+      className: 'button-primary',
       click: function yesClick () {
         this.value = true
       }
@@ -1222,7 +1221,7 @@ var plugin = function plugin (vex) {
     NO: {
       text: 'Cancel',
       type: 'button',
-      className: 'vex-dialog-button-secondary',
+      className: 'button-secondary',
       click: function noClick () {
         this.value = false
         this.close()

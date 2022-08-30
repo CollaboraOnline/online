@@ -90,7 +90,7 @@
 	flex-direction: row;
 	justify-content: space-between;
 }
-.vex-content.vex-3btns .vex-dialog-buttons > button:not(.vex-dialog-button-secondary) {
+.vex-content.vex-3btns .vex-dialog-buttons > button:not(.button-secondary) {
 	flex: 1;
 }
 .vex.vex-theme-plain .vex-content,
@@ -242,14 +242,14 @@ kbd,
 	height: 288px;
 }
 
-.vex.vex-theme-plain .vex-content.vex-locking .vex-dialog-button-primary {
+.vex.vex-theme-plain .vex-content.vex-locking .button-primary {
 	background-color: var(--color-primary);
 	color: var(--color-primary-text);
 	border-color: var(--color-primary-dark);
 	text-shadow: 0 0 8px var(--color-primary-dark);
 }
 
-.vex.vex-theme-plain .vex-content.vex-locking .vex-dialog-button-primary:hover {
+.vex.vex-theme-plain .vex-content.vex-locking .button-primary:hover {
 	border-color: var(--color-primary-darker) !important;
 	background-color: var(--color-primary-darker);
 	color: var(--color-primary-text);
@@ -284,7 +284,7 @@ kbd,
 	height: 238px;
 	background-position: center;
 }
-.vex.vex-theme-plain .vex-content.vex-locking.mobile .vex-dialog-button-primary {
+.vex.vex-theme-plain .vex-content.vex-locking.mobile .button-primary {
 	background-color: #fda918 !important;
 	border-color: #cc8202 !important;
 	text-shadow: 0 0 0.5px #cc8202;

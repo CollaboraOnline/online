@@ -55,7 +55,7 @@ describe.skip('Annotation tests.', function() {
 
 		cy.get('#new-mobile-comment-input-area').type('{home}modified ');
 
-		cy.get('.vex-dialog-button-primary').click();
+		cy.get('.button-primary').click();
 
 		cy.get('#comment-container-1').should('exist');
 
@@ -73,7 +73,7 @@ describe.skip('Annotation tests.', function() {
 
 		cy.get('#new-mobile-comment-input-area').type('reply');
 
-		cy.get('.vex-dialog-button-primary').click();
+		cy.get('.button-primary').click();
 
 		cy.get('#comment-container-2').should('exist');
 
@@ -103,10 +103,10 @@ describe.skip('Annotation tests.', function() {
 		cy.get('.cool-annotation-textarea')
 			.should('have.text', '');
 
-		cy.get('.vex-dialog-button-primary')
+		cy.get('.button-primary')
 			.click();
 
-		cy.get('.vex-dialog-button-secondary')
+		cy.get('.button-secondary')
 			.click();
 
 		cy.get('#mobile-wizard .wizard-comment-box.cool-annotation-content-wrapper')

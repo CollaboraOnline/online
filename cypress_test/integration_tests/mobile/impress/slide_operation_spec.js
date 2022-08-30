@@ -41,7 +41,7 @@ describe('Slide operations', function() {
 		cy.get('.menu-entry-icon.deletepage').parent()
 			.click();
 
-		cy.get('.vex-dialog-button-primary').click();
+		cy.get('.button-primary').click();
 
 		impressHelper.assertNumberOfSlidePreviews(1);
 	});

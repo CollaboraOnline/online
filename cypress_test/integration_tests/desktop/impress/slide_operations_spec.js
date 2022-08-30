@@ -32,7 +32,7 @@ describe('Slide operations', function() {
 			.should('not.have.class', 'disabled')
 			.click();
 
-		cy.get('.vex-dialog-button-primary').click();
+		cy.get('.vex-dialog-buttons .button-primary').click();
 
 		cy.get('#tb_presentation-toolbar_item_deletepage')
 			.should('have.class', 'disabled');

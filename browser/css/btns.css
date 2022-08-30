@@ -24,8 +24,8 @@ button.jsdialog img {
 	flex-wrap: wrap;
 }
 
-[class*='button-secondary'],
-.vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-secondary {
+.button-secondary,
+button:not(.ui-corner-all):not(.button-primary) {
 	box-sizing: border-box;
 	height: 32px;
 	line-height: 0em;
@@ -40,20 +40,15 @@ button.jsdialog img {
 	vertical-align: middle;
 }
 
-[class*='button-secondary']:hover,
-.ui-pushbutton.jsdialog:not(#ok):not(.sidebar):hover,
-.ui-button-box.jsdialog #cancel:hover,
-.cell.jsdialog > button:not(#ok):hover,
-.ui-button-box.jsdialog button:not(#ok):hover,
-.vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-secondary:hover {
+.button-secondary:hover,
+button:not(.ui-corner-all):not(.button-primary):hover {
 	cursor: pointer;
 	color: var(--color-text-darker) !important;
 	background-color: var(--color-background-lighter) !important;
 	border: 1px solid var(--color-border-darker);
 }
 
-[class*='button-primary'],
-.vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-primary {
+.button-primary {
 	height: 32px;
 	line-height: 0em;
 	color: var(--color-primary-text);
@@ -65,7 +60,7 @@ button.jsdialog img {
 	vertical-align: middle;
 }
 
-[class*='button-primary']:hover {
+.button-primary:hover {
 	background-color: var(--color-primary-lighter);
 }
 

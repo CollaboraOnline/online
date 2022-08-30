@@ -22,7 +22,7 @@ describe('Sheet Operations.', function () {
 	function clickVexDialogButton(buttonText) {
 		cy.get('.vex-content').should('exist');
 
-		cy.contains('button.vex-dialog-button', buttonText)
+		cy.contains('.vex-dialog-buttons button', buttonText)
 			.click();
 	}
 
