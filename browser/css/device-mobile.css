@@ -345,13 +345,13 @@ textarea.cool-annotation-textarea {
 	min-width: -webkit-fill-available !important;
 	min-width: fill-available !important;
 }
-button.vex-dialog-button-primary.vex-dialog-button.vex-first {
+button.button-primary.vex-dialog-button.vex-first {
 	border: 1px solid var(--color-primary) !important;
 	border-radius: var(--border-radius) !important;
 	background-color: var(--color-primary-lighter) !important;
 	color: var(--color-primary-text) !important;
 }
-button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
+button.button-secondary.vex-dialog-button.vex-last {
 	border-radius: var(--border-radius);
 	background-color: var(--color-background-lighter) !important;
 	border: 1px solid var(--color-border-lighter) !important;
@@ -372,7 +372,7 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 	padding: 0;
 }
 
-.vex-welcome-mobile .vex-dialog-button-primary {
+.vex-welcome-mobile .button-primary {
 	width: 100%;
 }
 /* Vex: Document document conflict */

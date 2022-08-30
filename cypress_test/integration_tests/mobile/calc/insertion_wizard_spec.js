@@ -74,7 +74,7 @@ describe('Calc insertion wizard.', function() {
 			.type('www.something.com');
 
 		// Insert
-		cy.get('.vex-content.hyperlink-dialog .vex-dialog-button-primary')
+		cy.get('.vex-content.hyperlink-dialog .button-primary')
 			.click();
 
 		cy.get('.blinking-cursor')

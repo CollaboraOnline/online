@@ -81,7 +81,7 @@ describe('Impress insertion wizard.', function() {
 		// Add some comment
 		cy.get('#new-mobile-comment-input-area').type('some text');
 
-		cy.get('.vex-dialog-button-primary').click();
+		cy.get('.button-primary').click();
 
 		cy.get('#comment-container-1').should('exist');
 
@@ -163,7 +163,7 @@ describe('Impress insertion wizard.', function() {
 			.type('www.something.com');
 
 		// Insert
-		cy.get('.vex-content.hyperlink-dialog .vex-dialog-button-primary')
+		cy.get('.vex-content.hyperlink-dialog .button-primary')
 			.click();
 
 		// TODO: we have some wierd shape here instead of a text shape with the link
@@ -360,7 +360,7 @@ describe('Impress insertion wizard.', function() {
 			.type('www.something.com');
 
 		// Insert
-		cy.get('.vex-content.hyperlink-dialog .vex-dialog-button-primary')
+		cy.get('.vex-content.hyperlink-dialog .button-primary')
 			.click();
 
 		// Check the text

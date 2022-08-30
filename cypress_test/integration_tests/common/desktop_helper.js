@@ -322,7 +322,7 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) 
 		if (isMobile) {
 			cy.get('#new-mobile-comment-input-area').type('some text' + n);
 
-			cy.get('.vex-dialog-button-primary').click();
+			cy.get('.vex-dialog-buttons .button-primary').click();
 		} else {
 			cy.get('#annotation-modify-textarea-new').type('some text' + n);
 

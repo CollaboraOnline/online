@@ -45,7 +45,7 @@ describe('Insert objects via insertion wizard.', function() {
 		// Add some comment
 		cy.get('#new-mobile-comment-input-area').type('some text');
 
-		cy.get('.vex-dialog-button-primary').click();
+		cy.get('.button-primary').click();
 
 		cy.get('#comment-container-1').should('exist');
 
@@ -286,7 +286,7 @@ describe('Insert objects via insertion wizard.', function() {
 			.type('www.something.com');
 
 		// Insert
-		cy.get('.vex-content.hyperlink-dialog .vex-dialog-button-primary')
+		cy.get('.vex-content.hyperlink-dialog .button-primary')
 			.click();
 
 		writerHelper.selectAllTextOfDoc();

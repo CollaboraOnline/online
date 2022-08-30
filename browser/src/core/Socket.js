@@ -872,14 +872,14 @@ app.definitions.Socket = L.Class.extend({
 				var dialogButtons = [
 					$.extend({}, vex.dialog.buttons.YES, {
 						text: _('Discard'),
-						className: 'vex-dialog-button-secondary',
+						className: 'button-secondary',
 						click: function() {
 							this.value = 'discard';
 							this.close();
 						}}),
 					$.extend({}, vex.dialog.buttons.YES, {
 						text: _('Overwrite'),
-						className: 'vex-dialog-button-secondary',
+						className: 'button-secondary',
 						click: function() {
 							this.value = 'overwrite';
 							this.close();
@@ -894,14 +894,14 @@ app.definitions.Socket = L.Class.extend({
 					dialogButtons.push(
 						$.extend({}, vex.dialog.buttons.YES, {
 							text: _('Save to new file'),
-							className: 'vex-dialog-button-primary',
+							className: 'button-primary',
 							click: function() {
 								this.value = 'saveas';
 								this.close();
 							}}),
 						$.extend({}, vex.dialog.buttons.YES, {
 							text: _('Cancel'),
-							className: 'vex-dialog-button-secondary vex-dialog-button-cancel',
+							className: 'button-secondary vex-dialog-button-cancel',
 							click: function() {
 								this.value = 'cancel';
 								this.close();
@@ -911,7 +911,7 @@ app.definitions.Socket = L.Class.extend({
 					dialogButtons.push(
 						$.extend({}, vex.dialog.buttons.YES, {
 							text: _('Cancel'),
-							className: 'vex-dialog-button-primary vex-dialog-button-cancel',
+							className: 'button-primary vex-dialog-button-cancel',
 							click: function() {
 								this.value = 'cancel';
 								this.close();
