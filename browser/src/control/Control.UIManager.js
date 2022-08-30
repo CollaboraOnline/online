@@ -96,7 +96,8 @@ L.Control.UIManager = L.Control.extend({
 		this.map.addControl(this.map.dialog);
 		this.map.addControl(L.control.contextMenu());
 		this.map.addControl(L.control.infobar());
-		this.map.addControl(L.control.userList());
+		this.map.userList = L.control.userList();
+		this.map.addControl(this.map.userList);
 
 		var openBusyPopup = function(label) {
 			this.busyPopupTimer = setTimeout(function() {

@@ -454,6 +454,12 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 
+		// if any key is pressed, we stop the following other user feature.
+		if (this._map._docLayer._followUser) {
+			this._map.userList.followUser(this._map._docLayer._viewId);
+		}
+
+
 		L.DomEvent.stopPropagation(ev);
 	},
 
