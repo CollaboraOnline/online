@@ -386,6 +386,7 @@ module.exports.hideSidebarIfVisible = hideSidebarIfVisible;
 module.exports.selectColorFromPalette = selectColorFromPalette;
 module.exports.selectFromListbox = selectFromListbox;
 module.exports.checkDialogAndClose = checkDialogAndClose;
+module.exports.makeZoomItemsVisible = makeZoomItemsVisible;
 module.exports.zoomIn = zoomIn;
 module.exports.zoomOut = zoomOut;
 module.exports.shouldHaveZoomLevel = shouldHaveZoomLevel;
