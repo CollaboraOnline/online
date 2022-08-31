@@ -60,6 +60,12 @@
             });
       }
 
+      function exportAsHtml() {
+        post({'MessageId': 'Action_Export',
+              'Values': { 'Format': 'html', }
+            });
+      }
+
       function hide_commands(id) {
         post({'MessageId': 'Hide_Menu_Item',
               'Values': { 'id': id, }
@@ -185,6 +191,7 @@
     <form>
       <button onclick="save(); return false;">Save</button>
       <button onclick="closeDocument(); return false;">Close</button></br></br>
+      <button onclick="exportAsHtml(); return false;">Export as HTML</button></br></br>
       <button onclick="hide_commands('save'); return false;">Hide Save Commands</button>
       <button onclick="show_commands('save'); return false;">Show Save Commands</button></br>
       <button onclick="hide_commands('print'); return false;">Hide Print Commands</button>
