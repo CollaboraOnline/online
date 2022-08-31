@@ -10,7 +10,6 @@
 #include <net/DelaySocket.hpp>
 
 #include <memory>
-#include <mutex>
 
 #define DELAY_LOG(X) std::cerr << X << '\n';
 
