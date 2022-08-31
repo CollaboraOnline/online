@@ -1,3 +1,5 @@
+/* For btns hover status see device-desktop.css */
+
 .jsdialog-container .ui-button-box button,
 .vex.vex-theme-plain .vex-dialog-button {
 	font-family: var(--jquery-ui-font);
@@ -40,14 +42,6 @@ button:not(.ui-corner-all):not(.button-primary) {
 	vertical-align: middle;
 }
 
-.button-secondary:hover,
-button:not(.ui-corner-all):not(.button-primary):hover {
-	cursor: pointer;
-	color: var(--color-text-darker) !important;
-	background-color: var(--color-background-lighter) !important;
-	border: 1px solid var(--color-border-darker);
-}
-
 .button-primary {
 	height: 32px;
 	line-height: 0em;
@@ -58,10 +52,6 @@ button:not(.ui-corner-all):not(.button-primary):hover {
 	border-radius: var(--border-radius);
 	margin: 5px;
 	vertical-align: middle;
-}
-
-.button-primary:hover {
-	background-color: var(--color-primary-lighter);
 }
 
 .vex.vex-theme-plain .vex-dialog-form .vex-dialog-buttons {
