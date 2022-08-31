@@ -213,7 +213,6 @@ public:
         _start = std::chrono::steady_clock::now() + std::chrono::milliseconds(delayMs);
         _nextPing = _start + std::chrono::milliseconds((long)(std::rand() * 1000.0) / RAND_MAX);
         _lastTile = _start;
-        sendMessage("load url=" + uri);
     }
 
     void gotPing(WSOpCode /* code */, int pingTimeUs) override
