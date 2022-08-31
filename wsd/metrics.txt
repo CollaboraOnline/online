@@ -27,7 +27,7 @@ KITS
 
     kit_count – total number of running kit processes.
     kit_unassigned_count – number of running kit processes that are not assigned to documents.
-    kit_assigned_count – number of running kit processes that are assigned to documents.
+    kit_assigned_count – number of running kit processes that are assigned to documents (number of currently open documents).
     kit_segfault_count - number of kit processes terminated with SIGSEGV or SIGBUS signals since the start of application.
     kit_lost_terminated_count - number of kit processes that were lost by coolwsd and were terminated by cleanup mechanism.
     kit_thread_count_total - total number of threads in all running kit processes.
