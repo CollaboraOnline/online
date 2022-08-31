@@ -63,7 +63,7 @@
         __VA_ARGS__                                                                                \
     }
 
-/// Support seemless serialization of STATE_ENUM to ostream.
+/// Support seamless serialization of STATE_ENUM to ostream.
 template <typename T, typename std::enable_if<
                           std::is_same<decltype(name(T())), const char*>::value>::type* = nullptr>
 inline std::ostream& operator<<(std::ostream& os, const T state)

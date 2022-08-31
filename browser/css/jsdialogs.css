@@ -36,6 +36,10 @@
 	box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
 
+.jsdialog-container .ui-dialog-titlebar {
+	background-color: var(--color-background-lighter);
+}
+
 .jsdialog-container .ui-dialog-content {
 	background-color: var(--color-background-lighter) !important;
 	font-family: var(--jquery-ui-font);
@@ -87,10 +91,6 @@
 	padding-top: 6px;
 }
 
-td.jsdialog:hover * {
-	color: var(--color-text-darker);
-}
-
 .jsdialog.row {
 	display: table-row;
 }
@@ -134,17 +134,13 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 /* Tabs */
 .jsdialog-tabs {
-	display: inline-flex;
+	display: flex;
 	width: 100%;
-	background: var(--color-main-background);
+	background: var(--color-background-lighter);
 }
 
 .jsdialog-tabs:empty {
 	display: none;
-}
-
-.jsdialog-tabs .ui-tabs.jsdialog {
-	display: inline-block;
 }
 
 .ui-tab.jsdialog {
@@ -153,11 +149,16 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	font-family: var(--cool-font);
 	line-height: normal;
 	color: dimgray;
-	color: var(--color-text-lighter);
+	color: var(--color-text-dark);
 	height: 32px;
 	display: flex;
 	align-items: center;
 	padding: 0px 1em;
+	border-radius: var(--border-radius);
+}
+
+.ui-tab.jsdialog:first-child.selected {
+	margin-inline-start: 12px;
 }
 
 .ui-tab.hidden.jsdialog {
@@ -166,7 +167,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-tab.selected.jsdialog {
 	background-color: var(--color-background-lighter);
-	color: var(--color-text-lighter);
+	color: var(--color-text-darker);
+	box-shadow: 0 0 2px 1px #cfcfcf;
 }
 
 .ui-tab.jsdialog:hover {
@@ -251,7 +253,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	color: var(--color-text-lighter) !important;
 }
 
-.ui-treeview-body {
+.ui-treeview-body,
+#custom_animation_label_parent {
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
 	line-height: var(--default-height);
@@ -552,6 +555,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .ui-iconview-entry:hover {
 	border: 1px solid var(--color-border-darker);
 	background-color: var(--color-background-darker);
+}
+
+.ui-iconview-separator {
+	flex: 0 0 99%;
 }
 
 /* Autofilter dropdown */
@@ -1196,6 +1203,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .formulabar.unotoolbutton {
 	margin-inline-end: 4px !important;
 	opacity: 0.8;
+}
+
+#acceptformula {
+	margin-inline-start: 3px;
 }
 
 .formulabar.unotoolbutton:hover {

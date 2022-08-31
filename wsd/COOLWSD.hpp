@@ -137,14 +137,20 @@ public:
     pid_t getPid() const { return _pid; }
 
     /// Send a text payload to the child-process WS.
-    virtual bool sendTextFrame(const std::string& data)
+    bool sendTextFrame(const std::string& data)
+    {
+        return sendFrame(data, false);
+    }
+
+    /// Send a payload to the child-process WS.
+    bool sendFrame(const std::string& data, bool binary = false)
     {
         try
         {
             if (_ws)
             {
                 LOG_TRC("Send to " << _name << " message: [" << COOLProtocol::getAbbreviatedMessage(data) << "].");
-                _ws->sendMessage(data);
+                _ws->sendMessage(data.c_str(), data.size(), (binary ? WSOpCode::Binary : WSOpCode::Text), false);
                 return true;
             }
         }
@@ -361,6 +367,21 @@ public:
         }
 
         return getConfigValue(Application::instance().config(), name, def);
+    }
+
+    /// Returns the value of the specified application configuration,
+    /// or the default, if one doesn't exist.
+    template <typename T> static T getConfigValueNonZero(const std::string& name, const T def)
+    {
+        static_assert(std::is_integral<T>::value, "Meaningless on non-integral types");
+
+        if (Util::isFuzzing())
+        {
+            return def;
+        }
+
+        const T res = getConfigValue(Application::instance().config(), name, def);
+        return res <= T(0) ? T(0) : res;
     }
 
     /// Reads and processes path entries with the given property

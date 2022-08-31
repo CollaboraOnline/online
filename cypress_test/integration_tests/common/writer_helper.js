@@ -1,6 +1,7 @@
 /* global cy require*/
 
 var helper = require('./helper');
+var desktopHelper = require('./desktop_helper');
 
 // A special text selection method for Writer. It selects
 // all text of the document, but it also removes previous
@@ -31,4 +32,11 @@ function selectAllTextOfDoc() {
 	cy.log('Select all text of Writer document - end.');
 }
 
+function openFileProperties() {
+	desktopHelper.actionOnSelector('fileTab', (selector) => { cy.get(selector).click(); });
+
+	desktopHelper.actionOnSelector('documentProperties', (selector) => { cy.get(selector).click(); });
+}
+
 module.exports.selectAllTextOfDoc = selectAllTextOfDoc;
+module.exports.openFileProperties = openFileProperties;

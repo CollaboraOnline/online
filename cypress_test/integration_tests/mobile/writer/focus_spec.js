@@ -54,7 +54,7 @@ describe('Focus tests', function() {
 		helper.clickOnIdle('#Paragraph');
 
 		cy.get('#aboveparaspacing .spinfield')
-			.should('have.attr', 'value', '0');
+			.should('have.value', '0');
 
 		helper.clickOnIdle('#aboveparaspacing .spinfield');
 

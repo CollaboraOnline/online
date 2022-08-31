@@ -59,7 +59,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		// list of types which can have multiple children but are not considered as containers
 		this._nonContainerType = ['buttonbox', 'treelistbox', 'iconview', 'combobox', 'listbox',
-			'scrollwindow'];
+			'scrollwindow', 'grid', 'tabcontrol'];
 
 		this._controlHandlers = {};
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
@@ -132,12 +132,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._toolitemHandlers['.uno:FrameLineColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:Color'] = this._colorControl;
 		this._toolitemHandlers['.uno:FillColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:ResetAttributes'] = this._formattingControl;
-		this._toolitemHandlers['.uno:SetDefault'] = this._formattingControl;
 
 		this._toolitemHandlers['.uno:InsertFormula'] = function () {};
 		this._toolitemHandlers['.uno:SetBorderStyle'] = function () {};
-		this._toolitemHandlers['.uno:TableCellBackgroundColor'] = function () {};
 
 		this._menus = {};
 		this._menus['AutoSumMenu'] = [
@@ -569,7 +566,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		}
 
-		for (var i = 0; i < data.children.length; i++) {
+		for (var i = 0; i < (data.children || []).length; i++) {
 			child = data.children[i];
 			if (processedChildren.indexOf(child) === -1) {
 				rowNode = L.DomUtil.create('tr', builder.options.cssClass, table);
@@ -851,7 +848,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 			var iconName = builder._generateMenuIconName(commandName);
 			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + iconName, sectionTitle);
-			var iconURL = L.LOUtil.getImageURL('lc_' + iconName + '.svg');
+			var iconURL = builder._createIconURL(iconName, true);
 			icon = L.DomUtil.create('img', '', iconSpan);
 			icon.src = iconURL;
 			icon.alt = '';
@@ -1043,7 +1040,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						return function(event) {
 							builder._createTabClick(builder, id, tabs, contentDivs, tabIds)(event);
 							if (data.tabs[id].id - 1 >= 0)
-								builder.callback('tabcontrol', 'selecttab', tabsContainer, data.tabs[id].id - 1, builder);
+								builder.callback('tabcontrol', 'selecttab', tabsContainer, id, builder);
 						};
 					};
 					$(tabs[t]).click(fn(t));
@@ -1348,7 +1345,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			else if (data.children && data.children.length)
 				value = data.children[0].text;
 
-			$(controls.spinfield).attr('value', builder._cleanValueFromUnits(value));
+			$(controls.spinfield).val(builder._cleanValueFromUnits(value));
 		};
 
 		controls.spinfield.addEventListener('change', function() {
@@ -1382,7 +1379,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder.listenNumericChanges(data, builder, controls, customCallback);
 
 		value = parseFloat(data.value);
-		$(controls.spinfield).attr('value', value);
+		$(controls.spinfield).val(value);
 
 		return false;
 	},
@@ -1394,7 +1391,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder.listenNumericChanges(data, builder, controls, customCallback);
 
 		value = parseFloat(data.value);
-		$(controls.spinfield).attr('value', value);
+		$(controls.spinfield).val(value);
 
 		return false;
 	},
@@ -1853,7 +1850,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (entry.selected && (entry.selected === 'true' || entry.selected === true))
 			$(span).addClass('selected');
 
-		if (entry.state) {
+		if (entry.state !== undefined) {
 			var checkbox = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', span);
 			checkbox.type = 'checkbox';
 
@@ -2012,26 +2009,41 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_iconViewEntry: function (parentContainer, parentData, entry, builder) {
 		var disabled = parentData.enabled === 'false' || parentData.enabled === false;
 
-		if (entry.selected && (entry.selected === 'true' || entry.selected === true))
-			$(parentContainer).addClass('selected');
+		if (entry.separator && (entry.separator === 'true' || entry.separator === true)) {
+			L.DomUtil.create('hr', builder.options.cssClass + ' ui-iconview-separator', parentContainer);
+			return;
+		}
 
-		var icon = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-icon', parentContainer);
+		var entryContainer = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-entry', parentContainer);
+		if (entry.selected && (entry.selected === 'true' || entry.selected === true))
+			$(entryContainer).addClass('selected');
+
+		var icon = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-icon', entryContainer);
 		var img = L.DomUtil.create('img', builder.options.cssClass, icon);
 		if (entry.image)
 			img.src = entry.image;
 		img.alt = entry.text;
-		img.title = entry.text;
+		if (entry.tooltip)
+			img.title = entry.tooltip;
+		else
+			img.title = entry.text;
 
 		if (!disabled) {
-			$(parentContainer).click(function() {
+			var singleClick = parentData.singleclickactivate === 'true' || parentData.singleclickactivate === true;
+			$(entryContainer).click(function() {
 				$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
 				builder.callback('iconview', 'select', parentData, entry.row, builder);
+				if (singleClick) {
+					builder.callback('iconview', 'activate', parentData, entry.row, builder);
+				}
 			});
-			$(parentContainer).dblclick(function() {
-				$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
-				builder.callback('iconview', 'activate', parentData, entry.row, builder);
-			});
-			builder._preventDocumentLosingFocusOnClick(parentContainer);
+			if (!singleClick) {
+				$(entryContainer).dblclick(function() {
+					$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
+					builder.callback('iconview', 'activate', parentData, entry.row, builder);
+				});
+			}
+			builder._preventDocumentLosingFocusOnClick(entryContainer);
 		}
 	},
 
@@ -2056,8 +2068,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			L.DomUtil.addClass(container, 'disabled');
 
 		for (var i in data.entries) {
-			var entry = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-entry', container);
-			builder._iconViewEntry(entry, data, data.entries[i], builder);
+			builder._iconViewEntry(container, data, data.entries[i], builder);
 		}
 
 		var firstSelected = $(container).children('.selected').get(0);
@@ -2437,17 +2448,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
-	_createIconURL: function(name) {
+	_createIconURL: function(name, noCommad) {
 		if (!name)
 			return '';
 
 
+		var alreadyClean = noCommad;
 		var cleanName = name;
-		var prefixLength = '.uno:'.length;
-		if (name.substr(0, prefixLength) == '.uno:')
-			cleanName = name.substr(prefixLength);
-		cleanName = encodeURIComponent(cleanName).replace(/\%/g, '');
-		cleanName = cleanName.toLowerCase();
+
+
+		if (!alreadyClean || alreadyClean !== true) {
+			var prefixLength = '.uno:'.length;
+			if (name.substr(0, prefixLength) == '.uno:')
+				cleanName = name.substr(prefixLength);
+			cleanName = encodeURIComponent(cleanName).replace(/\%/g, '');
+			cleanName = cleanName.toLowerCase();
+		}
 
 		var iconURLAliases = {
 			'alignleft': 'leftpara',
@@ -2561,6 +2577,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'configuredialog': 'sidebar',
 			'modifypage': 'sidebar',
 			'parapropertypanel': 'paragraphdialog',
+			'tablecellbackgroundcolor': 'fillcolor'
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
@@ -2928,56 +2945,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return selectedColor;
 	},
 
-	_formattingControl: function(parentContainer, data, builder) {
-		var iconPath = builder._createIconURL(data.command);
-		var sectionTitle = L.DomUtil.create('div', 'ui-header ' + builder.options.cssClass + ' level-' + builder._currentDepth + ' mobile-wizard-widebutton ui-widget', parentContainer);
-		sectionTitle.id = 'clearFormatting';
-		$(sectionTitle).css('justify-content', 'space-between');
-
-		if (data && data.id)
-			sectionTitle.id = data.id;
-
-		var leftDiv = L.DomUtil.create('div', 'ui-header-left', sectionTitle);
-		var titleClass = '';
-		if (iconPath) {
-			var icon = L.DomUtil.create('img', 'menu-entry-icon', leftDiv);
-			icon.src = iconPath;
-			icon.alt = '';
-			titleClass = 'menu-entry-with-icon';
-		}
-
-		sectionTitle.title = data.text;
-		builder.map.uiManager.enableTooltip(sectionTitle);
-
-		var updateFunction = function() {
-			var items = builder.map['stateChangeHandler'];
-			var state = items.getItemValue(data.command);
-
-			if (state && state === 'disabled')
-				$(sectionTitle).addClass('disabled');
-			else
-				$(sectionTitle).removeClass('disabled');
-		};
-
-		updateFunction();
-
-		builder.map.on('commandstatechanged', function(e) {
-			if (e.commandName === data.command)
-				updateFunction();
-		}, this);
-
-		if (builder.options.noLabelsForUnoButtons !== true) {
-			var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
-			titleSpan.textContent =  builder._cleanText(_UNO(data.command));
-		}
-
-		$(sectionTitle).click(function () {
-			builder.callback('toolbutton', 'click', sectionTitle, data.command, builder);
-		});
-		builder._preventDocumentLosingFocusOnClick(sectionTitle);
-		return false;
-	},
-
 	_getCurrentBorderNumber: function(builder) {
 		var outer = builder.map['stateChangeHandler'].getItemValue('.uno:BorderOuter');
 		var inner = builder.map['stateChangeHandler'].getItemValue('.uno:BorderInner');
@@ -3338,6 +3305,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			break;
 
 		case 'setText':
+			// eg. in mobile wizard input is inside spin button div
+			var innerInput = control.querySelector('input');
+			if (innerInput)
+				control = innerInput;
+
 			var currentText = this._cleanText(data.text);
 			control.value = currentText;
 			if (data.selection) {

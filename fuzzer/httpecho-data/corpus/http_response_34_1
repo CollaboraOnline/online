@@ -1,0 +1,23 @@
+HTTP/1.1 200 OK
+Date: Tue, 01 Jun 2021 23:17:54 GMT
+Server: Apache/2.4.41 (Ubuntu)
+Set-Cookie: ocqiesh0cngs=eb9cgs9nnv4ejg9rdt4ipsidpq; path=/nextcloud; secure; HttpOnly
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-cache, no-store, must-revalidate
+Pragma: no-cache
+Set-Cookie: oc_sessionPassphrase=KF%2FlcYMbv7dq5Hez16qo%2BFeSmYV2tH11dEa4q7zuU41TvD2RSW%2BTHXbBgWpiUgEAfGfO%2BsXFB4IODsAEChphY117iGUTjP7W%2Bcm52T%2FumPTz5FuiGLJvvV1d6NlvNojr; path=/nextcloud; secure; HttpOnly
+Content-Security-Policy: default-src 'none';base-uri 'none';manifest-src 'self'
+Referrer-Policy: no-referrer
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Frame-Options: SAMEORIGIN
+X-Permitted-Cross-Domain-Policies: none
+X-Robots-Tag: none
+X-XSS-Protection: 1; mode=block
+Set-Cookie: nc_sameSiteCookielax=true; path=/nextcloud; httponly;secure; expires=Fri, 31-Dec-2100 23:59:59 GMT; SameSite=lax
+Set-Cookie: nc_sameSiteCookiestrict=true; path=/nextcloud; httponly;secure; expires=Fri, 31-Dec-2100 23:59:59 GMT; SameSite=strict
+Feature-Policy: autoplay 'none';camera 'none';fullscreen 'none';geolocation 'none';microphone 'none';payment 'none'
+Content-Length: 624
+Content-Type: application/json; charset=utf-8
+
+{"BaseFileName":"chart.ods","Size":7564,"Version":"0","UserId":"admin","OwnerId":"admin","UserFriendlyName":"admin","UserExtraInfo":{"avatar":"https:\/\/192.168.1.111:443\/nextcloud\/index.php\/avatar\/admin\/32"},"UserCanWrite":true,"UserCanNotWriteRelative":false,"PostMessageOrigin":"https:\/\/192.168.1.111\/nextcloud\/","LastModifiedTime":"2020-05-20T14:56:21.000000Z","SupportsRename":true,"UserCanRename":true,"EnableInsertRemoteImage":true,"EnableShare":true,"HideUserList":"desktop","DisablePrint":"0","DisableExport":"0","DisableCopy":"0","HideExportOption":"0","HidePrintOption":"0","DownloadAsPostMessage":false}

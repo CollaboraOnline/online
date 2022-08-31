@@ -180,34 +180,34 @@ describe.skip('Apply paragraph properties.', function() {
 	it('Change para spacing via combobox.', function() {
 		// Check para spacing current value
 		cy.get('#aboveparaspacing .spinfield')
-			.should('have.attr', 'value', '0');
+			.should('have.value', '0');
 		cy.get('#belowparaspacing .spinfield')
-			.should('have.attr', 'value', '0');
+			.should('have.value', '0');
 
 		// Change spacing
 		helper.clickOnIdle('#aboveparaspacing .plus');
 		cy.get('#aboveparaspacing .spinfield')
-			.should('have.attr', 'value', '0.01');
+			.should('have.value', '0.01');
 
 		helper.clickOnIdle('#aboveparaspacing .plus');
 		cy.get('#aboveparaspacing .spinfield')
-			.should('have.attr', 'value', '0.02');
+			.should('have.value', '0.02');
 
 		helper.clickOnIdle('#aboveparaspacing .plus');
 		cy.get('#aboveparaspacing .spinfield')
-			.should('have.attr', 'value', '0.03');
+			.should('have.value', '0.03');
 
 		helper.clickOnIdle('#aboveparaspacing .plus');
 		cy.get('#aboveparaspacing .spinfield')
-			.should('have.attr', 'value', '0.04');
+			.should('have.value', '0.04');
 
 		helper.clickOnIdle('#aboveparaspacing .minus');
 		cy.get('#aboveparaspacing .spinfield')
-			.should('have.attr', 'value', '0.03');
+			.should('have.value', '0.03');
 
 		helper.clickOnIdle('#belowparaspacing .plus');
 		cy.get('#belowparaspacing .spinfield')
-			.should('have.attr', 'value', '0.01');
+			.should('have.value', '0.01');
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -254,11 +254,11 @@ describe.skip('Apply paragraph properties.', function() {
 		// Change indent
 		helper.clickOnIdle('#beforetextindent .plus');
 		cy.get('#beforetextindent .spinfield')
-			.should('have.attr', 'value', '0.01');
+			.should('have.value', '0.01');
 
 		helper.clickOnIdle('#beforetextindent .plus');
 		cy.get('#beforetextindent .spinfield')
-			.should('have.attr', 'value', '0.02');
+			.should('have.value', '0.02');
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -271,11 +271,11 @@ describe.skip('Apply paragraph properties.', function() {
 		// Change indent
 		helper.clickOnIdle('#aftertextindent .plus');
 		cy.get('#aftertextindent .spinfield')
-			.should('have.attr', 'value', '0.01');
+			.should('have.value', '0.01');
 
 		helper.clickOnIdle('#aftertextindent .plus');
 		cy.get('#aftertextindent .spinfield')
-			.should('have.attr', 'value', '0.02');
+			.should('have.value', '0.02');
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -288,11 +288,11 @@ describe.skip('Apply paragraph properties.', function() {
 		// Increase firstline indent
 		helper.clickOnIdle('#firstlineindent .plus');
 		cy.get('#firstlineindent .spinfield')
-			.should('have.attr', 'value', '0.01');
+			.should('have.value', '0.01');
 
 		helper.clickOnIdle('#firstlineindent .plus');
 		cy.get('#firstlineindent .spinfield')
-			.should('have.attr', 'value', '0.02');
+			.should('have.value', '0.02');
 
 		writerHelper.selectAllTextOfDoc();
 

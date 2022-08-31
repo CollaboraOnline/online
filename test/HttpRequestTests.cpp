@@ -215,7 +215,7 @@ void HttpRequestTests::testBadResponse()
             httpSession->syncRequest(httpRequest);
 
         LOK_ASSERT(httpResponse->done());
-        LOK_ASSERT(httpResponse->state() == http::Response::State::Timeout);
+        LOK_ASSERT(httpResponse->state() == http::Response::State::Error);
     }
 }
 

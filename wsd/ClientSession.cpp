@@ -296,7 +296,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         if (data.get())
         {
             preProcessSetClipboardPayload(*data);
-            docBroker->forwardToChild(getId(), "setclipboard\n" + *data);
+            docBroker->forwardToChild(getId(), "setclipboard\n" + *data, true);
 
             // FIXME: work harder for error detection ?
             std::ostringstream oss;
@@ -454,6 +454,10 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // Keep track of timestamps of incoming client messages that indicate user activity.
         updateLastActivityTime();
         docBroker->updateLastActivityTime();
+        if (COOLProtocol::tokenIndicatesDocumentModification(tokens[0]))
+        {
+            docBroker->updateLastModifyingActivityTime();
+        }
 
         if (isWritable() && isViewLoaded())
         {
@@ -1142,7 +1146,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         {
             oss << " batch=" << getBatchMode();
         }
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
         sendLockedInfo();
 #endif
         return forwardToChild(oss.str(), docBroker);
@@ -1155,7 +1159,7 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
     return false;
 }
 
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
 void ClientSession::sendLockedInfo()
 {
     Poco::JSON::Object::Ptr lockInfo = new Poco::JSON::Object();

@@ -276,9 +276,11 @@ L.Control.MobileWizardPopup = L.Control.extend({
 								});
 						}
 					}
-				} else {
+				} else if (this._container) {
 					posX = window.innerWidth/2 - this._container.offsetWidth/2;
 					posY = window.innerHeight/2 - this._container.offsetHeight/2;
+				} else {
+					console.error('no _container objet in mobile wizard popup');
 				}
 			};
 

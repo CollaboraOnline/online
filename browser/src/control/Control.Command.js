@@ -65,22 +65,23 @@ L.Map.include({
 			lockingOnMobile = 'mobile';
 		}
 		var that = this;
+		var message = [
+			'<div class="container">',
+			'<div id="unlock-image" class="item illustration"></div>',
+			'<div class="item">',
+			'<h1>' + this.Locking.unlockTitle + '</h1>',
+			'<p>' + this.Locking.unlockDescription + '<p>',
+			'<ul>',
+		];
+		var highlights = [this.Locking.writerHighlights, this.Locking.calcHighlights, this.Locking.impressHighlights, this.Locking.drawHighlights];
+		highlights.forEach(function(highlight) {
+			if (highlight)
+				message.push('<li>' + highlight + '</li>');
+		});
+		message.push('</ul>', '</div>', '<div>');
+
 		vex.dialog.confirm({
-			unsafeMessage: [
-				'<div class="container">',
-				'<div id="unlock-image" class="item illustration"></div>',
-				'<div class="item">',
-				'<h1>' + this.Locking.unlockTitle + '</h1>',
-				'<p>' + this.Locking.unlockDescription + '<p>',
-				'<ul>',
-				'<li>' + this.Locking.writerHighlights + '</li>',
-				'<li>' + this.Locking.calcHighlights + '</li>',
-				'<li>' + this.Locking.impressHighlights + '</li>',
-				'<li>' + this.Locking.drawHighlights + '</li>',
-				'</ul>',
-				'</div>',
-				'<div>'
-			].join(''),
+			unsafeMessage: message.join(''),
 			showCloseButton: false,
 			contentClassName: 'vex-content vex-locking ' + lockingOnMobile,
 			callback: function (value) {

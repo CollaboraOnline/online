@@ -58,7 +58,7 @@ namespace Quarantine
         FileUtil::removeFile(COOLWSD::QuarantinePath, true);
     }
 
-    // returns quarentine directory size in bytes
+    // returns quarantine directory size in bytes
     // files with hardlink count of more than 1 is not counted
     // because they are originally stored in jails
     std::size_t quarantineSize()

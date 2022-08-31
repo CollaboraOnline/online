@@ -24,3 +24,11 @@ Run the fuzzers like this:
 ----
 ./httpresponse_fuzzer -max_len=16384 fuzzer/httpresponse-data/
 ----
+
+- HttpEcho:
+
+----
+./httpecho_fuzzer -max_len=16384 fuzzer/httpecho-data/
+OR, better:
+./fuzzer/httpecho-fuzz.sh
+----

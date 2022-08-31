@@ -755,8 +755,8 @@ protected:
             {
                 std::string raw(data, len);
                 std::cerr << "attempting to send invalid UTF-8 message '" << raw << "' "
-                          << " error at offset " << len
-                          << "string: " << Util::dumpHex(raw) << "\n";
+                          << " error at offset " << std::hex << "0x" << offset << std::dec
+                          << " bytes, string: " << Util::dumpHex(raw) << "\n";
                 assert("invalid utf-8 - check Message::detectType()" && false);
             }
         }

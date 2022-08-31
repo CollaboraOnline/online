@@ -193,7 +193,7 @@ kbd,
 	width: 100%;
 }
 
-/* Integrator: fremium */
+/* Integrator: feature locking */
 .vex.vex-theme-plain .vex-content.vex-locking {
 	width: 652px;
 }
@@ -202,6 +202,14 @@ kbd,
 	margin-bottom: .5em;
 	font-size: 1.1em;
 	color: #fda208;
+}
+
+.vex.vex-theme-plain .vex-content.vex-locking:not(.mobile) h1 {
+	margin-inline-start: 1.1em;
+}
+
+.vex.vex-theme-plain .vex-content.vex-locking p {
+	margin-inline-start: 1.2em;
 }
 
 .vex.vex-theme-plain .vex-content.vex-locking ul {
@@ -216,8 +224,8 @@ kbd,
 	color: #fda208;
 	font-weight: bold;
 	display: inline-block;
-	width: 0.5em;
-	margin-left: -0.5em;
+	width: 1em;
+	margin-inline-start: 0.5em;
 }
 
 .vex.vex-theme-plain .vex-content.vex-locking .container {

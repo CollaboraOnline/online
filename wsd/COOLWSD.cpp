@@ -304,6 +304,7 @@ void COOLWSD::writeTraceEventRecording(const std::string &recording)
     writeTraceEventRecording(recording.data(), recording.length());
 }
 
+#if !LIBFUZZER
 // FIXME: Somewhat idiotically, the parameter to emitOneRecordingIfEnabled() should end with a
 // newline, while the paramter to emitOneRecording() should not.
 
@@ -325,6 +326,8 @@ void TraceEvent::emitOneRecording(const std::string &recording)
 
     COOLWSD::writeTraceEventRecording(recording + "\n");
 }
+
+#endif //!LIBFUZZER
 
 void COOLWSD::checkSessionLimitsAndWarnClients()
 {
@@ -1185,7 +1188,7 @@ public:
 
         fetchAliasGroups(newAppConfig, remoteJson);
 
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
         fetchLockedHostPatterns(newAppConfig, remoteJson);
         fetchLockedTranslations(newAppConfig, remoteJson);
         fetchUnlockImageUrl(newAppConfig, remoteJson);
@@ -1198,7 +1201,7 @@ public:
 
         HostUtil::parseWopiHost(conf);
 
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
         CommandControl::LockManager::parseLockedHost(conf);
 #endif
 
@@ -1369,7 +1372,7 @@ public:
 
                 newAppConfig.insert(std::make_pair(path + ".host", host));
                 newAppConfig.insert(std::make_pair(path + ".host[@allow]", booleanToString(allow)));
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
                 std::string unlockLink;
                 JsonUtil::findJSONValue(group, "unlock_link", unlockLink);
                 newAppConfig.insert(std::make_pair(path + ".unlock_link", unlockLink));
@@ -1914,6 +1917,8 @@ void COOLWSD::innerInitialize(Application& self)
         { "per_document.limit_stack_mem_kb", "8000" },
         { "per_document.limit_virt_mem_mb", "0" },
         { "per_document.max_concurrency", "4" },
+        { "per_document.min_time_between_saves_ms", "500" },
+        { "per_document.min_time_between_uploads_ms", "5000" },
         { "per_document.batch_priority", "5" },
         { "per_document.pdf_resolution_dpi", "96" },
         { "per_document.redlining_as_comments", "false" },
@@ -1950,7 +1955,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "welcome.enable", "false" },
         { "home_mode.enable", "false" },
         { "feedback.show", "true" },
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
         { "feature_lock.locked_hosts[@allow]", "false"},
         { "feature_lock.locked_hosts.fallback[@read_only]", "false"},
         { "feature_lock.locked_hosts.fallback[@disabled_commands]", "false"},
@@ -1967,7 +1972,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "feature_lock.impress_unlock_highlights", IMPRESS_UNLOCK_HIGHLIGHTS },
         { "feature_lock.draw_unlock_highlights", DRAW_UNLOCK_HIGHLIGHTS },
 #endif
-#ifdef ENABLE_FEATURE_RESTRICTION
+#if ENABLE_FEATURE_RESTRICTION
         { "restricted_commands", "" },
 #endif
         { "user_interface.mode", "default" },
@@ -1984,6 +1989,8 @@ void COOLWSD::innerInitialize(Application& self)
         { "languagetool.user_name", ""},
         { "languagetool.enabled", "false"},
         { "languagetool.ssl_verification", "true"},
+        { "deepl.api_url", ""},
+        { "deepl.auth_key", ""},
     };
 
     // Set default values, in case they are missing from the config file.
@@ -2402,6 +2409,7 @@ void COOLWSD::innerInitialize(Application& self)
     AdminEnabled = getConfigValue<bool>(conf, "admin_console.enable", true);
 #endif
 
+    // LanguageTool configuration
     bool enableLanguageTool = getConfigValue<bool>(conf, "languagetool.enabled", false);
     setenv("LANGUAGETOOL_ENABLED", enableLanguageTool ? "true" : "false", 1);
     const std::string baseAPIUrl = getConfigValue<std::string>(conf, "languagetool.base_url", "");
@@ -2412,6 +2420,12 @@ void COOLWSD::innerInitialize(Application& self)
     setenv("LANGUAGETOOL_APIKEY", apiKey.c_str(), 1);
     bool sslVerification = getConfigValue<bool>(conf, "languagetool.ssl_verification", "");
     setenv("LANGUAGETOOL_SSL_VERIFICATION", sslVerification ? "true" : "false", 1);
+
+    // DeepL configuration
+    const std::string apiURL = getConfigValue<std::string>(conf, "deepl.api_url", "");
+    const std::string authKey = getConfigValue<std::string>(conf, "deepl.auth_key", "");
+    setenv("DEEPL_API_URL", apiURL.c_str(), 1);
+    setenv("DEEPL_AUTH_KEY", authKey.c_str(), 1);
 
 #if ENABLE_SUPPORT_KEY
     const std::string supportKeyString = getConfigValue<std::string>(conf, "support_key", "");
@@ -3608,7 +3622,7 @@ private:
                             uri.substr(pos + ProxyRemoteLen), socket,
                             ProxyRequestHandler::getProxyRatingServer());
                     }
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
                     else
                     {
                         const Poco::URI unlockImageUri =

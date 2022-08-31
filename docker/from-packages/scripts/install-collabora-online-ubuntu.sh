@@ -35,10 +35,10 @@ fi
 # Add Collabora repos
 if [ "$type" == "cool" ] && [ -n ${secret_key+set} ]; then
     echo "Based on the provided build arguments Collabora Online from customer repo will be used."
-    echo "deb [signed-by=/usr/share/keyrings/collaboraonline-release-keyring.gpg] https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/${version:-21.11}/customer-ubuntu1804-${secret_key} /" >> /etc/apt/sources.list.d/collabora.list
+    echo "deb [signed-by=/usr/share/keyrings/collaboraonline-release-keyring.gpg] https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/${version:-22.05}/customer-ubuntu1804-${secret_key} /" >> /etc/apt/sources.list.d/collabora.list
 elif [ "$type" == "key" ]; then
     echo "Based on the provided build arguments license key enabled Collabora Online will be used."
-    echo "deb [signed-by=/usr/share/keyrings/collaboraonline-release-keyring.gpg] https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/${version:-21.11}-key /" >> /etc/apt/sources.list.d/collabora.list
+    echo "deb [signed-by=/usr/share/keyrings/collaboraonline-release-keyring.gpg] https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/${version:-22.05}-key /" >> /etc/apt/sources.list.d/collabora.list
 else
     echo "Based on the provided build arguments Collabora Online Development Edition will be used."
     if [ $(uname -i) == "aarch64" ]; then

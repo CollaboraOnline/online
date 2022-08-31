@@ -180,7 +180,7 @@ describe('Table operations', function() {
 	it('Change row height.', function() {
 		if (mode === 'classic') {
 			cy.get('#rowheight .spinfield')
-				.should('have.attr', 'value', '0');
+				.should('have.value', '0');
 
 			helper.typeIntoInputField('#rowheight .spinfield', '1.4', true, false);
 
@@ -330,12 +330,13 @@ describe('Table operations', function() {
 		cy.get('.unospan-split_merge.unoSplitCell')
 			.click();
 
-		cy.get('.lokdialog_canvas').should('exist');
+		cy.get('.lokdialog.ui-dialog-content.ui-widget-content').should('exist');
 
-		cy.get('.lokdialog_canvas').click();
+		cy.get('.lokdialog.ui-dialog-content.ui-widget-content').click();
 
-		//to close the lokdialog
-		helper.typeIntoDocument('{shift}{enter}');
+		cy.get('#ok.ui-pushbutton.jsdialog').should('exist');
+
+		cy.get('#ok.ui-pushbutton.jsdialog').click();
 
 		helper.typeIntoDocument('{ctrl}{a}');
 

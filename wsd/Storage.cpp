@@ -96,7 +96,7 @@ void StorageBase::initialize()
         HostUtil::parseWopiHost(app.config());
     }
 
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
     CommandControl::LockManager::parseLockedHost(app.config());
 #endif
 
@@ -391,13 +391,17 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
 #endif
 }
 
-StorageBase::UploadResult
-LocalStorage::uploadLocalFileToStorage(const Authorization& /*auth*/, LockContext& /*lockCtx*/,
-                                       const std::string& /*saveAsPath*/,
-                                       const std::string& /*saveAsFilename*/, bool /*isRename*/)
+void LocalStorage::uploadLocalFileToStorageAsync(const Authorization& /*auth*/,
+                                                 LockContext& /*lockCtx*/,
+                                                 const std::string& /*saveAsPath*/,
+                                                 const std::string& /*saveAsFilename*/,
+                                                 bool /*isRename*/, const Attributes&, SocketPoll&,
+                                                 const AsyncUploadCallback& asyncUploadCallback)
 {
     const std::string path = getUri().getPath();
 
+    // Assume failure by default.
+    UploadResult res = UploadResult(UploadResult::Result::FAILED, "Internal error");
     try
     {
         LOG_TRC("Copying local file to local file storage (isCopy: " << _isCopy << ") for "
@@ -412,15 +416,17 @@ LocalStorage::uploadLocalFileToStorage(const Authorization& /*auth*/, LockContex
         getFileInfo().setLastModifiedTime(
             Util::getIso8601FracformatTime(FileUtil::Stat(path).modifiedTimepoint()));
         LOG_TRC("New FileInfo modified time in storage " << getFileInfo().getLastModifiedTime());
+        res = UploadResult(UploadResult::Result::OK);
     }
     catch (const Poco::Exception& exc)
     {
         LOG_ERR("copyTo(\"" << getRootFilePathAnonym() << "\", \"" << COOLWSD::anonymizeUrl(path)
                             << "\") failed: " << exc.displayText());
-        return UploadResult(UploadResult::Result::FAILED, "Internal error.");
+        // Default UploadResult is failure.
     }
 
-    return UploadResult(UploadResult::Result::OK);
+    if (asyncUploadCallback)
+        asyncUploadCallback(AsyncUpload(AsyncUpload::State::Complete, res));
 }
 
 #if !MOBILEAPP
@@ -860,7 +866,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
     JsonUtil::findJSONValue(object, "BreadcrumbDocName", _breadcrumbDocName);
     JsonUtil::findJSONValue(object, "FileUrl", _fileUrl);
 
-#ifdef ENABLE_FEATURE_LOCK
+#if ENABLE_FEATURE_LOCK
     bool isUserLocked = false;
     JsonUtil::findJSONValue(object, "IsUserLocked", isUserLocked);
 
@@ -915,7 +921,8 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
         _disableExport = true;
 }
 
-bool WopiStorage::updateLockState(const Authorization& auth, LockContext& lockCtx, bool lock)
+bool WopiStorage::updateLockState(const Authorization& auth, LockContext& lockCtx, bool lock,
+                                  const Attributes& attribs)
 {
     lockCtx._lockFailureReason.clear();
     if (!lockCtx._supportsLocks)
@@ -942,10 +949,10 @@ bool WopiStorage::updateLockState(const Authorization& auth, LockContext& lockCt
 
         request.set("X-WOPI-Override", lock ? "LOCK" : "UNLOCK");
         request.set("X-WOPI-Lock", lockCtx._lockToken);
-        if (!getExtendedData().empty())
+        if (!attribs.getExtendedData().empty())
         {
-            request.set("X-COOL-WOPI-ExtendedData", getExtendedData());
-            request.set("X-LOOL-WOPI-ExtendedData", getExtendedData());
+            request.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
+            request.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
         }
 
         // IIS requires content-length for POST requests: see https://forums.iis.net/t/1119456.aspx
@@ -1179,7 +1186,8 @@ private:
 void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
                                                 const std::string& saveAsPath,
                                                 const std::string& saveAsFilename,
-                                                const bool isRename, SocketPoll& socketPoll,
+                                                const bool isRename, const Attributes& attribs,
+                                                SocketPoll& socketPoll,
                                                 const AsyncUploadCallback& asyncUploadCallback)
 {
     ProfileZone profileZone("WopiStorage::uploadLocalFileToStorage", { {"url", _fileUrl} });
@@ -1241,21 +1249,21 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
         {
             // normal save
             httpHeader.set("X-WOPI-Override", "PUT");
-            httpHeader.set("X-COOL-WOPI-IsModifiedByUser", isUserModified() ? "true" : "false");
-            httpHeader.set("X-LOOL-WOPI-IsModifiedByUser", isUserModified() ? "true" : "false");
-            httpHeader.set("X-COOL-WOPI-IsAutosave", isAutosave() ? "true" : "false");
-            httpHeader.set("X-LOOL-WOPI-IsAutosave", isAutosave() ? "true" : "false");
-            httpHeader.set("X-COOL-WOPI-IsExitSave", isExitSave() ? "true" : "false");
-            httpHeader.set("X-LOOL-WOPI-IsExitSave", isExitSave() ? "true" : "false");
-            if (isExitSave())
+            httpHeader.set("X-COOL-WOPI-IsModifiedByUser", attribs.isUserModified() ? "true" : "false");
+            httpHeader.set("X-LOOL-WOPI-IsModifiedByUser", attribs.isUserModified() ? "true" : "false");
+            httpHeader.set("X-COOL-WOPI-IsAutosave", attribs.isAutosave() ? "true" : "false");
+            httpHeader.set("X-LOOL-WOPI-IsAutosave", attribs.isAutosave() ? "true" : "false");
+            httpHeader.set("X-COOL-WOPI-IsExitSave", attribs.isExitSave() ? "true" : "false");
+            httpHeader.set("X-LOOL-WOPI-IsExitSave", attribs.isExitSave() ? "true" : "false");
+            if (attribs.isExitSave())
                 httpHeader.set("Connection", "close"); // Don't maintain the socket if we are exiting.
-            if (!getExtendedData().empty())
+            if (!attribs.getExtendedData().empty())
             {
-                httpHeader.set("X-COOL-WOPI-ExtendedData", getExtendedData());
-                httpHeader.set("X-LOOL-WOPI-ExtendedData", getExtendedData());
+                httpHeader.set("X-COOL-WOPI-ExtendedData", attribs.getExtendedData());
+                httpHeader.set("X-LOOL-WOPI-ExtendedData", attribs.getExtendedData());
             }
 
-            if (!getForceSave())
+            if (!attribs.isForced())
             {
                 // Request WOPI host to not overwrite if timestamps mismatch
                 httpHeader.set("X-COOL-WOPI-Timestamp", getFileInfo().getLastModifiedTime());
@@ -1370,13 +1378,6 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
         AsyncUpload::State::Error, UploadResult(UploadResult::Result::FAILED, "Internal error.")));
 }
 
-StorageBase::UploadResult WopiStorage::uploadLocalFileToStorage(const Authorization&, LockContext&,
-                                                                const std::string&,
-                                                                const std::string&, const bool)
-{
-    return UploadResult(UploadResult::Result::FAILED);
-}
-
 StorageBase::UploadResult
 WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
                                            std::string responseString)
@@ -1451,9 +1452,6 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
 
                     result.setSaveAsResult(name, url);
                 }
-                // Reset the force save flag now, if any, since we are done saving
-                // Next saves shouldn't be saved forcefully unless commanded
-                forceSave(false);
             }
             else
             {

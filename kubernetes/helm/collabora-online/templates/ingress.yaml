@@ -5,12 +5,6 @@ metadata:
   namespace: {{ .Values.namespace.collabora }}
   annotations:
     nginx.ingress.kubernetes.io/upstream-hash-by: "$arg_WOPISrc"
-    haproxy.org/backend-config-snippet: |
-      balance leastconn
-      stick store-request url_param(WOPISrc)
-      stick-table type string len 2048 size 1k store conn_cur
-      http-request track-sc1 url_param(WOPISrc)
-      stick match url_param(WOPISrc) if { sc1_conn_cur gt 1 }
 spec:
   rules:
   - host: {{ .Values.hosts.host }}

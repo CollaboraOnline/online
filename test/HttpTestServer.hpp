@@ -114,11 +114,12 @@ private:
             else if (Util::startsWith(request.getUrl(), "/inject"))
             {
                 // /inject/<hex data> sends back the data (in binary form)
-                // verbatum. It doesn't add headers or anything at all.
+                // verbatim. It doesn't add headers or anything at all.
                 const std::string hex = request.getUrl().substr(sizeof("/inject"));
                 const std::string bytes = Util::hexStringToBytes(
                     reinterpret_cast<const uint8_t*>(hex.data()), hex.size());
                 socket->send(bytes);
+                socket->shutdown();
             }
             else
             {

@@ -19,7 +19,7 @@
 
 [data-userinterfacemode='classic'] #document-container:not(.mobile) + #sidebar-dock-wrapper,
 #document-container.spreadsheet-doctype:not(.mobile) + #sidebar-dock-wrapper {
-	border-inline-start: 1px solid var(--color-border) !important;
+	border-inline-start: 1px solid var(--color-border);
 }
 
 .sidebar .spinfieldcontainer input {
@@ -266,12 +266,8 @@ td.jsdialog .jsdialog.cell.sidebar {
 .hasnotebookbar .ui-content.unotoolbutton.selected:hover,
 .unotoolbutton.notebookbar:hover,
 .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline):hover,
-#clearFormatting:hover,
-#FormatPaintbrush:hover,
 .sidebar.unotoolbutton:hover,
 .sidebar.unotoolbutton.selected:hover,
-.sidebar #resetattr:hover,
-.sidebar #FormatPaintbrush:hover,
 #table-textorientbox.sidebar .jsdialog .radiobutton:hover {
 	background-color: var(--color-background-darker) !important;
 	border: 1px solid var(--color-border-darker);
@@ -311,8 +307,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 }
 
 #orientationcontrol,
-#rotation,
-#misc_label {
+#rotation {
 	visibility: hidden;
 	height: 16px;
 }

@@ -39,7 +39,7 @@ static_assert(false, "config.h must be included in the .cpp being compiled");
 //
 // There is no attempt to support all possible
 // features of the RFC. However, we do attempt
-// to be maximally compatible and accomodating
+// to be maximally compatible and accommodating
 // to server and client implementations in the
 // wild. This code is designed to work primarily
 // on the client side, with provision for being
@@ -125,7 +125,7 @@ static_assert(false, "config.h must be included in the .cpp being compiled");
 // which contains the status code, reason,
 // and a convenient status category.
 //
-// Finally, if a syncronous request is needed,
+// Finally, if a synchronous request is needed,
 // http::Session provides syncRequest that
 // blocks until the request completes. However,
 // the onFinished callback is still triggered
@@ -825,7 +825,7 @@ private:
     {
         if (!done())
         {
-            LOG_TRC("Finishing");
+            LOG_TRC("Finishing: " << name(newState));
             _bodyFile.close();
             _state = newState;
             if (_finishedCallback)
@@ -866,7 +866,7 @@ private:
     {
         assert(!_host.empty() && portNumber > 0 && !_port.empty() &&
                "Invalid hostname and portNumber for http::Sesssion");
-#ifdef ENABLE_DEBUG
+#if ENABLE_DEBUG
         std::string scheme;
         std::string hostString;
         std::string portString;
@@ -1131,6 +1131,8 @@ private:
         while (!_response->done())
         {
             const auto now = std::chrono::steady_clock::now();
+            checkTimeout(now);
+
             const auto remaining =
                 std::chrono::duration_cast<std::chrono::microseconds>(deadline - now);
             poller.poll(remaining);
@@ -1173,7 +1175,8 @@ private:
             }
         };
 
-        _response.reset(new Response(onFinished));
+        _response.reset();
+        _response = std::make_shared<Response>(onFinished);
 
         _request = std::move(req);
 
@@ -1321,7 +1324,7 @@ private:
 
         const auto duration =
             std::chrono::duration_cast<std::chrono::milliseconds>(now - _startTime);
-        if (duration > getTimeout())
+        if (now < _startTime || duration > getTimeout() || SigUtil::getTerminationFlag())
         {
             std::shared_ptr<StreamSocket> socket = _socket.lock();
             const int fd = socket ? socket->getFD() : 0;

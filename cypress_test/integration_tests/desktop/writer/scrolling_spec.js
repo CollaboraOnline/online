@@ -67,10 +67,10 @@ describe('Scroll through document', function() {
 		helper.typeIntoDocument('{home}{end}{home}');
 
 		cy.get('#test-div-horizontal-scrollbar')
-			.should('have.text', '6');
+			.should('have.text', '0');
 
 		helper.typeIntoDocument('{end}{home}{end}');
 
-		desktopHelper.assertScrollbarPosition('horizontal', 577, 660);
+		desktopHelper.assertScrollbarPosition('horizontal', 570, 653);
 	});
 });

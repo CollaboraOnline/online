@@ -275,6 +275,9 @@ L.Control.JSDialog = L.Control.extend({
 		}
 
 		builder.build(content, [data]);
+		var primaryBtn = L.DomUtil.get(defaultButtonId);
+		if (primaryBtn)
+			L.DomUtil.addClass(primaryBtn, 'button-primary');
 		if (isAutofilter)
 			content.firstChild.dir = document.documentElement.dir;
 
@@ -415,7 +418,7 @@ L.Control.JSDialog = L.Control.extend({
 				container.appendChild(endMarker);
 			}
 
-			if (canHaveFocus)
+			if (canHaveFocus && initialFocusElement)
 				initialFocusElement.focus();
 
 			if (toRemove)
@@ -462,7 +465,7 @@ L.Control.JSDialog = L.Control.extend({
 	onJSUpdate: function (e) {
 		var data = e.data;
 
-		if (data.jsontype !== 'dialog')
+		if (data.jsontype !== 'dialog' && data.jsontype !== 'popup')
 			return;
 
 		var dialog = this.dialogs[data.id] ? this.dialogs[data.id].container : null;
@@ -512,7 +515,7 @@ L.Control.JSDialog = L.Control.extend({
 	onJSAction: function (e) {
 		var data = e.data;
 
-		if (data.jsontype !== 'dialog')
+		if (data.jsontype !== 'dialog' && data.jsontype !== 'popup')
 			return;
 
 		var builder = this.dialogs[data.id] ? this.dialogs[data.id].builder : null;

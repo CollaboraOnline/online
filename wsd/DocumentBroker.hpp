@@ -16,6 +16,7 @@
 #include <map>
 #include <memory>
 #include <mutex>
+#include <sstream>
 #include <string>
 #include <thread>
 #include <utility>
@@ -51,7 +52,7 @@ class ChildProcess : public WSProcess
 {
 public:
     /// @param pid is the process ID of the child.
-    /// @param socket is the underlying Sockeet to the child.
+    /// @param socket is the underlying Socket to the child.
     ChildProcess(const pid_t pid,
                  const std::string& jailId,
                  const std::shared_ptr<StreamSocket>& socket,
@@ -153,7 +154,7 @@ class ClientSession;
 /// activity). Once we get the save result from Core
 /// (and ideally with success), we upload the document
 /// immediately. Previously, this was a synchronous
-/// process, which is now being reworked into an asynch.
+/// process, which is now being reworked into an async.
 ///
 /// The user can invoke both Save and Upload operations
 /// however, and in more than one way.
@@ -410,7 +411,7 @@ public:
     virtual bool handleInput(const std::shared_ptr<Message>& message);
 
     /// Forward a message from client session to its respective child session.
-    bool forwardToChild(const std::string& viewId, const std::string& message);
+    bool forwardToChild(const std::string& viewId, const std::string& message, bool binary = false);
 
     int getRenderedTileCount() { return _debugRenderedTileCount; }
 
@@ -425,7 +426,19 @@ public:
 
     std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_mutex); }
 
-    void updateLastActivityTime();
+    /// Update the last activity time to now.
+    /// Best to be inlined as it's called frequently.
+    void updateLastActivityTime()
+    {
+        _lastActivityTime = std::chrono::steady_clock::now();
+        // posted to admin console in the main polling loop.
+    }
+
+    /// Sets the last activity timestamp that is most likely to modify the document.
+    void updateLastModifyingActivityTime()
+    {
+        _lastModifyActivityTime = std::chrono::steady_clock::now();
+    }
 
     /// This updates the editing sessionId which is used for auto-saving.
     void updateEditingSessionId(const std::string& viewId)
@@ -609,6 +622,13 @@ private:
         return _saveManager.lastSaveRequestTime() < _lastActivityTime;
     }
 
+    /// True if there has been potentially *document-modifying* activity from a client
+    /// after we last *requested* saving, since there are race conditions while saving.
+    bool haveModifyActivityAfterSaveRequest() const
+    {
+        return _saveManager.lastSaveRequestTime() < _lastModifyActivityTime;
+    }
+
     /// Encodes whether or not saving is needed.
     STATE_ENUM(NeedToSave,
                No, //< No need to save, data up-to-date.
@@ -683,9 +703,11 @@ private:
     class RequestManager
     {
     public:
-        RequestManager()
-            : _lastRequestTime(now())
+        RequestManager(std::chrono::milliseconds minTimeBetweenRequests)
+            : _minTimeBetweenRequests(minTimeBetweenRequests)
+            , _lastRequestTime(now())
             , _lastResponseTime(now())
+            , _lastRequestDuration(0)
             , _lastRequestFailureCount(0)
         {
         }
@@ -698,9 +720,10 @@ private:
 
         /// How much time passed since the last request,
         /// regardless of whether we got a response or not.
-        const std::chrono::milliseconds timeSinceLastRequest() const
+        const std::chrono::milliseconds timeSinceLastRequest(
+            const std::chrono::steady_clock::time_point now = RequestManager::now()) const
         {
-            return std::chrono::duration_cast<std::chrono::milliseconds>(now() - _lastRequestTime);
+            return std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastRequestTime);
         }
 
         /// True iff there is an active request and it has timed out.
@@ -711,22 +734,44 @@ private:
 
 
         /// Sets the time the last response was received to now.
-        void markLastResponseTime() { _lastResponseTime = now(); }
+        void markLastResponseTime()
+        {
+            _lastResponseTime = now();
+            _lastRequestDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
+                _lastResponseTime - _lastRequestTime);
+        }
 
         /// Returns the time the last response was received.
         std::chrono::steady_clock::time_point lastResponseTime() const { return _lastResponseTime; }
 
+        /// Returns the duration of the last request.
+        std::chrono::milliseconds lastRequestDuration() const { return _lastRequestDuration; }
+
         /// How much time passed since the last response,
         /// regardless of whether there is a newer request or not.
-        const std::chrono::milliseconds timeSinceLastResponse() const
+        const std::chrono::milliseconds timeSinceLastResponse(
+            const std::chrono::steady_clock::time_point now = RequestManager::now()) const
         {
-            return std::chrono::duration_cast<std::chrono::milliseconds>(now() - _lastResponseTime);
+            return std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastResponseTime);
         }
 
 
         /// Returns true iff there is an active request in progress.
         bool isActive() const { return _lastResponseTime < _lastRequestTime; }
 
+        /// The minimum time to wait between requests.
+        std::chrono::milliseconds minTimeBetweenRequests() const { return _minTimeBetweenRequests; }
+
+        /// Checks whether or not we can issue a new request now.
+        /// Returns true iff there is no active request and sufficient
+        /// time has elapsed since the last request, including that
+        /// more time than the last request's duration has passed.
+        bool canRequestNow() const
+        {
+            const auto now = RequestManager::now();
+            return !isActive() && std::min(timeSinceLastRequest(now), timeSinceLastResponse(now)) >=
+                                      std::max(_minTimeBetweenRequests, _lastRequestDuration);
+        }
 
         /// Sets the last request's result, either to success or failure.
         /// And marks the last response time.
@@ -757,14 +802,20 @@ private:
         }
 
     private:
+        /// The minimum time between requests.
+        const std::chrono::milliseconds _minTimeBetweenRequests;
+
         /// The last time we started an a request.
         std::chrono::steady_clock::time_point _lastRequestTime;
 
         /// The last time we received a response.
         std::chrono::steady_clock::time_point _lastResponseTime;
 
-        /// Counts the number of previous request that failed.
-        /// Note that this is interpretted by the request in question.
+        /// The time we spent in the last request.
+        std::chrono::milliseconds _lastRequestDuration;
+
+        /// Counts the number of previous requests that failed.
+        /// Note that this is interpreted by the request in question.
         /// For example, Core's Save operation turns 'false' for success
         /// when the file is unmodified, but that is still a successful result.
         std::size_t _lastRequestFailureCount;
@@ -778,15 +829,25 @@ private:
     class SaveManager final
     {
     public:
-        SaveManager()
-            : _autosaveInterval(std::chrono::seconds(30))
+        SaveManager(std::chrono::milliseconds autosaveInterval,
+                    std::chrono::milliseconds minTimeBetweenSaves)
+            : _request(minTimeBetweenSaves)
+            , _autosaveInterval(autosaveInterval)
             , _lastAutosaveCheckTime(RequestManager::now())
-            , _isAutosaveEnabled(std::getenv("COOL_NO_AUTOSAVE") == nullptr)
         {
+            if (Log::traceEnabled())
+            {
+                std::ostringstream oss;
+                dumpState(oss, ", ");
+                LOG_TRC("Created SaveManager: " << oss.str());
+            }
         }
 
-        /// Return true iff auto save is enabled.
-        bool isAutosaveEnabled() const { return _isAutosaveEnabled; }
+        /// Returns true iff auto save is enabled.
+        bool isAutosaveEnabled() const { return _autosaveInterval > std::chrono::seconds::zero(); }
+
+        /// Returns the autosave interval.
+        std::chrono::milliseconds autosaveInterval() const { return _autosaveInterval; }
 
         /// Returns true if we should issue an auto-save.
         bool needAutosaveCheck() const
@@ -892,19 +953,27 @@ private:
             return _request.timeSinceLastResponse();
         }
 
-        /// True if we aren't saving and the minimum time since last save has elapsed.
-        bool canSaveNow(std::chrono::milliseconds minTime) const
+        /// Returns how long the last save took.
+        std::chrono::milliseconds lastSaveDuration() const
         {
-            return !isSaving() && std::min(_request.timeSinceLastRequest(),
-                                           _request.timeSinceLastResponse()) >= minTime;
+            return _request.lastRequestDuration();
         }
+
+        /// Returns the minimum time between saves.
+        std::chrono::milliseconds minTimeBetweenSaves() const
+        {
+            return _request.minTimeBetweenRequests();
+        }
+
+        /// True if we aren't saving and the minimum time since last save has elapsed.
+        bool canSaveNow() const { return _request.canRequestNow(); }
 
         void dumpState(std::ostream& os, const std::string& indent = "\n  ")
         {
             const auto now = std::chrono::steady_clock::now();
             os << indent << "isSaving now: " << std::boolalpha << isSaving();
-            os << indent << "auto-save enabled: " << std::boolalpha << _isAutosaveEnabled;
-            os << indent << "auto-save interval: " << _autosaveInterval;
+            os << indent << "auto-save enabled: " << std::boolalpha << isAutosaveEnabled();
+            os << indent << "auto-save interval: " << autosaveInterval();
             os << indent
                << "last auto-save check time: " << Util::getTimeForLog(now, _lastAutosaveCheckTime);
             os << indent << "auto-save check needed: " << std::boolalpha << needAutosaveCheck();
@@ -913,9 +982,8 @@ private:
                << "last save request: " << Util::getTimeForLog(now, lastSaveRequestTime());
             os << indent
                << "last save response: " << Util::getTimeForLog(now, lastSaveResponseTime());
-
-            os << indent << "since last save request: " << timeSinceLastSaveRequest();
-            os << indent << "since last save response: " << timeSinceLastSaveResponse();
+            os << indent << "last save duration: " << lastSaveDuration();
+            os << indent << "min time between saves: " << minTimeBetweenSaves();
 
             os << indent
                << "file last modified time: " << Util::getTimeForLog(now, _lastModifiedTime);
@@ -932,17 +1000,14 @@ private:
         /// The document's last-modified time.
         std::chrono::system_clock::time_point _lastModifiedTime;
 
-        /// The number of seconds between autosave checks for modification.
-        const std::chrono::seconds _autosaveInterval;
+        /// The number of milliseconds between autosave checks for modification.
+        const std::chrono::milliseconds _autosaveInterval;
 
         /// The maximum time to wait for saving to finish.
-        std::chrono::seconds _savingTimeout;
+        std::chrono::seconds _savingTimeout{};
 
         /// The last autosave check time.
         std::chrono::steady_clock::time_point _lastAutosaveCheckTime;
-
-        /// Whether auto-saving is enabled at all or not.
-        const bool _isAutosaveEnabled;
     };
 
     /// Represents an upload request.
@@ -991,16 +1056,16 @@ private:
     class StorageManager final
     {
     public:
-        StorageManager()
-            : _lastUploadTime(RequestManager::now())
+        StorageManager(std::chrono::milliseconds minTimeBetweenUploads)
+            : _request(minTimeBetweenUploads)
         {
+            if (Log::traceEnabled())
+            {
+                std::ostringstream oss;
+                dumpState(oss, ", ");
+                LOG_TRC("Created StorageManager: " << oss.str());
+            }
         }
-
-        /// Marks the last time we attempted to upload, regardless of outcome, to now.
-        void markLastUploadTime() { _lastUploadTime = RequestManager::now(); }
-
-        // Gets the last time we attempted to upload.
-        std::chrono::steady_clock::time_point getLastUploadTime() const { return _lastUploadTime; }
 
         /// Returns whether the last upload was successful or not.
         bool lastUploadSuccessful() const { return _request.lastRequestSuccessful(); }
@@ -1012,6 +1077,9 @@ private:
                               << _request.timeSinceLastRequest());
             _request.setLastRequestResult(success);
         }
+
+        /// True iff an upload is in progress (requested but not completed).
+        bool isUploading() const { return _request.isActive(); }
 
         /// The duration elapsed since we sent the last upload request to storage.
         std::chrono::milliseconds timeSinceLastUploadRequest() const
@@ -1046,31 +1114,42 @@ private:
         /// Returns the last modified time of the document.
         const std::string& getLastModifiedTime() const { return _lastModifiedTime; }
 
+        /// Returns how long the last upload took.
+        std::chrono::milliseconds lastUploadDuration() const
+        {
+            return _request.lastRequestDuration();
+        }
+
+        /// Returns the minimum time between uploads.
+        std::chrono::milliseconds minTimeBetweenUploads() const
+        {
+            return _request.minTimeBetweenRequests();
+        }
+
+        /// True if we aren't uploading and the minimum time since last upload has elapsed.
+        bool canUploadNow() const { return _request.canRequestNow(); }
+
         void dumpState(std::ostream& os, const std::string& indent = "\n  ")
         {
             const auto now = std::chrono::steady_clock::now();
-            os << indent << "last upload time: " << Util::getTimeForLog(now, getLastUploadTime());
-            os << indent << "last upload was successful: " << lastUploadSuccessful();
-            os << indent << "upload failure count: " << uploadFailureCount();
-            os << indent << "last modified time (on server): " << _lastModifiedTime;
-            os << indent << "since last upload request: " << timeSinceLastUploadRequest();
-            os << indent << "since last upload response: " << timeSinceLastUploadResponse();
+            os << indent << "isUploading now: " << std::boolalpha << isUploading();
+            os << indent << "last upload request time: "
+               << Util::getTimeForLog(now, _request.lastRequestTime());
+            os << indent << "last upload response time: "
+               << Util::getTimeForLog(now, _request.lastResponseTime());
+            os << indent << "last upload duration: " << lastUploadDuration();
+            os << indent << "min time between uploads: " << minTimeBetweenUploads();
+            os << indent << "last modified time (on server): " << getLastModifiedTime();
             os << indent
                << "file last modified: " << Util::getTimeForLog(now, _lastUploadedFileModifiedTime);
+            os << indent << "last upload was successful: " << std::boolalpha
+               << lastUploadSuccessful();
+            os << indent << "upload failure count: " << uploadFailureCount();
         }
 
     private:
         /// Request tracking logic.
         RequestManager _request;
-
-        /// The last time we tried uploading, regardless of whether the
-        /// document was modified and a newer version saved
-        /// and uploaded or not. In effect, this tracks the time we
-        /// synchronized with Storage (i.e. the last time we either uploaded
-        /// or had nothing new to upload). It is redundant as it is
-        /// equivalent to the larger of 'Last Save Response Time' and
-        /// 'Last Storage Response Time', and should be removed.
-        std::chrono::steady_clock::time_point _lastUploadTime;
 
         /// The modified-timestamp of the local file on disk we uploaded last.
         std::chrono::system_clock::time_point _lastUploadedFileModifiedTime;
@@ -1272,6 +1351,15 @@ private:
     std::set<std::string> _isInitialStateSet;
 
     std::unique_ptr<StorageBase> _storage;
+
+    /// The current upload request's attributes. Re-used to retry after failure.
+    /// Updated right before uploading.
+    StorageBase::Attributes _currentStorageAttrs;
+    /// The next upload request's attributes. Avoids clobbering
+    /// _currentStorageAttrs until the current request succeeds.
+    /// Updated right before saving.
+    StorageBase::Attributes _nextStorageAttrs;
+
     std::unique_ptr<TileCache> _tileCache;
     std::atomic<bool> _isModified;
     int _cursorPosX;
@@ -1294,7 +1382,13 @@ private:
     int _debugRenderedTileCount;
 
     std::chrono::steady_clock::time_point _lastNotifiedActivityTime;
+
+    /// Time of the last interactive event received.
     std::chrono::steady_clock::time_point _lastActivityTime;
+
+    /// Time of the last interactive event that very likely modified the document.
+    std::chrono::steady_clock::time_point _lastModifyActivityTime;
+
     std::chrono::steady_clock::time_point _threadStart;
     std::chrono::milliseconds _loadDuration;
     std::chrono::milliseconds _wopiDownloadDuration;

@@ -122,7 +122,6 @@ COOL_CSS_LST =\
 	$(srcdir)/css/leaflet-spinner.css \
 	$(srcdir)/css/selectionMarkers.css \
 	$(srcdir)/css/color-palette.css \
-	$(srcdir)/css/color-palette-dark.css \
 	$(srcdir)/css/cool.css \
 	$(srcdir)/css/toolbar.css \
 	$(srcdir)/css/partsPreviewControl.css \
@@ -764,9 +763,9 @@ check-local: $(MOCHA_TS_JS_FILES)
 
 SSL_FLAG = `xmllint --xpath 'string(/config/ssl/enable)' $(abs_top_builddir)/coolwsd.xml`
 
-# the delay (in miliseconds) between each emulated key stroke for each view
+# the delay (in milliseconds) between each emulated key stroke for each view
 typing_speed=100
-# The duration of the typing (in miliseconds)
+# The duration of the typing (in milliseconds)
 typing_duration=30000
 # By default 6 views are spawned in the document.
 single_view="false"

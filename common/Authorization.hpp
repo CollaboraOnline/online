@@ -61,7 +61,7 @@ public:
         _data = std::move(accessToken);
     }
 
-    /// Set the access_token parametr to the given uri.
+    /// Set the access_token parameter to the given URI.
     void authorizeURI(Poco::URI& uri) const;
 
     /// Set the Authorization: header in request.

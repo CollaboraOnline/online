@@ -2063,7 +2063,7 @@ class CanvasSectionContainer {
 					But when Leaflet is removed, animation will stop first and then onclick event will be propagated to sections.
 
 				stoppingEvents: ['click', 'mousemove' ..etc] // Events should match the real keywords.
-				// Developer can set the duration for the animation, in miliseconds. There are also other ways to stop the animation.
+				// Developer can set the duration for the animation, in milliseconds. There are also other ways to stop the animation.
 				duration: 2000 | null // 2 seconds | null.
 		*/
 

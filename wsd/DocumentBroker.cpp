@@ -109,31 +109,37 @@ public:
 
 std::atomic<unsigned> DocumentBroker::DocBrokerId(1);
 
-DocumentBroker::DocumentBroker(ChildType type,
-                               const std::string& uri,
-                               const Poco::URI& uriPublic,
-                               const std::string& docKey,
-                               unsigned mobileAppDocId) :
-    _limitLifeSeconds(std::chrono::seconds::zero()),
-    _uriOrig(uri),
-    _type(type),
-    _uriPublic(uriPublic),
-    _docKey(docKey),
-    _docId(Util::encodeId(DocBrokerId++, 3)),
-    _documentChangedInStorage(false),
-    _isViewFileExtension(false),
-    _isModified(false),
-    _cursorPosX(0),
-    _cursorPosY(0),
-    _cursorWidth(0),
-    _cursorHeight(0),
-    _poll(new DocumentBrokerPoll("doc" SHARED_DOC_THREADNAME_SUFFIX + _docId, *this)),
-    _stop(false),
-    _lockCtx(new LockContext()),
-    _tileVersion(0),
-    _debugRenderedTileCount(0),
-    _wopiDownloadDuration(0),
-    _mobileAppDocId(mobileAppDocId)
+DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poco::URI& uriPublic,
+                               const std::string& docKey, unsigned mobileAppDocId)
+    : _limitLifeSeconds(std::chrono::seconds::zero())
+    , _uriOrig(uri)
+    , _type(type)
+    , _uriPublic(uriPublic)
+    , _docKey(docKey)
+    , _docId(Util::encodeId(DocBrokerId++, 3))
+    , _documentChangedInStorage(false)
+    , _isViewFileExtension(false)
+    , _saveManager(std::chrono::seconds(std::getenv("COOL_NO_AUTOSAVE") != nullptr
+                                            ? 0
+                                            : COOLWSD::getConfigValueNonZero<int>(
+                                                  "per_document.autosave_duration_secs", 300)),
+                   std::chrono::milliseconds(COOLWSD::getConfigValueNonZero<int>(
+                       "per_document.min_time_between_saves_ms", 500)))
+    , _storageManager(std::chrono::milliseconds(
+          COOLWSD::getConfigValueNonZero<int>("per_document.min_time_between_uploads_ms", 5000)))
+    , _isModified(false)
+    , _cursorPosX(0)
+    , _cursorPosY(0)
+    , _cursorWidth(0)
+    , _cursorHeight(0)
+    , _poll(
+          Util::make_unique<DocumentBrokerPoll>("doc" SHARED_DOC_THREADNAME_SUFFIX + _docId, *this))
+    , _stop(false)
+    , _lockCtx(Util::make_unique<LockContext>())
+    , _tileVersion(0)
+    , _debugRenderedTileCount(0)
+    , _wopiDownloadDuration(0)
+    , _mobileAppDocId(mobileAppDocId)
 {
     assert(!_docKey.empty());
     assert(!COOLWSD::ChildRoot.empty());
@@ -845,7 +851,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         }
     }
 
-#ifdef ENABLE_FEATURE_RESTRICTION
+#if ENABLE_FEATURE_RESTRICTION
     Object::Ptr restrictionInfo = new Object();
     restrictionInfo->set("IsRestrictedUser", CommandControl::RestrictionManager::isRestrictedUser());
 
@@ -933,7 +939,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         // Only lock the document on storage for editing sessions
         // FIXME: why not lock before downloadStorageFileToLocal? Would also prevent race conditions
         if (!session->isReadOnly() &&
-            !_storage->updateLockState(session->getAuthorization(), *_lockCtx, true))
+            !_storage->updateLockState(session->getAuthorization(), *_lockCtx, true,
+                                       _currentStorageAttrs))
         {
             LOG_ERR("Failed to lock!");
             session->setLockFailed(_lockCtx->_lockFailureReason);
@@ -1140,7 +1147,8 @@ void DocumentBroker::endRenameFileCommand()
 
 bool DocumentBroker::attemptLock(const ClientSession& session, std::string& failReason)
 {
-    const bool bResult = _storage->updateLockState(session.getAuthorization(), *_lockCtx, true);
+    const bool bResult = _storage->updateLockState(session.getAuthorization(), *_lockCtx, true,
+                                                   _currentStorageAttrs);
     if (!bResult)
         failReason = _lockCtx->_lockFailureReason;
     return bResult;
@@ -1267,6 +1275,16 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     // Record that we got a response to avoid timing out on saving.
     _saveManager.setLastSaveResult(success || result == "unmodified");
 
+    if (success && !isAsyncUploading())
+    {
+        // Update the storage attributes to capture what's
+        // new and applies to this new version and reset.
+        // These are the attributes of the next version to be uploaded.
+        // Note: these are owned by us and this is thread-safe.
+        _currentStorageAttrs.merge(_nextStorageAttrs);
+        _nextStorageAttrs.reset();
+    }
+
     // The the clients know of any save failures.
     if (!success && result != "unmodified")
     {
@@ -1361,14 +1379,14 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
 {
     assertCorrectThread();
 
-    if (force && _storage)
+    if (force)
     {
-        _storage->forceSave();
+        // Don't reset the force flag if it was set
+        // (which would imply we failed to upload).
+        _currentStorageAttrs.setForced(force);
     }
 
-    if (force || _storageManager.lastUploadSuccessful() ||
-        (_storageManager.timeSinceLastUploadRequest() > std::chrono::seconds(5) &&
-         _storageManager.timeSinceLastUploadResponse() > std::chrono::seconds(5)))
+    if (force || _storageManager.lastUploadSuccessful() || _storageManager.canUploadNow())
     {
         constexpr bool isRename = false;
         uploadToStorageInternal(sessionId, /*saveAsPath*/ std::string(),
@@ -1382,7 +1400,8 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
     else
     {
         LOG_TRC("Last upload had failed and it's only been "
-                << _storageManager.timeSinceLastUploadResponse() << " since. ");
+                << _storageManager.timeSinceLastUploadResponse()
+                << " since. Min time between uploads: " << _storageManager.minTimeBetweenUploads());
     }
 }
 
@@ -1503,9 +1522,9 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId,
                 broadcastSaveResult(false, "Could not upload document to storage");
         }
 
-        //FIXME: flag the failure so we retry.
         LOG_WRN("Failed to upload [" << _docKey << "] asynchronously. "
                                      << DocumentState::toString(_docState.activity()));
+        _storageManager.setLastUploadResult(false);
 
         switch (_docState.activity())
         {
@@ -1530,7 +1549,8 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId,
     };
 
     _storage->uploadLocalFileToStorageAsync(session->getAuthorization(), *_lockCtx, saveAsPath,
-                                            saveAsFilename, isRename, *_poll, asyncUploadCallback);
+                                            saveAsFilename, isRename, _currentStorageAttrs, *_poll,
+                                            asyncUploadCallback);
 }
 
 void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResult& uploadResult)
@@ -1571,7 +1591,6 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         {
             // Saved and stored; update flags.
             _saveManager.setLastModifiedTime(_uploadRequest->newFileModifiedTime());
-            _storageManager.markLastUploadTime();
 
             // Save the storage timestamp.
             _storageManager.setLastModifiedTime(_storage->getFileInfo().getLastModifiedTime());
@@ -1581,6 +1600,9 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
 
             // After a successful save, we are sure that document in the storage is same as ours
             _documentChangedInStorage = false;
+
+            // Reset the storage attributes; They've been used and we can discard them.
+            _currentStorageAttrs.reset();
 
             LOG_DBG("Uploaded docKey ["
                     << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
@@ -1868,7 +1890,8 @@ void DocumentBroker::refreshLock()
     else
     {
         std::shared_ptr<ClientSession> session = it->second;
-        if (!session || !_storage->updateLockState(session->getAuthorization(), *_lockCtx, true))
+        if (!session || !_storage->updateLockState(session->getAuthorization(), *_lockCtx, true,
+                                                   _currentStorageAttrs))
             LOG_ERR("Failed to refresh lock");
     }
 }
@@ -1963,30 +1986,27 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
         static const std::chrono::milliseconds MaxIdleSaveDurationMs = std::chrono::seconds(
             COOLWSD::getConfigValue<int>("per_document.idlesave_duration_secs", 30));
 
-        // The configured maximum duration before saving. Zero to disable.
-        static const std::chrono::milliseconds MaxAutoSaveDurationMs = std::chrono::seconds(
-            COOLWSD::getConfigValue<int>("per_document.autosave_duration_secs", 300));
-
         const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         const std::chrono::milliseconds inactivityTimeMs
             = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime);
-        const auto timeSinceLastSaveMs = std::chrono::duration_cast<std::chrono::milliseconds>(
-            now - _storageManager.getLastUploadTime());
-        LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSaveMs
-                                                   << " and most recent activity was "
-                                                   << inactivityTimeMs << " ago.");
+        const auto timeSinceLastSave = std::min(_saveManager.timeSinceLastSaveRequest(),
+                                                _storageManager.timeSinceLastUploadResponse());
+        LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSave
+                                                     << " and most recent activity was "
+                                                     << inactivityTimeMs << " ago.");
 
         bool save = false;
         // Zero or negative config value disables save.
         // Either we've been idle long enough, or it's auto-save time.
-        if (MaxIdleSaveDurationMs > std::chrono::milliseconds::zero()
-            && inactivityTimeMs >= MaxIdleSaveDurationMs)
+        if (MaxIdleSaveDurationMs > std::chrono::milliseconds::zero() &&
+            inactivityTimeMs >= MaxIdleSaveDurationMs)
         {
             save = true;
         }
 
-        if (MaxAutoSaveDurationMs > std::chrono::milliseconds::zero()
-            && timeSinceLastSaveMs >= MaxAutoSaveDurationMs)
+        // Save if it's been long enough since the last save and/or upload.
+        if (_saveManager.isAutosaveEnabled() &&
+            timeSinceLastSave >= _saveManager.autosaveInterval())
         {
             save = true;
         }
@@ -2060,7 +2080,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     }
 
     // Don't hammer on saving.
-    if (!canStop && _saveManager.canSaveNow(std::chrono::milliseconds(500)))
+    if (!canStop && _saveManager.canSaveNow())
     {
         // Stop if there is nothing to save.
         const bool possiblyModified = isPossiblyModified();
@@ -2102,7 +2122,8 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         LOG_TRC("Too soon to issue another save on ["
                 << getDocKey() << "]: " << _saveManager.timeSinceLastSaveRequest()
                 << " since last save request and " << _saveManager.timeSinceLastSaveRequest()
-                << " since last save response");
+                << " since last save response. Min time between saves: "
+                << _saveManager.minTimeBetweenSaves());
     }
 
     if (canStop)
@@ -2127,14 +2148,15 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         // Invalidate the timestamp to force persisting.
         _saveManager.setLastModifiedTime(std::chrono::system_clock::time_point());
 
-        // We do not want save to terminate editing mode if we are in edit mode now
-
         std::ostringstream oss;
         // arguments init
         oss << '{';
 
         if (dontTerminateEdit)
         {
+            // We do not want save to terminate editing mode if we are in edit mode now.
+            //TODO: Perhaps we want to terminate if forced by the user,
+            // otherwise autosave doesn't terminate?
             oss << "\"DontTerminateEdit\":"
                    "{"
                    "\"type\":\"boolean\","
@@ -2157,15 +2179,13 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         // arguments end
         oss << '}';
 
-        if (_storage)
-        {
-            // If we can't upload, we will quarantine.
-            //FIXME: these must be tracked in DocBroker as they will
-            // get clobbered when uploading fails and we save again.
-            _storage->setIsAutosave(isAutosave || UnitWSD::get().isAutosave());
-            _storage->setIsExitSave(isExitSave);
-            _storage->setExtendedData(extendedData);
-        }
+        // At this point, if we have any potential modifications, we need to capture the fact.
+        _nextStorageAttrs.setUserModified(isModified() || haveModifyActivityAfterSaveRequest());
+
+        //FIXME: It's odd to capture these here, but this function is used from ClientSession too.
+        _nextStorageAttrs.setIsAutosave(isAutosave || UnitWSD::get().isAutosave());
+        _nextStorageAttrs.setIsExitSave(isExitSave);
+        _nextStorageAttrs.setExtendedData(extendedData);
 
         const std::string saveArgs = oss.str();
         LOG_TRC(".uno:Save arguments: " << saveArgs);
@@ -2402,7 +2422,8 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
             // Unlock the document, if last editable sessions, before we lose a token that can unlock.
             if (lastEditableSession && _lockCtx->_isLocked && _storage)
             {
-                if (!_storage->updateLockState(it->second->getAuthorization(), *_lockCtx, false))
+                if (!_storage->updateLockState(it->second->getAuthorization(), *_lockCtx, false,
+                                               _currentStorageAttrs))
                     LOG_ERR("Failed to unlock!");
             }
 
@@ -3127,13 +3148,6 @@ void DocumentBroker::setModified(const bool value)
     }
 #endif
 
-    if (value || _storageManager.lastUploadSuccessful())
-    {
-        // Set the X-COOL-WOPI-IsModifiedByUser header flag sent to storage.
-        // But retain the last value if we failed to upload, so we don't clobber it.
-        _storage->setUserModified(value);
-    }
-
     LOG_DBG("Modified state set to " << value << " for Doc [" << _docId << ']');
     _isModified = value;
 }
@@ -3148,7 +3162,7 @@ void DocumentBroker::setInitialSetting(const std::string& name)
     _isInitialStateSet.emplace(name);
 }
 
-bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string& message)
+bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string& message, bool binary)
 {
     assertCorrectThread();
 
@@ -3180,7 +3194,8 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
             msg += ' ' + tokens.cat(' ', 3);
         }
 
-        _childProcess->sendTextFrame(msg);
+        _childProcess->sendFrame(msg, binary);
+
         return true;
     }
 
@@ -3340,12 +3355,6 @@ void DocumentBroker::broadcastMessageToOthers(const std::string& message, const 
         if (sessionIt.second == _session) continue;
         sessionIt.second->sendTextFrame(message);
     }
-}
-
-void DocumentBroker::updateLastActivityTime()
-{
-    _lastActivityTime = std::chrono::steady_clock::now();
-    // posted to admin console in the main polling loop.
 }
 
 void DocumentBroker::processBatchUpdates()
@@ -3650,7 +3659,10 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  canSave: " << name(canSaveToDisk());
     os << "\n  canUpload: " << name(canUploadToStorage());
     os << "\n  needToUpload: " << name(needToUploadToStorage());
+    os << "\n  lastActivityTime: " << Util::getTimeForLog(now, _lastActivityTime);
     os << "\n  haveActivityAfterSaveRequest: " << haveActivityAfterSaveRequest();
+    os << "\n  lastModifyActivityTime: " << Util::getTimeForLog(now, _lastModifyActivityTime);
+    os << "\n  haveModifyActivityAfterSaveRequest: " << haveModifyActivityAfterSaveRequest();
     os << "\n  isViewFileExtension: " << _isViewFileExtension;
 
     if (_limitLifeSeconds > std::chrono::seconds::zero())
@@ -3670,6 +3682,11 @@ void DocumentBroker::dumpState(std::ostream& os)
 
     os << "\n  StorageManager:";
     _storageManager.dumpState(os, "\n    ");
+
+    os << "\n    Current StorageAttributes:";
+    _currentStorageAttrs.dumpState(os, "\n      ");
+    os << "\n    Next StorageAttributes:";
+    _nextStorageAttrs.dumpState(os, "\n      ");
 
     _lockCtx->dumpState(os);
 

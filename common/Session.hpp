@@ -340,7 +340,7 @@ private:
     /// The form factor of the device where the client is running: desktop, tablet, mobile.
     std::string _deviceFormFactor;
 
-    /// The start value of Auto Spell Checking wheter it is enabled or disabled on start.
+    /// The start value of Auto Spell Checking whether it is enabled or disabled on start.
     std::string _spellOnline;
 
     /// Disable dialogs interactivity.

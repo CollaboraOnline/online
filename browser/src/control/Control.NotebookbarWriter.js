@@ -165,18 +165,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 		if (hasGroupedDownloadAs) {
 			content.push({
-				'id': 'downloadas-container',
-				'type': 'container',
-				'text': '',
-				'enabled': 'true',
-				'children': [
-					{
-						'id': 'downloadas',
-						'type': 'menubartoolitem',
-						'text': _('Download'),
-						'command': '.uno:InsertGraphic'
-					}
-				]
+				'id': 'downloadas',
+				'type': 'bigmenubartoolitem',
+				'text': _('Download')
 			});
 		} else {
 			content = content.concat([
@@ -269,6 +260,18 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			});
 		}
+
+		content.push({
+			'type': 'container',
+			'children': [
+				{
+					'id': 'properties',
+					'type': 'bigtoolitem',
+					'text': _('Properties'),
+					'command': '.uno:SetDocumentProperties'
+				}
+			]
+		});
 
 		return this.getTabPage('File', content);
 	},
@@ -1512,6 +1515,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:LanguageMenu'),
 				'command': '.uno:LanguageMenu'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Translate'),
+				'command': '.uno:Translate'
 			},
 			{
 				'type': 'container',

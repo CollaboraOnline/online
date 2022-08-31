@@ -1715,16 +1715,10 @@ public:
                     {
                         bool broadcast = false;
                         int viewId = -1;
-                        int exceptViewId = -1;
 
                         const std::string& target = tokens[1];
                         if (target == "all")
                         {
-                            broadcast = true;
-                        }
-                        else if (COOLProtocol::matchPrefix("except-", target))
-                        {
-                            exceptViewId = std::stoi(target.substr(7));
                             broadcast = true;
                         }
                         else
@@ -1747,8 +1741,7 @@ public:
                                 continue;
 
                             ChildSession& session = *it.second;
-                            if ((broadcast && (session.getViewId() != exceptViewId))
-                                || (!broadcast && (session.getViewId() == viewId)))
+                            if (broadcast || (!broadcast && (session.getViewId() == viewId)))
                             {
                                 if (!session.isCloseFrame())
                                 {
@@ -1966,7 +1959,7 @@ private:
     bool _inputProcessingEnabled;
 };
 
-#if !defined BUILDING_TESTS && !MOBILEAPP
+#if !defined BUILDING_TESTS && !MOBILEAPP && !LIBFUZZER
 
 // When building the fuzzer we link COOLWSD.cpp into the same executable so the
 // Protected::emitOneRecording() there gets used. When building the unit tests the one in
@@ -2288,7 +2281,7 @@ public:
 protected:
     void handleMessage(const std::vector<char>& data) override
     {
-        // To get A LOT of Trace Events, to exercide their handling, uncomment this:
+        // To get A LOT of Trace Events, to exercise their handling, uncomment this:
         // ProfileZone profileZone("KitWebSocketHandler::handleMessage");
 
         std::string message(data.data(), data.size());

@@ -43,6 +43,7 @@ class ScrollSection {
 	map: any;
 	autoScrollTimer: any;
 	pendingScrollEvent: any = null;
+	stepByStepScrolling: boolean = false; // quick scroll will move "page up/down" not "jump to"
 
 	constructor () {
 		this.name = L.CSections.Scroll.name;
@@ -72,8 +73,13 @@ class ScrollSection {
 		this.sectionProperties.previousDragDistance = null;
 
 		this.sectionProperties.usableThickness = 20 * app.roundedDpiScale;
-		this.sectionProperties.scrollBarThickness = 12 * app.roundedDpiScale;
-		this.sectionProperties.edgeOffset = 10 * app.roundedDpiScale;
+		this.sectionProperties.scrollBarThickness = 6 * app.roundedDpiScale;
+		this.sectionProperties.edgeOffset = 0;
+
+		this.sectionProperties.drawScrollBarRailway = true;
+		this.sectionProperties.scrollBarRailwayThickness = 12 * app.roundedDpiScale;
+		this.sectionProperties.scrollBarRailwayAlpha = this.map._docLayer._docType === 'spreadsheet' ? 1.0 : 0.5;
+		this.sectionProperties.scrollBarRailwayColor = '#EFEFEF';
 
 		this.sectionProperties.drawVerticalScrollBar = ((<any>window).mode.isDesktop() ? true: false);
 		this.sectionProperties.drawHorizontalScrollBar = ((<any>window).mode.isDesktop() ? true: false);
@@ -95,7 +101,7 @@ class ScrollSection {
 		this.sectionProperties.currentAlpha = 1.0; // This variable will be updated while animating. When not animating, this will be equal to one of the above variables.
 
 		// Durations.
-		this.sectionProperties.idleDuration = 2000; // In miliseconds. Scroll bar will be visible for this period of time after being used.
+		this.sectionProperties.idleDuration = 2000; // In milliseconds. Scroll bar will be visible for this period of time after being used.
 		this.sectionProperties.fadeOutStartingTime = 1800; // After this period, scroll bar starts to disappear. This duration is included in "idleDuration".
 		this.sectionProperties.fadeOutDuration = this.sectionProperties.idleDuration - this.sectionProperties.fadeOutStartingTime;
 
@@ -110,6 +116,10 @@ class ScrollSection {
 		this.sectionProperties.pointerSyncWithVerticalScrollBar = true;
 		this.sectionProperties.pointerSyncWithHorizontalScrollBar = true;
 		this.sectionProperties.pointerReCaptureSpacer = null; // Clicked point of the scroll bar.
+
+		// Step by step scrolling interval in ms
+		this.sectionProperties.stepDuration = 50;
+		this.sectionProperties.quickScrollHorizontalTimer = null;
 	}
 
 	public completePendingScroll() {
@@ -267,7 +277,9 @@ class ScrollSection {
 		}
 
 		result.ratio = app.view.size.pixels[1] / result.scrollLength; // 1px scrolling = xpx document height.
-		result.startY = Math.round(this.documentTopLeft[1] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.yOffset);
+		result.startY = Math.round(this.documentTopLeft[1] / result.ratio + this.sectionProperties.yOffset);
+
+		result.verticalScrollStep = this.size[1] / 2;
 
 		return result;
 	}
@@ -330,7 +342,9 @@ class ScrollSection {
 		}
 
 		result.ratio = app.view.size.pixels[0] / result.scrollLength;
-		result.startX = Math.round(this.documentTopLeft[0] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.xOffset);
+		result.startX = Math.round(this.documentTopLeft[0] / result.ratio + this.sectionProperties.xOffset);
+
+		result.horizontalScrollStep = this.size[0] / 2;
 
 		return result;
 	}
@@ -393,14 +407,27 @@ class ScrollSection {
 	private drawVerticalScrollBar () {
 		var scrollProps: any = this.getVerticalScrollProperties();
 
-		if (this.sectionProperties.animatingVerticalScrollBar)
+		var startX = this.isCalcRTL() ? this.sectionProperties.edgeOffset : this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
+
+		if (this.sectionProperties.drawScrollBarRailway) {
+			this.context.globalAlpha = this.sectionProperties.scrollBarRailwayAlpha;
+			this.context.fillStyle = this.sectionProperties.scrollBarRailwayColor;
+			this.context.fillRect(
+				startX,
+				this.sectionProperties.yMin + this.sectionProperties.yOffset,
+				this.sectionProperties.scrollBarRailwayThickness,
+				this.sectionProperties.yMax - this.sectionProperties.yMin - this.sectionProperties.yOffset
+			);
+		}
+
+		if (this.sectionProperties.animatingVerticalScrollBar) {
 			this.context.globalAlpha = this.sectionProperties.currentAlpha;
-		else
+		} else {
 			this.context.globalAlpha = this.sectionProperties.clickScrollVertical ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
+		}
 
 		this.context.fillStyle = '#7E8182';
 
-		var startX = this.isCalcRTL() ? this.sectionProperties.edgeOffset : this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
 
 		this.context.fillRect(startX, scrollProps.startY, this.sectionProperties.scrollBarThickness, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness);
 
@@ -423,6 +450,23 @@ class ScrollSection {
 	private drawHorizontalScrollBar () {
 		var scrollProps: any = this.getHorizontalScrollProperties();
 
+		var startY = this.size[1] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
+
+		const sizeX = scrollProps.scrollSize - this.sectionProperties.scrollBarThickness;
+		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
+		const startX = this.isCalcRTL() ? docWidth - scrollProps.startX - sizeX : scrollProps.startX;
+
+		if (this.sectionProperties.drawScrollBarRailway) {
+			this.context.globalAlpha = this.sectionProperties.scrollBarRailwayAlpha;
+			this.context.fillStyle = this.sectionProperties.scrollBarRailwayColor;
+			this.context.fillRect(
+				this.sectionProperties.xMin + this.sectionProperties.xOffset,
+				startY,
+				this.sectionProperties.xMax - this.sectionProperties.xMin - this.sectionProperties.xOffset,
+				this.sectionProperties.scrollBarRailwayThickness
+			);
+		}
+
 		if (this.sectionProperties.animatingHorizontalScrollBar)
 			this.context.globalAlpha = this.sectionProperties.currentAlpha;
 		else
@@ -430,11 +474,6 @@ class ScrollSection {
 
 		this.context.fillStyle = '#7E8182';
 
-		var startY = this.size[1] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
-
-		const sizeX = scrollProps.scrollSize - this.sectionProperties.scrollBarThickness;
-		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
-		const startX = this.isCalcRTL() ? docWidth - scrollProps.startX - sizeX : scrollProps.startX;
 
 		this.context.fillRect(startX, startY, sizeX, this.sectionProperties.scrollBarThickness);
 
@@ -772,14 +811,31 @@ class ScrollSection {
 		When user presses the button while the mouse pointer is on the railway of the scroll bar but not on the scroll bar directly,
 		we quickly scroll the document to that position.
 	*/
-	private quickScrollVertical (point: Array<number>) {
+	private quickScrollVertical (point: Array<number>, originalSign?: number) {
 		// Desktop only for now.
 		if (!(<any>window).mode.isDesktop())
 			return;
 
 		var props = this.getVerticalScrollProperties();
 		var midY = (props.startY + props.startY + props.scrollSize - this.sectionProperties.scrollBarThickness) * 0.5;
-		var offset = Math.round((point[1] - midY) * props.ratio);
+
+		if (this.stepByStepScrolling) {
+			var sign = (point[1] - (props.startY + props.scrollSize)) > 0
+				? 1 : ((point[1] - props.startY) < 0 ? -1 : 0);
+			var offset = props.verticalScrollStep * sign;
+
+			if (this.sectionProperties.quickScrollVerticalTimer)
+				clearTimeout(this.sectionProperties.quickScrollVerticalTimer);
+			if (this.sectionProperties.clickScrollVertical)
+				this.sectionProperties.quickScrollVerticalTimer = setTimeout(() => {
+					if (!originalSign || originalSign === sign) {
+						this.quickScrollVertical(point, sign);
+					}
+				}, this.sectionProperties.stepDuration);
+		} else {
+			offset = Math.round((point[1] - midY) * props.ratio);
+		}
+
 		this.scrollVerticalWithOffset(offset);
 	}
 
@@ -787,7 +843,7 @@ class ScrollSection {
 		When user presses the button while the mouse pointer is on the railway of the scroll bar but not on the scroll bar directly,
 		we quickly scroll the document to that position.
 	*/
-	private quickScrollHorizontal (point: Array<number>) {
+	private quickScrollHorizontal (point: Array<number>, originalSign?: number) {
 		// Desktop only for now.
 		if (!(<any>window).mode.isDesktop())
 			return;
@@ -797,7 +853,24 @@ class ScrollSection {
 		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
 		const startX = this.isCalcRTL() ? docWidth - props.startX - sizeX : props.startX;
 		var midX = startX + sizeX * 0.5;
-		var offset = Math.round((point[0] - midX) * props.ratio);
+
+		if (this.stepByStepScrolling) {
+			var sign = (point[0] - (startX + sizeX)) > 0
+				? 1 : ((point[0] - startX) < 0 ? -1 : 0);
+			var offset = props.horizontalScrollStep * sign;
+
+			if (this.sectionProperties.quickScrollHorizontalTimer)
+				clearTimeout(this.sectionProperties.quickScrollHorizontalTimer);
+			if (this.sectionProperties.clickScrollHorizontal)
+				this.sectionProperties.quickScrollHorizontalTimer = setTimeout(() => {
+					if (!originalSign || originalSign === sign) {
+						this.quickScrollHorizontal(point, sign);
+					}
+				}, this.sectionProperties.stepDuration);
+		} else {
+			offset = Math.round((point[0] - midX) * props.ratio);
+		}
+
 		this.scrollHorizontalWithOffset(offset);
 	}
 
@@ -811,7 +884,19 @@ class ScrollSection {
 		return point[0] - props.startX;
 	}
 
+	private clearQuickScrollTimeout() {
+		if (this.sectionProperties.quickScrollVerticalTimer) {
+			clearTimeout(this.sectionProperties.quickScrollVerticalTimer);
+			this.sectionProperties.quickScrollVerticalTimer = null;
+		}
+		if (this.sectionProperties.quickScrollHorizontalTimer) {
+			clearTimeout(this.sectionProperties.quickScrollHorizontalTimer);
+			this.sectionProperties.quickScrollHorizontalTimer = null;
+		}
+	}
+
 	public onMouseDown (point: Array<number>, e: MouseEvent) {
+		this.clearQuickScrollTimeout();
 		this.onMouseMove(point, null, e);
 		this.isMouseOnScrollBar(point);
 
@@ -860,6 +945,8 @@ class ScrollSection {
 
 	public onMouseUp (point: Array<number>, e: MouseEvent) {
 		this.map.scrollingIsHandled = false;
+		this.clearQuickScrollTimeout();
+
 		if (this.sectionProperties.clickScrollVertical) {
 			e.stopPropagation(); // Don't propagate to map.
 			this.stopPropagating(); // Don't propagate to bound sections.
