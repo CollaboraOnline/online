@@ -17,6 +17,7 @@ export ENABLE_DEBUG
 bin_PROGRAMS = \
 	coolforkit \
 	coolmount \
+        coolstress \
 	coolconvert coolconfig
 
 if ENABLE_LIBFUZZER
@@ -31,6 +32,7 @@ man_MANS = man/coolwsd.1 \
            man/coolforkit.1 \
            man/coolconvert.1 \
            man/coolconfig.1 \
+           man/coolstress.1 \
            man/coolwsd-systemplate-setup.1 \
            man/coolwsd-generate-proof-key.1 \
            man/coolmount.1
@@ -144,7 +146,6 @@ noinst_PROGRAMS = clientnb \
                   connect \
                   lokitclient \
                   coolmap \
-                  coolstress \
                   coolsocketdump
 
 if ENABLE_LIBFUZZER
