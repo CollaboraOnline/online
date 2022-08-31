@@ -1044,6 +1044,12 @@ bool ChildSession::downloadAs(const StringVector& tokens)
         }
     }
 
+    if (filterOptions.empty() && format == "html")
+    {
+        // Opt-in to avoid linked images, those would not leave the chroot.
+        filterOptions = "EmbedImages";
+    }
+
     // Hack pass watermark by filteroptions to saveas
     if ( getWatermarkText().length() > 0) {
         filterOptions += std::string(",Watermark=") + getWatermarkText() + std::string("WATERMARKEND");
