@@ -182,11 +182,11 @@ function doZoom(zoomIn) {
 		});
 
 	if (zoomIn) {
-		cy.get('.w2ui-tb-image.w2ui-icon.zoomin')
-			.click();
+		cy.get('.w2ui-tb-image.w2ui-icon.zoomin').click({force: true});
+		cy.wait(500);
 	} else {
-		cy.get('.w2ui-tb-image.w2ui-icon.zoomout')
-			.click();
+		cy.get('.w2ui-tb-image.w2ui-icon.zoomout').click({force: true});
+		cy.wait(500);
 	}
 
 	cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')
