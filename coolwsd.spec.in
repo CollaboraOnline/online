@@ -110,6 +110,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 /usr/bin/coolconvert
 /usr/bin/coolconfig
 /usr/bin/loolconfig
+/usr/bin/coolstress
 /usr/bin/coolmount
 /usr/share/coolwsd/discovery.xml
 /usr/share/coolwsd/favicon.ico
@@ -123,6 +124,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 /usr/share/man/man1/coolforkit.1.gz
 /usr/share/man/man1/coolconvert.1.gz
 /usr/share/man/man1/coolconfig.1.gz
+/usr/share/man/man1/coolstress.1.gz
 /usr/share/man/man1/coolwsd-systemplate-setup.1.gz
 /usr/share/man/man1/coolwsd-generate-proof-key.1.gz
 /usr/share/man/man1/coolmount.1.gz
