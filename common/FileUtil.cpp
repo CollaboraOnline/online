@@ -466,25 +466,32 @@ namespace FileUtil
     std::string checkDiskSpaceOnRegisteredFileSystems(const bool cacheLastCheck)
     {
         static std::chrono::steady_clock::time_point lastCheck;
+        static std::string lastResult;
         std::chrono::steady_clock::time_point now(std::chrono::steady_clock::now());
 
         std::lock_guard<std::mutex> lock(fsmutex);
 
-        // Don't check more often than once a minute
-        if (std::chrono::duration_cast<std::chrono::seconds>(now - lastCheck).count() < 60)
-            return std::string();
-
         if (cacheLastCheck)
+        {
+            // Don't check more often than once a minute
+            if (std::chrono::duration_cast<std::chrono::seconds>(now - lastCheck).count() < 60)
+                return lastResult;
+
             lastCheck = now;
+        }
 
         for (const auto& i: filesystems)
         {
             if (!checkDiskSpace(i.getPath()))
             {
+                if (cacheLastCheck)
+                    lastResult = i.getPath();
                 return i.getPath();
             }
         }
 
+        if (cacheLastCheck)
+            lastResult = std::string();
         return std::string();
     }
 #endif
