@@ -1159,6 +1159,32 @@ void AdminModel::getMetrics(std::ostringstream &oss)
     oss << "error_unauthorized_request " << UnauthorizedRequestException::count << "\n";
     oss << "error_service_unavailable " << ServiceUnavailableException::count << "\n";
     oss << "error_parse_error " << ParseError::count << "\n";
+    oss << std::endl;
+
+    int tick_per_sec = sysconf(_SC_CLK_TCK);
+    // dump document data
+    for (const auto& it : _documents)
+    {
+        const Document &doc = *it.second;
+        std::string suffix = "{pid=" + std::to_string(doc.getPid()) + "} ";
+        oss << "doc_host" << suffix << "= \"" << doc.getHostName() << "\"\n";
+        oss << "doc_key" << suffix << "= \"" << doc.getDocKey() << "\"\n"; // often WOPISrc
+
+        std::string encodedFilename;
+        Poco::URI::encode(doc.getFilename(), " ", encodedFilename);
+        oss << "doc_filename" << suffix << "= \"" << encodedFilename << "\"\n";
+
+        oss << "doc_views" << suffix << doc.getViews().size() << "\n";
+        oss << "doc_views_active" << suffix << doc.getActiveViews() << "\n";
+        oss << "doc_is_modified" << suffix << doc.getModifiedStatus() << "\n";
+        oss << "doc_memory_used_bytes" << suffix << doc.getMemoryDirty() << "\n";
+        oss << "doc_cpu_used_seconds" << suffix << ((double)doc.getLastJiffies()/tick_per_sec) << "\n";
+        oss << "doc_open_time_seconds" << suffix << doc.getOpenTime() << "\n";
+        oss << "doc_idle_time_seconds" << suffix << doc.getIdleTime() << "\n";
+        oss << "doc_download_time_seconds" << suffix << ((double)doc.getWopiDownloadDuration().count() / 1000) << "\n";
+        oss << "doc_upload_time_seconds" << suffix << ((double)doc.getWopiUploadDuration().count() / 1000) << "\n";
+        oss << std::endl;
+    }
 }
 
 std::set<pid_t> AdminModel::getDocumentPids() const

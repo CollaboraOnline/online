@@ -171,3 +171,15 @@ SELECTED ERRORS - all integer counts
     error_unauthorized_request - an authorization exception usually on CheckFileInfo
     error_service_unavailable - internal error, service is unavailable
     error_parse_error - badly formed data provided for us to parse.
+
+PER DOCUMENT DETAILS - suffixed by {pid=<pid>} for each document:
+
+    doc_host - host this document was fetched from
+    doc_key - key often WOPISrc used to fetch the document
+    doc_active_views - number of views/users currently
+    doc_is_modified - is the document modified, or not ie. saved/readonly
+    doc_memory_used_bytes - bytes of memory dirtied by this process
+    doc_cpu_used_seconds - number of seconds of CPU time used
+    doc_open_time_seconds - time since the document was first opened
+    doc_download_time_seconds - how long it took to download the doc
+    doc_upload_time_seconds - how long it last took to up-load the doc or 0 if unsaved.

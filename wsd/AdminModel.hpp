@@ -185,7 +185,7 @@ public:
 
     unsigned getActiveViews() const { return _activeViews; }
 
-    unsigned getLastJiffies() const { return _lastJiffy; }
+    size_t getLastJiffies() const { return _lastJiffy; }
     void setLastJiffies(size_t newJ);
     unsigned getLastCpuPercentage(){ return _lastCpuPercentage; }
 
@@ -240,7 +240,7 @@ private:
     /// The dirty (ie. un-shared) memory of the document's Kit process.
     size_t _memoryDirty;
     /// Last noted Jiffy count
-    unsigned _lastJiffy;
+    size_t _lastJiffy;
     std::chrono::steady_clock::time_point _lastJiffyTime;
     unsigned _lastCpuPercentage;
 
