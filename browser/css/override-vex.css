@@ -91,7 +91,7 @@
 	justify-content: space-between;
 }
 .vex-content.vex-3btns .vex-dialog-buttons > button:not(.button-secondary) {
-	flex: 1;
+	flex: 1 auto;
 }
 .vex.vex-theme-plain .vex-content,
 .vex-dialog-message {
