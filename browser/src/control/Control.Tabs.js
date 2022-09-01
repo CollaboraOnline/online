@@ -302,8 +302,8 @@ L.Control.Tabs = L.Control.extend({
 		vex.dialog.confirm({
 			message: _('Are you sure you want to delete sheet, %sheet%?').replace('%sheet%', $('#spreadsheet-tab' + this._tabForContextMenu).text()),
 			buttons: [
-				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
-				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
+				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
+				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') })
 			],
 			callback: function(data) {
 				if (data) {
@@ -320,8 +320,8 @@ L.Control.Tabs = L.Control.extend({
 			contentClassName: 'vex-has-inputs',
 			message: _('Enter new sheet name'),
 			buttons: [
-				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
-				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
+				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
+				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') })
 			],
 			input: '<input name="sheetname" id="rename-calc-sheet-modal" type="text" value="' + $('#spreadsheet-tab' + this._tabForContextMenu).text() + '" required />',
 			afterOpen: function() { document.getElementById('rename-calc-sheet-modal').select(); },

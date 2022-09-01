@@ -1758,8 +1758,8 @@ L.Control.Menubar = L.Control.extend({
 			vex.dialog.open({
 				message: msg,
 				buttons: [
-					$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
-					$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
+					$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
+					$.extend({}, vex.dialog.buttons.YES, { text: _('OK') })
 				],
 				callback: function(e) {
 					if (e === true) {

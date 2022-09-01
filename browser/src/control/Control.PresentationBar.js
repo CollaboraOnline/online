@@ -106,8 +106,8 @@ L.Control.PresentationBar = L.Control.extend({
 			vex.dialog.confirm({
 				message: msg,
 				buttons: [
+					$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
 					$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
-					$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
 				],
 				callback: this.onDelete.bind(this)
 			});
