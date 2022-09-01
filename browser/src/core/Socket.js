@@ -1040,8 +1040,8 @@ app.definitions.Socket = L.Class.extend({
 					message: msg,
 					input: '<input name="password" type="password" required />',
 					buttons: [
-						$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
-						$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
+						$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
+						$.extend({}, vex.dialog.buttons.YES, { text: _('OK') })
 					],
 					callback: L.bind(function(data) {
 						if (data) {

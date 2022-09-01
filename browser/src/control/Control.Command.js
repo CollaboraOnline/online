@@ -89,8 +89,8 @@ L.Map.include({
 					window.open(that.Locking.unlockLink, '_blank');
 			},
 			buttons: [
-				$.extend({}, vex.dialog.buttons.YES, { text: _('Unlock') }),
-				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
+				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
+				$.extend({}, vex.dialog.buttons.YES, { text: _('Unlock') })
 			]
 		});
 
