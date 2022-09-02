@@ -50,16 +50,25 @@ namespace LOKitHelper
         const auto type = static_cast<LibreOfficeKitDocumentType>(loKitDocument->pClass->getDocumentType(loKitDocument));
 
         const int parts = loKitDocument->pClass->getParts(loKitDocument);
+        const int part = loKitDocument->pClass->getPart(loKitDocument);
         std::ostringstream oss;
         oss << "type=" << documentTypeToString(type)
             << " parts=" << parts
-            << " current=" << loKitDocument->pClass->getPart(loKitDocument);
+            << " current=" << part;
 
         long width, height;
         loKitDocument->pClass->getDocumentSize(loKitDocument, &width, &height);
         oss << " width=" << width
             << " height=" << height
             << " viewid=" << loKitDocument->pClass->getView(loKitDocument);
+
+        if (type == LOK_DOCTYPE_SPREADSHEET)
+        {
+            long lastColumn, lastRow;
+            loKitDocument->pClass->getDataArea(loKitDocument, part, &lastColumn, &lastRow);
+            oss << " lastcolumn=" << lastColumn
+                << " lastrow=" << lastRow;
+        }
 
         if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION || type == LOK_DOCTYPE_DRAWING)
         {
