@@ -251,15 +251,13 @@ void Session::handleMessage(const std::vector<char> &data)
     }
     catch (const Exception& exc)
     {
-        LOG_ERR("Session::handleInput: Exception while handling [" <<
-                getAbbreviatedMessage(data) <<
-                "] in " << getName() << ": " << exc.displayText() <<
-                (exc.nested() ? " (" + exc.nested()->displayText() + ')' : ""));
+        LOG_ERR("Exception while handling ["
+                << getAbbreviatedMessage(data) << "] in " << getName() << ": " << exc.displayText()
+                << (exc.nested() ? " (" + exc.nested()->displayText() + ')' : ""));
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("Session::handleInput: Exception while handling [" <<
-                getAbbreviatedMessage(data) << "]: " << exc.what());
+        LOG_ERR("Exception while handling [" << getAbbreviatedMessage(data) << "]: " << exc.what());
     }
 }
 
