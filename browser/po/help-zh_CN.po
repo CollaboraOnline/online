@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-04 14:31+0200\n"
-"PO-Revision-Date: 2022-06-12 09:21+0000\n"
-"Last-Translator: Eric <alchemillatruth@purelymail.com>\n"
+"PO-Revision-Date: 2022-09-03 10:18+0000\n"
+"Last-Translator: Jason Clermont <lunme1008@gmail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/help/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1005,33 +1005,33 @@ msgstr "在列表中插入无编号的新段落。如果光标在列表末尾则
 
 #: html/cool-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "在表格中导航"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "将光标移动到工作表中的第一个单元格 (A1)。"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "将光标移至工作表上包含数据的最后一个单元格。"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:134-18
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "将光标移到当前行的第一个单元格。"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:135-18
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "将光标移到当前行的最后一个单元格。"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:136-18
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
-msgstr ""
+msgstr "选择本行中第一个单元格到当前单元格。"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
-msgstr ""
+msgstr "选择从当前单元格到当前行的最后一个单元格。"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
