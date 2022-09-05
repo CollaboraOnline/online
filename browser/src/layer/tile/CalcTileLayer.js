@@ -81,6 +81,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._cellCursorXY = new L.Point(-1, -1);
 		this._gotFirstCellCursor = false;
 		this._sheetSwitch = new L.SheetSwitchViewRestore(map);
+		this._lastColumn = 0; // with data
+		this._lastRow = 0; // with data
 		this.requestCellCursor();
 	},
 
@@ -279,6 +281,26 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var newDocWidth = Math.min(maxDocSize.x, this._docWidthTwips);
 		var newDocHeight = Math.min(maxDocSize.y, this._docHeightTwips);
 
+		var mapPosX = this._map._getTopLeftPoint().x;
+		var mapPosY = this._map._getTopLeftPoint().y;
+		var mapSize = this._map.getSize();
+
+		var lastCellPixel = this.sheetGeometry.getCellRect(this._lastColumn, this._lastRow);
+		var isCalcRTL = this._map._docLayer.isCalcRTL();
+		lastCellPixel = isCalcRTL ? lastCellPixel.getBottomRight() : lastCellPixel.getBottomLeft();
+		var lastCellTwips = this._corePixelsToTwips(lastCellPixel);
+		var mapSizeTwips = this._corePixelsToTwips(mapSize);
+
+		var limitWidth = mapPosX + mapSize.x < lastCellPixel.x;
+		var limitHeight = mapPosY + mapSize.y < lastCellPixel.y;
+
+		// limit to data area only (and map size for margin)
+		if (limitWidth)
+			newDocWidth = Math.min(lastCellTwips.x + mapSizeTwips.x, newDocWidth);
+
+		if (limitHeight)
+			newDocHeight = Math.min(lastCellTwips.y + mapSizeTwips.y, newDocHeight);
+
 		var shouldRestrict = (newDocWidth !== this._docWidthTwips ||
 				newDocHeight !== this._docHeightTwips);
 
@@ -302,6 +324,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
 
 		this._map.fire('scrolllimits', newSizePx.clone());
+
+		if (limitWidth || limitHeight)
+			this._painter._sectionContainer.requestReDraw();
 	},
 
 	_getCursorPosSize: function () {
@@ -331,6 +356,13 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		};
 	},
 
+	/// take into account only data area to reduce scrollbar range
+	updateScollLimit: function () {
+		if (this.sheetGeometry && this._lastColumn && this._lastRow) {
+			this._restrictDocumentSize();
+		}
+	},
+
 	_onStatusMsg: function (textMsg) {
 		console.log('DEBUG: onStatusMsg: ' + textMsg);
 		var command = app.socket.parseServerCmd(textMsg);
@@ -338,6 +370,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			var firstSelectedPart = (typeof this._selectedPart !== 'number');
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
+			this._lastColumn = command.lastcolumn;
+			this._lastRow = command.lastrow;
 			app.file.size.twips = [this._docWidthTwips, this._docHeightTwips];
 			app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
 			app.view.size.pixels = app.file.size.pixels.slice();
