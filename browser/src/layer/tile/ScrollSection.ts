@@ -350,8 +350,10 @@ class ScrollSection {
 	}
 
 	public onUpdateScrollOffset () {
-		if (this.map._docLayer._docType === 'spreadsheet')
+		if (this.map._docLayer._docType === 'spreadsheet') {
 			this.map._docLayer.refreshViewData();
+			this.map._docLayer.updateScollLimit();
+		}
 	}
 
 	private DrawVerticalScrollBarMobile () {

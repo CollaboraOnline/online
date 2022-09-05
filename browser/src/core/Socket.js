@@ -1717,6 +1717,12 @@ app.definitions.Socket = L.Class.extend({
 					return [parseInt(element[0]), parseInt(element[1]), parseInt(element[2]), parseInt(element[3])];
 				});
 			}
+			else if (tokens[i].startsWith('lastcolumn=')) {
+				command.lastcolumn = parseInt(tokens[i].substring(11));
+			}
+			else if (tokens[i].startsWith('lastrow=')) {
+				command.lastrow = parseInt(tokens[i].substring(8));
+			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
 			var defaultZoom = this._map.options.zoom;
