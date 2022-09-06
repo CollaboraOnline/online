@@ -401,8 +401,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		data.command = data.id;
 
 		var isDownloadAsGroup = data.id === 'downloadas';
+		var isSaveAsGroup = data.id === 'saveas';
 		var options = {};
-		if (isDownloadAsGroup) {
+		if (isDownloadAsGroup || isSaveAsGroup) {
 			options.hasDropdownArrow = true;
 		}
 
@@ -411,15 +412,15 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).unbind('click.toolbutton');
 		if (!builder.map.isLockedItem(data)) {
 			$(control.container).click(function () {
-				if (!isDownloadAsGroup) {
+				if (!isDownloadAsGroup && !isSaveAsGroup) {
 					L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
 					return;
 				}
 
-				var downloadasSubmenuOpts = builder._getDownloadAsSubmenuOpts(builder.options.map._docLayer._docType);
+				var submenuOpts = builder._getSubmenuOpts(builder.options.map._docLayer._docType, data.id, builder);
 
 				$(control.container).w2menu({
-					items: downloadasSubmenuOpts,
+					items: submenuOpts,
 					onSelect: function (event) {
 						L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: event.item.id});
 					}
@@ -448,6 +449,15 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		builder.options.noLabelsForUnoButtons = noLabels;
 
 		return false;
+	},
+
+	_getSubmenuOpts: function(docType, id, builder) {
+		switch (id) {
+		case 'downloadas':
+			return builder._getDownloadAsSubmenuOpts(docType);
+		case 'saveas':
+			return builder._getSaveAsSubmenuOpts(docType);
+		}
 	},
 
 	_getDownloadAsSubmenuOpts: function(docType) {
@@ -524,6 +534,67 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				{
 					'id': 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)')
+				}
+			];
+		}
+
+		submenuOpts.forEach(function mapIconToItem(menuItem) {
+			menuItem.icon = menuItem.id + '-submenu-icon';
+		});
+
+		return submenuOpts;
+	},
+
+	_getSaveAsSubmenuOpts: function(docType) {
+		var submenuOpts = [];
+
+		if (docType === 'text') {
+			submenuOpts = [
+				{
+					'id': 'saveas-odt',
+					'text': _('ODF text document (.odt)')
+				},
+				{
+					'id': 'saveas-rtf',
+					'text': _('Rich Text (.rtf)')
+				},
+				{
+					'id': 'saveas-docx',
+					'text': _('Word Document (.docx)')
+				},
+				{
+					'id': 'saveas-doc',
+					'text': _('Word 2003 Document (.doc)')
+				}
+			];
+		} else if (docType === 'spreadsheet') {
+			submenuOpts = [
+				{
+					'id': 'saveas-ods',
+					'text': _('ODF spreadsheet (.ods)')
+				},
+				{
+					'id': 'saveas-xlsx',
+					'text': _('Excel Spreadsheet (.xlsx)')
+				},
+				{
+					'id': 'saveas-xls',
+					'text': _('Excel 2003 Spreadsheet (.xls)')
+				}
+			];
+		} else if (docType === 'presentation') {
+			submenuOpts = [
+				{
+					'id': 'saveas-odp',
+					'text': _('ODF presentation (.odp)')
+				},
+				{
+					'id': 'saveas-pptx',
+					'text': _('PowerPoint Presentation (.pptx)')
+				},
+				{
+					'id': 'saveas-ppt',
+					'text': _('PowerPoint 2003 Presentation (.ppt)')
 				}
 			];
 		}

@@ -752,9 +752,9 @@ L.Map.include({
 		var map = this;
 		map.fire('postMessage', {msgId: 'UI_Share'});
 	},
-	openSaveAs: function () {
+	openSaveAs: function (format) {
 		var map = this;
-		map.fire('postMessage', {msgId: 'UI_SaveAs'});
+		map.fire('postMessage', {msgId: 'UI_SaveAs', args: {format: format}});
 	},
 
 	formulabarBlur: function() {
