@@ -174,8 +174,10 @@ SELECTED ERRORS - all integer counts
 
 PER DOCUMENT DETAILS - suffixed by {pid=<pid>} for each document:
 
-    doc_host - host this document was fetched from
-    doc_key - key often WOPISrc used to fetch the document
+    doc_pid - define the pid of the related document with these labels:
+        host= - host this document was fetched from
+        key= - key often WOPISrc used to fetch the document
+	filename= - filename of the document
     doc_active_views - number of views/users currently
     doc_is_modified - is the document modified, or not ie. saved/readonly
     doc_memory_used_bytes - bytes of memory dirtied by this process

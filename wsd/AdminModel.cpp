@@ -1166,14 +1166,15 @@ void AdminModel::getMetrics(std::ostringstream &oss)
     for (const auto& it : _documents)
     {
         const Document &doc = *it.second;
-        std::string suffix = "{pid=" + std::to_string(doc.getPid()) + "} ";
-        oss << "doc_host" << suffix << "= \"" << doc.getHostName() << "\"\n";
-        oss << "doc_key" << suffix << "= \"" << doc.getDocKey() << "\"\n"; // often WOPISrc
+        std::string pid = std::to_string(doc.getPid());
 
         std::string encodedFilename;
         Poco::URI::encode(doc.getFilename(), " ", encodedFilename);
-        oss << "doc_filename" << suffix << "= \"" << encodedFilename << "\"\n";
+        oss << "doc_pid{host=\"" << doc.getHostName() << "\","
+               "key=\"" << doc.getDocKey() << "\","
+               "filename=\"" << encodedFilename << "\"} " << pid << "\n";
 
+        std::string suffix = "{pid=" + pid + "} ";
         oss << "doc_views" << suffix << doc.getViews().size() << "\n";
         oss << "doc_views_active" << suffix << doc.getActiveViews() << "\n";
         oss << "doc_is_modified" << suffix << doc.getModifiedStatus() << "\n";
