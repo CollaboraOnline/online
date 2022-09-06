@@ -137,29 +137,43 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 		var hasSaveAs = !this._map['wopi'].UserCanNotWriteRelative;
 		var hasShare = this._map['wopi'].EnableShare;
 		var hasGroupedDownloadAs = !!window.groupDownloadAsForNb;
+		var hasGroupedSaveAs = window.uiDefaults && window.uiDefaults.saveAsMode === 'group';
 		var hasRunMacro = !(window.enableMacrosExecution  === 'false');
 		var hasSave = !this._map['wopi'].HideSaveOption;
+		var content = [];
 
-		var content = [
-			hasSave ?
-				{
-					'type': 'toolbox',
-					'children': [
-						{
-							'id': 'file-save',
-							'type': 'bigtoolitem',
-							'text': _('Save'),
-							'command': '.uno:Save'
-						}
-					]
-				} : {},
-			hasSaveAs ?
-				{
+		if (hasSave) {
+			content.push({
+				'type': 'toolbox',
+				'children': [
+					{
+						'id': 'file-save',
+						'type': 'bigtoolitem',
+						'text': _('Save'),
+						'command': '.uno:Save'
+					}
+				]
+			});
+		}
+
+		if (hasSaveAs) {
+			if (hasGroupedSaveAs) {
+				content.push({
+					'id': 'saveas',
+					'type': 'bigmenubartoolitem',
+					'text': _('Save As'),
+				});
+			} else {
+				content.push({
 					'id': 'file-saveas',
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:SaveAs', 'presentation'),
 					'command': '.uno:SaveAs'
-				} : {},
+				});
+			}
+		}
+
+		var content = content.concat([
 			{
 				'id': 'file-shareas-rev-history',
 				'type': 'container',
@@ -200,7 +214,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						}
 					]
 				} : {}
-		];
+		]);
 
 		if (hasGroupedDownloadAs) {
 			content.push({
