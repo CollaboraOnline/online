@@ -58,6 +58,14 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
 
             continue;
         }
+        if (keyValue.equals(0, "SaveAsMode"))
+        {
+            if (keyValue.equals(1, "group"))
+            {
+                json.set("saveAsMode", "group");
+            }
+            continue;
+        }
         else if (keyValue.startsWith(0, "Text"))
         {
             currentDef = &textDefs;
