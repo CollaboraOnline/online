@@ -7,8 +7,6 @@
 
 #pragma once
 
-#include <config_version.h>
-
 #include <chrono>
 #include <cstdint>
 #include <iostream>
@@ -31,7 +29,7 @@
 #include "Log.hpp"
 #include "Util.hpp"
 
-#ifndef APP_NAME
+#ifndef COOLWSD_VERSION
 static_assert(false, "config.h must be included in the .cpp being compiled");
 #endif
 

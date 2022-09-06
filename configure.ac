@@ -58,15 +58,7 @@ AC_DEFINE_UNQUOTED([COOLWSD_VERSION_HASH],[["$COOLWSD_VERSION_HASH"]],[Collabora
 
 AC_CONFIG_SRCDIR([wsd/COOLWSD.cpp])
 
-# this is a dummy header, autoheader adds all entries to it
-# don't include config_unused.h anywhere!
-AC_CONFIG_HEADERS([config_unused.h])
-
-# maintain config.h.in and config_version.h.in manually
-# config.h.in is for configurable variables that are stable if configure parameters are unchanged
 AC_CONFIG_HEADERS([config.h])
-# config_version.h.in is for version/hash related variables
-AC_CONFIG_HEADERS([config_version.h])
 
 # Checks for programs.
 AC_PROG_CXX
