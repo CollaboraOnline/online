@@ -1204,6 +1204,7 @@ app.definitions.Socket = L.Class.extend({
 
 		if (textMsg.startsWith('status:')) {
 			this._onStatusMsg(textMsg, command);
+			return;
 		}
 
 		// These can arrive very early during the startup, and never again.
