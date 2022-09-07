@@ -1,23 +1,16 @@
-{{- if eq .Values.deployment.kind "Deployment" -}}
+{{- if eq .Values.deployment.kind "StatefulSet" -}}
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "collabora-online.fullname" . }}
   labels:
     {{- include "collabora-online.labels" . | nindent 4 }}
 spec:
-  terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+  serviceName: "collabora"
   minReadySeconds: {{ .Values.deployment.minReadySeconds }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
-  strategy:
-    type: {{ .Values.deployment.type }}
-    {{- if eq .Values.deployment.type "RollingUpdate"}}
-    rollingUpdate:
-      maxSurge: {{ .Values.deployment.maxSurge }}
-      maxUnavailable: {{ .Values.deployment.maxUnavailable }}
-    {{- end}}
   selector:
     matchLabels:
       {{- include "collabora-online.selectorLabels" . | nindent 6 }}
@@ -34,6 +27,7 @@ spec:
         {{- include "collabora-online.selectorLabels" . | nindent 8 }}
         type: main
     spec:
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}

@@ -1,23 +1,23 @@
-{{- if .Values.ingress.enabled -}}
+{{- if and .Values.dynamicConfig.enabled .Values.dynamicConfig.ingress.enabled -}}
 {{- $fullName := include "collabora-online.fullname" . -}}
-{{- $svcPort := .Values.service.port -}}
+{{- $svcPort := .Values.dynamicConfig.service.port -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-dynconfig
   labels:
     {{- include "collabora-online.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
+  {{- with .Values.dynamicConfig.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if .Values.ingress.className }}
-  ingressClassName: {{ .Values.ingress.className }}
+  {{- if .Values.dynamicConfig.ingress.className }}
+  ingressClassName: {{ .Values.dynamicConfig.ingress.className }}
   {{- end }}
-  {{- if .Values.ingress.tls }}
+  {{- if .Values.dynamicConfig.ingress.tls }}
   tls:
-    {{- range .Values.ingress.tls }}
+    {{- range .Values.dynamicConfig.ingress.tls }}
     - hosts:
         {{- range .hosts }}
         - {{ . | quote }}
@@ -26,7 +26,7 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    {{- range .Values.ingress.hosts }}
+    {{- range .Values.dynamicConfig.ingress.hosts }}
     - host: {{ .host | quote }}
       http:
         paths:
@@ -35,7 +35,7 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ $fullName }}
+                name: {{ $fullName }}-dynconfig
                 port:
                   number: {{ $svcPort }}
           {{- end }}
