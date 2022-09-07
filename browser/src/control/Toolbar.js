@@ -322,6 +322,12 @@ L.Map.include({
 	},
 
 	sendUnoCommand: function (command, json) {
+		if (command.startsWith('.uno:Sidebar') || command.startsWith('.uno:SlideMasterPage') ||
+			command.startsWith('.uno:ModifyPage') || command.startsWith('.uno:SlideChangeWindow') ||
+			command.startsWith('.uno:CustomAnimation') || command.startsWith('.uno:MasterSlidesPanel')) {
+			window.initSidebarState = true;
+		}
+
 		// To exercise the Trace Event functionality, uncomment this
 		// app.socket.emitInstantTraceEvent('cool-unocommand:' + command);
 
