@@ -1,7 +1,22 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.global.configmap.name }}
-  namespace: {{ .Values.namespace.collabora }}
+  name: {{ include "collabora-online.fullname" . }}
+  annotations:
+    confighash: config-{{ .Values.collabora | toYaml | sha256sum | trunc 32 }}
+  labels:
+    {{- include "collabora-online.labels" . | nindent 4 }}
 data:
-  timeout-tunnel: 3600s
+  {{- if .Values.collabora.extra_params }}
+  extra_params: {{ .Values.collabora.extra_params }}
+  {{- end }}
+  server_name: {{ .Values.collabora.server_name }}
+  {{- range $k,$v := .Values.collabora.aliasgroups }}
+  {{- $alias := $v.domain }}
+  {{- if $v.aliases }}
+  {{- $alias := printf "%s|https://%s:443" $alias (join ":443|https://" $v.aliases ) }}
+  aliasgroup{{ add $k 1 }}: {{ $alias }}
+  {{- else }}
+  aliasgroup{{ add $k 1 }}: {{ $alias }}
+  {{- end }}
+  {{- end }}
