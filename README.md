@@ -19,7 +19,7 @@
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/CollaboraOnline/online)
 
 
-**LibreOffice in the Cloud on your own Terms**
+**Your own private Office in the Cloud**
 
 ![](https://raw.githubusercontent.com/CollaboraOnline/CollaboraOnline.github.io/master/static/images/homepage-image.png)
 
