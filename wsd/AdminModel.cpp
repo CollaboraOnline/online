@@ -1174,7 +1174,7 @@ void AdminModel::getMetrics(std::ostringstream &oss)
                "key=\"" << doc.getDocKey() << "\","
                "filename=\"" << encodedFilename << "\"} " << pid << "\n";
 
-        std::string suffix = "{pid=" + pid + "} ";
+        std::string suffix = "{pid=\"" + pid + "\"} ";
         oss << "doc_views" << suffix << doc.getViews().size() << "\n";
         oss << "doc_views_active" << suffix << doc.getActiveViews() << "\n";
         oss << "doc_is_modified" << suffix << doc.getModifiedStatus() << "\n";
