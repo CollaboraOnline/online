@@ -1594,18 +1594,28 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				if (currentText.indexOf('\n') >= 0) {
 					var currentPos = 0;
-					while (startPos >= currentPos + currentText.indexOf('\n', currentPos)) {
-						currentPos += currentText.indexOf('\n', currentPos) + 1;
-						startPos -= currentPos;
+					var found = currentText.indexOf('\n', currentPos);
+					while (startPos > found) {
+						if (found === -1)
+							break;
+						currentPos = found + 1;
 						startPara++;
+						found = currentText.indexOf('\n', currentPos);
 					}
 
+					startPos -= currentPos;
+
 					currentPos = 0;
-					while (endPos >= currentPos + currentText.indexOf('\n', currentPos)) {
-						currentPos += currentText.indexOf('\n', currentPos) + 1;
-						endPos -= currentPos;
+					found = currentText.indexOf('\n', currentPos);
+					while (endPos > found) {
+						if (found === -1)
+							break;
+						currentPos = found + 1;
 						endPara++;
+						found = currentText.indexOf('\n', currentPos);
 					}
+
+					endPos -= currentPos;
 				}
 
 				var selection = startPos + ';' + endPos + ';' + startPara + ';' + endPara;
@@ -3343,7 +3353,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						var found = currentText.indexOf('\n', start);
 						if (found === -1)
 							break;
-						start += found + 1;
+						start = found + 1;
 					}
 
 					start += startPos;
@@ -3353,7 +3363,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						found = currentText.indexOf('\n', end);
 						if (found === -1)
 							break;
-						end += found + 1;
+						end = found + 1;
 					}
 
 					end += endPos;
