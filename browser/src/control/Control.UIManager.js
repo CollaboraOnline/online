@@ -213,6 +213,15 @@ L.Control.UIManager = L.Control.extend({
 		if (window.mode.isDesktop() && !window.ThisIsAMobileApp) {
 			var showSidebar = this.getSavedStateOrDefault('ShowSidebar');
 
+			if (this.map.getDocType() === 'presentation') {
+				if (this.getSavedStateOrDefault('SdSlideTransitionDeck'))
+					app.socket.sendMessage('uno .uno:SlideChangeWindow');
+				else if (this.getSavedStateOrDefault('SdCustomAnimationDeck'))
+					app.socket.sendMessage('uno .uno:CustomAnimation');
+				else if (this.getSavedStateOrDefault('SdMasterPagesDeck'))
+					app.socket.sendMessage('uno .uno:MasterSlidesPanel');
+			}
+
 			if (showSidebar === false)
 				app.socket.sendMessage('uno .uno:SidebarHide');
 		}

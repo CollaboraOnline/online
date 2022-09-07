@@ -117,6 +117,13 @@ L.Control.Sidebar = L.Control.extend({
 		wrapper.style.maxHeight = document.getElementById('document-container').getBoundingClientRect().height + 'px';
 	},
 
+	unsetSelectedSidebar: function() {
+		this.map.uiManager.setSavedState('PropertyDeck', false);
+		this.map.uiManager.setSavedState('SdSlideTransitionDeck', false);
+		this.map.uiManager.setSavedState('SdCustomAnimationDeck', false);
+		this.map.uiManager.setSavedState('SdMasterPagesDeck', false);
+	},
+
 	onSidebar: function(data) {
 		var sidebarData = data.data;
 		this.builder.setWindowId(sidebarData.id);
@@ -135,6 +142,11 @@ L.Control.Sidebar = L.Control.extend({
 
 				this.onResize();
 				this.map.dialog._resizeCalcInputBar();
+
+				if (this.map.getDocType() === 'presentation' && sidebarData.children && sidebarData.children[0] && sidebarData.children[0].id) {
+					this.unsetSelectedSidebar();
+					this.map.uiManager.setSavedState(sidebarData.children[0].id, true);
+				}
 
 				this.builder.build(this.container, [sidebarData]);
 				if (wrapper.style.display === 'none')

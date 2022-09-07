@@ -78,6 +78,8 @@ function onClick(e, id, item) {
 	item = item || getToolbarItemById(id);
 
 	if (id === 'sidebar' || id === 'modifypage' || id === 'slidechangewindow' || id === 'customanimation' || id === 'masterslidespanel') {
+		if (!map.uiManager.getSavedStateOrDefault('ShowSidebar', false))
+			map.sendUnoCommand('.uno:SidebarShow');
 		window.initSidebarState = true;
 	}
 
