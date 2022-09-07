@@ -61,5 +61,9 @@ fi
 # Generate WOPI proof key
 coolwsd-generate-proof-key
 
+# You can add your own CA certificates to /usr/local/share/ca-certificates/
+# e.g. as docker volume: -v /path/to/ca-cert/:/usr/local/share/ca-certificates/
+update-ca-certificates
+
 # Start coolwsd
 exec /usr/bin/coolwsd --version --o:sys_template_path=/opt/cool/systemplate --o:child_root_path=/opt/cool/child-roots --o:file_server_root_path=/usr/share/coolwsd --o:logging.color=false ${extra_params}
