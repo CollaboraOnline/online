@@ -57,7 +57,7 @@ m4_ifelse(MOBILEAPP,[true],
 )
 m4_ifelse(IOSAPP,[true],
   [   window.ThisIsTheiOSApp = true;
-   window.postMobileMessage = function(msg) { window.webkit.messageHandlers.cool.postMessage(msg); };
+   window.postMobileMessage = function(msg) { window.webkit.messageHandlers.lok.postMessage(msg); };
    window.postMobileError   = function(msg) { window.webkit.messageHandlers.error.postMessage(msg); };
    window.postMobileDebug   = function(msg) { window.webkit.messageHandlers.debug.postMessage(msg); };],
   [   window.ThisIsTheiOSApp = false;]
