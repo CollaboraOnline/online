@@ -59,6 +59,7 @@ void DocumentBroker::handleProxyRequest(
             "Content-Length: " << sessionId.size() << "\r\n"
             "Content-Type: application/json; charset=utf-8\r\n"
             "X-Content-Type-Options: nosniff\r\n"
+            "Connection: close\r\n"
             "\r\n" << sessionId;
 
         socket->send(oss.str());
