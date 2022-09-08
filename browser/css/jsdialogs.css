@@ -157,7 +157,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	border-radius: var(--border-radius);
 }
 
-.ui-tab.jsdialog:first-child.selected {
+.ui-tab.jsdialog:first-child {
 	margin-inline-start: 12px;
 }
 
