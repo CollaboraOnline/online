@@ -155,6 +155,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	align-items: center;
 	padding: 0px 1em;
 	border-radius: var(--border-radius);
+	background-color: var(--color-main-background);
+	margin-inline-end: 12px;
 }
 
 .ui-tab.jsdialog:first-child {
