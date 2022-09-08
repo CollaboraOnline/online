@@ -2881,6 +2881,7 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
                 << "Content-Length: " << saved->length() << "\r\n"
                 << "Content-Type: application/octet-stream\r\n"
                 << "X-Content-Type-Options: nosniff\r\n"
+                << "Connection: close\r\n"
                 << "\r\n";
             oss.write(saved->c_str(), saved->length());
             socket->setSocketBufferSize(
@@ -2897,7 +2898,7 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
 
 #if !MOBILEAPP
     // Bad request.
-    HttpHelper::sendError(400, socket, "Failed to find this clipboard");
+    HttpHelper::sendError(400, socket, "Failed to find this clipboard", "Connection: close\r\n");
 #endif
     socket->shutdown();
     socket->ignoreInput();

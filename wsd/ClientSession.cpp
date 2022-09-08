@@ -278,6 +278,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                 << "Date: " << Util::getHttpTimeNow() << "\r\n"
                 << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                 << "Content-Length: 0\r\n"
+                << "Connection: close\r\n"
                 << "\r\n";
             socket->send(oss.str());
             socket->closeConnection(); // Shutdown socket.
@@ -304,6 +305,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
                 << "Date: " << Util::getHttpTimeNow() << "\r\n"
                 << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
                 << "Content-Length: 0\r\n"
+                << "Connection: close\r\n"
                 << "\r\n";
             socket->send(oss.str());
             socket->shutdown();
@@ -1784,6 +1786,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 << "Content-Length: " << (empty ? 0 : (payload->size() - header)) << "\r\n"
                 << "Content-Type: application/octet-stream\r\n"
                 << "X-Content-Type-Options: nosniff\r\n"
+                << "Connection: close\r\n"
                 << "\r\n";
 
             if (!empty)

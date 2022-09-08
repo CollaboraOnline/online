@@ -39,7 +39,7 @@ void sendError(int errorCode, const std::shared_ptr<StreamSocket>& socket, const
 void sendErrorAndShutdown(int errorCode, const std::shared_ptr<StreamSocket>& socket,
                           const std::string& body, const std::string& extraHeader)
 {
-    sendError(errorCode, socket, body, extraHeader);
+    sendError(errorCode, socket, body, extraHeader + "Connection: close\r\n");
     socket->shutdown();
     socket->ignoreInput();
 }
@@ -114,6 +114,9 @@ void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std:
 
     response->setContentType(mediaType);
     response->add("X-Content-Type-Options", "nosniff");
+    //Should we add the header anyway ?
+    if (headerOnly)
+        response->add("Connection", "close");
 
     int bufferSize = std::min<std::size_t>(st.size(), Socket::MaximumSendBufferSize);
     if (static_cast<long>(st.size()) >= socket->getSendBufferSize())
