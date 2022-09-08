@@ -1380,14 +1380,17 @@ public:
 #endif
                 Poco::JSON::Array::Ptr aliases = group->getArray("aliases");
 
-                auto it = aliases->begin();
 
-                size_t j;
-                for (j = 0; j < aliases->size(); j++)
-                {
-                    const std::string aliasPath = path + ".alias[" + std::to_string(j) + ']';
-                    newAppConfig.insert(std::make_pair(aliasPath, it->toString()));
-                    it++;
+                size_t j = 0;
+                if (aliases) {
+                    auto it = aliases->begin();
+
+                    for (; j < aliases->size(); j++)
+                    {
+                        const std::string aliasPath = path + ".alias[" + std::to_string(j) + ']';
+                        newAppConfig.insert(std::make_pair(aliasPath, it->toString()));
+                        it++;
+                    }
                 }
                 for (;; j++)
                 {
