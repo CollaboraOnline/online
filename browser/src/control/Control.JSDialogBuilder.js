@@ -946,7 +946,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		};
 	},
 
-	_tabsControlHandler: function(parentContainer, data, builder) {
+	_tabsControlHandler: function(parentContainer, data, builder, tabTooltip) {
+		if (tabTooltip === undefined) {
+			tabTooltip = '';
+		}
 		if (data.tabs) {
 			var tabs = 0;
 			for (var tabIdx = 0; data.children && tabIdx < data.children.length; tabIdx++) {
@@ -975,6 +978,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var isSelectedTab = data.selected == item.id;
 				if (isSelectedTab) {
 					$(tab).addClass('selected');
+					tab.title = tabTooltip;
 					singleTabId = tabIdx;
 				}
 

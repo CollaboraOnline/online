@@ -347,20 +347,26 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	// overriden
 	_createTabClick: function(builder, t, tabs, contentDivs, tabIds)
 	{
+		var tooltipCollapsed = _('Tap to expand');
+		var tooltipExpanded = _('Tap to collapse');
+		$(tabs[t]).prop('title', tooltipExpanded);
 		return function(event) {
 			var tabIsSelected = $(tabs[t]).hasClass('selected');
 			var notebookbarIsCollapsed = builder.wizard.isCollapsed();
 
 			if (tabIsSelected && !notebookbarIsCollapsed) {
 				builder.wizard.collapse();
+				$(tabs[t]).prop('title', tooltipCollapsed);
 			} else if (notebookbarIsCollapsed) {
 				builder.wizard.extend();
+				$(tabs[t]).prop('title', tooltipExpanded);
 			}
 
 			$(tabs[t]).addClass('selected');
 			for (var i = 0; i < tabs.length; i++) {
 				if (i !== t) {
 					$(tabs[i]).removeClass('selected');
+					$(tabs[i]).prop('title', '');
 					$(contentDivs[i]).hide();
 				}
 			}
@@ -376,7 +382,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 	_overriddenTabsControlHandler: function(parentContainer, data, builder) {
 		data.tabs = builder.wizard.getTabs();
-		return builder._tabsControlHandler(parentContainer, data, builder);
+		return builder._tabsControlHandler(parentContainer, data, builder, _('Tap to collapse'));
 	},
 
 	_toolboxHandler: function(parentContainer, data) {
