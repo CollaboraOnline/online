@@ -323,14 +323,25 @@ L.Map.include({
 
 	sendUnoCommand: function (command, json) {
 		if ((command.startsWith('.uno:Sidebar') && !command.startsWith('.uno:SidebarShow')) ||
-			command.startsWith('.uno:SlideMasterPage') ||
-			command.startsWith('.uno:ModifyPage') || command.startsWith('.uno:SlideChangeWindow') ||
-			command.startsWith('.uno:CustomAnimation') || command.startsWith('.uno:MasterSlidesPanel')) {
+			command.startsWith('.uno:SlideMasterPage') || command.startsWith('.uno:SlideChangeWindow') ||
+			command.startsWith('.uno:CustomAnimation') || command.startsWith('.uno:MasterSlidesPanel') ||
+			command.startsWith('.uno:ModifyPage')) {
 
-			if (!this.uiManager.getSavedStateOrDefault('ShowSidebar', false))
-				this.sendUnoCommand('.uno:SidebarShow');
+			// sidebar control is present only in desktop/tablet case
+			if (this.sidebar) {
+				if (this.sidebar.isVisible()) {
+					this.sidebar.setupTargetDeck(command);
+				} else {
+					// we don't know which deck was active last, show first then switch if needed
+					app.socket.sendMessage('uno .uno:SidebarShow');
 
-			window.initSidebarState = true;
+					if (this.sidebar.getTargetDeck() == null)
+						app.socket.sendMessage('uno ' + command);
+
+					this.sidebar.setupTargetDeck(command);
+					return;
+				}
+			}
 		}
 
 		// To exercise the Trace Event functionality, uncomment this
