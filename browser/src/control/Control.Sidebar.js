@@ -3,7 +3,7 @@
  * L.Control.Sidebar
  */
 
-/* global $ */
+/* global $ app */
 L.Control.Sidebar = L.Control.extend({
 
 	options: {
@@ -12,6 +12,7 @@ L.Control.Sidebar = L.Control.extend({
 
 	container: null,
 	builder: null,
+	targetDeckCommand: null,
 
 	onAdd: function (map) {
 		this.map = map;
@@ -30,6 +31,10 @@ L.Control.Sidebar = L.Control.extend({
 		this.map.off('jsdialogaction', this.onJSAction, this);
 	},
 
+	isVisible: function() {
+		return $('#sidebar-dock-wrapper').is(':visible');
+	},
+
 	closeSidebar: function() {
 		$('#sidebar-dock-wrapper').hide();
 		this.map._onResize();
@@ -40,10 +45,7 @@ L.Control.Sidebar = L.Control.extend({
 			this.map.focus();
 		}
 
-		if (window.initSidebarState) {
-			this.map.uiManager.setSavedState('ShowSidebar', false);
-			window.initSidebarState = false;
-		}
+		this.map.uiManager.setSavedState('ShowSidebar', false);
 	},
 
 	onJSUpdate: function (e) {
@@ -124,6 +126,31 @@ L.Control.Sidebar = L.Control.extend({
 		this.map.uiManager.setSavedState('SdMasterPagesDeck', false);
 	},
 
+	commandForDeck: function(deckId) {
+		if (deckId === 'PropertyDeck')
+			return ''; // not important for us
+		else if (deckId === 'SdSlideTransitionDeck')
+			return '.uno:SlideChangeWindow';
+		else if (deckId === 'SdCustomAnimationDeck')
+			return '.uno:CustomAnimation';
+		else if (deckId === 'SdMasterPagesDeck')
+			return '.uno:MasterSlidesPanel';
+		return '';
+	},
+
+	setupTargetDeck: function(unoCommand) {
+		this.targetDeckCommand = unoCommand;
+	},
+
+	getTargetDeck: function() {
+		return this.targetDeckCommand;
+	},
+
+	changeDeck: function(unoCommand) {
+		app.socket.sendMessage('uno ' + unoCommand);
+		this.setupTargetDeck(unoCommand);
+	},
+
 	onSidebar: function(data) {
 		var sidebarData = data.data;
 		this.builder.setWindowId(sidebarData.id);
@@ -145,17 +172,28 @@ L.Control.Sidebar = L.Control.extend({
 
 				if (this.map.getDocType() === 'presentation' && sidebarData.children && sidebarData.children[0] && sidebarData.children[0].id) {
 					this.unsetSelectedSidebar();
-					this.map.uiManager.setSavedState(sidebarData.children[0].id, true);
+					var currentDeck = sidebarData.children[0].id;
+					this.map.uiManager.setSavedState(currentDeck, true);
+					if (this.targetDeckCommand) {
+						var stateHandler = this.map['stateChangeHandler'];
+						var isCurrent = stateHandler ?
+							stateHandler.getItemValue(this.targetDeckCommand) : false;
+						// just to be sure chack with other method
+						if (isCurrent === 'false' || !isCurrent)
+							isCurrent = this.targetDeckCommand === this.commandForDeck(currentDeck);
+						if (this.targetDeckCommand &&
+							(isCurrent === 'false' || !isCurrent))
+							this.changeDeck(this.targetDeckCommand);
+					} else {
+						this.changeDeck(this.targetDeckCommand);
+					}
 				}
 
 				this.builder.build(this.container, [sidebarData]);
 				if (wrapper.style.display === 'none')
 					$('#sidebar-dock-wrapper').show(this.options.animSpeed);
 
-				if (window.initSidebarState) {
-					this.map.uiManager.setSavedState('ShowSidebar', true);
-					window.initSidebarState = false;
-				}
+				this.map.uiManager.setSavedState('ShowSidebar', true);
 			} else {
 				this.closeSidebar();
 			}
