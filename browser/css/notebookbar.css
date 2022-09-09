@@ -3,6 +3,7 @@
 
 .notebookbar-tabs-container {
 	display: inline-flex;
+	margin-inline-start: 5px;
 }
 
 .ui-tabs.notebookbar {
