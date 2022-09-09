@@ -104,22 +104,6 @@
 	display: none;
 }
 
-.notebookbar-tabs-container:after,
-.notebookbar-tabs-container:before {
-	content: '';
-	position: relative;
-	z-index: -1;
-	display: block;
-	min-width: 2rem;
-	margin: 0;
-	-webkit-box-flex: 1;
-	-webkit-flex: 1 0 auto;
-	-ms-flex: 1 0 auto;
-	flex: 1 0 auto;
-	max-width: 2rem;
-	box-shadow: 0px 0 13px 2px var(--color-primary), 0px 0px 26px 6px var(--color-primary-lighter);
-}
-
 .hasnotebookbar #document-titlebar {
 	position: static;
 	display: inline-flex;
