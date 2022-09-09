@@ -19,6 +19,7 @@ class Cursor {
 
 	private position: cool.Point;
 	private size: cool.Point;
+	private width: number;
 	private container: HTMLDivElement;
 	private cursorHeader: HTMLDivElement;
 	private cursor: HTMLDivElement;
@@ -56,6 +57,10 @@ class Cursor {
 		this.domAttached = true;
 
 		this.update();
+
+		let cursor_css = getComputedStyle(this.cursor, null);
+		this.width = parseFloat(cursor_css.getPropertyValue("width"));
+
 		if (this.map._docLayer.isCalc())
 			this.map.on('splitposchanged move', this.update, this);
 		else
@@ -63,6 +68,7 @@ class Cursor {
 
 		window.addEventListener('blur', this.onFocusBlur.bind(this));
 		window.addEventListener('focus', this.onFocusBlur.bind(this));
+		window.addEventListener('resize', this.onResize.bind(this));
 	}
 
 	setMouseCursor() {
@@ -91,6 +97,7 @@ class Cursor {
 
 		window.removeEventListener('blur', this.onFocusBlur.bind(this));
 		window.removeEventListener('focus', this.onFocusBlur.bind(this));
+		window.removeEventListener('resize', this.onResize.bind(this));
 	}
 
 	isDomAttached(): boolean {
@@ -110,6 +117,13 @@ class Cursor {
 
 	onFocusBlur(ev: FocusEvent) {
 		this.addCursorClass(ev.type !== 'blur');
+	}
+
+	onResize() {
+		if (window.devicePixelRatio !== 1 )
+			this.cursor.style.width = this.width / window.devicePixelRatio + 'px';
+		else
+			this.cursor.style.removeProperty('width');
 	}
 
 	// position and size should be in core pixels.
