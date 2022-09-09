@@ -221,16 +221,27 @@ L.Control.UIManager = L.Control.extend({
 		if (window.mode.isDesktop() && !window.ThisIsAMobileApp) {
 			var showSidebar = this.getSavedStateOrDefault('ShowSidebar');
 
-			if (this.map.getDocType() === 'presentation') {
-				if (this.getSavedStateOrDefault('SdSlideTransitionDeck'))
-					app.socket.sendMessage('uno .uno:SlideChangeWindow');
-				else if (this.getSavedStateOrDefault('SdCustomAnimationDeck'))
-					app.socket.sendMessage('uno .uno:CustomAnimation');
-				else if (this.getSavedStateOrDefault('SdMasterPagesDeck'))
-					app.socket.sendMessage('uno .uno:MasterSlidesPanel');
+			if (this.getSavedStateOrDefault('PropertyDeck')) {
+				app.socket.sendMessage('uno .uno:SidebarShow');
 			}
 
-			if (showSidebar === false)
+			if (this.map.getDocType() === 'presentation') {
+				if (this.getSavedStateOrDefault('SdSlideTransitionDeck', false)) {
+					app.socket.sendMessage('uno .uno:SidebarShow');
+					app.socket.sendMessage('uno .uno:SlideChangeWindow');
+					this.map.sidebar.setupTargetDeck('.uno:SlideChangeWindow');
+				} else if (this.getSavedStateOrDefault('SdCustomAnimationDeck', false)) {
+					app.socket.sendMessage('uno .uno:SidebarShow');
+					app.socket.sendMessage('uno .uno:CustomAnimation');
+					this.map.sidebar.setupTargetDeck('.uno:CustomAnimation');
+				} else if (this.getSavedStateOrDefault('SdMasterPagesDeck', false)) {
+					app.socket.sendMessage('uno .uno:SidebarShow');
+					app.socket.sendMessage('uno .uno:MasterSlidesPanel');
+					this.map.sidebar.setupTargetDeck('.uno:MasterSlidesPanel');
+				}
+			}
+
+			if (!showSidebar)
 				app.socket.sendMessage('uno .uno:SidebarHide');
 		}
 		else if (window.mode.isChromebook()) {
