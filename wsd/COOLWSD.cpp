@@ -1227,11 +1227,11 @@ public:
             }
             catch (const Poco::NullPointerException&)
             {
-                LOG_INF("Not overwriting any wopi host pattern because the storage->wopi->hosts section does not exist");
+                LOG_INF("Not overwriting any wopi host pattern because the storage->wopi section does not exist");
                 return;
             }
 
-            if (wopiHostPatterns->size() == 0)
+            if (!wopiHostPatterns || wopiHostPatterns->size() == 0)
             {
                 LOG_INF("Not overwriting any wopi host pattern because JSON contains empty array");
                 return;
@@ -1347,11 +1347,11 @@ public:
             }
             catch (const Poco::NullPointerException&)
             {
-                LOG_INF("Not overwriting any alias groups because storage->wopi->alias_groups->groups array does not exist");
+                LOG_INF("Not overwriting any alias groups because storage->wopi->alias_groups section does not exist");
                 return;
             }
 
-            if (groups->size() == 0)
+            if (!groups || groups->size() == 0)
             {
                 LOG_INF("Not overwriting any alias groups because alias_group array is empty");
                 return;
