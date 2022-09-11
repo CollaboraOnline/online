@@ -3494,7 +3494,7 @@ public:
         }
         else
         {
-            LOG_INF("convert-to: Requesting address is allowed: " << addressToCheck);
+            LOG_TRC("convert-to: Requesting address is allowed: " << addressToCheck);
         }
 
         // Handle forwarded header and make sure all participating IPs are allowed
