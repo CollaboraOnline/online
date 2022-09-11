@@ -5127,33 +5127,34 @@ void COOLWSD::processFetchUpdate()
 {
     try
     {
-        Poco::URI uriFetch(std::string(INFOBAR_URL));
+        const std::string url(INFOBAR_URL);
+        if (url.empty())
+            return; // No url, nothing to do.
+
+        Poco::URI uriFetch(url);
         uriFetch.addQueryParameter("product", APP_NAME);
         uriFetch.addQueryParameter("version", COOLWSD_VERSION);
-        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("update");
+        LOG_TRC("Infobar update request from " << uriFetch.toString());
         std::shared_ptr<http::Session> sessionFetch = StorageBase::getHttpSession(uriFetch);
-        http::Request request(uriFetch.getPathAndQuery());
-
-        if (!sessionFetch || !socketPoll)
+        if (!sessionFetch)
             return;
 
+        http::Request request(uriFetch.getPathAndQuery());
         request.add("Accept", "application/json");
-        http::Session::FinishedCallback fetchCallback =
-            [sessionFetch, socketPoll](const std::shared_ptr<http::Session>& httpSession)
+
+        const std::shared_ptr<const http::Response> httpResponse =
+            sessionFetch->syncRequest(request);
+        if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_OK)
         {
-            const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
-            if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_OK)
-            {
-                std::lock_guard<std::mutex> lock(COOLWSD::FetchUpdateMutex);
-                COOLWSD::LatestVersion = httpResponse->getBody();
-            }
+            LOG_DBG("Infobar update returned: " << httpResponse->getBody());
 
-            socketPoll->stop();
-        };
-
-        sessionFetch->setFinishedHandler(fetchCallback);
-        sessionFetch->asyncRequest(request, *socketPoll);
-        socketPoll->startThread();
+            std::lock_guard<std::mutex> lock(COOLWSD::FetchUpdateMutex);
+            COOLWSD::LatestVersion = httpResponse->getBody();
+        }
+        else
+            LOG_WRN("Failed to update the infobar. Got: "
+                    << httpResponse->statusLine().statusCode() << ' '
+                    << httpResponse->statusLine().reasonPhrase());
     }
     catch(const Poco::Exception& exc)
     {
