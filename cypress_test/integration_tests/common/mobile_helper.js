@@ -230,6 +230,7 @@ function closeInsertionWizard() {
 	cy.log('Closing insertion wizard - end.');
 }
 
+/// deprecated: see selectFromColorPicker function instead
 function selectFromColorPalette(paletteNum, groupNum, paletteAfterChangeNum, colorNum) {
 	cy.log('Selecting a color from the color palette - start.');
 
@@ -240,6 +241,27 @@ function selectFromColorPalette(paletteNum, groupNum, paletteAfterChangeNum, col
 
 	if (paletteAfterChangeNum !== undefined && colorNum !== undefined) {
 		cy.get('#color-picker-' + paletteAfterChangeNum.toString() + '-tint-' + colorNum.toString())
+			.click();
+	}
+
+	cy.wait(1000);
+
+	cy.get('#mobile-wizard-back')
+		.click();
+
+	cy.log('Selecting a color from the color palette - end.');
+}
+
+function selectFromColorPicker(pickerId, groupNum, colorNum) {
+	cy.log('Selecting a color from the color palette - start.');
+
+	cy.get(pickerId + ' [id^=color-picker-][id$=-basic-color-' + groupNum.toString() + ']')
+		.click();
+
+	cy.wait(1000);
+
+	if (colorNum !== undefined) {
+		cy.get(pickerId + ' [id^=color-picker-][id$=-tint-' + colorNum.toString() + ']')
 			.click();
 	}
 
@@ -391,6 +413,7 @@ module.exports.executeCopyFromContextMenu = executeCopyFromContextMenu;
 module.exports.openInsertionWizard = openInsertionWizard;
 module.exports.closeInsertionWizard = closeInsertionWizard;
 module.exports.selectFromColorPalette = selectFromColorPalette;
+module.exports.selectFromColorPicker = selectFromColorPicker;
 module.exports.openTextPropertiesPanel = openTextPropertiesPanel;
 module.exports.selectListBoxItem = selectListBoxItem;
 module.exports.selectListBoxItem2 = selectListBoxItem2;
