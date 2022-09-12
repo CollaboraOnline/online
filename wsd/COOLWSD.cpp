@@ -6,11 +6,12 @@
  */
 
 #include <config.h>
-#include <config_version.h>
+
 #include <stdexcept>
 #include "COOLWSD.hpp"
 #include "ProofKey.hpp"
 #include "CommandControl.hpp"
+#include "ConfigUtil.hpp"
 #include "HostUtil.hpp"
 
 /* Default host used in the start test URI */
@@ -23,7 +24,7 @@
 #define COOLWSD_TEST_METRICS "/cool/getMetrics"
 
 /* Default cool UI used in the start test URI */
-#define COOLWSD_TEST_COOL_UI "/browser/" COOLWSD_VERSION_HASH "/debug.html"
+#define COOLWSD_TEST_COOL_UI "/browser/" + config::getVersionHash() + "/debug.html"
 
 /* Default document used in the start test URI */
 #define COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER  "test/data/hello-world.odt"
@@ -4712,9 +4713,9 @@ private:
         const std::string favIconUrl = "favIconUrl";
         const std::string urlsrc = "urlsrc";
 
-        const std::string rootUriValue = "%SRV_URI%";
-        const std::string uriBaseValue = rootUriValue + "/browser/" COOLWSD_VERSION_HASH "/";
-        const std::string uriValue = uriBaseValue + "cool.html?";
+        const std::string rootUriValue("%SRV_URI%");
+        const std::string uriBaseValue(rootUriValue + "/browser/" + config::getVersionHash() + "/");
+        const std::string uriValue(uriBaseValue + "cool.html?");
 
         InputSource inputSrc(discoveryPath);
         DOMParser parser;
@@ -5133,7 +5134,7 @@ void COOLWSD::processFetchUpdate()
 
         Poco::URI uriFetch(url);
         uriFetch.addQueryParameter("product", APP_NAME);
-        uriFetch.addQueryParameter("version", COOLWSD_VERSION);
+        uriFetch.addQueryParameter("version", config::getVersion());
         LOG_TRC("Infobar update request from " << uriFetch.toString());
         std::shared_ptr<http::Session> sessionFetch = StorageBase::getHttpSession(uriFetch);
         if (!sessionFetch)
@@ -5182,7 +5183,7 @@ int COOLWSD::innerMain()
 {
 #if !MOBILEAPP
     SigUtil::setUserSignals();
-    SigUtil::setFatalSignals("wsd " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
+    SigUtil::setFatalSignals("wsd " + config::getVersion() + " " + config::getVersionHash());
 #endif
 
 #if !MOBILEAPP

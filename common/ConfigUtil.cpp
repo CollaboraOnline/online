@@ -6,6 +6,7 @@
  */
 
 #include <config.h>
+#include <config_version.h>
 
 #include <ConfigUtil.hpp>
 #include <Util.hpp>
@@ -66,4 +67,17 @@ bool isSslEnabled()
     return false;
 #endif
 }
+
+const std::string& getVersion()
+{
+    static std::string Version("" COOLWSD_VERSION);
+    return Version;
+}
+
+const std::string& getVersionHash()
+{
+    static std::string VersionHash("" COOLWSD_VERSION_HASH);
+    return VersionHash;
+}
+
 } // namespace config

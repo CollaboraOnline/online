@@ -10,7 +10,6 @@
  */
 
 #include <config.h>
-#include <config_version.h>
 
 #include <dlfcn.h>
 #ifdef __linux__
@@ -2570,7 +2569,7 @@ void lokit_main(
 {
 #if !MOBILEAPP
 
-    SigUtil::setFatalSignals("kit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
+    SigUtil::setFatalSignals("kit startup of " + config::getVersion() + " " + config::getVersionHash());
     SigUtil::setUserSignals();
 
     Util::setThreadName("kit_spare_" + Util::encodeId(numericIdentifier, 3));

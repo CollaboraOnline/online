@@ -6,7 +6,6 @@
  */
 
 #include <config.h>
-#include <config_version.h>
 
 #include <iomanip>
 #include <string>
@@ -506,10 +505,10 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         LOG_TRC("Fileserver request: " << requestUri.toString());
         requestUri.normalize(); // avoid .'s and ..'s
 
-        if (requestUri.getPath().find("browser/" COOLWSD_VERSION_HASH "/") == std::string::npos)
+        if (requestUri.getPath().find("browser/" + config::getVersionHash() + "/") == std::string::npos)
         {
             LOG_WRN("Client - server version mismatch, disabling browser cache. "
-                    "Expected: " COOLWSD_VERSION_HASH "; Actual URI path with version hash: "
+                    "Expected: " + config::getVersionHash() + "; Actual URI path with version hash: "
                     << requestUri.getPath());
             noCache = true;
         }
@@ -522,7 +521,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         const std::string relPath = getRequestPathname(request);
         const std::string endPoint = requestSegments[requestSegments.size() - 1];
 
-        static std::string etagString = "\"" COOLWSD_VERSION_HASH +
+        static std::string etagString = "\"" + config::getVersionHash() +
             config.getString("ver_suffix", "") + "\"";
 
 #if ENABLE_DEBUG
@@ -949,8 +948,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), std::to_string(tokenTtl));
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_HEADER%"), escapedAccessHeader);
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), cnxDetails.getWebSocketUrl());
-    Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(COOLWSD_VERSION_HASH));
-    Poco::replaceInPlace(preprocess, std::string("%COOLWSD_VERSION%"), std::string(COOLWSD_VERSION));
+    Poco::replaceInPlace(preprocess, std::string("%VERSION%"), config::getVersionHash());
+    Poco::replaceInPlace(preprocess, std::string("%COOLWSD_VERSION%"), config::getVersion());
     Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
     Poco::replaceInPlace(preprocess, std::string("%UI_DEFAULTS%"), uiDefaultsToJSON(uiDefaults, userInterfaceMode));
     Poco::replaceInPlace(preprocess, std::string("%POSTMESSAGE_ORIGIN%"), escapedPostmessageOrigin);
@@ -968,8 +967,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     bool useIntegrationTheme = config.getBool("user_interface.use_integration_theme", true);
     bool hasIntegrationTheme = (theme != "") && FileUtil::Stat(COOLWSD::FileServerRoot + "/browser/dist/" + theme).exists();
     const std::string themePreFix = hasIntegrationTheme && useIntegrationTheme ? theme + "/" : "";
-    const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/browser/" COOLWSD_VERSION_HASH "/" + themePreFix + "%s.css\">");
-    const std::string scriptJS("<script src=\"%s/browser/" COOLWSD_VERSION_HASH "/" + themePreFix + "%s.js\"></script>");
+    const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/browser/" + config::getVersionHash() + "/" + themePreFix + "%s.css\">");
+    const std::string scriptJS("<script src=\"%s/browser/" + config::getVersionHash() + "/" + themePreFix + "%s.js\"></script>");
 
     std::string brandCSS(Poco::format(linkCSS, responseRoot, std::string(BRANDING)));
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
@@ -1132,7 +1131,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
         "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
         "Cache-Control:max-age=11059200\r\n"
-        "ETag: \"" COOLWSD_VERSION_HASH "\"\r\n"
+        "ETag: \"" << config::getVersionHash() << "\"\r\n"
         "Content-Length: " << preprocess.size() << "\r\n"
         "Content-Type: " << mimeType << "\r\n"
         "X-Content-Type-Options: nosniff\r\n"
@@ -1250,7 +1249,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     ServerURL cnxDetails(requestDetails);
     std::string responseRoot = cnxDetails.getResponseRoot();
 
-    static const std::string scriptJS("<script src=\"%s/browser/" COOLWSD_VERSION_HASH "/%s.js\"></script>");
+    static const std::string scriptJS("<script src=\"%s/browser/" + config::getVersionHash() + "/%s.js\"></script>");
     static const std::string footerPage("<footer class=\"footer has-text-centered\"><strong>Key:</strong> %s &nbsp;&nbsp;<strong>Expiry Date:</strong> %s</footer>");
 
     const std::string relPath = getRequestPathname(request);
@@ -1278,7 +1277,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
 
     Poco::replaceInPlace(templateFile, std::string("<!--%BRANDING_JS%-->"), brandJS);
     Poco::replaceInPlace(templateFile, std::string("<!--%FOOTER%-->"), brandFooter);
-    Poco::replaceInPlace(templateFile, std::string("%VERSION%"), std::string(COOLWSD_VERSION_HASH));
+    Poco::replaceInPlace(templateFile, std::string("%VERSION%"), config::getVersionHash());
     Poco::replaceInPlace(templateFile, std::string("%SERVICE_ROOT%"), responseRoot);
 
     // Ask UAs to block if they detect any XSS attempt

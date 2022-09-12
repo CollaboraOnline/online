@@ -6,7 +6,6 @@
  */
 
 #include <config.h>
-#include <config_version.h>
 
 #include "Util.hpp"
 
@@ -61,6 +60,7 @@
 #include <Poco/Util/Application.h>
 
 #include "Common.hpp"
+#include "ConfigUtil.hpp"
 #include "Log.hpp"
 #include "Protocol.hpp"
 #include "TraceEvent.hpp"
@@ -618,8 +618,8 @@ namespace Util
 
     void getVersionInfo(std::string& version, std::string& hash)
     {
-        version = std::string(COOLWSD_VERSION);
-        hash = std::string(COOLWSD_VERSION_HASH);
+        version = config::getVersion();
+        hash = config::getVersionHash();
         hash.resize(std::min(8, (int)hash.length()));
     }
 

@@ -45,4 +45,10 @@ bool getBool(const std::string& key, const bool def);
 /// Return true if SSL is enabled in the config and no fuzzing is enabled.
 bool isSslEnabled();
 
+/// Returns version
+const std::string& getVersion();
+
+/// Returns version hash
+const std::string& getVersionHash();
+
 } // namespace config

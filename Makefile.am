@@ -157,6 +157,7 @@ noinst_PROGRAMS += \
 endif
 
 connect_SOURCES = tools/Connect.cpp \
+		  common/ConfigUtil.cpp \
                   common/DummyTraceEventEmitter.cpp \
                   common/Log.cpp \
                   common/Protocol.cpp \
@@ -164,6 +165,7 @@ connect_SOURCES = tools/Connect.cpp \
                   common/Util.cpp
 
 lokitclient_SOURCES = common/Log.cpp \
+		      common/ConfigUtil.cpp \
                       common/DummyTraceEventEmitter.cpp \
                       tools/KitClient.cpp \
                       common/Protocol.cpp \
@@ -226,6 +228,7 @@ httpecho_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 endif # ENABLE_LIBFUZZER
 
 clientnb_SOURCES = net/clientnb.cpp \
+		   common/ConfigUtil.cpp \
                    common/DummyTraceEventEmitter.cpp \
                    common/Log.cpp \
                    common/StringVector.cpp \
@@ -245,6 +248,7 @@ coolstress_SOURCES = tools/Stress.cpp \
 coolconfig_SOURCES = tools/Config.cpp \
 		     tools/ConfigMigrationAssistant.cpp \
 		     common/DummyTraceEventEmitter.cpp \
+		     common/ConfigUtil.cpp \
 		     common/Crypto.cpp \
 		     common/Log.cpp \
 		     common/StringVector.cpp \

@@ -10,7 +10,6 @@
  */
 
 #include <config.h>
-#include <config_version.h>
 
 #ifndef __FreeBSD__
 #include <sys/capability.h>
@@ -541,7 +540,7 @@ int main(int argc, char** argv)
         }
     }
 
-    SigUtil::setFatalSignals("forkit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
+    SigUtil::setFatalSignals("forkit startup of " + config::getVersion() + " " + config::getVersionHash());
 
     Util::setApplicationPath(Poco::Path(argv[0]).parent().toString());
 

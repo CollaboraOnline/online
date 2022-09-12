@@ -162,7 +162,7 @@ unit_base_la_LIBADD += -lssl -lcrypto
 endif
 
 fakesockettest_CPPFLAGS = -g
-fakesockettest_SOURCES = fakesockettest.cpp  ../net/FakeSocket.cpp ../common/DummyTraceEventEmitter.cpp ../common/Log.cpp ../common/Util.cpp
+fakesockettest_SOURCES = fakesockettest.cpp  ../net/FakeSocket.cpp ../common/DummyTraceEventEmitter.cpp ../common/Log.cpp ../common/ConfigUtil.cpp ../common/Util.cpp
 fakesockettest_LDADD = $(CPPUNIT_LIBS)
 
 # old-style unit tests - bootstrapped via UnitClient
