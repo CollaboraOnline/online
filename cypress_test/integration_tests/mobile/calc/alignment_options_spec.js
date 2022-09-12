@@ -43,7 +43,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#ScAlignmentPropertyPanel');
 
-		cy.get('#AlignLeft')
+		cy.get('.unoAlignLeft')
 			.should('be.visible');
 	}
 
@@ -51,7 +51,7 @@ describe('Change alignment settings.', function() {
 		openAlignmentPaneForFirstCell();
 
 		// Set right aligment first
-		helper.clickOnIdle('#AlignRight');
+		helper.clickOnIdle('.unoAlignRight');
 
 		calcHelper.selectEntireSheet();
 
@@ -65,7 +65,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#ScAlignmentPropertyPanel');
 
-		helper.clickOnIdle('#AlignLeft');
+		helper.clickOnIdle('.unoAlignLeft');
 
 		calcHelper.selectEntireSheet();
 
@@ -76,7 +76,7 @@ describe('Change alignment settings.', function() {
 	it('Align to center horizontally.', function() {
 		openAlignmentPaneForFirstCell();
 
-		helper.clickOnIdle('#AlignHorizontalCenter');
+		helper.clickOnIdle('.unoAlignHorizontalCenter');
 
 		calcHelper.selectEntireSheet();
 
@@ -87,7 +87,7 @@ describe('Change alignment settings.', function() {
 	it('Change to block alignment.', function() {
 		openAlignmentPaneForFirstCell();
 
-		helper.clickOnIdle('#AlignBlock');
+		helper.clickOnIdle('.unoAlignBlock');
 
 		calcHelper.selectEntireSheet();
 
@@ -112,7 +112,7 @@ describe('Change alignment settings.', function() {
 	it('Align to the top and to bottom.', function() {
 		openAlignmentPaneForFirstCell();
 
-		helper.clickOnIdle('#AlignTop');
+		helper.clickOnIdle('.unoAlignTop');
 
 		calcHelper.selectEntireSheet();
 
@@ -126,7 +126,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#ScAlignmentPropertyPanel');
 
-		helper.clickOnIdle('#AlignBottom');
+		helper.clickOnIdle('.unoAlignBottom');
 
 		calcHelper.selectEntireSheet();
 
@@ -137,7 +137,7 @@ describe('Change alignment settings.', function() {
 	it('Align to center vertically.', function() {
 		openAlignmentPaneForFirstCell();
 
-		helper.clickOnIdle('#AlignVCenter');
+		helper.clickOnIdle('.unoAlignVCenter');
 
 		calcHelper.selectEntireSheet();
 
@@ -265,7 +265,7 @@ describe('Change alignment settings.', function() {
 
 		helper.clickOnIdle('#ScAlignmentPropertyPanel');
 
-		cy.get('#AlignLeft')
+		cy.get('.unoAlignLeft')
 			.should('be.visible');
 
 		cy.get('input#mergecells')
