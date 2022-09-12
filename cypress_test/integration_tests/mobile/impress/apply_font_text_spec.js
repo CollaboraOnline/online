@@ -30,7 +30,7 @@ describe('Apply font on selected text.', function() {
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#Bold');
+		helper.clickOnIdle('.unoBold');
 
 		triggerNewSVG();
 
@@ -43,7 +43,7 @@ describe('Apply font on selected text.', function() {
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#Italic');
+		helper.clickOnIdle('.unoItalic');
 
 		triggerNewSVG();
 
@@ -56,7 +56,7 @@ describe('Apply font on selected text.', function() {
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#Underline');
+		helper.clickOnIdle('.unoUnderline');
 
 		triggerNewSVG();
 
@@ -69,7 +69,7 @@ describe('Apply font on selected text.', function() {
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#Strikeout');
+		helper.clickOnIdle('.unoStrikeout');
 
 		triggerNewSVG();
 
@@ -82,7 +82,7 @@ describe('Apply font on selected text.', function() {
 
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#Shadowed');
+		helper.clickOnIdle('.unoShadowed');
 
 		triggerNewSVG();
 
@@ -129,7 +129,7 @@ describe('Apply font on selected text.', function() {
 
 		helper.clickOnIdle('#Color .ui-header');
 
-		mobileHelper.selectFromColorPalette(2, 5, 13, 2);
+		mobileHelper.selectFromColorPicker('#Color', 5, 2);
 
 		triggerNewSVG();
 
@@ -144,7 +144,7 @@ describe('Apply font on selected text.', function() {
 
 		helper.clickOnIdle('#CharBackColor .ui-header');
 
-		mobileHelper.selectFromColorPalette(3, 2, 13, 2);
+		mobileHelper.selectFromColorPicker('#CharBackColor', 2, 2);
 
 		cy.get('#CharBackColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
@@ -172,7 +172,7 @@ describe('Apply font on selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		helper.clickOnIdle('#SuperScript');
+		helper.clickOnIdle('.unoSuperScript');
 
 		triggerNewSVG();
 
@@ -192,7 +192,7 @@ describe('Apply font on selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		helper.clickOnIdle('#SubScript');
+		helper.clickOnIdle('.unoSubScript');
 
 		triggerNewSVG();
 
