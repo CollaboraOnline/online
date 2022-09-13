@@ -30,7 +30,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		helper.clickOnIdle('#ParaPropertyPanel');
 
-		cy.get('#ParaLeftToRight')
+		cy.get('.unoParaLeftToRight')
 			.should('be.visible');
 	}
 
@@ -39,7 +39,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		helper.clickOnIdle('#ListsPropertyPanel');
 
-		cy.get('#DefaultBullet')
+		cy.get('.unoDefaultBullet')
 			.should('be.visible');
 	}
 
@@ -52,7 +52,7 @@ describe('Apply paragraph properties on selected text.', function() {
 		// Set right alignment first
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('#RightPara');
+		helper.clickOnIdle('.unoRightPara');
 
 		triggerNewSVG();
 
@@ -64,7 +64,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('#LeftPara');
+		helper.clickOnIdle('.unoLeftPara');
 
 		triggerNewSVG();
 
@@ -80,7 +80,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('#CenterPara');
+		helper.clickOnIdle('.unoCenterPara');
 
 		triggerNewSVG();
 
@@ -97,7 +97,7 @@ describe('Apply paragraph properties on selected text.', function() {
 		// Set right alignment first
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('#RightPara');
+		helper.clickOnIdle('.unoRightPara');
 
 		triggerNewSVG();
 
@@ -109,7 +109,7 @@ describe('Apply paragraph properties on selected text.', function() {
 		// Then set justified alignment
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('#JustifyPara');
+		helper.clickOnIdle('.unoJustifyPara');
 
 		triggerNewSVG();
 
@@ -126,7 +126,7 @@ describe('Apply paragraph properties on selected text.', function() {
 		// Set bottom alignment first
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('#CellVertBottom');
+		helper.clickOnIdle('.unoCellVertBottom');
 
 		triggerNewSVG();
 
@@ -138,7 +138,7 @@ describe('Apply paragraph properties on selected text.', function() {
 		// Then set top alignment
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('#CellVertTop');
+		helper.clickOnIdle('.unoCellVertTop');
 
 		triggerNewSVG();
 
@@ -154,7 +154,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('#CellVertCenter');
+		helper.clickOnIdle('.unoCellVertCenter');
 
 		triggerNewSVG();
 
@@ -171,7 +171,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		openListsPropertiesPanel();
 
-		helper.clickOnIdle('#DefaultBullet');
+		helper.clickOnIdle('#ListsPropertyPanel .unoDefaultBullet');
 
 		triggerNewSVG();
 
@@ -188,7 +188,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		openListsPropertiesPanel();
 
-		helper.clickOnIdle('#DefaultNumbering');
+		helper.clickOnIdle('#ListsPropertyPanel .unoDefaultNumbering');
 
 		triggerNewSVG();
 
@@ -236,7 +236,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('#ParaspaceIncrease');
+		helper.clickOnIdle('.unoParaspaceIncrease');
 
 		triggerNewSVG();
 
@@ -247,7 +247,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('#ParaspaceDecrease');
+		helper.clickOnIdle('.unoParaspaceDecrease');
 
 		triggerNewSVG();
 
@@ -264,7 +264,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('#ParaRightToLeft');
+		helper.clickOnIdle('.unoParaRightToLeft');
 
 		triggerNewSVG();
 
@@ -276,7 +276,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('#ParaLeftToRight');
+		helper.clickOnIdle('.unoParaLeftToRight');
 
 		triggerNewSVG();
 
@@ -294,7 +294,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		openListsPropertiesPanel();
 
-		helper.clickOnIdle('#DefaultBullet');
+		helper.clickOnIdle('#ListsPropertyPanel .unoDefaultBullet');
 
 		triggerNewSVG();
 
@@ -308,7 +308,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		openListsPropertiesPanel();
 
-		helper.clickOnIdle('#OutlineRight');
+		helper.clickOnIdle('.unoOutlineRight');
 
 		triggerNewSVG();
 
@@ -320,7 +320,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		openListsPropertiesPanel();
 
-		helper.clickOnIdle('#OutlineLeft');
+		helper.clickOnIdle('.unoOutlineLeft');
 
 		triggerNewSVG();
 
