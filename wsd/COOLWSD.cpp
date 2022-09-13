@@ -3710,13 +3710,13 @@ private:
             else if (requestDetails.isGet("/favicon.ico"))
                 handleFaviconRequest(requestDetails, socket);
 
-            else if (requestDetails.isGet("/hosting/discovery") ||
-                     requestDetails.isGet("/hosting/discovery/"))
-                handleWopiDiscoveryRequest(requestDetails, socket);
-
-            else if (requestDetails.isGet(CAPABILITIES_END_POINT))
-                handleCapabilitiesRequest(request, socket);
-
+            else if (requestDetails.equals(0, "hosting"))
+            {
+                if (requestDetails.equals(1, "discovery"))
+                    handleWopiDiscoveryRequest(requestDetails, socket);
+                else if (requestDetails.equals(1, "capabilities"))
+                    handleCapabilitiesRequest(request, socket);
+            }
             else if (requestDetails.isGet("/robots.txt"))
                 handleRobotsTxtRequest(request, socket);
 
