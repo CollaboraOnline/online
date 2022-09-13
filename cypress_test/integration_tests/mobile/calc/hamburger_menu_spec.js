@@ -163,8 +163,6 @@ describe('Trigger hamburger menu options.', function() {
 			.should('contain.text', 'q');
 
 		// Revert one undo step via Repair
-		mobileHelper.selectHamburgerMenuItem(['Edit', 'Repair']);
-
 		repairHelper.rollbackPastChange('Undo', undefined, true);
 
 		cy.get('input#addressInput')
