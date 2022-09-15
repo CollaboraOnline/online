@@ -19,8 +19,8 @@
     <string name="rate_now">Ocijeni sada</string>
     <string name="file_chromeos_read_only">Datoteku nije moguće spremiti na ovom mjestu, otvorit će se u zaštićenom stanju. Premjesti je u datoteke za reprodukciju za potpuni pristup čitanju/pisanju.</string>
     <string name="cant_open_the_document">Dokument se ne može otvoriti</string>
-    <string name="convert_odf_message">Ovaj dokument može sadržavati formatiranje ili sadržaj koji se ne može spremiti u trenutačno odabranom tekstualnom formatu datoteke.</string>
+    <string name="convert_odf_message">Ovaj dokument može sadržavati formatiranje ili sadržaj koji se ne može spremiti u trenutačno odabran datotečni format „Tekst”.</string>
     <string name="use_text">Koristi tekstualni format</string>
-    <string name="ask_for_convert_odf">Potvrdi format datoteke</string>
+    <string name="ask_for_convert_odf">Potvrdi datotečni format</string>
     <string name="use_odf">Koristi ODF format</string>
 </resources>

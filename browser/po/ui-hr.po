@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-04 14:31+0200\n"
-"PO-Revision-Date: 2022-08-21 20:15+0000\n"
+"PO-Revision-Date: 2022-09-15 13:19+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -38,7 +38,7 @@ msgstr "(trenutačno)"
 
 #: admin/admin.strings.js:10
 msgid "Analytics"
-msgstr "Analize"
+msgstr "Analitika"
 
 #: admin/admin.strings.js:11
 msgid "History"
@@ -54,7 +54,7 @@ msgstr "Kontrolna ploča"
 
 #: admin/admin.strings.js:14
 msgid "Users online"
-msgstr "Korisnici na mreži"
+msgstr "Online korisnici"
 
 #: admin/admin.strings.js:15
 msgid "User Name"
@@ -1494,7 +1494,7 @@ msgid ""
 "current file format."
 msgstr ""
 "Ovaj dokument možda sadrži formatiranje ili sadržaj koji se ne može spremiti "
-"u trenutačnom formatu datoteke."
+"u trenutačan datotečni format."
 
 #: src/control/Ruler.js:364
 msgid "Left Margin"
