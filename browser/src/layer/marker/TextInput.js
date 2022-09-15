@@ -664,6 +664,15 @@ L.TextInput = L.Layer.extend({
 		if (removeBefore > 0 || removeAfter > 0)
 			this._removeTextContent(removeBefore, removeAfter);
 
+		var docLayer = this._map._docLayer;
+		if (removeBefore > 0 && docLayer._typingMention) {
+			var ch = docLayer._mentionText.pop();
+			if (ch === '@')
+				this._map.fire('closementionpopup', { 'typingMention': false });
+			else 	
+				this._map.fire('sendmentiontext', {data: docLayer._mentionText});
+		}
+
 		var newText = content;
 		if (matchTo > 0)
 			newText = newText.slice(matchTo);
@@ -683,6 +692,24 @@ L.TextInput = L.Layer.extend({
 			var contentString = this.codePointsToString(content);
 			if (contentString[matchTo] === '\n' || contentString.charCodeAt(matchTo) === 13)
 				this._finishFormulabarEditing();
+		}
+
+		// special handling for mentions
+		if (docLayer._typingMention)  {
+			if (removeBefore === 0) {
+				docLayer._mentionText.push(ev.data);
+				var regEx = /^[0-9a-zA-Z ]+$/;
+				if (ev.data.match(regEx))
+					this._map.fire('sendmentiontext', {data: docLayer._mentionText});
+				else {
+					this._map.fire('closementionpopup', { 'typingMention': false });
+				}
+			}
+		}
+		
+		if (ev.data === '@' && this._map.getDocType() === 'text') {
+			docLayer._mentionText.push(ev.data);
+			docLayer._typingMention = true;
 		}
 	},
 
@@ -716,6 +743,7 @@ L.TextInput = L.Layer.extend({
 			// The composition messages doesn't play well with just a line break,
 			// therefore send a keystroke.
 			var unoKeyCode = this._linebreakHint ? 5376 : 1280;
+			this.closeMention = true;
 			this._sendKeyEvent(13, unoKeyCode);
 			this._emptyArea();
 		} else {
@@ -772,6 +800,11 @@ L.TextInput = L.Layer.extend({
 		this._fancyLog('empty-area-end');
 
 		this._ignoreInputCount--;
+
+		var mentionPopup = L.DomUtil.get('mentionPopup');
+		if (mentionPopup && this.closeMention) {
+			this._map.fire('closementionpopup',{ 'typingMention': false });
+		}
 	},
 
 	_onCompositionStart: function(/*ev*/) {
@@ -819,6 +852,27 @@ L.TextInput = L.Layer.extend({
 		else {
 			this._deleteHint = '';
 			this._linebreakHint = ev.keyCode === 13 && ev.shiftKey;
+		}
+
+		var mentionPopup = L.DomUtil.get('mentionPopup');
+		if (mentionPopup) {
+			if (ev.key === 'ArrowDown') {
+				var initialFocusElement =
+					document.querySelector('#mentionPopup span[tabIndex="0"]');
+				if (initialFocusElement) {
+					initialFocusElement.focus();
+					ev.preventDefault();
+					ev.stopPropagation();
+				}
+				this.closeMention = false;
+			} else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
+				ev.key === 'ArrowUp' || ev.key === 'Home' ||
+				ev.key === 'End' || ev.key === 'PageUp' ||
+				ev.key === 'PageDown' || ev.key === 'Enter') {
+				this.closeMention = true;
+			} else if (ev.key === 'Escape') {
+				this._map.fire('closementionpopup', { 'typingMention': false });
+			}
 		}
 	},
 

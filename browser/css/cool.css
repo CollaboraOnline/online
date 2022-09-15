@@ -975,3 +975,11 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 #datepicker .ui-icon-circle-triangle-w {
 	background-position: 0;
 }
+
+#mentionPopup .lokdialog.ui-dialog-content.ui-widget-content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100px;
+	min-width: 100px;
+}

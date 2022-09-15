@@ -1005,6 +1005,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._followUser = false;
 		this._followEditor = false;
 		this._selectedTextContent = '';
+		this._typingMention = false;
+		this._mentionText = [];
 	},
 
 	_initContainer: function () {

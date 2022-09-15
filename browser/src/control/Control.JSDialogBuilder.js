@@ -1920,9 +1920,34 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			};
 
 			text.addEventListener('click', clickFunction);
-			text.addEventListener('keypress', function onEvent(event) {
-				if (event.key === 'Enter')
+			text.addEventListener('keydown', function onEvent(event) {
+				var preventDef = false;
+				var listElements = $('#' + treeViewData.id + ' li');
+				var currIndex = parseInt(entry.row);
+				var treeLength = treeViewData.entries.length;
+				var spanElement = 'span.ui-treeview-cell';
+				if (event.key === 'Enter') {
 					clickFunction();
+					preventDef = true;
+				} else if (event.key === 'ArrowDown') {
+					if (currIndex === treeLength - 1)
+						listElements.eq(0).find(spanElement).focus();
+					else
+						listElements.eq(currIndex + 1).find(spanElement).focus();
+					preventDef = true;
+				} else if (event.key === 'ArrowUp') {
+					if (currIndex === 0)
+						listElements.eq(treeLength - 1).find(spanElement).focus();
+					else
+						listElements.eq(currIndex - 1).find(spanElement).focus();
+					preventDef = true;
+				} else if (treeViewData.id === 'mentionList' && event.key !== 'Tab' && event.key !== 'Shift') {
+					builder.map.focus();
+				}
+				if (preventDef) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
 			});
 
 			if (!singleClick) {
@@ -1960,7 +1985,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_treelistboxControl: function (parentContainer, data, builder) {
 		var table = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview', parentContainer);
 		table.id = data.id;
-
 		var disabled = data.enabled === 'false' || data.enabled === false;
 		if (disabled)
 			L.DomUtil.addClass(table, 'disabled');

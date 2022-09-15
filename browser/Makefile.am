@@ -356,6 +356,7 @@ COOL_JS_LST =\
 	src/control/Control.NotebookbarBuilder.js \
 	src/control/Control.Layers.js \
 	src/control/Control.Sidebar.js \
+	src/control/Control.Mention.js \
 	src/control/Search.js \
 	src/control/Permission.js \
 	src/control/Toolbar.js \

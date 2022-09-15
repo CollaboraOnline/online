@@ -136,7 +136,7 @@ L.Control.JSDialog = L.Control.extend({
 		var callback = e.callback;
 		var isSnackbar = data.type === 'snackbar';
 		var isModalPopup = data.type === 'modalpopup' || isSnackbar;
-		var canHaveFocus = !isSnackbar && data.id !== 'busypopup';
+		var canHaveFocus = !isSnackbar && data.id !== 'busypopup' && !data.isMention;
 		var focusWidgetId = data.init_focus_id;
 
 		if (data.action === 'fadeout')
