@@ -664,6 +664,9 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 /*Tooltips
 ----------------------------------*/
 [data-title]:hover:after {
+	padding: 7px 9px;
+	font-size: 1em;
+	line-height: 1;
 	opacity: 1;
 	transition: all 0.1s ease 0.5s;
 	visibility: visible;
