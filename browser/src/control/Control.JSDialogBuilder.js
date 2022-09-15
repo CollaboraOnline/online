@@ -559,16 +559,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		for (var row = 0; row < rows; row++) {
 			for (var col = 0; col < cols; col++) {
 				var child = builder._getGridChild(data.children, row, col);
-				var colNode = L.DomUtil.create('div', builder.options.cssClass + ' ui-grid-cell',
-					table);
 
 				if (child) {
-					if (child.width) {
-						colNode.style.gridColumnStart = parseInt(col);
-						colNode.style.gridColumnEnd = parseInt(col + child.width);
+					var sandbox = L.DomUtil.create('div');
+					builder.build(table, [child], false);
+					var control = sandbox.firstChild;
+					if (control) {
+						table.appendChild(sandbox.firstChild);
+						L.DomUtil.addClass(control, 'ui-grid-cell');
 					}
-
-					builder.build(colNode, [child], false, false);
 
 					processedChildren.push(child);
 				}
@@ -578,9 +577,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		for (var i = 0; i < (data.children || []).length; i++) {
 			child = data.children[i];
 			if (processedChildren.indexOf(child) === -1) {
-				colNode = L.DomUtil.create('div', builder.options.cssClass + ' ui-grid-cell',
-					table);
-				builder.build(colNode, [child], false, false);
+				sandbox = L.DomUtil.create('div');
+				builder.build(sandbox, [child], false);
+				control = sandbox.firstChild;
+				if (control) {
+					table.appendChild(sandbox.firstChild);
+					L.DomUtil.addClass(control, 'ui-grid-cell');
+				}
 				processedChildren.push(child);
 			}
 		}
@@ -2205,11 +2208,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_separatorControl: function(parentContainer, data) {
 		// don't create new control, style current parent
 
-		L.DomUtil.addClass(parentContainer, 'ui-separator');
+		var target = parentContainer.lastChild;
+		if (!target)
+			target = parentContainer;
+
+		L.DomUtil.addClass(target, 'ui-separator');
 		if (data.orientation && data.orientation === 'vertical') {
-			L.DomUtil.addClass(parentContainer, 'vertical');
+			L.DomUtil.addClass(target, 'vertical');
 		} else {
-			L.DomUtil.addClass(parentContainer, 'horizontal');
+			L.DomUtil.addClass(target, 'horizontal');
 		}
 
 		return false;
@@ -3441,6 +3448,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				L.DomUtil.addClass(parent, 'hidden');
 		}
 
+		if (control && data.width) {
+			control.style.gridColumn = 'span ' + parseInt(data.width);
+		}
+
 		// natural tab-order when using keyboard navigation
 		if (control && !control.hasAttribute('tabIndex')
 			&& data.type !== 'container'
@@ -3496,12 +3507,30 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (hasManyChildren && isContainer) {
 				var table = L.DomUtil.createWithId('div', childData.id, containerToInsert);
 				$(table).addClass(this.options.cssClass);
-				$(table).css('display', 'grid');
-				if (isVertical)
-					$(table).css('grid-template-columns', 'repeat(' + 1  + ', auto)'); // vertical
-				else
-					$(table).css('grid-auto-flow', 'column'); // horizontal
+
+				if (!isVertical) {
+					var rows = this._getGridRows(childData.children);
+					var cols = this._getGridColumns(childData.children);
+
+					if (rows > 1 && cols > 1) {
+						var gridRowColStyle = 'grid-template-rows: repeat(' + rows  + '); \
+							grid-template-columns: repeat(' + cols  + ');';
+
+						table.style = gridRowColStyle;
+					} else {
+						$(table).css('grid-auto-flow', 'column');
+					}
+
+					$(table).css('display', 'grid');
+				}
+
 				$(table).addClass('ui-grid-cell');
+
+				// if 'table' has no id - postprocess won't work...
+				if (childData.width) {
+					table.style.gridColumn = 'span ' + parseInt(childData.width);
+				}
+
 				var childObject = table;
 
 				this.postProcess(containerToInsert, childData);
