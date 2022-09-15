@@ -306,11 +306,6 @@ td.jsdialog .jsdialog.cell.sidebar {
 	bottom: 15px;
 }
 
-.sidebar #ratio {
-	position: relative;
-	left: 163px;
-}
-
 button#button2.ui-pushbutton.jsdialog.sidebar {
 	width: 151px;
 	padding: 4px;
