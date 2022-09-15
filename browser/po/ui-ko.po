@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-08-04 14:31+0200\n"
-"PO-Revision-Date: 2020-08-30 15:35+0000\n"
-"Last-Translator: 김주현 <kjh000121@gmail.com>\n"
-"Language-Team: Korean <https://weblate.documentfoundation.org/projects/"
-"libo_online/cool-ui/ko/>\n"
-"Language: \n"
+"PO-Revision-Date: 2022-09-15 01:54+0000\n"
+"Last-Translator: HerMin <jetem@me.com>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/collabora-online/"
+"ui/ko/>\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -44,9 +44,8 @@ msgid "History"
 msgstr "기록"
 
 #: admin/admin.strings.js:12
-#, fuzzy
 msgid "Log"
-msgstr "로그인"
+msgstr "로그"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
@@ -61,24 +60,21 @@ msgid "User Name"
 msgstr "사용자 이름"
 
 #: admin/admin.strings.js:16
-#, fuzzy
 msgid "Documents open"
-msgstr "문서 열림"
+msgstr "문서열기"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:122 admin/src/AdminSocketOverview.js:341
-#, fuzzy
 msgid " user(s)."
-msgstr "사용자 0명"
+msgstr " 사용자."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:195
-#, fuzzy
 msgid " document(s) open."
-msgstr "문서 열림"
+msgstr " 문서열기."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
-msgstr "문서의 수"
+msgstr "문서수"
 
 #: admin/admin.strings.js:20
 msgid "Memory consumed"
@@ -86,11 +82,11 @@ msgstr "메모리가 사용됨"
 
 #: admin/admin.strings.js:21
 msgid "Bytes sent"
-msgstr "보낸 바이트"
+msgstr "전송된 바이트"
 
 #: admin/admin.strings.js:22
 msgid "Bytes received"
-msgstr "받은 바이트"
+msgstr "수신된 바이트"
 
 #: admin/admin.strings.js:23
 msgid "PID"
@@ -102,7 +98,7 @@ msgstr "문서"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "보기"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
@@ -118,7 +114,7 @@ msgstr "수정됨"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "WOPI 호스트"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
