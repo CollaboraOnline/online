@@ -3461,14 +3461,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			control.setAttribute('tabIndex', '0');
 	},
 
-	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
+	build: function(parent, data, hasVerticalParent) {
 
+		// TODO: check and probably remove additional containers
 		if (hasVerticalParent === undefined) {
 			parent = L.DomUtil.create('div', 'root-container ' + this.options.cssClass, parent);
 			parent = L.DomUtil.create('div', 'vertical ' + this.options.cssClass, parent);
 		}
-
-		var containerToInsert = parent;
 
 		for (var childIndex in data) {
 			var childData = data[childIndex];
@@ -3477,19 +3476,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var childType = childData.type;
 
-			if (parentHasManyChildren) {
-				if (!hasVerticalParent)
-					var td = L.DomUtil.create('div', 'cell ' + this.options.cssClass, containerToInsert);
-				else {
-					containerToInsert = L.DomUtil.create('div', 'row ' + this.options.cssClass, parent);
-					td = L.DomUtil.create('div', 'cell ' + this.options.cssClass, containerToInsert);
-				}
-			} else {
-				td = containerToInsert;
-			}
+			var containerToInsert = parent;
 
 			if (childData.dialogid)
-				td.id = childData.dialogid;
+				containerToInsert.id = childData.dialogid;
 
 			var isVertical = childData.vertical === 'true' || childData.vertical === true ? true : false;
 
@@ -3504,14 +3494,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var hasManyChildren = childData.children && childData.children.length > 1;
 			var isContainer = this.isContainerType(childData.type);
 			if (hasManyChildren && isContainer) {
-				var table = L.DomUtil.createWithId('div', childData.id, td);
+				var table = L.DomUtil.createWithId('div', childData.id, containerToInsert);
 				$(table).addClass(this.options.cssClass);
-				$(table).addClass('vertical');
-				var childObject = L.DomUtil.create('div', 'row ' + this.options.cssClass, table);
+				$(table).css('display', 'grid');
+				if (isVertical)
+					$(table).css('grid-template-columns', 'repeat(' + 1  + ', auto)'); // vertical
+				else
+					$(table).css('grid-auto-flow', 'column'); // horizontal
+				$(table).addClass('ui-grid-cell');
+				var childObject = table;
 
-				this.postProcess(td, childData);
+				this.postProcess(containerToInsert, childData);
 			} else {
-				childObject = td;
+				childObject = containerToInsert;
 			}
 
 			var handler = this._controlHandlers[childType];
@@ -3523,7 +3518,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				window.app.console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
 
 			if (processChildren && childData.children != undefined)
-				this.build(childObject, childData.children, isVertical, hasManyChildren);
+				this.build(childObject, childData.children, isVertical);
 			else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
 				$('#' + childData.id).addClass('hidden-from-event');
 			}
