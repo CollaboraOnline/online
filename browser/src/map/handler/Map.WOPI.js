@@ -453,6 +453,10 @@ L.Map.WOPI = L.Handler.extend({
 		else if (msg.MessageId === 'Action_ChangeUIMode') {
 			this._map.uiManager.onChangeUIMode({mode: msg.Values.Mode, force: true});
 		}
+		else if (msg.MessageId === 'Action_Mention') {
+			var list = msg.Values.list;
+			this._map.fire('openmentionpopup', {data: list});
+		}
 	},
 
 	_postMessage: function(e) {

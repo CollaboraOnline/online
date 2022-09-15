@@ -146,6 +146,101 @@
               document.getElementById("ModifiedStatus").innerHTML = "Error during save";
             }
           }
+        } else if (msg.MessageId === 'UI_Mention') {
+          var dummyUserDatabase = [ {
+                                      username:'Abigail', 
+                                      profile: 'Abigail profile link'
+                                    }, 
+                                    {
+                                      username: 'Alexandra',
+                                      profile: 'Alexandra profile link'
+                                    },
+                                    {
+                                      username: 'Alison',
+                                      profile: 'Alison profile link'
+                                    },
+                                    {
+                                      username: 'Amanda',
+                                      profile: 'Amanda profile link'
+                                    },
+                                    {
+                                      username: 'Amelia',
+                                      profile: 'Amelia profile link'
+                                    },
+                                    {
+                                      username: 'Amy',
+                                      profile: 'Amy profile link'
+                                    },
+                                    {
+                                      username: 'Andrea',
+                                      profile: 'Andrea profile link'
+                                    },
+                                    {
+                                      username: 'Angela',
+                                      profile: 'Angela profile link'
+                                    },
+                                    {
+                                      username: 'Anna',
+                                      profile: 'Anna profile link'
+                                    },
+                                    {
+                                      username: 'Anne',
+                                      profile: 'Anne profile link'
+                                    },
+                                    {
+                                      username: 'Audrey',
+                                      profile: 'Audrey profile link'
+                                    },
+                                    {
+                                      username: 'Ava',
+                                      profile: 'Ava profile link'
+                                    },
+                                    {
+                                      username: 'Bella',
+                                      profile: 'Bella profile link'
+                                    },
+                                    {
+                                      username: 'Bernadette',
+                                      profile: 'Bernadette profile link'
+                                    },
+                                    {
+                                      username: 'Carol',
+                                      profile: 'Carol profile link'
+                                    },
+                                    {
+                                      username: 'Caroline',
+                                      profile: 'Caroline profile link'
+                                    },
+                                    {
+                                      username: 'Carolyn',
+                                      profile: 'Carolyn profile link'
+                                    },
+                                    {
+                                      username: 'xyz abc',
+                                      profile: 'xyz abc profile link'
+                                    } ]; 
+          if (msg.Values) {
+            var type = msg.Values.type;
+            var text = msg.Values.text;
+
+            var users = [];
+            dummyUserDatabase.forEach(element => {
+              if (element.username.includes(text))
+                users.push(element);
+            });      
+            
+            if (type === 'autocomplete')
+            {
+              setTimeout(post, 0,
+                {
+                  'MessageId': 'Action_Mention',
+                  'SendTime': Date.now(),
+                  'Values': {
+                    'list': users,
+                  }
+                });
+            }
+          }
         }
       }
 
