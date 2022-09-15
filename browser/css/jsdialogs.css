@@ -123,6 +123,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .jsdialog.ui-grid {
 	border-spacing: 0px;
 	width: 100%;
+	display: grid;
 }
 
 /* Scrollwindow - used eg. in accessibility check in writer */

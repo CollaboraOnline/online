@@ -548,18 +548,25 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var processedChildren = [];
 
-		var table = L.DomUtil.create('table', builder.options.cssClass + ' ui-grid', parentContainer);
+		var table = L.DomUtil.create('div', builder.options.cssClass + ' ui-grid', parentContainer);
 		table.id = data.id;
 
+		var gridRowColStyle = 'grid-template-rows: repeat(' + rows  + ', auto); \
+			grid-template-columns: repeat(' + cols  + ', auto);';
+
+		table.style = gridRowColStyle;
+
 		for (var row = 0; row < rows; row++) {
-			var rowNode = L.DomUtil.create('tr', builder.options.cssClass, table);
 			for (var col = 0; col < cols; col++) {
 				var child = builder._getGridChild(data.children, row, col);
-				var colNode = L.DomUtil.create('td', builder.options.cssClass, rowNode);
+				var colNode = L.DomUtil.create('div', builder.options.cssClass + ' ui-grid-cell',
+					table);
 
 				if (child) {
-					if (child.width)
-						$(colNode).attr('colspan', parseInt(child.width));
+					if (child.width) {
+						colNode.style.gridColumnStart = parseInt(col);
+						colNode.style.gridColumnEnd = parseInt(col + child.width);
+					}
 
 					builder.build(colNode, [child], false, false);
 
@@ -571,8 +578,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		for (var i = 0; i < (data.children || []).length; i++) {
 			child = data.children[i];
 			if (processedChildren.indexOf(child) === -1) {
-				rowNode = L.DomUtil.create('tr', builder.options.cssClass, table);
-				colNode = L.DomUtil.create('td', builder.options.cssClass, rowNode);
+				colNode = L.DomUtil.create('div', builder.options.cssClass + ' ui-grid-cell',
+					table);
 				builder.build(colNode, [child], false, false);
 				processedChildren.push(child);
 			}
