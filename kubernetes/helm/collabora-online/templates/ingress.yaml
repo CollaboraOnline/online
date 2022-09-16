@@ -5,6 +5,15 @@ metadata:
   namespace: {{ .Values.namespace.collabora }}
   annotations:
     nginx.ingress.kubernetes.io/upstream-hash-by: "$arg_WOPISrc"
+    haproxy.org/timeout-tunnel: "3600s"
+    haproxy.org/backend-config-snippet: |
+      mode http
+      balance leastconn
+      stick-table type string len 2048 size 1k store conn_cur
+      http-request set-var(txn.wopisrcconns) url_param(WOPISrc),table_conn_cur()
+      http-request track-sc1 url_param(WOPISrc)
+      stick match url_param(WOPISrc) if { var(txn.wopisrcconns) -m int gt 0 }
+      stick store-request url_param(WOPISrc)
 spec:
   rules:
   - host: {{ .Values.hosts.host }}

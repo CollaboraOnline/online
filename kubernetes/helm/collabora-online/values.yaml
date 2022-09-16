@@ -63,6 +63,8 @@ deployment:
 environmentVariablesCool:
   - name: extra_params
     value: --o:ssl.enable=false
+  - name: aliasgroup1
+    value: http://.*:80
   - name: username
     value:
   - name: password
