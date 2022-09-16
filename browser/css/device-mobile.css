@@ -752,7 +752,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	background: url('images/lc_replycomment.svg') no-repeat left center /24px;
 }
 .context-menu-list .context-menu-item:nth-child(3) span {
-	background: url('images/lc_deleteannotation.svg') no-repeat left center /24px;
+	background: url('images/lc_deletenote.svg') no-repeat left center /24px;
 }
 .context-menu-list .context-menu-item:nth-child(4) span {
 	background: url('images/lc_ok.svg') no-repeat left center /24px;
