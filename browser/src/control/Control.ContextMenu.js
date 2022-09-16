@@ -39,7 +39,7 @@ L.Control.ContextMenu = L.Control.extend({
 					  'FormatStockGain', 'InsertDataLabel' , 'DeleteDataLabel', 'ResetDataPoint',
 					  'InsertTrendline', 'InsertMeanValue', 'InsertXErrorBars' , 'InsertYErrorBars', 'ResetAllDataPoints' , 'DeleteAxis',
 					  'InsertAxisTitle', 'InsertMinorGrid', 'InsertMajorGrid' , 'InsertAxis', 'DeleteMajorGrid' , 'DeleteMinorGrid',
-					  'SpellCheckIgnoreAll', 'LanguageStatus', 'SpellCheckApplySuggestion','PageDialog',
+					  'SpellCheckIgnoreAll', 'LanguageStatus', 'SpellCheckApplySuggestion', 'PageDialog',
 					  'CompressGraphic', 'GraphicDialog', 'InsertCaptionDialog',
 					  'NextTrackedChange', 'PreviousTrackedChange', 'RejectTrackedChange', 'AcceptTrackedChange'],
 
@@ -72,6 +72,7 @@ L.Control.ContextMenu = L.Control.extend({
 		// lines as in the arrays above.
 		mobileBlackList: [
 			// general
+			'PasteSpecial',
 			'TransformDialog', 'FormatLine', 'FormatArea',
 			'InsertTitles', 'InsertRemoveAxes',
 			'DiagramType', 'DataRanges',
@@ -80,10 +81,12 @@ L.Control.ContextMenu = L.Control.extend({
 			'InsertTrendline', 'InsertXErrorBars' , 'InsertYErrorBars', 'FormatChartArea',
 			'FormatMeanValue', 'DiagramData', 'FormatLegend', 'FormatTrendline',
 			'FormatTrendlineEquation', 'FormatStockLoss', 'FormatStockGain', 'LanguageStatus',
+			'PageDialog',
 			// text
 			'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
 			// spreadsheet
-			'FormatCellDialog', 'DataDataPilotRun'
+			'FormatCellDialog', 'DataDataPilotRun',
+			'GroupSparklines', 'UngroupSparklines'
 		]
 	},
 
