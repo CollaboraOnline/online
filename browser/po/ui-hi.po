@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-16 12:48+0200\n"
-"PO-Revision-Date: 2022-08-01 11:22+0000\n"
-"Last-Translator: Pranam Lashkari <plashkari628@gmail.com>\n"
+"PO-Revision-Date: 2022-09-17 23:21+0000\n"
+"Last-Translator: Rashesh Padia <rasheshpadia419@gmail.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/collabora-online/"
 "ui/hi/>\n"
-"Language: \n"
+"Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -912,12 +912,12 @@ msgstr ""
 
 #: src/control/Control.NotebookbarBuilder.js:350
 msgid "Tap to expand"
-msgstr ""
+msgstr "विस्तार करने के लिए टैप करें"
 
 #: src/control/Control.NotebookbarBuilder.js:351
 #: src/control/Control.NotebookbarBuilder.js:385
 msgid "Tap to collapse"
-msgstr ""
+msgstr "संक्षिप्त करने के लिए टैप करें"
 
 #: src/control/Control.NotebookbarBuilder.js:505
 #: src/control/Control.NotebookbarCalc.js:187
