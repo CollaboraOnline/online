@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-16 12:48+0200\n"
-"PO-Revision-Date: 2022-08-06 16:18+0000\n"
-"Last-Translator: SC <lalocas@protonmail.com>\n"
+"PO-Revision-Date: 2022-09-17 23:21+0000\n"
+"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -902,12 +902,12 @@ msgstr "Final do gradiente"
 
 #: src/control/Control.NotebookbarBuilder.js:350
 msgid "Tap to expand"
-msgstr ""
+msgstr "Clique para expandir"
 
 #: src/control/Control.NotebookbarBuilder.js:351
 #: src/control/Control.NotebookbarBuilder.js:385
 msgid "Tap to collapse"
-msgstr ""
+msgstr "Clique para recolher"
 
 #: src/control/Control.NotebookbarBuilder.js:505
 #: src/control/Control.NotebookbarCalc.js:187
