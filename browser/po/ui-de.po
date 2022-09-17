@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-16 12:48+0200\n"
-"PO-Revision-Date: 2022-08-12 15:19+0000\n"
-"Last-Translator: Sargon-Isa <Sargon_isa@hotmail.de>\n"
+"PO-Revision-Date: 2022-09-17 23:21+0000\n"
+"Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -907,12 +907,12 @@ msgstr "Endfarbe"
 
 #: src/control/Control.NotebookbarBuilder.js:350
 msgid "Tap to expand"
-msgstr ""
+msgstr "Antippen zum Erweitern"
 
 #: src/control/Control.NotebookbarBuilder.js:351
 #: src/control/Control.NotebookbarBuilder.js:385
 msgid "Tap to collapse"
-msgstr ""
+msgstr "Antippen zum Zuklappen"
 
 #: src/control/Control.NotebookbarBuilder.js:505
 #: src/control/Control.NotebookbarCalc.js:187
