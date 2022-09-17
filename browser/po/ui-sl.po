@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-16 12:48+0200\n"
-"PO-Revision-Date: 2022-08-12 15:19+0000\n"
+"PO-Revision-Date: 2022-09-17 23:21+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:6
@@ -902,12 +902,12 @@ msgstr "Konec preliva"
 
 #: src/control/Control.NotebookbarBuilder.js:350
 msgid "Tap to expand"
-msgstr ""
+msgstr "Tapnite za razširjanje"
 
 #: src/control/Control.NotebookbarBuilder.js:351
 #: src/control/Control.NotebookbarBuilder.js:385
 msgid "Tap to collapse"
-msgstr ""
+msgstr "Tapnite za strnjevanje"
 
 #: src/control/Control.NotebookbarBuilder.js:505
 #: src/control/Control.NotebookbarCalc.js:187
