@@ -41,7 +41,6 @@ if [ "$type" == "cool" ] && [ -n ${secret_key+set} ]; then
     else
         echo "deb [signed-by=/usr/share/keyrings/collaboraonline-release-keyring.gpg] https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/${version:-22.05}/customer-ubuntu1804-${secret_key} /" > /etc/apt/sources.list.d/collabora.list
     fi
-    echo "deb [signed-by=/usr/share/keyrings/collaboraonline-release-keyring.gpg] https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/${version:-22.05}/customer-ubuntu1804-${secret_key} /" > /etc/apt/sources.list.d/collabora.list
 elif [ "$type" == "key" ]; then
     echo "Based on the provided build arguments license key enabled Collabora Online will be used."
     echo "deb [signed-by=/usr/share/keyrings/collaboraonline-release-keyring.gpg] https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/${version:-22.05}-key /" > /etc/apt/sources.list.d/collabora.list
