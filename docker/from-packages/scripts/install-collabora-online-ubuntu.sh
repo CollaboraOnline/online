@@ -33,6 +33,7 @@ if [ $(uname -i) == "aarch64" ]; then
 fi
 
 # Add Collabora repos
+secret_key=$(cat /run/secrets/secret_key)
 if [ "$type" == "cool" ] && [ -n ${secret_key+set} ]; then
     echo "Based on the provided build arguments Collabora Online from customer repo will be used."
     echo "deb [signed-by=/usr/share/keyrings/collaboraonline-release-keyring.gpg] https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/${version:-22.05}/customer-ubuntu1804-${secret_key} /" >> /etc/apt/sources.list.d/collabora.list
