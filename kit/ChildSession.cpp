@@ -2904,7 +2904,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             for (int i = 0; i < getLOKitDocument()->getParts(); i++)
             {
                 const std::string parts = std::to_string(i);
-                const int mode = 0; // TODO: next step: getLOKitDocument()->getEditMode();
+                const int mode = getLOKitDocument()->getEditMode();
                 const std::string optionalMode = (mode > 0) ? (", " + std::to_string(mode)) : "";
                 sendTextFrame("invalidatetiles: EMPTY, " + parts + optionalMode);
             }
