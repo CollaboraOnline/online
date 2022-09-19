@@ -3110,6 +3110,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_PRINT_RANGES:
         sendTextFrame("printranges: " + payload);
         break;
+    case LOK_CALLBACK_FONTS_MISSING:
+        // TODO
+        break;
     default:
         LOG_ERR("Unknown callback event (" << lokCallbackTypeToString(type) << "): " << payload);
     }
