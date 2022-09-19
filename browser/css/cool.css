@@ -39,6 +39,16 @@
 	justify-content: center;
 }
 
+/* Space */
+.m-v-0 {
+	margin-block: 0;
+}
+
+/* Border */
+.border-0 {
+	border: 0 !important;
+}
+
 /* clip technique: hide visually but keep it available to screen readers */
 .visuallyhidden {
 	border: 0;
