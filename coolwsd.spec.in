@@ -17,7 +17,7 @@ Vendor:         %{vendor}
 Summary:        Collabora Online WebSocket Daemon
 License:        EULA
 Source0:        coolwsd-@PACKAGE_VERSION@.tar.gz
-BuildRequires:  libcap-devel libpng-devel pam-devel gcc-c++ cppunit-devel pam-devel fontconfig make
+BuildRequires:  libcap-devel libpng-devel pam-devel gcc-c++ cppunit-devel pam-devel fontconfig make libzstd-devel
 
 # Red Hat and CentOS
 %if 0%{?rhel} == 7
@@ -37,7 +37,7 @@ Requires:       collaboraoffice collaboraoffice-ure collaboraofficebasis-core co
 Requires(post): coreutils grep sed cpio
 %if 0%{?rhel}
 # coolwsd dependencies
-Requires:       systemd expat keyutils-libs krb5-libs libattr libcap libcom_err libgcc libpng libselinux openssh-clients openssl-libs pcre xz-libs zlib
+Requires:       systemd expat keyutils-libs krb5-libs libattr libcap libcom_err libgcc libpng libselinux openssh-clients openssl-libs pcre xz-libs zlib libzstd
 # Collabora Office dependencies (unfortunately Collabora Office RPM packages do not have real dependencies)
 Requires:       expat fontconfig freetype libuuid bzip2-libs
 %endif
@@ -45,7 +45,7 @@ Requires:       expat fontconfig freetype libuuid bzip2-libs
 %if 0%{?suse_version}
 # coolwsd dependencies
 Requires(post): libcap-progs
-Requires:       systemd libopenssl1_0_0 libpcre1 libz1 libcap2 libpng12-0 %{fillup_prereq}
+Requires:       systemd libopenssl1_0_0 libpcre1 libz1 libcap2 libpng12-0 libzstd1 %{fillup_prereq}
 # Collabora Office dependencies (unfortunately Collabora Office RPM packages do not have real dependencies)
 # cd /opt/collaboraoffice/program ; for i in soffice.bin *.so ;do ldd $i | grep '=>' | sed -e "s/^.*=> //" -e "s/ [(].*$//"; done | sort | uniq | xargs rpm -qf --qf="%{NAME}\n" | sort | uniq | grep -v collaboraoffice
 Requires:       fontconfig libbz2-1 libexpat1 libfreetype6 libpng16-16 libuuid1 openssh
