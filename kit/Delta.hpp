@@ -423,8 +423,8 @@ class DeltaGenerator {
 
         // compress for speed, not size - and trust to deltas.
         size_t compSize = ZSTD_compress(compressed.get(), maxCompressed,
-                                       output.data(), output.size(),
-                                       ZSTD_minCLevel());
+                                        output.data(), output.size(),
+                                        -(1<<17) /* ZSTD_minCLevel() */);
         if (ZSTD_isError(compSize))
         {
             LOG_ERR("Failed to compress delta of size " << output.size() << " with " << ZSTD_getErrorName(compSize));
