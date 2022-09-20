@@ -40,7 +40,7 @@ function hideSidebar(frameId) {
 	cy.customGet('#tb_editbar_item_sidebar .w2ui-button', frameId)
 		.click({force: true});
 
-	cy.customGet('#tb_editbar_item_sidebar .w2ui-button', frameId)
+	cy.customGet('#tb_editbar_item_sidebar .w2ui-button', frameId, { timeout: 5000 })
 		.should('not.have.class', 'checked');
 
 	cy.customGet('#sidebar-dock-wrapper', frameId)
