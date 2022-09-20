@@ -1,5 +1,5 @@
 {{- if .Values.global.app.scaling.enabled }}
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ .Values.hpa.name }}
@@ -22,12 +22,16 @@ spec:
   - type: Resource
     resource:
       name: memory
-      targetAverageUtilization: {{ .Values.global.app.scaling.target.memory }}
+      target:
+        type: Utilization
+        averageUtilization: {{ .Values.global.app.scaling.target.memory }}
 {{- end }}
 {{- if gt .Values.global.app.scaling.target.cpu 1.0 }}
   - type: Resource
     resource:
       name: cpu
-      targetAverageUtilization: {{ .Values.global.app.scaling.target.cpu }}
+      target:
+        type: Utilization
+        averageUtilization: {{ .Values.global.app.scaling.target.cpu }}
 {{- end }}
 {{- end }}
