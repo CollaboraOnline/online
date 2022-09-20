@@ -387,7 +387,26 @@ class Comment {
 			if (this.isCalcRTL()) { // Mirroring is done in setPosition
 				startX += sizeX;  // but adjust for width of the cell.
 			}
-			this.setPosition(Math.round(this.sectionProperties.data.cellPos[0] * ratio), Math.round(this.sectionProperties.data.cellPos[1] * ratio));
+			this.showSection = true;
+			var position: Array<number> = [Math.round(this.sectionProperties.data.cellPos[0] * ratio), Math.round(this.sectionProperties.data.cellPos[1] * ratio)];
+			var splitPosCore = {x: 0, y: 0};
+			if (this.map._docLayer.getSplitPanesContext())
+				splitPosCore = this.map._docLayer.getSplitPanesContext().getSplitPos();
+
+			splitPosCore.x *= app.dpiScale;
+			splitPosCore.y *= app.dpiScale;
+
+			if (position[0] <= splitPosCore.x)
+				position[0] += this.documentTopLeft[0];
+			else if (position[0] - this.documentTopLeft[0] <= splitPosCore.x)
+				this.showSection = false;
+
+			if (position[1] <= splitPosCore.y)
+				position[1] += this.documentTopLeft[1];
+			else if (position[1] - this.documentTopLeft[1] <= splitPosCore.y)
+				this.showSection = false;
+
+			this.setPosition(position[0], position[1]);
 		}
 		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
