@@ -145,13 +145,13 @@ L.Map.Keyboard = L.Handler.extend({
 		pageDown: 34,
 		enter:    13,
 		BACKSPACE:8,
-		TAB:      9, 
+		TAB:      9,
 		SPACE :   32,
 		SHIFT:    16, // shift		: UNKOWN
 		CTRL:     17, // ctrl		: UNKOWN
 		ALT:      18, // alt		: UNKOWN
 		PAUSE:    19, // pause/break	: UNKOWN
-		CAPSLOCK: 20, // caps lock	: UNKOWN, 
+		CAPSLOCK: 20, // caps lock	: UNKOWN,
 		END:      35,
 		HOME:     36,
 		LEFT:     37,
@@ -187,7 +187,7 @@ L.Map.Keyboard = L.Handler.extend({
 		M:        77,
 		N:        78,
 		O:        79,
-		P:        80,	
+		P:        80,
 		Q:        81,
 		R:        82,
 		S:        83,
@@ -234,7 +234,7 @@ L.Map.Keyboard = L.Handler.extend({
 		SEMICOLON:    186,
 		EQUAL:        187,
 		COMMA:        188,
-		//SUBTRACT:     189, 
+		//SUBTRACT:     189,
 		PERIOD:       190, // period		: UNKOWN
 		FORWARDSLASH: 191, // forward slash	: UNKOWN
 		GRAVEACCENT:  192, // grave accent	: UNKOWN
@@ -332,7 +332,7 @@ L.Map.Keyboard = L.Handler.extend({
 	// any 'beforeinput', 'keypress' and 'input' events that would add
 	// printable characters. Those are handled by TextInput.js.
 	_onKeyDown: function (ev) {
-		if (this._map.uiManager.isUIBlocked())
+		if (this._map.uiManager.isUIBlocked() || (this._map.isPermissionReadOnly() && !this.readOnlyAllowedShortcuts(ev)))
 			return;
 
 		var completeEvent = app.socket.createCompleteTraceEvent('L.Map.Keyboard._onKeyDown', { type: ev.type, charCode: ev.charCode });
@@ -713,7 +713,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return false;
 		case this.keyCodes.C[DEFAULT]: // 'C'
 		case this.keyCodes.X[DEFAULT]: // 'X'
-		case this.keyCodes.C[MAC]: // 'c' Since keydown+c as different value in mac so i had to update the mapping in keyCodes 
+		case this.keyCodes.C[MAC]: // 'c' Since keydown+c as different value in mac so i had to update the mapping in keyCodes
 		case this.keyCodes.X[MAC]: // 'x' same reason as above
 		case this.keyCodes.LEFTWINDOWKEY[MAC]: // Left Cmd (Safari)
 		case this.keyCodes.RIGHTWINDOWKEY[MAC]: // Right Cmd (Safari)
@@ -752,6 +752,17 @@ L.Map.Keyboard = L.Handler.extend({
 			// need to handle this separately for Firefox
 			return true;
 		}
+		return false;
+	},
+
+	readOnlyAllowedShortcuts: function(e) {
+		// Open keyboard shortcuts help page
+		if (this._isCtrlKey(e) && e.shiftKey && e.key === '?')
+			return true;
+		// Open help with F1 if any special key is not pressed
+		else if (e.type === 'keydown' && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey && e.keyCode === this.keyCodes.F1)
+			return true;
+
 		return false;
 	}
 });
