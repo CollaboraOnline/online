@@ -4884,7 +4884,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugLoadDelta = 0;
 		this._debugInvalidateCount = 0;
 		this._debugRenderCount = 0;
-		this._debugDeltas = true; // FIXME - turn me off before pushing ...
+		this._debugDeltas = true;
+		this._debugDeltasDetail = false;
 		if (!this._debugData) {
 			this._debugData = {};
 			this._debugDataNames = ['tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount', 'postMessage'];
@@ -6654,6 +6655,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		// FIXME:used clamped array ... as a 2nd parameter
 		var allDeltas = window.fzstd.decompress(rawDelta);
 
+		var imgData;
+		var ctx = canvas.getContext('2d');
+
 		while (offset < allDeltas.length)
 		{
 			if (this._debugDeltas)
@@ -6669,46 +6673,57 @@ L.CanvasTileLayer = L.Layer.extend({
 						       delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
 			}
 
-			// FIXME: it is a nonsense to keep fetching the data from the canvas
-			// and putting it back if we apply multiple deltas - horribly wasteful.
-			// we should move that outside the loop.
-			var len = this._applyDeltaChunk(canvas, tile, initCanvas, delta, isKeyframe);
-			if (this._debugDeltas)
-				window.app.console.log('Applied chunk ' + i++ + ' of total size ' + delta.length +
-						       ' at stream offset ' + offset + ' size ' + len);
+
+			if (isKeyframe)
+			{
+				// FIXME: use zstd to de-compress directly into a Uint8ClampedArray
+				len = canvas.width * canvas.height * 4;
+				var pixelArray = new Uint8ClampedArray(delta.subarray(0, len));
+				imgData = new ImageData(pixelArray, canvas.width, canvas.height);
+
+				if (this._debugDeltas)
+					window.app.console.log('Applied keyframe ' + i++ + ' of total size ' + delta.length +
+							       ' at stream offset ' + offset + ' size ' + len);
+			}
+			else
+			{
+				if (initCanvas && tile.el) // render old image data to the canvas
+					ctx.drawImage(tile.el, 0, 0);
+
+				if (!imgData) // no keyframe
+				{
+					if (this._debugDeltas)
+						window.app.console.log('Fetch canvas contents');
+					imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+				}
+
+				// copy old data to work from:
+				var oldData = new Uint8ClampedArray(imgData.data);
+
+				var len = this._applyDeltaChunk(imgData, delta, oldData, canvas.width, canvas.height);
+				if (this._debugDeltas)
+					window.app.console.log('Applied chunk ' + i++ + ' of total size ' + delta.length +
+							       ' at stream offset ' + offset + ' size ' + len);
+			}
+
 			initCanvas = false;
 			isKeyframe = false;
 			offset += len;
 		}
+
+	        if (imgData)
+			ctx.putImageData(imgData, 0, 0);
+
+		return i;
+
 	},
 
-	_applyDeltaChunk: function(canvas, tile, initCanvas, delta, isKeyframe) {
-		var ctx = canvas.getContext('2d');
-
-		var pixSize = canvas.width * canvas.height * 4;
+	_applyDeltaChunk: function(imgData, delta, oldData, width, height) {
+		var pixSize = width * height * 4;
 		if (this._debugDeltas)
-			window.app.console.log('Applying a ' + (isKeyframe ? 'keyframe' : 'delta') +
-					       ' of length ' + delta.length + ' canvas size: ' + pixSize);
+			window.app.console.log('Applying a delta of length ' +
+					       delta.length + ' canvas size: ' + pixSize);
 			// + ' hex: ' + hex2string(delta));
-
-		if (delta.length === 0)
-			return; // that was easy!
-
-		if (isKeyframe)
-		{
-			// FIXME: use zstd to de-compress directly into a Uint8ClampedArray
-			ctx.putImageData(new ImageData(new Uint8ClampedArray(delta.subarray(0, pixSize)),
-						       canvas.width, canvas.height), 0, 0);
-			return pixSize;
-		}
-
-		if (initCanvas && tile.el) // render old image data to the canvas
-			ctx.drawImage(tile.el, 0, 0);
-
-		// FIXME; can we operate directly on the image ?
-		var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-		// FIXME: can we just keep a ptr to imgData.data (?) ... =)
-		var oldData = new Uint8ClampedArray(imgData.data);
 
 		var offset = 0;
 
@@ -6736,14 +6751,14 @@ L.CanvasTileLayer = L.Layer.extend({
 				var count = delta[i+1];
 				var srcRow = delta[i+2];
 				var destRow = delta[i+3];
-				if (this._debugDeltas)
+				if (this._debugDeltasDetail)
 					window.app.console.log('[' + i + ']: copy ' + count + ' row(s) ' + srcRow + ' to ' + destRow);
 				i+= 4;
 				for (var cnt = 0; cnt < count; ++cnt)
 				{
-					var src = (srcRow + cnt) * canvas.width * 4;
-					var dest = (destRow + cnt) * canvas.width * 4;
-					for (var j = 0; j < canvas.width * 4; ++j)
+					var src = (srcRow + cnt) * width * 4;
+					var dest = (destRow + cnt) * width * 4;
+					for (var j = 0; j < width * 4; ++j)
 					{
 						imgData.data[dest + j] = oldData[src + j];
 					}
@@ -6753,8 +6768,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				destRow = delta[i+1];
 				var destCol = delta[i+2];
 				var span = delta[i+3];
-				offset = destRow * canvas.width * 4 + destCol * 4;
-				if (this._debugDeltas)
+				offset = destRow * width * 4 + destCol * 4;
+				if (this._debugDeltasDetail)
 					window.app.console.log('[' + i + ']: apply new span of size ' + span +
 							       ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 				i += 4;
@@ -6775,8 +6790,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				break;
 			}
 		}
-
-		ctx.putImageData(imgData, 0, 0);
 
 		return i;
 	},
