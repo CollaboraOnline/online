@@ -2847,21 +2847,16 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             }
             else if (tokens.size() == 2 && tokens.equals(0, "EMPTY"))
             {
+                // without mode: "EMPTY, <part>"
                 const std::string part = (_docType != "text" ? tokens[1].c_str() : "0"); // Writer renders everything as part 0.
-
-                // without mode: "EMPTY, <parts>"
-                // with mode:    "EMPTY, <parts> <mode>"
-                StringVector spaceTokens(StringVector::tokenize(payload, ' '));
-                if (spaceTokens.size() == 3)
-                {
-                    const std::string newPart = spaceTokens[1].c_str();
-                    const std::string mode = spaceTokens[2].c_str();
-                    sendTextFrame("invalidatetiles: EMPTY, " + part + ", " + mode);
-                }
-                else
-                {
-                    sendTextFrame("invalidatetiles: EMPTY, " + part);
-                }
+                sendTextFrame("invalidatetiles: EMPTY, " + part);
+            }
+            else if (tokens.size() == 3 && tokens.equals(0, "EMPTY"))
+            {
+                // with mode:    "EMPTY, <part>, <mode>"
+                const std::string part = (_docType != "text" ? tokens[1].c_str() : "0"); // Writer renders everything as part 0.
+                const std::string mode = (_docType != "text" ? tokens[2].c_str() : "0"); // Writer is not using mode.
+                sendTextFrame("invalidatetiles: EMPTY, " + part + ", " + mode);
             }
             else
             {
@@ -2909,7 +2904,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             for (int i = 0; i < getLOKitDocument()->getParts(); i++)
             {
                 const std::string parts = std::to_string(i);
-                sendTextFrame("invalidatetiles: EMPTY, " + parts);
+                const int mode = 0; // TODO: next step: getLOKitDocument()->getEditMode();
+                const std::string optionalMode = (mode > 0) ? (", " + std::to_string(mode)) : "";
+                sendTextFrame("invalidatetiles: EMPTY, " + parts + optionalMode);
             }
         }
         break;
