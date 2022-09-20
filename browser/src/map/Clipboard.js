@@ -715,6 +715,9 @@ L.Clipboard = L.Class.extend({
 	copy: function(ev) { return this._doCopyCut(ev, 'Copy'); },
 
 	paste: function(ev) {
+		if (this._map.isPermissionReadOnly())
+			return;
+
 		window.app.console.log('Paste');
 
 		if (this._isAnyInputFieldSelected())

@@ -142,7 +142,106 @@ L.Map.Keyboard = L.Handler.extend({
 	keyCodes: {
 		pageUp:   33,
 		pageDown: 34,
-		enter:    13
+		enter:    13,
+		BACKSPACE:8,
+		TAB:      9,
+		SPACE :   32,
+		SHIFT:    16, // shift		: UNKOWN
+		CTRL:     17, // ctrl		: UNKOWN
+		ALT:      18, // alt		: UNKOWN
+		PAUSE:    19, // pause/break	: UNKOWN
+		CAPSLOCK: 20, // caps lock	: UNKOWN,
+		END:      35,
+		HOME:     36,
+		LEFT:     37,
+		UP:       38,
+		RIGHT:    39,
+		DOWN:     40,
+		INSERT:   45,
+		DELETE:   46,
+		NUM0:     [48,96], // two values because of different mapping in mac and windows for same keys
+		NUM1:     [49,97],
+		NUM2:     [50,98],
+		NUM3:     [51,99],
+		NUM4:     [52,100],
+		NUM5:     [53,101],
+		NUM6:     [54,102],
+		NUM7:     [55,103],
+		NUM8:     [56,103],
+		NUM9:     [57,104],
+		A:        65,
+		B:        66,
+		C:        [67,99],
+		//c:        99,
+		D:        68,
+		E:        69,
+		//f:        70, no need for separate as for Windows it will remain the same
+		F:        70,
+		G:        71,
+		H:        72,
+		I:        73,
+		J:        74,
+		K:        75,
+		L:        76,
+		M:        77,
+		N:        78,
+		O:        79,
+		P:        80,
+		Q:        81,
+		R:        82,
+		S:        83,
+		T:        84,
+		U:        85,
+		V:        [86,118],
+		//v:        118, // this is for MAC as the value of v changes when we press keydown
+		W:        87,
+		X:        [88,120],
+		//x:        120, // this is for MAC as the value of x changes when we press keydown
+		Y:        89,
+		Z:        90,
+		LEFTWINDOWKEY :    [91,91], // left window key	: UNKOWN  and also for MAC
+		RIGHTWINDOWKEY:    [92,93], // right window key	: UNKOWN  and also for MAC
+		SELECTKEY:         93, // select key	: UNKOWN
+		// NUM0:     96,
+		// NUM1:     97,
+		// NUM2:     98,
+		// NUM3:     99,
+		// NUM4:     100,
+		// NUM5:     101,
+		// NUM6:     102,
+		// NUM7:     103,
+		// NUM8:     104,
+		MULTIPLY:    106,
+		ADD:         107,
+		//SUBTRACT:    109,
+		DECIMAL:     110,
+		DIVIDE:      111,
+		F1:       112,
+		F2:       113,
+		F3:       114,
+		F4:       115,
+		F5:       116,
+		F6:       117,
+		F7:       118,
+		F8:       119,
+		F9:       120,
+		F10:      121,
+		F11:      122,
+		NUMLOCK:  144,
+		SCROLLLOCK:   145,
+		SUBTRACT:     [109,173,189],
+		SEMICOLON:    186,
+		EQUAL:        187,
+		COMMA:        188,
+		//SUBTRACT:     189,
+		PERIOD:       190, // period		: UNKOWN
+		FORWARDSLASH: 191, // forward slash	: UNKOWN
+		GRAVEACCENT:  192, // grave accent	: UNKOWN
+		OPENBRACKET:  219, // open bracket	: UNKOWN
+		BACKSLASH:    220, // back slash	: UNKOWN
+		CLOSEBRACKET: 221, // close bracket	: UNKOWN
+		SINGLEQUOTE : 222  // single quote	: UNKOWN
+
 	},
 
 	navigationKeyCodes: {
@@ -231,7 +330,7 @@ L.Map.Keyboard = L.Handler.extend({
 	// any 'beforeinput', 'keypress' and 'input' events that would add
 	// printable characters. Those are handled by TextInput.js.
 	_onKeyDown: function (ev) {
-		if (this._map.uiManager.isUIBlocked())
+		if (this._map.uiManager.isUIBlocked() || (this._map.isPermissionReadOnly() && !this.readOnlyAllowedShortcuts(ev)))
 			return;
 
 		var completeEvent = app.socket.createCompleteTraceEvent('L.Map.Keyboard._onKeyDown', { type: ev.type, charCode: ev.charCode });
@@ -598,12 +697,12 @@ L.Map.Keyboard = L.Handler.extend({
 				return true;
 			}
 			return false;
-		case 67: // 'C'
-		case 88: // 'X'
-		case 99: // 'c'
-		case 120: // 'x'
-		case 91: // Left Cmd (Safari)
-		case 93: // Right Cmd (Safari)
+		case this.keyCodes.C[DEFAULT]: // 'C'
+		case this.keyCodes.X[DEFAULT]: // 'X'
+		case this.keyCodes.C[MAC]: // 'c' Since keydown+c as different value in mac so i had to update the mapping in keyCodes
+		case this.keyCodes.X[MAC]: // 'x' same reason as above
+		case this.keyCodes.LEFTWINDOWKEY[MAC]: // Left Cmd (Safari)
+		case this.keyCodes.RIGHTWINDOWKEY[MAC]: // Right Cmd (Safari)
 			// we prepare for a copy or cut event
 			this._map.focus();
 			this._map._textInput.select();
@@ -639,6 +738,17 @@ L.Map.Keyboard = L.Handler.extend({
 			// need to handle this separately for Firefox
 			return true;
 		}
+		return false;
+	},
+
+	readOnlyAllowedShortcuts: function(e) {
+		// Open keyboard shortcuts help page
+		if (this._isCtrlKey(e) && e.shiftKey && e.key === '?')
+			return true;
+		// Open help with F1 if any special key is not pressed
+		else if (e.type === 'keydown' && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey && e.keyCode === this.keyCodes.F1)
+			return true;
+
 		return false;
 	}
 });
