@@ -180,7 +180,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			command.part = this._selectedPart;
 		}
 
-		if (command.mode === undefined)
+		if (isNaN(command.mode))
 			command.mode = this._selectedMode;
 
 		var topLeftTwips = new L.Point(command.x, command.y);

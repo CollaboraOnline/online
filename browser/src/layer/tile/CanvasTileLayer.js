@@ -1589,12 +1589,12 @@ L.CanvasTileLayer = L.Layer.extend({
 					msg += 'part=0 ';
 				} else {
 					var tokens = payload.substring('EMPTY'.length + 1);
-					tokens = tokens.split(' ');
+					tokens = tokens.split(',');
 					var part = parseInt(tokens[0] ? tokens[0] : '');
-					var mode = parseInt(tokens[1] ? tokens[1] : '');
+					var mode = parseInt((tokens.length > 1 && tokens[1]) ? tokens[1] : '');
 					mode = (isNaN(mode) ? this._selectedMode : mode);
 					msg += 'part=' + (isNaN(part) ? this._selectedPart : part)
-						+ ((mode !== 0) ? (' mode=' + mode) : '')
+						+ ((mode && mode !== 0) ? (' mode=' + mode) : '')
 						+ ' ';
 				}
 				msg += 'x=0 y=0 ';
