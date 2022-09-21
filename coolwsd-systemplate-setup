@@ -15,12 +15,6 @@ test -d "$INSTDIR" || { echo "$0: No such directory: $INSTDIR"; exit 1; }
 
 mkdir -p $CHROOT || exit 1
 
-# For the tmpfonts we need to use the pathnames as used by the
-# configure script, which does *not* look up realpaths, because the
-# Makefile.am uses @SYSTEMPLATE_PATH@ which uses abs_top_builddir
-# which uses ac_pwd which is not based on use of realpath.
-CHROOT_AS_GIVEN=$CHROOT
-
 # Resolve the real paths, in case they are relative and/or symlinked.
 # INSTDIR_LOGICAL will contain the logical path, if there are symlinks,
 # while INSTDIR is the physical one. Both will most likely be the same,
@@ -118,23 +112,6 @@ do
     mkdir -p $INSTDIR_PARENT
     ln -f -s `${REALPATH} --relative-to=$INSTDIR_PARENT $CHROOT/lo` $CHROOT/$path
 done
-
-# A similar dance also for the directory where "temporary" fonts are
-# stored. Such are downloaded from other servers based on a separate
-# configuration file. They need to be accessible using the same
-# pathname both in the ForKit process and in the Kit processes.
-
-mkdir -p $CHROOT/tmpfonts
-mkdir -p $CHROOT$CHROOT
-ln -f -s `${REALPATH} --relative-to=$CHROOT$CHROOT $CHROOT/tmpfonts` $CHROOT$CHROOT
-
-# To be safe we do this both for $CHROOT and $CHROOT_AS_GIVEN, in case they differ.
-
-if [ "$CHROOT_AS_GIVEN" != "$CHROOT" ]; then
-    mkdir -p $CHROOT_AS_GIVEN/tmpfonts
-    mkdir -p $CHROOT_AS_GIVEN$CHROOT_AS_GIVEN
-    ln -f -s `${REALPATH} --relative-to=$CHROOT_AS_GIVEN$CHROOT_AS_GIVEN $CHROOT_AS_GIVEN/tmpfonts` $CHROOT_AS_GIVEN$CHROOT_AS_GIVEN
-fi
 
 # /usr/share/fonts needs to be taken care of separately because the
 # directory time stamps must be preserved for fontconfig to trust
