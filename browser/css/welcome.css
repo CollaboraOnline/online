@@ -1,6 +1,6 @@
 .iframe-welcome-wrap,
 .iframe-welcome-content {
-	position: absolute;
+	position: fixed;
 	z-index: 1106;
 	display: flex;
 	width: 100%;
