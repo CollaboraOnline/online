@@ -5210,7 +5210,7 @@ int COOLWSD::innerMain()
     assert(Server && "The COOLWSDServer instance does not exist.");
     Server->findClientPort();
 
-    TmpFontDir = SysTemplate + "/tmpfonts";
+    TmpFontDir = ChildRoot + JailUtil::CHILDROOT_TMP_INCOMING_PATH;
 
     // Start the internal prisoner server and spawn forkit,
     // which in turn forks first child.
