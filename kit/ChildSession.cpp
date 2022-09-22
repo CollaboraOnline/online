@@ -3144,6 +3144,17 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         }
 #endif
         break;
+    case LOK_CALLBACK_EXPORT_FILE:
+    {
+        // Register download id -> URL mapping in the DocumentBroker
+        auto url = payload.substr(strlen("file:///tmp/"));
+        auto downloadId = Util::rng::getFilename(64);
+        std::string docBrokerMessage = "registerdownload: downloadid=" + downloadId + " url=" + url + " clientid=" + getId();
+        _docManager->sendFrame(docBrokerMessage.c_str(), docBrokerMessage.length());
+        std::string message = "downloadas: downloadid=" + downloadId + " port=" + std::to_string(ClientPortNumber) + " id=export";
+        sendTextFrame(message);
+        break;
+    }
     default:
         LOG_ERR("Unknown callback event (" << lokCallbackTypeToString(type) << "): " << payload);
     }
