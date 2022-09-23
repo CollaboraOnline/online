@@ -116,17 +116,6 @@
 	width: 294px;
 }
 
-.sidebar #FIELD_TRANSPARENCY {
-	height: 0;
-	position: relative;
-	bottom: 18px;
-}
-
-.sidebar #transparency_label {
-	position: relative;
-	top: 12px;
-}
-
 .sidebar #table-indentfieldbox {
 	text-align: left;
 }
