@@ -2627,9 +2627,7 @@ void lokit_main(
 #if !MOBILEAPP
         const Path jailPath = Path::forDirectory(childRoot + '/' + jailId);
         const std::string jailPathStr = jailPath.toString();
-        LOG_INF("Jail path: " << jailPathStr);
-        File(jailPath).createDirectories();
-        chmod(jailPathStr.c_str(), S_IXUSR | S_IWUSR | S_IRUSR);
+        JailUtil::createJailPath(jailPathStr);
 
         if (!ChildSession::NoCapsForKit)
         {
@@ -2658,7 +2656,7 @@ void lokit_main(
 
                 // Mount loTemplate inside it.
                 LOG_INF("Mounting " << loTemplate << " -> " << loJailDestPath);
-                Poco::File(loJailDestPath).createDirectories();
+                JailUtil::createJailPath(loJailDestPath);
                 if (!JailUtil::bind(loTemplate, loJailDestPath)
                     || !JailUtil::remountReadonly(loTemplate, loJailDestPath))
                 {
@@ -2706,6 +2704,9 @@ void lokit_main(
             {
                 LOG_INF("Mounting is disabled, will link/copy " << sysTemplate << " -> "
                                                                 << jailPathStr);
+
+                // Make sure we have the jail directory.
+                JailUtil::createJailPath(jailPathStr);
 
                 // Create a file to mark this a copied jail.
                 JailUtil::markJailCopied(jailPathStr);
