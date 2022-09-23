@@ -206,11 +206,18 @@ void cleanupJails(const std::string& root)
         LOG_WRN("Jails root directory [" << root << "] is not empty. Will not remove it.");
 }
 
+void createJailPath(const std::string& path)
+{
+    LOG_INF("Creating jail path (if missing): " << path);
+    Poco::File(path).createDirectories();
+    chmod(path.c_str(), S_IXUSR | S_IWUSR | S_IRUSR);
+}
+
 void setupChildRoot(bool bindMount, const std::string& childRoot, const std::string& sysTemplate)
 {
     // Start with a clean slate.
     cleanupJails(childRoot);
-    Poco::File(childRoot + CHILDROOT_TMP_INCOMING_PATH).createDirectories();
+    createJailPath(childRoot + CHILDROOT_TMP_INCOMING_PATH);
 
     disableBindMounting(); // Clear to avoid surprises.
 
