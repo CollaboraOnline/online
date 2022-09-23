@@ -30,6 +30,11 @@
 	z-index: 1105;
 }
 
+.jsdialog.one-child-popup {
+	border: 0;
+	margin: 0 !important;
+}
+
 .jsdialog-container.modalpopup {
 	border: 1px solid #a4a4a4 !important;
 	border-radius: var(--border-radius);

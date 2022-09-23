@@ -240,7 +240,7 @@ class ContentControlSection {
 		var json: any = {
 			'children': [
 				{
-					'id': 'container',
+					'id': 'container-dropdown',
 					'type': 'container',
 					'text': '',
 					'enabled': true,
