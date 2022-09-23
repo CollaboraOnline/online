@@ -2,8 +2,8 @@
 	cursor: pointer;
 	margin-left: 3px !important;
 	margin-top: 1px !important;
-	width: 18px;
-	height: 17px;
+	min-width: 22px;
+	min-height: 22px;
 	background: url('images/unfold.svg') center/16px var(--color-background-lighter) no-repeat;
 	border: 1px solid var(--color-border-darker);
 	border-radius: var(--border-radius);
