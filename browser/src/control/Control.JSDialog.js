@@ -138,6 +138,7 @@ L.Control.JSDialog = L.Control.extend({
 		var isModalPopup = data.type === 'modalpopup' || isSnackbar;
 		var canHaveFocus = !isSnackbar && data.id !== 'busypopup';
 		var focusWidgetId = data.init_focus_id;
+		var isOnlyChild = false;
 
 		if (data.action === 'fadeout')
 		{
@@ -224,6 +225,10 @@ L.Control.JSDialog = L.Control.extend({
 
 		var defaultButtonId = this._getDefaultButtonId(data.children);
 
+		if (data.children[0].children.length === 1) {
+			isOnlyChild = true;
+		}
+
 		// it has to be first button in the form
 		var defaultButton = L.DomUtil.createWithId('button', 'default-button', container);
 		defaultButton.style.display = 'none';
@@ -260,7 +265,7 @@ L.Control.JSDialog = L.Control.extend({
 				windowId: data.id,
 				mobileWizard: this,
 				map: this.map,
-				cssClass: 'jsdialog' + (isAutofilter ? ' autofilter' : ''),
+				cssClass: 'jsdialog' + (isAutofilter ? ' autofilter' : '') + (isOnlyChild ? ' one-child-popup' : ''),
 				callback: callback
 			});
 
