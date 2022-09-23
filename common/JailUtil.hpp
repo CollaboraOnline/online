@@ -42,6 +42,9 @@ void removeJail(const std::string& root);
 /// Remove all jails.
 void cleanupJails(const std::string& jailRoot);
 
+/// Creates the jail directory path recursively.
+void createJailPath(const std::string& path);
+
 /// Setup the Child-Root directory.
 void setupChildRoot(bool bindMount, const std::string& jailRoot, const std::string& sysTemplate);
 
