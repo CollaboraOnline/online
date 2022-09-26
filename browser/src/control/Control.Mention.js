@@ -7,14 +7,8 @@ L.Control.Mention = L.Control.extend({
 		this.map = map;
 		this.map.on('openmentionpopup', this.openMentionPopup, this);
 		this.map.on('closementionpopup', this.closeMentionPopup, this);
-		this.closeMentionPopupJson = {
-			'jsontype': 'dialog',
-			'type': 'modalpopup',
-			'action': 'close',
-			'id': 'mentionPopup',
-		};
 		this.map.on('sendmentiontext', this.sendMentionText, this);
-		this.data = {
+		this.newPopupData = {
 			'children': [
 				{
 					'id': 'container',
@@ -41,8 +35,6 @@ L.Control.Mention = L.Control.extend({
 	sendMentionText: function (ev) {
 		var text = ev.data.join('').substring(1);
 		if (text.length === 1 && this.firstChar !== text[0]) {
-			// TODO: if waiting time to get list is unbearable uncomment below line to show spinner 
-			// this.openMentionPopup({ showSpinner: true });
 			this.map.fire('postMessage', { msgId: 'UI_Mention', args: { type: 'autocomplete', text: text } });
 			this.firstChar = text[0];
 		} else {
@@ -50,7 +42,7 @@ L.Control.Mention = L.Control.extend({
 		}
 	},
 
-	getCurrentCursorPostion: function () {
+	getCurrentCursorPosition: function () {
 		var cursorCorePixels = this.map._docLayer._cursorCorePixels;
 		var origin = this.map.getPixelOrigin();
 		var panePos = this.map._getMapPanePos();
@@ -58,83 +50,100 @@ L.Control.Mention = L.Control.extend({
 	},
 
 	openMentionPopup: function (ev) {
-		var framePos = this.getCurrentCursorPostion();
-		var data = this.data;
-		if (ev.showSpinner) {
-			data.children[0].children[0] = {
-				'id': 'spinner',
-				'type': 'spinner',
-				'text': '',
-				'enabled': true,
-				'singleclickactivate': true,
-			};
+		var framePos = this.getCurrentCursorPosition();
+		this.users = ev.data;
+		if (this.users === null)
+			return;
+
+		var text = this.map._docLayer._mentionText.join('').substring(1);
+		// filterout the users from list according to the text
+		if (text.length > 1) {
+			this.itemList = this.users.filter(function (element) {
+				// case insensitive
+				return element.username.toLowerCase().includes(text.toLowerCase());
+			});
 		} else {
-			this.users = ev.data;
-			if (this.users === null)
-				return;
-			
-			var text = this.map._docLayer._mentionText.join('').substring(1);
-			// filterout the users from list according to the text
-			if (text.length > 1) {
-				this.itemList = this.users.filter(function (element) {
-					// case insensitive
-					return element.username.toLowerCase().includes(text.toLowerCase());
-				});
-			} else {
-				this.itemList = this.users;
-			}
-
-			if (this.itemList.length !== 0) {
-				var entries = [];
-				data.children[0].children[0] = {
-					'id': 'mentionList',
-					'type': 'treelistbox',
-					'text': '',
-					'enabled': true,
-					'singleclickactivate': true,
-				};
-
-				// add entries
-				for (var i in this.itemList) {
-					var entry = {
-						'text': this.itemList[i].username,
-						'columns': [
-							{
-								'text': this.itemList[i].username
-							}
-						],
-						'row': i.toString()
-					};
-					entries.push(entry);
-				}
-				data.children[0].children[0].entries = entries;
-
-			} else {
-				data.children[0].children[0] = {
-					'id': 'fixedtext',
-					'type': 'fixedtext',
-					'text': 'no search results found!',
-					'enabled': true,
-					'singleclickactivate': true,
-				};
-			}
+			this.itemList = this.users;
 		}
 
+		if (this.itemList.length !== 0) {
+			var entries = [];
+			for (var i in this.itemList) {
+				var entry = {
+					'text': this.itemList[i].username,
+					'columns': [
+						{
+							'text': this.itemList[i].username
+						}
+					],
+					'row': i.toString()
+				};
+				entries.push(entry);
+			}
+
+			var data;
+			var control = {
+				'id': 'mentionList',
+				'type': 'treelistbox',
+				'text': '',
+				'enabled': true,
+				'singleclickactivate': false,
+			};
+			// update the popup with list if mentionList already exist
+			if (L.DomUtil.get('mentionList')) {
+				data = {
+					'jsontype': 'dialog',
+					'id': 'mentionPopup',
+					'control': control
+				};
+				data.control.entries = entries;
+				data.posx = framePos.x;
+				data.posy = framePos.y;
+				this.map.fire('jsdialogupdate', { data: data, callback: this.callback.bind(this) });
+				return;
+			}
+			if (L.DomUtil.get('mentionPopup'))
+				this.closeMentionPopup({ typingMention: true });
+			data = this.newPopupData;
+			data.children[0].children[0] = control;
+			data.children[0].children[0].entries = entries;
+		} else {
+			var control = {
+				'id': 'fixedtext',
+				'type': 'fixedtext',
+				'text': 'no search results found!',
+				'enabled': true,
+			};
+			if (L.DomUtil.get('fixedtext')) {
+				data = {
+					'jsontype': 'dialog',
+					'id': 'mentionPopup',
+					'control': control
+				};
+				data.posx = framePos.x;
+				data.posy = framePos.y;
+				this.map.fire('jsdialogupdate', { data: data, callback: this.callback.bind(this) });
+				return;
+			}
+			if (L.DomUtil.get('mentionPopup'))
+				this.closeMentionPopup({ typingMention: true });
+			data = this.newPopupData;
+			data.children[0].children[0] = control;
+		}
 		// add position
 		data.posx = framePos.x;
 		data.posy = framePos.y;
-
-		// close the mention popup if already exist
-		var mentionPopup = L.DomUtil.get('mentionPopup');
-		if (mentionPopup) {
-			this.closeMentionPopup({'typingMention' : true});
-		}
-
 		this.map.fire('jsdialog', { data: data, callback: this.callback.bind(this) });
 	},
 
 	closeMentionPopup: function (ev) {
-		this.map.fire('jsdialog', { data: this.closeMentionPopupJson, callback: undefined });
+		var closePopupData = {
+			'jsontype': 'dialog',
+			'type': 'modalpopup',
+			'action': 'close',
+			'id': 'mentionPopup',
+		};
+		this.map.fire('jsdialog', { data: closePopupData, callback: undefined });
 		if (!ev.typingMention) {
 			this.map._docLayer._typingMention = false;
 			this.map._docLayer._mentionText = [];
@@ -143,7 +152,7 @@ L.Control.Mention = L.Control.extend({
 
 	callback: function (objectType, eventType, object, index) {
 		if (eventType === 'close') {
-			this.map.fire('jsdialog', { data: this.closeMentionPopupJson, callback: undefined });
+			this.closeMentionPopup({ 'typingMention': false });
 		} else if (eventType === 'select') {
 			var command = {
 				'Hyperlink.Text': {
@@ -160,10 +169,14 @@ L.Control.Mention = L.Control.extend({
 				}
 			};
 			this._map.sendUnoCommand('.uno:SetHyperlink', command);
-			this.map.fire('jsdialog', { data: this.closeMentionPopupJson, callback: undefined });
+			this.closeMentionPopup({ 'typingMention': false });
+		} else if (eventType === 'keydown') {
+			if (object.key !== 'Tab' && object.key !== 'Shift') {
+				this.map.focus();
+				return true;
+			}
 		}
-		this.map._docLayer._typingMention = false;
-		this.map._docLayer._mentionText = [];
+		return false;
 	},
 });
 L.control.mention = function () {
