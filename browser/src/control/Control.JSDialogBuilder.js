@@ -1941,8 +1941,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					else
 						listElements.eq(currIndex - 1).find(spanElement).focus();
 					preventDef = true;
-				} else if (treeViewData.id === 'mentionList' && event.key !== 'Tab' && event.key !== 'Shift') {
-					builder.map.focus();
+				} else if (builder.callback('treeview', 'keydown', { treeViewData: treeViewData, key: event.key }, entry.row, builder)) {
+					preventDef = true;
 				}
 				if (preventDef) {
 					event.preventDefault();

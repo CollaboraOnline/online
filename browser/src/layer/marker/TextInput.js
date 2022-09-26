@@ -743,7 +743,6 @@ L.TextInput = L.Layer.extend({
 			// The composition messages doesn't play well with just a line break,
 			// therefore send a keystroke.
 			var unoKeyCode = this._linebreakHint ? 5376 : 1280;
-			this.closeMention = true;
 			this._sendKeyEvent(13, unoKeyCode);
 			this._emptyArea();
 		} else {
@@ -800,11 +799,6 @@ L.TextInput = L.Layer.extend({
 		this._fancyLog('empty-area-end');
 
 		this._ignoreInputCount--;
-
-		var mentionPopup = L.DomUtil.get('mentionPopup');
-		if (mentionPopup && this.closeMention) {
-			this._map.fire('closementionpopup',{ 'typingMention': false });
-		}
 	},
 
 	_onCompositionStart: function(/*ev*/) {
@@ -864,13 +858,12 @@ L.TextInput = L.Layer.extend({
 					ev.preventDefault();
 					ev.stopPropagation();
 				}
-				this.closeMention = false;
 			} else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
 				ev.key === 'ArrowUp' || ev.key === 'Home' ||
 				ev.key === 'End' || ev.key === 'PageUp' ||
-				ev.key === 'PageDown' || ev.key === 'Enter') {
-				this.closeMention = true;
-			} else if (ev.key === 'Escape') {
+				ev.key === 'PageDown' || ev.key === 'Enter' || 
+				ev.key === 'Escape' || ev.key === 'Control' ||
+				ev.key === 'Tab') {
 				this._map.fire('closementionpopup', { 'typingMention': false });
 			}
 		}
