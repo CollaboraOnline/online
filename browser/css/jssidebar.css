@@ -13,6 +13,7 @@
 .ui-expander-content.sidebar.expanded > .sidebar .ui-grid-cell {
 	justify-content: space-between;
 	padding: 2px 0;
+	align-items: center;
 }
 
 #document-container:not(.mobile) + #sidebar-dock-wrapper {
@@ -137,6 +138,11 @@
 	position: relative;
 	display: flex;
 	justify-content: space-between;
+}
+
+#textorientbox.sidebar button.ui-pushbutton {
+	min-width: 32px;
+	height: 32px;
 }
 
 #table-box4.sidebar.jsdialog.vertical {
