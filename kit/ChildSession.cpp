@@ -3128,7 +3128,25 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("printranges: " + payload);
         break;
     case LOK_CALLBACK_FONTS_MISSING:
-        sendTextFrame("fontsmissing: " + payload);
+        {
+            static std::string fontsMissingHandling = std::string(std::getenv("FONTS_MISSING_HANDLING"));
+            if (fontsMissingHandling == "report" || fontsMissingHandling == "both")
+                sendTextFrame("fontsmissing: " + payload);
+            if (fontsMissingHandling == "log" || fontsMissingHandling == "both")
+            {
+#if 0
+                Poco::JSON::Parser parser;
+                Poco::JSON::Object::Ptr root = parser.parse(payload).extract<Poco::JSON::Object::Ptr>();
+
+                const Poco::Dynamic::Var fontsMissing = root->get("fontsmissing");
+                if (fontsMissing.isArray())
+                    for (const auto &f : fontsMissing)
+                        LOG_INF("Font missing: " << f.convert<std::string>());
+#else
+                LOG_INF("Fonts missing: " << payload);
+#endif
+            }
+        }
         break;
     default:
         LOG_ERR("Unknown callback event (" << lokCallbackTypeToString(type) << "): " << payload);
