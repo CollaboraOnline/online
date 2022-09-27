@@ -110,7 +110,8 @@
 	display: none;
 }
 
-.vex.vex-theme-plain .vex-content{
+.vex.vex-theme-plain .vex-content,
+.vex.vex-theme-bottom-right-corner .vex-content {
 	box-shadow: 0 1px 10px 1px var(--color-box-shadow);
 	border-radius: var(--border-radius-large);
 	background-color: var(--color-background-lighter);
