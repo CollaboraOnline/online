@@ -270,6 +270,10 @@
         <enable desc="Enable more configuration options for home users" type="bool" default="false">false</enable>
     </home_mode>
 
+    <fonts_missing>
+        <handling desc="How to handle fonts mising in a document: 'report', 'log', 'both', or 'ignore'" type="string" default="log">log</handling>
+    </fonts_missing>
+
     @LOCK_CONFIGURATION@
 
     @FEATURE_RESTRICTION_CONFIGURATION@
