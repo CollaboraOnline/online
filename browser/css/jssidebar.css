@@ -68,6 +68,10 @@
 	margin-inline-start: -14px;
 }
 
+#ParaPropertyPanel.sidebar #box3 {
+	margin-inline-end: 64px;
+}
+
 #fontnamecombobox > .sidebar.jsdialog.ui-listbox,
 #applystyle > .sidebar.jsdialog.ui-listbox {
 	min-width: 186px;
