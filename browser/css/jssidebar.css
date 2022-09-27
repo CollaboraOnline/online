@@ -202,6 +202,11 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 	justify-content: space-between;
 }
 
+#CellAppearancePropertyPanel.sidebar div {
+	grid-template-columns: repeat(4, auto) !important;
+	justify-content: space-between;
+}
+
 .sidebar-container > .root-container.jsdialog.sidebar {
 	margin: 0;
 }
