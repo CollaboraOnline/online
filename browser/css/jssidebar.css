@@ -10,6 +10,10 @@
 	vertical-align: middle;
 }
 
+.ui-expander-content.sidebar.expanded > .sidebar .ui-grid-cell {
+	justify-content: space-between;
+}
+
 #document-container:not(.mobile) + #sidebar-dock-wrapper {
 	width: 330px;
 	padding: 0;
