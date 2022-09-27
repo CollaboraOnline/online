@@ -17,7 +17,7 @@ L.Control.Infobar = L.Control.extend({
 		var buttons = [];
 		var callback = function() {};
 		if (e.actionLabel && e.action) {
-			buttons.push($.extend({}, vex.dialog.buttons.YES, { text: e.actionLabel }));
+			buttons.push($.extend({}, vex.dialog.buttons.YES, { text: e.actionLabel, className: 'button-primary'}));
 			callback = function (value) {
 				if (value === false) // close btn clicked
 					return;
