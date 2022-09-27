@@ -54,6 +54,30 @@ L.SVGGroup = L.Layer.extend({
 		return parser.parseFromString(svgString, 'image/svg+xml');
 	},
 
+	addEmbeddedVideo: function(svgString) {
+		var svgDoc = this.parseSVG(svgString);
+
+		if (svgDoc.lastChild.localName !== 'foreignObject')
+			return;
+
+		var svgLastChild = svgDoc.lastChild;
+
+		// remove opacity
+		this._forEachGroupNode(function (groupNode) {
+			L.DomUtil.removeClass(groupNode, 'leaflet-control-buttons-disabled');
+		});
+
+		// allow mouse interaction
+		this._renderer._container.setAttribute('pointer-events', 'all');
+
+		// add video nodes
+		this._renderer._container.firstChild.appendChild(svgLastChild);
+
+		var point = this._map.latLngToLayerPoint(this._bounds.getNorthWest());
+		svgLastChild.setAttribute('x', point.x);
+		svgLastChild.setAttribute('y', point.y);
+	},
+
 	addEmbeddedSVG: function (svgString) {
 		var svgDoc = this.parseSVG(svgString);
 

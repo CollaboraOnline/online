@@ -2047,6 +2047,18 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_onShapeSelectionContent: function (textMsg) {
+		// for the demo - use selection to inject video...
+
+		var videoJSON = {
+			url: 'https://www.w3schools.com/tags/movie.mp4',
+			mimeType: 'video/mp4'
+		};
+
+		if (textMsg !== undefined) { // dummy condition always true for testing
+			this._onEmbeddedVideoContent(JSON.stringify(videoJSON));
+			return;
+		}
+
 		textMsg = textMsg.substring('shapeselectioncontent:'.length + 1);
 		if (this._graphicMarker) {
 			var extraInfo = this._graphicSelection.extraInfo;
@@ -2059,6 +2071,37 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (wasVisibleSVG)
 				this._graphicMarker._showEmbeddedSVG();
 		}
+	},
+
+	// shows the video inside current selection marker
+	_onEmbeddedVideoContent: function (textMsg) {
+		if (!this._graphicMarker)
+			return;
+
+		var videoDesc = JSON.parse(textMsg);
+
+		if (this._graphicSelectionTwips) {
+			var topLeftPoint = this._twipsToCssPixels(
+				this._graphicSelectionTwips.getTopLeft(), this._map.getZoom());
+			var bottomRightPoint = this._twipsToCssPixels(
+				this._graphicSelectionTwips.getBottomRight(), this._map.getZoom());
+
+			videoDesc.width = bottomRightPoint.x - topLeftPoint.x;
+			videoDesc.height = bottomRightPoint.y - topLeftPoint.y;
+		}
+
+		var videoToInsert = '<?xml version="1.0" encoding="UTF-8"?>\
+		<foreignObject xmlns="http://www.w3.org/2000/svg" overflow="visible" width="'
+			+ videoDesc.width + '" height="' + videoDesc.height + '">\
+		    <body xmlns="http://www.w3.org/1999/xhtml">\
+		        <video controls="controls" width="' + videoDesc.width + '" height="'
+					+ videoDesc.height + '">\
+		            <source src="' + videoDesc.url + '" type="' + videoDesc.mimeType + '"/>\
+		        </video>\
+		    </body>\
+		</foreignObject>';
+
+		this._graphicMarker.addEmbeddedVideo(videoToInsert);
 	},
 
 	_resetSelectionRanges: function() {
