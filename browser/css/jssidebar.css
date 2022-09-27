@@ -12,6 +12,7 @@
 
 .ui-expander-content.sidebar.expanded > .sidebar .ui-grid-cell {
 	justify-content: space-between;
+	padding: 2px 0;
 }
 
 #document-container:not(.mobile) + #sidebar-dock-wrapper {
