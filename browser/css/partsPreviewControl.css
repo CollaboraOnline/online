@@ -31,19 +31,19 @@
 	vertical-align: middle;
 	max-width: 164px;
 	cursor: pointer;
-	border: 1px solid var(--color-border);
+	border: 1px solid var(--color-border) !important;
 	margin-left: 10px;
 	margin-right: 10px;
 }
 
 /* The current part the user is on. */
 .preview-img-currentpart {
-	border: 1px solid var(--color-border-dark);
+	border: 1px solid var(--color-primary-dark) !important;
 }
 
 /* One of (potentially many) selected parts, but not the current. */
 .preview-img-selectedpart {
-	border: 1px solid var(--color-border-dark) !important;
+	border: 1px solid var(--color-primary) !important;
 }
 
 /* Highlight where a slide can be dropped when reordering by drag-and-drop. */
