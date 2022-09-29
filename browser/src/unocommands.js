@@ -286,6 +286,7 @@ var unoCommandsArray = {
 	'InsertSlideTitleField':{presentation:{menu:_('Slide Tit~le'),},},
 	'InsertSlidesField':{presentation:{menu:_('Slide ~Count'),},},
 	'InsertSoftHyphen':{global:{menu:_('Insert s~oft Hyphen'),},},
+	'InsertSparkline':{spreadsheet:{menu:_('Sparkline...'),},},
 	'InsertSymbol':{global:{context:_('Insert Special Character'),menu:_('S~pecial Character...'),},},
 	'InsertTable':{presentation:{menu:_('~Table...'),},text:{menu:_('Insert ~Table...'),},},
 	'InsertTimeField':{global:{menu:_('Time Field'),},text:{menu:_('~Time'),},},
