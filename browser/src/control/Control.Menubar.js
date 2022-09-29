@@ -717,6 +717,8 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:ResetAttributes'},
 				{name: _UNO('.uno:PrintRangesMenu', 'spreadsheet'), type: 'menu', menu: [
 					{uno: '.uno:DefinePrintArea'},
+					{uno: '.uno:AddPrintArea'},
+					{uno: '.uno:EditPrintArea'},
 					{uno: '.uno:DeletePrintArea'}]},
 				{name: _UNO('.uno:FormatSparklineMenu', 'spreadsheet'), type: 'menu', menu: [
 				    {uno: '.uno:InsertSparkline'},

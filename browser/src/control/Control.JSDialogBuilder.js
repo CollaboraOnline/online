@@ -170,6 +170,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		];
 		this._menus['MenuPrintRanges'] = [
 			{text: _UNO('.uno:DefinePrintArea', 'spreadsheet'), uno: '.uno:DefinePrintArea'},
+			{text: _UNO('.uno:AddPrintArea', 'spreadsheet'), uno: '.uno:AddPrintArea'},
+			{text: _UNO('.uno:EditPrintArea', 'spreadsheet'), uno: '.uno:EditPrintArea'},
 			{text: _UNO('.uno:DeletePrintArea', 'spreadsheet'), uno: '.uno:DeletePrintArea'}
 		];
 		this._menus['MenuRowHeight'] = [
