@@ -923,6 +923,7 @@ void Admin::getMetrics(std::ostringstream &metrics)
 void Admin::sendMetrics(const std::shared_ptr<StreamSocket>& socket, const std::shared_ptr<Poco::Net::HTTPResponse>& response)
 {
     std::ostringstream oss;
+    response->add("Connection", "close");
     response->write(oss);
     getMetrics(oss);
     socket->send(oss.str());
