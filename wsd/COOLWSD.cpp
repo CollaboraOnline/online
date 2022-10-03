@@ -1212,20 +1212,14 @@ public:
     void fetchLockedHostPatterns(std::map<std::string, std::string>& newAppConfig,
                                  Poco::JSON::Object::Ptr remoteJson)
     {
-        if (!_conf.getBool("feature_lock.locked_hosts[@allow]", false))
-        {
-            LOG_INF("locked_hosts feature is disabled from configuration");
-            return;
-        }
-
         try
         {
+            Poco::JSON::Object::Ptr lockedHost;
             Poco::JSON::Array::Ptr lockedHostPatterns;
             try
             {
-                lockedHostPatterns = remoteJson->getObject("feature_locking")
-                                         ->getObject("locked_hosts")
-                                         ->getArray("hosts");
+                lockedHost = remoteJson->getObject("feature_locking")->getObject("locked_hosts");
+                lockedHostPatterns = lockedHost->getArray("hosts");
             }
             catch (const Poco::NullPointerException&)
             {
@@ -1240,11 +1234,18 @@ public:
                 return;
             }
 
+            Poco::Dynamic::Var allow = lockedHost->get("allow");
+            if (booleanToString(allow) == "false")
+            {
+                LOG_INF("locked_hosts feature is disabled, set feature_lock->locked_hosts->allow to true to enable");
+                return;
+            }
+            newAppConfig.insert(std::make_pair("feature_lock.locked_hosts[@allow]", booleanToString(allow)));
+
             std::size_t i;
             for (i = 0; i < lockedHostPatterns->size(); i++)
             {
                 std::string host;
-
                 Poco::JSON::Object::Ptr subObject = lockedHostPatterns->getObject(i);
                 JsonUtil::findJSONValue(subObject, "host", host);
                 Poco::Dynamic::Var readOnly = subObject->get("read_only");
