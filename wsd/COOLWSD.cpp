@@ -1201,13 +1201,23 @@ public:
 
         try
         {
-            Poco::JSON::Array::Ptr lockedHostPatterns =
-                remoteJson->getObject("feature_locking")->getObject("locked_hosts")->getArray("hosts");
-
-            if (lockedHostPatterns->size() == 0)
+            Poco::JSON::Array::Ptr lockedHostPatterns;
+            try
             {
-                LOG_WRN("Not overwriting any locked wopi host pattern because JSON contains empty "
-                        "array");
+                lockedHostPatterns = remoteJson->getObject("feature_locking")
+                                         ->getObject("locked_hosts")
+                                         ->getArray("hosts");
+            }
+            catch (const Poco::NullPointerException&)
+            {
+                LOG_INF("Overriding locked_hosts failed because feature_locking->locked_hosts->hosts array does not exist");
+                return;
+            }
+
+            if (lockedHostPatterns.isNull() || lockedHostPatterns->size() == 0)
+            {
+                LOG_INF(
+                    "Overriding locked_hosts failed because locked_hosts->hosts array is empty or null");
                 return;
             }
 
@@ -1258,7 +1268,6 @@ public:
         {
             Poco::JSON::Object::Ptr aliasGroups;
             Poco::JSON::Array::Ptr groups;
-
             try
             {
                 aliasGroups = remoteJson->getObject("storage")->getObject("wopi")->getObject("alias_groups");
@@ -1266,13 +1275,13 @@ public:
             }
             catch (const Poco::NullPointerException&)
             {
-                LOG_INF("Not overwriting any alias groups because storage->wopi->alias_groups->groups array does not exist");
+                LOG_INF("Overriding alias_groups failed because storage->wopi->alias_groups->groups array does not exist");
                 return;
             }
 
-            if (groups->size() == 0)
+            if (groups.isNull() || groups->size() == 0)
             {
-                LOG_INF("Not overwriting any alias groups because alias_group array is empty");
+                LOG_INF("Overriding alias_groups failed because alias_groups->groups array is empty or null");
                 return;
             }
 
@@ -1299,14 +1308,16 @@ public:
 #endif
                 Poco::JSON::Array::Ptr aliases = group->getArray("aliases");
 
-                auto it = aliases->begin();
-
-                size_t j;
-                for (j = 0; j < aliases->size(); j++)
+                size_t j = 0;
+                if (aliases)
                 {
-                    const std::string aliasPath = path + ".alias[" + std::to_string(j) + ']';
-                    newAppConfig.insert(std::make_pair(aliasPath, it->toString()));
-                    it++;
+                    auto it = aliases->begin();
+                    for (; j < aliases->size(); j++)
+                    {
+                        const std::string aliasPath = path + ".alias[" + std::to_string(j) + ']';
+                        newAppConfig.insert(std::make_pair(aliasPath, it->toString()));
+                        it++;
+                    }
                 }
                 for (;; j++)
                 {
@@ -1353,7 +1364,7 @@ public:
         }
         catch (const Poco::NullPointerException&)
         {
-            LOG_INF("Not overwriting the remote font config URL because the remove_font_config entry does not exist");
+            LOG_INF("Overriding the remote font config URL failed because the remove_font_config entry does not exist");
         }
         catch (const std::exception& exc)
         {
@@ -1364,10 +1375,29 @@ public:
     void fetchLockedTranslations(std::map<std::string, std::string>& newAppConfig,
                                  Poco::JSON::Object::Ptr remoteJson)
     {
-        Poco::JSON::Array::Ptr lockedTranslations;
         try
         {
-            lockedTranslations = remoteJson->getObject("feature_locking")->getArray("translations");
+            Poco::JSON::Array::Ptr lockedTranslations;
+            try
+            {
+                lockedTranslations =
+                    remoteJson->getObject("feature_locking")->getArray("translations");
+            }
+            catch (const Poco::NullPointerException&)
+            {
+                LOG_INF(
+                    "Overriding translations failed because feature_locking->translations array "
+                    "does not exist");
+                return;
+            }
+
+            if (lockedTranslations.isNull() || lockedTranslations->size() == 0)
+            {
+                LOG_INF("Overriding feature_locking->translations failed because array is empty or "
+                        "null");
+                return;
+            }
+
             std::size_t i;
             for (i = 0; i < lockedTranslations->size(); i++)
             {
@@ -1423,15 +1453,9 @@ public:
                 newAppConfig.insert(std::make_pair(path, ""));
             }
         }
-        catch (const Poco::NullPointerException&)
-        {
-            LOG_INF("Not overwriting any translations because feature_locking->translations array "
-                    "does not exist");
-            return;
-        }
         catch (const std::exception& exc)
         {
-            LOG_ERR("Failed to fetch remote_font_config, please check JSON format: " << exc.what());
+            LOG_ERR("Failed to fetch feature_locking->translations, please check JSON format: " << exc.what());
         }
     }
 
@@ -1450,7 +1474,7 @@ public:
         }
         catch (const Poco::NullPointerException&)
         {
-            LOG_INF("Not overwriting the unlock_image URL because the unlock_image entry does not "
+            LOG_INF("Overriding unlock_image URL failed because the unlock_image entry does not "
                     "exist");
         }
         catch (const std::exception& exc)
