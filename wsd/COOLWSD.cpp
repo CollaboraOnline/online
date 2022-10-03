@@ -1187,8 +1187,6 @@ public:
 
         std::map<std::string, std::string> newAppConfig;
 
-        fetchWopiHostPatterns(newAppConfig, remoteJson);
-
         fetchAliasGroups(newAppConfig, remoteJson);
 
 #if ENABLE_FEATURE_LOCK
@@ -1202,8 +1200,6 @@ public:
         AutoPtr<AppConfigMap> newConfig(new AppConfigMap(newAppConfig));
         _conf.addWriteable(newConfig, PRIO_JSON);
 
-        HostUtil::parseWopiHost(_conf);
-
 #if ENABLE_FEATURE_LOCK
         CommandControl::LockManager::parseLockedHost(_conf);
 #endif
@@ -1211,68 +1207,6 @@ public:
         HostUtil::parseAliases(_conf);
 
         handleOptions(remoteJson);
-    }
-
-    void fetchWopiHostPatterns(std::map<std::string, std::string>& newAppConfig,
-                               Poco::JSON::Object::Ptr remoteJson)
-    {
-        //wopi host patterns
-        if (!_conf.getBool("storage.wopi[@allow]", false))
-        {
-            LOG_INF("WOPI host feature is disabled in configuration");
-            return;
-        }
-        try
-        {
-            Poco::JSON::Array::Ptr wopiHostPatterns;
-            try
-            {
-                wopiHostPatterns = remoteJson->getObject("storage")->getObject("wopi")->getArray("hosts");
-            }
-            catch (const Poco::NullPointerException&)
-            {
-                LOG_INF("Not overwriting any wopi host pattern because the storage->wopi->hosts section does not exist");
-                return;
-            }
-
-            if (wopiHostPatterns->size() == 0)
-            {
-                LOG_INF("Not overwriting any wopi host pattern because JSON contains empty array");
-                return;
-            }
-
-            std::size_t i;
-            for (i = 0; i < wopiHostPatterns->size(); i++)
-            {
-                std::string host;
-
-                Poco::JSON::Object::Ptr subObject = wopiHostPatterns->getObject(i);
-                JsonUtil::findJSONValue(subObject, "host", host);
-                Poco::Dynamic::Var allow = subObject->get("allow");
-
-                const std::string path = "storage.wopi.host[" + std::to_string(i) + ']';
-                newAppConfig.insert(std::make_pair(path, host));
-                newAppConfig.insert(std::make_pair(path + "[@allow]", booleanToString(allow)));
-            }
-
-            //if number of wopi host patterns defined in coolwsd.xml are greater than number of host
-            //fetched from json, overwrite the remaining host from config file to empty strings and
-            //set allow to false
-            for (;; ++i)
-            {
-                const std::string path = "storage.wopi.host[" + std::to_string(i) + "]";
-                if (!_conf.has(path))
-                {
-                    break;
-                }
-                newAppConfig.insert(std::make_pair(path, ""));
-                newAppConfig.insert(std::make_pair(path + "[@allow]", "false"));
-            }
-        }
-        catch (std::exception& exc)
-        {
-            LOG_ERR("Failed to fetch wopi host patterns, please check JSON format: " << exc.what());
-        }
     }
 
     void fetchLockedHostPatterns(std::map<std::string, std::string>& newAppConfig,
