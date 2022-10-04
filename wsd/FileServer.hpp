@@ -24,7 +24,7 @@ class FileServerRequestHandler
     static void preprocessFile(const Poco::Net::HTTPRequest& request,
                                const RequestDetails &requestDetails,
                                Poco::MemoryInputStream& message,
-                               const std::shared_ptr<StreamSocket>& socket);
+                               const std::shared_ptr<StreamSocket>& socket, std::map<std::string, std::string> replaceVar);
     static void preprocessWelcomeFile(const Poco::Net::HTTPRequest& request,
                                       const RequestDetails &requestDetails,
                                       Poco::MemoryInputStream& message,

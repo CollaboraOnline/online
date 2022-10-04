@@ -562,7 +562,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             endPoint == "uno-localizations.json" ||
             endPoint == "uno-localizations-override.json")
         {
-            preprocessFile(request, requestDetails, message, socket);
+            std::map<std::string, std::string> replaceVar = {{"ACCESS_TOKEN",""}, {"SOCKET_PROXY", ""}, {"ACCESS_TOKEN_TTL", ""}, {"ACCESS_HEADER", ""}, {"HOST", ""},  {"VERSION", "COOLWSD_VERSION_HASH"}, {"COOLWSD_VERSION", "COOLWSD_VERSION"}, {"SERVICE_ROOT", ""}, {"UI_DEFAULTS", ""}, {"POSTMESSAGE_ORIGIN", ""}, {"PROTOCOL_DEBUG", ""}, {"HEXIFY_URL", ""}, {"BRANDING_CSS", ""}, {"BRANDING_JS", ""},  {"CSS_VARIABLES", ""}, {"DOCUMENT_SIGNING_DIV", ""} , {"DOCUMENT_SIGNING_URL", ""}, {"BROWSER_LOGGING", ""}, {"GROUP_DOWNLOAD_AS", ""},  {"OUT_OF_TIMEOUT_SECS", ""}, {"IDLE_TIMEOUT_SECS", ""}, {"ENABLE_WELCOME_MSG", ""}, {"AUTO_SHOW_WELCOME", ""}, {"UI_RTL_SETTINGS", ""},   {"USE_INTEGRATION_THEME", ""}, {"ENABLE_MACROS_EXECUTION", ""},  {"AUTO_SHOW_FEEDBACK", ""}, {"FEEDBACK_URL", "FEEDBACK_URL"}, {"WELCOME_URL", "WELCOME_URL"}, {"BUYPRODUCT_URL", ""}, {"FRAME_ANCESTORS", ""}, {"USER_INTERFACE_MODE",""}};
+            preprocessFile(request, requestDetails, message, socket, replaceVar);
             return;
         }
 
@@ -872,7 +873,8 @@ namespace
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
                                               const RequestDetails &requestDetails,
                                               Poco::MemoryInputStream& message,
-                                              const std::shared_ptr<StreamSocket>& socket)
+                                              const std::shared_ptr<StreamSocket>& socket,
+                                              std::map<std::string, std::string> replaceVar)
 {
     ServerURL cnxDetails(requestDetails);
 
@@ -940,29 +942,27 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     std::string socketProxy = "false";
     if (requestDetails.isProxy())
         socketProxy = "true";
-    Poco::replaceInPlace(preprocess, std::string("%SOCKET_PROXY%"), socketProxy);
+    replaceVar["SOCKET_PROXY"] = socketProxy;
 
     std::string responseRoot = cnxDetails.getResponseRoot();
     std::string userInterfaceMode;
 
-    Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
-    Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), std::to_string(tokenTtl));
-    Poco::replaceInPlace(preprocess, std::string("%ACCESS_HEADER%"), escapedAccessHeader);
-    Poco::replaceInPlace(preprocess, std::string("%HOST%"), cnxDetails.getWebSocketUrl());
-    Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(COOLWSD_VERSION_HASH));
-    Poco::replaceInPlace(preprocess, std::string("%COOLWSD_VERSION%"), std::string(COOLWSD_VERSION));
-    Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
-    Poco::replaceInPlace(preprocess, std::string("%UI_DEFAULTS%"), uiDefaultsToJSON(uiDefaults, userInterfaceMode));
-    Poco::replaceInPlace(preprocess, std::string("%POSTMESSAGE_ORIGIN%"), escapedPostmessageOrigin);
+    replaceVar["ACCESS_TOKEN"] = escapedAccessToken;
+    replaceVar["ACCESS_TOKEN_TTL"] = std::to_string(tokenTtl);
+    replaceVar["ACCESS_HEADER"] = escapedAccessHeader;
+    replaceVar["HOST"] = cnxDetails.getWebSocketUrl();
+    replaceVar["SERVICE_ROOT"] = responseRoot;
+    replaceVar["UI_DEFAULTS"] = uiDefaultsToJSON(uiDefaults, userInterfaceMode);
+    replaceVar["POSTMESSAGE_ORIGIN"] = escapedPostmessageOrigin;
 
     const auto& config = Application::instance().config();
 
     std::string protocolDebug = stringifyBoolFromConfig(config, "logging.protocol", false);
-    Poco::replaceInPlace(preprocess, std::string("%PROTOCOL_DEBUG%"), protocolDebug);
+    replaceVar["PROTOCOL_DEBUG"] = protocolDebug;
 
     static const std::string hexifyEmbeddedUrls =
         COOLWSD::getConfigValue<bool>("hexify_embedded_urls", false) ? "true" : "false";
-    Poco::replaceInPlace(preprocess, std::string("%HEXIFY_URL%"), hexifyEmbeddedUrls);
+    replaceVar["HEXIFY_URL"] = hexifyEmbeddedUrls;
 
 
     bool useIntegrationTheme = config.getBool("user_interface.use_integration_theme", true);
@@ -984,9 +984,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     }
 #endif
 
-    Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_CSS%-->"), brandCSS);
-    Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_JS%-->"), brandJS);
-    Poco::replaceInPlace(preprocess, std::string("<!--%CSS_VARIABLES%-->"), cssVarsToStyle(cssVars));
+    replaceVar["BRANDING_CSS"] = brandCSS;
+    replaceVar["BRANDING_JS"] = brandJS;
+    replaceVar["CSS_VARIABLES"] = cssVarsToStyle(cssVars);
 
     // Customization related to document signing.
     std::string documentSigningDiv;
@@ -997,17 +997,17 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         documentSigningDiv = "<div id=\"document-signing-bar\"></div>";
         Poco::URI::encode(documentSigningURL, "'", escapedDocumentSigningURL);
     }
-    Poco::replaceInPlace(preprocess, std::string("<!--%DOCUMENT_SIGNING_DIV%-->"), documentSigningDiv);
-    Poco::replaceInPlace(preprocess, std::string("%DOCUMENT_SIGNING_URL%"), escapedDocumentSigningURL);
+    replaceVar["DOCUMENT_SIGNING_DIV"] = documentSigningDiv;
+    replaceVar["DOCUMENT_SIGNING_URL"] = escapedDocumentSigningURL;
 
     const auto coolLogging = stringifyBoolFromConfig(config, "browser_logging", false);
-    Poco::replaceInPlace(preprocess, std::string("%BROWSER_LOGGING%"), coolLogging);
+    replaceVar["BROWSER_LOGGING"] = coolLogging;
     const auto groupDownloadAs = stringifyBoolFromConfig(config, "per_view.group_download_as", false);
-    Poco::replaceInPlace(preprocess, std::string("%GROUP_DOWNLOAD_AS%"), groupDownloadAs);
+    replaceVar["GROUP_DOWNLOAD_AS"] = groupDownloadAs;
     const unsigned int outOfFocusTimeoutSecs = config.getUInt("per_view.out_of_focus_timeout_secs", 60);
-    Poco::replaceInPlace(preprocess, std::string("%OUT_OF_FOCUS_TIMEOUT_SECS%"), std::to_string(outOfFocusTimeoutSecs));
+    replaceVar["OUT_OF_FOCUS_TIMEOUT_SECS"] = std::to_string(outOfFocusTimeoutSecs);
     const unsigned int idleTimeoutSecs = config.getUInt("per_view.idle_timeout_secs", 900);
-    Poco::replaceInPlace(preprocess, std::string("%IDLE_TIMEOUT_SECS%"), std::to_string(idleTimeoutSecs));
+    replaceVar["IDLE_TIMEOUT_SECS"] = std::to_string(idleTimeoutSecs);
 
     #if ENABLE_WELCOME_MESSAGE
         std::string enableWelcomeMessage = "true";
@@ -1021,8 +1021,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         std::string autoShowWelcome = stringifyBoolFromConfig(config, "welcome.enable", false);
     #endif
 
-    Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG%"), enableWelcomeMessage);
-    Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_WELCOME%"), autoShowWelcome);
+    replaceVar["ENABLE_WELCOME_MSG"] = enableWelcomeMessage;
+    replaceVar["AUTO_SHOW_WELCOME"] = autoShowWelcome;
 
     // the config value of 'notebookbar/tabbed' or 'classic/compact' overrides the UIMode
     // from the WOPI
@@ -1041,30 +1041,28 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     if (userInterfaceMode != "classic" && userInterfaceMode != "notebookbar")
         userInterfaceMode = "notebookbar";
 
-    Poco::replaceInPlace(preprocess, std::string("%USER_INTERFACE_MODE%"), userInterfaceMode);
+    replaceVar["USER_INTERFACE_MODE"] = userInterfaceMode;
 
     std::string uiRtlSettings;
     if (isRtlLanguage(requestDetails.getParam("lang")))
         uiRtlSettings = " dir=\"rtl\" ";
-    Poco::replaceInPlace(preprocess, std::string("%UI_RTL_SETTINGS%"), uiRtlSettings);
+    replaceVar["UI_RTL_SETTINGS"] = uiRtlSettings;
 
     const std::string useIntegrationThemeString = useIntegrationTheme && hasIntegrationTheme ? "true" : "false";
-    Poco::replaceInPlace(preprocess, std::string("%USE_INTEGRATION_THEME%"), useIntegrationThemeString);
+    replaceVar["USE_INTEGRATION_THEME"] = useIntegrationThemeString;
 
     std::string enableMacrosExecution = stringifyBoolFromConfig(config, "security.enable_macros_execution", false);
-    Poco::replaceInPlace(preprocess, std::string("%ENABLE_MACROS_EXECUTION%"), enableMacrosExecution);
+    replaceVar["ENABLE_MACROS_EXECUTION"] = enableMacrosExecution;
 
     if (!config.getBool("feedback.show", true) && config.getBool("home_mode.enable", false))
     {
-        Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_FEEDBACK%"), (std::string)"false");
+        replaceVar["AUTO_SHOW_FEEDBACK"] = "false";
     }
     else
     {
-        Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_FEEDBACK%"), (std::string)"true");
+        replaceVar["AUTO_SHOW_FEEDBACK"] = "true";
     }
-    Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_URL%"), std::string(FEEDBACK_URL));
-    Poco::replaceInPlace(preprocess, std::string("%WELCOME_URL%"), std::string(WELCOME_URL));
-    Poco::replaceInPlace(preprocess, std::string("%BUYPRODUCT_URL%"), buyProduct);
+    replaceVar["BUYPRODUCT_URL"] = buyProduct;
 
     const std::string mimeType = "text/html";
 
@@ -1116,13 +1114,29 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
                 << "frame-ancestors " << frameAncestors;
         std::string escapedFrameAncestors;
         Poco::URI::encode(frameAncestors, "'", escapedFrameAncestors);
-        Poco::replaceInPlace(preprocess, std::string("%FRAME_ANCESTORS%"), escapedFrameAncestors);
+        replaceVar["FRAME_ANCESTORS"] = escapedFrameAncestors;
     }
     else
     {
         LOG_TRC("Denied all frame ancestors");
         cspOss << imgSrc << "; ";
     }
+
+    std::string newpreprocess;
+    newpreprocess.reserve(preprocess.length() + 50);
+    std::stringstream checkVar(preprocess);
+    std::string medium;
+
+     while(getline(checkVar, medium, '$'))
+     {
+        if(medium.substr(medium.length()-4, medium.length()) == "<!--")
+            medium = medium.substr(0, medium.length()-4);
+        if(medium.substr(0, 3) == "-->")
+            medium = medium.substr(3, medium.length());
+        if(medium == replaceVar[medium])
+            newpreprocess.append(replaceVar[medium]);
+        else newpreprocess.append(medium);
+     }
 
     cspOss << "\r\n";
 
@@ -1133,7 +1147,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
         "Cache-Control:max-age=11059200\r\n"
         "ETag: \"" COOLWSD_VERSION_HASH "\"\r\n"
-        "Content-Length: " << preprocess.size() << "\r\n"
+        "Content-Length: " << newpreprocess.size() << "\r\n"
         "Content-Type: " << mimeType << "\r\n"
         "X-Content-Type-Options: nosniff\r\n"
         "X-XSS-Protection: 1; mode=block\r\n"
@@ -1200,10 +1214,10 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     }
 
     oss << "\r\n"
-        << preprocess;
+        << newpreprocess;
 
     socket->send(oss.str());
-    LOG_TRC("Sent file: " << relPath << ": " << preprocess);
+    LOG_TRC("Sent file: " << relPath << ": " << newpreprocess);
 }
 
 
