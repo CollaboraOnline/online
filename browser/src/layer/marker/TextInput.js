@@ -707,7 +707,7 @@ L.TextInput = L.Layer.extend({
 			}
 		}
 		
-		if (ev.data === '@' && this._map.getDocType() === 'text') {
+		if (ev.data === '@') {
 			docLayer._mentionText.push(ev.data);
 			docLayer._typingMention = true;
 		}
