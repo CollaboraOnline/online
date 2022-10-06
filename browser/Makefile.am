@@ -708,6 +708,7 @@ pot:
 		src/main.js \
 		src/map/Clipboard.js \
 		src/map/Map.js \
+		src/map/handler/Map.Feedback.js \
 		src/map/handler/Map.FileInserter.js \
 		src/map/handler/Map.Keyboard.js \
 		src/map/handler/Map.WOPI.js
