@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-16 12:48+0200\n"
-"PO-Revision-Date: 2022-09-15 01:54+0000\n"
+"PO-Revision-Date: 2022-09-28 21:23+0000\n"
 "Last-Translator: HerMin <jetem@me.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ko/>\n"
-"Language: \n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -166,7 +166,7 @@ msgstr "CPU 통계의 시간 간격(ms)"
 
 #: admin/admin.strings.js:40 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "강제종료."
 
 #: admin/admin.strings.js:41
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -207,7 +207,7 @@ msgstr "새로 고침"
 
 #: admin/admin.strings.js:50
 msgid "Channel Filter:"
-msgstr ""
+msgstr "필터:"
 
 #: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:426
 #: src/control/Control.StatusBar.js:314
@@ -216,11 +216,11 @@ msgstr "없음"
 
 #: admin/admin.strings.js:52
 msgid "Set Log Levels"
-msgstr ""
+msgstr "로그 레벨 설정"
 
 #: admin/admin.strings.js:53
 msgid "Log Levels"
-msgstr ""
+msgstr "로그 레벨"
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
 #: src/control/Parts.js:428 src/control/Signing.js:611
@@ -230,11 +230,11 @@ msgstr "닫기"
 
 #: admin/admin.strings.js:55
 msgid "Update Log Levels"
-msgstr ""
+msgstr "로그 레벨 업데이트"
 
 #: admin/admin.strings.js:56
 msgid "Version Information"
-msgstr ""
+msgstr "버전 정보"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -246,7 +246,7 @@ msgstr "보냄"
 
 #: admin/src/AdminSocketBase.js:53
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "서비스가 종료되었습니다: 페이지를 새로고침하세요."
 
 #: admin/src/AdminSocketBase.js:63
 msgid "Connection error"
@@ -281,7 +281,7 @@ msgstr "취소"
 
 #: admin/src/AdminSocketOverview.js:390
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr ""
+msgstr "Jwt 인증키가 잘못되었습니다."
 
 #: admin/src/AdminSocketOverview.js:394
 msgid "Failed to authenticate this session over protocol %0"
@@ -313,19 +313,19 @@ msgstr ""
 
 #: admin/src/Util.js:14
 msgid "EB"
-msgstr ""
+msgstr "EB"
 
 #: admin/src/Util.js:14
 msgid "ZB"
-msgstr ""
+msgstr "ZB"
 
 #: admin/src/Util.js:14
 msgid "YB"
-msgstr ""
+msgstr "YB"
 
 #: admin/src/Util.js:14
 msgid "BB"
-msgstr ""
+msgstr "BB"
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
@@ -341,16 +341,15 @@ msgstr " 초"
 
 #: js/w2ui-1.5.rc1.js:2920
 msgid "Recent"
-msgstr ""
+msgstr "최근"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
 msgstr "색 없음"
 
 #: src/control/ColorPicker.js:123
-#, fuzzy
 msgid "Automatic color"
-msgstr "색 없음"
+msgstr "자동 색상"
 
 #: src/control/Control.AlertDialog.js:66
 msgid "Open link"
@@ -362,7 +361,7 @@ msgstr "서버에서 %1 명령을 구문 분석하는 동안 %0 오류가 발생
 
 #: src/control/Control.Command.js:93
 msgid "Unlock"
-msgstr ""
+msgstr "잠금해제"
 
 #: src/control/Control.ContextMenu.js:182
 msgid "Delete"
@@ -374,7 +373,7 @@ msgstr "선택적으로 붙여넣기"
 
 #: src/control/Control.DocumentNameInput.js:77
 msgid "Path"
-msgstr ""
+msgstr "경로"
 
 #: src/control/Control.DocumentRepair.js:114
 #: src/control/Control.UserList.js:295
@@ -391,7 +390,7 @@ msgstr "클립보드로 복사 확인"
 
 #: src/control/Control.FormulaBar.js:45
 msgid "cell address"
-msgstr ""
+msgstr "셀주소"
 
 #: src/control/Control.FormulaBarJSDialog.js:42
 msgid "Function Wizard"
@@ -399,7 +398,7 @@ msgstr "함수 마법사"
 
 #: src/control/Control.FormulaBarJSDialog.js:55
 msgid "Formula"
-msgstr ""
+msgstr "공식"
 
 #: src/control/Control.FormulaBarJSDialog.js:62
 #: src/control/Control.MobileTopBar.js:40
@@ -418,11 +417,11 @@ msgstr "평균"
 
 #: src/control/Control.JSDialogBuilder.js:143
 msgid "Min"
-msgstr ""
+msgstr "최소값"
 
 #: src/control/Control.JSDialogBuilder.js:144
 msgid "Max"
-msgstr ""
+msgstr "최대값"
 
 #: src/control/Control.JSDialogBuilder.js:145
 #: src/control/Control.StatusBar.js:309
@@ -431,7 +430,7 @@ msgstr "수"
 
 #: src/control/Control.JSDialogBuilder.js:429
 msgid "Solid"
-msgstr ""
+msgstr "고정"
 
 #: src/control/Control.JSDialogBuilder.js:432
 msgid "Linear"
@@ -463,20 +462,19 @@ msgstr "고정 크기"
 
 #: src/control/Control.JSDialogBuilder.js:1331
 msgid "From"
-msgstr ""
+msgstr "발신"
 
 #: src/control/Control.JSDialogBuilder.js:1334
 msgid "To"
-msgstr ""
+msgstr "수신"
 
 #: src/control/Control.JSDialogBuilder.js:1337
 msgid "Color"
 msgstr "색"
 
 #: src/control/Control.JSDialogBuilder.js:1625
-#, fuzzy
 msgid "Select range"
-msgstr "변경 사항 거부"
+msgstr "범위 선택"
 
 #: src/control/Control.JSDialogBuilder.js:1674
 #: src/control/Control.NotebookbarBuilder.js:238
@@ -493,13 +491,12 @@ msgid "Style"
 msgstr "스타일"
 
 #: src/control/Control.JSDialogBuilder.js:2374
-#, fuzzy
 msgid "reply"
-msgstr "답변"
+msgstr "회신"
 
 #: src/control/Control.JSDialogBuilder.js:2377
 msgid "replies"
-msgstr ""
+msgstr "회신"
 
 #: src/control/Control.JSDialogBuilder.js:2388
 #: src/layer/tile/CanvasTileLayer.js:5010
@@ -510,7 +507,7 @@ msgstr "추가 설명"
 
 #: src/control/Control.JSDialogBuilder.js:2450
 msgid "Insert Comment"
-msgstr ""
+msgstr "메모삽입"
 
 #: src/control/Control.JSDialogBuilder.js:3018
 #, fuzzy
@@ -612,7 +609,7 @@ msgstr "서식 있는 텍스트 (.rtf)"
 #: src/control/Control.Menubar.js:75 src/control/Control.Menubar.js:845
 #: src/control/Control.NotebookbarBuilder.js:482
 msgid "EPUB (.epub)"
-msgstr ""
+msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:835
 #: src/control/Control.NotebookbarWriter.js:256 src/control/Signing.js:604
@@ -669,7 +666,7 @@ msgstr "배율 초기화"
 #: src/control/Control.NotebookbarImpress.js:340
 #: src/control/Control.NotebookbarWriter.js:1061
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "토글 모드"
 
 #: src/control/Control.Menubar.js:119 src/control/Control.Menubar.js:377
 #: src/control/Control.NotebookbarWriter.js:1073
@@ -683,7 +680,7 @@ msgstr "눈금자 보기"
 #: src/control/Control.NotebookbarImpress.js:346
 #: src/control/Control.NotebookbarWriter.js:1084
 msgid "Show Status Bar"
-msgstr ""
+msgstr "상태 표시줄 표시"
 
 #: src/control/Control.Menubar.js:127 src/control/Control.Menubar.js:388
 #: src/control/Control.Menubar.js:516 src/control/Control.Menubar.js:639
@@ -703,15 +700,15 @@ msgstr "텍스트 방향"
 
 #: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1096
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Rich 텍스트 삽입"
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1097
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "체크박스 삽입"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1098
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "드롭다운 삽입"
 
 #: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1099
 msgid "Insert Picture"
