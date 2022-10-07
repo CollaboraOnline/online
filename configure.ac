@@ -1080,7 +1080,7 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
 dnl    deflated HTTP / web-page serving
        PKG_CHECK_MODULES([ZLIB], [zlib])
 dnl    tile compression
-       PKG_CHECK_MODULES([ZSTD], [libzstd])
+       PKG_CHECK_MODULES([ZSTD], [libzstd >= 1.4.0])
 
        PKG_CHECK_MODULES([CPPUNIT], [cppunit])
        ])
