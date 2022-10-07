@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-16 12:48+0200\n"
-"PO-Revision-Date: 2020-10-08 12:25+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2022-10-07 08:03+0000\n"
+"Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/"
 "collabora-online/help/sq/>\n"
 "Language: sq\n"
@@ -12,19 +12,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
-msgstr "Shkurtimet e Tastierës"
+msgstr "Shkurtore Tastiere"
 
 #: html/cool-help.html%2Bdiv.div.h2:21-9
 msgid "General Keyboard Shortcuts"
-msgstr "Shkurtime të Përgjithshme nga Tastiera"
+msgstr "Shkurtore të Përgjithshme Tastiere"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:23-18
 msgid "Undo"
-msgstr "Zhbëj"
+msgstr "Zhbëje"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:23-49
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
@@ -48,7 +48,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:26-18
 msgid "Paste as unformatted text"
-msgstr "Ngjit si tekst jo të formatuar"
+msgstr "Ngjite si tekst të paformatuar"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:26-70
 #, fuzzy
@@ -73,7 +73,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:28-18
 msgid "Print (Download as PDF)"
-msgstr "Printo (Shkarko si PDF)"
+msgstr "Shtype (Shkarkoje si PDF)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:28-68
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
@@ -81,7 +81,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:29-18
 msgid "Display the Keyboard shortcuts help"
-msgstr "Afisho ndihmën e shkurtimeve të Tastierës"
+msgstr "Shfaq ndihmën mbi shkurtore Tastiere"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:29-80
 msgid ""
@@ -95,14 +95,14 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.h2:179-9
 #: html/cool-help.html%2Bdiv.div.h2:236-9
 msgid "Text formatting"
-msgstr "Formatim Teksti"
+msgstr "Formatim teksti"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:35-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:156-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:181-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:238-18
 msgid "Bold"
-msgstr "Theksuar"
+msgstr "Të trasha"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:35-49
 #: html/cool-help.html%2Bdiv.div.table.tr.td:156-49
@@ -116,7 +116,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B "
 #: html/cool-help.html%2Bdiv.div.table.tr.td:182-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:239-18
 msgid "Italic"
-msgstr "Të Pjerrëta"
+msgstr "Të pjerrëta"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:36-51
 #: html/cool-help.html%2Bdiv.div.table.tr.td:157-51
@@ -130,7 +130,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I "
 #: html/cool-help.html%2Bdiv.div.table.tr.td:183-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:240-18
 msgid "Underline"
-msgstr "Nënvizim"
+msgstr "Nënvizuar"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:37-54
 #: html/cool-help.html%2Bdiv.div.table.tr.td:158-54
@@ -142,7 +142,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>U"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:38-18
 msgid "Double Underline"
-msgstr "Nënvizim i dyfishtë"
+msgstr "Nënvizuar dyfish"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:38-61
 #: html/cool-help.html%2Bdiv.div.table.tr.td:163-54
@@ -155,7 +155,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:184-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:241-18
 msgid "Strikethrough"
-msgstr "Vizuar"
+msgstr "Hequrvije"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:39-58
 #: html/cool-help.html%2Bdiv.div.table.tr.td:159-58
@@ -225,7 +225,7 @@ msgstr "Formatimi i paragrafit"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:191-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:248-18
 msgid "Align Center"
-msgstr "Rreshto në qendër"
+msgstr "Vendose Në Qendër"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:46-57
 #: html/cool-help.html%2Bdiv.div.table.tr.td:165-57
@@ -240,7 +240,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:192-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:249-18
 msgid "Align Left"
-msgstr "Rreshto Majtas"
+msgstr "Vendose Majtas"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:47-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:166-55
@@ -386,7 +386,7 @@ msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Djathtas"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:203-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:260-18
 msgid "Go to beginning of a word"
-msgstr "Shko në fillimin e një fjale"
+msgstr "Kalo te fillimi i një fjale"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:62-70
 #: html/cool-help.html%2Bdiv.div.table.tr.td:203-70
@@ -398,7 +398,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjeta Majtas"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:204-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:261-18
 msgid "Select to the left word by word"
-msgstr "Zgjidh në të majtë fjalë pas fjale"
+msgstr "Përzgjidh në të majtë fjalë pas fjale"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:63-76
 #: html/cool-help.html%2Bdiv.div.table.tr.td:204-76
@@ -420,7 +420,7 @@ msgstr "Lëvize kursorin në të djathtë"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:205-69
 #: html/cool-help.html%2Bdiv.div.table.tr.td:262-69
 msgid "Arrow Right"
-msgstr "Shigjeta e djathtë"
+msgstr "Shigjeta Djathtas"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:65-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:206-18
@@ -438,7 +438,7 @@ msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Djathtas"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:207-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:264-18
 msgid "Go to start of the next word"
-msgstr "Shko në fillimin e fjalës pasardhëse"
+msgstr "Kalo te fillimi i fjalës pasuese"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:66-73
 #: html/cool-help.html%2Bdiv.div.table.tr.td:207-73
@@ -450,7 +450,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Djathtas"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:208-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:265-18
 msgid "Select to the right word by word"
-msgstr "Zgjidh në të djathtë fjalë pas fjale"
+msgstr "Përzgjidh në të djathtë fjalë pas fjale"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:67-77
 #: html/cool-help.html%2Bdiv.div.table.tr.td:208-77
@@ -466,13 +466,13 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.table.tr.td:209-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:266-18
 msgid "Move cursor up one line"
-msgstr "Lëvizni kursorin lart një rresht"
+msgstr "Kaloje kursorin një rresht më sipër"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:68-68
 #: html/cool-help.html%2Bdiv.div.table.tr.td:209-68
 #: html/cool-help.html%2Bdiv.div.table.tr.td:266-68
 msgid "Arrow Up"
-msgstr "Shigjeta Lart"
+msgstr "Shigjeta Sipër"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:69-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:210-18
@@ -1256,7 +1256,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 
 #: html/cool-help.html%2Bdiv.div.h2:154-9
 msgid "Cell formatting"
-msgstr "Formatimi i qelisë"
+msgstr "Formatim kutizash"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:162-18
 msgid "Display comment"
@@ -1272,7 +1272,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:169-18
 msgid "Set Optimal Column Width"
-msgstr "Vendos gjerësinë optimale të kolonës"
+msgstr "Ujdisni Gjerësinë Optimale të Shtyllave"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:170-18
 msgid "Two decimal places, thousands separator"
@@ -1312,7 +1312,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:173-18
 msgid "Standard currency format"
-msgstr "Formati standard i valutës"
+msgstr "Formati standard i monedhës"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:173-69
 msgid ""
