@@ -79,6 +79,21 @@ L.TextInput = L.Layer.extend({
 			'?':  [ 63, 0,      0, 4287 ],
 			'_':  [ 95, 0,      0, 5384 ]
 		};
+
+		// unoKeyCode values of the digits.
+		this._unoKeyMap = {
+			'48': 96,   // 0
+			'49': 97,   // 1
+			'50': 98,   // 2
+			'51': 99,   // 3
+			'52': 100,  // 4
+			'53': 101,  // 5
+			'54': 102,  // 6
+			'55': 103,  // 7
+			'56': 104,  // 8
+			'57': 105   // 9
+		};
+
 	},
 
 	onAdd: function() {
@@ -563,6 +578,12 @@ L.TextInput = L.Layer.extend({
 		this._lastContent = oldContent;
 	},
 
+	_isDigit: function(asciiChar) {
+		if (asciiChar >= 48 && asciiChar <= 57)
+			return true;
+		return false;
+	},
+
 	// Fired when text has been inputed, *during* and after composing/spellchecking
 	_onInput: function(ev) {
 		if (this._map.uiManager.isUIBlocked())
@@ -680,7 +701,15 @@ L.TextInput = L.Layer.extend({
 		this._lastContent = content;
 
 		if (newText.length > 0) {
-			this._sendText(this.codePointsToString(newText));
+			// When the cell formatted as percent, to trig percentage sign addition
+			// automatically we send the first digit character as KeyEvent.
+			if (this._map.getDocType() === 'spreadsheet' &&
+			    content.length === 1 && ev.inputType === 'insertText' &&
+				this._isDigit(newText)) {
+				this._sendKeyEvent(newText, this._unoKeyMap[newText], 'input');
+			}
+			else
+				this._sendText(this.codePointsToString(newText));
 		}
 
 		// was a 'delete' and we need to reset world.
