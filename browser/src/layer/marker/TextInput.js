@@ -810,13 +810,11 @@ L.TextInput = L.Layer.extend({
 			return;
 
 		this._map.notifyActive();
-		if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
-		    ev.key === 'ArrowUp' || ev.key === 'ArrowDown' ||
-		    ev.key === 'Home' || ev.key === 'End' ||
-		    ev.key === 'PageUp' || ev.key === 'PageDown'
-		) {
+		if (!this._isComposing && (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
+			ev.key === 'ArrowUp' || ev.key === 'ArrowDown' ||
+			ev.key === 'Home' || ev.key === 'End' ||
+			ev.key === 'PageUp' || ev.key === 'PageDown'))
 			this._emptyArea();
-		}
 	},
 
 	// Used in the deleteContentBackward for deleting multiple characters with a single
