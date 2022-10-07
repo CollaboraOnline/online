@@ -78,7 +78,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		this.insertMode = false;
 		this._cellSelections = Array(0);
-		this._cellCursorXY = {x: -1, y: -1};
+		this._cellCursorXY = new L.Point(-1, -1);
 		this._gotFirstCellCursor = false;
 		this.requestCellCursor();
 	},
