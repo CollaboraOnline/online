@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-16 12:48+0200\n"
-"PO-Revision-Date: 2022-05-04 14:13+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2022-09-28 21:23+0000\n"
+"Last-Translator: george kitsoukakis <norhorn@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
 "ui/el/>\n"
-"Language: \n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -421,11 +421,11 @@ msgstr "Μέσος όρος"
 
 #: src/control/Control.JSDialogBuilder.js:143
 msgid "Min"
-msgstr ""
+msgstr "Ελάχιστο"
 
 #: src/control/Control.JSDialogBuilder.js:144
 msgid "Max"
-msgstr ""
+msgstr "Μέγιστο"
 
 #: src/control/Control.JSDialogBuilder.js:145
 #: src/control/Control.StatusBar.js:309
@@ -668,7 +668,7 @@ msgstr "Επαναφορά εστίασης"
 #: src/control/Control.NotebookbarImpress.js:340
 #: src/control/Control.NotebookbarWriter.js:1061
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Εναλλαγή κατάστασης UI"
 
 #: src/control/Control.Menubar.js:119 src/control/Control.Menubar.js:377
 #: src/control/Control.NotebookbarWriter.js:1073
@@ -702,30 +702,29 @@ msgstr "Προσανατολισμός κειμένου"
 
 #: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1096
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Εισαγωγή εμπλουτισμένου κειμένου"
 
 #: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1097
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Εισαγωγή πλαισίου ελέγχου"
 
 #: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1098
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Εισαγωγή αναδυόμενης λίστας"
 
 #: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1099
 msgid "Insert Picture"
-msgstr ""
+msgstr "Εισαγωγή εικόνας"
 
 #: src/control/Control.Menubar.js:295 src/control/Control.Menubar.js:1100
-#, fuzzy
 msgid "Insert Date"
-msgstr "Εισαγωγή πίνακα"
+msgstr "Εισαγωγή ημερομηνίας"
 
 #: src/control/Control.Menubar.js:296 src/control/Control.Menubar.js:1101
 #: src/control/Control.NotebookbarWriter.js:270
 #: src/control/Control.NotebookbarWriter.js:1002
 msgid "Properties"
-msgstr ""
+msgstr "Ιδιότητες"
 
 #: src/control/Control.Menubar.js:324
 #: src/control/Control.NotebookbarWriter.js:294
@@ -854,7 +853,7 @@ msgstr "Επαναφορά στην προεπιλεγμένη γλώσσα"
 
 #: src/control/Control.Menubar.js:1589
 msgid "Use Compact view"
-msgstr ""
+msgstr "Χρήση συμπτυγμένης προβολής"
 
 #: src/control/Control.Menubar.js:1591
 msgid "Use Tabbed view"
