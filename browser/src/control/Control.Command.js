@@ -157,6 +157,8 @@ L.Map.include({
 	},
 
 	_extractCommand: function(item) {
+		if (!item)
+			return '';
 		if (item.command) // in notebookbar uno commands are stored as command
 			return [item.command];
 		else if (item.uno) { // in classic mode uno commands are stored as uno in menus
