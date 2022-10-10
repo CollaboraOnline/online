@@ -353,7 +353,7 @@ class DeltaGenerator {
                     lastMatchOffset = match - y;
                     output.push_back('c');   // copy-row
                     lastCopy = output.size();
-                    output.push_back(1);     // count
+                    output.push_back(1);     // count - updated later.
                     output.push_back(match); // src
                     output.push_back(y);     // dest
 
