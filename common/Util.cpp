@@ -8,6 +8,10 @@
 #include <config.h>
 #include <config_version.h>
 
+#ifndef COOLWSD_BUILDCONFIG
+#define COOLWSD_BUILDCONFIG
+#endif
+
 #include "Util.hpp"
 
 #include <csignal>
@@ -635,11 +639,12 @@ namespace Util
         std::string version, hash;
         Util::getVersionInfo(version, hash);
         return
-            "{ \"Version\":  \"" + version + "\", "
-              "\"Hash\":     \"" + hash + "\", "
-              "\"Protocol\": \"" + COOLProtocol::GetProtocolVersion() + "\", "
-              "\"Id\":       \"" + Util::getProcessIdentifier() + "\", "
-              "\"Options\":  \"" + std::string(enableExperimental ? " (E)" : "") + "\" }";
+            "{ \"Version\":     \"" + version + "\", "
+              "\"Hash\":        \"" + hash + "\", "
+              "\"BuildConfig\": \"" + std::string(COOLWSD_BUILDCONFIG) + "\", "
+              "\"Protocol\":    \"" + COOLProtocol::GetProtocolVersion() + "\", "
+              "\"Id\":          \"" + Util::getProcessIdentifier() + "\", "
+              "\"Options\":     \"" + std::string(enableExperimental ? " (E)" : "") + "\" }";
     }
 
     std::string UniqueId()
