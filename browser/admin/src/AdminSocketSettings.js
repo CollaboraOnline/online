@@ -85,6 +85,7 @@ var AdminSocketSettings = AdminSocketBase.extend({
 			else {
 				$('#coolwsd-version').text(coolwsdVersionObj.Version);
 			}
+			$('#coolwsd-buildconfig').html(coolwsdVersionObj.BuildConfig);
 		}
 		else if (textMsg.startsWith('lokitversion ')) {
 			var lokitVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
@@ -95,6 +96,7 @@ var AdminSocketSettings = AdminSocketBase.extend({
 			$('#lokit-version').html(lokitVersionObj.ProductName + ' ' +
 			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension +
 			                         ' (git hash: ' + h + ')');
+			$('#lokit-buildconfig').html(lokitVersionObj.BuildConfig);
 		}
 	},
 
