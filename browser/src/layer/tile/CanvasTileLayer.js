@@ -6673,7 +6673,7 @@ L.CanvasTileLayer = L.Layer.extend({
 						       delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
 			}
 
-
+			var len;
 			if (isKeyframe)
 			{
 				// FIXME: use zstd to de-compress directly into a Uint8ClampedArray
@@ -6700,7 +6700,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				// copy old data to work from:
 				var oldData = new Uint8ClampedArray(imgData.data);
 
-				var len = this._applyDeltaChunk(imgData, delta, oldData, canvas.width, canvas.height);
+				len = this._applyDeltaChunk(imgData, delta, oldData, canvas.width, canvas.height);
 				if (this._debugDeltas)
 					window.app.console.log('Applied chunk ' + i++ + ' of total size ' + delta.length +
 							       ' at stream offset ' + offset + ' size ' + len);

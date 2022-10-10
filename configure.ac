@@ -261,6 +261,18 @@ AC_ARG_WITH([poco-includes],
                             headers.  If you are building for Android 64bit,
                             you need two, separated by a colon ':'.]))
 
+AC_ARG_WITH([zstd-libs],
+            AS_HELP_STRING([--with-zstd-libs=<path>],
+                           [Path to the directory containing libzstd.a
+                            libraries.  If you are building for Android 64bit,
+                            you need two, separated by a colon ':'.]))
+
+AC_ARG_WITH([zstd-includes],
+            AS_HELP_STRING([--with-zstd-includes=<path>],
+                           [Path to the "include" directory with the zstd
+                            headers.  If you are building for Android 64bit,
+                            you need two, separated by a colon ':'.]))
+
 AC_ARG_WITH([poco-libs],
             AS_HELP_STRING([--with-poco-libs=<path>],
                            [Path to the "lib" directory with the Poco
@@ -477,6 +489,18 @@ if test "$enable_experimental" = "yes" ; then
 fi
 AC_SUBST(ENABLE_EXPERIMENTAL)
 
+dnl check for a file at a path with an env-var with a given suffix
+AC_DEFUN([CHK_FILE_VAR], dnl env-var, suffix, file-to-match, msg
+[
+   if test -n "$[$1][$4]" -o "z[$4]" = "z"; then
+       if test -f "$[$1][$4]/[$2]"; then
+           AC_MSG_RESULT([$[$1]])
+       else
+           AC_MSG_ERROR([This is not a [$3] [$4] directory no: $[$1][$4]/[$2]])
+       fi
+   fi
+]) dnl CHK_FILE_VAR
+
 # macOS: When configuring for building the app itself, on macOS, we need these.
 # But not when just configuring for building the JS on Linux, for copying over
 # to the Mac.
@@ -496,6 +520,16 @@ POCOLIB_ARM64_V8A=
 POCOLIB_X86=
 POCOLIB_X86_64=
 POCODEBUG=
+
+ZSTDINCLUDE=
+ZSTDINCLUDE_ARM64_V8A=
+ZSTDINCLUDE_X86=
+ZSTDINCLUDE_X86_64=
+ZSTDLIB=
+ZSTDLIB_ARM64_V8A=
+ZSTDLIB_X86=
+ZSTDLIB_X86_64=
+
 CORE_VERSION_HASH=""
 if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_androidapp" = "yes" \); then
    if test "$enable_androidapp" = "yes" ; then
@@ -575,36 +609,11 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
       fi
    fi
 
-   # Sanity check
-   if test -f "$POCOINCLUDE/Poco/Poco.h"; then
-       AC_MSG_RESULT([$POCOINCLUDE])
-   else
-       AC_MSG_ERROR([This is not a Poco include directory: $POCOINCLUDE])
-   fi
-
-   if test -n "$POCOINCLUDE_ARM64_V8A" ; then
-      if test -f "$POCOINCLUDE_ARM64_V8A/Poco/Poco.h"; then
-         AC_MSG_RESULT([$POCOINCLUDE_ARM64_V8A])
-      else
-         AC_MSG_ERROR([This is not a Poco ARM64 include directory: $POCOINCLUDE_ARM64_V8A])
-      fi
-   fi
-
-   if test -n "$POCOINCLUDE_X86" ; then
-      if test -f "$POCOINCLUDE_X86/Poco/Poco.h"; then
-         AC_MSG_RESULT([$POCOINCLUDE_X86])
-      else
-         AC_MSG_ERROR([This is not a Poco x86 include directory: $POCOINCLUDE_X86])
-      fi
-   fi
-
-   if test -n "$POCOINCLUDE_X86_64" ; then
-      if test -f "$POCOINCLUDE_X86_64/Poco/Poco.h"; then
-         AC_MSG_RESULT([$POCOINCLUDE_X86_64])
-      else
-         AC_MSG_ERROR([This is not a Poco x86-64 include directory: $POCOINCLUDE_X86_64])
-      fi
-   fi
+   # Sanity checks
+   CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include)
+   CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include,_ARM64_V8A)
+   CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include,_X64)
+   CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include,_X86_64)
 
    AC_MSG_CHECKING([for Poco lib directory to build against])
    if test -z "$with_poco_libs"; then
@@ -621,41 +630,53 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
       fi
    fi
 
-   # Sanity check
-   if test -f "$POCOLIB/libPocoFoundation.a"; then
-       AC_MSG_RESULT([$POCOLIB])
-   else
-       AC_MSG_ERROR([This is not a Poco lib directory: $POCOLIB])
-   fi
-
-   if test -n "$POCOLIB_ARM64_V8A" ; then
-      if test -f "$POCOLIB_ARM64_V8A/libPocoFoundation.a"; then
-         AC_MSG_RESULT([$POCOLIB_ARM64_V8A])
-      else
-         AC_MSG_ERROR([This is not a Poco ARM64 lib directory: $POCOLIB_ARM64_V8A])
-      fi
-   fi
-
-   if test -n "$POCOLIB_X86" ; then
-      if test -f "$POCOLIB_X86/libPocoFoundation.a"; then
-         AC_MSG_RESULT([$POCOLIB_X86])
-      else
-         AC_MSG_ERROR([This is not a Poco x86 lib directory: $POCOLIB_X86])
-      fi
-   fi
-
-   if test -n "$POCOLIB_X86_64" ; then
-      if test -f "$POCOLIB_X86_64/libPocoFoundation.a"; then
-         AC_MSG_RESULT([$POCOLIB_X86_64])
-      else
-         AC_MSG_ERROR([This is not a Poco x86-64 lib directory: $POCOLIB_X86_64])
-      fi
-   fi
+   # Sanity checks
+   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib)
+   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_ARM64_V8A)
+   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X64)
+   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X86_X64)
 
    if test "$ENABLE_DEBUG" = "true" ; then
        POCODEBUG=d
    fi
+
+   AC_MSG_CHECKING([for zstd lib directory to build against])
+   if test -z "$with_zstd_libs"; then
+      AC_MSG_ERROR([You MUST use the --with-zstd-libs option when configuring the mobile app build tree.])
+   fi
+
+   ZSTDINCLUDE="$with_zstd_includes"
+   if test "$enable_androidapp" = "yes" ; then
+      if echo "$ZSTDINCLUDE" | grep -qs ':' ; then
+         ZSTDINCLUDE=`echo $with_zstd_includes | cut -d: -f1`
+         ZSTDINCLUDE_ARM64_V8A=`echo $with_zstd_includes | cut -d: -f2`
+         ZSTDINCLUDE_X86=`echo $with_zstd_includes | cut -d: -f3`
+         ZSTDINCLUDE_X86_64=`echo $with_zstd_includes | cut -d: -f4`
+      fi
+   fi
+
+   # Sanity checks
+   CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include)
+   CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include,_ARM64_V8A)
+   CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include,_X64)
+   CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include,_X86_64)
+
+   ZSTDLIB="$with_zstd_libs"
+   if test "$enable_androidapp" = "yes" ; then
+      if echo "$ZSTDLIB" | grep -qs ':' ; then
+         ZSTDLIB=`echo $with_zstd_libs | cut -d: -f1`
+         ZSTDLIB_ARM64_V8A=`echo $with_zstd_libs | cut -d: -f2`
+         ZSTDLIB_X86=`echo $with_zstd_libs | cut -d: -f3`
+         ZSTDLIB_X86_64=`echo $with_zstd_libs | cut -d: -f4`
+      fi
+   fi
+
+   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib)
+   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_ARM64_V8A)
+   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X64)
+   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X86_64)
 fi
+
 AC_SUBST(LOBUILDDIR)
 AC_SUBST(ANDROID_ABI)
 AC_SUBST(ANDROID_ABI_SPLIT)
@@ -671,6 +692,14 @@ AC_SUBST(POCOLIB_ARM64_V8A)
 AC_SUBST(POCOLIB_X86)
 AC_SUBST(POCOLIB_X86_64)
 AC_SUBST(POCODEBUG)
+AC_SUBST(ZSTDINCLUDE)
+AC_SUBST(ZSTDINCLUDE_ARM64_V8A)
+AC_SUBST(ZSTDINCLUDE_X86)
+AC_SUBST(ZSTDINCLUDE_X86_64)
+AC_SUBST(ZSTDLIB)
+AC_SUBST(ZSTDLIB_ARM64_V8A)
+AC_SUBST(ZSTDLIB_X86)
+AC_SUBST(ZSTDLIB_X86_64)
 AC_SUBST([CORE_VERSION_HASH])
 
 AC_DEFINE_UNQUOTED([CORE_VERSION_HASH],[["$CORE_VERSION_HASH"]],[LibreOffice core git hash if present])
@@ -1045,6 +1074,12 @@ AS_IF([test -n "$with_poco_includes"],
 
 AS_IF([test -n "$with_poco_libs"],
       [LDFLAGS="$LDFLAGS -L${with_poco_libs}"])
+
+AS_IF([test -n "$with_zstd_includes"],
+      [CPPFLAGS="$CPPFLAGS -isystem ${with_zstd_includes}"])
+
+AS_IF([test -n "$with_zstd_libs"],
+      [LDFLAGS="$LDFLAGS -L${with_zstd_libs}"])
 
 AS_IF([test -n "$LIBPNG_INCLUDES"],
       [CPPFLAGS="$CPPFLAGS -isystem ${LIBPNG_INCLUDES}"])
