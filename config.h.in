@@ -12,6 +12,9 @@
 /* Enable permanent anonymization in logs */
 #undef COOLWSD_ANONYMIZE_USER_DATA
 
+/* Options passed to configure script */
+#undef COOLWSD_BUILDCONFIG
+
 /* Destination for Trace Event output */
 #undef COOLWSD_TRACEEVENTFILE
 
