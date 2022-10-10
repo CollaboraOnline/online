@@ -908,6 +908,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     LOG_TRC("postmessage_origin" << postMessageOrigin);
     const std::string theme = form.get("theme", "");
     LOG_TRC("theme=" << theme);
+    const std::string checkfileinfo_override = form.get("checkfileinfo_override", "");
+    LOG_TRC("checkfileinfo_override=" << checkfileinfo_override);
 
     // Escape bad characters in access token.
     // This is placed directly in javascript in cool.html, we need to make sure
@@ -954,6 +956,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
     Poco::replaceInPlace(preprocess, std::string("%UI_DEFAULTS%"), uiDefaultsToJSON(uiDefaults, userInterfaceMode));
     Poco::replaceInPlace(preprocess, std::string("%POSTMESSAGE_ORIGIN%"), escapedPostmessageOrigin);
+    Poco::replaceInPlace(preprocess, std::string("%CHECK_FILE_INFO_OVERRIDE%"),
+                         checkFileInfoToJSON(checkfileinfo_override));
 
     const auto& config = Application::instance().config();
 
