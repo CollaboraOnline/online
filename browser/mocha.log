@@ -1,0 +1,173 @@
+
+
+  Bounds parse() tests
+    Bounds.parse() call with an empty string argument
+incomplete rectangle
+      ✓ should return undefined
+    Bounds.parse() call with an string argument with 3 numbers
+incomplete rectangle
+      ✓ should return undefined
+    Bounds.parse() call with an string argument with 4 numbers
+      ✓ should return a valid Bounds
+      ✓ and the Bounds should be correct in position and size
+    Bounds constructor call
+      ✓ correctness check with PointConstructable[] argument
+
+  CPointSet empty() tests
+    new CPointSet()
+      ✓ should be empty
+    CPointSet constructed from Points
+      ✓ should be not be empty
+    CPointSet constructed from array of CPointSets
+      ✓ should be not be empty
+    After setting an empty Point array to a non-empty CPointSet
+      ✓ the CPointSet should be empty
+
+  SheetGeometry public methods tests
+    Document zoom level = 10
+      Tests for part#0 - Varying row/column sizes
+        ✓ correctness of getPart()
+        ✓ correctness of getViewColumnRange()
+        ✓ correctness of getViewRowRange()
+        ✓ correctness of getRowData()
+        ✓ correctness of getColumnGroupLevels()
+        ✓ correctness of getRowGroupLevels()
+        ✓ correctness of getColumnGroupsDataInView()
+        ✓ correctness of getRowGroupsDataInView()
+        ✓ correctness of getTileTwipsAtZoom()
+        ✓ correctness of getTileTwipsPointFromPrint()
+        ✓ correctness of getPrintTwipsPointFromTile()
+        ✓ correctness of getTileTwipsSheetAreaFromPrint()
+        ✓ correctness of getSize()
+        ✓ correctness of getCellRect()
+        ✓ correctness of getCellFromPos()
+        ✓ correctness of getSnapDocPosX() and getSnapDocPosY()
+      Tests for part#1 - Hidden rows
+        ✓ correctness of getPart()
+        ✓ correctness of getViewColumnRange()
+        ✓ correctness of getViewRowRange()
+        ✓ correctness of getRowData()
+        ✓ correctness of getColumnGroupLevels()
+        ✓ correctness of getRowGroupLevels()
+        ✓ correctness of getColumnGroupsDataInView()
+        ✓ correctness of getRowGroupsDataInView()
+        ✓ correctness of getTileTwipsAtZoom()
+        ✓ correctness of getTileTwipsPointFromPrint()
+        ✓ correctness of getPrintTwipsPointFromTile()
+        ✓ correctness of getTileTwipsSheetAreaFromPrint()
+        ✓ correctness of getSize()
+        ✓ correctness of getCellRect()
+        ✓ correctness of getCellFromPos()
+        ✓ correctness of getSnapDocPosX() and getSnapDocPosY()
+      Tests for part#2 - Filtered rows
+        ✓ correctness of getPart()
+        ✓ correctness of getViewColumnRange()
+        ✓ correctness of getViewRowRange()
+        ✓ correctness of getRowData()
+        ✓ correctness of getColumnGroupLevels()
+        ✓ correctness of getRowGroupLevels()
+        ✓ correctness of getColumnGroupsDataInView()
+        ✓ correctness of getRowGroupsDataInView()
+        ✓ correctness of getTileTwipsAtZoom()
+        ✓ correctness of getTileTwipsPointFromPrint()
+        ✓ correctness of getPrintTwipsPointFromTile()
+        ✓ correctness of getTileTwipsSheetAreaFromPrint()
+        ✓ correctness of getSize()
+        ✓ correctness of getCellRect()
+        ✓ correctness of getCellFromPos()
+        ✓ correctness of getSnapDocPosX() and getSnapDocPosY()
+      Tests for part#3 - Row groups
+        ✓ correctness of getPart()
+        ✓ correctness of getViewColumnRange()
+        ✓ correctness of getViewRowRange()
+        ✓ correctness of getRowData()
+        ✓ correctness of getColumnGroupLevels()
+        ✓ correctness of getRowGroupLevels()
+        ✓ correctness of getColumnGroupsDataInView()
+        ✓ correctness of getRowGroupsDataInView()
+        ✓ correctness of getTileTwipsAtZoom()
+        ✓ correctness of getTileTwipsPointFromPrint()
+        ✓ correctness of getPrintTwipsPointFromTile()
+        ✓ correctness of getTileTwipsSheetAreaFromPrint()
+        ✓ correctness of getSize()
+        ✓ correctness of getCellRect()
+        ✓ correctness of getCellFromPos()
+        ✓ correctness of getSnapDocPosX() and getSnapDocPosY()
+    Document zoom level = 7
+      Tests for part#0 - Varying row/column sizes
+        ✓ correctness of getPart()
+        ✓ correctness of getViewColumnRange()
+        ✓ correctness of getViewRowRange()
+        ✓ correctness of getRowData()
+        ✓ correctness of getColumnGroupLevels()
+        ✓ correctness of getRowGroupLevels()
+        ✓ correctness of getColumnGroupsDataInView()
+        ✓ correctness of getRowGroupsDataInView()
+        ✓ correctness of getTileTwipsAtZoom()
+        ✓ correctness of getTileTwipsPointFromPrint()
+        ✓ correctness of getPrintTwipsPointFromTile()
+        ✓ correctness of getTileTwipsSheetAreaFromPrint()
+        ✓ correctness of getSize()
+        ✓ correctness of getCellRect()
+        ✓ correctness of getCellFromPos()
+        ✓ correctness of getSnapDocPosX() and getSnapDocPosY()
+      Tests for part#1 - Hidden rows
+        ✓ correctness of getPart()
+        ✓ correctness of getViewColumnRange()
+        ✓ correctness of getViewRowRange()
+        ✓ correctness of getRowData()
+        ✓ correctness of getColumnGroupLevels()
+        ✓ correctness of getRowGroupLevels()
+        ✓ correctness of getColumnGroupsDataInView()
+        ✓ correctness of getRowGroupsDataInView()
+        ✓ correctness of getTileTwipsAtZoom()
+        ✓ correctness of getTileTwipsPointFromPrint()
+        ✓ correctness of getPrintTwipsPointFromTile()
+        ✓ correctness of getTileTwipsSheetAreaFromPrint()
+        ✓ correctness of getSize()
+        ✓ correctness of getCellRect()
+        ✓ correctness of getCellFromPos()
+        ✓ correctness of getSnapDocPosX() and getSnapDocPosY()
+      Tests for part#2 - Filtered rows
+        ✓ correctness of getPart()
+        ✓ correctness of getViewColumnRange()
+        ✓ correctness of getViewRowRange()
+        ✓ correctness of getRowData()
+        ✓ correctness of getColumnGroupLevels()
+        ✓ correctness of getRowGroupLevels()
+        ✓ correctness of getColumnGroupsDataInView()
+        ✓ correctness of getRowGroupsDataInView()
+        ✓ correctness of getTileTwipsAtZoom()
+        ✓ correctness of getTileTwipsPointFromPrint()
+        ✓ correctness of getPrintTwipsPointFromTile()
+        ✓ correctness of getTileTwipsSheetAreaFromPrint()
+        ✓ correctness of getSize()
+        ✓ correctness of getCellRect()
+        ✓ correctness of getCellFromPos()
+        ✓ correctness of getSnapDocPosX() and getSnapDocPosY()
+      Tests for part#3 - Row groups
+        ✓ correctness of getPart()
+        ✓ correctness of getViewColumnRange()
+        ✓ correctness of getViewRowRange()
+        ✓ correctness of getRowData()
+        ✓ correctness of getColumnGroupLevels()
+        ✓ correctness of getRowGroupLevels()
+        ✓ correctness of getColumnGroupsDataInView()
+        ✓ correctness of getRowGroupsDataInView()
+        ✓ correctness of getTileTwipsAtZoom()
+        ✓ correctness of getTileTwipsPointFromPrint()
+        ✓ correctness of getPrintTwipsPointFromTile()
+        ✓ correctness of getTileTwipsSheetAreaFromPrint()
+        ✓ correctness of getSize()
+        ✓ correctness of getCellRect()
+        ✓ correctness of getCellFromPos()
+        ✓ correctness of getSnapDocPosX() and getSnapDocPosY()
+
+  SheetGeometry bugfix tests
+    update: On ungroup groups key will have an empty string - should not skip parsing
+      ✓ correctness of getRowGroupLevels() before ungroup
+      ✓ correctness of getRowGroupLevels() after ungroup
+
+
+  139 passing (30ms)
+
