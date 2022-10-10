@@ -36,18 +36,26 @@ if(${ANDROID_ABI} STREQUAL "armeabi-v7a")
     set(LOBUILDDIR_ABI @LOBUILDDIR@)
     set(POCOINCLUDE_ABI @POCOINCLUDE@)
     set(POCOLIB_ABI @POCOLIB@)
+    set(ZSTDINCLUDE_ABI @ZSTDINCLUDE@)
+    set(ZSTDLIB_ABI @ZSTDLIB@)
 elseif(${ANDROID_ABI} STREQUAL "arm64-v8a")
     set(LOBUILDDIR_ABI @LOBUILDDIR_ARM64_V8A@)
     set(POCOINCLUDE_ABI @POCOINCLUDE_ARM64_V8A@)
     set(POCOLIB_ABI @POCOLIB_ARM64_V8A@)
+    set(ZSTDINCLUDE_ABI @ZSTDINCLUDE_ARM64_V8A@)
+    set(ZSTDLIB_ABI @ZSTDLIB_ARM64_V8A@)
 elseif(${ANDROID_ABI} STREQUAL "x86")
     set(LOBUILDDIR_ABI @LOBUILDDIR_X86@)
     set(POCOINCLUDE_ABI @POCOINCLUDE_X86@)
     set(POCOLIB_ABI @POCOLIB_X86@)
+    set(ZSTDINCLUDE_ABI @ZSTDINCLUDE_X86@)
+    set(ZSTDLIB_ABI @ZSTDLIB_X86@)
 elseif(${ANDROID_ABI} STREQUAL "x86_64")
     set(LOBUILDDIR_ABI @LOBUILDDIR_X86_64@)
     set(POCOINCLUDE_ABI @POCOINCLUDE_X86_64@)
     set(POCOLIB_ABI @POCOLIB_X86_64@)
+    set(ZSTDINCLUDE_ABI @ZSTDINCLUDE_X86_64@)
+    set(ZSTDLIB_ABI @ZSTDLIB_X86_64@)
 else()
     MESSAGE(FATAL_ERROR "Cannot build for ABI ${ANDROID_ABI}, please add support for that.")
 endif()
@@ -63,6 +71,7 @@ target_include_directories(androidapp PRIVATE
                            ../../../../../net
                            ../../../../../wsd
                            ${POCOINCLUDE_ABI}         # POCO
+                           ${ZSTDINCLUDE_ABI}         # ZSTD
                            ${LOBUILDDIR_ABI}/workdir/UnpackedTarball/libpng # libpng
                            ${LOBUILDDIR_ABI}/include                        # LibreOfficeKit
 )
@@ -125,5 +134,6 @@ target_link_libraries(androidapp
                       ${POCOLIB_ABI}/libPocoXML@POCODEBUG@.a
                       ${POCOLIB_ABI}/libPocoJSON@POCODEBUG@.a
                       ${POCOLIB_ABI}/libPocoFoundation@POCODEBUG@.a
+                      ${ZSTDLIB_ABI}/libzstd.a
                       "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}/liblo-native-code.so"
 )
