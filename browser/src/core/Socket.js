@@ -1560,6 +1560,10 @@ app.definitions.Socket = L.Class.extend({
 			}
 		}, 1 /* ms */);
 
+		if (this._map.isPermissionEdit()) {
+			this._map.setPermission('view');
+		}
+
 		if (!this._map['wopi'].DisableInactiveMessages)
 			this._map.uiManager.showSnackbar(_('The server has been disconnected.'));
 	},
