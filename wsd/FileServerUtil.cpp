@@ -124,6 +124,35 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
     return previousJSON;
 }
 
+std::string FileServerRequestHandler::checkFileInfoToJSON(const std::string& checkfileInfo)
+{
+    static std::string previousCheckFileInfo;
+    static std::string previousCheckFileInfoJSON("{}");
+
+    // early exit if we are serving the same thing
+    if (checkfileInfo == previousCheckFileInfo)
+        return previousCheckFileInfoJSON;
+
+    Poco::JSON::Object json;
+    StringVector tokens(StringVector::tokenize(checkfileInfo, ';'));
+    for (const auto& token : tokens)
+    {
+        StringVector keyValue(StringVector::tokenize(tokens.getParam(token), '='));
+        if (keyValue.equals(0, "DownloadAsPostMessage"))
+        {
+            bool value(false);
+            if (keyValue.equals(1, "true") || keyValue.equals(1, "True") || keyValue.equals(1, "1"))
+                value = true;
+            json.set(keyValue[0], value);
+        }
+    }
+    std::ostringstream oss;
+    Poco::JSON::Stringifier::stringify(json, oss);
+    previousCheckFileInfo = checkfileInfo;
+    previousCheckFileInfoJSON = oss.str();
+    return previousCheckFileInfoJSON;
+}
+
 namespace
 {
 bool isValidCss(const std::string& token)
