@@ -19,10 +19,10 @@ build the native parts on Windows.
 
 git clone https://android.googlesource.com/platform/external/zstd/ android-zstd
 cd android-zstd
-mkdir armabi-v7a
-cd armabi-v7a
+mkdir -p install/armeabi-v7a
+cd install/armeabi-v7a
 
-NDK_PATH=/opt/libreoffice/android-ndk-r20b
+NDK_PATH=~/Android/Sdk/ndk-bundle
 cmake \
   -DCMAKE_TOOLCHAIN_FILE=${NDK_PATH}/build/cmake/android.toolchain.cmake \
   -DANDROID_ABI=armeabi-v7a \
@@ -34,7 +34,11 @@ cmake \
   ../build/cmake
 make
 
+* Build zstd for several platforms:
 
+  scripts/build-zstd.sh ~/Android/Sdk/ndk-bundle /opt/libreoffice
+
+This will create a set of folders in install/ that you can configure with.
 
 * Build the POCO for Android
 
@@ -146,7 +150,7 @@ make
 
   Don't forget to change --with-lo-builddir in the following:
 
-  ./autogen.sh && ./configure CC=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang CXX=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++ --host=arm-linux-androideabi --enable-androidapp --with-lo-builddir=/local/libreoffice/master-android --with-poco-includes=/opt/poco-android/include --with-poco-libs=/opt/poco-android/lib --with-zstd-includes=/opt/zstd-android/lib --with-zstd-libs=/opt/zstd-android/armabi-v7a/lib --disable-setcap --enable-silent-rules --enable-debug
+  ./autogen.sh && ./configure CC=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang CXX=~/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++ --host=arm-linux-androideabi --enable-androidapp --with-lo-builddir=/local/libreoffice/master-android --with-poco-includes=/opt/poco-android/include --with-poco-libs=/opt/poco-android/lib --with-zstd-includes=/opt/libreoffice/android-zstd/lib --with-zstd-libs=/opt/libreoffice/android-zstd/install/armeabi-v7a/lib --disable-setcap --enable-silent-rules --enable-debug
 
 * Build the JavaScript, HTML and CSS files also in the online-android folder
 
