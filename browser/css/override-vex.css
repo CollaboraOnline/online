@@ -219,12 +219,19 @@ kbd,
 	text-shadow: 1px 1px 12px #ffbf0038, 0 0 0.5px #00000026;
 }
 
+.vex.vex-theme-plain .vex-content.vex-locking ul li {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
 .vex.vex-theme-plain .vex-content.vex-locking ul li::before {
 	content: '\2022';
 	color: #fda208;
 	font-weight: bold;
 	display: inline-block;
 	width: 1em;
+	min-width: 1em;
 	margin-inline-start: 0.5em;
 }
 
