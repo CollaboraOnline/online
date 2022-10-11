@@ -41,6 +41,8 @@ let ssl_args = [
 
 if (ssl_flag === 'true')
 	args = [...args, ...ssl_args];
+else
+	args = [...args, '--o:ssl.enable=false'];
 
 process.on('SIGUSR2', serverReady);
 
@@ -66,7 +68,8 @@ let childNodes = [];
 
 function serverReady() {
     console.log('\nTest running - connect to:\n\n\t' +
-		'https://localhost:9999/browser/1234/cool.html?file_path=file://' +
+		(ssl_flag === 'true'?'https':'http') +
+		'://localhost:9999/browser/1234/cool.html?file_path=file://' +
 		top_builddir + '/test/data/perf-test-edit.odt\n\n');
 
     let execArgs = [];
