@@ -130,6 +130,21 @@ window.HTMLElement.prototype.getBoundingClientRect = function() {
 	};
 };
 
+// nodejs requires rejectUnauthorized to be set to cope with our https
+window.createWebSocket = function(uri) {
+        if ('processCoolUrl' in window) {
+                uri = window.processCoolUrl({ url: uri, type: 'ws' });
+        }
+
+        if (global.socketProxy) {
+                window.socketProxy = true;
+                return new global.ProxySocket(uri);
+        } else {
+		// FIXME: rejectUnauthorized: false for SSL?
+                return new WebSocket(uri);
+        }
+};
+
 function sleep(ms)
 {
 	return new Promise(r => setTimeout(r, ms));
