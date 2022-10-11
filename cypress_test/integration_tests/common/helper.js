@@ -471,20 +471,18 @@ function expectTextForClipboard(expectedPlainText, frameId) {
 	cy.log('Text:' + expectedPlainText ,  'FrameID:' + frameId);
 	doIfInWriter(function() {
 		// for backward compatibility allow '/nTEXT' and 'TEXT'
-		const expectedRegex = RegExp('/^(\n' + expectedPlainText + ')|(' + expectedPlainText + ')$/');
+		const expectedRegex = RegExp('^(\n' + expectedPlainText + ')|(' + expectedPlainText + ')$');
 		cy.customGet('#copy-paste-container p', frameId)
-			.then(function(pItem) {
+			.then(function (pItem) {
 				if (pItem.children('font').length !== 0) {
 					cy.customGet('#copy-paste-container p font', frameId)
-						.invoke('text')
-						.then(function(value) {
-							return expectedRegex.test(value);
+						.should(($ele) => {
+							expect($ele.text()).to.match(expectedRegex);
 						});
 				} else {
 					cy.customGet('#copy-paste-container p', frameId)
-						.invoke('text')
-						.then(function(value) {
-							return expectedRegex.test(value);
+						.should(($ele) => {
+							expect($ele.text()).to.match(expectedRegex);
 						});
 				}
 			});
