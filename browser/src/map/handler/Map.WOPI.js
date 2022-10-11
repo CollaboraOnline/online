@@ -93,6 +93,7 @@ L.Map.WOPI = L.Handler.extend({
 	},
 
 	_setWopiProps: function(wopiInfo) {
+		var overridenFileInfo = window.checkFileInfoOverride;
 		// Store postmessageorigin property, if it exists
 		if (wopiInfo['PostMessageOrigin']) {
 			this.PostMessageOrigin = wopiInfo['PostMessageOrigin'];
@@ -110,7 +111,8 @@ L.Map.WOPI = L.Handler.extend({
 		this.DisableExport = !!wopiInfo['DisableExport'];
 		this.DisableCopy = !!wopiInfo['DisableCopy'];
 		this.DisableInactiveMessages = !!wopiInfo['DisableInactiveMessages'];
-		this.DownloadAsPostMessage = !!wopiInfo['DownloadAsPostMessage'];
+		this.DownloadAsPostMessage = Object.prototype.hasOwnProperty.call(overridenFileInfo, 'DownloadAsPostMessage') ?
+			overridenFileInfo.DownloadAsPostMessage : !!wopiInfo['DownloadAsPostMessage'];
 		this.UserCanNotWriteRelative = !!wopiInfo['UserCanNotWriteRelative'];
 		this.EnableInsertRemoteImage = !!wopiInfo['EnableInsertRemoteImage'];
 		this.SupportsRename = !!wopiInfo['SupportsRename'];

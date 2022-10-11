@@ -39,6 +39,8 @@ class FileServerRequestHandler
     /// Also returns the UIMode from uiDefaults in uiMode output param
     static std::string uiDefaultsToJSON(const std::string& uiDefaults, std::string& uiMode);
 
+    static std::string checkFileInfoToJSON(const std::string& checkfileFileInfo);
+
     static std::string cssVarsToStyle(const std::string& cssVars);
 
     static std::string stringifyBoolFromConfig(const Poco::Util::LayeredConfiguration& config,
