@@ -14,11 +14,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-07 17:09+0200\n"
-"PO-Revision-Date: 2022-09-17 23:21+0000\n"
-"Last-Translator: Gökay Şatır <gokaysatir@collabora.com>\n"
+"PO-Revision-Date: 2022-10-10 13:26+0000\n"
+"Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1031,7 +1031,7 @@ msgstr "~Yardım"
 #: src/control/Control.NotebookbarImpress.js:164
 #: src/control/Control.NotebookbarWriter.js:126
 msgid "Save As"
-msgstr ""
+msgstr "Farklı Kaydet"
 
 #: src/control/Control.NotebookbarCalc.js:133
 #: src/control/Control.NotebookbarDraw.js:150
@@ -1864,7 +1864,6 @@ msgstr ""
 "yapılandırılmıştır, lütfen sistem yöneticiniz ile görüşün."
 
 #: src/errormessages.js:15
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
@@ -1873,7 +1872,7 @@ msgid ""
 msgstr ""
 "Bu, {productname} yazılımının desteklenmeyen bir sürümüdür. Kurumlarda "
 "dağıtım için uygun olduğu izlenimini önlemek için, bu ileti aynı anda {docs} "
-"belge veya {connection} bağlantıdan daha fazlası kullanıldığında görünür"
+"belge veya {connections} bağlantıdan daha fazlası kullanıldığında görünür."
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -2213,7 +2212,7 @@ msgstr "Düzenlemeye devam etmek için lütfen tıklayın"
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Lütfen bize geri bildiriminizi gönderin"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
