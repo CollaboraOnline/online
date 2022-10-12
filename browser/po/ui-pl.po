@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-07 17:09+0200\n"
-"PO-Revision-Date: 2022-09-17 23:21+0000\n"
+"PO-Revision-Date: 2022-10-10 13:26+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<"
-"12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) ||"
-" (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 4.14.1\n"
 
 #: admin/admin.strings.js:6
@@ -1033,7 +1033,7 @@ msgstr "Po~moc"
 #: src/control/Control.NotebookbarImpress.js:164
 #: src/control/Control.NotebookbarWriter.js:126
 msgid "Save As"
-msgstr ""
+msgstr "Zapisz jako"
 
 #: src/control/Control.NotebookbarCalc.js:133
 #: src/control/Control.NotebookbarDraw.js:150
@@ -1871,7 +1871,6 @@ msgstr ""
 "skonfigurowany, skontaktuj się z administratorem."
 
 #: src/errormessages.js:15
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
@@ -1880,7 +1879,7 @@ msgid ""
 msgstr ""
 "To jest nieobsługiwana wersja {productname}. Aby uniknąć wrażenia, że nadaje "
 "się do wdrożenia w przedsiębiorstwach, ten komunikat pojawia się, gdy więcej "
-"niż {docs} dokumentów lub {connections} połączeń jest używanych jednocześnie"
+"niż {docs} dokumentów lub {connections} połączeń jest używanych jednocześnie."
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -2215,7 +2214,7 @@ msgstr "Kliknij, aby wznowić edycję"
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Prześlij nam swoją opinię"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
