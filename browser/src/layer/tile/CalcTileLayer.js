@@ -839,6 +839,12 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._updateHeadersGridLines(values);
 
 		} else if (values.commandName === '.uno:SheetGeometryData') {
+			// duplicate sheet-geometry for same sheet triggers replay of other messages that
+			// disrupt the view restore during sheet switch.
+			if (this._oldSheetGeomMsg === textMsg && this._selectedPart === this.sheetGeometry.getPart())
+				return;
+
+			this._oldSheetGeomMsg = textMsg;
 			this._handleSheetGeometryDataMsg(values);
 
 		} else if (values.comments) {
