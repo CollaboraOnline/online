@@ -301,6 +301,18 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		if (limitHeight)
 			newDocHeight = Math.min(lastCellTwips.y + mapSizeTwips.y, newDocHeight);
 
+		var extendedLimit = false;
+
+		if (!limitWidth && maxDocSize.x > this._docWidthTwips) {
+			newDocWidth = this._docWidthTwips + mapSizeTwips.x;
+			extendedLimit = true;
+		}
+
+		if (!limitHeight && maxDocSize.y > this._docHeightTwips) {
+			newDocHeight = this._docHeightTwips + mapSizeTwips.y;
+			extendedLimit = true;
+		}
+
 		var shouldRestrict = (newDocWidth !== this._docWidthTwips ||
 				newDocHeight !== this._docHeightTwips);
 
@@ -325,7 +337,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		this._map.fire('scrolllimits', newSizePx.clone());
 
-		if (limitWidth || limitHeight)
+		if (limitWidth || limitHeight || extendedLimit)
 			this._painter._sectionContainer.requestReDraw();
 	},
 
