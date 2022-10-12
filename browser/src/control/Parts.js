@@ -8,6 +8,10 @@
 L.Map.include({
 	setPart: function (part, external, calledFromSetPartHandler) {
 		var docLayer = this._docLayer;
+
+		if (docLayer.isCalc())
+			docLayer._sheetSwitch.save(part /* toPart */);
+
 		docLayer._prevSelectedPart = docLayer._selectedPart;
 		docLayer._selectedParts = [];
 		if (part === 'prev') {

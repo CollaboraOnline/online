@@ -80,6 +80,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._cellSelections = Array(0);
 		this._cellCursorXY = new L.Point(-1, -1);
 		this._gotFirstCellCursor = false;
+		this._sheetSwitch = new L.SheetSwitchViewRestore(map);
 		this.requestCellCursor();
 	},
 
@@ -250,6 +251,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._replayPrintTwipsMsgAllViews('textviewselection');
 			// Hide previous tab's shown comment (if any).
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).hideAllComments();
+			this._sheetSwitch.gotSetPart(part);
 		}
 	},
 
