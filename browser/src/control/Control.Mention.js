@@ -169,6 +169,7 @@ L.Control.Mention = L.Control.extend({
 				}
 			};
 			this._map.sendUnoCommand('.uno:SetHyperlink', command);
+			this.map.fire('postMessage', { msgId: 'UI_Mention', args: { type: 'selected', username: this.itemList[index].username }});
 			this.closeMentionPopup({ 'typingMention': false });
 		} else if (eventType === 'keydown') {
 			if (object.key !== 'Tab' && object.key !== 'Shift') {
