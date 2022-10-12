@@ -2259,6 +2259,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._prevCellCursorXY = new L.Point(-1, -1);
 		}
 
+		var oldCursorXY = this._cellCursorXY.clone();
+
 		if (textMsg.match('EMPTY') || !this._map.isPermissionEdit()) {
 			app.file.calc.cellCursor.visible = false;
 			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
@@ -2323,7 +2325,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._prevCellCursor = new L.LatLngBounds(this._cellCursor.getSouthWest(), this._cellCursor.getNorthEast());
 		}
 
-		this._onUpdateCellCursor(horizontalDirection, verticalDirection, onPgUpDn);
+		var scrollToCursor = this._sheetSwitch.tryRestore(oldCursorXY.equals(this._cellCursorXY), this._selectedPart);
+
+		this._onUpdateCellCursor(horizontalDirection, verticalDirection, onPgUpDn, scrollToCursor);
 
 		// Remove input help if there is any:
 		this._removeInputHelpMarker();
@@ -4274,11 +4278,11 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._updateCursorAndOverlay();
 	},
 
-	_onUpdateCellCursor: function (horizontalDirection, verticalDirection, onPgUpDn) {
+	_onUpdateCellCursor: function (horizontalDirection, verticalDirection, onPgUpDn, scrollToCursor) {
 		this._onUpdateCellResizeMarkers();
 		if (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)) {
 			var mapBounds = this._map.getBounds();
-			if (!this._cellCursorXY.equals(this._prevCellCursorXY) &&
+			if (scrollToCursor && !this._cellCursorXY.equals(this._prevCellCursorXY) &&
 			    !this._map.calcInputBarHasFocus()) {
 				var scroll = this._calculateScrollForNewCellCursor();
 				window.app.console.assert(scroll instanceof L.LatLng, '_calculateScrollForNewCellCursor returned wrong type');
