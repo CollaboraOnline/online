@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-07 17:09+0200\n"
-"PO-Revision-Date: 2022-05-04 14:13+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2022-10-10 13:26+0000\n"
+"Last-Translator: liimee <alt3753.7@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -364,7 +364,7 @@ msgstr "Buka tautan"
 
 #: src/control/Control.AlertDialog.js:94
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr "Peladen mengalami kesalahan %0 saat mem-parsing perintah %1."
+msgstr "Server mengalami kesalahan %0 saat menguraikan perintah %1."
 
 #: src/control/Control.Command.js:93
 msgid "Unlock"
@@ -393,7 +393,7 @@ msgstr "Mulai unduh"
 
 #: src/control/Control.DownloadProgress.js:62
 msgid "Confirm copy to clipboard"
-msgstr "Konfirmasi salin ke papan"
+msgstr "Konfirmasi salin ke papan klip"
 
 #: src/control/Control.FormulaBar.js:45
 msgid "cell address"
@@ -405,7 +405,7 @@ msgstr "Fungsi Wisaya"
 
 #: src/control/Control.FormulaBarJSDialog.js:55
 msgid "Formula"
-msgstr ""
+msgstr "Rumus"
 
 #: src/control/Control.FormulaBarJSDialog.js:62
 #: src/control/Control.MobileTopBar.js:40
@@ -424,16 +424,16 @@ msgstr "Rerata"
 
 #: src/control/Control.JSDialogBuilder.js:143
 msgid "Min"
-msgstr ""
+msgstr "Minimum"
 
 #: src/control/Control.JSDialogBuilder.js:144
 msgid "Max"
-msgstr ""
+msgstr "Maksimum"
 
 #: src/control/Control.JSDialogBuilder.js:145
 #: src/control/Control.StatusBar.js:309
 msgid "Count"
-msgstr "Menghitung"
+msgstr "Hitung"
 
 #: src/control/Control.JSDialogBuilder.js:431
 msgid "Solid"
@@ -717,7 +717,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:297 src/control/Control.Menubar.js:1112
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Sisipkan Kotak Centang"
 
 #: src/control/Control.Menubar.js:298 src/control/Control.Menubar.js:1113
 msgid "Insert Dropdown"
@@ -725,12 +725,11 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:299 src/control/Control.Menubar.js:1114
 msgid "Insert Picture"
-msgstr ""
+msgstr "Sisipkan Gambar"
 
 #: src/control/Control.Menubar.js:300 src/control/Control.Menubar.js:1115
-#, fuzzy
 msgid "Insert Date"
-msgstr "Sisip Tabel"
+msgstr "Sisipkan Tanggal"
 
 #: src/control/Control.Menubar.js:301 src/control/Control.Menubar.js:1116
 #: src/control/Control.NotebookbarWriter.js:284
@@ -1033,7 +1032,7 @@ msgstr "~Bantuan"
 #: src/control/Control.NotebookbarImpress.js:164
 #: src/control/Control.NotebookbarWriter.js:126
 msgid "Save As"
-msgstr ""
+msgstr "Simpan Sebagai"
 
 #: src/control/Control.NotebookbarCalc.js:133
 #: src/control/Control.NotebookbarDraw.js:150
@@ -1126,7 +1125,7 @@ msgstr "Buruk"
 
 #: src/control/Control.NotebookbarCalc.js:746
 msgid "Row Height"
-msgstr ""
+msgstr "Tinggi Baris"
 
 #: src/control/Control.NotebookbarCalc.js:752
 msgid "Column Width"
