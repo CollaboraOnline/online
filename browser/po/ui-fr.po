@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-07 17:09+0200\n"
-"PO-Revision-Date: 2022-10-05 09:21+0000\n"
-"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
+"PO-Revision-Date: 2022-10-10 13:26+0000\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1572,7 +1572,7 @@ msgstr "Document téléversé."
 
 #: src/control/Signing.js:491
 msgid "Select identity:"
-msgstr "Sélectionner une identité :"
+msgstr "Sélectionner une identité :"
 
 #: src/control/Signing.js:492
 msgid "Login from mobile"
@@ -1588,7 +1588,7 @@ msgstr "Sélectionner le passeport"
 
 #: src/control/Signing.js:602
 msgid "Passport: N/A"
-msgstr "Passeport : N/A"
+msgstr "Passeport : s.o."
 
 #: src/control/Signing.js:604
 msgid "Sign"
@@ -1596,7 +1596,7 @@ msgstr "Signer"
 
 #: src/control/Signing.js:606
 msgid "Status:"
-msgstr "État :"
+msgstr "État :"
 
 #: src/control/Signing.js:607
 msgid "N/A"
