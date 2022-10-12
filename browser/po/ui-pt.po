@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-07 17:09+0200\n"
-"PO-Revision-Date: 2022-09-17 23:21+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2022-10-12 02:03+0000\n"
+"Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.15-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1029,7 +1029,7 @@ msgstr "Aju~da"
 #: src/control/Control.NotebookbarImpress.js:164
 #: src/control/Control.NotebookbarWriter.js:126
 msgid "Save As"
-msgstr ""
+msgstr "Guardar como"
 
 #: src/control/Control.NotebookbarCalc.js:133
 #: src/control/Control.NotebookbarDraw.js:150
@@ -1864,17 +1864,16 @@ msgstr ""
 "configurado. Deve contactar o administrador de sistemas."
 
 #: src/errormessages.js:15
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
 "when more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
-"Esta é uma versão não suportada do {productname}. Para evitar dar a "
-"impressão de que é adequada para utilização empresarial, esta mensagem "
-"aparece sempre que estiver abertos mais do que {docs} documentos ou mais do "
-"que {connections} ligações em simultâneo"
+"Esta é a versão do {productname} sem suporte. Para evitar dar a impressão de "
+"que é adequada para utilização empresarial, esta mensagem aparece sempre que "
+"estiverem abertos mais do que {docs} documentos ou mais do que {connections} "
+"ligações em simultâneo."
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -2216,7 +2215,7 @@ msgstr "Por favor clique para continuar a editar"
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Por favor dê a sua opinião"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
