@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-07 17:09+0200\n"
-"PO-Revision-Date: 2022-08-18 14:19+0000\n"
+"PO-Revision-Date: 2022-10-10 13:26+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -920,12 +920,12 @@ msgstr "Toning slutfärg"
 
 #: src/control/Control.NotebookbarBuilder.js:350
 msgid "Tap to expand"
-msgstr ""
+msgstr "Tryck för att expandera"
 
 #: src/control/Control.NotebookbarBuilder.js:351
 #: src/control/Control.NotebookbarBuilder.js:385
 msgid "Tap to collapse"
-msgstr ""
+msgstr "Tryck för att fälla ihop"
 
 #: src/control/Control.NotebookbarBuilder.js:515
 #: src/control/Control.NotebookbarCalc.js:201
@@ -1027,7 +1027,7 @@ msgstr "~Hjälp"
 #: src/control/Control.NotebookbarImpress.js:164
 #: src/control/Control.NotebookbarWriter.js:126
 msgid "Save As"
-msgstr ""
+msgstr "Spara som"
 
 #: src/control/Control.NotebookbarCalc.js:133
 #: src/control/Control.NotebookbarDraw.js:150
@@ -1166,7 +1166,7 @@ msgstr "Statusrad"
 
 #: src/control/Control.NotebookbarCalc.js:1037
 msgid "Sparkline"
-msgstr "Sparkline"
+msgstr "Miniatyrdiagram"
 
 #: src/control/Control.NotebookbarCalc.js:1116
 #: src/control/Control.NotebookbarCalc.js:1763
@@ -1859,16 +1859,16 @@ msgstr ""
 "kontakta administratören."
 
 #: src/errormessages.js:15
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
 "when more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
-"Detta är en icke-stödd version av {productname}. För att undvika intrycket "
-"att den är lämplig att distribuera i företag visas det här meddelandet när "
-"mer än {docs} dokument eller {connections} anslutningar används samtidigt"
+"Detta är en icke-supportad version av {productname}. Om du vill använda "
+"{productname} i företaget bör du skaffa ett supportavtal. Detta meddelande "
+"visas när mer än {docs} dokument eller {connections} anslutningar används "
+"samtidigt."
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -2204,7 +2204,7 @@ msgstr "Klicka för att återuppta redigeringen"
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Skicka din återkoppling"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
