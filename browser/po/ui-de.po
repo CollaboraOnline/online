@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-07 17:09+0200\n"
-"PO-Revision-Date: 2022-09-17 23:21+0000\n"
-"Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
+"PO-Revision-Date: 2022-10-10 13:25+0000\n"
+"Last-Translator: Sargon-Isa <Sargon_isa@hotmail.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1034,7 +1034,7 @@ msgstr "~Hilfe"
 #: src/control/Control.NotebookbarImpress.js:164
 #: src/control/Control.NotebookbarWriter.js:126
 msgid "Save As"
-msgstr ""
+msgstr "Speichern als"
 
 #: src/control/Control.NotebookbarCalc.js:133
 #: src/control/Control.NotebookbarDraw.js:150
@@ -1877,17 +1877,16 @@ msgstr ""
 "konfiguriert, bitte wenden Sie sich an den Administrator."
 
 #: src/errormessages.js:15
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
 "when more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
-"Dies ist eine nicht unterstützte {productname} Version. Um den Eindruck zu "
-"vermeiden, dass sie sich für den Einsatz in Unternehmen eignet, erscheint "
-"diese Nachricht, wenn mehr als {docs} Dokumente oder {connections} "
-"Verbindungen gleichzeitig verwendet werden"
+"Dies ist eine nicht unterstützte Version von {Produktname}. Um den Eindruck "
+"zu vermeiden, dass es für den Einsatz in Unternehmen geeignet ist, wird "
+"diese Meldung angezeigt, wenn mehr als {docs} Dokumente oder {connections} "
+"Verbindungen gleichzeitig verwendet werden."
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -2240,7 +2239,7 @@ msgstr "Bitte tippen zum weiteren Bearbeiten"
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Bitte senden Sie uns Ihr Feedback"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
