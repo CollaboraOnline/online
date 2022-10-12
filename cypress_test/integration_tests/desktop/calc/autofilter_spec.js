@@ -119,6 +119,10 @@ describe('AutoFilter', function() {
 		cy.contains('.autofilter', 'Sort Ascending')
 			.click();
 
+		// Without this the copy-paste-container doesn't seem to get updated although the table
+		// has correct values.
+		calcHelper.selectEntireSheet();
+
 		helper.waitUntilIdle('#copy-paste-container tbody');
 
 		calcHelper.assertDataClipboardTable(['Cypress Test', 'Status', 'Test 1', 'Pass',
