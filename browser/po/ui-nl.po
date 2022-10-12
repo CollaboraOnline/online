@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-07 17:09+0200\n"
-"PO-Revision-Date: 2022-09-17 23:21+0000\n"
+"PO-Revision-Date: 2022-10-10 13:26+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1030,7 +1030,7 @@ msgstr "~Help"
 #: src/control/Control.NotebookbarImpress.js:164
 #: src/control/Control.NotebookbarWriter.js:126
 msgid "Save As"
-msgstr ""
+msgstr "Opslaan als"
 
 #: src/control/Control.NotebookbarCalc.js:133
 #: src/control/Control.NotebookbarDraw.js:150
@@ -1869,7 +1869,6 @@ msgstr ""
 "geconfigureerd. Neem a.u.b. contact op met de beheerder."
 
 #: src/errormessages.js:15
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
@@ -1879,7 +1878,7 @@ msgstr ""
 "Dit is een niet ondersteunde versie van {productname}. Om de indruk te "
 "vermijden dat het geschikt is voor gebruik in bedrijven, wordt dit bericht "
 "weergegeven wanneer er meer dan {docs} documenten of {connections} "
-"verbindingen tegelijkertijd worden gebruikt"
+"verbindingen tegelijkertijd worden gebruikt."
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -2218,7 +2217,7 @@ msgstr "Klik om bewerken voort te zetten"
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Stuur ons uw bevindingen"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
