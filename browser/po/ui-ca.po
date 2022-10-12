@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-07 17:09+0200\n"
-"PO-Revision-Date: 2022-09-19 23:52+0000\n"
+"PO-Revision-Date: 2022-10-10 13:25+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1030,7 +1030,7 @@ msgstr "~Ajuda"
 #: src/control/Control.NotebookbarImpress.js:164
 #: src/control/Control.NotebookbarWriter.js:126
 msgid "Save As"
-msgstr ""
+msgstr "Anomena i desa"
 
 #: src/control/Control.NotebookbarCalc.js:133
 #: src/control/Control.NotebookbarDraw.js:150
