@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-07 17:09+0200\n"
-"PO-Revision-Date: 2022-06-28 00:19+0000\n"
-"Last-Translator: Eric <alchemillatruth@purelymail.com>\n"
+"PO-Revision-Date: 2022-10-10 13:26+0000\n"
+"Last-Translator: Eric <hamburger1024@mailbox.org>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1840,15 +1840,14 @@ msgid ""
 msgstr "主机URL为空。coolwsd服务器的配置可能不正确，请联系管理员。"
 
 #: src/errormessages.js:15
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
 "when more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
-"这是 {productname} 不受支持的版本。为了避免让人觉得它适合在企业中部署，当同时使用超过 {docs} 个文档或超过 "
-"{connections} 个连接时，就会出现这个消息"
+"这是不受支持的 {productname} 版本。为了避免让人觉得它适合在企业中部署，"
+"当同时使用超过 {docs} 个文档或超过 {connections} 个连接时，就会出现这则消息。"
 
 #: src/errormessages.js:16
 msgid "More information and support"
