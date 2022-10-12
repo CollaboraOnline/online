@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-07 17:09+0200\n"
-"PO-Revision-Date: 2022-10-10 13:25+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2022-10-12 02:03+0000\n"
+"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
 "Language: es\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.15-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -443,11 +443,11 @@ msgstr "Lineal"
 
 #: src/control/Control.JSDialogBuilder.js:437
 msgid "Axial"
-msgstr "Axial"
+msgstr "Eje"
 
 #: src/control/Control.JSDialogBuilder.js:440
 msgid "Radial"
-msgstr "Radial"
+msgstr "Radio"
 
 #: src/control/Control.JSDialogBuilder.js:443
 msgid "Ellipsoid"
@@ -1864,17 +1864,16 @@ msgstr ""
 "esté mal configurado. Póngase en contacto con el personal técnico."
 
 #: src/errormessages.js:15
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
 "when more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
-"Esta versión de {productname} no tiene servicio técnico. Para evitar la "
-"impresión de que es adecuada para despliegues corporativos, este mensaje "
-"aparece cuando hay más de {docs} documentos o {connections} conexiones en "
-"uso simultáneamente"
+"Esta es una versión no compatible de {productname}. Para evitar la impresión "
+"de que es adecuado para su implementación en las empresas, este mensaje "
+"aparece cuando más de {docs} documentos o {conexiones} conexiones están en "
+"uso al mismo tiempo."
 
 #: src/errormessages.js:16
 msgid "More information and support"
