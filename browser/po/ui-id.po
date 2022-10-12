@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-07 17:09+0200\n"
 "PO-Revision-Date: 2022-10-10 13:26+0000\n"
-"Last-Translator: liimee <alt3753.7@gmail.com>\n"
+"Last-Translator: Rizal Muttaqin <riz_17_oke@yahoo.co.id>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
 "Language: id\n"
@@ -679,7 +679,7 @@ msgstr "Atur ulang zum"
 #: src/control/Control.NotebookbarImpress.js:354
 #: src/control/Control.NotebookbarWriter.js:1075
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Jungkit Modus UI"
 
 #: src/control/Control.Menubar.js:124 src/control/Control.Menubar.js:386
 #: src/control/Control.NotebookbarWriter.js:1087
@@ -713,7 +713,7 @@ msgstr "Orientasi Teks"
 
 #: src/control/Control.Menubar.js:296 src/control/Control.Menubar.js:1111
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Sisipkan Rich Text"
 
 #: src/control/Control.Menubar.js:297 src/control/Control.Menubar.js:1112
 msgid "Insert Checkbox"
@@ -721,7 +721,7 @@ msgstr "Sisipkan Kotak Centang"
 
 #: src/control/Control.Menubar.js:298 src/control/Control.Menubar.js:1113
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Sisipkan Tarik Turun"
 
 #: src/control/Control.Menubar.js:299 src/control/Control.Menubar.js:1114
 msgid "Insert Picture"
@@ -735,7 +735,7 @@ msgstr "Sisipkan Tanggal"
 #: src/control/Control.NotebookbarWriter.js:284
 #: src/control/Control.NotebookbarWriter.js:1016
 msgid "Properties"
-msgstr ""
+msgstr "Properti"
 
 #: src/control/Control.Menubar.js:329
 #: src/control/Control.NotebookbarWriter.js:308
@@ -876,11 +876,11 @@ msgstr "Atur Ulang ke Bahasa Baku"
 
 #: src/control/Control.Menubar.js:1604
 msgid "Use Compact view"
-msgstr ""
+msgstr "Gunakan tampilan Ringkas"
 
 #: src/control/Control.Menubar.js:1606
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Gunakan tampilan Bertab"
 
 #: src/control/Control.Menubar.js:1667
 msgid "Insert Shape"
@@ -925,12 +925,12 @@ msgstr "Akhir Gradien"
 
 #: src/control/Control.NotebookbarBuilder.js:350
 msgid "Tap to expand"
-msgstr ""
+msgstr "Ketuk untuk kembangkan"
 
 #: src/control/Control.NotebookbarBuilder.js:351
 #: src/control/Control.NotebookbarBuilder.js:385
 msgid "Tap to collapse"
-msgstr ""
+msgstr "Ketuk untuk ciutkan"
 
 #: src/control/Control.NotebookbarBuilder.js:515
 #: src/control/Control.NotebookbarCalc.js:201
@@ -1160,14 +1160,14 @@ msgstr "Hapus Kolom"
 #: src/control/Control.NotebookbarImpress.js:353
 #: src/control/Control.NotebookbarWriter.js:1074
 msgid "Compact view"
-msgstr ""
+msgstr "Tampilan Ringkas"
 
 #: src/control/Control.NotebookbarCalc.js:981
 #: src/control/Control.NotebookbarDraw.js:264
 #: src/control/Control.NotebookbarImpress.js:359
 #: src/control/Control.NotebookbarWriter.js:1097
 msgid "Status Bar"
-msgstr ""
+msgstr "Bilah Status"
 
 #: src/control/Control.NotebookbarCalc.js:1037
 msgid "Sparkline"
@@ -1183,7 +1183,7 @@ msgstr "Grafik mini"
 #: src/control/Control.NotebookbarWriter.js:906
 #: src/control/Control.NotebookbarWriter.js:2216
 msgid "Shapes"
-msgstr ""
+msgstr "Bentuk"
 
 #: src/control/Control.NotebookbarDraw.js:32
 #: src/control/Control.NotebookbarDraw.js:731
@@ -1202,7 +1202,7 @@ msgstr "Gambar (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:99
 msgid "~Master"
-msgstr ""
+msgstr "~Induk"
 
 #: src/control/Control.NotebookbarImpress.js:247
 msgid "ODF Presentation (.odp)"
@@ -1218,9 +1218,8 @@ msgid "Reference~s"
 msgstr "~Acuan"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "Form"
-msgstr "Forum"
+msgstr "Formulir"
 
 #: src/control/Control.NotebookbarWriter.js:194
 msgid "ODF Text Document (.odt)"
@@ -1232,23 +1231,23 @@ msgstr "Dokumen EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:991
 msgid "Rich Text"
-msgstr ""
+msgstr "Rich Text"
 
 #: src/control/Control.NotebookbarWriter.js:996
 msgid "Checkbox"
-msgstr ""
+msgstr "Kotak centang"
 
 #: src/control/Control.NotebookbarWriter.js:1001
 msgid "Dropdown"
-msgstr ""
+msgstr "Tarik turun"
 
 #: src/control/Control.NotebookbarWriter.js:1006
 msgid "Picture"
-msgstr ""
+msgstr "Gambar"
 
 #: src/control/Control.NotebookbarWriter.js:1086
 msgid "Ruler"
-msgstr ""
+msgstr "Penggaris"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1452,7 +1451,7 @@ msgstr "0 pengguna"
 
 #: src/control/Control.UserList.js:159
 msgid "Following"
-msgstr ""
+msgstr "Mengikuti"
 
 #: src/control/Control.UserList.js:187 src/control/Control.UserList.js:353
 msgid "Always follow the editor"
@@ -1872,7 +1871,6 @@ msgstr ""
 "administrator."
 
 #: src/errormessages.js:15
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
@@ -1880,9 +1878,9 @@ msgid ""
 "concurrently."
 msgstr ""
 "Ini adalah versi {productname} yang tidak didukung. Untuk menghindari kesan "
-"bahwa itu cocok untuk penggelaran di perusahaan, pesan ini muncul ketika "
-"lebih dari {docs} dokumen atau koneksi {connections} sedang digunakan secara "
-"bersamaan"
+"bahwa produk ini cocok untuk penggelaran di perusahaan, pesan ini muncul "
+"ketika lebih dari {docs} dokumen atau sambungan {connections} sedang "
+"digunakan secara bersamaan."
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -1986,6 +1984,8 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"Dokumen terlalu besar atau tidak ada ruang diska yang tersisa untuk "
+"menyimpan. Dokumen sekarang akan menjadi hanya-baca."
 
 #: src/errormessages.js:35 src/errormessages.js:44
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -2028,6 +2028,10 @@ msgid ""
 "preserve a copy locally. Please contact the server (%storageserver) "
 "administrator to resolve the issue."
 msgstr ""
+"Penyimpanan gagal karena dokumen terlalu besar atau kuota diska terlampaui. "
+"Dokumen sekarang akan menjadi hanya-baca tetapi Anda masih dapat "
+"mengunduhnya sekarang untuk menyimpan salinannya secara lokal. Harap hubungi "
+"administrator peladen (%storageserver) untuk mengatasi masalah tersebut."
 
 #: src/errormessages.js:45
 msgid ""
@@ -2211,7 +2215,7 @@ msgstr "Mohon klik untuk melanjutkan penyuntingan"
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Kirimkan tanggapan Anda kepada kami"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
@@ -2249,9 +2253,8 @@ msgid "Collabora Online Welcome"
 msgstr "Selamat Datang di Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-#, fuzzy
 msgid "Explore The New %coolVersion"
-msgstr "Jelajahi %coolVersion baru"
+msgstr "Jelajahi Sang %coolVersion Baru"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -2271,9 +2274,8 @@ msgstr ""
 "collabora-office-android-ios/\">aplikasi</a> juga tersedia untuk seluler."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
-#, fuzzy
 msgid "Discover All The Changes"
-msgstr "Temukan semua perubahan"
+msgstr "Temukan Semua Perubahan"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
