@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-07 17:09+0200\n"
 "PO-Revision-Date: 2022-10-10 13:26+0000\n"
-"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
 "Language: fr\n"
@@ -1033,7 +1033,7 @@ msgstr "~Aide"
 #: src/control/Control.NotebookbarImpress.js:164
 #: src/control/Control.NotebookbarWriter.js:126
 msgid "Save As"
-msgstr ""
+msgstr "Enregistrer sous"
 
 #: src/control/Control.NotebookbarCalc.js:133
 #: src/control/Control.NotebookbarDraw.js:150
@@ -1873,7 +1873,6 @@ msgstr ""
 "veuillez contacter l'administrateur."
 
 #: src/errormessages.js:15
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
@@ -1883,7 +1882,7 @@ msgstr ""
 "Cette version de {productname} n'est pas prise en charge. Pour éviter de "
 "donner l'impression qu'elle peut être déployée en entreprise, ce message "
 "apparaît lorsque plus de {docs} documents ou {connections} connexions sont "
-"utilisées concurremment"
+"utilisées concurremment."
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -2229,7 +2228,7 @@ msgstr "Veuillez cliquer pour reprendre l'édition"
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Veuillez nous faire part de vos commentaires"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
