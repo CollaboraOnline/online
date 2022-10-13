@@ -764,6 +764,7 @@ void WopiStorage::WOPIFileInfo::init()
     _hidePrintOption = false;
     _hideSaveOption = false;
     _hideExportOption = false;
+    _hideRepairOption = false;
     _disablePrint = false;
     _disableExport = false;
     _disableCopy = false;
@@ -850,6 +851,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
     JsonUtil::findJSONValue(object, "HidePrintOption", _hidePrintOption);
     JsonUtil::findJSONValue(object, "HideSaveOption", _hideSaveOption);
     JsonUtil::findJSONValue(object, "HideExportOption", _hideExportOption);
+    JsonUtil::findJSONValue(object, "HideRepairOption", _hideRepairOption);
     JsonUtil::findJSONValue(object, "EnableOwnerTermination", _enableOwnerTermination);
     JsonUtil::findJSONValue(object, "DisablePrint", _disablePrint);
     JsonUtil::findJSONValue(object, "DisableExport", _disableExport);

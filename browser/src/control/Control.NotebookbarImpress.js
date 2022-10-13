@@ -134,6 +134,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 	getFileTab: function() {
 		var hasRevisionHistory = L.Params.revHistoryEnabled;
 		var hasPrint = !this._map['wopi'].HidePrintOption;
+		var hasRepair = !this._map['wopi'].HideRepairOption;
 		var hasSaveAs = !this._map['wopi'].UserCanNotWriteRelative;
 		var hasShare = this._map['wopi'].EnableShare;
 		var hasGroupedDownloadAs = !!window.groupDownloadAsForNb;
@@ -223,18 +224,20 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'text': _('Download')
 			});
 
-			content.push({
-				'type': 'container',
-				'children': [
-					{
-						'id': 'repair',
-						'type': 'menubartoolitem',
-						'text': _('Repair'),
-						'command': _('Repair')
-					}
-				],
-				'vertical': 'true'
-			});
+			if (hasRepair) {
+				content.push({
+					'type': 'container',
+					'children': [
+						{
+							'id': 'repair',
+							'type': 'menubartoolitem',
+							'text': _('Repair'),
+							'command': _('Repair')
+						}
+					],
+					'vertical': 'true'
+				});
+			}
 		} else {
 			content = content.concat([
 				{
@@ -285,12 +288,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 							'text': _('PDF Document (.pdf)'),
 							'command': ''
 						},
-						{
+						hasRepair? {
 							'id': 'repair',
 							'type': 'menubartoolitem',
 							'text': _('Repair'),
 							'command': _('Repair')
-						}
+						} : {}
 					],
 					'vertical': 'true'
 				}

@@ -529,6 +529,8 @@ public:
         bool getHideSaveOption() const { return _hideSaveOption; }
         void setHideExportOption(bool hideExportOption) { _hideExportOption = hideExportOption; }
         bool getHideExportOption() const { return _hideExportOption; }
+        void setHideRepairOption(bool hideRepairOption) { _hideRepairOption = hideRepairOption; }
+        bool getHideRepairOption() const { return _hideRepairOption; }
         bool getEnableOwnerTermination() const { return _enableOwnerTermination; }
         bool getDisablePrint() const { return _disablePrint; }
         bool getDisableExport() const { return _disableExport; }
@@ -574,6 +576,8 @@ public:
         bool _hideSaveOption;
         /// Hide 'Download as' button/menubar item from UI
         bool _hideExportOption;
+        /// Hide the 'Repair' button/item from the UI
+        bool _hideRepairOption;
         /// If WOPI host has enabled owner termination feature on
         bool _enableOwnerTermination;
         /// If WOPI host has allowed the user to print the document

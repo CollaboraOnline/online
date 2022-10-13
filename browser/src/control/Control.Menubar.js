@@ -1976,6 +1976,9 @@ L.Control.Menubar = L.Control.extend({
 		if (menuItem.id && menuItem.id.startsWith('fullscreen-presentation') && this._map['wopi'].HideExportOption)
 			return false;
 
+		if (menuItem.id === 'repair' && this._map['wopi'].HideRepairOption)
+			return false;
+
 		if (menuItem.id === 'changesmenu' && this._map['wopi'].HideChangeTrackingControls)
 			return false;
 

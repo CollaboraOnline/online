@@ -96,6 +96,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var hasSigning = L.DomUtil.get('document-signing-bar') !== null;
 		var hasRevisionHistory = L.Params.revHistoryEnabled;
 		var hasPrint = !this._map['wopi'].HidePrintOption;
+		var hasRepair = !this._map['wopi'].HideRepairOption;
 		var hasSaveAs = !this._map['wopi'].UserCanNotWriteRelative;
 		var hasShare = this._map['wopi'].EnableShare;
 		var hasGroupedDownloadAs = !!window.groupDownloadAsForNb;
@@ -242,38 +243,24 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			]);
 		}
 
-		if (hasSigning === false) {
-			content.push({
-				'type': 'container',
-				'children': [
-					{
-						'id': 'repair',
-						'type': 'bigmenubartoolitem',
-						'text': _('Repair'),
-						'command': _('Repair')
-					}
-				]
-			});
-		} else {
-			content.push({
-				'type': 'container',
-				'children': [
-					{
-						'id': 'repair',
-						'type': 'menubartoolitem',
-						'text': _('Repair'),
-						'command': _('Repair')
-					},
-					{
-						'id': 'signdocument',
-						'type': 'menubartoolitem',
-						'text': _('Sign document'),
-						'command': ''
-					}
-				],
-				'vertical': 'true'
-			});
-		}
+		content.push({
+			'type': 'container',
+			'children': [
+				hasRepair? {
+					'id': 'repair',
+					'type': 'menubartoolitem',
+					'text': _('Repair'),
+					'command': _('Repair')
+				} : {},
+				hasSigning? {
+					'id': 'signdocument',
+					'type': 'menubartoolitem',
+					'text': _('Sign document'),
+					'command': ''
+				} : {}
+			],
+			'vertical': 'true'
+		});
 
 		content.push({
 			'type': 'container',

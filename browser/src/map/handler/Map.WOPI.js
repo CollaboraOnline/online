@@ -15,6 +15,7 @@ L.Map.WOPI = L.Handler.extend({
 	HidePrintOption: false,
 	HideSaveOption: false,
 	HideExportOption: false,
+	HideRepairOption: false,
 	HideChangeTrackingControls: false,
 	DisablePrint: false,
 	DisableExport: false,
@@ -106,6 +107,7 @@ L.Map.WOPI = L.Handler.extend({
 		this.HidePrintOption = !!wopiInfo['HidePrintOption'];
 		this.HideSaveOption = !!wopiInfo['HideSaveOption'];
 		this.HideExportOption = !!wopiInfo['HideExportOption'];
+		this.HideRepairOption = !!wopiInfo['HideRepairOption'];
 		this.HideChangeTrackingControls = !!wopiInfo['HideChangeTrackingControls'];
 		this.DisablePrint = !!wopiInfo['DisablePrint'];
 		this.DisableExport = !!wopiInfo['DisableExport'];
