@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-07 17:09+0200\n"
-"PO-Revision-Date: 2022-10-13 19:21+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2022-10-14 11:54+0000\n"
+"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
 "Language: es\n"
@@ -443,11 +443,11 @@ msgstr "Lineal"
 
 #: src/control/Control.JSDialogBuilder.js:437
 msgid "Axial"
-msgstr "Axial"
+msgstr "Simetría Axial"
 
 #: src/control/Control.JSDialogBuilder.js:440
 msgid "Radial"
-msgstr "Radial"
+msgstr "Simetría Radial"
 
 #: src/control/Control.JSDialogBuilder.js:443
 msgid "Ellipsoid"
