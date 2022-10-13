@@ -44,6 +44,7 @@
 #include <Crypto.hpp>
 #include "FileServer.hpp"
 #include "COOLWSD.hpp"
+#include "FileUtil.hpp"
 #include "ServerURL.hpp"
 #include <Log.hpp>
 #include <Protocol.hpp>
@@ -344,11 +345,13 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
         {
             localPath = path.toString().substr(prefix.length());
         }
-        if (!Poco::File(localPath).exists())
+
+        if (!FileUtil::Stat(localPath).exists())
         {
             LOG_ERR("Local file URI [" << localPath << "] invalid or doesn't exist.");
             throw BadRequestException("Invalid URI: " + localPath);
         }
+
         if (request.getMethod() == "GET" && !Util::endsWith(path.toString(), suffix))
         {
             LocalFileInfo localFile;
