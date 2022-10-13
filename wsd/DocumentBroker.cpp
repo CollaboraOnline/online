@@ -776,6 +776,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         wopiInfo->set("HidePrintOption", wopifileinfo->getHidePrintOption());
         wopiInfo->set("HideSaveOption", wopifileinfo->getHideSaveOption());
         wopiInfo->set("HideExportOption", wopifileinfo->getHideExportOption());
+        wopiInfo->set("HideRepairOption", wopifileinfo->getHideRepairOption());
         wopiInfo->set("DisablePrint", wopifileinfo->getDisablePrint());
         wopiInfo->set("DisableExport", wopifileinfo->getDisableExport());
         wopiInfo->set("DisableCopy", wopifileinfo->getDisableCopy());
