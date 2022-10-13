@@ -3738,6 +3738,16 @@ private:
                 return;
             }
         }
+        catch (const BadRequestException& ex)
+        {
+            LOG_ERR('#' << socket->getFD() << " bad request: ["
+                        << COOLProtocol::getAbbreviatedMessage(socket->getInBuffer())
+                        << "]: " << ex.what());
+
+            // Bad request.
+            HttpHelper::sendErrorAndShutdown(400, socket);
+            return;
+        }
         catch (const std::exception& exc)
         {
             LOG_ERR('#' << socket->getFD() << " Exception while processing incoming request: [" <<
