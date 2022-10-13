@@ -1079,7 +1079,8 @@ app.definitions.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('fontsmissing:')) {
 			var fontsMissingObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			var msg = 'Missing fonts: ';
+			var msg = _('Missing fonts:');
+			msg += ' ';
 			for (var i = 0; i < fontsMissingObj.fontsmissing.length; ++i) {
 				if (i > 0)
 					msg += ', ';
