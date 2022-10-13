@@ -630,6 +630,8 @@ wopi: <JSON>
      + HidePrintOption: (boolean): If Collabora Online should hide print options
      + HideExportOption: (boolean): If Collabora Online should hide the export options
        this implies 'Download as' options in file menu
+     + HideRepairOption: (boolean): If Collabora Online should hide the Repair
+       undo functionality
 
 versionrestore: <action>
 
