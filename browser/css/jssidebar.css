@@ -33,7 +33,6 @@
 	height: 28px;
 	padding-inline-start: 4px;
 	position: relative;
-	margin-inline-start: 8px;
 	color: var(--color-text-dark);
 	background-color: var(--color-background-dark);
 }
