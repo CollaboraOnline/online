@@ -3410,14 +3410,17 @@ ConvertToBroker::ConvertToBroker(const std::string& uri,
                                  const Poco::URI& uriPublic,
                                  const std::string& docKey,
                                  const std::string& format,
-                                 const std::string& sOptions)
+                                 const std::string& sOptions,
+                                 const std::string& lang)
     : StatelessBatchBroker(uri, uriPublic, docKey)
     , _format(format)
     , _sOptions(sOptions)
+    , _lang(lang)
 {
     LOG_TRC("Created ConvertToBroker: uri: [" << uri << "], uriPublic: [" << uriPublic.toString()
                                               << "], docKey: [" << docKey << "], format: ["
-                                              << format << "], options: [" << sOptions << "].");
+                                              << format << "], options: [" << sOptions << "], lang: ["
+                                              << lang << "].");
 
     static const std::chrono::seconds limit_convert_secs(
         COOLWSD::getConfigValue<int>("per_document.limit_convert_secs", 100));
@@ -3455,7 +3458,9 @@ bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std:
             std::string encodedFrom;
             Poco::URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
             // add batch mode, no interactive dialogs
-            const std::string _load = "load url=" + encodedFrom + " batch=true";
+            std::string _load = "load url=" + encodedFrom + " batch=true";
+            if (!docBroker->getLang().empty())
+                _load += " lang=" + docBroker->getLang();
             std::vector<char> loadRequest(_load.begin(), _load.end());
             docBroker->_clientSession->handleMessage(loadRequest);
 
