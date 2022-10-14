@@ -12,6 +12,9 @@
 /* Enable permanent anonymization in logs */
 #undef COOLWSD_ANONYMIZE_USER_DATA
 
+/* Options passed to configure script */
+#undef COOLWSD_BUILDCONFIG
+
 /* Destination for Trace Event output */
 #undef COOLWSD_TRACEEVENTFILE
 
@@ -50,7 +53,7 @@
 #undef HAVE_PKCS5_PBKDF2_HMAC
 
 /* Define to 1 if you have the `ppoll' function. */
-#undef HAVE_PPOLL
+#define HAVE_PPOLL 0
 
 /* Whether the used C++ has support for std::filesystem. */
 #undef HAVE_STD_FILESYSTEM

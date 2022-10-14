@@ -58,6 +58,8 @@ AC_DEFINE_UNQUOTED([COOLWSD_VERSION_HASH],[["$COOLWSD_VERSION_HASH"]],[Collabora
 
 AC_CONFIG_SRCDIR([wsd/COOLWSD.cpp])
 
+AC_DEFINE_UNQUOTED([COOLWSD_BUILDCONFIG],[["$ac_configure_args"]],[Options passed to configure script])
+
 # this is a dummy header, autoheader adds all entries to it
 # don't include config_unused.h anywhere!
 AC_CONFIG_HEADERS([config_unused.h])

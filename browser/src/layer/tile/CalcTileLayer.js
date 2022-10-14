@@ -78,8 +78,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		this.insertMode = false;
 		this._cellSelections = Array(0);
-		this._cellCursorXY = {x: -1, y: -1};
+		this._cellCursorXY = new L.Point(-1, -1);
 		this._gotFirstCellCursor = false;
+		this._sheetSwitch = new L.SheetSwitchViewRestore(map);
 		this.requestCellCursor();
 	},
 
@@ -250,6 +251,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._replayPrintTwipsMsgAllViews('textviewselection');
 			// Hide previous tab's shown comment (if any).
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).hideAllComments();
+			this._sheetSwitch.gotSetPart(part);
 		}
 	},
 
@@ -839,6 +841,12 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._updateHeadersGridLines(values);
 
 		} else if (values.commandName === '.uno:SheetGeometryData') {
+			// duplicate sheet-geometry for same sheet triggers replay of other messages that
+			// disrupt the view restore during sheet switch.
+			if (this._oldSheetGeomMsg === textMsg && this._selectedPart === this.sheetGeometry.getPart())
+				return;
+
+			this._oldSheetGeomMsg = textMsg;
 			this._handleSheetGeometryDataMsg(values);
 
 		} else if (values.comments) {

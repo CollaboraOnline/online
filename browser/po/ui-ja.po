@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-16 12:48+0200\n"
+"POT-Creation-Date: 2022-10-07 17:09+0200\n"
 "PO-Revision-Date: 2022-04-12 07:41+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
@@ -139,12 +139,12 @@ msgid "Network Graph"
 msgstr "ネットワークグラフ"
 
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:255
-#: src/control/Control.NotebookbarCalc.js:99
+#: src/control/Control.NotebookbarCalc.js:100
 #: src/control/Control.NotebookbarDraw.js:20
 #: src/control/Control.NotebookbarDraw.js:130
 #: src/control/Control.NotebookbarImpress.js:20
-#: src/control/Control.NotebookbarImpress.js:151
-#: src/control/Control.NotebookbarWriter.js:113
+#: src/control/Control.NotebookbarImpress.js:152
+#: src/control/Control.NotebookbarWriter.js:114
 #: src/layer/tile/CommentListSection.ts:399
 #: src/layer/tile/CommentSection.ts:126
 msgid "Save"
@@ -211,7 +211,7 @@ msgstr "更新"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:426
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:428
 #: src/control/Control.StatusBar.js:314
 msgid "None"
 msgstr "なし"
@@ -225,7 +225,7 @@ msgid "Log Levels"
 msgstr ""
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
-#: src/control/Parts.js:428 src/control/Signing.js:611
+#: src/control/Parts.js:432 src/control/Signing.js:611
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "閉じる"
@@ -263,16 +263,16 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "本当にこのセッションを終了しますか？"
 
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1762
+#: src/control/Control.Menubar.js:1784
 #: src/control/Control.PresentationBar.js:110 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:324 src/control/Toolbar.js:730
-#: src/core/Socket.js:1044
+#: src/core/Socket.js:1044 src/map/handler/Map.Feedback.js:83
 msgid "OK"
 msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.Command.js:92 src/control/Control.LanguageDialog.js:86
-#: src/control/Control.Menubar.js:1761 src/control/Control.MobileTopBar.js:41
+#: src/control/Control.Menubar.js:1783 src/control/Control.MobileTopBar.js:41
 #: src/control/Control.PresentationBar.js:109 src/control/Control.Tabs.js:305
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:729
 #: src/core/Socket.js:903 src/core/Socket.js:913 src/core/Socket.js:1043
@@ -365,11 +365,11 @@ msgstr "サーバーでの %1 コマンドの解析中に %0 エラーが発生�
 msgid "Unlock"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:182
+#: src/control/Control.ContextMenu.js:185
 msgid "Delete"
 msgstr "削除"
 
-#: src/control/Control.ContextMenu.js:202
+#: src/control/Control.ContextMenu.js:205
 msgid "Paste Special"
 msgstr "形式を選択して貼り付け"
 
@@ -430,450 +430,470 @@ msgstr ""
 msgid "Count"
 msgstr "数"
 
-#: src/control/Control.JSDialogBuilder.js:429
+#: src/control/Control.JSDialogBuilder.js:431
 msgid "Solid"
 msgstr "実線"
 
-#: src/control/Control.JSDialogBuilder.js:432
+#: src/control/Control.JSDialogBuilder.js:434
 msgid "Linear"
 msgstr "線形"
 
-#: src/control/Control.JSDialogBuilder.js:435
+#: src/control/Control.JSDialogBuilder.js:437
 msgid "Axial"
 msgstr "軸"
 
-#: src/control/Control.JSDialogBuilder.js:438
+#: src/control/Control.JSDialogBuilder.js:440
 msgid "Radial"
 msgstr "放射状"
 
-#: src/control/Control.JSDialogBuilder.js:441
+#: src/control/Control.JSDialogBuilder.js:443
 msgid "Ellipsoid"
 msgstr "楕円"
 
-#: src/control/Control.JSDialogBuilder.js:445
+#: src/control/Control.JSDialogBuilder.js:447
 msgid "Quadratic"
 msgstr "放物線"
 
-#: src/control/Control.JSDialogBuilder.js:448
+#: src/control/Control.JSDialogBuilder.js:450
 msgid "Square"
 msgstr "正方形"
 
-#: src/control/Control.JSDialogBuilder.js:451
+#: src/control/Control.JSDialogBuilder.js:453
 msgid "Fixed size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1331
+#: src/control/Control.JSDialogBuilder.js:1333
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1334
+#: src/control/Control.JSDialogBuilder.js:1336
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1337
+#: src/control/Control.JSDialogBuilder.js:1339
 msgid "Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1625
+#: src/control/Control.JSDialogBuilder.js:1637
 msgid "Select range"
 msgstr "範囲を選択"
 
-#: src/control/Control.JSDialogBuilder.js:1674
+#: src/control/Control.JSDialogBuilder.js:1686
 #: src/control/Control.NotebookbarBuilder.js:238
 msgid "Font Name"
 msgstr "フォント名"
 
-#: src/control/Control.JSDialogBuilder.js:1676 src/control/Toolbar.js:123
+#: src/control/Control.JSDialogBuilder.js:1688 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "フォントサイズ"
 
-#: src/control/Control.JSDialogBuilder.js:1678
+#: src/control/Control.JSDialogBuilder.js:1690
 #: src/control/Control.TopToolbar.js:499
 msgid "Style"
 msgstr "スタイル"
 
-#: src/control/Control.JSDialogBuilder.js:2374
+#: src/control/Control.JSDialogBuilder.js:2410
 #, fuzzy
 msgid "reply"
 msgstr "返信"
 
-#: src/control/Control.JSDialogBuilder.js:2377
+#: src/control/Control.JSDialogBuilder.js:2413
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2388
-#: src/layer/tile/CanvasTileLayer.js:5010
-#: src/layer/tile/CanvasTileLayer.js:5021
+#: src/control/Control.JSDialogBuilder.js:2424
+#: src/layer/tile/CanvasTileLayer.js:5039
+#: src/layer/tile/CanvasTileLayer.js:5050
 #: src/layer/tile/CommentListSection.ts:857
 msgid "Comment"
 msgstr "コメント"
 
-#: src/control/Control.JSDialogBuilder.js:2450
+#: src/control/Control.JSDialogBuilder.js:2486
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3018
+#: src/control/Control.JSDialogBuilder.js:3054
 msgid "Cell borders"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3229
-#: src/control/Control.Menubar.js:727
+#: src/control/Control.JSDialogBuilder.js:3265
+#: src/control/Control.Menubar.js:742
 msgid "Rows"
 msgstr "行"
 
-#: src/control/Control.JSDialogBuilder.js:3230
-#: src/control/Control.Menubar.js:730
+#: src/control/Control.JSDialogBuilder.js:3266
+#: src/control/Control.Menubar.js:745
 msgid "Columns"
 msgstr "列"
 
-#: src/control/Control.JSDialogBuilder.js:3250
+#: src/control/Control.JSDialogBuilder.js:3286
 msgid "Insert Table"
 msgstr "表の挿入"
 
-#: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:305
-#: src/control/Control.Menubar.js:307 src/control/Control.Menubar.js:309
-#: src/control/Control.Menubar.js:456 src/control/Control.Menubar.js:576
-#: src/control/Control.Menubar.js:812
-#: src/control/Control.NotebookbarBuilder.js:941
-#: src/control/Control.NotebookbarBuilder.js:943
-#: src/control/Control.NotebookbarBuilder.js:945
-#: src/control/Control.NotebookbarBuilder.js:953
+#: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:310
+#: src/control/Control.Menubar.js:312 src/control/Control.Menubar.js:314
+#: src/control/Control.Menubar.js:465 src/control/Control.Menubar.js:585
+#: src/control/Control.Menubar.js:827
+#: src/control/Control.NotebookbarBuilder.js:1012
+#: src/control/Control.NotebookbarBuilder.js:1014
+#: src/control/Control.NotebookbarBuilder.js:1016
+#: src/control/Control.NotebookbarBuilder.js:1024
 #: src/control/Control.StatusBar.js:535
 msgid "None (Do not check spelling)"
 msgstr "なし（スペルチェックを行わない）"
 
-#: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:340
-#: src/control/Control.Menubar.js:477 src/control/Control.Menubar.js:593
-#: src/control/Control.Menubar.js:833 src/control/Control.Menubar.js:887
-#: src/control/Control.Menubar.js:943 src/control/Control.Menubar.js:989
-msgid "Share..."
-msgstr "共有..."
-
-#: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:341
-#: src/control/Control.Menubar.js:479 src/control/Control.Menubar.js:594
-#: src/control/Control.Menubar.js:834 src/control/Control.Menubar.js:888
-#: src/control/Control.Menubar.js:945 src/control/Control.Menubar.js:990
-msgid "See revision history"
-msgstr "改訂履歴を見る"
-
-#: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:342
-#: src/control/Control.Menubar.js:480 src/control/Control.Menubar.js:595
-#: src/control/Control.Menubar.js:839 src/control/Control.Menubar.js:892
-#: src/control/Control.Menubar.js:947 src/control/Control.Menubar.js:994
-msgid "Download as"
-msgstr "形式を指定してダウンロード"
-
-#: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:342
-#: src/control/Control.Menubar.js:480 src/control/Control.Menubar.js:595
-#: src/control/Control.Menubar.js:839 src/control/Control.Menubar.js:892
-#: src/control/Control.Menubar.js:947 src/control/Control.Menubar.js:994
-msgid "Export as"
-msgstr "形式を指定してエクスポート"
-
-#: src/control/Control.Menubar.js:70 src/control/Control.Menubar.js:343
-#: src/control/Control.Menubar.js:481 src/control/Control.Menubar.js:596
-#: src/control/Control.Menubar.js:840 src/control/Control.Menubar.js:893
-#: src/control/Control.Menubar.js:948 src/control/Control.Menubar.js:995
-#: src/control/Control.NotebookbarBuilder.js:486
-#: src/control/Control.NotebookbarBuilder.js:509
-#: src/control/Control.NotebookbarBuilder.js:532
-#: src/control/Control.NotebookbarCalc.js:219
-#: src/control/Control.NotebookbarDraw.js:196
-#: src/control/Control.NotebookbarImpress.js:271
-#: src/control/Control.NotebookbarWriter.js:216
-msgid "PDF Document (.pdf)"
-msgstr "PDFドキュメント (.pdf)"
-
-#: src/control/Control.Menubar.js:71 src/control/Control.Menubar.js:841
-#: src/control/Control.NotebookbarBuilder.js:466
+#: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:76
+#: src/control/Control.Menubar.js:856
+#: src/control/Control.NotebookbarBuilder.js:476
+#: src/control/Control.NotebookbarBuilder.js:561
 msgid "ODF text document (.odt)"
 msgstr "ODF 文書ドキュメント (.odt)"
 
-#: src/control/Control.Menubar.js:72 src/control/Control.Menubar.js:842
-#: src/control/Control.NotebookbarBuilder.js:478
-#: src/control/Control.NotebookbarWriter.js:198
+#: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:77
+#: src/control/Control.Menubar.js:857
+#: src/control/Control.NotebookbarBuilder.js:488
+#: src/control/Control.NotebookbarBuilder.js:573
+#: src/control/Control.NotebookbarWriter.js:212
 msgid "Word 2003 Document (.doc)"
 msgstr "Word 2003 文書 (.doc)"
 
-#: src/control/Control.Menubar.js:73 src/control/Control.Menubar.js:843
-#: src/control/Control.NotebookbarBuilder.js:474
-#: src/control/Control.NotebookbarWriter.js:204
+#: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:78
+#: src/control/Control.Menubar.js:858
+#: src/control/Control.NotebookbarBuilder.js:484
+#: src/control/Control.NotebookbarBuilder.js:569
+#: src/control/Control.NotebookbarWriter.js:218
 msgid "Word Document (.docx)"
 msgstr "Word 文書 (.docx)"
 
-#: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:844
-#: src/control/Control.NotebookbarBuilder.js:470
-#: src/control/Control.NotebookbarWriter.js:186
+#: src/control/Control.Menubar.js:70 src/control/Control.Menubar.js:79
+#: src/control/Control.Menubar.js:859
+#: src/control/Control.NotebookbarBuilder.js:480
+#: src/control/Control.NotebookbarBuilder.js:565
+#: src/control/Control.NotebookbarWriter.js:200
 msgid "Rich Text (.rtf)"
 msgstr "リッチテキスト (.rtf)"
 
-#: src/control/Control.Menubar.js:75 src/control/Control.Menubar.js:845
-#: src/control/Control.NotebookbarBuilder.js:482
+#: src/control/Control.Menubar.js:72 src/control/Control.Menubar.js:349
+#: src/control/Control.Menubar.js:486 src/control/Control.Menubar.js:606
+#: src/control/Control.Menubar.js:848 src/control/Control.Menubar.js:902
+#: src/control/Control.Menubar.js:958 src/control/Control.Menubar.js:1004
+msgid "Share..."
+msgstr "共有..."
+
+#: src/control/Control.Menubar.js:73 src/control/Control.Menubar.js:350
+#: src/control/Control.Menubar.js:488 src/control/Control.Menubar.js:607
+#: src/control/Control.Menubar.js:849 src/control/Control.Menubar.js:903
+#: src/control/Control.Menubar.js:960 src/control/Control.Menubar.js:1005
+msgid "See revision history"
+msgstr "改訂履歴を見る"
+
+#: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:351
+#: src/control/Control.Menubar.js:489 src/control/Control.Menubar.js:608
+#: src/control/Control.Menubar.js:854 src/control/Control.Menubar.js:907
+#: src/control/Control.Menubar.js:962 src/control/Control.Menubar.js:1009
+msgid "Download as"
+msgstr "形式を指定してダウンロード"
+
+#: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:351
+#: src/control/Control.Menubar.js:489 src/control/Control.Menubar.js:608
+#: src/control/Control.Menubar.js:854 src/control/Control.Menubar.js:907
+#: src/control/Control.Menubar.js:962 src/control/Control.Menubar.js:1009
+msgid "Export as"
+msgstr "形式を指定してエクスポート"
+
+#: src/control/Control.Menubar.js:75 src/control/Control.Menubar.js:352
+#: src/control/Control.Menubar.js:490 src/control/Control.Menubar.js:609
+#: src/control/Control.Menubar.js:855 src/control/Control.Menubar.js:908
+#: src/control/Control.Menubar.js:963 src/control/Control.Menubar.js:1010
+#: src/control/Control.NotebookbarBuilder.js:496
+#: src/control/Control.NotebookbarBuilder.js:519
+#: src/control/Control.NotebookbarBuilder.js:542
+#: src/control/Control.NotebookbarCalc.js:233
+#: src/control/Control.NotebookbarDraw.js:196
+#: src/control/Control.NotebookbarImpress.js:285
+#: src/control/Control.NotebookbarWriter.js:230
+msgid "PDF Document (.pdf)"
+msgstr "PDFドキュメント (.pdf)"
+
+#: src/control/Control.Menubar.js:80 src/control/Control.Menubar.js:860
+#: src/control/Control.NotebookbarBuilder.js:492
 msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
-#: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:835
-#: src/control/Control.NotebookbarWriter.js:256 src/control/Signing.js:604
+#: src/control/Control.Menubar.js:81 src/control/Control.Menubar.js:850
+#: src/control/Control.NotebookbarWriter.js:270 src/control/Signing.js:604
 msgid "Sign document"
 msgstr "ドキュメントに署名"
 
-#: src/control/Control.Menubar.js:80 src/control/Control.Menubar.js:350
-#: src/control/Control.Menubar.js:485 src/control/Control.Menubar.js:603
+#: src/control/Control.Menubar.js:85 src/control/Control.Menubar.js:359
+#: src/control/Control.Menubar.js:494 src/control/Control.Menubar.js:616
 #: src/control/Control.Toolbar.js:1161
 msgid "Close document"
 msgstr "ドキュメントを閉じる"
 
-#: src/control/Control.Menubar.js:85 src/control/Control.Menubar.js:355
-#: src/control/Control.Menubar.js:490 src/control/Control.Menubar.js:608
-#: src/control/Control.Menubar.js:850 src/control/Control.Menubar.js:902
-#: src/control/Control.Menubar.js:954 src/control/Control.Menubar.js:1003
-#: src/control/Control.NotebookbarCalc.js:166
-#: src/control/Control.NotebookbarCalc.js:167
-#: src/control/Control.NotebookbarCalc.js:225
-#: src/control/Control.NotebookbarCalc.js:226
+#: src/control/Control.Menubar.js:90 src/control/Control.Menubar.js:364
+#: src/control/Control.Menubar.js:499 src/control/Control.Menubar.js:621
+#: src/control/Control.Menubar.js:865 src/control/Control.Menubar.js:917
+#: src/control/Control.Menubar.js:969 src/control/Control.Menubar.js:1018
+#: src/control/Control.NotebookbarCalc.js:180
+#: src/control/Control.NotebookbarCalc.js:181
+#: src/control/Control.NotebookbarCalc.js:239
+#: src/control/Control.NotebookbarCalc.js:240
 #: src/control/Control.NotebookbarDraw.js:202
 #: src/control/Control.NotebookbarDraw.js:203
-#: src/control/Control.NotebookbarImpress.js:218
-#: src/control/Control.NotebookbarImpress.js:219
-#: src/control/Control.NotebookbarImpress.js:277
-#: src/control/Control.NotebookbarImpress.js:278
-#: src/control/Control.NotebookbarWriter.js:238
-#: src/control/Control.NotebookbarWriter.js:239
-#: src/control/Control.NotebookbarWriter.js:250
-#: src/control/Control.NotebookbarWriter.js:251
+#: src/control/Control.NotebookbarImpress.js:232
+#: src/control/Control.NotebookbarImpress.js:233
+#: src/control/Control.NotebookbarImpress.js:291
+#: src/control/Control.NotebookbarImpress.js:292
+#: src/control/Control.NotebookbarWriter.js:252
+#: src/control/Control.NotebookbarWriter.js:253
+#: src/control/Control.NotebookbarWriter.js:264
+#: src/control/Control.NotebookbarWriter.js:265
 msgid "Repair"
 msgstr "修復"
 
-#: src/control/Control.Menubar.js:109 src/control/Control.Menubar.js:115
-#: src/control/Control.Menubar.js:367 src/control/Control.Menubar.js:373
-#: src/control/Control.Menubar.js:502 src/control/Control.Menubar.js:508
-#: src/control/Control.Menubar.js:620 src/control/Control.Menubar.js:626
-#: src/control/Control.NotebookbarCalc.js:927
-#: src/control/Control.NotebookbarCalc.js:928
+#: src/control/Control.Menubar.js:114 src/control/Control.Menubar.js:120
+#: src/control/Control.Menubar.js:376 src/control/Control.Menubar.js:382
+#: src/control/Control.Menubar.js:511 src/control/Control.Menubar.js:517
+#: src/control/Control.Menubar.js:633 src/control/Control.Menubar.js:639
+#: src/control/Control.NotebookbarCalc.js:941
+#: src/control/Control.NotebookbarCalc.js:942
 #: src/control/Control.NotebookbarDraw.js:224
 #: src/control/Control.NotebookbarDraw.js:225
-#: src/control/Control.NotebookbarImpress.js:305
-#: src/control/Control.NotebookbarImpress.js:306
-#: src/control/Control.NotebookbarWriter.js:1026
-#: src/control/Control.NotebookbarWriter.js:1027
+#: src/control/Control.NotebookbarImpress.js:319
+#: src/control/Control.NotebookbarImpress.js:320
+#: src/control/Control.NotebookbarWriter.js:1040
+#: src/control/Control.NotebookbarWriter.js:1041
 #: src/control/Control.StatusBar.js:188
 msgid "Reset zoom"
 msgstr "表示倍率をリセット"
 
-#: src/control/Control.Menubar.js:118 src/control/Control.Menubar.js:376
-#: src/control/Control.Menubar.js:511 src/control/Control.Menubar.js:629
-#: src/control/Control.NotebookbarCalc.js:962
+#: src/control/Control.Menubar.js:123 src/control/Control.Menubar.js:385
+#: src/control/Control.Menubar.js:520 src/control/Control.Menubar.js:642
+#: src/control/Control.NotebookbarCalc.js:976
 #: src/control/Control.NotebookbarDraw.js:259
-#: src/control/Control.NotebookbarImpress.js:340
-#: src/control/Control.NotebookbarWriter.js:1061
+#: src/control/Control.NotebookbarImpress.js:354
+#: src/control/Control.NotebookbarWriter.js:1075
 msgid "Toggle UI Mode"
 msgstr ""
 
-#: src/control/Control.Menubar.js:119 src/control/Control.Menubar.js:377
-#: src/control/Control.NotebookbarWriter.js:1073
+#: src/control/Control.Menubar.js:124 src/control/Control.Menubar.js:386
+#: src/control/Control.NotebookbarWriter.js:1087
 msgid "Show Ruler"
 msgstr "ルーラーの表示"
 
-#: src/control/Control.Menubar.js:120 src/control/Control.Menubar.js:378
-#: src/control/Control.Menubar.js:513 src/control/Control.Menubar.js:630
-#: src/control/Control.NotebookbarCalc.js:968
+#: src/control/Control.Menubar.js:125 src/control/Control.Menubar.js:387
+#: src/control/Control.Menubar.js:522 src/control/Control.Menubar.js:643
+#: src/control/Control.NotebookbarCalc.js:982
 #: src/control/Control.NotebookbarDraw.js:265
-#: src/control/Control.NotebookbarImpress.js:346
-#: src/control/Control.NotebookbarWriter.js:1084
+#: src/control/Control.NotebookbarImpress.js:360
+#: src/control/Control.NotebookbarWriter.js:1098
 msgid "Show Status Bar"
 msgstr "ステータスバーの表示"
 
-#: src/control/Control.Menubar.js:127 src/control/Control.Menubar.js:388
-#: src/control/Control.Menubar.js:516 src/control/Control.Menubar.js:639
-#: src/control/Control.Menubar.js:1057 src/control/Control.Menubar.js:1107
-#: src/control/Control.Menubar.js:1121 src/control/Control.Menubar.js:1144
+#: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:397
+#: src/control/Control.Menubar.js:525 src/control/Control.Menubar.js:652
+#: src/control/Control.Menubar.js:1072 src/control/Control.Menubar.js:1122
+#: src/control/Control.Menubar.js:1136 src/control/Control.Menubar.js:1159
 msgid "Local Image..."
 msgstr ""
 
-#: src/control/Control.Menubar.js:149 src/control/Control.Menubar.js:151
-#: src/control/Control.Menubar.js:1074 src/control/Control.Menubar.js:1076
+#: src/control/Control.Menubar.js:154 src/control/Control.Menubar.js:156
+#: src/control/Control.Menubar.js:1089 src/control/Control.Menubar.js:1091
 msgid "All"
 msgstr "すべて"
 
-#: src/control/Control.Menubar.js:204
+#: src/control/Control.Menubar.js:209
 msgid "Text orientation"
 msgstr "文字の方向"
 
-#: src/control/Control.Menubar.js:291 src/control/Control.Menubar.js:1096
+#: src/control/Control.Menubar.js:296 src/control/Control.Menubar.js:1111
 msgid "Insert Rich Text"
 msgstr ""
 
-#: src/control/Control.Menubar.js:292 src/control/Control.Menubar.js:1097
+#: src/control/Control.Menubar.js:297 src/control/Control.Menubar.js:1112
 msgid "Insert Checkbox"
 msgstr ""
 
-#: src/control/Control.Menubar.js:293 src/control/Control.Menubar.js:1098
+#: src/control/Control.Menubar.js:298 src/control/Control.Menubar.js:1113
 msgid "Insert Dropdown"
 msgstr ""
 
-#: src/control/Control.Menubar.js:294 src/control/Control.Menubar.js:1099
+#: src/control/Control.Menubar.js:299 src/control/Control.Menubar.js:1114
 msgid "Insert Picture"
 msgstr ""
 
-#: src/control/Control.Menubar.js:295 src/control/Control.Menubar.js:1100
+#: src/control/Control.Menubar.js:300 src/control/Control.Menubar.js:1115
 #, fuzzy
 msgid "Insert Date"
 msgstr "表の挿入"
 
-#: src/control/Control.Menubar.js:296 src/control/Control.Menubar.js:1101
-#: src/control/Control.NotebookbarWriter.js:270
-#: src/control/Control.NotebookbarWriter.js:1002
+#: src/control/Control.Menubar.js:301 src/control/Control.Menubar.js:1116
+#: src/control/Control.NotebookbarWriter.js:284
+#: src/control/Control.NotebookbarWriter.js:1016
 msgid "Properties"
 msgstr ""
 
-#: src/control/Control.Menubar.js:324
-#: src/control/Control.NotebookbarWriter.js:294
+#: src/control/Control.Menubar.js:329
+#: src/control/Control.NotebookbarWriter.js:308
 msgid "Forum"
 msgstr ""
 
-#: src/control/Control.Menubar.js:325 src/control/Control.Menubar.js:462
-#: src/control/Control.Menubar.js:579 src/control/Control.Menubar.js:818
-#: src/control/Control.NotebookbarWriter.js:305
+#: src/control/Control.Menubar.js:330 src/control/Control.Menubar.js:471
+#: src/control/Control.Menubar.js:588 src/control/Control.Menubar.js:833
+#: src/control/Control.NotebookbarWriter.js:319
 msgid "Online Help"
 msgstr "オンラインヘルプ"
 
-#: src/control/Control.Menubar.js:326 src/control/Control.Menubar.js:463
-#: src/control/Control.Menubar.js:580 src/control/Control.Menubar.js:819
-#: src/control/Control.NotebookbarWriter.js:316
+#: src/control/Control.Menubar.js:331 src/control/Control.Menubar.js:472
+#: src/control/Control.Menubar.js:589 src/control/Control.Menubar.js:834
+#: src/control/Control.NotebookbarWriter.js:330
 msgid "Keyboard shortcuts"
 msgstr "キーボードショートカット"
 
-#: src/control/Control.Menubar.js:327 src/control/Control.Menubar.js:464
-#: src/control/Control.Menubar.js:581 src/control/Control.Menubar.js:820
-#: src/control/Control.NotebookbarWriter.js:327
+#: src/control/Control.Menubar.js:332 src/control/Control.Menubar.js:473
+#: src/control/Control.Menubar.js:590 src/control/Control.Menubar.js:835
+#: src/control/Control.NotebookbarWriter.js:341
 msgid "Report an issue"
 msgstr ""
 
-#: src/control/Control.Menubar.js:328 src/control/Control.Menubar.js:465
-#: src/control/Control.Menubar.js:582 src/control/Control.Menubar.js:821
-#: src/control/Control.Menubar.js:877 src/control/Control.Menubar.js:933
-#: src/control/Control.Menubar.js:979 src/control/Control.Menubar.js:1049
-#: src/control/Control.NotebookbarWriter.js:339
+#: src/control/Control.Menubar.js:333 src/control/Control.Menubar.js:474
+#: src/control/Control.Menubar.js:591 src/control/Control.Menubar.js:836
+#: src/control/Control.Menubar.js:892 src/control/Control.Menubar.js:948
+#: src/control/Control.Menubar.js:994 src/control/Control.Menubar.js:1064
+#: src/control/Control.NotebookbarWriter.js:353
 msgid "Latest Updates"
 msgstr ""
 
-#: src/control/Control.Menubar.js:329 src/control/Control.Menubar.js:466
-#: src/control/Control.Menubar.js:583 src/control/Control.Menubar.js:822
-#: src/control/Control.Menubar.js:878 src/control/Control.Menubar.js:934
-#: src/control/Control.Menubar.js:980 src/control/Control.Menubar.js:1050
-#: src/control/Control.NotebookbarWriter.js:351
+#: src/control/Control.Menubar.js:334 src/control/Control.Menubar.js:475
+#: src/control/Control.Menubar.js:592 src/control/Control.Menubar.js:837
+#: src/control/Control.Menubar.js:893 src/control/Control.Menubar.js:949
+#: src/control/Control.Menubar.js:995 src/control/Control.Menubar.js:1065
+#: src/control/Control.NotebookbarWriter.js:365
 msgid "Send Feedback"
 msgstr ""
 
-#: src/control/Control.Menubar.js:330 src/control/Control.Menubar.js:467
-#: src/control/Control.Menubar.js:584 src/control/Control.Menubar.js:823
-#: src/control/Control.Menubar.js:879 src/control/Control.Menubar.js:935
-#: src/control/Control.Menubar.js:981 src/control/Control.Menubar.js:1051
-#: src/control/Control.NotebookbarWriter.js:363
+#: src/control/Control.Menubar.js:335 src/control/Control.Menubar.js:476
+#: src/control/Control.Menubar.js:593 src/control/Control.Menubar.js:838
+#: src/control/Control.Menubar.js:894 src/control/Control.Menubar.js:950
+#: src/control/Control.Menubar.js:996 src/control/Control.Menubar.js:1066
+#: src/control/Control.NotebookbarWriter.js:377
 msgid "About"
 msgstr "このソフトウェアについて"
 
-#: src/control/Control.Menubar.js:332 src/control/Control.Menubar.js:469
-#: src/control/Control.Menubar.js:586 src/control/Control.Menubar.js:825
+#: src/control/Control.Menubar.js:337 src/control/Control.Menubar.js:478
+#: src/control/Control.Menubar.js:595 src/control/Control.Menubar.js:840
 msgid "Last modification"
 msgstr ""
 
-#: src/control/Control.Menubar.js:339 src/control/Control.Menubar.js:476
-msgid "Save Comments"
-msgstr "コメントの保存"
-
-#: src/control/Control.Menubar.js:344 src/control/Control.Menubar.js:894
-#: src/control/Control.NotebookbarBuilder.js:516
+#: src/control/Control.Menubar.js:344 src/control/Control.Menubar.js:353
+#: src/control/Control.Menubar.js:909
+#: src/control/Control.NotebookbarBuilder.js:526
+#: src/control/Control.NotebookbarBuilder.js:595
 msgid "ODF presentation (.odp)"
 msgstr "ODF プレゼンテーション (.odp)"
 
-#: src/control/Control.Menubar.js:345 src/control/Control.Menubar.js:895
-#: src/control/Control.NotebookbarBuilder.js:528
-#: src/control/Control.NotebookbarImpress.js:252
+#: src/control/Control.Menubar.js:345 src/control/Control.Menubar.js:354
+#: src/control/Control.Menubar.js:910
+#: src/control/Control.NotebookbarBuilder.js:538
+#: src/control/Control.NotebookbarBuilder.js:603
+#: src/control/Control.NotebookbarImpress.js:266
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "PowerPoint 2003 プレゼンテーション (.ppt)"
 
-#: src/control/Control.Menubar.js:346 src/control/Control.Menubar.js:896
-#: src/control/Control.NotebookbarBuilder.js:524
-#: src/control/Control.NotebookbarImpress.js:258
+#: src/control/Control.Menubar.js:346 src/control/Control.Menubar.js:355
+#: src/control/Control.Menubar.js:911
+#: src/control/Control.NotebookbarBuilder.js:534
+#: src/control/Control.NotebookbarBuilder.js:599
+#: src/control/Control.NotebookbarImpress.js:272
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "PowerPoint プレゼンテーション (.ppt)"
 
-#: src/control/Control.Menubar.js:449 src/control/Control.Menubar.js:931
+#: src/control/Control.Menubar.js:348 src/control/Control.Menubar.js:485
+msgid "Save Comments"
+msgstr "コメントの保存"
+
+#: src/control/Control.Menubar.js:458 src/control/Control.Menubar.js:946
 #: src/control/Control.PresentationBar.js:57
 msgid "Fullscreen presentation"
 msgstr "全画面プレゼンテーション"
 
-#: src/control/Control.Menubar.js:450
+#: src/control/Control.Menubar.js:459
 msgid "Present current slide"
 msgstr ""
 
-#: src/control/Control.Menubar.js:482 src/control/Control.Menubar.js:897
-#: src/control/Control.Menubar.js:949
-#: src/control/Control.NotebookbarBuilder.js:520
+#: src/control/Control.Menubar.js:491 src/control/Control.Menubar.js:912
+#: src/control/Control.Menubar.js:964
+#: src/control/Control.NotebookbarBuilder.js:530
 #: src/control/Control.NotebookbarDraw.js:177
-#: src/control/Control.NotebookbarImpress.js:239
+#: src/control/Control.NotebookbarImpress.js:253
 msgid "ODF Drawing (.odg)"
 msgstr "ODF 図形描画 (.odg)"
 
-#: src/control/Control.Menubar.js:597 src/control/Control.Menubar.js:996
-#: src/control/Control.NotebookbarBuilder.js:493
+#: src/control/Control.Menubar.js:602 src/control/Control.Menubar.js:610
+#: src/control/Control.Menubar.js:1011
+#: src/control/Control.NotebookbarBuilder.js:503
+#: src/control/Control.NotebookbarBuilder.js:580
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF 表計算 (.ods)"
 
-#: src/control/Control.Menubar.js:598 src/control/Control.Menubar.js:997
-#: src/control/Control.NotebookbarBuilder.js:501
-#: src/control/Control.NotebookbarCalc.js:200
+#: src/control/Control.Menubar.js:603 src/control/Control.Menubar.js:611
+#: src/control/Control.Menubar.js:1012
+#: src/control/Control.NotebookbarBuilder.js:511
+#: src/control/Control.NotebookbarBuilder.js:588
+#: src/control/Control.NotebookbarCalc.js:214
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Excel 2003 表計算 (.xls)"
 
-#: src/control/Control.Menubar.js:599 src/control/Control.Menubar.js:998
-#: src/control/Control.NotebookbarBuilder.js:497
-#: src/control/Control.NotebookbarCalc.js:206
+#: src/control/Control.Menubar.js:604 src/control/Control.Menubar.js:612
+#: src/control/Control.Menubar.js:1013
+#: src/control/Control.NotebookbarBuilder.js:507
+#: src/control/Control.NotebookbarBuilder.js:584
+#: src/control/Control.NotebookbarCalc.js:220
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Excel 表計算 (.xlsx)"
 
-#: src/control/Control.Menubar.js:600
+#: src/control/Control.Menubar.js:613
 msgid "CSV file (.csv)"
 msgstr "CSV ファイル (.csv)"
 
-#: src/control/Control.Menubar.js:829 src/control/Control.Menubar.js:883
-#: src/control/Control.Menubar.js:939 src/control/Control.Menubar.js:985
+#: src/control/Control.Menubar.js:844 src/control/Control.Menubar.js:898
+#: src/control/Control.Menubar.js:954 src/control/Control.Menubar.js:1000
 #: src/control/Control.StatusBar.js:173
 msgid "Search"
 msgstr "検索"
 
-#: src/control/Control.Menubar.js:874
+#: src/control/Control.Menubar.js:889
 msgid "Page Setup"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1259 src/control/Control.StatusBar.js:534
+#: src/control/Control.Menubar.js:1274 src/control/Control.StatusBar.js:534
 msgid "Reset to Default Language"
 msgstr "既定の言語に戻す"
 
-#: src/control/Control.Menubar.js:1589
+#: src/control/Control.Menubar.js:1604
 msgid "Use Compact view"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1591
+#: src/control/Control.Menubar.js:1606
 msgid "Use Tabbed view"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1652
+#: src/control/Control.Menubar.js:1667
 msgid "Insert Shape"
 msgstr "シェイプの挿入"
 
-#: src/control/Control.Menubar.js:1753
+#: src/control/Control.Menubar.js:1775
 #: src/control/Control.PresentationBar.js:101
 msgid "Are you sure you want to delete this slide?"
 msgstr "このスライドを本当に削除してよろしいですか？"
 
-#: src/control/Control.Menubar.js:1756
+#: src/control/Control.Menubar.js:1778
 #: src/control/Control.PresentationBar.js:104
 msgid "Are you sure you want to delete this page?"
 msgstr "このページを本当に削除してよろしいですか？"
 
-#: src/control/Control.Menubar.js:1875
+#: src/control/Control.Menubar.js:1897
 msgid "file type icon"
 msgstr ""
 
@@ -909,33 +929,33 @@ msgstr ""
 msgid "Tap to collapse"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:505
-#: src/control/Control.NotebookbarCalc.js:187
+#: src/control/Control.NotebookbarBuilder.js:515
+#: src/control/Control.NotebookbarCalc.js:201
 msgid "CSV File (.csv)"
 msgstr "CSV ファイル (.csv)"
 
-#: src/control/Control.NotebookbarBuilder.js:730
+#: src/control/Control.NotebookbarBuilder.js:801
 #: src/control/Control.TopToolbar.js:227
 msgid "Insert Local Image"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:812
+#: src/control/Control.NotebookbarBuilder.js:883
 msgid "Very Tight"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:813
+#: src/control/Control.NotebookbarBuilder.js:884
 msgid "Tight"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:814
+#: src/control/Control.NotebookbarBuilder.js:885
 msgid "Normal"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:815
+#: src/control/Control.NotebookbarBuilder.js:886
 msgid "Loose"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:816
+#: src/control/Control.NotebookbarBuilder.js:887
 msgid "Very Loose"
 msgstr ""
 
@@ -1005,155 +1025,161 @@ msgstr ""
 msgid "~Help"
 msgstr "ヘルプ(~H)"
 
-#: src/control/Control.NotebookbarCalc.js:119
+#: src/control/Control.NotebookbarCalc.js:112
+#: src/control/Control.NotebookbarImpress.js:164
+#: src/control/Control.NotebookbarWriter.js:126
+msgid "Save As"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:133
 #: src/control/Control.NotebookbarDraw.js:150
-#: src/control/Control.NotebookbarImpress.js:171
-#: src/control/Control.NotebookbarWriter.js:132
+#: src/control/Control.NotebookbarImpress.js:185
+#: src/control/Control.NotebookbarWriter.js:146
 msgid "Share"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:126
+#: src/control/Control.NotebookbarCalc.js:140
 #: src/control/Control.NotebookbarDraw.js:157
-#: src/control/Control.NotebookbarImpress.js:178
-#: src/control/Control.NotebookbarWriter.js:139
+#: src/control/Control.NotebookbarImpress.js:192
+#: src/control/Control.NotebookbarWriter.js:153
 msgid "See history"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:157
-#: src/control/Control.NotebookbarImpress.js:209
-#: src/control/Control.NotebookbarWriter.js:170
+#: src/control/Control.NotebookbarCalc.js:171
+#: src/control/Control.NotebookbarImpress.js:223
+#: src/control/Control.NotebookbarWriter.js:184
 msgid "Download"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:181
+#: src/control/Control.NotebookbarCalc.js:195
 #, fuzzy
 msgid "ODF Spreadsheet (.ods)"
 msgstr "ODF 表計算 (.ods)"
 
-#: src/control/Control.NotebookbarCalc.js:490
+#: src/control/Control.NotebookbarCalc.js:504
 msgid "General"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:491
+#: src/control/Control.NotebookbarCalc.js:505
 msgid "Number"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:492
+#: src/control/Control.NotebookbarCalc.js:506
 msgid "Percent"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:493
+#: src/control/Control.NotebookbarCalc.js:507
 msgid "Currency"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:494
-#: src/control/Control.NotebookbarWriter.js:997
+#: src/control/Control.NotebookbarCalc.js:508
+#: src/control/Control.NotebookbarWriter.js:1011
 msgid "Date"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:495
+#: src/control/Control.NotebookbarCalc.js:509
 msgid "Time"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:496
+#: src/control/Control.NotebookbarCalc.js:510
 msgid "Scientific"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:497
+#: src/control/Control.NotebookbarCalc.js:511
 msgid "Fraction"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:498
+#: src/control/Control.NotebookbarCalc.js:512
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:499 src/control/Toolbar.js:725
+#: src/control/Control.NotebookbarCalc.js:513 src/control/Toolbar.js:725
 msgid "Text"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:633
+#: src/control/Control.NotebookbarCalc.js:647
 msgid "Default"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:639
+#: src/control/Control.NotebookbarCalc.js:653
 msgid "Heading 1"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:645
+#: src/control/Control.NotebookbarCalc.js:659
 msgid "Heading 2"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:657
+#: src/control/Control.NotebookbarCalc.js:671
 msgid "Good"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:663
+#: src/control/Control.NotebookbarCalc.js:677
 msgid "Neutral"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:669
+#: src/control/Control.NotebookbarCalc.js:683
 msgid "Bad"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:732
+#: src/control/Control.NotebookbarCalc.js:746
 msgid "Row Height"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:738
+#: src/control/Control.NotebookbarCalc.js:752
 msgid "Column Width"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:749
+#: src/control/Control.NotebookbarCalc.js:763
 msgid "Insert Rows Above"
 msgstr "行を上に挿入"
 
-#: src/control/Control.NotebookbarCalc.js:754
+#: src/control/Control.NotebookbarCalc.js:768
 msgid "Insert Columns Before"
 msgstr "列を左に挿入"
 
-#: src/control/Control.NotebookbarCalc.js:759
+#: src/control/Control.NotebookbarCalc.js:773
 msgid "Delete Rows"
 msgstr "行の削除"
 
-#: src/control/Control.NotebookbarCalc.js:769
+#: src/control/Control.NotebookbarCalc.js:783
 msgid "Insert Rows Below"
 msgstr "行を下に挿入"
 
-#: src/control/Control.NotebookbarCalc.js:774
+#: src/control/Control.NotebookbarCalc.js:788
 msgid "Insert Columns After"
 msgstr "列を右に挿入"
 
-#: src/control/Control.NotebookbarCalc.js:779
+#: src/control/Control.NotebookbarCalc.js:793
 msgid "Delete Columns"
 msgstr "列の削除"
 
-#: src/control/Control.NotebookbarCalc.js:961
+#: src/control/Control.NotebookbarCalc.js:975
 #: src/control/Control.NotebookbarDraw.js:258
-#: src/control/Control.NotebookbarImpress.js:339
-#: src/control/Control.NotebookbarWriter.js:1060
+#: src/control/Control.NotebookbarImpress.js:353
+#: src/control/Control.NotebookbarWriter.js:1074
 msgid "Compact view"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:967
+#: src/control/Control.NotebookbarCalc.js:981
 #: src/control/Control.NotebookbarDraw.js:264
-#: src/control/Control.NotebookbarImpress.js:345
-#: src/control/Control.NotebookbarWriter.js:1083
+#: src/control/Control.NotebookbarImpress.js:359
+#: src/control/Control.NotebookbarWriter.js:1097
 msgid "Status Bar"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1023
+#: src/control/Control.NotebookbarCalc.js:1037
 msgid "Sparkline"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1102
-#: src/control/Control.NotebookbarCalc.js:1749
+#: src/control/Control.NotebookbarCalc.js:1116
+#: src/control/Control.NotebookbarCalc.js:1763
 #: src/control/Control.NotebookbarDraw.js:589
 #: src/control/Control.NotebookbarDraw.js:959
-#: src/control/Control.NotebookbarImpress.js:675
-#: src/control/Control.NotebookbarImpress.js:951
-#: src/control/Control.NotebookbarImpress.js:1782
-#: src/control/Control.NotebookbarWriter.js:892
-#: src/control/Control.NotebookbarWriter.js:2202
+#: src/control/Control.NotebookbarImpress.js:689
+#: src/control/Control.NotebookbarImpress.js:965
+#: src/control/Control.NotebookbarImpress.js:1796
+#: src/control/Control.NotebookbarWriter.js:906
+#: src/control/Control.NotebookbarWriter.js:2216
 msgid "Shapes"
 msgstr ""
 
@@ -1176,13 +1202,13 @@ msgstr ""
 msgid "~Master"
 msgstr ""
 
-#: src/control/Control.NotebookbarImpress.js:233
+#: src/control/Control.NotebookbarImpress.js:247
 #, fuzzy
 msgid "ODF Presentation (.odp)"
 msgstr "ODF プレゼンテーション (.odp)"
 
-#: src/control/Control.NotebookbarImpress.js:293
-#: src/control/Control.NotebookbarImpress.js:763
+#: src/control/Control.NotebookbarImpress.js:307
+#: src/control/Control.NotebookbarImpress.js:777
 msgid "Presentation"
 msgstr ""
 
@@ -1194,32 +1220,32 @@ msgstr "参照(~S)"
 msgid "Form"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:180
+#: src/control/Control.NotebookbarWriter.js:194
 #, fuzzy
 msgid "ODF Text Document (.odt)"
 msgstr "ODF 文書ドキュメント (.odt)"
 
-#: src/control/Control.NotebookbarWriter.js:222
+#: src/control/Control.NotebookbarWriter.js:236
 msgid "EPUB Document (.epub)"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:977
+#: src/control/Control.NotebookbarWriter.js:991
 msgid "Rich Text"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:982
+#: src/control/Control.NotebookbarWriter.js:996
 msgid "Checkbox"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:987
+#: src/control/Control.NotebookbarWriter.js:1001
 msgid "Dropdown"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:992
+#: src/control/Control.NotebookbarWriter.js:1006
 msgid "Picture"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1072
+#: src/control/Control.NotebookbarWriter.js:1086
 msgid "Ruler"
 msgstr ""
 
@@ -1440,7 +1466,7 @@ msgstr "読み取り専用"
 msgid "Current"
 msgstr ""
 
-#: src/control/Parts.js:429
+#: src/control/Parts.js:433
 msgid "Show Selected Sheets"
 msgstr ""
 
@@ -1775,42 +1801,42 @@ msgstr "キャンセルを押下すると表示モードで開きます。"
 msgid "Wrong password provided. Please try again."
 msgstr "パスワードが間違っています、再度挑戦してください。"
 
-#: src/core/Socket.js:1113
+#: src/core/Socket.js:1111
 msgid "Someone"
 msgstr ""
 
-#: src/core/Socket.js:1115
+#: src/core/Socket.js:1113
 msgid " saved this document as "
 msgstr ""
 
-#: src/core/Socket.js:1115
+#: src/core/Socket.js:1113
 msgid ". Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1124
+#: src/core/Socket.js:1122
 msgid "Loading..."
 msgstr "読み込み中..."
 
-#: src/core/Socket.js:1124
+#: src/core/Socket.js:1122
 msgid "Connecting..."
 msgstr "接続中..."
 
-#: src/core/Socket.js:1142
+#: src/core/Socket.js:1140
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1532
+#: src/core/Socket.js:1530
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "ええ、困りましたね、ドキュメントに接続できませんでした。再度試みてください。"
 
-#: src/core/Socket.js:1549
+#: src/core/Socket.js:1547
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "接続中..."
 
-#: src/core/Socket.js:1555
+#: src/core/Socket.js:1553
 msgid "The server has been disconnected."
 msgstr ""
 
@@ -1828,11 +1854,12 @@ msgstr "ホストURLが空です。coolwsdサーバーの設定が誤ってい�
 
 # TODO: デプロイメントの訳語。いまはこれでOK
 #: src/errormessages.js:15
+#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
 "when more than {docs} documents or {connections} connections are in use "
-"concurrently"
+"concurrently."
 msgstr ""
 "このバージョンの{productname}はサポートされていないバージョンです。企業でのデプロイメントに適しているという印象を誤って与えることを避けるため"
 "、{docs}以上のドキュメントや{connections}以上のコネクションが同時に使用されている場合にこのメッセージが表示されます。"
@@ -1988,11 +2015,11 @@ msgstr ""
 msgid "Uploading file to server failed, the file is too large."
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:1856
+#: src/layer/tile/CanvasTileLayer.js:1869
 msgid "Functions"
 msgstr "関数"
 
-#: src/layer/tile/CanvasTileLayer.js:5038
+#: src/layer/tile/CanvasTileLayer.js:5067
 msgid "No Comments"
 msgstr ""
 
@@ -2115,6 +2142,10 @@ msgstr ""
 
 #: src/map/Map.js:1440
 msgid "Please click to resume editing"
+msgstr ""
+
+#: src/map/handler/Map.Feedback.js:82
+msgid "Please send us your feedback"
 msgstr ""
 
 #: src/map/handler/Map.FileInserter.js:105
