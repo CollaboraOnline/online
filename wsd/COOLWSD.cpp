@@ -4226,12 +4226,14 @@ private:
                    options += ",PDFVer=" + pdfVer + "PDFVEREND";
                 }
 
+                std::string lang = (form.has("lang") ? form.get("lang") : "");
+
                 // This lock could become a bottleneck.
                 // In that case, we can use a pool and index by publicPath.
                 std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
                 LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                auto docBroker = std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey, format, options);
+                auto docBroker = std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey, format, options, lang);
                 handler.takeFile();
 
                 cleanupDocBrokers();

@@ -1427,6 +1427,7 @@ class ConvertToBroker final : public StatelessBatchBroker
 {
     const std::string _format;
     const std::string _sOptions;
+    const std::string _lang;
 
 public:
     /// Construct DocumentBroker with URI and docKey
@@ -1434,8 +1435,12 @@ public:
                     const Poco::URI& uriPublic,
                     const std::string& docKey,
                     const std::string& format,
-                    const std::string& sOptions);
+                    const std::string& sOptions,
+                    const std::string& lang);
     virtual ~ConvertToBroker();
+
+    /// _lang accessors
+    const std::string& getLang() { return _lang; }
 
     /// Move socket to this broker for response & do conversion
     bool startConversion(SocketDisposition &disposition, const std::string &id);
