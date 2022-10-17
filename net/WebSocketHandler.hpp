@@ -455,6 +455,11 @@ private:
             {
                 handleMessage(_wsPayload);
             }
+            catch (const Poco::Exception& ex)
+            {
+                LOG_ERR('#' << socket->getFD()
+                            << ": Error during handleMessage: " << ex.displayText());
+            }
             catch (const std::exception& exception)
             {
                 LOG_ERR('#' << socket->getFD() << ": Error during handleMessage: " << exception.what());
