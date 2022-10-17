@@ -557,20 +557,33 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		table.style = gridRowColStyle;
 
 		for (var row = 0; row < rows; row++) {
+			var prevChild = null;
+
 			for (var col = 0; col < cols; col++) {
 				var child = builder._getGridChild(data.children, row, col);
+				var isMergedCell = prevChild && prevChild.width
+					&& parseInt(prevChild.left) + parseInt(prevChild.width) > col;
 
 				if (child) {
+					if (!child.id || child.id === '') // required for postprocess...
+						child.id = table.id + '-cell-' + row + '-' + col;
+
 					var sandbox = L.DomUtil.create('div');
-					builder.build(table, [child], false);
+					builder.build(sandbox, [child], false);
+
 					var control = sandbox.firstChild;
 					if (control) {
-						table.appendChild(sandbox.firstChild);
 						L.DomUtil.addClass(control, 'ui-grid-cell');
+						table.appendChild(control);
 					}
 
 					processedChildren.push(child);
+					prevChild = child;
+				} else if (!isMergedCell) {
+					// empty placeholder to keep correct order
+					L.DomUtil.create('div', 'ui-grid-cell', table);
 				}
+
 			}
 		}
 
@@ -581,8 +594,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder.build(sandbox, [child], false);
 				control = sandbox.firstChild;
 				if (control) {
-					table.appendChild(sandbox.firstChild);
 					L.DomUtil.addClass(control, 'ui-grid-cell');
+					table.appendChild(control);
 				}
 				processedChildren.push(child);
 			}

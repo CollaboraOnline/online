@@ -520,11 +520,14 @@ L.Control.JSDialog = L.Control.extend({
 		var temporaryParent = L.DomUtil.create('div');
 		builder.build(temporaryParent, [data.control], false);
 		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
+		var backupGridSpan = control.style.gridColumn;
 		L.DomUtil.remove(control);
 
 		var newControl = dialog.querySelector('[id=\'' + data.control.id + '\']');
-		if (newControl)
+		if (newControl) {
 			newControl.scrollTop = scrollTop;
+			newControl.style.gridColumn = backupGridSpan;
+		}
 
 		if (focusedId)
 			dialog.querySelector('[id=\'' + focusedId + '\']').focus();
