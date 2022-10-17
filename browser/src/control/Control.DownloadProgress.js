@@ -102,8 +102,8 @@ L.Control.DownloadProgress = L.Control.extend({
 	},
 
 	setValue: function (value) {
-		this._bar.style.width = value + '%';
-		this._value.innerHTML = value + '%';
+		this._bar.style.width = Math.round(value) + '%';
+		this._value.innerHTML = Math.round(value) + '%';
 	},
 
 	_setProgressCursor: function() {
