@@ -79,11 +79,14 @@ L.Control.Sidebar = L.Control.extend({
 		var temporaryParent = L.DomUtil.create('div');
 		this.builder.build(temporaryParent, [data.control], false);
 		parent.insertBefore(temporaryParent.querySelector('[id=\'' + controlId + '\']'), control.nextSibling);
+		var backupGridSpan = control.style.gridColumn;
 		L.DomUtil.remove(control);
 
 		var newControl = this.container.querySelector('[id=\'' + controlId + '\']');
-		if (newControl)
+		if (newControl) {
 			newControl.scrollTop = scrollTop;
+			newControl.style.gridColumn = backupGridSpan;
+		}
 
 		if (focusedId)
 			this.container.querySelector('[id=\'' + focusedId + '\']').focus();
