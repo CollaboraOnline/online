@@ -3823,7 +3823,7 @@ private:
 
         http::Response httpResponse(http::StatusLine(200));
         httpResponse.set("Content-Length", std::to_string(responseString.size()));
-        httpResponse.set("Content-Type", std::to_string(mimeType.size()));
+        httpResponse.set("Content-Type", mimeType);
         httpResponse.set("Last-Modified", Util::getHttpTimeNow());
         httpResponse.set("Connection", "close");
         httpResponse.writeData(socket->getOutBuffer());
@@ -3840,7 +3840,7 @@ private:
         assert(socket && "Must have a valid socket");
 
         LOG_TRC("Favicon request: " << requestDetails.getURI());
-        std::string mimeType = "image/vnd.microsoft.icon";
+        const std::string mimeType = "image/vnd.microsoft.icon";
         std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
         if (!File(faviconPath).exists())
             faviconPath = COOLWSD::FileServerRoot + "/favicon.ico";
