@@ -117,7 +117,7 @@
 }
 
 .lo-menu a.disabled {
-	cursor: default;
+	cursor: not-allowed;
 }
 
 .lo-menu > li > a, .lo-menu > li > a.has-submenu {
