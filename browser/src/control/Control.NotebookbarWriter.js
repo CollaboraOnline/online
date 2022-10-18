@@ -248,7 +248,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			'children': [
 				hasRepair? {
 					'id': 'repair',
-					'type': 'menubartoolitem',
+					'type': (hasSigning ? '' : 'big') + 'menubartoolitem',
 					'text': _('Repair'),
 					'command': _('Repair')
 				} : {},
