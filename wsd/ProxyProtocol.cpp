@@ -33,6 +33,11 @@ void DocumentBroker::handleProxyRequest(
     const RequestDetails &requestDetails,
     const std::shared_ptr<StreamSocket> &socket)
 {
+    const std::string routeToken = requestDetails.getParam("routeToken");
+    if (!routeToken.empty())
+        throw BadRequestException(
+            "indirection_endpoint and proxy websocket cannot be used together");
+
     std::shared_ptr<ClientSession> clientSession;
     if (requestDetails.equals(RequestDetails::Field::Command, "open"))
     {
