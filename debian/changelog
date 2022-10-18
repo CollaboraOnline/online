@@ -1,3 +1,9 @@
+coolwsd (22.05.7.1-1) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-22.05.7-1
+
+ -- Andras Timar <andras.timar@collabora.com>  Tue, 18 Oct 2022 22:00:00 +0200
+
 coolwsd (22.05.7.0-1) unstable; urgency=medium
 
   * Snapshot from master branch
