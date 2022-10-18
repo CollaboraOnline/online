@@ -216,6 +216,9 @@ L.Control.UIManager = L.Control.extend({
 		}
 
 		this.map.on('changeuimode', this.onChangeUIMode, this);
+
+		if (typeof window.initializedUI === 'function')
+			window.initializedUI();
 	},
 
 	initializeSidebar: function() {
@@ -372,6 +375,9 @@ L.Control.UIManager = L.Control.extend({
 		// displayed correctly
 		this.map.fire('rulerchanged');
 		this.map.fire('statusbarchanged');
+
+		if (typeof window.initializedUI === 'function')
+			window.initializedUI();
 	},
 
 	// UI modification
