@@ -178,7 +178,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					'children': [
 						{
 							'id': 'repair',
-							'type': 'menubartoolitem',
+							'type': 'bigmenubartoolitem',
 							'text': _('Repair'),
 							'command': _('Repair')
 						}
