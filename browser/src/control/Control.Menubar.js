@@ -2002,6 +2002,10 @@ L.Control.Menubar = L.Control.extend({
 	_createMenu: function(menu) {
 		var itemList = [];
 		var docType = this._map.getDocType();
+		var isReadOnly = this._map.isPermissionReadOnly();
+		if (docType !== 'drawing' && isReadOnly) {
+			this._hiddenItems.push('insert');
+		}
 		for (var i in menu) {
 			if (this._checkItemVisibility(menu[i]) === false)
 				continue;
