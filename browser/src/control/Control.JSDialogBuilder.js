@@ -2617,7 +2617,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'configuredialog': 'sidebar',
 			'modifypage': 'sidebar',
 			'parapropertypanel': 'paragraphdialog',
-			'tablecellbackgroundcolor': 'fillcolor'
+			'tablecellbackgroundcolor': 'fillcolor',
+			'signdocument':'signature'
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
