@@ -275,6 +275,10 @@
         <handling desc="How to handle fonts mising in a document: 'report', 'log', 'both', or 'ignore'" type="string" default="log">log</handling>
     </fonts_missing>
 
+    <indirection_endpoint>
+        <url desc="URL endpoint to collabora kubernetes operator which servers routeToken and serverId in json format" default=""></url>
+    </indirection_endpoint>
+
     @LOCK_CONFIGURATION@
 
     @FEATURE_RESTRICTION_CONFIGURATION@

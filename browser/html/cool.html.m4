@@ -316,7 +316,10 @@ m4_ifelse(MOBILEAPP,[true],
       window.uiDefaults = {};
       window.useIntegrationTheme = 'false';
       window.checkFileInfoOverride = {};
-      window.deeplEnabled = false;],
+      window.deeplEnabled = false;
+	    window.deeplEnabled = %DEEPL_ENABLED%;  
+      window.routeToken='';
+      window.serverId='';],
      [window.host = '%HOST%';
       window.serviceRoot = '%SERVICE_ROOT%';
       window.hexifyUrl = %HEXIFY_URL%;
@@ -342,7 +345,9 @@ m4_ifelse(MOBILEAPP,[true],
       window.groupDownloadAsForNb = %GROUP_DOWNLOAD_AS%;
       window.uiDefaults = %UI_DEFAULTS%;
       window.checkFileInfoOverride = %CHECK_FILE_INFO_OVERRIDE%;
-	  window.deeplEnabled = %DEEPL_ENABLED%;])
+	    window.deeplEnabled = %DEEPL_ENABLED%;
+      window.routeToken = '%ROUTE_TOKEN%';
+      window.serverId = '%SERVER_ID%';])
 
 // This is GLOBAL_JS:
 m4_syscmd([cat ]GLOBAL_JS)m4_dnl

@@ -751,7 +751,13 @@ window.app = {
 	global.makeDocAndWopiSrcUrl = function (root, docUrlParams, suffix, wopiSrcParam) {
 		var wopiSrc = '';
 		if (global.wopiSrc != '') {
-			wopiSrc = '?WOPISrc=' + global.wopiSrc + '&compat=';
+			wopiSrc = '?WOPISrc=' + global.wopiSrc;
+			if (global.routeToken != '')
+				wopiSrc += '&RouteToken=' + global.routeToken;
+			if (global.serverId != '')
+				wopiSrc += '&ServerId=' + global.serverId;
+			wopiSrc += '&compat=';
+
 			if (wopiSrcParam && wopiSrcParam.length > 0)
 				wopiSrc += '&' + wopiSrcParam;
 		}

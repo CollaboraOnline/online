@@ -49,6 +49,7 @@
 #include <Protocol.hpp>
 #include <Util.hpp>
 #include <common/ConfigUtil.hpp>
+#include <common/JsonUtil.hpp>
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
 #endif
@@ -877,6 +878,10 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     ServerURL cnxDetails(requestDetails);
 
     const Poco::URI::QueryParameters params = Poco::URI(request.getURI()).getQueryParameters();
+    std::string wopiSrc = std::string();
+    for (const auto& param : params)
+        if (param.first == "WOPISrc")
+            wopiSrc = param.second;
 
     // Is this a file we read at startup - if not; it's not for serving.
     const std::string relPath = getRequestPathname(request);
@@ -1070,6 +1075,63 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%WELCOME_URL%"), std::string(WELCOME_URL));
     Poco::replaceInPlace(preprocess, std::string("%BUYPRODUCT_URL%"), buyProduct);
     Poco::replaceInPlace(preprocess, std::string("%DEEPL_ENABLED%"), (config.getBool("deepl.enabled", false) ? std::string("true"): std::string("false")));
+    Poco::URI indirectionURI(config.getString("indirection_endpoint.url", ""));
+    bool validIndirection = !indirectionURI.empty() && !wopiSrc.empty();
+    std::string routeToken = std::string(), serverId = std::string();
+#if !ENABLE_DEBUG
+    if (validIndirection && Util::iequal(indirectionURI.getScheme(), "http"))
+    {
+        LOG_ERR("Indirection url should only use HTTPS protocol: " << indirectionURI.toString());
+        validIndirection = false;
+    }
+#endif
+    if (validIndirection)
+    {
+        try
+        {
+            indirectionURI.addQueryParameter("WOPISrc", wopiSrc);
+            auto httpSession = http::Session::create(indirectionURI.getHost(),
+                                                     http::Session::Protocol::HttpSsl,
+                                                     indirectionURI.getPort());
+
+            http::Request operatorRequest(indirectionURI.getPathAndQuery());
+
+            const std::shared_ptr<const http::Response> httpResponse =
+                httpSession->syncRequest(operatorRequest);
+
+            unsigned int statusCode = httpResponse->statusLine().statusCode();
+            if (statusCode == Poco::Net::HTTPResponse::HTTP_OK)
+            {
+                std::string body = httpResponse->getBody();
+
+                LOG_DBG("Got " << body.size() << " bytes for " << indirectionURI.toString());
+
+                Poco::JSON::Object::Ptr json;
+                if (JsonUtil::parseJSON(body, json))
+                {
+                    JsonUtil::findJSONValue(json, "route_token", routeToken);
+                    JsonUtil::findJSONValue(json, "server_id", serverId);
+                }
+                else
+                {
+                    LOG_ERR("Could not parse JSON sent by kubernetes operator, Please check JSON "
+                            "format");
+                }
+            }
+            else
+            {
+                LOG_ERR("kubernetes operator sent response with status code: " +
+                        std::to_string(statusCode));
+            }
+        }
+        catch (...)
+        {
+            LOG_ERR("Failed to fetch JSON from kubernetes operator");
+        }
+    }
+
+    Poco::replaceInPlace(preprocess, std::string("%ROUTE_TOKEN%"), routeToken);
+    Poco::replaceInPlace(preprocess, std::string("%SERVER_ID%"), serverId);
 
     const std::string mimeType = "text/html";
 
@@ -1093,21 +1155,17 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     if (uriHost.getHost() != configFrameAncestor)
         frameAncestors += ' ' + uriHost.getHost() + ":*";
 
-    for (const auto& param : params)
+    if (!wopiSrc.empty())
     {
-        if (param.first == "WOPISrc")
+        std::string wopiFrameAncestor;
+        Poco::URI::decode(wopiSrc, wopiFrameAncestor);
+        Poco::URI uriWopiFrameAncestor(wopiFrameAncestor);
+        // Remove parameters from URL
+        wopiFrameAncestor = uriWopiFrameAncestor.getHost();
+        if (wopiFrameAncestor != uriHost.getHost() && wopiFrameAncestor != configFrameAncestor)
         {
-            std::string wopiFrameAncestor;
-            Poco::URI::decode(param.second, wopiFrameAncestor);
-            Poco::URI uriWopiFrameAncestor(wopiFrameAncestor);
-            // Remove parameters from URL
-            wopiFrameAncestor = uriWopiFrameAncestor.getHost();
-            if (wopiFrameAncestor != uriHost.getHost() && wopiFrameAncestor != configFrameAncestor)
-            {
-                frameAncestors += ' ' + wopiFrameAncestor + ":*";
-                LOG_TRC("Picking frame ancestor from WOPISrc: " << wopiFrameAncestor);
-            }
-            break;
+            frameAncestors += ' ' + wopiFrameAncestor + ":*";
+            LOG_TRC("Picking frame ancestor from WOPISrc: " << wopiFrameAncestor);
         }
     }
 
