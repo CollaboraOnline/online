@@ -475,8 +475,10 @@ public:
         return FileUtil::anonymizeUsername(username);
     }
 
+#if ENABLE_DEBUG
     /// get correct server URL with protocol + port number for this running server
     static std::string getServerURL();
+#endif
 
 protected:
     void initialize(Poco::Util::Application& self) override
