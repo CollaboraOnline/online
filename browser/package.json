@@ -31,7 +31,8 @@
     "uglifycss": "0.0.29",
     "uglifyify": "5.0.2",
     "vex-js": "4.1.0",
-    "pako": "2.0.4"
+    "pako": "2.0.4",
+	"canvas": "^2.6.1"
   },
   "repository": {
     "type": "git",
@@ -45,7 +46,6 @@
   ],
   "license": "BSD-2-Clause",
   "dependencies": {
-    "canvas": "^2.6.1",
     "jsdom": "^16.4.0",
     "tmp": "^0.2.1"
   },
