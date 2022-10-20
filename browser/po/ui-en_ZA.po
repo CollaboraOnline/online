@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-18 21:59+0200\n"
-"PO-Revision-Date: 2022-09-17 23:21+0000\n"
-"Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
+"PO-Revision-Date: 2022-10-20 09:24+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: English (South Africa) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_ZA/>\n"
-"Language: \n"
+"Language: en_ZA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1022,7 +1022,7 @@ msgstr "~Help"
 #: src/control/Control.NotebookbarImpress.js:165
 #: src/control/Control.NotebookbarWriter.js:127
 msgid "Save As"
-msgstr ""
+msgstr "Save As"
 
 #: src/control/Control.NotebookbarCalc.js:134
 #: src/control/Control.NotebookbarDraw.js:151
@@ -1800,7 +1800,7 @@ msgstr "Wrong password provided. Please try again."
 
 #: src/core/Socket.js:1082
 msgid "Missing fonts:"
-msgstr ""
+msgstr "Missing fonts:"
 
 #: src/core/Socket.js:1122
 msgid "Someone"
@@ -1859,7 +1859,6 @@ msgstr ""
 "contact the administrator."
 
 #: src/errormessages.js:15
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
@@ -1869,7 +1868,7 @@ msgstr ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears when "
 "more than {docs} documents or {connections} connections are in use "
-"concurrently"
+"concurrently."
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -2199,7 +2198,7 @@ msgstr "Please click to resume editing"
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Please send us your feedback"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
