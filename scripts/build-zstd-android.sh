@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ $# -eq 0 ]; then
-    echo "build-zstd.sh <abs-path-to-ndk-toplevel> <abs-path-to-build-top-dir>"
+    echo "build-zstd-android.sh <abs-path-to-ndk-toplevel> <abs-path-to-build-top-dir>"
     exit;
 fi
 
