@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-18 21:59+0200\n"
-"PO-Revision-Date: 2022-09-17 23:21+0000\n"
+"PO-Revision-Date: 2022-10-20 09:24+0000\n"
 "Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt_BR/>\n"
-"Language: \n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1032,7 +1032,7 @@ msgstr "~Ajuda"
 #: src/control/Control.NotebookbarImpress.js:165
 #: src/control/Control.NotebookbarWriter.js:127
 msgid "Save As"
-msgstr ""
+msgstr "Salvar como"
 
 #: src/control/Control.NotebookbarCalc.js:134
 #: src/control/Control.NotebookbarDraw.js:151
@@ -1813,7 +1813,7 @@ msgstr "Senha inválida. Tente novamente."
 
 #: src/core/Socket.js:1082
 msgid "Missing fonts:"
-msgstr ""
+msgstr "Fontes em falta:"
 
 #: src/core/Socket.js:1122
 msgid "Someone"
@@ -1870,7 +1870,6 @@ msgstr ""
 "desconfigurado, contacte o administrador."
 
 #: src/errormessages.js:15
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
@@ -1880,7 +1879,7 @@ msgstr ""
 "Esta é uma versão sem suporte de {productname}. Para evitar a impressão de "
 "que é adequado para implantação em empresas, esta mensagem aparece quando "
 "mais de documentos {docs} ou conexões {connections} estão em uso "
-"simultaneamente"
+"simultaneamente."
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -2213,7 +2212,7 @@ msgstr "Por favor, clique para retomar a edição"
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Envie-nos por favor o seu feedback"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
