@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-18 21:59+0200\n"
-"PO-Revision-Date: 2022-10-10 13:26+0000\n"
+"PO-Revision-Date: 2022-10-20 09:24+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1791,7 +1791,7 @@ msgstr "הססמה שסופקה שגויה. נא לנסות שוב."
 
 #: src/core/Socket.js:1082
 msgid "Missing fonts:"
-msgstr ""
+msgstr "גופנים חסרים:"
 
 #: src/core/Socket.js:1122
 msgid "Someone"
