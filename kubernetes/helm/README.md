@@ -7,19 +7,41 @@ In order for Collaborative Editing to function correctly on kubernetes, it is vi
 How to test this specific setup:
   1. Install Kubernetes cluster locally - minikube - https://minikube.sigs.k8s.io/docs/
   2. Install helm - https://helm.sh/docs/intro/install/
-  3. install HAProxy Kubernetes Ingress Controller - https://www.haproxy.com/documentation/kubernetes/latest/installation/community/kubernetes/
-  4. Prepare the namespace in local kubernetes cluster with this command :
-```
-kubectl create namespace collabora
-```
-  5. Install helm-chart using below command
-```
-helm install collabora-online ./kubernetes/helm/collabora-online/
-```
+  3. Install HAProxy Kubernetes Ingress Controller - https://www.haproxy.com/documentation/kubernetes/latest/installation/community/kubernetes/
+  4. Create an `values.yaml` for your minikube setup (if you setup differe e.g. take an look in then [`values.yml`](./collabora-online/values.yaml) of the helmchart - e.g. for annotations using [NGINX Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/) or more komplex setups, see [Nodes](#Notes) ):
+
+      Here an example `my_values.yaml`:
+      ```yaml
+      replicaCount: 3
+      
+      ingress:
+        enabled: true
+        annotations:
+          haproxy.org/timeout-tunnel: "3600s"
+          haproxy.org/backend-config-snippet: |
+            mode http
+            balance leastconn
+            stick-table type string len 2048 size 1k store conn_cur
+            http-request set-var(txn.wopisrcconns) url_param(WOPISrc),table_conn_cur()
+            http-request track-sc1 url_param(WOPISrc)
+            stick match url_param(WOPISrc) if { var(txn.wopisrcconns) -m int gt 0 }
+            stick store-request url_param(WOPISrc)
+        hosts:
+         - host: chart-example.local
+           paths:
+            - path: /
+      ```
+
+  5. Install helm-chart using below command (with a new namespace collabora)
+
+      ```bash
+      helm install --create-namespace --namespace colloabora collabora-online ./kubernetes/helm/collabora-online/ -f my_values.yml
+      ```
+
   6. Finally spin the collabora-online in kubernetes
 
       A. HAProxy service is deployed as NodePort so we can access it with node's ip address. To get node ip
-      ```
+      ```bash
       minikube ip
       ```
       Example output:
@@ -50,9 +72,10 @@ helm install collabora-online ./kubernetes/helm/collabora-online/
       ```
 
 To check if everything is setup correctly you can run:
+```bash
+curl -I -H 'Host: chart-example.local' 'http://192.168.0.106:30536/'
 ```
-curl -I -H 'Host: coolwsd.public.example.com' 'http://192.168.0.106:30536/'
-```
+
 It should return a similar output as below:
 ```
 HTTP/1.1 200 OK
@@ -65,30 +88,85 @@ content-type: text/plain
 
 ## Some useful commands to check what is happening :
 * Where is this pods, are they ready ?
-```
-kubectl -n collabora get pod
-```
-example output :
-```
-NAME                                READY   STATUS    RESTARTS   AGE
-collabora-online-5fb4869564-dnzmk   1/1     Running   0          28h
-collabora-online-5fb4869564-fb4cf   1/1     Running   0          28h
-collabora-online-5fb4869564-wbrv2   1/1     Running   0          28h
-```
+
+  ```bash
+  kubectl -n collabora get pod
+  ```
+
+  example output :
+  ```
+  NAME                                READY   STATUS    RESTARTS   AGE
+  collabora-online-5fb4869564-dnzmk   1/1     Running   0          28h
+  collabora-online-5fb4869564-fb4cf   1/1     Running   0          28h
+  collabora-online-5fb4869564-wbrv2   1/1     Running   0          28h
+  ```
+
 * What is the outside host that multiple coolwsd servers actually answering ?
-```
-kubectl get ingress -n collabora
-```
-example output :
-```
-|-----------|------------------|--------------------------|------------------------|-------|
-| NAMESPACE |       NAME       |           HOSTS          |         ADDRESS        | PORTS |
-|-----------|------------------|--------------------------|------------------------|-------|
-| collabora | collabora-online |coolwsd.public.example.com|                        |  80   |
-|-----------|------------------|--------------------------|------------------------|-------|
-```
+  ```bash
+  kubectl get ingress -n collabora
+  ```
+
+  example output :
+  ```
+  |-----------|------------------|---------------------|------------------------|-------|
+  | NAMESPACE |       NAME       |        HOSTS        |         ADDRESS        | PORTS |
+  |-----------|------------------|---------------------|------------------------|-------|
+  | collabora | collabora-online | chart-example.local |                        |  80   |
+  |-----------|------------------|---------------------|------------------------|-------|
+  ```
 
 
 ## Notes:
-* If you wish to dive into advanced settings of kubernetes deployment feel free to update values.yaml file to achieve that
-* Don't forget that you have to create the namespace (default is collabora) you specified in collabora-online/values.yaml file
+* For big setups, you maybe NOT want to restart every pod to modify WOPI hosts, therefore it is possible to setup an additional webserver to serve a ConfigMap for using [Remote/Dynamic Configuration](https://sdk.collaboraonline.com/docs/installation/Configuration.html?highlight=remote#remote-dynamic-configuration):
+
+  ```yaml
+  collabora:
+    env:
+      - name: remoteconfigurl
+        value: https://dynconfig.public.example.com/config/config.json
+  
+  dynamicConfig:
+    enabled: true
+  
+    ingress:
+      enabled: true
+      annotations:
+        "cert-manager.io/issuer": letsencrypt-zprod 
+      hosts:
+        - host: "dynconfig.public.example.com"
+      tls:
+        - secretName: "collabora-online-dynconfig-tls"
+          hosts:
+            - "dynconfig.public.example.com"
+  
+    configuration:
+       kind: "configuration"
+       storage:
+         wopi:
+           alias_groups:
+             groups:
+              - host: "https://nextcloud\\.public\\.example\\.com/"
+                allow: true
+              - host: "https://moodle\\.public\\.example\\.com/"
+                allow: true
+                aliases:
+                  - "https://moodle3\\.public\\.example2\\.de/"
+  ```
+  PS: In current state of Collabora needs outside of debuggin for Remove/Dynamic Configuration HTTPS, see [here in wsd/COOLWSD.cpp](https://github.com/CollaboraOnline/online/blob/8591d323c6db99e592ac8ac8ebef0e3a95f2e6ba/wsd/COOLWSD.cpp#L1069-L1096)
+
+* Works well with [Prometheus Operator](https://prometheus-operator.dev/) ([Helmchart](https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack)) and there setup of [Grafana](https://grafana.com/grafana/), by enabling following values:
+  ```yaml
+  prometheus:
+    servicemonitor:
+      enabled: true
+      labels:
+        release: "kube-prometheus-stack"
+    rules:
+      enabled: true # will deploy alert rules
+      additionalLabels:
+        release: "kube-prometheus-stack"
+  grafana:
+    dashboards:
+      enabled: true # will deploy default dashboards 
+  ```
+  PS: The labels `release=kube-prometheus-stack` is setup with the helmchart of the Prometheus Operator. For Grafana Dashboards it maybe need scan enable to scan in correct namespaces (or ALL), enabled by `sidecar.dashboards.searchNamespace` in [Helmchart of grafana](https://artifacthub.io/packages/helm/grafana/grafana) (which is part of PrometheusOperator, so `grafana.sidecar.dashboards.searchNamespace`) 
