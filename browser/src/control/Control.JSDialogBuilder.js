@@ -1408,6 +1408,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		edit.id = data.id;
 		edit.dir = 'auto';
 
+		if (data.password === true)
+			edit.type = 'password';
+
 		if (data.enabled === 'false' || data.enabled === false)
 			$(edit).prop('disabled', true);
 
