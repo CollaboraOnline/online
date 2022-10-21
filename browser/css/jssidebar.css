@@ -346,3 +346,8 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 #rowheight-input {
 	margin-inline-start: 0 !important;
 }
+
+/* fixes sidebar width in calc (textorientbox, alignment buttons were too big) */
+#AlignmentPropertyPanel button {
+	min-width: unset;
+}
