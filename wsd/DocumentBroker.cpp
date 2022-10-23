@@ -2662,6 +2662,60 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
             COOLProtocol::getTokenString((*message)[2], "url", url);
             LOG_CHECK_RET(url != "", false);
 
+            std::string decoded;
+            Poco::URI::decode(url, decoded);
+            const std::string filePath(COOLWSD::ChildRoot + getJailId() + JAILED_DOCUMENT_ROOT + decoded);
+
+            std::ifstream ifs(filePath);
+            const std::string svg((std::istreambuf_iterator<char>(ifs)),
+                                (std::istreambuf_iterator<char>()));
+            ifs.close();
+
+            bool broken = false;
+            std::ostringstream oss;
+            std::string::size_type pos = 0;
+            for (;;)
+            {
+                const auto prefix = "src=\"file:///tmp/";
+                const auto start = svg.find(prefix, pos);
+                if (start == std::string::npos)
+                {
+                    // Copy the rest and finish.
+                    oss << svg.substr(pos);
+                    break;
+                }
+
+                const auto startFilename = start + sizeof(prefix) - 1; // - null termination.
+                const auto end = svg.find('"', startFilename);
+                const auto dot = svg.find('.', startFilename); // - null termination.
+                if (end == std::string::npos || dot == std::string::npos)
+                {
+                    // Broken file; leave it as-is. Better to have no video than no slideshow.
+                    broken = true;
+                    break;
+                }
+
+                const std::string id = svg.substr(startFilename, dot - startFilename);
+
+                oss << svg.substr(pos, start - pos);
+
+                // Store the original json with the internal, temporary, file URI.
+                const std::string fileUrl = svg.substr(start + 5, end - start - 5);
+                _embeddedMedia[id] = "{ \"action\":\"update\",\"id\":\"" + id + "\",\"url\":\"" + fileUrl + "\"}";
+
+                std::string mediaUrl;
+                Poco::URI::encode(generatePublicMediaUrl(id), "&",
+                                  mediaUrl); // '&' is reserved in xml/html/svg.
+                oss << "src=\"" << mediaUrl << '"';
+                pos = end + 1;
+            }
+
+            if (!broken)
+            {
+                std::ofstream ofs(filePath);
+                ofs << oss.str();
+            }
+
             _registeredDownloadLinks[downloadid] = url;
         }
         else if (message->firstTokenMatches("traceevent:"))
@@ -3771,6 +3825,22 @@ bool DocumentBroker::isAsyncUploading() const
     return state == StorageBase::AsyncUpload::State::Running;
 }
 
+std::string DocumentBroker::generatePublicMediaUrl(const std::string& mediaId) const
+{
+    std::string wopiSrc;
+    Poco::URI::encode(Util::split(_uriPublic.toString(), '?').first, ":?#/=&", wopiSrc);
+
+    Poco::URI uri("/cool/media");
+    uri.setScheme(_uriPublic.getScheme());
+    uri.setHost(_uriPublic.getHost());
+    uri.setPort(COOLWSD::getClientPortNumber());
+    uri.addQueryParameter("ServerId", Util::getProcessIdentifier());
+    uri.addQueryParameter("Tag", mediaId);
+    uri.addQueryParameter("WOPISrc", wopiSrc);
+
+    return uri.toString();
+}
+
 std::string DocumentBroker::addEmbeddedMedia(const std::string& json)
 {
     Poco::JSON::Object::Ptr object;
@@ -3788,21 +3858,12 @@ std::string DocumentBroker::addEmbeddedMedia(const std::string& json)
             // Store the original json with the internal, temporary, file URI.
             _embeddedMedia[id] = json;
 
-            std::string wopiSrc;
-            Poco::URI::encode(Util::split(_uriPublic.toString(), '?').first, ":?#/=&", wopiSrc);
-
-            Poco::URI uri("/cool/media");
-            uri.setScheme(_uriPublic.getScheme());
-            uri.setHost(_uriPublic.getHost());
-            uri.setPort(COOLWSD::getClientPortNumber());
-            uri.addQueryParameter("ServerId", Util::getProcessIdentifier());
-            uri.addQueryParameter("Tag", id);
-            uri.addQueryParameter("WOPISrc", wopiSrc);
+            const std::string publicUrl = generatePublicMediaUrl(id);
 
             std::string mediaUrl;
-            Poco::URI::encode(uri.toString(), "&", mediaUrl); // '&' is reserved in xml/html/svg.
+            Poco::URI::encode(publicUrl, "&", mediaUrl); // '&' is reserved in xml/html/svg.
             object->set("url", mediaUrl);
-            object->set("mimeType", "video/mp4");
+            object->set("mimeType", "video/mp4"); //FIXME: get this from the source json
 
             std::ostringstream mediaStr;
             object->stringify(mediaStr);
