@@ -6,6 +6,7 @@
 /* global $ w2ui _ */
 L.Control.UserList = L.Control.extend({
 	options: {
+		userLimitHeader: 6,
 		userPopupTimeout: null,
 		userJoinedPopupMessage: '<div>' + _('%user has joined') + '</div>',
 		userLeftPopupMessage: '<div>' + _('%user has left') + '</div>',
@@ -139,8 +140,21 @@ L.Control.UserList = L.Control.extend({
 
 		var that = this;
 
+		var headerUserList = this.options.listUser.slice(-this.options.userLimitHeader);
+
+		// Remove users that should no longer be in the header
+		Array.from(document.querySelectorAll('#userListSummary [data-view-id]')).map(function(element) {
+			return element.getAttribute('data-view-id');
+		}).filter(function(viewId) {
+			return headerUserList.map(function(user) {
+				return user.viewId;
+			}).indexOf(viewId) === -1;
+		}).forEach(function(viewId) {
+			L.DomUtil.remove(document.querySelector('#userListSummary [data-view-id="' + viewId + '"]'));
+		});
+
 		// Summary rendering
-		this.options.listUser.slice(-3).forEach(function (user) {
+		headerUserList.forEach(function (user) {
 			if (!document.querySelector('#userListSummary [data-view-id="' + user.viewId + '"]')) {
 				document.getElementById('userListSummary').appendChild(L.control.createAvatar(user.viewId, user.userName, user.extraInfo, user.color));
 			}
