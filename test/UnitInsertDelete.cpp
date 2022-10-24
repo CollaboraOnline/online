@@ -219,13 +219,19 @@ UnitBase::TestResult UnitInsertDelete::testPasteBlank()
 
         // Paste nothing into it.
         TST_LOG("paste mimetype=text/plain;charset=utf-8");
-        helpers::sendTextFrame(wsSession, "paste mimetype=text/plain;charset=utf-8\n", testname);
+        helpers::sendAndDrain(wsSession, "paste mimetype=text/plain;charset=utf-8\n", testname, "",
+                              std::chrono::milliseconds(500));
 
         // Check if the document contains the pasted text.
-        TST_LOG("getAllText");
-        const std::string selection = helpers::getAllText(wsSession, testname);
-        TST_LOG("getAllText => " << selection);
-        LOK_ASSERT_EQUAL(std::string("textselectioncontent: "), selection);
+        TST_LOG("selectAll");
+        helpers::selectAll(wsSession, testname, std::chrono::milliseconds(200), 2);
+
+        TST_LOG("gettextselection");
+        helpers::sendTextFrame(wsSession, "gettextselection mimetype=text/plain;charset=utf-8", testname);
+        TST_LOG("getResponseString");
+        const std::string prefix = "textselectioncontent: ";
+        const std::string text = helpers::getResponseString(wsSession, prefix, testname);
+        LOK_ASSERT_EQUAL(prefix, text);
 
         socketPoll->joinThread();
     }
