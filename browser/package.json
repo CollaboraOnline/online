@@ -32,7 +32,7 @@
     "uglifyify": "5.0.2",
     "vex-js": "4.1.0",
     "pako": "2.0.4",
-	"canvas": "^2.6.1"
+    "canvas": "^2.6.1"
   },
   "repository": {
     "type": "git",
