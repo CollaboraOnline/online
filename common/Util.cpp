@@ -63,6 +63,7 @@
 #include <Poco/RandomStream.h>
 #include <Poco/TemporaryFile.h>
 #include <Poco/Util/Application.h>
+#include <Poco/URI.h>
 
 #include "Common.hpp"
 #include "Log.hpp"
@@ -700,6 +701,13 @@ namespace Util
         }
 
         return true;
+    }
+
+    std::string encodeURIComponent(const std::string& uri, const std::string& reserved)
+    {
+        std::string encoded;
+        Poco::URI::encode(uri, reserved, encoded);
+        return encoded;
     }
 
     /// Split a string in two at the delimiter and give the delimiter to the first.
