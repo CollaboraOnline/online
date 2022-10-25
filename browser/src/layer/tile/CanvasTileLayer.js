@@ -2086,13 +2086,15 @@ L.CanvasTileLayer = L.Layer.extend({
 			videoDesc.height = bottomRightPoint.y - topLeftPoint.y;
 		}
 
+		var serverPrefix = window.makeHttpUrl('');
+
 		var videoToInsert = '<?xml version="1.0" encoding="UTF-8"?>\
 		<foreignObject xmlns="http://www.w3.org/2000/svg" overflow="visible" width="'
 			+ videoDesc.width + '" height="' + videoDesc.height + '">\
 		    <body xmlns="http://www.w3.org/1999/xhtml">\
 		        <video controls="controls" width="' + videoDesc.width + '" height="'
 					+ videoDesc.height + '">\
-		            <source src="' + videoDesc.url + '" type="' + videoDesc.mimeType + '"/>\
+		            <source src="' + serverPrefix + videoDesc.url + '" type="' + videoDesc.mimeType + '"/>\
 		        </video>\
 		    </body>\
 		</foreignObject>';
