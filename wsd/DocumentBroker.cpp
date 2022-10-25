@@ -2655,12 +2655,14 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
         }
         else if (message->firstTokenMatches("registerdownload:"))
         {
-            LOG_CHECK_RET(message->tokens().size() == 3, false);
-            std::string downloadid, url;
+            LOG_CHECK_RET(message->tokens().size() == 4, false);
+            std::string downloadid, url, clientId;
             COOLProtocol::getTokenString((*message)[1], "downloadid", downloadid);
             LOG_CHECK_RET(downloadid != "", false);
             COOLProtocol::getTokenString((*message)[2], "url", url);
             LOG_CHECK_RET(url != "", false);
+            COOLProtocol::getTokenString((*message)[3], "clientid", clientId);
+            LOG_CHECK_RET(!clientId.empty(), false);
 
             std::string decoded;
             Poco::URI::decode(url, decoded);
@@ -2671,49 +2673,11 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
                                 (std::istreambuf_iterator<char>()));
             ifs.close();
 
-            bool broken = false;
-            std::ostringstream oss;
-            std::string::size_type pos = 0;
-            for (;;)
-            {
-                const auto prefix = "src=\"file:///tmp/";
-                const auto start = svg.find(prefix, pos);
-                if (start == std::string::npos)
-                {
-                    // Copy the rest and finish.
-                    oss << svg.substr(pos);
-                    break;
-                }
-
-                const auto startFilename = start + sizeof(prefix) - 1; // - null termination.
-                const auto end = svg.find('"', startFilename);
-                const auto dot = svg.find('.', startFilename); // - null termination.
-                if (end == std::string::npos || dot == std::string::npos)
-                {
-                    // Broken file; leave it as-is. Better to have no video than no slideshow.
-                    broken = true;
-                    break;
-                }
-
-                const std::string id = svg.substr(startFilename, dot - startFilename);
-
-                oss << svg.substr(pos, start - pos);
-
-                // Store the original json with the internal, temporary, file URI.
-                const std::string fileUrl = svg.substr(start + 5, end - start - 5);
-                _embeddedMedia[id] = "{ \"action\":\"update\",\"id\":\"" + id + "\",\"url\":\"" + fileUrl + "\"}";
-
-                std::string mediaUrl;
-                Poco::URI::encode(generatePublicMediaUrl(id), "&",
-                                  mediaUrl); // '&' is reserved in xml/html/svg.
-                oss << "src=\"" << mediaUrl << '"';
-                pos = end + 1;
-            }
-
-            if (!broken)
+            const auto it = _sessions.find(clientId);
+            if (it != _sessions.end())
             {
                 std::ofstream ofs(filePath);
-                ofs << oss.str();
+                ofs << it->second->processSVGContent(svg);
             }
 
             _registeredDownloadLinks[downloadid] = url;
@@ -3823,19 +3787,6 @@ bool DocumentBroker::isAsyncUploading() const
     StorageBase::AsyncUpload::State state = _storage->queryLocalFileToStorageAsyncUploadState().state();
 
     return state == StorageBase::AsyncUpload::State::Running;
-}
-
-std::string DocumentBroker::generatePublicMediaUrl(const std::string& mediaId) const
-{
-    std::string wopiSrc;
-    Poco::URI::encode(Util::split(_uriPublic.toString(), '?').first, ":?#/=&", wopiSrc);
-
-    Poco::URI uri("/cool/media");
-    uri.addQueryParameter("ServerId", Util::getProcessIdentifier());
-    uri.addQueryParameter("Tag", mediaId);
-    uri.addQueryParameter("WOPISrc", wopiSrc);
-
-    return uri.toString();
 }
 
 void DocumentBroker::addEmbeddedMedia(const std::string& id, const std::string& json)

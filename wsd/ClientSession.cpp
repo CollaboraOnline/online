@@ -2454,4 +2454,54 @@ void ClientSession::preProcessSetClipboardPayload(std::string& payload)
     }
 }
 
+std::string ClientSession::processSVGContent(const std::string& svg)
+{
+    const std::shared_ptr<DocumentBroker> docBroker = _docBroker.lock();
+    if (!docBroker)
+    {
+        LOG_ERR("No DocBroker to process SVG content");
+        return svg;
+    }
+
+    bool broken = false;
+    std::ostringstream oss;
+    std::string::size_type pos = 0;
+    for (;;)
+    {
+        static const std::string prefix = "src=\"file:///tmp/";
+        const auto start = svg.find(prefix, pos);
+        if (start == std::string::npos)
+        {
+            // Copy the rest and finish.
+            oss << svg.substr(pos);
+            break;
+        }
+
+        const auto startFilename = start + prefix.size();
+        const auto end = svg.find('"', startFilename);
+        const auto dot = svg.find('.', startFilename); // - null termination.
+        if (end == std::string::npos || dot == std::string::npos)
+        {
+            // Broken file; leave it as-is. Better to have no video than no slideshow.
+            broken = true;
+            break;
+        }
+
+        const std::string id = svg.substr(startFilename, dot - startFilename);
+        oss << svg.substr(pos, start - pos);
+
+        // Store the original json with the internal, temporary, file URI.
+        const std::string fileUrl = svg.substr(start + 5, end - start - 5);
+        docBroker->addEmbeddedMedia(id, "{ \"action\":\"update\",\"id\":\"" + id + "\",\"url\":\"" +
+                                            fileUrl + "\"}");
+
+        const std::string mediaUrl =
+            Util::encodeURIComponent(createPublicURI("media", id, /*encode=*/false), "&");
+        oss << "src=\"" << mediaUrl << '"';
+        pos = end + 1;
+    }
+
+    return broken ? svg : oss.str();
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
