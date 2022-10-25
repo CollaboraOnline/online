@@ -1204,7 +1204,7 @@ bool ClientSession::getCommandValues(const char *buffer, int length, const Strin
         return sendTextFrameAndLogError("error: cmd=commandvalues kind=syntax");
 
     std::string cmdValues;
-    if (docBroker->tileCache().getTextStream(TileCache::StreamType::CmdValues, command, cmdValues))
+    if (docBroker->hasTileCache() && docBroker->tileCache().getTextStream(TileCache::StreamType::CmdValues, command, cmdValues))
         return sendTextFrame(cmdValues);
 
     return forwardToChild(std::string(buffer, length), docBroker);
