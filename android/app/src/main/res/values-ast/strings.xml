@@ -88,10 +88,12 @@
     <string name="server_url">URL del sirvidor</string>
     <string name="external_sd_path">Camín a SD esterna</string>
     <string name="pref_user_name_guest">Usuariu invitáu</string>
-    <string name="pref_user_name_info">Utilízase al engadir comentarios</string>
+    <string name="pref_user_name_info">Utilízase al amestar comentarios</string>
     <string name="pref_user_name">Nome d\'usuariu</string>
     <string name="owncloud_settings">Axustes del sirvidor na nube</string>
     <string name="password">Conseña</string>
     <string name="physical_storage_settings">Axustes d\'almacenamientu físicu</string>
     <string name="storage_provider_settings">Axustes del fornidor d\'almacenamientu</string>
+    <string name="theme_dark">Escuru</string>
+    <string name="choose_theme">Escueyi\'l tema</string>
 </resources>

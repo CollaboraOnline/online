@@ -107,10 +107,10 @@
 \nIdentificador da versión no repositorio Git «core»: %3$s</string>
     <string name="pref_user_name">Nome de usuario</string>
     <string name="theme">Tema</string>
-    <string name="choose_theme">Escoge un tema</string>
-    <string name="pref_user_name_guest">Usuario invitado</string>
+    <string name="choose_theme">Escolla o tema</string>
+    <string name="pref_user_name_guest">Usuario convidado</string>
     <string name="theme_light">Claro</string>
-    <string name="pref_user_name_info">Se usa al agregar un comentario</string>
-    <string name="theme_system_default">Sistema por defecto</string>
-    <string name="theme_dark">Negro</string>
+    <string name="pref_user_name_info">Úsase ao engadir un comentario</string>
+    <string name="theme_system_default">Valor predefinido do sistema</string>
+    <string name="theme_dark">Escuro</string>
 </resources>
