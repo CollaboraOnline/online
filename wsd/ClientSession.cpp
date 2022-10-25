@@ -201,16 +201,21 @@ std::string ClientSession::getClipboardURI(bool encode)
     if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
         return std::string();
 
+    return createPublicURI("clipboard", _clipboardKeys[0], encode);
+}
+
+std::string ClientSession::createPublicURI(const std::string& subPath, const std::string& tag, bool encode)
+{
     Poco::URI wopiSrc = getDocumentBroker()->getPublicUri();
     wopiSrc.setQueryParameters(Poco::URI::QueryParameters());
 
     const std::string encodedFrom = Util::encodeURIComponent(wopiSrc.toString());
 
     std::string meta = _serverURL.getSubURLForEndpoint(
-        "/cool/clipboard?WOPISrc=" + encodedFrom +
+        "/cool/" + subPath + "?WOPISrc=" + encodedFrom +
         "&ServerId=" + Util::getProcessIdentifier() +
         "&ViewId=" + std::to_string(getKitViewId()) +
-        "&Tag=" + _clipboardKeys[0]);
+        "&Tag=" + tag);
 
     if (!encode)
         return meta;

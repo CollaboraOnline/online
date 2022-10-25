@@ -221,6 +221,9 @@ public:
     /// Create URI for transient clipboard content.
     std::string getClipboardURI(bool encode = true);
 
+    /// Utility to create a publicly accessible URI.
+    std::string createPublicURI(const std::string& subPath, const std::string& tag, bool encode);
+
     /// Adds and/or modified the copied payload before sending on to the client.
     void postProcessCopyPayload(const std::shared_ptr<Message>& payload);
 
