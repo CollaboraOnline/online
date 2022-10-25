@@ -19,8 +19,8 @@
     <string name="view_only">Só ver</string>
     <string name="ask_for_copy">Este documento é só de lectura. Queres facer unha copia para editala\?</string>
     <string name="edit_copy">Editar unha copia</string>
-    <string name="use_text">Use o formato de texto</string>
-    <string name="use_odf">Uso ODF formato</string>
+    <string name="use_text">Empregar o formato Texto</string>
+    <string name="use_odf">Empregar o formato ODF</string>
     <string name="ask_for_convert_odf">Confirme o formato do ficheiro</string>
-    <string name="convert_odf_message">Este documento pode conter formato ou contido que non se pode gardar no formato de ficheiro seleccionado actualmente \"Texto\".</string>
+    <string name="convert_odf_message">Este documento pode conter formato ou contido que non poidan ser gardados no formato de ficheiro seleccionado agora, «Texto».</string>
 </resources>
