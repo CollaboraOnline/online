@@ -201,12 +201,10 @@ std::string ClientSession::getClipboardURI(bool encode)
     if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
         return std::string();
 
-    std::string encodedFrom;
     Poco::URI wopiSrc = getDocumentBroker()->getPublicUri();
     wopiSrc.setQueryParameters(Poco::URI::QueryParameters());
 
-    std::string encodeChars = ",/?:@&=+$#"; // match JS encodeURIComponent
-    Poco::URI::encode(wopiSrc.toString(), encodeChars, encodedFrom);
+    const std::string encodedFrom = Util::encodeURIComponent(wopiSrc.toString());
 
     std::string meta = _serverURL.getSubURLForEndpoint(
         "/cool/clipboard?WOPISrc=" + encodedFrom +
@@ -217,10 +215,7 @@ std::string ClientSession::getClipboardURI(bool encode)
     if (!encode)
         return meta;
 
-    std::string metaEncoded;
-    Poco::URI::encode(meta, encodeChars, metaEncoded);
-
-    return metaEncoded;
+    return Util::encodeURIComponent(meta);
 }
 
 bool ClientSession::matchesClipboardKeys(const std::string &/*viewId*/, const std::string &tag)
