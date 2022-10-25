@@ -3838,37 +3838,12 @@ std::string DocumentBroker::generatePublicMediaUrl(const std::string& mediaId) c
     return uri.toString();
 }
 
-std::string DocumentBroker::addEmbeddedMedia(const std::string& json)
+void DocumentBroker::addEmbeddedMedia(const std::string& id, const std::string& json)
 {
-    Poco::JSON::Object::Ptr object;
-    if (JsonUtil::parseJSON(json, object))
-    {
-        const std::string id = JsonUtil::getJSONValue<std::string>(object, "id");
-        if (id.empty())
-        {
-            LOG_ERR("Invalid embeddedmedia json without id: " << json);
-        }
-        else
-        {
-            LOG_TRC("Adding embeddedmedia with id [" << id << "]: " << json);
+    LOG_TRC("Adding embeddedmedia with id [" << id << "]: " << json);
 
-            // Store the original json with the internal, temporary, file URI.
-            _embeddedMedia[id] = json;
-
-            const std::string publicUrl = generatePublicMediaUrl(id);
-
-            std::string mediaUrl;
-            Poco::URI::encode(publicUrl, "&", mediaUrl); // '&' is reserved in xml/html/svg.
-            object->set("url", mediaUrl);
-            object->set("mimeType", "video/mp4"); //FIXME: get this from the source json
-
-            std::ostringstream mediaStr;
-            object->stringify(mediaStr);
-            return mediaStr.str();
-        }
-    }
-
-    return std::string();
+    // Store the original json with the internal, temporary, file URI.
+    _embeddedMedia[id] = json;
 }
 
 void DocumentBroker::removeEmbeddedMedia(const std::string& json)

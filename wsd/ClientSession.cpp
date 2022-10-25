@@ -1813,9 +1813,31 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
     }
     else if (tokens.equals(0, "mediashape:"))
     {
-        const std::string newJson = docBroker->addEmbeddedMedia(payload->jsonString());
-        if (!newJson.empty())
-            forwardToClient(std::make_shared<Message>("mediashape: " + newJson, Message::Dir::Out));
+        const std::string json = payload->jsonString();
+        Poco::JSON::Object::Ptr object;
+        if (JsonUtil::parseJSON(json, object))
+        {
+            const std::string id = JsonUtil::getJSONValue<std::string>(object, "id");
+            if (id.empty())
+            {
+                LOG_ERR("Invalid embeddedmedia json without id: " << json);
+            }
+            else
+            {
+                docBroker->addEmbeddedMedia(id, json);
+
+                const std::string mediaUrl =
+                    Util::encodeURIComponent(createPublicURI("media", id, /*encode=*/false), "&");
+                object->set("url", mediaUrl);
+                object->set("mimeType", "video/mp4"); //FIXME: get this from the source json
+
+                std::ostringstream mediaStr;
+                object->stringify(mediaStr);
+                forwardToClient(
+                    std::make_shared<Message>("mediashape: " + mediaStr.str(), Message::Dir::Out));
+            }
+        }
+
         return true;
     }
     else if (tokens.equals(0, "formfieldbutton:")) {
