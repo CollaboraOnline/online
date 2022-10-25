@@ -3831,9 +3831,6 @@ std::string DocumentBroker::generatePublicMediaUrl(const std::string& mediaId) c
     Poco::URI::encode(Util::split(_uriPublic.toString(), '?').first, ":?#/=&", wopiSrc);
 
     Poco::URI uri("/cool/media");
-    uri.setScheme(_uriPublic.getScheme());
-    uri.setHost(_uriPublic.getHost());
-    uri.setPort(COOLWSD::getClientPortNumber());
     uri.addQueryParameter("ServerId", Util::getProcessIdentifier());
     uri.addQueryParameter("Tag", mediaId);
     uri.addQueryParameter("WOPISrc", wopiSrc);
