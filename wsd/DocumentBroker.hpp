@@ -492,7 +492,7 @@ public:
     void unregisterDownloadId(const std::string& downloadId);
 
     /// Add embedded media objects. Returns json with external URL.
-    std::string addEmbeddedMedia(const std::string& json);
+    void addEmbeddedMedia(const std::string& id, const std::string& json);
     /// Remove embedded media objects.
     void removeEmbeddedMedia(const std::string& json);
 
