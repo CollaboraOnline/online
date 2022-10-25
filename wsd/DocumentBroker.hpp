@@ -703,10 +703,6 @@ private:
     /// a convert-to request or doctored to look like one.
     virtual bool isConvertTo() const { return false; }
 
-    /// Returns a publicly (externally) accessible URL
-    /// for an embedded media resource in the document.
-    std::string generatePublicMediaUrl(const std::string& mediaId) const;
-
     /// Request manager.
     /// Encapsulates common fields for
     /// Save and Upload requests.

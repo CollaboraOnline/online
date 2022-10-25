@@ -1092,7 +1092,8 @@ bool ChildSession::downloadAs(const StringVector& tokens)
     }
 
     // Register download id -> URL mapping in the DocumentBroker
-    std::string docBrokerMessage = "registerdownload: downloadid=" + tmpDir + " url=" + urlToSend;
+    const std::string docBrokerMessage =
+        "registerdownload: downloadid=" + tmpDir + " url=" + urlToSend + " clientid=" + getId();
     _docManager->sendFrame(docBrokerMessage.c_str(), docBrokerMessage.length());
 
     // Send download id to the client
