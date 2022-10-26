@@ -2058,9 +2058,14 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 			var wasVisibleSVG = this._graphicMarker._hasVisibleEmbeddedSVG();
 			this._graphicMarker.removeEmbeddedSVG();
-			this._graphicMarker.addEmbeddedSVG(textMsg);
-			if (wasVisibleSVG)
-				this._graphicMarker._showEmbeddedSVG();
+
+			// video is handled in _onMediaShapeMsg
+			var isVideoSVG = textMsg.indexOf('<video') !== -1;
+			if (!isVideoSVG) {
+				this._graphicMarker.addEmbeddedSVG(textMsg);
+				if (wasVisibleSVG)
+					this._graphicMarker._showEmbeddedSVG();
+			}
 		}
 	},
 
