@@ -2479,13 +2479,16 @@ std::string ClientSession::processSVGContent(const std::string& svg)
 
         const auto startFilename = start + prefix.size();
         const auto end = svg.find('"', startFilename);
-        const auto dot = svg.find('.', startFilename); // - null termination.
-        if (end == std::string::npos || dot == std::string::npos)
+        if (end == std::string::npos)
         {
             // Broken file; leave it as-is. Better to have no video than no slideshow.
             broken = true;
             break;
         }
+
+        auto dot = svg.find('.', startFilename);
+        if (dot == std::string::npos || dot > end)
+            dot = end;
 
         const std::string id = svg.substr(startFilename, dot - startFilename);
         oss << svg.substr(pos, start - pos);
