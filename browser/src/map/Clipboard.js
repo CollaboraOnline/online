@@ -242,7 +242,7 @@ L.Clipboard = L.Class.extend({
 			}
 
 			request.open(type, url, true /* isAsync */);
-			request.timeout = 20 * 1000; // 20 secs ...
+			request.timeout = 30 * 1000; // 30 secs ...
 			request.responseType = 'blob';
 			if (optionalFormData !== null)
 				request.send(optionalFormData);
