@@ -3081,7 +3081,7 @@ bool globalPreinit(const std::string &loTemplate)
     // Disable problematic components that may be present from a
     // desktop or developer's install if env. var not set.
     ::setenv("UNODISABLELIBRARY",
-             "abp avmediagst avmediavlccmdmail losessioninstall OGLTrans PresenterScreen "
+             "abp avmediagst avmediavlc cmdmail losessioninstall OGLTrans PresenterScreen "
              "syssh ucpftp1 ucpgio1 ucphier1 ucpimage updatecheckui updatefeed updchk"
              // Database
              "dbaxml dbmm dbp dbu deployment firebird_sdbc mork "
