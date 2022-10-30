@@ -2061,7 +2061,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			// video is handled in _onMediaShapeMsg
 			var isVideoSVG = textMsg.indexOf('<video') !== -1;
-			if (!isVideoSVG) {
+			if (isVideoSVG) {
+				this._map._cacheSVG[extraInfo.id] = undefined;
+			} else {
 				this._graphicMarker.addEmbeddedSVG(textMsg);
 				if (wasVisibleSVG)
 					this._graphicMarker._showEmbeddedSVG();
