@@ -175,9 +175,9 @@ describe('Trigger hamburger menu options.', function() {
 	});
 
 
-	it('Repair Document', function() {
+	it.skip('Repair Document', function() {
 		helper.typeIntoDocument('Hello World');
-		
+
 		repairHelper.rollbackPastChange('Typing: “World”', undefined, true);
 
 		helper.selectAllText();
