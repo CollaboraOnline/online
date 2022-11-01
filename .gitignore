@@ -126,6 +126,8 @@ ios/Mobile/Resources/Settings.bundle/Root.plist
 lobuilddir-symlink
 pocoinclude-symlink
 pocolib-symlink
+zstdinclude-symlink
+zstdlib-symlink
 ICU.dat
 ios/Mobile/Assets.xcassets/AppIcon.appiconset
 

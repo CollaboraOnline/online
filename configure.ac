@@ -1621,6 +1621,20 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
           fi
           ln -s "$POCOLIB" pocolib-symlink
 
+          if test -L zstdinclude-symlink; then
+             rm -f zstdinclude-symlink
+          elif test -f zstdinclude-symlink; then
+             AC_MSG_ERROR([zstdinclude-symlink exists and is not a symbolic link])
+          fi
+          ln -s "$ZSTDINCLUDE" zstdinclude-symlink
+
+          if test -L zstdlib-symlink; then
+             rm -f zstdlib-symlink
+          elif test -f zstdlib-symlink; then
+             AC_MSG_ERROR([zstdlib-symlink exists and is not a symbolic link])
+          fi
+          ln -s "$ZSTDLIB" zstdlib-symlink
+
           eval `grep 'export ICU_MAJOR=' "$LOBUILDDIR/config_host.mk"`
           if test -L ICU.dat; then
              rm -f ICU.dat
