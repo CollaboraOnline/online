@@ -65,7 +65,22 @@ L.Control.StatusBar = L.Control.extend({
 	},
 
 	_updateToolbarsVisibility: function(context) {
-		window.updateVisibilityForToolbar(w2ui['actionbar'], context);
+		var isReadOnly = this.map.isPermissionReadOnly();
+		var statusbar = w2ui['actionbar'];
+		if (isReadOnly) {
+			statusbar.disable('LanguageStatus');
+			statusbar.hide('InsertMode');
+			statusbar.hide('break6');
+			statusbar.hide('StatusSelectionMode');
+			statusbar.hide('break7');
+		} else {
+			statusbar.enable('LanguageStatus');
+			statusbar.show('InsertMode');
+			statusbar.show('break6');
+			statusbar.show('StatusSelectionMode');
+			statusbar.show('break7');
+		}
+		window.updateVisibilityForToolbar(statusbar, context);
 	},
 
 	onContextChange: function(event) {
@@ -404,9 +419,6 @@ L.Control.StatusBar = L.Control.extend({
 		this.map.fire('updateuserlistcount');
 
 		this._updateToolbarsVisibility();
-
-		if (isReadOnly)
-			statusbar.disable('LanguageStatus');
 
 		if (statusbar)
 			statusbar.refresh();
