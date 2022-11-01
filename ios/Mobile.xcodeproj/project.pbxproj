@@ -3914,6 +3914,7 @@
 					"$(SOURCE_ROOT)/../lobuilddir-symlink/workdir/UnoApiHeadersTarget/udkapi/comprehensive",
 					"$(SOURCE_ROOT)/../lobuilddir-symlink/workdir/UnoApiHeadersTarget/offapi/comprehensive",
 					"$(SOURCE_ROOT)/../pocoinclude-symlink",
+					"$(SOURCE_ROOT)/../zstdinclude-symlink",
 				);
 				INFOPLIST_FILE = Mobile/Info.plist;
 				LD_GENERATE_MAP_FILE = YES;
@@ -3936,6 +3937,9 @@
 					"-lPocoXMLd",
 					"-lPocoJSONd",
 					"-lPocoNetd",
+					"-L",
+					"$(SOURCE_ROOT)/../zstdlib-symlink",
+					"-lzstd",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.office.Mobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3973,6 +3977,7 @@
 					"$(SOURCE_ROOT)/../lobuilddir-symlink/workdir/UnoApiHeadersTarget/udkapi/comprehensive",
 					"$(SOURCE_ROOT)/../lobuilddir-symlink/workdir/UnoApiHeadersTarget/offapi/comprehensive",
 					"$(SOURCE_ROOT)/../pocoinclude-symlink",
+					"$(SOURCE_ROOT)/../zstdinclude-symlink",
 				);
 				INFOPLIST_FILE = Mobile/Info.plist;
 				LD_GENERATE_MAP_FILE = YES;
@@ -3995,6 +4000,9 @@
 					"-lPocoXMLd",
 					"-lPocoJSONd",
 					"-lPocoNetd",
+					"-L",
+					"$(SOURCE_ROOT)/../zstdlib-symlink",
+					"-lzstd",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.collabora.office.Mobile;
 				PRODUCT_NAME = "$(TARGET_NAME)";
