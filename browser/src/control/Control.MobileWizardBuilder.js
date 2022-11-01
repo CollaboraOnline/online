@@ -281,6 +281,8 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		edit.value = builder._cleanText(data.text);
 		edit.id = data.id;
 		edit.dir = 'auto';
+		if (data.password)
+			edit.type = 'password';
 
 		if (data.enabled === 'false' || data.enabled === false)
 			$(edit).prop('disabled', true);
