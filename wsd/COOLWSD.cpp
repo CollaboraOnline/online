@@ -1974,6 +1974,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "languagetool.ssl_verification", "true"},
         { "deepl.api_url", ""},
         { "deepl.auth_key", ""},
+        { "deepl.enabled", "false"},
     };
 
     // Set default values, in case they are missing from the config file.
