@@ -208,6 +208,18 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			}
 		];
 
+		content.push({
+			'type': 'container',
+			'children': [
+				{
+					'id': 'properties',
+					'type': 'bigtoolitem',
+					'text': _('Properties'),
+					'command': '.uno:SetDocumentProperties'
+				}
+			]
+		});
+
 		return this.getTabPage('File', content);
 	},
 
