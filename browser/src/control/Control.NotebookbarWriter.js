@@ -1517,11 +1517,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'text': _UNO('.uno:LanguageMenu'),
 				'command': '.uno:LanguageMenu'
 			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Translate'),
-				'command': '.uno:Translate'
-			},
+			window.deeplEnabled ?
+				{
+					'type': 'bigtoolitem',
+					'text': _UNO('.uno:Translate'),
+					'command': '.uno:Translate'
+				}: {},
 			{
 				'type': 'container',
 				'children': [
