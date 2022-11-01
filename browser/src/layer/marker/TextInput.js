@@ -705,7 +705,7 @@ L.TextInput = L.Layer.extend({
 			// automatically we send the first digit character as KeyEvent.
 			if (this._map.getDocType() === 'spreadsheet' &&
 			    content.length === 1 && ev.inputType === 'insertText' &&
-				this._isDigit(newText)) {
+				this._isDigit(newText) && window.mode.isDesktop()) {
 				this._sendKeyEvent(newText, this._unoKeyMap[newText], 'input');
 			}
 			else
