@@ -456,6 +456,11 @@ L.Control.StatusBar = L.Control.extend({
 
 	onPermissionChanged: function(event) {
 		var isReadOnly = event.perm === 'readonly';
+		if (isReadOnly) {
+			$('#toolbar-down').addClass('readonly');
+		} else {
+			$('#toolbar-down').removeClass('readonly');
+		}
 		$('#PermissionMode').parent().html(this._getPermissionModeHtml(isReadOnly));
 	},
 
