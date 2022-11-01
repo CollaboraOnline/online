@@ -762,6 +762,9 @@ L.Map.Keyboard = L.Handler.extend({
 		// Open help with F1 if any special key is not pressed
 		else if (e.type === 'keydown' && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey && e.keyCode === this.keyCodes.F1)
 			return true;
+		// comment insert
+		else if (e.key === 'c' && e.altKey && e.altKey && e.ctrlKey && this._map.isPermissionEditForComments())
+			return true;
 
 		return false;
 	}
