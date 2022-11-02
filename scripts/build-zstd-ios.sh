@@ -7,6 +7,9 @@ fi
 
 BUILD_PATH=$1 # for instance $PWD/zstd-build-dir
 
+# Then when running the configure script, pass the following additional options:
+# -with-zstd-libs=$PWD/zstd-build-dir/ios-zstd/install/OS64/lib --with-zstd-includes=$PWD/zstd-build-dir/ios-zstd/lib
+
 PLATFORMS="OS64"
 
 mkdir -p $BUILD_PATH
