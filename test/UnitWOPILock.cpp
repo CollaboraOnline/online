@@ -32,77 +32,17 @@ public:
     {
     }
 
-    virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& /*message*/, std::shared_ptr<StreamSocket>& socket) override
+    void configCheckFileInfo(Poco::JSON::Object::Ptr fileInfo) override
     {
-        Poco::URI uriReq(request.getURI());
-        Poco::RegularExpression regInfo("/wopi/files/[0-9]");
-        Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
-        LOG_TST("Fake wopi host request: " << request.getMethod() << ' ' << uriReq.toString());
+        LOG_TST("CheckFileInfo: Have " << _sessionCount << " sessions");
 
-        // CheckFileInfo
-        if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
-        {
-            LOG_TST("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
-            static int requestCount = 0;
+        fileInfo->set("SupportsLocks", "true");
 
-            const std::string fileName(uriReq.getPath() == "/wopi/files/3" ? "he%llo.txt" : "hello.txt");
-            Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
-            fileInfo->set("BaseFileName", fileName);
-            fileInfo->set("Size", getFileContent().size());
-            fileInfo->set("Version", "1.0");
-            fileInfo->set("OwnerId", "test");
-            fileInfo->set("UserId", "test");
-
-            fileInfo->set("UserFriendlyName", "test");
-            /// First session will be only session with the edit permission
-            fileInfo->set("UserCanWrite", requestCount < 1 ? "true" : "false");
-            fileInfo->set("PostMessageOrigin", "localhost");
-            fileInfo->set("LastModifiedTime", Util::getIso8601FracformatTime(getFileLastModifiedTime()));
-            fileInfo->set("EnableOwnerTermination", "true");
-            fileInfo->set("SupportsLocks", "true");
-
-            std::ostringstream jsonStream;
-            fileInfo->stringify(jsonStream);
-
-            http::Response httpResponse(http::StatusLine(200));
-            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-            httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
-            socket->sendAndShutdown(httpResponse);
-
-            requestCount++;
-
-            return true;
-        }
-        // GetFile
-        else if (request.getMethod() == "GET" && regContent.match(uriReq.getPath()))
-        {
-            LOG_TST("Fake wopi host request, handling GetFile: " << uriReq.getPath());
-
-            http::Response httpResponse(http::StatusLine(200));
-            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-            httpResponse.setBody(getFileContent(), "text/plain; charset=utf-8");
-            socket->sendAndShutdown(httpResponse);
-
-            return true;
-        }
-        // X-WOPI-Lock
-        else if (request.getMethod() == "POST" && regInfo.match(uriReq.getPath()))
-        {
-            LOG_TST("Fake wopi host request, handling Update Lock State: " << uriReq.getPath());
-
-            assertLockRequest(request);
-
-            http::Response httpResponse(http::StatusLine(200));
-            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-            socket->sendAndShutdown(httpResponse);
-
-            return true;
-        }
-
-        return false;
+        // Make the first session the editor, the second one read-only.
+        fileInfo->set("UserCanWrite", _sessionCount ? "false" : "true");
     }
 
-    void assertLockRequest(const Poco::Net::HTTPRequest& request)
+    void assertLockRequest(const Poco::Net::HTTPRequest& request) override
     {
         const std::string lock = request.get("X-WOPI-Lock", std::string());
         const std::string newLockState = request.get("X-WOPI-Override", std::string());
