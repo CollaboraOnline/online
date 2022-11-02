@@ -68,6 +68,7 @@ all_la_unit_tests = \
 	unit-wopi-httpheaders.la \
 	unit-load.la \
 	unit-wopi-lock.la \
+	unit-wopi-unlock.la \
 	unit-wopi-httpredirect.la \
 	unit-wopi-loadencoded.la \
 	unit-prefork.la \
@@ -232,6 +233,8 @@ unit_wopi_languages_la_SOURCES = UnitWOPILanguages.cpp
 unit_wopi_languages_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_lock_la_SOURCES = UnitWOPILock.cpp
 unit_wopi_lock_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_unlock_la_SOURCES = UnitWOPIUnlock.cpp
+unit_wopi_unlock_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_watermark_la_SOURCES = UnitWOPIWatermark.cpp
 unit_wopi_watermark_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_loadencoded_la_SOURCES = UnitWOPILoadEncoded.cpp
