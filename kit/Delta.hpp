@@ -599,35 +599,19 @@ class DeltaGenerator {
         return output.size();
     }
 
+    // used only by test code
     static Blob expand(const Blob &blob)
     {
         Blob img = std::make_shared<BlobData>();
         img->resize(1024*1024*4); // lots of extra space.
 
-        z_stream zstr;
-        memset((void *)&zstr, 0, sizeof (zstr));
-
-        zstr.next_in = (Bytef *)blob->data();
-        zstr.avail_in = blob->size();
-        zstr.next_out = (Bytef *)img->data();
-        zstr.avail_out = img->size();
-
-        if (inflateInit2 (&zstr, -MAX_WBITS) != Z_OK)
+        size_t const dSize = ZSTD_decompress(img->data(), img->size(), blob->data(), blob->size());
+        if (ZSTD_isError(dSize))
         {
-            LOG_ERR("Failed to expand zimage");
+            LOG_ERR("Failed to decompress blob of size " << blob->size() << " with " << ZSTD_getErrorName(dSize));
             return Blob();
         }
-
-        if (inflate (&zstr, Z_SYNC_FLUSH) != Z_STREAM_END)
-        {
-            LOG_ERR("Failed to inflate zimage");
-            return Blob();
-        }
-
-        if (inflateEnd(&zstr) != Z_OK)
-            return Blob();
-
-        img->resize(img->size() - zstr.avail_out);
+        img->resize(dSize);
 
         return img;
     }
