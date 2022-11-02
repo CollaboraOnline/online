@@ -2356,7 +2356,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		data.annotation.containerObject.addSectionFunctions(annotation);
 		annotation.onInitialize();
 
-		annotation.sectionProperties.menu.isRoot = isRoot;
+		if (this.map.isPermissionEditForComments() || this.map.isEditMode())
+			annotation.sectionProperties.menu.isRoot = isRoot;
 
 		container.appendChild(annotation.sectionProperties.container);
 
@@ -2365,14 +2366,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		annotation.setExpanded();
 		annotation.hideMarker();
 		annotation.sectionProperties.annotationMarker = null;
-
-		var replyCountNode = document.getElementById('reply-count-node-' + data.id);
-		if (replyCountNode)
-			replyCountNode.style.display = 'none';
-
-		var arrowSpan = document.getElementById('arrow span ' + data.id);
-		if (arrowSpan)
-			arrowSpan.style.display = 'none';
 	},
 
 	_rootCommentControl: function(parentContainer, data, builder) {
@@ -2429,7 +2422,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(childContainer).hide();
 
 			if (builder.wizard) {
-				$(container).find('.cool-annotation-menubar')[0].style.display = 'none';
+				if ($(container).find('.cool-annotation-menubar').length > 0)
+					$(container).find('.cool-annotation-menubar')[0].style.display = 'none';
 
 				var arrowSpan = container.querySelector('[id=\'arrow span ' + data.id + '\']');
 

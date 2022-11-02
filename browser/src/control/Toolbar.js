@@ -347,10 +347,14 @@ L.Map.include({
 		// app.socket.emitInstantTraceEvent('cool-unocommand:' + command);
 
 		var isAllowedInReadOnly = false;
-		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog', '.uno:EditAnnotation',
-			'.uno:InsertAnnotation', '.uno:DeleteAnnotation', '.uno:Signature',
-			'.uno:ShowResolvedAnnotations', '.uno:ToolbarMode?Mode:string=notebookbar_online.ui',
-			'.uno:ToolbarMode?Mode:string=Default', '.uno:ResolveComment'];
+		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog',
+			'.uno:Signature', '.uno:ShowResolvedAnnotations',
+			'.uno:ToolbarMode?Mode:string=notebookbar_online.ui', '.uno:ToolbarMode?Mode:string=Default'];
+		if (this.isPermissionEditForComments()) {
+			allowedCommands.push('.uno:InsertAnnotation','.uno:DeleteCommentThread', '.uno:DeleteAnnotation', '.uno:DeleteNote',
+				'.uno:DeleteComment', '.uno:ReplyComment', '.uno:ReplyToAnnotation', '.uno:ResolveComment',
+				'.uno:ResolveCommentThread', '.uno:ResolveComment', '.uno:EditAnnotation');
+		}
 
 		for (var i in allowedCommands) {
 			if (allowedCommands[i] === command) {
