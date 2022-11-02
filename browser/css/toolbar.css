@@ -1073,10 +1073,6 @@ button.leaflet-control-search-next
 	text-align: left;
 }
 
-.insertshape-grid .row:last-child {
-	margin-bottom: 70px;
-}
-
 .insertshape-grid .col {
 	height: 30px;
 	padding: 2px;
