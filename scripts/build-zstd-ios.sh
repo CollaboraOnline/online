@@ -5,7 +5,7 @@ if [ $# -eq 0 ]; then
     exit;
 fi
 
-BUILD_PATH=$1 # eg. /opt/libreoffice/
+BUILD_PATH=$1 # for instance $PWD/zstd-build-dir
 
 PLATFORMS="OS64"
 
