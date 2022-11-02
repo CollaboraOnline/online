@@ -7,7 +7,7 @@ fi
 
 BUILD_PATH=$1 # eg. /opt/libreoffice/
 
-PLATFORMS="OS OS64"
+PLATFORMS="OS64"
 
 mkdir -p $BUILD_PATH
 cd $BUILD_PATH
