@@ -41,6 +41,21 @@ var AdminSocketSettings = AdminSocketBase.extend({
 					});
 				dialog.open();
 			};
+
+			document.getElementById('btnLogout').onclick = function() {
+				var dialog = (new DlgYesNo())
+					.title(_('Confirmation'))
+					.text(_('Are you sure you want to logout from admin console?'))
+					.yesButtonText(_('OK'))
+					.noButtonText(_('Cancel'))
+					.type('warning')
+					.yesFunction(function() {
+						console.debug(document.cookie);
+						document.cookie = 'JWT= ;expires=Thu, 18 Dec 2013 12:00:00 UTC;max-age=0;path=/;';
+						console.debug(document.cookie);
+					});
+				dialog.open();
+			};
 		});
 	},
 
