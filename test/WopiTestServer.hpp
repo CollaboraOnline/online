@@ -201,6 +201,9 @@ protected:
     {
     }
 
+    /// Called when the server receives a Lock or Unlock request.
+    virtual void assertLockRequest(const Poco::Net::HTTPRequest& /*request*/) {}
+
     /// Given a URI, returns the filename.
     ///FIXME: this should be remove when we support multiple files properly.
     virtual std::string getFilename(const Poco::URI& uri) const
@@ -283,6 +286,8 @@ protected:
         fileInfo->set("LastModifiedTime",
                       Util::getIso8601FracformatTime(getFileLastModifiedTime()));
         fileInfo->set("EnableOwnerTermination", "true");
+        fileInfo->set("SupportsLocks", "false");
+        configCheckFileInfo(fileInfo);
 
         std::ostringstream jsonStream;
         fileInfo->stringify(jsonStream);
@@ -294,6 +299,9 @@ protected:
 
         return true;
     }
+
+    /// Override to set the CheckFileInfo attributes.
+    virtual void configCheckFileInfo(Poco::JSON::Object::Ptr /*fileInfo*/) {}
 
     virtual bool handleGetFileRequest(const Poco::Net::HTTPRequest&,
                                       std::shared_ptr<StreamSocket>& socket)
@@ -346,33 +354,52 @@ protected:
         const Poco::URI uriReq(request.getURI());
         if (isWopiInfoRequest(uriReq.getPath()))
         {
-            ++_countPutRelative;
-            LOG_TST("Fake wopi host request, handling PutRelativeFile (#"
-                    << _countPutRelative << "): " << uriReq.getPath());
-
-            const std::string wopiURL =
-                helpers::getTestServerURI() +
-                "/something wopi/files/1?access_token=anything&reuse_cookies=cook=well";
-
-            std::string content;
-            if (request.get("X-WOPI-Override") == std::string("PUT_RELATIVE"))
+            if (!request.get("X-WOPI-Lock", std::string()).empty())
             {
-                LOK_ASSERT_EQUAL(std::string("PUT_RELATIVE"), request.get("X-WOPI-Override"));
-                assertPutRelativeFileRequest(request);
-                content = "{ \"Name\":\"hello world%1.pdf\", \"Url\":\"" + wopiURL + "\" }";
+                const std::string op = request.get("X-WOPI-Override", std::string());
+                if (op == "LOCK" || op == "UNLOCK")
+                {
+                    assertLockRequest(request);
+                    http::Response httpResponse(http::StatusLine(200));
+                    socket->sendAndShutdown(httpResponse);
+                }
+                else
+                {
+                    http::Response httpResponse(http::StatusLine(409));
+                    httpResponse.set("X-WOPI-LockFailureReason", "Invalid lock operation");
+                    socket->sendAndShutdown(httpResponse);
+                }
             }
             else
             {
-                // rename file; response should be the file name without the url and the extension
-                LOK_ASSERT_EQUAL(std::string("RENAME_FILE"), request.get("X-WOPI-Override"));
-                assertRenameFileRequest(request);
-                content = "{ \"Name\":\"hello\", \"Url\":\"" + wopiURL + "\" }";
-            }
+                const std::string wopiURL =
+                    helpers::getTestServerURI() +
+                    "/something wopi/files/1?access_token=anything&reuse_cookies=cook=well";
 
-            http::Response httpResponse(http::StatusLine(200));
-            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-            httpResponse.setBody(content, "application/json; charset=utf-8");
-            socket->sendAndShutdown(httpResponse);
+                std::string content;
+                if (request.get("X-WOPI-Override") == std::string("PUT_RELATIVE"))
+                {
+                    ++_countPutRelative;
+                    LOG_TST("Fake wopi host request, handling PutRelativeFile (#"
+                            << _countPutRelative << "): " << uriReq.getPath());
+
+                    LOK_ASSERT_EQUAL(std::string("PUT_RELATIVE"), request.get("X-WOPI-Override"));
+                    assertPutRelativeFileRequest(request);
+                    content = "{ \"Name\":\"hello world%1.pdf\", \"Url\":\"" + wopiURL + "\" }";
+                }
+                else
+                {
+                    // rename file; response should be the file name without the url and the extension
+                    LOK_ASSERT_EQUAL(std::string("RENAME_FILE"), request.get("X-WOPI-Override"));
+                    assertRenameFileRequest(request);
+                    content = "{ \"Name\":\"hello\", \"Url\":\"" + wopiURL + "\" }";
+                }
+
+                http::Response httpResponse(http::StatusLine(200));
+                httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
+                httpResponse.setBody(content, "application/json; charset=utf-8");
+                socket->sendAndShutdown(httpResponse);
+            }
 
             return true;
         }
