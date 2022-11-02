@@ -1359,11 +1359,12 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
     {
         uploadToStorage(sessionId, /*force=*/needToUploadState == NeedToUpload::Force);
     }
-    else
+
+    if (!isAsyncUploading())
     {
-        // If the session is disconnected, remove.
+        // If marked to destroy, or session is disconnected, remove.
         const auto it = _sessions.find(sessionId);
-        if (it != _sessions.end() && it->second->isCloseFrame())
+        if (_docState.isMarkedToDestroy() || (it != _sessions.end() && it->second->isCloseFrame()))
             disconnectSessionInternal(sessionId);
 
         // If marked to destroy, then this was the last session.
@@ -1394,11 +1395,6 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
         constexpr bool isRename = false;
         uploadToStorageInternal(sessionId, /*saveAsPath*/ std::string(),
                                 /*saveAsFilename*/ std::string(), isRename, force);
-
-        // If marked to destroy, or session is disconnected, remove.
-        const auto it = _sessions.find(sessionId);
-        if (_docState.isMarkedToDestroy() || (it != _sessions.end() && it->second->isCloseFrame()))
-            disconnectSessionInternal(sessionId);
     }
     else
     {
