@@ -3396,7 +3396,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_mapOnError: function (e) {
-		if (e.msg && this._map.isPermissionEdit()) {
+		if (e.msg && this._map.isPermissionEdit() && e.critical !== false) {
 			this._map.setPermission('view');
 		}
 	},
