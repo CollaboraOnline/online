@@ -239,11 +239,11 @@
 	     don't necessarily want to bump the version number in configure.ac for something that
 	     perhaps is just a minor iOS-specific fix.
 
-	     Also, even if currently the version in configure.ac is just three numbers, that might
-	     change. This CFBundleShortVersionString must, however, be three numbers.
+	     Also, currently the version in configure.ac is four numbers. This
+	     CFBundleShortVersionString must, however, be three numbers.
 	-->
 	<key>CFBundleShortVersionString</key>
-	<string>22.05.5</string>
+	<string>22.05.8</string>
 	<key>CFBundleVersion</key>
 	<string>@IOSAPP_BUNDLE_VERSION@</string>
 	<key>LSRequiresIPhoneOS</key>
