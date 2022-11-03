@@ -6,7 +6,7 @@
 /* global _ */
 
 L.Map.mergeOptions({
-	feedback: true,
+	feedback: !window.ThisIsAMobileApp,
 	feedbackTimeout: 30000
 });
 
