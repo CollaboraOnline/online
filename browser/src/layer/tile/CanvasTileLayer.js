@@ -1977,11 +1977,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.fire('postMessage', {msgId: 'Download_As', args: {Type: command.id, URL: url}});
 		}
 		else if (command.id === 'print') {
-			if (L.Browser.edge || L.Browser.ie || this._map.options.print === false || L.Browser.cypressTest) {
-				// the print dialog doesn't work well on firefox
-				// due to a pdf.js issue - https://github.com/mozilla/pdf.js/issues/5397
-				// open the pdf file in a new tab so that that user can print it directly in the browser's
-				// pdf viewer
+			if (this._map.options.print === false || L.Browser.cypressTest) {
+				// open the pdf in a new tab, it can be printed directly in the browser's pdf viewer
 				url = window.makeHttpUrlWopiSrc('/' + this._map.options.urlPrefix + '/',
 					this._map.options.doc, '/download/' + command.downloadid,
 					'attachment=0');
