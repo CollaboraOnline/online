@@ -241,7 +241,7 @@ L.CanvasTileLayer.include({
 		this._updateTableMarkers();
 	},
 	_onTableSelectedMsg: function (textMsg) {
-		if (!this._map.isPermissionEdit()) {
+		if (!this._map.isEditMode()) {
 			this._clearTableMarkers();
 			return;
 		}

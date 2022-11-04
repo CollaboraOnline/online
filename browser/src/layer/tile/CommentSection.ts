@@ -166,11 +166,11 @@ class Comment {
 
 		this.createAuthorTable();
 
-		if (this.sectionProperties.data.trackchange && !this.map.isPermissionReadOnly()) {
+		if (this.sectionProperties.data.trackchange && !this.map.isReadOnlyMode()) {
 			this.createTrackChangeButtons();
 		}
 
-		if (this.sectionProperties.noMenu !== true && (this.map.isPermissionEditForComments() || this.map.isPermissionEdit())) {
+		if (this.sectionProperties.noMenu !== true && (this.map.isPermissionEditForComments() || this.map.isEditMode())) {
 			this.createMenu();
 		}
 

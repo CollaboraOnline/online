@@ -264,7 +264,7 @@ L.Control.StatusBar = L.Control.extend({
 	onDocLayerInit: function () {
 		var statusbar = w2ui['actionbar'];
 		var docType = this.map.getDocType();
-		var isReadOnly = this.map.isPermissionReadOnly();
+		var isReadOnly = this.map.isReadOnlyMode();
 
 		switch (docType) {
 		case 'spreadsheet':
