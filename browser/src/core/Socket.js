@@ -918,7 +918,7 @@ app.definitions.Socket = L.Class.extend({
 							}})
 					);
 				}
-				if (!this._map.isPermissionReadOnly()) {
+				if (!this._map.isReadOnlyMode()) {
 					vex.dialog.open({
 						unsafeMessage: '<h1 class="vex-dialog-title">' + vex._escapeHtml(_('Document has been changed')) + '</h1><p class="vex-dialog-message">' + vex._escapeHtml(_('Document has been changed in storage. What would you like to do with your unsaved changes?')) + '</p>',
 						escapeButtonCloses: false,
@@ -1561,7 +1561,7 @@ app.definitions.Socket = L.Class.extend({
 			}
 		}, 1 /* ms */);
 
-		if (this._map.isPermissionEdit()) {
+		if (this._map.isEditMode()) {
 			this._map.setPermission('view');
 		}
 

@@ -29,6 +29,7 @@ L.Map.WOPI = L.Handler.extend({
 	CallPythonScriptSource: null,
 	SupportsRename: false,
 	UserCanRename: false,
+	UserCanWrite: false,
 
 	_appLoadedConditions: {
 		docloaded: false,
@@ -120,6 +121,12 @@ L.Map.WOPI = L.Handler.extend({
 		this.SupportsRename = !!wopiInfo['SupportsRename'];
 		this.UserCanRename = !!wopiInfo['UserCanRename'];
 		this.EnableShare = !!wopiInfo['EnableShare'];
+		this.UserCanWrite = !!wopiInfo['UserCanWrite'];
+		if (this.UserCanWrite)
+			window.docPermission = 'edit';
+		else
+			window.docPermission = 'readonly';
+
 		if (wopiInfo['HideUserList'])
 			this.HideUserList = wopiInfo['HideUserList'].split(',');
 

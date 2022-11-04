@@ -80,10 +80,10 @@ L.Control.SearchBar = L.Control.extend({
 		}
 		else if (id === 'hidesearchbar') {
 			$('#toolbar-search').hide();
-			if (this.map.isPermissionEdit())
+			if (this.map.isEditMode())
 				$('#toolbar-down').show();
 			/** show edit button if only we are able to edit but in readonly mode */
-			if (window.docPermission  === 'edit' && this.map.isPermissionReadOnly())
+			if (this.map.canUserWrite() && this.map.isReadOnlyMode())
 				$('#mobile-edit-button').show();
 		}
 	},

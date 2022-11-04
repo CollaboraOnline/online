@@ -845,7 +845,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 	sendSplitIndex: function (newSplitIndex, isSplitCol) {
 
-		if (!this._map.isPermissionEdit() || !this._splitCellState || !this.options.syncSplits) {
+		if (!this._map.isEditMode() || !this._splitCellState || !this.options.syncSplits) {
 			return false;
 		}
 

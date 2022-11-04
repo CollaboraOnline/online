@@ -105,7 +105,7 @@ function onClick(e, id, item) {
 	}
 	else if (id === 'save') {
 		// Save only when not read-only.
-		if (!map.isPermissionReadOnly()) {
+		if (!map.isReadOnlyMode()) {
 			map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'toolbar' }});
 			if (!map._disableDefaultAction['UI_Save']) {
 				map.save(false /* An explicit save should terminate cell edit */, false /* An explicit save should save it again */);
@@ -627,7 +627,7 @@ function getColorPickerData(type) {
 }
 
 function onColorPick(id, color) {
-	if (!map.isPermissionEdit()) {
+	if (!map.isEditMode()) {
 		return;
 	}
 	// no fill or automatic color is -1
@@ -920,20 +920,20 @@ function processStateChangedCommand(commandName, state) {
 		return;
 
 	if (state === 'true') {
-		if (map.isPermissionEdit()) {
+		if (map.isEditMode()) {
 			toolbar.enable(id);
 		}
 		toolbar.check(id);
 	}
 	else if (state === 'false') {
-		if (map.isPermissionEdit()) {
+		if (map.isEditMode()) {
 			toolbar.enable(id);
 		}
 		toolbar.uncheck(id);
 	}
 	// Change the toolbar button states if we are in editmode
 	// If in non-edit mode, will be taken care of when permission is changed to 'edit'
-	else if (map.isPermissionEdit() && (state === 'enabled' || state === 'disabled')) {
+	else if (map.isEditMode() && (state === 'enabled' || state === 'disabled')) {
 		var toolbarUp = toolbar;
 		if (state === 'enabled') {
 			toolbarUp.enable(id);
