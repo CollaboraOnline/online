@@ -320,6 +320,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:AccessibilityCheck', 'text'),
+						'command': '.uno:AccessibilityCheck'
+					},
+					{
 						'type': 'toolbox',
 						'children': [
 							{
