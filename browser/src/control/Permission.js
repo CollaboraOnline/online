@@ -185,7 +185,7 @@ L.Map.include({
 	},
 
 	_requestFileCopy: function() {
-		if (window.docPermission === 'readonly') {
+		if (!this.canUserWrite()) {
 			window.postMobileMessage('REQUESTFILECOPY');
 		} else {
 			this._switchToEditMode();
@@ -231,7 +231,7 @@ L.Map.include({
 	},
 
 	enableSelection: function () {
-		if (this.isPermissionEdit()) {
+		if (this.isEditMode()) {
 			return;
 		}
 		app.socket.sendMessage('requestloksession');
@@ -239,24 +239,35 @@ L.Map.include({
 	},
 
 	disableSelection: function () {
-		if (this.isPermissionEdit()) {
+		if (this.isEditMode()) {
 			return;
 		}
 		this.dragging.enable();
 	},
 
-	isPermissionEditForComments: function() {
-		// Currently we allow user to perform comment operations
-		// even in the view/readonly mode(initial mobile mode)
-		// allow comment operations if user has edit permission for doc
+	// If document can be edited or not (i.e: PDF can not be edited)
+	isDocEditable: function() {
+		return this.options.permission === 'edit';
+	},
+
+	// Can user make changes to the document or not
+	// i.e: user can not make changes(even can not add comments) is document is shared as read only
+	canUserWrite: function() {
 		return window.docPermission === 'edit';
 	},
 
-	isPermissionReadOnly: function() {
+	// If user has write access he can always add comments
+	isPermissionEditForComments: function() {
+		return this.canUserWrite();
+	},
+
+	// Is user currently in read only mode (i.e: initial mobile read only view mode, user may have write access)
+	isReadOnlyMode: function() {
 		return this._permission === 'readonly';
 	},
 
-	isPermissionEdit: function() {
+	// Is user currently in editing mode
+	isEditMode: function() {
 		return this._permission === 'edit';
 	}
 });

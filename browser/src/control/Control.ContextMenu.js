@@ -123,7 +123,7 @@ L.Control.ContextMenu = L.Control.extend({
 
 	_onContextMenu: function(obj) {
 		var map = this._map;
-		if (!map.isPermissionEdit()) {
+		if (!map.isEditMode()) {
 			return;
 		}
 

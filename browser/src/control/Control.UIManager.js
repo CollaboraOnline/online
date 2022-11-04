@@ -192,9 +192,9 @@ L.Control.UIManager = L.Control.extend({
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
 			document.getElementById('selectbackground').parentNode.removeChild(document.getElementById('selectbackground'));
 
-			if ((window.mode.isTablet() || window.mode.isDesktop()) && window.docPermission === 'edit') {
+			if ((window.mode.isTablet() || window.mode.isDesktop()) && this.map.canUserWrite()) {
 				var showRuler = this.getSavedStateOrDefault('ShowRuler');
-				var interactiveRuler = this.map.isPermissionEdit();
+				var interactiveRuler = this.map.isEditMode();
 				var isRTL = document.documentElement.dir === 'rtl';
 				L.control.ruler({position: (isRTL ? 'topright' : 'topleft'), interactive:interactiveRuler, showruler: showRuler}).addTo(this.map);
 				this.map.fire('rulerchanged');
@@ -384,7 +384,7 @@ L.Control.UIManager = L.Control.extend({
 
 	insertButtonToClassicToolbar: function(button) {
 		if (!w2ui['editbar'].get(button.id)) {
-			if (this.map.isPermissionEdit()) {
+			if (this.map.isEditMode()) {
 				// add the css rule for the image
 				var style = $('html > head > style');
 				if (style.length == 0)
@@ -414,7 +414,7 @@ L.Control.UIManager = L.Control.extend({
 					toolbarUpMobileItems.splice(idx, 0, button.id);
 				}
 			}
-			else if (this.map.isPermissionReadOnly()) {
+			else if (this.map.isReadOnlyMode()) {
 				// Just add a menu entry for it
 				this.map.fire('addmenu', {id: button.id, label: button.hint});
 			}
@@ -667,7 +667,7 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	enterReadonlyOrClose: function() {
-		if (this.map.isPermissionEdit()) {
+		if (this.map.isEditMode()) {
 			// in edit mode, passing 'edit' actually enters readonly mode
 			// and bring the blue circle editmode button back
 			this.map.setPermission('edit');

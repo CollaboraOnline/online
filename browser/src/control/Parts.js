@@ -257,7 +257,7 @@ L.Map.include({
 		else if (typeof (page) === 'number' && page >= 0 && page < docLayer._pages) {
 			docLayer._currentPage = page;
 		}
-		if (!this.isPermissionEdit() && app.file.writer.pageRectangleList.length > docLayer._currentPage) {
+		if (!this.isEditMode() && app.file.writer.pageRectangleList.length > docLayer._currentPage) {
 			var pos = new L.Point(app.file.writer.pageRectangleList[docLayer._currentPage][0], app.file.writer.pageRectangleList[docLayer._currentPage][1]);
 			pos = docLayer._twipsToCorePixels(pos);
 			this.scrollTop(pos.y);

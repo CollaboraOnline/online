@@ -181,7 +181,7 @@ L.Map.include({
 	applyFont: function (fontName) {
 		if (!fontName)
 			return;
-		if (this.isPermissionEdit()) {
+		if (this.isEditMode()) {
 			var msg = 'uno .uno:CharFontName {' +
 				'"CharFontName.FamilyName": ' +
 					'{"type": "string", "value": "' + fontName + '"}}';
@@ -190,7 +190,7 @@ L.Map.include({
 	},
 
 	applyFontSize: function (fontSize) {
-		if (this.isPermissionEdit()) {
+		if (this.isEditMode()) {
 			var msg = 'uno .uno:FontHeight {' +
 				'"FontHeight.Height": ' +
 				'{"type": "float", "value": "' + fontSize + '"}}';
@@ -275,7 +275,7 @@ L.Map.include({
 			this.fire('error', {cmd: 'setStyle', kind: 'incorrectparam'});
 			return;
 		}
-		if (this.isPermissionEdit()) {
+		if (this.isEditMode()) {
 			var msg = 'uno .uno:StyleApply {' +
 					'"Style":{"type":"string", "value": "' + style + '"},' +
 					'"FamilyName":{"type":"string", "value":"' + familyName + '"}' +
@@ -289,7 +289,7 @@ L.Map.include({
 			this.fire('error', {cmd: 'setLayout', kind: 'incorrectparam'});
 			return;
 		}
-		if (this.isPermissionEdit()) {
+		if (this.isEditMode()) {
 			var msg = 'uno .uno:AssignLayout {' +
 					'"WhatPage":{"type":"unsigned short", "value": "' + this.getCurrentPartNumber() + '"},' +
 					'"WhatLayout":{"type":"unsigned short", "value": "' + layout + '"}' +
@@ -375,14 +375,14 @@ L.Map.include({
 			return;
 		if (this.dialog.hasOpenedDialog() && !command.startsWith('.uno:ToolbarMode'))
 			this.dialog.blinkOpenDialog();
-		else if (this.isPermissionEdit() || isAllowedInReadOnly) {
+		else if (this.isEditMode() || isAllowedInReadOnly) {
 			if (!this.messageNeedsToBeRedirected(command))
 				app.socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 		}
 	},
 
 	toggleCommandState: function (unoState) {
-		if (this.isPermissionEdit()) {
+		if (this.isEditMode()) {
 			if (!unoState.startsWith('.uno:')) {
 				unoState = '.uno:' + unoState;
 			}

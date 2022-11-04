@@ -1246,7 +1246,7 @@ L.Control.Menubar = L.Control.extend({
 		var liItem = L.DomUtil.create('li', '');
 		liItem.setAttribute('role', 'menuitem');
 		liItem.id = 'menu-' + e.id;
-		if (this._map.isPermissionReadOnly()) {
+		if (this._map.isReadOnlyMode()) {
 			L.DomUtil.addClass(liItem, 'readonly');
 		}
 		var aItem = L.DomUtil.create('a', '', liItem);
@@ -1535,7 +1535,7 @@ L.Control.Menubar = L.Control.extend({
 			var type = $(aItem).data('type');
 			var id = $(aItem).data('id');
 			var constChecked = 'lo-menu-item-checked';
-			if (self._map.isPermissionEdit()) {
+			if (self._map.isEditMode()) {
 				if (type === 'unocommand') { // enable all depending on stored commandStates
 					var data, lang, languageAndCode;
 					var constUno = 'uno';
@@ -1706,7 +1706,7 @@ L.Control.Menubar = L.Control.extend({
 
 		if (id === 'save') {
 			// Save only when not read-only.
-			if (!this._map.isPermissionReadOnly()) {
+			if (!this._map.isReadOnlyMode()) {
 				this._map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'filemenu' }});
 
 				if (!this._map._disableDefaultAction['UI_Save']) {
@@ -1820,7 +1820,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'repair') {
 			app.socket.sendMessage('commandvalues command=.uno:DocumentRepair');
 		} else if (id === 'searchdialog') {
-			if (this._map.isPermissionReadOnly()) {
+			if (this._map.isReadOnlyMode()) {
 				$('#toolbar-down').hide();
 				$('#toolbar-search').show();
 				$('#mobile-edit-button').hide();
@@ -1926,7 +1926,7 @@ L.Control.Menubar = L.Control.extend({
 		if (menuItem.id === 'signdocument' && (L.DomUtil.get('document-signing-bar') === null)) {
 			return false;
 		}
-		if (this._map.isPermissionReadOnly() && menuItem.type === 'menu') {
+		if (this._map.isReadOnlyMode() && menuItem.type === 'menu') {
 			var found = false;
 			for (var j in this.options.allowedReadonlyMenus) {
 				if (this.options.allowedReadonlyMenus[j] === menuItem.id) {
@@ -1937,7 +1937,7 @@ L.Control.Menubar = L.Control.extend({
 			if (!found)
 				return false;
 		}
-		if (this._map.isPermissionReadOnly()) {
+		if (this._map.isReadOnlyMode()) {
 			switch (menuItem.id) {
 			case 'last-mod':
 			case 'save':
@@ -1954,7 +1954,7 @@ L.Control.Menubar = L.Control.extend({
 			}
 		}
 
-		if (this._map.isPermissionEdit()) {
+		if (this._map.isEditMode()) {
 			switch (menuItem.id) {
 			case 'savecomments':
 				return false;
@@ -2027,7 +2027,7 @@ L.Control.Menubar = L.Control.extend({
 			liItem.setAttribute('role', 'menuitem');
 			if (menu[i].id) {
 				liItem.id = 'menu-' + menu[i].id;
-				if (menu[i].id === 'closedocument' && this._map.isPermissionReadOnly()) {
+				if (menu[i].id === 'closedocument' && this._map.isReadOnlyMode()) {
 					// see corresponding css rule for readonly class usage
 					L.DomUtil.addClass(liItem, 'readonly');
 				}

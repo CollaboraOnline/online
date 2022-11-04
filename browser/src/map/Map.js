@@ -1621,7 +1621,7 @@ L.Map = L.Evented.extend({
 		// Calling from some other place with no real 'click' event doesn't work.
 
 		if (type === 'click' || type === 'dblclick') {
-			if (this.isPermissionEdit()) {
+			if (this.isEditMode()) {
 				this.fire('editorgotfocus');
 				this.focus();
 			}

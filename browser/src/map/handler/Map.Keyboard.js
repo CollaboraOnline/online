@@ -332,7 +332,7 @@ L.Map.Keyboard = L.Handler.extend({
 	// any 'beforeinput', 'keypress' and 'input' events that would add
 	// printable characters. Those are handled by TextInput.js.
 	_onKeyDown: function (ev) {
-		if (this._map.uiManager.isUIBlocked() || (this._map.isPermissionReadOnly() && !this.readOnlyAllowedShortcuts(ev)))
+		if (this._map.uiManager.isUIBlocked() || (this._map.isReadOnlyMode() && !this.readOnlyAllowedShortcuts(ev)))
 			return;
 
 		var completeEvent = app.socket.createCompleteTraceEvent('L.Map.Keyboard._onKeyDown', { type: ev.type, charCode: ev.charCode });
@@ -467,7 +467,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 
-		if (this._map.isPermissionEdit()) {
+		if (this._map.isEditMode()) {
 			docLayer._resetPreFetching();
 
 			if (this._ignoreKeyEvent(ev)) {
@@ -726,7 +726,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		case this.keyCodes.S: // s
 			// Save only when not read-only.
-			if (!this._map.isPermissionReadOnly()) {
+			if (!this._map.isReadOnlyMode()) {
 				this._map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'keyboard' }});
 				if (!this._map._disableDefaultAction['UI_Save']) {
 					this._map.save(false /* An explicit save should terminate cell edit */,

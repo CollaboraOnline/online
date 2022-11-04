@@ -221,7 +221,7 @@ L.TextInput = L.Layer.extend({
 		// Clicking or otherwise focusing the map should focus on the clipboard
 		// container in order for the user to input text (and on-screen keyboards
 		// to pop-up), unless the document is read only.
-		if (!this._map.isPermissionEdit()) {
+		if (!this._map.isEditMode()) {
 			this._setAcceptInput(false);
 			// on clicking focus is important
 			// specially in chrome once document loses focus it never gets it back
@@ -690,7 +690,7 @@ L.TextInput = L.Layer.extend({
 			var ch = docLayer._mentionText.pop();
 			if (ch === '@')
 				this._map.fire('closementionpopup', { 'typingMention': false });
-			else 	
+			else
 				this._map.fire('sendmentiontext', {data: docLayer._mentionText});
 		}
 
@@ -735,7 +735,7 @@ L.TextInput = L.Layer.extend({
 				}
 			}
 		}
-		
+
 		if (ev.data === '@' && this._map.getDocType() === 'text') {
 			docLayer._mentionText.push(ev.data);
 			docLayer._typingMention = true;
@@ -890,7 +890,7 @@ L.TextInput = L.Layer.extend({
 			} else if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
 				ev.key === 'ArrowUp' || ev.key === 'Home' ||
 				ev.key === 'End' || ev.key === 'PageUp' ||
-				ev.key === 'PageDown' || ev.key === 'Enter' || 
+				ev.key === 'PageDown' || ev.key === 'Enter' ||
 				ev.key === 'Escape' || ev.key === 'Control' ||
 				ev.key === 'Tab') {
 				this._map.fire('closementionpopup', { 'typingMention': false });
