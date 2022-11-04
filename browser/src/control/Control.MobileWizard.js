@@ -148,7 +148,7 @@ L.Control.MobileWizard = L.Control.extend({
 				pcw.style.display = 'block';
 		}
 		$('#mobile-wizard-content').empty();
-		if (this.map.isPermissionEdit()) {
+		if (this.map.isEditMode()) {
 			$('#toolbar-down').show();
 		}
 		if (window.ThisIsTheAndroidApp)

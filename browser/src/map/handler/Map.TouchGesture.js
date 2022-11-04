@@ -365,7 +365,7 @@ L.Map.TouchGesture = L.Handler.extend({
 				acceptInput = (cellCursor && cellCursor.contains(latlng));
 				if (acceptInput) {
 					// Enter cell-edit mode on second tap of a selected cell.
-					if (this._map.isPermissionEdit()) {
+					if (this._map.isEditMode()) {
 						docLayer.postKeyboardEvent('input', 0, 769); // F2
 						sendMouseEvents = false; // Mouse events will exit editing mode.
 					}
@@ -400,7 +400,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (docLayer) {
 			if (docLayer._docType === 'spreadsheet' && !docLayer.hasGraphicSelection()) {
 				// Enter cell-edit mode on double-taping a cell.
-				if (this._map.isPermissionEdit()) {
+				if (this._map.isEditMode()) {
 					docLayer.postKeyboardEvent('input', 0, 769); // F2
 				}
 			} else {

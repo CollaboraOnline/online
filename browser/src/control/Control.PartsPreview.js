@@ -184,7 +184,7 @@ L.Control.PartsPreview = L.Control.extend({
 		if (!window.mode.isDesktop()) {
 			(new Hammer(img, {recognizers: [[Hammer.Press]]}))
 				.on('press', function (e) {
-					if (this._map.isPermissionEdit()) {
+					if (this._map.isEditMode()) {
 						this._addDnDTouchHandlers(e);
 					}
 				}.bind(this));

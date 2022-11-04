@@ -206,7 +206,7 @@ L.TextInput = L.Layer.extend({
 		// Clicking or otherwise focusing the map should focus on the clipboard
 		// container in order for the user to input text (and on-screen keyboards
 		// to pop-up), unless the document is read only.
-		if (!this._map.isPermissionEdit()) {
+		if (!this._map.isEditMode()) {
 			this._setAcceptInput(false);
 			// on clicking focus is important
 			// specially in chrome once document loses focus it never gets it back
