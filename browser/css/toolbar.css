@@ -870,8 +870,7 @@ button.leaflet-control-search-next
 .w2ui-icon.cellverttop{ background: url('images/lc_cellverttop.svg') no-repeat center !important; }
 .w2ui-icon.cellvertcenter{ background: url('images/lc_cellvertcenter.svg') no-repeat center !important; }
 .w2ui-icon.cellvertbottom{ background: url('images/lc_cellvertbottom.svg') no-repeat center !important; }
-.w2ui-icon.linespacing, .w2ui-icon.spacepara1{ background: url('images/lc_linespacing.svg') no-repeat center !important; }
-.w2ui-icon.spacepara15{ background: url('images/lc_spacepara15.svg') no-repeat center !important; }
+.w2ui-icon.linespacing, .w2ui-icon.spacepara1, .w2ui-icon.spacepara15{ background: url('images/lc_linespacing.svg') no-repeat center !important; }
 .w2ui-icon.spacepara2{ background: url('images/lc_spacepara2.svg') no-repeat center !important; }
 .w2ui-icon.paraspaceincrease{ background: url('images/lc_paraspaceincrease.svg') no-repeat center !important; }
 .w2ui-icon.paraspacedecrease{ background: url('images/lc_paraspacedecrease.svg') no-repeat center !important; }
