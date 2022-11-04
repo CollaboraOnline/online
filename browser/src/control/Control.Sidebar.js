@@ -155,7 +155,7 @@ L.Control.Sidebar = L.Control.extend({
 		this.builder.setWindowId(sidebarData.id);
 		$(this.container).empty();
 
-		if (sidebarData.action === 'close' || window.app.file.disableSidebar || this.map.isPermissionReadOnly()) {
+		if (sidebarData.action === 'close' || window.app.file.disableSidebar || this.map.isReadOnlyMode()) {
 			this.closeSidebar();
 		} else if (sidebarData.children) {
 			for (var i = sidebarData.children.length - 1; i >= 0; i--) {

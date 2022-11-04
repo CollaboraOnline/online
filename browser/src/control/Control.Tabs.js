@@ -197,7 +197,7 @@ L.Control.Tabs = L.Control.extend({
 									this._tabForContextMenu = j;
 									this._setPart(e);
 									window.contextMenuWizard = true;
-									if (!this._map.isPermissionReadOnly()) this._map.fire('mobilewizard', {data: menuData});
+									if (!this._map.isReadOnlyMode()) this._map.fire('mobilewizard', {data: menuData});
 								};
 							}(i).bind(this));
 					} else {
@@ -251,7 +251,7 @@ L.Control.Tabs = L.Control.extend({
 	},
 
 	_addDnDHandlers: function(element) {
-		if (!this._map.isPermissionReadOnly()) {
+		if (!this._map.isReadOnlyMode()) {
 			element.setAttribute('draggable', true);
 			element.addEventListener('dragstart', this._handleDragStart.bind(this), false);
 			element.addEventListener('dragenter', this._handleDragEnter, false);
