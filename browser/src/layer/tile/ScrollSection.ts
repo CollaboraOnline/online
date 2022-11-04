@@ -765,6 +765,8 @@ class ScrollSection {
 	}
 
 	public onMouseMove (position: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
+		this.clearQuickScrollTimeout();
+
 		if (this.sectionProperties.clickScrollVertical && this.containerObject.draggingSomething) {
 			if (!this.sectionProperties.previousDragDistance) {
 				this.sectionProperties.previousDragDistance = [0, 0];
