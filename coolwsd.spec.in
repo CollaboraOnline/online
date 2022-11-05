@@ -17,7 +17,7 @@ Vendor:         %{vendor}
 Summary:        Collabora Online WebSocket Daemon
 License:        EULA
 Source0:        coolwsd-@PACKAGE_VERSION@.tar.gz
-BuildRequires:  libcap-devel libpng-devel pam-devel gcc-c++ cppunit-devel pam-devel fontconfig make libzstd-devel
+BuildRequires:  libcap-devel libpng-devel pam-devel gcc-c++ cppunit-devel pam-devel fontconfig make
 
 # Red Hat and CentOS
 %if 0%{?rhel} == 7
