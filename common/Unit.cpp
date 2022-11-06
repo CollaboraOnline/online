@@ -346,6 +346,10 @@ void UnitBase::exitTest(TestResult result)
 {
     if (isFinished())
     {
+        if ((result == TestResult::Ok && _retValue != EX_OK) ||
+            (result != TestResult::Ok && _retValue == EX_OK))
+            LOG_TST(getTestname() << ": exitTest " << testResultAsString(result)
+                                  << " but is already finished with a different result.");
         return;
     }
 
