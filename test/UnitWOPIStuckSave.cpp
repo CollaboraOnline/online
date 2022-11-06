@@ -36,7 +36,7 @@ public:
         , _phase(Phase::Load)
     {
         // We need more time to retry saving.
-        setTimeout(std::chrono::seconds(90));
+        setTimeout(std::chrono::seconds(200));
     }
 
     void configure(Poco::Util::LayeredConfiguration& config) override
@@ -44,7 +44,7 @@ public:
         WopiTestServer::configure(config);
 
         // Small value to shorten the test run time.
-        config.setUInt("per_document.limit_store_failures", 3);
+        config.setUInt("per_document.limit_store_failures", 2);
         config.setBool("per_document.always_save_on_exit", true);
     }
 
