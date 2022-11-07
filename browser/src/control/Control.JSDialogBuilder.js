@@ -2598,7 +2598,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'tableautofitmenu': 'columnwidth',
 			'menucolumnwidth': 'columnwidth',
 			'hyphenation': 'hyphenate',
-			'onlinehelp': 'feedback',
 			'objectbackone': 'behindobject',
 			'deleteannotation': 'deletenote',
 			'areapropertypanel': 'chartareapanel',
