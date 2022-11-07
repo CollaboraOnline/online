@@ -1078,20 +1078,21 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::URI indirectionURI(config.getString("indirection_endpoint.url", ""));
     bool validIndirection = !indirectionURI.empty() && !wopiSrc.empty();
     std::string routeToken = std::string(), serverId = std::string();
-#if !ENABLE_DEBUG
-    if (validIndirection && Util::iequal(indirectionURI.getScheme(), "http"))
+    std::string protocol = COOLWSD::isSSLEnabled() ? "https" : "http";
+    if (validIndirection && Util::iequal(indirectionURI.getScheme(), protocol))
     {
         LOG_ERR("Indirection url should only use HTTPS protocol: " << indirectionURI.toString());
         validIndirection = false;
     }
-#endif
     if (validIndirection)
     {
         try
         {
             indirectionURI.addQueryParameter("WOPISrc", wopiSrc);
             auto httpSession = http::Session::create(indirectionURI.getHost(),
-                                                     http::Session::Protocol::HttpSsl,
+                                                     COOLWSD::isSSLEnabled()
+                                                         ? http::Session::Protocol::HttpSsl
+                                                         : http::Session::Protocol::HttpUnencrypted,
                                                      indirectionURI.getPort());
 
             http::Request operatorRequest(indirectionURI.getPathAndQuery());
