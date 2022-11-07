@@ -3128,7 +3128,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("printranges: " + payload);
         break;
     case LOK_CALLBACK_FONTS_MISSING:
+#if !MOBILEAPP
         {
+            // This environment variable is always set in COOLWSD::innerInitialize().
             static std::string fontsMissingHandling = std::string(std::getenv("FONTS_MISSING_HANDLING"));
             if (fontsMissingHandling == "report" || fontsMissingHandling == "both")
                 sendTextFrame("fontsmissing: " + payload);
@@ -3147,6 +3149,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 #endif
             }
         }
+#endif
         break;
     default:
         LOG_ERR("Unknown callback event (" << lokCallbackTypeToString(type) << "): " << payload);
