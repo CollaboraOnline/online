@@ -1,21 +1,19 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "collabora-online.fullname" . }}
+  name: {{ .Values.global.app.service.name }}
+  namespace: {{ .Values.namespace.collabora }}
   labels:
-    {{- include "collabora-online.labels" . | nindent 4 }}
-    type: main
-  {{- with .Values.service.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    app: {{ template "name" . }}
+    chart: {{ template "chartname" . }}
+    release: {{ .Release.Name }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.global.app.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: {{ .Values.global.app.service.externalPort }}
+      targetPort: {{ .Values.global.app.service.internalPort }}
       protocol: TCP
-      name: http
+      name: {{ .Values.global.app.service.name }}
   selector:
-    {{- include "collabora-online.selectorLabels" . | nindent 4 }}
-    type: main
+    app: {{ template "name" . }}
+    release: {{ .Release.Name }}
