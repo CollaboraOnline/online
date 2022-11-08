@@ -22,8 +22,6 @@
 #include <Unit.hpp>
 #include <helpers.hpp>
 
-class COOLWebSocket;
-
 namespace
 {
 void getPartHashCodes(const std::string& testname, const std::string& response,

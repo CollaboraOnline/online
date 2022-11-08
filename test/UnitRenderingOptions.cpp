@@ -17,8 +17,6 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
-class COOLWebSocket;
-
 /// Rendering options testcase.
 class UnitRenderingOptions : public UnitWSD
 {
