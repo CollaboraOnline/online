@@ -364,6 +364,8 @@ static IMP standardImpOfInputAccessoryView = nil;
             p.fd = self.document->fakeClientFd;
             p.events = POLLOUT;
             fakeSocketPoll(&p, 1, -1);
+
+            // This is read in the iOS-specific code in ClientRequestDispatcher::handleIncomingMessage() in COOLWSD.cpp
             std::string message(url + " " + std::to_string(self.document->appDocId));
             fakeSocketWrite(self.document->fakeClientFd, message.c_str(), message.size());
 
