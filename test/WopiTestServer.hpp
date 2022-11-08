@@ -4,9 +4,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#include "Protocol.hpp"
 #include "config.h"
 
+#include "Protocol.hpp"
 #include "HttpRequest.hpp"
 #include "helpers.hpp"
 #include "Log.hpp"
@@ -14,16 +14,21 @@
 #include "UnitHTTP.hpp"
 #include "Util.hpp"
 
-#include <Poco/DateTimeFormat.h>
-#include <Poco/DateTimeFormatter.h>
 #include <Poco/JSON/Object.h>
-#include <Poco/MemoryStream.h>
-#include <Poco/RegularExpression.h>
-#include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
+
 #include <sstream>
 #include <vector>
+
+namespace Poco
+{
+namespace Net
+{
+class HTTPRequest;
+}
+
+} // namespace Poco
 
 /// Simulates a WOPI server for testing purposes.
 /// Currently only serves one file contents.
