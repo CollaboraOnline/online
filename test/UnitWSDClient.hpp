@@ -16,16 +16,30 @@
 #include <string>
 #include <vector>
 
+/// Send a command message to WSD from a UnitWSDClient instance on the given connection.
+#define WSD_CMD_BY_CONNECTION_INDEX(INDEX, MSG)                                                    \
+    do                                                                                             \
+    {                                                                                              \
+        LOG_TST("Sending from #" << INDEX << ": " << MSG);                                         \
+        helpers::sendTextFrame(getWsAt(INDEX)->getWebSocket(), MSG, getTestname());                \
+        SocketPoll::wakeupWorld();                                                                 \
+    } while (false)
+
+/// Send a command message to WSD from a UnitWSDClient instance on the primary connection.
+#define WSD_CMD(MSG) WSD_CMD_BY_CONNECTION_INDEX(0, MSG)
+
+/// A WebSocketSession wrapper to help with testing.
 class UnitWebSocket final
 {
     std::shared_ptr<http::WebSocketSession> _httpSocket;
 
 public:
-    /// Get a websocket connected for a given URL
-    UnitWebSocket(const std::shared_ptr<SocketPoll>& socketPoll, const std::string& documentURL)
+    /// Get a websocket connected for a given URL.
+    UnitWebSocket(const std::shared_ptr<SocketPoll>& socketPoll, const std::string& documentURL,
+                  const std::string& testname = "UnitWebSocket ")
     {
         Poco::URI uri(helpers::getTestServerURI());
-        _httpSocket = helpers::connectLOKit(socketPoll, uri, documentURL, "UnitWebSocket ");
+        _httpSocket = helpers::connectLOKit(socketPoll, uri, documentURL, testname);
     }
 
     /// Destroy the WS.
@@ -39,6 +53,8 @@ public:
 
 /// A WSD unit-test base class with support
 /// to manage client connections.
+/// This cannot be in UnitWSD or UnitBase because
+/// we use test code that isn't availabe in COOLWSD.
 class UnitWSDClient : public UnitWSD
 {
 public:
@@ -75,8 +91,8 @@ protected:
 
         // Insert at the front.
         const auto& _ws = _wsList.emplace(
-            _wsList.begin(),
-            Util::make_unique<UnitWebSocket>(socketPoll(), "/cool/" + _wopiSrc + "/ws"));
+            _wsList.begin(), Util::make_unique<UnitWebSocket>(
+                                 socketPoll(), "/cool/" + _wopiSrc + "/ws", getTestname()));
 
         assert((*_ws).get());
     }
@@ -89,8 +105,8 @@ protected:
 
         // Insert at the back.
         const auto& _ws = _wsList.emplace(
-            _wsList.end(),
-            Util::make_unique<UnitWebSocket>(socketPoll(), "/cool/" + _wopiSrc + "/ws"));
+            _wsList.end(), Util::make_unique<UnitWebSocket>(
+                               socketPoll(), "/cool/" + _wopiSrc + "/ws", getTestname()));
 
         assert((*_ws).get());
     }
@@ -102,17 +118,5 @@ private:
     /// Websockets to communicate.
     std::vector<std::unique_ptr<UnitWebSocket>> _wsList;
 };
-
-/// Send a command message to WSD from a WopiTestServer on the given connection.
-#define WSD_CMD_BY_CONNECTION_INDEX(INDEX, MSG)                                                    \
-    do                                                                                             \
-    {                                                                                              \
-        LOG_TST("Sending from #" << INDEX << ": " << MSG);                                         \
-        helpers::sendTextFrame(getWsAt(INDEX)->getWebSocket(), MSG, getTestname());                \
-        SocketPoll::wakeupWorld();                                                                 \
-    } while (false)
-
-/// Send a command message to WSD from a WopiTestServer on the primary connection.
-#define WSD_CMD(MSG) WSD_CMD_BY_CONNECTION_INDEX(0, MSG)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
