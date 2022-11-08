@@ -37,7 +37,7 @@ Requires:       collaboraoffice collaboraoffice-ure collaboraofficebasis-core co
 Requires(post): coreutils grep sed cpio
 %if 0%{?rhel}
 # coolwsd dependencies
-Requires:       systemd expat keyutils-libs krb5-libs libattr libcap libcom_err libgcc libpng libselinux openssh-clients openssl-libs pcre xz-libs zlib libzstd
+Requires:       systemd expat keyutils-libs krb5-libs libattr libcap libcom_err libgcc libpng libselinux openssh-clients openssl-libs pcre xz-libs zlib
 # Collabora Office dependencies (unfortunately Collabora Office RPM packages do not have real dependencies)
 Requires:       expat fontconfig freetype libuuid bzip2-libs
 %endif
