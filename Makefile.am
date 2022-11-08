@@ -338,6 +338,7 @@ noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
                  test/testlog.hpp \
                  test/HttpTestServer.hpp \
                  test/WOPIUploadConflictCommon.hpp \
+                 test/UnitWSDClient.hpp \
                  test/helpers.hpp
 
 GIT_BRANCH := $(shell git symbolic-ref --short HEAD)
