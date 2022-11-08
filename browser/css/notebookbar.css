@@ -269,6 +269,7 @@
 .mobile-wizard-widebutton.disabled,
 .locking-disabled {
 	opacity: 0.65;
+	cursor: not-allowed;
 }
 
 .locking-disabled:hover {
