@@ -112,7 +112,6 @@ private:
     bool _isHead : 1;
     bool _isProxy : 1;
     bool _isWebSocket : 1;
-    bool _isMobile : 1;
     std::string _uriString;
     std::string _proxyPrefix;
     std::string _hostUntrusted;
