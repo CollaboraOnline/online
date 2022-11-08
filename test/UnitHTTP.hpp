@@ -18,8 +18,6 @@
 #include <Poco/Version.h>
 
 #include "Common.hpp"
-#include <helpers.hpp>
-#include <net/WebSocketSession.hpp>
 
 /// Unit test stub for a server response
 class UnitHTTPServerResponse : public Poco::Net::HTTPServerResponse
@@ -116,26 +114,5 @@ namespace UnitHTTP
                                                  ClientPortNumber);
     }
 }
-
-class UnitWebSocket
-{
-    std::shared_ptr<http::WebSocketSession> _httpSocket;
-
-public:
-    /// Get a websocket connected for a given URL
-    UnitWebSocket(const std::shared_ptr<SocketPoll>& socketPoll, const std::string& documentURL)
-    {
-        Poco::URI uri(helpers::getTestServerURI());
-        _httpSocket = helpers::connectLOKit(socketPoll, uri, documentURL, "UnitWebSocket ");
-    }
-
-    /// Destroy the WS.
-    /// Here, we can't do IO as we don't own the socket (SocketPoll does).
-    /// In fact, we can't destroy it (it's referenced by SocketPoll).
-    /// Instead, we can only flag for shutting down.
-    ~UnitWebSocket() { _httpSocket->asyncShutdown(); }
-
-    const std::shared_ptr<http::WebSocketSession>& getWebSocket() { return _httpSocket; }
-};
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

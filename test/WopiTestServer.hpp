@@ -11,8 +11,8 @@
 #include "helpers.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
-#include "UnitHTTP.hpp"
 #include "Util.hpp"
+#include "UnitWSDClient.hpp"
 
 #include <Poco/JSON/Object.h>
 #include <Poco/URI.h>
@@ -35,7 +35,7 @@ class HTTPRequest;
 /// Furthermore, the file URI doesn't contain the
 /// real filename (in most tests), instead filenames
 /// 1 to 9 are considered special.
-class WopiTestServer : public UnitWSD
+class WopiTestServer : public UnitWSDClient
 {
 private:
 
@@ -43,15 +43,6 @@ private:
     {
         DocChanged = 1010
     };
-
-    /// The WOPISrc URL.
-    std::string _wopiSrc;
-
-    /// The SocketPoll thread.
-    std::shared_ptr<SocketPoll> _socketPoll;
-
-    /// Websockets to communicate.
-    std::vector< std::unique_ptr<UnitWebSocket> > _wsList;
 
     /// Content of the file.
     std::string _fileContent;
@@ -76,18 +67,6 @@ private:
 
 protected:
 
-    const std::string& getWopiSrc() const { return _wopiSrc; }
-
-    const std::unique_ptr<UnitWebSocket>& getWs() const { return _wsList.at(0); }
-
-    const std::unique_ptr<UnitWebSocket>& getWsAt(int index) { return _wsList.at(index); }
-
-    void deleteSocketAt(int index)
-    {
-        std::unique_ptr<UnitWebSocket>& socket = _wsList.at(index);
-        socket.reset();
-    }
-
     const std::string& getFileContent() const { return _fileContent; }
 
     /// Sets the file content to a given value and update the last file modified time
@@ -104,8 +83,7 @@ protected:
     }
 
     WopiTestServer(const std::string& name, const std::string& filenameOrContents = "Hello, world")
-        : UnitWSD(name)
-        , _socketPoll(std::make_shared<SocketPoll>(name + "ServerPoll"))
+        : UnitWSDClient(name)
         , _filename(DefaultFilename)
         , _countCheckFileInfo(0)
         , _countGetFile(0)
@@ -113,8 +91,6 @@ protected:
         , _countPutFile(0)
     {
         LOG_TST("WopiTestServer created for [" << getTestname() << ']');
-
-        _socketPoll->startThread();
 
         // Read the document data and store as string in memory.
         const auto data = helpers::readDataFromFile(filenameOrContents);
@@ -143,45 +119,6 @@ protected:
     void resetCountPutRelative() { _countPutRelative = 0; }
     std::size_t getCountPutFile() const { return _countPutFile; }
     void resetCountPutFile() { _countPutFile = 0; }
-
-    void initWebsocket(const std::string& wopiName)
-    {
-        Poco::URI wopiURL(helpers::getTestServerURI() + wopiName + "&testname=" + getTestname());
-
-        _wopiSrc.clear();
-        Poco::URI::encode(wopiURL.toString(), ":/?", _wopiSrc);
-
-        // This is just a client connection that is used from the tests.
-        // It really has nothing to do with this fake WOPI server, exept
-        // that it manages it since it is the base of WOPI tests, so
-        // it's a common bit of housekeeping that all WOPI tests must do.
-        LOG_TST("Connecting test client to COOL (#" << (_wsList.size() + 1)
-                                                    << " connection): /cool/" << _wopiSrc << "/ws");
-
-        // Insert at the front.
-        const auto& _ws = _wsList.emplace(
-            _wsList.begin(),
-            Util::make_unique<UnitWebSocket>(_socketPoll, "/cool/" + _wopiSrc + "/ws"));
-
-        assert((*_ws).get());
-    }
-
-    void addWebSocket()
-    {
-        // This is just a client connection that is used from the tests.
-        // It really has nothing to do with this fake WOPI server, exept
-        // that it manages it since it is the base of WOPI tests, so
-        // it's a common bit of housekeeping that all WOPI tests must do.
-        LOG_TST("Connecting test client to COOL (#" << (_wsList.size() + 1)
-                                                    << " connection): /cool/" << _wopiSrc << "/ws");
-
-        // Insert at the back.
-        const auto& _ws = _wsList.emplace(
-            _wsList.end(),
-            Util::make_unique<UnitWebSocket>(_socketPoll, "/cool/" + _wopiSrc + "/ws"));
-
-        assert((*_ws).get());
-    }
 
     virtual void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& /*request*/)
     {
@@ -510,17 +447,5 @@ protected:
     }
 
 };
-
-/// Send a command message to WSD from a WopiTestServer on the given connection.
-#define WSD_CMD_BY_CONNECTION_INDEX(INDEX, MSG)                                                    \
-    do                                                                                             \
-    {                                                                                              \
-        LOG_TST("Sending from #" << INDEX << ": " << MSG);                                         \
-        helpers::sendTextFrame(getWsAt(INDEX)->getWebSocket(), MSG, getTestname());                \
-        SocketPoll::wakeupWorld();                                                                 \
-    } while (false)
-
-/// Send a command message to WSD from a WopiTestServer on the primary connection.
-#define WSD_CMD(MSG) WSD_CMD_BY_CONNECTION_INDEX(0, MSG)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
