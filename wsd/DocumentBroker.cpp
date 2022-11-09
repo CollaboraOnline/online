@@ -2490,6 +2490,12 @@ void DocumentBroker::finalRemoveSession(const std::string& id)
         {
             const bool readonly = (it->second ? it->second->isReadOnly() : false);
 
+            if (UnitWSD::isUnitTesting())
+            {
+                // Notify test code before removal.
+                UnitWSD::get().onDocBrokerRemoveSession(_docKey, it->second);
+            }
+
             // Remove. The caller must have a reference to the session
             // in question, lest we destroy from underneath them.
             it->second->dispose();
@@ -2506,11 +2512,6 @@ void DocumentBroker::finalRemoveSession(const std::string& id)
                     logger << pair.second->getId() << ' ';
 
                 LOG_END_FLUSH(logger);
-            }
-
-            if (UnitWSD::isUnitTesting())
-            {
-                UnitWSD::get().onDocBrokerRemoveSession(_docKey, it->second);
             }
         }
         else
