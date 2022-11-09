@@ -235,8 +235,11 @@ p.mobile-wizard.ui-combobox-text.selected {
 	flex-wrap: wrap !important;
 	margin-top: 25px;
 }
-#rotationlabel, #cellbackgroundlabel, #NumberFormatCurrency > .unolabel, #NumberFormatPercent > .unolabel, #NumberFormatDecimal > .unolabel{
+#mobile-wizard #rotationlabel, #cellbackgroundlabel, #NumberFormatCurrency > .unolabel, #NumberFormatPercent > .unolabel, #NumberFormatDecimal > .unolabel{
 	display: none;
+}
+#rotationlabel:not(#mobile-wizard) {
+	visibility: hidden;
 }
 #mobile-wizard #NumberFormatDecimal, #mobile-wizard #NumberFormatPercent{
 	margin-left: 20%;
