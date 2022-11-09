@@ -380,7 +380,7 @@ void AdminModel::addMemStats(unsigned memUsage)
     if (_memStats.size() > _memStatsSize)
         _memStats.pop_front();
 
-    notify("mem_stats " + std::to_string(memUsage));
+    notify("mem_stats " + std::to_string(memUsage) + ' ' + Util::getProcessIdentifier());
 }
 
 void AdminModel::addCpuStats(unsigned cpuUsage)
@@ -391,7 +391,7 @@ void AdminModel::addCpuStats(unsigned cpuUsage)
     if (_cpuStats.size() > _cpuStatsSize)
         _cpuStats.pop_front();
 
-    notify("cpu_stats " + std::to_string(cpuUsage));
+    notify("cpu_stats " + std::to_string(cpuUsage) + ' ' + Util::getProcessIdentifier());
 }
 
 void AdminModel::addSentStats(uint64_t sent)
@@ -586,7 +586,8 @@ void AdminModel::removeDocument(const std::string& docKey, const std::string& se
         std::ostringstream oss;
         oss << "rmdoc "
             << docIt->second->getPid() << ' '
-            << sessionId;
+            << sessionId << ' '
+            << Util::getProcessIdentifier();
         notify(oss.str());
 
         // The idea is to only expire the document and keep the history

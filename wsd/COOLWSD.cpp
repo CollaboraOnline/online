@@ -12,6 +12,7 @@
 #include "ProofKey.hpp"
 #include "CommandControl.hpp"
 #include "HostUtil.hpp"
+#include "Admin.hpp"
 
 /* Default host used in the start test URI */
 #define COOLWSD_TEST_HOST "localhost"
@@ -1199,6 +1200,8 @@ public:
 
         fetchRemoteFontConfig(newAppConfig, remoteJson);
 
+        fetchMonitors(newAppConfig, remoteJson);
+
         AutoPtr<AppConfigMap> newConfig(new AppConfigMap(newAppConfig));
         _conf.addWriteable(newConfig, PRIO_JSON);
 
@@ -1207,6 +1210,8 @@ public:
 #endif
 
         HostUtil::parseAliases(_conf);
+
+        Admin::instance().startMonitors();
 
         handleOptions(remoteJson);
     }
@@ -1530,6 +1535,32 @@ public:
             LOG_ERR(
                 "Failed to fetch indirection_endpoint, please check JSON format: " << exc.what());
         }
+    }
+
+    void fetchMonitors(std::map<std::string, std::string>& newAppConfig,
+                       Poco::JSON::Object::Ptr remoteJson)
+    {
+        Poco::JSON::Array::Ptr monitors;
+        try
+        {
+            monitors = remoteJson->getArray("monitors");
+        }
+        catch (const Poco::NullPointerException&)
+        {
+            LOG_INF("Overriding monitor failed because array "
+                    "does not exist");
+            return;
+        }
+
+        if (monitors.isNull() || monitors->size() == 0)
+        {
+            LOG_INF("Overriding monitors failed because array is empty or "
+                    "null");
+            return;
+        }
+
+        for (size_t i = 0; i < monitors->size(); i++)
+            newAppConfig.insert(std::make_pair("monitors.monitor[" + std::to_string(i) + ']', monitors->get(i)));
     }
 
     void handleOptions(Poco::JSON::Object::Ptr remoteJson)

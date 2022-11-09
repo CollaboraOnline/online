@@ -67,6 +67,8 @@ public:
     void start();
     void stop();
 
+    void startMonitors();
+
     /// Custom poll thread function
     void pollingThread() override;
 

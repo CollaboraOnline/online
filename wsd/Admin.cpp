@@ -938,6 +938,12 @@ void Admin::sendMetrics(const std::shared_ptr<StreamSocket>& socket, const std::
 
 void Admin::start()
 {
+    startThread();
+    startMonitors();
+}
+
+void Admin::startMonitors()
+{
     bool haveMonitors = false;
     const auto& config = Application::instance().config();
 
@@ -962,8 +968,6 @@ void Admin::start()
 
     if (!haveMonitors)
         LOG_TRC("No monitors configured.");
-
-    startThread();
 }
 
 void Admin::stop()
