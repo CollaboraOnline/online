@@ -773,6 +773,8 @@ int main(int argc, char** argv)
     int returnValue = EX_OK;
     UnitKit::get().returnValue(returnValue);
 
+    UnitBase::uninit();
+
     LOG_INF("ForKit process finished.");
     Util::forcedExit(returnValue);
 }

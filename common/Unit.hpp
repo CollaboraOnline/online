@@ -116,8 +116,7 @@ protected:
 
     /// Construct a UnitBase instance with a default name.
     explicit UnitBase(const std::string& name, UnitType type)
-        : _dlHandle(nullptr)
-        , _setRetValue(false)
+        : _setRetValue(false)
         , _retValue(0)
         , _timeoutMilliSeconds(std::chrono::seconds(30))
         , _type(type)
@@ -131,6 +130,8 @@ protected:
 public:
     /// Load unit test hook shared library from this path
     static bool init(UnitType type, const std::string& unitLibPath);
+
+    static void uninit();
 
     /// Do we have a unit test library hooking things & loaded
     static bool isUnitTesting();
@@ -245,11 +246,9 @@ public:
     std::shared_ptr<SocketPoll> socketPoll() { return _socketPoll; }
 
 private:
-    void setHandle(void *dlHandle)
+    void setHandle()
     {
-        assert(_dlHandle == nullptr && "setHandle must only be called once");
-        assert(dlHandle != nullptr && "Invalid handle to set");
-        _dlHandle = dlHandle;
+        assert(DlHandle != nullptr && "Invalid handle to set");
         _socketPoll->startThread();
     }
 
@@ -272,7 +271,7 @@ private:
     /// setup global instance for get() method
     static void rememberInstance(UnitType type, UnitBase* instance);
 
-    void *_dlHandle;
+    static void* DlHandle; //< The handle to the unit-test .so.
     static char *UnitLibPath;
     static UnitBase** GlobalArray; //< All the tests.
     static int GlobalIndex; //< The index of the current test.
