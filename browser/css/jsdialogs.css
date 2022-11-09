@@ -760,38 +760,13 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #MacroSelectorDialog #categories {
 	box-sizing: border-box;
 	border-color: transparent;
-	padding-right: 12px
 }
 
-#MacroSelectorDialog #categories .ui-treeview-entry.selected {
-	color: var(--color-text-dark);
-	background-color: var(--color-background-dark);
-}
-
-#MacroSelectorDialog #categories .ui-treeview-entry.selected::after {
-	margin-right: -6px;
-	margin-right: -11px;
-	color: var(--color-border-darker);
-	content: '\23F5';
-	font-size: var(--header-font-size);
-}
-
-#MacroSelectorDialog #categories .ui-treeview-entry {
-	color: var(--color-main-text);
-}
-
-#MacroSelectorDialog #categories .ui-treeview-entry:hover {
-	box-shadow: inset -6px 0 0 var(--color-border-darker);
-}
-
-#MacroSelectorDialog #categories > tbody > ul > li > ul .ui-treeview-expandable.selected > .ui-treeview::before {
-	/* visibility: hidden; hide when javascript sets properly expanders*/
-}
 #MacroSelectorDialog #categories .ui-treeview-entry.selected, #MacroSelectorDialog #categories .ui-listview-entry, #MacroSelectorDialog #categories .ui-listview-entry.selected {
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
 }
-#MacroSelectorDialog #categories .ui-treeview-entry:hover, #MacroSelectorDialog #categories .ui-treeview-entry.selected:hover, #MacroSelectorDialog #categories .ui-listview-entry:hover, #MacroSelectorDialog #categories .ui-listview-entry.selected:hover {
+#MacroSelectorDialog #categories .ui-treeview-entry:hover, #MacroSelectorDialog #categories .ui-treeview-entry.selected:hover, #MacroSelectorDialog #categories .ui-listview-entry:hover, #MacroSelectorDialog #categories .ui-listview-entry.selected:hover, #MacroSelectorDialog #categories .ui-treeview-entry.selected {
 	background-color: var(--color-background-darker);
 	color: var(--color-text-darker);
 }
