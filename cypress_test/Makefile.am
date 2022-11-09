@@ -226,8 +226,10 @@ clean-local:
 check-mobile: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
+	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_coolwsd)
 	$(call run_mobile_tests,$(spec))
+	$(if $(HEADLESS_BUILD),@pkill Xvfb,)
 	@$(KILL_COMMAND) || true
 
 run-mobile: @JAILS_PATH@ $(NODE_BINS)
@@ -285,8 +287,10 @@ endef
 check-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
+	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_coolwsd)
 	$(call run_desktop_tests,$(spec))
+	$(if $(HEADLESS_BUILD),@pkill Xvfb,)
 	@$(KILL_COMMAND) || true
 
 run-desktop: @JAILS_PATH@ $(NODE_BINS)
@@ -343,10 +347,12 @@ endef
 check-multi: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
+	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_coolwsd)
 	$(if $(spec), \
 		$(call run_multiuser_test,$(spec)), \
 		$(call run_all_multiuser_tests))
+	$(if $(HEADLESS_BUILD),@pkill Xvfb,)
 	@$(KILL_COMMAND) || true
 
 run-multi: @JAILS_PATH@ $(NODE_BINS)
