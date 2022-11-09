@@ -274,19 +274,31 @@ L.Control.Header = L.Class.extend({
 	},
 
 	_selectColumn: function(colNumber, modifier) {
-		var command = {
-			Col: {
-				type: 'unsigned short',
-				value: colNumber
-			},
-			Modifier: {
-				type: 'unsigned short',
-				value: modifier
+		// If function dialog is open and user wants to add the whole column to function.
+		if (this._map.dialog.hasOpenedDialog() && this._map.dialog.getCurrentDialogContainer()) {
+			var dialogContainer = this._map.dialog.getCurrentDialogContainer();
+			if (dialogContainer.dataset.uniqueId === 'FormulaDialog') {
+				var alpha = this._colIndexToAlpha(colNumber + 1);
+				var text = alpha + ':' + alpha;
+				this._map._textInput._sendText(text);
 			}
-		};
+		}
+		// Normal behavior.
+		else {
+			var command = {
+				Col: {
+					type: 'unsigned short',
+					value: colNumber
+				},
+				Modifier: {
+					type: 'unsigned short',
+					value: modifier
+				}
+			};
 
-		this._map.wholeColumnSelected = true; // This variable is set early, state change will set this again.
-		this._map.sendUnoCommand('.uno:SelectColumn ', command);
+			this._map.wholeColumnSelected = true; // This variable is set early, state change will set this again.
+			this._map.sendUnoCommand('.uno:SelectColumn ', command);
+		}
 	},
 
 	_insertColBefore: function() {

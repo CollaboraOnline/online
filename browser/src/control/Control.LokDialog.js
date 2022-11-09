@@ -136,6 +136,13 @@ L.Control.LokDialog = L.Control.extend({
 		return Object.keys(this._dialogs).length > 0;
 	},
 
+	getCurrentDialogContainer: function() {
+		if (this._currentId)
+			return document.getElementById(this._dialogs[this._currentId].strId);
+		else
+			return null;
+	},
+
 	// method used to warn user about dialog modality
 	blinkOpenDialog: function() {
 		$('.lokdialog_container').addClass('lokblink');
@@ -291,7 +298,7 @@ L.Control.LokDialog = L.Control.extend({
 		if (e.action === 'created') {
 			if ((e.winType === 'dialog' || e.winType === 'dropdown') && !window.mode.isMobile()) {
 				// When left/top are invalid, the dialog shows in the center.
-				this._launchDialog(e.id, left, top, width, height, e.title);
+				this._launchDialog(e.id, left, top, width, height, e.title, null, e.unique_id);
 			} else if (e.winType === 'child' || e.winType === 'tooltip') {
 				var parentId = parseInt(e.parentId);
 				if (!this._isOpen(parentId))
@@ -376,7 +383,7 @@ L.Control.LokDialog = L.Control.extend({
 			// FIXME: we don't really have to destroy and launch the dialog again but do it for
 			// now because the size sent to us previously in 'created' cb is not correct
 			$('#' + strId).remove();
-			this._launchDialog(e.id, null, null, width, height, this._dialogs[parseInt(e.id)].title);
+			this._launchDialog(e.id, null, null, width, height, this._dialogs[parseInt(e.id)].title, null, e.unique_id);
 			if (this._map._docLayer && this._map._docLayer._docType === 'spreadsheet') {
 				if (this._map._docLayer._painter._sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
 					this._map._docLayer._painter._sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
@@ -577,7 +584,7 @@ L.Control.LokDialog = L.Control.extend({
 		return changed;
 	},
 
-	_launchDialog: function(id, leftTwips, topTwips, width, height, title, type) {
+	_launchDialog: function(id, leftTwips, topTwips, width, height, title, type, uniqueId) {
 		if (window.ThisIsTheiOSApp) {
 			if (w2ui['editbar'])
 				w2ui['editbar'].disable('closemobile');
@@ -590,6 +597,8 @@ L.Control.LokDialog = L.Control.extend({
 
 		var strId = this._toStrId(id);
 		dialogContainer.id = strId;
+		if (uniqueId)
+			dialogContainer.dataset.uniqueId = uniqueId;
 
 		var dialogCanvas = L.DomUtil.create('canvas', 'lokdialog_canvas', dialogContainer);
 		this._setCanvasWidthHeight(dialogCanvas, width, height);
