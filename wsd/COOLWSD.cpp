@@ -5596,6 +5596,7 @@ int COOLWSD::innerMain()
     int returnValue = EX_OK;
     UnitWSD::get().returnValue(returnValue);
 
+    UnitBase::uninit();
     LOG_INF("Process [coolwsd] finished with exit status: " << returnValue);
 
     // At least on centos7, Poco deadlocks while
@@ -5677,6 +5678,8 @@ int COOLWSD::main(const std::vector<std::string>& /*args*/)
     cleanup();
 
     UnitWSD::get().returnValue(returnValue);
+
+    UnitBase::uninit();
 
     LOG_INF("Process [coolwsd] finished with exit status: " << returnValue);
 
