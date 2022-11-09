@@ -43,6 +43,6 @@ describe('Scroll through document', function() {
 
 		cy.wait(500);
 
-		desktopHelper.assertScrollbarPosition('horizontal', 121, 148);
+		desktopHelper.assertScrollbarPosition('horizontal', 250, 270);
 	});
 });
