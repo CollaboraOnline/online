@@ -27,10 +27,11 @@
 #include <common/SigUtil.hpp>
 #include <common/Message.hpp>
 
-UnitBase *UnitBase::Global = nullptr;
 UnitKit *GlobalKit = nullptr;
 UnitWSD *GlobalWSD = nullptr;
 UnitTool *GlobalTool = nullptr;
+UnitBase** UnitBase::GlobalArray = nullptr;
+int UnitBase::GlobalIndex = -1;
 char * UnitBase::UnitLibPath;
 static std::thread TimeoutThread;
 static std::atomic<bool> TimeoutThreadRunning(false);
@@ -39,7 +40,7 @@ std::timed_mutex TimeoutThreadMutex;
 /// Controls whether experimental features/behavior is enabled or not.
 bool EnableExperimental = false;
 
-UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibPath)
+UnitBase** UnitBase::linkAndCreateUnit(UnitType type, const std::string& unitLibPath)
 {
 #if !MOBILEAPP
     void *dlHandle = dlopen(unitLibPath.c_str(), RTLD_GLOBAL|RTLD_NOW);
@@ -72,15 +73,15 @@ UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibP
         LOG_ERR("No " << symbol << " symbol in " << unitLibPath);
         return nullptr;
     }
-    UnitBase *hooks = createHooks();
-
+    UnitBase* hooks = createHooks();
     if (hooks)
+    {
         hooks->setHandle(dlHandle);
-
-    return hooks;
-#else
-    return nullptr;
+        return new UnitBase* [1] { hooks };
+    }
 #endif
+
+    return nullptr;
 }
 
 bool UnitBase::init(UnitType type, const std::string &unitLibPath)
@@ -93,51 +94,69 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
         return true;
 #endif
 
+    GlobalArray = nullptr;
     if (!unitLibPath.empty())
     {
-        UnitBase* instance = linkAndCreateUnit(type, unitLibPath);
-        rememberInstance(type, instance);
-        LOG_DBG(instance->getTestname() << ": Initializing");
-
-        if (instance && type == UnitType::Kit)
+        GlobalArray = linkAndCreateUnit(type, unitLibPath);
+        if (GlobalArray)
         {
-            TimeoutThreadMutex.lock();
-            TimeoutThread = std::thread([instance]{
-                    TimeoutThreadRunning = true;
-                    Util::setThreadName("unit timeout");
+            GlobalIndex = 0;
+            UnitBase* instance = GlobalArray[GlobalIndex];
+            if (instance)
+            {
+                rememberInstance(type, instance);
+                LOG_DBG(instance->getTestname() << ": Initializing");
 
-                    if (TimeoutThreadMutex.try_lock_for(instance->_timeoutMilliSeconds))
-                    {
-                        LOG_DBG(instance->getTestname() << ": Unit test finished in time");
-                        TimeoutThreadMutex.unlock();
-                    }
-                    else
-                    {
-                        LOG_ERR(instance->getTestname()
-                                << ": Unit test timeout after " << instance->_timeoutMilliSeconds);
-                        instance->timeout();
-                    }
-                    TimeoutThreadRunning = false;
-                });
+                if (instance && type == UnitType::Kit)
+                {
+                    TimeoutThreadMutex.lock();
+                    TimeoutThread = std::thread(
+                        [instance]
+                        {
+                            TimeoutThreadRunning = true;
+                            Util::setThreadName("unit timeout");
+
+                            if (TimeoutThreadMutex.try_lock_for(instance->_timeoutMilliSeconds))
+                            {
+                                LOG_DBG(instance->getTestname() << ": Unit test finished in time");
+                                TimeoutThreadMutex.unlock();
+                            }
+                            else
+                            {
+                                LOG_ERR(instance->getTestname() << ": Unit test timeout after "
+                                                                << instance->_timeoutMilliSeconds);
+                                instance->timeout();
+                            }
+                            TimeoutThreadRunning = false;
+                        });
+                }
+
+                return get(type) != nullptr;
+            }
         }
     }
-    else
+
+    // Fallback.
+    switch (type)
     {
-        switch (type)
-        {
         case UnitType::Wsd:
             rememberInstance(UnitType::Wsd, new UnitWSD("UnitWSD"));
+            GlobalArray = new UnitBase* [1] { GlobalWSD };
+            GlobalIndex = 0;
             break;
         case UnitType::Kit:
             rememberInstance(UnitType::Kit, new UnitKit("UnitKit"));
+            GlobalArray = new UnitBase* [1] { GlobalKit };
+            GlobalIndex = 0;
             break;
         case UnitType::Tool:
             rememberInstance(UnitType::Tool, new UnitTool("UnitTool"));
+            GlobalArray = new UnitBase* [1] { GlobalTool };
+            GlobalIndex = 0;
             break;
         default:
             assert(false);
             break;
-        }
     }
 
     return get(type) != nullptr;
@@ -168,8 +187,6 @@ void UnitBase::rememberInstance(UnitType type, UnitBase* instance)
 {
     assert(instance->_type == type);
 
-    Global = instance;
-
     switch (type)
     {
     case UnitType::Wsd:
@@ -189,7 +206,8 @@ void UnitBase::rememberInstance(UnitType type, UnitBase* instance)
 
 bool UnitBase::isUnitTesting()
 {
-    return Global && Global->_dlHandle;
+    return GlobalArray && GlobalIndex >= 0 && GlobalArray[GlobalIndex] &&
+           GlobalArray[GlobalIndex]->_dlHandle;
 }
 
 void UnitBase::setTimeout(std::chrono::milliseconds timeoutMilliSeconds)
@@ -391,8 +409,6 @@ void UnitBase::returnValue(int &retValue)
     TimeoutThreadMutex.unlock();
     if (TimeoutThread.joinable())
         TimeoutThread.join();
-
-    Global = nullptr;
 }
 
 void UnitKit::returnValue(int &retValue)

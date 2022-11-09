@@ -233,8 +233,8 @@ public:
 
     static UnitBase& get()
     {
-        assert(Global);
-        return *Global;
+        assert(GlobalArray && GlobalIndex >= 0 && GlobalArray[GlobalIndex]);
+        return *GlobalArray[GlobalIndex];
     }
 
     static std::string getUnitLibPath() { return std::string(UnitLibPath); }
@@ -252,7 +252,9 @@ private:
         _dlHandle = dlHandle;
         _socketPoll->startThread();
     }
-    static UnitBase *linkAndCreateUnit(UnitType type, const std::string& unitLibPath);
+
+    /// Dynamically load the unit-test .so.
+    static UnitBase** linkAndCreateUnit(UnitType type, const std::string& unitLibPath);
 
     /// Handles messages from LOKit.
     virtual bool onFilterLOKitMessage(const std::shared_ptr<Message>& /*message*/) { return false; }
@@ -272,10 +274,12 @@ private:
 
     void *_dlHandle;
     static char *UnitLibPath;
+    static UnitBase** GlobalArray; //< All the tests.
+    static int GlobalIndex; //< The index of the current test.
+
     bool _setRetValue;
     int _retValue;
     std::chrono::milliseconds _timeoutMilliSeconds;
-    static UnitBase *Global;
     UnitType _type;
 
     std::shared_ptr<SocketPoll> _socketPoll; //< Poll thread for async http comm.

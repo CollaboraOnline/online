@@ -35,12 +35,12 @@ public:
     {
         bool madeWSD = init(UnitType::Wsd, std::string());
         assert(madeWSD);
-        delete UnitBase::Global;
-        UnitBase::Global = nullptr;
+        delete [] UnitBase::GlobalArray;
+        UnitBase::GlobalArray = nullptr;
         bool madeKit = init(UnitType::Kit, std::string());
         assert(madeKit);
-        delete UnitBase::Global;
-        UnitBase::Global = nullptr;
+        delete [] UnitBase::GlobalArray;
+        UnitBase::GlobalArray = nullptr;
     }
 };
 
