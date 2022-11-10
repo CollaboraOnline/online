@@ -143,19 +143,30 @@ L.Control.Header = L.Class.extend({
 	},
 
 	_selectRow: function(row, modifier) {
-		var command = {
-			Row: {
-				type: 'long',
-				value: row
-			},
-			Modifier: {
-				type: 'unsigned short',
-				value: modifier
+		// If function dialog is open and user wants to add the whole row to function.
+		if (this._map.dialog.hasOpenedDialog() && this._map.dialog.getCurrentDialogContainer()) {
+			var dialogContainer = this._map.dialog.getCurrentDialogContainer();
+			if (dialogContainer.dataset.uniqueId === 'FormulaDialog') {
+				var alpha = String(row + 1);
+				var text = alpha + ':' + alpha;
+				this._map._textInput._sendText(text);
 			}
-		};
-
-		this._map.wholeRowSelected = true; // This variable is set early, state change will set this again.
-		this._map.sendUnoCommand('.uno:SelectRow ', command);
+		}
+		else {
+			// Normal behavior.
+			var command = {
+				Row: {
+					type: 'long',
+					value: row
+				},
+				Modifier: {
+					type: 'unsigned short',
+					value: modifier
+				}
+			};
+			this._map.wholeRowSelected = true; // This variable is set early, state change will set this again.
+			this._map.sendUnoCommand('.uno:SelectRow ', command);
+		}
 	},
 
 	_insertRowAbove: function() {
