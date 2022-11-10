@@ -77,7 +77,7 @@ AC_PROG_LN_S
 
 AC_LANG_PUSH([C++])
 
-AS_IF([test `uname -s` = Linux],
+AS_IF([test `uname -s` = Linux -a "$host_os" != "emscripten"],
       [AC_PATH_PROG([SETCAP], setcap,[],[/bin:/usr/bin:/sbin:/usr/sbin])]
        AS_IF([test -z "$SETCAP"],
        [AC_MSG_ERROR([The setcap command is needed. It might be in a package called libcap-progs.])]))
@@ -531,7 +531,7 @@ ZSTDLIB_X86=
 ZSTDLIB_X86_64=
 
 CORE_VERSION_HASH=""
-if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_androidapp" = "yes" \); then
+if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_androidapp" = "yes" \) -o "$host_os" = "emscripten" ; then
    if test "$enable_androidapp" = "yes" ; then
       AC_MSG_CHECKING([for Android ABI to build for])
       if test -n "$with_android_abi" ; then
@@ -564,7 +564,7 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    CORE_VERSION_HASH=`cd $LOBUILDDIR && grep buildid instdir/program/setuprc | sed -e 's/buildid=//' -e 's/............................$//'`
 
    # Sanity check, just a random object file in the LibreOffice build tree
-   if test \( "$enable_iosapp" = "yes" -a -f "$LOBUILDDIR/workdir/CxxObject/vcl/ios/iosinst.o" \) -o \( "$enable_androidapp" = "yes" -a -f "$LOBUILDDIR/workdir/LinkTarget/StaticLibrary/liblibpng.a" \); then
+   if test \( "$enable_iosapp" = "yes" -a -f "$LOBUILDDIR/workdir/CxxObject/vcl/ios/iosinst.o" \) -o \( "$enable_androidapp" = "yes" -a -f "$LOBUILDDIR/workdir/LinkTarget/StaticLibrary/liblibpng.a" \) -o \( "$host_os" = "emscripten" -a -f "${LOBUILDDIR}/workdir/LinkTarget/StaticLibrary/liblibpng.a" \); then
        AC_MSG_RESULT([$LOBUILDDIR])
    else
        AC_MSG_ERROR([This is not a LibreOffice core build directory: $LOBUILDDIR])
@@ -1093,11 +1093,11 @@ AS_IF([test -n "$with_cppunit_includes"],
 AS_IF([test -n "$with_cppunit_libs"],
       [LDFLAGS="$LDFLAGS -L${with_cppunit_libs}"])
 
-AS_IF([test `uname -s` = Linux -o `uname -s` = FreeBSD],
+AS_IF([test \( `uname -s` = Linux -o `uname -s` = FreeBSD \) -a "$host_os" != "emscripten"],
       [AS_IF([test -n "$with_poco_libs" -a -f "$with_poco_libs/libPocoFoundation.so"],
              [LDFLAGS="$LDFLAGS -Wl,-rpath,${with_poco_libs}"])])
 
-AS_IF([test `uname -s` = Linux -o `uname -s` = FreeBSD],
+AS_IF([test \( `uname -s` = Linux -o `uname -s` = FreeBSD \) -a "$host_os" != "emscripten"],
       [AS_IF([test -n "$with_cppunit_libs"],
              [LDFLAGS="$LDFLAGS -Wl,-rpath,${with_cppunit_libs}"])])
 
@@ -1107,7 +1107,7 @@ AS_IF([test `uname -s` != Darwin],
                       [],
                       [AC_MSG_ERROR([dlopen not found])])])
 
-AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
       [AC_SEARCH_LIBS([png_create_write_struct],
                       [png],
                       [],
@@ -1120,7 +1120,7 @@ dnl    tile compression
        PKG_CHECK_MODULES([CPPUNIT], [cppunit])
        ])
 
-AS_IF([test `uname -s` = Linux -a "$ENABLE_ANDROIDAPP" != "true"],
+AS_IF([test `uname -s` = Linux -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
       [AC_SEARCH_LIBS([cap_get_proc],
                       [cap],
                       [],
@@ -1135,7 +1135,7 @@ mobile_app=
 ENABLE_MOBILEAPP=
 MOBILEAPP=0
 AC_MSG_CHECKING([Is this a mobile app])
-if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_androidapp" = "yes"; then
+if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_androidapp" = "yes" -o "$host_os" = "emscripten" ; then
      AC_MSG_RESULT([Yes])
      mobile_app=true;
      MOBILEAPP=1
@@ -1164,7 +1164,7 @@ fi
 AM_CONDITIONAL([ENABLE_SSL], [$ENABLE_SSL])
 AC_SUBST(ENABLE_SSL)
 
-AS_IF([test "$ENABLE_ANDROIDAPP" != "true"],
+AS_IF([test "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
       [AC_CHECK_HEADERS([security/pam_appl.h],
                         [],
                         [AC_MSG_ERROR([header security/pam_appl.h not found, install PAM development package])])
@@ -1191,7 +1191,7 @@ LIBS="$LIBS -lPocoNetSSL${POCO_DEBUG_SUFFIX} -lPocoNet${POCO_DEBUG_SUFFIX} -lPoc
 AS_IF([test "$ENABLE_SSL" = "true"],
       [LIBS="$LIBS -lssl -lcrypto"])
 
-AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
       [AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
                         [],
                         [AC_MSG_ERROR([header LibreOfficeKit/LibreOfficeKit.h not found, perhaps you want to use --with-lokit-path])])
@@ -1309,10 +1309,10 @@ if test -n "$with_user_id"; then
 fi
 AC_DEFINE_UNQUOTED([COOL_USER_ID],["$COOL_USER_ID"],[The user-name which is allowed to run coolwsd and its tools])
 
-AM_CONDITIONAL([ENABLE_SETCAP], [test "$enable_setcap" != "no" -a `uname -s` = "Linux" -a "$enable_fuzzers" != "yes"])
+AM_CONDITIONAL([ENABLE_SETCAP], [test "$enable_setcap" != "no" -a `uname -s` = "Linux" -a "$enable_fuzzers" != "yes" -a "$host_os" != "emscripten"])
 
 ENABLE_SETCAP=
-if test "$enable_setcap" != "no" -a `uname -s` = "Linux" -a "$enable_fuzzers" != "yes"; then
+if test "$enable_setcap" != "no" -a `uname -s` = "Linux" -a "$enable_fuzzers" != "yes" -a "$host_os" != "emscripten"; then
     ENABLE_SETCAP=true
     setcap_msg="setcap enabled"
 else
