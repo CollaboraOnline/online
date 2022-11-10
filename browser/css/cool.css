@@ -869,6 +869,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	margin: 6px 8px;
+	font-size: 14px;
 }
 
 .leaflet-canvas-container .cell-cursor-data {
