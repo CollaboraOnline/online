@@ -5593,8 +5593,7 @@ int COOLWSD::innerMain()
     JailUtil::cleanupJails(ChildRoot);
 #endif // !MOBILEAPP
 
-    int returnValue = EX_OK;
-    UnitWSD::get().returnValue(returnValue);
+    const int returnValue = UnitBase::uninit();
 
     UnitBase::uninit();
     LOG_INF("Process [coolwsd] finished with exit status: " << returnValue);
@@ -5677,9 +5676,7 @@ int COOLWSD::main(const std::vector<std::string>& /*args*/)
 
     cleanup();
 
-    UnitWSD::get().returnValue(returnValue);
-
-    UnitBase::uninit();
+    returnValue = UnitBase::uninit();
 
     LOG_INF("Process [coolwsd] finished with exit status: " << returnValue);
 
