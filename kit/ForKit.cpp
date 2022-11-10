@@ -770,10 +770,7 @@ int main(int argc, char** argv)
             forkLibreOfficeKit(childRoot, sysTemplate, loTemplate);
     }
 
-    int returnValue = EX_OK;
-    UnitKit::get().returnValue(returnValue);
-
-    UnitBase::uninit();
+    const int returnValue = UnitBase::uninit();
 
     LOG_INF("ForKit process finished.");
     Util::forcedExit(returnValue);
