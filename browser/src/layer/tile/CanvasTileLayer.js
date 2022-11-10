@@ -2412,6 +2412,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
+	_setupClickFuncForId: function(targetId, func) {
+		var target = document.getElementById(targetId);
+		target.style.cursor = 'pointer';
+		target.onclick = target.ontouchend = func;
+	},
+
 	_showURLPopUp: function(position, url) {
 		// # for internal links
 		if (!url.startsWith('#')) {
@@ -2441,11 +2447,15 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (offsetDiffTop < 10) this._movePopUpBelow();
 			if (offsetDiffLeft < 10) this._movePopUpRight();
 			var map_ = this._map;
-			var element = document.getElementById('hyperlink-pop-up');
-			element.style.cursor = 'pointer';
-			element.onclick = element.ontouchend = function() {
+			this._setupClickFuncForId('hyperlink-pop-up', function() {
 				map_.fire('warn', {url: url, map: map_, cmd: 'openlink'});
-			};
+			});
+			this._setupClickFuncForId('hyperlink-pop-up-edit', function () {
+				map_.sendUnoCommand('.uno:EditHyperlink');
+			});
+			this._setupClickFuncForId('hyperlink-pop-up-remove', function () {
+				// delete
+			});
 		}
 	},
 
