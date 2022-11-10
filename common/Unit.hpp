@@ -132,7 +132,9 @@ public:
     /// Load unit test hook shared library from this path
     static bool init(UnitType type, const std::string& unitLibPath);
 
-    static void uninit();
+    /// Uninitialize the unit-test and return the global exit code.
+    /// Returns 0 on success.
+    static int uninit();
 
     /// Do we have a unit test library hooking things & loaded
     static bool isUnitTesting();
@@ -273,6 +275,7 @@ private:
     static char *UnitLibPath;
     static UnitBase** GlobalArray; //< All the tests.
     static int GlobalIndex; //< The index of the current test.
+    static TestResult GlobalResult; //< The result of all tests. Latches at first failure.
 
     bool _setRetValue;
     int _retValue;

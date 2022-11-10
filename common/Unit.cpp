@@ -34,6 +34,7 @@ UnitBase** UnitBase::GlobalArray = nullptr;
 int UnitBase::GlobalIndex = -1;
 char* UnitBase::UnitLibPath = nullptr;
 void* UnitBase::DlHandle = nullptr;
+UnitBase::TestResult UnitBase::GlobalResult = UnitBase::TestResult::Ok;
 static std::thread TimeoutThread;
 static std::atomic<bool> TimeoutThreadRunning(false);
 std::timed_mutex TimeoutThreadMutex;
@@ -222,10 +223,20 @@ void UnitBase::rememberInstance(UnitType type, UnitBase* instance)
     }
 }
 
-void UnitBase::uninit()
+int UnitBase::uninit()
 {
+    TST_LOG_NAME("UnitBase", "Uninitializing unit-tests: "
+                                 << (GlobalResult == TestResult::Ok ? "SUCCESS" : "FAILED"));
+
     if (GlobalArray)
     {
+        // By default, this will check _setRetValue and copy _retValue to the arg.
+        // But we call it to trigger overrides and to perform cleanups.
+        int retValue = GlobalResult == TestResult::Ok ? EX_OK : EX_SOFTWARE;
+        GlobalArray[GlobalIndex]->returnValue(retValue);
+        if (retValue)
+            GlobalResult = TestResult::Failed;
+
         for (int i = 0; GlobalArray[i] != nullptr; ++i)
         {
             delete GlobalArray[i];
@@ -249,6 +260,7 @@ void UnitBase::uninit()
         dlclose(DlHandle);
     DlHandle = nullptr;
 
+    return GlobalResult == TestResult::Ok ? EX_OK : EX_SOFTWARE;
 }
 
 void UnitBase::initialize()
@@ -429,11 +441,19 @@ void UnitBase::exitTest(TestResult result)
     {
         LOG_TST("ERROR " << getTestname() << ": FAILURE: exitTest: " << testResultAsString(result));
         _retValue = EX_SOFTWARE;
+        if (GlobalResult == TestResult::Ok)
+            GlobalResult = result;
     }
+
+    _setRetValue = true;
 
     // Check if we have more tests, but keep the current index if it's the last.
     if (GlobalArray && GlobalIndex >= 0 && GlobalArray[GlobalIndex + 1])
     {
+        // By default, this will check _setRetValue and copy _retValue to the arg.
+        // But we call it to trigger overrides and to perform cleanups.
+        returnValue(_retValue);
+
         // We have more tests.
         ++GlobalIndex;
         rememberInstance(_type, GlobalArray[GlobalIndex]);
@@ -444,11 +464,10 @@ void UnitBase::exitTest(TestResult result)
         return;
     }
 
-    TST_LOG_NAME("UnitBase", getTestname() << " was the last test. Finishing "
-                                           << (_retValue ? "FAILED" : "SUCCESS"));
-
     // We are done with all the tests.
-    _setRetValue = true;
+    TST_LOG_NAME("UnitBase", getTestname()
+                                 << " was the last test. Finishing "
+                                 << (GlobalResult == TestResult::Ok ? "SUCCESS" : "FAILED"));
 
 #if !MOBILEAPP
     LOG_INF("Setting ShutdownRequestFlag as there are no more tests");
