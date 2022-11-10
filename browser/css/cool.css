@@ -871,6 +871,26 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	text-overflow: ellipsis;
 	margin: 6px 8px;
 	font-size: 14px;
+	line-height: 1;
+}
+
+#hyperlink-pop-up {
+	padding: 6px 0;
+	display: inline-block;
+	line-height: 1;
+}
+
+.hyperlink-popup-btn {
+	display: inline-block;
+	margin-left: 12px;
+	vertical-align: baseline;
+	width: 26px;
+	height: 26px;
+}
+
+.hyperlink-popup-btn:hover {
+	background-color: var(--color-background-darker);
+	border-radius: 50%;
 }
 
 .leaflet-canvas-container .cell-cursor-data {

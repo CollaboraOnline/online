@@ -2417,8 +2417,23 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!url.startsWith('#')) {
 			var link = L.DomUtil.createWithId('a', 'hyperlink-pop-up');
 			link.innerText = url;
+			var editBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-edit');
+			L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
+			var imgEditBtn = L.DomUtil.create('img', 'hyperlink-pop-up-editimg', editBtn);
+			imgEditBtn.setAttribute('src', L.LOUtil.getImageURL('lc_edithyperlink.svg'));
+			imgEditBtn.setAttribute('width', 18);
+			imgEditBtn.setAttribute('height', 18);
+			imgEditBtn.setAttribute('style', 'padding: 4px');
+			var removeBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-remove');
+			L.DomUtil.addClass(removeBtn, 'hyperlink-popup-btn');
+			var imgRemoveBtn = L.DomUtil.create('img', 'hyperlink-pop-up-removeimg', removeBtn);
+			imgRemoveBtn.setAttribute('src', L.LOUtil.getImageURL('lc_removehyperlink.svg'));
+			imgRemoveBtn.setAttribute('width', 18);
+			imgRemoveBtn.setAttribute('height', 18);
+			imgRemoveBtn.setAttribute('style', 'padding: 4px');
+			var linkOuterHtml = link.outerHTML + editBtn.outerHTML + removeBtn.outerHTML;
 			this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false, autoPan: false})
-				.setContent(link.outerHTML)
+				.setContent(linkOuterHtml)
 				.setLatLng(position)
 				.openOn(this._map);
 			var offsetDiffTop = $('.hyperlink-popup').offset().top - $('#map').offset().top;
