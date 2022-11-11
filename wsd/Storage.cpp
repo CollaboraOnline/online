@@ -61,6 +61,8 @@
 #include "androidapp.hpp"
 #elif defined(GTKAPP)
 #include "gtk.hpp"
+#elif defined(__EMSCRIPTEN__)
+#include "wasmapp.hpp"
 #endif
 
 bool StorageBase::FilesystemEnabled;
