@@ -89,10 +89,10 @@ endif
 noinst_LTLIBRARIES = ${all_la_unit_tests}
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
-AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION) $(ZLIB_LIBS) $(ZSTD_LIBS)
+AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION) $(ZLIB_LIBS) $(ZSTD_LIBS) ${PNG_LIBS}
 
 if ENABLE_SSL
-AM_LDFLAGS += -lssl -lcrypto
+AM_LDFLAGS += ${OPENSSL_LIBS}
 endif
 
 # We work around some of the mess of using the same sources both on
