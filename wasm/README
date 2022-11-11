@@ -1,0 +1,53 @@
+
+= WASM with emscripten =
+
+Building for WASM with emscripten is still a bit immature and many projects
+need patching to work.
+
+Note that there are wrapper tools like "emconfigure", "emmake", "emcmake" that
+tend to set up environment variables like CC properly, although some project's
+build system unfortunately override that.
+
+For convenience it's recommended to build with a docker container that has the
+required build tools.
+
+    podman pull public.ecr.aws/allotropia/libo-builders/wasm
+
+== Build dependencies ==
+
+First you need to build LibreOffice core with emscripten.
+Currently best to use "feature/wasm" branch.
+
+    podman run -v $HOME/lo/feature_wasm:$HOME/lo/feature_wasm:ro -v /data/lo/build_feature_wasm:/data/lo/build_feature_wasm -v $HOME/lo/ext_sources:/ext_sources:ro --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c 'source /home/builder/emsdk/emsdk_env.sh && cd /data/lo/build_feature_wasm/ && /home/ms/lo/feature_wasm/autogen.sh --with-external-tar=/ext_sources --with-distro=LibreOfficeWASM32'
+
+    podman run -v $HOME/lo/feature_wasm:$HOME/lo/feature_wasm:ro -v /data/lo/build_feature_wasm:/data/lo/build_feature_wasm -v $HOME/lo/ext_sources:/ext_sources:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c 'source /home/builder/emsdk/emsdk_env.sh && cd /data/lo/build_feature_wasm/ && make -rj8'
+
+Then build libzstd:
+* with assembly code disabled
+* using the Makefile (didn't try its other build systems)
+
+    tar -xzvf ~/Downloads/zstd-1.5.2.tar.gz
+    cd zstd-1.5.2/
+    podman run -v /data/lo/zstd-1.5.2:/data/lo/zstd-1.5.2:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c 'source /home/builder/emsdk/emsdk_env.sh && cd /data/lo/zstd-1.5.2/ && emmake make -j8 lib-nomt ZSTD_NO_ASM=1'
+
+Then build POCO:
+* this requires a patch (currently exists patch for 1.12.4 and untested "devel"
+  branch)
+* note that the header Poco/Platform.h maps EMSCRIPTEN to POCO_OS_LINUX
+* it has both Makefiles and CMake but i couldn't get CMake to use CXXFLAGS to
+  disable some Linux-specific code; i tried variations on:
+    emcmake cmake -S .. -DENABLE_MONGODB=off -DENABLE_DATA_SQLITE=off -DENABLE_REDIS=off -DENABLE_PROMETHEUS=off -DENABLE_PDF=off -DENABLE_SEVENZIP=off -DENABLE_ZIP=off -DENABLE_CPPPARSER=off -DENABLE_POCODOC=off -DENABLE_PAGECOMPILER=off -DENABLE_PAGECOMPILER_FILE2PAGE=off -DENABLE_ACTIVERECORD=off -DENABLE_ACTIVERECORD_COMPILER=off -DENABLE_DATA=off -DENABLE_DATA_ODBC=off -DENABLE_DATA_POSTGRESQL=off -DENABLE_DATA_MYSQL=off -DENABLE_APACHECONNECTOR=off -DENABLE_JWT=off CXXFLAGS=-DPOCO_NO_LINUX_IF_PACKET_H
+* Online requires a single include directory so "make install" must be used
+
+    tar -xjvf ~/Downloads/poco-1.12.4-all.tar.bz2
+    cd poco-1.12.4-all
+    patch -p1 < $HOME/lo/online/wasm/poco-1.12.4-emscripten.patch
+    podman run -v /data/lo/poco-1.12.4-all:/data/lo/poco-1.12.4-all:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c 'source /home/builder/emsdk/emsdk_env.sh && cd /data/lo/poco-1.12.4-all && emconfigure ./configure --static --no-samples --no-tests --omit=Crypto,NetSSL_OpenSSL,JWT,Data,Data/SQLite,Data/ODBC,Data/MySQL,Data/PostgreSQL,Zip,PageCompiler,PageCompiler/File2Page,MongoDB,Redis,ActiveRecord,ActiveRecord/Compiler,Prometheus && emmake make -j8 CC=/home/builder/emsdk/upstream/emscripten/emcc CXX=/home/builder/emsdk/upstream/emscripten/em++ LD=/home/builder/emsdk/upstream/emscripten/em++ CXXFLAGS=-DPOCO_NO_LINUX_IF_PACKET_H && make -j8 install INSTALLDIR=/data/lo/poco-1.12.4-all/install'
+
+== Build Online ==
+
+Then build Online itself:
+
+    podman run -v /data/lo/zstd-1.5.2:/data/lo/zstd-1.5.2:ro -v /data/lo/poco-1.12.4-all:/data/lo/poco-1.12.4-all:ro -v $HOME/lo/feature_wasm:$HOME/lo/feature_wasm:ro -v /data/lo/build_feature_wasm:/data/lo/build_feature_wasm:ro -v $HOME/lo/online:$HOME/lo/online:rw -v /data/lo/build_online_wasm:/data/lo/build_online_wasm:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd /data/lo/build_online_wasm/ && /home/ms/lo/online/autogen.sh && emconfigure /home/ms/lo/online/configure --with-lokit-path=$HOME/lo/feature_wasm/include --with-lo-path=/data/lo/build_feature_wasm/instdir --with-lo-builddir=/data/lo/build_feature_wasm --with-zstd-includes=/data/lo/zstd-1.5.2/lib --with-zstd-libs=/data/lo/zstd-1.5.2/lib --with-poco-includes=/data/lo/poco-1.12.4-all/install/include --with-poco-libs=/data/lo/poco-1.12.4-all/install/lib --host=wasm32-local-emscripten"
+    podman run -v /data/lo/zstd-1.5.2:/data/lo/zstd-1.5.2:ro -v /data/lo/poco-1.12.4-all:/data/lo/poco-1.12.4-all:ro -v $HOME/lo/feature_wasm:$HOME/lo/feature_wasm:ro -v /data/lo/build_feature_wasm:/data/lo/build_feature_wasm:ro -v $HOME/lo/online:$HOME/lo/online:rw -v /data/lo/build_online_wasm:/data/lo/build_online_wasm:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd /data/lo/build_online_wasm/ && emmake make"
+
