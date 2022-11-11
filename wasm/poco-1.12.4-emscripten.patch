@@ -1,0 +1,20 @@
+--- poco-1.12.4-all/Foundation/src/Thread_POSIX.cpp	2022-10-31 18:44:32.000000000 +0100
++++ poco-1.12.4-all/Foundation/src/Thread_POSIX.cpp	2022-11-09 18:20:41.701346868 +0100
+@@ -67,7 +67,7 @@
+ {
+ #if (POCO_OS == POCO_OS_MAC_OS_X)
+ 	pthread_setname_np(threadName.c_str()); // __OSX_AVAILABLE_STARTING(__MAC_10_6, __IPHONE_3_2)
+-#else
++#elif !defined(__EMSCRIPTEN__)
+ 	if (pthread_setname_np(thread, threadName.c_str()) == ERANGE && threadName.size() > 15)
+ 	{
+ 		std::string truncName(threadName, 0, 7);
+@@ -272,7 +272,7 @@
+ 
+ long ThreadImpl::currentOsTidImpl()
+ {
+-#if POCO_OS == POCO_OS_LINUX
++#if POCO_OS == POCO_OS_LINUX && !defined(__EMSCRIPTEN__)
+     return ::syscall(SYS_gettid);
+ #elif POCO_OS == POCO_OS_MAC_OS_X
+     return ::pthread_mach_thread_np(::pthread_self());
