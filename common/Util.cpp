@@ -15,7 +15,7 @@
 #include "Util.hpp"
 
 #include <csignal>
-#include <sys/poll.h>
+#include <poll.h>
 #ifdef __linux__
 #  include <sys/prctl.h>
 #  include <sys/syscall.h>
