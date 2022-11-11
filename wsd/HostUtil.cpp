@@ -80,6 +80,8 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
     }
 
     AliasHosts.clear();
+    WopiHosts.clear();
+    hostList.clear();
 #if ENABLE_FEATURE_LOCK
     CommandControl::LockManager::unlockLinkMap.clear();
 #endif
