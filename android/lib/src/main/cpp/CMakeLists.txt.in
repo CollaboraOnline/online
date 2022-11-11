@@ -129,7 +129,6 @@ target_link_libraries(androidapp
                       ${LOBUILDDIR_ABI}/workdir/LinkTarget/StaticLibrary/liblibpng.a
                       ${POCOLIB_ABI}/libPocoEncodings@POCODEBUG@.a
                       ${POCOLIB_ABI}/libPocoNet@POCODEBUG@.a
-                      ${POCOLIB_ABI}/libPocoRedis@POCODEBUG@.a
                       ${POCOLIB_ABI}/libPocoUtil@POCODEBUG@.a
                       ${POCOLIB_ABI}/libPocoXML@POCODEBUG@.a
                       ${POCOLIB_ABI}/libPocoJSON@POCODEBUG@.a
