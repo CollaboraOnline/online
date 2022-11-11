@@ -53,7 +53,7 @@ std::atomic<bool> Socket::InhibitThreadChecks(false);
 
 #define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
 
-int Socket::createSocket(Socket::Type type)
+int Socket::createSocket([[maybe_unused]] Socket::Type type)
 {
 #if !MOBILEAPP
     int domain = AF_UNSPEC;
@@ -747,7 +747,7 @@ void SocketPoll::dumpState(std::ostream& os)
 }
 
 /// Returns true on success only.
-bool ServerSocket::bind(Type type, int port)
+bool ServerSocket::bind([[maybe_unused]] Type type, [[maybe_unused]] int port)
 {
 #if !MOBILEAPP
     // Enable address reuse to avoid stalling after

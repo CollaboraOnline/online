@@ -43,7 +43,7 @@ std::timed_mutex TimeoutThreadMutex;
 /// Controls whether experimental features/behavior is enabled or not.
 bool EnableExperimental = false;
 
-UnitBase** UnitBase::linkAndCreateUnit(UnitType type, const std::string& unitLibPath)
+UnitBase** UnitBase::linkAndCreateUnit([[maybe_unused]] UnitType type, [[maybe_unused]] const std::string& unitLibPath)
 {
 #if !MOBILEAPP
     DlHandle = dlopen(unitLibPath.c_str(), RTLD_GLOBAL|RTLD_NOW);

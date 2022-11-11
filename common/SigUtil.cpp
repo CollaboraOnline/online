@@ -40,8 +40,10 @@
 
 #ifndef IOS
 static std::atomic<bool> TerminationFlag(false);
+#ifndef __EMSCRIPTEN__
 static std::atomic<bool> DumpGlobalState(false);
 static std::atomic<bool> ForwardSigUsr2Flag(false); //< Flags to forward SIG_USR2 to children.
+#endif
 static std::atomic<bool> ShutdownRequestFlag(false);
 #endif
 
@@ -90,7 +92,7 @@ namespace SigUtil
 #endif
 #endif // !IOS
 
-    void checkDumpGlobalState(GlobalDumpStateFn dumpState)
+    void checkDumpGlobalState([[maybe_unused]] GlobalDumpStateFn dumpState)
     {
 #if !MOBILEAPP
         assert(dumpState && "Invalid callback for checkDumpGlobalState");
@@ -102,7 +104,7 @@ namespace SigUtil
 #endif
     }
 
-    void checkForwardSigUsr2(ForwardSigUsr2Fn forwardSigUsr2)
+    void checkForwardSigUsr2([[maybe_unused]] ForwardSigUsr2Fn forwardSigUsr2)
     {
 #if !MOBILEAPP
         assert(forwardSigUsr2 && "Invalid callback for checkForwardSigUsr2");
