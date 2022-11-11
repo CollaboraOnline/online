@@ -816,6 +816,8 @@ fi
 AC_SUBST(ENABLE_GTKAPP)
 AM_CONDITIONAL([ENABLE_GTKAPP], [test "$ENABLE_GTKAPP" = "true"])
 
+AM_CONDITIONAL([ENABLE_WASM], [test "$host_os" = "emscripten"])
+
 MAX_CONNECTIONS=9999
 AS_IF([test -n "$with_max_connections" && test "$with_max_connections" -gt "0"],
       [MAX_CONNECTIONS="$with_max_connections"])
@@ -1559,6 +1561,7 @@ AC_SUBST(ALLOWED_LANGUAGES)
 AC_CONFIG_FILES([Makefile
                  cypress_test/Makefile
                  gtk/Makefile
+                 wasm/Makefile
                  test/Makefile
                  browser/Makefile
                  browser/npm-shrinkwrap.json

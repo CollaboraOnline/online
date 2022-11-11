@@ -5,7 +5,11 @@ if ENABLE_MOBILEAPP
 if ENABLE_GTKAPP
 SUBDIRS = gtk browser
 else
+if ENABLE_WASM
+SUBDIRS = wasm browser
+else !ENABLE_WASM
 SUBDIRS = browser
+endif !ENABLE_WASM
 endif
 
 else
