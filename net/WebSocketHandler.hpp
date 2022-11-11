@@ -41,7 +41,7 @@ private:
 
     std::vector<char> _wsPayload;
     std::atomic<bool> _shuttingDown;
-    unsigned char _lastFlags; //< The flags in the last frame.
+    [[maybe_unused]] unsigned char _lastFlags; //< The flags in the last frame.
     const bool _isClient;
 
 protected:
@@ -60,7 +60,7 @@ public:
     /// isClient: the instance should behave like a client (true) or like a server (false)
     ///           (from websocket perspective)
     /// isMasking: a client should mask (true) or not (false) outgoing frames
-    WebSocketHandler(bool isClient, bool isMasking) :
+    WebSocketHandler(bool isClient, [[maybe_unused]] bool isMasking) :
 #if !MOBILEAPP
         _lastPingSentTime(std::chrono::steady_clock::now()),
         _pingTimeUs(0),
@@ -529,8 +529,8 @@ protected:
         }
     }
 
-    int getPollEvents(std::chrono::steady_clock::time_point now,
-                      int64_t & timeoutMaxMicroS) override
+    int getPollEvents([[maybe_unused]] std::chrono::steady_clock::time_point now,
+                      [[maybe_unused]] int64_t & timeoutMaxMicroS) override
     {
 #if !MOBILEAPP
         if (!_isClient)
@@ -589,7 +589,7 @@ public:
 #endif
 
     /// Do we need to handle a timeout ?
-    void checkTimeout(std::chrono::steady_clock::time_point now) override
+    void checkTimeout([[maybe_unused]] std::chrono::steady_clock::time_point now) override
     {
 #if !MOBILEAPP
         if (_isClient)
@@ -729,7 +729,7 @@ protected:
     /// 0 for closed/invalid socket, and -1 for other errors.
     int sendFrame(const std::shared_ptr<StreamSocket>& socket,
                   const char* data, const uint64_t len,
-                  unsigned char flags, bool flush = true) const
+                  [[maybe_unused]] unsigned char flags, bool flush = true) const
     {
         if (!socket || data == nullptr || len == 0)
             return -1;
@@ -894,7 +894,7 @@ protected:
 
     /// Upgrade the http(s) connection to a websocket.
     template <typename T>
-    void upgradeToWebSocket(StreamSocket& socket, const T& req)
+    void upgradeToWebSocket(StreamSocket& socket, [[maybe_unused]] const T& req)
     {
         LOG_TRC('#' << socket.getFD() << ": Upgrading to WebSocket.");
         assert(!socket.isWebSocket());

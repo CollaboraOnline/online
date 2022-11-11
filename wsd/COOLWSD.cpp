@@ -358,7 +358,7 @@ void COOLWSD::checkSessionLimitsAndWarnClients()
 #endif
 }
 
-void COOLWSD::checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
+void COOLWSD::checkDiskSpaceAndWarnClients([[maybe_unused]] const bool cacheLastCheck)
 {
 #if !MOBILEAPP
     try
@@ -1811,7 +1811,7 @@ private:
 };
 #endif
 
-void COOLWSD::innerInitialize(Application& self)
+void COOLWSD::innerInitialize([[maybe_unused]] Application& self)
 {
 #if !MOBILEAPP
     if (geteuid() == 0 && CheckCoolUser)
@@ -2652,7 +2652,7 @@ void COOLWSD::dumpOutgoingTrace(const std::string& id, const std::string& sessio
     }
 }
 
-void COOLWSD::defineOptions(OptionSet& optionSet)
+void COOLWSD::defineOptions([[maybe_unused]] OptionSet& optionSet)
 {
 #if !MOBILEAPP
     ServerApplication::defineOptions(optionSet);
@@ -2734,8 +2734,8 @@ void COOLWSD::defineOptions(OptionSet& optionSet)
 #endif
 }
 
-void COOLWSD::handleOption(const std::string& optionName,
-                           const std::string& value)
+void COOLWSD::handleOption([[maybe_unused]] const std::string& optionName,
+                           [[maybe_unused]] const std::string& value)
 {
 #if !MOBILEAPP
     ServerApplication::handleOption(optionName, value);

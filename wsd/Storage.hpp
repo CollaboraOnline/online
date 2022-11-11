@@ -478,7 +478,7 @@ public:
 private:
     /// True if we the source file a temporary that we own.
     /// Typically for convert-to requests.
-    const bool _isTemporaryFile;
+    [[maybe_unused]] const bool _isTemporaryFile;
     /// True if the jailed file is not linked but copied.
     bool _isCopy;
     static std::atomic<unsigned> LastLocalStorageId;

@@ -59,7 +59,7 @@ public:
     /// Listen to incoming connections (Servers only).
     /// Does not retry on error.
     /// Returns true on success only.
-    bool listen(const int backlog = 64)
+    bool listen([[maybe_unused]] const int backlog = 64)
     {
 #if !MOBILEAPP
         const int rc = ::listen(getFD(), backlog);
