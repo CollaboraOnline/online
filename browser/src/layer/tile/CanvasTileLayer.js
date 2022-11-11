@@ -2423,6 +2423,13 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!url.startsWith('#')) {
 			var link = L.DomUtil.createWithId('a', 'hyperlink-pop-up');
 			link.innerText = url;
+			var copyBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-copy');
+			L.DomUtil.addClass(copyBtn, 'hyperlink-popup-btn');
+			var imgCopyBtn = L.DomUtil.create('img', 'hyperlink-pop-up-copyimg', copyBtn);
+			imgCopyBtn.setAttribute('src', L.LOUtil.getImageURL('lc_copyhyperlinklocation.svg'));
+			imgCopyBtn.setAttribute('width', 18);
+			imgCopyBtn.setAttribute('height', 18);
+			imgCopyBtn.setAttribute('style', 'padding: 4px');
 			var editBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-edit');
 			L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
 			var imgEditBtn = L.DomUtil.create('img', 'hyperlink-pop-up-editimg', editBtn);
@@ -2437,7 +2444,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			imgRemoveBtn.setAttribute('width', 18);
 			imgRemoveBtn.setAttribute('height', 18);
 			imgRemoveBtn.setAttribute('style', 'padding: 4px');
-			var linkOuterHtml = link.outerHTML + editBtn.outerHTML + removeBtn.outerHTML;
+			var linkOuterHtml = link.outerHTML + copyBtn.outerHTML + editBtn.outerHTML + removeBtn.outerHTML;
 			this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false, autoPan: false})
 				.setContent(linkOuterHtml)
 				.setLatLng(position)
@@ -2450,11 +2457,14 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._setupClickFuncForId('hyperlink-pop-up', function() {
 				map_.fire('warn', {url: url, map: map_, cmd: 'openlink'});
 			});
+			this._setupClickFuncForId('hyperlink-pop-up-copy', function () {
+				map_.sendUnoCommand('.uno:CopyHyperlinkLocation');
+			});
 			this._setupClickFuncForId('hyperlink-pop-up-edit', function () {
 				map_.sendUnoCommand('.uno:EditHyperlink');
 			});
 			this._setupClickFuncForId('hyperlink-pop-up-remove', function () {
-				// delete
+				map_.sendUnoCommand('.uno:RemoveHyperlink');
 			});
 		}
 	},
