@@ -153,10 +153,12 @@ using Poco::Net::PartHandler;
 #if MOBILEAPP
 #ifdef IOS
 #include "ios.h"
-#elif GTKAPP
+#elif defined(GTKAPP)
 #include "gtk.hpp"
 #elif defined(__ANDROID__)
 #include "androidapp.hpp"
+#elif defined(__EMSCRIPTEN__)
+#include "wasmapp.hpp"
 #endif
 #endif
 

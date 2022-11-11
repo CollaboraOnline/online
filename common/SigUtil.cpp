@@ -9,14 +9,14 @@
 
 #include "SigUtil.hpp"
 
-#if !defined(__ANDROID__)
+#if !defined(__ANDROID__) && !defined(__EMSCRIPTEN__)
 #  include <execinfo.h>
 #endif
 #include <csignal>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <sys/poll.h>
+#include <poll.h>
 #include <sys/uio.h>
 #include <unistd.h>
 

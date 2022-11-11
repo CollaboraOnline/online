@@ -59,6 +59,8 @@
 #include <ios.h>
 #elif defined(__ANDROID__)
 #include "androidapp.hpp"
+#elif defined(__EMSCRIPTEN__)
+#include "wasmapp.hpp"
 #endif
 
 bool StorageBase::FilesystemEnabled;
