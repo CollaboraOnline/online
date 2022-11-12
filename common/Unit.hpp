@@ -51,6 +51,7 @@ class StorageBase;
 
 typedef UnitBase *(CreateUnitHooksFunction)();
 extern "C" { UnitBase *unit_create_wsd(void); }
+extern "C" { UnitBase *unit_create_wsd_multi(void); }
 extern "C" { UnitBase *unit_create_kit(void); }
 extern "C" { typedef struct _LibreOfficeKit LibreOfficeKit; }
 
