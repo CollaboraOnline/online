@@ -100,6 +100,9 @@ UnitBase** UnitBase::linkAndCreateUnit(UnitType type, const std::string& unitLib
             break;
     }
 
+    // Internal consistency sanity check.
+    selfTest();
+
     CreateUnitHooksFunction* createHooks =
         reinterpret_cast<CreateUnitHooksFunction*>(dlsym(DlHandle, symbol));
 
@@ -161,18 +164,54 @@ void UnitBase::filter()
     }
 }
 
+void UnitBase::selfTest()
+{
+    assert(init(UnitType::Wsd, std::string()));
+    assert(!UnitBase::get().isFinished());
+    assert(!UnitWSD::get().isFinished());
+    assert(GlobalArray);
+    assert(GlobalIndex == 0);
+    assert(&UnitBase::get() == GlobalArray[0]);
+    delete GlobalArray[0];
+    delete[] GlobalArray;
+    GlobalArray = nullptr;
+    GlobalIndex = -1;
+    GlobalKit = nullptr;
+    GlobalWSD = nullptr;
+    GlobalTool = nullptr;
+
+    assert(init(UnitType::Kit, std::string()));
+    assert(!UnitBase::get().isFinished());
+    assert(!UnitKit::get().isFinished());
+    assert(GlobalArray);
+    assert(GlobalIndex == 0);
+    assert(&UnitBase::get() == GlobalArray[0]);
+    delete GlobalArray[0];
+    delete[] GlobalArray;
+    GlobalArray = nullptr;
+    GlobalIndex = -1;
+    GlobalKit = nullptr;
+    GlobalWSD = nullptr;
+    GlobalTool = nullptr;
+}
+
 bool UnitBase::init(UnitType type, const std::string &unitLibPath)
 {
 #if !MOBILEAPP
-    assert(!get(type));
+    LOG_ASSERT(!get(type));
 #else
     // The COOLWSD initialization is called in a loop on mobile, allow reuse
     if (get(type))
         return true;
 #endif
 
+    LOG_ASSERT(GlobalArray == nullptr);
+    LOG_ASSERT(GlobalIndex == -1);
     GlobalArray = nullptr;
     GlobalIndex = -1;
+    GlobalKit = nullptr;
+    GlobalWSD = nullptr;
+    GlobalTool = nullptr;
     if (!unitLibPath.empty())
     {
         GlobalArray = linkAndCreateUnit(type, unitLibPath);
@@ -271,6 +310,10 @@ UnitBase* UnitBase::get(UnitType type)
 void UnitBase::rememberInstance(UnitType type, UnitBase* instance)
 {
     assert(instance->_type == type);
+
+    assert(GlobalWSD == nullptr);
+    assert(GlobalKit == nullptr);
+    assert(GlobalTool == nullptr);
 
     switch (type)
     {
@@ -537,6 +580,11 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
         // We have more tests.
         ++GlobalIndex;
         filter();
+
+        // Clear the shortcuts.
+        GlobalKit = nullptr;
+        GlobalWSD = nullptr;
+        GlobalTool = nullptr;
 
         if (GlobalArray[GlobalIndex] != nullptr)
         {
