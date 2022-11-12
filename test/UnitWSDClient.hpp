@@ -126,6 +126,29 @@ protected:
         SocketPoll::wakeupWorld();
     }
 
+    /// Connect to a local test document (not a fake wopi URL), without loading it.
+    /// Returns the document URL to use for loading.
+    std::string connectToLocalDocument(const std::string& docFilename)
+    {
+        std::string documentPath, documentURL;
+        helpers::getDocumentPathAndURL(docFilename, documentPath, documentURL, getTestname());
+
+        LOG_TST("Connecting to local document [" << docFilename << "] with URL: " << documentURL);
+        _wsList.emplace_back(
+            Util::make_unique<UnitWebSocket>(socketPoll(), documentURL, getTestname()));
+
+        return documentURL;
+    }
+
+    /// Connect and load a local test document (not a fake wopi document).
+    void connectAndLoadLocalDocument(const std::string& docFilename)
+    {
+        const std::string documentURL = connectToLocalDocument(docFilename);
+
+        LOG_TST("Loading local document [" << docFilename << "] with URL: " << documentURL);
+        WSD_CMD("load url=" + documentURL);
+    }
+
 private:
     /// The WOPISrc URL.
     std::string _wopiSrc;
