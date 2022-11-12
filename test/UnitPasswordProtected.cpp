@@ -7,231 +7,219 @@
 
 #include <config.h>
 
-#include <memory>
-#include <string>
+#include <UnitWSDClient.hpp>
 
-#include <Poco/URI.h>
-#include <test/lokassert.hpp>
-
-#include <Unit.hpp>
-#include <Util.hpp>
-#include <helpers.hpp>
-
-/// Password protected testcase.
-class UnitPasswordProtected : public UnitWSD
+class UnitPasswordProtectedDocWithoutPassword : public UnitWSDClient
 {
-    TestResult testPasswordProtectedDocumentWithoutPassword();
-    TestResult testPasswordProtectedDocumentWithWrongPassword();
-    TestResult testPasswordProtectedDocumentWithCorrectPassword();
-    TestResult testPasswordProtectedDocumentWithCorrectPasswordAgain();
-    TestResult testPasswordProtectedOOXMLDocument();
-    TestResult testPasswordProtectedBinaryMSOfficeDocument();
+    STATE_ENUM(Phase, Load, WaitError) _phase;
 
 public:
-    UnitPasswordProtected()
-        : UnitWSD("UnitPasswordProtect")
+    UnitPasswordProtectedDocWithoutPassword()
+        : UnitWSDClient("UnitPasswordProtectedDocWithoutPassword")
+        , _phase(Phase::Load)
     {
     }
 
-    void invokeWSDTest() override;
+    bool onDocumentError(const std::string& message) override
+    {
+        LOG_TST("onDocumentError: [" << message << ']');
+        LOK_ASSERT_EQUAL_MESSAGE("Expect only passwordrequired errors",
+                                 std::string("error: cmd=load kind=passwordrequired:to-view"),
+                                 message);
+
+        passTest("Password is required for viewing");
+        return true;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitError);
+                connectAndLoadLocalDocument("password-protected.ods");
+                break;
+            }
+            case Phase::WaitError:
+                break;
+        }
+    }
 };
 
-UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithoutPassword()
+class UnitPasswordProtectedDocWrongPassword : public UnitWSDClient
 {
-    try
+    STATE_ENUM(Phase, Load, WaitError) _phase;
+
+public:
+    UnitPasswordProtectedDocWrongPassword()
+        : UnitWSDClient("UnitPasswordProtectedDocWrongPassword")
+        , _phase(Phase::Load)
     {
-        std::string documentPath, documentURL;
-        helpers::getDocumentPathAndURL("password-protected.ods", documentPath, documentURL,
-                                       testname);
-
-        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("WithoutPasswordPoll");
-        socketPoll->startThread();
-
-        std::shared_ptr<http::WebSocketSession> socket = helpers::connectLOKit(
-            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
-
-        // Send a load request without password first
-        helpers::sendTextFrame(socket, "load url=" + documentURL, testname);
-
-        auto response = helpers::getResponseString(socket, "error:", testname);
-        StringVector tokens(StringVector::tokenize(response, ' '));
-        LOK_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
-
-        std::string errorCommand;
-        std::string errorKind;
-        COOLProtocol::getTokenString(tokens[1], "cmd", errorCommand);
-        COOLProtocol::getTokenString(tokens[2], "kind", errorKind);
-        LOK_ASSERT_EQUAL(std::string("load"), errorCommand);
-        LOK_ASSERT_EQUAL(std::string("passwordrequired:to-view"), errorKind);
-
-        response = helpers::getResponseString(socket, "error:", testname);
-        LOK_ASSERT_MESSAGE("Unexpected faileddocloading load error message",
-            response != "error: cmd=load kind=faileddocloading");
-    }
-    catch (const Poco::Exception& exc)
-    {
-        LOK_ASSERT_FAIL(exc.displayText());
     }
 
-    return TestResult::Ok;
-}
+    bool onDocumentError(const std::string& message) override
+    {
+        LOG_TST("onDocumentError: [" << message << ']');
+        LOK_ASSERT_EQUAL_MESSAGE("Expect only wrongpassword errors",
+                                 std::string("error: cmd=load kind=wrongpassword"), message);
 
-UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithWrongPassword()
+        passTest("Password is required for viewing");
+        return true;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitError);
+
+                const std::string docFilename = "password-protected.ods";
+                const std::string documentURL = connectToLocalDocument(docFilename);
+
+                LOG_TST("Loading local document [" << docFilename << "] with URL: " << documentURL);
+                WSD_CMD("load url=" + documentURL + " password=2");
+                break;
+            }
+            case Phase::WaitError:
+                break;
+        }
+    }
+};
+
+class UnitPasswordProtectedDocCorrectPassword : public UnitWSDClient
 {
-    try
+    STATE_ENUM(Phase, Load, WaitLoad) _phase;
+
+public:
+    UnitPasswordProtectedDocCorrectPassword()
+        : UnitWSDClient("UnitPasswordProtectedDocCorrectPassword")
+        , _phase(Phase::Load)
     {
-        std::string documentPath, documentURL;
-        helpers::getDocumentPathAndURL("password-protected.ods", documentPath, documentURL,
-                                       testname);
-
-        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("WrongPasswordPoll");
-        socketPoll->startThread();
-
-        std::shared_ptr<http::WebSocketSession> socket = helpers::connectLOKit(
-            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
-
-        // Send a load request with incorrect password
-        helpers::sendTextFrame(socket, "load url=" + documentURL + " password=2", testname);
-
-        const auto response = helpers::getResponseString(socket, "error:", testname);
-        StringVector tokens(StringVector::tokenize(response, ' '));
-        LOK_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
-
-        std::string errorCommand;
-        std::string errorKind;
-        COOLProtocol::getTokenString(tokens[1], "cmd", errorCommand);
-        COOLProtocol::getTokenString(tokens[2], "kind", errorKind);
-        LOK_ASSERT_EQUAL(std::string("load"), errorCommand);
-        LOK_ASSERT_EQUAL(std::string("wrongpassword"), errorKind);
-    }
-    catch (const Poco::Exception& exc)
-    {
-        LOK_ASSERT_FAIL(exc.displayText());
     }
 
-    return TestResult::Ok;
-}
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        LOG_TST("onDocumentLoaded: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoad);
 
-UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithCorrectPassword()
+        passTest("Loaded successfully");
+        return true;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoad);
+
+                const std::string docFilename = "password-protected.ods";
+                const std::string documentURL = connectToLocalDocument(docFilename);
+
+                LOG_TST("Loading local document [" << docFilename << "] with URL: " << documentURL);
+                WSD_CMD("load url=" + documentURL + " password=1");
+                break;
+            }
+            case Phase::WaitLoad:
+                break;
+        }
+    }
+};
+
+class UnitPasswordProtectedOOXMLDoc : public UnitWSDClient
 {
-    try
+    STATE_ENUM(Phase, Load, WaitLoad) _phase;
+
+public:
+    UnitPasswordProtectedOOXMLDoc()
+        : UnitWSDClient("UnitPasswordProtectedOOXMLDoc")
+        , _phase(Phase::Load)
     {
-        std::string documentPath, documentURL;
-        helpers::getDocumentPathAndURL("password-protected.ods", documentPath, documentURL,
-                                       testname);
-
-        std::shared_ptr<SocketPoll> socketPoll =
-            std::make_shared<SocketPoll>("CorrectPasswordPoll");
-        socketPoll->startThread();
-
-        std::shared_ptr<http::WebSocketSession> socket = helpers::connectLOKit(
-            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
-
-        // Send a load request with correct password
-        helpers::sendTextFrame(socket, "load url=" + documentURL + " password=1", testname);
-
-        LOK_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL,
-                               helpers::isDocumentLoaded(socket, testname));
-    }
-    catch (const Poco::Exception& exc)
-    {
-        LOK_ASSERT_FAIL(exc.displayText());
     }
 
-    return TestResult::Ok;
-}
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        LOG_TST("onDocumentLoaded: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoad);
 
-UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithCorrectPasswordAgain()
+        passTest("Loaded successfully");
+        return true;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoad);
+
+                const std::string docFilename = "password-protected.docx";
+                const std::string documentURL = connectToLocalDocument(docFilename);
+
+                LOG_TST("Loading local document [" << docFilename << "] with URL: " << documentURL);
+                WSD_CMD("load url=" + documentURL + " password=abc");
+                break;
+            }
+            case Phase::WaitLoad:
+                break;
+        }
+    }
+};
+
+class UnitPasswordProtectedBinMSODoc : public UnitWSDClient
 {
-    return testPasswordProtectedDocumentWithCorrectPassword();
-}
+    STATE_ENUM(Phase, Load, WaitLoad) _phase;
 
-UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedOOXMLDocument()
+public:
+    UnitPasswordProtectedBinMSODoc()
+        : UnitWSDClient("UnitPasswordProtectedBinMSODoc")
+        , _phase(Phase::Load)
+    {
+    }
+
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        LOG_TST("onDocumentLoaded: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoad);
+
+        passTest("Loaded successfully");
+        return true;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoad);
+
+                const std::string docFilename = "password-protected.doc";
+                const std::string documentURL = connectToLocalDocument(docFilename);
+
+                LOG_TST("Loading local document [" << docFilename << "] with URL: " << documentURL);
+                WSD_CMD("load url=" + documentURL + " password=abc");
+                break;
+            }
+            case Phase::WaitLoad:
+                break;
+        }
+    }
+};
+
+UnitBase** unit_create_wsd_multi(void)
 {
-    try
+    return new UnitBase* [6]
     {
-        std::string documentPath, documentURL;
-        helpers::getDocumentPathAndURL("password-protected.docx", documentPath, documentURL,
-                                       testname);
-
-        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("PasswordOOXMLPoll");
-        socketPoll->startThread();
-
-        std::shared_ptr<http::WebSocketSession> socket = helpers::connectLOKit(
-            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
-
-        // Send a load request with correct password
-        helpers::sendTextFrame(socket, "load url=" + documentURL + " password=abc", testname);
-
-        LOK_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL,
-                               helpers::isDocumentLoaded(socket, testname));
-    }
-    catch (const Poco::Exception& exc)
-    {
-        LOK_ASSERT_FAIL(exc.displayText());
-    }
-
-    return TestResult::Ok;
+        new UnitPasswordProtectedDocWithoutPassword(), new UnitPasswordProtectedDocWrongPassword(),
+            new UnitPasswordProtectedDocCorrectPassword(), new UnitPasswordProtectedOOXMLDoc(),
+            new UnitPasswordProtectedBinMSODoc(), nullptr
+    };
 }
-
-UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedBinaryMSOfficeDocument()
-{
-    try
-    {
-        std::string documentPath, documentURL;
-        helpers::getDocumentPathAndURL("password-protected.doc", documentPath, documentURL,
-                                       testname);
-
-        std::shared_ptr<SocketPoll> socketPoll =
-            std::make_shared<SocketPoll>("PasswordMSOfficePoll");
-        socketPoll->startThread();
-
-        std::shared_ptr<http::WebSocketSession> socket = helpers::connectLOKit(
-            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
-
-        // Send a load request with correct password
-        helpers::sendTextFrame(socket, "load url=" + documentURL + " password=abc", testname);
-
-        LOK_ASSERT_MESSAGE("cannot load the document with correct password " + documentURL,
-                               helpers::isDocumentLoaded(socket, testname));
-    }
-    catch (const Poco::Exception& exc)
-    {
-        LOK_ASSERT_FAIL(exc.displayText());
-    }
-
-    return TestResult::Ok;
-}
-
-void UnitPasswordProtected::invokeWSDTest()
-{
-    UnitBase::TestResult result = testPasswordProtectedDocumentWithoutPassword();
-    if (result != TestResult::Ok)
-        exitTest(result);
-
-    result = testPasswordProtectedDocumentWithWrongPassword();
-    if (result != TestResult::Ok)
-        exitTest(result);
-
-    result = testPasswordProtectedDocumentWithCorrectPassword();
-    if (result != TestResult::Ok)
-        exitTest(result);
-
-    result = testPasswordProtectedDocumentWithCorrectPasswordAgain();
-    if (result != TestResult::Ok)
-        exitTest(result);
-
-    result = testPasswordProtectedOOXMLDocument();
-    if (result != TestResult::Ok)
-        exitTest(result);
-
-    result = testPasswordProtectedBinaryMSOfficeDocument();
-    if (result != TestResult::Ok)
-        exitTest(result);
-
-    exitTest(TestResult::Ok);
-}
-
-UnitBase* unit_create_wsd(void) { return new UnitPasswordProtected(); }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
