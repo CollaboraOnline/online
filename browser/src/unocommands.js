@@ -270,6 +270,7 @@ var unoCommandsArray = {
 	'InsertNeutralParagraph':{text:{menu:_('Insert Unnumbered Entry'),},},
 	'InsertNonBreakingSpace':{global:{menu:_('Insert ~non-breaking space'),},},
 	'InsertObjectChart':{global:{context:_('Insert Chart'),menu:_('~Chart...'),},},
+	'InsertObjectStarMath':{spreadsheet:{context:_('Insert Formula Object'),menu:_('~Formula Object...'),},text:{context:_('Insert Formula Object'),menu:_('~Formula Object...'),},},
 	'InsertPage':{presentation:{menu:_('New Page'),},},
 	'InsertPageCountField':{text:{menu:_('Page ~Count'),},},
 	'InsertPageField':{presentation:{menu:_('~Page Number'),},},
