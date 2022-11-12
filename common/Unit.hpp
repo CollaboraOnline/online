@@ -284,6 +284,9 @@ private:
         return GlobalArray && GlobalIndex >= 0 && GlobalArray[GlobalIndex + 1];
     }
 
+    /// Self-test.
+    static void selfTest();
+
     /// Handles messages from LOKit.
     virtual bool onFilterLOKitMessage(const std::shared_ptr<Message>& /*message*/) { return false; }
 

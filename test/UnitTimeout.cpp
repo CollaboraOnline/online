@@ -15,6 +15,7 @@
 #include <Log.hpp>
 #include <Util.hpp>
 #include <Unit.hpp>
+#include "lokassert.hpp"
 
 class UnitTimeout : public UnitWSD
 {
@@ -25,29 +26,9 @@ public:
         setTimeout(std::chrono::seconds(1));
     }
 
-    virtual void timeout() override
-    {
-        passTest("Timed out as expected");
-    }
-
-    // sanity check the non-unit-test paths
-    static void testDefaultKits()
-    {
-        bool madeWSD = init(UnitType::Wsd, std::string());
-        assert(madeWSD);
-        delete [] UnitBase::GlobalArray;
-        UnitBase::GlobalArray = nullptr;
-        bool madeKit = init(UnitType::Kit, std::string());
-        assert(madeKit);
-        delete [] UnitBase::GlobalArray;
-        UnitBase::GlobalArray = nullptr;
-    }
+    virtual void timeout() override { passTest("Timed out as expected"); }
 };
 
-UnitBase *unit_create_wsd(void)
-{
-    UnitTimeout::testDefaultKits();
-    return new UnitTimeout();
-}
+UnitBase* unit_create_wsd(void) { return new UnitTimeout(); }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
