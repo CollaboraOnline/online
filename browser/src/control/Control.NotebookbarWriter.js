@@ -888,6 +888,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:DrawText'
 			},
 			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:InsertObjectStarMath', 'text'),
+				'command': '.uno:InsertObjectStarMath'
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
