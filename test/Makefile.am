@@ -23,6 +23,7 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
 # 'Finished in' in the `make check` output.
 # When adding new tests, please maintain order.
 all_la_unit_tests = \
+	unit-wopi-stuck-save.la \
 	unit-insert-delete.la \
 	unit-tiletest.la \
 	unit-httpws.la \
@@ -32,7 +33,6 @@ all_la_unit_tests = \
 	unit-crash.la \
 	unit-wopi-save-on-exit.la \
 	unit-wopi-documentconflict.la \
-	unit-wopi-stuck-save.la \
 	unit-wopi-fileurl.la \
 	unit-each-view.la \
 	unit-close.la \
