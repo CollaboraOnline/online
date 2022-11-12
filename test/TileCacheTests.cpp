@@ -1579,7 +1579,9 @@ void TileCacheTests::testTileProcessed()
 
     } while(gotTile);
 
-    LOK_ASSERT_EQUAL_MESSAGE("Expected exactly the requested number of tiles", 25, arrivedTile);
+    // Now that we force flushing invalidated tiles (Core 2cc955f9109c0fc8443c9f93c1bf6bd317043cb5),
+    // we get 28 tiles instead of the 25 we got previously.
+    LOK_ASSERT_EQUAL_MESSAGE("Expected exactly the requested number of tiles", 28, arrivedTile);
 
     for(std::string& tileID : tileIDs)
     {
