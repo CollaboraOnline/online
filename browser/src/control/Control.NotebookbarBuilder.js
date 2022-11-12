@@ -92,7 +92,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:StarShapes'] = function() {};
 		this._toolitemHandlers['.uno:CalloutShapes'] = function() {};
 		this._toolitemHandlers['.uno:FlowChartShapes'] = function() {};
-		this._toolitemHandlers['.uno:InsertObjectStarMath'] = function() {};
 		this._toolitemHandlers['.uno:EmojiControl'] = function() {};
 		this._toolitemHandlers['.uno:InsertDraw'] = function() {};
 		this._toolitemHandlers['.uno:EditGlossary'] = function() {};
