@@ -24,6 +24,7 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
 # When adding new tests, please maintain order.
 all_la_unit_tests = \
 	unit-insert-delete.la \
+	unit-tiletest.la \
 	unit-httpws.la \
 	unit-password-protected.la \
 	unit-wopi-fail-upload.la \
