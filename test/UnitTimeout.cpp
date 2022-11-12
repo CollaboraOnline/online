@@ -18,42 +18,16 @@
 
 class UnitTimeout : public UnitWSD
 {
-    std::atomic<bool> _timedOut;
 public:
     UnitTimeout()
         : UnitWSD("UnitTimeout")
-        , _timedOut(false)
     {
         setTimeout(std::chrono::seconds(1));
     }
 
     virtual void timeout() override
     {
-        _timedOut = true;
-        UnitBase::timeout();
-    }
-
-    virtual void returnValue(int & retValue) override
-    {
-        bool timedOut = _timedOut;
-        bool setRetValue = _setRetValue;
-        int retVal = _retValue;
-
-        UnitWSD::returnValue(retValue); // Always call base.
-        // Note that at this point 'this' is deleted.
-        if (!timedOut)
-        {
-            LOG_TST("ERROR: Failed to timeout");
-            retValue = EX_SOFTWARE;
-        }
-        else
-        {
-            assert(setRetValue);
-            assert(retVal == EX_SOFTWARE);
-            // we wanted a timeout.
-            // Test passed by timing-out as expected.
-            retValue = EX_OK;
-        }
+        passTest("Timed out as expected");
     }
 
     // sanity check the non-unit-test paths
