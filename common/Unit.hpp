@@ -247,11 +247,8 @@ public:
     std::shared_ptr<SocketPoll> socketPoll() { return _socketPoll; }
 
 private:
-    void setHandle()
-    {
-        assert(DlHandle != nullptr && "Invalid handle to set");
-        _socketPoll->startThread();
-    }
+    /// Initialize the test.
+    virtual void initialize();
 
     /// Dynamically load the unit-test .so.
     static UnitBase** linkAndCreateUnit(UnitType type, const std::string& unitLibPath);
