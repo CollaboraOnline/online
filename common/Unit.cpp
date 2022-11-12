@@ -123,7 +123,7 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
                 rememberInstance(type, instance);
                 TST_LOG_NAME("UnitBase",
                              "Starting test #1: " << GlobalArray[GlobalIndex]->getTestname());
-                instance->setHandle();
+                instance->initialize();
 
                 if (instance && type == UnitType::Kit)
                 {
@@ -249,6 +249,14 @@ void UnitBase::uninit()
         dlclose(DlHandle);
     DlHandle = nullptr;
 
+}
+
+void UnitBase::initialize()
+{
+    assert(DlHandle != nullptr && "Invalid handle to set");
+    LOG_TST(getTestname() << ">>> initialize: " << this
+                          << " starting thread: " << _socketPoll.get());
+    _socketPoll->startThread();
 }
 
 bool UnitBase::isUnitTesting()
@@ -432,7 +440,7 @@ void UnitBase::exitTest(TestResult result)
 
         LOG_TST("Starting test #" << GlobalIndex + 1 << ": "
                                   << GlobalArray[GlobalIndex]->getTestname());
-        GlobalArray[GlobalIndex]->setHandle();
+        GlobalArray[GlobalIndex]->initialize();
         return;
     }
 
