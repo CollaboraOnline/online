@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-18 21:59+0200\n"
-"PO-Revision-Date: 2022-09-17 23:21+0000\n"
-"Last-Translator: Marco Cecchetti <mrcekets@gmail.com>\n"
+"PO-Revision-Date: 2022-11-06 00:02+0000\n"
+"Last-Translator: Giacomo Bertolotti <giacomo.chappo@hotmail.it>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/it/>\n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.14.2\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1034,7 +1034,7 @@ msgstr "Ai~uto"
 #: src/control/Control.NotebookbarImpress.js:165
 #: src/control/Control.NotebookbarWriter.js:127
 msgid "Save As"
-msgstr ""
+msgstr "Salva Come"
 
 #: src/control/Control.NotebookbarCalc.js:134
 #: src/control/Control.NotebookbarDraw.js:151
@@ -1814,8 +1814,9 @@ msgid "Wrong password provided. Please try again."
 msgstr "La password è errata. Riprova."
 
 #: src/core/Socket.js:1082
+#, fuzzy
 msgid "Missing fonts:"
-msgstr ""
+msgstr "Font mancanti:"
 
 #: src/core/Socket.js:1122
 msgid "Someone"
@@ -1872,17 +1873,16 @@ msgstr ""
 "contatta l'amministratore."
 
 #: src/errormessages.js:15
-#, fuzzy
 msgid ""
 "This is an unsupported version of {productname}. To avoid the impression "
 "that it is suitable for deployment in enterprises, this message appears "
 "when more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
-"Questa è una versione gratuita di {productname}. Per evitare l'impressione "
-"che essa sia adatta all'utilizzo aziendale, questo messaggio viene "
-"visualizzato quando più di {docs} documenti o {connections} connessioni sono "
-"contemporaneamente in uso"
+"Questa è una versione non supportata di {productname}. Per evitare di dare "
+"l'impressione che sia adatto alla distribuzione nelle aziende, questo "
+"messaggio appare quando sono in uso contemporaneamente più {docs} documenti "
+"o {connections} connessioni."
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -2219,8 +2219,9 @@ msgid "Please click to resume editing"
 msgstr "Clicca per riprendere la modifica"
 
 #: src/map/handler/Map.Feedback.js:82
+#, fuzzy
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Inviaci il tuo feedback"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
