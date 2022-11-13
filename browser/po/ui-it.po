@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-18 21:59+0200\n"
-"PO-Revision-Date: 2022-11-06 00:02+0000\n"
-"Last-Translator: Giacomo Bertolotti <giacomo.chappo@hotmail.it>\n"
+"PO-Revision-Date: 2022-11-13 11:57+0000\n"
+"Last-Translator: Translator-3000 <weblate.m1d0h@8shield.net>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/it/>\n"
 "Language: it\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.2\n"
+"X-Generator: Weblate 4.15-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1814,7 +1814,6 @@ msgid "Wrong password provided. Please try again."
 msgstr "La password è errata. Riprova."
 
 #: src/core/Socket.js:1082
-#, fuzzy
 msgid "Missing fonts:"
 msgstr "Font mancanti:"
 
@@ -2219,7 +2218,6 @@ msgid "Please click to resume editing"
 msgstr "Clicca per riprendere la modifica"
 
 #: src/map/handler/Map.Feedback.js:82
-#, fuzzy
 msgid "Please send us your feedback"
 msgstr "Inviaci il tuo feedback"
 
