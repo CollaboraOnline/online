@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-18 21:59+0200\n"
-"PO-Revision-Date: 2022-10-10 13:26+0000\n"
-"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
+"PO-Revision-Date: 2022-10-25 20:42+0000\n"
+"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1806,7 +1806,7 @@ msgstr "Felaktigt lösenord. Försök igen."
 
 #: src/core/Socket.js:1082
 msgid "Missing fonts:"
-msgstr ""
+msgstr "Saknar teckensnitt:"
 
 #: src/core/Socket.js:1122
 msgid "Someone"
