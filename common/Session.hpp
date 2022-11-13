@@ -77,13 +77,10 @@ public:
     const std::string& getName() const { return _name; }
     bool isDisconnected() const { return _disconnected; }
 
-    virtual void setReadOnly(bool bValue = true) { _isReadOnly = bValue; }
+    virtual void setReadOnly(bool readonly) { _isReadOnly = readonly; }
     bool isReadOnly() const { return _isReadOnly; }
 
-    void setAllowChangeComments(bool bValue = true)
-    {
-        _isAllowChangeComments = bValue;
-    }
+    void setAllowChangeComments(bool allow) { _isAllowChangeComments = allow; }
     bool isAllowChangeComments() const { return _isAllowChangeComments; }
 
     /// overridden to prepend client ids on messages by the Kit

@@ -727,11 +727,11 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
             !wopifileinfo->getUserCanWrite() || _isViewFileExtension)
         {
             LOG_DBG("Setting the session as readonly");
-            session->setReadOnly();
+            session->setReadOnly(true);
             if (COOLWSD::IsViewWithCommentsFileExtension(wopiStorage->getFileExtension()))
             {
                 LOG_DBG("Allow session to change comments");
-                session->setAllowChangeComments();
+                session->setAllowChangeComments(true);
             }
         }
         else if (wopifileinfo->getUserCanWrite())
@@ -843,11 +843,11 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
             if (COOLWSD::IsViewFileExtension(localStorage->getFileExtension()))
             {
                 LOG_DBG("Setting the session as readonly");
-                session->setReadOnly();
+                session->setReadOnly(true);
                 if (COOLWSD::IsViewWithCommentsFileExtension(localStorage->getFileExtension()))
                 {
                     LOG_DBG("Allow session to change comments");
-                    session->setAllowChangeComments();
+                    session->setAllowChangeComments(true);
                 }
             }
             session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
