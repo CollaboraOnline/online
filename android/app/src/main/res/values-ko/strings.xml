@@ -93,7 +93,7 @@
     <string name="pref_filter_summary">기본적으로 사용할 파일 필터를 설정합니다.</string>
     <string name="pref_show_debug_info">디버그 정보 표시하기</string>
     <string name="close_document_locations">문서 위치 닫기</string>
-    <string name="otg_file_system">OTG 장치 (실험적)</string>
+    <string name="otg_file_system">OTG 장치 (실험용)</string>
     <string name="pref_show_debug_info_summary">문서 뷰어에서 디버그 정보 표시 활성화하기</string>
     <string name="local_file_system">로컬 파일 시스템</string>
     <string name="external_sd_file_system">외부 SD</string>
