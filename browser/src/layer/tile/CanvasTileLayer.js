@@ -1623,6 +1623,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		else if (textMsg.startsWith('status:') || textMsg.startsWith('statusupdate:')) {
 			this._onStatusMsg(textMsg);
+
+			// update tiles and selection because mode could be changed
+			this._update();
+			this.updateAllGraphicViewSelections();
+			this.updateAllViewCursors();
+			this.updateAllTextViewSelection();
 		}
 		else if (textMsg.startsWith('textselection:')) {
 			this._onTextSelectionMsg(textMsg);
