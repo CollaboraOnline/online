@@ -75,6 +75,13 @@ AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_LN_S
 
+# override AC_PROG_CXX:
+# avoid libtool from adding -rpath when linking
+if test "$host_os" = "emscripten"; then
+    hardcode_libdir_flag_spec=
+    hardcode_libdir_flag_spec_CXX=
+fi
+
 AC_LANG_PUSH([C++])
 
 AS_IF([test `uname -s` = Linux -a "$host_os" != "emscripten"],
