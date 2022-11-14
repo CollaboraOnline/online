@@ -30,6 +30,7 @@
 #define COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC    "test/data/hello-world.ods"
 #define COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_IMPRESS "test/data/hello-world.odp"
 #define COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_DRAW    "test/data/hello-world.odg"
+#define COOLWSD_INST_DOCUMENT_ABSOLUTE_PATH_WRITER  COOLWSD_DATADIR "/" COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER
 
 /* Default ciphers used, when not specified otherwise */
 #define DEFAULT_CIPHER_SET "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"
@@ -819,7 +820,20 @@ inline std::string getLaunchBase(bool asAdmin = false)
     return oss.str();
 }
 
-inline std::string getLaunchURI(const std::string &document)
+inline std::string getPostMessageURI(const std::string &document, bool instdir)
+{
+    std::ostringstream oss;
+
+    oss << getLaunchBase(false);
+    oss << COOLWSD::ServiceRoot;
+    oss << "/browser/dist/framed.doc.html?file_path=";
+    oss << (instdir ? COOLWSD_DATADIR "/" : DEBUG_ABSSRCDIR "/");
+    oss << document;
+
+    return oss.str();
+}
+
+inline std::string getLaunchURI(const std::string &document, bool instdir)
 {
     std::ostringstream oss;
 
@@ -827,7 +841,7 @@ inline std::string getLaunchURI(const std::string &document)
     oss << COOLWSD::ServiceRoot;
     oss << COOLWSD_TEST_COOL_UI;
     oss << "?file_path=";
-    oss << DEBUG_ABSSRCDIR "/";
+    oss << (instdir ? COOLWSD_DATADIR "/" : DEBUG_ABSSRCDIR "/");
     oss << document;
 
     return oss.str();
@@ -5744,16 +5758,20 @@ int COOLWSD::innerMain()
 #endif
 
 #if !MOBILEAPP && ENABLE_DEBUG
-    const std::string postMessageURI =
-        getServiceURI("/browser/dist/framed.doc.html?file_path=" DEBUG_ABSSRCDIR
-                      "/" COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER);
     std::ostringstream oss;
-    oss << "\nLaunch one of these in your browser:\n\n"
-        << "    Writer:      " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER) << '\n'
-        << "    Calc:        " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC) << '\n'
-        << "    Impress:     " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_IMPRESS) << '\n'
-        << "    Draw:        " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_DRAW) << '\n'
-        << "    postMessage: " << postMessageURI << std::endl;
+    const auto readyServer = [](const bool instdir, const std::ostringstream& oss) {
+        std::string postMessageURI =
+            getServiceURI("/browser/dist/framed.doc.html?file_path="
+                          DEBUG_ABSSRCDIR "/" COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER);
+        oss << "\nLaunch one of these in your browser:\n\n"
+            << "    Writer:      " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER, instdir) << '\n'
+            << "    Calc:        " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC, instdir) << '\n'
+            << "    Impress:     " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_IMPRESS, instdir) << '\n'
+            << "    Draw:        " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_DRAW, instdir) << '\n'
+            << "    postMessage: " << postMessageURI << std::endl;
+    };
+
+    readyServer(File(std::string(COOLWSD_INST_DOCUMENT_ABSOLUTE_PATH_WRITER)).exists(), oss);
 
     const std::string adminURI = getServiceURI(COOLWSD_TEST_ADMIN_CONSOLE, true);
     if (!adminURI.empty())
