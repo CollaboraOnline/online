@@ -476,6 +476,10 @@ run: setup-wsd
 			--o:trace_event[@enable]=true
 
 if ENABLE_DEBUG
+install-data-local:
+	mkdir -p "$(DESTDIR)$(coolwsddatadir)/test/data"
+	find $(abs_srcdir) -name "hello-world*" -exec cp {} $(DESTDIR)$(coolwsddatadir)/test/data/ \;
+
 run-one: setup-wsd
 	./coolwsd $(COMMON_PARAMS) \
 			--o:security.capabilities="$(CAPABILITIES)" \
