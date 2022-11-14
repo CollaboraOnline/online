@@ -620,6 +620,11 @@ app.definitions.Socket = L.Class.extend({
 				this._map.options.permission = 'readonly';
 			}
 
+			if (json.allowComments) {
+				console.debug('xxx: we allowed comments');
+				this._map.options.allowChangeComments = true;
+			}
+
 			if (this._map._docLayer) {
 				this._map.setPermission(this._map.options.permission);
 			}

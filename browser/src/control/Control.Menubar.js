@@ -2019,6 +2019,13 @@ L.Control.Menubar = L.Control.extend({
 	_createMenu: function(menu) {
 		var itemList = [];
 		var docType = this._map.getDocType();
+		var isReadOnly = this._map.isPermissionReadOnly();
+		var isAllowChangeComments = this._map.isAllowChangeComments();
+
+		if (!isAllowChangeComments && isReadOnly) { // Checks if PDF or not indirectly. If It is not a PDF(view_comments)
+			//this._hiddenItems.push('insert');     // and a readonly doc, all subitems of insert menu are disabled so not
+		}                                           // have a reason to show insert menu anymore.
+
 		for (var i in menu) {
 			if (this._checkItemVisibility(menu[i]) === false)
 				continue;

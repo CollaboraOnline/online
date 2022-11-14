@@ -258,5 +258,9 @@ L.Map.include({
 
 	isPermissionEdit: function() {
 		return this._permission === 'edit';
+	},
+
+	isAllowChangeComments: function() {
+		return this.options.allowChangeComments;
 	}
 });

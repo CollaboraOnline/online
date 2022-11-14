@@ -1360,6 +1360,8 @@ void ClientSession::sendFileMode(const bool readOnly, const bool editComments)
     result += readOnly ? "true": "false";
     result += ", \"editComment\": ";
     result += editComments ? "true": "false";
+    result += ", \"allowComments\": ";
+    result += isAllowChangeComments() ? "true": "false";
     result += "}";
     sendTextFrame(result);
 }
