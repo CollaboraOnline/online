@@ -736,9 +736,9 @@ void Admin::notifyForkit()
 }
 
 /// Similar to std::clamp(), old libstdc++ doesn't have it.
-template <typename T>
-T clamp(const T& n, const T& lower, const T& upper) {
-  return std::max(lower, std::min(n, upper));
+template <typename T> T clamp(const T& n, const T& lower, const T& upper)
+{
+    return std::max(lower, std::min(n, upper));
 }
 
 void Admin::triggerMemoryCleanup(const size_t totalMem)
@@ -756,7 +756,7 @@ void Admin::triggerMemoryCleanup(const size_t totalMem)
             memLimit << "% (" << static_cast<size_t>(_totalSysMemKb * memLimit / 100.) << " KB).");
 
     const double memToFreePercentage = (totalMem / static_cast<double>(_totalSysMemKb)) - memLimit / 100.;
-    int memToFreeKb = clamp<double>(memToFreePercentage > 0.0 ? memToFreePercentage * _totalSysMemKb : 0, 0, std::numeric_limits<int>::max());
+    int memToFreeKb = clamp<double>(memToFreePercentage * _totalSysMemKb, 0, std::numeric_limits<int>::max());
     // Don't kill documents to save a KB or two.
     if (memToFreeKb > 1024)
     {
