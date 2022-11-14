@@ -2901,13 +2901,6 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         {
             std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
             sendTextFrame("status: " + status);
-            for (int i = 0; i < getLOKitDocument()->getParts(); i++)
-            {
-                const std::string parts = std::to_string(i);
-                const int mode = getLOKitDocument()->getEditMode();
-                const std::string optionalMode = (mode > 0) ? (", " + std::to_string(mode)) : "";
-                sendTextFrame("invalidatetiles: EMPTY, " + parts + optionalMode);
-            }
         }
         break;
     case LOK_CALLBACK_SEARCH_NOT_FOUND:
