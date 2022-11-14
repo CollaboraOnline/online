@@ -46,12 +46,6 @@ L.Map.StateChangeHandler = L.Handler.extend({
 		if (e.commandName === '.uno:SlideMasterPage') {
 			this._map._docLayer._masterPageChanged = true;
 			this._map._docLayer._selectedMode = (state === true || state === 'true') ? 1 : 0;
-			// clear the old tiles because they are saved in the same place
-			// since the part no will be the same for both views and it will think it is cached
-			this._map._docLayer._onMessage('invalidatetiles: EMPTY', null);
-			this._map._docLayer.updateAllGraphicViewSelections();
-			this._map._docLayer.updateAllViewCursors();
-			this._map._docLayer.updateAllTextViewSelection();
 		}
 
 		if (e.commandName === '.uno:FormatPaintbrush') {
