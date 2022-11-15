@@ -5442,7 +5442,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// This layergroup contains all the layers corresponding to other's view
 		this._viewLayerGroup = new L.LayerGroup();
-		if (this.options.permission !== 'readonly') {
+		if (app.file.permission !== 'readonly') {
 			map.addLayer(this._viewLayerGroup);
 		}
 
@@ -5511,7 +5511,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// generated just for the validity-dropdown-icon.
 		map.on('dropdownmarkertapped', this._onDropDownButtonClick, this);
 
-		map.setPermission(this.options.permission);
+		map.setPermission(app.file.permission);
 
 		map.fire('statusindicator', {statusType: 'coolloaded'});
 
