@@ -476,6 +476,14 @@ run: setup-wsd
 			--o:trace_event[@enable]=true
 
 if ENABLE_DEBUG
+
+if ENABLE_LDDTREE
+COOLWSD_SHAREDEPS=coolwsd.sharedeps
+$(COOLWSD_SHAREDEPS): $(bin_PROGRAMS)
+	@echo "generating shared dependencies"
+	@lddtree -l $(bin_PROGRAMS) | xargs realpath | grep -v $(abs_builddir) | sort | uniq > $@
+endif
+
 install-data-local:
 	mkdir -p "$(DESTDIR)$(coolwsddatadir)/test/data"
 	find $(abs_srcdir) -name "hello-world*" -exec cp {} $(DESTDIR)$(coolwsddatadir)/test/data/ \;
@@ -548,7 +556,7 @@ endif
 # installing. When building for packaging, no need for this, as the
 # capabilities won't survive packaging anyway. Instead, handle it when
 # installing the RPM or Debian package.
-all-local: $(ALL_LOCAL_DEPS) @JAILS_PATH@ $(SYSTEM_STAMP)
+all-local: $(ALL_LOCAL_DEPS) @JAILS_PATH@ $(SYSTEM_STAMP) $(COOLWSD_SHAREDEPS)
 	$(SET_CAPS_COMMAND)
 	@$(abs_top_srcdir)/scripts/refresh-git-hooks
 

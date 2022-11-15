@@ -1269,6 +1269,9 @@ if test "$host_os" != "emscripten"; then
     LIBS="$LIBS -lPocoNetSSL${POCO_DEBUG_SUFFIX} -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX} -lPocoCrypto${POCO_DEBUG_SUFFIX}"
 fi
 
+AC_CHECK_PROG(LDDTREE,lddtree,lddtree,,,false)
+AM_CONDITIONAL([ENABLE_LDDTREE], [test "$LDDTREE" == "lddtree"])
+
 AS_IF([test "$ENABLE_SSL" = "true"],
       [LIBS="$LIBS -lssl -lcrypto"])
 
