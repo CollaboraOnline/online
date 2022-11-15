@@ -6,6 +6,7 @@
  */
 
 #include "helpers.hpp"
+#include "lokassert.hpp"
 #include "testlog.hpp"
 #include "Unit.hpp"
 #include "Util.hpp"
@@ -21,8 +22,7 @@
     do                                                                                             \
     {                                                                                              \
         LOG_TST("Sending from #" << INDEX << ": " << MSG);                                         \
-        helpers::sendTextFrame(getWsAt(INDEX)->getWebSocket(), MSG, getTestname());                \
-        SocketPoll::wakeupWorld();                                                                 \
+        sendCommand(INDEX, MSG);                                                                   \
     } while (false)
 
 /// Send a command message to WSD from a UnitWSDClient instance on the primary connection.
@@ -109,6 +109,14 @@ protected:
                                socketPoll(), "/cool/" + _wopiSrc + "/ws", getTestname()));
 
         assert((*_ws).get());
+    }
+
+    /// Send a command to WSD.
+    void sendCommand(int index, const std::string& msg)
+    {
+        LOK_ASSERT(index >= 0 && static_cast<std::size_t>(index) < _wsList.size());
+        helpers::sendTextFrame(getWsAt(index)->getWebSocket(), msg, getTestname());
+        SocketPoll::wakeupWorld();
     }
 
 private:
