@@ -146,7 +146,8 @@ L.Control.Sidebar = L.Control.extend({
 	},
 
 	changeDeck: function(unoCommand) {
-		app.socket.sendMessage('uno ' + unoCommand);
+		if (unoCommand !== null)
+			app.socket.sendMessage('uno ' + unoCommand);
 		this.setupTargetDeck(unoCommand);
 	},
 
