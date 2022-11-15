@@ -31,7 +31,7 @@ cmake \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_SYSTEM_NAME=Android \
   -DCMAKE_SYSTEM_VERSION=21 \
-  ../build/cmake
+  ../../build/cmake
 make
 
 * Build zstd for several platforms:
