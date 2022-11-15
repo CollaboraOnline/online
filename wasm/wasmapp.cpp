@@ -8,4 +8,9 @@
 int coolwsd_server_socket_fd = -1;
 const char *user_name = nullptr;
 
+int main()
+{
+    return 0;
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */
