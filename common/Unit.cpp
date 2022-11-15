@@ -55,18 +55,26 @@ UnitBase** UnitBase::linkAndCreateUnit(UnitType type, const std::string& unitLib
     // avoid std:string de-allocation during failure / exit.
     UnitLibPath = strdup(unitLibPath.c_str());
 
-    CreateUnitHooksFunction* createHooks = nullptr;
-
-    bool multiTest = true;
     const char *symbol = nullptr;
     switch (type)
     {
         case UnitType::Wsd:
+        {
             // Try the multi-test version first.
-            createHooks = reinterpret_cast<CreateUnitHooksFunction*>(
-                dlsym(DlHandle, "unit_create_wsd_multi"));
+            CreateUnitHooksFunctionMulti* createHooksMulti =
+                reinterpret_cast<CreateUnitHooksFunctionMulti*>(
+                    dlsym(DlHandle, "unit_create_wsd_multi"));
+            if (createHooksMulti)
+            {
+                UnitBase** hooks = createHooksMulti();
+                if (hooks)
+                    return hooks;
+            }
+
+            // Fallback.
             symbol = "unit_create_wsd";
             break;
+        }
         case UnitType::Kit:
             symbol = "unit_create_kit";
             break;
@@ -75,26 +83,20 @@ UnitBase** UnitBase::linkAndCreateUnit(UnitType type, const std::string& unitLib
             break;
     }
 
-    if (!createHooks)
-    {
-        multiTest = false;
-        createHooks = reinterpret_cast<CreateUnitHooksFunction*>(dlsym(DlHandle, symbol));
-    }
+    CreateUnitHooksFunction* createHooks =
+        reinterpret_cast<CreateUnitHooksFunction*>(dlsym(DlHandle, symbol));
 
     if (!createHooks)
     {
         LOG_ERR("No " << symbol << " symbol in " << unitLibPath);
         return nullptr;
     }
+
     UnitBase* hooks = createHooks();
-    if (multiTest)
-    {
-        return reinterpret_cast<UnitBase**>(hooks);
-    }
-    else
-    {
+    if (hooks)
         return new UnitBase* [2] { hooks, nullptr };
-    }
+
+    LOG_ERR("No wsd unit-tests found in " << unitLibPath);
 #endif
 
     return nullptr;
