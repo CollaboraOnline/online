@@ -245,11 +245,6 @@ L.Map.include({
 		this.dragging.enable();
 	},
 
-	// If document can be edited or not (i.e: PDF can not be edited)
-	isDocEditable: function() {
-		return this.options.permission === 'edit';
-	},
-
 	// Can user make changes to the document or not
 	// i.e: user can not make changes(even can not add comments) is document is shared as read only
 	canUserWrite: function() {
