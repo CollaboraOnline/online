@@ -667,6 +667,12 @@ int main(int argc, char** argv)
             if (UserInterface != "classic" && UserInterface != "notebookbar")
                 UserInterface = "notebookbar";
         }
+
+        else if (std::strstr(cmd, "--help") == cmd)
+        {
+            printArgumentHelp();
+            return EX_OK;
+        }
     }
 
     if (sysTemplate.empty() || loTemplate.empty() || childRoot.empty())

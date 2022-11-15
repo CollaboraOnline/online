@@ -155,7 +155,7 @@ int main(int argc, char** argv)
     if (argc < 3)
     {
         usage(program);
-        return EX_USAGE;
+        return argc == 2 && (strcmp(argv[1], "--help") == 0) ? EX_OK : EX_USAGE;
     }
 
     const char* option = argv[1];
