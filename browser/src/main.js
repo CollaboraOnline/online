@@ -16,7 +16,9 @@ else if (wopiSrc !== '' && accessHeader !== '') {
 }
 
 var filePath = getParameterByName('file_path');
-var permission = getParameterByName('permission') || 'edit';
+
+app.file.permission = getParameterByName('permission') || 'edit';
+
 var timestamp = getParameterByName('timestamp');
 // Should the document go inactive or not
 var alwaysActive = getParameterByName('alwaysactive');
@@ -45,7 +47,6 @@ var map = L.map('map', {
 	server: host,
 	doc: docURL,
 	docParams: docParams,
-	permission: permission,
 	timestamp: timestamp,
 	documentContainer: 'document-container',
 	debug: debugMode,
@@ -78,7 +79,6 @@ window.addEventListener('beforeunload', function () {
 	}
 });
 
-window.docPermission = permission;
 window.bundlejsLoaded = true;
 
 

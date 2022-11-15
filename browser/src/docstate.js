@@ -9,6 +9,7 @@ window.app = { // Shouldn't have any functions defined.
 	file: {
 		editComment: false,
 		readOnly: true,
+		permission: 'readonly',
 		disableSidebar: false,
 		size: {
 			pixels: [0, 0], // This can change according to the zoom level and document's size.
@@ -78,4 +79,6 @@ if (activateValidation) {
 	};
 
 	window.app = new Proxy(window.app, validator);
+	window.app.file = new Proxy(window.app.file, validator);
+
 }
