@@ -54,6 +54,7 @@
 #include <NetUtil.hpp>
 #include <CommandControl.hpp>
 #include "HostUtil.hpp"
+#include <Zotero.hpp>
 
 #ifdef IOS
 #include <ios.h>
@@ -925,6 +926,19 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
         _watermarkText = overrideWatermarks;
     if (isTemplate(filename))
         _disableExport = true;
+
+    if (Zotero::ZoteroConfig::isEnabled() && !_userExtraInfo.empty())
+    {
+        Poco::JSON::Parser parser;
+        Poco::Dynamic::Var result = parser.parse(_userExtraInfo);
+        Poco::JSON::Object::Ptr pObject = result.extract<Poco::JSON::Object::Ptr>();
+
+        std::string ZoteroAPIKey;
+        JsonUtil::findJSONValue(pObject, "ZoteroAPIKey", ZoteroAPIKey);
+        Zotero::ZoteroConfig::setAPIKey(ZoteroAPIKey);
+        std::string userId = Zotero::ZoteroConfig::fetchUserId(ZoteroAPIKey);
+        Zotero::ZoteroConfig::setUserId(userId);
+    }
 }
 
 bool WopiStorage::updateLockState(const Authorization& auth, LockContext& lockCtx, bool lock,

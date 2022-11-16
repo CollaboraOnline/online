@@ -1506,6 +1506,17 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			}
 		];
 
+		if (this._map.zotero && this._map.zotero.enable) {
+			content.push(
+				{
+					'id': 'zoteroedit',
+					'type': 'bigmenubartoolitem',
+					'text': _('Add/Edit Citation'),
+					'command': _('zoteroEdit')
+				}
+			);
+		}
+
 		return this.getTabPage('References', content);
 	},
 

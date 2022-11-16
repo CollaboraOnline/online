@@ -360,6 +360,7 @@ COOL_JS_LST =\
 	src/control/Control.Layers.js \
 	src/control/Control.Sidebar.js \
 	src/control/Control.Mention.js \
+	src/control/Control.Zotero.js \
 	src/control/Search.js \
 	src/control/Permission.js \
 	src/control/Toolbar.js \
@@ -701,6 +702,7 @@ pot:
 		src/control/Control.Toolbar.js \
 		src/control/Control.TopToolbar.js \
 		src/control/Control.UserList.js \
+		src/control/Control.Zotero.js \
 		src/control/Parts.js \
 		src/control/Permission.js \
 		src/control/Ruler.js \
