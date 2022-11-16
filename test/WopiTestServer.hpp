@@ -18,6 +18,7 @@
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
 
+#include <cctype>
 #include <sstream>
 #include <vector>
 
@@ -160,11 +161,14 @@ protected:
             return "he%llo.txt";
         }
 
-        const auto number = std::stoi(filename);
-        if (number >=1 && number <= 9)
+        if (filename.size() == 1 && std::isdigit(filename[0]))
         {
-            // Fake filename, depends on implicit filename.
-            return DefaultFilename;
+            const auto number = std::stoi(filename);
+            if (number >= 1 && number <= 9)
+            {
+                // Fake filename, depends on implicit filename.
+                return DefaultFilename;
+            }
         }
 
         // Return the filename given in the URI.
