@@ -17,7 +17,7 @@ add_library(androidapp SHARED
             ../../../../../common/SpookyV2.cpp
             ../../../../../common/Unit.cpp
             ../../../../../common/Util.cpp
-            ../../../../../common/CommandControl.cpp
+            ../../../../../common/Zotero.cpp
             ../../../../../kit/ChildSession.cpp
             ../../../../../kit/Kit.cpp
             ../../../../../net/FakeSocket.cpp

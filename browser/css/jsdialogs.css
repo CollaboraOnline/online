@@ -664,6 +664,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	max-height: 150px;
 }
 
+#ZoteroDialog .ui-treeview-body {
+	max-height: 500px;
+}
+
 .autofilter-container-submenu > .autofilter-container {
 	padding: 0px;
 }

@@ -1835,6 +1835,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.sendUnoCommand('.uno:LOKSidebarWriterPage');
 			this._map.fire('showwizardsidebar', {noRefresh: true});
 			window.pageMobileWizard = true;
+		} else if (id === 'zoteroedit') {
+			app.socket.sendMessage('zotero type=action editcitation');
 		}
 		// Inform the host if asked
 		if (postmessage)

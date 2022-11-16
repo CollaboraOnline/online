@@ -31,6 +31,7 @@
 #include <common/TraceEvent.hpp>
 #include <common/Util.hpp>
 #include <common/CommandControl.hpp>
+#include <common/Zotero.hpp>
 
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
@@ -1041,6 +1042,16 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "blockingcommandstatus"))
     {
+        return forwardToChild(std::string(buffer, length), docBroker);
+    }
+    else if (tokens.equals(0, "zotero"))
+    {
+        if (!_isZoteroUserInfoSet)
+        {
+            forwardToChild("zotero type=userinfo userid=" + Zotero::ZoteroConfig::getUserId() + " apikey=" + Zotero::ZoteroConfig::getAPIKey(), docBroker);
+            _isZoteroUserInfoSet = true;
+        }
+
         return forwardToChild(std::string(buffer, length), docBroker);
     }
     else
