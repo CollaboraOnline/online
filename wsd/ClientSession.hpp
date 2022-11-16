@@ -385,6 +385,10 @@ private:
 
     /// Epoch of the client's performance.now() function, as microseconds since Unix epoch
     uint64_t _performanceCounterEpoch;
+
+    // Saves time from setting/fetching user info multiple times using zotero API
+    bool _isZoteroUserInfoSet = false;
+
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

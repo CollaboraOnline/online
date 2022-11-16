@@ -306,6 +306,7 @@ private:
     bool updateBlockingCommandStatus(const StringVector& tokens);
     std::string getBlockedCommandType(std::string command);
 #endif
+    bool handleZoteroMessage(const StringVector& tokens);
     bool formFieldEvent(const char* buffer, int length, const StringVector& tokens);
     bool contentControlEvent(const StringVector& tokens);
     bool renderSearchResult(const char* buffer, int length, const StringVector& tokens);
