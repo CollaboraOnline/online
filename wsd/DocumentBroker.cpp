@@ -510,29 +510,29 @@ void DocumentBroker::pollThread()
             _poll->continuePolling() << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag() <<
             ", TerminationFlag: " << SigUtil::getTerminationFlag() << ", closeReason: " << _closeReason << ". Flushing socket.");
 
-    // If we are exiting because the owner discarded conflict changes, don't detect data loss.
-    if (!(_docState.isCloseRequested() && _documentChangedInStorage))
+    // Check for data-loss.
+    std::string reason;
+    if (isModified() || isStorageOutdated())
     {
-        // If the document is modified, or not uploaded, at exit, dump the state and warn.
-        const std::string reason = isModified()          ? "flagged as modified"
-                                   : isStorageOutdated() ? "not uploaded to storage"
-                                                         : "";
-        if (!reason.empty())
+        // If we are exiting because the owner discarded conflict changes, don't detect data loss.
+        if (!(_docState.isCloseRequested() && _documentChangedInStorage))
         {
-            std::stringstream state;
-            dumpState(state);
-            LOG_WRN("DocumentBroker stopping although " << reason << ". State: " << state.str());
-            if (UnitWSD::isUnitTesting())
-            {
-                _unitWsd.onDataLoss("Data-loss detected while exiting DocBroker [" + _docKey + ']');
-            }
+            reason = isModified() ? "flagged as modified" : "not uploaded to storage";
+
+            // The test may override (if it was expected).
+            if (UnitWSD::isUnitTesting() &&
+                !_unitWsd.onDataLoss("Data-loss detected while exiting [" + _docKey + ']'))
+                reason.clear();
         }
     }
-    else if (UnitWSD::isUnitTesting() && _unitWsd.isFinished() && _unitWsd.failed())
+
+    if (!reason.empty() || (UnitWSD::isUnitTesting() && _unitWsd.isFinished() && _unitWsd.failed()))
     {
         std::stringstream state;
+        state << "DocBroker [" << _docKey << " stopped "
+              << (reason.empty() ? "because of test failure" : ("although " + reason)) << ": ";
         dumpState(state);
-        LOG_WRN("Test failed with doc [" << _docKey << "]: " << state.str());
+        LOG_WRN(state.str());
     }
 
     // Flush socket data first.
