@@ -1410,6 +1410,14 @@ private:
 
     /// Embedded media map [id, json].
     std::map<std::string, std::string> _embeddedMedia;
+
+    // Last member.
+#ifdef ENABLE_DEBUG
+    /// The UnitWSD instance. We capture it here since
+    /// this is our instance, but the test framework
+    /// has a single global instance via UnitWSD::get().
+    UnitWSD& _unitWsd;
+#endif
 };
 
 #if !MOBILEAPP
