@@ -173,7 +173,7 @@ public:
     }
 
     // Called when we have modified document data at exit.
-    void fail(const std::string& reason) override
+    bool onDataLoss(const std::string& reason) override
     {
         LOG_TST("Modified document being unloaded: " << reason);
 
@@ -184,6 +184,8 @@ public:
         LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitDocClose but was " + toString(_phase),
                            _phase == Phase::WaitDocClose);
         _unloadingModifiedDocDetected = true;
+
+        return failed();
     }
 
     // Wait for clean unloading.

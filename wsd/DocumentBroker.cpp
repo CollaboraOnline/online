@@ -521,7 +521,8 @@ void DocumentBroker::pollThread()
             LOG_WRN("DocumentBroker stopping although " << reason << ". State: " << state.str());
             if (UnitWSD::isUnitTesting())
             {
-                UnitWSD::get().fail("Data-loss detected while exiting DocBroker [" + _docKey + ']');
+                UnitWSD::get().onDataLoss("Data-loss detected while exiting DocBroker [" +
+                                            _docKey + ']');
             }
         }
     }
