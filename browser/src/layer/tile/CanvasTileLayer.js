@@ -1864,7 +1864,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			entries[entries.length-1].children[0] = {
 				id: '',
 				type: 'fixedtext',
-				text: '<div class="func-info-sig">' + func.signature + '</div>' + '<div class="func-info-desc">' + func.description + '</div>',
+				html: '<div class="func-info-sig">' + func.signature + '</div>' + '<div class="func-info-desc">' + func.description + '</div>',
 				enabled: true,
 				style: 'func-info'
 			};
@@ -1907,7 +1907,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			funcEntries[funcEntries.length-1].children[0] = {
 				id: '',
 				type: 'fixedtext',
-				text: '<div class="func-info-sig">' + func.signature + '</div>' + '<div class="func-info-desc">' + func.description + '</div>',
+				html: '<div class="func-info-sig">' + func.signature + '</div>' + '<div class="func-info-desc">' + func.description + '</div>',
 				enabled: true,
 				style: 'func-info'
 			};
