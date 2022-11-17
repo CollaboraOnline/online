@@ -158,6 +158,6 @@ std::string inline lokFormatAssertEq(const char* expected_name, const std::strin
     do                                                                                             \
     {                                                                                              \
         TST_LOG("ERROR: Forced failure: " << (message));                                           \
-        LOK_ASSERT_IMPL(!"Forced failure: " #message);                                             \
+        LOK_ASSERT_IMPL(!"Forced failure: " #message); /* NOLINT(misc-static-assert) */            \
         CPPUNIT_FAIL((message));                                                                   \
     } while (false)

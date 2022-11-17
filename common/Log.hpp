@@ -440,7 +440,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
             LOG("ERROR: Assertion failure: "                                                       \
                 << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ". ")                             \
                 << "Condition: " << (#condition));                                                 \
-            assert(!#condition);                                                                   \
+            assert(!#condition); /* NOLINT(misc-static-assert) */                                  \
         }                                                                                          \
     } while (false)
 
