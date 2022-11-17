@@ -67,8 +67,10 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
     if (!conf.has("storage.wopi.alias_groups"))
     {
         conf.setString("storage.wopi.alias_groups[@mode]", "compat");
+        return;
     }
-    else if (conf.has("storage.wopi.alias_groups.group[0]"))
+
+    if (conf.has("storage.wopi.alias_groups.group[0]"))
     {
         // group defined in alias_groups
         if (Util::iequal(config::getString("storage.wopi.alias_groups[@mode]", "first"), "first"))
