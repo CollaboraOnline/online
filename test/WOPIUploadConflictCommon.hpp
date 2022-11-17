@@ -260,7 +260,7 @@ public:
     }
 
     // Called when we have modified document data at exit.
-    void fail(const std::string& reason) override
+    bool onDataLoss(const std::string& reason) override
     {
         // We expect this to happen only with the disonnection test,
         // because only in that case there is no user input.
@@ -275,6 +275,8 @@ public:
             "Expected to be in Scenario::Disconnect OR Scenario::SaveOverwrite but was " +
                 toString(_scenario),
             (_scenario == Scenario::Disconnect) || (_scenario == Scenario::SaveOverwrite));
+
+        return failed();
     }
 
     // Wait for clean unloading.

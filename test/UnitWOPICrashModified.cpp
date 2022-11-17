@@ -74,10 +74,11 @@ public:
         return true;
     }
 
-    void fail(const std::string& reason) override
+    bool onDataLoss(const std::string& reason) override
     {
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
         passTest("Finished with the data-loss check: " + reason);
+        return failed();
     }
 
     void invokeWSDTest() override

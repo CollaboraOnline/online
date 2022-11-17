@@ -143,10 +143,12 @@ public:
     /// Tweak the return value from the process.
     virtual void returnValue(int& /* retValue */);
 
-    /// Trigger a failure due to any reason.
-    virtual void fail(const std::string& reason)
+    /// Data-loss detection. Override if expected/intentional.
+    /// Returns true if we failed, false otherwise.
+    virtual bool onDataLoss(const std::string& reason)
     {
         failTest(reason);
+        return failed();
     }
 
     /// Input message either for WSD or Kit
