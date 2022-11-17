@@ -1891,28 +1891,34 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._openMobileWizard(data);
 	},
 
+	_getCalcFunctionListEntry: function(name, category, index, signature, description) {
+		return  {
+			id: '',
+			type: 'calcfuncpanel',
+			text: name,
+			functionName: name,
+			index: index,
+			category: category,
+			enabled: true,
+			children: [
+				{
+					id: '',
+					type: 'fixedtext',
+					html: '<div class="func-info-sig">' + signature + '</div>' + '<div class="func-info-desc">' + description + '</div>',
+					enabled: true,
+					style: 'func-info'
+				}
+			]
+		};
+	},
+
 	_onCalcFunctionList: function (funcList, data) {
 		var entries = data.children;
 		for (var idx = 0; idx < funcList.length; ++idx) {
 			var func =  funcList[idx];
 			var name = func.signature.split('(')[0];
-			var entry = {
-				id: '',
-				type: 'calcfuncpanel',
-				text: name,
-				functionName: name,
-				index: func.index,
-				enabled: true,
-				children: []
-			};
-			entries.push(entry);
-			entries[entries.length-1].children[0] = {
-				id: '',
-				type: 'fixedtext',
-				html: '<div class="func-info-sig">' + func.signature + '</div>' + '<div class="func-info-desc">' + func.description + '</div>',
-				enabled: true,
-				style: 'func-info'
-			};
+			entries.push(this._getCalcFunctionListEntry(
+				name, undefined, func.index, func.signature, func.description));
 		}
 	},
 
@@ -1936,26 +1942,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		for (idx = 0; idx < funcList.length; ++idx) {
 			var func =  funcList[idx];
 			var name = func.signature.split('(')[0];
-			var funcEntry = {
-				id: '',
-				type: 'calcfuncpanel',
-				text: name,
-				functionName: name,
-				index: func.index,
-				category: func.category,
-				enabled: true,
-				children: []
-			};
 			var funcEntries = categoryEntries[func.category].children;
-			funcEntries.push(funcEntry);
-
-			funcEntries[funcEntries.length-1].children[0] = {
-				id: '',
-				type: 'fixedtext',
-				html: '<div class="func-info-sig">' + func.signature + '</div>' + '<div class="func-info-desc">' + func.description + '</div>',
-				enabled: true,
-				style: 'func-info'
-			};
+			funcEntries.push(this._getCalcFunctionListEntry(
+				name, func.category, func.index, func.signature, func.description));
 		}
 	},
 
