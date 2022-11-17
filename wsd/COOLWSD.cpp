@@ -1199,7 +1199,6 @@ public:
 
         AutoPtr<AppConfigMap> newConfig(new AppConfigMap(newAppConfig));
         _conf.addWriteable(newConfig, PRIO_JSON);
-        newConfig->clear();
 
 #if ENABLE_FEATURE_LOCK
         CommandControl::LockManager::parseLockedHost(_conf);
