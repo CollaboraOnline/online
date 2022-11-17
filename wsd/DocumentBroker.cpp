@@ -142,6 +142,9 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _debugRenderedTileCount(0)
     , _wopiDownloadDuration(0)
     , _mobileAppDocId(mobileAppDocId)
+#ifdef ENABLE_DEBUG
+    , _unitWsd(UnitWSD::get())
+#endif
 {
     assert(!_docKey.empty());
     assert(!COOLWSD::ChildRoot.empty());
@@ -155,7 +158,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
 
     if (UnitWSD::isUnitTesting())
     {
-        UnitWSD::get().onDocBrokerCreate(_docKey);
+        _unitWsd.onDocBrokerCreate(_docKey);
     }
 }
 
@@ -284,7 +287,7 @@ void DocumentBroker::pollThread()
             break;
         }
 
-        if (UnitWSD::isUnitTesting() && UnitWSD::get().isFinished())
+        if (UnitWSD::isUnitTesting() && _unitWsd.isFinished())
         {
             stop("UnitTestFinished");
             break;
@@ -521,12 +524,11 @@ void DocumentBroker::pollThread()
             LOG_WRN("DocumentBroker stopping although " << reason << ". State: " << state.str());
             if (UnitWSD::isUnitTesting())
             {
-                UnitWSD::get().onDataLoss("Data-loss detected while exiting DocBroker [" +
-                                            _docKey + ']');
+                _unitWsd.onDataLoss("Data-loss detected while exiting DocBroker [" + _docKey + ']');
             }
         }
     }
-    else if (UnitWSD::isUnitTesting() && UnitWSD::get().isFinished() && UnitWSD::get().failed())
+    else if (UnitWSD::isUnitTesting() && _unitWsd.isFinished() && _unitWsd.failed())
     {
         std::stringstream state;
         dumpState(state);
@@ -613,7 +615,7 @@ DocumentBroker::~DocumentBroker()
 
     if (UnitWSD::isUnitTesting())
     {
-        UnitWSD::get().onDocBrokerDestroy(_docKey);
+        _unitWsd.onDocBrokerDestroy(_docKey);
     }
 }
 
@@ -651,7 +653,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 
     {
         bool result;
-        if (UnitWSD::get().filterLoad(sessionId, jailId, result))
+        if (_unitWsd.filterLoad(sessionId, jailId, result))
             return result;
     }
 
@@ -2196,7 +2198,7 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         _nextStorageAttrs.setUserModified(isModified() || haveModifyActivityAfterSaveRequest());
 
         //FIXME: It's odd to capture these here, but this function is used from ClientSession too.
-        _nextStorageAttrs.setIsAutosave(isAutosave || UnitWSD::get().isAutosave());
+        _nextStorageAttrs.setIsAutosave(isAutosave || _unitWsd.isAutosave());
         _nextStorageAttrs.setIsExitSave(isExitSave);
         _nextStorageAttrs.setExtendedData(extendedData);
 
@@ -2303,7 +2305,7 @@ std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSessi
 
     if (UnitWSD::isUnitTesting())
     {
-        UnitWSD::get().onDocBrokerAddSession(_docKey, session);
+        _unitWsd.onDocBrokerAddSession(_docKey, session);
     }
 
     return count;
@@ -2503,7 +2505,7 @@ void DocumentBroker::finalRemoveSession(const std::string& id)
             if (UnitWSD::isUnitTesting())
             {
                 // Notify test code before removal.
-                UnitWSD::get().onDocBrokerRemoveSession(_docKey, it->second);
+                _unitWsd.onDocBrokerRemoveSession(_docKey, it->second);
             }
 
             // Remove. The caller must have a reference to the session
@@ -2592,7 +2594,7 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 {
     assertCorrectThread();
 
-    if (UnitWSD::get().filterAlertAllusers(msg))
+    if (_unitWsd.filterAlertAllusers(msg))
         return;
 
     auto payload = std::make_shared<Message>(msg, Message::Dir::Out);
@@ -2637,7 +2639,7 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
         COOLWSD::dumpOutgoingTrace(getJailId(), "0", message->abbr());
 #endif
 
-    if (UnitBase::get().filterLOKitMessage(message))
+    if (_unitWsd.filterLOKitMessage(message))
         return true;
 
     if (COOLProtocol::getFirstToken(message->forwardToken(), '-') == "client")
