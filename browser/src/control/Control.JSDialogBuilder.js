@@ -1981,24 +1981,30 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_comboboxEntry: function(parentContainer, data, builder) {
-		var fixedtext = L.DomUtil.create('p', builder.options.cssClass, parentContainer);
-		fixedtext.textContent = builder._cleanText(data.text);
-		fixedtext.parent = data.parent;
+		var comboboxEntry = L.DomUtil.create('p', builder.options.cssClass, parentContainer);
+		comboboxEntry.textContent = builder._cleanText(data.text);
+
+		comboboxEntry.parent = data.parent;
 
 		if (data.style && data.style.length)
-			L.DomUtil.addClass(fixedtext, data.style);
+			L.DomUtil.addClass(comboboxEntry, data.style);
 
-		$(fixedtext).click(function () {
+		$(comboboxEntry).click(function () {
 			builder.refreshSidebar = true;
 			if (builder.wizard)
 				builder.wizard.goLevelUp();
-			builder.callback('combobox', 'selected', fixedtext.parent, data.pos + ';' + fixedtext.textContent, builder);
+			builder.callback('combobox', 'selected', comboboxEntry.parent, data.pos + ';' + comboboxEntry.textContent, builder);
 		});
 	},
 
 	_fixedtextControl: function(parentContainer, data, builder) {
 		var fixedtext = L.DomUtil.create('p', builder.options.cssClass, parentContainer);
-		fixedtext.textContent = builder._cleanText(data.text);
+
+		if (data.text)
+			fixedtext.textContent = builder._cleanText(data.text);
+		else if (data.html)
+			fixedtext.innerHTML = data.html;
+
 		fixedtext.id = data.id;
 		if (data.style && data.style.length) {
 			L.DomUtil.addClass(fixedtext, data.style);
