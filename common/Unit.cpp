@@ -20,6 +20,7 @@
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Util/LayeredConfiguration.h>
+#include <Poco/Util/Application.h>
 
 #include "Log.hpp"
 #include "Util.hpp"
@@ -497,6 +498,8 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
 
         LOG_TST("Starting test #" << GlobalIndex + 1 << ": "
                                   << GlobalArray[GlobalIndex]->getTestname());
+        if (GlobalWSD)
+            GlobalWSD->configure(Poco::Util::Application::instance().config());
         GlobalArray[GlobalIndex]->initialize();
         return;
     }
