@@ -26,22 +26,23 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
 }
 
 template <typename T, typename U>
-inline std::string lokFormatAssertEq(const T& expected, const char* expectedName, const U& actual)
+inline std::string lokFormatAssertEq(const char* expectedName, const T& expected,
+                                     const char* actualName, const U& actual)
 {
     std::ostringstream oss;
-    oss << "Expected " << expectedName << " == [" << std::boolalpha << (expected) << "] but got ["
-        << (actual) << ']';
+    oss << "Expected " << actualName << " [" << std::boolalpha << (actual)
+        << "] == " << expectedName << " [" << (expected) << ']';
     return oss.str();
 }
 
 template <>
-std::string inline lokFormatAssertEq(const std::string& expected, const char*,
-                                     const std::string& actual)
+std::string inline lokFormatAssertEq(const char* expected_name, const std::string& expected,
+                                     const char* actual_name, const std::string& actual)
 {
     std::ostringstream oss;
     oss << '\n';
-    oss << "Expected: [" << expected << "]\n";
-    oss << "Actual:   [" << actual << "]\n";
+    oss << "Expected (" << expected_name << "): [" << expected << "]\n";
+    oss << "Actual (" << actual_name << "):   [" << actual << "]\n";
     oss << "          [";
 
     const auto minSize = std::min(expected.size(), actual.size());
@@ -110,11 +111,11 @@ std::string inline lokFormatAssertEq(const std::string& expected, const char*,
 /// Assert the equality of two expressions. WARNING: Multiple evaluations!
 /// Captures full expressions, but only meaningful when they have no side-effects when evaluated.
 #define LOK_ASSERT_EQUAL_UNSAFE(expected, actual)                                                  \
-    LOK_ASSERT_EQUAL_MESSAGE_UNSAFE("", expected, #actual, actual)
+    LOK_ASSERT_EQUAL_MESSAGE_UNSAFE("", #expected, expected, #actual, actual)
 
 /// Assert the equality of two expressions with a custom message. WARNING: Multiple evaluations!
 /// Captures full expressions, but only meaningful when they have no side-effects when evaluated.
-#define LOK_ASSERT_EQUAL_MESSAGE_UNSAFE(message, expected, actual_name, actual)                    \
+#define LOK_ASSERT_EQUAL_MESSAGE_UNSAFE(message, expected_name, expected, actual_name, actual)     \
     do                                                                                             \
     {                                                                                              \
         if (!((expected) == (actual)))                                                             \
@@ -124,7 +125,7 @@ std::string inline lokFormatAssertEq(const std::string& expected, const char*,
             const auto msg##__LINE__ = oss##__LINE__.str();                                        \
             TST_LOG("ERROR: Assertion failure: "                                                   \
                     << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ' ')                          \
-                    << lokFormatAssertEq(expected, actual_name, actual));                          \
+                    << lokFormatAssertEq(expected_name, expected, actual_name, actual));           \
             LOK_ASSERT_IMPL((expected) == (actual));                                               \
             CPPUNIT_ASSERT_EQUAL_MESSAGE(msg##__LINE__, (expected), (actual));                     \
         }                                                                                          \
@@ -138,7 +139,7 @@ std::string inline lokFormatAssertEq(const std::string& expected, const char*,
         auto&& act##__LINE__ = ACT;                                                                \
         if (!(exp##__LINE__ == act##__LINE__))                                                     \
         {                                                                                          \
-            LOK_ASSERT_EQUAL_MESSAGE_UNSAFE(MSG, exp##__LINE__, #ACT, act##__LINE__);              \
+            LOK_ASSERT_EQUAL_MESSAGE_UNSAFE(MSG, #EXP, exp##__LINE__, #ACT, act##__LINE__);        \
         }                                                                                          \
         else                                                                                       \
         {                                                                                          \
