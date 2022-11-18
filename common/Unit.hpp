@@ -258,6 +258,9 @@ private:
     /// Dynamically load the unit-test .so.
     static UnitBase** linkAndCreateUnit(UnitType type, const std::string& unitLibPath);
 
+    /// Based on COOL_TEST_OPTIONS envar, filter the tests.
+    static void filter();
+
     /// Handles messages from LOKit.
     virtual bool onFilterLOKitMessage(const std::shared_ptr<Message>& /*message*/) { return false; }
 
