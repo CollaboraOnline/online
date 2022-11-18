@@ -1713,7 +1713,7 @@ L.Control.Menubar = L.Control.extend({
 					this._map.save(false, false);
 				}
 			}
-		} else if (id === 'saveas' && type === 'action') {
+		} else if (id === 'saveas' && type !== 'menu') { // jsdialog has no type='action'
 			this._map.openSaveAs();
 		} else if (id === 'savecomments') {
 			if (this._map.isPermissionEditForComments()) {
