@@ -305,7 +305,7 @@ private:
     {
         const auto header = COOLProtocol::getFirstLine(message);
         const bool match = COOLProtocol::matchPrefix(prefix, header);
-        LOG_DBG(context << (match ? "Matched" : "Skipped") << " message [" << prefix
+        LOG_DBG(context << (match ? " Matched" : " Skipped") << " message [" << prefix
                         << "]: " << header);
         return match;
     }
@@ -343,8 +343,6 @@ private:
 
             if (_shutdown && _outQueue.isEmpty())
             {
-                LOG_DBG(
-                    "WebSocketSession: closing gracefully after sending all the data, as flagged.");
                 sendCloseFrame();
             }
         }
