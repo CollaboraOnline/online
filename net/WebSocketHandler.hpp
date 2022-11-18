@@ -647,10 +647,13 @@ public:
     /// 0 for closed socket, and -1 for other errors.
     int sendMessage(const char* data, const size_t len, const WSOpCode code, const bool flush) const
     {
-        int unitReturn = -1;
-        if (!Util::isFuzzing() &&
-            UnitBase::get().filterSendWebSocketMessage(data, len, code, flush, unitReturn))
-            return unitReturn;
+        if (!Util::isFuzzing())
+        {
+            int unitReturn = -1;
+            static auto& unit = UnitBase::get();
+            if (unit.filterSendWebSocketMessage(data, len, code, flush, unitReturn))
+                return unitReturn;
+        }
 
         //TODO: Support fragmented messages.
 
