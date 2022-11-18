@@ -100,20 +100,18 @@ protected:
     }
 
     /// Encourages the process to exit with this value (unless hooked)
-    void exitTest(TestResult result);
+    void exitTest(TestResult result, const std::string& reason = std::string());
 
     /// Fail the test with the given reason.
     void failTest(const std::string& reason)
     {
-        LOG_TST("FAILURE: " << getTestname() << " finished: " << reason);
-        exitTest(TestResult::Failed);
+        exitTest(TestResult::Failed, reason);
     }
 
     /// Pass the test with the given optional reason.
     void passTest(const std::string& reason = std::string())
     {
-        LOG_TST("SUCCESS: " << getTestname() << " finished: " << reason);
-        exitTest(TestResult::Ok);
+        exitTest(TestResult::Ok, reason);
     }
 
     /// Construct a UnitBase instance with a default name.
