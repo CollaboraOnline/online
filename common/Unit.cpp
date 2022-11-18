@@ -551,18 +551,4 @@ void UnitBase::returnValue(int &retValue)
     LOG_TST("==================== Finished [" << getTestname() << "] ====================");
 }
 
-void UnitKit::returnValue(int &retValue)
-{
-    UnitBase::returnValue(retValue);
-
-    GlobalKit = nullptr;
-}
-
-void UnitWSD::returnValue(int &retValue)
-{
-    UnitBase::returnValue(retValue);
-
-    GlobalWSD = nullptr;
-}
-
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
