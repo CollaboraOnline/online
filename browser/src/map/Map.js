@@ -317,7 +317,11 @@ L.Map = L.Evented.extend({
 		app.socket.sendMessage('commandvalues command=.uno:LanguageStatus');
 		app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 		if (this._docLayer._docType === 'spreadsheet') {
+			this._docLayer._gotFirstCellCursor = false;
+			if (this._docLayer.options.sheetGeometryDataEnabled)
+				this._docLayer.requestSheetGeometryData();
 			this._docLayer.refreshViewData();
+			this._docLayer._update();
 		}
 		this._docLayer._getToolbarCommandsValues();
 	},
