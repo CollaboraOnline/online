@@ -68,7 +68,19 @@ UnitBase** UnitBase::linkAndCreateUnit(UnitType type, const std::string& unitLib
             {
                 UnitBase** hooks = createHooksMulti();
                 if (hooks)
+                {
+                    std::ostringstream oss;
+                    oss << "Loaded UnitTest [" << unitLibPath << "] with: ";
+                    for (int i = 0; hooks[i] != nullptr; ++i)
+                    {
+                        if (i)
+                            oss << ", ";
+                        oss << hooks[i]->getTestname();
+                    }
+
+                    LOG_INF(oss.str());
                     return hooks;
+                }
             }
 
             // Fallback.
