@@ -123,7 +123,7 @@ void UnitBase::filter()
         return;
 
     const std::string filter = Util::toLower(TestOptions);
-    for (GlobalIndex = 0; GlobalArray[GlobalIndex] != nullptr; ++GlobalIndex)
+    for (; GlobalArray[GlobalIndex] != nullptr; ++GlobalIndex)
     {
         const std::string& name = GlobalArray[GlobalIndex]->getTestname();
         if (strstr(Util::toLower(name).c_str(), filter.c_str()))
@@ -269,7 +269,8 @@ int UnitBase::uninit()
         // By default, this will check _setRetValue and copy _retValue to the arg.
         // But we call it to trigger overrides and to perform cleanups.
         int retValue = GlobalResult == TestResult::Ok ? EX_OK : EX_SOFTWARE;
-        GlobalArray[GlobalIndex]->returnValue(retValue);
+        if (GlobalArray[GlobalIndex] != nullptr)
+            GlobalArray[GlobalIndex]->returnValue(retValue);
         if (retValue)
             GlobalResult = TestResult::Failed;
 
@@ -494,14 +495,19 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
 
         // We have more tests.
         ++GlobalIndex;
-        rememberInstance(_type, GlobalArray[GlobalIndex]);
+        filter();
 
-        LOG_TST("Starting test #" << GlobalIndex + 1 << ": "
-                                  << GlobalArray[GlobalIndex]->getTestname());
-        if (GlobalWSD)
-            GlobalWSD->configure(Poco::Util::Application::instance().config());
-        GlobalArray[GlobalIndex]->initialize();
-        return;
+        if (GlobalArray[GlobalIndex] != nullptr)
+        {
+            rememberInstance(_type, GlobalArray[GlobalIndex]);
+
+            LOG_TST("Starting test #" << GlobalIndex + 1 << ": "
+                                    << GlobalArray[GlobalIndex]->getTestname());
+            if (GlobalWSD)
+                GlobalWSD->configure(Poco::Util::Application::instance().config());
+            GlobalArray[GlobalIndex]->initialize();
+            return;
+        }
     }
 
     // We are done with all the tests.
