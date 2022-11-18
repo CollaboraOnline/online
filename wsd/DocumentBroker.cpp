@@ -1255,6 +1255,9 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     if (success)
         LOG_DBG("Save result from Core: saved (during "
                 << DocumentState::toString(_docState.activity()) << ')');
+    else if (result == "unmodified")
+        LOG_DBG("Save result from Core: unmodified (during "
+                << DocumentState::toString(_docState.activity()) << ')');
     else
         LOG_WRN("Save result from Core (failure): "
                 << result << " (during " << DocumentState::toString(_docState.activity()) << ')');
@@ -1266,13 +1269,19 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     const std::string oldName = _storage->getRootFilePathToUpload();
     const std::string newName = _storage->getRootFilePathUploading();
 
+    // Rename even if no new save, in case we have an older version.
     if (rename(oldName.c_str(), newName.c_str()) < 0)
     {
         // It's not an error if there was no file to rename, when the document isn't modified.
         const auto onrre = errno;
-        LOG_DBG("Failed to renamed [" << oldName << "] to [" << newName << "] ("
-                                      << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre)
-                                      << ')');
+        if (success || onrre != ENOENT)
+            LOG_ERR("Failed to rename [" << oldName << "] to [" << newName << "] ("
+                                          << Util::symbolicErrno(onrre) << ": "
+                                          << std::strerror(onrre) << ')');
+        else
+            LOG_DBG("Failed to rename [" << oldName << "] to [" << newName << "] ("
+                                          << Util::symbolicErrno(onrre) << ": "
+                                          << std::strerror(onrre) << ')');
     }
     else
     {
@@ -1390,6 +1399,7 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
 {
     assertCorrectThread();
 
+    LOG_TRC("uploadToStorage [" << sessionId << "]:" << (force ? "" : "not") << " forced");
     if (force)
     {
         // Don't reset the force flag if it was set
@@ -1397,6 +1407,7 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
         _currentStorageAttrs.setForced(force);
     }
 
+    // Upload immediately if forced or had no failures. Otherwise, throttle (on failure).
     if (force || _storageManager.lastUploadSuccessful() || _storageManager.canUploadNow())
     {
         constexpr bool isRename = false;
@@ -1405,7 +1416,7 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
     }
     else
     {
-        LOG_TRC("Last upload had failed and it's only been "
+        LOG_DBG("Last upload had failed and it's only been "
                 << _storageManager.timeSinceLastUploadResponse()
                 << " since. Min time between uploads: " << _storageManager.minTimeBetweenUploads());
     }
