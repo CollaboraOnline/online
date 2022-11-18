@@ -102,6 +102,24 @@ UnitBase** UnitBase::linkAndCreateUnit(UnitType type, const std::string& unitLib
     return nullptr;
 }
 
+void UnitBase::filter()
+{
+    // For now, support only filtering.
+    static const char* TestOptions = getenv("COOL_TEST_OPTIONS");
+    if (TestOptions == nullptr)
+        return;
+
+    const std::string filter = Util::toLower(TestOptions);
+    for (GlobalIndex = 0; GlobalArray[GlobalIndex] != nullptr; ++GlobalIndex)
+    {
+        const std::string& name = GlobalArray[GlobalIndex]->getTestname();
+        if (strstr(Util::toLower(name).c_str(), filter.c_str()))
+            break;
+
+        LOG_INF("Skipping test [" << name << "] per filter [" << TestOptions << "]");
+    }
+}
+
 bool UnitBase::init(UnitType type, const std::string &unitLibPath)
 {
 #if !MOBILEAPP
@@ -119,7 +137,10 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
         GlobalArray = linkAndCreateUnit(type, unitLibPath);
         if (GlobalArray)
         {
+            // Filter tests.
             GlobalIndex = 0;
+            filter();
+
             UnitBase* instance = GlobalArray[GlobalIndex];
             if (instance)
             {
