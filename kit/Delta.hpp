@@ -57,6 +57,9 @@ struct TileLocation {
 /// A quick and dirty, thread-safe delta generator for last tile changes
 class DeltaGenerator {
 
+    // fast - and deltas take lots of size off.
+    static const int compressionLevel = -3;
+
     /// Bitmap row with a CRC for quick vertical shift detection
     struct DeltaBitmapRow {
         // FIXME: add "whole row the same" flag.
@@ -424,7 +427,7 @@ class DeltaGenerator {
         // compress for speed, not size - and trust to deltas.
         size_t compSize = ZSTD_compress(compressed.get(), maxCompressed,
                                         output.data(), output.size(),
-                                        -(1<<17) /* ZSTD_minCLevel() */);
+                                        compressionLevel);
         if (ZSTD_isError(compSize))
         {
             LOG_ERR("Failed to compress delta of size " << output.size() << " with " << ZSTD_getErrorName(compSize));
@@ -432,7 +435,7 @@ class DeltaGenerator {
         }
 
         LOG_TRC("Compressed delta of size " << output.size() << " to size " << compSize);
-//                << Util::dumpHex(std::string((char *)compressed, compSize)));
+//                << Util::dumpHex(std::string((char *)compressed.get(), compSize)));
 
         // FIXME: should get zstd to drop it directly in-place really.
         outStream.push_back('D');
@@ -553,6 +556,8 @@ class DeltaGenerator {
             }
 
             ZSTD_CCtx *cctx = ZSTD_createCCtx();
+
+            ZSTD_CCtx_setParameter(cctx, ZSTD_c_compressionLevel, compressionLevel);
 
             ZSTD_outBuffer outb;
             outb.dst = compressed.get();
