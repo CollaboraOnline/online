@@ -331,7 +331,7 @@ L.Control.StatusBar = L.Control.extend({
 					},
 					{type: 'break', id: 'break9', mobile: false},
 					{
-						type: 'html', id: 'PermissionMode', mobile: false, tablet: false,
+						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
 						html: this._getPermissionModeHtml(isReadOnly)
 					}
 				]);
@@ -367,7 +367,7 @@ L.Control.StatusBar = L.Control.extend({
 					},
 					{type: 'break', id: 'break8', mobile: false},
 					{
-						type: 'html', id: 'PermissionMode', mobile: false, tablet: false,
+						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
 						html: this._getPermissionModeHtml(isReadOnly)
 					}
 				]);
@@ -388,7 +388,7 @@ L.Control.StatusBar = L.Control.extend({
 					},
 					{type: 'break', id: 'break8', mobile: false},
 					{
-						type: 'html', id: 'PermissionMode', mobile: false, tablet: false,
+						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
 						html: this._getPermissionModeHtml(isReadOnly)
 					}
 				]);
@@ -408,7 +408,7 @@ L.Control.StatusBar = L.Control.extend({
 					},
 					{type: 'break', id: 'break8', mobile: false},
 					{
-						type: 'html', id: 'PermissionMode', mobile: false, tablet: false,
+						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
 						html: this._getPermissionModeHtml(isReadOnly)
 					}
 				]);
