@@ -333,7 +333,10 @@ public:
         try
         {
             // Invoke the test, expect no exceptions.
-            invokeWSDTest();
+            if (!isFinished())
+            {
+                invokeWSDTest();
+            }
         }
         catch (const Poco::Exception& ex)
         {
