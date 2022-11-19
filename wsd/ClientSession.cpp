@@ -653,22 +653,29 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         }
         else
         {
-            int dontTerminateEdit = 1;
-            if (tokens.size() > 1)
-                getTokenInteger(tokens[1], "dontTerminateEdit", dontTerminateEdit);
-
             // Don't save unmodified docs by default.
             int dontSaveIfUnmodified = 1;
-            if (tokens.size() > 2)
-                getTokenInteger(tokens[2], "dontSaveIfUnmodified", dontSaveIfUnmodified);
-
+            int dontTerminateEdit = 1;
             std::string extendedData;
-            if (tokens.size() > 3)
+
+            // We expect at most 3 arguments.
+            for (int i = 0; i < 3; ++i)
             {
-                getTokenString(tokens[3], "extendedData", extendedData);
-                std::string decoded;
-                Poco::URI::decode(extendedData, decoded);
-                extendedData = decoded;
+                // +1 to skip the command token.
+                const StringVector attr = StringVector::tokenize(tokens[i + 1], '=');
+                if (attr.size() == 2)
+                {
+                    if (attr[0] == "dontTerminateEdit")
+                        COOLProtocol::stringToInteger(attr[1], dontTerminateEdit);
+                    else if (attr[0] == "dontSaveIfUnmodified")
+                        COOLProtocol::stringToInteger(attr[1], dontSaveIfUnmodified);
+                    else if (attr[0] == "extendedData")
+                    {
+                        std::string decoded;
+                        Poco::URI::decode(attr[1], decoded);
+                        extendedData = decoded;
+                    }
+                }
             }
 
             constexpr bool isAutosave = false;
