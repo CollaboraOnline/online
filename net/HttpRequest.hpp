@@ -510,9 +510,10 @@ public:
 
     bool writeData(Buffer& out, std::size_t capacity)
     {
+        const std::size_t buffered_size = out.size();
         if (_stage == Stage::Header)
         {
-            LOG_TRC("performWrites (request header).");
+            LOG_TRC("performWrites (request header)");
 
             out.append(getVerb());
             out.append(" ");
@@ -529,7 +530,7 @@ public:
 
         if (_stage == Stage::Body)
         {
-            LOG_TRC("performWrites (request body).");
+            LOG_TRC("performWrites (request body)");
 
             // Get the data to write into the socket
             // from the client's callback. This is
@@ -547,14 +548,16 @@ public:
 
                 if (read == 0)
                 {
-                    LOG_TRC("performWrites (request body): finished, total: " << wrote);
+                    LOG_TRC("performWrites (request body): finished, total: " << out.size() -
+                                                                                     buffered_size);
                     _stage = Stage::Finished;
                     return true;
                 }
 
                 out.append(buffer, read);
                 wrote += read;
-                LOG_TRC("performWrites (request body): " << read << " bytes, total: " << wrote);
+                LOG_TRC("performWrites (request body): " << read << " bytes, total: "
+                                                         << out.size() - buffered_size);
             } while (wrote < capacity);
         }
 
@@ -1282,8 +1285,8 @@ private:
         if (socket)
         {
             Buffer& out = socket->getOutBuffer();
-            LOG_TRC('#' << socket->getFD() << ": performWrites: " << out.size()
-                        << " bytes, capacity: " << capacity);
+            LOG_TRC('#' << socket->getFD() << ": performWrites: sending request (buffered: "
+                        << out.size() << " bytes, capacity: " << capacity << ')');
 
             if (!socket->send(_request))
             {
