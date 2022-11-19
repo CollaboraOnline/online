@@ -9,6 +9,7 @@
 
 #include "WOPIUploadConflictCommon.hpp"
 
+#include <chrono>
 #include <string>
 #include <memory>
 
@@ -304,9 +305,174 @@ public:
     }
 };
 
+/// This test simulates a modified read-only document.
+class UnitWOPIReadOnly : public WopiTestServer
+{
+public:
+    STATE_ENUM(Scenario, Edit, ViewWithComment);
+
+private:
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose, Done) _phase;
+
+    const Scenario _scenario;
+
+    std::chrono::steady_clock::time_point _eventTime;
+
+public:
+    UnitWOPIReadOnly(Scenario scenario)
+        : WopiTestServer("UnitWOPIReadOnly_" + toStringShort(scenario))
+        , _phase(Phase::Load)
+        , _scenario(scenario)
+    {
+    }
+
+    void configure(Poco::Util::LayeredConfiguration& config) override
+    {
+        WopiTestServer::configure(config);
+
+        // Make it more likely to force uploading.
+        config.setBool("per_document.always_save_on_exit", true);
+    }
+
+    void configCheckFileInfo(Poco::JSON::Object::Ptr fileInfo) override
+    {
+        LOG_TST("CheckFileInfo: making read-only");
+
+        fileInfo->set("UserCanWrite", "false");
+        fileInfo->set("UserCanNotWriteRelative", "true");
+
+        if (_scenario == Scenario ::Edit)
+        {
+            // An extension that doesn't allow commenting. By omitting this,
+            // we allow commenting and consider the document editable.
+            fileInfo->set("BaseFileName", "doc.odt");
+        }
+        else if (_scenario == Scenario ::ViewWithComment)
+        {
+            // An extension that allows commenting.
+            fileInfo->set("BaseFileName", "doc.pdf");
+        }
+    }
+
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    {
+        // Unexpected on a read-only doc.
+        failTest("PutFile on a read-only document");
+
+        return nullptr;
+    }
+
+    /// The document is loaded.
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        LOG_TST("onDocumentLoaded: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        // Update before transitioning, to avoid triggering immediately.
+        _eventTime = std::chrono::steady_clock::now();
+        TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
+
+        WSD_CMD("key type=input char=97 key=0");
+        WSD_CMD("key type=up char=0 key=512");
+
+        return true;
+    }
+
+    bool onDocumentModified(const std::string& message) override
+    {
+        LOG_TST("Modified: [" << message << ']');
+        failTest("Modified read-only document");
+
+        return failed();
+    }
+
+    bool onDataLoss(const std::string& reason) override
+    {
+        LOG_TST("Data-loss in " << name(_phase) << ": " << reason);
+
+        // We expect this to happen, since we can't upload the document.
+        LOK_ASSERT_MESSAGE("Expected reason to be 'Data-loss detected'",
+                           Util::startsWith(reason, "Data-loss detected"));
+
+        failTest("Data-loss detected");
+
+        return failed();
+    }
+
+    void onDocBrokerDestroy(const std::string& docKey) override
+    {
+        LOG_TST("Destroyed dockey [" << docKey << ']');
+        LOK_ASSERT_STATE(_phase, Phase::Done);
+
+        passTest("No modification or unexpected PutFile on read-only doc");
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
+
+                LOG_TST("Load: initWebsocket.");
+                initWebsocket("/wopi/files/" + getTestname() + "?access_token=anything");
+
+                WSD_CMD("load url=" + getWopiSrc());
+                break;
+            }
+            case Phase::WaitLoadStatus:
+                break;
+            case Phase::WaitModifiedStatus:
+            {
+                // Wait for the modified status (and fail) in onDocumentModified.
+                // Otherwise, save the document and wait for upload.
+                const auto now = std::chrono::steady_clock::now();
+                const auto elapsed =
+                    std::chrono::duration_cast<std::chrono::milliseconds>(now - _eventTime);
+                if (elapsed >= std::chrono::seconds(2))
+                {
+                    LOG_TST("No modified status on read-only document after waiting for "
+                            << elapsed);
+                    TRANSITION_STATE(_phase, Phase::WaitDocClose);
+                    _eventTime = std::chrono::steady_clock::now();
+                    LOG_TST("Saving the document");
+                    WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+                }
+            }
+            break;
+            case Phase::WaitDocClose:
+            {
+                // Wait for the upload post saving (and fail) in assertPutFileRequest.
+                // Otherwise, close the document and wait for upload.
+                const auto now = std::chrono::steady_clock::now();
+                const auto elapsed =
+                    std::chrono::duration_cast<std::chrono::milliseconds>(now - _eventTime);
+                if (elapsed >= std::chrono::seconds(2))
+                {
+                    LOG_TST("No upload on read-only document after waiting for " << elapsed);
+                    TRANSITION_STATE(_phase, Phase::Done);
+                    WSD_CMD("closedocument");
+                }
+            }
+            case Phase::Done:
+            {
+                // just wait for the results
+                break;
+            }
+        }
+    }
+};
+
 UnitBase** unit_create_wsd_multi(void)
 {
-    return new UnitBase* [3] { new UnitWOPIExpiredToken(), new UnitWOPIFailUpload(), nullptr };
+    return new UnitBase* [6]
+    {
+        new UnitWOPIExpiredToken(), new UnitWOPIFailUpload(),
+            new UnitWOPIReadOnly(UnitWOPIReadOnly::Scenario::ViewWithComment),
+            new UnitWOPIReadOnly(UnitWOPIReadOnly::Scenario::Edit),
+    };
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
