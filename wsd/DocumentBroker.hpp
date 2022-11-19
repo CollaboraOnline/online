@@ -1080,7 +1080,7 @@ private:
         void setLastUploadResult(bool success)
         {
             LOG_DBG("Upload " << (success ? "succeeded" : "failed") << " after "
-                              << _request.timeSinceLastRequest());
+                              << _request.lastRequestDuration());
             _request.setLastRequestResult(success);
         }
 
