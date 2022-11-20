@@ -284,6 +284,12 @@ void DocumentBroker::pollThread()
             break;
         }
 
+        if (UnitWSD::isUnitTesting() && UnitWSD::get().isFinished())
+        {
+            stop("UnitTestFinished");
+            break;
+        }
+
 #if !MOBILEAPP
         const auto now = std::chrono::steady_clock::now();
 
