@@ -573,7 +573,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 					var control = sandbox.firstChild;
 					if (control) {
-						L.DomUtil.addClass(control, 'ui-grid-cell');
+						L.DomUtil.addClass(control, 'ui-grid-col-' + col);
 						table.appendChild(control);
 					}
 
