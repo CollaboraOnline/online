@@ -262,6 +262,7 @@ public:
     static void writeTraceEventRecording(const char *data, std::size_t nbytes);
     static void writeTraceEventRecording(const std::string &recording);
     static std::string LogLevel;
+    static std::string LogLevelStartup;
     static std::string MostVerboseLogLevelSettableFromClient;
     static std::string LeastVerboseLogLevelSettableFromClient;
     static bool AnonymizeUserData;

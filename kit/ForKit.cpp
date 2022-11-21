@@ -63,6 +63,7 @@ static std::string UserInterface;
 static bool DisplayVersion = false;
 static std::string UnitTestLibrary;
 static std::string LogLevel;
+static std::string LogLevelStartup;
 static std::atomic<unsigned> ForkCounter(0);
 
 /// The [child pid -> jail path] map.
@@ -82,7 +83,8 @@ void dump_forkit_state()
     std::ostringstream oss;
 
     oss << "Forkit: " << ForkCounter << " forks\n"
-        << "  loglevel: " << LogLevel << "\n"
+        << "  LogLevel: " << LogLevel << "\n"
+        << "  LogLevelStartup: " << LogLevelStartup << "\n"
         << "  unit test: " << UnitTestLibrary << "\n"
 #ifndef KIT_IN_PROCESS
         << "  NoCapsForKit: " << NoCapsForKit << "\n"
@@ -549,6 +551,7 @@ int main(int argc, char** argv)
     const bool logToFile = std::getenv("COOL_LOGFILE");
     const char* logFilename = std::getenv("COOL_LOGFILENAME");
     const char* logLevel = std::getenv("COOL_LOGLEVEL");
+    const char* logLevelStartup = std::getenv("COOL_LOGLEVEL_STARTUP");
     const char* logColor = std::getenv("COOL_LOGCOLOR");
     std::map<std::string, std::string> logProperties;
     if (logToFile && logFilename)
@@ -556,11 +559,14 @@ int main(int argc, char** argv)
         logProperties["path"] = std::string(logFilename);
     }
 
-    Log::initialize("frk", "trace", logColor != nullptr, logToFile, logProperties);
+    LogLevelStartup = logLevelStartup ? logLevelStartup : "trace";
+    Log::initialize("frk", LogLevelStartup, logColor != nullptr, logToFile, logProperties);
+
     LogLevel = logLevel ? logLevel : "trace";
-    if (LogLevel != "trace")
+    if (LogLevel != LogLevelStartup)
     {
-        LOG_INF("Setting log-level to [trace] and delaying setting to configured [" << LogLevel << "] until after Forkit initialization.");
+        LOG_INF("Setting log-level to [" << LogLevelStartup << " and delaying "
+                "setting to configured [" << LogLevel << "] until after Forkit initialization.");
     }
 
     std::string childRoot;
@@ -725,7 +731,7 @@ int main(int argc, char** argv)
 
     // No need to trace subsequent children.
     ::unsetenv("COOL_TRACE_STARTUP");
-    if (LogLevel != "trace")
+    if (LogLevel != LogLevelStartup)
     {
         LOG_INF("Forkit initialization complete: setting log-level to [" << LogLevel << "] as configured.");
         Log::logger().setLevel(LogLevel);
