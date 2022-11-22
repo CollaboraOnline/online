@@ -2116,6 +2116,11 @@ void COOLWSD::innerInitialize(Application& self)
     LOG_INF("Initializing coolwsd server [" << ServerName << "]. Experimental features are "
                                             << (EnableExperimental ? "enabled." : "disabled."));
 
+    // Check deprecated settings.
+    bool reuseCookies = false;
+    if (getSafeConfig(conf, "storage.wopi.reuse_cookies", reuseCookies))
+        LOG_WRN("NOTE: Deprecated config option storage.wopi.reuse_cookies - no longer supported.");
+
     // Get anonymization settings.
 #if COOLWSD_ANONYMIZE_USER_DATA
     AnonymizeUserData = true;
