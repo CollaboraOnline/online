@@ -89,7 +89,7 @@ describe('Apply font changes.', function() {
 	it('Apply font color.', function() {
 		helper.clickOnIdle('#Color .ui-header');
 
-		mobileHelper.selectFromColorPalette(2, 5);
+		mobileHelper.selectFromColorPicker('#Color', 5);
 
 		calcHelper.selectEntireSheet();
 

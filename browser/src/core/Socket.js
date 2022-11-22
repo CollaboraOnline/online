@@ -1471,7 +1471,7 @@ app.definitions.Socket = L.Class.extend({
 			if (msgData.enabled || msgData.type === 'modalpopup' || msgData.type === 'snackbar') {
 				this._map.fire('mobilewizard', {data: msgData, callback: callback});
 			} else {
-				this._map.fire('closemobilewizard');
+				console.warn('jsdialog: unhandled mobile message');
 			}
 		} else if (msgData.jsontype === 'autofilter') {
 			this._map.fire('autofilterdropdown', msgData);
