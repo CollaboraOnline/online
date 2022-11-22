@@ -27,7 +27,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.clickOnIdle('#FontColor .ui-header');
 
-		mobileHelper.selectFromColorPalette(0, 0, 5, 7);
+		mobileHelper.selectFromColorPicker('#FontColor', 0, 7);
 
 		// End remove spell checking red lines
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);

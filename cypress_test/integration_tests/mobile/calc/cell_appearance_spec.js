@@ -45,7 +45,7 @@ describe('Change cell appearance.', function() {
 
 		helper.clickOnIdle('#BackgroundColor');
 
-		mobileHelper.selectFromColorPalette(4, 2);
+		mobileHelper.selectFromColorPicker('#BackgroundColor', 2);
 
 		// Check that the color is shown as selected
 		cy.get('#BackgroundColor .color-sample-selected')
@@ -235,7 +235,7 @@ describe('Change cell appearance.', function() {
 		// Then apply border color
 		helper.clickOnIdle('#FrameLineColor > .ui-header');
 
-		mobileHelper.selectFromColorPalette(5, 3);
+		mobileHelper.selectFromColorPicker('#FrameLineColor', 3);
 
 		// Check that the color is shown as selected
 		cy.get('#FrameLineColor > .ui-header .color-sample-selected')

@@ -331,6 +331,7 @@ COOL_JS_LST =\
 	src/control/Control.JSDialog.js \
 	src/control/Control.JSDialogBuilder.js \
 	src/control/Control.MobileWizardBuilder.js \
+	src/control/Control.MobileWizardWindow.js \
 	src/control/Control.MobileWizard.js \
 	src/control/Control.MobileWizardPopup.js \
 	src/control/Control.LanguageDialog.js \
@@ -681,6 +682,9 @@ pot:
 		src/control/Control.MobileBottomBar.js \
 		src/control/Control.MobileTopBar.js \
 		src/control/Control.MobileWizardBuilder.js \
+		src/control/Control.MobileWizardWindow.js
+		src/control/Control.MobileWizard.js
+		src/control/Control.MobileWizardPopup.js
 		src/control/Control.Notebookbar.js \
 		src/control/Control.NotebookbarBuilder.js \
 		src/control/Control.NotebookbarCalc.js \
