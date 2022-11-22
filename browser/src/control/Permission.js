@@ -21,7 +21,8 @@ L.Map.include({
 		//
 		// For mobile we need to display the edit button for all the cases except for PDF
 		// we offer save-as to another place where the user can edit the document
-		if (!app.file.fileBasedView && (this._shouldStartReadOnly() || window.mode.isMobile() || window.mode.isTablet())) {
+		var isPDF = app.file.fileBasedView && app.file.editComment;
+		if (!isPDF && (this._shouldStartReadOnly() || window.mode.isMobile() || window.mode.isTablet())) {
 			button.show();
 		} else {
 			button.hide();
