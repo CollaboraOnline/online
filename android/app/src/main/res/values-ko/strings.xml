@@ -19,7 +19,7 @@
     <string name="pref_show_hidden_files">숨겨진 파일/폴더</string>
     <string name="pref_category_explorer">파일 관리자 설정</string>
     <string name="grid_view">그리드</string>
-    <string name="failed_to_load_file">로드할 파일을 결정하지 못하였습니다</string>
+    <string name="failed_to_load_file">불러올 파일을 결정하지 못하였습니다</string>
     <string name="storage_permission_required">저장 권한이 필요합니다</string>
     <string name="pref_category_editor">편집기 설정</string>
     <string name="list_view">목록</string>

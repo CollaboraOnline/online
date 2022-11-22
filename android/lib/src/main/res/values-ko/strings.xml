@@ -1,2 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="temp_file_saving_disabled">이 파일은 읽기 전용이며, 저장이 비활성화됩니다.</string>
+    <string name="file_chromeos_read_only">이 파일은 이 위치에 저장할 수 없으며, 읽기 전용으로 열립니다. 전체 읽기/쓰기 액세스를 위해 재생 파일로 이동합니다.</string>
+    <string name="storage_permission_required">저장 권한이 필요합니다</string>
+    <string name="failed_to_load_file">불러올 파일을 결정하지 못하였습니다</string>
+    <string name="failed_to_insert_image">이미지를 삽입하지 못했습니다</string>
+    <string name="cannot_open_file_chooser">파일 선택기를 열 수 없습니다</string>
+    <string name="preparing_for_the_first_start_after_an_update">업데이트 후 첫 번째 시작을 준비하는 중입니다.</string>
+    <string name="rate_now">지금 평가</string>
+    <string name="rate_our_app_title">%1$s를 이용해 주셔서 감사합니다!</string>
+    <string name="loading">불러오는 중...</string>
+    <string name="exiting">종료 중...</string>
+    <string name="restarting">다시 시작하는 중...</string>
+    <string name="cant_open_the_document">문서를 열 수 없습니다</string>
+    <string name="view_only">보기 전용</string>
+    <string name="edit_copy">사본 편집하기</string>
+    <string name="ask_for_copy">이 문서는 읽기 전용입니다. 편집을 위해 사본을 만드시겠습니까\?</string>
+    <string name="use_text">텍스트 형식 사용하기</string>
+    <string name="use_odf">ODF 형식 사용하기</string>
+    <string name="ask_for_convert_odf">파일 형식 확정하기</string>
+    <string name="convert_odf_message">이 문서에는 현재 선택한 \"텍스트\" 파일 형식으로 저장할 수 없는 서식 또는 콘텐츠가 포함되어 있을 수 있습니다.</string>
+</resources>
