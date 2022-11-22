@@ -1995,6 +1995,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "languagetool.user_name", ""},
         { "languagetool.enabled", "false"},
         { "languagetool.ssl_verification", "true"},
+        { "languagetool.rest_protocol", ""},
         { "deepl.api_url", ""},
         { "deepl.auth_key", ""},
         { "deepl.enabled", "false"},
@@ -2439,6 +2440,8 @@ void COOLWSD::innerInitialize(Application& self)
     setenv("LANGUAGETOOL_APIKEY", apiKey.c_str(), 1);
     bool sslVerification = getConfigValue<bool>(conf, "languagetool.ssl_verification", "");
     setenv("LANGUAGETOOL_SSL_VERIFICATION", sslVerification ? "true" : "false", 1);
+    const std::string restProtocol = getConfigValue<std::string>(conf, "languagetool.rest_protocol", "");
+    setenv("LANGUAGETOOL_RESTPROTOCOL", restProtocol.c_str(), 1);
 
     // DeepL configuration
     const std::string apiURL = getConfigValue<std::string>(conf, "deepl.api_url", "");
