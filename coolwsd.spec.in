@@ -12,7 +12,7 @@ Name:           coolwsd%{name_suffix}
 Name:           coolwsd
 %endif
 Version:        @PACKAGE_VERSION@
-Release:        2%{?dist}
+Release:        1%{?dist}
 Vendor:         %{vendor}
 Summary:        Collabora Online WebSocket Daemon
 License:        EULA
