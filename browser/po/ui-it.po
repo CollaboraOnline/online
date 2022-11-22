@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-11-18 14:50+0100\n"
-"PO-Revision-Date: 2022-11-13 11:57+0000\n"
+"PO-Revision-Date: 2022-11-18 17:25+0000\n"
 "Last-Translator: Translator-3000 <weblate.m1d0h@8shield.net>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/it/>\n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -889,7 +889,7 @@ msgstr "Usa la vista a schede"
 
 #: src/control/Control.Menubar.js:1650 src/control/Control.Menubar.js:1663
 msgid "Read-only mode"
-msgstr ""
+msgstr "Modalità di sola lettura"
 
 #: src/control/Control.Menubar.js:1677
 msgid "Insert Shape"
@@ -2082,15 +2082,15 @@ msgstr "Funzioni"
 
 #: src/layer/tile/CanvasTileLayer.js:2420
 msgid "Copy link location"
-msgstr ""
+msgstr "Copia indirizzo"
 
 #: src/layer/tile/CanvasTileLayer.js:2428
 msgid "Edit link"
-msgstr ""
+msgstr "Modifica indirizzo"
 
 #: src/layer/tile/CanvasTileLayer.js:2436
 msgid "Remove link"
-msgstr ""
+msgstr "Rimuovi indirizzo"
 
 #: src/layer/tile/CanvasTileLayer.js:5150
 msgid "No Comments"
