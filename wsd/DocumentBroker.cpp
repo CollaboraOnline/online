@@ -1875,32 +1875,38 @@ void DocumentBroker::setInteractive(bool value)
     }
 }
 
-std::string DocumentBroker::getWriteableSessionId() const
+std::shared_ptr<ClientSession> DocumentBroker::getWriteableSession() const
 {
     assertCorrectThread();
 
-    std::string savingSessionId;
+    std::shared_ptr<ClientSession> savingSession;
     for (const auto& sessionIt : _sessions)
     {
         const auto& session = sessionIt.second;
 
         // Save the document using an editable and loaded session, or first ...
         // Note that isViewLoaded() precludes inWaitDisconnected().
-        if ((session->isViewLoaded() && session->isWritable()) || savingSessionId.empty())
+        if ((session->isViewLoaded() && session->isWritable()) || !savingSession)
         {
-            savingSessionId = session->getId();
+            savingSession = session;
         }
 
         // or if any of the sessions is document owner, use that.
         //FIXME: can the owner be read-only?
         if (session->isDocumentOwner())
         {
-            savingSessionId = session->getId();
+            savingSession = session;
             break;
         }
     }
 
-    return savingSessionId;
+    return savingSession;
+}
+
+std::string DocumentBroker::getWriteableSessionId() const
+{
+    const auto session = getWriteableSession();
+    return session ? session->getId() : std::string();
 }
 
 void DocumentBroker::refreshLock()
