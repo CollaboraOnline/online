@@ -896,6 +896,8 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
         if (isReadOnly)
         {
             isUserLocked = true;
+            _userCanWrite = false;
+            LOG_DBG("Feature lock is enabled and " << host << " is in the list of read-only members. Therefore, document is set to read-only.");
         }
         CommandControl::LockManager::setHostReadOnly(isReadOnly);
     }
