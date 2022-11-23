@@ -867,8 +867,6 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 
 .hyperlink-popup .leaflet-popup-content {
 	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
 	margin: 6px 8px;
 	font-size: 14px;
 	line-height: 1;
@@ -878,6 +876,9 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	padding: 6px 0;
 	display: inline-block;
 	line-height: 1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 188px;
 }
 
 .hyperlink-popup-btn {
