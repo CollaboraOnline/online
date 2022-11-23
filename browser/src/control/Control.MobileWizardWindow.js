@@ -315,6 +315,11 @@ L.Control.MobileWizardWindow = L.Control.extend({
 			if (data.jsontype === 'autofilter' && (data.visible === 'false' || data.visible === false))
 				return;
 
+			if (data.jsontype === 'dialog' && data.action === 'close') {
+				this.parent.removeWindow(this, false);
+				return;
+			}
+
 			this._inBuilding = true;
 
 			var isDocumentAreaPopup = data.popupParent === '_POPOVER_'
@@ -370,7 +375,8 @@ L.Control.MobileWizardWindow = L.Control.extend({
 					} else {
 						this.backButton.hide();
 						popupContainer.empty();
-						this._builder = L.control.mobileWizardBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'mobile-wizard'});
+						if (!this._builder)
+							this._builder = L.control.mobileWizardBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'mobile-wizard'});
 						this._builder.build(popupContainer.get(0), [data]);
 					}
 
@@ -415,7 +421,8 @@ L.Control.MobileWizardWindow = L.Control.extend({
 				history.pushState({context: 'mobile-wizard', level: 0}, 'mobile-wizard-level-0');
 			}
 
-			this._builder = L.control.mobileWizardBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'mobile-wizard', callback: callback});
+			if (!this._builder)
+				this._builder = L.control.mobileWizardBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'mobile-wizard', callback: callback});
 			this._builder.build(this.content, [data]);
 			if (window.ThisIsTheAndroidApp)
 				window.postMobileMessage('hideProgressbar');
