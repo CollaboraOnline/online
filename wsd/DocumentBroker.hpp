@@ -497,8 +497,11 @@ public:
     void removeEmbeddedMedia(const std::string& json);
 
 private:
-    /// get the session id of a session that can write the document for save / locking.
+    /// Get the session that can write the document for save / locking / uploading.
     /// Note that if there is no loaded and writable session, the first will be returned.
+    std::shared_ptr<ClientSession> getWriteableSession() const;
+
+    /// Return the SessionId of the first writable session.
     std::string getWriteableSessionId() const;
 
     void refreshLock();
