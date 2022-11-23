@@ -8,6 +8,12 @@ Note that there are wrapper tools like "emconfigure", "emmake", "emcmake" that
 tend to set up environment variables like CC properly, although some project's
 build system unfortunately override that.
 
+Linking WASM executable uses a lot of memory; without optimisations or with -O1
+in LDFLAGS, /usr/bin/time prints "1660068maxresident" which should work
+anywhere, but with -O2 in LDFLAGS (which is the default) some LTO happens that
+uses about 8x as much RAM, "12261016maxresident" or ~12 GiB... so append
+CXXFLAGS='-g -O1' or similar to the configure invocation if out of memory.
+
 For convenience it's recommended to build with a docker container that has the
 required build tools.
 
