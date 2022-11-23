@@ -336,7 +336,7 @@ L.Control.LokDialog = L.Control.extend({
 		if (!(this._isOpen(e.id) || this._getParentId(e.id))) {
 			if (e.action == 'close' && window.mobileDialogId == e.id) {
 				window.mobileDialogId = undefined;
-				this._map.fire('closemobilewizard');
+				//this._map.fire('closemobilewizard');
 			}
 			return;
 		}
