@@ -164,7 +164,13 @@ public:
     const Poco::URI& getPublicUri() const { return _uriPublic; }
 
     /// The access token of this session.
-    Authorization getAuthorization() const { return _auth; }
+    const Authorization& getAuthorization() const { return _auth; }
+
+    void invalidateAuthorizationToken()
+    {
+        LOG_DBG("Session [" << getId() << "] expiring its authorization token");
+        _auth.expire();
+    }
 
     /// Set WOPI fileinfo object
     void setWopiFileInfo(std::unique_ptr<WopiStorage::WOPIFileInfo>& wopiFileInfo) { _wopiFileInfo = std::move(wopiFileInfo); }
