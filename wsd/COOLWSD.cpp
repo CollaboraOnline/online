@@ -990,6 +990,15 @@ public:
             setRaw(pair.first, pair.second);
         }
     }
+
+    void reset(const std::map<std::string, std::string>& map)
+    {
+        clear();
+        for (const auto& pair : map)
+        {
+            setRaw(pair.first, pair.second);
+        }
+    }
 };
 
 #if !MOBILEAPP
@@ -1178,14 +1187,15 @@ public:
     RemoteConfigPoll(LayeredConfiguration& config) :
         RemoteJSONPoll(config, "remote_config.remote_url", "remoteconfig_poll", "configuration")
     {
+        constexpr int PRIO_JSON = -200; // highest priority
+        _persistConfig = new AppConfigMap(std::map<std::string, std::string>{});
+        _conf.addWriteable(_persistConfig, PRIO_JSON);
     }
 
     virtual ~RemoteConfigPoll() { }
 
     void handleJSON(Poco::JSON::Object::Ptr remoteJson) override
     {
-        constexpr int PRIO_JSON = -200; // highest priority
-
         std::map<std::string, std::string> newAppConfig;
 
         fetchAliasGroups(newAppConfig, remoteJson);
@@ -1197,10 +1207,7 @@ public:
 #endif
 
         fetchRemoteFontConfig(newAppConfig, remoteJson);
-
-        AutoPtr<AppConfigMap> newConfig(new AppConfigMap(newAppConfig));
-        _conf.addWriteable(newConfig, PRIO_JSON);
-        newConfig->clear();
+        _persistConfig->reset(newAppConfig);
 
 #if ENABLE_FEATURE_LOCK
         CommandControl::LockManager::parseLockedHost(_conf);
@@ -1533,6 +1540,10 @@ public:
         }
         return booleanFlag.toString();
     }
+
+private:
+    // keeps track of remote config layer
+    Poco::AutoPtr<AppConfigMap> _persistConfig = nullptr;
 };
 
 class RemoteFontConfigPoll : public RemoteJSONPoll
