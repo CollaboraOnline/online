@@ -29,9 +29,10 @@ class Authorization
 public:
     enum class Type
     {
-        None,
+        None, //< Unlike Expired, this implies no Authorization needed.
         Token,
-        Header
+        Header,
+        Expired //< The server is rejecting the current authorization key.
     };
 
 private:
@@ -60,6 +61,12 @@ public:
         _type = Type::Token;
         _data = std::move(accessToken);
     }
+
+    /// Expire the Authorization data.
+    void expire() { _type = Type::Expired; }
+
+    /// Returns true iff the Authorization data is invalid.
+    bool isExpired() const { return _type == Type::Expired; }
 
     /// Set the access_token parameter to the given URI.
     void authorizeURI(Poco::URI& uri) const;
