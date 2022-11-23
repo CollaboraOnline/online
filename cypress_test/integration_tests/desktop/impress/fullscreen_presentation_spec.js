@@ -29,6 +29,67 @@ describe('Fullscreen Presentation.', function() {
 			.click();
 	}
 
+	function slideExist(id) {
+		getSlideShowContent().find('#' + id)
+			.should('exist')
+			.should('have.class', 'Slide');
+	}
+
+	function textFieldHasContent(id, className, content) {
+		getSlideShowContent().find('#' + id)
+			.should('have.class', className)
+			.find('.PlaceholderText')
+			.as('placeholder');
+		if (className.indexOf('Time') !== 0) {
+			cy.get('@placeholder').should('contain', content);
+		} else {
+			cy.get('@placeholder')
+				.should('exist')
+				.then((template) => {
+					var displayedContent = template.prop('textContent');
+					var displayedTime = Date.parse('2000-01-01T' + displayedContent + '.000Z');
+					var expectedTime = Date.parse('2000-01-01T' + content + '.000Z');
+					expect(displayedTime).to.be.closeTo(expectedTime, 60000, 'displayedContent: ' + displayedContent);
+				});
+		}
+	}
+
+	function metaSlidesChildExist(id) {
+		getSlideShowContent().find('#ooo\\:meta_slides > #' + id)
+			.should('exist');
+	}
+
+	function slideBackgroundObjectShould(slideId, elementSelector, chainer) {
+		getSlideShowContent().find('#' + slideId + ' > .MasterPageView > .BackgroundObjects > ' + elementSelector)
+			.should(chainer);
+	}
+
+	function textFieldCheck(textFields, visibilityMap) {
+		var numberOfSlides = Object.keys(visibilityMap).length;
+
+		for (var i = 0; i < numberOfSlides; ++i)
+		{
+			cy.wait(1000);
+			var slideId = 'id' + (i + 1).toString();
+			slideExist(slideId);
+			textFields.forEach((tf) => {
+				var included = visibilityMap[slideId].includes(tf.id);
+				var isSlideNumber = tf.className.indexOf('PageNumber') === 0;
+				if (included) {
+					textFieldHasContent(tf.id, tf.className, tf.content);
+					if (!isSlideNumber) {
+						metaSlidesChildExist(tf.id);
+					}
+				}
+				var selector = isSlideNumber ? '#' + tf.id : 'use[href="#' + tf.id + '"]';
+				slideBackgroundObjectShould(slideId, selector, included ? 'exist' : 'not.exist');
+			});
+			// move to next slide
+			getSlideShowContent().find('#' + slideId).click();
+		}
+
+	}
+
 	afterEach(function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
@@ -266,4 +327,92 @@ describe('Fullscreen Presentation.', function() {
 			});
 	});
 
+	it('Small text fields.', function() {
+		before('small-text-fields.odp');
+		cy.wait(2000);
+
+		var textFields = [
+			{id: 'tf1', className: 'DateTime.Default', content: '01/01/2022'},
+			{id: 'tf2', className: 'Footer.Default', content: 'master page footer'},
+			{id: 'tf3', className: 'PageNumber.Default', content: '1'},
+			{id: 'tf4', className: 'DateTime.id6', content: '01/01/2022'},
+			{id: 'tf5', className: 'Footer.id7', content: 'master page footer'},
+			{id: 'tf6', className: 'PageNumber.id8', content: '1'},
+		];
+		var visibilityMap = {
+			id1: ['tf1', 'tf2', 'tf3', 'tf4', 'tf5', 'tf6'],
+		};
+
+		textFieldCheck(textFields, visibilityMap);
+	});
+
+	it('Duplicated text fields.', function() {
+		before('double-text-fields.odp');
+		cy.wait(2000);
+
+		var date = new Date().toLocaleDateString();
+		var time = new Date().toLocaleTimeString();
+
+		var textFields = [
+			{id: 'tf1', className: 'DateTime.Default', content: '01/01/2022'},
+			{id: 'tf2', className: 'Footer.Default', content: 'master page footer'},
+			{id: 'tf3', className: 'PageNumber.Default', content: '1'},
+			{id: 'tf4', className: 'PageName.id9', content: 'Slide 1'},
+			{id: 'tf5', className: 'PageName.id10', content: 'Slide 1'},
+			{id: 'tf6', className: 'DateTime.id11', content: '01/01/2022'},
+			{id: 'tf7', className: 'Footer.id12', content: 'master page footer'},
+			{id: 'tf8', className: 'PageNumber.id13', content: '1'},
+			{id: 'tf9', className: 'Date.id14', content: date},
+			{id: 'tf10', className: 'Date.id15', content: date},
+			{id: 'tf11', className: 'Time.id16', content: time},
+			{id: 'tf12', className: 'Time.id17', content: time},
+			{id: 'tf13', className: 'PageName.id9', content: 'Slide 2'},
+			{id: 'tf14', className: 'PageName.id10', content: 'Slide 2'},
+			{id: 'tf15', className: 'PageNumber.id13', content: '2'},
+		];
+		var visibilityMap = {
+			id1: ['tf1', 'tf2', 'tf3', 'tf4', 'tf5', 'tf6', 'tf7', 'tf8', 'tf9', 'tf10', 'tf11', 'tf12'],
+			id2: ['tf6', 'tf7', 'tf9', 'tf10', 'tf11', 'tf12', 'tf13', 'tf14', 'tf15'],
+			id3: []
+		};
+
+		textFieldCheck(textFields, visibilityMap);
+	});
+
+	it('Two Master pages text fields.', function() {
+		before('two-mp-text-fields.odp');
+		cy.wait(2000);
+
+		var date = new Date().toLocaleDateString();
+
+		var textFields = [
+			{id: 'tf1', className: 'DateTime.Default', content: '01/01/2022'},
+			{id: 'tf2', className: 'Footer.Default', content: 'master page footer'},
+			{id: 'tf3', className: 'PageNumber.Default', content: '1'},
+			{id: 'tf4', className: 'PageName.id17', content: 'Slide 1'},
+			{id: 'tf5', className: 'PageName.id18', content: 'Slide 1'},
+			{id: 'tf6', className: 'DateTime.id19', content: '01/01/2022'},
+			{id: 'tf7', className: 'Footer.id20', content: 'master page footer'},
+			{id: 'tf8', className: 'PageNumber.id21', content: '1'},
+			{id: 'tf9', className: 'Date.id22', content: date},
+			{id: 'tf10', className: 'Date.id23', content: date},
+			{id: 'tf11', className: 'PageName.id17', content: 'Slide 2'},
+			{id: 'tf12', className: 'PageName.id18', content: 'Slide 2'},
+			{id: 'tf13', className: 'PageNumber.id21', content: '2'},
+			{id: 'tf14', className: 'DateTime.Default', content: date},
+			{id: 'tf15', className: 'Footer.Default', content: 'master page 2 footer'},
+			{id: 'tf16', className: 'PageNumber.Default', content: '4'},
+			{id: 'tf17', className: 'DateTime.id10', content: date},
+			{id: 'tf18', className: 'Footer.id11', content: 'master page 2 footer'},
+			{id: 'tf19', className: 'PageNumber.id12', content: '4'},
+		];
+		var visibilityMap = {
+			id1: ['tf1', 'tf2', 'tf3', 'tf4', 'tf5', 'tf6', 'tf7', 'tf8', 'tf9', 'tf10'],
+			id2: ['tf6', 'tf7', 'tf9', 'tf10', 'tf11', 'tf12', 'tf13'],
+			id3: [],
+			id4: ['tf14', 'tf15', 'tf16', 'tf17', 'tf18', 'tf19'],
+		};
+
+		textFieldCheck(textFields, visibilityMap);
+	});
 });
