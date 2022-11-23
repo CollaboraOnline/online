@@ -24,8 +24,6 @@
 
 .sidebar .spinfieldcontainer input {
 	width: 121px;
-	border: 1px solid var(--color-border-dark);
-	border-radius: var(--border-radius);
 	height: 28px;
 	padding-inline-start: 4px;
 	position: relative;
