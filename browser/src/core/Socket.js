@@ -1468,7 +1468,8 @@ app.definitions.Socket = L.Class.extend({
 				this._map.fire('formulabar', {data: msgData});
 				return;
 			}
-			if (msgData.enabled || msgData.type === 'modalpopup' || msgData.type === 'snackbar') {
+			if (msgData.enabled || msgData.jsontype === 'dialog' ||
+				msgData.type === 'modalpopup' || msgData.type === 'snackbar') {
 				this._map.fire('mobilewizard', {data: msgData, callback: callback});
 			} else {
 				console.warn('jsdialog: unhandled mobile message');
