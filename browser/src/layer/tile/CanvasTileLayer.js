@@ -2444,6 +2444,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				.setContent(linkOuterHtml)
 				.setLatLng(position)
 				.openOn(this._map);
+			document.getElementById('hyperlink-pop-up').title = url;
 			var offsetDiffTop = $('.hyperlink-popup').offset().top - $('#map').offset().top;
 			var offsetDiffLeft = $('.hyperlink-popup').offset().left - $('#map').offset().left;
 			if (offsetDiffTop < 10) this._movePopUpBelow();
