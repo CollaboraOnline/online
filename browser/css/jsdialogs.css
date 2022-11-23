@@ -430,6 +430,11 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 /* spinfield */
 
+.spinfieldcontainer input {
+	border: 1px solid var(--color-border-dark);
+	border-radius: var(--border-radius);
+}
+
 .spinfieldcontainer input:hover {
 	border: 1px solid var(--color-border-darker);
 	color: var(--color-text-darker);
