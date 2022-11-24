@@ -2328,20 +2328,14 @@ std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSessi
     return count;
 }
 
-std::size_t DocumentBroker::removeSession(const std::string& id)
+std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& session)
 {
     assertCorrectThread();
 
+    LOG_ASSERT_MSG(session, "Got null ClientSession");
+    const std::string id = session->getId();
     try
     {
-        const auto it = _sessions.find(id);
-        if (it == _sessions.end())
-        {
-            LOG_ERR("Invalid or unknown session [" << id << "] to remove.");
-            return _sessions.size();
-        }
-        std::shared_ptr<ClientSession> session = it->second;
-
         const std::size_t activeSessionCount = countActiveSessions();
 
         const bool lastEditableSession = session->isWritable() && !haveAnotherEditableSession(id);
@@ -3358,7 +3352,7 @@ void DocumentBroker::shutdownClients(const std::string& closeReason)
                 session->shutdownGoingAway(closeReason);
 
                 // Remove session, save, and mark to destroy.
-                removeSession(session->getId());
+                removeSession(session);
             }
         }
         catch (const std::exception& exc)
@@ -3695,7 +3689,7 @@ bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& messa
                 httpResponse.set("Connection", "close");
                 _socket->sendAndShutdown(httpResponse);
 
-                removeSession(_clientSession->getId());
+                removeSession(_clientSession);
                 stop("Finished RenderSearchResult handler.");
             }
         }

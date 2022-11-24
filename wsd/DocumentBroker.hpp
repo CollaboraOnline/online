@@ -347,7 +347,7 @@ public:
     std::size_t addSession(const std::shared_ptr<ClientSession>& session);
 
     /// Removes a session by ID. Returns the new number of sessions.
-    std::size_t removeSession(const std::string& id);
+    std::size_t removeSession(const std::shared_ptr<ClientSession>& session);
 
     /// Add a callback to be invoked in our polling thread.
     void addCallback(const SocketPoll::CallbackFn& fn);

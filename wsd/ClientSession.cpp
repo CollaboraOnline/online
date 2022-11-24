@@ -839,12 +839,13 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         docBroker->sendRequestedTiles(client_from_this());
         return true;
     }
-    else if (tokens.equals(0, "removesession")) {
+    else if (tokens.equals(0, "removesession"))
+    {
         if (tokens.size() > 1 && (_isDocumentOwner || !isReadOnly()))
         {
             std::string sessionId = Util::encodeId(std::stoi(tokens[1]), 4);
             docBroker->broadcastMessage(firstLine);
-            docBroker->removeSession(sessionId);
+            docBroker->removeSession(client_from_this());
         }
         else
             LOG_WRN("Readonly session '" << getId() << "' trying to kill another view");
@@ -1552,7 +1553,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                         // Conversion failed, cleanup fake session.
                         LOG_TRC("Removing save-as ClientSession after conversion error.");
                         // Remove us.
-                        docBroker->removeSession(getId());
+                        docBroker->removeSession(client_from_this());
                         // Now terminate.
                         docBroker->stop("Aborting saveas handler.");
                     }
@@ -1698,7 +1699,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             LOG_TRC("Removing save-as ClientSession after conversion.");
 
             // Remove us.
-            docBroker->removeSession(getId());
+            docBroker->removeSession(client_from_this());
 
             // Now terminate.
             docBroker->stop("Finished saveas handler.");
@@ -2136,7 +2137,7 @@ void ClientSession::onDisconnect()
         // Connection terminated. Destroy session.
         LOG_DBG("on docKey [" << docKey << "] terminated. Cleaning up");
 
-        docBroker->removeSession(getId());
+        docBroker->removeSession(session);
     }
     catch (const UnauthorizedRequestException& exc)
     {
