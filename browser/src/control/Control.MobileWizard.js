@@ -182,7 +182,7 @@ L.Control.MobileWizard = L.Control.extend({
 			} else {
 				var newWindow = L.control.mobileWizardWindow(this, 'mobile-wizard-content-' + data.id);
 				for (var i in this.contents)
-					$(this.contents[i].content).hide();
+					this.contents[i].hideWindow();
 				this.contents.push(newWindow);
 				this.map.addControl(newWindow);
 				newWindow._onMobileWizard(data, callback);
@@ -203,7 +203,7 @@ L.Control.MobileWizard = L.Control.extend({
 			this.contents.splice(pos, 1);
 			if (this.contents.length) {
 				var parentWindow = this.contents[this.contents.length - 1];
-				$(parentWindow.content).show();
+				parentWindow.showWindow();
 				if (wasPopup)
 					parentWindow.goLevelUp();
 			}
