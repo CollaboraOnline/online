@@ -490,7 +490,7 @@ void DocumentBroker::pollThread()
                 {
                     std::string id = it.second->getId();
                     LOG_WRN("Unusual, Kit session " + id + " failed its disconnect handshake, killing");
-                    finalRemoveSession(id);
+                    finalRemoveSession(it.second);
                     break; // it invalid.
                 }
             }
@@ -2505,7 +2505,7 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
             }
 
             if (hardDisconnect)
-                finalRemoveSession(id);
+                finalRemoveSession(it->second);
             // else wait for disconnected.
         }
         else
@@ -2520,49 +2520,42 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
     }
 }
 
-void DocumentBroker::finalRemoveSession(const std::string& id)
+void DocumentBroker::finalRemoveSession(const std::shared_ptr<ClientSession>& session)
 {
     assertCorrectThread();
+
+    LOG_ASSERT_MSG(session, "Got null ClientSession");
+    const std::string sessionId = session->getId();
     try
     {
-        auto it = _sessions.find(id);
-        if (it != _sessions.end())
+        if (UnitWSD::isUnitTesting())
         {
-            const bool readonly = (it->second ? it->second->isReadOnly() : false);
-
-            if (UnitWSD::isUnitTesting())
-            {
-                // Notify test code before removal.
-                _unitWsd.onDocBrokerRemoveSession(_docKey, it->second);
-            }
-
-            // Remove. The caller must have a reference to the session
-            // in question, lest we destroy from underneath them.
-            it->second->dispose();
-            _sessions.erase(it);
-            const std::size_t count = _sessions.size();
-
-            Log::StreamLogger logger = Log::trace();
-            if (logger.enabled())
-            {
-                logger << "Removed " << (readonly ? "readonly" : "non-readonly")
-                       << " session [" << id << "] from docKey ["
-                       << _docKey << "] to have " << count << " sessions:";
-                for (const auto& pair : _sessions)
-                    logger << pair.second->getId() << ' ';
-
-                LOG_END_FLUSH(logger);
-            }
+            // Notify test code before removal.
+            _unitWsd.onDocBrokerRemoveSession(_docKey, session);
         }
-        else
+
+        const bool readonly = session->isReadOnly();
+        session->dispose();
+
+        // Remove. The caller must have a reference to the session
+        // in question, lest we destroy from underneath them.
+        _sessions.erase(sessionId);
+
+        Log::StreamLogger logger = Log::trace();
+        if (logger.enabled())
         {
-            LOG_TRC("Session [" << id << "] not found to remove from docKey [" <<
-                    _docKey << "]. Have " << _sessions.size() << " sessions.");
+            logger << "Removed " << (readonly ? "" : "non-") << "readonly session [" << sessionId
+                   << "] from docKey [" << _docKey << "] to have " << _sessions.size()
+                   << " sessions:";
+            for (const auto& pair : _sessions)
+                logger << pair.second->getId() << ' ';
+
+            LOG_END_FLUSH(logger);
         }
     }
     catch (const std::exception& ex)
     {
-        LOG_ERR("Error while removing session [" << id << "]: " << ex.what());
+        LOG_ERR("Error while removing session [" << sessionId << "]: " << ex.what());
     }
 }
 
@@ -3362,7 +3355,7 @@ void DocumentBroker::shutdownClients(const std::string& closeReason)
         try
         {
             if (session->inWaitDisconnected())
-                finalRemoveSession(session->getId());
+                finalRemoveSession(session);
             else
             {
                 // Notify the client and disconnect.
