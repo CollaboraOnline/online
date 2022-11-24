@@ -153,6 +153,12 @@ L.Control.MobileWizard = L.Control.extend({
 		L.DomUtil.updateElementsOrientation(['mobile-wizard', 'mobile-wizard-content']);
 	},
 
+	selectedTab: function(tabText) {
+		var topWindow = this.contents.length ? this.contents[this.contents.length - 1] : null;
+		if (topWindow)
+			topWindow.selectedTab(tabText);
+	},
+
 	_getContentForWindowId: function(id) {
 		for (var i in this.contents) {
 			if (this.contents[i].id === 'mobile-wizard-content-' + id)

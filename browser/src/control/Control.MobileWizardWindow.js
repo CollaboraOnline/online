@@ -19,18 +19,18 @@ L.Control.MobileWizardWindow = L.Control.extend({
 	_customTitle: false,
 	_isTabMode: false,
 	_currentPath: [],
-	_tabs: [],
 	_currentScrollPosition: 0,
 	_isPopup: false,
 
 	initialize: function (mobileWizard, id) {
 		L.setOptions(this, this.options);
-		this.id = id;
-		this.parent = mobileWizard;
-		this.isVisible = false;
+		this.id = id; // unique id of this window "mobile-wizard-content-N"
+		this.parent = mobileWizard; // reference to the parent mobile-wizard
+		this.isVisible = false; // indicates if this window is currently visible inside mobile-wizard
+		this.tabs = []; // tabs we can later restore if dialog was hidden
 
-		var parent = document.getElementById('mobile-wizard-content');
-		this.content = L.DomUtil.create('div', 'mobile-wizard mobile-wizard-content', parent);
+		var parentNode = document.getElementById('mobile-wizard-content');
+		this.content = L.DomUtil.create('div', 'mobile-wizard mobile-wizard-content', parentNode);
 		this.content.id = this.id;
 	},
 
@@ -55,7 +55,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		this.content.innerHTML = '';
 		this.backButton.show();
 		this.backButton.addClass('close-button');
-		$('#mobile-wizard-tabs').empty();
+		$('#mobile-wizard-tabs').children().detach();
 		$('#mobile-wizard-tabs').hide();
 		$('#mobile-wizard-titlebar').show();
 		$('#mobile-wizard-titlebar').css('top', '0px');
@@ -65,7 +65,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		$('#mobile-wizard').removeClass('snackbar');
 		this._isTabMode = false;
 		this._currentPath = [];
-		this._tabs = [];
+		this.tabs = [];
 		this._currentScrollPosition = 0;
 		this._isPopup = false;
 	},
@@ -84,6 +84,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 	showWindow: function() {
 		this.isVisible = true;
 		$(this.content).show();
+		this.restoreTabs();
 	},
 
 	_showWizard: function() {
@@ -136,12 +137,16 @@ L.Control.MobileWizardWindow = L.Control.extend({
 	},
 
 	setTabs: function(tabs) {
-		this._tabs = tabs;
+		this.tabs = tabs;
 		$('#mobile-wizard-tabs').show();
-		$('#mobile-wizard-tabs').empty();
+		$('#mobile-wizard-tabs').children().detach();
 		$('#mobile-wizard-tabs').append(tabs);
 		$('#mobile-wizard-titlebar').hide();
 		this._isTabMode = true;
+	},
+
+	restoreTabs: function() {
+		this.setTabs(this.tabs);
 	},
 
 	setCurrentScrollPosition: function() {
@@ -283,10 +288,10 @@ L.Control.MobileWizardWindow = L.Control.extend({
 	},
 
 	_selectTab: function(tabId) {
-		if (this._tabs && tabId) {
-			for (var index in this._tabs.children) {
-				if (this._tabs.children[index].id === tabId) {
-					$(this._tabs.children[index]).trigger('click', {animate: false});
+		if (this.tabs && tabId) {
+			for (var index in this.tabs.children) {
+				if (this.tabs.children[index].id === tabId) {
+					$(this.tabs.children[index]).trigger('click', {animate: false});
 					break;
 				}
 			}
@@ -295,7 +300,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 
 	_goToPath: function(path) {
 		// when dialog has tabs, tab selection triggers the callback, causes infinite regenetate loop
-		if (this._tabs && path && path.length && !this.map.dialog.hasDialogInMobilePanelOpened())
+		if (this.tabs && path && path.length && !this.map.dialog.hasDialogInMobilePanelOpened())
 			this._selectTab(path[0]);
 
 		var _path = [];
