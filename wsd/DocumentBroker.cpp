@@ -1257,7 +1257,7 @@ bool DocumentBroker::isStorageOutdated() const
     return currentModifiedTime != lastModifiedTime;
 }
 
-void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool success,
+void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& session, bool success,
                                         const std::string& result)
 {
     assertCorrectThread();
@@ -1317,24 +1317,20 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     // The the clients know of any save failures.
     if (!success && result != "unmodified")
     {
-        const auto it = _sessions.find(sessionId);
-        if (it != _sessions.end())
-        {
-            LOG_INF("Failed to save docKey ["
-                    << _docKey << "] as .uno:Save has failed in LOK. Notifying client "
-                    << sessionId);
-            it->second->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
-            broadcastSaveResult(false, "Could not save the document");
-        }
+        LOG_INF("Failed to save docKey [" << _docKey
+                                          << "] as .uno:Save has failed in LOK. Notifying clients");
+        session->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
+        broadcastSaveResult(false, "Could not save the document");
     }
 
-    checkAndUploadToStorage(sessionId);
+    checkAndUploadToStorage(session);
 }
 
 // This is called when either we just got save response, or,
 // there was nothing to save and want to check for uploading.
-void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
+void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession>& session)
 {
+    const std::string sessionId = session->getId();
     LOG_TRC("checkAndUploadToStorage with session " << sessionId);
 
     // See if we have anything to upload.
@@ -1381,28 +1377,16 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
     }
 #endif
 
-    const auto it = _sessions.find(sessionId);
-
     if (needToUploadState != NeedToUpload::No)
     {
-        if (it == _sessions.end())
-        {
-            LOG_ERR("Session with sessionId ["
-                    << sessionId << "] not found to upload docKey [" << _docKey
-                    << "]. The document will not be uploaded to storage at this time.");
-            broadcastSaveResult(false, "Session not found");
-        }
-        else
-        {
-            uploadToStorage(it->second, /*force=*/needToUploadState == NeedToUpload::Force);
-        }
+        uploadToStorage(session, /*force=*/needToUploadState == NeedToUpload::Force);
     }
 
     if (!isAsyncUploading())
     {
         // If marked to destroy, or session is disconnected, remove.
-        if (_docState.isMarkedToDestroy() || (it != _sessions.end() && it->second->isCloseFrame()))
-            disconnectSessionInternal(it->second);
+        if (_docState.isMarkedToDestroy() || session->isCloseFrame())
+            disconnectSessionInternal(session);
 
         // If marked to destroy, then this was the last session.
         if (_docState.isMarkedToDestroy() || _sessions.empty())
@@ -2140,10 +2124,10 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         if (!autoSave(possiblyModified))
         {
             // Nothing to save. Try to upload if necessary.
-            const std::string sessionId = getWriteableSessionId();
-            if (!sessionId.empty())
+            const auto session = getWriteableSession();
+            if (session)
             {
-                checkAndUploadToStorage(sessionId);
+                checkAndUploadToStorage(session);
                 if (isAsyncUploading())
                 {
                     LOG_DBG("Uploading document before stopping.");
