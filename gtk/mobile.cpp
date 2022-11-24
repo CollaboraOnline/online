@@ -26,6 +26,10 @@
 #include "Protocol.hpp"
 #include "Util.hpp"
 
+#include "gtk.hpp"
+
+const char *user_name = "Dummy";
+
 const int SHOW_JS_MAXLEN = 70;
 
 int coolwsd_server_socket_fd = -1;
