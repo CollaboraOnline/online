@@ -201,7 +201,7 @@ L.Control.MobileWizard = L.Control.extend({
 		if (pos >= 0) {
 			var wasPopup = false;
 			// popup was closed so go level up in parent
-			if (pos > 0 && this.contents[pos]._isPopup) {
+			if (pos > 0 && this.contents[pos].isPopup) {
 				wasPopup = true;
 			}
 
