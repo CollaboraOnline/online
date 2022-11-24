@@ -336,6 +336,8 @@ int main(int argc, char* argv[])
         "?file_path=" + fileURL +
         "&closebutton=1"
         "&permission=edit"
+        "&lang=en"
+        "&userinterfacemode=notebookbar"
         "&debug=true";
 
     webkit_web_view_load_uri(webView, urlAndQuery.c_str());
