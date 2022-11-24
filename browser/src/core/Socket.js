@@ -248,6 +248,9 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	_logSocket: function(type, msg) {
+		if (window.ThisIsTheGtkApp)
+			window.postMobileDebug(type + ' ' + msg);
+
 		var fullDebug = this._map._docLayer && this._map._docLayer._debug;
 
 		if (fullDebug)
