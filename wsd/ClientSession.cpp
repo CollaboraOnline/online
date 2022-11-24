@@ -694,7 +694,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // The savetostorage command is really only used to resolve save conflicts
         // and it seems to always have force=1. However, we should still honor the
         // contract and do as told, not as we expect the API to be used. Use force if provided.
-        docBroker->uploadToStorage(getId(), force);
+        docBroker->uploadToStorage(client_from_this(), force);
     }
     else if (tokens.equals(0, "clientvisiblearea"))
     {
