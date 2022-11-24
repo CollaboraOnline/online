@@ -75,7 +75,7 @@ static void send2JS(const std::vector<char>& buffer)
         std::vector<char> data;
         for (int i = 0; i < buffer.size(); i++)
         {
-            if (ubufp[i] < ' ' || ubufp[i] == '\'' || ubufp[i] == '\\')
+            if (ubufp[i] < ' ' || ubufp[i] >= 0x80 || ubufp[i] == '\'' || ubufp[i] == '\\')
             {
                 data.push_back('\\');
                 data.push_back('x');
