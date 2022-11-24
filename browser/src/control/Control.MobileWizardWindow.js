@@ -10,6 +10,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		snackbarTimeout: 6000
 	},
 
+	// TODO: review if used and move to initialize with description
 	_builder: null,
 	_inMainMenu: true,
 	_isActive: false,
@@ -20,15 +21,23 @@ L.Control.MobileWizardWindow = L.Control.extend({
 	_isTabMode: false,
 	_currentPath: [],
 	_currentScrollPosition: 0,
-	_isPopup: false,
 
 	initialize: function (mobileWizard, id) {
 		L.setOptions(this, this.options);
 		this.id = id; // unique id of this window "mobile-wizard-content-N"
 		this.parent = mobileWizard; // reference to the parent mobile-wizard
+		this.tabs = null; // tabs we can later restore if dialog was hidden
 		this.isVisible = false; // indicates if this window is currently visible inside mobile-wizard
-		this.tabs = []; // tabs we can later restore if dialog was hidden
+		this.isPopup = false; // indicates that current window is a popup, uses different look
+		this.isSnackBar = false; // shows as little popup at the bottom
+		this.isFunctionMenu = false; // shows full screen with list of calc functions
+		this.isHamburgerMenu = false; // shows full screen with items from menubar
+		this.isShapesWizard = false; // shows full screen shape type selector
 
+		this.mobileWizard = $('#mobile-wizard'); // reference to main container of mobile wizard
+		this.backButton = $('#mobile-wizard-back'); // reference to the button for going back or close
+		this.titleBar = $('#mobile-wizard-titlebar'); // titlebar containing title and back button
+		this.tabsContainer = $('#mobile-wizard-tabs'); // can be shown instead of titlebar
 		var parentNode = document.getElementById('mobile-wizard-content');
 		this.content = L.DomUtil.create('div', 'mobile-wizard mobile-wizard-content', parentNode);
 		this.content.id = this.id;
@@ -41,6 +50,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		if (!window.mode.isMobile())
 			return;
 
+		this.content.innerHTML = '';
 		this._setupBackButton();
 	},
 
@@ -49,42 +59,73 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		this.content = undefined;
 	},
 
+	/// this removes special styling
+	_removeSpecialClasses: function() {
+		this.mobileWizard.removeClass('shapeswizard');
+		this.mobileWizard.removeClass('menuwizard');
+		this.mobileWizard.removeClass('funcwizard');
+		this.mobileWizard.removeClass('popup');
+		this.mobileWizard.removeClass('snackbar');
+	},
+
+	/// this applies special styling for different types of mobile-wizards
+	_applySpecialClasses: function() {
+		if (this.isShapesWizard)
+			this.mobileWizard.addClass('shapeswizard');
+		if (this.isHamburgerMenu)
+			this.mobileWizard.addClass('menuwizard');
+		if (this.isFunctionMenu)
+			this.mobileWizard.addClass('funcwizard');
+		if (this.isPopup)
+			this.mobileWizard.addClass('popup');
+		if (this.isSnackBar)
+			this.mobileWizard.addClass('snackbar');
+	},
+
+	/// resets all classes which can modify the look to the original values
+	_softReset: function() {
+		this._setupBackButton();
+		this.tabsContainer.children().detach();
+		this.tabsContainer.hide();
+		this.titleBar.css('top', '0px');
+		this.titleBar.show();
+		this._setTitle('');
+		this._removeSpecialClasses();
+	},
+
+	/// resets all, including content
 	_reset: function() {
+		this._softReset();
 		this._currentDepth = 0;
 		this._inMainMenu = true;
 		this.content.innerHTML = '';
-		this.backButton.show();
-		this.backButton.addClass('close-button');
-		$('#mobile-wizard-tabs').children().detach();
-		$('#mobile-wizard-tabs').hide();
-		$('#mobile-wizard-titlebar').show();
-		$('#mobile-wizard-titlebar').css('top', '0px');
-		$('#mobile-wizard').removeClass('menuwizard');
-		$('#mobile-wizard').removeClass('funcwizard');
-		$('#mobile-wizard').removeClass('popup');
-		$('#mobile-wizard').removeClass('snackbar');
 		this._isTabMode = false;
 		this._currentPath = [];
 		this.tabs = [];
 		this._currentScrollPosition = 0;
-		this._isPopup = false;
+		this.isPopup = false;
 	},
 
+	// reset back button to the original state
 	_setupBackButton: function() {
-		this.content.innerHTML = '';
-		this.backButton = $('#mobile-wizard-back');
-		$(this.backButton).addClass('close-button');
+		this.backButton.show();
+		this.backButton.addClass('close-button');
 	},
 
+	/// for hiding the window by manager (mobile-wizard)
 	hideWindow: function() {
 		this.isVisible = false;
 		$(this.content).hide();
+		this._removeSpecialClasses();
 	},
 
+	/// for showing the window by manager (mobile-wizard)
 	showWindow: function() {
+		this._softReset();
 		this.isVisible = true;
 		$(this.content).show();
 		this.restoreTabs();
+		this._applySpecialClasses();
 	},
 
 	_showWizard: function() {
@@ -136,17 +177,20 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		return this._currentDepth;
 	},
 
+	/// setups the tab bar and hides title bar
 	setTabs: function(tabs) {
 		this.tabs = tabs;
-		$('#mobile-wizard-tabs').show();
-		$('#mobile-wizard-tabs').children().detach();
-		$('#mobile-wizard-tabs').append(tabs);
-		$('#mobile-wizard-titlebar').hide();
+		this.tabsContainer.show();
+		this.tabsContainer.children().detach();
+		this.tabsContainer.append(tabs);
+		this.titleBar.hide();
 		this._isTabMode = true;
 	},
 
+	/// for restoring the tabs by manager
 	restoreTabs: function() {
-		this.setTabs(this.tabs);
+		if (this.tabs)
+			this.setTabs(this.tabs);
 	},
 
 	setCurrentScrollPosition: function() {
@@ -160,8 +204,8 @@ L.Control.MobileWizardWindow = L.Control.extend({
 			this.backButton.removeClass('close-button');
 
 		if (this._isTabMode && this._currentDepth > 0) {
-			$('#mobile-wizard-titlebar').show();
-			$('#mobile-wizard-tabs').hide();
+			this.titleBar.show();
+			this.tabsContainer.hide();
 		}
 
 		$('#mobile-wizard .ui-effects-placeholder').hide();
@@ -255,8 +299,8 @@ L.Control.MobileWizardWindow = L.Control.extend({
 				this._inMainMenu = true;
 				this.backButton.addClass('close-button');
 				if (this._isTabMode) {
-					$('#mobile-wizard-titlebar').hide();
-					$('#mobile-wizard-tabs').show();
+					this.titleBar.hide();
+					this.tabsContainer.show();
 				}
 			}
 			if (window.commentWizard === true) {
@@ -341,7 +385,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 			var isCalc = this.map._docLayer ? (this.map._docLayer._docType === 'spreadsheet') : false;
 			var isAutofilter = isDocumentAreaPopup && isCalc;
 
-			var isPopupJson = (data.type === 'modalpopup' || data.type === 'snackbar');
+			var isPopupJson = (data.jsontype === 'popup' || data.type === 'modalpopup' || data.type === 'snackbar');
 			// show autofilter as regular mobile wizard for compatibility with older version
 			var isPopup = !isAutofilter && isPopupJson;
 			var isSidebar = false;
@@ -409,7 +453,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 			}
 
 			this._reset();
-			this._isPopup = isPopupJson;
+			this.isPopup = isPopupJson;
 
 			this._showWizard();
 			if (this.map._docLayer && !this.map._docLayer.isCalc()) {
@@ -442,15 +486,15 @@ L.Control.MobileWizardWindow = L.Control.extend({
 			if (data.id === 'menubar' || data.id === 'insertshape') {
 				document.getElementById('mobile-wizard').style.height = '100vh';
 				if (data.id === 'menubar')
-					$('#mobile-wizard').addClass('menuwizard');
+					this.isHamburgerMenu = true;
 				else if (data.id === 'insertshape') {
-					$('#mobile-wizard').addClass('shapeswizard');
+					this.isShapesWizard = true;
 				}
 				$('#mobile-wizard').css('top', $('#document-container').css('top'));
 			} else if (data.id === 'funclist') {
 				document.getElementById('mobile-wizard').style.height = '100vh';
 				$('#mobile-wizard').css('top', $('#document-container').css('top'));
-				$('#mobile-wizard').addClass('funcwizard');
+				this.isFunctionMenu = true;
 			} else {
 				document.getElementById('mobile-wizard').style.height = this.options.maxHeight;
 				$('#mobile-wizard').css('top', '');
@@ -470,16 +514,16 @@ L.Control.MobileWizardWindow = L.Control.extend({
 				// force hide scroll indicator while its showing/hidding is not fixed
 				$('.mobile-wizard-scroll-indicator').hide();
 
-				$('#mobile-wizard').addClass('popup');
-				$('#mobile-wizard-titlebar').hide();
+				this.titleBar.hide();
 
 				if (data.type === 'snackbar') {
 					var that = this;
-					$('#mobile-wizard').addClass('snackbar');
+					this.isSnackBar = true;
 					this.snackBarTimout = setTimeout(function () { that.parent.removeWindow(that); }, this.options.snackbarTimeout);
 				}
 			}
 
+			this._applySpecialClasses();
 			this._inBuilding = false;
 		}
 	},
