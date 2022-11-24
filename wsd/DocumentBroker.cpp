@@ -1402,7 +1402,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
     {
         // If marked to destroy, or session is disconnected, remove.
         if (_docState.isMarkedToDestroy() || (it != _sessions.end() && it->second->isCloseFrame()))
-            disconnectSessionInternal(sessionId);
+            disconnectSessionInternal(it->second);
 
         // If marked to destroy, then this was the last session.
         if (_docState.isMarkedToDestroy() || _sessions.empty())
@@ -2393,7 +2393,7 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
 
         // If last editable, save and don't remove until after uploading to storage.
         if (!lastEditableSession || !autoSave(isPossiblyModified(), dontSaveIfUnmodified))
-            disconnectSessionInternal(id);
+            disconnectSessionInternal(session);
 
         // Last view going away; can destroy?
         if (activeSessionCount <= 1)
@@ -2428,91 +2428,75 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
     return _sessions.size();
 }
 
-void DocumentBroker::disconnectSessionInternal(const std::string& id)
+void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSession>& session)
 {
     assertCorrectThread();
+
+    LOG_ASSERT_MSG(session, "Got null ClientSession");
+    const std::string id = session->getId();
     try
     {
 #if !MOBILEAPP
         Admin::instance().rmDoc(_docKey, id);
+        COOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
 #endif
-        auto it = _sessions.find(id);
-        if (it != _sessions.end())
+        if (_docState.isUnloadRequested())
         {
-#if !MOBILEAPP
-            COOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
-#endif
-            if (_docState.isUnloadRequested())
-            {
-                // We must be the last session, flag to destroy if unload is requested.
-                LOG_ASSERT_MSG(countActiveSessions() <= 1,
-                               "Unload-requested with multiple sessions");
-                _docState.markToDestroy();
-                LOG_TRC("Unload requested while disconnecting session ["
-                        << id << "], having " << _sessions.size()
-                        << " sessions, marking to destroy.");
-            }
+            // We must be the last session, flag to destroy if unload is requested.
+            LOG_ASSERT_MSG(countActiveSessions() <= 1, "Unload-requested with multiple sessions");
+            LOG_TRC("Unload requested while disconnecting session ["
+                    << id << "], having " << _sessions.size() << " sessions, marking to destroy.");
+            _docState.markToDestroy();
+        }
 
-            std::shared_ptr<ClientSession> session = it->second;
-            const bool lastEditableSession =
-                session->isWritable() && !haveAnotherEditableSession(id);
+        const bool lastEditableSession = session->isWritable() && !haveAnotherEditableSession(id);
 
-            LOG_TRC("Disconnect session internal " << id <<
-                    ", LastEditableSession: " << lastEditableSession <<
-                    " destroy? " << _docState.isMarkedToDestroy() <<
-                    " locked? " << _lockCtx->_isLocked);
+        LOG_TRC("Disconnect session internal "
+                << id << ", LastEditableSession: " << lastEditableSession << " destroy? "
+                << _docState.isMarkedToDestroy() << " locked? " << _lockCtx->_isLocked);
 
-            // Unlock the document, if last editable sessions, before we lose a token that can unlock.
-            if (lastEditableSession && _lockCtx->_isLocked && _storage)
-            {
-                if (!_storage->updateLockState(it->second->getAuthorization(), *_lockCtx, false,
-                                               _currentStorageAttrs))
-                    LOG_ERR("Failed to unlock!");
-            }
+        // Unlock the document, if last editable sessions, before we lose a token that can unlock.
+        if (lastEditableSession && _lockCtx->_isLocked && _storage)
+        {
+            if (!_storage->updateLockState(session->getAuthorization(), *_lockCtx, false,
+                                           _currentStorageAttrs))
+                LOG_ERR("Failed to unlock before disconnecting last editable session");
+        }
 
-            bool hardDisconnect;
-            if (it->second->inWaitDisconnected())
-            {
-                LOG_TRC("hard disconnecting while waiting for disconnected handshake.");
-                hardDisconnect = true;
-            }
-            else
-            {
-                hardDisconnect = it->second->disconnectFromKit();
-
-                if (isLoaded() || _sessions.size() > 1)
-                {
-                    // Let the child know the client has disconnected.
-                    const std::string msg("child-" + id + " disconnect");
-                    _childProcess->sendTextFrame(msg);
-                }
-                else
-                {
-                    // We aren't even loaded and no other views--kill.
-                    // If we send disconnect, we risk hanging because
-                    // we flag Core for quiting via unipoll, but Core
-                    // would still continue loading. If at the end of
-                    // loading it shows a dialog (such as the macro or
-                    // csv import dialogs), it will wait for their
-                    // dismissal indefinetely. Neither would our
-                    // load-timeout kick in, since we would be gone.
-#if !MOBILEAPP
-                    LOG_INF("Session [" << id << "] disconnected but DocKey [" << _docKey
-                                        << "] isn't loaded yet. Terminating the child roughly.");
-                    _childProcess->terminate();
-#endif
-                }
-            }
-
-            if (hardDisconnect)
-                finalRemoveSession(it->second);
-            // else wait for disconnected.
+        bool hardDisconnect;
+        if (session->inWaitDisconnected())
+        {
+            LOG_TRC("hard disconnecting while waiting for disconnected handshake.");
+            hardDisconnect = true;
         }
         else
         {
-            LOG_TRC("Session [" << id << "] not found to disconnect from docKey [" <<
-                    _docKey << "]. Have " << _sessions.size() << " sessions.");
+            hardDisconnect = session->disconnectFromKit();
+
+            if (isLoaded() || _sessions.size() > 1)
+            {
+                // Let the child know the client has disconnected.
+                _childProcess->sendTextFrame("child-" + id + " disconnect");
+            }
+            else
+            {
+                // We aren't even loaded and no other views--kill.
+                // If we send disconnect, we risk hanging because we flag Core for
+                // quiting via unipoll, but Core would still continue loading.
+                // If at the end of loading it shows a dialog (such as the macro or
+                // csv import dialogs), it will wait for their dismissal indefinetely.
+                // Neither would our load-timeout kick in, since we would be gone.
+#if !MOBILEAPP
+                LOG_INF("Session [" << id << "] disconnected but DocKey [" << _docKey
+                                    << "] isn't loaded yet. Terminating the child roughly.");
+                _childProcess->terminate();
+#endif
+            }
         }
+
+        if (hardDisconnect)
+            finalRemoveSession(session);
+        // else wait for disconnected.
     }
     catch (const std::exception& ex)
     {
