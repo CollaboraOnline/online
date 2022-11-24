@@ -27,6 +27,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		L.setOptions(this, this.options);
 		this.id = id;
 		this.parent = mobileWizard;
+		this.isVisible = false;
 
 		var parent = document.getElementById('mobile-wizard-content');
 		this.content = L.DomUtil.create('div', 'mobile-wizard mobile-wizard-content', parent);
@@ -75,27 +76,35 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		$(this.backButton).addClass('close-button');
 	},
 
-	_showWizard: function(ContentsLength) {
+	hideWindow: function() {
+		this.isVisible = false;
+		$(this.content).hide();
+	},
+
+	showWindow: function() {
+		this.isVisible = true;
+		$(this.content).show();
+	},
+
+	_showWizard: function() {
 		if (this.snackBarTimout)
 			clearTimeout(this.snackBarTimout);
 
-		var docType = this.map.getDocType();
-		//window.app.console.log('ContentsLength: ' + ContentsLength + ' | docType: ' + docType + '$(#mobile-wizard-content).scrollTop();'  + 'this._isTabMode: ' + this._isTabMode + ' | _tabs: ' + this._tabs);
-		var maxScrolled = 52;
-		if ((ContentsLength > 5 || this._tabs) && !window.mobileMenuWizard) {
-			$('#mobile-wizard-content').append('<div id="mobile-wizard-scroll-indicator" style="width: 100%;height: 0px;position: fixed;z-index: 2;bottom: -7px;box-shadow: 0 -8px 20px 4px #0b87e770, 0 1px 10px 6px #0b87e7;"></div>');
-		}
-		if (docType == 'spreadsheet')
-			maxScrolled = 30;
-		else if (docType == 'presentation')
-			maxScrolled = 20;
-		$('#mobile-wizard').show();
-		$('#mobile-wizard-content').on('scroll', function() {
-			var mWizardContentScroll = $('#mobile-wizard-content').scrollTop();
-			var height = $('#mobile-wizard-content').prop('scrollHeight');
-			var scrolled = (mWizardContentScroll / height) * 100;
-			if (scrolled > maxScrolled) {$('#mobile-wizard-scroll-indicator').css('display','none');}
-			else {$('#mobile-wizard-scroll-indicator').css('display','block');}
+		this.isVisible = true;
+
+		this.scrollIndicator = $('<div class="mobile-wizard-scroll-indicator" id="mobile-wizard-scroll-indicator-' + this.id + '" style="width: 100%;height: 0px;position: fixed;z-index: 2;bottom: -7px;box-shadow: 0 -8px 20px 4px #0b87e770, 0 1px 10px 6px #0b87e7;"></div>');
+		$(this.content).append(this.scrollIndicator);
+
+		var wizard = $('#mobile-wizard');
+		wizard.show();
+		var that = this;
+		wizard.on('scroll', function() {
+			var mWizardContentScroll = wizard.scrollTop();
+			var height = wizard.prop('scrollHeight');
+			var contentHeight = wizard.prop('clientHeight');
+			var scrollLeft = height - mWizardContentScroll;
+			if (scrollLeft < contentHeight + 1 || !that.isVisible) { that.scrollIndicator.css('display','none'); }
+			else { that.scrollIndicator.css('display','block'); }
 		});
 		$('#toolbar-down').hide();
 		if (window.ThisIsTheAndroidApp)
@@ -136,7 +145,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 	},
 
 	setCurrentScrollPosition: function() {
-		this._currentScrollPosition = $('#mobile-wizard-content').scrollTop();
+		this._currentScrollPosition = $(this.content).scrollTop();
 	},
 
 	goLevelDown: function(contentToShow, options) {
@@ -263,7 +272,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 
 	_scrollToPosition: function(position) {
 		if (this._currentScrollPosition) {
-			$('#mobile-wizard-content').animate({ scrollTop: position }, 0);
+			$(this.content).animate({ scrollTop: position }, 0);
 		}
 	},
 
@@ -304,7 +313,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 
 		if (goBack) {
 			this._currentScrollPosition = 0;
-			$('#mobile-wizard-content').animate({ scrollTop: 0 }, 0);
+			$(this.content).animate({ scrollTop: 0 }, 0);
 		}
 
 		this._currentPath = _path;
@@ -397,14 +406,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 			this._reset();
 			this._isPopup = isPopupJson;
 
-			var mWizardContentLength = 0;
-			if (data.children && data.children.length > 0) {
-				if (data.children[0].type == 'menuitem' || data.children[0].children === undefined)
-					mWizardContentLength = data.children.length;
-				else mWizardContentLength = data.children[0].children.length;
-			}
-
-			this._showWizard(mWizardContentLength);
+			this._showWizard();
 			if (this.map._docLayer && !this.map._docLayer.isCalc()) {
 				// In Calc, the wizard is used for the formulas,
 				// and it's easier to allow the user to search
@@ -461,7 +463,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 
 			if (isPopup) {
 				// force hide scroll indicator while its showing/hidding is not fixed
-				$('#mobile-wizard-scroll-indicator').hide();
+				$('.mobile-wizard-scroll-indicator').hide();
 
 				$('#mobile-wizard').addClass('popup');
 				$('#mobile-wizard-titlebar').hide();
@@ -619,7 +621,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		}
 
 		// avoid scrolling when adding new bigger elements to the view
-		$('#mobile-wizard-content').animate({ scrollTop: this._currentScrollPosition }, 0);
+		$(this.content).animate({ scrollTop: this._currentScrollPosition }, 0);
 
 		this._inBuilding = false;
 	},
