@@ -179,8 +179,10 @@ namespace RenderTiles
                                             LibreOfficeKitTileMode mode)>& blendWatermark,
                   const std::function<void (const char *buffer, size_t length)>& outputMessage,
                   unsigned mobileAppDocId,
-                  int canonicalViewId)
+                  int canonicalViewId, int viewId)
     {
+        document->setView(viewId);
+
         const auto& tiles = tileCombined.getTiles();
 
         // Otherwise our delta-building & threading goes badly wrong
