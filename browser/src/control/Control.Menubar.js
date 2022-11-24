@@ -1837,6 +1837,8 @@ L.Control.Menubar = L.Control.extend({
 			window.pageMobileWizard = true;
 		} else if (id === 'zoteroedit') {
 			app.socket.sendMessage('zotero type=action editcitation');
+		} else if (id === 'zoterostyle') {
+			this._map.zotero.handleStyleList();
 		}
 		// Inform the host if asked
 		if (postmessage)

@@ -11,15 +11,15 @@ L.Control.Zotero = L.Control.extend({
 		this.enable = !!zoteroProps['Enable'];
 	},
 
-	dialogSetup: function () {
+	dialogSetup: function (title) {
 		this.remove();
 
 		var data = {
-			id: 'ZoteroLibraryDialog',
-			dialogid: 'ZoteroLibraryDialog',
+			id: 'ZoteroDialog',
+			dialogid: 'ZoteroDialog',
 			type: 'dialog',
-			text: _('My Library'),
-			title: _('My Library'),
+			text: title,
+			title: title,
 			jsontype: 'dialog',
 			responses: [
 				{
@@ -42,7 +42,7 @@ L.Control.Zotero = L.Control.extend({
 					children: [
 						{
 							type: 'treelistbox',
-							id: 'versions',
+							id: 'zoterolist',
 							enabled: false,
 						},
 						{
@@ -95,40 +95,17 @@ L.Control.Zotero = L.Control.extend({
 		return this;
 	},
 
-	createItem: function (index, tilte, authors, dateTime) {
-		this.items.push({ 'text': tilte, 'columns': [
-			tilte,
-			authors,
-			dateTime
-		].map(
-			function (item) {
-				return { text: item };
-			}
-		), 'row': index});
-	},
-
-	fillItems: function (items) {
-		for (var iterator = 0; iterator < items.length; ++iterator) {
-			var creatorArray = [];
-			for (var creator = 0; creator < items[iterator].data.creators.length; ++creator) {
-				creatorArray.push(items[iterator].data.creators[creator].firstName + ' ' + items[iterator].data.creators[creator].lastName);
-			}
-			var creatorString = creatorArray.join(', ');
-			this.createItem(iterator, items[iterator].data.title, creatorString, items[iterator].data.date);
-		}
-	},
-
-	show: function () {
+	updateDialog: function(headerArray, failText) {
 		if (this.items.length !== 0) {
-			var dialogUpdateEvent = {
+			return {
 				data: {
 					jsontype: 'dialog',
 					action: 'update',
-					id: 'ZoteroLibraryDialog',
+					id: 'ZoteroDialog',
 					control: {
-						id: 'versions',
+						id: 'zoterolist',
 						type: 'treelistbox',
-						headers: ['Title', 'Author(s)', 'Date'].map(
+						headers: headerArray.map(
 							function(item) { return { text: item }; }
 						),
 						text: '',
@@ -139,63 +116,126 @@ L.Control.Zotero = L.Control.extend({
 				callback: this._onAction.bind(this)
 			};
 		} else {
-			var dialogUpdateEvent = {
+			return {
 				data: {
 					jsontype: 'dialog',
 					action: 'update',
-					id: 'ZoteroLibraryDialog',
+					id: 'ZoteroDialog',
 					control: {
-						id: 'versions',
+						id: 'zoterolist',
 						type: 'fixedtext',
-						text: _('Your library is empty'),
+						text: failText,
 					},
 				},
 			};
 		}
+	},
+
+	// columns: Array of details which will be displayed in the dialog
+	// entryData: Object containing extra details related to the entry
+	createEntry: function (index, columns, entryData) {
+		this.items.push(Object.assign({ 'columns': columns.map(
+			function (item) {
+				return { text: item };
+			}
+		), 'row': index,
+		}, entryData));
+	},
+
+	fillItems: function (items) {
+		for (var iterator = 0; iterator < items.length; ++iterator) {
+			var creatorArray = [];
+			for (var creator = 0; creator < items[iterator].data.creators.length; ++creator) {
+				creatorArray.push(items[iterator].data.creators[creator].firstName + ' ' + items[iterator].data.creators[creator].lastName);
+			}
+			var creatorString = creatorArray.join(', ');
+			this.createEntry(iterator,
+				[items[iterator].data.title, creatorString, items[iterator].data.date],
+				{citation: items[iterator].citation, bib: items[iterator].bib, type: 'item'}
+			);
+		}
+	},
+
+	fillStyles: function (styles) {
+		for (var iterator = 0; iterator < styles.length; ++iterator) {
+			this.createEntry(iterator, [styles[iterator].title], {name: styles[iterator].name, type: 'style'});
+		}
+	},
+
+	showItemList: function (itemList) {
+		var itemListJSON = JSON.parse(itemList.substring('itemslist: '.length));
+		this.dialogSetup(_('My Library'));
+		this.fillItems(itemListJSON);
+
+		var dialogUpdateEvent = this.updateDialog(['Title', 'Creator(s)', 'Date'], _('Your library is empty'));
+
 		if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
 		this.map.fire('jsdialogupdate', dialogUpdateEvent);
+	},
+
+	showStyleList: function() {
+		var that = this;
+		fetch('https://www.zotero.org/styles-files/styles.json')
+			.then(function (response) { return response.json();})
+			.then(function (data) {
+				that.dialogSetup(_('Citation Style'));
+				that.fillStyles(data);
+
+				var dialogUpdateEvent = that.updateDialog(['Styles'],_('An error occurred while fetching style list'));
+
+				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
+				that.map.fire('jsdialogupdate', dialogUpdateEvent);
+			});
 	},
 
 	_onAction: function(element, action, data, index) {
 		if (element === 'dialog' && action === 'close') return;
 		if (element === 'treeview') {
-			var entry = data.entries[parseInt(index)];
-			this.selected = {
-				item: entry.columns[0].text,
-				index: parseInt(entry.row),
-			};
+			this.selected = data.entries[parseInt(index)];
 			return;
 		}
 		if (element === 'responsebutton' && data.id == 'ok' && this.selected) {
-			this._onOk(this.selected.item, this.selected.index);
+			this._onOk(this.selected);
 		}
 
 		var closeEvent = {
 		    data: {
 				action: 'close',
-				id: 'ZoteroLibraryDialog',
+				id: 'ZoteroDialog',
 			}
 		};
 		this.map.fire(window.mode.isMobile() ? 'closemobilewizard' : 'jsdialog', closeEvent);
 		console.log('Closed after');
 	},
 
-	_onOk: function (item, index) {
-		console.log(item, index);
-		// this._map.sendUnoCommand('.uno:' + action, command);
+	_onOk: function (selected) {
+		console.log(selected);
+
+
+		if (selected.type === 'item') {
+			var parameters = {
+				FieldCommand: {type: 'string', value:'ADDIN ZOTERO_ITEM CSL_CITATION'},
+				FieldResult: {type: 'string', value: selected.citation}
+			};
+
+			this.map.sendUnoCommand('.uno:TextFormField', parameters);
+		}
+		else if (selected.tyle === 'style') {
+			console.log('do something');
+		}
 	},
 
-	handItemList: function(itemList) {
-		var itemListJSON = JSON.parse(itemList.substring('itemslist: '.length));
-		console.log(itemListJSON);
-		this.dialogSetup();
-		this.fillItems(itemListJSON);
-		this.show();
+	handleItemList: function(itemList) {
+		this.showItemList(itemList);
+	},
+
+	handleStyleList: function() {
+		this.showStyleList();
 	},
 
 	_onMessage: function(message) {
 		if (message.startsWith('itemslist: ')) {
-			this.handItemList(message);
+			this.handleItemList(message);
 		}
 	}
 });
