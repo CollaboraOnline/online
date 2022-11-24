@@ -688,7 +688,7 @@ private:
     std::size_t addSessionInternal(const std::shared_ptr<ClientSession>& session);
 
     /// Starts the Kit <-> DocumentBroker shutdown handshake
-    void disconnectSessionInternal(const std::string& id);
+    void disconnectSessionInternal(const std::shared_ptr<ClientSession>& session);
 
     /// Forward a message from child session to its respective client session.
     bool forwardToClient(const std::shared_ptr<Message>& payload);
