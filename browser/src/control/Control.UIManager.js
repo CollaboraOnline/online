@@ -753,6 +753,92 @@ L.Control.UIManager = L.Control.extend({
 		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json), callback: builderCallback});
 	},
 
+	// Modals
+
+	/// shows modal dialog
+	/// json - JSON for building the dialog
+	/// callbacks - array of { id: widgetId, type: eventType, func: functionToCall }
+	showModal: function(json, callbacks) {
+		var builderCallback = function(objectType, eventType, object, data) {
+			window.app.console.debug('modal action: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
+
+			for (var i in callbacks) {
+				var callback = callbacks[i];
+				if (object.id === callback.id && (!callback.type || eventType === callback.type)) {
+					callback.func();
+				}
+			}
+		};
+
+		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json), callback: builderCallback});
+	},
+
+	/// shows simple info modal (message + ok button)
+	/// id - id of a dialog
+	/// title - title of a dialog
+	/// message1 - 1st line of message
+	/// message2 - 2nd line of message
+	/// buttonText - text inside button
+	/// callback - callback on button press
+	showInfoModal: function(id, title, message1, message2, buttonText, callback) {
+		var dialogId = 'modal-dialog-' + id;
+		var json = {
+			id: dialogId,
+			dialogid: id,
+			type: 'modalpopup',
+			title: title,
+			hasClose: true,
+			cancellable: true,
+			jsontype: 'dialog',
+			'init_focus_id': 'response',
+			children: [
+				{
+					id: 'info-modal-container',
+					type: 'container',
+					vertical: true,
+					children: [
+						{
+							id: 'info-modal-label1',
+							type: 'fixedtext',
+							text: message1
+						},
+						{
+							id: 'info-modal-label2',
+							type: 'fixedtext',
+							text: message2
+						},
+						{
+							id: '',
+							type: 'buttonbox',
+							text: '',
+							enabled: true,
+							children: [
+								{
+									id: 'response',
+									type: 'pushbutton',
+									text: buttonText,
+									'has_default': true,
+								}
+							],
+							vertical: false,
+							layoutstyle: 'end'
+						},
+					],
+				},
+			]
+		};
+
+		var closeFunc = function() {
+			var closeMessage = { id: dialogId, jsontype: 'dialog', type: 'modalpopup', action: 'close' };
+			app.socket._onMessage({ textMsg: 'jsdialog: ' + JSON.stringify(closeMessage) });
+		};
+
+		this.showModal(json, [
+			{id: 'response', func: function() { if (typeof callback === 'function') callback(); closeFunc(); }},
+			{id: '__POPOVER__', func: function() { closeFunc(); }}
+		]);
+	},
+
 	// Helper functions
 
 	moveObjectVertically: function(obj, diff) {

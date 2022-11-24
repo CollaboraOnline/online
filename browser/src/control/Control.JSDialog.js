@@ -242,13 +242,14 @@ L.Control.JSDialog = L.Control.extend({
 			}
 		};
 
-		if (!isModalPopup) {
+		if (!isModalPopup || (data.hasClose)) {
 			var titlebar = L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', container);
 			var title = L.DomUtil.create('span', 'ui-dialog-title', titlebar);
 			title.innerText = data.title;
 			var button = L.DomUtil.create('button', 'ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close', titlebar);
 			L.DomUtil.create('span', 'ui-button-icon ui-icon ui-icon-closethick', button);
-		} else {
+		}
+		if (isModalPopup) {
 			L.DomUtil.addClass(container, 'modalpopup');
 			if (isSnackbar)
 				L.DomUtil.addClass(container, 'snackbar');
@@ -309,6 +310,12 @@ L.Control.JSDialog = L.Control.extend({
 				that.draggingObject = null;
 			}
 		};
+
+		if (isModalPopup && data.hasClose) {
+			button.onclick = function() {
+				that.close(data.id, true);
+			};
+		}
 
 		if (!isModalPopup) {
 			button.onclick = function() {

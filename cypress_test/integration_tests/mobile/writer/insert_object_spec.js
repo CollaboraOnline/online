@@ -297,6 +297,33 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('have.attr', 'href', 'http://www.something.com/');
 	});
 
+	it('Open inserted hyperlink.', function() {
+		mobileHelper.openInsertionWizard();
+
+		// Open hyperlink dialog
+		cy.contains('.menu-entry-with-icon', 'Hyperlink...')
+			.click();
+
+		// Dialog is opened
+		cy.get('.vex-content.hyperlink-dialog')
+			.should('exist');
+
+		// Type text and link
+		cy.get('.vex-content.hyperlink-dialog textarea[name="text"]')
+			.type('some text');
+		cy.get('.vex-content.hyperlink-dialog input[name="link"]')
+			.type('www.something.com');
+
+		// Insert
+		cy.get('.vex-content.hyperlink-dialog .button-primary')
+			.click();
+
+		cy.get('#hyperlink-pop-up').click();
+
+		cy.get('#info-modal-label2')
+			.should('have.text', 'http://www.something.com');
+	});
+
 	it('Insert shape.', function() {
 		mobileHelper.openInsertionWizard();
 

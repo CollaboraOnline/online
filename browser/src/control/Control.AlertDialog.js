@@ -53,41 +53,14 @@ L.Control.AlertDialog = L.Control.extend({
 				messageText = window.errorMessages.invalidLink;
 			}
 
-			var containerWithLink = document.createElement('div');
-			containerWithLink.innerHTML = messageText;
-			var externalUrl = document.createElement('p');
-			externalUrl.classList.add('vex-dialog-external-url');
-			externalUrl.innerHTML = url;
-			containerWithLink.appendChild(externalUrl);
-			buttonsList = [];
-
-			if (isLinkValid) {
-				buttonsList.push({
-					text: _('Open link'),
-					type: 'button',
-					className: 'button-primary',
-					click: function() {
-						if ('processCoolUrl' in window) {
-							url = window.processCoolUrl({ url: url, type: 'doc' });
-						}
-
-						window.open(url, '_blank');
-						vex.closeAll();
+			this._map.uiManager.showInfoModal('openlink', _('Open link'), messageText, url,
+				_('Open link'), function() {
+					if ('processCoolUrl' in window) {
+						url = window.processCoolUrl({ url: url, type: 'doc' });
 					}
-				});
-			}
 
-			vex.dialog.open({
-				unsafeMessage: containerWithLink.outerHTML,
-				showCloseButton: true,
-				contentClassName: 'word-wrap-for-vex-dialog',
-				buttons: buttonsList,
-				callback: function() {},
-				afterClose: function () {
-					vex.dialogID = -1;
-					e.map.focus();
-				}
-			});
+					window.open(url, '_blank');
+				});
 		} else if (e.cmd && e.kind) {
 			this._map.fire('hidebusy');
 
