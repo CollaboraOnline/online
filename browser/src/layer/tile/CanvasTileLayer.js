@@ -2451,7 +2451,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (offsetDiffLeft < 10) this._movePopUpRight();
 			var map_ = this._map;
 			this._setupClickFuncForId('hyperlink-pop-up', function() {
-				map_.fire('warn', {url: url, map: map_, cmd: 'openlink'});
+				map_.uiManager.showHyperlinkWarn(url, 'openlink');
 			});
 			this._setupClickFuncForId('hyperlink-pop-up-copy', function () {
 				map_.sendUnoCommand('.uno:CopyHyperlinkLocation');

@@ -711,6 +711,85 @@ L.Control.UIManager = L.Control.extend({
 		this.map.fire('hidebusy');
 	},
 
+	showHyperlinkWarn: function(url, action) {
+		console.debug(action);
+		var json = {
+			id: 'hyperlinkWarnDialog',
+			dialogid: 'hyperlinkWarnDialog',
+			type: 'dialog',
+			text: 'Are you sure you want to visit the following URL?',
+			title: 'Hyperlink',
+			jsontype: 'dialog',
+			enabled: true,
+			children: [
+				{
+					id: 'dialog-vbox1',
+					type: 'container',
+					text: '',
+					enabled: true,
+					vertical: true,
+					children: [
+						{
+							id: 'dialog-action_area1',
+							type: 'container',
+							text: '',
+							enabled: true,
+							vertical: true,
+							children: [
+								{
+									id: 'label',
+									type: 'fixedtext',
+									text: 'You are leaving the editor. Are you sure you want to visit the following URL?'
+								},
+								{
+									id: 'label',
+									type: 'fixedtext',
+									text: url
+								},
+							],
+						},
+						{
+							id: 'dialog-action_area2',
+							type: 'container',
+							text: '',
+							enabled: true,
+							vertical: true,
+							children: [
+								{
+									id: '',
+									type: 'buttonbox',
+									text: '',
+									enabled: true,
+									children: [
+										{
+											id: 'ok',
+											type: 'pushbutton',
+											text: '~Open link',
+											enabled: true,
+											'has_default': true,
+										}
+									],
+									vertical: false,
+									layoutstyle: 'end'
+								},
+							],
+						},
+					 ],
+				 },
+			 ]
+		};
+
+		var builderCallback = function(objectType, eventType, object, data) {
+			window.app.console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
+
+			if (object.id === 'ok' && objectType === 'pushbutton' && eventType === 'click') {
+				window.open(url, '_blank');
+			}
+		};
+
+		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json), callback: builderCallback});
+	},
+
 	// Snack bar
 
 	showSnackbar: function(label, action, callback) {
