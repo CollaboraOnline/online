@@ -970,6 +970,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:Text'
 			},
 			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:InsertMath', 'presentation'),
+				'command': '.uno:InsertMath'
+			},
+			{
 				'type': 'container',
 				'children': [
 					{

@@ -962,6 +962,11 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'command': '.uno:Text'
 			},
 			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:InsertMath', 'presentation'),
+				'command': '.uno:InsertMath'
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
