@@ -251,8 +251,8 @@ public:
     /// Flag for termination. Note that this doesn't save any unsaved changes in the document
     void stop(const std::string& reason);
 
-    /// Hard removes a session by ID, only for ClientSession.
-    void finalRemoveSession(const std::string& id);
+    /// Hard removes a session, only for ClientSession.
+    void finalRemoveSession(const std::shared_ptr<ClientSession>& session);
 
     /// Create new client session
     std::shared_ptr<ClientSession> createNewClientSession(
