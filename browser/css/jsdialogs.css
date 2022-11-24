@@ -519,6 +519,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	pointer-events: none;
 	margin-block-start: 8px;
 	margin-inline-start: -16px;
+	margin-inline-end: 4px;
 }
 
 .ui-listbox[disabled='disabled'] ~ .ui-listbox-arrow {
