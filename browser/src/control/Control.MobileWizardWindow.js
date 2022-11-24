@@ -33,10 +33,13 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		this.isFunctionMenu = false; // shows full screen with list of calc functions
 		this.isHamburgerMenu = false; // shows full screen with items from menubar
 		this.isShapesWizard = false; // shows full screen shape type selector
+		this.title = ''; // text title
+		this.cusomTitle = null; // HTML title
 
 		this.mobileWizard = $('#mobile-wizard'); // reference to main container of mobile wizard
 		this.backButton = $('#mobile-wizard-back'); // reference to the button for going back or close
 		this.titleBar = $('#mobile-wizard-titlebar'); // titlebar containing title and back button
+		this.titleNode = $('#mobile-wizard-title'); // title content
 		this.tabsContainer = $('#mobile-wizard-tabs'); // can be shown instead of titlebar
 		var parentNode = document.getElementById('mobile-wizard-content');
 		this.content = L.DomUtil.create('div', 'mobile-wizard mobile-wizard-content', parentNode);
@@ -89,7 +92,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		this.tabsContainer.hide();
 		this.titleBar.css('top', '0px');
 		this.titleBar.show();
-		this._setTitle('');
+		this.titleNode.innerHTML = '';
 		this._removeSpecialClasses();
 	},
 
@@ -101,7 +104,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		this.content.innerHTML = '';
 		this._isTabMode = false;
 		this._currentPath = [];
-		this.tabs = [];
+		this.tabs = null;
 		this._currentScrollPosition = 0;
 		this.isPopup = false;
 	},
@@ -124,6 +127,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		this._softReset();
 		this.isVisible = true;
 		$(this.content).show();
+		this.restoreTitle();
 		this.restoreTabs();
 		this._applySpecialClasses();
 	},
@@ -309,14 +313,24 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		}
 	},
 
-	_setTitle: function(title) {
-		var right = $('#mobile-wizard-title');
-		right.text(title);
+	/// for restoring title on windows switching
+	restoreTitle: function() {
+		if (this.cusomTitle)
+			this._setCustomTitle(this.cusomTitle);
+		else
+			this._setTitle(this.title);
 	},
 
+	/// setups text title
+	_setTitle: function(title) {
+		this.title = title;
+		this.titleNode.text(this.title);
+	},
+
+	/// setups custom HTML titlebar
 	_setCustomTitle: function(title) {
-		var right = $('#mobile-wizard-title');
-		right.html(title);
+		this.cusomTitle = title;
+		this.titleNode.html(this.cusomTitle);
 	},
 
 	_scrollToPosition: function(position) {
