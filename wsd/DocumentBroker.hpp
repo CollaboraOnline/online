@@ -298,7 +298,7 @@ public:
 
     /// Upload the document to Storage if it needs persisting.
     /// Results are logged and broadcast to users.
-    void uploadToStorage(const std::string& sesionId, bool force);
+    void uploadToStorage(const std::shared_ptr<ClientSession>& session, bool force);
 
     /// UploadAs the document to Storage, with a new name.
     /// @param uploadAsPath Absolute path to the jailed file.
@@ -606,9 +606,9 @@ private:
     bool isStorageOutdated() const;
 
     /// Upload the doc to the storage.
-    void uploadToStorageInternal(const std::string& sesionId, const std::string& saveAsPath,
-                                 const std::string& saveAsFilename, const bool isRename,
-                                 const bool force);
+    void uploadToStorageInternal(const std::shared_ptr<ClientSession>& session,
+                                 const std::string& saveAsPath, const std::string& saveAsFilename,
+                                 const bool isRename, const bool force);
 
     /// Handles the completion of uploading to storage, both success and failure cases.
     void handleUploadToStorageResponse(const StorageBase::UploadResult& uploadResult);

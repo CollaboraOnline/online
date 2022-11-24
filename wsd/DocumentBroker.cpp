@@ -15,6 +15,7 @@
 #include <ctime>
 #include <ios>
 #include <fstream>
+#include <memory>
 #include <sstream>
 
 #include <Poco/DigestStream.h>
@@ -1380,15 +1381,26 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
     }
 #endif
 
+    const auto it = _sessions.find(sessionId);
+
     if (needToUploadState != NeedToUpload::No)
     {
-        uploadToStorage(sessionId, /*force=*/needToUploadState == NeedToUpload::Force);
+        if (it == _sessions.end())
+        {
+            LOG_ERR("Session with sessionId ["
+                    << sessionId << "] not found to upload docKey [" << _docKey
+                    << "]. The document will not be uploaded to storage at this time.");
+            broadcastSaveResult(false, "Session not found");
+        }
+        else
+        {
+            uploadToStorage(it->second, /*force=*/needToUploadState == NeedToUpload::Force);
+        }
     }
 
     if (!isAsyncUploading())
     {
         // If marked to destroy, or session is disconnected, remove.
-        const auto it = _sessions.find(sessionId);
         if (_docState.isMarkedToDestroy() || (it != _sessions.end() && it->second->isCloseFrame()))
             disconnectSessionInternal(sessionId);
 
@@ -1404,11 +1416,11 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
     }
 }
 
-void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
+void DocumentBroker::uploadToStorage(const std::shared_ptr<ClientSession>& session, bool force)
 {
     assertCorrectThread();
 
-    LOG_TRC("uploadToStorage [" << sessionId << "]:" << (force ? "" : "not") << " forced");
+    LOG_TRC("uploadToStorage [" << session->getId() << "]:" << (force ? "" : "not") << " forced");
     if (force)
     {
         // Don't reset the force flag if it was set
@@ -1420,7 +1432,7 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
     if (force || _storageManager.lastUploadSuccessful() || _storageManager.canUploadNow())
     {
         constexpr bool isRename = false;
-        uploadToStorageInternal(sessionId, /*saveAsPath*/ std::string(),
+        uploadToStorageInternal(session, /*saveAsPath*/ std::string(),
                                 /*saveAsFilename*/ std::string(), isRename, force);
     }
     else
@@ -1437,7 +1449,18 @@ void DocumentBroker::uploadAsToStorage(const std::string& sessionId,
 {
     assertCorrectThread();
 
-    uploadToStorageInternal(sessionId, uploadAsPath, uploadAsFilename, isRename, /*force=*/false);
+    const auto it = _sessions.find(sessionId);
+    if (it == _sessions.end())
+    {
+        LOG_ERR("Session with sessionId ["
+                << sessionId << "] not found to uploadAs docKey [" << _docKey
+                << "]. The document will not be uploaded to storage at this time.");
+        broadcastSaveResult(false, "Session not found");
+
+        return;
+    }
+
+    uploadToStorageInternal(it->second, uploadAsPath, uploadAsFilename, isRename, /*force=*/false);
 }
 
 void DocumentBroker::uploadAfterLoadingTemplate(const std::string& sessionId)
@@ -1460,31 +1483,33 @@ void DocumentBroker::uploadAfterLoadingTemplate(const std::string& sessionId)
     }
 #endif //!MOBILEAPP
 
-    uploadToStorage(sessionId, /*force=*/false);
+    const auto it = _sessions.find(sessionId);
+    if (it == _sessions.end())
+    {
+        LOG_ERR("Session with sessionId ["
+                << sessionId << "] not found to upload after loading docKey [" << _docKey
+                << "] from template. The document will not be uploaded to storage at this time.");
+        broadcastSaveResult(false, "Session not found");
+        return;
+    }
+
+    uploadToStorage(it->second, /*force=*/false);
 }
 
-void DocumentBroker::uploadToStorageInternal(const std::string& sessionId,
+void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession>& session,
                                              const std::string& saveAsPath,
                                              const std::string& saveAsFilename, const bool isRename,
                                              const bool force)
 {
     assertCorrectThread();
+    LOG_ASSERT_MSG(session, "Must have a valid ClientSession");
+
+    const std::string sessionId = session->getId();
 
     LOG_DBG("Uploading to storage docKey [" << _docKey << "] for session [" << sessionId
                                             << "]. Force: " << force);
-    const auto it = _sessions.find(sessionId);
-    if (it == _sessions.end())
-    {
-        LOG_ERR("Session with sessionId ["
-                << sessionId << "] not found while storing document docKey [" << _docKey
-                << "]. The document will not be uploaded to storage at this time.");
-        broadcastSaveResult(false, "Session not found");
-
-        return;
-    }
 
     const bool isSaveAs = !saveAsPath.empty();
-    auto session = it->second;
     const std::string uri = isSaveAs ? saveAsPath : session->getPublicUri().toString();
 
     // Map the FileId from the docKey to the new filename to anonymize the new filename as the FileId.
