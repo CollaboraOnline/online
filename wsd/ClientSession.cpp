@@ -1816,7 +1816,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
     } else if (tokens.equals(0, "disconnected:")) {
 
         LOG_INF("End of disconnection handshake for " << getId());
-        docBroker->finalRemoveSession(getId());
+        docBroker->finalRemoveSession(client_from_this());
         return true;
     }
     else if (tokens.equals(0, "mediashape:"))
