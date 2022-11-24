@@ -290,11 +290,12 @@ public:
 
     /// Handle the save response from Core and upload to storage as necessary.
     /// Also notifies clients of the result.
-    void handleSaveResponse(const std::string& sessionId, bool success, const std::string& result);
+    void handleSaveResponse(const std::shared_ptr<ClientSession>& session, bool success,
+                            const std::string& result);
 
     /// Check if uploading is needed, and start uploading.
     /// The current state of uploading must be introspected separately.
-    void checkAndUploadToStorage(const std::string& sessionId);
+    void checkAndUploadToStorage(const std::shared_ptr<ClientSession>& session);
 
     /// Upload the document to Storage if it needs persisting.
     /// Results are logged and broadcast to users.

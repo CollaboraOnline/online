@@ -1511,7 +1511,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                     }
 
                     // Save to Storage and log result.
-                    docBroker->handleSaveResponse(getId(), success, result);
+                    docBroker->handleSaveResponse(client_from_this(), success, result);
 
                     if (!isCloseFrame())
                         forwardToClient(payload);
