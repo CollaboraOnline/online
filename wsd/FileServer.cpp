@@ -1082,7 +1082,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     cspOss << "Content-Security-Policy: default-src 'none'; "
         "frame-src 'self' " << WELCOME_URL << " " << FEEDBACK_URL << " " << buyProduct <<
         " blob: " << documentSigningURL << "; "
-           "connect-src 'self' " << cnxDetails.getWebSocketUrl() << "; "
+           "connect-src 'self' https://www.zotero.org " << cnxDetails.getWebSocketUrl() << "; "
            "script-src 'unsafe-inline' 'self'; "
            "style-src 'self' 'unsafe-inline'; "
            "font-src 'self' data:; "
