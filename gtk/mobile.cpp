@@ -337,8 +337,7 @@ int main(int argc, char* argv[])
         "&closebutton=1"
         "&permission=edit"
         "&lang=en"
-        "&userinterfacemode=notebookbar"
-        "&debug=true";
+        "&userinterfacemode=notebookbar";
 
     webkit_web_view_load_uri(webView, urlAndQuery.c_str());
 
