@@ -1684,7 +1684,8 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             {
                 // this also sends the saveas: result
                 LOG_TRC("Save-as path: " << resultURL.getPath());
-                docBroker->uploadAsToStorage(getId(), resultURL.getPath(), wopiFilename, false);
+                docBroker->uploadAsToStorage(client_from_this(), resultURL.getPath(), wopiFilename,
+                                             false);
             }
             else
                 sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
