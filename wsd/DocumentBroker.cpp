@@ -1167,11 +1167,21 @@ void DocumentBroker::startRenameFileCommand()
 
     blockUI("rename"); // Prevent user interaction while we start renaming.
 
+    const auto it = _sessions.find(_renameSessionId);
+    if (it == _sessions.end())
+    {
+        LOG_ERR("Session [" << _renameSessionId << "] not found to save docKey [" << _docKey
+                            << "] before renaming. The document will not be renamed.");
+        broadcastSaveResult(false, "Renaming session not found");
+        endRenameFileCommand();
+        return;
+    }
+
     constexpr bool dontTerminateEdit = false; // We will save, rename, and reload: terminate.
     constexpr bool dontSaveIfUnmodified = true;
     constexpr bool isAutosave = false;
     constexpr bool isExitSave = false;
-    sendUnoSave(_renameSessionId, dontTerminateEdit, dontSaveIfUnmodified, isAutosave, isExitSave);
+    sendUnoSave(it->second, dontTerminateEdit, dontSaveIfUnmodified, isAutosave, isExitSave);
 }
 
 void DocumentBroker::endRenameFileCommand()
@@ -2028,11 +2038,19 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
     // Prefer the last editing view, if still valid, otherwise, find the first writable sessionId.
     // Note: a loaded view cannot be disconnecting.
     const auto itLastEditingSession = _sessions.find(_lastEditingSessionId);
-    const std::string savingSessionId =
+    const std::shared_ptr<ClientSession> savingSession =
         (itLastEditingSession != _sessions.end() && itLastEditingSession->second->isWritable() &&
          itLastEditingSession->second->isViewLoaded())
-            ? _lastEditingSessionId
-            : getWriteableSessionId();
+            ? itLastEditingSession->second
+            : getWriteableSession();
+
+    if (!savingSession)
+    {
+        LOG_ERR("No session to use for saving");
+        return false;
+    }
+
+    const std::string savingSessionId = savingSession->getId();
 
     // Remember the last save time, since this is the predicate.
     LOG_TRC("Checking to autosave [" << _docKey << "] using session [" << savingSessionId << ']');
@@ -2046,7 +2064,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
         // potentially optimize it away. This is as good as user-issued save, since this is
         // triggered when the document is closed. In the case of network disconnection or browser crash
         // most users would want to have had the chance to hit save before the document unloaded.
-        sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/true,
+        sent = sendUnoSave(savingSession, /*dontTerminateEdit=*/true,
                            dontSaveIfUnmodified, /*isAutosave=*/false,
                            /*isExitSave=*/true);
     }
@@ -2076,7 +2094,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
         if (save)
         {
             LOG_TRC("Sending timed save command for [" << _docKey << ']');
-            sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/true,
+            sent = sendUnoSave(savingSession, /*dontTerminateEdit=*/true,
                                /*dontSaveIfUnmodified=*/true, /*isAutosave=*/true,
                                /*isExitSave=*/false);
         }
@@ -2197,18 +2215,19 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     }
 }
 
-bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminateEdit,
-                                 bool dontSaveIfUnmodified, bool isAutosave, bool isExitSave,
-                                 const std::string& extendedData)
+bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
+                                 bool dontTerminateEdit, bool dontSaveIfUnmodified, bool isAutosave,
+                                 bool isExitSave, const std::string& extendedData)
 {
     assertCorrectThread();
 
-    LOG_INF("Saving doc [" << _docKey << "] using session [" << sessionId << "].");
+    LOG_ASSERT_MSG(session, "Got null ClientSession");
+    const std::string sessionId = session->getId();
 
-    if (_sessions.find(sessionId) != _sessions.end())
-    {
-        // Invalidate the timestamp to force persisting.
-        _saveManager.setLastModifiedTime(std::chrono::system_clock::time_point());
+    LOG_INF("Saving doc [" << _docKey << "] using session [" << sessionId << ']');
+
+    // Invalidate the timestamp to force persisting.
+    _saveManager.setLastModifiedTime(std::chrono::system_clock::time_point());
 
         std::ostringstream oss;
         // arguments init
@@ -2249,24 +2268,25 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         _nextStorageAttrs.setIsExitSave(isExitSave);
         _nextStorageAttrs.setExtendedData(extendedData);
 
-        const std::string saveArgs = oss.str();
-        LOG_TRC(".uno:Save arguments: " << saveArgs);
-        const auto command = "uno .uno:Save " + saveArgs;
-        if (forwardToChild(sessionId, command))
+    const std::string saveArgs = oss.str();
+    LOG_TRC(".uno:Save arguments: " << saveArgs);
+    const auto command = "uno .uno:Save " + saveArgs;
+    if (forwardToChild(sessionId, command))
+    {
+        _saveManager.markLastSaveRequestTime();
+        if (_docState.activity() == DocumentState::Activity::None)
         {
-            _saveManager.markLastSaveRequestTime();
-            if (_docState.activity() == DocumentState::Activity::None)
-            {
-                // If we aren't in the midst of any particular activity,
-                // then this is a generic save on its own.
-                startActivity(DocumentState::Activity::Save);
-            }
+            // If we aren't in the midst of any particular activity,
+            // then this is a generic save on its own.
+            startActivity(DocumentState::Activity::Save);
         }
 
         return true;
     }
 
-    LOG_ERR("Failed to save doc [" << _docKey << "]: No valid session [" << sessionId << "].");
+    LOG_ERR("Failed to save doc ["
+            << _docKey << "]: Failed to forward .uno:Save command to session [" << sessionId
+            << ']');
     return false;
 }
 
