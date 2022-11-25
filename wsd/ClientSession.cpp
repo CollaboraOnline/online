@@ -1885,7 +1885,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             {
                 LOG_DBG("Uploading template [" << _wopiFileInfo->getTemplateSource()
                                                << "] to storage after loading.");
-                docBroker->uploadAfterLoadingTemplate(getId());
+                docBroker->uploadAfterLoadingTemplate(client_from_this());
             }
 
             for(auto &token : tokens)
