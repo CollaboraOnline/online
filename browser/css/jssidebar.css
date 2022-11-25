@@ -64,16 +64,16 @@
 	width: 100% !important; /* frame inside frame */
 }
 
-.sidebar.ui-expander-content {
-	padding-inline: 10px;
+#AlignmentPropertyPanel.sidebar.ui-grid #box3,
+#ParaPropertyPanel.sidebar.ui-grid #box1.sidebar.ui-grid-cell,
+#NumberFormatPropertyPanel.sidebar.ui-grid #grid1 {
+	justify-content: space-between !important;
 }
 
 /* section content */
 
-#AlignmentPropertyPanel.sidebar.ui-grid #box3,
-#ParaPropertyPanel.sidebar.ui-grid #box1.sidebar.ui-grid-cell,
-#NumberFormatPropertyPanel.sidebar.ui-grid #grid1,
-.sidebar.ui-grid {
+.sidebar.ui-expander-content {
+	padding-inline: 10px;
 	width: 300px;
 	row-gap: 4px;
 	column-gap: 4px;
@@ -124,7 +124,9 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 
 .sidebar.ui-grid.ui-grid-cell .menubutton {
 	justify-content: space-between;
+	justify-self: end;
 	padding: 4px;
+	margin-right: 1px;
 }
 
 /* widget width */
