@@ -1365,10 +1365,21 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
             // If we have nothing to upload, do the rename now.
             if (needToUploadState == NeedToUpload::No)
             {
-                LOG_DBG("Renaming in storage as there is no new version to upload first.");
-                std::string uploadAsPath;
-                constexpr bool isRename = true;
-                uploadAsToStorage(_renameSessionId, uploadAsPath, _renameFilename, isRename);
+                const auto it = _sessions.find(_renameSessionId);
+                if (it == _sessions.end())
+                {
+                    LOG_ERR("Session with sessionId ["
+                            << _renameSessionId << "] not found to rename docKey [" << _docKey
+                            << "]. The document will not be renamed.");
+                    broadcastSaveResult(false, "Renaming session not found");
+                }
+                else
+                {
+                    LOG_DBG("Renaming in storage as there is no new version to upload first.");
+                    std::string uploadAsPath;
+                    constexpr bool isRename = true;
+                    uploadAsToStorage(it->second, uploadAsPath, _renameFilename, isRename);
+                }
 
                 endRenameFileCommand();
                 return;
@@ -1448,24 +1459,13 @@ void DocumentBroker::uploadToStorage(const std::shared_ptr<ClientSession>& sessi
     }
 }
 
-void DocumentBroker::uploadAsToStorage(const std::string& sessionId,
+void DocumentBroker::uploadAsToStorage(const std::shared_ptr<ClientSession>& session,
                                        const std::string& uploadAsPath,
                                        const std::string& uploadAsFilename, const bool isRename)
 {
     assertCorrectThread();
 
-    const auto it = _sessions.find(sessionId);
-    if (it == _sessions.end())
-    {
-        LOG_ERR("Session with sessionId ["
-                << sessionId << "] not found to uploadAs docKey [" << _docKey
-                << "]. The document will not be uploaded to storage at this time.");
-        broadcastSaveResult(false, "Session not found");
-
-        return;
-    }
-
-    uploadToStorageInternal(it->second, uploadAsPath, uploadAsFilename, isRename, /*force=*/false);
+    uploadToStorageInternal(session, uploadAsPath, uploadAsFilename, isRename, /*force=*/false);
 }
 
 void DocumentBroker::uploadAfterLoadingTemplate(const std::shared_ptr<ClientSession>& session)
@@ -1663,10 +1663,21 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
             {
                 case DocumentState::Activity::Rename:
                 {
-                    LOG_DBG("Renaming in storage after uploading the last saved version.");
-                    std::string uploadAsPath;
-                    constexpr bool isRename = true;
-                    uploadAsToStorage(_renameSessionId, uploadAsPath, _renameFilename, isRename);
+                    const auto it = _sessions.find(_renameSessionId);
+                    if (it == _sessions.end())
+                    {
+                        LOG_ERR("Session with sessionId ["
+                                << _renameSessionId << "] not found to rename docKey [" << _docKey
+                                << "]. The document will not be renamed.");
+                        broadcastSaveResult(false, "Renaming session not found");
+                    }
+                    else
+                    {
+                        LOG_DBG("Renaming in storage as there is no new version to upload first.");
+                        std::string uploadAsPath;
+                        constexpr bool isRename = true;
+                        uploadAsToStorage(it->second, uploadAsPath, _renameFilename, isRename);
+                    }
 
                     endRenameFileCommand();
                 }
