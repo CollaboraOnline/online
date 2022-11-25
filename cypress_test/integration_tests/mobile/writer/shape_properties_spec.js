@@ -189,7 +189,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	it('Vertical mirroring', function() {
 		openPosSizePanel();
 
-		helper.clickOnIdle('#FlipVertical');
+		helper.clickOnIdle('.unoFlipVertical');
 		cy.wait(1000);
 
 		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, defaultAltitude, false /* horiz mirroring */, true /* vert mirroring */);
@@ -200,7 +200,7 @@ describe('Change shape properties via mobile wizard.', function() {
 	it('Horizontal mirroring', function() {
 		openPosSizePanel();
 
-		helper.clickOnIdle('#FlipHorizontal');
+		helper.clickOnIdle('.unoFlipHorizontal');
 		triggerNewSVG();
 
 		cy.wait(1000);
@@ -215,23 +215,23 @@ describe('Change shape properties via mobile wizard.', function() {
 
 		// We can't test the result, so we just trigger
 		// the events to catch crashes, consoler errors.
-		helper.clickOnIdle('#BringToFront');
+		helper.clickOnIdle('.unoBringToFront');
 		cy.wait(300);
 
-		helper.clickOnIdle('#ObjectForwardOne');
+		helper.clickOnIdle('.unoObjectForwardOne');
 		cy.wait(300);
 
-		helper.clickOnIdle('#ObjectBackOne');
+		helper.clickOnIdle('.unoObjectBackOne');
 		cy.wait(300);
 
-		helper.clickOnIdle('#SendToBack');
+		helper.clickOnIdle('.unoSendToBack');
 		cy.wait(300);
 	});
 
 	it.skip('Change line color', function() {
 		openLinePropertyPanel();
 
-		helper.clickOnIdle('#XLineColor');
+		helper.clickOnIdle('.unoXLineColor');
 
 		helper.clickOnIdle('.ui-content[title="Line Color"] .color-sample-small[style="background-color: rgb(152, 0, 0);"]');
 
@@ -414,7 +414,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.get('#FillColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(114, 159, 207);');
 
-		helper.clickOnIdle('#FillColor');
+		helper.clickOnIdle('.unoFillColor');
 
 		mobileHelper.selectFromColorPalette(0, 2, 0, 2);
 
