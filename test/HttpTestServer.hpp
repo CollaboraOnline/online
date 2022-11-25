@@ -30,7 +30,7 @@ private:
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
         _socket = socket;
-        LOG_TRC('#' << socket->getFD() << " Connected to ServerRequestHandler.");
+        LOG_TRC('#' << socket->getFD() << ": Connected to ServerRequestHandler");
     }
 
     /// Called after successful socket reads.
