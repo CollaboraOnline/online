@@ -246,7 +246,7 @@ class ContentControlSection {
 					'enabled': true,
 					'children': [
 						{
-							'id': 'list',
+							'id': 'contentControlList',
 							'type': 'treelistbox',
 							'text': '',
 							'enabled': true,
@@ -261,7 +261,7 @@ class ContentControlSection {
 			'cancellable': true,
 			'popupParent': '_POPOVER_',
 			'clickToClose': '_POPOVER_',
-			'id': '0'
+			'id': 'contentControlModalpopup'
 		};
 
 		var entries = [];
