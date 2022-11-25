@@ -341,6 +341,17 @@ int main(int argc, char* argv[])
 
     webkit_web_view_load_uri(webView, urlAndQuery.c_str());
 
+    if (true) // Set this to false to disable developer console.
+    {
+        // Enable the developer extras
+        WebKitSettings *settings = webkit_web_view_get_settings (WEBKIT_WEB_VIEW(webView));
+        g_object_set (G_OBJECT(settings), "enable-developer-extras", TRUE, NULL);
+
+        // Show the inspector
+        WebKitWebInspector *inspector = webkit_web_view_get_inspector (WEBKIT_WEB_VIEW(webView));
+        webkit_web_inspector_show (WEBKIT_WEB_INSPECTOR(inspector));
+    }
+
     gtk_widget_grab_focus(GTK_WIDGET(webView));
     gtk_widget_show_all(mainWindow);
     gtk_main();
