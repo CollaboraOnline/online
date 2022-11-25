@@ -1463,8 +1463,10 @@ void DocumentBroker::uploadAsToStorage(const std::string& sessionId,
     uploadToStorageInternal(it->second, uploadAsPath, uploadAsFilename, isRename, /*force=*/false);
 }
 
-void DocumentBroker::uploadAfterLoadingTemplate(const std::string& sessionId)
+void DocumentBroker::uploadAfterLoadingTemplate(const std::shared_ptr<ClientSession>& session)
 {
+    LOG_ASSERT_MSG(session, "Must have a valid ClientSession");
+
 #if !MOBILEAPP
     // Create the 'upload' file as it gets created only when
     // handling .uno:Save, which isn't issued for templates
@@ -1483,17 +1485,7 @@ void DocumentBroker::uploadAfterLoadingTemplate(const std::string& sessionId)
     }
 #endif //!MOBILEAPP
 
-    const auto it = _sessions.find(sessionId);
-    if (it == _sessions.end())
-    {
-        LOG_ERR("Session with sessionId ["
-                << sessionId << "] not found to upload after loading docKey [" << _docKey
-                << "] from template. The document will not be uploaded to storage at this time.");
-        broadcastSaveResult(false, "Session not found");
-        return;
-    }
-
-    uploadToStorage(it->second, /*force=*/false);
+    uploadToStorage(session, /*force=*/false);
 }
 
 void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession>& session,

@@ -308,7 +308,7 @@ public:
     /// Uploads the document right after loading from a template.
     /// Template-loading requires special handling because the
     /// document changes once loaded into a non-template format.
-    void uploadAfterLoadingTemplate(const std::string& sessionId);
+    void uploadAfterLoadingTemplate(const std::shared_ptr<ClientSession>& session);
 
     bool isModified() const { return _isModified; }
     void setModified(const bool value);
