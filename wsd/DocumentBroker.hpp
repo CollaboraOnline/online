@@ -303,8 +303,9 @@ public:
 
     /// UploadAs the document to Storage, with a new name.
     /// @param uploadAsPath Absolute path to the jailed file.
-    void uploadAsToStorage(const std::string& sessionId, const std::string& uploadAsPath,
-                           const std::string& uploadAsFilename, const bool isRename);
+    void uploadAsToStorage(const std::shared_ptr<ClientSession>& session,
+                           const std::string& uploadAsPath, const std::string& uploadAsFilename,
+                           const bool isRename);
 
     /// Uploads the document right after loading from a template.
     /// Template-loading requires special handling because the
