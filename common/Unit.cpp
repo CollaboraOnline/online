@@ -484,6 +484,7 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
             GlobalResult = result;
     }
 
+    endTest(reason);
     _setRetValue = true;
 
     // Check if we have more tests, but keep the current index if it's the last.
