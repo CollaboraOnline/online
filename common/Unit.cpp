@@ -464,19 +464,19 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
     {
         if ((result == TestResult::Ok && _retValue != EX_OK) ||
             (result != TestResult::Ok && _retValue == EX_OK))
-            LOG_TST(getTestname() << ": exitTest " << testResultAsString(result)
+            LOG_TST(getTestname() << ": exitTest " << name(result)
                                   << " but is already finished with a different result.");
         return;
     }
 
     if (result == TestResult::Ok)
     {
-        LOG_TST(getTestname() << ": SUCCESS: exitTest: " << testResultAsString(result)
+        LOG_TST(getTestname() << ": SUCCESS: exitTest: " << name(result)
                               << (reason.empty() ? "" : ": " + reason));
     }
     else
     {
-        LOG_TST("ERROR " << getTestname() << ": FAILURE: exitTest: " << testResultAsString(result)
+        LOG_TST("ERROR " << getTestname() << ": FAILURE: exitTest: " << name(result)
                          << (reason.empty() ? "" : ": " + reason));
 
         _retValue = EX_SOFTWARE;
