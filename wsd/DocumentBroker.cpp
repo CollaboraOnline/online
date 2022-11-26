@@ -3263,31 +3263,26 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
     if (Log::traceEnabled() && Util::startsWith(message, "paste "))
         LOG_TRC("Logging paste payload (" << message.size() << " bytes) '" << message << "' end paste");
 
-    std::string msg = "child-" + viewId + ' ' + message;
-
-    const auto it = _sessions.find(viewId);
-    if (it != _sessions.end())
+    std::string msg = "child-" + viewId + ' ';
+    if (Util::startsWith(message, "load "))
     {
-        assert(!_uriJailed.empty());
-
-        StringVector tokens = StringVector::tokenize(msg);
-        if (tokens.size() > 1 && tokens.equals(1, "load"))
+        // Special-case loading.
+        const StringVector tokens = StringVector::tokenize(message);
+        if (tokens.size() > 1 && tokens.equals(0, "load"))
         {
+            LOG_ASSERT_MSG(!_uriJailed.empty(), "Must have valid _uriJailed");
+
             // The json options must come last.
-            msg = tokens[0] + ' ' + tokens[1] + ' ' + tokens[2];
+            msg += "load " + tokens[1];
             msg += " jail=" + _uriJailed;
             msg += " xjail=" + _uriJailedAnonym;
             msg += ' ' + tokens.cat(' ', 3);
+            return _childProcess->sendFrame(msg, binary);
         }
-
-        _childProcess->sendFrame(msg, binary);
-
-        return true;
     }
 
-    // try the not yet created sessions
-    LOG_WRN("Child session [" << viewId << "] not found to forward message: " << getAbbreviatedMessage(message));
-    return false;
+    // Forward message with prefix to the Kit.
+    return _childProcess->sendFrame(msg + message, binary);
 }
 
 bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
