@@ -111,6 +111,13 @@ protected:
         assert((*_ws).get());
     }
 
+    void endTest(const std::string& reason) override
+    {
+        LOG_TST("Ending test by disconnecting " << _wsList.size() << " connection(s): " << reason);
+        _wsList.clear();
+        UnitWSD::endTest(reason);
+    }
+
     /// Send a command to WSD.
     void sendCommand(int index, const std::string& msg)
     {
