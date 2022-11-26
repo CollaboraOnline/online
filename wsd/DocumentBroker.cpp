@@ -1802,8 +1802,11 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         {
             LOG_ERR("Cannot upload docKey ["
                     << _docKey << "] to storage URI [" << _uploadRequest->uriAnonym()
-                    << "]. Invalid or expired access token. Notifying client.");
+                    << "]. Invalid or expired access token. Notifying client and invalidating the "
+                       "authorization token of session ["
+                    << session->getId() << ']');
             session->sendTextFrameAndLogError("error: cmd=storage kind=saveunauthorized");
+            session->invalidateAuthorizationToken();
         }
         else
         {
@@ -1906,9 +1909,11 @@ std::shared_ptr<ClientSession> DocumentBroker::getWriteableSession() const
     {
         const auto& session = sessionIt.second;
 
-        // Save the document using an editable and loaded session, or first ...
+        // Save the document using a session that is loaded, editable, and
+        // with a valid authorization token, or the first.
         // Note that isViewLoaded() precludes inWaitDisconnected().
-        if ((session->isViewLoaded() && session->isWritable()) || !savingSession)
+        if (!savingSession || (session->isViewLoaded() && session->isWritable() &&
+                               !session->getAuthorization().isExpired()))
         {
             savingSession = session;
         }
@@ -2138,7 +2143,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         {
             // Nothing to save. Try to upload if necessary.
             const auto session = getWriteableSession();
-            if (session)
+            if (session && !session->getAuthorization().isExpired())
             {
                 checkAndUploadToStorage(session);
                 if (isAsyncUploading())
@@ -2155,8 +2160,8 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
                     LOG_WRN("The document ["
                             << _docKey
                             << "] could not be uploaded to storage because there are no writable "
-                               "sessions to upload. The document should be recoverable from the "
-                               "quarantine. Stopping.");
+                               "sessions, or no authorization tokens, to upload. The document "
+                               "should be recoverable from the quarantine. Stopping.");
                 }
 
                 canStop = true;
