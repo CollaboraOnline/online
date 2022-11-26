@@ -60,17 +60,21 @@ public:
     /// isClient: the instance should behave like a client (true) or like a server (false)
     ///           (from websocket perspective)
     /// isMasking: a client should mask (true) or not (false) outgoing frames
-    WebSocketHandler(bool isClient, bool isMasking) :
+    WebSocketHandler(bool isClient, bool isMasking)
+        :
 #if !MOBILEAPP
-        _lastPingSentTime(std::chrono::steady_clock::now()),
-        _pingTimeUs(0),
-        _isMasking(isClient && isMasking),
-        _inFragmentBlock(false),
-        _key(isClient ? PublicComputeAccept::generateKey() : std::string()),
+        _lastPingSentTime(std::chrono::steady_clock::now() -
+                          std::chrono::microseconds(PingFrequencyMicroS) -
+                          std::chrono::microseconds(InitialPingDelayMicroS))
+        , _pingTimeUs(0)
+        , _isMasking(isClient && isMasking)
+        , _inFragmentBlock(false)
+        , _key(isClient ? PublicComputeAccept::generateKey() : std::string())
+        ,
 #endif
-        _shuttingDown(false),
-        _lastFlags(0),
-        _isClient(isClient)
+        _shuttingDown(false)
+        , _lastFlags(0)
+        , _isClient(isClient)
     {
     }
 
@@ -80,26 +84,16 @@ public:
     /// request: the HTTP upgrade request to WebSocket
     template <typename T>
     WebSocketHandler(const std::shared_ptr<StreamSocket>& socket, const T& request)
-        : _socket(socket)
-#if !MOBILEAPP
-        , _lastPingSentTime(std::chrono::steady_clock::now()
-                            - std::chrono::microseconds(PingFrequencyMicroS)
-                            - std::chrono::microseconds(InitialPingDelayMicroS))
-        , _pingTimeUs(0)
-        , _isMasking(false)
-        , _inFragmentBlock(false)
-        , _key(std::string())
-#endif
-        , _shuttingDown(false)
-        , _lastFlags(0)
-        , _isClient(false)
+        : WebSocketHandler(/*isClient=*/false, /*isMasking=*/false)
     {
         if (!socket)
             throw std::runtime_error("Invalid socket while upgrading to WebSocket.");
 
+        _socket = socket;
+
         // As a server, respond with 101 protocol-upgrade.
-        if (!_isClient)
-            upgradeToWebSocket(*socket, request);
+        assert(!_isClient);
+        upgradeToWebSocket(*socket, request);
     }
 
     /// Status codes sent to peer on shutdown.
