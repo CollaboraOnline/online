@@ -76,28 +76,7 @@ protected:
     /// After this time we invoke 'timeout' default 30 seconds
     void setTimeout(std::chrono::milliseconds timeoutMilliSeconds);
 
-    enum class TestResult
-    {
-        Failed,
-        Ok,
-        TimedOut
-    };
-
-    static const std::string testResultAsString(TestResult res)
-    {
-        switch (res)
-        {
-            case TestResult::Failed:
-                return "Failed";
-            case TestResult::Ok:
-                return "Ok";
-            case TestResult::TimedOut:
-                return "TimedOut";
-        }
-
-        assert(!"Unknown TestResult entry.");
-        return std::to_string(static_cast<int>(res));
-    }
+    STATE_ENUM(TestResult, Failed, Ok, TimedOut);
 
     /// Encourages the process to exit with this value (unless hooked)
     void exitTest(TestResult result, const std::string& reason = std::string());
