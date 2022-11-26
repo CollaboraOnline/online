@@ -114,6 +114,12 @@ protected:
         exitTest(TestResult::Ok, reason);
     }
 
+    virtual void endTest(const std::string& reason)
+    {
+        LOG_TST("Ending test by stopping SocketPoll [" << _socketPoll->name() << "]: " << reason);
+        _socketPoll->joinThread();
+    }
+
     /// Construct a UnitBase instance with a default name.
     explicit UnitBase(const std::string& name, UnitType type)
         : _setRetValue(false)
