@@ -198,7 +198,7 @@ public:
             OK = 0,
             DISKFULL,
             TOO_LARGE, //< 413
-            UNAUTHORIZED, //< 401, 403
+            UNAUTHORIZED, //< 401, 403, 404
             DOC_CHANGED, /**< Document changed in storage */
             CONFLICT, //< 409
             FAILED
