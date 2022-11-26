@@ -93,7 +93,7 @@ public:
 
         // As a server, respond with 101 protocol-upgrade.
         assert(!_isClient);
-        upgradeToWebSocket(*socket, request);
+        upgradeToWebSocket(socket, request);
     }
 
     /// Status codes sent to peer on shutdown.
@@ -896,10 +896,11 @@ protected:
 
     /// Upgrade the http(s) connection to a websocket.
     template <typename T>
-    void upgradeToWebSocket(StreamSocket& socket, const T& req)
+    void upgradeToWebSocket(const std::shared_ptr<StreamSocket>& socket, const T& req)
     {
-        LOG_TRC('#' << socket.getFD() << ": Upgrading to WebSocket.");
-        assert(!socket.isWebSocket());
+        assert(socket && "Must have a valid socket");
+        LOG_TRC('#' << socket->getFD() << ": Upgrading to WebSocket.");
+        assert(!socket->isWebSocket());
         assert(!_isClient && "Accepting upgrade requests are done by servers only.");
 
 #if !MOBILEAPP
@@ -908,23 +909,23 @@ protected:
         const std::string wsKey = req.get("Sec-WebSocket-Key", "");
         const std::string wsProtocol = req.get("Sec-WebSocket-Protocol", "chat");
         // FIXME: other sanity checks ...
-        LOG_INF('#' << socket.getFD() << ": WebSocket version: " << wsVersion << ", key: [" << wsKey
-                    << "], protocol: [" << wsProtocol << "].");
+        LOG_INF('#' << socket->getFD() << ": WebSocket version: " << wsVersion << ", key: ["
+                    << wsKey << "], protocol: [" << wsProtocol << "].");
 
 #if ENABLE_DEBUG
         if (std::getenv("COOL_ZERO_BUFFER_SIZE"))
-            socket.setSocketBufferSize(0);
+            socket->setSocketBufferSize(0);
 #endif
 
         http::Response httpResponse(http::StatusLine(101));
         httpResponse.set("Upgrade", "websocket");
         httpResponse.set("Connection", "Upgrade");
         httpResponse.set("Sec-WebSocket-Accept", PublicComputeAccept::doComputeAccept(wsKey));
-        LOG_TRC('#' << socket.getFD()
+        LOG_TRC('#' << socket->getFD()
                     << ": Sending WS Upgrade response: " << httpResponse.header().toString());
-        socket.send(httpResponse);
+        socket->send(httpResponse);
 #endif
-        setWebSocket();
+        setWebSocket(socket);
     }
 
 #if !MOBILEAPP
@@ -949,7 +950,7 @@ protected:
                        == PublicComputeAccept::doComputeAccept(_key))
             {
                 LOG_TRC('#' << socket->getFD() << " Accepted incoming websocket response");
-                setWebSocket();
+                setWebSocket(socket);
             }
             else
             {
@@ -982,11 +983,10 @@ protected:
     }
 #endif
 
-    void setWebSocket()
+    void setWebSocket(const std::shared_ptr<StreamSocket>& socket)
     {
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
-        if (socket)
-            socket->setWebSocket();
+        assert(socket && "Must have a valid socket");
+        socket->setWebSocket();
 #if !MOBILEAPP
         // No need to ping right upon connection/upgrade,
         // but do reset the time to avoid pinging immediately after.
