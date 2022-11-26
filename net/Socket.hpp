@@ -1132,11 +1132,13 @@ public:
                 if (len < 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
                     LOG_SYS_ERRNO(last_errno,
                                   "Read failed, have " << _inBuffer.size() << " buffered bytes");
-                else if (len <= 0)
+                else if (len < 0)
                     LOG_TRC("Read failed ("
                             << len << "), have " << _inBuffer.size() << " buffered bytes ("
                             << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
                             << ')');
+                else if (len == 0)
+                    LOG_TRC("Read closed (0), have " << _inBuffer.size() << " buffered bytes");
                 else // Success.
                     LOG_TRC("Read " << len << " bytes in addition to " << _inBuffer.size()
                                     << " buffered bytes"
