@@ -1947,17 +1947,17 @@ void DocumentBroker::refreshLock()
 {
     assertCorrectThread();
 
-    const std::string savingSessionId = getWriteableSessionId();
-    LOG_TRC("Refresh lock " << _lockCtx->_lockToken << " with session [" << savingSessionId << ']');
-
-    auto it = _sessions.find(savingSessionId);
-    if (it == _sessions.end())
+    const std::shared_ptr<ClientSession> session = getWriteableSession();
+    if (!session)
         LOG_ERR("No write-able session to refresh lock with");
+    else if (session->getAuthorization().isExpired())
+        LOG_ERR("No write-able session with valid authorization to refresh lock with");
     else
     {
-        std::shared_ptr<ClientSession> session = it->second;
-        if (!session || !_storage->updateLockState(session->getAuthorization(), *_lockCtx, true,
-                                                   _currentStorageAttrs))
+        const std::string savingSessionId = session->getId();
+        LOG_TRC("Refresh lock " << _lockCtx->_lockToken << " with session [" << savingSessionId << ']');
+        if (!_storage->updateLockState(session->getAuthorization(), *_lockCtx, true,
+                                       _currentStorageAttrs))
             LOG_ERR("Failed to refresh lock");
     }
 }
