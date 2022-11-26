@@ -1872,9 +1872,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
             if (UnitWSD::isUnitTesting())
             {
-                UnitWSD::get().onDocBrokerViewLoaded(
-                    docBroker->getDocKey(),
-                    std::dynamic_pointer_cast<ClientSession>(shared_from_this()));
+                UnitWSD::get().onDocBrokerViewLoaded(docBroker->getDocKey(), client_from_this());
             }
 
 #if !MOBILEAPP
