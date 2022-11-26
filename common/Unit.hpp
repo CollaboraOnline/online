@@ -93,16 +93,13 @@ protected:
         exitTest(TestResult::Ok, reason);
     }
 
-    virtual void endTest(const std::string& reason)
-    {
-        LOG_TST("Ending test by stopping SocketPoll [" << _socketPoll->name() << "]: " << reason);
-        _socketPoll->joinThread();
-    }
+    /// Called when a test has eneded, to clean up.
+    virtual void endTest(const std::string& reason);
 
     /// Construct a UnitBase instance with a default name.
     explicit UnitBase(const std::string& name, UnitType type)
         : _setRetValue(false)
-        , _retValue(0)
+        , _result(TestResult::Ok)
         , _timeoutMilliSeconds(std::chrono::seconds(30))
         , _type(type)
         , _socketPoll(std::make_shared<SocketPoll>(name))
@@ -204,7 +201,7 @@ public:
 
     /// True iff exitTest was called with anything but TestResult::Ok.
     /// Meaningful only when isFinished() is true.
-    bool failed() const { return _retValue; }
+    bool failed() const { return _result != TestResult::Ok; }
 
     std::chrono::milliseconds getTimeoutMilliSeconds() const
     {
@@ -267,7 +264,7 @@ private:
     static TestResult GlobalResult; //< The result of all tests. Latches at first failure.
 
     bool _setRetValue;
-    int _retValue;
+    TestResult _result;
     std::chrono::milliseconds _timeoutMilliSeconds;
     UnitType _type;
 

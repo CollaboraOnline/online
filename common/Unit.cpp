@@ -321,7 +321,7 @@ void UnitBase::setTimeout(std::chrono::milliseconds timeoutMilliSeconds)
 
 UnitBase::~UnitBase()
 {
-    LOG_TST(getTestname() << ": ~UnitBase: " << (_retValue ? "FAILED" : "SUCCESS"));
+    LOG_TST(getTestname() << ": ~UnitBase: " << (failed() ? "FAILED" : "SUCCESS"));
 
     _socketPoll->joinThread();
 }
@@ -462,13 +462,13 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
 {
     if (isFinished())
     {
-        if ((result == TestResult::Ok && _retValue != EX_OK) ||
-            (result != TestResult::Ok && _retValue == EX_OK))
-            LOG_TST(getTestname() << ": exitTest " << name(result)
-                                  << " but is already finished with a different result.");
+        if (result != _result)
+            LOG_TST(getTestname() << ": exitTest got " << name(result)
+                                  << " but is already finished with " << name(_result));
         return;
     }
 
+    _result = result;
     if (result == TestResult::Ok)
     {
         LOG_TST(getTestname() << ": SUCCESS: exitTest: " << name(result)
@@ -479,7 +479,6 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
         LOG_TST("ERROR " << getTestname() << ": FAILURE: exitTest: " << name(result)
                          << (reason.empty() ? "" : ": " + reason));
 
-        _retValue = EX_SOFTWARE;
         if (GlobalResult == TestResult::Ok)
             GlobalResult = result;
     }
@@ -490,10 +489,6 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
     // Check if we have more tests, but keep the current index if it's the last.
     if (GlobalArray && GlobalIndex >= 0 && GlobalArray[GlobalIndex + 1])
     {
-        // By default, this will check _setRetValue and copy _retValue to the arg.
-        // But we call it to trigger overrides and to perform cleanups.
-        returnValue(_retValue);
-
         // We have more tests.
         ++GlobalIndex;
         filter();
@@ -541,7 +536,13 @@ void UnitBase::timeout()
 void UnitBase::returnValue(int &retValue)
 {
     if (_setRetValue)
-        retValue = _retValue;
+        retValue = (_result == TestResult::Ok ? EX_OK : EX_SOFTWARE);
+}
+
+void UnitBase::endTest(const std::string& reason)
+{
+    LOG_TST("Ending test by stopping SocketPoll [" << _socketPoll->name() << "]: " << reason);
+    _socketPoll->joinThread();
 
     // tell the timeout thread that the work has finished
     TimeoutThreadMutex.unlock();
