@@ -164,10 +164,10 @@ bool ClientSession::disconnectFromKit()
 #ifndef IOS
         LOG_TRC("request/rescue clipboard on disconnect for " << getId());
         // rescue clipboard before shutdown.
-        docBroker->forwardToChild(getId(), "getclipboard");
+        docBroker->forwardToChild(client_from_this(), "getclipboard");
 #endif
         // handshake nicely; so wait for 'disconnected'
-        docBroker->forwardToChild(getId(), "disconnect");
+        docBroker->forwardToChild(client_from_this(), "disconnect");
 
         return false;
     }
@@ -290,7 +290,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         }
 
         LOG_TRC("Session [" << getId() << "] sending getclipboard" + specific);
-        docBroker->forwardToChild(getId(), "getclipboard" + specific);
+        docBroker->forwardToChild(client_from_this(), "getclipboard" + specific);
         _clipSockets.push_back(socket);
     }
     else // REQUEST_SET
@@ -300,7 +300,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         if (data.get())
         {
             preProcessSetClipboardPayload(*data);
-            docBroker->forwardToChild(getId(), "setclipboard\n" + *data, true);
+            docBroker->forwardToChild(client_from_this(), "setclipboard\n" + *data, true);
 
             // FIXME: work harder for error detection ?
             std::ostringstream oss;
@@ -1297,7 +1297,7 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, co
 bool ClientSession::forwardToChild(const std::string& message,
                                    const std::shared_ptr<DocumentBroker>& docBroker)
 {
-    return docBroker->forwardToChild(getId(), message);
+    return docBroker->forwardToChild(client_from_this(), message);
 }
 
 bool ClientSession::filterMessage(const std::string& message) const
