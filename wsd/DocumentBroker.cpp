@@ -2271,7 +2271,7 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     const std::string saveArgs = oss.str();
     LOG_TRC(".uno:Save arguments: " << saveArgs);
     const auto command = "uno .uno:Save " + saveArgs;
-    if (forwardToChild(sessionId, command))
+    if (forwardToChild(session, command))
     {
         _saveManager.markLastSaveRequestTime();
         if (_docState.activity() == DocumentState::Activity::None)
@@ -3275,15 +3275,21 @@ void DocumentBroker::setInitialSetting(const std::string& name)
     _isInitialStateSet.emplace(name);
 }
 
-bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string& message, bool binary)
+bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& session,
+                                    const std::string& message, bool binary)
 {
     assertCorrectThread();
+    LOG_ASSERT_MSG(session, "Must have a valid ClientSession");
+    LOG_ASSERT_MSG(_sessions.find(session->getId()) != _sessions.end(),
+                   "ClientSession must be known");
 
     // Ignore userinactive, useractive message until document is loaded
     if (!isLoaded() && (message == "userinactive" || message == "useractive"))
     {
         return true;
     }
+
+    const std::string viewId = session->getId();
 
     LOG_TRC("Forwarding payload to child [" << viewId << "]: " << getAbbreviatedMessage(message));
 
