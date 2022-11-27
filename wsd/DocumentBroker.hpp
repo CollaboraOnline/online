@@ -832,17 +832,37 @@ private:
     };
 
     /// Responsible for managing document saving.
-    /// Tracks auto-saveing and its frequency.
+    /// Tracks idle-saving and its interval.
+    /// Tracks auto-saving and its interval.
     /// Tracks the last save request and response times.
     /// Tracks the local file's last modified time.
     /// Tracks the time a save response was received.
     class SaveManager final
     {
+        /// Decide the auto-save interval. Returns 0 when disabled,
+        /// otherwise, the minimum of idle- and auto-save.
+        static std::chrono::milliseconds
+        getCheckInterval(std::chrono::milliseconds idleSaveInterval,
+                         std::chrono::milliseconds autoSaveInterval)
+        {
+            if (idleSaveInterval > idleSaveInterval.zero())
+            {
+                if (autoSaveInterval > autoSaveInterval.zero())
+                    return std::min(idleSaveInterval, autoSaveInterval);
+                return idleSaveInterval; // It's the only non-zero of the two.
+            }
+
+            return autoSaveInterval; // Regardless of whether it's 0 or not.
+        }
+
     public:
-        SaveManager(std::chrono::milliseconds autoSaveInterval,
+        SaveManager(std::chrono::milliseconds idleSaveInterval,
+                    std::chrono::milliseconds autoSaveInterval,
                     std::chrono::milliseconds minTimeBetweenSaves)
             : _request(minTimeBetweenSaves)
+            , _idleSaveInterval(idleSaveInterval)
             , _autoSaveInterval(autoSaveInterval)
+            , _checkInterval(getCheckInterval(idleSaveInterval, autoSaveInterval))
             , _lastAutosaveCheckTime(RequestManager::now())
         {
             if (Log::traceEnabled())
@@ -853,19 +873,25 @@ private:
             }
         }
 
-        /// Returns true iff auto save is enabled.
-        bool isAutoSaveEnabled() const { return _autoSaveInterval > std::chrono::seconds::zero(); }
+        /// Returns true iff idle-save is enabled.
+        bool isIdleSaveEnabled() const { return _idleSaveInterval > _idleSaveInterval.zero(); }
 
-        /// Returns the autoSave interval.
+        /// Returns the idle-save interval.
+        std::chrono::milliseconds idleSaveInterval() const { return _idleSaveInterval; }
+
+        /// Returns true iff auto-save is enabled.
+        bool isAutoSaveEnabled() const { return _autoSaveInterval > _autoSaveInterval.zero(); }
+
+        /// Returns the auto-save interval.
         std::chrono::milliseconds autoSaveInterval() const { return _autoSaveInterval; }
 
-        /// Returns true if we should issue an auto-save.
+        /// Returns true if it's time for an auto-save check.
+        /// This is the minimum of idle-save and auto-save interval.
         bool needAutoSaveCheck() const
         {
-            return isAutoSaveEnabled()
-                   && std::chrono::duration_cast<std::chrono::seconds>(RequestManager::now()
-                                                                       - _lastAutosaveCheckTime)
-                          >= _autoSaveInterval;
+            return _checkInterval > _checkInterval.zero() &&
+                   std::chrono::duration_cast<std::chrono::seconds>(
+                       RequestManager::now() - _lastAutosaveCheckTime) >= _checkInterval;
         }
 
         /// Marks autoSave check done.
@@ -982,8 +1008,11 @@ private:
         {
             const auto now = std::chrono::steady_clock::now();
             os << indent << "isSaving now: " << std::boolalpha << isSaving();
+            os << indent << "idle-save enabled: " << std::boolalpha << isIdleSaveEnabled();
+            os << indent << "idle-save interval: " << idleSaveInterval();
             os << indent << "auto-save enabled: " << std::boolalpha << isAutoSaveEnabled();
             os << indent << "auto-save interval: " << autoSaveInterval();
+            os << indent << "check interval: " << _checkInterval;
             os << indent
                << "last auto-save check time: " << Util::getTimeForLog(now, _lastAutosaveCheckTime);
             os << indent << "auto-save check needed: " << std::boolalpha << needAutoSaveCheck();
@@ -1010,8 +1039,14 @@ private:
         /// The document's last-modified time.
         std::chrono::system_clock::time_point _lastModifiedTime;
 
+        /// The number of milliseconds between idlesave checks for modification.
+        const std::chrono::milliseconds _idleSaveInterval;
+
         /// The number of milliseconds between autosave checks for modification.
         const std::chrono::milliseconds _autoSaveInterval;
+
+        /// The number of milliseconds between idlesave/autosave checks.
+        const std::chrono::milliseconds _checkInterval;
 
         /// The maximum time to wait for saving to finish.
         std::chrono::seconds _savingTimeout{};
