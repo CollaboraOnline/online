@@ -125,6 +125,10 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _saveManager(std::chrono::seconds(std::getenv("COOL_NO_AUTOSAVE") != nullptr
                                             ? 0
                                             : COOLWSD::getConfigValueNonZero<int>(
+                                                  "per_document.idlesave_duration_secs", 30)),
+                   std::chrono::seconds(std::getenv("COOL_NO_AUTOSAVE") != nullptr
+                                            ? 0
+                                            : COOLWSD::getConfigValueNonZero<int>(
                                                   "per_document.autosave_duration_secs", 300)),
                    std::chrono::milliseconds(COOLWSD::getConfigValueNonZero<int>(
                        "per_document.min_time_between_saves_ms", 500)))
@@ -2015,30 +2019,22 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
     }
     else if (isModified())
     {
-        // The configured maximum idle duration before saving. Zero to disable.
-        static const std::chrono::milliseconds MaxIdleSaveDurationMs = std::chrono::seconds(
-            COOLWSD::getConfigValue<int>("per_document.idlesave_duration_secs", 30));
-
         const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-        const std::chrono::milliseconds inactivityTimeMs
+        const std::chrono::milliseconds inactivityTime
             = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime);
         const auto timeSinceLastSave = std::min(_saveManager.timeSinceLastSaveRequest(),
                                                 _storageManager.timeSinceLastUploadResponse());
         LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSave
                                                      << " and most recent activity was "
-                                                     << inactivityTimeMs << " ago.");
+                                                     << inactivityTime << " ago.");
 
-        bool save = false;
-        // Zero or negative config value disables save.
         // Either we've been idle long enough, or it's auto-save time.
-        if (MaxIdleSaveDurationMs > std::chrono::milliseconds::zero() &&
-            inactivityTimeMs >= MaxIdleSaveDurationMs)
-        {
-            save = true;
-        }
+        bool save = _saveManager.isIdleSaveEnabled() &&
+                    inactivityTime >= _saveManager.idleSaveInterval() &&
+                    timeSinceLastSave >= _saveManager.idleSaveInterval();
 
         // Save if it's been long enough since the last save and/or upload.
-        if (_saveManager.isAutoSaveEnabled() &&
+        if (!save && _saveManager.isAutoSaveEnabled() &&
             timeSinceLastSave >= _saveManager.autoSaveInterval())
         {
             save = true;
@@ -2046,7 +2042,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
 
         if (save)
         {
-            LOG_TRC("Sending timed save command for [" << _docKey << "].");
+            LOG_TRC("Sending timed save command for [" << _docKey << ']');
             sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/true,
                                /*dontSaveIfUnmodified=*/true, /*isAutosave=*/true,
                                /*isExitSave=*/false);
