@@ -443,7 +443,7 @@ void DocumentBroker::pollThread()
                             : (!_closeReason.empty() ? _closeReason : "unloading");
                     autoSaveAndStop(reason);
                 }
-                else if (!_stop && _saveManager.needAutosaveCheck())
+                else if (!_stop && _saveManager.needAutoSaveCheck())
                 {
                     LOG_TRC("Triggering an autosave.");
                     autoSave(false);
@@ -1968,7 +1968,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
 {
     assertCorrectThread();
 
-    _saveManager.autosaveChecked();
+    _saveManager.autoSaveChecked();
 
     LOG_TRC("autoSave(): forceful? " << force
                                      << ", dontSaveIfUnmodified: " << dontSaveIfUnmodified);
@@ -2038,8 +2038,8 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
         }
 
         // Save if it's been long enough since the last save and/or upload.
-        if (_saveManager.isAutosaveEnabled() &&
-            timeSinceLastSave >= _saveManager.autosaveInterval())
+        if (_saveManager.isAutoSaveEnabled() &&
+            timeSinceLastSave >= _saveManager.autoSaveInterval())
         {
             save = true;
         }

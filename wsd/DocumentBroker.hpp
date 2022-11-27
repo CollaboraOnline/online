@@ -839,10 +839,10 @@ private:
     class SaveManager final
     {
     public:
-        SaveManager(std::chrono::milliseconds autosaveInterval,
+        SaveManager(std::chrono::milliseconds autoSaveInterval,
                     std::chrono::milliseconds minTimeBetweenSaves)
             : _request(minTimeBetweenSaves)
-            , _autosaveInterval(autosaveInterval)
+            , _autoSaveInterval(autoSaveInterval)
             , _lastAutosaveCheckTime(RequestManager::now())
         {
             if (Log::traceEnabled())
@@ -854,29 +854,29 @@ private:
         }
 
         /// Returns true iff auto save is enabled.
-        bool isAutosaveEnabled() const { return _autosaveInterval > std::chrono::seconds::zero(); }
+        bool isAutoSaveEnabled() const { return _autoSaveInterval > std::chrono::seconds::zero(); }
 
-        /// Returns the autosave interval.
-        std::chrono::milliseconds autosaveInterval() const { return _autosaveInterval; }
+        /// Returns the autoSave interval.
+        std::chrono::milliseconds autoSaveInterval() const { return _autoSaveInterval; }
 
         /// Returns true if we should issue an auto-save.
-        bool needAutosaveCheck() const
+        bool needAutoSaveCheck() const
         {
-            return isAutosaveEnabled()
+            return isAutoSaveEnabled()
                    && std::chrono::duration_cast<std::chrono::seconds>(RequestManager::now()
                                                                        - _lastAutosaveCheckTime)
-                          >= _autosaveInterval;
+                          >= _autoSaveInterval;
         }
 
-        /// Marks autosave check done.
-        void autosaveChecked() { _lastAutosaveCheckTime = RequestManager::now(); }
+        /// Marks autoSave check done.
+        void autoSaveChecked() { _lastAutosaveCheckTime = RequestManager::now(); }
 
         /// Called to postpone autosaving by at least the given duration.
         void postponeAutosave(std::chrono::seconds seconds)
         {
             const auto now = RequestManager::now();
 
-            const auto nextAutosaveCheck = _lastAutosaveCheckTime + _autosaveInterval;
+            const auto nextAutosaveCheck = _lastAutosaveCheckTime + _autoSaveInterval;
             const auto postponeTime = now + seconds;
             if (nextAutosaveCheck < postponeTime)
             {
@@ -982,11 +982,11 @@ private:
         {
             const auto now = std::chrono::steady_clock::now();
             os << indent << "isSaving now: " << std::boolalpha << isSaving();
-            os << indent << "auto-save enabled: " << std::boolalpha << isAutosaveEnabled();
-            os << indent << "auto-save interval: " << autosaveInterval();
+            os << indent << "auto-save enabled: " << std::boolalpha << isAutoSaveEnabled();
+            os << indent << "auto-save interval: " << autoSaveInterval();
             os << indent
                << "last auto-save check time: " << Util::getTimeForLog(now, _lastAutosaveCheckTime);
-            os << indent << "auto-save check needed: " << std::boolalpha << needAutosaveCheck();
+            os << indent << "auto-save check needed: " << std::boolalpha << needAutoSaveCheck();
 
             os << indent
                << "last save request: " << Util::getTimeForLog(now, lastSaveRequestTime());
@@ -1011,7 +1011,7 @@ private:
         std::chrono::system_clock::time_point _lastModifiedTime;
 
         /// The number of milliseconds between autosave checks for modification.
-        const std::chrono::milliseconds _autosaveInterval;
+        const std::chrono::milliseconds _autoSaveInterval;
 
         /// The maximum time to wait for saving to finish.
         std::chrono::seconds _savingTimeout{};
