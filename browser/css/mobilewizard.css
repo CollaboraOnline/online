@@ -748,6 +748,16 @@ a.leaflet-control-zoom-in {
 	clear: both;
 }
 
+#mobile-wizard [id^='info-modal-label'].mobile-wizard.ui-text {
+	border: none;
+	color: var(--color-text-dark) !important;
+}
+
+#mobile-wizard [id^='info-modal-label'].mobile-wizard.ui-text:first-child {
+	font-size: 1em;
+	color: var(--color-text-lighter) !important;
+}
+
 #DecrementIndent + input:disabled{display: none;}
 div#mobile-wizard-content input[type='number']{
 	color: var(--color-text-dark);
