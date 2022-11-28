@@ -275,10 +275,13 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	width: 100%;
 }
 
-.sidebar#ChartTypePanel #grid6 {
-	display: block;
+.sidebar#ChartTypePanel #stack:not(.hidden) + #grid6 {
+	display: block !important;
 }
 
+.sidebar#ChartTypePanel #stack.hidden + #grid6 {
+	display: none;
+}
 
 /* not available commands*/
 
