@@ -1153,6 +1153,11 @@ AC_DEFINE_UNQUOTED([MOBILEAPP],[$MOBILEAPP],[Define to 1 if this is a mobileapp 
 AC_SUBST(ENABLE_MOBILEAPP)
 AM_CONDITIONAL([ENABLE_MOBILEAPP], [test "$ENABLE_MOBILEAPP" = "true"])
 
+if test "$host_os" = "emscripten" ; then
+    ENABLE_EMSCRIPTENAPP=true
+fi
+AC_SUBST(ENABLE_EMSCRIPTENAPP)
+
 ENABLE_SSL=true
 if test "$enable_ssl" != "no" -a "$mobile_app" != "true"; then
    ssl_msg="ssl enabled"
