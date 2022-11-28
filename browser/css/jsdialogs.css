@@ -170,7 +170,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-tab.hidden.jsdialog {
-	display: none;
+	visibility: hidden;
 }
 
 .ui-tab.selected.jsdialog {
