@@ -80,9 +80,9 @@ m4_ifelse(ANDROIDAPP,[true],
 )
 m4_ifelse(EMSCRIPTENAPP,[true],
   [   window.ThisIsTheEmscriptenApp = true;
-   window.postMobileMessage = function(msg) { _handle_cool_message(msg); };
-   window.postMobileError   = function(msg) { _handle_error_message(msg); };
-   window.postMobileDebug   = function(msg) { _handle_debug_message(msg); };],
+   window.postMobileMessage = function(msg) { _handle_cool_message(allocateUTF8(msg)); };
+   window.postMobileError   = function(msg) { _handle_error_message(allocateUTF8(msg)); };
+   window.postMobileDebug   = function(msg) { _handle_debug_message(allocateUTF8(msg)); };],
   [   window.ThisIsTheEmscriptenApp = false;]
 )
 
