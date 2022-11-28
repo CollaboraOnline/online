@@ -21,6 +21,7 @@ m4_define([MOBILEAPP],[])
 m4_ifelse(IOSAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(ANDROIDAPP,[true],[m4_define([MOBILEAPP],[true])])
+m4_ifelse(EMSCRIPTENAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(MOBILEAPP,[],
   // Start listening for Host_PostmessageReady message and save the
   // result for future
@@ -76,6 +77,13 @@ m4_ifelse(ANDROIDAPP,[true],
    window.postMobileError   = function(msg) { window.COOLMessageHandler.postMobileError(msg); };
    window.postMobileDebug   = function(msg) { window.COOLMessageHandler.postMobileDebug(msg); };],
   [   window.ThisIsTheAndroidApp = false;]
+)
+m4_ifelse(EMSCRIPTENAPP,[true],
+  [   window.ThisIsTheEmscriptenApp = true;
+   window.postMobileMessage = function(msg) { _handle_cool_message(msg); };
+   window.postMobileError   = function(msg) { _handle_error_message(msg); };
+   window.postMobileDebug   = function(msg) { _handle_debug_message(msg); };],
+  [   window.ThisIsTheEmscriptenApp = false;]
 )
 
 if (window.ThisIsTheiOSApp) {
