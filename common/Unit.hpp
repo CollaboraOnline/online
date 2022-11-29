@@ -268,6 +268,7 @@ private:
     std::chrono::milliseconds _timeoutMilliSeconds;
     UnitType _type;
 
+    std::mutex _lock; //< Used to protect cleanup functions.
     std::shared_ptr<SocketPoll> _socketPoll; //< Poll thread for async http comm.
 
 protected:
