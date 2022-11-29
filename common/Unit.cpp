@@ -520,7 +520,7 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
                                  << (GlobalResult == TestResult::Ok ? "SUCCESS" : "FAILED"));
 
 #if !MOBILEAPP
-    LOG_INF("Setting ShutdownRequestFlag as there are no more tests");
+    LOG_TST("Setting TerminationFlag as there are no more tests");
     SigUtil::setTerminationFlag(); // And wakupWorld.
 #else
     SocketPoll::wakeupWorld();
