@@ -481,8 +481,6 @@ input[type=checkbox].w2ui-toggle:focus {
 .w2ui-overlay table.w2ui-drop-menu td.menu-text {
   padding: 8px 10px 8px 5px;
   width: auto;
-  text-align: center;
-  font-size: 16px;
 }
 .w2ui-overlay table.w2ui-drop-menu td.menu-count {
   text-align: right;
@@ -530,9 +528,6 @@ input[type=checkbox].w2ui-toggle:focus {
 /*************************************************
 * ---- Common Classes ----
 */
-.mitem-selected {
-  background-color: #d3d3d3;
-}
 .w2ui-marker {
   color: #444;
   background-color: rgba(252, 244, 161, 0.48);
