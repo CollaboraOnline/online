@@ -7,7 +7,6 @@
 
 .sidebar .ui-content .unobutton {
 	margin: 0;
-	vertical-align: middle;
 }
 
 #document-container:not(.mobile) + #sidebar-dock-wrapper {
