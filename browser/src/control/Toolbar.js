@@ -226,8 +226,19 @@ L.Map.include({
 			options = '';
 		}
 
+		// printing: don't export form fields, irrelevant, and can be buggy
+		// comments are irrelevant, too
+		if (id === 'print' && format === 'pdf' && options === '')
+			options = '{[\"ExportFormFields\":{\"type\":\"boolean\",\"value\":\"false\"},' +
+						'\"ExportNotes\":{\"type\":\"boolean\",\"value\":\"false\"}]}';
+
+		// download: don't export comments into PDF by default
+		if (id == 'export' && format === 'pdf' && options === '')
+			options = '{\"ExportNotes\":{\"type\":\"boolean\",\"value\":\"false\"}}';
+
 		if (!window.ThisIsAMobileApp)
 			this.showBusy(_('Downloading...'), false);
+
 		app.socket.sendMessage('downloadas ' +
 			'name=' + encodeURIComponent(name) + ' ' +
 			'id=' + id + ' ' +
