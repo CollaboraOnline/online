@@ -127,6 +127,7 @@ public:
     /// Returns true if we failed, false otherwise.
     virtual bool onDataLoss(const std::string& reason)
     {
+        LOG_TST("onDataLoss: " << reason);
         failTest(reason);
         return failed();
     }
