@@ -11,6 +11,10 @@ img.sidebar.ui-image {
 	padding: 6px;
 }
 
+.sidebar.ui-grid {
+	row-gap: 8px;
+}
+
 .sidebar .ui-content .unobutton {
 	margin: 0;
 }
