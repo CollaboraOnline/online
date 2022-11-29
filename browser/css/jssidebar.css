@@ -5,6 +5,12 @@
 	text-transform: none !important;
 }
 
+img.sidebar.ui-image {
+	/* Images that are not buttons (e.g. spinfield)
+	   16px + 6px + 6px = 28px, same height as grid cell */
+	padding: 6px;
+}
+
 .sidebar .ui-content .unobutton {
 	margin: 0;
 }
@@ -218,7 +224,8 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 }
 
 #ParaPropertyPanel .sidebar.ui-grid-cell {
-	column-gap: 8px;
+	/* Same as sidebar  button margins */
+	column-gap: 5px;
 }
 
 button#button2.ui-pushbutton.jsdialog.sidebar {
