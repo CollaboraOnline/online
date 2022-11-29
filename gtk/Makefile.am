@@ -16,7 +16,7 @@ AM_CPPFLAGS = -pthread \
               ${include_paths} \
               ${WEBKIT_CFLAGS}
 
-AM_LDFLAGS = -pthread ${WEBKIT_LIBS} -ldl $(ZSTD_LIBS)
+AM_LDFLAGS = -pthread ${WEBKIT_LIBS} -ldl $(ZSTD_LIBS) ${PNG_LIBS}
 
 common_sources = \
                  ../common/Authorization.cpp \
