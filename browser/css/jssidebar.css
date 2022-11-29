@@ -80,11 +80,7 @@ img.sidebar.ui-image {
 .sidebar.ui-expander-content {
 	padding-inline: 10px;
 	width: 300px;
-	row-gap: 4px;
-	column-gap: 4px;
-	align-items: center;
 	line-height: var(--default-height);
-	justify-content: space-between;
 }
 
 #fontheight,
