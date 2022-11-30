@@ -15,8 +15,8 @@ L.Control.DocumentRepair = L.Control.extend({
 			id: 'DocumentRepairDialog',
 			dialogid: 'DocumentRepairDialog',
 			type: 'dialog',
-			text: 'Repair Document',
-			title: 'Repair Document',
+			text: _('Repair Document'),
+			title: _('Repair Document'),
 			jsontype: 'dialog',
 			responses: [
 				{
@@ -58,13 +58,13 @@ L.Control.DocumentRepair = L.Control.extend({
 										{
 											id: 'cancel',
 											type: 'pushbutton',
-											text: '~Cancel',
+											text: _('Cancel'),
 											enabled: true
 										},
 										{
 											id: 'ok',
 											type: 'pushbutton',
-											text: '~Ok',
+											text: _('OK'),
 											enabled: true,
 											'has_default': true,
 										}
@@ -127,7 +127,7 @@ L.Control.DocumentRepair = L.Control.extend({
 					control: {
 						id: 'versions',
 						type: 'treelistbox',
-						headers: ['Type', 'What?', 'Who?', 'When?'].map(
+						headers: [_('Type'), _('What?'), _('Who?'), _('When?')].map(
 							function(item) { return { text: item }; }
 						),
 						text: '',
@@ -146,7 +146,7 @@ L.Control.DocumentRepair = L.Control.extend({
 					control: {
 						id: 'versions',
 						type: 'fixedtext',
-						text: 'You haven\'t done anything to rollback yet...',
+						text: _('You have not done anything to rollback yet...'),
 					},
 				},
 			};
@@ -156,8 +156,8 @@ L.Control.DocumentRepair = L.Control.extend({
 	},
 
 	fillActions: function (data) {
-		this.fillAction(data.Redo.actions, 'Redo');
-		this.fillAction(data.Undo.actions, 'Undo');
+		this.fillAction(data.Redo.actions, _('Redo'));
+		this.fillAction(data.Undo.actions, _('Undo'));
 	},
 
 	_onAction: function(element, action, data, index) {
