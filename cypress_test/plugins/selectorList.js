@@ -18,7 +18,7 @@ module.exports.list = {
 	insertAnnotation: ['#Insert .unoInsertAnnotation', '#tb_editbar_item_insertannotation'],
 	insertTable: ['#InsertTable', '#tb_editbar_item_inserttable'],
 	insertGraphic: ['#InsertGraphic', '#tb_editbar_item_insertgraphic'],
-	clearFormat: ['#clearFormatting', '#tb_editbar_item_reset'],
+	clearFormat: ['#Home .unoResetAttributes', '#tb_editbar_item_reset'],
 	hyperLink: ['#HyperlinkDialog', '#tb_editbar_item_link'],
 	insertShape: ['#BasicShapes', '#tb_editbar_item_insertshapes'],
 	save: ['#Save', '#tb_editbar_item_save'],

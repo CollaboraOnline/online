@@ -304,14 +304,10 @@ describe('Table operations', function() {
 
 		selectOptionNotebookbar('.unospan-Table.unoSplitCell');
 
-		cy.get('.lokdialog_canvas').should('exist');
+		cy.get('#SplitCellsDialog').should('be.visible');
 
-		helper.waitUntilIdle('.lokdialog_canvas');
-
-		cy.get('.lokdialog_canvas').click();
-
-		//to close the lokdialog
-		helper.typeIntoDocument('{shift}{enter}');
+		cy.get('#SplitCellsDialog .ui-pushbutton.jsdialog.button-primary')
+			.click();
 
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
