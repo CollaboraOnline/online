@@ -21,7 +21,13 @@ m4_define([MOBILEAPP],[])
 m4_ifelse(IOSAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(ANDROIDAPP,[true],[m4_define([MOBILEAPP],[true])])
+
+// FIXME: This is wrong. We don't want a separate HTML file (produced with M4 conditionals on the
+// below EMSCRIPTENAPP) for a "WASM app". What we want is that the same cool.html page adapts on
+// demand to instead run locally using WASM, if the connection to the COOL server breaks. (And then
+// re-connects to the COOL server when possible.)
 m4_ifelse(EMSCRIPTENAPP,[true],[m4_define([MOBILEAPP],[true])])
+
 m4_ifelse(MOBILEAPP,[],
   // Start listening for Host_PostmessageReady message and save the
   // result for future
