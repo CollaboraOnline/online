@@ -1512,13 +1512,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'id': 'zoteroedit',
 					'type': 'bigmenubartoolitem',
 					'text': _('Add/Edit Citation'),
-					'command': _('zoteroEdit')
+					'command': 'zoteroEdit'
 				},
 				{
 					'id': 'zoterostyle',
 					'type': 'bigmenubartoolitem',
 					'text': _('Citation Style'),
-					'command': _('zoteroStyle')
+					'command': 'zoteroStyle'
 				}
 			);
 		}
