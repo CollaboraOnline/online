@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-01 21:14+0100\n"
-"PO-Revision-Date: 2022-11-18 17:25+0000\n"
+"PO-Revision-Date: 2022-12-01 20:34+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -398,19 +398,19 @@ msgstr "Típus"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "What?"
-msgstr ""
+msgstr "Mi?"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "Who?"
-msgstr ""
+msgstr "Ki?"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "When?"
-msgstr ""
+msgstr "Mikor?"
 
 #: src/control/Control.DocumentRepair.js:149
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "Még nem történt visszavonható művelet..."
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "Redo"
@@ -1289,12 +1289,12 @@ msgstr "Vonalzó"
 
 #: src/control/Control.NotebookbarWriter.js:1514
 msgid "Add/Edit Citation"
-msgstr ""
+msgstr "Hivatkozás hozzáadása/módosítása"
 
 #: src/control/Control.NotebookbarWriter.js:1520
 #: src/control/Control.Zotero.js:181
 msgid "Citation Style"
-msgstr ""
+msgstr "Hivatkozásstílus"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1515,15 +1515,15 @@ msgstr "Jelenleg"
 
 #: src/control/Control.Zotero.js:167
 msgid "My Library"
-msgstr ""
+msgstr "Saját könyvtár"
 
 #: src/control/Control.Zotero.js:170
 msgid "Your library is empty"
-msgstr ""
+msgstr "A könyvtár üres"
 
 #: src/control/Control.Zotero.js:184
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "Hiba történt a stíluslista lekérése közben"
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
