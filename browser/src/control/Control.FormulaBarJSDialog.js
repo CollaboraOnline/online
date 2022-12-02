@@ -103,7 +103,6 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 		inputField.setAttribute('autocorrect', 'off');
 		inputField.setAttribute('autocomplete', 'off');
 		inputField.setAttribute('spellcheck', 'false');
-		inputField.setAttribute('wrap', 'off');
 	},
 
 	toggleMultiLine: function(input) {
