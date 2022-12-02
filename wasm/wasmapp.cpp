@@ -16,7 +16,6 @@ static std::string fileURL;
 static COOLWSD *coolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
-emscripten::val contentArray = emscripten::val::array();
 
 static void send2JS(const std::vector<char>& buffer)
 {
@@ -168,6 +167,45 @@ static void handle_cool_message()
                         free(string_copy);
                     }).detach();
     }
+}
+
+void readWASMFile(emscripten::val& contentArray, size_t nRead, const std::vector<char>& filebuf)
+{
+    emscripten::val fileContentView = emscripten::val(emscripten::typed_memory_view(
+        nRead,
+        filebuf.data()));
+    emscripten::val fileContentCopy = emscripten::val::global("ArrayBuffer").new_(nRead);
+    emscripten::val fileContentCopyView = emscripten::val::global("Uint8Array").new_(fileContentCopy);
+    fileContentCopyView.call<void>("set", fileContentView);
+    contentArray.call<void>("push", fileContentCopyView);
+}
+
+void writeWASMFile(emscripten::val& contentArray, const std::string& rFileName)
+{
+    emscripten::val document = emscripten::val::global("document");
+    emscripten::val window = emscripten::val::global("window");
+    emscripten::val type = emscripten::val::object();
+    type.set("type","application/octet-stream");
+    emscripten::val contentBlob = emscripten::val::global("Blob").new_(contentArray, type);
+    emscripten::val contentUrl = window["URL"].call<emscripten::val>("createObjectURL", contentBlob);
+    emscripten::val contentLink = document.call<emscripten::val>("createElement", std::string("a"));
+    contentLink.set("href", contentUrl);
+    contentLink.set("download", rFileName);
+    contentLink.set("style", "display:none");
+    emscripten::val body = document["body"];
+    body.call<void>("appendChild", contentLink);
+    contentLink.call<void>("click");
+    body.call<void>("removeChild", contentLink);
+    window["URL"].call<emscripten::val>("revokeObjectURL", contentUrl);
+}
+
+// Copy file from online to WASM memory
+void copyFileBufferToWasmMemory(const std::string& fileName, const std::vector<char>& filebuf)
+{
+    EM_ASM(
+        {
+            FS.writeFile(UTF8ToString($0), new Uint8Array(Module.HEAPU8.buffer, $1, $2));
+        }, fileName.c_str(), filebuf.data(), filebuf.size());
 }
 
 /// Close the document.
