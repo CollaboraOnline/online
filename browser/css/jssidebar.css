@@ -109,6 +109,10 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 
 /* widgets */
 
+.sidebar.toolbox {
+	align-items: center;
+}
+
 .sidebar.spinfieldcontainer input {
 	color: var(--color-text-dark);
 	background-color: var(--color-background-dark);
