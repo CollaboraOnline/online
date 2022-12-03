@@ -28,6 +28,8 @@
 #include <StringVector.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
+#include <common/JsonUtil.hpp>
+
 
 #include <net/Socket.hpp>
 #if ENABLE_SSL
@@ -282,7 +284,8 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             }
         }
     }
-    else if (tokens.equals(0, "update-log-levels") && tokens.size() > 1) {
+    else if (tokens.equals(0, "update-log-levels") && tokens.size() > 1)
+    {
         for (size_t i = 1; i < tokens.size(); i++)
         {
             StringVector _channel(StringVector::tokenize(tokens[i], '='));
@@ -293,6 +296,29 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         }
         // Let's send back the current log levels in return. So the user can be sure of the values.
         sendTextFrame("channel_list " + _admin->getChannelLogLevels());
+    }
+    else if (tokens.equals(0, "updateroutetoken") && tokens.size() > 1)
+    {
+        // parse the json object of serverId to routeToken
+        Poco::JSON::Object::Ptr object;
+        if (JsonUtil::parseJSON(tokens[1], object))
+        {
+            const std::string routeToken =
+                JsonUtil::getJSONValue<std::string>(object, Util::getProcessIdentifier());
+            if (!routeToken.empty())
+            {
+                COOLWSD::alertAllUsersInternal("updateroutetoken " + routeToken);
+            }
+            else
+            {
+                LOG_ERR("Failed to update the route token, invalid serverId to routeToken json : "
+                        << tokens[1]);
+            }
+        }
+        else
+        {
+            LOG_ERR("Failed to update the route token, invalid JSON parsing: " << tokens[1]);
+        }
     }
 }
 

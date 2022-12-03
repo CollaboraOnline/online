@@ -942,6 +942,10 @@ section). Others are just response messages to some client command.
     <pid> process id hosting the document
     reset the idle time counter for the document
 
+[*] updateroutetoken <JSON string>
+
+    <JSON string> contains the map of serverId as key and routeToken as value
+
 InvalidAuthToken
 
     This is sent when invalid auth token is provided in 'auth' command. See
