@@ -672,6 +672,69 @@ window.app = {
 		}, false);
 	}
 
+	// indirect socket to wrap the asyncness around fetching the routetoken from indirection url endpoint
+	global.IndirectSocket = function(uri) {
+		var that = this;
+		this.uri = uri;
+		this.binaryType = '';
+		this.unloading = false;
+		this.readyState = 0; // connecting
+		this.innerSocket = undefined;
+
+		this.onclose = function() {};
+		this.onerror = function () {};
+		this.onmessage = function () {};
+		this.onopen = function () {};
+
+		this.close = function() {
+			this.innerSocket.onerror = function () {};
+			this.innerSocket.onclose = function () {};
+			this.innerSocket.onmessage = function () {};
+			this.innerSocket.close();
+		};
+
+		this.send = function(msg) {
+			this.innerSocket.send(msg);
+		};
+
+		this.setUnloading = function() {
+			this.unloading = true;
+		};
+
+		var http = new XMLHttpRequest();
+		http.open('GET', global.indirectionUrl + '?WOPISrc=' + global.wopiSrc, true);
+		http.responseType = 'json';
+		http.addEventListener('load', function() {
+			if (this.status === 200) {
+				global.routeToken = http.response.route_token;
+				//add routeToken in uri
+				var startIndex = that.uri.indexOf('&compat');
+				var uri = that.uri.substr(0, startIndex) + '&RouteToken=' + global.routeToken + that.uri.substr(startIndex);
+				that.innerSocket = new WebSocket(uri);
+				that.innerSocket.binaryType = that.binaryType;
+				that.innerSocket.onerror = function() {
+					that.readyState = that.innerSocket.readyState;
+					that.onerror();
+				};
+				that.innerSocket.onclose = function() {
+					that.readyState = 3;
+					that.onclose();
+				};
+				that.innerSocket.onopen = function() {
+					that.readyState = 1;
+					that.onopen();
+				};
+				that.innerSocket.onmessage = function(e) {
+					that.readyState = that.innerSocket.readyState;
+					that.onmessage(e);
+				};
+			} else {
+				window.app.console.debug('Indirection url: error on incoming response ' + this.status);
+			}
+		});
+		http.send();
+	};
+
 	global.createWebSocket = function(uri) {
 		if ('processCoolUrl' in window) {
 			uri = window.processCoolUrl({ url: uri, type: 'ws' });
@@ -680,7 +743,10 @@ window.app = {
 		if (global.socketProxy) {
 			window.socketProxy = true;
 			return new global.ProxySocket(uri);
-		} else {
+		} else if (global.indirectionUrl != '') {
+			window.indirectSocket = true;
+			return new global.IndirectSocket(uri);
+		} else {			
 			return new WebSocket(uri);
 		}
 	};
@@ -745,10 +811,14 @@ window.app = {
 
 	// Form a URI from the docUrl and wopiSrc and encodes.
 	// The docUrlParams, suffix, and wopiSrc are optionally hexified.
+	global.routeToken = '';
 	global.makeDocAndWopiSrcUrl = function (root, docUrlParams, suffix, wopiSrcParam) {
 		var wopiSrc = '';
 		if (global.wopiSrc != '') {
-			wopiSrc = '?WOPISrc=' + global.wopiSrc + '&compat=';
+			wopiSrc = '?WOPISrc=' + global.wopiSrc;
+			if (global.routeToken != '')
+				wopiSrc += '&RouteToken=' + global.routeToken;
+			wopiSrc += '&compat=';
 			if (wopiSrcParam && wopiSrcParam.length > 0)
 				wopiSrc += '&' + wopiSrcParam;
 		}
