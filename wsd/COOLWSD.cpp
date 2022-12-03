@@ -271,10 +271,12 @@ inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>
 }
 #endif
 
+} // end anonymous namespace
+
 #if !MOBILEAPP
 /// Internal implementation to alert all clients
 /// connected to any document.
-void alertAllUsersInternal(const std::string& msg)
+void COOLWSD::alertAllUsersInternal(const std::string& msg)
 {
     std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
 
@@ -290,8 +292,6 @@ void alertAllUsersInternal(const std::string& msg)
     }
 }
 #endif
-
-} // end anonymous namespace
 
 void COOLWSD::writeTraceEventRecording(const char *data, std::size_t nbytes)
 {
@@ -365,7 +365,7 @@ void COOLWSD::checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
         if (!fs.empty())
         {
             LOG_WRN("File system of [" << fs << "] is dangerously low on disk space.");
-            alertAllUsersInternal("error: cmd=internal kind=diskfull");
+            COOLWSD::alertAllUsersInternal("error: cmd=internal kind=diskfull");
         }
     }
     catch (const std::exception& exc)
@@ -1206,6 +1206,8 @@ public:
         fetchUnlockImageUrl(newAppConfig, remoteJson);
 #endif
 
+        fetchIndirectionEndpoint(newAppConfig, remoteJson);
+
         fetchRemoteFontConfig(newAppConfig, remoteJson);
         _persistConfig->reset(newAppConfig);
 
@@ -1519,6 +1521,33 @@ public:
         catch (const std::exception& exc)
         {
             LOG_ERR("Failed to fetch unlock_image, please check JSON format: " << exc.what());
+        }
+    }
+
+    void fetchIndirectionEndpoint(std::map<std::string, std::string>& newAppConfig,
+                                  Poco::JSON::Object::Ptr remoteJson)
+    {
+        try
+        {
+            Poco::JSON::Object::Ptr indirectionEndpoint =
+                remoteJson->getObject("indirection_endpoint");
+
+            std::string url;
+            if (JsonUtil::findJSONValue(indirectionEndpoint, "url", url))
+            {
+                newAppConfig.insert(std::make_pair("indirection_endpoint.url", url));
+            }
+        }
+        catch (const Poco::NullPointerException&)
+        {
+            LOG_INF("Overriding indirection_endpoint.url failed because the indirection_endpoint.url "
+                    "entry does not "
+                    "exist");
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR(
+                "Failed to fetch indirection_endpoint, please check JSON format: " << exc.what());
         }
     }
 
@@ -1999,6 +2028,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "deepl.auth_key", ""},
         { "deepl.enabled", "false"},
         { "zotero.enable", "true"},
+        { "indirection_endpoint.url", ""}
     };
 
     // Set default values, in case they are missing from the config file.
@@ -5786,7 +5816,7 @@ void alertAllUsers(const std::string& cmd, const std::string& kind)
 
 void alertAllUsers(const std::string& msg)
 {
-    alertAllUsersInternal(msg);
+    COOLWSD::alertAllUsersInternal(msg);
 }
 
 }

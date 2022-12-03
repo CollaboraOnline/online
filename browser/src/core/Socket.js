@@ -1176,6 +1176,9 @@ app.definitions.Socket = L.Class.extend({
 				this._map.openUnlockPopup(blockedInfo.errorCmd);
 			return;
 		}
+		else if (textMsg.startsWith('updateroutetoken') && window.indirectionUrl != '') {
+			window.routeToken = textMsg.split(' ')[1];
+		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('delta:') &&
 			 !textMsg.startsWith('renderfont:') && !textMsg.startsWith('windowpaint:')) {
 
