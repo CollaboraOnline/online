@@ -277,6 +277,10 @@
         <handling desc="How to handle fonts mising in a document: 'report', 'log', 'both', or 'ignore'" type="string" default="log">log</handling>
     </fonts_missing>
 
+    <indirection_endpoint>
+        <url desc="URL endpoint to server which servers routeToken in json format" default=""></url>
+    </indirection_endpoint>
+
     @LOCK_CONFIGURATION@
 
     @FEATURE_RESTRICTION_CONFIGURATION@
