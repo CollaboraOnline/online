@@ -1074,6 +1074,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%BUYPRODUCT_URL%"), buyProduct);
     Poco::replaceInPlace(preprocess, std::string("%DEEPL_ENABLED%"), (config.getBool("deepl.enabled", false) ? std::string("true"): std::string("false")));
     Poco::replaceInPlace(preprocess, std::string("%ZOTERO_ENABLED%"), (config.getBool("zotero.enable", true) ? std::string("true"): std::string("false")));
+    Poco::URI indirectionURI(config.getString("indirection_endpoint.url", ""));
+    Poco::replaceInPlace(preprocess, std::string("%INDIRECTION_URL%"), indirectionURI.toString());
 
     const std::string mimeType = "text/html";
 
@@ -1083,7 +1085,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     cspOss << "Content-Security-Policy: default-src 'none'; "
         "frame-src 'self' " << WELCOME_URL << " " << FEEDBACK_URL << " " << buyProduct <<
         " blob: " << documentSigningURL << "; "
-           "connect-src 'self' https://www.zotero.org https://api.zotero.org " << cnxDetails.getWebSocketUrl() << "; "
+           "connect-src 'self' https://www.zotero.org https://api.zotero.org " << cnxDetails.getWebSocketUrl() << " " << indirectionURI.getAuthority() << "; "
            "script-src 'unsafe-inline' 'self'; "
            "style-src 'self' 'unsafe-inline'; "
            "font-src 'self' data:; "
