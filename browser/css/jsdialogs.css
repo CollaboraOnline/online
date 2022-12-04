@@ -785,7 +785,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 /* color selector */
 .unotoolbutton .selected-color {
 	height: 5px;
-	width: 24px;
+	width: var(--icon-size);
 	position: relative;
 	top: -6px;
 	border: 1px solid var(--color-border-dark);
@@ -854,6 +854,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 /* toolbox */
+.no-label.has-dropdown,
 .jsdialog.toolbox {
 	display: flex;
 	align-items: center;
@@ -1137,8 +1138,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 /* toolbuttons */
 
 .jsdialog .ui-content.unobutton {
-	width: 24px;
-	height: 24px;
+	width: var(--icon-size);
+	height: var(--icon-size);
 	margin-inline-end: 5px;
 	vertical-align: middle;
 }
@@ -1208,8 +1209,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .formulabar.unotoolbutton img, .formulabar.ui-pushbutton {
-	height: 24px !important;
-	width: 24px !important;
+	height: var(--icon-size) !important;
+	width: var(--icon-size) !important;
 	min-width: unset !important;
 }
 

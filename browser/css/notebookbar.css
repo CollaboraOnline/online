@@ -81,8 +81,8 @@
 }
 
 .notebookbar-shortcuts-bar .notebookbar.unotoolbutton {
-	height: 27px;
-	width: 24px;
+	height: var(--icon-size);
+	width: var(--icon-size);
 	display: flex;
 	margin: 0px !important;
 	align-items: center;
@@ -202,9 +202,6 @@
 /* unobuttons */
 
 .hasnotebookbar .ui-content .unobutton {
-	width: 32px;
-	height: 32px;
-	margin-inline-end: 5px;
 	vertical-align: middle;
 }
 
@@ -223,13 +220,13 @@
 }
 
 .unotoolbutton.notebookbar .unobutton {
-	width: 24px !important;
-	height: 24px !important;
+	width: var(--icon-size);
+	height: var(--icon-size);
 	margin-inline-end: 0px !important;
 }
 
 .has-dropdown--color.notebookbar {
-	height: 24px !important;
+	height: var(--icon-size);
 }
 
 .unotoolbutton.notebookbar .unolabel {
@@ -298,7 +295,8 @@
 }
 
 .unotoolbutton.notebookbar.has-label:not(.inline) img {
-	width: 24px !important;
+	width: var(--icon-size-big);
+	height: var(--icon-size-big);
 	margin: auto !important;
 	display: block;
 }
@@ -335,15 +333,6 @@
 #table-HomeTab {
 	margin-left: -16px;/*force alignment: clipboard elements*/
 	margin-top: -5px;
-}
-
-#clearFormatting.notebookbar div img, #FormatPaintbrush.notebookbar div img {
-	width: 24px !important;
-	height: 24px !important;
-}
-
-#clearFormatting.notebookbar, #FormatPaintbrush.notebookbar{
-	height: 24px !important;
 }
 
 #fontsize.notebookbar .select2.select2-container {

@@ -45,6 +45,9 @@
 	--default-height: 24px;
 	--header-height: 38px;
 
+	--icon-size: 24px;
+	--icon-size-big: 32px;
+
 	/* Annotations */
 	--annotation-input-size: 240px;
 }
