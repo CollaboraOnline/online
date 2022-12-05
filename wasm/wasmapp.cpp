@@ -71,10 +71,8 @@ static void send2JS(const std::vector<char>& buffer)
     emscripten_run_script(js.c_str());
 }
 
-static void handle_cool_message()
+void handle_cool_message(const char *string_value)
 {
-    // TODO what msg?
-    const char* string_value = "HULLO";
     if (strcmp(string_value, "HULLO") == 0)
     {
         // Now we know that the JS has started completely
@@ -252,7 +250,6 @@ int main(int argc, char* argv[])
                 }).detach();
 
     fakeClientFd = fakeSocketSocket();
-    handle_cool_message();
 
     return 0;
 }
