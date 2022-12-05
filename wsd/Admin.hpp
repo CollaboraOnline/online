@@ -67,6 +67,8 @@ public:
     void start();
     void stop();
 
+    void startMonitors();
+
     /// Custom poll thread function
     void pollingThread() override;
 
@@ -190,6 +192,9 @@ private:
         std::string _uri;
     };
     std::vector<MonitorConnectRecord> _pendingConnects;
+
+    // this vector makes sure that online connects to unique monitors
+    std::vector<std::string> _monitorUris;
 
     int _cpuStatsTaskIntervalMs;
     int _memStatsTaskIntervalMs;

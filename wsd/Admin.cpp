@@ -964,6 +964,12 @@ void Admin::sendMetrics(const std::shared_ptr<StreamSocket>& socket, const std::
 
 void Admin::start()
 {
+    startMonitors();
+    startThread();
+}
+
+void Admin::startMonitors()
+{
     bool haveMonitors = false;
     const auto& config = Application::instance().config();
 
@@ -976,9 +982,15 @@ void Admin::start()
         if (!uri.empty())
         {
             Poco::URI monitor(uri);
-            if (monitor.getScheme() == "wss" || monitor.getScheme() == "ws")
+            if ((monitor.getScheme() == "wss" || monitor.getScheme() == "ws"))
             {
-                addCallback([=] { scheduleMonitorConnect(uri, std::chrono::steady_clock::now()); });
+                if (std::find(_monitorUris.begin(), _monitorUris.end(), monitor.toString()) ==
+                    _monitorUris.end())
+                {
+                    _monitorUris.push_back(monitor.toString());
+                    addCallback([=]
+                                { scheduleMonitorConnect(uri, std::chrono::steady_clock::now()); });
+                }
                 haveMonitors = true;
             }
             else
@@ -988,8 +1000,6 @@ void Admin::start()
 
     if (!haveMonitors)
         LOG_TRC("No monitors configured.");
-
-    startThread();
 }
 
 void Admin::stop()
