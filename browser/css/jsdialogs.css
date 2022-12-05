@@ -878,7 +878,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 /* toolbox */
 .jsdialog.toolbox {
 	display: flex;
-	align-items: center;
 }
 
 /* spinner */
