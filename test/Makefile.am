@@ -23,9 +23,10 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
 # 'Finished in' in the `make check` output.
 # When adding new tests, please maintain order.
 all_la_unit_tests = \
+	unit-tiletest.la \
+	unit-wopi-async-slow.la \
 	unit-wopi-stuck-save.la \
 	unit-insert-delete.la \
-	unit-tiletest.la \
 	unit-httpws.la \
 	unit-password-protected.la \
 	unit-wopi-fail-upload.la \
@@ -72,7 +73,6 @@ all_la_unit_tests = \
 	unit-wopi-httpredirect.la \
 	unit-wopi-loadencoded.la \
 	unit-prefork.la \
-	unit-wopi-async-slow.la \
 	unit-render-search-result.la \
 	unit-tiff-load.la \
 	unit-bad-doc-load.la \
