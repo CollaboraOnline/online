@@ -1438,7 +1438,7 @@ if test "$enable_feature_lock" = "yes"; then
 .uno:TTestDialog .uno:FTestDialog .uno:ZTestDialog .uno:ChiSquareTestDialog \
 .uno:FourierAnalysisDialog .uno:Validation .uno:DataFilterSpecialFilter \
 .uno:TrackChanges .uno:AcceptTrackedChanges .uno:InsertReferenceField \
-.uno:Watermark .uno:InsertIndexesEntry .uno:InsertAuthoritiesEntry \
+.uno:Watermark .uno:InsertIndexesEntry \
 .uno:InsertMultiIndex .uno:SlideMasterPage downloadas-epub downloadas-rtf masterslidebutton"
 fi
 AC_DEFINE_UNQUOTED([LOCKED_COMMANDS],["$LOCKED_COMMANDS"],[Default value of feature_lock.locked_commands])

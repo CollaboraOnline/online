@@ -164,6 +164,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 				{uno: '.uno:InsertBookmark'},
 				{uno: '.uno:InsertReferenceField'},
+				{uno: '.uno:InsertIndexesEntry'},
+				{name: _UNO('.uno:IndexesMenu', 'text'), uno: '.uno:InsertMultiIndex'},
 				{type: 'separator'},
 				{uno: '.uno:InsertSymbol'},
 				{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
@@ -174,10 +176,6 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:InsertWJ'},
 					{uno: '.uno:InsertLRM'},
 					{uno: '.uno:InsertRLM'}]},
-				{name: _UNO('.uno:IndexesMenu', 'text'), type: 'menu', menu: [
-					{uno: '.uno:InsertIndexesEntry'},
-					{uno: '.uno:InsertAuthoritiesEntry'},
-					{uno: '.uno:InsertMultiIndex'}]},
 			]},
 			{name: _UNO('.uno:FormatMenu', 'text'), id: 'format', type: 'menu', menu: [
 				{name: _UNO('.uno:FormatTextMenu', 'text'), type: 'menu', menu: [
