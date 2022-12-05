@@ -145,7 +145,7 @@ L.Control.Zotero = L.Control.extend({
 	fillItems: function (items) {
 		for (var iterator = 0; iterator < items.length; ++iterator) {
 			var creatorArray = [];
-			for (var creator = 0; creator < items[iterator].data.creators.length; ++creator) {
+			for (var creator = 0; items[iterator].data.creators && creator < items[iterator].data.creators.length; ++creator) {
 				creatorArray.push(items[iterator].data.creators[creator].firstName + ' ' + items[iterator].data.creators[creator].lastName);
 			}
 			var creatorString = creatorArray.join(', ');
