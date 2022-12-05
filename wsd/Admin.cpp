@@ -882,48 +882,62 @@ void Admin::dumpState(std::ostream& os)
     SocketPoll::dumpState(os);
 }
 
-class MonitorSocketHandler : public AdminSocketHandler
+
+MonitorSocketHandler::MonitorSocketHandler(Admin *admin, const std::string &uri) :
+    AdminSocketHandler(admin),
+    _connecting(true),
+    _uri(uri)
 {
-    bool _connecting;
-    std::string _uri;
-public:
+}
 
-    MonitorSocketHandler(Admin *admin, const std::string &uri) :
-        AdminSocketHandler(admin),
-        _connecting(true),
-        _uri(uri)
+int MonitorSocketHandler::getPollEvents(std::chrono::steady_clock::time_point now,
+                    int64_t &timeoutMaxMicroS)
+{
+    if (_connecting)
     {
+        LOG_TRC("Waiting for outbound connection to complete");
+        return POLLOUT;
     }
-    int getPollEvents(std::chrono::steady_clock::time_point now,
-                      int64_t &timeoutMaxMicroS) override
+    else
+        return AdminSocketHandler::getPollEvents(now, timeoutMaxMicroS);
+}
+
+void MonitorSocketHandler::performWrites(std::size_t capacity)
+{
+    LOG_TRC("Outbound monitor - connected");
+    _connecting = false;
+    return AdminSocketHandler::performWrites(capacity);
+}
+
+void MonitorSocketHandler::onDisconnect()
+{
+    bool reconnect = false;
+    // schedule monitor reconnect only if monitor uri exist in configuration
+    for (std::string uri : Admin::instance().getMonitorList())
     {
-        if (_connecting)
+        if (Util::iequal(uri, _uri.substr(0, _uri.find('?'))))
         {
-            LOG_TRC("Waiting for outbound connection to complete");
-            return POLLOUT;
+            LOG_ERR("Monitor " << _uri << " dis-connected, re-trying in 20 seconds");
+            Admin::instance().scheduleMonitorConnect(_uri, std::chrono::steady_clock::now() +
+                                                                std::chrono::seconds(20));
+            reconnect = true;
+            break;
         }
-        else
-            return AdminSocketHandler::getPollEvents(now, timeoutMaxMicroS);
     }
 
-    void performWrites(std::size_t capacity) override
-    {
-        LOG_TRC("Outbound monitor - connected");
-        _connecting = false;
-        return AdminSocketHandler::performWrites(capacity);
-    }
-
-    void onDisconnect() override
-    {
-        LOG_ERR("Monitor " << _uri << " dis-connected, re-trying in 20 seconds");
-        Admin::instance().scheduleMonitorConnect(_uri, std::chrono::steady_clock::now() + std::chrono::seconds(20));
-    }
-};
+    if (!reconnect)
+        LOG_TRC("Remove monitor " << _uri);
+}
 
 void Admin::connectToMonitorSync(const std::string &uri)
 {
+    const std::string uriWithoutParam = uri.substr(0, uri.find('?'));
+    if (_monitorSockets.find(uriWithoutParam) != _monitorSockets.end())
+        return;
+
     LOG_TRC("Add monitor " << uri);
     auto handler = std::make_shared<MonitorSocketHandler>(this, uri);
+    _monitorSockets.insert({uriWithoutParam, handler});
     insertNewWebSocketSync(Poco::URI(uri), handler);
     AdminSocketHandler::subscribeAsync(handler);
 }
@@ -964,10 +978,15 @@ void Admin::sendMetrics(const std::shared_ptr<StreamSocket>& socket, const std::
 
 void Admin::start()
 {
-    bool haveMonitors = false;
-    const auto& config = Application::instance().config();
+    startMonitors();
+    startThread();
+}
 
-    for (size_t i = 0; ; ++i)
+std::vector<std::string> Admin::getMonitorList()
+{
+    const auto& config = Application::instance().config();
+    std::vector<std::string> monitorList;
+    for (size_t i = 0;; ++i)
     {
         const std::string path = "monitors.monitor[" + std::to_string(i) + ']';
         const std::string uri = config.getString(path, "");
@@ -977,19 +996,61 @@ void Admin::start()
         {
             Poco::URI monitor(uri);
             if (monitor.getScheme() == "wss" || monitor.getScheme() == "ws")
-            {
-                addCallback([=] { scheduleMonitorConnect(uri, std::chrono::steady_clock::now()); });
-                haveMonitors = true;
-            }
+                monitorList.push_back(uri);
             else
                 LOG_ERR("Unhandled monitor URI: '" << uri << "' should be \"wss://foo:1234/baa\"");
         }
     }
+    return monitorList;
+}
+
+void Admin::startMonitors()
+{
+    bool haveMonitors = false;
+    for (std::string uri : getMonitorList())
+    {
+        addCallback(
+            [=]
+            {
+                scheduleMonitorConnect(uri + "?ServerId=" + Util::getProcessIdentifier(),
+                                       std::chrono::steady_clock::now());
+            });
+        haveMonitors = true;
+    }
 
     if (!haveMonitors)
         LOG_TRC("No monitors configured.");
+}
 
-    startThread();
+void Admin::updateMonitors(std::vector<std::string>& oldMonitors)
+{
+    if (oldMonitors.size() == 0)
+    {
+        startMonitors();
+        return;
+    }
+
+    std::unordered_map<std::string, bool> currentMonitorMap;
+    for (std::string uri : getMonitorList())
+    {
+        currentMonitorMap[uri] = true;
+    }
+
+    // shutdown monitors which doesnot not exist in currentMonitorMap
+    for (std::string uri : oldMonitors)
+    {
+        if (!currentMonitorMap[uri])
+        {
+            auto socketHandler = _monitorSockets[uri];
+            if (socketHandler != nullptr)
+            {
+                socketHandler->shutdown();
+                _monitorSockets.erase(uri);
+            }
+        }
+    }
+
+    startMonitors();
 }
 
 void Admin::stop()

@@ -1210,12 +1210,19 @@ public:
 
         fetchIndirectionEndpoint(newAppConfig, remoteJson);
 
+        fetchMonitors(newAppConfig, remoteJson);
+
         fetchRemoteFontConfig(newAppConfig, remoteJson);
+
+        // before resetting get monitors list
+        std::vector<std::string> oldMonitors = Admin::instance().getMonitorList();
+
         _persistConfig->reset(newAppConfig);
 
 #if ENABLE_FEATURE_LOCK
         CommandControl::LockManager::parseLockedHost(_conf);
-#endif
+#endif  
+        Admin::instance().updateMonitors(oldMonitors);
 
         HostUtil::parseAliases(_conf);
 
@@ -1550,6 +1557,47 @@ public:
         {
             LOG_ERR(
                 "Failed to fetch indirection_endpoint, please check JSON format: " << exc.what());
+        }
+    }
+
+    void fetchMonitors(std::map<std::string, std::string>& newAppConfig,
+                       Poco::JSON::Object::Ptr remoteJson)
+    {
+        Poco::JSON::Array::Ptr monitors;
+        try
+        {
+            monitors = remoteJson->getArray("monitors");
+        }
+        catch (const Poco::NullPointerException&)
+        {
+            LOG_INF("Overriding monitor failed because array "
+                    "does not exist");
+            return;
+        }
+
+        if (monitors.isNull() || monitors->size() == 0)
+        {
+            LOG_INF("Overriding monitors failed because array is empty or "
+                    "null");
+            return;
+        }
+        std::size_t i;
+        for (i = 0; i < monitors->size(); i++)
+            newAppConfig.insert(
+                std::make_pair("monitors.monitor[" + std::to_string(i) + ']', monitors->get(i).toString()));
+
+        //if number of monitors defined in configuration are greater than number of monitors
+        //fetched from json or if the number of monitors shrinks with new json,
+        //overwrite the remaining monitors from config file to empty strings
+        for (;; i++)
+        {
+            const std::string path =
+                "monitors.monitor[" + std::to_string(i) + ']';
+            if (!_conf.has(path))
+            {
+                break;
+            }
+            newAppConfig.insert(std::make_pair(path, ""));
         }
     }
 
