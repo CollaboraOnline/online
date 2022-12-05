@@ -1293,15 +1293,21 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
 {
     assertCorrectThread();
 
+    // Record that we got a response to avoid timing out on saving.
+    _saveManager.setLastSaveResult(success || result == "unmodified");
+
     if (success)
         LOG_DBG("Save result from Core: saved (during "
-                << DocumentState::toString(_docState.activity()) << ')');
+                << DocumentState::toString(_docState.activity()) << ") in "
+                << _saveManager.lastSaveDuration());
     else if (result == "unmodified")
         LOG_DBG("Save result from Core: unmodified (during "
-                << DocumentState::toString(_docState.activity()) << ')');
-    else
-        LOG_WRN("Save result from Core (failure): "
-                << result << " (during " << DocumentState::toString(_docState.activity()) << ')');
+                << DocumentState::toString(_docState.activity()) << ") in "
+                << _saveManager.lastSaveDuration());
+    else // Failure with error.
+        LOG_WRN("Save result from Core (failure): " << result << " (during "
+                                                    << DocumentState::toString(_docState.activity())
+                                                    << ") in " << _saveManager.lastSaveDuration());
 
 #if !MOBILEAPP
     // Create the 'upload' file regardless of success or failure,
@@ -1331,9 +1337,6 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
 
     Quarantine::quarantineFile(this, Util::splitLast(newName, '/').second);
 #endif //!MOBILEAPP
-
-    // Record that we got a response to avoid timing out on saving.
-    _saveManager.setLastSaveResult(success || result == "unmodified");
 
     if (success && !isAsyncUploading())
     {
