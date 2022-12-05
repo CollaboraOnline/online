@@ -1367,7 +1367,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var content = [
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertMultiIndex', 'text'),
+				'text': _UNO('.uno:IndexesMenu', 'text'),
 				'command': '.uno:InsertMultiIndex'
 			},
 			{
@@ -1428,11 +1428,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertReferenceField', 'text'),
-				'command': '.uno:InsertReferenceField'
-			},
-			{
 				'type': 'container',
 				'children': [
 					{
@@ -1450,8 +1445,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertAuthoritiesEntry', 'text'),
-								'command': '.uno:InsertAuthoritiesEntry'
+								'text': _UNO('.uno:InsertReferenceField', 'text'),
+								'command': '.uno:InsertReferenceField'
 							}
 						]
 					}
