@@ -873,6 +873,7 @@ bool COOLWSD::NoSeccomp = false;
 bool COOLWSD::AdminEnabled = true;
 bool COOLWSD::UnattendedRun = false;
 bool COOLWSD::SignalParent = false;
+std::string COOLWSD::RouteToken;
 #if ENABLE_DEBUG
 bool COOLWSD::SingleKit = false;
 #endif
@@ -1221,7 +1222,7 @@ public:
 
 #if ENABLE_FEATURE_LOCK
         CommandControl::LockManager::parseLockedHost(_conf);
-#endif  
+#endif
         Admin::instance().updateMonitors(oldMonitors);
 
         HostUtil::parseAliases(_conf);
@@ -5177,6 +5178,7 @@ public:
            << "\n  Security " << (COOLWSD::NoCapsForKit ? "no" : "") << " chroot, "
            << (COOLWSD::NoSeccomp ? "no" : "") << " api lockdown"
            << "\n  Admin: " << (COOLWSD::AdminEnabled ? "enabled" : "disabled")
+           << "\n  RouteToken: " << COOLWSD::RouteToken
 #endif
            << "\n  TerminationFlag: " << SigUtil::getTerminationFlag()
            << "\n  isShuttingDown: " << SigUtil::getShutdownRequestFlag()
