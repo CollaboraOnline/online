@@ -308,6 +308,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             if (!routeToken.empty())
             {
                 COOLWSD::alertAllUsersInternal("updateroutetoken " + routeToken);
+                COOLWSD::RouteToken = routeToken;
             }
             else
             {
