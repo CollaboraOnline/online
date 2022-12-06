@@ -224,7 +224,7 @@ extern "C"
     void forwardSigUsr2();
 }
 
-#if ENABLE_DEBUG
+#if ENABLE_DEBUG && !MOBILEAPP
 static std::chrono::milliseconds careerSpanMs(std::chrono::milliseconds::zero());
 #endif
 
