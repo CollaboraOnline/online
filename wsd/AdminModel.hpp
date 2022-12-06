@@ -15,6 +15,8 @@
 #include <string>
 #include <utility>
 
+#include <Poco/URI.h>
+
 #include <common/Log.hpp>
 #include "Util.hpp"
 #include "net/WebSocketHandler.hpp"
@@ -134,12 +136,12 @@ class Document
     Document& operator = (const Document &) = delete;
 
 public:
-    Document(std::string docKey, pid_t pid, std::string filename, std::string wopiHost)
+    Document(std::string docKey, pid_t pid, std::string filename, Poco::URI wopiSrc)
         : _docKey(std::move(docKey))
         , _pid(pid)
         , _activeViews(0)
         , _filename(std::move(filename))
-        , _wopiHost(std::move(wopiHost))
+        , _wopiSrc(std::move(wopiSrc))
         , _memoryDirty(0)
         , _lastJiffy(0)
         , _lastCpuPercentage(0)
@@ -171,7 +173,9 @@ public:
 
     std::string getFilename() const { return _filename; }
 
-    std::string getHostName() const { return _wopiHost; }
+    std::string getHostName() const { return _wopiSrc.getHost(); }
+
+    std::string getWopiSrc() const { return _wopiSrc.toString(); }
 
     bool isExpired() const { return _end != 0 && std::time(nullptr) >= _end; }
 
@@ -236,7 +240,7 @@ private:
     /// Hosted filename
     std::string _filename;
 
-    std::string _wopiHost;
+    Poco::URI _wopiSrc;
     /// The dirty (ie. un-shared) memory of the document's Kit process.
     size_t _memoryDirty;
     /// Last noted Jiffy count
@@ -358,7 +362,7 @@ public:
 
     void addDocument(const std::string& docKey, pid_t pid, const std::string& filename,
                      const std::string& sessionId, const std::string& userName, const std::string& userId,
-                     const int smapsFD, const std::string& URI);
+                     const int smapsFD, const Poco::URI& wopiSrc);
 
     void removeDocument(const std::string& docKey, const std::string& sessionId);
     void removeDocument(const std::string& docKey);
