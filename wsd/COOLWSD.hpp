@@ -240,6 +240,7 @@ public:
     static bool AdminEnabled;
     static bool UnattendedRun; //< True when run from an unattended test, not interactive.
     static bool SignalParent;
+    static std::string RouteToken;
 #if ENABLE_DEBUG
     static bool SingleKit;
 #endif

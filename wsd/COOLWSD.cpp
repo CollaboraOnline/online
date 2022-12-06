@@ -871,6 +871,7 @@ bool COOLWSD::NoSeccomp = false;
 bool COOLWSD::AdminEnabled = true;
 bool COOLWSD::UnattendedRun = false;
 bool COOLWSD::SignalParent = false;
+std::string COOLWSD::RouteToken;
 #if ENABLE_DEBUG
 bool COOLWSD::SingleKit = false;
 #endif
@@ -3828,7 +3829,10 @@ private:
 
             else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                      requestDetails.equals(2, "ws") && requestDetails.isWebSocket())
+            {
                 handleClientWsUpgrade(request, requestDetails, disposition, socket);
+                COOLWSD::RouteToken = requestDetails.getParam("RouteToken");
+            }
 
             else if (!requestDetails.isWebSocket() &&
                      (requestDetails.equals(RequestDetails::Field::Type, "cool") ||
@@ -5134,6 +5138,7 @@ public:
            << "\n  Security " << (COOLWSD::NoCapsForKit ? "no" : "") << " chroot, "
            << (COOLWSD::NoSeccomp ? "no" : "") << " api lockdown"
            << "\n  Admin: " << (COOLWSD::AdminEnabled ? "enabled" : "disabled")
+           << "\n  RouteToken: " << COOLWSD::RouteToken
 #endif
            << "\n  TerminationFlag: " << SigUtil::getTerminationFlag()
            << "\n  isShuttingDown: " << SigUtil::getShutdownRequestFlag()

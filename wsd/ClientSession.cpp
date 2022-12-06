@@ -216,6 +216,11 @@ std::string ClientSession::createPublicURI(const std::string& subPath, const std
         "&ViewId=" + std::to_string(getKitViewId()) +
         "&Tag=" + tag);
 
+#if !MOBILEAPP
+    if (!COOLWSD::RouteToken.empty())
+        meta += "&RouteToken=" + COOLWSD::RouteToken;
+#endif
+
     if (!encode)
         return meta;
 
