@@ -554,9 +554,9 @@ void Admin::modificationAlert(const std::string& dockey, pid_t pid, bool value){
 
 void Admin::addDoc(const std::string& docKey, pid_t pid, const std::string& filename,
                    const std::string& sessionId, const std::string& userName, const std::string& userId,
-                   const int smapsFD, const std::string& wopiHost)
+                   const int smapsFD, const Poco::URI& wopiSrc)
 {
-    addCallback([=] { _model.addDocument(docKey, pid, filename, sessionId, userName, userId, smapsFD, wopiHost); });
+    addCallback([=] { _model.addDocument(docKey, pid, filename, sessionId, userName, userId, smapsFD, wopiSrc); });
 }
 
 void Admin::rmDoc(const std::string& docKey, const std::string& sessionId)
