@@ -291,7 +291,7 @@ public:
 private:
     void handleMessage(const std::vector<char>& data) override
     {
-        LOG_DBG("Got message: " << COOLProtocol::getAbbreviatedMessage(data));
+        LOG_TRC("Got message: " << COOLProtocol::getAbbreviatedMessage(data));
         {
             std::unique_lock<std::mutex> lock(_inMutex);
             _inQueue.put(data);
