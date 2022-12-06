@@ -946,6 +946,12 @@ section). Others are just response messages to some client command.
 
     <JSON string> contains the map of serverId as key and routeToken as value
 
+[*] routing_rmdoc <wopiSrc>
+
+    <wopiSrc> of the document that is getting removed
+    
+    note: This might get additional parameters in future
+    
 InvalidAuthToken
 
     This is sent when invalid auth token is provided in 'auth' command. See
