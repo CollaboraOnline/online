@@ -39,26 +39,44 @@ bool coolmount(const std::string& arg, std::string source, std::string target)
 
 bool bind(const std::string& source, const std::string& target)
 {
-    LOG_DBG("Mounting [" << source << "] -> [" << target << "].");
-    Poco::File(target).createDirectory();
-    const bool res = coolmount("-b", source, target);
-    if (res)
-        LOG_TRC("Bind-mounted [" << source << "] -> [" << target << "].");
-    else
-        LOG_ERR("Failed to bind-mount [" << source << "] -> [" << target << "].");
-    return res;
+    LOG_DBG("Mounting [" << source << "] -> [" << target << ']');
+    try
+    {
+        Poco::File(target).createDirectory();
+        const bool res = coolmount("-b", source, target);
+        if (res)
+            LOG_TRC("Bind-mounted [" << source << "] -> [" << target << ']');
+        else
+            LOG_ERR("Failed to bind-mount [" << source << "] -> [" << target << ']');
+        return res;
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_ERR("Failed to mount [" << source << "] -> [" << target << "]: " << exc.what());
+    }
+
+    return false;
 }
 
 bool remountReadonly(const std::string& source, const std::string& target)
 {
-    LOG_DBG("Remounting [" << source << "] -> [" << target << "].");
-    Poco::File(target).createDirectory();
-    const bool res = coolmount("-r", source, target);
-    if (res)
-        LOG_TRC("Mounted [" << source << "] -> [" << target << "] readonly.");
-    else
-        LOG_ERR("Failed to mount [" << source << "] -> [" << target << "] readonly.");
-    return res;
+    LOG_DBG("Remounting [" << source << "] -> [" << target << ']');
+    try
+    {
+        Poco::File(target).createDirectory();
+        const bool res = coolmount("-r", source, target);
+        if (res)
+            LOG_TRC("Mounted [" << source << "] -> [" << target << "] readonly");
+        else
+            LOG_ERR("Failed to mount [" << source << "] -> [" << target << "] readonly");
+        return res;
+    }
+    catch (const std::exception& exc)
+    {
+        LOG_ERR("Failed to remount [" << source << "] -> [" << target << "]: " << exc.what());
+    }
+
+    return false;
 }
 
 /// Unmount a bind-mounted jail directory.
