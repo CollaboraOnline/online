@@ -41,6 +41,7 @@ AM_CPPFLAGS = \
 	-I@LOBUILDDIR@/workdir/UnpackedTarball/libpng \
 	-I@LOBUILDDIR@/workdir/UnpackedTarball/zlib \
 	-DCOOLWSD_CONFIGDIR='"@COOLWSD_CONFIGDIR@"' \
+	-DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
 	-DMOBILEAPP=1
 
 bin_PROGRAMS = online
