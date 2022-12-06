@@ -65,7 +65,6 @@ online_LDADD = \
 	$(shell cat @LOBUILDDIR@/instdir/program/soffice.html.linkdeps)
 
 # TODO these are just copypasta from core
-# TODO still missing --pre-js flags, which are needed?
 online_LDFLAGS = \
 	-pthread -s USE_PTHREADS=1 -s TOTAL_MEMORY=1GB -s PTHREAD_POOL_SIZE=4 --bind -s FORCE_FILESYSTEM=1 -s WASM_BIGINT=1 -s ERROR_ON_UNDEFINED_SYMBOLS=1 -s FETCH=1 -s ASSERTIONS=1 -s EXIT_RUNTIME=0 -s EXPORTED_RUNTIME_METHODS=["UTF16ToString","stringToUTF16","UTF8ToString","allocateUTF8","printErr","ccall","cwrap","FS"] -pthread -s USE_PTHREADS=1 -s DISABLE_EXCEPTION_CATCHING=0 -s EXPORTED_FUNCTIONS=["_main","_libreofficekit_hook","_libreofficekit_hook_2","_lok_preinit","_lok_preinit_2"] \
 	--pre-js @LOBUILDDIR@/workdir/CustomTarget/static/emscripten_fs_image/soffice.data.js.link
