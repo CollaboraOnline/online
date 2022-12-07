@@ -32,6 +32,7 @@ Session::Session(const std::shared_ptr<ProtocolHandlerInterface> &protocol,
     _isActive(true),
     _lastActivityTime(std::chrono::steady_clock::now()),
     _isCloseFrame(false),
+    _isWritable(readOnly),
     _isReadOnly(readOnly),
     _isAllowChangeComments(false),
     _haveDocPassword(false),
@@ -280,6 +281,7 @@ void Session::dumpState(std::ostream& os)
        << "\n\t\tdisconnected: " << _disconnected
        << "\n\t\tisActive: " << _isActive
        << "\n\t\tisCloseFrame: " << _isCloseFrame
+       << "\n\t\tisWritable: " << _isWritable
        << "\n\t\tisReadOnly: " << _isReadOnly
        << "\n\t\tisAllowChangeComments: " << _isAllowChangeComments
        << "\n\t\tisEditable: " << isEditable()
