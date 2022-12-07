@@ -77,9 +77,26 @@ public:
     const std::string& getName() const { return _name; }
     bool isDisconnected() const { return _disconnected; }
 
+    /// Controls whether writing in the Storage is enabled in this session.
+    /// If set to false, will setReadOnly(true) and setAllowChangeComments(false).
+    void setWritable(bool writable)
+    {
+        _isWritable = writable;
+        if (!writable)
+        {
+            setReadOnly(true);
+            setAllowChangeComments(false);
+        }
+    }
+
+    /// True iff the session can write in the Storage.
+    bool isWritable() const { return _isWritable; }
+
+    /// Controls whether editing is enabled in this session.
     virtual void setReadOnly(bool readonly) { _isReadOnly = readonly; }
     bool isReadOnly() const { return _isReadOnly; }
 
+    /// Controls whether commenting is enabled in this session
     void setAllowChangeComments(bool allow) { _isAllowChangeComments = allow; }
     bool isAllowChangeComments() const { return _isAllowChangeComments; }
 
@@ -283,10 +300,14 @@ private:
     // Whether websocket received close frame.  Closing Handshake
     std::atomic<bool> _isCloseFrame;
 
-    /// Whether the session is opened as readonly
+    /// Whether the session can write in storage.
+    bool _isWritable;
+
+    /// Whether the session can edit the document.
     bool _isReadOnly;
 
-    /// If the session is read-only, are comments allowed
+    /// Whether the session can add/change comments.
+    /// Must have _isWritable=true, regardless of _isReadOnly.
     bool _isAllowChangeComments;
 
     /// The actual URL, also in the child, even if the child never accesses that.
