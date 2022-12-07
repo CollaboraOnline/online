@@ -11,8 +11,10 @@
     "autolinker": "3.14.1",
     "browserify": "16.5.1",
     "browserify-css": "0.15.0",
+    "canvas": "^2.10.2",
     "d3": "5.16.0",
     "eslint": "7.0.0",
+    "fzstd": "0.0.4",
     "hammerjs": "2.0.8",
     "jquery": "3.5.1",
     "jquery-contextmenu": "2.9.2",
@@ -21,7 +23,7 @@
     "json-js": "1.1.2",
     "l10n-for-node": "0.0.1",
     "mocha": "8.2.1",
-    "fzstd": "0.0.4",
+    "pako": "2.0.4",
     "select2": "4.0.13",
     "shrinkpack": "1.0.0-alpha",
     "smartmenus": "1.0.0",
@@ -31,9 +33,7 @@
     "uglify-js": "3.9.4",
     "uglifycss": "0.0.29",
     "uglifyify": "5.0.2",
-    "vex-js": "4.1.0",
-    "pako": "2.0.4",
-    "canvas": "^2.6.1"
+    "vex-js": "4.1.0"
   },
   "repository": {
     "type": "git",
