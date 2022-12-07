@@ -1388,7 +1388,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:UpdateCurIndex', 'text'),
+								'text': _('Update Index'),
 								'command': '.uno:UpdateCurIndex'
 							}
 						]
