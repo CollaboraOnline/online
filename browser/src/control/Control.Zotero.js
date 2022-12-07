@@ -214,13 +214,14 @@ L.Control.Zotero = L.Control.extend({
 
 		if (selected.type === 'item') {
 			var parameters = {
-				FieldCommand: {type: 'string', value:'ADDIN ZOTERO_ITEM CSL_CITATION'},
+				FieldType: {type: 'string', value: 'vnd.oasis.opendocument.field.UNHANDLED'},
+				FieldCommand: {type: 'string', value: 'ADDIN ZOTERO_ITEM CSL_CITATION'},
 				FieldResult: {type: 'string', value: selected.citation}
 			};
 
 			this.map.sendUnoCommand('.uno:TextFormField', parameters);
 		}
-		else if (selected.tyle === 'style') {
+		else if (selected.type === 'style') {
 			console.log('do something');
 		}
 	},
