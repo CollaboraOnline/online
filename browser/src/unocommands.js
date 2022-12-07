@@ -415,6 +415,7 @@ var unoCommandsArray = {
 	'Shadowed':{global:{context:_('Toggle Shadow'),menu:_('Shadow'),},},
 	'ShapesMenu':{global:{menu:_('~Shape'),},},
 	'SheetMenu':{spreadsheet:{menu:_('~Sheet'),},},
+	'SheetRightToLeft':{spreadsheet:{menu:_('R~ight-To-Left'),},},
 	'Show':{spreadsheet:{menu:_('~Show Sheet...'),},},
 	'ShowColumn':{spreadsheet:{context:_('S~how Columns'),menu:_('~Show'),},},
 	'ShowDetail':{global:{menu:_('~Show Details'),},},
