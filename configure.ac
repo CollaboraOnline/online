@@ -143,6 +143,11 @@ AC_ARG_ENABLE([iosapp],
               AS_HELP_STRING([--enable-iosapp],
                              [Use on a Mac where you will build the iOS app.]))
 
+AC_ARG_WITH([wasm-fallback],
+              AS_HELP_STRING([--with-wasm-fallback=<path>],
+                             [Build a COOL where the client can fall back to a WASM implementation if the connection to the server fails.
+                              The path is where the WASM build of Online was done.]))
+
 AC_ARG_WITH([iosapp-appicon],
               AS_HELP_STRING([--with-iosapp-appicon=<path>],
                              [Point to a directory containing an icon set to use instead of the default empty one.]))
@@ -822,6 +827,16 @@ if test "$enable_gtkapp" = "yes"; then
 fi
 AC_SUBST(ENABLE_GTKAPP)
 AM_CONDITIONAL([ENABLE_GTKAPP], [test "$ENABLE_GTKAPP" = "true"])
+
+dnl ENABLE_WASM_FALLBACK means we are building an otherwise normal COOL but with the "WASM fallback"
+dnl capability. Compare to ENABLE_WASM.
+
+AM_CONDITIONAL([ENABLE_WASM_FALLBACK], [test -n "$with_wasm_fallback"])
+WASM_BUILDDIR="$with_wasm_fallback"
+AC_SUBST(WASM_BUILDDIR)
+
+dnl ENABLE_WASM means that we are building the WASM "app" that will run locally in the
+dnl client when necessary. ENABLE_WASM_FALLBACK and ENABLE_WASM can't both be on simultaneously.
 
 AM_CONDITIONAL([ENABLE_WASM], [test "$host_os" = "emscripten"])
 
