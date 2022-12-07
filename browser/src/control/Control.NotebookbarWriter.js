@@ -1371,30 +1371,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:InsertMultiIndex'
 			},
 			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:InsertIndexesEntry', 'text'),
-								'command': '.uno:InsertIndexesEntry'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:UpdateCurIndex', 'text'),
-								'command': '.uno:UpdateCurIndex'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:InsertIndexesEntry', 'text'),
+				'command': '.uno:InsertIndexesEntry'
 			},
 			{
 				'type': 'bigtoolitem',
