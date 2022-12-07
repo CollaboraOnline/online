@@ -738,23 +738,29 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         templateSource = wopifileinfo->getTemplateSource();
 
         _isViewFileExtension = COOLWSD::IsViewFileExtension(wopiStorage->getFileExtension());
-        if (CommandControl::LockManager::isLockedReadOnlyUser() ||
-            !wopifileinfo->getUserCanWrite() || _isViewFileExtension)
+        if (!wopifileinfo->getUserCanWrite()) // Readonly.
         {
-            LOG_DBG("Setting session [" << sessionId << "] as readonly");
+            LOG_DBG("Setting session [" << sessionId << "] to readonly for UserCanWrite=false");
             session->setReadOnly(true);
-            if (_isViewFileExtension)
-            {
-                LOG_DBG("Allow session [" << sessionId
-                                          << "] to change comments on document with extension ["
-                                          << wopiStorage->getFileExtension() << ']');
-                session->setAllowChangeComments(true);
-            }
+            session->setAllowChangeComments(false);
         }
-        else if (wopifileinfo->getUserCanWrite())
+        else if (CommandControl::LockManager::isLockedReadOnlyUser()) // Readonly.
         {
-            LOG_DBG("Setting session [" << sessionId
-                                        << "] as writable since WOPI has UserCanWrite=true");
+            LOG_DBG("Setting session [" << sessionId << "] to readonly for LockedReadOnlyUser");
+            session->setReadOnly(true);
+            session->setAllowChangeComments(false);
+        }
+        else if (_isViewFileExtension) // PDF and the like: only commenting, no editing.
+        {
+            LOG_DBG("Setting session [" << sessionId << "] to readonly for ViewFileExtension ["
+                                        << wopiStorage->getFileExtension()
+                                        << "] and allowing comments");
+            session->setReadOnly(true);
+            session->setAllowChangeComments(true);
+        }
+        else // Fully writable document, with comments.
+        {
+            LOG_DBG("Setting session [" << sessionId << "] to writable and allowing comments");
             session->setReadOnly(false);
             session->setAllowChangeComments(true);
         }
