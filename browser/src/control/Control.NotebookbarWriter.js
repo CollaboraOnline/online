@@ -1524,15 +1524,55 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getZoteroTab: function() {
 		var content = [
 			{
-				'id': 'zoteroedit',
+				'id': 'zoteroaddeditcitation',
 				'type': 'bigmenubartoolitem',
 				'text': _('Add/Edit Citation'),
 				'command': 'zoteroEdit'
 			},
 			{
-				'id': 'zoterostyle',
+				'id': 'zoteroaddnote',
 				'type': 'bigmenubartoolitem',
-				'text': _('Citation Style'),
+				'text': _('Add Note'),
+				'command': 'zoteroAddNote'
+			},
+			{
+				'id': 'zoteroaddeditbibliography',
+				'type': 'bigmenubartoolitem',
+				'text': _('Add/Edit Bibliography'),
+				'command': 'zoteroEditBibliography'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoterorefresh',
+								'type': 'toolitem',
+								'text': _('Refresh'),
+								'command': 'zoteroRefresh'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoterounlink',
+								'type': 'toolitem',
+								'text': _('Unlink Citations'),
+								'command': 'zoteroUnlink'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'zoterosetdocprefs',
+				'type': 'bigmenubartoolitem',
+				'text': _('Document Preferences'),
 				'command': 'zoteroStyle'
 			}
 		 ];
