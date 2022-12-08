@@ -831,7 +831,12 @@ AM_CONDITIONAL([ENABLE_GTKAPP], [test "$ENABLE_GTKAPP" = "true"])
 dnl ENABLE_WASM_FALLBACK means we are building an otherwise normal COOL but with the "WASM fallback"
 dnl capability. Compare to ENABLE_WASM.
 
-AM_CONDITIONAL([ENABLE_WASM_FALLBACK], [test -n "$with_wasm_fallback"])
+ENABLE_WASM_FALLBACK=
+if test -n "$with_wasm_fallback"]; then
+   ENABLE_WASM_FALLBACK=true
+fi
+AC_SUBST(ENABLE_WASM_FALLBACK)
+AM_CONDITIONAL([ENABLE_WASM_FALLBACK], [test "$ENABLE_WASM_FALLBACK" = "true"])
 WASM_BUILDDIR="$with_wasm_fallback"
 AC_SUBST(WASM_BUILDDIR)
 
