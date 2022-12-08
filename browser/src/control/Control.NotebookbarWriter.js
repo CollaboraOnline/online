@@ -38,7 +38,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		if (this._map.zotero && this._map.zotero.enable) {
 			tabs.push(
 				{
-					'text': _('Zotero'),
+					'text': 'Zotero',
 					'id': 'zotero',
 					'name': 'Zotero',
 				}
