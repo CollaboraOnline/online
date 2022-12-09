@@ -50,7 +50,6 @@
 #include <Clipboard.hpp>
 #include <string>
 #include <CommandControl.hpp>
-#include <Zotero.hpp>
 
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
@@ -302,10 +301,6 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 #if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION
         return updateBlockingCommandStatus(tokens);
 #endif
-    }
-    else if (tokens.equals(0, "zotero"))
-    {
-        return handleZoteroMessage(tokens);
     }
     else
     {
@@ -2776,32 +2771,6 @@ std::string ChildSession::getBlockedCommandType(std::string command)
     return "";
 }
 #endif
-
-bool ChildSession::handleZoteroMessage(const StringVector& tokens)
-{
-    std::string messageType;
-    getTokenString(tokens[1], "type", messageType);
-
-    if (messageType == "userinfo")
-    {
-        std::string userid, apikey;
-        getTokenString(tokens[2], "userid", userid);
-        getTokenString(tokens[3], "apikey", apikey);
-
-        Zotero::ZoteroConfig::setUserId(userid);
-        Zotero::ZoteroConfig::setAPIKey(apikey);
-    }
-    else if (messageType == "action")
-    {
-        if(tokens[2] == "editcitation")
-        {
-            std::string itemsJSON = Zotero::ZoteroConfig::fetchItemsList();
-            sendTextFrame("zotero: itemslist: " + itemsJSON);
-        }
-    }
-
-    return true;
-}
 
 void ChildSession::loKitCallback(const int type, const std::string& payload)
 {
