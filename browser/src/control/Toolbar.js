@@ -875,6 +875,16 @@ L.Map.include({
 				});
 			}
 			break;
+		case 'exportepub':
+			{
+				this.sendUnoCommand('.uno:ExportToEPUB', {
+					'SynchronMode': {
+						'type': 'boolean',
+						'value': false
+					}
+				});
+			}
+			break;
 		}
 	},
 });
