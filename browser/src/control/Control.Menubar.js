@@ -1832,7 +1832,7 @@ L.Control.Menubar = L.Control.extend({
 			this._map.fire('showwizardsidebar', {noRefresh: true});
 			window.pageMobileWizard = true;
 		} else if (id === 'zoteroaddeditcitation') {
-			app.socket.sendMessage('zotero type=action editcitation');
+			this._map.zotero.handleItemList();
 		} else if (id === 'zoterosetdocprefs') {
 			this._map.zotero.handleStyleList();
 		}

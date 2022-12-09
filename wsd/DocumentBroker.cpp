@@ -45,7 +45,6 @@
 #include <common/Unit.hpp>
 #include <common/FileUtil.hpp>
 #include <CommandControl.hpp>
-#include <Zotero.hpp>
 
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
@@ -891,22 +890,6 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     LOG_TRC("Sending command restriction info to client: " << restrictionInfoString);
     session->sendMessage("restrictedCommands: " + restrictionInfoString);
 #endif
-
-    // Make sure zotero is enabled and user is logged in
-    if(Zotero::ZoteroConfig::isEnabled() &&
-       !Zotero::ZoteroConfig::getAPIKey().empty() &&
-       !Zotero::ZoteroConfig::getUserId().empty())
-    {
-        Object::Ptr zoteroInfo = new Object();
-        zoteroInfo->set("Enable", true);
-
-        std::ostringstream ossZoteroInfo;
-        zoteroInfo->stringify(ossZoteroInfo);
-        const std::string zoteroInfoString = ossZoteroInfo.str();
-        LOG_TRC("Sending Zotero info to client: " << zoteroInfoString);
-
-        session->sendMessage("zotero: config: " + zoteroInfoString);
-    }
 
 #if ENABLE_SUPPORT_KEY
     if (!COOLWSD::OverrideWatermark.empty())

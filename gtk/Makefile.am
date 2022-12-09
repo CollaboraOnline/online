@@ -31,8 +31,7 @@ common_sources = \
                  ../common/StringVector.cpp \
                  ../common/TraceEvent.cpp \
                  ../common/Unit.cpp \
-                 ../common/Util.cpp \
-                 ../common/Zotero.cpp
+                 ../common/Util.cpp
 
 kit_sources = ../kit/ChildSession.cpp \
               ../kit/Kit.cpp
