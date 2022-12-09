@@ -1479,7 +1479,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'zoteroaddnote',
 								'type': 'toolitem',
-								'text': _('Add Note'),
+								'text': _('Add Citation Note'),
 								'command': 'zoteroAddNote'
 							}
 						]
@@ -1496,7 +1496,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'zoterorefresh',
 								'type': 'toolitem',
-								'text': _('Refresh'),
+								'text': _('Refresh Citations'),
 								'command': 'zoteroRefresh'
 							}
 						]
@@ -1518,7 +1518,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			{
 				'id': 'zoterosetdocprefs',
 				'type': 'bigmenubartoolitem',
-				'text': _('Document Preferences'),
+				'text': _('Citation Preferences'),
 				'command': 'zoteroStyle'
 			},
 			{
@@ -1571,65 +1571,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 		return this.getTabPage('References', content);
 	},
-
-	getZoteroTab: function() {
-		var content = [
-			{
-				'id': 'zoteroaddeditcitation',
-				'type': 'bigmenubartoolitem',
-				'text': _('Add/Edit Citation'),
-				'command': 'zoteroEdit'
-			},
-			{
-				'id': 'zoteroaddnote',
-				'type': 'bigmenubartoolitem',
-				'text': _('Add Note'),
-				'command': 'zoteroAddNote'
-			},
-			{
-				'id': 'zoteroaddeditbibliography',
-				'type': 'bigmenubartoolitem',
-				'text': _('Add/Edit Bibliography'),
-				'command': 'zoteroEditBibliography'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'zoterorefresh',
-								'type': 'toolitem',
-								'text': _('Refresh'),
-								'command': 'zoteroRefresh'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'zoterounlink',
-								'type': 'toolitem',
-								'text': _('Unlink Citations'),
-								'command': 'zoteroUnlink'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'zoterosetdocprefs',
-				'type': 'bigmenubartoolitem',
-				'text': _('Document Preferences'),
-				'command': 'zoteroStyle'
-			}
-		 ];
-
-		return this.getTabPage('Zotero', content);
-	 },
 
 	 getReviewTab: function() {
 		var content = [
