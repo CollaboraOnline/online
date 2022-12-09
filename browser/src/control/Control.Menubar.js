@@ -265,6 +265,16 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:FormatLine'},
 				{uno: '.uno:FormatArea'}
 			]},
+			{name: _('References'), id: 'zotero', type: 'menu', menu: [
+				{name: _('Add/Edit Citation'), id: 'zoteroaddeditcitation', type: 'action'},
+				{name: _('Add Note'), id: 'zoteroaddnote', type: 'action'},
+				{type: 'separator'},
+				{name: _('Add/Edit Bibliography'), id: 'zoteroaddbibliography', type: 'action'},
+				{type: 'separator'},
+				{name: _('Refresh'), id: 'zoterorefresh', type: 'action'},
+				{name: _('Unlink Citations'), id: 'zoterounlink', type: 'action'},
+				{name: _('Document Preferences'), id: 'zoterosetdocprefs', type: 'action', iosapp: false}]
+			},
 			{name: _UNO('.uno:TableMenu', 'text'), type: 'menu', id: 'table', menu: [
 				{uno: '.uno:InsertTable'},
 				{name: _UNO('.uno:TableInsertMenu', 'text'), type: 'menu', menu: [
@@ -323,16 +333,6 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'}
 			]},
-			{name: _('Zotero'), id: 'zotero', type: 'menu', menu: [
-				{name: _('Add/Edit Citation'), id: 'zoteroaddeditcitation', type: 'action'},
-				{name: _('Add Note'), id: 'zoteroaddnote', type: 'action'},
-				{type: 'separator'},
-				{name: _('Add/Edit Bibliography'), id: 'zoteroaddbibliography', type: 'action'},
-				{type: 'separator'},
-				{name: _('Refresh'), id: 'zoterorefresh', type: 'action'},
-				{name: _('Unlink Citations'), id: 'zoterounlink', type: 'action'},
-				{name: _('Document Preferences'), id: 'zoterosetdocprefs', type: 'action', iosapp: false}]
-			},
 			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
 				{name: _('Forum'), id: 'forum', type: 'action'},
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
