@@ -6,9 +6,37 @@
 /* global _ */
 L.Control.Zotero = L.Control.extend({
 
-	initialize: function (map, zoteroProps) {
+	onAdd: function (map) {
 		this.map = map;
-		this.enable = !!zoteroProps['Enable'];
+		this.enable = false;
+		this.map.on('updateviewslist', this.onUpdateViews, this);
+	},
+
+	onRemove: function () {
+		this.map.off('updateviewslist', this.onUpdateViews, this);
+	},
+
+	onUpdateViews: function () {
+		var userExtraInfo = this.map._docLayer ? this.map._viewInfo[this.map._docLayer._viewId].userextrainfo : null;
+		if (userExtraInfo) {
+			this.apiKey = userExtraInfo.ZoteroAPIKey;
+			if (this.apiKey)
+				this.updateUserID();
+		}
+	},
+
+	updateUserID: function () {
+		var that = this;
+		fetch('https://api.zotero.org/keys/' + this.apiKey)
+			.then(function (response) { return response.json(); })
+			.then(function (data) {
+				that.userID = data.userID;
+				that.enable = !!that.userID;
+				if (that.map.uiManager.isMenubarHidden())
+					;
+				else
+					that.map.menubar._onRefresh();
+			});
 	},
 
 	dialogSetup: function (title) {
@@ -162,15 +190,19 @@ L.Control.Zotero = L.Control.extend({
 		}
 	},
 
-	showItemList: function (itemList) {
-		var itemListJSON = JSON.parse(itemList.substring('itemslist: '.length));
-		this.dialogSetup(_('My Library'));
-		this.fillItems(itemListJSON);
+	showItemList: function () {
+		var that = this;
+		fetch('https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib')
+			.then(function (response) { return response.json();})
+			.then(function (data) {
+				that.dialogSetup(_('My Library'));
+				that.fillItems(data);
 
-		var dialogUpdateEvent = this.updateDialog(['Title', 'Creator(s)', 'Date'], _('Your library is empty'));
+				var dialogUpdateEvent = that.updateDialog(['Title', 'Creator(s)', 'Date'], _('Your library is empty'));
 
-		if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
-		this.map.fire('jsdialogupdate', dialogUpdateEvent);
+				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
+				that.map.fire('jsdialogupdate', dialogUpdateEvent);
+			});
 	},
 
 	showStyleList: function() {
@@ -199,7 +231,7 @@ L.Control.Zotero = L.Control.extend({
 		}
 
 		var closeEvent = {
-		    data: {
+			data: {
 				action: 'close',
 				id: 'ZoteroDialog',
 			}
@@ -226,8 +258,8 @@ L.Control.Zotero = L.Control.extend({
 		}
 	},
 
-	handleItemList: function(itemList) {
-		this.showItemList(itemList);
+	handleItemList: function() {
+		this.showItemList();
 	},
 
 	handleStyleList: function() {
@@ -241,7 +273,7 @@ L.Control.Zotero = L.Control.extend({
 	}
 });
 
-L.control.zotero = function (map, zoteroProps) {
-	return new L.Control.Zotero(map, zoteroProps);
+L.control.zotero = function (map) {
+	return new L.Control.Zotero(map);
 };
 

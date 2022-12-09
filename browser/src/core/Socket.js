@@ -1176,17 +1176,6 @@ app.definitions.Socket = L.Class.extend({
 				this._map.openUnlockPopup(blockedInfo.errorCmd);
 			return;
 		}
-		else if (textMsg.startsWith('zotero: '))
-		{
-			var subTextMsg = textMsg.substring('zotero: '.length);
-			if (subTextMsg.startsWith('config: ')) {
-				var zoteroProp = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-				this._map.zotero = L.control.zotero(this._map, zoteroProp);
-			}
-			else {
-				this._map.zotero._onMessage(subTextMsg);
-			}
-		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('delta:') &&
 			 !textMsg.startsWith('renderfont:') && !textMsg.startsWith('windowpaint:')) {
 
