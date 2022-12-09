@@ -1452,75 +1452,85 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					}
 				],
 				'vertical': 'true'
-			},
-			{
-				'id': 'zoteroaddeditbibliography',
-				'type': 'bigmenubartoolitem',
-				'text': _('Add/Edit Bibliography'),
-				'command': 'zoteroEditBibliography'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'zoteroaddeditcitation',
-								'type': 'toolitem',
-								'text': _('Add/Edit Citation'),
-								'command': 'zoteroEdit'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'zoteroaddnote',
-								'type': 'toolitem',
-								'text': _('Add Citation Note'),
-								'command': 'zoteroAddNote'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'zoterorefresh',
-								'type': 'toolitem',
-								'text': _('Refresh Citations'),
-								'command': 'zoteroRefresh'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'zoterounlink',
-								'type': 'toolitem',
-								'text': _('Unlink Citations'),
-								'command': 'zoteroUnlink'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'zoterosetdocprefs',
-				'type': 'bigmenubartoolitem',
-				'text': _('Citation Preferences'),
-				'command': 'zoteroStyle'
-			},
+			}
+		];
+		// Ideally we would always show the following buttons,
+		// if zotero is not present we would display them
+		// disabled or enabled but trigering a common warn dialog for all of them
+		if (this._map.zotero && this._map.zotero.enable) {
+			content.push(
+				{
+					'id': 'zoteroaddeditbibliography',
+					'type': 'bigmenubartoolitem',
+					'text': _('Add/Edit Bibliography'),
+					'command': 'zoteroEditBibliography'
+				},
+				{
+					'type': 'container',
+					'children': [
+						{
+							'type': 'toolbox',
+							'children': [
+								{
+									'id': 'zoteroaddeditcitation',
+									'type': 'toolitem',
+									'text': _('Add/Edit Citation'),
+									'command': 'zoteroEdit'
+								}
+							]
+						},
+						{
+							'type': 'toolbox',
+							'children': [
+								{
+									'id': 'zoteroaddnote',
+									'type': 'toolitem',
+									'text': _('Add Citation Note'),
+									'command': 'zoteroAddNote'
+								}
+							]
+						}
+					],
+					'vertical': 'true'
+				},
+				{
+					'type': 'container',
+					'children': [
+						{
+							'type': 'toolbox',
+							'children': [
+								{
+									'id': 'zoterorefresh',
+									'type': 'toolitem',
+									'text': _('Refresh Citations'),
+									'command': 'zoteroRefresh'
+								}
+							]
+						},
+						{
+							'type': 'toolbox',
+							'children': [
+								{
+									'id': 'zoterounlink',
+									'type': 'toolitem',
+									'text': _('Unlink Citations'),
+									'command': 'zoteroUnlink'
+								}
+							]
+						}
+					],
+					'vertical': 'true'
+				},
+				{
+					'id': 'zoterosetdocprefs',
+					'type': 'bigmenubartoolitem',
+					'text': _('Citation Preferences'),
+					'command': 'zoteroStyle'
+				}
+			);
+		}
+
+		content.push(
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertFieldCtrl', 'text'),
@@ -1567,7 +1577,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'text': _UNO('.uno:UpdateAll', 'text'),
 				'command': '.uno:UpdateAll'
 			}
-		];
+		);
 
 		return this.getTabPage('References', content);
 	},
