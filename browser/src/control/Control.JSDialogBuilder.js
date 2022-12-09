@@ -2647,7 +2647,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'modifypage': 'sidebar',
 			'parapropertypanel': 'paragraphdialog',
 			'tablecellbackgroundcolor': 'fillcolor',
-			'signdocument':'signature'
+			'signdocument':'signature',
+			'zoteroaddeditcitation': 'insertauthoritiesentry',
+			'zoteroaddnote': 'addcitationnote',
+			'zoterorefresh': 'updateall',
+			'zoterounlink': 'unlinkcitation',
+			'zoteroaddeditbibliography': 'addeditbibliography',
+			'zoterosetdocprefs': 'formproperties'
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
