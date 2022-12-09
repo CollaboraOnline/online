@@ -313,11 +313,13 @@ window.app = {
 	};
 
 	global.switchToWASM = function() {
+		// This should start the WASM code. The .wasm file has to be
+		// already loaded.
 		createWasm();
 		window.socket = window.TheFakeWebSocket;
-		window.socket.send('HULLO');
 		// A FakeWebSocket is immediately open.
 		window.socket.onopen();
+		window.socket.send('HULLO');
 	};
 
 	global.proxySocketCounter = 0;
