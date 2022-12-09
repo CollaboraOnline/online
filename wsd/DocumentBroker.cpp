@@ -2710,6 +2710,9 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
                                 (std::istreambuf_iterator<char>()));
             ifs.close();
 
+            if (svg.empty())
+                LOG_WRN("Empty download: [id: " << downloadid << ", url: " << url << "].");
+
             const auto it = _sessions.find(clientId);
             if (it != _sessions.end())
             {
