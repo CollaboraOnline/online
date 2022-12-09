@@ -7,7 +7,7 @@
 L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 	getTabs: function() {
-		var tabs = [
+		return [
 			{
 				'text': _('~File'),
 				'id': '-1',
@@ -34,17 +34,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'id': '-6',
 				'name': 'References'
 			},
-		];
-		if (this._map.zotero && this._map.zotero.enable) {
-			tabs.push(
-				{
-					'text': 'Zotero',
-					'id': 'zotero',
-					'name': 'Zotero',
-				}
-			);
-		}
-		tabs.push(
 			{
 				'text': _('~Review'),
 				'id': '-7',
@@ -82,31 +71,25 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'id': '-2',
 				'name': 'Help',
 			}
-		);
-		return tabs;
+		];
 	},
 
 	getFullJSON: function(selectedId) {
-		var tabPages = [
-			this.getFileTab(),
-			this.getHomeTab(),
-			this.getInsertTab(),
-			this.getLayoutTab(),
-			this.getReferencesTab()
-		];
-		if (this._map.zotero && this._map.zotero.enable) {
-			tabPages.push(this.getZoteroTab());
-		}
-		tabPages.push(
-			this.getReviewTab(),
-			this.getFormatTab(),
-			this.getFormTab(),
-			this.getTableTab(),
-			this.getDrawTab(),
-			this.getViewTab(),
-			this.getHelpTab()
-		);
-		return this.getNotebookbar(tabPages, selectedId);
+		return this.getNotebookbar(
+			[
+				this.getFileTab(),
+				this.getHomeTab(),
+				this.getInsertTab(),
+				this.getLayoutTab(),
+				this.getReferencesTab(),
+				this.getReviewTab(),
+				this.getFormatTab(),
+				this.getFormTab(),
+				this.getTableTab(),
+				this.getDrawTab(),
+				this.getViewTab(),
+				this.getHelpTab()
+			 ], selectedId);
 	},
 
 	getFileTab: function() {
@@ -1469,6 +1452,74 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					}
 				],
 				'vertical': 'true'
+			},
+			{
+				'id': 'zoteroaddeditbibliography',
+				'type': 'bigmenubartoolitem',
+				'text': _('Add/Edit Bibliography'),
+				'command': 'zoteroEditBibliography'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoteroaddeditcitation',
+								'type': 'toolitem',
+								'text': _('Add/Edit Citation'),
+								'command': 'zoteroEdit'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoteroaddnote',
+								'type': 'toolitem',
+								'text': _('Add Note'),
+								'command': 'zoteroAddNote'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoterorefresh',
+								'type': 'toolitem',
+								'text': _('Refresh'),
+								'command': 'zoteroRefresh'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoterounlink',
+								'type': 'toolitem',
+								'text': _('Unlink Citations'),
+								'command': 'zoteroUnlink'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'zoterosetdocprefs',
+				'type': 'bigmenubartoolitem',
+				'text': _('Document Preferences'),
+				'command': 'zoteroStyle'
 			},
 			{
 				'type': 'bigtoolitem',
