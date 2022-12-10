@@ -281,6 +281,8 @@ void Session::dumpState(std::ostream& os)
        << "\n\t\tisActive: " << _isActive
        << "\n\t\tisCloseFrame: " << _isCloseFrame
        << "\n\t\tisReadOnly: " << _isReadOnly
+       << "\n\t\tisAllowChangeComments: " << _isAllowChangeComments
+       << "\n\t\tisEditable: " << isEditable()
        << "\n\t\tdocURL: " << _docURL
        << "\n\t\tjailedFilePath: " << _jailedFilePath
        << "\n\t\tdocPwd: " << _docPassword
