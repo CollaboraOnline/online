@@ -121,8 +121,7 @@ protected:
     /// Send a command to WSD.
     void sendCommand(int index, const std::string& msg)
     {
-        if (index < 0 || static_cast<std::size_t>(index) >= _wsList.size())
-            LOK_ASSERT(index >= 0 && static_cast<std::size_t>(index) < _wsList.size());
+        LOK_ASSERT_SILENT(index >= 0 && static_cast<std::size_t>(index) < _wsList.size());
         helpers::sendTextFrame(getWsAt(index)->getWebSocket(), msg, getTestname());
         SocketPoll::wakeupWorld();
     }

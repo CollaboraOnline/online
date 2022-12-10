@@ -84,7 +84,7 @@ std::string inline lokFormatAssertEq(const char* expected_name, const std::strin
 #endif
 
 /// Assert the truth of a condition, with a custom message.
-#define LOK_ASSERT_MESSAGE(message, condition)                                                     \
+#define LOK_ASSERT_MESSAGE_IMPL(message, condition, silent)                                        \
     do                                                                                             \
     {                                                                                              \
         auto&& cond##__LINE__ = !!(condition);                                                     \
@@ -99,14 +99,24 @@ std::string inline lokFormatAssertEq(const char* expected_name, const std::strin
             LOK_ASSERT_IMPL(cond##__LINE__);                                                       \
             CPPUNIT_ASSERT_MESSAGE((msg##__LINE__), condition);                                    \
         }                                                                                          \
-        else                                                                                       \
+        else if (!silent)                                                                          \
         {                                                                                          \
             LOK_TRACE("PASS: " << (#condition) << " [true]");                                      \
         }                                                                                          \
     } while (false)
 
-/// Assert the truth of a condition.
-#define LOK_ASSERT(condition) LOK_ASSERT_MESSAGE("", condition)
+/// Assert the truth of a condition, with a custom message, logging on success.
+#define LOK_ASSERT_MESSAGE(message, condition) LOK_ASSERT_MESSAGE_IMPL(message, condition, false)
+
+/// Assert the truth of a condition, with a custom message, without logging on success.
+#define LOK_ASSERT_MESSAGE_SILENT(message, condition)                                              \
+    LOK_ASSERT_MESSAGE_IMPL(message, condition, true)
+
+/// Assert the truth of a condition, logging on success.
+#define LOK_ASSERT(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, false)
+
+/// Assert the truth of a condition without logging on success.
+#define LOK_ASSERT_SILENT(condition) LOK_ASSERT_MESSAGE_IMPL("", condition, true)
 
 /// Assert the equality of two expressions. WARNING: Multiple evaluations!
 /// Captures full expressions, but only meaningful when they have no side-effects when evaluated.
