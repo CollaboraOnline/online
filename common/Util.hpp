@@ -1045,6 +1045,9 @@ int main(int argc, char**argv)
     std::string encodeURIComponent(const std::string& uri,
                                    const std::string& reserved = ",/?:@&=+$#");
 
+    /// Decode a URI encoded with encodeURIComponent.
+    std::string decodeURIComponent(const std::string& uri);
+
     /// Anonymize a sensitive string to avoid leaking it.
     /// Called on strings to be logged or exposed.
     std::string anonymize(const std::string& text, const std::uint64_t nAnonymizationSalt);

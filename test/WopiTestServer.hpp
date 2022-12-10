@@ -414,7 +414,7 @@ protected:
     bool handleHttpRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
                            std::shared_ptr<StreamSocket>& socket) override
     {
-        Poco::URI uriReq(request.getURI());
+        Poco::URI uriReq(Util::decodeURIComponent(request.getURI()));
 
         {
             std::ostringstream oss;
