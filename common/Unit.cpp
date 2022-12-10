@@ -492,7 +492,7 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
     _setRetValue = true;
 
     // Check if we have more tests, but keep the current index if it's the last.
-    if (GlobalArray && GlobalIndex >= 0 && GlobalArray[GlobalIndex + 1])
+    if (haveMoreTests())
     {
         // We have more tests.
         ++GlobalIndex;

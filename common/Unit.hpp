@@ -221,7 +221,8 @@ public:
 
     static UnitBase& get()
     {
-        assert(GlobalArray && GlobalIndex >= 0 && GlobalArray[GlobalIndex]);
+        assert(GlobalArray && GlobalIndex >= 0 && GlobalArray[GlobalIndex] &&
+               "There are no tests to dereference");
         return *GlobalArray[GlobalIndex];
     }
 
@@ -241,6 +242,12 @@ private:
 
     /// Based on COOL_TEST_OPTIONS envar, filter the tests.
     static void filter();
+
+    /// Returns true iff there are more valid test instances to dereference.
+    static bool haveMoreTests()
+    {
+        return GlobalArray && GlobalIndex >= 0 && GlobalArray[GlobalIndex + 1];
+    }
 
     /// Handles messages from LOKit.
     virtual bool onFilterLOKitMessage(const std::shared_ptr<Message>& /*message*/) { return false; }
