@@ -710,6 +710,13 @@ namespace Util
         return encoded;
     }
 
+    std::string decodeURIComponent(const std::string& uri)
+    {
+        std::string decoded;
+        Poco::URI::decode(uri, decoded);
+        return decoded;
+    }
+
     /// Split a string in two at the delimiter and give the delimiter to the first.
     static
     std::pair<std::string, std::string> splitLast2(const char* s, const int length, const char delimiter = ' ')
