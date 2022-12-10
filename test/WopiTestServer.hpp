@@ -13,6 +13,8 @@
 #include "Unit.hpp"
 #include "Util.hpp"
 #include "UnitWSDClient.hpp"
+#include "StringVector.hpp"
+#include "lokassert.hpp"
 
 #include <Poco/JSON/Object.h>
 #include <Poco/URI.h>
@@ -409,6 +411,21 @@ protected:
         return false;
     }
 
+    /// In some very rare cases we may get requests from other tests.
+    /// This asserts that the URI in question is for our test.
+    void assertTargetTest(const Poco::URI& uri)
+    {
+        const auto params = uri.getQueryParameters();
+        const auto testnameIt = std::find_if(params.begin(), params.end(),
+                                             [](const std::pair<std::string, std::string>& pair)
+                                             { return pair.first == "testname"; });
+
+        LOK_ASSERT_MESSAGE_SILENT("Request belongs to an unknown test", testnameIt != params.end());
+
+        const std::string target = StringVector::tokenize(testnameIt->second, '/')[0];
+        LOK_ASSERT_EQUAL_MESSAGE("Request belongs to a different test", getTestname(), target);
+    }
+
     /// Here we act as a WOPI server, so that we have a server that responds to
     /// the wopi requests without additional expensive setup.
     bool handleHttpRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
@@ -428,10 +445,7 @@ protected:
             LOG_TST(oss.str());
         }
 
-        // In some very rare cases we are getting requests from other tests.
-        LOK_ASSERT_MESSAGE("Request belongs to a different test",
-                           uriReq.toString().find("testname=" + getTestname()) !=
-                               std::string::npos);
+        assertTargetTest(uriReq);
 
         if (request.getMethod() == "GET")
         {
