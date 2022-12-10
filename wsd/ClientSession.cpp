@@ -646,9 +646,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "save"))
     {
-        if (isReadOnly() && !isAllowChangeComments())
+        // If we can't write to Storage, there is no point in saving.
+        if (!isWritable())
         {
-            LOG_WRN("The document is read-only, cannot save.");
+            LOG_WRN("Session [" << getId() << "] on document [" << docBroker->getDocKey()
+                                << "] has no write permissions in Storage and cannot save.");
+            sendTextFrameAndLogError("error: cmd=save kind=savefailed");
         }
         else
         {
