@@ -27,6 +27,7 @@
 #include "Util.hpp"
 
 #include <common/SigUtil.hpp>
+#include <common/StringVector.hpp>
 #include <common/Message.hpp>
 
 UnitKit *GlobalKit = nullptr;
@@ -36,6 +37,7 @@ UnitBase** UnitBase::GlobalArray = nullptr;
 int UnitBase::GlobalIndex = -1;
 char* UnitBase::UnitLibPath = nullptr;
 void* UnitBase::DlHandle = nullptr;
+UnitBase::TestOptions UnitBase::GlobalTestOptions;
 UnitBase::TestResult UnitBase::GlobalResult = UnitBase::TestResult::Ok;
 static std::thread TimeoutThread;
 static std::atomic<bool> TimeoutThreadRunning(false);
@@ -116,21 +118,39 @@ UnitBase** UnitBase::linkAndCreateUnit(UnitType type, const std::string& unitLib
     return nullptr;
 }
 
-void UnitBase::filter()
+void UnitBase::initTestSuiteOptions()
 {
-    // For now, support only filtering.
     static const char* TestOptions = getenv("COOL_TEST_OPTIONS");
     if (TestOptions == nullptr)
         return;
 
-    const std::string filter = Util::toLower(TestOptions);
+    StringVector tokens = StringVector::tokenize(std::string(TestOptions), ':');
+
+    for (const auto& token : tokens)
+    {
+        // Expect name=value pairs.
+        const auto pair = Util::split(tokens.getParam(token), '=');
+
+        // If there is no value, assume it's a filter string.
+        if (pair.second.empty())
+        {
+            const std::string filter = Util::toLower(pair.first);
+            LOG_INF("Setting the 'filter' test option to [" << filter << ']');
+            GlobalTestOptions.setFilter(filter);
+        }
+    }
+}
+
+void UnitBase::filter()
+{
+    const auto& filter = GlobalTestOptions.getFilter();
     for (; GlobalArray[GlobalIndex] != nullptr; ++GlobalIndex)
     {
         const std::string& name = GlobalArray[GlobalIndex]->getTestname();
         if (strstr(Util::toLower(name).c_str(), filter.c_str()))
             break;
 
-        LOG_INF("Skipping test [" << name << "] per filter [" << TestOptions << "]");
+        LOG_INF("Skipping test [" << name << "] per filter [" << filter << ']');
     }
 }
 
@@ -151,6 +171,8 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
         GlobalArray = linkAndCreateUnit(type, unitLibPath);
         if (GlobalArray)
         {
+            initTestSuiteOptions();
+
             // Filter tests.
             GlobalIndex = 0;
             filter();
