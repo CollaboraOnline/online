@@ -741,26 +741,26 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         if (!wopifileinfo->getUserCanWrite()) // Readonly.
         {
             LOG_DBG("Setting session [" << sessionId << "] to readonly for UserCanWrite=false");
-            session->setReadOnly(true);
-            session->setAllowChangeComments(false);
+            session->setWritable(false);
         }
         else if (CommandControl::LockManager::isLockedReadOnlyUser()) // Readonly.
         {
             LOG_DBG("Setting session [" << sessionId << "] to readonly for LockedReadOnlyUser");
-            session->setReadOnly(true);
-            session->setAllowChangeComments(false);
+            session->setWritable(false);
         }
         else if (_isViewFileExtension) // PDF and the like: only commenting, no editing.
         {
             LOG_DBG("Setting session [" << sessionId << "] to readonly for ViewFileExtension ["
                                         << wopiStorage->getFileExtension()
                                         << "] and allowing comments");
+            session->setWritable(true);
             session->setReadOnly(true);
             session->setAllowChangeComments(true);
         }
         else // Fully writable document, with comments.
         {
             LOG_DBG("Setting session [" << sessionId << "] to writable and allowing comments");
+            session->setWritable(true);
             session->setReadOnly(false);
             session->setAllowChangeComments(true);
         }
