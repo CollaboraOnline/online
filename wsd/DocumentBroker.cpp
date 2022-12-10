@@ -1927,7 +1927,7 @@ std::shared_ptr<ClientSession> DocumentBroker::getWriteableSession() const
         // Save the document using a session that is loaded, editable, and
         // with a valid authorization token, or the first.
         // Note that isViewLoaded() precludes inWaitDisconnected().
-        if (!savingSession || (session->isViewLoaded() && session->isWritable() &&
+        if (!savingSession || (session->isViewLoaded() && session->isEditable() &&
                                !session->getAuthorization().isExpired()))
         {
             savingSession = session;
@@ -2033,7 +2033,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
     // Note: a loaded view cannot be disconnecting.
     const auto itLastEditingSession = _sessions.find(_lastEditingSessionId);
     const std::shared_ptr<ClientSession> savingSession =
-        (itLastEditingSession != _sessions.end() && itLastEditingSession->second->isWritable() &&
+        (itLastEditingSession != _sessions.end() && itLastEditingSession->second->isEditable() &&
          itLastEditingSession->second->isViewLoaded())
             ? itLastEditingSession->second
             : getWriteableSession();
@@ -2382,7 +2382,7 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
     {
         const std::size_t activeSessionCount = countActiveSessions();
 
-        const bool lastEditableSession = session->isWritable() && !haveAnotherEditableSession(id);
+        const bool lastEditableSession = session->isEditable() && !haveAnotherEditableSession(id);
         static const bool dontSaveIfUnmodified = !COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
 
         LOG_INF("Removing session [" << id << "] on docKey [" << _docKey << "]. Have "
@@ -2390,7 +2390,7 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
                                      << " active). IsLive: " << session->isLive()
                                      << ", IsReadOnly: " << session->isReadOnly()
                                      << ", IsAllowChangeComments: " << session->isAllowChangeComments()
-                                     << ", IsWritable: " << session->isWritable()
+                                     << ", IsEditable: " << session->isEditable()
                                      << ", Unloading: " << _docState.isUnloadRequested()
                                      << ", MarkToDestroy: " << _docState.isMarkedToDestroy()
                                      << ", LastEditableSession: " << lastEditableSession
@@ -2476,7 +2476,7 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
             _docState.markToDestroy();
         }
 
-        const bool lastEditableSession = session->isWritable() && !haveAnotherEditableSession(id);
+        const bool lastEditableSession = session->isEditable() && !haveAnotherEditableSession(id);
 
         LOG_TRC("Disconnect session internal "
                 << id << ", LastEditableSession: " << lastEditableSession << " destroy? "
@@ -3220,7 +3220,7 @@ bool DocumentBroker::haveAnotherEditableSession(const std::string& id) const
 
     for (const auto& it : _sessions)
     {
-        if (it.second->getId() != id && it.second->isViewLoaded() && it.second->isWritable())
+        if (it.second->getId() != id && it.second->isViewLoaded() && it.second->isEditable())
         {
             // This is a loaded session that is non-readonly.
             return true;

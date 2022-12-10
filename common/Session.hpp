@@ -83,6 +83,9 @@ public:
     void setAllowChangeComments(bool allow) { _isAllowChangeComments = allow; }
     bool isAllowChangeComments() const { return _isAllowChangeComments; }
 
+    /// Returns true iff the view is either non-readonly or can change comments.
+    bool isEditable() const { return !isReadOnly() || isAllowChangeComments(); }
+
     /// overridden to prepend client ids on messages by the Kit
     virtual bool sendBinaryFrame(const char* buffer, int length);
     virtual bool sendTextFrame(const char* buffer, const int length);
