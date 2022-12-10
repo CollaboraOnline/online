@@ -72,6 +72,20 @@ public:
     };
 
 protected:
+    /// The options used for the current TestSuite.
+    class TestOptions
+    {
+    public:
+        TestOptions() {}
+
+        void setFilter(const std::string& filter) { _filter = filter; }
+        const std::string& getFilter() const { return _filter; }
+
+    private:
+        /// The test filter string. Only run tests that match.
+        std::string _filter;
+    };
+
     // ---------------- Helper API ----------------
     /// After this time we invoke 'timeout' default 30 seconds
     void setTimeout(std::chrono::milliseconds timeoutMilliSeconds);
@@ -240,6 +254,9 @@ private:
     /// Dynamically load the unit-test .so.
     static UnitBase** linkAndCreateUnit(UnitType type, const std::string& unitLibPath);
 
+    /// Initialize the Test Suite options.
+    static void initTestSuiteOptions();
+
     /// Based on COOL_TEST_OPTIONS envar, filter the tests.
     static void filter();
 
@@ -269,6 +286,7 @@ private:
     static char *UnitLibPath;
     static UnitBase** GlobalArray; //< All the tests.
     static int GlobalIndex; //< The index of the current test.
+    static TestOptions GlobalTestOptions; //< The test options for this Test Suite.
     static TestResult GlobalResult; //< The result of all tests. Latches at first failure.
 
     bool _setRetValue;
