@@ -5536,7 +5536,7 @@ int COOLWSD::innerMain()
 
     // Wait until documents are saved and sessions closed.
     // Don't stop the DocBroker, they will exit.
-    constexpr size_t sleepMs = 500;
+    constexpr size_t sleepMs = 200;
     constexpr size_t count = (COMMAND_TIMEOUT_MS * 6) / sleepMs;
     for (size_t i = 0; i < count; ++i)
     {
