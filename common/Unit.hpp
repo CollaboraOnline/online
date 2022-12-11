@@ -76,14 +76,22 @@ protected:
     class TestOptions
     {
     public:
-        TestOptions() {}
+        TestOptions()
+            : _keepgoing(false)
+        {
+        }
 
         void setFilter(const std::string& filter) { _filter = filter; }
         const std::string& getFilter() const { return _filter; }
 
+        void setKeepgoing(bool failfase) { _keepgoing = failfase; }
+        bool getKeepgoing() const { return _keepgoing; }
+
     private:
         /// The test filter string. Only run tests that match.
         std::string _filter;
+        /// Don't run subsequent tests, if any, on failure.
+        bool _keepgoing;
     };
 
     // ---------------- Helper API ----------------
