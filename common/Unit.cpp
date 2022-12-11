@@ -25,6 +25,7 @@
 
 #include "Log.hpp"
 #include "Util.hpp"
+#include "test/testlog.hpp"
 
 #include <common/SigUtil.hpp>
 #include <common/StringVector.hpp>
@@ -496,8 +497,8 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
     if (isFinished())
     {
         if (result != _result)
-            LOG_TST(getTestname() << ": exitTest got " << name(result)
-                                  << " but is already finished with " << name(_result));
+            LOG_TST("exitTest got " << name(result) << " but is already finished with "
+                                    << name(_result));
         return;
     }
 
@@ -507,13 +508,12 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
 
     if (result == TestResult::Ok)
     {
-        LOG_TST(getTestname() << ": SUCCESS: exitTest: " << name(result)
-                              << (reason.empty() ? "" : ": " + reason));
+        LOG_TST("SUCCESS: exitTest: " << name(result) << (reason.empty() ? "" : ": " + reason));
     }
     else
     {
-        LOG_TST("ERROR " << getTestname() << ": FAILURE: exitTest: " << name(result)
-                         << (reason.empty() ? "" : ": " + reason));
+        LOG_TST("ERROR: FAILURE: exitTest: " << name(result)
+                                             << (reason.empty() ? "" : ": " + reason));
 
         if (GlobalResult == TestResult::Ok)
             GlobalResult = result;
@@ -572,8 +572,8 @@ void UnitBase::timeout()
     // Don't timeout if we had already finished.
     if (isUnitTesting() && !isFinished())
     {
-        LOG_TST("ERROR " << getTestname() << ": Timed out waiting for unit test to complete within "
-                         << _timeoutMilliSeconds);
+        LOG_TST("ERROR: Timed out waiting for unit test to complete within "
+                << _timeoutMilliSeconds);
         exitTest(TestResult::TimedOut);
     }
 }
