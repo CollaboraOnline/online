@@ -18,6 +18,7 @@
 /// Some ideas from https://stackoverflow.com/questions/28828957/enum-to-string-in-modern-c11-c14-c17-and-future-c20
 /// and from https://github.com/pfultz2/Cloak/wiki/C-Preprocessor-tricks,-tips,-and-idioms
 
+#define STRINGIFY1(_, e) #e,
 #define STRINGIFY2(NAME, e) #NAME "::" #e,
 #define CONCAT(X, Y) X##Y
 #define CALL(X, ...) X(__VA_ARGS__)
@@ -50,6 +51,20 @@
 /// NAME is the name of the state enum followed by the state names.
 #define STATE_ENUM(NAME, ...)                                                                      \
     enum class NAME : char;                                                                        \
+    /* Returns the state name only, without the namespace. */                                      \
+    static inline const char* nameShort(NAME e)                                                    \
+    {                                                                                              \
+        static const char* const NAME##_names[] = { FOR_EACH(STRINGIFY1, NAME, __VA_ARGS__) };     \
+        assert(static_cast<unsigned>(e) < sizeof(NAME##_names) / sizeof(NAME##_names[0]) &&        \
+               "Enum value is out of range.");                                                     \
+        return NAME##_names[static_cast<int>(e)];                                                  \
+    }                                                                                              \
+    /* Returns the state name only, without the namespace, as a std::string. */                    \
+    static inline std::string toStringShort(NAME e)                                                \
+    {                                                                                              \
+        return nameShort(e);                                                                       \
+    }                                                                                              \
+    /* Returns the state name with the namespace. */                                               \
     static inline const char* name(NAME e)                                                         \
     {                                                                                              \
         static const char* const NAME##_names[] = { FOR_EACH(STRINGIFY2, NAME, __VA_ARGS__) };     \
@@ -57,7 +72,11 @@
                "Enum value is out of range.");                                                     \
         return NAME##_names[static_cast<int>(e)];                                                  \
     }                                                                                              \
-    static inline std::string toString(NAME e) { return name(e); }                                 \
+    /* Returns the state name, with the namespace, as a std::string. */                            \
+    static inline std::string toString(NAME e)                                                     \
+    {                                                                                              \
+        return name(e);                                                                            \
+    }                                                                                              \
     enum class NAME : char                                                                         \
     {                                                                                              \
         __VA_ARGS__                                                                                \
