@@ -83,25 +83,38 @@ std::string inline lokFormatAssertEq(const char* expected_name, const std::strin
     } while (false)
 #endif
 
+namespace test
+{
+namespace detail
+{
+/// For tests that don't have a 'failed' member.
+inline constexpr bool failed() { return false; }
+} // namespace detail
+} // namespace test
+
 /// Assert the truth of a condition, with a custom message.
 #define LOK_ASSERT_MESSAGE_IMPL(message, condition, silent)                                        \
     do                                                                                             \
     {                                                                                              \
-        auto&& cond##__LINE__ = !!(condition);                                                     \
-        if (!cond##__LINE__)                                                                       \
+        using namespace test::detail;                                                              \
+        if (!failed())                                                                             \
         {                                                                                          \
-            std::ostringstream oss##__LINE__;                                                      \
-            oss##__LINE__ << message;                                                              \
-            const auto msg##__LINE__ = oss##__LINE__.str();                                        \
-            TST_LOG("ERROR: Assertion failure: "                                                   \
-                    << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ". ")                         \
-                    << "Condition: " << (#condition));                                             \
-            LOK_ASSERT_IMPL(cond##__LINE__);                                                       \
-            CPPUNIT_ASSERT_MESSAGE((msg##__LINE__), condition);                                    \
-        }                                                                                          \
-        else if (!silent)                                                                          \
-        {                                                                                          \
-            LOK_TRACE("PASS: " << (#condition) << " [true]");                                      \
+            auto&& cond##__LINE__ = !!(condition);                                                 \
+            if (!cond##__LINE__)                                                                   \
+            {                                                                                      \
+                std::ostringstream oss##__LINE__;                                                  \
+                oss##__LINE__ << message;                                                          \
+                const auto msg##__LINE__ = oss##__LINE__.str();                                    \
+                TST_LOG("ERROR: Assertion failure: "                                               \
+                        << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ". ")                     \
+                        << "Condition: " << (#condition));                                         \
+                LOK_ASSERT_IMPL(cond##__LINE__);                                                   \
+                CPPUNIT_ASSERT_MESSAGE((msg##__LINE__), condition);                                \
+            }                                                                                      \
+            else if (!silent)                                                                      \
+            {                                                                                      \
+                LOK_TRACE("PASS: " << (#condition) << " [true]");                                  \
+            }                                                                                      \
         }                                                                                          \
     } while (false)
 
@@ -128,7 +141,8 @@ std::string inline lokFormatAssertEq(const char* expected_name, const std::strin
 #define LOK_ASSERT_EQUAL_MESSAGE_UNSAFE(message, expected_name, expected, actual_name, actual)     \
     do                                                                                             \
     {                                                                                              \
-        if (!((expected) == (actual)))                                                             \
+        using namespace test::detail;                                                              \
+        if (!failed() && !((expected) == (actual)))                                                \
         {                                                                                          \
             std::ostringstream oss##__LINE__;                                                      \
             oss##__LINE__ << message;                                                              \
