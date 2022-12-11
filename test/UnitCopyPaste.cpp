@@ -100,8 +100,6 @@ public:
     bool assertClipboard(const std::shared_ptr<ClipboardData> &clipboard,
                          const std::string &mimeType, const std::string &content)
     {
-        bool failed = false;
-
         std::string value;
 
         // allow empty clipboards
@@ -113,7 +111,8 @@ public:
             LOG_TST("Error: missing clipboard or missing clipboard mime type '" << mimeType
                                                                                 << '\'');
             LOK_ASSERT_FAIL("Missing clipboard mime type");
-            failed = true;
+            exitTest(TestResult::Failed);
+            return false;
         }
         else if (value != content)
         {
@@ -122,13 +121,10 @@ public:
                     << Util::dumpHex(value) << "Expected:\n"
                     << Util::dumpHex(content));
             LOK_ASSERT_EQUAL_MESSAGE("Clipboard content mismatch", content, value);
-            failed = true;
-        }
-        if (failed)
-        {
             exitTest(TestResult::Failed);
             return false;
         }
+
         return true;
     }
 
