@@ -511,9 +511,11 @@ void DocumentBroker::pollThread()
 #endif
     }
 
-    LOG_INF("Finished polling doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
-            _poll->continuePolling() << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag() <<
-            ", TerminationFlag: " << SigUtil::getTerminationFlag() << ", closeReason: " << _closeReason << ". Flushing socket.");
+    LOG_INF("Finished polling doc ["
+            << _docKey << "]. stop: " << _stop << ", continuePolling: " << _poll->continuePolling()
+            << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag()
+            << ", TerminationFlag: " << SigUtil::getTerminationFlag()
+            << ". Terminating child with reason: [" << _closeReason << ']');
 
     // Check for data-loss.
     std::string reason;
@@ -540,34 +542,33 @@ void DocumentBroker::pollThread()
         LOG_WRN(state.str());
     }
 
-    // Flush socket data first.
-    constexpr auto flushTimeoutMicroS = std::chrono::microseconds(POLL_TIMEOUT_MICRO_S * 2); // ~1000ms
-    LOG_INF("Flushing socket " << _poll->getSocketCount() << " for doc [" << _docKey << "] for "
-                               << flushTimeoutMicroS << ". stop: " << _stop
-                               << ", continuePolling: " << _poll->continuePolling()
-                               << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag()
-                               << ", TerminationFlag: " << SigUtil::getTerminationFlag()
-                               << ". Terminating child with reason: [" << _closeReason << "].");
-    const auto flushStartTime = std::chrono::steady_clock::now();
-    while (_poll->getSocketCount())
+    // Flush socket data first, if any.
+    if (_poll->getSocketCount())
     {
-        const auto now = std::chrono::steady_clock::now();
-        const auto elapsedMicroS
-            = std::chrono::duration_cast<std::chrono::microseconds>(now - flushStartTime);
-        if (elapsedMicroS > flushTimeoutMicroS)
-            break;
+        constexpr auto flushTimeoutMicroS =
+            std::chrono::microseconds(POLL_TIMEOUT_MICRO_S * 2); // ~2000ms
+        LOG_INF("Flushing " << _poll->getSocketCount() << " sockets for doc [" << _docKey
+                            << "] for " << flushTimeoutMicroS);
 
-        const std::chrono::microseconds timeoutMicroS
-            = std::min(flushTimeoutMicroS - elapsedMicroS,
-                       std::chrono::microseconds(POLL_TIMEOUT_MICRO_S / 5));
-        _poll->poll(timeoutMicroS);
+        const auto flushStartTime = std::chrono::steady_clock::now();
+        while (_poll->getSocketCount())
+        {
+            const auto now = std::chrono::steady_clock::now();
+            const auto elapsedMicroS =
+                std::chrono::duration_cast<std::chrono::microseconds>(now - flushStartTime);
+            if (elapsedMicroS > flushTimeoutMicroS)
+                break;
 
-        processBatchUpdates();
+            const std::chrono::microseconds timeoutMicroS =
+                std::min(flushTimeoutMicroS - elapsedMicroS,
+                         std::chrono::microseconds(POLL_TIMEOUT_MICRO_S / 5));
+            _poll->poll(timeoutMicroS);
+
+            processBatchUpdates();
+        }
+
+        LOG_INF("Finished flushing socket for doc [" << _docKey << ']');
     }
-
-    LOG_INF("Finished flushing socket for doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
-            _poll->continuePolling() << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag() <<
-            ", TerminationFlag: " << SigUtil::getTerminationFlag() << ". Terminating child with reason: [" << _closeReason << "].");
 
     // Terminate properly while we can.
     terminateChild(_closeReason);
@@ -584,7 +585,7 @@ void DocumentBroker::pollThread()
     if (_tileCache)
         _tileCache->clear();
 
-    LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
+    LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << ']');
 }
 
 bool DocumentBroker::isAlive() const
