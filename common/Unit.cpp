@@ -138,6 +138,12 @@ void UnitBase::initTestSuiteOptions()
             LOG_INF("Setting the 'filter' test option to [" << filter << ']');
             GlobalTestOptions.setFilter(filter);
         }
+        else if (pair.first == "keepgoing")
+        {
+            const bool keepgoing = pair.second == "1" || pair.second == "true";
+            LOG_INF("Setting the 'keepgoing' test option to " << keepgoing);
+            GlobalTestOptions.setKeepgoing(keepgoing);
+        }
     }
 }
 
@@ -496,6 +502,9 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
     }
 
     _result = result;
+    endTest(reason);
+    _setRetValue = true;
+
     if (result == TestResult::Ok)
     {
         LOG_TST(getTestname() << ": SUCCESS: exitTest: " << name(result)
@@ -508,10 +517,19 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
 
         if (GlobalResult == TestResult::Ok)
             GlobalResult = result;
-    }
 
-    endTest(reason);
-    _setRetValue = true;
+        if (!GlobalTestOptions.getKeepgoing() && haveMoreTests())
+        {
+            LOG_TST("Failing fast per options, even though there are more tests");
+#if !MOBILEAPP
+            LOG_TST("Setting TerminationFlag as the Test Suite failed");
+            SigUtil::setTerminationFlag(); // And wakupWorld.
+#else
+            SocketPoll::wakeupWorld();
+#endif
+            return;
+        }
+    }
 
     // Check if we have more tests, but keep the current index if it's the last.
     if (haveMoreTests())
