@@ -3764,6 +3764,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  possibly-modified: " << isPossiblyModified();
     os << "\n  canSave: " << name(canSaveToDisk());
     os << "\n  canUpload: " << name(canUploadToStorage());
+    os << "\n  isStorageOutdated: " << isStorageOutdated();
     os << "\n  needToUpload: " << name(needToUploadToStorage());
     os << "\n  lastActivityTime: " << Util::getTimeForLog(now, _lastActivityTime);
     os << "\n  haveActivityAfterSaveRequest: " << haveActivityAfterSaveRequest();
