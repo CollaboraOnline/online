@@ -123,6 +123,7 @@ protected:
         : _setRetValue(false)
         , _result(TestResult::Ok)
         , _timeoutMilliSeconds(std::chrono::seconds(30))
+        , _startTimeMilliSeconds(std::chrono::milliseconds::zero())
         , _type(type)
         , _socketPoll(std::make_shared<SocketPoll>(name))
         , testname(name)
@@ -233,7 +234,16 @@ public:
 
     void checkTimeout(const std::chrono::milliseconds elapsedTime)
     {
-        if (isUnitTesting() && !isFinished() && elapsedTime > getTimeoutMilliSeconds())
+        if (_startTimeMilliSeconds == std::chrono::milliseconds::zero())
+        {
+            // Since we can't assume we are the first test to run,
+            // we need to capture *out* start so we can correctly
+            // calculate how long we've been running.
+            _startTimeMilliSeconds = elapsedTime;
+        }
+
+        if (isUnitTesting() && !isFinished() &&
+            (elapsedTime - _startTimeMilliSeconds) > getTimeoutMilliSeconds())
         {
             LOG_TST("ERROR Test exceeded its time limit of "
                     << getTimeoutMilliSeconds() << ". It's been running for " << elapsedTime);
@@ -300,6 +310,8 @@ private:
     bool _setRetValue;
     TestResult _result;
     std::chrono::milliseconds _timeoutMilliSeconds;
+    /// The time at which this particular test started, relative to the start of the Test Suite.
+    std::chrono::milliseconds _startTimeMilliSeconds;
     UnitType _type;
 
     std::mutex _lock; //< Used to protect cleanup functions.
