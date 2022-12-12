@@ -227,15 +227,15 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'children': [
 						{
 							'id': 'downloadas-pdf',
-							'type': 'menubartoolitem',
+							'type': 'customtoolitem',
 							'text': _('PDF Document (.pdf)'),
-							'command': ''
+							'command': 'exportpdf'
 						},
 						{
 							'id': 'downloadas-epub',
-							'type': 'menubartoolitem',
+							'type': 'customtoolitem',
 							'text': _('EPUB Document (.epub)'),
-							'command': ''
+							'command': 'exportepub'
 						},
 					],
 					'vertical': 'true'
@@ -270,16 +270,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'type': 'bigtoolitem',
 					'text': _('Properties'),
 					'command': '.uno:SetDocumentProperties'
-				},
-				{
-					'type': 'bigcustomtoolitem',
-					'text': _UNO('.uno:ExportToPDF'),
-					'command': 'exportpdf'
-				},
-				{
-					'type': 'bigcustomtoolitem',
-					'text': _UNO('.uno:ExportToEPUB'),
-					'command': 'exportepub'
 				}
 			]
 		});
