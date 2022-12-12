@@ -315,6 +315,9 @@ L.Control.UIManager = L.Control.extend({
 		this.makeSpaceForNotebookbar();
 		this.notebookbar._showNotebookbar = true;
 		this.notebookbar.showTabs();
+		$('.main-nav').removeClass('readonly');
+		$('#map').addClass('notebookbar-opened');
+		this.insertCustomButtons();
 	},
 
 	refreshMenubar: function() {
@@ -322,14 +325,7 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	addNotebookbarUI: function() {
-		this.createNotebookbarControl(this.map.getDocType());
-
-		this.notebookbar._showNotebookbar = true;
-		this.notebookbar.showTabs();
-		$('.main-nav').removeClass('readonly');
-
-		$('#map').addClass('notebookbar-opened');
-
+		this.refreshNotebookbar();
 		this.map.sendInitUNOCommands();
 		this.map._docLayer._resetClientVisArea();
 		this.map._docLayer._requestNewTiles();
