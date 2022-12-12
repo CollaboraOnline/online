@@ -487,12 +487,14 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'text': _('Word 2003 Document (.doc)')
 				},
 				{
-					'id': 'downloadas-epub',
-					'text': _('EPUB (.epub)')
+					'id': 'exportepub',
+					'text': _('EPUB (.epub)'),
+					'command': 'exportepub'
 				},
 				{
-					'id': 'downloadas-pdf',
-					'text': _('PDF Document (.pdf)')
+					'id': 'exportpdf',
+					'text': _('PDF Document (.pdf)'),
+					'command': 'exportpdf'
 				}
 			];
 		} else if (docType === 'spreadsheet') {

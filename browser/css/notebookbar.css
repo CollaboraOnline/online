@@ -585,11 +585,11 @@
 	background: url('images/lc_downloadas-docx.svg') center;
 }
 
-[class*='as-pdf-submenu-icon'] {
+[class*='pdf-submenu-icon'] {
 	background: url('images/lc_downloadas-pdf.svg') center;
 }
 
-[class*='as-epub-submenu-icon'] {
+[class*='epub-submenu-icon'] {
 	background: url('images/lc_downloadas-epub.svg') center;
 }
 
