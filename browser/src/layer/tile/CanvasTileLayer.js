@@ -2308,6 +2308,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			app.file.calc.cellCursor.visible = false;
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellCursor(null);
+			if (this._map._clip)
+				this._map._clip.clearSelection();
 		}
 		else {
 			var strTwips = textMsg.match(/\d+/g);
