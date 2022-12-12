@@ -1,4 +1,4 @@
-m4_dnl -*- Mode: HTML; fill-column: 100 -*-
+m4_dnl -*- Mode: HTML -*-x
 m4_changequote([,])m4_dnl
 m4_dnl# m4_foreachq(x, `item_1, item_2, ..., item_n', stmt)
 m4_dnl# quoted list, alternate improved version
@@ -21,6 +21,15 @@ m4_define([MOBILEAPP],[])
 m4_ifelse(IOSAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(ANDROIDAPP,[true],[m4_define([MOBILEAPP],[true])])
+
+// FIXME: This is temporary and not what we actually eventually want.
+
+// What we really want is not a separate HTML file (produced with M4 conditionals on the below
+// EMSCRIPTENAPP) for a "WASM app". What we want is that the same cool.html page adapts on demand to
+// instead run locally using WASM, if the connection to the COOL server breaks. (And then
+// re-connects to the COOL server when possible.)
+
+m4_ifelse(EMSCRIPTENAPP,[true],[m4_define([MOBILEAPP],[true])])
 
 m4_ifelse(MOBILEAPP,[],
   // Start listening for Host_PostmessageReady message and save the
@@ -78,25 +87,12 @@ m4_ifelse(ANDROIDAPP,[true],
    window.postMobileDebug   = function(msg) { window.COOLMessageHandler.postMobileDebug(msg); };],
   [   window.ThisIsTheAndroidApp = false;]
 )
-
-m4_dnl The WASMFALLBACK m4 maro as passed in from ENABLE_WASM_FALLBACK in the Makefile.am means that
-m4_dnl we are constructing an HTML page that is prepared to edit the document locally using WASM
-m4_dnl code if connection to the COOL server fails.
-
-m4_dnl Especially, notice that even in this case, most of the time the HTML and JS will talk to a
-m4_dnl normal COOL server. Only if enabled on the server side, then, when the connection to the
-m4_dnl server breaks, will the JS instead start the WASM thing locally and use that instead of the
-m4_dnl server. This requires that the WASM file has been downloaded already of course, and also that
-m4_dnl the document that is being edited also is sent to the client regularly.
-
-m4_dnl The window.HaveWASMFallback variable tells whether such WASM fallback is to be possible in
-m4_dnl this COOL client, and the window.WASMFallbackActive variable tells whether it has been
-m4_dnl activated.
-
-window.WASMFallbackActive = false;
-m4_ifelse(WASMFALLBACK,[true],
-  [   window.HaveWASMFallback = true; ],
-  [   window.HaveWASMFallback = false;]
+m4_ifelse(EMSCRIPTENAPP,[true],
+  [   window.ThisIsTheEmscriptenApp = true;
+   window.postMobileMessage = function(msg) { _handle_cool_message(allocateUTF8(msg)); };
+   window.postMobileError   = function(msg) { _handle_error_message(allocateUTF8(msg)); };
+   window.postMobileDebug   = function(msg) { _handle_debug_message(allocateUTF8(msg)); };],
+  [   window.ThisIsTheEmscriptenApp = false;]
 )
 
 if (window.ThisIsTheiOSApp) {
