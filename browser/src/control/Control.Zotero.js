@@ -39,7 +39,7 @@ L.Control.Zotero = L.Control.extend({
 			});
 	},
 
-	dialogSetup: function (title) {
+	dialogSetup: function (title, showCategories) {
 		this.remove();
 
 		var data = {
@@ -59,58 +59,58 @@ L.Control.Zotero = L.Control.extend({
 					response: 0
 				},
 			],
-			enabled: true,
 			children: [
 				{
-					id: 'dialog-vbox1',
+					id: 'ZoteroDialog-mainbox',
 					type: 'container',
-					text: '',
-					enabled: true,
 					vertical: true,
 					children: [
 						{
-							type: 'treelistbox',
-							id: 'zoterolist',
-							enabled: false,
+							id: 'ZoteroDialog-content',
+							type: 'container',
+							children: [
+								(showCategories) ? {
+									type: 'treelistbox',
+									id: 'zoterocategory',
+									enabled: false,
+									entries: this.getDefaultCategories()
+								} : {},
+								{
+									type: 'treelistbox',
+									id: 'zoterolist',
+									enabled: false,
+								}
+							]
 						},
 						{
-							id: 'dialog-action_area1',
-							type: 'container',
-							text: '',
-							enabled: true,
-							vertical: true,
+							id: 'ZoteroDialog-buttonbox',
+							type: 'buttonbox',
 							children: [
 								{
-									id: '',
-									type: 'buttonbox',
-									text: '',
-									enabled: true,
-									children: [
-										{
-											id: 'cancel',
-											type: 'pushbutton',
-											text: '~Cancel',
-											enabled: true
-										},
-										{
-											id: 'ok',
-											type: 'pushbutton',
-											text: '~Ok',
-											enabled: true,
-											'has_default': true,
-										}
-									],
-									vertical: false,
-									layoutstyle: 'end'
+									id: 'cancel',
+									type: 'pushbutton',
+									text: '~Cancel',
 								},
+								{
+									id: 'ok',
+									type: 'pushbutton',
+									text: '~Ok',
+									'has_default': true,
+								}
 							],
-						},
+							vertical: false,
+							layoutstyle: 'end'
+						}
 					]
 				},
 			],
 		};
 
-		this.items = [];
+		this.items = []; // zoterolist content
+		this.categories = this.getDefaultCategories(); // zoterocategory content
+
+		this.groups = [];
+		this.collections = [];
 
 		var dialogBuildEvent = {
 			data: data,
@@ -123,7 +123,7 @@ L.Control.Zotero = L.Control.extend({
 		return this;
 	},
 
-	updateDialog: function(headerArray, failText) {
+	updateList: function(headerArray, failText) {
 		if (this.items.length !== 0) {
 			return {
 				data: {
@@ -157,6 +157,34 @@ L.Control.Zotero = L.Control.extend({
 				},
 			};
 		}
+	},
+
+	getDefaultCategories: function () {
+		return [
+			{text: _('My Library'), row: 'https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib'},
+			{text: _('Group Libraries')}];
+	},
+
+	updateCategories: function() {
+		return {
+			data: {
+				jsontype: 'dialog',
+				action: 'update',
+				id: 'ZoteroDialog',
+				control: {
+					id: 'zoterocategory',
+					type: 'treelistbox',
+					entries: this.categories,
+				},
+			},
+			callback: this._onAction.bind(this)
+		};
+	},
+
+	fillCategories: function () {
+		this.categories = this.getDefaultCategories().slice();
+		this.categories[0].children = this.collections.slice();
+		this.categories[1].children = this.groups.slice();
 	},
 
 	// columns: Array of details which will be displayed in the dialog
@@ -193,19 +221,50 @@ L.Control.Zotero = L.Control.extend({
 	showItemList: function () {
 		var that = this;
 
-		that.dialogSetup(_('My Library'));
-		var dialogUpdateEvent = that.updateDialog(['Title', 'Creator(s)', 'Date'], _('Loading'));
+		that.dialogSetup(_('My Library'), true);
+		var dialogUpdateEvent = that.updateList(['Title', 'Creator(s)', 'Date'], _('Loading'));
 		that.map.fire('jsdialogupdate', dialogUpdateEvent);
+		that.map.fire('jsdialogupdate', that.updateCategories());
 
 		fetch('https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib')
 			.then(function (response) { return response.json();})
 			.then(function (data) {
 				that.fillItems(data);
 
-				var dialogUpdateEvent = that.updateDialog(['Title', 'Creator(s)', 'Date'], _('Your library is empty'));
+				var dialogUpdateEvent = that.updateList(['Title', 'Creator(s)', 'Date'], _('Your library is empty'));
 
 				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
+			});
+
+		fetch('https://api.zotero.org/users/' + this.userID + '/groups?v=3&key=' + this.apiKey)
+			.then(function (response) { return response.json(); })
+			.then(function (data) {
+				for (var i = 0; i < data.length; i++) {
+					that.groups.push(
+						{
+							text: data[i].data.name,
+							id: data[i].data.id,
+							row: data[i].links.self.href + '/items?v=3&key=' + that.apiKey
+						});
+					that.fillCategories();
+					that.map.fire('jsdialogupdate', that.updateCategories());
+				}
+			});
+
+		fetch('https://api.zotero.org/users/' + this.userID + '/collections?v=3&key=' + this.apiKey)
+			.then(function (response) { return response.json(); })
+			.then(function (data) {
+				for (var i = 0; i < data.length; i++) {
+					that.collections.push(
+						{
+							text: data[i].data.name,
+							id: data[i].data.key,
+							row: data[i].links.self.href + '/items?v=3&key=' + that.apiKey
+						});
+					that.fillCategories();
+					that.map.fire('jsdialogupdate', that.updateCategories());
+				}
 			});
 	},
 
@@ -214,10 +273,10 @@ L.Control.Zotero = L.Control.extend({
 		fetch('https://www.zotero.org/styles-files/styles.json')
 			.then(function (response) { return response.json();})
 			.then(function (data) {
-				that.dialogSetup(_('Citation Style'));
+				that.dialogSetup(_('Citation Style'), false);
 				that.fillStyles(data);
 
-				var dialogUpdateEvent = that.updateDialog(['Styles'],_('An error occurred while fetching style list'));
+				var dialogUpdateEvent = that.updateList(['Styles'],_('An error occurred while fetching style list'));
 
 				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
@@ -225,10 +284,24 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	_onAction: function(element, action, data, index) {
+		var that = this;
 		if (element === 'dialog' && action === 'close') return;
 		if (element === 'treeview') {
-			this.selected = data.entries[parseInt(index)];
-			return;
+			if (data.id === 'zoterocategory') {
+				var url = index;
+				that.items = [];
+				fetch(url)
+					.then(function (response) { return response.json();})
+					.then(function (data) {
+						that.fillItems(data);
+						var dialogUpdateEvent = that.updateList(['Title', 'Creator(s)', 'Date'], _('Your library is empty'));
+						that.map.fire('jsdialogupdate', dialogUpdateEvent);
+					});
+				return;
+			} else {
+				this.selected = data.entries[parseInt(index)];
+				return;
+			}
 		}
 		if (element === 'responsebutton' && data.id == 'ok' && this.selected) {
 			this._onOk(this.selected);
