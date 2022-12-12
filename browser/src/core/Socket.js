@@ -3,7 +3,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app _ vex $ errorMessages Uint8Array brandProductName allocateUTF8 _free _handle_debug_message */
+/* global app _ vex $ errorMessages Uint8Array brandProductName */
 
 app.definitions.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
@@ -250,11 +250,6 @@ app.definitions.Socket = L.Class.extend({
 	_logSocket: function(type, msg) {
 		if (window.ThisIsTheGtkApp)
 			window.postMobileDebug(type + ' ' + msg);
-		else if (window.WASMFallbackActive) {
-			var s = allocateUTF8(type + ' ' + msg);
-			_handle_debug_message(s);
-			_free(s);
-		}
 
 		var fullDebug = this._map._docLayer && this._map._docLayer._debug;
 
