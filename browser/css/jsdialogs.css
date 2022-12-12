@@ -1220,3 +1220,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-inline-start: none !important;
 	background-color: var(--color-main-background) !important;
 }
+
+/* Zotero dialog*/
+
+#ZoteroDialog-mainbox .ui-treeview {
+	max-width: 800px;
+}
