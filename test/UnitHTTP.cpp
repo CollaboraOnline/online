@@ -78,7 +78,7 @@ public:
 
             if (sent != responseStr)
             {
-                LOG_TST("Test " << i << " failed - mismatching string '" << responseStr << " vs. '"
+                LOG_TST("Test " << i << " failed - mismatching string '" << responseStr << "' vs. '"
                                 << sent << "'");
                 exitTest(TestResult::Failed);
                 return;
