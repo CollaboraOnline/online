@@ -831,12 +831,7 @@ AM_CONDITIONAL([ENABLE_GTKAPP], [test "$ENABLE_GTKAPP" = "true"])
 dnl ENABLE_WASM_FALLBACK means we are building an otherwise normal COOL but with the "WASM fallback"
 dnl capability. Compare to ENABLE_WASM.
 
-ENABLE_WASM_FALLBACK=
-if test -n "$with_wasm_fallback"]; then
-   ENABLE_WASM_FALLBACK=true
-fi
-AC_SUBST(ENABLE_WASM_FALLBACK)
-AM_CONDITIONAL([ENABLE_WASM_FALLBACK], [test "$ENABLE_WASM_FALLBACK" = "true"])
+AM_CONDITIONAL([ENABLE_WASM_FALLBACK], [test -n "$with_wasm_fallback"])
 WASM_BUILDDIR="$with_wasm_fallback"
 AC_SUBST(WASM_BUILDDIR)
 
@@ -1172,6 +1167,11 @@ fi
 AC_DEFINE_UNQUOTED([MOBILEAPP],[$MOBILEAPP],[Define to 1 if this is a mobileapp (eg. Android) build.])
 AC_SUBST(ENABLE_MOBILEAPP)
 AM_CONDITIONAL([ENABLE_MOBILEAPP], [test "$ENABLE_MOBILEAPP" = "true"])
+
+if test "$host_os" = "emscripten" ; then
+    ENABLE_EMSCRIPTENAPP=true
+fi
+AC_SUBST(ENABLE_EMSCRIPTENAPP)
 
 ENABLE_SSL=true
 if test "$enable_ssl" != "no" -a "$mobile_app" != "true"; then

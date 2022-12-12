@@ -1,5 +1,5 @@
-/* -*- js-indent-level: 8; fill-column: 100 -*- */
-/* global Uint8Array _handle_cool_message createWasm */
+/* -*- js-indent-level: 8 -*- */
+/* global Uint8Array */
 
 /*
 	For extending window.app object, please see "docstate.js" file.
@@ -303,23 +303,7 @@ window.app = {
 	};
 	global.FakeWebSocket.prototype.send = function(data) {
 		this.sendCounter++;
-		if (window.HaveWASMFallback) {
-			if (window.WASMFallbackActive)
-				_handle_cool_message(data);
-			else
-				window.realSocket.send(data);
-		} else
-			window.postMobileMessage(data);
-	};
-
-	global.switchToWASM = function() {
-		// This should start the WASM code. The .wasm file has to be
-		// already loaded.
-		createWasm();
-		window.socket = window.TheFakeWebSocket;
-		// A FakeWebSocket is immediately open.
-		window.socket.onopen();
-		window.socket.send('HULLO');
+		window.postMobileMessage(data);
 	};
 
 	global.proxySocketCounter = 0;
@@ -834,10 +818,6 @@ window.app = {
 			global.socket = global.createWebSocket(websocketURI);
 		} catch (err) {
 			window.app.console.log(err);
-		}
-		if (window.HaveWASMFallback) {
-			window.realSocket = global.socket;
-			window.TheFakeWebSocket = new global.FakeWebSocket();
 		}
 	}
 
