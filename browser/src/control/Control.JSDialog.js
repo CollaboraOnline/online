@@ -283,7 +283,7 @@ L.Control.JSDialog = L.Control.extend({
 		}
 
 		builder.build(content, [data]);
-		var primaryBtn = L.DomUtil.get(defaultButtonId);
+		var primaryBtn = content.querySelector('#' + defaultButtonId);
 		if (primaryBtn)
 			L.DomUtil.addClass(primaryBtn, 'button-primary');
 		if (isAutofilter)
@@ -425,9 +425,13 @@ L.Control.JSDialog = L.Control.extend({
 
 		// after some updates, eg. drawing areas window can be bigger than initially
 		// update position according to that with small delay
-		var initialPositionSetup = function (force) {
-			setupPosition(force);
-			that.updatePosition(container, posX, posY);
+		// styleOnly - don't change position
+		var initialPositionSetup = function (force, styleOnly) {
+			if (!styleOnly) {
+				setupPosition(force);
+				that.updatePosition(container, posX, posY);
+			}
+
 			container.style.visibility = '';
 
 			// setup initial focus and helper elements for closing popup
@@ -537,8 +541,9 @@ L.Control.JSDialog = L.Control.extend({
 			dialogInfo.updatePos(false, new L.Point(data.posx, data.posy));
 		}
 
-		if (!dialogInfo.invalidated && dialogInfo.setupPosFunc) {
-			setTimeout(function () { dialogInfo.setupPosFunc(true); }, 100);
+		if (dialogInfo.setupPosFunc) {
+			var styleOnly = dialogInfo.invalidated === true;
+			setTimeout(function () { dialogInfo.setupPosFunc(!styleOnly, styleOnly); }, 100);
 			dialogInfo.invalidated = true;
 		}
 	},
