@@ -162,10 +162,6 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:InsertColumnBreak', 'spreadsheet'), uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
-				{uno: '.uno:InsertBookmark'},
-				{uno: '.uno:InsertReferenceField'},
-				{uno: '.uno:InsertIndexesEntry'},
-				{name: _UNO('.uno:IndexesMenu', 'text'), uno: '.uno:InsertMultiIndex'},
 				{type: 'separator'},
 				{uno: '.uno:InsertSymbol'},
 				{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
@@ -266,14 +262,24 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:FormatArea'}
 			]},
 			{name: _('References'), id: 'zotero', type: 'menu', menu: [
-				{name: _('Add/Edit Citation'), id: 'zoteroAddEditCitation', type: 'action'},
-				{name: _('Add Note'), id: 'zoteroaddnote', type: 'action'},
+				{name: _UNO('.uno:IndexesMenu', 'text'), uno: '.uno:InsertMultiIndex'},
+				{uno: '.uno:InsertIndexesEntry'},
+				{name: _('Update Index'), uno: '.uno:UpdateCurIndex'},
 				{type: 'separator'},
+				{uno: '.uno:InsertFootnote'},
+				{uno: '.uno:InsertEndnote'},
+				{uno: '.uno:FootnoteDialog'},
+				{type: 'separator'},
+				{uno: '.uno:InsertBookmark'},
+				{uno: '.uno:InsertReferenceField'},
+				{type: 'separator'},
+				{name: _('Add/Edit Citation'), id: 'zoteroAddEditCitation', type: 'action'},
+				{name: _('Add Citation Note'), id: 'zoteroaddnote', type: 'action'},
 				{name: _('Add/Edit Bibliography'), id: 'zoteroaddbibliography', type: 'action'},
 				{type: 'separator'},
-				{name: _('Refresh'), id: 'zoterorefresh', type: 'action'},
+				{name: _('Refresh Citations'), id: 'zoterorefresh', type: 'action'},
 				{name: _('Unlink Citations'), id: 'zoterounlink', type: 'action'},
-				{name: _('Document Preferences'), id: 'zoterosetdocprefs', type: 'action', iosapp: false}]
+				{name: _('Citations Preferences'), id: 'zoterosetdocprefs', type: 'action', iosapp: false}]
 			},
 			{name: _UNO('.uno:TableMenu', 'text'), type: 'menu', id: 'table', menu: [
 				{uno: '.uno:InsertTable'},
@@ -1094,8 +1100,6 @@ L.Control.Menubar = L.Control.extend({
 						{name: _UNO('.uno:InsertPageFooter', 'text'), id: 'insertpagefooter', type: 'menu', menu: [
 							{name: _('All'), disabled: true, id: 'insertfooter', tag: '_ALL_', uno: '.uno:InsertPageFooter?On:bool=true'}]}
 					]},
-					{uno: '.uno:InsertFootnote'},
-					{uno: '.uno:InsertEndnote'},
 					{type: 'separator'},
 					{uno: '.uno:InsertPagebreak'},
 					{name: _UNO('.uno:InsertColumnBreak', 'spreadsheet'), uno: '.uno:InsertColumnBreak'},
