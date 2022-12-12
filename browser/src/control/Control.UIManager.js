@@ -309,6 +309,18 @@ L.Control.UIManager = L.Control.extend({
 		this.map.addControl(notebookbar);
 	},
 
+	refreshNotebookbar: function() {
+		this.removeNotebookbarUI();
+		this.createNotebookbarControl(this.map.getDocType());
+		this.makeSpaceForNotebookbar();
+		this.notebookbar._showNotebookbar = true;
+		this.notebookbar.showTabs();
+	},
+
+	refreshMenubar: function() {
+		this.map.menubar._onRefresh();
+	},
+
 	addNotebookbarUI: function() {
 		this.createNotebookbarControl(this.map.getDocType());
 
