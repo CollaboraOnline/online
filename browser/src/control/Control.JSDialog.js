@@ -472,7 +472,7 @@ L.Control.JSDialog = L.Control.extend({
 			clickToClose: clickToCloseElement,
 			overlay: overlay,
 			isPopup: isModalPopup,
-			invalidated: false,
+			invalidated: !!toRemove,
 			setupPosFunc: initialPositionSetup,
 			updatePos: updatePos
 		};
