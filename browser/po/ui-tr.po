@@ -14,11 +14,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-01 21:14+0100\n"
-"PO-Revision-Date: 2022-11-18 17:25+0000\n"
+"PO-Revision-Date: 2022-12-03 20:49+0000\n"
 "Last-Translator: PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -399,19 +399,19 @@ msgstr "Tür"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "What?"
-msgstr ""
+msgstr "Ne?"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "Who?"
-msgstr ""
+msgstr "Kim?"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "When?"
-msgstr ""
+msgstr "Ne zaman?"
 
 #: src/control/Control.DocumentRepair.js:149
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "Henüz geri almak için bir şey yapmadınız..."
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "Redo"
@@ -1290,12 +1290,12 @@ msgstr "Cetvel"
 
 #: src/control/Control.NotebookbarWriter.js:1514
 msgid "Add/Edit Citation"
-msgstr ""
+msgstr "Atıf Ekle/Düzenle"
 
 #: src/control/Control.NotebookbarWriter.js:1520
 #: src/control/Control.Zotero.js:181
 msgid "Citation Style"
-msgstr ""
+msgstr "Atıf Biçemi"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1515,15 +1515,15 @@ msgstr "Şimdiki"
 
 #: src/control/Control.Zotero.js:167
 msgid "My Library"
-msgstr ""
+msgstr "Kitaplığım"
 
 #: src/control/Control.Zotero.js:170
 msgid "Your library is empty"
-msgstr ""
+msgstr "Kitaplığınız boş"
 
 #: src/control/Control.Zotero.js:184
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "Biçem listesi alınırken bir hata oluştu"
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
