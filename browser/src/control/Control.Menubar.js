@@ -261,7 +261,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:FormatLine'},
 				{uno: '.uno:FormatArea'}
 			]},
-			{name: _('References'), id: 'zotero', type: 'menu', menu: [
+			{name: _('References'), id: 'references', type: 'menu', menu: [
 				{name: _UNO('.uno:IndexesMenu', 'text'), uno: '.uno:InsertMultiIndex'},
 				{uno: '.uno:InsertIndexesEntry'},
 				{name: _('Update Index'), uno: '.uno:UpdateCurIndex'},
@@ -1640,6 +1640,8 @@ L.Control.Menubar = L.Control.extend({
 								$(aItem).removeClass(constChecked);
 							}
 						}
+					} else if ((id.startsWith('zotero') && !(self._map.zotero && self._map.zotero.enable))) {
+						$(aItem).addClass('disabled');
 					} else {
 						$(aItem).removeClass('disabled');
 					}
@@ -1963,10 +1965,6 @@ L.Control.Menubar = L.Control.extend({
 			case 'savecomments':
 				return false;
 			}
-		}
-
-		if (menuItem.id === 'zotero' && !(this._map.zotero && this._map.zotero.enable)) {
-			return false;
 		}
 
 		if (menuItem.id === 'runmacro' && window.enableMacrosExecution === 'false')
