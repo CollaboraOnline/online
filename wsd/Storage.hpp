@@ -612,8 +612,6 @@ public:
         bool _supportsRename;
         /// If user is allowed to rename the document
         bool _userCanRename;
-        /// Personal API key for Zotero bibliography database
-        std::string _zoteroAPIKey;
     };
 
     /// Returns the response of CheckFileInfo WOPI call for URI that was
