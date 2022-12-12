@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-01 21:14+0100\n"
-"PO-Revision-Date: 2022-11-30 06:47+0000\n"
+"PO-Revision-Date: 2022-12-08 22:21+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (South Africa) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_ZA/>\n"
-"Language: \n"
+"Language: en_ZA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -392,19 +392,19 @@ msgstr "Type"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "What?"
-msgstr ""
+msgstr "What?"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "Who?"
-msgstr ""
+msgstr "Who?"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "When?"
-msgstr ""
+msgstr "When?"
 
 #: src/control/Control.DocumentRepair.js:149
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "You have not done anything to rollback yet..."
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "Redo"
@@ -1283,12 +1283,12 @@ msgstr "Ruler"
 
 #: src/control/Control.NotebookbarWriter.js:1514
 msgid "Add/Edit Citation"
-msgstr ""
+msgstr "Add/Edit Citation"
 
 #: src/control/Control.NotebookbarWriter.js:1520
 #: src/control/Control.Zotero.js:181
 msgid "Citation Style"
-msgstr ""
+msgstr "Citation Style"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1507,15 +1507,15 @@ msgstr "Current"
 
 #: src/control/Control.Zotero.js:167
 msgid "My Library"
-msgstr ""
+msgstr "My Library"
 
 #: src/control/Control.Zotero.js:170
 msgid "Your library is empty"
-msgstr ""
+msgstr "Your library is empty"
 
 #: src/control/Control.Zotero.js:184
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "An error occurred while fetching style list"
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
