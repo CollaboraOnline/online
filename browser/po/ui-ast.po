@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-01 21:14+0100\n"
-"PO-Revision-Date: 2022-12-01 10:47+0000\n"
+"PO-Revision-Date: 2022-12-06 19:25+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -392,15 +392,15 @@ msgstr "Triba"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "What?"
-msgstr ""
+msgstr "¿Qué?"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "Who?"
-msgstr ""
+msgstr "¿Quién?"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "When?"
-msgstr ""
+msgstr "¿Cuándo?"
 
 #: src/control/Control.DocumentRepair.js:149
 msgid "You have not done anything to rollback yet..."
@@ -451,7 +451,7 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:143
 msgid "Min"
-msgstr ""
+msgstr "Mínimu"
 
 #: src/control/Control.JSDialogBuilder.js:144
 msgid "Max"
@@ -602,7 +602,7 @@ msgstr "Documentu de Word (.docx)"
 #: src/control/Control.NotebookbarBuilder.js:564
 #: src/control/Control.NotebookbarWriter.js:201
 msgid "Rich Text (.rtf)"
-msgstr "Testu enriquecíu (.rtf)"
+msgstr "Testu arriquecíu (.rtf)"
 
 #: src/control/Control.Menubar.js:72 src/control/Control.Menubar.js:349
 #: src/control/Control.Menubar.js:487 src/control/Control.Menubar.js:608
@@ -738,7 +738,7 @@ msgstr "Orientación del testu"
 
 #: src/control/Control.Menubar.js:296 src/control/Control.Menubar.js:1107
 msgid "Insert Rich Text"
-msgstr "Inxertar un testu enriquecíu"
+msgstr "Inxertar un testu arriquecíu"
 
 #: src/control/Control.Menubar.js:297 src/control/Control.Menubar.js:1108
 msgid "Insert Checkbox"
@@ -912,7 +912,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:1638 src/control/Control.Menubar.js:1651
 msgid "Read-only mode"
-msgstr ""
+msgstr "Mou namái de llectura"
 
 #: src/control/Control.Menubar.js:1665
 msgid "Insert Shape"
@@ -1266,7 +1266,7 @@ msgstr "Documentu EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:988
 msgid "Rich Text"
-msgstr "Testu enriquecíu"
+msgstr "Testu arriquecíu"
 
 #: src/control/Control.NotebookbarWriter.js:993
 msgid "Checkbox"
@@ -1509,11 +1509,11 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:167
 msgid "My Library"
-msgstr ""
+msgstr "La mio biblioteca"
 
 #: src/control/Control.Zotero.js:170
 msgid "Your library is empty"
-msgstr ""
+msgstr "La to biblioteca ta balera"
 
 #: src/control/Control.Zotero.js:184
 msgid "An error occurred while fetching style list"

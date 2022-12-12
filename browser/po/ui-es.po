@@ -7,11 +7,11 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-01 21:14+0100\n"
-"PO-Revision-Date: 2022-11-18 17:25+0000\n"
-"Last-Translator: Eloy Crespo <eloy.crespo@collabora.com>\n"
+"PO-Revision-Date: 2022-12-05 13:37+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -351,7 +351,7 @@ msgstr "Recientes"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
-msgstr "Sin color"
+msgstr "Ningún color"
 
 #: src/control/ColorPicker.js:123
 msgid "Automatic color"
@@ -398,19 +398,19 @@ msgstr "Tipo"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "What?"
-msgstr ""
+msgstr "¿Qué?"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "Who?"
-msgstr ""
+msgstr "¿Quién?"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "When?"
-msgstr ""
+msgstr "¿Cuándo?"
 
 #: src/control/Control.DocumentRepair.js:149
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "Aún no ha hecho nada que pueda revertirse…"
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "Redo"
@@ -701,7 +701,7 @@ msgstr "Reparar"
 #: src/control/Control.NotebookbarWriter.js:1038
 #: src/control/Control.StatusBar.js:203
 msgid "Reset zoom"
-msgstr "Restablecer escala"
+msgstr "Restablecer zum"
 
 #: src/control/Control.Menubar.js:123 src/control/Control.Menubar.js:386
 #: src/control/Control.Menubar.js:522 src/control/Control.Menubar.js:645
@@ -1289,12 +1289,12 @@ msgstr "Regla"
 
 #: src/control/Control.NotebookbarWriter.js:1514
 msgid "Add/Edit Citation"
-msgstr ""
+msgstr "Añadir/editar cita"
 
 #: src/control/Control.NotebookbarWriter.js:1520
 #: src/control/Control.Zotero.js:181
 msgid "Citation Style"
-msgstr ""
+msgstr "Estilo de cita"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1514,15 +1514,15 @@ msgstr "Actual"
 
 #: src/control/Control.Zotero.js:167
 msgid "My Library"
-msgstr ""
+msgstr "Mi biblioteca"
 
 #: src/control/Control.Zotero.js:170
 msgid "Your library is empty"
-msgstr ""
+msgstr "Su biblioteca está vacía"
 
 #: src/control/Control.Zotero.js:184
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "Se produjo un error al recuperar la lista de estilos"
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
