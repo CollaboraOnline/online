@@ -5,7 +5,7 @@
     <string name="current_dir">Directori actual: %1$s</string>
     <string name="bad_directory">El camí del directori no és vàlid</string>
     <string name="directory_browser_label">Trieu un directori</string>
-    <string name="search_label">Vés-hi</string>
+    <string name="search_label">Ves-hi</string>
     <string name="cancel_label">Cancel·la</string>
     <string name="confirm_label">Confirma</string>
     <string name="password">Contrasenya</string>
@@ -29,7 +29,7 @@
     <string name="document_locations">Ubicacions dels documents</string>
     <string name="title_activity_show_html">Quant a</string>
     <string name="directory_not_saved">No s\'ha desat el directori.</string>
-    <string name="bmp_null">El BMP és nul!</string>
+    <string name="bmp_null">El BMP no és vàlid.</string>
     <string name="unable_to_go_further">No és possible anar més enllà.</string>
     <string name="action_overwrite">Sobreescriu</string>
     <string name="action_create">Crea</string>

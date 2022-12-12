@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-01 21:14+0200\n"
-"PO-Revision-Date: 2022-03-13 21:44+0000\n"
+"PO-Revision-Date: 2022-12-03 20:48+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "help/ca/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.15-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -24,7 +24,7 @@ msgstr "Dreceres de teclat generals"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:23-18
 msgid "Undo"
-msgstr "Desfà"
+msgstr "Desfés"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:23-49
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
@@ -32,7 +32,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:24-18
 msgid "Redo"
-msgstr "Refà"
+msgstr "Refés"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:24-49
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y"

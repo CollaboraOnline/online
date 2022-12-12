@@ -73,7 +73,7 @@
     <!-- Edit action names -->
     <!-- Feedback messages -->
     <!-- Document provider settings -->
-    <string name="storage_provider_settings">Configuración del proveedor de almacenamiento</string>
+    <string name="storage_provider_settings">Config. de proveedor de almac.</string>
     <string name="owncloud_settings">Config. de servidor en nube</string>
     <string name="physical_storage_settings">Conf. de almacenamiento físico</string>
     <string name="external_sd_path">Ruta a SD externa</string>
@@ -113,7 +113,7 @@
     <!-- Clipboard Actions -->
     <!-- UNO cmd controller Strings -->
     <string name="unable_to_go_further">No se puede ir más allá.</string>
-    <string name="bmp_null">¡Windows bitmap (Bmp) es nulo!</string>
+    <string name="bmp_null">El BMP no es válido.</string>
     <string name="directory_not_saved">Directorio no guardado.</string>
     <string name="title_activity_show_html">Acerca de</string>
     <string name="share_document">Compartir documento</string>
