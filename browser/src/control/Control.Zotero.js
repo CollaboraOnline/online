@@ -192,10 +192,14 @@ L.Control.Zotero = L.Control.extend({
 
 	showItemList: function () {
 		var that = this;
+
+		that.dialogSetup(_('My Library'));
+		var dialogUpdateEvent = that.updateDialog(['Title', 'Creator(s)', 'Date'], _('Loading'));
+		that.map.fire('jsdialogupdate', dialogUpdateEvent);
+
 		fetch('https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib')
 			.then(function (response) { return response.json();})
 			.then(function (data) {
-				that.dialogSetup(_('My Library'));
 				that.fillItems(data);
 
 				var dialogUpdateEvent = that.updateDialog(['Title', 'Creator(s)', 'Date'], _('Your library is empty'));
