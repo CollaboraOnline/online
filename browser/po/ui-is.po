@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-01 21:14+0100\n"
-"PO-Revision-Date: 2022-10-20 09:24+0000\n"
+"PO-Revision-Date: 2022-12-05 13:37+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/ui/is/>\n"
-"Language: \n"
+"Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Weblate 4.14.2-dev\n"
+"X-Generator: Weblate 4.15-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -393,19 +393,19 @@ msgstr "Tegund"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "What?"
-msgstr ""
+msgstr "Hvað?"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "Who?"
-msgstr ""
+msgstr "Hver?"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "When?"
-msgstr ""
+msgstr "Hvenær?"
 
 #: src/control/Control.DocumentRepair.js:149
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "Þú hefur enn ekki gert neitt sem er hægt að endurheimta..."
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "Redo"
@@ -913,7 +913,7 @@ msgstr "Nota flipa-ásýnd"
 
 #: src/control/Control.Menubar.js:1638 src/control/Control.Menubar.js:1651
 msgid "Read-only mode"
-msgstr ""
+msgstr "Skrifvarinn hamur"
 
 #: src/control/Control.Menubar.js:1665
 msgid "Insert Shape"
@@ -1284,12 +1284,12 @@ msgstr "Mælistika"
 
 #: src/control/Control.NotebookbarWriter.js:1514
 msgid "Add/Edit Citation"
-msgstr ""
+msgstr "Bæta við/Breyta tilvitnun"
 
 #: src/control/Control.NotebookbarWriter.js:1520
 #: src/control/Control.Zotero.js:181
 msgid "Citation Style"
-msgstr ""
+msgstr "Stíll tilvitnunar"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1509,15 +1509,15 @@ msgstr "Núverandi"
 
 #: src/control/Control.Zotero.js:167
 msgid "My Library"
-msgstr ""
+msgstr "Safnið mitt"
 
 #: src/control/Control.Zotero.js:170
 msgid "Your library is empty"
-msgstr ""
+msgstr "Safnið þitt er tómt"
 
 #: src/control/Control.Zotero.js:184
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "Villa kom upp við að sækja lista yfir stíla"
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
@@ -2126,15 +2126,15 @@ msgstr "Föll"
 
 #: src/layer/tile/CanvasTileLayer.js:2420
 msgid "Copy link location"
-msgstr ""
+msgstr "Afrita staðsetningu tengils"
 
 #: src/layer/tile/CanvasTileLayer.js:2428
 msgid "Edit link"
-msgstr ""
+msgstr "Breyta tengli"
 
 #: src/layer/tile/CanvasTileLayer.js:2436
 msgid "Remove link"
-msgstr ""
+msgstr "Fjarlægja tengil"
 
 #: src/layer/tile/CanvasTileLayer.js:5149
 msgid "No Comments"
