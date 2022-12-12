@@ -266,7 +266,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:FormatArea'}
 			]},
 			{name: _('References'), id: 'zotero', type: 'menu', menu: [
-				{name: _('Add/Edit Citation'), id: 'zoteroaddeditcitation', type: 'action'},
+				{name: _('Add/Edit Citation'), id: 'zoteroAddEditCitation', type: 'action'},
 				{name: _('Add Note'), id: 'zoteroaddnote', type: 'action'},
 				{type: 'separator'},
 				{name: _('Add/Edit Bibliography'), id: 'zoteroaddbibliography', type: 'action'},
@@ -1831,10 +1831,10 @@ L.Control.Menubar = L.Control.extend({
 			this._map.sendUnoCommand('.uno:LOKSidebarWriterPage');
 			this._map.fire('showwizardsidebar', {noRefresh: true});
 			window.pageMobileWizard = true;
-		} else if (id === 'zoteroaddeditcitation') {
-			this._map.zotero.handleItemList();
-		} else if (id === 'zoterosetdocprefs') {
-			this._map.zotero.handleStyleList();
+		} else if (id === 'zoteroAddEditCitation') {
+			this._map.dispatch('zoteroAddEditCitation');
+		} else if (id === 'zoteroSetDocPrefs') {
+			this._map.dispatch('zoteroSetDocPrefs');
 		}
 		// Inform the host if asked
 		if (postmessage)

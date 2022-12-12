@@ -1472,10 +1472,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'type': 'toolbox',
 							'children': [
 								{
-									'id': 'zoteroaddeditcitation',
-									'type': 'toolitem',
+									'id': 'zoteroAddEditCitation',
+									'type': 'customtoolitem',
 									'text': _('Add/Edit Citation'),
-									'command': 'zoteroEdit'
+									'command': 'zoteroAddEditCitation'
 								}
 							]
 						},
@@ -1522,10 +1522,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'vertical': 'true'
 				},
 				{
-					'id': 'zoterosetdocprefs',
-					'type': 'bigmenubartoolitem',
+					'id': 'zoteroSetDocPrefs',
+					'type': 'bigcustomtoolitem',
 					'text': _('Citation Preferences'),
-					'command': 'zoteroStyle'
+					'command': 'zoteroSetDocPrefs'
 				}
 			);
 		}

@@ -32,10 +32,10 @@ L.Control.Zotero = L.Control.extend({
 			.then(function (data) {
 				that.userID = data.userID;
 				that.enable = !!that.userID;
-				if (that.map.uiManager.isMenubarHidden())
-					;
+				if (that.map.uiManager.notebookbar)
+					that.map.uiManager.refreshNotebookbar();
 				else
-					that.map.menubar._onRefresh();
+					that.map.uiManager.refreshMenubar();
 			});
 	},
 
