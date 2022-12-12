@@ -12,7 +12,6 @@ m4_define(_YEAR_,m4_esyscmd(date +%Y|tr -d '\n'))
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0 minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<script type="text/javascript" src="js/global.js"></script>
 <button onclick="switchToWASM();">Switch to WASM!</button>
 
 <script>
