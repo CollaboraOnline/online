@@ -52,8 +52,8 @@ online_SOURCES = wasmapp.cpp
 
 online_DEPENDENCIES = \
 	@LOBUILDDIR@/instdir/program/soffice.html.linkdeps \
-	online.data \
-	online.data.js.metadata \
+	soffice.data \
+	soffice.data.js.metadata \
 	libonline.a
 
 # note cannot add content of .linkdeps to DEPENDENCIES because it contains -lFoo
@@ -75,5 +75,5 @@ online_LDFLAGS = \
 	--pre-js @LOBUILDDIR@/workdir/CustomTarget/static/emscripten_fs_image/soffice.data.js.link
 
 
-online.dat%: @LOBUILDDIR@/instdir/program/soffice.dat%
+soffice.dat%: @LOBUILDDIR@/instdir/program/soffice.dat%
 	cp $< $@
