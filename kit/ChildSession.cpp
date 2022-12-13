@@ -678,6 +678,32 @@ bool ChildSession::uploadSignedDocument(const char* buffer, int length, const St
     return true;
 }
 
+namespace {
+
+    /**
+     * Create the 'upload' file regardless of success or failure,
+     * because we don't know if the last upload worked or not.
+     * DocBroker will have to decide to upload or skip.
+     */
+    void renameForUpload(const std::string& url)
+    {
+        const std::string oldName = Poco::URI(url).getPath();
+        const std::string newName = oldName + TO_UPLOAD_SUFFIX;
+        if (rename(oldName.c_str(), newName.c_str()) < 0)
+        {
+            // It's not an error if there was no file to rename, when the document isn't modified.
+            const auto onrre = errno;
+            LOG_TRC("Failed to rename [" << oldName << "] to [" << newName << "] ("
+                                         << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre)
+                                         << ')');
+        }
+        else
+        {
+            LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
+        }
+    }
+}
+
 #endif
 
 bool ChildSession::loadDocument(const StringVector& tokens)
@@ -756,18 +782,9 @@ bool ChildSession::loadDocument(const StringVector& tokens)
         }
 
 #if !MOBILEAPP
-            // Create the 'upload' file so DocBroker picks up and uploads.
-            const std::string oldName = Poco::URI(url).getPath();
-            const std::string newName = oldName + TO_UPLOAD_SUFFIX;
-            if (rename(oldName.c_str(), newName.c_str()) < 0)
-            {
-                // It's not an error if there was no file to rename, when the document isn't modified.
-                LOG_TRC("Failed to renamed [" << oldName << "] to [" << newName << ']');
-            }
-            else
-            {
-                LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
-            }
+
+        renameForUpload(url);
+
 #endif //!MOBILEAPP
     }
 
@@ -2927,23 +2944,8 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         if (!commandName.isEmpty() && commandName.toString() == ".uno:Save")
         {
 #if !MOBILEAPP
-            // Create the 'upload' file regardless of success or failure,
-            // because we don't know if the last upload worked or not.
-            // DocBroker will have to decide to upload or skip.
-            const std::string oldName = Poco::URI(getJailedFilePath()).getPath();
-            const std::string newName = oldName + TO_UPLOAD_SUFFIX;
-            if (rename(oldName.c_str(), newName.c_str()) < 0)
-            {
-                // It's not an error if there was no file to rename, when the document isn't modified.
-                const auto onrre = errno;
-                LOG_TRC("Failed to renamed [" << oldName << "] to [" << newName << "] ("
-                                              << Util::symbolicErrno(onrre) << ": "
-                                              << std::strerror(onrre) << ')');
-            }
-            else
-            {
-                LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
-            }
+
+            renameForUpload(getJailedFilePath());
 
 #else // MOBILEAPP
             // After the document has been saved (into the temporary copy that we set up in
