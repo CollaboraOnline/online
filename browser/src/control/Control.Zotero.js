@@ -289,6 +289,8 @@ L.Control.Zotero = L.Control.extend({
 		if (element === 'treeview') {
 			if (data.id === 'zoterocategory') {
 				var url = index;
+				if (!url)
+					return;
 				that.items = [];
 				fetch(url)
 					.then(function (response) { return response.json();})
