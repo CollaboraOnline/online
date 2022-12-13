@@ -318,6 +318,7 @@ L.Control.UIManager = L.Control.extend({
 		$('.main-nav').removeClass('readonly');
 		$('#map').addClass('notebookbar-opened');
 		this.insertCustomButtons();
+		this.map.sendInitUNOCommands();
 	},
 
 	refreshMenubar: function() {
@@ -326,7 +327,6 @@ L.Control.UIManager = L.Control.extend({
 
 	addNotebookbarUI: function() {
 		this.refreshNotebookbar();
-		this.map.sendInitUNOCommands();
 		this.map._docLayer._resetClientVisArea();
 		this.map._docLayer._requestNewTiles();
 	},
