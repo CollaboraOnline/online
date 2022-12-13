@@ -273,15 +273,9 @@ int loadDoc(void * h_void, bool url, const char * input,
     }
 }
 
-void lok_cleanup(void * h_void)
-{
-    lok::Office * llo = static_cast<lok::Office *>(h_void);
-    delete llo;
-}
-
 int main(int, char*[])
 {
-    void * handle = lok_init();
+    lok_init();
 
     Log::initialize("WASM", "trace", false, false, {});
     Util::setThreadName("main");
@@ -291,27 +285,20 @@ int main(int, char*[])
                                      LOG_TRC_NOFILE(line);
                                  });
 
-    std::thread([]
-                {
-                    assert(coolwsd == nullptr);
-                    char *argv[2];
-                    argv[0] = strdup("wasm");
-                    argv[1] = nullptr;
-                    Util::setThreadName("app");
-                    while (true)
-                    {
-                        coolwsd = new COOLWSD();
-                        coolwsd->run(1, argv);
-                        delete coolwsd;
-                        LOG_TRC("One run of COOLWSD completed");
-                    }
-                }).detach();
+    char *argv[2];
+    argv[0] = strdup("wasm");
+    argv[1] = nullptr;
+    Util::setThreadName("app");
 
     fakeClientFd = fakeSocketSocket();
 
-    emscripten_run_script("alert('hi')");
-
-    lok_cleanup(handle);
+    while (true)
+    {
+        coolwsd = new COOLWSD();
+        coolwsd->run(1, argv);
+        delete coolwsd;
+        LOG_TRC("One run of COOLWSD completed");
+    }
 
     return 0;
 }
