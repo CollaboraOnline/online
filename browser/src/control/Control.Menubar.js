@@ -1100,6 +1100,8 @@ L.Control.Menubar = L.Control.extend({
 						{name: _UNO('.uno:InsertPageFooter', 'text'), id: 'insertpagefooter', type: 'menu', menu: [
 							{name: _('All'), disabled: true, id: 'insertfooter', tag: '_ALL_', uno: '.uno:InsertPageFooter?On:bool=true'}]}
 					]},
+					{uno: '.uno:InsertFootnote'},
+					{uno: '.uno:InsertEndnote'},
 					{type: 'separator'},
 					{uno: '.uno:InsertPagebreak'},
 					{name: _UNO('.uno:InsertColumnBreak', 'spreadsheet'), uno: '.uno:InsertColumnBreak'},
