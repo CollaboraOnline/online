@@ -217,8 +217,71 @@ void closeDocument()
     LOG_DBG("COOLWSD has finished.");
 }
 
+void * lok_init()
+{
+    lok::Office * llo = NULL;
+    try {
+        std::string lo_path = "/instdir/program";
+        llo = lok::lok_cpp_init(lo_path.c_str());
+        if (!llo) {
+            std::cerr << ": Failed to initialise LibreOfficeKit" << std::endl;
+            return NULL;
+        }
+        return static_cast<void*>(llo);
+    } catch (const std::exception & e) {
+        delete llo;
+        std::cerr << ": LibreOfficeKit threw exception (" << e.what() << ")" << std::endl;
+        return NULL;
+    }
+}
+
+int loadDoc(void * h_void, bool url, const char * input,
+    const char * format, const char * options)
+{
+    try {
+        if (!h_void) return 1;
+        lok::Office * llo = static_cast<lok::Office *>(h_void);
+
+        std::string input_url;
+        if (url) {
+            input_url = input;
+        } else {
+            //url_encode_path(input_url, input);
+        }
+        lok::Document * lodoc = llo->documentLoad(input_url.c_str(), options);
+        if (!lodoc) {
+            const char * errmsg = llo->getError();
+            std::cerr << ": LibreOfficeKit failed to load document (" << errmsg << ")" << std::endl;
+            return 1;
+        }
+
+        std::string output_url;
+        //url_encode_path(output_url, output);
+        if (!lodoc->saveAs(output_url.c_str(), format, options)) {
+            const char * errmsg = llo->getError();
+            std::cerr << ": LibreOfficeKit failed to export (" << errmsg << ")" << std::endl;
+            delete lodoc;
+            return 1;
+        }
+
+        delete lodoc;
+
+        return 0;
+    } catch (const std::exception & e) {
+        std::cerr << ": LibreOfficeKit threw exception (" << e.what() << ")" << std::endl;
+        return 1;
+    }
+}
+
+void lok_cleanup(void * h_void)
+{
+    lok::Office * llo = static_cast<lok::Office *>(h_void);
+    delete llo;
+}
+
 int main(int argc, char* argv[])
 {
+    void * handle = lok_init();
     if (argc != 2)
     {
         fprintf(stderr, "Usage: %s document\n", argv[0]);
@@ -250,6 +313,10 @@ int main(int argc, char* argv[])
                 }).detach();
 
     fakeClientFd = fakeSocketSocket();
+
+    emscripten_run_script("alert('hi')");
+
+    lok_cleanup(handle);
 
     return 0;
 }

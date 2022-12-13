@@ -18,6 +18,7 @@
 #include <SetupKitEnvironment.hpp>
 #include <Util.hpp>
 
+#include <LibreOfficeKit/LibreOfficeKit.hxx>
 #include <Poco/Base64Encoder.h>
 
 #ifdef __EMSCRIPTEN__
