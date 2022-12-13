@@ -82,3 +82,5 @@ if (activateValidation) {
 	window.app.file = new Proxy(window.app.file, validator);
 
 }
+
+window.JSDialog = {}; // initialize jsdialog module
