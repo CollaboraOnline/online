@@ -66,11 +66,13 @@ apt-get update
 # Install the Collabora packages
 apt-get -y install coolwsd collaboraoffice-dict* collaboraofficebasis-ar collaboraofficebasis-as collaboraofficebasis-ast collaboraofficebasis-bg collaboraofficebasis-bn-in collaboraofficebasis-br collaboraofficebasis-ca collaboraofficebasis-calc collaboraofficebasis-ca-valencia collaboraofficebasis-core collaboraofficebasis-cs collaboraofficebasis-cy collaboraofficebasis-da collaboraofficebasis-de collaboraofficebasis-draw collaboraofficebasis-el collaboraofficebasis-en-gb collaboraofficebasis-en-us collaboraofficebasis-es collaboraofficebasis-et collaboraofficebasis-eu collaboraofficebasis-extension-pdf-import collaboraofficebasis-fi collaboraofficebasis-fr collaboraofficebasis-ga collaboraofficebasis-gd collaboraofficebasis-gl collaboraofficebasis-graphicfilter collaboraofficebasis-gu collaboraofficebasis-he collaboraofficebasis-hi collaboraofficebasis-hr collaboraofficebasis-hu collaboraofficebasis-id collaboraofficebasis-images collaboraofficebasis-impress collaboraofficebasis-is collaboraofficebasis-it collaboraofficebasis-ja collaboraofficebasis-km collaboraofficebasis-kn collaboraofficebasis-ko collaboraofficebasis-lt collaboraofficebasis-lv collaboraofficebasis-ml collaboraofficebasis-mr collaboraofficebasis-nb collaboraofficebasis-nl collaboraofficebasis-nn collaboraofficebasis-oc collaboraofficebasis-ooofonts collaboraofficebasis-ooolinguistic collaboraofficebasis-or collaboraofficebasis-pa-in collaboraofficebasis-pl collaboraofficebasis-pt collaboraofficebasis-pt-br collaboraofficebasis-ro collaboraofficebasis-ru collaboraofficebasis-sk collaboraofficebasis-sl collaboraofficebasis-sr collaboraofficebasis-sr-latn collaboraofficebasis-sv collaboraofficebasis-ta collaboraofficebasis-te collaboraofficebasis-tr collaboraofficebasis-uk collaboraofficebasis-vi collaboraofficebasis-writer collaboraofficebasis-zh-cn collaboraofficebasis-zh-tw
 
+if [ -z "$nobrand" ]; then
 if [ "$type" == "cool" ] || [ "$type" == "key" ]; then
     apt-get -y install collabora-online-brand
 else
     apt-get -y install code-brand
 fi
+fi # $nobrand
 
 # Install inotifywait and killall to automatic restart coolwsd, if coolwsd.xml changes
 apt-get -y install inotify-tools psmisc
