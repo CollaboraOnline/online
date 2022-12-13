@@ -279,14 +279,9 @@ void lok_cleanup(void * h_void)
     delete llo;
 }
 
-int main(int argc, char* argv[])
+int main(int, char*[])
 {
     void * handle = lok_init();
-    if (argc != 2)
-    {
-        fprintf(stderr, "Usage: %s document\n", argv[0]);
-        _exit(1); // avoid log cleanup
-    }
 
     Log::initialize("WASM", "trace", false, false, {});
     Util::setThreadName("main");
