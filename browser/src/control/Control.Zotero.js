@@ -196,6 +196,32 @@ L.Control.Zotero = L.Control.extend({
 		};
 	},
 
+	getCitationJSONString: function(item) {
+		var resultJSON = {};
+		resultJSON['citationID'] = Math.random().toString(36).substring(2,12);
+
+		resultJSON['schema'] = 'https://raw.githubusercontent.com/citation-style-language/schema/master/schemas/input/csl-citation.json';
+
+		var properties = {
+			formattedCitation: item['citation'],
+			plainCitation: new DOMParser().parseFromString(item['citation'], 'text/html').documentElement.textContent,
+			noteIndex: '0'
+		};
+
+		resultJSON['properties'] = properties;
+
+		var citationItems = {
+			id: item['csljson'].id,
+			uris: [item['links']['self']['href'], item['links']['alternate']['href']],
+		};
+
+		citationItems['itemData'] = item['csljson'];
+
+		resultJSON['citationItems'] = [citationItems];
+
+		return JSON.stringify(resultJSON);
+	},
+
 	fillCategories: function () {
 		this.categories = this.getDefaultCategories().slice();
 		this.categories[0].children = this.collections.slice();
@@ -231,8 +257,7 @@ L.Control.Zotero = L.Control.extend({
 			var creatorString = creatorArray.join(', ');
 			this.createEntry(iterator,
 				[items[iterator].data.title, creatorString, items[iterator].data.date],
-				{citation: items[iterator].citation, bib: items[iterator].bib, type: 'item', itemType: items[iterator].data.itemType},
-				true
+				{type: 'item', itemType: items[iterator].data.itemType, item: items[iterator]}
 			);
 		}
 	},
@@ -251,7 +276,7 @@ L.Control.Zotero = L.Control.extend({
 		that.map.fire('jsdialogupdate', dialogUpdateEvent);
 		that.map.fire('jsdialogupdate', that.updateCategories());
 
-		fetch('https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib')
+		fetch('https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson')
 			.then(function (response) { return response.json();})
 			.then(function (data) {
 				that.fillItems(data);
@@ -355,10 +380,9 @@ L.Control.Zotero = L.Control.extend({
 		if (selected.type === 'item') {
 			var parameters = {
 				FieldType: {type: 'string', value: 'vnd.oasis.opendocument.field.UNHANDLED'},
-				FieldCommand: {type: 'string', value: 'ADDIN ZOTERO_ITEM CSL_CITATION'},
-				FieldResult: {type: 'string', value: selected.citation}
+				FieldCommand: {type: 'string', value: 'ADDIN ZOTERO_ITEM CSL_CITATION ' + this.getCitationJSONString(selected.item)},
+				FieldResult: {type: 'string', value: selected.item.citation}
 			};
-
 			this.map.sendUnoCommand('.uno:TextFormField', parameters);
 		}
 		else if (selected.type === 'style') {
