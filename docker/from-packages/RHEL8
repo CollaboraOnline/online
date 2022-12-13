@@ -19,6 +19,9 @@ ARG version
 # Optional. The default is 'code'.
 ARG type
 
+# Optional. If defined then brand package will not be installed.
+ARG nobrand
+
 # Environment variables
 ENV LC_CTYPE C.UTF-8
 
