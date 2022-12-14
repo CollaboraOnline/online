@@ -90,8 +90,8 @@ m4_ifelse(ANDROIDAPP,[true],
 m4_ifelse(EMSCRIPTENAPP,[true],
   [   window.ThisIsTheEmscriptenApp = true;
    window.postMobileMessage = function(msg) { _handle_cool_message(allocateUTF8(msg)); };
-   window.postMobileError   = function(msg) { _handle_error_message(allocateUTF8(msg)); };
-   window.postMobileDebug   = function(msg) { _handle_debug_message(allocateUTF8(msg)); };],
+   window.postMobileError   = function(msg) { console.log('COOL Error: ' + msg); };
+   window.postMobileDebug   = function(msg) { console.log('COOL Debug: ' + msg); };],
   [   window.ThisIsTheEmscriptenApp = false;]
 )
 
@@ -147,7 +147,44 @@ function onSlideClick(e){
 	document.getElementById(e).classList.add("active");
 }
 
+function initWasmWithQt() {
+	var spinner = document.querySelector('#qtspinner');
+	var canvas = document.querySelector('#qtcanvas');
+	var status = document.querySelector('#qtstatus')
+
+	var qtLoader = QtLoader({
+	    canvasElements : [canvas],
+	    showLoader: function(loaderStatus) {
+		spinner.style.display = 'block';
+		canvas.style.display = 'none';
+		status.innerHTML = loaderStatus + "...";
+	    },
+	    showError: function(errorText) {
+		status.innerHTML = errorText;
+		spinner.style.display = 'block';
+		canvas.style.display = 'none';
+	    },
+	    showExit: function() {
+		status.innerHTML = "Application exit";
+		if (qtLoader.exitCode !== undefined)
+		    status.innerHTML += " with code " + qtLoader.exitCode;
+		if (qtLoader.exitText !== undefined)
+		    status.innerHTML += " (" + qtLoader.exitText + ")";
+		spinner.style.display = 'block';
+		canvas.style.display = 'none';
+	    },
+	    showCanvas: function() {
+		spinner.style.display = 'none';
+		canvas.style.display = 'block';
+	    },
+	});
+	console.log('**************** Calling qtLoader.loadEmscriptenModule()');
+	qtLoader.loadEmscriptenModule("online");
+	console.log('**************** qtLoader.loadEmscriptenModule() returned');
+}
 </script>
+
+m4_ifelse(EMSCRIPTENAPP,[true],[<script type="text/javascript" src="qtloader.js"></script>])
 
 m4_ifelse(BUNDLE,[],
   <!-- Using individual CSS files -->
@@ -186,7 +223,9 @@ m4_ifelse(MOBILEAPP,[true],
 )m4_dnl
 </head>
 
-  <body style="user-select: none;height:100%;display:flex;flex-direction:column">
+  <body style="user-select: none;height:100%;display:flex;flex-direction:column"
+m4_ifelse(EMSCRIPTENAPP,[true],[onload="initWasmWithQt()"])
+	>
     <!--The "controls" div holds map controls such as the Zoom button and
         it's separated from the map in order to have the controls on the top
         of the page all the time.
