@@ -306,7 +306,8 @@ function _treelistboxControl(parentContainer, data, builder) {
 					console.error(toHide);
 
 					for (var i in cells) {
-						if (cells[i].innerText && cells[i].innerText.indexOf(filter) >= 0)
+						var entryText = cells[i].innerText;
+						if (entryText && entryText.toLowerCase().indexOf(filter.toLowerCase()) >= 0)
 							toHide = false;
 					}
 
