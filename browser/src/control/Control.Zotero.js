@@ -106,12 +106,12 @@ L.Control.Zotero = L.Control.extend({
 								{
 									id: 'cancel',
 									type: 'pushbutton',
-									text: '~Cancel',
+									text: _('Cancel'),
 								},
 								{
 									id: 'ok',
 									type: 'pushbutton',
-									text: '~Ok',
+									text: _('OK'),
 									'has_default': true,
 								}
 							],
@@ -272,7 +272,7 @@ L.Control.Zotero = L.Control.extend({
 		var that = this;
 
 		that.dialogSetup(_('My Library'), true);
-		var dialogUpdateEvent = that.updateList(['Title', 'Creator(s)', 'Date'], _('Loading'));
+		var dialogUpdateEvent = that.updateList([_('Title'), _('Creator(s)'), _('Date')], _('Loading'));
 		that.map.fire('jsdialogupdate', dialogUpdateEvent);
 		that.map.fire('jsdialogupdate', that.updateCategories());
 
@@ -281,7 +281,7 @@ L.Control.Zotero = L.Control.extend({
 			.then(function (data) {
 				that.fillItems(data);
 
-				var dialogUpdateEvent = that.updateList(['Title', 'Creator(s)', 'Date'], _('Your library is empty'));
+				var dialogUpdateEvent = that.updateList([_('Title'), _('Creator(s)'), _('Date')], _('Your library is empty'));
 
 				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
@@ -326,7 +326,7 @@ L.Control.Zotero = L.Control.extend({
 				that.dialogSetup(_('Citation Style'), false);
 				that.fillStyles(data);
 
-				var dialogUpdateEvent = that.updateList(['Styles'],_('An error occurred while fetching style list'));
+				var dialogUpdateEvent = that.updateList([_('Styles')],_('An error occurred while fetching style list'));
 
 				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
@@ -346,7 +346,7 @@ L.Control.Zotero = L.Control.extend({
 					.then(function (response) { return response.json();})
 					.then(function (data) {
 						that.fillItems(data);
-						var dialogUpdateEvent = that.updateList(['Title', 'Creator(s)', 'Date'], _('Your library is empty'));
+						var dialogUpdateEvent = that.updateList([_('Title'), _('Creator(s)'), _('Date')], _('Your library is empty'));
 						that.map.fire('jsdialogupdate', dialogUpdateEvent);
 					});
 				return;
