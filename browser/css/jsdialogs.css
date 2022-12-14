@@ -225,6 +225,21 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	position: relative !important;
 }
 
+.ui-treeview-header-sort-icon::after {
+	content: '\25BC';
+	margin-inline-start: 7px;
+	display: none;
+}
+
+.ui-treeview-header-sort-icon.up::after {
+	transform: rotate(180deg);
+	display: inline-block;
+}
+
+.ui-treeview-header-sort-icon.down::after {
+	display: inline-block;
+}
+
 .ui-expander-label.expanded {
 	padding-left: 14px; /*adding extra padding to account for image absolute position*/
 	color: #444;
