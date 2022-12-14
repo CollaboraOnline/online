@@ -297,28 +297,27 @@ function _treelistboxControl(parentContainer, data, builder) {
 	}
 
 	table.filterEntries = function (filter) {
-		if (isHeaderListBox) {
-			tbody.querySelectorAll('.jsdialog.ui-listview-entry')
-				.forEach(function (entry) {
-					var cells = entry.querySelectorAll('td');
-					var toHide = filter.trim() !== '';
-					console.error(filter.trim());
-					console.error(toHide);
+		if (isHeaderListBox)
+			var selector = '.ui-listview-entry';
+		else
+			selector = '.ui-treeview-entry';
 
-					for (var i in cells) {
-						var entryText = cells[i].innerText;
-						if (entryText && entryText.toLowerCase().indexOf(filter.toLowerCase()) >= 0)
-							toHide = false;
-					}
+		tbody.querySelectorAll(selector)
+			.forEach(function (entry) {
+				var cells = entry.querySelectorAll('td');
+				var toHide = filter.trim() !== '';
 
-					if (toHide)
-						L.DomUtil.addClass(entry, 'hidden');
-					else
-						L.DomUtil.removeClass(entry, 'hidden');
-				});
-		} else {
-			console.error('aaaa');
-		}
+				for (var i in cells) {
+					var entryText = cells[i].innerText;
+					if (entryText && entryText.toLowerCase().indexOf(filter.toLowerCase()) >= 0)
+						toHide = false;
+				}
+
+				if (toHide)
+					L.DomUtil.addClass(entry, 'hidden');
+				else
+					L.DomUtil.removeClass(entry, 'hidden');
+			});
 	};
 
 	return false;
