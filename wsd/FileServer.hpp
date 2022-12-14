@@ -33,6 +33,9 @@ class FileServerRequestHandler
                                     const RequestDetails &requestDetails,
                                     const std::shared_ptr<StreamSocket>& socket);
 
+    static std::string processLoginRequest(const std::string name, const std::string password);
+    static void adminLogout(const std::string jwt);
+
     /// Construct a JSON to be accepted by the cool.html from a list like
     /// UIMode=classic;TextRuler=true;PresentationStatusbar=false
     /// that is passed as "ui_defaults" hidden input during the iframe setup.
@@ -47,9 +50,14 @@ class FileServerRequestHandler
                                                std::string propertyName,
                                                bool defaultValue);
 
+    static bool checkJWT(const std::string jwt);
+    static std::vector<std::string> _adminSessionList;
+
 public:
     /// Evaluate if the cookie exists, and if not, ask for the credentials.
-    static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, Poco::Net::HTTPResponse& response);
+    static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request);
+
+    static bool isAdminLoggedIn(const std::string jwt);
 
     static void handleRequest(const Poco::Net::HTTPRequest& request,
                               const RequestDetails &requestDetails,

@@ -3690,15 +3690,13 @@ private:
                     /* WARNING: security point, we may skip authentication */
                     bool skipAuthentication = COOLWSD::getConfigValue<bool>("security.enable_metrics_unauthenticated", false);
                     if (!skipAuthentication)
-                        if (!FileServerRequestHandler::isAdminLoggedIn(request, *response))
+                        if (!FileServerRequestHandler::isAdminLoggedIn(request))
                             throw Poco::Net::NotAuthenticatedException("Invalid admin login");
                 }
                 catch (const Poco::Net::NotAuthenticatedException& exc)
                 {
-                    //LOG_ERR("FileServerRequestHandler::NotAuthenticated: " << exc.displayText());
                     http::Response httpResponse(http::StatusLine(401));
                     httpResponse.set("Content-Type", "text/html charset=UTF-8");
-                    httpResponse.set("WWW-authenticate", "Basic realm=\"online\"");
                     socket->sendAndShutdown(httpResponse);
                     socket->ignoreInput();
                     return;

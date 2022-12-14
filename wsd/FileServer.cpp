@@ -196,73 +196,66 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
 
 }
 
-bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
-                                               HTTPResponse &response)
+bool FileServerRequestHandler::checkJWT(const std::string jwt)
 {
     assert(COOLWSD::AdminEnabled);
 
-    const auto& config = Application::instance().config();
+    bool tokenValid = false;
 
-    NameValueCollection cookies;
-    request.getCookies(cookies);
+    LOG_INF("Verifying JWT token: " << jwt);
+    JWTAuth authAgent("admin", "admin", "admin");
+    // Check session list first, which is possibly quicker.
+    if (std::find(_adminSessionList.begin(), _adminSessionList.end(), jwt) != _adminSessionList.end() && authAgent.verify(jwt))
+    {
+        LOG_TRC("JWT token is valid");
+        tokenValid = true;
+    }
+    else
+        LOG_INF("Invalid JWT token, let the administrator re-login");
+
+    return tokenValid;
+}
+
+bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request)
+{
+    assert(COOLWSD::AdminEnabled);
+
+    bool tokenValid = false;
+
     try
     {
-        const std::string jwtToken = cookies.get("jwt");
-        LOG_INF("Verifying JWT token: " << jwtToken);
-        JWTAuth authAgent("admin", "admin", "admin");
-        if (authAgent.verify(jwtToken))
-        {
-            LOG_TRC("JWT token is valid");
-            return true;
-        }
-
-        LOG_INF("Invalid JWT token, let the administrator re-login");
+        NameValueCollection cookies;
+        request.getCookies(cookies);
+        if (cookies.find("jwt") != cookies.end())
+            tokenValid = checkJWT(cookies.get("jwt"));
+        else
+            LOG_INF("No existing JWT cookie found");
     }
     catch (const Poco::Exception& exc)
     {
-        LOG_INF("No existing JWT cookie found");
+        LOG_ERR("Error while trying to validate admin session.");
     }
 
-    // If no cookie found, or is invalid, let the admin re-login
-    HTTPBasicCredentials credentials(request);
-    const std::string& userProvidedUsr = credentials.getUsername();
-    const std::string& userProvidedPwd = credentials.getPassword();
+    return tokenValid;
+}
 
-    // Deny attempts to login without providing a username / pwd and fail right away
-    // We don't even want to allow a password-less PAM module to be used here,
-    // or anything.
-    if (userProvidedUsr.empty() || userProvidedPwd.empty())
+bool FileServerRequestHandler::isAdminLoggedIn(const std::string jwt)
+{
+    return checkJWT(jwt);
+}
+
+std::vector<std::string> FileServerRequestHandler::_adminSessionList;
+
+void FileServerRequestHandler::adminLogout(const std::string jwt)
+{
+    for (std::size_t i = 0; i < _adminSessionList.size(); i++)
     {
-        LOG_ERR("An attempt to log into Admin Console without username or password.");
-        return false;
+        if (_adminSessionList[i] == jwt)
+        {
+            _adminSessionList.erase(_adminSessionList.begin() + i);
+            return;
+        }
     }
-
-    // Check if the user is allowed to use the admin console
-    if (config.getBool("admin_console.enable_pam", "false"))
-    {
-        // use PAM - it needs the username too
-        if (!isPamAuthOk(userProvidedUsr, userProvidedPwd))
-            return false;
-    }
-    else
-    {
-        // use the hash or password in the config file
-        if (!isConfigAuthOk(userProvidedUsr, userProvidedPwd))
-            return false;
-    }
-
-    // authentication passed, generate and set the cookie
-    JWTAuth authAgent("admin", "admin", "admin");
-    const std::string jwtToken = authAgent.getAccessToken();
-
-    Poco::Net::HTTPCookie cookie("jwt", jwtToken);
-    // bundlify appears to add an extra /dist -> dist/dist/admin
-    cookie.setPath(COOLWSD::ServiceRoot + "/browser/dist/");
-    cookie.setSecure(COOLWSD::isSSLEnabled() ||
-                     COOLWSD::isSSLTermination());
-    response.addCookie(cookie);
-
-    return true;
 }
 
 #if ENABLE_DEBUG
@@ -477,6 +470,48 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
     }
 #endif
 
+std::string FileServerRequestHandler::processLoginRequest(const std::string name, const std::string password)
+{
+    const auto& config = Application::instance().config();
+
+    bool credentialsValid = true;
+
+    if (password.empty() || name.empty())
+        credentialsValid = false;
+
+    if (credentialsValid)
+    {
+        // Check if the user is allowed to use the admin console.
+        if (config.getBool("admin_console.enable_pam", "false"))
+        {
+            // use PAM - it needs the username too
+            if (!isPamAuthOk(name, password))
+                credentialsValid = false;
+        }
+        else
+        {
+            // use the hash or password in the config file
+            if (!isConfigAuthOk(name, password))
+                credentialsValid = false;
+        }
+    }
+
+    std::string cookie = "jwt=";
+    if (credentialsValid)
+    {
+        // So the user has valid credentials. Let's create a token for them.
+        JWTAuth authAgent("admin", "admin", "admin");
+        cookie += authAgent.getAccessToken();
+        _adminSessionList.push_back(authAgent.getAccessToken());
+    }
+
+    // bundlify appears to add an extra /dist -> dist/dist/admin
+    cookie += "; path=/browser/dist/;";
+    cookie += (COOLWSD::isSSLEnabled() || COOLWSD::isSSLTermination() ? " secure": "");
+
+    return cookie;
+}
+
 void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                                              const RequestDetails &requestDetails,
                                              Poco::MemoryInputStream& message,
@@ -547,6 +582,57 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 return;
             }
         }
+        else if (request.getMethod() == HTTPRequest::HTTP_POST && endPoint == "admin_login")
+        {
+            http::Response httpResponse(http::StatusLine(303));
+            httpResponse.add("Location", "/browser/dist/admin/admin.html");
+
+            std::ostringstream ss;
+
+            std::string message_line;
+            std::string name, password;
+            char temp[1000];
+            while (message.getline(temp, 1000))
+            {
+                message_line = temp;
+                if (message_line.find("name") != std::string::npos && message_line.find("password") != std::string::npos)
+                {
+                    std::vector<std::string> parameters = Util::splitStringToVector(message_line, '&');
+                    for (size_t i = 0; i < parameters.size(); i++)
+                    {
+                        if (parameters[i].find("name=") != std::string::npos)
+                        {
+                            name = Util::replace(parameters[i], "name=", "");
+                        }
+                        else if (parameters[i].find("password=") != std::string::npos)
+                        {
+                            password = Util::replace(parameters[i], "password=", "");
+                        }
+                    }
+                }
+            }
+
+            httpResponse.add("Set-Cookie", processLoginRequest(name, password));
+            httpResponse.complete();
+            Buffer buf;
+            httpResponse.writeData(buf);
+            socket->send(buf.data());
+            return;
+        }
+        else if (request.getMethod() == HTTPRequest::HTTP_POST && endPoint == "admin_logout")
+        {
+            NameValueCollection cookies;
+            request.getCookies(cookies);
+            const std::string jwtToken = cookies.get("jwt");
+
+            LOG_TRC("Trying to log out.");
+            adminLogout(jwtToken);
+
+            std::ostringstream oss;
+            response.write(oss);
+            socket->send(oss.str());
+            return;
+        }
 
         // Is this a file we read at startup - if not; it's not for serving.
         if (FileHash.find(relPath) == FileHash.end())
@@ -575,6 +661,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 endPoint == "adminSettings.html" ||
                 endPoint == "adminHistory.html" ||
                 endPoint == "adminAnalytics.html" ||
+                endPoint == "adminLogin.html" ||
                 endPoint == "adminLog.html")
             {
                 preprocessAdminFile(request, requestDetails, socket);
@@ -588,9 +675,6 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 
                 if (!COOLWSD::AdminEnabled)
                     throw Poco::FileAccessDeniedException("Admin console disabled");
-
-                if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
-                    throw Poco::Net::NotAuthenticatedException("Invalid admin login");
 
                 // Ask UAs to block if they detect any XSS attempt
                 response.add("X-XSS-Protection", "1; mode=block");
@@ -682,7 +766,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
     catch (const Poco::Net::NotAuthenticatedException& exc)
     {
         LOG_ERR("FileServerRequestHandler::NotAuthenticated: " << exc.displayText());
-        sendError(401, request, socket, "", "", "WWW-authenticate: Basic realm=\"online\"\r\n");
+        //sendError(401, request, socket, "", "", "WWW-authenticate: Basic realm=\"online\"\r\n");
     }
     catch (const Poco::FileAccessDeniedException& exc)
     {
@@ -1253,8 +1337,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     if (!COOLWSD::AdminEnabled)
         throw Poco::FileAccessDeniedException("Admin console disabled");
 
-    if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
-        throw Poco::Net::NotAuthenticatedException("Invalid admin login");
+    bool loggedIn = FileServerRequestHandler::isAdminLoggedIn(request);
 
     ServerURL cnxDetails(requestDetails);
     std::string responseRoot = cnxDetails.getResponseRoot();
@@ -1264,9 +1347,11 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
 
     const std::string relPath = getRequestPathname(request);
     LOG_DBG("Preprocessing file: " << relPath);
-    std::string adminFile = *getUncompressedFile(relPath);
-    const std::string templatePath =
-        Poco::Path(relPath).setFileName("admintemplate.html").toString();
+
+    // If user is not logged in, render login page.
+    std::string adminFile = loggedIn ? *getUncompressedFile(relPath): *getUncompressedFile(Poco::Path(relPath).setFileName("adminLogin.html").toString());
+
+    const std::string templatePath = Poco::Path(relPath).setFileName("admintemplate.html").toString();
     std::string templateFile = *getUncompressedFile(templatePath);
     Poco::replaceInPlace(templateFile, std::string("<!--%MAIN_CONTENT%-->"), adminFile); // Now template has the main content..
 

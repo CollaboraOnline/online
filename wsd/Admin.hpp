@@ -44,7 +44,7 @@ private:
 private:
     Admin* _admin;
     int _sessionId;
-    bool _isAuthenticated;
+    std::string _jwt;
 };
 
 class MemoryStatsTask;

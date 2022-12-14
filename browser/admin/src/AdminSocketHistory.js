@@ -33,8 +33,8 @@ var AdminSocketHistory = AdminSocketBase.extend({
 			jsonObj = JSON.parse(e.data);
 			var doc = jsonObj['History']['documents'];
 			var exdoc = jsonObj['History']['expiredDocuments'];
-			$('#json-doc').find('textarea').html(JSON.stringify(doc));
-			$('#json-ex-doc').find('textarea').html(JSON.stringify(exdoc));
+			$('#json-doc').find('textarea').text(JSON.stringify(doc));
+			$('#json-ex-doc').find('textarea').text(JSON.stringify(exdoc));
 		} catch (e) {
 			$('document').alert(e.message);
 		}

@@ -75,25 +75,13 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         std::string jwtToken;
         COOLProtocol::getTokenString(tokens[1], "jwt", jwtToken);
 
-        LOG_INF("Verifying JWT token: " << jwtToken);
-        JWTAuth authAgent("admin", "admin", "admin");
-        if (authAgent.verify(jwtToken))
-        {
-            LOG_TRC("JWT token is valid");
-            _isAuthenticated = true;
-            return;
-        }
-        else
-        {
-            LOG_DBG("Invalid auth token");
-            sendMessage("InvalidAuthToken");
-            shutdown();
-            ignoreInput();
-            return;
-        }
+        LOG_INF("JWT token is set for admin socket handler: " << jwtToken);
+        _jwt = jwtToken;
     }
 
-    if (!_isAuthenticated)
+    bool authenticated = FileServerRequestHandler::isAdminLoggedIn(_jwt);
+
+    if (!authenticated)
     {
         LOG_DBG("Not authenticated - message is '" << firstLine << "' " <<
                 tokens.size() << " first: '" << tokens[0] << '\'');
@@ -301,7 +289,6 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
                                        const Poco::Net::HTTPRequest& request)
     : WebSocketHandler(socket.lock(), request)
     , _admin(adminManager)
-    , _isAuthenticated(false)
 {
     // Different session id pool for admin sessions (?)
     _sessionId = Util::decodeId(COOLWSD::GetConnectionId());
@@ -309,8 +296,7 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
 
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager)
     : WebSocketHandler(/* isClient = */ true, /* isMasking = */ true),
-      _admin(adminManager),
-      _isAuthenticated(true)
+      _admin(adminManager)
 {
     _sessionId = Util::decodeId(COOLWSD::GetConnectionId());
 }
@@ -322,7 +308,7 @@ void AdminSocketHandler::sendTextFrame(const std::string& message)
         UnitWSD::get().onAdminQueryMessage(message);
     }
 
-    if (_isAuthenticated)
+    if (FileServerRequestHandler::isAdminLoggedIn(_jwt))
     {
         LOG_TRC("send admin text frame '" << message << '\'');
         sendMessage(message);
