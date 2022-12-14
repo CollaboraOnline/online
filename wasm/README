@@ -54,8 +54,8 @@ Then build libzstd:
     podman run -v /data/lo/zstd-1.5.2:/data/lo/zstd-1.5.2:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c 'source /home/builder/emsdk/emsdk_env.sh && cd /data/lo/zstd-1.5.2/ && emmake make -j8 lib-nomt ZSTD_NO_ASM=1'
 
 Then build POCO:
-* this requires a patch (currently exists patch for 1.12.4 and untested "devel"
-  branch)
+* this requires two patches (currently exists patch for 1.12.4 and untested "devel"
+  branch) plus renaming one source file (which actually is from expat but Poco includes)
 * note that the header Poco/Platform.h maps EMSCRIPTEN to POCO_OS_LINUX
 * it has both Makefiles and CMake but i couldn't get CMake to use CXXFLAGS to
   disable some Linux-specific code; i tried variations on:
@@ -65,6 +65,8 @@ Then build POCO:
     tar -xjvf ~/Downloads/poco-1.12.4-all.tar.bz2
     cd poco-1.12.4-all
     patch -p1 < $HOME/lo/online/wasm/poco-1.12.4-emscripten.patch
+    mv XML/src/xmlparse.cpp XML/src/xmlparse.c
+    patch < $HOME/lo/online/wasm/poco-no-special-expat-sauce.diff
     podman run -v /data/lo/poco-1.12.4-all:/data/lo/poco-1.12.4-all:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c 'source /home/builder/emsdk/emsdk_env.sh && cd /data/lo/poco-1.12.4-all && emconfigure ./configure --static --no-samples --no-tests --omit=Crypto,NetSSL_OpenSSL,JWT,Data,Data/SQLite,Data/ODBC,Data/MySQL,Data/PostgreSQL,Zip,PageCompiler,PageCompiler/File2Page,MongoDB,Redis,ActiveRecord,ActiveRecord/Compiler,Prometheus && emmake make -j8 CC=/home/builder/emsdk/upstream/emscripten/emcc CXX=/home/builder/emsdk/upstream/emscripten/em++ LD=/home/builder/emsdk/upstream/emscripten/em++ CXXFLAGS="-DPOCO_NO_LINUX_IF_PACKET_H -pthread -s USE_PTHREADS=1 -s DISABLE_EXCEPTION_CATCHING=0" && make -j8 install INSTALLDIR=/data/lo/poco-1.12.4-all/install'
 
 == Build Online with manually built dependencies ==
