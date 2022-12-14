@@ -55,6 +55,11 @@ l10nstrings.strLogLevels = _('Log Levels');
 l10nstrings.strCloseModal = _('Close');
 l10nstrings.strUpdateLogLevels = _('Update Log Levels');
 l10nstrings.strVersionInfo = _('Version Information');
+l10nstrings.strLoginButton = _("Login");
+l10nstrings.strLogin = _("Login");
+l10nstrings.strAdminUserName = _("User name");
+l10nstrings.strAdminPassword = _("Password");
+
 
 if (module) {
 	module.exports = l10nstrings;

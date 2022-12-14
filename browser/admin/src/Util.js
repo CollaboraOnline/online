@@ -2,7 +2,7 @@
 /*
 	Utility class
 */
-/* global Base _ */
+/* global DlgYesNo Base _ */
 /* eslint no-unused-vars:0 */
 var Util = Base.extend({
 	constructor: null
@@ -70,4 +70,27 @@ var Util = Base.extend({
 
 		return '';
 	}
+});
+
+window.addEventListener('load', function() {
+	document.getElementById('btnLogout').onclick = function() {
+		var dialog = (new DlgYesNo())
+			.title(_('Confirmation'))
+			.text(_('Are you sure you want to logout from admin console?'))
+			.yesButtonText(_('OK'))
+			.noButtonText(_('Cancel'))
+			.type('warning')
+			.yesFunction(function() {
+				var http = new XMLHttpRequest();
+				var url = 'admin_logout';
+				http.open('POST', url, true);
+				http.onreadystatechange = function() {
+					if (http.readyState == 4 && http.status == 200) {
+						window.location.reload();
+					}
+				};
+				http.send(null);
+			});
+		dialog.open();
+	};
 });
