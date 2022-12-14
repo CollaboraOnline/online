@@ -66,6 +66,22 @@ L.Control.Zotero = L.Control.extend({
 					vertical: true,
 					children: [
 						{
+							id: 'ZoteroDialog-search-container',
+							type: 'container',
+							layoutstyle: 'end',
+							children: [
+								{
+									type: 'fixedtext',
+									id: 'zoterosearch-label',
+									text: _('Search:')
+								},
+								{
+									type: 'edit',
+									id: 'zoterosearch',
+								}
+							]
+						},
+						{
 							id: 'ZoteroDialog-content',
 							type: 'container',
 							children: [
@@ -304,6 +320,10 @@ L.Control.Zotero = L.Control.extend({
 				this.selected = data.entries[parseInt(index)];
 				return;
 			}
+		}
+		if (element === 'edit' && data.id === 'zoterosearch') {
+			document.getElementById('zoterolist').filterEntries(data.value);
+			return;
 		}
 		if (element === 'responsebutton' && data.id == 'ok' && this.selected) {
 			this._onOk(this.selected);
