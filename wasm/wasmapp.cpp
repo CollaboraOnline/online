@@ -16,6 +16,7 @@ static std::string fileURL;
 static COOLWSD *coolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
+static lok::Office * llo = NULL;
 
 static void send2JS(const std::vector<char>& buffer)
 {
@@ -71,6 +72,7 @@ static void send2JS(const std::vector<char>& buffer)
     emscripten_run_script(js.c_str());
 }
 
+extern "C"
 void handle_cool_message(const char *string_value)
 {
     if (strcmp(string_value, "HULLO") == 0)
@@ -219,7 +221,6 @@ void closeDocument()
 
 void * lok_init()
 {
-    lok::Office * llo = NULL;
     try {
         std::string lo_path = "/instdir/program";
         llo = lok::lok_cpp_init(lo_path.c_str());
@@ -235,13 +236,9 @@ void * lok_init()
     }
 }
 
-int loadDoc(void * h_void, bool url, const char * input,
-    const char * format, const char * options)
+int loadDoc(bool url, const char * input, const char * options)
 {
     try {
-        if (!h_void) return 1;
-        lok::Office * llo = static_cast<lok::Office *>(h_void);
-
         std::string input_url;
         if (url) {
             input_url = input;
@@ -252,15 +249,6 @@ int loadDoc(void * h_void, bool url, const char * input,
         if (!lodoc) {
             const char * errmsg = llo->getError();
             std::cerr << ": LibreOfficeKit failed to load document (" << errmsg << ")" << std::endl;
-            return 1;
-        }
-
-        std::string output_url;
-        //url_encode_path(output_url, output);
-        if (!lodoc->saveAs(output_url.c_str(), format, options)) {
-            const char * errmsg = llo->getError();
-            std::cerr << ": LibreOfficeKit failed to export (" << errmsg << ")" << std::endl;
-            delete lodoc;
             return 1;
         }
 
@@ -284,6 +272,9 @@ int main(int, char*[])
                                  {
                                      LOG_TRC_NOFILE(line);
                                  });
+
+    // Experiment
+    loadDoc(true, "file:///android/default-document/example.odt", "");
 
     char *argv[2];
     argv[0] = strdup("wasm");
