@@ -1239,5 +1239,22 @@ input[type='number']:hover::-webkit-outer-spin-button {
 /* Zotero dialog*/
 
 #ZoteroDialog-mainbox .ui-treeview {
+	min-width: 150px;
+	min-height: 150px;
 	max-width: 800px;
+	max-height: 500px;
+}
+
+#ZoteroDialog-search-container {
+	margin: 7px;
+}
+
+#zoterocategory {
+	margin-inline-end: 7px;
+	min-width: 100px;
+}
+
+#zoterosearch-label {
+	text-align: end;
+	margin: auto 7px;
 }

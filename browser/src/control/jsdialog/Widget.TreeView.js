@@ -296,6 +296,30 @@ function _treelistboxControl(parentContainer, data, builder) {
 		}
 	}
 
+	table.filterEntries = function (filter) {
+		if (isHeaderListBox) {
+			tbody.querySelectorAll('.jsdialog.ui-listview-entry')
+				.forEach(function (entry) {
+					var cells = entry.querySelectorAll('td');
+					var toHide = filter.trim() !== '';
+					console.error(filter.trim());
+					console.error(toHide);
+
+					for (var i in cells) {
+						if (cells[i].innerText && cells[i].innerText.indexOf(filter) >= 0)
+							toHide = false;
+					}
+
+					if (toHide)
+						L.DomUtil.addClass(entry, 'hidden');
+					else
+						L.DomUtil.removeClass(entry, 'hidden');
+				});
+		} else {
+			console.error('aaaa');
+		}
+	};
+
 	return false;
 }
 
