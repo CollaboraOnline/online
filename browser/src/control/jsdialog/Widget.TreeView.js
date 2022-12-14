@@ -1,6 +1,31 @@
 /* -*- js-indent-level: 8 -*- */
 /*
  * JSDialog.TreeView - tree view widget with or without header
+ *
+ * Example JSON:
+ * a) without header
+ * {
+ *     id: 'id',
+ *     type: 'treelistbox',
+ *     entries: [
+ *         { row: 0, text: 'first entry', children: [ { row: 2, text: 'first subentry' } ] },
+ *         { row: 1, text: 'second entry', selected: true, state: false }
+ *     ]
+ * }
+ *
+ * b) with headers
+ * {
+ *     id: 'id',
+ *     type: 'treelistbox',
+ *     headers: [ { text: 'first column' }, { text: 'second' }],
+ *     entries: [
+ *         { row: 0, columns [ { text: 'a' }, { text: 'b' } ] },
+ *         { row: 1, columns [ { text: 'a2' }, { text: 'b2' }, selected: true ]}
+ *     ]
+ * }
+ * 
+ * 'row' property is used in the callback to differentiate entries
+ * 'state' property defines if entry has the checkbox (false/true), when is missing - no checkbox
  */
 
 /* global $ JSDialog */
