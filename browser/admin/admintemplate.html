@@ -21,6 +21,7 @@
 
         html, body {
             font-family: 'Montserrat', sans-serif;
+            background-color: #F5F5F5;
 		}
 
 		/* These classes are for tab views without javascipt. */
@@ -58,7 +59,7 @@
         var host = (window.location.protocol === 'https:' ? 'wss://': 'ws://') + window.location.host + '%SERVICE_ROOT%/cool/adminws/';
     </script>
 
-    <div class="is-fullwidth has-text-white" style="height:62px;background-color:#17191E;line-height:50px;">
+    <div class="is-fullwidth has-text-white" style="min-height:62px;background-color:#17191E;line-height:50px;">
         <a style="margin-left:12px;color:#9D998D;"><script>document.write(l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole)</script></a>
         <a style="margin-right:12px;color:#9D998D;" id="a-settings-tablet" href="adminSettings.html" class="is-hidden-mobile is-pulled-right"><script>document.write(l10nstrings.strSettings)</script></a>
         <div class="dropdown is-hoverable is-right is-pulled-right is-hidden-tablet" style="margin-right:12px;">
@@ -86,7 +87,7 @@
         </div>
     </div>
 
-    <div class="columns is-fullwidth" style="height:calc(100vh - 70px);background-color: #F5F5F5;">
+    <div class="columns is-fullwidth" style="height:calc(100vh - 70px);">
         <nav class="column is-hidden-mobile is-narrow" id="column-admin-panel" style="width:225px;">
             <div class="list is-hoverable" style="height:100%;">
                 <a class="list-item" id="button-admin-panel-collapse" href="#">&larr;</a>
@@ -102,7 +103,7 @@
                 <a class="list-item" id="button-admin-panel-expand" href="#">&rarr;</a>
             </div>
         </div>
-        <div class="column">
+        <div class="column" style="margin:10px">
             <!--%MAIN_CONTENT%-->
         </div>
     </div>
