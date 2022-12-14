@@ -1009,7 +1009,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     const auto coolLogging = stringifyBoolFromConfig(config, "browser_logging", false);
     Poco::replaceInPlace(preprocess, std::string("%BROWSER_LOGGING%"), coolLogging);
-    const auto groupDownloadAs = stringifyBoolFromConfig(config, "per_view.group_download_as", false);
+    const auto groupDownloadAs = stringifyBoolFromConfig(config, "per_view.group_download_as", true);
     Poco::replaceInPlace(preprocess, std::string("%GROUP_DOWNLOAD_AS%"), groupDownloadAs);
     const unsigned int outOfFocusTimeoutSecs = config.getUInt("per_view.out_of_focus_timeout_secs", 60);
     Poco::replaceInPlace(preprocess, std::string("%OUT_OF_FOCUS_TIMEOUT_SECS%"), std::to_string(outOfFocusTimeoutSecs));
