@@ -50,9 +50,15 @@ var AdminSocketSettings = AdminSocketBase.extend({
 					.noButtonText(_('Cancel'))
 					.type('warning')
 					.yesFunction(function() {
-						console.debug(document.cookie);
-						document.cookie = 'JWT= ;expires=Thu, 18 Dec 2013 12:00:00 UTC;max-age=0;path=/;';
-						console.debug(document.cookie);
+						var http = new XMLHttpRequest();
+						var url = 'admin_logout';
+						http.open('POST', url, true);
+						http.onreadystatechange = function() {
+							if (http.readyState == 4 && http.status == 200) {
+								window.location.reload();
+							}
+						};
+						http.send(null);
 					});
 				dialog.open();
 			};
