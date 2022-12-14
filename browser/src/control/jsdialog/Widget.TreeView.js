@@ -161,6 +161,64 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 	}
 }
 
+function _createHeaders(tbody, data, builder) {
+	var headers = L.DomUtil.create('tr', builder.options.cssClass + ' ui-treeview-header', tbody);
+	for (var h in data.headers) {
+		var header = L.DomUtil.create('th', builder.options.cssClass, headers);
+		var headerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-header-text', header);
+		headerText.innerText = data.headers[h].text;
+		var headerSortIcon = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-header-sort-icon', header);
+
+		var sortByColumn = function (columnIndex, up) {
+			var compareFunction = function (a, b) {
+				if (!a || !b)
+					return 0;
+
+				var tda = a.querySelectorAll('td').item(columnIndex);
+				var tdb = b.querySelectorAll('td').item(columnIndex);
+
+				if (up)
+					return tdb.innerText.toLowerCase().localeCompare(tda.innerText.toLowerCase());
+				else
+					return tda.innerText.toLowerCase().localeCompare(tdb.innerText.toLowerCase());
+			};
+
+			var toSort = [];
+
+			tbody.querySelectorAll('.jsdialog.ui-listview-entry')
+				.forEach(function (item) { toSort.push(item); tbody.removeChild(item); });
+
+			toSort.sort(compareFunction);
+
+			toSort.forEach(function (item) { tbody.insertBefore(item, tbody.lastChild.nextSibling); });
+		};
+
+		var clickFunction = function (columnIndex, icon) {
+			var clearSorting = function () {
+				var icons = headers.querySelectorAll('.ui-treeview-header-sort-icon');
+				icons.forEach(function (icon) {
+					L.DomUtil.removeClass(icon, 'down');
+					L.DomUtil.removeClass(icon, 'up');
+				});
+			};
+
+			return function () {
+				if (L.DomUtil.hasClass(icon, 'down')) {
+					clearSorting();
+					L.DomUtil.addClass(icon, 'up');
+					sortByColumn(columnIndex, true);
+				} else {
+					clearSorting();
+					L.DomUtil.addClass(icon, 'down');
+					sortByColumn(columnIndex, false);
+				}
+			};
+		};
+
+		header.onclick = clickFunction(h, headerSortIcon);
+	}
+}
+
 function _treelistboxControl(parentContainer, data, builder) {
 	var table = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview', parentContainer);
 	table.id = data.id;
@@ -171,13 +229,8 @@ function _treelistboxControl(parentContainer, data, builder) {
 	var tbody = L.DomUtil.create('tbody', builder.options.cssClass + ' ui-treeview-body', table);
 
 	var isHeaderListBox = data.headers && data.headers.length !== 0;
-	if (isHeaderListBox) {
-		var headers = L.DomUtil.create('tr', builder.options.cssClass + ' ui-treeview-header', tbody);
-		for (var h in data.headers) {
-			var header = L.DomUtil.create('th', builder.options.cssClass, headers);
-			header.innerText = data.headers[h].text;
-		}
-	}
+	if (isHeaderListBox)
+		_createHeaders(tbody, data, builder);
 
 	if (!disabled) {
 		tbody.ondrop = function (ev) {
