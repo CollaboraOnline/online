@@ -175,8 +175,8 @@ L.Control.Zotero = L.Control.extend({
 
 	getDefaultCategories: function () {
 		return [
-			{text: _('My Library'), row: 'https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib'},
-			{text: _('Group Libraries')}];
+			{ columns: [{ text: _('My Library'), row: 'https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib'} ] },
+			{ columns: [{ text: _('Group Libraries')}] }];
 	},
 
 	updateCategories: function() {
@@ -257,7 +257,7 @@ L.Control.Zotero = L.Control.extend({
 				for (var i = 0; i < data.length; i++) {
 					that.groups.push(
 						{
-							text: data[i].data.name,
+							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.id,
 							row: data[i].links.self.href + '/items?v=3&key=' + that.apiKey
 						});
@@ -272,7 +272,7 @@ L.Control.Zotero = L.Control.extend({
 				for (var i = 0; i < data.length; i++) {
 					that.collections.push(
 						{
-							text: data[i].data.name,
+							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.key,
 							row: data[i].links.self.href + '/items?v=3&key=' + that.apiKey
 						});
