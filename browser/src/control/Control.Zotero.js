@@ -152,8 +152,6 @@ L.Control.Zotero = L.Control.extend({
 						headers: headerArray.map(
 							function(item) { return { text: item }; }
 						),
-						text: '',
-						enabled: true,
 						entries: this.items,
 					},
 				},
@@ -167,8 +165,8 @@ L.Control.Zotero = L.Control.extend({
 					id: 'ZoteroDialog',
 					control: {
 						id: 'zoterolist',
-						type: 'fixedtext',
-						text: failText,
+						type: 'treelistbox',
+						entries: [ { text: failText } ]
 					},
 				},
 			};
