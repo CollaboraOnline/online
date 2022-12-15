@@ -3,6 +3,16 @@
 var helper = require('./helper');
 var mobileHelper = require('./mobile_helper');
 
+function loginAdmin() {
+	cy.get('#btnLogout').click();
+	cy.get('#modal-yes-button-1').click();
+	cy.wait(200);
+	cy.get('#admin-user-name-input').type('admin');
+	cy.get('#admin-password-input').type('admin');
+	cy.get('#admin-login-button').click();
+	cy.wait(200);
+}
+
 describe('Interfering second user.', function() {
 	function getComponent(fileName) {
 		if (fileName.endsWith('.odt'))
@@ -19,6 +29,8 @@ describe('Interfering second user.', function() {
 			cy.visit('http://admin:admin@localhost:' +
 				Cypress.env('SERVER_PORT') +
 				'/browser/dist/admin/admin.html');
+
+			loginAdmin();
 
 			cy.get('#uptime')
 				.should('not.have.text', '0');
@@ -70,6 +82,8 @@ describe('Interfering second user.', function() {
 			cy.visit('http://admin:admin@localhost:' +
 				Cypress.env('SERVER_PORT') +
 				'/browser/dist/admin/admin.html');
+
+			loginAdmin();
 
 			cy.get('#uptime')
 				.should('not.have.text', '0');

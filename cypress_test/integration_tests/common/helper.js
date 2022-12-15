@@ -623,6 +623,15 @@ function closeDocument(fileName, testState) {
 			Cypress.env('SERVER_PORT') +
 			'/browser/dist/admin/admin.html');
 
+		// Logout and login admin.
+		cy.get('#btnLogout').click();
+		cy.get('#modal-yes-button-1').click();
+		cy.wait(200);
+		cy.get('#admin-user-name-input').type('admin');
+		cy.get('#admin-password-input').type('admin');
+		cy.get('#admin-login-button').click();
+		cy.wait(200);
+
 		// https://github.com/cypress-io/cypress/issues/9207
 		if (testState === 'failed') {
 			cy.wait(5000);
