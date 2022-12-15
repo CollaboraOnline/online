@@ -1428,7 +1428,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_editControl: function(parentContainer, data, builder, callback) {
 		var edit = L.DomUtil.create('input', 'ui-edit ' + builder.options.cssClass, parentContainer);
-		edit.value = builder._cleanText(data.text);
+		edit.value = data.text;
 		edit.id = data.id;
 		edit.dir = 'auto';
 

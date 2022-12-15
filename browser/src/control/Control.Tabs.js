@@ -316,20 +316,11 @@ L.Control.Tabs = L.Control.extend({
 	_renameSheet: function() {
 		var map = this._map;
 		var nPos = this._tabForContextMenu;
-		var tabName = $('<div>').text($('#spreadsheet-tab' + this._tabForContextMenu).text()).html().replaceAll('"', '&quot;');
-		vex.dialog.open({
-			contentClassName: 'vex-has-inputs',
-			message: _('Enter new sheet name'),
-			buttons: [
-				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
-				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') })
-			],
-			input: '<input name="sheetname" id="rename-calc-sheet-modal" type="text" value="' + tabName + '" required />',
-			afterOpen: function() { document.getElementById('rename-calc-sheet-modal').select(); },
-			callback: function(data) {
-				map.renamePage(data.sheetname, nPos);
-			}
-		});
+		var tabName = $('#spreadsheet-tab' + this._tabForContextMenu).text();
+		this._map.uiManager.showInputModal('rename-calc-sheet', _('Rename sheet'), _('Enter new sheet name'), tabName, _('OK'),
+			function (value) {
+				map.renamePage(value, nPos);
+			});
 	},
 
 	_showSheet: function() {
