@@ -240,6 +240,11 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: inline-block;
 }
 
+.ui-listview-icon {
+	height: 24px;
+	margin-inline-end: 8px;
+}
+
 .ui-expander-label.expanded {
 	padding-left: 14px; /*adding extra padding to account for image absolute position*/
 	color: #444;
