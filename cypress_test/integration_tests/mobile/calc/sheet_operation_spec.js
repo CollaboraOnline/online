@@ -100,11 +100,11 @@ describe('Sheet Operation', function () {
 
 		selectOptionMobileWizard('Rename Sheet...');
 
-		cy.get('.vex-content').should('exist');
+		cy.get('#mobile-wizard-content-modal-dialog-rename-calc-sheet').should('exist');
 
-		cy.get('#rename-calc-sheet-modal').clear().type('renameSheet');
+		cy.get('#input-modal-input').clear().type('renameSheet');
 
-		clickVexDialogButton('OK');
+		cy.get('#response-ok').click();
 
 		cy.get('.spreadsheet-tab.spreadsheet-tab-selected').should('have.text', 'renameSheet');
 	});

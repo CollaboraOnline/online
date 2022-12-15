@@ -849,6 +849,84 @@ L.Control.UIManager = L.Control.extend({
 		]);
 	},
 
+	/// shows simple input modal (message + input + (cancel + ok) button)
+	/// id - id of a dialog
+	/// title - title of a dialog
+	/// message - message
+	/// defaultValue - default value of an input
+	/// buttonText - text inside OK button
+	/// callback - callback on button press
+	showInputModal: function(id, title, message, defaultValue, buttonText, callback) {
+		var dialogId = 'modal-dialog-' + id;
+		var json = {
+			id: dialogId,
+			dialogid: id,
+			type: 'modalpopup',
+			title: title,
+			hasClose: true,
+			cancellable: true,
+			jsontype: 'dialog',
+			'init_focus_id': 'response',
+			children: [
+				{
+					id: 'input-modal-container',
+					type: 'container',
+					vertical: true,
+					children: [
+						{
+							id: 'input-modal-label',
+							type: 'fixedtext',
+							text: message
+						},
+						{
+							id: 'input-modal-input',
+							type: 'edit',
+							text: defaultValue
+						},
+						{
+							id: '',
+							type: 'buttonbox',
+							text: '',
+							enabled: true,
+							children: [
+								{
+									id: 'response-cancel',
+									type: 'pushbutton',
+									text: _('Cancel'),
+								},
+								{
+									id: 'response-ok',
+									type: 'pushbutton',
+									text: buttonText,
+									'has_default': true,
+								}
+							],
+							vertical: false,
+							layoutstyle: 'end'
+						},
+					],
+				},
+			]
+		};
+
+		var closeFunc = function() {
+			var closeMessage = { id: dialogId, jsontype: 'dialog', type: 'modalpopup', action: 'close' };
+			app.socket._onMessage({ textMsg: 'jsdialog: ' + JSON.stringify(closeMessage) });
+		};
+
+		this.showModal(json, [
+			{id: 'response-ok', func: function() {
+				if (typeof callback === 'function') {
+					var input = document.getElementById('input-modal-input');
+					callback(input.value);
+				}
+				closeFunc();
+			}},
+			{id: 'response-cancel', func: function() { closeFunc(); }},
+			{id: '__POPOVER__', func: function() { closeFunc(); }}
+		]);
+	},
+
 	// Helper functions
 
 	moveObjectVertically: function(obj, diff) {
