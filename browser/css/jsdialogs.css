@@ -52,7 +52,7 @@
 }
 
 .jsdialog.vertical p, .ui-frame-label {
-	margin: 0px;
+	margin: auto 0px;
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
 	line-height: var(--default-height);
@@ -124,6 +124,11 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	border-spacing: 0px;
 	width: 100%;
 	display: grid;
+}
+
+/* vertical alignment in the grid */
+.ui-grid-cell {
+	margin: auto 0px;
 }
 
 /* Scrollwindow - used eg. in accessibility check in writer */
