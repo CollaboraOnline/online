@@ -81,8 +81,22 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder) {
 	}
 
 	var text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', span);
-	text.innerText = entry.text;
-	text.tabIndex = 0;
+	for (var i in entry.columns) {
+		if (entry.columns[i].collapsed || entry.columns[i].expanded) {
+			var iconId = entry.columns[i].collapsed ? entry.columns[i].collapsed : entry.columns[i].expanded;
+			var newLength = iconId.lastIndexOf('.');
+			if (newLength > 0)
+				iconId = iconId.substr(0, newLength).replaceAll('/', '');
+			else
+				iconId = iconId.replaceAll('/', '');
+			var icon = L.DomUtil.create('img', 'ui-listview-icon', text);
+			icon.src = builder._createIconURL(iconId, true);
+		} else if (entry.columns[i].text) {
+			var innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', text);
+			innerText.innerText = entry.columns[i].text || entry.text;
+			innerText.tabIndex = 0;
+		}
+	}
 
 	if (entry.children) {
 		var ul = L.DomUtil.create('ul', builder.options.cssClass, li);
@@ -179,7 +193,14 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 
 	for (var i in entry.columns) {
 		var td = L.DomUtil.create('td', '', parentContainer);
-		td.innerText = entry.columns[i].text;
+
+		if (entry.columns[i].collapsed || entry.columns[i].expanded) {
+			var iconId = entry.columns[i].collapsed ? entry.columns[i].collapsed : entry.columns[i].expanded;
+			iconId = iconId.replaceAll('/', '');
+			var icon = L.DomUtil.create('img', 'ui-listview-icon', td);
+			icon.src = builder._createIconURL(iconId, true);
+		} else if (entry.columns[i].text)
+			td.innerText = entry.columns[i].text;
 
 		if (!disabled) {
 			$(td).click(function() {
