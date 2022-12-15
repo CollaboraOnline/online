@@ -40,6 +40,8 @@ describe('Image Operation Tests', function() {
 		cy.get('#selectheight input').clear({force:true})
 			.type('2{enter}', {force:true});
 
+		cy.wait(1000);
+
 		assertImageSize(139, 93);
 
 		//Keep ratio checked

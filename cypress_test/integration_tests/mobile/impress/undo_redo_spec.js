@@ -43,12 +43,12 @@ describe('Editing Operations', function() {
 		helper.expectTextForClipboard('Hello Worl');
 	}
 
-	it('Undo', function() {
+	it.skip('Undo', function() {
 		undo();
 	});
 
 
-	it('Redo',function() {
+	it.skip('Redo',function() {
 		undo();
 
 		cy.get('#tb_actionbar_item_redo').click();
