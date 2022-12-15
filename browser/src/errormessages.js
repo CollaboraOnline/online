@@ -8,6 +8,8 @@ vex.defaultOptions.className = 'vex-theme-plain';
 var lang = getParameterByName('lang');
 if (lang) {
 	String.locale = lang;
+} else {
+	String.locale = 'en-US';
 }
 
 errorMessages.diskfull = _('No disk space left on server, please contact the server administrator to continue.');
