@@ -31,7 +31,7 @@ L.Control.Zotero = L.Control.extend({
 			.then(function (response) { return response.json(); })
 			.then(function (data) {
 				that.userID = data.userID;
-				that.enable = !!that.userID;
+				that.enable = false;
 				if (that.map.uiManager.notebookbar)
 					that.map.uiManager.refreshNotebookbar();
 				else
