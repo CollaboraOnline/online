@@ -224,10 +224,20 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 	}
 }
 
+function _hasIcon(columns) {
+	for (var i in columns)
+		if (columns[i].collapsed !== undefined)
+			return true;
+	return false;
+}
+
 function _createHeaders(tbody, data, builder) {
 	var headers = L.DomUtil.create('tr', builder.options.cssClass + ' ui-treeview-header', tbody);
 	var hasCheckboxes = data.entries && data.entries.length && data.entries[0].state !== undefined;
 	if (hasCheckboxes)
+		data.headers = [{ text: '' }].concat(data.headers);
+	var hasIcons = data.entries && data.entries.length && _hasIcon(data.entries[0].columns);
+	if (hasIcons)
 		data.headers = [{ text: '' }].concat(data.headers);
 	for (var h in data.headers) {
 		var header = L.DomUtil.create('th', builder.options.cssClass, headers);
