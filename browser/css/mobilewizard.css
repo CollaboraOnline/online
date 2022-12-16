@@ -758,6 +758,10 @@ a.leaflet-control-zoom-in {
 	color: var(--color-text-lighter) !important;
 }
 
+#mobile-wizard [id^='mobile-wizard-content-modal-dialog-'] {
+	width: 100%;
+}
+
 #DecrementIndent + input:disabled{display: none;}
 div#mobile-wizard-content input[type='number']{
 	color: var(--color-text-dark);
