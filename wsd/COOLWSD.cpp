@@ -3250,13 +3250,19 @@ public:
     PrisonerRequestDispatcher()
         : WebSocketHandler(/* isClient = */ false, /* isMasking = */ true)
     {
+        LOG_TRC("PrisonerRequestDispatcher");
     }
     ~PrisonerRequestDispatcher()
     {
         LOG_TRC("~PrisonerRequestDispatcher");
 
         // Notify the broker that we're done.
-        onDisconnect();
+        // Note: since this class is the default WebScoketHandler
+        // for all incoming connections, for ForKit we have to
+        // replace it (once we receive 'GET /coolws/forkit') with
+        // ForKitProcWSHandler (see ForKitProcess) and nothing to disconnect.
+        if (_childProcess.lock())
+            onDisconnect();
     }
 
 private:
@@ -3280,8 +3286,14 @@ private:
         std::shared_ptr<DocumentBroker> docBroker = child ? child->getDocumentBroker() : nullptr;
         if (docBroker)
         {
-            LOG_WRN("DocBroker [" << docBroker->getDocKey() << "] got disconnected from its Kit ("
-                                  << child->getPid() << "). Closing.");
+            if (!docBroker->isUnloading())
+                LOG_WRN("DocBroker [" << docBroker->getDocKey()
+                                      << "] got disconnected from its Kit (" << child->getPid()
+                                      << ") unexpectedly. Closing");
+            else
+                LOG_DBG("DocBroker [" << docBroker->getDocKey() << "] disconnected from its Kit ("
+                                      << child->getPid() << ") as expected");
+
             std::unique_lock<std::mutex> lock = docBroker->getLock();
             docBroker->disconnectedFromKit();
         }
