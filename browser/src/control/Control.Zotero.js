@@ -203,12 +203,18 @@ L.Control.Zotero = L.Control.extend({
 
 	// columns: Array of details which will be displayed in the dialog
 	// entryData: Object containing extra details related to the entry
-	createEntry: function (index, columns, entryData) {
-		this.items.push(Object.assign({ 'columns': columns.map(
+	createEntry: function (index, columns, entryData, hasIcon) {
+		if (hasIcon) {
+			var icon = 'zotero' + entryData.itemType;
+			var firstColumn = [ { collapsed: icon, expanded: icon } ];
+		} else {
+			firstColumn = [];
+		}
+		this.items.push(Object.assign({ 'columns': firstColumn.concat(columns.map(
 			function (item) {
 				return { text: item };
 			}
-		), row: index,
+		)), row: index,
 		}, entryData));
 	},
 
@@ -224,7 +230,8 @@ L.Control.Zotero = L.Control.extend({
 			var creatorString = creatorArray.join(', ');
 			this.createEntry(iterator,
 				[items[iterator].data.title, creatorString, items[iterator].data.date],
-				{citation: items[iterator].citation, bib: items[iterator].bib, type: 'item'}
+				{citation: items[iterator].citation, bib: items[iterator].bib, type: 'item', itemType: items[iterator].data.itemType},
+				true
 			);
 		}
 	},
