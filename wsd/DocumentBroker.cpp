@@ -3437,9 +3437,18 @@ void DocumentBroker::closeDocument(const std::string& reason)
 
 void DocumentBroker::disconnectedFromKit()
 {
-    LOG_INF("DocBroker " << _docKey << " Disconnected from Kit. Flagging to close.");
-    _docState.setDisconnected();
-    closeDocument("docdisconnected");
+    _docState.setDisconnected(); // Always set the disconnected flag.
+    if (_closeReason.empty())
+    {
+        // If we have a reason to close, no advantage in clobbering it.
+        LOG_INF("DocBroker [" << _docKey << "] Disconnected from Kit. Flagging to close");
+        closeDocument("docdisconnected");
+    }
+    else
+    {
+        LOG_INF("DocBroker [" << _docKey << "] Disconnected from Kit while closing with reason ["
+                              << _closeReason << ']');
+    }
 }
 
 std::size_t DocumentBroker::broadcastMessage(const std::string& message) const
