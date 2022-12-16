@@ -72,7 +72,7 @@ public:
         :
 #if !MOBILEAPP
         _lastPingSentTime(std::chrono::steady_clock::now() -
-                          std::chrono::microseconds(PingFrequencyMicroS) -
+                          std::chrono::microseconds(PingFrequencyMicroS) +
                           std::chrono::microseconds(InitialPingDelayMicroS))
         , _pingTimeUs(0)
         , _isMasking(isClient && isMasking)
