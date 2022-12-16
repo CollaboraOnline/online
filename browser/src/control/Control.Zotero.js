@@ -214,6 +214,9 @@ L.Control.Zotero = L.Control.extend({
 
 	fillItems: function (items) {
 		for (var iterator = 0; iterator < items.length; ++iterator) {
+			if (items[iterator].data.itemType === 'note')
+				continue;
+
 			var creatorArray = [];
 			for (var creator = 0; items[iterator].data.creators && creator < items[iterator].data.creators.length; ++creator) {
 				creatorArray.push(items[iterator].data.creators[creator].firstName + ' ' + items[iterator].data.creators[creator].lastName);
@@ -259,7 +262,7 @@ L.Control.Zotero = L.Control.extend({
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.id,
-							row: data[i].links.self.href + '/items?v=3&key=' + that.apiKey
+							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey
 						});
 					that.fillCategories();
 					that.map.fire('jsdialogupdate', that.updateCategories());
@@ -274,7 +277,7 @@ L.Control.Zotero = L.Control.extend({
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.key,
-							row: data[i].links.self.href + '/items?v=3&key=' + that.apiKey
+							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey
 						});
 					that.fillCategories();
 					that.map.fire('jsdialogupdate', that.updateCategories());
