@@ -173,14 +173,12 @@ using Poco::Net::MessageHeader;
 using Poco::Net::NameValueCollection;
 using Poco::Path;
 using Poco::StreamCopier;
-using Poco::URI;
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
 using Poco::Util::LayeredConfiguration;
 using Poco::Util::MissingOptionException;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
-using Poco::Util::ServerApplication;
 using Poco::Util::XMLConfiguration;
 using Poco::XML::AutoPtr;
 using Poco::XML::DOMParser;
@@ -845,7 +843,7 @@ inline std::string getServiceURI(const std::string &sub, bool asAdmin = false)
 namespace
 {
 
-void sendLoadResult(std::shared_ptr<ClientSession> clientSession, bool success,
+void sendLoadResult(const std::shared_ptr<ClientSession>& clientSession, bool success,
                     const std::string &errorMsg)
 {
     const std::string result = success ? "" : "Error while loading document";
@@ -1759,7 +1757,7 @@ private:
         return true;
     }
 
-    bool finishDownload(const std::string& uri, const std::shared_ptr<const http::Response> httpResponse)
+    bool finishDownload(const std::string& uri, const std::shared_ptr<const http::Response>& httpResponse)
     {
         const unsigned int statusCode = httpResponse->statusLine().statusCode();
 
@@ -4921,7 +4919,6 @@ private:
         return ostrJSON.str();
     }
 
-private:
     // The socket that owns us (we can't own it).
     std::weak_ptr<StreamSocket> _socket;
     std::string _id;
@@ -5226,7 +5223,7 @@ void COOLWSD::processFetchUpdate()
 {
     try
     {
-        const std::string url(INFOBAR_URL);
+        const std::string url(INFOBAR_URL); // NOLINT Don't warn when INFOBAR_URL is emtpy
         if (url.empty())
             return; // No url, nothing to do.
 
