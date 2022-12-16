@@ -783,6 +783,28 @@ L.Control.UIManager = L.Control.extend({
 		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json), callback: builderCallback});
 	},
 
+	_modalDialogJSON: function(id, title, cancellable, widgets) {
+		var dialogId = 'modal-dialog-' + id;
+		return {
+			id: dialogId,
+			dialogid: id,
+			type: 'modalpopup',
+			title: title,
+			hasClose: true,
+			cancellable: cancellable,
+			jsontype: 'dialog',
+			'init_focus_id': 'response',
+			children: [
+				{
+					id: 'info-modal-container',
+					type: 'container',
+					vertical: true,
+					children: widgets,
+				},
+			]
+		};
+	},
+
 	/// shows simple info modal (message + ok button)
 	/// id - id of a dialog
 	/// title - title of a dialog
@@ -792,51 +814,34 @@ L.Control.UIManager = L.Control.extend({
 	/// callback - callback on button press
 	showInfoModal: function(id, title, message1, message2, buttonText, callback) {
 		var dialogId = 'modal-dialog-' + id;
-		var json = {
-			id: dialogId,
-			dialogid: id,
-			type: 'modalpopup',
-			title: title,
-			hasClose: true,
-			cancellable: true,
-			jsontype: 'dialog',
-			'init_focus_id': 'response',
-			children: [
-				{
-					id: 'info-modal-container',
-					type: 'container',
-					vertical: true,
-					children: [
-						{
-							id: 'info-modal-label1',
-							type: 'fixedtext',
-							text: message1
-						},
-						{
-							id: 'info-modal-label2',
-							type: 'fixedtext',
-							text: message2
-						},
-						{
-							id: '',
-							type: 'buttonbox',
-							text: '',
-							enabled: true,
-							children: [
-								{
-									id: 'response',
-									type: 'pushbutton',
-									text: buttonText,
-									'has_default': true,
-								}
-							],
-							vertical: false,
-							layoutstyle: 'end'
-						},
-					],
-				},
-			]
-		};
+		var json = this._modalDialogJSON(id, title, true, [
+			{
+				id: 'info-modal-label1',
+				type: 'fixedtext',
+				text: message1
+			},
+			{
+				id: 'info-modal-label2',
+				type: 'fixedtext',
+				text: message2
+			},
+			{
+				id: '',
+				type: 'buttonbox',
+				text: '',
+				enabled: true,
+				children: [
+					{
+						id: 'response',
+						type: 'pushbutton',
+						text: buttonText,
+						'has_default': true,
+					}
+				],
+				vertical: false,
+				layoutstyle: 'end'
+			},
+		]);
 
 		var closeFunc = function() {
 			var closeMessage = { id: dialogId, jsontype: 'dialog', type: 'modalpopup', action: 'close' };
@@ -858,56 +863,39 @@ L.Control.UIManager = L.Control.extend({
 	/// callback - callback on button press
 	showInputModal: function(id, title, message, defaultValue, buttonText, callback) {
 		var dialogId = 'modal-dialog-' + id;
-		var json = {
-			id: dialogId,
-			dialogid: id,
-			type: 'modalpopup',
-			title: title,
-			hasClose: true,
-			cancellable: !window.mode.isDesktop(),
-			jsontype: 'dialog',
-			'init_focus_id': 'response',
-			children: [
-				{
-					id: 'input-modal-container',
-					type: 'container',
-					vertical: true,
-					children: [
-						{
-							id: 'info-modal-label1',
-							type: 'fixedtext',
-							text: message
-						},
-						{
-							id: 'input-modal-input',
-							type: 'edit',
-							text: defaultValue
-						},
-						{
-							id: '',
-							type: 'buttonbox',
-							text: '',
-							enabled: true,
-							children: [
-								{
-									id: 'response-cancel',
-									type: 'pushbutton',
-									text: _('Cancel'),
-								},
-								{
-									id: 'response-ok',
-									type: 'pushbutton',
-									text: buttonText,
-									'has_default': true,
-								}
-							],
-							vertical: false,
-							layoutstyle: 'end'
-						},
-					],
-				},
-			]
-		};
+		var json = this._modalDialogJSON(id, title, !window.mode.isDesktop(), [
+			{
+				id: 'info-modal-label1',
+				type: 'fixedtext',
+				text: message
+			},
+			{
+				id: 'input-modal-input',
+				type: 'edit',
+				text: defaultValue
+			},
+			{
+				id: '',
+				type: 'buttonbox',
+				text: '',
+				enabled: true,
+				children: [
+					{
+						id: 'response-cancel',
+						type: 'pushbutton',
+						text: _('Cancel'),
+					},
+					{
+						id: 'response-ok',
+						type: 'pushbutton',
+						text: buttonText,
+						'has_default': true,
+					}
+				],
+				vertical: false,
+				layoutstyle: 'end'
+			},
+		]);
 
 		var closeFunc = function() {
 			var closeMessage = { id: dialogId, jsontype: 'dialog', type: 'modalpopup', action: 'close' };
