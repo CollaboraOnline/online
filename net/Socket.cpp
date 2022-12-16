@@ -255,8 +255,9 @@ bool SocketPoll::startThread()
         // because the owner is unlikely to recover.
         // If there is a valid use-case for restarting
         // an expired thread, we should add a way to reset it.
-        LOG_ERR("SocketPoll [" << _name
-                               << "] thread has ran and finished. Will not start it again.");
+        LOG_ASSERT_MSG(!"Expired thread",
+                       "SocketPoll [" << _name
+                                      << "] thread has ran and finished. Will not start it again");
     }
 
     return false;
