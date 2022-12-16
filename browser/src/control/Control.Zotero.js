@@ -78,6 +78,7 @@ L.Control.Zotero = L.Control.extend({
 								{
 									type: 'edit',
 									id: 'zoterosearch',
+									text: ''
 								}
 							]
 						},
