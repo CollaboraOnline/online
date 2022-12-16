@@ -2006,6 +2006,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			else
 				this._map._fileDownloader.setAttribute('data-src', url);
 		}
+		else if (command.id === 'browsercopy') {
+			console.log('triggered the in-browser-copy');
+		}
 	},
 
 	_onErrorMsg: function (textMsg) {

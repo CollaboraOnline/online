@@ -2957,6 +2957,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 #if !MOBILEAPP
 
             renameForUpload(getJailedFilePath());
+            performDownloadAs("in-browser-copy", "browsercopy", "", "");
 
 #else // MOBILEAPP
             // After the document has been saved (into the temporary copy that we set up in
