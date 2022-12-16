@@ -1998,7 +1998,6 @@ void COOLWSD::innerInitialize(Application& self)
         { "deepl.api_url", ""},
         { "deepl.auth_key", ""},
         { "deepl.enabled", "false"},
-        { "zotero.enable", "true"},
     };
 
     // Set default values, in case they are missing from the config file.
@@ -4914,9 +4913,6 @@ private:
 
         // Set that this is a proxy.php-enabled instance
         capabilities->set("hasProxyPrefix", COOLWSD::IsProxyPrefixEnabled);
-
-        // Set if this instance supports Zotero
-        capabilities->set("hasZoteroSupport", config::getBool("zotero.enable", true));
 
         std::ostringstream ostrJSON;
         capabilities->stringify(ostrJSON);
