@@ -1075,6 +1075,17 @@ bool ChildSession::downloadAs(const StringVector& tokens)
     NSLog(@"We should never come here, aborting");
     std::abort();
 #else
+
+    if (!performDownloadAs(name, id, format, filterOptions))
+        return false;
+
+#endif
+    return true;
+}
+
+bool ChildSession::performDownloadAs(const std::string& name, const std::string& id,
+                                   const std::string& format, const std::string& filterOptions)
+{
     // Prevent user inputting anything funny here.
     // A "name" should always be a name, not a path
     const Poco::Path filenameParam(name);
@@ -1116,7 +1127,7 @@ bool ChildSession::downloadAs(const StringVector& tokens)
     // Send download id to the client
     sendTextFrame("downloadas: downloadid=" + tmpDir +
                   " port=" + std::to_string(ClientPortNumber) + " id=" + id);
-#endif
+
     return true;
 }
 

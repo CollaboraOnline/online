@@ -271,6 +271,13 @@ private:
     bool clientVisibleArea(const StringVector& tokens);
     bool outlineState(const StringVector& tokens);
     bool downloadAs(const StringVector& tokens);
+
+    /**
+     * Starts the actual download by registering it at DocumentBroker and sending the information to the client.
+     */
+    bool performDownloadAs(const std::string& name, const std::string& id,
+                         const std::string& format, const std::string& filterOptions);
+
     bool getChildId();
     bool getTextSelection(const StringVector& tokens);
     bool setClipboard(const char* buffer, int length, const StringVector& tokens);
