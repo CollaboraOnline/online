@@ -513,9 +513,9 @@ void DocumentBroker::pollThread()
 
     LOG_INF("Finished polling doc ["
             << _docKey << "]. stop: " << _stop << ", continuePolling: " << _poll->continuePolling()
+            << ", CloseReason: [" << _closeReason << ']'
             << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag()
-            << ", TerminationFlag: " << SigUtil::getTerminationFlag()
-            << ". Terminating child with reason: [" << _closeReason << ']');
+            << ", TerminationFlag: " << SigUtil::getTerminationFlag());
 
     // Check for data-loss.
     std::string reason;
@@ -571,6 +571,7 @@ void DocumentBroker::pollThread()
     }
 
     // Terminate properly while we can.
+    LOG_DBG("Terminating child with reason: [" << _closeReason << ']');
     terminateChild(_closeReason);
 
     // Stop to mark it done and cleanup.

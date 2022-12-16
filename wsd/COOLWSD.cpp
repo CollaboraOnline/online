@@ -3419,9 +3419,11 @@ private:
         std::shared_ptr<DocumentBroker> docBroker = child ? child->getDocumentBroker() : nullptr;
         if (docBroker)
             docBroker->handleInput(message);
+        else if (child)
+            LOG_WRN("Child " << child->getPid() << " has no DocBroker to handle message: ["
+                             << message->abbr() << ']');
         else
-            LOG_WRN("Child " << child->getPid() <<
-                    " has no DocumentBroker to handle message: [" << message->abbr() << ']');
+            LOG_WRN("Cannot handle message with unassociated Kit: [" << message->abbr() << ']');
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
