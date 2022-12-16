@@ -58,7 +58,7 @@ void TileCache::clear()
 {
     _cache.clear();
     _cacheSize = 0;
-    for (auto i : _streamCache)
+    for (std::map<std::string, Blob>& i : _streamCache)
         i.clear();
 
     LOG_INF("Completely cleared tile cache for: " << _docURL);
