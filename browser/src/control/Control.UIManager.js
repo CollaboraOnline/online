@@ -864,7 +864,7 @@ L.Control.UIManager = L.Control.extend({
 			type: 'modalpopup',
 			title: title,
 			hasClose: true,
-			cancellable: true,
+			cancellable: !window.mode.isDesktop(),
 			jsontype: 'dialog',
 			'init_focus_id': 'response',
 			children: [
@@ -874,7 +874,7 @@ L.Control.UIManager = L.Control.extend({
 					vertical: true,
 					children: [
 						{
-							id: 'input-modal-label',
+							id: 'info-modal-label1',
 							type: 'fixedtext',
 							text: message
 						},
