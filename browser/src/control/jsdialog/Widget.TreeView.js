@@ -30,6 +30,26 @@
 
 /* global $ JSDialog */
 
+function _createCheckbox(parentContainer, treeViewData, builder, entry) {
+	var checkbox = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', parentContainer);
+	checkbox.type = 'checkbox';
+
+	if (entry.state === 'true' || entry.state === true)
+		checkbox.checked = true;
+
+	if (treeViewData.enabled !== false && treeViewData.enabled !== 'false') {
+		$(checkbox).change(function() {
+			if (this.checked) {
+				builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: true}, builder);
+			} else {
+				builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: false}, builder);
+			}
+		});
+	}
+
+	return checkbox;
+}
+
 function _treelistboxEntry(parentContainer, treeViewData, entry, builder) {
 	if (entry.text == '<dummy>')
 		return;
@@ -62,23 +82,8 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder) {
 	if (entry.selected && (entry.selected === 'true' || entry.selected === true))
 		L.DomUtil.addClass(span, 'selected');
 
-	if (entry.state !== undefined) {
-		var checkbox = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', span);
-		checkbox.type = 'checkbox';
-
-		if (entry.state === 'true' || entry.state === true)
-			checkbox.checked = true;
-
-		if (!disabled) {
-			$(checkbox).change(function() {
-				if (this.checked) {
-					builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: true}, builder);
-				} else {
-					builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: false}, builder);
-				}
-			});
-		}
-	}
+	if (entry.state !== undefined)
+		var checkbox = _createCheckbox(span, treeViewData, builder, entry);
 
 	var text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', span);
 	for (var i in entry.columns) {
@@ -191,6 +196,11 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 	if (entry.selected && (entry.selected === 'true' || entry.selected === true))
 		L.DomUtil.addClass(parentContainer, 'selected');
 
+	if (entry.state !== undefined) {
+		var td = L.DomUtil.create('td', '', parentContainer);
+		_createCheckbox(td, treeViewData, builder, entry);
+	}
+
 	for (var i in entry.columns) {
 		var td = L.DomUtil.create('td', '', parentContainer);
 
@@ -216,6 +226,9 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 
 function _createHeaders(tbody, data, builder) {
 	var headers = L.DomUtil.create('tr', builder.options.cssClass + ' ui-treeview-header', tbody);
+	var hasCheckboxes = data.entries && data.entries.length && data.entries[0].state !== undefined;
+	if (hasCheckboxes)
+		data.headers = [{ text: '' }].concat(data.headers);
 	for (var h in data.headers) {
 		var header = L.DomUtil.create('th', builder.options.cssClass, headers);
 		var headerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-header-text', header);
@@ -229,6 +242,20 @@ function _createHeaders(tbody, data, builder) {
 
 				var tda = a.querySelectorAll('td').item(columnIndex);
 				var tdb = b.querySelectorAll('td').item(columnIndex);
+
+				if (tda.querySelector('input')) {
+					if (tda.querySelector('input').checked === tdb.querySelector('input').checked)
+						return 0;
+					if (up) {
+						if (tda.querySelector('input').checked > tdb.querySelector('input').checked)
+							return 1;
+						else
+							return -1;
+					} else if (tdb.querySelector('input').checked > tda.querySelector('input').checked)
+						return 1;
+					else
+						return -1;
+				}
 
 				if (up)
 					return tdb.innerText.toLowerCase().localeCompare(tda.innerText.toLowerCase());

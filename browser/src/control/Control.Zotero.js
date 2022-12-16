@@ -208,7 +208,7 @@ L.Control.Zotero = L.Control.extend({
 			function (item) {
 				return { text: item };
 			}
-		), 'row': index,
+		), row: index,
 		}, entryData));
 	},
 
