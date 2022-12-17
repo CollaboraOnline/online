@@ -24,11 +24,11 @@
 /// which fails. We then modify the document again
 /// and save. We expect another upload attempt,
 /// which will succeed.
-/// Modify, Save, Upload fails, Modify, Save -> Upload.
+/// Modify, Save, Upload fails.
+/// Modify, Save, Upload fails, close -> Upload.
 class UnitWOPIAsyncUpload_Modify : public WopiTestServer
 {
-    STATE_ENUM(Phase, Load, WaitLoadStatus, Modify, WaitModifiedStatus, WaitFirstPutFile, Close,
-               WaitSecondPutFile, Done)
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitUnmodifiedStatus, WaitDestroy)
     _phase;
 
 public:
@@ -41,41 +41,45 @@ public:
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
+        LOK_ASSERT_MESSAGE("Too many PutFile attempts", getCountPutFile() <= 3);
+
+        // The document is modified.
+        LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
+
+        // Triggered manually or during closing, not auto-save.
+        LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
+
+        LOK_ASSERT_MESSAGE("Unexpected phase", _phase == Phase::WaitModifiedStatus ||
+                                                   _phase == Phase::WaitUnmodifiedStatus);
+
         // We save twice. First right after loading, unmodified.
-        if (_phase == Phase::WaitFirstPutFile)
+        if (getCountPutFile() == 1)
         {
-            LOG_TST("assertPutFileRequest: First PutFile, which will fail");
-
-            TRANSITION_STATE(_phase, Phase::Close);
-
-            LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
-
-            // We requested the save.
-            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
+            LOG_TST("First PutFile, which will fail");
 
             // Fail with error.
-            LOG_TST("assertPutFileRequest: returning 404 to simulate PutFile failure");
-            return Util::make_unique<http::Response>(http::StatusLine(404));
+            LOG_TST("Simulate PutFile failure");
+            return Util::make_unique<http::Response>(http::StatusLine(500));
         }
-        else if (_phase == Phase::WaitSecondPutFile)
+
+        if (getCountPutFile() == 2)
+        {
+            LOG_TST("Second PutFile, which will also fail");
+
+            LOG_TST("Simulate PutFile failure (again)");
+            return Util::make_unique<http::Response>(http::StatusLine(500));
+        }
+
+        if (getCountPutFile() == 3)
         {
             // This during closing the document.
-            LOG_TST("assertPutFileRequest: Second PutFile, which will succeed");
-            LOK_ASSERT_STATE(_phase, Phase::WaitSecondPutFile);
+            LOG_TST("Third PutFile, which will succeed");
 
-            // the document is modified
-            LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
-
-            // Triggered while closing.
-            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
-
-            // To detect multiple uploads after the last successful one.
-            TRANSITION_STATE(_phase, Phase::Done);
-
-            passTest("Document uploaded on closing as expected.");
+            // The document should now unload.
+            TRANSITION_STATE(_phase, Phase::WaitDestroy);
 
             // Success.
-            return Util::make_unique<http::Response>(http::StatusLine(200));
+            return nullptr;
         }
 
         failTest("Unexpected Phase in PutFile: " + std::to_string(static_cast<int>(_phase)));
@@ -85,10 +89,12 @@ public:
     /// The document is loaded.
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded: [" << message << ']');
+        LOG_TST("Got: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
-        TRANSITION_STATE(_phase, Phase::Modify);
+        TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
+        WSD_CMD("key type=input char=97 key=0");
+        WSD_CMD("key type=up char=0 key=512");
 
         return true;
     }
@@ -96,14 +102,46 @@ public:
     /// The document is modified. Save it.
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("onDocumentModified: Doc (WaitModifiedStatus): [" << message << ']');
+        LOG_TST("Got: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
-        TRANSITION_STATE(_phase, Phase::WaitFirstPutFile);
 
+        TRANSITION_STATE(_phase, Phase::WaitUnmodifiedStatus);
         WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
                 "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue");
 
         return true;
+    }
+
+    /// The document is unmodified. Modify again.
+    bool onDocumentUnmodified(const std::string& message) override
+    {
+        LOG_TST("Got: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitUnmodifiedStatus);
+
+        if (getCountPutFile() <= 1)
+        {
+            // Modify again.
+            TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
+            WSD_CMD("key type=input char=97 key=0");
+            WSD_CMD("key type=up char=0 key=512");
+        }
+        else
+        {
+            LOG_ASSERT(getCountPutFile() > 1);
+            LOG_TST("More than one upload attempted, closing the document");
+            WSD_CMD("closedocument");
+        }
+
+        return true;
+    }
+
+    // Wait for clean unloading.
+    void onDocBrokerDestroy(const std::string& docKey) override
+    {
+        LOG_TST("Destroyed dockey [" << docKey << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitDestroy);
+
+        passTest("Document uploaded on closing as expected.");
     }
 
     void invokeWSDTest() override
@@ -121,31 +159,10 @@ public:
                 break;
             }
             case Phase::WaitLoadStatus:
-                break;
-            case Phase::Modify:
-            {
-                TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
-
-                WSD_CMD("key type=input char=97 key=0");
-                WSD_CMD("key type=up char=0 key=512");
-                break;
-            }
             case Phase::WaitModifiedStatus:
-            case Phase::WaitFirstPutFile:
+            case Phase::WaitUnmodifiedStatus:
+            case Phase::WaitDestroy:
                 break;
-            case Phase::Close:
-            {
-                TRANSITION_STATE(_phase, Phase::WaitSecondPutFile);
-
-                WSD_CMD("closedocument");
-                break;
-            }
-            case Phase::WaitSecondPutFile:
-            case Phase::Done:
-            {
-                // just wait for the results
-                break;
-            }
         }
     }
 };
