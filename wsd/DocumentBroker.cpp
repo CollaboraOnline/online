@@ -1867,6 +1867,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         for (const auto& sessionIt : _sessions)
         {
             sessionIt.second->sendTextFrameAndLogError("error: cmd=storage kind=savetoolarge");
+            sessionIt.second->setWritable(false);
         }
 
         broadcastSaveResult(false, "Too large", uploadResult.getReason());
@@ -1881,6 +1882,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         for (const auto& sessionIt : _sessions)
         {
             sessionIt.second->sendTextFrameAndLogError("error: cmd=storage kind=savediskfull");
+            sessionIt.second->setWritable(false);
         }
 
         broadcastSaveResult(false, "Disk full", uploadResult.getReason());
