@@ -27,17 +27,9 @@
 /// Modify, Save, Upload fails, Modify, Save -> Upload.
 class UnitWOPIAsyncUpload_Modify : public WopiTestServer
 {
-    enum class Phase
-    {
-        Load,
-        WaitLoadStatus,
-        Modify,
-        WaitModifiedStatus,
-        WaitFirstPutFile,
-        Close,
-        WaitSecondPutFile,
-        Polling
-    } _phase;
+    STATE_ENUM(Phase, Load, WaitLoadStatus, Modify, WaitModifiedStatus, WaitFirstPutFile, Close,
+               WaitSecondPutFile, Done)
+    _phase;
 
 public:
     UnitWOPIAsyncUpload_Modify()
@@ -54,8 +46,7 @@ public:
         {
             LOG_TST("assertPutFileRequest: First PutFile, which will fail");
 
-            LOG_TST("WaitFirstPutFile => Close");
-            _phase = Phase::Close;
+            TRANSITION_STATE(_phase, Phase::Close);
 
             LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
 
@@ -70,8 +61,7 @@ public:
         {
             // This during closing the document.
             LOG_TST("assertPutFileRequest: Second PutFile, which will succeed");
-            LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitSecondPutFile",
-                               _phase == Phase::WaitSecondPutFile);
+            LOK_ASSERT_STATE(_phase, Phase::WaitSecondPutFile);
 
             // the document is modified
             LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
@@ -79,10 +69,10 @@ public:
             // Triggered while closing.
             LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
 
-            passTest("Document uploaded on closing as expected.");
+            // To detect multiple uploads after the last successful one.
+            TRANSITION_STATE(_phase, Phase::Done);
 
-            LOG_TST("WaitSecondPutFile => Polling");
-            _phase = Phase::Polling; // To detect multiple uploads after the last successful one.
+            passTest("Document uploaded on closing as expected.");
 
             // Success.
             return Util::make_unique<http::Response>(http::StatusLine(200));
@@ -96,13 +86,10 @@ public:
     bool onDocumentLoaded(const std::string& message) override
     {
         LOG_TST("onDocumentLoaded: [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus",
-                           _phase == Phase::WaitLoadStatus);
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
-        LOG_TST("onDocumentModified: Switching to Phase::Modify");
-        _phase = Phase::Modify;
+        TRANSITION_STATE(_phase, Phase::Modify);
 
-        SocketPoll::wakeupWorld();
         return true;
     }
 
@@ -110,17 +97,11 @@ public:
     bool onDocumentModified(const std::string& message) override
     {
         LOG_TST("onDocumentModified: Doc (WaitModifiedStatus): [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitModified",
-                           _phase == Phase::WaitModifiedStatus);
-        {
-            LOG_TST("onDocumentModified: Switching to Phase::WaitFirstPutFile");
-            _phase = Phase::WaitFirstPutFile;
+        LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
+        TRANSITION_STATE(_phase, Phase::WaitFirstPutFile);
 
-            WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
-                    "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue");
-
-            SocketPoll::wakeupWorld();
-        }
+        WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
+                "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue");
 
         return true;
     }
@@ -131,8 +112,7 @@ public:
         {
             case Phase::Load:
             {
-                LOG_TST("Load => WaitLoadStatus");
-                _phase = Phase::WaitLoadStatus;
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
                 LOG_TST("Load: initWebsocket.");
                 initWebsocket("/wopi/files/0?access_token=anything");
@@ -144,28 +124,24 @@ public:
                 break;
             case Phase::Modify:
             {
-                LOG_TST("Modify => WaitModified");
-                _phase = Phase::WaitModifiedStatus;
+                TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
 
                 WSD_CMD("key type=input char=97 key=0");
                 WSD_CMD("key type=up char=0 key=512");
                 break;
             }
             case Phase::WaitModifiedStatus:
-                break;
             case Phase::WaitFirstPutFile:
                 break;
             case Phase::Close:
             {
-                LOG_TST("Close => WaitSecondPutFile");
-                _phase = Phase::WaitSecondPutFile;
+                TRANSITION_STATE(_phase, Phase::WaitSecondPutFile);
 
                 WSD_CMD("closedocument");
                 break;
             }
             case Phase::WaitSecondPutFile:
-                break;
-            case Phase::Polling:
+            case Phase::Done:
             {
                 // just wait for the results
                 break;
