@@ -27,7 +27,7 @@
 class UnitWOPIAsyncUpload_Close : public WopiTestServer
 {
     STATE_ENUM(Phase, Load, WaitLoadStatus, Modify, WaitModifiedStatus, WaitFirstPutFile, Close,
-               WaitSecondPutFile, Polling)
+               WaitSecondPutFile, Done)
     _phase;
 
 public:
@@ -53,13 +53,13 @@ public:
             LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
 
             // Fail with error.
+            LOG_TST("assertPutFileRequest: returning 404 to simulate PutFile failure");
             return Util::make_unique<http::Response>(http::StatusLine(404));
         }
 
         // This during closing the document.
         LOG_TST("assertPutFileRequest: Second PutFile, which will succeed");
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitSecondPutFile",
-                           _phase == Phase::WaitSecondPutFile);
+        LOK_ASSERT_STATE(_phase, Phase::WaitSecondPutFile);
 
         // the document is modified
         LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
@@ -76,8 +76,7 @@ public:
     bool onDocumentLoaded(const std::string& message) override
     {
         LOG_TST("onDocumentLoaded: [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus",
-                           _phase == Phase::WaitLoadStatus);
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         TRANSITION_STATE(_phase, Phase::Modify);
 
@@ -87,9 +86,9 @@ public:
     /// The document is modified. Save it.
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("onDocumentModified: Doc (WaitModifiedStatus): [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitModifiedStatus",
-                           _phase == Phase::WaitModifiedStatus);
+        LOG_TST("onDocumentModified: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
+
         TRANSITION_STATE(_phase, Phase::WaitFirstPutFile);
 
         WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
@@ -123,7 +122,6 @@ public:
                 break;
             }
             case Phase::WaitModifiedStatus:
-                break;
             case Phase::WaitFirstPutFile:
                 break;
             case Phase::Close:
@@ -134,8 +132,7 @@ public:
                 break;
             }
             case Phase::WaitSecondPutFile:
-                break;
-            case Phase::Polling:
+            case Phase::Done:
             {
                 // just wait for the results
                 break;
