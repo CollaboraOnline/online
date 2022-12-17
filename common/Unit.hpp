@@ -205,6 +205,11 @@ public:
     /// Return true to stop further handling of messages.
     virtual bool onDocumentModified(const std::string&) { return false; }
 
+    /// Called when the document's 'modified' status
+    /// changes to false. This happens after saving.
+    /// Return true to stop further handling of messages.
+    virtual bool onDocumentUnmodified(const std::string&) { return false; }
+
     /// Called when the document has been saved.
     /// Return true to stop further handling of messages.
     virtual bool onDocumentSaved(const std::string&, bool, const std::string&) { return false; }

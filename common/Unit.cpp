@@ -455,6 +455,11 @@ bool UnitBase::filterSendWebSocketMessage(const char* data, const std::size_t le
         if (onDocumentModified(message))
             return false;
     }
+    else if (message == "statechanged: .uno:ModifiedStatus=false")
+    {
+        if (onDocumentUnmodified(message))
+            return false;
+    }
     else if (Util::startsWith(message, "statechanged:"))
     {
         if (onDocumentStateChanged(message))
