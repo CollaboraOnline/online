@@ -516,8 +516,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'text': _('CSV File (.csv)')
 				},
 				{
-					'id': 'downloadas-pdf',
-					'text': _('PDF Document (.pdf)')
+					'id': 'exportpdf',
+					'text': _('PDF Document (.pdf)'),
+					'command': 'exportpdf',
 				}
 			];
 		} else if (docType === 'presentation') {
@@ -539,8 +540,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'text': _('PowerPoint 2003 Presentation (.ppt)')
 				},
 				{
-					'id': 'downloadas-pdf',
-					'text': _('PDF Document (.pdf)')
+					'id': 'exportpdf',
+					'text': _('PDF Document (.pdf)'),
+					'command': 'exportpdf',
 				}
 			];
 		}
