@@ -8,6 +8,9 @@ Makefile.in
 *.la
 *.lo
 *.o
-test
+gdb.txt
+./test
+./fakesockettest
+./unithttplib
 run_unit.sh
 run_unit_standalone.sh
