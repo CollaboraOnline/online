@@ -569,7 +569,11 @@ void DocumentBroker::pollThread()
             const std::chrono::microseconds timeoutMicroS =
                 std::min(flushTimeoutMicroS - elapsedMicroS,
                          std::chrono::microseconds(POLL_TIMEOUT_MICRO_S / 5));
-            _poll->poll(timeoutMicroS);
+            if (_poll->poll(timeoutMicroS) == 0 && UnitWSD::isUnitTesting())
+            {
+                // Polling timed out, no more data to flush.
+                break;
+            }
 
             processBatchUpdates();
         }
