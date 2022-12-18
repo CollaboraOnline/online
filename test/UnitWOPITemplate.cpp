@@ -148,7 +148,6 @@ public:
                 initWebsocket("/wopi/files/10?access_token=anything");
                 WSD_CMD("load url=" + getWopiSrc());
 
-                SocketPoll::wakeupWorld();
                 break;
             }
             case Phase::CloseDoc:
