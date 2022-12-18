@@ -940,9 +940,6 @@ private:
             return _request.lastRequestTime();
         }
 
-        /// Marks the last save response as now.
-        void markLastSaveResponseTime() { _request.markLastResponseTime(); }
-
         /// Returns the last save response time.
         std::chrono::steady_clock::time_point lastSaveResponseTime() const
         {
@@ -1121,7 +1118,7 @@ private:
         void setLastUploadResult(bool success)
         {
             LOG_DBG("Upload " << (success ? "succeeded" : "failed") << " after "
-                              << _request.lastRequestDuration());
+                              << _request.timeSinceLastRequest());
             _request.setLastRequestResult(success);
         }
 
