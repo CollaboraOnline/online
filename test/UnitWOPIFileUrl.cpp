@@ -223,7 +223,6 @@ public:
         WSD_CMD("key type=input char=97 key=0");
         WSD_CMD("key type=up char=0 key=512");
 
-        SocketPoll::wakeupWorld();
         return true;
     }
 
@@ -238,8 +237,6 @@ public:
 
         WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
                 "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue");
-
-        SocketPoll::wakeupWorld();
 
         return true;
     }

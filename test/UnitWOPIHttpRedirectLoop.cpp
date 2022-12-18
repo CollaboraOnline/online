@@ -87,7 +87,6 @@ public:
                 initWebsocket("/wopi/files/0?" + params);
 
                 WSD_CMD("load url=" + getWopiSrc());
-                SocketPoll::wakeupWorld();
 
                 break;
             }
