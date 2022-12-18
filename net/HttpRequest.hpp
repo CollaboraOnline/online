@@ -1089,7 +1089,7 @@ public:
             // Technically, there is a race here. The socket can
             // get disconnected and removed right after isConnected.
             // In that case, we will timeout and no request will be sent.
-            poll.wakeupWorld();
+            poll.wakeup();
         }
 
         return true;
