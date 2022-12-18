@@ -3245,10 +3245,14 @@ static std::shared_ptr<DocumentBroker>
 /// Handles the socket that the prisoner kit connected to WSD on.
 class PrisonerRequestDispatcher : public WebSocketHandler
 {
+    int _pid; //< The Kit's PID (for logging).
+    int _socketFD; //< The socket FD to the Kit (for logging).
     std::weak_ptr<ChildProcess> _childProcess;
 public:
     PrisonerRequestDispatcher()
         : WebSocketHandler(/* isClient = */ false, /* isMasking = */ true)
+        , _pid(0)
+        , _socketFD(0)
     {
         LOG_TRC("PrisonerRequestDispatcher");
     }
@@ -3261,7 +3265,8 @@ public:
         // for all incoming connections, for ForKit we have to
         // replace it (once we receive 'GET /coolws/forkit') with
         // ForKitProcWSHandler (see ForKitProcess) and nothing to disconnect.
-        if (_childProcess.lock())
+        std::shared_ptr<ChildProcess> child = _childProcess.lock();
+        if (child && child->getPid() > 0)
             onDisconnect();
     }
 
@@ -3275,32 +3280,34 @@ private:
 
     void onDisconnect() override
     {
-        std::shared_ptr<StreamSocket> socket = getSocket().lock();
-        if (socket)
-            LOG_TRC('#' << socket->getFD() << " Prisoner connection disconnected.");
-        else
-            LOG_WRN("Prisoner connection disconnected but without valid socket.");
+        LOG_DBG('#' << _socketFD << " Prisoner connection disconnected");
 
         // Notify the broker that we're done.
         std::shared_ptr<ChildProcess> child = _childProcess.lock();
-        std::shared_ptr<DocumentBroker> docBroker = child ? child->getDocumentBroker() : nullptr;
+        std::shared_ptr<DocumentBroker> docBroker =
+            child && child->getPid() > 0 ? child->getDocumentBroker() : nullptr;
         if (docBroker)
         {
-            if (!docBroker->isUnloading())
+            assert(child->getPid() == _pid && "Child PID changed unexpectedly");
+            if (!docBroker->isUnloading() && !SigUtil::getShutdownRequestFlag())
+            {
                 LOG_WRN("DocBroker [" << docBroker->getDocKey()
                                       << "] got disconnected from its Kit (" << child->getPid()
                                       << ") unexpectedly. Closing");
+            }
             else
+            {
                 LOG_DBG("DocBroker [" << docBroker->getDocKey() << "] disconnected from its Kit ("
                                       << child->getPid() << ") as expected");
+            }
 
             std::unique_lock<std::mutex> lock = docBroker->getLock();
             docBroker->disconnectedFromKit();
         }
-        else if (child)
-            LOG_WRN("Kit (" << child->getPid() << ") disconnected. No DocBroker associated.");
-        else
-            LOG_WRN("An unassociated Kit disconnected.");
+        else if (!SigUtil::getShutdownRequestFlag())
+        {
+            LOG_WRN("Unassociated Kit (" << _pid << ") disconnected unexpectedly");
+        }
     }
 
     /// Called after successful socket reads.
@@ -3391,6 +3398,8 @@ private:
 
             auto child = std::make_shared<ChildProcess>(pid, jailId, socket, request);
 
+            _pid = pid;
+            _socketFD = socket->getFD();
             child->setSMapsFD(socket->getIncomingFD());
             _childProcess = child; // weak
 
@@ -3423,19 +3432,31 @@ private:
         auto message = std::make_shared<Message>(data.data(), data.size(), Message::Dir::Out);
         std::shared_ptr<StreamSocket> socket = getSocket().lock();
         if (socket)
+        {
+            assert(socket->getFD() == _socketFD && "Socket FD changed unexpectedly");
             LOG_TRC('#' << socket->getFD() << " Prisoner message [" << message->abbr() << ']');
+        }
         else
-            LOG_WRN("Message handler called but without valid socket.");
+            LOG_WRN("Message handler called but without valid socket. Expected #" << _socketFD);
 
         std::shared_ptr<ChildProcess> child = _childProcess.lock();
-        std::shared_ptr<DocumentBroker> docBroker = child ? child->getDocumentBroker() : nullptr;
+        std::shared_ptr<DocumentBroker> docBroker =
+            child && child->getPid() > 0 ? child->getDocumentBroker() : nullptr;
         if (docBroker)
+        {
+            assert(child->getPid() == _pid && "Child PID changed unexpectedly");
             docBroker->handleInput(message);
-        else if (child)
+        }
+        else if (child && child->getPid() > 0)
+        {
             LOG_WRN("Child " << child->getPid() << " has no DocBroker to handle message: ["
                              << message->abbr() << ']');
+        }
         else
-            LOG_WRN("Cannot handle message with unassociated Kit: [" << message->abbr() << ']');
+        {
+            LOG_ERR("Cannot handle message with unassociated Kit (PID " << _pid << "): ["
+                                                                        << message->abbr());
+        }
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point /* now */,
