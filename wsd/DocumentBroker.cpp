@@ -616,7 +616,8 @@ DocumentBroker::~DocumentBroker()
     _poll->joinThread();
 
     if (!_sessions.empty())
-        LOG_WRN("Destroying DocumentBroker [" << _docKey << "] while having unremoved sessions.");
+        LOG_WRN("Destroying DocumentBroker [" << _docKey << "] while having " << _sessions.size()
+                                              << " unremoved sessions.");
 
     // Need to first make sure the child exited, socket closed,
     // and thread finished before we are destroyed.
