@@ -263,6 +263,7 @@ var unoCommandsArray = {
 	'InsertIndexesEntry':{text:{context:_('Insert Index Entry'),menu:_('~Index Entry...'),},},
 	'InsertLRM':{global:{menu:_('~Left-to-right Mark'),},},
 	'InsertMajorGrid':{global:{menu:_('Insert Major Grid'),},},
+	'InsertMath':{presentation:{context:_('Insert Formula Object'),menu:_('~Formula Object...'),},},
 	'InsertMeanValue':{global:{menu:_('Insert Mean ~Value Line'),},},
 	'InsertMenu':{global:{menu:_('~Insert'),},},
 	'InsertMinorGrid':{global:{menu:_('Insert Minor Grid'),},},
