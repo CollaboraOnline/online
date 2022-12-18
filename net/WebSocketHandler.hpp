@@ -238,16 +238,17 @@ public:
     void shutdown(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE,
                   const std::string& statusMessage = std::string())
     {
-        if (!_shuttingDown)
-            sendCloseFrame(statusCode, statusMessage);
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
         {
             LOG_TRC('#' << socket->getFD() << ": Shutdown. Close Connection.");
+            if (!_shuttingDown)
+                sendCloseFrame(statusCode, statusMessage);
             socket->closeConnection();
             socket->getInBuffer().clear();
             socket->ignoreInput();
         }
+
         _wsPayload.clear();
 #if !MOBILEAPP
         _inFragmentBlock = false;
