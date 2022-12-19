@@ -13,7 +13,7 @@ L.Control.Zotero = L.Control.extend({
 		if (cachedData) {
 			return new Promise(function(resolve) {
 				resolve(cachedData);
-			}, function () {});
+			});
 		} else {
 			return fetch(url).then(function (response) {
 				that._cachedURL[url] = response.json();
@@ -284,7 +284,8 @@ L.Control.Zotero = L.Control.extend({
 			var creatorString = creatorArray.join(', ');
 			this.createEntry(iterator,
 				[items[iterator].data.title, creatorString, items[iterator].data.date],
-				{type: 'item', itemType: items[iterator].data.itemType, item: items[iterator]}
+				{type: 'item', itemType: items[iterator].data.itemType, item: items[iterator]},
+				true
 			);
 		}
 	},
