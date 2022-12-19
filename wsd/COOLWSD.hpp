@@ -137,20 +137,22 @@ public:
     pid_t getPid() const { return _pid; }
 
     /// Send a text payload to the child-process WS.
-    bool sendTextFrame(const std::string& data)
+    bool sendTextFrame(const std::string& data, bool flush = false)
     {
-        return sendFrame(data, false);
+        return sendFrame(data, false, flush);
     }
 
     /// Send a payload to the child-process WS.
-    bool sendFrame(const std::string& data, bool binary = false)
+    bool sendFrame(const std::string& data, bool binary = false, bool flush = false)
     {
         try
         {
             if (_ws)
             {
-                LOG_TRC("Send to " << _name << " message: [" << COOLProtocol::getAbbreviatedMessage(data) << "].");
-                _ws->sendMessage(data.c_str(), data.size(), (binary ? WSOpCode::Binary : WSOpCode::Text), false);
+                LOG_TRC("Send to " << _name << " message: ["
+                                   << COOLProtocol::getAbbreviatedMessage(data) << ']');
+                _ws->sendMessage(data.c_str(), data.size(),
+                                 (binary ? WSOpCode::Binary : WSOpCode::Text), flush);
                 return true;
             }
         }
