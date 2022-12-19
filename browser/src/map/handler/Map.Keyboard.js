@@ -379,6 +379,7 @@ L.Map.Keyboard = L.Handler.extend({
 			keyEventFn = L.bind(docLayer.postKeyboardEvent, docLayer);
 		}
 
+		var docType = this._map._docLayer._docType;
 		this.modifier = 0;
 		var shift = ev.shiftKey ? UNOModifier.SHIFT : 0;
 		var ctrl = ev.ctrlKey ? UNOModifier.CTRL : 0;
@@ -432,8 +433,14 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		// handle help - F1
-		if (ev.type === 'keydown' && !shift && !ctrl && !alt && !cmd && keyCode === this.keyCodes.F1) {
+		if (ev.type === 'keydown' && !this.modifier && keyCode === this.keyCodes.F1) {
 			this._map.showHelp('online-help');
+			ev.preventDefault();
+			return;
+		}
+
+		// disable F2 in Writer, formula bar is unsupported, and messes with further input
+		if (ev.type === 'keydown' && !this.modifier && keyCode === this.keyCodes.F2 && docType === 'text') {
 			ev.preventDefault();
 			return;
 		}
@@ -441,7 +448,7 @@ L.Map.Keyboard = L.Handler.extend({
 		// don't trigger browser reload on F5, launch slideshow in Impress
 		if (ev.type === 'keydown' && keyCode === this.keyCodes.F5) {
 			ev.preventDefault();
-			if (this._map._docLayer._docType === 'presentation')
+			if (docType === 'presentation')
 			{
 				this._map.fire('fullscreen');
 			}
@@ -521,7 +528,7 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 		else if (!this.modifier && (keyCode === this.keyCodes.pageUp || keyCode === this.keyCodes.pageDown) && ev.type === 'keydown') {
-			if (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') {
+			if (docType === 'presentation' || docType === 'drawing') {
 				var partToSelect = keyCode === this.keyCodes.pageUp ? 'prev' : 'next';
 				this._map._docLayer._preview._scrollViewByDirection(partToSelect);
 				if (app.file.fileBasedView)
@@ -530,7 +537,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 		else if (!this.modifier && (keyCode === this.keyCodes.END || keyCode === this.keyCodes.HOME) && ev.type === 'keydown') {
-			if (this._map._docLayer._docType === 'drawing' && app.file.fileBasedView === true) {
+			if (docType === 'drawing' && app.file.fileBasedView === true) {
 				partToSelect = keyCode === this.keyCodes.HOME ? 0 : this._map._docLayer._parts -1;
 				this._map._docLayer._preview._scrollViewToPartPosition(partToSelect);
 				this._map._docLayer._checkSelectedPart();
