@@ -174,9 +174,15 @@ L.Control.Zotero = L.Control.extend({
 		}
 	},
 
+	_getDefaultSubCollections: function () {
+		return [
+			{ columns: [ { text: _('My Publications') } ], row: 'https://api.zotero.org/users/' + this.userID + '/publications/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib' },
+		];
+	},
+
 	getDefaultCategories: function () {
 		return [
-			{ columns: [{ text: _('My Library'), row: 'https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib'} ] },
+			{ columns: [{ text: _('My Library') } ], row: 'https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib', children: this._getDefaultSubCollections() },
 			{ columns: [{ text: _('Group Libraries')}] }];
 	},
 
@@ -224,7 +230,7 @@ L.Control.Zotero = L.Control.extend({
 
 	fillCategories: function () {
 		this.categories = this.getDefaultCategories().slice();
-		this.categories[0].children = this.collections.slice();
+		this.categories[0].children = this.categories[0].children.concat(this.collections.slice());
 		this.categories[1].children = this.groups.slice();
 	},
 
