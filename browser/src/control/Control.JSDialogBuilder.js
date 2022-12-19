@@ -2658,7 +2658,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (!data.command)
 			data.command = data.id;
 
+		if (data.inlineLabel !== undefined) {
+			var backupInlineText = builder.options.useInLineLabelsForUnoButtons;
+			builder.options.useInLineLabelsForUnoButtons = data.inlineLabel;
+		}
+
 		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		if (data.inlineLabel !== undefined)
+			builder.options.useInLineLabelsForUnoButtons = backupInlineText;
 
 		$(control.container).unbind('click.toolbutton');
 		if (!builder.map.isLockedItem(data)) {
