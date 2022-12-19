@@ -257,7 +257,9 @@ L.Control.Zotero = L.Control.extend({
 	// entryData: Object containing extra details related to the entry
 	createEntry: function (index, columns, entryData, hasIcon) {
 		if (hasIcon) {
-			var icon = 'zotero' + entryData.itemType;
+			var type = entryData.itemType;
+			type = type.toUpperCase()[0] + type.substr(1);
+			var icon = 'zotero' + type;
 			var firstColumn = [ { collapsed: icon, expanded: icon } ];
 		} else {
 			firstColumn = [];
