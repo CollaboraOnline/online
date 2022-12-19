@@ -360,6 +360,8 @@ L.Control.Zotero = L.Control.extend({
 		var that = this;
 		if (element === 'dialog' && action === 'close') return;
 		if (element === 'treeview') {
+			if (action == 'keydown')
+				return;
 			if (data.id === 'zoterocategory') {
 				var url = index;
 				if (!url)
