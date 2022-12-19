@@ -305,8 +305,8 @@ versionrestore <action>
 
     Version restore related messages.
 
-    <action> can take following values:
-    - prerestore: The storage is about restore the document to an earlier
+    <action> can take the following values:
+    - prerestore: The storage is about to restore the document to an earlier
     revision.
 
 asksignaturestatus
