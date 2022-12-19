@@ -88,12 +88,7 @@ public:
         {
             LOG_DBG("Closing ChildProcess [" << _pid << "].");
 
-            // Request the child to exit
-            if (isAlive())
-            {
-                LOG_DBG("Stopping ChildProcess [" << _pid << "] by sending 'exit' command.");
-                sendTextFrame("exit");
-            }
+            requestTermination();
 
             // Shutdown the socket.
             if (_ws)
@@ -105,6 +100,17 @@ public:
         }
 
         _pid = -1; // Detach from child.
+    }
+
+    /// Request graceful termination.
+    void requestTermination()
+    {
+        // Request the child to exit
+        if (isAlive())
+        {
+            LOG_DBG("Stopping ChildProcess [" << _pid << "] by sending 'exit' command");
+            sendTextFrame("exit", /*flush=*/true);
+        }
     }
 
     /// Kill or abandon the child.

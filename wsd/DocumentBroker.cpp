@@ -517,6 +517,13 @@ void DocumentBroker::pollThread()
             << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag()
             << ", TerminationFlag: " << SigUtil::getTerminationFlag());
 
+    if (_childProcess && _sessions.empty())
+    {
+        LOG_INF("Requesting termination of child [" << getPid() << "] for doc [" << _docKey
+                                                    << "] as there are no sessions");
+        _childProcess->requestTermination();
+    }
+
     // Check for data-loss.
     std::string reason;
     if (isModified() || isStorageOutdated())
