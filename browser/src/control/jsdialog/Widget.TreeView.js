@@ -355,27 +355,43 @@ function _treelistboxControl(parentContainer, data, builder) {
 	}
 
 	table.filterEntries = function (filter) {
+		if (table.filterTimer)
+			clearTimeout(table.filterTimer);
+
 		if (isHeaderListBox)
 			var selector = '.ui-listview-entry';
 		else
 			selector = '.ui-treeview-entry';
 
-		tbody.querySelectorAll(selector)
-			.forEach(function (entry) {
-				var cells = entry.querySelectorAll('td');
-				var toHide = filter.trim() !== '';
+		var entriesToHide = [];
+		var allEntries = tbody.querySelectorAll(selector);
 
-				for (var i in cells) {
-					var entryText = cells[i].innerText;
-					if (entryText && entryText.toLowerCase().indexOf(filter.toLowerCase()) >= 0)
-						toHide = false;
+		filter = filter.trim();
+
+		allEntries.forEach(function (entry) {
+			if (filter === '')
+				return;
+
+			var cells = entry.querySelectorAll('td');
+			for (var i in cells) {
+				var entryText = cells[i].innerText;
+				if (entryText && entryText.toLowerCase().indexOf(filter.toLowerCase()) >= 0) {
+					return;
 				}
+			}
 
-				if (toHide)
-					L.DomUtil.addClass(entry, 'hidden');
-				else
-					L.DomUtil.removeClass(entry, 'hidden');
+			entriesToHide.push(entry);
+		});
+
+		table.filterTimer = setTimeout(function() {
+			allEntries.forEach(function (entry) {
+				L.DomUtil.removeClass(entry, 'hidden');
 			});
+
+			entriesToHide.forEach(function (entry) {
+				L.DomUtil.addClass(entry, 'hidden');
+			});
+		}, 100);
 	};
 
 	return false;
