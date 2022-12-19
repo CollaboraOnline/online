@@ -193,9 +193,10 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'children': [
 					{
 						'id': 'downloadas-pdf',
-						'type': 'menubartoolitem',
+						'type': 'customtoolitem',
 						'text': _('PDF Document (.pdf)'),
-						'command': ''
+						'command': 'exportpdf',
+						'inlineLabel': true
 					},
 					hasRepair? {
 						'id': 'repair',
