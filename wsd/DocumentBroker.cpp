@@ -1449,7 +1449,7 @@ void DocumentBroker::uploadToStorage(const std::shared_ptr<ClientSession>& sessi
 {
     assertCorrectThread();
 
-    LOG_TRC("uploadToStorage [" << session->getId() << "]:" << (force ? "" : "not") << " forced");
+    LOG_TRC("uploadToStorage [" << session->getId() << "]: " << (force ? "" : "not") << " forced");
     if (force)
     {
         // Don't reset the force flag if it was set
@@ -3412,7 +3412,7 @@ void DocumentBroker::terminateChild(const std::string& closeReason)
 
     if (_childProcess)
     {
-        LOG_INF("Terminating child [" << getPid() << "] of doc [" << _docKey << "].");
+        LOG_INF("Terminating child [" << getPid() << "] of doc [" << _docKey << ']');
 
         _childProcess->close();
     }

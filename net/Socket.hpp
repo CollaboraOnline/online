@@ -595,7 +595,7 @@ public:
     /// Stop the polling thread.
     void stop()
     {
-        LOG_DBG("Stopping " << _name << '.');
+        LOG_DBG("Stopping SocketPoll thread " << _name);
         _stop = true;
 #if MOBILEAPP
         {
@@ -614,7 +614,7 @@ public:
 
     void removeSockets()
     {
-        LOG_DBG("Removing all sockets from " << _name << '.');
+        LOG_DBG("Removing all sockets from SocketPoll thread " << _name);
         assertCorrectThread();
 
         while (!_pollSockets.empty())
