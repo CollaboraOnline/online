@@ -756,9 +756,9 @@ protected:
         ASSERT_CORRECT_SOCKET_THREAD(socket);
         Buffer& out = socket->getOutBuffer();
 
-        LOG_TRC("WebSocketHandler::sendFrame: Writing to #"
-                << socket->getFD() << ' ' << len << " bytes in addition to " << out.size()
-                << " bytes buffered.");
+        LOG_TRC("WebSocketHandler: Writing " << len << " bytes to #" << socket->getFD()
+                                             << " in addition to " << out.size()
+                                             << " bytes buffered");
 
 #if ENABLE_DEBUG
         if ((flags & 0xf) == (int)WSOpCode::Text) // utf8 validate
