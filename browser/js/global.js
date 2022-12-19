@@ -882,7 +882,7 @@ window.app = {
 
 		global.socket.binaryType = 'arraybuffer';
 
-		if (window.ThisIsAMobileApp) {
+		if (window.ThisIsAMobileApp && !window.ThisIsTheEmscriptenApp) {
 			// This corresponds to the initial GET request when creating a WebSocket
 			// connection and tells the app's code that it is OK to start invoking
 			// TheFakeWebSocket's onmessage handler. The app code that handles this

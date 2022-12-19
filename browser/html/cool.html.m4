@@ -186,7 +186,20 @@ function initWasmWithQt() {
 }
 </script>
 
-m4_ifelse(EMSCRIPTENAPP,[true],[<script type="text/javascript" src="qtloader.js"></script>])
+m4_ifelse(EMSCRIPTENAPP,[true],[
+  <script type="text/javascript" src="qtloader.js"></script>
+  <script type="text/javascript" src="online.js"></script>
+
+  <script>
+    Module.onRuntimeInitialized = () => {
+      console.log('================ onRuntimeInitialized: sending HULLO');
+      window.postMobileMessage('HULLO');
+      console.log('================ onRuntimeInitialized: Calling socket.onopen()');
+      window.socket.onopen();
+      console.log('================ onRuntimeInitialized: Done');
+    }
+  </script>
+])
 
 m4_ifelse(BUNDLE,[],
   <!-- Using individual CSS files -->
