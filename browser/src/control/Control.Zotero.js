@@ -3,8 +3,24 @@
  * L.Control.Zotero
  */
 
-/* global _ */
+/* global _ Promise */
 L.Control.Zotero = L.Control.extend({
+	_cachedURL: [],
+
+	getCachedOrFetch: function (url) {
+		var that = this;
+		var cachedData = this._cachedURL[url];
+		if (cachedData) {
+			return new Promise(function(resolve) {
+				resolve(cachedData);
+			}, function () {});
+		} else {
+			return fetch(url).then(function (response) {
+				that._cachedURL[url] = response.json();
+				return that._cachedURL[url];
+			});
+		}
+	},
 
 	onAdd: function (map) {
 		this.map = map;
@@ -40,8 +56,6 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	dialogSetup: function (title, showCategories) {
-		this.remove();
-
 		var data = {
 			id: 'ZoteroDialog',
 			dialogid: 'ZoteroDialog',
@@ -70,6 +84,11 @@ L.Control.Zotero = L.Control.extend({
 							type: 'container',
 							layoutstyle: 'end',
 							children: [
+								{
+									type: 'pushbutton',
+									id: 'zoterorefresh',
+									text: _('Refresh')
+								},
 								{
 									type: 'fixedtext',
 									id: 'zoterosearch-label',
@@ -276,14 +295,14 @@ L.Control.Zotero = L.Control.extend({
 
 	showItemList: function () {
 		var that = this;
+		this.dialogType = 'itemlist';
 
 		that.dialogSetup(_('My Library'), true);
 		var dialogUpdateEvent = that.updateList([_('Title'), _('Creator(s)'), _('Date')], _('Loading'));
 		that.map.fire('jsdialogupdate', dialogUpdateEvent);
 		that.map.fire('jsdialogupdate', that.updateCategories());
 
-		fetch('https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson')
-			.then(function (response) { return response.json();})
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson')
 			.then(function (data) {
 				that.fillItems(data);
 
@@ -293,8 +312,7 @@ L.Control.Zotero = L.Control.extend({
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
 			});
 
-		fetch('https://api.zotero.org/users/' + this.userID + '/groups?v=3&key=' + this.apiKey)
-			.then(function (response) { return response.json(); })
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/groups?v=3&key=' + this.apiKey)
 			.then(function (data) {
 				for (var i = 0; i < data.length; i++) {
 					that.groups.push(
@@ -308,8 +326,7 @@ L.Control.Zotero = L.Control.extend({
 				}
 			});
 
-		fetch('https://api.zotero.org/users/' + this.userID + '/collections?v=3&key=' + this.apiKey)
-			.then(function (response) { return response.json(); })
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/collections?v=3&key=' + this.apiKey)
 			.then(function (data) {
 				for (var i = 0; i < data.length; i++) {
 					that.collections.push(
@@ -326,8 +343,8 @@ L.Control.Zotero = L.Control.extend({
 
 	showStyleList: function() {
 		var that = this;
-		fetch('https://www.zotero.org/styles-files/styles.json')
-			.then(function (response) { return response.json();})
+		this.dialogType = 'stylelist';
+		this.getCachedOrFetch('https://www.zotero.org/styles-files/styles.json')
 			.then(function (data) {
 				that.dialogSetup(_('Citation Style'), false);
 				that.fillStyles(data);
@@ -348,8 +365,7 @@ L.Control.Zotero = L.Control.extend({
 				if (!url)
 					return;
 				that.items = [];
-				fetch(url)
-					.then(function (response) { return response.json();})
+				this.getCachedOrFetch(url)
 					.then(function (data) {
 						that.fillItems(data);
 						var dialogUpdateEvent = that.updateList([_('Title'), _('Creator(s)'), _('Date')], _('Your library is empty'));
@@ -368,6 +384,14 @@ L.Control.Zotero = L.Control.extend({
 		if (element === 'responsebutton' && data.id == 'ok' && this.selected) {
 			this._onOk(this.selected);
 		}
+		if (element === 'pushbutton' && data.id === 'zoterorefresh') {
+			this._cachedURL = [];
+			if (this.dialogType === 'itemlist')
+				this.showItemList();
+			else
+				this.showStyleList();
+			return;
+		}
 
 		var closeEvent = {
 			data: {
@@ -376,7 +400,6 @@ L.Control.Zotero = L.Control.extend({
 			}
 		};
 		this.map.fire(window.mode.isMobile() ? 'closemobilewizard' : 'jsdialog', closeEvent);
-		console.log('Closed after');
 	},
 
 	_onOk: function (selected) {
