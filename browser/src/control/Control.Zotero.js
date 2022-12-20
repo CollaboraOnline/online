@@ -381,7 +381,7 @@ L.Control.Zotero = L.Control.extend({
 		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/collections/' + collectionId + '/collections/?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson')
 			.then(function (data) {
 				for (var i = 0; i < data.length; i++) {
-					targetCollection.push(
+					targetCollection.children.push(
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.key,
@@ -391,6 +391,8 @@ L.Control.Zotero = L.Control.extend({
 						});
 				}
 
+				if (!data.length)
+					targetCollection.children = undefined;
 				that.fillCategories();
 				that.map.fire('jsdialogupdate', that.updateCategories());
 			});
@@ -405,9 +407,11 @@ L.Control.Zotero = L.Control.extend({
 			if (targetEntry.children.length === 1
 				&& targetEntry.children[0].text === '<dummy>') {
 				targetEntry.children = [];
-				targetEntry.ondemand = false;
+				targetEntry.ondemand = undefined;
+				this.fillCategories();
+				this.map.fire('jsdialogupdate', this.updateCategories());
 
-				this._fetchCollectionAndPushTo(entry.id, targetEntry.children);
+				this._fetchCollectionAndPushTo(entry.id, targetEntry);
 			}
 		}
 	},
