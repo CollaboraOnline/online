@@ -378,7 +378,7 @@ L.Control.Zotero = L.Control.extend({
 					});
 				return;
 			} else {
-				this.selected = data.entries[parseInt(index)];
+				this.selected = data.entries[parseInt(index) - 1];
 				return;
 			}
 		}
@@ -408,9 +408,6 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	_onOk: function (selected) {
-		console.log(selected);
-
-
 		if (selected.type === 'item') {
 			var parameters = {
 				FieldType: {type: 'string', value: 'vnd.oasis.opendocument.field.UNHANDLED'},
