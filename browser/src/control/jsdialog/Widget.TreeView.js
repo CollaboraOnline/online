@@ -213,12 +213,28 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 			td.innerText = entry.columns[i].text;
 
 		if (!disabled) {
-			$(td).click(function() {
+			var clickFunction = function() {
 				parentContainer.parentNode.querySelectorAll('.ui-listview-entry')
 					.forEach(function (item) { L.DomUtil.removeClass(item, 'selected'); });
 				L.DomUtil.addClass(parentContainer, 'selected');
 
 				builder.callback('treeview', 'select', treeViewData, entry.row, builder);
+			};
+
+			$(td).click(clickFunction);
+
+			parentContainer.addEventListener('keydown', function onEvent(event) {
+				var preventDef = false;
+				if (event.key === 'Enter') {
+					clickFunction();
+					preventDef = true;
+				} else if (builder.callback('treeview', 'keydown', { treeViewData: treeViewData, key: event.key }, entry.row, builder)) {
+					preventDef = true;
+				}
+				if (preventDef) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
 			});
 		}
 	}
@@ -343,6 +359,7 @@ function _treelistboxControl(parentContainer, data, builder) {
 		// list view with headers
 		for (var i in data.entries) {
 			var tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry', tbody);
+			tr.tabIndex = 0;
 			_headerlistboxEntry(tr, data, data.entries[i], builder);
 		}
 	} else {
