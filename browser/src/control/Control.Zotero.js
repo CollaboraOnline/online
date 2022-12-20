@@ -22,6 +22,12 @@ L.Control.Zotero = L.Control.extend({
 		}
 	},
 
+	settings: {
+		hasBibliography: '0',
+		bibliographyStyleHasBeenSet: '0',
+		style: '',
+	},
+
 	onAdd: function (map) {
 		this.map = map;
 		this.enable = false;
@@ -354,6 +360,68 @@ L.Control.Zotero = L.Control.extend({
 			});
 	},
 
+	setStyle: function(style) {
+		this.settings.style = style.name;
+		this.settings.hasBibliography = '1';
+
+		var dataNode = document.createElement('data');
+
+		var sessionNode = document.createElement('session');
+		sessionNode.setAttribute('id', Math.random().toString(36).substring(2,10));
+
+		dataNode.appendChild(sessionNode);
+
+		var styleNode = document.createElement('style');
+		styleNode.setAttribute('id', 'http://www.zotero.org/styles/' + style.name);
+
+		var language = this.map['stateChangeHandler'].getItemValue('.uno:LanguageStatus');
+		var split = language.split(';');
+		var isoCode = '';
+		if (split.length > 1)
+			isoCode = split[1];
+		styleNode.setAttribute('locale', isoCode);
+		styleNode.setAttribute('hasBibliography', this.settings.hasBibliography);
+		styleNode.setAttribute('bibliographyStyleHasBeenSet', this.settings.bibliographyStyleHasBeenSet);
+
+		dataNode.appendChild(styleNode);
+
+		var prefsNode = document.createElement('prefs');
+
+		var prefNode = document.createElement('pref');
+		prefNode.setAttribute('name', 'fieldType');
+		prefNode.setAttribute('value', 'Field');
+
+		prefsNode.appendChild(prefNode);
+
+		dataNode.appendChild(prefsNode);
+
+
+
+		var style =
+		{
+			'UpdatedProperties': {
+				'type': '[]com.sun.star.beans.PropertyValue',
+				'value': {
+					'NamePrefix': {
+						'type': 'string',
+						'value': 'ZOTERO_PREF_'
+					},
+					'UserDefinedProperties': {
+						'type': '[]com.sun.star.beans.PropertyValue',
+						'value': {
+							'ZOTERO_PREF_1': {
+								'type': 'string',
+								'value': dataNode.outerHTML
+							}
+						}
+					}
+				}
+			}
+		};
+
+		this.map.sendUnoCommand('.uno:SetDocumentProperties', style);
+	},
+
 	_findEntryWithUrlImpl: function(entry, url) {
 		if (entry.row === url)
 			return entry;
@@ -484,7 +552,7 @@ L.Control.Zotero = L.Control.extend({
 			this.map.sendUnoCommand('.uno:TextFormField', parameters);
 		}
 		else if (selected.type === 'style') {
-			console.log('do something');
+			this.setStyle(selected);
 		}
 	},
 
