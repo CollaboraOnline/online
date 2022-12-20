@@ -195,13 +195,13 @@ L.Control.Zotero = L.Control.extend({
 
 	_getDefaultSubCollections: function () {
 		return [
-			{ columns: [ { text: _('My Publications') } ], row: 'https://api.zotero.org/users/' + this.userID + '/publications/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib' },
+			{ columns: [ { text: _('My Publications') } ], row: 'https://api.zotero.org/users/' + this.userID + '/publications/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson' },
 		];
 	},
 
 	getDefaultCategories: function () {
 		return [
-			{ columns: [{ text: _('My Library') } ], row: 'https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib', children: this._getDefaultSubCollections() },
+			{ columns: [{ text: _('My Library') } ], row: 'https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson', children: this._getDefaultSubCollections() },
 			{ columns: [{ text: _('Group Libraries')}] }];
 	},
 
@@ -315,28 +315,28 @@ L.Control.Zotero = L.Control.extend({
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
 			});
 
-		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/groups?v=3&key=' + this.apiKey)
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/groups?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson')
 			.then(function (data) {
 				for (var i = 0; i < data.length; i++) {
 					that.groups.push(
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.id,
-							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey
+							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson'
 						});
 					that.fillCategories();
 					that.map.fire('jsdialogupdate', that.updateCategories());
 				}
 			});
 
-		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/collections?v=3&key=' + this.apiKey)
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/collections?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson')
 			.then(function (data) {
 				for (var i = 0; i < data.length; i++) {
 					that.collections.push(
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.key,
-							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey
+							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson'
 						});
 					that.fillCategories();
 					that.map.fire('jsdialogupdate', that.updateCategories());
