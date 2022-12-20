@@ -1260,6 +1260,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #zoterocategory.jsdialog {
 	margin-inline-end: 7px;
 	min-width: 150px !important;
+	overflow-x: scroll;
 }
 
 #zoterolist.jsdialog {
