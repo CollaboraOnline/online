@@ -148,36 +148,7 @@ function onSlideClick(e){
 }
 
 function initWasmWithQt() {
-	var spinner = document.querySelector('#qtspinner');
-	var canvas = document.querySelector('#qtcanvas');
-	var status = document.querySelector('#qtstatus')
-
-	var qtLoader = QtLoader({
-	    canvasElements : [canvas],
-	    showLoader: function(loaderStatus) {
-		spinner.style.display = 'block';
-		canvas.style.display = 'none';
-		status.innerHTML = loaderStatus + "...";
-	    },
-	    showError: function(errorText) {
-		status.innerHTML = errorText;
-		spinner.style.display = 'block';
-		canvas.style.display = 'none';
-	    },
-	    showExit: function() {
-		status.innerHTML = "Application exit";
-		if (qtLoader.exitCode !== undefined)
-		    status.innerHTML += " with code " + qtLoader.exitCode;
-		if (qtLoader.exitText !== undefined)
-		    status.innerHTML += " (" + qtLoader.exitText + ")";
-		spinner.style.display = 'block';
-		canvas.style.display = 'none';
-	    },
-	    showCanvas: function() {
-		spinner.style.display = 'none';
-		canvas.style.display = 'block';
-	    },
-	});
+	var qtLoader = QtLoader({});
 	console.log('**************** Calling qtLoader.loadEmscriptenModule()');
 	qtLoader.loadEmscriptenModule("online");
 	console.log('**************** qtLoader.loadEmscriptenModule() returned');
@@ -185,8 +156,13 @@ function initWasmWithQt() {
 </script>
 
 m4_ifelse(EMSCRIPTENAPP,[true],[
+  <script>
+    console.log('================ Before including qtloader.js');
+  </script>
   <script type="text/javascript" src="qtloader.js"></script>
-  <script type="text/javascript" src="online.js"></script>
+  <script>
+    console.log('================ After including qtloader.js');
+  </script>
 
   <script>
     Module.onRuntimeInitialized = () => {
@@ -196,6 +172,7 @@ m4_ifelse(EMSCRIPTENAPP,[true],[
       window.socket.onopen();
       console.log('================ onRuntimeInitialized: Done');
     }
+  console.log('================ End if second inline script in cool.html');
   </script>
 ])
 
