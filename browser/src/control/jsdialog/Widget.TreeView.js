@@ -9,7 +9,7 @@
  *     type: 'treelistbox',
  *     entries: [
  *         { row: 0, text: 'first entry', children: [ { row: 2, text: 'first subentry' } ] },
- *         { row: 1, text: 'second entry', selected: true, state: false }
+ *         { row: 1, text: 'second entry', selected: true, state: false, ondemand: true }
  *     ]
  * }
  *
@@ -26,6 +26,7 @@
  * 
  * 'row' property is used in the callback to differentiate entries
  * 'state' property defines if entry has the checkbox (false/true), when is missing - no checkbox
+ * 'ondemand' property can be set to provide nodes lazy loading
  */
 
 /* global $ JSDialog */
