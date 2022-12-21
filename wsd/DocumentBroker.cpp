@@ -2508,12 +2508,8 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
         {
             hardDisconnect = session->disconnectFromKit();
 
-            if (isLoaded() || _sessions.size() > 1)
-            {
-                // Let the child know the client has disconnected.
-                _childProcess->sendTextFrame("child-" + id + " disconnect");
-            }
-            else
+#if !MOBILEAPP
+            if (!isLoaded() && _sessions.empty())
             {
                 // We aren't even loaded and no other views--kill.
                 // If we send disconnect, we risk hanging because we flag Core for
@@ -2521,12 +2517,11 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
                 // If at the end of loading it shows a dialog (such as the macro or
                 // csv import dialogs), it will wait for their dismissal indefinetely.
                 // Neither would our load-timeout kick in, since we would be gone.
-#if !MOBILEAPP
                 LOG_INF("Session [" << id << "] disconnected but DocKey [" << _docKey
                                     << "] isn't loaded yet. Terminating the child roughly.");
                 _childProcess->terminate();
-#endif
             }
+#endif
         }
 
         if (hardDisconnect)
