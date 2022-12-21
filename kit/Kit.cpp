@@ -320,7 +320,7 @@ namespace
             if (errno == ENOENT)
             {
                 File(Path(linkableCopy).parent()).createDirectories();
-                if (!FileUtil::copy(fpath, linkableCopy.c_str(), /*log=*/false, /*throw_on_error=*/false))
+                if (!FileUtil::copy(fpath, linkableCopy, /*log=*/false, /*throw_on_error=*/false))
                     LOG_TRC("Failed to create linkable copy [" << fpath << "] to [" << linkableCopy.c_str() << "]");
                 else {
                     // Match system permissions, so a file we can write is not shared across jails.
@@ -344,13 +344,13 @@ namespace
         static bool warned = false;
         if (!warned)
         {
-            LOG_ERR("link(\"" << fpath << "\", \"" << newPath.c_str() << "\") failed: " << strerror(errno)
+            LOG_ERR("link(\"" << fpath << "\", \"" << newPath << "\") failed: " << strerror(errno)
                     << ". Very slow copying path triggered.");
             warned = true;
         } else
-            LOG_TRC("link(\"" << fpath << "\", \"" << newPath.c_str() << "\") failed: " << strerror(errno)
+            LOG_TRC("link(\"" << fpath << "\", \"" << newPath << "\") failed: " << strerror(errno)
                     << ". Will copy.");
-        if (!FileUtil::copy(fpath, newPath.c_str(), /*log=*/false, /*throw_on_error=*/false))
+        if (!FileUtil::copy(fpath, newPath, /*log=*/false, /*throw_on_error=*/false))
         {
             LOG_FTL("Failed to copy or link [" << fpath << "] to [" << newPath << "]. Exiting.");
             Util::forcedExit(EX_SOFTWARE);
@@ -457,7 +457,7 @@ namespace
 
     void linkOrCopy(std::string source,
                     const Poco::Path& destination,
-                    std::string linkable,
+                    const std::string& linkable,
                     LinkOrCopyType type)
     {
         std::string resolved = FileUtil::realpath(source);
@@ -655,7 +655,6 @@ public:
     /// 2) Document which require password to modify
     enum class PasswordType { ToView, ToModify };
 
-public:
     Document(const std::shared_ptr<lok::Office>& loKit,
              const std::string& jailId,
              const std::string& docKey,
@@ -1317,8 +1316,6 @@ private:
         else
             _editorChangeWarning = false;
     }
-
-private:
 
     // Get the color value for all author names from the core
     std::map<std::string, int> getViewColors()

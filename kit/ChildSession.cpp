@@ -1634,7 +1634,7 @@ bool ChildSession::dialogEvent(const StringVector& tokens)
 
     try
     {
-        nLOKWindowId = std::stoull(tokens[1].c_str());
+        nLOKWindowId = std::stoull(tokens[1]);
     }
     catch (const std::exception&)
     {
