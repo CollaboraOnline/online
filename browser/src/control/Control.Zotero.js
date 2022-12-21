@@ -366,20 +366,20 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	fetchStyle: function() {
-		app.socket.sendMessage('commandvalues command=.uno:SetDocumentProperties?namePrefix=ZOTERO_PREF_1');
+		app.socket.sendMessage('commandvalues command=.uno:SetDocumentProperties?namePrefix=ZOTERO_PREF_');
 	},
 
 	setFetchedStyle: function(userDefinedProperties) {
+		var valueString = '';
 		for (var i = 0; i < userDefinedProperties.length; i++) {
-			var value = new DOMParser().parseFromString(userDefinedProperties[i].value, 'text/html');
-			var style = value.getElementsByTagName('style')[0].id.substring(value.getElementsByTagName('style')[0].id.lastIndexOf('/')+1);
-
-			if (!style)
-				continue;
-
-			this.settings.style = style;
-			return;
+			valueString += userDefinedProperties[i].value;
 		}
+
+		var value = new DOMParser().parseFromString(valueString, 'text/html');
+		var style = value.getElementsByTagName('style')[0].id.substring(value.getElementsByTagName('style')[0].id.lastIndexOf('/')+1);
+
+		this.settings.style = style;
+		return;
 	},
 
 	setStyle: function(style) {
@@ -417,7 +417,7 @@ L.Control.Zotero = L.Control.extend({
 
 		dataNode.appendChild(prefsNode);
 
-
+		var valueString = dataNode.outerHTML;
 
 		var style =
 		{
@@ -431,16 +431,21 @@ L.Control.Zotero = L.Control.extend({
 					'UserDefinedProperties': {
 						'type': '[]com.sun.star.beans.PropertyValue',
 						'value': {
-							'ZOTERO_PREF_1': {
-								'type': 'string',
-								'value': dataNode.outerHTML
-							}
 						}
 					}
 				}
 			}
 		};
 
+		// style preference needs to be stored into chunks of max 255 chars
+		for (var start = 0, end = 1; (end * 255) < (valueString.length + 255); start++, end++) {
+			style['UpdatedProperties']['value']['UserDefinedProperties']['value']['ZOTERO_PREF_'+end] =
+			{
+				'type': 'string',
+				'value': valueString.slice(start*255, end*255)
+			};
+
+		}
 		this.map.sendUnoCommand('.uno:SetDocumentProperties', style);
 	},
 
