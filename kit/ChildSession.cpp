@@ -1105,18 +1105,20 @@ bool ChildSession::performDownloadAs(const std::string& name, const std::string&
     const std::string url = jailDoc + urlToSend;
     const std::string urlAnonym = jailDoc + tmpDir + '/' + Poco::Path(nameAnonym).getFileName();
 
-    LOG_DBG("Calling LOK's saveAs with: url='" << urlAnonym << "', format='" <<
-            (format.empty() ? "(nullptr)" : format.c_str()) << "', ' filterOptions=" <<
-            (filterOptions.empty() ? "(nullptr)" : filterOptions.c_str()) << "'.");
-
     bool success = false;
     if (id == "browsercopy" && !sourceFileURI.empty())
     {
+        LOG_DBG("Calling LOK's copy for in-browser download: url='" + urlAnonym << "'.");
+
         const std::string sourceFilePath = Poco::URI(sourceFileURI).getPath();
         success = FileUtil::copy(sourceFilePath, url, true, false);
     }
     else
     {
+        LOG_DBG("Calling LOK's saveAs with: url='" << urlAnonym << "', format='" <<
+                (format.empty() ? "(nullptr)" : format) << "', ' filterOptions=" <<
+                (filterOptions.empty() ? "(nullptr)" : filterOptions) << "'.");
+
         success = getLOKitDocument()->saveAs(url.c_str(),
                                              format.empty() ? nullptr : format.c_str(),
                                              filterOptions.empty() ? nullptr : filterOptions.c_str());
@@ -2967,7 +2969,8 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 #if !MOBILEAPP
 
             // upload the file to the browser for the potential use via WASM
-            performDownloadAs("in-browser-copy", "browsercopy", "", "", getJailedFilePath());
+            const std::string fileName = Util::getFilenameFromURL(getJailedFilePath(), true);
+            performDownloadAs(fileName, "browsercopy", "", "", getJailedFilePath());
 
             renameForUpload(getJailedFilePath());
 
