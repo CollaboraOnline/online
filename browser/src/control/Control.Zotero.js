@@ -201,13 +201,13 @@ L.Control.Zotero = L.Control.extend({
 
 	_getDefaultSubCollections: function () {
 		return [
-			{ columns: [ { text: _('My Publications') } ], row: 'https://api.zotero.org/users/' + this.userID + '/publications/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson' },
+			{ columns: [ { text: _('My Publications') } ], row: 'https://api.zotero.org/users/' + this.userID + '/publications/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style },
 		];
 	},
 
 	getDefaultCategories: function () {
 		return [
-			{ columns: [{ text: _('My Library') } ], row: 'https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson', children: this._getDefaultSubCollections() },
+			{ columns: [{ text: _('My Library') } ], row: 'https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson', children: this._getDefaultSubCollections() + '&style=' + this.settings.style },
 			{ columns: [{ text: _('Group Libraries')}] }];
 	},
 
@@ -304,6 +304,11 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	showItemList: function () {
+		if (!this.settings.style) {
+			this.pendingAction = this.showItemList;
+			this.showStyleList();
+			return;
+		}
 		var that = this;
 		this.dialogType = 'itemlist';
 
@@ -312,28 +317,28 @@ L.Control.Zotero = L.Control.extend({
 		that.map.fire('jsdialogupdate', dialogUpdateEvent);
 		that.map.fire('jsdialogupdate', that.updateCategories());
 
-		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/groups?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson')
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/groups?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style)
 			.then(function (data) {
 				for (var i = 0; i < data.length; i++) {
 					that.groups.push(
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.id,
-							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson'
+							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style
 						});
 					that.fillCategories();
 					that.map.fire('jsdialogupdate', that.updateCategories());
 				}
 			});
 
-		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/collections/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson')
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/collections/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style)
 			.then(function (data) {
 				for (var i = 0; i < data.length; i++) {
 					that.collections.push(
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.key,
-							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson',
+							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style,
 							children: [ { text: '<dummy>' } ],
 							ondemand: true
 						});
@@ -464,14 +469,14 @@ L.Control.Zotero = L.Control.extend({
 
 	_fetchCollectionAndPushTo: function(collectionId, targetCollection) {
 		var that = this;
-		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/collections/' + collectionId + '/collections/?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson')
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/collections/' + collectionId + '/collections/?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style)
 			.then(function (data) {
 				for (var i = 0; i < data.length; i++) {
 					targetCollection.children.push(
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.key,
-							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson',
+							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style,
 							children: [ { text: '<dummy>' } ],
 							ondemand: true
 						});
@@ -557,6 +562,11 @@ L.Control.Zotero = L.Control.extend({
 			}
 		};
 		this.map.fire(window.mode.isMobile() ? 'closemobilewizard' : 'jsdialog', closeEvent);
+
+		if (this.pendingAction) {
+			this.pendingAction();
+			delete this.pendingAction;
+		}
 	},
 
 	_onOk: function (selected) {
