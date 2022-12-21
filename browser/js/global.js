@@ -702,15 +702,14 @@ window.app = {
 		};
 
 		var http = new XMLHttpRequest();
-		http.open('GET', global.indirectionUrl + '?WOPISrc=' + global.wopiSrc, true);
+		http.open('GET', global.indirectionUrl + '?Uri=' + encodeURIComponent(that.uri), true);
 		http.responseType = 'json';
 		http.addEventListener('load', function() {
 			if (this.status === 200) {
-				global.routeToken = http.response.route_token;
-				//add routeToken in uri
-				var startIndex = that.uri.indexOf('&compat');
-				var uri = that.uri.substr(0, startIndex) + '&RouteToken=' + global.routeToken + that.uri.substr(startIndex);
-				that.innerSocket = new WebSocket(uri);
+				var uriWithRouteToken = http.response.uri;
+				var params = (new URL(uriWithRouteToken)).searchParams;
+				global.routeToken = params.get('RouteToken');
+				that.innerSocket = new WebSocket(uriWithRouteToken);
 				that.innerSocket.binaryType = that.binaryType;
 				that.innerSocket.onerror = function() {
 					that.readyState = that.innerSocket.readyState;
