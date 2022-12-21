@@ -2007,7 +2007,22 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._map._fileDownloader.setAttribute('data-src', url);
 		}
 		else if (command.id === 'browsercopy') {
-			console.log('triggered the in-browser-copy');
+			// download the document copy for offline editing into an ArrayBuffer
+			var req = new XMLHttpRequest();
+			req.open('GET', url);
+			req.responseType = 'arraybuffer';
+			req.addEventListener('load', function() {
+				if (this.status == 200) {
+					var data = new Uint8Array(this.response);
+					if (data.length)
+					{
+						console.log('Got the document from the server');
+
+						return;
+					}
+				}
+			});
+			req.send('');
 		}
 	},
 
