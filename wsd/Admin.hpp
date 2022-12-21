@@ -47,14 +47,14 @@ private:
     bool _isAuthenticated;
 };
 
-class MonitorSocketHandler : public AdminSocketHandler 
+class MonitorSocketHandler : public AdminSocketHandler
 {
 public:
     MonitorSocketHandler(Admin *admin, const std::string &uri);
 
     int getPollEvents(std::chrono::steady_clock::time_point now,
                       int64_t &timeoutMaxMicroS) override;
-    
+
     void performWrites(std::size_t capacity) override;
 
     void onDisconnect() override;
