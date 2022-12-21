@@ -76,7 +76,7 @@ L.Clipboard = L.Class.extend({
 	getMetaPath: function(idx) {
 		if (!idx)
 			idx = 0;
-			
+
 		var metaPath = '/cool/clipboard?WOPISrc=' + encodeURIComponent(this._map.options.doc) +
 			'&ServerId=' + app.socket.WSDServer.Id +
 			'&ViewId=' + this._map._docLayer._viewId +
