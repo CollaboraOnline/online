@@ -273,6 +273,7 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	fillItems: function (items) {
+		var index = 0;
 		for (var iterator = 0; iterator < items.length; ++iterator) {
 			if (items[iterator].data.itemType === 'note')
 				continue;
@@ -282,7 +283,7 @@ L.Control.Zotero = L.Control.extend({
 				creatorArray.push(items[iterator].data.creators[creator].firstName + ' ' + items[iterator].data.creators[creator].lastName);
 			}
 			var creatorString = creatorArray.join(', ');
-			this.createEntry(iterator,
+			this.createEntry(index++,
 				[items[iterator].data.title, creatorString, items[iterator].data.date],
 				{type: 'item', itemType: items[iterator].data.itemType, item: items[iterator]},
 				true
@@ -444,7 +445,7 @@ L.Control.Zotero = L.Control.extend({
 				this.showItemsForUrl(url);
 				return;
 			} else {
-				this.selected = data.entries[parseInt(index) - 1];
+				this.selected = data.entries[parseInt(index)];
 				return;
 			}
 		}
