@@ -48,6 +48,9 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		else if (values.userDefinedProperties) {
 			this._map.zotero.setFetchedStyle(values.userDefinedProperties);
 		}
+		else if (values.fields) {
+			this._map.zotero.onFieldValue(values.fields);
+		}
 		else {
 			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
