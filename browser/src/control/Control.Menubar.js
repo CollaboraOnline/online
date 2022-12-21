@@ -1845,6 +1845,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.sendUnoCommand('.uno:LOKSidebarWriterPage');
 			this._map.fire('showwizardsidebar', {noRefresh: true});
 			window.pageMobileWizard = true;
+		} else if (id === 'zoteroaddeditbibliography') {
+			this._map.dispatch('zoteroaddeditbibliography');
 		} else if (id === 'zoteroAddEditCitation') {
 			this._map.dispatch('zoteroAddEditCitation');
 		} else if (id === 'zoteroSetDocPrefs') {

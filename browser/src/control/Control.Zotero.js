@@ -3,7 +3,7 @@
  * L.Control.Zotero
  */
 
-/* global _ Promise app */
+/* global _ Promise app Set */
 L.Control.Zotero = L.Control.extend({
 	_cachedURL: [],
 
@@ -32,6 +32,41 @@ L.Control.Zotero = L.Control.extend({
 		this.map = map;
 		this.enable = false;
 		this.map.on('updateviewslist', this.onUpdateViews, this);
+	},
+
+	onFieldValue: function(fields) {
+		this.citations = new Set();
+
+		for (var index = 0; index < fields.length; index++) {
+			var field = fields[index];
+			var braceIndex = field.command.indexOf('{');
+
+			if (braceIndex < 0) {
+				continue;
+			}
+
+			var values = JSON.parse(field.command.substring(braceIndex));
+			if (!values) {
+				return;
+			}
+			var that = this;
+			values.citationItems.forEach(function(item) {
+				that.citations.add(item);
+			});
+		}
+	},
+
+	getCitationKeys: function() {
+		var keys = [];
+
+		this.citations.forEach(function(item) {
+
+			var slashIndex = item.id .indexOf('/');
+			var key = slashIndex < 0 ? item.id : item.id .substring(slashIndex + 1);
+			keys.push(key);
+		});
+
+		return keys;
 	},
 
 	onRemove: function () {
@@ -582,6 +617,7 @@ L.Control.Zotero = L.Control.extend({
 				FieldResult: {type: 'string', value: selected.item.citation}
 			};
 			this.map.sendUnoCommand('.uno:TextFormField', parameters);
+			this.updateFieldsList();
 		}
 		else if (selected.type === 'style') {
 			this.setStyle(selected);
@@ -594,6 +630,36 @@ L.Control.Zotero = L.Control.extend({
 
 	handleStyleList: function() {
 		this.showStyleList();
+	},
+
+	insertBib: function() {
+
+		if (!this.settings.style) {
+			this.pendingAction = this.insertBib;
+			this.showStyleList();
+			return;
+		}
+
+		if (!this.citations.size)
+			return;
+
+		var that = this;
+
+		fetch('https://api.zotero.org/users/' + this.userID + '/items?format=bib&itemKey=' + this.getCitationKeys().join(',') + '&v=3&key=' + this.apiKey + '&style=' + this.settings.style)
+			.then(function (response) { return response.text(); })
+			.then(function (html) {
+				var parameters = {
+					FieldType: {type: 'string', value: 'vnd.oasis.opendocument.field.UNHANDLED'},
+					FieldCommand: {type: 'string', value: 'ADDIN ZOTERO_BIBL CSL_BIBLIOGRAPHY '},
+					FieldResult: {type: 'string', value: html}
+				};
+
+				that.map.sendUnoCommand('.uno:TextFormField', parameters);
+			});
+	},
+
+	updateFieldsList: function() {
+		app.socket.sendMessage('commandvalues command=.uno:TextFormFields?type=vnd.oasis.opendocument.field.UNHANDLED&commandPrefix=ADDIN%20ZOTERO_ITEM%20CSL_CITATION');
 	},
 
 	_onMessage: function(message) {

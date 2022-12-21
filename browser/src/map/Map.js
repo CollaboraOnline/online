@@ -275,6 +275,7 @@ L.Map = L.Evented.extend({
 			if (this._docLoaded) {
 				app.socket.sendMessage('blockingcommandstatus isRestrictedUser=' + this.Restriction.isRestrictedUser + ' isLockedUser=' + this.Locking.isLockedUser);
 				this.zotero.fetchStyle();
+				this.zotero.updateFieldsList();
 				this.notifyActive();
 				if (!document.hasFocus()) {
 					this.fire('editorgotfocus');

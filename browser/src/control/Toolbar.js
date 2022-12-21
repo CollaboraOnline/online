@@ -865,6 +865,11 @@ L.Map.include({
 				this.zotero.handleStyleList();
 			}
 			break;
+		case 'zoteroaddeditbibliography':
+			{
+				this.zotero.insertBib();
+			}
+			break;
 		case 'exportpdf':
 			{
 				this.sendUnoCommand('.uno:ExportToPDF', {
