@@ -45,6 +45,9 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		else if (values.redlines && values.redlines.length > 0) {
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importChanges(values.redlines);
 		}
+		else if (values.userDefinedProperties) {
+			this._map.zotero.setFetchedStyle(values.userDefinedProperties);
+		}
 		else {
 			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
