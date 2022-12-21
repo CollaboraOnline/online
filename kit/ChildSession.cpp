@@ -1084,7 +1084,8 @@ bool ChildSession::downloadAs(const StringVector& tokens)
 }
 
 bool ChildSession::performDownloadAs(const std::string& name, const std::string& id,
-                                   const std::string& format, const std::string& filterOptions)
+                                     const std::string& format, const std::string& filterOptions,
+                                     const std::string& sourceFileURI)
 {
     // Prevent user inputting anything funny here.
     // A "name" should always be a name, not a path
@@ -1108,9 +1109,18 @@ bool ChildSession::performDownloadAs(const std::string& name, const std::string&
             (format.empty() ? "(nullptr)" : format.c_str()) << "', ' filterOptions=" <<
             (filterOptions.empty() ? "(nullptr)" : filterOptions.c_str()) << "'.");
 
-    bool success = getLOKitDocument()->saveAs(url.c_str(),
-                               format.empty() ? nullptr : format.c_str(),
-                               filterOptions.empty() ? nullptr : filterOptions.c_str());
+    bool success = false;
+    if (id == "browsercopy" && !sourceFileURI.empty())
+    {
+        const std::string sourceFilePath = Poco::URI(sourceFileURI).getPath();
+        success = FileUtil::copy(sourceFilePath, url, true, false);
+    }
+    else
+    {
+        success = getLOKitDocument()->saveAs(url.c_str(),
+                                             format.empty() ? nullptr : format.c_str(),
+                                             filterOptions.empty() ? nullptr : filterOptions.c_str());
+    }
 
     if (!success)
     {
@@ -2956,8 +2966,10 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         {
 #if !MOBILEAPP
 
+            // upload the file to the browser for the potential use via WASM
+            performDownloadAs("in-browser-copy", "browsercopy", "", "", getJailedFilePath());
+
             renameForUpload(getJailedFilePath());
-            performDownloadAs("in-browser-copy", "browsercopy", "", "");
 
 #else // MOBILEAPP
             // After the document has been saved (into the temporary copy that we set up in

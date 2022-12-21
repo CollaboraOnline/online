@@ -78,7 +78,10 @@ namespace FileUtil
     /// Update the access-time and modified-time metadata for the given file.
     bool updateTimestamps(const std::string& filename, timespec tsAccess, timespec tsModified);
 
-    /// Copy the source file to the target.
+    /**
+     * Copy the source file to the target.
+     * @param log Whether to LOG_INF() information that the file is being copied.  Other info like TRC or ERR is logged always.
+     */
     bool copy(const std::string& fromPath, const std::string& toPath, bool log,
               bool throw_on_error);
 

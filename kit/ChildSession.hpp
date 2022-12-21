@@ -274,9 +274,11 @@ private:
 
     /**
      * Starts the actual download by registering it at DocumentBroker and sending the information to the client.
+     * @param sourceFileURI file:/// URI to the file that should be downloaded.  When provided, and id is 'browsercopy', the saveAs() is skipped.
      */
     bool performDownloadAs(const std::string& name, const std::string& id,
-                         const std::string& format, const std::string& filterOptions);
+                           const std::string& format, const std::string& filterOptions,
+                           const std::string& sourceFileURI = "");
 
     bool getChildId();
     bool getTextSelection(const StringVector& tokens);

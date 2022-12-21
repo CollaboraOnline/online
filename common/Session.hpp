@@ -289,7 +289,7 @@ private:
     /// The actual URL, also in the child, even if the child never accesses that.
     std::string _docURL;
 
-    /// The Jailed document path.
+    /// The Jailed (ie. relative to the Jail chroot) document path, including the filename.
     std::string _jailedFilePath;
 
     /// The Jailed document path, anonymized for logging.
