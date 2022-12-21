@@ -3,7 +3,7 @@
  * L.Control.Zotero
  */
 
-/* global _ Promise */
+/* global _ Promise app */
 L.Control.Zotero = L.Control.extend({
 	_cachedURL: [],
 
@@ -342,7 +342,7 @@ L.Control.Zotero = L.Control.extend({
 				}
 			});
 
-		this.showItemsForUrl('https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson');
+		this.showItemsForUrl('https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style);
 	},
 
 	showStyleList: function() {
@@ -358,6 +358,23 @@ L.Control.Zotero = L.Control.extend({
 				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
 			});
+	},
+
+	fetchStyle: function() {
+		app.socket.sendMessage('commandvalues command=.uno:SetDocumentProperties?namePrefix=ZOTERO_PREF_1');
+	},
+
+	setFetchedStyle: function(userDefinedProperties) {
+		for (var i = 0; i < userDefinedProperties.length; i++) {
+			var value = new DOMParser().parseFromString(userDefinedProperties[i].value, 'text/html');
+			var style = value.getElementsByTagName('style')[0].id.substring(value.getElementsByTagName('style')[0].id.lastIndexOf('/')+1);
+
+			if (!style)
+				continue;
+
+			this.settings.style = style;
+			return;
+		}
 	},
 
 	setStyle: function(style) {
