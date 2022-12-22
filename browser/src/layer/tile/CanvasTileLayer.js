@@ -2655,7 +2655,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var cellViewCursorMarker = this._cellViewCursors[viewId].marker;
 		var viewPart = this._cellViewCursors[viewId].part;
-		var viewMode = this._cellViewCursors[viewId].mode;
+		var viewMode = this._cellViewCursors[viewId].mode ? this._cellViewCursors[viewId].mode : 0;
 
 		if (!this._isEmptyRectangle(this._cellViewCursors[viewId].bounds)
 			&& this._selectedPart === viewPart && this._selectedMode === viewMode
@@ -3779,7 +3779,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var viewCursorMarker = this._viewCursors[viewId].marker;
 		var viewCursorVisible = this._viewCursors[viewId].visible;
 		var viewPart = this._viewCursors[viewId].part;
-		var viewMode = this._viewCursors[viewId].mode;
+		var viewMode = this._viewCursors[viewId].mode ? this._viewCursors[viewId].mode : 0;
 
 		if (!this._map.isViewReadOnly(viewId) &&
 		    viewCursorVisible &&
@@ -3855,7 +3855,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var viewPointSet = this._viewSelections[viewId].pointSet;
 		var viewSelection = this._viewSelections[viewId].selection;
 		var viewPart = this._viewSelections[viewId].part;
-		var viewMode = this._viewSelections[viewId].mode;
+		var viewMode = this._viewSelections[viewId].mode ? this._viewSelections[viewId].mode : 0;
 
 		if (viewPointSet &&
 		    (this.isWriter() || (this._selectedPart === viewPart && this._selectedMode === viewMode))) {
