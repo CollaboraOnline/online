@@ -242,7 +242,7 @@ L.Control.Zotero = L.Control.extend({
 
 	getDefaultCategories: function () {
 		return [
-			{ columns: [{ text: _('My Library') } ], row: 'https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson', children: this._getDefaultSubCollections() + '&style=' + this.settings.style },
+			{ columns: [{ text: _('My Library') } ], row: 'https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style, children: this._getDefaultSubCollections() },
 			{ columns: [{ text: _('Group Libraries')}] }];
 	},
 
@@ -352,28 +352,28 @@ L.Control.Zotero = L.Control.extend({
 		that.map.fire('jsdialogupdate', dialogUpdateEvent);
 		that.map.fire('jsdialogupdate', that.updateCategories());
 
-		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/groups?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style)
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/groups?v=3&key=' + this.apiKey)
 			.then(function (data) {
 				for (var i = 0; i < data.length; i++) {
 					that.groups.push(
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.id,
-							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style
+							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson&style=' + that.settings.style
 						});
 					that.fillCategories();
 					that.map.fire('jsdialogupdate', that.updateCategories());
 				}
 			});
 
-		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/collections/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style)
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/collections?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style)
 			.then(function (data) {
 				for (var i = 0; i < data.length; i++) {
 					that.collections.push(
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.key,
-							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style,
+							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson&style=' + that.settings.style,
 							children: [ { text: '<dummy>' } ],
 							ondemand: true
 						});
@@ -509,14 +509,14 @@ L.Control.Zotero = L.Control.extend({
 
 	_fetchCollectionAndPushTo: function(collectionId, targetCollection) {
 		var that = this;
-		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/collections/' + collectionId + '/collections/?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style)
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/collections/' + collectionId + '/collections/?v=3&key=' + this.apiKey)
 			.then(function (data) {
 				for (var i = 0; i < data.length; i++) {
 					targetCollection.children.push(
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.key,
-							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style,
+							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson&style=' + that.settings.style,
 							children: [ { text: '<dummy>' } ],
 							ondemand: true
 						});
