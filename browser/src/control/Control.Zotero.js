@@ -338,6 +338,26 @@ L.Control.Zotero = L.Control.extend({
 		}
 	},
 
+	fillNotes: function (items) {
+		var index = 0;
+		for (var iterator = 0; iterator < items.length; ++iterator) {
+			if (items[iterator].data.itemType !== 'note')
+				continue;
+
+			var dummyNode = L.DomUtil.create('div');
+			dummyNode.innerHTML = items[iterator].data.note;
+			var note = dummyNode.innerText.replaceAll('\n', ' ');
+			if (note.length > 100)
+				note = note.substr(0, 100);
+
+			this.createEntry(index++,
+				[note],
+				{type: 'note', itemType: items[iterator].data.itemType, item: items[iterator]},
+				true
+			);
+		}
+	},
+
 	showItemList: function () {
 		if (!this.settings.style) {
 			this.pendingAction = this.showItemList;
@@ -622,6 +642,14 @@ L.Control.Zotero = L.Control.extend({
 		else if (selected.type === 'style') {
 			this.setStyle(selected);
 		}
+		else if (selected.type === 'note') {
+			if (this.map._clip) {
+				this.map._clip.dataTransferToDocumentFallback(null, selected.item.data.note);
+				app.socket.sendMessage('uno .uno:Paste');
+			}
+			else
+				console.warn('zotero: cannot paste a note');
+		}
 	},
 
 	handleItemList: function() {
@@ -633,7 +661,24 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	handleInsertNote: function() {
-		// TODO
+		if (!this.settings.style) {
+			this.pendingAction = this.handleInsertNote;
+			this.showStyleList();
+			return;
+		}
+
+		var that = this;
+		this.dialogType = 'insertnote';
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style)
+			.then(function (data) {
+				that.dialogSetup(_('Add Note'), false);
+				that.fillNotes(data);
+
+				var dialogUpdateEvent = that.updateList([_('Notes')],_('An error occurred while fetching notes'));
+
+				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
+				that.map.fire('jsdialogupdate', dialogUpdateEvent);
+			});
 	},
 
 	handleInsertBibliography: function() {
