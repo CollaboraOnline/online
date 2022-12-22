@@ -855,19 +855,24 @@ L.Map.include({
 				}
 			}
 			break;
-		case 'zoteroAddEditCitation':
+		case 'zoteroaddeditcitation':
 			{
 				this.zotero.handleItemList();
 			}
 			break;
-		case 'zoteroSetDocPrefs':
+		case 'zoterosetdocprefs':
 			{
 				this.zotero.handleStyleList();
 			}
 			break;
 		case 'zoteroaddeditbibliography':
 			{
-				this.zotero.insertBib();
+				this.zotero.handleInsertBibliography();
+			}
+			break;
+		case 'zoteroaddnote':
+			{
+				this.zotero.handleInsertNote();
 			}
 			break;
 		case 'exportpdf':
