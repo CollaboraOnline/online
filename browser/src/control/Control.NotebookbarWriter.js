@@ -1468,7 +1468,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'id': 'zoteroaddeditbibliography',
 					'type': 'bigmenubartoolitem',
 					'text': _('Add/Edit Bibliography'),
-					'command': 'zoteroEditBibliography'
+					'command': 'zoteroeditbibliography'
 				},
 				{
 					'type': 'container',
@@ -1480,7 +1480,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 									'id': 'zoteroAddEditCitation',
 									'type': 'customtoolitem',
 									'text': _('Add/Edit Citation'),
-									'command': 'zoteroAddEditCitation'
+									'command': 'zoteroaddeditcitation'
 								}
 							]
 						},
@@ -1489,9 +1489,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'children': [
 								{
 									'id': 'zoteroaddnote',
-									'type': 'toolitem',
+									'type': 'customtoolitem',
 									'text': _('Add Citation Note'),
-									'command': 'zoteroAddNote'
+									'command': 'zoteroaddnote'
 								}
 							]
 						}
@@ -1506,9 +1506,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'children': [
 								{
 									'id': 'zoterorefresh',
-									'type': 'toolitem',
+									'type': 'customtoolitem',
 									'text': _('Refresh Citations'),
-									'command': 'zoteroRefresh'
+									'command': 'zoterorefresh'
 								}
 							]
 						},
@@ -1517,9 +1517,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'children': [
 								{
 									'id': 'zoterounlink',
-									'type': 'toolitem',
+									'type': 'customtoolitem',
 									'text': _('Unlink Citations'),
-									'command': 'zoteroUnlink'
+									'command': 'zoterounlink'
 								}
 							]
 						}
@@ -1530,7 +1530,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'id': 'zoteroSetDocPrefs',
 					'type': 'bigcustomtoolitem',
 					'text': _('Citation Preferences'),
-					'command': 'zoteroSetDocPrefs'
+					'command': 'zoterosetdocprefs'
 				}
 			);
 		}

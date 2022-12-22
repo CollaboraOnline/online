@@ -273,9 +273,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertBookmark'},
 				{uno: '.uno:InsertReferenceField'},
 				{type: 'separator'},
-				{name: _('Add/Edit Citation'), id: 'zoteroAddEditCitation', type: 'action'},
+				{name: _('Add/Edit Citation'), id: 'zoteroaddeditcitation', type: 'action'},
 				{name: _('Add Citation Note'), id: 'zoteroaddnote', type: 'action'},
-				{name: _('Add/Edit Bibliography'), id: 'zoteroaddbibliography', type: 'action'},
+				{name: _('Add/Edit Bibliography'), id: 'zoteroaddeditbibliography', type: 'action'},
 				{type: 'separator'},
 				{name: _('Refresh Citations'), id: 'zoterorefresh', type: 'action'},
 				{name: _('Unlink Citations'), id: 'zoterounlink', type: 'action'},
@@ -1847,10 +1847,12 @@ L.Control.Menubar = L.Control.extend({
 			window.pageMobileWizard = true;
 		} else if (id === 'zoteroaddeditbibliography') {
 			this._map.dispatch('zoteroaddeditbibliography');
-		} else if (id === 'zoteroAddEditCitation') {
-			this._map.dispatch('zoteroAddEditCitation');
-		} else if (id === 'zoteroSetDocPrefs') {
-			this._map.dispatch('zoteroSetDocPrefs');
+		} else if (id === 'zoteroaddeditcitation') {
+			this._map.dispatch('zoteroaddeditcitation');
+		} else if (id === 'zoterosetdocprefs') {
+			this._map.dispatch('zoterosetdocprefs');
+		} else if (id === 'zoteroaddnote') {
+			this._map.dispatch('zoteroaddnote');
 		}
 		// Inform the host if asked
 		if (postmessage)

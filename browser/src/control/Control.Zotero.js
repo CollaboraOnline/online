@@ -632,10 +632,14 @@ L.Control.Zotero = L.Control.extend({
 		this.showStyleList();
 	},
 
-	insertBib: function() {
+	handleInsertNote: function() {
+		// TODO
+	},
+
+	handleInsertBibliography: function() {
 
 		if (!this.settings.style) {
-			this.pendingAction = this.insertBib;
+			this.pendingAction = this.handleInsertBibliography;
 			this.showStyleList();
 			return;
 		}
