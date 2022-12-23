@@ -203,6 +203,9 @@ app.definitions.Socket = L.Class.extend({
 		if (window.deviceFormFactor) {
 			msg += ' deviceFormFactor=' + window.deviceFormFactor;
 		}
+
+		msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
+
 		if (this._map.options.renderingOptions) {
 			var options = {
 				'rendering': this._map.options.renderingOptions
