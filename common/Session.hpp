@@ -226,6 +226,8 @@ public:
 
     const std::string& getLang() const { return _lang; }
 
+    const std::string& getTimezone() const { return _timezone; }
+
     bool getHaveDocPassword() const { return _haveDocPassword; }
 
     void setHaveDocPassword(const bool val) { _haveDocPassword = val; }
@@ -361,6 +363,9 @@ private:
 
     /// Language for the document based on what the user has in the UI.
     std::string _lang;
+
+    /// Timezone of the user.
+    std::string _timezone;
 
     /// the canonical id unique to the set of rendering properties of this session
     int _canonicalViewId;

@@ -931,6 +931,9 @@ window.app = {
 						msg += ' spellOnline=' + spellOnline;
 					}
 				}
+
+				msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
+
 				global.socket.send(msg);
 			}
 		};

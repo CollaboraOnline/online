@@ -155,6 +155,11 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
                 _lang = value;
             ++offset;
         }
+        else if (name == "timezone")
+        {
+            _timezone= value;
+            ++offset;
+        }
         else if (name == "watermarkText")
         {
             Poco::URI::decode(value, _watermarkText);
@@ -299,6 +304,7 @@ void Session::dumpState(std::ostream& os)
        << "\n\t\tuserId: " << _userId
        << "\n\t\tuserName: " << _userName
        << "\n\t\tlang: " << _lang
+       << "\n\t\ttimezone: " << _timezone
        << '\n';
 }
 
