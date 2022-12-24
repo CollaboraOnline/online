@@ -461,9 +461,16 @@ public:
     {
     }
 
+protected:
     /// Called when a DocumentBroker is destroyed (from the destructor).
     /// Useful to detect when unloading was clean and to (re)load again.
     virtual void onDocBrokerDestroy(const std::string&) {}
+
+public:
+    /// Called when a DocumentBroker is destroyed (from the destructor).
+    /// Useful to detect when unloading was clean and to (re)load again.
+    /// Handle by overriding onDocBrokerDestroy.
+    void DocBrokerDestroy(const std::string&);
 
     /// Called when a new view is loaded.
     virtual void onDocBrokerViewLoaded(const std::string&, const std::shared_ptr<ClientSession>&) {}

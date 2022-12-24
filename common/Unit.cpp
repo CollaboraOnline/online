@@ -510,6 +510,14 @@ void UnitWSD::lookupTile(int part, int mode, int width, int height, int tilePosX
     }
 }
 
+void UnitWSD::DocBrokerDestroy(const std::string& key)
+{
+    if (isUnitTesting())
+    {
+        onDocBrokerDestroy(key);
+    }
+}
+
 UnitWSD& UnitWSD::get()
 {
     assert(GlobalWSD);
