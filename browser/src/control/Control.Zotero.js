@@ -457,9 +457,12 @@ L.Control.Zotero = L.Control.extend({
 		}
 
 		var value = new DOMParser().parseFromString(valueString, 'text/html');
-		var style = value.getElementsByTagName('style')[0].id.substring(value.getElementsByTagName('style')[0].id.lastIndexOf('/')+1);
+		var styleNode = value.getElementsByTagName('style')[0];
 
-		this.settings.style = style;
+		this.settings.style = styleNode.id.substring(styleNode.id.lastIndexOf('/')+1);
+		var locale = styleNode.getAttribute('locale');
+		if (locale)
+			this.settings.locale = locale;
 		return;
 	},
 
