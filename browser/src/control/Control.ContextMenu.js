@@ -244,6 +244,9 @@ L.Control.ContextMenu = L.Control.extend({
 				if (window.mode.isMobile() && this.options.mobileBlackList.indexOf(commandName) !== -1)
 					continue;
 
+				if (commandName == 'None' && !item.text)
+					continue;
+
 				if (hasParam || commandName === 'None' || commandName === 'FontDialogForParagraph' || commandName === 'Delete') {
 					itemName = window.removeAccessKey(item.text);
 					itemName = itemName.replace(' ', '\u00a0');
