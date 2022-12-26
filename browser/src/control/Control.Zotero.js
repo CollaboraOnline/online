@@ -234,15 +234,19 @@ L.Control.Zotero = L.Control.extend({
 		}
 	},
 
+	getZoteroItemQuery: function() {
+		return '?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style + '&locale=' + this.settings.locale;
+	},
+
 	_getDefaultSubCollections: function () {
 		return [
-			{ columns: [ { text: _('My Publications') } ], row: 'https://api.zotero.org/users/' + this.userID + '/publications/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style },
+			{ columns: [ { text: _('My Publications') } ], row: 'https://api.zotero.org/users/' + this.userID + '/publications/items/top' + this.getZoteroItemQuery() },
 		];
 	},
 
 	getDefaultCategories: function () {
 		return [
-			{ columns: [{ text: _('My Library') } ], row: 'https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style, children: this._getDefaultSubCollections() },
+			{ columns: [{ text: _('My Library') } ], row: 'https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery(), children: this._getDefaultSubCollections() },
 			{ columns: [{ text: _('Group Libraries')}] }];
 	},
 
@@ -379,21 +383,21 @@ L.Control.Zotero = L.Control.extend({
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.id,
-							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson&style=' + that.settings.style
+							row: data[i].links.self.href + '/items/top' + this.getZoteroItemQuery()
 						});
 					that.fillCategories();
 					that.map.fire('jsdialogupdate', that.updateCategories());
 				}
 			});
 
-		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/collections?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style)
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/collections' + this.getZoteroItemQuery())
 			.then(function (data) {
 				for (var i = 0; i < data.length; i++) {
 					that.collections.push(
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.key,
-							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson&style=' + that.settings.style,
+							row: data[i].links.self.href + '/items/top' + this.getZoteroItemQuery(),
 							children: [ { text: '<dummy>' } ],
 							ondemand: true
 						});
@@ -402,7 +406,7 @@ L.Control.Zotero = L.Control.extend({
 				}
 			});
 
-		this.showItemsForUrl('https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style);
+		this.showItemsForUrl('https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery());
 	},
 
 	showStyleList: function() {
@@ -536,7 +540,7 @@ L.Control.Zotero = L.Control.extend({
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.key,
-							row: data[i].links.self.href + '/items/top?v=3&key=' + that.apiKey + '&include=data,citation,bib,csljson&style=' + that.settings.style,
+							row: data[i].links.self.href + '/items/top' + this.getZoteroItemQuery(),
 							children: [ { text: '<dummy>' } ],
 							ondemand: true
 						});
@@ -669,7 +673,7 @@ L.Control.Zotero = L.Control.extend({
 
 		var that = this;
 		this.dialogType = 'insertnote';
-		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items/top?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style)
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery())
 			.then(function (data) {
 				that.dialogSetup(_('Add Note'), false);
 				that.fillNotes(data);
