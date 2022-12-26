@@ -26,6 +26,7 @@ L.Control.Zotero = L.Control.extend({
 		hasBibliography: '0',
 		bibliographyStyleHasBeenSet: '0',
 		style: '',
+		locale: 'en-US'
 	},
 
 	onAdd: function (map) {
@@ -96,7 +97,8 @@ L.Control.Zotero = L.Control.extend({
 			});
 	},
 
-	dialogSetup: function (title, showCategories) {
+	dialogSetup: function (title, showCategories, ShowLocale) {
+		var that = this;
 		var data = {
 			id: 'ZoteroDialog',
 			dialogid: 'ZoteroDialog',
@@ -159,6 +161,26 @@ L.Control.Zotero = L.Control.extend({
 								}
 							]
 						},
+						(ShowLocale) ? {
+							id: 'ZoteroDialog-locale-container',
+							type: 'container',
+							children: [
+								{
+									type: 'fixedtext',
+									id: 'zoterolocale-label',
+									text: _('Language:')
+								},
+								{
+									'id': 'zoterolocale',
+									'type': 'combobox',
+									'entries': Array.from(Object.keys(this.languageNames), function(langCode) {return that.languageNames[langCode][0];}),
+									'selectedCount': '1',
+									'selectedEntries': [
+										Object.keys(this.languageNames).indexOf(this.settings.locale)
+									],
+								},
+							]
+						} : {},
 						{
 							id: 'ZoteroDialog-buttonbox',
 							type: 'buttonbox',
@@ -414,7 +436,7 @@ L.Control.Zotero = L.Control.extend({
 		this.dialogType = 'stylelist';
 		this.getCachedOrFetch('https://www.zotero.org/styles-files/styles.json')
 			.then(function (data) {
-				that.dialogSetup(_('Citation Style'), false);
+				that.dialogSetup(_('Citation Style'), false, true);
 				that.fillStyles(data);
 
 				var dialogUpdateEvent = that.updateList([_('Styles')],_('An error occurred while fetching style list'));
@@ -454,13 +476,7 @@ L.Control.Zotero = L.Control.extend({
 
 		var styleNode = document.createElement('style');
 		styleNode.setAttribute('id', 'http://www.zotero.org/styles/' + style.name);
-
-		var language = this.map['stateChangeHandler'].getItemValue('.uno:LanguageStatus');
-		var split = language.split(';');
-		var isoCode = '';
-		if (split.length > 1)
-			isoCode = split[1];
-		styleNode.setAttribute('locale', isoCode);
+		styleNode.setAttribute('locale', this.settings.locale);
 		styleNode.setAttribute('hasBibliography', this.settings.hasBibliography);
 		styleNode.setAttribute('bibliographyStyleHasBeenSet', this.settings.bibliographyStyleHasBeenSet);
 
@@ -607,8 +623,11 @@ L.Control.Zotero = L.Control.extend({
 			document.getElementById('zoterolist').filterEntries(data.value);
 			return;
 		}
-		if (element === 'responsebutton' && data.id == 'ok' && this.selected) {
-			this._onOk(this.selected);
+		if (element === 'responsebutton' && data.id == 'ok') {
+			if (this.selected)
+				this._onOk(this.selected);
+			if (this.selectedCitationLangCode)
+				this.settings.locale = this.selectedCitationLangCode;
 		}
 		if (element === 'pushbutton' && data.id === 'zoterorefresh') {
 			this._cachedURL = [];
@@ -616,6 +635,10 @@ L.Control.Zotero = L.Control.extend({
 				this.showItemList();
 			else
 				this.showStyleList();
+			return;
+		}
+		if (element === 'combobox') {
+			this.selectedCitationLangCode = Object.keys(this.languageNames)[parseInt(index)];
 			return;
 		}
 
@@ -627,6 +650,9 @@ L.Control.Zotero = L.Control.extend({
 		};
 		this.map.fire(window.mode.isMobile() ? 'closemobilewizard' : 'jsdialog', closeEvent);
 
+		// clear all previous selections
+		delete this.selectedCitationLangCode;
+		delete this.selected;
 		if (this.pendingAction) {
 			this.pendingAction();
 			delete this.pendingAction;
@@ -719,6 +745,227 @@ L.Control.Zotero = L.Control.extend({
 		if (message.startsWith('itemslist: ')) {
 			this.handleItemList(message);
 		}
+	},
+
+	// from https://raw.githubusercontent.com/citation-style-language/locales/master/locales.json
+	// saves us from fetching same thing every time for every user
+	languageNames: {
+		'af-ZA': [
+			'Afrikaans',
+			'Afrikaans'
+		],
+		'ar': [
+			'العربية',
+			'Arabic'
+		],
+		'bg-BG': [
+			'Български',
+			'Bulgarian'
+		],
+		'ca-AD': [
+			'Català',
+			'Catalan'
+		],
+		'cs-CZ': [
+			'Čeština',
+			'Czech'
+		],
+		'cy-GB': [
+			'Cymraeg',
+			'Welsh'
+		],
+		'da-DK': [
+			'Dansk',
+			'Danish'
+		],
+		'de-AT': [
+			'Deutsch (Österreich)',
+			'German (Austria)'
+		],
+		'de-CH': [
+			'Deutsch (Schweiz)',
+			'German (Switzerland)'
+		],
+		'de-DE': [
+			'Deutsch (Deutschland)',
+			'German (Germany)'
+		],
+		'el-GR': [
+			'Ελληνικά',
+			'Greek'
+		],
+		'en-GB': [
+			'English (UK)',
+			'English (UK)'
+		],
+		'en-US': [
+			'English (US)',
+			'English (US)'
+		],
+		'es-CL': [
+			'Español (Chile)',
+			'Spanish (Chile)'
+		],
+		'es-ES': [
+			'Español (España)',
+			'Spanish (Spain)'
+		],
+		'es-MX': [
+			'Español (México)',
+			'Spanish (Mexico)'
+		],
+		'et-EE': [
+			'Eesti keel',
+			'Estonian'
+		],
+		'eu': [
+			'Euskara',
+			'Basque'
+		],
+		'fa-IR': [
+			'فارسی',
+			'Persian'
+		],
+		'fi-FI': [
+			'Suomi',
+			'Finnish'
+		],
+		'fr-CA': [
+			'Français (Canada)',
+			'French (Canada)'
+		],
+		'fr-FR': [
+			'Français (France)',
+			'French (France)'
+		],
+		'he-IL': [
+			'עברית',
+			'Hebrew'
+		],
+		'hi-IN': [
+			'हिंदी',
+			'Hindi'
+		],
+		'hr-HR': [
+			'Hrvatski',
+			'Croatian'
+		],
+		'hu-HU': [
+			'Magyar',
+			'Hungarian'
+		],
+		'id-ID': [
+			'Bahasa Indonesia',
+			'Indonesian'
+		],
+		'is-IS': [
+			'Íslenska',
+			'Icelandic'
+		],
+		'it-IT': [
+			'Italiano',
+			'Italian'
+		],
+		'ja-JP': [
+			'日本語',
+			'Japanese'
+		],
+		'km-KH': [
+			'ភាសាខ្មែរ',
+			'Khmer'
+		],
+		'ko-KR': [
+			'한국어',
+			'Korean'
+		],
+		'la': [
+			'Latina',
+			'Latin'
+		],
+		'lt-LT': [
+			'Lietuvių kalba',
+			'Lithuanian'
+		],
+		'lv-LV': [
+			'Latviešu',
+			'Latvian'
+		],
+		'mn-MN': [
+			'Монгол',
+			'Mongolian'
+		],
+		'nb-NO': [
+			'Norsk bokmål',
+			'Norwegian (Bokmål)'
+		],
+		'nl-NL': [
+			'Nederlands',
+			'Dutch'
+		],
+		'nn-NO': [
+			'Norsk nynorsk',
+			'Norwegian (Nynorsk)'
+		],
+		'pl-PL': [
+			'Polski',
+			'Polish'
+		],
+		'pt-BR': [
+			'Português (Brasil)',
+			'Portuguese (Brazil)'
+		],
+		'pt-PT': [
+			'Português (Portugal)',
+			'Portuguese (Portugal)'
+		],
+		'ro-RO': [
+			'Română',
+			'Romanian'
+		],
+		'ru-RU': [
+			'Русский',
+			'Russian'
+		],
+		'sk-SK': [
+			'Slovenčina',
+			'Slovak'
+		],
+		'sl-SI': [
+			'Slovenščina',
+			'Slovenian'
+		],
+		'sr-RS': [
+			'Српски / Srpski',
+			'Serbian'
+		],
+		'sv-SE': [
+			'Svenska',
+			'Swedish'
+		],
+		'th-TH': [
+			'ไทย',
+			'Thai'
+		],
+		'tr-TR': [
+			'Türkçe',
+			'Turkish'
+		],
+		'uk-UA': [
+			'Українська',
+			'Ukrainian'
+		],
+		'vi-VN': [
+			'Tiếng Việt',
+			'Vietnamese'
+		],
+		'zh-CN': [
+			'中文 (中国大陆)',
+			'Chinese (PRC)'
+		],
+		'zh-TW': [
+			'中文 (台灣)',
+			'Chinese (Taiwan)'
+		]
 	}
 });
 
