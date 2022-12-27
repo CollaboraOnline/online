@@ -8,7 +8,7 @@ How to test this specific setup:
   1. Install Kubernetes cluster locally - minikube - https://minikube.sigs.k8s.io/docs/
   2. Install helm - https://helm.sh/docs/intro/install/
   3. Install HAProxy Kubernetes Ingress Controller - https://www.haproxy.com/documentation/kubernetes/latest/installation/community/kubernetes/
-  4. Create an `values.yaml` for your minikube setup (if you setup differe e.g. take an look in then [`values.yml`](./collabora-online/values.yaml) of the helmchart - e.g. for annotations using [NGINX Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/) or more komplex setups, see [Nodes](#Notes) ):
+  4. Create an `my_values.yaml` for your minikube setup (if you setup differe e.g. take an look in then [`values.yaml`](./collabora-online/values.yaml) of the helmchart - e.g. for annotations using [NGINX Ingress Controller](https://docs.nginx.com/nginx-ingress-controller/) or more komplex setups, see [Nodes](#Notes) ):
 
       Here an example `my_values.yaml`:
       ```yaml
@@ -27,15 +27,33 @@ How to test this specific setup:
             stick match url_param(WOPISrc) if { var(txn.wopisrcconns) -m int gt 0 }
             stick store-request url_param(WOPISrc)
         hosts:
-         - host: chart-example.local
-           paths:
+          - host: chart-example.local
+            paths:
             - path: /
+              pathType: ImplementationSpecific
+
+        image:
+          tag: "latest"
       ```
+
+      Important notes: 
+      1. If you have multiple host and aliases setup set aliasgroups in my_values.yaml
+          ```yaml
+          collabora:
+            - host: "<protocol>://<host-name>:<port>"
+              aliases: ["<protocol>://<its-first-alias>:<port>, <protocol>://<its-second-alias>:<port>"]
+          ```
+
+      2. Specify `server_name` when the hostname is not reachable directly for example behind reverse-proxy
+          ```yaml
+          collabora:
+            server_name: <hostname>:<port>
+          ```
 
   5. Install helm-chart using below command (with a new namespace collabora)
 
       ```bash
-      helm install --create-namespace --namespace colloabora collabora-online ./kubernetes/helm/collabora-online/ -f my_values.yml
+      helm install --create-namespace --namespace collabora collabora-online ./kubernetes/helm/collabora-online/ -f my_values.yaml
       ```
 
   6. Finally spin the collabora-online in kubernetes
@@ -68,22 +86,23 @@ How to test this specific setup:
 
       C. Now in this case to make our hostname available we have to add following line into /etc/hosts:
       ```
-      192.168.0.106   coolwsd.public.example.com
+      192.168.0.106   chart-example.local
       ```
 
-To check if everything is setup correctly you can run:
-```bash
-curl -I -H 'Host: chart-example.local' 'http://192.168.0.106:30536/'
-```
+  7. To check if everything is setup correctly you can run:
 
-It should return a similar output as below:
-```
-HTTP/1.1 200 OK
-last-modified: Tue, 18 May 2021 10:46:29
-user-agent: COOLWSD WOPI Agent 6.4.8
-content-length: 2
-content-type: text/plain
-```
+      ```bash
+      curl -I -H 'Host: chart-example.local' 'http://192.168.0.106:30536/'
+      ```
+
+      It should return a similar output as below:
+      ```
+      HTTP/1.1 200 OK
+      last-modified: Tue, 18 May 2021 10:46:29
+      user-agent: COOLWSD WOPI Agent 6.4.8
+      content-length: 2
+      content-type: text/plain
+      ```
 
 
 ## Some useful commands to check what is happening :
@@ -115,6 +134,10 @@ content-type: text/plain
   |-----------|------------------|---------------------|------------------------|-------|
   ```
 
+* To uninstall the helm chart
+  ```bash
+  helm uninstall collabora-online -n collabora
+  ```
 
 ## Notes:
 * For big setups, you maybe NOT want to restart every pod to modify WOPI hosts, therefore it is possible to setup an additional webserver to serve a ConfigMap for using [Remote/Dynamic Configuration](https://sdk.collaboraonline.com/docs/installation/Configuration.html?highlight=remote#remote-dynamic-configuration):
