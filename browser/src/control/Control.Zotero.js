@@ -405,7 +405,7 @@ L.Control.Zotero = L.Control.extend({
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.id,
-							row: data[i].links.self.href + '/items/top' + this.getZoteroItemQuery()
+							row: data[i].links.self.href + '/items/top' + that.getZoteroItemQuery()
 						});
 					that.fillCategories();
 					that.map.fire('jsdialogupdate', that.updateCategories());
@@ -419,7 +419,7 @@ L.Control.Zotero = L.Control.extend({
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.key,
-							row: data[i].links.self.href + '/items/top' + this.getZoteroItemQuery(),
+							row: data[i].links.self.href + '/items/top' + that.getZoteroItemQuery(),
 							children: [ { text: '<dummy>' } ],
 							ondemand: true
 						});
@@ -559,7 +559,7 @@ L.Control.Zotero = L.Control.extend({
 						{
 							columns: [ { text: data[i].data.name } ],
 							id: data[i].data.key,
-							row: data[i].links.self.href + '/items/top' + this.getZoteroItemQuery(),
+							row: data[i].links.self.href + '/items/top' + that.getZoteroItemQuery(),
 							children: [ { text: '<dummy>' } ],
 							ondemand: true
 						});
