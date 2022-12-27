@@ -6,7 +6,6 @@ metadata:
   labels:
     {{- include "collabora-online.labels" . | nindent 4 }}
 spec:
-  terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
   minReadySeconds: {{ .Values.deployment.minReadySeconds }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -34,6 +33,17 @@ spec:
         {{- include "collabora-online.selectorLabels" . | nindent 8 }}
         type: main
     spec:
+      {{- if .Values.deployment.hostAliases }}
+      hostAliases:
+        {{- range .Values.deployment.hostAliases }}
+        - ip: {{ .ip | quote }}
+          hostnames:
+          {{- range .hostnames }}
+          - {{ . | quote }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}

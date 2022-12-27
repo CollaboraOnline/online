@@ -23,9 +23,18 @@ serviceAccount:
   name: ""
 
 collabora:
+  # example to add aliasgroups
+  # - host: "<protocol>://<host-name>:<port>"
+  #   aliases: ["<protocol>://<its-first-alias>:<port>, <protocol>://<its-second-alias>:<port>"]
   aliasgroups: []
-  extra_params: --o:ssl.termination=true --o:ssl.enable=false
-  server_name: "localhost"
+
+  extra_params: --o:ssl.enable=false
+  
+  # External hostname:port of the server running coolwsd. 
+  # If empty, it's derived from the request (please set it if this doesn't work). 
+  # May be specified when behind a reverse-proxy or when the hostname is not reachable directly.
+  server_name: null
+  
   existingSecret:
     enabled: false
     secretName: ""
@@ -98,12 +107,15 @@ service:
 
 deployment:
   # Use StatefulSet or Deployment
-  kind: StatefulSet
+  kind: Deployment
   containerPort: 9980
   type: RollingUpdate
   minReadySeconds: 0
   maxUnavailable: 0
   maxSurge: 1
+  # info on how to use hostAliases: https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/
+  # note: different from aliasgroups
+  hostAliases: null
 
 probes:
   startup:
