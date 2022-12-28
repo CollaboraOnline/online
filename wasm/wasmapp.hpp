@@ -32,4 +32,6 @@ extern int coolwsd_server_socket_fd;
 
 extern const char* user_name;
 
+extern "C" void handle_cool_message(const char *string_value);
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab cinoptions=b1,g0,N-s cinkeys+=0=break: */

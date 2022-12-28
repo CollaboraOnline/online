@@ -5462,6 +5462,10 @@ int COOLWSD::innerMain()
     // Start the server.
     Server->start();
 
+#if defined(__EMSCRIPTEN__)
+    handle_cool_message("HULLO");
+#endif
+
     /// The main-poll does next to nothing:
     SocketPoll mainWait("main");
 
