@@ -35,7 +35,9 @@ public:
           _shutdown(false)
     {
         int maxConcurrency = 2;
-#if MOBILEAPP && !defined(GTKAPP)
+#ifdef __EMSCRIPTEN__
+        // Leave it at that.
+#elif MOBILEAPP && !defined(GTKAPP)
         maxConcurrency = std::max<int>(std::thread::hardware_concurrency(), 2);
 #else
         const char *max = getenv("MAX_CONCURRENCY");
