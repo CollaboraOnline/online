@@ -148,33 +148,16 @@ function onSlideClick(e){
 	document.getElementById(e).classList.add("active");
 }
 
-function initWasmWithQt() {
-	var qtLoader = QtLoader({});
-	console.log('**************** Calling qtLoader.loadEmscriptenModule()');
-	qtLoader.loadEmscriptenModule("online");
-	console.log('**************** qtLoader.loadEmscriptenModule() returned');
-}
-console.log('================ End if inline script 1 in cool.html');
+console.log('================ End of inline script 1 in cool.html');
 </script>
 
 m4_ifelse(EMSCRIPTENAPP,[true],[
   <script>
-    console.log('================ Before including qtloader.js');
+    console.log('================ Before including online.js');
   </script>
-  <script type="text/javascript" src="qtloader.js"></script>
+  <script type="text/javascript" src="online.js"></script>
   <script>
-    console.log('================ After including qtloader.js');
-  </script>
-
-  <script>
-    Module.onRuntimeInitialized = () => {
-      console.log('================ onRuntimeInitialized: sending HULLO');
-      window.postMobileMessage('HULLO');
-      console.log('================ onRuntimeInitialized: Calling socket.onopen()');
-      window.socket.onopen();
-      console.log('================ onRuntimeInitialized: Done');
-    }
-  console.log('================ End if second inline script in cool.html');
+    console.log('================ After including online.js');
   </script>
 ])
 
@@ -215,9 +198,7 @@ m4_ifelse(MOBILEAPP,[true],
 )m4_dnl
 </head>
 
-  <body style="user-select: none;height:100%;display:flex;flex-direction:column"
-m4_ifelse(EMSCRIPTENAPP,[true],[onload="initWasmWithQt()"])
-	>
+  <body style="user-select: none;height:100%;display:flex;flex-direction:column">
     <!--The "controls" div holds map controls such as the Zoom button and
         it's separated from the map in order to have the controls on the top
         of the page all the time.
