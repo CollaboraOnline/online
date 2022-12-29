@@ -360,7 +360,9 @@ L.Control.Zotero = L.Control.extend({
 
 	fillStyles: function (styles) {
 		for (var iterator = 0; iterator < styles.length; ++iterator) {
-			this.createEntry(iterator, [styles[iterator].title], {name: styles[iterator].name, type: 'style'});
+			this.createEntry(iterator, [styles[iterator].title],
+				Object.assign({name: styles[iterator].name, type: 'style'},
+					this.settings.style === styles[iterator].name ? {selected: true} : null));
 		}
 	},
 
