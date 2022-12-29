@@ -533,6 +533,9 @@ L.Control.JSDialog = L.Control.extend({
 			newControl.style.gridColumn = backupGridSpan;
 		}
 
+		if (data.control.has_default === true && (data.control.type === 'pushbutton' || data.control.type === 'okbutton'))
+			L.DomUtil.addClass(newControl, 'button-primary');
+
 		if (focusedId)
 			dialog.querySelector('[id=\'' + focusedId + '\']').focus();
 
