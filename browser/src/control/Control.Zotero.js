@@ -727,7 +727,7 @@ L.Control.Zotero = L.Control.extend({
 
 		var that = this;
 
-		fetch('https://api.zotero.org/users/' + this.userID + '/items?format=bib&itemKey=' + this.getCitationKeys().join(',') + '&v=3&key=' + this.apiKey + '&style=' + this.settings.style)
+		fetch('https://api.zotero.org/users/' + this.userID + '/items?format=bib&itemKey=' + this.getCitationKeys().join(',') + '&v=3&key=' + this.apiKey + '&style=' + this.settings.style + '&locale=' + this.settings.locale)
 			.then(function (response) { return response.text(); })
 			.then(function (html) {
 				var parameters = {
