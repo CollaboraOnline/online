@@ -194,7 +194,7 @@ L.Control.Zotero = L.Control.extend({
 									id: 'ok',
 									type: 'pushbutton',
 									text: _('OK'),
-									'has_default': true,
+									enabled: false,
 								}
 							],
 							vertical: false,
@@ -220,6 +220,23 @@ L.Control.Zotero = L.Control.extend({
 		this.map.fire(window.mode.isMobile() ? 'mobilewizard' : 'jsdialog', dialogBuildEvent);
 
 		return this;
+	},
+
+	enableDialogOKButton: function() {
+		this.map.fire('jsdialogupdate', {
+			data: {
+				jsontype: 'dialog',
+				action: 'update',
+				id: 'ZoteroDialog',
+				control: {
+					id: 'ok',
+					type: 'pushbutton',
+					text: _('OK'),
+					'has_default': true
+				},
+			},
+			callback: this._onAction.bind(this)
+		});
 	},
 
 	updateList: function(headerArray, failText) {
@@ -481,6 +498,8 @@ L.Control.Zotero = L.Control.extend({
 
 		var styleNode = document.createElement('style');
 		styleNode.setAttribute('id', 'http://www.zotero.org/styles/' + style.name);
+		if (this.selectedCitationLangCode)
+			this.settings.locale = this.selectedCitationLangCode;
 		styleNode.setAttribute('locale', this.settings.locale);
 		styleNode.setAttribute('hasBibliography', this.settings.hasBibliography);
 		styleNode.setAttribute('bibliographyStyleHasBeenSet', this.settings.bibliographyStyleHasBeenSet);
@@ -621,6 +640,7 @@ L.Control.Zotero = L.Control.extend({
 				return;
 			} else {
 				this.selected = data.entries[parseInt(index)];
+				this.enableDialogOKButton();
 				return;
 			}
 		}
@@ -628,11 +648,12 @@ L.Control.Zotero = L.Control.extend({
 			document.getElementById('zoterolist').filterEntries(data.value);
 			return;
 		}
-		if (element === 'responsebutton' && data.id == 'ok') {
-			if (this.selected)
+		if (data.id == 'ok') {
+			// style already specified just changing the language
+			if (!this.selected && this.selectedCitationLangCode)
+				this._onOk({name: this.settings.style, type: 'style'});
+			else
 				this._onOk(this.selected);
-			if (this.selectedCitationLangCode)
-				this.settings.locale = this.selectedCitationLangCode;
 		}
 		if (element === 'pushbutton' && data.id === 'zoterorefresh') {
 			this._cachedURL = [];
@@ -644,6 +665,8 @@ L.Control.Zotero = L.Control.extend({
 		}
 		if (element === 'combobox') {
 			this.selectedCitationLangCode = Object.keys(this.languageNames)[parseInt(index)];
+			if (this.settings.style)
+				this.enableDialogOKButton();
 			return;
 		}
 
