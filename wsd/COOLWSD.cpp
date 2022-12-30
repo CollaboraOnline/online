@@ -2497,12 +2497,14 @@ void COOLWSD::innerInitialize([[maybe_unused]] Application& self)
         COOLWSD::MaxDocuments = COOLWSD::MaxConnections;
     }
 
+#if !defined __EMSCRIPTEN__
     struct rlimit rlim;
     ::getrlimit(RLIMIT_NOFILE, &rlim);
     LOG_INF("Maximum file descriptor supported by the system: " << rlim.rlim_cur - 1);
     // 4 fds per document are used for client connection, Kit process communication, and
     // a wakeup pipe with 2 fds. 32 fds (i.e. 8 documents) are reserved.
     LOG_INF("Maximum number of open documents supported by the system: " << rlim.rlim_cur / 4 - 8);
+#endif
 
     LOG_INF("Maximum concurrent open Documents limit: " << COOLWSD::MaxDocuments);
     LOG_INF("Maximum concurrent client Connections limit: " << COOLWSD::MaxConnections);
