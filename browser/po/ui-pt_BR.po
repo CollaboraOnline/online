@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-01 21:14+0100\n"
-"PO-Revision-Date: 2022-12-30 22:17+0000\n"
-"Last-Translator: Flavio F. M. <flavius_androiduser@protonmail.com>\n"
+"PO-Revision-Date: 2022-12-31 22:47+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -1293,12 +1293,12 @@ msgstr "Régua"
 
 #: src/control/Control.NotebookbarWriter.js:1514
 msgid "Add/Edit Citation"
-msgstr "Adicionar/Editar Citação"
+msgstr "Adicionar/Editar citação"
 
 #: src/control/Control.NotebookbarWriter.js:1520
 #: src/control/Control.Zotero.js:181
 msgid "Citation Style"
-msgstr "Estilo de Citação"
+msgstr "Estilo de citação"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1518,7 +1518,7 @@ msgstr "Atual"
 
 #: src/control/Control.Zotero.js:167
 msgid "My Library"
-msgstr "Minha Biblioteca"
+msgstr "Minha biblioteca"
 
 #: src/control/Control.Zotero.js:170
 msgid "Your library is empty"
