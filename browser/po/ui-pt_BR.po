@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-01 21:14+0100\n"
 "PO-Revision-Date: 2022-12-30 22:17+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"Last-Translator: Flavio F. M. <flavius_androiduser@protonmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -1281,7 +1281,7 @@ msgstr "Caixa de seleção"
 
 #: src/control/Control.NotebookbarWriter.js:998
 msgid "Dropdown"
-msgstr "Dropdown"
+msgstr "Menu suspenso"
 
 #: src/control/Control.NotebookbarWriter.js:1003
 msgid "Picture"
@@ -1293,12 +1293,12 @@ msgstr "Régua"
 
 #: src/control/Control.NotebookbarWriter.js:1514
 msgid "Add/Edit Citation"
-msgstr ""
+msgstr "Adicionar/Editar Citação"
 
 #: src/control/Control.NotebookbarWriter.js:1520
 #: src/control/Control.Zotero.js:181
 msgid "Citation Style"
-msgstr ""
+msgstr "Estilo de Citação"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1518,15 +1518,15 @@ msgstr "Atual"
 
 #: src/control/Control.Zotero.js:167
 msgid "My Library"
-msgstr ""
+msgstr "Minha Biblioteca"
 
 #: src/control/Control.Zotero.js:170
 msgid "Your library is empty"
-msgstr ""
+msgstr "Sua biblioteca está vazia"
 
 #: src/control/Control.Zotero.js:184
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "Ocorreu um erro ao buscar a lista de estilos"
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
