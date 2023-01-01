@@ -20,4 +20,5 @@
     <string name="view_only">Apenas visualização</string>
     <string name="restarting">Reiniciando...</string>
     <string name="cant_open_the_document">Não foi possível abrir o documento</string>
+    <string name="use_odf">Usar Formato ODF</string>
 </resources>
