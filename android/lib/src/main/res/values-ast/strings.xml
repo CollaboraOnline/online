@@ -17,4 +17,5 @@
     <string name="use_odf">Usar el formatu ODF</string>
     <string name="use_text">Usar el formatu Testu</string>
     <string name="convert_odf_message">Esti documentu pue contener formatu o conteníu que nun pue guardase nel formatu de ficheru «Testu».</string>
+    <string name="ask_for_copy">Esti documentu ye namái de llectura. ¿Quies facer una copia pa editala\?</string>
 </resources>
