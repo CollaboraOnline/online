@@ -73,6 +73,15 @@ static void send2JS(const std::vector<char>& buffer)
 }
 
 extern "C"
+{
+    static void myCallback(int type, const char* payload, void*)
+    {
+        std::cout << "Callback: " << lokCallbackTypeToString(type)
+                  << " payload: " << payload << std::endl;
+    }
+}
+
+extern "C"
 void handle_cool_message(const char *string_value)
 {
     std::cout << "================ handle_cool_message(): '" << string_value << "'" << std::endl;
@@ -238,6 +247,72 @@ void * lok_init()
     }
 }
 
+void downloadLokitDocTileAsPng(lok::Document* loKitDocument)
+{
+    loKitDocument->registerCallback(myCallback, nullptr);
+
+    loKitDocument->initializeForRendering(nullptr);
+
+    std::string line = "tile";
+
+    StringVector tokens(StringVector::tokenize(line, ' '));
+
+    if (tokens.equals(0, "?") || tokens.equals(0, "help"))
+    {
+        std::cout <<
+            "Commands mimic COOL protocol but we talk directly to LOKit:" << std::endl <<
+            "    status" << std::endl <<
+            "        calls LibreOfficeKitDocument::getDocumentType, getParts, getPartName, getDocumentSize" << std::endl <<
+            "    tile part pixelwidth pixelheight docposx docposy doctilewidth doctileheight" << std::endl <<
+            "        calls LibreOfficeKitDocument::paintTile" << std::endl;
+    }
+    else if (tokens.equals(0, "status"))
+    {
+        std::cout << LOKitHelper::documentStatus(loKitDocument->get()) << std::endl;
+        for (int i = 0; i < loKitDocument->getParts(); i++)
+        {
+            std::cout << "  " << i << ": '" << loKitDocument->getPartName(i) << '\'' << std::endl;
+        }
+    }
+    else if (tokens.equals(0, "tile"))
+    {
+        emscripten::val contentArray = emscripten::val::array();
+        int partNumber(1);
+        int canvasWidth(1800);
+        int canvasHeight(2400);
+        int tilePosX(0);
+        int tilePosY(0);
+        int tileWidth(13000);
+        int tileHeight(17000);
+
+        std::vector<unsigned char> pixmap(canvasWidth*canvasHeight*4);
+        loKitDocument->setPart(partNumber);
+        loKitDocument->paintTile(pixmap.data(), canvasWidth, canvasHeight, tilePosX, tilePosY, tileWidth, tileHeight);
+
+        std::vector<char> png;
+        const auto mode = static_cast<LibreOfficeKitTileMode>(loKitDocument->getTileMode());
+
+        Png::encodeBufferToPNG(pixmap.data(), canvasWidth, canvasHeight, png, mode);
+
+        Poco::TemporaryFile pngFile;
+        std::ofstream pngStream(pngFile.path(), std::ios::binary);
+        pngStream.write(png.data(), png.size());
+        pngStream.close();
+
+        readWASMFile(contentArray, png.size(), png);
+        writeWASMFile(contentArray, "tile.png");
+
+        if (std::system((std::string("display ") + pngFile.path()).c_str()) == -1)
+        {
+            std::cout << "nothing to show" << std::endl;
+        }
+    }
+    else
+    {
+        std::cout << "Unrecognized" << std::endl;
+    }
+}
+
 int loadDoc(bool url, const char * input, const char * options)
 {
     std::cout << "================ loadDoc('" << input << "'" << std::endl;
@@ -248,18 +323,20 @@ int loadDoc(bool url, const char * input, const char * options)
         } else {
             //url_encode_path(input_url, input);
         }
-        lok::Document * lodoc = llo->documentLoad(input_url.c_str(), options);
-        if (!lodoc) {
+        lok::Document * loKitDocument = llo->documentLoad(input_url.c_str(), options);
+        if (!loKitDocument) {
             const char * errmsg = llo->getError();
-            std::cerr << ": LibreOfficeKit failed to load document (" << errmsg << ")" << std::endl;
+            std::cerr << "LibreOfficeKit failed to load document (" << errmsg << ")" << std::endl;
             return 1;
         }
 
-        delete lodoc;
+        downloadLokitDocTileAsPng(loKitDocument);
+
+        delete loKitDocument;
 
         return 0;
     } catch (const std::exception & e) {
-        std::cerr << ": LibreOfficeKit threw exception (" << e.what() << ")" << std::endl;
+        std::cerr << "LibreOfficeKit threw exception (" << e.what() << ")" << std::endl;
         return 1;
     }
 }

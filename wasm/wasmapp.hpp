@@ -12,14 +12,17 @@
 
 #include <FakeSocket.hpp>
 #include <Kit.hpp>
+#include <KitHelper.hpp>
 #include <Log.hpp>
 #include <COOLWSD.hpp>
 #include <Protocol.hpp>
 #include <SetupKitEnvironment.hpp>
 #include <Util.hpp>
+#include <Png.hpp>
 
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 #include <Poco/Base64Encoder.h>
+#include <Poco/TemporaryFile.h>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
