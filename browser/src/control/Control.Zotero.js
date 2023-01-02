@@ -383,8 +383,8 @@ L.Control.Zotero = L.Control.extend({
 		}
 	},
 
-	fillNotes: function (items) {
-		var index = 0;
+	fillNotes: function (items, notesCount) {
+		var index = notesCount;
 		for (var iterator = 0; iterator < items.length; ++iterator) {
 			if (items[iterator].data.itemType !== 'note')
 				continue;
@@ -399,6 +399,7 @@ L.Control.Zotero = L.Control.extend({
 				true
 			);
 		}
+		return index;
 	},
 
 	showItemList: function () {
@@ -725,15 +726,31 @@ L.Control.Zotero = L.Control.extend({
 
 		var that = this;
 		this.dialogType = 'insertnote';
+		var notesCount = 0;
+
+		var updateDialog = function () {
+			var dialogUpdateEvent = that.updateList([_('Notes')],_('An error occurred while fetching notes'));
+			if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
+			that.map.fire('jsdialogupdate', dialogUpdateEvent);
+		};
+
 		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items' + this.getZoteroItemQuery())
 			.then(function (data) {
 				that.dialogSetup(_('Add Note'), false);
-				that.fillNotes(data);
+				notesCount += that.fillNotes(data, notesCount);
+				updateDialog();
 
-				var dialogUpdateEvent = that.updateList([_('Notes')],_('An error occurred while fetching notes'));
-
-				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
-				that.map.fire('jsdialogupdate', dialogUpdateEvent);
+				that.getCachedOrFetch('https://api.zotero.org/users/' + that.userID + '/groups?v=3&key=' + that.apiKey)
+					.then(function (data) {
+						for (var i = 0; i < data.length; i++) {
+							var groupUrl = data[i].links.self.href + '/items' + that.getZoteroItemQuery();
+							that.getCachedOrFetch(groupUrl)
+								.then(function (data) {
+									notesCount += that.fillNotes(data, notesCount);
+									updateDialog();
+								});
+						}
+					});
 			});
 	},
 
