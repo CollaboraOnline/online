@@ -24,7 +24,7 @@ serviceAccount:
 
 collabora:
   # example to add aliasgroups
-  # - host: "<protocol>://<host-name>:<port>"
+  # - domain: "<protocol>://<host-name>:<port>"
   #   aliases: ["<protocol>://<its-first-alias>:<port>, <protocol>://<its-second-alias>:<port>"]
   aliasgroups: []
 

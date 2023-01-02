@@ -12,7 +12,7 @@ data:
   {{- end }}
   server_name: {{ .Values.collabora.server_name }}
   {{- range $k,$v := .Values.collabora.aliasgroups }}
-  {{- $alias := $v.host }}
+  {{- $alias := $v.domain }}
   {{- if $v.aliases }}
   {{- $alias := printf "%s,%s" $alias (join "," $v.aliases) }}
   aliasgroup{{ add $k 1 }}: {{ $alias }}

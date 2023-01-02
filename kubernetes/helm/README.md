@@ -40,7 +40,7 @@ How to test this specific setup:
       1. If you have multiple host and aliases setup set aliasgroups in my_values.yaml
           ```yaml
           collabora:
-            - host: "<protocol>://<host-name>:<port>"
+            - domain: "<protocol>://<host-name>:<port>"
               aliases: ["<protocol>://<its-first-alias>:<port>, <protocol>://<its-second-alias>:<port>"]
           ```
 
