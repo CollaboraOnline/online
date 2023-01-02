@@ -342,13 +342,13 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         timeout.tv_nsec = (timeoutMaxMicroS % (1000 * 1000)) * 1000;
         rc = ::ppoll(&_pollFds[0], size + 1, &timeout, nullptr);
 #  else
-        int timeoutMaxMs = (timeoutMaxMicroS + 9999) / 1000;
+        int timeoutMaxMs = (timeoutMaxMicroS + 999) / 1000;
         LOG_TRC("Legacy Poll start, timeoutMs: " << timeoutMaxMs);
         rc = ::poll(&_pollFds[0], size + 1, std::max(timeoutMaxMs,0));
 #  endif
 #else
         LOG_TRC("SocketPoll Poll");
-        int timeoutMaxMs = (timeoutMaxMicroS + 9999) / 1000;
+        int timeoutMaxMs = (timeoutMaxMicroS + 999) / 1000;
         rc = fakeSocketPoll(&_pollFds[0], size + 1, std::max(timeoutMaxMs,0));
 #endif
     }
