@@ -702,7 +702,6 @@ L.Control.Zotero = L.Control.extend({
 		else if (selected.type === 'note') {
 			if (this.map._clip) {
 				this.map._clip.dataTransferToDocumentFallback(null, selected.item.data.note);
-				app.socket.sendMessage('uno .uno:Paste');
 			}
 			else
 				console.warn('zotero: cannot paste a note');
