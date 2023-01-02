@@ -736,6 +736,9 @@ window.app = {
 				return encodeURIComponent(key) + '=' + encodeURIComponent(wopiParams[key]);
 			}).join('&');
 		}
+	} else if (window.ThisIsTheEmscriptenApp) {
+		// This is of course just a horrible temporary hack
+		global.docURL = 'file:///android/default-document/example.odt';
 	} else {
 		global.docURL = filePath;
 	}
@@ -823,7 +826,10 @@ window.app = {
 
 	var lang = encodeURIComponent(global.getParameterByName('lang'));
 	global.queueMsg = [];
-	if (window.ThisIsAMobileApp)
+	if (window.ThisIsTheEmscriptenApp)
+		// Temporary hack
+		window.LANG = 'en-US';
+	else if (window.ThisIsAMobileApp)
 		window.LANG = lang;
 	if (global.socket && global.socket.readyState !== 3) {
 		global.socket.onopen = function () {

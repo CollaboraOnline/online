@@ -15,7 +15,11 @@ else if (wopiSrc !== '' && accessHeader !== '') {
 	wopiParams = { 'access_header': accessHeader };
 }
 
-var filePath = getParameterByName('file_path');
+if (window.ThisIsTheEmscriptenApp)
+	// Temporary hack
+	var filePath = 'file:///android/default-document/example.odt';
+else
+	var filePath = getParameterByName('file_path');
 
 app.file.permission = getParameterByName('permission') || 'edit';
 
