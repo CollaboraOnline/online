@@ -392,8 +392,6 @@ L.Control.Zotero = L.Control.extend({
 			var dummyNode = L.DomUtil.create('div');
 			dummyNode.innerHTML = items[iterator].data.note;
 			var note = dummyNode.innerText.replaceAll('\n', ' ');
-			if (note.length > 100)
-				note = note.substr(0, 100);
 
 			this.createEntry(index++,
 				[note],
