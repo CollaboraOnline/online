@@ -727,7 +727,7 @@ L.Control.Zotero = L.Control.extend({
 
 		var that = this;
 		this.dialogType = 'insertnote';
-		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery())
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items' + this.getZoteroItemQuery())
 			.then(function (data) {
 				that.dialogSetup(_('Add Note'), false);
 				that.fillNotes(data);
