@@ -382,6 +382,9 @@ m4_ifelse(IOSAPP,[true],
 m4_ifelse(ANDROIDAPP,[true],
      [window.userInterfaceMode = window.getParameterByName('userinterfacemode');])
 
+m4_ifelse(EMSCRIPTENAPP,[true],
+     [window.userInterfaceMode = 'notebookbar';])
+
 // Dynamically load the appropriate *-mobile.css, *-tablet.css or *-desktop.css
 var link = document.createElement('link');
 link.setAttribute("rel", "stylesheet");
