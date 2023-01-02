@@ -2794,9 +2794,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_sendColorCommand: function(builder, data, color) {
 		var gradientItem;
 
-		if (data.id === 'LB_GLOW_COLOR') {
-			data.id = 'GlowColor';
-		}
+		// complex color properties
 
 		if (data.id === 'fillgrad1') {
 			gradientItem = builder.map['stateChangeHandler'].getItemValue('.uno:FillGradient');
@@ -2808,9 +2806,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			gradientItem.endcolor = color;
 			builder.map.sendUnoCommand('.uno:FillGradient?FillGradientJSON:string=' + JSON.stringify(gradientItem));
 			return;
-		} else if (data.id === 'fillattr') {
-			builder.map.sendUnoCommand('.uno:FillPageColor?Color:string=' + color);
-			return;
 		} else if (data.id === 'fillattr2') {
 			gradientItem = builder.map['stateChangeHandler'].getItemValue('.uno:FillPageGradient');
 			gradientItem.startcolor = color;
@@ -2821,28 +2816,26 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			gradientItem.endcolor = color;
 			builder.map.sendUnoCommand('.uno:FillPageGradient?FillPageGradientJSON:string=' + JSON.stringify(gradientItem));
 			return;
-		} else if (data.id === 'Color' || data.id === 'CharBackColor' || data.id === 'FillColor'
-			|| data.id === 'XLineColor' || data.id === 'GlowColor') {
-			var params = {};
-			params[data.id] = {
-				type : 'long',
-				value : builder.parseHexColor(color)
-			};
+		}
 
-			builder.map['stateChangeHandler'].setItemValue(data.command, params[data.id].value);
-			builder.map.sendUnoCommand(data.command, params);
-			return;
+		// simple numeric color values
+
+		if (data.id === 'fillattr') {
+			data.command = '.uno:FillPageColor';
+		} else if (data.id === 'LB_GLOW_COLOR') {
+			data.id = 'GlowColor';
 		} else if (data.id === 'LB_SHADOW_COLOR') {
 			data.command = '.uno:FillShadowColor';
 		}
 
-		var command = data.command + '?Color:string=' + color;
+		var params = {};
+		params[data.id] = {
+			type : 'long',
+			value : builder.parseHexColor(color)
+		};
 
-		// update the item state as we send
-		var items = builder.map['stateChangeHandler'];
-		items.setItemValue(data.command, builder.parseHexColor(color));
-
-		builder.map.sendUnoCommand(command);
+		builder.map['stateChangeHandler'].setItemValue(data.command, params[data.id].value);
+		builder.map.sendUnoCommand(data.command, params);
 	},
 
 	_getDefaultColorForCommand: function(command) {
