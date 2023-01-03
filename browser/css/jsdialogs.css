@@ -21,10 +21,6 @@
 	z-index: 2001;
 }
 
-.lokdialog > .jsdialog.root-container:not(.autofilter) {
-	margin: .5em 1em; /*same as in .ui-dialog */
-}
-
 .jsdialog-container {
 	position: absolute;
 	z-index: 1105;
