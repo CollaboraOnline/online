@@ -816,6 +816,12 @@ L.Control.UIManager = L.Control.extend({
 		var dialogId = 'modal-dialog-' + id;
 		var json = this._modalDialogJSON(id, title, true, [
 			{
+				id: 'info-modal-tile-m',
+				type: 'fixedtext',
+				text: title,
+				hidden: !window.mode.isMobile()
+			},
+			{
 				id: 'info-modal-label1',
 				type: 'fixedtext',
 				text: message1
