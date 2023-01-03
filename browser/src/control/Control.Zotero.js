@@ -658,6 +658,8 @@ L.Control.Zotero = L.Control.extend({
 			this._cachedURL = [];
 			if (this.dialogType === 'itemlist')
 				this.showItemList();
+			else if (this.dialogType === 'insertnote')
+				this.handleInsertNote();
 			else
 				this.showStyleList();
 			return;
