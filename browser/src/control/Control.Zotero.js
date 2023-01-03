@@ -61,6 +61,11 @@ L.Control.Zotero = L.Control.extend({
 				that.setCitationNumber(that.citations[citationId]);
 			});
 		}
+
+		if (this.pendingCitationUpdate) {
+			delete this.pendingCitationUpdate;
+			this.updateCitations();
+		}
 	},
 
 	getCitationKeys: function() {
@@ -819,6 +824,10 @@ L.Control.Zotero = L.Control.extend({
 			};
 			this.map.sendUnoCommand('.uno:TextFormField', parameters);
 			this.updateFieldsList();
+
+			// update all the citations once citations are inserted and we get updated fields
+			if (this.settings.citationFormat === 'numeric')
+				this.pendingCitationUpdate = true;
 		}
 		else if (selected.type === 'style') {
 			this.setStyle(selected);
