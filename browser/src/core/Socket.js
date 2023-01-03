@@ -1077,14 +1077,13 @@ app.definitions.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('fontsmissing:')) {
 			var fontsMissingObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			var msg = _('Missing fonts:');
-			msg += ' ';
+			var msg = ' ';
 			for (var i = 0; i < fontsMissingObj.fontsmissing.length; ++i) {
 				if (i > 0)
 					msg += ', ';
 				msg += fontsMissingObj.fontsmissing[i];
 			}
-			this._map.fire('infobar', { msg: msg });
+			this._map.uiManager.showInfoModal('fontsmissing', _('Missing Fonts'), msg, null, _('Close'));
 		}
 		else if (textMsg.startsWith('info:') && command.errorCmd === 'socket') {
 			if (command.errorKind === 'limitreached' && !this.WasShownLimitDialog) {
