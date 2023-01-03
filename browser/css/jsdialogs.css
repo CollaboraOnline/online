@@ -1250,7 +1250,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 #ZoteroDialog-search-container.jsdialog, #ZoteroDialog-locale-container.jsdialog {
-	margin: 7px;
+	margin-block: 7px;
 }
 
 #ZoteroDialog-locale-container.jsdialog {
@@ -1264,11 +1264,14 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 #zoterolist.jsdialog {
-	margin-inline-end: 7px;
 	width: 800px;
 }
 
-#zoterosearch-label.jsdialog, #zoterolocale-label.jsdialog {
+#zoterosearch-label.jsdialog {
 	text-align: end;
 	margin: auto 7px;
+}
+
+#zoterolocale-label.jsdialog {
+	margin-inline-end: 7px;
 }
