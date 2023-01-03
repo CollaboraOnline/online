@@ -489,6 +489,7 @@ L.Control.Zotero = L.Control.extend({
 		this.settings.hasBibliography = '1';
 
 		var dataNode = document.createElement('data');
+		dataNode.setAttribute('data-version', '3');
 
 		var sessionNode = document.createElement('session');
 		sessionNode.setAttribute('id', Math.random().toString(36).substring(2,10));
@@ -778,6 +779,8 @@ L.Control.Zotero = L.Control.extend({
 				};
 
 				that.map.sendUnoCommand('.uno:TextFormField', parameters);
+				that.settings.bibliographyStyleHasBeenSet = '1';
+				that.setStyle({name: that.settings.style}); // update the document meta data about bib being set
 			});
 	},
 
