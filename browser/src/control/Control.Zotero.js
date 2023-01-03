@@ -274,7 +274,7 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	getZoteroItemQuery: function() {
-		return '?v=3&key=' + this.apiKey + '&include=data,citation,bib,csljson&style=' + this.settings.style + '&locale=' + this.settings.locale;
+		return '?v=3&key=' + this.apiKey + '&include=data,citation,csljson&style=' + this.settings.style + '&locale=' + this.settings.locale;
 	},
 
 	_getDefaultSubCollections: function () {
