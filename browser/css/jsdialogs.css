@@ -1276,11 +1276,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	width: 800px;
 }
 
-#zoterosearch-label.jsdialog {
-	text-align: end;
-	margin: auto 7px;
-}
-
 #zoterolocale-label.jsdialog {
 	margin-inline-end: 7px;
 }
