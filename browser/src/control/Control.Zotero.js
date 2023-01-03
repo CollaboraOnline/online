@@ -477,6 +477,54 @@ L.Control.Zotero = L.Control.extend({
 		app.socket.sendMessage('commandvalues command=.uno:SetDocumentProperties?namePrefix=ZOTERO_PREF_');
 	},
 
+	setFetchedCitationFormat: function(style) {
+		if (!style)
+			style = this.settings.style;
+
+		var that = this;
+		fetch('https://www.zotero.org/styles/' + style)
+			.then(function (response) { return response.text(); })
+			.then(function (html) {
+				var csl = new DOMParser().parseFromString(html, 'text/xml');
+				var categories = csl.getElementsByTagName('category');
+				for (var i = 0; i < categories.length; i++) {
+					if (categories[i].getAttribute('citation-format')) {
+						that.settings.citationFormat = categories[i].getAttribute('citation-format');
+						break;
+					}
+				}
+
+				var citation = csl.getElementsByTagName('citation')[0];
+
+				if (citation) {
+					that.setCitationLayout(citation);
+					that.updateCitations();
+				} else {
+					var link = csl.getElementsByTagName('link');
+					for (var i = 0; i < link.length; i++) {
+						if (link[i].getAttribute('rel') === 'independent-parent') {
+							that.setFetchedCitationFormat(link[i].getAttribute('href').substring(link[i].getAttribute('href').lastIndexOf('/')+1));
+							break;
+						}
+					}
+				}
+			});
+	},
+
+	setCitationLayout: function(ciatationNode) {
+		var layout = ciatationNode.getElementsByTagName('layout')[0];
+		this.settings.layout = {};
+		this.settings.layout['prefix'] = layout && layout.getAttribute('prefix') ? layout.getAttribute('prefix') : '';
+		this.settings.layout['suffix'] = layout && layout.getAttribute('suffix') ? layout.getAttribute('suffix') : '';
+		this.settings.layout['delimiter'] = layout && layout.getAttribute('delimiter') ? layout.getAttribute('delimiter') : '';
+
+		var group = layout.getElementsByTagName('group')[0];
+		this.settings.group = {};
+		this.settings.group['prefix'] = group && group.getAttribute('prefix') ? group.getAttribute('prefix') : '';
+		this.settings.group['suffix'] = group && group.getAttribute('suffix') ? group.getAttribute('suffix') : '';
+		this.settings.group['delimiter'] = group && group.getAttribute('delimiter') ? group.getAttribute('delimiter') : '';
+	},
+
 	setFetchedStyle: function(userDefinedProperties) {
 		var valueString = '';
 		for (var i = 0; i < userDefinedProperties.length; i++) {
@@ -490,6 +538,7 @@ L.Control.Zotero = L.Control.extend({
 		var locale = styleNode.getAttribute('locale');
 		if (locale)
 			this.settings.locale = locale;
+		this.setFetchedCitationFormat();
 		return;
 	},
 
@@ -555,6 +604,7 @@ L.Control.Zotero = L.Control.extend({
 
 		}
 		this.map.sendUnoCommand('.uno:SetDocumentProperties', style);
+		this.setFetchedCitationFormat();
 	},
 
 	_findEntryWithUrlImpl: function(entry, url) {
