@@ -3,7 +3,7 @@
  * L.Control.Zotero
  */
 
-/* global _ Promise app Set */
+/* global _ Promise app */
 L.Control.Zotero = L.Control.extend({
 	_cachedURL: [],
 
@@ -36,7 +36,7 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	onFieldValue: function(fields) {
-		this.citations = new Set();
+		this.resetCitation();
 
 		for (var index = 0; index < fields.length; index++) {
 			var field = fields[index];
@@ -51,23 +51,20 @@ L.Control.Zotero = L.Control.extend({
 				return;
 			}
 			var that = this;
-			values.citationItems.forEach(function(item) {
-				that.citations.add(item);
+			this.citationCluster[values.citationID] = [];
+			var citationString = L.Util.trim(values.properties.plainCitation, this.settings.layout.prefix, this.settings.layout.suffix);
+			var citations = citationString.split(this.settings.layout.delimiter);
+			values.citationItems.forEach(function(item, i) {
+				var citationId = item.id.substr(item.id.indexOf('/')+1);
+				that.citationCluster[values.citationID].push(citationId);
+				that.citations[citationId] = L.Util.trim(citations[i], that.settings.group.prefix, that.settings.group.suffix);
+				that.setCitationNumber(that.citations[citationId]);
 			});
 		}
 	},
 
 	getCitationKeys: function() {
-		var keys = [];
-
-		this.citations.forEach(function(item) {
-
-			var slashIndex = item.id .indexOf('/');
-			var key = slashIndex < 0 ? item.id : item.id .substring(slashIndex + 1);
-			keys.push(key);
-		});
-
-		return keys;
+		return Object.keys(this.citations);
 	},
 
 	onRemove: function () {
@@ -310,30 +307,94 @@ L.Control.Zotero = L.Control.extend({
 		};
 	},
 
-	getCitationJSONString: function(item) {
+	resetCitation: function() {
+		this.citationCluster = {};
+		this.citations = {};
+		delete this.settings.citationNumber;
+	},
+
+	setCitationNumber: function(number) {
+		if (this.settings.citationFormat !== 'numeric')
+			return;
+
+		if (!this.settings.citationNumber)
+			this.settings.citationNumber = 1;
+
+		this.settings.citationNumber = this.settings.citationNumber <= parseInt(number) ? parseInt(number) + 1 : this.settings.citationNumber;
+
+	},
+
+	getCitationText: function(citationId, text) {
+		if (this.citations[citationId])
+			return this.citations[citationId];
+
+		if (this.settings.citationFormat === 'numeric') {
+			if (!this.settings.citationNumber)
+				this.settings.citationNumber = 1;
+			this.citations[citationId] = this.settings.citationNumber++;
+		} else {
+			this.citations[citationId] = L.Util.trim(text, this.settings.layout.prefix, this.settings.layout.suffix);
+		}
+
+		return this.settings.group.prefix + this.citations[citationId] + this.settings.group.suffix;
+	},
+
+	handleCitationText: function(citationItems) {
+		//Some citations have style so trying to change just inner most text without affecting other html
+		var citationString = '';
+		var citationNode = new DOMParser().parseFromString(citationItems[0].citation, 'text/html').body;
+
+		var that = this;
+		citationItems.forEach(function(item) {
+			var itemHTML = new DOMParser().parseFromString(item.citation, 'text/html').body;
+			// last-child works here only because its a single chain of nodes
+			var innerMostNode = itemHTML.querySelector('*:last-child');
+
+			citationString += innerMostNode ? that.getCitationText(item['key'], innerMostNode.textContent)
+				: that.getCitationText(item['key'], item.citation.toString());
+			citationString += that.settings.layout.delimiter;
+		});
+
+		citationString = this.settings.layout.prefix + L.Util.trimEnd(citationString, this.settings.layout.delimiter) + this.settings.layout.suffix;
+		// last-child works here only because its a single chain of nodes
+		var innerText = citationNode.querySelector('*:last-child');
+		if (!innerText)
+			citationNode.textContent = citationString;
+		else
+			innerText.textContent = citationString;
+		return citationNode;
+	},
+
+	getCitationJSONString: function(items) {
 		var resultJSON = {};
 		resultJSON['citationID'] = Math.random().toString(36).substring(2,12);
 
+		var citationNode = this.handleCitationText(items);
+
 		var properties = {
-			formattedCitation: item['citation'],
-			plainCitation: new DOMParser().parseFromString(item['citation'], 'text/html').documentElement.textContent,
+			formattedCitation: citationNode.innerHTML,
+			plainCitation: citationNode.textContent,
 			noteIndex: '0'
 		};
 
 		resultJSON['properties'] = properties;
 
-		var citationItems = {
-			id: item['csljson'].id,
-			uris: [item['links']['self']['href'], item['links']['alternate']['href']],
-		};
+		resultJSON['citationItems'] = [];
 
-		citationItems['itemData'] = item['csljson'];
+		items.forEach(function(item) {
+			var citationItems = {
+				id: item['csljson'].id,
+				uris: [item['links']['self']['href'], item['links']['alternate']['href']],
+				itemData: item['csljson']
+			};
+			resultJSON['citationItems'].push(citationItems);
+		});
 
-		resultJSON['citationItems'] = [citationItems];
 
 		resultJSON['schema'] = 'https://raw.githubusercontent.com/citation-style-language/schema/master/schemas/input/csl-citation.json';
 
-		return JSON.stringify(resultJSON);
+		return {jsonString: JSON.stringify(resultJSON),
+			citationString: properties.formattedCitation};
 	},
 
 	fillCategories: function () {
@@ -746,10 +807,11 @@ L.Control.Zotero = L.Control.extend({
 
 	_onOk: function (selected) {
 		if (selected.type === 'item') {
+			var citationData = this.getCitationJSONString([selected.item]);
 			var parameters = {
 				FieldType: {type: 'string', value: 'vnd.oasis.opendocument.field.UNHANDLED'},
-				FieldCommand: {type: 'string', value: 'ADDIN ZOTERO_ITEM CSL_CITATION ' + this.getCitationJSONString(selected.item)},
-				FieldResult: {type: 'string', value: selected.item.citation}
+				FieldCommand: {type: 'string', value: 'ADDIN ZOTERO_ITEM CSL_CITATION ' + citationData.jsonString},
+				FieldResult: {type: 'string', value: citationData.citationString}
 			};
 			this.map.sendUnoCommand('.uno:TextFormField', parameters);
 			this.updateFieldsList();
@@ -841,6 +903,58 @@ L.Control.Zotero = L.Control.extend({
 
 	updateFieldsList: function() {
 		app.socket.sendMessage('commandvalues command=.uno:TextFormFields?type=vnd.oasis.opendocument.field.UNHANDLED&commandPrefix=ADDIN%20ZOTERO_ITEM%20CSL_CITATION');
+	},
+
+	updateCitations: function() {
+		if (!this.citations) {
+			this.updateFieldsList();
+			return;
+		}
+
+		var updatedCitations = {
+			'FieldType': {
+				'type': 'string',
+				'value': 'vnd.oasis.opendocument.field.UNHANDLED'
+			},
+			'FieldCommandPrefix': {
+				'type': 'string',
+				'value': 'ADDIN ZOTERO_ITEM CSL_CITATION'
+			},
+			'Fields': {
+				'type': '[][]com.sun.star.beans.PropertyValue',
+				'value': []
+			}
+		};
+		var that = this;
+		var citationKeys = this.getCitationKeys();
+		var citationCluster = this.citationCluster;
+
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery() + '&itemKey=' + citationKeys.join(','))
+			.then(function (data) {
+				that.resetCitation();
+				// creating object for faster search
+				var dataMap = data.reduce(function(map, item) {
+					map[item.key] = item;
+					return map;
+				}, {});
+
+				Object.keys(citationCluster).forEach(function (clusterKey) {
+					var itemList = citationCluster[clusterKey].reduce(function(list, item) {
+						list.push(dataMap[item]);
+						return list;
+					}, []);
+					var citationData = that.getCitationJSONString(itemList);
+					var field = {
+						FieldType: {type: 'string', value: 'vnd.oasis.opendocument.field.UNHANDLED'},
+						FieldCommand: {type: 'string', value: 'ADDIN ZOTERO_ITEM CSL_CITATION ' + citationData.jsonString},
+						FieldResult: {type: 'string', value: citationData.citationString}
+					};
+					updatedCitations['Fields']['value'].push(field);
+				});
+
+				that.map.sendUnoCommand('.uno:TextFormFields', updatedCitations);
+				that.updateFieldsList();
+			});
 	},
 
 	_onMessage: function(message) {
