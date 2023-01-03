@@ -403,7 +403,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	background-color: var(--color-background-dark);
 	line-height: 28px;
 	max-height: 32px;
-	width: 100%;
+	width: auto;
 	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 }
