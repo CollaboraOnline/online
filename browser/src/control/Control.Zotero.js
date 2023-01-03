@@ -128,9 +128,18 @@ L.Control.Zotero = L.Control.extend({
 							layoutstyle: 'end',
 							children: [
 								{
-									type: 'pushbutton',
-									id: 'zoterorefresh',
-									text: _('Refresh')
+									id: 'zoterorefresh-buttonbox',
+									type: 'buttonbox',
+									leftaligned: 'true',
+									children: [
+										{
+											type: 'pushbutton',
+											id: 'zoterorefresh',
+											text: _('Refresh')
+										}
+									],
+									vertical: false,
+									layoutstyle: 'end'
 								},
 								{
 									type: 'fixedtext',
