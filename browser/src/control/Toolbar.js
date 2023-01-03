@@ -875,6 +875,11 @@ L.Map.include({
 				this.zotero.handleInsertNote();
 			}
 			break;
+		case 'zoterorefresh':
+			{
+				this.zotero.refreshCitations();
+			}
+			break;
 		case 'exportpdf':
 			{
 				this.sendUnoCommand('.uno:ExportToPDF', {

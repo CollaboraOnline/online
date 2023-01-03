@@ -970,6 +970,14 @@ L.Control.Zotero = L.Control.extend({
 			});
 	},
 
+	refreshCitations: function() {
+		//discard the cached url and fetch fresh one
+		var refreshURL = 'https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery() + '&itemKey=' + this.getCitationKeys().join(',');
+		if (this._cachedURL[refreshURL])
+			delete this._cachedURL[refreshURL];
+		this.updateCitations();
+	},
+
 	_onMessage: function(message) {
 		if (message.startsWith('itemslist: ')) {
 			this.handleItemList(message);

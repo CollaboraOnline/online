@@ -1843,14 +1843,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.sendUnoCommand('.uno:LOKSidebarWriterPage');
 			this._map.fire('showwizardsidebar', {noRefresh: true});
 			window.pageMobileWizard = true;
-		} else if (id === 'zoteroaddeditbibliography') {
-			this._map.dispatch('zoteroaddeditbibliography');
-		} else if (id === 'zoteroaddeditcitation') {
-			this._map.dispatch('zoteroaddeditcitation');
-		} else if (id === 'zoterosetdocprefs') {
-			this._map.dispatch('zoterosetdocprefs');
-		} else if (id === 'zoteroaddnote') {
-			this._map.dispatch('zoteroaddnote');
+		} else if (id.startsWith('zotero')) {
+			this._map.dispatch(id);
 		}
 		// Inform the host if asked
 		if (postmessage)
