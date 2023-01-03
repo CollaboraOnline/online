@@ -610,12 +610,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 												+ (data.layoutstyle ? data.layoutstyle : ''), parentContainer);
 		container.id = data.id;
 
+		var isButtonBoxLeft = data.leftaligned === 'true';
 		var leftAlignButtons = [];
 		var rightAlignButton = [];
 
 		for (var i in data.children) {
 			var child = data.children[i];
-			if (child.id === 'help')
+			if (child.id === 'help' || isButtonBoxLeft === true)
 				leftAlignButtons.push(child);
 			else
 				rightAlignButton.push(child);
