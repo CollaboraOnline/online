@@ -79,8 +79,10 @@ button:not(.ui-corner-all):not(.button-primary) {
 .jsdialog.ui-button-box-right {
 	display: flex;
 	float: inline-end;
+	margin-inline-end: -5px;
 }
 
 .jsdialog.ui-button-box-left {
 	float: inline-start;
+	margin-inline-start: -5px;
 }
