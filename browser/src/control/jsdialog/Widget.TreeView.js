@@ -207,7 +207,11 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 
 		if (entry.columns[i].collapsed || entry.columns[i].expanded) {
 			var iconId = entry.columns[i].collapsed ? entry.columns[i].collapsed : entry.columns[i].expanded;
-			iconId = iconId.replaceAll('/', '');
+			var newLength = iconId.lastIndexOf('.');
+			if (newLength > 0)
+				iconId = iconId.substr(0, newLength).replaceAll('/', '');
+			else
+				iconId = iconId.replaceAll('/', '');
 			var icon = L.DomUtil.create('img', 'ui-listview-icon', td);
 			icon.src = builder._createIconURL(iconId, true);
 		} else if (entry.columns[i].text)
