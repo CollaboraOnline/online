@@ -68,9 +68,9 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('#listitems .mobile-wizard.ui-treeview-body .ui-listview-entry')
 			.each((item, index) => {
 				if (index == 0)
-					expect(item.get(0).innerText).to.eq('\tChoose an item');
+					expect(item.get(0).innerText).to.eq('\t\tChoose an item');
 				else if (index == 1)
-					expect(item.get(0).innerText).to.eq('some text\tsomething');
+					expect(item.get(0).innerText).to.eq('\tsome text\tsomething');
 			});
 	});
 });
