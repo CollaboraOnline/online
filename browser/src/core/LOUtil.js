@@ -422,5 +422,16 @@ L.LOUtil = {
 		};
 
 		return result;
+	},
+
+	getFileExtension: function (map) {
+		var filename = map['wopi'].BaseFileName;
+		return filename.substring(filename.lastIndexOf('.') + 1);
+	},
+
+	isFileODF: function (map) {
+		var ext = this.getFileExtension(map);
+		return ext === 'odt' || ext === 'ods' || ext === 'odp' || ext == 'odg';
 	}
+
 };

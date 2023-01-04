@@ -289,6 +289,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 	},
 
 	getHomeTab: function() {
+		var isODF = L.LOUtil.isFileODF(this._map);
 		var content = [
 			{
 				'id': 'home-undo-redo',
@@ -428,7 +429,9 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 									{
 										'type': 'toolitem',
 										'text': _UNO('.uno:FontworkGalleryFloater'),
-										'command': '.uno:FontworkGalleryFloater'
+										'command': '.uno:FontworkGalleryFloater',
+										// Fontwork export/import not supported in other formats.
+										'visible': isODF ? 'true' : 'false',
 									},
 									{
 										'type': 'toolitem',
@@ -838,6 +841,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 	},
 
 	getInsertTab: function() {
+		var isODF = L.LOUtil.isFileODF(this._map);
 		var content = [
 			{
 				'type': 'bigtoolitem',
@@ -997,7 +1001,9 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:FontworkGalleryFloater'),
-								'command': '.uno:FontworkGalleryFloater'
+								'command': '.uno:FontworkGalleryFloater',
+								// Fontwork export/import not supported in other formats.
+								'visible': isODF ? 'true' : 'false',
 							}
 						]
 					},
