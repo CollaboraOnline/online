@@ -6674,7 +6674,10 @@ L.CanvasTileLayer = L.Layer.extend({
 					       ' of length ' + rawDelta.length + ' hex: ' + hex2string(rawDelta));
 
 		if (rawDelta.length === 0)
-			return 0; // that was easy!
+			return; // that was easy!
+
+		var traceEvent = app.socket.createCompleteTraceEvent('L.CanvasTileLayer.applyDelta',
+								     { keyFrame: isKeyframe, length: rawDelta.length });
 
 		// 'Uint8Array' delta
 		var canvas;
@@ -6757,8 +6760,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	        if (imgData)
 			ctx.putImageData(imgData, 0, 0);
 
-		return i;
-
+		if (traceEvent)
+			traceEvent.finish();
 	},
 
 	_applyDeltaChunk: function(imgData, delta, oldData, width, height) {
