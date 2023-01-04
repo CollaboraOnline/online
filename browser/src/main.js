@@ -70,7 +70,6 @@ L.Map.THIS = map;
 
 map.loadDocument(global.socket);
 
-global.socket = app.socket;
 window.addEventListener('beforeunload', function () {
 	if (map && app.socket) {
 		if (app.socket.setUnloading)
