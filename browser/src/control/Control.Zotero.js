@@ -309,8 +309,6 @@ L.Control.Zotero = L.Control.extend({
 		var resultJSON = {};
 		resultJSON['citationID'] = Math.random().toString(36).substring(2,12);
 
-		resultJSON['schema'] = 'https://raw.githubusercontent.com/citation-style-language/schema/master/schemas/input/csl-citation.json';
-
 		var properties = {
 			formattedCitation: item['citation'],
 			plainCitation: new DOMParser().parseFromString(item['citation'], 'text/html').documentElement.textContent,
@@ -327,6 +325,8 @@ L.Control.Zotero = L.Control.extend({
 		citationItems['itemData'] = item['csljson'];
 
 		resultJSON['citationItems'] = [citationItems];
+
+		resultJSON['schema'] = 'https://raw.githubusercontent.com/citation-style-language/schema/master/schemas/input/csl-citation.json';
 
 		return JSON.stringify(resultJSON);
 	},
