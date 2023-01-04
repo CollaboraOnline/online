@@ -516,6 +516,7 @@ public:
         const std::string& getUserId() const { return _userId; }
         const std::string& getUsername() const { return _username; }
         const std::string& getUserExtraInfo() const { return _userExtraInfo; }
+        const std::string& getUserPrivateInfo() const { return _userPrivateInfo; }
         const std::string& getWatermarkText() const { return _watermarkText; }
         const std::string& getTemplateSaveAs() const { return _templateSaveAs; }
         const std::string& getTemplateSource() const { return _templateSource; }
@@ -554,8 +555,10 @@ public:
         std::string _obfuscatedUserId;
         /// Display Name of user accessing the file
         std::string _username;
-        /// Extra info per user, typically mail and other links, as json.
+        /// Extra public info per user, typically mail and other links, as json, shared with everyone.
         std::string _userExtraInfo;
+        /// Private info per user, for API keys and other non-public information.
+        std::string _userPrivateInfo;
         /// In case a watermark has to be rendered on each tile.
         std::string _watermarkText;
         /// In case we want to use this file as a template, it should be first re-saved under this name (using PutRelativeFile).

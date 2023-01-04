@@ -847,6 +847,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
     LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): " << wopiResponse.str());
 
     JsonUtil::findJSONValue(object, "UserExtraInfo", _userExtraInfo);
+    JsonUtil::findJSONValue(object, "UserPrivateInfo", _userPrivateInfo);
     JsonUtil::findJSONValue(object, "WatermarkText", _watermarkText);
     JsonUtil::findJSONValue(object, "UserCanWrite", _userCanWrite);
     JsonUtil::findJSONValue(object, "PostMessageOrigin", _postMessageOrigin);
