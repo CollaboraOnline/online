@@ -1100,6 +1100,13 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             oss << " authorextrainfo=" << encodedUserExtraInfo; //TODO: could this include PII?
         }
 
+        if (!getUserPrivateInfo().empty())
+        {
+            std::string encodedUserPrivateInfo;
+            Poco::URI::encode(getUserPrivateInfo(), "", encodedUserPrivateInfo);
+            oss << " authorprivateinfo=" << encodedUserPrivateInfo;
+        }
+
         oss << " readonly=" << isReadOnly();
 
         if (loadPart >= 0)

@@ -209,6 +209,7 @@ public:
     const std::string& getViewUserId() const { return getUserId(); }
     const std::string& getViewUserName() const { return getUserName(); }
     const std::string& getViewUserExtraInfo() const { return getUserExtraInfo(); }
+    const std::string& getViewUserPrivateInfo() const { return getUserPrivateInfo(); }
     void updateSpeed();
     int getSpeed();
 

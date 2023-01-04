@@ -131,6 +131,11 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
             Poco::URI::decode(value, _userExtraInfo);
             ++offset;
         }
+        else if (name == "authorprivateinfo")
+        {
+            Poco::URI::decode(value, _userPrivateInfo);
+            ++offset;
+        }
         else if (name == "readonly")
         {
             _isReadOnly = value != "0";
