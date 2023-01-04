@@ -725,6 +725,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     // Call the storage specific fileinfo functions
     std::string userId, username;
     std::string userExtraInfo;
+    std::string userPrivateInfo;
     std::string watermarkText;
     std::string templateSource;
 
@@ -743,6 +744,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         userId = wopifileinfo->getUserId();
         username = wopifileinfo->getUsername();
         userExtraInfo = wopifileinfo->getUserExtraInfo();
+        userPrivateInfo = wopifileinfo->getUserPrivateInfo();
         watermarkText = wopifileinfo->getWatermarkText();
         templateSource = wopifileinfo->getTemplateSource();
 
@@ -916,6 +918,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     session->setUserId(userId);
     session->setUserName(username);
     session->setUserExtraInfo(userExtraInfo);
+    session->setUserPrivateInfo(userPrivateInfo);
     session->setWatermarkText(watermarkText);
     session->createCanonicalViewId(_sessions);
 

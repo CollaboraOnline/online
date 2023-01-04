@@ -206,6 +206,8 @@ public:
 
     void setUserExtraInfo(const std::string& userExtraInfo) { _userExtraInfo = userExtraInfo; }
 
+    void setUserPrivateInfo(const std::string& userPrivateInfo) { _userPrivateInfo = userPrivateInfo; }
+
     void setUserName(const std::string& userName) { _userName = userName; }
 
     const std::string& getUserName() const {return _userName; }
@@ -233,6 +235,8 @@ public:
     const std::string& getDocPassword() const { return _docPassword; }
 
     const std::string& getUserExtraInfo() const { return _userExtraInfo; }
+
+    const std::string& getUserPrivateInfo() const { return _userPrivateInfo; }
 
     const std::string& getDocURL() const { return  _docURL; }
 
@@ -345,6 +349,9 @@ private:
 
     /// Extra info per user, mostly mail, avatar, links, etc.
     std::string _userExtraInfo;
+
+    /// Private info per user, not shared with others.
+    std::string _userPrivateInfo;
 
     /// In case a watermark has to be rendered on each tile.
     std::string _watermarkText;

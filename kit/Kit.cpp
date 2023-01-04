@@ -1234,11 +1234,13 @@ private:
 
         // Double check if list of viewids from core and our list matches,
         // and create an array of JSON objects containing id and username
-        std::ostringstream oss;
-        oss << "viewinfo: [";
+
+        std::map<int, std::string> viewStrings; // viewId -> public data string
+
         for (const auto& viewId : viewIds)
         {
-            oss << "{\"id\":" << viewId << ',';
+            std::ostringstream oss;
+            oss << "\"id\":" << viewId << ',';
             int color = 0;
             const auto itView = viewInfoMap.find(viewId);
             if (itView == viewInfoMap.end())
@@ -1262,15 +1264,37 @@ private:
                 }
             }
 
-            oss << "\"color\":" << color << "},";
+            oss << "\"color\":" << color;
+
+            viewStrings[viewId] = oss.str();
         }
 
-        if (viewCount > 0)
-            oss.seekp(-1, std::ios_base::cur); // Remove last comma.
-        oss << ']';
+        // Broadcast updated viewinfo to all clients. Every view gets own userprivateinfo.
 
-        // Broadcast updated viewinfo to all clients.
-        notifyAll(oss.str());
+        for (const auto& it : _sessions)
+        {
+            std::ostringstream oss;
+            oss << "viewinfo: [";
+
+            for (const auto& viewId : viewIds)
+            {
+                if (viewId == it.second->getViewId() && !it.second->getUserPrivateInfo().empty())
+                {
+                    oss << "{" << viewStrings[viewId];
+                    oss << ",\"userprivateinfo\":" << it.second->getUserPrivateInfo();
+                    oss << "},";
+                }
+                else
+                    oss << "{" << viewStrings[viewId] << "},";
+            }
+
+            if (viewCount > 0)
+                oss.seekp(-1, std::ios_base::cur); // Remove last comma.
+
+            oss << ']';
+
+            it.second->sendTextFrame(oss.str());
+        }
     }
 
     void updateEditorSpeeds(int id, int speed) override
@@ -1505,7 +1529,8 @@ private:
         session->setViewId(viewId);
 
         _sessionUserInfo[viewId] = UserInfo(session->getViewUserId(), session->getViewUserName(),
-                                            session->getViewUserExtraInfo(), session->isReadOnly());
+                                            session->getViewUserExtraInfo(), session->getViewUserPrivateInfo(),
+                                            session->isReadOnly());
 
         _loKitDocument->setViewLanguage(viewId, lang.c_str());
 
