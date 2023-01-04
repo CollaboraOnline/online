@@ -77,9 +77,9 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	onUpdateViews: function () {
-		var userExtraInfo = this.map._docLayer ? this.map._viewInfo[this.map._docLayer._viewId].userextrainfo : null;
-		if (userExtraInfo) {
-			this.apiKey = userExtraInfo.ZoteroAPIKey;
+		var userPrivateInfo = this.map._docLayer ? this.map._viewInfo[this.map._docLayer._viewId].userprivateinfo : null;
+		if (userPrivateInfo) {
+			this.apiKey = userPrivateInfo.ZoteroAPIKey;
 			if (this.apiKey)
 				this.updateUserID();
 		}
