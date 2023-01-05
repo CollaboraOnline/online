@@ -50,6 +50,8 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		}
 		else if (values.fields) {
 			this._map.zotero.onFieldValue(values.fields);
+		} else if (values.setRefs) {
+			this._map.zotero.onFieldValue(values.setRefs);
 		}
 		else {
 			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
