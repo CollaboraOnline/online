@@ -40,13 +40,19 @@ L.Control.Zotero = L.Control.extend({
 
 		for (var index = 0; index < fields.length; index++) {
 			var field = fields[index];
-			var braceIndex = field.command.indexOf('{');
+			var fieldString;
+			if (this.getFieldType() === 'Field')
+				fieldString = field.command;
+			else if (this.getFieldType() === 'ReferenceMark')
+				fieldString = field.name;
 
-			if (braceIndex < 0) {
+			var firstBraceIndex = fieldString.indexOf('{');
+			var lastBraceIndex = fieldString.lastIndexOf('}');
+
+			if (firstBraceIndex < 0 || lastBraceIndex > fieldString.length || lastBraceIndex < 0)
 				continue;
-			}
 
-			var values = JSON.parse(field.command.substring(braceIndex));
+			var values = JSON.parse(fieldString.substring(firstBraceIndex, lastBraceIndex+1));
 			if (!values) {
 				return;
 			}
@@ -600,6 +606,8 @@ L.Control.Zotero = L.Control.extend({
 		var locale = styleNode.getAttribute('locale');
 		if (locale)
 			this.settings.locale = locale;
+		this.settings.fieldType = value.getElementsByName('fieldType')[0].getAttribute('value');
+
 		this.setFetchedCitationFormat();
 		return;
 	},
@@ -630,7 +638,7 @@ L.Control.Zotero = L.Control.extend({
 
 		var prefNode = document.createElement('pref');
 		prefNode.setAttribute('name', 'fieldType');
-		prefNode.setAttribute('value', 'Field');
+		prefNode.setAttribute('value', this.getFieldType());
 
 		prefsNode.appendChild(prefNode);
 
@@ -667,6 +675,16 @@ L.Control.Zotero = L.Control.extend({
 		}
 		this.map.sendUnoCommand('.uno:SetDocumentProperties', style);
 		this.setFetchedCitationFormat();
+	},
+
+	getFieldType: function() {
+		if (this.settings.fieldType)
+			return this.settings.fieldType;
+
+		var fileExtension = this.map['wopi'].BaseFileName.substring(this.map['wopi'].BaseFileName.lastIndexOf('.') + 1);
+		this.settings.fieldType = fileExtension.startsWith('doc') ? 'Field' : 'ReferenceMark';
+
+		return this.settings.fieldType;
 	},
 
 	_findEntryWithUrlImpl: function(entry, url) {
@@ -813,13 +831,7 @@ L.Control.Zotero = L.Control.extend({
 	_onOk: function (selected) {
 		if (selected.type === 'item') {
 			var citationData = this.getCitationJSONString([selected.item]);
-			var parameters = {
-				FieldType: {type: 'string', value: 'vnd.oasis.opendocument.field.UNHANDLED'},
-				FieldCommand: {type: 'string', value: 'ADDIN ZOTERO_ITEM CSL_CITATION ' + citationData.jsonString},
-				FieldResult: {type: 'string', value: citationData.citationString}
-			};
-			this.map.sendUnoCommand('.uno:TextFormField', parameters);
-			this.updateFieldsList();
+			this.sendInsertCitationCommand(citationData.jsonString, citationData.citationString);
 
 			// update all the citations once citations are inserted and we get updated fields
 			if (this.settings.citationFormat === 'numeric')
@@ -911,7 +923,10 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	updateFieldsList: function() {
-		app.socket.sendMessage('commandvalues command=.uno:TextFormFields?type=vnd.oasis.opendocument.field.UNHANDLED&commandPrefix=ADDIN%20ZOTERO_ITEM%20CSL_CITATION');
+		if (this.getFieldType() === 'Field')
+			app.socket.sendMessage('commandvalues command=.uno:TextFormFields?type=vnd.oasis.opendocument.field.UNHANDLED&commandPrefix=ADDIN%20ZOTERO_ITEM%20CSL_CITATION');
+		else if (this.getFieldType() === 'ReferenceMark')
+			app.socket.sendMessage('commandvalues command=.uno:Fields?typeName=SetRef&namePrefix=ZOTERO_ITEM%20CSL_CITATION');
 	},
 
 	updateCitations: function() {
@@ -920,20 +935,6 @@ L.Control.Zotero = L.Control.extend({
 			return;
 		}
 
-		var updatedCitations = {
-			'FieldType': {
-				'type': 'string',
-				'value': 'vnd.oasis.opendocument.field.UNHANDLED'
-			},
-			'FieldCommandPrefix': {
-				'type': 'string',
-				'value': 'ADDIN ZOTERO_ITEM CSL_CITATION'
-			},
-			'Fields': {
-				'type': '[][]com.sun.star.beans.PropertyValue',
-				'value': []
-			}
-		};
 		var that = this;
 		var citationKeys = this.getCitationKeys();
 		var citationCluster = this.citationCluster;
@@ -947,22 +948,17 @@ L.Control.Zotero = L.Control.extend({
 					return map;
 				}, {});
 
+				var newValues = [];
 				Object.keys(citationCluster).forEach(function (clusterKey) {
 					var itemList = citationCluster[clusterKey].reduce(function(list, item) {
 						list.push(dataMap[item]);
 						return list;
 					}, []);
 					var citationData = that.getCitationJSONString(itemList);
-					var field = {
-						FieldType: {type: 'string', value: 'vnd.oasis.opendocument.field.UNHANDLED'},
-						FieldCommand: {type: 'string', value: 'ADDIN ZOTERO_ITEM CSL_CITATION ' + citationData.jsonString},
-						FieldResult: {type: 'string', value: citationData.citationString}
-					};
-					updatedCitations['Fields']['value'].push(field);
+					newValues.push(that.getFieldParameters(citationData.jsonString, citationData.citationString));
 				});
 
-				that.map.sendUnoCommand('.uno:TextFormFields', updatedCitations);
-				that.updateFieldsList();
+				that.sendUpdateCitationCommand(newValues);
 			});
 	},
 
@@ -972,6 +968,72 @@ L.Control.Zotero = L.Control.extend({
 		if (this._cachedURL[refreshURL])
 			delete this._cachedURL[refreshURL];
 		this.updateCitations();
+	},
+
+	sendInsertCitationCommand: function(cslJSON, citationString) {
+		var command = '';
+		if (this.getFieldType() === 'Field')
+			command = '.uno:TextFormField';
+		else if (this.getFieldType() === 'ReferenceMark')
+			command = '.uno:InsertField';
+
+		this.map.sendUnoCommand(command, this.getFieldParameters(cslJSON, citationString));
+		this.updateFieldsList();
+	},
+
+	sendUpdateCitationCommand: function(newValueArray) {
+
+		var updatedCitations;
+		if (this.getFieldType() === 'Field') {
+			updatedCitations = {
+				'FieldType': {
+					'type': 'string',
+					'value': 'vnd.oasis.opendocument.field.UNHANDLED'
+				},
+				'FieldCommandPrefix': {
+					'type': 'string',
+					'value': 'ADDIN ZOTERO_ITEM CSL_CITATION'
+				},
+				'Fields': {
+					'type': '[][]com.sun.star.beans.PropertyValue',
+					'value': newValueArray
+				}
+			};
+			this.map.sendUnoCommand('.uno:TextFormFields', updatedCitations);
+		} else if (this.getFieldType() === 'ReferenceMark') {
+			updatedCitations = {
+				'TypeName': {
+					'type': 'string',
+					'value': 'SetRef'
+				},
+				'NamePrefix': {
+					'type': 'string',
+					'value': 'ZOTERO_ITEM CSL_CITATION'
+				},
+				'Fields': {
+					'type': '[][]com.sun.star.beans.PropertyValue',
+					'value': newValueArray
+				}
+			};
+			this.map.sendUnoCommand('.uno:UpdateFields', updatedCitations);
+		}
+		this.updateFieldsList();
+	},
+
+	getFieldParameters: function(cslJSON, citationString) {
+		var field = {};
+
+		if (this.getFieldType() === 'Field') {
+			field['FieldType'] = {type: 'string', value: 'vnd.oasis.opendocument.field.UNHANDLED'};
+			field['FieldCommand'] = {type: 'string', value: 'ADDIN ZOTERO_ITEM CSL_CITATION ' + cslJSON};
+			field['FieldResult'] = {type: 'string', value: citationString};
+		} else if (this.getFieldType() === 'ReferenceMark') {
+			field['TypeName'] = {type: 'string', value: 'SetRef'};
+			field['Name'] = {type: 'string', value: 'ZOTERO_ITEM CSL_CITATION ' + cslJSON + ' RNDpyJknp173F'};
+			field['Content'] = {type: 'string', value: citationString};
+		}
+
+		return field;
 	},
 
 	_onMessage: function(message) {
