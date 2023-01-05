@@ -368,6 +368,8 @@ function _treelistboxControl(parentContainer, data, builder) {
 			tr.tabIndex = 0;
 			_headerlistboxEntry(tr, data, data.entries[i], builder);
 		}
+
+		var firstSelected = tbody.querySelector('.ui-listview-entry.selected');
 	} else {
 		// tree view
 		var ul = L.DomUtil.create('ul', builder.options.cssClass, tbody);
@@ -375,6 +377,24 @@ function _treelistboxControl(parentContainer, data, builder) {
 		for (i in data.entries) {
 			_treelistboxEntry(ul, data, data.entries[i], builder);
 		}
+
+		firstSelected = tbody.querySelector('.ui-treeview-entry.selected');
+	}
+
+	if (firstSelected) {
+		var observer = new IntersectionObserver(function (entries, observer) {
+			entries.forEach(function (entry) {
+				if (entry.intersectionRatio > 0) {
+					if (isHeaderListBox)
+						table.scrollTop = firstSelected.offsetTop - tbody.offsetTop;
+					else
+						table.scrollTop = firstSelected.parentNode.offsetTop - tbody.offsetTop;
+					observer.disconnect();
+				}
+			});
+		});
+
+		observer.observe(tbody);
 	}
 
 	table.filterEntries = function (filter) {
