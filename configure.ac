@@ -148,6 +148,14 @@ AC_ARG_WITH([wasm-fallback],
                              [Build a COOL where the client can fall back to a WASM implementation if the connection to the server fails.
                               The path is where the WASM build of Online was done.]))
 
+AC_ARG_WITH([wasm-additional-files],
+              AS_HELP_STRING([--with-wasm-additional-files=<path>],
+                             [Add more files to the in-memory WASM file system in online.wasm in addition to the ones from the WASM
+                              build of Collabora Office. The files will be available in the WASM in-memory file system as pathnames
+                              stripping the initial prefix <path> where they are on the build system. For instance, if you give
+                              --with-wasm-additional-files=$HOME/our-sample-docs, and there is a file $HOME/our-sample-docs/temp/test.docx,
+                              that will be available in the online.wasm as /temp/test.docx.]))
+
 AC_ARG_WITH([iosapp-appicon],
               AS_HELP_STRING([--with-iosapp-appicon=<path>],
                              [Point to a directory containing an icon set to use instead of the default empty one.]))
@@ -834,6 +842,13 @@ dnl capability. Compare to ENABLE_WASM.
 AM_CONDITIONAL([ENABLE_WASM_FALLBACK], [test -n "$with_wasm_fallback"])
 WASM_BUILDDIR="$with_wasm_fallback"
 AC_SUBST(WASM_BUILDDIR)
+
+AM_CONDITIONAL([ENABLE_WASM_ADDITIONAL_FILES], [test -n "$with_wasm_additional_files"])
+WASM_ADDITIONAL_FILES="$with_wasm_additional_files"
+AC_SUBST(WASM_ADDITIONAL_FILES)
+
+AS_IF([test -n "$WASM_ADDITIONAL_FILES" && test ! -d "$WASM_ADDITIONAL_FILES"],
+      [AC_MSG_ERROR([No such directory "'"$WASM_ADDITIONAL_FILES"'"])])
 
 dnl ENABLE_WASM means that we are building the WASM "app" that will run locally in the
 dnl client when necessary. ENABLE_WASM_FALLBACK and ENABLE_WASM can't both be on simultaneously.
