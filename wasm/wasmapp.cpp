@@ -238,32 +238,6 @@ void * lok_init()
     }
 }
 
-int loadDoc(bool url, const char * input, const char * options)
-{
-    std::cout << "================ loadDoc('" << input << "'" << std::endl;
-    try {
-        std::string input_url;
-        if (url) {
-            input_url = input;
-        } else {
-            //url_encode_path(input_url, input);
-        }
-        lok::Document * lodoc = llo->documentLoad(input_url.c_str(), options);
-        if (!lodoc) {
-            const char * errmsg = llo->getError();
-            std::cerr << ": LibreOfficeKit failed to load document (" << errmsg << ")" << std::endl;
-            return 1;
-        }
-
-        delete lodoc;
-
-        return 0;
-    } catch (const std::exception & e) {
-        std::cerr << ": LibreOfficeKit threw exception (" << e.what() << ")" << std::endl;
-        return 1;
-    }
-}
-
 int main(int, char*[])
 {
     std::cout << "================ Here is main()" << std::endl;
@@ -277,9 +251,6 @@ int main(int, char*[])
                                  {
                                      LOG_TRC_NOFILE(line);
                                  });
-
-    // Experiment
-    loadDoc(true, "file:///android/default-document/example.odt", "");
 
     char *argv[2];
     argv[0] = strdup("wasm");
