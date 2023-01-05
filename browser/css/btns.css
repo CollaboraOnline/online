@@ -76,6 +76,18 @@ button:not(.ui-corner-all):not(.button-primary) {
 
 /* button box */
 
+/* - Add fallback for browsers without support
+for float logical values */
+html:not([dir='rtl']) .jsdialog.ui-button-box-right,
+html[dir='rtl'] .jsdialog.ui-button-box-left {
+	float: right;
+}
+html[dir='rtl'] .jsdialog.ui-button-box-right,
+html:not([dir='rtl']) .jsdialog.ui-button-box-left {
+	float: left;
+}
+/* - */
+
 .jsdialog.ui-button-box-right {
 	display: flex;
 	float: inline-end;
