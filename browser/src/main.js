@@ -1,5 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
-/* global errorMessages getParameterByName accessToken accessTokenTTL accessHeader */
+/* global errorMessages getParameterByName accessToken accessTokenTTL accessHeader createOnlineModule */
 /* global app L vex host idleTimeoutSecs outOfFocusTimeoutSecs _ */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function (global) {
@@ -72,7 +72,18 @@ map.uiManager.initializeBasicUI();
 
 L.Map.THIS = map;
 
-map.loadDocument(global.socket);
+if (window.ThisIsTheEmscriptenApp) {
+	var Module = {
+		onRuntimeInitialized: function() {
+			map.loadDocument(global.socket);
+		},
+	};
+	createOnlineModule(Module);
+	app.HandleCOOLMessage = Module['_handle_cool_message'];
+	app.AllocateUTF8 = Module['allocateUTF8'];
+} else {
+	map.loadDocument(global.socket);
+}
 
 window.addEventListener('beforeunload', function () {
 	if (map && app.socket) {
