@@ -89,7 +89,7 @@ m4_ifelse(ANDROIDAPP,[true],
 )
 m4_ifelse(EMSCRIPTENAPP,[true],
   [   window.ThisIsTheEmscriptenApp = true;
-   window.postMobileMessage = function(msg) { _handle_cool_message(allocateUTF8(msg)); };
+   window.postMobileMessage = function(msg) { app.HandleCOOLMessage(app.AllocateUTF8(msg)); };
    window.postMobileError   = function(msg) { console.log('COOL Error: ' + msg); };
    window.postMobileDebug   = function(msg) { console.log('COOL Debug: ' + msg); };],
   [   window.ThisIsTheEmscriptenApp = false;]
