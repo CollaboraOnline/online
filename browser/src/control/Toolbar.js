@@ -345,9 +345,6 @@ L.Map.include({
 					// we don't know which deck was active last, show first then switch if needed
 					app.socket.sendMessage('uno .uno:SidebarShow');
 
-					if (this.sidebar.getTargetDeck() == null)
-						app.socket.sendMessage('uno ' + command);
-
 					this.sidebar.setupTargetDeck(command);
 					return;
 				}
