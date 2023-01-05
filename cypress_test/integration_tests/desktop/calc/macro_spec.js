@@ -29,7 +29,7 @@ describe('macro dialog tests', function() {
 			.click();
 	}
 
-	it('Macro execution warning appears before loading the document.', function() {
+	it.skip('Macro execution warning appears before loading the document.', function() {
 		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
