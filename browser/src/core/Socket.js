@@ -1083,7 +1083,17 @@ app.definitions.Socket = L.Class.extend({
 					msg += ', ';
 				msg += fontsMissingObj.fontsmissing[i];
 			}
-			this._map.uiManager.showInfoModal('fontsmissing', _('Missing Fonts'), msg, null, _('Close'));
+
+			if (!this._map.welcome.isGuest() && this._map.welcome.shouldWelcome() && window.autoShowWelcome)
+			{
+				setTimeout(function() {
+					this._map.uiManager.showInfoModal('fontsmissing', _('Missing Fonts'), msg, null, _('Close'));
+				}.bind(this), 20000);
+			}
+			else
+			{
+				this._map.uiManager.showInfoModal('fontsmissing', _('Missing Fonts'), msg, null, _('Close'));
+			}
 		}
 		else if (textMsg.startsWith('info:') && command.errorCmd === 'socket') {
 			if (command.errorKind === 'limitreached' && !this.WasShownLimitDialog) {
