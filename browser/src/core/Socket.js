@@ -47,6 +47,7 @@ app.definitions.Socket = L.Class.extend({
 			this.socket = socket;
 		} else if (window.ThisIsAMobileApp) {
 			// We have already opened the FakeWebSocket over in global.js
+			// But do we then set this.socket at all? Is this case ever reached?
 		} else	{
 			try {
 				this.socket = window.createWebSocket(this.getWebSocketBaseURI(map));
@@ -171,6 +172,12 @@ app.definitions.Socket = L.Class.extend({
 
 		// Always send the protocol version number.
 		// TODO: Move the version number somewhere sensible.
+
+		// Note that there is code also in global.socket.onopen() in global.js to send the
+		// exact same 'coolclient' message and a slightly different 'load' message. At least
+		// in a "make run" scenario it is that code that sends the 'coolclient' and 'load'
+		// messages. Not this code. But at least currently in the "WASM app" case, it is
+		// this code that gets invoked. Oh well.
 
 		// Also send information about our performance timer epoch
 		var now0 = Date.now();
@@ -428,7 +435,7 @@ app.definitions.Socket = L.Class.extend({
 
 	_extractTextImg: function (e) {
 
-		if (window.ThisIsTheiOSApp && typeof (e.data) === 'string') {
+		if ((window.ThisIsTheiOSApp || window.ThisIsTheEmscriptenApp) && typeof (e.data) === 'string') {
 			var index;
 			index = e.data.indexOf('\n');
 			if (index < 0)
