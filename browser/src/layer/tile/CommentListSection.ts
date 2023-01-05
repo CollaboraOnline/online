@@ -412,7 +412,11 @@ class CommentSection {
 				else {
 					this.cancel(comment);
 				}
-			}.bind(this)
+			}.bind(this),
+
+			// Allow close on click away only in desktop (in case of reduced window size otherwise we wont use vex).
+			// Refer: vex.defaultOptions in vex.combined.js
+			overlayClosesOnClick: (<any>window).mode.isMobile() || (<any>window).mode.isTablet(),
 		});
 
 		var tagTd = 'td',
