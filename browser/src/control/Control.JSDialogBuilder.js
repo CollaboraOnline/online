@@ -2398,6 +2398,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'styleapply3fstyle3astring3ddefault26familyname3astring3dcellstyles': 'fontcolor',
 			'fontworkgalleryfloater': 'fontworkpropertypanel',
 			'insertfieldctrl': 'insertfield',
+			'pagenumberwizard': 'insertpagenumberfield',
 			'entirerow': 'fromrow',
 			'insertcheckboxcontentcontrol': 'checkbox',
 			'cellvertbottom': 'alignbottom',
