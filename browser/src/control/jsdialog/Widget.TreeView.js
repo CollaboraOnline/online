@@ -213,6 +213,7 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 			else
 				iconId = iconId.replaceAll('/', '');
 			var icon = L.DomUtil.create('img', 'ui-listview-icon', td);
+			L.DomUtil.addClass(icon, iconId + 'img');
 			icon.src = builder._createIconURL(iconId, true);
 		} else if (entry.columns[i].text)
 			td.innerText = entry.columns[i].text;
