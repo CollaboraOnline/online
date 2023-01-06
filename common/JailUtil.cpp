@@ -292,24 +292,44 @@ void setupJailDevNodes(const std::string& root)
     if (!Poco::File(root + "/dev/random").exists())
     {
         LOG_DBG("Making /dev/random node in [" << root << "/dev].");
-        if (mknod((root + "/dev/random").c_str(),
-                  S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-                  makedev(1, 8))
-            != 0)
+//        if (mknod((root + "/dev/random").c_str(),
+//                  S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
+//                  makedev(1, 8))
+//            != 0)
         {
-            LOG_SYS("mknod(" << root << "/dev/random) failed. Mount must not use nodev flag.");
+            if (isBindMountingEnabled())
+            {
+                Poco::File(root + "/dev/random").createFile();
+                const bool res = coolmount("-b", "/dev/random", root + "/dev/random");
+                if (res)
+                   LOG_TRC("Bind mounted /dev/random -> " << root << "/dev/random.");
+                else
+                   LOG_ERR("Failed to bind mount /dev/random  -> " << root << "/dev/random.");
+            }
+            else
+                LOG_SYS("mknod(" << root << "/dev/random) failed. Mount must not use nodev flag.");
         }
     }
 
     if (!Poco::File(root + "/dev/urandom").exists())
     {
         LOG_DBG("Making /dev/urandom node in [" << root << "/dev].");
-        if (mknod((root + "/dev/urandom").c_str(),
-                  S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-                  makedev(1, 9))
-            != 0)
+//        if (mknod((root + "/dev/urandom").c_str(),
+//                  S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
+//                  makedev(1, 9))
+//            != 0)
         {
-            LOG_SYS("mknod(" << root << "/dev/urandom) failed. Mount must not use nodev flag.");
+            if (isBindMountingEnabled())
+            {
+                Poco::File(root + "/dev/urandom").createFile();
+                const bool res = coolmount("-b", "/dev/urandom", root + "/dev/urandom");
+                if (res)
+                   LOG_TRC("Bind mounted /dev/urandom -> " << root << "/dev/urandom.");
+                else
+                   LOG_ERR("Failed to bind mount /dev/urandom  -> " << root << "/dev/urandom.");
+            }
+            else
+                LOG_SYS("mknod(" << root << "/dev/urandom) failed. Mount must not use nodev flag.");
         }
     }
 #else
@@ -318,7 +338,7 @@ void setupJailDevNodes(const std::string& root)
          const bool res = coolmount("-d", "", root + "/dev");
          if (res)
             LOG_TRC("Mounted devfs hierarchy -> [" << root << "/dev].");
-        else
+         else
             LOG_ERR("Failed to mount devfs -> [" << root << "/dev].");
     }
 #endif

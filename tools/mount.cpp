@@ -225,22 +225,23 @@ int main(int argc, char** argv)
     else if (argc == 4) // Mount
     {
         const char* source = argv[2];
-        struct stat sb;
-        if (stat(source, &sb) != 0 || !S_ISDIR(sb.st_mode))
-        {
-            fprintf(stderr, "%s: cannot mount from invalid source directory [%s].\n", program,
-                    source);
-            return EX_USAGE;
-        }
+//        struct stat sb;
+
+//        if (stat(source, &sb) != 0 || !S_ISDIR(sb.st_mode))
+//        {
+//            fprintf(stderr, "%s: cannot mount from invalid source directory [%s].\n", program,
+//                    source);
+//            return EX_USAGE;
+//        }
 
         const char* target = argv[3];
-        const bool target_exists = (stat(target, &sb) == 0 && S_ISDIR(sb.st_mode));
-        if (!target_exists)
-        {
-            fprintf(stderr, "%s: cannot mount on invalid target directory [%s].\n", program,
-                    target);
-            return EX_USAGE;
-        }
+//        const bool target_exists = (stat(target, &sb) == 0 && S_ISDIR(sb.st_mode));
+//        if (!target_exists)
+//        {
+//            fprintf(stderr, "%s: cannot mount on invalid target directory [%s].\n", program,
+//                    target);
+//            return EX_USAGE;
+//        }
 
         // Mount the source path as the target path.
         // First bind to mount an existing directory node into the chroot.
