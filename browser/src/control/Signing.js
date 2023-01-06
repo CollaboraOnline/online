@@ -41,7 +41,7 @@ function getVereignIFrameURL() {
 }
 
 function randomName() {
-	return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
+	return L.Util.randomString(12) + (new Date()).getTime().toString(36);
 }
 
 function getCurrentDocumentFilename(documentType) {

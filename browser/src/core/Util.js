@@ -243,6 +243,15 @@ L.Util = {
 			return msg.replace(ctrl, '⌘').replace(alt, '⌥');
 		}
 		return msg;
+	},
+
+	randomString: function(len) {
+		var result = '';
+		var ValidCharacters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+		for (var i = 0; i < len; i++) {
+			result += ValidCharacters.charAt(Math.floor(Math.random() * ValidCharacters.length));
+		}
+		return result;
 	}
 };
 
