@@ -378,7 +378,7 @@ L.Control.Zotero = L.Control.extend({
 
 	getCitationJSONString: function(items) {
 		var resultJSON = {};
-		resultJSON['citationID'] = Math.random().toString(36).substring(2,12);
+		resultJSON['citationID'] = L.Util.randomString(10);
 
 		var citationNode = this.handleCitationText(items);
 
@@ -620,7 +620,7 @@ L.Control.Zotero = L.Control.extend({
 		dataNode.setAttribute('data-version', '3');
 
 		var sessionNode = document.createElement('session');
-		sessionNode.setAttribute('id', Math.random().toString(36).substring(2,10));
+		sessionNode.setAttribute('id', L.Util.randomString(8));
 
 		dataNode.appendChild(sessionNode);
 
@@ -1029,7 +1029,7 @@ L.Control.Zotero = L.Control.extend({
 			field['FieldResult'] = {type: 'string', value: citationString};
 		} else if (this.getFieldType() === 'ReferenceMark') {
 			field['TypeName'] = {type: 'string', value: 'SetRef'};
-			field['Name'] = {type: 'string', value: 'ZOTERO_ITEM CSL_CITATION ' + cslJSON + ' RNDpyJknp173F'};
+			field['Name'] = {type: 'string', value: 'ZOTERO_ITEM CSL_CITATION ' + cslJSON + ' RND' + L.Util.randomString(10)};
 			field['Content'] = {type: 'string', value: citationString};
 		}
 
