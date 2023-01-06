@@ -105,6 +105,14 @@
 	width: 100%;
 }
 
+th.jsdialog:not(:first-child) {
+	padding-inline-end: 24px;
+}
+
+th.jsdialog {
+	text-align: start;
+}
+
 .jsdialog.vertical:not([id^='table-dialog-action_area']) > .jsdialog.row,
 td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: table;
