@@ -283,7 +283,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	width: 56px;
 	height: 56px;
 	right: 16px;
-	bottom: 16px;
+	bottom: 64px;
 	background-color: var(--color-primary);
 	border-radius: 50%;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
