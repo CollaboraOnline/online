@@ -46,12 +46,14 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importChanges(values.redlines);
 		}
 		else if (values.userDefinedProperties) {
-			this._map.zotero.setFetchedStyle(values.userDefinedProperties);
+			this._map.zotero.handleCustomProperty(values.userDefinedProperties);
 		}
 		else if (values.fields) {
 			this._map.zotero.onFieldValue(values.fields);
 		} else if (values.setRefs) {
 			this._map.zotero.onFieldValue(values.setRefs);
+		} else if (values.bookmarks) {
+			this._map.zotero.handleBookmark(values.bookmarks);
 		}
 		else {
 			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);

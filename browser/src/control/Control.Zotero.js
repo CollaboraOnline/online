@@ -3,7 +3,7 @@
  * L.Control.Zotero
  */
 
-/* global _ Promise app */
+/* global _ Promise app Set */
 L.Control.Zotero = L.Control.extend({
 	_cachedURL: [],
 
@@ -45,6 +45,8 @@ L.Control.Zotero = L.Control.extend({
 				fieldString = field.command;
 			else if (this.getFieldType() === 'ReferenceMark')
 				fieldString = field.name;
+			else if (this.getFieldType() === 'Bookmark')
+				fieldString = field.bookmark;
 
 			var firstBraceIndex = fieldString.indexOf('{');
 			var lastBraceIndex = fieldString.lastIndexOf('}');
@@ -68,10 +70,11 @@ L.Control.Zotero = L.Control.extend({
 			});
 		}
 
-		if (this.pendingCitationUpdate) {
+		if (this.pendingCitationUpdate || this.previousNumberOfFields !== fields.length) {
 			delete this.pendingCitationUpdate;
 			this.updateCitations();
 		}
+		this.previousNumberOfFields = fields.length;
 	},
 
 	getCitationKeys: function() {
@@ -323,6 +326,8 @@ L.Control.Zotero = L.Control.extend({
 		this.citationCluster = {};
 		this.citations = {};
 		delete this.settings.citationNumber;
+		if (this.getFieldType() === 'Bookmark')
+			this.bookmarksOrder = [];
 	},
 
 	setCitationNumber: function(number) {
@@ -337,7 +342,7 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	getCitationText: function(citationId, text) {
-		if (this.citations[citationId])
+		if (this.citations && this.citations[citationId])
 			return this.citations[citationId];
 
 		if (this.settings.citationFormat === 'numeric') {
@@ -544,7 +549,11 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	fetchStyle: function() {
-		app.socket.sendMessage('commandvalues command=.uno:SetDocumentProperties?namePrefix=ZOTERO_PREF_');
+		this.fetchCustomProperty('ZOTERO_PREF_');
+	},
+
+	fetchCustomProperty: function(prefix) {
+		app.socket.sendMessage('commandvalues command=.uno:SetDocumentProperties?namePrefix=' + prefix);
 	},
 
 	setFetchedCitationFormat: function(style) {
@@ -595,11 +604,7 @@ L.Control.Zotero = L.Control.extend({
 		this.settings.group['delimiter'] = group && group.getAttribute('delimiter') ? group.getAttribute('delimiter') : '';
 	},
 
-	setFetchedStyle: function(userDefinedProperties) {
-		var valueString = '';
-		for (var i = 0; i < userDefinedProperties.length; i++) {
-			valueString += userDefinedProperties[i].value;
-		}
+	setFetchedStyle: function(valueString) {
 
 		var value = new DOMParser().parseFromString(valueString, 'text/html');
 		var styleNode = value.getElementsByTagName('style')[0];
@@ -650,34 +655,7 @@ L.Control.Zotero = L.Control.extend({
 
 		var valueString = dataNode.outerHTML;
 
-		var style =
-		{
-			'UpdatedProperties': {
-				'type': '[]com.sun.star.beans.PropertyValue',
-				'value': {
-					'NamePrefix': {
-						'type': 'string',
-						'value': 'ZOTERO_PREF_'
-					},
-					'UserDefinedProperties': {
-						'type': '[]com.sun.star.beans.PropertyValue',
-						'value': {
-						}
-					}
-				}
-			}
-		};
-
-		// style preference needs to be stored into chunks of max 255 chars
-		for (var start = 0, end = 1; (end * 255) < (valueString.length + 255); start++, end++) {
-			style['UpdatedProperties']['value']['UserDefinedProperties']['value']['ZOTERO_PREF_'+end] =
-			{
-				'type': 'string',
-				'value': valueString.slice(start*255, end*255)
-			};
-
-		}
-		this.map.sendUnoCommand('.uno:SetDocumentProperties', style);
+		this.setCustomProperty('ZOTERO_PREF_', valueString);
 		this.setFetchedCitationFormat();
 
 		if (window.isLocalStorageAllowed)
@@ -935,6 +913,8 @@ L.Control.Zotero = L.Control.extend({
 			app.socket.sendMessage('commandvalues command=.uno:TextFormFields?type=vnd.oasis.opendocument.field.UNHANDLED&commandPrefix=ADDIN%20ZOTERO_ITEM%20CSL_CITATION');
 		else if (this.getFieldType() === 'ReferenceMark')
 			app.socket.sendMessage('commandvalues command=.uno:Fields?typeName=SetRef&namePrefix=ZOTERO_ITEM%20CSL_CITATION');
+		else if (this.getFieldType() === 'Bookmark')
+			app.socket.sendMessage('commandvalues command=.uno:Bookmarks?namePrefix=ZOTERO_BREF_');
 	},
 
 	updateCitations: function(showSnackbar) {
@@ -964,7 +944,8 @@ L.Control.Zotero = L.Control.extend({
 						return list;
 					}, []);
 					var citationData = that.getCitationJSONString(itemList);
-					newValues.push(that.getFieldParameters(citationData.jsonString, citationData.citationString));
+					var updateParameter = that.getFieldParameters(citationData.jsonString, citationData.citationString);
+					newValues.push(that.getFieldType() !== 'Bookmark' ? updateParameter : {parameter: updateParameter, cslJSON: citationData.jsonString});
 				});
 
 				that.sendUpdateCitationCommand(newValues);
@@ -986,12 +967,17 @@ L.Control.Zotero = L.Control.extend({
 
 	sendInsertCitationCommand: function(cslJSON, citationString) {
 		var command = '';
+		var parameters = this.getFieldParameters(cslJSON, citationString);
 		if (this.getFieldType() === 'Field')
 			command = '.uno:TextFormField';
 		else if (this.getFieldType() === 'ReferenceMark')
 			command = '.uno:InsertField';
+		else if (this.getFieldType() == 'Bookmark') {
+			command = '.uno:InsertBookmark';
+			this.setCustomProperty(parameters['Bookmark'].value + '_', 'ZOTERO_ITEM CSL_CITATION ' + cslJSON);
+		}
 
-		this.map.sendUnoCommand(command, this.getFieldParameters(cslJSON, citationString));
+		this.map.sendUnoCommand(command, parameters);
 		this.updateFieldsList();
 	},
 
@@ -1030,7 +1016,24 @@ L.Control.Zotero = L.Control.extend({
 				}
 			};
 			this.map.sendUnoCommand('.uno:UpdateFields', updatedCitations);
+		} else if (this.getFieldType() === 'Bookmark') {
+			updatedCitations = {
+				'BookmarkNamePrefix': {
+					'type': 'string',
+					'value': 'ZOTERO_BREF_'
+				},
+				'Bookmarks': {
+					'type': '[][]com.sun.star.beans.PropertyValue',
+					'value': newValueArray.map(function(value) {return value.parameter;})
+				}
+			};
+			var that = this;
+			newValueArray.forEach(function(value) {
+				that.setCustomProperty(value.parameter['Bookmark'].value + '_', 'ZOTERO_ITEM CSL_CITATION ' + value.cslJSON);
+			});
+			this.map.sendUnoCommand('.uno:UpdateBookmarks', updatedCitations);
 		}
+
 		this.updateFieldsList();
 	},
 
@@ -1045,9 +1048,80 @@ L.Control.Zotero = L.Control.extend({
 			field['TypeName'] = {type: 'string', value: 'SetRef'};
 			field['Name'] = {type: 'string', value: 'ZOTERO_ITEM CSL_CITATION ' + cslJSON + ' RND' + L.Util.randomString(10)};
 			field['Content'] = {type: 'string', value: citationString};
+		} else if (this.getFieldType() == 'Bookmark') {
+			field['Bookmark'] = {type: 'string', value: 'ZOTERO_BREF_' + L.Util.randomString(12)};
+			field['BookmarkText'] = {type: 'string', value: citationString};
 		}
 
 		return field;
+	},
+
+	setCustomProperty: function(prefix, string) {
+		var property =
+		{
+			'UpdatedProperties': {
+				'type': '[]com.sun.star.beans.PropertyValue',
+				'value': {
+					'NamePrefix': {
+						'type': 'string',
+						'value': prefix
+					},
+					'UserDefinedProperties': {
+						'type': '[]com.sun.star.beans.PropertyValue',
+						'value': {
+						}
+					}
+				}
+			}
+		};
+
+		// style preference needs to be stored into chunks of max 255 chars
+		for (var start = 0, end = 1; (end * 255) < (string.length + 255); start++, end++) {
+			property['UpdatedProperties']['value']['UserDefinedProperties']['value'][prefix+end] =
+			{
+				'type': 'string',
+				'value': string.slice(start*255, end*255)
+			};
+
+		}
+		this.map.sendUnoCommand('.uno:SetDocumentProperties', property);
+	},
+
+	handleCustomProperty: function(userDefinedProperties) {
+		var prefixList = new Set();
+		var nameValueMap = {};
+		var resultMap = {};
+		for (var i = 0; i < userDefinedProperties.length; i++) {
+			prefixList.add(userDefinedProperties[i].name.substring(0, userDefinedProperties[i].name.lastIndexOf('_')));
+			nameValueMap[userDefinedProperties[i].name] = userDefinedProperties[i].value;
+		}
+
+		prefixList.forEach(function(prefix) {
+			for (i = 1; nameValueMap[prefix + '_' + i]; i++) {
+				if (resultMap[prefix])
+					resultMap[prefix] += nameValueMap[prefix + '_' + i];
+				else
+					resultMap[prefix] = nameValueMap[prefix + '_' + i];
+			}
+		});
+		if (resultMap.ZOTERO_PREF)
+			this.setFetchedStyle(resultMap.ZOTERO_PREF);
+		else if (Object.keys(resultMap)[0].startsWith('ZOTERO_BREF')) {
+			var fields = [];
+			this.bookmarksOrder.forEach(function(bookmark) {
+				fields.push({bookmark: resultMap[bookmark]});
+			});
+			this.onFieldValue(fields);
+		}
+	},
+
+	handleBookmark: function(bookmarks) {
+		this.resetCitation();
+		var that = this;
+		bookmarks.forEach(function(bookmark) {
+			that.bookmarksOrder.push(bookmark.name);
+		});
+		this.fetchCustomProperty('ZOTERO_BREF_');
 	},
 
 	_onMessage: function(message) {
