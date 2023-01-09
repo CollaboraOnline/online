@@ -171,6 +171,7 @@ L.Control.Zotero = L.Control.extend({
 									type: 'treelistbox',
 									id: 'zoterolist',
 									enabled: false,
+									entries: [ { columns: [ { text: _('Loading...') } ] } ]
 								}
 							]
 						},
@@ -279,7 +280,7 @@ L.Control.Zotero = L.Control.extend({
 					control: {
 						id: 'zoterolist',
 						type: 'treelistbox',
-						entries: [ { text: failText } ]
+						entries: [ { columns: [ { text: failText } ] } ]
 					},
 				},
 			};
@@ -489,8 +490,6 @@ L.Control.Zotero = L.Control.extend({
 		this.dialogType = 'itemlist';
 
 		that.dialogSetup(_('My Library'), true);
-		var dialogUpdateEvent = that.updateList([_('Title'), _('Creator(s)'), _('Date')], _('Loading'));
-		that.map.fire('jsdialogupdate', dialogUpdateEvent);
 		that.map.fire('jsdialogupdate', that.updateCategories());
 
 		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/groups?v=3&key=' + this.apiKey)
@@ -529,9 +528,9 @@ L.Control.Zotero = L.Control.extend({
 	showStyleList: function() {
 		var that = this;
 		this.dialogType = 'stylelist';
+		this.dialogSetup(_('Citation Style'), false, true);
 		this.getCachedOrFetch('https://www.zotero.org/styles-files/styles.json')
 			.then(function (data) {
-				that.dialogSetup(_('Citation Style'), false, true);
 				that.fillStyles(data);
 
 				var dialogUpdateEvent = that.updateList([_('Styles')],_('An error occurred while fetching style list'));
@@ -868,6 +867,8 @@ L.Control.Zotero = L.Control.extend({
 		this.dialogType = 'insertnote';
 		var notesCount = 0;
 
+		this.dialogSetup(_('Add Note'), false);
+
 		var updateDialog = function () {
 			var dialogUpdateEvent = that.updateList([_('Notes')],_('An error occurred while fetching notes'));
 			if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
@@ -876,7 +877,6 @@ L.Control.Zotero = L.Control.extend({
 
 		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items' + this.getZoteroItemQuery())
 			.then(function (data) {
-				that.dialogSetup(_('Add Note'), false);
 				notesCount += that.fillNotes(data, notesCount);
 				updateDialog();
 
