@@ -735,7 +735,7 @@ window.app = {
 		}
 	} else if (window.ThisIsTheEmscriptenApp) {
 		// This is of course just a horrible temporary hack
-		global.docURL = 'file:///android/default-document/example.odt';
+		global.docURL = 'file:///sample.docx';
 	} else {
 		global.docURL = filePath;
 	}
