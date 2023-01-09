@@ -566,7 +566,7 @@ L.Control.Zotero = L.Control.extend({
 
 				if (citation) {
 					that.setCitationLayout(citation);
-					that.updateCitations();
+					that.updateCitations(true);
 				} else {
 					var link = csl.getElementsByTagName('link');
 					for (var i = 0; i < link.length; i++) {
@@ -929,11 +929,12 @@ L.Control.Zotero = L.Control.extend({
 			app.socket.sendMessage('commandvalues command=.uno:Fields?typeName=SetRef&namePrefix=ZOTERO_ITEM%20CSL_CITATION');
 	},
 
-	updateCitations: function() {
+	updateCitations: function(showSnackbar) {
 		if (!this.citations) {
 			this.updateFieldsList();
 			return;
 		}
+
 
 		var that = this;
 		var citationKeys = this.getCitationKeys();
@@ -959,7 +960,12 @@ L.Control.Zotero = L.Control.extend({
 				});
 
 				that.sendUpdateCitationCommand(newValues);
+				if (showSnackbar)
+					that.map.uiManager.showSnackbar(_('Updated citations'));
 			});
+
+		if (showSnackbar)
+			this.map.uiManager.showSnackbar(_('Updating citations'));
 	},
 
 	refreshCitations: function() {
@@ -967,7 +973,7 @@ L.Control.Zotero = L.Control.extend({
 		var refreshURL = 'https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery() + '&itemKey=' + this.getCitationKeys().join(',');
 		if (this._cachedURL[refreshURL])
 			delete this._cachedURL[refreshURL];
-		this.updateCitations();
+		this.updateCitations(true);
 	},
 
 	sendInsertCitationCommand: function(cslJSON, citationString) {
