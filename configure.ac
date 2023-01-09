@@ -154,7 +154,9 @@ AC_ARG_WITH([wasm-additional-files],
                               build of Collabora Office. The files will be available in the WASM in-memory file system as pathnames
                               stripping the initial prefix <path> where they are on the build system. For instance, if you give
                               --with-wasm-additional-files=$HOME/our-sample-docs, and there is a file $HOME/our-sample-docs/temp/test.docx,
-                              that will be available in the online.wasm as /temp/test.docx.]))
+                              that will be available in the online.wasm as /temp/test.docx.
+                              NOTE: Temporarily for now, this option is mandatory and the additional files should contain a document
+                              in the root called "sample.docx"]))
 
 AC_ARG_WITH([iosapp-appicon],
               AS_HELP_STRING([--with-iosapp-appicon=<path>],
@@ -842,6 +844,14 @@ dnl capability. Compare to ENABLE_WASM.
 AM_CONDITIONAL([ENABLE_WASM_FALLBACK], [test -n "$with_wasm_fallback"])
 WASM_BUILDDIR="$with_wasm_fallback"
 AC_SUBST(WASM_BUILDDIR)
+
+dnl Temporary hack: We hardcode /sample.docx in a few places, so make sure that file is there
+AC_MSG_CHECKING([that temporarily there is a sample document with a fixed name])
+AS_IF([test -z "$with_wasm_additional_files"],
+      [AC_MSG_ERROR([You must use the --with-wasm-additional-files option for now])])
+AS_IF([test ! -f "$with_wasm_additional_files/sample.docx"],
+      [AC_MSG_ERROR([There must be a file called sample.docx in $with_wasm_additional_files for now])])
+AC_MSG_RESULT([yes])
 
 AM_CONDITIONAL([ENABLE_WASM_ADDITIONAL_FILES], [test -n "$with_wasm_additional_files"])
 WASM_ADDITIONAL_FILES="$with_wasm_additional_files"
