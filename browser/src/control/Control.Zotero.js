@@ -888,7 +888,7 @@ L.Control.Zotero = L.Control.extend({
 			return;
 		}
 
-		if (!this.citations.size)
+		if (!(this.citations && Object.keys(this.citations)))
 			return;
 
 		var that = this;
@@ -896,13 +896,7 @@ L.Control.Zotero = L.Control.extend({
 		fetch('https://api.zotero.org/users/' + this.userID + '/items?format=bib&itemKey=' + this.getCitationKeys().join(',') + '&v=3&key=' + this.apiKey + '&style=' + this.settings.style + '&locale=' + this.settings.locale)
 			.then(function (response) { return response.text(); })
 			.then(function (html) {
-				var parameters = {
-					FieldType: {type: 'string', value: 'vnd.oasis.opendocument.field.UNHANDLED'},
-					FieldCommand: {type: 'string', value: 'ADDIN ZOTERO_BIBL CSL_BIBLIOGRAPHY '},
-					FieldResult: {type: 'string', value: html}
-				};
-
-				that.map.sendUnoCommand('.uno:TextFormField', parameters);
+				that.sendInsertBibCommand(html);
 				that.settings.bibliographyStyleHasBeenSet = '1';
 				that.setStyle({name: that.settings.style}); // update the document meta data about bib being set
 			});
@@ -1054,6 +1048,38 @@ L.Control.Zotero = L.Control.extend({
 		}
 
 		return field;
+	},
+
+	getBibParameters: function(html) {
+		var field = {};
+		// TODO: support uncited ommited(citation) and custom sources in bibliography
+		if (this.getFieldType() === 'Field') {
+			field['FieldType'] = {type: 'string', value: 'vnd.oasis.opendocument.field.UNHANDLED'};
+			field['FieldCommand'] = {type: 'string', value: 'ADDIN ZOTERO_BIBL {"uncited":[],"omitted":[],"custom":[]} CSL_BIBLIOGRAPHY'};
+			field['FieldResult'] = {type: 'string', value: html};
+		} else if (this.getFieldType() == 'Bookmark') {
+			field['Bookmark'] = {type: 'string', value: 'ZOTERO_BREF_' + L.Util.randomString(12)};
+			field['BookmarkText'] = {type: 'string', value: html};
+		} else {
+			field['RegionName'] = {type: 'string', value: 'ZOTERO_BIBL {"uncited":[],"omitted":[],"custom":[]} CSL_BIBLIOGRAPHY ' + ' RND' + L.Util.randomString(10)};
+			field['Content'] = {type: 'string', value: html};
+		}
+
+		return field;
+	},
+
+	sendInsertBibCommand: function(html) {
+		var command = '';
+		var parameters = this.getBibParameters(html);
+		if (this.getFieldType() === 'Field')
+			command = '.uno:TextFormField';
+		else if (this.getFieldType() == 'Bookmark') {
+			command = '.uno:InsertBookmark';
+			this.setCustomProperty(parameters['Bookmark'].value + '_', 'ZOTERO_BIBL {"uncited":[],"omitted":[],"custom":[]} CSL_BIBLIOGRAPHY');
+		} else
+			command = '.uno:InsertSection';
+
+		this.map.sendUnoCommand(command, parameters);
 	},
 
 	setCustomProperty: function(prefix, string) {
