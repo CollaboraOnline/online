@@ -14,7 +14,7 @@ int coolwsd_server_socket_fd = -1;
 const char* user_name;
 const int SHOW_JS_MAXLEN = 200;
 
-static std::string fileURL = "file:///android/default-document/example.odt";
+static std::string fileURL = "file:///sample.docx";
 static COOLWSD *coolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
