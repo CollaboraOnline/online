@@ -453,6 +453,9 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	fillStyles: function (styles) {
+		if (this.settings.style === '' && window.isLocalStorageAllowed)
+			this.settings.style = localStorage.getItem('Zotero_LastUsedStyle');
+
 		for (var iterator = 0; iterator < styles.length; ++iterator) {
 			this.createEntry(iterator, [styles[iterator].title],
 				Object.assign({name: styles[iterator].name, type: 'style'},
@@ -609,7 +612,9 @@ L.Control.Zotero = L.Control.extend({
 		this.settings.fieldType = value.getElementsByName('fieldType')[0].getAttribute('value');
 
 		this.setFetchedCitationFormat();
-		return;
+
+		if (window.isLocalStorageAllowed)
+			localStorage.setItem('Zotero_LastUsedStyle', this.settings.style);
 	},
 
 	setStyle: function(style) {
@@ -675,6 +680,9 @@ L.Control.Zotero = L.Control.extend({
 		}
 		this.map.sendUnoCommand('.uno:SetDocumentProperties', style);
 		this.setFetchedCitationFormat();
+
+		if (window.isLocalStorageAllowed)
+			localStorage.setItem('Zotero_LastUsedStyle', this.settings.style);
 	},
 
 	getFieldType: function() {
