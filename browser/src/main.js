@@ -17,7 +17,7 @@ else if (wopiSrc !== '' && accessHeader !== '') {
 
 if (window.ThisIsTheEmscriptenApp)
 	// Temporary hack
-	var filePath = 'file:///android/default-document/example.odt';
+	var filePath = 'file:///sample.docx';
 else
 	var filePath = getParameterByName('file_path');
 
