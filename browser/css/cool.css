@@ -224,7 +224,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	overflow-x: hidden;
 	overflow-y: auto;
 	z-index: 1200;
-	scrollbar-width: auto;
+	scrollbar-width: thin;
 	scrollbar-color: var(--color-border) transparent;
 }
 
