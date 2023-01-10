@@ -46,7 +46,7 @@
     <string name="pref_filter_title">Standard fil-filter</string>
     <string name="pref_sort_title">Fil-rækkefølge</string>
     <string name="owncloud_unauthorized">Kan ikke logge ind på cloud-serveren. Tjek din konfiguration.</string>
-    <string name="owncloud_unspecified_error">"Uspecificeret fejl ved forbindelse til  cloud-serveren. Tjek din konfiguration og/eller prøv senere."</string>
+    <string name="owncloud_unspecified_error">Uspecificeret fejl ved forbindelse til cloud-serveren. Tjek din konfiguration og/eller prøv senere.</string>
     <string name="server_url_and_port">Cloudserverens URL og port.</string>
     <string name="server_url">Serverens URL</string>
     <string name="owncloud_settings">Cloudserver-indstillinger</string>
@@ -85,11 +85,11 @@
 \nonline git-hash: %2$s
 \ncore git-hash: %3$s</string>
     <string name="loading">Indlæser…</string>
-    <string name="current_dir">Aktuel mappe: % 1$s</string>
+    <string name="current_dir">Aktuel mappe: %1$s</string>
     <string name="bad_directory">Ugyldig stil til mappe</string>
     <string name="directory_browser_label">Vælg mappe</string>
     <string name="search_label">Kør</string>
-    <string name="otg_warning">Eksperimentel funktionalitet: Anvend kun, hvis der kan kan skrives på OTG-enheden.</string>
+    <string name="otg_warning">Eksperimentel funktionalitet: Anvend kun, hvis der kan skrives på OTG-enheden.</string>
     <string name="external_sd_path">Sti til SD-kort</string>
     <string name="physical_storage_settings">Indstillinger for fysisk lager</string>
     <string name="storage_provider_settings">Indstillinger for lagerleverandør</string>
@@ -104,4 +104,12 @@
     <string name="pref_category_editor">Redigeringsindstillinger</string>
     <string name="pref_category_explorer">Filmanager-indstillinger</string>
     <string name="grid_view">Gitter</string>
+    <string name="pref_user_name">Brugernavn</string>
+    <string name="pref_user_name_info">Bruges ved tilføjelse af en kommentar</string>
+    <string name="theme_system_default">Systemstandard</string>
+    <string name="theme_dark">Mørkt</string>
+    <string name="theme_light">Lyst</string>
+    <string name="pref_user_name_guest">Gæstebruger</string>
+    <string name="theme">Tema</string>
+    <string name="choose_theme">Vælg tema</string>
 </resources>
