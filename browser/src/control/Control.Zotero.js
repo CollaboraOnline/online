@@ -111,8 +111,107 @@ L.Control.Zotero = L.Control.extend({
 			});
 	},
 
-	dialogSetup: function (title, showCategories, ShowLocale) {
+	getTopBarJSON: function () {
+		return {
+			id: 'ZoteroDialog-search-container',
+			type: 'container',
+			layoutstyle: 'end',
+			children: [
+				{
+					id: 'zoterorefresh-buttonbox',
+					type: 'buttonbox',
+					leftaligned: 'true',
+					children: [
+						{
+							type: 'pushbutton',
+							id: 'zoterorefresh',
+							text: _('Refresh')
+						}
+					],
+					vertical: false,
+					layoutstyle: 'end'
+				},
+				{
+					type: 'edit',
+					id: 'zoterosearch',
+					placeholder: _('Search'),
+					text: ''
+				}
+			]
+		};
+	},
+
+	getMainControlsJSON: function (showCategories) {
+		return {
+			id: 'ZoteroDialog-content',
+			type: 'container',
+			children: [
+				{
+					id: 'ZoteroDialog-main',
+					type: 'container',
+					children: [
+						(showCategories) ? {
+							type: 'treelistbox',
+							id: 'zoterocategory',
+							enabled: false,
+							entries: this.getDefaultCategories()
+						} : {},
+						{
+							type: 'treelistbox',
+							id: 'zoterolist',
+							enabled: false,
+							entries: [ { columns: [ { text: _('Loading...') } ] } ]
+						}
+					]
+				}
+			],
+			vertical: true
+		};
+	},
+
+	getOptionsJSON: function () {
 		var that = this;
+		return {
+			id: 'ZoteroDialog-locale-container',
+			type: 'container',
+			children: [
+				{
+					type: 'fixedtext',
+					id: 'zoterolocale-label',
+					text: _('Language:')
+				},
+				{
+					id: 'zoterolocale',
+					type: 'combobox',
+					entries: Array.from(Object.keys(this.availableLanguages), function(langCode) {return that.availableLanguages[langCode][0];}),
+					selectedCount: '1',
+					selectedEntries: [
+						Object.keys(this.availableLanguages).indexOf(this.settings.locale)
+					],
+					enabled: false
+				},
+				{
+					type: 'fixedtext',
+					id: 'zoterotype-label',
+					text: _('Store as:')
+				},
+				{
+					id: 'zoterotype',
+					type: 'combobox',
+					entries: [
+						_('Fields'),
+						_('Bookmarks')
+					],
+					selectedCount: '1',
+					selectedEntries: [
+						this.getFieldType() === 'Bookmark' ? 1 : 0
+					]
+				}
+			]
+		};
+	},
+
+	dialogSetup: function (title, showCategories, showOptions) {
 		var data = {
 			id: 'ZoteroDialog',
 			dialogid: 'ZoteroDialog',
@@ -136,72 +235,9 @@ L.Control.Zotero = L.Control.extend({
 					type: 'container',
 					vertical: true,
 					children: [
-						{
-							id: 'ZoteroDialog-search-container',
-							type: 'container',
-							layoutstyle: 'end',
-							children: [
-								{
-									id: 'zoterorefresh-buttonbox',
-									type: 'buttonbox',
-									leftaligned: 'true',
-									children: [
-										{
-											type: 'pushbutton',
-											id: 'zoterorefresh',
-											text: _('Refresh')
-										}
-									],
-									vertical: false,
-									layoutstyle: 'end'
-								},
-								{
-									type: 'edit',
-									id: 'zoterosearch',
-									placeholder: _('Search'),
-									text: ''
-								}
-							]
-						},
-						{
-							id: 'ZoteroDialog-content',
-							type: 'container',
-							children: [
-								(showCategories) ? {
-									type: 'treelistbox',
-									id: 'zoterocategory',
-									enabled: false,
-									entries: this.getDefaultCategories()
-								} : {},
-								{
-									type: 'treelistbox',
-									id: 'zoterolist',
-									enabled: false,
-									entries: [ { columns: [ { text: _('Loading...') } ] } ]
-								}
-							]
-						},
-						(ShowLocale) ? {
-							id: 'ZoteroDialog-locale-container',
-							type: 'container',
-							children: [
-								{
-									type: 'fixedtext',
-									id: 'zoterolocale-label',
-									text: _('Language:')
-								},
-								{
-									id: 'zoterolocale',
-									type: 'combobox',
-									entries: Array.from(Object.keys(this.availableLanguages), function(langCode) {return that.availableLanguages[langCode][0];}),
-									selectedCount: '1',
-									selectedEntries: [
-										Object.keys(this.availableLanguages).indexOf(this.settings.locale)
-									],
-									enabled: false
-								},
-							]
-						} : {},
+						this.getTopBarJSON(),
+						this.getMainControlsJSON(showCategories),
+						(showOptions) ? this.getOptionsJSON() : {},
 						{
 							id: 'ZoteroDialog-buttonbox',
 							type: 'buttonbox',
@@ -752,6 +788,15 @@ L.Control.Zotero = L.Control.extend({
 		return this.settings.fieldType;
 	},
 
+	setFieldType: function(isField) {
+		if (isField) {
+			var fileExtension = this.map['wopi'].BaseFileName.substring(this.map['wopi'].BaseFileName.lastIndexOf('.') + 1);
+			this.settings.fieldType = fileExtension.startsWith('doc') ? 'Field' : 'ReferenceMark';
+		} else {
+			this.settings.fieldType = 'Bookmark';
+		}
+	},
+
 	_findEntryWithUrlImpl: function(entry, url) {
 		if (entry.row === url)
 			return entry;
@@ -860,6 +905,8 @@ L.Control.Zotero = L.Control.extend({
 			return;
 		}
 		if (data.id == 'ok') {
+			// set selected type or field as default
+			this.setFieldType(this.selectedFieldType !== false);
 			// style already specified just changing the language
 			if (!this.selected && this.selectedCitationLangCode)
 				this._onOk({name: this.settings.style, type: 'style'});
@@ -877,9 +924,17 @@ L.Control.Zotero = L.Control.extend({
 			return;
 		}
 		if (element === 'combobox') {
-			this.selectedCitationLangCode = Object.keys(this.availableLanguages)[parseInt(index)];
-			if (this.settings.style)
-				this.enableDialogOKButton();
+			if (data.id === 'zoterolocale') {
+				this.selectedCitationLangCode = Object.keys(this.availableLanguages)[parseInt(index)];
+				if (this.settings.style)
+					this.enableDialogOKButton();
+			} else if (data.id === 'zoterotype') {
+				var selectedIndex = parseInt(index);
+				if (selectedIndex === 0) {
+					this.selectedFieldType = true;
+				} else if (selectedIndex === 1)
+					this.selectedFieldType = false;
+			}
 			return;
 		}
 
