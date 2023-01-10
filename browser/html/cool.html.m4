@@ -177,6 +177,8 @@ m4_ifelse(IOSAPP,[true],
   [<link rel="stylesheet" href="Branding/branding.css">])
 m4_ifelse(ANDROIDAPP,[true],
   [<link rel="stylesheet" href="branding.css">])
+m4_ifelse(EMSCRIPTENAPP,[true],
+  [<link rel="stylesheet" href="branding.css">])
 
 m4_dnl Handle localization
 m4_ifelse(MOBILEAPP,[true],
