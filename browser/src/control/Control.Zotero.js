@@ -48,13 +48,7 @@ L.Control.Zotero = L.Control.extend({
 			else if (this.getFieldType() === 'Bookmark')
 				fieldString = field.bookmark;
 
-			var firstBraceIndex = fieldString.indexOf('{');
-			var lastBraceIndex = fieldString.lastIndexOf('}');
-
-			if (firstBraceIndex < 0 || lastBraceIndex > fieldString.length || lastBraceIndex < 0)
-				continue;
-
-			var values = JSON.parse(fieldString.substring(firstBraceIndex, lastBraceIndex+1));
+			var values = this.getJSONfromCitationString(fieldString);
 			if (!values) {
 				return;
 			}
@@ -391,6 +385,7 @@ L.Control.Zotero = L.Control.extend({
 	resetCitation: function() {
 		this.citationCluster = {};
 		this.citations = {};
+		this.pendingCitationInsertion = [];
 		delete this.settings.citationNumber;
 		if (this.getFieldType() === 'Bookmark')
 			this.bookmarksOrder = [];
@@ -433,9 +428,13 @@ L.Control.Zotero = L.Control.extend({
 			// last-child works here only because its a single chain of nodes
 			var innerMostNode = itemHTML.querySelector('*:last-child');
 
-			citationString += innerMostNode ? that.getCitationText(item['key'], innerMostNode.textContent)
-				: that.getCitationText(item['key'], item.citation.toString());
-			citationString += that.settings.layout.delimiter;
+			var keys = item['key'] ? [item['key']]
+				: Object.keys(item['citationItems']).map(function(citationitem) {return item['citationItems'][citationitem].id.substring(item['citationItems'][citationitem].id.lastIndexOf('/')+1);});
+			keys.forEach(function(key) {
+				citationString += innerMostNode ? that.getCitationText(key, innerMostNode.textContent)
+					: that.getCitationText(key, item.citation.toString());
+				citationString += that.settings.layout.delimiter;
+			});
 		});
 
 		citationString = this.settings.layout.prefix + L.Util.trimEnd(citationString, this.settings.layout.delimiter) + this.settings.layout.suffix;
@@ -446,6 +445,22 @@ L.Control.Zotero = L.Control.extend({
 		else
 			innerText.textContent = citationString;
 		return citationNode;
+	},
+
+	getJSONfromCitationString: function(string) {
+		if (!string)
+			return {};
+
+		var firstBraceIndex = string.indexOf('{');
+		var lastBraceIndex = string.lastIndexOf('}');
+
+		if (firstBraceIndex < 0 || lastBraceIndex > string.length || lastBraceIndex < 0)
+			return {};
+
+		var values = JSON.parse(string.substring(firstBraceIndex, lastBraceIndex+1));
+		if (values['properties']['formattedCitation'])
+			values.citation = values['properties']['formattedCitation']; // comes in handy to avoid multiple property checking latter
+		return values;
 	},
 
 	getCitationJSONString: function(items) {
@@ -465,9 +480,13 @@ L.Control.Zotero = L.Control.extend({
 		resultJSON['citationItems'] = [];
 
 		items.forEach(function(item) {
+			if (item['citationItems']) {
+				resultJSON['citationItems'] = resultJSON['citationItems'].concat(item['citationItems']);
+				return;
+			}
 			var citationItems = {
 				id: item['csljson'].id,
-				uris: [item['links']['self']['href'], item['links']['alternate']['href']],
+				uris: Object.keys(item['links']).map(function(link) {return item['links'][link]['href'];}),
 				itemData: item['csljson']
 			};
 			resultJSON['citationItems'].push(citationItems);
@@ -996,8 +1015,8 @@ L.Control.Zotero = L.Control.extend({
 
 	_onOk: function (selected) {
 		if (selected.type === 'item') {
-			var citationData = this.getCitationJSONString([selected.item]);
-			this.sendInsertCitationCommand(citationData.jsonString, citationData.citationString);
+			this.pendingCitationInsertion = [selected.item];
+			this.handleInsertCitation();
 
 			// update all the citations once citations are inserted and we get updated fields
 			this.pendingCitationUpdate = true;
@@ -1182,16 +1201,32 @@ L.Control.Zotero = L.Control.extend({
 			this.handleInsertBibliography();
 	},
 
-	sendInsertCitationCommand: function(cslJSON, citationString) {
-		var command = '';
-		var parameters = this.getFieldParameters(cslJSON, citationString);
+	handleInsertCitation: function() {
+		//start by fetching existing citation under the cursor
 		if (this.getFieldType() === 'Field')
-			command = '.uno:TextFormField';
+			app.socket.sendMessage('commandvalues command=.uno:TextFormField?type=vnd.oasis.opendocument.field.UNHANDLED&commandPrefix=ADDIN%20ZOTERO_ITEM');
+		else
+			this.insertCitation({}); //temp fix until exitsting citations can be fetched for every field type
+	},
+
+	insertCitation: function(field) {
+		if (!(this.pendingCitationInsertion && this.pendingCitationInsertion.length))
+			return;
+
+		var existingCitation = this.getJSONfromCitationString(field.command);
+		var citationClusterFields = Object.keys(existingCitation).length ? [existingCitation].concat(this.pendingCitationInsertion) : this.pendingCitationInsertion;
+		this.pendingCitationInsertion = [];
+		var citationData = this.getCitationJSONString(citationClusterFields);
+		var parameters = Object.keys(field).length ? this.getFieldUpdateParameters(citationData.jsonString, citationData.citationString) :this.getFieldParameters(citationData.jsonString, citationData.citationString);
+
+		var command = '';
+		if (this.getFieldType() === 'Field')
+			command = Object.keys(field).length ? '.uno:UpdateTextFormField' : '.uno:TextFormField';
 		else if (this.getFieldType() === 'ReferenceMark')
 			command = '.uno:InsertField';
 		else if (this.getFieldType() == 'Bookmark') {
 			command = '.uno:InsertBookmark';
-			this.setCustomProperty(parameters['Bookmark'].value + '_', 'ZOTERO_ITEM CSL_CITATION ' + cslJSON);
+			this.setCustomProperty(parameters['Bookmark'].value + '_', 'ZOTERO_ITEM CSL_CITATION ' + citationData.cslJSON);
 		}
 
 		this.map.sendUnoCommand(command, parameters);
@@ -1270,6 +1305,41 @@ L.Control.Zotero = L.Control.extend({
 			field['BookmarkText'] = {type: 'string', value: citationString};
 		}
 
+		return field;
+	},
+
+	getFieldUpdateParameters: function(cslJSON, citationString) {
+		var field = {};
+
+		if (this.getFieldType() === 'Field') {
+			field = {
+				'FieldType': {
+					'type': 'string',
+					'value': 'vnd.oasis.opendocument.field.UNHANDLED'
+				},
+				'FieldCommandPrefix': {
+					'type': 'string',
+					'value': 'ADDIN ZOTERO_ITEM'
+				},
+				'Field': {
+					'type': '[]com.sun.star.beans.PropertyValue',
+					'value': {
+						'FieldType': {
+							'type': 'string',
+							'value': 'vnd.oasis.opendocument.field.UNHANDLED'
+						},
+						'FieldCommand': {
+							'type': 'string',
+							'value': 'ADDIN ZOTERO_ITEM CSL_CITATION ' + cslJSON
+						},
+						'FieldResult': {
+							'type': 'string',
+							'value': citationString
+						}
+					}
+				}
+			};
+		}
 		return field;
 	},
 
