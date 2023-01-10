@@ -233,7 +233,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'inlineLabel': true
 						},
 						{
-							'id': 'downloadas-epub',
+							'id': 'exportepub',
 							'type': 'customtoolitem',
 							'text': _('EPUB Document (.epub)'),
 							'command': 'exportepub',
