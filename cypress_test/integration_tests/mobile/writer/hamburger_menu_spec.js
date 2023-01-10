@@ -142,6 +142,7 @@ describe('Trigger hamburger menu options.', function() {
 
 	it('Download as EPUB', function() {
 		mobileHelper.selectHamburgerMenuItem(['Download as', 'EPUB (.epub)']);
+		mobileHelper.pressPushButtonOfDialog('OK');
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
