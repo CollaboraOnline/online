@@ -1469,7 +1469,7 @@ if test "$enable_feature_lock" = "yes"; then
 .uno:FourierAnalysisDialog .uno:Validation .uno:DataFilterSpecialFilter \
 .uno:TrackChanges .uno:AcceptTrackedChanges .uno:InsertReferenceField \
 .uno:Watermark .uno:InsertIndexesEntry \
-.uno:InsertMultiIndex .uno:SlideMasterPage downloadas-epub downloadas-rtf masterslidebutton"
+.uno:InsertMultiIndex .uno:SlideMasterPage exportepub downloadas-rtf masterslidebutton"
 fi
 AC_DEFINE_UNQUOTED([LOCKED_COMMANDS],["$LOCKED_COMMANDS"],[Default value of feature_lock.locked_commands])
 AC_SUBST(LOCKED_COMMANDS)

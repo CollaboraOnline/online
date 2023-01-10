@@ -401,6 +401,10 @@ function deleteImage() {
 		.should('not.exist');
 }
 
+function pressPushButtonOfDialog(name) {
+	cy.contains('.ui-pushbutton', name).click();
+}
+
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
 module.exports.openHamburgerMenu = openHamburgerMenu;
@@ -421,3 +425,4 @@ module.exports.openCommentWizard = openCommentWizard;
 module.exports.insertImage = insertImage;
 module.exports.deleteImage = deleteImage;
 module.exports.insertComment = insertComment;
+module.exports.pressPushButtonOfDialog = pressPushButtonOfDialog;
