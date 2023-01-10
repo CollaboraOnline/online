@@ -18,7 +18,6 @@ static std::string fileURL = "file:///sample.docx";
 static COOLWSD *coolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
-static lok::Office * llo = NULL;
 
 static void send2JS(const std::vector<char>& buffer)
 {
@@ -225,28 +224,9 @@ void closeDocument()
     LOG_DBG("COOLWSD has finished.");
 }
 
-void * lok_init()
-{
-    try {
-        std::string lo_path = "/instdir/program";
-        llo = lok::lok_cpp_init(lo_path.c_str());
-        if (!llo) {
-            std::cerr << ": Failed to initialise LibreOfficeKit" << std::endl;
-            return NULL;
-        }
-        return static_cast<void*>(llo);
-    } catch (const std::exception & e) {
-        delete llo;
-        std::cerr << ": LibreOfficeKit threw exception (" << e.what() << ")" << std::endl;
-        return NULL;
-    }
-}
-
 int main(int, char*[])
 {
     std::cout << "================ Here is main()" << std::endl;
-
-    lok_init();
 
     Log::initialize("WASM", "error", false, false, {});
     Util::setThreadName("main");
