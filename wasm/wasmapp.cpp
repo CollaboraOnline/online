@@ -248,7 +248,7 @@ int main(int, char*[])
 
     lok_init();
 
-    Log::initialize("WASM", "trace", false, false, {});
+    Log::initialize("WASM", "error", false, false, {});
     Util::setThreadName("main");
 
     fakeSocketSetLoggingCallback([](const std::string& line)
