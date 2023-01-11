@@ -767,7 +767,7 @@ MOCHA_TEST_LOG = "`pwd`/mocha.log"
 check-local: $(MOCHA_TS_JS_FILES)
 	@echo "Running mocha tests..."
 	@echo > ${MOCHA_TEST_LOG}
-	@if $(NODE) node_modules/mocha/bin/mocha "$(srcdir)/mocha_tests/**/*.js" 2> ${MOCHA_TEST_LOG} 1>&2; then \
+	@if npm test 2> ${MOCHA_TEST_LOG} 1>&2; then \
 		echo "Mocha tests finished successfully. Results in ${MOCHA_TEST_LOG}"; \
 	else \
 		cat ${MOCHA_TEST_LOG}; \
