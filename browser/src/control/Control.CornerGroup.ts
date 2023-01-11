@@ -37,8 +37,8 @@ export class CornerGroup extends CanvasSectionObject {
 		this._map.on('viewrowcolumnheaders', this.update, this);
 
 		// Style.
-		var baseElem = document.getElementsByTagName('body')[0];
-		var elem = L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
+		const baseElem = document.getElementsByTagName('body')[0];
+		const elem = L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
 		this.backgroundColor = L.DomUtil.getStyle(elem, 'background-color'); // This is a section property.
 		this.borderColor = this.backgroundColor; // This is a section property.
 		L.DomUtil.remove(elem);
@@ -47,13 +47,13 @@ export class CornerGroup extends CanvasSectionObject {
 	update(): void {
 		// Below 2 sections exist (since this section is added), unless they are being removed.
 
-		var rowGroupSection = this.containerObject.getSectionWithName(L.CSections.RowGroup.name) as RowGroup;
+		const rowGroupSection = this.containerObject.getSectionWithName(L.CSections.RowGroup.name) as RowGroup;
 		if (rowGroupSection) {
 			rowGroupSection.update(); // This will update its size.
 			this.size[0] = rowGroupSection.size[0];
 		}
 
-		var columnGroupSection = this.containerObject.getSectionWithName(L.CSections.ColumnGroup.name) as ColumnGroup;
+		const columnGroupSection = this.containerObject.getSectionWithName(L.CSections.ColumnGroup.name) as ColumnGroup;
 		if (columnGroupSection) {
 			columnGroupSection.update(); // This will update its size.
 			this.size[1] = columnGroupSection.size[1];
@@ -68,7 +68,7 @@ export class CornerGroup extends CanvasSectionObject {
 		// and eventually _updateCursorAndOverlay function is triggered and focus will be at the map
 		// thus the keyboard shortcuts like delete will work again.
 		// selecting whole page does not trigger that and the focus will be lost.
-		var docLayer = this._map._docLayer;
+		const docLayer = this._map._docLayer;
 		if (docLayer)
 			docLayer._updateCursorAndOverlay();
 	}
