@@ -880,6 +880,11 @@ L.Map.include({
 				this.zotero.refreshCitationsAndBib();
 			}
 			break;
+		case 'zoterounlink':
+			{
+				this.zotero.unlinkCitations();
+			}
+			break;
 		case 'exportpdf':
 			{
 				this.sendUnoCommand('.uno:ExportToPDF', {
