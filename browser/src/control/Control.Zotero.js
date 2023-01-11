@@ -1188,6 +1188,16 @@ L.Control.Zotero = L.Control.extend({
 			this.map.uiManager.showSnackbar(_('Updating citations'));
 	},
 
+	handleUnlinkCitations: function() {
+		// TODO
+		this.map.uiManager.showSnackbar('Unlinked citations');
+	},
+
+	unlinkCitations: function() {
+		this.map.uiManager.showInfoModal('zoterounlinkwarn', _('Unlink Citations'),
+			_('Unlinking citations will prevent Collabora Online from updating citations and bibliographies in this document.'),
+			null, _('Confirm'), this.handleUnlinkCitations.bind(this));
+	},
 	refreshCitationsAndBib: function() {
 		if (!this.enable) {
 			this.askForApiKey();
