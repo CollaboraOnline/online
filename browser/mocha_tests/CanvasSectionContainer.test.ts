@@ -2,22 +2,12 @@
 /// <reference path="../src/geometry/Point.ts" />
 /// <reference path="../src/geometry/Bounds.ts" />
 /// <reference path="../src/layer/tile/CanvasSectionContainer.ts" />
+/// <reference path="./helper/canvasContainerSetup.ts" />
 
 var jsdom = require('jsdom');
-
 var assert = require('assert').strict;
 
-var dom = new jsdom.JSDOM(
-    `<!DOCTYPE html>
-    <html>
-      <head></head>
-      <body>
-        <div id="canvas-container">
-            <canvas id="document-canvas"></canvas>
-        </div>
-      </body>
-    </html>`
-);
+var dom = new jsdom.JSDOM(canvasDomString());
 
 global.window = dom.window;
 global.document = dom.window.document;
