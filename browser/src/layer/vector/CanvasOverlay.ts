@@ -90,46 +90,58 @@ class TransformationsList {
 
 // CanvasOverlay handles CPath rendering and mouse events handling via overlay-section of the main canvas.
 // where overlays like cell-cursors, cell-selections, edit-cursors are instances of CPath or its subclasses.
-class CanvasOverlay {
+class CanvasOverlay extends CanvasSectionObject {
 	private map: any;
 	private ctx: CanvasRenderingContext2D;
 	private paths: Map<number, any>;
 	private bounds: cool.Bounds;
 	private tsManager: any;
-	private overlaySection: CanvasSectionObject;
 	private transformList: TransformationsList;
 
 	constructor(mapObject: any, canvasContext: CanvasRenderingContext2D) {
+		super({
+			name: L.CSections.Overlays.name,
+			anchor: 'top left',
+			position: [0, 0],
+			size: [0, 0],
+			expand: '',
+			processingOrder: L.CSections.Overlays.processingOrder,
+			drawingOrder: L.CSections.Overlays.drawingOrder,
+			zIndex: L.CSections.Overlays.zIndex,
+			interactable: true,
+			sectionProperties: {},
+		});
 		this.map = mapObject;
 		this.ctx = canvasContext;
 		this.tsManager = this.map.getTileSectionMgr();
-		this.overlaySection = undefined;
+		this.sectionProperties.docLayer = this.map._docLayer;
+		this.sectionProperties.tsManager = this.tsManager;
 		this.paths = new Map<number, CPath>();
 		this.transformList = new TransformationsList();
 		this.updateCanvasBounds();
 	}
 
-	onInitialize() {
+	onInitialize(): void {
 		return;
 	}
 
-	onResize() {
+	onResize(): void {
 		this.paths.forEach(function (path: CPath) {
 			path.onResize();
 		});
 		this.onDraw();
 	}
 
-	onDraw() {
+	onDraw(): void {
 		// No need to "erase" previous drawings because tiles are draw first via its onDraw.
 		this.draw();
 	}
 
-	onMouseMove(position: Array<number>) {
+	onMouseMove(position: Array<number>): void {
 		var mousePos = new cool.Point(position[0], position[1]);
 		var overlaySectionBounds = this.bounds.clone();
 		var splitPos = this.tsManager.getSplitPos();
-		if (this.overlaySection.isCalcRTL()) {
+		if (this.isCalcRTL()) {
 			// Mirror the mouse position in overlay section coordinates.
 			mousePos.x = overlaySectionBounds.max.x - overlaySectionBounds.min.x - mousePos.x;
 		}
@@ -157,16 +169,8 @@ class CanvasOverlay {
 		});
 	}
 
-	setOverlaySection(overlaySection: any) {
-		this.overlaySection = overlaySection;
-	}
-
-	getTestDiv(): HTMLDivElement {
-		return this.overlaySection.getTestDiv();
-	}
-
-	setPenOnOverlay() {
-		this.overlaySection.containerObject.setPenPosition(this.overlaySection);
+	setPenOnOverlay(): void {
+		this.containerObject.setPenPosition(this);
 	}
 
 	initPath(path: CPath) {
@@ -187,7 +191,7 @@ class CanvasOverlay {
 		// This does not get called via onDraw, so ask section container to redraw everything.
 		path.setDeleted();
 		this.paths.delete(path.getId());
-		this.overlaySection.containerObject.requestReDraw();
+		this.containerObject.requestReDraw();
 	}
 
 	removePathGroup(pathGroup: CPathGroup) {
@@ -212,7 +216,7 @@ class CanvasOverlay {
 		return this.map.getSplitPanesContext();
 	}
 
-	private isVisible(path: CPath): boolean {
+	private isPathVisible(path: CPath): boolean {
 		var pathBounds = path.getBounds();
 		if (!pathBounds.isValid())
 			return false;
@@ -277,7 +281,7 @@ class CanvasOverlay {
 		orderedPaths.sort(CanvasOverlay.renderOrderComparator);
 
 		orderedPaths.forEach((path: CPath) => {
-			if (this.isVisible(path))
+			if (this.isPathVisible(path))
 				path.updatePathAllPanes(paintArea);
 		}, this);
 	}
@@ -288,14 +292,14 @@ class CanvasOverlay {
 			return;
 		}
 
-		if (!this.isVisible(path) && (!oldBounds.isValid() || !this.intersectsVisible(oldBounds)))
+		if (!this.isPathVisible(path) && (!oldBounds.isValid() || !this.intersectsVisible(oldBounds)))
 			return;
 		// This does not get called via onDraw(ie, tiles aren't painted), so ask tileSection to "erase" by painting over.
 		// Repainting the whole canvas is not necessary but finding the minimum area to paint over
 		// is potentially expensive to compute (think of overlapped path objects).
 		// TODO: We could repaint the area on the canvas occupied by all the visible path-objects
 		// and paint tiles just for that, but need a more general version of _tilesSection.onDraw() and callees.
-		this.overlaySection.containerObject.requestReDraw();
+		this.containerObject.requestReDraw();
 	}
 
 	private updateCanvasBounds() {
@@ -385,8 +389,8 @@ class CanvasOverlay {
 		}
 
 		this.transformList.add(transform);
-		if (this.overlaySection.isCalcRTL()) {
-			const sectionWidth = this.overlaySection.size[0];
+		if (this.isCalcRTL()) {
+			const sectionWidth = this.size[0];
 			// Apply horizontal flip transformation.
 			this.transformList.addNew(new cool.Point(-sectionWidth, 0), new cool.Point(-1, 1));
 		}
