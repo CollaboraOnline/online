@@ -2180,7 +2180,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		annotation.containerObject = data.annotation.containerObject;
 		annotation.sectionProperties.section = annotation;
 		annotation.sectionProperties.commentListSection = data.annotation.sectionProperties.commentListSection;
-		data.annotation.containerObject.addSectionFunctions(annotation);
 		annotation.onInitialize();
 
 		if (this.map.isPermissionEditForComments() || this.map.isEditMode())
