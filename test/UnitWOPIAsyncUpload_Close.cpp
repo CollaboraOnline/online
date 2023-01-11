@@ -45,8 +45,6 @@ public:
         {
             LOG_TST("assertPutFileRequest: First PutFile, which will fail");
 
-            TRANSITION_STATE(_phase, Phase::Close);
-
             LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
 
             // We requested the save.
@@ -98,6 +96,16 @@ public:
                 "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue");
 
         return true;
+    }
+
+    void onDocumentUploaded(bool success) override
+    {
+        LOG_TST("Uploaded: " << (success ? "success" : "failure"));
+
+        if (_phase == Phase::WaitFirstPutFile)
+        {
+            TRANSITION_STATE(_phase, Phase::Close);
+        }
     }
 
     void invokeWSDTest() override

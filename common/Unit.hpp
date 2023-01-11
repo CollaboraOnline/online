@@ -214,6 +214,9 @@ public:
     /// Return true to stop further handling of messages.
     virtual bool onDocumentSaved(const std::string&, bool, const std::string&) { return false; }
 
+    /// Called when the document has been uploaded.
+    virtual void onDocumentUploaded(bool) {}
+
     /// Called when the document issues a 'statechanged:' message.
     /// Return true to stop further handling of messages.
     virtual bool onDocumentStateChanged(const std::string&) { return false; }
