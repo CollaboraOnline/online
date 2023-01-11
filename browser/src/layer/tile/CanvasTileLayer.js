@@ -383,28 +383,9 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_addOverlaySection: function () {
-		var tsMgr = this;
 		var canvasOverlay = this._layer._canvasOverlay = new CanvasOverlay(this._map, this._sectionContainer.getContext());
-		this._sectionContainer.createSection({
-			name: L.CSections.Overlays.name,
-			anchor: 'top left',
-			position: [0, 0],
-			size: [0, 0],
-			expand: '',
-			processingOrder: L.CSections.Overlays.processingOrder,
-			drawingOrder: L.CSections.Overlays.drawingOrder,
-			zIndex: L.CSections.Overlays.zIndex,
-			interactable: true,
-			sectionProperties: {
-				docLayer: tsMgr._layer,
-				tsManager: tsMgr
-			},
-			onInitialize: canvasOverlay.onInitialize.bind(canvasOverlay),
-			onResize: canvasOverlay.onResize.bind(canvasOverlay), // will call onDraw.
-			onDraw: canvasOverlay.onDraw.bind(canvasOverlay),
-			onMouseMove: canvasOverlay.onMouseMove.bind(canvasOverlay),
-		}, L.CSections.Tiles.name); // 'tile' section is the parent.
-		canvasOverlay.setOverlaySection(this._sectionContainer.getSectionWithName(L.CSections.Overlays.name));
+		this._sectionContainer.addSection(canvasOverlay);
+		canvasOverlay.bindToSection(L.CSections.Tiles.name);
 	},
 
 	shouldDrawCalcGrid: function () {
