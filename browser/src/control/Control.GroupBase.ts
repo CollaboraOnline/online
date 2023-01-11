@@ -40,11 +40,11 @@ export class GroupBase extends CanvasSectionObject {
 		if (options.interactable === undefined)
 			this.interactable = true;
 		if (options.sectionProperties === undefined)
-			this.sectionProperties = {}
+			this.sectionProperties = {};
 	}
 
 	// Create font for the group headers. Group headers are on the left side of corner header.
-	_createFont() {
+	_createFont(): void {
 		const baseElem = document.getElementsByTagName('body')[0];
 		const elem = L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
 		this.backgroundColor = L.DomUtil.getStyle(elem, 'background-color'); // This is a section property.
@@ -59,12 +59,12 @@ export class GroupBase extends CanvasSectionObject {
 	}
 
 	// This returns the required width for the section.
-	_computeSectionWidth() {
+	_computeSectionWidth(): number {
 		return this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * (this._groups.length + 1);
 	}
 
 	// This function puts data into a good shape for use of this class.
-	_collectGroupsData (groups: Array<GroupEntryStrings>) {
+	_collectGroupsData (groups: Array<GroupEntryStrings>): void {
 		let level: number, groupEntry: GroupEntry;
 
 		var lastGroupIndex = new Array(groups.length);
@@ -161,16 +161,16 @@ export class GroupBase extends CanvasSectionObject {
 		}
 	}
 
-	drawGroupControl (entry: GroupEntry) {
+	drawGroupControl (entry: GroupEntry): void {
 		return;
 	}
 
 	// This calls drawing functions related to tails and plus & minus signs etc.
-	drawOutline() {
+	drawOutline(): void {
 		if (this._groups) {
 			for (let i = 0; i < this._groups.length; i++) {
 				if (this._groups[i]) {
-					for (let group in this._groups[i]) {
+					for (const group in this._groups[i]) {
 						if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
 							if (this._isPreviousGroupVisible(this._groups[i][group].index, this._groups[i][group].level))
 								this.drawGroupControl(this._groups[i][group]);
@@ -181,24 +181,24 @@ export class GroupBase extends CanvasSectionObject {
 		}
 	}
 
-	drawLevelHeader (level: number) {
+	drawLevelHeader (level: number): void {
 		return;
 	}
 
 	// This function calls drawing function for related to headers of groups. Headers are drawn on the left of corner header.
-	drawLevelHeaders() {
+	drawLevelHeaders(): void {
 		for (var i = 0; i < this._groups.length + 1; ++i) {
 			this.drawLevelHeader(i);
 		}
 	}
 
 	/// In Calc RTL mode, x-coordinate of a given rectangle of given width is horizontally mirrored
-	transformRectX (xcoord: number, rectWidth: number) {
+	transformRectX (xcoord: number, rectWidth: number): number {
 		return this.isCalcRTL() ? this.size[0] - xcoord - rectWidth : xcoord;
 	}
 
 	/// In Calc RTL mode, x-coordinate of a given point is horizontally mirrored
-	transformX (xcoord: number) {
+	transformX (xcoord: number): number {
 		return this.isCalcRTL() ? this.size[0] - xcoord : xcoord;
 	}
 
@@ -207,14 +207,14 @@ export class GroupBase extends CanvasSectionObject {
 	 * startX, startY, endX, endY. If mirrorX is true then point is horizontally
 	 * mirrored before checking.
 	 */
-	isPointInRect (point: number[], startX: number, startY: number, endX: number, endY: number, mirrorX: boolean) {
+	isPointInRect (point: number[], startX: number, startY: number, endX: number, endY: number, mirrorX: boolean): boolean {
 		var x = mirrorX ? this.size[0] - point[0] : point[0];
 		var y = point[1];
 
 		return (x > startX && x < endX && y > startY && y < endY);
 	}
 
-	onDraw() {
+	onDraw(): void {
 		this.drawOutline();
 		this.drawLevelHeaders();
 	}
@@ -227,7 +227,7 @@ export class GroupBase extends CanvasSectionObject {
 		return -1;
 	}
 
-	onMouseMove (point: number[]) {
+	onMouseMove (point: number[]): void {
 		// If mouse is above a group header or a group control, we change the cursor.
 		if (this.findClickedGroup(point) !== null || this.findClickedLevel(point) !== -1)
 			this.context.canvas.style.cursor = 'pointer';
@@ -235,15 +235,15 @@ export class GroupBase extends CanvasSectionObject {
 			this.context.canvas.style.cursor = 'default';
 	}
 
-	onMouseLeave() {
+	onMouseLeave(): void {
 		this.context.canvas.style.cursor = 'default';
 	}
 
-	_updateOutlineState(group: Partial<GroupEntry>) {
+	_updateOutlineState(group: Partial<GroupEntry>): void {
 		return;
 	}
 
-	onClick (point: number[]) {
+	onClick (point: number[]): void {
 		// User may have clicked on one of the level headers.
 		var level = this.findClickedLevel(point);
 		if (level !== -1) {
@@ -264,17 +264,17 @@ export class GroupBase extends CanvasSectionObject {
 	}
 
 	/* Double clicking on a group's tail closes it. */
-	onDoubleClick (point: number[]) {
+	onDoubleClick (point: number[]): void {
 		var group = this.findTailsGroup(point);
 		if (group)
 			this._updateOutlineState(group);
 	}
 
-	onMouseEnter() {
+	onMouseEnter(): void {
 		$.contextMenu('destroy', '#document-canvas');
 	}
 
-	onRemove() {
+	onRemove(): void {
 		this.isRemoved = true;
 		this.containerObject.getSectionWithName(L.CSections.RowHeader.name).position[0] = 0;
 		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[0] = 0;
