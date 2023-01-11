@@ -38,7 +38,7 @@ export class RowGroup extends GroupBase {
 	}
 
 	// This function is called by CanvasSectionContainer when the section is added to the sections list.
-	onInitialize() {
+	onInitialize(): void {
 		this._map = L.Map.THIS;
 		this.sectionProperties.docLayer = this._map._docLayer;
 		this._groups = null;
@@ -54,7 +54,7 @@ export class RowGroup extends GroupBase {
 		this.isRemoved = false;
 	}
 
-	update() {
+	update(): void {
 		if (this.isRemoved) // Prevent calling while deleting the section. It causes errors.
 			return;
 
@@ -72,11 +72,11 @@ export class RowGroup extends GroupBase {
 	}
 
 	// This returns the required width for the section.
-	_computeSectionWidth() {
+	_computeSectionWidth(): number {
 		return this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * (this._groups.length + 1);
 	}
 
-	getRelativeY (docPos: number) {
+	getRelativeY (docPos: number): number {
 		if (docPos <= this._splitPos.y) {
 			return docPos - this.documentTopLeft[1] + this._cornerHeaderHeight;
 		}
@@ -86,7 +86,7 @@ export class RowGroup extends GroupBase {
 		}
 	}
 
-	drawGroupControl (group: GroupEntry) {
+	drawGroupControl (group: GroupEntry): void {
 		var startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
 		var startY = this.getRelativeY(group.startPos);
 		var endY = group.endPos + this._cornerHeaderHeight - this.documentTopLeft[1];
@@ -132,7 +132,7 @@ export class RowGroup extends GroupBase {
 		}
 	}
 
-	drawLevelHeader (level: number) {
+	drawLevelHeader (level: number): void {
 		var ctx = this.context;
 		var ctrlHeadSize = this._groupHeadSize;
 		var levelSpacing = this._levelSpacing;
@@ -152,7 +152,7 @@ export class RowGroup extends GroupBase {
 	}
 
 	// Handle user interaction.
-	_updateOutlineState (group: Partial<GroupEntry>) {
+	_updateOutlineState (group: Partial<GroupEntry>): void {
 		var state = group.hidden ? 'visible' : 'hidden'; // we have to send the new state
 		var payload = 'outlinestate type=row' + ' level=' + group.level + ' index=' + group.index + ' state=' + state;
 		app.socket.sendMessage(payload);
@@ -215,7 +215,7 @@ export class RowGroup extends GroupBase {
 		}
 	}
 
-	onRemove() {
+	onRemove(): void {
 		this.isRemoved = true;
 		this.containerObject.getSectionWithName(L.CSections.RowHeader.name).position[0] = 0;
 		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[0] = 0;
