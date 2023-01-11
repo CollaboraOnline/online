@@ -1,6 +1,46 @@
 declare var L: any;
 declare var app: any;
 
+/**
+ * Used to initialize a new anonymous CanvasSectionObject from its properties.
+ * See documentation of CanvasSectionObject properties for description
+ */
+interface SectionInitProperties {
+	name: string;
+	backgroundColor?: string;
+	borderColor?: string;
+	anchor?: string | Array<any>;
+	position: Array<number>;
+	size: Array<number>;
+	expand: string;
+	processingOrder: number;
+	drawingOrder: number;
+	zIndex: number;
+	interactable: boolean;
+	showSection?: boolean;
+	sectionProperties?: any;
+	onInitialize?: () => void;
+	onMouseMove?: (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) => void;
+	onMouseDown?: (point: Array<number>, e: MouseEvent) => void;
+	onMouseUp?: (point: Array<number>, e: MouseEvent) => void;
+	onMouseEnter?: (point: Array<number>, e: MouseEvent) => void;
+	onMouseLeave?: (point: Array<number>, e: MouseEvent) => void;
+	onClick?: (point: Array<number>, e: MouseEvent) => void;
+	onDoubleClick?: (point: Array<number>, e: MouseEvent) => void;
+	onContextMenu?: (e?: MouseEvent) => void;
+	onMouseWheel?: (point: Array<number>, delta: Array<number>, e: MouseEvent) => void;
+	onLongPress?: (point: Array<number>, e: MouseEvent) => void;
+	onMultiTouchStart?: (e: TouchEvent) => void;
+	onMultiTouchMove?: (point: Array<number>, dragDistance: number, e: TouchEvent) => void;
+	onMultiTouchEnd?: (e: TouchEvent) => void;
+	onResize?: () => void;
+	onDraw?: (frameCount?: number, elapsedTime?: number) => void;
+	onDrawArea?: (area?: cool.Bounds, paneTopLeft?: cool.Point, canvasContext?: CanvasRenderingContext2D) => void;
+	onNewDocumentTopLeft?: (size: Array<number>) => void;
+	onRemove?: () => void;
+	onAnimationEnded?: (frameCount: number, elapsedTime: number) => void;
+}
+
 // Below classes are for managing the canvas layout.
 /*
 	Potential values are separated with '|'
@@ -261,7 +301,7 @@ class CanvasSectionObject {
 	/// Do not implement this. This function is added by section container. This returns if Calc document is in RTL mode
 	isCalcRTL: () => boolean;
 
-	constructor (options: any) {
+	constructor (options: SectionInitProperties) {
 		this.name = options.name;
 		this.backgroundColor = options.backgroundColor ? options.backgroundColor: null;
 		this.borderColor = options.borderColor ? options.borderColor: null;
@@ -1831,7 +1871,7 @@ class CanvasSectionContainer {
 			return true;
 	}
 
-	createSection (options: any, parentSectionName: string = null) {
+	createSection (options: SectionInitProperties, parentSectionName: string = null) {
 		if (this.newSectionChecks(options)) {
 			// Every section can draw from Point(0, 0), their drawings will be translated to myTopLeft position.
 			var newSection: CanvasSectionObject = new CanvasSectionObject(options);
