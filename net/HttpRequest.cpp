@@ -155,11 +155,11 @@ int64_t Header::parse(const char* p, int64_t len)
 
         _chunked = getTransferEncoding() == "chunked";
 
-        LOG_TRC("Read " << data.tellg() << " bytes of header:\n"
-                        << std::string(p, data.tellg())
-                        << "\nhasContentLength: " << hasContentLength()
+        LOG_TRC("Read " << data.tellg()
+                        << " bytes of header. hasContentLength: " << hasContentLength()
                         << ", contentLength: " << (hasContentLength() ? getContentLength() : -1)
-                        << ", chunked: " << getChunkedTransferEncoding());
+                        << ", chunked: " << getChunkedTransferEncoding() << ":\n"
+                        << std::string(p, data.tellg()));
 
         // We consumed the full header, including the blank line.
         return endPos + 1;
