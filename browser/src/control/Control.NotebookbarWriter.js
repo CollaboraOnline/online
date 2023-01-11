@@ -856,6 +856,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'type': 'bigtoolitem',
+				'text': _UNO('.uno:PageNumberWizard', 'text'),
+				'command': '.uno:PageNumberWizard'
+			},
+			{
+				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertFieldCtrl', 'text'),
 				'command': '.uno:InsertFieldCtrl'
 			},
