@@ -1344,16 +1344,6 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
     Quarantine::quarantineFile(this, Util::splitLast(newName, '/').second);
 #endif //!MOBILEAPP
 
-    if (success && !isAsyncUploading())
-    {
-        // Update the storage attributes to capture what's
-        // new and applies to this new version and reset the next.
-        // These are the attributes of the next version to be uploaded.
-        // Note: these are owned by us and this is thread-safe.
-        _currentStorageAttrs.merge(_nextStorageAttrs);
-        _nextStorageAttrs.reset();
-    }
-
     // Let the clients know of any save failures.
     if (!success && result != "unmodified")
     {
@@ -1616,6 +1606,12 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
         }
     };
 
+    // Update the storage attributes to capture what's
+    // new and applies to this new version and reset the next.
+    // These are the attributes of the next version to be uploaded.
+    // Note: these are owned by us and this is thread-safe.
+    _currentStorageAttrs.merge(_nextStorageAttrs);
+
     // Once set, isUnloading shouldn't be unset.
     _currentStorageAttrs.setIsExitSave(isUnloading());
 
@@ -1625,6 +1621,8 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
         // (which would imply we failed to upload).
         _currentStorageAttrs.setForced(true);
     }
+
+    _nextStorageAttrs.reset();
 
     _storage->uploadLocalFileToStorageAsync(session->getAuthorization(), *_lockCtx, saveAsPath,
                                             saveAsFilename, isRename, _currentStorageAttrs, *_poll,
