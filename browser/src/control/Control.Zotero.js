@@ -188,13 +188,14 @@ L.Control.Zotero = L.Control.extend({
 									text: _('Language:')
 								},
 								{
-									'id': 'zoterolocale',
-									'type': 'combobox',
-									'entries': Array.from(Object.keys(this.languageNames), function(langCode) {return that.languageNames[langCode][0];}),
-									'selectedCount': '1',
-									'selectedEntries': [
-										Object.keys(this.languageNames).indexOf(this.settings.locale)
+									id: 'zoterolocale',
+									type: 'combobox',
+									entries: Array.from(Object.keys(this.availableLanguages), function(langCode) {return that.availableLanguages[langCode][0];}),
+									selectedCount: '1',
+									selectedEntries: [
+										Object.keys(this.availableLanguages).indexOf(this.settings.locale)
 									],
+									enabled: false
 								},
 							]
 						} : {},
@@ -250,6 +251,27 @@ L.Control.Zotero = L.Control.extend({
 					type: 'pushbutton',
 					text: _('OK'),
 					'has_default': true
+				},
+			},
+			callback: this._onAction.bind(this)
+		});
+	},
+
+	enableDialogLanguageCombobox: function(locale) {
+		var that = this;
+		this.map.fire('jsdialogupdate', {
+			data: {
+				jsontype: 'dialog',
+				action: 'update',
+				id: 'ZoteroDialog',
+				control: {
+					id: 'zoterolocale',
+					type: 'combobox',
+					entries: Array.from(Object.keys(this.availableLanguages), function(langCode) {return that.availableLanguages[langCode][0];}),
+					selectedCount: '1',
+					selectedEntries: [
+						Object.keys(this.availableLanguages).indexOf(locale)
+					],
 				},
 			},
 			callback: this._onAction.bind(this)
@@ -549,6 +571,7 @@ L.Control.Zotero = L.Control.extend({
 
 				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
+				that.checkStyleTypeAndEnableOK(that.settings.style);
 			}, function () {
 				that.map.uiManager.showSnackbar(_('Failed to load styles'));
 			});
@@ -593,6 +616,51 @@ L.Control.Zotero = L.Control.extend({
 						}
 					}
 				}
+			});
+	},
+
+	/// returns found languageNames key
+	makeLanguageAvailable: function (locale) {
+		var ret = null;
+		var languages = Object.keys(this.languageNames).filter(
+			function (value) { return value.indexOf(locale) >= 0; });
+		for (var l in languages) {
+			var language = languages[l];
+			ret = language;
+			this.availableLanguages[language] = this.languageNames[language];
+		}
+		return ret;
+	},
+
+	checkStyleTypeAndEnableOK: function(style) {
+		var that = this;
+		fetch('https://www.zotero.org/styles/' + style)
+			.then(function (response) { return response.text(); })
+			.then(function (html) {
+				var csl = new DOMParser().parseFromString(html, 'text/xml');
+
+				that.availableLanguages = {};
+
+				var locales = csl.getElementsByTagName('locale');
+				for (var i = 0; i < locales.length; i++) {
+					if (locales[i].getAttribute('xml:lang')) {
+						var code = locales[i].getAttribute('xml:lang');
+						that.makeLanguageAvailable(code);
+					}
+				}
+
+				var style = csl.getElementsByTagName('style');
+				if (style.length) {
+					var defaultLocale = style[0].getAttribute('default-locale');
+					if (defaultLocale && defaultLocale !== '')
+						defaultLocale = that.makeLanguageAvailable(defaultLocale);
+				}
+
+				var availableLocale =
+					Object.keys(that.availableLanguages).indexOf(that.settings.locale) >= 0;
+				that.enableDialogLanguageCombobox(
+					availableLocale ? that.settings.locale : defaultLocale);
+				that.enableDialogOKButton();
 			});
 	},
 
@@ -776,7 +844,10 @@ L.Control.Zotero = L.Control.extend({
 				return;
 			} else {
 				this.selected = data.entries[parseInt(index)];
-				this.enableDialogOKButton();
+				if (this.dialogType === 'stylelist') {
+					this.checkStyleTypeAndEnableOK(this.selected.name);
+				} else
+					this.enableDialogOKButton();
 				return;
 			}
 		}
@@ -802,7 +873,7 @@ L.Control.Zotero = L.Control.extend({
 			return;
 		}
 		if (element === 'combobox') {
-			this.selectedCitationLangCode = Object.keys(this.languageNames)[parseInt(index)];
+			this.selectedCitationLangCode = Object.keys(this.availableLanguages)[parseInt(index)];
 			if (this.settings.style)
 				this.enableDialogOKButton();
 			return;
@@ -1223,6 +1294,7 @@ L.Control.Zotero = L.Control.extend({
 
 	// from https://raw.githubusercontent.com/citation-style-language/locales/master/locales.json
 	// saves us from fetching same thing every time for every user
+	availableLanguages: {},
 	languageNames: {
 		'af-ZA': [
 			'Afrikaans',
