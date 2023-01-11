@@ -3,7 +3,7 @@
 /// <reference path="../src/geometry/Bounds.ts" />
 /// <reference path="../src/layer/tile/CanvasSectionContainer.ts" />
 /// <reference path="./helper/canvasContainerSetup.ts" />
-/// <reference path="./helper/types.ts" />
+/// <reference path="./helper/rectUtil.ts" />
 
 var jsdom = require('jsdom');
 var assert = require('assert').strict;
@@ -15,27 +15,6 @@ global.document = dom.window.document;
 
 const canvasWidth = 1024;
 const canvasHeight = 768;
-
-function assertPosSize(actual: mtest.Rectangle, expected: mtest.Rectangle) {
-    // Only assert components of expected that are provided.
-    if (typeof expected.x === 'number')
-        assert.equal(actual.x, expected.x, 'Left mismatch');
-    if (typeof expected.y === 'number')
-        assert.equal(actual.y, expected.y, 'Top mismatch');
-    if (typeof expected.width === 'number')
-        assert.equal(actual.width, expected.width, 'Width mismatch');
-    if (typeof expected.height === 'number')
-        assert.equal(actual.height, expected.height, 'Height mismatch');
-}
-
-function getSectionRectangle(section: CanvasSectionObject): mtest.Rectangle {
-    return {
-        x: section.myTopLeft[0],
-        y: section.myTopLeft[1],
-        width: section.size[0],
-        height: section.size[1],
-    };
-}
 
 describe('Singleton section container', function() {
     const canvas = <HTMLCanvasElement>document.getElementById('document-canvas');
