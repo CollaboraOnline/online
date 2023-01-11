@@ -754,6 +754,26 @@ class CanvasSectionContainer {
 		return [this.documentAnchor[0], this.documentAnchor[1]];
 	}
 
+	public getCanvasBoundingClientRect(): DOMRect {
+		return this.canvas.getBoundingClientRect();
+	}
+
+	public getCanvasRight(): number {
+		return this.right;
+	}
+
+	public getCanvasBottom(): number {
+		return this.bottom;
+	}
+
+	public isDraggingSomething(): boolean {
+		return this.draggingSomething;
+	}
+
+	public getDragDistance(): number[] {
+		return [...this.dragDistance];
+	}
+
 	public isDocumentObjectVisible (section: CanvasSectionObject): boolean {
 		if (
 			(

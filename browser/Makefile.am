@@ -314,10 +314,10 @@ COOL_JS_LST =\
 	src/control/Control.CornerGroup.ts \
 	src/control/Control.RowGroup.ts \
 	src/control/Control.ColumnGroup.ts \
-	src/control/Control.CornerHeader.js \
-	src/control/Control.Header.js \
-	src/control/Control.ColumnHeader.js \
-	src/control/Control.RowHeader.js \
+	src/control/Control.CornerHeader.ts \
+	src/control/Control.Header.ts \
+	src/control/Control.ColumnHeader.ts \
+	src/control/Control.RowHeader.ts \
 	src/control/Control.DocumentRepair.js \
 	src/control/Control.DownloadProgress.js \
 	src/control/Control.ContextMenu.js \
