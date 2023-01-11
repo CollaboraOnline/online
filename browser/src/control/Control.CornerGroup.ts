@@ -31,7 +31,7 @@ export class CornerGroup extends CanvasSectionObject {
 		});
 	}
 
-	public onInitialize() {
+	public onInitialize(): void {
 		this._map = L.Map.THIS;
 		this._map.on('sheetgeometrychanged', this.update, this);
 		this._map.on('viewrowcolumnheaders', this.update, this);
@@ -44,7 +44,7 @@ export class CornerGroup extends CanvasSectionObject {
 		L.DomUtil.remove(elem);
 	}
 
-	update() {
+	update(): void {
 		// Below 2 sections exist (since this section is added), unless they are being removed.
 
 		var rowGroupSection = this.containerObject.getSectionWithName(L.CSections.RowGroup.name) as RowGroup;
@@ -60,7 +60,7 @@ export class CornerGroup extends CanvasSectionObject {
 		}
 	}
 
-	onClick() {
+	onClick(): void {
 		this._map.wholeRowSelected = true;
 		this._map.wholeColumnSelected = true;
 		this._map.sendUnoCommand('.uno:SelectAll');
@@ -73,12 +73,12 @@ export class CornerGroup extends CanvasSectionObject {
 			docLayer._updateCursorAndOverlay();
 	}
 
-	onMouseEnter() {
+	onMouseEnter(): void {
 		this.containerObject.getCanvasStyle().cursor = 'pointer';
 		$.contextMenu('destroy', '#document-canvas');
 	}
 
-	onMouseLeave() {
+	onMouseLeave(): void {
 		this.containerObject.getCanvasStyle().cursor = 'default';
 	}
 
