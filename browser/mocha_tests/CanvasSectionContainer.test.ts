@@ -210,3 +210,80 @@ describe('Vertically packed two section container', function() {
             });
     });
 });
+
+// '-left' layout is usually used for RTL where it is used to attach a section's right to the left of another section.
+describe('Horizontally packed two section container with -left layout', function() {
+
+    const sectionContainer = setupCanvasContainer(canvasWidth, canvasHeight);
+
+    const docLayer = {};
+    const tsManager = {};
+
+    sectionContainer.createSection({
+        name: 'RightSection',
+        anchor: 'top right',
+        position: [originX, originY],
+        size: [halfWidth, 1],
+        expand: 'bottom',
+        processingOrder: 1,
+        drawingOrder: 1,
+        zIndex: 1,
+        interactable: false,
+        sectionProperties: {
+            docLayer: docLayer,
+            tsManager: tsManager,
+            strokeStyle: '#c0c0c0'
+        },
+    });
+
+    sectionContainer.createSection({
+        name: 'LeftSection',
+        // Attach LeftSection's right to left of RightSection.
+        anchor: ['top', ['RightSection', '-left', 'right']],
+        position: [originX, originY],
+        size: [1, 1],
+        expand: 'bottom left',
+        processingOrder: 2,
+        drawingOrder: 2,
+        zIndex: 1,
+        interactable: false,
+        sectionProperties: {
+            docLayer: docLayer,
+            tsManager: tsManager,
+            strokeStyle: '#c0c0c0'
+        },
+    });
+
+    sectionContainer.enableDrawing();
+    it('Container should have LeftSection', function() {
+        assert.ok(sectionContainer.doesSectionExist('LeftSection'));
+    });
+
+    it('Container should have RightSection', function() {
+        assert.ok(sectionContainer.doesSectionExist('RightSection'));
+    });
+
+    it('LeftSection PosSize checks', function () {
+        const left = sectionContainer.getSectionWithName('LeftSection');
+        const leftRect = getSectionRectangle(left);
+        assertPosSize(leftRect,
+            {
+                x: 0,
+                y: originY,
+                width: halfWidth - 1,
+                height: canvasHeight - originY
+            });
+    });
+
+    it('RightSection PosSize checks', function () {
+        const right = sectionContainer.getSectionWithName('RightSection');
+        const rightRect = getSectionRectangle(right);
+        assertPosSize(rightRect,
+            {
+                x: canvasWidth - originX - halfWidth,
+                y: originY,
+                width: halfWidth,
+                height: canvasHeight - originY
+            });
+    });
+});
