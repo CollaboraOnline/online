@@ -1192,8 +1192,7 @@ void DocumentBroker::startRenameFileCommand()
     constexpr bool dontTerminateEdit = false; // We will save, rename, and reload: terminate.
     constexpr bool dontSaveIfUnmodified = true;
     constexpr bool isAutosave = false;
-    constexpr bool isExitSave = false;
-    sendUnoSave(it->second, dontTerminateEdit, dontSaveIfUnmodified, isAutosave, isExitSave);
+    sendUnoSave(it->second, dontTerminateEdit, dontSaveIfUnmodified, isAutosave);
 }
 
 void DocumentBroker::endRenameFileCommand()
@@ -2076,9 +2075,8 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
         // potentially optimize it away. This is as good as user-issued save, since this is
         // triggered when the document is closed. In the case of network disconnection or browser crash
         // most users would want to have had the chance to hit save before the document unloaded.
-        sent = sendUnoSave(savingSession, /*dontTerminateEdit=*/true,
-                           dontSaveIfUnmodified, /*isAutosave=*/false,
-                           /*isExitSave=*/true);
+        sent = sendUnoSave(savingSession, /*dontTerminateEdit=*/true, dontSaveIfUnmodified,
+                           /*isAutosave=*/false);
     }
     else if (isModified())
     {
@@ -2107,8 +2105,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
         {
             LOG_TRC("Sending timed save command for [" << _docKey << ']');
             sent = sendUnoSave(savingSession, /*dontTerminateEdit=*/true,
-                               /*dontSaveIfUnmodified=*/true, /*isAutosave=*/true,
-                               /*isExitSave=*/false);
+                               /*dontSaveIfUnmodified=*/true, /*isAutosave=*/true);
         }
     }
 
@@ -2234,7 +2231,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
 
 bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
                                  bool dontTerminateEdit, bool dontSaveIfUnmodified, bool isAutosave,
-                                 bool isExitSave, const std::string& extendedData)
+                                 const std::string& extendedData)
 {
     assertCorrectThread();
 
@@ -2282,7 +2279,7 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
 
     // Note: It's odd to capture these here, but this function is used from ClientSession too.
     _nextStorageAttrs.setIsAutosave(isAutosave || _unitWsd.isAutosave());
-    _nextStorageAttrs.setIsExitSave(isExitSave);
+    _nextStorageAttrs.setIsExitSave(isUnloading());
     _nextStorageAttrs.setExtendedData(extendedData);
 
     const std::string saveArgs = oss.str();
