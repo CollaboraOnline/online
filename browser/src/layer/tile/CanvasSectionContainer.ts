@@ -583,6 +583,10 @@ class CanvasSectionContainer {
 		return this.clearColor;
 	}
 
+	public getCanvasStyle(): CSSStyleDeclaration {
+		return this.canvas.style;
+	}
+
 	setInZoomAnimation (inZoomAnimation: boolean) {
 		this.inZoomAnimation = inZoomAnimation;
 	}
