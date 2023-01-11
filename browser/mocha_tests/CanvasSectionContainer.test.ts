@@ -1,7 +1,6 @@
 /// <reference path="./refs/globals.ts"/>
 /// <reference path="../src/geometry/Point.ts" />
 /// <reference path="../src/geometry/Bounds.ts" />
-/// <reference path="../src/layer/tile/CanvasSectionContainer.ts" />
 /// <reference path="./helper/canvasContainerSetup.ts" />
 /// <reference path="./helper/rectUtil.ts" />
 
@@ -17,12 +16,11 @@ const canvasWidth = 1024;
 const canvasHeight = 768;
 
 describe('Singleton section container', function() {
-    const canvas = <HTMLCanvasElement>document.getElementById('document-canvas');
+
+    const sectionContainer = setupCanvasContainer(canvasWidth, canvasHeight);
+
     const docLayer = {};
     const tsManager = {};
-
-    const sectionContainer = new CanvasSectionContainer(canvas, true /* disableDrawing? */);
-    sectionContainer.onResize(canvasWidth, canvasHeight); // Set canvas size.
 
     sectionContainer.createSection({
         name: 'OnlySection',
