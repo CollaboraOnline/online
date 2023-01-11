@@ -309,10 +309,10 @@ COOL_JS_LST =\
 	src/control/Control.Command.js \
 	src/control/Control.js \
 	src/control/Control.PartsPreview.js \
-	src/control/Control.GroupBase.js \
-	src/control/Control.CornerGroup.js \
-	src/control/Control.RowGroup.js \
-	src/control/Control.ColumnGroup.js \
+	src/control/Control.GroupBase.ts \
+	src/control/Control.CornerGroup.ts \
+	src/control/Control.RowGroup.ts \
+	src/control/Control.ColumnGroup.ts \
 	src/control/Control.CornerHeader.js \
 	src/control/Control.Header.js \
 	src/control/Control.ColumnHeader.js \
