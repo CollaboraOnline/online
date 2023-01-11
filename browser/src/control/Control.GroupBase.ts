@@ -67,28 +67,28 @@ export class GroupBase extends CanvasSectionObject {
 	_collectGroupsData (groups: Array<GroupEntryStrings>): void {
 		let level: number, groupEntry: GroupEntry;
 
-		var lastGroupIndex = new Array(groups.length);
-		var firstChildGroupIndex = new Array(groups.length);
-		var lastLevel = -1;
-		for (var i = 0; i < groups.length; ++i) {
+		const lastGroupIndex = new Array(groups.length);
+		const firstChildGroupIndex = new Array(groups.length);
+		let lastLevel = -1;
+		for (let i = 0; i < groups.length; ++i) {
 			// a new group start
-			var groupData = groups[i];
+			const groupData = groups[i];
 			level = parseInt(groupData.level) - 1;
 			if (!this._groups[level]) {
 				this._groups[level] = [];
 			}
-			var startPos = parseInt(groupData.startPos);
-			var endPos = parseInt(groupData.endPos);
-			var isHidden = !!parseInt(groupData.hidden);
+			let startPos = parseInt(groupData.startPos);
+			let endPos = parseInt(groupData.endPos);
+			const isHidden = !!parseInt(groupData.hidden);
 			if (isHidden || startPos === endPos) {
 				startPos -= this._groupHeadSize / 2;
 				endPos = startPos + this._groupHeadSize;
 			}
 			else {
-				var moved = false;
+				let moved = false;
 				// if the first child is collapsed the parent head has to be top-aligned with the child
 				if (level < lastLevel && firstChildGroupIndex[lastLevel] !== undefined) {
-					var childGroupEntry = this._groups[lastLevel][firstChildGroupIndex[lastLevel]];
+					const childGroupEntry = this._groups[lastLevel][firstChildGroupIndex[lastLevel]];
 					if (childGroupEntry.hidden) {
 						if (startPos > childGroupEntry.startPos && startPos < childGroupEntry.endPos) {
 							startPos = childGroupEntry.startPos;
@@ -99,7 +99,7 @@ export class GroupBase extends CanvasSectionObject {
 				// if 2 groups belonging to the same level are contiguous and the first group is collapsed,
 				// the second one has to be shifted as much as possible in order to avoid overlapping.
 				if (!moved && lastGroupIndex[level] !== undefined) {
-					var prevGroupEntry = this._groups[level][lastGroupIndex[level]];
+					const prevGroupEntry = this._groups[level][lastGroupIndex[level]];
 					if (prevGroupEntry.hidden) {
 						if (startPos > prevGroupEntry.startPos && startPos < prevGroupEntry.endPos) {
 							startPos = prevGroupEntry.endPos;
@@ -131,10 +131,10 @@ export class GroupBase extends CanvasSectionObject {
 		if (level === 0) // First group's drawings are always drawn.
 			return true;
 
-		for (var i = 0; i < this._groups.length; i++) {
-			for (var group in this._groups[i]) {
+		for (let i = 0; i < this._groups.length; i++) {
+			for (const group in this._groups[i]) {
 				if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
-					var group_ = this._groups[i][group];
+					const group_ = this._groups[i][group];
 					if (group_.level === level - 1 && group_.index === index) {
 						if (group_.hidden === false) {
 							if (group_.level > 0) {
@@ -187,7 +187,7 @@ export class GroupBase extends CanvasSectionObject {
 
 	// This function calls drawing function for related to headers of groups. Headers are drawn on the left of corner header.
 	drawLevelHeaders(): void {
-		for (var i = 0; i < this._groups.length + 1; ++i) {
+		for (let i = 0; i < this._groups.length + 1; ++i) {
 			this.drawLevelHeader(i);
 		}
 	}
@@ -208,8 +208,8 @@ export class GroupBase extends CanvasSectionObject {
 	 * mirrored before checking.
 	 */
 	isPointInRect (point: number[], startX: number, startY: number, endX: number, endY: number, mirrorX: boolean): boolean {
-		var x = mirrorX ? this.size[0] - point[0] : point[0];
-		var y = point[1];
+		const x = mirrorX ? this.size[0] - point[0] : point[0];
+		const y = point[1];
 
 		return (x > startX && x < endX && y > startY && y < endY);
 	}
@@ -245,7 +245,7 @@ export class GroupBase extends CanvasSectionObject {
 
 	onClick (point: number[]): void {
 		// User may have clicked on one of the level headers.
-		var level = this.findClickedLevel(point);
+		const level = this.findClickedLevel(point);
 		if (level !== -1) {
 			this._updateOutlineState({level: level, index: -1}); // index: -1 targets all groups (there may be multiple separate row groups.).
 		}
@@ -265,7 +265,7 @@ export class GroupBase extends CanvasSectionObject {
 
 	/* Double clicking on a group's tail closes it. */
 	onDoubleClick (point: number[]): void {
-		var group = this.findTailsGroup(point);
+		const group = this.findTailsGroup(point);
 		if (group)
 			this._updateOutlineState(group);
 	}
