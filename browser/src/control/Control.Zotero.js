@@ -512,6 +512,8 @@ L.Control.Zotero = L.Control.extend({
 					that.fillCategories();
 					that.map.fire('jsdialogupdate', that.updateCategories());
 				}
+			}, function () {
+				that.map.uiManager.showSnackbar(_('Failed to load groups'));
 			});
 
 		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/collections' + this.getZoteroItemQuery())
@@ -528,6 +530,8 @@ L.Control.Zotero = L.Control.extend({
 					that.fillCategories();
 					that.map.fire('jsdialogupdate', that.updateCategories());
 				}
+			}, function () {
+				that.map.uiManager.showSnackbar(_('Failed to load collections'));
 			});
 
 		this.showItemsForUrl('https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery());
@@ -545,6 +549,8 @@ L.Control.Zotero = L.Control.extend({
 
 				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
+			}, function () {
+				that.map.uiManager.showSnackbar(_('Failed to load styles'));
 			});
 	},
 
@@ -716,6 +722,8 @@ L.Control.Zotero = L.Control.extend({
 					targetCollection.children = undefined;
 				that.fillCategories();
 				that.map.fire('jsdialogupdate', that.updateCategories());
+			}, function () {
+				that.map.uiManager.showSnackbar(_('Failed to load collections'));
 			});
 	},
 
@@ -746,6 +754,8 @@ L.Control.Zotero = L.Control.extend({
 				var dialogUpdateEvent = that.updateList([_('Title'), _('Creator(s)'), _('Date')], _('Your library is empty'));
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
 				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
+			}, function () {
+				that.map.uiManager.showSnackbar(_('Failed to load items'));
 			});
 	},
 
@@ -946,6 +956,8 @@ L.Control.Zotero = L.Control.extend({
 				that.sendUpdateCitationCommand(newValues);
 				if (showSnackbar)
 					that.map.uiManager.showSnackbar(_('Updated citations'));
+			}, function () {
+				that.map.uiManager.showSnackbar(_('Citations update failed'));
 			});
 
 		if (showSnackbar)
