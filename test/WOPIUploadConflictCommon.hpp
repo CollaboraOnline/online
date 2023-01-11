@@ -81,8 +81,8 @@ protected:
     }
 
 public:
-    WOPIUploadConflictCommon(std::string name, const std::string& fileContent)
-        : WopiTestServer(std::move(name), fileContent)
+    WOPIUploadConflictCommon(const std::string& name, const std::string& fileContent)
+        : WopiTestServer(name, fileContent)
         , _expectedCheckFileInfo(0)
         , _expectedGetFile(0)
         , _expectedPutRelative(0)
