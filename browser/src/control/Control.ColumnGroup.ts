@@ -13,20 +13,31 @@
 	This class is an extended version of "CanvasSectionObject".
 */
 
-L.Control.ColumnGroup = L.Control.GroupBase.extend({
-	name: L.CSections.ColumnGroup.name,
-	anchor: ['top', [L.CSections.CornerGroup.name, 'right', 'left']],
-	position: [0, 0], // This section's myTopLeft is placed according to corner group section if exists, if not, this is placed at (0, 0).
-	size: [0, 0], // No initial width is necessary. Width will be expanded. Height is computed inside update function.
-	expand: ['left', 'right'], // Expand horizontally.
-	processingOrder: L.CSections.ColumnGroup.processingOrder,
-	drawingOrder: L.CSections.ColumnGroup.drawingOrder,
-	zIndex: L.CSections.ColumnGroup.zIndex,
-	interactable: true,
-	sectionProperties: {},
+namespace cool {
+
+export class ColumnGroup extends GroupBase {
+	_map: any;
+	_sheetGeometry: cool.SheetGeometry;
+	_cornerHeaderWidth: number;
+	_splitPos: cool.Point;
+
+	constructor() {
+		super({
+			name: L.CSections.ColumnGroup.name,
+			anchor: ['top', [L.CSections.CornerGroup.name, 'right', 'left']],
+			position: [0, 0], // This section's myTopLeft is placed according to corner group section if exists, if not, this is placed at (0, 0).
+			size: [0, 0], // No initial width is necessary. Width will be expanded. Height is computed inside update function.
+			expand: 'left right', // Expand horizontally.
+			processingOrder: L.CSections.ColumnGroup.processingOrder,
+			drawingOrder: L.CSections.ColumnGroup.drawingOrder,
+			zIndex: L.CSections.ColumnGroup.zIndex,
+			interactable: true,
+			sectionProperties: {},
+		});
+	}
 
 	// This function is called by CanvasSectionContainer when the section is added to the sections list.
-	onInitialize: function () {
+	onInitialize() {
 		this._map = L.Map.THIS;
 		this.sectionProperties.docLayer = this._map._docLayer;
 		this._groups = null;
@@ -40,9 +51,9 @@ L.Control.ColumnGroup = L.Control.GroupBase.extend({
 		this._createFont();
 		this.update();
 		this.isRemoved = false;
-	},
+	}
 
-	update: function () {
+	update() {
 		if (this.isRemoved) // Prevent calling while deleting the section. It causes errors.
 			return;
 
@@ -54,17 +65,17 @@ L.Control.ColumnGroup = L.Control.GroupBase.extend({
 
 		this._cornerHeaderWidth = this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).size[0];
 
-		this._splitPos = this._map._docLayer._splitPanesContext.getSplitPos();
+		this._splitPos = (this._map._docLayer._splitPanesContext as cool.SplitPanesContext).getSplitPos();
 
 		this._collectGroupsData(this._sheetGeometry.getColumnGroupsDataInView());
-	},
+	}
 
 	// This returns the required height for the section.
-	_computeSectionHeight: function () {
+	_computeSectionHeight() {
 		return this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * (this._groups.length + 1);
-	},
+	}
 
-	getRelativeX: function (docPos) {
+	getRelativeX (docPos: number) {
 		if (docPos <= this._splitPos.x) {
 			return docPos - this.documentTopLeft[0] + this._cornerHeaderWidth;
 		}
@@ -72,9 +83,9 @@ L.Control.ColumnGroup = L.Control.GroupBase.extend({
 			// max here is to prevent encroachment of the fixed pane-area.
 			return Math.max(docPos - this.documentTopLeft[0], this._splitPos.x) + this._cornerHeaderWidth;
 		}
-	},
+	}
 
-	drawGroupControl: function (group) {
+	drawGroupControl (group: GroupEntry) {
 		var startX = this.getRelativeX(group.startPos);
 		var startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
 		var endX = group.endPos + this._cornerHeaderWidth - this.documentTopLeft[0];
@@ -117,9 +128,9 @@ L.Control.ColumnGroup = L.Control.GroupBase.extend({
 
 			this.context.stroke();
 		}
-	},
+	}
 
-	drawLevelHeader: function (level) {
+	drawLevelHeader (level: number) {
 		var ctx = this.context;
 		var ctrlHeadSize = this._groupHeadSize;
 		var levelSpacing = this._levelSpacing;
@@ -135,19 +146,19 @@ L.Control.ColumnGroup = L.Control.GroupBase.extend({
 		ctx.font = this._getFont();
 		ctx.textAlign = 'center';
 		ctx.textBaseline = 'middle';
-		ctx.fillText(level + 1, this.transformX(startX + (ctrlHeadSize / 2)), startY + (ctrlHeadSize / 2) + 2 * app.dpiScale);
-	},
+		ctx.fillText((level + 1).toString(), this.transformX(startX + (ctrlHeadSize / 2)), startY + (ctrlHeadSize / 2) + 2 * app.dpiScale);
+	}
 
 	// Handle user interaction.
-	_updateOutlineState: function (group) {
+	_updateOutlineState (group: Partial<GroupEntry>) {
 		var state = group.hidden ? 'visible' : 'hidden'; // we have to send the new state
 		var payload = 'outlinestate type=column' + ' level=' + group.level + ' index=' + group.index + ' state=' + state;
 		app.socket.sendMessage(payload);
-	},
+	}
 
 	// When user clicks somewhere on the section, onMouseClick event is called by CanvasSectionContainer.
 	// Clicked point is also given to handler function. This function finds the clicked header.
-	findClickedLevel: function (point) {
+	findClickedLevel (point: number[]) {
 		var mirrorX = this.isCalcRTL();
 		if ((!mirrorX && point[0] < this._cornerHeaderWidth)
 			|| (mirrorX && point[0] > this.size[0] - this._cornerHeaderWidth)) {
@@ -159,9 +170,9 @@ L.Control.ColumnGroup = L.Control.GroupBase.extend({
 		else {
 			return -1;
 		}
-	},
+	}
 
-	findClickedGroup: function (point) {
+	findClickedGroup (point: number[]) {
 		var mirrorX = this.isCalcRTL();
 		for (var i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {
@@ -180,10 +191,10 @@ L.Control.ColumnGroup = L.Control.GroupBase.extend({
 			}
 		}
 		return null;
-	},
+	}
 
 	// Users can double click on group tails.
-	findTailsGroup: function (point) {
+	findTailsGroup (point: number[]) {
 		var mirrorX = this.isCalcRTL();
 		for (var i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {
@@ -201,15 +212,19 @@ L.Control.ColumnGroup = L.Control.GroupBase.extend({
 				}
 			}
 		}
-	},
+	}
 
-	onRemove: function () {
+	onRemove () {
 		this.isRemoved = true;
 		this.containerObject.getSectionWithName(L.CSections.ColumnHeader.name).position[1] = 0;
 		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[1] = 0;
-	},
-});
+	}
+}
 
-L.control.columnGroup = function (options) {
-	return new L.Control.ColumnGroup(options);
+}
+
+L.Control.ColumnGroup = cool.ColumnGroup;
+
+L.control.columnGroup = function () {
+	return new L.Control.ColumnGroup();
 };
