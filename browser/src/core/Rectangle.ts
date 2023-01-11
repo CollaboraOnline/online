@@ -170,7 +170,7 @@ export class Rectangle {
 
 	/**
 	 * Moves the rectangle to (x, y) as its new x1, y1 without changing
-	 * anything else.
+	 * its size.
 	 */
 	public moveTo (x: number, y: number): void {
 		this.x1 = x;
