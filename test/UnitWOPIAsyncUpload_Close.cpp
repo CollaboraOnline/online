@@ -26,7 +26,7 @@
 /// Modify, Save, Upload fails, close -> Upload.
 class UnitWOPIAsyncUpload_Close : public WopiTestServer
 {
-    STATE_ENUM(Phase, Load, WaitLoadStatus, Modify, WaitModifiedStatus, WaitFirstPutFile, Close,
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitFirstPutFile, Close,
                WaitSecondPutFile, Done)
     _phase;
 
@@ -78,7 +78,10 @@ public:
         LOG_TST("onDocumentLoaded: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
-        TRANSITION_STATE(_phase, Phase::Modify);
+        TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
+
+        WSD_CMD("key type=input char=97 key=0");
+        WSD_CMD("key type=up char=0 key=512");
 
         return true;
     }
@@ -112,17 +115,9 @@ public:
                 break;
             }
             case Phase::WaitLoadStatus:
-                break;
-            case Phase::Modify:
-            {
-                TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
-
-                WSD_CMD("key type=input char=97 key=0");
-                WSD_CMD("key type=up char=0 key=512");
-                break;
-            }
             case Phase::WaitModifiedStatus:
             case Phase::WaitFirstPutFile:
+            case Phase::WaitSecondPutFile:
                 break;
             case Phase::Close:
             {
@@ -131,7 +126,6 @@ public:
                 WSD_CMD("closedocument");
                 break;
             }
-            case Phase::WaitSecondPutFile:
             case Phase::Done:
             {
                 // just wait for the results
