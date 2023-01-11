@@ -1,4 +1,7 @@
-var L: any = { CSections: { Scroll: { name : 'scroll' } } };
+var L: any = {
+    CSections: { Scroll: { name : 'scroll' } },
+    LOUtil: {},
+};
 
 var app: any = {
     roundedDpiScale : 1
