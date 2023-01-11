@@ -113,3 +113,66 @@ describe('Horizontally packed two section container', function() {
         assertPosSize(rightRect, {x: 513, y: 0, width: 511, height: 768});
     });
 });
+
+describe('Vertically packed two section container', function() {
+
+    const sectionContainer = setupCanvasContainer(canvasWidth, canvasHeight);
+
+    const docLayer = {};
+    const tsManager = {};
+
+    sectionContainer.createSection({
+        name: 'TopSection',
+        anchor: 'top left',
+        position: [0, 0],
+        size: [1, Math.round(canvasHeight / 2)],
+        expand: 'right',
+        processingOrder: 1,
+        drawingOrder: 1,
+        zIndex: 1,
+        interactable: false,
+        sectionProperties: {
+            docLayer: docLayer,
+            tsManager: tsManager,
+            strokeStyle: '#c0c0c0'
+        },
+    });
+
+    sectionContainer.createSection({
+        name: 'BottomSection',
+        anchor: [['TopSection', 'bottom', 'top'], 'left'],
+        position: [0, 0],
+        size: [1, 1],
+        expand: 'bottom right',
+        processingOrder: 2,
+        drawingOrder: 2,
+        zIndex: 1,
+        interactable: false,
+        sectionProperties: {
+            docLayer: docLayer,
+            tsManager: tsManager,
+            strokeStyle: '#c0c0c0'
+        },
+    });
+
+    sectionContainer.enableDrawing();
+    it('Container should have TopSection', function() {
+        assert.ok(sectionContainer.doesSectionExist('TopSection'));
+    });
+
+    it('Container should have BottomSection', function() {
+        assert.ok(sectionContainer.doesSectionExist('BottomSection'));
+    });
+
+    it('TopSection PosSize checks', function () {
+        const top = sectionContainer.getSectionWithName('TopSection');
+        const topRect = getSectionRectangle(top);
+        assertPosSize(topRect, {x: 0, y: 0, width: 1024, height: 384});
+    });
+
+    it('BottomSection PosSize checks', function () {
+        const bottom = sectionContainer.getSectionWithName('BottomSection');
+        const bottomRect = getSectionRectangle(bottom);
+        assertPosSize(bottomRect, {x: 0, y: 385, width: 1024, height: 383});
+    });
+});
