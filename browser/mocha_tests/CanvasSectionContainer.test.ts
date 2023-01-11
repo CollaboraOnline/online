@@ -14,6 +14,10 @@ global.document = dom.window.document;
 
 const canvasWidth = 1024;
 const canvasHeight = 768;
+const halfWidth = Math.floor(canvasWidth / 2);
+const halfHeight = Math.floor(canvasHeight / 2);
+const originX = 0;
+const originY = 0;
 
 describe('Singleton section container', function() {
 
@@ -25,7 +29,7 @@ describe('Singleton section container', function() {
     sectionContainer.createSection({
         name: 'OnlySection',
         anchor: 'top left',
-        position: [0, 0],
+        position: [originX, originY],
         size: [1, 1],
         expand: 'bottom right',
         processingOrder: 1,
@@ -47,7 +51,13 @@ describe('Singleton section container', function() {
     it('OnlySection PosSize checks', function () {
         const only = sectionContainer.getSectionWithName('OnlySection');
         const onlyRect = getSectionRectangle(only);
-        assertPosSize(onlyRect, {x: 0, y: 0, width: 1024, height: 768});
+        assertPosSize(onlyRect,
+            {
+                x: originX,
+                y: originY,
+                width: canvasWidth - originX,
+                height: canvasHeight - originY
+            });
     });
 });
 
@@ -61,8 +71,8 @@ describe('Horizontally packed two section container', function() {
     sectionContainer.createSection({
         name: 'LeftSection',
         anchor: 'top left',
-        position: [0, 0],
-        size: [Math.round(canvasWidth / 2), 1],
+        position: [originX, originY],
+        size: [halfWidth, 1],
         expand: 'bottom',
         processingOrder: 1,
         drawingOrder: 1,
@@ -78,7 +88,7 @@ describe('Horizontally packed two section container', function() {
     sectionContainer.createSection({
         name: 'RightSection',
         anchor: ['top', ['LeftSection', 'right', 'left']],
-        position: [0, 0],
+        position: [originX, originY],
         size: [1, 1],
         expand: 'bottom right',
         processingOrder: 2,
@@ -104,13 +114,25 @@ describe('Horizontally packed two section container', function() {
     it('LeftSection PosSize checks', function () {
         const left = sectionContainer.getSectionWithName('LeftSection');
         const leftRect = getSectionRectangle(left);
-        assertPosSize(leftRect, {x: 0, y: 0, width: 512, height: 768});
+        assertPosSize(leftRect,
+            {
+                x: originX,
+                y: originY,
+                width: halfWidth,
+                height: canvasHeight - originY
+            });
     });
 
     it('RightSection PosSize checks', function () {
         const right = sectionContainer.getSectionWithName('RightSection');
         const rightRect = getSectionRectangle(right);
-        assertPosSize(rightRect, {x: 513, y: 0, width: 511, height: 768});
+        assertPosSize(rightRect,
+            {
+                x: 1 + halfWidth + originX,
+                y: originY,
+                width: halfWidth - 1 - originX,
+                height: canvasHeight - originY
+            });
     });
 });
 
@@ -124,8 +146,8 @@ describe('Vertically packed two section container', function() {
     sectionContainer.createSection({
         name: 'TopSection',
         anchor: 'top left',
-        position: [0, 0],
-        size: [1, Math.round(canvasHeight / 2)],
+        position: [originX, originY],
+        size: [1, halfHeight],
         expand: 'right',
         processingOrder: 1,
         drawingOrder: 1,
@@ -141,7 +163,7 @@ describe('Vertically packed two section container', function() {
     sectionContainer.createSection({
         name: 'BottomSection',
         anchor: [['TopSection', 'bottom', 'top'], 'left'],
-        position: [0, 0],
+        position: [originX, originY],
         size: [1, 1],
         expand: 'bottom right',
         processingOrder: 2,
@@ -167,12 +189,24 @@ describe('Vertically packed two section container', function() {
     it('TopSection PosSize checks', function () {
         const top = sectionContainer.getSectionWithName('TopSection');
         const topRect = getSectionRectangle(top);
-        assertPosSize(topRect, {x: 0, y: 0, width: 1024, height: 384});
+        assertPosSize(topRect,
+            {
+                x: originX,
+                y: originY,
+                width: canvasWidth - originX,
+                height: halfHeight
+            });
     });
 
     it('BottomSection PosSize checks', function () {
         const bottom = sectionContainer.getSectionWithName('BottomSection');
         const bottomRect = getSectionRectangle(bottom);
-        assertPosSize(bottomRect, {x: 0, y: 385, width: 1024, height: 383});
+        assertPosSize(bottomRect,
+            {
+                x: originX,
+                y: 1 + halfHeight + originY,
+                width: canvasWidth - originX,
+                height: halfHeight - 1 - originY
+            });
     });
 });
