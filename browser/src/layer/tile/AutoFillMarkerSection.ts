@@ -4,30 +4,7 @@ declare var L: any;
 declare var app: any;
 
 app.definitions.AutoFillMarkerSection =
-class AutoFillMarkerSection {
-	context: CanvasRenderingContext2D = null;
-	myTopLeft: Array<number> = null;
-	documentTopLeft: Array<number> = null;
-	containerObject: any = null;
-	dpiScale: number = null;
-	name: string = L.CSections.AutoFillMarker.name;
-	backgroundColor: string = 'black';
-	borderColor: string = null;
-	boundToSection: string = null;
-	anchor: Array<any> = new Array(0);
-	documentObject: boolean = true;
-	position: Array<number> = new Array(0);
-	size: Array<number> = new Array(0);
-	expand: Array<string> = new Array(0);
-	isLocated: boolean = false;
-	showSection: boolean = true;
-	processingOrder: number = L.CSections.AutoFillMarker.processingOrder;
-	drawingOrder: number = L.CSections.AutoFillMarker.drawingOrder;
-	zIndex: number = L.CSections.AutoFillMarker.zIndex;
-	interactable: boolean = true;
-	sectionProperties: any = {};
-	stopPropagating: () => void; // Implemented by section container.
-	setPosition: (x: number, y: number) => void; // Implemented by section container. Document objects only.
+class AutoFillMarkerSection extends CanvasSectionObject {
 	map: any;
 	cursorBorderWidth: number = 2;
 	selectionBorderWidth: number = 1;
@@ -35,6 +12,21 @@ class AutoFillMarkerSection {
 	isCalcRTL: () => boolean;
 
 	constructor () {
+		super({
+			name: L.CSections.AutoFillMarker.name,
+			anchor: [],
+			position: new Array<number>(0),
+			size: new Array<number>(0),
+			expand: '',
+			showSection: true,
+			processingOrder: L.CSections.AutoFillMarker.processingOrder,
+			drawingOrder: L.CSections.AutoFillMarker.drawingOrder,
+			zIndex: L.CSections.AutoFillMarker.zIndex,
+			interactable: true,
+			sectionProperties: {}
+		});
+
+		this.documentObject = true;
 		this.map = L.Map.THIS;
 
 		this.sectionProperties.docLayer = this.map._docLayer;
