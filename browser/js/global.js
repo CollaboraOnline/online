@@ -625,9 +625,8 @@ window.app = {
 
 	if (global.socketProxy)
 	{
-		// [start:cssRenamerSocketProxy]
 		// re-write relative URLs in CSS - somewhat grim.
-		var cssRenamerSocketProxy = function() {
+		window.addEventListener('load', function() {
 			var replaceUrls = function(rules, replaceBase) {
 				if (!rules)
 					return;
@@ -670,10 +669,7 @@ window.app = {
 				}
 				replaceUrls(rules, replaceBase);
 			}
-		};
-		// [end:cssRenamerSocketProxy]
-
-		window.addEventListener('load', cssRenamerSocketProxy, false);
+		}, false);
 	}
 
 	global.createWebSocket = function(uri) {
