@@ -37,7 +37,7 @@ export class ColumnGroup extends GroupBase {
 	}
 
 	// This function is called by CanvasSectionContainer when the section is added to the sections list.
-	onInitialize() {
+	onInitialize(): void {
 		this._map = L.Map.THIS;
 		this.sectionProperties.docLayer = this._map._docLayer;
 		this._groups = null;
@@ -53,7 +53,7 @@ export class ColumnGroup extends GroupBase {
 		this.isRemoved = false;
 	}
 
-	update() {
+	update(): void {
 		if (this.isRemoved) // Prevent calling while deleting the section. It causes errors.
 			return;
 
@@ -71,11 +71,11 @@ export class ColumnGroup extends GroupBase {
 	}
 
 	// This returns the required height for the section.
-	_computeSectionHeight() {
+	_computeSectionHeight(): number {
 		return this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * (this._groups.length + 1);
 	}
 
-	getRelativeX (docPos: number) {
+	getRelativeX (docPos: number): number {
 		if (docPos <= this._splitPos.x) {
 			return docPos - this.documentTopLeft[0] + this._cornerHeaderWidth;
 		}
@@ -85,7 +85,7 @@ export class ColumnGroup extends GroupBase {
 		}
 	}
 
-	drawGroupControl (group: GroupEntry) {
+	drawGroupControl (group: GroupEntry): void {
 		var startX = this.getRelativeX(group.startPos);
 		var startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
 		var endX = group.endPos + this._cornerHeaderWidth - this.documentTopLeft[0];
@@ -130,7 +130,7 @@ export class ColumnGroup extends GroupBase {
 		}
 	}
 
-	drawLevelHeader (level: number) {
+	drawLevelHeader (level: number): void {
 		var ctx = this.context;
 		var ctrlHeadSize = this._groupHeadSize;
 		var levelSpacing = this._levelSpacing;
@@ -150,7 +150,7 @@ export class ColumnGroup extends GroupBase {
 	}
 
 	// Handle user interaction.
-	_updateOutlineState (group: Partial<GroupEntry>) {
+	_updateOutlineState (group: Partial<GroupEntry>): void {
 		var state = group.hidden ? 'visible' : 'hidden'; // we have to send the new state
 		var payload = 'outlinestate type=column' + ' level=' + group.level + ' index=' + group.index + ' state=' + state;
 		app.socket.sendMessage(payload);
@@ -158,7 +158,7 @@ export class ColumnGroup extends GroupBase {
 
 	// When user clicks somewhere on the section, onMouseClick event is called by CanvasSectionContainer.
 	// Clicked point is also given to handler function. This function finds the clicked header.
-	findClickedLevel (point: number[]) {
+	findClickedLevel (point: number[]): number {
 		var mirrorX = this.isCalcRTL();
 		if ((!mirrorX && point[0] < this._cornerHeaderWidth)
 			|| (mirrorX && point[0] > this.size[0] - this._cornerHeaderWidth)) {
@@ -172,7 +172,7 @@ export class ColumnGroup extends GroupBase {
 		}
 	}
 
-	findClickedGroup (point: number[]) {
+	findClickedGroup (point: number[]): GroupEntry {
 		var mirrorX = this.isCalcRTL();
 		for (var i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {
@@ -194,7 +194,7 @@ export class ColumnGroup extends GroupBase {
 	}
 
 	// Users can double click on group tails.
-	findTailsGroup (point: number[]) {
+	findTailsGroup (point: number[]): GroupEntry {
 		var mirrorX = this.isCalcRTL();
 		for (var i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {
@@ -214,7 +214,7 @@ export class ColumnGroup extends GroupBase {
 		}
 	}
 
-	onRemove () {
+	onRemove(): void {
 		this.isRemoved = true;
 		this.containerObject.getSectionWithName(L.CSections.ColumnHeader.name).position[1] = 0;
 		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[1] = 0;
