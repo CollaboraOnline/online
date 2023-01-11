@@ -774,6 +774,10 @@ class CanvasSectionContainer {
 		return [...this.dragDistance];
 	}
 
+	public getPositionOnMouseUp(): number[] {
+		return [...this.positionOnMouseUp];
+	}
+
 	public isDocumentObjectVisible (section: CanvasSectionObject): boolean {
 		if (
 			(
