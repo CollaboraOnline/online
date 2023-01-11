@@ -102,12 +102,12 @@ def extractContextCommands(path):
         elif readingCommands:
             commands += commandsFromLine(line)
 
-    f = open(path + '/browser/src/control/Control.ColumnHeader.js', 'r')
+    f = open(path + '/browser/src/control/Control.ColumnHeader.ts', 'r')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
-    f = open(path + '/browser/src/control/Control.RowHeader.js', 'r')
+    f = open(path + '/browser/src/control/Control.RowHeader.ts', 'r')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
