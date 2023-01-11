@@ -72,7 +72,7 @@ L.Control.Zotero = L.Control.extend({
 
 		if (this.pendingCitationUpdate || this.previousNumberOfFields !== fields.length) {
 			delete this.pendingCitationUpdate;
-			this.updateCitations();
+			this.updateCitations(true);
 		}
 		this.previousNumberOfFields = fields.length;
 	},
