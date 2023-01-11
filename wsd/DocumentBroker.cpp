@@ -2128,9 +2128,14 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     const NeedToSave needToSave = needToSaveToDisk();
     const NeedToUpload needToUpload = needToUploadToStorage();
     bool canStop = (needToSave == NeedToSave::No && needToUpload == NeedToUpload::No);
+    LOG_TRC("autoSaveAndStop for docKey [" << getDocKey() << "] needToSave: " << name(needToSave)
+                                           << ", needToUpload: " << name(needToUpload)
+                                           << ", canStop: " << canStop);
 
     if (!canStop && needToSave == NeedToSave::No && !isStorageOutdated())
     {
+        LOG_TRC("autoSaveAndStop for docKey ["
+                << getDocKey() << "] has nothing to save and Storage is up-to-date, canStop: true");
         canStop = true;
     }
 
