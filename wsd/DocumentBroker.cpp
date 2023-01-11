@@ -1636,6 +1636,8 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
     LOG_TRC("lastUploadSuccessful: " << lastUploadSuccessful);
     _storageManager.setLastUploadResult(lastUploadSuccessful);
 
+    _unitWsd.onDocumentUploaded(lastUploadSuccessful);
+
 #if !MOBILEAPP
     if (lastUploadSuccessful && !isModified())
     {
