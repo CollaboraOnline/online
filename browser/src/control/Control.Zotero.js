@@ -701,15 +701,16 @@ L.Control.Zotero = L.Control.extend({
 		this.settings.style = style.name;
 		this.settings.hasBibliography = '1';
 
-		var dataNode = document.createElement('data');
+		var xmlDoc = new DOMParser().parseFromString('<data></data>', 'text/xml');
+		var dataNode = xmlDoc.getElementsByTagName('data')[0];
 		dataNode.setAttribute('data-version', '3');
 
-		var sessionNode = document.createElement('session');
+		var sessionNode = xmlDoc.createElement('session');
 		sessionNode.setAttribute('id', L.Util.randomString(8));
 
 		dataNode.appendChild(sessionNode);
 
-		var styleNode = document.createElement('style');
+		var styleNode = xmlDoc.createElement('style');
 		styleNode.setAttribute('id', 'http://www.zotero.org/styles/' + style.name);
 		if (this.selectedCitationLangCode)
 			this.settings.locale = this.selectedCitationLangCode;
@@ -719,9 +720,9 @@ L.Control.Zotero = L.Control.extend({
 
 		dataNode.appendChild(styleNode);
 
-		var prefsNode = document.createElement('prefs');
+		var prefsNode = xmlDoc.createElement('prefs');
 
-		var prefNode = document.createElement('pref');
+		var prefNode = xmlDoc.createElement('pref');
 		prefNode.setAttribute('name', 'fieldType');
 		prefNode.setAttribute('value', this.getFieldType());
 
