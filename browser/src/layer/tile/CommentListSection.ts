@@ -563,7 +563,7 @@ export class CommentSection extends CanvasSectionObject {
 					anchorPos: [annotation.sectionProperties.data.anchorPos[0], annotation.sectionProperties.data.anchorPos[1]],
 				};
 
-				var replyAnnotationSection = new app.definitions.Comment(replyAnnotation, replyAnnotation.id === 'new' ? {noMenu: true} : {}, this);
+				var replyAnnotationSection = new cool.Comment(replyAnnotation, replyAnnotation.id === 'new' ? {noMenu: true} : {}, this);
 				replyAnnotationSection.name += '-reply';
 
 				this.newAnnotationVex(replyAnnotationSection, annotation.onReplyClick, /* isMod */ false);
@@ -927,8 +927,8 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
-	public add (comment: any, mobileReply: boolean = false): void {
-		var annotation = new app.definitions.Comment(comment, comment.id === 'new' ? {noMenu: true} : {}, this);
+	public add (comment: any, mobileReply: boolean = false): cool.Comment {
+		var annotation = new cool.Comment(comment, comment.id === 'new' ? {noMenu: true} : {}, this);
 		if (mobileReply)
 			annotation.name += '-reply'; // Section name.
 
@@ -1732,7 +1732,7 @@ export class CommentSection extends CanvasSectionObject {
 				if (comment.author in this.map._viewInfoByUserName) {
 					comment.avatar = this.map._viewInfoByUserName[comment.author].userextrainfo.avatar;
 				}
-				var commentSection = new app.definitions.Comment(comment, {}, this);
+				var commentSection = new cool.Comment(comment, {}, this);
 				if (!this.containerObject.addSection(commentSection))
 					continue;
 				this.sectionProperties.commentList.push(commentSection);
@@ -1765,7 +1765,7 @@ export class CommentSection extends CanvasSectionObject {
 				if (changeComment.author in this.map._viewInfoByUserName) {
 					changeComment.avatar = this.map._viewInfoByUserName[changeComment.author].userextrainfo.avatar;
 				}
-				var commentSection = new app.definitions.Comment(changeComment, {}, this);
+				var commentSection = new cool.Comment(changeComment, {}, this);
 				if (!this.containerObject.addSection(commentSection))
 					continue;
 				this.sectionProperties.commentList.push(commentSection);
