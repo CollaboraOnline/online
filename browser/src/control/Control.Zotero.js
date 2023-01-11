@@ -63,7 +63,7 @@ L.Control.Zotero = L.Control.extend({
 			var citationString = L.Util.trim(values.properties.plainCitation, this.settings.layout.prefix, this.settings.layout.suffix);
 			var citations = citationString.split(this.settings.layout.delimiter);
 			values.citationItems.forEach(function(item, i) {
-				var citationId = item.id.substr(item.id.indexOf('/')+1);
+				var citationId = item.id.toString().substr(item.id.toString().indexOf('/')+1);
 				that.citationCluster[values.citationID].push(citationId);
 				that.citations[citationId] = L.Util.trim(citations[i], that.settings.group.prefix, that.settings.group.suffix);
 				that.setCitationNumber(that.citations[citationId]);
@@ -606,7 +606,7 @@ L.Control.Zotero = L.Control.extend({
 
 	setFetchedStyle: function(valueString) {
 
-		var value = new DOMParser().parseFromString(valueString, 'text/html');
+		var value = new DOMParser().parseFromString(valueString, 'text/xml');
 		var styleNode = value.getElementsByTagName('style')[0];
 
 		this.settings.style = styleNode.id.substring(styleNode.id.lastIndexOf('/')+1);
@@ -614,6 +614,8 @@ L.Control.Zotero = L.Control.extend({
 		if (locale)
 			this.settings.locale = locale;
 		this.settings.fieldType = value.getElementsByName('fieldType')[0].getAttribute('value');
+		this.settings.hasBibliography = styleNode.getAttribute('hasBibliography');
+		this.settings.bibliographyStyleHasBeenSet = styleNode.getAttribute('bibliographyStyleHasBeenSet');
 
 		this.setFetchedCitationFormat();
 
@@ -819,8 +821,7 @@ L.Control.Zotero = L.Control.extend({
 			this.sendInsertCitationCommand(citationData.jsonString, citationData.citationString);
 
 			// update all the citations once citations are inserted and we get updated fields
-			if (this.settings.citationFormat === 'numeric')
-				this.pendingCitationUpdate = true;
+			this.pendingCitationUpdate = true;
 		}
 		else if (selected.type === 'style') {
 			this.setStyle(selected);
@@ -1071,13 +1072,60 @@ L.Control.Zotero = L.Control.extend({
 	sendInsertBibCommand: function(html) {
 		var command = '';
 		var parameters = this.getBibParameters(html);
-		if (this.getFieldType() === 'Field')
+		if (this.getFieldType() === 'Field') {
 			command = '.uno:TextFormField';
-		else if (this.getFieldType() == 'Bookmark') {
+			if (this.settings.bibliographyStyleHasBeenSet == '1') {
+				parameters = {
+					'FieldType': {
+						'type': 'string',
+						'value': 'vnd.oasis.opendocument.field.UNHANDLED'
+					},
+					'FieldCommandPrefix': {
+						'type': 'string',
+						'value': 'ADDIN ZOTERO_BIBL'
+					},
+					'Fields': {
+						'type': '[][]com.sun.star.beans.PropertyValue',
+						'value': [parameters]
+					}
+				};
+				command = '.uno:TextFormFields';
+			}
+
+		} else if (this.getFieldType() == 'Bookmark') {
 			command = '.uno:InsertBookmark';
-			this.setCustomProperty(parameters['Bookmark'].value + '_', 'ZOTERO_BIBL {"uncited":[],"omitted":[],"custom":[]} CSL_BIBLIOGRAPHY');
-		} else
+			var newBibBookmarkName = parameters['Bookmark'].value;
+			if (this.settings.bibliographyStyleHasBeenSet == '1') {
+				command = '.uno:UpdateBookmarks';
+				parameters = {
+					'BookmarkNamePrefix': {
+						'type': 'string',
+						'value': this.bibBookmarkName
+					},
+					'Bookmarks': {
+						'type': '[][]com.sun.star.beans.PropertyValue',
+						'value': [parameters]
+					}
+				};
+			}
+			this.bibBookmarkName = newBibBookmarkName;
+			this.setCustomProperty(this.bibBookmarkName + '_', 'ZOTERO_BIBL {"uncited":[],"omitted":[],"custom":[]} CSL_BIBLIOGRAPHY');
+		} else {
 			command = '.uno:InsertSection';
+			if (this.settings.bibliographyStyleHasBeenSet == '1') {
+				var command = '.uno:UpdateSections';
+				parameters = {
+					'SectionNamePrefix': {
+						'type': 'string',
+						'value': 'ZOTERO_BIBL'
+					},
+					'Sections': {
+						'type': '[][]com.sun.star.beans.PropertyValue',
+						'value': [parameters]
+					}
+				};
+			}
+		}
 
 		this.map.sendUnoCommand(command, parameters);
 	},
@@ -1134,7 +1182,12 @@ L.Control.Zotero = L.Control.extend({
 			this.setFetchedStyle(resultMap.ZOTERO_PREF);
 		else if (Object.keys(resultMap)[0].startsWith('ZOTERO_BREF')) {
 			var fields = [];
+			var that = this;
 			this.bookmarksOrder.forEach(function(bookmark) {
+				if (resultMap[bookmark].startsWith('ZOTERO_BIBL')) {
+					that.bibBookmarkName = bookmark;
+					return;
+				}
 				fields.push({bookmark: resultMap[bookmark]});
 			});
 			this.onFieldValue(fields);
