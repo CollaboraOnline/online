@@ -86,9 +86,9 @@ export class ColumnGroup extends GroupBase {
 	}
 
 	drawGroupControl (group: GroupEntry): void {
-		var startX = this.getRelativeX(group.startPos);
-		var startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
-		var endX = group.endPos + this._cornerHeaderWidth - this.documentTopLeft[0];
+		const startX = this.getRelativeX(group.startPos);
+		let startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
+		const endX = group.endPos + this._cornerHeaderWidth - this.documentTopLeft[0];
 
 		if (startX > this._cornerHeaderWidth) {
 			// draw head
@@ -131,12 +131,12 @@ export class ColumnGroup extends GroupBase {
 	}
 
 	drawLevelHeader (level: number): void {
-		var ctx = this.context;
-		var ctrlHeadSize = this._groupHeadSize;
-		var levelSpacing = this._levelSpacing;
+		const ctx = this.context;
+		const ctrlHeadSize = this._groupHeadSize;
+		const levelSpacing = this._levelSpacing;
 
-		var startX = Math.round((this._cornerHeaderWidth - ctrlHeadSize) * 0.5);
-		var startY = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
+		const startX = Math.round((this._cornerHeaderWidth - ctrlHeadSize) * 0.5);
+		const startY = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
 
 		ctx.strokeStyle = 'black';
 		ctx.lineWidth = app.dpiScale;
@@ -151,19 +151,19 @@ export class ColumnGroup extends GroupBase {
 
 	// Handle user interaction.
 	_updateOutlineState (group: Partial<GroupEntry>): void {
-		var state = group.hidden ? 'visible' : 'hidden'; // we have to send the new state
-		var payload = 'outlinestate type=column' + ' level=' + group.level + ' index=' + group.index + ' state=' + state;
+		const state = group.hidden ? 'visible' : 'hidden'; // we have to send the new state
+		const payload = 'outlinestate type=column' + ' level=' + group.level + ' index=' + group.index + ' state=' + state;
 		app.socket.sendMessage(payload);
 	}
 
 	// When user clicks somewhere on the section, onMouseClick event is called by CanvasSectionContainer.
 	// Clicked point is also given to handler function. This function finds the clicked header.
 	findClickedLevel (point: number[]): number {
-		var mirrorX = this.isCalcRTL();
+		const mirrorX = this.isCalcRTL();
 		if ((!mirrorX && point[0] < this._cornerHeaderWidth)
 			|| (mirrorX && point[0] > this.size[0] - this._cornerHeaderWidth)) {
-			var index = (point[1] / this.size[1]) * 100; // Percentage.
-			var levelPercentage = (1 / (this._groups.length + 1)) * 100; // There is one more button than the number of levels.
+			let index = (point[1] / this.size[1]) * 100; // Percentage.
+			const levelPercentage = (1 / (this._groups.length + 1)) * 100; // There is one more button than the number of levels.
 			index = Math.floor(index / levelPercentage);
 			return index;
 		}
@@ -173,16 +173,16 @@ export class ColumnGroup extends GroupBase {
 	}
 
 	findClickedGroup (point: number[]): GroupEntry {
-		var mirrorX = this.isCalcRTL();
-		for (var i = 0; i < this._groups.length; i++) {
+		const mirrorX = this.isCalcRTL();
+		for (let i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {
-				for (var group in this._groups[i]) {
+				for (const group in this._groups[i]) {
 					if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
-						var group_ = this._groups[i][group];
-						var startX = this.getRelativeX(group_.startPos);
-						var startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group_.level;
-						var endX = startX + this._groupHeadSize;
-						var endY = group_.endPos + this._cornerHeaderWidth - this.documentTopLeft[1];
+						const group_ = this._groups[i][group];
+						const startX = this.getRelativeX(group_.startPos);
+						const startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group_.level;
+						const endX = startX + this._groupHeadSize;
+						const endY = group_.endPos + this._cornerHeaderWidth - this.documentTopLeft[1];
 						if (this.isPointInRect(point, startX, startY, endX, endY, mirrorX)) {
 							return group_;
 						}
@@ -195,16 +195,16 @@ export class ColumnGroup extends GroupBase {
 
 	// Users can double click on group tails.
 	findTailsGroup (point: number[]): GroupEntry {
-		var mirrorX = this.isCalcRTL();
-		for (var i = 0; i < this._groups.length; i++) {
+		const mirrorX = this.isCalcRTL();
+		for (let i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {
-				for (var group in this._groups[i]) {
+				for (const group in this._groups[i]) {
 					if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
-						var group_ = this._groups[i][group];
-						var startX = this.getRelativeX(group_.startPos);
-						var startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group_.level;
-						var endX = group_.endPos + this._cornerHeaderWidth - this.documentTopLeft[0];
-						var endY = startY + this._groupHeadSize;
+						const group_ = this._groups[i][group];
+						const startX = this.getRelativeX(group_.startPos);
+						const startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group_.level;
+						const endX = group_.endPos + this._cornerHeaderWidth - this.documentTopLeft[0];
+						const endY = startY + this._groupHeadSize;
 						if (this.isPointInRect(point, startX, startY, endX, endY, mirrorX)) {
 							return group_;
 						}

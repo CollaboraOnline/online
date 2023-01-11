@@ -87,9 +87,9 @@ export class RowGroup extends GroupBase {
 	}
 
 	drawGroupControl (group: GroupEntry): void {
-		var startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
-		var startY = this.getRelativeY(group.startPos);
-		var endY = group.endPos + this._cornerHeaderHeight - this.documentTopLeft[1];
+		let startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
+		const startY = this.getRelativeY(group.startPos);
+		const endY = group.endPos + this._cornerHeaderHeight - this.documentTopLeft[1];
 
 		if (startY > this._cornerHeaderHeight) {
 			// draw head
@@ -133,12 +133,12 @@ export class RowGroup extends GroupBase {
 	}
 
 	drawLevelHeader (level: number): void {
-		var ctx = this.context;
-		var ctrlHeadSize = this._groupHeadSize;
-		var levelSpacing = this._levelSpacing;
+		const ctx = this.context;
+		const ctrlHeadSize = this._groupHeadSize;
+		const levelSpacing = this._levelSpacing;
 
-		var startX = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
-		var startY = Math.round((this._cornerHeaderHeight - ctrlHeadSize) * 0.5);
+		const startX = levelSpacing + (ctrlHeadSize + levelSpacing) * level;
+		const startY = Math.round((this._cornerHeaderHeight - ctrlHeadSize) * 0.5);
 
 		ctx.strokeStyle = 'black';
 		ctx.lineWidth = app.dpiScale;
@@ -153,8 +153,8 @@ export class RowGroup extends GroupBase {
 
 	// Handle user interaction.
 	_updateOutlineState (group: Partial<GroupEntry>): void {
-		var state = group.hidden ? 'visible' : 'hidden'; // we have to send the new state
-		var payload = 'outlinestate type=row' + ' level=' + group.level + ' index=' + group.index + ' state=' + state;
+		const state = group.hidden ? 'visible' : 'hidden'; // we have to send the new state
+		const payload = 'outlinestate type=row' + ' level=' + group.level + ' index=' + group.index + ' state=' + state;
 		app.socket.sendMessage(payload);
 	}
 
@@ -162,8 +162,8 @@ export class RowGroup extends GroupBase {
 	// Clicked point is also given to handler function. This function finds the clicked header.
 	findClickedLevel (point: number[]): number {
 		if (point[1] < this._cornerHeaderHeight) {
-			var index = (this.transformX(point[0]) / this.size[0]) * 100; // Percentage.
-			var levelPercentage = (1 / (this._groups.length + 1)) * 100; // There is one more button than the number of levels.
+			let index = (this.transformX(point[0]) / this.size[0]) * 100; // Percentage.
+			const levelPercentage = (1 / (this._groups.length + 1)) * 100; // There is one more button than the number of levels.
 			index = Math.floor(index / levelPercentage);
 			return index;
 		}
@@ -173,16 +173,16 @@ export class RowGroup extends GroupBase {
 	}
 
 	findClickedGroup (point: number[]): GroupEntry {
-		var mirrorX = this.isCalcRTL();
-		for (var i = 0; i < this._groups.length; i++) {
+		const mirrorX = this.isCalcRTL();
+		for (let i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {
-				for (var group in this._groups[i]) {
+				for (const group in this._groups[i]) {
 					if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
-						var group_ = this._groups[i][group];
-						var startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group_.level;
-						var startY = this.getRelativeY(group_.startPos);
-						var endX = startX + this._groupHeadSize;
-						var endY = startY + this._groupHeadSize;
+						const group_ = this._groups[i][group];
+						const startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group_.level;
+						const startY = this.getRelativeY(group_.startPos);
+						const endX = startX + this._groupHeadSize;
+						const endY = startY + this._groupHeadSize;
 						if (this.isPointInRect(point, startX, startY, endX, endY, mirrorX)) {
 							return group_;
 						}
@@ -195,16 +195,16 @@ export class RowGroup extends GroupBase {
 
 	// Users can double click on group tails.
 	findTailsGroup (point: number[]): GroupEntry {
-		var mirrorX = this.isCalcRTL();
-		for (var i = 0; i < this._groups.length; i++) {
+		const mirrorX = this.isCalcRTL();
+		for (let i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {
-				for (var group in this._groups[i]) {
+				for (const group in this._groups[i]) {
 					if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
-						var group_ = this._groups[i][group];
-						var startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group_.level;
-						var startY = this.getRelativeY(group_.startPos);
-						var endX = startX + this._groupHeadSize; // Let's use this as thikcness. User doesn't have to double click on a pixel:)
-						var endY = group_.endPos + this._cornerHeaderHeight - this.documentTopLeft[1];
+						const group_ = this._groups[i][group];
+						const startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group_.level;
+						const startY = this.getRelativeY(group_.startPos);
+						const endX = startX + this._groupHeadSize; // Let's use this as thikcness. User doesn't have to double click on a pixel:)
+						const endY = group_.endPos + this._cornerHeaderHeight - this.documentTopLeft[1];
 
 						if (this.isPointInRect(point, startX, startY, endX, endY, mirrorX)) {
 							return group_;
