@@ -502,7 +502,7 @@ export class Comment extends CanvasSectionObject {
 		return intersectsVisibleArea;
 	}
 
-	public getPosition () {
+	public getPosition (): number[] {
 		// For redline comments there are no 'rectangles' or 'rectangleOriginal' properties in sectionProperties.data
 		// So use the comment rectangle stored in anchorPos (in display? twips).
 		if (this.sectionProperties.data.trackchange && this.sectionProperties.data.anchorPos) {
@@ -517,7 +517,7 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
-	public getSize() {
+	public getSize(): number[] {
 		// For redline comments there are no 'rectangles' or 'rectangleOriginal' properties in sectionProperties.data
 		// So use the comment rectangle stored in anchorPos (in display? twips).
 		if (this.sectionProperties.data.trackchange && this.sectionProperties.data.anchorPos) {
