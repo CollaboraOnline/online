@@ -256,6 +256,7 @@ var unoCommandsArray = {
 	'InsertEndnote':{text:{context:_('Insert Endnote'),menu:_('~Endnote'),},},
 	'InsertField':{text:{menu:_('~More Fields...'),},},
 	'InsertFieldCtrl':{text:{context:_('Insert Field'),menu:_('Fiel~d'),},},
+	'PageNumberWizard':{text:{context:_('Page Number'),menu:_('~Page Number...'),},},
 	'InsertFootnote':{text:{context:_('Insert Footnote'),menu:_('~Footnote'),},},
 	'InsertGraphic':{global:{context:_('Insert Image...'),menu:_('~Image...'),},},
 	'InsertHardHyphen':{global:{menu:_('Insert non-br~eaking hyphen'),},},
