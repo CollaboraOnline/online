@@ -1035,6 +1035,30 @@ L.Control.Zotero = L.Control.extend({
 
 		var that = this;
 
+		if (this.settings.citationFormat === 'numeric') {
+			this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items?include=bib&itemKey=' + this.getCitationKeys().join(',') + '&v=3&key=' + this.apiKey + '&style=' + this.settings.style + '&locale=' + this.settings.locale)
+				.then(function(data) {
+					var bibList = data.reduce(function(map, item) {
+						map[item.key] = item.bib;
+						return map;
+					}, {});
+
+					var html = '';
+					that.getCitationKeys().forEach(function(key) {
+						var bib = new DOMParser().parseFromString(bibList[key], 'text/html').body;
+						var numberNode = bib.getElementsByClassName('csl-entry')[0].firstElementChild;
+						var number = parseInt(numberNode.textContent.substring(numberNode.textContent.search(/[0-9]/))).toString();
+						numberNode.textContent = numberNode.textContent.replace(number, that.citations[key]);
+						html += bib.innerHTML;
+					});
+
+					that.sendInsertBibCommand(html);
+					that.markBibliographyStyleHasBeenSet(); // update the document meta data about bib being set
+
+				});
+			return;
+		}
+
 		fetch('https://api.zotero.org/users/' + this.userID + '/items?format=bib&itemKey=' + this.getCitationKeys().join(',') + '&v=3&key=' + this.apiKey + '&style=' + this.settings.style + '&locale=' + this.settings.locale)
 			.then(function (response) { return response.text(); })
 			.then(function (html) {
