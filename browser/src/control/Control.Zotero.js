@@ -610,7 +610,8 @@ L.Control.Zotero = L.Control.extend({
 
 				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
-				that.checkStyleTypeAndEnableOK(that.settings.style);
+				if (that.settings.style && that.settings.style !== '')
+					that.checkStyleTypeAndEnableOK(that.settings.style);
 			}, function () {
 				that.map.uiManager.showSnackbar(_('Failed to load styles'));
 			});
@@ -908,7 +909,7 @@ L.Control.Zotero = L.Control.extend({
 			// set selected type or field as default
 			this.setFieldType(this.selectedFieldType !== false);
 			// style already specified just changing the language
-			if (!this.selected && this.selectedCitationLangCode)
+			if (!this.selected)
 				this._onOk({name: this.settings.style, type: 'style'});
 			else
 				this._onOk(this.selected);
