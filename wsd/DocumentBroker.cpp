@@ -1611,6 +1611,9 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
         }
     };
 
+    // Once set, isUnloading shouldn't be unset.
+    _currentStorageAttrs.setIsExitSave(isUnloading());
+
     if (force)
     {
         // Don't reset the force flag if it was set
@@ -2280,7 +2283,6 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
 
     // Note: It's odd to capture these here, but this function is used from ClientSession too.
     _nextStorageAttrs.setIsAutosave(isAutosave || _unitWsd.isAutosave());
-    _nextStorageAttrs.setIsExitSave(isUnloading());
     _nextStorageAttrs.setExtendedData(extendedData);
 
     const std::string saveArgs = oss.str();
