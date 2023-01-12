@@ -56,8 +56,9 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			this._map.zotero.onFieldValue(values.setRefs);
 		} else if (this._map.zotero && values.bookmarks) {
 			this._map.zotero.handleBookmark(values.bookmarks);
-		}
-		else {
+		} else if (this._map.zotero && values.bookmark) {
+			this._map.zotero.fetchCustomProperty(values.bookmark.name);
+		} else {
 			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
 	},
