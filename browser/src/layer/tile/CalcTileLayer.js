@@ -375,6 +375,19 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
+	_handleRTLFlags: function (command) {
+		var rtlChanged = command.rtlParts === undefined;
+		rtlChanged = rtlChanged || this._rtlParts !== undefined && (
+			command.rtlParts.length !== this._rtlParts.length
+			|| this._rtlParts.some(function (part, index) {
+				return part !== command.rtlParts[index];
+			}));
+		this._rtlParts = command.rtlParts || [];
+		if (rtlChanged) {
+			this._adjustCanvasSectionsForLayoutChange();
+		}
+	},
+
 	_onStatusMsg: function (textMsg) {
 		console.log('DEBUG: onStatusMsg: ' + textMsg);
 		var command = app.socket.parseServerCmd(textMsg);
@@ -413,8 +426,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				this._updateMaxBounds(true);
 			}
 			this._hiddenParts = command.hiddenparts || [];
-			this._rtlParts = command.rtlParts || [];
-			console.log('DEBUG: rtlParts = ' + this._rtlParts);
+			this._handleRTLFlags(command);
 			this._documentInfo = textMsg;
 			var partNames = textMsg.match(/[^\r\n]+/g);
 			// only get the last matches
@@ -432,6 +444,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			if (firstSelectedPart) {
 				this._switchSplitPanesContext();
 			}
+		} else {
+			this._handleRTLFlags(command);
 		}
 
 		var scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
