@@ -621,8 +621,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_adjustCanvasSectionsForLayoutChange: function () {
-
-		var sheetIsRTL = this._selectedPart in this._rtlParts;
+		var sheetIsRTL = this._rtlParts.indexOf(this._selectedPart) >= 0;
 		if (sheetIsRTL && this._layoutIsRTL !== true) {
 			console.log('debug: in LTR -> RTL canvas section adjustments');
 			var sectionContainer = this._painter._sectionContainer;
