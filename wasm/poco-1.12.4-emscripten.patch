@@ -18,3 +18,14 @@
      return ::syscall(SYS_gettid);
  #elif POCO_OS == POCO_OS_MAC_OS_X
      return ::pthread_mach_thread_np(::pthread_self());
+--- poco-1.12.4-all/Net/include/Poco/Net/Net.h
++++ poco-1.12.4-all/Net/include/Poco/Net/Net.h
+@@ -132,7 +132,7 @@
+ #endif
+ 
+ 
+-#if (POCO_OS == POCO_OS_LINUX) || (POCO_OS == POCO_OS_WINDOWS_NT)
++#if ((POCO_OS == POCO_OS_LINUX) || (POCO_OS == POCO_OS_WINDOWS_NT)) && !defined(__EMSCRIPTEN__)
+ 	#define POCO_HAVE_FD_EPOLL 1
+ #endif
+ 
