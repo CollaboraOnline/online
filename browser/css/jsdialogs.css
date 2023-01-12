@@ -1279,3 +1279,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .jsdialog[id^='zotero'][id$='-label'] {
 	margin-inline-end: 7px;
 }
+
+.jsdialog[id^='zotero'][id$='-label']:not(:first-child) {
+	margin-inline-start: 24px;
+}
