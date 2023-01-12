@@ -571,7 +571,7 @@ L.Control.Zotero = L.Control.extend({
 
 				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
-				that.checkStyleTypeAndEnableOK(that.settings.style);
+				that.checkStyleType(that.settings.style, false);
 			}, function () {
 				that.map.uiManager.showSnackbar(_('Failed to load styles'));
 			});
@@ -632,7 +632,7 @@ L.Control.Zotero = L.Control.extend({
 		return ret;
 	},
 
-	checkStyleTypeAndEnableOK: function(style) {
+	checkStyleType: function(style, enableOK) {
 		var that = this;
 		fetch('https://www.zotero.org/styles/' + style)
 			.then(function (response) { return response.text(); })
@@ -660,7 +660,9 @@ L.Control.Zotero = L.Control.extend({
 					Object.keys(that.availableLanguages).indexOf(that.settings.locale) >= 0;
 				that.enableDialogLanguageCombobox(
 					availableLocale ? that.settings.locale : defaultLocale);
-				that.enableDialogOKButton();
+
+				if (enableOK)
+					that.enableDialogOKButton();
 			});
 	},
 
@@ -845,7 +847,7 @@ L.Control.Zotero = L.Control.extend({
 			} else {
 				this.selected = data.entries[parseInt(index)];
 				if (this.dialogType === 'stylelist') {
-					this.checkStyleTypeAndEnableOK(this.selected.name);
+					this.checkStyleType(this.selected.name, true);
 				} else
 					this.enableDialogOKButton();
 				return;
