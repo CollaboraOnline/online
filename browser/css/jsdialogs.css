@@ -1274,6 +1274,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	width: 800px;
 }
 
-#zoterolocale-label.jsdialog {
+.jsdialog[id^='zotero'][id$='-label'] {
 	margin-inline-end: 7px;
 }
