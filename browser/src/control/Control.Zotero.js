@@ -1205,6 +1205,8 @@ L.Control.Zotero = L.Control.extend({
 		//start by fetching existing citation under the cursor
 		if (this.getFieldType() === 'Field')
 			app.socket.sendMessage('commandvalues command=.uno:TextFormField?type=vnd.oasis.opendocument.field.UNHANDLED&commandPrefix=ADDIN%20ZOTERO_ITEM');
+		else if (this.getFieldType() === 'Bookmark')
+			app.socket.sendMessage('commandvalues command=.uno:Bookmark?namePrefix=ZOTERO_BREF_');
 		else
 			this.insertCitation({}); //temp fix until exitsting citations can be fetched for every field type
 	},
@@ -1213,20 +1215,26 @@ L.Control.Zotero = L.Control.extend({
 		if (!(this.pendingCitationInsertion && this.pendingCitationInsertion.length))
 			return;
 
-		var existingCitation = this.getJSONfromCitationString(field.command);
-		var citationClusterFields = Object.keys(existingCitation).length ? [existingCitation].concat(this.pendingCitationInsertion) : this.pendingCitationInsertion;
+		var cslString, command = '';
+		var isNewCitation = !Object.keys(field).length;
+		if (this.getFieldType() === 'Field') {
+			cslString = field.command;
+			command = isNewCitation ? '.uno:TextFormField' : '.uno:UpdateTextFormField';
+		} else if (this.getFieldType() == 'Bookmark') {
+			cslString = field.bookmark;
+			command = isNewCitation ? '.uno:InsertBookmark' : '.uno:UpdateBookmark';
+		} else if (this.getFieldType() === 'ReferenceMark') {
+			command = '.uno:InsertField';
+		}
+		var existingCitation = this.getJSONfromCitationString(cslString);
+		var citationClusterFields = isNewCitation ? this.pendingCitationInsertion : [existingCitation].concat(this.pendingCitationInsertion);
 		this.pendingCitationInsertion = [];
 		var citationData = this.getCitationJSONString(citationClusterFields);
-		var parameters = Object.keys(field).length ? this.getFieldUpdateParameters(citationData.jsonString, citationData.citationString) :this.getFieldParameters(citationData.jsonString, citationData.citationString);
+		var parameters = isNewCitation ? this.getFieldParameters(citationData.jsonString, citationData.citationString) : this.getFieldUpdateParameters(citationData.jsonString, citationData.citationString);
 
-		var command = '';
-		if (this.getFieldType() === 'Field')
-			command = Object.keys(field).length ? '.uno:UpdateTextFormField' : '.uno:TextFormField';
-		else if (this.getFieldType() === 'ReferenceMark')
-			command = '.uno:InsertField';
-		else if (this.getFieldType() == 'Bookmark') {
-			command = '.uno:InsertBookmark';
-			this.setCustomProperty(parameters['Bookmark'].value + '_', 'ZOTERO_ITEM CSL_CITATION ' + citationData.cslJSON);
+		if (this.getFieldType() == 'Bookmark') {
+			var prefix = isNewCitation ? parameters['Bookmark'].value : parameters['Bookmark']['value']['Bookmark'].value;
+			this.setCustomProperty(prefix + '_', 'ZOTERO_ITEM CSL_CITATION ' + citationData.jsonString);
 		}
 
 		this.map.sendUnoCommand(command, parameters);
@@ -1333,6 +1341,26 @@ L.Control.Zotero = L.Control.extend({
 							'value': 'ADDIN ZOTERO_ITEM CSL_CITATION ' + cslJSON
 						},
 						'FieldResult': {
+							'type': 'string',
+							'value': citationString
+						}
+					}
+				}
+			};
+		} else if (this.getFieldType() === 'Bookmark') {
+			field = {
+				'BookmarkNamePrefix': {
+					'type': 'string',
+					'value': 'ZOTERO_BREF_'
+				},
+				'Bookmark': {
+					'type': '[]com.sun.star.beans.PropertyValue',
+					'value': {
+						'Bookmark': {
+							'type': 'string',
+							'value': 'ZOTERO_BREF_' + L.Util.randomString(12)
+						},
+						'BookmarkText': {
 							'type': 'string',
 							'value': citationString
 						}
@@ -1470,9 +1498,21 @@ L.Control.Zotero = L.Control.extend({
 					resultMap[prefix] = nameValueMap[prefix + '_' + i];
 			}
 		});
-		if (resultMap.ZOTERO_PREF)
+
+		var resultKeys = Object.keys(resultMap);
+		if (resultMap.ZOTERO_PREF) {
 			this.setFetchedStyle(resultMap.ZOTERO_PREF);
-		else if (Object.keys(resultMap)[0].startsWith('ZOTERO_BREF')) {
+		}
+		// insert new bookmark citation
+		else if (!resultKeys.length && this.pendingCitationInsertion && this.pendingCitationInsertion.length) {
+			this.insertCitation({});
+		}
+		// update existing bookmark citation
+		else if (resultKeys[0].startsWith('ZOTERO_BREF')) {
+			if (this.pendingCitationInsertion && this.pendingCitationInsertion.length) {
+				this.insertCitation({bookmark: resultMap[resultKeys[0]]});
+				return;
+			}
 			var fields = [];
 			var that = this;
 			this.bookmarksOrder.forEach(function(bookmark) {
