@@ -1644,8 +1644,6 @@ L.Control.Menubar = L.Control.extend({
 								$(aItem).removeClass(constChecked);
 							}
 						}
-					} else if ((id.startsWith('zotero') && !(self._map.zotero && self._map.zotero.enable))) {
-						$(aItem).addClass('disabled');
 					} else {
 						$(aItem).removeClass('disabled');
 					}
