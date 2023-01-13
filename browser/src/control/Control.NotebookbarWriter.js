@@ -226,7 +226,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'type': 'container',
 					'children': [
 						{
-							'id': 'downloadas-pdf',
+							'id': 'exportpdf',
 							'type': 'customtoolitem',
 							'text': _('PDF Document (.pdf)'),
 							'command': 'exportpdf',

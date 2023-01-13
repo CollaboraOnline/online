@@ -76,6 +76,7 @@ describe('Trigger hamburger menu options.', function() {
 		before('hamburger_menu.ods');
 
 		mobileHelper.selectHamburgerMenuItem(['Download as', 'PDF Document (.pdf)']);
+		mobileHelper.pressPushButtonOfDialog('Export');
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')

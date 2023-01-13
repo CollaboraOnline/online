@@ -227,11 +227,11 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					'vertical': 'true'
 				},
 				{
-					'id': 'file-downloadas-pdf',
+					'id': 'file-exportpdf',
 					'type': 'container',
 					'children': [
 						{
-							'id': 'downloadas-pdf',
+							'id': 'exportpdf',
 							'type': 'customtoolitem',
 							'text': _('PDF Document (.pdf)'),
 							'command': 'exportpdf',
