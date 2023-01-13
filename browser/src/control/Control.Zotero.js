@@ -88,6 +88,10 @@ L.Control.Zotero = L.Control.extend({
 		this.map.off('updateviewslist', this.onUpdateViews, this);
 	},
 
+	askForApiKey: function () {
+		this.map.fire('postMessage', {msgId: 'UI_ZoteroKeyMissing'});
+	},
+
 	onUpdateViews: function () {
 		var userPrivateInfo = this.map._docLayer ? this.map._viewInfo[this.map._docLayer._viewId].userprivateinfo : null;
 		if (userPrivateInfo) {
@@ -550,6 +554,11 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	showItemList: function () {
+		if (!this.enable) {
+			this.askForApiKey();
+			return;
+		}
+
 		if (!this.settings.style) {
 			this.pendingAction = this.showItemList;
 			this.showStyleList();
@@ -599,6 +608,11 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	showStyleList: function() {
+		if (!this.enable) {
+			this.askForApiKey();
+			return;
+		}
+
 		var that = this;
 		this.dialogType = 'stylelist';
 		this.dialogSetup(_('Citation Style'), false, true);
@@ -1004,6 +1018,11 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	handleInsertNote: function() {
+		if (!this.enable) {
+			this.askForApiKey();
+			return;
+		}
+
 		if (!this.settings.style) {
 			this.pendingAction = this.handleInsertNote;
 			this.showStyleList();
@@ -1042,6 +1061,10 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	handleInsertBibliography: function() {
+		if (!this.enable) {
+			this.askForApiKey();
+			return;
+		}
 
 		if (!this.settings.style) {
 			this.pendingAction = this.handleInsertBibliography;
@@ -1138,6 +1161,11 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	refreshCitationsAndBib: function() {
+		if (!this.enable) {
+			this.askForApiKey();
+			return;
+		}
+
 		//discard the cached url and fetch fresh one
 		this._cachedURL = [];
 		this.updateCitations(true);
