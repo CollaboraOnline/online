@@ -1189,7 +1189,23 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	handleUnlinkCitations: function() {
-		// TODO
+		var parametes = {};
+		var command = '';
+		if (this.getFieldType() === 'Field') {
+			parametes = {
+				'FieldType': {
+					'type': 'string',
+					'value': 'vnd.oasis.opendocument.field.UNHANDLED'
+				},
+				'FieldCommandPrefix': {
+					'type': 'string',
+					'value': 'ADDIN ZOTERO_'
+				},
+			};
+			command = '.uno:DeleteTextFormFields';
+		}
+		this.map.sendUnoCommand(command, parametes);
+		this.resetCitation();
 		this.map.uiManager.showSnackbar('Unlinked citations');
 	},
 
