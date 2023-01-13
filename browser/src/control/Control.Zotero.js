@@ -63,14 +63,17 @@ L.Control.Zotero = L.Control.extend({
 			var citationString = L.Util.trim(values.properties.plainCitation, this.settings.layout.prefix, this.settings.layout.suffix);
 			var citations = citationString.split(this.settings.layout.delimiter);
 			values.citationItems.forEach(function(item, i) {
-				var citationId = item.id.toString().substr(item.id.toString().indexOf('/')+1);
+				//zotero desktop versions do not store keys in cslJSON
+				//extract key from the item url
+				var itemUri = item.uris[0];
+				var citationId = itemUri.substr(itemUri.lastIndexOf('/')+1);
 				that.citationCluster[values.citationID].push(citationId);
 				that.citations[citationId] = L.Util.trim(citations[i], that.settings.group.prefix, that.settings.group.suffix);
 				that.setCitationNumber(that.citations[citationId]);
 			});
 		}
 
-		if (this.pendingCitationUpdate || this.previousNumberOfFields !== fields.length) {
+		if (this.pendingCitationUpdate || (this.previousNumberOfFields && this.previousNumberOfFields !== fields.length)) {
 			delete this.pendingCitationUpdate;
 			this.updateCitations(true);
 		}
