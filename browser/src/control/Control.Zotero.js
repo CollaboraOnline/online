@@ -1205,6 +1205,8 @@ L.Control.Zotero = L.Control.extend({
 		//start by fetching existing citation under the cursor
 		if (this.getFieldType() === 'Field')
 			app.socket.sendMessage('commandvalues command=.uno:TextFormField?type=vnd.oasis.opendocument.field.UNHANDLED&commandPrefix=ADDIN%20ZOTERO_ITEM');
+		else if (this.getFieldType() === 'ReferenceMark')
+			app.socket.sendMessage('commandvalues command=.uno:Field?typeName=SetRef&namePrefix=ZOTERO_ITEM%20CSL_CITATION');
 		else if (this.getFieldType() === 'Bookmark')
 			app.socket.sendMessage('commandvalues command=.uno:Bookmark?namePrefix=ZOTERO_BREF_');
 		else
@@ -1224,7 +1226,8 @@ L.Control.Zotero = L.Control.extend({
 			cslString = field.bookmark;
 			command = isNewCitation ? '.uno:InsertBookmark' : '.uno:UpdateBookmark';
 		} else if (this.getFieldType() === 'ReferenceMark') {
-			command = '.uno:InsertField';
+			cslString = field.name;
+			command = isNewCitation ? '.uno:InsertField': '.uno:UpdateField';
 		}
 		var existingCitation = this.getJSONfromCitationString(cslString);
 		var citationClusterFields = isNewCitation ? this.pendingCitationInsertion : [existingCitation].concat(this.pendingCitationInsertion);
@@ -1341,6 +1344,30 @@ L.Control.Zotero = L.Control.extend({
 							'value': 'ADDIN ZOTERO_ITEM CSL_CITATION ' + cslJSON
 						},
 						'FieldResult': {
+							'type': 'string',
+							'value': citationString
+						}
+					}
+				}
+			};
+		} else if (this.getFieldType() === 'ReferenceMark') {
+			field = {
+				'TypeName': {
+					'type': 'string',
+					'value': 'SetRef'
+				},
+				'NamePrefix': {
+					'type': 'string',
+					'value': 'ZOTERO_ITEM CSL_CITATION'
+				},
+				'Field': {
+					'type': '[]com.sun.star.beans.PropertyValue',
+					'value': {
+						'Name': {
+							'type': 'string',
+							'value': 'ZOTERO_ITEM CSL_CITATION ' + cslJSON
+						},
+						'Content': {
 							'type': 'string',
 							'value': citationString
 						}
