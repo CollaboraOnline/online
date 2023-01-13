@@ -102,6 +102,7 @@ describe('Trigger hamburger menu options.', function() {
 
 	it('Download as PDF', function() {
 		mobileHelper.selectHamburgerMenuItem(['Download as', 'PDF Document (.pdf)']);
+		mobileHelper.pressPushButtonOfDialog('Export');
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')

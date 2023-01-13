@@ -586,7 +586,7 @@
 }
 
 [class*='pdf-submenu-icon'] {
-	background: url('images/lc_downloadas-pdf.svg') center;
+	background: url('images/lc_exportpdf.svg') center;
 }
 
 [class*='epub-submenu-icon'] {
