@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach*/
+/* global describe it beforeEach require afterEach*/
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
@@ -15,7 +15,7 @@ describe('Editing Operations', function() {
 
 		impressHelper.selectTextShapeInTheCenter();
 
-		cy.get('g.leaflet-control-buttons-disabled svg').dblclick({force:true});
+		impressHelper.selectTextOfShape(false);
 	});
 
 	afterEach(function() {
@@ -25,9 +25,11 @@ describe('Editing Operations', function() {
 	function undo() {
 		helper.typeIntoDocument('Hello World');
 
+		impressHelper.selectTextOfShape();
+
 		helper.typeIntoDocument('{ctrl}z');
 
-		helper.selectAllText();
+		impressHelper.selectTextOfShape();
 
 		helper.expectTextForClipboard('Hello Worl');
 	}
@@ -40,7 +42,7 @@ describe('Editing Operations', function() {
 		undo();
 		helper.typeIntoDocument('{ctrl}y');
 
-		helper.selectAllText();
+		impressHelper.selectTextOfShape();
 
 		helper.expectTextForClipboard('Hello World');
 	});
@@ -48,31 +50,17 @@ describe('Editing Operations', function() {
 	it('Repair Document', function() {
 		helper.typeIntoDocument('Hello World');
 
-		helper.typeIntoDocument('{esc}');
-
-		cy.wait(1000);
-
-		impressHelper.selectTextShapeInTheCenter();
-
-		impressHelper.selectTextOfShape();
-
-		cy.wait(1000);
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		helper.typeIntoDocument('Overwrite Text');
 
-		helper.typeIntoDocument('{esc}');
-
-		cy.wait(1000);
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		repairHelper.rollbackPastChange('Undo');
 
-		impressHelper.selectTextShapeInTheCenter();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
 		impressHelper.selectTextOfShape();
-
-		cy.wait(1000);
-
-		helper.selectAllText();
 
 		helper.expectTextForClipboard('Hello World');
 	});
