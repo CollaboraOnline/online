@@ -162,7 +162,7 @@ function triggerNewSVGForShapeInTheCenter() {
 // we have already a shape selected. We try to select the
 // text of this shape by double clicking into it, until the
 // cursor becomes visible.
-function selectTextOfShape() {
+function selectTextOfShape(selectAllText = true) {
 	cy.log('Selecting text of shape - start.');
 
 	// Double click onto the selected shape
@@ -191,7 +191,8 @@ function selectTextOfShape() {
 	cy.get('.leaflet-cursor.blinking-cursor')
 		.should('exist');
 
-	helper.selectAllText();
+	if (selectAllText)
+		helper.selectAllText();
 
 	cy.log('Selecting text of shape - end.');
 }
