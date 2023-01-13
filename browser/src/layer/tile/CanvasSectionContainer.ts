@@ -342,6 +342,8 @@ class CanvasSectionContainer {
 	private dirty: boolean = false;
 	private sectionsDirty: boolean = false;
 	private paintedEver: boolean = false;
+	private drawTimeOutID: number = 0; //
+	private drawFrequency: number = 17; // Draw calls won't be issued more often than this value (in milliseconds).
 
 	// For window sections.
 	private windowSectionList: Array<CanvasSectionObject> = [];
@@ -715,6 +717,13 @@ class CanvasSectionContainer {
 		}
 	}
 
+	private drawTimer(): number {
+		return <any>setTimeout(function() {
+			this.drawSections();
+			this.drawTimeOutID = 0;
+		}.bind(this), this.drawFrequency);
+	}
+
 	requestReDraw() {
 		if (!this.drawingAllowed()) {
 			// Someone requested a redraw, but we're paused => schedule a redraw.
@@ -722,8 +731,11 @@ class CanvasSectionContainer {
 			return;
 		}
 
-		if (!this.getAnimatingSectionName())
-			this.drawSections();
+		if (!this.getAnimatingSectionName()) {
+			if (this.drawTimeOutID === 0) {
+				this.drawTimeOutID = this.drawTimer();
+			}
+		}
 	}
 
 	private propagateOnClick(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
@@ -1730,6 +1742,8 @@ class CanvasSectionContainer {
 	}
 
 	private drawSections (frameCount: number = null, elapsedTime: number = null) {
+		//console.log('perf: ' + performance.now());
+
 		this.context.setTransform(1, 0, 0, 1, 0, 0);
 
 		if (!this.zoomChanged) {

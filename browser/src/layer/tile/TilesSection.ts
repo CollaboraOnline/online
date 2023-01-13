@@ -750,7 +750,7 @@ class TilesSection {
 	public onMultiTouchStart () { return; }
 	public onMultiTouchMove () { return; }
 	public onMultiTouchEnd () { return; }
-	public onNewDocumentTopLeft () { return; }
+	public onNewDocumentTopLeft () { this.containerObject.requestReDraw(); }
 }
 
 L.getNewTilesSection = function () {
