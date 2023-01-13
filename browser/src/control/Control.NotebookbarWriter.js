@@ -1459,10 +1459,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			}
 		];
-		// Ideally we would always show the following buttons,
-		// if zotero is not present we would display them
-		// disabled or enabled but trigering a common warn dialog for all of them
-		if (this._map.zotero && this._map.zotero.enable) {
+		if (this._map.zotero) {
 			content.push(
 				{
 					'id': 'zoteroaddeditbibliography',
