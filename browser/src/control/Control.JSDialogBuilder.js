@@ -2481,7 +2481,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'zoterounlink': 'unlinkcitation',
 			'zoteroaddeditbibliography': 'addeditbibliography',
 			'zoterosetdocprefs': 'formproperties',
-			'exportpdf': 'downloadas-pdf',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];

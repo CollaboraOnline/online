@@ -864,7 +864,7 @@ L.Control.Menubar = L.Control.extend({
 
 			]},
 			{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id: 'downloadas', type: 'menu', menu: [
-				{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
+				{name: _('PDF Document (.pdf)'), id: 'exportpdf', type: 'action'},
 				{name: _('ODF text document (.odt)'), id: 'downloadas-odt', type: 'action'},
 				{name: _('Word 2003 Document (.doc)'), id: 'downloadas-doc', type: 'action'},
 				{name: _('Word Document (.docx)'), id: 'downloadas-docx', type: 'action'},
@@ -918,7 +918,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:SetDocumentProperties', 'presentation'), uno: '.uno:SetDocumentProperties', id: 'properties'}
 			]},
 			{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id:'downloadas', type: 'menu', menu: [
-				{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
+				{name: _('PDF Document (.pdf)'), id: 'exportpdf', type: 'action'},
 				{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action'},
 				{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action'},
 				{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action'},
@@ -974,7 +974,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:SetDocumentProperties', 'presentation'), uno: '.uno:SetDocumentProperties', id: 'properties'}
 			]},
 			{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id:'downloadas', type: 'menu', menu: [
-				{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
+				{name: _('PDF Document (.pdf)'), id: 'exportpdf', type: 'action'},
 				{name: _('ODF Drawing (.odg)'), id: 'downloadas-odg', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'presentation'), id: 'editmenu', type: 'menu', menu: [
@@ -1022,7 +1022,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:SetDocumentProperties', 'spreadsheet'), uno: '.uno:SetDocumentProperties', id: 'properties'}
 			]},
 			{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id:'downloadas', type: 'menu', menu: [
-				{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
+				{name: _('PDF Document (.pdf)'), id: 'exportpdf', type: 'action'},
 				{name: _('ODF spreadsheet (.ods)'), id: 'downloadas-ods', type: 'action'},
 				{name: _('Excel 2003 Spreadsheet (.xls)'), id: 'downloadas-xls', type: 'action'},
 				{name: _('Excel Spreadsheet (.xlsx)'), id: 'downloadas-xlsx', type: 'action'}
@@ -1195,7 +1195,7 @@ L.Control.Menubar = L.Control.extend({
 
 		allowedViewModeActions: [
 			'savecomments', 'shareas', 'print', // file menu
-			'downloadas-pdf', 'downloadas-odt', 'downloadas-doc', 'downloadas-docx', 'downloadas-rtf', // file menu
+			'downloadas-odt', 'downloadas-doc', 'downloadas-docx', 'downloadas-rtf', // file menu
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'downloadas-odg', 'exportpdf', 'exportepub', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'downloadas-csv', 'closedocument', // file menu
 			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'showresolved', // view menu
