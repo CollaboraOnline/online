@@ -54,6 +54,8 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			this._map.zotero.insertCitation(values.field);
 		} else if (this._map.zotero && values.setRefs) {
 			this._map.zotero.onFieldValue(values.setRefs);
+		} else if (this._map.zotero && values.setRef) {
+			this._map.zotero.insertCitation(values.setRef);
 		} else if (this._map.zotero && values.bookmarks) {
 			this._map.zotero.handleBookmark(values.bookmarks);
 		} else if (this._map.zotero && values.bookmark) {
