@@ -874,7 +874,7 @@ L.Map.include({
 			break;
 		case 'zoterorefresh':
 			{
-				this.zotero.refreshCitations();
+				this.zotero.refreshCitationsAndBib();
 			}
 			break;
 		case 'exportpdf':

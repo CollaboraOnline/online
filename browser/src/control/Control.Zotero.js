@@ -647,6 +647,8 @@ L.Control.Zotero = L.Control.extend({
 				if (citation) {
 					that.setCitationLayout(citation);
 					that.updateCitations(true);
+					if (that.settings.bibliographyStyleHasBeenSet === '1')
+						that.handleInsertBibliography();
 				} else {
 					var link = csl.getElementsByTagName('link');
 					for (var i = 0; i < link.length; i++) {
@@ -737,10 +739,7 @@ L.Control.Zotero = L.Control.extend({
 			localStorage.setItem('Zotero_LastUsedStyle', this.settings.style);
 	},
 
-	setStyle: function(style) {
-		this.settings.style = style.name;
-		this.settings.hasBibliography = '1';
-
+	getStyleXml: function() {
 		var xmlDoc = new DOMParser().parseFromString('<data></data>', 'text/xml');
 		var dataNode = xmlDoc.getElementsByTagName('data')[0];
 		dataNode.setAttribute('data-version', '3');
@@ -751,7 +750,7 @@ L.Control.Zotero = L.Control.extend({
 		dataNode.appendChild(sessionNode);
 
 		var styleNode = xmlDoc.createElement('style');
-		styleNode.setAttribute('id', 'http://www.zotero.org/styles/' + style.name);
+		styleNode.setAttribute('id', 'http://www.zotero.org/styles/' + this.settings.style);
 		if (this.selectedCitationLangCode)
 			this.settings.locale = this.selectedCitationLangCode;
 		styleNode.setAttribute('locale', this.settings.locale);
@@ -770,6 +769,15 @@ L.Control.Zotero = L.Control.extend({
 
 		dataNode.appendChild(prefsNode);
 
+		return dataNode;
+	},
+
+	setStyle: function(style) {
+		this.settings.style = style.name;
+		this.settings.hasBibliography = '1';
+
+		var dataNode = this.getStyleXml();
+
 		var valueString = dataNode.outerHTML;
 
 		this.setCustomProperty('ZOTERO_PREF_', valueString);
@@ -777,6 +785,17 @@ L.Control.Zotero = L.Control.extend({
 
 		if (window.isLocalStorageAllowed)
 			localStorage.setItem('Zotero_LastUsedStyle', this.settings.style);
+	},
+
+	markBibliographyStyleHasBeenSet: function(unset) {
+		if (unset)
+			this.settings.bibliographyStyleHasBeenSet = '0';
+		else
+			this.settings.bibliographyStyleHasBeenSet = '1';
+
+		var dataNode = this.getStyleXml();
+		var valueString = dataNode.outerHTML;
+		this.setCustomProperty('ZOTERO_PREF_', valueString);
 	},
 
 	getFieldType: function() {
@@ -1039,8 +1058,7 @@ L.Control.Zotero = L.Control.extend({
 			.then(function (response) { return response.text(); })
 			.then(function (html) {
 				that.sendInsertBibCommand(html);
-				that.settings.bibliographyStyleHasBeenSet = '1';
-				that.setStyle({name: that.settings.style}); // update the document meta data about bib being set
+				that.markBibliographyStyleHasBeenSet(); // update the document meta data about bib being set
 			});
 	},
 
@@ -1095,12 +1113,12 @@ L.Control.Zotero = L.Control.extend({
 			this.map.uiManager.showSnackbar(_('Updating citations'));
 	},
 
-	refreshCitations: function() {
+	refreshCitationsAndBib: function() {
 		//discard the cached url and fetch fresh one
-		var refreshURL = 'https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery() + '&itemKey=' + this.getCitationKeys().join(',');
-		if (this._cachedURL[refreshURL])
-			delete this._cachedURL[refreshURL];
+		this._cachedURL = [];
 		this.updateCitations(true);
+		if (this.settings.bibliographyStyleHasBeenSet === '1')
+			this.handleInsertBibliography();
 	},
 
 	sendInsertCitationCommand: function(cslJSON, citationString) {
