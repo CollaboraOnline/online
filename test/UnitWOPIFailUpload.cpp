@@ -660,8 +660,8 @@ public:
         LOK_ASSERT_STATE(_phase, Phase::WaitSecondPutFile);
 
         // Triggered while closing.
-        // LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsExitSave"));
-        // LOK_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsExitSave"));
+        LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsExitSave"));
+        LOK_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsExitSave"));
 
         return nullptr;
     }
