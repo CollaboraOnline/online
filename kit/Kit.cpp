@@ -2454,6 +2454,8 @@ void documentViewCallback(const int type, const char* payload, void* data)
 /// Called by LOK main-loop the central location for data processing.
 int pollCallback(void* pData, int timeoutUs)
 {
+    if (timeoutUs < 0)
+        timeoutUs = SocketPoll::DefaultPollTimeoutMicroS.count();
 #ifndef IOS
     if (!pData)
         return 0;
