@@ -52,6 +52,9 @@ public:
             // We requested the save.
             LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
 
+            // Certainly not exiting yet.
+            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsExitSave"));
+
             // Fail with error.
             LOG_TST("assertPutFileRequest: returning 404 to simulate PutFile failure");
             return Util::make_unique<http::Response>(http::StatusLine(404));
