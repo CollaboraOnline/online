@@ -272,14 +272,14 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:InsertBookmark'},
 				{uno: '.uno:InsertReferenceField'},
-				{type: 'separator'},
-				{name: _('Add Citation'), id: 'zoteroaddeditcitation', type: 'action'},
-				{name: _('Add Citation Note'), id: 'zoteroaddnote', type: 'action'},
-				{name: _('Add Bibliography'), id: 'zoteroaddeditbibliography', type: 'action'},
-				{type: 'separator'},
-				{name: _('Refresh Citations'), id: 'zoterorefresh', type: 'action'},
-				{name: _('Unlink Citations'), id: 'zoterounlink', type: 'action'},
-				{name: _('Citations Preferences'), id: 'zoterosetdocprefs', type: 'action', iosapp: false}]
+				{type: 'separator', hidden: !window.zoteroEnabled},
+				{name: _('Add Citation'), id: 'zoteroaddeditcitation', type: 'action', hidden: !window.zoteroEnabled},
+				{name: _('Add Citation Note'), id: 'zoteroaddnote', type: 'action', hidden: !window.zoteroEnabled},
+				{name: _('Add Bibliography'), id: 'zoteroaddeditbibliography', type: 'action', hidden: !window.zoteroEnabled},
+				{type: 'separator', hidden: !window.zoteroEnabled},
+				{name: _('Refresh Citations'), id: 'zoterorefresh', type: 'action', hidden: !window.zoteroEnabled},
+				{name: _('Unlink Citations'), id: 'zoterounlink', type: 'action', hidden: !window.zoteroEnabled},
+				{name: _('Citations Preferences'), id: 'zoterosetdocprefs', type: 'action', iosapp: false, hidden: !window.zoteroEnabled}]
 			},
 			{name: _UNO('.uno:TableMenu', 'text'), type: 'menu', id: 'table', menu: [
 				{uno: '.uno:InsertTable'},
