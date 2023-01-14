@@ -45,14 +45,14 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		else if (values.redlines && values.redlines.length > 0) {
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importChanges(values.redlines);
 		}
-		else if (values.userDefinedProperties) {
+		else if (this._map.zotero && values.userDefinedProperties) {
 			this._map.zotero.handleCustomProperty(values.userDefinedProperties);
 		}
-		else if (values.fields) {
+		else if (this._map.zotero && values.fields) {
 			this._map.zotero.onFieldValue(values.fields);
-		} else if (values.setRefs) {
+		} else if (this._map.zotero && values.setRefs) {
 			this._map.zotero.onFieldValue(values.setRefs);
-		} else if (values.bookmarks) {
+		} else if (this._map.zotero && values.bookmarks) {
 			this._map.zotero.handleBookmark(values.bookmarks);
 		}
 		else {
