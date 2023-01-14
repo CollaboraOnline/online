@@ -45,9 +45,15 @@ public:
 
         // The document is modified.
         LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
+        LOK_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
 
         // Triggered manually or during closing, not auto-save.
         LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
+        LOK_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsAutosave"));
+
+        // Certainly not exiting yet.
+        LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsExitSave"));
+        LOK_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsExitSave"));
 
         LOK_ASSERT_MESSAGE("Unexpected phase", _phase == Phase::WaitModifiedStatus ||
                                                    _phase == Phase::WaitUnmodifiedStatus);
