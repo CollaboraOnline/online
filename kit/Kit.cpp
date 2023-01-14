@@ -2391,7 +2391,7 @@ protected:
 #if !MOBILEAPP
             LOG_INF("Terminating immediately due to parent 'exit' command.");
             flushTraceEventRecordings();
-            Util::forcedExit(EX_SOFTWARE);
+            Util::forcedExit(EX_OK);
 #else
 #ifdef IOS
             LOG_INF("Setting our KitSocketPoll's termination flag due to 'exit' command.");
