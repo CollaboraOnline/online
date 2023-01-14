@@ -26,8 +26,10 @@
 /// Modify, Save, Upload fails, close -> Upload.
 class UnitWOPIAsyncUpload_Close : public WopiTestServer
 {
-    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitFirstPutFile, Close,
-               WaitSecondPutFile, Done)
+    using Base = WopiTestServer;
+
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitFirstPutFile, WaitSecondPutFile,
+               Done)
     _phase;
 
 public:
@@ -64,8 +66,6 @@ public:
 
         // Triggered while closing.
         LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
-
-        passTest("Document uploaded on closing as expected.");
 
         return nullptr;
     }
@@ -104,8 +104,22 @@ public:
 
         if (_phase == Phase::WaitFirstPutFile)
         {
-            TRANSITION_STATE(_phase, Phase::Close);
+            TRANSITION_STATE(_phase, Phase::WaitSecondPutFile);
+
+            WSD_CMD("closedocument");
         }
+    }
+
+    // Wait for clean unloading.
+    void onDocBrokerDestroy(const std::string& docKey) override
+    {
+        LOG_TST("Destroyed dockey [" << docKey << "] closed.");
+        LOK_ASSERT_STATE(_phase, Phase::WaitSecondPutFile);
+
+        TRANSITION_STATE(_phase, Phase::Done);
+        passTest("Document uploaded on closing as expected.");
+
+        Base::onDocBrokerDestroy(docKey);
     }
 
     void invokeWSDTest() override
@@ -126,14 +140,6 @@ public:
             case Phase::WaitModifiedStatus:
             case Phase::WaitFirstPutFile:
             case Phase::WaitSecondPutFile:
-                break;
-            case Phase::Close:
-            {
-                TRANSITION_STATE(_phase, Phase::WaitSecondPutFile);
-
-                WSD_CMD("closedocument");
-                break;
-            }
             case Phase::Done:
             {
                 // just wait for the results
