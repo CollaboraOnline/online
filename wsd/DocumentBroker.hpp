@@ -1444,6 +1444,9 @@ private:
     /// Embedded media map [id, json].
     std::map<std::string, std::string> _embeddedMedia;
 
+    /// True iff the config per_document.always_save_on_exit is true.
+    const bool _alwaysSaveOnExit;
+
     // Last member.
 #ifdef ENABLE_DEBUG
     /// The UnitWSD instance. We capture it here since
