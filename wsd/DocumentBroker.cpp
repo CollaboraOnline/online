@@ -147,6 +147,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _debugRenderedTileCount(0)
     , _wopiDownloadDuration(0)
     , _mobileAppDocId(mobileAppDocId)
+    , _alwaysSaveOnExit(COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false))
 #ifdef ENABLE_DEBUG
     , _unitWsd(UnitWSD::get())
 #endif
@@ -158,8 +159,9 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     assert(_mobileAppDocId > 0);
 #endif
 
-    LOG_INF("DocumentBroker [" << COOLWSD::anonymizeUrl(_uriPublic.toString()) <<
-            "] created with docKey [" << _docKey << ']');
+    LOG_INF("DocumentBroker [" << COOLWSD::anonymizeUrl(_uriPublic.toString())
+                               << "] created with docKey [" << _docKey
+                               << "], always_save_on_exit: " << _alwaysSaveOnExit);
 
     if (UnitWSD::isUnitTesting())
     {
@@ -1226,9 +1228,7 @@ DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
     // If unloadRequested is set, assume we will unload after uploading and exit.
     if (isMarkedToDestroy() || _docState.isUnloadRequested())
     {
-        static const bool always_save
-            = COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
-        if (always_save)
+        if (_alwaysSaveOnExit)
         {
             if (_documentChangedInStorage)
             {
@@ -2406,7 +2406,7 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
         const std::size_t activeSessionCount = countActiveSessions();
 
         const bool lastEditableSession = session->isEditable() && !haveAnotherEditableSession(id);
-        static const bool dontSaveIfUnmodified = !COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
+        const bool dontSaveIfUnmodified = !_alwaysSaveOnExit;
 
         LOG_INF("Removing session [" << id << "] on docKey [" << _docKey << "]. Have "
                                      << _sessions.size() << " sessions (" << activeSessionCount
