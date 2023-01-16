@@ -84,7 +84,7 @@ L.Control.Zotero = L.Control.extend({
 
 	askForApiKey: function () {
 		this.map.fire('postMessage', {msgId: 'UI_ZoteroKeyMissing'});
-		this.map.uiManager.showSnackbar(_('Zotero API key not configured'));
+		this.map.uiManager.showSnackbar(_('Zotero API key is not configured'));
 	},
 
 	onUpdateViews: function () {

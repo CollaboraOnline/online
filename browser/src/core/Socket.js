@@ -1128,7 +1128,7 @@ app.definitions.Socket = L.Class.extend({
 			if (textMsg.startsWith('saveas:')) {
 				var userName = command.username ? command.username : _('Someone');
 				vex.dialog.confirm({
-					message: userName +  _(' saved this document as ') + command.filename + _('. Do you want to join?'),
+					message: _('%userName saved this document as %fileName. Do you want to join?').replace('%userName', userName).replace('%fileName', command.filename),
 					callback: L.bind(function (val) {
 						if (val) this._renameOrSaveAsCallback(textMsg, command);
 					}, this)
