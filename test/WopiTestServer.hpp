@@ -240,7 +240,7 @@ protected:
         std::ostringstream jsonStream;
         fileInfo->stringify(jsonStream);
 
-        http::Response httpResponse(http::StatusLine(200));
+        http::Response httpResponse(http::StatusCode::OK);
         httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
         httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
         socket->sendAndShutdown(httpResponse);
@@ -254,7 +254,7 @@ protected:
     virtual bool handleGetFileRequest(const Poco::Net::HTTPRequest&,
                                       std::shared_ptr<StreamSocket>& socket)
     {
-        http::Response httpResponse(http::StatusLine(200));
+        http::Response httpResponse(http::StatusCode::OK);
         httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
         httpResponse.setBody(getFileContent(), "application/octet-stream");
         socket->sendAndShutdown(httpResponse);
@@ -308,12 +308,12 @@ protected:
                 if (op == "LOCK" || op == "UNLOCK")
                 {
                     assertLockRequest(request);
-                    http::Response httpResponse(http::StatusLine(200));
+                    http::Response httpResponse(http::StatusCode::OK);
                     socket->sendAndShutdown(httpResponse);
                 }
                 else
                 {
-                    http::Response httpResponse(http::StatusLine(409));
+                    http::Response httpResponse(http::StatusCode::Conflict);
                     httpResponse.set("X-WOPI-LockFailureReason", "Invalid lock operation");
                     socket->sendAndShutdown(httpResponse);
                 }
@@ -343,7 +343,7 @@ protected:
                     content = "{ \"Name\":\"hello\", \"Url\":\"" + wopiURL + "\" }";
                 }
 
-                http::Response httpResponse(http::StatusLine(200));
+                http::Response httpResponse(http::StatusCode::OK);
                 httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
                 httpResponse.setBody(content, "application/json; charset=utf-8");
                 socket->sendAndShutdown(httpResponse);
@@ -364,7 +364,7 @@ protected:
                     Util::getIso8601FracformatTime(getFileLastModifiedTime());
                 if (wopiTimestamp != fileModifiedTime)
                 {
-                    http::Response httpResponse(http::StatusLine(409));
+                    http::Response httpResponse(http::StatusCode::Conflict);
                     httpResponse.setBody(
                         "{\"COOLStatusCode\":" +
                         std::to_string(static_cast<int>(COOLStatusCode::DocChanged)) + '}');
@@ -400,7 +400,7 @@ protected:
                                          "\" }";
                 LOG_TST("Fake wopi host (default) response to POST " << uriReq.getPath()
                                                                      << ": 200 OK " << body);
-                http::Response httpResponse(http::StatusLine(200));
+                http::Response httpResponse(http::StatusCode::OK);
                 httpResponse.setBody(body, "application/json; charset=utf-8");
                 socket->sendAndShutdown(httpResponse);
             }
