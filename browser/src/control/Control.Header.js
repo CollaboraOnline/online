@@ -521,9 +521,7 @@ L.Control.Header = L.Class.extend({
 		}
 	},
 
-	onNewDocumentTopLeft: function () {
-		this._updateCanvas();
-	},
+	onNewDocumentTopLeft: function () { },
 
 	onMouseWheel: function() {},
 });
