@@ -867,7 +867,7 @@ L.Map.include({
 			break;
 		case 'zoteroaddeditbibliography':
 			{
-				this.zotero.handleInsertBibliography();
+				this.zotero.insertBibliography();
 			}
 			break;
 		case 'zoteroaddnote':
