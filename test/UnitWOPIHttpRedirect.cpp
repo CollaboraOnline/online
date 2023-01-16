@@ -98,7 +98,7 @@ public:
             std::ostringstream jsonStream;
             fileInfo->stringify(jsonStream);
 
-            http::Response httpResponse(http::StatusLine(200));
+            http::Response httpResponse(http::StatusCode::OK);
             httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
             httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
             socket->sendAndShutdown(httpResponse);
@@ -135,7 +135,7 @@ public:
             LOK_ASSERT_MESSAGE("Expected to be in Phase::Redirected2", _phase == Phase::Redirected2);
             _phase = Phase::Loaded;
 
-            http::Response httpResponse(http::StatusLine(200));
+            http::Response httpResponse(http::StatusCode::OK);
             httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
             httpResponse.setBody(getFileContent(), "text/plain; charset=utf-8");
             socket->sendAndShutdown(httpResponse);

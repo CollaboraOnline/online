@@ -122,7 +122,7 @@ public:
         }
 
         // Internal Server Error.
-        return Util::make_unique<http::Response>(http::StatusLine(500));
+        return Util::make_unique<http::Response>(http::StatusCode::InternalServerError);
     }
 
     bool onDocumentModified(const std::string& message) override
@@ -231,7 +231,7 @@ public:
             LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
 
             // File unknown/User unauthorized.
-            return Util::make_unique<http::Response>(http::StatusLine(404));
+            return Util::make_unique<http::Response>(http::StatusCode::NotFound);
         }
 
         // This during closing the document.
@@ -520,7 +520,7 @@ public:
 
             // Fail with error.
             LOG_TST("Simulate PutFile failure");
-            return Util::make_unique<http::Response>(http::StatusLine(500));
+            return Util::make_unique<http::Response>(http::StatusCode::InternalServerError);
         }
 
         if (getCountPutFile() == 2)
@@ -528,7 +528,7 @@ public:
             LOG_TST("Second PutFile, which will also fail");
 
             LOG_TST("Simulate PutFile failure (again)");
-            return Util::make_unique<http::Response>(http::StatusLine(500));
+            return Util::make_unique<http::Response>(http::StatusCode::InternalServerError);
         }
 
         if (getCountPutFile() == 3)

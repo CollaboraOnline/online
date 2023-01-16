@@ -3736,7 +3736,7 @@ bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& messa
 
                 std::string aDataString(_aResposeData.data(), _aResposeData.size());
                 // really not ideal that the response works only with std::string
-                http::Response httpResponse(http::StatusLine(200));
+                http::Response httpResponse(http::StatusCode::OK);
                 httpResponse.setBody(aDataString, "image/png");
                 httpResponse.set("Connection", "close");
                 _socket->sendAndShutdown(httpResponse);

@@ -3736,7 +3736,7 @@ private:
                 catch (const Poco::Net::NotAuthenticatedException& exc)
                 {
                     //LOG_ERR("FileServerRequestHandler::NotAuthenticated: " << exc.displayText());
-                    http::Response httpResponse(http::StatusLine(401));
+                    http::Response httpResponse(http::StatusCode::Unauthorized);
                     httpResponse.set("Content-Type", "text/html charset=UTF-8");
                     httpResponse.set("WWW-authenticate", "Basic realm=\"online\"");
                     socket->sendAndShutdown(httpResponse);
@@ -3829,7 +3829,7 @@ private:
 
             // Bad request.
             // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
-            http::Response httpResponse(http::StatusLine(400));
+            http::Response httpResponse(http::StatusCode::BadRequest);
             httpResponse.set("Content-Length", "0");
             socket->sendAndShutdown(httpResponse);
             socket->ignoreInput();
@@ -3893,7 +3893,7 @@ private:
         const std::string mimeType = "text/plain";
         const std::string responseString = "OK";
 
-        http::Response httpResponse(http::StatusLine(200));
+        http::Response httpResponse(http::StatusCode::OK);
         httpResponse.set("Content-Length", std::to_string(responseString.size()));
         httpResponse.set("Content-Type", mimeType);
         httpResponse.set("Last-Modified", Util::getHttpTimeNow());
@@ -3940,7 +3940,7 @@ private:
             srvUrl = requestDetails.getProxyPrefix();
         Poco::replaceInPlace(xml, std::string("%SRV_URI%"), srvUrl);
 
-        http::Response httpResponse(http::StatusLine(200));
+        http::Response httpResponse(http::StatusCode::OK);
         httpResponse.setBody(xml, "text/xml");
         httpResponse.set("Last-Modified", Util::getHttpTimeNow());
         httpResponse.set("X-Content-Type-Options", "nosniff");
@@ -3958,7 +3958,7 @@ private:
 
         const std::string capabilities = getCapabilitiesJson(request, socket);
 
-        http::Response httpResponse(http::StatusLine(200));
+        http::Response httpResponse(http::StatusCode::OK);
         httpResponse.set("Last-Modified", Util::getHttpTimeNow());
         httpResponse.setBody(capabilities, "application/json");
         httpResponse.set("X-Content-Type-Options", "nosniff");
@@ -4003,7 +4003,7 @@ private:
             LOG_ERR(errMsg);
 
             // we got the wrong request.
-            http::Response httpResponse(http::StatusLine(400));
+            http::Response httpResponse(http::StatusCode::BadRequest);
             httpResponse.set("Content-Length", "0");
             socket->sendAndShutdown(httpResponse);
             socket->ignoreInput();
@@ -4077,7 +4077,7 @@ private:
         LOG_DBG("HTTP request: " << request.getURI());
         const std::string responseString = "User-agent: *\nDisallow: /\n";
 
-        http::Response httpResponse(http::StatusLine(200));
+        http::Response httpResponse(http::StatusCode::OK);
         httpResponse.set("Last-Modified", Util::getHttpTimeNow());
         httpResponse.set("Content-Length", std::to_string(responseString.size()));
         httpResponse.set("Content-Type", "text/plain");
@@ -4130,7 +4130,7 @@ private:
             LOG_ERR(errMsg);
 
             // we got the wrong request.
-            http::Response httpResponse(http::StatusLine(400));
+            http::Response httpResponse(http::StatusCode::BadRequest);
             httpResponse.set("Content-Length", "0");
             socket->sendAndShutdown(httpResponse);
             socket->ignoreInput();
@@ -4149,7 +4149,7 @@ private:
                     "Unknown DocBroker reference in media URL: " + request.getURI();
                 LOG_ERR(errMsg);
 
-                http::Response httpResponse(http::StatusLine(400));
+                http::Response httpResponse(http::StatusCode::BadRequest);
                 httpResponse.set("Content-Length", "0");
                 socket->sendAndShutdown(httpResponse);
                 socket->ignoreInput();
@@ -4342,7 +4342,7 @@ private:
             if (!allowConvertTo(socket->clientAddress(), request))
             {
                 LOG_WRN("Conversion requests not allowed from this address: " << socket->clientAddress());
-                http::Response httpResponse(http::StatusLine(403));
+                http::Response httpResponse(http::StatusCode::Forbidden);
                 httpResponse.set("Content-Length", "0");
                 socket->sendAndShutdown(httpResponse);
                 socket->ignoreInput();
@@ -4386,7 +4386,7 @@ private:
                         && strcasecmp(pdfVer.c_str(), "PDF-1.5") && strcasecmp(pdfVer.c_str(), "PDF-1.6"))
                     {
                         LOG_ERR("Wrong PDF type: " << pdfVer << ". Conversion aborted.");
-                        http::Response httpResponse(http::StatusLine(400));
+                        http::Response httpResponse(http::StatusCode::BadRequest);
                         httpResponse.set("Content-Length", "0");
                         socket->sendAndShutdown(httpResponse);
                         socket->ignoreInput();
@@ -4461,7 +4461,7 @@ private:
 
                     handler.takeFile();
 
-                    http::Response httpResponse(http::StatusLine(200));
+                    http::Response httpResponse(http::StatusCode::OK);
                     httpResponse.set("Content-Length", "0");
                     socket->sendAndShutdown(httpResponse);
                     socket->ignoreInput();
@@ -4545,7 +4545,7 @@ private:
                 else
                     LOG_ERR("Download with id [" << downloadId << "] not found.");
 
-                http::Response httpResponse(http::StatusLine(404));
+                http::Response httpResponse(http::StatusCode::NotFound);
                 httpResponse.set("Content-Length", "0");
                 socket->sendAndShutdown(httpResponse);
             }

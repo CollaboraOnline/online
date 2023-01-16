@@ -113,7 +113,7 @@ public:
                 std::ostringstream jsonStream;
                 fileInfo->stringify(jsonStream);
 
-                http::Response httpResponse(http::StatusLine(200));
+                http::Response httpResponse(http::StatusCode::OK);
                 httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
                 httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
                 socket->sendAndShutdown(httpResponse);
