@@ -928,7 +928,7 @@ protected:
             socket->setSocketBufferSize(0);
 #endif
 
-        http::Response httpResponse(http::StatusLine(101));
+        http::Response httpResponse(http::StatusCode::SwitchingProtocols);
         httpResponse.set("Upgrade", "websocket");
         httpResponse.set("Connection", "Upgrade");
         httpResponse.set("Sec-WebSocket-Accept", PublicComputeAccept::doComputeAccept(wsKey));

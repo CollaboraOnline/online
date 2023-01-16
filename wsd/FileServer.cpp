@@ -445,7 +445,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
                 const std::string fileModifiedTime = Util::getIso8601FracformatTime(LocalFileInfo::fileInfoVec[i].fileLastModifiedTime);
                 if (wopiTimestamp != fileModifiedTime)
                 {
-                    http::Response httpResponse(http::StatusLine(409));
+                    http::Response httpResponse(http::StatusCode::Conflict);
                     httpResponse.setBody(
                         "{\"COOLStatusCode\":" +
                         std::to_string(static_cast<int>(LocalFileInfo::COOLStatusCode::DocChanged)) + ',' +
@@ -469,7 +469,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             const std::string body = "{\"LastModifiedTime\": \"" +
                                         Util::getIso8601FracformatTime(LocalFileInfo::fileInfoVec[i].fileLastModifiedTime) +
                                         "\" }";
-            http::Response httpResponse(http::StatusLine(200));
+            http::Response httpResponse(http::StatusCode::OK);
             httpResponse.setBody(body);
             socket->send(httpResponse);
             return;

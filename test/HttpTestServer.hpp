@@ -123,7 +123,7 @@ private:
             }
             else
             {
-                http::Response response(http::StatusLine(200));
+                http::Response response(http::StatusCode::OK);
                 if (Util::startsWith(request.getUrl(), "/echo/"))
                 {
                     if (Util::startsWith(request.getUrl(), "/echo/chunked/"))
@@ -158,7 +158,7 @@ private:
         }
         else
         {
-            http::Response response(http::StatusLine(501));
+            http::Response response(http::StatusCode::NotImplemented);
             response.set("Content-Length", "0");
             socket->send(response);
         }
