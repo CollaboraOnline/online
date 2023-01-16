@@ -36,4 +36,5 @@ button:not(.ui-corner-all):not(.button-primary):hover {
 
 .button-primary:hover {
 	background-color: var(--color-primary-lighter);
+	color: var(--color-primary-dark);
 }
