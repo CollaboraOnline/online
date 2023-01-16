@@ -149,6 +149,83 @@ STATE_ENUM(FieldParseState,
            Valid //< The field is both complete and valid.
 );
 
+/// Named HTTP Status Codes.
+/// See https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+enum class StatusCode : unsigned
+{
+    // Informational
+    Continue = 100,
+    SwitchingProtocols = 101,
+    Processing = 102, // RFC 2518 (WebDAV)
+    EarlyHints = 103, // RFC 8297
+
+    // Successful
+    OK = 200,
+    Created = 201,
+    Accepted = 202,
+    NonAuthoritativeInformation = 203,
+    NoContent = 204,
+    ResetContent = 205,
+    PartialContent = 206,
+    MultiStatus = 207, // RFC 4918 (WebDAV)
+    AlreadyReported = 208, // RFC 5842 (WebDAV)
+    IMUsed = 226, // RFC 3229
+
+    // Redirection
+    MultipleChoices = 300,
+    MovedPermanently = 301,
+    Found = 302,
+    SeeOther = 303,
+    NotModified = 304,
+    UseProxy = 305,
+    TemporaryRedirect = 307,
+
+    // Client Error
+    BadRequest = 400,
+    Unauthorized = 401,
+    PaymentRequired = 402,
+    Forbidden = 403,
+    NotFound = 404,
+    MethodNotAllowed = 405,
+    NotAcceptable = 406,
+    ProxyAuthenticationRequired = 407,
+    RequestTimeout = 408,
+    Conflict = 409,
+    Gone = 410,
+    LengthRequired = 411,
+    PreconditionFailed = 412,
+    PayloadTooLarge = 413, // Previously called "Request Entity Too Large"
+    URITooLong = 414, // Previously called "Request-URI Too Long"
+    UnsupportedMediaType = 415,
+    RangeNotSatisfiable = 416, // Previously called "Requested Range Not Satisfiable"
+    ExpectationFailed = 417,
+    ImATeapot = 418, // RFC 2324, RFC 7168 (April's fool)
+    MisdirectedRequest = 421, // RFC 7540
+    UnprocessableEntity = 422, // RFC 4918 (WebDAV)
+    Locked = 423, // RFC 4918 (WebDAV)
+    FailedDependency = 424, // RFC 4918 (WebDAV)
+    TooEarly = 425, // RFC 8470
+    UpgradeRequired = 426,
+    PreconditionRequired = 428, // RFC 6585
+    TooManyRequests = 429, // RFC 6585
+    RequestHeaderFieldsTooLarge = 431, // RFC 6585
+    LoginTimeout = 440, // IIS
+    RetryWith = 449, // IIS
+    UnavailableForLegalReasons = 451, // RFC 7725 and IIS Redirect
+
+    // Server Error
+    InternalServerError = 500,
+    NotImplemented = 501,
+    BadGateway = 502,
+    ServiceUnavailable = 503,
+    GatewayTimeout = 504,
+    HTTPVersionNotSupported = 505,
+    InsufficientStorage = 507, // RFC 4918 (WebDAV)
+    LoopDetected = 508, // RFC 5842 (WebDAV)
+    NotExtended = 510, // RFC 2774
+    NetworkAuthenticationRequired = 511, // RFC 6585
+};
+
 /// Returns the Reason Phrase for a given HTTP Status Code.
 /// If not defined, "Unknown" is returned.
 /// The Reason Phrase is informational only, but it helps
@@ -161,11 +238,13 @@ static inline const char* getReasonPhraseForCode(int code)
         return R;
     switch (code)
     {
+        // Informational
         CASE(100, "Continue");
         CASE(101, "Switching Protocols");
         CASE(102, "Processing"); // RFC 2518 (WebDAV)
         CASE(103, "Early Hints"); // RFC 8297
 
+        // Successful
         CASE(200, "OK");
         CASE(201, "Created");
         CASE(202, "Accepted");
@@ -177,6 +256,7 @@ static inline const char* getReasonPhraseForCode(int code)
         CASE(208, "Already Reported"); // RFC 5842 (WebDAV)
         CASE(226, "IM Used"); // RFC 3229
 
+        // Redirection
         CASE(300, "Multiple Choices");
         CASE(301, "Moved Permanently");
         CASE(302, "Found");
@@ -185,6 +265,7 @@ static inline const char* getReasonPhraseForCode(int code)
         CASE(305, "Use Proxy");
         CASE(307, "Temporary Redirect");
 
+        // Client Error
         CASE(400, "Bad Request");
         CASE(401, "Unauthorized");
         CASE(402, "Payment Required");
@@ -217,6 +298,7 @@ static inline const char* getReasonPhraseForCode(int code)
         CASE(449, "Retry With"); // IIS
         CASE(451, "Unavailable For Legal Reasons"); // RFC 7725 and IIS Redirect
 
+        // Server Error
         CASE(500, "Internal Server Error");
         CASE(501, "Not Implemented");
         CASE(502, "Bad Gateway");
@@ -613,6 +695,11 @@ public:
     {
     }
 
+    StatusLine(StatusCode statusCode)
+        : StatusLine(static_cast<unsigned>(statusCode))
+    {
+    }
+
     /// The Status Code class of the response.
     /// None of these implies complete receipt of the response.
     STATE_ENUM(StatusCodeClass,
@@ -700,6 +787,13 @@ public:
     {
         _header.add("Date", Util::getHttpTimeNow());
         _header.add("Server", HTTP_SERVER_STRING);
+    }
+
+    /// A response sent from a server.
+    /// Used for generating an outgoing response.
+    Response(StatusCode statusCode)
+        : Response(StatusLine(statusCode))
+    {
     }
 
     /// The state of an incoming response, when parsing.
@@ -1486,7 +1580,7 @@ private:
                 _connected = true;
 
                 LOG_DBG('#' << socket->getFD() << " Sending header with size " << _size);
-                http::Response httpResponse(http::StatusLine(200));
+                http::Response httpResponse(http::StatusCode::OK);
                 httpResponse.set("Content-Length", std::to_string(_size));
                 httpResponse.set("Content-Type", _mimeType);
                 httpResponse.set("accept-ranges", "bytes");
@@ -1498,7 +1592,7 @@ private:
             }
 
             LOG_DBG('#' << socket->getFD() << " Has no data to send back");
-            http::Response httpResponse(http::StatusLine(400));
+            http::Response httpResponse(http::StatusCode::BadRequest);
             httpResponse.set("Content-Length", "0");
             socket->sendAndShutdown(httpResponse);
         }
