@@ -23,6 +23,14 @@
 
 ![](https://raw.githubusercontent.com/CollaboraOnline/CollaboraOnline.github.io/master/static/images/homepage-image.png)
 
+
+## Get in touch 💬
+
+* [📋 Forum](forum.collaboraonline.com/)
+* [👥 Facebook](https://www.facebook.com/collaboraoffice/)
+* [🐣 Twitter](https://twitter.com/CollaboraOffice)
+* [🐘 Mastodon](https://mastodon.social/@CollaboraOffice)
+
 ## Key features
 * View and edit text documents, spreadsheets, presentations & more
 * Collaborative editing features
