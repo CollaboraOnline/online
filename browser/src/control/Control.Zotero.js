@@ -1212,6 +1212,18 @@ L.Control.Zotero = L.Control.extend({
 			};
 			command = '.uno:DeleteBookmarks';
 			this.setCustomProperty('ZOTERO_BREF_', ''); // deletes stored CSL data from custom properties
+		} else if (this.getFieldType() === 'ReferenceMark') {
+			parametes = {
+				'TypeName': {
+					'type': 'string',
+					'value': 'SetRef'
+				},
+				'NamePrefix': {
+					'type': 'string',
+					'value': 'ZOTERO_ITEM CSL_CITATION'
+				}
+			};
+			command = '.uno:DeleteFields';
 		}
 		this.map.sendUnoCommand(command, parametes);
 		this.resetCitation();
