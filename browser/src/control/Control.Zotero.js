@@ -1203,6 +1203,15 @@ L.Control.Zotero = L.Control.extend({
 				},
 			};
 			command = '.uno:DeleteTextFormFields';
+		} else if (this.getFieldType() === 'Bookmark') {
+			parametes = {
+				'BookmarkNamePrefix': {
+					'type': 'string',
+					'value': 'ZOTERO_BREF_'
+				}
+			};
+			command = '.uno:DeleteBookmarks';
+			this.setCustomProperty('ZOTERO_BREF_', ''); // deletes stored CSL data from custom properties
 		}
 		this.map.sendUnoCommand(command, parametes);
 		this.resetCitation();
