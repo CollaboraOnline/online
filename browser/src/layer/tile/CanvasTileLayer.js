@@ -1060,7 +1060,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				setTimeout(this.update.bind(this), 200);
 			}, this._painter);
 		}
-		else {
+		else if (this._docType !== 'spreadsheet') { // See scroll section. panBy is used for spreadsheets while scrolling.
 			this._map.on('movestart', this._painter.startUpdates, this._painter);
 			this._map.on('moveend', this._painter.stopUpdates, this._painter);
 		}

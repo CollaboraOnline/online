@@ -579,7 +579,8 @@ class ScrollSection {
 			this.sectionProperties.drawVerticalScrollBar = true;
 			this.sectionProperties.mouseIsOnVerticalScrollBar = true;
 			this.sectionProperties.mapPane.style.cursor = 'pointer';
-			this.containerObject.requestReDraw();
+			if (!this.containerObject.draggingSomething && !(<any>window).mode.isDesktop())
+				this.containerObject.requestReDraw();
 		}
 	}
 
@@ -608,7 +609,8 @@ class ScrollSection {
 			this.sectionProperties.drawHorizontalScrollBar = true;
 			this.sectionProperties.mouseIsOnHorizontalScrollBar = true;
 			this.sectionProperties.mapPane.style.cursor = 'pointer';
-			this.containerObject.requestReDraw();
+			if (!this.containerObject.draggingSomething && !(<any>window).mode.isDesktop())
+				this.containerObject.requestReDraw();
 		}
 	}
 
