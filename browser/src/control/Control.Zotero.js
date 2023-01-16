@@ -744,7 +744,11 @@ L.Control.Zotero = L.Control.extend({
 		var locale = styleNode.getAttribute('locale');
 		if (locale)
 			this.settings.locale = locale;
-		this.settings.fieldType = value.getElementsByName('fieldType')[0].getAttribute('value');
+		var filedTypeNode = value.getElementsByName('fieldType');
+		if (filedTypeNode && filedTypeNode[0])
+			this.settings.fieldType = filedTypeNode[0].getAttribute('value');
+		else
+			this.settings.fieldType = this.getFieldType();
 		this.settings.hasBibliography = styleNode.getAttribute('hasBibliography');
 		this.settings.bibliographyStyleHasBeenSet = styleNode.getAttribute('bibliographyStyleHasBeenSet');
 
@@ -1061,12 +1065,16 @@ L.Control.Zotero = L.Control.extend({
 			});
 	},
 
-	handleInsertBibliography: function() {
+	insertBibliography: function() {
 		if (!this.enable) {
 			this.askForApiKey();
 			return;
 		}
 
+		this.handleInsertBibliography();
+	},
+
+	handleInsertBibliography: function() {
 		if (!this.settings.style) {
 			this.pendingAction = this.handleInsertBibliography;
 			this.showStyleList();
