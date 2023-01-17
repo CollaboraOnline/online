@@ -93,7 +93,6 @@ L.Control.JSDialog = L.Control.extend({
 		}
 		else {
 			this.clearDialog(id);
-			this.map.focus();
 		}
 	},
 
@@ -156,6 +155,21 @@ L.Control.JSDialog = L.Control.extend({
 		else if (data.action === 'close')
 		{
 			this.close(data.id, false);
+
+			// Manage focus
+			var dialogs = Object.keys(this.dialogs);
+			if (dialogs.length) {
+				var lastKey = dialogs[dialogs.length - 1];
+				var container = this.dialogs[lastKey].container;
+				container.focus();
+				var initialFocusElement =
+					container.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker)');
+				initialFocusElement.focus();
+			}
+			else if (!this.hasDialogOpened()) {
+				this._map.fire('editorgotfocus');
+			}
+
 			return;
 		}
 
