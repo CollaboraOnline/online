@@ -1232,22 +1232,24 @@ DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
         {
             if (_documentChangedInStorage)
             {
-                LOG_WRN("Need to upload per always_save_on_exit config, but the document has a "
-                        "conflict. Cannot force uploading.");
-                return NeedToUpload::Yes; // Still try.
+                LOG_INF("Need to upload per always_save_on_exit config while the document has a "
+                        "conflict");
+            }
+            else
+            {
+                LOG_INF("Need to upload per always_save_on_exit config "
+                        << (isMarkedToDestroy() ? "MarkedToDestroy" : "Unloading"));
             }
 
-            LOG_INF("Need to upload per always_save_on_exit config "
-                    << (isMarkedToDestroy() ? "MarkedToDestroy" : "Unloading"));
-            return NeedToUpload::Force;
+            return NeedToUpload::Yes;
         }
     }
 
-    // Force uploading only for retryable failures, not conflicts.
+    // Force uploading only for retryable failures, not conflicts. See FIXME below.
     if (!_storageManager.lastUploadSuccessful() && !_documentChangedInStorage)
     {
-        LOG_INF("Enabling forced uploading to storage as last attempt had failed.");
-        return NeedToUpload::Force;
+        LOG_DBG("Uploading to storage as last attempt had failed");
+        return NeedToUpload::Yes;
     }
 
     // Finally, see if we have a newer version than storage.
