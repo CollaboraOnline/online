@@ -84,7 +84,10 @@ L.Control.Zotero = L.Control.extend({
 
 	askForApiKey: function () {
 		this.map.fire('postMessage', {msgId: 'UI_ZoteroKeyMissing'});
-		this.map.uiManager.showSnackbar(_('Zotero API key is not configured'));
+		// if empty - integrator supports Zotero and will ask user to provide the key
+		// if undefined/null - integrator doesn't have feature yet - show the warning
+		if (this.apiKey !== '')
+			this.map.uiManager.showSnackbar(_('Zotero API key is not configured'));
 	},
 
 	onUpdateViews: function () {
@@ -107,7 +110,7 @@ L.Control.Zotero = L.Control.extend({
 					that.map.uiManager.refreshNotebookbar();
 				else
 					that.map.uiManager.refreshMenubar();
-			});
+			}, function () { that.map.uiManager.showSnackbar(_('Zotero API key incorrect')); });
 	},
 
 	getTopBarJSON: function () {
