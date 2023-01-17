@@ -59,8 +59,7 @@ public:
         if (_scenario == Scenario::VerifyOverwrite)
         {
             // By default, we don't upload when verifying (unless always_save_on_exit is set).
-            //FIXME: we exit too soon without considering always_save_on_exit.
-            setExpectedPutFile(/*SaveOnExit*/ 0);
+            setExpectedPutFile(SaveOnExit);
         }
         else
         {
@@ -94,32 +93,8 @@ public:
         const std::string wopiTimestamp = request.get("X-COOL-WOPI-Timestamp", std::string());
         const bool force = wopiTimestamp.empty(); // Without a timestamp we force to always store.
 
-        switch (_scenario)
-        {
-            case Scenario::Disconnect:
-                // When we disconnect, we unload the document. So SaveOnExit kicks in.
-                LOK_ASSERT_EQUAL_MESSAGE("Unexpected overwritting the document in storage",
-                                         SaveOnExit, force);
-                break;
-            case Scenario::CloseDiscard:
-            case Scenario::SaveDiscard:
-                break;
-            case Scenario::SaveOverwrite:
-            case Scenario::VerifyOverwrite:
-                if (getCountPutFile() < getExpectedPutFile())
-                {
-                    // These are regular saves.
-                    LOK_ASSERT_EQUAL_MESSAGE("Unexpected overwritting the document in storage",
-                                             false, force);
-                }
-                else
-                {
-                    // The last one is the always_save_on_exit, and has to be forced.
-                    LOK_ASSERT_EQUAL_MESSAGE("Expected forced overwritting the document in storage",
-                                             true, force);
-                }
-                break;
-        }
+        // We don't expect overwriting by forced uploading.
+        LOK_ASSERT_EQUAL_MESSAGE("Unexpected overwritting the document in storage", false, force);
 
         // Internal Server Error.
         return Util::make_unique<http::Response>(http::StatusCode::InternalServerError);
