@@ -97,15 +97,7 @@ public:
         else
         {
             // With always_save_on_exit, we expect exactly one PutFile per document.
-            if (_scenario == Scenario::VerifyOverwrite)
-            {
-                //FIXME: this uncovers a bug with unmodified files!
-                setExpectedPutFile(0);
-            }
-            else
-            {
-                setExpectedPutFile(1);
-            }
+            setExpectedPutFile(1);
         }
     }
 
@@ -118,11 +110,7 @@ public:
         switch (_scenario)
         {
             case Scenario::Disconnect:
-                expectedContents = ModifiedOriginalDocContent; //TODO: save-as in this case.
-                break;
             case Scenario::SaveDiscard:
-                expectedContents = ConflictingDocContent;
-                break;
             case Scenario::CloseDiscard:
                 expectedContents = ConflictingDocContent;
                 break;
