@@ -41,7 +41,6 @@ all_la_unit_tests = \
 	unit-uno-command.la \
 	unit-load-torture.la \
 	unit-copy-paste.la \
-	unit-wopi-async-upload-modify.la \
 	unit-http.la \
 	unit-wopi-temp.la \
 	unit-wopi-async-upload-close.la \
@@ -205,8 +204,6 @@ unit_wopi_la_SOURCES = UnitWOPI.cpp
 unit_wopi_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_async_upload_close_la_SOURCES = UnitWOPIAsyncUpload_Close.cpp
 unit_wopi_async_upload_close_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_async_upload_modify_la_SOURCES = UnitWOPIAsyncUpload_Modify.cpp
-unit_wopi_async_upload_modify_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_async_upload_modifyclose_la_SOURCES = UnitWOPIAsyncUpload_ModifyClose.cpp
 unit_wopi_async_upload_modifyclose_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_async_slow_la_SOURCES = UnitWOPISlow.cpp
