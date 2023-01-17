@@ -1228,23 +1228,20 @@ DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
 
     // When destroying, we might have to force uploading if always_save_on_exit=true.
     // If unloadRequested is set, assume we will unload after uploading and exit.
-    if (isMarkedToDestroy() || _docState.isUnloadRequested())
+    if (isUnloading() && _alwaysSaveOnExit)
     {
-        if (_alwaysSaveOnExit)
+        if (_documentChangedInStorage)
         {
-            if (_documentChangedInStorage)
-            {
-                LOG_INF("Need to upload per always_save_on_exit config while the document has a "
-                        "conflict");
-            }
-            else
-            {
-                LOG_INF("Need to upload per always_save_on_exit config "
-                        << (isMarkedToDestroy() ? "MarkedToDestroy" : "Unloading"));
-            }
-
-            return NeedToUpload::Yes;
+            LOG_INF("Need to upload per always_save_on_exit config while the document has a "
+                    "conflict");
         }
+        else
+        {
+            LOG_INF("Need to upload per always_save_on_exit config "
+                    << (isMarkedToDestroy() ? "MarkedToDestroy" : "Unloading"));
+        }
+
+        return NeedToUpload::Yes;
     }
 
     // Force uploading only for retryable failures, not conflicts. See FIXME below.
