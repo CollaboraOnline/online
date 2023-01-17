@@ -74,8 +74,19 @@ public:
             case Scenario::VerifyOverwrite:
                 break;
             case Scenario::SaveOverwrite:
-                LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage",
-                                         std::string(ConflictingDocContent), getFileContent());
+                if (getCountPutFile() < 3)
+                {
+                    // The first two times the content should be the conflicting one.
+                    LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage",
+                                             std::string(ConflictingDocContent), getFileContent());
+                }
+                else
+                {
+                    // The second time will overwrite with the modified content.
+                    LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage",
+                                             std::string(ModifiedOriginalDocContent),
+                                             getFileContent());
+                }
                 break;
         }
 
@@ -86,11 +97,12 @@ public:
     {
         Base::onDocBrokerCreate(docKey);
 
-        // When overwriting, we will do so twice.
-        // Once to find out that we have a conflict and another time to force it.
         if (_scenario == Scenario::SaveOverwrite)
         {
-            setExpectedPutFile(2);
+            // When overwriting, we will do so thrice.
+            // Once to find out that we have a conflict and another
+            // to force overwriting it. Finally, always_save_on_exit.
+            setExpectedPutFile(3);
         }
         else
         {
