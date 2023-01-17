@@ -323,5 +323,18 @@ L.installContextMenu = function(options) {
 		}
 	};
 	rewrite(options.items);
+
+	if (document.documentElement.dir === 'rtl') {
+		options.positionSubmenu = function($menu) {
+			if (typeof $menu === 'undefined') {
+				return;
+			}
+
+			$menu.css('right', 'auto');
+			$.contextMenu.defaults.positionSubmenu.call(this, $menu);
+			$menu.css('right', $menu.css('left'));
+		};
+	}
+
 	$.contextMenu(options);
 };
