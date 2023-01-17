@@ -321,9 +321,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:ThesaurusDialog'},
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 					{name: _UNO('.uno:SetLanguageSelectionMenu', 'text'), type: 'menu', menu: [
-						{name: _('None (Do not check spelling)'), id: 'noneselection', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}]},
+						{name: _('None (Do not check spelling)'), id: 'noneselection', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}, {name: _('More...'), id: 'fontlanguage', uno: '.uno:FontDialog?Page:string=font'}]},
 					{name: _UNO('.uno:SetLanguageParagraphMenu', 'text'), type: 'menu', menu: [
-						{name: _('None (Do not check spelling)'), id: 'noneparagraph', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
+						{name: _('None (Do not check spelling)'), id: 'noneparagraph', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}, {name: _('More...'), id: 'paragraphlanguage', uno: '.uno:FontDialogForParagraph'}]},
 					{name: _UNO('.uno:SetLanguageAllTextMenu', 'text'), type: 'menu', menu: [
 						{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}, {name: _('More...'), id: 'morelanguage', uno: '.uno:LanguageStatus?Language:string=*'}]}]},
 				{uno: '.uno:WordCountDialog'},
@@ -1301,7 +1301,9 @@ L.Control.Menubar = L.Control.extend({
 			var $menuDefault = $('#menu-nonelanguage').parent();
 
 			var noneselection = $('#menu-noneselection').detach();
+			var fontlanguage = $('#menu-fontlanguage').detach();
 			var noneparagraph = $('#menu-noneparagraph').detach();
+			var paragraphlanguage = $('#menu-paragraphlanguage').detach();
 			var nonelanguage = $('#menu-nonelanguage').detach();
 			var morelanguage = $('#menu-morelanguage').detach();
 
@@ -1329,7 +1331,9 @@ L.Control.Menubar = L.Control.extend({
 			$menuDefault.append(this._createUnoMenuItem(resetLang, constLang + constDefa));
 
 			$menuSelection.append(noneselection);
+			$menuSelection.append(fontlanguage);
 			$menuParagraph.append(noneparagraph);
+			$menuParagraph.append(paragraphlanguage);
 			$menuDefault.append(nonelanguage);
 			$menuDefault.append(morelanguage);
 		}
