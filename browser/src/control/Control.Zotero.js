@@ -520,7 +520,7 @@ L.Control.Zotero = L.Control.extend({
 			function (item) {
 				return { text: item };
 			}
-		)), row: index,
+		)), row: index, state: (this.dialogType === 'itemlist') ? false : undefined,
 		}, entryData));
 	},
 
@@ -950,11 +950,22 @@ L.Control.Zotero = L.Control.extend({
 				this.showItemsForUrl(url);
 				return;
 			} else {
-				this.selected = data.entries[parseInt(index)];
-				if (this.dialogType === 'stylelist') {
-					this.checkStyleTypeAndEnableOK(this.selected.name);
-				} else
+				if (this.dialogType === 'itemlist') {
+					if (action !== 'change')
+						return;
+
+					this.selected = data.entries.filter(function (e) { return e.state === true; });
 					this.enableDialogOKButton();
+				} else {
+					this.selected = data.entries[parseInt(index)];
+
+					if (this.dialogType === 'stylelist') {
+						this.checkStyleTypeAndEnableOK(this.selected.name);
+					} else if (this.dialogType === 'insertnote') {
+						this.enableDialogOKButton();
+					}
+				}
+
 				return;
 			}
 		}
@@ -1014,8 +1025,14 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	_onOk: function (selected) {
-		if (selected.type === 'item') {
-			this.pendingCitationInsertion = [selected.item];
+		if (this.dialogType === 'itemlist') {
+			this.pendingCitationInsertion = [];
+
+			for (var i in selected) {
+			    this.pendingCitationInsertion
+					= this.pendingCitationInsertion.concat([selected[i].item]);
+			}
+
 			this.handleInsertCitation();
 
 			// update all the citations once citations are inserted and we get updated fields
