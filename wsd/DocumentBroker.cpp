@@ -1236,18 +1236,9 @@ DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
         }
     }
 
-    // Force uploading only for retryable failures, not conflicts. See FIXME below.
+    // Force uploading only for retryable failures, not conflicts.
     if (!_storageManager.lastUploadSuccessful() && !_documentChangedInStorage)
     {
-        //FIXME: Forcing is used when overwriting a 'document conflict' and
-        // for uploading when otherwise we might not have an immediate
-        // reason. We shouldn't use a single flag for both these uses.
-        if (_documentChangedInStorage)
-        {
-            LOG_WRN("Last upload failed due to a conflict. Cannot force uploading.");
-            return NeedToUpload::Yes; // Still try.
-        }
-
         LOG_INF("Enabling forced uploading to storage as last attempt had failed.");
         return NeedToUpload::Force;
     }
