@@ -433,6 +433,7 @@ define bundle_all
 			-DCOOL_JS=$(INTERMEDIATE_DIR)/cool-src.js \
 			$(srcdir)/bundle.js.m4 > $(INTERMEDIATE_DIR)/bundle.js
 		@$(NODE) node_modules/uglify-js/bin/uglifyjs \
+			-O max_line_len=100 \
 			$(INTERMEDIATE_DIR)/bundle.js \
 			--output $@)
 endef
