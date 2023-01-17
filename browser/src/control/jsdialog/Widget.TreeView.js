@@ -41,8 +41,10 @@ function _createCheckbox(parentContainer, treeViewData, builder, entry) {
 	if (treeViewData.enabled !== false && treeViewData.enabled !== 'false') {
 		$(checkbox).change(function() {
 			if (this.checked) {
+				treeViewData.entries[entry.row].state = true;
 				builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: true}, builder);
 			} else {
+				treeViewData.entries[entry.row].state = false;
 				builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: false}, builder);
 			}
 		});
