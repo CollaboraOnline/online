@@ -564,7 +564,7 @@ export class ScrollSection extends CanvasSectionObject {
 			this.sectionProperties.drawVerticalScrollBar = true;
 			this.sectionProperties.mouseIsOnVerticalScrollBar = true;
 			this.sectionProperties.mapPane.style.cursor = 'pointer';
-			if (!this.containerObject.draggingSomething && !(<any>window).mode.isDesktop())
+			if (!this.containerObject.isDraggingSomething() && !(<any>window).mode.isDesktop())
 				this.containerObject.requestReDraw();
 		}
 	}
@@ -594,7 +594,7 @@ export class ScrollSection extends CanvasSectionObject {
 			this.sectionProperties.drawHorizontalScrollBar = true;
 			this.sectionProperties.mouseIsOnHorizontalScrollBar = true;
 			this.sectionProperties.mapPane.style.cursor = 'pointer';
-			if (!this.containerObject.draggingSomething && !(<any>window).mode.isDesktop())
+			if (!this.containerObject.isDraggingSomething() && !(<any>window).mode.isDesktop())
 				this.containerObject.requestReDraw();
 		}
 	}
