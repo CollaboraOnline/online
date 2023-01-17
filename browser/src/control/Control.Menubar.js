@@ -1311,10 +1311,6 @@ L.Control.Menubar = L.Control.extend({
 			$menuParagraph.empty();
 			$menuDefault.empty();
 
-			$menuSelection.append(noneselection);
-			$menuParagraph.append(noneparagraph);
-			$menuDefault.append(nonelanguage);
-
 			for (var lang in languages) {
 				translated = languages[lang].translated;
 				neutral = languages[lang].neutral;
@@ -1331,6 +1327,10 @@ L.Control.Menubar = L.Control.extend({
 			$menuSelection.append(this._createUnoMenuItem(resetLang, constLang + constCurr));
 			$menuParagraph.append(this._createUnoMenuItem(resetLang, constLang + constPara));
 			$menuDefault.append(this._createUnoMenuItem(resetLang, constLang + constDefa));
+
+			$menuSelection.append(noneselection);
+			$menuParagraph.append(noneparagraph);
+			$menuDefault.append(nonelanguage);
 		}
 	},
 
