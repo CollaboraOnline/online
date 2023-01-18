@@ -75,7 +75,7 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
         // group defined in alias_groups
         if (Util::iequal(config::getString("storage.wopi.alias_groups[@mode]", "first"), "first"))
         {
-            LOG_ERR("Admins didnot set the alias_groups mode to 'groups'");
+            LOG_ERR("Admins did not set the alias_groups mode to 'groups'");
             AliasHosts.clear();
             return;
         }
