@@ -1263,17 +1263,22 @@ L.Control.Zotero = L.Control.extend({
 			_('Unlinking citations will prevent Collabora Online from updating citations and bibliography in this document.'),
 			null, _('Confirm'), this.handleUnlinkCitations.bind(this));
 	},
+
+	handleRefreshCitationsAndBib: function(showSnackbar) {
+		//discard the cached url and fetch fresh one
+		this._cachedURL = [];
+		this.updateCitations(showSnackbar);
+		if (this.settings.bibliographyStyleHasBeenSet === '1')
+			this.handleInsertBibliography();
+	},
+
 	refreshCitationsAndBib: function() {
 		if (!this.enable) {
 			this.askForApiKey();
 			return;
 		}
 
-		//discard the cached url and fetch fresh one
-		this._cachedURL = [];
-		this.updateCitations(true);
-		if (this.settings.bibliographyStyleHasBeenSet === '1')
-			this.handleInsertBibliography();
+		this.handleRefreshCitationsAndBib(true);
 	},
 
 	handleInsertCitation: function() {
