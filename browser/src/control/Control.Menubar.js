@@ -1739,17 +1739,9 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'print') {
 			this._map.print();
 		} else if (id.startsWith('downloadas-')) {
-			var format = id.substring('downloadas-'.length);
-			var fileName = this._map['wopi'].BaseFileName;
-			fileName = fileName.substr(0, fileName.lastIndexOf('.'));
-			fileName = fileName === '' ? 'document' : fileName;
-			this._map.downloadAs(fileName + '.' + format, format);
+			this._map.dispatch(id);
 		} else if (id.startsWith('saveas-')) {
-			var format = id.substring('saveas-'.length);
-			var fileName = this._map['wopi'].BaseFileName;
-			fileName = fileName.substr(0, fileName.lastIndexOf('.'));
-			fileName = fileName === '' ? 'document' : fileName;
-			this._map.openSaveAs(format);
+			this._map.dispatch(id);
 		} else if (id === 'signdocument') {
 			this._map.showSignDocument();
 		} else if (id === 'insertcomment') {
