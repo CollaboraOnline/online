@@ -460,6 +460,7 @@ var unoCommandsArray = {
 	'Text':{global:{context:_('Insert Text Box'),menu:_('~Text Box'),},},
 	'TextAlign':{global:{menu:_('Align Tex~t'),},},
 	'TextWrap':{text:{menu:_('Text Wrap...'),},},
+	'ThemeDialog':{global:{menu:_('Theme...'),},},
 	'ThesaurusDialog':{global:{menu:_('~Thesaurus...'),},text:{menu:_('~Thesaurus...'),},},
 	'TitlePageDialog':{text:{menu:_('Title Page...'),},},
 	'ToggleMergeCells':{spreadsheet:{context:_('Merge and center or unmerge cells depending on the current toggle state'),menu:_('M~erge and Center Cells'),},},

@@ -771,6 +771,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ChapterNumberingDialog', 'text'),
 				'command': '.uno:ChapterNumberingDialog'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:ThemeDialog'),
+				'command': '.uno:ThemeDialog'
 			}
 		];
 
