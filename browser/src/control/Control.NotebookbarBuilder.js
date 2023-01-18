@@ -427,7 +427,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				$(control.container).w2menu({
 					items: submenuOpts,
 					onSelect: function (event) {
-						L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: event.item.id});
+						builder.map.dispatch(event.item.id);
 					}
 				});
 			});
