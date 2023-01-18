@@ -1822,7 +1822,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var listbox = L.DomUtil.create('select', builder.options.cssClass + ' ui-listbox ', container);
 		listbox.id = data.id + '-input';
-		listbox.tabIndex = '0';
 		var listboxArrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', container);
 		listboxArrow.id = 'listbox-arrow-' + data.id;
 
