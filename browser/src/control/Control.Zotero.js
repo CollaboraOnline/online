@@ -1334,7 +1334,7 @@ L.Control.Zotero = L.Control.extend({
 			return;
 		}
 
-		var citationClusterFields = isNewCitation ? this.pendingCitationInsertion : [existingCitation].concat(this.pendingCitationInsertion);
+		var citationClusterFields = this.pendingCitationInsertion;
 		this.pendingCitationInsertion = [];
 		var citationData = this.getCitationJSONString(citationClusterFields);
 		var parameters = isNewCitation ? this.getFieldParameters(citationData.jsonString, citationData.citationString) : this.getFieldUpdateParameters(citationData.jsonString, citationData.citationString);
