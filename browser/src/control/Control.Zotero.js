@@ -624,7 +624,7 @@ L.Control.Zotero = L.Control.extend({
 				that.map.uiManager.showSnackbar(_('Failed to load collections'));
 			});
 
-		this.showItemsForUrl('https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery());
+		this.showItemsForUrl('https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery(), true);
 	},
 
 	showStyleList: function() {
@@ -920,7 +920,7 @@ L.Control.Zotero = L.Control.extend({
 		}
 	},
 
-	showItemsForUrl: function(url) {
+	showItemsForUrl: function(url, checkState) {
 		var that = this;
 		that.items = [];
 		this.getCachedOrFetch(url)
@@ -929,6 +929,14 @@ L.Control.Zotero = L.Control.extend({
 				var dialogUpdateEvent = that.updateList([_('Title'), _('Creator(s)'), _('Date')], _('Your library is empty'));
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
 				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
+
+				// mark already existing citations
+				if (checkState) {
+					that.pendingCitationInsertion = [];
+					that.pendingCitationUpdate = false;
+					that.pendingItemListing = true;
+					that.fetchCitationUnderCursor();
+				}
 			}, function () {
 				that.map.uiManager.showSnackbar(_('Failed to load items'));
 			});
@@ -1267,6 +1275,11 @@ L.Control.Zotero = L.Control.extend({
 
 	handleInsertCitation: function() {
 		//start by fetching existing citation under the cursor
+		if (!this.fetchCitationUnderCursor())
+			this.insertCitation({}); //temp fix until exitsting citations can be fetched for every field type
+	},
+
+	fetchCitationUnderCursor: function() {
 		if (this.getFieldType() === 'Field')
 			app.socket.sendMessage('commandvalues command=.uno:TextFormField?type=vnd.oasis.opendocument.field.UNHANDLED&commandPrefix=ADDIN%20ZOTERO_ITEM');
 		else if (this.getFieldType() === 'ReferenceMark')
@@ -1274,11 +1287,15 @@ L.Control.Zotero = L.Control.extend({
 		else if (this.getFieldType() === 'Bookmark')
 			app.socket.sendMessage('commandvalues command=.uno:Bookmark?namePrefix=ZOTERO_BREF_');
 		else
-			this.insertCitation({}); //temp fix until exitsting citations can be fetched for every field type
+			return false;
+
+		return true;
 	},
 
+	// happens on _onCommandValuesMsg in WriterTileLayer.js
 	insertCitation: function(field) {
-		if (!(this.pendingCitationInsertion && this.pendingCitationInsertion.length))
+		if (!(this.pendingCitationInsertion && this.pendingCitationInsertion.length)
+			&& !this.pendingItemListing)
 			return;
 
 		var cslString, command = '';
@@ -1294,6 +1311,29 @@ L.Control.Zotero = L.Control.extend({
 			command = isNewCitation ? '.uno:InsertField': '.uno:UpdateField';
 		}
 		var existingCitation = this.getJSONfromCitationString(cslString);
+
+		// we need only to update states of items to show in the dialog
+		if (this.pendingItemListing) {
+			this.pendingItemListing = false;
+			for (var i in existingCitation.citationItems) {
+				var existingItem = existingCitation.citationItems[i];
+				var itemUri = existingItem.uris[0];
+				var key = itemUri.substr(itemUri.lastIndexOf('/')+1);
+
+				for (var j in this.items) {
+					var listItem = this.items[j];
+					if (listItem.item.key === key) {
+						listItem.state = true;
+						break;
+					}
+				}
+			}
+
+			var dialogUpdateEvent = this.updateList([_('Title'), _('Creator(s)'), _('Date')], _('Your library is empty'));
+			this.map.fire('jsdialogupdate', dialogUpdateEvent);
+			return;
+		}
+
 		var citationClusterFields = isNewCitation ? this.pendingCitationInsertion : [existingCitation].concat(this.pendingCitationInsertion);
 		this.pendingCitationInsertion = [];
 		var citationData = this.getCitationJSONString(citationClusterFields);
