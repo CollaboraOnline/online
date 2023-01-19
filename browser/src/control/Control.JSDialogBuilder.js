@@ -2348,6 +2348,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'formatsparklinemenu': 'insertsparkline',
 			'insertdatecontentcontrol': 'datefield',
 			'editheaderandfooter': 'headerandfooter',
+			'exportas': 'saveas',
 			'insertheaderfooter': 'headerandfooter',
 			'previoustrackedchange': 'prevrecord',
 			'fieldtransparency': 'linetransparency',

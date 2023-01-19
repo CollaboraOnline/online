@@ -140,6 +140,12 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					'text': _UNO('.uno:SaveAs', 'presentation'),
 					'command': '.uno:SaveAs'
 				} : {},
+			hasSaveAs ?
+				{
+					'id': 'exportas',
+					'type': 'bigmenubartoolitem',
+					'text': _('Export As'),
+				} : {},
 			{
 				'id': 'file-shareas-rev-history',
 				'type': 'container',

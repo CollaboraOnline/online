@@ -432,8 +432,20 @@ L.Map.WOPI = L.Handler.extend({
 			if (msg.Values) {
 				if (msg.Values.Filename !== null && msg.Values.Filename !== undefined) {
 					this._notifySave = msg.Values['Notify'];
-					this._map.showBusy(_('Creating copy...'), false);
-					this._map.saveAs(msg.Values.Filename);
+					var dotPos = msg.Values.Filename.indexOf('.');
+					var format = undefined;
+					if (dotPos > 0)
+						format = msg.Values.Filename.substr(dotPos + 1);
+					else
+						console.warn('Action_SaveAs: no format specified');
+
+					var isExport = format === 'pdf' || format === 'epub';
+					if (isExport) {
+						this._map.exportAs(msg.Values.Filename);
+					} else {
+						this._map.showBusy(_('Creating copy...'), false);
+						this._map.saveAs(msg.Values.Filename, format);
+					}
 				}
 			}
 		}
