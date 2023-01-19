@@ -273,6 +273,14 @@ L.Map.include({
 			'options=' + options);
 	},
 
+	exportAs: function (url) {
+		if (url === undefined || url == null) {
+			return;
+		}
+
+		app.socket.sendMessage('exportas url=wopi:' + encodeURIComponent(url));
+	},
+
 	renameFile: function (filename) {
 		if (!filename) {
 			return;
@@ -821,6 +829,10 @@ L.Map.include({
 			fileName = fileName.substr(0, fileName.lastIndexOf('.'));
 			fileName = fileName === '' ? 'document' : fileName;
 			this.downloadAs(fileName + '.' + format, format);
+			return;
+		} if (action.indexOf('exportas-') === 0) {
+			var format = action.substring('exportas-'.length);
+			this.openSaveAs(format);
 			return;
 		}
 

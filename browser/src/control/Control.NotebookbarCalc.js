@@ -122,6 +122,14 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			}
 		}
 
+		if (hasSaveAs) {
+			content.push({
+				'id': 'exportas',
+				'type': 'bigmenubartoolitem',
+				'text': _('Export As'),
+			});
+		}
+
 		content = content.concat([
 			{
 				'id': 'file-shareas-rev-history',

@@ -136,6 +136,14 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			}
 		}
 
+		if (hasSaveAs) {
+			content.push({
+				'id': 'exportas',
+				'type': 'bigmenubartoolitem',
+				'text': _('Export As'),
+			});
+		}
+
 		content = content.concat([
 			{
 				'type': 'container',

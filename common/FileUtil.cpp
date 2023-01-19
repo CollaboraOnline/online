@@ -568,6 +568,11 @@ namespace FileUtil
         return AnonymizeUserData ? Util::anonymize(username, AnonymizationSalt) : username;
     }
 
+    std::string extractFileExtension(const std::string& path)
+    {
+        return Util::splitLast(path, '.', true).second;
+    }
+
 } // namespace FileUtil
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -329,6 +329,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens.equals(0, "selectgraphic") ||
                tokens.equals(0, "resetselection") ||
                tokens.equals(0, "saveas") ||
+               tokens.equals(0, "exportas") ||
                tokens.equals(0, "useractive") ||
                tokens.equals(0, "userinactive") ||
                tokens.equals(0, "windowcommand") ||
@@ -451,6 +452,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens.equals(0, "saveas"))
         {
             return saveAs(tokens);
+        }
+        else if (tokens.equals(0, "exportas"))
+        {
+            return exportAs(tokens);
         }
         else if (tokens.equals(0, "useractive"))
         {
@@ -2497,6 +2502,76 @@ bool ChildSession::saveAs(const StringVector& tokens)
     return true;
 }
 
+bool ChildSession::exportAs(const StringVector& tokens)
+{
+    std::string wopiFilename, url;
+
+    if (tokens.size() <= 1 ||
+        !getTokenString(tokens[1], "url", url))
+    {
+        sendTextFrameAndLogError("error: cmd=exportas kind=syntax");
+        return false;
+    }
+
+    Poco::URI wopiURL(url);
+    if (wopiURL.getScheme() == "wopi")
+    {
+        std::vector<std::string> pathSegments;
+        wopiURL.getPathSegments(pathSegments);
+
+        if (pathSegments.size() == 0)
+        {
+            sendTextFrameAndLogError("error: cmd=exportas kind=syntax");
+            return false;
+        }
+
+        wopiFilename = wopiURL.getPath();
+    }
+    else
+    {
+        sendTextFrameAndLogError("error: cmd=exportas kind=syntax");
+        return false;
+    }
+
+    // for PDF and EPUB show dialog with export options first
+    // when options will be chosen and file exported we will
+    // receive LOK_CALLBACK_EXPORT_FILE message
+    std::string extension = FileUtil::extractFileExtension(wopiFilename);
+
+    const bool isPDF = extension == "pdf";
+    const bool isEPUB = extension == "epub";
+    if (isPDF || isEPUB)
+    {
+        // We don't have the FileId at this point, just a new filename to save-as.
+        // So here the filename will be obfuscated with some hashing, which later will
+        // get a proper FileId that we will use going forward.
+        LOG_DBG("Calling LOK's exportAs with: '" << anonymizeUrl(wopiFilename) << "'.");
+
+        getLOKitDocument()->setView(_viewId);
+
+        std::string encodedWopiFilename;
+        Poco::URI::encode(wopiFilename, "", encodedWopiFilename);
+
+        _exportAsWopiUrl = encodedWopiFilename;
+
+        const std::string arguments = "{"
+            "\"SynchronMode\":{"
+                "\"type\":\"boolean\","
+                "\"value\": false"
+            "}}";
+
+        if (isPDF)
+            getLOKitDocument()->postUnoCommand(".uno:ExportToPDF", arguments.c_str(), false);
+        else if (isEPUB)
+            getLOKitDocument()->postUnoCommand(".uno:ExportToEPUB", arguments.c_str(), false);
+
+        return true;
+    }
+
+    sendTextFrameAndLogError("error: cmd=exportas kind=unsupported");
+    return false;
+}
+
 bool ChildSession::setClientPart(const StringVector& tokens)
 {
     int part = 0;
@@ -3146,6 +3221,47 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_EXPORT_FILE:
     {
+        bool isAbort = payload == "ABORT";
+        bool isError = payload == "ERROR";
+        bool isPending = payload == "PENDING";
+        bool exportWasRequested = !_exportAsWopiUrl.empty();
+
+        if (isPending) // dialog ret=ok, local save has been started
+        {
+            sendTextFrame("blockui: ");
+            return;
+        }
+        else if (isAbort) // dialog ret=cancel, local save was aborted
+        {
+            _exportAsWopiUrl.clear();
+            return;
+        }
+
+        // this is export status message
+        sendTextFrame("unblockui: ");
+
+        if (isError) // local save failed
+        {
+            _exportAsWopiUrl.clear();
+            sendTextFrameAndLogError("error: cmd=exportas kind=failure");
+            return;
+        }
+
+        // local save was successful
+
+        if (exportWasRequested)
+        {
+            std::string encodedURL;
+            Poco::URI::encode(payload, "", encodedURL);
+
+            sendTextFrame("exportas: url=" + encodedURL + " filename=" + _exportAsWopiUrl);
+
+            _exportAsWopiUrl.clear();
+            return;
+        }
+
+        // it was download request
+
         // Register download id -> URL mapping in the DocumentBroker
         auto url = std::string("../../") + payload.substr(strlen("file:///tmp/"));
         auto downloadId = Util::rng::getFilename(64);
