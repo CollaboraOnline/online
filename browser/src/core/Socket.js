@@ -1122,6 +1122,9 @@ app.definitions.Socket = L.Class.extend({
 		else if (textMsg.startsWith('saveas:') || textMsg.startsWith('renamefile:')) {
 			this._renameOrSaveAsCallback(textMsg, command);
 		}
+		else if (textMsg.startsWith('exportas:')) {
+			this._exportAsCallback(command);
+		}
 		else if (textMsg.startsWith('warn:')) {
 			var len = 'warn: '.length;
 			textMsg = textMsg.substring(len);
@@ -1250,6 +1253,11 @@ app.definitions.Socket = L.Class.extend({
 		if (this._map._docLayer && !msgDelayed) {
 			this._map._docLayer._onMessage(textMsg, e.image);
 		}
+	},
+
+	_exportAsCallback: function(command) {
+		this._map.hideBusy();
+		this._map.uiManager.showInfoModal('exported-success', _('Exported to storage'), _('Successfully exported: ') + decodeURIComponent(command.filename), '', _('OK'));
 	},
 
 	_renameOrSaveAsCallback: function(textMsg, command) {
