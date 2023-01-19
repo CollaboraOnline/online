@@ -388,7 +388,6 @@ L.Control.Zotero = L.Control.extend({
 	resetCitation: function() {
 		this.citationCluster = {};
 		this.citations = {};
-		this.pendingCitationInsertion = [];
 		delete this.settings.citationNumber;
 		if (this.getFieldType() === 'Bookmark')
 			this.bookmarksOrder = [];
@@ -935,7 +934,6 @@ L.Control.Zotero = L.Control.extend({
 
 				// mark already existing citations
 				if (checkState) {
-					that.pendingCitationInsertion = [];
 					that.pendingCitationUpdate = false;
 					that.pendingItemListing = true;
 					that.fetchCitationUnderCursor();
@@ -1037,14 +1035,13 @@ L.Control.Zotero = L.Control.extend({
 
 	_onOk: function (selected) {
 		if (this.dialogType === 'itemlist') {
-			this.pendingCitationInsertion = [];
+			var citationsToInsert = [];
 
 			for (var i in selected) {
-			    this.pendingCitationInsertion
-					= this.pendingCitationInsertion.concat([selected[i].item]);
+			    citationsToInsert = citationsToInsert.concat([selected[i].item]);
 			}
 
-			this.handleInsertCitation();
+			this.insertCitation(citationsToInsert);
 
 			// update all the citations once citations are inserted and we get updated fields
 			this.pendingCitationUpdate = true;
@@ -1296,57 +1293,63 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	// happens on _onCommandValuesMsg in WriterTileLayer.js
-	insertCitation: function(field) {
-		if (!(this.pendingCitationInsertion && this.pendingCitationInsertion.length)
-			&& !this.pendingItemListing)
+	handleFieldUnderCursor: function (field) {
+		if (!this.pendingItemListing)
 			return;
 
-		var cslString, command = '';
-		var isNewCitation = !Object.keys(field).length;
+		var cslString;
 		if (this.getFieldType() === 'Field') {
 			cslString = field.command;
-			command = isNewCitation ? '.uno:TextFormField' : '.uno:UpdateTextFormField';
 		} else if (this.getFieldType() == 'Bookmark') {
 			cslString = field.bookmark;
-			command = isNewCitation ? '.uno:InsertBookmark' : '.uno:UpdateBookmark';
 		} else if (this.getFieldType() === 'ReferenceMark') {
 			cslString = field.name;
-			command = isNewCitation ? '.uno:InsertField': '.uno:UpdateField';
 		}
-		var existingCitation = this.getJSONfromCitationString(cslString);
+		var existingCitationUnderCursor = this.getJSONfromCitationString(cslString);
+		this.insertNewCitation = !Object.keys(existingCitationUnderCursor).length;
 
 		// we need only to update states of items to show in the dialog
-		if (this.pendingItemListing) {
-			this.pendingItemListing = false;
-			for (var i in existingCitation.citationItems) {
-				var existingItem = existingCitation.citationItems[i];
-				var itemUri = existingItem.uris[0];
-				var key = itemUri.substr(itemUri.lastIndexOf('/')+1);
+		this.pendingItemListing = false;
+		for (var i in existingCitationUnderCursor.citationItems) {
+			var existingItem = existingCitationUnderCursor.citationItems[i];
+			var itemUri = existingItem.uris[0];
+			var key = itemUri.substr(itemUri.lastIndexOf('/')+1);
 
-				for (var j in this.items) {
-					var listItem = this.items[j];
-					if (listItem.item.key === key) {
-						listItem.state = true;
-						break;
-					}
+			for (var j in this.items) {
+				var listItem = this.items[j];
+				if (listItem.item.key === key) {
+					listItem.state = true;
+					break;
 				}
 			}
-
-			var dialogUpdateEvent = this.updateList([_('Title'), _('Creator(s)'), _('Date')], _('Your library is empty'));
-			this.map.fire('jsdialogupdate', dialogUpdateEvent);
-			return;
 		}
 
-		var citationClusterFields = this.pendingCitationInsertion;
-		this.pendingCitationInsertion = [];
-		var citationData = this.getCitationJSONString(citationClusterFields);
-		var parameters = isNewCitation ? this.getFieldParameters(citationData.jsonString, citationData.citationString) : this.getFieldUpdateParameters(citationData.jsonString, citationData.citationString);
+		var dialogUpdateEvent = this.updateList([_('Title'), _('Creator(s)'), _('Date')], _('Your library is empty'));
+		this.map.fire('jsdialogupdate', dialogUpdateEvent);
+	},
+
+	insertCitation: function(citationsToInsert) {
+		if (!(citationsToInsert && citationsToInsert.length))
+			return;
+
+		var command = '';
+		if (this.getFieldType() === 'Field') {
+			command = this.insertNewCitation ? '.uno:TextFormField' : '.uno:UpdateTextFormField';
+		} else if (this.getFieldType() == 'Bookmark') {
+			command = this.insertNewCitation ? '.uno:InsertBookmark' : '.uno:UpdateBookmark';
+		} else if (this.getFieldType() === 'ReferenceMark') {
+			command = this.insertNewCitation ? '.uno:InsertField': '.uno:UpdateField';
+		}
+
+		var citationData = this.getCitationJSONString(citationsToInsert);
+		var parameters = this.insertNewCitation ? this.getFieldParameters(citationData.jsonString, citationData.citationString) : this.getFieldUpdateParameters(citationData.jsonString, citationData.citationString);
 
 		if (this.getFieldType() == 'Bookmark') {
-			var prefix = isNewCitation ? parameters['Bookmark'].value : parameters['Bookmark']['value']['Bookmark'].value;
+			var prefix = this.insertNewCitation ? parameters['Bookmark'].value : parameters['Bookmark']['value']['Bookmark'].value;
 			this.setCustomProperty(prefix + '_', 'ZOTERO_ITEM CSL_CITATION ' + citationData.jsonString);
 		}
 
+		delete this.insertNewCitation;
 		this.map.sendUnoCommand(command, parameters);
 		this.updateFieldsList();
 	},
@@ -1638,15 +1641,13 @@ L.Control.Zotero = L.Control.extend({
 			this.setFetchedStyle(resultMap.ZOTERO_PREF);
 		}
 		// insert new bookmark citation
-		else if (!resultKeys.length && this.pendingCitationInsertion && this.pendingCitationInsertion.length) {
-			this.insertCitation({});
+		else if (!resultKeys.length) {
+			this.handleFieldUnderCursor({});
 		}
 		// update existing bookmark citation
-		else if (resultKeys[0].startsWith('ZOTERO_BREF')) {
-			if (this.pendingCitationInsertion && this.pendingCitationInsertion.length) {
-				this.insertCitation({bookmark: resultMap[resultKeys[0]]});
-				return;
-			}
+		else if (resultKeys.length && resultKeys[0].startsWith('ZOTERO_BREF')) {
+			this.handleFieldUnderCursor({bookmark: resultMap[resultKeys[0]]});
+
 			var fields = [];
 			var that = this;
 			this.bookmarksOrder.forEach(function(bookmark) {
