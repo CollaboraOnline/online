@@ -74,6 +74,16 @@ button:not(.ui-corner-all):not(.button-primary) {
 	display: initial !important;
 }
 
+.ui-pushbutton[disabled] {
+	color: var(--color-text-lighter) !important;
+	background-color: white !important;
+}
+
+.ui-pushbutton[disabled]:hover {
+	cursor: not-allowed !important;
+	background: white !important;
+}
+
 /* button box */
 
 /* - Add fallback for browsers without support
