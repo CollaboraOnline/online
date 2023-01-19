@@ -37,11 +37,11 @@ private:
     bool _inFragmentBlock;
     /// The security key. Meaningful only for clients.
     const std::string _key;
+    unsigned char _lastFlags; //< The flags in the last frame.
 #endif
 
     std::vector<char> _wsPayload;
     std::atomic<bool> _shuttingDown;
-    unsigned char _lastFlags; //< The flags in the last frame.
     const bool _isClient;
 
     // Last member.
@@ -78,15 +78,16 @@ public:
         , _isMasking(isClient && isMasking)
         , _inFragmentBlock(false)
         , _key(isClient ? PublicComputeAccept::generateKey() : std::string())
+        , _lastFlags(0)
         ,
 #endif
         _shuttingDown(false)
-        , _lastFlags(0)
         , _isClient(isClient)
 #ifdef ENABLE_DEBUG
         , _unit(UnitBase::get())
 #endif
     {
+        (void) isMasking;
     }
 
     /// Upgrades itself to a websocket directly.
@@ -551,6 +552,9 @@ protected:
             timeoutMaxMicroS
                 = std::min(timeoutMaxMicroS, (int64_t)(PingFrequencyMicroS - timeSincePingMicroS).count());
         }
+#else
+        (void) now;
+        (void) timeoutMaxMicroS;
 #endif
         int events = POLLIN;
         if (_msgHandler && _msgHandler->hasQueuedMessages())
@@ -614,6 +618,8 @@ public:
             if (socket)
                 sendPing(now, socket);
         }
+#else
+        (void) now;
 #endif
     }
 
@@ -789,6 +795,8 @@ protected:
         // Return the number of bytes we wrote to the *buffer*.
         const size_t size = out.size() - oldSize;
 #else
+        (void) flags;
+
         // We ignore the flush parameter and always flush in the MOBILEAPP case because there is no
         // WebSocket framing, we put the messages as such into the FakeSocket queue.
         flush = true;
@@ -935,6 +943,8 @@ protected:
         LOG_TRC('#' << socket->getFD()
                     << ": Sending WS Upgrade response: " << httpResponse.header().toString());
         socket->send(httpResponse);
+#else
+        (void) req;
 #endif
         setWebSocket(socket);
     }

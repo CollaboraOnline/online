@@ -388,6 +388,8 @@ std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth
 
 #else // MOBILEAPP
 
+    (void) _isTemporaryFile;
+
     // In the mobile app we use no jail
     setRootFilePath(getUri().getPath());
 

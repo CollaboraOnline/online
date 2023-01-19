@@ -374,6 +374,8 @@ void COOLWSD::checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
     {
         LOG_ERR("Exception while checking disk-space and warning clients: " << exc.what());
     }
+#else
+    (void) cacheLastCheck;
 #endif
 }
 
@@ -2600,6 +2602,8 @@ void COOLWSD::innerInitialize(Application& self)
     std::cerr << std::endl;
 #endif
 
+#else
+    (void) self;
 #endif
 }
 
@@ -2769,6 +2773,8 @@ void COOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false));
 #endif
 
+#else
+    (void) optionSet;
 #endif
 }
 
@@ -2836,6 +2842,10 @@ void COOLWSD::handleOption(const std::string& optionName,
     if (latencyMs)
         SimulatedLatencyMs = std::stoi(latencyMs);
 #endif
+
+#else
+    (void) optionName;
+    (void) value;
 #endif
 }
 
