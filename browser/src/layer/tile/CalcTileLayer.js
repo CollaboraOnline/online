@@ -646,6 +646,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._layoutIsRTL = true;
 
 			sectionContainer.reNewAllSections(true);
+			this._syncTileContainerSize();
 
 		} else if (!sheetIsRTL && this._layoutIsRTL === true) {
 
@@ -683,7 +684,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			tilesSection.anchor = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, 'right', 'left']];
 
 			sectionContainer.reNewAllSections(true);
-
+			this._syncTileContainerSize();
 		}
 	},
 
