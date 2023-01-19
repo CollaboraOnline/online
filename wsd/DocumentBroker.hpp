@@ -305,7 +305,7 @@ public:
     /// @param uploadAsPath Absolute path to the jailed file.
     void uploadAsToStorage(const std::shared_ptr<ClientSession>& session,
                            const std::string& uploadAsPath, const std::string& uploadAsFilename,
-                           const bool isRename);
+                           const bool isRename, const bool isExport);
 
     /// Uploads the document right after loading from a template.
     /// Template-loading requires special handling because the
@@ -611,7 +611,7 @@ private:
     /// Upload the doc to the storage.
     void uploadToStorageInternal(const std::shared_ptr<ClientSession>& session,
                                  const std::string& saveAsPath, const std::string& saveAsFilename,
-                                 const bool isRename, const bool force);
+                                 const bool isRename, const bool isExport, const bool force);
 
     /// Handles the completion of uploading to storage, both success and failure cases.
     void handleUploadToStorageResponse(const StorageBase::UploadResult& uploadResult);
@@ -1061,12 +1061,13 @@ private:
         UploadRequest(std::string uriAnonym,
                       std::chrono::system_clock::time_point newFileModifiedTime,
                       const std::shared_ptr<class ClientSession>& session, bool isSaveAs,
-                      bool isRename)
+                      bool isExport, bool isRename)
             : _startTime(std::chrono::steady_clock::now())
             , _uriAnonym(std::move(uriAnonym))
             , _newFileModifiedTime(newFileModifiedTime)
             , _session(session)
             , _isSaveAs(isSaveAs)
+            , _isExport(isExport)
             , _isRename(isRename)
         {
         }
@@ -1085,6 +1086,7 @@ private:
 
         std::shared_ptr<class ClientSession> session() const { return _session.lock(); }
         bool isSaveAs() const { return _isSaveAs; }
+        bool isExport() const { return _isExport; }
         bool isRename() const { return _isRename; }
 
     private:
@@ -1093,6 +1095,7 @@ private:
         const std::chrono::system_clock::time_point _newFileModifiedTime;
         const std::weak_ptr<class ClientSession> _session;
         const bool _isSaveAs;
+        const bool _isExport;
         const bool _isRename;
     };
 

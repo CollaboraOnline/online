@@ -124,6 +124,9 @@ namespace FileUtil
         return realpath(path.c_str());
     }
 
+    /// Returns file extension from the path
+    std::string extractFileExtension(const std::string& path);
+
     /// Returns true iff the two files both exist, can be read,
     /// have equal size and every byte of their contents match.
     bool compareFileContents(const std::string& rhsPath, const std::string& lhsPath);

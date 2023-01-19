@@ -69,6 +69,9 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Word Document (.docx)'), id: 'saveas-docx', type: 'action'},
 					{name: _('Rich Text (.rtf)'), id: 'saveas-rtf', type: 'action'},
 				]},
+				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
+					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
+				]},
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id: 'downloadas', type: 'menu', menu: [
@@ -359,6 +362,9 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'saveas-ppt', type: 'action'},
 					{name: _('PowerPoint Presentation (.pptx)'), id: 'saveas-pptx', type: 'action'},
 				]},
+				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
+					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
+				]},
 				{name: _('Save Comments'), id: 'savecomments', type: 'action'},
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
@@ -497,6 +503,9 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
 				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Save', 'presentation'), L.Control.MenubarShortcuts.shortcuts.SAVE), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
+				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
+					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
+				]},
 				{name: _('Save Comments'), id: 'savecomments', type: 'action'},
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _UNO('.uno:Print', 'presentation'), id: 'print', type: 'action'},
@@ -618,6 +627,9 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('ODF spreadsheet (.ods)'), id: 'saveas-ods', type: 'action'},
 					{name: _('Excel 2003 Spreadsheet (.xls)'), id: 'saveas-xls', type: 'action'},
 					{name: _('Excel Spreadsheet (.xlsx)'), id: 'saveas-xlsx', type: 'action'},
+				]},
+				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
+					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
 				]},
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
@@ -1988,6 +2000,9 @@ L.Control.Menubar = L.Control.extend({
 			return false;
 
 		if (menuItem.id && (menuItem.id === 'saveas' || menuItem.id.startsWith('saveas-')) && this._map['wopi'].UserCanNotWriteRelative)
+			return false;
+
+		if (menuItem.id && (menuItem.id.startsWith('exportas')) && this._map['wopi'].UserCanNotWriteRelative)
 			return false;
 
 		if ((menuItem.id === 'shareas' || menuItem.id === 'ShareAs') && !this._map['wopi'].EnableShare)

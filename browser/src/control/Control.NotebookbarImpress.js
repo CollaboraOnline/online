@@ -174,6 +174,14 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			}
 		}
 
+		if (hasSaveAs) {
+			content.push({
+				'id': 'exportas',
+				'type': 'bigmenubartoolitem',
+				'text': _('Export As'),
+			});
+		}
+
 		var content = content.concat([
 			{
 				'id': 'file-shareas-rev-history',
