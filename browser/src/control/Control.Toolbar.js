@@ -1033,6 +1033,9 @@ function onCommandResult(e) {
 		((commandName === '.uno:DeleteTextFormField' && e.result.DeleteTextFormField.startsWith('ADDIN ZOTERO_')) ||
 		(commandName === '.uno:DeleteField' && e.result.DeleteField.startsWith('ZOTERO_')))) {
 		map.zotero.handleRefreshCitationsAndBib(false);
+	} else if (map.zotero && commandName === '.uno:DeleteBookmark' && e.result.DeleteBookmark.startsWith('ZOTERO_BREF_')) {
+		map.zotero.setCustomProperty(e.result.DeleteBookmark, '');
+		map.zotero.handleRefreshCitationsAndBib(false);
 	}
 }
 
