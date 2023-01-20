@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-16 20:13+0200\n"
+"POT-Creation-Date: 2023-01-20 11:33+0200\n"
 "PO-Revision-Date: 2022-11-27 13:31+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
@@ -2721,7 +2721,8 @@ msgstr ""
 "Wybierz właściwą podpowiedź aby poprawić tekst."
 
 #: html/cool-help.html%2Bdiv.h4:547-5
-msgid "Is here a thesaurus?"
+#, fuzzy
+msgid "Is there a thesaurus?"
 msgstr "Czy jest tu słownik wyrazów bliskoznacznych?"
 
 #: html/cool-help.html%2Bdiv.p:548-5

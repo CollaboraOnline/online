@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-16 20:13+0200\n"
+"POT-Creation-Date: 2023-01-20 11:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2244,7 +2244,7 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:547-5
-msgid "Is here a thesaurus?"
+msgid "Is there a thesaurus?"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.p:548-5

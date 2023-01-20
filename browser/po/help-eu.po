@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-16 20:13+0200\n"
+"POT-Creation-Date: 2023-01-20 11:33+0200\n"
 "PO-Revision-Date: 2022-08-10 08:22+0000\n"
 "Last-Translator: Gontzal Manuel Pujana Onaindia <thadahdenyse@gmail.com>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
@@ -2750,7 +2750,8 @@ msgstr ""
 "iradokizun zuzena testua aldatzeko."
 
 #: html/cool-help.html%2Bdiv.h4:547-5
-msgid "Is here a thesaurus?"
+#, fuzzy
+msgid "Is there a thesaurus?"
 msgstr "Ba al dago sinonimoen hiztegirik?"
 
 #: html/cool-help.html%2Bdiv.p:548-5
