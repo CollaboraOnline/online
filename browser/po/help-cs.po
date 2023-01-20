@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-16 20:13+0200\n"
+"POT-Creation-Date: 2023-01-20 11:33+0200\n"
 "PO-Revision-Date: 2022-02-24 20:26+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
@@ -2700,7 +2700,8 @@ msgstr ""
 "s příslušnými gramatickými pravidly. Text změníte tím, že návrh vyberete."
 
 #: html/cool-help.html%2Bdiv.h4:547-5
-msgid "Is here a thesaurus?"
+#, fuzzy
+msgid "Is there a thesaurus?"
 msgstr "Je k dispozici slovník synonym?"
 
 #: html/cool-help.html%2Bdiv.p:548-5
