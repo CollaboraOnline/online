@@ -76,8 +76,6 @@ public:
             case Scenario::SaveOverwrite:
                 LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage",
                                          std::string(ConflictingDocContent), getFileContent());
-                LOG_TST("Closing the document to verify its contents after reloading");
-                WSD_CMD("closedocument");
                 break;
         }
 
@@ -98,6 +96,27 @@ public:
         {
             // With always_save_on_exit, we expect exactly one PutFile per document.
             setExpectedPutFile(1);
+        }
+    }
+
+    void onDocumentUploaded(bool success) override
+    {
+        LOG_TST("Uploaded: " << (success ? "success" : "failure"));
+
+        switch (_scenario)
+        {
+            case Scenario::Disconnect:
+            case Scenario::SaveDiscard:
+            case Scenario::CloseDiscard:
+            case Scenario::VerifyOverwrite:
+                break;
+            case Scenario::SaveOverwrite:
+                if (getCountPutFile() == 2)
+                {
+                    LOG_TST("Closing the document to verify its contents after reloading");
+                    WSD_CMD("closedocument");
+                }
+                break;
         }
     }
 
