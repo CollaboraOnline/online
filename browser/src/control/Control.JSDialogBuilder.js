@@ -42,6 +42,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_colorPickers: null,
 	_colorLastSelection: {},
 
+	// Responses are included in a parent container. While buttons are created, responses need to be checked.
+	// So we save the button ids and responses to check them later.
+	_responses: {}, // Button id = response
+
 	_currentDepth: 0,
 
 	setWindowId: function (id) {
@@ -504,6 +508,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (parentContainer && !parentContainer.id)
 			parentContainer.id = data.id;
 
+		// Dialogue is a parent container of a buttonbox, so we will save the responses first, then we will check them while creating the buttons.
+		if ((data.type === 'dialog' || data.type === 'messagebox' || data.type === 'modelessdialog')
+			&& data.responses) {
+			for (var i in data.responses) {
+				// Button id = response
+				builder._responses[data.responses[i].id] = data.responses[i].response;
+			}
+		}
+
 		return true;
 	},
 
@@ -626,7 +639,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		for (i in leftAlignButtons) {
 			child = leftAlignButtons[i];
-			builder._controlHandlers['pushbutton'](left, child, builder);
+			builder._controlHandlers[child.type](left, child, builder);
 		}
 
 		var right = L.DomUtil.create('div', builder.options.cssClass + ' ui-button-box-right', container);
@@ -635,7 +648,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		for (i in rightAlignButton) {
 			child = rightAlignButton[i];
-			builder._controlHandlers['pushbutton'](right, child, builder);
+			builder._controlHandlers[child.type](right, child, builder);
 		}
 
 		return false;
@@ -1694,12 +1707,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled === 'false' || data.enabled === false)
 			$(pushbutton).prop('disabled', true);
 
-		$(pushbutton).click(function () {
-			if (customCallback)
-				customCallback();
-			else
-				builder.callback('pushbutton', 'click', pushbutton, data.command, builder);
-		});
+		if (customCallback)
+			pushbutton.onclick = customCallback;
+		else if (builder._responses[pushbutton.id] !== undefined)
+			pushbutton.onclick = builder.callback.bind(builder, 'responsebutton', 'click', { id: pushbutton.id }, builder._responses[pushbutton.id], builder);
+		else
+			pushbutton.onclick = builder.callback.bind(builder, 'pushbutton', 'click', pushbutton, data.command, builder);
 
 		builder.map.hideRestrictedItems(data, wrapper, pushbutton);
 		builder.map.disableLockedItem(data, wrapper, pushbutton);
@@ -3294,13 +3307,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
-	setupStandardButtonHandler: function(button, response, builder) {
-		$(button).unbind('click');
-		$(button).click(function () {
-			builder.callback('responsebutton', 'click', {id: button.id }, response, builder);
-		});
-	},
-
 	postProcess: function(parent, data) {
 		if (!parent || !data || !data.id || data.id === '')
 			return;
@@ -3415,17 +3421,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				this.build(childObject, childData.children, isVertical);
 			else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
 				$('#' + childData.id).addClass('hidden-from-event');
-			}
-
-			if ((childType === 'dialog' || childType === 'messagebox' || childType === 'modelessdialog')
-				&& childData.responses) {
-				for (var i in childData.responses) {
-					var buttonId = childData.responses[i].id;
-					var response = childData.responses[i].response;
-					var button = parent.querySelector('[id=\'' + buttonId + '\']');
-					if (button)
-						this.setupStandardButtonHandler(button, response, this);
-				}
 			}
 		}
 	}
