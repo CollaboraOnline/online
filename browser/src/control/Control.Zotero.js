@@ -110,7 +110,7 @@ L.Control.Zotero = L.Control.extend({
 					that.map.uiManager.refreshNotebookbar();
 				else
 					that.map.uiManager.refreshMenubar();
-			}, function () { that.map.uiManager.showSnackbar(_('Zotero API key incorrect')); });
+			}, function () { that.map.uiManager.showSnackbar(_('Zotero API key is incorrect')); });
 	},
 
 	getTopBarJSON: function () {
