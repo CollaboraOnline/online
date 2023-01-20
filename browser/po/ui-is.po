@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-16 20:13+0100\n"
-"PO-Revision-Date: 2022-12-05 13:37+0000\n"
+"PO-Revision-Date: 2023-01-18 07:13+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/ui/is/>\n"
-"Language: \n"
+"Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -740,44 +740,43 @@ msgid "Text orientation"
 msgstr "Snúningur texta"
 
 #: src/control/Control.Menubar.js:264
-#, fuzzy
 msgid "References"
-msgstr "Tilví~sanir"
+msgstr "Tilvísanir"
 
 #: src/control/Control.Menubar.js:267
 #: src/control/Control.NotebookbarWriter.js:1396
 msgid "Update Index"
-msgstr ""
+msgstr "Uppfæra yfirlit"
 
 #: src/control/Control.Menubar.js:276
 #: src/control/Control.NotebookbarWriter.js:1479
 msgid "Add Citation"
-msgstr ""
+msgstr "Bæta við tilvitnun"
 
 #: src/control/Control.Menubar.js:277
 #: src/control/Control.NotebookbarWriter.js:1490
 msgid "Add Citation Note"
-msgstr ""
+msgstr "Bæta við minnispunkti með tilvitnun"
 
 #: src/control/Control.Menubar.js:278
 #: src/control/Control.NotebookbarWriter.js:1467
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Bæta við heimildaskrá"
 
 #: src/control/Control.Menubar.js:280
 #: src/control/Control.NotebookbarWriter.js:1507
 msgid "Refresh Citations"
-msgstr ""
+msgstr "Endurlesa tilvitnanir"
 
 #: src/control/Control.Menubar.js:281
 #: src/control/Control.NotebookbarWriter.js:1518
 msgid "Unlink Citations"
-msgstr ""
+msgstr "Aftengja tilvitnanir"
 
 #: src/control/Control.Menubar.js:282
 #: src/control/Control.NotebookbarWriter.js:1529
 msgid "Citation Preferences"
-msgstr ""
+msgstr "Kjörstillingar tilvitnana"
 
 #: src/control/Control.Menubar.js:310 src/control/Control.Menubar.js:1121
 msgid "Insert Rich Text"
@@ -1467,7 +1466,7 @@ msgstr "Ertu viss um að þú viljir eyða blaðinu %sheet%?"
 
 #: src/control/Control.Tabs.js:320
 msgid "Rename sheet"
-msgstr ""
+msgstr "Endurnefna blað"
 
 #: src/control/Control.Tabs.js:320
 msgid "Enter new sheet name"
@@ -1547,7 +1546,7 @@ msgstr "Núverandi"
 
 #: src/control/Control.Zotero.js:87
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "Zotero API-lykill er ekki stilltur"
 
 #: src/control/Control.Zotero.js:162 src/core/Socket.js:1140
 msgid "Loading..."
@@ -1555,23 +1554,23 @@ msgstr "Hleð inn..."
 
 #: src/control/Control.Zotero.js:180
 msgid "Language:"
-msgstr ""
+msgstr "Tungumál:"
 
 #: src/control/Control.Zotero.js:195
 msgid "Store as:"
-msgstr ""
+msgstr "Geyma sem:"
 
 #: src/control/Control.Zotero.js:201
 msgid "Fields"
-msgstr ""
+msgstr "Gagnasvið"
 
 #: src/control/Control.Zotero.js:202
 msgid "Bookmarks"
-msgstr ""
+msgstr "Bókamerki"
 
 #: src/control/Control.Zotero.js:359
 msgid "My Publications"
-msgstr ""
+msgstr "Útgáfurnar mínar"
 
 #: src/control/Control.Zotero.js:365 src/control/Control.Zotero.js:590
 msgid "My Library"
@@ -1579,24 +1578,23 @@ msgstr "Safnið mitt"
 
 #: src/control/Control.Zotero.js:366
 msgid "Group Libraries"
-msgstr ""
+msgstr "Söfn hóps"
 
 #: src/control/Control.Zotero.js:606
 msgid "Failed to load groups"
-msgstr ""
+msgstr "Mistókst að hlaða inn hópum"
 
 #: src/control/Control.Zotero.js:624 src/control/Control.Zotero.js:901
 msgid "Failed to load collections"
-msgstr ""
+msgstr "Mistókst að hlaða inn söfnum"
 
 #: src/control/Control.Zotero.js:638
 msgid "Citation Style"
 msgstr "Stíll tilvitnunar"
 
 #: src/control/Control.Zotero.js:643
-#, fuzzy
 msgid "Styles"
-msgstr "Stíll"
+msgstr "Stílar"
 
 #: src/control/Control.Zotero.js:643
 msgid "An error occurred while fetching style list"
@@ -1604,7 +1602,7 @@ msgstr "Villa kom upp við að sækja lista yfir stíla"
 
 #: src/control/Control.Zotero.js:650
 msgid "Failed to load styles"
-msgstr ""
+msgstr "Mistókst að hlaða inn stílum"
 
 #: src/control/Control.Zotero.js:929
 msgid "Title"
@@ -1612,7 +1610,7 @@ msgstr "Titill"
 
 #: src/control/Control.Zotero.js:929
 msgid "Creator(s)"
-msgstr ""
+msgstr "Búið til af)"
 
 #: src/control/Control.Zotero.js:929
 msgid "Your library is empty"
@@ -1620,32 +1618,31 @@ msgstr "Safnið þitt er tómt"
 
 #: src/control/Control.Zotero.js:933
 msgid "Failed to load items"
-msgstr ""
+msgstr "Mistókst að hlaða inn atriðum"
 
 #: src/control/Control.Zotero.js:1060
 msgid "Add Note"
-msgstr ""
+msgstr "Bæta við minnispunkti"
 
 #: src/control/Control.Zotero.js:1063
 msgid "Notes"
-msgstr ""
+msgstr "Minnispunktar"
 
 #: src/control/Control.Zotero.js:1063
-#, fuzzy
 msgid "An error occurred while fetching notes"
-msgstr "Villa kom upp við að sækja lista yfir stíla"
+msgstr "Villa kom upp við að sækja minnispunkta"
 
 #: src/control/Control.Zotero.js:1182
 msgid "Updated citations"
-msgstr ""
+msgstr "Uppfærði tilvitnanir"
 
 #: src/control/Control.Zotero.js:1184
 msgid "Citations update failed"
-msgstr ""
+msgstr "Uppfærsla tilvitnana mistókst"
 
 #: src/control/Control.Zotero.js:1188
 msgid "Updating citations"
-msgstr ""
+msgstr "Uppfæri tilvitnanir"
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
@@ -1993,9 +1990,8 @@ msgid "Wrong password provided. Please try again."
 msgstr "Rangt lykilorð, reyndu aftur."
 
 #: src/core/Socket.js:1090 src/core/Socket.js:1095
-#, fuzzy
 msgid "Missing Fonts"
-msgstr "Letur sem vantar:"
+msgstr "Letur sem vantar"
 
 #: src/core/Socket.js:1129
 msgid "Someone"
@@ -2003,7 +1999,7 @@ msgstr "Einhver"
 
 #: src/core/Socket.js:1131
 msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr ""
+msgstr "%userName vistaði þetta skjal sem %fileName. Vilt þú taka þátt?"
 
 #: src/core/Socket.js:1140
 msgid "Connecting..."
