@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-16 20:13+0100\n"
-"PO-Revision-Date: 2023-01-18 07:13+0000\n"
-"Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
+"PO-Revision-Date: 2023-01-20 10:22+0000\n"
+"Last-Translator: Andi Chandler <andi@gowling.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_GB/>\n"
 "Language: en_GB\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15.1-dev\n"
+"X-Generator: Weblate 4.15.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -739,9 +739,8 @@ msgid "Text orientation"
 msgstr "Text orientation"
 
 #: src/control/Control.Menubar.js:264
-#, fuzzy
 msgid "References"
-msgstr "Reference~s"
+msgstr "References"
 
 #: src/control/Control.Menubar.js:267
 #: src/control/Control.NotebookbarWriter.js:1396
