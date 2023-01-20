@@ -40,10 +40,25 @@ std::string inline lokFormatAssertEq(const char* expected_name, const std::strin
                                      const char* actual_name, const std::string& actual)
 {
     std::ostringstream oss;
+    oss << "Expected (" << expected_name << "): [";
+    const std::string expected_prefix = oss.str();
+    oss.str("");
+
+    oss << "Actual (" << actual_name << "):   [";
+    const std::string actual_prefix = oss.str();
+    oss.str("");
+
     oss << '\n';
-    oss << "Expected (" << expected_name << "): [" << expected << "]\n";
-    oss << "Actual (" << actual_name << "):   [" << actual << "]\n";
-    oss << "          [";
+    oss << expected_prefix << expected << "]\n";
+    oss << actual_prefix << actual << "]\n";
+
+    auto space_count = std::max(expected_prefix.size(), actual_prefix.size());
+    while (--space_count > 0)
+    {
+        oss << ' ';
+    }
+
+    oss << '[';
 
     const auto minSize = std::min(expected.size(), actual.size());
     for (std::size_t i = 0; i < minSize; ++i)
