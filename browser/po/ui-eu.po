@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-16 20:13+0100\n"
-"PO-Revision-Date: 2022-12-05 13:37+0000\n"
+"PO-Revision-Date: 2023-01-18 07:13+0000\n"
 "Last-Translator: Alex Gabilondo <alexgabi@disroot.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "ui/eu/>\n"
-"Language: \n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -502,11 +502,11 @@ msgstr "Tamaina finkoa"
 
 #: src/control/Control.JSDialogBuilder.js:1358
 msgid "From"
-msgstr "Hemendik:"
+msgstr "Hemendik"
 
 #: src/control/Control.JSDialogBuilder.js:1361
 msgid "To"
-msgstr "Hona:"
+msgstr "Hona"
 
 #: src/control/Control.JSDialogBuilder.js:1364
 msgid "Color"
@@ -636,7 +636,7 @@ msgstr "Deskargatu honela"
 #: src/control/Control.Menubar.js:867 src/control/Control.Menubar.js:921
 #: src/control/Control.Menubar.js:977 src/control/Control.Menubar.js:1025
 msgid "Export as"
-msgstr "Esportatu honela:"
+msgstr "Esportatu honela"
 
 #: src/control/Control.Menubar.js:75 src/control/Control.Menubar.js:366
 #: src/control/Control.Menubar.js:505 src/control/Control.Menubar.js:625
@@ -743,44 +743,43 @@ msgid "Text orientation"
 msgstr "Testu-orientazioa"
 
 #: src/control/Control.Menubar.js:264
-#, fuzzy
 msgid "References"
-msgstr "E~rreferentziak"
+msgstr "Erreferentziak"
 
 #: src/control/Control.Menubar.js:267
 #: src/control/Control.NotebookbarWriter.js:1396
 msgid "Update Index"
-msgstr ""
+msgstr "Eguneratu indizea"
 
 #: src/control/Control.Menubar.js:276
 #: src/control/Control.NotebookbarWriter.js:1479
 msgid "Add Citation"
-msgstr ""
+msgstr "Gehitu aipamena"
 
 #: src/control/Control.Menubar.js:277
 #: src/control/Control.NotebookbarWriter.js:1490
 msgid "Add Citation Note"
-msgstr ""
+msgstr "Gehitu aipamenaren oharra"
 
 #: src/control/Control.Menubar.js:278
 #: src/control/Control.NotebookbarWriter.js:1467
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Gehitu bibliografia"
 
 #: src/control/Control.Menubar.js:280
 #: src/control/Control.NotebookbarWriter.js:1507
 msgid "Refresh Citations"
-msgstr ""
+msgstr "Eguneratu aipamenak"
 
 #: src/control/Control.Menubar.js:281
 #: src/control/Control.NotebookbarWriter.js:1518
 msgid "Unlink Citations"
-msgstr ""
+msgstr "Desestekatu aipamenak"
 
 #: src/control/Control.Menubar.js:282
 #: src/control/Control.NotebookbarWriter.js:1529
 msgid "Citation Preferences"
-msgstr ""
+msgstr "Aipamenen hobespenak"
 
 #: src/control/Control.Menubar.js:310 src/control/Control.Menubar.js:1121
 msgid "Insert Rich Text"
@@ -1470,7 +1469,7 @@ msgstr "Ziur zaude %sheet% orria ezabatu nahi duzula?"
 
 #: src/control/Control.Tabs.js:320
 msgid "Rename sheet"
-msgstr ""
+msgstr "Berrizendatu kalkulu orria"
 
 #: src/control/Control.Tabs.js:320
 msgid "Enter new sheet name"
@@ -1550,7 +1549,7 @@ msgstr "Unekoa"
 
 #: src/control/Control.Zotero.js:87
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "Zotero API gakoa ez dago konfiguratuta"
 
 #: src/control/Control.Zotero.js:162 src/core/Socket.js:1140
 msgid "Loading..."
@@ -1558,23 +1557,23 @@ msgstr "Kargatzen..."
 
 #: src/control/Control.Zotero.js:180
 msgid "Language:"
-msgstr ""
+msgstr "Hizkuntza:"
 
 #: src/control/Control.Zotero.js:195
 msgid "Store as:"
-msgstr ""
+msgstr "Biltegiratu honela:"
 
 #: src/control/Control.Zotero.js:201
 msgid "Fields"
-msgstr ""
+msgstr "Eremuak"
 
 #: src/control/Control.Zotero.js:202
 msgid "Bookmarks"
-msgstr ""
+msgstr "Laster-markak"
 
 #: src/control/Control.Zotero.js:359
 msgid "My Publications"
-msgstr ""
+msgstr "Nire argitalpenak"
 
 #: src/control/Control.Zotero.js:365 src/control/Control.Zotero.js:590
 msgid "My Library"
@@ -1582,24 +1581,23 @@ msgstr "Nire liburutegia"
 
 #: src/control/Control.Zotero.js:366
 msgid "Group Libraries"
-msgstr ""
+msgstr "Taldeko liburutegiak"
 
 #: src/control/Control.Zotero.js:606
 msgid "Failed to load groups"
-msgstr ""
+msgstr "Ezin izan dira taldeak kargatu"
 
 #: src/control/Control.Zotero.js:624 src/control/Control.Zotero.js:901
 msgid "Failed to load collections"
-msgstr ""
+msgstr "Ezin izan dira bildumak kargatu"
 
 #: src/control/Control.Zotero.js:638
 msgid "Citation Style"
 msgstr "Aipamenaren estiloa"
 
 #: src/control/Control.Zotero.js:643
-#, fuzzy
 msgid "Styles"
-msgstr "Estiloa"
+msgstr "Estiloak"
 
 #: src/control/Control.Zotero.js:643
 msgid "An error occurred while fetching style list"
@@ -1607,7 +1605,7 @@ msgstr "Errore bat gertatu da estilo-zerrenda eskuratzean"
 
 #: src/control/Control.Zotero.js:650
 msgid "Failed to load styles"
-msgstr ""
+msgstr "Ezin izan dira estiloak kargatu"
 
 #: src/control/Control.Zotero.js:929
 msgid "Title"
@@ -1615,7 +1613,7 @@ msgstr "Izenburua"
 
 #: src/control/Control.Zotero.js:929
 msgid "Creator(s)"
-msgstr ""
+msgstr "Sortzailea(k)"
 
 #: src/control/Control.Zotero.js:929
 msgid "Your library is empty"
@@ -1623,32 +1621,31 @@ msgstr "Zure liburutegia hutsik dago"
 
 #: src/control/Control.Zotero.js:933
 msgid "Failed to load items"
-msgstr ""
+msgstr "Ezin izan dira elementuak kargatu"
 
 #: src/control/Control.Zotero.js:1060
 msgid "Add Note"
-msgstr ""
+msgstr "Gehitu oharra"
 
 #: src/control/Control.Zotero.js:1063
 msgid "Notes"
-msgstr ""
+msgstr "Oharrak"
 
 #: src/control/Control.Zotero.js:1063
-#, fuzzy
 msgid "An error occurred while fetching notes"
-msgstr "Errore bat gertatu da estilo-zerrenda eskuratzean"
+msgstr "Errore bat gertatu da oharrak eskuratzean"
 
 #: src/control/Control.Zotero.js:1182
 msgid "Updated citations"
-msgstr ""
+msgstr "Eguneratu dira aipamenak"
 
 #: src/control/Control.Zotero.js:1184
 msgid "Citations update failed"
-msgstr ""
+msgstr "Ezin izan dira aipamenak eguneratu"
 
 #: src/control/Control.Zotero.js:1188
 msgid "Updating citations"
-msgstr ""
+msgstr "Aipamenak eguneratzen"
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
@@ -1999,9 +1996,8 @@ msgid "Wrong password provided. Please try again."
 msgstr "Pasahitz okerra. Saiatu berriro."
 
 #: src/core/Socket.js:1090 src/core/Socket.js:1095
-#, fuzzy
 msgid "Missing Fonts"
-msgstr "Falta diren letra-motak:"
+msgstr "Falta diren letra-motak"
 
 #: src/core/Socket.js:1129
 msgid "Someone"
@@ -2009,7 +2005,7 @@ msgstr "Norbaitek"
 
 #: src/core/Socket.js:1131
 msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr ""
+msgstr "%userName-k dokumentu hau %fileName gisa gorde du. Sartu nahi duzu?"
 
 #: src/core/Socket.js:1140
 msgid "Connecting..."
