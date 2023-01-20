@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-16 20:13+0100\n"
 "PO-Revision-Date: 2023-01-16 21:34+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
 "Language: es\n"
@@ -480,11 +480,11 @@ msgstr "Lineal"
 
 #: src/control/Control.JSDialogBuilder.js:438
 msgid "Axial"
-msgstr "Axial"
+msgstr "Simetría axial"
 
 #: src/control/Control.JSDialogBuilder.js:441
 msgid "Radial"
-msgstr "Radial"
+msgstr "Simetría radial"
 
 #: src/control/Control.JSDialogBuilder.js:444
 msgid "Ellipsoid"
@@ -1583,7 +1583,7 @@ msgstr "Mi biblioteca"
 
 #: src/control/Control.Zotero.js:366
 msgid "Group Libraries"
-msgstr ""
+msgstr "Bibliotecas colectivas"
 
 #: src/control/Control.Zotero.js:606
 msgid "Failed to load groups"
