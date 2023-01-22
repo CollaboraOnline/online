@@ -325,7 +325,8 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:SetLanguageParagraphMenu', 'text'), type: 'menu', menu: [
 						{name: _('None (Do not check spelling)'), id: 'noneparagraph', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}, {name: _('More...'), id: 'paragraphlanguage', uno: '.uno:FontDialogForParagraph'}]},
 					{name: _UNO('.uno:SetLanguageAllTextMenu', 'text'), type: 'menu', menu: [
-						{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}, {name: _('More...'), id: 'morelanguage', uno: '.uno:LanguageStatus?Language:string=*'}]}]},
+						{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
+				]},
 				{uno: '.uno:WordCountDialog'},
 				{uno: '.uno:AccessibilityCheck'},
 				{type: 'separator'},
@@ -476,7 +477,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:SpellDialog'},
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
-					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}, {name: _('More...'), id: 'morelanguage', uno: '.uno:LanguageStatus?Language:string=*'}]},
+					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
 				{type: 'separator'},
 				{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'}
 
@@ -597,7 +598,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:SpellDialog'},
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
-					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}, {name: _('More...'), id: 'morelanguage', uno: '.uno:LanguageStatus?Language:string=*'}]}
+					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
@@ -834,7 +835,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:SpellDialog'},
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
-					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}, {name: _('More...'), id: 'morelanguage', uno: '.uno:LanguageStatus?Language:string=*'}]},
+					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
 				{uno: '.uno:GoalSeekDialog'},
 				{type: 'separator'},
 				{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'}
@@ -1305,7 +1306,6 @@ L.Control.Menubar = L.Control.extend({
 			var noneparagraph = $('#menu-noneparagraph').detach();
 			var paragraphlanguage = $('#menu-paragraphlanguage').detach();
 			var nonelanguage = $('#menu-nonelanguage').detach();
-			var morelanguage = $('#menu-morelanguage').detach();
 
 			// clear old entries
 
@@ -1335,7 +1335,6 @@ L.Control.Menubar = L.Control.extend({
 			$menuParagraph.append(noneparagraph);
 			$menuParagraph.append(paragraphlanguage);
 			$menuDefault.append(nonelanguage);
-			$menuDefault.append(morelanguage);
 		}
 	},
 
