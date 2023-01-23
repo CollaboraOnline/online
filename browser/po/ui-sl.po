@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-20 11:33+0100\n"
-"PO-Revision-Date: 2023-01-16 21:34+0000\n"
+"PO-Revision-Date: 2023-01-22 13:13+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 4.15.1-dev\n"
+"X-Generator: Weblate 4.15.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:6
@@ -1558,7 +1558,7 @@ msgstr "Ključ API Zotero ni nastavljen"
 
 #: src/control/Control.Zotero.js:113
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Ključ Zotero API ni pravilen"
 
 #: src/control/Control.Zotero.js:165 src/core/Socket.js:1140
 msgid "Loading..."
@@ -1661,10 +1661,12 @@ msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Odstranjevanje povezav citatov prepreči Collabora Online, da posodobi citate "
+"in bibliografijo v tem dokumentu."
 
 #: src/control/Control.Zotero.js:1264
 msgid "Confirm"
-msgstr ""
+msgstr "Potrdi"
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
