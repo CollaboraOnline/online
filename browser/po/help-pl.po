@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-20 11:33+0200\n"
-"PO-Revision-Date: 2022-11-27 13:31+0000\n"
+"PO-Revision-Date: 2023-01-22 13:13+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "help/pl/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.15.1\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -2721,9 +2721,8 @@ msgstr ""
 "Wybierz właściwą podpowiedź aby poprawić tekst."
 
 #: html/cool-help.html%2Bdiv.h4:547-5
-#, fuzzy
 msgid "Is there a thesaurus?"
-msgstr "Czy jest tu słownik wyrazów bliskoznacznych?"
+msgstr "Czy jest słownik wyrazów bliskoznacznych?"
 
 #: html/cool-help.html%2Bdiv.p:548-5
 msgid ""
@@ -2938,7 +2937,7 @@ msgstr "Ustaw marginesy strony w oknie dialogowym."
 
 #: html/cool-help.html%2Bdiv.div.h4:592-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr "Jak mogę zmienić orientację strony na poziomą w moim dokumencie?"
+msgstr "Jak zmienić orientację strony na poziomą w moim dokumencie"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:594-11
 msgid ""
