@@ -112,6 +112,7 @@ w2ui-toolbar {
 .w2ui-overlay .menu {
 	overflow: hidden auto;
 	border-radius: var(--border-radius);
+	position: static !important;
 }
 .w2ui-overlay > div {
 	border: 1px solid var(--color-border-dark);
