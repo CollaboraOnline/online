@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-20 11:33+0100\n"
-"PO-Revision-Date: 2023-01-20 10:22+0000\n"
+"PO-Revision-Date: 2023-01-22 13:13+0000\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1561,7 +1561,7 @@ msgstr "Kunci API Zotero tidak dikonfigurasi"
 
 #: src/control/Control.Zotero.js:113
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Kunci API Zotero salah"
 
 #: src/control/Control.Zotero.js:165 src/core/Socket.js:1140
 msgid "Loading..."
@@ -1664,10 +1664,12 @@ msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Melepas taut sitasi akan mencegah Collabora Online memperbarui sitasi dan "
+"bibliografi dalam dokumen ini."
 
 #: src/control/Control.Zotero.js:1264
 msgid "Confirm"
-msgstr ""
+msgstr "Konfirmasi"
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
