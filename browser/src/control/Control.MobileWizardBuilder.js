@@ -805,8 +805,6 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 					var isCancel = response === '0' || response === 0;
 					if (button && (isHelp || isClose || isCancel))
 						button.style.display = 'none';
-					else if (button)
-						this.setupStandardButtonHandler(button, response, this);
 				}
 			}
 		}
