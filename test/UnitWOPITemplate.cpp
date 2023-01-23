@@ -41,12 +41,12 @@ public:
                                    std::shared_ptr<StreamSocket>& socket) override
     {
         const Poco::URI uriReq(request.getURI());
-        LOG_TST("Fake wopi host " << request.getMethod() << " request: " << uriReq.toString());
+        LOG_TST("FakeWOPIHost: " << request.getMethod() << " request: " << uriReq.toString());
 
         // CheckFileInfo
         if (request.getMethod() == "GET" && uriReq.getPath() == "/wopi/files/10")
         {
-            LOG_TST("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
+            LOG_TST("FakeWOPIHost: Handling CheckFileInfo: " << uriReq.getPath());
 
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
             fileInfo->set("BaseFileName", "test.odt");
@@ -75,8 +75,7 @@ public:
                   || request.getMethod() == "PROPFIND")
                  && uriReq.getPath() == "/test.ott")
         {
-            LOG_TST("Fake wopi host request, handling " << request.getMethod() << " on "
-                                                        << uriReq.getPath());
+            LOG_TST("FakeWOPIHost: Handling " << request.getMethod() << " on " << uriReq.getPath());
 
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
@@ -92,7 +91,7 @@ public:
         // Get the template
         else if (request.getMethod() == "GET" && uriReq.getPath() == "/test.ott")
         {
-            LOG_TST("Fake wopi host request, handling template GetFile: " << uriReq.getPath());
+            LOG_TST("FakeWOPIHost: Handling template GetFile: " << uriReq.getPath());
 
             HttpHelper::sendFileAndShutdown(socket, TDOC "/test.ott", "");
 
@@ -101,7 +100,7 @@ public:
         // Save template
         else if (request.getMethod() == "POST" && uriReq.getPath() == "/wopi/files/10/contents")
         {
-            LOG_TST("Fake wopi host request, handling PutFile: " << uriReq.getPath());
+            LOG_TST("FakeWOPIHost: Handling PutFile: " << uriReq.getPath());
 
             if (!_savedTemplate)
             {
@@ -130,7 +129,7 @@ public:
             return true;
         }
 
-        LOG_TST("Fake wopi host unknown request "
+        LOG_TST("FakeWOPIHost: unknown request "
                 << request.getMethod() << " request: " << uriReq.toString() << ". Defaulting.");
         return false;
     }
