@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Collabora Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-20 11:33+0200\n"
-"PO-Revision-Date: 2021-11-18 08:06+0000\n"
+"PO-Revision-Date: 2023-01-22 13:13+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/help/sl/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.15.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
@@ -2723,7 +2723,6 @@ msgstr ""
 "ustrezni predlog za spremembo besedila."
 
 #: html/cool-help.html%2Bdiv.h4:547-5
-#, fuzzy
 msgid "Is there a thesaurus?"
 msgstr "Ali obstaja slovar sopomenk?"
 
