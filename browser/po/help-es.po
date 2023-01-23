@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-20 11:33+0200\n"
-"PO-Revision-Date: 2022-12-03 20:49+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2023-01-22 13:13+0000\n"
+"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "help/es/>\n"
 "Language: es\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.15.1\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -2723,9 +2723,8 @@ msgstr ""
 "Seleccione la sugerencia adecuada para cambiar el texto."
 
 #: html/cool-help.html%2Bdiv.h4:547-5
-#, fuzzy
 msgid "Is there a thesaurus?"
-msgstr "¿Hay un diccionario de sinónimos?"
+msgstr "¿Hay un tesauro?"
 
 #: html/cool-help.html%2Bdiv.p:548-5
 msgid ""
