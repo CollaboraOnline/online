@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-20 11:33+0200\n"
-"PO-Revision-Date: 2022-02-24 20:26+0000\n"
+"PO-Revision-Date: 2023-01-23 18:12+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "help/cs/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -2700,7 +2700,6 @@ msgstr ""
 "s příslušnými gramatickými pravidly. Text změníte tím, že návrh vyberete."
 
 #: html/cool-help.html%2Bdiv.h4:547-5
-#, fuzzy
 msgid "Is there a thesaurus?"
 msgstr "Je k dispozici slovník synonym?"
 
