@@ -362,14 +362,20 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 		else if (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing' && this._map._docLayer._preview.partsFocused === true) {
-			if (!this.modifier && (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.RIGHT || ev.keyCode === this.keyCodes.LEFT) && ev.type === 'keydown') {
+			if (!this.modifier && (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.RIGHT || ev.keyCode === this.keyCodes.LEFT
+				|| ev.keyCode === this.keyCodes.DELETE || ev.keyCode === this.keyCodes.BACKSPACE) && ev.type === 'keydown') {
 				var partToSelect = (ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.LEFT) ? 'prev' : 'next';
-				this._map.setPart(partToSelect);
-				if (app.file.fileBasedView)
-					this._map._docLayer._checkSelectedPart();
+				var deletePart = (ev.keyCode === this.keyCodes.DELETE || ev.keyCode === this.keyCodes.BACKSPACE) ? true: false;
 
+				if (!deletePart) {
+					this._map.setPart(partToSelect);
+					if (app.file.fileBasedView)
+						this._map._docLayer._checkSelectedPart();
+				}
+				else if (this._map.isEditMode() && !app.file.fileBasedView) {
+					this._map.deletePage(this._map._docLayer._selectedPart);
+				}
 				ev.preventDefault();
-				console.log('parts focused is working');
 				return;
 			}
 			else {
