@@ -1249,6 +1249,14 @@ L.Control.Zotero = L.Control.extend({
 				}
 			};
 			command = '.uno:DeleteFields';
+
+			var sectionUnlinkParameter = {
+				'SectionNamePrefix': {
+					'type': 'string',
+					'value': 'ZOTERO_BIBL'
+				}
+			};
+			this.map.sendUnoCommand('.uno:DeleteSections', sectionUnlinkParameter);
 		}
 		this.map.sendUnoCommand(command, parametes);
 		this.resetCitation();
