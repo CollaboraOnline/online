@@ -80,8 +80,8 @@ public:
                                    std::shared_ptr<StreamSocket>& socket) override
     {
         Poco::URI uriReq(request.getURI());
-        LOG_TST("Fake wopi host handling HTTP " << request.getMethod()
-                                                << " request: " << uriReq.toString());
+        LOG_TST("FakeWOPIHost: Handling HTTP " << request.getMethod()
+                                               << " request: " << uriReq.toString());
 
         constexpr auto DefaultUrlFilename = "empty.odt";
         static const Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
@@ -93,8 +93,7 @@ public:
             // CheckFileInfo
             if (regInfo.match(uriReq.getPath()))
             {
-                LOG_TST(
-                    "Fake wopi host request, handling WOPI::CheckFileInfo: " << uriReq.getPath());
+                LOG_TST("FakeWOPIHost: Handling WOPI::CheckFileInfo: " << uriReq.getPath());
 
                 Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
                 fileInfo->set("BaseFileName", DefaultUrlFilename);
@@ -124,7 +123,7 @@ public:
             if (uriReq.getPath() == FileUrlFilename)
             {
                 const std::string filename = std::string(TDOC) + FileUrlFilename;
-                LOG_TST("Fake wopi host request, WOPI::GetFile sending FileUrl: " << filename);
+                LOG_TST("FakeWOPIHost: Request, WOPI::GetFile sending FileUrl: " << filename);
                 HttpHelper::sendFileAndShutdown(socket, filename, "");
                 return true;
             }
@@ -132,7 +131,7 @@ public:
             if (uriReq.getPath() == InvalidFilename)
             {
                 const std::string filename = std::string(TDOC) + InvalidFilename;
-                LOG_TST("Fake wopi host request, WOPI::GetFile returning 404 for: " << filename);
+                LOG_TST("FakeWOPIHost: Request, WOPI::GetFile returning 404 for: " << filename);
 
                 socket->send("HTTP/1.1 404 Not Found\r\n"
                              "User-Agent: " WOPI_AGENT_STRING "\r\n"
@@ -153,14 +152,14 @@ public:
                 }
 
                 const std::string filename = std::string(TDOC) + '/' + DefaultUrlFilename;
-                LOG_TST("Fake wopi host request, WOPI::GetFile sending Default: " << filename);
+                LOG_TST("FakeWOPIHost: Request, WOPI::GetFile sending Default: " << filename);
                 HttpHelper::sendFileAndShutdown(socket, filename, "");
                 return true;
             }
         }
         else if (request.getMethod() == "POST")
         {
-            LOG_TST("Fake wopi host request, handling PutFile: " << uriReq.getPath());
+            LOG_TST("FakeWOPIHost: Handling PutFile: " << uriReq.getPath());
 
             LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitPutFile",
                                _phase == Phase::WaitPutFile);

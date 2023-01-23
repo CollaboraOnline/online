@@ -32,12 +32,12 @@ public:
         Poco::URI uriReq(request.getURI());
         Poco::RegularExpression regInfo("/wopi/files/[0-9]");
         Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
-        LOG_INF("Fake wopi host request: " << uriReq.toString());
+        LOG_INF("FakeWOPIHost: Request: " << uriReq.toString());
 
         // CheckFileInfo
         if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
         {
-            LOG_INF("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
+            LOG_INF("FakeWOPIHost: Handling CheckFileInfo: " << uriReq.getPath());
 
             assertCheckFileInfoRequest(request);
 
@@ -68,7 +68,7 @@ public:
         // GetFile
         else if (request.getMethod() == "GET" && regContent.match(uriReq.getPath()))
         {
-            LOG_INF("Fake wopi host request, handling GetFile: " << uriReq.getPath());
+            LOG_INF("FakeWOPIHost: Handling GetFile: " << uriReq.getPath());
 
             assertGetFileRequest(request);
 
