@@ -627,6 +627,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				{
 					'id': 'exportas-pdf',
 					'text': _('PDF Document (.pdf)')
+				},
+				{
+					'id': 'exportas-epub',
+					'text': _('EPUB (.epub)')
 				}
 			];
 		} else if (docType === 'spreadsheet') {
