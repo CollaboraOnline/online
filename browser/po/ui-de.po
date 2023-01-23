@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-20 11:33+0100\n"
-"PO-Revision-Date: 2022-12-01 20:34+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2023-01-22 13:13+0000\n"
+"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 4.15.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -749,45 +749,44 @@ msgid "Text orientation"
 msgstr "Textausrichtung"
 
 #: src/control/Control.Menubar.js:264
-#, fuzzy
 msgid "References"
 msgstr "~Bezüge"
 
 #: src/control/Control.Menubar.js:267
 #: src/control/Control.NotebookbarWriter.js:1401
 msgid "Update Index"
-msgstr ""
+msgstr "Verzeichnisse Aktualisieren"
 
 #: src/control/Control.Menubar.js:276
 #: src/control/Control.NotebookbarWriter.js:1484
 msgid "Add Citation"
-msgstr ""
+msgstr "Zitat hinzufügen"
 
 #: src/control/Control.Menubar.js:277
 #: src/control/Control.NotebookbarWriter.js:1495
 msgid "Add Citation Note"
-msgstr ""
+msgstr "Anmerkung hinzufügen"
 
 #: src/control/Control.Menubar.js:278
 #: src/control/Control.NotebookbarWriter.js:1472
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Quellenangabe hinzufügen"
 
 #: src/control/Control.Menubar.js:280
 #: src/control/Control.NotebookbarWriter.js:1512
 msgid "Refresh Citations"
-msgstr ""
+msgstr "Zitate aktualisieren"
 
 #: src/control/Control.Menubar.js:281
 #: src/control/Control.NotebookbarWriter.js:1523
 #: src/control/Control.Zotero.js:1262
 msgid "Unlink Citations"
-msgstr ""
+msgstr "Zitate entfernen"
 
 #: src/control/Control.Menubar.js:282
 #: src/control/Control.NotebookbarWriter.js:1534
 msgid "Citation Preferences"
-msgstr ""
+msgstr "Zitate Einstellungen"
 
 #: src/control/Control.Menubar.js:310 src/control/Control.Menubar.js:1120
 msgid "Insert Rich Text"
@@ -1641,7 +1640,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:1088
 msgid "Add Note"
-msgstr ""
+msgstr "Anmerkung hinzufügen"
 
 #: src/control/Control.Zotero.js:1091
 msgid "Notes"
