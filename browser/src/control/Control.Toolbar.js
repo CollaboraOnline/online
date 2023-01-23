@@ -1031,7 +1031,10 @@ function onCommandResult(e) {
 		_('Conflict Undo/Redo with multiple users. Please use document repair to resolve') + '</div>'});
 	} else if (map.zotero &&
 		((commandName === '.uno:DeleteTextFormField' && e.result.DeleteTextFormField.startsWith('ADDIN ZOTERO_')) ||
-		(commandName === '.uno:DeleteField' && e.result.DeleteField.startsWith('ZOTERO_')))) {
+		(commandName === '.uno:DeleteField' && e.result.DeleteField.startsWith('ZOTERO_')) ||
+		(commandName === '.uno:DeleteSection' && e.result.DeleteSection.startsWith('ZOTERO_BIBL')))) {
+		if (commandName === '.uno:DeleteSection')
+			map.zotero.markBibliographyStyleHasBeenSet(true);
 		map.zotero.handleRefreshCitationsAndBib(false);
 	} else if (map.zotero && commandName === '.uno:DeleteBookmark' && e.result.DeleteBookmark.startsWith('ZOTERO_BREF_')) {
 		map.zotero.setCustomProperty(e.result.DeleteBookmark, '');
