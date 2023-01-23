@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-20 11:33+0100\n"
 "PO-Revision-Date: 2023-01-22 13:13+0000\n"
-"Last-Translator: William Gathoye <william+weblate@gathoye.be>\n"
+"Last-Translator: Eda <eda@mutu.net>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
 "Language: fr\n"
@@ -1934,7 +1934,7 @@ msgstr "Version non prise en charge par le serveur."
 
 #: src/core/Socket.js:573
 msgid "LOKit version:"
-msgstr "Versison LOKit :"
+msgstr "Version LOKit :"
 
 #: src/core/Socket.js:685
 msgid "Session terminated by document owner"
