@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-01 21:14+0100\n"
-"PO-Revision-Date: 2022-12-01 20:34+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"POT-Creation-Date: 2023-01-20 11:33+0100\n"
+"PO-Revision-Date: 2023-01-22 13:13+0000\n"
+"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -746,7 +746,47 @@ msgstr "Alle"
 msgid "Text orientation"
 msgstr "Textausrichtung"
 
-#: src/control/Control.Menubar.js:296 src/control/Control.Menubar.js:1107
+#: src/control/Control.Menubar.js:264
+msgid "References"
+msgstr "Bezüge"
+
+#: src/control/Control.Menubar.js:267
+#: src/control/Control.NotebookbarWriter.js:1401
+msgid "Update Index"
+msgstr "Verzeichnisse Aktualisieren"
+
+#: src/control/Control.Menubar.js:276
+#: src/control/Control.NotebookbarWriter.js:1484
+msgid "Add Citation"
+msgstr "Zitat hinzufügen"
+
+#: src/control/Control.Menubar.js:277
+#: src/control/Control.NotebookbarWriter.js:1495
+msgid "Add Citation Note"
+msgstr "Anmerkung hinzufügen"
+
+#: src/control/Control.Menubar.js:278
+#: src/control/Control.NotebookbarWriter.js:1472
+msgid "Add Bibliography"
+msgstr "Quellenangabe hinzufügen"
+
+#: src/control/Control.Menubar.js:280
+#: src/control/Control.NotebookbarWriter.js:1512
+msgid "Refresh Citations"
+msgstr "Zitate aktualisieren"
+
+#: src/control/Control.Menubar.js:281
+#: src/control/Control.NotebookbarWriter.js:1523
+#: src/control/Control.Zotero.js:1262
+msgid "Unlink Citations"
+msgstr "Zitate entfernen"
+
+#: src/control/Control.Menubar.js:282
+#: src/control/Control.NotebookbarWriter.js:1534
+msgid "Citation Preferences"
+msgstr "Zitate Einstellungen"
+
+#: src/control/Control.Menubar.js:310 src/control/Control.Menubar.js:1120
 msgid "Insert Rich Text"
 msgstr "Rich Text einfügen"
 
@@ -1524,8 +1564,21 @@ msgstr "Meine Bibliothek"
 msgid "Your library is empty"
 msgstr "Ihre Bibliothek ist leer"
 
-#: src/control/Control.Zotero.js:184
-msgid "An error occurred while fetching style list"
+#: src/control/Control.Zotero.js:944
+msgid "Failed to load items"
+msgstr ""
+
+#: src/control/Control.Zotero.js:1088
+msgid "Add Note"
+msgstr "Anmerkung hinzufügen"
+
+#: src/control/Control.Zotero.js:1091
+msgid "Notes"
+msgstr ""
+
+#: src/control/Control.Zotero.js:1091
+#, fuzzy
+msgid "An error occurred while fetching notes"
 msgstr "Fehler beim Abrufen der Stilliste"
 
 #: src/control/Parts.js:432
