@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-20 11:33+0200\n"
-"PO-Revision-Date: 2023-01-20 10:22+0000\n"
+"PO-Revision-Date: 2023-01-23 18:12+0000\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/help/id/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1465,12 +1465,12 @@ msgstr "Fitur Lanjutan"
 #: html/cool-help.html%2Bdiv.div.p:301-9
 #: html/cool-help.html%2Bdiv.div.h2:419-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr "<span class=\"productname\">%productName</span> lembar kerja"
+msgstr "<span class=\"productname\">%productName</span> lembar sebar"
 
 #: html/cool-help.html%2Bdiv.div.p:302-9
 #: html/cool-help.html%2Bdiv.div.h3:421-5
 msgid "Editing spreadsheets"
-msgstr "Menyunting spreadsheets"
+msgstr "Menyunting lembar sebar"
 
 #: html/cool-help.html%2Bdiv.div.p:303-9
 #: html/cool-help.html%2Bdiv.div.h3:424-5
@@ -1480,7 +1480,7 @@ msgstr "Rumus"
 #: html/cool-help.html%2Bdiv.div.p:304-9
 #: html/cool-help.html%2Bdiv.div.h3:430-5
 msgid "Formatting spreadsheets"
-msgstr "Pemformatan spreadsheet"
+msgstr "Pemformatan lembar sebar"
 
 #: html/cool-help.html%2Bdiv.div.p:308-9
 #: html/cool-help.html%2Bdiv.div.h2:467-5
@@ -1515,12 +1515,12 @@ msgstr "Menyunting presentasi"
 #: html/cool-help.html%2Bdiv.div.p:316-9
 #: html/cool-help.html%2Bdiv.div.h3:506-5
 msgid "Slide show"
-msgstr "tampilan Salindia"
+msgstr "Pertunjukan salindia"
 
 #: html/cool-help.html%2Bdiv.div.p:317-9
 #: html/cool-help.html%2Bdiv.div.h3:510-5
 msgid "Slide pane"
-msgstr "panel Salindia"
+msgstr "Panel salindia"
 
 #: html/cool-help.html%2Bdiv.p:320-5
 #: html/cool-help.html%2Bdiv.h2:523-5
@@ -1534,12 +1534,12 @@ msgstr "Umum"
 #: html/cool-help.html%2Bdiv.div.p:323-9
 #: html/cool-help.html%2Bdiv.div.h3:554-5
 msgid "Text documents"
-msgstr "dokumen Teks"
+msgstr "Dokumen teks"
 
 #: html/cool-help.html%2Bdiv.div.p:326-9
 #: html/cool-help.html%2Bdiv.div.h3:618-5
 msgid "Spreadsheets"
-msgstr "Lembar Kerja"
+msgstr "Lembar sebar"
 
 #: html/cool-help.html%2Bdiv.div.p:329-9
 #: html/cool-help.html%2Bdiv.div.h3:646-5
@@ -1554,7 +1554,7 @@ msgid ""
 "alone on a document, or collaboratively as part of a team."
 msgstr ""
 "<span class=\"productname\">%productName</span> memungkinkan Anda membuat "
-"dan menyunting dokumen teks dokumen office, lembar kerja, dan presentasi "
+"dan menyunting dokumen teks dokumen office, lembar sebar, dan presentasi "
 "langsung di peramban Anda, dengan cara yang sederhana dan langsung. Anda "
 "dapat mengerjakan dokumen sendiri, atau secara kolaboratif sebagai bagian "
 "dari tim."
@@ -1727,6 +1727,10 @@ msgid ""
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
+"Untuk mengunduh dokumen, unduh dari menu aplikasi <span class=\"productname\""
+">%productName</span> <span class=\"ui\">Berkas</span>. Format unduhan yang "
+"tersedia tergantung pada aplikasi. Semua aplikasi mengekspor dokumen dalam "
+"format PDF."
 
 #: html/cool-help.html%2Bdiv.p:363-5
 msgid ""
@@ -1834,12 +1838,19 @@ msgid ""
 "Repair function allows users to undo other editor’s changes to the document "
 "to a previous state."
 msgstr ""
+"Ketika beberapa orang mengedit dokumen yang sama secara bersamaan, ada "
+"kemungkinan perubahan yang mereka lakukan akan bertentangan dan hal ini "
+"dapat menyebabkan kebingungan. Fungsi Perbaikan Dokumen memungkinkan "
+"pengguna untuk membatalkan perubahan editor lain pada dokumen ke kondisi "
+"sebelumnya."
 
 #: html/cool-help.html%2Bdiv.p:375-5
 msgid ""
 "To jump back to the selected state, select it with the mouse and hit <span "
 "class=\"ui\">Jump to state</span>."
 msgstr ""
+"Untuk kembali ke keadaan yang dipilih, pilih itu dengan tetikus dan tekan "
+"<span class=\"ui\">Lompat ke keadaan</span>."
 
 #: html/cool-help.html%2Bdiv.p:377-5
 msgid ""
@@ -1848,6 +1859,10 @@ msgid ""
 ">+</span><kbd>A</kbd> and proceeded to type over it destroying it – while "
 "you were concurrently editing."
 msgstr ""
+"Ini sangat berguna – katakanlah ketika seorang kolega secara tidak sengaja "
+"memilih semua teks dalam dokumen dengan <kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>A</kbd> dan melanjutkan mengetik menghancurkannya – saat "
+"Anda menyunting secara bersamaan."
 
 #: html/cool-help.html%2Bdiv.h4:378-5
 msgid "Inactive document"
@@ -1860,6 +1875,11 @@ msgid ""
 "“Inactive” state. The document is shown with a transparent gray overlay, "
 "with the message “Inactive document – please click to resume editing”."
 msgstr ""
+"Ketika <span class=\"productname\">%productName</span> mendeteksi bahwa "
+"belum ada aktivitas apa pun di peramban untuk sementara waktu, itu "
+"menempatkan dokumen dalam keadaan \"Tidak Aktif\". Dokumen ditampilkan "
+"dengan hamparan abu-abu transparan, dengan pesan \"Dokumen tidak aktif - "
+"silakan klik untuk melanjutkan penyuntingan\"."
 
 #: html/cool-help.html%2Bdiv.p:381-5
 msgid ""
@@ -1867,6 +1887,9 @@ msgid ""
 "disappear. Any changes that may have been made by other users – while "
 "collaboratively editing the document – are re-loaded."
 msgstr ""
+"Untuk melanjutkan penyuntingan, klik dokumen dan hamparan dan pesan "
+"menghilang. Setiap perubahan yang mungkin telah dilakukan oleh pengguna lain "
+"- saat menyunting dokumen secara kolaboratif - dimuat ulang."
 
 #: html/cool-help.html%2Bdiv.h4:382-5
 msgid "Pasting"
@@ -1879,6 +1902,10 @@ msgid ""
 "or browser window, or from outside of the browser, the pasted content will "
 "preserve rich text."
 msgstr ""
+"Ketika Anda menyisipkan konten yang disalin dari dalam dokumen yang sama, "
+"format dan elemen dipertahankan. Jika Anda menyalin dari dokumen lain, di "
+"jendela tab atau peramban lain, atau dari luar peramban, konten yang "
+"disisipkan akan mempertahankan rich text."
 
 #: html/cool-help.html%2Bdiv.p:384-5
 msgid ""
@@ -1886,6 +1913,9 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>V</kbd>"
 msgstr ""
+"Anda dapat menempelkan sebagai teks yang tidak diformat dengan pintasan "
+"papan ketik: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.p:385-5
 msgid ""
@@ -1893,18 +1923,25 @@ msgid ""
 "You can also paste objects, such as images, if they are copied from the "
 "document you are working in."
 msgstr ""
+"Saat Anda menempelkan teks dari dalam dokumen, pemformatan akan dihormati. "
+"Anda juga dapat menempelkan objek, seperti gambar, jika disalin dari dokumen "
+"tempat Anda bekerja."
 
 #: html/cool-help.html%2Bdiv.p:386-5
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application, it will be pasted as rich text."
 msgstr ""
+"Ketika Anda menempelkan teks dari luar dokumen (jendela peramban lain atau "
+"aplikasi desktop), teks tersebut akan ditempelkan sebagai rich text."
 
 #: html/cool-help.html%2Bdiv.p:387-5
 msgid ""
 "When you have internal cut or copied content, you can paste this content "
 "using the context menu."
 msgstr ""
+"Ketika Anda memiliki konten internal yang dipotong atau disalin, Anda dapat "
+"menempelkan konten ini menggunakan menu konteks."
 
 #: html/cool-help.html%2Bdiv.h4:390-5
 msgid "Adding charts"
@@ -1923,16 +1960,22 @@ msgid ""
 "Select a table in text document, a range in a spreadsheet or a table in a "
 "presentation."
 msgstr ""
+"Pilih suatu tabel di dokumen teks, suatu rentang dalam lembar sebar, atau "
+"suatu tabel dalam presentasi."
 
 #: html/cool-help.html%2Bdiv.ol.li.p:395-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
 "Customize your chart on the sidebar:"
 msgstr ""
+"Pilih <span class=\"ui\">Sisipkan</span> → <span class=\"ui\">Bagan</span>. "
+"Sesuaikan bagan Anda di bilah samping:"
 
 #: html/cool-help.html%2Bdiv.ol.li.p:398-11
 msgid "If no table or range was selected, a prototype chart is displayed."
 msgstr ""
+"Jika tidak ada tabel atau rentang yang dipilih, bagan prototipe akan "
+"ditampilkan."
 
 #: html/cool-help.html%2Bdiv.p:401-5
 msgid ""
@@ -1941,22 +1984,31 @@ msgid ""
 "Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart "
 "Type</span> to edit chart data and select chart type."
 msgstr ""
+"<span class=\"def\">Penyuntingan bagan:</span> Klik ganda bagan untuk "
+"memilih. Gunakan menu konteks untuk menambahkan elemen bagan seperti judul, "
+"sumbu, dan lainnya. Pilih <span class=\"ui\">Rentang Data</span> dan <span "
+"class=\"ui\">Tipe Bagan</span> untuk menyunting data bagan dan memilih tipe "
+"bagan."
 
 #: html/cool-help.html%2Bdiv.p:402-5
 msgid ""
 "<span class=\"def\">Chart formatting:</span> The same context menu brings "
 "you to chart data table and chart type selection."
 msgstr ""
+"<span class=\"def\">Pemformatan bagan:</span> Menu konteks yang sama membawa "
+"Anda ke tabel data bagan dan pemilihan tipe bagan."
 
 #: html/cool-help.html%2Bdiv.p:403-5
 msgid ""
 "<span class=\"def\">Data series formatting:</span> Open the context menu and "
 "choose <span class=\"ui\">Format data series</span>."
 msgstr ""
+"<span class=\"def\">Pemformatan seri data:</span> Buka menu konteks dan "
+"pilih <span class=\"ui\">Format seri data</span>."
 
 #: html/cool-help.html%2Bdiv.h4:404-5
 msgid "Handling images"
-msgstr ""
+msgstr "Menangani citra"
 
 #: html/cool-help.html%2Bdiv.p:405-5
 msgid ""
@@ -1964,6 +2016,9 @@ msgid ""
 "document from your local computer or from your cloud storage. Inserted "
 "images are always embedded in the document."
 msgstr ""
+"<span class=\"productname\">%productName</span> menyisipkan gambar dalam "
+"dokumen teks dari komputer lokal Anda atau dari penyimpanan cloud Anda. "
+"Gambar yang disisipkan selalu disematkan dalam dokumen."
 
 #: html/cool-help.html%2Bdiv.p:406-5
 msgid ""
@@ -1971,12 +2026,18 @@ msgid ""
 "Insert image</span> icon allows you to choose an image from the cloud "
 "storage's folders and shares."
 msgstr ""
+"<span class=\"def\">Sisipkan gambar:</span> Mengklik ikon <span class=\"ui\""
+">Sisipkan gambar</span> memungkinkan Anda memilih gambar dari folder "
+"penyimpanan cloud dan penyimpanan cloud bersama."
 
 #: html/cool-help.html%2Bdiv.p:407-5
 msgid ""
 "<span class=\"def\">Insert local image:</span> opens the browser file picker "
 "to upload the image from your local computer and insert it into the document."
 msgstr ""
+"<span class=\"def\">Sisipkan gambar lokal:</span> membuka pemilih berkas "
+"peramban untuk mengunggah gambar dari komputer lokal Anda dan menyisipkannya "
+"ke dalam dokumen."
 
 #: html/cool-help.html%2Bdiv.p:408-5
 msgid ""
@@ -1984,6 +2045,9 @@ msgid ""
 "image. Select the image and open the context menu. Use the images handles to "
 "resize the image with the mouse."
 msgstr ""
+"Gambar dapat diubah ukuran, diputar, dan ditambatkan. Teks dapat dialirkan "
+"di sekitar gambar. Pilih gambar dan buka menu konteks. Gunakan pegangan "
+"gambar untuk mengubah ukuran gambar dengan tetikus."
 
 #: html/cool-help.html%2Bdiv.h4:409-5
 msgid "Comments in documents"
@@ -1995,12 +2059,18 @@ msgid ""
 "that need special reader attention. Comments are displayed on the right and "
 "carry the name and date of the issuer."
 msgstr ""
+"Sisipkan komentar di <span class=\"productname\">%productName</span> di "
+"tempat-tempat yang membutuhkan perhatian khusus pembaca. Komentar "
+"ditampilkan di sebelah kanan dan membawa nama dan tanggal penerbit."
 
 #: html/cool-help.html%2Bdiv.p.img:412-5
 msgid ""
 "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
 "\"images/submenu.svg\">) icon to reply, move and delete comments."
 msgstr ""
+"Klik pada ikon sub menu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" "
+"src=\"images/submenu.svg\">) untuk membalas, memindahkan, dan menghapus "
+"komentar."
 
 #: html/cool-help.html%2Bdiv.h4:413-5
 msgid "Spellchecking"
@@ -2013,12 +2083,18 @@ msgid ""
 "misspelled words. Click on the right mouse button to open a context menu "
 "with suggested misspelling corrections."
 msgstr ""
+"<span class=\"productname\">%productName</span> dapat memeriksa ejaan di "
+"dokumen teks, lembar sebar, dan presentasi. Garis bawah merah bergelombang "
+"menunjukkan kata-kata yang salah eja. Klik tombol kanan tetikus untuk "
+"membuka menu konteks dengan koreksi salah eja yang disarankan."
 
 #: html/cool-help.html%2Bdiv.p:416-5
 msgid ""
 "To systematically spell-check the whole document use the <span class=\"ui\""
 ">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
 msgstr ""
+"Untuk memeriksa seluruh dokumen secara sistematis, gunakan opsi menu <span "
+"class=\"ui\">Alat</span><span class=\"ui\">Ejaan</span>."
 
 #: html/cool-help.html%2Bdiv.div.p:422-5
 msgid ""
@@ -2031,15 +2107,24 @@ msgid ""
 "cursor to the next cell to the right, and with an <kbd>Enter</kbd> to the "
 "cell below for easy further data entry."
 msgstr ""
+"Anda menyunting lembar sebar daring dengan cara yang sama seperti menyunting "
+"lembar sebar desktop. Operasi seperti memasukkan data, memilih rentang, "
+"kolom, baris, atau lembar adalah sama. Gunakan papan ketik, menu, atau bilah "
+"alat untuk memerintahkan tindakan dalam lembar sebar. Menyeret konten sel "
+"untuk mengisi sel dengan data juga didukung. Perintah salin, potong, dan "
+"tempel tersedia dari menu konteks. Mengikuti data yang dimasukkan dengan "
+"akan <kbd>Tab</kbd> memindahkan kursor ke sel berikutnya di sebelah kanan, "
+"dan dengan ke <kbd>Enter</kbd> sel di bawah ini untuk memudahkan entri data "
+"lebih lanjut."
 
 #: html/cool-help.html%2Bdiv.div.p:425-5
 msgid ""
 "Formulas are entered in the formula bar. Enter '=' and insert the formula."
-msgstr ""
+msgstr "Rumus dimasukkan di bilah rumus. Masukkan '=' dan sisipkan rumus."
 
 #: html/cool-help.html%2Bdiv.div.p:426-5
 msgid "All spreadsheets functions and mathematical rules applies."
-msgstr ""
+msgstr "Semua fungsi lembar sebar dan aturan matematika berlaku."
 
 #: html/cool-help.html%2Bdiv.div.p:428-5
 msgid ""
@@ -2048,6 +2133,10 @@ msgid ""
 "committees/download.php/16826/openformula-spec-20060221.html\" target=\""
 "_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
 msgstr ""
+"Bahasa rumus harus sangat akrab bagi setiap pengguna lembar sebar, dan "
+"ditentukan dengan sangat rinci dalam <a href=\"https://www.oasis-open.org/"
+"committees/download.php/16826/openformula-spec-20060221.html\" target="
+"\"_blank\" rel=\"noopener noreferrer\">spesifikasi OpenFormula OASIS</a>."
 
 #: html/cool-help.html%2Bdiv.div.p:431-5
 msgid ""
@@ -2059,6 +2148,13 @@ msgid ""
 "custom number formatting, as well as font, complex border, background, cell "
 "protection and other options."
 msgstr ""
+"<span class=\"def\">Pemformatan langsung:</span> Anda dapat memformat sel, "
+"kolom, baris, dan lembar dari lembar sebar dengan memformat langsung dari "
+"menu, bilah alat, atau menu konteks. Pemformatan langsung hanya berlaku "
+"untuk objek saat ini yang dipilih. Untuk memformat sel, gunakan menu atau "
+"tekan <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>. Dialog "
+"ini memungkinkan pemformatan angka yang kompleks dan ubahan, serta fonta, "
+"batas kompleks, latar belakang, proteksi sel, dan opsi lainnya."
 
 #: html/cool-help.html%2Bdiv.div.p:435-5
 msgid ""
@@ -2079,12 +2175,19 @@ msgid ""
 "spreadsheets in <span class=\"productname\">%productName</span> there are "
 "various possibilities for applying filters."
 msgstr ""
+"<span class=\"def\">Memfilter data:</span> Filter dan filter tingkat lanjut "
+"memungkinkan Anda mengerjakan baris (record) dari rentang data tertentu yang "
+"difilter. Dalam lembar sebar di <span class=\"productname\">%productName</"
+"span> ada berbagai kemungkinan untuk menerapkan filter."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:439-10
 msgid ""
 "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly "
 "restrict the display to records with identical entries in a data field."
 msgstr ""
+"Salah satu penggunaan untuk fungsi <span class=\"ui\">FilterOtomatis</span> "
+"adalah dengan cepat membatasi tampilan ke record dengan entri identik dalam "
+"bidang data."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:442-11
 msgid ""
@@ -2093,6 +2196,10 @@ msgid ""
 "standard filter to connect the conditions with either a logical AND or a "
 "logical OR operator."
 msgstr ""
+"Dalam dialog <span class=\"ui\">Filter Standar</span>, Anda juga bisa "
+"menentukan rentang yang berisi nilai di bidang data tertentu. Anda dapat "
+"menggunakan filter standar untuk menyambungkan kondisi dengan operator AND "
+"logis atau OR logis."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:443-11
 msgid ""
@@ -2100,6 +2207,9 @@ msgid ""
 "filter conditions. With advanced filters you enter the conditions directly "
 "into the sheet."
 msgstr ""
+"<span class=\"ui\">Filter Tingkat Lanjut</span> memungkinkan hingga total "
+"delapan kondisi filter. Dengan filter tingkat lanjut Anda memasukkan kondisi "
+"langsung ke dalam lembar."
 
 #: html/cool-help.html%2Bdiv.div.p:445-5
 msgid ""
@@ -2107,6 +2217,10 @@ msgid ""
 "and group rows and columns together so that you can collapse and expand the "
 "groups with a single click making it easy to represent hierarchical data."
 msgstr ""
+"<span class=\"def\">Membuat kerangka:</span> Anda bisa membuat kerangka data "
+"dan mengelompokkan baris dan kolom bersama-sama sehingga Anda bisa "
+"menciutkan dan memperluas grup dengan satu klik sehingga mudah untuk "
+"mewakili data hierarkis."
 
 #: html/cool-help.html%2Bdiv.div.p:447-5
 msgid ""
@@ -2114,12 +2228,17 @@ msgid ""
 "entries to be valid. Invalid entries to a cell will be rejected. To enable "
 "data validation:"
 msgstr ""
+"<span class=\"def\">Validasi data:</span> Untuk setiap sel, Anda bisa "
+"menentukan entri yang valid. Entri yang tidak valid ke sel akan ditolak. "
+"Untuk mengaktifkan validasi data:"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:450-9
 msgid ""
 "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\""
 ">Data</span> menu. The <span class=\"ui\">Validity</span> dialog opens."
 msgstr ""
+"Pilih <span class=\"ui\">Validitas</span> dari menu <span class=\"ui\">Data</"
+"span>. Dialog <span class=\"ui\">Validitas</span> terbuka."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:453-11
 msgid ""
@@ -2137,6 +2256,9 @@ msgid ""
 "Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\""
 ">OK</span> to close the dialog."
 msgstr ""
+"Gunakan tab <span class=\"ui\">Bantuan Masukan</span> dan <span class=\"ui\""
+">Peringatan Kesalahan</span> untuk meningkatkan interaksi pengguna. Klik "
+"<span class=\"ui\">OK</span> untuk menutup dialog."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:458-11
 msgid ""
@@ -2154,6 +2276,11 @@ msgid ""
 "dot shows on the top right corner of the cell when it has a comment. Hover "
 "the mouse on the cell to display comments."
 msgstr ""
+"<span class=\"def\">Komentar:</span> Di lembar sebar, Anda dapat menyisipkan "
+"satu komentar per sel. Saat Anda memilih <span class=\"ui\">Sisipkan "
+"komentar</span>, popup muncul yang memungkinkan Anda menulis konten untuk "
+"komentar. Titik merah terlihat di sudut kanan atas sel saat memiliki "
+"komentar. Arahkan tetikus ke sel untuk menampilkan komentar."
 
 #: html/cool-help.html%2Bdiv.div.p:462-5
 msgid ""
@@ -2163,6 +2290,11 @@ msgid ""
 "Conditional Formatting</span> icon on the toolbar. Select the symbol set to "
 "apply on the range."
 msgstr ""
+"<span class=\"def\">Pemformatan bersyarat:</span> <span class=\"productname\""
+">%productName</span> menambahkan simbol ke setiap sel rentang berdasarkan "
+"kondisi sel. Pilih rentang sel dan klik ikon <span class=\"ui\">Pemformatan "
+"Bersyarat</span> pada bilah alat. Pilih kumpulan simbol untuk diterapkan "
+"pada rentang."
 
 #: html/cool-help.html%2Bdiv.div.p:470-5
 msgid ""
@@ -2174,6 +2306,14 @@ msgid ""
 "tables and charts, are similar to a desktop word processor. Use the "
 "keyboard, menus and toolbars to interact with your document."
 msgstr ""
+"<span class=\"productname\">%productName</span> menyunting dokumen teks "
+"dengan cara yang sama seperti Anda menyunting dokumen desktop. Ini "
+"menyediakan tata letak What You See Is What You Get (WYSIWYG) - yang dengan "
+"mudah menataletak dokumen sebagaimana saat dicetak. Operasi seperti mengetik "
+"teks, memotong, menyalin, dan menempelkan konten, memilih teks, menyisipkan, "
+"mengubah ukuran, menjangkar gambar, menambahkan, dan menangani tabel dan "
+"bagan, mirip dengan pengolah kata desktop. Gunakan papan tik, menu, dan "
+"bilah alat untuk berinteraksi dengan dokumen Anda."
 
 #: html/cool-help.html%2Bdiv.div.p:473-5
 msgid ""
@@ -2181,6 +2321,9 @@ msgid ""
 "available in the context menu are related - not extensively - to the "
 "underlying object in the document."
 msgstr ""
+"Menu konteks tersedia saat mengklik tombol kanan tetikus. Perintah yang "
+"tersedia dalam menu konteks terkait - tidak secara ekstensif - ke objek yang "
+"mendasarinya dalam dokumen."
 
 #: html/cool-help.html%2Bdiv.div.h3:475-5
 msgid "Formatting text"
@@ -2197,6 +2340,14 @@ msgid ""
 "changes formatting as well, simplifying the effort of formatting many "
 "paragraph individually."
 msgstr ""
+"<span class=\"productname\">%productName</span> mendukung teknik modern "
+"untuk pemformatan paragraf melalui gaya. Gaya adalah sekumpulan properti "
+"teks (fonta, warna, latar belakang, dan banyak lagi) berlabel nama, yaitu "
+"nama gaya. Gunakan gaya untuk menerapkan kumpulan properti yang sama ke "
+"banyak paragraf dalam dokumen dan menghasilkan tampilan profesional yang "
+"seragam. Selain itu, jika Anda mengubah salah satu properti pemformatan "
+"gaya, semua paragraf dengan gaya yang sama juga mengubah pemformatan, "
+"menyederhanakan upaya memformat banyak paragraf satu per satu."
 
 #: html/cool-help.html%2Bdiv.div.p:477-5
 msgid ""
@@ -2205,6 +2356,10 @@ msgid ""
 "in every text excerpt, turning text formatting a long task, subject to "
 "errors and delays."
 msgstr ""
+"Sebaliknya, pemformatan langsung menerapkan pemformatan ke kutipan yang "
+"dipilih dari konten dokumen. Pada dokumen panjang, pemformatan langsung "
+"harus diterapkan di setiap kutipan teks, mengubah pemformatan teks menjadi "
+"tugas panjang, yang rentan kesalahan dan penundaan."
 
 #: html/cool-help.html%2Bdiv.div.p:478-5
 msgid ""
@@ -2212,6 +2367,10 @@ msgid ""
 "objects by formatting directly from the menus, toolbar or context menus. "
 "Direct formatting applies only to the current object selected."
 msgstr ""
+"<span class=\"def\">Pemformatan langsung:</span> Anda bisa memformat objek "
+"dokumen teks dengan memformat langsung dari menu, bilah alat, atau menu "
+"konteks. Pemformatan langsung hanya berlaku untuk objek yang saat ini "
+"dipilih."
 
 #: html/cool-help.html%2Bdiv.div.p:479-5
 msgid ""
@@ -2220,10 +2379,14 @@ msgid ""
 "paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → "
 "<span class=\"ui\">Edit styles</span> to change style."
 msgstr ""
+"<span class=\"def\">Pemformatan gaya:</span> <span class=\"productname\""
+">%productName</span> mendukung gaya paragraf. Anda bisa menerapkan gaya "
+"paragraf yang sudah ada ke paragraf. Pilih menu <span class=\"ui\">Sunting</"
+"span> → <span class=\"ui\">Sunting gaya</span> untuk mengubah gaya."
 
 #: html/cool-help.html%2Bdiv.div.h4:483-5
 msgid "Handling Tables"
-msgstr ""
+msgstr "Menangani Tabel"
 
 #: html/cool-help.html%2Bdiv.div.p:484-5
 msgid ""
@@ -2232,6 +2395,10 @@ msgid ""
 "cells with the <span class=\"ui\">Table</span> menu. The default paragraph "
 "style inside cells is “Table contents”."
 msgstr ""
+"Sisipkan tabel dengan ikon yang tepat di bilah alat. Pilih cacah awal baris "
+"dan kolom. Tambahkan baris dan kolom dengan menu konteks sel. Gabungkan sel "
+"dengan menu <span class=\"ui\">Tabel</span>. Gaya paragraf baku di dalam sel "
+"adalah \"Isi tabel\"."
 
 #: html/cool-help.html%2Bdiv.div.p:486-5
 msgid ""
@@ -2239,6 +2406,9 @@ msgid ""
 "cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\""
 ">Properties</span>. Fine tune the table with the properties dialog."
 msgstr ""
+"<span class=\"def\">Memformat sel:</span> Klik di sel atau rentang sel dan "
+"pilih menu <span class=\"ui\">Tabel</span> → <span class=\"ui\">Properti</"
+"span>. Selaraskan tabel dengan dialog properti."
 
 #: html/cool-help.html%2Bdiv.div.h4:487-5
 msgid "Track changes"
@@ -2283,18 +2453,25 @@ msgid ""
 "spaces are shown as marks to assisting text alignment, editing and "
 "formatting."
 msgstr ""
+"<span class=\"def\">Tanda pemformatan:</span> Paragraf, halaman, dan spasi "
+"tak putus diperlihatkan sebagai tanda untuk membantu perataan, penyuntingan, "
+"dan pemformatan teks."
 
 #: html/cool-help.html%2Bdiv.div.p:494-5
 msgid ""
 "<span class=\"def\">Fields:</span> A basic set of fields is available to "
 "insert in the document."
 msgstr ""
+"<span class=\"def\">Bidang:</span> Sekumpulan bidang dasar tersedia untuk "
+"disisipkan dalam dokumen."
 
 #: html/cool-help.html%2Bdiv.div.p:495-5
 msgid ""
 "<span class=\"def\">Alphabetical index:</span> Existing alphabetical index "
 "can be updated with new entries."
 msgstr ""
+"<span class=\"def\">Indeks alfabetis:</span> Indeks alfabetis yang ada bisa "
+"dimutakhirkan dengan entri baru."
 
 #: html/cool-help.html%2Bdiv.div.p:496-5
 msgid ""
@@ -2302,12 +2479,17 @@ msgid ""
 "available for the existing page style applied in the document at the cursor "
 "position."
 msgstr ""
+"<span class=\"def\">Kepala dan kaki halaman:</span> Kepala dan kaki tersedia "
+"untuk gaya halaman yang sudah ada yang diterapkan dalam dokumen di posisi "
+"kursor."
 
 #: html/cool-help.html%2Bdiv.div.p:497-5
 msgid ""
 "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes "
 "are supported."
 msgstr ""
+"<span class=\"def\">Catatan kaki dan catatan akhir:</span> Catatan kaki dan "
+"catatan akhir didukung."
 
 #: html/cool-help.html%2Bdiv.div.p:504-5
 msgid ""
@@ -2318,6 +2500,12 @@ msgid ""
 "presentation application. Use the keyboard, menus and toolbars to perform "
 "actions in your document."
 msgstr ""
+"<span class=\"productname\">%productName</span> Impress menyunting "
+"presentasi dengan cara yang seharusnya akrab bagi orang-orang. Operasi "
+"seperti mengetik teks, memotong, menyalin, dan menempelkan konten, memilih "
+"teks, menyisipkan, mengubah ukuran, menjangkar gambar, menambahkan, dan "
+"menangani tabel, mirip dengan aplikasi presentasi desktop. Gunakan papan "
+"ketik, menu, dan bilah alat untuk melakukan tindakan di dokumen Anda."
 
 #: html/cool-help.html%2Bdiv.div.p:507-5
 msgid ""
@@ -2326,24 +2514,36 @@ msgid ""
 "the slide show from the menu or click on icon in the bottom left toolbar in "
 "the slide pane."
 msgstr ""
+"<span class=\"productname\">%productName</span> menampilkan pertunjukan "
+"salindia, termasuk sub kumpulan transisi salindia dan animasi objek. Pilih "
+"pertunjukan salindia dari menu atau klik ikon di bilah alat kiri bawah di "
+"panel salindia."
 
 #: html/cool-help.html%2Bdiv.div.p:508-5
 msgid ""
 "To exit a <span class=\"productname\">%productName</span> slide show, press "
 "the <kbd>Esc</kbd> key to return to the presentation edit mode."
 msgstr ""
+"Untuk keluar dari pertunjukan salindia <span class=\"productname\""
+">%productName</span>, tekan tombol <kbd>Esc</kbd> untuk kembali ke mode "
+"sunting presentasi."
 
 #: html/cool-help.html%2Bdiv.div.p:511-5
 msgid ""
 "Click on any slide thumbnail in the pane to switch to this slide to view or "
 "edit it."
 msgstr ""
+"Klik pada gambar mini salindia apa pun di panel untuk beralih ke salindia "
+"ini untuk menampilkan atau menyuntingnya."
 
 #: html/cool-help.html%2Bdiv.div.p:512-5
 msgid ""
 "Use the slide pane toolbar in the bottom to start the slideshow, add slide, "
 "duplicate or delete the current slide."
 msgstr ""
+"Gunakan bilah alat panel salindia di bagian bawah untuk memulai pertunjukan "
+"salindia, menambahkan salindia, menduplikasi, atau menghapus salindia saat "
+"ini."
 
 #: html/cool-help.html%2Bdiv.div.p:515-5
 msgid ""
@@ -2360,6 +2560,9 @@ msgid ""
 "<span class=\"def\">Master slide:</span> Select the master slide associated "
 "to the current slide. Format and arrange slide elements in the master slide."
 msgstr ""
+"<span class=\"def\">Salindia induk:</span> Pilih salindia induk yang terkait "
+"dengan salindia saat ini. Memformat dan menyusun elemen salindia di salindia "
+"induk."
 
 #: html/cool-help.html%2Bdiv.div.p:518-5
 msgid ""
@@ -2368,6 +2571,11 @@ msgid ""
 "slide in the slide show. Slide transitions are property of the slide, use "
 "the side bar to set the slide transition when in edit mode."
 msgstr ""
+"<span class=\"def\">Transisi salindia:</span> <span class=\"productname\""
+">%productName</span> Impress menyediakan efek visual saat menampilkan "
+"salindia baru di pertunjukan salindia. Transisi salindia adalah milik "
+"salindia, gunakan bilah samping untuk mengatur transisi salindia saat dalam "
+"mode sunting."
 
 #: html/cool-help.html%2Bdiv.div.p:519-5
 msgid ""
@@ -2375,12 +2583,17 @@ msgid ""
 "can have animation. Use the side bar to configure the slide transition for a "
 "selected object or set of objects."
 msgstr ""
+"<span class=\"def\">Animasi objek:</span> Objek individual di salindia bisa "
+"memiliki animasi. Gunakan bilah samping untuk mengonfigurasi transisi "
+"salindia untuk objek atau sekumpulan objek yang dipilih."
 
 #: html/cool-help.html%2Bdiv.div.p:520-5
 msgid ""
 "<span class=\"def\">Tables:</span> Insert tables in the presentation. Use "
 "the sidebar to select the table theme."
 msgstr ""
+"<span class=\"def\">Tabel:</span> Sisipkan tabel dalam presentasi. Gunakan "
+"bilah samping untuk memilih tema tabel."
 
 #: html/cool-help.html%2Bdiv.h4:524-5
 msgid ""
@@ -2395,19 +2608,21 @@ msgid ""
 "<span class=\"productname\">%productName</span> supports both reading and "
 "writing for the following file formats:"
 msgstr ""
+"<span class=\"productname\">%productName</span> mendukung pembacaan dan "
+"penulisan untuk format berkas berikut:"
 
 #: html/cool-help.html%2Bdiv.ul.li.p:527-11
 msgid ""
 "Text documents: Microsoft formats DOC, DOCX, RTF. OpenDocument Format ODT"
-msgstr ""
+msgstr "Dokumen teks: Format Microsoft DOC, DOCX, RTF. Format OpenDocument ODT"
 
 #: html/cool-help.html%2Bdiv.ul.li.p:528-11
 msgid "Spreadsheets: Microsoft formats XLS, XLSX, OpenDocument Format ODS"
-msgstr ""
+msgstr "Lembar Sebar: Format Microsoft XLS, XLSX, Format OpenDocument ODS"
 
 #: html/cool-help.html%2Bdiv.ul.li.p:529-11
 msgid "Presentations: Microsoft formats PPT, PPTX, OpenDocument Format ODP"
-msgstr ""
+msgstr "Presentasi: Format Microsoft PPT, PPTX, Format OpenDocument ODP"
 
 #: html/cool-help.html%2Bdiv.h4:531-5
 msgid "How do I save a document with another name?"
@@ -2415,15 +2630,15 @@ msgstr "Bagaimana saya menyimpan sebuah dokumen dengan nama lain?"
 
 #: html/cool-help.html%2Bdiv.ol.li.p:533-11
 msgid "Hover the mouse on the document name in the menu bar."
-msgstr ""
+msgstr "Apungkan tetikus ke nama dokumen di bilah menu."
 
 #: html/cool-help.html%2Bdiv.ol.li.p:534-11
 msgid "Type the new file name in the text box and press <kbd>Enter</kbd>."
-msgstr ""
+msgstr "Ketik nama berkas baru di kotak teks dan tekan <kbd>Enter</kbd>."
 
 #: html/cool-help.html%2Bdiv.p:536-5
 msgid "A copy of the document is saved with the new name in the same folder."
-msgstr ""
+msgstr "Salinan dokumen disimpan dengan nama baru di folder yang sama."
 
 #: html/cool-help.html%2Bdiv.h4:537-5
 msgid ""
@@ -2440,6 +2655,11 @@ msgid ""
 "your changes, you must either undo them, or use the <span class=\"ui\">"
 "Revision History </span> in the <span class=\"ui\">File</span> menu."
 msgstr ""
+"<span class=\"productname\">%productName</span> menyimpan dokumen di latar "
+"belakang secara teratur, Anda tidak bisa hanya menutup tanpa menyimpannya. "
+"Untuk meninggalkan perubahan, Anda harus membatalkannya, atau menggunakan "
+"<span class=\"ui\">Riwayat Revisi</span> di menu <span class=\"ui\""
+">Berkas</span>."
 
 #: html/cool-help.html%2Bdiv.h4:539-5
 msgid ""
@@ -2455,6 +2675,9 @@ msgid ""
 "protected documents, but it is necessary to supply the password in the “"
 "Enter password” prompt at load time."
 msgstr ""
+"Ya. <span class=\"productname\">%productName</span> membuka dokumen yang "
+"dilindungi kata sandi, tetapi perlu untuk memasukkan kata sandi di prompt "
+"\"Masukkan kata sandi\" pada waktu membuka."
 
 #: html/cool-help.html%2Bdiv.h4:541-5
 msgid "How can I check spelling in my language?"
@@ -2466,20 +2689,25 @@ msgid ""
 ">Languages</span> and select the language for the whole document. Optionally "
 "you can set languages for the selected text and for the current paragraph."
 msgstr ""
+"Pilih menu <span class=\"ui\">Perkakas</span> → <span class=\"ui\">Bahasa</"
+"span> dan pilih bahasa untuk keseluruhan dokumen. Opsional Anda dapat "
+"mengatur bahasa untuk teks yang dipilih dan untuk paragraf saat ini."
 
 #: html/cool-help.html%2Bdiv.h4:543-5
 msgid "How can I remove the red wavy lines in my document?"
-msgstr ""
+msgstr "Bagaimana cara menghapus garis bergelombang merah di dokumen saya?"
 
 #: html/cool-help.html%2Bdiv.p:544-5
 msgid ""
 "Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\">"
 "Automatic Spell Checking</span>."
 msgstr ""
+"Pilih menu <span class=\"ui\">Alat</span> dan kosongkan kotak centang <span "
+"class=\"ui\">Pemeriksaan Ejaan Otomatis</span>."
 
 #: html/cool-help.html%2Bdiv.h4:545-5
 msgid "What is the blue wavy underline in some words in the text?"
-msgstr ""
+msgstr "Apa itu garis bawah bergelombang biru dalam beberapa kata dalam teks?"
 
 #: html/cool-help.html%2Bdiv.p:546-5
 msgid ""
@@ -2488,11 +2716,15 @@ msgid ""
 "suggestions to correct the grammar error and the offended grammar rules. "
 "Select the right suggestion to change the text."
 msgstr ""
+"Kesalahan tata bahasa dalam teks ditandai dengan garis bawah biru "
+"bergelombang. Klik pada teks bergaris bawah dengan tombol kanan tetikus "
+"untuk membuka menu dengan saran untuk memperbaiki kesalahan tata bahasa dan "
+"aturan tata bahasa yang terlanggar. Pilih saran yang tepat untuk mengubah "
+"teks."
 
 #: html/cool-help.html%2Bdiv.h4:547-5
-#, fuzzy
 msgid "Is there a thesaurus?"
-msgstr "Apakah di sini ada tesaurus?"
+msgstr "Apakah ada tesaurus?"
 
 #: html/cool-help.html%2Bdiv.p:548-5
 msgid ""
@@ -2500,12 +2732,17 @@ msgid ""
 "<span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions "
 "for replacements."
 msgstr ""
+"Ya. Klik pada kata yang Anda inginkan dan pilih <span class=\"ui\">Perkakas</"
+"span> → <span class=\"ui\">Tesaurus</span>. Dialog terbuka dengan banyak "
+"saran untuk penggantian."
 
 #: html/cool-help.html%2Bdiv.h4:550-5
 msgid ""
 "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove "
 "from my text document?"
 msgstr ""
+"Apa itu simbol <span class=\"blue\">¶</span> biru dan bagaimana saya bisa "
+"menghapus dari dokumen teks saya?"
 
 #: html/cool-help.html%2Bdiv.p:551-5
 msgid ""
@@ -2514,6 +2751,10 @@ msgid ""
 "document display, choose menu <span class=\"ui\">View</span> → <span class=\""
 "ui\">Formatting mark</span>."
 msgstr ""
+"Simbol <span class=\"blue\">¶</span> adalah tanda pemformatan. Ini digunakan "
+"untuk membantu perataan dan penyuntingan teks dan tidak dicetak. Untuk "
+"mengalihkannya dalam tampilan dokumen, pilih menu <span class=\"ui\""
+">Tampilan</span> → <span class=\"ui\">Tanda pemformatan</span>."
 
 #: html/cool-help.html%2Bdiv.div.h4:555-5
 msgid "How do I get a word count of my document?"
@@ -2525,6 +2766,9 @@ msgid ""
 "ui\">Word count</span>. A dialog shows word counts for selection and for the "
 "whole document."
 msgstr ""
+"Cacah kata tersedia di <span class=\"ui\">Alat</span> → <span class=\"ui\""
+">Cacah kata</span>. Dialog memperlihatkan cacah kata untuk pilihan dan untuk "
+"seluruh dokumen."
 
 #: html/cool-help.html%2Bdiv.div.p:558-5
 msgid ""
@@ -2532,6 +2776,9 @@ msgid ""
 "word count is for the whole document. Otherwise the word count is for the "
 "selected text."
 msgstr ""
+"Cacah kata juga ditampilkan di bilah status. Jika tidak ada teks yang "
+"dipilih, cacah kata adalah untuk seluruh dokumen. Jika tidak, cacah kata "
+"adalah untuk teks yang dipilih."
 
 #: html/cool-help.html%2Bdiv.div.h4:559-5
 msgid ""
@@ -2545,10 +2792,12 @@ msgid ""
 "You can insert these special characters in the document using the <span "
 "class=\"ui\">Special Character</span> dialog."
 msgstr ""
+"Anda bisa menyisipkan karakter khusus ini dalam dokumen menggunakan dialog "
+"<span class=\"ui\">Karakter Khusus</span>."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:562-11
 msgid "Place the cursor in the position to insert the character."
-msgstr ""
+msgstr "Letakkan kursor di posisi untuk menyisipkan karakter."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:564-9
 msgid ""
@@ -2556,6 +2805,8 @@ msgid ""
 "Characters </span> or click the corresponding icon in the toolbar. A dialog "
 "shows."
 msgstr ""
+"Pilih <span class=\"ui\">Sisipkan</span> → <span class=\"ui\">Karakter "
+"Khusus</span> atau klik ikon terkait di bilah alat. Suatu dialog muncul."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:567-11
 msgid ""
@@ -2574,10 +2825,12 @@ msgid ""
 "Press <span class=\"ui\">Insert</span> button. To close the dialog, press <"
 "span class=\"ui\">Cancel</span>."
 msgstr ""
+"Tekan tombol <span class=\"ui\">Sisipkan</span>. Untuk menutup dialog, tekan "
+"<span class=\"ui\">Batalkan</span>."
 
 #: html/cool-help.html%2Bdiv.div.h4:570-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr ""
+msgstr "Mengapa saya tidak bisa menghapus teks? Ini hanya dicoret?"
 
 #: html/cool-help.html%2Bdiv.div.p:571-5
 msgid ""
@@ -2587,32 +2840,41 @@ msgid ""
 "enabled choosing <span class=\"ui\">Edit</span> → <span class=\"ui\">Track "
 "Changes </span> → <span class=\"ui\">Record</span>."
 msgstr ""
+"Anda mengaktifkan fitur Lacak Perubahan untuk dokumen. Lacak Perubahan "
+"merekam semua perubahan dalam teks dan memperlihatkan edisi untuk revisi "
+"nanti. Berguna untuk menandai perubahan dalam teks dan lembar sebar. Lacak "
+"perubahan diaktifkan dengan memilih <span class=\"ui\">Sunting</span> → "
+"<span class=\"ui\">Lacak Perubahan </span> → <span class=\"ui\">Rekam</span>."
 
 #: html/cool-help.html%2Bdiv.div.p:572-5
 msgid "With track changes enabled your document is shown the following manner:"
 msgstr ""
+"Dengan lacak perubahan yang diaktifkan, dokumen Anda diperlihatkan dengan "
+"cara berikut:"
 
 #: html/cool-help.html%2Bdiv.div.ul.li.p:574-11
 msgid "Deletions are marked with colored strike-through characters."
-msgstr ""
+msgstr "Penghapusan ditandai dengan karakter dicoret berwarna."
 
 #: html/cool-help.html%2Bdiv.div.ul.li.p:575-11
 msgid "Additions are marked with colored underlined characters."
-msgstr ""
+msgstr "Penambahan ditandai dengan karakter bergaris bawah berwarna."
 
 #: html/cool-help.html%2Bdiv.div.ul.li.p:576-11
 msgid "All changes are marked with a vertical bar in the right margin."
-msgstr ""
+msgstr "Semua perubahan ditandai dengan bilah vertikal di margin kanan."
 
 #: html/cool-help.html%2Bdiv.div.ul.li.p:577-11
 msgid "Changes are displayed as comment in the right of the document area."
-msgstr ""
+msgstr "Perubahan ditampilkan sebagai komentar di sebelah kanan area dokumen."
 
 #: html/cool-help.html%2Bdiv.div.p:580-5
 msgid ""
 "The color assigned to the changes depends on the user that changes the "
 "document."
 msgstr ""
+"Warna yang ditetapkan ke perubahan bergantung pada pengguna yang mengubah "
+"dokumen."
 
 #: html/cool-help.html%2Bdiv.div.p:581-5
 msgid ""
@@ -2621,6 +2883,12 @@ msgid ""
 "Beware that if track changes are enabled but hidden, you still record "
 "changes and may inadvertently leave unwanted text available in the document."
 msgstr ""
+"Untuk menampilkan atau menyembunyikan lacak perubahan pilih <span class=\"ui"
+"\">Sunting</span> → <span class=\"ui\">Lacak Perubahan</span> → <span class="
+"\"ui\">Perlihatkan</span>. Berhati-hatilah bahwa jika lacak perubahan "
+"diaktifkan tetapi tersembunyi, Anda masih merekam perubahan dan mungkin "
+"secara tidak sengaja meninggalkan teks yang tidak diinginkan yang tersedia "
+"di dokumen."
 
 #: html/cool-help.html%2Bdiv.div.p:582-5
 msgid ""
@@ -2652,16 +2920,20 @@ msgid ""
 "Using the ruler drag the leftmost edge of the ruler to adjust the left "
 "margin, or the rightmost for the right margin."
 msgstr ""
+"Menggunakan penggaris, seret tepi paling kiri penggaris untuk menyesuaikan "
+"margin kiri, atau yang paling kanan untuk margin kanan."
 
 #: html/cool-help.html%2Bdiv.div.p:586-5
 msgid "Using the page style"
-msgstr ""
+msgstr "Menggunakan gaya halaman"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:588-11
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and "
 "select the <span class=\"ui\">Page</span> tab"
 msgstr ""
+"Pilih <span class=\"ui\">Format</span> → <span class=\"ui\">Halaman</span> "
+"dan pilih tab <span class=\"ui\">Halaman</span>"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:589-11
 msgid "Set the page margins in the dialog."
@@ -2733,10 +3005,13 @@ msgid ""
 "alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to "
 "a paint bucket."
 msgstr ""
+"Klik pada ikon pemformatan klon<img style=\"height:0.6cm;width:0.6cm;\" alt="
+"\"\" src=\"images/lc_formatpaintbrush.svg\">. Penunjuk tetikus berubah "
+"menjadi ember cat."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:606-11
 msgid "Select the text you want to apply the new format."
-msgstr ""
+msgstr "Pilih teks yang ingin Anda terapkan format baru."
 
 #: html/cool-help.html%2Bdiv.div.p:608-5
 msgid "Applying a paragraph style:"
@@ -2758,6 +3033,8 @@ msgstr ""
 msgid ""
 "Why did the text I just typed change automatically? How can I revert it?"
 msgstr ""
+"Mengapa teks yang baru saja saya ketik berubah secara otomatis? Bagaimana "
+"saya bisa mengembalikannya?"
 
 #: html/cool-help.html%2Bdiv.div.p:614-5
 msgid ""
@@ -2767,10 +3044,16 @@ msgid ""
 "necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\""
 ">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
 msgstr ""
+"Anda mengaktifkan KoreksiOtomatis. KoreksiOtomatis mengubah teks yang baru "
+"saja diketik menjadi tabel internal teks terkait. Dalam kebanyakan kasus, "
+"KoreksiOtomatis memperbaiki kesalahan ketik saat Anda mengetik. Jika "
+"KoreksiOtomatis tidak diperlukan, nonaktifkan di <span class=\"ui\">Alat</"
+"span> → <span class=\"ui\">KoreksiOtomatis</span> → <span class=\"ui\">Saat "
+"mengetik</span>."
 
 #: html/cool-help.html%2Bdiv.div.h4:619-5
 msgid "How can I select data to print?"
-msgstr ""
+msgstr "Bagaimana cara memilih data untuk dicetak?"
 
 #: html/cool-help.html%2Bdiv.div.p:620-5
 msgid ""
@@ -2778,6 +3061,9 @@ msgid ""
 "and print the document to download. On printing the PDF, select the pages of "
 "interest."
 msgstr ""
+"Sisipkan pemutus kolom dan baris dalam lembar sebar untuk mempersempit "
+"rentang cetak dan mencetak dokumen untuk diunduh. Saat mencetak PDF, pilih "
+"halaman yang diinginkan."
 
 #: html/cool-help.html%2Bdiv.div.h4:621-5
 msgid "How can I import CSV data?"
@@ -2788,12 +3074,16 @@ msgid ""
 "Load your CSV data in some native tool to your platform, select and copy it "
 "to the clipboard"
 msgstr ""
+"Muat data CSV Anda di beberapa alat asli ke platform Anda, pilih dan salin "
+"ke papan klip"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:624-11
 msgid ""
 "Activate the <span class=\"productname\">%productName</span> spreadsheet "
 "window."
 msgstr ""
+"Aktifkan jendela lembar sebar <span class=\"productname\""
+">%productName</span>."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:626-9
 msgid ""
@@ -2802,6 +3092,10 @@ msgid ""
 ">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> dialog "
 "opens to let you describe the precise format of the CSV data."
 msgstr ""
+"Tempel dari peramban <span class=\"ui\">Sunting</span> → <span class=\"ui\""
+">Tempel</span> atau tekan <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>. Dialog <span class=\"ui\">Impor Teks</span> terbuka "
+"untuk memungkinkan Anda menjelaskan format data CSV yang tepat."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:629-11
 msgid ""
@@ -2845,11 +3139,11 @@ msgid ""
 "class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."
 msgstr ""
 "Pemformatan langsung adalah pemformatan yang diterapkan langsung ke konten "
-"paragraf atau sel spreadsheet yang dipilih, dan tumpang tindih dengan "
+"paragraf atau sel lembar sebar yang dipilih, dan tumpang tindih dengan "
 "pemformatan gaya yang ditetapkan. Untuk memulihkan pemformatan ke pengaturan "
-"gaya, pilih teks atau sel spreadsheet dan pilih <span class=\"ui\""
-">Format</span> → <span class=\"ui\">Hapus Pemformatan Langsung</span> atau "
-"gunakan tombol di toolbar."
+"gaya, pilih teks atau sel lembar sebar dan pilih <span class=\"ui\">Format</"
+"span> → <span class=\"ui\">Hapus Pemformatan Langsung</span> atau gunakan "
+"tombol di bilah alat."
 
 #: html/cool-help.html%2Bdiv.div.h4:641-5
 msgid "How do I rename a sheet?"
@@ -2861,10 +3155,13 @@ msgid ""
 "right mouse button) over the sheet tab in the bottom. Enter the new sheet "
 "name in the dialog that follows."
 msgstr ""
+"Mengganti nama lembar di dokumen lembar sebar menggunakan menu konteks ("
+"menggunakan tombol kanan tetikus) di atas tab lembar di bagian bawah. "
+"Masukkan nama lembar baru dalam dialog berikut ini."
 
 #: html/cool-help.html%2Bdiv.div.h4:647-5
 msgid "How can I run my slide show?"
-msgstr ""
+msgstr "Bagaimana cara menjalankan pertunjukan salindia saya?"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:649-11
 msgid ""
@@ -2878,10 +3175,15 @@ msgid ""
 "the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\""
 "images/lc_dia.svg\">"
 msgstr ""
+"Pilih <span class=\"ui\">Pertunjukan Salindia</span> → <span class=\"ui\""
+">Presentasi Layar Penuh</span> atau klik ikon paling kiri di bagian bawah "
+"panel salindia: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
+"\"images/lc_dia.svg\">"
 
 #: html/cool-help.html%2Bdiv.div.h4:652-5
 msgid "How can I change the line, area and position of a shape in my slides?"
 msgstr ""
+"Bagaimana cara mengubah garis, area, dan posisi bentuk di salindia saya?"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:654-11
 msgid "Select the shape in your slide. A set of handles shows."
