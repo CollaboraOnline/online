@@ -772,6 +772,16 @@ L.Map.Keyboard = L.Handler.extend({
 		// comment insert
 		else if (e.key === 'c' && e.altKey && e.altKey && e.ctrlKey && this._map.isPermissionEditForComments())
 			return true;
+		// full-screen presentation
+		else if (e.type === 'keydown' && e.keyCode === this.keyCodes.F5 && this._map._docLayer._docType === 'presentation')
+			return true;
+		// moving around
+		else if (!this.modifier && (e.keyCode === this.keyCodes.pageUp || e.keyCode === this.keyCodes.pageDown) && e.type === 'keydown')
+			return true;
+		else if (!this.modifier && (e.keyCode === this.keyCodes.END || e.keyCode === this.keyCodes.HOME) && e.type === 'keydown')
+			return true;
+		else if (e.type === 'keydown' && e.keyCode in this._panKeys)
+			return true;
 
 		return false;
 	}
