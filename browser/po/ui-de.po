@@ -751,7 +751,7 @@ msgstr "Textausrichtung"
 #: src/control/Control.Menubar.js:264
 #, fuzzy
 msgid "References"
-msgstr "~Bezüge"
+msgstr "Bezüge"
 
 #: src/control/Control.Menubar.js:267
 #: src/control/Control.NotebookbarWriter.js:1401
