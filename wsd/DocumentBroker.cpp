@@ -2247,44 +2247,44 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     // Invalidate the timestamp to force persisting.
     _saveManager.setLastModifiedTime(std::chrono::system_clock::time_point());
 
-        std::ostringstream oss;
-        // arguments init
-        oss << '{';
+    std::ostringstream oss;
+    // arguments init
+    oss << '{';
 
+    if (dontTerminateEdit)
+    {
+        // We do not want save to terminate editing mode if we are in edit mode now.
+        //TODO: Perhaps we want to terminate if forced by the user,
+        // otherwise autosave doesn't terminate?
+        oss << "\"DontTerminateEdit\":"
+               "{"
+               "\"type\":\"boolean\","
+               "\"value\":true"
+               "}";
+    }
+
+    if (dontSaveIfUnmodified)
+    {
         if (dontTerminateEdit)
-        {
-            // We do not want save to terminate editing mode if we are in edit mode now.
-            //TODO: Perhaps we want to terminate if forced by the user,
-            // otherwise autosave doesn't terminate?
-            oss << "\"DontTerminateEdit\":"
-                   "{"
-                   "\"type\":\"boolean\","
-                   "\"value\":true"
-                   "}";
-        }
+            oss << ',';
 
-        if (dontSaveIfUnmodified)
-        {
-            if (dontTerminateEdit)
-                oss << ',';
+        oss << "\"DontSaveIfUnmodified\":"
+               "{"
+               "\"type\":\"boolean\","
+               "\"value\":true"
+               "}";
+    }
 
-            oss << "\"DontSaveIfUnmodified\":"
-                   "{"
-                   "\"type\":\"boolean\","
-                   "\"value\":true"
-                   "}";
-        }
+    // arguments end
+    oss << '}';
 
-        // arguments end
-        oss << '}';
+    // At this point, if we have any potential modifications, we need to capture the fact.
+    _nextStorageAttrs.setUserModified(isModified() || haveModifyActivityAfterSaveRequest());
 
-        // At this point, if we have any potential modifications, we need to capture the fact.
-        _nextStorageAttrs.setUserModified(isModified() || haveModifyActivityAfterSaveRequest());
-
-        //FIXME: It's odd to capture these here, but this function is used from ClientSession too.
-        _nextStorageAttrs.setIsAutosave(isAutosave || _unitWsd.isAutosave());
-        _nextStorageAttrs.setIsExitSave(isExitSave);
-        _nextStorageAttrs.setExtendedData(extendedData);
+    //FIXME: It's odd to capture these here, but this function is used from ClientSession too.
+    _nextStorageAttrs.setIsAutosave(isAutosave || _unitWsd.isAutosave());
+    _nextStorageAttrs.setIsExitSave(isExitSave);
+    _nextStorageAttrs.setExtendedData(extendedData);
 
     const std::string saveArgs = oss.str();
     LOG_TRC(".uno:Save arguments: " << saveArgs);
