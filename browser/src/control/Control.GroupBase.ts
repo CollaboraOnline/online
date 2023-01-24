@@ -78,13 +78,9 @@ export class GroupBase extends CanvasSectionObject {
 				this._groups[level] = [];
 			}
 			let startPos = parseInt(groupData.startPos);
-			let endPos = parseInt(groupData.endPos);
+			const endPos = parseInt(groupData.endPos);
 			const isHidden = !!parseInt(groupData.hidden);
-			if (isHidden || startPos === endPos) {
-				startPos -= this._groupHeadSize / 2;
-				endPos = startPos + this._groupHeadSize;
-			}
-			else {
+			if (!isHidden) {
 				let moved = false;
 				// if the first child is collapsed the parent head has to be top-aligned with the child
 				if (level < lastLevel && firstChildGroupIndex[lastLevel] !== undefined) {
