@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-20 11:33+0100\n"
-"PO-Revision-Date: 2022-12-08 22:21+0000\n"
+"PO-Revision-Date: 2023-01-24 15:11+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (New Zealand) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_NZ/>\n"
-"Language: \n"
+"Language: en_NZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -739,45 +739,44 @@ msgid "Text orientation"
 msgstr "Text orientation"
 
 #: src/control/Control.Menubar.js:264
-#, fuzzy
 msgid "References"
-msgstr "Reference~s"
+msgstr "References"
 
 #: src/control/Control.Menubar.js:267
 #: src/control/Control.NotebookbarWriter.js:1401
 msgid "Update Index"
-msgstr ""
+msgstr "Update Index"
 
 #: src/control/Control.Menubar.js:276
 #: src/control/Control.NotebookbarWriter.js:1484
 msgid "Add Citation"
-msgstr ""
+msgstr "Add Citation"
 
 #: src/control/Control.Menubar.js:277
 #: src/control/Control.NotebookbarWriter.js:1495
 msgid "Add Citation Note"
-msgstr ""
+msgstr "Add Citation Note"
 
 #: src/control/Control.Menubar.js:278
 #: src/control/Control.NotebookbarWriter.js:1472
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Add Bibliography"
 
 #: src/control/Control.Menubar.js:280
 #: src/control/Control.NotebookbarWriter.js:1512
 msgid "Refresh Citations"
-msgstr ""
+msgstr "Refresh Citations"
 
 #: src/control/Control.Menubar.js:281
 #: src/control/Control.NotebookbarWriter.js:1523
 #: src/control/Control.Zotero.js:1262
 msgid "Unlink Citations"
-msgstr ""
+msgstr "Unlink Citations"
 
 #: src/control/Control.Menubar.js:282
 #: src/control/Control.NotebookbarWriter.js:1534
 msgid "Citation Preferences"
-msgstr ""
+msgstr "Citation Preferences"
 
 #: src/control/Control.Menubar.js:310 src/control/Control.Menubar.js:1120
 msgid "Insert Rich Text"
@@ -1474,7 +1473,7 @@ msgstr "Are you sure you want to delete sheet, %sheet%?"
 
 #: src/control/Control.Tabs.js:320
 msgid "Rename sheet"
-msgstr ""
+msgstr "Rename sheet"
 
 #: src/control/Control.Tabs.js:320
 msgid "Enter new sheet name"
@@ -1549,11 +1548,11 @@ msgstr "Current"
 
 #: src/control/Control.Zotero.js:90
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "Zotero API key is not configured"
 
 #: src/control/Control.Zotero.js:113
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Zotero API key is incorrect"
 
 #: src/control/Control.Zotero.js:165 src/core/Socket.js:1140
 msgid "Loading..."
@@ -1561,23 +1560,23 @@ msgstr "Loading..."
 
 #: src/control/Control.Zotero.js:183
 msgid "Language:"
-msgstr ""
+msgstr "Language:"
 
 #: src/control/Control.Zotero.js:198
 msgid "Store as:"
-msgstr ""
+msgstr "Store as:"
 
 #: src/control/Control.Zotero.js:204
 msgid "Fields"
-msgstr ""
+msgstr "Fields"
 
 #: src/control/Control.Zotero.js:205
 msgid "Bookmarks"
-msgstr ""
+msgstr "Bookmarks"
 
 #: src/control/Control.Zotero.js:362
 msgid "My Publications"
-msgstr ""
+msgstr "My Publications"
 
 #: src/control/Control.Zotero.js:368 src/control/Control.Zotero.js:593
 msgid "My Library"
@@ -1585,24 +1584,23 @@ msgstr "My Library"
 
 #: src/control/Control.Zotero.js:369
 msgid "Group Libraries"
-msgstr ""
+msgstr "Group Libraries"
 
 #: src/control/Control.Zotero.js:609
 msgid "Failed to load groups"
-msgstr ""
+msgstr "Failed to load groups"
 
 #: src/control/Control.Zotero.js:627 src/control/Control.Zotero.js:904
 msgid "Failed to load collections"
-msgstr ""
+msgstr "Failed to load collections"
 
 #: src/control/Control.Zotero.js:641
 msgid "Citation Style"
 msgstr "Citation Style"
 
 #: src/control/Control.Zotero.js:646
-#, fuzzy
 msgid "Styles"
-msgstr "Style"
+msgstr "Styles"
 
 #: src/control/Control.Zotero.js:646
 msgid "An error occurred while fetching style list"
@@ -1610,7 +1608,7 @@ msgstr "An error occurred while fetching style list"
 
 #: src/control/Control.Zotero.js:653
 msgid "Failed to load styles"
-msgstr ""
+msgstr "Failed to load styles"
 
 #: src/control/Control.Zotero.js:932 src/control/Control.Zotero.js:1335
 msgid "Title"
@@ -1618,7 +1616,7 @@ msgstr "Title"
 
 #: src/control/Control.Zotero.js:932 src/control/Control.Zotero.js:1335
 msgid "Creator(s)"
-msgstr ""
+msgstr "Creator(s)"
 
 #: src/control/Control.Zotero.js:932 src/control/Control.Zotero.js:1335
 msgid "Your library is empty"
@@ -1626,42 +1624,43 @@ msgstr "Your library is empty"
 
 #: src/control/Control.Zotero.js:944
 msgid "Failed to load items"
-msgstr ""
+msgstr "Failed to load items"
 
 #: src/control/Control.Zotero.js:1088
 msgid "Add Note"
-msgstr ""
+msgstr "Add Note"
 
 #: src/control/Control.Zotero.js:1091
 msgid "Notes"
-msgstr ""
+msgstr "Notes"
 
 #: src/control/Control.Zotero.js:1091
-#, fuzzy
 msgid "An error occurred while fetching notes"
-msgstr "An error occurred while fetching style list"
+msgstr "An error occurred while fetching notes"
 
 #: src/control/Control.Zotero.js:1210
 msgid "Updated citations"
-msgstr ""
+msgstr "Updated citations"
 
 #: src/control/Control.Zotero.js:1212
 msgid "Citations update failed"
-msgstr ""
+msgstr "Citations update failed"
 
 #: src/control/Control.Zotero.js:1216
 msgid "Updating citations"
-msgstr ""
+msgstr "Updating citations"
 
 #: src/control/Control.Zotero.js:1263
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Unlinking citations will prevent Collabora Online from updating citations "
+"and bibliography in this document."
 
 #: src/control/Control.Zotero.js:1264
 msgid "Confirm"
-msgstr ""
+msgstr "Confirm"
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
@@ -2008,9 +2007,8 @@ msgid "Wrong password provided. Please try again."
 msgstr "Wrong password provided. Please try again."
 
 #: src/core/Socket.js:1090 src/core/Socket.js:1095
-#, fuzzy
 msgid "Missing Fonts"
-msgstr "Missing fonts:"
+msgstr "Missing Fonts"
 
 #: src/core/Socket.js:1129
 msgid "Someone"
@@ -2018,7 +2016,7 @@ msgstr "Someone"
 
 #: src/core/Socket.js:1131
 msgid "%userName saved this document as %fileName. Do you want to join?"
-msgstr ""
+msgstr "%userName saved this document as %fileName. Do you want to join?"
 
 #: src/core/Socket.js:1140
 msgid "Connecting..."
