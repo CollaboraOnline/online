@@ -1524,16 +1524,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					event.preventDefault();
 				} else if (event.key === 'Left' || event.key === 'ArrowLeft') {
 					builder.callback('edit', 'keypress', edit, UNOKey.LEFT | modifier, builder);
-					event.preventDefault();
 				} else if (event.key === 'Right' || event.key === 'ArrowRight') {
 					builder.callback('edit', 'keypress', edit, UNOKey.RIGHT | modifier, builder);
-					event.preventDefault();
 				} else if (event.key === 'Up' || event.key === 'ArrowUp') {
 					builder.callback('edit', 'keypress', edit, UNOKey.UP | modifier, builder);
-					event.preventDefault();
 				} else if (event.key === 'Down' || event.key === 'ArrowDown') {
 					builder.callback('edit', 'keypress', edit, UNOKey.DOWN | modifier, builder);
-					event.preventDefault();
 				} else if (event.key === 'Home') {
 					builder.callback('edit', 'keypress', edit, UNOKey.HOME | modifier, builder);
 					event.preventDefault();
