@@ -76,22 +76,36 @@ export class RowGroup extends GroupBase {
 		return this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * (this._groups.length + 1);
 	}
 
-	getRelativeY (docPos: number): number {
-		if (this._splitPos.y === 0) {
-			return docPos - this.documentTopLeft[1] + this._cornerHeaderHeight;
+	isGroupHeaderVisible (startY: number, startPos: number): boolean {
+		if (startPos > this._splitPos.y) {
+			return startY > this._splitPos.y + this._cornerHeaderHeight;
 		}
 		else {
-			// max here is to prevent encroachment of the fixed pane-area.
-			return Math.max(docPos - this.documentTopLeft[1], this._splitPos.y) + this._cornerHeaderHeight;
+			return startY >= this._cornerHeaderHeight;
 		}
+	}
+
+	getEndPosition (endPos: number): number {
+		if (endPos <= this._splitPos.y)
+			return endPos;
+		else {
+			return Math.max(endPos + this._cornerHeaderHeight - this.documentTopLeft[1], this._splitPos.y + this._cornerHeaderHeight);
+		}
+	}
+
+	getRelativeY (docPos: number): number {
+		if (docPos < this._splitPos.y)
+			return docPos + this._cornerHeaderHeight;
+		else
+			return Math.max(docPos - this.documentTopLeft[1], this._splitPos.y) + this._cornerHeaderHeight;
 	}
 
 	drawGroupControl (group: GroupEntry): void {
 		let startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
 		let startY = this.getRelativeY(group.startPos);
-		const endY = group.endPos + this._cornerHeaderHeight - this.documentTopLeft[1];
+		const endY = this.getEndPosition(group.endPos);
 
-		if (startY >= this._cornerHeaderHeight) {
+		if (this.isGroupHeaderVisible(startY, group.startPos)) {
 			// draw head
 			this.context.beginPath();
 			this.context.fillStyle = this.backgroundColor;
@@ -122,7 +136,7 @@ export class RowGroup extends GroupBase {
 			}
 		}
 
-		if (!group.hidden && endY > this._cornerHeaderHeight + this._groupHeadSize) {
+		if (!group.hidden && endY > this._cornerHeaderHeight + this._groupHeadSize && endY > startY) {
 			//draw tail
 			this.context.beginPath();
 			startY += this._groupHeadSize;
