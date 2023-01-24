@@ -282,9 +282,9 @@ L.Control.Zotero = L.Control.extend({
 					],
 					selectedCount: '1',
 					selectedEntries: [
-						this.getFieldType() === 'Bookmark' ? 1 : 0
+						this.getFieldType() === 'Bookmark' || this.settings.wrapper === 'Endnote' ? 1 : 0
 					],
-					enabled: !(this.citations && Object.keys(this.citations).length)
+					enabled: false
 				}
 			]
 		};
@@ -390,6 +390,33 @@ L.Control.Zotero = L.Control.extend({
 					selectedEntries: [
 						Object.keys(this.availableLanguages).indexOf(locale)
 					],
+				},
+			},
+			callback: this._onAction.bind(this)
+		});
+	},
+
+	enableDialogFieldTypeCombobox: function(citationFormat) {
+		var entries = [];
+		if (citationFormat === 'note') {
+			entries = [_('Footnotes'), _('Endnotes')];
+		} else {
+			entries = [_('Fields'), _('Bookmarks')];
+		}
+		this.map.fire('jsdialogupdate', {
+			data: {
+				jsontype: 'dialog',
+				action: 'update',
+				id: 'ZoteroDialog',
+				control: {
+					id: 'zoterotype',
+					type: 'combobox',
+					entries: entries,
+					selectedCount: '1',
+					selectedEntries: [
+						this.getFieldType() === 'Bookmark' || this.settings.wrapper === 'Endnote' ? 1 : 0
+					],
+					enabled: !(this.citations && Object.keys(this.citations).length)
 				},
 			},
 			callback: this._onAction.bind(this)
@@ -724,7 +751,7 @@ L.Control.Zotero = L.Control.extend({
 				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
 				if (that.settings.style && that.settings.style !== '')
-					that.checkStyleTypeAndEnableOK(that.settings.style);
+					that.checkStyleTypeAndEnableOK(that.settings);
 			}, function () {
 				that.map.uiManager.showSnackbar(_('Failed to load styles'));
 			});
@@ -789,7 +816,8 @@ L.Control.Zotero = L.Control.extend({
 		return ret;
 	},
 
-	checkStyleTypeAndEnableOK: function(style) {
+	checkStyleTypeAndEnableOK: function(selectedStyle) {
+		var style = selectedStyle.name ? selectedStyle.name : selectedStyle.style;
 		var that = this;
 		fetch('https://www.zotero.org/styles/' + style)
 			.then(function (response) { return response.text(); })
@@ -817,6 +845,15 @@ L.Control.Zotero = L.Control.extend({
 					Object.keys(that.availableLanguages).indexOf(that.settings.locale) >= 0;
 				that.enableDialogLanguageCombobox(
 					availableLocale ? that.settings.locale : defaultLocale);
+
+				var categories = csl.getElementsByTagName('category');
+				for (var i = 0; i < categories.length; i++) {
+					if (categories[i].getAttribute('citation-format')) {
+						selectedStyle.citationFormat = categories[i].getAttribute('citation-format');
+						break;
+					}
+				}
+				that.enableDialogFieldTypeCombobox(selectedStyle.citationFormat);
 				that.enableDialogOKButton();
 			});
 	},
@@ -849,6 +886,11 @@ L.Control.Zotero = L.Control.extend({
 			this.settings.fieldType = filedTypeNode[0].getAttribute('value');
 		else
 			this.settings.fieldType = this.getFieldType();
+
+		var noteTypeNode = value.getElementsByName('noteType');
+		if (noteTypeNode && noteTypeNode[0])
+			this.settings.wrapper = noteTypeNode[0].getAttribute('value') === '1' ? 'Footnote' : 'Endnote';
+
 		this.settings.hasBibliography = styleNode.getAttribute('hasBibliography');
 		this.settings.bibliographyStyleHasBeenSet = styleNode.getAttribute('bibliographyStyleHasBeenSet');
 
@@ -880,11 +922,23 @@ L.Control.Zotero = L.Control.extend({
 
 		var prefsNode = xmlDoc.createElement('prefs');
 
-		var prefNode = xmlDoc.createElement('pref');
-		prefNode.setAttribute('name', 'fieldType');
-		prefNode.setAttribute('value', this.getFieldType());
+		var prefFieldNode = xmlDoc.createElement('pref');
+		prefFieldNode.setAttribute('name', 'fieldType');
+		prefFieldNode.setAttribute('value', this.getFieldType());
 
-		prefsNode.appendChild(prefNode);
+		prefsNode.appendChild(prefFieldNode);
+
+		if (this.settings.wrapper) {
+			var prefNotedNode = xmlDoc.createElement('pref');
+			prefNotedNode.setAttribute('name', 'noteType');
+
+			if (this.settings.wrapper === 'Footnote')
+				prefNotedNode.setAttribute('value', '1');
+			else
+				prefNotedNode.setAttribute('value', '2');
+
+			prefsNode.appendChild(prefNotedNode);
+		}
 
 		dataNode.appendChild(prefsNode);
 
@@ -924,15 +978,22 @@ L.Control.Zotero = L.Control.extend({
 		var fileExtension = this.map['wopi'].BaseFileName.substring(this.map['wopi'].BaseFileName.lastIndexOf('.') + 1);
 		this.settings.fieldType = fileExtension.startsWith('doc') ? 'Field' : 'ReferenceMark';
 
+		//TODO: probably also check for notes?
 		return this.settings.fieldType;
 	},
 
-	setFieldType: function(isField) {
-		if (isField) {
+	setFieldType: function(field, format) {
+		this.settings.wrapper = '';
+		if (field === 'Bookmarks')
+			this.settings.fieldType = 'Bookmark';
+		else {
 			var fileExtension = this.map['wopi'].BaseFileName.substring(this.map['wopi'].BaseFileName.lastIndexOf('.') + 1);
 			this.settings.fieldType = fileExtension.startsWith('doc') ? 'Field' : 'ReferenceMark';
-		} else {
-			this.settings.fieldType = 'Bookmark';
+			if (format === 'note') {
+				this.settings.wrapper = 'Footnote';
+				if (field === 'Endnotes')
+					this.settings.wrapper = 'Endnote';
+			}
 		}
 	},
 
@@ -1048,7 +1109,7 @@ L.Control.Zotero = L.Control.extend({
 					this.selected = data.entries[parseInt(index)];
 
 					if (this.dialogType === 'stylelist') {
-						this.checkStyleTypeAndEnableOK(this.selected.name);
+						this.checkStyleTypeAndEnableOK(this.selected);
 					} else if (this.dialogType === 'insertnote') {
 						this.enableDialogOKButton();
 					}
@@ -1063,12 +1124,18 @@ L.Control.Zotero = L.Control.extend({
 		}
 		if (data.id == 'ok') {
 			// set selected type or field as default
-			this.setFieldType(this.selectedFieldType !== false);
+			if (!this.selected || this.selected.type === 'style') {
+				var citationFormat = this.selected ? this.selected.citationFormat : this.settings.citationFormat;
+				this.setFieldType(this.selectedFieldType, citationFormat);
+			}
+
 			// style already specified just changing the language
 			if (!this.selected)
 				this._onOk({name: this.settings.style, type: 'style'});
 			else
 				this._onOk(this.selected);
+
+			delete this.selectedFieldType;
 		}
 		if (element === 'pushbutton' && data.id === 'zoterorefresh') {
 			this._cachedURL = [];
@@ -1086,11 +1153,7 @@ L.Control.Zotero = L.Control.extend({
 				if (this.settings.style)
 					this.enableDialogOKButton();
 			} else if (data.id === 'zoterotype') {
-				var selectedIndex = parseInt(index);
-				if (selectedIndex === 0) {
-					this.selectedFieldType = true;
-				} else if (selectedIndex === 1)
-					this.selectedFieldType = false;
+				this.selectedFieldType = index.substring(index.indexOf(';')+1);
 			}
 			return;
 		}
@@ -1526,6 +1589,9 @@ L.Control.Zotero = L.Control.extend({
 			field['Bookmark'] = {type: 'string', value: 'ZOTERO_BREF_' + L.Util.randomString(12)};
 			field['BookmarkText'] = {type: 'string', value: citationString};
 		}
+
+		if (this.settings.wrapper)
+			field['Wrapper'] = {type: 'string', value: this.settings.wrapper};
 
 		return field;
 	},
