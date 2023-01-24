@@ -75,22 +75,36 @@ export class ColumnGroup extends GroupBase {
 		return this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * (this._groups.length + 1);
 	}
 
-	getRelativeX (docPos: number): number {
-		if (this._splitPos.x === 0) {
-			return docPos - this.documentTopLeft[0] + this._cornerHeaderWidth;
+	isGroupHeaderVisible (startX: number, startPos: number): boolean {
+		if (startPos > this._splitPos.x) {
+			return startX > this._splitPos.x + this._cornerHeaderWidth;
 		}
 		else {
-			// max here is to prevent encroachment of the fixed pane-area.
-			return Math.max(docPos - this.documentTopLeft[0], this._splitPos.x) + this._cornerHeaderWidth;
+			return startX >= this._cornerHeaderWidth && (startX > this.documentTopLeft[0] || startX < this._splitPos.x);
 		}
+	}
+
+	getEndPosition (endPos: number): number {
+		if (endPos <= this._splitPos.x)
+			return endPos;
+		else {
+			return Math.max(endPos + this._cornerHeaderWidth - this.documentTopLeft[0], this._splitPos.x + this._cornerHeaderWidth);
+		}
+	}
+
+	getRelativeX (docPos: number): number {
+		if (docPos < this._splitPos.x)
+			return docPos + this._cornerHeaderWidth;
+		else
+			return Math.max(docPos - this.documentTopLeft[0], this._splitPos.x) + this._cornerHeaderWidth;
 	}
 
 	drawGroupControl (group: GroupEntry): void {
 		let startX = this.getRelativeX(group.startPos);
 		let startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
-		const endX = group.endPos + this._cornerHeaderWidth - this.documentTopLeft[0];
+		const endX = this.getEndPosition(group.endPos);
 
-		if (startX >= this._cornerHeaderWidth) {
+		if (this.isGroupHeaderVisible(startX, group.startPos)) {
 			// draw head
 			this.context.beginPath();
 			this.context.fillStyle = this.backgroundColor;
@@ -121,7 +135,7 @@ export class ColumnGroup extends GroupBase {
 			}
 		}
 
-		if (!group.hidden && endX > this._cornerHeaderWidth + this._groupHeadSize) {
+		if (!group.hidden && endX > this._cornerHeaderWidth + this._groupHeadSize && endX > startX) {
 			//draw tail
 			this.context.beginPath();
 			startX += this._groupHeadSize;
