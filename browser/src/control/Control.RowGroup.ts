@@ -77,7 +77,7 @@ export class RowGroup extends GroupBase {
 	}
 
 	getRelativeY (docPos: number): number {
-		if (docPos <= this._splitPos.y) {
+		if (this._splitPos.y === 0) {
 			return docPos - this.documentTopLeft[1] + this._cornerHeaderHeight;
 		}
 		else {
@@ -88,51 +88,58 @@ export class RowGroup extends GroupBase {
 
 	drawGroupControl (group: GroupEntry): void {
 		let startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
-		const startY = this.getRelativeY(group.startPos);
+		let startY = this.getRelativeY(group.startPos);
 		const endY = group.endPos + this._cornerHeaderHeight - this.documentTopLeft[1];
 
-		if (startY > this._cornerHeaderHeight) {
+		if (startY >= this._cornerHeaderHeight) {
 			// draw head
+			this.context.beginPath();
 			this.context.fillStyle = this.backgroundColor;
 			this.context.fillRect(this.transformRectX(startX, this._groupHeadSize), startY, this._groupHeadSize, this._groupHeadSize);
 			this.context.strokeStyle = 'black';
 			this.context.lineWidth = app.dpiScale;
 			this.context.strokeRect(this.transformRectX(startX + 0.5, this._groupHeadSize), startY + 0.5, this._groupHeadSize, this._groupHeadSize);
-		}
 
-		if (!group.hidden && endY > startY) {
-			//draw tail
-			startX += this._groupHeadSize * 0.5;
-			this.context.strokeStyle = 'black';
-			this.context.lineWidth = app.dpiScale;
-			this.context.beginPath();
-			this.context.moveTo(this.transformX(startX + 0.5), startY + this._groupHeadSize + 0.5);
-			this.context.lineTo(this.transformX(startX + 0.5), endY - app.roundedDpiScale + 0.5);
-			this.context.lineTo(this.transformX(startX + this._groupHeadSize / 2), endY - app.roundedDpiScale + 0.5);
-			this.context.stroke();
-			startX -= this._groupHeadSize * 0.5;
-			if (startY > this._cornerHeaderHeight) {
+			if (!group.hidden) {
 				// draw '-'
+				this.context.beginPath();
 				this.context.moveTo(this.transformX(startX + this._groupHeadSize * 0.25), startY + this._groupHeadSize / 2 + 0.5);
 				this.context.lineTo(this.transformX(startX + this._groupHeadSize * 0.75 + app.roundedDpiScale), startY + this._groupHeadSize / 2 + 0.5);
 				this.context.stroke();
 			}
+			else {
+				// draw '+'
+				this.context.beginPath();
+				this.context.moveTo(this.transformX(startX + this._groupHeadSize * 0.25), startY + this._groupHeadSize / 2 + 0.5);
+				this.context.lineTo(this.transformX(startX + this._groupHeadSize * 0.75 + app.roundedDpiScale), startY + this._groupHeadSize / 2 + 0.5);
+
+				this.context.stroke();
+
+				this.context.moveTo(this.transformX(startX + this._groupHeadSize * 0.50 + 0.5), startY + this._groupHeadSize * 0.25);
+				this.context.lineTo(this.transformX(startX + this._groupHeadSize * 0.50 + 0.5), startY + this._groupHeadSize * 0.75 + app.roundedDpiScale);
+
+				this.context.stroke();
+			}
 		}
-		else if (startY > this._cornerHeaderHeight) {
-			// draw '+'
+
+		if (!group.hidden && endY > this._cornerHeaderHeight + this._groupHeadSize) {
+			//draw tail
 			this.context.beginPath();
-
-			this.context.moveTo(this.transformX(startX + this._groupHeadSize * 0.25), startY + this._groupHeadSize / 2 + 0.5);
-			this.context.lineTo(this.transformX(startX + this._groupHeadSize * 0.75 + app.roundedDpiScale), startY + this._groupHeadSize / 2 + 0.5);
-
-			this.context.moveTo(this.transformX(startX + this._groupHeadSize * 0.50 + 0.5), startY + this._groupHeadSize * 0.25);
-			this.context.lineTo(this.transformX(startX + this._groupHeadSize * 0.50 + 0.5), startY + this._groupHeadSize * 0.75 + app.roundedDpiScale);
-
+			startY += this._groupHeadSize;
+			startY = startY >= this._cornerHeaderHeight + this._groupHeadSize ? startY: this._cornerHeaderHeight + this._groupHeadSize;
+			startX += this._groupHeadSize * 0.5;
+			this.context.strokeStyle = 'black';
+			this.context.lineWidth = app.dpiScale;
+			this.context.moveTo(this.transformX(startX + 0.5), startY + 0.5);
+			this.context.lineTo(this.transformX(startX + 0.5), endY - app.roundedDpiScale + 0.5);
+			this.context.stroke();
+			this.context.lineTo(this.transformX(startX + this._groupHeadSize / 2), endY - app.roundedDpiScale + 0.5);
 			this.context.stroke();
 		}
 	}
 
 	drawLevelHeader (level: number): void {
+		this.context.beginPath();
 		const ctx = this.context;
 		const ctrlHeadSize = this._groupHeadSize;
 		const levelSpacing = this._levelSpacing;
