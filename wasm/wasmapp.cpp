@@ -21,11 +21,6 @@ static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
 
 static void send2JS(const std::vector<char>& buffer)
 {
-    if (buffer.size() < SHOW_JS_MAXLEN)
-        LOG_TRC_NOFILE("Send to JS: " << std::string(buffer.data(), buffer.size()));
-    else
-        LOG_TRC_NOFILE("Send to JS: " << std::string(buffer.data(), SHOW_JS_MAXLEN) << "...");
-
     std::string js;
 
     // Check if the message is binary. We say that any message that isn't just a single line is
