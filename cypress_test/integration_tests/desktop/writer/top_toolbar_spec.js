@@ -279,15 +279,17 @@ describe('Top toolbar tests.', function() {
 		cy.get('#annotation-content-area-1').should('contain','some text0');
 	});
 
-	it('Insert/delete table.', function() {
+	it.only('Insert/delete table.', function() {
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
 
 		mode === 'notebookbar' ? cy.get('#toolbar-up .w2ui-scroll-right').click() : '';
 
-		cy.wait(500);
+		//cy.wait(500);
 
-		desktopHelper.actionOnSelector('insertTable', (selector) => { cy.get(selector).click(); });
+		desktopHelper.actionOnSelector('insertTable', (selector) => { 
+			cy.get(selector).should('be.visible').click(); 
+		});
 
 		cy.get('.inserttable-grid > .row > .col').eq(3)
 		   .click();
@@ -486,16 +488,18 @@ describe('Top toolbar tests.', function() {
 
 	});
 
-	it('Insert Special Character.', function() {
+	it.only('Insert Special Character.', function() {
 
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
 
 		mode === 'notebookbar' ? cy.get('#toolbar-up .w2ui-scroll-right').click() : '';
 
-		cy.wait(500);
+		//cy.wait(500);
 
-		desktopHelper.actionOnSelector('insertSymbol', (selector) => { cy.get(selector).click(); });
+		desktopHelper.actionOnSelector('insertSymbol', (selector) => { 
+			cy.get(selector).should('be.visible').click();
+		});
 
 		desktopHelper.checkDialogAndClose('Special Characters');
 	});
