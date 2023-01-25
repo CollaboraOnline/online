@@ -60,6 +60,8 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			this._map.zotero.handleBookmark(values.bookmarks);
 		} else if (this._map.zotero && values.bookmark) {
 			this._map.zotero.fetchCustomProperty(values.bookmark.name);
+		} else if (this._map.zotero && values.sections) {
+			this._map.zotero.onFieldValue(values.sections);
 		} else {
 			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
