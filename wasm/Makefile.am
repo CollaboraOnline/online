@@ -1,35 +1,6 @@
 
 EXEEXT = .js
 
-noinst_LIBRARIES = libonline.a
-
-libonline_a_SOURCES = \
-	../common/Authorization.cpp \
-	../common/ConfigUtil.cpp \
-	../common/FileUtil.cpp \
-	../common/CommandControl.cpp \
-	../common/Log.cpp \
-	../common/MessageQueue.cpp \
-	../common/TraceEvent.cpp \
-	../common/Protocol.cpp \
-	../common/StringVector.cpp \
-	../common/Session.cpp \
-	../common/SigUtil.cpp \
-	../common/SpookyV2.cpp \
-	../common/Unit.cpp \
-	../common/Util.cpp \
-	../common/CommandControl.cpp \
-	../kit/ChildSession.cpp \
-	../kit/Kit.cpp \
-	../net/FakeSocket.cpp \
-	../net/Socket.cpp \
-	../wsd/ClientSession.cpp \
-	../wsd/DocumentBroker.cpp \
-	../wsd/COOLWSD.cpp \
-	../wsd/RequestDetails.cpp \
-	../wsd/Storage.cpp \
-	../wsd/TileCache.cpp
-
 AM_CXXFLAGS = \
 	-pthread -s USE_PTHREADS=1 \
 	-s DISABLE_EXCEPTION_CATCHING=0
@@ -49,17 +20,39 @@ AM_CPPFLAGS = \
 bin_PROGRAMS = online
 
 online_SOURCES = \
-	wasmapp.cpp
+	wasmapp.cpp \
+	../common/Authorization.cpp \
+	../common/ConfigUtil.cpp \
+	../common/FileUtil.cpp \
+	../common/CommandControl.cpp \
+	../common/Log.cpp \
+	../common/MessageQueue.cpp \
+	../common/TraceEvent.cpp \
+	../common/Protocol.cpp \
+	../common/StringVector.cpp \
+	../common/Session.cpp \
+	../common/SigUtil.cpp \
+	../common/SpookyV2.cpp \
+	../common/Unit.cpp \
+	../common/Util.cpp \
+	../kit/ChildSession.cpp \
+	../kit/Kit.cpp \
+	../net/FakeSocket.cpp \
+	../net/Socket.cpp \
+	../wsd/ClientSession.cpp \
+	../wsd/DocumentBroker.cpp \
+	../wsd/COOLWSD.cpp \
+	../wsd/RequestDetails.cpp \
+	../wsd/Storage.cpp \
+	../wsd/TileCache.cpp
 
 online_DEPENDENCIES = \
 	@LOBUILDDIR@/instdir/program/soffice.html.linkdeps \
 	soffice.data \
-	soffice.data.js.metadata \
-	libonline.a
+	soffice.data.js.metadata
 
 # note cannot add content of .linkdeps to DEPENDENCIES because it contains -lFoo
 online_LDADD = \
-	libonline.a \
 	${POCOLIB}/libPocoEncodings@POCODEBUG@.a \
 	${POCOLIB}/libPocoNet@POCODEBUG@.a \
 	${POCOLIB}/libPocoUtil@POCODEBUG@.a \
