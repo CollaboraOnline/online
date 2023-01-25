@@ -6,6 +6,7 @@
 /* global _ Promise app Set */
 L.Control.Zotero = L.Control.extend({
 	_cachedURL: [],
+	citations: {},
 
 	getCachedOrFetch: function (url) {
 		var that = this;
@@ -26,7 +27,12 @@ L.Control.Zotero = L.Control.extend({
 		hasBibliography: '0',
 		bibliographyStyleHasBeenSet: '0',
 		style: '',
-		locale: 'en-US'
+		locale: 'en-US',
+		bib: {
+			uncited: [],
+			omitted: [],
+			custom: []
+		}
 	},
 
 	onAdd: function (map) {
@@ -36,8 +42,8 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	onFieldValue: function(fields) {
-		this.resetCitation();
 
+		var resetCitations = true;
 		for (var index = 0; index < fields.length; index++) {
 			var field = fields[index];
 			var fieldString;
@@ -48,9 +54,19 @@ L.Control.Zotero = L.Control.extend({
 			else if (this.getFieldType() === 'Bookmark')
 				fieldString = field.bookmark;
 
+			if (fieldString.startsWith('ZOTERO_BIBL') || fieldString.startsWith('ADDIN ZOTERO_BIBL')) {
+				this.setBibCustomProperty(fieldString);
+				continue;
+			}
+
+			// Reset citations only once but avoid resetting it if we only recieved bib fields
+			if (resetCitations) {
+				resetCitations = false;
+				this.resetCitation();
+			}
 			var values = this.getJSONfromCitationString(fieldString);
 			if (!values) {
-				return;
+				continue;
 			}
 			var that = this;
 			this.citationCluster[values.citationID] = [];
@@ -76,6 +92,25 @@ L.Control.Zotero = L.Control.extend({
 
 	getCitationKeys: function() {
 		return Object.keys(this.citations);
+	},
+
+	getCitationKeysForBib: function() {
+		var uncitedKeys = [];
+		this.settings.bib.uncited.forEach(function(item) {
+			uncitedKeys.push(item[0].substring(item[0].lastIndexOf('/')+1));
+		});
+
+		var omittedKeys = new Set();
+		this.settings.bib.omitted.forEach(function(item) {
+			omittedKeys.add(item[0].substring(item[0].lastIndexOf('/')+1));
+		});
+
+		var allKeys = Object.keys(this.citations).concat(uncitedKeys);
+
+		allKeys = allKeys.filter(function(key) { return !omittedKeys.has(key); });
+
+		return allKeys;
+
 	},
 
 	onRemove: function () {
@@ -684,8 +719,10 @@ L.Control.Zotero = L.Control.extend({
 				if (citation) {
 					that.setCitationLayout(citation);
 					that.updateCitations(true);
-					if (that.settings.bibliographyStyleHasBeenSet === '1')
+					if (that.settings.bibliographyStyleHasBeenSet === '1') {
+						that.updateBibList();
 						that.handleInsertBibliography();
+					}
 				} else {
 					var link = csl.getElementsByTagName('link');
 					for (var i = 0; i < link.length; i++) {
@@ -1132,7 +1169,7 @@ L.Control.Zotero = L.Control.extend({
 		var that = this;
 
 		if (this.settings.citationFormat === 'numeric') {
-			this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items?include=bib&itemKey=' + this.getCitationKeys().join(',') + '&v=3&key=' + this.apiKey + '&style=' + this.settings.style + '&locale=' + this.settings.locale)
+			this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items?include=bib&itemKey=' + this.getCitationKeysForBib().join(',') + '&v=3&key=' + this.apiKey + '&style=' + this.settings.style + '&locale=' + this.settings.locale)
 				.then(function(data) {
 					var bibList = data.reduce(function(map, item) {
 						map[item.key] = item.bib;
@@ -1140,7 +1177,7 @@ L.Control.Zotero = L.Control.extend({
 					}, {});
 
 					var html = '';
-					that.getCitationKeys().forEach(function(key) {
+				that.getCitationKeysForBib().forEach(function(key) {
 						var bib = new DOMParser().parseFromString(bibList[key], 'text/html').body;
 						var numberNode = bib.getElementsByClassName('csl-entry')[0].firstElementChild;
 						var number = parseInt(numberNode.textContent.substring(numberNode.textContent.search(/[0-9]/))).toString();
@@ -1170,6 +1207,15 @@ L.Control.Zotero = L.Control.extend({
 			app.socket.sendMessage('commandvalues command=.uno:Fields?typeName=SetRef&namePrefix=ZOTERO_ITEM%20CSL_CITATION');
 		else if (this.getFieldType() === 'Bookmark')
 			app.socket.sendMessage('commandvalues command=.uno:Bookmarks?namePrefix=ZOTERO_BREF_');
+	},
+
+	updateBibList: function() {
+		if (this.getFieldType() === 'Field')
+			app.socket.sendMessage('commandvalues command=.uno:TextFormFields?type=vnd.oasis.opendocument.field.UNHANDLED&commandPrefix=ADDIN%20ZOTERO_BIBL');
+		else if (this.getFieldType() === 'ReferenceMark')
+			app.socket.sendMessage('commandvalues command=.uno:Sections?typeName=SetRef&namePrefix=ZOTERO_BIBL');
+		else if (this.getFieldType() === 'Bookmark')
+			app.socket.sendMessage('commandvalues command=.uno:SetDocumentProperties?namePrefix=' + this.bibBookmarkName);
 	},
 
 	updateCitations: function(showSnackbar) {
@@ -1527,13 +1573,13 @@ L.Control.Zotero = L.Control.extend({
 		// TODO: support uncited ommited(citation) and custom sources in bibliography
 		if (this.getFieldType() === 'Field') {
 			field['FieldType'] = {type: 'string', value: 'vnd.oasis.opendocument.field.UNHANDLED'};
-			field['FieldCommand'] = {type: 'string', value: 'ADDIN ZOTERO_BIBL {"uncited":[],"omitted":[],"custom":[]} CSL_BIBLIOGRAPHY'};
+			field['FieldCommand'] = {type: 'string', value: 'ADDIN ZOTERO_BIBL ' + JSON.stringify(this.settings.bib) + ' CSL_BIBLIOGRAPHY'};
 			field['FieldResult'] = {type: 'string', value: html};
 		} else if (this.getFieldType() == 'Bookmark') {
 			field['Bookmark'] = {type: 'string', value: 'ZOTERO_BREF_' + L.Util.randomString(12)};
 			field['BookmarkText'] = {type: 'string', value: html};
 		} else {
-			field['RegionName'] = {type: 'string', value: 'ZOTERO_BIBL {"uncited":[],"omitted":[],"custom":[]} CSL_BIBLIOGRAPHY ' + ' RND' + L.Util.randomString(10)};
+			field['RegionName'] = {type: 'string', value: 'ZOTERO_BIBL ' + JSON.stringify(this.settings.bib) + ' CSL_BIBLIOGRAPHY ' + ' RND' + L.Util.randomString(10)};
 			field['Content'] = {type: 'string', value: html};
 		}
 
@@ -1580,7 +1626,7 @@ L.Control.Zotero = L.Control.extend({
 				};
 			}
 			this.bibBookmarkName = newBibBookmarkName;
-			this.setCustomProperty(this.bibBookmarkName + '_', 'ZOTERO_BIBL {"uncited":[],"omitted":[],"custom":[]} CSL_BIBLIOGRAPHY');
+			this.setCustomProperty(this.bibBookmarkName + '_', 'ZOTERO_BIBL ' + JSON.stringify(this.settings.bib) + ' CSL_BIBLIOGRAPHY');
 		} else {
 			command = '.uno:InsertSection';
 			if (this.settings.bibliographyStyleHasBeenSet == '1') {
@@ -1667,12 +1713,30 @@ L.Control.Zotero = L.Control.extend({
 			this.bookmarksOrder.forEach(function(bookmark) {
 				if (resultMap[bookmark].startsWith('ZOTERO_BIBL')) {
 					that.bibBookmarkName = bookmark;
+					that.setBibCustomProperty(resultMap[bookmark]);
 					return;
 				}
 				fields.push({bookmark: resultMap[bookmark]});
 			});
 			this.onFieldValue(fields);
 		}
+	},
+
+	setBibCustomProperty: function(bibProperty) {
+		if (!bibProperty)
+			return {};
+
+		var firstBraceIndex = bibProperty.indexOf('{');
+		var lastBraceIndex = bibProperty.lastIndexOf('}');
+
+		if (firstBraceIndex < 0 || lastBraceIndex > bibProperty.length || lastBraceIndex < 0)
+			return {};
+
+		var values = JSON.parse(bibProperty.substring(firstBraceIndex, lastBraceIndex+1));
+
+		this.settings.bib.uncited = values.uncited;
+		this.settings.bib.omitted = values.omitted;
+		this.settings.bib.custom = values.custom;
 	},
 
 	handleBookmark: function(bookmarks) {
