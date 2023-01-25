@@ -212,6 +212,10 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 
 .sidebar.jsdialog.checkbutton label {
 	padding: 0;
+	display: flex;
+	line-height: 1;
+	flex-direction: column;
+	justify-content: center;
 }
 
 /* writer */
