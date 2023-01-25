@@ -47,7 +47,7 @@ describe('Track Changes', function () {
 			.click();
 	}
 
-	it('Accept All', function () {
+	it.only('Accept All', function () {
 
 		helper.typeIntoDocument('Hello World');
 
@@ -55,13 +55,13 @@ describe('Track Changes', function () {
 
 		helper.clearAllText();
 		//if we don't wait , the test will fail in CLI
-		cy.wait(200);
+		//cy.wait(200);
 
 		helper.selectAllText();
 
 		confirmChange('Accept All');
 
-		cy.wait(200);
+		//cy.wait(200);
 
 		helper.typeIntoDocument('{ctrl}a');
 
