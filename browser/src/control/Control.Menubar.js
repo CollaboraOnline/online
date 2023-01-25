@@ -2033,6 +2033,11 @@ L.Control.Menubar = L.Control.extend({
 				return false;
 		}
 
+		if (menuItem.id && this._map['wopi'].HideExportOption
+			&& (menuItem.id.startsWith('export'))) {
+			return false;
+		}
+
 		if (this._hiddenItems &&
 		    $.inArray(menuItem.id, this._hiddenItems) !== -1)
 			return false;
