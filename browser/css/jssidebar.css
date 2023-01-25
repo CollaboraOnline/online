@@ -210,6 +210,10 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 	font-size: var(--default-font-size);
 }
 
+.sidebar.jsdialog.checkbutton label {
+	padding: 0;
+}
+
 /* writer */
 
 #PosSizePropertyPanel.sidebar #selectrotationtype,
