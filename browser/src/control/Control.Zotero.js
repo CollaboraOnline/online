@@ -76,6 +76,7 @@ L.Control.Zotero = L.Control.extend({
 			this.citationCluster[values.citationID] = [];
 			var citationString = L.Util.trim(values.properties.plainCitation, this.settings.layout.prefix, this.settings.layout.suffix);
 			var citations = citationString.split(this.settings.layout.delimiter);
+			var itemUriList = [];
 			values.citationItems.forEach(function(item, i) {
 				//zotero desktop versions do not store keys in cslJSON
 				//extract key from the item url
@@ -84,7 +85,9 @@ L.Control.Zotero = L.Control.extend({
 				that.citationCluster[values.citationID].push(citationId);
 				that.citations[citationId] = L.Util.trim(citations[i], that.settings.group.prefix, that.settings.group.suffix);
 				that.setCitationNumber(that.citations[citationId]);
+				itemUriList.push(itemUri);
 			});
+			this.showUnsupportedItemWarning(itemUriList);
 		}
 
 		if (this.pendingCitationUpdate || (this.previousNumberOfFields && this.previousNumberOfFields !== fields.length)) {
@@ -150,7 +153,40 @@ L.Control.Zotero = L.Control.extend({
 					that.map.uiManager.refreshNotebookbar();
 				else
 					that.map.uiManager.refreshMenubar();
+				that.updateGroupIdList();
 			}, function () { that.map.uiManager.showSnackbar(_('Zotero API key is incorrect')); });
+	},
+
+	updateGroupIdList: function() {
+		this.groupIdList = new Set();
+		var that = this;
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/groups?v=3&key=' + this.apiKey)
+			.then(function (data) {
+				for (var i = 0; i < data.length; i++) {
+					that.groupIdList.add(data[i].data.id.toString());
+				}
+			}, function () {});
+	},
+
+	showUnsupportedItemWarning: function(uriList) {
+		if (this.showUnsupportedWarning === false || !this.userID)
+			return;
+
+		for (var i in uriList) {
+			var uriObject = new URL(uriList[i]);
+
+			var catagory = uriObject.pathname.startsWith('/groups/') ? '/groups/' : '/users/';
+
+			var id = uriObject.pathname.substring(catagory.length);
+			id = id.substring(0, id.indexOf('/'));
+			if (!this.groupIdList.has(id) && id !== this.userID.toString()) {
+				this.showUnsupportedWarning = false;
+				this.map.uiManager.showInfoModal('zoterounreachablewarn', _('Zotero Warning'),
+					_('The document contains some citations which may be unreachable through web API. It may cause some problems while editing citations or bibliography.'),
+					null, _('Close'), function() {});
+				return;
+			}
+		}
 	},
 
 	getTopBarJSON: function () {
