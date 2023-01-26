@@ -138,6 +138,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:VerticalText'), uno: '.uno:VerticalText'},
 				{type: 'separator'},
 				{uno: '.uno:InsertSection', id: 'insertsection'},
+				{uno: '.uno:PageNumberWizard', id: 'pagenumberwizard'},
 				{name: _UNO('.uno:InsertFieldCtrl', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertPageNumberField'},
 					{uno: '.uno:InsertPageCountField'},
