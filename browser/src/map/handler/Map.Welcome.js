@@ -32,13 +32,14 @@ L.Map.Welcome = L.Handler.extend({
 		this.remove();
 	},
 
-	onUpdateList: function () {
+	isGuest: function() {
 		var docLayer = this._map._docLayer || {};
 		var viewInfo = this._map._viewInfo[docLayer._viewId];
-		var isGuest  = viewInfo && viewInfo.userextrainfo &&
-		    viewInfo.userextrainfo.is_guest;
+		return  viewInfo && viewInfo.userextrainfo && viewInfo.userextrainfo.is_guest;
+	},
 
-		if (!isGuest && window.autoShowWelcome && this.shouldWelcome()) {
+	onUpdateList: function () {
+		if (!this.isGuest() && window.autoShowWelcome && this.shouldWelcome()) {
 			this.showWelcomeDialog();
 		}
 	},

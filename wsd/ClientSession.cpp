@@ -23,6 +23,7 @@
 #include "DocumentBroker.hpp"
 #include "COOLWSD.hpp"
 #include <common/Common.hpp>
+#include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
 #include <common/Clipboard.hpp>
@@ -74,8 +75,7 @@ ClientSession::ClientSession(
     _tileHeightTwips(0),
     _kitViewId(-1),
     _serverURL(requestDetails),
-    _isTextDocument(false),
-    _lastSentFormFielButtonMessage("")
+    _isTextDocument(false)
 {
     const std::size_t curConnections = ++COOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
@@ -162,10 +162,10 @@ bool ClientSession::disconnectFromKit()
 #ifndef IOS
         LOG_TRC("request/rescue clipboard on disconnect for " << getId());
         // rescue clipboard before shutdown.
-        docBroker->forwardToChild(getId(), "getclipboard");
+        docBroker->forwardToChild(client_from_this(), "getclipboard");
 #endif
         // handshake nicely; so wait for 'disconnected'
-        docBroker->forwardToChild(getId(), "disconnect");
+        docBroker->forwardToChild(client_from_this(), "disconnect");
 
         return false;
     }
@@ -200,26 +200,26 @@ std::string ClientSession::getClipboardURI(bool encode)
     if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
         return std::string();
 
-    std::string encodedFrom;
+    return createPublicURI("clipboard", _clipboardKeys[0], encode);
+}
+
+std::string ClientSession::createPublicURI(const std::string& subPath, const std::string& tag, bool encode)
+{
     Poco::URI wopiSrc = getDocumentBroker()->getPublicUri();
     wopiSrc.setQueryParameters(Poco::URI::QueryParameters());
 
-    std::string encodeChars = ",/?:@&=+$#"; // match JS encodeURIComponent
-    Poco::URI::encode(wopiSrc.toString(), encodeChars, encodedFrom);
+    const std::string encodedFrom = Util::encodeURIComponent(wopiSrc.toString());
 
     std::string meta = _serverURL.getSubURLForEndpoint(
-        "/cool/clipboard?WOPISrc=" + encodedFrom +
+        "/cool/" + subPath + "?WOPISrc=" + encodedFrom +
         "&ServerId=" + Util::getProcessIdentifier() +
         "&ViewId=" + std::to_string(getKitViewId()) +
-        "&Tag=" + _clipboardKeys[0]);
+        "&Tag=" + tag);
 
     if (!encode)
         return meta;
 
-    std::string metaEncoded;
-    Poco::URI::encode(meta, encodeChars, metaEncoded);
-
-    return metaEncoded;
+    return Util::encodeURIComponent(meta);
 }
 
 bool ClientSession::matchesClipboardKeys(const std::string &/*viewId*/, const std::string &tag)
@@ -288,7 +288,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         }
 
         LOG_TRC("Session [" << getId() << "] sending getclipboard" + specific);
-        docBroker->forwardToChild(getId(), "getclipboard" + specific);
+        docBroker->forwardToChild(client_from_this(), "getclipboard" + specific);
         _clipSockets.push_back(socket);
     }
     else // REQUEST_SET
@@ -298,7 +298,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         if (data.get())
         {
             preProcessSetClipboardPayload(*data);
-            docBroker->forwardToChild(getId(), "setclipboard\n" + *data, true);
+            docBroker->forwardToChild(client_from_this(), "setclipboard\n" + *data, true);
 
             // FIXME: work harder for error detection ?
             std::ostringstream oss;
@@ -462,7 +462,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             docBroker->updateLastModifyingActivityTime();
         }
 
-        if (isWritable() && isViewLoaded())
+        if (isEditable() && isViewLoaded())
         {
             assert(!inWaitDisconnected() && "A writable view can't be waiting disconnection.");
             docBroker->updateEditingSessionId(getId());
@@ -646,34 +646,44 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "save"))
     {
-        if (isReadOnly() && !isAllowChangeComments())
+        // If we can't write to Storage, there is no point in saving.
+        if (!isWritable())
         {
-            LOG_WRN("The document is read-only, cannot save.");
+            LOG_WRN("Session [" << getId() << "] on document [" << docBroker->getDocKey()
+                                << "] has no write permissions in Storage and cannot save.");
+            sendTextFrameAndLogError("error: cmd=save kind=savefailed");
         }
         else
         {
-            int dontTerminateEdit = 1;
-            if (tokens.size() > 1)
-                getTokenInteger(tokens[1], "dontTerminateEdit", dontTerminateEdit);
-
             // Don't save unmodified docs by default.
             int dontSaveIfUnmodified = 1;
-            if (tokens.size() > 2)
-                getTokenInteger(tokens[2], "dontSaveIfUnmodified", dontSaveIfUnmodified);
-
+            int dontTerminateEdit = 1;
             std::string extendedData;
-            if (tokens.size() > 3)
+
+            // We expect at most 3 arguments.
+            for (int i = 0; i < 3; ++i)
             {
-                getTokenString(tokens[3], "extendedData", extendedData);
-                std::string decoded;
-                Poco::URI::decode(extendedData, decoded);
-                extendedData = decoded;
+                // +1 to skip the command token.
+                const StringVector attr = StringVector::tokenize(tokens[i + 1], '=');
+                if (attr.size() == 2)
+                {
+                    if (attr[0] == "dontTerminateEdit")
+                        COOLProtocol::stringToInteger(attr[1], dontTerminateEdit);
+                    else if (attr[0] == "dontSaveIfUnmodified")
+                        COOLProtocol::stringToInteger(attr[1], dontSaveIfUnmodified);
+                    else if (attr[0] == "extendedData")
+                    {
+                        std::string decoded;
+                        Poco::URI::decode(attr[1], decoded);
+                        extendedData = decoded;
+                    }
+                }
             }
 
             constexpr bool isAutosave = false;
             constexpr bool isExitSave = false;
-            docBroker->sendUnoSave(getId(), dontTerminateEdit != 0, dontSaveIfUnmodified != 0,
-                                    isAutosave, isExitSave, extendedData);
+            docBroker->sendUnoSave(client_from_this(), dontTerminateEdit != 0,
+                                   dontSaveIfUnmodified != 0, isAutosave, isExitSave, extendedData);
         }
     }
     else if (tokens.equals(0, "savetostorage"))
@@ -686,7 +696,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // The savetostorage command is really only used to resolve save conflicts
         // and it seems to always have force=1. However, we should still honor the
         // contract and do as told, not as we expect the API to be used. Use force if provided.
-        docBroker->uploadToStorage(getId(), force);
+        docBroker->uploadToStorage(client_from_this(), force);
     }
     else if (tokens.equals(0, "clientvisiblearea"))
     {
@@ -831,12 +841,13 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         docBroker->sendRequestedTiles(client_from_this());
         return true;
     }
-    else if (tokens.equals(0, "removesession")) {
+    else if (tokens.equals(0, "removesession"))
+    {
         if (tokens.size() > 1 && (_isDocumentOwner || !isReadOnly()))
         {
             std::string sessionId = Util::encodeId(std::stoi(tokens[1]), 4);
             docBroker->broadcastMessage(firstLine);
-            docBroker->removeSession(sessionId);
+            docBroker->removeSession(client_from_this());
         }
         else
             LOG_WRN("Readonly session '" << getId() << "' trying to kill another view");
@@ -1089,6 +1100,13 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             oss << " authorextrainfo=" << encodedUserExtraInfo; //TODO: could this include PII?
         }
 
+        if (!getUserPrivateInfo().empty())
+        {
+            std::string encodedUserPrivateInfo;
+            Poco::URI::encode(getUserPrivateInfo(), "", encodedUserPrivateInfo);
+            oss << " authorprivateinfo=" << encodedUserPrivateInfo;
+        }
+
         oss << " readonly=" << isReadOnly();
 
         if (loadPart >= 0)
@@ -1203,7 +1221,7 @@ bool ClientSession::getCommandValues(const char *buffer, int length, const Strin
         return sendTextFrameAndLogError("error: cmd=commandvalues kind=syntax");
 
     std::string cmdValues;
-    if (docBroker->tileCache().getTextStream(TileCache::StreamType::CmdValues, command, cmdValues))
+    if (docBroker->hasTileCache() && docBroker->tileCache().getTextStream(TileCache::StreamType::CmdValues, command, cmdValues))
         return sendTextFrame(cmdValues);
 
     return forwardToChild(std::string(buffer, length), docBroker);
@@ -1277,7 +1295,7 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, co
 bool ClientSession::forwardToChild(const std::string& message,
                                    const std::shared_ptr<DocumentBroker>& docBroker)
 {
-    return docBroker->forwardToChild(getId(), message);
+    return docBroker->forwardToChild(client_from_this(), message);
 }
 
 bool ClientSession::filterMessage(const std::string& message) const
@@ -1366,7 +1384,7 @@ void ClientSession::sendFileMode(const bool readOnly, const bool editComments)
 void ClientSession::setLockFailed(const std::string& sReason)
 {
     _isLockFailed = true;
-    setReadOnly();
+    setReadOnly(true);
     sendTextFrame("lockfailed:" + sReason);
 }
 
@@ -1502,7 +1520,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                     }
 
                     // Save to Storage and log result.
-                    docBroker->handleSaveResponse(getId(), success, result);
+                    docBroker->handleSaveResponse(client_from_this(), success, result);
 
                     if (!isCloseFrame())
                         forwardToClient(payload);
@@ -1544,7 +1562,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                         // Conversion failed, cleanup fake session.
                         LOG_TRC("Removing save-as ClientSession after conversion error.");
                         // Remove us.
-                        docBroker->removeSession(getId());
+                        docBroker->removeSession(client_from_this());
                         // Now terminate.
                         docBroker->stop("Aborting saveas handler.");
                     }
@@ -1664,7 +1682,8 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             {
                 // this also sends the saveas: result
                 LOG_TRC("Save-as path: " << resultURL.getPath());
-                docBroker->uploadAsToStorage(getId(), resultURL.getPath(), wopiFilename, false);
+                docBroker->uploadAsToStorage(client_from_this(), resultURL.getPath(), wopiFilename,
+                                             false);
             }
             else
                 sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
@@ -1690,7 +1709,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             LOG_TRC("Removing save-as ClientSession after conversion.");
 
             // Remove us.
-            docBroker->removeSession(getId());
+            docBroker->removeSession(client_from_this());
 
             // Now terminate.
             docBroker->stop("Finished saveas handler.");
@@ -1807,7 +1826,36 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
     } else if (tokens.equals(0, "disconnected:")) {
 
         LOG_INF("End of disconnection handshake for " << getId());
-        docBroker->finalRemoveSession(getId());
+        docBroker->finalRemoveSession(client_from_this());
+        return true;
+    }
+    else if (tokens.equals(0, "mediashape:"))
+    {
+        const std::string json = payload->jsonString();
+        Poco::JSON::Object::Ptr object;
+        if (JsonUtil::parseJSON(json, object))
+        {
+            const std::string id = JsonUtil::getJSONValue<std::string>(object, "id");
+            if (id.empty())
+            {
+                LOG_ERR("Invalid embeddedmedia json without id: " << json);
+            }
+            else
+            {
+                docBroker->addEmbeddedMedia(id, json);
+
+                const std::string mediaUrl =
+                    Util::encodeURIComponent(createPublicURI("media", id, /*encode=*/false), "&");
+                object->set("url", mediaUrl);
+                object->set("mimeType", "video/mp4"); //FIXME: get this from the source json
+
+                std::ostringstream mediaStr;
+                object->stringify(mediaStr);
+                forwardToClient(
+                    std::make_shared<Message>("mediashape: " + mediaStr.str(), Message::Dir::Out));
+            }
+        }
+
         return true;
     }
     else if (tokens.equals(0, "formfieldbutton:")) {
@@ -1833,6 +1881,11 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             docBroker->setInteractive(false);
             docBroker->setLoaded();
 
+            if (UnitWSD::isUnitTesting())
+            {
+                UnitWSD::get().onDocBrokerViewLoaded(docBroker->getDocKey(), client_from_this());
+            }
+
 #if !MOBILEAPP
             Admin::instance().setViewLoadDuration(docBroker->getDocKey(), getId(), std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - _viewLoadStart));
 #endif
@@ -1842,7 +1895,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             {
                 LOG_DBG("Uploading template [" << _wopiFileInfo->getTemplateSource()
                                                << "] to storage after loading.");
-                docBroker->uploadAfterLoadingTemplate(getId());
+                docBroker->uploadAfterLoadingTemplate(client_from_this());
             }
 
             for(auto &token : tokens)
@@ -2094,7 +2147,7 @@ void ClientSession::onDisconnect()
         // Connection terminated. Destroy session.
         LOG_DBG("on docKey [" << docKey << "] terminated. Cleaning up");
 
-        docBroker->removeSession(getId());
+        docBroker->removeSession(session);
     }
     catch (const UnauthorizedRequestException& exc)
     {
@@ -2144,9 +2197,6 @@ void ClientSession::dumpState(std::ostream& os)
 
     os << "\t\tisLive: " << isLive()
        << "\n\t\tisViewLoaded: " << isViewLoaded()
-       << "\n\t\tisReadOnly: " << isReadOnly()
-       << "\n\t\tisAllowChangeComments: " << isAllowChangeComments()
-       << "\n\t\tisWritable: " << isWritable()
        << "\n\t\tisDocumentOwner: " << isDocumentOwner()
        << "\n\t\tstate: " << name(_state)
        << "\n\t\tkeyEvents: " << _keyEvents
@@ -2422,6 +2472,59 @@ void ClientSession::preProcessSetClipboardPayload(std::string& payload)
         std::size_t len = end - start + 4;
         payload.erase(start, len);
     }
+}
+
+std::string ClientSession::processSVGContent(const std::string& svg)
+{
+    const std::shared_ptr<DocumentBroker> docBroker = _docBroker.lock();
+    if (!docBroker)
+    {
+        LOG_ERR("No DocBroker to process SVG content");
+        return svg;
+    }
+
+    bool broken = false;
+    std::ostringstream oss;
+    std::string::size_type pos = 0;
+    for (;;)
+    {
+        static const std::string prefix = "src=\"file:///tmp/";
+        const auto start = svg.find(prefix, pos);
+        if (start == std::string::npos)
+        {
+            // Copy the rest and finish.
+            oss << svg.substr(pos);
+            break;
+        }
+
+        const auto startFilename = start + prefix.size();
+        const auto end = svg.find('"', startFilename);
+        if (end == std::string::npos)
+        {
+            // Broken file; leave it as-is. Better to have no video than no slideshow.
+            broken = true;
+            break;
+        }
+
+        auto dot = svg.find('.', startFilename);
+        if (dot == std::string::npos || dot > end)
+            dot = end;
+
+        const std::string id = svg.substr(startFilename, dot - startFilename);
+        oss << svg.substr(pos, start - pos);
+
+        // Store the original json with the internal, temporary, file URI.
+        const std::string fileUrl = svg.substr(start + 5, end - start - 5);
+        docBroker->addEmbeddedMedia(id, "{ \"action\":\"update\",\"id\":\"" + id + "\",\"url\":\"" +
+                                            fileUrl + "\"}");
+
+        const std::string mediaUrl =
+            Util::encodeURIComponent(createPublicURI("media", id, /*encode=*/false), "&");
+        oss << "src=\"" << mediaUrl << '"';
+        pos = end + 1;
+    }
+
+    return broken ? svg : oss.str();
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

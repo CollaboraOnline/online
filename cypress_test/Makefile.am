@@ -50,6 +50,7 @@ KILL_COMMAND=pkill -F $(PID_FILE) || pkill --signal SIGKILL -F $(PID_FILE)
 PARALLEL_BUILD = $(findstring -j,$(MAKEFLAGS))
 DISPLAY_NUMBER = 100
 HEADLESS_BUILD := $(findstring Command failed,$(shell xhost > /dev/null 2>&1 || echo "Command failed, so we are in a headless environment."))
+export HEADLESS_DISPLAY=$(shell who | grep `whoami` | grep -v ": " | xargs | cut -d " " -f2)
 export DISPLAY=$(if $(HEADLESS_BUILD),:$(DISPLAY_NUMBER),$(shell echo $$DISPLAY))
 
 COMMA :=,
@@ -226,8 +227,10 @@ clean-local:
 check-mobile: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
+	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_coolwsd)
 	$(call run_mobile_tests,$(spec))
+	$(if $(HEADLESS_BUILD),@pkill Xvfb,)
 	@$(KILL_COMMAND) || true
 
 run-mobile: @JAILS_PATH@ $(NODE_BINS)
@@ -285,8 +288,10 @@ endef
 check-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
+	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_coolwsd)
 	$(call run_desktop_tests,$(spec))
+	$(if $(HEADLESS_BUILD),@pkill Xvfb,)
 	@$(KILL_COMMAND) || true
 
 run-desktop: @JAILS_PATH@ $(NODE_BINS)
@@ -343,10 +348,12 @@ endef
 check-multi: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
+	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
 	$(call start_coolwsd)
 	$(if $(spec), \
 		$(call run_multiuser_test,$(spec)), \
 		$(call run_all_multiuser_tests))
+	$(if $(HEADLESS_BUILD),@pkill Xvfb,)
 	@$(KILL_COMMAND) || true
 
 run-multi: @JAILS_PATH@ $(NODE_BINS)
@@ -581,7 +588,8 @@ do-run-cov: @JAILS_PATH@ $(NODE_BINS)
 # 1 - config: cypress configuration (e.g. cypress' --config argument).
 # 2 - env:    list of environment variables (e.g. cypress' --env argument).
 define run_interactive_all
-	$(CYPRESS_BINARY) open \
+	DISPLAY=$(if $(HEADLESS_BUILD),$(HEADLESS_DISPLAY),$(DISPLAY)) \
+		$(CYPRESS_BINARY) open \
 		--config $(1) \
 		--env $(2)
 endef
@@ -593,7 +601,8 @@ endef
 # 2 - env:    list of environment variables (e.g. cypress' --env argument).
 # 3 - spec:   test file path (e.g. cypress' --spec argument)
 define run_interactive_single
-	$(CYPRESS_BINARY) run \
+	DISPLAY=$(if $(HEADLESS_BUILD),$(HEADLESS_DISPLAY),$(DISPLAY)) \
+		$(CYPRESS_BINARY) run \
 		--browser $(BROWSER) \
 		--headed --no-exit \
 		--config $(1),retries=0 \

@@ -1,51 +1,117 @@
+/* general */
+
 .sidebar * {
 	font-family: var(--jquery-ui-font);
 	text-transform: none !important;
 }
 
+img.sidebar.ui-image {
+	/* Images that are not buttons (e.g. spinfield)
+	   16px + 6px + 6px = 28px, same height as grid cell */
+	padding: 6px;
+}
+
+.sidebar.ui-grid {
+	row-gap: 8px;
+}
+
 .sidebar .ui-content .unobutton {
 	margin: 0;
-	width: 24px;
-	height: 24px;
-	vertical-align: middle;
 }
 
 #document-container:not(.mobile) + #sidebar-dock-wrapper {
-	width: 330px;
 	padding: 0;
-	margin-top: 0 !important;
 	box-sizing: border-box;
 }
-
 [data-userinterfacemode='classic'] #document-container:not(.mobile) + #sidebar-dock-wrapper,
 #document-container.spreadsheet-doctype:not(.mobile) + #sidebar-dock-wrapper {
 	border-inline-start: 1px solid var(--color-border);
 }
+.sidebar .menu-entry-icon {
+	width: 24px;
+	height: 24px;
+}
 
-.sidebar .spinfieldcontainer input {
-	width: 121px;
-	border: 1px solid var(--color-border-dark);
-	border-radius: var(--border-radius);
-	height: 28px;
-	padding-inline-start: 4px;
-	position: relative;
-	margin-inline-start: 8px;
+
+/* expander section header */
+
+.sidebar.ui-expander {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.sidebar.ui-expander-label {
+	color: var(--color-main-text);
+	font-size: var(--header-font-size);
+	line-height: var(--header-height);
+	padding-inline: 8px;
+}
+
+.ui-expander-icon-right .sidebar.unotoolbutton {
+	margin: 0px !important;
+}
+
+.ui-expander.jsdialog.sidebar .ui-expander-icon-right,
+.ui-expander.jsdialog.sidebar .ui-expander-icon-right * {
+	display: block;
+	width: 10px;
+	height: 10px;
+	margin-inline-end: 10px;
+}
+
+.ui-expander.jsdialog.sidebar .ui-expander-icon-right img {
+	filter: brightness(2);
+}
+
+.ui-expander.jsdialog.sidebar .ui-expander-icon-right:hover img {
+	filter: none;
+}
+
+#softedgeframe .sidebar.ui-expander-content,
+#glowframe .sidebar.ui-expander-content {
+	width: 100% !important; /* frame inside frame */
+}
+
+#AlignmentPropertyPanel.sidebar.ui-grid #box3,
+#ParaPropertyPanel.sidebar.ui-grid #box1.sidebar.ui-grid-cell,
+#NumberFormatPropertyPanel.sidebar.ui-grid #grid1 {
+	justify-content: space-between !important;
+}
+
+/* section content */
+
+.sidebar.ui-expander-content {
+	padding-inline: 10px;
+	width: 300px;
+	line-height: var(--default-height);
+}
+
+#fontheight,
+#AlignmentPropertyPanel #textorientbox,
+.sidebar.ui-grid.ui-grid-cell > div {
+	justify-content: end;
+	display: flex;
+}
+
+div.sidebar.ui-grid-cell.checkbutton,
+div.sidebar.ui-grid .checkbutton.sidebar,
+#ShadowPropertyPanel #SHOW_SHADOW,
+#NumberFormatPropertyPanel.sidebar.ui-grid div.sidebar.ui-grid-cell:nth-child(2n+1),
+#AlignmentPropertyPanel #indentbuttons, #SidebarTextPanel.sidebar.ui-grid div.sidebar.ui-grid-cell:nth-child(2n+1),
+#ParaPropertyPanel.sidebar.ui-grid div.sidebar.ui-grid-cell:nth-child(2n) {
+	justify-content: start;
+}
+
+/* widgets */
+
+.sidebar.toolbox {
+	align-items: center;
+}
+
+.sidebar.spinfieldcontainer input {
 	color: var(--color-text-dark);
 	background-color: var(--color-background-dark);
-}
-#TableEditPanelPanelExpander .sidebar .spinfieldcontainer input,
-#ParaPropertyPanelPanelExpander .sidebar .spinfieldcontainer input {
-	width: 85px;
-}
-
-.sidebar.spinfield {
-	max-width: 121px;
-}
-
-.sidebar.jsdialog.ui-listbox,
-.sidebar.jsdialog.menubutton {
-	min-width: 121px;
-	max-width: 121px;
 }
 
 .menubutton.sidebar span {
@@ -65,167 +131,37 @@
 	margin-inline-start: -14px;
 }
 
+.sidebar.ui-grid.ui-grid-cell .menubutton {
+	justify-content: space-between;
+	justify-self: end;
+	padding: 4px;
+	margin-right: 1px;
+}
+
+/* widget width */
+
+.sidebar.ui-pushbutton,
+.sidebar.spinfield,
+.sidebar.ui-listbox,
+.sidebar.menubutton {
+	width: 121px;
+}
+
+#gradientstyle > .sidebar.ui-listbox,
+#gradangle > .sidebar.spinfield,
+#fontsizecombobox .sidebar.ui-listbox,
+#TableEditPanel .sidebar.spinfieldcontainer input,
+#ParaPropertyPanel .sidebar.spinfieldcontainer input {
+	min-width: 87px;
+	width: 87px;
+}
+
 #fontnamecombobox > .sidebar.jsdialog.ui-listbox,
 #applystyle > .sidebar.jsdialog.ui-listbox {
-	min-width: 186px;
+	width: 198px;
 }
 
-#table-style {
-	padding-left: 4px;
-}
-
-#gradientstyle > .sidebar.jsdialog.ui-listbox {
-	width: 74px;
-}
-
-#table-grid3.sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.jsdialog.ui-grid > tr.sidebar.jsdialog > td.sidebar.jsdialog > .sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.jsdialog.ui-grid {
-	width: 10px;
-}
-
-#fontsizecombobox > .sidebar.jsdialog.ui-listbox {
-	min-width: 86px;
-}
-
-.sidebar.ui-expander {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.sidebar.ui-expander-content {
-	padding-inline: 10px;
-}
-
-#selectcolor {
-	display: flex;
-	justify-content: flex-end;
-}
-
-.sidebar.jsdialog.cell > #table-box3 {
-	width: 292px;
-}
-
-.sidebar.jsdialog.cell > #table-box3,
-.sidebar.jsdialog.cell > #table-box4 {
-	display: flex;
-	justify-content: flex-end;
-}
-
-#ShadowPropertyPanel div#table-grid3 table#grid3 td:nth-child(1) {
-	justify-content: flex-start;
-	width: 294px;
-}
-
-.sidebar #table-indentfieldbox {
-	text-align: left;
-}
-
-#ParaPropertyPanelPanelExpander #grid4 > tr:last-child {
-	display: flex;
-	justify-content: space-between;
-	width: 275px;
-}
-
-#textorientbox {
-	position: relative;
-	display: flex;
-	justify-content: space-between;
-}
-
-#table-box4.sidebar.jsdialog.vertical {
-	width: auto;
-}
-
-#btnEditChart,
-#masterslidebutton {
-	line-height: 22px;
-	min-width: 121px;
-}
-
-div#negativenumbersred.checkbutton.jsdialog.sidebar,
-div#thousandseparator.checkbutton.jsdialog.sidebar {
-	height: 24px;
-}
-
-#settransparency, #fontheight,
-#document-container ~ #sidebar-dock-wrapper .sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.ui-grid > tr.sidebar > td.sidebar:last-child:not(:first-child),
-.sidebar.jsdialog.cell > #table-box3 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:last-child,
-.sidebar.jsdialog.cell > #table-box4 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:last-child,
-.sidebar.jsdialog.cell > #table-box4 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:nth-child(4) {
-	display: flex;
-	justify-content: flex-end;
-}
-
-#table-paperformat, #table-orientation, #table-fillstyle, #table-masterslide,
-#table-marginLB, #displaymasterbackground, #displaymasterobjects, #table-box1 {
-	width: 100%;
-}
-
-#TableEditPanel #table-grid1 #grid1 > tr > td:nth-child(2) {
-	display: inherit;
-}
-
-.sidebar.ui-drawing-area {
-	max-width: 290px;
-}
-
-#NumberFormatPropertyPanel > tr > td > div > div > div > div > div > div {
-	text-align: right;
-}
-#NumberFormatPropertyPanel #leadingzeroeslabel {
-	margin-left: 2px;
-}
-
-.sidebar.ui-expander-label {
-	color: var(--color-main-text);
-	font-size: var(--header-font-size);
-	line-height: var(--header-height);
-	padding-inline: 8px;
-}
-
-.sidebar.root-container.jsdialog > .jsdialog.sidebar {
-	width: 100%;
-}
-
-#ScCellAppearancePropertyPanelPanelExpander #CellAppearancePropertyPanel table.jsdialog.sidebar.ui-grid,
-#CellAppearancePropertyPanel table.jsdialog.sidebar.ui-grid tr.jsdialog.sidebar {
-	display: flex;
-}
-#ScCellAppearancePropertyPanelPanelExpander #CellAppearancePropertyPanel table.jsdialog.sidebar.ui-grid {
-	justify-content: space-between;
-}
-
-.sidebar-container > .root-container.jsdialog.sidebar {
-	margin: 0;
-}
-
-td.jsdialog .jsdialog.cell.sidebar {
-	padding: 2px 0px;
-	width: auto;
-}
-
-.sidebar.jsdialog.checkbutton {
-	font-size: var(--default-font-size);
-}
-
-.sidebar .menu-entry-icon {
-	width: 24px;
-	height: 24px;
-}
-
-.ui-expander-icon-right .sidebar.unotoolbutton {
-	margin: 0px !important;
-}
-
-.sidebar.unotoolbutton,
-.sidebar #resetattr,
-.sidebar #FormatPaintbrush{
-	border: 1px solid transparent;
-	margin-right: 5px;
-}
-#table-textorientbox.sidebar .jsdialog .radiobutton {
-	border: 1px solid transparent;
-}
+/* widget selected */
 
 /* non selected */
 #clearFormatting,
@@ -253,64 +189,55 @@ td.jsdialog .jsdialog.cell.sidebar {
 .unotoolbutton.notebookbar:hover,
 .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline):hover,
 .sidebar.unotoolbutton:hover,
-.sidebar.unotoolbutton.selected:hover,
-#table-textorientbox.sidebar .jsdialog .radiobutton:hover {
+.sidebar.unotoolbutton.selected:hover {
 	background-color: var(--color-background-darker) !important;
 	border: 1px solid var(--color-border-darker);
 	color: var(--color-text-darker);
 	border-radius: var(--border-radius);
 }
 
-.sidebar #font select,
-.sidebar #fontsizecombobox select {
+
+/* fixes */
+
+.sidebar.ui-grid-cell .sidebar.ui-pushbutton {
 	margin: 0;
 }
-
-.ui-expander.jsdialog.sidebar .ui-expander-icon-right,
-.ui-expander.jsdialog.sidebar .ui-expander-icon-right * {
-	display: block;
-	width: 10px;
-	height: 10px;
-	margin-inline-end: 10px;
+.sidebar.unotoolbutton {
+	border: 1px solid transparent;
+	margin-right: 5px;
+}
+.sidebar.jsdialog.checkbutton {
+	font-size: var(--default-font-size);
 }
 
-.ui-expander.jsdialog.sidebar .ui-expander-icon-right img {
-	filter: brightness(2);
+.sidebar.jsdialog.checkbutton label {
+	padding: 0;
+	display: flex;
+	line-height: 1;
+	flex-direction: column;
+	justify-content: center;
 }
 
-.ui-expander.jsdialog.sidebar .ui-expander-icon-right:hover img {
-	filter: none;
+/* writer */
+
+#PosSizePropertyPanel.sidebar #selectrotationtype,
+#PosSizePropertyPanel.sidebar #ratio {
+	justify-content: end;
+}
+#ParaPropertyPanel.sidebar #box3 {
+	display: grid;
+	justify-content: start;
+	row-gap: 4px;
 }
 
-#table-textorientbox.sidebar .jsdialog input[type='radio'] {
-	background: none !important;
-	width: auto;
-	height: auto;
+#ParaPropertyPanel.sidebar #indentfieldbox {
+	display: grid;
+	row-gap: 4px;
 }
 
-#gradangle > .spinfield {
-	margin-left: 0;
-}
-
-#orientationcontrol,
-#rotation {
-	visibility: hidden;
-	height: 16px;
-}
-
-.sidebar #fliplabel {
-	position: relative;
-	bottom: 26px;
-}
-
-.sidebar #rotationlabel {
-	position: relative;
-	bottom: 15px;
-}
-
-.sidebar #ratio {
-	position: relative;
-	left: 163px;
+#ParaPropertyPanel .sidebar.ui-grid-cell {
+	/* Same as sidebar  button margins */
+	column-gap: 5px;
 }
 
 button#button2.ui-pushbutton.jsdialog.sidebar {
@@ -320,29 +247,69 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	left: -10px;
 }
 
-#writedirection, #backgroundcolor {
-	justify-content: end;
-	margin-right: 0;
+#ParaPropertyPanel.sidebar.ui-grid #indentfieldbox {
+	width: 158px;
 }
 
-#softedgeframe .sidebar.ui-expander-content,
-#glowframe .sidebar.ui-expander-content {
-	width: 100% !important; /* frame inside frame */
+#TableEditPanel.sidebar.ui-grid #delete_label {
+	width: 118px;
 }
 
-#LB_SHADOW_COLOR {
-	border: 1px solid var(--color-border-lighter);
-	background-color: var(--color-background-lighter);
+/* calc */
+
+/* cell appearance use one row */
+#CellAppearancePropertyPanel.sidebar div {
+	grid-template-columns: repeat(5, auto) !important;
 }
 
-.sidebar #leftindent {
-	line-height: 32px;
+#table-textorientbox.sidebar .jsdialog .radiobutton {
+	border: 1px solid transparent;
 }
 
-#TableEditPanelPanelExpander #grid1 > tr > td {
-	width: 176px;
+#table-textorientbox.sidebar .jsdialog input[type='radio'] {
+	background: none !important;
+	width: auto;
+	height: auto;
 }
 
-#rowheight-input {
-	margin-inline-start: 0 !important;
+/* fixes sidebar width in calc (textorientbox, alignment buttons were too big) */
+#AlignmentPropertyPanel button {
+	min-width: 32px;
+	width: 32px;
+	margin: 0 2px;
+}
+
+
+/* Charts */
+
+.sidebar#ChartTypePanel #cmb_chartType-input,
+.sidebar#ChartTypePanel #\33 dscheme-input,
+.sidebar#ChartTypePanel .ui-listbox,
+.sidebar#ChartTypePanel .ui-pushbutton,
+.sidebar#ChartTypePanel .ui-scrollwindow,
+.sidebar#ChartTypePanel #stack,
+.sidebar#ChartElementsPanel .ui-listbox {
+	justify-content: start;
+	width: 100%;
+}
+
+.sidebar#ChartTypePanel #stack:not(.hidden) + #grid6 {
+	display: block !important;
+}
+
+.sidebar#ChartTypePanel #stack.hidden + #grid6 {
+	display: none;
+}
+
+/* not available commands*/
+
+#orientationcontrol,
+#rotation {
+	visibility: hidden;
+}
+
+#orientationcontrol,
+#rotation, #grid1-cell-5-1,
+#rotationlabel {
+	height: 0;
 }

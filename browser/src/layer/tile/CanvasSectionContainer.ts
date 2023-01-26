@@ -1,6 +1,50 @@
 declare var L: any;
 declare var app: any;
 
+/**
+ * Used to hold the user defined callbacks passed when using createSection()
+ * See documentation of CanvasSectionObject properties for description.
+ */
+interface SectionCallbacks {
+	onInitialize?: () => void;
+	onMouseMove?: (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) => void;
+	onMouseDown?: (point: Array<number>, e: MouseEvent) => void;
+	onMouseUp?: (point: Array<number>, e: MouseEvent) => void;
+	onMouseEnter?: (point: Array<number>, e: MouseEvent) => void;
+	onMouseLeave?: (point: Array<number>, e: MouseEvent) => void;
+	onClick?: (point: Array<number>, e: MouseEvent) => void;
+	onDoubleClick?: (point: Array<number>, e: MouseEvent) => void;
+	onContextMenu?: (e?: MouseEvent) => void;
+	onMouseWheel?: (point: Array<number>, delta: Array<number>, e: MouseEvent) => void;
+	onLongPress?: (point: Array<number>, e: MouseEvent) => void;
+	onMultiTouchStart?: (e: TouchEvent) => void;
+	onMultiTouchMove?: (point: Array<number>, dragDistance: number, e: TouchEvent) => void;
+	onMultiTouchEnd?: (e: TouchEvent) => void;
+	onResize?: () => void;
+	onDraw?: (frameCount?: number, elapsedTime?: number) => void;
+	onDrawArea?: (area?: cool.Bounds, paneTopLeft?: cool.Point, canvasContext?: CanvasRenderingContext2D) => void;
+	onNewDocumentTopLeft?: (size: Array<number>) => void;
+	onRemove?: () => void;
+	onAnimationEnded?: (frameCount: number, elapsedTime: number) => void;
+}
+
+/// Used to initialize a new anonymous CanvasSectionObject from its properties.
+interface SectionInitProperties extends SectionCallbacks {
+	name: string;
+	backgroundColor?: string;
+	borderColor?: string;
+	anchor?: string | Array<any>;
+	position: Array<number>;
+	size: Array<number>;
+	expand: string;
+	processingOrder: number;
+	drawingOrder: number;
+	zIndex: number;
+	interactable: boolean;
+	showSection?: boolean;
+	sectionProperties?: any;
+}
+
 // Below classes are for managing the canvas layout.
 /*
 	Potential values are separated with '|'
@@ -171,97 +215,206 @@ class CanvasSectionObject {
 	isAnimating: boolean = false;
 	windowSection: boolean = false;
 	sectionProperties: any = {};
+	callbacks: SectionCallbacks;
+
 	/// Paramaters: null (use sectionProperties).
-	onInitialize: () => void;
+	onInitialize(): void {
+		if (this.callbacks.onInitialize)
+			return this.callbacks.onInitialize();
+	}
 
 	/// Parameters: Point [x, y], DragDistance [x, y] (null when not dragging), e (native event object)
-	onMouseMove: (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) => void;
+	onMouseMove(point: Array<number>, dragDistance: Array<number>, e: MouseEvent): void {
+		if (this.callbacks.onMouseMove)
+			return this.callbacks.onMouseMove(point, dragDistance, e);
+	}
 
 	/// Parameters: Point [x, y], e (native event object)
-	onMouseDown: (point: Array<number>, e: MouseEvent) => void;
+	onMouseDown(point: Array<number>, e: MouseEvent): void {
+		if (this.callbacks.onMouseDown)
+			return this.callbacks.onMouseDown(point, e);
+	}
 
 	/// Parameters: Point [x, y], e (native event object)
-	onMouseUp: (point: Array<number>, e: MouseEvent) => void;
+	onMouseUp(point: Array<number>, e: MouseEvent): void {
+		if (this.callbacks.onMouseUp)
+			return this.callbacks.onMouseUp(point, e);
+	}
 
 	/// Parameters: Point [x, y], e (native event object)
-	onMouseEnter: (point: Array<number>, e: MouseEvent) => void;
+	onMouseEnter(point: Array<number>, e: MouseEvent): void {
+		if (this.callbacks.onMouseEnter)
+			return this.callbacks.onMouseEnter(point, e);
+	}
 
 	/// Parameters: Point [x, y], e (native event object)
-	onMouseLeave: (point: Array<number>, e: MouseEvent) => void;
+	onMouseLeave(point: Array<number>, e: MouseEvent): void {
+		if (this.callbacks.onMouseLeave)
+			return this.callbacks.onMouseLeave(point, e);
+	}
 
 	/// Parameters: Point [x, y], e (native event object)
-	onClick: (point: Array<number>, e: MouseEvent) => void;
+	onClick(point: Array<number>, e: MouseEvent): void {
+		if (this.callbacks.onClick)
+			return this.callbacks.onClick(point, e);
+	}
 
 	/// Parameters: Point [x, y], e (native event object)
-	onDoubleClick: (point: Array<number>, e: MouseEvent) => void;
+	onDoubleClick(point: Array<number>, e: MouseEvent): void {
+		if (this.callbacks.onDoubleClick)
+			return this.callbacks.onDoubleClick(point, e);
+	}
 
 	/// Parameters: e (native event object)
-	onContextMenu: (e?: MouseEvent) => void;
+	onContextMenu(e?: MouseEvent): void {
+		if (this.callbacks.onContextMenu)
+			return this.callbacks.onContextMenu(e);
+	}
 
 	/// Parameters: Point [x, y], Delta [X, Y], e (native event object)
-	onMouseWheel: (point: Array<number>, delta: Array<number>, e: MouseEvent) => void;
+	onMouseWheel(point: Array<number>, delta: Array<number>, e: MouseEvent): void {
+		if (this.callbacks.onMouseWheel)
+			return this.callbacks.onMouseWheel(point, delta, e);
+	}
 
 	/// Parameters: Point [x, y], e (native event object)
-	onLongPress: (point: Array<number>, e: MouseEvent) => void;
+	onLongPress(point: Array<number>, e: MouseEvent): void {
+		if (this.callbacks.onLongPress)
+			return this.callbacks.onLongPress(point, e);
+	}
 
 	/// Parameters: e (native event object)
-	onMultiTouchStart: (e: TouchEvent) => void;
+	onMultiTouchStart(e: TouchEvent): void {
+		if (this.callbacks.onMultiTouchStart)
+			return this.callbacks.onMultiTouchStart(e);
+	}
 
 	/// Parameters: Point [x, y], DragDistance, e (native event object)
-	onMultiTouchMove: (point: Array<number>, dragDistance: number, e: TouchEvent) => void;
+	onMultiTouchMove(point: Array<number>, dragDistance: number, e: TouchEvent): void {
+		if (this.callbacks.onMultiTouchMove)
+			return this.callbacks.onMultiTouchMove(point, dragDistance, e);
+	}
 
 	/// Parameters: e (native event object)
-	onMultiTouchEnd: (e: TouchEvent) => void;
+	onMultiTouchEnd(e: TouchEvent): void {
+		if (this.callbacks.onMultiTouchEnd)
+			return this.callbacks.onMultiTouchEnd(e);
+	}
 
 	/// Parameters: null (Section's size is up to date when this callback is called.)
-	onResize: () => void;
+	onResize(): void {
+		if (this.callbacks.onResize)
+			return this.callbacks.onResize();
+	}
 
 	/// Parameters: null || (frameCount, elapsedTime)
-	onDraw: (frameCount?: number, elapsedTime?: number) => void;
+	onDraw(frameCount?: number, elapsedTime?: number): void {
+		if (this.callbacks.onDraw)
+			return this.callbacks.onDraw(frameCount, elapsedTime);
+	}
 
 	/// Optional Parameters: (area, paneTopLeft, canvasContext) - area is the area to be painted using canvasContext.
-	onDrawArea: (area?: cool.Bounds, paneTopLeft?: cool.Point, canvasContext?: CanvasRenderingContext2D) => void;
+	onDrawArea(area?: cool.Bounds, paneTopLeft?: cool.Point, canvasContext?: CanvasRenderingContext2D): void {
+		if (this.callbacks.onDrawArea)
+			return this.callbacks.onDrawArea(area, paneTopLeft, canvasContext);
+	}
 
 	/// frameCount, elapsedTime. Sections that will use animation, have to have this function defined.
-	onAnimationEnded: (frameCount: number, elapsedTime: number) => void;
+	onAnimationEnded(frameCount: number, elapsedTime: number): void {
+		if (this.callbacks.onAnimationEnded)
+			return this.callbacks.onAnimationEnded(frameCount, elapsedTime);
+	}
 
 	/// Parameters: Size [x, y]
-	onNewDocumentTopLeft: (size: Array<number>) => void;
+	onNewDocumentTopLeft(size: Array<number>): void {
+		if (this.callbacks.onNewDocumentTopLeft)
+			return this.callbacks.onNewDocumentTopLeft(size);
+	}
 
 	/// This Function is called right before section is removed.
-	onRemove: () => void;
+	onRemove(): void {
+		if (this.callbacks.onRemove)
+			return this.callbacks.onRemove();
+	}
 
-	/// Parameters: integer. Do not implement this. This function is added by section container.
-	setDrawingOrder: (drawingOrder: number) => void;
+	/// Parameters: integer.
+	public setDrawingOrder(drawingOrder: number): void {
+		this.drawingOrder = drawingOrder;
+		this.containerObject.updateBoundSectionLists();
+		this.containerObject.reNewAllSections();
+	}
 
-	/// Parameters: integer. Do not implement this. This function is added by section container.
-	setZIndex: (zIndex: number) => void;
+	/// Parameters: integer.
+	public setZIndex(zIndex: number): void {
+		this.zIndex = zIndex;
+		this.containerObject.updateBoundSectionLists();
+		this.containerObject.reNewAllSections();
+	}
 
-	/// Parameters: string. Do not implement this. This function is added by section container.
-	bindToSection: (sectionName: string) => void;
+	/// Parameters: string.
+	public bindToSection(sectionName: string): void {
+		this.boundToSection = sectionName;
+		this.containerObject.updateBoundSectionLists();
+		this.containerObject.reNewAllSections();
+	}
 
 	/// The sections those this section can propagate events to. Updated by container.
 	boundsList: Array<CanvasSectionObject>;
 
-	/// Do not implement this. This function is added by section container.
-	stopPropagating: () => void;
+	public stopPropagating(): void {
+		this.containerObject.lowestPropagatedBoundSection = this.name;
+	}
 
-	/// Do not implement this. This function is added by section container. Return value: boolean.
-	startAnimating: (options: any) => boolean;
+	public startAnimating(options: any): boolean {
+		return this.containerObject.startAnimating(this.name, options);
+	}
 
-	/// Do not implement this. This function is added by section container.
-	resetAnimation: () => void;
+	public resetAnimation(): void {
+		this.containerObject.resetAnimation(this.name);
+	}
 
-	/// Do not implement this. This function is added by section container.
-	getTestDiv: () => HTMLDivElement;
+	public getTestDiv(): HTMLDivElement {
+		var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + this.name);
+		if (element)
+			return element;
 
-	/// Document objects only. Do not implement this. This function is added by section container.
-	setPosition: (x: number, y: number) => void;
+		return null;
+	}
 
-	/// Do not implement this. This function is added by section container. This returns if Calc document is in RTL mode
-	isCalcRTL: () => boolean;
+	/// Document objects only.
+	public setPosition(x: number, y: number): void {
+		if (this.documentObject !== true)
+			return;
 
-	constructor (options: any) {
+		x = Math.round(x);
+		y = Math.round(y);
+		let sectionXcoord = x - this.containerObject.getDocumentTopLeft()[0];
+		if (this.isCalcRTL()) {
+			// the document coordinates are not always in sync(fixing that is non-trivial!), so use the latest from map.
+			const docLayer = this.sectionProperties.docLayer;
+			const docSize = docLayer._map.getPixelBoundsCore().getSize();
+			sectionXcoord = docSize.x - sectionXcoord - this.size[0];
+		}
+
+		this.myTopLeft[0] = this.containerObject.getDocumentAnchor()[0] + sectionXcoord;
+		this.myTopLeft[1] = this.containerObject.getDocumentAnchor()[1] + y - this.containerObject.getDocumentTopLeft()[1];
+		this.position[0] = x;
+		this.position[1] = y;
+		this.isVisible = this.containerObject.isDocumentObjectVisible(this);
+		if (this.containerObject.testing)
+			this.containerObject.createUpdateSingleDivElement(this);
+	}
+
+	/// This returns if Calc document is in RTL mode
+	public isCalcRTL(): boolean {
+		const docLayer = this.sectionProperties.docLayer;
+		if (docLayer && docLayer.isCalcRTL())
+			return true;
+
+		return false;
+	}
+
+	constructor (options: SectionInitProperties) {
 		this.name = options.name;
 		this.backgroundColor = options.backgroundColor ? options.backgroundColor: null;
 		this.borderColor = options.borderColor ? options.borderColor: null;
@@ -275,26 +428,28 @@ class CanvasSectionObject {
 		this.interactable = options.interactable;
 		this.showSection = options.showSection;
 		this.sectionProperties = options.sectionProperties ? options.sectionProperties: {};
-		this.onInitialize = options.onInitialize ? options.onInitialize: function() { return; };
-		this.onMouseMove = options.onMouseMove ? options.onMouseMove: function() { return; };
-		this.onMouseDown = options.onMouseDown ? options.onMouseDown: function() { return; };
-		this.onMouseUp = options.onMouseUp ? options.onMouseUp: function() { return; };
-		this.onMouseEnter = options.onMouseEnter ? options.onMouseEnter: function() { return; };
-		this.onMouseLeave = options.onMouseLeave ? options.onMouseLeave: function() { return; };
-		this.onClick = options.onClick ? options.onClick: function() { return; };
-		this.onDoubleClick = options.onDoubleClick ? options.onDoubleClick: function() { return; };
-		this.onContextMenu = options.onContextMenu ? options.onContextMenu: function() { return; };
-		this.onMouseWheel = options.onMouseWheel ? options.onMouseWheel: function() { return; };
-		this.onLongPress = options.onLongPress ? options.onLongPress: function() { return; };
-		this.onMultiTouchStart = options.onMultiTouchStart ? options.onMultiTouchStart: function() { return; };
-		this.onMultiTouchMove = options.onMultiTouchMove ? options.onMultiTouchMove: function() { return; };
-		this.onMultiTouchEnd = options.onMultiTouchEnd ? options.onMultiTouchEnd: function() { return; };
-		this.onResize = options.onResize ? options.onResize: function() { return; };
-		this.onDraw = options.onDraw ? options.onDraw: function() { return; };
-		this.onDrawArea = options.onDrawArea ? options.onDrawArea: function() { return; };
-		this.onNewDocumentTopLeft = options.onNewDocumentTopLeft ? options.onNewDocumentTopLeft: function() { return; };
-		this.onRemove = options.onRemove ? options.onRemove: function() { return; };
-		this.onAnimationEnded = options.onAnimationEnded ? options.onAnimationEnded: function() { return; };
+		this.callbacks = {
+			onInitialize: options.onInitialize?.bind(this),
+			onMouseMove: options.onMouseMove?.bind(this),
+			onMouseDown: options.onMouseDown?.bind(this),
+			onMouseUp: options.onMouseUp?.bind(this),
+			onMouseEnter: options.onMouseEnter?.bind(this),
+			onMouseLeave: options.onMouseLeave?.bind(this),
+			onClick: options.onClick?.bind(this),
+			onDoubleClick: options.onDoubleClick?.bind(this),
+			onContextMenu: options.onContextMenu?.bind(this),
+			onMouseWheel: options.onMouseWheel?.bind(this),
+			onLongPress: options.onLongPress?.bind(this),
+			onMultiTouchStart: options.onMultiTouchStart?.bind(this),
+			onMultiTouchMove: options.onMultiTouchMove?.bind(this),
+			onMultiTouchEnd: options.onMultiTouchEnd?.bind(this),
+			onResize: options.onResize?.bind(this),
+			onDraw: options.onDraw?.bind(this),
+			onDrawArea: options.onDrawArea?.bind(this),
+			onNewDocumentTopLeft: options.onNewDocumentTopLeft?.bind(this),
+			onRemove: options.onRemove?.bind(this),
+			onAnimationEnded: options.onAnimationEnded?.bind(this),
+		};
 	}
 }
 
@@ -426,6 +581,10 @@ class CanvasSectionContainer {
 
 	getClearColor () {
 		return this.clearColor;
+	}
+
+	public getCanvasStyle(): CSSStyleDeclaration {
+		return this.canvas.style;
 	}
 
 	setInZoomAnimation (inZoomAnimation: boolean) {
@@ -591,7 +750,35 @@ class CanvasSectionContainer {
 		return [this.documentBottomRight[0] - this.documentTopLeft[0], this.documentBottomRight[1] - this.documentTopLeft[1]];
 	}
 
-	private isDocumentObjectVisible (section: CanvasSectionObject): boolean {
+	public getDocumentAnchor(): Array<number> {
+		return [this.documentAnchor[0], this.documentAnchor[1]];
+	}
+
+	public getCanvasBoundingClientRect(): DOMRect {
+		return this.canvas.getBoundingClientRect();
+	}
+
+	public getCanvasRight(): number {
+		return this.right;
+	}
+
+	public getCanvasBottom(): number {
+		return this.bottom;
+	}
+
+	public isDraggingSomething(): boolean {
+		return this.draggingSomething;
+	}
+
+	public getDragDistance(): number[] {
+		return [...this.dragDistance];
+	}
+
+	public getPositionOnMouseUp(): number[] {
+		return [...this.positionOnMouseUp];
+	}
+
+	public isDocumentObjectVisible (section: CanvasSectionObject): boolean {
 		if (
 			(
 				section.position[0] >= this.documentTopLeft[0] && section.position[0] <= this.documentBottomRight[0] ||
@@ -707,7 +894,9 @@ class CanvasSectionContainer {
 		}
 	}
 
-	private updateBoundSectionLists() {
+	// Should only be called by CanvasSectionObject member functions!
+	// HACK: Typescript does not have the concept of friend classes hence this has to be public.
+	public updateBoundSectionLists() {
 		for (var i: number = 0; i < this.sections.length; i++) {
 			this.sections[i].boundsList = null;
 			this.sections[i].boundsList = this.updateBoundSectionList(this.sections[i]);
@@ -1831,7 +2020,7 @@ class CanvasSectionContainer {
 			return true;
 	}
 
-	createSection (options: any, parentSectionName: string = null) {
+	createSection (options: SectionInitProperties, parentSectionName: string = null) {
 		if (this.newSectionChecks(options)) {
 			// Every section can draw from Point(0, 0), their drawings will be translated to myTopLeft position.
 			var newSection: CanvasSectionObject = new CanvasSectionObject(options);
@@ -1854,81 +2043,6 @@ class CanvasSectionContainer {
 		}
 	}
 
-	private addSectionFunctions(section: CanvasSectionObject) {
-		section.setDrawingOrder = function(drawingOrder: number) {
-			section.drawingOrder = drawingOrder;
-			section.containerObject.updateBoundSectionLists();
-			section.containerObject.reNewAllSections();
-		};
-
-		section.setZIndex = function(zIndex: number) {
-			section.zIndex = zIndex;
-			section.containerObject.updateBoundSectionLists();
-			section.containerObject.reNewAllSections();
-		};
-
-		section.bindToSection = function(sectionName: string) {
-			section.boundToSection = sectionName;
-			section.containerObject.updateBoundSectionLists();
-			section.containerObject.reNewAllSections();
-		};
-
-		section.stopPropagating = function() {
-			section.containerObject.lowestPropagatedBoundSection = section.name;
-		};
-
-		section.startAnimating = function(options: any): boolean {
-			return section.containerObject.startAnimating(section.name, options);
-		};
-
-		section.resetAnimation = function () {
-			section.containerObject.resetAnimation(section.name);
-		};
-
-		section.getTestDiv = function (): HTMLDivElement {
-			var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + this.name);
-			if (element) {
-				return element;
-			}
-			else {
-				return null;
-			}
-		};
-
-		section.isCalcRTL = function (): boolean {
-			const docLayer = section.sectionProperties.docLayer;
-			if (docLayer && docLayer.isCalcRTL()) {
-				return true;
-			}
-
-			return false;
-		};
-
-		// Only for document objects.
-		if (section.documentObject === true) {
-			section.setPosition = function (x: number, y: number) {
-				x = Math.round(x);
-				y = Math.round(y);
-				let sectionXcoord = x - section.containerObject.documentTopLeft[0];
-				if (section.isCalcRTL()) {
-					console.log('DEBUG: setPosition: docSize = ' + section.containerObject.getDocumentSize()[0]);
-					// the document coordinates are not always in sync(fixing that is non-trivial!), so use the latest from map.
-					const docLayer = section.sectionProperties.docLayer;
-					const docSize = docLayer._map.getPixelBoundsCore().getSize();
-					sectionXcoord = docSize.x - sectionXcoord - section.size[0];
-				}
-
-				section.myTopLeft[0] = section.containerObject.documentAnchor[0] + sectionXcoord;
-				section.myTopLeft[1] = section.containerObject.documentAnchor[1] + y - section.containerObject.documentTopLeft[1];
-				section.position[0] = x;
-				section.position[1] = y;
-				section.isVisible = section.containerObject.isDocumentObjectVisible(section);
-				if (this.testing)
-					section.containerObject.createUpdateSingleDivElement(section);
-			};
-		}
-	}
-
 	private pushSection (newSection: CanvasSectionObject) {
 		// Every section can draw from Point(0, 0), their drawings will be translated to myTopLeft position.
 		newSection.context = this.context;
@@ -1936,7 +2050,6 @@ class CanvasSectionContainer {
 		newSection.containerObject = this;
 		newSection.sectionProperties.section = newSection;
 		this.sections.push(newSection);
-		this.addSectionFunctions(newSection);
 		newSection.onInitialize();
 		if (this.drawingAllowed()) {
 			this.updateBoundSectionLists();

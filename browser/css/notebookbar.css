@@ -269,6 +269,7 @@
 .mobile-wizard-widebutton.disabled,
 .locking-disabled {
 	opacity: 0.65;
+	cursor: not-allowed;
 }
 
 .locking-disabled:hover {
@@ -584,12 +585,12 @@
 	background: url('images/lc_downloadas-docx.svg') center;
 }
 
-[class*='as-pdf-submenu-icon'] {
-	background: url('images/lc_downloadas-pdf.svg') center;
+[class*='pdf-submenu-icon'] {
+	background: url('images/lc_exportpdf.svg') center;
 }
 
-[class*='as-epub-submenu-icon'] {
-	background: url('images/lc_downloadas-epub.svg') center;
+[class*='epub-submenu-icon'] {
+	background: url('images/lc_exportepub.svg') center;
 }
 
 [class*='as-xls-submenu-icon'] {

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-07 17:09+0200\n"
+"POT-Creation-Date: 2023-01-20 11:33+0200\n"
 "PO-Revision-Date: 2020-10-21 10:26+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
@@ -2703,7 +2703,8 @@ msgstr ""
 "det rigtige forslag til ændring af teksten."
 
 #: html/cool-help.html%2Bdiv.h4:547-5
-msgid "Is here a thesaurus?"
+#, fuzzy
+msgid "Is there a thesaurus?"
 msgstr "Findes der en synonymordbog?"
 
 #: html/cool-help.html%2Bdiv.p:548-5

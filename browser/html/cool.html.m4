@@ -21,6 +21,16 @@ m4_define([MOBILEAPP],[])
 m4_ifelse(IOSAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(ANDROIDAPP,[true],[m4_define([MOBILEAPP],[true])])
+
+// FIXME: This is temporary and not what we actually eventually want.
+
+// What we really want is not a separate HTML file (produced with M4 conditionals on the below
+// EMSCRIPTENAPP) for a "WASM app". What we want is that the same cool.html page adapts on demand to
+// instead run locally using WASM, if the connection to the COOL server breaks. (And then
+// re-connects to the COOL server when possible.)
+
+m4_ifelse(EMSCRIPTENAPP,[true],[m4_define([MOBILEAPP],[true])])
+
 m4_ifelse(MOBILEAPP,[],
   // Start listening for Host_PostmessageReady message and save the
   // result for future
@@ -77,6 +87,13 @@ m4_ifelse(ANDROIDAPP,[true],
    window.postMobileDebug   = function(msg) { window.COOLMessageHandler.postMobileDebug(msg); };],
   [   window.ThisIsTheAndroidApp = false;]
 )
+m4_ifelse(EMSCRIPTENAPP,[true],
+  [   window.ThisIsTheEmscriptenApp = true;
+   window.postMobileMessage = function(msg) { _handle_cool_message(allocateUTF8(msg)); };
+   window.postMobileError   = function(msg) { console.log('COOL Error: ' + msg); };
+   window.postMobileDebug   = function(msg) { console.log('COOL Debug: ' + msg); };],
+  [   window.ThisIsTheEmscriptenApp = false;]
+)
 
 if (window.ThisIsTheiOSApp) {
   window.addEventListener('keydown', function(e) {
@@ -130,7 +147,34 @@ function onSlideClick(e){
 	document.getElementById(e).classList.add("active");
 }
 
+function initWasmWithQt() {
+	var qtLoader = QtLoader({});
+	console.log('**************** Calling qtLoader.loadEmscriptenModule()');
+	qtLoader.loadEmscriptenModule("online");
+	console.log('**************** qtLoader.loadEmscriptenModule() returned');
+}
 </script>
+
+m4_ifelse(EMSCRIPTENAPP,[true],[
+  <script>
+    console.log('================ Before including qtloader.js');
+  </script>
+  <script type="text/javascript" src="qtloader.js"></script>
+  <script>
+    console.log('================ After including qtloader.js');
+  </script>
+
+  <script>
+    Module.onRuntimeInitialized = () => {
+      console.log('================ onRuntimeInitialized: sending HULLO');
+      window.postMobileMessage('HULLO');
+      console.log('================ onRuntimeInitialized: Calling socket.onopen()');
+      window.socket.onopen();
+      console.log('================ onRuntimeInitialized: Done');
+    }
+  console.log('================ End if second inline script in cool.html');
+  </script>
+])
 
 m4_ifelse(BUNDLE,[],
   <!-- Using individual CSS files -->
@@ -169,7 +213,9 @@ m4_ifelse(MOBILEAPP,[true],
 )m4_dnl
 </head>
 
-  <body style="user-select: none;height:100%;display:flex;flex-direction:column">
+  <body style="user-select: none;height:100%;display:flex;flex-direction:column"
+m4_ifelse(EMSCRIPTENAPP,[true],[onload="initWasmWithQt()"])
+	>
     <!--The "controls" div holds map controls such as the Zoom button and
         it's separated from the map in order to have the controls on the top
         of the page all the time.
@@ -315,7 +361,9 @@ m4_ifelse(MOBILEAPP,[true],
       window.tileSize = 256;
       window.uiDefaults = {};
       window.useIntegrationTheme = 'false';
-      window.checkFileInfoOverride = {};],
+      window.checkFileInfoOverride = {};
+      window.deeplEnabled = false;
+      window.zoteroEnabled = false;],
      [window.host = '%HOST%';
       window.serviceRoot = '%SERVICE_ROOT%';
       window.hexifyUrl = %HEXIFY_URL%;
@@ -340,7 +388,9 @@ m4_ifelse(MOBILEAPP,[true],
       window.tileSize = 256;
       window.groupDownloadAsForNb = %GROUP_DOWNLOAD_AS%;
       window.uiDefaults = %UI_DEFAULTS%;
-      window.checkFileInfoOverride = %CHECK_FILE_INFO_OVERRIDE%;])
+      window.checkFileInfoOverride = %CHECK_FILE_INFO_OVERRIDE%;
+	    window.deeplEnabled = %DEEPL_ENABLED%;
+      window.zoteroEnabled = %ZOTERO_ENABLED%;])
 
 // This is GLOBAL_JS:
 m4_syscmd([cat ]GLOBAL_JS)m4_dnl

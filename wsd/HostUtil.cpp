@@ -67,19 +67,23 @@ void HostUtil::parseAliases(Poco::Util::LayeredConfiguration& conf)
     if (!conf.has("storage.wopi.alias_groups"))
     {
         conf.setString("storage.wopi.alias_groups[@mode]", "compat");
+        return;
     }
-    else if (conf.has("storage.wopi.alias_groups.group[0]"))
+
+    if (conf.has("storage.wopi.alias_groups.group[0]"))
     {
         // group defined in alias_groups
         if (Util::iequal(config::getString("storage.wopi.alias_groups[@mode]", "first"), "first"))
         {
-            LOG_ERR("Admins didnot set the alias_groups mode to 'groups'");
+            LOG_ERR("Admins did not set the alias_groups mode to 'groups'");
             AliasHosts.clear();
             return;
         }
     }
 
     AliasHosts.clear();
+    WopiHosts.clear();
+    hostList.clear();
 #if ENABLE_FEATURE_LOCK
     CommandControl::LockManager::unlockLinkMap.clear();
 #endif

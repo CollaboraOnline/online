@@ -227,14 +227,15 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					'vertical': 'true'
 				},
 				{
-					'id': 'file-downloadas-pdf',
+					'id': 'file-exportpdf',
 					'type': 'container',
 					'children': [
 						{
-							'id': 'downloadas-pdf',
-							'type': 'menubartoolitem',
+							'id': 'exportpdf',
+							'type': 'customtoolitem',
 							'text': _('PDF Document (.pdf)'),
-							'command': ''
+							'command': 'exportpdf',
+							'inlineLabel': true
 						},
 						hasRepair? {
 							'id': 'repair',
@@ -247,6 +248,18 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				}
 			]);
 		}
+
+		content.push({
+			'type': 'container',
+			'children': [
+				{
+					'id': 'properties',
+					'type': 'bigtoolitem',
+					'text': _('Properties'),
+					'command': '.uno:SetDocumentProperties'
+				}
+			]
+		});
 
 		return this.getTabPage('File', content);
 	},
@@ -995,6 +1008,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 	},
 
 	getInsertTab: function() {
+		var isODF = L.LOUtil.isFileODF(this._map);
 		var content = [
 			{
 				'type': 'bigtoolitem',
@@ -1146,7 +1160,9 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:FontworkGalleryFloater'),
-								'command': '.uno:FontworkGalleryFloater'
+								'command': '.uno:FontworkGalleryFloater',
+								// Fontwork export/import not supported in other formats.
+								'visible': isODF ? 'true' : 'false',
 							}
 						]
 					},
@@ -1532,6 +1548,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 	},
 
 	getDrawTab: function() {
+		var isODF = L.LOUtil.isFileODF(this._map);
 		var content = [
 			{
 				'type': 'bigtoolitem',
@@ -1793,7 +1810,9 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:FontworkGalleryFloater'),
-								'command': '.uno:FontworkGalleryFloater'
+								'command': '.uno:FontworkGalleryFloater',
+								// Fontwork export/import not supported in other formats.
+								'visible': isODF ? 'true' : 'false',
 							}
 						]
 					},

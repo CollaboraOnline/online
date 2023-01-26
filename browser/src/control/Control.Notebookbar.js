@@ -136,11 +136,14 @@ L.Control.Notebookbar = L.Control.extend({
 		var temporaryParent = L.DomUtil.create('div');
 		this.builder.buildControl(temporaryParent, data.control);
 		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
+		var backupGridSpan = control.style.gridColumn;
 		L.DomUtil.remove(control);
 
 		var newControl = this.container.querySelector('[id=\'' + data.control.id + '\']');
-		if (newControl)
+		if (newControl) {
 			newControl.scrollTop = scrollTop;
+			newControl.style.gridColumn = backupGridSpan;
+		}
 	},
 
 	onJSAction: function (e) {

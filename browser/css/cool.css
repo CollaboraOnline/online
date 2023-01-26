@@ -234,7 +234,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	overflow-x: hidden;
 	overflow-y: auto;
 	z-index: 1200;
-	scrollbar-width: auto;
+	scrollbar-width: thin;
 	scrollbar-color: var(--color-border) transparent;
 }
 
@@ -790,9 +790,12 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 
 .lokdialog.ui-dialog-content.ui-widget-content {
-	padding: 0px;
 	overflow: auto;
 	border-radius: calc(var(--border-radius)/2);
+}
+
+.lokdialog_container:not(.jsdialog-container) .lokdialog.ui-dialog-content.ui-widget-content {
+	padding: 0px;
 }
 
 .lokdialog_canvas {
@@ -867,8 +870,31 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 
 .hyperlink-popup .leaflet-popup-content {
 	white-space: nowrap;
+	margin: 6px 8px;
+	font-size: 14px;
+	line-height: 1;
+}
+
+#hyperlink-pop-up {
+	padding: 6px 0;
+	display: inline-block;
+	line-height: 1;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	max-width: 188px;
+}
+
+.hyperlink-popup-btn {
+	display: inline-block;
+	margin-left: 12px;
+	vertical-align: baseline;
+	width: 26px;
+	height: 26px;
+}
+
+.hyperlink-popup-btn:hover {
+	background-color: var(--color-background-darker);
+	border-radius: 50%;
 }
 
 .leaflet-canvas-container .cell-cursor-data {

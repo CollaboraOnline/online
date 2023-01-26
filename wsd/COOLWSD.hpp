@@ -88,12 +88,7 @@ public:
         {
             LOG_DBG("Closing ChildProcess [" << _pid << "].");
 
-            // Request the child to exit
-            if (isAlive())
-            {
-                LOG_DBG("Stopping ChildProcess [" << _pid << "] by sending 'exit' command.");
-                sendTextFrame("exit");
-            }
+            requestTermination();
 
             // Shutdown the socket.
             if (_ws)
@@ -105,6 +100,17 @@ public:
         }
 
         _pid = -1; // Detach from child.
+    }
+
+    /// Request graceful termination.
+    void requestTermination()
+    {
+        // Request the child to exit
+        if (isAlive())
+        {
+            LOG_DBG("Stopping ChildProcess [" << _pid << "] by sending 'exit' command");
+            sendTextFrame("exit", /*flush=*/true);
+        }
     }
 
     /// Kill or abandon the child.
@@ -137,20 +143,22 @@ public:
     pid_t getPid() const { return _pid; }
 
     /// Send a text payload to the child-process WS.
-    bool sendTextFrame(const std::string& data)
+    bool sendTextFrame(const std::string& data, bool flush = false)
     {
-        return sendFrame(data, false);
+        return sendFrame(data, false, flush);
     }
 
     /// Send a payload to the child-process WS.
-    bool sendFrame(const std::string& data, bool binary = false)
+    bool sendFrame(const std::string& data, bool binary = false, bool flush = false)
     {
         try
         {
             if (_ws)
             {
-                LOG_TRC("Send to " << _name << " message: [" << COOLProtocol::getAbbreviatedMessage(data) << "].");
-                _ws->sendMessage(data.c_str(), data.size(), (binary ? WSOpCode::Binary : WSOpCode::Text), false);
+                LOG_TRC("Send to " << _name << " message: ["
+                                   << COOLProtocol::getAbbreviatedMessage(data) << ']');
+                _ws->sendMessage(data.c_str(), data.size(),
+                                 (binary ? WSOpCode::Binary : WSOpCode::Text), flush);
                 return true;
             }
         }
@@ -262,6 +270,7 @@ public:
     static void writeTraceEventRecording(const char *data, std::size_t nbytes);
     static void writeTraceEventRecording(const std::string &recording);
     static std::string LogLevel;
+    static std::string LogLevelStartup;
     static std::string MostVerboseLogLevelSettableFromClient;
     static std::string LeastVerboseLogLevelSettableFromClient;
     static bool AnonymizeUserData;
@@ -475,8 +484,10 @@ public:
         return FileUtil::anonymizeUsername(username);
     }
 
+#if ENABLE_DEBUG
     /// get correct server URL with protocol + port number for this running server
     static std::string getServerURL();
+#endif
 
 protected:
     void initialize(Poco::Util::Application& self) override

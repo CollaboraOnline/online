@@ -59,6 +59,10 @@
 #include <ios.h>
 #elif defined(__ANDROID__)
 #include "androidapp.hpp"
+#elif defined(GTKAPP)
+#include "gtk.hpp"
+#elif defined(__EMSCRIPTEN__)
+#include "wasmapp.hpp"
 #endif
 
 bool StorageBase::FilesystemEnabled;
@@ -845,6 +849,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
     LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): " << wopiResponse.str());
 
     JsonUtil::findJSONValue(object, "UserExtraInfo", _userExtraInfo);
+    JsonUtil::findJSONValue(object, "UserPrivateInfo", _userPrivateInfo);
     JsonUtil::findJSONValue(object, "WatermarkText", _watermarkText);
     JsonUtil::findJSONValue(object, "UserCanWrite", _userCanWrite);
     JsonUtil::findJSONValue(object, "PostMessageOrigin", _postMessageOrigin);
@@ -896,6 +901,8 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
         if (isReadOnly)
         {
             isUserLocked = true;
+            _userCanWrite = false;
+            LOG_DBG("Feature lock is enabled and " << host << " is in the list of read-only members. Therefore, document is set to read-only.");
         }
         CommandControl::LockManager::setHostReadOnly(isReadOnly);
     }
@@ -1464,9 +1471,13 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
         {
             result.setResult(StorageBase::UploadResult::Result::TOO_LARGE);
         }
-        else if (details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED
-                 || details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_FORBIDDEN)
+        else if (details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED ||
+                 details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_FORBIDDEN ||
+                 details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_NOT_FOUND)
         {
+            // The ms-wopi specs recognizes 401 and 404 for invalid token
+            // and file unknown/user unauthorized, respectively.
+            // We also handle 403 that some implementation use.
             result.setResult(StorageBase::UploadResult::Result::UNAUTHORIZED);
         }
         else if (details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_CONFLICT)

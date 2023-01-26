@@ -53,9 +53,11 @@ L.Control.ContextMenu = L.Control.extend({
 				   'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph', 'TableDialog',
 				   'SpellCheckIgnore'],
 
-			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable',
-				      'FormatCellDialog', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize', 
-				      'FormatSparklineMenu', 'InsertSparkline', 'DeleteSparkline', 'DeleteSparklineGroup', 'EditSparklineGroup', 'EditSparkline', 'GroupSparklines', 'UngroupSparklines'],
+			spreadsheet: ['MergeCells', 'SplitCell', 'InsertCell', 'DeleteCell',
+				      'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable',
+				      'FormatCellDialog', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize',
+				      'FormatSparklineMenu', 'InsertSparkline', 'DeleteSparkline', 'DeleteSparklineGroup',
+				      'EditSparklineGroup', 'EditSparkline', 'GroupSparklines', 'UngroupSparklines'],
 
 			presentation: ['SetDefault'],
 			drawing: []
@@ -121,7 +123,7 @@ L.Control.ContextMenu = L.Control.extend({
 
 	_onContextMenu: function(obj) {
 		var map = this._map;
-		if (!map.isPermissionEdit()) {
+		if (!map.isEditMode()) {
 			return;
 		}
 
@@ -242,6 +244,9 @@ L.Control.ContextMenu = L.Control.extend({
 				if (window.mode.isMobile() && this.options.mobileBlackList.indexOf(commandName) !== -1)
 					continue;
 
+				if (commandName == 'None' && !item.text)
+					continue;
+
 				if (hasParam || commandName === 'None' || commandName === 'FontDialogForParagraph' || commandName === 'Delete') {
 					itemName = window.removeAccessKey(item.text);
 					itemName = itemName.replace(' ', '\u00a0');
@@ -318,5 +323,18 @@ L.installContextMenu = function(options) {
 		}
 	};
 	rewrite(options.items);
+
+	if (document.documentElement.dir === 'rtl') {
+		options.positionSubmenu = function($menu) {
+			if (typeof $menu === 'undefined') {
+				return;
+			}
+
+			$menu.css('right', 'auto');
+			$.contextMenu.defaults.positionSubmenu.call(this, $menu);
+			$menu.css('right', $menu.css('left'));
+		};
+	}
+
 	$.contextMenu(options);
 };

@@ -242,7 +242,7 @@ L.Clipboard = L.Class.extend({
 			}
 
 			request.open(type, url, true /* isAsync */);
-			request.timeout = 20 * 1000; // 20 secs ...
+			request.timeout = 30 * 1000; // 30 secs ...
 			request.responseType = 'blob';
 			if (optionalFormData !== null)
 				request.send(optionalFormData);
@@ -715,6 +715,9 @@ L.Clipboard = L.Class.extend({
 	copy: function(ev) { return this._doCopyCut(ev, 'Copy'); },
 
 	paste: function(ev) {
+		if (this._map.isReadOnlyMode())
+			return;
+
 		window.app.console.log('Paste');
 
 		if (this._isAnyInputFieldSelected())
@@ -861,7 +864,7 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_substProductName: function (msg) {
-		var productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition';
+		var productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition (unbranded)';
 		return msg.replace('%productName', productName);
 	},
 

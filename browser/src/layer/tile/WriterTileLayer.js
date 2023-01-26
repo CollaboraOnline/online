@@ -45,7 +45,22 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		else if (values.redlines && values.redlines.length > 0) {
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importChanges(values.redlines);
 		}
-		else {
+		else if (this._map.zotero && values.userDefinedProperties) {
+			this._map.zotero.handleCustomProperty(values.userDefinedProperties);
+		}
+		else if (this._map.zotero && values.fields) {
+			this._map.zotero.onFieldValue(values.fields);
+		} else if (this._map.zotero && values.field) {
+			this._map.zotero.handleFieldUnderCursor(values.field);
+		} else if (this._map.zotero && values.setRefs) {
+			this._map.zotero.onFieldValue(values.setRefs);
+		} else if (this._map.zotero && values.setRef) {
+			this._map.zotero.handleFieldUnderCursor(values.setRef);
+		} else if (this._map.zotero && values.bookmarks) {
+			this._map.zotero.handleBookmark(values.bookmarks);
+		} else if (this._map.zotero && values.bookmark) {
+			this._map.zotero.fetchCustomProperty(values.bookmark.name);
+		} else {
 			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
 	},
@@ -61,7 +76,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			command.part = this._selectedPart;
 		}
 
-		if (command.mode === undefined)
+		if (isNaN(command.mode))
 			command.mode = this._selectedMode;
 
 		command.part = 0;

@@ -1,28 +1,13 @@
 declare var L: any;
 declare var app: any;
 
-app.definitions.ContentControlSection =
+namespace cool {
 
-class ContentControlSection {
-    context: CanvasRenderingContext2D = null;
-    processingOrder: number = L.CSections.ContentControl.processingOrder;
-	drawingOrder: number = L.CSections.ContentControl.drawingOrder;
-	zIndex: number = L.CSections.ContentControl.zIndex;
-    name: string = L.CSections.ContentControl.name;
-	interactable: boolean = false;
-    documentObject: boolean = true;
-	sectionProperties: any = {};
-	myTopLeft: Array<number> = [0, 0];
-	position: Array<number> = [0, 0];
-	size: Array<number> = new Array(0);
-	expand: Array<string> = new Array(0);
-	anchor: Array<any> = new Array(0);
+export class ContentControlSection extends CanvasSectionObject {
+
 	map: any;
 
-	// Implemented by section container. Document objects only.
-	setPosition: (x: number, y: number) => void;
-
-	public onInitialize() {
+	public onInitialize(): void {
 		this.sectionProperties.polyAttri = {
 			stroke: true,
 			fill: false,
@@ -52,12 +37,28 @@ class ContentControlSection {
 	}
 
 	constructor() {
+		super({
+			processingOrder: L.CSections.ContentControl.processingOrder,
+			drawingOrder: L.CSections.ContentControl.drawingOrder,
+			zIndex: L.CSections.ContentControl.zIndex,
+			name: L.CSections.ContentControl.name,
+			interactable: false,
+			sectionProperties: {},
+			position: [0, 0],
+			size: [],
+			expand: '',
+			anchor: [],
+		});
+
+		this.myTopLeft = [0, 0];
+		this.documentObject = true;
 		this.map = L.Map.THIS;
 		this.sectionProperties.json = null;
 		this.sectionProperties.datePicker = null;
 		this.sectionProperties.picturePicker = null;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	public drawContentControl(json: any) {
 		this.sectionProperties.json = json;
 		this.sectionProperties.datePicker = false;
@@ -96,7 +97,7 @@ class ContentControlSection {
 		app.sectionContainer.requestReDraw();
 	}
 
-	private setPositionAndSize () {
+	private setPositionAndSize (): void {
 		if (!this.sectionProperties.json || !this.sectionProperties.json.rectangles)
 			return;
 
@@ -136,13 +137,13 @@ class ContentControlSection {
 			this.size[0] = 5;
 	}
 
-	public onResize () {
+	public onResize (): void {
 		this.setPositionAndSize();
 	}
 
-	public drawPolygon() {
-		var rectArray = L.Bounds.parseArray(this.sectionProperties.json.rectangles);
-		var rectangles = rectArray.map(function (rect: any) {
+	public drawPolygon(): void {
+		var rectArray = cool.Bounds.parseArray(this.sectionProperties.json.rectangles);
+		var rectangles = rectArray.map(function (rect: cool.Bounds) {
 			return rect.getPointArray();
 		});
 
@@ -161,7 +162,7 @@ class ContentControlSection {
 		this.sectionProperties.frame.setPointSet(this.sectionProperties.pointSet);
 	}
 
-	public onDraw() {
+	public onDraw(): void {
 		if (!this.sectionProperties.json)
 			return;
 
@@ -170,11 +171,12 @@ class ContentControlSection {
 		}
 	}
 
-	public onNewDocumentTopLeft () {
+	public onNewDocumentTopLeft (): void {
 		this.setPositionAndSize();
 	}
 
-	private callback(objectType:any , eventType:any, object:any, data:any, builder:any) {
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	private callback(objectType: any , eventType: any, object: any, data: any, builder: any): void {
 		var fireEvent: string = 'jsdialog';
 		if ((<any>window).mode.isMobile()) {
 			fireEvent = 'mobilewizard';
@@ -194,25 +196,25 @@ class ContentControlSection {
 		}
 	}
 
-	private addDropDownBtn() {
+	private addDropDownBtn(): void {
 		var matches = this.sectionProperties.json.rectangles.match(/\d+/g);
 
 		//consider first rectangle to position dropdownbutton
 		var rectangle = [parseInt(matches[0]), parseInt(matches[1]), parseInt(matches[2]), parseInt(matches[3])];
 
-		var topLeftTwips = new L.Point(rectangle[0], rectangle[1]);
-		var offset = new L.Point(rectangle[2], rectangle[3]);
+		var topLeftTwips = new cool.Point(rectangle[0], rectangle[1]);
+		var offset = new cool.Point(rectangle[2], rectangle[3]);
 		var bottomRightTwips = topLeftTwips.add(offset);
 		var buttonAreaTwips = [topLeftTwips, bottomRightTwips];
 
-		var frameArea = new L.Bounds(
+		var frameArea = new cool.Bounds(
 			this.map._docLayer._twipsToPixels(topLeftTwips),
 			this.map._docLayer._twipsToPixels(bottomRightTwips));
 
 		var size = frameArea.getSize();
 		var origin = this.map.getPixelOrigin();
 		var panePos = this.map._getMapPanePos();
-		this.sectionProperties.framePos = new L.Point(Math.round(frameArea.min.x + panePos.x - origin.x), Math.round(frameArea.min.y + panePos.y - origin.y));
+		this.sectionProperties.framePos = new cool.Point(Math.round(frameArea.min.x + panePos.x - origin.x), Math.round(frameArea.min.y + panePos.y - origin.y));
 		this.sectionProperties.frameWidth = Math.round(size.x);
 		this.sectionProperties.frameHeight = Math.round(size.y);
 
@@ -234,7 +236,8 @@ class ContentControlSection {
 		this.map.addLayer(this.sectionProperties.dropdownButton);
 	}
 
-	private openDropdownJson() {
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	private openDropdownJson(): any {
 		if (!this.sectionProperties.json.items)
 			return;
 		var json: any = {
@@ -246,7 +249,7 @@ class ContentControlSection {
 					'enabled': true,
 					'children': [
 						{
-							'id': 'list',
+							'id': 'contentControlList',
 							'type': 'treelistbox',
 							'text': '',
 							'enabled': true,
@@ -261,7 +264,7 @@ class ContentControlSection {
 			'cancellable': true,
 			'popupParent': '_POPOVER_',
 			'clickToClose': '_POPOVER_',
-			'id': '0'
+			'id': 'contentControlModalpopup'
 		};
 
 		var entries = [];
@@ -289,7 +292,8 @@ class ContentControlSection {
 		return json;
 	}
 
-	private onClickDropdown(event: any) {
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	private onClickDropdown(event: any): void {
 		if (this.sectionProperties.datePicker) {
 			this.showDatePicker();
 		} else if (this.sectionProperties.json.items) {
@@ -302,7 +306,7 @@ class ContentControlSection {
 		L.DomEvent.stopPropagation(event);
 	}
 
-	private showDatePicker() {
+	private showDatePicker(): void {
 		if ($('#datepicker').is(':visible')) {
 			$('#datepicker').hide();
 		} else {
@@ -312,4 +316,9 @@ class ContentControlSection {
 			$('#datepicker').show();
 		}
 	}
-};
+}
+
+}
+
+app.definitions.ContentControlSection = cool.ContentControlSection;
+

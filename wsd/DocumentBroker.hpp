@@ -251,8 +251,8 @@ public:
     /// Flag for termination. Note that this doesn't save any unsaved changes in the document
     void stop(const std::string& reason);
 
-    /// Hard removes a session by ID, only for ClientSession.
-    void finalRemoveSession(const std::string& id);
+    /// Hard removes a session, only for ClientSession.
+    void finalRemoveSession(const std::shared_ptr<ClientSession>& session);
 
     /// Create new client session
     std::shared_ptr<ClientSession> createNewClientSession(
@@ -290,25 +290,27 @@ public:
 
     /// Handle the save response from Core and upload to storage as necessary.
     /// Also notifies clients of the result.
-    void handleSaveResponse(const std::string& sessionId, bool success, const std::string& result);
+    void handleSaveResponse(const std::shared_ptr<ClientSession>& session, bool success,
+                            const std::string& result);
 
     /// Check if uploading is needed, and start uploading.
     /// The current state of uploading must be introspected separately.
-    void checkAndUploadToStorage(const std::string& sessionId);
+    void checkAndUploadToStorage(const std::shared_ptr<ClientSession>& session);
 
     /// Upload the document to Storage if it needs persisting.
     /// Results are logged and broadcast to users.
-    void uploadToStorage(const std::string& sesionId, bool force);
+    void uploadToStorage(const std::shared_ptr<ClientSession>& session, bool force);
 
     /// UploadAs the document to Storage, with a new name.
     /// @param uploadAsPath Absolute path to the jailed file.
-    void uploadAsToStorage(const std::string& sessionId, const std::string& uploadAsPath,
-                           const std::string& uploadAsFilename, const bool isRename);
+    void uploadAsToStorage(const std::shared_ptr<ClientSession>& session,
+                           const std::string& uploadAsPath, const std::string& uploadAsFilename,
+                           const bool isRename);
 
     /// Uploads the document right after loading from a template.
     /// Template-loading requires special handling because the
     /// document changes once loaded into a non-template format.
-    void uploadAfterLoadingTemplate(const std::string& sessionId);
+    void uploadAfterLoadingTemplate(const std::shared_ptr<ClientSession>& session);
 
     bool isModified() const { return _isModified; }
     void setModified(const bool value);
@@ -347,7 +349,7 @@ public:
     std::size_t addSession(const std::shared_ptr<ClientSession>& session);
 
     /// Removes a session by ID. Returns the new number of sessions.
-    std::size_t removeSession(const std::string& id);
+    std::size_t removeSession(const std::shared_ptr<ClientSession>& session);
 
     /// Add a callback to be invoked in our polling thread.
     void addCallback(const SocketPoll::CallbackFn& fn);
@@ -398,6 +400,8 @@ public:
     static bool lookupSendClipboardTag(const std::shared_ptr<StreamSocket> &socket,
                                        const std::string &tag, bool sendError = false);
 
+    void handleMediaRequest(const std::shared_ptr<Socket>& socket, const std::string& tag);
+
     /// True if any flag to unload or terminate is set.
     bool isUnloading() const
     {
@@ -411,7 +415,8 @@ public:
     virtual bool handleInput(const std::shared_ptr<Message>& message);
 
     /// Forward a message from client session to its respective child session.
-    bool forwardToChild(const std::string& viewId, const std::string& message, bool binary = false);
+    bool forwardToChild(const std::shared_ptr<ClientSession>& session, const std::string& message,
+                        bool binary = false);
 
     int getRenderedTileCount() { return _debugRenderedTileCount; }
 
@@ -448,7 +453,7 @@ public:
     }
 
     /// Sends the .uno:Save command to LoKit.
-    bool sendUnoSave(const std::string& sessionId, bool dontTerminateEdit = true,
+    bool sendUnoSave(const std::shared_ptr<ClientSession>& session, bool dontTerminateEdit = true,
                      bool dontSaveIfUnmodified = true, bool isAutosave = false,
                      bool isExitSave = false, const std::string& extendedData = std::string());
 
@@ -489,9 +494,17 @@ public:
     /// Remove download id mapping
     void unregisterDownloadId(const std::string& downloadId);
 
+    /// Add embedded media objects. Returns json with external URL.
+    void addEmbeddedMedia(const std::string& id, const std::string& json);
+    /// Remove embedded media objects.
+    void removeEmbeddedMedia(const std::string& json);
+
 private:
-    /// get the session id of a session that can write the document for save / locking.
+    /// Get the session that can write the document for save / locking / uploading.
     /// Note that if there is no loaded and writable session, the first will be returned.
+    std::shared_ptr<ClientSession> getWriteableSession() const;
+
+    /// Return the SessionId of the first writable session.
     std::string getWriteableSessionId() const;
 
     void refreshLock();
@@ -596,9 +609,9 @@ private:
     bool isStorageOutdated() const;
 
     /// Upload the doc to the storage.
-    void uploadToStorageInternal(const std::string& sesionId, const std::string& saveAsPath,
-                                 const std::string& saveAsFilename, const bool isRename,
-                                 const bool force);
+    void uploadToStorageInternal(const std::shared_ptr<ClientSession>& session,
+                                 const std::string& saveAsPath, const std::string& saveAsFilename,
+                                 const bool isRename, const bool force);
 
     /// Handles the completion of uploading to storage, both success and failure cases.
     void handleUploadToStorageResponse(const StorageBase::UploadResult& uploadResult);
@@ -678,7 +691,7 @@ private:
     std::size_t addSessionInternal(const std::shared_ptr<ClientSession>& session);
 
     /// Starts the Kit <-> DocumentBroker shutdown handshake
-    void disconnectSessionInternal(const std::string& id);
+    void disconnectSessionInternal(const std::shared_ptr<ClientSession>& session);
 
     /// Forward a message from child session to its respective client session.
     bool forwardToClient(const std::shared_ptr<Message>& payload);
@@ -696,7 +709,6 @@ private:
     /// a convert-to request or doctored to look like one.
     virtual bool isConvertTo() const { return false; }
 
-private:
     /// Request manager.
     /// Encapsulates common fields for
     /// Save and Upload requests.
@@ -822,17 +834,37 @@ private:
     };
 
     /// Responsible for managing document saving.
-    /// Tracks auto-saveing and its frequency.
+    /// Tracks idle-saving and its interval.
+    /// Tracks auto-saving and its interval.
     /// Tracks the last save request and response times.
     /// Tracks the local file's last modified time.
     /// Tracks the time a save response was received.
     class SaveManager final
     {
+        /// Decide the auto-save interval. Returns 0 when disabled,
+        /// otherwise, the minimum of idle- and auto-save.
+        static std::chrono::milliseconds
+        getCheckInterval(std::chrono::milliseconds idleSaveInterval,
+                         std::chrono::milliseconds autoSaveInterval)
+        {
+            if (idleSaveInterval > idleSaveInterval.zero())
+            {
+                if (autoSaveInterval > autoSaveInterval.zero())
+                    return std::min(idleSaveInterval, autoSaveInterval);
+                return idleSaveInterval; // It's the only non-zero of the two.
+            }
+
+            return autoSaveInterval; // Regardless of whether it's 0 or not.
+        }
+
     public:
-        SaveManager(std::chrono::milliseconds autosaveInterval,
+        SaveManager(std::chrono::milliseconds idleSaveInterval,
+                    std::chrono::milliseconds autoSaveInterval,
                     std::chrono::milliseconds minTimeBetweenSaves)
             : _request(minTimeBetweenSaves)
-            , _autosaveInterval(autosaveInterval)
+            , _idleSaveInterval(idleSaveInterval)
+            , _autoSaveInterval(autoSaveInterval)
+            , _checkInterval(getCheckInterval(idleSaveInterval, autoSaveInterval))
             , _lastAutosaveCheckTime(RequestManager::now())
         {
             if (Log::traceEnabled())
@@ -843,30 +875,36 @@ private:
             }
         }
 
-        /// Returns true iff auto save is enabled.
-        bool isAutosaveEnabled() const { return _autosaveInterval > std::chrono::seconds::zero(); }
+        /// Returns true iff idle-save is enabled.
+        bool isIdleSaveEnabled() const { return _idleSaveInterval > _idleSaveInterval.zero(); }
 
-        /// Returns the autosave interval.
-        std::chrono::milliseconds autosaveInterval() const { return _autosaveInterval; }
+        /// Returns the idle-save interval.
+        std::chrono::milliseconds idleSaveInterval() const { return _idleSaveInterval; }
 
-        /// Returns true if we should issue an auto-save.
-        bool needAutosaveCheck() const
+        /// Returns true iff auto-save is enabled.
+        bool isAutoSaveEnabled() const { return _autoSaveInterval > _autoSaveInterval.zero(); }
+
+        /// Returns the auto-save interval.
+        std::chrono::milliseconds autoSaveInterval() const { return _autoSaveInterval; }
+
+        /// Returns true if it's time for an auto-save check.
+        /// This is the minimum of idle-save and auto-save interval.
+        bool needAutoSaveCheck() const
         {
-            return isAutosaveEnabled()
-                   && std::chrono::duration_cast<std::chrono::seconds>(RequestManager::now()
-                                                                       - _lastAutosaveCheckTime)
-                          >= _autosaveInterval;
+            return _checkInterval > _checkInterval.zero() &&
+                   std::chrono::duration_cast<std::chrono::seconds>(
+                       RequestManager::now() - _lastAutosaveCheckTime) >= _checkInterval;
         }
 
-        /// Marks autosave check done.
-        void autosaveChecked() { _lastAutosaveCheckTime = RequestManager::now(); }
+        /// Marks autoSave check done.
+        void autoSaveChecked() { _lastAutosaveCheckTime = RequestManager::now(); }
 
         /// Called to postpone autosaving by at least the given duration.
         void postponeAutosave(std::chrono::seconds seconds)
         {
             const auto now = RequestManager::now();
 
-            const auto nextAutosaveCheck = _lastAutosaveCheckTime + _autosaveInterval;
+            const auto nextAutosaveCheck = _lastAutosaveCheckTime + _autoSaveInterval;
             const auto postponeTime = now + seconds;
             if (nextAutosaveCheck < postponeTime)
             {
@@ -901,9 +939,6 @@ private:
         {
             return _request.lastRequestTime();
         }
-
-        /// Marks the last save response as now.
-        void markLastSaveResponseTime() { _request.markLastResponseTime(); }
 
         /// Returns the last save response time.
         std::chrono::steady_clock::time_point lastSaveResponseTime() const
@@ -972,11 +1007,14 @@ private:
         {
             const auto now = std::chrono::steady_clock::now();
             os << indent << "isSaving now: " << std::boolalpha << isSaving();
-            os << indent << "auto-save enabled: " << std::boolalpha << isAutosaveEnabled();
-            os << indent << "auto-save interval: " << autosaveInterval();
+            os << indent << "idle-save enabled: " << std::boolalpha << isIdleSaveEnabled();
+            os << indent << "idle-save interval: " << idleSaveInterval();
+            os << indent << "auto-save enabled: " << std::boolalpha << isAutoSaveEnabled();
+            os << indent << "auto-save interval: " << autoSaveInterval();
+            os << indent << "check interval: " << _checkInterval;
             os << indent
                << "last auto-save check time: " << Util::getTimeForLog(now, _lastAutosaveCheckTime);
-            os << indent << "auto-save check needed: " << std::boolalpha << needAutosaveCheck();
+            os << indent << "auto-save check needed: " << std::boolalpha << needAutoSaveCheck();
 
             os << indent
                << "last save request: " << Util::getTimeForLog(now, lastSaveRequestTime());
@@ -1000,8 +1038,14 @@ private:
         /// The document's last-modified time.
         std::chrono::system_clock::time_point _lastModifiedTime;
 
+        /// The number of milliseconds between idlesave checks for modification.
+        const std::chrono::milliseconds _idleSaveInterval;
+
         /// The number of milliseconds between autosave checks for modification.
-        const std::chrono::milliseconds _autosaveInterval;
+        const std::chrono::milliseconds _autoSaveInterval;
+
+        /// The number of milliseconds between idlesave/autosave checks.
+        const std::chrono::milliseconds _checkInterval;
 
         /// The maximum time to wait for saving to finish.
         std::chrono::seconds _savingTimeout{};
@@ -1401,6 +1445,17 @@ private:
 
     // Maps download id -> URL
     std::map<std::string, std::string> _registeredDownloadLinks;
+
+    /// Embedded media map [id, json].
+    std::map<std::string, std::string> _embeddedMedia;
+
+    // Last member.
+#ifdef ENABLE_DEBUG
+    /// The UnitWSD instance. We capture it here since
+    /// this is our instance, but the test framework
+    /// has a single global instance via UnitWSD::get().
+    UnitWSD& _unitWsd;
+#endif
 };
 
 #if !MOBILEAPP
@@ -1427,6 +1482,7 @@ class ConvertToBroker final : public StatelessBatchBroker
 {
     const std::string _format;
     const std::string _sOptions;
+    const std::string _lang;
 
 public:
     /// Construct DocumentBroker with URI and docKey
@@ -1434,8 +1490,12 @@ public:
                     const Poco::URI& uriPublic,
                     const std::string& docKey,
                     const std::string& format,
-                    const std::string& sOptions);
+                    const std::string& sOptions,
+                    const std::string& lang);
     virtual ~ConvertToBroker();
+
+    /// _lang accessors
+    const std::string& getLang() { return _lang; }
 
     /// Move socket to this broker for response & do conversion
     bool startConversion(SocketDisposition &disposition, const std::string &id);

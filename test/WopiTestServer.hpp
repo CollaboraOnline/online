@@ -4,33 +4,41 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#include "Protocol.hpp"
 #include "config.h"
 
+#include "Protocol.hpp"
 #include "HttpRequest.hpp"
 #include "helpers.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
-#include "UnitHTTP.hpp"
 #include "Util.hpp"
+#include "UnitWSDClient.hpp"
+#include "StringVector.hpp"
+#include "lokassert.hpp"
 
-#include <Poco/DateTimeFormat.h>
-#include <Poco/DateTimeFormatter.h>
 #include <Poco/JSON/Object.h>
-#include <Poco/MemoryStream.h>
-#include <Poco/RegularExpression.h>
-#include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
 #include <Poco/Util/LayeredConfiguration.h>
+
+#include <cctype>
 #include <sstream>
 #include <vector>
+
+namespace Poco
+{
+namespace Net
+{
+class HTTPRequest;
+}
+
+} // namespace Poco
 
 /// Simulates a WOPI server for testing purposes.
 /// Currently only serves one file contents.
 /// Furthermore, the file URI doesn't contain the
 /// real filename (in most tests), instead filenames
 /// 1 to 9 are considered special.
-class WopiTestServer : public UnitWSD
+class WopiTestServer : public UnitWSDClient
 {
 private:
 
@@ -38,15 +46,6 @@ private:
     {
         DocChanged = 1010
     };
-
-    /// The WOPISrc URL.
-    std::string _wopiSrc;
-
-    /// The SocketPoll thread.
-    std::shared_ptr<SocketPoll> _socketPoll;
-
-    /// Websockets to communicate.
-    std::vector< std::unique_ptr<UnitWebSocket> > _wsList;
 
     /// Content of the file.
     std::string _fileContent;
@@ -71,18 +70,6 @@ private:
 
 protected:
 
-    const std::string& getWopiSrc() const { return _wopiSrc; }
-
-    const std::unique_ptr<UnitWebSocket>& getWs() const { return _wsList.at(0); }
-
-    const std::unique_ptr<UnitWebSocket>& getWsAt(int index) { return _wsList.at(index); }
-
-    void deleteSocketAt(int index)
-    {
-        std::unique_ptr<UnitWebSocket>& socket = _wsList.at(index);
-        socket.reset();
-    }
-
     const std::string& getFileContent() const { return _fileContent; }
 
     /// Sets the file content to a given value and update the last file modified time
@@ -99,8 +86,7 @@ protected:
     }
 
     WopiTestServer(const std::string& name, const std::string& filenameOrContents = "Hello, world")
-        : UnitWSD(name)
-        , _socketPoll(std::make_shared<SocketPoll>(name + "ServerPoll"))
+        : UnitWSDClient(name)
         , _filename(DefaultFilename)
         , _countCheckFileInfo(0)
         , _countGetFile(0)
@@ -108,8 +94,6 @@ protected:
         , _countPutFile(0)
     {
         LOG_TST("WopiTestServer created for [" << getTestname() << ']');
-
-        _socketPoll->startThread();
 
         // Read the document data and store as string in memory.
         const auto data = helpers::readDataFromFile(filenameOrContents);
@@ -139,45 +123,6 @@ protected:
     std::size_t getCountPutFile() const { return _countPutFile; }
     void resetCountPutFile() { _countPutFile = 0; }
 
-    void initWebsocket(const std::string& wopiName)
-    {
-        Poco::URI wopiURL(helpers::getTestServerURI() + wopiName + "&testname=" + getTestname());
-
-        _wopiSrc.clear();
-        Poco::URI::encode(wopiURL.toString(), ":/?", _wopiSrc);
-
-        // This is just a client connection that is used from the tests.
-        // It really has nothing to do with this fake WOPI server, exept
-        // that it manages it since it is the base of WOPI tests, so
-        // it's a common bit of housekeeping that all WOPI tests must do.
-        LOG_TST("Connecting test client to COOL (#" << (_wsList.size() + 1)
-                                                    << " connection): /cool/" << _wopiSrc << "/ws");
-
-        // Insert at the front.
-        const auto& _ws = _wsList.emplace(
-            _wsList.begin(),
-            Util::make_unique<UnitWebSocket>(_socketPoll, "/cool/" + _wopiSrc + "/ws"));
-
-        assert((*_ws).get());
-    }
-
-    void addWebSocket()
-    {
-        // This is just a client connection that is used from the tests.
-        // It really has nothing to do with this fake WOPI server, exept
-        // that it manages it since it is the base of WOPI tests, so
-        // it's a common bit of housekeeping that all WOPI tests must do.
-        LOG_TST("Connecting test client to COOL (#" << (_wsList.size() + 1)
-                                                    << " connection): /cool/" << _wopiSrc << "/ws");
-
-        // Insert at the back.
-        const auto& _ws = _wsList.emplace(
-            _wsList.end(),
-            Util::make_unique<UnitWebSocket>(_socketPoll, "/cool/" + _wopiSrc + "/ws"));
-
-        assert((*_ws).get());
-    }
-
     virtual void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& /*request*/)
     {
     }
@@ -201,6 +146,9 @@ protected:
     {
     }
 
+    /// Called when the server receives a Lock or Unlock request.
+    virtual void assertLockRequest(const Poco::Net::HTTPRequest& /*request*/) {}
+
     /// Given a URI, returns the filename.
     ///FIXME: this should be remove when we support multiple files properly.
     virtual std::string getFilename(const Poco::URI& uri) const
@@ -215,11 +163,14 @@ protected:
             return "he%llo.txt";
         }
 
-        const auto number = std::stoi(filename);
-        if (number >=1 && number <= 9)
+        if (filename.size() == 1 && std::isdigit(filename[0]))
         {
-            // Fake filename, depends on implicit filename.
-            return DefaultFilename;
+            const auto number = std::stoi(filename);
+            if (number >= 1 && number <= 9)
+            {
+                // Fake filename, depends on implicit filename.
+                return DefaultFilename;
+            }
         }
 
         // Return the filename given in the URI.
@@ -283,11 +234,13 @@ protected:
         fileInfo->set("LastModifiedTime",
                       Util::getIso8601FracformatTime(getFileLastModifiedTime()));
         fileInfo->set("EnableOwnerTermination", "true");
+        fileInfo->set("SupportsLocks", "false");
+        configCheckFileInfo(fileInfo);
 
         std::ostringstream jsonStream;
         fileInfo->stringify(jsonStream);
 
-        http::Response httpResponse(http::StatusLine(200));
+        http::Response httpResponse(http::StatusCode::OK);
         httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
         httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
         socket->sendAndShutdown(httpResponse);
@@ -295,10 +248,13 @@ protected:
         return true;
     }
 
+    /// Override to set the CheckFileInfo attributes.
+    virtual void configCheckFileInfo(Poco::JSON::Object::Ptr /*fileInfo*/) {}
+
     virtual bool handleGetFileRequest(const Poco::Net::HTTPRequest&,
                                       std::shared_ptr<StreamSocket>& socket)
     {
-        http::Response httpResponse(http::StatusLine(200));
+        http::Response httpResponse(http::StatusCode::OK);
         httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
         httpResponse.setBody(getFileContent(), "application/octet-stream");
         socket->sendAndShutdown(httpResponse);
@@ -346,33 +302,52 @@ protected:
         const Poco::URI uriReq(request.getURI());
         if (isWopiInfoRequest(uriReq.getPath()))
         {
-            ++_countPutRelative;
-            LOG_TST("Fake wopi host request, handling PutRelativeFile (#"
-                    << _countPutRelative << "): " << uriReq.getPath());
-
-            const std::string wopiURL =
-                helpers::getTestServerURI() +
-                "/something wopi/files/1?access_token=anything&reuse_cookies=cook=well";
-
-            std::string content;
-            if (request.get("X-WOPI-Override") == std::string("PUT_RELATIVE"))
+            if (!request.get("X-WOPI-Lock", std::string()).empty())
             {
-                LOK_ASSERT_EQUAL(std::string("PUT_RELATIVE"), request.get("X-WOPI-Override"));
-                assertPutRelativeFileRequest(request);
-                content = "{ \"Name\":\"hello world%1.pdf\", \"Url\":\"" + wopiURL + "\" }";
+                const std::string op = request.get("X-WOPI-Override", std::string());
+                if (op == "LOCK" || op == "UNLOCK")
+                {
+                    assertLockRequest(request);
+                    http::Response httpResponse(http::StatusCode::OK);
+                    socket->sendAndShutdown(httpResponse);
+                }
+                else
+                {
+                    http::Response httpResponse(http::StatusCode::Conflict);
+                    httpResponse.set("X-WOPI-LockFailureReason", "Invalid lock operation");
+                    socket->sendAndShutdown(httpResponse);
+                }
             }
             else
             {
-                // rename file; response should be the file name without the url and the extension
-                LOK_ASSERT_EQUAL(std::string("RENAME_FILE"), request.get("X-WOPI-Override"));
-                assertRenameFileRequest(request);
-                content = "{ \"Name\":\"hello\", \"Url\":\"" + wopiURL + "\" }";
-            }
+                const std::string wopiURL =
+                    helpers::getTestServerURI() +
+                    "/something wopi/files/1?access_token=anything&reuse_cookies=cook=well";
 
-            http::Response httpResponse(http::StatusLine(200));
-            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-            httpResponse.setBody(content, "application/json; charset=utf-8");
-            socket->sendAndShutdown(httpResponse);
+                std::string content;
+                if (request.get("X-WOPI-Override") == std::string("PUT_RELATIVE"))
+                {
+                    ++_countPutRelative;
+                    LOG_TST("Fake wopi host request, handling PutRelativeFile (#"
+                            << _countPutRelative << "): " << uriReq.getPath());
+
+                    LOK_ASSERT_EQUAL(std::string("PUT_RELATIVE"), request.get("X-WOPI-Override"));
+                    assertPutRelativeFileRequest(request);
+                    content = "{ \"Name\":\"hello world%1.pdf\", \"Url\":\"" + wopiURL + "\" }";
+                }
+                else
+                {
+                    // rename file; response should be the file name without the url and the extension
+                    LOK_ASSERT_EQUAL(std::string("RENAME_FILE"), request.get("X-WOPI-Override"));
+                    assertRenameFileRequest(request);
+                    content = "{ \"Name\":\"hello\", \"Url\":\"" + wopiURL + "\" }";
+                }
+
+                http::Response httpResponse(http::StatusCode::OK);
+                httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
+                httpResponse.setBody(content, "application/json; charset=utf-8");
+                socket->sendAndShutdown(httpResponse);
+            }
 
             return true;
         }
@@ -389,7 +364,7 @@ protected:
                     Util::getIso8601FracformatTime(getFileLastModifiedTime());
                 if (wopiTimestamp != fileModifiedTime)
                 {
-                    http::Response httpResponse(http::StatusLine(409));
+                    http::Response httpResponse(http::StatusCode::Conflict);
                     httpResponse.setBody(
                         "{\"COOLStatusCode\":" +
                         std::to_string(static_cast<int>(COOLStatusCode::DocChanged)) + '}');
@@ -425,7 +400,7 @@ protected:
                                          "\" }";
                 LOG_TST("Fake wopi host (default) response to POST " << uriReq.getPath()
                                                                      << ": 200 OK " << body);
-                http::Response httpResponse(http::StatusLine(200));
+                http::Response httpResponse(http::StatusCode::OK);
                 httpResponse.setBody(body, "application/json; charset=utf-8");
                 socket->sendAndShutdown(httpResponse);
             }
@@ -436,12 +411,27 @@ protected:
         return false;
     }
 
+    /// In some very rare cases we may get requests from other tests.
+    /// This asserts that the URI in question is for our test.
+    void assertTargetTest(const Poco::URI& uri)
+    {
+        const auto params = uri.getQueryParameters();
+        const auto testnameIt = std::find_if(params.begin(), params.end(),
+                                             [](const std::pair<std::string, std::string>& pair)
+                                             { return pair.first == "testname"; });
+
+        LOK_ASSERT_MESSAGE_SILENT("Request belongs to an unknown test", testnameIt != params.end());
+
+        const std::string target = StringVector::tokenize(testnameIt->second, '/')[0];
+        LOK_ASSERT_EQUAL_MESSAGE("Request belongs to a different test", getTestname(), target);
+    }
+
     /// Here we act as a WOPI server, so that we have a server that responds to
     /// the wopi requests without additional expensive setup.
     bool handleHttpRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& message,
                            std::shared_ptr<StreamSocket>& socket) override
     {
-        Poco::URI uriReq(request.getURI());
+        Poco::URI uriReq(Util::decodeURIComponent(request.getURI()));
 
         {
             std::ostringstream oss;
@@ -455,10 +445,7 @@ protected:
             LOG_TST(oss.str());
         }
 
-        // In some very rare cases we are getting requests from other tests.
-        LOK_ASSERT_MESSAGE("Request belongs to a different test",
-                           uriReq.toString().find("testname=" + getTestname()) !=
-                               std::string::npos);
+        assertTargetTest(uriReq);
 
         if (request.getMethod() == "GET")
         {
@@ -478,17 +465,5 @@ protected:
     }
 
 };
-
-/// Send a command message to WSD from a WopiTestServer on the given connection.
-#define WSD_CMD_BY_CONNECTION_INDEX(INDEX, MSG)                                                    \
-    do                                                                                             \
-    {                                                                                              \
-        LOG_TST("Sending from #" << INDEX << ": " << MSG);                                         \
-        helpers::sendTextFrame(getWsAt(INDEX)->getWebSocket(), MSG, getTestname());                \
-        SocketPoll::wakeupWorld();                                                                 \
-    } while (false)
-
-/// Send a command message to WSD from a WopiTestServer on the primary connection.
-#define WSD_CMD(MSG) WSD_CMD_BY_CONNECTION_INDEX(0, MSG)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -113,7 +113,7 @@ public:
                 std::ostringstream jsonStream;
                 fileInfo->stringify(jsonStream);
 
-                http::Response httpResponse(http::StatusLine(200));
+                http::Response httpResponse(http::StatusCode::OK);
                 httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
                 httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
                 socket->sendAndShutdown(httpResponse);
@@ -223,7 +223,6 @@ public:
         WSD_CMD("key type=input char=97 key=0");
         WSD_CMD("key type=up char=0 key=512");
 
-        SocketPoll::wakeupWorld();
         return true;
     }
 
@@ -238,8 +237,6 @@ public:
 
         WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
                 "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue");
-
-        SocketPoll::wakeupWorld();
 
         return true;
     }

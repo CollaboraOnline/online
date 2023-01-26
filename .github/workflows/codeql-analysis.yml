@@ -63,6 +63,7 @@ jobs:
         sudo sh -c "echo deb-src http://security.ubuntu.com/ubuntu/ focal-security universe >> /etc/apt/sources.list"
         sudo sh -c "echo deb-src http://security.ubuntu.com/ubuntu/ focal-security multiverse >> /etc/apt/sources.list"
         sudo apt-get update
+        sudo apt install -y libunwind-dev
         sudo apt-get install -y build-essential git libpoco-dev libcap-dev python3-polib npm libpng-dev python3-lxml libpam-dev libzstd-dev
         sudo apt-get build-dep -y libreoffice
 

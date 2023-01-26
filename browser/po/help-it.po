@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-07 17:09+0200\n"
-"PO-Revision-Date: 2022-06-29 12:18+0000\n"
-"Last-Translator: AbsurdUsername <sgso@pm.me>\n"
+"POT-Creation-Date: 2023-01-20 11:33+0200\n"
+"PO-Revision-Date: 2023-01-22 13:13+0000\n"
+"Last-Translator: Translator-3000 <weblate.m1d0h@8shield.net>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
 "help/it/>\n"
 "Language: it\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.15.1\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -2758,7 +2758,7 @@ msgstr ""
 "il testo."
 
 #: html/cool-help.html%2Bdiv.h4:547-5
-msgid "Is here a thesaurus?"
+msgid "Is there a thesaurus?"
 msgstr "Esiste un dizionario dei sinonimi?"
 
 #: html/cool-help.html%2Bdiv.p:548-5

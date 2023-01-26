@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-07 17:09+0200\n"
-"PO-Revision-Date: 2022-03-13 21:44+0000\n"
+"POT-Creation-Date: 2023-01-20 11:33+0200\n"
+"PO-Revision-Date: 2023-01-05 09:47+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "help/ca/>\n"
@@ -24,7 +24,7 @@ msgstr "Dreceres de teclat generals"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:23-18
 msgid "Undo"
-msgstr "Desfà"
+msgstr "Desfés"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:23-49
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
@@ -32,7 +32,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:24-18
 msgid "Redo"
-msgstr "Refà"
+msgstr "Refés"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:24-49
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y"
@@ -271,7 +271,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:50-18
 msgid "Apply Default paragraph style"
-msgstr "Aplica l'estil de paràgraf predeterminat"
+msgstr "Aplica l'estil de paràgraf per defecte"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:50-74
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0"
@@ -2425,8 +2425,8 @@ msgstr ""
 "Inseriu taules amb la icona de la barra d'eines corresponent. Seleccioneu el "
 "nombre inicial de files i columnes. Afegiu-hi files i columnes amb el menú "
 "contextual de les cel·les. Fusioneu cel·les amb el menú <span class=\"ui\""
-">Taula</span>. L'estil de paràgraf predeterminat de les cel·les és «"
-"Contingut de la taula»."
+">Taula</span>. L'estil de paràgraf per defecte de les cel·les és «Contingut "
+"de la taula»."
 
 #: html/cool-help.html%2Bdiv.div.p:486-5
 msgid ""
@@ -2758,7 +2758,8 @@ msgstr ""
 "suggeriment més adient per a canviar el text."
 
 #: html/cool-help.html%2Bdiv.h4:547-5
-msgid "Is here a thesaurus?"
+#, fuzzy
+msgid "Is there a thesaurus?"
 msgstr "Hi ha un tesaurus?"
 
 #: html/cool-help.html%2Bdiv.p:548-5

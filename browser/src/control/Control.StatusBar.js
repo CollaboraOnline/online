@@ -65,7 +65,22 @@ L.Control.StatusBar = L.Control.extend({
 	},
 
 	_updateToolbarsVisibility: function(context) {
-		window.updateVisibilityForToolbar(w2ui['actionbar'], context);
+		var isReadOnly = this.map.isReadOnlyMode();
+		var statusbar = w2ui['actionbar'];
+		if (isReadOnly) {
+			statusbar.disable('LanguageStatus');
+			statusbar.hide('InsertMode');
+			statusbar.hide('break6');
+			statusbar.hide('StatusSelectionMode');
+			statusbar.hide('break7');
+		} else {
+			statusbar.enable('LanguageStatus');
+			statusbar.show('InsertMode');
+			statusbar.show('break6');
+			statusbar.show('StatusSelectionMode');
+			statusbar.show('break7');
+		}
+		window.updateVisibilityForToolbar(statusbar, context);
 	},
 
 	onContextChange: function(event) {
@@ -264,7 +279,7 @@ L.Control.StatusBar = L.Control.extend({
 	onDocLayerInit: function () {
 		var statusbar = w2ui['actionbar'];
 		var docType = this.map.getDocType();
-		var isReadOnly = this.map.isPermissionReadOnly();
+		var isReadOnly = this.map.isReadOnlyMode();
 
 		switch (docType) {
 		case 'spreadsheet':
@@ -316,7 +331,7 @@ L.Control.StatusBar = L.Control.extend({
 					},
 					{type: 'break', id: 'break9', mobile: false},
 					{
-						type: 'html', id: 'PermissionMode', mobile: false, tablet: false,
+						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
 						html: this._getPermissionModeHtml(isReadOnly)
 					}
 				]);
@@ -352,7 +367,7 @@ L.Control.StatusBar = L.Control.extend({
 					},
 					{type: 'break', id: 'break8', mobile: false},
 					{
-						type: 'html', id: 'PermissionMode', mobile: false, tablet: false,
+						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
 						html: this._getPermissionModeHtml(isReadOnly)
 					}
 				]);
@@ -373,7 +388,7 @@ L.Control.StatusBar = L.Control.extend({
 					},
 					{type: 'break', id: 'break8', mobile: false},
 					{
-						type: 'html', id: 'PermissionMode', mobile: false, tablet: false,
+						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
 						html: this._getPermissionModeHtml(isReadOnly)
 					}
 				]);
@@ -393,7 +408,7 @@ L.Control.StatusBar = L.Control.extend({
 					},
 					{type: 'break', id: 'break8', mobile: false},
 					{
-						type: 'html', id: 'PermissionMode', mobile: false, tablet: false,
+						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
 						html: this._getPermissionModeHtml(isReadOnly)
 					}
 				]);
@@ -404,9 +419,6 @@ L.Control.StatusBar = L.Control.extend({
 		this.map.fire('updateuserlistcount');
 
 		this._updateToolbarsVisibility();
-
-		if (isReadOnly)
-			statusbar.disable('LanguageStatus');
 
 		if (statusbar)
 			statusbar.refresh();
@@ -444,6 +456,11 @@ L.Control.StatusBar = L.Control.extend({
 
 	onPermissionChanged: function(event) {
 		var isReadOnly = event.perm === 'readonly';
+		if (isReadOnly) {
+			$('#toolbar-down').addClass('readonly');
+		} else {
+			$('#toolbar-down').removeClass('readonly');
+		}
 		$('#PermissionMode').parent().html(this._getPermissionModeHtml(isReadOnly));
 	},
 

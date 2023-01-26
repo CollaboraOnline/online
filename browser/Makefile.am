@@ -165,7 +165,8 @@ NODE_MODULES_JS =\
 	node_modules/jquery-contextmenu/dist/jquery.contextMenu.js \
 	node_modules/jquery-ui-dist/jquery-ui.js \
 	node_modules/smartmenus/dist/jquery.smartmenus.js \
-	node_modules/pako/dist/pako_inflate.es5.js
+	node_modules/pako/dist/pako_inflate.es5.js \
+	node_modules/fzstd/umd/index.js
 
 COOL_LIBS_JS =\
 	ResizeObserverPolyfill.js \
@@ -202,6 +203,7 @@ COOL_JS_LST =\
 	src/core/Log.js \
 	src/core/Util.js \
 	src/core/LOUtil.js \
+	src/core/Rectangle.ts \
 	src/core/Class.js \
 	src/core/Events.js \
 	src/core/Socket.js \
@@ -308,14 +310,14 @@ COOL_JS_LST =\
 	src/control/Control.Command.js \
 	src/control/Control.js \
 	src/control/Control.PartsPreview.js \
-	src/control/Control.GroupBase.js \
-	src/control/Control.CornerGroup.js \
-	src/control/Control.RowGroup.js \
-	src/control/Control.ColumnGroup.js \
-	src/control/Control.CornerHeader.js \
-	src/control/Control.Header.js \
-	src/control/Control.ColumnHeader.js \
-	src/control/Control.RowHeader.js \
+	src/control/Control.GroupBase.ts \
+	src/control/Control.CornerGroup.ts \
+	src/control/Control.RowGroup.ts \
+	src/control/Control.ColumnGroup.ts \
+	src/control/Control.CornerHeader.ts \
+	src/control/Control.Header.ts \
+	src/control/Control.ColumnHeader.ts \
+	src/control/Control.RowHeader.ts \
 	src/control/Control.DocumentRepair.js \
 	src/control/Control.DownloadProgress.js \
 	src/control/Control.ContextMenu.js \
@@ -327,9 +329,11 @@ COOL_JS_LST =\
 	src/control/Control.AlertDialog.js \
 	src/control/Control.Infobar.js \
 	src/control/ColorPicker.js \
+	src/control/jsdialog/Widget.TreeView.js \
 	src/control/Control.JSDialog.js \
 	src/control/Control.JSDialogBuilder.js \
 	src/control/Control.MobileWizardBuilder.js \
+	src/control/Control.MobileWizardWindow.js \
 	src/control/Control.MobileWizard.js \
 	src/control/Control.MobileWizardPopup.js \
 	src/control/Control.LanguageDialog.js \
@@ -358,6 +362,7 @@ COOL_JS_LST =\
 	src/control/Control.Layers.js \
 	src/control/Control.Sidebar.js \
 	src/control/Control.Mention.js \
+	src/control/Control.Zotero.js \
 	src/control/Search.js \
 	src/control/Permission.js \
 	src/control/Toolbar.js \
@@ -429,6 +434,7 @@ define bundle_all
 			-DCOOL_JS=$(INTERMEDIATE_DIR)/cool-src.js \
 			$(srcdir)/bundle.js.m4 > $(INTERMEDIATE_DIR)/bundle.js
 		@$(NODE) node_modules/uglify-js/bin/uglifyjs \
+			-O max_line_len=100 \
 			$(INTERMEDIATE_DIR)/bundle.js \
 			--output $@)
 endef
@@ -533,6 +539,7 @@ $(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 		-DGTKAPP=$(ENABLE_GTKAPP) \
 		-DDEBUG=$(ENABLE_DEBUG) \
 		-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
+		-DEMSCRIPTENAPP=$(ENABLE_EMSCRIPTENAPP) \
 		-DMOBILEAPPNAME="$(APP_NAME)" \
 		-DCOOL_CSS="$(subst $(SPACE),$(COMMA),$(COOL_CSS_M4))" \
 		-DGLOBAL_JS="$(DIST_FOLDER)/global.js" \
@@ -680,6 +687,9 @@ pot:
 		src/control/Control.MobileBottomBar.js \
 		src/control/Control.MobileTopBar.js \
 		src/control/Control.MobileWizardBuilder.js \
+		src/control/Control.MobileWizardWindow.js \
+		src/control/Control.MobileWizard.js \
+		src/control/Control.MobileWizardPopup.js \
 		src/control/Control.Notebookbar.js \
 		src/control/Control.NotebookbarBuilder.js \
 		src/control/Control.NotebookbarCalc.js \
@@ -696,6 +706,7 @@ pot:
 		src/control/Control.Toolbar.js \
 		src/control/Control.TopToolbar.js \
 		src/control/Control.UserList.js \
+		src/control/Control.Zotero.js \
 		src/control/Parts.js \
 		src/control/Permission.js \
 		src/control/Ruler.js \
@@ -757,7 +768,7 @@ MOCHA_TEST_LOG = "`pwd`/mocha.log"
 check-local: $(MOCHA_TS_JS_FILES)
 	@echo "Running mocha tests..."
 	@echo > ${MOCHA_TEST_LOG}
-	@if $(NODE) node_modules/mocha/bin/mocha "$(srcdir)/mocha_tests/**/*.js" 2> ${MOCHA_TEST_LOG} 1>&2; then \
+	@if npm test 2> ${MOCHA_TEST_LOG} 1>&2; then \
 		echo "Mocha tests finished successfully. Results in ${MOCHA_TEST_LOG}"; \
 	else \
 		cat ${MOCHA_TEST_LOG}; \

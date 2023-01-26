@@ -5,23 +5,34 @@
 
 /* global _UNO app UNOModifier */
 
-L.Control.RowHeader = L.Control.Header.extend({
-	name: L.CSections.RowHeader.name,
-	anchor: [[L.CSections.CornerHeader.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']],
-	position: [0, 0], // This section's myTopLeft is placed according to corner header and row group sections.
-	size: [48 * app.dpiScale, 0], // No initial height is necessary.
-	expand: ['top', 'bottom'], // Expand vertically.
-	processingOrder: L.CSections.RowHeader.processingOrder,
-	drawingOrder: L.CSections.RowHeader.drawingOrder,
-	zIndex: L.CSections.RowHeader.zIndex,
-	interactable: true,
-	sectionProperties: {},
+declare var _UNO: any;
+declare var UNOModifier: any;
 
-	options: {
-		cursor: 'row-resize'
-	},
+namespace cool {
 
-	onInitialize: function () {
+export class RowHeader extends cool.Header {
+
+	_current: number;
+	_resizeHandleSize: number;
+	_selection: SelectionRange;
+
+	constructor(options?: HeaderExtraProperties) {
+		super({
+			name: L.CSections.RowHeader.name,
+			anchor: [[L.CSections.CornerHeader.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']],
+			position: [0, 0], // This section's myTopLeft is placed according to corner header and row group sections.
+			size: [48 * app.dpiScale, 0], // No initial height is necessary.
+			expand: 'top bottom', // Expand vertically.
+			processingOrder: L.CSections.RowHeader.processingOrder,
+			drawingOrder: L.CSections.RowHeader.drawingOrder,
+			zIndex: L.CSections.RowHeader.zIndex,
+			interactable: true,
+			sectionProperties: {},
+			cursor: (options == undefined || options.cursor === undefined) ? 'row-resize' : options.cursor,
+		});
+	}
+
+	onInitialize(): void {
 		this._map = L.Map.THIS;
 		this._isColumn = false;
 		this._current = -1;
@@ -73,23 +84,23 @@ L.Control.RowHeader = L.Control.Header.extend({
 		};
 
 		this._menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
-		this._headerInfo = new L.Control.Header.HeaderInfo(this._map, false /* isCol */);
-	},
+		this._headerInfo = new cool.HeaderInfo(this._map, false /* isCol */);
+	}
 
-	drawHeaderEntry: function (entry) {
+	drawHeaderEntry (entry: HeaderEntryData): void {
 		if (!entry)
 			return;
 
-		var content = entry.index + 1;
-		var startY = entry.pos - entry.size;
+		const content = entry.index + 1;
+		const startY = entry.pos - entry.size;
 
 		if (entry.size <= 0)
 			return;
 
-		var highlight = entry.isCurrent || entry.isHighlighted;
+		const highlight = entry.isCurrent || entry.isHighlighted;
 
 		// background gradient
-		var selectionBackgroundGradient = null;
+		let selectionBackgroundGradient = null;
 		if (highlight) {
 			selectionBackgroundGradient = this.context.createLinearGradient(0, startY, 0, startY + entry.size);
 			selectionBackgroundGradient.addColorStop(0, this._selectionBackgroundGradient[0]);
@@ -103,13 +114,13 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this.context.fillRect(0, startY, this.size[0], entry.size);
 
 		// draw resize handle
-		var handleSize = this._resizeHandleSize;
+		const handleSize = this._resizeHandleSize;
 		if (entry.isCurrent && entry.size > 2 * handleSize && !this.inResize()) {
-			var center = startY + entry.size - handleSize / 2;
-			var x = 2 * app.dpiScale;
-			var w = this.size[0] - 4 * app.dpiScale;
-			var size = 2 * app.dpiScale;
-			var offset = 1 *app.dpiScale;
+			const center = startY + entry.size - handleSize / 2;
+			const x = 2 * app.dpiScale;
+			const w = this.size[0] - 4 * app.dpiScale;
+			const size = 2 * app.dpiScale;
+			const offset = 1 *app.dpiScale;
 
 			this.context.fillStyle = '#BBBBBB';
 			this.context.beginPath();
@@ -123,16 +134,16 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this.context.font = this.getFont();
 		this.context.textAlign = 'center';
 		this.context.textBaseline = 'middle';
-		this.context.fillText(content, this.size[0] / 2, entry.pos - (entry.size / 2) + app.roundedDpiScale);
+		this.context.fillText(content.toString(), this.size[0] / 2, entry.pos - (entry.size / 2) + app.roundedDpiScale);
 
 		// draw row borders.
 		this.context.strokeStyle = this._borderColor;
 		this.context.lineWidth = app.dpiScale;
 		this.context.strokeRect(0.5, startY - 0.5, this.size[0], entry.size);
-	},
+	}
 
-	getHeaderEntryBoundingClientRect: function (index) {
-		var entry = this._mouseOverEntry;
+	getHeaderEntryBoundingClientRect (index: number): Partial<DOMRect> {
+		let entry = this._mouseOverEntry;
 
 		if (index)
 			entry = this._headerInfo.getRowData(index);
@@ -140,33 +151,34 @@ L.Control.RowHeader = L.Control.Header.extend({
 		if (!entry)
 			return;
 
-		var rect = this._canvas.getBoundingClientRect();
+		const rect = this.containerObject.getCanvasBoundingClientRect();
 
-		var rowStart = (entry.pos - entry.size) / app.dpiScale;
-		var rowEnd = entry.pos / app.dpiScale;
+		const rowStart = (entry.pos - entry.size) / app.dpiScale;
+		const rowEnd = entry.pos / app.dpiScale;
 
-		var left = rect.left;
-		var right = rect.right;
-		var top = rect.top + rowStart;
-		var bottom = rect.top + rowEnd;
+		const left = rect.left;
+		const right = rect.right;
+		const top = rect.top + rowStart;
+		const bottom = rect.top + rowEnd;
 		return {left: left, right: right, top: top, bottom: bottom};
-	},
+	}
 
-	onDraw: function () {
-		this._headerInfo.forEachElement(function(elemData) {
+	onDraw(): void {
+		this._headerInfo.forEachElement(function(elemData: HeaderEntryData): boolean {
 			this.drawHeaderEntry(elemData);
+			return false; // continue till last.
 		}.bind(this));
 
 		this.drawResizeLineIfNeeded();
-	},
+	}
 
-	onClick: function (point, e) {
+	onClick (point: number[], e: MouseEvent): void {
 		if (!this._mouseOverEntry)
 			return;
 
-		var row = this._mouseOverEntry.index;
+		const row = this._mouseOverEntry.index;
 
-		var modifier = 0;
+		let modifier = 0;
 		if (e.shiftKey) {
 			modifier += UNOModifier.SHIFT;
 		}
@@ -175,11 +187,12 @@ L.Control.RowHeader = L.Control.Header.extend({
 		}
 
 		this._selectRow(row, modifier);
-	},
+	}
 
-	_onDialogResult: function (e) {
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	_onDialogResult (e: any): void {
 		if (e.type === 'submit' && !isNaN(e.value)) {
-			var extra = {
+			const extra = {
 				aExtraHeight: {
 					type: 'unsigned short',
 					value: e.value
@@ -188,47 +201,44 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 			this._map.sendUnoCommand('.uno:SetOptimalRowHeight', extra);
 		}
-	},
+	}
 
-	onDragEnd: function (dragDistance) {
-		if (dragDistance[1] === 0) {
+	onDragEnd (dragDistance: number[]): void {
+		if (dragDistance[1] === 0)
 			return;
-		}
-		else {
-			var height = this._dragEntry.size;
-			var row = this._dragEntry.index;
 
-			var nextRow = this._headerInfo.getNextIndex(this._dragEntry.index);
-			if (this._headerInfo.isZeroSize(nextRow)) {
-				row = nextRow;
-				height = 0;
+		let height = this._dragEntry.size;
+		let row = this._dragEntry.index;
+
+		const nextRow = this._headerInfo.getNextIndex(this._dragEntry.index);
+		if (this._headerInfo.isZeroSize(nextRow)) {
+			row = nextRow;
+			height = 0;
+		}
+
+		height += dragDistance[1];
+		height /= app.dpiScale;
+		height = this._map._docLayer._pixelsToTwips({x: 0, y: height}).y;
+
+		const command = {
+			RowHeight: {
+				type: 'unsigned short',
+				value: this._map._docLayer.twipsToHMM(Math.max(height, 0))
+			},
+			Row: {
+				type: 'long',
+				value: row + 1 // core expects 1-based index.
 			}
+		};
 
-			height += dragDistance[1];
-			height /= app.dpiScale;
-			height = this._map._docLayer._pixelsToTwips({x: 0, y: height}).y;
+		this._map.sendUnoCommand('.uno:RowHeight', command);
+		this._mouseOverEntry = null;
+	}
 
-			var command = {
-				RowHeight: {
-					type: 'unsigned short',
-					value: this._map._docLayer.twipsToHMM(Math.max(height, 0))
-				},
-				Row: {
-					type: 'long',
-					value: row + 1 // core expects 1-based index.
-				}
-			};
-
-			this._map.sendUnoCommand('.uno:RowHeight', command);
-			//this.containerObject.requestReDraw();
-			this._mouseOverEntry = null;
-		}
-	},
-
-	setOptimalHeightAuto: function () {
+	setOptimalHeightAuto(): void {
 		if (this._mouseOverEntry) {
-			var row = this._mouseOverEntry.index;
-			var command = {
+			const row = this._mouseOverEntry.index;
+			const command = {
 				Row: {
 					type: 'long',
 					value: row
@@ -239,7 +249,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 				}
 			};
 
-			var extra = {
+			const extra = {
 				aExtraHeight: {
 					type: 'unsigned short',
 					value: 0
@@ -249,20 +259,21 @@ L.Control.RowHeader = L.Control.Header.extend({
 			this._map.sendUnoCommand('.uno:SelectRow', command);
 			this._map.sendUnoCommand('.uno:SetOptimalRowHeight', extra);
 		}
-	},
+	}
 
-	_getParallelPos: function (point) {
+	_getParallelPos (point: cool.Point): number {
 		return point.y;
-	},
+	}
 
-	_getOrthogonalPos: function (point) {
+	_getOrthogonalPos (point: cool.Point): number {
 		return point.x;
-	},
+	}
+}
 
-	onResize: function () {},
-	onRemove: function () {},
-});
+}
 
-L.control.rowHeader = function (options) {
+L.Control.RowHeader = cool.RowHeader;
+
+L.control.rowHeader = function (options?: cool.HeaderExtraProperties) {
 	return new L.Control.RowHeader(options);
 };

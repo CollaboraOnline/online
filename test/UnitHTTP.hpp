@@ -16,15 +16,8 @@
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/SocketAddress.h>
 #include <Poco/Version.h>
-#include <Poco/URI.h>
 
 #include "Common.hpp"
-#include <tools/COOLWebSocket.hpp>
-#include <helpers.hpp>
-#include <net/WebSocketSession.hpp>
-
-using Poco::Net::SocketAddress;
-using Poco::Net::HTTPServerParams;
 
 /// Unit test stub for a server response
 class UnitHTTPServerResponse : public Poco::Net::HTTPServerResponse
@@ -94,15 +87,15 @@ public:
         return true;
     }
 #endif
-    virtual const SocketAddress& clientAddress() const override
+    virtual const Poco::Net::SocketAddress& clientAddress() const override
     {
         return _clientAddress;
     }
-    virtual const SocketAddress& serverAddress() const override
+    virtual const Poco::Net::SocketAddress& serverAddress() const override
     {
         return _serverAddress;
     }
-    virtual const HTTPServerParams& serverParams() const override
+    virtual const Poco::Net::HTTPServerParams& serverParams() const override
     {
         return _dummyParams;
     }
@@ -121,26 +114,5 @@ namespace UnitHTTP
                                                  ClientPortNumber);
     }
 }
-
-class UnitWebSocket
-{
-    std::shared_ptr<http::WebSocketSession> _httpSocket;
-
-public:
-    /// Get a websocket connected for a given URL
-    UnitWebSocket(const std::shared_ptr<SocketPoll>& socketPoll, const std::string& documentURL)
-    {
-        Poco::URI uri(helpers::getTestServerURI());
-        _httpSocket = helpers::connectLOKit(socketPoll, uri, documentURL, "UnitWebSocket ");
-    }
-
-    /// Destroy the WS.
-    /// Here, we can't do IO as we don't own the socket (SocketPoll does).
-    /// In fact, we can't destroy it (it's referenced by SocketPoll).
-    /// Instead, we can only flag for shutting down.
-    ~UnitWebSocket() { _httpSocket->asyncShutdown(); }
-
-    const std::shared_ptr<http::WebSocketSession>& getWebSocket() { return _httpSocket; }
-};
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

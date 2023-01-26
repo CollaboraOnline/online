@@ -1,28 +1,43 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "collabora-online.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Values.global.ingress.name }}
-  namespace: {{ .Values.namespace.collabora }}
+  name: {{ $fullName }}
+  labels:
+    {{- include "collabora-online.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
   annotations:
-    nginx.ingress.kubernetes.io/upstream-hash-by: "$arg_WOPISrc"
-    haproxy.org/timeout-tunnel: "3600s"
-    haproxy.org/backend-config-snippet: |
-      mode http
-      balance leastconn
-      stick-table type string len 2048 size 1k store conn_cur
-      http-request set-var(txn.wopisrcconns) url_param(WOPISrc),table_conn_cur()
-      http-request track-sc1 url_param(WOPISrc)
-      stick match url_param(WOPISrc) if { var(txn.wopisrcconns) -m int gt 0 }
-      stick store-request url_param(WOPISrc)
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
+  {{- if .Values.ingress.tls }}
+  tls:
+    {{- range .Values.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
   rules:
-  - host: {{ .Values.hosts.host }}
-    http:
-      paths:
-      - path: "/"
-        pathType: Prefix
-        backend:
-          service:
-            name: {{ .Values.global.app.service.name }}
-            port:
-              number: 9980
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+          {{- end }}
+    {{- end }}
+{{- end }}

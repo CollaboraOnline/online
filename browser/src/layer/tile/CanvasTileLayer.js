@@ -383,28 +383,9 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_addOverlaySection: function () {
-		var tsMgr = this;
 		var canvasOverlay = this._layer._canvasOverlay = new CanvasOverlay(this._map, this._sectionContainer.getContext());
-		this._sectionContainer.createSection({
-			name: L.CSections.Overlays.name,
-			anchor: 'top left',
-			position: [0, 0],
-			size: [0, 0],
-			expand: '',
-			processingOrder: L.CSections.Overlays.processingOrder,
-			drawingOrder: L.CSections.Overlays.drawingOrder,
-			zIndex: L.CSections.Overlays.zIndex,
-			interactable: true,
-			sectionProperties: {
-				docLayer: tsMgr._layer,
-				tsManager: tsMgr
-			},
-			onInitialize: canvasOverlay.onInitialize.bind(canvasOverlay),
-			onResize: canvasOverlay.onResize.bind(canvasOverlay), // will call onDraw.
-			onDraw: canvasOverlay.onDraw.bind(canvasOverlay),
-			onMouseMove: canvasOverlay.onMouseMove.bind(canvasOverlay),
-		}, L.CSections.Tiles.name); // 'tile' section is the parent.
-		canvasOverlay.setOverlaySection(this._sectionContainer.getSectionWithName(L.CSections.Overlays.name));
+		this._sectionContainer.addSection(canvasOverlay);
+		canvasOverlay.bindToSection(L.CSections.Tiles.name);
 	},
 
 	shouldDrawCalcGrid: function () {
@@ -1060,7 +1041,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				setTimeout(this.update.bind(this), 200);
 			}, this._painter);
 		}
-		else {
+		else if (this._docType !== 'spreadsheet') { // See scroll section. panBy is used for spreadsheets while scrolling.
 			this._map.on('movestart', this._painter.startUpdates, this._painter);
 			this._map.on('moveend', this._painter.stopUpdates, this._painter);
 		}
@@ -1557,6 +1538,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		else if (textMsg.startsWith('graphicselection:')) {
 			this._onGraphicSelectionMsg(textMsg);
 		}
+		else if (textMsg.startsWith('mediashape:')) {
+			this._onMediaShapeMsg(textMsg);
+		}
 		else if (textMsg.startsWith('cellcursor:')) {
 			this._onCellCursorMsg(textMsg);
 		}
@@ -1586,12 +1570,12 @@ L.CanvasTileLayer = L.Layer.extend({
 					msg += 'part=0 ';
 				} else {
 					var tokens = payload.substring('EMPTY'.length + 1);
-					tokens = tokens.split(' ');
+					tokens = tokens.split(',');
 					var part = parseInt(tokens[0] ? tokens[0] : '');
-					var mode = parseInt(tokens[1] ? tokens[1] : '');
+					var mode = parseInt((tokens.length > 1 && tokens[1]) ? tokens[1] : '');
 					mode = (isNaN(mode) ? this._selectedMode : mode);
 					msg += 'part=' + (isNaN(part) ? this._selectedPart : part)
-						+ ((mode !== 0) ? (' mode=' + mode) : '')
+						+ ((mode && mode !== 0) ? (' mode=' + mode) : '')
 						+ ' ';
 				}
 				msg += 'x=0 y=0 ';
@@ -1620,6 +1604,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		else if (textMsg.startsWith('status:') || textMsg.startsWith('statusupdate:')) {
 			this._onStatusMsg(textMsg);
+
+			// update tiles and selection because mode could be changed
+			this._update();
+			this.updateAllGraphicViewSelections();
+			this.updateAllViewCursors();
+			this.updateAllTextViewSelection();
 		}
 		else if (textMsg.startsWith('textselection:')) {
 			this._onTextSelectionMsg(textMsg);
@@ -1882,28 +1872,34 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._openMobileWizard(data);
 	},
 
+	_getCalcFunctionListEntry: function(name, category, index, signature, description) {
+		return  {
+			id: '',
+			type: 'calcfuncpanel',
+			text: name,
+			functionName: name,
+			index: index,
+			category: category,
+			enabled: true,
+			children: [
+				{
+					id: '',
+					type: 'fixedtext',
+					html: '<div class="func-info-sig">' + signature + '</div>' + '<div class="func-info-desc">' + description + '</div>',
+					enabled: true,
+					style: 'func-info'
+				}
+			]
+		};
+	},
+
 	_onCalcFunctionList: function (funcList, data) {
 		var entries = data.children;
 		for (var idx = 0; idx < funcList.length; ++idx) {
 			var func =  funcList[idx];
 			var name = func.signature.split('(')[0];
-			var entry = {
-				id: '',
-				type: 'calcfuncpanel',
-				text: name,
-				functionName: name,
-				index: func.index,
-				enabled: true,
-				children: []
-			};
-			entries.push(entry);
-			entries[entries.length-1].children[0] = {
-				id: '',
-				type: 'fixedtext',
-				text: '<div class="func-info-sig">' + func.signature + '</div>' + '<div class="func-info-desc">' + func.description + '</div>',
-				enabled: true,
-				style: 'func-info'
-			};
+			entries.push(this._getCalcFunctionListEntry(
+				name, undefined, func.index, func.signature, func.description));
 		}
 	},
 
@@ -1927,26 +1923,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		for (idx = 0; idx < funcList.length; ++idx) {
 			var func =  funcList[idx];
 			var name = func.signature.split('(')[0];
-			var funcEntry = {
-				id: '',
-				type: 'calcfuncpanel',
-				text: name,
-				functionName: name,
-				index: func.index,
-				category: func.category,
-				enabled: true,
-				children: []
-			};
 			var funcEntries = categoryEntries[func.category].children;
-			funcEntries.push(funcEntry);
-
-			funcEntries[funcEntries.length-1].children[0] = {
-				id: '',
-				type: 'fixedtext',
-				text: '<div class="func-info-sig">' + func.signature + '</div>' + '<div class="func-info-desc">' + func.description + '</div>',
-				enabled: true,
-				style: 'func-info'
-			};
+			funcEntries.push(this._getCalcFunctionListEntry(
+				name, func.category, func.index, func.signature, func.description));
 		}
 	},
 
@@ -1974,11 +1953,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.fire('postMessage', {msgId: 'Download_As', args: {Type: command.id, URL: url}});
 		}
 		else if (command.id === 'print') {
-			if (L.Browser.gecko || L.Browser.edge || L.Browser.ie || this._map.options.print === false || L.Browser.cypressTest) {
-				// the print dialog doesn't work well on firefox
-				// due to a pdf.js issue - https://github.com/mozilla/pdf.js/issues/5397
-				// open the pdf file in a new tab so that that user can print it directly in the browser's
-				// pdf viewer
+			if (this._map.options.print === false || L.Browser.cypressTest) {
+				// open the pdf in a new tab, it can be printed directly in the browser's pdf viewer
 				url = window.makeHttpUrlWopiSrc('/' + this._map.options.urlPrefix + '/',
 					this._map.options.doc, '/download/' + command.downloadid,
 					'attachment=0');
@@ -2055,10 +2031,53 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 			var wasVisibleSVG = this._graphicMarker._hasVisibleEmbeddedSVG();
 			this._graphicMarker.removeEmbeddedSVG();
-			this._graphicMarker.addEmbeddedSVG(textMsg);
-			if (wasVisibleSVG)
-				this._graphicMarker._showEmbeddedSVG();
+
+			// video is handled in _onMediaShapeMsg
+			var isVideoSVG = textMsg.indexOf('<video') !== -1;
+			if (isVideoSVG) {
+				this._map._cacheSVG[extraInfo.id] = undefined;
+			} else {
+				this._graphicMarker.addEmbeddedSVG(textMsg);
+				if (wasVisibleSVG)
+					this._graphicMarker._showEmbeddedSVG();
+			}
 		}
+	},
+
+	_onMediaShapeMsg: function (textMsg) {
+		textMsg = textMsg.substring('mediashape:'.length + 1);
+		this._onEmbeddedVideoContent(textMsg);
+	},
+
+	// shows the video inside current selection marker
+	_onEmbeddedVideoContent: function (textMsg) {
+		if (!this._graphicMarker)
+			return;
+
+		var videoDesc = JSON.parse(textMsg);
+
+		if (this._graphicSelectionTwips) {
+			var topLeftPoint = this._twipsToCssPixels(
+				this._graphicSelectionTwips.getTopLeft(), this._map.getZoom());
+			var bottomRightPoint = this._twipsToCssPixels(
+				this._graphicSelectionTwips.getBottomRight(), this._map.getZoom());
+
+			videoDesc.width = bottomRightPoint.x - topLeftPoint.x;
+			videoDesc.height = bottomRightPoint.y - topLeftPoint.y;
+		}
+
+		var videoToInsert = '<?xml version="1.0" encoding="UTF-8"?>\
+		<foreignObject xmlns="http://www.w3.org/2000/svg" overflow="visible" width="'
+			+ videoDesc.width + '" height="' + videoDesc.height + '">\
+		    <body xmlns="http://www.w3.org/1999/xhtml">\
+		        <video controls="controls" width="' + videoDesc.width + '" height="'
+					+ videoDesc.height + '">\
+		            <source src="' + videoDesc.url + '" type="' + videoDesc.mimeType + '"/>\
+		        </video>\
+		    </body>\
+		</foreignObject>';
+
+		this._graphicMarker.addEmbeddedVideo(videoToInsert);
 	},
 
 	_resetSelectionRanges: function() {
@@ -2261,7 +2280,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var oldCursorXY = this._cellCursorXY.clone();
 
-		if (textMsg.match('EMPTY') || !this._map.isPermissionEdit()) {
+		if (textMsg.match('EMPTY') || !this._map.isEditMode()) {
 			app.file.calc.cellCursor.visible = false;
 			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._cellCursor = L.LatLngBounds.createDefault();
@@ -2270,6 +2289,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			app.file.calc.cellCursor.visible = false;
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellCursor(null);
+			if (this._map._clip)
+				this._map._clip.clearSelection();
 		}
 		else {
 			var strTwips = textMsg.match(/\d+/g);
@@ -2366,25 +2387,64 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
+	_setupClickFuncForId: function(targetId, func) {
+		var target = document.getElementById(targetId);
+		target.style.cursor = 'pointer';
+		target.onclick = target.ontouchend = func;
+	},
+
 	_showURLPopUp: function(position, url) {
 		// # for internal links
 		if (!url.startsWith('#')) {
 			var link = L.DomUtil.createWithId('a', 'hyperlink-pop-up');
 			link.innerText = url;
+			var copyBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-copy');
+			L.DomUtil.addClass(copyBtn, 'hyperlink-popup-btn');
+			copyBtn.setAttribute('title', _('Copy link location'));
+			var imgCopyBtn = L.DomUtil.create('img', 'hyperlink-pop-up-copyimg', copyBtn);
+			imgCopyBtn.setAttribute('src', L.LOUtil.getImageURL('lc_copyhyperlinklocation.svg'));
+			imgCopyBtn.setAttribute('width', 18);
+			imgCopyBtn.setAttribute('height', 18);
+			imgCopyBtn.setAttribute('style', 'padding: 4px');
+			var editBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-edit');
+			L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
+			editBtn.setAttribute('title', _('Edit link'));
+			var imgEditBtn = L.DomUtil.create('img', 'hyperlink-pop-up-editimg', editBtn);
+			imgEditBtn.setAttribute('src', L.LOUtil.getImageURL('lc_edithyperlink.svg'));
+			imgEditBtn.setAttribute('width', 18);
+			imgEditBtn.setAttribute('height', 18);
+			imgEditBtn.setAttribute('style', 'padding: 4px');
+			var removeBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-remove');
+			L.DomUtil.addClass(removeBtn, 'hyperlink-popup-btn');
+			removeBtn.setAttribute('title', _('Remove link'));
+			var imgRemoveBtn = L.DomUtil.create('img', 'hyperlink-pop-up-removeimg', removeBtn);
+			imgRemoveBtn.setAttribute('src', L.LOUtil.getImageURL('lc_removehyperlink.svg'));
+			imgRemoveBtn.setAttribute('width', 18);
+			imgRemoveBtn.setAttribute('height', 18);
+			imgRemoveBtn.setAttribute('style', 'padding: 4px');
+			var linkOuterHtml = link.outerHTML + copyBtn.outerHTML + editBtn.outerHTML + removeBtn.outerHTML;
 			this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false, autoPan: false})
-				.setContent(link.outerHTML)
+				.setContent(linkOuterHtml)
 				.setLatLng(position)
 				.openOn(this._map);
+			document.getElementById('hyperlink-pop-up').title = url;
 			var offsetDiffTop = $('.hyperlink-popup').offset().top - $('#map').offset().top;
 			var offsetDiffLeft = $('.hyperlink-popup').offset().left - $('#map').offset().left;
 			if (offsetDiffTop < 10) this._movePopUpBelow();
 			if (offsetDiffLeft < 10) this._movePopUpRight();
 			var map_ = this._map;
-			var element = document.getElementById('hyperlink-pop-up');
-			element.style.cursor = 'pointer';
-			element.onclick = element.ontouchend = function() {
+			this._setupClickFuncForId('hyperlink-pop-up', function() {
 				map_.fire('warn', {url: url, map: map_, cmd: 'openlink'});
-			};
+			});
+			this._setupClickFuncForId('hyperlink-pop-up-copy', function () {
+				map_.sendUnoCommand('.uno:CopyHyperlinkLocation');
+			});
+			this._setupClickFuncForId('hyperlink-pop-up-edit', function () {
+				map_.sendUnoCommand('.uno:EditHyperlink');
+			});
+			this._setupClickFuncForId('hyperlink-pop-up-remove', function () {
+				map_.sendUnoCommand('.uno:RemoveHyperlink');
+			});
 		}
 	},
 
@@ -2449,7 +2509,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._showURLPopUp(cursorPos, obj.hyperlink.link);
 		}
 
-		if (!this._map.editorHasFocus() && this._map._isCursorVisible && (modifierViewId === this._viewId) && (this._map.isPermissionEdit())) {
+		if (!this._map.editorHasFocus() && this._map._isCursorVisible && (modifierViewId === this._viewId) && (this._map.isEditMode())) {
 			// Regain cursor if we had been out of focus and now have input.
 			// Unless the focus is in the Calc Formula-Bar, don't steal the focus.
 			if (!this._map.calcInputBarHasFocus())
@@ -2576,7 +2636,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var cellViewCursorMarker = this._cellViewCursors[viewId].marker;
 		var viewPart = this._cellViewCursors[viewId].part;
-		var viewMode = this._cellViewCursors[viewId].mode;
+		var viewMode = this._cellViewCursors[viewId].mode ? this._cellViewCursors[viewId].mode : 0;
 
 		if (!this._isEmptyRectangle(this._cellViewCursors[viewId].bounds)
 			&& this._selectedPart === viewPart && this._selectedMode === viewMode
@@ -3177,7 +3237,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onTextSelectionEndMsg: function (textMsg) {
 		var rectangles = this._getTextSelectionRectangles(textMsg);
 
-		if (rectangles.length && this._map.isPermissionEdit()) {
+		if (rectangles.length && this._map.isEditMode()) {
 			var topLeftTwips = rectangles[0].getTopLeft();
 			var bottomRightTwips = rectangles[0].getBottomRight();
 			var oldSelection = this._textSelectionEnd;
@@ -3196,7 +3256,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onTextSelectionStartMsg: function (textMsg) {
 		var rectangles = this._getTextSelectionRectangles(textMsg);
 
-		if (rectangles.length && this._map.isPermissionEdit()) {
+		if (rectangles.length && this._map.isEditMode()) {
 			var topLeftTwips = rectangles[0].getTopLeft();
 			var bottomRightTwips = rectangles[0].getBottomRight();
 			var oldSelection = this._textSelectionStart;
@@ -3224,7 +3284,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onCellSelectionAreaMsg: function (textMsg) {
 		var autofillMarkerSection = app.sectionContainer.getSectionWithName(L.CSections.AutoFillMarker.name);
 		var strTwips = textMsg.match(/\d+/g);
-		if (strTwips != null && this._map.isPermissionEdit()) {
+		if (strTwips != null && this._map.isEditMode()) {
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
@@ -3259,7 +3319,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onCellAutoFillAreaMsg: function (textMsg) {
 		var strTwips = textMsg.match(/\d+/g);
-		if (strTwips != null && this._map.isPermissionEdit()) {
+		if (strTwips != null && this._map.isEditMode()) {
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 
@@ -3350,7 +3410,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_mapOnError: function (e) {
-		if (e.msg && this._map.isPermissionEdit()) {
+		if (e.msg && this._map.isEditMode() && e.critical !== false) {
 			this._map.setPermission('view');
 		}
 	},
@@ -3604,9 +3664,19 @@ L.CanvasTileLayer = L.Layer.extend({
 				That edit changed our cursor position.
 			Now we already set the cursor position to another point.
 			We want to keep the cursor position at the same point relative to screen.
+			Do that only when we are reaching the end of screen so we don't flicker.
 			*/
-			var y = this._cursorCorePixels.min.y - this._cursorPreviousPositionCorePixels.min.y;
-			this._painter._sectionContainer.getSectionWithName(L.CSections.Scroll.name).scrollVerticalWithOffset(y);
+			var that = this;
+			var paneRectsInLatLng = this.getPaneLatLngRectangles();
+			var isCursorVisible = this._visibleCursor.isInAny(paneRectsInLatLng);
+			if (!isCursorVisible) {
+				setTimeout(function () {
+					var y = that._cursorCorePixels.min.y - that._cursorPreviousPositionCorePixels.min.y;
+					if (y) {
+						that._painter._sectionContainer.getSectionWithName(L.CSections.Scroll.name).scrollVerticalWithOffset(y);
+					}
+				}, 0);
+			}
 		}
 
 		this._updateCursorAndOverlay();
@@ -3637,7 +3707,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	// enable or disable blinking cursor and  the cursor overlay depending on
 	// the state of the document (if the falgs are set)
 	_updateCursorAndOverlay: function (/*update*/) {
-		if (this._map.isPermissionEdit()
+		if (this._map.isEditMode()
 		&& this._map._isCursorVisible   // only when LOK has told us it is ok
 		&& this._map.editorHasFocus()   // not when document is not focused
 		&& !this._map.isSearching()  	// not when searching within the doc
@@ -3690,7 +3760,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var viewCursorMarker = this._viewCursors[viewId].marker;
 		var viewCursorVisible = this._viewCursors[viewId].visible;
 		var viewPart = this._viewCursors[viewId].part;
-		var viewMode = this._viewCursors[viewId].mode;
+		var viewMode = this._viewCursors[viewId].mode ? this._viewCursors[viewId].mode : 0;
 
 		if (!this._map.isViewReadOnly(viewId) &&
 		    viewCursorVisible &&
@@ -3766,7 +3836,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var viewPointSet = this._viewSelections[viewId].pointSet;
 		var viewSelection = this._viewSelections[viewId].selection;
 		var viewPart = this._viewSelections[viewId].part;
-		var viewMode = this._viewSelections[viewId].mode;
+		var viewMode = this._viewSelections[viewId].mode ? this._viewSelections[viewId].mode : 0;
 
 		if (viewPointSet &&
 		    (this.isWriter() || (this._selectedPart === viewPart && this._selectedMode === viewMode))) {
@@ -4223,7 +4293,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._map.removeLayer(this._graphicMarker);
 			}
 
-			if (!this._map.isPermissionEdit()) {
+			if (!this._map.isEditMode()) {
 				return;
 			}
 
@@ -4838,7 +4908,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugLoadDelta = 0;
 		this._debugInvalidateCount = 0;
 		this._debugRenderCount = 0;
-		this._debugDeltas = 0;
+		this._debugDeltas = true;
+		this._debugDeltasDetail = false;
 		if (!this._debugData) {
 			this._debugData = {};
 			this._debugDataNames = ['tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount', 'postMessage'];
@@ -5358,7 +5429,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// This layergroup contains all the layers corresponding to other's view
 		this._viewLayerGroup = new L.LayerGroup();
-		if (this.options.permission !== 'readonly') {
+		if (app.file.permission !== 'readonly') {
 			map.addLayer(this._viewLayerGroup);
 		}
 
@@ -5427,7 +5498,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// generated just for the validity-dropdown-icon.
 		map.on('dropdownmarkertapped', this._onDropDownButtonClick, this);
 
-		map.setPermission(this.options.permission);
+		map.setPermission(app.file.permission);
 
 		map.fire('statusindicator', {statusType: 'coolloaded'});
 
@@ -6584,7 +6655,10 @@ L.CanvasTileLayer = L.Layer.extend({
 					       ' of length ' + rawDelta.length + ' hex: ' + hex2string(rawDelta));
 
 		if (rawDelta.length === 0)
-			return 0; // that was easy!
+			return; // that was easy!
+
+		var traceEvent = app.socket.createCompleteTraceEvent('L.CanvasTileLayer.applyDelta',
+								     { keyFrame: isKeyframe, length: rawDelta.length });
 
 		// 'Uint8Array' delta
 		var canvas;
@@ -6603,17 +6677,19 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// apply potentially several deltas in turn.
 		var i = 0;
-		var offset = 0, nextOffset = 0;
-		while (offset < rawDelta.length)
-		{
-			var inflator = new window.pako.Inflate({ raw: true });
-			inflator.push(offset > 0 ? rawDelta.subarray(offset) : rawDelta);
-			if (inflator.err) throw inflator.msg;
+		var offset = 0;
 
-			var delta = inflator.result;
-			nextOffset = rawDelta.length - inflator.strm.avail_in;
+		// FIXME:used clamped array ... as a 2nd parameter
+		var allDeltas = window.fzstd.decompress(rawDelta);
+
+		var imgData;
+		var ctx = canvas.getContext('2d');
+
+		while (offset < allDeltas.length)
+		{
 			if (this._debugDeltas)
-				window.app.console.log('Next delta at ' + nextOffset);
+				window.app.console.log('Next delta at ' + offset + ' length ' + (allDeltas.length - offset));
+			var delta = allDeltas.subarray(offset);
 
 			// Debugging paranoia: if we get this wrong bad things happen.
 			if ((isKeyframe && delta.length != canvas.width * canvas.height * 4) ||
@@ -6624,42 +6700,57 @@ L.CanvasTileLayer = L.Layer.extend({
 						       delta.length + ' vs. ' + (canvas.width * canvas.height * 4));
 			}
 
-			if (this._debugDeltas)
-				window.app.console.log('Apply chunk ' + i++ + ' of size ' + delta.length +
-						       ' at compressed stream offset ' + offset + ' compressed size ' + (nextOffset - offset));
-			this._applyDeltaChunk(canvas, tile, initCanvas, delta, isKeyframe);
+			var len;
+			if (isKeyframe)
+			{
+				// FIXME: use zstd to de-compress directly into a Uint8ClampedArray
+				len = canvas.width * canvas.height * 4;
+				var pixelArray = new Uint8ClampedArray(delta.subarray(0, len));
+				imgData = new ImageData(pixelArray, canvas.width, canvas.height);
+
+				if (this._debugDeltas)
+					window.app.console.log('Applied keyframe ' + i++ + ' of total size ' + delta.length +
+							       ' at stream offset ' + offset + ' size ' + len);
+			}
+			else
+			{
+				if (initCanvas && tile.el) // render old image data to the canvas
+					ctx.drawImage(tile.el, 0, 0);
+
+				if (!imgData) // no keyframe
+				{
+					if (this._debugDeltas)
+						window.app.console.log('Fetch canvas contents');
+					imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+				}
+
+				// copy old data to work from:
+				var oldData = new Uint8ClampedArray(imgData.data);
+
+				len = this._applyDeltaChunk(imgData, delta, oldData, canvas.width, canvas.height);
+				if (this._debugDeltas)
+					window.app.console.log('Applied chunk ' + i++ + ' of total size ' + delta.length +
+							       ' at stream offset ' + offset + ' size ' + len);
+			}
+
 			initCanvas = false;
 			isKeyframe = false;
-			offset = nextOffset;
+			offset += len;
 		}
+
+	        if (imgData)
+			ctx.putImageData(imgData, 0, 0);
+
+		if (traceEvent)
+			traceEvent.finish();
 	},
 
-	_applyDeltaChunk: function(canvas, tile, initCanvas, delta, isKeyframe) {
-		var ctx = canvas.getContext('2d');
-
-		var pixSize = canvas.width * canvas.height * 4;
+	_applyDeltaChunk: function(imgData, delta, oldData, width, height) {
+		var pixSize = width * height * 4;
 		if (this._debugDeltas)
-			window.app.console.log('Applying a ' + (isKeyframe ? 'keyframe' : 'delta') +
-					       ' of length ' + delta.length + ' canvas size: ' + pixSize);
+			window.app.console.log('Applying a delta of length ' +
+					       delta.length + ' canvas size: ' + pixSize);
 			// + ' hex: ' + hex2string(delta));
-
-		if (delta.length === 0)
-			return; // that was easy!
-
-		if (isKeyframe)
-		{
-			// FIXME: tweak Pako to de-compress directly into a Uint8ClampedArray
-			ctx.putImageData(new ImageData(new Uint8ClampedArray(delta),
-						       canvas.width, canvas.height), 0, 0);
-			return;
-		}
-
-		if (initCanvas && tile.el) // render old image data to the canvas
-			ctx.drawImage(tile.el, 0, 0);
-
-		// FIXME; can we operate directly on the image ?
-		var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-		var oldData = new Uint8ClampedArray(imgData.data);
 
 		var offset = 0;
 
@@ -6678,7 +6769,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		// Apply delta.
-		for (var i = 0; i < delta.length;)
+		var stop = false;
+		for (var i = 0; i < delta.length && !stop;)
 		{
 			switch (delta[i])
 			{
@@ -6686,14 +6778,14 @@ L.CanvasTileLayer = L.Layer.extend({
 				var count = delta[i+1];
 				var srcRow = delta[i+2];
 				var destRow = delta[i+3];
-				if (this._debugDeltas)
+				if (this._debugDeltasDetail)
 					window.app.console.log('[' + i + ']: copy ' + count + ' row(s) ' + srcRow + ' to ' + destRow);
 				i+= 4;
 				for (var cnt = 0; cnt < count; ++cnt)
 				{
-					var src = (srcRow + cnt) * canvas.width * 4;
-					var dest = (destRow + cnt) * canvas.width * 4;
-					for (var j = 0; j < canvas.width * 4; ++j)
+					var src = (srcRow + cnt) * width * 4;
+					var dest = (destRow + cnt) * width * 4;
+					for (var j = 0; j < width * 4; ++j)
 					{
 						imgData.data[dest + j] = oldData[src + j];
 					}
@@ -6703,8 +6795,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				destRow = delta[i+1];
 				var destCol = delta[i+2];
 				var span = delta[i+3];
-				offset = destRow * canvas.width * 4 + destCol * 4;
-				if (this._debugDeltas)
+				offset = destRow * width * 4 + destCol * 4;
+				if (this._debugDeltasDetail)
 					window.app.console.log('[' + i + ']: apply new span of size ' + span +
 							       ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 				i += 4;
@@ -6715,6 +6807,10 @@ L.CanvasTileLayer = L.Layer.extend({
 				}
 				// imgData.data[offset - 2] = 256; // debug - blue terminator
 				break;
+			case 116: // 't': // terminate delta new one next
+				stop = true;
+				i++;
+				break;
 			default:
 				console.log('[' + i + ']: ERROR: Unknown delta code ' + delta[i]);
 				i = delta.length;
@@ -6722,7 +6818,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 		}
 
-		ctx.putImageData(imgData, 0, 0);
+		return i;
 	},
 
 	_onTileMsg: function (textMsg, img) {
@@ -6923,7 +7019,7 @@ L.TilesPreFetcher = L.Class.extend({
 		var zoom = this._map.getZoom();
 		var part = this._docLayer._selectedPart;
 		var mode = this._docLayer._selectedMode;
-		var hasEditPerm = this._map.isPermissionEdit();
+		var hasEditPerm = this._map.isEditMode();
 
 		if (this._zoom === undefined) {
 			this._zoom = zoom;

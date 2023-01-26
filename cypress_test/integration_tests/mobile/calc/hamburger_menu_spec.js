@@ -76,6 +76,7 @@ describe('Trigger hamburger menu options.', function() {
 		before('hamburger_menu.ods');
 
 		mobileHelper.selectHamburgerMenuItem(['Download as', 'PDF Document (.pdf)']);
+		mobileHelper.pressPushButtonOfDialog('Export');
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -394,84 +395,6 @@ describe('Trigger hamburger menu options.', function() {
 				expect(cells).to.have.lengthOf(1);
 				expect(cells[0]).to.have.text('2');
 			});
-	});
-
-	it('Sheet: insert / delete row break.', function() {
-		before('hamburger_menu_sheet.ods');
-
-		// Select B2 cell
-		calcHelper.clickOnFirstCell();
-
-		cy.get('.spreadsheet-cell-resize-marker')
-			.then(function(items) {
-				expect(items).to.have.lengthOf(2);
-				var marker = items[1];
-				var XPos = marker.getBoundingClientRect().right + 2;
-				var YPos = marker.getBoundingClientRect().bottom + 2;
-				cy.get('body')
-					.click(XPos, YPos);
-
-				cy.get('input#addressInput')
-					.should('have.prop', 'value', 'B2');
-			});
-
-		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Page Break', 'Row Break']);
-
-		// TODO: no visual indicator here
-		cy.wait(500);
-
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Sheet')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Delete Page Break')
-			.click();
-
-		cy.contains('[title=\'Delete Page Break\'] .menu-entry-with-icon', 'Row Break')
-			.click();
-
-		// TODO: no visual indicator here
-		cy.wait(500);
-	});
-
-	it('Sheet: insert / delete column break.', function() {
-		before('hamburger_menu_sheet.ods');
-
-		// Select B2 cell
-		calcHelper.clickOnFirstCell();
-
-		cy.get('.spreadsheet-cell-resize-marker')
-			.then(function(items) {
-				expect(items).to.have.lengthOf(2);
-				var marker = items[1];
-				var XPos = marker.getBoundingClientRect().right + 2;
-				var YPos = marker.getBoundingClientRect().bottom + 2;
-				cy.get('body')
-					.click(XPos, YPos);
-
-				cy.get('input#addressInput')
-					.should('have.prop', 'value', 'B2');
-			});
-
-		mobileHelper.selectHamburgerMenuItem(['Sheet', 'Insert Page Break', 'Column Break']);
-
-		// TODO: no visual indicator here
-		cy.wait(500);
-
-		mobileHelper.openHamburgerMenu();
-
-		cy.contains('.menu-entry-with-icon', 'Sheet')
-			.click();
-
-		cy.contains('.menu-entry-with-icon', 'Delete Page Break')
-			.click();
-
-		cy.contains('[title=\'Delete Page Break\'] .menu-entry-with-icon', 'Column Break')
-			.click();
-
-		// TODO: no visual indicator here
-		cy.wait(500);
 	});
 
 	it('Data: sort ascending.', function() {

@@ -15,7 +15,7 @@
 #include "Util.hpp"
 
 #include <csignal>
-#include <sys/poll.h>
+#include <poll.h>
 #ifdef __linux__
 #  include <sys/prctl.h>
 #  include <sys/syscall.h>
@@ -63,6 +63,7 @@
 #include <Poco/RandomStream.h>
 #include <Poco/TemporaryFile.h>
 #include <Poco/Util/Application.h>
+#include <Poco/URI.h>
 
 #include "Common.hpp"
 #include "Log.hpp"
@@ -702,6 +703,20 @@ namespace Util
         return true;
     }
 
+    std::string encodeURIComponent(const std::string& uri, const std::string& reserved)
+    {
+        std::string encoded;
+        Poco::URI::encode(uri, reserved, encoded);
+        return encoded;
+    }
+
+    std::string decodeURIComponent(const std::string& uri)
+    {
+        std::string decoded;
+        Poco::URI::decode(uri, decoded);
+        return decoded;
+    }
+
     /// Split a string in two at the delimiter and give the delimiter to the first.
     static
     std::pair<std::string, std::string> splitLast2(const char* s, const int length, const char delimiter = ' ')
@@ -1099,7 +1114,10 @@ namespace Util
 
     void forcedExit(int code)
     {
-        LOG_FTL("Forced Exit with code: " << code);
+        if (code)
+            LOG_FTL("Forced Exit with code: " << code);
+        else
+            LOG_INF("Forced Exit with code: " << code);
         Log::shutdown();
 
 #if CODE_COVERAGE

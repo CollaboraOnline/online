@@ -23,6 +23,9 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
 # 'Finished in' in the `make check` output.
 # When adding new tests, please maintain order.
 all_la_unit_tests = \
+	unit-tiletest.la \
+	unit-wopi-async-slow.la \
+	unit-wopi-stuck-save.la \
 	unit-insert-delete.la \
 	unit-httpws.la \
 	unit-password-protected.la \
@@ -31,7 +34,6 @@ all_la_unit_tests = \
 	unit-crash.la \
 	unit-wopi-save-on-exit.la \
 	unit-wopi-documentconflict.la \
-	unit-wopi-stuck-save.la \
 	unit-wopi-fileurl.la \
 	unit-each-view.la \
 	unit-close.la \
@@ -39,7 +41,6 @@ all_la_unit_tests = \
 	unit-uno-command.la \
 	unit-load-torture.la \
 	unit-copy-paste.la \
-	unit-wopi-async-upload-modify.la \
 	unit-http.la \
 	unit-wopi-temp.la \
 	unit-wopi-async-upload-close.la \
@@ -67,10 +68,10 @@ all_la_unit_tests = \
 	unit-wopi-httpheaders.la \
 	unit-load.la \
 	unit-wopi-lock.la \
+	unit-wopi-unlock.la \
 	unit-wopi-httpredirect.la \
 	unit-wopi-loadencoded.la \
 	unit-prefork.la \
-	unit-wopi-async-slow.la \
 	unit-render-search-result.la \
 	unit-tiff-load.la \
 	unit-bad-doc-load.la \
@@ -87,10 +88,10 @@ endif
 noinst_LTLIBRARIES = ${all_la_unit_tests}
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
-AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION) $(ZLIB_LIBS)
+AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION) $(ZLIB_LIBS) $(ZSTD_LIBS) ${PNG_LIBS}
 
 if ENABLE_SSL
-AM_LDFLAGS += -lssl -lcrypto
+AM_LDFLAGS += ${OPENSSL_LIBS}
 endif
 
 # We work around some of the mess of using the same sources both on
@@ -190,7 +191,9 @@ unit_copy_paste_la_SOURCES = UnitCopyPaste.cpp
 unit_copy_paste_la_LIBADD = $(CPPUNIT_LIBS)
 unit_convert_la_SOURCES = UnitConvert.cpp
 unit_timeout_la_SOURCES = UnitTimeout.cpp
+unit_timeout_la_LIBADD = $(CPPUNIT_LIBS)
 unit_prefork_la_SOURCES = UnitPrefork.cpp
+unit_prefork_la_LIBADD = $(CPPUNIT_LIBS)
 unit_storage_la_SOURCES = UnitStorage.cpp
 unit_storage_la_LIBADD = $(CPPUNIT_LIBS)
 # unit_tilecache_la_SOURCES = UnitTileCache.cpp
@@ -201,8 +204,6 @@ unit_wopi_la_SOURCES = UnitWOPI.cpp
 unit_wopi_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_async_upload_close_la_SOURCES = UnitWOPIAsyncUpload_Close.cpp
 unit_wopi_async_upload_close_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_async_upload_modify_la_SOURCES = UnitWOPIAsyncUpload_Modify.cpp
-unit_wopi_async_upload_modify_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_async_upload_modifyclose_la_SOURCES = UnitWOPIAsyncUpload_ModifyClose.cpp
 unit_wopi_async_upload_modifyclose_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_async_slow_la_SOURCES = UnitWOPISlow.cpp
@@ -231,6 +232,8 @@ unit_wopi_languages_la_SOURCES = UnitWOPILanguages.cpp
 unit_wopi_languages_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_lock_la_SOURCES = UnitWOPILock.cpp
 unit_wopi_lock_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_unlock_la_SOURCES = UnitWOPIUnlock.cpp
+unit_wopi_unlock_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_watermark_la_SOURCES = UnitWOPIWatermark.cpp
 unit_wopi_watermark_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_loadencoded_la_SOURCES = UnitWOPILoadEncoded.cpp

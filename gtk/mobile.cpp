@@ -26,7 +26,11 @@
 #include "Protocol.hpp"
 #include "Util.hpp"
 
-const int SHOW_JS_MAXLEN = 70;
+#include "gtk.hpp"
+
+const char *user_name = "Dummy";
+
+const int SHOW_JS_MAXLEN = 300;
 
 int coolwsd_server_socket_fd = -1;
 
@@ -71,7 +75,7 @@ static void send2JS(const std::vector<char>& buffer)
         std::vector<char> data;
         for (int i = 0; i < buffer.size(); i++)
         {
-            if (ubufp[i] < ' ' || ubufp[i] == '\'' || ubufp[i] == '\\')
+            if (ubufp[i] < ' ' || ubufp[i] >= 0x80 || ubufp[i] == '\'' || ubufp[i] == '\\')
             {
                 data.push_back('\\');
                 data.push_back('x');
@@ -83,10 +87,9 @@ static void send2JS(const std::vector<char>& buffer)
                 data.push_back(ubufp[i]);
             }
         }
-        data.push_back(0);
 
         js = "window.TheFakeWebSocket.onmessage({'data': '";
-        js = js + std::string(buffer.data(), buffer.size());
+        js = js + std::string(data.data(), data.size());
         js = js + "'});";
     }
 
@@ -332,9 +335,21 @@ int main(int argc, char* argv[])
         "?file_path=" + fileURL +
         "&closebutton=1"
         "&permission=edit"
-        "&debug=true";
+        "&lang=en"
+        "&userinterfacemode=notebookbar";
 
     webkit_web_view_load_uri(webView, urlAndQuery.c_str());
+
+    if (true) // Set this to false to disable developer console.
+    {
+        // Enable the developer extras
+        WebKitSettings *settings = webkit_web_view_get_settings (WEBKIT_WEB_VIEW(webView));
+        g_object_set (G_OBJECT(settings), "enable-developer-extras", TRUE, NULL);
+
+        // Show the inspector
+        WebKitWebInspector *inspector = webkit_web_view_get_inspector (WEBKIT_WEB_VIEW(webView));
+        webkit_web_inspector_show (WEBKIT_WEB_INSPECTOR(inspector));
+    }
 
     gtk_widget_grab_focus(GTK_WIDGET(webView));
     gtk_widget_show_all(mainWindow);

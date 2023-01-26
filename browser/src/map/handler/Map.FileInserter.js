@@ -106,7 +106,7 @@ L.Map.FileInserter = L.Handler.extend({
 			if (file.size === 0)
 				errMsg = _('The file of type: %0 cannot be uploaded to server since the file is empty');
 			errMsg = errMsg.replace('%0', file.type);
-			map.fire('error', {msg: errMsg});
+			map.fire('error', {msg: errMsg, critical: false});
 			return;
 		}
 

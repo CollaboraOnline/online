@@ -22,7 +22,7 @@
 /// We modify the document and close immediately.
 class UnitWOPIAsyncUpload_ModifyClose : public WopiTestServer
 {
-    STATE_ENUM(Phase, Load, WaitLoadStatus, ModifyAndClose, WaitPutFile, Polling) _phase;
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitPutFile, WaitDestroy) _phase;
 
 public:
     UnitWOPIAsyncUpload_ModifyClose()
@@ -34,26 +34,26 @@ public:
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
+        LOK_ASSERT_STATE(_phase, Phase::WaitPutFile);
+
         // Expect PutFile after closing, since the document is modified.
         if (_phase == Phase::WaitPutFile)
         {
-            LOG_TST("assertPutFileRequest: First PutFile, which will fail");
-
-            TRANSITION_STATE(_phase, Phase::Polling);
-
-            // We requested the save.
-            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
-
+            // The document is modified.
             LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
+            LOK_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
 
-            passTest("Document uploaded on closing as expected.");
+            // Triggered manually or during closing, not auto-save.
+            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
+            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsAutosave"));
 
-            return Util::make_unique<http::Response>(http::StatusLine(200));
+            TRANSITION_STATE(_phase, Phase::WaitDestroy);
+
+            return Util::make_unique<http::Response>(http::StatusCode::OK);
         }
 
         // This during closing the document.
-        LOG_TST("assertPutFileRequest: Second PutFile, unexpected");
-
+        LOG_TST("assertPutFileRequest: unexpected");
         failTest("PutFile multiple times.");
 
         return nullptr;
@@ -65,9 +65,22 @@ public:
         LOG_TST("onDocumentLoaded: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
-        TRANSITION_STATE(_phase, Phase::ModifyAndClose);
+        TRANSITION_STATE(_phase, Phase::WaitPutFile);
+
+        WSD_CMD("key type=input char=97 key=0");
+        WSD_CMD("key type=up char=0 key=512");
+        WSD_CMD("closedocument");
 
         return true;
+    }
+
+    // Wait for clean unloading.
+    void onDocBrokerDestroy(const std::string& docKey) override
+    {
+        LOG_TST("Destroyed dockey [" << docKey << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitDestroy);
+
+        passTest("Document unloaded as expected.");
     }
 
     void invokeWSDTest() override
@@ -85,22 +98,9 @@ public:
                 break;
             }
             case Phase::WaitLoadStatus:
-                break;
-            case Phase::ModifyAndClose:
-            {
-                TRANSITION_STATE(_phase, Phase::WaitPutFile);
-
-                WSD_CMD("key type=input char=97 key=0");
-                WSD_CMD("key type=up char=0 key=512");
-                WSD_CMD("closedocument");
-                break;
-            }
             case Phase::WaitPutFile:
-            case Phase::Polling:
-            {
-                // just wait for the results
+            case Phase::WaitDestroy:
                 break;
-            }
         }
     }
 };

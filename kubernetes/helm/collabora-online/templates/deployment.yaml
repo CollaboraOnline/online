@@ -1,20 +1,15 @@
+{{- if eq .Values.deployment.kind "Deployment" -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ default .Values.global.app.name .Values.deployment.name }}
-  namespace: {{ .Values.namespace.collabora }}
+  name: {{ include "collabora-online.fullname" . }}
   labels:
-    app: {{ template "name" . }}
-    chart: {{ template "chartname" . }}
-    release: {{ .Release.Name }}
-    version: "{{ .Values.global.app.version }}"
+    {{- include "collabora-online.labels" . | nindent 4 }}
 spec:
   minReadySeconds: {{ .Values.deployment.minReadySeconds }}
+  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  selector:
-    matchLabels:
-      app: {{ template "name" . }}
-      release: {{ .Release.Name }}
+  {{- end }}
   strategy:
     type: {{ .Values.deployment.type }}
     {{- if eq .Values.deployment.type "RollingUpdate"}}
@@ -22,64 +17,129 @@ spec:
       maxSurge: {{ .Values.deployment.maxSurge }}
       maxUnavailable: {{ .Values.deployment.maxUnavailable }}
     {{- end}}
+  selector:
+    matchLabels:
+      {{- include "collabora-online.selectorLabels" . | nindent 6 }}
+      type: main
   template:
     metadata:
-      labels:
-        app: {{ template "name" . }}
-        release: {{ .Release.Name }}
-        version: "{{ .Values.global.app.version }}"
       annotations:
-      {{- if .Values.global.app.monitoring.activate }}
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "{{ .Values.global.app.monitoring.port }}"
-        prometheus.io/path: "{{ .Values.global.app.monitoring.path }}"
-      {{- end }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        confighash: config-{{ .Values.collabora | toYaml | sha256sum | trunc 32 }}
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+      labels:
+        {{- include "collabora-online.selectorLabels" . | nindent 8 }}
+        type: main
     spec:
+      {{- if .Values.deployment.hostAliases }}
+      hostAliases:
+        {{- range .Values.deployment.hostAliases }}
+        - ip: {{ .ip | quote }}
+          hostnames:
+          {{- range .hostnames }}
+          - {{ . | quote }}
+          {{- end }}
+        {{- end }}
+      {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "collabora-online.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Values.global.app.name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.global.app.service.internalPort }}
-          securityContext:
-            readOnlyRootFilesystem: false
-        {{- if .Values.probes.liveness.activate }}
+            - name: http
+              containerPort: {{ .Values.deployment.containerPort }}
+              protocol: TCP
+          {{- if .Values.probes.startup.enabled }}
+          startupProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.deployment.containerPort }}
+              scheme: HTTP
+            failureThreshold: {{ .Values.probes.startup.failureThreshold }}
+            periodSeconds: {{ .Values.probes.startup.periodSeconds }}
+          {{- end }}
+          {{- if .Values.probes.liveness.enabled }}
           livenessProbe:
             httpGet:
-              path: {{ .Values.probes.liveness.path }}
-              port: {{ .Values.probes.port }}
-              scheme: {{ .Values.probes.urlScheme }}
+              path: /
+              port: {{ .Values.deployment.containerPort }}
+              scheme: HTTP
             initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
             periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
             timeoutSeconds: {{ .Values.probes.liveness.timeoutSeconds }}
             successThreshold: {{ .Values.probes.liveness.successThreshold }}
             failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
           {{- end }}
-          {{- if .Values.probes.readiness.activate }}
+          {{- if .Values.probes.readiness.enabled }}
           readinessProbe:
             httpGet:
-              path: {{ .Values.probes.readiness.path }}
-              port: {{ .Values.probes.port }}
-              scheme: {{ .Values.probes.urlScheme }}
+              path: /
+              port: {{ .Values.deployment.containerPort }}
+              scheme: HTTP
             initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
             periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
             timeoutSeconds: {{ .Values.probes.readiness.timeoutSeconds }}
             successThreshold: {{ .Values.probes.readiness.successThreshold }}
             failureThreshold: {{ .Values.probes.readiness.failureThreshold }}
           {{- end }}
-          {{- if .Values.environmentVariablesCool }}
+
+          envFrom:
+            - configMapRef:
+                name: {{ include "collabora-online.fullname" . }}
           env:
-{{ toYaml .Values.environmentVariablesCool | indent 12 }}
-          {{- end }}
+            - name: username
+              valueFrom:
+                secretKeyRef:
+                  {{- if (.Values.collabora.existingSecret).enabled }}
+                  name: {{ .Values.collabora.existingSecret.secretName | quote }}
+                  key: {{ .Values.collabora.existingSecret.usernameKey | quote }}
+                  {{- else }}
+                  name: {{ include "collabora-online.fullname" . }}
+                  key: username
+                  {{- end }}
+            - name: password
+              valueFrom:
+                secretKeyRef:
+                  {{- if (.Values.collabora.existingSecret).enabled }}
+                  name: {{ .Values.collabora.existingSecret.secretName | quote }}
+                  key: {{ .Values.collabora.existingSecret.passwordKey | quote }}
+                  {{- else }}
+                  name: {{ include "collabora-online.fullname" . }}
+                  key: password
+                  {{- end }}
+            {{- with .Values.collabora.env }}
+            {{ toYaml . | nindent 12 }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: tmp
               mountPath: /tmp
-          resources:
-{{ toYaml .Values.resources | indent 12 }}
-    {{- if .Values.nodeSelector }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 8 }}
-    {{- end }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         - name: tmp
           emptyDir: {}
+{{- end }}

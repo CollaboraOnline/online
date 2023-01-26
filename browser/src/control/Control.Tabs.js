@@ -197,7 +197,7 @@ L.Control.Tabs = L.Control.extend({
 									this._tabForContextMenu = j;
 									this._setPart(e);
 									window.contextMenuWizard = true;
-									if (!this._map.isPermissionReadOnly()) this._map.fire('mobilewizard', {data: menuData});
+									if (!this._map.isReadOnlyMode()) this._map.fire('mobilewizard', {data: menuData});
 								};
 							}(i).bind(this));
 					} else {
@@ -251,7 +251,7 @@ L.Control.Tabs = L.Control.extend({
 	},
 
 	_addDnDHandlers: function(element) {
-		if (!this._map.isPermissionReadOnly()) {
+		if (!this._map.isReadOnlyMode()) {
 			element.setAttribute('draggable', true);
 			element.addEventListener('dragstart', this._handleDragStart.bind(this), false);
 			element.addEventListener('dragenter', this._handleDragEnter, false);
@@ -316,19 +316,11 @@ L.Control.Tabs = L.Control.extend({
 	_renameSheet: function() {
 		var map = this._map;
 		var nPos = this._tabForContextMenu;
-		vex.dialog.open({
-			contentClassName: 'vex-has-inputs',
-			message: _('Enter new sheet name'),
-			buttons: [
-				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
-				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') })
-			],
-			input: '<input name="sheetname" id="rename-calc-sheet-modal" type="text" value="' + $('#spreadsheet-tab' + this._tabForContextMenu).text() + '" required />',
-			afterOpen: function() { document.getElementById('rename-calc-sheet-modal').select(); },
-			callback: function(data) {
-				map.renamePage(data.sheetname, nPos);
-			}
-		});
+		var tabName = $('#spreadsheet-tab' + this._tabForContextMenu).text();
+		this._map.uiManager.showInputModal('rename-calc-sheet', _('Rename sheet'), _('Enter new sheet name'), tabName, _('OK'),
+			function (value) {
+				map.renamePage(value, nPos);
+			});
 	},
 
 	_showSheet: function() {

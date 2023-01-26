@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.63])
 
-AC_INIT([coolwsd], [22.05.7.0], [https://github.com/CollaboraOnline/online/issues], [coolwsd], [https://collaboraonline.github.io/])
+AC_INIT([coolwsd], [22.05.10.0], [https://github.com/CollaboraOnline/online/issues], [coolwsd], [https://collaboraonline.github.io/])
 LT_INIT([shared, disable-static, dlopen])
 
 AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
@@ -75,9 +75,16 @@ AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_LN_S
 
+# override AC_PROG_CXX:
+# avoid libtool from adding -rpath when linking
+if test "$host_os" = "emscripten"; then
+    hardcode_libdir_flag_spec=
+    hardcode_libdir_flag_spec_CXX=
+fi
+
 AC_LANG_PUSH([C++])
 
-AS_IF([test `uname -s` = Linux],
+AS_IF([test `uname -s` = Linux -a "$host_os" != "emscripten"],
       [AC_PATH_PROG([SETCAP], setcap,[],[/bin:/usr/bin:/sbin:/usr/sbin])]
        AS_IF([test -z "$SETCAP"],
        [AC_MSG_ERROR([The setcap command is needed. It might be in a package called libcap-progs.])]))
@@ -135,6 +142,11 @@ AC_ARG_ENABLE([anonymization],
 AC_ARG_ENABLE([iosapp],
               AS_HELP_STRING([--enable-iosapp],
                              [Use on a Mac where you will build the iOS app.]))
+
+AC_ARG_WITH([wasm-fallback],
+              AS_HELP_STRING([--with-wasm-fallback=<path>],
+                             [Build a COOL where the client can fall back to a WASM implementation if the connection to the server fails.
+                              The path is where the WASM build of Online was done.]))
 
 AC_ARG_WITH([iosapp-appicon],
               AS_HELP_STRING([--with-iosapp-appicon=<path>],
@@ -258,6 +270,18 @@ AC_ARG_WITH([trace-event-file],
 AC_ARG_WITH([poco-includes],
             AS_HELP_STRING([--with-poco-includes=<path>],
                            [Path to the "include" directory with the Poco
+                            headers.  If you are building for Android 64bit,
+                            you need two, separated by a colon ':'.]))
+
+AC_ARG_WITH([zstd-libs],
+            AS_HELP_STRING([--with-zstd-libs=<path>],
+                           [Path to the directory containing libzstd.a
+                            libraries.  If you are building for Android 64bit,
+                            you need two, separated by a colon ':'.]))
+
+AC_ARG_WITH([zstd-includes],
+            AS_HELP_STRING([--with-zstd-includes=<path>],
+                           [Path to the "include" directory with the zstd
                             headers.  If you are building for Android 64bit,
                             you need two, separated by a colon ':'.]))
 
@@ -477,6 +501,18 @@ if test "$enable_experimental" = "yes" ; then
 fi
 AC_SUBST(ENABLE_EXPERIMENTAL)
 
+dnl check for a file at a path with an env-var with a given suffix
+AC_DEFUN([CHK_FILE_VAR], dnl env-var, suffix, file-to-match, msg
+[
+   if test -n "$[$1][$4]" -o "z[$4]" = "z"; then
+       if test -f "$[$1][$4]/[$2]"; then
+           AC_MSG_RESULT([$[$1]])
+       else
+           AC_MSG_ERROR([This is not a [$3] [$4] directory no: $[$1][$4]/[$2]])
+       fi
+   fi
+]) dnl CHK_FILE_VAR
+
 # macOS: When configuring for building the app itself, on macOS, we need these.
 # But not when just configuring for building the JS on Linux, for copying over
 # to the Mac.
@@ -496,8 +532,18 @@ POCOLIB_ARM64_V8A=
 POCOLIB_X86=
 POCOLIB_X86_64=
 POCODEBUG=
+
+ZSTDINCLUDE=
+ZSTDINCLUDE_ARM64_V8A=
+ZSTDINCLUDE_X86=
+ZSTDINCLUDE_X86_64=
+ZSTDLIB=
+ZSTDLIB_ARM64_V8A=
+ZSTDLIB_X86=
+ZSTDLIB_X86_64=
+
 CORE_VERSION_HASH=""
-if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_androidapp" = "yes" \); then
+if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_androidapp" = "yes" \) -o "$host_os" = "emscripten" ; then
    if test "$enable_androidapp" = "yes" ; then
       AC_MSG_CHECKING([for Android ABI to build for])
       if test -n "$with_android_abi" ; then
@@ -530,7 +576,7 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
    CORE_VERSION_HASH=`cd $LOBUILDDIR && grep buildid instdir/program/setuprc | sed -e 's/buildid=//' -e 's/............................$//'`
 
    # Sanity check, just a random object file in the LibreOffice build tree
-   if test \( "$enable_iosapp" = "yes" -a -f "$LOBUILDDIR/workdir/CxxObject/vcl/ios/iosinst.o" \) -o \( "$enable_androidapp" = "yes" -a -f "$LOBUILDDIR/workdir/LinkTarget/StaticLibrary/liblibpng.a" \); then
+   if test \( "$enable_iosapp" = "yes" -a -f "$LOBUILDDIR/workdir/CxxObject/vcl/ios/iosinst.o" \) -o \( "$enable_androidapp" = "yes" -a -f "$LOBUILDDIR/workdir/LinkTarget/StaticLibrary/liblibpng.a" \) -o \( "$host_os" = "emscripten" -a -f "${LOBUILDDIR}/workdir/LinkTarget/StaticLibrary/liblibpng.a" \); then
        AC_MSG_RESULT([$LOBUILDDIR])
    else
        AC_MSG_ERROR([This is not a LibreOffice core build directory: $LOBUILDDIR])
@@ -575,36 +621,11 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
       fi
    fi
 
-   # Sanity check
-   if test -f "$POCOINCLUDE/Poco/Poco.h"; then
-       AC_MSG_RESULT([$POCOINCLUDE])
-   else
-       AC_MSG_ERROR([This is not a Poco include directory: $POCOINCLUDE])
-   fi
-
-   if test -n "$POCOINCLUDE_ARM64_V8A" ; then
-      if test -f "$POCOINCLUDE_ARM64_V8A/Poco/Poco.h"; then
-         AC_MSG_RESULT([$POCOINCLUDE_ARM64_V8A])
-      else
-         AC_MSG_ERROR([This is not a Poco ARM64 include directory: $POCOINCLUDE_ARM64_V8A])
-      fi
-   fi
-
-   if test -n "$POCOINCLUDE_X86" ; then
-      if test -f "$POCOINCLUDE_X86/Poco/Poco.h"; then
-         AC_MSG_RESULT([$POCOINCLUDE_X86])
-      else
-         AC_MSG_ERROR([This is not a Poco x86 include directory: $POCOINCLUDE_X86])
-      fi
-   fi
-
-   if test -n "$POCOINCLUDE_X86_64" ; then
-      if test -f "$POCOINCLUDE_X86_64/Poco/Poco.h"; then
-         AC_MSG_RESULT([$POCOINCLUDE_X86_64])
-      else
-         AC_MSG_ERROR([This is not a Poco x86-64 include directory: $POCOINCLUDE_X86_64])
-      fi
-   fi
+   # Sanity checks
+   CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include)
+   CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include,_ARM64_V8A)
+   CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include,_X64)
+   CHK_FILE_VAR(POCOINCLUDE,Poco/Poco.h,Poco include,_X86_64)
 
    AC_MSG_CHECKING([for Poco lib directory to build against])
    if test -z "$with_poco_libs"; then
@@ -621,41 +642,53 @@ if test \( "$enable_iosapp" = "yes" -a `uname -s` = "Darwin" \) -o \( "$enable_a
       fi
    fi
 
-   # Sanity check
-   if test -f "$POCOLIB/libPocoFoundation.a"; then
-       AC_MSG_RESULT([$POCOLIB])
-   else
-       AC_MSG_ERROR([This is not a Poco lib directory: $POCOLIB])
-   fi
-
-   if test -n "$POCOLIB_ARM64_V8A" ; then
-      if test -f "$POCOLIB_ARM64_V8A/libPocoFoundation.a"; then
-         AC_MSG_RESULT([$POCOLIB_ARM64_V8A])
-      else
-         AC_MSG_ERROR([This is not a Poco ARM64 lib directory: $POCOLIB_ARM64_V8A])
-      fi
-   fi
-
-   if test -n "$POCOLIB_X86" ; then
-      if test -f "$POCOLIB_X86/libPocoFoundation.a"; then
-         AC_MSG_RESULT([$POCOLIB_X86])
-      else
-         AC_MSG_ERROR([This is not a Poco x86 lib directory: $POCOLIB_X86])
-      fi
-   fi
-
-   if test -n "$POCOLIB_X86_64" ; then
-      if test -f "$POCOLIB_X86_64/libPocoFoundation.a"; then
-         AC_MSG_RESULT([$POCOLIB_X86_64])
-      else
-         AC_MSG_ERROR([This is not a Poco x86-64 lib directory: $POCOLIB_X86_64])
-      fi
-   fi
+   # Sanity checks
+   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib)
+   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_ARM64_V8A)
+   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X64)
+   CHK_FILE_VAR(POCOLIB,libPocoFoundation.a,Poco lib,_X86_X64)
 
    if test "$ENABLE_DEBUG" = "true" ; then
        POCODEBUG=d
    fi
+
+   AC_MSG_CHECKING([for zstd lib directory to build against])
+   if test -z "$with_zstd_libs"; then
+      AC_MSG_ERROR([You MUST use the --with-zstd-libs option when configuring the mobile app build tree.])
+   fi
+
+   ZSTDINCLUDE="$with_zstd_includes"
+   if test "$enable_androidapp" = "yes" ; then
+      if echo "$ZSTDINCLUDE" | grep -qs ':' ; then
+         ZSTDINCLUDE=`echo $with_zstd_includes | cut -d: -f1`
+         ZSTDINCLUDE_ARM64_V8A=`echo $with_zstd_includes | cut -d: -f2`
+         ZSTDINCLUDE_X86=`echo $with_zstd_includes | cut -d: -f3`
+         ZSTDINCLUDE_X86_64=`echo $with_zstd_includes | cut -d: -f4`
+      fi
+   fi
+
+   # Sanity checks
+   CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include)
+   CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include,_ARM64_V8A)
+   CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include,_X64)
+   CHK_FILE_VAR(ZSTDINCLUDE,zstd.h,Zstd include,_X86_64)
+
+   ZSTDLIB="$with_zstd_libs"
+   if test "$enable_androidapp" = "yes" ; then
+      if echo "$ZSTDLIB" | grep -qs ':' ; then
+         ZSTDLIB=`echo $with_zstd_libs | cut -d: -f1`
+         ZSTDLIB_ARM64_V8A=`echo $with_zstd_libs | cut -d: -f2`
+         ZSTDLIB_X86=`echo $with_zstd_libs | cut -d: -f3`
+         ZSTDLIB_X86_64=`echo $with_zstd_libs | cut -d: -f4`
+      fi
+   fi
+
+   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib)
+   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_ARM64_V8A)
+   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X64)
+   CHK_FILE_VAR(ZSTDLIB,libzstd.a,Zstd lib,_X86_64)
 fi
+
 AC_SUBST(LOBUILDDIR)
 AC_SUBST(ANDROID_ABI)
 AC_SUBST(ANDROID_ABI_SPLIT)
@@ -671,6 +704,14 @@ AC_SUBST(POCOLIB_ARM64_V8A)
 AC_SUBST(POCOLIB_X86)
 AC_SUBST(POCOLIB_X86_64)
 AC_SUBST(POCODEBUG)
+AC_SUBST(ZSTDINCLUDE)
+AC_SUBST(ZSTDINCLUDE_ARM64_V8A)
+AC_SUBST(ZSTDINCLUDE_X86)
+AC_SUBST(ZSTDINCLUDE_X86_64)
+AC_SUBST(ZSTDLIB)
+AC_SUBST(ZSTDLIB_ARM64_V8A)
+AC_SUBST(ZSTDLIB_X86)
+AC_SUBST(ZSTDLIB_X86_64)
 AC_SUBST([CORE_VERSION_HASH])
 
 AC_DEFINE_UNQUOTED([CORE_VERSION_HASH],[["$CORE_VERSION_HASH"]],[LibreOffice core git hash if present])
@@ -786,6 +827,18 @@ if test "$enable_gtkapp" = "yes"; then
 fi
 AC_SUBST(ENABLE_GTKAPP)
 AM_CONDITIONAL([ENABLE_GTKAPP], [test "$ENABLE_GTKAPP" = "true"])
+
+dnl ENABLE_WASM_FALLBACK means we are building an otherwise normal COOL but with the "WASM fallback"
+dnl capability. Compare to ENABLE_WASM.
+
+AM_CONDITIONAL([ENABLE_WASM_FALLBACK], [test -n "$with_wasm_fallback"])
+WASM_BUILDDIR="$with_wasm_fallback"
+AC_SUBST(WASM_BUILDDIR)
+
+dnl ENABLE_WASM means that we are building the WASM "app" that will run locally in the
+dnl client when necessary. ENABLE_WASM_FALLBACK and ENABLE_WASM can't both be on simultaneously.
+
+AM_CONDITIONAL([ENABLE_WASM], [test "$host_os" = "emscripten"])
 
 MAX_CONNECTIONS=9999
 AS_IF([test -n "$with_max_connections" && test "$with_max_connections" -gt "0"],
@@ -1046,6 +1099,12 @@ AS_IF([test -n "$with_poco_includes"],
 AS_IF([test -n "$with_poco_libs"],
       [LDFLAGS="$LDFLAGS -L${with_poco_libs}"])
 
+AS_IF([test -n "$with_zstd_includes"],
+      [CPPFLAGS="$CPPFLAGS -isystem ${with_zstd_includes}"])
+
+AS_IF([test -n "$with_zstd_libs"],
+      [LDFLAGS="$LDFLAGS -L${with_zstd_libs}"])
+
 AS_IF([test -n "$LIBPNG_INCLUDES"],
       [CPPFLAGS="$CPPFLAGS -isystem ${LIBPNG_INCLUDES}"])
 
@@ -1058,11 +1117,11 @@ AS_IF([test -n "$with_cppunit_includes"],
 AS_IF([test -n "$with_cppunit_libs"],
       [LDFLAGS="$LDFLAGS -L${with_cppunit_libs}"])
 
-AS_IF([test `uname -s` = Linux -o `uname -s` = FreeBSD],
+AS_IF([test \( `uname -s` = Linux -o `uname -s` = FreeBSD \) -a "$host_os" != "emscripten"],
       [AS_IF([test -n "$with_poco_libs" -a -f "$with_poco_libs/libPocoFoundation.so"],
              [LDFLAGS="$LDFLAGS -Wl,-rpath,${with_poco_libs}"])])
 
-AS_IF([test `uname -s` = Linux -o `uname -s` = FreeBSD],
+AS_IF([test \( `uname -s` = Linux -o `uname -s` = FreeBSD \) -a "$host_os" != "emscripten"],
       [AS_IF([test -n "$with_cppunit_libs"],
              [LDFLAGS="$LDFLAGS -Wl,-rpath,${with_cppunit_libs}"])])
 
@@ -1072,17 +1131,17 @@ AS_IF([test `uname -s` != Darwin],
                       [],
                       [AC_MSG_ERROR([dlopen not found])])])
 
-AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
-      [AC_SEARCH_LIBS([png_create_write_struct],
-                      [png],
-                      [],
-                      [AC_MSG_ERROR([libpng not available?])])
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
+      [PKG_CHECK_MODULES([PNG], [libpng])
+dnl    deflated HTTP / web-page serving
        PKG_CHECK_MODULES([ZLIB], [zlib])
+dnl    tile compression
+       PKG_CHECK_MODULES([ZSTD], [libzstd >= 1.4.0])
 
        PKG_CHECK_MODULES([CPPUNIT], [cppunit])
        ])
 
-AS_IF([test `uname -s` = Linux -a "$ENABLE_ANDROIDAPP" != "true"],
+AS_IF([test `uname -s` = Linux -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
       [AC_SEARCH_LIBS([cap_get_proc],
                       [cap],
                       [],
@@ -1097,7 +1156,7 @@ mobile_app=
 ENABLE_MOBILEAPP=
 MOBILEAPP=0
 AC_MSG_CHECKING([Is this a mobile app])
-if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_androidapp" = "yes"; then
+if test "$enable_gtkapp" = "yes" -o "$enable_iosapp" = "yes" -o "$enable_androidapp" = "yes" -o "$host_os" = "emscripten" ; then
      AC_MSG_RESULT([Yes])
      mobile_app=true;
      MOBILEAPP=1
@@ -1108,6 +1167,11 @@ fi
 AC_DEFINE_UNQUOTED([MOBILEAPP],[$MOBILEAPP],[Define to 1 if this is a mobileapp (eg. Android) build.])
 AC_SUBST(ENABLE_MOBILEAPP)
 AM_CONDITIONAL([ENABLE_MOBILEAPP], [test "$ENABLE_MOBILEAPP" = "true"])
+
+if test "$host_os" = "emscripten" ; then
+    ENABLE_EMSCRIPTENAPP=true
+fi
+AC_SUBST(ENABLE_EMSCRIPTENAPP)
 
 ENABLE_SSL=true
 if test "$enable_ssl" != "no" -a "$mobile_app" != "true"; then
@@ -1126,7 +1190,7 @@ fi
 AM_CONDITIONAL([ENABLE_SSL], [$ENABLE_SSL])
 AC_SUBST(ENABLE_SSL)
 
-AS_IF([test "$ENABLE_ANDROIDAPP" != "true"],
+AS_IF([test "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
       [AC_CHECK_HEADERS([security/pam_appl.h],
                         [],
                         [AC_MSG_ERROR([header security/pam_appl.h not found, install PAM development package])])
@@ -1148,12 +1212,14 @@ else
 fi
 AC_SUBST(ENABLE_SUPPORT_KEY)
 
-LIBS="$LIBS -lPocoNetSSL${POCO_DEBUG_SUFFIX} -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX} -lPocoCrypto${POCO_DEBUG_SUFFIX}"
+if test "$host_os" != "emscripten"; then
+    LIBS="$LIBS -lPocoNetSSL${POCO_DEBUG_SUFFIX} -lPocoNet${POCO_DEBUG_SUFFIX} -lPocoUtil${POCO_DEBUG_SUFFIX} -lPocoJSON${POCO_DEBUG_SUFFIX} -lPocoXML${POCO_DEBUG_SUFFIX} -lPocoFoundation${POCO_DEBUG_SUFFIX} -lPocoCrypto${POCO_DEBUG_SUFFIX}"
+fi
 
 AS_IF([test "$ENABLE_SSL" = "true"],
       [LIBS="$LIBS -lssl -lcrypto"])
 
-AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
+AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true" -a "$host_os" != "emscripten"],
       [AC_CHECK_HEADERS([LibreOfficeKit/LibreOfficeKit.h],
                         [],
                         [AC_MSG_ERROR([header LibreOfficeKit/LibreOfficeKit.h not found, perhaps you want to use --with-lokit-path])])
@@ -1170,6 +1236,7 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
            AC_DEFINE([DISABLE_SECCOMP],1,[Whether to disable SECCOMP])
        fi
 
+       PKG_CHECK_MODULES([OPENSSL], [openssl])
        AC_MSG_CHECKING([Whether OpenSSL has PKCS5_PBKDF2_HMAC()])
        AC_COMPILE_IFELSE([AC_LANG_SOURCE([
        #include <openssl/opensslv.h>
@@ -1271,10 +1338,10 @@ if test -n "$with_user_id"; then
 fi
 AC_DEFINE_UNQUOTED([COOL_USER_ID],["$COOL_USER_ID"],[The user-name which is allowed to run coolwsd and its tools])
 
-AM_CONDITIONAL([ENABLE_SETCAP], [test "$enable_setcap" != "no" -a `uname -s` = "Linux" -a "$enable_fuzzers" != "yes"])
+AM_CONDITIONAL([ENABLE_SETCAP], [test "$enable_setcap" != "no" -a `uname -s` = "Linux" -a "$enable_fuzzers" != "yes" -a "$host_os" != "emscripten"])
 
 ENABLE_SETCAP=
-if test "$enable_setcap" != "no" -a `uname -s` = "Linux" -a "$enable_fuzzers" != "yes"; then
+if test "$enable_setcap" != "no" -a `uname -s` = "Linux" -a "$enable_fuzzers" != "yes" -a "$host_os" != "emscripten"; then
     ENABLE_SETCAP=true
     setcap_msg="setcap enabled"
 else
@@ -1401,8 +1468,8 @@ if test "$enable_feature_lock" = "yes"; then
 .uno:TTestDialog .uno:FTestDialog .uno:ZTestDialog .uno:ChiSquareTestDialog \
 .uno:FourierAnalysisDialog .uno:Validation .uno:DataFilterSpecialFilter \
 .uno:TrackChanges .uno:AcceptTrackedChanges .uno:InsertReferenceField \
-.uno:Watermark .uno:InsertIndexesEntry .uno:InsertAuthoritiesEntry \
-.uno:InsertMultiIndex .uno:SlideMasterPage downloadas-epub downloadas-rtf masterslidebutton"
+.uno:Watermark .uno:InsertIndexesEntry \
+.uno:InsertMultiIndex .uno:SlideMasterPage exportepub downloadas-rtf masterslidebutton"
 fi
 AC_DEFINE_UNQUOTED([LOCKED_COMMANDS],["$LOCKED_COMMANDS"],[Default value of feature_lock.locked_commands])
 AC_SUBST(LOCKED_COMMANDS)
@@ -1521,6 +1588,7 @@ AC_SUBST(ALLOWED_LANGUAGES)
 AC_CONFIG_FILES([Makefile
                  cypress_test/Makefile
                  gtk/Makefile
+                 wasm/Makefile
                  test/Makefile
                  browser/Makefile
                  browser/npm-shrinkwrap.json
@@ -1582,6 +1650,20 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
              AC_MSG_ERROR([pocolib-symlink exists and is not a symbolic link])
           fi
           ln -s "$POCOLIB" pocolib-symlink
+
+          if test -L zstdinclude-symlink; then
+             rm -f zstdinclude-symlink
+          elif test -f zstdinclude-symlink; then
+             AC_MSG_ERROR([zstdinclude-symlink exists and is not a symbolic link])
+          fi
+          ln -s "$ZSTDINCLUDE" zstdinclude-symlink
+
+          if test -L zstdlib-symlink; then
+             rm -f zstdlib-symlink
+          elif test -f zstdlib-symlink; then
+             AC_MSG_ERROR([zstdlib-symlink exists and is not a symbolic link])
+          fi
+          ln -s "$ZSTDLIB" zstdlib-symlink
 
           eval `grep 'export ICU_MAJOR=' "$LOBUILDDIR/config_host.mk"`
           if test -L ICU.dat; then

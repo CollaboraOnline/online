@@ -1234,11 +1234,13 @@ private:
 
         // Double check if list of viewids from core and our list matches,
         // and create an array of JSON objects containing id and username
-        std::ostringstream oss;
-        oss << "viewinfo: [";
+
+        std::map<int, std::string> viewStrings; // viewId -> public data string
+
         for (const auto& viewId : viewIds)
         {
-            oss << "{\"id\":" << viewId << ',';
+            std::ostringstream oss;
+            oss << "\"id\":" << viewId << ',';
             int color = 0;
             const auto itView = viewInfoMap.find(viewId);
             if (itView == viewInfoMap.end())
@@ -1262,15 +1264,37 @@ private:
                 }
             }
 
-            oss << "\"color\":" << color << "},";
+            oss << "\"color\":" << color;
+
+            viewStrings[viewId] = oss.str();
         }
 
-        if (viewCount > 0)
-            oss.seekp(-1, std::ios_base::cur); // Remove last comma.
-        oss << ']';
+        // Broadcast updated viewinfo to all clients. Every view gets own userprivateinfo.
 
-        // Broadcast updated viewinfo to all clients.
-        notifyAll(oss.str());
+        for (const auto& it : _sessions)
+        {
+            std::ostringstream oss;
+            oss << "viewinfo: [";
+
+            for (const auto& viewId : viewIds)
+            {
+                if (viewId == it.second->getViewId() && !it.second->getUserPrivateInfo().empty())
+                {
+                    oss << "{" << viewStrings[viewId];
+                    oss << ",\"userprivateinfo\":" << it.second->getUserPrivateInfo();
+                    oss << "},";
+                }
+                else
+                    oss << "{" << viewStrings[viewId] << "},";
+            }
+
+            if (viewCount > 0)
+                oss.seekp(-1, std::ios_base::cur); // Remove last comma.
+
+            oss << ']';
+
+            it.second->sendTextFrame(oss.str());
+        }
     }
 
     void updateEditorSpeeds(int id, int speed) override
@@ -1452,6 +1476,9 @@ private:
                 }
 
                 session->sendTextFrameAndLogError("error: cmd=load kind=faileddocloading");
+
+                LOG_FTL("Failed to load the document. Setting TerminationFlag");
+                SigUtil::setTerminationFlag();
                 return nullptr;
             }
 
@@ -1502,7 +1529,8 @@ private:
         session->setViewId(viewId);
 
         _sessionUserInfo[viewId] = UserInfo(session->getViewUserId(), session->getViewUserName(),
-                                            session->getViewUserExtraInfo(), session->isReadOnly());
+                                            session->getViewUserExtraInfo(), session->getViewUserPrivateInfo(),
+                                            session->isReadOnly());
 
         _loKitDocument->setViewLanguage(viewId, lang.c_str());
 
@@ -2451,6 +2479,8 @@ void documentViewCallback(const int type, const char* payload, void* data)
 /// Called by LOK main-loop the central location for data processing.
 int pollCallback(void* pData, int timeoutUs)
 {
+    if (timeoutUs < 0)
+        timeoutUs = SocketPoll::DefaultPollTimeoutMicroS.count();
 #ifndef IOS
     if (!pData)
         return 0;
@@ -2579,6 +2609,7 @@ void lokit_main(
     const bool logToFile = std::getenv("COOL_LOGFILE");
     const char* logFilename = std::getenv("COOL_LOGFILENAME");
     const char* logLevel = std::getenv("COOL_LOGLEVEL");
+    const char* logLevelStartup = std::getenv("COOL_LOGLEVEL_STARTUP");
     const bool logColor = config::getBool("logging.color", true) && isatty(fileno(stderr));
     std::map<std::string, std::string> logProperties;
     if (logToFile && logFilename)
@@ -2589,11 +2620,13 @@ void lokit_main(
     Util::rng::reseed();
 
     const std::string LogLevel = logLevel ? logLevel : "trace";
+    const std::string LogLevelStartup = logLevelStartup ? logLevelStartup : "trace";
     const bool bTraceStartup = (std::getenv("COOL_TRACE_STARTUP") != nullptr);
-    Log::initialize("kit", bTraceStartup ? "trace" : logLevel, logColor, logToFile, logProperties);
-    if (bTraceStartup && LogLevel != "trace")
+    Log::initialize("kit", bTraceStartup ? LogLevelStartup : logLevel, logColor, logToFile, logProperties);
+    if (bTraceStartup && LogLevel != LogLevelStartup)
     {
-        LOG_INF("Setting log-level to [trace] and delaying setting to configured [" << LogLevel << "] until after Kit initialization.");
+        LOG_INF("Setting log-level to [" << LogLevelStartup << "] and delaying "
+                "setting to [" << LogLevel << "] until after Kit initialization.");
     }
 
     const char* pAnonymizationSalt = std::getenv("COOL_ANONYMIZATION_SALT");
@@ -2929,7 +2962,7 @@ void lokit_main(
         LOG_INF("New kit client websocket inserted.");
 
 #if !MOBILEAPP
-        if (bTraceStartup && LogLevel != "trace")
+        if (bTraceStartup && LogLevel != LogLevelStartup)
         {
             LOG_INF("Kit initialization complete: setting log-level to [" << LogLevel << "] as configured.");
             Log::logger().setLevel(LogLevel);

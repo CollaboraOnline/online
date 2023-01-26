@@ -64,7 +64,7 @@ public:
             std::ostringstream jsonStream;
             fileInfo->stringify(jsonStream);
 
-            http::Response httpResponse(http::StatusLine(200));
+            http::Response httpResponse(http::StatusCode::OK);
             httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
             httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
             socket->sendAndShutdown(httpResponse);
@@ -123,7 +123,7 @@ public:
 
             const std::string body = "{\"LastModifiedTime\": \"" +
                                      Util::getIso8601FracformatTime(getFileLastModifiedTime()) + "\" }";
-            http::Response httpResponse(http::StatusLine(200));
+            http::Response httpResponse(http::StatusCode::OK);
             httpResponse.setBody(body, "application/json; charset=utf-8");
             socket->sendAndShutdown(httpResponse);
 
@@ -148,7 +148,6 @@ public:
                 initWebsocket("/wopi/files/10?access_token=anything");
                 WSD_CMD("load url=" + getWopiSrc());
 
-                SocketPoll::wakeupWorld();
                 break;
             }
             case Phase::CloseDoc:

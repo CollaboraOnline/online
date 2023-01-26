@@ -289,7 +289,6 @@ window.app = {
 		this.protocol = '';
 		this.readyState = 1;
 		this.id = window.fakeWebSocketCounter++;
-		this.sendCounter = 0;
 		this.onclose = function() {
 		};
 		this.onerror = function() {
@@ -302,7 +301,6 @@ window.app = {
 		};
 	};
 	global.FakeWebSocket.prototype.send = function(data) {
-		this.sendCounter++;
 		window.postMobileMessage(data);
 	};
 
@@ -319,7 +317,6 @@ window.app = {
 		this.readyState = 0; // connecting
 		this.sessionId = 'open';
 		this.id = window.proxySocketCounter++;
-		this.sendCounter = 0;
 		this.msgInflight = 0;
 		this.openInflight = 0;
 		this.inSerial = 0;
@@ -882,7 +879,7 @@ window.app = {
 
 		global.socket.binaryType = 'arraybuffer';
 
-		if (window.ThisIsAMobileApp) {
+		if (window.ThisIsAMobileApp && !window.ThisIsTheEmscriptenApp) {
 			// This corresponds to the initial GET request when creating a WebSocket
 			// connection and tells the app's code that it is OK to start invoking
 			// TheFakeWebSocket's onmessage handler. The app code that handles this

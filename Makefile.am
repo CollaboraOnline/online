@@ -5,7 +5,11 @@ if ENABLE_MOBILEAPP
 if ENABLE_GTKAPP
 SUBDIRS = gtk browser
 else
+if ENABLE_WASM
+SUBDIRS = wasm browser
+else !ENABLE_WASM
 SUBDIRS = browser
+endif !ENABLE_WASM
 endif
 
 else
@@ -65,7 +69,7 @@ nginxconfig_DATA = etc/nginx/coolwsd.conf
 ACLOCAL_AMFLAGS = -I m4
 
 # quick and easy for now.
-include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit ${ZLIB_CFLAGS}
+include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit ${ZLIB_CFLAGS} ${ZSTD_CFLAGS} ${PNG_CFLAGS}
 
 AM_CPPFLAGS = -pthread -DCOOLWSD_DATADIR='"@COOLWSD_DATADIR@"' \
 	      -DCOOLWSD_CONFIGDIR='"@COOLWSD_CONFIGDIR@"' \
@@ -76,13 +80,13 @@ if !ENABLE_DEBUG
 AM_CPPFLAGS += -DNDEBUG
 endif
 
-AM_LDFLAGS = -pthread -Wl,-E -lpam $(ZLIB_LIBS)
+AM_LDFLAGS = -pthread -Wl,-E -lpam $(ZLIB_LIBS) $(ZSTD_LIBS) ${PNG_LIBS}
 
 if ENABLE_SSL
-AM_LDFLAGS += -lssl -lcrypto
+AM_LDFLAGS += ${OPENSSL_LIBS}
 else
-coolwsd_LDADD = -lssl -lcrypto
-coolconfig_LDADD = -lssl -lcrypto
+coolwsd_LDADD = ${OPENSSL_LIBS}
+coolconfig_LDADD = ${OPENSSL_LIBS}
 endif
 
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes --exclude=browser *
@@ -338,6 +342,7 @@ noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
                  test/testlog.hpp \
                  test/HttpTestServer.hpp \
                  test/WOPIUploadConflictCommon.hpp \
+                 test/UnitWSDClient.hpp \
                  test/helpers.hpp
 
 GIT_BRANCH := $(shell git symbolic-ref --short HEAD)

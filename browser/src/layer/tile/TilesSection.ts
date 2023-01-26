@@ -6,43 +6,26 @@ declare var $: any;
 declare var Hammer: any;
 declare var app: any;
 
-class TilesSection {
-	context: CanvasRenderingContext2D = null;
-	myTopLeft: Array<number> = null;
-	documentTopLeft: Array<number> = null;
-	containerObject: any = null;
-	dpiScale: number = null;
-	name: string = null;
-	backgroundColor: string = null;
-	borderColor: string = null;
-	boundToSection: string = null;
-	anchor: Array<any> = new Array(0);
-	position: Array<number> = new Array(0);
-	size: Array<number> = new Array(0);
-	expand: Array<string> = new Array(0);
-	isLocated: boolean = false;
-	processingOrder: number = null;
-	drawingOrder: number = null;
-	zIndex: number = null;
-	interactable: boolean = true;
-	sectionProperties: any = {};
+class TilesSection extends CanvasSectionObject {
 	map: any;
 	offscreenCanvases: Array<any> = new Array(0);
 	oscCtxs: Array<any> = new Array(0);
 	isJSDOM: boolean = false; // testing
 
-	isCalcRTL: () => boolean;
-
 	constructor () {
-		this.name = L.CSections.Tiles.name;
-		// Below anchor list may be expanded. For example, Writer may have ruler section. Then ruler section should also be added here.
-		this.anchor = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, 'right', 'left']];
-		this.position = [0, 0]; // This section's myTopLeft will be anchored to other sections^. No initial position is needed.
-		this.size = [0, 0]; // Going to be expanded, no initial width or height is necessary.
-		this.expand = ['top', 'left', 'bottom', 'right'];
-		this.processingOrder = L.CSections.Tiles.processingOrder;
-		this.drawingOrder = L.CSections.Tiles.drawingOrder;
-		this.zIndex = L.CSections.Tiles.zIndex;
+		super({
+			name: L.CSections.Tiles.name,
+			// Below anchor list may be expanded. For example, Writer may have ruler section. Then ruler section should also be added here.
+			anchor: [[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, 'right', 'left']],
+			position: [0, 0], // This section's myTopLeft will be anchored to other sections^. No initial position is needed.
+			size: [0, 0], // Going to be expanded, no initial width or height is necessary.
+			expand: 'top left bottom right',
+			processingOrder: L.CSections.Tiles.processingOrder,
+			drawingOrder: L.CSections.Tiles.drawingOrder,
+			zIndex: L.CSections.Tiles.zIndex,
+			interactable: true,
+			sectionProperties: {},
+		});
 
 		this.map = L.Map.THIS;
 
@@ -53,6 +36,7 @@ class TilesSection {
 		this.sectionProperties.pageBackgroundFillColorWriter = 'white';
 		this.sectionProperties.pageBackgroundTextColor = 'grey';
 		this.sectionProperties.pageBackgroundFont = String(40 * app.roundedDpiScale) + 'px Arial';
+
 		this.isJSDOM = typeof window === 'object' && window.name === 'nodejs';
 	}
 
@@ -736,21 +720,6 @@ class TilesSection {
 			corePxBounds.max.multiplyBy(convScale)
 		);
 	}
-
-	public onMouseWheel () { return; }
-	public onMouseMove () { return; }
-	public onMouseDown () { return; }
-	public onMouseUp () { return; }
-	public onMouseEnter () { return; }
-	public onMouseLeave () { return; }
-	public onClick () { return; }
-	public onDoubleClick () { return; }
-	public onContextMenu () { return; }
-	public onLongPress () { return; }
-	public onMultiTouchStart () { return; }
-	public onMultiTouchMove () { return; }
-	public onMultiTouchEnd () { return; }
-	public onNewDocumentTopLeft () { return; }
 }
 
 L.getNewTilesSection = function () {

@@ -3,7 +3,6 @@
 srcdir=`dirname $0`
 test -n "$srcdir" || srcdir=.
 
-olddir=`pwd`
 cd "$srcdir"
 
 function failed {
@@ -37,5 +36,3 @@ cat << EOF
 Result: All went OK, please run $srcdir/configure (with the appropriate parameters) now.
 
 EOF
-
-cd "$olddir"

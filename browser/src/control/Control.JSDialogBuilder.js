@@ -4,7 +4,7 @@
  * from the JSON description provided by the server.
  */
 
-/* global app $ w2ui _ _UNO UNOKey UNOModifier L */
+/* global app $ w2ui _ _UNO UNOKey UNOModifier L JSDialog */
 
 L.Control.JSDialogBuilder = L.Control.extend({
 
@@ -41,6 +41,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_menus: null,
 	_colorPickers: null,
 	_colorLastSelection: {},
+
+	// Responses are included in a parent container. While buttons are created, responses need to be checked.
+	// So we save the button ids and responses to check them later.
+	_responses: {}, // Button id = response
 
 	_currentDepth: 0,
 
@@ -102,7 +106,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['divcontainer'] = this._divContainerHandler;
 		this._controlHandlers['colorlistbox'] = this._colorControl;
 		this._controlHandlers['borderstyle'] = this._borderControl;
-		this._controlHandlers['treelistbox'] = this._treelistboxControl;
+		this._controlHandlers['treelistbox'] = JSDialog.treeView;
 		this._controlHandlers['iconview'] = this._iconViewControl;
 		this._controlHandlers['drawingarea'] = this._drawingAreaControl;
 		this._controlHandlers['rootcomment'] = this._rootCommentControl;
@@ -115,6 +119,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['image'] = this._imageHandler;
 		this._controlHandlers['scrollwindow'] = this._scrollWindowControl;
 		this._controlHandlers['customtoolitem'] = this._mapDispatchToolItem;
+		this._controlHandlers['bigcustomtoolitem'] = this._mapBigDispatchToolItem;
 
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
@@ -503,6 +508,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (parentContainer && !parentContainer.id)
 			parentContainer.id = data.id;
 
+		// Dialogue is a parent container of a buttonbox, so we will save the responses first, then we will check them while creating the buttons.
+		if ((data.type === 'dialog' || data.type === 'messagebox' || data.type === 'modelessdialog')
+			&& data.responses) {
+			for (var i in data.responses) {
+				// Button id = response
+				builder._responses[data.responses[i].id] = data.responses[i].response;
+			}
+		}
+
 		return true;
 	},
 
@@ -548,32 +562,55 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var processedChildren = [];
 
-		var table = L.DomUtil.create('table', builder.options.cssClass + ' ui-grid', parentContainer);
+		var table = L.DomUtil.create('div', builder.options.cssClass + ' ui-grid', parentContainer);
 		table.id = data.id;
 
+		var gridRowColStyle = 'grid-template-rows: repeat(' + rows  + ', auto); \
+			grid-template-columns: repeat(' + cols  + ', auto);';
+
+		table.style = gridRowColStyle;
+
 		for (var row = 0; row < rows; row++) {
-			var rowNode = L.DomUtil.create('tr', builder.options.cssClass, table);
+			var prevChild = null;
+
 			for (var col = 0; col < cols; col++) {
 				var child = builder._getGridChild(data.children, row, col);
-				var colNode = L.DomUtil.create('td', builder.options.cssClass, rowNode);
+				var isMergedCell = prevChild && prevChild.width
+					&& parseInt(prevChild.left) + parseInt(prevChild.width) > col;
 
 				if (child) {
-					if (child.width)
-						$(colNode).attr('colspan', parseInt(child.width));
+					if (!child.id || child.id === '') // required for postprocess...
+						child.id = table.id + '-cell-' + row + '-' + col;
 
-					builder.build(colNode, [child], false, false);
+					var sandbox = L.DomUtil.create('div');
+					builder.build(sandbox, [child], false);
+
+					var control = sandbox.firstChild;
+					if (control) {
+						L.DomUtil.addClass(control, 'ui-grid-cell');
+						table.appendChild(control);
+					}
 
 					processedChildren.push(child);
+					prevChild = child;
+				} else if (!isMergedCell) {
+					// empty placeholder to keep correct order
+					L.DomUtil.create('div', 'ui-grid-cell', table);
 				}
+
 			}
 		}
 
 		for (var i = 0; i < (data.children || []).length; i++) {
 			child = data.children[i];
 			if (processedChildren.indexOf(child) === -1) {
-				rowNode = L.DomUtil.create('tr', builder.options.cssClass, table);
-				colNode = L.DomUtil.create('td', builder.options.cssClass, rowNode);
-				builder.build(colNode, [child], false, false);
+				sandbox = L.DomUtil.create('div');
+				builder.build(sandbox, [child], false);
+				control = sandbox.firstChild;
+				if (control) {
+					L.DomUtil.addClass(control, 'ui-grid-cell');
+					table.appendChild(control);
+				}
 				processedChildren.push(child);
 			}
 		}
@@ -586,12 +623,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 												+ (data.layoutstyle ? data.layoutstyle : ''), parentContainer);
 		container.id = data.id;
 
+		var isButtonBoxLeft = data.leftaligned === 'true';
 		var leftAlignButtons = [];
 		var rightAlignButton = [];
 
 		for (var i in data.children) {
 			var child = data.children[i];
-			if (child.id === 'help')
+			if (child.id === 'help' || isButtonBoxLeft === true)
 				leftAlignButtons.push(child);
 			else
 				rightAlignButton.push(child);
@@ -601,7 +639,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		for (i in leftAlignButtons) {
 			child = leftAlignButtons[i];
-			builder._controlHandlers['pushbutton'](left, child, builder);
+			builder._controlHandlers[child.type](left, child, builder);
 		}
 
 		var right = L.DomUtil.create('div', builder.options.cssClass + ' ui-button-box-right', container);
@@ -610,7 +648,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		for (i in rightAlignButton) {
 			child = rightAlignButton[i];
-			builder._controlHandlers['pushbutton'](right, child, builder);
+			builder._controlHandlers[child.type](right, child, builder);
 		}
 
 		return false;
@@ -691,7 +729,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (data.enabled !== 'false' && data.enabled !== false) {
 					$(sectionTitle).click(function(event, data) {
 						builder.wizard.goLevelDown(mainContainer, data);
-						if (contentNode && contentNode.onshow)
+						if (contentNode && contentNode.onshow && !builder.wizard._inBuilding)
 							contentNode.onshow();
 					});
 				} else {
@@ -1404,9 +1442,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_editControl: function(parentContainer, data, builder, callback) {
 		var edit = L.DomUtil.create('input', 'ui-edit ' + builder.options.cssClass, parentContainer);
-		edit.value = builder._cleanText(data.text);
+		edit.value = data.text;
 		edit.id = data.id;
 		edit.dir = 'auto';
+
+		if (data.password === true)
+			edit.type = 'password';
 
 		if (data.enabled === 'false' || data.enabled === false)
 			$(edit).prop('disabled', true);
@@ -1666,12 +1707,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled === 'false' || data.enabled === false)
 			$(pushbutton).prop('disabled', true);
 
-		$(pushbutton).click(function () {
-			if (customCallback)
-				customCallback();
-			else
-				builder.callback('pushbutton', 'click', pushbutton, data.command, builder);
-		});
+		if (customCallback)
+			pushbutton.onclick = customCallback;
+		else if (builder._responses[pushbutton.id] !== undefined)
+			pushbutton.onclick = builder.callback.bind(builder, 'responsebutton', 'click', { id: pushbutton.id }, builder._responses[pushbutton.id], builder);
+		else
+			pushbutton.onclick = builder.callback.bind(builder, 'pushbutton', 'click', pushbutton, data.command, builder);
 
 		builder.map.hideRestrictedItems(data, wrapper, pushbutton);
 		builder.map.disableLockedItem(data, wrapper, pushbutton);
@@ -1794,7 +1835,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var listbox = L.DomUtil.create('select', builder.options.cssClass + ' ui-listbox ', container);
 		listbox.id = data.id + '-input';
-		listbox.tabIndex = '0';
 		var listboxArrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', container);
 		listboxArrow.id = 'listbox-arrow-' + data.id;
 
@@ -1833,214 +1873,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				newOption.selected = true;
 			} else
 				$(listbox).val('');
-		}
-
-		return false;
-	},
-
-	_treelistboxEntry: function (parentContainer, treeViewData, entry, builder) {
-		if (entry.text == '<dummy>')
-			return;
-		var disabled = treeViewData.enabled === 'false' || treeViewData.enabled === false;
-
-		var li = L.DomUtil.create('li', builder.options.cssClass, parentContainer);
-
-		if (!disabled && entry.state == null) {
-			li.draggable = true;
-
-			li.ondragstart = function drag(ev) {
-				ev.dataTransfer.setData('text', entry.row);
-				builder.callback('treeview', 'dragstart', treeViewData, entry.row, builder);
-
-				$('.ui-treeview').addClass('droptarget');
-			};
-
-			li.ondragend = function () { $('.ui-treeview').removeClass('droptarget'); };
-			li.ondragover = function (event) { event.preventDefault(); };
-		}
-
-		var span = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-entry ' + (entry.children ? ' ui-treeview-expandable' : 'ui-treeview-notexpandable'), li);
-
-		var expander = L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview-expander ', span);
-
-		if (entry.selected && (entry.selected === 'true' || entry.selected === true))
-			$(span).addClass('selected');
-
-		if (entry.state !== undefined) {
-			var checkbox = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', span);
-			checkbox.type = 'checkbox';
-
-			if (entry.state === 'true' || entry.state === true)
-				checkbox.checked = true;
-
-			if (!disabled) {
-				$(checkbox).change(function() {
-					if (this.checked) {
-						builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: true}, builder);
-					} else {
-						builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: false}, builder);
-					}
-				});
-			}
-		}
-
-		var text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', span);
-		text.innerText = entry.text;
-		text.tabIndex = 0;
-
-		if (entry.children) {
-			var ul = L.DomUtil.create('ul', builder.options.cssClass, li);
-			for (var i in entry.children) {
-				builder._treelistboxEntry(ul, treeViewData, entry.children[i], builder);
-			}
-
-			var toggleFunction = function() {
-				$(span).toggleClass('collapsed');
-			};
-
-			if (!disabled) {
-				if (entry.ondemand) {
-					expander.tabIndex = 0;
-					L.DomEvent.on(expander, 'click', function() {
-						if (entry.ondemand && L.DomUtil.hasClass(span, 'collapsed'))
-							builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
-						toggleFunction();
-					});
-				} else {
-					$(expander).click(toggleFunction);
-				}
-
-				// block expand/collapse on checkbox
-				if (entry.state)
-					$(checkbox).click(toggleFunction);
-			}
-
-			if (entry.ondemand)
-				L.DomUtil.addClass(span, 'collapsed');
-		}
-
-		if (!disabled && entry.state == null) {
-			var singleClick = treeViewData.singleclickactivate === 'true' || treeViewData.singleclickactivate === true;
-			var clickFunction = function() {
-				$('#' + treeViewData.id + ' .ui-treeview-entry').removeClass('selected');
-				$(span).addClass('selected');
-
-				builder.callback('treeview', 'select', treeViewData, entry.row, builder);
-				if (singleClick) {
-					builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
-				}
-			};
-
-			text.addEventListener('click', clickFunction);
-			text.addEventListener('keydown', function onEvent(event) {
-				var preventDef = false;
-				var listElements = $('#' + treeViewData.id + ' li');
-				var currIndex = parseInt(entry.row);
-				var treeLength = treeViewData.entries.length;
-				var spanElement = 'span.ui-treeview-cell';
-				if (event.key === 'Enter') {
-					clickFunction();
-					preventDef = true;
-				} else if (event.key === 'ArrowDown') {
-					if (currIndex === treeLength - 1)
-						listElements.eq(0).find(spanElement).focus();
-					else
-						listElements.eq(currIndex + 1).find(spanElement).focus();
-					preventDef = true;
-				} else if (event.key === 'ArrowUp') {
-					if (currIndex === 0)
-						listElements.eq(treeLength - 1).find(spanElement).focus();
-					else
-						listElements.eq(currIndex - 1).find(spanElement).focus();
-					preventDef = true;
-				} else if (builder.callback('treeview', 'keydown', { treeViewData: treeViewData, key: event.key }, entry.row, builder)) {
-					preventDef = true;
-				}
-				if (preventDef) {
-					event.preventDefault();
-					event.stopPropagation();
-				}
-			});
-
-			if (!singleClick) {
-				$(text).dblclick(function() {
-					$('#' + treeViewData.id + ' .ui-treeview-entry').removeClass('selected');
-					$(span).addClass('selected');
-
-					builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
-				});
-			}
-		}
-	},
-
-	_headerlistboxEntry: function (parentContainer, treeViewData, entry, builder) {
-		var disabled = treeViewData.enabled === 'false' || treeViewData.enabled === false;
-
-		if (entry.selected && (entry.selected === 'true' || entry.selected === true))
-			$(parentContainer).addClass('selected');
-
-		for (var i in entry.columns) {
-			var td = L.DomUtil.create('td', '', parentContainer);
-			td.innerText = entry.columns[i].text;
-
-			if (!disabled) {
-				$(td).click(function() {
-					$('#' + treeViewData.id + ' .ui-listview-entry').removeClass('selected');
-					$(parentContainer).addClass('selected');
-
-					builder.callback('treeview', 'select', treeViewData, entry.row, builder);
-				});
-			}
-		}
-	},
-
-	_treelistboxControl: function (parentContainer, data, builder) {
-		var table = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview', parentContainer);
-		table.id = data.id;
-		var disabled = data.enabled === 'false' || data.enabled === false;
-		if (disabled)
-			L.DomUtil.addClass(table, 'disabled');
-
-		var tbody = L.DomUtil.create('tbody', builder.options.cssClass + ' ui-treeview-body', table);
-
-		var isHeaderListBox = data.headers && data.headers.length !== 0;
-		if (isHeaderListBox) {
-			var headers = L.DomUtil.create('tr', builder.options.cssClass + ' ui-treeview-header', tbody);
-			for (var h in data.headers) {
-				var header = L.DomUtil.create('th', builder.options.cssClass, headers);
-				header.innerText = data.headers[h].text;
-			}
-		}
-
-		if (!disabled) {
-			tbody.ondrop = function (ev) {
-				ev.preventDefault();
-				var row = ev.dataTransfer.getData('text');
-				builder.callback('treeview', 'dragend', data, row, builder);
-				$('.ui-treeview').removeClass('droptarget');
-			};
-
-			tbody.ondragover = function (event) { event.preventDefault(); };
-		}
-
-		if (!data.entries || data.entries.length === 0) {
-			L.DomUtil.addClass(table, 'empty');
-			return false;
-		}
-
-		if (isHeaderListBox) {
-			// list view with headers
-			for (var i in data.entries) {
-				var tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry', tbody);
-				builder._headerlistboxEntry(tr, data, data.entries[i], builder);
-			}
-		} else {
-			// tree view
-			var ul = L.DomUtil.create('ul', builder.options.cssClass, tbody);
-
-			for (i in data.entries) {
-				builder._treelistboxEntry(ul, data, data.entries[i], builder);
-			}
 		}
 
 		return false;
@@ -2155,24 +1987,30 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_comboboxEntry: function(parentContainer, data, builder) {
-		var fixedtext = L.DomUtil.create('p', builder.options.cssClass, parentContainer);
-		fixedtext.textContent = builder._cleanText(data.text);
-		fixedtext.parent = data.parent;
+		var comboboxEntry = L.DomUtil.create('p', builder.options.cssClass, parentContainer);
+		comboboxEntry.textContent = builder._cleanText(data.text);
+
+		comboboxEntry.parent = data.parent;
 
 		if (data.style && data.style.length)
-			L.DomUtil.addClass(fixedtext, data.style);
+			L.DomUtil.addClass(comboboxEntry, data.style);
 
-		$(fixedtext).click(function () {
+		$(comboboxEntry).click(function () {
 			builder.refreshSidebar = true;
 			if (builder.wizard)
 				builder.wizard.goLevelUp();
-			builder.callback('combobox', 'selected', fixedtext.parent, data.pos + ';' + fixedtext.textContent, builder);
+			builder.callback('combobox', 'selected', comboboxEntry.parent, data.pos + ';' + comboboxEntry.textContent, builder);
 		});
 	},
 
 	_fixedtextControl: function(parentContainer, data, builder) {
 		var fixedtext = L.DomUtil.create('p', builder.options.cssClass, parentContainer);
-		fixedtext.textContent = builder._cleanText(data.text);
+
+		if (data.text)
+			fixedtext.textContent = builder._cleanText(data.text);
+		else if (data.html)
+			fixedtext.innerHTML = data.html;
+
 		fixedtext.id = data.id;
 		if (data.style && data.style.length) {
 			L.DomUtil.addClass(fixedtext, data.style);
@@ -2189,11 +2027,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_separatorControl: function(parentContainer, data) {
 		// don't create new control, style current parent
 
-		L.DomUtil.addClass(parentContainer, 'ui-separator');
+		var target = parentContainer.lastChild;
+		if (!target)
+			target = parentContainer;
+
+		L.DomUtil.addClass(target, 'ui-separator');
 		if (data.orientation && data.orientation === 'vertical') {
-			L.DomUtil.addClass(parentContainer, 'vertical');
+			L.DomUtil.addClass(target, 'vertical');
 		} else {
-			L.DomUtil.addClass(parentContainer, 'horizontal');
+			L.DomUtil.addClass(target, 'horizontal');
 		}
 
 		return false;
@@ -2350,10 +2192,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		annotation.containerObject = data.annotation.containerObject;
 		annotation.sectionProperties.section = annotation;
 		annotation.sectionProperties.commentListSection = data.annotation.sectionProperties.commentListSection;
-		data.annotation.containerObject.addSectionFunctions(annotation);
 		annotation.onInitialize();
 
-		annotation.sectionProperties.menu.isRoot = isRoot;
+		if (this.map.isPermissionEditForComments() || this.map.isEditMode())
+			annotation.sectionProperties.menu.isRoot = isRoot;
 
 		container.appendChild(annotation.sectionProperties.container);
 
@@ -2362,14 +2204,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		annotation.setExpanded();
 		annotation.hideMarker();
 		annotation.sectionProperties.annotationMarker = null;
-
-		var replyCountNode = document.getElementById('reply-count-node-' + data.id);
-		if (replyCountNode)
-			replyCountNode.style.display = 'none';
-
-		var arrowSpan = document.getElementById('arrow span ' + data.id);
-		if (arrowSpan)
-			arrowSpan.style.display = 'none';
 	},
 
 	_rootCommentControl: function(parentContainer, data, builder) {
@@ -2426,7 +2260,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(childContainer).hide();
 
 			if (builder.wizard) {
-				$(container).find('.cool-annotation-menubar')[0].style.display = 'none';
+				if ($(container).find('.cool-annotation-menubar').length > 0)
+					$(container).find('.cool-annotation-menubar')[0].style.display = 'none';
 
 				var arrowSpan = container.querySelector('[id=\'arrow span ' + data.id + '\']');
 
@@ -2574,6 +2409,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'styleapply3fstyle3astring3ddefault26familyname3astring3dcellstyles': 'fontcolor',
 			'fontworkgalleryfloater': 'fontworkpropertypanel',
 			'insertfieldctrl': 'insertfield',
+			'pagenumberwizard': 'insertpagenumberfield',
 			'entirerow': 'fromrow',
 			'insertcheckboxcontentcontrol': 'checkbox',
 			'cellvertbottom': 'alignbottom',
@@ -2595,7 +2431,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'tableautofitmenu': 'columnwidth',
 			'menucolumnwidth': 'columnwidth',
 			'hyphenation': 'hyphenate',
-			'onlinehelp': 'feedback',
 			'objectbackone': 'behindobject',
 			'deleteannotation': 'deletenote',
 			'areapropertypanel': 'chartareapanel',
@@ -2618,7 +2453,46 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'modifypage': 'sidebar',
 			'parapropertypanel': 'paragraphdialog',
 			'tablecellbackgroundcolor': 'fillcolor',
-			'signdocument':'signature'
+			'signdocument':'signature',
+			'zoteroArtwork':  'zoteroThesis',
+			'zoteroAudioRecording':  'zoteroThesis',
+			'zoteroBill':  'zoteroThesis',
+			'zoteroBlogPost':  'zoteroThesis',
+			'zoteroBookSection':  'zoteroBook',
+			'zoteroCase':  'zoteroThesis',
+			'zoteroConferencePaper':  'zoteroThesis',
+			'zoteroDictionaryEntry':  'zoteroThesis',
+			'zoteroDocument':  'zoteroThesis',
+			'zoteroEmail':  'zoteroThesis',
+			'zoteroEncyclopediaArticle':  'zoteroThesis',
+			'zoteroFilm':  'zoteroThesis',
+			'zoteroForumPost':  'zoteroThesis',
+			'zoteroHearing':  'zoteroThesis',
+			'zoteroInstantMessage':  'zoteroThesis',
+			'zoteroInterview':  'zoteroThesis',
+			'zoteroLetter':  'zoteroThesis',
+			'zoteroMagazineArticle':  'zoteroThesis',
+			'zoteroManuscript':  'zoteroThesis',
+			'zoteroMap':  'zoteroThesis',
+			'zoteroNewspaperArticle':  'zoteroThesis',
+			'zoteroNote':  'zoteroThesis',
+			'zoteroPatent':  'zoteroThesis',
+			'zoteroPodcast':  'zoteroThesis',
+			'zoteroPreprint':  'zoteroThesis',
+			'zoteroPresentation':  'zoteroThesis',
+			'zoteroRadioBroadcast':  'zoteroThesis',
+			'zoteroReport':  'zoteroThesis',
+			'zoteroComputerProgram':  'zoteroThesis',
+			'zoteroStatute':  'zoteroThesis',
+			'zoteroTvBroadcast':  'zoteroThesis',
+			'zoteroVideoRecording':  'zoteroThesis',
+			'zoteroWebpage':  'zoteroThesis',
+			'zoteroaddeditcitation': 'insertauthoritiesentry',
+			'zoteroaddnote': 'addcitationnote',
+			'zoterorefresh': 'updateall',
+			'zoterounlink': 'unlinkcitation',
+			'zoteroaddeditbibliography': 'addeditbibliography',
+			'zoterosetdocprefs': 'formproperties',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
@@ -2828,7 +2702,34 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (!data.command)
 			data.command = data.id;
 
+		if (data.inlineLabel !== undefined) {
+			var backupInlineText = builder.options.useInLineLabelsForUnoButtons;
+			builder.options.useInLineLabelsForUnoButtons = data.inlineLabel;
+		}
+
 		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		if (data.inlineLabel !== undefined)
+			builder.options.useInLineLabelsForUnoButtons = backupInlineText;
+
+		$(control.container).unbind('click.toolbutton');
+		if (!builder.map.isLockedItem(data)) {
+			$(control.container).click(function () {
+				builder.map.dispatch(data.command);
+			});
+		}
+	},
+
+	_mapBigDispatchToolItem: function (parentContainer, data, builder) {
+		if (!data.command)
+			data.command = data.id;
+
+		var noLabels = builder.options.noLabelsForUnoButtons;
+		builder.options.noLabelsForUnoButtons = false;
+
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		builder.options.noLabelsForUnoButtons = noLabels;
 
 		$(control.container).unbind('click.toolbutton');
 		if (!builder.map.isLockedItem(data)) {
@@ -2904,9 +2805,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_sendColorCommand: function(builder, data, color) {
 		var gradientItem;
 
-		if (data.id === 'LB_GLOW_COLOR') {
-			data.id = 'GlowColor';
-		}
+		// complex color properties
 
 		if (data.id === 'fillgrad1') {
 			gradientItem = builder.map['stateChangeHandler'].getItemValue('.uno:FillGradient');
@@ -2918,9 +2817,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			gradientItem.endcolor = color;
 			builder.map.sendUnoCommand('.uno:FillGradient?FillGradientJSON:string=' + JSON.stringify(gradientItem));
 			return;
-		} else if (data.id === 'fillattr') {
-			builder.map.sendUnoCommand('.uno:FillPageColor?Color:string=' + color);
-			return;
 		} else if (data.id === 'fillattr2') {
 			gradientItem = builder.map['stateChangeHandler'].getItemValue('.uno:FillPageGradient');
 			gradientItem.startcolor = color;
@@ -2931,28 +2827,26 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			gradientItem.endcolor = color;
 			builder.map.sendUnoCommand('.uno:FillPageGradient?FillPageGradientJSON:string=' + JSON.stringify(gradientItem));
 			return;
-		} else if (data.id === 'Color' || data.id === 'CharBackColor' || data.id === 'FillColor'
-			|| data.id === 'XLineColor' || data.id === 'GlowColor') {
-			var params = {};
-			params[data.id] = {
-				type : 'long',
-				value : builder.parseHexColor(color)
-			};
+		}
 
-			builder.map['stateChangeHandler'].setItemValue(data.command, params[data.id].value);
-			builder.map.sendUnoCommand(data.command, params);
-			return;
+		// simple numeric color values
+
+		if (data.id === 'fillattr') {
+			data.command = '.uno:FillPageColor';
+		} else if (data.id === 'LB_GLOW_COLOR') {
+			data.id = 'GlowColor';
 		} else if (data.id === 'LB_SHADOW_COLOR') {
 			data.command = '.uno:FillShadowColor';
 		}
 
-		var command = data.command + '?Color:string=' + color;
+		var params = {};
+		params[data.id] = {
+			type : 'long',
+			value : builder.parseHexColor(color)
+		};
 
-		// update the item state as we send
-		var items = builder.map['stateChangeHandler'];
-		items.setItemValue(data.command, builder.parseHexColor(color));
-
-		builder.map.sendUnoCommand(command);
+		builder.map['stateChangeHandler'].setItemValue(data.command, params[data.id].value);
+		builder.map.sendUnoCommand(data.command, params);
 	},
 
 	_getDefaultColorForCommand: function(command) {
@@ -3413,13 +3307,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
-	setupStandardButtonHandler: function(button, response, builder) {
-		$(button).unbind('click');
-		$(button).click(function () {
-			builder.callback('responsebutton', 'click', {id: button.id }, response, builder);
-		});
-	},
-
 	postProcess: function(parent, data) {
 		if (!parent || !data || !data.id || data.id === '')
 			return;
@@ -3430,6 +3317,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				L.DomUtil.addClass(control, 'hidden');
 			else if (parent.id === data.id)
 				L.DomUtil.addClass(parent, 'hidden');
+		}
+
+		if (control && data.width) {
+			control.style.gridColumn = 'span ' + parseInt(data.width);
 		}
 
 		// natural tab-order when using keyboard navigation
@@ -3452,14 +3343,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			control.setAttribute('tabIndex', '0');
 	},
 
-	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
+	build: function(parent, data, hasVerticalParent) {
 
+		// TODO: check and probably remove additional containers
 		if (hasVerticalParent === undefined) {
 			parent = L.DomUtil.create('div', 'root-container ' + this.options.cssClass, parent);
 			parent = L.DomUtil.create('div', 'vertical ' + this.options.cssClass, parent);
 		}
-
-		var containerToInsert = parent;
 
 		for (var childIndex in data) {
 			var childData = data[childIndex];
@@ -3468,19 +3358,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var childType = childData.type;
 
-			if (parentHasManyChildren) {
-				if (!hasVerticalParent)
-					var td = L.DomUtil.create('div', 'cell ' + this.options.cssClass, containerToInsert);
-				else {
-					containerToInsert = L.DomUtil.create('div', 'row ' + this.options.cssClass, parent);
-					td = L.DomUtil.create('div', 'cell ' + this.options.cssClass, containerToInsert);
-				}
-			} else {
-				td = containerToInsert;
-			}
+			var containerToInsert = parent;
 
 			if (childData.dialogid)
-				td.id = childData.dialogid;
+				containerToInsert.id = childData.dialogid;
 
 			var isVertical = childData.vertical === 'true' || childData.vertical === true ? true : false;
 
@@ -3495,14 +3376,37 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var hasManyChildren = childData.children && childData.children.length > 1;
 			var isContainer = this.isContainerType(childData.type);
 			if (hasManyChildren && isContainer) {
-				var table = L.DomUtil.createWithId('div', childData.id, td);
+				var table = L.DomUtil.createWithId('div', childData.id, containerToInsert);
 				$(table).addClass(this.options.cssClass);
-				$(table).addClass('vertical');
-				var childObject = L.DomUtil.create('div', 'row ' + this.options.cssClass, table);
 
-				this.postProcess(td, childData);
+				if (!isVertical) {
+					var rows = this._getGridRows(childData.children);
+					var cols = this._getGridColumns(childData.children);
+
+					if (rows > 1 && cols > 1) {
+						var gridRowColStyle = 'grid-template-rows: repeat(' + rows  + '); \
+							grid-template-columns: repeat(' + cols  + ');';
+
+						table.style = gridRowColStyle;
+					} else {
+						$(table).css('grid-auto-flow', 'column');
+					}
+
+					$(table).css('display', 'grid');
+				}
+
+				$(table).addClass('ui-grid-cell');
+
+				// if 'table' has no id - postprocess won't work...
+				if (childData.width) {
+					table.style.gridColumn = 'span ' + parseInt(childData.width);
+				}
+
+				var childObject = table;
+
+				this.postProcess(containerToInsert, childData);
 			} else {
-				childObject = td;
+				childObject = containerToInsert;
 			}
 
 			var handler = this._controlHandlers[childType];
@@ -3514,20 +3418,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				window.app.console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
 
 			if (processChildren && childData.children != undefined)
-				this.build(childObject, childData.children, isVertical, hasManyChildren);
+				this.build(childObject, childData.children, isVertical);
 			else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
 				$('#' + childData.id).addClass('hidden-from-event');
-			}
-
-			if ((childType === 'dialog' || childType === 'messagebox' || childType === 'modelessdialog')
-				&& childData.responses) {
-				for (var i in childData.responses) {
-					var buttonId = childData.responses[i].id;
-					var response = childData.responses[i].response;
-					var button = parent.querySelector('[id=\'' + buttonId + '\']');
-					if (button)
-						this.setupStandardButtonHandler(button, response, this);
-				}
 			}
 		}
 	}

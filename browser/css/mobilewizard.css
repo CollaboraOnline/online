@@ -31,9 +31,6 @@ span#main-menu-btn-icon {
 #fontnamecombobox {
 	padding-right: 0px;
 }
-#fontheight {
-	display: none;
-}
 
 #style {
 	display: flex;
@@ -43,7 +40,7 @@ span#main-menu-btn-icon {
 	width: 100%;
 }
 
-.ui-header.level-1.mobile-wizard.ui-widget img[src='images/lc_downloadas-pdf.svg']{
+.ui-header.level-1.mobile-wizard.ui-widget img[src='images/lc_exportpdf.svg']{
 	visibility: visible;
 }
 
@@ -235,8 +232,11 @@ p.mobile-wizard.ui-combobox-text.selected {
 	flex-wrap: wrap !important;
 	margin-top: 25px;
 }
-#rotationlabel, #cellbackgroundlabel, #NumberFormatCurrency > .unolabel, #NumberFormatPercent > .unolabel, #NumberFormatDecimal > .unolabel{
+#mobile-wizard #rotationlabel, #cellbackgroundlabel, #NumberFormatCurrency > .unolabel, #NumberFormatPercent > .unolabel, #NumberFormatDecimal > .unolabel{
 	display: none;
+}
+#rotationlabel:not(#mobile-wizard) {
+	visibility: hidden;
 }
 #mobile-wizard #NumberFormatDecimal, #mobile-wizard #NumberFormatPercent{
 	margin-left: 20%;
@@ -748,6 +748,20 @@ a.leaflet-control-zoom-in {
 	clear: both;
 }
 
+#mobile-wizard [id^='info-modal-label'].mobile-wizard.ui-text {
+	border: none;
+	color: var(--color-text-dark) !important;
+}
+
+#mobile-wizard [id^='info-modal-label'].mobile-wizard.ui-text:first-child {
+	font-size: 1em;
+	color: var(--color-text-lighter) !important;
+}
+
+#mobile-wizard [id^='mobile-wizard-content-modal-dialog-'] {
+	width: 100%;
+}
+
 #DecrementIndent + input:disabled{display: none;}
 div#mobile-wizard-content input[type='number']{
 	color: var(--color-text-dark);
@@ -1231,4 +1245,20 @@ label.disabled {
 /* Mobile wizard popup */
 #mobile-wizard-popup .lokdialog.ui-dialog-content {
 	overflow-x: hidden;
+}
+
+[id$='contentControlModalpopup'].mobile-wizard {
+	display: flex;
+	flex: 1;
+	align-self: stretch;
+}
+
+#contentControlList.mobile-wizard {
+	margin: 0;
+	border-color: transparent;
+	width: 100%;
+}
+
+#contentControlList.mobile-wizard li:not(:last-child) {
+	border-bottom: 1px solid var(--color-border-lighter);
 }

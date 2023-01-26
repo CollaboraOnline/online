@@ -145,13 +145,13 @@ L.Map.Keyboard = L.Handler.extend({
 		pageDown: 34,
 		enter:    13,
 		BACKSPACE:8,
-		TAB:      9, 
+		TAB:      9,
 		SPACE :   32,
 		SHIFT:    16, // shift		: UNKOWN
 		CTRL:     17, // ctrl		: UNKOWN
 		ALT:      18, // alt		: UNKOWN
 		PAUSE:    19, // pause/break	: UNKOWN
-		CAPSLOCK: 20, // caps lock	: UNKOWN, 
+		CAPSLOCK: 20, // caps lock	: UNKOWN,
 		END:      35,
 		HOME:     36,
 		LEFT:     37,
@@ -187,7 +187,7 @@ L.Map.Keyboard = L.Handler.extend({
 		M:        77,
 		N:        78,
 		O:        79,
-		P:        80,	
+		P:        80,
 		Q:        81,
 		R:        82,
 		S:        83,
@@ -234,7 +234,7 @@ L.Map.Keyboard = L.Handler.extend({
 		SEMICOLON:    186,
 		EQUAL:        187,
 		COMMA:        188,
-		//SUBTRACT:     189, 
+		//SUBTRACT:     189,
 		PERIOD:       190, // period		: UNKOWN
 		FORWARDSLASH: 191, // forward slash	: UNKOWN
 		GRAVEACCENT:  192, // grave accent	: UNKOWN
@@ -332,7 +332,7 @@ L.Map.Keyboard = L.Handler.extend({
 	// any 'beforeinput', 'keypress' and 'input' events that would add
 	// printable characters. Those are handled by TextInput.js.
 	_onKeyDown: function (ev) {
-		if (this._map.uiManager.isUIBlocked())
+		if (this._map.uiManager.isUIBlocked() || (this._map.isReadOnlyMode() && !this.readOnlyAllowedShortcuts(ev)))
 			return;
 
 		var completeEvent = app.socket.createCompleteTraceEvent('L.Map.Keyboard._onKeyDown', { type: ev.type, charCode: ev.charCode });
@@ -379,6 +379,7 @@ L.Map.Keyboard = L.Handler.extend({
 			keyEventFn = L.bind(docLayer.postKeyboardEvent, docLayer);
 		}
 
+		var docType = this._map._docLayer._docType;
 		this.modifier = 0;
 		var shift = ev.shiftKey ? UNOModifier.SHIFT : 0;
 		var ctrl = ev.ctrlKey ? UNOModifier.CTRL : 0;
@@ -432,8 +433,14 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		// handle help - F1
-		if (ev.type === 'keydown' && !shift && !ctrl && !alt && !cmd && keyCode === this.keyCodes.F1) {
+		if (ev.type === 'keydown' && !this.modifier && keyCode === this.keyCodes.F1) {
 			this._map.showHelp('online-help');
+			ev.preventDefault();
+			return;
+		}
+
+		// disable F2 in Writer, formula bar is unsupported, and messes with further input
+		if (ev.type === 'keydown' && !this.modifier && keyCode === this.keyCodes.F2 && docType === 'text') {
 			ev.preventDefault();
 			return;
 		}
@@ -441,7 +448,7 @@ L.Map.Keyboard = L.Handler.extend({
 		// don't trigger browser reload on F5, launch slideshow in Impress
 		if (ev.type === 'keydown' && keyCode === this.keyCodes.F5) {
 			ev.preventDefault();
-			if (this._map._docLayer._docType === 'presentation')
+			if (docType === 'presentation')
 			{
 				this._map.fire('fullscreen');
 			}
@@ -467,7 +474,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 
-		if (this._map.isPermissionEdit()) {
+		if (this._map.isEditMode()) {
 			docLayer._resetPreFetching();
 
 			if (this._ignoreKeyEvent(ev)) {
@@ -521,7 +528,7 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 		else if (!this.modifier && (keyCode === this.keyCodes.pageUp || keyCode === this.keyCodes.pageDown) && ev.type === 'keydown') {
-			if (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') {
+			if (docType === 'presentation' || docType === 'drawing') {
 				var partToSelect = keyCode === this.keyCodes.pageUp ? 'prev' : 'next';
 				this._map._docLayer._preview._scrollViewByDirection(partToSelect);
 				if (app.file.fileBasedView)
@@ -530,7 +537,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 		else if (!this.modifier && (keyCode === this.keyCodes.END || keyCode === this.keyCodes.HOME) && ev.type === 'keydown') {
-			if (this._map._docLayer._docType === 'drawing' && app.file.fileBasedView === true) {
+			if (docType === 'drawing' && app.file.fileBasedView === true) {
 				partToSelect = keyCode === this.keyCodes.HOME ? 0 : this._map._docLayer._parts -1;
 				this._map._docLayer._preview._scrollViewToPartPosition(partToSelect);
 				this._map._docLayer._checkSelectedPart();
@@ -713,7 +720,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return false;
 		case this.keyCodes.C[DEFAULT]: // 'C'
 		case this.keyCodes.X[DEFAULT]: // 'X'
-		case this.keyCodes.C[MAC]: // 'c' Since keydown+c as different value in mac so i had to update the mapping in keyCodes 
+		case this.keyCodes.C[MAC]: // 'c' Since keydown+c as different value in mac so i had to update the mapping in keyCodes
 		case this.keyCodes.X[MAC]: // 'x' same reason as above
 		case this.keyCodes.LEFTWINDOWKEY[MAC]: // Left Cmd (Safari)
 		case this.keyCodes.RIGHTWINDOWKEY[MAC]: // Right Cmd (Safari)
@@ -726,7 +733,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		case this.keyCodes.S: // s
 			// Save only when not read-only.
-			if (!this._map.isPermissionReadOnly()) {
+			if (!this._map.isReadOnlyMode()) {
 				this._map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'keyboard' }});
 				if (!this._map._disableDefaultAction['UI_Save']) {
 					this._map.save(false /* An explicit save should terminate cell edit */,
@@ -752,6 +759,20 @@ L.Map.Keyboard = L.Handler.extend({
 			// need to handle this separately for Firefox
 			return true;
 		}
+		return false;
+	},
+
+	readOnlyAllowedShortcuts: function(e) {
+		// Open keyboard shortcuts help page
+		if (this._isCtrlKey(e) && e.shiftKey && e.key === '?')
+			return true;
+		// Open help with F1 if any special key is not pressed
+		else if (e.type === 'keydown' && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey && e.keyCode === this.keyCodes.F1)
+			return true;
+		// comment insert
+		else if (e.key === 'c' && e.altKey && e.altKey && e.ctrlKey && this._map.isPermissionEditForComments())
+			return true;
+
 		return false;
 	}
 });

@@ -100,7 +100,7 @@ function openHamburgerMenu() {
 	cy.get('#toolbar-hamburger')
 		.should('have.class', 'menuwizard-opened');
 
-	cy.get('#mobile-wizard-content')
+	cy.get('#mobile-wizard-content-menubar')
 		.should('not.be.empty');
 
 	cy.log('Opening hamburger menu - end.');
@@ -118,8 +118,8 @@ function closeHamburgerMenu() {
 	cy.get('#toolbar-hamburger')
 		.should('not.have.class', 'menuwizard-opened');
 
-	cy.get('#mobile-wizard-content')
-		.should('be.empty');
+	cy.get('#mobile-wizard-content-menubar')
+		.should('not.exist');
 
 	cy.log('Closing hamburger menu - end.');
 }
@@ -401,6 +401,10 @@ function deleteImage() {
 		.should('not.exist');
 }
 
+function pressPushButtonOfDialog(name) {
+	cy.contains('.ui-pushbutton', name).click();
+}
+
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
 module.exports.openHamburgerMenu = openHamburgerMenu;
@@ -421,3 +425,4 @@ module.exports.openCommentWizard = openCommentWizard;
 module.exports.insertImage = insertImage;
 module.exports.deleteImage = deleteImage;
 module.exports.insertComment = insertComment;
+module.exports.pressPushButtonOfDialog = pressPushButtonOfDialog;

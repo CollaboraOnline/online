@@ -79,7 +79,7 @@ L.Map = L.Evented.extend({
 			this.options.documentContainer = L.DomUtil.get(this.options.documentContainer);
 		}
 
-		if (!window.ThisIsTheiOSApp && !window.ThisIsTheAndroidApp)
+		if (!window.ThisIsAMobileApp)
 			this._clip = L.clipboard(this);
 		this._initContainer(id);
 		this._initLayout();
@@ -274,6 +274,8 @@ L.Map = L.Evented.extend({
 			this._docLoaded = e.status;
 			if (this._docLoaded) {
 				app.socket.sendMessage('blockingcommandstatus isRestrictedUser=' + this.Restriction.isRestrictedUser + ' isLockedUser=' + this.Locking.isLockedUser);
+				if (this.zotero)
+					this.zotero.fetchStyle();
 				this.notifyActive();
 				if (!document.hasFocus()) {
 					this.fire('editorgotfocus');
@@ -317,7 +319,11 @@ L.Map = L.Evented.extend({
 		app.socket.sendMessage('commandvalues command=.uno:LanguageStatus');
 		app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 		if (this._docLayer._docType === 'spreadsheet') {
+			this._docLayer._gotFirstCellCursor = false;
+			if (this._docLayer.options.sheetGeometryDataEnabled)
+				this._docLayer.requestSheetGeometryData();
 			this._docLayer.refreshViewData();
+			this._docLayer._update();
 		}
 		this._docLayer._getToolbarCommandsValues();
 	},
@@ -1621,7 +1627,7 @@ L.Map = L.Evented.extend({
 		// Calling from some other place with no real 'click' event doesn't work.
 
 		if (type === 'click' || type === 'dblclick') {
-			if (this.isPermissionEdit()) {
+			if (this.isEditMode()) {
 				this.fire('editorgotfocus');
 				this.focus();
 			}

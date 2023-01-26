@@ -792,7 +792,6 @@ bool ChildSession::loadDocument(const StringVector& tokens)
     _docManager->notifyViewInfo();
     sendTextFrame("editor: " + std::to_string(_docManager->getEditorId()));
 
-
     LOG_INF("Loaded session " << getId());
     return true;
 }
@@ -1093,7 +1092,8 @@ bool ChildSession::downloadAs(const StringVector& tokens)
     }
 
     // Register download id -> URL mapping in the DocumentBroker
-    std::string docBrokerMessage = "registerdownload: downloadid=" + tmpDir + " url=" + urlToSend;
+    const std::string docBrokerMessage =
+        "registerdownload: downloadid=" + tmpDir + " url=" + urlToSend + " clientid=" + getId();
     _docManager->sendFrame(docBrokerMessage.c_str(), docBrokerMessage.length());
 
     // Send download id to the client
@@ -2847,21 +2847,16 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             }
             else if (tokens.size() == 2 && tokens.equals(0, "EMPTY"))
             {
+                // without mode: "EMPTY, <part>"
                 const std::string part = (_docType != "text" ? tokens[1].c_str() : "0"); // Writer renders everything as part 0.
-
-                // without mode: "EMPTY, <parts>"
-                // with mode:    "EMPTY, <parts> <mode>"
-                StringVector spaceTokens(StringVector::tokenize(payload, ' '));
-                if (spaceTokens.size() == 3)
-                {
-                    const std::string newPart = spaceTokens[1].c_str();
-                    const std::string mode = spaceTokens[2].c_str();
-                    sendTextFrame("invalidatetiles: EMPTY, " + part + ", " + mode);
-                }
-                else
-                {
-                    sendTextFrame("invalidatetiles: EMPTY, " + part);
-                }
+                sendTextFrame("invalidatetiles: EMPTY, " + part);
+            }
+            else if (tokens.size() == 3 && tokens.equals(0, "EMPTY"))
+            {
+                // with mode:    "EMPTY, <part>, <mode>"
+                const std::string part = (_docType != "text" ? tokens[1].c_str() : "0"); // Writer renders everything as part 0.
+                const std::string mode = (_docType != "text" ? tokens[2].c_str() : "0"); // Writer is not using mode.
+                sendTextFrame("invalidatetiles: EMPTY, " + part + ", " + mode);
             }
             else
             {
@@ -2906,11 +2901,6 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         {
             std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
             sendTextFrame("status: " + status);
-            for (int i = 0; i < getLOKitDocument()->getParts(); i++)
-            {
-                const std::string parts = std::to_string(i);
-                sendTextFrame("invalidatetiles: EMPTY, " + parts);
-            }
         }
         break;
     case LOK_CALLBACK_SEARCH_NOT_FOUND:
@@ -3107,6 +3097,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_DOCUMENT_BACKGROUND_COLOR:
         sendTextFrame("documentbackgroundcolor: " + payload);
         break;
+    case LOK_CALLBACK_MEDIA_SHAPE:
+        sendTextFrame("mediashape: " + payload);
+        break;
     case LOK_CALLBACK_CONTENT_CONTROL:
         sendTextFrame("contentcontrol: " + payload);
         break;
@@ -3128,7 +3121,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("printranges: " + payload);
         break;
     case LOK_CALLBACK_FONTS_MISSING:
+#if !MOBILEAPP
         {
+            // This environment variable is always set in COOLWSD::innerInitialize().
             static std::string fontsMissingHandling = std::string(std::getenv("FONTS_MISSING_HANDLING"));
             if (fontsMissingHandling == "report" || fontsMissingHandling == "both")
                 sendTextFrame("fontsmissing: " + payload);
@@ -3147,7 +3142,19 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
 #endif
             }
         }
+#endif
         break;
+    case LOK_CALLBACK_EXPORT_FILE:
+    {
+        // Register download id -> URL mapping in the DocumentBroker
+        auto url = std::string("../../") + payload.substr(strlen("file:///tmp/"));
+        auto downloadId = Util::rng::getFilename(64);
+        std::string docBrokerMessage = "registerdownload: downloadid=" + downloadId + " url=" + url + " clientid=" + getId();
+        _docManager->sendFrame(docBrokerMessage.c_str(), docBrokerMessage.length());
+        std::string message = "downloadas: downloadid=" + downloadId + " port=" + std::to_string(ClientPortNumber) + " id=export";
+        sendTextFrame(message);
+        break;
+    }
     default:
         LOG_ERR("Unknown callback event (" << lokCallbackTypeToString(type) << "): " << payload);
     }

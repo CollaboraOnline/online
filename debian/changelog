@@ -1,3 +1,51 @@
+coolwsd (22.05.10.0-1) unstable; urgency=medium
+
+  * Snapshot from master branch
+
+ -- Andras Timar <andras.timar@collabora.com>  Fri, 20 Jan 2023 11:00:00 +0100
+
+coolwsd (22.05.9.2-1) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-22.05.9-2
+
+ -- Andras Timar <andras.timar@collabora.com>  Sat, 17 Dec 2022 20:00:00 +0100
+
+coolwsd (22.05.9.1-1) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-22.05.9-1
+
+ -- Andras Timar <andras.timar@collabora.com>  Fri, 16 Dec 2022 21:00:00 +0100
+
+coolwsd (22.05.9.0-1) unstable; urgency=medium
+
+  * Snapshot from master branch
+
+ -- Andras Timar <andras.timar@collabora.com>  Tue, 22 Nov 2022 15:00:00 +0100
+
+coolwsd (22.05.8.2-1) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-22.05.8-2
+
+ -- Andras Timar <andras.timar@collabora.com>  Tue, 08 Nov 2022 11:00:00 +0100
+
+coolwsd (22.05.8.1-1) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-22.05.8-1
+
+ -- Andras Timar <andras.timar@collabora.com>  Fri, 04 Nov 2022 09:00:00 +0100
+
+coolwsd (22.05.7.2-1) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-22.05.7-2
+
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 20 Oct 2022 11:00:00 +0200
+
+coolwsd (22.05.7.1-1) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-22.05.7-1
+
+ -- Andras Timar <andras.timar@collabora.com>  Tue, 18 Oct 2022 22:00:00 +0200
+
 coolwsd (22.05.7.0-1) unstable; urgency=medium
 
   * Snapshot from master branch

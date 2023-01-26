@@ -4,30 +4,7 @@ declare var L: any;
 declare var app: any;
 
 app.definitions.AutoFillMarkerSection =
-class AutoFillMarkerSection {
-	context: CanvasRenderingContext2D = null;
-	myTopLeft: Array<number> = null;
-	documentTopLeft: Array<number> = null;
-	containerObject: any = null;
-	dpiScale: number = null;
-	name: string = L.CSections.AutoFillMarker.name;
-	backgroundColor: string = 'black';
-	borderColor: string = null;
-	boundToSection: string = null;
-	anchor: Array<any> = new Array(0);
-	documentObject: boolean = true;
-	position: Array<number> = new Array(0);
-	size: Array<number> = new Array(0);
-	expand: Array<string> = new Array(0);
-	isLocated: boolean = false;
-	showSection: boolean = true;
-	processingOrder: number = L.CSections.AutoFillMarker.processingOrder;
-	drawingOrder: number = L.CSections.AutoFillMarker.drawingOrder;
-	zIndex: number = L.CSections.AutoFillMarker.zIndex;
-	interactable: boolean = true;
-	sectionProperties: any = {};
-	stopPropagating: () => void; // Implemented by section container.
-	setPosition: (x: number, y: number) => void; // Implemented by section container. Document objects only.
+class AutoFillMarkerSection extends CanvasSectionObject {
 	map: any;
 	cursorBorderWidth: number = 2;
 	selectionBorderWidth: number = 1;
@@ -35,6 +12,21 @@ class AutoFillMarkerSection {
 	isCalcRTL: () => boolean;
 
 	constructor () {
+		super({
+			name: L.CSections.AutoFillMarker.name,
+			anchor: [],
+			position: new Array<number>(0),
+			size: new Array<number>(0),
+			expand: '',
+			showSection: true,
+			processingOrder: L.CSections.AutoFillMarker.processingOrder,
+			drawingOrder: L.CSections.AutoFillMarker.drawingOrder,
+			zIndex: L.CSections.AutoFillMarker.zIndex,
+			interactable: true,
+			sectionProperties: {}
+		});
+
+		this.documentObject = true;
 		this.map = L.Map.THIS;
 
 		this.sectionProperties.docLayer = this.map._docLayer;
@@ -57,7 +49,7 @@ class AutoFillMarkerSection {
 
 	public onInitialize () {
 		if ((<any>window).mode.isDesktop()) {
-			this.size = [Math.round(8 * app.dpiScale), Math.round(8 * app.dpiScale)];
+			this.size = [Math.round(6 * app.dpiScale), Math.round(6 * app.dpiScale)];
 		}
 		else {
 			this.size = [Math.round(16 * app.dpiScale), Math.round(16 * app.dpiScale)];
@@ -105,32 +97,28 @@ class AutoFillMarkerSection {
 		this.setPosition(position[0], position[1]);
 	}
 
-	// Give bottom right position of selected area, in core pixels. Call with null parameter when auto fill marker is not visible.
-	public calculatePositionViaCellSelection (point: Array<number>) {
+	private calculatePositionFromPoint (point: Array<number>) {
+		var calcPoint: Array<number>;
 		if (point === null) {
-			this.sectionProperties.selectedAreaPoint = null;
+			calcPoint = null;
 		}
 		else {
-			var translation = (<any>window).mode.isDesktop() ?
-				[this.size[0], this.size[1]] :
-				[Math.floor(this.size[0] * 0.5), Math.floor(this.size[1] * 0.5)];
-			this.sectionProperties.selectedAreaPoint = [point[0] - translation[0], point[1] - translation[1]];
+			var translation = [Math.floor(this.size[0] * 0.5), Math.floor(this.size[1] * 0.5)];
+			calcPoint = [point[0] - translation[0], point[1] - translation[1]];
 		}
-		this.setMarkerPosition();
+		return calcPoint;
+	}
+
+	// Give bottom right position of selected area, in core pixels. Call with null parameter when auto fill marker is not visible.
+	public calculatePositionViaCellSelection (point: Array<number>) {
+	       this.sectionProperties.selectedAreaPoint = this.calculatePositionFromPoint(point);
+	       this.setMarkerPosition();
 	}
 
 	// Give bottom right position of cell cursor, in core pixels. Call with null parameter when auto fill marker is not visible.
 	public calculatePositionViaCellCursor (point: Array<number>) {
-		if (point === null) {
-			this.sectionProperties.cellCursorPoint = null;
-		}
-		else {
-			var translation = (<any>window).mode.isDesktop() ?
-				[this.size[0], this.size[1]] :
-				[Math.floor(this.size[0] * 0.5), Math.floor(this.size[1] * 0.5)];
-			this.sectionProperties.cellCursorPoint = [point[0] - translation[0], point[1] - translation[1]];
-		}
-		this.setMarkerPosition();
+	       this.sectionProperties.cellCursorPoint = this.calculatePositionFromPoint(point);
+	       this.setMarkerPosition();
 	}
 
 	// This is for enhancing contrast of the marker with the background
@@ -149,10 +137,11 @@ class AutoFillMarkerSection {
 			return adjustForRTL ? this.size[0] - xcoord : xcoord;
 		};
 
+		// top white line
 		this.context.beginPath();
 		this.context.moveTo(transformX(-0.5), -0.5);
 		var borderWidth = this.sectionProperties.selectedAreaPoint ? this.selectionBorderWidth : this.cursorBorderWidth;
-		this.context.lineTo(transformX(this.size[0] - 0.5 - (desktop ? borderWidth : 0)), -0.5);
+		this.context.lineTo(transformX(this.size[0] + 0.5 - (desktop ? borderWidth : 0)), - 0.5);
 		this.context.stroke();
 
 		if (!desktop) {
@@ -162,9 +151,10 @@ class AutoFillMarkerSection {
 			this.context.stroke();
 		}
 
+		// bottom white line
 		this.context.beginPath();
 		this.context.moveTo(transformX(-0.5), -0.5);
-		this.context.lineTo(transformX(-0.5), translation[1] - 0.5 - borderWidth);
+		this.context.lineTo(transformX(-0.5), translation[1] + 0.5 - borderWidth);
 		this.context.stroke();
 	}
 
@@ -223,7 +213,7 @@ class AutoFillMarkerSection {
 			this.sectionProperties.inMouseDown = true;
 
 			// revert coordinates to global and fire event again with position in the center
-			var canvasClientRect = this.containerObject.canvas.getBoundingClientRect();
+			var canvasClientRect = this.containerObject.getCanvasBoundingClientRect();
 			point[0] = this.myTopLeft[0] / app.dpiScale + this.size[0] * 0.5 + 1 + canvasClientRect.left;
 			point[1] = this.myTopLeft[1] / app.dpiScale + this.size[1] * 0.5 + 1 + canvasClientRect.top;
 

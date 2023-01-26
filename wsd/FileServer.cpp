@@ -44,6 +44,7 @@
 #include <Crypto.hpp>
 #include "FileServer.hpp"
 #include "COOLWSD.hpp"
+#include "FileUtil.hpp"
 #include "ServerURL.hpp"
 #include <Log.hpp>
 #include <Protocol.hpp>
@@ -344,11 +345,13 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
         {
             localPath = path.toString().substr(prefix.length());
         }
-        if (!Poco::File(localPath).exists())
+
+        if (!FileUtil::Stat(localPath).exists())
         {
             LOG_ERR("Local file URI [" << localPath << "] invalid or doesn't exist.");
             throw BadRequestException("Invalid URI: " + localPath);
         }
+
         if (request.getMethod() == "GET" && !Util::endsWith(path.toString(), suffix))
         {
             LocalFileInfo localFile;
@@ -442,7 +445,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
                 const std::string fileModifiedTime = Util::getIso8601FracformatTime(LocalFileInfo::fileInfoVec[i].fileLastModifiedTime);
                 if (wopiTimestamp != fileModifiedTime)
                 {
-                    http::Response httpResponse(http::StatusLine(409));
+                    http::Response httpResponse(http::StatusCode::Conflict);
                     httpResponse.setBody(
                         "{\"COOLStatusCode\":" +
                         std::to_string(static_cast<int>(LocalFileInfo::COOLStatusCode::DocChanged)) + ',' +
@@ -466,7 +469,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             const std::string body = "{\"LastModifiedTime\": \"" +
                                         Util::getIso8601FracformatTime(LocalFileInfo::fileInfoVec[i].fileLastModifiedTime) +
                                         "\" }";
-            http::Response httpResponse(http::StatusLine(200));
+            http::Response httpResponse(http::StatusCode::OK);
             httpResponse.setBody(body);
             socket->send(httpResponse);
             return;
@@ -1006,7 +1009,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     const auto coolLogging = stringifyBoolFromConfig(config, "browser_logging", false);
     Poco::replaceInPlace(preprocess, std::string("%BROWSER_LOGGING%"), coolLogging);
-    const auto groupDownloadAs = stringifyBoolFromConfig(config, "per_view.group_download_as", false);
+    const auto groupDownloadAs = stringifyBoolFromConfig(config, "per_view.group_download_as", true);
     Poco::replaceInPlace(preprocess, std::string("%GROUP_DOWNLOAD_AS%"), groupDownloadAs);
     const unsigned int outOfFocusTimeoutSecs = config.getUInt("per_view.out_of_focus_timeout_secs", 60);
     Poco::replaceInPlace(preprocess, std::string("%OUT_OF_FOCUS_TIMEOUT_SECS%"), std::to_string(outOfFocusTimeoutSecs));
@@ -1069,6 +1072,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_URL%"), std::string(FEEDBACK_URL));
     Poco::replaceInPlace(preprocess, std::string("%WELCOME_URL%"), std::string(WELCOME_URL));
     Poco::replaceInPlace(preprocess, std::string("%BUYPRODUCT_URL%"), buyProduct);
+    Poco::replaceInPlace(preprocess, std::string("%DEEPL_ENABLED%"), (config.getBool("deepl.enabled", false) ? std::string("true"): std::string("false")));
+    Poco::replaceInPlace(preprocess, std::string("%ZOTERO_ENABLED%"), (config.getBool("zotero.enable", true) ? std::string("true"): std::string("false")));
 
     const std::string mimeType = "text/html";
 
@@ -1078,11 +1083,12 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     cspOss << "Content-Security-Policy: default-src 'none'; "
         "frame-src 'self' " << WELCOME_URL << " " << FEEDBACK_URL << " " << buyProduct <<
         " blob: " << documentSigningURL << "; "
-           "connect-src 'self' " << cnxDetails.getWebSocketUrl() << "; "
+           "connect-src 'self' https://www.zotero.org https://api.zotero.org " << cnxDetails.getWebSocketUrl() << "; "
            "script-src 'unsafe-inline' 'self'; "
            "style-src 'self' 'unsafe-inline'; "
            "font-src 'self' data:; "
-           "object-src 'self' blob:; ";
+           "object-src 'self' blob:; "
+           "media-src 'self'; ";
 
     // Frame ancestors: Allow coolwsd host, wopi host and anything configured.
     std::string configFrameAncestor = config.getString("net.frame_ancestors", "");
@@ -1116,7 +1122,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         // X-Frame-Options supports only one ancestor, ignore that
         //(it's deprecated anyway and CSP works in all major browsers)
         // frame anchestors are also allowed for img-src in order to load the views avatars
-        cspOss << imgSrc << frameAncestors << "; "
+        cspOss << imgSrc << " " << frameAncestors << "; "
                 << "frame-ancestors " << frameAncestors;
         std::string escapedFrameAncestors;
         Poco::URI::encode(frameAncestors, "'", escapedFrameAncestors);

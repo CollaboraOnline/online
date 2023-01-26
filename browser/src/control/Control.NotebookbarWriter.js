@@ -89,7 +89,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				this.getDrawTab(),
 				this.getViewTab(),
 				this.getHelpTab()
-			], selectedId);
+			 ], selectedId);
 	},
 
 	getFileTab: function() {
@@ -226,16 +226,18 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'type': 'container',
 					'children': [
 						{
-							'id': 'downloadas-pdf',
-							'type': 'menubartoolitem',
+							'id': 'exportpdf',
+							'type': 'customtoolitem',
 							'text': _('PDF Document (.pdf)'),
-							'command': ''
+							'command': 'exportpdf',
+							'inlineLabel': true
 						},
 						{
-							'id': 'downloadas-epub',
-							'type': 'menubartoolitem',
+							'id': 'exportepub',
+							'type': 'customtoolitem',
 							'text': _('EPUB Document (.epub)'),
-							'command': ''
+							'command': 'exportepub',
+							'inlineLabel': true
 						},
 					],
 					'vertical': 'true'
@@ -318,6 +320,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'command': '.uno:KeyboardShortcuts'
 							}
 						]
+					},
+					{
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:AccessibilityCheck', 'text'),
+						'command': '.uno:AccessibilityCheck'
 					},
 					{
 						'type': 'toolbox',
@@ -752,6 +759,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	},
 
 	getInsertTab: function() {
+		var isODF = L.LOUtil.isFileODF(this._map);
 		var content = [
 			{
 				'type': 'bigtoolitem',
@@ -848,6 +856,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'type': 'bigtoolitem',
+				'text': _UNO('.uno:PageNumberWizard', 'text'),
+				'command': '.uno:PageNumberWizard'
+			},
+			{
+				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertFieldCtrl', 'text'),
 				'command': '.uno:InsertFieldCtrl'
 			},
@@ -881,6 +894,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:DrawText'),
 				'command': '.uno:DrawText'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:InsertObjectStarMath', 'text'),
+				'command': '.uno:InsertObjectStarMath'
 			},
 			{
 				'type': 'container',
@@ -917,7 +935,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:FontworkGalleryFloater'),
-								'command': '.uno:FontworkGalleryFloater'
+								'command': '.uno:FontworkGalleryFloater',
+								// Fontwork export/import not supported in other formats.
+								'visible': isODF ? 'true' : 'false',
 							}
 						]
 					},
@@ -1357,7 +1377,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var content = [
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertMultiIndex', 'text'),
+				'text': _UNO('.uno:IndexesMenu', 'text'),
 				'command': '.uno:InsertMultiIndex'
 			},
 			{
@@ -1378,7 +1398,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:UpdateCurIndex', 'text'),
+								'text': _('Update Index'),
 								'command': '.uno:UpdateCurIndex'
 							}
 						]
@@ -1418,11 +1438,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertReferenceField', 'text'),
-				'command': '.uno:InsertReferenceField'
-			},
-			{
 				'type': 'container',
 				'children': [
 					{
@@ -1440,14 +1455,89 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertAuthoritiesEntry', 'text'),
-								'command': '.uno:InsertAuthoritiesEntry'
+								'text': _UNO('.uno:InsertReferenceField', 'text'),
+								'command': '.uno:InsertReferenceField'
 							}
 						]
 					}
 				],
 				'vertical': 'true'
-			},
+			}
+		];
+		if (this._map.zotero) {
+			content.push(
+				{
+					'id': 'zoteroaddeditbibliography',
+					'type': 'bigmenubartoolitem',
+					'text': _('Add Bibliography'),
+					'command': 'zoteroeditbibliography'
+				},
+				{
+					'type': 'container',
+					'children': [
+						{
+							'type': 'toolbox',
+							'children': [
+								{
+									'id': 'zoteroAddEditCitation',
+									'type': 'customtoolitem',
+									'text': _('Add Citation'),
+									'command': 'zoteroaddeditcitation'
+								}
+							]
+						},
+						{
+							'type': 'toolbox',
+							'children': [
+								{
+									'id': 'zoteroaddnote',
+									'type': 'customtoolitem',
+									'text': _('Add Citation Note'),
+									'command': 'zoteroaddnote'
+								}
+							]
+						}
+					],
+					'vertical': 'true'
+				},
+				{
+					'type': 'container',
+					'children': [
+						{
+							'type': 'toolbox',
+							'children': [
+								{
+									'id': 'zoterorefresh',
+									'type': 'customtoolitem',
+									'text': _('Refresh Citations'),
+									'command': 'zoterorefresh'
+								}
+							]
+						},
+						{
+							'type': 'toolbox',
+							'children': [
+								{
+									'id': 'zoterounlink',
+									'type': 'customtoolitem',
+									'text': _('Unlink Citations'),
+									'command': 'zoterounlink'
+								}
+							]
+						}
+					],
+					'vertical': 'true'
+				},
+				{
+					'id': 'zoteroSetDocPrefs',
+					'type': 'bigcustomtoolitem',
+					'text': _('Citation Preferences'),
+					'command': 'zoterosetdocprefs'
+				}
+			);
+		}
+
+		content.push(
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertFieldCtrl', 'text'),
@@ -1494,12 +1584,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'text': _UNO('.uno:UpdateAll', 'text'),
 				'command': '.uno:UpdateAll'
 			}
-		];
+		);
 
 		return this.getTabPage('References', content);
 	},
 
-	getReviewTab: function() {
+	 getReviewTab: function() {
 		var content = [
 			{
 				'type': 'bigtoolitem',
@@ -1517,11 +1607,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'text': _UNO('.uno:LanguageMenu'),
 				'command': '.uno:LanguageMenu'
 			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Translate'),
-				'command': '.uno:Translate'
-			},
+			window.deeplEnabled ?
+				{
+					'type': 'bigtoolitem',
+					'text': _UNO('.uno:Translate'),
+					'command': '.uno:Translate'
+				}: {},
 			{
 				'type': 'container',
 				'children': [
@@ -1970,6 +2061,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	},
 
 	getDrawTab: function() {
+		var isODF = L.LOUtil.isFileODF(this._map);
 		var content = [
 			{
 				'type': 'bigtoolitem',
@@ -2227,7 +2319,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:FontworkGalleryFloater'),
-								'command': '.uno:FontworkGalleryFloater'
+								'command': '.uno:FontworkGalleryFloater',
+								// Fontwork export/import not supported in other formats.
+								'visible': isODF ? 'true' : 'false',
 							}
 						]
 					},

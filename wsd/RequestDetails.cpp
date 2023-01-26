@@ -66,7 +66,6 @@ template <typename T> bool equal(const T& lhs, const T& rhs)
 }
 
 RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::string& serviceRoot)
-    : _isMobile(false)
 {
     // Check and remove the ServiceRoot from the request.getURI()
     if (!Util::startsWith(request.getURI(), serviceRoot))
@@ -100,7 +99,6 @@ RequestDetails::RequestDetails(const std::string &mobileURI)
     , _isProxy(false)
     , _isWebSocket(false)
 {
-    _isMobile = true;
     _uriString = mobileURI;
     dehexify();
     processURI();

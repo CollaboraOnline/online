@@ -10,98 +10,49 @@
 #include "lokassert.hpp"
 #include <WopiTestServer.hpp>
 #include <Log.hpp>
-#include <Unit.hpp>
-#include <UnitHTTP.hpp>
 #include <helpers.hpp>
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Util/LayeredConfiguration.h>
+#include <wsd/ClientSession.hpp>
 
+#include <Poco/Net/HTTPRequest.h>
+
+/// This is to test that we unlock before unloading the last editor.
 class UnitWopiLock : public WopiTestServer
 {
     STATE_ENUM(Phase, Load, LockDocument, UnlockDocument, Done) _phase;
 
     std::string _lockState;
-    std::string _lockString;
+    std::string _lockToken;
+    std::size_t _checkFileInfoCount;
+    std::size_t _viewCount;
 
 public:
     UnitWopiLock()
         : WopiTestServer("UnitWopiLock")
         , _phase(Phase::Load)
         , _lockState("UNLOCK")
+        , _checkFileInfoCount(0)
+        , _viewCount(0)
     {
     }
 
-    virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& /*message*/, std::shared_ptr<StreamSocket>& socket) override
+    void configCheckFileInfo(Poco::JSON::Object::Ptr fileInfo) override
     {
-        Poco::URI uriReq(request.getURI());
-        Poco::RegularExpression regInfo("/wopi/files/[0-9]");
-        Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
-        LOG_TST("Fake wopi host request: " << request.getMethod() << ' ' << uriReq.toString());
+        // Make the first session the editor, subsequent ones read-only.
+        const bool firstView = _checkFileInfoCount == 0;
+        ++_checkFileInfoCount;
 
-        // CheckFileInfo
-        if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
-        {
-            LOG_TST("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
-            static int requestCount = 0;
+        LOG_TST("CheckFileInfo: " << (firstView ? "editor" : "viewer"));
 
-            const std::string fileName(uriReq.getPath() == "/wopi/files/3" ? "he%llo.txt" : "hello.txt");
-            Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
-            fileInfo->set("BaseFileName", fileName);
-            fileInfo->set("Size", getFileContent().size());
-            fileInfo->set("Version", "1.0");
-            fileInfo->set("OwnerId", "test");
-            fileInfo->set("UserId", "test");
+        fileInfo->set("SupportsLocks", "true");
+        fileInfo->set("UserCanWrite", firstView ? "true" : "false");
 
-            fileInfo->set("UserFriendlyName", "test");
-            /// First session will be only session with the edit permission
-            fileInfo->set("UserCanWrite", requestCount < 1 ? "true" : "false");
-            fileInfo->set("PostMessageOrigin", "localhost");
-            fileInfo->set("LastModifiedTime", Util::getIso8601FracformatTime(getFileLastModifiedTime()));
-            fileInfo->set("EnableOwnerTermination", "true");
-            fileInfo->set("SupportsLocks", "true");
-
-            std::ostringstream jsonStream;
-            fileInfo->stringify(jsonStream);
-
-            http::Response httpResponse(http::StatusLine(200));
-            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-            httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
-            socket->sendAndShutdown(httpResponse);
-
-            requestCount++;
-
-            return true;
-        }
-        // GetFile
-        else if (request.getMethod() == "GET" && regContent.match(uriReq.getPath()))
-        {
-            LOG_TST("Fake wopi host request, handling GetFile: " << uriReq.getPath());
-
-            http::Response httpResponse(http::StatusLine(200));
-            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-            httpResponse.setBody(getFileContent(), "text/plain; charset=utf-8");
-            socket->sendAndShutdown(httpResponse);
-
-            return true;
-        }
-        // X-WOPI-Lock
-        else if (request.getMethod() == "POST" && regInfo.match(uriReq.getPath()))
-        {
-            LOG_TST("Fake wopi host request, handling Update Lock State: " << uriReq.getPath());
-
-            assertLockRequest(request);
-
-            http::Response httpResponse(http::StatusLine(200));
-            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-            socket->sendAndShutdown(httpResponse);
-
-            return true;
-        }
-
-        return false;
+        // An extension that doesn't allow commenting. By omitting this,
+        // the test fails because we allow commenting and consider the
+        // document editable, and don't unlock when the editor disconnects.
+        fileInfo->set("BaseFileName", "doc.odt");
     }
 
-    void assertLockRequest(const Poco::Net::HTTPRequest& request)
+    void assertLockRequest(const Poco::Net::HTTPRequest& request) override
     {
         const std::string lock = request.get("X-WOPI-Lock", std::string());
         const std::string newLockState = request.get("X-WOPI-Override", std::string());
@@ -112,24 +63,40 @@ public:
         {
             LOK_ASSERT_EQUAL_MESSAGE("Expected X-WOPI-Override:LOCK", std::string("LOCK"),
                                      newLockState);
-            LOK_ASSERT_MESSAGE("Lock String cannot be empty", !lock.empty());
-            TRANSITION_STATE(_phase, Phase::UnlockDocument);
+            LOK_ASSERT_MESSAGE("Lock token cannot be empty", !lock.empty());
             _lockState = newLockState;
-            _lockString = lock;
-
+            _lockToken = lock;
         }
         else if (_phase == Phase::UnlockDocument)
         {
             LOK_ASSERT_EQUAL_MESSAGE("Expected X-WOPI-Override:UNLOCK", std::string("UNLOCK"),
                                      newLockState);
-            LOK_ASSERT_MESSAGE("Document is not unlocked", _lockState != "UNLOCK");
-            LOK_ASSERT_EQUAL(_lockString, lock);
+            LOK_ASSERT_EQUAL_MESSAGE("Document is not unlocked", std::string("LOCK"), _lockState);
+            LOK_ASSERT_EQUAL_MESSAGE("The lock token has changed", _lockToken, lock);
+
             TRANSITION_STATE(_phase, Phase::Done);
             exitTest(TestResult::Ok);
         }
         else
         {
             LOK_ASSERT_FAIL("Unexpected lock-state change while in " + toString(_phase));
+        }
+    }
+
+    void onDocBrokerViewLoaded(const std::string&,
+                               const std::shared_ptr<ClientSession>& session) override
+    {
+        LOG_TST("View #" << _viewCount + 1 << " [" << session->getName() << "] loaded");
+
+        ++_viewCount;
+        if (_viewCount == 2)
+        {
+            // Transition before disconnecting.
+            TRANSITION_STATE(_phase, Phase::UnlockDocument);
+
+            // force kill the session with edit permission
+            LOG_TST("Disconnecting first connection with edit permission");
+            deleteSocketAt(0);
         }
     }
 
@@ -155,14 +122,8 @@ public:
                 break;
             }
             case Phase::LockDocument:
-                break;
             case Phase::UnlockDocument:
-            {
-                // force kill the session with edit permission
-                LOG_TST("Disconnecting first connection with edit permission");
-                deleteSocketAt(0);
                 break;
-            }
             case Phase::Done:
             {
                 // just wait for the results
@@ -172,9 +133,6 @@ public:
     }
 };
 
-UnitBase *unit_create_wsd(void)
-{
-    return new UnitWopiLock();
-}
+UnitBase* unit_create_wsd(void) { return new UnitWopiLock(); }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

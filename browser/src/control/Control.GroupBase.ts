@@ -3,7 +3,23 @@
  * L.Control.GroupBase
 */
 
-/* global $ app */
+namespace cool {
+
+export interface GroupEntry {
+	level: number,
+	index: number,
+	startPos: number,
+	endPos: number,
+	hidden: boolean
+}
+
+export interface GroupEntryStrings {
+	level: string,
+	index: string,
+	startPos: string,
+	endPos: string,
+	hidden: string
+}
 
 /*
 	This file is Calc only. This is the base class for Control.RowGroup and Control.ColumnGroup files.
@@ -11,56 +27,64 @@
 	This class is an extended version of "CanvasSectionObject".
 */
 
-L.Control.GroupBase = L.Class.extend({
-	interactable: true,
-	sectionProperties: {},
+export class GroupBase extends CanvasSectionObject {
+	_textColor: string;
+	_getFont: () => string;
+	_levelSpacing: number;
+	_groupHeadSize: number;
+	_groups: Array<Array<GroupEntry>>;
+	isRemoved: boolean = false;
+
+	constructor (options: SectionInitProperties) {
+		super(options);
+		if (options.interactable === undefined)
+			this.interactable = true;
+		if (options.sectionProperties === undefined)
+			this.sectionProperties = {};
+	}
 
 	// Create font for the group headers. Group headers are on the left side of corner header.
-	_createFont: function () {
-		var baseElem = document.getElementsByTagName('body')[0];
-		var elem = L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
+	_createFont(): void {
+		const baseElem = document.getElementsByTagName('body')[0];
+		const elem = L.DomUtil.create('div', 'spreadsheet-header-row', baseElem);
 		this.backgroundColor = L.DomUtil.getStyle(elem, 'background-color'); // This is a section property.
 		this.borderColor = this.backgroundColor;
 		this._textColor = L.DomUtil.getStyle(elem, 'color');
-		var fontFamily = L.DomUtil.getStyle(elem, 'font-family');
-		var fontSize = parseInt(L.DomUtil.getStyle(elem, 'font-size'));
+		const fontFamily = L.DomUtil.getStyle(elem, 'font-family');
+		const fontSize = parseInt(L.DomUtil.getStyle(elem, 'font-size'));
 		this._getFont = function() {
 			return Math.round(fontSize * app.dpiScale) + 'px ' + fontFamily;
 		};
 		L.DomUtil.remove(elem);
-	},
+	}
 
 	// This returns the required width for the section.
-	_computeSectionWidth: function () {
+	_computeSectionWidth(): number {
 		return this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * (this._groups.length + 1);
-	},
+	}
 
 	// This function puts data into a good shape for use of this class.
-	_collectGroupsData: function(groups) {
-		var level, groupEntry;
+	_collectGroupsData (groups: Array<GroupEntryStrings>): void {
+		let level: number, groupEntry: GroupEntry;
 
-		var lastGroupIndex = new Array(groups.length);
-		var firstChildGroupIndex = new Array(groups.length);
-		var lastLevel = -1;
-		for (var i = 0; i < groups.length; ++i) {
+		const lastGroupIndex = new Array(groups.length);
+		const firstChildGroupIndex = new Array(groups.length);
+		let lastLevel = -1;
+		for (let i = 0; i < groups.length; ++i) {
 			// a new group start
-			var groupData = groups[i];
+			const groupData = groups[i];
 			level = parseInt(groupData.level) - 1;
 			if (!this._groups[level]) {
-				this._groups[level] = {};
+				this._groups[level] = [];
 			}
-			var startPos = parseInt(groupData.startPos);
-			var endPos = parseInt(groupData.endPos);
-			var isHidden = !!parseInt(groupData.hidden);
-			if (isHidden || startPos === endPos) {
-				startPos -= this._groupHeadSize / 2;
-				endPos = startPos + this._groupHeadSize;
-			}
-			else {
-				var moved = false;
+			let startPos = parseInt(groupData.startPos);
+			const endPos = parseInt(groupData.endPos);
+			const isHidden = !!parseInt(groupData.hidden);
+			if (!isHidden) {
+				let moved = false;
 				// if the first child is collapsed the parent head has to be top-aligned with the child
 				if (level < lastLevel && firstChildGroupIndex[lastLevel] !== undefined) {
-					var childGroupEntry = this._groups[lastLevel][firstChildGroupIndex[lastLevel]];
+					const childGroupEntry = this._groups[lastLevel][firstChildGroupIndex[lastLevel]];
 					if (childGroupEntry.hidden) {
 						if (startPos > childGroupEntry.startPos && startPos < childGroupEntry.endPos) {
 							startPos = childGroupEntry.startPos;
@@ -71,7 +95,7 @@ L.Control.GroupBase = L.Class.extend({
 				// if 2 groups belonging to the same level are contiguous and the first group is collapsed,
 				// the second one has to be shifted as much as possible in order to avoid overlapping.
 				if (!moved && lastGroupIndex[level] !== undefined) {
-					var prevGroupEntry = this._groups[level][lastGroupIndex[level]];
+					const prevGroupEntry = this._groups[level][lastGroupIndex[level]];
 					if (prevGroupEntry.hidden) {
 						if (startPos > prevGroupEntry.startPos && startPos < prevGroupEntry.endPos) {
 							startPos = prevGroupEntry.endPos;
@@ -81,12 +105,12 @@ L.Control.GroupBase = L.Class.extend({
 			}
 			groupEntry = {
 				level: level,
-				index: groupData.index,
+				index: parseInt(groupData.index),
 				startPos: startPos,
 				endPos: endPos,
 				hidden: isHidden
 			};
-			this._groups[level][groupData.index] = groupEntry;
+			this._groups[level][parseInt(groupData.index)] = groupEntry;
 			lastGroupIndex[level] = groupData.index;
 			if (level > lastLevel) {
 				firstChildGroupIndex[level] = groupData.index;
@@ -96,17 +120,17 @@ L.Control.GroupBase = L.Class.extend({
 				firstChildGroupIndex[level + 1] = undefined;
 			}
 		}
-	},
+	}
 
 	// If previous group is visible (expanded), current group's plus sign etc. will be drawn. If previous group is not expanded, current group's plus sign etc. won't be drawn.
-	_isPreviousGroupVisible: function (index, level) {
+	_isPreviousGroupVisible (index: number, level: number): boolean {
 		if (level === 0) // First group's drawings are always drawn.
 			return true;
 
-		for (var i = 0; i < this._groups.length; i++) {
-			for (var group in this._groups[i]) {
+		for (let i = 0; i < this._groups.length; i++) {
+			for (const group in this._groups[i]) {
 				if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
-					var group_ = this._groups[i][group];
+					const group_ = this._groups[i][group];
 					if (group_.level === level - 1 && group_.index === index) {
 						if (group_.hidden === false) {
 							if (group_.level > 0) {
@@ -131,14 +155,18 @@ L.Control.GroupBase = L.Class.extend({
 				}
 			}
 		}
-	},
+	}
+
+	drawGroupControl (entry: GroupEntry): void {
+		return;
+	}
 
 	// This calls drawing functions related to tails and plus & minus signs etc.
-	drawOutline: function() {
+	drawOutline(): void {
 		if (this._groups) {
-			for (var i = 0; i < this._groups.length; i++) {
+			for (let i = 0; i < this._groups.length; i++) {
 				if (this._groups[i]) {
-					for (var group in this._groups[i]) {
+					for (const group in this._groups[i]) {
 						if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
 							if (this._isPreviousGroupVisible(this._groups[i][group].index, this._groups[i][group].level))
 								this.drawGroupControl(this._groups[i][group]);
@@ -147,57 +175,73 @@ L.Control.GroupBase = L.Class.extend({
 				}
 			}
 		}
-	},
+	}
+
+	drawLevelHeader (level: number): void {
+		return;
+	}
 
 	// This function calls drawing function for related to headers of groups. Headers are drawn on the left of corner header.
-	drawLevelHeaders: function () {
-		for (var i = 0; i < this._groups.length + 1; ++i) {
+	drawLevelHeaders(): void {
+		for (let i = 0; i < this._groups.length + 1; ++i) {
 			this.drawLevelHeader(i);
 		}
-	},
+	}
 
 	/// In Calc RTL mode, x-coordinate of a given rectangle of given width is horizontally mirrored
-	transformRectX: function (xcoord, rectWidth) {
+	transformRectX (xcoord: number, rectWidth: number): number {
 		return this.isCalcRTL() ? this.size[0] - xcoord - rectWidth : xcoord;
-	},
+	}
 
 	/// In Calc RTL mode, x-coordinate of a given point is horizontally mirrored
-	transformX: function (xcoord) {
+	transformX (xcoord: number): number {
 		return this.isCalcRTL() ? this.size[0] - xcoord : xcoord;
-	},
+	}
 
 	/**
 	 * Checks if the given point is within the bounds of the rectangle defined by
 	 * startX, startY, endX, endY. If mirrorX is true then point is horizontally
 	 * mirrored before checking.
 	 */
-	isPointInRect: function (point, startX, startY, endX, endY, mirrorX) {
-		var x = mirrorX ? this.size[0] - point[0] : point[0];
-		var y = point[1];
+	isPointInRect (point: number[], startX: number, startY: number, endX: number, endY: number, mirrorX: boolean): boolean {
+		const x = mirrorX ? this.size[0] - point[0] : point[0];
+		const y = point[1];
 
 		return (x > startX && x < endX && y > startY && y < endY);
-	},
+	}
 
-	onDraw: function () {
+	onDraw(): void {
 		this.drawOutline();
 		this.drawLevelHeaders();
-	},
+	}
 
-	onMouseMove: function (point) {
+	findClickedGroup (point: number[]): GroupEntry {
+		return null;
+	}
+
+	findClickedLevel (point: number[]): number {
+		return -1;
+	}
+
+	onMouseMove (point: number[]): void {
 		// If mouse is above a group header or a group control, we change the cursor.
 		if (this.findClickedGroup(point) !== null || this.findClickedLevel(point) !== -1)
 			this.context.canvas.style.cursor = 'pointer';
 		else
 			this.context.canvas.style.cursor = 'default';
-	},
+	}
 
-	onMouseLeave: function () {
+	onMouseLeave(): void {
 		this.context.canvas.style.cursor = 'default';
-	},
+	}
 
-	onClick: function (point) {
+	_updateOutlineState(group: Partial<GroupEntry>): void {
+		return;
+	}
+
+	onClick (point: number[]): void {
 		// User may have clicked on one of the level headers.
-		var level = this.findClickedLevel(point);
+		const level = this.findClickedLevel(point);
 		if (level !== -1) {
 			this._updateOutlineState({level: level, index: -1}); // index: -1 targets all groups (there may be multiple separate row groups.).
 		}
@@ -209,30 +253,29 @@ L.Control.GroupBase = L.Class.extend({
 				this._updateOutlineState(group);
 			}
 		}
-	},
+	}
+
+	findTailsGroup (point: number[]): GroupEntry {
+		return null;
+	}
 
 	/* Double clicking on a group's tail closes it. */
-	onDoubleClick: function (point) {
-		var group = this.findTailsGroup(point);
+	onDoubleClick (point: number[]): void {
+		const group = this.findTailsGroup(point);
 		if (group)
 			this._updateOutlineState(group);
-	},
+	}
 
-	onMouseEnter: function () {
+	onMouseEnter(): void {
 		$.contextMenu('destroy', '#document-canvas');
-	},
+	}
 
-	onRemove: function () {
+	onRemove(): void {
 		this.isRemoved = true;
 		this.containerObject.getSectionWithName(L.CSections.RowHeader.name).position[0] = 0;
 		this.containerObject.getSectionWithName(L.CSections.CornerHeader.name).position[0] = 0;
-	},
+	}
+}
+}
 
-	onNewDocumentTopLeft: function () {},
-	onLongPress: function () {},
-	onMouseDown: function () {},
-	onMouseUp: function () {},
-	onMouseWheel: function () {},
-	onContextMenu: function () {},
-	onResize: function () {},
-});
+L.Control.GroupBase = cool.GroupBase;

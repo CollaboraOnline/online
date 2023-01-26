@@ -181,7 +181,7 @@ L.Map.include({
 	applyFont: function (fontName) {
 		if (!fontName)
 			return;
-		if (this.isPermissionEdit()) {
+		if (this.isEditMode()) {
 			var msg = 'uno .uno:CharFontName {' +
 				'"CharFontName.FamilyName": ' +
 					'{"type": "string", "value": "' + fontName + '"}}';
@@ -190,7 +190,7 @@ L.Map.include({
 	},
 
 	applyFontSize: function (fontSize) {
-		if (this.isPermissionEdit()) {
+		if (this.isEditMode()) {
 			var msg = 'uno .uno:FontHeight {' +
 				'"FontHeight.Height": ' +
 				'{"type": "float", "value": "' + fontSize + '"}}';
@@ -226,8 +226,19 @@ L.Map.include({
 			options = '';
 		}
 
+		// printing: don't export form fields, irrelevant, and can be buggy
+		// comments are irrelevant, too
+		if (id === 'print' && format === 'pdf' && options === '')
+			options = '{\"ExportFormFields\":{\"type\":\"boolean\",\"value\":\"false\"},' +
+						'\"ExportNotes\":{\"type\":\"boolean\",\"value\":\"false\"}}';
+
+		// download: don't export comments into PDF by default
+		if (id == 'export' && format === 'pdf' && options === '')
+			options = '{\"ExportNotes\":{\"type\":\"boolean\",\"value\":\"false\"}}';
+
 		if (!window.ThisIsAMobileApp)
 			this.showBusy(_('Downloading...'), false);
+
 		app.socket.sendMessage('downloadas ' +
 			'name=' + encodeURIComponent(name) + ' ' +
 			'id=' + id + ' ' +
@@ -275,7 +286,7 @@ L.Map.include({
 			this.fire('error', {cmd: 'setStyle', kind: 'incorrectparam'});
 			return;
 		}
-		if (this.isPermissionEdit()) {
+		if (this.isEditMode()) {
 			var msg = 'uno .uno:StyleApply {' +
 					'"Style":{"type":"string", "value": "' + style + '"},' +
 					'"FamilyName":{"type":"string", "value":"' + familyName + '"}' +
@@ -289,7 +300,7 @@ L.Map.include({
 			this.fire('error', {cmd: 'setLayout', kind: 'incorrectparam'});
 			return;
 		}
-		if (this.isPermissionEdit()) {
+		if (this.isEditMode()) {
 			var msg = 'uno .uno:AssignLayout {' +
 					'"WhatPage":{"type":"unsigned short", "value": "' + this.getCurrentPartNumber() + '"},' +
 					'"WhatLayout":{"type":"unsigned short", "value": "' + layout + '"}' +
@@ -323,9 +334,8 @@ L.Map.include({
 
 	sendUnoCommand: function (command, json) {
 		if ((command.startsWith('.uno:Sidebar') && !command.startsWith('.uno:SidebarShow')) ||
-			command.startsWith('.uno:SlideMasterPage') || command.startsWith('.uno:SlideChangeWindow') ||
-			command.startsWith('.uno:CustomAnimation') || command.startsWith('.uno:MasterSlidesPanel') ||
-			command.startsWith('.uno:ModifyPage')) {
+			command.startsWith('.uno:SlideChangeWindow') || command.startsWith('.uno:CustomAnimation') ||
+			command.startsWith('.uno:MasterSlidesPanel') || command.startsWith('.uno:ModifyPage')) {
 
 			// sidebar control is present only in desktop/tablet case
 			if (this.sidebar) {
@@ -334,9 +344,6 @@ L.Map.include({
 				} else {
 					// we don't know which deck was active last, show first then switch if needed
 					app.socket.sendMessage('uno .uno:SidebarShow');
-
-					if (this.sidebar.getTargetDeck() == null)
-						app.socket.sendMessage('uno ' + command);
 
 					this.sidebar.setupTargetDeck(command);
 					return;
@@ -348,10 +355,14 @@ L.Map.include({
 		// app.socket.emitInstantTraceEvent('cool-unocommand:' + command);
 
 		var isAllowedInReadOnly = false;
-		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog', '.uno:EditAnnotation',
-			'.uno:InsertAnnotation', '.uno:DeleteAnnotation', '.uno:Signature',
-			'.uno:ShowResolvedAnnotations', '.uno:ToolbarMode?Mode:string=notebookbar_online.ui',
-			'.uno:ToolbarMode?Mode:string=Default'];
+		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog',
+			'.uno:Signature', '.uno:ShowResolvedAnnotations',
+			'.uno:ToolbarMode?Mode:string=notebookbar_online.ui', '.uno:ToolbarMode?Mode:string=Default'];
+		if (this.isPermissionEditForComments()) {
+			allowedCommands.push('.uno:InsertAnnotation','.uno:DeleteCommentThread', '.uno:DeleteAnnotation', '.uno:DeleteNote',
+				'.uno:DeleteComment', '.uno:ReplyComment', '.uno:ReplyToAnnotation', '.uno:ResolveComment',
+				'.uno:ResolveCommentThread', '.uno:ResolveComment', '.uno:EditAnnotation', '.uno:ExportToEPUB', '.uno:ExportToPDF');
+		}
 
 		for (var i in allowedCommands) {
 			if (allowedCommands[i] === command) {
@@ -376,14 +387,14 @@ L.Map.include({
 			return;
 		if (this.dialog.hasOpenedDialog() && !command.startsWith('.uno:ToolbarMode'))
 			this.dialog.blinkOpenDialog();
-		else if (this.isPermissionEdit() || isAllowedInReadOnly) {
+		else if (this.isEditMode() || isAllowedInReadOnly) {
 			if (!this.messageNeedsToBeRedirected(command))
 				app.socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 		}
 	},
 
 	toggleCommandState: function (unoState) {
-		if (this.isPermissionEdit()) {
+		if (this.isEditMode()) {
 			if (!unoState.startsWith('.uno:')) {
 				unoState = '.uno:' + unoState;
 			}
@@ -408,7 +419,7 @@ L.Map.include({
 		if (window.ThisIsAMobileApp) {
 			productName = window.MobileAppName;
 		} else {
-			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition';
+			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition (unbranded)';
 		}
 		var w;
 		var iw = window.innerWidth;
@@ -582,7 +593,7 @@ L.Map.include({
 		if (window.ThisIsAMobileApp) {
 			productName = window.MobileAppName;
 		} else {
-			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition';
+			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition (unbranded)';
 		}
 		var productURL = (typeof brandProductURL !== 'undefined') ? brandProductURL : 'https://collaboraonline.github.io/';
 		content.find('#product-name').text(productName).addClass('product-' + productName.split(/[ ()]+/).join('-').toLowerCase());
@@ -839,6 +850,56 @@ L.Map.include({
 				} else {
 					this.sendUnoCommand('.uno:FunctionDialog');
 				}
+			}
+			break;
+		case 'zoteroaddeditcitation':
+			{
+				this.zotero.handleItemList();
+			}
+			break;
+		case 'zoterosetdocprefs':
+			{
+				this.zotero.handleStyleList();
+			}
+			break;
+		case 'zoteroaddeditbibliography':
+			{
+				this.zotero.insertBibliography();
+			}
+			break;
+		case 'zoteroaddnote':
+			{
+				this.zotero.handleInsertNote();
+			}
+			break;
+		case 'zoterorefresh':
+			{
+				this.zotero.refreshCitationsAndBib();
+			}
+			break;
+		case 'zoterounlink':
+			{
+				this.zotero.unlinkCitations();
+			}
+			break;
+		case 'exportpdf':
+			{
+				this.sendUnoCommand('.uno:ExportToPDF', {
+					'SynchronMode': {
+						'type': 'boolean',
+						'value': false
+					}
+				});
+			}
+			break;
+		case 'exportepub':
+			{
+				this.sendUnoCommand('.uno:ExportToEPUB', {
+					'SynchronMode': {
+						'type': 'boolean',
+						'value': false
+					}
+				});
 			}
 			break;
 		}

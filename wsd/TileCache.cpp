@@ -58,7 +58,7 @@ void TileCache::clear()
 {
     _cache.clear();
     _cacheSize = 0;
-    for (auto i : _streamCache)
+    for (std::map<std::string, Blob>& i : _streamCache)
         i.clear();
 
     LOG_INF("Completely cleared tile cache for: " << _docURL);
@@ -203,7 +203,10 @@ void TileCache::saveTileAndNotify(const TileDesc& desc, const char *data, const 
     // Ignore if we can't save the tile, things will work anyway, but slower.
     // An error indication is supposed to be sent to all users in that case.
     Tile tile = saveDataToCache(desc, data, size);
-    LOG_TRC("Saved cache tile: " << cacheFileName(desc) << " of size " << size << " bytes");
+    if (!_dontCache)
+        LOG_TRC("Saved cache tile: " << cacheFileName(desc) << " of size " << size << " bytes");
+    else
+        LOG_TRC("Got (non-cached) tile: " << cacheFileName(desc));
 
     // Notify subscribers, if any.
     if (tileBeingRendered)

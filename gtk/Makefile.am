@@ -1,6 +1,6 @@
 bin_PROGRAMS = mobile
 
-include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/kit -I${top_srcdir}/wsd -I${top_srcdir}
+include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/kit -I${top_srcdir}/wsd -I${top_srcdir} ${ZSTD_CFLAGS}
 
 warning_flags = -Wall -Werror -Wno-parentheses -Wno-sign-compare -Wno-unused-variable
 define_flags = -DMOBILEAPP=1
@@ -8,6 +8,7 @@ define_flags = -DMOBILEAPP=1
 AM_CPPFLAGS = -pthread \
               -DCOOLWSD_DATADIR='"@COOLWSD_DATADIR@"' \
               -DCOOLWSD_CONFIGDIR='"@COOLWSD_CONFIGDIR@"' \
+	      -DDEBUG_ABSSRCDIR='"'$(realpath ${top_srcdir})'"' \
               -DTOPSRCDIR='"'$(realpath ${top_srcdir})'"' \
               -DGTKAPP \
               ${define_flags} \
@@ -15,10 +16,11 @@ AM_CPPFLAGS = -pthread \
               ${include_paths} \
               ${WEBKIT_CFLAGS}
 
-AM_LDFLAGS = -pthread ${WEBKIT_LIBS} -ldl
+AM_LDFLAGS = -pthread ${WEBKIT_LIBS} -ldl $(ZSTD_LIBS) ${PNG_LIBS}
 
 common_sources = \
                  ../common/Authorization.cpp \
+                 ../common/ConfigUtil.cpp \
                  ../common/FileUtil.cpp \
                  ../common/Log.cpp \
                  ../common/MessageQueue.cpp \
@@ -27,6 +29,7 @@ common_sources = \
                  ../common/SigUtil.cpp \
                  ../common/SpookyV2.cpp \
                  ../common/StringVector.cpp \
+                 ../common/TraceEvent.cpp \
                  ../common/Unit.cpp \
                  ../common/Util.cpp
 

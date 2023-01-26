@@ -15,6 +15,7 @@
 #include <ctime>
 #include <ios>
 #include <fstream>
+#include <memory>
 #include <sstream>
 
 #include <Poco/DigestStream.h>
@@ -30,11 +31,13 @@
 #include "JailUtil.hpp"
 #include "COOLWSD.hpp"
 #include "SenderQueue.hpp"
+#include "Socket.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
 #include "ProxyProtocol.hpp"
 #include "Util.hpp"
 #include "QuarantineUtil.hpp"
+#include <common/JsonUtil.hpp>
 #include <common/Log.hpp>
 #include <common/Message.hpp>
 #include <common/Clipboard.hpp>
@@ -122,6 +125,10 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _saveManager(std::chrono::seconds(std::getenv("COOL_NO_AUTOSAVE") != nullptr
                                             ? 0
                                             : COOLWSD::getConfigValueNonZero<int>(
+                                                  "per_document.idlesave_duration_secs", 30)),
+                   std::chrono::seconds(std::getenv("COOL_NO_AUTOSAVE") != nullptr
+                                            ? 0
+                                            : COOLWSD::getConfigValueNonZero<int>(
                                                   "per_document.autosave_duration_secs", 300)),
                    std::chrono::milliseconds(COOLWSD::getConfigValueNonZero<int>(
                        "per_document.min_time_between_saves_ms", 500)))
@@ -140,6 +147,9 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _debugRenderedTileCount(0)
     , _wopiDownloadDuration(0)
     , _mobileAppDocId(mobileAppDocId)
+#ifdef ENABLE_DEBUG
+    , _unitWsd(UnitWSD::get())
+#endif
 {
     assert(!_docKey.empty());
     assert(!COOLWSD::ChildRoot.empty());
@@ -153,7 +163,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
 
     if (UnitWSD::isUnitTesting())
     {
-        UnitWSD::get().onDocBrokerCreate(_docKey);
+        _unitWsd.onDocBrokerCreate(_docKey);
     }
 }
 
@@ -279,6 +289,12 @@ void DocumentBroker::pollThread()
         if (_stop)
         {
             LOG_DBG("Doc [" << _docKey << "] is flagged to stop after returning from poll.");
+            break;
+        }
+
+        if (UnitWSD::isUnitTesting() && _unitWsd.isFinished())
+        {
+            stop("UnitTestFinished");
             break;
         }
 
@@ -431,7 +447,7 @@ void DocumentBroker::pollThread()
                             : (!_closeReason.empty() ? _closeReason : "unloading");
                     autoSaveAndStop(reason);
                 }
-                else if (!_stop && _saveManager.needAutosaveCheck())
+                else if (!_stop && _saveManager.needAutoSaveCheck())
                 {
                     LOG_TRC("Triggering an autosave.");
                     autoSave(false);
@@ -478,7 +494,7 @@ void DocumentBroker::pollThread()
                 {
                     std::string id = it.second->getId();
                     LOG_WRN("Unusual, Kit session " + id + " failed its disconnect handshake, killing");
-                    finalRemoveSession(id);
+                    finalRemoveSession(it.second);
                     break; // it invalid.
                 }
             }
@@ -495,65 +511,78 @@ void DocumentBroker::pollThread()
 #endif
     }
 
-    LOG_INF("Finished polling doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
-            _poll->continuePolling() << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag() <<
-            ", TerminationFlag: " << SigUtil::getTerminationFlag() << ", closeReason: " << _closeReason << ". Flushing socket.");
+    LOG_INF("Finished polling doc ["
+            << _docKey << "]. stop: " << _stop << ", continuePolling: " << _poll->continuePolling()
+            << ", CloseReason: [" << _closeReason << ']'
+            << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag()
+            << ", TerminationFlag: " << SigUtil::getTerminationFlag());
 
-    // If we are exiting because the owner discarded conflict changes, don't detect data loss.
-    if (!(_docState.isCloseRequested() && _documentChangedInStorage))
+    if (_childProcess && _sessions.empty())
     {
-        // If the document is modified, or not uploaded, at exit, dump the state and warn.
-        const std::string reason = isModified()          ? "flagged as modified"
-                                   : isStorageOutdated() ? "not uploaded to storage"
-                                                         : "";
-        if (!reason.empty())
+        LOG_INF("Requesting termination of child [" << getPid() << "] for doc [" << _docKey
+                                                    << "] as there are no sessions");
+        _childProcess->requestTermination();
+    }
+
+    // Check for data-loss.
+    std::string reason;
+    if (isModified() || isStorageOutdated())
+    {
+        // If we are exiting because the owner discarded conflict changes, don't detect data loss.
+        if (!(_docState.isCloseRequested() && _documentChangedInStorage))
         {
-            std::stringstream state;
-            dumpState(state);
-            LOG_WRN("DocumentBroker stopping although " << reason << ". State: " << state.str());
-            if (UnitWSD::isUnitTesting())
-            {
-                UnitWSD::get().fail("Data-loss detected while exiting DocBroker [" + _docKey + ']');
-            }
+            reason = isModified() ? "flagged as modified" : "not uploaded to storage";
+
+            // The test may override (if it was expected).
+            if (UnitWSD::isUnitTesting() &&
+                !_unitWsd.onDataLoss("Data-loss detected while exiting [" + _docKey + ']'))
+                reason.clear();
         }
     }
-    else if (UnitWSD::isUnitTesting() && UnitWSD::get().isFinished() && UnitWSD::get().failed())
+
+    if (!reason.empty() || (UnitWSD::isUnitTesting() && _unitWsd.isFinished() && _unitWsd.failed()))
     {
         std::stringstream state;
+        state << "DocBroker [" << _docKey << " stopped "
+              << (reason.empty() ? "because of test failure" : ("although " + reason)) << ": ";
         dumpState(state);
-        LOG_WRN("Test failed with doc [" << _docKey << "]: " << state.str());
+        LOG_WRN(state.str());
     }
 
-    // Flush socket data first.
-    constexpr auto flushTimeoutMicroS = std::chrono::microseconds(POLL_TIMEOUT_MICRO_S * 2); // ~1000ms
-    LOG_INF("Flushing socket " << _poll->getSocketCount() << " for doc [" << _docKey << "] for "
-                               << flushTimeoutMicroS << ". stop: " << _stop
-                               << ", continuePolling: " << _poll->continuePolling()
-                               << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag()
-                               << ", TerminationFlag: " << SigUtil::getTerminationFlag()
-                               << ". Terminating child with reason: [" << _closeReason << "].");
-    const auto flushStartTime = std::chrono::steady_clock::now();
-    while (_poll->getSocketCount())
+    // Flush socket data first, if any.
+    if (_poll->getSocketCount())
     {
-        const auto now = std::chrono::steady_clock::now();
-        const auto elapsedMicroS
-            = std::chrono::duration_cast<std::chrono::microseconds>(now - flushStartTime);
-        if (elapsedMicroS > flushTimeoutMicroS)
-            break;
+        constexpr auto flushTimeoutMicroS =
+            std::chrono::microseconds(POLL_TIMEOUT_MICRO_S * 2); // ~2000ms
+        LOG_INF("Flushing " << _poll->getSocketCount() << " sockets for doc [" << _docKey
+                            << "] for " << flushTimeoutMicroS);
 
-        const std::chrono::microseconds timeoutMicroS
-            = std::min(flushTimeoutMicroS - elapsedMicroS,
-                       std::chrono::microseconds(POLL_TIMEOUT_MICRO_S / 5));
-        _poll->poll(timeoutMicroS);
+        const auto flushStartTime = std::chrono::steady_clock::now();
+        while (_poll->getSocketCount())
+        {
+            const auto now = std::chrono::steady_clock::now();
+            const auto elapsedMicroS =
+                std::chrono::duration_cast<std::chrono::microseconds>(now - flushStartTime);
+            if (elapsedMicroS > flushTimeoutMicroS)
+                break;
 
-        processBatchUpdates();
+            const std::chrono::microseconds timeoutMicroS =
+                std::min(flushTimeoutMicroS - elapsedMicroS,
+                         std::chrono::microseconds(POLL_TIMEOUT_MICRO_S / 5));
+            if (_poll->poll(timeoutMicroS) == 0 && UnitWSD::isUnitTesting())
+            {
+                // Polling timed out, no more data to flush.
+                break;
+            }
+
+            processBatchUpdates();
+        }
+
+        LOG_INF("Finished flushing socket for doc [" << _docKey << ']');
     }
-
-    LOG_INF("Finished flushing socket for doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
-            _poll->continuePolling() << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag() <<
-            ", TerminationFlag: " << SigUtil::getTerminationFlag() << ". Terminating child with reason: [" << _closeReason << "].");
 
     // Terminate properly while we can.
+    LOG_DBG("Terminating child with reason: [" << _closeReason << ']');
     terminateChild(_closeReason);
 
     // Stop to mark it done and cleanup.
@@ -568,7 +597,7 @@ void DocumentBroker::pollThread()
     if (_tileCache)
         _tileCache->clear();
 
-    LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
+    LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << ']');
 }
 
 bool DocumentBroker::isAlive() const
@@ -591,7 +620,8 @@ DocumentBroker::~DocumentBroker()
     _poll->joinThread();
 
     if (!_sessions.empty())
-        LOG_WRN("Destroying DocumentBroker [" << _docKey << "] while having unremoved sessions.");
+        LOG_WRN("Destroying DocumentBroker [" << _docKey << "] while having " << _sessions.size()
+                                              << " unremoved sessions.");
 
     // Need to first make sure the child exited, socket closed,
     // and thread finished before we are destroyed.
@@ -604,7 +634,7 @@ DocumentBroker::~DocumentBroker()
 
     if (UnitWSD::isUnitTesting())
     {
-        UnitWSD::get().onDocBrokerDestroy(_docKey);
+        _unitWsd.onDocBrokerDestroy(_docKey);
     }
 }
 
@@ -642,7 +672,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 
     {
         bool result;
-        if (UnitWSD::get().filterLoad(sessionId, jailId, result))
+        if (_unitWsd.filterLoad(sessionId, jailId, result))
             return result;
     }
 
@@ -699,6 +729,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     // Call the storage specific fileinfo functions
     std::string userId, username;
     std::string userExtraInfo;
+    std::string userPrivateInfo;
     std::string watermarkText;
     std::string templateSource;
 
@@ -717,23 +748,34 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         userId = wopifileinfo->getUserId();
         username = wopifileinfo->getUsername();
         userExtraInfo = wopifileinfo->getUserExtraInfo();
+        userPrivateInfo = wopifileinfo->getUserPrivateInfo();
         watermarkText = wopifileinfo->getWatermarkText();
         templateSource = wopifileinfo->getTemplateSource();
 
         _isViewFileExtension = COOLWSD::IsViewFileExtension(wopiStorage->getFileExtension());
-        if (CommandControl::LockManager::isLockedReadOnlyUser() ||
-            !wopifileinfo->getUserCanWrite() || _isViewFileExtension)
+        if (!wopifileinfo->getUserCanWrite()) // Readonly.
         {
-            LOG_DBG("Setting the session as readonly");
-            session->setReadOnly();
-            if (COOLWSD::IsViewWithCommentsFileExtension(wopiStorage->getFileExtension()))
-            {
-                LOG_DBG("Allow session to change comments");
-                session->setAllowChangeComments();
-            }
+            LOG_DBG("Setting session [" << sessionId << "] to readonly for UserCanWrite=false");
+            session->setWritable(false);
         }
-        else if (wopifileinfo->getUserCanWrite())
+        else if (CommandControl::LockManager::isLockedReadOnlyUser()) // Readonly.
         {
+            LOG_DBG("Setting session [" << sessionId << "] to readonly for LockedReadOnlyUser");
+            session->setWritable(false);
+        }
+        else if (_isViewFileExtension) // PDF and the like: only commenting, no editing.
+        {
+            LOG_DBG("Setting session [" << sessionId << "] to readonly for ViewFileExtension ["
+                                        << wopiStorage->getFileExtension()
+                                        << "] and allowing comments");
+            session->setWritable(true);
+            session->setReadOnly(true);
+            session->setAllowChangeComments(true);
+        }
+        else // Fully writable document, with comments.
+        {
+            LOG_DBG("Setting session [" << sessionId << "] to writable and allowing comments");
+            session->setWritable(true);
             session->setReadOnly(false);
             session->setAllowChangeComments(true);
         }
@@ -789,6 +831,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         wopiInfo->set("SupportsRename", wopifileinfo->getSupportsRename());
         wopiInfo->set("UserCanRename", wopifileinfo->getUserCanRename());
         wopiInfo->set("FileUrl", wopifileinfo->getFileUrl());
+        wopiInfo->set("UserCanWrite", wopifileinfo->getUserCanWrite());
         if (wopifileinfo->getHideChangeTrackingControls() != WopiStorage::WOPIFileInfo::TriState::Unset)
             wopiInfo->set("HideChangeTrackingControls", wopifileinfo->getHideChangeTrackingControls() == WopiStorage::WOPIFileInfo::TriState::True);
 
@@ -838,14 +881,17 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
             userId = localfileinfo->getUserId();
             username = localfileinfo->getUsername();
 
-            if (COOLWSD::IsViewFileExtension(localStorage->getFileExtension()))
+            _isViewFileExtension = COOLWSD::IsViewFileExtension(localStorage->getFileExtension());
+            if (_isViewFileExtension)
             {
-                LOG_DBG("Setting the session as readonly");
-                session->setReadOnly();
-                if (COOLWSD::IsViewWithCommentsFileExtension(localStorage->getFileExtension()))
+                LOG_DBG("Setting session [" << sessionId << "] as readonly");
+                session->setReadOnly(true);
+                if (_isViewFileExtension)
                 {
-                    LOG_DBG("Allow session to change comments");
-                    session->setAllowChangeComments();
+                    LOG_DBG("Allow session [" << sessionId
+                                              << "] to change comments on document with extension ["
+                                              << localStorage->getFileExtension() << ']');
+                    session->setAllowChangeComments(true);
                 }
             }
             session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
@@ -876,6 +922,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     session->setUserId(userId);
     session->setUserName(username);
     session->setUserExtraInfo(userExtraInfo);
+    session->setUserPrivateInfo(userPrivateInfo);
     session->setWatermarkText(watermarkText);
     session->createCanonicalViewId(_sessions);
 
@@ -1127,11 +1174,21 @@ void DocumentBroker::startRenameFileCommand()
 
     blockUI("rename"); // Prevent user interaction while we start renaming.
 
+    const auto it = _sessions.find(_renameSessionId);
+    if (it == _sessions.end())
+    {
+        LOG_ERR("Session [" << _renameSessionId << "] not found to save docKey [" << _docKey
+                            << "] before renaming. The document will not be renamed.");
+        broadcastSaveResult(false, "Renaming session not found");
+        endRenameFileCommand();
+        return;
+    }
+
     constexpr bool dontTerminateEdit = false; // We will save, rename, and reload: terminate.
     constexpr bool dontSaveIfUnmodified = true;
     constexpr bool isAutosave = false;
     constexpr bool isExitSave = false;
-    sendUnoSave(_renameSessionId, dontTerminateEdit, dontSaveIfUnmodified, isAutosave, isExitSave);
+    sendUnoSave(it->second, dontTerminateEdit, dontSaveIfUnmodified, isAutosave, isExitSave);
 }
 
 void DocumentBroker::endRenameFileCommand()
@@ -1238,17 +1295,26 @@ bool DocumentBroker::isStorageOutdated() const
     return currentModifiedTime != lastModifiedTime;
 }
 
-void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool success,
+void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& session, bool success,
                                         const std::string& result)
 {
     assertCorrectThread();
 
+    // Record that we got a response to avoid timing out on saving.
+    _saveManager.setLastSaveResult(success || result == "unmodified");
+
     if (success)
         LOG_DBG("Save result from Core: saved (during "
-                << DocumentState::toString(_docState.activity()) << ')');
-    else
-        LOG_INF("Save result from Core (failure): "
-                << result << " (during " << DocumentState::toString(_docState.activity()) << ')');
+                << DocumentState::toString(_docState.activity()) << ") in "
+                << _saveManager.lastSaveDuration());
+    else if (result == "unmodified")
+        LOG_DBG("Save result from Core: unmodified (during "
+                << DocumentState::toString(_docState.activity()) << ") in "
+                << _saveManager.lastSaveDuration());
+    else // Failure with error.
+        LOG_WRN("Save result from Core (failure): " << result << " (during "
+                                                    << DocumentState::toString(_docState.activity())
+                                                    << ") in " << _saveManager.lastSaveDuration());
 
 #if !MOBILEAPP
     // Create the 'upload' file regardless of success or failure,
@@ -1257,13 +1323,19 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     const std::string oldName = _storage->getRootFilePathToUpload();
     const std::string newName = _storage->getRootFilePathUploading();
 
+    // Rename even if no new save, in case we have an older version.
     if (rename(oldName.c_str(), newName.c_str()) < 0)
     {
         // It's not an error if there was no file to rename, when the document isn't modified.
         const auto onrre = errno;
-        LOG_TRC("Failed to renamed [" << oldName << "] to [" << newName << "] ("
-                                      << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre)
-                                      << ')');
+        if (success || onrre != ENOENT)
+            LOG_ERR("Failed to rename [" << oldName << "] to [" << newName << "] ("
+                                          << Util::symbolicErrno(onrre) << ": "
+                                          << std::strerror(onrre) << ')');
+        else
+            LOG_DBG("Failed to rename [" << oldName << "] to [" << newName << "] ("
+                                          << Util::symbolicErrno(onrre) << ": "
+                                          << std::strerror(onrre) << ')');
     }
     else
     {
@@ -1272,9 +1344,6 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
 
     Quarantine::quarantineFile(this, Util::splitLast(newName, '/').second);
 #endif //!MOBILEAPP
-
-    // Record that we got a response to avoid timing out on saving.
-    _saveManager.setLastSaveResult(success || result == "unmodified");
 
     if (success && !isAsyncUploading())
     {
@@ -1289,24 +1358,20 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     // The the clients know of any save failures.
     if (!success && result != "unmodified")
     {
-        const auto it = _sessions.find(sessionId);
-        if (it != _sessions.end())
-        {
-            LOG_DBG("Failed to save docKey ["
-                    << _docKey << "] as .uno:Save has failed in LOK. Notifying client "
-                    << sessionId);
-            it->second->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
-            broadcastSaveResult(false, "Could not save the document");
-        }
+        LOG_INF("Failed to save docKey [" << _docKey
+                                          << "] as .uno:Save has failed in LOK. Notifying clients");
+        session->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
+        broadcastSaveResult(false, "Could not save the document");
     }
 
-    checkAndUploadToStorage(sessionId);
+    checkAndUploadToStorage(session);
 }
 
 // This is called when either we just got save response, or,
 // there was nothing to save and want to check for uploading.
-void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
+void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession>& session)
 {
+    const std::string sessionId = session->getId();
     LOG_TRC("checkAndUploadToStorage with session " << sessionId);
 
     // See if we have anything to upload.
@@ -1320,10 +1385,21 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
             // If we have nothing to upload, do the rename now.
             if (needToUploadState == NeedToUpload::No)
             {
-                LOG_DBG("Renaming in storage as there is no new version to upload first.");
-                std::string uploadAsPath;
-                constexpr bool isRename = true;
-                uploadAsToStorage(_renameSessionId, uploadAsPath, _renameFilename, isRename);
+                const auto it = _sessions.find(_renameSessionId);
+                if (it == _sessions.end())
+                {
+                    LOG_ERR("Session with sessionId ["
+                            << _renameSessionId << "] not found to rename docKey [" << _docKey
+                            << "]. The document will not be renamed.");
+                    broadcastSaveResult(false, "Renaming session not found");
+                }
+                else
+                {
+                    LOG_DBG("Renaming in storage as there is no new version to upload first.");
+                    std::string uploadAsPath;
+                    constexpr bool isRename = true;
+                    uploadAsToStorage(it->second, uploadAsPath, _renameFilename, isRename);
+                }
 
                 endRenameFileCommand();
                 return;
@@ -1355,14 +1431,14 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
 
     if (needToUploadState != NeedToUpload::No)
     {
-        uploadToStorage(sessionId, /*force=*/needToUploadState == NeedToUpload::Force);
+        uploadToStorage(session, /*force=*/needToUploadState == NeedToUpload::Force);
     }
-    else
+
+    if (!isAsyncUploading())
     {
-        // If the session is disconnected, remove.
-        const auto it = _sessions.find(sessionId);
-        if (it != _sessions.end() && it->second->isCloseFrame())
-            disconnectSessionInternal(sessionId);
+        // If marked to destroy, or session is disconnected, remove.
+        if (_docState.isMarkedToDestroy() || session->isCloseFrame())
+            disconnectSessionInternal(session);
 
         // If marked to destroy, then this was the last session.
         if (_docState.isMarkedToDestroy() || _sessions.empty())
@@ -1376,10 +1452,11 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
     }
 }
 
-void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
+void DocumentBroker::uploadToStorage(const std::shared_ptr<ClientSession>& session, bool force)
 {
     assertCorrectThread();
 
+    LOG_TRC("uploadToStorage [" << session->getId() << "]: " << (force ? "" : "not") << " forced");
     if (force)
     {
         // Don't reset the force flag if it was set
@@ -1387,36 +1464,34 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
         _currentStorageAttrs.setForced(force);
     }
 
+    // Upload immediately if forced or had no failures. Otherwise, throttle (on failure).
     if (force || _storageManager.lastUploadSuccessful() || _storageManager.canUploadNow())
     {
         constexpr bool isRename = false;
-        uploadToStorageInternal(sessionId, /*saveAsPath*/ std::string(),
+        uploadToStorageInternal(session, /*saveAsPath*/ std::string(),
                                 /*saveAsFilename*/ std::string(), isRename, force);
-
-        // If marked to destroy, or session is disconnected, remove.
-        const auto it = _sessions.find(sessionId);
-        if (_docState.isMarkedToDestroy() || (it != _sessions.end() && it->second->isCloseFrame()))
-            disconnectSessionInternal(sessionId);
     }
     else
     {
-        LOG_TRC("Last upload had failed and it's only been "
+        LOG_DBG("Last upload had failed and it's only been "
                 << _storageManager.timeSinceLastUploadResponse()
                 << " since. Min time between uploads: " << _storageManager.minTimeBetweenUploads());
     }
 }
 
-void DocumentBroker::uploadAsToStorage(const std::string& sessionId,
+void DocumentBroker::uploadAsToStorage(const std::shared_ptr<ClientSession>& session,
                                        const std::string& uploadAsPath,
                                        const std::string& uploadAsFilename, const bool isRename)
 {
     assertCorrectThread();
 
-    uploadToStorageInternal(sessionId, uploadAsPath, uploadAsFilename, isRename, /*force=*/false);
+    uploadToStorageInternal(session, uploadAsPath, uploadAsFilename, isRename, /*force=*/false);
 }
 
-void DocumentBroker::uploadAfterLoadingTemplate(const std::string& sessionId)
+void DocumentBroker::uploadAfterLoadingTemplate(const std::shared_ptr<ClientSession>& session)
 {
+    LOG_ASSERT_MSG(session, "Must have a valid ClientSession");
+
 #if !MOBILEAPP
     // Create the 'upload' file as it gets created only when
     // handling .uno:Save, which isn't issued for templates
@@ -1435,31 +1510,23 @@ void DocumentBroker::uploadAfterLoadingTemplate(const std::string& sessionId)
     }
 #endif //!MOBILEAPP
 
-    uploadToStorage(sessionId, /*force=*/false);
+    uploadToStorage(session, /*force=*/false);
 }
 
-void DocumentBroker::uploadToStorageInternal(const std::string& sessionId,
+void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession>& session,
                                              const std::string& saveAsPath,
                                              const std::string& saveAsFilename, const bool isRename,
                                              const bool force)
 {
     assertCorrectThread();
+    LOG_ASSERT_MSG(session, "Must have a valid ClientSession");
+
+    const std::string sessionId = session->getId();
 
     LOG_DBG("Uploading to storage docKey [" << _docKey << "] for session [" << sessionId
                                             << "]. Force: " << force);
-    const auto it = _sessions.find(sessionId);
-    if (it == _sessions.end())
-    {
-        LOG_ERR("Session with sessionId ["
-                << sessionId << "] not found while storing document docKey [" << _docKey
-                << "]. The document will not be uploaded to storage at this time.");
-        broadcastSaveResult(false, "Session not found");
-
-        return;
-    }
 
     const bool isSaveAs = !saveAsPath.empty();
-    auto session = it->second;
     const std::string uri = isSaveAs ? saveAsPath : session->getPublicUri().toString();
 
     // Map the FileId from the docKey to the new filename to anonymize the new filename as the FileId.
@@ -1569,6 +1636,8 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
     LOG_TRC("lastUploadSuccessful: " << lastUploadSuccessful);
     _storageManager.setLastUploadResult(lastUploadSuccessful);
 
+    _unitWsd.onDocumentUploaded(lastUploadSuccessful);
+
 #if !MOBILEAPP
     if (lastUploadSuccessful && !isModified())
     {
@@ -1616,10 +1685,21 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
             {
                 case DocumentState::Activity::Rename:
                 {
-                    LOG_DBG("Renaming in storage after uploading the last saved version.");
-                    std::string uploadAsPath;
-                    constexpr bool isRename = true;
-                    uploadAsToStorage(_renameSessionId, uploadAsPath, _renameFilename, isRename);
+                    const auto it = _sessions.find(_renameSessionId);
+                    if (it == _sessions.end())
+                    {
+                        LOG_ERR("Session with sessionId ["
+                                << _renameSessionId << "] not found to rename docKey [" << _docKey
+                                << "]. The document will not be renamed.");
+                        broadcastSaveResult(false, "Renaming session not found");
+                    }
+                    else
+                    {
+                        LOG_DBG("Renaming in storage as there is no new version to upload first.");
+                        std::string uploadAsPath;
+                        constexpr bool isRename = true;
+                        uploadAsToStorage(it->second, uploadAsPath, _renameFilename, isRename);
+                    }
 
                     endRenameFileCommand();
                 }
@@ -1755,8 +1835,11 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         {
             LOG_ERR("Cannot upload docKey ["
                     << _docKey << "] to storage URI [" << _uploadRequest->uriAnonym()
-                    << "]. Invalid or expired access token. Notifying client.");
+                    << "]. Invalid or expired access token. Notifying client and invalidating the "
+                       "authorization token of session ["
+                    << session->getId() << ']');
             session->sendTextFrameAndLogError("error: cmd=storage kind=saveunauthorized");
+            session->invalidateAuthorizationToken();
         }
         else
         {
@@ -1836,7 +1919,7 @@ void DocumentBroker::setLoaded()
         const auto minTimeoutSecs = ((_loadDuration * 4).count() + 500) / 1000;
         _saveManager.setSavingTimeout(
             std::max(std::chrono::seconds(minTimeoutSecs), std::chrono::seconds(5)));
-        LOG_TRC("Document loaded in " << _loadDuration << ", saving-timeout set to "
+        LOG_DBG("Document loaded in " << _loadDuration << ", saving-timeout set to "
                                       << _saveManager.getSavingTimeout());
     }
 }
@@ -1850,49 +1933,57 @@ void DocumentBroker::setInteractive(bool value)
     }
 }
 
-std::string DocumentBroker::getWriteableSessionId() const
+std::shared_ptr<ClientSession> DocumentBroker::getWriteableSession() const
 {
     assertCorrectThread();
 
-    std::string savingSessionId;
+    std::shared_ptr<ClientSession> savingSession;
     for (const auto& sessionIt : _sessions)
     {
         const auto& session = sessionIt.second;
 
-        // Save the document using an editable and loaded session, or first ...
+        // Save the document using a session that is loaded, editable, and
+        // with a valid authorization token, or the first.
         // Note that isViewLoaded() precludes inWaitDisconnected().
-        if ((session->isViewLoaded() && session->isWritable()) || savingSessionId.empty())
+        if (!savingSession || (session->isViewLoaded() && session->isEditable() &&
+                               !session->getAuthorization().isExpired()))
         {
-            savingSessionId = session->getId();
+            savingSession = session;
         }
 
         // or if any of the sessions is document owner, use that.
         //FIXME: can the owner be read-only?
         if (session->isDocumentOwner())
         {
-            savingSessionId = session->getId();
+            savingSession = session;
             break;
         }
     }
 
-    return savingSessionId;
+    return savingSession;
+}
+
+std::string DocumentBroker::getWriteableSessionId() const
+{
+    const auto session = getWriteableSession();
+    return session ? session->getId() : std::string();
 }
 
 void DocumentBroker::refreshLock()
 {
     assertCorrectThread();
 
-    const std::string savingSessionId = getWriteableSessionId();
-    LOG_TRC("Refresh lock " << _lockCtx->_lockToken << " with session [" << savingSessionId << ']');
-
-    auto it = _sessions.find(savingSessionId);
-    if (it == _sessions.end())
+    const std::shared_ptr<ClientSession> session = getWriteableSession();
+    if (!session)
         LOG_ERR("No write-able session to refresh lock with");
+    else if (session->getAuthorization().isExpired())
+        LOG_ERR("No write-able session with valid authorization to refresh lock with");
     else
     {
-        std::shared_ptr<ClientSession> session = it->second;
-        if (!session || !_storage->updateLockState(session->getAuthorization(), *_lockCtx, true,
-                                                   _currentStorageAttrs))
+        const std::string savingSessionId = session->getId();
+        LOG_TRC("Refresh lock " << _lockCtx->_lockToken << " with session [" << savingSessionId << ']');
+        if (!_storage->updateLockState(session->getAuthorization(), *_lockCtx, true,
+                                       _currentStorageAttrs))
             LOG_ERR("Failed to refresh lock");
     }
 }
@@ -1936,7 +2027,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
 {
     assertCorrectThread();
 
-    _saveManager.autosaveChecked();
+    _saveManager.autoSaveChecked();
 
     LOG_TRC("autoSave(): forceful? " << force
                                      << ", dontSaveIfUnmodified: " << dontSaveIfUnmodified);
@@ -1959,11 +2050,19 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
     // Prefer the last editing view, if still valid, otherwise, find the first writable sessionId.
     // Note: a loaded view cannot be disconnecting.
     const auto itLastEditingSession = _sessions.find(_lastEditingSessionId);
-    const std::string savingSessionId =
-        (itLastEditingSession != _sessions.end() && itLastEditingSession->second->isWritable() &&
+    const std::shared_ptr<ClientSession> savingSession =
+        (itLastEditingSession != _sessions.end() && itLastEditingSession->second->isEditable() &&
          itLastEditingSession->second->isViewLoaded())
-            ? _lastEditingSessionId
-            : getWriteableSessionId();
+            ? itLastEditingSession->second
+            : getWriteableSession();
+
+    if (!savingSession)
+    {
+        LOG_ERR("No session to use for saving");
+        return false;
+    }
+
+    const std::string savingSessionId = savingSession->getId();
 
     // Remember the last save time, since this is the predicate.
     LOG_TRC("Checking to autosave [" << _docKey << "] using session [" << savingSessionId << ']');
@@ -1977,45 +2076,37 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
         // potentially optimize it away. This is as good as user-issued save, since this is
         // triggered when the document is closed. In the case of network disconnection or browser crash
         // most users would want to have had the chance to hit save before the document unloaded.
-        sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/true,
+        sent = sendUnoSave(savingSession, /*dontTerminateEdit=*/true,
                            dontSaveIfUnmodified, /*isAutosave=*/false,
                            /*isExitSave=*/true);
     }
     else if (isModified())
     {
-        // The configured maximum idle duration before saving. Zero to disable.
-        static const std::chrono::milliseconds MaxIdleSaveDurationMs = std::chrono::seconds(
-            COOLWSD::getConfigValue<int>("per_document.idlesave_duration_secs", 30));
-
         const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-        const std::chrono::milliseconds inactivityTimeMs
+        const std::chrono::milliseconds inactivityTime
             = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime);
         const auto timeSinceLastSave = std::min(_saveManager.timeSinceLastSaveRequest(),
                                                 _storageManager.timeSinceLastUploadResponse());
         LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSave
                                                      << " and most recent activity was "
-                                                     << inactivityTimeMs << " ago.");
+                                                     << inactivityTime << " ago.");
 
-        bool save = false;
-        // Zero or negative config value disables save.
         // Either we've been idle long enough, or it's auto-save time.
-        if (MaxIdleSaveDurationMs > std::chrono::milliseconds::zero() &&
-            inactivityTimeMs >= MaxIdleSaveDurationMs)
-        {
-            save = true;
-        }
+        bool save = _saveManager.isIdleSaveEnabled() &&
+                    inactivityTime >= _saveManager.idleSaveInterval() &&
+                    timeSinceLastSave >= _saveManager.idleSaveInterval();
 
         // Save if it's been long enough since the last save and/or upload.
-        if (_saveManager.isAutosaveEnabled() &&
-            timeSinceLastSave >= _saveManager.autosaveInterval())
+        if (!save && _saveManager.isAutoSaveEnabled() &&
+            timeSinceLastSave >= _saveManager.autoSaveInterval())
         {
             save = true;
         }
 
         if (save)
         {
-            LOG_TRC("Sending timed save command for [" << _docKey << "].");
-            sent = sendUnoSave(savingSessionId, /*dontTerminateEdit=*/true,
+            LOG_TRC("Sending timed save command for [" << _docKey << ']');
+            sent = sendUnoSave(savingSession, /*dontTerminateEdit=*/true,
                                /*dontSaveIfUnmodified=*/true, /*isAutosave=*/true,
                                /*isExitSave=*/false);
         }
@@ -2092,10 +2183,10 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         if (!autoSave(possiblyModified))
         {
             // Nothing to save. Try to upload if necessary.
-            const std::string sessionId = getWriteableSessionId();
-            if (!sessionId.empty())
+            const auto session = getWriteableSession();
+            if (session && !session->getAuthorization().isExpired())
             {
-                checkAndUploadToStorage(sessionId);
+                checkAndUploadToStorage(session);
                 if (isAsyncUploading())
                 {
                     LOG_DBG("Uploading document before stopping.");
@@ -2110,8 +2201,8 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
                     LOG_WRN("The document ["
                             << _docKey
                             << "] could not be uploaded to storage because there are no writable "
-                               "sessions to upload. The document should be recoverable from the "
-                               "quarantine. Stopping.");
+                               "sessions, or no authorization tokens, to upload. The document "
+                               "should be recoverable from the quarantine. Stopping.");
                 }
 
                 canStop = true;
@@ -2136,18 +2227,19 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     }
 }
 
-bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminateEdit,
-                                 bool dontSaveIfUnmodified, bool isAutosave, bool isExitSave,
-                                 const std::string& extendedData)
+bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
+                                 bool dontTerminateEdit, bool dontSaveIfUnmodified, bool isAutosave,
+                                 bool isExitSave, const std::string& extendedData)
 {
     assertCorrectThread();
 
-    LOG_INF("Saving doc [" << _docKey << "] using session [" << sessionId << "].");
+    LOG_ASSERT_MSG(session, "Got null ClientSession");
+    const std::string sessionId = session->getId();
 
-    if (_sessions.find(sessionId) != _sessions.end())
-    {
-        // Invalidate the timestamp to force persisting.
-        _saveManager.setLastModifiedTime(std::chrono::system_clock::time_point());
+    LOG_INF("Saving doc [" << _docKey << "] using session [" << sessionId << ']');
+
+    // Invalidate the timestamp to force persisting.
+    _saveManager.setLastModifiedTime(std::chrono::system_clock::time_point());
 
         std::ostringstream oss;
         // arguments init
@@ -2184,28 +2276,29 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         _nextStorageAttrs.setUserModified(isModified() || haveModifyActivityAfterSaveRequest());
 
         //FIXME: It's odd to capture these here, but this function is used from ClientSession too.
-        _nextStorageAttrs.setIsAutosave(isAutosave || UnitWSD::get().isAutosave());
+        _nextStorageAttrs.setIsAutosave(isAutosave || _unitWsd.isAutosave());
         _nextStorageAttrs.setIsExitSave(isExitSave);
         _nextStorageAttrs.setExtendedData(extendedData);
 
-        const std::string saveArgs = oss.str();
-        LOG_TRC(".uno:Save arguments: " << saveArgs);
-        const auto command = "uno .uno:Save " + saveArgs;
-        if (forwardToChild(sessionId, command))
+    const std::string saveArgs = oss.str();
+    LOG_TRC(".uno:Save arguments: " << saveArgs);
+    const auto command = "uno .uno:Save " + saveArgs;
+    if (forwardToChild(session, command))
+    {
+        _saveManager.markLastSaveRequestTime();
+        if (_docState.activity() == DocumentState::Activity::None)
         {
-            _saveManager.markLastSaveRequestTime();
-            if (_docState.activity() == DocumentState::Activity::None)
-            {
-                // If we aren't in the midst of any particular activity,
-                // then this is a generic save on its own.
-                startActivity(DocumentState::Activity::Save);
-            }
+            // If we aren't in the midst of any particular activity,
+            // then this is a generic save on its own.
+            startActivity(DocumentState::Activity::Save);
         }
 
         return true;
     }
 
-    LOG_ERR("Failed to save doc [" << _docKey << "]: No valid session [" << sessionId << "].");
+    LOG_ERR("Failed to save doc ["
+            << _docKey << "]: Failed to forward .uno:Save command to session [" << sessionId
+            << ']');
     return false;
 }
 
@@ -2291,29 +2384,23 @@ std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSessi
 
     if (UnitWSD::isUnitTesting())
     {
-        UnitWSD::get().onDocBrokerAddSession(_docKey, session);
+        _unitWsd.onDocBrokerAddSession(_docKey, session);
     }
 
     return count;
 }
 
-std::size_t DocumentBroker::removeSession(const std::string& id)
+std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& session)
 {
     assertCorrectThread();
 
+    LOG_ASSERT_MSG(session, "Got null ClientSession");
+    const std::string id = session->getId();
     try
     {
-        const auto it = _sessions.find(id);
-        if (it == _sessions.end())
-        {
-            LOG_ERR("Invalid or unknown session [" << id << "] to remove.");
-            return _sessions.size();
-        }
-        std::shared_ptr<ClientSession> session = it->second;
-
         const std::size_t activeSessionCount = countActiveSessions();
 
-        const bool lastEditableSession = session->isWritable() && !haveAnotherEditableSession(id);
+        const bool lastEditableSession = session->isEditable() && !haveAnotherEditableSession(id);
         static const bool dontSaveIfUnmodified = !COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
 
         LOG_INF("Removing session [" << id << "] on docKey [" << _docKey << "]. Have "
@@ -2321,7 +2408,7 @@ std::size_t DocumentBroker::removeSession(const std::string& id)
                                      << " active). IsLive: " << session->isLive()
                                      << ", IsReadOnly: " << session->isReadOnly()
                                      << ", IsAllowChangeComments: " << session->isAllowChangeComments()
-                                     << ", IsWritable: " << session->isWritable()
+                                     << ", IsEditable: " << session->isEditable()
                                      << ", Unloading: " << _docState.isUnloadRequested()
                                      << ", MarkToDestroy: " << _docState.isMarkedToDestroy()
                                      << ", LastEditableSession: " << lastEditableSession
@@ -2351,7 +2438,7 @@ std::size_t DocumentBroker::removeSession(const std::string& id)
 
         // If last editable, save and don't remove until after uploading to storage.
         if (!lastEditableSession || !autoSave(isPossiblyModified(), dontSaveIfUnmodified))
-            disconnectSessionInternal(id);
+            disconnectSessionInternal(session);
 
         // Last view going away; can destroy?
         if (activeSessionCount <= 1)
@@ -2386,91 +2473,70 @@ std::size_t DocumentBroker::removeSession(const std::string& id)
     return _sessions.size();
 }
 
-void DocumentBroker::disconnectSessionInternal(const std::string& id)
+void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSession>& session)
 {
     assertCorrectThread();
+
+    LOG_ASSERT_MSG(session, "Got null ClientSession");
+    const std::string id = session->getId();
     try
     {
 #if !MOBILEAPP
         Admin::instance().rmDoc(_docKey, id);
+        COOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
 #endif
-        auto it = _sessions.find(id);
-        if (it != _sessions.end())
+        if (_docState.isUnloadRequested())
         {
-#if !MOBILEAPP
-            COOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
-#endif
-            if (_docState.isUnloadRequested())
-            {
-                // We must be the last session, flag to destroy if unload is requested.
-                LOG_ASSERT_MSG(countActiveSessions() <= 1,
-                               "Unload-requested with multiple sessions");
-                _docState.markToDestroy();
-                LOG_TRC("Unload requested while disconnecting session ["
-                        << id << "], having " << _sessions.size()
-                        << " sessions, marking to destroy.");
-            }
+            // We must be the last session, flag to destroy if unload is requested.
+            LOG_ASSERT_MSG(countActiveSessions() <= 1, "Unload-requested with multiple sessions");
+            LOG_TRC("Unload requested while disconnecting session ["
+                    << id << "], having " << _sessions.size() << " sessions, marking to destroy.");
+            _docState.markToDestroy();
+        }
 
-            std::shared_ptr<ClientSession> session = it->second;
-            const bool lastEditableSession =
-                session->isWritable() && !haveAnotherEditableSession(id);
+        const bool lastEditableSession = session->isEditable() && !haveAnotherEditableSession(id);
 
-            LOG_TRC("Disconnect session internal " << id <<
-                    ", LastEditableSession: " << lastEditableSession <<
-                    " destroy? " << _docState.isMarkedToDestroy() <<
-                    " locked? " << _lockCtx->_isLocked);
+        LOG_TRC("Disconnect session internal "
+                << id << ", LastEditableSession: " << lastEditableSession << " destroy? "
+                << _docState.isMarkedToDestroy() << " locked? " << _lockCtx->_isLocked);
 
-            // Unlock the document, if last editable sessions, before we lose a token that can unlock.
-            if (lastEditableSession && _lockCtx->_isLocked && _storage)
-            {
-                if (!_storage->updateLockState(it->second->getAuthorization(), *_lockCtx, false,
-                                               _currentStorageAttrs))
-                    LOG_ERR("Failed to unlock!");
-            }
+        // Unlock the document, if last editable sessions, before we lose a token that can unlock.
+        if (lastEditableSession && _lockCtx->_isLocked && _storage)
+        {
+            if (!_storage->updateLockState(session->getAuthorization(), *_lockCtx, false,
+                                           _currentStorageAttrs))
+                LOG_ERR("Failed to unlock before disconnecting last editable session");
+        }
 
-            bool hardDisconnect;
-            if (it->second->inWaitDisconnected())
-            {
-                LOG_TRC("hard disconnecting while waiting for disconnected handshake.");
-                hardDisconnect = true;
-            }
-            else
-            {
-                hardDisconnect = it->second->disconnectFromKit();
-
-                if (isLoaded() || _sessions.size() > 1)
-                {
-                    // Let the child know the client has disconnected.
-                    const std::string msg("child-" + id + " disconnect");
-                    _childProcess->sendTextFrame(msg);
-                }
-                else
-                {
-                    // We aren't even loaded and no other views--kill.
-                    // If we send disconnect, we risk hanging because
-                    // we flag Core for quiting via unipoll, but Core
-                    // would still continue loading. If at the end of
-                    // loading it shows a dialog (such as the macro or
-                    // csv import dialogs), it will wait for their
-                    // dismissal indefinetely. Neither would our
-                    // load-timeout kick in, since we would be gone.
-#if !MOBILEAPP
-                    LOG_INF("Session [" << id << "] disconnected but DocKey [" << _docKey
-                                        << "] isn't loaded yet. Terminating the child roughly.");
-                    _childProcess->terminate();
-#endif
-                }
-            }
-
-            if (hardDisconnect)
-                finalRemoveSession(id);
-            // else wait for disconnected.
+        bool hardDisconnect;
+        if (session->inWaitDisconnected())
+        {
+            LOG_TRC("hard disconnecting while waiting for disconnected handshake.");
+            hardDisconnect = true;
         }
         else
         {
-            LOG_TRC("Session [" << id << "] not found to disconnect from docKey [" <<
-                    _docKey << "]. Have " << _sessions.size() << " sessions.");
+            hardDisconnect = session->disconnectFromKit();
+
+#if !MOBILEAPP
+            if (!isLoaded() && _sessions.empty())
+            {
+                // We aren't even loaded and no other views--kill.
+                // If we send disconnect, we risk hanging because we flag Core for
+                // quiting via unipoll, but Core would still continue loading.
+                // If at the end of loading it shows a dialog (such as the macro or
+                // csv import dialogs), it will wait for their dismissal indefinetely.
+                // Neither would our load-timeout kick in, since we would be gone.
+                LOG_INF("Session [" << id << "] disconnected but DocKey [" << _docKey
+                                    << "] isn't loaded yet. Terminating the child roughly.");
+                _childProcess->terminate();
+            }
+#endif
         }
+
+        if (hardDisconnect)
+            finalRemoveSession(session);
+        // else wait for disconnected.
     }
     catch (const std::exception& ex)
     {
@@ -2478,48 +2544,42 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
     }
 }
 
-void DocumentBroker::finalRemoveSession(const std::string& id)
+void DocumentBroker::finalRemoveSession(const std::shared_ptr<ClientSession>& session)
 {
     assertCorrectThread();
+
+    LOG_ASSERT_MSG(session, "Got null ClientSession");
+    const std::string sessionId = session->getId();
     try
     {
-        auto it = _sessions.find(id);
-        if (it != _sessions.end())
+        if (UnitWSD::isUnitTesting())
         {
-            const bool readonly = (it->second ? it->second->isReadOnly() : false);
-
-            // Remove. The caller must have a reference to the session
-            // in question, lest we destroy from underneath them.
-            it->second->dispose();
-            _sessions.erase(it);
-            const std::size_t count = _sessions.size();
-
-            Log::StreamLogger logger = Log::trace();
-            if (logger.enabled())
-            {
-                logger << "Removed " << (readonly ? "readonly" : "non-readonly")
-                       << " session [" << id << "] from docKey ["
-                       << _docKey << "] to have " << count << " sessions:";
-                for (const auto& pair : _sessions)
-                    logger << pair.second->getId() << ' ';
-
-                LOG_END_FLUSH(logger);
-            }
-
-            if (UnitWSD::isUnitTesting())
-            {
-                UnitWSD::get().onDocBrokerRemoveSession(_docKey, it->second);
-            }
+            // Notify test code before removal.
+            _unitWsd.onDocBrokerRemoveSession(_docKey, session);
         }
-        else
+
+        const bool readonly = session->isReadOnly();
+        session->dispose();
+
+        // Remove. The caller must have a reference to the session
+        // in question, lest we destroy from underneath them.
+        _sessions.erase(sessionId);
+
+        Log::StreamLogger logger = Log::trace();
+        if (logger.enabled())
         {
-            LOG_TRC("Session [" << id << "] not found to remove from docKey [" <<
-                    _docKey << "]. Have " << _sessions.size() << " sessions.");
+            logger << "Removed " << (readonly ? "" : "non-") << "readonly session [" << sessionId
+                   << "] from docKey [" << _docKey << "] to have " << _sessions.size()
+                   << " sessions:";
+            for (const auto& pair : _sessions)
+                logger << pair.second->getId() << ' ';
+
+            LOG_END_FLUSH(logger);
         }
     }
     catch (const std::exception& ex)
     {
-        LOG_ERR("Error while removing session [" << id << "]: " << ex.what());
+        LOG_ERR("Error while removing session [" << sessionId << "]: " << ex.what());
     }
 }
 
@@ -2579,7 +2639,7 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 {
     assertCorrectThread();
 
-    if (UnitWSD::get().filterAlertAllusers(msg))
+    if (_unitWsd.filterAlertAllusers(msg))
         return;
 
     auto payload = std::make_shared<Message>(msg, Message::Dir::Out);
@@ -2624,7 +2684,7 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
         COOLWSD::dumpOutgoingTrace(getJailId(), "0", message->abbr());
 #endif
 
-    if (UnitBase::get().filterLOKitMessage(message))
+    if (_unitWsd.filterLOKitMessage(message))
         return true;
 
     if (COOLProtocol::getFirstToken(message->forwardToken(), '-') == "client")
@@ -2653,12 +2713,33 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
         }
         else if (message->firstTokenMatches("registerdownload:"))
         {
-            LOG_CHECK_RET(message->tokens().size() == 3, false);
-            std::string downloadid, url;
+            LOG_CHECK_RET(message->tokens().size() == 4, false);
+            std::string downloadid, url, clientId;
             COOLProtocol::getTokenString((*message)[1], "downloadid", downloadid);
             LOG_CHECK_RET(downloadid != "", false);
             COOLProtocol::getTokenString((*message)[2], "url", url);
             LOG_CHECK_RET(url != "", false);
+            COOLProtocol::getTokenString((*message)[3], "clientid", clientId);
+            LOG_CHECK_RET(!clientId.empty(), false);
+
+            std::string decoded;
+            Poco::URI::decode(url, decoded);
+            const std::string filePath(COOLWSD::ChildRoot + getJailId() + JAILED_DOCUMENT_ROOT + decoded);
+
+            std::ifstream ifs(filePath);
+            const std::string svg((std::istreambuf_iterator<char>(ifs)),
+                                (std::istreambuf_iterator<char>()));
+            ifs.close();
+
+            if (svg.empty())
+                LOG_WRN("Empty download: [id: " << downloadid << ", url: " << url << "].");
+
+            const auto it = _sessions.find(clientId);
+            if (it != _sessions.end())
+            {
+                std::ofstream ofs(filePath);
+                ofs << it->second->processSVGContent(svg);
+            }
 
             _registeredDownloadLinks[downloadid] = url;
         }
@@ -2923,6 +3004,46 @@ void DocumentBroker::handleClipboardRequest(ClipboardRequest type,  const std::s
         LOG_ERR("Could not find matching session to handle clipboard request for " << viewId << " tag: " << tag);
 }
 
+void DocumentBroker::handleMediaRequest(const std::shared_ptr<Socket>& socket,
+                                        const std::string& tag)
+{
+    LOG_DBG("handleMediaRequest: " << tag);
+
+    auto streamSocket = std::static_pointer_cast<StreamSocket>(socket);
+    if (!streamSocket)
+    {
+        LOG_ERR("Invalid socket to handle media request in Doc [" << _docId << "] with tag [" << tag
+                                                                  << ']');
+        return;
+    }
+
+    const auto it = _embeddedMedia.find(tag);
+    if (it == _embeddedMedia.end())
+    {
+        LOG_ERR("Invalid media request in Doc [" << _docId << "] with tag [" << tag << ']');
+        return;
+    }
+
+    LOG_ERR("Media: " << it->second);
+    Poco::JSON::Object::Ptr object;
+    if (JsonUtil::parseJSON(it->second, object))
+    {
+        LOG_ASSERT(JsonUtil::getJSONValue<std::string>(object, "id") == tag);
+        const std::string url = JsonUtil::getJSONValue<std::string>(object, "url");
+        LOG_ASSERT(!url.empty());
+        if (Util::startsWith(Util::toLower(url), "file://"))
+        {
+            // For now, we only support file:// schemes.
+            // In the future, we may/should support http.
+            const std::string path = getJailRoot() + url.substr(sizeof("file://") - 1);
+            auto session = std::make_shared<http::server::Session>();
+            session->asyncUpload(path, "video/mp4");
+            auto handler = std::static_pointer_cast<ProtocolHandlerInterface>(session);
+            streamSocket->setHandler(handler);
+        }
+    }
+}
+
 void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& session)
 {
     std::unique_lock<std::mutex> lock(_mutex);
@@ -3112,7 +3233,7 @@ bool DocumentBroker::haveAnotherEditableSession(const std::string& id) const
 
     for (const auto& it : _sessions)
     {
-        if (it.second->getId() != id && it.second->isViewLoaded() && it.second->isWritable())
+        if (it.second->getId() != id && it.second->isViewLoaded() && it.second->isEditable())
         {
             // This is a loaded session that is non-readonly.
             return true;
@@ -3164,9 +3285,13 @@ void DocumentBroker::setInitialSetting(const std::string& name)
     _isInitialStateSet.emplace(name);
 }
 
-bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string& message, bool binary)
+bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& session,
+                                    const std::string& message, bool binary)
 {
     assertCorrectThread();
+    LOG_ASSERT_MSG(session, "Must have a valid ClientSession");
+    LOG_ASSERT_MSG(_sessions.find(session->getId()) != _sessions.end(),
+                   "ClientSession must be known");
 
     // Ignore userinactive, useractive message until document is loaded
     if (!isLoaded() && (message == "userinactive" || message == "useractive"))
@@ -3174,36 +3299,33 @@ bool DocumentBroker::forwardToChild(const std::string& viewId, const std::string
         return true;
     }
 
+    const std::string viewId = session->getId();
+
     LOG_TRC("Forwarding payload to child [" << viewId << "]: " << getAbbreviatedMessage(message));
 
     if (Log::traceEnabled() && Util::startsWith(message, "paste "))
         LOG_TRC("Logging paste payload (" << message.size() << " bytes) '" << message << "' end paste");
 
-    std::string msg = "child-" + viewId + ' ' + message;
-
-    const auto it = _sessions.find(viewId);
-    if (it != _sessions.end())
+    std::string msg = "child-" + viewId + ' ';
+    if (Util::startsWith(message, "load "))
     {
-        assert(!_uriJailed.empty());
-
-        StringVector tokens = StringVector::tokenize(msg);
-        if (tokens.size() > 1 && tokens.equals(1, "load"))
+        // Special-case loading.
+        const StringVector tokens = StringVector::tokenize(message);
+        if (tokens.size() > 1 && tokens.equals(0, "load"))
         {
+            LOG_ASSERT_MSG(!_uriJailed.empty(), "Must have valid _uriJailed");
+
             // The json options must come last.
-            msg = tokens[0] + ' ' + tokens[1] + ' ' + tokens[2];
+            msg += "load " + tokens[1];
             msg += " jail=" + _uriJailed;
             msg += " xjail=" + _uriJailedAnonym;
             msg += ' ' + tokens.cat(' ', 3);
+            return _childProcess->sendFrame(msg, binary);
         }
-
-        _childProcess->sendFrame(msg, binary);
-
-        return true;
     }
 
-    // try the not yet created sessions
-    LOG_WRN("Child session [" << viewId << "] not found to forward message: " << getAbbreviatedMessage(message));
-    return false;
+    // Forward message with prefix to the Kit.
+    return _childProcess->sendFrame(msg + message, binary);
 }
 
 bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
@@ -3215,7 +3337,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
 
     std::string name;
     std::string sid;
-    if (COOLProtocol::parseNameValuePair(payload->forwardToken(), name, sid, '-') && name == "client")
+    if (COOLProtocol::parseNameValuePair(prefix, name, sid, '-') && name == "client")
     {
         if (sid == "all")
         {
@@ -3266,14 +3388,14 @@ void DocumentBroker::shutdownClients(const std::string& closeReason)
         try
         {
             if (session->inWaitDisconnected())
-                finalRemoveSession(session->getId());
+                finalRemoveSession(session);
             else
             {
                 // Notify the client and disconnect.
                 session->shutdownGoingAway(closeReason);
 
                 // Remove session, save, and mark to destroy.
-                removeSession(session->getId());
+                removeSession(session);
             }
         }
         catch (const std::exception& exc)
@@ -3299,7 +3421,7 @@ void DocumentBroker::terminateChild(const std::string& closeReason)
 
     if (_childProcess)
     {
-        LOG_INF("Terminating child [" << getPid() << "] of doc [" << _docKey << "].");
+        LOG_INF("Terminating child [" << getPid() << "] of doc [" << _docKey << ']');
 
         _childProcess->close();
     }
@@ -3328,9 +3450,18 @@ void DocumentBroker::closeDocument(const std::string& reason)
 
 void DocumentBroker::disconnectedFromKit()
 {
-    LOG_INF("DocBroker " << _docKey << " Disconnected from Kit. Flagging to close.");
-    _docState.setDisconnected();
-    closeDocument("docdisconnected");
+    _docState.setDisconnected(); // Always set the disconnected flag.
+    if (_closeReason.empty())
+    {
+        // If we have a reason to close, no advantage in clobbering it.
+        LOG_INF("DocBroker [" << _docKey << "] Disconnected from Kit. Flagging to close");
+        closeDocument("docdisconnected");
+    }
+    else
+    {
+        LOG_INF("DocBroker [" << _docKey << "] Disconnected from Kit while closing with reason ["
+                              << _closeReason << ']');
+    }
 }
 
 std::size_t DocumentBroker::broadcastMessage(const std::string& message) const
@@ -3410,14 +3541,17 @@ ConvertToBroker::ConvertToBroker(const std::string& uri,
                                  const Poco::URI& uriPublic,
                                  const std::string& docKey,
                                  const std::string& format,
-                                 const std::string& sOptions)
+                                 const std::string& sOptions,
+                                 const std::string& lang)
     : StatelessBatchBroker(uri, uriPublic, docKey)
     , _format(format)
     , _sOptions(sOptions)
+    , _lang(lang)
 {
     LOG_TRC("Created ConvertToBroker: uri: [" << uri << "], uriPublic: [" << uriPublic.toString()
                                               << "], docKey: [" << docKey << "], format: ["
-                                              << format << "], options: [" << sOptions << "].");
+                                              << format << "], options: [" << sOptions << "], lang: ["
+                                              << lang << "].");
 
     static const std::chrono::seconds limit_convert_secs(
         COOLWSD::getConfigValue<int>("per_document.limit_convert_secs", 100));
@@ -3455,7 +3589,9 @@ bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std:
             std::string encodedFrom;
             Poco::URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
             // add batch mode, no interactive dialogs
-            const std::string _load = "load url=" + encodedFrom + " batch=true";
+            std::string _load = "load url=" + encodedFrom + " batch=true";
+            if (!docBroker->getLang().empty())
+                _load += " lang=" + docBroker->getLang();
             std::vector<char> loadRequest(_load.begin(), _load.end());
             docBroker->_clientSession->handleMessage(loadRequest);
 
@@ -3600,12 +3736,12 @@ bool RenderSearchResultBroker::handleInput(const std::shared_ptr<Message>& messa
 
                 std::string aDataString(_aResposeData.data(), _aResposeData.size());
                 // really not ideal that the response works only with std::string
-                http::Response httpResponse(http::StatusLine(200));
+                http::Response httpResponse(http::StatusCode::OK);
                 httpResponse.setBody(aDataString, "image/png");
                 httpResponse.set("Connection", "close");
                 _socket->sendAndShutdown(httpResponse);
 
-                removeSession(_clientSession->getId());
+                removeSession(_clientSession);
                 stop("Finished RenderSearchResult handler.");
             }
         }
@@ -3660,6 +3796,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  possibly-modified: " << isPossiblyModified();
     os << "\n  canSave: " << name(canSaveToDisk());
     os << "\n  canUpload: " << name(canUploadToStorage());
+    os << "\n  isStorageOutdated: " << isStorageOutdated();
     os << "\n  needToUpload: " << name(needToUploadToStorage());
     os << "\n  lastActivityTime: " << Util::getTimeForLog(now, _lastActivityTime);
     os << "\n  haveActivityAfterSaveRequest: " << haveActivityAfterSaveRequest();
@@ -3722,6 +3859,32 @@ bool DocumentBroker::isAsyncUploading() const
     StorageBase::AsyncUpload::State state = _storage->queryLocalFileToStorageAsyncUploadState().state();
 
     return state == StorageBase::AsyncUpload::State::Running;
+}
+
+void DocumentBroker::addEmbeddedMedia(const std::string& id, const std::string& json)
+{
+    LOG_TRC("Adding embeddedmedia with id [" << id << "]: " << json);
+
+    // Store the original json with the internal, temporary, file URI.
+    _embeddedMedia[id] = json;
+}
+
+void DocumentBroker::removeEmbeddedMedia(const std::string& json)
+{
+    Poco::JSON::Object::Ptr object;
+    if (JsonUtil::parseJSON(json, object))
+    {
+        const std::string id = JsonUtil::getJSONValue<std::string>(object, "id");
+        if (id.empty())
+        {
+            LOG_ERR("Invalid embeddedmedia json without id: " << json);
+        }
+        else
+        {
+            LOG_TRC("Removing embeddedmedia with id [" << id << "]: " << json);
+            _embeddedMedia.erase(id);
+        }
+    }
 }
 
 // not beautiful - but neither is editing mobile project files.

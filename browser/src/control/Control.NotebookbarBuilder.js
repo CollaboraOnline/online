@@ -92,7 +92,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:StarShapes'] = function() {};
 		this._toolitemHandlers['.uno:CalloutShapes'] = function() {};
 		this._toolitemHandlers['.uno:FlowChartShapes'] = function() {};
-		this._toolitemHandlers['.uno:InsertObjectStarMath'] = function() {};
 		this._toolitemHandlers['.uno:EmojiControl'] = function() {};
 		this._toolitemHandlers['.uno:InsertDraw'] = function() {};
 		this._toolitemHandlers['.uno:EditGlossary'] = function() {};
@@ -488,12 +487,14 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'text': _('Word 2003 Document (.doc)')
 				},
 				{
-					'id': 'downloadas-epub',
-					'text': _('EPUB (.epub)')
+					'id': 'exportepub',
+					'text': _('EPUB (.epub)'),
+					'command': 'exportepub'
 				},
 				{
-					'id': 'downloadas-pdf',
-					'text': _('PDF Document (.pdf)')
+					'id': 'exportpdf',
+					'text': _('PDF Document (.pdf)'),
+					'command': 'exportpdf'
 				}
 			];
 		} else if (docType === 'spreadsheet') {
@@ -515,8 +516,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'text': _('CSV File (.csv)')
 				},
 				{
-					'id': 'downloadas-pdf',
-					'text': _('PDF Document (.pdf)')
+					'id': 'exportpdf',
+					'text': _('PDF Document (.pdf)'),
+					'command': 'exportpdf',
 				}
 			];
 		} else if (docType === 'presentation') {
@@ -538,8 +540,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'text': _('PowerPoint 2003 Presentation (.ppt)')
 				},
 				{
-					'id': 'downloadas-pdf',
-					'text': _('PDF Document (.pdf)')
+					'id': 'exportpdf',
+					'text': _('PDF Document (.pdf)'),
+					'command': 'exportpdf',
 				}
 			];
 		}
@@ -953,7 +956,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			// Save only when not read-only.
-			if (!builder.map.isPermissionReadOnly()) {
+			if (!builder.map.isReadOnlyMode()) {
 				builder.map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'notebookbar' }});
 				if (!builder.map._disableDefaultAction['UI_Save']) {
 					builder.map.save(false, false);

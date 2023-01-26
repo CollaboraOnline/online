@@ -1,4 +1,32 @@
-apiVersion: v1
-description: Collabora Online helm chart
+apiVersion: v2
+type: "application"
 name: collabora-online
-version: 0.0.1
+description: Collabora Online helm chart
+
+version: 1.0.0
+appVersion: "22.05.6.3.1"
+
+home: "https://www.collaboraoffice.com/code/"
+icon: "https://avatars0.githubusercontent.com/u/22418908?s=200&v=4"
+sources:
+  - "https://github.com/CollaboraOnline/online"
+  - "https://github.com/CollaboraOnline/online/tree/master/docker"
+  - "https://github.com/CollaboraOnline/online/tree/master/kubernetes/helm/collabora-online"
+
+keywords:
+  - "collabora-online"
+  - "collabora"
+  - "code"
+  - "nextcloud"
+  - "office"
+
+maintainers:
+  - name: "Klaus Erber"
+    email: "k.erber@erber-freelance.de"
+    url: "https://www.erber-freelance.de/"
+  - name: "Martin Müller"
+    email: "martin.mueller@dataport.de"
+    url: "https://dphoenixsuite.de"
+  - name: "Geno"
+    email: "geno+dev@fireorbit.de"
+    url: "https://fireorbit.de"

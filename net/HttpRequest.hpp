@@ -9,6 +9,11 @@
 
 #include <config_version.h>
 
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/stat.h>
+
 #include <chrono>
 #include <cstdint>
 #include <iostream>
@@ -16,8 +21,6 @@
 #include <memory>
 #include <sstream>
 #include <string>
-#include <sys/types.h>
-#include <sys/socket.h>
 #include <netdb.h>
 
 #include <Common.hpp>
@@ -146,6 +149,83 @@ STATE_ENUM(FieldParseState,
            Valid //< The field is both complete and valid.
 );
 
+/// Named HTTP Status Codes.
+/// See https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+enum class StatusCode : unsigned
+{
+    // Informational
+    Continue = 100,
+    SwitchingProtocols = 101,
+    Processing = 102, // RFC 2518 (WebDAV)
+    EarlyHints = 103, // RFC 8297
+
+    // Successful
+    OK = 200,
+    Created = 201,
+    Accepted = 202,
+    NonAuthoritativeInformation = 203,
+    NoContent = 204,
+    ResetContent = 205,
+    PartialContent = 206,
+    MultiStatus = 207, // RFC 4918 (WebDAV)
+    AlreadyReported = 208, // RFC 5842 (WebDAV)
+    IMUsed = 226, // RFC 3229
+
+    // Redirection
+    MultipleChoices = 300,
+    MovedPermanently = 301,
+    Found = 302,
+    SeeOther = 303,
+    NotModified = 304,
+    UseProxy = 305,
+    TemporaryRedirect = 307,
+
+    // Client Error
+    BadRequest = 400,
+    Unauthorized = 401,
+    PaymentRequired = 402,
+    Forbidden = 403,
+    NotFound = 404,
+    MethodNotAllowed = 405,
+    NotAcceptable = 406,
+    ProxyAuthenticationRequired = 407,
+    RequestTimeout = 408,
+    Conflict = 409,
+    Gone = 410,
+    LengthRequired = 411,
+    PreconditionFailed = 412,
+    PayloadTooLarge = 413, // Previously called "Request Entity Too Large"
+    URITooLong = 414, // Previously called "Request-URI Too Long"
+    UnsupportedMediaType = 415,
+    RangeNotSatisfiable = 416, // Previously called "Requested Range Not Satisfiable"
+    ExpectationFailed = 417,
+    ImATeapot = 418, // RFC 2324, RFC 7168 (April's fool)
+    MisdirectedRequest = 421, // RFC 7540
+    UnprocessableEntity = 422, // RFC 4918 (WebDAV)
+    Locked = 423, // RFC 4918 (WebDAV)
+    FailedDependency = 424, // RFC 4918 (WebDAV)
+    TooEarly = 425, // RFC 8470
+    UpgradeRequired = 426,
+    PreconditionRequired = 428, // RFC 6585
+    TooManyRequests = 429, // RFC 6585
+    RequestHeaderFieldsTooLarge = 431, // RFC 6585
+    LoginTimeout = 440, // IIS
+    RetryWith = 449, // IIS
+    UnavailableForLegalReasons = 451, // RFC 7725 and IIS Redirect
+
+    // Server Error
+    InternalServerError = 500,
+    NotImplemented = 501,
+    BadGateway = 502,
+    ServiceUnavailable = 503,
+    GatewayTimeout = 504,
+    HTTPVersionNotSupported = 505,
+    InsufficientStorage = 507, // RFC 4918 (WebDAV)
+    LoopDetected = 508, // RFC 5842 (WebDAV)
+    NotExtended = 510, // RFC 2774
+    NetworkAuthenticationRequired = 511, // RFC 6585
+};
+
 /// Returns the Reason Phrase for a given HTTP Status Code.
 /// If not defined, "Unknown" is returned.
 /// The Reason Phrase is informational only, but it helps
@@ -158,11 +238,13 @@ static inline const char* getReasonPhraseForCode(int code)
         return R;
     switch (code)
     {
+        // Informational
         CASE(100, "Continue");
         CASE(101, "Switching Protocols");
         CASE(102, "Processing"); // RFC 2518 (WebDAV)
         CASE(103, "Early Hints"); // RFC 8297
 
+        // Successful
         CASE(200, "OK");
         CASE(201, "Created");
         CASE(202, "Accepted");
@@ -174,6 +256,7 @@ static inline const char* getReasonPhraseForCode(int code)
         CASE(208, "Already Reported"); // RFC 5842 (WebDAV)
         CASE(226, "IM Used"); // RFC 3229
 
+        // Redirection
         CASE(300, "Multiple Choices");
         CASE(301, "Moved Permanently");
         CASE(302, "Found");
@@ -182,6 +265,7 @@ static inline const char* getReasonPhraseForCode(int code)
         CASE(305, "Use Proxy");
         CASE(307, "Temporary Redirect");
 
+        // Client Error
         CASE(400, "Bad Request");
         CASE(401, "Unauthorized");
         CASE(402, "Payment Required");
@@ -214,6 +298,7 @@ static inline const char* getReasonPhraseForCode(int code)
         CASE(449, "Retry With"); // IIS
         CASE(451, "Unavailable For Legal Reasons"); // RFC 7725 and IIS Redirect
 
+        // Server Error
         CASE(500, "Internal Server Error");
         CASE(501, "Not Implemented");
         CASE(502, "Bad Gateway");
@@ -507,9 +592,10 @@ public:
 
     bool writeData(Buffer& out, std::size_t capacity)
     {
+        const std::size_t buffered_size = out.size();
         if (_stage == Stage::Header)
         {
-            LOG_TRC("performWrites (request header).");
+            LOG_TRC("performWrites (request header)");
 
             out.append(getVerb());
             out.append(" ");
@@ -526,7 +612,7 @@ public:
 
         if (_stage == Stage::Body)
         {
-            LOG_TRC("performWrites (request body).");
+            LOG_TRC("performWrites (request body)");
 
             // Get the data to write into the socket
             // from the client's callback. This is
@@ -544,14 +630,16 @@ public:
 
                 if (read == 0)
                 {
-                    LOG_TRC("performWrites (request body): finished, total: " << wrote);
+                    LOG_TRC("performWrites (request body): finished, total: " << out.size() -
+                                                                                     buffered_size);
                     _stage = Stage::Finished;
                     return true;
                 }
 
                 out.append(buffer, read);
                 wrote += read;
-                LOG_TRC("performWrites (request body): " << read << " bytes, total: " << wrote);
+                LOG_TRC("performWrites (request body): " << read << " bytes, total: "
+                                                         << out.size() - buffered_size);
             } while (wrote < capacity);
         }
 
@@ -604,6 +692,11 @@ public:
         , _versionMinor(1)
         , _statusCode(statusCodeNumber)
         , _reasonPhrase(getReasonPhraseForCode(statusCodeNumber))
+    {
+    }
+
+    StatusLine(StatusCode statusCode)
+        : StatusLine(static_cast<unsigned>(statusCode))
     {
     }
 
@@ -694,6 +787,13 @@ public:
     {
         _header.add("Date", Util::getHttpTimeNow());
         _header.add("Server", HTTP_SERVER_STRING);
+    }
+
+    /// A response sent from a server.
+    /// Used for generating an outgoing response.
+    Response(StatusCode statusCode)
+        : Response(StatusLine(statusCode))
+    {
     }
 
     /// The state of an incoming response, when parsing.
@@ -1008,6 +1108,7 @@ public:
                                                        const std::string& saveToFilePath)
     {
         TerminatingPoll poller("HttpSynReqPoll");
+        poller.runOnClientThread();
         return syncDownload(req, saveToFilePath, poller);
     }
 
@@ -1028,6 +1129,7 @@ public:
     const std::shared_ptr<const Response> syncRequest(const Request& req)
     {
         TerminatingPoll poller("HttpSynReqPoll");
+        poller.runOnClientThread();
         return syncRequest(req, poller);
     }
 
@@ -1073,7 +1175,7 @@ public:
             LOG_ASSERT_MSG(_socket.lock(), "Connect must set the _socket member.");
             LOG_ASSERT_MSG(_socket.lock()->getFD() == socket->getFD(),
                            "Socket FD's mismatch after connect().");
-            LOG_TRC('#' << socket->getFD() << ": Connected");
+            LOG_TRC('#' << socket->getFD() << ": inserting in poller after connecting");
             poll.insertNewSocket(socket);
         }
         else
@@ -1081,7 +1183,7 @@ public:
             // Technically, there is a race here. The socket can
             // get disconnected and removed right after isConnected.
             // In that case, we will timeout and no request will be sent.
-            poll.wakeupWorld();
+            poll.wakeup();
         }
 
         return true;
@@ -1198,7 +1300,7 @@ private:
     {
         if (socket)
         {
-            LOG_TRC('#' << socket->getFD() << " Connected.");
+            LOG_TRC('#' << socket->getFD() << ": Connected");
             _connected = true;
         }
         else
@@ -1279,8 +1381,8 @@ private:
         if (socket)
         {
             Buffer& out = socket->getOutBuffer();
-            LOG_TRC('#' << socket->getFD() << ": performWrites: " << out.size()
-                        << " bytes, capacity: " << capacity);
+            LOG_TRC('#' << socket->getFD() << ": performWrites: sending request (buffered: "
+                        << out.size() << " bytes, capacity: " << capacity << ')');
 
             if (!socket->send(_request))
             {
@@ -1375,6 +1477,245 @@ get(const std::string& url, const std::string& path,
 {
     auto httpSession = http::Session::create(url);
     return httpSession->syncRequest(http::Request(path), timeout);
+}
+
+namespace server
+{
+
+/// A server http Session to make asynchronous HTTP responses.
+class Session final : public ProtocolHandlerInterface
+{
+public:
+    /// Construct a Session instance.
+    Session()
+        : _timeout(getDefaultTimeout())
+        , _pos(-1)
+        , _size(0)
+        , _fd(-1)
+        , _connected(false)
+    {
+    }
+
+    /// Returns the default timeout.
+    static constexpr std::chrono::milliseconds getDefaultTimeout()
+    {
+        return std::chrono::seconds(30);
+    }
+
+    bool isConnected() const { return _connected; };
+
+    /// Set the timeout, in microseconds.
+    void setTimeout(const std::chrono::microseconds timeout) { _timeout = timeout; }
+    /// Get the timeout, in microseconds.
+    std::chrono::microseconds getTimeout() const { return _timeout; }
+
+    /// The onFinished callback handler signature.
+    using FinishedCallback = std::function<void(const std::shared_ptr<Session>& session)>;
+
+    /// Set a callback to handle onFinished events from this session.
+    /// onFinished is triggered whenever a request has finished,
+    /// regardless of the reason (error, timeout, completion).
+    void setFinishedHandler(FinishedCallback onFinished) { _onFinished = std::move(onFinished); }
+
+    /// Start an asynchronous upload from a file.
+    /// Return true when it dispatches the socket to the SocketPoll.
+    /// Note: when reusing this Session, it is assumed that the socket
+    /// is already added to the SocketPoll on a previous call (do not
+    /// use multiple SocketPoll instances on the same Session).
+    bool asyncUpload(std::string fromFile, std::string mimeType)
+    {
+        LOG_TRC("asyncUpload from file [" << fromFile << ']');
+
+        _fd = open(fromFile.c_str(), O_RDONLY);
+        if (_fd == -1)
+        {
+            LOG_ERR("Failed to open file [" << fromFile << "] for uploading");
+            return false;
+        }
+
+        struct stat sb;
+        const int res = fstat(_fd, &sb);
+        if (res == -1)
+        {
+            LOG_SYS("Failed to stat file [" << fromFile);
+            close(_fd);
+            _fd = -1;
+            return false;
+        }
+
+        _size = sb.st_size;
+        _data = std::move(fromFile);
+        _mimeType = std::move(mimeType);
+        return true;
+    }
+
+    void asyncShutdown()
+    {
+        LOG_TRC("asyncShutdown");
+        if (_socket)
+        {
+            _socket->shutdown();
+        }
+    }
+
+    void disconnect()
+    {
+        LOG_TRC("disconnect");
+        if (_socket)
+        {
+            _socket->closeConnection();
+        }
+    }
+
+private:
+    void onConnect(const std::shared_ptr<StreamSocket>& socket) override
+    {
+        _connected = false; // Assume disconnected by default.
+        _socket = socket;
+        if (socket)
+        {
+            if (_fd >= 0 || _pos >= 0)
+            {
+                LOG_TRC('#' << socket->getFD() << " Connected");
+                _connected = true;
+
+                LOG_DBG('#' << socket->getFD() << " Sending header with size " << _size);
+                http::Response httpResponse(http::StatusCode::OK);
+                httpResponse.set("Content-Length", std::to_string(_size));
+                httpResponse.set("Content-Type", _mimeType);
+                httpResponse.set("accept-ranges", "bytes");
+                httpResponse.set("Content-Range", "bytes 0-" + std::to_string(_size - 1) + '/' +
+                                                      std::to_string(_size));
+
+                socket->send(httpResponse);
+                return;
+            }
+
+            LOG_DBG('#' << socket->getFD() << " Has no data to send back");
+            http::Response httpResponse(http::StatusCode::BadRequest);
+            httpResponse.set("Content-Length", "0");
+            socket->sendAndShutdown(httpResponse);
+        }
+        else
+        {
+            LOG_DBG("Error: onConnect without a valid socket");
+        }
+    }
+
+    void shutdown(bool /*goingAway*/, const std::string& /*statusMessage*/) override
+    {
+        LOG_TRC("shutdown");
+    }
+
+    void getIOStats(uint64_t& sent, uint64_t& recv) override
+    {
+        LOG_TRC("getIOStats");
+        if (_socket)
+            _socket->getIOStats(sent, recv);
+        else
+        {
+            sent = 0;
+            recv = 0;
+        }
+    }
+
+    int getPollEvents(std::chrono::steady_clock::time_point /*now*/,
+                      int64_t& /*timeoutMaxMicroS*/) override
+    {
+        int events = POLLIN;
+        if (_fd >= 0 || _pos >= 0)
+            events |= POLLOUT;
+        return events;
+    }
+
+    virtual void handleIncomingMessage(SocketDisposition& /*disposition*/) override
+    {
+        // std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (!isConnected())
+        {
+            LOG_ERR("handleIncomingMessage called when not connected.");
+            assert(!_socket && "Expected no socket when not connected.");
+            return;
+        }
+
+        assert(_socket && "No valid socket to handleIncomingMessage.");
+        LOG_TRC('#' << _socket->getFD() << " handleIncomingMessage.");
+    }
+
+    void performWrites(std::size_t capacity) override
+    {
+        // We may get called after disconnecting and freeing the Socket instance.
+        if (_socket)
+        {
+            const Buffer& out = _socket->getOutBuffer();
+            LOG_TRC('#' << _socket->getFD() << ": performWrites: " << out.size()
+                        << " bytes, capacity: " << capacity);
+
+            while (_fd >= 0 && capacity > 0)
+            {
+                //FIXME: replace with in-place read into the output buffer.
+                char buffer[64 * 1024];
+                const auto size = std::min(sizeof(buffer), capacity);
+                int n;
+                while ((n = ::read(_fd, buffer, size)) < 0 && errno == EINTR)
+                    LOG_TRC("EINTR reading from " << _data);
+
+                if (n <= 0)
+                {
+                    if (n == 0)
+                    {
+                        LOG_TRC('#' << _socket->getFD() << ": performWrites finished uploading");
+                    }
+                    else
+                    {
+                        LOG_SYS('#' << _socket->getFD() << ": failed to upload file");
+                    }
+
+                    close(_fd);
+                    _fd = -1;
+                    onDisconnect();
+                    break;
+                }
+
+                _socket->send(buffer, n);
+                LOG_ASSERT(static_cast<std::size_t>(n) <= capacity);
+                capacity -= n;
+                LOG_TRC('#' << _socket->getFD() << ": performWrites wrote " << n
+                            << " bytes, capacity: " << capacity);
+            }
+        }
+    }
+
+    void onDisconnect() override
+    {
+        // Make sure the socket is disconnected and released.
+        if (_socket)
+        {
+            LOG_TRC('#' << _socket->getFD() << ": onDisconnect");
+
+            _socket->shutdown(); // Flag for shutdown for housekeeping in SocketPoll.
+            _socket->closeConnection(); // Immediately disconnect.
+            _socket.reset();
+        }
+
+        _connected = false;
+    }
+
+    int sendTextMessage(const char*, const size_t, bool) const override { return 0; }
+    int sendBinaryMessage(const char*, const size_t, bool) const override { return 0; }
+
+private:
+    std::chrono::microseconds _timeout;
+    std::chrono::steady_clock::time_point _startTime;
+    std::string _data; //< Data to upload, if not from a file, OR, the filename (if _pos == -1).
+    std::string _mimeType; //< The data Content-Type.
+    int _pos; //< The current position in the data string.
+    int _size; //< The size of the data in bytes.
+    int _fd; //< The descriptor of the file to upload.
+    bool _connected;
+    FinishedCallback _onFinished;
+    std::shared_ptr<StreamSocket> _socket; //< Must be the last member.
+};
 }
 
 } // namespace http

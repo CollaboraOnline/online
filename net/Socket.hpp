@@ -595,7 +595,7 @@ public:
     /// Stop the polling thread.
     void stop()
     {
-        LOG_DBG("Stopping " << _name << '.');
+        LOG_DBG("Stopping SocketPoll thread " << _name);
         _stop = true;
 #if MOBILEAPP
         {
@@ -614,7 +614,7 @@ public:
 
     void removeSockets()
     {
-        LOG_DBG("Removing all sockets from " << _name << '.');
+        LOG_DBG("Removing all sockets from SocketPoll thread " << _name);
         assertCorrectThread();
 
         while (!_pollSockets.empty())
@@ -721,7 +721,9 @@ public:
     /// Wakeup the main polling loop in another thread
     void wakeup()
     {
-        if (!isAlive())
+        // There is a race when shutting down because
+        // SocketPoll threads exit when shutting down.
+        if (!isAlive() && !SigUtil::getShutdownRequestFlag())
             LOG_WRN("Waking up dead poll thread ["
                     << _name << "], started: " << (_threadStarted ? "true" : "false")
                     << ", finished: " << _threadFinished);
@@ -806,6 +808,7 @@ public:
 
         if (!_threadStarted)
         {
+            // TODO: should avoid wakeup resource creation too.
             _runOnClientThread = true;
             return true;
         }
@@ -1131,11 +1134,13 @@ public:
                 if (len < 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
                     LOG_SYS_ERRNO(last_errno,
                                   "Read failed, have " << _inBuffer.size() << " buffered bytes");
-                else if (len <= 0)
+                else if (len < 0)
                     LOG_TRC("Read failed ("
                             << len << "), have " << _inBuffer.size() << " buffered bytes ("
                             << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
                             << ')');
+                else if (len == 0)
+                    LOG_TRC("Read closed (0), have " << _inBuffer.size() << " buffered bytes");
                 else // Success.
                     LOG_TRC("Read " << len << " bytes in addition to " << _inBuffer.size()
                                     << " buffered bytes"

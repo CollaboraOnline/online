@@ -727,7 +727,7 @@ export class SheetDimension {
 			return groupsData;
 		}
 
-		this._outlines.forEachGroupInRange(this._viewStartIndex, this._viewEndIndex,
+		this._outlines.forEachGroupInRange(0, this._viewEndIndex,
 			function (levelIdx: number, groupIdx: number, start: number, end: number, hidden: number) {
 
 				var startElementData = this.getElementData(start);

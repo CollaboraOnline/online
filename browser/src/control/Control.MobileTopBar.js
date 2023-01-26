@@ -219,7 +219,7 @@ L.Control.MobileTopBar = L.Control.extend({
 		var commandName = e.commandName;
 		var state = e.state;
 
-		if (this.map.isPermissionEdit() && (state === 'enabled' || state === 'disabled')) {
+		if (this.map.isEditMode() && (state === 'enabled' || state === 'disabled')) {
 			var id = window.unoCmdToToolbarId(commandName);
 			var toolbar = w2ui['actionbar'];
 

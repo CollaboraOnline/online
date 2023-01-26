@@ -27,7 +27,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		helper.clickOnIdle('#FontColor .ui-header');
 
-		mobileHelper.selectFromColorPalette(0, 0, 5, 7);
+		mobileHelper.selectFromColorPicker('#FontColor', 0, 7);
 
 		// End remove spell checking red lines
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
@@ -102,6 +102,7 @@ describe('Trigger hamburger menu options.', function() {
 
 	it('Download as PDF', function() {
 		mobileHelper.selectHamburgerMenuItem(['Download as', 'PDF Document (.pdf)']);
+		mobileHelper.pressPushButtonOfDialog('Export');
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
@@ -142,6 +143,7 @@ describe('Trigger hamburger menu options.', function() {
 
 	it('Download as EPUB', function() {
 		mobileHelper.selectHamburgerMenuItem(['Download as', 'EPUB (.epub)']);
+		mobileHelper.pressPushButtonOfDialog('OK');
 
 		cy.get('iframe')
 			.should('have.attr', 'data-src')
