@@ -584,12 +584,7 @@ private:
     /// (regardless of whether we need to or not).
     CanUpload canUploadToStorage() const
     {
-        if (!_storage)
-        {
-            return CanUpload::NoStorage;
-        }
-
-        return CanUpload::Yes;
+        return _storage ? CanUpload::Yes : CanUpload::NoStorage;
     }
 
     /// Encodes whether or not uploading is needed.
