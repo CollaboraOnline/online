@@ -1341,14 +1341,14 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
     if (success && !isAsyncUploading())
     {
         // Update the storage attributes to capture what's
-        // new and applies to this new version and reset.
+        // new and applies to this new version and reset the next.
         // These are the attributes of the next version to be uploaded.
         // Note: these are owned by us and this is thread-safe.
         _currentStorageAttrs.merge(_nextStorageAttrs);
         _nextStorageAttrs.reset();
     }
 
-    // The the clients know of any save failures.
+    // Let the clients know of any save failures.
     if (!success && result != "unmodified")
     {
         LOG_INF("Failed to save docKey [" << _docKey
@@ -2271,7 +2271,7 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     // At this point, if we have any potential modifications, we need to capture the fact.
     _nextStorageAttrs.setUserModified(isModified() || haveModifyActivityAfterSaveRequest());
 
-    //FIXME: It's odd to capture these here, but this function is used from ClientSession too.
+    // Note: It's odd to capture these here, but this function is used from ClientSession too.
     _nextStorageAttrs.setIsAutosave(isAutosave || _unitWsd.isAutosave());
     _nextStorageAttrs.setIsExitSave(isExitSave);
     _nextStorageAttrs.setExtendedData(extendedData);
