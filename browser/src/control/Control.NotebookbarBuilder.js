@@ -415,6 +415,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		}
 
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
+		var submenuOpts = builder._getSubmenuOpts(builder.options.map._docLayer._docType, data.id, builder);
 
 		$(control.container).unbind('click.toolbutton');
 		if (!builder.map.isLockedItem(data)) {
@@ -424,8 +425,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					return;
 				}
 
-				var submenuOpts = builder._getSubmenuOpts(builder.options.map._docLayer._docType, data.id, builder);
-
 				$(control.container).w2menu({
 					items: submenuOpts,
 					onSelect: function (event) {
@@ -433,6 +432,19 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					}
 				});
 			});
+		}
+
+		for (var i in submenuOpts) {
+			var item = submenuOpts[i];
+
+			if (item.id.startsWith('export')) {
+				var format = item.id.substring('export'.length);
+				builder.map._docLayer.registerExportFormat(item.text, format);
+			}
+			else if (item.id.startsWith('downloadas-')) {
+				var format = item.id.substring('downloadas-'.length);
+				builder.map._docLayer.registerExportFormat(item.text, format);
+			}
 		}
 	},
 
@@ -467,6 +479,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		case 'exportas':
 			return builder._getExportAsSubmenuOpts(docType);
 		}
+		return [];
 	},
 
 	_getDownloadAsSubmenuOpts: function(docType) {
