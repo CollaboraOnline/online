@@ -1686,6 +1686,9 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
 
             // Reset the storage attributes; They've been used and we can discard them.
             _currentStorageAttrs.reset();
+            // In case there was an update while we were uploading, merge it.
+            _currentStorageAttrs.merge(_nextStorageAttrs);
+            _nextStorageAttrs.reset();
 
             LOG_DBG("Uploaded docKey ["
                     << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
