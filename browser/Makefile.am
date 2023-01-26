@@ -459,6 +459,25 @@ if !ENABLE_MOBILEAPP
 ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
 endif
 
+if ENABLE_WASM
+$(DIST_FOLDER)/online%: $(abs_top_builddir)/wasm/online%
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+$(DIST_FOLDER)/soffice%: $(abs_top_builddir)/wasm/soffice%
+	@mkdir -p $(dir $@)
+	@cp $< $@
+
+WASM_FILES= \
+	$(DIST_FOLDER)/online.data \
+	$(DIST_FOLDER)/online.js \
+	$(DIST_FOLDER)/online.wasm \
+	$(DIST_FOLDER)/online.wasm.debug.wasm \
+	$(DIST_FOLDER)/online.worker.js \
+	$(DIST_FOLDER)/soffice.data \
+	$(DIST_FOLDER)/soffice.data.js.metadata
+endif
+
 $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 	@mkdir -p $(dir $@)
 	$(builddir)/node_modules/typescript/bin/tsc --outFile $@ $<
@@ -477,7 +496,8 @@ build-cool: \
 	$(DIST_FOLDER)/device-tablet.css \
 	$(DIST_FOLDER)/device-desktop.css \
 	$(DIST_FOLDER)/bundle.js \
-	$(DIST_FOLDER)/cool.html
+	$(DIST_FOLDER)/cool.html \
+	$(WASM_FILES)
 	@echo "build cool completed"
 if ENABLE_ANDROIDAPP
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/branding.css" "$(APP_BRANDING_DIR)/branding.js" $(DIST_FOLDER)/ ; else touch $(DIST_FOLDER)/branding.css ; fi
