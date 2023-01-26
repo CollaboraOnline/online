@@ -316,13 +316,13 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Slide', 'Delete Slide']);
 
-		cy.get('.vex-content')
+		cy.get('#mobile-wizard-content-modal-dialog-deleteslide-modal')
 			.should('exist');
 
-		cy.get('.button-primary')
+		cy.get('#response')
 			.click();
 
-		cy.get('.vex-content')
+		cy.get('#mobile-wizard-content-modal-dialog-deleteslide-modal')
 			.should('not.exist');
 
 		impressHelper.assertNumberOfSlidePreviews(1);
