@@ -454,6 +454,16 @@ void DocumentBroker::pollThread()
                     LOG_TRC("Triggering an autosave.");
                     autoSave(false);
                 }
+                else if (!isAsyncUploading() && !_storageManager.lastUploadSuccessful() &&
+                         needToUploadToStorage() != NeedToUpload::No)
+                {
+                    // Retry uploading, if the last one failed and we can try again.
+                    const auto session = getWriteableSession();
+                    if (session && !session->getAuthorization().isExpired())
+                    {
+                        checkAndUploadToStorage(session);
+                    }
+                }
             }
             break;
 
