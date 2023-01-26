@@ -3,7 +3,7 @@
 * Control.Menubar
 */
 
-/* global app $ _ _UNO vex L */
+/* global app $ _ _UNO L */
 L.Control.MenubarShortcuts = {
 	shortcuts: {
 		SAVE: 'Ctrl + S',
@@ -1763,7 +1763,8 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id.startsWith('downloadas-')
 			|| id.startsWith('saveas-')
 			|| id.startsWith('export')
-			|| id.startsWith('zotero')) {
+			|| id.startsWith('zotero')
+			|| id === 'deletepage') {
 			this._map.dispatch(id);
 		} else if (id === 'signdocument') {
 			this._map.showSignDocument();
@@ -1805,27 +1806,6 @@ L.Control.Menubar = L.Control.extend({
 			this._openInsertShapesWizard();
 		} else if (id === 'duplicatepage') {
 			this._map.duplicatePage();
-		} else if (id === 'deletepage') {
-			var map = this._map;
-			var msg;
-			if (map.getDocType() === 'presentation') {
-				msg = _('Are you sure you want to delete this slide?');
-			}
-			else { /* drawing */
-				msg = _('Are you sure you want to delete this page?');
-			}
-			vex.dialog.open({
-				message: msg,
-				buttons: [
-					$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
-					$.extend({}, vex.dialog.buttons.YES, { text: _('OK') })
-				],
-				callback: function(e) {
-					if (e === true) {
-						map.deletePage();
-					}
-				}
-			});
 		} else if (id === 'about') {
 			this._map.showLOAboutDialog();
 		} else if (id === 'latestupdates' && this._map.welcome) {

@@ -814,7 +814,8 @@ L.Control.UIManager = L.Control.extend({
 	/// message2 - 2nd line of message
 	/// buttonText - text inside button
 	/// callback - callback on button press
-	showInfoModal: function(id, title, message1, message2, buttonText, callback) {
+	/// withCancel - specifies if needs cancal button also
+	showInfoModal: function(id, title, message1, message2, buttonText, callback, withCancel) {
 		var dialogId = 'modal-dialog-' + id;
 		var json = this._modalDialogJSON(id, title, true, [
 			{
@@ -839,6 +840,11 @@ L.Control.UIManager = L.Control.extend({
 				text: '',
 				enabled: true,
 				children: [
+					withCancel ? {
+						id: 'cancel',
+						type: 'pushbutton',
+						text: _('Cancel')
+					} : { type: 'container' },
 					{
 						id: 'response',
 						type: 'pushbutton',
@@ -858,6 +864,7 @@ L.Control.UIManager = L.Control.extend({
 
 		this.showModal(json, [
 			{id: 'response', func: function() { if (typeof callback === 'function') callback(); closeFunc(); }},
+			{id: 'cancel', func: function() { closeFunc(); }},
 			{id: '__POPOVER__', func: function() { closeFunc(); }}
 		]);
 	},
