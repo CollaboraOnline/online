@@ -2703,6 +2703,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (!data.command)
 			data.command = data.id;
 
+		if (data.id && data.id !== 'exportas' && data.id.startsWith('export')) {
+			var format = data.id.substring('export'.length);
+			builder.map._docLayer.registerExportFormat(data.text, format);
+
+			if (builder.map['wopi'].HideExportOption)
+				return false;
+		}
+
 		if (data.inlineLabel !== undefined) {
 			var backupInlineText = builder.options.useInLineLabelsForUnoButtons;
 			builder.options.useInLineLabelsForUnoButtons = data.inlineLabel;
