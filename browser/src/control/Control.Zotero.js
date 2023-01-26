@@ -207,7 +207,8 @@ L.Control.Zotero = L.Control.extend({
 					selectedCount: '1',
 					selectedEntries: [
 						this.getFieldType() === 'Bookmark' ? 1 : 0
-					]
+					],
+					enabled: !(this.citations && Object.keys(this.citations).length)
 				}
 			]
 		};
