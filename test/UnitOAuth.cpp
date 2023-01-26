@@ -102,8 +102,6 @@ public:
         LOK_ASSERT_EQUAL_MESSAGE("GetFile was not invoked", true, _getFileCalled);
         _getFileCalled = false;
 
-        // Close the document after loading.
-        WSD_CMD("closedocument");
         switch (_phase)
         {
             case Phase::LoadToken:
@@ -111,16 +109,25 @@ public:
                 _credential = "abcdefg123456_newtoken";
                 WSD_CMD("resetaccesstoken " + _credential);
                 WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+
+                // Close the document after loading.
+                WSD_CMD("closedocument");
                 break;
             case Phase::ModifyAccessToken:
+                // Close the document after loading.
+                WSD_CMD("closedocument");
                 break;
             case Phase::LoadHeader:
+                // Close the document after loading.
+                WSD_CMD("closedocument");
                 TRANSITION_STATE(_phase, Phase::LoadingHeader);
                 _credential = "basic==";
                 initWebsocket("/wopi/files/1?access_header=Authorization: Basic " + _credential);
                 WSD_CMD("load url=" + getWopiSrc());
                 break;
             case Phase::LoadingHeader:
+                // Close the document after loading.
+                WSD_CMD("closedocument");
                 passTest("Finished all cases successfully");
                 break;
             default:
