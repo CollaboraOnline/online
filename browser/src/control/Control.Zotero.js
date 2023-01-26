@@ -41,6 +41,10 @@ L.Control.Zotero = L.Control.extend({
 		this.map.on('updateviewslist', this.onUpdateViews, this);
 	},
 
+	extractItemKeyFromLink: function(link) {
+		return link.substring(link.lastIndexOf('/')+1);
+	},
+
 	onFieldValue: function(fields) {
 
 		var resetCitations = true;
@@ -76,7 +80,7 @@ L.Control.Zotero = L.Control.extend({
 				//zotero desktop versions do not store keys in cslJSON
 				//extract key from the item url
 				var itemUri = item.uris[0];
-				var citationId = itemUri.substr(itemUri.lastIndexOf('/')+1);
+				var citationId = that.extractItemKeyFromLink(itemUri);
 				that.citationCluster[values.citationID].push(citationId);
 				that.citations[citationId] = L.Util.trim(citations[i], that.settings.group.prefix, that.settings.group.suffix);
 				that.setCitationNumber(that.citations[citationId]);
@@ -96,13 +100,14 @@ L.Control.Zotero = L.Control.extend({
 
 	getCitationKeysForBib: function() {
 		var uncitedKeys = [];
+		var that = this;
 		this.settings.bib.uncited.forEach(function(item) {
-			uncitedKeys.push(item[0].substring(item[0].lastIndexOf('/')+1));
+			uncitedKeys.push(that.extractItemKeyFromLink(item[0]));
 		});
 
 		var omittedKeys = new Set();
 		this.settings.bib.omitted.forEach(function(item) {
-			omittedKeys.add(item[0].substring(item[0].lastIndexOf('/')+1));
+			omittedKeys.add(that.extractItemKeyFromLink(item[0]));
 		});
 
 		var allKeys = Object.keys(this.citations).concat(uncitedKeys);
@@ -467,7 +472,7 @@ L.Control.Zotero = L.Control.extend({
 			var innerMostNode = itemHTML.querySelector('*:last-child');
 
 			var keys = item['key'] ? [item['key']]
-				: Object.keys(item['citationItems']).map(function(citationitem) {return item['citationItems'][citationitem].id.substring(item['citationItems'][citationitem].id.lastIndexOf('/')+1);});
+				: Object.keys(item['citationItems']).map(function(citationitem) {return that.extractItemKeyFromLink(item['citationItems'][citationitem].id);});
 			keys.forEach(function(key) {
 				citationString += innerMostNode ? that.getCitationText(key, innerMostNode.textContent)
 					: that.getCitationText(key, item.citation.toString());
@@ -727,7 +732,7 @@ L.Control.Zotero = L.Control.extend({
 					var link = csl.getElementsByTagName('link');
 					for (var i = 0; i < link.length; i++) {
 						if (link[i].getAttribute('rel') === 'independent-parent') {
-							that.setFetchedCitationFormat(link[i].getAttribute('href').substring(link[i].getAttribute('href').lastIndexOf('/')+1));
+							that.setFetchedCitationFormat(that.extractItemKeyFromLink(link[i].getAttribute('href')));
 							break;
 						}
 					}
@@ -799,7 +804,7 @@ L.Control.Zotero = L.Control.extend({
 		var value = new DOMParser().parseFromString(valueString, 'text/xml');
 		var styleNode = value.getElementsByTagName('style')[0];
 
-		this.settings.style = styleNode.id.substring(styleNode.id.lastIndexOf('/')+1);
+		this.settings.style = this.extractItemKeyFromLink(styleNode.id);
 		var locale = styleNode.getAttribute('locale');
 		if (locale)
 			this.settings.locale = locale;
@@ -1177,7 +1182,7 @@ L.Control.Zotero = L.Control.extend({
 					}, {});
 
 					var html = '';
-				that.getCitationKeysForBib().forEach(function(key) {
+					that.getCitationKeysForBib().forEach(function(key) {
 						var bib = new DOMParser().parseFromString(bibList[key], 'text/html').body;
 						var numberNode = bib.getElementsByClassName('csl-entry')[0].firstElementChild;
 						var number = parseInt(numberNode.textContent.substring(numberNode.textContent.search(/[0-9]/))).toString();
@@ -1373,7 +1378,7 @@ L.Control.Zotero = L.Control.extend({
 		for (var i in existingCitationUnderCursor.citationItems) {
 			var existingItem = existingCitationUnderCursor.citationItems[i];
 			var itemUri = existingItem.uris[0];
-			var key = itemUri.substr(itemUri.lastIndexOf('/')+1);
+			var key = this.extractItemKeyFromLink(itemUri);
 
 			for (var j in this.items) {
 				var listItem = this.items[j];
