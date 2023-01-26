@@ -70,7 +70,8 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Rich Text (.rtf)'), id: 'saveas-rtf', type: 'action'},
 				]},
 				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
-					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
+					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'},
+					{name: _('EPUB (.epub)'), id: 'exportas-epub', type: 'action'}
 				]},
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
@@ -868,6 +869,10 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:PickList', 'text'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'text'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'text'), id: 'saveas', type: 'action'},
+				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
+					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'},
+					{name: _('EPUB (.epub)'), id: 'exportas-epub', type: 'action'}
+				]},
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: _('Sign document'), id: 'signdocument', type: 'action'},
@@ -924,6 +929,9 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
+				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
+					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
+				]},
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{type: 'separator'},
@@ -981,6 +989,9 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
+				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
+					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
+				]},
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _UNO('.uno:Print', 'presentation'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
@@ -1028,6 +1039,9 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:PickList', 'spreadsheet'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'spreadsheet'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'spreadsheet'), id: 'saveas', type: 'action'},
+				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
+					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
+				]},
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{type: 'separator'},
@@ -1735,10 +1749,6 @@ L.Control.Menubar = L.Control.extend({
 			}
 		} else if (id === 'saveas' && type !== 'menu') { // jsdialog has no type='action'
 			this._map.openSaveAs();
-		} else if (id === 'exportpdf') {
-			this._map.dispatch('exportpdf');
-		} else if (id === 'exportepub') {
-			this._map.dispatch('exportepub');
 		} else if (id === 'savecomments') {
 			if (this._map.isPermissionEditForComments()) {
 				this._map.fire('postMessage', {msgId: 'UI_Save'});
@@ -1750,9 +1760,10 @@ L.Control.Menubar = L.Control.extend({
 			this._map.openShare();
 		} else if (id === 'print') {
 			this._map.print();
-		} else if (id.startsWith('downloadas-')) {
-			this._map.dispatch(id);
-		} else if (id.startsWith('saveas-')) {
+		} else if (id.startsWith('downloadas-')
+			|| id.startsWith('saveas-')
+			|| id.startsWith('export')
+			|| id.startsWith('zotero')) {
 			this._map.dispatch(id);
 		} else if (id === 'signdocument') {
 			this._map.showSignDocument();
@@ -1851,8 +1862,6 @@ L.Control.Menubar = L.Control.extend({
 			this._map.sendUnoCommand('.uno:LOKSidebarWriterPage');
 			this._map.fire('showwizardsidebar', {noRefresh: true});
 			window.pageMobileWizard = true;
-		} else if (id.startsWith('zotero')) {
-			this._map.dispatch(id);
 		}
 		// Inform the host if asked
 		if (postmessage)
