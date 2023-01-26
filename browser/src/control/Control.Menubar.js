@@ -2033,9 +2033,14 @@ L.Control.Menubar = L.Control.extend({
 				return false;
 		}
 
-		if (menuItem.id && this._map['wopi'].HideExportOption
-			&& (menuItem.id.startsWith('export'))) {
-			return false;
+		if (menuItem.id && menuItem.id.startsWith('export')) {
+			if (!menuItem.id.startsWith('exportas-')) {
+				var format = menuItem.id.substring('export'.length);
+				this._map._docLayer.registerExportFormat(menuItem.name, format);
+			}
+
+			if (this._map['wopi'].HideExportOption)
+				return false;
 		}
 
 		if (this._hiddenItems &&
