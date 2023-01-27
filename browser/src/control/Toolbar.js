@@ -273,6 +273,14 @@ L.Map.include({
 			'options=' + options);
 	},
 
+	exportAs: function (url) {
+		if (url === undefined || url == null) {
+			return;
+		}
+
+		app.socket.sendMessage('exportas url=wopi:' + encodeURIComponent(url));
+	},
+
 	renameFile: function (filename) {
 		if (!filename) {
 			return;
@@ -808,6 +816,23 @@ L.Map.include({
 
 	// map.dispatch() will be used to call some actions so we can share the code
 	dispatch: function(action) {
+		if (action.indexOf('saveas-') === 0) {
+			var format = action.substring('saveas-'.length);
+			this.openSaveAs(format);
+			return;
+		} else if (action.indexOf('downloadas-') === 0) {
+			var format = action.substring('downloadas-'.length);
+			var fileName = this['wopi'].BaseFileName;
+			fileName = fileName.substr(0, fileName.lastIndexOf('.'));
+			fileName = fileName === '' ? 'document' : fileName;
+			this.downloadAs(fileName + '.' + format, format);
+			return;
+		} if (action.indexOf('exportas-') === 0) {
+			var format = action.substring('exportas-'.length);
+			this.openSaveAs(format);
+			return;
+		}
+
 		switch (action) {
 		case 'acceptformula':
 			{
@@ -902,6 +927,8 @@ L.Map.include({
 				});
 			}
 			break;
+		default:
+			console.error('unknown dispatch: "' + action + '"');
 		}
 	},
 });

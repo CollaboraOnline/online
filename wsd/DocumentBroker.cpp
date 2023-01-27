@@ -1398,7 +1398,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
                     LOG_DBG("Renaming in storage as there is no new version to upload first.");
                     std::string uploadAsPath;
                     constexpr bool isRename = true;
-                    uploadAsToStorage(it->second, uploadAsPath, _renameFilename, isRename);
+                    uploadAsToStorage(it->second, uploadAsPath, _renameFilename, isRename, /*isExport*/false);
                 }
 
                 endRenameFileCommand();
@@ -1469,7 +1469,7 @@ void DocumentBroker::uploadToStorage(const std::shared_ptr<ClientSession>& sessi
     {
         constexpr bool isRename = false;
         uploadToStorageInternal(session, /*saveAsPath*/ std::string(),
-                                /*saveAsFilename*/ std::string(), isRename, force);
+                                /*saveAsFilename*/ std::string(), isRename, /*isExport*/false, force);
     }
     else
     {
@@ -1481,11 +1481,12 @@ void DocumentBroker::uploadToStorage(const std::shared_ptr<ClientSession>& sessi
 
 void DocumentBroker::uploadAsToStorage(const std::shared_ptr<ClientSession>& session,
                                        const std::string& uploadAsPath,
-                                       const std::string& uploadAsFilename, const bool isRename)
+                                       const std::string& uploadAsFilename, const bool isRename,
+                                       const bool isExport)
 {
     assertCorrectThread();
 
-    uploadToStorageInternal(session, uploadAsPath, uploadAsFilename, isRename, /*force=*/false);
+    uploadToStorageInternal(session, uploadAsPath, uploadAsFilename, isRename, isExport, /*force=*/false);
 }
 
 void DocumentBroker::uploadAfterLoadingTemplate(const std::shared_ptr<ClientSession>& session)
@@ -1516,7 +1517,7 @@ void DocumentBroker::uploadAfterLoadingTemplate(const std::shared_ptr<ClientSess
 void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession>& session,
                                              const std::string& saveAsPath,
                                              const std::string& saveAsFilename, const bool isRename,
-                                             const bool force)
+                                             const bool isExport, const bool force)
 {
     assertCorrectThread();
     LOG_ASSERT_MSG(session, "Must have a valid ClientSession");
@@ -1564,7 +1565,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
     LOG_DBG("Uploading [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
 
     _uploadRequest = Util::make_unique<UploadRequest>(uriAnonym, newFileModifiedTime, session,
-                                                      isSaveAs, isRename);
+                                                      isSaveAs, isExport, isRename);
 
     StorageBase::AsyncUploadCallback asyncUploadCallback =
         [this](const StorageBase::AsyncUpload& asyncUp)
@@ -1698,7 +1699,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
                         LOG_DBG("Renaming in storage as there is no new version to upload first.");
                         std::string uploadAsPath;
                         constexpr bool isRename = true;
-                        uploadAsToStorage(it->second, uploadAsPath, _renameFilename, isRename);
+                        uploadAsToStorage(it->second, uploadAsPath, _renameFilename, isRename, /*isExport*/false);
                     }
 
                     endRenameFileCommand();
@@ -1758,7 +1759,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
                                                    << filenameAnonym << "] successfully.");
 
                 std::ostringstream oss;
-                oss << "saveas: url=" << url << " filename=" << encodedName
+                oss << (_uploadRequest->isExport() ? "exportas:" : "saveas:") << " url=" << url << " filename=" << encodedName
                     << " xfilename=" << filenameAnonym;
                 session->sendTextFrame(oss.str());
 

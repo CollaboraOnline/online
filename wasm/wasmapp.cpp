@@ -12,7 +12,7 @@ int coolwsd_server_socket_fd = -1;
 const char* user_name;
 const int SHOW_JS_MAXLEN = 70;
 
-static std::string fileURL;
+static std::string fileURL = "file:///android/default-document/example.odt";
 static COOLWSD *coolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
@@ -69,12 +69,14 @@ static void send2JS(const std::vector<char>& buffer)
 
     LOG_TRC_NOFILE( "Evaluating JavaScript: " << subjs);
 
-    emscripten_run_script(js.c_str());
+    MAIN_THREAD_EM_ASM(eval(UTF8ToString($0)), js.c_str());
 }
 
 extern "C"
 void handle_cool_message(const char *string_value)
 {
+    std::cout << "================ handle_cool_message(): '" << string_value << "'" << std::endl;
+
     if (strcmp(string_value, "HULLO") == 0)
     {
         // Now we know that the JS has started completely
@@ -238,6 +240,7 @@ void * lok_init()
 
 int loadDoc(bool url, const char * input, const char * options)
 {
+    std::cout << "================ loadDoc('" << input << "'" << std::endl;
     try {
         std::string input_url;
         if (url) {

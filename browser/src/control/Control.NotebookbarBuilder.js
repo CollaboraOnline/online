@@ -407,30 +407,44 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		var isDownloadAsGroup = data.id === 'downloadas';
 		var isSaveAsGroup = data.id === 'saveas';
+		var isExportAsGroup = data.id === 'exportas';
 		var options = {};
-		if (isDownloadAsGroup || isSaveAsGroup) {
+		var hasCustomMenu = isDownloadAsGroup || isSaveAsGroup || isExportAsGroup;
+		if (hasCustomMenu) {
 			options.hasDropdownArrow = true;
 		}
 
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
+		var submenuOpts = builder._getSubmenuOpts(builder.options.map._docLayer._docType, data.id, builder);
 
 		$(control.container).unbind('click.toolbutton');
 		if (!builder.map.isLockedItem(data)) {
 			$(control.container).click(function () {
-				if (!isDownloadAsGroup && !isSaveAsGroup) {
+				if (!hasCustomMenu) {
 					L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
 					return;
 				}
 
-				var submenuOpts = builder._getSubmenuOpts(builder.options.map._docLayer._docType, data.id, builder);
-
 				$(control.container).w2menu({
 					items: submenuOpts,
 					onSelect: function (event) {
-						L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: event.item.id});
+						builder.map.dispatch(event.item.id);
 					}
 				});
 			});
+		}
+
+		for (var i in submenuOpts) {
+			var item = submenuOpts[i];
+
+			if (item.id.startsWith('export')) {
+				var format = item.id.substring('export'.length);
+				builder.map._docLayer.registerExportFormat(item.text, format);
+			}
+			else if (item.id.startsWith('downloadas-')) {
+				var format = item.id.substring('downloadas-'.length);
+				builder.map._docLayer.registerExportFormat(item.text, format);
+			}
 		}
 	},
 
@@ -462,7 +476,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			return builder._getDownloadAsSubmenuOpts(docType);
 		case 'saveas':
 			return builder._getSaveAsSubmenuOpts(docType);
+		case 'exportas':
+			return builder._getExportAsSubmenuOpts(docType);
 		}
+		return [];
 	},
 
 	_getDownloadAsSubmenuOpts: function(docType) {
@@ -604,6 +621,50 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				{
 					'id': 'saveas-ppt',
 					'text': _('PowerPoint 2003 Presentation (.ppt)')
+				}
+			];
+		}
+
+		submenuOpts.forEach(function mapIconToItem(menuItem) {
+			menuItem.icon = menuItem.id + '-submenu-icon';
+		});
+
+		return submenuOpts;
+	},
+
+	_getExportAsSubmenuOpts: function(docType) {
+		var submenuOpts = [];
+
+		if (docType === 'text') {
+			submenuOpts = [
+				{
+					'id': 'exportas-pdf',
+					'text': _('PDF Document (.pdf)')
+				},
+				{
+					'id': 'exportas-epub',
+					'text': _('EPUB (.epub)')
+				}
+			];
+		} else if (docType === 'spreadsheet') {
+			submenuOpts = [
+				{
+					'id': 'exportas-pdf',
+					'text': _('PDF Document (.pdf)')
+				}
+			];
+		} else if (docType === 'presentation') {
+			submenuOpts = [
+				{
+					'id': 'exportas-pdf',
+					'text': _('PDF Document (.pdf)')
+				}
+			];
+		} else if (docType === 'drawing') {
+			submenuOpts = [
+				{
+					'id': 'exportas-pdf',
+					'text': _('PDF Document (.pdf)')
 				}
 			];
 		}

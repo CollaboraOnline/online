@@ -292,6 +292,7 @@ private:
     bool resizeWindow(const StringVector& tokens);
     bool resetSelection(const StringVector& tokens);
     bool saveAs(const StringVector& tokens);
+    bool exportAs(const StringVector& tokens);
     bool setClientPart(const StringVector& tokens);
     bool selectClientPart(const StringVector& tokens);
     bool moveSelectedClientParts(const StringVector& tokens);
@@ -375,6 +376,9 @@ private:
 
     /// How many sessions / clients we have
     static size_t NumSessions;
+
+    /// stores wopi url for export as operation
+    std::string _exportAsWopiUrl;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
