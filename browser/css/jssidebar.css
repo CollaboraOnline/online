@@ -220,9 +220,16 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 
 /* writer */
 
-#PosSizePropertyPanel.sidebar #selectrotationtype,
-#PosSizePropertyPanel.sidebar #ratio {
+#PosSizePropertyPanel.sidebar #selectrotationtype {
 	justify-content: end;
+}
+/* Fix to allow ratio to span across columns
+ so Seitenverhältnis beibehalten doesn't get cropped*/
+#PosSizePropertyPanel.sidebar #ratio {
+	grid-column: 1 / 3;
+}
+#PosSizePropertyPanel.sidebar #ratio input[type='checkbox'] {
+	margin-inline-start: 0;
 }
 #ParaPropertyPanel.sidebar #box3 {
 	display: grid;
