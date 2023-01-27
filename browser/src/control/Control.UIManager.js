@@ -13,6 +13,7 @@ L.Control.UIManager = L.Control.extend({
 
 	onAdd: function (map) {
 		this.map = map;
+		var that = this;
 		this.notebookbar = null;
 		// Every time the UI mode changes from 'classic' to 'notebookbar'
 		// the two below elements will be destroyed.
@@ -37,6 +38,19 @@ L.Control.UIManager = L.Control.extend({
 
 		map.on('blockUI', this.blockUI, this);
 		map.on('unblockUI', this.unblockUI, this);
+
+		$('#toolbar-wrapper').on('click', function (event) {
+			if (event.target.parentElement.id === 'toolbar-up' || // checks if clicked on empty part of the toolbar on tabbed view
+				event.target.id === 'tb_editbar_item_item_64') // checks if clicked on empty part of the toolbar on compact view
+				that.map.fire('editorgotfocus');
+		});
+
+		$('.main-nav').on('click', function (event) {
+			if (event.target.parentElement.nodeName === 'NAV' || // checks if clicked on an container of an element
+				event.target.nodeName === 'NAV' || // checks if clicked on navigation bar itself
+				event.target.parentElement.id === 'document-titlebar') { // checks if clicked on the document titlebar container
+				that.map.fire('editorgotfocus');}
+		});
 	},
 
 	// UI initialization
