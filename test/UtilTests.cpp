@@ -11,6 +11,8 @@
 
 #include <Util.hpp>
 
+#include <cppunit/extensions/HelperMacros.h>
+
 /// Util unit-tests.
 class UtilTests : public CPPUNIT_NS::TestFixture
 {
