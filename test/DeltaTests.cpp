@@ -13,6 +13,8 @@
 #include <Util.hpp>
 #include <Png.hpp>
 
+#include <cppunit/extensions/HelperMacros.h>
+
 /// Delta unit-tests.
 class DeltaTests : public CPPUNIT_NS::TestFixture
 {
