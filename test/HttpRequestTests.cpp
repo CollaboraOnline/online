@@ -35,6 +35,8 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
+#include <cppunit/extensions/HelperMacros.h>
+
 /// When enabled, in addition to the loopback
 /// server, an external server will be used
 /// to check for regressions.
