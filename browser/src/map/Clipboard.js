@@ -515,6 +515,9 @@ L.Clipboard = L.Class.extend({
 		if ($('.ui-edit').is(':focus'))
 			return true;
 
+		if ($('.ui-textarea').is(':focus'))
+			return true;
+
 		if ($('.w2ui-input').is(':focus'))
 			return true;
 
