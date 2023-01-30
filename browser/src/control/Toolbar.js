@@ -781,6 +781,9 @@ L.Map.include({
 						textBox.focus();
 					}
 				}, 0);
+			},
+			afterClose: function() {
+				map.focus();
 			}
 		});
 	},
