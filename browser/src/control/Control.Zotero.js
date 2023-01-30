@@ -1123,19 +1123,24 @@ L.Control.Zotero = L.Control.extend({
 			return;
 		}
 		if (data.id == 'ok') {
-			// set selected type or field as default
+			// set selected style, style format and field
 			if (!this.selected || this.selected.type === 'style') {
 				var citationFormat = this.selected ? this.selected.citationFormat : this.settings.citationFormat;
-				this.setFieldType(this.selectedFieldType, citationFormat);
+				this.closeZoteroDialog();
+				this.map.uiManager.showConfirmModal('zoterofieldtypewarn', _('Citation warning'),
+					_('Once citations are entered their storage and display type can not be changed.'),
+					 _('Confirm'), function() {
+						this.setFieldType(this.selectedFieldType, citationFormat);
+						var parameters = this.selected ? this.selected : {name: this.settings.style, type: 'style'};
+						this._onOk(parameters);
+						delete this.selectedFieldType;
+						this.dispatchPendingAction();
+					 }.bind(this));
+				return;
 			}
 
-			// style already specified just changing the language
-			if (!this.selected)
-				this._onOk({name: this.settings.style, type: 'style'});
-			else
-				this._onOk(this.selected);
-
-			delete this.selectedFieldType;
+			this._onOk(this.selected);
+			this.dispatchPendingAction();
 		}
 		if (element === 'pushbutton' && data.id === 'zoterorefresh') {
 			this._cachedURL = [];
@@ -1158,6 +1163,17 @@ L.Control.Zotero = L.Control.extend({
 			return;
 		}
 
+		this.closeZoteroDialog();
+	},
+
+	dispatchPendingAction: function() {
+		if (this.pendingAction) {
+			this.pendingAction();
+			delete this.pendingAction;
+		}
+	},
+
+	closeZoteroDialog: function() {
 		var closeEvent = {
 			data: {
 				action: 'close',
@@ -1169,10 +1185,6 @@ L.Control.Zotero = L.Control.extend({
 		// clear all previous selections
 		delete this.selectedCitationLangCode;
 		delete this.selected;
-		if (this.pendingAction) {
-			this.pendingAction();
-			delete this.pendingAction;
-		}
 	},
 
 	_onOk: function (selected) {
@@ -1331,7 +1343,7 @@ L.Control.Zotero = L.Control.extend({
 
 		var that = this;
 		var citationKeys = this.getCitationKeys();
-		var citationCluster = this.citationCluster;
+		var citationCluster = this.citationCluster ? this.citationCluster : [];
 
 		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery() + '&itemKey=' + citationKeys.join(','))
 			.then(function (data) {
