@@ -19,7 +19,7 @@
  * 'enabled' editable field can be temporarily disabled
  */
 
-/* global $ JSDialog UNOKey UNOModifier */
+/* global JSDialog UNOKey UNOModifier */
 
 function _multiLineEditControl(parentContainer, data, builder, callback) {
 	var controlType = 'textarea';
@@ -39,7 +39,7 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 	edit.id = data.id;
 
 	if (data.enabled === 'false' || data.enabled === false)
-		$(edit).prop('disabled', true);
+		edit.disabled = true;
 
 	// todo: change -> keyup to provide real-time updates
 	edit.addEventListener('change', function() {
@@ -217,7 +217,7 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 	}
 
 	if (data.hidden)
-		$(edit).hide();
+		L.DomUtil.addClass(edit, 'hidden');
 
 	return false;
 }
