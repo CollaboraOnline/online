@@ -21,6 +21,43 @@
 
 /* global JSDialog UNOKey UNOModifier */
 
+function _sendSelection(edit, builder) {
+	var currentText = edit.value;
+	var startPos = edit.selectionStart;
+	var endPos = edit.selectionEnd;
+	var startPara = 0;
+	var endPara = 0;
+
+	if (currentText.indexOf('\n') >= 0) {
+		var currentPos = 0;
+		var found = currentText.indexOf('\n', currentPos);
+		while (startPos > found) {
+			if (found === -1)
+				break;
+			currentPos = found + 1;
+			startPara++;
+			found = currentText.indexOf('\n', currentPos);
+		}
+
+		startPos -= currentPos;
+
+		currentPos = 0;
+		found = currentText.indexOf('\n', currentPos);
+		while (endPos > found) {
+			if (found === -1)
+				break;
+			currentPos = found + 1;
+			endPara++;
+			found = currentText.indexOf('\n', currentPos);
+		}
+
+		endPos -= currentPos;
+	}
+
+	var selection = startPos + ';' + endPos + ';' + startPara + ';' + endPara;
+	builder.callback('edit', 'textselection', edit, selection, builder);
+}
+
 function _multiLineEditControl(parentContainer, data, builder, callback) {
 	var controlType = 'textarea';
 	if (data.cursor && (data.cursor === 'false' || data.cursor === false))
@@ -78,11 +115,9 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 				builder.callback('edit', 'keypress', edit, UNOKey.RIGHT | modifier, builder);
 				event.preventDefault();
 			} else if (event.key === 'Up' || event.key === 'ArrowUp') {
-				builder.callback('edit', 'keypress', edit, UNOKey.UP | modifier, builder);
-				event.preventDefault();
+				setTimeout(function () { _sendSelection(edit, builder); }, 0);
 			} else if (event.key === 'Down' || event.key === 'ArrowDown') {
-				builder.callback('edit', 'keypress', edit, UNOKey.DOWN | modifier, builder);
-				event.preventDefault();
+				setTimeout(function () { _sendSelection(edit, builder); }, 0);
 			} else if (event.key === 'Home') {
 				builder.callback('edit', 'keypress', edit, UNOKey.HOME | modifier, builder);
 				event.preventDefault();
@@ -177,41 +212,7 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 
 			builder.callback('edit', 'grab_focus', edit, null, builder);
 
-			var currentText = event.target.value;
-
-			var startPos = event.target.selectionStart;
-			var endPos = event.target.selectionEnd;
-			var startPara = 0;
-			var endPara = 0;
-
-			if (currentText.indexOf('\n') >= 0) {
-				var currentPos = 0;
-				var found = currentText.indexOf('\n', currentPos);
-				while (startPos > found) {
-					if (found === -1)
-						break;
-					currentPos = found + 1;
-					startPara++;
-					found = currentText.indexOf('\n', currentPos);
-				}
-
-				startPos -= currentPos;
-
-				currentPos = 0;
-				found = currentText.indexOf('\n', currentPos);
-				while (endPos > found) {
-					if (found === -1)
-						break;
-					currentPos = found + 1;
-					endPara++;
-					found = currentText.indexOf('\n', currentPos);
-				}
-
-				endPos -= currentPos;
-			}
-
-			var selection = startPos + ';' + endPos + ';' + startPara + ';' + endPara;
-			builder.callback('edit', 'textselection', edit, selection, builder);
+			_sendSelection(event.target, builder);
 			event.preventDefault();
 		});
 	}
