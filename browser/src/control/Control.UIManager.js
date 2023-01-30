@@ -944,6 +944,60 @@ L.Control.UIManager = L.Control.extend({
 		]);
 	},
 
+	/// shows simple confirm modal (message + (cancel + ok) button)
+	/// id - id of a dialog
+	/// title - title of a dialog
+	/// message - message
+	/// buttonText - text inside OK button
+	/// callback - callback on button press
+	showConfirmModal: function(id, title, message, buttonText, callback) {
+		var dialogId = 'modal-dialog-' + id;
+		var json = this._modalDialogJSON(id, title, !window.mode.isDesktop(), [
+			{
+				id: 'info-modal-label1',
+				type: 'fixedtext',
+				text: message
+			},
+			{
+				id: '',
+				type: 'buttonbox',
+				text: '',
+				enabled: true,
+				children: [
+					{
+						id: 'response-cancel',
+						type: 'pushbutton',
+						text: _('Cancel'),
+					},
+					{
+						id: 'response-ok',
+						type: 'pushbutton',
+						text: buttonText,
+						'has_default': true,
+					}
+				],
+				vertical: false,
+				layoutstyle: 'end'
+			},
+		]);
+
+		var closeFunc = function() {
+			var closeMessage = { id: dialogId, jsontype: 'dialog', type: 'modalpopup', action: 'close' };
+			app.socket._onMessage({ textMsg: 'jsdialog: ' + JSON.stringify(closeMessage) });
+		};
+
+		this.showModal(json, [
+			{id: 'response-ok', func: function() {
+				if (typeof callback === 'function') {
+					callback();
+				}
+				closeFunc();
+			}},
+			{id: 'response-cancel', func: function() { closeFunc(); }},
+			{id: '__POPOVER__', func: function() { closeFunc(); }}
+		]);
+	},
+
 	// Helper functions
 
 	moveObjectVertically: function(obj, diff) {
