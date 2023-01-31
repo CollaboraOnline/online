@@ -247,6 +247,23 @@ export class ColumnHeader extends Header {
 		this._mouseOverEntry = null;
 	}
 
+	onMouseUp(): void {
+		super.onMouseUp();
+
+		if (!(this.containerObject.isDraggingSomething() && this._dragEntry)) {
+			const entry = this._mouseOverEntry;
+			let modifier = 0;
+
+			if (this._startSelectionEntry && this._startSelectionEntry.index !== entry.index) {
+				this._selectColumn(this._startSelectionEntry.index, modifier);
+				modifier += UNOModifier.SHIFT;
+				this._selectColumn(entry.index, modifier);
+			}
+
+			this._startSelectionEntry = null;
+		}
+	}
+
 	setOptimalWidthAuto(): void {
 		if (this._mouseOverEntry) {
 			const column = this._mouseOverEntry.index;
