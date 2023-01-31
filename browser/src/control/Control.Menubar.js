@@ -273,13 +273,13 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertBookmark'},
 				{uno: '.uno:InsertReferenceField'},
 				{type: 'separator'},
-				{name: _('Add/Edit Citation'), id: 'zoteroAddEditCitation', type: 'action'},
+				{name: _('Add Citation'), id: 'zoteroAddEditCitation', type: 'action'},
 				{name: _('Add Citation Note'), id: 'zoteroaddnote', type: 'action'},
-				{name: _('Add/Edit Bibliography'), id: 'zoteroaddbibliography', type: 'action'},
+				{name: _('Add Bibliography'), id: 'zoteroaddbibliography', type: 'action'},
 				{type: 'separator'},
 				{name: _('Refresh Citations'), id: 'zoterorefresh', type: 'action'},
 				{name: _('Unlink Citations'), id: 'zoterounlink', type: 'action'},
-				{name: _('Citations Preferences'), id: 'zoterosetdocprefs', type: 'action', iosapp: false}]
+				{name: _('Citation Preferences'), id: 'zoterosetdocprefs', type: 'action', iosapp: false}]
 			},
 			{name: _UNO('.uno:TableMenu', 'text'), type: 'menu', id: 'table', menu: [
 				{uno: '.uno:InsertTable'},
