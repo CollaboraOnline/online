@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-20 11:33+0100\n"
-"PO-Revision-Date: 2023-01-22 13:13+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2023-01-26 16:55+0000\n"
+"Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15.1\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1483,7 +1483,7 @@ msgstr "Sind Sie sicher, dass Sie Tabelle %sheet% löschen möchten?"
 
 #: src/control/Control.Tabs.js:320
 msgid "Rename sheet"
-msgstr ""
+msgstr "Tabelle umbenennen"
 
 #: src/control/Control.Tabs.js:320
 msgid "Enter new sheet name"
@@ -1558,35 +1558,35 @@ msgstr "Aktuell"
 
 #: src/control/Control.Zotero.js:90
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "Der Zotero API Schlüssel ist nicht konfiguriert"
 
 #: src/control/Control.Zotero.js:113
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Der Zotero API Schlüssel ist nicht korrekt"
 
 #: src/control/Control.Zotero.js:165 src/core/Socket.js:1140
 msgid "Loading..."
-msgstr "Lade …"
+msgstr "Lade…"
 
 #: src/control/Control.Zotero.js:183
 msgid "Language:"
-msgstr ""
+msgstr "Sprache:"
 
 #: src/control/Control.Zotero.js:198
 msgid "Store as:"
-msgstr ""
+msgstr "Speichern als:"
 
 #: src/control/Control.Zotero.js:204
 msgid "Fields"
-msgstr ""
+msgstr "Felder"
 
 #: src/control/Control.Zotero.js:205
 msgid "Bookmarks"
-msgstr ""
+msgstr "Lesezeichen"
 
 #: src/control/Control.Zotero.js:362
 msgid "My Publications"
-msgstr ""
+msgstr "Meine Veröffentlichungen"
 
 #: src/control/Control.Zotero.js:368 src/control/Control.Zotero.js:593
 msgid "My Library"
@@ -1594,32 +1594,31 @@ msgstr "Meine Bibliothek"
 
 #: src/control/Control.Zotero.js:369
 msgid "Group Libraries"
-msgstr ""
+msgstr "Gruppenbibliotheken"
 
 #: src/control/Control.Zotero.js:609
 msgid "Failed to load groups"
-msgstr ""
+msgstr "Laden der Gruppen gescheitert"
 
 #: src/control/Control.Zotero.js:627 src/control/Control.Zotero.js:904
 msgid "Failed to load collections"
-msgstr ""
+msgstr "Laden der Sammlungen gescheitert"
 
 #: src/control/Control.Zotero.js:641
 msgid "Citation Style"
 msgstr "Zitierweise"
 
 #: src/control/Control.Zotero.js:646
-#, fuzzy
 msgid "Styles"
-msgstr "Aussehen"
+msgstr "Stile"
 
 #: src/control/Control.Zotero.js:646
 msgid "An error occurred while fetching style list"
-msgstr "Fehler beim Abrufen der Stilliste"
+msgstr "Fehler beim Abrufen der Stil-Liste"
 
 #: src/control/Control.Zotero.js:653
 msgid "Failed to load styles"
-msgstr ""
+msgstr "Laden der Stile gescheitert"
 
 #: src/control/Control.Zotero.js:932 src/control/Control.Zotero.js:1335
 msgid "Title"
@@ -1627,7 +1626,7 @@ msgstr "Titel"
 
 #: src/control/Control.Zotero.js:932 src/control/Control.Zotero.js:1335
 msgid "Creator(s)"
-msgstr ""
+msgstr "Ersteller"
 
 #: src/control/Control.Zotero.js:932 src/control/Control.Zotero.js:1335
 msgid "Your library is empty"
@@ -1635,7 +1634,7 @@ msgstr "Ihre Bibliothek ist leer"
 
 #: src/control/Control.Zotero.js:944
 msgid "Failed to load items"
-msgstr ""
+msgstr "Laden der Elemente gescheitert"
 
 #: src/control/Control.Zotero.js:1088
 msgid "Add Note"
@@ -1643,34 +1642,35 @@ msgstr "Anmerkung hinzufügen"
 
 #: src/control/Control.Zotero.js:1091
 msgid "Notes"
-msgstr ""
+msgstr "Anmerkungen"
 
 #: src/control/Control.Zotero.js:1091
-#, fuzzy
 msgid "An error occurred while fetching notes"
-msgstr "Fehler beim Abrufen der Stilliste"
+msgstr "Fehler beim Abrufen der Stil-Liste"
 
 #: src/control/Control.Zotero.js:1210
 msgid "Updated citations"
-msgstr ""
+msgstr "Zitate aktualisiert"
 
 #: src/control/Control.Zotero.js:1212
 msgid "Citations update failed"
-msgstr ""
+msgstr "Aktualisierung der Zitate gescheitert"
 
 #: src/control/Control.Zotero.js:1216
 msgid "Updating citations"
-msgstr ""
+msgstr "Aktualisiere Zitate"
 
 #: src/control/Control.Zotero.js:1263
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Das Aufheben der Verknüpfung von Zitaten führt dazu, dass Collabora Online "
+"die Zitate und die Bibliographie in diesem Dokument nicht aktualisieren kann."
 
 #: src/control/Control.Zotero.js:1264
 msgid "Confirm"
-msgstr ""
+msgstr "Bestätigen"
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
@@ -2026,9 +2026,8 @@ msgstr ""
 "Sie haben ein falsches Kennwort eingegeben. Bitte versuchen Sie es erneut."
 
 #: src/core/Socket.js:1090 src/core/Socket.js:1095
-#, fuzzy
 msgid "Missing Fonts"
-msgstr "Fehlende Schriftarten:"
+msgstr "Fehlende Schriftarten"
 
 #: src/core/Socket.js:1129
 msgid "Someone"
@@ -2037,6 +2036,8 @@ msgstr "Jemand"
 #: src/core/Socket.js:1131
 msgid "%userName saved this document as %fileName. Do you want to join?"
 msgstr ""
+"%userName hat dieses Dokument unter %fileName gespeichert. Möchten Sie "
+"beitreten?"
 
 #: src/core/Socket.js:1140
 msgid "Connecting..."
