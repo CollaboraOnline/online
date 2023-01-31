@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-20 11:33+0200\n"
-"PO-Revision-Date: 2023-01-22 13:13+0000\n"
+"PO-Revision-Date: 2023-01-26 16:55+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "help/pl/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.15.1\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1364,7 +1364,7 @@ msgstr "Zablokuj pozycję z listy (element listy musi zostać zaznaczony)"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:252-92
 #: html/cool-help.html%2Bdiv.div.table.tr.td:286-99
 msgid "Tab"
-msgstr "Tab"
+msgstr "Tabulator"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:196-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:253-18
