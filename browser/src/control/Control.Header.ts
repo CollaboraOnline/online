@@ -33,6 +33,7 @@ export class Header extends CanvasSectionObject {
 	_headerInfo: HeaderInfo;
 	_dragEntry: HeaderEntryData;
 	_mouseOverEntry: HeaderEntryData;
+	_startSelectionEntry: HeaderEntryData;
 	_hitResizeArea: boolean;
 	_menuItem: any;
 	_dragDistance: number[];
@@ -490,9 +491,12 @@ export class Header extends CanvasSectionObject {
 	}
 
 	onMouseMove (point: number[], dragDistance?: number[]): void {
+		const result = this._entryAtPoint(point); // Data related to current entry that the mouse is over now.
+		if (result) // Is mouse over an entry.
+			this._mouseOverEntry = result.entry;
+
 		if (!this.containerObject.isDraggingSomething()) { // If we are not dragging anything.
 			this._dragDistance = null;
-			const result = this._entryAtPoint(point); // Data related to current entry that the mouse is over now.
 
 			// If mouse was over another entry previously, we draw that again (without mouse-over effect).
 			if (this._mouseOverEntry && (!result || result.entry.index !== this._mouseOverEntry.index)) {
@@ -504,7 +508,6 @@ export class Header extends CanvasSectionObject {
 			let isMouseOverResizeArea = false;
 
 			if (result) { // Is mouse over an entry.
-				this._mouseOverEntry = result.entry;
 				this._mouseOverEntry.isOver = true;
 				this._lastMouseOverIndex = this._mouseOverEntry.index; // used by context menu
 				this.containerObject.setPenPosition(this);
@@ -559,6 +562,8 @@ export class Header extends CanvasSectionObject {
 		else {
 			this._dragEntry = null;
 		}
+
+		this._startSelectionEntry = this._mouseOverEntry;
 	}
 
 	onMouseUp(): void {
