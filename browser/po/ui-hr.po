@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-20 11:33+0100\n"
-"PO-Revision-Date: 2022-12-14 20:00+0000\n"
+"PO-Revision-Date: 2023-01-26 16:55+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
-"Language: \n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -745,45 +745,44 @@ msgid "Text orientation"
 msgstr "Smjer teksta"
 
 #: src/control/Control.Menubar.js:264
-#, fuzzy
 msgid "References"
-msgstr "Re~ference"
+msgstr "Reference"
 
 #: src/control/Control.Menubar.js:267
 #: src/control/Control.NotebookbarWriter.js:1401
 msgid "Update Index"
-msgstr ""
+msgstr "Aktualiziraj indeks"
 
 #: src/control/Control.Menubar.js:276
 #: src/control/Control.NotebookbarWriter.js:1484
 msgid "Add Citation"
-msgstr ""
+msgstr "Dodaj citat"
 
 #: src/control/Control.Menubar.js:277
 #: src/control/Control.NotebookbarWriter.js:1495
 msgid "Add Citation Note"
-msgstr ""
+msgstr "Dodaj napomenu uz citat"
 
 #: src/control/Control.Menubar.js:278
 #: src/control/Control.NotebookbarWriter.js:1472
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Dodaj bibliografiju"
 
 #: src/control/Control.Menubar.js:280
 #: src/control/Control.NotebookbarWriter.js:1512
 msgid "Refresh Citations"
-msgstr ""
+msgstr "Aktualiziraj citate"
 
 #: src/control/Control.Menubar.js:281
 #: src/control/Control.NotebookbarWriter.js:1523
 #: src/control/Control.Zotero.js:1262
 msgid "Unlink Citations"
-msgstr ""
+msgstr "Odspoji citate"
 
 #: src/control/Control.Menubar.js:282
 #: src/control/Control.NotebookbarWriter.js:1534
 msgid "Citation Preferences"
-msgstr ""
+msgstr "Postavke za citate"
 
 #: src/control/Control.Menubar.js:310 src/control/Control.Menubar.js:1120
 msgid "Insert Rich Text"
@@ -1480,7 +1479,7 @@ msgstr "Stvarno želiš ukloniti list %sheet%?"
 
 #: src/control/Control.Tabs.js:320
 msgid "Rename sheet"
-msgstr ""
+msgstr "Preimenuj list"
 
 #: src/control/Control.Tabs.js:320
 msgid "Enter new sheet name"
@@ -1556,11 +1555,11 @@ msgstr "Trenutačno"
 
 #: src/control/Control.Zotero.js:90
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "Zotero API ključ nije konfiguriran"
 
 #: src/control/Control.Zotero.js:113
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Zotero API ključ je neispravan"
 
 #: src/control/Control.Zotero.js:165 src/core/Socket.js:1140
 msgid "Loading..."
@@ -1568,23 +1567,23 @@ msgstr "Učitavanje …"
 
 #: src/control/Control.Zotero.js:183
 msgid "Language:"
-msgstr ""
+msgstr "Jezik:"
 
 #: src/control/Control.Zotero.js:198
 msgid "Store as:"
-msgstr ""
+msgstr "Spremi kao:"
 
 #: src/control/Control.Zotero.js:204
 msgid "Fields"
-msgstr ""
+msgstr "Polja"
 
 #: src/control/Control.Zotero.js:205
 msgid "Bookmarks"
-msgstr ""
+msgstr "Straničnici"
 
 #: src/control/Control.Zotero.js:362
 msgid "My Publications"
-msgstr ""
+msgstr "Moje publikacije"
 
 #: src/control/Control.Zotero.js:368 src/control/Control.Zotero.js:593
 msgid "My Library"
@@ -1592,24 +1591,23 @@ msgstr "Moja biblioteka"
 
 #: src/control/Control.Zotero.js:369
 msgid "Group Libraries"
-msgstr ""
+msgstr "Biblioteke grupe"
 
 #: src/control/Control.Zotero.js:609
 msgid "Failed to load groups"
-msgstr ""
+msgstr "Neuspjelo učitavanje grupa"
 
 #: src/control/Control.Zotero.js:627 src/control/Control.Zotero.js:904
 msgid "Failed to load collections"
-msgstr ""
+msgstr "Neuspjelo učitavanje zbirki"
 
 #: src/control/Control.Zotero.js:641
 msgid "Citation Style"
 msgstr "Stil citata"
 
 #: src/control/Control.Zotero.js:646
-#, fuzzy
 msgid "Styles"
-msgstr "Stil"
+msgstr "Stilovi"
 
 #: src/control/Control.Zotero.js:646
 msgid "An error occurred while fetching style list"
@@ -1617,7 +1615,7 @@ msgstr "Dogodila se greška pri dohvaćanju popisa stilova"
 
 #: src/control/Control.Zotero.js:653
 msgid "Failed to load styles"
-msgstr ""
+msgstr "Neuspjelo učitavanje stilova"
 
 #: src/control/Control.Zotero.js:932 src/control/Control.Zotero.js:1335
 msgid "Title"
@@ -1625,7 +1623,7 @@ msgstr "Naslov"
 
 #: src/control/Control.Zotero.js:932 src/control/Control.Zotero.js:1335
 msgid "Creator(s)"
-msgstr ""
+msgstr "Stvaratelji"
 
 #: src/control/Control.Zotero.js:932 src/control/Control.Zotero.js:1335
 msgid "Your library is empty"
@@ -1633,42 +1631,43 @@ msgstr "Tvoja biblioteka je prazna"
 
 #: src/control/Control.Zotero.js:944
 msgid "Failed to load items"
-msgstr ""
+msgstr "Neuspjelo učitavanje stavki"
 
 #: src/control/Control.Zotero.js:1088
 msgid "Add Note"
-msgstr ""
+msgstr "Dodaj napomenu"
 
 #: src/control/Control.Zotero.js:1091
 msgid "Notes"
-msgstr ""
+msgstr "Napomene"
 
 #: src/control/Control.Zotero.js:1091
-#, fuzzy
 msgid "An error occurred while fetching notes"
-msgstr "Dogodila se greška pri dohvaćanju popisa stilova"
+msgstr "Dogodila se greška pri dohvaćanju napomena"
 
 #: src/control/Control.Zotero.js:1210
 msgid "Updated citations"
-msgstr ""
+msgstr "Citati su aktualizirani"
 
 #: src/control/Control.Zotero.js:1212
 msgid "Citations update failed"
-msgstr ""
+msgstr "Neuspjelo aktualiziranje citata"
 
 #: src/control/Control.Zotero.js:1216
 msgid "Updating citations"
-msgstr ""
+msgstr "Aktualiziranje citata"
 
 #: src/control/Control.Zotero.js:1263
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Uklanjanje poveznica citata spriječit će Collabora Online aktualizirati "
+"citate i bibliografiju u ovom dokumentu."
 
 #: src/control/Control.Zotero.js:1264
 msgid "Confirm"
-msgstr ""
+msgstr "Potvrdi"
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
@@ -2019,9 +2018,8 @@ msgid "Wrong password provided. Please try again."
 msgstr "Navedena je netočna lozinka. Pokušaj ponovo."
 
 #: src/core/Socket.js:1090 src/core/Socket.js:1095
-#, fuzzy
 msgid "Missing Fonts"
-msgstr "Nedostajući fontovi:"
+msgstr "Nedostajući fontovi"
 
 #: src/core/Socket.js:1129
 msgid "Someone"
@@ -2030,6 +2028,7 @@ msgstr "Netko"
 #: src/core/Socket.js:1131
 msgid "%userName saved this document as %fileName. Do you want to join?"
 msgstr ""
+"%userName je spremio/la ovaj dokument kao %fileName. Želiš li se pridružiti?"
 
 #: src/core/Socket.js:1140
 msgid "Connecting..."
