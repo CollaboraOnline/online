@@ -650,13 +650,14 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	fillStyles: function (styles) {
+		var styleToSelect = this.settings.style;
 		if (this.settings.style === '' && window.isLocalStorageAllowed)
-			this.settings.style = localStorage.getItem('Zotero_LastUsedStyle');
+			styleToSelect = localStorage.getItem('Zotero_LastUsedStyle');
 
 		for (var iterator = 0; iterator < styles.length; ++iterator) {
 			this.createEntry(iterator, [styles[iterator].title],
 				Object.assign({name: styles[iterator].name, type: 'style'},
-					this.settings.style === styles[iterator].name ? {selected: true} : null));
+					styleToSelect === styles[iterator].name ? {selected: true} : null));
 		}
 	},
 
@@ -750,8 +751,9 @@ L.Control.Zotero = L.Control.extend({
 
 				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
-				if (that.settings.style && that.settings.style !== '')
-					that.checkStyleTypeAndEnableOK(that.settings);
+				var styleToBeSelected = (that.settings.style && that.settings.style !== '') ? that.settings : {name: localStorage.getItem('Zotero_LastUsedStyle')};
+				if (styleToBeSelected !== '')
+					that.checkStyleTypeAndEnableOK(styleToBeSelected);
 			}, function () {
 				that.map.uiManager.showSnackbar(_('Failed to load styles'));
 			});
@@ -818,6 +820,10 @@ L.Control.Zotero = L.Control.extend({
 
 	checkStyleTypeAndEnableOK: function(selectedStyle) {
 		var style = selectedStyle.name ? selectedStyle.name : selectedStyle.style;
+
+		if (!style)
+			return;
+
 		var that = this;
 		fetch('https://www.zotero.org/styles/' + style)
 			.then(function (response) { return response.text(); })
@@ -1126,14 +1132,14 @@ L.Control.Zotero = L.Control.extend({
 			// set selected style, style format and field
 			if (!this.selected || this.selected.type === 'style') {
 				var citationFormat = this.selected ? this.selected.citationFormat : this.settings.citationFormat;
+				var parameters = this.selected ? this.selected : {name: localStorage.getItem('Zotero_LastUsedStyle'), type: 'style'};
+				var selectedFieldType = this.selectedFieldType;
 				this.closeZoteroDialog();
 				this.map.uiManager.showConfirmModal('zoterofieldtypewarn', _('Citation warning'),
 					_('Once citations are entered their storage and display type can not be changed.'),
 					 _('Confirm'), function() {
-						this.setFieldType(this.selectedFieldType, citationFormat);
-						var parameters = this.selected ? this.selected : {name: this.settings.style, type: 'style'};
+						this.setFieldType(selectedFieldType, citationFormat);
 						this._onOk(parameters);
-						delete this.selectedFieldType;
 						this.dispatchPendingAction();
 					 }.bind(this));
 				return;
@@ -1185,6 +1191,7 @@ L.Control.Zotero = L.Control.extend({
 		// clear all previous selections
 		delete this.selectedCitationLangCode;
 		delete this.selected;
+		delete this.selectedFieldType;
 	},
 
 	_onOk: function (selected) {
