@@ -12,64 +12,76 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'text': _('~File'),
 				'id': '-1',
 				'name': 'File',
+				'shortcut': 'f'
 			},
 			{
 				'text': _('~Home'),
 				'id': this.HOME_TAB_ID,
 				'name': 'Home',
-				'context': 'default|Text|DrawText'
+				'context': 'default|Text|DrawText',
+				'shortcut': 'h'
 			},
 			{
 				'text': _('~Insert'),
 				'id': '-4',
-				'name': 'Insert'
+				'name': 'Insert',
+				'shortcut': 'i'
 			},
 			{
 				'text': _('~Layout'),
 				'id': '-5',
-				'name': 'Layout'
+				'name': 'Layout',
+				'shortcut': 'l'
 			},
 			{
 				'text': _('Reference~s'),
 				'id': '-6',
-				'name': 'References'
+				'name': 'References',
+				'shortcut': 'r'
 			},
 			{
 				'text': _('~Review'),
 				'id': '-7',
-				'name': 'Review'
+				'name': 'Review',
+				'shortcut': 'w'
 			},
 			{
 				'text': _('Format'),
 				'id': '-3',
 				'name': 'Format',
+				'shortcut': 'o'
 			},
 			{
 				'text': _('Form'),
 				'id': 'Form',
 				'name': 'Form',
+				'shortcut': 'm'
 			},
 			{
 				'text': _('~Table'),
 				'id': '-8',
 				'name': 'Table',
+				'shortcut': '',
 				'context': 'Table'
 			},
 			{
 				'text': _('~Draw'),
 				'id': '-9',
 				'name': 'Draw',
+				'shortcut': '',
 				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork'
 			},
 			{
 				'text': _('~View'),
 				'id': 'View',
 				'name': 'View',
+				'shortcut': 'v'
 			},
 			{
 				'text': _('~Help'),
 				'id': '-2',
 				'name': 'Help',
+				'shortcut': 'e'
 			}
 		];
 	},

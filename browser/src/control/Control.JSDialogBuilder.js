@@ -1062,7 +1062,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var tab = L.DomUtil.create('div', 'ui-tab ' + builder.options.cssClass, tabsContainer);
 				tab.id = item.name + '-tab-label';
 				tab.number = item.id - 1;
-
+				console.debug(item.shortcut + ' ' + item.text);
+				$(tab).attr('accesskey', item.shortcut);
 				var isSelectedTab = data.selected == item.id;
 				if (isSelectedTab) {
 					$(tab).addClass('selected');
@@ -1085,7 +1086,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				tabIds[tabIdx] = item.name;
 
 				var label = L.DomUtil.create('span', 'ui-tab-content ' + builder.options.cssClass + ' unolabel', tab);
-				label.textContent = title;
+
+				var iTxt = item.text;
+				console.debug(iTxt);
+				var accessKey = iTxt.substring(iTxt.indexOf('~'), iTxt.indexOf('~') + 2);
+				title = iTxt.replace(accessKey, '<mark>' + accessKey.replace('~', '')  + '</mark>');
+				console.debug(title);
+				label.innerHTML = title;
 
 				var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
 				contentDiv.id = item.name;

@@ -865,8 +865,12 @@ L.TextInput = L.Layer.extend({
 	},
 
 	_onKeyDown: function(ev) {
+		console.debug(ev.key);
 		if (this._map.uiManager.isUIBlocked())
 			return;
+
+		if (ev.key === 'Alt')
+			this._map.uiManager.toggleAccessKeys();
 
 		if (ev.keyCode === 8)
 			this._deleteHint = 'backspace';
@@ -906,6 +910,9 @@ L.TextInput = L.Layer.extend({
 	_onKeyUp: function(ev) {
 		if (this._map.uiManager.isUIBlocked())
 			return;
+
+		if (this._map.uiManager.hasAccessKeysTooltip())
+			this._map.uiManager.toggleAccessKeys();
 
 		app.idleHandler.notifyActive();
 		if (!this._isComposing && (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
