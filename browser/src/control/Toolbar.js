@@ -742,6 +742,9 @@ L.Map.include({
 			],
 			callback: function(data) {
 				if (data && data.link != '') {
+					if (typeof data.text === 'undefined') {
+						data.text = data.link;
+					}
 					var command = {
 						'Hyperlink.Text': {
 							type: 'string',
