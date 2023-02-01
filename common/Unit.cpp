@@ -117,6 +117,9 @@ UnitBase** UnitBase::linkAndCreateUnit(UnitType type, const std::string& unitLib
         return new UnitBase* [2] { hooks, nullptr };
 
     LOG_ERR("No wsd unit-tests found in " << unitLibPath);
+#else
+    (void) type;
+    (void) unitLibPath;
 #endif
 
     return nullptr;

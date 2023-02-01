@@ -68,6 +68,7 @@ int Socket::createSocket(Socket::Type type)
 
     return socket(domain, SOCK_STREAM | SOCK_NONBLOCK, 0);
 #else
+    (void) type;
     return fakeSocketSocket();
 #endif
 }
@@ -801,6 +802,9 @@ bool ServerSocket::bind(Type type, int port)
 
     return rc == 0;
 #else
+    (void) type;
+    (void) port;
+
     return true;
 #endif
 }
