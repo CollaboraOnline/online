@@ -436,8 +436,10 @@ L.Map.WOPI = L.Handler.extend({
 					var format = undefined;
 					if (dotPos > 0)
 						format = msg.Values.Filename.substr(dotPos + 1);
-					else
-						console.warn('Action_SaveAs: no format specified');
+					else {
+						this._map.uiManager.showInfoModal('error', _('Error'), _('File name should contain an extension.'), '', _('OK'));
+						return;
+					}
 
 					var isExport = format === 'pdf' || format === 'epub';
 					if (isExport) {
