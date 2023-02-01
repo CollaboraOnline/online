@@ -159,19 +159,30 @@ L.Map.include({
 	_extractCommand: function(item) {
 		if (!item)
 			return '';
-		if (item.command) // in notebookbar uno commands are stored as command
-			return [item.command];
-		else if (item.uno) { // in classic mode uno commands are stored as uno in menus
-			if (typeof item.uno === 'string')
-				return [item.uno];
-			return [item.uno.textCommand , item.uno.objectCommand]; // some unos have multiple commands
+
+		var commandArray = [];
+		if (item.lockUno || item.uno) { // in classic mode uno commands are stored as uno in menus
+			var uno = item.lockUno ? item.lockUno : item.uno;
+			if (typeof uno === 'string')
+				commandArray.push(uno);
+			else { // some unos have multiple commands
+				commandArray.push(uno.textCommand);
+				commandArray.push(uno.objectCommand);
+				if (item.unosheet)
+					commandArray.push(item.unosheet);
+			}
 		}
+		else if (item.command) // in notebookbar uno commands are stored as command
+			commandArray.push(item.command);
 		else if (item.id)
-			return [item.id];
-		else if (item.unosheet)
-			return [item.unosheet];
+			commandArray.push(item.id);
 		else if (typeof item === 'string')
-			return [item];
-		return '';
+			commandArray.push(item);
+
+		for (var command in commandArray) {
+			if (!commandArray[command].startsWith('.uno:'))
+				commandArray[command] = '.uno:' + commandArray[command];
+		}
+		return commandArray;
 	}
 });
