@@ -507,12 +507,14 @@ namespace FileUtil
 #endif
 
         // we should be able to run just OK with 5GB for production or 1GB for development
+#if defined(__linux__) || defined(__FreeBSD__) || defined(IOS)
 #if ENABLE_DEBUG
         constexpr int64_t gb(1);
 #else
         constexpr int64_t gb(5);
 #endif
         constexpr int64_t ENOUGH_SPACE = gb*1024*1024*1024;
+#endif
 
 #if defined(__linux__) || defined(__FreeBSD__)
         struct statfs sfs;
