@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.2
+# syntax=docker/dockerfile:1.4
 
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -25,13 +25,13 @@ ARG type
 ENV LC_CTYPE C.UTF-8
 
 # Setup scripts for Collabora Online
-ADD /scripts/install-collabora-online-ubuntu.sh /
+COPY /scripts/install-collabora-online-ubuntu.sh /
 RUN --mount=type=secret,id=secret_key bash install-collabora-online-ubuntu.sh
 RUN rm -rf /install-collabora-online-ubuntu.sh
 
 # Start script for Collabora Online
-ADD /scripts/start-collabora-online.sh /
-ADD /scripts/start-collabora-online.pl /
+COPY /scripts/start-collabora-online.sh /
+COPY /scripts/start-collabora-online.pl /
 
 EXPOSE 9980
 
