@@ -742,7 +742,7 @@ L.Map.include({
 			overlayClosesOnClick: false,
 			input: [
 				_('Text') + '<textarea name="text" id="hyperlink-text-box" style="resize: none" type="text"></textarea>',
-				_('Link') + '<input name="link" id="hyperlink-link-box" type="text" value="' + link + '"/>'
+				_('Link') + '<input name="link" id="hyperlink-link-box" type="text" value="' + link + '" required/>'
 			].join(''),
 			buttons: [
 				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
@@ -750,6 +750,9 @@ L.Map.include({
 			],
 			callback: function(data) {
 				if (data && data.link != '') {
+					if (typeof data.text === 'undefined') {
+						data.text = data.link;
+					}
 					var command = {
 						'Hyperlink.Text': {
 							type: 'string',
