@@ -48,6 +48,7 @@ L.Clipboard = L.Class.extend({
 		document.onbeforecut = beforeSelect;
 		document.onbeforecopy = beforeSelect;
 		document.onbeforepaste = beforeSelect;
+		document.onselectionchange = function() { return that.selectionchange(); };
 	},
 
 	// We can do a much better job when we fetch text/plain too.
@@ -755,6 +756,11 @@ L.Clipboard = L.Class.extend({
 				this._stopHideDownload();
 		}
 		return false;
+	},
+
+	// Listens all type selection changes from out of the map eg:formulabar
+	selectionchange: function() {
+		this.setTextSelectionText(document.getSelection());
 	},
 
 	clearSelection: function() {
