@@ -216,6 +216,11 @@ std::string ClientSession::createPublicURI(const std::string& subPath, const std
         "&ViewId=" + std::to_string(getKitViewId()) +
         "&Tag=" + tag);
 
+#if !MOBILEAPP
+    if (!COOLWSD::RouteToken.empty())
+        meta += "&RouteToken=" + COOLWSD::RouteToken;
+#endif
+
     if (!encode)
         return meta;
 
@@ -681,9 +686,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             }
 
             constexpr bool isAutosave = false;
-            constexpr bool isExitSave = false;
             docBroker->sendUnoSave(client_from_this(), dontTerminateEdit != 0,
-                                   dontSaveIfUnmodified != 0, isAutosave, isExitSave, extendedData);
+                                   dontSaveIfUnmodified != 0, isAutosave, extendedData);
         }
     }
     else if (tokens.equals(0, "savetostorage"))
@@ -1128,6 +1132,11 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         if (!getDeviceFormFactor().empty())
         {
             oss << " deviceFormFactor=" << getDeviceFormFactor();
+        }
+
+        if (!getTimezone().empty())
+        {
+            oss << " timezone=" << getTimezone();
         }
 
         if (!getSpellOnline().empty())

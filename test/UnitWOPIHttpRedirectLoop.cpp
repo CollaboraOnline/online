@@ -44,12 +44,12 @@ public:
         std::string redirectUri = "/wopi/files/";
         static unsigned redirectionCount = 0;
 
-        LOG_INF("Fake wopi host request URI [" << uriReq.toString() << "]:\n");
+        LOG_INF("FakeWOPIHost: Request URI [" << uriReq.toString() << "]:\n");
 
         // CheckFileInfo - always returns redirect response
         if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
         {
-            LOG_INF("Fake wopi host request, handling CheckFileInfo");
+            LOG_INF("FakeWOPIHost: Handling CheckFileInfo");
 
             assertCheckFileInfoRequest(request);
 

@@ -778,6 +778,9 @@ L.Map.include({
 						textBox.focus();
 					}
 				}, 0);
+			},
+			afterClose: function() {
+				map.focus();
 			}
 		});
 	},
@@ -925,6 +928,20 @@ L.Map.include({
 						'value': false
 					}
 				});
+			}
+			break;
+		case 'deletepage':
+			{
+				var map = this;
+				var msg;
+				if (map.getDocType() === 'presentation') {
+					msg = _('Are you sure you want to delete this slide?');
+				}
+				else { /* drawing */
+					msg = _('Are you sure you want to delete this page?');
+				}
+				map.uiManager.showInfoModal('deleteslide-modal', _('Delete'),
+					msg, '', _('OK'), function () { map.deletePage(); }, true);
 			}
 			break;
 		default:

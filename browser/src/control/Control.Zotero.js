@@ -6,6 +6,7 @@
 /* global _ Promise app Set */
 L.Control.Zotero = L.Control.extend({
 	_cachedURL: [],
+	citations: {},
 
 	getCachedOrFetch: function (url) {
 		var that = this;
@@ -26,7 +27,12 @@ L.Control.Zotero = L.Control.extend({
 		hasBibliography: '0',
 		bibliographyStyleHasBeenSet: '0',
 		style: '',
-		locale: 'en-US'
+		locale: 'en-US',
+		bib: {
+			uncited: [],
+			omitted: [],
+			custom: []
+		}
 	},
 
 	onAdd: function (map) {
@@ -35,9 +41,13 @@ L.Control.Zotero = L.Control.extend({
 		this.map.on('updateviewslist', this.onUpdateViews, this);
 	},
 
-	onFieldValue: function(fields) {
-		this.resetCitation();
+	extractItemKeyFromLink: function(link) {
+		return link.substring(link.lastIndexOf('/')+1);
+	},
 
+	onFieldValue: function(fields) {
+
+		var resetCitations = true;
 		for (var index = 0; index < fields.length; index++) {
 			var field = fields[index];
 			var fieldString;
@@ -48,23 +58,36 @@ L.Control.Zotero = L.Control.extend({
 			else if (this.getFieldType() === 'Bookmark')
 				fieldString = field.bookmark;
 
+			if (fieldString.startsWith('ZOTERO_BIBL') || fieldString.startsWith('ADDIN ZOTERO_BIBL')) {
+				this.setBibCustomProperty(fieldString);
+				continue;
+			}
+
+			// Reset citations only once but avoid resetting it if we only recieved bib fields
+			if (resetCitations) {
+				resetCitations = false;
+				this.resetCitation();
+			}
 			var values = this.getJSONfromCitationString(fieldString);
 			if (!values) {
-				return;
+				continue;
 			}
 			var that = this;
 			this.citationCluster[values.citationID] = [];
 			var citationString = L.Util.trim(values.properties.plainCitation, this.settings.layout.prefix, this.settings.layout.suffix);
 			var citations = citationString.split(this.settings.layout.delimiter);
+			var itemUriList = [];
 			values.citationItems.forEach(function(item, i) {
 				//zotero desktop versions do not store keys in cslJSON
 				//extract key from the item url
 				var itemUri = item.uris[0];
-				var citationId = itemUri.substr(itemUri.lastIndexOf('/')+1);
+				var citationId = that.extractItemKeyFromLink(itemUri);
 				that.citationCluster[values.citationID].push(citationId);
 				that.citations[citationId] = L.Util.trim(citations[i], that.settings.group.prefix, that.settings.group.suffix);
 				that.setCitationNumber(that.citations[citationId]);
+				itemUriList.push(itemUri);
 			});
+			this.showUnsupportedItemWarning(itemUriList);
 		}
 
 		if (this.pendingCitationUpdate || (this.previousNumberOfFields && this.previousNumberOfFields !== fields.length)) {
@@ -76,6 +99,26 @@ L.Control.Zotero = L.Control.extend({
 
 	getCitationKeys: function() {
 		return Object.keys(this.citations);
+	},
+
+	getCitationKeysForBib: function() {
+		var uncitedKeys = [];
+		var that = this;
+		this.settings.bib.uncited.forEach(function(item) {
+			uncitedKeys.push(that.extractItemKeyFromLink(item[0]));
+		});
+
+		var omittedKeys = new Set();
+		this.settings.bib.omitted.forEach(function(item) {
+			omittedKeys.add(that.extractItemKeyFromLink(item[0]));
+		});
+
+		var allKeys = Object.keys(this.citations).concat(uncitedKeys);
+
+		allKeys = allKeys.filter(function(key) { return !omittedKeys.has(key); });
+
+		return allKeys;
+
 	},
 
 	onRemove: function () {
@@ -110,7 +153,40 @@ L.Control.Zotero = L.Control.extend({
 					that.map.uiManager.refreshNotebookbar();
 				else
 					that.map.uiManager.refreshMenubar();
+				that.updateGroupIdList();
 			}, function () { that.map.uiManager.showSnackbar(_('Zotero API key is incorrect')); });
+	},
+
+	updateGroupIdList: function() {
+		this.groupIdList = new Set();
+		var that = this;
+		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/groups?v=3&key=' + this.apiKey)
+			.then(function (data) {
+				for (var i = 0; i < data.length; i++) {
+					that.groupIdList.add(data[i].data.id.toString());
+				}
+			}, function () {});
+	},
+
+	showUnsupportedItemWarning: function(uriList) {
+		if (this.showUnsupportedWarning === false || !this.userID)
+			return;
+
+		for (var i in uriList) {
+			var uriObject = new URL(uriList[i]);
+
+			var catagory = uriObject.pathname.startsWith('/groups/') ? '/groups/' : '/users/';
+
+			var id = uriObject.pathname.substring(catagory.length);
+			id = id.substring(0, id.indexOf('/'));
+			if (!this.groupIdList.has(id) && id !== this.userID.toString()) {
+				this.showUnsupportedWarning = false;
+				this.map.uiManager.showInfoModal('zoterounreachablewarn', _('Zotero Warning'),
+					_('The document contains some citations which may be unreachable through web API. It may cause some problems while editing citations or bibliography.'),
+					null, _('Close'), function() {});
+				return;
+			}
+		}
 	},
 
 	getTopBarJSON: function () {
@@ -206,8 +282,9 @@ L.Control.Zotero = L.Control.extend({
 					],
 					selectedCount: '1',
 					selectedEntries: [
-						this.getFieldType() === 'Bookmark' ? 1 : 0
-					]
+						this.getFieldType() === 'Bookmark' || this.settings.wrapper === 'Endnote' ? 1 : 0
+					],
+					enabled: false
 				}
 			]
 		};
@@ -313,6 +390,33 @@ L.Control.Zotero = L.Control.extend({
 					selectedEntries: [
 						Object.keys(this.availableLanguages).indexOf(locale)
 					],
+				},
+			},
+			callback: this._onAction.bind(this)
+		});
+	},
+
+	enableDialogFieldTypeCombobox: function(citationFormat) {
+		var entries = [];
+		if (citationFormat === 'note') {
+			entries = [_('Footnotes'), _('Endnotes')];
+		} else {
+			entries = [_('Fields'), _('Bookmarks')];
+		}
+		this.map.fire('jsdialogupdate', {
+			data: {
+				jsontype: 'dialog',
+				action: 'update',
+				id: 'ZoteroDialog',
+				control: {
+					id: 'zoterotype',
+					type: 'combobox',
+					entries: entries,
+					selectedCount: '1',
+					selectedEntries: [
+						this.getFieldType() === 'Bookmark' || this.settings.wrapper === 'Endnote' ? 1 : 0
+					],
+					enabled: !(this.citations && Object.keys(this.citations).length)
 				},
 			},
 			callback: this._onAction.bind(this)
@@ -431,7 +535,7 @@ L.Control.Zotero = L.Control.extend({
 			var innerMostNode = itemHTML.querySelector('*:last-child');
 
 			var keys = item['key'] ? [item['key']]
-				: Object.keys(item['citationItems']).map(function(citationitem) {return item['citationItems'][citationitem].id.substring(item['citationItems'][citationitem].id.lastIndexOf('/')+1);});
+				: Object.keys(item['citationItems']).map(function(citationitem) {return that.extractItemKeyFromLink(item['citationItems'][citationitem].id);});
 			keys.forEach(function(key) {
 				citationString += innerMostNode ? that.getCitationText(key, innerMostNode.textContent)
 					: that.getCitationText(key, item.citation.toString());
@@ -546,13 +650,14 @@ L.Control.Zotero = L.Control.extend({
 	},
 
 	fillStyles: function (styles) {
+		var styleToSelect = this.settings.style;
 		if (this.settings.style === '' && window.isLocalStorageAllowed)
-			this.settings.style = localStorage.getItem('Zotero_LastUsedStyle');
+			styleToSelect = localStorage.getItem('Zotero_LastUsedStyle');
 
 		for (var iterator = 0; iterator < styles.length; ++iterator) {
 			this.createEntry(iterator, [styles[iterator].title],
 				Object.assign({name: styles[iterator].name, type: 'style'},
-					this.settings.style === styles[iterator].name ? {selected: true} : null));
+					styleToSelect === styles[iterator].name ? {selected: true} : null));
 		}
 	},
 
@@ -646,8 +751,9 @@ L.Control.Zotero = L.Control.extend({
 
 				if (window.mode.isMobile()) window.mobileDialogId = dialogUpdateEvent.data.id;
 				that.map.fire('jsdialogupdate', dialogUpdateEvent);
-				if (that.settings.style && that.settings.style !== '')
-					that.checkStyleTypeAndEnableOK(that.settings.style);
+				var styleToBeSelected = (that.settings.style && that.settings.style !== '') ? that.settings : {name: localStorage.getItem('Zotero_LastUsedStyle')};
+				if (styleToBeSelected !== '')
+					that.checkStyleTypeAndEnableOK(styleToBeSelected);
 			}, function () {
 				that.map.uiManager.showSnackbar(_('Failed to load styles'));
 			});
@@ -683,13 +789,15 @@ L.Control.Zotero = L.Control.extend({
 				if (citation) {
 					that.setCitationLayout(citation);
 					that.updateCitations(true);
-					if (that.settings.bibliographyStyleHasBeenSet === '1')
+					if (that.settings.bibliographyStyleHasBeenSet === '1') {
+						that.updateBibList();
 						that.handleInsertBibliography();
+					}
 				} else {
 					var link = csl.getElementsByTagName('link');
 					for (var i = 0; i < link.length; i++) {
 						if (link[i].getAttribute('rel') === 'independent-parent') {
-							that.setFetchedCitationFormat(link[i].getAttribute('href').substring(link[i].getAttribute('href').lastIndexOf('/')+1));
+							that.setFetchedCitationFormat(that.extractItemKeyFromLink(link[i].getAttribute('href')));
 							break;
 						}
 					}
@@ -710,7 +818,12 @@ L.Control.Zotero = L.Control.extend({
 		return ret;
 	},
 
-	checkStyleTypeAndEnableOK: function(style) {
+	checkStyleTypeAndEnableOK: function(selectedStyle) {
+		var style = selectedStyle.name ? selectedStyle.name : selectedStyle.style;
+
+		if (!style)
+			return;
+
 		var that = this;
 		fetch('https://www.zotero.org/styles/' + style)
 			.then(function (response) { return response.text(); })
@@ -738,6 +851,15 @@ L.Control.Zotero = L.Control.extend({
 					Object.keys(that.availableLanguages).indexOf(that.settings.locale) >= 0;
 				that.enableDialogLanguageCombobox(
 					availableLocale ? that.settings.locale : defaultLocale);
+
+				var categories = csl.getElementsByTagName('category');
+				for (var i = 0; i < categories.length; i++) {
+					if (categories[i].getAttribute('citation-format')) {
+						selectedStyle.citationFormat = categories[i].getAttribute('citation-format');
+						break;
+					}
+				}
+				that.enableDialogFieldTypeCombobox(selectedStyle.citationFormat);
 				that.enableDialogOKButton();
 			});
 	},
@@ -761,7 +883,7 @@ L.Control.Zotero = L.Control.extend({
 		var value = new DOMParser().parseFromString(valueString, 'text/xml');
 		var styleNode = value.getElementsByTagName('style')[0];
 
-		this.settings.style = styleNode.id.substring(styleNode.id.lastIndexOf('/')+1);
+		this.settings.style = this.extractItemKeyFromLink(styleNode.id);
 		var locale = styleNode.getAttribute('locale');
 		if (locale)
 			this.settings.locale = locale;
@@ -770,6 +892,11 @@ L.Control.Zotero = L.Control.extend({
 			this.settings.fieldType = filedTypeNode[0].getAttribute('value');
 		else
 			this.settings.fieldType = this.getFieldType();
+
+		var noteTypeNode = value.getElementsByName('noteType');
+		if (noteTypeNode && noteTypeNode[0])
+			this.settings.wrapper = noteTypeNode[0].getAttribute('value') === '1' ? 'Footnote' : 'Endnote';
+
 		this.settings.hasBibliography = styleNode.getAttribute('hasBibliography');
 		this.settings.bibliographyStyleHasBeenSet = styleNode.getAttribute('bibliographyStyleHasBeenSet');
 
@@ -801,11 +928,23 @@ L.Control.Zotero = L.Control.extend({
 
 		var prefsNode = xmlDoc.createElement('prefs');
 
-		var prefNode = xmlDoc.createElement('pref');
-		prefNode.setAttribute('name', 'fieldType');
-		prefNode.setAttribute('value', this.getFieldType());
+		var prefFieldNode = xmlDoc.createElement('pref');
+		prefFieldNode.setAttribute('name', 'fieldType');
+		prefFieldNode.setAttribute('value', this.getFieldType());
 
-		prefsNode.appendChild(prefNode);
+		prefsNode.appendChild(prefFieldNode);
+
+		if (this.settings.wrapper) {
+			var prefNotedNode = xmlDoc.createElement('pref');
+			prefNotedNode.setAttribute('name', 'noteType');
+
+			if (this.settings.wrapper === 'Footnote')
+				prefNotedNode.setAttribute('value', '1');
+			else
+				prefNotedNode.setAttribute('value', '2');
+
+			prefsNode.appendChild(prefNotedNode);
+		}
 
 		dataNode.appendChild(prefsNode);
 
@@ -845,15 +984,22 @@ L.Control.Zotero = L.Control.extend({
 		var fileExtension = this.map['wopi'].BaseFileName.substring(this.map['wopi'].BaseFileName.lastIndexOf('.') + 1);
 		this.settings.fieldType = fileExtension.startsWith('doc') ? 'Field' : 'ReferenceMark';
 
+		//TODO: probably also check for notes?
 		return this.settings.fieldType;
 	},
 
-	setFieldType: function(isField) {
-		if (isField) {
+	setFieldType: function(field, format) {
+		this.settings.wrapper = '';
+		if (field === 'Bookmarks')
+			this.settings.fieldType = 'Bookmark';
+		else {
 			var fileExtension = this.map['wopi'].BaseFileName.substring(this.map['wopi'].BaseFileName.lastIndexOf('.') + 1);
 			this.settings.fieldType = fileExtension.startsWith('doc') ? 'Field' : 'ReferenceMark';
-		} else {
-			this.settings.fieldType = 'Bookmark';
+			if (format === 'note') {
+				this.settings.wrapper = 'Footnote';
+				if (field === 'Endnotes')
+					this.settings.wrapper = 'Endnote';
+			}
 		}
 	},
 
@@ -969,7 +1115,7 @@ L.Control.Zotero = L.Control.extend({
 					this.selected = data.entries[parseInt(index)];
 
 					if (this.dialogType === 'stylelist') {
-						this.checkStyleTypeAndEnableOK(this.selected.name);
+						this.checkStyleTypeAndEnableOK(this.selected);
 					} else if (this.dialogType === 'insertnote') {
 						this.enableDialogOKButton();
 					}
@@ -983,13 +1129,24 @@ L.Control.Zotero = L.Control.extend({
 			return;
 		}
 		if (data.id == 'ok') {
-			// set selected type or field as default
-			this.setFieldType(this.selectedFieldType !== false);
-			// style already specified just changing the language
-			if (!this.selected)
-				this._onOk({name: this.settings.style, type: 'style'});
-			else
-				this._onOk(this.selected);
+			// set selected style, style format and field
+			if (!this.selected || this.selected.type === 'style') {
+				var citationFormat = this.selected ? this.selected.citationFormat : this.settings.citationFormat;
+				var parameters = this.selected ? this.selected : {name: localStorage.getItem('Zotero_LastUsedStyle'), type: 'style'};
+				var selectedFieldType = this.selectedFieldType;
+				this.closeZoteroDialog();
+				this.map.uiManager.showConfirmModal('zoterofieldtypewarn', _('Citation warning'),
+					_('Once citations are entered their storage and display type can not be changed.'),
+					 _('Confirm'), function() {
+						this.setFieldType(selectedFieldType, citationFormat);
+						this._onOk(parameters);
+						this.dispatchPendingAction();
+					 }.bind(this));
+				return;
+			}
+
+			this._onOk(this.selected);
+			this.dispatchPendingAction();
 		}
 		if (element === 'pushbutton' && data.id === 'zoterorefresh') {
 			this._cachedURL = [];
@@ -1007,15 +1164,22 @@ L.Control.Zotero = L.Control.extend({
 				if (this.settings.style)
 					this.enableDialogOKButton();
 			} else if (data.id === 'zoterotype') {
-				var selectedIndex = parseInt(index);
-				if (selectedIndex === 0) {
-					this.selectedFieldType = true;
-				} else if (selectedIndex === 1)
-					this.selectedFieldType = false;
+				this.selectedFieldType = index.substring(index.indexOf(';')+1);
 			}
 			return;
 		}
 
+		this.closeZoteroDialog();
+	},
+
+	dispatchPendingAction: function() {
+		if (this.pendingAction) {
+			this.pendingAction();
+			delete this.pendingAction;
+		}
+	},
+
+	closeZoteroDialog: function() {
 		var closeEvent = {
 			data: {
 				action: 'close',
@@ -1027,10 +1191,7 @@ L.Control.Zotero = L.Control.extend({
 		// clear all previous selections
 		delete this.selectedCitationLangCode;
 		delete this.selected;
-		if (this.pendingAction) {
-			this.pendingAction();
-			delete this.pendingAction;
-		}
+		delete this.selectedFieldType;
 	},
 
 	_onOk: function (selected) {
@@ -1131,7 +1292,7 @@ L.Control.Zotero = L.Control.extend({
 		var that = this;
 
 		if (this.settings.citationFormat === 'numeric') {
-			this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items?include=bib&itemKey=' + this.getCitationKeys().join(',') + '&v=3&key=' + this.apiKey + '&style=' + this.settings.style + '&locale=' + this.settings.locale)
+			this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items?include=bib&itemKey=' + this.getCitationKeysForBib().join(',') + '&v=3&key=' + this.apiKey + '&style=' + this.settings.style + '&locale=' + this.settings.locale)
 				.then(function(data) {
 					var bibList = data.reduce(function(map, item) {
 						map[item.key] = item.bib;
@@ -1139,7 +1300,7 @@ L.Control.Zotero = L.Control.extend({
 					}, {});
 
 					var html = '';
-					that.getCitationKeys().forEach(function(key) {
+					that.getCitationKeysForBib().forEach(function(key) {
 						var bib = new DOMParser().parseFromString(bibList[key], 'text/html').body;
 						var numberNode = bib.getElementsByClassName('csl-entry')[0].firstElementChild;
 						var number = parseInt(numberNode.textContent.substring(numberNode.textContent.search(/[0-9]/))).toString();
@@ -1171,6 +1332,15 @@ L.Control.Zotero = L.Control.extend({
 			app.socket.sendMessage('commandvalues command=.uno:Bookmarks?namePrefix=ZOTERO_BREF_');
 	},
 
+	updateBibList: function() {
+		if (this.getFieldType() === 'Field')
+			app.socket.sendMessage('commandvalues command=.uno:TextFormFields?type=vnd.oasis.opendocument.field.UNHANDLED&commandPrefix=ADDIN%20ZOTERO_BIBL');
+		else if (this.getFieldType() === 'ReferenceMark')
+			app.socket.sendMessage('commandvalues command=.uno:Sections?typeName=SetRef&namePrefix=ZOTERO_BIBL');
+		else if (this.getFieldType() === 'Bookmark')
+			app.socket.sendMessage('commandvalues command=.uno:SetDocumentProperties?namePrefix=' + this.bibBookmarkName);
+	},
+
 	updateCitations: function(showSnackbar) {
 		if (!this.citations) {
 			this.updateFieldsList();
@@ -1180,7 +1350,7 @@ L.Control.Zotero = L.Control.extend({
 
 		var that = this;
 		var citationKeys = this.getCitationKeys();
-		var citationCluster = this.citationCluster;
+		var citationCluster = this.citationCluster ? this.citationCluster : [];
 
 		this.getCachedOrFetch('https://api.zotero.org/users/' + this.userID + '/items/top' + this.getZoteroItemQuery() + '&itemKey=' + citationKeys.join(','))
 			.then(function (data) {
@@ -1326,7 +1496,7 @@ L.Control.Zotero = L.Control.extend({
 		for (var i in existingCitationUnderCursor.citationItems) {
 			var existingItem = existingCitationUnderCursor.citationItems[i];
 			var itemUri = existingItem.uris[0];
-			var key = itemUri.substr(itemUri.lastIndexOf('/')+1);
+			var key = this.extractItemKeyFromLink(itemUri);
 
 			for (var j in this.items) {
 				var listItem = this.items[j];
@@ -1439,6 +1609,9 @@ L.Control.Zotero = L.Control.extend({
 			field['BookmarkText'] = {type: 'string', value: citationString};
 		}
 
+		if (this.settings.wrapper)
+			field['Wrapper'] = {type: 'string', value: this.settings.wrapper};
+
 		return field;
 	},
 
@@ -1526,13 +1699,13 @@ L.Control.Zotero = L.Control.extend({
 		// TODO: support uncited ommited(citation) and custom sources in bibliography
 		if (this.getFieldType() === 'Field') {
 			field['FieldType'] = {type: 'string', value: 'vnd.oasis.opendocument.field.UNHANDLED'};
-			field['FieldCommand'] = {type: 'string', value: 'ADDIN ZOTERO_BIBL {"uncited":[],"omitted":[],"custom":[]} CSL_BIBLIOGRAPHY'};
+			field['FieldCommand'] = {type: 'string', value: 'ADDIN ZOTERO_BIBL ' + JSON.stringify(this.settings.bib) + ' CSL_BIBLIOGRAPHY'};
 			field['FieldResult'] = {type: 'string', value: html};
 		} else if (this.getFieldType() == 'Bookmark') {
 			field['Bookmark'] = {type: 'string', value: 'ZOTERO_BREF_' + L.Util.randomString(12)};
 			field['BookmarkText'] = {type: 'string', value: html};
 		} else {
-			field['RegionName'] = {type: 'string', value: 'ZOTERO_BIBL {"uncited":[],"omitted":[],"custom":[]} CSL_BIBLIOGRAPHY ' + ' RND' + L.Util.randomString(10)};
+			field['RegionName'] = {type: 'string', value: 'ZOTERO_BIBL ' + JSON.stringify(this.settings.bib) + ' CSL_BIBLIOGRAPHY ' + ' RND' + L.Util.randomString(10)};
 			field['Content'] = {type: 'string', value: html};
 		}
 
@@ -1579,7 +1752,7 @@ L.Control.Zotero = L.Control.extend({
 				};
 			}
 			this.bibBookmarkName = newBibBookmarkName;
-			this.setCustomProperty(this.bibBookmarkName + '_', 'ZOTERO_BIBL {"uncited":[],"omitted":[],"custom":[]} CSL_BIBLIOGRAPHY');
+			this.setCustomProperty(this.bibBookmarkName + '_', 'ZOTERO_BIBL ' + JSON.stringify(this.settings.bib) + ' CSL_BIBLIOGRAPHY');
 		} else {
 			command = '.uno:InsertSection';
 			if (this.settings.bibliographyStyleHasBeenSet == '1') {
@@ -1666,12 +1839,30 @@ L.Control.Zotero = L.Control.extend({
 			this.bookmarksOrder.forEach(function(bookmark) {
 				if (resultMap[bookmark].startsWith('ZOTERO_BIBL')) {
 					that.bibBookmarkName = bookmark;
+					that.setBibCustomProperty(resultMap[bookmark]);
 					return;
 				}
 				fields.push({bookmark: resultMap[bookmark]});
 			});
 			this.onFieldValue(fields);
 		}
+	},
+
+	setBibCustomProperty: function(bibProperty) {
+		if (!bibProperty)
+			return {};
+
+		var firstBraceIndex = bibProperty.indexOf('{');
+		var lastBraceIndex = bibProperty.lastIndexOf('}');
+
+		if (firstBraceIndex < 0 || lastBraceIndex > bibProperty.length || lastBraceIndex < 0)
+			return {};
+
+		var values = JSON.parse(bibProperty.substring(firstBraceIndex, lastBraceIndex+1));
+
+		this.settings.bib.uncited = values.uncited;
+		this.settings.bib.omitted = values.omitted;
+		this.settings.bib.custom = values.custom;
 	},
 
 	handleBookmark: function(bookmarks) {

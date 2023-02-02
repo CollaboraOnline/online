@@ -248,6 +248,7 @@ public:
     static bool AdminEnabled;
     static bool UnattendedRun; //< True when run from an unattended test, not interactive.
     static bool SignalParent;
+    static std::string RouteToken;
 #if ENABLE_DEBUG
     static bool SingleKit;
 #endif
@@ -483,6 +484,7 @@ public:
     {
         return FileUtil::anonymizeUsername(username);
     }
+    static void alertAllUsersInternal(const std::string& msg);
 
 #if ENABLE_DEBUG
     /// get correct server URL with protocol + port number for this running server

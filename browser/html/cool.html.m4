@@ -89,7 +89,7 @@ m4_ifelse(ANDROIDAPP,[true],
 )
 m4_ifelse(EMSCRIPTENAPP,[true],
   [   window.ThisIsTheEmscriptenApp = true;
-   window.postMobileMessage = function(msg) { _handle_cool_message(allocateUTF8(msg)); };
+   window.postMobileMessage = function(msg) { app.HandleCOOLMessage(app.AllocateUTF8(msg)); };
    window.postMobileError   = function(msg) { console.log('COOL Error: ' + msg); };
    window.postMobileDebug   = function(msg) { console.log('COOL Debug: ' + msg); };],
   [   window.ThisIsTheEmscriptenApp = false;]
@@ -176,6 +176,8 @@ document.getElementsByTagName("head")[[0]].appendChild(link);
 m4_ifelse(IOSAPP,[true],
   [<link rel="stylesheet" href="Branding/branding.css">])
 m4_ifelse(ANDROIDAPP,[true],
+  [<link rel="stylesheet" href="branding.css">])
+m4_ifelse(EMSCRIPTENAPP,[true],
   [<link rel="stylesheet" href="branding.css">])
 
 m4_dnl Handle localization
@@ -344,7 +346,8 @@ m4_ifelse(MOBILEAPP,[true],
       window.useIntegrationTheme = 'false';
       window.checkFileInfoOverride = {};
       window.deeplEnabled = false;
-      window.zoteroEnabled = false;],
+      window.zoteroEnabled = false;
+      window.indirectionUrl='';],
      [window.host = '%HOST%';
       window.serviceRoot = '%SERVICE_ROOT%';
       window.hexifyUrl = %HEXIFY_URL%;
@@ -371,7 +374,8 @@ m4_ifelse(MOBILEAPP,[true],
       window.uiDefaults = %UI_DEFAULTS%;
       window.checkFileInfoOverride = %CHECK_FILE_INFO_OVERRIDE%;
 	    window.deeplEnabled = %DEEPL_ENABLED%;
-      window.zoteroEnabled = %ZOTERO_ENABLED%;])
+      window.zoteroEnabled = %ZOTERO_ENABLED%;
+      window.indirectionUrl='%INDIRECTION_URL%';])
 
 // This is GLOBAL_JS:
 m4_syscmd([cat ]GLOBAL_JS)m4_dnl
@@ -381,6 +385,9 @@ m4_ifelse(IOSAPP,[true],
 
 m4_ifelse(ANDROIDAPP,[true],
      [window.userInterfaceMode = window.getParameterByName('userinterfacemode');])
+
+m4_ifelse(EMSCRIPTENAPP,[true],
+     [window.userInterfaceMode = 'notebookbar';])
 
 // Dynamically load the appropriate *-mobile.css, *-tablet.css or *-desktop.css
 var link = document.createElement('link');

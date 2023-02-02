@@ -7,20 +7,24 @@
 
 #include "wasmapp.hpp"
 
+#include "base64.hpp"
+
 int coolwsd_server_socket_fd = -1;
 
 const char* user_name;
-const int SHOW_JS_MAXLEN = 70;
+const int SHOW_JS_MAXLEN = 200;
 
-static std::string fileURL = "file:///android/default-document/example.odt";
+static std::string fileURL = "file:///sample.docx";
 static COOLWSD *coolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
-static lok::Office * llo = NULL;
 
 static void send2JS(const std::vector<char>& buffer)
 {
-    LOG_TRC_NOFILE("Send to JS: " << COOLProtocol::getAbbreviatedMessage(buffer.data(), buffer.size()));
+    if (buffer.size() < SHOW_JS_MAXLEN)
+        LOG_TRC_NOFILE("Send to JS: " << std::string(buffer.data(), buffer.size()));
+    else
+        LOG_TRC_NOFILE("Send to JS: " << std::string(buffer.data(), SHOW_JS_MAXLEN) << "...");
 
     std::string js;
 
@@ -35,7 +39,7 @@ static void send2JS(const std::vector<char>& buffer)
     {
         // The data needs to be an ArrayBuffer
         js = "window.TheFakeWebSocket.onmessage({'data': Base64ToArrayBuffer('";
-        js = js + std::string(buffer.data(), buffer.size());
+        js = js + macaron::Base64::Encode(std::string(buffer.data(), buffer.size()));
         js = js + "')});";
     }
     else
@@ -56,10 +60,9 @@ static void send2JS(const std::vector<char>& buffer)
                 data.push_back(ubufp[i]);
             }
         }
-        data.push_back(0);
 
         js = "window.TheFakeWebSocket.onmessage({'data': '";
-        js = js + std::string(buffer.data(), buffer.size());
+        js = js + std::string(data.data(), data.size());
         js = js + "'});";
     }
 
@@ -221,65 +224,17 @@ void closeDocument()
     LOG_DBG("COOLWSD has finished.");
 }
 
-void * lok_init()
-{
-    try {
-        std::string lo_path = "/instdir/program";
-        llo = lok::lok_cpp_init(lo_path.c_str());
-        if (!llo) {
-            std::cerr << ": Failed to initialise LibreOfficeKit" << std::endl;
-            return NULL;
-        }
-        return static_cast<void*>(llo);
-    } catch (const std::exception & e) {
-        delete llo;
-        std::cerr << ": LibreOfficeKit threw exception (" << e.what() << ")" << std::endl;
-        return NULL;
-    }
-}
-
-int loadDoc(bool url, const char * input, const char * options)
-{
-    std::cout << "================ loadDoc('" << input << "'" << std::endl;
-    try {
-        std::string input_url;
-        if (url) {
-            input_url = input;
-        } else {
-            //url_encode_path(input_url, input);
-        }
-        lok::Document * lodoc = llo->documentLoad(input_url.c_str(), options);
-        if (!lodoc) {
-            const char * errmsg = llo->getError();
-            std::cerr << ": LibreOfficeKit failed to load document (" << errmsg << ")" << std::endl;
-            return 1;
-        }
-
-        delete lodoc;
-
-        return 0;
-    } catch (const std::exception & e) {
-        std::cerr << ": LibreOfficeKit threw exception (" << e.what() << ")" << std::endl;
-        return 1;
-    }
-}
-
 int main(int, char*[])
 {
     std::cout << "================ Here is main()" << std::endl;
 
-    lok_init();
-
-    Log::initialize("WASM", "trace", false, false, {});
+    Log::initialize("WASM", "error", false, false, {});
     Util::setThreadName("main");
 
     fakeSocketSetLoggingCallback([](const std::string& line)
                                  {
                                      LOG_TRC_NOFILE(line);
                                  });
-
-    // Experiment
-    loadDoc(true, "file:///android/default-document/example.odt", "");
 
     char *argv[2];
     argv[0] = strdup("wasm");
@@ -288,15 +243,13 @@ int main(int, char*[])
 
     fakeClientFd = fakeSocketSocket();
 
-    while (true)
-    {
-        std::cout << "================ Creating a COOLWSD object and calling its run()" << std::endl;
-        coolwsd = new COOLWSD();
-        coolwsd->run(1, argv);
-        std::cout << "================ One run of COOLWSD::run() done" << std::endl;
-        delete coolwsd;
-        LOG_TRC("One run of COOLWSD completed");
-    }
+    // We run COOOLWSD::run() in a thread of its own so that main() can return.
+    std::thread([&]
+                {
+                    coolwsd = new COOLWSD();
+                    coolwsd->run(1, argv);
+                    delete coolwsd;
+                }).detach();
 
     std::cout << "================ main() is returning" << std::endl;
     return 0;

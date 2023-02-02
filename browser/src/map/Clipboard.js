@@ -76,10 +76,16 @@ L.Clipboard = L.Class.extend({
 	getMetaPath: function(idx) {
 		if (!idx)
 			idx = 0;
-		return '/cool/clipboard?WOPISrc=' + encodeURIComponent(this._map.options.doc) +
+
+		var metaPath = '/cool/clipboard?WOPISrc=' + encodeURIComponent(this._map.options.doc) +
 			'&ServerId=' + app.socket.WSDServer.Id +
 			'&ViewId=' + this._map._docLayer._viewId +
 			'&Tag=' + this._accessKey[idx];
+
+		if (window.routeToken !== '')
+			metaPath += '&RouteToken='+window.routeToken;
+
+		return metaPath;
 	},
 
 	getMetaURL: function(idx) {
@@ -507,6 +513,9 @@ L.Clipboard = L.Class.extend({
 			return true;
 
 		if ($('.ui-edit').is(':focus'))
+			return true;
+
+		if ($('.ui-textarea').is(':focus'))
 			return true;
 
 		if ($('.w2ui-input').is(':focus'))

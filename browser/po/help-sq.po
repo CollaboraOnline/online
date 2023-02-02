@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-20 11:33+0200\n"
-"PO-Revision-Date: 2022-10-07 08:03+0000\n"
+"POT-Creation-Date: 2023-02-01 00:10+0200\n"
+"PO-Revision-Date: 2023-01-30 18:44+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/"
 "collabora-online/help/sq/>\n"
@@ -51,7 +51,6 @@ msgid "Paste as unformatted text"
 msgstr "Ngjite si tekst të paformatuar"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:26-70
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>V"
@@ -61,7 +60,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Paste special"
-msgstr ""
+msgstr "Ngjitje speciale"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:27-58
 msgid ""
@@ -109,7 +108,7 @@ msgstr "Të trasha"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:181-49
 #: html/cool-help.html%2Bdiv.div.table.tr.td:238-49
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B "
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:36-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:157-18
@@ -123,30 +122,28 @@ msgstr "Të pjerrëta"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:182-51
 #: html/cool-help.html%2Bdiv.div.table.tr.td:239-51
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I "
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:37-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:158-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:183-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:240-18
 msgid "Underline"
-msgstr "Nënvizuar"
+msgstr "Të nënvizuara"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:37-54
 #: html/cool-help.html%2Bdiv.div.table.tr.td:158-54
 #: html/cool-help.html%2Bdiv.div.table.tr.td:183-54
 #: html/cool-help.html%2Bdiv.div.table.tr.td:240-54
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>U"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>U"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:38-18
 msgid "Double Underline"
-msgstr "Nënvizuar dyfish"
+msgstr "Të nënvizuara dyfish"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:38-61
 #: html/cool-help.html%2Bdiv.div.table.tr.td:163-54
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D"
 
@@ -166,18 +163,17 @@ msgid ""
 "plus\">+</span><kbd>5"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>5 "
+"plus\">+</span><kbd>5"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:40-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:185-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:242-18
 msgid "Superscript"
-msgstr "Mbishkrim"
+msgstr "Sipërshkrim"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:40-56
 #: html/cool-help.html%2Bdiv.div.table.tr.td:185-56
 #: html/cool-help.html%2Bdiv.div.table.tr.td:242-56
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>P"
@@ -189,12 +185,11 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.table.tr.td:186-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:243-18
 msgid "Subscript"
-msgstr "Nënshkrim"
+msgstr "Poshtëshkrim"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:41-54
 #: html/cool-help.html%2Bdiv.div.table.tr.td:186-54
 #: html/cool-help.html%2Bdiv.div.table.tr.td:243-54
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>B"
@@ -205,20 +200,18 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.table.tr.td:42-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:160-18
 msgid "Remove direct formatting"
-msgstr ""
+msgstr "Hiqi formatimin e drejtpërdrejtë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:42-69
 #: html/cool-help.html%2Bdiv.div.table.tr.td:160-69
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M"
 
 #: html/cool-help.html%2Bdiv.div.h2:44-9
 #: html/cool-help.html%2Bdiv.div.h2:189-9
 #: html/cool-help.html%2Bdiv.div.h2:246-9
-#, fuzzy
 msgid "Paragraph formatting"
-msgstr "Formatimi i paragrafit"
+msgstr "Formatim paragrafi"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:46-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:165-18
@@ -231,7 +224,6 @@ msgstr "Vendose Në Qendër"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:165-57
 #: html/cool-help.html%2Bdiv.div.table.tr.td:191-57
 #: html/cool-help.html%2Bdiv.div.table.tr.td:248-57
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 
@@ -246,7 +238,6 @@ msgstr "Vendose Majtas"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:166-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:192-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:249-55
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
 
@@ -255,13 +246,12 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:193-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:250-18
 msgid "Align Right"
-msgstr ""
+msgstr "Align Right"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:48-56
 #: html/cool-help.html%2Bdiv.div.table.tr.td:167-56
 #: html/cool-help.html%2Bdiv.div.table.tr.td:193-56
 #: html/cool-help.html%2Bdiv.div.table.tr.td:250-56
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R"
 
@@ -270,19 +260,18 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:194-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:251-18
 msgid "Justify"
-msgstr ""
+msgstr "Përligje"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:49-52
 #: html/cool-help.html%2Bdiv.div.table.tr.td:168-52
 #: html/cool-help.html%2Bdiv.div.table.tr.td:194-52
 #: html/cool-help.html%2Bdiv.div.table.tr.td:251-52
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:50-18
 msgid "Apply Default paragraph style"
-msgstr ""
+msgstr "Apliko stil parazgjedhje paragrafësh"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:50-74
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0"
@@ -290,7 +279,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:51-18
 msgid "Apply Heading 1 paragraph style"
-msgstr ""
+msgstr "Apliko stil paragrafi Kryesh 1"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:51-76
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1"
@@ -298,7 +287,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:52-18
 msgid "Apply Heading 2 paragraph style"
-msgstr ""
+msgstr "Apliko stil paragrafi Kryesh 2"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:52-76
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2"
@@ -306,17 +295,16 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:53-18
 msgid "Apply Heading 3 paragraph style"
-msgstr ""
+msgstr "Apliko stil paragrafi Kryesh 3"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:53-76
 #: html/cool-help.html%2Bdiv.div.table.tr.td:169-69
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:54-18
 msgid "Apply Heading 4 paragraph style"
-msgstr ""
+msgstr "Apliko stil paragrafi Kryesh 4"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:54-76
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4"
@@ -324,7 +312,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:55-18
 msgid "Apply Heading 5 paragraph style"
-msgstr ""
+msgstr "Apliko stil paragrafi Kryesh 5"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:55-76
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5"
@@ -332,7 +320,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5"
 
 #: html/cool-help.html%2Bdiv.div.h2:57-9
 msgid "Text selection and navigation in document"
-msgstr ""
+msgstr "Përzgjedhje teksti dhe lëvizje në dokument"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:59-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:164-18
@@ -340,9 +328,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.table.tr.td:200-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:244-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:257-18
-#, fuzzy
 msgid "Select All"
-msgstr "Zgjidh gjithçka"
+msgstr "Përzgjidhe Krejt"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:59-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:97-18
@@ -353,7 +340,6 @@ msgstr "Zgjidh gjithçka"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:244-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:257-55
 #: html/cool-help.html%2Bdiv.div.table.tr.td:289-71
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
 
@@ -367,20 +353,19 @@ msgstr "Lëvize kursorin majtas"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:201-68
 #: html/cool-help.html%2Bdiv.div.table.tr.td:258-68
 msgid "Arrow Left"
-msgstr ""
+msgstr "Shigjeta Majtas"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:61-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:202-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:259-18
 msgid "Move cursor with selection to the left"
-msgstr ""
+msgstr "Lëvize kursorin me përzgjedhjen majtas"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:61-83
 #: html/cool-help.html%2Bdiv.div.table.tr.td:202-83
 #: html/cool-help.html%2Bdiv.div.table.tr.td:259-83
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Djathtas"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Majtas"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:62-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:203-18
@@ -392,7 +377,7 @@ msgstr "Kalo te fillimi i një fjale"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:203-70
 #: html/cool-help.html%2Bdiv.div.table.tr.td:260-70
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjeta Majtas"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Majtas"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:63-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:204-18
@@ -426,7 +411,7 @@ msgstr "Shigjeta Djathtas"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:206-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:263-18
 msgid "Move cursor with selection to the right"
-msgstr ""
+msgstr "Lëvize kursorin me përzgjedhjen djathtas"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:65-84
 #: html/cool-help.html%2Bdiv.div.table.tr.td:206-84
@@ -478,32 +463,31 @@ msgstr "Shigjeta Sipër"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:210-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:267-18
 msgid "Select lines in upwards direction"
-msgstr ""
+msgstr "Përzgjidhni rreshta në kah për sipër"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:69-78
 #: html/cool-help.html%2Bdiv.div.table.tr.td:210-78
 #: html/cool-help.html%2Bdiv.div.table.tr.td:267-78
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Lart"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Sipër"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:70-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:211-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:268-18
 msgid "Move cursor to beginning of the previous paragraph"
-msgstr ""
+msgstr "Kaloje kursorin në fillim të paragrafit të mëparshëm"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:70-95
 #: html/cool-help.html%2Bdiv.div.table.tr.td:211-95
 #: html/cool-help.html%2Bdiv.div.table.tr.td:268-95
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjeta Majtas"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Sipër"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:71-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:212-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:269-18
 msgid "Select to beginning of paragraph"
-msgstr ""
+msgstr "Përzgjidhni nga aty e te fillimi i paragrafit"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:71-77
 #: html/cool-help.html%2Bdiv.div.table.tr.td:212-77
@@ -513,280 +497,259 @@ msgid ""
 "--plus\">+</span><kbd>Arrow Up"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Shigjetë Lart"
+"--plus\">+</span><kbd>Shigjetë Sipër"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:72-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:213-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:270-18
-#, fuzzy
 msgid "Move cursor down one line"
-msgstr "Lëvizni kursorin lart një rresht"
+msgstr "Shpjere kursorin një rresht poshtë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:72-70
 #: html/cool-help.html%2Bdiv.div.table.tr.td:213-70
 #: html/cool-help.html%2Bdiv.div.table.tr.td:270-70
 msgid "Arrow Down"
-msgstr ""
+msgstr "Shigjetë Poshtë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:73-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:214-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:271-18
 msgid "Select lines in downwards direction"
-msgstr ""
+msgstr "Përzgjidhni rreshta në kah për poshtë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:73-80
 #: html/cool-help.html%2Bdiv.div.table.tr.td:214-80
 #: html/cool-help.html%2Bdiv.div.table.tr.td:271-80
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Lart"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Poshtë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:74-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:215-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:272-18
 msgid "Move cursor to beginning of the next paragraph"
-msgstr ""
+msgstr "Shpjere kursorin në fillimin e paragrafit pasues"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:74-91
 #: html/cool-help.html%2Bdiv.div.table.tr.td:215-91
 #: html/cool-help.html%2Bdiv.div.table.tr.td:272-91
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjeta Majtas"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Poshtë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:75-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:216-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:273-18
 msgid "Select to end of paragraph"
-msgstr ""
+msgstr "Përzgjidh nga aty e deri te fundi i paragrafit"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:75-71
 #: html/cool-help.html%2Bdiv.div.table.tr.td:216-71
 #: html/cool-help.html%2Bdiv.div.table.tr.td:273-71
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Arrow Down"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Shigjetë Lart"
+"--plus\">+</span><kbd>Shigjetë Poshtë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:76-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:217-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:274-18
-#, fuzzy
 msgid "Go to beginning of line"
-msgstr "Shko në fillimin e një fjale"
+msgstr "Kalo te fillimi i rreshtit"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:76-68
 #: html/cool-help.html%2Bdiv.div.table.tr.td:134-99
 #: html/cool-help.html%2Bdiv.div.table.tr.td:217-68
 #: html/cool-help.html%2Bdiv.div.table.tr.td:274-68
 msgid "Home"
-msgstr ""
+msgstr "Home"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:77-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:218-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:275-18
 msgid "Go and select to the beginning of a line"
-msgstr ""
+msgstr "Kalo dhe përzgjidh nga aty te fillimi i një rreshti"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:77-85
 #: html/cool-help.html%2Bdiv.div.table.tr.td:136-118
 #: html/cool-help.html%2Bdiv.div.table.tr.td:218-85
 #: html/cool-help.html%2Bdiv.div.table.tr.td:275-85
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Lart"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:78-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:219-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:276-18
-#, fuzzy
 msgid "Go to start of document"
-msgstr "Shko të fillim të dokumentit"
+msgstr "Kalo te fillimi i dokumentit"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:78-68
 #: html/cool-help.html%2Bdiv.div.table.tr.td:98-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:132-98
 #: html/cool-help.html%2Bdiv.div.table.tr.td:219-68
 #: html/cool-help.html%2Bdiv.div.table.tr.td:276-68
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:79-18
 msgid "Go and select text to start of document"
-msgstr ""
+msgstr "Kalo dhe përzgjidh tekst te fillimi i një dokumenti"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:79-84
 #: html/cool-help.html%2Bdiv.div.table.tr.td:220-83
 #: html/cool-help.html%2Bdiv.div.table.tr.td:277-83
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Home"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Hapësirë"
+"--plus\">+</span><kbd>Home"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:80-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:221-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:278-18
 msgid "Go to end of line"
-msgstr ""
+msgstr "Kalo te fundi i rreshtit"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:80-62
 #: html/cool-help.html%2Bdiv.div.table.tr.td:135-98
 #: html/cool-help.html%2Bdiv.div.table.tr.td:221-62
 #: html/cool-help.html%2Bdiv.div.table.tr.td:278-62
 msgid "End"
-msgstr ""
+msgstr "End"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:81-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:222-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:279-18
 msgid "Go and select to the end of a line"
-msgstr ""
+msgstr "Kalo dhe përzgjidh deri te fundi i një rreshti"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:81-79
 #: html/cool-help.html%2Bdiv.div.table.tr.td:137-117
 #: html/cool-help.html%2Bdiv.div.table.tr.td:222-79
 #: html/cool-help.html%2Bdiv.div.table.tr.td:279-79
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:82-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:223-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:280-18
-#, fuzzy
 msgid "Go to end of document"
-msgstr "Shko në fund të dokumentit"
+msgstr "Kalo te fundi i dokumentit"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:82-66
 #: html/cool-help.html%2Bdiv.div.table.tr.td:99-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:133-111
 #: html/cool-help.html%2Bdiv.div.table.tr.td:223-66
 #: html/cool-help.html%2Bdiv.div.table.tr.td:280-66
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:83-18
 msgid "Go and select text to end of document"
-msgstr ""
+msgstr "Kalo dhe përzgjidhi tekst deri te fundi i një dokumenti"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:83-82
 #: html/cool-help.html%2Bdiv.div.table.tr.td:224-81
 #: html/cool-help.html%2Bdiv.div.table.tr.td:281-81
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>End"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>P"
+"--plus\">+</span><kbd>End"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:84-18
 msgid "Move the view up one page"
-msgstr ""
+msgstr "Ngjite pamjen një faqe më sipër"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:84-70
 msgid "PageUp"
-msgstr ""
+msgstr "PageUp"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:85-18
 msgid "Switch cursor between text and header"
-msgstr ""
+msgstr "Kaloje kursorin nga teksti te kryefaqe, ose anasjelltas"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:85-82
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:86-18
 msgid "Extend the selection up one page"
-msgstr ""
+msgstr "Zgjeroje përzgjedhjen me një faqe më sipër"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:86-77
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Lart"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:87-18
 msgid "Move the view down one page"
-msgstr ""
+msgstr "Kaloje pamjen një faqe më poshtë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:87-72
 msgid "PageDown"
-msgstr ""
+msgstr "PageDown"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Switch cursor between text and footer"
-msgstr ""
+msgstr "Kaloje kursorin nga teksti te fundfaqe, ose anasjelltas"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:88-82
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjeta Majtas"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:89-18
 msgid "Extend the selection down one page"
-msgstr ""
+msgstr "Zgjeroje përzgjedhjen poshtë me një faqe"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:89-79
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Lart"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:90-18
 msgid "Delete to beginning of word"
-msgstr ""
+msgstr "Fshi deri te fillimi i fjalës"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:90-72
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B "
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-18
 msgid "Delete to end of word"
-msgstr ""
+msgstr "Fshi deri te fundi i fjalës"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-66
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-18
 msgid "Delete to beginning of sentence"
-msgstr ""
+msgstr "Fshi deri te fillimi i fjalisë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-76
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Backspace"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Hapësirë"
+"--plus\">+</span><kbd>Backspace"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-18
 msgid "Delete to end of sentence"
-msgstr ""
+msgstr "Fshi deri në fund të fjalisë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-70
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Del"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>P"
+"--plus\">+</span><kbd>Del"
 
 #: html/cool-help.html%2Bdiv.div.h2:95-9
 msgid "Shortcut Keys for Tables"
-msgstr ""
+msgstr "Taste Shkurtoresh për Tabela"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:97-105
 msgid ""
@@ -809,9 +772,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:100-18
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:100-107
 msgid ""
@@ -821,9 +783,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:101-18
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Djathtas"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tastet Shigjetë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:101-113
 msgid ""
@@ -831,26 +792,24 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:102-18
-#, fuzzy
 msgid ""
 "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Arrow Keys"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Shigjetë Majtas"
+"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Tastet Shigjetë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:102-161
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:103-18
-#, fuzzy
 msgid ""
 "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>Arrow Keys"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Shigjetë Majtas"
+"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Tastet Shigjetë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:103-160
 #: html/cool-help.html%2Bdiv.div.table.tr.td:104-208
@@ -858,19 +817,18 @@ msgid "Like Alt, but only the active cell is modified"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:104-18
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow "
 "Keys"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>V"
+"plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tastet "
+"Shigjetë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:105-18
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:105-109
 msgid ""
@@ -879,9 +837,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:106-18
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:106-106
 msgid ""
@@ -891,13 +848,12 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:107-18
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Del"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>P"
+"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Del"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td.p:107-177
 msgid ""
@@ -922,11 +878,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h2:112-9
 msgid "Word processor functions"
-msgstr ""
+msgstr "Funksione përpunuesi teksti"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:114-18
 msgid "Insert footnote"
-msgstr ""
+msgstr "Futni poshtëshënim"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:114-60
 msgid ""
@@ -938,7 +894,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:115-18
 msgid "Insert endnote"
-msgstr ""
+msgstr "Futni fundshënim"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:115-59
 msgid ""
@@ -956,7 +912,6 @@ msgstr "Fut koment"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:116-59
 #: html/cool-help.html%2Bdiv.div.table.tr.td:161-59
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>C"
@@ -994,16 +949,15 @@ msgid ""
 "--plus\">+</span><kbd>Space"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Hapësirë"
+"--plus\">+</span><kbd>Space"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:122-18
 msgid "Insert line break"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:122-62
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:123-18
 msgid "Manual page break"
@@ -1012,22 +966,20 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.table.tr.td:123-62
 #: html/cool-help.html%2Bdiv.div.table.tr.td:231-78
 #: html/cool-help.html%2Bdiv.div.table.tr.td:288-85
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:124-18
 msgid "Column break (in multicolumnar text)"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:124-81
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Enter"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>P"
+"--plus\">+</span><kbd>Enter"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:125-18
 msgid ""
@@ -1036,9 +988,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:125-119
 #: html/cool-help.html%2Bdiv.div.table.tr.td:126-155
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:126-18
 msgid ""
@@ -1048,7 +999,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Lëvizje në Fletëllogaritje"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
@@ -1083,9 +1034,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-164
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Lart"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:139-18
 msgid ""
@@ -1094,9 +1044,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:139-168
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Lart"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:140-18
 msgid ""
@@ -1106,9 +1055,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:140-245
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Majtas"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-18
 msgid ""
@@ -1118,9 +1066,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Djathtas"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-18
 msgid ""
@@ -1130,9 +1077,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-221
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjeta Majtas"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Sipër"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-18
 msgid ""
@@ -1142,9 +1088,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-226
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Poshtë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-18
 msgid ""
@@ -1155,31 +1100,28 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-272
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Arrow"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Shigjetë Lart"
+"--plus\">+</span><kbd>Shigjetë"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "E shpie një fletë majtas"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-73
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Lart"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-80
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Lart"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-18
 msgid ""
@@ -1189,13 +1131,12 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-260
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Up"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>P"
+"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Page Up"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-18
 msgid ""
@@ -1205,13 +1146,12 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-248
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Down"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>P"
+"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Page Down"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""
@@ -1221,9 +1161,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-18
 msgid ""
@@ -1232,27 +1171,24 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-158
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-85
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tasti plus"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-90
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tasti minus"
 
 #: html/cool-help.html%2Bdiv.div.h2:154-9
 msgid "Cell formatting"
@@ -1300,7 +1236,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:172-18
 msgid "Standard date format"
-msgstr "Formati standard i datës"
+msgstr "Format standard datash"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:172-65
 msgid ""
@@ -1312,7 +1248,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:173-18
 msgid "Standard currency format"
-msgstr "Formati standard i monedhës"
+msgstr "Format standard monedhash"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:173-69
 msgid ""
@@ -1336,7 +1272,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:175-18
 msgid "Standard format"
-msgstr "Formati standard"
+msgstr "Format standard"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:175-60
 msgid ""
@@ -1356,7 +1292,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.table.tr.td:252-92
 #: html/cool-help.html%2Bdiv.div.table.tr.td:286-99
 msgid "Tab"
-msgstr ""
+msgstr "Tab"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:196-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:253-18
@@ -1367,28 +1303,29 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.table.tr.td:230-107
 #: html/cool-help.html%2Bdiv.div.table.tr.td:253-93
 #: html/cool-help.html%2Bdiv.div.table.tr.td:287-107
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Shigjetë Lart"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/cool-help.html%2Bdiv.div.h2:198-9
 #: html/cool-help.html%2Bdiv.div.h2:255-9
 msgid "Text selection and navigation in a textbox"
-msgstr ""
+msgstr "Përzgjedhje teksti dhe lëvizje në kuadrat tekstesh"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:220-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:277-18
+#, fuzzy
 msgid "Go and select text to start of textbox"
-msgstr ""
+msgstr "Kalo dhe përzgjidh tekst te fillimi i një dokumenti"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:224-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:281-18
+#, fuzzy
 msgid "Go and select text to end of textbox"
-msgstr ""
+msgstr "Kalo dhe përzgjidhi tekst deri te fundi i një dokumenti"
 
 #: html/cool-help.html%2Bdiv.div.h2:226-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "Shkurtore tastiere për Diapozitiva"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:228-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:285-18
@@ -1418,7 +1355,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:232-18
 msgid "Select all in slide"
-msgstr ""
+msgstr "Përzgjidh gjithçka te diapozitiv"
 
 #: html/cool-help.html%2Bdiv.div.h2:283-9
 msgid "Draw page keyboard shortcuts"
@@ -1430,22 +1367,23 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:289-18
 msgid "Select all in drawing page"
-msgstr ""
+msgstr "Përzgjidh gjithçka te faqe vizatimesh"
 
 #: html/cool-help.html%2Bdiv.h1:294-5
+#, fuzzy
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
+msgstr "Fletëllogaritje <span class=\"productname\">%productName</span>"
 
 #: html/cool-help.html%2Bdiv.p:295-5
 #: html/cool-help.html%2Bdiv.h3:333-5
-#, fuzzy
 msgid "Collaborative editing"
-msgstr "Formatimi i qelisë"
+msgstr "Përpunim në bashkëpunim"
 
 #: html/cool-help.html%2Bdiv.p:296-5
 #: html/cool-help.html%2Bdiv.h3:340-5
+#, fuzzy
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr ""
+msgstr "Fletëllogaritje <span class=\"productname\">%productName</span>"
 
 #: html/cool-help.html%2Bdiv.p:297-5
 #: html/cool-help.html%2Bdiv.h3:360-5
@@ -1455,7 +1393,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.p:298-5
 #: html/cool-help.html%2Bdiv.h3:368-5
 msgid "Editing documents"
-msgstr ""
+msgstr "Përpunim dokumentesh"
 
 #: html/cool-help.html%2Bdiv.p:299-5
 #: html/cool-help.html%2Bdiv.div.p:305-9
@@ -1464,91 +1402,92 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.h3:434-5
 #: html/cool-help.html%2Bdiv.div.h3:514-5
 msgid "Advanced features"
-msgstr ""
+msgstr "Veçori të thelluara"
 
 #: html/cool-help.html%2Bdiv.div.p:301-9
 #: html/cool-help.html%2Bdiv.div.h2:419-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr ""
+msgstr "Fletëllogaritje <span class=\"productname\">%productName</span>"
 
 #: html/cool-help.html%2Bdiv.div.p:302-9
 #: html/cool-help.html%2Bdiv.div.h3:421-5
 msgid "Editing spreadsheets"
-msgstr ""
+msgstr "Përpunim fletëllogaritjesh"
 
 #: html/cool-help.html%2Bdiv.div.p:303-9
 #: html/cool-help.html%2Bdiv.div.h3:424-5
 msgid "Formulas"
-msgstr ""
+msgstr "Formula"
 
 #: html/cool-help.html%2Bdiv.div.p:304-9
 #: html/cool-help.html%2Bdiv.div.h3:430-5
 msgid "Formatting spreadsheets"
-msgstr ""
+msgstr "Formatim fletëllogaritjesh"
 
 #: html/cool-help.html%2Bdiv.div.p:308-9
 #: html/cool-help.html%2Bdiv.div.h2:467-5
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr ""
+msgstr "Dokumente tekst <span class=\"productname\">%productName</span>"
 
 #: html/cool-help.html%2Bdiv.div.p:309-9
 #: html/cool-help.html%2Bdiv.div.h3:469-5
 msgid "Editing text documents"
-msgstr ""
+msgstr "Përpunim dokumentesh tekst"
 
 #: html/cool-help.html%2Bdiv.div.p:310-9
 #: html/cool-help.html%2Bdiv.div.h3:472-5
 msgid "Context menus"
-msgstr ""
+msgstr "Menu konteksti"
 
 #: html/cool-help.html%2Bdiv.div.p:311-9
 #: html/cool-help.html%2Bdiv.div.h3:482-5
 msgid "Advanced text document editor features"
-msgstr ""
+msgstr "Veçori të thelluar përpunuesi dokumentesh tekst"
 
 #: html/cool-help.html%2Bdiv.div.p:314-9
 #: html/cool-help.html%2Bdiv.div.h2:501-5
+#, fuzzy
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr ""
+msgstr "Fletëllogaritje <span class=\"productname\">%productName</span>"
 
 #: html/cool-help.html%2Bdiv.div.p:315-9
 #: html/cool-help.html%2Bdiv.div.h3:503-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "Përpunim paraqitjesh"
 
 #: html/cool-help.html%2Bdiv.div.p:316-9
 #: html/cool-help.html%2Bdiv.div.h3:506-5
 msgid "Slide show"
-msgstr ""
+msgstr "Shfaqje diapozitivash"
 
 #: html/cool-help.html%2Bdiv.div.p:317-9
 #: html/cool-help.html%2Bdiv.div.h3:510-5
 msgid "Slide pane"
-msgstr ""
+msgstr "Kuadrat diapozitash"
 
 #: html/cool-help.html%2Bdiv.p:320-5
 #: html/cool-help.html%2Bdiv.h2:523-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Pyetje të Bëra Rëndom"
 
 #: html/cool-help.html%2Bdiv.p:321-5
 msgid "General"
-msgstr ""
+msgstr "Të përgjithshme"
 
 #: html/cool-help.html%2Bdiv.div.p:323-9
 #: html/cool-help.html%2Bdiv.div.h3:554-5
 msgid "Text documents"
-msgstr ""
+msgstr "Dokumente tekst"
 
 #: html/cool-help.html%2Bdiv.div.p:326-9
 #: html/cool-help.html%2Bdiv.div.h3:618-5
 msgid "Spreadsheets"
-msgstr ""
+msgstr "Fletëllogaritje"
 
 #: html/cool-help.html%2Bdiv.div.p:329-9
 #: html/cool-help.html%2Bdiv.div.h3:646-5
 msgid "Presentations"
-msgstr ""
+msgstr "Paraqitje"
 
 #: html/cool-help.html%2Bdiv.p:331-5
 msgid ""
@@ -1630,11 +1569,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.ul.li.p:350-11
 msgid "Search backwards"
-msgstr ""
+msgstr "Kërko së prapthi"
 
 #: html/cool-help.html%2Bdiv.ul.li.p:351-11
 msgid "Search forward"
-msgstr ""
+msgstr "Kërkoni përpara"
 
 #: html/cool-help.html%2Bdiv.ul.li.p:352-11
 msgid "Cancel the search (appears only when a text has been searched)"
@@ -1713,7 +1652,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:370-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopjoje dhe Ngjite"
 
 #: html/cool-help.html%2Bdiv.p:371-5
 msgid ""
@@ -1744,7 +1683,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:373-5
 msgid "Document repair"
-msgstr ""
+msgstr "Riparim dokumentesh"
 
 #: html/cool-help.html%2Bdiv.p:374-5
 msgid ""
@@ -1770,7 +1709,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:378-5
 msgid "Inactive document"
-msgstr ""
+msgstr "Dokument joaktiv"
 
 #: html/cool-help.html%2Bdiv.p:379-5
 msgid ""
@@ -1789,7 +1728,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:382-5
 msgid "Pasting"
-msgstr ""
+msgstr "Ngjitje"
 
 #: html/cool-help.html%2Bdiv.p:383-5
 msgid ""
@@ -1827,7 +1766,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:390-5
 msgid "Adding charts"
-msgstr ""
+msgstr "Shtim grafikësh"
 
 #: html/cool-help.html%2Bdiv.p:391-5
 msgid ""
@@ -1873,7 +1812,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:404-5
 msgid "Handling images"
-msgstr ""
+msgstr "Trajtim figurash"
 
 #: html/cool-help.html%2Bdiv.p:405-5
 msgid ""
@@ -1903,9 +1842,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:409-5
-#, fuzzy
 msgid "Comments in documents"
-msgstr "Shko në fund të dokumentit"
+msgstr "Komente në dokumente"
 
 #: html/cool-help.html%2Bdiv.p:410-5
 msgid ""
@@ -1922,7 +1860,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:413-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "Kontroll drejtshkrimi"
 
 #: html/cool-help.html%2Bdiv.p:414-5
 msgid ""
@@ -2092,9 +2030,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h3:475-5
-#, fuzzy
 msgid "Formatting text"
-msgstr "Formatim Teksti"
+msgstr "Formatim teksti"
 
 #: html/cool-help.html%2Bdiv.div.p:476-5
 msgid ""
@@ -2133,7 +2070,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h4:483-5
 msgid "Handling Tables"
-msgstr ""
+msgstr "Trajtim Tabelash"
 
 #: html/cool-help.html%2Bdiv.div.p:484-5
 msgid ""
@@ -2152,7 +2089,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h4:487-5
 msgid "Track changes"
-msgstr ""
+msgstr "Ndiqi ndryshimet"
 
 #: html/cool-help.html%2Bdiv.div.p:488-5
 msgid ""
@@ -2170,7 +2107,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h4:491-5
 msgid "Other advanced features"
-msgstr ""
+msgstr "Veçori të tjera të thelluara"
 
 #: html/cool-help.html%2Bdiv.div.p:492-5
 msgid ""
@@ -2383,7 +2320,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:547-5
 msgid "Is there a thesaurus?"
-msgstr ""
+msgstr "A ka ndonjë fjalor sinonimik?"
 
 #: html/cool-help.html%2Bdiv.p:548-5
 msgid ""
@@ -2407,9 +2344,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h4:555-5
-#, fuzzy
 msgid "How do I get a word count of my document?"
-msgstr "Shko të fillim të dokumentit"
+msgstr "Si mund të kem një numërim të fjalëve të dokumentit tim?"
 
 #: html/cool-help.html%2Bdiv.div.p:556-5
 msgid ""
@@ -2438,7 +2374,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:562-11
 msgid "Place the cursor in the position to insert the character."
-msgstr ""
+msgstr "Vendoseni kursorin te pozicioni ku duhet futur shenja."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:564-9
 msgid ""
@@ -2521,9 +2457,8 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h4:584-5
-#, fuzzy
 msgid "How do I set the margins of the document?"
-msgstr "Shko të fillim të dokumentit"
+msgstr "Si t’i ujdis mënjanat e dokumentit?"
 
 #: html/cool-help.html%2Bdiv.div.p:585-5
 msgid ""
@@ -2533,7 +2468,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.p:586-5
 msgid "Using the page style"
-msgstr ""
+msgstr "Përdorim stili faqeje"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:588-11
 msgid ""
@@ -2543,7 +2478,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:589-11
 msgid "Set the page margins in the dialog."
-msgstr ""
+msgstr "Caktoni mënjana faqeje te dialogu"
 
 #: html/cool-help.html%2Bdiv.div.h4:592-5
 msgid "How do I change the page orientation to landscape inside my document"
@@ -2569,11 +2504,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:597-11
 msgid "Select Landscape in “With Page Style”"
-msgstr ""
+msgstr "Përzgjidhni “Së gjeri”, te “Me Stil Faqeje”"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:598-11
 msgid "Select if you want to change page numbering."
-msgstr ""
+msgstr "Përzgjidhni nëse doni të ndryshohet numërtimi i faqeve."
 
 #: html/cool-help.html%2Bdiv.div.p:600-5
 msgid ""
@@ -2587,7 +2522,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.p:602-5
 msgid "Directly:"
-msgstr ""
+msgstr "Drejtpërsëdrejti:"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:604-11
 msgid "Select the text with the existing format"
@@ -2607,7 +2542,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.p:608-5
 msgid "Applying a paragraph style:"
-msgstr ""
+msgstr "Aplikim i një stili paragrafësh:"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:610-11
 msgid "Place the cursor at the paragraph to be formatted"
@@ -2710,7 +2645,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h4:641-5
 msgid "How do I rename a sheet?"
-msgstr ""
+msgstr "Si ta riemërtoj një fletë?"
 
 #: html/cool-help.html%2Bdiv.div.p:642-5
 msgid ""
@@ -2753,7 +2688,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:659-11
 msgid "Set the properties of the element of the object."
-msgstr ""
+msgstr "Caktoni vetitë e elementit të objektit."
 
 #, fuzzy
 #~ msgid ""

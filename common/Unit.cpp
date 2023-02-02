@@ -25,7 +25,7 @@
 
 #include "Log.hpp"
 #include "Util.hpp"
-#include "test/testlog.hpp"
+#include <test/testlog.hpp>
 
 #include <common/SigUtil.hpp>
 #include <common/StringVector.hpp>
@@ -474,6 +474,71 @@ bool UnitBase::filterSendWebSocketMessage(const char* data, const std::size_t le
     return onFilterSendWebSocketMessage(data, len, code, flush, unitReturn);
 }
 
+void UnitBase::exitTest(TestResult result, const std::string& reason)
+{
+    // We could be called from either a SocketPoll (websrv_poll)
+    // or from invokeTest (coolwsd main).
+    std::lock_guard<std::mutex> guard(_lock);
+
+    if (isFinished())
+    {
+        if (result != _result)
+            LOG_TST("exitTest got " << name(result) << " but is already finished with "
+                                    << name(_result));
+        return;
+    }
+
+    if (result == TestResult::Ok)
+    {
+        LOG_TST("SUCCESS: exitTest: " << name(result) << (reason.empty() ? "" : ": " + reason));
+    }
+    else
+    {
+        LOG_TST("ERROR: FAILURE: exitTest: " << name(result)
+                                             << (reason.empty() ? "" : ": " + reason));
+
+        if (GlobalResult == TestResult::Ok)
+            GlobalResult = result;
+    }
+
+    _result = result;
+    endTest(reason);
+    _setRetValue = true;
+
+    // Notify inheritors.
+    onExitTest(result, reason);
+}
+
+void UnitBase::timeout()
+{
+    // Don't timeout if we had already finished.
+    if (isUnitTesting() && !isFinished())
+    {
+        LOG_TST("ERROR: Timed out waiting for unit test to complete within "
+                << _timeoutMilliSeconds);
+        exitTest(TestResult::TimedOut);
+    }
+}
+
+void UnitBase::returnValue(int& retValue)
+{
+    if (_setRetValue)
+        retValue = (_result == TestResult::Ok ? EX_OK : EX_SOFTWARE);
+}
+
+void UnitBase::endTest(const std::string& reason)
+{
+    LOG_TST("Ending test by stopping SocketPoll [" << _socketPoll->name() << "]: " << reason);
+    _socketPoll->joinThread();
+
+    // tell the timeout thread that the work has finished
+    TimeoutThreadMutex.unlock();
+    if (TimeoutThread.joinable())
+        TimeoutThread.join();
+
+    LOG_TST("==================== Finished [" << getTestname() << "] ====================");
+}
+
 UnitWSD::UnitWSD(const std::string& name)
     : UnitBase(name, UnitType::Wsd)
     , _hasKitHooks(false)
@@ -510,81 +575,22 @@ void UnitWSD::lookupTile(int part, int mode, int width, int height, int tilePosX
     }
 }
 
-UnitWSD& UnitWSD::get()
+void UnitWSD::DocBrokerDestroy(const std::string& key)
 {
-    assert(GlobalWSD);
-    return *GlobalWSD;
-}
-
-UnitKit::UnitKit(const std::string& name)
-    : UnitBase(name, UnitType::Kit)
-{
-}
-
-UnitKit::~UnitKit()
-{
-}
-
-UnitKit& UnitKit::get()
-{
-#if MOBILEAPP
-    if (!GlobalKit)
-        GlobalKit = new UnitKit("UnitKit");
-#endif
-
-    assert(GlobalKit);
-    return *GlobalKit;
-}
-
-void UnitBase::exitTest(TestResult result, const std::string& reason)
-{
-    // We could be called from either a SocketPoll (websrv_poll)
-    // or from invokeTest (coolwsd main).
-    std::lock_guard<std::mutex> guard(_lock);
-
-    if (isFinished())
+    if (isUnitTesting())
     {
-        if (result != _result)
-            LOG_TST("exitTest got " << name(result) << " but is already finished with "
-                                    << name(_result));
-        return;
-    }
+        onDocBrokerDestroy(key);
 
-    _result = result;
-    endTest(reason);
-    _setRetValue = true;
+        // We could be called from either a SocketPoll (websrv_poll)
+        // or from invokeTest (coolwsd main).
+        std::lock_guard<std::mutex> guard(_lock);
 
-    if (result == TestResult::Ok)
-    {
-        LOG_TST("SUCCESS: exitTest: " << name(result) << (reason.empty() ? "" : ": " + reason));
-    }
-    else
-    {
-        LOG_TST("ERROR: FAILURE: exitTest: " << name(result)
-                                             << (reason.empty() ? "" : ": " + reason));
-
-        if (GlobalResult == TestResult::Ok)
-            GlobalResult = result;
-
-        if (!GlobalTestOptions.getKeepgoing() && haveMoreTests())
+        // Check if we have more tests, but keep the current index if it's the last.
+        if (haveMoreTests())
         {
-            LOG_TST("Failing fast per options, even though there are more tests");
-#if !MOBILEAPP
-            LOG_TST("Setting TerminationFlag as the Test Suite failed");
-            SigUtil::setTerminationFlag(); // And wakupWorld.
-#else
-            SocketPoll::wakeupWorld();
-#endif
-            return;
-        }
-    }
-
-    // Check if we have more tests, but keep the current index if it's the last.
-    if (haveMoreTests())
-    {
-        // We have more tests.
-        ++GlobalIndex;
-        filter();
+            // We have more tests.
+            ++GlobalIndex;
+            filter();
 
         // Clear the shortcuts.
         GlobalKit = nullptr;
@@ -601,10 +607,38 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
                 GlobalWSD->configure(Poco::Util::Application::instance().config());
             GlobalArray[GlobalIndex]->initialize();
 
-            // Wake-up so the previous test stops.
+                // Wake-up so the previous test stops.
+                SocketPoll::wakeupWorld();
+                return;
+            }
+        }
+    }
+}
+
+UnitWSD& UnitWSD::get()
+{
+    assert(GlobalWSD);
+    return *GlobalWSD;
+}
+
+void UnitWSD::onExitTest(TestResult result, const std::string&)
+{
+    if (haveMoreTests())
+    {
+        if (result != TestResult::Ok && !GlobalTestOptions.getKeepgoing())
+        {
+            LOG_TST("Failing fast per options, even though there are more tests");
+#if !MOBILEAPP
+            LOG_TST("Setting TerminationFlag as the Test Suite failed");
+            SigUtil::setTerminationFlag(); // And wakupWorld.
+#else
             SocketPoll::wakeupWorld();
+#endif
             return;
         }
+
+        LOG_TST("Have more tests. Waiting for the DocBroker to destroy before starting them");
+        return;
     }
 
     // We are done with all the tests.
@@ -620,34 +654,40 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
 #endif
 }
 
-void UnitBase::timeout()
+UnitKit::UnitKit(const std::string& name)
+    : UnitBase(name, UnitType::Kit)
 {
-    // Don't timeout if we had already finished.
-    if (isUnitTesting() && !isFinished())
-    {
-        LOG_TST("ERROR: Timed out waiting for unit test to complete within "
-                << _timeoutMilliSeconds);
-        exitTest(TestResult::TimedOut);
-    }
 }
 
-void UnitBase::returnValue(int &retValue)
+UnitKit::~UnitKit() {}
+
+UnitKit& UnitKit::get()
 {
-    if (_setRetValue)
-        retValue = (_result == TestResult::Ok ? EX_OK : EX_SOFTWARE);
+#if MOBILEAPP
+    if (!GlobalKit)
+        GlobalKit = new UnitKit("UnitKit");
+#endif
+
+    assert(GlobalKit);
+    return *GlobalKit;
 }
 
-void UnitBase::endTest(const std::string& reason)
+void UnitKit::onExitTest(TestResult, const std::string&)
 {
-    LOG_TST("Ending test by stopping SocketPoll [" << _socketPoll->name() << "]: " << reason);
-    _socketPoll->joinThread();
+    // coolforkit doesn't link with CPPUnit.
+    // LOK_ASSERT_MESSAGE("UnitKit doesn't yet support multiple tests", !haveMoreTests());
 
-    // tell the timeout thread that the work has finished
-    TimeoutThreadMutex.unlock();
-    if (TimeoutThread.joinable())
-        TimeoutThread.join();
+    // // We are done with all the tests.
+    // TST_LOG_NAME("UnitBase", getTestname()
+    //                              << " was the last test. Finishing "
+    //                              << (GlobalResult == TestResult::Ok ? "SUCCESS" : "FAILED"));
 
-    LOG_TST("==================== Finished [" << getTestname() << "] ====================");
+#if !MOBILEAPP
+    // LOG_TST("Setting TerminationFlag as there are no more tests");
+    SigUtil::setTerminationFlag(); // And wakupWorld.
+#else
+    SocketPoll::wakeupWorld();
+#endif
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

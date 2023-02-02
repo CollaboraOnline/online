@@ -47,6 +47,23 @@ private:
     bool _isAuthenticated;
 };
 
+class MonitorSocketHandler : public AdminSocketHandler
+{
+public:
+    MonitorSocketHandler(Admin *admin, const std::string &uri);
+
+    int getPollEvents(std::chrono::steady_clock::time_point now,
+                      int64_t &timeoutMaxMicroS) override;
+
+    void performWrites(std::size_t capacity) override;
+
+    void onDisconnect() override;
+
+private:
+    bool _connecting;
+    std::string _uri;
+};
+
 class MemoryStatsTask;
 
 /// An admin command processor.
@@ -67,6 +84,12 @@ public:
     void start();
     void stop();
 
+    void startMonitors();
+
+    void updateMonitors(std::vector<std::string>& oldMonitors);
+
+    std::vector<std::string> getMonitorList();
+
     /// Custom poll thread function
     void pollingThread() override;
 
@@ -83,7 +106,7 @@ public:
     /// Calls with same pid will increment view count, if pid already exists
     void addDoc(const std::string& docKey, pid_t pid, const std::string& filename,
                 const std::string& sessionId, const std::string& userName, const std::string& userId,
-                const int smapsFD, const std::string& wopiHost);
+                const int smapsFD, const Poco::URI& wopiSrc);
 
     /// Decrement view count till becomes zero after which doc is removed
     void rmDoc(const std::string& docKey, const std::string& sessionId);
@@ -200,6 +223,9 @@ private:
     // Don't update any more frequently than this since it's excessive.
     static const int MinStatsIntervalMs;
     static const int DefStatsIntervalMs;
+
+    // map to make sure only connection with unique monitor uri exists
+    std::map<std::string, std::shared_ptr<MonitorSocketHandler>> _monitorSockets;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -136,7 +136,7 @@ load <pathname>
 
     Deprecated.
 
-load [part=<partNumber>] url=<url> [timestamp=<time>] [lang=<locale>] [deviceFormFactor=<device type>] [options=<options>]
+load [part=<partNumber>] url=<url> [timestamp=<time>] [lang=<locale>] [deviceFormFactor=<device type>] [timezone=<timezone>] [options=<options>]
 
     part is an optional parameter. <partNumber> is a number.
 
@@ -148,6 +148,8 @@ load [part=<partNumber>] url=<url> [timestamp=<time>] [lang=<locale>] [deviceFor
 
     deviceFormFactor specifies the form factor of the device the client is running on
     it can be one of the following: 'desktop', 'tablet', 'mobile'
+
+    timestamp is in tzfile(5) format. For example: Pacific/Auckland.
 
     options are the whole rest of the line, not URL-encoded, and must be valid JSON.
 
@@ -942,6 +944,16 @@ section). Others are just response messages to some client command.
     <pid> process id hosting the document
     reset the idle time counter for the document
 
+[*] updateroutetoken <JSON string>
+
+    <JSON string> contains the map of serverId as key and routeToken as value
+
+[*] routing_rmdoc <wopiSrc>
+
+    <wopiSrc> of the document that is getting removed
+    
+    note: This might get additional parameters in future
+    
 InvalidAuthToken
 
     This is sent when invalid auth token is provided in 'auth' command. See

@@ -24,6 +24,7 @@
 #include <cppunit/TestRunner.h>
 #include <cppunit/TextTestProgressListener.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
+#include <cppunit/extensions/HelperMacros.h>
 
 #include <Poco/RegularExpression.h>
 #include <Poco/DirectoryIterator.h>

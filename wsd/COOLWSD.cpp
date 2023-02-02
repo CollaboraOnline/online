@@ -273,10 +273,12 @@ inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>
 }
 #endif
 
+} // end anonymous namespace
+
 #if !MOBILEAPP
 /// Internal implementation to alert all clients
 /// connected to any document.
-void alertAllUsersInternal(const std::string& msg)
+void COOLWSD::alertAllUsersInternal(const std::string& msg)
 {
     std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
 
@@ -292,8 +294,6 @@ void alertAllUsersInternal(const std::string& msg)
     }
 }
 #endif
-
-} // end anonymous namespace
 
 void COOLWSD::writeTraceEventRecording(const char *data, std::size_t nbytes)
 {
@@ -367,7 +367,7 @@ void COOLWSD::checkDiskSpaceAndWarnClients(const bool cacheLastCheck)
         if (!fs.empty())
         {
             LOG_WRN("File system of [" << fs << "] is dangerously low on disk space.");
-            alertAllUsersInternal("error: cmd=internal kind=diskfull");
+            COOLWSD::alertAllUsersInternal("error: cmd=internal kind=diskfull");
         }
     }
     catch (const std::exception& exc)
@@ -873,6 +873,7 @@ bool COOLWSD::NoSeccomp = false;
 bool COOLWSD::AdminEnabled = true;
 bool COOLWSD::UnattendedRun = false;
 bool COOLWSD::SignalParent = false;
+std::string COOLWSD::RouteToken;
 #if ENABLE_DEBUG
 bool COOLWSD::SingleKit = false;
 #endif
@@ -1208,12 +1209,21 @@ public:
         fetchUnlockImageUrl(newAppConfig, remoteJson);
 #endif
 
+        fetchIndirectionEndpoint(newAppConfig, remoteJson);
+
+        fetchMonitors(newAppConfig, remoteJson);
+
         fetchRemoteFontConfig(newAppConfig, remoteJson);
+
+        // before resetting get monitors list
+        std::vector<std::string> oldMonitors = Admin::instance().getMonitorList();
+
         _persistConfig->reset(newAppConfig);
 
 #if ENABLE_FEATURE_LOCK
         CommandControl::LockManager::parseLockedHost(_conf);
 #endif
+        Admin::instance().updateMonitors(oldMonitors);
 
         HostUtil::parseAliases(_conf);
 
@@ -1521,6 +1531,74 @@ public:
         catch (const std::exception& exc)
         {
             LOG_ERR("Failed to fetch unlock_image, please check JSON format: " << exc.what());
+        }
+    }
+
+    void fetchIndirectionEndpoint(std::map<std::string, std::string>& newAppConfig,
+                                  Poco::JSON::Object::Ptr remoteJson)
+    {
+        try
+        {
+            Poco::JSON::Object::Ptr indirectionEndpoint =
+                remoteJson->getObject("indirection_endpoint");
+
+            std::string url;
+            if (JsonUtil::findJSONValue(indirectionEndpoint, "url", url))
+            {
+                newAppConfig.insert(std::make_pair("indirection_endpoint.url", url));
+            }
+        }
+        catch (const Poco::NullPointerException&)
+        {
+            LOG_INF("Overriding indirection_endpoint.url failed because the indirection_endpoint.url "
+                    "entry does not "
+                    "exist");
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR(
+                "Failed to fetch indirection_endpoint, please check JSON format: " << exc.what());
+        }
+    }
+
+    void fetchMonitors(std::map<std::string, std::string>& newAppConfig,
+                       Poco::JSON::Object::Ptr remoteJson)
+    {
+        Poco::JSON::Array::Ptr monitors;
+        try
+        {
+            monitors = remoteJson->getArray("monitors");
+        }
+        catch (const Poco::NullPointerException&)
+        {
+            LOG_INF("Overriding monitor failed because array "
+                    "does not exist");
+            return;
+        }
+
+        if (monitors.isNull() || monitors->size() == 0)
+        {
+            LOG_INF("Overriding monitors failed because array is empty or "
+                    "null");
+            return;
+        }
+        std::size_t i;
+        for (i = 0; i < monitors->size(); i++)
+            newAppConfig.insert(
+                std::make_pair("monitors.monitor[" + std::to_string(i) + ']', monitors->get(i).toString()));
+
+        //if number of monitors defined in configuration are greater than number of monitors
+        //fetched from json or if the number of monitors shrinks with new json,
+        //overwrite the remaining monitors from config file to empty strings
+        for (;; i++)
+        {
+            const std::string path =
+                "monitors.monitor[" + std::to_string(i) + ']';
+            if (!_conf.has(path))
+            {
+                break;
+            }
+            newAppConfig.insert(std::make_pair(path, ""));
         }
     }
 
@@ -2002,6 +2080,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "deepl.auth_key", ""},
         { "deepl.enabled", "false"},
         { "zotero.enable", "true"},
+        { "indirection_endpoint.url", ""}
     };
 
     // Set default values, in case they are missing from the config file.
@@ -5101,6 +5180,7 @@ public:
            << "\n  Security " << (COOLWSD::NoCapsForKit ? "no" : "") << " chroot, "
            << (COOLWSD::NoSeccomp ? "no" : "") << " api lockdown"
            << "\n  Admin: " << (COOLWSD::AdminEnabled ? "enabled" : "disabled")
+           << "\n  RouteToken: " << COOLWSD::RouteToken
 #endif
            << "\n  TerminationFlag: " << SigUtil::getTerminationFlag()
            << "\n  isShuttingDown: " << SigUtil::getShutdownRequestFlag()
@@ -5465,7 +5545,10 @@ int COOLWSD::innerMain()
     Server->start();
 
 #if defined(__EMSCRIPTEN__)
+    // It is not at all obvious that this is the ideal place to do the HULLO thing and call onopen
+    // on TheFakeWebSocket. But it seems to work.
     handle_cool_message("HULLO");
+    MAIN_THREAD_EM_ASM(window.TheFakeWebSocket.onopen(););
 #endif
 
     /// The main-poll does next to nothing:
@@ -5832,7 +5915,7 @@ void alertAllUsers(const std::string& cmd, const std::string& kind)
 
 void alertAllUsers(const std::string& msg)
 {
-    alertAllUsersInternal(msg);
+    COOLWSD::alertAllUsersInternal(msg);
 }
 
 }

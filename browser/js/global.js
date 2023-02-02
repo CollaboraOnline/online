@@ -672,6 +672,68 @@ window.app = {
 		}, false);
 	}
 
+	// indirect socket to wrap the asyncness around fetching the routetoken from indirection url endpoint
+	global.IndirectSocket = function(uri) {
+		var that = this;
+		this.uri = uri;
+		this.binaryType = '';
+		this.unloading = false;
+		this.readyState = 0; // connecting
+		this.innerSocket = undefined;
+
+		this.onclose = function() {};
+		this.onerror = function () {};
+		this.onmessage = function () {};
+		this.onopen = function () {};
+
+		this.close = function() {
+			this.innerSocket.onerror = function () {};
+			this.innerSocket.onclose = function () {};
+			this.innerSocket.onmessage = function () {};
+			this.innerSocket.close();
+		};
+
+		this.send = function(msg) {
+			this.innerSocket.send(msg);
+		};
+
+		this.setUnloading = function() {
+			this.unloading = true;
+		};
+
+		var http = new XMLHttpRequest();
+		http.open('GET', global.indirectionUrl + '?Uri=' + encodeURIComponent(that.uri), true);
+		http.responseType = 'json';
+		http.addEventListener('load', function() {
+			if (this.status === 200) {
+				var uriWithRouteToken = http.response.uri;
+				var params = (new URL(uriWithRouteToken)).searchParams;
+				global.routeToken = params.get('RouteToken');
+				that.innerSocket = new WebSocket(uriWithRouteToken);
+				that.innerSocket.binaryType = that.binaryType;
+				that.innerSocket.onerror = function() {
+					that.readyState = that.innerSocket.readyState;
+					that.onerror();
+				};
+				that.innerSocket.onclose = function() {
+					that.readyState = 3;
+					that.onclose();
+				};
+				that.innerSocket.onopen = function() {
+					that.readyState = 1;
+					that.onopen();
+				};
+				that.innerSocket.onmessage = function(e) {
+					that.readyState = that.innerSocket.readyState;
+					that.onmessage(e);
+				};
+			} else {
+				window.app.console.debug('Indirection url: error on incoming response ' + this.status);
+			}
+		});
+		http.send();
+	};
+
 	global.createWebSocket = function(uri) {
 		if ('processCoolUrl' in window) {
 			uri = window.processCoolUrl({ url: uri, type: 'ws' });
@@ -680,6 +742,9 @@ window.app = {
 		if (global.socketProxy) {
 			window.socketProxy = true;
 			return new global.ProxySocket(uri);
+		} else if (global.indirectionUrl != '') {
+			window.indirectSocket = true;
+			return new global.IndirectSocket(uri);
 		} else {
 			return new WebSocket(uri);
 		}
@@ -733,6 +798,9 @@ window.app = {
 				return encodeURIComponent(key) + '=' + encodeURIComponent(wopiParams[key]);
 			}).join('&');
 		}
+	} else if (window.ThisIsTheEmscriptenApp) {
+		// This is of course just a horrible temporary hack
+		global.docURL = 'file:///sample.docx';
 	} else {
 		global.docURL = filePath;
 	}
@@ -745,10 +813,14 @@ window.app = {
 
 	// Form a URI from the docUrl and wopiSrc and encodes.
 	// The docUrlParams, suffix, and wopiSrc are optionally hexified.
+	global.routeToken = '';
 	global.makeDocAndWopiSrcUrl = function (root, docUrlParams, suffix, wopiSrcParam) {
 		var wopiSrc = '';
 		if (global.wopiSrc != '') {
-			wopiSrc = '?WOPISrc=' + global.wopiSrc + '&compat=';
+			wopiSrc = '?WOPISrc=' + global.wopiSrc;
+			if (global.routeToken != '')
+				wopiSrc += '&RouteToken=' + global.routeToken;
+			wopiSrc += '&compat=';
 			if (wopiSrcParam && wopiSrcParam.length > 0)
 				wopiSrc += '&' + wopiSrcParam;
 		}
@@ -820,7 +892,10 @@ window.app = {
 
 	var lang = encodeURIComponent(global.getParameterByName('lang'));
 	global.queueMsg = [];
-	if (window.ThisIsAMobileApp)
+	if (window.ThisIsTheEmscriptenApp)
+		// Temporary hack
+		window.LANG = 'en-US';
+	else if (window.ThisIsAMobileApp)
 		window.LANG = lang;
 	if (global.socket && global.socket.readyState !== 3) {
 		global.socket.onopen = function () {
@@ -856,6 +931,9 @@ window.app = {
 						msg += ' spellOnline=' + spellOnline;
 					}
 				}
+
+				msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
+
 				global.socket.send(msg);
 			}
 		};

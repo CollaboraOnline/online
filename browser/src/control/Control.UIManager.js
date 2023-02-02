@@ -13,6 +13,7 @@ L.Control.UIManager = L.Control.extend({
 
 	onAdd: function (map) {
 		this.map = map;
+		var that = this;
 		this.notebookbar = null;
 		// Every time the UI mode changes from 'classic' to 'notebookbar'
 		// the two below elements will be destroyed.
@@ -37,6 +38,19 @@ L.Control.UIManager = L.Control.extend({
 
 		map.on('blockUI', this.blockUI, this);
 		map.on('unblockUI', this.unblockUI, this);
+
+		$('#toolbar-wrapper').on('click', function (event) {
+			if (event.target.parentElement.id === 'toolbar-up' || // checks if clicked on empty part of the toolbar on tabbed view
+				event.target.id === 'tb_editbar_item_item_64') // checks if clicked on empty part of the toolbar on compact view
+				that.map.fire('editorgotfocus');
+		});
+
+		$('.main-nav').on('click', function (event) {
+			if (event.target.parentElement.nodeName === 'NAV' || // checks if clicked on an container of an element
+				event.target.nodeName === 'NAV' || // checks if clicked on navigation bar itself
+				event.target.parentElement.id === 'document-titlebar') { // checks if clicked on the document titlebar container
+				that.map.fire('editorgotfocus');}
+		});
 	},
 
 	// UI initialization
@@ -814,7 +828,8 @@ L.Control.UIManager = L.Control.extend({
 	/// message2 - 2nd line of message
 	/// buttonText - text inside button
 	/// callback - callback on button press
-	showInfoModal: function(id, title, message1, message2, buttonText, callback) {
+	/// withCancel - specifies if needs cancal button also
+	showInfoModal: function(id, title, message1, message2, buttonText, callback, withCancel) {
 		var dialogId = 'modal-dialog-' + id;
 		var json = this._modalDialogJSON(id, title, true, [
 			{
@@ -839,6 +854,11 @@ L.Control.UIManager = L.Control.extend({
 				text: '',
 				enabled: true,
 				children: [
+					withCancel ? {
+						id: 'cancel',
+						type: 'pushbutton',
+						text: _('Cancel')
+					} : { type: 'container' },
 					{
 						id: 'response',
 						type: 'pushbutton',
@@ -858,6 +878,7 @@ L.Control.UIManager = L.Control.extend({
 
 		this.showModal(json, [
 			{id: 'response', func: function() { if (typeof callback === 'function') callback(); closeFunc(); }},
+			{id: 'cancel', func: function() { closeFunc(); }},
 			{id: '__POPOVER__', func: function() { closeFunc(); }}
 		]);
 	},
@@ -915,6 +936,60 @@ L.Control.UIManager = L.Control.extend({
 				if (typeof callback === 'function') {
 					var input = document.getElementById('input-modal-input');
 					callback(input.value);
+				}
+				closeFunc();
+			}},
+			{id: 'response-cancel', func: function() { closeFunc(); }},
+			{id: '__POPOVER__', func: function() { closeFunc(); }}
+		]);
+	},
+
+	/// shows simple confirm modal (message + (cancel + ok) button)
+	/// id - id of a dialog
+	/// title - title of a dialog
+	/// message - message
+	/// buttonText - text inside OK button
+	/// callback - callback on button press
+	showConfirmModal: function(id, title, message, buttonText, callback) {
+		var dialogId = 'modal-dialog-' + id;
+		var json = this._modalDialogJSON(id, title, !window.mode.isDesktop(), [
+			{
+				id: 'info-modal-label1',
+				type: 'fixedtext',
+				text: message
+			},
+			{
+				id: '',
+				type: 'buttonbox',
+				text: '',
+				enabled: true,
+				children: [
+					{
+						id: 'response-cancel',
+						type: 'pushbutton',
+						text: _('Cancel'),
+					},
+					{
+						id: 'response-ok',
+						type: 'pushbutton',
+						text: buttonText,
+						'has_default': true,
+					}
+				],
+				vertical: false,
+				layoutstyle: 'end'
+			},
+		]);
+
+		var closeFunc = function() {
+			var closeMessage = { id: dialogId, jsontype: 'dialog', type: 'modalpopup', action: 'close' };
+			app.socket._onMessage({ textMsg: 'jsdialog: ' + JSON.stringify(closeMessage) });
+		};
+
+		this.showModal(json, [
+			{id: 'response-ok', func: function() {
+				if (typeof callback === 'function') {
+					callback();
 				}
 				closeFunc();
 			}},

@@ -455,7 +455,7 @@ public:
     /// Sends the .uno:Save command to LoKit.
     bool sendUnoSave(const std::shared_ptr<ClientSession>& session, bool dontTerminateEdit = true,
                      bool dontSaveIfUnmodified = true, bool isAutosave = false,
-                     bool isExitSave = false, const std::string& extendedData = std::string());
+                     const std::string& extendedData = std::string());
 
     /// Sends a message to all sessions.
     /// Returns the number of sessions sent the message to.
@@ -584,12 +584,7 @@ private:
     /// (regardless of whether we need to or not).
     CanUpload canUploadToStorage() const
     {
-        if (!_storage)
-        {
-            return CanUpload::NoStorage;
-        }
-
-        return CanUpload::Yes;
+        return _storage ? CanUpload::Yes : CanUpload::NoStorage;
     }
 
     /// Encodes whether or not uploading is needed.
@@ -1451,6 +1446,9 @@ private:
 
     /// Embedded media map [id, json].
     std::map<std::string, std::string> _embeddedMedia;
+
+    /// True iff the config per_document.always_save_on_exit is true.
+    const bool _alwaysSaveOnExit;
 
     // Last member.
 #ifdef ENABLE_DEBUG

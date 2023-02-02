@@ -235,6 +235,23 @@ export class RowHeader extends cool.Header {
 		this._mouseOverEntry = null;
 	}
 
+	onMouseUp(): void {
+		super.onMouseUp();
+
+		if (!(this.containerObject.isDraggingSomething() && this._dragEntry)) {
+			const entry = this._mouseOverEntry;
+			let modifier = 0;
+
+			if (this._startSelectionEntry && this._startSelectionEntry.index !== entry.index) {
+				this._selectRow(this._startSelectionEntry.index, modifier);
+				modifier += UNOModifier.SHIFT;
+				this._selectRow(entry.index, modifier);
+			}
+
+			this._startSelectionEntry = null;
+		}
+	}
+
 	setOptimalHeightAuto(): void {
 		if (this._mouseOverEntry) {
 			const row = this._mouseOverEntry.index;

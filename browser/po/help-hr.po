@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-20 11:33+0200\n"
-"PO-Revision-Date: 2022-09-15 13:20+0000\n"
+"POT-Creation-Date: 2023-02-01 00:10+0200\n"
+"PO-Revision-Date: 2023-01-26 16:55+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/help/hr/>\n"
@@ -2722,7 +2722,6 @@ msgstr ""
 "teksta."
 
 #: html/cool-help.html%2Bdiv.h4:547-5
-#, fuzzy
 msgid "Is there a thesaurus?"
 msgstr "Postoji li tezaurus?"
 

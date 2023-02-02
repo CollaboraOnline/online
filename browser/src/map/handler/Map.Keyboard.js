@@ -332,7 +332,9 @@ L.Map.Keyboard = L.Handler.extend({
 	// any 'beforeinput', 'keypress' and 'input' events that would add
 	// printable characters. Those are handled by TextInput.js.
 	_onKeyDown: function (ev) {
-		if (this._map.uiManager.isUIBlocked() || (this._map.isReadOnlyMode() && !this.readOnlyAllowedShortcuts(ev)))
+		if (this._map.uiManager.isUIBlocked() || (this._map.isReadOnlyMode() && !this.readOnlyAllowedShortcuts(ev))
+			|| ((this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') && this._map._docLayer._preview.partsFocused === true)
+		)
 			return;
 
 		var completeEvent = app.socket.createCompleteTraceEvent('L.Map.Keyboard._onKeyDown', { type: ev.type, charCode: ev.charCode });
@@ -358,6 +360,27 @@ L.Map.Keyboard = L.Handler.extend({
 			&& this._map.jsdialog.handleKeyEvent(ev)) {
 			ev.preventDefault();
 			return;
+		}
+		else if (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing' && this._map._docLayer._preview.partsFocused === true) {
+			if (!this.modifier && (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.RIGHT || ev.keyCode === this.keyCodes.LEFT
+				|| ev.keyCode === this.keyCodes.DELETE || ev.keyCode === this.keyCodes.BACKSPACE) && ev.type === 'keydown') {
+				var partToSelect = (ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.LEFT) ? 'prev' : 'next';
+				var deletePart = (ev.keyCode === this.keyCodes.DELETE || ev.keyCode === this.keyCodes.BACKSPACE) ? true: false;
+
+				if (!deletePart) {
+					this._map.setPart(partToSelect);
+					if (app.file.fileBasedView)
+						this._map._docLayer._checkSelectedPart();
+				}
+				else if (this._map.isEditMode() && !app.file.fileBasedView) {
+					this._map.deletePage(this._map._docLayer._selectedPart);
+				}
+				ev.preventDefault();
+				return;
+			}
+			else {
+				this._map._docLayer._preview.partsFocused = false;
+			}
 		}
 	},
 
@@ -481,7 +504,6 @@ L.Map.Keyboard = L.Handler.extend({
 				// key ignored
 			}
 			else if (ev.type === 'keydown') {
-				// window.app.console.log(e);
 				if (this.handleOnKeyDownKeys[keyCode] && charCode === 0) {
 					if (keyEventFn) {
 						keyEventFn('input', charCode, unoKeyCode);
@@ -771,6 +793,16 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		// comment insert
 		else if (e.key === 'c' && e.altKey && e.altKey && e.ctrlKey && this._map.isPermissionEditForComments())
+			return true;
+		// full-screen presentation
+		else if (e.type === 'keydown' && e.keyCode === this.keyCodes.F5 && this._map._docLayer._docType === 'presentation')
+			return true;
+		// moving around
+		else if (!this.modifier && (e.keyCode === this.keyCodes.pageUp || e.keyCode === this.keyCodes.pageDown) && e.type === 'keydown')
+			return true;
+		else if (!this.modifier && (e.keyCode === this.keyCodes.END || e.keyCode === this.keyCodes.HOME) && e.type === 'keydown')
+			return true;
+		else if (e.type === 'keydown' && e.keyCode in this._panKeys)
 			return true;
 
 		return false;
