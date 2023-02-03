@@ -28,6 +28,7 @@ L.Control.DocumentRepair = L.Control.extend({
 					response: 0
 				},
 			],
+			'init_focus_id': 'ok',
 			enabled: true,
 			children: [
 				{
