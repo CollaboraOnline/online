@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-01 00:10+0100\n"
-"PO-Revision-Date: 2023-01-22 13:13+0000\n"
+"PO-Revision-Date: 2023-02-03 04:57+0000\n"
 "Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15.1\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1125,7 +1125,6 @@ msgstr "Guardar como"
 #: src/control/Control.NotebookbarDraw.js:147
 #: src/control/Control.NotebookbarImpress.js:181
 #: src/control/Control.NotebookbarWriter.js:143
-#, fuzzy
 msgid "Export As"
 msgstr "Exportar como"
 
@@ -1571,13 +1570,16 @@ msgstr "Clave API de Zotero es incorrecta"
 
 #: src/control/Control.Zotero.js:184
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Advertencia de Zotero"
 
 #: src/control/Control.Zotero.js:185
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"El documento contiene algunas citas que pueden ser inaccesibles a través de "
+"la API web. Esto puede causar algunos problemas al editar citas o "
+"bibliografía."
 
 #: src/control/Control.Zotero.js:241 src/core/Socket.js:1153
 msgid "Loading..."
@@ -1601,11 +1603,11 @@ msgstr "Marcadores"
 
 #: src/control/Control.Zotero.js:402
 msgid "Footnotes"
-msgstr ""
+msgstr "Notas a pie de página"
 
 #: src/control/Control.Zotero.js:402
 msgid "Endnotes"
-msgstr ""
+msgstr "Notas finales"
 
 #: src/control/Control.Zotero.js:466
 msgid "My Publications"
@@ -1661,13 +1663,15 @@ msgstr "No se pudieron cargar los elementos"
 
 #: src/control/Control.Zotero.js:1138
 msgid "Citation warning"
-msgstr ""
+msgstr "Aviso de cita"
 
 #: src/control/Control.Zotero.js:1139
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Una vez introducidas las citaciones, su almacenamiento y tipo de "
+"visualización no pueden modificarse."
 
 #: src/control/Control.Zotero.js:1140 src/control/Control.Zotero.js:1439
 msgid "Confirm"
@@ -2081,11 +2085,11 @@ msgstr "Se está cambiando el nombre del archivo y se recargará pronto"
 
 #: src/core/Socket.js:1273
 msgid "Exported to storage"
-msgstr ""
+msgstr "Exportado al almacén"
 
 #: src/core/Socket.js:1273
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Exportado con éxito: "
 
 #: src/core/Socket.js:1568
 msgid ""
