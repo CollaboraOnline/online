@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-01 00:10+0100\n"
-"PO-Revision-Date: 2023-01-23 18:12+0000\n"
+"PO-Revision-Date: 2023-02-03 04:57+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <="
-" 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 "X-Generator: Weblate 4.16-dev\n"
 
 #: admin/admin.strings.js:6
@@ -1126,7 +1126,6 @@ msgstr "Uložit jako"
 #: src/control/Control.NotebookbarDraw.js:147
 #: src/control/Control.NotebookbarImpress.js:181
 #: src/control/Control.NotebookbarWriter.js:143
-#, fuzzy
 msgid "Export As"
 msgstr "Exportovat jako"
 
@@ -1572,13 +1571,16 @@ msgstr "Klíč API pro Zotero není správný"
 
 #: src/control/Control.Zotero.js:184
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Upozornění o Zoteru"
 
 #: src/control/Control.Zotero.js:185
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Některé citace obsažené v tomto dokumentu nemusí být prostřednictvím "
+"webového API dostupné. To může při úpravách citací nebo seznamu použité "
+"literatury způsobovat problémy."
 
 #: src/control/Control.Zotero.js:241 src/core/Socket.js:1153
 msgid "Loading..."
@@ -1602,11 +1604,11 @@ msgstr "Záložky"
 
 #: src/control/Control.Zotero.js:402
 msgid "Footnotes"
-msgstr ""
+msgstr "Poznámky pod čarou"
 
 #: src/control/Control.Zotero.js:402
 msgid "Endnotes"
-msgstr ""
+msgstr "Vysvětlivky"
 
 #: src/control/Control.Zotero.js:466
 msgid "My Publications"
@@ -1662,13 +1664,13 @@ msgstr "Nepodařilo se načíst položky"
 
 #: src/control/Control.Zotero.js:1138
 msgid "Citation warning"
-msgstr ""
+msgstr "Upozornění o citacích"
 
 #: src/control/Control.Zotero.js:1139
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
-msgstr ""
+msgstr "Po zadání citací nelze měnit jejich úložiště a typ zobrazení."
 
 #: src/control/Control.Zotero.js:1140 src/control/Control.Zotero.js:1439
 msgid "Confirm"
@@ -2086,11 +2088,11 @@ msgstr "Dokument se právě přejmenovává a brzy se znovu načte"
 
 #: src/core/Socket.js:1273
 msgid "Exported to storage"
-msgstr ""
+msgstr "Exportováno do úložiště"
 
 #: src/core/Socket.js:1273
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Úspěšně exportováno: "
 
 #: src/core/Socket.js:1568
 msgid ""
