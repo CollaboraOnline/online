@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-01 00:10+0100\n"
+"POT-Creation-Date: 2023-02-03 12:49+0100\n"
 "PO-Revision-Date: 2020-12-08 13:30+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Amharic <https://hosted.weblate.org/projects/collabora-online/"
@@ -213,7 +213,7 @@ msgstr "ማነቃቂያ"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:433
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:434
 #: src/control/Control.StatusBar.js:329
 msgid "None"
 msgstr "ምንም"
@@ -269,8 +269,8 @@ msgstr "በ እርግጥ ይህን ክፍል ጊዜ ማጥፋት ይፈልጋሉ
 #: src/control/Control.DocumentRepair.js:67 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:320 src/control/Control.Zotero.js:332
 #: src/control/Control.Zotero.js:370 src/control/Toolbar.js:749
-#: src/control/Toolbar.js:944 src/core/Socket.js:1052 src/core/Socket.js:1273
-#: src/map/handler/Map.Feedback.js:83
+#: src/control/Toolbar.js:947 src/core/Socket.js:1052 src/core/Socket.js:1273
+#: src/map/handler/Map.Feedback.js:83 src/map/handler/Map.WOPI.js:440
 msgid "OK"
 msgstr "እሺ"
 
@@ -369,7 +369,7 @@ msgstr "ይህ ሰርቨር %0 ስህተት ገጥሞታል ትእዛዙን በ 
 msgid "Unlock"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:943
+#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:946
 msgid "Delete"
 msgstr ""
 
@@ -445,130 +445,130 @@ msgstr ""
 msgid "Accept"
 msgstr "እቀበላለሁ"
 
-#: src/control/Control.JSDialogBuilder.js:146
+#: src/control/Control.JSDialogBuilder.js:147
 #: src/control/Control.StatusBar.js:327
 msgid "Sum"
 msgstr "ድምር"
 
-#: src/control/Control.JSDialogBuilder.js:147
+#: src/control/Control.JSDialogBuilder.js:148
 #: src/control/Control.StatusBar.js:322
 msgid "Average"
 msgstr "መካከለኛ"
 
-#: src/control/Control.JSDialogBuilder.js:148
+#: src/control/Control.JSDialogBuilder.js:149
 msgid "Min"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:149
+#: src/control/Control.JSDialogBuilder.js:150
 msgid "Max"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:150
+#: src/control/Control.JSDialogBuilder.js:151
 #: src/control/Control.StatusBar.js:324
 msgid "Count"
 msgstr "መቁጠሪያ"
 
-#: src/control/Control.JSDialogBuilder.js:436
+#: src/control/Control.JSDialogBuilder.js:437
 msgid "Solid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:439
+#: src/control/Control.JSDialogBuilder.js:440
 msgid "Linear"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:442
+#: src/control/Control.JSDialogBuilder.js:443
 msgid "Axial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:445
+#: src/control/Control.JSDialogBuilder.js:446
 msgid "Radial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:448
+#: src/control/Control.JSDialogBuilder.js:449
 msgid "Ellipsoid"
 msgstr "ኤሊፕሶዪድ"
 
-#: src/control/Control.JSDialogBuilder.js:452
+#: src/control/Control.JSDialogBuilder.js:453
 msgid "Quadratic"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:455
+#: src/control/Control.JSDialogBuilder.js:456
 msgid "Square"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:458
+#: src/control/Control.JSDialogBuilder.js:459
 msgid "Fixed size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1371
+#: src/control/Control.JSDialogBuilder.js:1372
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1374
+#: src/control/Control.JSDialogBuilder.js:1375
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1377
+#: src/control/Control.JSDialogBuilder.js:1378
 msgid "Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1477
+#: src/control/Control.JSDialogBuilder.js:1478
 #, fuzzy
 msgid "Select range"
 msgstr "ለውጡን አልቀበልም"
 
-#: src/control/Control.JSDialogBuilder.js:1526
+#: src/control/Control.JSDialogBuilder.js:1527
 #: src/control/Control.NotebookbarBuilder.js:237
 #, fuzzy
 msgid "Font Name"
 msgstr "ፊደል"
 
-#: src/control/Control.JSDialogBuilder.js:1528 src/control/Toolbar.js:123
+#: src/control/Control.JSDialogBuilder.js:1529 src/control/Toolbar.js:123
 #, fuzzy
 msgid "Font Size"
 msgstr "ፊደል"
 
-#: src/control/Control.JSDialogBuilder.js:1530
+#: src/control/Control.JSDialogBuilder.js:1531
 #: src/control/Control.TopToolbar.js:499
 msgid "Style"
 msgstr "ዘዴ"
 
-#: src/control/Control.JSDialogBuilder.js:2043
+#: src/control/Control.JSDialogBuilder.js:2044
 #, fuzzy
 msgid "reply"
 msgstr "መመለሻ"
 
-#: src/control/Control.JSDialogBuilder.js:2046
+#: src/control/Control.JSDialogBuilder.js:2047
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2057
+#: src/control/Control.JSDialogBuilder.js:2058
 #: src/layer/tile/CanvasTileLayer.js:5114
 #: src/layer/tile/CanvasTileLayer.js:5125
 #: src/layer/tile/CommentListSection.ts:851
 msgid "Comment"
 msgstr "አስተያየት"
 
-#: src/control/Control.JSDialogBuilder.js:2120
+#: src/control/Control.JSDialogBuilder.js:2121
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2757
+#: src/control/Control.JSDialogBuilder.js:2758
 #, fuzzy
 msgid "Cell borders"
 msgstr "ድንበሮች"
 
-#: src/control/Control.JSDialogBuilder.js:2968
+#: src/control/Control.JSDialogBuilder.js:2969
 #: src/control/Control.Menubar.js:773
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2969
+#: src/control/Control.JSDialogBuilder.js:2970
 #: src/control/Control.Menubar.js:776
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2989
+#: src/control/Control.JSDialogBuilder.js:2990
 #, fuzzy
 msgid "Insert Table"
 msgstr "ሰንጠረዥ ማስገቢያ"
@@ -1955,11 +1955,11 @@ msgstr ""
 msgid "Link"
 msgstr ""
 
-#: src/control/Toolbar.js:938
+#: src/control/Toolbar.js:941
 msgid "Are you sure you want to delete this slide?"
 msgstr "በ እርግጥ ይህን ተንሸራታች ማጥፋት ይፈልጋሉ?"
 
-#: src/control/Toolbar.js:941
+#: src/control/Toolbar.js:944
 msgid "Are you sure you want to delete this page?"
 msgstr "በ እርግጥ ይህን ገጽ ማጥፋት ይፈልጋሉ?"
 
@@ -2470,7 +2470,15 @@ msgstr ""
 msgid "Creating new file from template..."
 msgstr "አዲስ ፋይል ከ ቴምፕሌት ውስጥ በ መፍጠር ላይ..."
 
-#: src/map/handler/Map.WOPI.js:446
+#: src/map/handler/Map.WOPI.js:440
+msgid "Error"
+msgstr ""
+
+#: src/map/handler/Map.WOPI.js:440
+msgid "File name should contain an extension."
+msgstr ""
+
+#: src/map/handler/Map.WOPI.js:448
 msgid "Creating copy..."
 msgstr "ኮፒ በ መፍጠር ላይ..."
 
