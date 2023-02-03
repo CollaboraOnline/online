@@ -13,18 +13,18 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-01 00:10+0100\n"
-"PO-Revision-Date: 2023-01-22 13:13+0000\n"
+"PO-Revision-Date: 2023-02-03 04:57+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<"
-"12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) ||"
-" (n%100>=12 && n%100<=14) ? 2 : 3);\n"
-"X-Generator: Weblate 4.15.1\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1128,7 +1128,6 @@ msgstr "Zapisz jako"
 #: src/control/Control.NotebookbarDraw.js:147
 #: src/control/Control.NotebookbarImpress.js:181
 #: src/control/Control.NotebookbarWriter.js:143
-#, fuzzy
 msgid "Export As"
 msgstr "Eksportuj jako"
 
@@ -1574,13 +1573,16 @@ msgstr "Klucz API Zotero jest nieprawidłowy"
 
 #: src/control/Control.Zotero.js:184
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Ostrzeżenie o Zotero"
 
 #: src/control/Control.Zotero.js:185
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Dokument zawiera cytaty, które mogą być niedostępne za pośrednictwem "
+"internetowego interfejsu API. Może to powodować pewne problemy podczas "
+"edycji cytatów lub bibliografii."
 
 #: src/control/Control.Zotero.js:241 src/core/Socket.js:1153
 msgid "Loading..."
@@ -1604,11 +1606,11 @@ msgstr "Zakładki"
 
 #: src/control/Control.Zotero.js:402
 msgid "Footnotes"
-msgstr ""
+msgstr "Przypisy dolne"
 
 #: src/control/Control.Zotero.js:402
 msgid "Endnotes"
-msgstr ""
+msgstr "Przypisy końcowe"
 
 #: src/control/Control.Zotero.js:466
 msgid "My Publications"
@@ -1664,13 +1666,15 @@ msgstr "Nie udało się załadować elementów"
 
 #: src/control/Control.Zotero.js:1138
 msgid "Citation warning"
-msgstr ""
+msgstr "Ostrzeżenie o cytowaniu"
 
 #: src/control/Control.Zotero.js:1139
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Po wstawieniu cytatów nie można zmienić ich sposobu przechowywania i "
+"wyświetlania."
 
 #: src/control/Control.Zotero.js:1140 src/control/Control.Zotero.js:1439
 msgid "Confirm"
@@ -2086,11 +2090,11 @@ msgstr ""
 
 #: src/core/Socket.js:1273
 msgid "Exported to storage"
-msgstr ""
+msgstr "Wyeksportowano do pamięci"
 
 #: src/core/Socket.js:1273
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Pomyślnie wyeksportowano: "
 
 #: src/core/Socket.js:1568
 msgid ""
