@@ -237,20 +237,28 @@ namespace COOLProtocol
     /// can only potentially be modifying, e.g. 'mouse' while dragging.
     /// Note: this is only used when we don't have the modified flag from
     /// Core so we flag the document as user-modified more accurately.
-    inline bool tokenIndicatesDocumentModification(const std::string& token)
+    inline bool tokenIndicatesDocumentModification(const StringVector& tokens)
     {
         // These keywords are chosen to cover the largest set of
         // commands that may potentially modify the document.
         // We need to assume modification rather than not.
-        return (
-            token.find("mouse") != std::string::npos || token.find("key") != std::string::npos ||
-            token.find("command") != std::string::npos ||
-            token.find("select") != std::string::npos || token.find("set") != std::string::npos ||
-            token.find("uno") != std::string::npos || token.find("input") != std::string::npos ||
-            token.find("move") != std::string::npos || token.find("paste") != std::string::npos ||
-            token.find("insert") != std::string::npos ||
-            token.find("resize") != std::string::npos ||
-            token.find("remove") != std::string::npos || token.find("sign") != std::string::npos);
+        if (tokens.equals(0, "key") || tokens.equals(0, "outlinestate") ||
+            tokens.equals(0, "paste") || tokens.equals(0, "insertfile") ||
+            tokens.equals(0, "textinput") || tokens.equals(0, "windowkey") ||
+            tokens.equals(0, "windowmouse") || tokens.equals(0, "windowgesture") ||
+            tokens.equals(0, "signdocument"))
+        {
+            return true;
+        }
+
+        if (tokens.size() > 1 && tokens.equals(0, "uno"))
+        {
+            // By default, all uno commands are modifying, unless we are certain they don't.
+            return !tokens.equals(1, ".uno:SidebarHide") && !tokens.equals(1, ".uno:SidebarShow") &&
+                   !tokens.equals(1, ".uno:Copy") && !tokens.equals(1, ".uno:Save");
+        }
+
+        return false;
     }
 
     /// Returns the first line of a message.
