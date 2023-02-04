@@ -457,10 +457,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // Keep track of timestamps of incoming client messages that indicate user activity.
         updateLastActivityTime();
         docBroker->updateLastActivityTime();
-        if (COOLProtocol::tokenIndicatesDocumentModification(tokens[0]))
-        {
-            docBroker->updateLastModifyingActivityTime();
-        }
 
         if (isEditable() && isViewLoaded())
         {
@@ -786,6 +782,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             }
             else
             {
+                docBroker->updateLastModifyingActivityTime();
                 return forwardToChild(std::string(buffer, length), docBroker);
             }
         }
@@ -1020,6 +1017,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         if (tokens.equals(0, "key"))
             _keyEvents++;
+
+        if (COOLProtocol::tokenIndicatesDocumentModification(tokens))
+        {
+            docBroker->updateLastModifyingActivityTime();
+        }
 
         if (!filterMessage(firstLine))
         {

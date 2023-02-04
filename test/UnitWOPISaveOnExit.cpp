@@ -55,7 +55,6 @@ public:
         assertGetFileCount();
     }
 
-
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
