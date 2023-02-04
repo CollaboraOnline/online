@@ -1339,8 +1339,10 @@ bool ClientSession::filterMessage(const std::string& message) const
             LOG_WRN("No value of id in downloadas message");
         }
     }
-    else if (tokens.equals(0, "gettextselection") || tokens.equals(0, ".uno:Copy"))
+    else if (tokens.equals(0, "gettextselection"))
     {
+        // Copying/pasting *within* the document is fine,
+        // so keep .uno:Copy and .uno:Paste, but exporting is not.
         if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
         {
             allowed = false;
