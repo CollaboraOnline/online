@@ -779,7 +779,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "moveselectedclientparts"))
     {
-        if(!_isTextDocument)
+        if (!_isTextDocument)
         {
             int nPosition;
             if (tokens.size() != 2 ||
