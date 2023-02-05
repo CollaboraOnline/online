@@ -181,7 +181,7 @@ public:
 /// This test simulates an expired token when uploading.
 class UnitWOPIExpiredToken : public WopiTestServer
 {
-    STATE_ENUM(Phase, Load, WaitLoadStatus, ModifyAndClose, WaitPutFile, Done) _phase;
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitPutFile, Done) _phase;
 
 public:
     UnitWOPIExpiredToken()
@@ -224,7 +224,11 @@ public:
         LOG_TST("onDocumentLoaded: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
-        TRANSITION_STATE(_phase, Phase::ModifyAndClose);
+        TRANSITION_STATE(_phase, Phase::WaitPutFile);
+
+        WSD_CMD("key type=input char=97 key=0");
+        WSD_CMD("key type=up char=0 key=512");
+        WSD_CMD("closedocument");
 
         return true;
     }
@@ -260,16 +264,6 @@ public:
                 break;
             }
             case Phase::WaitLoadStatus:
-                break;
-            case Phase::ModifyAndClose:
-            {
-                TRANSITION_STATE(_phase, Phase::WaitPutFile);
-
-                WSD_CMD("key type=input char=97 key=0");
-                WSD_CMD("key type=up char=0 key=512");
-                WSD_CMD("closedocument");
-                break;
-            }
             case Phase::WaitPutFile:
             case Phase::Done:
             {
