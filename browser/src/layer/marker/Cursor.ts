@@ -80,6 +80,11 @@ class Cursor {
 			}
 		}
 	}
+	setMouseCursorForTextBox() {
+		if (this.domAttached && this.container && this.container.querySelector('.blinking-cursor') !== null) {
+			$('.leaflet-interactive').css('cursor', 'text');
+		}
+	}
 
 	remove() {
 		this.map.off('splitposchanged', this.update, this);
