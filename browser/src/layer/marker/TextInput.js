@@ -433,7 +433,7 @@ L.TextInput = L.Layer.extend({
 			// Display caret
 			this._map._docLayer._cursorMarker.add();
 		}
-		this._map._docLayer._cursorMarker.setMouseCursor();
+		this._map._docLayer._cursorMarker.setMouseCursorForTextBox();
 
 		// Move and display under-caret marker
 		if (L.Browser.touch) {
