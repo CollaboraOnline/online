@@ -293,8 +293,8 @@ namespace RenderTiles
                 pngPool.pushWork([=,&output,&pixmap,&tiles,&renderedTiles,
                                   &pngMutex,&deltaGen]()
                     {
-                        auto data = std::shared_ptr<std::vector< char >>(new std::vector< char >());
-                        data->reserve(pixmapWidth * pixmapHeight * 1);
+                        std::vector< char > data;
+                        data.reserve(pixmapWidth * pixmapHeight * 1);
 
                         // FIXME: don't try to store & create deltas for read-only documents.
                         if (tiles[tileIndex].getId() < 0) // not a preview
@@ -311,14 +311,14 @@ namespace RenderTiles
                                                          tileCombined.getPart(),
                                                          canonicalViewId
                                                          ),
-                                                     *data, wireId, forceKeyframe);
+                                                     data, wireId, forceKeyframe);
                         }
                         else
                         {
                             // FIXME: write our own trivial PNG encoding code using deflate.
                             LOG_TRC("Encode a new png for tile #" << tileIndex);
                             if (!Png::encodeSubBufferToPNG(pixmap.data(), offsetX, offsetY, pixelWidth, pixelHeight,
-                                                           pixmapWidth, pixmapHeight, *data, mode))
+                                                           pixmapWidth, pixmapHeight, data, mode))
                             {
                                 // FIXME: Return error.
                                 // sendTextFrameAndLogError("error: cmd=tile kind=failure");
@@ -327,10 +327,10 @@ namespace RenderTiles
                             }
                         }
 
-                        LOG_TRC("Tile " << tileIndex << " is " << data->size() << " bytes.");
+                        LOG_TRC("Tile " << tileIndex << " is " << data.size() << " bytes.");
                         std::unique_lock<std::mutex> pngLock(pngMutex);
-                        output.insert(output.end(), data->begin(), data->end());
-                        pushRendered(renderedTiles, tiles[tileIndex], wireId, data->size());
+                        output.insert(output.end(), data.begin(), data.end());
+                        pushRendered(renderedTiles, tiles[tileIndex], wireId, data.size());
                     });
             }
             tileIndex++;
