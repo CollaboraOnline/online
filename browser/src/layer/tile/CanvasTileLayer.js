@@ -4430,7 +4430,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			var formula = this._lastFormula;
 			var targetURL = formula.substring(11, formula.length - 1).split(',')[0];
 			targetURL = targetURL.split('"').join('');
-			targetURL = this._map.makeURLFromStr(targetURL);
+			if (targetURL.startsWith('#')) {
+				targetURL = targetURL.split(';')[0];
+			} else {
+				targetURL = this._map.makeURLFromStr(targetURL);
+			}
 
 			this._closeURLPopUp();
 			if (targetURL) {
