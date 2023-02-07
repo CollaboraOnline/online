@@ -2402,58 +2402,55 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_showURLPopUp: function(position, url) {
-		// # for internal links
-		if (!url.startsWith('#')) {
-			var parent = L.DomUtil.create('div');
-			var link = L.DomUtil.createWithId('a', 'hyperlink-pop-up', parent);
-			link.innerText = url;
-			var copyBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-copy', parent);
-			L.DomUtil.addClass(copyBtn, 'hyperlink-popup-btn');
-			copyBtn.setAttribute('title', _('Copy link location'));
-			var imgCopyBtn = L.DomUtil.create('img', 'hyperlink-pop-up-copyimg', copyBtn);
-			imgCopyBtn.setAttribute('src', L.LOUtil.getImageURL('lc_copyhyperlinklocation.svg'));
-			imgCopyBtn.setAttribute('width', 18);
-			imgCopyBtn.setAttribute('height', 18);
-			imgCopyBtn.setAttribute('style', 'padding: 4px');
-			var editBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-edit', parent);
-			L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
-			editBtn.setAttribute('title', _('Edit link'));
-			var imgEditBtn = L.DomUtil.create('img', 'hyperlink-pop-up-editimg', editBtn);
-			imgEditBtn.setAttribute('src', L.LOUtil.getImageURL('lc_edithyperlink.svg'));
-			imgEditBtn.setAttribute('width', 18);
-			imgEditBtn.setAttribute('height', 18);
-			imgEditBtn.setAttribute('style', 'padding: 4px');
-			var removeBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-remove', parent);
-			L.DomUtil.addClass(removeBtn, 'hyperlink-popup-btn');
-			removeBtn.setAttribute('title', _('Remove link'));
-			var imgRemoveBtn = L.DomUtil.create('img', 'hyperlink-pop-up-removeimg', removeBtn);
-			imgRemoveBtn.setAttribute('src', L.LOUtil.getImageURL('lc_removehyperlink.svg'));
-			imgRemoveBtn.setAttribute('width', 18);
-			imgRemoveBtn.setAttribute('height', 18);
-			imgRemoveBtn.setAttribute('style', 'padding: 4px');
-			this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false, autoPan: false})
-				.setHTMLContent(parent)
-				.setLatLng(position)
-				.openOn(this._map);
-			document.getElementById('hyperlink-pop-up').title = url;
-			var offsetDiffTop = $('.hyperlink-popup').offset().top - $('#map').offset().top;
-			var offsetDiffLeft = $('.hyperlink-popup').offset().left - $('#map').offset().left;
-			if (offsetDiffTop < 10) this._movePopUpBelow();
-			if (offsetDiffLeft < 10) this._movePopUpRight();
-			var map_ = this._map;
-			this._setupClickFuncForId('hyperlink-pop-up', function() {
-				map_.fire('warn', {url: url, map: map_, cmd: 'openlink'});
-			});
-			this._setupClickFuncForId('hyperlink-pop-up-copy', function () {
-				map_.sendUnoCommand('.uno:CopyHyperlinkLocation');
-			});
-			this._setupClickFuncForId('hyperlink-pop-up-edit', function () {
-				map_.sendUnoCommand('.uno:EditHyperlink');
-			});
-			this._setupClickFuncForId('hyperlink-pop-up-remove', function () {
-				map_.sendUnoCommand('.uno:RemoveHyperlink');
-			});
-		}
+		var parent = L.DomUtil.create('div');
+		var link = L.DomUtil.createWithId('a', 'hyperlink-pop-up', parent);
+		link.innerText = url;
+		var copyBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-copy', parent);
+		L.DomUtil.addClass(copyBtn, 'hyperlink-popup-btn');
+		copyBtn.setAttribute('title', _('Copy link location'));
+		var imgCopyBtn = L.DomUtil.create('img', 'hyperlink-pop-up-copyimg', copyBtn);
+		imgCopyBtn.setAttribute('src', L.LOUtil.getImageURL('lc_copyhyperlinklocation.svg'));
+		imgCopyBtn.setAttribute('width', 18);
+		imgCopyBtn.setAttribute('height', 18);
+		imgCopyBtn.setAttribute('style', 'padding: 4px');
+		var editBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-edit', parent);
+		L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
+		editBtn.setAttribute('title', _('Edit link'));
+		var imgEditBtn = L.DomUtil.create('img', 'hyperlink-pop-up-editimg', editBtn);
+		imgEditBtn.setAttribute('src', L.LOUtil.getImageURL('lc_edithyperlink.svg'));
+		imgEditBtn.setAttribute('width', 18);
+		imgEditBtn.setAttribute('height', 18);
+		imgEditBtn.setAttribute('style', 'padding: 4px');
+		var removeBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-remove', parent);
+		L.DomUtil.addClass(removeBtn, 'hyperlink-popup-btn');
+		removeBtn.setAttribute('title', _('Remove link'));
+		var imgRemoveBtn = L.DomUtil.create('img', 'hyperlink-pop-up-removeimg', removeBtn);
+		imgRemoveBtn.setAttribute('src', L.LOUtil.getImageURL('lc_removehyperlink.svg'));
+		imgRemoveBtn.setAttribute('width', 18);
+		imgRemoveBtn.setAttribute('height', 18);
+		imgRemoveBtn.setAttribute('style', 'padding: 4px');
+		this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false, autoPan: false})
+			.setHTMLContent(parent)
+			.setLatLng(position)
+			.openOn(this._map);
+		document.getElementById('hyperlink-pop-up').title = url;
+		var offsetDiffTop = $('.hyperlink-popup').offset().top - $('#map').offset().top;
+		var offsetDiffLeft = $('.hyperlink-popup').offset().left - $('#map').offset().left;
+		if (offsetDiffTop < 10) this._movePopUpBelow();
+		if (offsetDiffLeft < 10) this._movePopUpRight();
+		var map_ = this._map;
+		this._setupClickFuncForId('hyperlink-pop-up', function() {
+			map_.fire('warn', {url: url, map: map_, cmd: 'openlink'});
+		});
+		this._setupClickFuncForId('hyperlink-pop-up-copy', function () {
+			map_.sendUnoCommand('.uno:CopyHyperlinkLocation');
+		});
+		this._setupClickFuncForId('hyperlink-pop-up-edit', function () {
+			map_.sendUnoCommand('.uno:EditHyperlink');
+		});
+		this._setupClickFuncForId('hyperlink-pop-up-remove', function () {
+			map_.sendUnoCommand('.uno:RemoveHyperlink');
+		});
 	},
 
 	_movePopUpBelow: function() {
