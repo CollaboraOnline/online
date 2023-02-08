@@ -45,7 +45,8 @@ window.app = { // Shouldn't have any functions defined.
 	},
 	socket: window.app.socket,
 	console: window.app.console,
-	languages: [],
+	languages: [], // all available languages, fetched from core
+	favouriteLanguages: ['de-DE', 'en-US', 'en-GB', 'es-ES', 'fr-FR', 'it', 'nl-NL', 'pt-BR', 'pt-PT', 'ru'],
 };
 
 var activateValidation = false;
