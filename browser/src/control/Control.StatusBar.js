@@ -172,6 +172,9 @@ L.Control.StatusBar = L.Control.extend({
 		else if (id === 'signstatus') {
 			this.map.sendUnoCommand('.uno:Signature');
 		}
+		else if (subItem && subItem.id === 'morelanguages') {
+			this.map.fire('morelanguages', { applyto: 'all' });
+		}
 	},
 
 	create: function() {
@@ -558,6 +561,9 @@ L.Control.StatusBar = L.Control.extend({
 
 
 		for (var lang in languages) {
+			if (languages.length > 10 && app.favouriteLanguages.indexOf(languages[lang].iso) < 0)
+				continue;
+
 			translated = languages[lang].translated;
 			neutral = languages[lang].neutral;
 			var splitNeutral = neutral.split(';');
@@ -565,6 +571,8 @@ L.Control.StatusBar = L.Control.extend({
 		}
 
 		toolbaritems.push({ id: 'reset', text: resetLang, uno: constLang + constDefault });
+
+		toolbaritems.push({ id: 'morelanguages', text: _('More...') });
 
 		w2ui['actionbar'].set('LanguageStatus', {items: toolbaritems});
 	},
