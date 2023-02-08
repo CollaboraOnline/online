@@ -3039,7 +3039,7 @@ void DocumentBroker::handleMediaRequest(const std::shared_ptr<Socket>& socket,
         return;
     }
 
-    LOG_ERR("Media: " << it->second);
+    LOG_DBG("Media: " << it->second);
     Poco::JSON::Object::Ptr object;
     if (JsonUtil::parseJSON(it->second, object))
     {
