@@ -1248,7 +1248,7 @@ L.Control.Menubar = L.Control.extend({
 		map.on('doclayerinit', this._onDocLayerInit, this);
 		map.on('updatepermission', this._onRefresh, this);
 		map.on('addmenu', this._addMenu, this);
-		map.on('commandvalues', this._onInitLanguagesMenu, this);
+		map.on('languagesupdated', this._onInitLanguagesMenu, this);
 		map.on('updatetoolbarcommandvalues', this._onStyleMenu, this);
 
 		this._resetOverflow();
@@ -1259,7 +1259,7 @@ L.Control.Menubar = L.Control.extend({
 		this._map.off('doclayerinit', this._onDocLayerInit, this);
 		this._map.off('updatepermission', this._onRefresh, this);
 		this._map.off('addmenu', this._addMenu, this);
-		this._map.off('commandvalues', this._onInitLanguagesMenu, this);
+		this._map.off('languagesupdated', this._onInitLanguagesMenu, this);
 		this._map.off('updatetoolbarcommandvalues', this._onStyleMenu, this);
 
 		this._menubarCont.remove();
@@ -1302,67 +1302,53 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 
-	_onInitLanguagesMenu: function (e) {
-		if (e.commandName === '.uno:LanguageStatus' && L.Util.isArray(e.commandValues)) {
-			var translated, neutral;
-			var constDefa = 'Default_RESET_LANGUAGES';
-			var constCurr = 'Current_RESET_LANGUAGES';
-			var constPara = 'Paragraph_RESET_LANGUAGES';
-			var constLang = '.uno:LanguageStatus?Language:string=';
-			var resetLang = _('Reset to Default Language');
-			var languages  = [];
+	_onInitLanguagesMenu: function () {
+		var translated, neutral;
+		var constDefa = 'Default_RESET_LANGUAGES';
+		var constCurr = 'Current_RESET_LANGUAGES';
+		var constPara = 'Paragraph_RESET_LANGUAGES';
+		var constLang = '.uno:LanguageStatus?Language:string=';
+		var resetLang = _('Reset to Default Language');
+		var languages  = app.languages;
 
-			e.commandValues.forEach(function(language) {
-				var split = language.split(';');
-				language = split[0];
-				var isoCode = '';
-				if (split.length > 1)
-					isoCode = split[1];
-				languages.push({translated: _(language), neutral: language, iso: isoCode});
-			});
-			languages.sort(function(a, b) {
-				return a.translated < b.translated ? -1 : a.translated > b.translated ? 1 : 0;
-			});
+		var $menuSelection = $('#menu-noneselection').parent();
+		var $menuParagraph = $('#menu-noneparagraph').parent();
+		var $menuDefault = $('#menu-nonelanguage').parent();
 
-			var $menuSelection = $('#menu-noneselection').parent();
-			var $menuParagraph = $('#menu-noneparagraph').parent();
-			var $menuDefault = $('#menu-nonelanguage').parent();
+		var noneselection = $('#menu-noneselection').detach();
+		var fontlanguage = $('#menu-fontlanguage').detach();
+		var noneparagraph = $('#menu-noneparagraph').detach();
+		var paragraphlanguage = $('#menu-paragraphlanguage').detach();
+		var nonelanguage = $('#menu-nonelanguage').detach();
 
-			var noneselection = $('#menu-noneselection').detach();
-			var fontlanguage = $('#menu-fontlanguage').detach();
-			var noneparagraph = $('#menu-noneparagraph').detach();
-			var paragraphlanguage = $('#menu-paragraphlanguage').detach();
-			var nonelanguage = $('#menu-nonelanguage').detach();
+		// clear old entries
 
-			// clear old entries
+		$menuSelection.empty();
+		$menuParagraph.empty();
+		$menuDefault.empty();
 
-			$menuSelection.empty();
-			$menuParagraph.empty();
-			$menuDefault.empty();
+		for (var lang in languages) {
+			translated = languages[lang].translated;
+			neutral = languages[lang].neutral;
 
-			for (var lang in languages) {
-				translated = languages[lang].translated;
-				neutral = languages[lang].neutral;
-
-				$menuSelection.append(this._createUnoMenuItem(translated, constLang + encodeURIComponent('Current_' + neutral)));
-				$menuParagraph.append(this._createUnoMenuItem(translated, constLang + encodeURIComponent('Paragraph_' + neutral)));
-				$menuDefault.append(this._createUnoMenuItem(translated, constLang + encodeURIComponent('Default_' + neutral)));
-			}
-
-			$menuSelection.append(this._createMenu([{type: 'separator'}]));
-			$menuParagraph.append(this._createMenu([{type: 'separator'}]));
-			$menuDefault.append(this._createMenu([{type: 'separator'}]));
-
-			$menuSelection.append(this._createUnoMenuItem(resetLang, constLang + constCurr));
-			$menuParagraph.append(this._createUnoMenuItem(resetLang, constLang + constPara));
-			$menuDefault.append(this._createUnoMenuItem(resetLang, constLang + constDefa));
-
-			$menuSelection.append(noneselection);
-			$menuSelection.append(fontlanguage);
-			$menuParagraph.append(noneparagraph);
-			$menuParagraph.append(paragraphlanguage);
-			$menuDefault.append(nonelanguage);
+			$menuSelection.append(this._createUnoMenuItem(translated, constLang + encodeURIComponent('Current_' + neutral)));
+			$menuParagraph.append(this._createUnoMenuItem(translated, constLang + encodeURIComponent('Paragraph_' + neutral)));
+			$menuDefault.append(this._createUnoMenuItem(translated, constLang + encodeURIComponent('Default_' + neutral)));
 		}
+
+		$menuSelection.append(this._createMenu([{type: 'separator'}]));
+		$menuParagraph.append(this._createMenu([{type: 'separator'}]));
+		$menuDefault.append(this._createMenu([{type: 'separator'}]));
+
+		$menuSelection.append(this._createUnoMenuItem(resetLang, constLang + constCurr));
+		$menuParagraph.append(this._createUnoMenuItem(resetLang, constLang + constPara));
+		$menuDefault.append(this._createUnoMenuItem(resetLang, constLang + constDefa));
+
+		$menuSelection.append(noneselection);
+		$menuSelection.append(fontlanguage);
+		$menuParagraph.append(noneparagraph);
+		$menuParagraph.append(paragraphlanguage);
+		$menuDefault.append(nonelanguage);
 	},
 
 	_addTabIndexPropsToMainMenu: function () {

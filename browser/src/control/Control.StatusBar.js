@@ -3,7 +3,7 @@
  * L.Control.StatusBar
  */
 
-/* global $ w2ui _ _UNO */
+/* global $ app w2ui _ _UNO */
 L.Control.StatusBar = L.Control.extend({
 
 	initialize: function () {
@@ -12,7 +12,7 @@ L.Control.StatusBar = L.Control.extend({
 	onAdd: function (map) {
 		this.map = map;
 		map.on('doclayerinit', this.onDocLayerInit, this);
-		map.on('commandvalues', this.onCommandValues, this);
+		map.on('languagesupdated', this.onLanguagesUpdated, this);
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
 		map.on('contextchange', this.onContextChange, this);
 		map.on('updatepermission', this.onPermissionChanged, this);
@@ -542,39 +542,31 @@ L.Control.StatusBar = L.Control.extend({
 		}
 	},
 
-	onCommandValues: function(e) {
-		if (e.commandName === '.uno:LanguageStatus' && L.Util.isArray(e.commandValues)) {
-			var translated, neutral;
-			var constLang = '.uno:LanguageStatus?Language:string=';
-			var constDefault = 'Default_RESET_LANGUAGES';
-			var constNone = 'Default_LANGUAGE_NONE';
-			var resetLang = _('Reset to Default Language');
-			var noneLang = _('None (Do not check spelling)');
-			var languages = [];
-			e.commandValues.forEach(function (language) {
-				languages.push({ translated: _(language.split(';')[0]), neutral: language });
-			});
-			languages.sort(function (a, b) {
-				return a.translated < b.translated ? -1 : a.translated > b.translated ? 1 : 0;
-			});
+	onLanguagesUpdated: function() {
+		var translated, neutral;
+		var constLang = '.uno:LanguageStatus?Language:string=';
+		var constDefault = 'Default_RESET_LANGUAGES';
+		var constNone = 'Default_LANGUAGE_NONE';
+		var resetLang = _('Reset to Default Language');
+		var noneLang = _('None (Do not check spelling)');
+		var languages = app.languages;
 
-			var toolbaritems = [];
-			toolbaritems.push({ text: noneLang,
-			 id: 'nonelanguage',
-			 uno: constLang + constNone });
+		var toolbaritems = [];
+		toolbaritems.push({ text: noneLang,
+			id: 'nonelanguage',
+			uno: constLang + constNone });
 
 
-			for (var lang in languages) {
-				translated = languages[lang].translated;
-				neutral = languages[lang].neutral;
-				var splitNeutral = neutral.split(';');
-				toolbaritems.push({ id: neutral, text: translated, uno: constLang + encodeURIComponent('Default_' + splitNeutral[0]) });
-			}
-
-			toolbaritems.push({ id: 'reset', text: resetLang, uno: constLang + constDefault });
-
-			w2ui['actionbar'].set('LanguageStatus', {items: toolbaritems});
+		for (var lang in languages) {
+			translated = languages[lang].translated;
+			neutral = languages[lang].neutral;
+			var splitNeutral = neutral.split(';');
+			toolbaritems.push({ id: neutral, text: translated, uno: constLang + encodeURIComponent('Default_' + splitNeutral[0]) });
 		}
+
+		toolbaritems.push({ id: 'reset', text: resetLang, uno: constLang + constDefault });
+
+		w2ui['actionbar'].set('LanguageStatus', {items: toolbaritems});
 	},
 });
 

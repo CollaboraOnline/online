@@ -76,7 +76,7 @@ function _notebookbarLanguageSelector(parentContainer, data, builder) {
 	$(control.container).bind('keydown', {self: menubar}, menubar._onKeyDown);
 	$(control.container).bind('hideAll.smapi', {self: menubar}, menubar._onMouseOut);
 
-	builder.map.on('commandvalues', menubar._onInitLanguagesMenu, menubar);
+	builder.map.on('languagesupdated', menubar._onInitLanguagesMenu, menubar);
 	app.socket.sendMessage('commandvalues command=.uno:LanguageStatus');
 
 	return false;
