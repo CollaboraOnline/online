@@ -157,9 +157,6 @@ function onClick(e, id, item) {
 	else if (id === 'link') {
 		map.showHyperlinkDialog();
 	}
-	else if (id === 'languagecode') {
-		map.fire('languagedialog');
-	}
 }
 
 function _setBorders(left, right, bottom, top, horiz, vert, color) {
@@ -884,14 +881,6 @@ function processStateChangedCommand(commandName, state) {
 		if (div) {
 			L.DomUtil.setStyle(div, 'background', color);
 		}
-	}
-	else if (commandName === '.uno:LanguageStatus') {
-		var code = state;
-		var split = code.split(';');
-		if (split.length > 1) {
-			code = split[1];
-		}
-		w2ui['editbar'].set('languagecode', {text: code});
 	}
 	else if (commandName === '.uno:ModifiedStatus') {
 		if (state === 'true') {

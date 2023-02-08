@@ -136,7 +136,6 @@ L.Control.TopToolbar = L.Control.extend({
 					}
 				}, mobile: false},
 			{type: 'break', id: 'breakfontsizes', invisible: true, mobile: false, tablet: false,},
-			{type: 'button', id: 'languagecode', desktop: false, mobile: true, tablet: false},
 			{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: 'Bold'},
 			{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic'},
 			{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: 'Underline'},
@@ -246,7 +245,6 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'button',  id: 'masterslidespanel', img: 'sidebar_master_slides', hint: _UNO('.uno:MasterSlidesPanel', 'presentation', true), uno: '.uno:MasterSlidesPanel', hidden: true},
 			{type: 'button',  id: 'fold',  img: 'fold', desktop: true, mobile: false, hidden: true},
 			{type: 'button',  id: 'hamburger-tablet',  img: 'fold', desktop: false, mobile: false, tablet: true, iosapptablet: false, hidden: true},
-			{type: 'button', id: 'languagecode', desktop: false, mobile: true, tablet: false}
 		];
 	},
 

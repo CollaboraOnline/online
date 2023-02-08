@@ -326,9 +326,9 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:ThesaurusDialog'},
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 					{name: _UNO('.uno:SetLanguageSelectionMenu', 'text'), type: 'menu', menu: [
-						{name: _('None (Do not check spelling)'), id: 'noneselection', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}, {name: _('More...'), id: 'fontlanguage', uno: '.uno:FontDialog?Page:string=font'}]},
+						{name: _('None (Do not check spelling)'), id: 'noneselection', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'} ]},
 					{name: _UNO('.uno:SetLanguageParagraphMenu', 'text'), type: 'menu', menu: [
-						{name: _('None (Do not check spelling)'), id: 'noneparagraph', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}, {name: _('More...'), id: 'paragraphlanguage', uno: '.uno:FontDialogForParagraph'}]},
+						{name: _('None (Do not check spelling)'), id: 'noneparagraph', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'} ]},
 					{name: _UNO('.uno:SetLanguageAllTextMenu', 'text'), type: 'menu', menu: [
 						{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 				]},
@@ -1301,6 +1301,17 @@ L.Control.Menubar = L.Control.extend({
 		return liItem;
 	},
 
+	_createActionMenuItem: function (caption, id) {
+		var liItem, aItem;
+		liItem = L.DomUtil.create('li', '');
+		liItem.setAttribute('role', 'menuitem');
+		aItem = L.DomUtil.create('a', '', liItem);
+		$(aItem).text(caption);
+		$(aItem).data('type', 'action');
+		$(aItem).data('id', id);
+		aItem.tabIndex = 0;
+		return liItem;
+	},
 
 	_onInitLanguagesMenu: function () {
 		var translated, neutral;
@@ -1328,6 +1339,9 @@ L.Control.Menubar = L.Control.extend({
 		$menuDefault.empty();
 
 		for (var lang in languages) {
+			if (languages.length > 10 && app.favouriteLanguages.indexOf(languages[lang].iso) < 0)
+				continue;
+
 			translated = languages[lang].translated;
 			neutral = languages[lang].neutral;
 
@@ -1335,6 +1349,10 @@ L.Control.Menubar = L.Control.extend({
 			$menuParagraph.append(this._createUnoMenuItem(translated, constLang + encodeURIComponent('Paragraph_' + neutral)));
 			$menuDefault.append(this._createUnoMenuItem(translated, constLang + encodeURIComponent('Default_' + neutral)));
 		}
+
+		$menuSelection.append(this._createActionMenuItem(_('More...'), 'morelanguages-selection'));
+		$menuParagraph.append(this._createActionMenuItem(_('More...'), 'morelanguages-paragraph'));
+		$menuDefault.append(this._createActionMenuItem(_('More...'), 'morelanguages-all'));
 
 		$menuSelection.append(this._createMenu([{type: 'separator'}]));
 		$menuParagraph.append(this._createMenu([{type: 'separator'}]));
@@ -1829,6 +1847,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.sendUnoCommand('.uno:LOKSidebarWriterPage');
 			this._map.fire('showwizardsidebar', {noRefresh: true});
 			window.pageMobileWizard = true;
+		} else if (id.indexOf('morelanguages-') != -1) {
+			this._map.fire('morelanguages', { applyto: id.substr('morelanguages-'.length) });
 		}
 		// Inform the host if asked
 		if (postmessage)
