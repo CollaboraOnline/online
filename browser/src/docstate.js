@@ -45,6 +45,7 @@ window.app = { // Shouldn't have any functions defined.
 	},
 	socket: window.app.socket,
 	console: window.app.console,
+	languages: [],
 };
 
 var activateValidation = false;
