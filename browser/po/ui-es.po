@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-03 12:49+0100\n"
-"PO-Revision-Date: 2023-02-03 17:27+0000\n"
-"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
+"PO-Revision-Date: 2023-02-07 21:49+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
 "Language: es\n"
@@ -478,11 +478,11 @@ msgstr "Lineal"
 
 #: src/control/Control.JSDialogBuilder.js:443
 msgid "Axial"
-msgstr "Simetría axial"
+msgstr "Axial"
 
 #: src/control/Control.JSDialogBuilder.js:446
 msgid "Radial"
-msgstr "Simetría radial"
+msgstr "Radial"
 
 #: src/control/Control.JSDialogBuilder.js:449
 msgid "Ellipsoid"
@@ -1566,11 +1566,11 @@ msgstr "No se configuró la clave de API de Zotero"
 
 #: src/control/Control.Zotero.js:157
 msgid "Zotero API key is incorrect"
-msgstr "Clave API de Zotero es incorrecta"
+msgstr "La clave de la API de Zotero es incorrecta"
 
 #: src/control/Control.Zotero.js:184
 msgid "Zotero Warning"
-msgstr "Advertencia de Zotero"
+msgstr "Alerta de Zotero"
 
 #: src/control/Control.Zotero.js:185
 msgid ""
@@ -1603,7 +1603,7 @@ msgstr "Marcadores"
 
 #: src/control/Control.Zotero.js:402
 msgid "Footnotes"
-msgstr "Notas a pie de página"
+msgstr "Notas al pie"
 
 #: src/control/Control.Zotero.js:402
 msgid "Endnotes"
@@ -1663,15 +1663,15 @@ msgstr "No se pudieron cargar los elementos"
 
 #: src/control/Control.Zotero.js:1138
 msgid "Citation warning"
-msgstr "Aviso de cita"
+msgstr "Alerta de cita"
 
 #: src/control/Control.Zotero.js:1139
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
-"Una vez introducidas las citaciones, su almacenamiento y tipo de "
-"visualización no pueden modificarse."
+"No es posible modificar el tipo de almacenamiento y vista de las citas una "
+"vez que se introduzcan."
 
 #: src/control/Control.Zotero.js:1140 src/control/Control.Zotero.js:1439
 msgid "Confirm"
@@ -1706,7 +1706,7 @@ msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
-"Desvincular las citas impedirá que Collabora Online actualice las citas y la "
+"Desenlazar las citas impedirá que Collabora Online actualice las citas y la "
 "bibliografía de este documento."
 
 #: src/control/Parts.js:432
@@ -2085,11 +2085,11 @@ msgstr "Se está cambiando el nombre del archivo y se recargará pronto"
 
 #: src/core/Socket.js:1273
 msgid "Exported to storage"
-msgstr "Exportado al almacén"
+msgstr "Se exportó al almacenamiento"
 
 #: src/core/Socket.js:1273
 msgid "Successfully exported: "
-msgstr "Exportado con éxito: "
+msgstr "Se exportó correctamente: "
 
 #: src/core/Socket.js:1568
 msgid ""
@@ -2166,7 +2166,7 @@ msgstr ""
 msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr ""
 "El parámetro WOPISrc es incorrecto o no existe; póngase en contacto con el "
-"equipo de asistencia."
+"personal técnico."
 
 #: src/errormessages.js:23
 msgid ""
