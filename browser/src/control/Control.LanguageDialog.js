@@ -3,35 +3,18 @@
  * L.Control.LanguageDialog used for spellchecking language selection on mobile devices
  */
 
-/* global _ $ vex */
+/* global _ $ app vex */
 L.Control.LanguageDialog = L.Control.extend({
 
 	_languages: [],
 
 	onAdd: function (map) {
-		map.on('commandvalues', this._onCommandValues, this);
+		map.on('languagesupdated', this._onLanguagesUpdated, this);
 		map.on('languagedialog', this._onLanguageDialog, this);
 	},
 
-	_onCommandValues: function(e) {
-		if (e.commandName === '.uno:LanguageStatus' && L.Util.isArray(e.commandValues)) {
-			var languages = [];
-
-			e.commandValues.forEach(function(language) {
-				var split = language.split(';');
-				language = split[0];
-				var isoCode = '';
-				if (split.length > 1)
-					isoCode = split[1];
-				languages.push({translated: _(language), neutral: language, iso: isoCode});
-			});
-
-			languages.sort(function(a, b) {
-				return a.translated < b.translated ? -1 : a.translated > b.translated ? 1 : 0;
-			});
-
-			this._languages = languages;
-		}
+	_onLanguagesUpdated: function() {
+		this._languages = app.languages;
 	},
 
 	_onItemSelected: function(e) {

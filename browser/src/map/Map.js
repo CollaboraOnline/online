@@ -270,6 +270,24 @@ L.Map = L.Evented.extend({
 			}
 		}, this);
 
+		this.on('commandvalues', function(e) {
+			if (e.commandName === '.uno:LanguageStatus' && L.Util.isArray(e.commandValues)) {
+				app.languages = [];
+				e.commandValues.forEach(function(language) {
+					var split = language.split(';');
+					language = split[0];
+					var code = '';
+					if (split.length > 1)
+						code = split[1];
+					app.languages.push({translated: _(language), neutral: language, iso: code});
+				});
+				app.languages.sort(function(a, b) {
+					return a.translated < b.translated ? -1 : a.translated > b.translated ? 1 : 0;
+				});
+				this.fire('languagesupdated');
+			}
+		});
+
 		this.on('docloaded', function(e) {
 			this._docLoaded = e.status;
 			if (this._docLoaded) {
