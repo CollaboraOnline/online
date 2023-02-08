@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-03 12:49+0100\n"
-"PO-Revision-Date: 2023-02-03 04:57+0000\n"
+"PO-Revision-Date: 2023-02-03 17:27+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2517,11 +2517,11 @@ msgstr "Új fájl létrehozása sablonból..."
 
 #: src/map/handler/Map.WOPI.js:440
 msgid "Error"
-msgstr ""
+msgstr "Hiba"
 
 #: src/map/handler/Map.WOPI.js:440
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "A fájlnévnek tartalmaznia kell kiterjesztést."
 
 #: src/map/handler/Map.WOPI.js:448
 msgid "Creating copy..."
