@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-03 12:49+0100\n"
-"PO-Revision-Date: 2023-01-26 16:55+0000\n"
-"Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
+"PO-Revision-Date: 2023-02-08 06:47+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1129,7 +1129,6 @@ msgstr "Speichern als"
 #: src/control/Control.NotebookbarDraw.js:147
 #: src/control/Control.NotebookbarImpress.js:181
 #: src/control/Control.NotebookbarWriter.js:143
-#, fuzzy
 msgid "Export As"
 msgstr "Exportieren als"
 
@@ -1575,13 +1574,16 @@ msgstr "Der Zotero API Schlüssel ist nicht korrekt"
 
 #: src/control/Control.Zotero.js:184
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Zotero-Warnung"
 
 #: src/control/Control.Zotero.js:185
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Das Dokument enthält einige Zitate, die möglicherweise nicht über die Web-"
+"API zugänglich sind. Dies kann zu Problemen bei der Bearbeitung von Zitaten "
+"oder Bibliographien führen."
 
 #: src/control/Control.Zotero.js:241 src/core/Socket.js:1153
 msgid "Loading..."
@@ -1605,11 +1607,11 @@ msgstr "Lesezeichen"
 
 #: src/control/Control.Zotero.js:402
 msgid "Footnotes"
-msgstr ""
+msgstr "Fußnoten"
 
 #: src/control/Control.Zotero.js:402
 msgid "Endnotes"
-msgstr ""
+msgstr "Endnoten"
 
 #: src/control/Control.Zotero.js:466
 msgid "My Publications"
@@ -1665,13 +1667,15 @@ msgstr "Laden der Elemente gescheitert"
 
 #: src/control/Control.Zotero.js:1138
 msgid "Citation warning"
-msgstr ""
+msgstr "Warnung vor Zitaten"
 
 #: src/control/Control.Zotero.js:1139
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Einmal eingegebene Zitate können in ihrer Speicher- und Darstellungsart "
+"nicht mehr geändert werden."
 
 #: src/control/Control.Zotero.js:1140 src/control/Control.Zotero.js:1439
 msgid "Confirm"
@@ -2094,11 +2098,11 @@ msgstr "Das Dokument wird umbenannt und in Kürze neu geladen"
 
 #: src/core/Socket.js:1273
 msgid "Exported to storage"
-msgstr ""
+msgstr "In den Speicher exportiert"
 
 #: src/core/Socket.js:1273
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Erfolgreich exportiert: "
 
 #: src/core/Socket.js:1568
 msgid ""
@@ -2540,11 +2544,11 @@ msgstr "Neue Datei aus Vorlage erzeugen …"
 
 #: src/map/handler/Map.WOPI.js:440
 msgid "Error"
-msgstr ""
+msgstr "Fehler"
 
 #: src/map/handler/Map.WOPI.js:440
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "Der Dateiname sollte eine Erweiterung enthalten."
 
 #: src/map/handler/Map.WOPI.js:448
 msgid "Creating copy..."
