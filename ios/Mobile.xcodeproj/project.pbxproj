@@ -76,11 +76,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BE00F89621396585001CE2D4 /* cool.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = cool.html; path = "../../../browser/dist/cool.html"; sourceTree = "<group>"; };
-		BE00F89721396585001CE2D4 /* bundle.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = bundle.css; path = "../../../browser/dist/bundle.css"; sourceTree = "<group>"; };
-		BE00F89921396585001CE2D4 /* bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = "../../../browser/dist/bundle.js"; sourceTree = "<group>"; };
+		BE00F89621396585001CE2D4 /* cool.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = cool.html; path = ../../../browser/dist/cool.html; sourceTree = "<group>"; };
+		BE00F89721396585001CE2D4 /* bundle.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = bundle.css; path = ../../../browser/dist/bundle.css; sourceTree = "<group>"; };
+		BE00F89921396585001CE2D4 /* bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = ../../../browser/dist/bundle.js; sourceTree = "<group>"; };
 		BE00F89D21396585001CE2D4 /* cool-help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "cool-help.html"; path = "../../../browser/dist/cool-help.html"; sourceTree = "<group>"; };
-		BE00F89E21396585001CE2D4 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = "../../../browser/dist/images"; sourceTree = "<group>"; };
+		BE00F89E21396585001CE2D4 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../browser/dist/images; sourceTree = "<group>"; };
 		BE00F8B4213ED543001CE2D4 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		BE00F8B6213ED573001CE2D4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		BE017B6925AE879800244ED8 /* docfuncutil.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docfuncutil.cxx; path = "../lobuilddir-symlink/sc/source/ui/docshell/docfuncutil.cxx"; sourceTree = "<group>"; };
@@ -565,8 +565,8 @@
 		BE5EB5D12140039100E0826C /* COOLWSD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = COOLWSD.cpp; sourceTree = "<group>"; };
 		BE5EB5D321400DC100E0826C /* DocumentBroker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DocumentBroker.cpp; sourceTree = "<group>"; };
 		BE5EB5D521401E0F00E0826C /* Storage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Storage.cpp; sourceTree = "<group>"; };
-		BE5EB5D92140363100E0826C /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = "../../ios/ios.mm"; sourceTree = "<group>"; };
-		BE5EB5DB2140480B00E0826C /* ICU.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ICU.dat; path = "../../../ICU.dat"; sourceTree = "<group>"; };
+		BE5EB5D92140363100E0826C /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../ios/ios.mm; sourceTree = "<group>"; };
+		BE5EB5DB2140480B00E0826C /* ICU.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = ICU.dat; path = ../../../ICU.dat; sourceTree = "<group>"; };
 		BE62A58C24BF873D00AFFD77 /* pngwrite.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pngwrite.cxx; path = "../lobuilddir-symlink/vcl/source/filter/png/pngwrite.cxx"; sourceTree = "<group>"; };
 		BE62A58D24BF873D00AFFD77 /* PngImageReader.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PngImageReader.cxx; path = "../lobuilddir-symlink/vcl/source/filter/png/PngImageReader.cxx"; sourceTree = "<group>"; };
 		BE62A58F24BF875700AFFD77 /* GraphicNativeTransform.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GraphicNativeTransform.cxx; path = "../lobuilddir-symlink/vcl/source/filter/GraphicNativeTransform.cxx"; sourceTree = "<group>"; };
@@ -671,7 +671,7 @@
 		BE7D6A6523FA9C2700C2E605 /* defaultprovider.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = defaultprovider.hxx; path = "../lobuilddir-symlink/configmgr/source/defaultprovider.hxx"; sourceTree = "<group>"; };
 		BE7D6A6623FA9C2700C2E605 /* parser.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = parser.hxx; path = "../lobuilddir-symlink/configmgr/source/parser.hxx"; sourceTree = "<group>"; };
 		BE7D6A6723FA9C2700C2E605 /* rootnode.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rootnode.cxx; path = "../lobuilddir-symlink/configmgr/source/rootnode.cxx"; sourceTree = "<group>"; };
-		BE7D6A6A23FAA8B500C2E605 /* coolkitconfig.xcu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = coolkitconfig.xcu; path = "../coolkitconfig.xcu"; sourceTree = "<group>"; };
+		BE7D6A6A23FAA8B500C2E605 /* coolkitconfig.xcu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = coolkitconfig.xcu; path = ../coolkitconfig.xcu; sourceTree = "<group>"; };
 		BE7E5B7623AD07BE00F9462A /* SvxPresetListBox.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SvxPresetListBox.cxx; path = "../lobuilddir-symlink/svx/source/tbxctrls/SvxPresetListBox.cxx"; sourceTree = "<group>"; };
 		BE7E5B7723AD07BE00F9462A /* tbxcolor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tbxcolor.cxx; path = "../lobuilddir-symlink/svx/source/tbxctrls/tbxcolor.cxx"; sourceTree = "<group>"; };
 		BE7E5B7823AD07BE00F9462A /* tbxdrctl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tbxdrctl.cxx; path = "../lobuilddir-symlink/svx/source/tbxctrls/tbxdrctl.cxx"; sourceTree = "<group>"; };
@@ -1058,7 +1058,7 @@
 		BEA2835521467FDD00848631 /* Kit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Kit.cpp; sourceTree = "<group>"; };
 		BEA283572146945500848631 /* ChildSession.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChildSession.cpp; sourceTree = "<group>"; };
 		BEA2835921470A1C00848631 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		BEA2835C21498AD400848631 /* Socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Socket.cpp; path = "../net/Socket.cpp"; sourceTree = "<group>"; };
+		BEA2835C21498AD400848631 /* Socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Socket.cpp; path = ../net/Socket.cpp; sourceTree = "<group>"; };
 		BEA2835E214A8E2000848631 /* Socket.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Socket.hpp; sourceTree = "<group>"; };
 		BEA2835F214ACA8500848631 /* FakeSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FakeSocket.cpp; sourceTree = "<group>"; };
 		BEA28376214FFD8C00848631 /* Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Unit.cpp; sourceTree = "<group>"; };
@@ -3494,6 +3494,7 @@
 				BE8D77232136762500AC58EA /* Sources */,
 				BE8D77242136762500AC58EA /* Frameworks */,
 				BE8D77252136762500AC58EA /* Resources */,
+				3F88490F29943B7600FBB3E9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3578,6 +3579,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3F88490F29943B7600FBB3E9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SOURCE_ROOT}/modify_bundle_version.sh\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BE8D77232136762500AC58EA /* Sources */ = {
