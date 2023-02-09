@@ -3,7 +3,8 @@
  * Feature blocking handler
  */
 
-/* global $ vex _ */
+/* global $ vex _ isAnyVexDialogActive*/
+
 L.Map.include({
 
 	Locking: {
@@ -57,7 +58,7 @@ L.Map.include({
 	},
 
 	openUnlockPopup: function(cmd) {
-		if (this.isRestrictedUser() && this.isRestrictedItem(cmd))
+		if ((this.isRestrictedUser() && this.isRestrictedItem(cmd)) || isAnyVexDialogActive())
 			return;
 		var lockingOnMobile = '';
 
