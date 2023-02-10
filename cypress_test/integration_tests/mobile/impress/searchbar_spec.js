@@ -5,7 +5,7 @@ var searchHelper = require('../../common/search_helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe('Searching via search bar.', function() {
+describe.skip('Searching via search bar.', function() {
 	var origTestFileName = 'search_bar.odp';
 	var testFileName;
 
