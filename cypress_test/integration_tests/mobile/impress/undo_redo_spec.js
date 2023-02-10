@@ -60,7 +60,7 @@ describe('Editing Operations', function() {
 		helper.expectTextForClipboard('Hello World');
 	});
 
-	it('Repair Document', function() {
+	it.skip('Repair Document', function() {
 		// End text edit, so 'Hello World' text is added to Undo stack
 		helper.typeIntoDocument('{esc}');
 

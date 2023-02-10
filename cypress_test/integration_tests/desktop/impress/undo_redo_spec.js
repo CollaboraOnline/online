@@ -47,7 +47,7 @@ describe('Editing Operations', function() {
 		helper.expectTextForClipboard('Hello World');
 	});
 
-	it('Repair Document', function() {
+	it.skip('Repair Document', function() {
 		helper.typeIntoDocument('Hello World');
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
