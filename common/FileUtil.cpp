@@ -501,7 +501,7 @@ namespace FileUtil
         assert(!path.empty());
 
 #if !MOBILEAPP
-        bool hookResult;
+        bool hookResult = true;
         if (UnitBase::get().filterCheckDiskSpace(path, hookResult))
             return hookResult;
 #endif
