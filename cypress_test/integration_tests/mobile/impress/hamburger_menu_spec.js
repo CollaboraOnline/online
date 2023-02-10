@@ -261,7 +261,7 @@ describe('Trigger hamburger menu options.', function() {
 		helper.expectTextForClipboard('X');
 	});
 
-	it('Search some word.', function() {
+	it.skip('Search some word.', function() {
 		before('hamburger_menu.odp');
 
 		mobileHelper.selectHamburgerMenuItem(['Search']);

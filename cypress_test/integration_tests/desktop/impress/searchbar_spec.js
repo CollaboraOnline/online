@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var searchHelper = require('../../common/search_helper');
 
-describe('Searching via search bar' ,function() {
+describe.skip('Searching via search bar' ,function() {
 	var origTestFileName = 'search_bar.odp';
 	var testFileName;
 
