@@ -950,6 +950,9 @@ L.Map.include({
 		case 'hyperlinkdialog':
 			this.showHyperlinkDialog();
 			break;
+		case 'rev-history':
+			this.openRevisionHistory();
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}
