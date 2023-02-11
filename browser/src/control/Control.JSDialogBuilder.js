@@ -2527,6 +2527,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder.map.dispatch(data.command);
 			});
 		}
+
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_mapBigDispatchToolItem: function (parentContainer, data, builder) {
@@ -2546,6 +2548,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder.map.dispatch(data.command);
 			});
 		}
+
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_divContainerHandler: function (parentContainer, data, builder) {
