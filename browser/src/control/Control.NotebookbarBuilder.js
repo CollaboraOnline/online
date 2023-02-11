@@ -53,7 +53,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:SaveAs'] = this._saveAsControl;
 		this._toolitemHandlers['.uno:shareas'] = this._shareAsControl;
 		this._toolitemHandlers['.uno:Print'] = this._printControl;
-		this._toolitemHandlers['.uno:rev-history'] = this._revHistoryControl;
 		this._toolitemHandlers['.uno:InsertPageHeader'] = this._headerFooterControl;
 		this._toolitemHandlers['.uno:InsertPageFooter'] = this._headerFooterControl;
 		this._toolitemHandlers['.uno:Text'] = this._insertTextBoxControl;
@@ -1046,16 +1045,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			builder.map.print();
-		});
-		builder._preventDocumentLosingFocusOnClick(control.container);
-	},
-
-	_revHistoryControl: function(parentContainer, data, builder) {
-		var control = builder._unoToolButton(parentContainer, data, builder);
-
-		$(control.container).unbind('click.toolbutton');
-		$(control.container).click(function () {
-			builder.map.openRevisionHistory();
 		});
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
