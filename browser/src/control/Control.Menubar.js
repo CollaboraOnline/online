@@ -1831,7 +1831,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'forum') {
 			window.open('https://forum.collaboraonline.com', '_blank');
 		} else if (id === 'inserthyperlink') {
-			this._map.showHyperlinkDialog();
+			this._map.dispatch('hyperlinkdialog');
 		} else if (id === 'keyboard-shortcuts' || id === 'online-help') {
 			this._map.showHelp(id);
 		} else if (L.Params.revHistoryEnabled && (id === 'rev-history' || id === 'Rev-History' || id === 'last-mod')) {
