@@ -947,6 +947,9 @@ L.Map.include({
 					msg, '', _('OK'), function () { map.deletePage(); }, true);
 			}
 			break;
+		case 'hyperlinkdialog':
+			this.showHyperlinkDialog();
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}

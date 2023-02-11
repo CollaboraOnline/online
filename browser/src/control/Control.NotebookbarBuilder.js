@@ -35,7 +35,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Color'] = this._colorControl;
 		this._toolitemHandlers['.uno:FillColor'] = this._colorControl;
 
-		this._toolitemHandlers['.uno:HyperlinkDialog'] = this._insertHyperlinkControl;
 		this._toolitemHandlers['.uno:InsertTable'] = this._insertTableControl;
 		this._toolitemHandlers['.uno:InsertGraphic'] = this._insertGraphicControl;
 		this._toolitemHandlers['.uno:InsertAnnotation'] = this._insertAnnotationControl;
@@ -676,16 +675,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		});
 
 		return submenuOpts;
-	},
-
-	_insertHyperlinkControl: function(parentContainer, data, builder) {
-		var control = builder._unoToolButton(parentContainer, data, builder);
-
-		$(control.container).unbind('click.toolbutton');
-		$(control.container).click(function () {
-			builder.map.showHyperlinkDialog();
-		});
-		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_headerFooterControl: function(parentContainer, data, builder) {
