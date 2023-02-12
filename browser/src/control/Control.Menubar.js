@@ -732,7 +732,10 @@ L.Control.Menubar = L.Control.extend({
 					{type: 'separator'},
 					{uno: '.uno:CommonAlignTop'},
 					{uno: '.uno:CommonAlignVerticalCenter'},
-					{uno: '.uno:CommonAlignBottom'}]},
+					{uno: '.uno:CommonAlignBottom'},
+					{type: 'separator'},
+					{uno: '.uno:ParaLeftToRight'},
+					{uno: '.uno:ParaRightToLeft'}]},
 				{name: _UNO('.uno:NumberFormatMenu', 'spreadsheet'), type: 'menu', menu: [
 					{uno: '.uno:NumberFormatStandard'},
 					{uno: '.uno:NumberFormatDecimal'},

@@ -470,6 +470,11 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 										'type': 'toolitem',
 										'text': _UNO('.uno:DecrementIndent'),
 										'command': '.uno:DecrementIndent'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:ParaLeftToRight'),
+										'command': '.uno:ParaLeftToRight'
 									}
 								]
 							}
@@ -508,6 +513,11 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 										'type': 'toolitem',
 										'text': _UNO('.uno:WrapText', 'spreadsheet'),
 										'command': '.uno:WrapText'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:ParaRightToLeft'),
+										'command': '.uno:ParaRightToLeft'
 									}
 								]
 							}
