@@ -959,6 +959,9 @@ L.Map.include({
 		case 'presentation':
 			this.fire('fullscreen');
 			break;
+		case 'charmapcontrol':
+			this.sendUnoCommand('.uno:InsertSymbol');
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}

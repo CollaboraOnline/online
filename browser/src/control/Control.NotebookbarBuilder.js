@@ -40,7 +40,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:InsertAnnotation'] = this._insertAnnotationControl;
 		this._toolitemHandlers['.uno:LineSpacing'] = this._lineSpacingControl;
 		this._toolitemHandlers['.uno:CharSpacing'] = this._CharSpacing;
-		this._toolitemHandlers['.uno:CharmapControl'] = this._symbolControl;
 		this._toolitemHandlers['.uno:Cut'] = this._clipboardButtonControl;
 		this._toolitemHandlers['.uno:Copy'] = this._clipboardButtonControl;
 		this._toolitemHandlers['.uno:Paste'] = this._clipboardButtonControl;
@@ -975,16 +974,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					builder.map.sendUnoCommand('.uno:' + event.item.uno);
 				}
 			});
-		});
-		builder._preventDocumentLosingFocusOnClick(control.container);
-	},
-
-	_symbolControl: function(parentContainer, data, builder) {
-		var control = builder._unoToolButton(parentContainer, data, builder);
-
-		$(control.container).unbind('click.toolbutton');
-		$(control.container).click(function () {
-			builder.map.sendUnoCommand('.uno:InsertSymbol');
 		});
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
