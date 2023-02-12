@@ -956,6 +956,9 @@ L.Map.include({
 		case 'shareas':
 			this.openShare();
 			break;
+		case 'presentation':
+			this.fire('fullscreen');
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}
