@@ -153,9 +153,10 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					hasShare ?
 						{
 							'id': 'ShareAs',
-							'type': 'menubartoolitem',
+							'type': 'customtoolitem',
 							'text': _('Share'),
-							'command': '.uno:shareas'
+							'command': 'shareas',
+							'inlineLabel': true
 						} : {},
 					hasRevisionHistory ?
 						{
