@@ -953,6 +953,9 @@ L.Map.include({
 		case 'rev-history':
 			this.openRevisionHistory();
 			break;
+		case 'shareas':
+			this.openShare();
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}

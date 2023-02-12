@@ -1771,7 +1771,7 @@ L.Control.Menubar = L.Control.extend({
 				}
 			}
 		} else if (id === 'shareas' || id === 'ShareAs') {
-			this._map.openShare();
+			this._map.dispatch('shareas');
 		} else if (id === 'print') {
 			this._map.print();
 		} else if (id.startsWith('downloadas-')
