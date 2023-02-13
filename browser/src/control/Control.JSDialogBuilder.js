@@ -2141,6 +2141,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var iconURLAliases = {
+			'sheetrighttoleft' : 'pararighttoleft',
 			'alignleft': 'leftpara',
 			'alignright': 'rightpara',
 			'alignhorizontalcenter': 'centerpara',
