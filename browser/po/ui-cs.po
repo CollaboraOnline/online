@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-03 12:49+0100\n"
-"PO-Revision-Date: 2023-02-04 20:56+0000\n"
-"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
+"PO-Revision-Date: 2023-02-11 17:35+0000\n"
+"Last-Translator: Andrej Shadura <andrew@shadura.me>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
 "Language: cs\n"
@@ -1547,7 +1547,7 @@ msgstr "Žádný uživatel"
 
 #: src/control/Control.UserList.js:159
 msgid "Following"
-msgstr "Následujících"
+msgstr "Sledován"
 
 #: src/control/Control.UserList.js:187 src/control/Control.UserList.js:353
 msgid "Always follow the editor"
