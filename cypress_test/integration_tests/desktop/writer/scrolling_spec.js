@@ -62,8 +62,6 @@ describe('Scroll through document', function() {
 		cy.get('.leaflet-layer')
 			.click('bottom');
 
-		cy.wait(500);
-
 		helper.typeIntoDocument('{home}{end}{home}');
 
 		cy.get('#test-div-horizontal-scrollbar')
