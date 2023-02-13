@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-03 12:49+0100\n"
-"PO-Revision-Date: 2022-08-01 11:22+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2023-02-11 17:35+0000\n"
+"Last-Translator: Andrej Shadura <andrew@shadura.me>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sk/>\n"
-"Language: \n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -395,19 +395,19 @@ msgstr "Typ"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "What?"
-msgstr ""
+msgstr "Čo?"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "Who?"
-msgstr ""
+msgstr "Kto?"
 
 #: src/control/Control.DocumentRepair.js:130
 msgid "When?"
-msgstr ""
+msgstr "Kedy?"
 
 #: src/control/Control.DocumentRepair.js:149
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "Ešte ste neurobili nič, čo sa dá vrátiť…"
 
 #: src/control/Control.DocumentRepair.js:159
 msgid "Redo"
@@ -454,11 +454,11 @@ msgstr "Priemer"
 
 #: src/control/Control.JSDialogBuilder.js:149
 msgid "Min"
-msgstr ""
+msgstr "Minimum"
 
 #: src/control/Control.JSDialogBuilder.js:150
 msgid "Max"
-msgstr ""
+msgstr "Maximum"
 
 #: src/control/Control.JSDialogBuilder.js:151
 #: src/control/Control.StatusBar.js:324
@@ -721,7 +721,7 @@ msgstr "Resetovať zväčšenie"
 #: src/control/Control.NotebookbarImpress.js:378
 #: src/control/Control.NotebookbarWriter.js:1090
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Prepnúť režim používateľského rozhrania"
 
 #: src/control/Control.Menubar.js:128 src/control/Control.Menubar.js:409
 #: src/control/Control.NotebookbarWriter.js:1102
@@ -754,66 +754,64 @@ msgid "Text orientation"
 msgstr "Orientácia textu"
 
 #: src/control/Control.Menubar.js:269
-#, fuzzy
 msgid "References"
-msgstr "O~dkazy"
+msgstr "Odkazy"
 
 #: src/control/Control.Menubar.js:272
 #: src/control/Control.NotebookbarWriter.js:1409
 msgid "Update Index"
-msgstr ""
+msgstr "Aktualizovať index"
 
 #: src/control/Control.Menubar.js:281
 #: src/control/Control.NotebookbarWriter.js:1492
 msgid "Add Citation"
-msgstr ""
+msgstr "Pridať citáciu"
 
 #: src/control/Control.Menubar.js:282
 #: src/control/Control.NotebookbarWriter.js:1503
 msgid "Add Citation Note"
-msgstr ""
+msgstr "Pridať poznámku k citácii"
 
 #: src/control/Control.Menubar.js:283
 #: src/control/Control.NotebookbarWriter.js:1480
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Pridať zoznam použitej literatúry"
 
 #: src/control/Control.Menubar.js:285
 #: src/control/Control.NotebookbarWriter.js:1520
 msgid "Refresh Citations"
-msgstr ""
+msgstr "Obnoviť citácie"
 
 #: src/control/Control.Menubar.js:286
 #: src/control/Control.NotebookbarWriter.js:1531
 #: src/control/Control.Zotero.js:1437
 msgid "Unlink Citations"
-msgstr ""
+msgstr "Zrušiť odkazy na citácie"
 
 #: src/control/Control.Menubar.js:287
 #: src/control/Control.NotebookbarWriter.js:1542
 msgid "Citation Preferences"
-msgstr ""
+msgstr "Predvoľby citácií"
 
 #: src/control/Control.Menubar.js:315 src/control/Control.Menubar.js:1148
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Vložiť formátovaný text"
 
 #: src/control/Control.Menubar.js:316 src/control/Control.Menubar.js:1149
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Vložiť začiarkavacie políčko"
 
 #: src/control/Control.Menubar.js:317 src/control/Control.Menubar.js:1150
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Vložiť rozbaľovací zoznam"
 
 #: src/control/Control.Menubar.js:318 src/control/Control.Menubar.js:1151
 msgid "Insert Picture"
-msgstr ""
+msgstr "Vložiť obrázok"
 
 #: src/control/Control.Menubar.js:319 src/control/Control.Menubar.js:1152
-#, fuzzy
 msgid "Insert Date"
-msgstr "Vložiť tabuľku"
+msgstr "Vložiť dátum"
 
 #: src/control/Control.Menubar.js:320 src/control/Control.Menubar.js:1153
 #: src/control/Control.NotebookbarCalc.js:266
@@ -822,7 +820,7 @@ msgstr "Vložiť tabuľku"
 #: src/control/Control.NotebookbarWriter.js:281
 #: src/control/Control.NotebookbarWriter.js:1031
 msgid "Properties"
-msgstr ""
+msgstr "Vlastnosti"
 
 #: src/control/Control.Menubar.js:329 src/control/Control.Menubar.js:331
 #: src/control/Control.Toolbar.js:244 src/control/Control.Toolbar.js:272
@@ -968,15 +966,15 @@ msgstr "Nastaviť na predvolený jazyk"
 
 #: src/control/Control.Menubar.js:1647
 msgid "Use Compact view"
-msgstr ""
+msgstr "Použiť kompaktné zobrazenie"
 
 #: src/control/Control.Menubar.js:1649
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Použiť zobrazenie s kartami"
 
 #: src/control/Control.Menubar.js:1685 src/control/Control.Menubar.js:1698
 msgid "Read-only mode"
-msgstr ""
+msgstr "Režim len na čítanie"
 
 #: src/control/Control.Menubar.js:1712
 msgid "Insert Shape"
@@ -1118,13 +1116,12 @@ msgstr "~Pomocník"
 #: src/control/Control.NotebookbarImpress.js:165
 #: src/control/Control.NotebookbarWriter.js:127
 msgid "Save As"
-msgstr ""
+msgstr "Uložiť ako"
 
 #: src/control/Control.NotebookbarCalc.js:129
 #: src/control/Control.NotebookbarDraw.js:147
 #: src/control/Control.NotebookbarImpress.js:181
 #: src/control/Control.NotebookbarWriter.js:143
-#, fuzzy
 msgid "Export As"
 msgstr "Exportovať ako"
 
@@ -1220,11 +1217,11 @@ msgstr "Zlé"
 
 #: src/control/Control.NotebookbarCalc.js:770
 msgid "Row Height"
-msgstr ""
+msgstr "Výška riadku"
 
 #: src/control/Control.NotebookbarCalc.js:776
 msgid "Column Width"
-msgstr ""
+msgstr "Šírka stĺpca"
 
 #: src/control/Control.NotebookbarCalc.js:787
 msgid "Insert Rows Above"
@@ -1255,18 +1252,18 @@ msgstr "Odstrániť stĺpce"
 #: src/control/Control.NotebookbarImpress.js:377
 #: src/control/Control.NotebookbarWriter.js:1089
 msgid "Compact view"
-msgstr ""
+msgstr "Kompaktné zobrazenie"
 
 #: src/control/Control.NotebookbarCalc.js:1005
 #: src/control/Control.NotebookbarDraw.js:284
 #: src/control/Control.NotebookbarImpress.js:383
 #: src/control/Control.NotebookbarWriter.js:1112
 msgid "Status Bar"
-msgstr ""
+msgstr "Stavový riadok"
 
 #: src/control/Control.NotebookbarCalc.js:1062
 msgid "Sparkline"
-msgstr ""
+msgstr "Minigraf"
 
 #: src/control/Control.NotebookbarCalc.js:1141
 #: src/control/Control.NotebookbarCalc.js:1791
@@ -1278,7 +1275,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:919
 #: src/control/Control.NotebookbarWriter.js:2303
 msgid "Shapes"
-msgstr ""
+msgstr "Tvary"
 
 #: src/control/Control.NotebookbarDraw.js:32
 #: src/control/Control.NotebookbarDraw.js:754
@@ -1297,7 +1294,7 @@ msgstr "Obrázok (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:99
 msgid "~Master"
-msgstr ""
+msgstr "~Predloha"
 
 #: src/control/Control.NotebookbarImpress.js:258
 msgid "ODF Presentation (.odp)"
@@ -1313,9 +1310,8 @@ msgid "Reference~s"
 msgstr "O~dkazy"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "Form"
-msgstr "Fórum"
+msgstr "Formulár"
 
 #: src/control/Control.NotebookbarWriter.js:203
 msgid "ODF Text Document (.odt)"
@@ -1327,23 +1323,23 @@ msgstr "Dokument EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:1006
 msgid "Rich Text"
-msgstr ""
+msgstr "Formátovaný text"
 
 #: src/control/Control.NotebookbarWriter.js:1011
 msgid "Checkbox"
-msgstr ""
+msgstr "Začiarkavacie políčko"
 
 #: src/control/Control.NotebookbarWriter.js:1016
 msgid "Dropdown"
-msgstr ""
+msgstr "Rozbaľovací zoznam"
 
 #: src/control/Control.NotebookbarWriter.js:1021
 msgid "Picture"
-msgstr ""
+msgstr "Obrázok"
 
 #: src/control/Control.NotebookbarWriter.js:1101
 msgid "Ruler"
-msgstr ""
+msgstr "Pravítko"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1487,7 +1483,7 @@ msgstr "Naozaj chcete odstrániť hárok %sheet% ?"
 
 #: src/control/Control.Tabs.js:320
 msgid "Rename sheet"
-msgstr ""
+msgstr "Premenovať hárok"
 
 #: src/control/Control.Tabs.js:320
 msgid "Enter new sheet name"
@@ -1547,11 +1543,11 @@ msgstr "Počet používateľov: 0"
 
 #: src/control/Control.UserList.js:159
 msgid "Following"
-msgstr ""
+msgstr "Sledovaný"
 
 #: src/control/Control.UserList.js:187 src/control/Control.UserList.js:353
 msgid "Always follow the editor"
-msgstr "Vždy nasledovať tohoto editora"
+msgstr "Vždy sledovať tohto editora"
 
 #: src/control/Control.UserList.js:301
 msgid "Readonly"
