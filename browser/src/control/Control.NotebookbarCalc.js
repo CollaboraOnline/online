@@ -771,6 +771,11 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:PageFormatDialog'
 			},
 			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:SheetRightToLeft', 'spreadsheet'),
+				'command': '.uno:SheetRightToLeft'
+			},
+			{
 				'id': 'Data-PrintRangesMenu:MenuPrintRanges',
 				'type': 'menubutton',
 				'text': _UNO('.uno:PrintRangesMenu', 'spreadsheet'),
