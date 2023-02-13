@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-03 12:49+0100\n"
-"PO-Revision-Date: 2023-01-22 13:13+0000\n"
-"Last-Translator: PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>\n"
+"PO-Revision-Date: 2023-02-12 13:34+0000\n"
+"Last-Translator: \"PhD. Ayhan YALÇINSOY\" <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.15.1\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1126,7 +1126,6 @@ msgstr "Farklı Kaydet"
 #: src/control/Control.NotebookbarDraw.js:147
 #: src/control/Control.NotebookbarImpress.js:181
 #: src/control/Control.NotebookbarWriter.js:143
-#, fuzzy
 msgid "Export As"
 msgstr "Dışarıya farklı aktar"
 
@@ -1572,13 +1571,15 @@ msgstr "Zotero API anahtarı yanlış"
 
 #: src/control/Control.Zotero.js:184
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Zotero Uyarısı"
 
 #: src/control/Control.Zotero.js:185
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Belge, web API aracılığıyla erişilemeyen bazı alıntılar içermektedir. "
+"Alıntıları veya kaynakçayı düzenlerken bazı sorunlara neden olabilir."
 
 #: src/control/Control.Zotero.js:241 src/core/Socket.js:1153
 msgid "Loading..."
@@ -1602,11 +1603,11 @@ msgstr "Yer İmleri"
 
 #: src/control/Control.Zotero.js:402
 msgid "Footnotes"
-msgstr ""
+msgstr "Altbilgi"
 
 #: src/control/Control.Zotero.js:402
 msgid "Endnotes"
-msgstr ""
+msgstr "Sonnot"
 
 #: src/control/Control.Zotero.js:466
 msgid "My Publications"
@@ -1662,13 +1663,14 @@ msgstr "Ögeler yüklenemedi"
 
 #: src/control/Control.Zotero.js:1138
 msgid "Citation warning"
-msgstr ""
+msgstr "Atıf uyarısı"
 
 #: src/control/Control.Zotero.js:1139
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Atıflar girildikten sonra saklama ve görüntüleme türleri değiştirilemez."
 
 #: src/control/Control.Zotero.js:1140 src/control/Control.Zotero.js:1439
 msgid "Confirm"
@@ -2081,11 +2083,11 @@ msgstr "Belge yeniden adlandırılıyor ve kısa süre içinde yeniden yüklenec
 
 #: src/core/Socket.js:1273
 msgid "Exported to storage"
-msgstr ""
+msgstr "Depoya aktarıldı"
 
 #: src/core/Socket.js:1273
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Başarıyla dışa aktarıldı: "
 
 #: src/core/Socket.js:1568
 msgid ""
@@ -2506,11 +2508,11 @@ msgstr "Şablondan yeni dosya oluşturuluyor ..."
 
 #: src/map/handler/Map.WOPI.js:440
 msgid "Error"
-msgstr ""
+msgstr "Hata"
 
 #: src/map/handler/Map.WOPI.js:440
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "Dosya adı bir uzantı içermelidir."
 
 #: src/map/handler/Map.WOPI.js:448
 msgid "Creating copy..."
