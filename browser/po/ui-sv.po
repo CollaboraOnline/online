@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-03 12:49+0100\n"
-"PO-Revision-Date: 2023-01-16 21:34+0000\n"
+"PO-Revision-Date: 2023-02-10 14:36+0000\n"
 "Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15.1-dev\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1122,7 +1122,6 @@ msgstr "Spara som"
 #: src/control/Control.NotebookbarDraw.js:147
 #: src/control/Control.NotebookbarImpress.js:181
 #: src/control/Control.NotebookbarWriter.js:143
-#, fuzzy
 msgid "Export As"
 msgstr "Exportera som"
 
@@ -1564,17 +1563,19 @@ msgstr "Zotero API-nyckel är inte konfigurerad"
 
 #: src/control/Control.Zotero.js:157
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Zotero API-nyckel är felaktig"
 
 #: src/control/Control.Zotero.js:184
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Zotero Varning"
 
 #: src/control/Control.Zotero.js:185
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Dokumentet innehåller några citat som kan vara oåtkomliga genom webb-API. "
+"Det kan orsaka vissa problem när du redigerar citat eller bibliografi."
 
 #: src/control/Control.Zotero.js:241 src/core/Socket.js:1153
 msgid "Loading..."
@@ -1598,11 +1599,11 @@ msgstr "Bokmärken"
 
 #: src/control/Control.Zotero.js:402
 msgid "Footnotes"
-msgstr ""
+msgstr "Fotnoter"
 
 #: src/control/Control.Zotero.js:402
 msgid "Endnotes"
-msgstr ""
+msgstr "Slutnoter"
 
 #: src/control/Control.Zotero.js:466
 msgid "My Publications"
@@ -1658,17 +1659,19 @@ msgstr "Misslyckades att ladda objekt"
 
 #: src/control/Control.Zotero.js:1138
 msgid "Citation warning"
-msgstr ""
+msgstr "Citeringsvarning"
 
 #: src/control/Control.Zotero.js:1139
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"När citeringar väl har angetts kan deras lagrings- och visningstyp inte "
+"ändras."
 
 #: src/control/Control.Zotero.js:1140 src/control/Control.Zotero.js:1439
 msgid "Confirm"
-msgstr ""
+msgstr "Bekräfta"
 
 #: src/control/Control.Zotero.js:1246
 msgid "Add Note"
@@ -1699,6 +1702,8 @@ msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Att ta bort länken till citat kommer att förhindra Collabora Online från att "
+"uppdatera citat och bibliografi i detta dokument."
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
@@ -2076,11 +2081,11 @@ msgstr "Dokumentet byter namn och laddas snart om"
 
 #: src/core/Socket.js:1273
 msgid "Exported to storage"
-msgstr ""
+msgstr "Exporterad till lagring"
 
 #: src/core/Socket.js:1273
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Har exporterats: "
 
 #: src/core/Socket.js:1568
 msgid ""
@@ -2498,11 +2503,11 @@ msgstr "Skapar en ny fil baserat på mall..."
 
 #: src/map/handler/Map.WOPI.js:440
 msgid "Error"
-msgstr ""
+msgstr "Fel"
 
 #: src/map/handler/Map.WOPI.js:440
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "Filnamn bör innehålla ett tillägg."
 
 #: src/map/handler/Map.WOPI.js:448
 msgid "Creating copy..."
