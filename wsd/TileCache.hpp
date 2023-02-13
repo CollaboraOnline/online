@@ -82,7 +82,13 @@ struct TileData
         else
         {
             LOG_TRC("received delta of size " << dataSize << " - appending to existing " << _wids.size());
-            assert(_wids.size() > 0 && "no underlying keyframe!");
+            // Issues #5532 and #5831 Replace assert with a log message
+            // Remove assert and allow delta messages to be handled even if
+            // there is no keyframe. Although it might make sense to skip
+            // delta messages if there is no keyframe, that causes some
+            // content, at least in Impress documents, to not render.
+            if (!_wids.size())
+                LOG_DBG("no underlying keyframe!");
         }
 
         size_t oldSize = size();
