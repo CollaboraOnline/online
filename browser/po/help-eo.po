@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-03 12:49+0200\n"
-"PO-Revision-Date: 2021-11-03 11:43+0000\n"
-"Last-Translator: phlostically <phlostically@mailinator.com>\n"
+"PO-Revision-Date: 2023-02-11 17:35+0000\n"
+"Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
 "Language-Team: Esperanto <https://hosted.weblate.org/projects/"
 "collabora-online/help/eo/>\n"
 "Language: eo\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1029,39 +1029,41 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Navigado en kalkultabeloj"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Movas la kursoron al la unua ĉelo en la folio (A1)."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "Movas la kursoron al la lasta ĉelo sur la folio kiu enhavas datumojn."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:134-18
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "Movas la kursoron al la unua ĉelo de la aktuala vico."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:135-18
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "Movas la kursoron al la lasta ĉelo de la aktuala vico."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:136-18
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
-msgstr ""
+msgstr "Elektas ĉelojn de la nuna ĉelo al la unua ĉelo de la nuna vico."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
-msgstr ""
+msgstr "Elektas ĉelojn de la nuna ĉelo ĝis la lasta ĉelo de la nuna vico."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
+"Elektas ĉelojn el la nuna ĉelo ĝis unu paĝo en la nuna kolumno aŭ etendas la "
+"ekzistantan elekton unu paĝon supren."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-164
 #, fuzzy
