@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-03 12:49+0100\n"
-"PO-Revision-Date: 2023-01-18 07:13+0000\n"
+"PO-Revision-Date: 2023-02-13 09:19+0000\n"
 "Last-Translator: Alex Gabilondo <alexgabi@disroot.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "ui/eu/>\n"
-"Language: \n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15.1-dev\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1123,7 +1123,6 @@ msgstr "Gorde honela"
 #: src/control/Control.NotebookbarDraw.js:147
 #: src/control/Control.NotebookbarImpress.js:181
 #: src/control/Control.NotebookbarWriter.js:143
-#, fuzzy
 msgid "Export As"
 msgstr "Esportatu honela"
 
@@ -1565,17 +1564,19 @@ msgstr "Zotero API gakoa ez dago konfiguratuta"
 
 #: src/control/Control.Zotero.js:157
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Zotero API gakoa okerra da"
 
 #: src/control/Control.Zotero.js:184
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Zotero abisua"
 
 #: src/control/Control.Zotero.js:185
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Dokumentuak web APIaren bidez eskuraezinak izan daitezkeen aipamen batzuk "
+"ditu. Arazo batzuk sor ditzake aipamenak edo bibliografia editatzerakoan."
 
 #: src/control/Control.Zotero.js:241 src/core/Socket.js:1153
 msgid "Loading..."
@@ -1599,11 +1600,11 @@ msgstr "Laster-markak"
 
 #: src/control/Control.Zotero.js:402
 msgid "Footnotes"
-msgstr ""
+msgstr "Oin oharrak"
 
 #: src/control/Control.Zotero.js:402
 msgid "Endnotes"
-msgstr ""
+msgstr "Amaiera oharrak"
 
 #: src/control/Control.Zotero.js:466
 msgid "My Publications"
@@ -1659,17 +1660,19 @@ msgstr "Ezin izan dira elementuak kargatu"
 
 #: src/control/Control.Zotero.js:1138
 msgid "Citation warning"
-msgstr ""
+msgstr "Aipamen abisua"
 
 #: src/control/Control.Zotero.js:1139
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Aipamenak sartu ondoren, haien biltegiratzea eta bistaratzeko mota ezin dira "
+"aldatu."
 
 #: src/control/Control.Zotero.js:1140 src/control/Control.Zotero.js:1439
 msgid "Confirm"
-msgstr ""
+msgstr "Berretsi"
 
 #: src/control/Control.Zotero.js:1246
 msgid "Add Note"
@@ -1700,6 +1703,8 @@ msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Aipuak kentzeak Collabora Online-k dokumentu honetako aipamenak eta "
+"bibliografia eguneratzea eragotziko du."
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
@@ -2079,11 +2084,11 @@ msgstr "Dokumentua izena aldatzen ari da eta laster berriro kargatuko da"
 
 #: src/core/Socket.js:1273
 msgid "Exported to storage"
-msgstr ""
+msgstr "Biltegira esportatu da"
 
 #: src/core/Socket.js:1273
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Behar bezala esportatu da: "
 
 #: src/core/Socket.js:1568
 msgid ""
@@ -2504,11 +2509,11 @@ msgstr "Fitxategi berria sortzen txantiloitik..."
 
 #: src/map/handler/Map.WOPI.js:440
 msgid "Error"
-msgstr ""
+msgstr "Errorea"
 
 #: src/map/handler/Map.WOPI.js:440
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "Fitxategiaren izenak luzapen bat izan behar du."
 
 #: src/map/handler/Map.WOPI.js:448
 msgid "Creating copy..."
