@@ -1,3 +1,5 @@
+NOTE: For instructions on how to build and run it without the
+Allotropia-supplied container, see wasm/README.no-container.md.
 
 = WASM with emscripten =
 
