@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-03 12:49+0100\n"
-"PO-Revision-Date: 2023-01-23 18:12+0000\n"
+"PO-Revision-Date: 2023-02-10 14:36+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1124,7 +1124,6 @@ msgstr "Guardar como"
 #: src/control/Control.NotebookbarDraw.js:147
 #: src/control/Control.NotebookbarImpress.js:181
 #: src/control/Control.NotebookbarWriter.js:143
-#, fuzzy
 msgid "Export As"
 msgstr "Exportar como"
 
@@ -1570,13 +1569,16 @@ msgstr "A chave da API do Zotero está incorreta"
 
 #: src/control/Control.Zotero.js:184
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Alerta de Zotero"
 
 #: src/control/Control.Zotero.js:185
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"O documento contém algumas citações que podem estar inacessíveis através da "
+"API da web. Pode causar alguns problemas durante a edição de citações ou "
+"bibliografia."
 
 #: src/control/Control.Zotero.js:241 src/core/Socket.js:1153
 msgid "Loading..."
@@ -1600,11 +1602,11 @@ msgstr "Marcadores"
 
 #: src/control/Control.Zotero.js:402
 msgid "Footnotes"
-msgstr ""
+msgstr "Notas de rodapé"
 
 #: src/control/Control.Zotero.js:402
 msgid "Endnotes"
-msgstr ""
+msgstr "Notas finais"
 
 #: src/control/Control.Zotero.js:466
 msgid "My Publications"
@@ -1660,13 +1662,15 @@ msgstr "Não foi possível carregar os itens"
 
 #: src/control/Control.Zotero.js:1138
 msgid "Citation warning"
-msgstr ""
+msgstr "Alerta de citação"
 
 #: src/control/Control.Zotero.js:1139
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Não é possível alterar o armazenamento e tipo de visualização das citações "
+"após estas serem inseridas."
 
 #: src/control/Control.Zotero.js:1140 src/control/Control.Zotero.js:1439
 msgid "Confirm"
@@ -2079,11 +2083,11 @@ msgstr "O nome do documento está a ser alterado e será recarregado em breve"
 
 #: src/core/Socket.js:1273
 msgid "Exported to storage"
-msgstr ""
+msgstr "Exportado para o armazenamento"
 
 #: src/core/Socket.js:1273
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Exportado com sucesso: "
 
 #: src/core/Socket.js:1568
 msgid ""
@@ -2513,11 +2517,11 @@ msgstr "A criar um novo ficheiro com base em modelo..."
 
 #: src/map/handler/Map.WOPI.js:440
 msgid "Error"
-msgstr ""
+msgstr "Erro"
 
 #: src/map/handler/Map.WOPI.js:440
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "O nome do ficheiro tem de ter uma extensão."
 
 #: src/map/handler/Map.WOPI.js:448
 msgid "Creating copy..."
