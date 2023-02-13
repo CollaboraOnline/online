@@ -106,7 +106,10 @@ struct TileData
     static bool isKeyframe(const char *data, size_t dataSize)
     {
         // keyframe or png
-        return dataSize > 0 && (data[0] == 'Z' || data[0] == (char)0x89);
+        // Fix issue 5831 Treat delta ('d') messages as a keyframe message
+        // Starting in the LibreOffice 7.4.x releases, delta messages are sent when
+        // opening new or certain existing .odp or .odg files.
+        return dataSize > 0 && (data[0] == 'Z' || data[0] == 'd' || data[0] == (char)0x89);
     }
 
     bool isValid() const { return _valid; }
