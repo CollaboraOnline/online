@@ -839,6 +839,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         wopiInfo->set("DownloadAsPostMessage", wopifileinfo->getDownloadAsPostMessage());
         wopiInfo->set("UserCanNotWriteRelative", wopifileinfo->getUserCanNotWriteRelative());
         wopiInfo->set("EnableInsertRemoteImage", wopifileinfo->getEnableInsertRemoteImage());
+        wopiInfo->set("EnableRemoteLinkPicker", wopifileinfo->getEnableRemoteLinkPicker());
         wopiInfo->set("EnableShare", wopifileinfo->getEnableShare());
         wopiInfo->set("HideUserList", wopifileinfo->getHideUserList());
         wopiInfo->set("SupportsRename", wopifileinfo->getSupportsRename());
