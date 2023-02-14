@@ -2404,6 +2404,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_showURLPopUp: function(position, url) {
 		var parent = L.DomUtil.create('div');
+		L.DomUtil.createWithId('div', 'hyperlink-pop-up-preview', parent);
 		var link = L.DomUtil.createWithId('a', 'hyperlink-pop-up', parent);
 		link.innerText = url;
 		var copyBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-copy', parent);
@@ -2455,6 +2456,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._setupClickFuncForId('hyperlink-pop-up-remove', function () {
 			map_.sendUnoCommand('.uno:RemoveHyperlink');
 		});
+
+		if (this._map['wopi'].EnableRemoteLinkPicker)
+			this._map.fire('postMessage', { msgId: 'Action_GetLinkPreview', args: { url: url } });
 	},
 
 	_movePopUpBelow: function() {
