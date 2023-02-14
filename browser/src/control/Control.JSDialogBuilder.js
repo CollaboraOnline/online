@@ -2192,6 +2192,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'cellverttop': 'aligntop',
 			'scalignmentpropertypanel': 'aligntop',
 			'hyperlinkdialog': 'inserthyperlink',
+			'remotelink': 'inserthyperlink',
 			'openhyperlinkoncursor': 'inserthyperlink',
 			'pageformatdialog': 'pagedialog',
 			'backgroundcolor': 'fillcolor',

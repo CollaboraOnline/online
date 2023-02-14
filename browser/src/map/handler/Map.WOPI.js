@@ -24,6 +24,7 @@ L.Map.WOPI = L.Handler.extend({
 	DownloadAsPostMessage: false,
 	UserCanNotWriteRelative: true,
 	EnableInsertRemoteImage: false,
+	EnableInsertRemoteLink: false,
 	EnableShare: false,
 	HideUserList: null,
 	CallPythonScriptSource: null,
@@ -118,6 +119,7 @@ L.Map.WOPI = L.Handler.extend({
 			overridenFileInfo.DownloadAsPostMessage : !!wopiInfo['DownloadAsPostMessage'];
 		this.UserCanNotWriteRelative = !!wopiInfo['UserCanNotWriteRelative'];
 		this.EnableInsertRemoteImage = !!wopiInfo['EnableInsertRemoteImage'];
+		this.EnableRemoteLinkPicker = !!wopiInfo['EnableRemoteLinkPicker'];
 		this.SupportsRename = !!wopiInfo['SupportsRename'];
 		this.UserCanRename = !!wopiInfo['UserCanRename'];
 		this.EnableShare = !!wopiInfo['EnableShare'];
@@ -396,6 +398,22 @@ L.Map.WOPI = L.Handler.extend({
 		else if (msg.MessageId == 'Action_InsertGraphic') {
 			if (msg.Values) {
 				this._map.insertURL(msg.Values.url);
+			}
+		}
+		else if (msg.MessageId == 'Action_InsertLink') {
+			if (msg.Values) {
+				var command = {
+					'Hyperlink.Text': {
+						type: 'string',
+						value: 'Link'
+					},
+					'Hyperlink.URL': {
+						type: 'string',
+						value: this._map.makeURLFromStr(msg.Values.url)
+					}
+				};
+				this._map.sendUnoCommand('.uno:SetHyperlink', command);
+				this._map.focus();
 			}
 		}
 		else if (msg.MessageId === 'Action_InsertFile') {
