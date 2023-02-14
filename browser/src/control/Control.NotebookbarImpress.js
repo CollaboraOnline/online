@@ -926,6 +926,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'text': _UNO('.uno:HyperlinkDialog'),
 				'command': '.uno:HyperlinkDialog'
 			},
+			(this._map['wopi'].EnableRemoteLinkPicker) ? {
+				'type': 'bigcustomtoolitem',
+				'text': _('Pick Link'),
+				'command': 'remotelink'
+			} : {},
 			{
 				'type': 'container',
 				'children': [

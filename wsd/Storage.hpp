@@ -563,6 +563,7 @@ public:
         bool getDownloadAsPostMessage() const { return _downloadAsPostMessage; }
         bool getUserCanNotWriteRelative() const { return _userCanNotWriteRelative; }
         bool getEnableInsertRemoteImage() const { return _enableInsertRemoteImage; }
+        bool getEnableRemoteLinkPicker() const { return _enableRemoteLinkPicker; }
         bool getEnableShare() const { return _enableShare; }
         bool getSupportsRename() const { return _supportsRename; }
         bool getSupportsLocks() const { return _supportsLocks; }
@@ -620,6 +621,8 @@ public:
         bool _userCanNotWriteRelative;
         /// If set to true, users can access the insert remote image functionality
         bool _enableInsertRemoteImage;
+        /// If set to true, users can access the remote link picker functionality
+        bool _enableRemoteLinkPicker;
         /// If set to true, users can access the file share functionality
         bool _enableShare;
         /// If set to "true", user list on the status bar will be hidden
