@@ -774,6 +774,7 @@ void WopiStorage::WOPIFileInfo::init()
     _downloadAsPostMessage = false;
     _userCanNotWriteRelative = true;
     _enableInsertRemoteImage = false;
+    _enableRemoteLinkPicker = false;
     _enableShare = false;
     _supportsLocks = false;
     _supportsRename = false;
@@ -863,6 +864,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
     JsonUtil::findJSONValue(object, "DownloadAsPostMessage", _downloadAsPostMessage);
     JsonUtil::findJSONValue(object, "UserCanNotWriteRelative", _userCanNotWriteRelative);
     JsonUtil::findJSONValue(object, "EnableInsertRemoteImage", _enableInsertRemoteImage);
+    JsonUtil::findJSONValue(object, "EnableRemoteLinkPicker", _enableRemoteLinkPicker);
     JsonUtil::findJSONValue(object, "EnableShare", _enableShare);
     JsonUtil::findJSONValue(object, "HideUserList", _hideUserList);
     JsonUtil::findJSONValue(object, "SupportsLocks", _supportsLocks);
