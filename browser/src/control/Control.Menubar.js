@@ -167,6 +167,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:InsertColumnBreak', 'spreadsheet'), uno: '.uno:InsertColumnBreak'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
+				{name: _('Pick Link'), id: 'remotelink', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:InsertSymbol'},
 				{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
@@ -430,6 +431,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:VerticalText'), uno: '.uno:VerticalText'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
+				{name: _('Pick Link'), id: 'remotelink', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:InsertSymbol'},
 				{type: 'separator'},
@@ -559,6 +561,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
+				{name: _('Pick Link'), id: 'remotelink', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:InsertSymbol'},
 				{type: 'separator'},
@@ -695,6 +698,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:FunctionDialog'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
+				{name: _('Pick Link'), id: 'remotelink', type: 'action'},
 				{uno: '.uno:InsertSymbol'},
 				{type: 'separator'},
 				{name: _UNO('.uno:InsertField', 'text'), type: 'menu', menu: [
@@ -1784,7 +1788,8 @@ L.Control.Menubar = L.Control.extend({
 			|| id.startsWith('saveas-')
 			|| id.startsWith('export')
 			|| id.startsWith('zotero')
-			|| id === 'deletepage') {
+			|| id === 'deletepage'
+			|| id === 'remotelink') {
 			this._map.dispatch(id);
 		} else if (id === 'signdocument') {
 			this._map.showSignDocument();
