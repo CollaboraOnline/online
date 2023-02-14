@@ -243,7 +243,7 @@
 	     CFBundleShortVersionString must, however, be three numbers.
 	-->
 	<key>CFBundleShortVersionString</key>
-	<string>22.05.8</string>
+	<string>23.05.0</string>
 	<key>CFBundleVersion</key>
 	<string>@IOSAPP_BUNDLE_VERSION@</string>
 	<key>LSRequiresIPhoneOS</key>
