@@ -741,7 +741,7 @@ L.Map.include({
 			message: _('Insert hyperlink'),
 			overlayClosesOnClick: false,
 			input: [
-				_('Text') + '<textarea name="text" id="hyperlink-text-box" style="resize: none" type="text"></textarea>',
+				_('Text') + '<input name="text" id="hyperlink-text-box" type="text" value="' + text  + '">',
 				_('Link') + '<input name="link" id="hyperlink-link-box" type="text" value="' + link + '" required/>'
 			].join(''),
 			buttons: [
