@@ -416,6 +416,20 @@ L.Map.WOPI = L.Handler.extend({
 				this._map.focus();
 			}
 		}
+		else if (msg.MessageId == 'Action_GetLinkPreview_Resp') {
+			var preview = document.querySelector('#hyperlink-pop-up-preview');
+			if (preview) {
+				preview.innerText = '';
+				if (msg.Values.image && msg.Values.image.indexOf('data:') === 0) {
+					var image = L.DomUtil.create('img', '', preview);
+					image.src = msg.Values.image;
+				}
+				if (msg.Values.title) {
+					var title = L.DomUtil.create('p', '', preview);
+					title.innerText = msg.Values.title;
+				}
+			}
+		}
 		else if (msg.MessageId === 'Action_InsertFile') {
 			if (msg.Values && (msg.Values.File instanceof Blob)) {
 				this._map.fire('insertfile', {file: msg.Values.File});
