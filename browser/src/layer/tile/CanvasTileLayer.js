@@ -2404,9 +2404,10 @@ L.CanvasTileLayer = L.Layer.extend({
 	_showURLPopUp: function(position, url) {
 		// # for internal links
 		if (!url.startsWith('#')) {
-			var link = L.DomUtil.createWithId('a', 'hyperlink-pop-up');
+			var parent = L.DomUtil.create('div');
+			var link = L.DomUtil.createWithId('a', 'hyperlink-pop-up', parent);
 			link.innerText = url;
-			var copyBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-copy');
+			var copyBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-copy', parent);
 			L.DomUtil.addClass(copyBtn, 'hyperlink-popup-btn');
 			copyBtn.setAttribute('title', _('Copy link location'));
 			var imgCopyBtn = L.DomUtil.create('img', 'hyperlink-pop-up-copyimg', copyBtn);
@@ -2414,7 +2415,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			imgCopyBtn.setAttribute('width', 18);
 			imgCopyBtn.setAttribute('height', 18);
 			imgCopyBtn.setAttribute('style', 'padding: 4px');
-			var editBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-edit');
+			var editBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-edit', parent);
 			L.DomUtil.addClass(editBtn, 'hyperlink-popup-btn');
 			editBtn.setAttribute('title', _('Edit link'));
 			var imgEditBtn = L.DomUtil.create('img', 'hyperlink-pop-up-editimg', editBtn);
@@ -2422,7 +2423,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			imgEditBtn.setAttribute('width', 18);
 			imgEditBtn.setAttribute('height', 18);
 			imgEditBtn.setAttribute('style', 'padding: 4px');
-			var removeBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-remove');
+			var removeBtn = L.DomUtil.createWithId('div', 'hyperlink-pop-up-remove', parent);
 			L.DomUtil.addClass(removeBtn, 'hyperlink-popup-btn');
 			removeBtn.setAttribute('title', _('Remove link'));
 			var imgRemoveBtn = L.DomUtil.create('img', 'hyperlink-pop-up-removeimg', removeBtn);
@@ -2430,9 +2431,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			imgRemoveBtn.setAttribute('width', 18);
 			imgRemoveBtn.setAttribute('height', 18);
 			imgRemoveBtn.setAttribute('style', 'padding: 4px');
-			var linkOuterHtml = link.outerHTML + copyBtn.outerHTML + editBtn.outerHTML + removeBtn.outerHTML;
 			this._map.hyperlinkPopup = new L.Popup({className: 'hyperlink-popup', closeButton: false, closeOnClick: false, autoPan: false})
-				.setContent(linkOuterHtml)
+				.setHTMLContent(parent)
 				.setLatLng(position)
 				.openOn(this._map);
 			document.getElementById('hyperlink-pop-up').title = url;
