@@ -97,6 +97,12 @@ L.Popup = L.Layer.extend({
 		return this;
 	},
 
+	setHTMLContent: function (content) {
+		this._htmlContent = content;
+		this.update();
+		return this;
+	},
+
 	update: function () {
 		if (!this._map) { return; }
 
@@ -174,12 +180,15 @@ L.Popup = L.Layer.extend({
 	},
 
 	_updateContent: function () {
-		if (!this._content) { return; }
+		if (!this._content && !this._htmlContent) { return; }
 
 		var node = this._contentNode;
 
-		if (typeof this._content === 'string') {
-			node.innerHTML = this._content;
+		if (this._htmlContent) {
+			node.innerHTML = '';
+			node.appendChild(this._htmlContent);
+		} else if (typeof this._content === 'string') {
+			node.innerText = this._content;
 		} else {
 			while (node.hasChildNodes()) {
 				node.removeChild(node.firstChild);
