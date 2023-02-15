@@ -373,7 +373,8 @@ L.Control.UIManager = L.Control.extend({
 				var style = $('html > head > style');
 				if (style.length == 0)
 					$('html > head').append('<style/>');
-				$('html > head > style').append('.w2ui-icon.' + button.id + '{background: url(' + button.imgurl + ') no-repeat center !important; }');
+				$('html > head > style').append('.w2ui-icon.' + encodeURIComponent(button.id) +
+					'{background: url("' + encodeURIComponent(button.imgurl) + '") no-repeat center !important; }');
 
 				// Position: Either specified by the caller, or defaulting to first position (before save)
 				var insertBefore = button.insertBefore || 'save';
