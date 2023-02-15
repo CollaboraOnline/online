@@ -2048,9 +2048,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// Remove other view selection as it interferes with playing the media.
 		for (var viewId in this._graphicViewMarkers) {
-			if (viewId !== this._viewId) {
+			if (viewId !== this._viewId && this._map._viewInfo[viewId]) {
 				var viewMarker = this._graphicViewMarkers[viewId].marker;
-				this._viewLayerGroup.removeLayer(viewMarker);
+				if (viewMarker)
+					this._viewLayerGroup.removeLayer(viewMarker);
 			}
 		}
 
