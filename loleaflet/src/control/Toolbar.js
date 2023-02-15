@@ -856,8 +856,8 @@ L.Map.include({
 			message: _('Insert hyperlink'),
 			overlayClosesOnClick: false,
 			input: [
-				_('Text') + '<input name="text" id="hyperlink-text-box" type="text" value="' + text + '"/>',
-				_('Link') + '<input name="link" id="hyperlink-link-box" type="text" value="' + link + '"/>'
+				_('Text') + '<input name="text" id="hyperlink-text-box" type="text"/>',
+				_('Link') + '<input name="link" id="hyperlink-link-box" type="text" required/>'
 			].join(''),
 			buttons: [
 				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
@@ -884,7 +884,11 @@ L.Map.include({
 			},
 			afterOpen: function() {
 				setTimeout(function() {
-					if (document.getElementById('hyperlink-text-box').value.trim() !== '') {
+					var linkBox = document.getElementById('hyperlink-link-box');
+					linkBox.value = link;
+					var textBox = document.getElementById('hyperlink-text-box');
+					textBox.value = text ? text.trim() : '';
+					if (textBox.value.trim() !== '') {
 						document.getElementById('hyperlink-link-box').focus();
 					}
 					else {
