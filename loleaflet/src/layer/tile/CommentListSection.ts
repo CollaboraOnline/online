@@ -323,7 +323,7 @@ class CommentSection {
 			contentClassName: 'vex-has-inputs',
 			message: '',
 			input: [
-				'<textarea name="comment" id="new-mobile-comment-input-area" class="loleaflet-annotation-textarea" required>' + (commentData.text && isMod ? commentData.text: '') + '</textarea>'
+				'<textarea name="comment" id="new-mobile-comment-input-area" class="loleaflet-annotation-textarea" required></textarea>'
 			].join(''),
 			buttons: [
 				$.extend({}, vex.dialog.buttons.YES, { text: _('Save') }),
@@ -378,6 +378,7 @@ class CommentSection {
 
 		dialog.contentEl.insertBefore(author, dialog.contentEl.childNodes[0]);
 
+		$(dialog.contentEl).find('textarea').text((commentData.text && isMod ? commentData.text : ''));
 		$(dialog.contentEl).find('textarea').focus();
 	}
 
