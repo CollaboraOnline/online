@@ -740,7 +740,7 @@ L.Map.include({
 			overlayClosesOnClick: false,
 			input: [
 				_('Text') + '<textarea name="text" id="hyperlink-text-box" style="resize: none" type="text"></textarea>',
-				_('Link') + '<input name="link" id="hyperlink-link-box" type="text" value="' + link + '"/>'
+				_('Link') + '<input name="link" id="hyperlink-link-box" type="text" required/>'
 			].join(''),
 			buttons: [
 				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
@@ -767,6 +767,8 @@ L.Map.include({
 			},
 			afterOpen: function() {
 				setTimeout(function() {
+					var linkBox = document.getElementById('hyperlink-link-box');
+					linkBox.value = link;
 					var textBox = document.getElementById('hyperlink-text-box');
 					textBox.textContent = text ? text.trim() : '';
 					if (textBox.textContent.trim() !== '') {
