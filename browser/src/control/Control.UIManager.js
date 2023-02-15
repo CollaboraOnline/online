@@ -487,7 +487,7 @@ L.Control.UIManager = L.Control.extend({
 						uno: button.unoCommand,
 						id: button.id,
 						img: button.id,
-						hint: _(button.hint), /* "Try" to localize ! */
+						hint: _(button.hint.replaceAll('\"', '&quot;')), /* "Try" to localize ! */
 						/* Notify the host back when button is clicked (only when unoCommand is not set) */
 						postmessage: !Object.prototype.hasOwnProperty.call(button, 'unoCommand')
 					}
