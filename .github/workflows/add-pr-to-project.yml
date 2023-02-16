@@ -1,0 +1,4 @@
+- name: Automate projects
+  # You may pin to the exact commit or the version.
+  # uses: takanabe/github-actions-automate-projects@5d004c140c65fa8b4ef3b18a38219ce680bce816
+  uses: takanabe/github-actions-automate-projects@v0.0.2
