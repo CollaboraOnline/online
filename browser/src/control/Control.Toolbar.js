@@ -522,6 +522,7 @@ function createShapesPanel(shapeType) {
 function insertShapes(shapeType) {
 	var width = 10;
 	var $grid = $('.insertshape-grid');
+	$grid.addClass(shapeType);
 
 	if (window.mode.isDesktop() || window.mode.isTablet())
 		$grid.css('margin-botttom', '0px');
