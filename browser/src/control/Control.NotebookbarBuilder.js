@@ -255,7 +255,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_createiOsFontButton: function(parentContainer, data, builder) {
-		var table = L.DomUtil.createWithId('div', 'fontnamecombobox', parentContainer);
+		// Fix issue #5838 Use unique IDs for font name combobox elements
+		var table = L.DomUtil.createWithId('div', 'fontnamecomboboxios', parentContainer);
 		var row = L.DomUtil.create('div', 'notebookbar row', table);
 		var button = L.DomUtil.createWithId('button', data.id, row);
 
