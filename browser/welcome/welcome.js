@@ -59,7 +59,8 @@ function onSlideClick(e, isButton = false) {
 function onMessage(e) {
     try {
         var msg = JSON.parse(e.data);
-        if (window.parent !== window.self && msg.MessageId === 'welcome-translate') {
+        if (e.origin === window.origin && window.parent !== window.self
+            && msg.MessageId === 'welcome-translate') {
             setTranslatable(document.body, msg.strings);
             window.parent.postMessage('{"MessageId":"welcome-show"}', '*');
         }
