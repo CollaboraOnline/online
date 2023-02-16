@@ -51,6 +51,9 @@ L.Control.UIManager = L.Control.extend({
 				event.target.parentElement.id === 'document-titlebar') { // checks if clicked on the document titlebar container
 				that.map.fire('editorgotfocus');}
 		});
+
+		if (window.zoteroEnabled)
+			this.map.on('updateviewslist', this.onUpdateViews, this);
 	},
 
 	// UI initialization
@@ -114,10 +117,6 @@ L.Control.UIManager = L.Control.extend({
 		this.map.addControl(L.control.infobar());
 		this.map.userList = L.control.userList();
 		this.map.addControl(this.map.userList);
-		if (window.zoteroEnabled) {
-			this.map.zotero = L.control.zotero(this.map);
-			this.map.addControl(this.map.zotero);
-		}
 
 		var openBusyPopup = function(label) {
 			this.busyPopupTimer = setTimeout(function() {
@@ -690,6 +689,19 @@ L.Control.UIManager = L.Control.extend({
 
 		// We've resized the document container.
 		this.map.invalidateSize();
+	},
+
+	onUpdateViews: function () {
+		var userPrivateInfo = this.map._docLayer ? this.map._viewInfo[this.map._docLayer._viewId].userprivateinfo : null;
+		if (userPrivateInfo) {
+			var apiKey = userPrivateInfo.ZoteroAPIKey;
+			if (apiKey) {
+				this.map.zotero = L.control.zotero(this.map);
+				this.map.zotero.apiKey = apiKey;
+				this.map.addControl(this.map.zotero);
+				this.map.zotero.updateUserID();
+			}
+		}
 	},
 
 	enterReadonlyOrClose: function() {
