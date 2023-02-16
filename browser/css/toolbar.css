@@ -1067,10 +1067,20 @@ button.leaflet-control-search-next
 	height: auto;
 }
 
+.insertshape-grid.insertconnectors {
+	min-width: auto;
+}
+
 .insertshape-grid .row {
 	height: auto;
 	position: static;
 	text-align: left;
+}
+
+.insertshape-grid.insertconnectors .row {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-auto-flow: row;
 }
 
 .insertshape-grid .col {
@@ -1090,6 +1100,10 @@ button.leaflet-control-search-next
 	line-height: 30px;
 	color: var(--color-main-text);
 	border-radius: var(--border-radius);
+}
+
+.insertshape-grid.insertconnectors .row-header {
+	display: none;
 }
 
 .insertshape-grid:hover div {
