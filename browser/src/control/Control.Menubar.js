@@ -277,11 +277,11 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:InsertBookmark'},
 				{uno: '.uno:InsertReferenceField'},
-				{type: 'separator', hidden: !window.zoteroEnabled},
+				{id: 'zoteroseparator', type: 'separator', hidden: !window.zoteroEnabled},
 				{name: _('Add Citation'), id: 'zoteroaddeditcitation', type: 'action', hidden: !window.zoteroEnabled},
 				{name: _('Add Citation Note'), id: 'zoteroaddnote', type: 'action', hidden: !window.zoteroEnabled},
 				{name: _('Add Bibliography'), id: 'zoteroaddeditbibliography', type: 'action', hidden: !window.zoteroEnabled},
-				{type: 'separator', hidden: !window.zoteroEnabled},
+				{is: 'zoteroseparator2', type: 'separator', hidden: !window.zoteroEnabled},
 				{name: _('Refresh Citations'), id: 'zoterorefresh', type: 'action', hidden: !window.zoteroEnabled},
 				{name: _('Unlink Citations'), id: 'zoterounlink', type: 'action', hidden: !window.zoteroEnabled},
 				{name: _('Citation Preferences'), id: 'zoterosetdocprefs', type: 'action', iosapp: false, hidden: !window.zoteroEnabled}]
@@ -1685,6 +1685,12 @@ L.Control.Menubar = L.Control.extend({
 					} else {
 						$(aItem).removeClass('disabled');
 					}
+				}
+				if (id && id.indexOf('zotero') >= 0) {
+					if (window.zoteroEnabled && self._map.zotero)
+						$(aItem).show();
+					else
+						$(aItem).hide();
 				}
 			} else { // eslint-disable-next-line no-lonely-if
 				if (type === 'unocommand') { // disable all uno commands
