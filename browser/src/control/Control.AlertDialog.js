@@ -57,7 +57,7 @@ L.Control.AlertDialog = L.Control.extend({
 			containerWithLink.innerHTML = messageText;
 			var externalUrl = document.createElement('p');
 			externalUrl.classList.add('vex-dialog-external-url');
-			externalUrl.innerHTML = url;
+			externalUrl.innerText = url;
 			containerWithLink.appendChild(externalUrl);
 			buttonsList = [];
 
