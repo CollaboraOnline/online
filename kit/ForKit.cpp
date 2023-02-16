@@ -382,6 +382,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
     ++spareKitId;
     LOG_DBG("Forking a coolkit process with jailId: " << jailId << " as spare coolkit #"
                                                       << spareKitId << '.');
+    const auto startForkingTime = std::chrono::steady_clock::now();
 
     const pid_t pid = fork();
     if (!pid)
@@ -427,6 +428,10 @@ static int createLibreOfficeKit(const std::string& childRoot,
         UnitKit::get().launchedKit(pid);
 #endif
     }
+
+    const auto duration = (std::chrono::steady_clock::now() - startForkingTime);
+    const auto durationMs = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
+    LOG_TRC("Forking child took " << durationMs);
 
     return pid;
 }
