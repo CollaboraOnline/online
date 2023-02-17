@@ -2352,7 +2352,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var isRealUnoCommand = true;
 
 		if (data.command || data.postmessage === true) {
-			var id = data.id ? data.id : (data.text && data.text !== '') ? data.text : data.command;
+			var id = data.id ? data.id : (data.command && data.command !== '') ? data.command : data.text;
 			var isUnoCommand = data.command && data.command.indexOf('.uno:') >= 0;
 			if (isUnoCommand)
 				id = encodeURIComponent(data.command.substr('.uno:'.length));
