@@ -530,6 +530,12 @@ L.Clipboard = L.Class.extend({
 		return false;
 	},
 
+	_isFormulabarSelected: function() {
+		if ($('#sc_input_window').is(':focus'))
+			return true;
+		return false;
+	},
+
 	// Does the selection of text before an event comes in
 	_beforeSelect: function(ev) {
 		window.app.console.log('Got event ' + ev.type + ' setting up selection');
@@ -729,7 +735,7 @@ L.Clipboard = L.Class.extend({
 
 		window.app.console.log('Paste');
 
-		if (this._isAnyInputFieldSelected())
+		if (this._isAnyInputFieldSelected() && !this._isFormulabarSelected())
 			return;
 
 		// If the focus is in the search box, paste there.
