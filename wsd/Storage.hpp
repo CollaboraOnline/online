@@ -52,7 +52,12 @@ struct LockContext
     /// Reason for unsuccessful locking request
     std::string _lockFailureReason;
 
-    LockContext() : _supportsLocks(false), _isLocked(false) { }
+    LockContext()
+        : _supportsLocks(false)
+        , _isLocked(false)
+        , _refreshSeconds(COOLWSD::getConfigValue<int>("storage.wopi.locking.refresh", 900))
+    {
+    }
 
     /// one-time setup for supporting locks & create token
     void initSupportsLocks();
@@ -61,6 +66,9 @@ struct LockContext
     bool needsRefresh(const std::chrono::steady_clock::time_point &now) const;
 
     void dumpState(std::ostream& os) const;
+
+private:
+    const std::chrono::seconds _refreshSeconds;
 };
 
 /// Base class of all Storage abstractions.

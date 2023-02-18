@@ -553,10 +553,8 @@ void LockContext::initSupportsLocks()
 
 bool LockContext::needsRefresh(const std::chrono::steady_clock::time_point &now) const
 {
-    static int refreshSeconds = COOLWSD::getConfigValue<int>("storage.wopi.locking.refresh", 900);
-    return _supportsLocks && _isLocked && refreshSeconds > 0 &&
-        std::chrono::duration_cast<std::chrono::seconds>
-        (now - _lastLockTime).count() >= refreshSeconds;
+    return _supportsLocks && _isLocked && _refreshSeconds > std::chrono::seconds::zero() &&
+           (now - _lastLockTime) >= _refreshSeconds;
 }
 
 void LockContext::dumpState(std::ostream& os) const
