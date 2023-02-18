@@ -451,6 +451,13 @@ void setupDynamicFiles(const std::string& sysTemplate)
 {
     LOG_INF("Setting up systemplate dynamic files in [" << sysTemplate << "].");
 
+    FileUtil::Stat copiedFileStat1(Poco::Path(sysTemplate, "etc/copied").toString());
+    if (copiedFileStat1.exists())
+    {
+        // At least one file is copied, we must check for changes before each jail setup.
+        LOG_TRC("The 'copied' file exists at [" << copiedFileStat1.path() << "]");
+    }
+
     const std::string etcSysTemplatePath = Poco::Path(sysTemplate, "etc").toString();
     LinkDynamicFiles = true; // Prefer linking, unless it fails.
 
@@ -469,6 +476,8 @@ void setupDynamicFiles(const std::string& sysTemplate)
     if (copiedFileStat.exists())
     {
         // At least one file is copied, we must check for changes before each jail setup.
+        LOG_TRC("The 'copied' file exists at ["
+                << copiedFileStat.path() << "]. Disabling linking of dynamic files in SysTemplate");
         LinkDynamicFiles = false;
     }
 
@@ -499,7 +508,6 @@ bool updateDynamicFilesImpl(const std::string& sysTemplate)
                                      << "], which will be used instead.");
         }
 
-        const Poco::File srcFilePath(srcFilename);
         FileUtil::Stat srcStat(srcFilename);
         if (!srcStat.exists())
             continue;
@@ -514,7 +522,17 @@ bool updateDynamicFilesImpl(const std::string& sysTemplate)
             continue;
         }
 
-        if (checkWritableSysTemplate && !FileUtil::isWritable(sysTemplate))
+        Poco::File copiedFile = Poco::Path(sysTemplate, "etc/copied").toString();
+
+        // Check that sysTemplate is in fact writable to avoid predictable errors.
+        bool isWritableSysTemplate = checkWritableSysTemplate && !FileUtil::isWritable(sysTemplate);
+        if (isWritableSysTemplate)
+        {
+            FileUtil::removeFile(copiedFile.path());
+            isWritableSysTemplate = !copiedFile.exists();
+        }
+
+        if (!isWritableSysTemplate)
         {
             disableBindMounting(); // We can't mount from incomplete systemplate that can't be updated.
             LinkDynamicFiles = false;
@@ -572,7 +590,8 @@ bool updateDynamicFilesImpl(const std::string& sysTemplate)
             }
 
             // Create the 'copied' file so we keep the files up-to-date.
-            Poco::File(Poco::Path(sysTemplate, "etc/copied").toString()).createFile();
+            copiedFile.createFile();
+            // LOG_TRC("Creating the 'copied' file at [" << copiedFile.path() << "]");
         }
     }
 

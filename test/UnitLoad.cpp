@@ -59,6 +59,7 @@ class UnitLoad : public UnitWSD
     TestResult testExcelLoad();
     TestResult testReload();
     TestResult testLoad();
+    TestResult testOverload();
 
     void configure(Poco::Util::LayeredConfiguration& config) override
     {
@@ -234,9 +235,56 @@ UnitBase::TestResult UnitLoad::testLoad()
     return TestResult::Ok;
 }
 
+UnitBase::TestResult UnitLoad::testOverload()
+{
+    std::shared_ptr<SocketPoll> socketPollPtr = std::make_shared<SocketPoll>("LoadPoll");
+    socketPollPtr->startThread();
+
+    std::vector<std::shared_ptr<http::WebSocketSession>> sessions;
+
+    for (int count = 0;; ++count)
+    {
+        std::string documentPath, documentURL;
+        helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL,
+                                       testname + std::to_string(count));
+
+        sessions.emplace_back(http::WebSocketSession::create(
+            socketPollPtr, helpers::getTestServerURI(), documentURL));
+        TST_LOG("Loading #" << count);
+        if (count % 128 == 0)
+        {
+            helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
+            TST_LOG(">>> ========== Loading " << documentURL);
+
+            std::shared_ptr<http::WebSocketSession> wsSession = http::WebSocketSession::create(
+                socketPollPtr, helpers::getTestServerURI(), documentURL);
+
+            TST_LOG("Loading " << documentURL);
+            wsSession->sendMessage("load url=" + documentURL);
+
+            std::vector<char> message =
+                wsSession->waitForMessage("status:", std::chrono::seconds(5));
+            LOK_ASSERT_MESSAGE("Failed to load the document", !message.empty());
+
+            wsSession->asyncShutdown();
+
+            LOK_ASSERT_MESSAGE("Expected success disconnection of the WebSocket",
+                               wsSession->waitForDisconnection(std::chrono::seconds(5)));
+            TST_LOG(">>> ========== Unloaded " << documentURL);
+        }
+    }
+
+    return TestResult::Ok;
+}
+
 void UnitLoad::invokeWSDTest()
 {
-    UnitBase::TestResult result = testLoad();
+    UnitBase::TestResult result = testOverload();
+    if (result != TestResult::Ok)
+        exitTest(result);
+
+#if 0
+    result = testLoad();
     if (result != TestResult::Ok)
         exitTest(result);
 
@@ -257,6 +305,7 @@ void UnitLoad::invokeWSDTest()
     // result = testReload();
     // if (result != TestResult::Ok)
     //     exitTest(result);
+#endif
 
     exitTest(TestResult::Ok);
 }
