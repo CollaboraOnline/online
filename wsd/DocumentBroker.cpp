@@ -963,10 +963,10 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
             !fileInfo.getLastModifiedTime().empty() &&
             _storageManager.getLastModifiedTime() != fileInfo.getLastModifiedTime())
         {
-            LOG_DBG("Document " << _docKey << "] has been modified behind our back. "
-                                << "Informing all clients. Expected: "
-                                << _storageManager.getLastModifiedTime()
-                                << ", Actual: " << fileInfo.getLastModifiedTime());
+            LOG_DBG("Document [" << _docKey << "] has been modified behind our back. "
+                                 << "Informing all clients. Expected: "
+                                 << _storageManager.getLastModifiedTime()
+                                 << ", Actual: " << fileInfo.getLastModifiedTime());
 
             _documentChangedInStorage = true;
             const std::string message = isModified() ? "error: cmd=storage kind=documentconflict"
