@@ -914,7 +914,7 @@ L.Control.Menubar = L.Control.extend({
 			]},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
 				{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action', mobileapp: false},
-				{uno: '.uno:ControlCodes'},
+				{uno: '.uno:ControlCodes', id: 'formattingmarks'},
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action', uno: '.uno:ShowResolvedAnnotations'},
 			]
@@ -1971,6 +1971,7 @@ L.Control.Menubar = L.Control.extend({
 			case 'pagesetup':
 			case 'watermark':
 			case 'properties':
+			case 'formattingmarks':
 				return false;
 			case 'insertcomment':
 			case 'savecomments':
