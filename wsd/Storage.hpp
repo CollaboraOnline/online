@@ -341,9 +341,16 @@ public:
 
     std::string getFileExtension() const { return Poco::Path(_fileInfo.getFilename()).getExtension(); }
 
+    STATE_ENUM(LockUpdateResult,
+               UNSUPPORTED, //< Locking is not supported on this host.
+               OK, //< Succeeded to either lock or unlock (see LockContext).
+               UNAUTHORIZED, //< 401, 403, 404.
+               FAILED //< Other failures.
+    );
+
     /// Update the locking state (check-in/out) of the associated file
-    virtual bool updateLockState(const Authorization& auth, LockContext& lockCtx, bool lock,
-                                 const Attributes& attribs) = 0;
+    virtual LockUpdateResult updateLockState(const Authorization& auth, LockContext& lockCtx,
+                                             bool lock, const Attributes& attribs) = 0;
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
@@ -474,9 +481,10 @@ public:
     /// obtained using getFileInfo method
     std::unique_ptr<LocalFileInfo> getLocalFileInfo();
 
-    bool updateLockState(const Authorization&, LockContext&, bool, const Attributes&) override
+    LockUpdateResult updateLockState(const Authorization&, LockContext&, bool,
+                                     const Attributes&) override
     {
-        return true;
+        return LockUpdateResult::OK;
     }
 
     std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
@@ -645,8 +653,8 @@ public:
                                                         unsigned redirectLimit);
 
     /// Update the locking state (check-in/out) of the associated file
-    bool updateLockState(const Authorization& auth, LockContext& lockCtx, bool lock,
-                         const Attributes& attribs) override;
+    LockUpdateResult updateLockState(const Authorization& auth, LockContext& lockCtx, bool lock,
+                                     const Attributes& attribs) override;
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
     std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
