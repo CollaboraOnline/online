@@ -135,7 +135,7 @@ protected:
     virtual std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/)
     {
-        return nullptr;
+        return nullptr; // Success.
     }
 
     virtual void assertPutRelativeFileRequest(const Poco::Net::HTTPRequest& /*request*/)
@@ -147,7 +147,11 @@ protected:
     }
 
     /// Called when the server receives a Lock or Unlock request.
-    virtual void assertLockRequest(const Poco::Net::HTTPRequest& /*request*/) {}
+    virtual std::unique_ptr<http::Response>
+    assertLockRequest(const Poco::Net::HTTPRequest& /*request*/)
+    {
+        return nullptr; // Success.
+    }
 
     /// Given a URI, returns the filename.
     ///FIXME: this should be remove when we support multiple files properly.
@@ -307,9 +311,21 @@ protected:
                 const std::string op = request.get("X-WOPI-Override", std::string());
                 if (op == "LOCK" || op == "UNLOCK")
                 {
-                    assertLockRequest(request);
-                    http::Response httpResponse(http::StatusCode::OK);
-                    socket->sendAndShutdown(httpResponse);
+                    std::unique_ptr<http::Response> response = assertLockRequest(request);
+                    if (!response)
+                    {
+                        LOG_TST("FakeWOPIHost: " << op << " operation on [" << uriReq.getPath()
+                                                 << "] succeeded 200 OK");
+                        http::Response httpResponse(http::StatusCode::OK);
+                        socket->sendAndShutdown(httpResponse);
+                    }
+                    else
+                    {
+                        LOG_TST("FakeWOPIHost: " << op << " operation on [" << uriReq.getPath()
+                                                 << "]: " << response->statusLine().statusCode()
+                                                 << ' ' << response->statusLine().reasonPhrase());
+                        socket->sendAndShutdown(*response);
+                    }
                 }
                 else
                 {

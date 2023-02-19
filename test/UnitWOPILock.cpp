@@ -52,7 +52,8 @@ public:
         fileInfo->set("BaseFileName", "doc.odt");
     }
 
-    void assertLockRequest(const Poco::Net::HTTPRequest& request) override
+    std::unique_ptr<http::Response>
+    assertLockRequest(const Poco::Net::HTTPRequest& request) override
     {
         const std::string lock = request.get("X-WOPI-Lock", std::string());
         const std::string newLockState = request.get("X-WOPI-Override", std::string());
@@ -81,6 +82,8 @@ public:
         {
             LOK_ASSERT_FAIL("Unexpected lock-state change while in " + toString(_phase));
         }
+
+        return nullptr; // Success.
     }
 
     void onDocBrokerViewLoaded(const std::string&,
