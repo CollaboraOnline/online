@@ -497,6 +497,21 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 
+		if (!this.modifier && this._map.getDocType() === 'spreadsheet' && (keyCode === this.keyCodes.pageUp || keyCode === this.keyCodes.pageDown) && ev.type === 'keydown') {
+			ev.preventDefault();
+			var currentSelectedPart = this._map._docLayer._selectedPart;
+			var parts = this._map._docLayer._parts;
+			var partToSelect = 0;
+			this._map._docLayer._clearReferences();
+
+			if (keyCode === this.keyCodes.pageUp) {
+				partToSelect = currentSelectedPart != parts - 1 ? currentSelectedPart + 1 : 0;
+			}
+			else {
+				partToSelect = currentSelectedPart != 0 ? currentSelectedPart - 1 : parts - 1;
+			}
+			this._map.setPart(parseInt(partToSelect), /*external:*/ false, /*calledFromSetPartHandler:*/ true);
+		}
 		if (this._map.isEditMode()) {
 			docLayer._resetPreFetching();
 
@@ -783,7 +798,6 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 		return false;
 	},
-
 	readOnlyAllowedShortcuts: function(e) {
 		// Open keyboard shortcuts help page
 		if (this._isCtrlKey(e) && e.shiftKey && e.key === '?')
