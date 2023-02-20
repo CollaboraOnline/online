@@ -417,6 +417,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	width: -webkit-fill-available;
 	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
+	overflow: hidden;
 }
 
 #search_edit.ui-edit.autofilter {
