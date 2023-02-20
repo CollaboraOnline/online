@@ -897,6 +897,14 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	border-radius: 50%;
 }
 
+#hyperlink-text-box:not(.mobile-wizard) {
+	width: 100% !important;
+	margin-bottom: 10px;
+	resize: none;
+	height: 32px;
+	box-sizing: border-box;
+}
+
 .leaflet-canvas-container .cell-cursor-data {
 	border-style: solid; /* required for ie11 */
 	display: none; /* prevent cypress failure */
