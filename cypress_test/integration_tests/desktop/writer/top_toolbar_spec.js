@@ -330,7 +330,7 @@ describe('Top toolbar tests.', function() {
 
 		desktopHelper.actionOnSelector('hyperLink', (selector) => { cy.get(selector).click(); });
 
-		cy.get('.vex-content.hyperlink-dialog')
+		cy.get('#hyperlink-link-box')
 			.should('exist');
 
 		cy.get('#hyperlink-text-box')
@@ -339,7 +339,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#hyperlink-link-box')
 			.type('www.something.com');
 
-		cy.get('.vex-dialog-buttons .button-primary')
+		cy.get('#response-ok')
 			.click();
 
 		writerHelper.selectAllTextOfDoc();
