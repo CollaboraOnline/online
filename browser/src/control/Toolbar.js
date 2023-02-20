@@ -721,6 +721,89 @@ L.Map.include({
 		return str;
 	},
 
+	_createAndRunHyperlinkDialog: function(defaultText, defaultLink) {
+		var map = this;
+		var id = 'hyperlink';
+		var title = _('Insert hyperlink');
+
+		var dialogId = 'modal-dialog-' + id;
+		var json = map.uiManager._modalDialogJSON(id, title, !window.mode.isDesktop(), [
+			{
+				id: 'hyperlink-text-box-label',
+				type: 'fixedtext',
+				text: _('Text')
+			},
+			{
+				id: 'hyperlink-text-box',
+				type: 'multilineedit',
+				text: defaultText
+			},
+			{
+				id: 'hyperlink-link-box-label',
+				type: 'fixedtext',
+				text: _('Link')
+			},
+			{
+				id: 'hyperlink-link-box',
+				type: 'edit',
+				text: defaultLink
+			},
+			{
+				type: 'buttonbox',
+				enabled: true,
+				children: [
+					{
+						id: 'response-cancel',
+						type: 'pushbutton',
+						text: _('Cancel'),
+					},
+					{
+						id: 'response-ok',
+						type: 'pushbutton',
+						text: _('OK'),
+						'has_default': true,
+					}
+				],
+				vertical: false,
+				layoutstyle: 'end'
+			},
+		], 'hyperlink-link-box');
+
+		var closeFunc = function() {
+			var closeMessage = { id: dialogId, jsontype: 'dialog', type: 'modalpopup', action: 'close' };
+			app.socket._onMessage({ textMsg: 'jsdialog: ' + JSON.stringify(closeMessage) });
+			map.focus();
+		};
+
+		map.uiManager.showModal(json, [
+			{id: 'response-ok', func: function() {
+				var text = document.getElementById('hyperlink-text-box');
+				var link = document.getElementById('hyperlink-link-box');
+
+				if (link.value != '') {
+					if (!text.value || text.value === '')
+						text.value = link.value;
+
+					var command = {
+						'Hyperlink.Text': {
+							type: 'string',
+							value: text.value
+						},
+						'Hyperlink.URL': {
+							type: 'string',
+							value: map.makeURLFromStr(link.value)
+						}
+					};
+					map.sendUnoCommand('.uno:SetHyperlink', command);
+				}
+
+				closeFunc();
+			}},
+			{id: 'response-cancel', func: function() { closeFunc(); }},
+			{id: '__POPOVER__', func: function() { closeFunc(); }}
+		]);
+	},
+
 	showHyperlinkDialog: function() {
 		var map = this;
 		var text = '';
@@ -736,58 +819,7 @@ L.Map.include({
 			text = this.extractContent(this._docLayer._selectedTextContent);
 		}
 
-		vex.dialog.open({
-			contentClassName: 'hyperlink-dialog vex-has-inputs',
-			message: _('Insert hyperlink'),
-			overlayClosesOnClick: false,
-			input: [
-				_('Text') + '<textarea name="text" id="hyperlink-text-box" style="resize: none" type="text"></textarea>',
-				_('Link') + '<input name="link" id="hyperlink-link-box" type="text" required/>'
-			].join(''),
-			buttons: [
-				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
-				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') })
-			],
-			callback: function(data) {
-				if (data && data.link != '') {
-					if (typeof data.text === 'undefined') {
-						data.text = data.link;
-					}
-					var command = {
-						'Hyperlink.Text': {
-							type: 'string',
-							value: data.text
-						},
-						'Hyperlink.URL': {
-							type: 'string',
-							value: map.makeURLFromStr(data.link)
-						}
-					};
-					map.sendUnoCommand('.uno:SetHyperlink', command);
-					map.focus();
-				}
-				else {
-					map.focus();
-				}
-			},
-			afterOpen: function() {
-				setTimeout(function() {
-					var linkBox = document.getElementById('hyperlink-link-box');
-					linkBox.value = link;
-					var textBox = document.getElementById('hyperlink-text-box');
-					textBox.textContent = text ? text.trim() : '';
-					if (textBox.textContent.trim() !== '') {
-						document.getElementById('hyperlink-link-box').focus();
-					}
-					else {
-						textBox.focus();
-					}
-				}, 0);
-			},
-			afterClose: function() {
-				map.focus();
-			}
-		});
+		this._createAndRunHyperlinkDialog(text ? text.trim() : '', link);
 	},
 
 	openRevisionHistory: function () {
