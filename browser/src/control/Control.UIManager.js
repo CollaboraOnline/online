@@ -811,8 +811,9 @@ L.Control.UIManager = L.Control.extend({
 		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json), callback: builderCallback});
 	},
 
-	_modalDialogJSON: function(id, title, cancellable, widgets) {
+	_modalDialogJSON: function(id, title, cancellable, widgets, focusId) {
 		var dialogId = 'modal-dialog-' + id;
+		focusId = focusId ? focusId : 'response';
 		return {
 			id: dialogId,
 			dialogid: id,
@@ -821,7 +822,7 @@ L.Control.UIManager = L.Control.extend({
 			hasClose: true,
 			cancellable: cancellable,
 			jsontype: 'dialog',
-			'init_focus_id': 'response',
+			'init_focus_id': focusId,
 			children: [
 				{
 					id: 'info-modal-container',
