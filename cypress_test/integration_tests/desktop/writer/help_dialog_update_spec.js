@@ -68,7 +68,7 @@ describe('Help dialog screenshot updation', function() {
 		cy.get('#menu-editmenu').click()
 			.get('#menu-repair').click();
 
-		cy.get('.jsdialog-container.lokdialog_container')
+		cy.get('.jsdialog-container.lokdialog_container') 
 			.should('exist');
 
 		helper.waitUntilIdle('.jsdialog-container.lokdialog_container');
@@ -153,7 +153,7 @@ describe('Help dialog screenshot updation', function() {
 		copyScreenshot('insert-table.png');
 	});
 
-	it('word count', function() {
+	it('Word count', function() {
 		cy.get('#menu-tools')
 			.click();
 
@@ -168,7 +168,7 @@ describe('Help dialog screenshot updation', function() {
 		copyScreenshot('word-count.png');
 	});
 
-	it('insert special', function() {
+	it('Insert special', function() {
 		cy.get('#toolbar-up > .w2ui-scroll-right')
 			.click();
 
@@ -188,7 +188,7 @@ describe('Help dialog screenshot updation', function() {
 		copyScreenshot('special-character.png');
 	});
 
-	it('manage changes', function() {
+	it('Manage changes', function() {
 		cy.get('#menu-editmenu')
 			.click()
 			.get('#menu-changesmenu')
