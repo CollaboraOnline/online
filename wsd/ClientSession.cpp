@@ -1399,6 +1399,8 @@ void ClientSession::sendFileMode(const bool readOnly, const bool editComments)
 
 void ClientSession::setLockFailed(const std::string& sReason)
 {
+    // TODO: make this "read-only" a special one with a notification (infobar? balloon tip?)
+    //       and a button to unlock
     _isLockFailed = true;
     setReadOnly(true);
     sendTextFrame("lockfailed:" + sReason);

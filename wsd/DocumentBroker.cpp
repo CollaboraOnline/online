@@ -16,6 +16,7 @@
 #include <ios>
 #include <fstream>
 #include <memory>
+#include <string>
 #include <sstream>
 
 #include <Poco/DigestStream.h>
@@ -1000,34 +1001,12 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         // FIXME: why not lock before downloadStorageFileToLocal? Would also prevent race conditions
         if (!session->isReadOnly())
         {
-            const StorageBase::LockUpdateResult result = _storage->updateLockState(
-                session->getAuthorization(), *_lockCtx, true, _currentStorageAttrs);
-            switch (result)
+            std::string error;
+            if (!updateStorageLockState(*session, /*lock=*/true, error))
             {
-                case StorageBase::LockUpdateResult::UNSUPPORTED:
-                    LOG_DBG("Locks on docKey [" << _docKey << "] are unsupported");
-                    break;
-                case StorageBase::LockUpdateResult::OK:
-                    LOG_DBG("Locked docKey [" << _docKey << "] successfully");
-                    break;
-                case StorageBase::LockUpdateResult::UNAUTHORIZED:
-                    LOG_ERR("Failed to lock docKey [" << _docKey
-                                                      << "]. Invalid or expired access token. "
-                                                         "Notifying client and invalidating the "
-                                                         "authorization token of session ["
-                                                      << session->getId()
-                                                      << "]. This session will now be read-only");
-                    session->invalidateAuthorizationToken();
-                    break;
-                case StorageBase::LockUpdateResult::FAILED:
-                    LOG_ERR("Failed to lock docKey ["
-                            << _docKey << "] with reason [" << _lockCtx->_lockFailureReason
-                            << "]. Notifying client and making session [" << session->getId()
-                            << "] read-only");
-                    session->setLockFailed(_lockCtx->_lockFailureReason);
-                    // TODO: make this "read-only" a special one with a notification (infobar? balloon tip?)
-                    //       and a button to unlock
-                    break;
+                LOG_ERR("Failed to lock docKey [" << _docKey << "] with session ["
+                                                  << session->getId()
+                                                  << "] after downloading: " << error);
             }
         }
 
@@ -1237,17 +1216,53 @@ void DocumentBroker::endRenameFileCommand()
     endActivity();
 }
 
-bool DocumentBroker::attemptLock(const ClientSession& session, std::string& failReason)
+bool DocumentBroker::updateStorageLockState(ClientSession& session, bool lock, std::string& error)
 {
     const StorageBase::LockUpdateResult result = _storage->updateLockState(
-        session.getAuthorization(), *_lockCtx, true, _currentStorageAttrs);
-    if (result != StorageBase::LockUpdateResult::OK)
+        session.getAuthorization(), *_lockCtx, lock, _currentStorageAttrs);
+    error = _lockCtx->_lockFailureReason;
+
+    switch (result)
     {
-        failReason = _lockCtx->_lockFailureReason;
-        return false;
+        case StorageBase::LockUpdateResult::UNSUPPORTED:
+            LOG_DBG("Locks on docKey [" << _docKey << "] are unsupported");
+            break;
+        case StorageBase::LockUpdateResult::OK:
+            LOG_DBG((lock ? "Locked" : "Unlocked") << " docKey [" << _docKey << "] successfully");
+            return true;
+            break;
+        case StorageBase::LockUpdateResult::UNAUTHORIZED:
+            LOG_ERR("Failed to " << (lock ? "Locked" : "Unlocked") << " docKey [" << _docKey
+                                 << "]. Invalid or expired access token. Notifying client and "
+                                    "invalidating the authorization token of session ["
+                                 << session.getId() << "]. This session will now be read-only");
+            session.invalidateAuthorizationToken();
+            if (lock)
+            {
+                // If we can't unlock, we don't want to set the document to read-only mode.
+                session.setLockFailed(error);
+            }
+            break;
+        case StorageBase::LockUpdateResult::FAILED:
+            LOG_ERR("Failed to " << (lock ? "Locked" : "Unlocked") << " docKey [" << _docKey
+                                 << "] with reason [" << error
+                                 << "]. Notifying client and making session [" << session.getId()
+                                 << "] read-only");
+
+            if (lock)
+            {
+                // If we can't unlock, we don't want to set the document to read-only mode.
+                session.setLockFailed(error);
+            }
+            break;
     }
 
-    return true;
+    return false;
+}
+
+bool DocumentBroker::attemptLock(ClientSession& session, std::string& failReason)
+{
+    return updateStorageLockState(session, /*lock=*/true, failReason);
 }
 
 DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
@@ -2020,9 +2035,12 @@ void DocumentBroker::refreshLock()
     {
         const std::string savingSessionId = session->getId();
         LOG_TRC("Refresh lock " << _lockCtx->_lockToken << " with session [" << savingSessionId << ']');
-        if (_storage->updateLockState(session->getAuthorization(), *_lockCtx, true,
-                                      _currentStorageAttrs) != StorageBase::LockUpdateResult::OK)
-            LOG_ERR("Failed to refresh lock");
+        std::string error;
+        if (!updateStorageLockState(*session, /*lock=*/true, error))
+        {
+            LOG_ERR("Failed to refresh lock of docKey [" << _docKey << "] with session ["
+                                                         << savingSessionId << "]: " << error);
+        }
     }
 }
 
@@ -2543,11 +2561,13 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
                 << _docState.isMarkedToDestroy() << " locked? " << _lockCtx->_isLocked);
 
         // Unlock the document, if last editable sessions, before we lose a token that can unlock.
+        std::string error;
         if (lastEditableSession && _lockCtx->_isLocked && _storage &&
-            _storage->updateLockState(session->getAuthorization(), *_lockCtx, false,
-                                      _currentStorageAttrs) != StorageBase::LockUpdateResult::OK)
+            !updateStorageLockState(*session, /*lock=*/false, error))
         {
-            LOG_ERR("Failed to unlock before disconnecting last editable session");
+            LOG_ERR("Failed to unlock docKey [" << _docKey
+                                                << "] before disconnecting last editable session ["
+                                                << session->getId() << "]: " << error);
         }
 
         bool hardDisconnect;
