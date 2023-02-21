@@ -3,7 +3,7 @@
 	Abstract class
 */
 
-/* global _ Util vex Base */
+/* global _ Util DlgYesNo Base */
 
 var AdminSocketBase = Base.extend({
 	socket: null,
@@ -49,17 +49,23 @@ var AdminSocketBase = Base.extend({
 		this.socket.close();
 
 		if (this.pageWillBeRefreshed === false) {
-			this.vexInstance = vex.open({
-				content: _('Server has been shut down; please reload the page.'),
-				contentClassName: 'cool-user-idle',
-				showCloseButton: false,
-				overlayClosesOnClick: false,
-				escapeButtonCloses: false,
-			});
+			var dialog = (new DlgYesNo())
+				.title(_('Refresh'))
+				.text(_('Server has been shut down; please reload the page.'))
+				.yesButtonText(_('OK'))
+				.type('warning')
+				.yesFunction(function() { window.location.reload(); });
+			dialog.open();
 		}
 	},
 
 	onSocketError: function () {
-		vex.dialog.alert(_('Connection error'));
+		var dialog = (new DlgYesNo())
+			.title(_('Connection error'))
+			.text(_('Connection error'))
+			.yesButtonText(_('OK'))
+			.type('warning')
+			.yesFunction(function() { window.location.reload(); });
+		dialog.open();
 	}
 });
