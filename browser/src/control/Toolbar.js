@@ -769,12 +769,6 @@ L.Map.include({
 			},
 		], 'hyperlink-link-box');
 
-		var closeFunc = function() {
-			var closeMessage = { id: dialogId, jsontype: 'dialog', type: 'modalpopup', action: 'close' };
-			app.socket._onMessage({ textMsg: 'jsdialog: ' + JSON.stringify(closeMessage) });
-			map.focus();
-		};
-
 		map.uiManager.showModal(json, [
 			{id: 'response-ok', func: function() {
 				var text = document.getElementById('hyperlink-text-box');
@@ -797,10 +791,8 @@ L.Map.include({
 					map.sendUnoCommand('.uno:SetHyperlink', command);
 				}
 
-				closeFunc();
-			}},
-			{id: 'response-cancel', func: function() { closeFunc(); }},
-			{id: '__POPOVER__', func: function() { closeFunc(); }}
+				map.uiManager.closeModal(dialogId);
+			}}
 		]);
 	},
 
