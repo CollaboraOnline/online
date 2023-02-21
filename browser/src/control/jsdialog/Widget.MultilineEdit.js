@@ -142,6 +142,8 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 			} else if (event.key === 'Control') {
 				modifier = modifier | UNOModifier.CTRL;
 				event.preventDefault();
+			} else if (event.key === 'a' && event.ctrlKey) {
+				builder.callback('edit', 'keypress', edit, UNOKey.A | UNOModifier.CTRL, builder);
 			}
 		});
 
