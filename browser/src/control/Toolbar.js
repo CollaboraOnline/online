@@ -727,7 +727,7 @@ L.Map.include({
 		var title = _('Insert hyperlink');
 
 		var dialogId = 'modal-dialog-' + id;
-		var json = map.uiManager._modalDialogJSON(id, title, !window.mode.isDesktop(), [
+		var json = map.uiManager._modalDialogJSON(id, title, true, [
 			{
 				id: 'hyperlink-text-box-label',
 				type: 'fixedtext',
