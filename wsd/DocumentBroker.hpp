@@ -280,7 +280,7 @@ public:
     virtual void setInteractive(bool value);
 
     /// If not yet locked, try to lock
-    bool attemptLock(const ClientSession& session, std::string& failReason);
+    bool attemptLock(ClientSession& session, std::string& failReason);
 
     bool isDocumentChangedInStorage() { return _documentChangedInStorage; }
 
@@ -513,6 +513,10 @@ private:
     bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId);
     bool isLoaded() const { return _docState.hadLoaded(); }
     bool isInteractive() const { return _docState.isInteractive(); }
+
+    /// Updates the document's lock in storage to either locked or unlocked.
+    /// Returns true iff the operation was successful.
+    bool updateStorageLockState(ClientSession& session, bool lock, std::string& error);
 
     std::size_t getIdleTimeSecs() const
     {
