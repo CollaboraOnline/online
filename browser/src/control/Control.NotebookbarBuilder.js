@@ -234,9 +234,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		if (commandName === '.uno:CharFontName') {
 			if (window.ThisIsTheiOSApp) {
 				if (state === '')
-					$('#fontnamecombobox').html(_('Font Name'));
+					$('#fontnamecomboboxios').html(_('Font Name'));
 				else
-					$('#fontnamecombobox').html(state);
+					$('#fontnamecomboboxios').html(state);
 				window.LastSetiOSFontNameButtonFont = state;
 			}
 		} else if (commandName === '.uno:StyleApply') {
@@ -256,12 +256,13 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 	_createiOsFontButton: function(parentContainer, data, builder) {
 		// Fix issue #5838 Use unique IDs for font name combobox elements
-		var table = L.DomUtil.createWithId('div', 'fontnamecomboboxios', parentContainer);
+		var table = L.DomUtil.createWithId('div', data.id, parentContainer);
 		var row = L.DomUtil.create('div', 'notebookbar row', table);
-		var button = L.DomUtil.createWithId('button', data.id, row);
+		var button = L.DomUtil.createWithId('button', data.id + 'ios', row);
 
 		$(table).addClass('select2 select2-container select2-container--default');
-		$(row).addClass('select2-selection select2-selection--single');
+		// Fix issue #5838 Don't add the "select2-selection--single" class
+		$(row).addClass('select2-selection');
 		$(button).addClass('select2-selection__rendered');
 
 		if (data.selectedEntries.length && data.entries[data.selectedEntries[0]])
