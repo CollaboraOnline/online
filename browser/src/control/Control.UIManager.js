@@ -797,8 +797,13 @@ L.Control.UIManager = L.Control.extend({
 	/// json - JSON for building the dialog
 	/// callbacks - array of { id: widgetId, type: eventType, func: functionToCall }
 	showModal: function(json, callbacks) {
+		var that = this;
 		var builderCallback = function(objectType, eventType, object, data) {
 			window.app.console.debug('modal action: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
+
+			// default close methods
+			callbacks.push({id: 'response-cancel', func: function() { that.closeModal(json.id); }});
+			callbacks.push({id: '__POPOVER__', func: function() { that.closeModal(json.id); }});
 
 			for (var i in callbacks) {
 				var callback = callbacks[i];
@@ -809,6 +814,11 @@ L.Control.UIManager = L.Control.extend({
 		};
 
 		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json), callback: builderCallback});
+	},
+
+	closeModal: function(dialogId) {
+		var closeMessage = { id: dialogId, jsontype: 'dialog', type: 'modalpopup', action: 'close' };
+		app.socket._onMessage({ textMsg: 'jsdialog: ' + JSON.stringify(closeMessage) });
 	},
 
 	_modalDialogJSON: function(id, title, cancellable, widgets, focusId) {
@@ -884,15 +894,13 @@ L.Control.UIManager = L.Control.extend({
 			},
 		]);
 
-		var closeFunc = function() {
-			var closeMessage = { id: dialogId, jsontype: 'dialog', type: 'modalpopup', action: 'close' };
-			app.socket._onMessage({ textMsg: 'jsdialog: ' + JSON.stringify(closeMessage) });
-		};
-
+		var that = this;
 		this.showModal(json, [
-			{id: 'response', func: function() { if (typeof callback === 'function') callback(); closeFunc(); }},
-			{id: 'cancel', func: function() { closeFunc(); }},
-			{id: '__POPOVER__', func: function() { closeFunc(); }}
+			{id: 'response', func: function() {
+				if (typeof callback === 'function')
+					callback();
+				that.closeModal(dialogId);
+			}}
 		]);
 	},
 
@@ -939,21 +947,15 @@ L.Control.UIManager = L.Control.extend({
 			},
 		]);
 
-		var closeFunc = function() {
-			var closeMessage = { id: dialogId, jsontype: 'dialog', type: 'modalpopup', action: 'close' };
-			app.socket._onMessage({ textMsg: 'jsdialog: ' + JSON.stringify(closeMessage) });
-		};
-
+		var that = this;
 		this.showModal(json, [
 			{id: 'response-ok', func: function() {
 				if (typeof callback === 'function') {
 					var input = document.getElementById('input-modal-input');
 					callback(input.value);
 				}
-				closeFunc();
-			}},
-			{id: 'response-cancel', func: function() { closeFunc(); }},
-			{id: '__POPOVER__', func: function() { closeFunc(); }}
+				that.closeModal(dialogId);
+			}}
 		]);
 	},
 
@@ -994,20 +996,14 @@ L.Control.UIManager = L.Control.extend({
 			},
 		]);
 
-		var closeFunc = function() {
-			var closeMessage = { id: dialogId, jsontype: 'dialog', type: 'modalpopup', action: 'close' };
-			app.socket._onMessage({ textMsg: 'jsdialog: ' + JSON.stringify(closeMessage) });
-		};
-
+		var that = this;
 		this.showModal(json, [
 			{id: 'response-ok', func: function() {
 				if (typeof callback === 'function') {
 					callback();
 				}
-				closeFunc();
-			}},
-			{id: 'response-cancel', func: function() { closeFunc(); }},
-			{id: '__POPOVER__', func: function() { closeFunc(); }}
+				that.closeModal(dialogId);
+			}}
 		]);
 	},
 
