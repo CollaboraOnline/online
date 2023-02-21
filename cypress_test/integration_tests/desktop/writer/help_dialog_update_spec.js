@@ -68,12 +68,12 @@ describe('Help dialog screenshot updation', function() {
 		cy.get('#menu-editmenu').click()
 			.get('#menu-repair').click();
 
-		cy.get('.leaflet-popup-content-wrapper')
+		cy.get('.jsdialog-container.lokdialog_container')
 			.should('exist');
 
-		helper.waitUntilIdle('.leaflet-popup-content-wrapper');
+		helper.waitUntilIdle('.jsdialog-container.lokdialog_container');
 
-		cy.get('.leaflet-popup-content-wrapper')
+		cy.get('.jsdialog-container.lokdialog_container')
 			.screenshot('repair-document');
 
 		copyScreenshot('repair-document.png');
