@@ -89,11 +89,11 @@ describe('Help dialog screenshot updation', function() {
 
 		cy.get('#new-mobile-comment-input-area').type('comment added');
 
-		cy.get('.vex-dialog-buttons .button-primary').click();
+		cy.get('.vex-dialog-buttons .button-primary').click(); // save button
 
 		cy.wait(1000);
 
-		cy.get('.cool-annotation-collapsed').click();
+		cy.get('.jsdialog-container.cool-annotation-collapsed').click();
 
 		cy.wait(1000);
 
