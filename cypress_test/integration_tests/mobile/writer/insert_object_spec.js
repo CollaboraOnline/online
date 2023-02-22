@@ -276,17 +276,17 @@ describe('Insert objects via insertion wizard.', function() {
 			.click();
 
 		// Dialog is opened
-		cy.get('.vex-content.hyperlink-dialog')
+		cy.get('#hyperlink-link-box')
 			.should('exist');
 
 		// Type text and link
-		cy.get('.vex-content.hyperlink-dialog textarea[name="text"]')
+		cy.get('#hyperlink-text-box')
 			.type('some text');
-		cy.get('.vex-content.hyperlink-dialog input[name="link"]')
+		cy.get('#hyperlink-link-box')
 			.type('www.something.com');
 
 		// Insert
-		cy.get('.vex-content.hyperlink-dialog .button-primary')
+		cy.get('#response-ok')
 			.click();
 
 		writerHelper.selectAllTextOfDoc();
@@ -305,17 +305,17 @@ describe('Insert objects via insertion wizard.', function() {
 			.click();
 
 		// Dialog is opened
-		cy.get('.vex-content.hyperlink-dialog')
+		cy.get('#hyperlink-link-box')
 			.should('exist');
 
 		// Type text and link
-		cy.get('.vex-content.hyperlink-dialog textarea[name="text"]')
+		cy.get('#hyperlink-text-box')
 			.type('some text');
-		cy.get('.vex-content.hyperlink-dialog input[name="link"]')
+		cy.get('#hyperlink-link-box')
 			.type('www.something.com');
 
 		// Insert
-		cy.get('.vex-content.hyperlink-dialog .button-primary')
+		cy.get('#response-ok')
 			.click();
 
 		cy.get('#hyperlink-pop-up').click();

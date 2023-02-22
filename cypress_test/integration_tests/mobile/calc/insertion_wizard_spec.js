@@ -63,18 +63,18 @@ describe('Calc insertion wizard.', function() {
 			.click();
 
 		// Dialog is opened
-		cy.get('.vex-content.hyperlink-dialog')
+		cy.get('#hyperlink-link-box')
 			.should('exist');
 
 		// Type text and link
-		cy.get('.vex-content.hyperlink-dialog textarea[name="text"]')
+		cy.get('#hyperlink-text-box')
 			.clear()
 			.type('some text');
-		cy.get('.vex-content.hyperlink-dialog input[name="link"]')
+		cy.get('#hyperlink-link-box')
 			.type('www.something.com');
 
 		// Insert
-		cy.get('.vex-content.hyperlink-dialog .button-primary')
+		cy.get('#response-ok')
 			.click();
 
 		cy.get('.blinking-cursor')
