@@ -15,6 +15,8 @@
 
 #include <Poco/Net/HTTPRequest.h>
 
+#include <chrono>
+
 /// This is to test that we unlock before unloading the last editor.
 class UnitWopiLock : public WopiTestServer
 {
@@ -136,6 +138,125 @@ public:
     }
 };
 
-UnitBase* unit_create_wsd(void) { return new UnitWopiLock(); }
+/// This is to test the behavior when locking fails.
+class UnitWopiLockFail : public WopiTestServer
+{
+    STATE_ENUM(Phase, Load, Lock, RefreshLock, Done) _phase;
+
+    std::string _lockState;
+    std::string _lockToken;
+    std::size_t _lockRefreshCount;
+    std::chrono::steady_clock::time_point _refreshTime;
+
+    static constexpr int RefreshPeriodSeconds = 2;
+
+public:
+    UnitWopiLockFail()
+        : WopiTestServer("UnitWopiLockFail")
+        , _phase(Phase::Load)
+        , _lockState("UNLOCK")
+        , _lockRefreshCount(0)
+    {
+    }
+
+    void configure(Poco::Util::LayeredConfiguration& config) override
+    {
+        WopiTestServer::configure(config);
+
+        // Small value to shorten the test run time.
+        config.setUInt("storage.wopi.locking.refresh", RefreshPeriodSeconds);
+    }
+
+    void configCheckFileInfo(Poco::JSON::Object::Ptr fileInfo) override
+    {
+        fileInfo->set("SupportsLocks", "true");
+    }
+
+    std::unique_ptr<http::Response>
+    assertLockRequest(const Poco::Net::HTTPRequest& request) override
+    {
+        const std::string lockToken = request.get("X-WOPI-Lock", std::string());
+        const std::string newLockState = request.get("X-WOPI-Override", std::string());
+        LOG_TST("In " << toString(_phase) << ", X-WOPI-Lock: " << lockToken << ", X-WOPI-Override: "
+                      << newLockState << ", for URI: " << request.getURI());
+
+        if (_phase == Phase::Lock)
+        {
+            LOK_ASSERT_EQUAL_MESSAGE("Expected X-WOPI-Override:LOCK", std::string("LOCK"),
+                                     newLockState);
+            LOK_ASSERT_MESSAGE("Lock token cannot be empty", !lockToken.empty());
+            _lockState = newLockState;
+            _lockToken = lockToken;
+
+            _refreshTime = std::chrono::steady_clock::now();
+            TRANSITION_STATE(_phase, Phase::RefreshLock);
+        }
+        else if (_phase == Phase::RefreshLock)
+        {
+            LOK_ASSERT_EQUAL_MESSAGE("Expected X-WOPI-Override:LOCK", std::string("LOCK"),
+                                     newLockState);
+            LOK_ASSERT_EQUAL_MESSAGE("Document is not locked", std::string("LOCK"), _lockState);
+            LOK_ASSERT_EQUAL_MESSAGE("The lock token has changed", _lockToken, lockToken);
+
+            ++_lockRefreshCount;
+            LOK_ASSERT_EQUAL_MESSAGE("Lock refresh with expired token", 1UL, _lockRefreshCount);
+
+            // Internal Server Error.
+            return Util::make_unique<http::Response>(http::StatusCode::Unauthorized);
+        }
+        else
+        {
+            LOK_ASSERT_FAIL("Unexpected lock-state change while in " + toString(_phase));
+        }
+
+        return nullptr; // Success.
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                // Always transition before issuing commands.
+                TRANSITION_STATE(_phase, Phase::Lock);
+
+                LOG_TST("Creating first connection");
+                initWebsocket("/wopi/files/0?access_token=anything");
+
+                LOG_TST("Loading first view (editor)");
+                WSD_CMD_BY_CONNECTION_INDEX(0, "load url=" + getWopiSrc());
+                break;
+            }
+            case Phase::Lock:
+                break;
+            case Phase::RefreshLock:
+            {
+                // Wait for the modified status (and fail) in onDocumentModified.
+                // Otherwise, save the document and wait for upload.
+                const auto now = std::chrono::steady_clock::now();
+                const auto elapsed =
+                    std::chrono::duration_cast<std::chrono::milliseconds>(now - _refreshTime);
+                if (_lockRefreshCount == 1 &&
+                    elapsed >= std::chrono::seconds(RefreshPeriodSeconds * 3))
+                {
+                    TRANSITION_STATE(_phase, Phase::Done);
+                    exitTest(TestResult::Ok);
+                }
+            }
+            break;
+            case Phase::Done:
+            {
+                // just wait for the results
+                break;
+            }
+        }
+    }
+};
+
+UnitBase** unit_create_wsd_multi(void)
+{
+    return new UnitBase* [3] { new UnitWopiLock(), new UnitWopiLockFail(), nullptr };
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
