@@ -249,6 +249,37 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         LOG_TRC("isDocLoaded state after loadDocument: " << _isDocLoaded);
         return _isDocLoaded;
     }
+    else if (tokens.equals(0, "extractlinktargets"))
+    {
+        if (tokens.size() < 2)
+        {
+            sendTextFrameAndLogError("error: cmd=extractlinktargets kind=syntax");
+            return false;
+        }
+
+        if (!_isDocLoaded)
+        {
+            sendTextFrameAndLogError("error: cmd=extractlinktargets kind=docnotloaded");
+            return false;
+        }
+
+        assert(!getDocURL().empty());
+        assert(!getJailedFilePath().empty());
+
+        char* data = _docManager->getLOKit()->extractRequest(getJailedFilePath().c_str());
+        if (!data)
+        {
+            LOG_TRC("extractRequest returned no data.");
+            sendTextFrame("extractedlinktargets: { }");
+            return false;
+        }
+
+        LOG_TRC("Extracted link targets: " << data);
+        bool success = sendTextFrame("extractedlinktargets: " + std::string(data));
+        free(data);
+
+        return success;
+    }
     else if (!_isDocLoaded)
     {
         sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=nodocloaded");

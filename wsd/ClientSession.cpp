@@ -2050,6 +2050,30 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                                               payload->data().size() - firstLine.size() - 1);
             return forwardToClient(payload);
         }
+        else if (tokens.equals(0, "extractedlinktargets:"))
+        {
+            LOG_TRC("Sending extracted link targets response.");
+
+            const std::string stringJSON = payload->jsonString();
+
+            Poco::Net::HTTPResponse response;
+            response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_OK);
+            std::ostringstream oss;
+            oss << "HTTP/1.1 200 OK\r\n"
+            "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
+            "User-Agent: " WOPI_AGENT_STRING "\r\n"
+            "Content-Type: application/json\r\n"
+            "X-Content-Type-Options: nosniff\r\n"
+            "\r\n"
+            << stringJSON;
+
+            _saveAsSocket->send(oss.str());
+            _saveAsSocket->shutdown();
+
+            // Now terminate.
+            docBroker->closeDocument("extractedlinktargets");
+            return true;
+        }
     }
     else
     {

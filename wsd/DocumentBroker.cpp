@@ -3694,16 +3694,30 @@ bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std:
             // Load the document manually and request saving in the target format.
             std::string encodedFrom;
             Poco::URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
-            // add batch mode, no interactive dialogs
-            std::string _load = "load url=" + encodedFrom + " batch=true";
-            if (!docBroker->getLang().empty())
-                _load += " lang=" + docBroker->getLang();
-            std::vector<char> loadRequest(_load.begin(), _load.end());
-            docBroker->_clientSession->handleMessage(loadRequest);
+
+            docBroker->sendStartMessage(docBroker->_clientSession, encodedFrom);
 
             // Save is done in the setLoaded
         });
     return true;
+}
+
+void ConvertToBroker::sendStartMessage(std::shared_ptr<ClientSession> clientSession, const std::string& encodedFrom)
+{
+    // add batch mode, no interactive dialogs
+    std::string _load = "load url=" + encodedFrom + " batch=true";
+    if (!getLang().empty())
+        _load += " lang=" + getLang();
+    std::vector<char> loadRequest(_load.begin(), _load.end());
+    clientSession->handleMessage(loadRequest);
+}
+
+void ExtractLinkTargetsBroker::sendStartMessage(std::shared_ptr<ClientSession> clientSession, const std::string& encodedFrom)
+{
+    ConvertToBroker::sendStartMessage(clientSession, encodedFrom);
+
+    const auto command = "extractlinktargets url=" + encodedFrom;
+    forwardToChild(clientSession, command);
 }
 
 void ConvertToBroker::dispose()

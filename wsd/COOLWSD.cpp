@@ -4543,6 +4543,54 @@ private:
             }
             return;
         }
+        else if (requestDetails.equals(1, "extract-link-targets"))
+        {
+            // just like convert-to but this will not do save-as at the end and send the output back
+            // instead it will generate a list of the target links of the document
+
+            // Validate sender - FIXME: should do this even earlier.
+            if (!allowConvertTo(socket->clientAddress(), request))
+            {
+                LOG_WRN("Conversion requests not allowed from this address: " << socket->clientAddress());
+                http::Response httpResponse(http::StatusCode::Forbidden);
+                httpResponse.set("Content-Length", "0");
+                socket->sendAndShutdown(httpResponse);
+                socket->ignoreInput();
+                return;
+            }
+
+            ConvertToPartHandler handler;
+            HTMLForm form(request, message, handler);
+
+            const std::string fromPath = handler.getFilename();
+            LOG_INF("Extract request for URI [" << fromPath << "].");
+
+            if (!fromPath.empty())
+            {
+                Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
+                const std::string docKey = RequestDetails::getDocKey(uriPublic);
+
+                std::string lang = (form.has("lang") ? form.get("lang") : "");
+
+                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+
+                LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+                auto docBroker = std::make_shared<ExtractLinkTargetsBroker>(fromPath, uriPublic, docKey, "", "", lang);
+                handler.takeFile();
+
+                cleanupDocBrokers();
+
+                DocBrokers.emplace(docKey, docBroker);
+                LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
+
+                if (!docBroker->startConversion(disposition, _id))
+                {
+                    LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
+                    cleanupDocBrokers();
+                }
+            }
+            return;
+        }
         else if (requestDetails.equals(2, "insertfile"))
         {
             LOG_INF("Insert file request.");
