@@ -1483,7 +1483,7 @@ public:
     static void removeFile(const std::string &uri);
 };
 
-class ConvertToBroker final : public StatelessBatchBroker
+class ConvertToBroker : public StatelessBatchBroker
 {
     const std::string _format;
     const std::string _sOptions;
@@ -1514,8 +1514,27 @@ public:
     /// How many live conversions are running.
     static std::size_t getInstanceCount();
 
-private:
+protected:
     bool isConvertTo() const override { return true; }
+
+    virtual void sendStartMessage(std::shared_ptr<ClientSession> clientSession, const std::string& encodedFrom);
+};
+
+class ExtractLinkTargetsBroker final : public ConvertToBroker
+{
+public:
+    /// Construct DocumentBroker with URI and docKey
+    ExtractLinkTargetsBroker(const std::string& uri,
+                    const Poco::URI& uriPublic,
+                    const std::string& docKey,
+                    const std::string& format,
+                    const std::string& sOptions,
+                    const std::string& lang)
+                    : ConvertToBroker(uri, uriPublic, docKey, format, sOptions, lang)
+                    {}
+
+private:
+    void sendStartMessage(std::shared_ptr<ClientSession> clientSession, const std::string& encodedFrom) override;
 };
 
 class RenderSearchResultBroker final : public StatelessBatchBroker
