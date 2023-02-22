@@ -8,6 +8,7 @@
 #include <config.h>
 
 #include "lokassert.hpp"
+#include "Unit.hpp"
 #include <WopiTestServer.hpp>
 #include <Log.hpp>
 #include <helpers.hpp>
@@ -20,7 +21,7 @@
 /// This is to test that we unlock before unloading the last editor.
 class UnitWopiLock : public WopiTestServer
 {
-    STATE_ENUM(Phase, Load, LockDocument, UnlockDocument, Done) _phase;
+    STATE_ENUM(Phase, Load, Lock, Unlock, Done) _phase;
 
     std::string _lockState;
     std::string _lockToken;
@@ -57,25 +58,25 @@ public:
     std::unique_ptr<http::Response>
     assertLockRequest(const Poco::Net::HTTPRequest& request) override
     {
-        const std::string lock = request.get("X-WOPI-Lock", std::string());
+        const std::string lockToken = request.get("X-WOPI-Lock", std::string());
         const std::string newLockState = request.get("X-WOPI-Override", std::string());
-        LOG_TST("In " << toString(_phase) << ", X-WOPI-Lock: " << lock << ", X-WOPI-Override: "
+        LOG_TST("In " << toString(_phase) << ", X-WOPI-Lock: " << lockToken << ", X-WOPI-Override: "
                       << newLockState << ", for URI: " << request.getURI());
 
-        if (_phase == Phase::LockDocument)
+        if (_phase == Phase::Lock)
         {
             LOK_ASSERT_EQUAL_MESSAGE("Expected X-WOPI-Override:LOCK", std::string("LOCK"),
                                      newLockState);
-            LOK_ASSERT_MESSAGE("Lock token cannot be empty", !lock.empty());
+            LOK_ASSERT_MESSAGE("Lock token cannot be empty", !lockToken.empty());
             _lockState = newLockState;
-            _lockToken = lock;
+            _lockToken = lockToken;
         }
-        else if (_phase == Phase::UnlockDocument)
+        else if (_phase == Phase::Unlock)
         {
             LOK_ASSERT_EQUAL_MESSAGE("Expected X-WOPI-Override:UNLOCK", std::string("UNLOCK"),
                                      newLockState);
-            LOK_ASSERT_EQUAL_MESSAGE("Document is not unlocked", std::string("LOCK"), _lockState);
-            LOK_ASSERT_EQUAL_MESSAGE("The lock token has changed", _lockToken, lock);
+            LOK_ASSERT_EQUAL_MESSAGE("Document is not locked", std::string("LOCK"), _lockState);
+            LOK_ASSERT_EQUAL_MESSAGE("The lock token has changed", _lockToken, lockToken);
 
             TRANSITION_STATE(_phase, Phase::Done);
             exitTest(TestResult::Ok);
@@ -97,7 +98,7 @@ public:
         if (_viewCount == 2)
         {
             // Transition before disconnecting.
-            TRANSITION_STATE(_phase, Phase::UnlockDocument);
+            TRANSITION_STATE(_phase, Phase::Unlock);
 
             // force kill the session with edit permission
             LOG_TST("Disconnecting first connection with edit permission");
@@ -112,7 +113,7 @@ public:
             case Phase::Load:
             {
                 // Always transition before issuing commands.
-                TRANSITION_STATE(_phase, Phase::LockDocument);
+                TRANSITION_STATE(_phase, Phase::Lock);
 
                 LOG_TST("Creating first connection");
                 initWebsocket("/wopi/files/0?access_token=anything");
@@ -126,8 +127,8 @@ public:
                 WSD_CMD_BY_CONNECTION_INDEX(1, "load url=" + getWopiSrc());
                 break;
             }
-            case Phase::LockDocument:
-            case Phase::UnlockDocument:
+            case Phase::Lock:
+            case Phase::Unlock:
                 break;
             case Phase::Done:
             {
