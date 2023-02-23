@@ -66,7 +66,8 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.arrow = null;
 		this.sectionProperties.initialLayoutData = null;
 		this.sectionProperties.showResolved = null;
-		this.sectionProperties.marginY = 10 * app.dpiScale;
+		this.sectionProperties.marginY = 20 * app.dpiScale;
+		this.sectionProperties.marginYThread = 10 * app.dpiScale;
 		this.sectionProperties.offset = 5 * app.dpiScale;
 		this.sectionProperties.layoutTimer = null;
 		this.sectionProperties.width = Math.round(1 * app.dpiScale); // Configurable variable.
@@ -1469,7 +1470,22 @@ export class CommentSection extends CanvasSectionObject {
 			} else {
 				i = tmpIdx;
 			}
-			startY += this.sectionProperties.marginY;
+			var threadGap = false;
+			if (tmpIdx > 0 && tmpIdx < this.sectionProperties.commentList.length) {
+				var parentId = this.getRootIndexOf(this.sectionProperties.commentList[tmpIdx-1].sectionProperties.data.id);
+				if (parentId == -1) {
+					// The previous comment has no parent
+					parentId = tmpIdx - 1;
+				}
+				if (this.sectionProperties.commentList[tmpIdx].sectionProperties.data.textRange === this.sectionProperties.commentList[parentId].sectionProperties.data.textRange) {
+					// Comments point to the same text range, so we add a smaller gap than usual
+					threadGap = true;
+				}
+			}
+			if (threadGap)
+				startY += this.sectionProperties.marginYThread;
+			else
+				startY += this.sectionProperties.marginY;
 		}
 		return startY;
 	}
@@ -1636,6 +1652,9 @@ export class CommentSection extends CanvasSectionObject {
 			} else {
 				comment.sectionProperties.replyCountNode.innerText = '';
 				comment.sectionProperties.replyCountNode.style.display = 'none';
+			}
+			if (parseInt(this.sectionProperties.commentList[i].sectionProperties.data.paraIdParent) === 0) {
+				this.sectionProperties.commentList[i].sectionProperties.data.parent = '0';
 			}
 		}
 	}
