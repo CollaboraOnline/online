@@ -24,6 +24,7 @@
 #include <Poco/URI.h>
 #include <Poco/BinaryReader.h>
 #include <Poco/Base64Decoder.h>
+#include <Poco/Base64Encoder.h>
 #if !MOBILEAPP
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPSClientSession.h>
@@ -277,6 +278,55 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         LOG_TRC("Extracted link targets: " << data);
         bool success = sendTextFrame("extractedlinktargets: " + std::string(data));
         free(data);
+
+        return success;
+    }
+    else if (tokens.equals(0, "getthumbnail"))
+    {
+        if (tokens.size() < 2)
+        {
+            sendTextFrameAndLogError("error: cmd=getthumbnail kind=syntax");
+            return false;
+        }
+
+        if (!_isDocLoaded)
+        {
+            sendTextFrameAndLogError("error: cmd=getthumbnail kind=docnotloaded");
+            return false;
+        }
+
+        int part = -1;
+        std::string timestamp, doctemplate;
+        parseDocOptions(tokens, part, timestamp, doctemplate);
+
+        assert(!getDocURL().empty());
+        assert(!getJailedFilePath().empty());
+
+        bool success = false;
+        const int x = 0;
+        const int y = 0;
+        const int width = 120;
+        const int height = 120;
+        const auto mode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
+
+        std::vector<unsigned char> thumbnail(width * height * 4);
+        getLOKitDocument()->paintThumbnail(thumbnail.data(), x, y);
+
+        std::vector<char> pngThumbnail;
+        if (Png::encodeBufferToPNG(thumbnail.data(), width, height, pngThumbnail, mode))
+        {
+            std::ostringstream oss;
+            oss << "sendthumbnail:\n";
+
+            // encode PNG to base64
+            Poco::Base64Encoder encoder(oss);
+            encoder.rdbuf()->setLineLength(0);
+            encoder.write(pngThumbnail.data(), pngThumbnail.size());
+            encoder.close();
+
+            std::string sendThumbnailCommand = oss.str();
+            success = sendTextFrame(sendThumbnailCommand.data(), sendThumbnailCommand.size());
+        }
 
         return success;
     }

@@ -3720,6 +3720,16 @@ void ExtractLinkTargetsBroker::sendStartMessage(std::shared_ptr<ClientSession> c
     forwardToChild(clientSession, command);
 }
 
+void GetThumbnailBroker::sendStartMessage(std::shared_ptr<ClientSession> clientSession, const std::string& encodedFrom)
+{
+    // load first
+    ConvertToBroker::sendStartMessage(clientSession, encodedFrom);
+
+    auto docBroker = this;
+    const auto command = "getthumbnail url=" + encodedFrom + " target=" + _target;
+    docBroker->forwardToChild(clientSession, command);
+}
+
 void ConvertToBroker::dispose()
 {
     if (!_uriOrig.empty())
