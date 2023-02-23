@@ -1527,10 +1527,8 @@ public:
     ExtractLinkTargetsBroker(const std::string& uri,
                     const Poco::URI& uriPublic,
                     const std::string& docKey,
-                    const std::string& format,
-                    const std::string& sOptions,
                     const std::string& lang)
-                    : ConvertToBroker(uri, uriPublic, docKey, format, sOptions, lang)
+                    : ConvertToBroker(uri, uriPublic, docKey, "", "", lang)
                     {}
 
 private:
