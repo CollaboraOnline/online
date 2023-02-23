@@ -246,15 +246,6 @@ public:
 
     const std::string& getJailedFilePathAnonym() const { return _jailedFilePathAnonym; }
 
-    int  getCanonicalViewId() { return _canonicalViewId; }
-    // Only called by kit.
-    void setCanonicalViewId(int viewId) { _canonicalViewId = viewId; }
-    // Only called by wsd.
-    template<class T> void createCanonicalViewId(SessionMap<T> &map)
-    {
-        _canonicalViewId = map.createCanonicalId(_watermarkText);
-    }
-
     const std::string& getDeviceFormFactor() const { return _deviceFormFactor; }
 
     const std::string& getSpellOnline() const { return _spellOnline; }
@@ -366,9 +357,6 @@ private:
 
     /// Timezone of the user.
     std::string _timezone;
-
-    /// the canonical id unique to the set of rendering properties of this session
-    int _canonicalViewId;
 
     /// The form factor of the device where the client is running: desktop, tablet, mobile.
     std::string _deviceFormFactor;
