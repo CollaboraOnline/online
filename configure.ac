@@ -1080,6 +1080,26 @@ else
     AC_DEFINE([HAVE_STD_FILESYSTEM_EXPERIMENTAL],0,[Whether the std::filesystem is in the experimental header.])
 fi
 
+SYS_RANDOM=
+AC_LANG_PUSH([C++])
+AC_LINK_IFELSE(
+    [AC_LANG_SOURCE([[
+    #include <sys/random.h>
+    int main()
+    {
+        char buffer[8];
+        getrandom(buffer, sizeof(buffer), GRND_NONBLOCK);
+    }
+    ]])],
+    [SYS_RANDOM=TRUE])
+AC_LANG_POP([C++])
+
+if test "$SYS_RANDOM" == "TRUE" ; then
+    AC_DEFINE([HAVE_SYS_RANDOM_H],1,[Define to 1 if you have the <sys/random.h> header file.])
+else
+    AC_DEFINE([HAVE_SYS_RANDOM_H],0,[Define to 1 if you have the <sys/random.h> header file.])
+fi
+
 AS_IF([test -n "$LOKIT_PATH"],
       [CPPFLAGS="$CPPFLAGS -I${LOKIT_PATH}"])
 lokit_msg="$LOKIT_PATH"
