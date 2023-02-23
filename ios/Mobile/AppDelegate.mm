@@ -254,6 +254,7 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
             templateListURL = nil;
     }
 
+#if 0 // Remove template list URL from application settings
     if (templateListURL == nil)
         templateListURL = [[NSUserDefaults standardUserDefaults] stringForKey:@"templateListURL"];
 
@@ -278,6 +279,7 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
                     }] resume];
         }
     }
+#endif
 
     // Also look for managed configuration setting of the user name.
 
