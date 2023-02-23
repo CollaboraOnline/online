@@ -3612,6 +3612,23 @@ public:
     }
 };
 
+/// Constructs ConvertToBroker implamentation based on request type
+static std::shared_ptr<ConvertToBroker> getConvertToBrokerImplementation(const std::string& requestType,
+                                                                         const std::string& fromPath,
+                                                                         const Poco::URI& uriPublic,
+                                                                         const std::string& docKey,
+                                                                         const std::string& format,
+                                                                         const std::string& options,
+                                                                         const std::string& lang)
+{
+    if (requestType == "convert-to")
+        return std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey, format, options, lang);
+    else if (requestType == "extract-link-targets")
+        return std::make_shared<ExtractLinkTargetsBroker>(fromPath, uriPublic, docKey, lang);
+
+    return nullptr;
+}
+
 #endif
 
 /// Handles incoming connections and dispatches to the appropriate handler.
@@ -4461,7 +4478,7 @@ private:
 
         LOG_INF("Post request: [" << COOLWSD::anonymizeUrl(requestDetails.getURI()) << ']');
 
-        if (requestDetails.equals(1, "convert-to"))
+        if (requestDetails.equals(1, "convert-to") || requestDetails.equals(1, "extract-link-targets"))
         {
             // Validate sender - FIXME: should do this even earlier.
             if (!allowConvertTo(socket->clientAddress(), request))
@@ -4482,9 +4499,13 @@ private:
             if (requestDetails.size() > 2)
                 format = requestDetails[2];
 
+            bool hasRequiredParameters = true;
+            if (requestDetails.equals(1, "convert-to") && format.empty())
+                hasRequiredParameters = false;
+
             const std::string fromPath = handler.getFilename();
             LOG_INF("Conversion request for URI [" << fromPath << "] format [" << format << "].");
-            if (!fromPath.empty() && !format.empty())
+            if (!fromPath.empty() && hasRequiredParameters)
             {
                 Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
                 const std::string docKey = RequestDetails::getDocKey(uriPublic);
@@ -4527,7 +4548,7 @@ private:
                 std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
                 LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                auto docBroker = std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey, format, options, lang);
+                auto docBroker = getConvertToBrokerImplementation(requestDetails[1], fromPath, uriPublic, docKey, format, options, lang);
                 handler.takeFile();
 
                 cleanupDocBrokers();
@@ -4541,53 +4562,9 @@ private:
                     cleanupDocBrokers();
                 }
             }
-            return;
-        }
-        else if (requestDetails.equals(1, "extract-link-targets"))
-        {
-            // just like convert-to but this will not do save-as at the end and send the output back
-            // instead it will generate a list of the target links of the document
-
-            // Validate sender - FIXME: should do this even earlier.
-            if (!allowConvertTo(socket->clientAddress(), request))
+            else
             {
-                LOG_WRN("Conversion requests not allowed from this address: " << socket->clientAddress());
-                http::Response httpResponse(http::StatusCode::Forbidden);
-                httpResponse.set("Content-Length", "0");
-                socket->sendAndShutdown(httpResponse);
-                socket->ignoreInput();
-                return;
-            }
-
-            ConvertToPartHandler handler;
-            HTMLForm form(request, message, handler);
-
-            const std::string fromPath = handler.getFilename();
-            LOG_INF("Extract request for URI [" << fromPath << "].");
-
-            if (!fromPath.empty())
-            {
-                Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
-                const std::string docKey = RequestDetails::getDocKey(uriPublic);
-
-                std::string lang = (form.has("lang") ? form.get("lang") : "");
-
-                std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
-
-                LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                auto docBroker = std::make_shared<ExtractLinkTargetsBroker>(fromPath, uriPublic, docKey, "", "", lang);
-                handler.takeFile();
-
-                cleanupDocBrokers();
-
-                DocBrokers.emplace(docKey, docBroker);
-                LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
-
-                if (!docBroker->startConversion(disposition, _id))
-                {
-                    LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
-                    cleanupDocBrokers();
-                }
+                LOG_INF("Missing parameters for conversion request.");
             }
             return;
         }
