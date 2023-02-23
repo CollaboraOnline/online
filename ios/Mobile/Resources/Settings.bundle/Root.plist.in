@@ -42,14 +42,6 @@
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Template list URL</string>
-			<key>Key</key>
-			<string>templateListURL</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
-			<key>Title</key>
 			<string>Your name</string>
 			<key>Key</key>
 			<string>userName</string>

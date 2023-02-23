@@ -244,42 +244,10 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
     // documents to download. If set, start a task to download it, and then to download the listed
     // templates.
 
-    NSString *templateListURL = nil;
-
     // First check managed configuration, if present
     NSDictionary *managedConfig = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"com.apple.configuration.managed"];
-    if (managedConfig != nil) {
-        templateListURL = managedConfig[@"templateListURL"];
-        if (templateListURL != nil && ![templateListURL isKindOfClass:[NSString class]])
-            templateListURL = nil;
-    }
 
-    if (templateListURL == nil)
-        templateListURL = [[NSUserDefaults standardUserDefaults] stringForKey:@"templateListURL"];
-
-    if (templateListURL != nil) {
-        NSURL *url = [NSURL URLWithString:templateListURL];
-        if (url != nil) {
-            [[[NSURLSession sharedSession] dataTaskWithURL:url
-                                         completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                        if (error == nil && [response isKindOfClass:[NSHTTPURLResponse class]] && [(NSHTTPURLResponse*)response statusCode] == 200)
-                            updateTemplates(data, response);
-                        else if (error == nil && [response isKindOfClass:[NSHTTPURLResponse class]])
-                            LOG_ERR("Failed to download " <<
-                                    [[url absoluteString] UTF8String] <<
-                                    ": response code " << [(NSHTTPURLResponse*)response statusCode]);
-                        else if (error != nil)
-                            LOG_ERR("Failed to download " <<
-                                    [[url absoluteString] UTF8String] <<
-                                    ": " << [[error description] UTF8String]);
-                        else
-                            LOG_ERR("Failed to download " <<
-                                    [[url absoluteString] UTF8String]);
-                    }] resume];
-        }
-    }
-
-    // Also look for managed configuration setting of the user name.
+    // Look for managed configuration setting of the user name.
 
     if (managedConfig != nil) {
         NSString *userName = managedConfig[@"userName"];
