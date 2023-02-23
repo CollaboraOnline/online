@@ -16,6 +16,11 @@
 
 #include <csignal>
 #include <poll.h>
+
+#ifdef HAVE_SYS_RANDOM_H
+#  include <sys/random.h>
+#endif
+
 #ifdef __linux__
 #  include <sys/prctl.h>
 #  include <sys/syscall.h>
@@ -125,15 +130,23 @@ namespace Util
 
             // a poor fallback but something.
             std::vector<char> random = getBytes(length);
-            int fd = open("/dev/urandom", O_RDONLY);
             int len = 0;
-            if (fd < 0 ||
-                (len = read(fd, random.data(), length)) < 0 ||
-                std::size_t(len) < length)
+#ifdef HAVE_SYS_RANDOM_H
+            len = getrandom(random.data(), length, GRND_NONBLOCK);
+
+            // if getrandom() fails, we fall back to "/dev/[u]random" approach.
+            if (len != length)
+#endif
             {
-                LOG_ERR("failed to read " << length << " hard random bytes, got " << len << " for hash: " << errno);
+                const int fd = open("/dev/urandom", O_RDONLY);
+                if (fd < 0 ||
+                    (len = read(fd, random.data(), length)) < 0 ||
+                    std::size_t(len) < length)
+                {
+                    LOG_ERR("failed to read " << length << " hard random bytes, got " << len << " for hash: " << errno);
+                }
+                close(fd);
             }
-            close(fd);
 
             hex.rdbuf()->setLineLength(0); // Don't insert line breaks.
             hex.write(random.data(), length);
