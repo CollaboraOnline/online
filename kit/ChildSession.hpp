@@ -262,6 +262,11 @@ public:
         _docManager = nullptr;
     }
 
+    // Only called by kit.
+    void setCanonicalViewId(int viewId) { _canonicalViewId = viewId; }
+
+    int  getCanonicalViewId() { return _canonicalViewId; }
+
 private:
     bool loadDocument(const StringVector& tokens);
 
@@ -379,6 +384,9 @@ private:
 
     /// stores wopi url for export as operation
     std::string _exportAsWopiUrl;
+
+    /// the canonical id unique to the set of rendering properties of this session
+    int _canonicalViewId;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

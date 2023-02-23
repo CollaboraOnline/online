@@ -254,6 +254,15 @@ public:
     /// Process an SVG to replace embedded file:/// media URIs with public http URLs.
     std::string processSVGContent(const std::string& svg);
 
+    int  getCanonicalViewId() { return _canonicalViewId; }
+
+    // Only called by wsd.
+    template<class T>
+    void createCanonicalViewId(SessionMap<T> &map)
+    {
+        _canonicalViewId = map.createCanonicalId(getWatermarkText());
+    }
+
 private:
     std::shared_ptr<ClientSession> client_from_this()
     {
@@ -406,6 +415,8 @@ private:
     // Saves time from setting/fetching user info multiple times using zotero API
     bool _isZoteroUserInfoSet = false;
 
+    /// the canonical id unique to the set of rendering properties of this session
+    int _canonicalViewId;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
