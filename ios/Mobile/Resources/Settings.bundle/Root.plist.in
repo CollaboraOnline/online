@@ -38,6 +38,7 @@
 			<key>Title</key>
 			<string>Settings</string>
 		</dict>
+		<!-- Remove template list URL from application settings
 		<dict>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
@@ -46,6 +47,7 @@
 			<key>Key</key>
 			<string>templateListURL</string>
 		</dict>
+		-->
 		<dict>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
