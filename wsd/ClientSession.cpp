@@ -15,6 +15,7 @@
 #include <memory>
 #include <unordered_map>
 
+#include <Poco/Base64Decoder.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
@@ -2073,6 +2074,39 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             // Now terminate.
             docBroker->closeDocument("extractedlinktargets");
             return true;
+        }
+        else if (tokens.equals(0, "sendthumbnail:"))
+        {
+            LOG_TRC("Sending get-thumbnail response.");
+
+            std::ostringstream oss;
+            oss << "HTTP/1.1 200 OK\r\n"
+            "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
+            "User-Agent: " WOPI_AGENT_STRING "\r\n"
+            "Content-Type: image/png\r\n"
+            "X-Content-Type-Options: nosniff\r\n"
+            "\r\n";
+
+            int firstLineSize = firstLine.size() + 1;
+            std::string base64thumbnail(payload->data().data() + firstLineSize);
+
+            // decode back to PNG
+            std::istringstream istr(base64thumbnail);
+            std::ostringstream ostr;
+            Poco::Base64Decoder b64in(istr);
+            copy(std::istreambuf_iterator<char>(b64in),
+                std::istreambuf_iterator<char>(),
+                std::ostreambuf_iterator<char>(ostr));
+
+            oss << ostr.str();
+
+            _saveAsSocket->send(oss.str());
+            _saveAsSocket->shutdown();
+
+            LOG_TRC("Removing get-thumbnail ClientSession.");
+
+            docBroker->removeSession(client_from_this());
+            docBroker->closeDocument("ownertermination");
         }
     }
     else

@@ -3619,12 +3619,15 @@ static std::shared_ptr<ConvertToBroker> getConvertToBrokerImplementation(const s
                                                                          const std::string& docKey,
                                                                          const std::string& format,
                                                                          const std::string& options,
-                                                                         const std::string& lang)
+                                                                         const std::string& lang,
+                                                                         const std::string& target)
 {
     if (requestType == "convert-to")
         return std::make_shared<ConvertToBroker>(fromPath, uriPublic, docKey, format, options, lang);
     else if (requestType == "extract-link-targets")
         return std::make_shared<ExtractLinkTargetsBroker>(fromPath, uriPublic, docKey, lang);
+    else if (requestType == "get-thumbnail")
+        return std::make_shared<GetThumbnailBroker>(fromPath, uriPublic, docKey, lang, target);
 
     return nullptr;
 }
@@ -4478,7 +4481,9 @@ private:
 
         LOG_INF("Post request: [" << COOLWSD::anonymizeUrl(requestDetails.getURI()) << ']');
 
-        if (requestDetails.equals(1, "convert-to") || requestDetails.equals(1, "extract-link-targets"))
+        if (requestDetails.equals(1, "convert-to") ||
+            requestDetails.equals(1, "extract-link-targets") ||
+            requestDetails.equals(1, "get-thumbnail"))
         {
             // Validate sender - FIXME: should do this even earlier.
             if (!allowConvertTo(socket->clientAddress(), request))
@@ -4541,14 +4546,15 @@ private:
                    options += ",PDFVer=" + pdfVer + "PDFVEREND";
                 }
 
-                std::string lang = (form.has("lang") ? form.get("lang") : "");
+                std::string lang = (form.has("lang") ? form.get("lang") : std::string());
+                std::string target = (form.has("target") ? form.get("target") : std::string());
 
                 // This lock could become a bottleneck.
                 // In that case, we can use a pool and index by publicPath.
                 std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
 
                 LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
-                auto docBroker = getConvertToBrokerImplementation(requestDetails[1], fromPath, uriPublic, docKey, format, options, lang);
+                auto docBroker = getConvertToBrokerImplementation(requestDetails[1], fromPath, uriPublic, docKey, format, options, lang, target);
                 handler.takeFile();
 
                 cleanupDocBrokers();
