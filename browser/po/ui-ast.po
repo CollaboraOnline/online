@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-03 12:49+0100\n"
-"PO-Revision-Date: 2023-01-16 21:34+0000\n"
+"PO-Revision-Date: 2023-02-21 01:07+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15.1-dev\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -751,9 +751,8 @@ msgid "Text orientation"
 msgstr "Orientación del testu"
 
 #: src/control/Control.Menubar.js:269
-#, fuzzy
 msgid "References"
-msgstr "Referencie~s"
+msgstr "Referencies"
 
 #: src/control/Control.Menubar.js:272
 #: src/control/Control.NotebookbarWriter.js:1409
@@ -1121,7 +1120,6 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:147
 #: src/control/Control.NotebookbarImpress.js:181
 #: src/control/Control.NotebookbarWriter.js:143
-#, fuzzy
 msgid "Export As"
 msgstr "Esportar como"
 
@@ -1581,7 +1579,7 @@ msgstr "Cargando…"
 
 #: src/control/Control.Zotero.js:259
 msgid "Language:"
-msgstr ""
+msgstr "Llingua:"
 
 #: src/control/Control.Zotero.js:274
 msgid "Store as:"
@@ -1589,7 +1587,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:280 src/control/Control.Zotero.js:404
 msgid "Fields"
-msgstr ""
+msgstr "Campos"
 
 #: src/control/Control.Zotero.js:281 src/control/Control.Zotero.js:404
 msgid "Bookmarks"
@@ -1601,7 +1599,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:402
 msgid "Endnotes"
-msgstr ""
+msgstr "Notes a lo cabero"
 
 #: src/control/Control.Zotero.js:466
 msgid "My Publications"
@@ -1628,9 +1626,8 @@ msgid "Citation Style"
 msgstr ""
 
 #: src/control/Control.Zotero.js:750
-#, fuzzy
 msgid "Styles"
-msgstr "Estilu"
+msgstr "Estilos"
 
 #: src/control/Control.Zotero.js:750
 msgid "An error occurred while fetching style list"
@@ -1676,7 +1673,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:1249
 msgid "Notes"
-msgstr ""
+msgstr "Notes"
 
 #: src/control/Control.Zotero.js:1249
 msgid "An error occurred while fetching notes"
@@ -1900,7 +1897,7 @@ msgstr ""
 
 #: src/control/Toolbar.js:240 src/control/Toolbar.js:253
 msgid "Downloading..."
-msgstr ""
+msgstr "Baxando…"
 
 #: src/control/Toolbar.js:269
 msgid "Saving..."
