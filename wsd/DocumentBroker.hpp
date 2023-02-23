@@ -1535,6 +1535,25 @@ private:
     void sendStartMessage(std::shared_ptr<ClientSession> clientSession, const std::string& encodedFrom) override;
 };
 
+class GetThumbnailBroker final : public ConvertToBroker
+{
+    std::string _target;
+
+public:
+    /// Construct DocumentBroker with URI and docKey
+    GetThumbnailBroker(const std::string& uri,
+                    const Poco::URI& uriPublic,
+                    const std::string& docKey,
+                    const std::string& lang,
+                    const std::string& target)
+                    : ConvertToBroker(uri, uriPublic, docKey, std::string(), std::string(), lang)
+                    , _target(target)
+                    {}
+
+private:
+    void sendStartMessage(std::shared_ptr<ClientSession> clientSession, const std::string& encodedFrom) override;
+};
+
 class RenderSearchResultBroker final : public StatelessBatchBroker
 {
     std::shared_ptr<std::vector<char>> _pSearchResultContent;
