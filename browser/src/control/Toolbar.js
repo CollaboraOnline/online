@@ -967,6 +967,9 @@ L.Map.include({
 					msg, '', _('OK'), function () { map.deletePage(); }, true);
 			}
 			break;
+		case 'closetablet':
+			this.uiManager.enterReadonlyOrClose();
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}
