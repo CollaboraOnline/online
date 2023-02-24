@@ -283,7 +283,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "getthumbnail"))
     {
-        if (tokens.size() < 2)
+        if (tokens.size() < 3)
         {
             sendTextFrameAndLogError("error: cmd=getthumbnail kind=syntax");
             return false;
@@ -295,16 +295,14 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             return false;
         }
 
-        int part = -1;
-        std::string timestamp, doctemplate;
-        parseDocOptions(tokens, part, timestamp, doctemplate);
+        int x, y;
+        if (!getTokenInteger(tokens[1], "x", x))
+            x = 0;
 
-        assert(!getDocURL().empty());
-        assert(!getJailedFilePath().empty());
+        if (!getTokenInteger(tokens[2], "y", y))
+            y = 0;
 
         bool success = false;
-        const int x = 0;
-        const int y = 0;
         const int width = 120;
         const int height = 120;
         const auto mode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
@@ -319,13 +317,23 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             oss << "sendthumbnail:\n";
 
             // encode PNG to base64
-            Poco::Base64Encoder encoder(oss);
-            encoder.rdbuf()->setLineLength(0);
-            encoder.write(pngThumbnail.data(), pngThumbnail.size());
-            encoder.close();
+            try
+            {
+                Poco::Base64Encoder encoder(oss);
+                encoder.rdbuf()->setLineLength(0);
+                encoder.write(pngThumbnail.data(), pngThumbnail.size());
+                encoder.close();
 
-            std::string sendThumbnailCommand = oss.str();
-            success = sendTextFrame(sendThumbnailCommand.data(), sendThumbnailCommand.size());
+                std::string sendThumbnailCommand = oss.str();
+                success = sendTextFrame(sendThumbnailCommand.data(), sendThumbnailCommand.size());
+            }
+            catch (const std::exception& e)
+            {
+                LOG_ERR("Encoding thumbnail failed: " << e.what());
+                std::string error = "sendthumbnail: error";
+                sendTextFrame(error.data(), error.size());
+                success = false;
+            }
         }
 
         return success;
