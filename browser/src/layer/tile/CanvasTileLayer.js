@@ -2704,11 +2704,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					var newCenter = mapBounds.getCenter();
 					newCenter.lat += scrollX;
 					newCenter.lat += scrollY;
-					var center = this._map.project(newCenter);
-					center = center.subtract(this._map.getSize().divideBy(2));
-					center.x = Math.round(center.x < 0 ? 0 : center.x);
-					center.y = Math.round(center.y < 0 ? 0 : center.y);
-					this._map.fire('scrollto', {x: center.x, y: center.y});
+					this.scrollToPos(newCenter);
 				}
 			}
 
@@ -3233,14 +3229,10 @@ L.CanvasTileLayer = L.Layer.extend({
 					var newCenter = mapBounds.getCenter();
 					newCenter.lng += scrollX;
 					newCenter.lat += scrollY;
-					var center = this._map.project(newCenter);
-					center = center.subtract(this._map.getSize().divideBy(2));
-					center.x = Math.round(center.x < 0 ? 0 : center.x);
-					center.y = Math.round(center.y < 0 ? 0 : center.y);
 					if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
 						var address = document.getElementById('addressInput').value;
 						if (!this._isWholeColumnSelected(address) && !this._isWholeRowSelected(address))
-							this._map.fire('scrollto', {x: center.x, y: center.y});
+							this.scrollToPos(newCenter);
 					}
 				}
 			}
@@ -3633,6 +3625,15 @@ L.CanvasTileLayer = L.Layer.extend({
 		!this._referenceMarkerStart.isDragged && !this._referenceMarkerEnd.isDragged;
 	},
 
+	// Scrolls the view to selected position
+	scrollToPos: function(pos) {
+		var center = this._map.project(pos);
+		center = center.subtract(this._map.getSize().divideBy(2));
+		center.x = Math.round(center.x < 0 ? 0 : center.x);
+		center.y = Math.round(center.y < 0 ? 0 : center.y);
+		this._map.fire('scrollto', {x: center.x, y: center.y});
+	},
+
 	// Update cursor layer (blinking cursor).
 	_onUpdateCursor: function (scroll, zoom, keepCaretPositionRelativeToScreen) {
 
@@ -3656,18 +3657,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		&& this._allowViewJump()) {
 
 			var paneRectsInLatLng = this.getPaneLatLngRectangles();
-
 			if (!this._visibleCursor.isInAny(paneRectsInLatLng)) {
-				var center = this._map.project(cursorPos);
-				center = center.subtract(this._map.getSize().divideBy(2));
-				center.x = Math.round(center.x < 0 ? 0 : center.x);
-				center.y = Math.round(center.y < 0 ? 0 : center.y);
-
 				if (!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
 				    !(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
 				    !(docLayer._followEditor || docLayer._followUser) &&
 				    !this._map.calcInputBarHasFocus()) {
-					this._map.fire('scrollto', {x: center.x, y: center.y});
+					this.scrollToPos(cursorPos);
 				}
 			}
 		}
@@ -3832,12 +3827,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._viewCursors[viewId] && this._viewCursors[viewId].visible && !this._isEmptyRectangle(this._viewCursors[viewId].bounds)) {
 			if (!this._map.getBounds().contains(this._viewCursors[viewId].bounds)) {
 				var viewCursorPos = this._viewCursors[viewId].bounds.getNorthWest();
-				var center = this._map.project(viewCursorPos);
-				center = center.subtract(this._map.getSize().divideBy(2));
-				center.x = Math.round(center.x < 0 ? 0 : center.x);
-				center.y = Math.round(center.y < 0 ? 0 : center.y);
-
-				this._map.fire('scrollto', {x: center.x, y: center.y});
+				this.scrollToPos(viewCursorPos);
 			}
 
 			this._viewCursors[viewId].marker.showCursorHeader();
@@ -4373,11 +4363,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					var newCenter = mapBounds.getCenter();
 					newCenter.lng += scroll.lng;
 					newCenter.lat += scroll.lat;
-					var center = this._map.project(newCenter);
-					center = center.subtract(this._map.getSize().divideBy(2));
-					center.x = Math.round(center.x < 0 ? 0 : center.x);
-					center.y = Math.round(center.y < 0 ? 0 : center.y);
-					this._map.fire('scrollto', {x: center.x, y: center.y});
+					this.scrollToPos(newCenter);
 				}
 				this._prevCellCursorXY = this._cellCursorXY;
 			}
