@@ -1,6 +1,10 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * JSDialog.LanguageSelector - widgets for selecting spell/grammar chacking language
+ * JSDialog.LanguageSelector - widgets for selecting spell/grammar checking language
+ *
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
  */
 
 /* global _UNO JSDialog $ */
