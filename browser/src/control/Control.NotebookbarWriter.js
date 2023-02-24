@@ -1044,7 +1044,15 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	},
 
 	getViewTab: function() {
+		var isTablet = window.mode.isTablet();
 		var content = [
+			isTablet ?
+				{
+					'id': 'closemobile',
+					'type': 'bigcustomtoolitem',
+					'text': _('Read mode'),
+					'command': 'closetablet',
+				} : {},
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ControlCodes', 'text'),
