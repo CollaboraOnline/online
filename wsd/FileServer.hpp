@@ -8,6 +8,8 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
+
 #include "Socket.hpp"
 
 #include <Poco/MemoryStream.h>
