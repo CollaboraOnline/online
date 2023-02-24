@@ -73,6 +73,7 @@ private:
     static void sendError(int errorCode, const Poco::Net::HTTPRequest& request,
                           const std::shared_ptr<StreamSocket>& socket, const std::string& shortMessage,
                           const std::string& longMessage, const std::string& extraHeader = "");
+    static void substituteVariables(std::string& file, const std::unordered_map<std::string, std::string>& varMap);
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
