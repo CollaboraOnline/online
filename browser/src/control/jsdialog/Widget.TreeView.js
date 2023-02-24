@@ -27,6 +27,10 @@
  * 'row' property is used in the callback to differentiate entries
  * 'state' property defines if entry has the checkbox (false/true), when is missing - no checkbox
  * 'ondemand' property can be set to provide nodes lazy loading
+ *
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
  */
 
 /* global $ JSDialog */
