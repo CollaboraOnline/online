@@ -1866,6 +1866,7 @@ bool ChildSession::unoCommand(const StringVector& tokens)
     const bool bNotify = (tokens.equals(1, ".uno:Save") ||
                           tokens.equals(1, ".uno:Undo") ||
                           tokens.equals(1, ".uno:Redo") ||
+                          tokens.equals(1, ".uno:OpenHyperlink") ||
                           tokens.startsWith(1, "vnd.sun.star.script:"));
 
     getLOKitDocument()->setView(_viewId);
