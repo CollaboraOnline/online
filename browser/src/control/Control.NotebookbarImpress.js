@@ -327,7 +327,15 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 	},
 
 	getViewTab: function() {
+		var isTablet = window.mode.isTablet();
 		var content = [
+			isTablet ?
+				{
+					'id': 'closemobile',
+					'type': 'bigcustomtoolitem',
+					'text': _('Read mode'),
+					'command': 'closetablet',
+				} : {},
 			{
 				'id': 'Presentation',
 				'type': 'bigcustomtoolitem',

@@ -2141,6 +2141,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var iconURLAliases = {
+			'closetablet': 'view',
 			'defineprintarea': 'menuprintranges',
 			'deleteprintarea': 'delete',
 			'sheetrighttoleft' : 'pararighttoleft',

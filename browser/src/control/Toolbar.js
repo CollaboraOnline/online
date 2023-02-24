@@ -988,6 +988,9 @@ L.Map.include({
 		case 'charmapcontrol':
 			this.sendUnoCommand('.uno:InsertSymbol');
 			break;
+		case 'closetablet':
+			this.uiManager.enterReadonlyOrClose();
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}
