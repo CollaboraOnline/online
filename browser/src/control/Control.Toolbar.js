@@ -1029,6 +1029,11 @@ function onCommandResult(e) {
 	} else if (map.zotero && commandName === '.uno:DeleteBookmark' && e.result.DeleteBookmark.startsWith('ZOTERO_BREF_')) {
 		map.zotero.setCustomProperty(e.result.DeleteBookmark, '');
 		map.zotero.handleRefreshCitationsAndBib(false);
+	} else if (commandName === '.uno:OpenHyperlink') {
+		// allow to process other incoming messages first
+		setTimeout(function () {
+			map._docLayer.scrollToPos(map._docLayer._visibleCursor.getNorthWest());
+		}, 0);
 	}
 }
 

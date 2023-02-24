@@ -24,6 +24,7 @@ else
 app.file.permission = getParameterByName('permission') || 'edit';
 
 var timestamp = getParameterByName('timestamp');
+var target = getParameterByName('target') || '';
 // Should the document go inactive or not
 var alwaysActive = getParameterByName('alwaysactive');
 // Cool Debug mode
@@ -52,6 +53,7 @@ var map = L.map('map', {
 	doc: docURL,
 	docParams: docParams,
 	timestamp: timestamp,
+	docTarget: target,
 	documentContainer: 'document-container',
 	debug: debugMode,
 	// the wopi and wopiSrc properties are in sync: false/true : empty/non-empty

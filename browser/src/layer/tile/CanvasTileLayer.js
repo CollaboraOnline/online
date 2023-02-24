@@ -3620,6 +3620,21 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
+	goToTarget: function(target) {
+		var command = {
+			'Name': {
+				type: 'string',
+				value: 'URL'
+			},
+			'URL': {
+				type: 'string',
+				value: '#' + target
+			}
+		};
+
+		this._map.sendUnoCommand('.uno:OpenHyperlink', command);
+	},
+
 	_allowViewJump: function() {
 		return (!this._map._clip || this._map._clip._selectionType !== 'complex') &&
 		!this._referenceMarkerStart.isDragged && !this._referenceMarkerEnd.isDragged;
@@ -3753,6 +3768,13 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (this._map.editorHasFocus() && !isAnyVexDialogActive() && !this._map.isSearching()
 				&& !this._isAnyInputFocused())
 				this._map.focus(false);
+		}
+
+		// when first time we updated the cursor - document is loaded
+		// let's move cursor to the target
+		if (this._map.options.docTarget !== '') {
+			this.goToTarget(this._map.options.docTarget);
+			this._map.options.docTarget = '';
 		}
 	},
 
