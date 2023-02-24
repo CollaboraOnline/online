@@ -566,6 +566,10 @@ static IMP standardImpOfInputAccessoryView = nil;
 }
 
 - (void)fontPickerViewControllerDidPickFont:(UIFontPickerViewController *)viewController {
+    // Partial fix #5885 Close the font picker when a font is tapped
+    // This matches the behavior of Apple apps such as Pages and Mail.
+    [viewController dismissViewControllerAnimated:YES completion:nil];
+
     // NSLog(@"Picked font: %@", [viewController selectedFontDescriptor]);
     NSDictionary<UIFontDescriptorAttributeName, id> *attribs = [[viewController selectedFontDescriptor] fontAttributes];
     NSString *family = attribs[UIFontDescriptorFamilyAttribute];
