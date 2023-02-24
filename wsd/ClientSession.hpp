@@ -212,6 +212,14 @@ public:
 
     bool isTextDocument() const { return _isTextDocument; }
 
+    void setThumbnailSession(const bool val) { _thumbnailSession = val; }
+
+    void setThumbnailTarget(const std::string& target) { _thumbnailTarget = target; }
+
+    const std::string& getThumbnailTarget() const { return _thumbnailTarget; }
+
+    bool thumbnailSession() { return _thumbnailSession; }
+
     /// Do we recognize this clipboard ?
     bool matchesClipboardKeys(const std::string &viewId, const std::string &tag);
 
@@ -361,6 +369,12 @@ private:
 
     /// Client is using a text document?
     bool _isTextDocument;
+
+    /// Session used to generate thumbnail
+    bool _thumbnailSession;
+
+    /// Target used for thumbnail rendering
+    std::string _thumbnailTarget;
 
     /// Rotating clipboard remote access identifiers - protected by GlobalSessionMapMutex
     std::string _clipboardKeys[2];
