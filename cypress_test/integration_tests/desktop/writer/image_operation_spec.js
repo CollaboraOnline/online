@@ -29,30 +29,21 @@ describe('Image Operation Tests', function() {
 		insertImage();
 		//when Keep ratio is unchecked
 		assertImageSize(248, 63);
-
-		helper.waitUntilIdle('#selectwidth input');
+		// TODO: if window is too small sidebar won't popup
 
 		cy.get('#selectwidth input').clear({force:true})
 			.type('3{enter}', {force:true});
 
-		helper.waitUntilIdle('#selectheight input');
-
 		cy.get('#selectheight input').clear({force:true})
 			.type('2{enter}', {force:true});
-
-		cy.wait(1000);
 
 		assertImageSize(139, 93);
 
 		//Keep ratio checked
 		cy.get('#ratio input').check();
 
-		helper.waitUntilIdle('#selectheight input');
-
 		cy.get('#selectheight input').clear({force:true})
 			.type('5{enter}', {force:true});
-
-		cy.wait(1000);
 
 		assertImageSize(347, 232);
 	});
