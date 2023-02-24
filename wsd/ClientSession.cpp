@@ -77,7 +77,8 @@ ClientSession::ClientSession(
     _tileHeightTwips(0),
     _kitViewId(-1),
     _serverURL(requestDetails),
-    _isTextDocument(false)
+    _isTextDocument(false),
+    _thumbnailSession(false)
 {
     const std::size_t curConnections = ++COOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
@@ -1924,6 +1925,28 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             Admin::instance().setViewLoadDuration(docBroker->getDocKey(), getId(), std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - _viewLoadStart));
 #endif
 
+            // position cursor for thumbnail rendering
+            if (_thumbnailSession)
+            {
+                //check whether we have a target!
+                std::ostringstream cmd;
+                cmd << "{";
+                cmd << "\"Name\":"
+                        "{"
+                        "\"type\":\"string\","
+                        "\"value\":\"URL\""
+                        "},"
+                        "\"URL\":"
+                        "{"
+                        "\"type\":\"string\","
+                        "\"value\":\"#";
+                cmd << getThumbnailTarget();
+                cmd << "\"}}";
+
+                const std::string renderThumbnailCmd = "uno .uno:OpenHyperLink " + cmd.str();
+                docBroker->forwardToChild(client_from_this(), renderThumbnailCmd);
+            }
+
             // Wopi post load actions
             if (_wopiFileInfo && !_wopiFileInfo->getTemplateSource().empty())
             {
@@ -2023,6 +2046,25 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                     }
 
                     docBroker->invalidateCursor(x, y, w, h);
+
+                    // session used for thumbnailing and target already was set
+                    if (_thumbnailSession)
+                    {
+                        bool cursorAlreadyAtTargetPosition = getThumbnailTarget().empty();
+                        if (cursorAlreadyAtTargetPosition)
+                        {
+                            std::ostringstream renderThumbnailCmd;
+                            renderThumbnailCmd << "getthumbnail x=" << x << " y=" << y;
+                            docBroker->forwardToChild(client_from_this(), renderThumbnailCmd.str());
+                        }
+                        else
+                        {
+                            // this is initial cursor position message
+                            // wait for second invalidatecursor message
+                            // reset target so we will proceed next time
+                            setThumbnailTarget(std::string());
+                        }
+                    }
                 }
                 else
                 {
@@ -2078,35 +2120,47 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         else if (tokens.equals(0, "sendthumbnail:"))
         {
             LOG_TRC("Sending get-thumbnail response.");
+            bool error = false;
 
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-            "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-            "User-Agent: " WOPI_AGENT_STRING "\r\n"
-            "Content-Type: image/png\r\n"
-            "X-Content-Type-Options: nosniff\r\n"
-            "\r\n";
+            if (firstLine.find("error") != std::string::npos)
+                error = true;
 
-            int firstLineSize = firstLine.size() + 1;
-            std::string base64thumbnail(payload->data().data() + firstLineSize);
+            if (!error)
+            {
+                int firstLineSize = firstLine.size() + 1;
+                std::string base64thumbnail(payload->data().data() + firstLineSize, payload->data().size() - firstLineSize);
 
-            // decode back to PNG
-            std::istringstream istr(base64thumbnail);
-            std::ostringstream ostr;
-            Poco::Base64Decoder b64in(istr);
-            copy(std::istreambuf_iterator<char>(b64in),
-                std::istreambuf_iterator<char>(),
-                std::ostreambuf_iterator<char>(ostr));
+                // decode back to PNG
+                try
+                {
+                    std::istringstream istr(base64thumbnail);
+                    std::ostringstream ostr;
+                    Poco::Base64Decoder b64in(istr);
+                    copy(std::istreambuf_iterator<char>(b64in),
+                        std::istreambuf_iterator<char>(),
+                        std::ostreambuf_iterator<char>(ostr));
 
-            oss << ostr.str();
+                    http::Response httpResponse(http::StatusCode::OK);
+                    httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+                    httpResponse.set("X-Content-Type-Options", "nosniff");
+                    httpResponse.setBody(ostr.str(), "image/png");
+                    _saveAsSocket->sendAndShutdown(httpResponse);
+                }
+                catch (const std::exception& e)
+                {
+                    LOG_ERR("Decoding thumbnail failed: " << e.what());
+                    error = true;
+                }
+            }
 
-            _saveAsSocket->send(oss.str());
-            _saveAsSocket->shutdown();
+            if (error)
+            {
+                http::Response httpResponse(http::StatusCode::InternalServerError);
+                httpResponse.set("Content-Length", "0");
+                _saveAsSocket->sendAndShutdown(httpResponse);
+            }
 
-            LOG_TRC("Removing get-thumbnail ClientSession.");
-
-            docBroker->removeSession(client_from_this());
-            docBroker->closeDocument("ownertermination");
+            docBroker->closeDocument("thumbnailgenerated");
         }
     }
     else
