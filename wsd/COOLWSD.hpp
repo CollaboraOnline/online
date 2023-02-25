@@ -36,7 +36,7 @@ class TraceFileWriter;
 class DocumentBroker;
 class ClipboardCache;
 
-std::shared_ptr<ChildProcess> getNewChild_Blocks(unsigned mobileAppDocId = 0);
+std::shared_ptr<ChildProcess> getNewChild_Blocks(unsigned mobileAppDocId);
 
 // A WSProcess object in the WSD process represents a descendant process, either the direct child
 // process ForKit or a grandchild Kit process, with which the WSD process communicates through a
