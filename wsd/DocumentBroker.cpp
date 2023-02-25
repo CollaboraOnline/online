@@ -705,7 +705,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     const Poco::Path jailPath(JAILED_DOCUMENT_ROOT, jailId);
     const std::string jailRoot = getJailRoot();
 
-    LOG_INF("jailPath: " << jailPath.toString() << ", jailRoot: " << jailRoot);
+    LOG_INF("JailPath for docKey [" << _docKey << "]: [" << jailPath.toString() << "], jailRoot: ["
+                                    << jailRoot << ']');
 
     bool firstInstance = false;
     if (_storage == nullptr)
@@ -715,7 +716,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         // Pass the public URI to storage as it needs to load using the token
         // and other storage-specific data provided in the URI.
         const Poco::URI& uriPublic = session->getPublicUri();
-        LOG_DBG("Loading, and creating new storage instance for URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "].");
+        LOG_DBG("Creating new storage instance for URI ["
+                << COOLWSD::anonymizeUrl(uriPublic.toString()) << ']');
 
         try
         {
@@ -751,6 +753,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
     if (wopiStorage != nullptr)
     {
+        LOG_DBG("CheckFileInfo for docKey [" << _docKey << ']');
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
         std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo =
             wopiStorage->getWOPIFileInfo(session->getAuthorization(), *_lockCtx);
@@ -1001,6 +1004,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     std::chrono::milliseconds getFileCallDurationMs = std::chrono::milliseconds::zero();
     if (!_storage->isDownloaded())
     {
+        LOG_DBG("Download file for docKey [" << _docKey << ']');
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
         std::string localPath = _storage->downloadStorageFileToLocal(session->getAuthorization(),
                                                                      *_lockCtx, templateSource);
