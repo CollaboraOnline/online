@@ -156,8 +156,11 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     assert(!_docKey.empty());
     assert(!COOLWSD::ChildRoot.empty());
 
+#if !MOBILEAPP
+    assert(_mobileAppDocId == 0 && "Unexpected to have mobileAppDocId in the non-mobile build");
+#endif
 #ifdef IOS
-    assert(_mobileAppDocId > 0);
+    assert(_mobileAppDocId > 0 && "Unexpected to have no mobileAppDocId in the iOS build");
 #endif
 
     LOG_INF("DocumentBroker [" << COOLWSD::anonymizeUrl(_uriPublic.toString())
@@ -200,11 +203,10 @@ void DocumentBroker::pollThread()
     LOG_INF("Starting docBroker polling thread for docKey [" << _docKey << ']');
 
     // Request a kit process for this doc.
-#if !MOBILEAPP
     do
     {
         static constexpr std::chrono::milliseconds timeoutMs(COMMAND_TIMEOUT_MS * 5);
-        _childProcess = getNewChild_Blocks();
+        _childProcess = getNewChild_Blocks(_mobileAppDocId);
         if (_childProcess
             || std::chrono::duration_cast<std::chrono::milliseconds>(
                    std::chrono::steady_clock::now() - _threadStart)
@@ -213,14 +215,8 @@ void DocumentBroker::pollThread()
 
         // Nominal time between retries, lest we busy-loop. getNewChild could also wait, so don't double that here.
         std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS / 10));
-    }
-    while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag() && !SigUtil::getShutdownRequestFlag());
-#else
-#ifdef IOS
-    assert(_mobileAppDocId > 0);
-#endif
-    _childProcess = getNewChild_Blocks(_mobileAppDocId);
-#endif
+    } while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag() &&
+             !SigUtil::getShutdownRequestFlag());
 
     if (!_childProcess)
     {
