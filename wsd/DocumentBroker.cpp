@@ -1231,6 +1231,7 @@ bool DocumentBroker::updateStorageLockState(ClientSession& session, bool lock, s
     {
         case StorageBase::LockUpdateResult::UNSUPPORTED:
             LOG_DBG("Locks on docKey [" << _docKey << "] are unsupported");
+            return true; // Not an error.
             break;
         case StorageBase::LockUpdateResult::OK:
             LOG_DBG((lock ? "Locked" : "Unlocked") << " docKey [" << _docKey << "] successfully");
