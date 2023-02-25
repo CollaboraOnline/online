@@ -38,6 +38,7 @@ L.Control.Zotero = L.Control.extend({
 	onAdd: function (map) {
 		this.map = map;
 		this.enable = false;
+		this.fetchStyle();
 	},
 
 	extractItemKeyFromLink: function(link) {
