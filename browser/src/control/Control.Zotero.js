@@ -1275,6 +1275,9 @@ L.Control.Zotero = L.Control.extend({
 		if (!(this.citations && Object.keys(this.citations)))
 			return;
 
+		if (this.getCitationKeys().length === 0)
+			return;
+
 		var that = this;
 
 		if (this.settings.citationFormat === 'numeric') {
