@@ -113,7 +113,7 @@ NODE_MODULES_SRC =\
 	select2@4.0.13 \
 	vex-js@4.1.0 \
 	l10n-for-node@0.0.1 \
-	@braintree/sanitize-url@6.0.0
+	@braintree/sanitize-url@6.0.2
 
 COOL_CSS_LST =\
 	$(builddir)/node_modules/select2/dist/css/select2.css \
