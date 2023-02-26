@@ -7,6 +7,11 @@ check_PROGRAMS = fakesockettest
 
 noinst_PROGRAMS = fakesockettest unittest unithttplib
 
+include_paths = ${ZLIB_CFLAGS} ${ZSTD_CFLAGS} ${PNG_CFLAGS}
+if ENABLE_SSL
+include_paths += ${OPENSSL_CFLAGS}
+endif
+
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit \
 	-I${top_srcdir} -I${top_srcdir}/test \
