@@ -583,6 +583,11 @@ void UnitWSD::DocBrokerDestroy(const std::string& key)
     if (isUnitTesting())
     {
         onDocBrokerDestroy(key);
+        if (!isFinished())
+        {
+            // Not yet finished; don't start the next test just yet.
+            return;
+        }
 
         // We could be called from either a SocketPoll (websrv_poll)
         // or from invokeTest (coolwsd main).
@@ -595,24 +600,23 @@ void UnitWSD::DocBrokerDestroy(const std::string& key)
             ++GlobalIndex;
             filter();
 
-        // Clear the shortcuts.
-        GlobalKit = nullptr;
-        GlobalWSD = nullptr;
-        GlobalTool = nullptr;
+            // Clear the shortcuts.
+            GlobalKit = nullptr;
+            GlobalWSD = nullptr;
+            GlobalTool = nullptr;
 
-        if (GlobalArray[GlobalIndex] != nullptr)
-        {
-            rememberInstance(_type, GlobalArray[GlobalIndex]);
+            if (GlobalArray[GlobalIndex] != nullptr)
+            {
+                rememberInstance(_type, GlobalArray[GlobalIndex]);
 
-            LOG_TST("Starting test #" << GlobalIndex + 1 << ": "
-                                    << GlobalArray[GlobalIndex]->getTestname());
-            if (GlobalWSD)
-                GlobalWSD->configure(Poco::Util::Application::instance().config());
-            GlobalArray[GlobalIndex]->initialize();
+                LOG_TST("Starting test #" << GlobalIndex + 1 << ": "
+                                          << GlobalArray[GlobalIndex]->getTestname());
+                if (GlobalWSD)
+                    GlobalWSD->configure(Poco::Util::Application::instance().config());
+                GlobalArray[GlobalIndex]->initialize();
 
                 // Wake-up so the previous test stops.
                 SocketPoll::wakeupWorld();
-                return;
             }
         }
     }
