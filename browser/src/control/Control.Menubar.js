@@ -322,7 +322,10 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:ToolsMenu', 'text'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellingAndGrammarDialog'},
 				{uno: '.uno:SpellOnline'},
-				{uno: '.uno:Translate'},
+				window.deeplEnabled ?
+					{
+						uno: '.uno:Translate'
+					}: {},
 				{uno: '.uno:ThesaurusDialog'},
 				{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 					{name: _UNO('.uno:SetLanguageSelectionMenu', 'text'), type: 'menu', menu: [
