@@ -46,7 +46,7 @@ public:
                 return it.second;
         }
 
-        const std::size_t id = _canonicalIds.size() + 1;
+        const std::size_t id = _canonicalIds.size() + 1000;
         _canonicalIds[viewProps] = id;
         return id;
     }

@@ -256,13 +256,6 @@ public:
 
     int  getCanonicalViewId() { return _canonicalViewId; }
 
-    // Only called by wsd.
-    template<class T>
-    void createCanonicalViewId(SessionMap<T> &map)
-    {
-        _canonicalViewId = map.createCanonicalId(getWatermarkText());
-    }
-
 private:
     std::shared_ptr<ClientSession> client_from_this()
     {

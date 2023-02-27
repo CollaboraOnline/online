@@ -730,7 +730,7 @@ public:
         return true;
     }
 
-    bool createSession(const std::string& sessionId, int canonicalViewId)
+    bool createSession(const std::string& sessionId)
     {
         try
         {
@@ -749,7 +749,6 @@ public:
                 _jailId, JailRoot, *this);
             _sessions.emplace(sessionId, session);
             _deltaGen.setSessionCount(_sessions.size());
-            session->setCanonicalViewId(canonicalViewId);
 
             const int viewId = session->getViewId();
             _lastUpdatedAt[viewId] = std::chrono::steady_clock::now();
@@ -757,6 +756,7 @@ public:
 
             LOG_DBG("Have " << _sessions.size() << " active sessions after creating "
                             << session->getId());
+            LOG_INF("New session [" << sessionId << "]");
             return true;
         }
         catch (const std::exception& ex)
@@ -1297,6 +1297,28 @@ private:
         }
     }
 
+    void invalidateCanonicalId(const std::string& sessionId)
+    {
+        auto it = _sessions.find(sessionId);
+        if (it == _sessions.end())
+        {
+            LOG_ERR("Session [" << sessionId << "] not found");
+            return;
+        }
+        std::shared_ptr<ChildSession> session = it->second;
+        int newCanonicalId = _sessions.createCanonicalId(getViewProps(session));
+        if (newCanonicalId == session->getCanonicalViewId())
+            return;
+        session->setCanonicalViewId(newCanonicalId);
+        std::string message = "canonicalidchange: viewid=" + std::to_string(session->getViewId()) + " canonicalid=" + std::to_string(newCanonicalId);
+        session->sendTextFrame(message);
+    }
+
+    std::string getViewProps(const std::shared_ptr<ChildSession>& session)
+    {
+        return session->getWatermarkText();
+    }
+
     void updateEditorSpeeds(int id, int speed) override
     {
         int maxSpeed = -1, fastestUser = -1;
@@ -1551,6 +1573,7 @@ private:
 
         session->initWatermark();
 
+        invalidateCanonicalId(sessionId);
         return _loKitDocument;
     }
 
@@ -2354,13 +2377,11 @@ protected:
             const std::string& sessionId = tokens[1];
             _docKey = tokens[2];
             const std::string& docId = tokens[3];
-            const int canonicalViewId = std::stoi(tokens[4]);
             const std::string fileId = Util::getFilenameFromURL(_docKey);
             Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 
             std::string url;
             URI::decode(_docKey, url);
-            LOG_INF("New session [" << sessionId << "] request on url [" << url << "] with viewId " << canonicalViewId);
 #ifndef IOS
             Util::setThreadName("kit" SHARED_DOC_THREADNAME_SUFFIX + docId);
 #endif
@@ -2385,7 +2406,7 @@ protected:
             }
 
             // Validate and create session.
-            if (!(url == _document->getUrl() && _document->createSession(sessionId, canonicalViewId)))
+            if (!(url == _document->getUrl() && _document->createSession(sessionId)))
             {
                 LOG_DBG("CreateSession failed.");
             }
