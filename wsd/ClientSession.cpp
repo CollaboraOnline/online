@@ -2099,19 +2099,11 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 
             const std::string stringJSON = payload->jsonString();
 
-            Poco::Net::HTTPResponse response;
-            response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_OK);
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-            "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-            "User-Agent: " WOPI_AGENT_STRING "\r\n"
-            "Content-Type: application/json\r\n"
-            "X-Content-Type-Options: nosniff\r\n"
-            "\r\n"
-            << stringJSON;
-
-            _saveAsSocket->send(oss.str());
-            _saveAsSocket->shutdown();
+            http::Response httpResponse(http::StatusCode::OK);
+            httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+            httpResponse.set("X-Content-Type-Options", "nosniff");
+            httpResponse.setBody(stringJSON, "application/json");
+            _saveAsSocket->sendAndShutdown(httpResponse);
 
             // Now terminate.
             docBroker->closeDocument("extractedlinktargets");
