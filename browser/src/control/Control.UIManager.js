@@ -830,6 +830,7 @@ L.Control.UIManager = L.Control.extend({
 			type: 'modalpopup',
 			title: title,
 			hasClose: true,
+			hasOverlay: true,
 			cancellable: cancellable,
 			jsontype: 'dialog',
 			'init_focus_id': focusId,

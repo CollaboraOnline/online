@@ -256,7 +256,9 @@ L.Control.JSDialog = L.Control.extend({
 			}
 		};
 
-		if (!isModalPopup || (data.hasClose)) {
+		var hasTitle = data.title && data.title !== '';
+		var haveTitlebar = !isModalPopup || (data.hasClose && hasTitle);
+		if (haveTitlebar) {
 			var titlebar = L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', container);
 			var title = L.DomUtil.create('span', 'ui-dialog-title', titlebar);
 			title.innerText = data.title;
@@ -289,7 +291,9 @@ L.Control.JSDialog = L.Control.extend({
 		if (isModalPopup && !isSnackbar) {
 			var existingOverlay = L.DomUtil.get(data.id + '-overlay');
 			if (!existingOverlay) {
-				var overlay = L.DomUtil.create('div', builder.options.cssClass + ' jsdialog-overlay ' + (data.cancellable ? 'cancellable' : ''), containerParent);
+				var overlay = L.DomUtil.create('div',
+					builder.options.cssClass + ' jsdialog-overlay ' + (data.cancellable && !data.hasOverlay ? 'cancellable' : ''),
+					containerParent);
 				overlay.id = data.id + '-overlay';
 				if (data.cancellable)
 					overlay.onclick = function () { that.close(data.id, true); };
@@ -325,7 +329,7 @@ L.Control.JSDialog = L.Control.extend({
 			}
 		};
 
-		if (isModalPopup && data.hasClose) {
+		if (isModalPopup && haveTitlebar) {
 			button.onclick = function() {
 				that.close(data.id, true);
 			};
