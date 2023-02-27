@@ -1911,6 +1911,14 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             return true;
         _lastSentFormFielButtonMessage = firstLine;
     }
+    else if (tokens.equals(0, "canonicalidchange:")) {
+        int viewId, canonicalId;
+        if (getTokenInteger(tokens[1], "viewid", viewId) &&
+            getTokenInteger(tokens[2], "canonicalid", canonicalId))
+        {
+            _canonicalViewId = canonicalId;
+        }
+    }
 
     if (!isDocPasswordProtected())
     {
