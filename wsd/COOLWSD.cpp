@@ -4540,6 +4540,10 @@ private:
             else
             {
                 LOG_INF("Missing parameters for conversion request.");
+                http::Response httpResponse(http::StatusCode::BadRequest);
+                httpResponse.set("Content-Length", "0");
+                socket->sendAndShutdown(httpResponse);
+                socket->ignoreInput();
             }
             return;
         }
