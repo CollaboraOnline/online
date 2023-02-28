@@ -38,7 +38,7 @@ JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness
 JQUERY_LIGHTNESS_IMAGES = $(wildcard $(JQUERY_LIGHTNESS_IMAGE_PATH)/*.png)
 JQUERY_LIGHTNESS_DIST_IMAGES = $(patsubst $(JQUERY_LIGHTNESS_IMAGE_PATH)/%.png,$(DIST_FOLDER)/images/%.png,$(JQUERY_LIGHTNESS_IMAGES))
 
-JQUERY_MINIFIED_IMAGE_PATH = node_modules/jquery-ui-dist/images
+JQUERY_MINIFIED_IMAGE_PATH = node_modules/jquery-ui/themes/base/images
 JQUERY_MINIFIED_IMAGES = $(wildcard $(JQUERY_MINIFIED_IMAGE_PATH)/*.png)
 JQUERY_MINIFIED_DIST_IMAGES = $(patsubst $(JQUERY_MINIFIED_IMAGE_PATH)/%.png,$(DIST_FOLDER)/images/%.png,$(JQUERY_MINIFIED_IMAGES))
 
@@ -163,7 +163,8 @@ NODE_MODULES_JS =\
 	node_modules/jquery/dist/jquery.js \
 	node_modules/jquery-mousewheel/jquery.mousewheel.js \
 	node_modules/jquery-contextmenu/dist/jquery.contextMenu.js \
-	node_modules/jquery-ui-dist/jquery-ui.js \
+	node_modules/jquery-ui/dist/jquery-ui.js \
+	$(shell find node_modules/jquery-ui/ui/i18n -name '*.js') \
 	node_modules/smartmenus/dist/jquery.smartmenus.js \
 	node_modules/pako/dist/pako_inflate.es5.js \
 	node_modules/fzstd/umd/index.js
