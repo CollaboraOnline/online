@@ -15,6 +15,7 @@
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 
+#include "Authorization.hpp"
 #include "COOLWSD.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
@@ -38,10 +39,15 @@ public:
         return sm;
     }
 
+    /// Create an http::Session from a URI.
     static std::shared_ptr<http::Session> getHttpSession(const Poco::URI& uri);
+
+    /// Create an http::Request with the common headers.
+    static http::Request createHttpRequest(const Poco::URI& uri, const Authorization& auth);
 
 private:
     StorageConnectionManager() {}
+
 #if 0
     void initialize()
     {
