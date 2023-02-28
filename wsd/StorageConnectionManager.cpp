@@ -60,6 +60,64 @@ bool StorageConnectionManager::FilesystemEnabled;
 bool StorageConnectionManager::SSLAsScheme = true;
 bool StorageConnectionManager::SSLEnabled = false;
 
+namespace
+{
+// access_token must be decoded
+void addWopiProof(Poco::Net::HTTPRequest& request, const Poco::URI& uri,
+                  const std::string& access_token)
+{
+    assert(!uri.isRelative());
+    for (const auto& header : GetProofHeaders(access_token, uri.toString()))
+        request.set(header.first, header.second);
+}
+
+std::map<std::string, std::string> GetQueryParams(const Poco::URI& uri)
+{
+    std::map<std::string, std::string> result;
+    for (const auto& param : uri.getQueryParameters())
+        result.emplace(param);
+    return result;
+}
+
+void initHttpRequest(Poco::Net::HTTPRequest& request, const Poco::URI& uri,
+                     const Authorization& auth)
+{
+    request.set("User-Agent", WOPI_AGENT_STRING);
+
+    auth.authorizeRequest(request);
+
+    // addStorageDebugCookie(request);
+
+    // TODO: Avoid repeated parsing.
+    std::map<std::string, std::string> params = GetQueryParams(uri);
+    const auto it = params.find("access_token");
+    if (it != params.end())
+        addWopiProof(request, uri, it->second);
+
+    // Helps wrt. debugging cluster cases from the logs
+    request.set("X-COOL-WOPI-ServerId", Util::getProcessIdentifier());
+}
+
+} // namespace
+
+http::Request StorageConnectionManager::createHttpRequest(const Poco::URI& uri,
+                                                          const Authorization& auth)
+{
+    http::Request httpRequest(uri.getPathAndQuery());
+
+    //FIXME: Hack Hack Hack! Use own version.
+    Poco::Net::HTTPRequest request;
+    ::initHttpRequest(request, uri, auth);
+
+    // Copy the headers, including the cookies.
+    for (const auto& pair : request)
+    {
+        httpRequest.header().set(pair.first, pair.second);
+    }
+
+    return httpRequest;
+}
+
 std::shared_ptr<http::Session> StorageConnectionManager::getHttpSession(const Poco::URI& uri)
 {
     bool useSSL = false;
