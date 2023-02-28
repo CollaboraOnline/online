@@ -2,19 +2,25 @@
 .jsdialog-overlay {
 	-webkit-animation: vex-fadein .5s;
 	animation: vex-fadein .5s;
-	position: fixed;
-	background: #1c5fa814;
+	position: absolute;
+	background: transparent;
 	top: 0;
 	right: 0;
 	bottom: 0;
 	left: 0;
+	max-width: 100%;
+	max-height: 100%;
 	z-index: 2000;
+	display: flex;
 }
 
 .jsdialog-overlay.cancellable {
 	-webkit-animation: none;
 	animation: none;
-	background: transparent;
+}
+
+.jsdialog-overlay.dimmed {
+	background: #1c5fa814;
 }
 
 .lokdialog_container.ui-dialog.ui-widget-content.modalpopup {
@@ -37,6 +43,10 @@
 	border: 1px solid #a4a4a4 !important;
 	border-radius: var(--border-radius);
 	box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+	overflow: auto;
+	position: relative;
+	margin: auto;
+	max-height: calc(100% - 30px);
 }
 
 .jsdialog-container .ui-dialog-titlebar {
