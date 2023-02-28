@@ -422,6 +422,122 @@ L.Map.include({
 		this.fire('selectbackground', {file: file});
 	},
 
+	onHelpOpen: function(id, map, productName) {
+		var i;
+		// Display keyboard shortcut or online help
+		if (id === 'keyboard-shortcuts') {
+			document.getElementById('online-help').style.display='none';
+			// Display help according to document opened
+			if (map.getDocType() === 'text') {
+				document.getElementById('text-shortcuts').style.display='block';
+			}
+			else if (map.getDocType() === 'spreadsheet') {
+				document.getElementById('spreadsheet-shortcuts').style.display='block';
+			}
+			else if (map.getDocType() === 'presentation') {
+				document.getElementById('presentation-shortcuts').style.display='block';
+			}
+			else if (map.getDocType() === 'drawing') {
+				document.getElementById('drawing-shortcuts').style.display='block';
+			}
+		} else /* id === 'online-help' */ {
+			document.getElementById('keyboard-shortcuts').style.display='none';
+			if (window.socketProxy) {
+				var helpdiv = document.getElementById('online-help');
+				var imgList = helpdiv.querySelectorAll('img');
+				for (var p = 0; p < imgList.length; p++) {
+					var imgSrc = imgList[p].src;
+					imgSrc = imgSrc.substring(imgSrc.indexOf('/images'));
+					imgList[p].src = window.makeWsUrl('/browser/dist'+ imgSrc);
+				}
+			}
+			// Display help according to document opened
+			if (map.getDocType() === 'text') {
+				var x = document.getElementsByClassName('text');
+				for (i = 0; i < x.length; i++) {
+					x[i].style.display = 'block';
+				}
+			}
+			else if (map.getDocType() === 'spreadsheet') {
+				x = document.getElementsByClassName('spreadsheet');
+				for (i = 0; i < x.length; i++) {
+					x[i].style.display = 'block';
+				}
+			}
+			else if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing') {
+				x = document.getElementsByClassName('presentation');
+				for (i = 0; i < x.length; i++) {
+					x[i].style.display = 'block';
+				}
+			}
+		}
+
+		var contentElement = document.getElementById(id);
+
+		// Let's translate
+		var max;
+		var translatableContent = contentElement.querySelectorAll('h1');
+		for (i = 0, max = translatableContent.length; i < max; i++) {
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+		}
+		translatableContent = contentElement.querySelectorAll('h2');
+		for (i = 0, max = translatableContent.length; i < max; i++) {
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+		}
+		translatableContent = contentElement.querySelectorAll('h3');
+		for (i = 0, max = translatableContent.length; i < max; i++) {
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+		}
+		translatableContent = contentElement.querySelectorAll('h4');
+		for (i = 0, max = translatableContent.length; i < max; i++) {
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+		}
+		translatableContent = contentElement.querySelectorAll('td');
+		for (i = 0, max = translatableContent.length; i < max; i++) {
+			var orig = translatableContent[i].innerHTML;
+			var trans = translatableContent[i].innerHTML.toLocaleString();
+			// Try harder to get translation of keyboard shortcuts (html2po trims starting <kbd> and ending </kbd>)
+			if (orig === trans && orig.indexOf('kbd') != -1) {
+				var trimmedOrig = orig.replace(/^(<kbd>)/,'').replace(/(<\/kbd>$)/,'');
+				var trimmedTrans = trimmedOrig.toLocaleString();
+				if (trimmedOrig !== trimmedTrans) {
+					trans = '<kbd>' + trimmedTrans + '</kbd>';
+				}
+			}
+			translatableContent[i].innerHTML = trans;
+		}
+		translatableContent = contentElement.querySelectorAll('p');
+		for (i = 0, max = translatableContent.length; i < max; i++) {
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+		}
+		translatableContent = contentElement.querySelectorAll('button'); // TOC
+		for (i = 0, max = translatableContent.length; i < max; i++) {
+			translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+		}
+
+		//translatable screenshots
+		var supportedLanguage = ['fr', 'it', 'de', 'es', 'pt-BR'];
+		var currentLanguage = String.locale;
+		if (supportedLanguage.indexOf(currentLanguage) >= 0) {
+			translatableContent = $(contentElement.querySelectorAll('.screenshot')).querySelectorAll('img');
+			for (i = 0, max = translatableContent.length; i < max; i++) {
+				translatableContent[i].src = translatableContent[i].src.replace('/en/', '/'+currentLanguage+'/');
+			}
+		}
+
+		// Substitute %productName in Online Help and replace special Mac key names
+		if (id === 'online-help') {
+			var productNameContent = contentElement.querySelectorAll('span.productname');
+			for (i = 0, max = productNameContent.length; i < max; i++) {
+				productNameContent[i].innerHTML = productNameContent[i].innerHTML.replace(/%productName/g, productName);
+			}
+			document.getElementById('online-help').innerHTML = L.Util.replaceCtrlAltInMac(document.getElementById('online-help').innerHTML);
+		}
+		if (id === 'keyboard-shortcuts') {
+			document.getElementById('keyboard-shortcuts').innerHTML = L.Util.replaceCtrlAltInMac(document.getElementById('keyboard-shortcuts').innerHTML);
+		}
+	},
+
 	_doVexOpenHelpFile: function(data, id, map) {
 		var productName;
 		if (window.ThisIsAMobileApp) {
@@ -429,149 +545,11 @@ L.Map.include({
 		} else {
 			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition (unbranded)';
 		}
-		var w;
-		var iw = window.innerWidth;
-		if (iw < 768) {
-			w = iw - 30;
-		}
-		else if (iw > 1920) {
-			w = 960;
-		}
-		else {
-			w = iw / 5 + 590;
-		}
-		vex.open({
-			unsafeContent: data,
-			showCloseButton: true,
-			escapeButtonCloses: true,
-			overlayClosesOnClick: false,
-			closeAllOnPopState: false,
-			contentClassName: 'vex-content vex-selectable',
-			buttons: {},
-			afterOpen: function() {
-				var $vexContent = $(this.contentEl);
-				this.contentEl.style.width = w + 'px';
-				var i;
-				// Display keyboard shortcut or online help
-				if (id === 'keyboard-shortcuts') {
-					document.getElementById('online-help').style.display='none';
-					// Display help according to document opened
-					if (map.getDocType() === 'text') {
-						document.getElementById('text-shortcuts').style.display='block';
-					}
-					else if (map.getDocType() === 'spreadsheet') {
-						document.getElementById('spreadsheet-shortcuts').style.display='block';
-					}
-					else if (map.getDocType() === 'presentation') {
-						document.getElementById('presentation-shortcuts').style.display='block';
-					}
-					else if (map.getDocType() === 'drawing') {
-						document.getElementById('drawing-shortcuts').style.display='block';
-					}
-				} else /* id === 'online-help' */ {
-					document.getElementById('keyboard-shortcuts').style.display='none';
-					if (window.socketProxy) {
-						var helpdiv = document.getElementById('online-help');
-						var imgList = helpdiv.querySelectorAll('img');
-						for (var p = 0; p < imgList.length; p++) {
-							var imgSrc = imgList[p].src;
-							imgSrc = imgSrc.substring(imgSrc.indexOf('/images'));
-							imgList[p].src = window.makeWsUrl('/browser/dist'+ imgSrc);
-						}
-					}
-					// Display help according to document opened
-					if (map.getDocType() === 'text') {
-						var x = document.getElementsByClassName('text');
-						for (i = 0; i < x.length; i++) {
-							x[i].style.display = 'block';
-						}
-					}
-					else if (map.getDocType() === 'spreadsheet') {
-						x = document.getElementsByClassName('spreadsheet');
-						for (i = 0; i < x.length; i++) {
-							x[i].style.display = 'block';
-						}
-					}
-					else if (map.getDocType() === 'presentation' || map.getDocType() === 'drawing') {
-						x = document.getElementsByClassName('presentation');
-						for (i = 0; i < x.length; i++) {
-							x[i].style.display = 'block';
-						}
-					}
-				}
 
-				// Let's translate
-				var max;
-				var translatableContent = $vexContent.find('h1');
-				for (i = 0, max = translatableContent.length; i < max; i++) {
-					translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
-				}
-				translatableContent = $vexContent.find('h2');
-				for (i = 0, max = translatableContent.length; i < max; i++) {
-					translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
-				}
-				translatableContent = $vexContent.find('h3');
-				for (i = 0, max = translatableContent.length; i < max; i++) {
-					translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
-				}
-				translatableContent = $vexContent.find('h4');
-				for (i = 0, max = translatableContent.length; i < max; i++) {
-					translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
-				}
-				translatableContent = $vexContent.find('td');
-				for (i = 0, max = translatableContent.length; i < max; i++) {
-					var orig = translatableContent[i].innerHTML;
-					var trans = translatableContent[i].innerHTML.toLocaleString();
-					// Try harder to get translation of keyboard shortcuts (html2po trims starting <kbd> and ending </kbd>)
-					if (orig === trans && orig.indexOf('kbd') != -1) {
-						var trimmedOrig = orig.replace(/^(<kbd>)/,'').replace(/(<\/kbd>$)/,'');
-						var trimmedTrans = trimmedOrig.toLocaleString();
-						if (trimmedOrig !== trimmedTrans) {
-							trans = '<kbd>' + trimmedTrans + '</kbd>';
-						}
-					}
-					translatableContent[i].innerHTML = trans;
-				}
-				translatableContent = $vexContent.find('p');
-				for (i = 0, max = translatableContent.length; i < max; i++) {
-					translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
-				}
-				translatableContent = $vexContent.find('button'); // TOC
-				for (i = 0, max = translatableContent.length; i < max; i++) {
-					translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
-				}
+		map.uiManager.showInfoModal(id, '', '', '', null, false);
 
-				//translatable screenshots
-				var supportedLanguage = ['fr', 'it', 'de', 'es', 'pt-BR'];
-				var currentLanguage = String.locale;
-				if (supportedLanguage.indexOf(currentLanguage) >= 0) {
-					translatableContent = $($vexContent.find('.screenshot')).find('img');
-					for (i = 0, max = translatableContent.length; i < max; i++) {
-						translatableContent[i].src = translatableContent[i].src.replace('/en/', '/'+currentLanguage+'/');
-					}
-				}
-
-				// Substitute %productName in Online Help and replace special Mac key names
-				if (id === 'online-help') {
-					var productNameContent = $vexContent.find('span.productname');
-					for (i = 0, max = productNameContent.length; i < max; i++) {
-						productNameContent[i].innerHTML = productNameContent[i].innerHTML.replace(/%productName/g, productName);
-					}
-					document.getElementById('online-help').innerHTML = L.Util.replaceCtrlAltInMac(document.getElementById('online-help').innerHTML);
-				}
-				if (id === 'keyboard-shortcuts') {
-					document.getElementById('keyboard-shortcuts').innerHTML = L.Util.replaceCtrlAltInMac(document.getElementById('keyboard-shortcuts').innerHTML);
-				}
-
-				$vexContent.attr('tabindex', -1);
-				$vexContent.focus();
-				// workaround for https://github.com/HubSpot/vex/issues/43
-				$('.vex-overlay').css({ 'pointer-events': 'none'});
-			},
-			beforeClose: function () {
-				map.focus();
-			}
-		});
+		document.getElementById(id).innerHTML = data;
+		this.onHelpOpen(id, map, productName);
 	},
 
 	showHelp: function(id) {
