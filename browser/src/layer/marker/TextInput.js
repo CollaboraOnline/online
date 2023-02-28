@@ -911,7 +911,8 @@ L.TextInput = L.Layer.extend({
 		if (!this._isComposing && (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
 			ev.key === 'ArrowUp' || ev.key === 'ArrowDown' ||
 			ev.key === 'Home' || ev.key === 'End' ||
-			ev.key === 'PageUp' || ev.key === 'PageDown'))
+			ev.key === 'PageUp' || ev.key === 'PageDown' || 
+			ev.key === 'Escape'))
 			this._emptyArea();
 	},
 
