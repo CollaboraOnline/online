@@ -11,14 +11,13 @@
 
 #pragma once
 
+#include <RequestVettingStation.hpp>
 #include <RequestDetails.hpp>
 #include <Socket.hpp>
 #include <WopiProxy.hpp>
 
 #include <string>
 #include <memory>
-
-class WopiProxy;
 
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ClientRequestDispatcher final : public SimpleSocketHandler
@@ -113,6 +112,10 @@ private:
 
     /// WASM document request handler. Used only when WASM is enabled.
     std::unique_ptr<WopiProxy> _wopiProxy;
+
+    /// External requests are first vetted before allocating DocBroker and Kit process.
+    /// This is a map of the request URI to the RequestVettingStation for vetting.
+    std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>> _requestVettingStations;
 
     /// Cache for static files, to avoid reading and processing from disk.
     static std::map<std::string, std::string> StaticFileContentCache;

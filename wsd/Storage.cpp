@@ -640,142 +640,19 @@ http::Request WopiStorage::initHttpRequest(const Poco::URI& uri, const Authoriza
     return httpRequest;
 }
 
-std::unique_ptr<WopiStorage::WOPIFileInfo>
-WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& auth,
-                                   LockContext& lockCtx, unsigned redirectLimit)
+void WopiStorage::handleWOPIFileInfo(const WOPIFileInfo& wopiFileInfo, LockContext& lockCtx)
 {
-    ProfileZone profileZone("WopiStorage::getWOPIFileInfo", { {"url", _fileUrl} });
+    setFileInfo(wopiFileInfo);
 
-    // update the access_token to the one matching to the session
-    auth.authorizeURI(uriObject);
-    const std::string uriAnonym = COOLWSD::anonymizeUrl(uriObject.toString());
+    if (COOLWSD::AnonymizeUserData)
+        Util::mapAnonymized(Util::getFilenameFromURL(wopiFileInfo.getFilename()),
+                            Util::getFilenameFromURL(getUri().toString()));
 
-    LOG_DBG("Getting info for wopi uri [" << uriAnonym << "].");
+    if (wopiFileInfo.getSupportsLocks())
+        lockCtx.initSupportsLocks();
 
-    std::string wopiResponse;
-    std::chrono::milliseconds callDurationMs;
-    try
-    {
-        std::shared_ptr<http::Session> httpSession = getHttpSession(uriObject);
-        http::Request httpRequest = initHttpRequest(uriObject, auth);
-
-        const auto startTime = std::chrono::steady_clock::now();
-
-        LOG_TRC("WOPI::CheckFileInfo request header for URI [" << uriAnonym << "]:\n"
-                                                               << httpRequest.header());
-
-        const std::shared_ptr<const http::Response> httpResponse
-            = httpSession->syncRequest(httpRequest);
-
-        callDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::steady_clock::now() - startTime);
-
-        const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
-        if (statusCode == http::StatusCode::MovedPermanently ||
-            statusCode == http::StatusCode::Found ||
-            statusCode == http::StatusCode::TemporaryRedirect ||
-            statusCode == http::StatusCode::PermanentRedirect)
-        {
-            if (redirectLimit)
-            {
-                const std::string& location = httpResponse->get("Location");
-                LOG_TRC("WOPI::CheckFileInfo redirect to URI [" << COOLWSD::anonymizeUrl(location) << "]");
-
-                Poco::URI redirectUriObject(location);
-                setUri(redirectUriObject);
-                return getWOPIFileInfoForUri(redirectUriObject, auth, lockCtx, redirectLimit - 1);
-            }
-            else
-            {
-                LOG_WRN("WOPI::CheckFileInfo redirected too many times - URI [" << uriAnonym << "]");
-            }
-        }
-
-        // Note: we don't log the response if obfuscation is enabled, except for failures.
-        wopiResponse = httpResponse->getBody();
-        const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
-
-        Log::StreamLogger logRes = failed ? Log::error() : Log::trace();
-        if (logRes.enabled())
-        {
-            logRes << "WOPI::CheckFileInfo " << (failed ? "failed" : "returned") << " for URI ["
-                   << uriAnonym << "]: " << httpResponse->statusLine().statusCode() << ' '
-                   << httpResponse->statusLine().reasonPhrase()
-                   << ". Headers: " << httpResponse->header()
-                   << (failed ? "\tBody: [" + wopiResponse + ']' : std::string());
-
-            LOG_END_FLUSH(logRes);
-        }
-
-        if (failed)
-        {
-            if (httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden)
-                throw UnauthorizedRequestException(
-                    "Access denied, 403. WOPI::CheckFileInfo failed on: " + uriAnonym);
-
-            throw StorageConnectionException("WOPI::CheckFileInfo failed: " + wopiResponse);
-        }
-    }
-    catch (const Poco::Exception& pexc)
-    {
-        LOG_ERR("Cannot get file info from WOPI storage uri [" << uriAnonym << "]. Error: " <<
-                pexc.displayText() << (pexc.nested() ? " (" + pexc.nested()->displayText() + ')' : ""));
-        throw;
-    }
-    catch (const BadRequestException& exc)
-    {
-        LOG_ERR("Cannot get file info from WOPI storage uri [" << uriAnonym << "]. Error: " << exc.what());
-    }
-
-    Poco::JSON::Object::Ptr object;
-    if (JsonUtil::parseJSON(wopiResponse, object))
-    {
-        if (COOLWSD::AnonymizeUserData)
-            LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): anonymizing...");
-        else
-            LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): " << wopiResponse);
-
-        std::size_t size = 0;
-        std::string filename, ownerId, lastModifiedTime;
-
-        JsonUtil::findJSONValue(object, "Size", size);
-        JsonUtil::findJSONValue(object, "OwnerId", ownerId);
-        JsonUtil::findJSONValue(object, "BaseFileName", filename);
-        JsonUtil::findJSONValue(object, "LastModifiedTime", lastModifiedTime);
-
-        FileInfo fileInfo = FileInfo({filename, ownerId, lastModifiedTime});
-        setFileInfo(fileInfo);
-
-        if (COOLWSD::AnonymizeUserData)
-            Util::mapAnonymized(Util::getFilenameFromURL(filename), Util::getFilenameFromURL(getUri().toString()));
-
-        auto wopiInfo = std::make_unique<WopiStorage::WOPIFileInfo>(fileInfo, object, uriObject);
-        if (wopiInfo->getSupportsLocks())
-            lockCtx.initSupportsLocks();
-
-        // If FileUrl is set, we use it for GetFile.
-        _fileUrl = wopiInfo->getFileUrl();
-
-        return wopiInfo;
-    }
-    else
-    {
-        if (COOLWSD::AnonymizeUserData)
-            wopiResponse = "obfuscated";
-
-        LOG_ERR("WOPI::CheckFileInfo ("
-                << callDurationMs
-                << ") failed or no valid JSON payload returned. Access denied. Original response: ["
-                << wopiResponse << "].");
-
-        throw UnauthorizedRequestException("Access denied. WOPI::CheckFileInfo failed on: " + uriAnonym);
-    }
-}
-
-std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth,
-                                                                        LockContext& lockCtx)
-{
-    return getWOPIFileInfoForUri(getUri(), auth, lockCtx, RedirectionLimit);
+    // If FileUrl is set, we use it for GetFile.
+    _fileUrl = wopiFileInfo.getFileUrl();
 }
 
 WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo,

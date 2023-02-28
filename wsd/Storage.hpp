@@ -704,17 +704,11 @@ public:
                 << COOLWSD::anonymizeUrl(uri.toString()) << ']');
     }
 
-    /// Returns the response of CheckFileInfo WOPI call for URI that was
-    /// provided during the initial creation of the WOPI storage.
+    /// Handles the response from CheckFileInfo, as converted into WOPIFileInfo.
     /// Also extracts the basic file information from the response
     /// which can then be obtained using getFileInfo()
     /// Also sets up the locking context for future operations.
-    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Authorization& auth, LockContext& lockCtx);
-    /// Implementation of getWOPIFileInfo for specific URI
-    std::unique_ptr<WOPIFileInfo> getWOPIFileInfoForUri(Poco::URI uriObject,
-                                                        const Authorization& auth,
-                                                        LockContext& lockCtx,
-                                                        unsigned redirectLimit);
+    void handleWOPIFileInfo(const WOPIFileInfo& wopiFileInfo, LockContext& lockCtx);
 
     /// Update the locking state (check-in/out) of the associated file
     LockUpdateResult updateLockState(const Authorization& auth, LockContext& lockCtx, bool lock,

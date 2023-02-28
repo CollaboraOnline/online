@@ -853,8 +853,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session,
     {
         LOG_DBG("CheckFileInfo for docKey [" << _docKey << ']');
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-        if (!wopiFileInfo)
-            wopiFileInfo = wopiStorage->getWOPIFileInfo(session->getAuthorization(), *_lockCtx);
+        wopiStorage->handleWOPIFileInfo(*wopiFileInfo, *_lockCtx);
 
         checkFileInfoCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - start);

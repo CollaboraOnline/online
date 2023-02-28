@@ -58,26 +58,6 @@ extern std::mutex DocBrokersMutex;
 
 extern void cleanupDocBrokers();
 
-namespace
-{
-
-void sendLoadResult(const std::shared_ptr<ClientSession>& clientSession, bool success,
-                    const std::string& errorMsg)
-{
-    const std::string result = success ? "" : "Error while loading document";
-    const std::string resultstr = success ? "true" : "false";
-    // Some sane limit, otherwise we get problems transferring this
-    // to the client with large strings (can be a whole webpage)
-    // Replace reserved characters
-    std::string errorMsgFormatted = COOLProtocol::getAbbreviatedMessage(errorMsg);
-    errorMsgFormatted = Poco::translate(errorMsg, "\"", "'");
-    clientSession->sendMessage("commandresult: { \"command\": \"load\", \"success\": " + resultstr +
-                               ", \"result\": \"" + result + "\", \"errorMsg\": \"" +
-                               errorMsgFormatted + "\"}");
-}
-
-} // anonymous namespace
-
 /// Find the DocumentBroker for the given docKey, if one exists.
 /// Otherwise, creates and adds a new one to DocBrokers.
 /// May return null if terminating or MaxDocuments limit is reached.
@@ -1655,119 +1635,10 @@ void ClientRequestDispatcher::handleClientWsUpgrade(const Poco::Net::HTTPRequest
 #endif
         }
 
-        LOG_INF("URL [" << url << "] for WS Request.");
-        const auto uriPublic = RequestDetails::sanitizeURI(url);
-        const auto docKey = RequestDetails::getDocKey(uriPublic);
-        const std::string fileId = Util::getFilenameFromURL(docKey);
-        Util::mapAnonymized(fileId,
-                            fileId); // Identity mapping, since fileId is already obfuscated
-
-        LOG_INF("Starting GET request handler for session [" << _id << "] on url ["
-                                                             << COOLWSD::anonymizeUrl(url) << "].");
-
-        // Indicate to the client that document broker is searching.
-        static const std::string status("statusindicator: find");
-        LOG_TRC("Sending to Client [" << status << "].");
-        ws->sendMessage(status);
-
-        LOG_INF("Sanitized URI [" << COOLWSD::anonymizeUrl(url) << "] to ["
-                                  << COOLWSD::anonymizeUrl(uriPublic.toString())
-                                  << "] and mapped to docKey [" << docKey << "] for session ["
-                                  << _id << "].");
-
-        // Check if readonly session is required
-        bool isReadOnly = false;
-        for (const auto& param : uriPublic.getQueryParameters())
-        {
-            LOG_TRC("Query param: " << param.first << ", value: " << param.second);
-            if (param.first == "permission" && param.second == "readonly")
-            {
-                isReadOnly = true;
-            }
-        }
-
-        LOG_INF("URL [" << COOLWSD::anonymizeUrl(url) << "] is "
-                        << (isReadOnly ? "readonly" : "writable"));
-
-        // Request a kit process for this doc.
-        std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
-            std::static_pointer_cast<ProtocolHandlerInterface>(ws),
-            DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic, mobileAppDocId);
-        if (docBroker)
-        {
-            std::shared_ptr<ClientSession> clientSession =
-                docBroker->createNewClientSession(ws, _id, uriPublic, isReadOnly, requestDetails);
-            if (clientSession)
-            {
-                // Transfer the client socket to the DocumentBroker when we get back to the poll:
-                docBroker->setupTransfer(
-                    disposition,
-                    [docBroker, clientSession, ws](const std::shared_ptr<Socket>& moveSocket)
-                    {
-                        try
-                        {
-                            auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
-
-                            // Set WebSocketHandler's socket after its construction for shared_ptr goodness.
-                            streamSocket->setHandler(ws);
-
-                            LOG_DBG_S('#' << moveSocket->getFD() << " handler is "
-                                          << clientSession->getName());
-
-                            // Add and load the session.
-                            docBroker->addSession(clientSession);
-
-                            COOLWSD::checkDiskSpaceAndWarnClients(true);
-                            // Users of development versions get just an info
-                            // when reaching max documents or connections
-                            COOLWSD::checkSessionLimitsAndWarnClients();
-
-                            sendLoadResult(clientSession, true, "");
-                        }
-                        catch (const UnauthorizedRequestException& exc)
-                        {
-                            LOG_ERR_S("Unauthorized Request while starting session on "
-                                      << docBroker->getDocKey() << " for socket #"
-                                      << moveSocket->getFD()
-                                      << ". Terminating connection. Error: " << exc.what());
-                            const std::string msg = "error: cmd=internal kind=unauthorized";
-                            ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
-                            moveSocket->ignoreInput();
-                        }
-                        catch (const StorageConnectionException& exc)
-                        {
-                            LOG_ERR_S("Storage error while starting session on "
-                                      << docBroker->getDocKey() << " for socket #"
-                                      << moveSocket->getFD()
-                                      << ". Terminating connection. Error: " << exc.what());
-                            const std::string msg = "error: cmd=storage kind=loadfailed";
-                            ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
-                            moveSocket->ignoreInput();
-                        }
-                        catch (const std::exception& exc)
-                        {
-                            LOG_ERR_S("Error while starting session on "
-                                      << docBroker->getDocKey() << " for socket #"
-                                      << moveSocket->getFD()
-                                      << ". Terminating connection. Error: " << exc.what());
-                            const std::string msg = "error: cmd=storage kind=loadfailed";
-                            ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
-                            moveSocket->ignoreInput();
-                        }
-                    });
-            }
-            else
-            {
-                LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey ["
-                                                                    << docKey << "].");
-                throw std::runtime_error("Cannot create client session for doc " + docKey);
-            }
-        }
-        else
-        {
-            throw ServiceUnavailableException("Failed to create DocBroker with docKey [" + docKey +
-                                              "].");
-        }
+        auto rvs = std::make_shared<RequestVettingStation>(_id, ws, requestDetails, socket,
+                                                           mobileAppDocId);
+        _requestVettingStations.emplace(_id, rvs);
+        rvs->handleRequest(*COOLWSD::getWebServerPoll(), disposition);
     }
     catch (const std::exception& exc)
     {
