@@ -139,6 +139,7 @@ coolwsd_sources = common/Crypto.cpp \
                   wsd/FileServerUtil.cpp \
                   wsd/RequestDetails.cpp \
                   wsd/Storage.cpp \
+                  wsd/StorageConnectionManager.cpp \
                   wsd/HostUtil.cpp \
                   wsd/TileCache.cpp \
                   wsd/ProofKey.cpp \
@@ -285,6 +286,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/SenderQueue.hpp \
               wsd/ServerURL.hpp \
               wsd/Storage.hpp \
+              wsd/StorageConnectionManager.hpp \
               wsd/TileCache.hpp \
               wsd/TileDesc.hpp \
               wsd/TraceFile.hpp \
