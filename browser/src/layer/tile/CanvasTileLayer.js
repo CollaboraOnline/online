@@ -1538,6 +1538,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		else if (textMsg.startsWith('graphicselection:')) {
 			this._onGraphicSelectionMsg(textMsg);
 		}
+		else if (textMsg.startsWith('mediashape:')) {
+			this._onMediaShapeMsg(textMsg);
+		}
 		else if (textMsg.startsWith('cellcursor:')) {
 			this._onCellCursorMsg(textMsg);
 		}
@@ -2029,7 +2032,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			var wasVisibleSVG = this._graphicMarker._hasVisibleEmbeddedSVG();
 			this._graphicMarker.removeEmbeddedSVG();
 
-			// video is handled in _onEmbeddedVideoContent
+			// video is handled in _onMediaShapeMsg
 			var isVideoSVG = textMsg.indexOf('<video') !== -1;
 			if (isVideoSVG) {
 				this._map._cacheSVG[extraInfo.id] = undefined;
@@ -2041,19 +2044,15 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
+	_onMediaShapeMsg: function (textMsg) {
+		textMsg = textMsg.substring('mediashape:'.length + 1);
+		this._onEmbeddedVideoContent(textMsg);
+	},
+
 	// shows the video inside current selection marker
 	_onEmbeddedVideoContent: function (textMsg) {
 		if (!this._graphicMarker)
 			return;
-
-		// Remove other view selection as it interferes with playing the media.
-		for (var viewId in this._graphicViewMarkers) {
-			if (viewId !== this._viewId && this._map._viewInfo[viewId]) {
-				var viewMarker = this._graphicViewMarkers[viewId].marker;
-				if (viewMarker)
-					this._viewLayerGroup.removeLayer(viewMarker);
-			}
-		}
 
 		var videoDesc = JSON.parse(textMsg);
 
@@ -2227,13 +2226,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._onMessage('textselectioncontent:');
 
 		this._onUpdateGraphicSelection();
-
-		if (msgData.length > 5) {
-			var extraInfo = msgData[5];
-			if (extraInfo.url !== undefined) {
-				this._onEmbeddedVideoContent(JSON.stringify(extraInfo));
-			}
-		}
 	},
 
 	_onGraphicViewSelectionMsg: function (textMsg) {

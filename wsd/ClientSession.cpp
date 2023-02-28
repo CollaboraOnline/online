@@ -1848,48 +1848,33 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         docBroker->finalRemoveSession(client_from_this());
         return true;
     }
-    else if (tokens.equals(0, "graphicselection:") || tokens.equals(0, "graphicviewselection:"))
+    else if (tokens.equals(0, "mediashape:"))
     {
-        if (payload->find("url", 3) >= 0)
+        const std::string json = payload->jsonString();
+        Poco::JSON::Object::Ptr object;
+        if (JsonUtil::parseJSON(json, object))
         {
-            std::string json(payload->data().data(), payload->size());
-            const auto it = json.find('{');
-            const std::string prefix = json.substr(0, it);
-            json.erase(0, it); // Remove the prefix to parse the purse JSON part.
-
-            Poco::JSON::Object::Ptr object;
-            if (JsonUtil::parseJSON(json, object))
+            const std::string id = JsonUtil::getJSONValue<std::string>(object, "id");
+            if (id.empty())
             {
-                const std::string url = JsonUtil::getJSONValue<std::string>(object, "url");
-                if (!url.empty())
-                {
-                    const std::string id = JsonUtil::getJSONValue<std::string>(object, "id");
-                    if (!id.empty())
-                    {
-                        docBroker->addEmbeddedMedia(
-                            id, json); // Capture the original message with internal URL.
+                LOG_ERR("Invalid embeddedmedia json without id: " << json);
+            }
+            else
+            {
+                docBroker->addEmbeddedMedia(id, json);
 
-                        const std::string mediaUrl = Util::encodeURIComponent(
-                            createPublicURI("media", id, /*encode=*/false), "&");
-                        object->set("url", mediaUrl); // Replace the url with the public one.
-                        object->set("mimeType", "video/mp4"); //FIXME: get this from the source json
+                const std::string mediaUrl =
+                    Util::encodeURIComponent(createPublicURI("media", id, /*encode=*/false), "&");
+                object->set("url", mediaUrl);
+                object->set("mimeType", "video/mp4"); //FIXME: get this from the source json
 
-                        std::ostringstream mediaStr;
-                        object->stringify(mediaStr);
-                        const std::string msg = prefix + mediaStr.str();
-                        forwardToClient(std::make_shared<Message>(msg, Message::Dir::Out));
-                        return true;
-                    }
-                    else
-                    {
-                        LOG_ERR("Invalid embeddedmedia json without id: " << json);
-                    }
-                }
+                std::ostringstream mediaStr;
+                object->stringify(mediaStr);
+                forwardToClient(
+                    std::make_shared<Message>("mediashape: " + mediaStr.str(), Message::Dir::Out));
             }
         }
 
-        // Non-Media graphic selsection.
-        forwardToClient(payload);
         return true;
     }
     else if (tokens.equals(0, "formfieldbutton:")) {
