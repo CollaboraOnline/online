@@ -2120,29 +2120,13 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             if (!error)
             {
                 int firstLineSize = firstLine.size() + 1;
-                std::string base64thumbnail(payload->data().data() + firstLineSize, payload->data().size() - firstLineSize);
+                std::string thumbnail(payload->data().data() + firstLineSize, payload->data().size() - firstLineSize);
 
-                // decode back to PNG
-                try
-                {
-                    std::istringstream istr(base64thumbnail);
-                    std::ostringstream ostr;
-                    Poco::Base64Decoder b64in(istr);
-                    copy(std::istreambuf_iterator<char>(b64in),
-                        std::istreambuf_iterator<char>(),
-                        std::ostreambuf_iterator<char>(ostr));
-
-                    http::Response httpResponse(http::StatusCode::OK);
-                    httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-                    httpResponse.set("X-Content-Type-Options", "nosniff");
-                    httpResponse.setBody(ostr.str(), "image/png");
-                    _saveAsSocket->sendAndShutdown(httpResponse);
-                }
-                catch (const std::exception& e)
-                {
-                    LOG_ERR("Decoding thumbnail failed: " << e.what());
-                    error = true;
-                }
+                http::Response httpResponse(http::StatusCode::OK);
+                httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+                httpResponse.set("X-Content-Type-Options", "nosniff");
+                httpResponse.setBody(thumbnail, "image/png");
+                _saveAsSocket->sendAndShutdown(httpResponse);
             }
 
             if (error)
