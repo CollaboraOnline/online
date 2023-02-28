@@ -1019,3 +1019,12 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	min-height: 100px;
 	min-width: 100px;
 }
+
+#hyperlink-pop-up-preview {
+	text-align: center;
+}
+
+#hyperlink-pop-up-preview img {
+	max-height: 150px;
+	max-width: 250px;
+}
