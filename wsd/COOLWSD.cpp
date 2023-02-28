@@ -147,6 +147,7 @@ using Poco::Net::PartHandler;
 
 #include <common/SigUtil.hpp>
 
+#include <RequestVettingStation.hpp>
 #include <ServerSocket.hpp>
 
 #if MOBILEAPP
