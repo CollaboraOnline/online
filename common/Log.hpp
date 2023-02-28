@@ -280,10 +280,10 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         LOG.flush();                                                                               \
     } while (false)
 
-#define LOG_BODY_(LOG, PRIO, LVL, X, END)                                                          \
+#define LOG_BODY_(LOG, PRIO, LVL, X, PREFIX, END)                                                  \
     char b_[1024];                                                                                 \
     std::ostringstream oss_(Log::prefix<sizeof(b_) - 1>(b_, LVL), std::ostringstream::ate);        \
-    logPrefix(oss_);                                                                               \
+    PREFIX(oss_);                                                                                  \
     oss_ << std::boolalpha << X;                                                                   \
     END(oss_);                                                                                     \
     LOG_LOG(LOG, PRIO, LVL, oss_.str())
@@ -311,7 +311,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, trace))                                                          \
         {                                                                                          \
-            LOG_BODY_(log_, TRACE, "TRC", X, LOG_END);                                             \
+            LOG_BODY_(log_, TRACE, "TRC", X, logPrefix, LOG_END);                                  \
         }                                                                                          \
     } while (false)
 
@@ -321,7 +321,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, trace))                                                          \
         {                                                                                          \
-            LOG_BODY_(log_, TRACE, "TRC", X, LOG_END_NOFILE);                                      \
+            LOG_BODY_(log_, TRACE, "TRC", X, logPrefix, LOG_END_NOFILE);                           \
         }                                                                                          \
     } while (false)
 
@@ -331,7 +331,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, debug))                                                          \
         {                                                                                          \
-            LOG_BODY_(log_, DEBUG, "DBG", X, LOG_END);                                             \
+            LOG_BODY_(log_, DEBUG, "DBG", X, logPrefix, LOG_END);                                  \
         }                                                                                          \
     } while (false)
 
@@ -339,9 +339,9 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     do                                                                                             \
     {                                                                                              \
         auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, information))                                                          \
+        if (LOG_CONDITIONAL(log_, information))                                                    \
         {                                                                                          \
-            LOG_BODY_(log_, INFORMATION, "INF", X, LOG_END);                                       \
+            LOG_BODY_(log_, INFORMATION, "INF", X, logPrefix, LOG_END);                            \
         }                                                                                          \
     } while (false)
 
@@ -349,9 +349,9 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     do                                                                                             \
     {                                                                                              \
         auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, information))                                                          \
+        if (LOG_CONDITIONAL(log_, information))                                                    \
         {                                                                                          \
-            LOG_BODY_(log_, INFORMATION, "INF", X, LOG_END_NOFILE);                                \
+            LOG_BODY_(log_, INFORMATION, "INF", X, logPrefix, LOG_END_NOFILE);                     \
         }                                                                                          \
     } while (false)
 
@@ -359,9 +359,9 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     do                                                                                             \
     {                                                                                              \
         auto& log_ = Log::logger();                                                                \
-        if (LOG_CONDITIONAL(log_, warning))                                                              \
+        if (LOG_CONDITIONAL(log_, warning))                                                        \
         {                                                                                          \
-            LOG_BODY_(log_, WARNING, "WRN", X, LOG_END);                                           \
+            LOG_BODY_(log_, WARNING, "WRN", X, logPrefix, LOG_END);                                \
         }                                                                                          \
     } while (false)
 
@@ -371,7 +371,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, error))                                                          \
         {                                                                                          \
-            LOG_BODY_(log_, ERROR, "ERR", X, LOG_END);                                             \
+            LOG_BODY_(log_, ERROR, "ERR", X, logPrefix, LOG_END);                                  \
         }                                                                                          \
     } while (false)
 
@@ -395,7 +395,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
         auto& log_ = Log::logger();                                                                \
         if (LOG_CONDITIONAL(log_, fatal))                                                          \
         {                                                                                          \
-            LOG_BODY_(log_, FATAL, "FTL", X, LOG_END);                                             \
+            LOG_BODY_(log_, FATAL, "FTL", X, logPrefix, LOG_END);                                  \
         }                                                                                          \
     } while (false)
 
@@ -406,6 +406,61 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
     {                                                                                              \
         const auto onrre = errno; /* Save errno immediately while avoiding name clashes*/          \
         LOG_FTL(X << " (" << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre) << ')');   \
+    } while (false)
+
+/// No-prefix version of LOG_TRC.
+#define LOG_TRC_S(X)                                                                               \
+    do                                                                                             \
+    {                                                                                              \
+        auto& log_ = Log::logger();                                                                \
+        if (LOG_CONDITIONAL(log_, debug))                                                          \
+        {                                                                                          \
+            LOG_BODY_(log_, TRACE, "TRC", X, (void), LOG_END);                                     \
+        }                                                                                          \
+    } while (false)
+
+/// No-prefix version of LOG_DBG.
+#define LOG_DBG_S(X)                                                                               \
+    do                                                                                             \
+    {                                                                                              \
+        auto& log_ = Log::logger();                                                                \
+        if (LOG_CONDITIONAL(log_, debug))                                                          \
+        {                                                                                          \
+            LOG_BODY_(log_, DEBUG, "DBG", X, (void), LOG_END);                                     \
+        }                                                                                          \
+    } while (false)
+
+/// No-prefix version of LOG_INF.
+#define LOG_INF_S(X)                                                                               \
+    do                                                                                             \
+    {                                                                                              \
+        auto& log_ = Log::logger();                                                                \
+        if (LOG_CONDITIONAL(log_, error))                                                          \
+        {                                                                                          \
+            LOG_BODY_(log_, INFORMATION, "INF", X, (void), LOG_END);                               \
+        }                                                                                          \
+    } while (false)
+
+/// No-prefix version of LOG_WRN.
+#define LOG_WRN_S(X)                                                                               \
+    do                                                                                             \
+    {                                                                                              \
+        auto& log_ = Log::logger();                                                                \
+        if (LOG_CONDITIONAL(log_, error))                                                          \
+        {                                                                                          \
+            LOG_BODY_(log_, WARNING, "WRN", X, (void), LOG_END);                                   \
+        }                                                                                          \
+    } while (false)
+
+/// No-prefix version of LOG_ERR.
+#define LOG_ERR_S(X)                                                                               \
+    do                                                                                             \
+    {                                                                                              \
+        auto& log_ = Log::logger();                                                                \
+        if (LOG_CONDITIONAL(log_, error))                                                          \
+        {                                                                                          \
+            LOG_BODY_(log_, ERROR, "ERR", X, (void), LOG_END);                                     \
+        }                                                                                          \
     } while (false)
 
 #define LOG_CHECK(X)                                                                               \
