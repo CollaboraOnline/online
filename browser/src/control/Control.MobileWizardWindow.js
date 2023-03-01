@@ -509,6 +509,9 @@ L.Control.MobileWizardWindow = L.Control.extend({
 				document.getElementById('mobile-wizard').style.height = '100vh';
 				$('#mobile-wizard').css('top', $('#document-container').css('top'));
 				this.isFunctionMenu = true;
+			}
+			else if (data.id === 'modal-dialog-about-dialog-box') {
+				isPopup = true;
 			} else {
 				document.getElementById('mobile-wizard').style.height = this.options.maxHeight;
 				$('#mobile-wizard').css('top', '');
