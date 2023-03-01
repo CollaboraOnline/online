@@ -3,7 +3,7 @@
  * Toolbar handler
  */
 
-/* global app $ window vex sanitizeUrl brandProductName brandProductURL _ Hammer */
+/* global app $ window vex sanitizeUrl brandProductName brandProductURL _ */
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
@@ -538,7 +538,7 @@ L.Map.include({
 		}
 	},
 
-	_doVexOpenHelpFile: function(data, id, map) {
+	_doOpenHelpFile: function(data, id, map) {
 		var productName;
 		if (window.ThisIsAMobileApp) {
 			productName = window.MobileAppName;
@@ -555,25 +555,65 @@ L.Map.include({
 	showHelp: function(id) {
 		var map = this;
 		if (window.ThisIsAMobileApp) {
-			map._doVexOpenHelpFile(window.HelpFile, id, map);
+			map._doOpenHelpFile(window.HelpFile, id, map);
 			return;
 		}
 		var helpLocation = 'cool-help.html';
 		if (window.socketProxy)
 			helpLocation = window.makeWsUrl('/browser/dist/' + helpLocation);
 		$.get(helpLocation, function(data) {
-			map._doVexOpenHelpFile(data, id, map);
+			map._doOpenHelpFile(data, id, map);
 		});
 	},
 
-	showLOAboutDialog: function() {
+	aboutDialogKeyHandler: function(event) {
+		if (event.key === 'd') {
+			this._docLayer.toggleTileDebugMode();
+		} else if (event.key === 'l') {
+			// L toggges the Online logging level between the default (whatever
+			// is set in coolwsd.xml or on the coolwsd command line) and the
+			// most verbose a client is allowed to set (which also can be set in
+			// coolwsd.xml or on the coolwsd command line).
+			//
+			// In a typical developer "make run" setup, the default is "trace"
+			// so there is nothing more verbose. But presumably it is different
+			// in production setups.
 
+			app.socket.threadLocalLoggingLevelToggle = !app.socket.threadLocalLoggingLevelToggle;
+
+			var newLogLevel = (app.socket.threadLocalLoggingLevelToggle ? 'verbose' : 'default');
+
+			app.socket.sendMessage('loggingleveloverride ' + newLogLevel);
+
+			var logLevelInformation;
+			if (newLogLevel === 'default')
+				logLevelInformation = 'default (from coolwsd.xml)';
+			else if (newLogLevel === 'verbose')
+				logLevelInformation = 'most verbose (from coolwsd.xml)';
+			else if (newLogLevel === 'terse')
+				logLevelInformation = 'least verbose (from coolwsd.xml)';
+			else
+				logLevelInformation = newLogLevel;
+
+			console.debug('Log level: ' + logLevelInformation);
+		}
+	},
+
+	aboutDialogClickHandler: function(event) {
+		if (event.detail === 3)
+			this._docLayer.toggleTileDebugMode();
+	},
+
+	showLOAboutDialog: function() {
 		// Just as a test to exercise the Async Trace Event functionality, uncomment this
 		// line and the asyncTraceEvent.finish() below.
 		// var asyncTraceEvent = app.socket.createAsyncTraceEvent('cool-showLOAboutDialog');
 
-		// Move the div sitting in 'body' as vex-content and make it visible
-		var content = $('#about-dialog').clone().css({display: 'block'});
+		var aboutDialogId = 'about-dialog';
+		// Move the div sitting in 'body' as content and make it visible
+		var content = document.getElementById(aboutDialogId).cloneNode(true);
+		content.style.display = 'block';
+
 		// fill product-name and product-string
 		var productName;
 		if (window.ThisIsAMobileApp) {
@@ -582,7 +622,10 @@ L.Map.include({
 			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition (unbranded)';
 		}
 		var productURL = (typeof brandProductURL !== 'undefined') ? brandProductURL : 'https://collaboraonline.github.io/';
-		content.find('#product-name').text(productName).addClass('product-' + productName.split(/[ ()]+/).join('-').toLowerCase());
+
+		content.querySelector('#product-name').innerText = productName;
+		content.classList.add('product-' + productName.split(/[ ()]+/).join('-').toLowerCase());
+
 		var productString = _('This version of %productName is powered by');
 		var productNameWithURL;
 		if (!window.ThisIsAMobileApp)
@@ -590,101 +633,22 @@ L.Map.include({
 								 '" target="_blank">' + productName + '</a>';
 		else
 			productNameWithURL = productName;
-		content.find('#product-string').html(productString.replace('%productName', productNameWithURL));
+
+		if (content.querySelector('#product-string'))
+			content.querySelector('#product-string').innerText = productString.replace('%productName', productNameWithURL);
 
 		if (window.socketProxy)
-			content.find('#slow-proxy').text(_('"Slow Proxy"'));
+			content.querySelector('#slow-proxy').innerText = _('"Slow Proxy"');
 
-		var w;
-		var iw = window.innerWidth;
-		if (iw < 768) {
-			w = iw - 30;
-		}
-		else if (iw > 1920) {
-			w = 960;
-		}
-		else {
-			w = iw / 5 + 590;
-		}
 		var map = this;
-		var handler = function(event) {
-			if (event.key === 'd') {
-				map._docLayer.toggleTileDebugMode();
-			} else if (event.key === 'l') {
-				// L toggges the Online logging level between the default (whatever
-				// is set in coolwsd.xml or on the coolwsd command line) and the
-				// most verbose a client is allowed to set (which also can be set in
-				// coolwsd.xml or on the coolwsd command line).
-				//
-				// In a typical developer "make run" setup, the default is "trace"
-				// so there is nothing more verbose. But presumably it is different
-				// in production setups.
 
-				app.socket.threadLocalLoggingLevelToggle = !app.socket.threadLocalLoggingLevelToggle;
+		map.uiManager.showInfoModal(aboutDialogId + '-box', '', '', '', '', null, false);
+		document.getElementById(aboutDialogId + '-box').innerHTML = content.outerHTML;
 
-				var newLogLevel = (app.socket.threadLocalLoggingLevelToggle ? 'verbose' : 'default');
-
-				app.socket.sendMessage('loggingleveloverride ' + newLogLevel);
-
-				var logLevelInformation = newLogLevel;
-				if (newLogLevel === 'default')
-					logLevelInformation = 'default (from coolwsd.xml)';
-				else if (newLogLevel === 'verbose')
-					logLevelInformation = 'most verbose (from coolwsd.xml)';
-				else if (newLogLevel === 'terse')
-					logLevelInformation = 'least verbose (from coolwsd.xml)';
-				else
-					logLevelInformation = newLogLevel;
-
-				$(app.ExpertlyTrickForLOAbout.contentEl).find('#log-level-state').html('Log level: ' + logLevelInformation);
-			}
-		};
-		vex.open({
-			unsafeContent: content[0].outerHTML,
-			showCloseButton: true,
-			closeClassName: 'vex-close-m',
-			escapeButtonCloses: true,
-			overlayClosesOnClick: true,
-			buttons: {},
-			afterOpen: function() {
-
-				var touchGesture = map['touchGesture'];
-				if (touchGesture && touchGesture._hammer) {
-					touchGesture._hammer.off('tripletap', L.bind(touchGesture._onTripleTap, touchGesture));
-				}
-
-				var $vexContent = $(this.contentEl);
-				var hammer = new Hammer.Manager($vexContent.get(0));
-				hammer.add(new Hammer.Tap({ taps: 3 }));
-				hammer.on('tap', function() {
-					map._docLayer.toggleTileDebugMode();
-				});
-
-				this.contentEl.style.width = w + 'px';
-
-				// FIXME: When we remove vex this needs to be cleaned up.
-
-				// It is hard to access the value of "this" in this afterOpen
-				// function in the handler function. Use a global variable until
-				// somebody figures out a better way.
-				app.ExpertlyTrickForLOAbout = this;
-				$(window).bind('keyup.vex', handler);
-				// workaround for https://github.com/HubSpot/vex/issues/43
-				$('.vex-overlay').css({ 'pointer-events': 'none'});
-			},
-			beforeClose: function () {
-				$(window).unbind('keyup.vex', handler);
-				var touchGesture = map['touchGesture'];
-				if (touchGesture && touchGesture._hammer) {
-					touchGesture._hammer.on('tripletap', L.bind(touchGesture._onTripleTap, touchGesture));
-				}
-				map.focus();
-
-				// Unset the global variable, see comment above.
-				app.ExpertlyTrickForLOAbout = undefined;
-				// asyncTraceEvent.finish();
-			}
-		});
+		var form = document.getElementById('modal-dialog-about-dialog-box');
+		form.addEventListener('click', this.aboutDialogClickHandler.bind(this));
+		form.addEventListener('keyup', this.aboutDialogKeyHandler.bind(this));
+		form.querySelector('#coolwsd-version').querySelector('a').focus();
 	},
 
 	extractContent: function(html) {
