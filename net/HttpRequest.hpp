@@ -633,7 +633,7 @@ public:
                     LOG_TRC("performWrites (request body): finished, total: " << out.size() -
                                                                                      buffered_size);
                     _stage = Stage::Finished;
-                    return true;
+                    break;
                 }
 
                 out.append(buffer, read);
@@ -642,6 +642,11 @@ public:
                                                          << out.size() - buffered_size);
             } while (wrote < capacity);
         }
+
+#ifdef DEBUG_HTTP
+        LOG_TRC("Request::writeData: " << buffered_size << " bytes buffered\n"
+                                       << Util::dumpHex(out));
+#endif //DEBUG_HTTP
 
         return true;
     }
