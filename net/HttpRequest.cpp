@@ -396,7 +396,7 @@ int64_t Request::readData(const char* p, const int64_t len)
 #ifdef DEBUG_HTTP
             LOG_TRC("After Header: "
                     << available << " bytes availble\n"
-                    << Util::dumpHex(std::string(p, std::min(available, 1 * 1024L))));
+                    << Util::dumpHex(std::string(p, std::min(available, 1 * 1024UL))));
 #endif //DEBUG_HTTP
         }
 
