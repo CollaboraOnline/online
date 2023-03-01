@@ -267,6 +267,9 @@ public:
 
     int  getCanonicalViewId() { return _canonicalViewId; }
 
+    void setViewRenderState(const std::string& state) { _viewRenderState = state; }
+
+    std::string getViewRenderState() { return _viewRenderState; }
 private:
     bool loadDocument(const StringVector& tokens);
 
@@ -384,6 +387,9 @@ private:
 
     /// stores wopi url for export as operation
     std::string _exportAsWopiUrl;
+
+    /// stores info about the view
+    std::string _viewRenderState;
 
     /// the canonical id unique to the set of rendering properties of this session
     int _canonicalViewId;
