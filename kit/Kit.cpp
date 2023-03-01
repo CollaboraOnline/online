@@ -878,11 +878,9 @@ public:
             return;
         }
 
-#ifdef FIXME_RENDER_SETTINGS
         // if necessary select a suitable rendering view eg. with 'show non-printing chars'
         if (tileCombined.getNormalizedViewId())
             _loKitDocument->setView(session->getViewId());
-#endif
 
         const auto blenderFunc = [&](unsigned char* data, int offsetX, int offsetY,
                                      std::size_t pixmapWidth, std::size_t pixmapHeight,
@@ -1079,6 +1077,29 @@ public:
 
                 tileQueue->updateCursorPosition(std::stoi(targetViewId), std::stoi(part), cursorX, cursorY, cursorWidth, cursorHeight);
             }
+        }
+        else if (type == LOK_CALLBACK_VIEW_RENDER_STATE)
+        {
+            Document* document = dynamic_cast<Document*>(descriptor->getDoc());
+            if (document)
+            {
+                std::shared_ptr<ChildSession> session = document->findSessionByViewId(descriptor->getViewId());
+                if (session)
+                {
+                    session->setViewRenderState(payload);
+                    document->invalidateCanonicalId(session->getId());
+                }
+                else
+                {
+                    LOG_ERR("Cannot find session for viewId: " << descriptor->getViewId());
+                }
+            }
+            else
+            {
+                // This shouldn't happen, but for sanity.
+                LOG_ERR("Failed to downcast DocumentManagerInterface to Document");
+            }
+            return;
         }
 
         // merge various callback types together if possible
@@ -1297,6 +1318,17 @@ private:
         }
     }
 
+    std::shared_ptr<ChildSession> findSessionByViewId(int viewId)
+    {
+        for (const auto& it : _sessions)
+        {
+            if (it.second && it.second->getViewId() == viewId)
+                return it.second;
+        }
+
+        return nullptr;
+    }
+
     void invalidateCanonicalId(const std::string& sessionId)
     {
         auto it = _sessions.find(sessionId);
@@ -1316,7 +1348,7 @@ private:
 
     std::string getViewProps(const std::shared_ptr<ChildSession>& session)
     {
-        return session->getWatermarkText();
+        return session->getWatermarkText() + "|" + session->getViewRenderState();
     }
 
     void updateEditorSpeeds(int id, int speed) override
