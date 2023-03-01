@@ -17,6 +17,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		mobileWizard: null,
 		// css class name added to the html nodes
 		cssClass: 'mobile-wizard',
+		// custom tabs placement handled by the parent container
+		useSetTabs: false,
 
 		// create only icon without label
 		noLabelsForUnoButtons: false,
@@ -1027,9 +1029,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 			var isMultiTabJSON = tabs > 1;
 
-			var tabsContainer = L.DomUtil.create('div', 'ui-tabs ' + builder.options.cssClass + ' ui-widget');
-			tabsContainer.id = data.id;
-			var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content ' + builder.options.cssClass + ' ui-widget', parentContainer);
+			var tabWidgetRootContainer = L.DomUtil.create('div', 'ui-tabs-root ' + builder.options.cssClass + ' ui-widget', parentContainer);
+			tabWidgetRootContainer.id = data.id;
+
+			var tabsContainer = L.DomUtil.create('div', 'ui-tabs ' + builder.options.cssClass + ' ui-widget', builder.options.useSetTabs ? undefined : tabWidgetRootContainer);
+			var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content ' + builder.options.cssClass + ' ui-widget', tabWidgetRootContainer);
 
 			var tabs = [];
 			var contentDivs = [];
@@ -1077,7 +1081,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			if (builder.wizard) {
-				builder.wizard.setTabs(tabsContainer, builder);
+				if (builder.options.useSetTabs)
+					builder.wizard.setTabs(tabsContainer, builder);
 
 				for (var t = 0; t < tabs.length; t++) {
 					// to get capture of 't' right has to be a sub fn.
@@ -1124,6 +1129,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_panelTabsHandler: function(parentContainer, data, builder) {
+		if (!builder.options.useSetTabs)
+			console.warn('mobile panelTabsHandler: setTabs will be used ignoring useSetTabs property');
+
 		var tabsContainer = L.DomUtil.create('div', 'ui-tabs ' + builder.options.cssClass + ' ui-widget');
 		var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content ' + builder.options.cssClass + ' ui-widget', parentContainer);
 
