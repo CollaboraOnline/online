@@ -529,6 +529,10 @@ export class CommentSection extends CanvasSectionObject {
 					type: 'string',
 					value: annotation.sectionProperties.data.id
 				},
+			        Author: {
+					type: 'string',
+					value: annotation.sectionProperties.data.author
+				},
 				Text: {
 					type: 'string',
 					value: annotation.sectionProperties.data.text
