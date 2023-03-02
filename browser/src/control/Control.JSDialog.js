@@ -177,7 +177,8 @@ L.Control.JSDialog = L.Control.extend({
 
 		instance.defaultButtonId = this._getDefaultButtonId(instance.children);
 
-		if (instance.children[0].children.length === 1)
+		if (instance.children && instance.children.length &&
+			instance.children[0].children && instance.children[0].children.length === 1)
 			instance.isOnlyChild = true;
 
 		// it has to be first button in the form
