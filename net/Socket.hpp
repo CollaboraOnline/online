@@ -411,10 +411,24 @@ class MessageHandlerInterface;
 class ProtocolHandlerInterface :
     public std::enable_shared_from_this<ProtocolHandlerInterface>
 {
+    int _fdSocket; //< The socket file-descriptor.
+
 protected:
     /// We own a message handler, after decoding the socket data we pass it on as messages.
     std::shared_ptr<MessageHandlerInterface> _msgHandler;
+
+    /// Sets the context used by logPrefix.
+    void setLogContext(int fd) { _fdSocket = fd; }
+
+    /// Used by the logging macros to automatically log a context prefix.
+    inline void logPrefix(std::ostream& os) const { os << '#' << _fdSocket << ": "; }
+
 public:
+    ProtocolHandlerInterface()
+        : _fdSocket(-1)
+    {
+    }
+
     // ------------------------------------------------------------------
     // Interface for implementing low level socket goodness from streams.
     // ------------------------------------------------------------------

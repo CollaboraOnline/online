@@ -94,14 +94,14 @@ public:
         std::string port;
         if (!net::parseUri(uri, scheme, host, port))
         {
-            LOG_ERR("Invalid URI while creating WebSocketSession: " << uri);
+            LOG_ERR_S("Invalid URI while creating WebSocketSession: " << uri);
             return nullptr;
         }
 
         const std::string lowerScheme = Util::toLower(scheme);
         if (!Util::startsWith(lowerScheme, "http") && !Util::startsWith(lowerScheme, "ws"))
         {
-            LOG_ERR("Unsupported scheme in URI while creating WebSocketSession: " << uri);
+            LOG_ERR_S("Unsupported scheme in URI while creating WebSocketSession: " << uri);
             return nullptr;
         }
 
@@ -241,7 +241,7 @@ public:
                     auto ws = weakptr.lock();
                     if (ws)
                     {
-                        LOG_TRC("WebSocketSession: shutdown");
+                        LOG_TRC_S("WebSocketSession: shutdown");
                         ws->shutdown(true, "Shutting down");
                     }
                 });

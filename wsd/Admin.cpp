@@ -375,14 +375,14 @@ bool AdminSocketHandler::handleInitialRequest(
 {
     if (!COOLWSD::AdminEnabled)
     {
-        LOG_ERR("Request for disabled admin console");
+        LOG_ERR_S("Request for disabled admin console");
         return false;
     }
 
     std::shared_ptr<StreamSocket> socket = socketWeak.lock();
     if (!socket)
     {
-        LOG_ERR("Invalid socket while reading initial request.");
+        LOG_ERR_S("Invalid socket while reading initial request");
         return false;
     }
 
@@ -403,7 +403,7 @@ bool AdminSocketHandler::handleInitialRequest(
     HTTPResponse response;
     response.setStatusAndReason(HTTPResponse::HTTP_BAD_REQUEST);
     response.setContentLength(0);
-    LOG_INF("Admin::handleInitialRequest bad request");
+    LOG_INF_S("Admin::handleInitialRequest bad request");
     socket->send(response);
 
     return false;
