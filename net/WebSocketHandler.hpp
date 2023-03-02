@@ -894,11 +894,6 @@ protected:
         return _socket;
     }
 
-    void setSocket(const std::weak_ptr<StreamSocket>& socket)
-    {
-        _socket = socket;
-    }
-
     void ignoreInput()
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
