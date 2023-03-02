@@ -10,6 +10,7 @@ L.Control.UIManager = L.Control.extend({
 	blockedUI: false,
 	busyPopupTimer: null,
 	customButtons: [], // added by WOPI InsertButton
+	modalIdPretext: 'modal-dialog-',
 
 	onAdd: function (map) {
 		this.map = map;
@@ -821,8 +822,13 @@ L.Control.UIManager = L.Control.extend({
 		app.socket._onMessage({ textMsg: 'jsdialog: ' + JSON.stringify(closeMessage) });
 	},
 
+	/// Returns generated (or to be generated) id for the modal container.
+	generateModalId: function(givenId) {
+		return this.modalIdPretext + givenId;
+	},
+
 	_modalDialogJSON: function(id, title, cancellable, widgets, focusId) {
-		var dialogId = 'modal-dialog-' + id;
+		var dialogId = this.generateModalId(id);
 		focusId = focusId ? focusId : 'response';
 		return {
 			id: dialogId,
@@ -854,7 +860,10 @@ L.Control.UIManager = L.Control.extend({
 	/// callback - callback on button press
 	/// withCancel - specifies if needs cancal button also
 	showInfoModal: function(id, title, message1, message2, buttonText, callback, withCancel) {
-		var dialogId = 'modal-dialog-' + id;
+		var dialogId = this.generateModalId(id);
+		var responseButtonId = id + '-response';
+		var cancelButtonId = id + '-cancel';
+
 		var json = this._modalDialogJSON(id, title, true, [
 			{
 				id: 'info-modal-tile-m',
@@ -879,12 +888,12 @@ L.Control.UIManager = L.Control.extend({
 				enabled: true,
 				children: [
 					withCancel ? {
-						id: 'cancel',
+						id: cancelButtonId,
 						type: 'pushbutton',
 						text: _('Cancel')
 					} : { type: 'container' },
 					{
-						id: id + '-response', // Try to keep the id unique.
+						id: responseButtonId,
 						type: 'pushbutton',
 						text: buttonText,
 						'has_default': true,
@@ -898,7 +907,7 @@ L.Control.UIManager = L.Control.extend({
 
 		var that = this;
 		this.showModal(json, [
-			{id: 'response', func: function() {
+			{id: responseButtonId, func: function() {
 				if (typeof callback === 'function')
 					callback();
 				that.closeModal(dialogId);
@@ -914,7 +923,7 @@ L.Control.UIManager = L.Control.extend({
 	/// buttonText - text inside OK button
 	/// callback - callback on button press
 	showInputModal: function(id, title, message, defaultValue, buttonText, callback) {
-		var dialogId = 'modal-dialog-' + id;
+		var dialogId = this.generateModalId(id);
 		var json = this._modalDialogJSON(id, title, !window.mode.isDesktop(), [
 			{
 				id: 'info-modal-label1',
@@ -968,7 +977,7 @@ L.Control.UIManager = L.Control.extend({
 	/// buttonText - text inside OK button
 	/// callback - callback on button press
 	showConfirmModal: function(id, title, message, buttonText, callback) {
-		var dialogId = 'modal-dialog-' + id;
+		var dialogId = this.generateModalId(id);
 		var json = this._modalDialogJSON(id, title, !window.mode.isDesktop(), [
 			{
 				id: 'info-modal-label1',
