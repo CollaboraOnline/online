@@ -182,19 +182,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Cut']);
 
-		// TODO: cypress does not support clipboard operations
-		// so we get a warning dialog here.
-		cy.get('.vex-dialog-form')
-			.should('be.visible');
-
-		cy.get('.vex-dialog-message')
-			.should('have.text', 'Please use the copy/paste buttons on your on-screen keyboard.');
-
-		cy.get('.vex-dialog-buttons .button-primary')
-			.click();
-
-		cy.get('.vex-dialog-form')
-			.should('not.exist');
+		cy.get('#copy_paste_warning').should('exist');
 	});
 
 	it('Copy.', function() {
@@ -204,19 +192,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Copy']);
 
-		// TODO: cypress does not support clipboard operations
-		// so we get a warning dialog here.
-		cy.get('.vex-dialog-form')
-			.should('be.visible');
-
-		cy.get('.vex-dialog-message')
-			.should('have.text', 'Please use the copy/paste buttons on your on-screen keyboard.');
-
-		cy.get('.vex-dialog-buttons .button-primary')
-			.click();
-
-		cy.get('.vex-dialog-form')
-			.should('not.exist');
+		cy.get('#copy_paste_warning').should('exist');
 	});
 
 	it('Paste.', function() {
@@ -226,19 +202,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Paste']);
 
-		// TODO: cypress does not support clipboard operations
-		// so we get a warning dialog here.
-		cy.get('.vex-dialog-form')
-			.should('be.visible');
-
-		cy.get('.vex-dialog-message')
-			.should('have.text', 'Please use the copy/paste buttons on your on-screen keyboard.');
-
-		cy.get('.vex-dialog-buttons .button-primary')
-			.click();
-
-		cy.get('.vex-dialog-form')
-			.should('not.exist');
+		cy.get('#copy_paste_warning').should('exist');
 	});
 
 	it('Select all.', function() {

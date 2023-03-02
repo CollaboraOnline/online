@@ -516,7 +516,9 @@ L.Clipboard = L.Class.extend({
 		if ($('.w2ui-input').is(':focus'))
 			return true;
 
-		if ((isAnyVexDialogActive() || this._map.jsdialog.hasDialogOpened()) && !this.isPasteSpecialDialogOpen())
+		var isJSDialogOpen = this._map.jsdialog ? this._map.jsdialog.hasDialogOpened(): document.getElementById('mobile-wizard-content').length > 0;
+
+		if ((isAnyVexDialogActive() || isJSDialogOpen) && !this.isPasteSpecialDialogOpen())
 			return true;
 
 		if ($('.annotation-active').length && $('.cool-annotation-edit').is(':visible'))
@@ -865,8 +867,10 @@ L.Clipboard = L.Class.extend({
 			msg = L.Util.replaceCtrlAltInMac(msg);
 		}
 
-		this._map.uiManager.showInfoModal('copy paste warning');
-		document.getElementById('copy paste warning').innerHTML = msg;
+		this._map.uiManager.showInfoModal('copy_paste_warning');
+		document.getElementById('copy_paste_warning').innerHTML = msg;
+		document.getElementById('copy_paste_warning').tabIndex = 0;
+		document.getElementById('copy_paste_warning').focus(); // We hid the OK button, we need to set focus manually on the popup.
 	},
 
 	_substProductName: function (msg) {
@@ -884,8 +888,10 @@ L.Clipboard = L.Class.extend({
 			    '<p>If you are copy and pasting between documents inside %productName, ' +
 			    'there is no need to download.</p>');
 
-		this._map.uiManager.showInfoModal('large copy paste warning');
-		document.getElementById('large copy paste warning').innerHTML = this._substProductName(msg);
+		this._map.uiManager.showInfoModal('large_copy_paste_warning');
+		document.getElementById('large_copy_paste_warning').innerHTML = this._substProductName(msg);
+		document.getElementById('large_copy_paste_warning').tabIndex = 0;
+		document.getElementById('large_copy_paste_warning').focus(); // We hid the OK button, we need to set focus manually on the popup.
 	},
 
 	_warnLargeCopyPasteAlreadyStarted: function () {
@@ -895,20 +901,21 @@ L.Clipboard = L.Class.extend({
 	},
 
 	isPasteSpecialDialogOpen: function() {
-		return document.getElementById('paste special dialog') ? true: false;
+		return document.getElementById('paste_special_dialog') ? true: false;
 	},
 
 	_openPasteSpecialPopup: function () {
 		var msg = _('<p>Your browser has very limited access to the clipboard</p><p>Please press now: <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd> to see more options</p><p class="vex-footnote">Close popup to ignore paste special</p>');
 		msg = L.Util.replaceCtrlAltInMac(msg);
 
-		this._map.uiManager.showInfoModal('paste special dialog');
+		this._map.uiManager.showInfoModal('paste_special_dialog');
 
-		// showInfoModal creates the id in following format: 'modal-dialog-paste special dialog'.
 		// We will use this for closing the dialog.
-		this.pasteSpecialDialogId = 'modal-dialog-paste special dialog';
+		this.pasteSpecialDialogId = this._map.uiManager.generateModalId('paste_special_dialog');
 
-		document.getElementById('paste special dialog').innerHTML = msg;
+		document.getElementById('paste_special_dialog').innerHTML = msg;
+		document.getElementById('paste_special_dialog').tabIndex = 0;
+		document.getElementById('paste_special_dialog').focus(); // We hid the OK button, we need to set focus manually on the popup.
 	},
 });
 

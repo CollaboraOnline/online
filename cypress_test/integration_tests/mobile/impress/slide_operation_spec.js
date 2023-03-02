@@ -41,7 +41,7 @@ describe('Slide operations', function() {
 		cy.get('.menu-entry-icon.deletepage').parent()
 			.click();
 
-		cy.get('#response').click();
+		cy.get('#deleteslide-modal-response').click();
 
 		impressHelper.assertNumberOfSlidePreviews(1);
 	});
