@@ -1525,7 +1525,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder.map.hideRestrictedItems(data, wrapper, pushbutton);
 		builder.map.disableLockedItem(data, wrapper, pushbutton);
 		if (data.hidden)
-			$(pushbutton).hide();
+			$(wrapper).hide(); // Both pushbutton and its wrapper needs to be hidden.
 
 		return false;
 	},

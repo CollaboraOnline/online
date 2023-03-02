@@ -3,7 +3,7 @@
  * L.Clipboard is used to abstract our storage and management of
  * local & remote clipboard data.
  */
-/* global app _ vex brandProductName isAnyVexDialogActive $ */
+/* global app _ brandProductName isAnyVexDialogActive $ */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -294,12 +294,7 @@ L.Clipboard = L.Class.extend({
 				if (that._isStubHtml(fallbackHtml))
 				{
 					// Let the user know they haven't really copied document content.
-					vex.dialog.alert({
-						message: _('Failed to download clipboard, please re-copy'),
-						callback: function () {
-							that._map.focus();
-						}
-					});
+					this._map.uiManager.showInfoModal('data transfer warning', '', _('Failed to download clipboard, please re-copy'));
 					return;
 				}
 
@@ -521,7 +516,7 @@ L.Clipboard = L.Class.extend({
 		if ($('.w2ui-input').is(':focus'))
 			return true;
 
-		if (isAnyVexDialogActive() && !this.isPasteSpecialDialogOpen())
+		if ((isAnyVexDialogActive() || this._map.jsdialog.hasDialogOpened()) && !this.isPasteSpecialDialogOpen())
 			return true;
 
 		if ($('.annotation-active').length && $('.cool-annotation-edit').is(':visible'))
@@ -862,7 +857,6 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_warnCopyPaste: function() {
-		var self = this;
 		var msg;
 		if (window.mode.isMobile() || window.mode.isTablet()) {
 			msg = _('<p>Please use the copy/paste buttons on your on-screen keyboard.</p>');
@@ -870,12 +864,9 @@ L.Clipboard = L.Class.extend({
 			msg = _('<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:</p><table class="warn-copy-paste"><tr><td><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd></td></tr><tr><td>Copy</td><td>Cut</td><td>Paste</td></tr></table>');
 			msg = L.Util.replaceCtrlAltInMac(msg);
 		}
-		vex.dialog.alert({
-			unsafeMessage: msg,
-			callback: function () {
-				self._map.focus();
-			}
-		});
+
+		this._map.uiManager.showInfoModal('copy paste warning');
+		document.getElementById('copy paste warning').innerHTML = msg;
 	},
 
 	_substProductName: function (msg) {
@@ -887,29 +878,20 @@ L.Clipboard = L.Class.extend({
 		if (this._userAlreadyWarned('warnedAboutLargeCopy'))
 			return;
 
-		var self = this;
 		var msg = _('<p>If you would like to share larger elements of your document with other applications ' +
 			    'it is necessary to first download them onto your device. To do that press the ' +
 			    '"Start download" button below, and when complete click "Confirm copy to clipboard".</p>' +
 			    '<p>If you are copy and pasting between documents inside %productName, ' +
 			    'there is no need to download.</p>');
-		vex.dialog.alert({
-			unsafeMessage: this._substProductName(msg),
-			callback: function () {
-				self._map.focus();
-			}
-		});
+
+		this._map.uiManager.showInfoModal('large copy paste warning');
+		document.getElementById('large copy paste warning').innerHTML = this._substProductName(msg);
 	},
 
 	_warnLargeCopyPasteAlreadyStarted: function () {
-		var self = this;
-		vex.dialog.alert({
-			unsafeMessage: _('<p>A download due to a large copy/paste operation has already started. ' +
-				   'Please, wait for the current download or cancel it before starting a new one</p>'),
-			callback: function () {
-				self._map.focus();
-			}
-		});
+		this._map.uiManager.showInfoModal('large copy paste started warning');
+		document.getElementById('large copy paste started warning').innerHTML = _('<p>A download due to a large copy/paste operation has already started. ' +
+		'Please, wait for the current download or cancel it before starting a new one</p>');
 	},
 
 	isPasteSpecialDialogOpen: function() {
@@ -920,7 +902,7 @@ L.Clipboard = L.Class.extend({
 		var msg = _('<p>Your browser has very limited access to the clipboard</p><p>Please press now: <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd> to see more options</p><p class="vex-footnote">Close popup to ignore paste special</p>');
 		msg = L.Util.replaceCtrlAltInMac(msg);
 
-		this._map.uiManager.showInfoModal('paste special dialog', '', '', '', null, false);
+		this._map.uiManager.showInfoModal('paste special dialog');
 
 		// showInfoModal creates the id in following format: 'modal-dialog-paste special dialog'.
 		// We will use this for closing the dialog.

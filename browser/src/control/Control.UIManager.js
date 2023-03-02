@@ -884,10 +884,11 @@ L.Control.UIManager = L.Control.extend({
 						text: _('Cancel')
 					} : { type: 'container' },
 					{
-						id: 'response',
+						id: id + '-response', // Try to keep the id unique.
 						type: 'pushbutton',
 						text: buttonText,
 						'has_default': true,
+						hidden: buttonText ? false: true // Hide if no text is given. So we can use one modal type for various purposes.
 					}
 				],
 				vertical: false,
