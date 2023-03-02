@@ -797,6 +797,13 @@ L.Map.include({
 
 	// map.dispatch() will be used to call some actions so we can share the code
 	dispatch: function(action) {
+		// Don't allow to execute new actions while any dialog is visible.
+		// It prevents launching multiple instances of the same dialog.
+		if (this.dialog.hasOpenedDialog() || (this.jsdialog && this.jsdialog.hasDialogOpened())) {
+			this.dialog.blinkOpenDialog();
+			return;
+		}
+
 		if (action.indexOf('saveas-') === 0) {
 			var format = action.substring('saveas-'.length);
 			this.openSaveAs(format);
