@@ -424,6 +424,10 @@ L.Map.WOPI = L.Handler.extend({
 		else if (msg.MessageId == 'Action_GetLinkPreview_Resp') {
 			var preview = document.querySelector('#hyperlink-pop-up-preview');
 			if (preview) {
+				// check if this is a preview for currently displayed link
+				if (preview.nextSibling && preview.nextSibling.innerText !== msg.Values.url)
+					return;
+
 				preview.innerText = '';
 				if (msg.Values.image && msg.Values.image.indexOf('data:') === 0) {
 					var image = L.DomUtil.create('img', '', preview);
