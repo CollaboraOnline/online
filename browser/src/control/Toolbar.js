@@ -723,13 +723,11 @@ L.Map.include({
 		return str;
 	},
 
-	showHyperlinkDialog: function() {
+	getTextForLink: function() {
 		var map = this;
 		var text = '';
-		var link = '';
-		if (this.hyperlinkUnderCursor && this.hyperlinkUnderCursor.text && this.hyperlinkUnderCursor.link) {
+		if (this.hyperlinkUnderCursor && this.hyperlinkUnderCursor.text) {
 			text = this.hyperlinkUnderCursor.text;
-			link = this.hyperlinkUnderCursor.link;
 		} else if (this._clip && this._clip._selectionType == 'text') {
 			if (map['stateChangeHandler'].getItemValue('.uno:Copy') === 'enabled') {
 				text = this.extractContent(this._clip._selectionContent);
@@ -737,6 +735,15 @@ L.Map.include({
 		} else if (this._docLayer._selectedTextContent) {
 			text = this.extractContent(this._docLayer._selectedTextContent);
 		}
+		return text;
+	},
+
+	showHyperlinkDialog: function() {
+		var map = this;
+		var text = this.getTextForLink();
+		var link = '';
+		if (this.hyperlinkUnderCursor && this.hyperlinkUnderCursor.link)
+			link = this.hyperlinkUnderCursor.link;
 
 		vex.dialog.open({
 			contentClassName: 'hyperlink-dialog vex-has-inputs',
