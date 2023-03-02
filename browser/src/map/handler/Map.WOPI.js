@@ -402,14 +402,19 @@ L.Map.WOPI = L.Handler.extend({
 		}
 		else if (msg.MessageId == 'Action_InsertLink') {
 			if (msg.Values) {
+				var link = this._map.makeURLFromStr(msg.Values.url);
+				var text = this._map.getTextForLink();
+
+				text = text ? text.trim() : link;
+
 				var command = {
 					'Hyperlink.Text': {
 						type: 'string',
-						value: 'Link'
+						value: text
 					},
 					'Hyperlink.URL': {
 						type: 'string',
-						value: this._map.makeURLFromStr(msg.Values.url)
+						value: link
 					}
 				};
 				this._map.sendUnoCommand('.uno:SetHyperlink', command);
