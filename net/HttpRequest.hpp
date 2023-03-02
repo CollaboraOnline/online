@@ -763,11 +763,12 @@ public:
 
     /// A response received from a server.
     /// Used for parsing an incoming response.
-    Response(FinishedCallback finishedCallback)
+    explicit Response(FinishedCallback finishedCallback, int fd = -1)
         : _state(State::New)
         , _parserStage(ParserStage::StatusLine)
         , _recvBodySize(0)
         , _finishedCallback(std::move(finishedCallback))
+        , _fd(fd)
     {
         // By default we store the body in memory.
         saveBodyToMemory();
@@ -782,8 +783,9 @@ public:
 
     /// A response sent from a server.
     /// Used for generating an outgoing response.
-    Response(StatusLine statusLineObj)
+    explicit Response(StatusLine statusLineObj, int fd = -1)
         : _statusLine(std::move(statusLineObj))
+        , _fd(fd)
     {
         _header.add("Date", Util::getHttpTimeNow());
         _header.add("Server", HTTP_SERVER_STRING);
@@ -791,8 +793,8 @@ public:
 
     /// A response sent from a server.
     /// Used for generating an outgoing response.
-    Response(StatusCode statusCode)
-        : Response(StatusLine(statusCode))
+    explicit Response(StatusCode statusCode, int fd = -1)
+        : Response(StatusLine(statusCode), fd)
     {
     }
 
@@ -919,10 +921,16 @@ public:
     {
         // We expect to have completed successfully, or timed out,
         // anything else means we didn't get complete data.
+        LOG_TRC("State::Error");
         finish(State::Error);
     }
 
+    /// Sets the context used by logPrefix.
+    void setLogContext(int fd) { _fd = fd; }
+
 private:
+    inline void logPrefix(std::ostream& os) const { os << '#' << _fd << ": "; }
+
     void finish(State newState)
     {
         if (!done())
@@ -947,6 +955,7 @@ private:
     std::ofstream _bodyFile; //< Used when _bodyHandling is OnDisk.
     IoWriteFunc _onBodyWriteCb; //< Used to handling body receipt in all cases.
     FinishedCallback _finishedCallback; //< Called when response is finished.
+    int _fd; //< The socket file-descriptor.
 };
 
 /// A client socket to make asynchronous HTTP requests.
@@ -1289,7 +1298,7 @@ private:
         };
 
         _response.reset();
-        _response = std::make_shared<Response>(onFinished);
+        _response = std::make_shared<Response>(onFinished, _fd);
 
         _request = std::move(req);
 
