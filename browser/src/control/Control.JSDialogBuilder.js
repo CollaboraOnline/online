@@ -1520,7 +1520,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		else if (builder._responses[pushbutton.id] !== undefined)
 			pushbutton.onclick = builder.callback.bind(builder, 'responsebutton', 'click', { id: pushbutton.id }, builder._responses[pushbutton.id], builder);
 		else
-			pushbutton.onclick = builder.callback.bind(builder, 'pushbutton', 'click', pushbutton, data.command, builder);
+			pushbutton.onclick = builder.callback.bind(builder, 'pushbutton', data.isToggle ? 'toggle' : 'click', pushbutton, data.command, builder);
 
 		builder.map.hideRestrictedItems(data, wrapper, pushbutton);
 		builder.map.disableLockedItem(data, wrapper, pushbutton);
