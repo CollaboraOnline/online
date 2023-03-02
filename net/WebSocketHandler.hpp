@@ -104,6 +104,7 @@ public:
             throw std::runtime_error("Invalid socket while upgrading to WebSocket.");
 
         _socket = socket;
+        setLogContext(socket->getFD());
 
         // As a server, respond with 101 protocol-upgrade.
         assert(!_isClient);
@@ -168,7 +169,7 @@ public:
             return true;
         }
 
-        LOG_ERR("Failed to make WebSocket request.");
+        LOG_ERR("Failed to make WebSocket request");
         return false;
     }
 #endif
@@ -178,7 +179,8 @@ protected:
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
         _socket = socket;
-        LOG_TRC('#' << socket->getFD() << " Connected to WS Handler " << this);
+        setLogContext(socket->getFD());
+        LOG_TRC("Connected to WS Handler " << this);
     }
 
     /// Sends WS Close frame to the peer.
@@ -189,21 +191,21 @@ protected:
         if (!socket)
         {
             LOG_ERR("No socket associated with WebSocketHandler " << this
-                                                                  << " to send Close Frame to.");
+                                                                  << " to send Close Frame to");
             return;
         }
 
         if (socket->isClosed())
         {
-            LOG_DBG('#' << socket->getFD() << " is closed. Cannot send Close Frame.");
+            LOG_DBG("Socket is closed. Cannot send Close Frame");
             return;
         }
 
         // Don't send close-frame more than once.
         if (!_shuttingDown)
         {
-            LOG_TRC('#' << socket->getFD() << ": Shutdown websocket, code: "
-                        << static_cast<unsigned>(statusCode) << ", message: " << statusMessage);
+            LOG_TRC("Shutdown websocket, code: " << static_cast<unsigned>(statusCode)
+                                                 << ", message: " << statusMessage);
             _shuttingDown = true;
 
 #if !MOBILEAPP
@@ -244,7 +246,7 @@ public:
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (socket)
         {
-            LOG_TRC('#' << socket->getFD() << ": Shutdown. Close Connection.");
+            LOG_TRC("Shutdown: Closing Connection");
             if (!_shuttingDown)
                 sendCloseFrame(statusCode, statusMessage);
             socket->closeConnection();
@@ -273,7 +275,7 @@ private:
 #if !MOBILEAPP
         if (len < 2) // partial read
         {
-            LOG_TRC('#' << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes");
+            LOG_TRC("Still incomplete WebSocket message, have " << len << " bytes");
             return false;
         }
 
@@ -290,7 +292,7 @@ private:
         {
             if (len < 2 + 2)
             {
-                LOG_TRC('#' << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes");
+                LOG_TRC("Still incomplete WebSocket message, have " << len << " bytes");
                 return false;
             }
 
@@ -301,7 +303,7 @@ private:
         {
             if (len < 2 + 8)
             {
-                LOG_TRC('#' << socket->getFD() << ": Still incomplete WebSocket message, have " << len << " bytes");
+                LOG_TRC("Still incomplete WebSocket message, have " << len << " bytes");
                 return false;
             }
             payloadLen = ((((uint64_t)p[9]) <<  0) + (((uint64_t)p[8]) <<  8) +
@@ -322,20 +324,21 @@ private:
 
         if (payloadLen + headerLen > len)
         { // partial read wait for more data.
-            LOG_TRC('#' << socket->getFD() << ": Still incomplete WebSocket frame, have " << len
-                        << " bytes, frame is " << payloadLen + headerLen << " bytes");
+            LOG_TRC("Still incomplete WebSocket frame, have "
+                    << len << " bytes, frame is " << payloadLen + headerLen << " bytes");
             return false;
         }
 
         if (hasMask && _isClient)
         {
-            LOG_ERR('#' << socket->getFD() << ": Servers should not send masked frames. Only clients.");
+            LOG_ERR("Servers should not send masked frames. Only clients");
             shutdown(StatusCodes::PROTOCOL_ERROR);
             return true;
         }
 
-        LOG_TRC('#' << socket->getFD() << ": Incoming WebSocket data of " << len << " bytes: "
-                    << Util::stringifyHexLine(socket->getInBuffer(), 0, std::min((size_t)32, len)));
+        LOG_TRC("Incoming WebSocket data of "
+                << len << " bytes: "
+                << Util::stringifyHexLine(socket->getInBuffer(), 0, std::min((size_t)32, len)));
 
         data = p + headerLen;
 
@@ -347,20 +350,21 @@ private:
 
             readPayload(data, payloadLen, mask, ctrlPayload);
             socket->getInBuffer().eraseFirst(headerLen + payloadLen);
-            LOG_TRC('#' << socket->getFD() << ": Incoming WebSocket frame code " << static_cast<unsigned>(code) <<
-                ", fin? " << fin << ", mask? " << hasMask << ", payload length: " << payloadLen <<
-                ", residual socket data: " << socket->getInBuffer().size() << " bytes.");
+            LOG_TRC("Incoming WebSocket frame code "
+                    << static_cast<unsigned>(code) << ", fin? " << fin << ", mask? " << hasMask
+                    << ", payload length: " << payloadLen
+                    << ", residual socket data: " << socket->getInBuffer().size() << " bytes");
 
             // All control frames MUST NOT be fragmented and MUST have a payload length of 125 bytes or less
             if (!fin)
             {
-                LOG_ERR('#' << socket->getFD() << ": A control frame cannot be fragmented.");
+                LOG_ERR("A control frame cannot be fragmented");
                 shutdown(StatusCodes::PROTOCOL_ERROR);
                 return true;
             }
             if (payloadLen > 125)
             {
-                LOG_ERR('#' << socket->getFD() << ": The payload length of a control frame must not exceed 125 bytes.");
+                LOG_ERR("The payload length of a control frame must not exceed 125 bytes");
                 shutdown(StatusCodes::PROTOCOL_ERROR);
                 return true;
             }
@@ -370,18 +374,18 @@ private:
             case WSOpCode::Pong:
                 {
                     if (_isClient)
-                        LOG_WRN('#' << socket->getFD() << ": Servers should not send pongs, only clients");
+                        LOG_WRN("Servers should not send pongs, only clients");
 
                     _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>
                         (std::chrono::steady_clock::now() - _lastPingSentTime).count();
-                    LOG_TRC('#' << socket->getFD() << ": Pong received: " << _pingTimeUs << " microseconds");
+                    LOG_TRC("Pong received: " << _pingTimeUs << " microseconds");
                     gotPing(code, _pingTimeUs);
                 }
                 break;
             case WSOpCode::Ping:
                 {
                     if (!_isClient)
-                        LOG_ERR('#' << socket->getFD() << ": Clients should not send pings, only servers");
+                        LOG_ERR("Clients should not send pings, only servers");
 
                     const auto now = std::chrono::steady_clock::now();
                     _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>
@@ -406,16 +410,16 @@ private:
                                 message.assign(&ctrlPayload[2], &ctrlPayload[2] + ctrlPayload.size() - 2);
                         }
 
-                        LOG_TRC('#' << socket->getFD() << ": Peer initiated socket shutdown. Code: "
-                                    << static_cast<int>(statusCode));
+                        LOG_TRC("Peer initiated socket shutdown. Code: "
+                                << static_cast<int>(statusCode));
                     }
                     shutdown(statusCode, message);
                     return true;
                 }
             default:
-                LOG_ERR('#' << socket->getFD() << ": Received unknown control code");
-                shutdown(StatusCodes::PROTOCOL_ERROR);
-                break;
+                    LOG_ERR("Received unknown control code");
+                    shutdown(StatusCodes::PROTOCOL_ERROR);
+                    break;
             }
 
             return true;
@@ -426,14 +430,16 @@ private:
         {
             if (code != WSOpCode::Continuation)
             {
-                LOG_ERR('#' << socket->getFD() << ": A fragment that is not the first fragment of a message must have the opcode equal to 0.");
+                LOG_ERR("A fragment that is not the first fragment of a message must have the opcode "
+                        "equal to 0");
                 shutdown(StatusCodes::PROTOCOL_ERROR);
                 return true;
             }
         }
         else if (code == WSOpCode::Continuation)
         {
-            LOG_ERR('#' << socket->getFD() << ": An unfragmented message or the first fragment of a fragmented message must have the opcode different than 0.");
+            LOG_ERR("An unfragmented message or the first fragment of a fragmented message must "
+                    "have the opcode different than 0");
             shutdown(StatusCodes::PROTOCOL_ERROR);
             return true;
         }
@@ -451,10 +457,13 @@ private:
 
 #if !MOBILEAPP
 
-        LOG_TRC('#' << socket->getFD() << ": Incoming WebSocket frame code " << static_cast<unsigned>(code) <<
-                ", fin? " << fin << ", mask? " << hasMask << ", payload length: " << payloadLen <<
-                ", residual socket data: " << socket->getInBuffer().size() << " bytes, unmasked data: "+
-                Util::stringifyHexLine(_wsPayload, 0, std::min((size_t)32, _wsPayload.size())));
+        LOG_TRC(
+            "Incoming WebSocket frame code "
+            << static_cast<unsigned>(code) << ", fin? " << fin << ", mask? " << hasMask
+            << ", payload length: " << payloadLen
+            << ", residual socket data: " << socket->getInBuffer().size()
+            << " bytes, unmasked data: " +
+                   Util::stringifyHexLine(_wsPayload, 0, std::min((size_t)32, _wsPayload.size())));
 
         if (fin)
         {
@@ -466,16 +475,15 @@ private:
             }
             catch (const Poco::Exception& ex)
             {
-                LOG_ERR('#' << socket->getFD()
-                            << ": Error during handleMessage: " << ex.displayText());
+                LOG_ERR("Error during handleMessage: " << ex.displayText());
             }
             catch (const std::exception& exception)
             {
-                LOG_ERR('#' << socket->getFD() << ": Error during handleMessage: " << exception.what());
+                LOG_ERR("Error during handleMessage: " << exception.what());
             }
             catch (...)
             {
-                LOG_ERR('#' << socket->getFD() << ": Error during handleMessage.");
+                LOG_ERR("Error during handleMessage");
             }
 
             _inFragmentBlock = false;
@@ -493,11 +501,11 @@ private:
         }
         catch (const std::exception& exception)
         {
-            LOG_ERR('#' << socket->getFD() << ": Error during handleMessage: " << exception.what());
+            LOG_ERR("Error during handleMessage: " << exception.what());
         }
         catch (...)
         {
-            LOG_ERR('#' << socket->getFD() << ": Error during handleMessage.");
+            LOG_ERR("Error during handleMessage");
         }
 #endif
 
@@ -531,8 +539,7 @@ protected:
             }
             catch (const std::exception& ex)
             {
-                LOG_DBG('#' << socket->getFD()
-                            << " handleClientUpgrade exception caught: " << ex.what());
+                LOG_DBG("handleClientUpgrade exception caught: " << ex.what());
             }
         }
 #endif
@@ -582,8 +589,7 @@ private:
             return;
         }
 
-        LOG_TRC('#' << socket->getFD() << ": Sending " <<
-                (const char *)(code == WSOpCode::Ping ? " ping." : "pong."));
+        LOG_TRC("Sending " << (const char*)(code == WSOpCode::Ping ? " ping" : "pong"));
         // FIXME: allow an empty payload.
         sendMessage(data, len, code, false);
         _lastPingSentTime = now;
@@ -757,7 +763,7 @@ protected:
 
         if (socket->isClosed())
         {
-            LOG_DBG('#' << socket->getFD() << " is closed. Cannot send WS frame.");
+            LOG_DBG("Socket is closed. Cannot send WS frame");
             return 0;
         }
 
@@ -844,9 +850,9 @@ protected:
                 socket->writeOutgoingData();
                 if (!out.empty())
                 {
-                    LOG_WRN('#'
-                            << socket->getFD() << " is shutting down but " << out.size()
-                            << " bytes couldn't be flushed and still remain in the output buffer.");
+                    LOG_WRN("Shutting down but "
+                            << out.size()
+                            << " bytes couldn't be flushed and still remain in the output buffer");
                 }
             }
         }
@@ -920,7 +926,7 @@ protected:
     void upgradeToWebSocket(const std::shared_ptr<StreamSocket>& socket, const T& req)
     {
         assert(socket && "Must have a valid socket");
-        LOG_TRC('#' << socket->getFD() << ": Upgrading to WebSocket.");
+        LOG_TRC("Upgrading to WebSocket");
         assert(!socket->isWebSocket());
         assert(!_isClient && "Accepting upgrade requests are done by servers only.");
 
@@ -930,8 +936,8 @@ protected:
         const std::string wsKey = req.get("Sec-WebSocket-Key", "");
         const std::string wsProtocol = req.get("Sec-WebSocket-Protocol", "chat");
         // FIXME: other sanity checks ...
-        LOG_INF('#' << socket->getFD() << ": WebSocket version: " << wsVersion << ", key: ["
-                    << wsKey << "], protocol: [" << wsProtocol << "].");
+        LOG_INF("WebSocket version: " << wsVersion << ", key: [" << wsKey << "], protocol: ["
+                                      << wsProtocol << ']');
 
 #if ENABLE_DEBUG
         if (std::getenv("COOL_ZERO_BUFFER_SIZE"))
@@ -942,8 +948,7 @@ protected:
         httpResponse.set("Upgrade", "websocket");
         httpResponse.set("Connection", "Upgrade");
         httpResponse.set("Sec-WebSocket-Accept", PublicComputeAccept::doComputeAccept(wsKey));
-        LOG_TRC('#' << socket->getFD()
-                    << ": Sending WS Upgrade response: " << httpResponse.header().toString());
+        LOG_TRC("Sending WS Upgrade response: " << httpResponse.header().toString());
         socket->send(httpResponse);
 #else
         (void) req;
@@ -960,8 +965,8 @@ protected:
 
         Buffer& data = socket->getInBuffer();
 
-        LOG_TRC('#' << socket->getFD() << " Incoming client websocket upgrade response: "
-                    << std::string(data.data(), data.size()));
+        LOG_TRC("Incoming client websocket upgrade response: " << std::string(data.data(),
+                                                                              data.size()));
 
         // Consume the incoming data by parsing and processing the body.
         http::Response response([&]() {
@@ -972,14 +977,12 @@ protected:
                 && response.get("Sec-WebSocket-Accept", "")
                        == PublicComputeAccept::doComputeAccept(_key))
             {
-                LOG_TRC('#' << socket->getFD() << " Accepted incoming websocket response");
+                LOG_TRC("Accepted incoming websocket response");
                 setWebSocket(socket);
             }
             else
             {
-                LOG_ERR('#' << socket->getFD()
-                            << " Server returned invalid accept token during handshake. "
-                               "Disconnecting.");
+                LOG_ERR("Server returned invalid accept token during handshake. Disconnecting");
                 socket->shutdown();
             }
         });
@@ -988,8 +991,7 @@ protected:
         if (read < 0)
         {
             // Error: Interrupt the transfer.
-            LOG_ERR('#' << socket->getFD()
-                        << " Error in client websocket upgrade response. Disconnecting");
+            LOG_ERR("Error in client websocket upgrade response. Disconnecting");
             socket->shutdown();
             return;
         }
