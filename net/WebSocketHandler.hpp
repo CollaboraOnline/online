@@ -939,7 +939,7 @@ protected:
             socket->setSocketBufferSize(0);
 #endif
 
-        http::Response httpResponse(http::StatusCode::SwitchingProtocols);
+        http::Response httpResponse(http::StatusCode::SwitchingProtocols, socket->getFD());
         httpResponse.set("Upgrade", "websocket");
         httpResponse.set("Connection", "Upgrade");
         httpResponse.set("Sec-WebSocket-Accept", PublicComputeAccept::doComputeAccept(wsKey));
@@ -964,23 +964,26 @@ protected:
                                                                               data.size()));
 
         // Consume the incoming data by parsing and processing the body.
-        http::Response response([&]() {
-            if (response.statusLine().statusCode()
-                    == Poco::Net::HTTPResponse::HTTP_SWITCHING_PROTOCOLS
-                && Util::iequal(response.get("Upgrade"), "websocket")
-                && Util::iequal(response.get("Connection", ""), "Upgrade")
-                && response.get("Sec-WebSocket-Accept", "")
-                       == PublicComputeAccept::doComputeAccept(_key))
+        http::Response response(
+            [&]()
             {
-                LOG_TRC("Accepted incoming websocket response");
-                setWebSocket(socket);
-            }
-            else
-            {
-                LOG_ERR("Server returned invalid accept token during handshake. Disconnecting");
-                socket->shutdown();
-            }
-        });
+                if (response.statusLine().statusCode() ==
+                        Poco::Net::HTTPResponse::HTTP_SWITCHING_PROTOCOLS &&
+                    Util::iequal(response.get("Upgrade"), "websocket") &&
+                    Util::iequal(response.get("Connection", ""), "Upgrade") &&
+                    response.get("Sec-WebSocket-Accept", "") ==
+                        PublicComputeAccept::doComputeAccept(_key))
+                {
+                    LOG_TRC("Accepted incoming websocket response");
+                    setWebSocket(socket);
+                }
+                else
+                {
+                    LOG_ERR("Server returned invalid accept token during handshake. Disconnecting");
+                    socket->shutdown();
+                }
+            },
+            socket->getFD());
 
         const int64_t read = response.readData(data.data(), data.size());
         if (read < 0)
