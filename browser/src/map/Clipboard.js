@@ -273,8 +273,8 @@ L.Clipboard = L.Class.extend({
 				that._doAsyncDownload(
 					'POST', dest, formData, false,
 					function() {
-						if (this.pasteSpecialVex && this.pasteSpecialVex.isOpen) {
-							vex.close(this.pasteSpecialVex);
+						if (this.isPasteSpecialDialogOpen()) {
+							this._map.jsdialog.closeDialog(this.pasteSpecialDialogId, false);
 							window.app.console.log('up-load done, now paste special');
 							app.socket.sendMessage('uno .uno:PasteSpecial');
 						} else {
@@ -308,8 +308,8 @@ L.Clipboard = L.Class.extend({
 				that._doAsyncDownload(
 					'POST', dest, formData, false,
 					function() {
-						if (this.pasteSpecialVex && this.pasteSpecialVex.isOpen) {
-							vex.close(this.pasteSpecialVex);
+						if (this.isPasteSpecialDialogOpen()) {
+							this._map.jsdialog.closeDialog(this.pasteSpecialDialogId, false);
 							window.app.console.log('up-load of fallback done, now paste special');
 							app.socket.sendMessage('uno .uno:PasteSpecial');
 						} else {
@@ -521,7 +521,7 @@ L.Clipboard = L.Class.extend({
 		if ($('.w2ui-input').is(':focus'))
 			return true;
 
-		if (isAnyVexDialogActive() && !(this.pasteSpecialVex && this.pasteSpecialVex.isOpen))
+		if (isAnyVexDialogActive() && !this.isPasteSpecialDialogOpen())
 			return true;
 
 		if ($('.annotation-active').length && $('.cool-annotation-edit').is(':visible'))
@@ -716,8 +716,8 @@ L.Clipboard = L.Class.extend({
 			// paste into dialog
 			var KEY_PASTE = 1299;
 			map._textInput._sendKeyEvent(0, KEY_PASTE);
-		} else if (this.pasteSpecialVex && this.pasteSpecialVex.isOpen) {
-			this.pasteSpecialVex.close();
+		} else if (this.isPasteSpecialDialogOpen()) {
+			this._map.jsdialog.closeDialog(this.pasteSpecialDialogId, false);
 			app.socket.sendMessage('uno .uno:PasteSpecial');
 		} else {
 			// paste into document
@@ -912,20 +912,21 @@ L.Clipboard = L.Class.extend({
 		});
 	},
 
+	isPasteSpecialDialogOpen: function() {
+		return document.getElementById('paste special dialog') ? true: false;
+	},
+
 	_openPasteSpecialPopup: function () {
-		var self = this;
 		var msg = _('<p>Your browser has very limited access to the clipboard</p><p>Please press now: <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd> to see more options</p><p class="vex-footnote">Close popup to ignore paste special</p>');
 		msg = L.Util.replaceCtrlAltInMac(msg);
-		self._map._clip.pasteSpecialVex = vex.open({
-			unsafeContent: msg,
-			showCloseButton: true,
-			escapeButtonCloses: true,
-			overlayClosesOnClick: false,
-			buttons: {},
-			afterOpen: function() {
-				self._map.focus();
-			}
-		});
+
+		this._map.uiManager.showInfoModal('paste special dialog', '', '', '', null, false);
+
+		// showInfoModal creates the id in following format: 'modal-dialog-paste special dialog'.
+		// We will use this for closing the dialog.
+		this.pasteSpecialDialogId = 'modal-dialog-paste special dialog';
+
+		document.getElementById('paste special dialog').innerHTML = msg;
 	},
 });
 
