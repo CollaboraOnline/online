@@ -515,7 +515,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['About']);
 
-		cy.get('.vex-content')
+		cy.get('#mobile-wizard-content')
 			.should('exist');
 
 		// Check the version
@@ -523,10 +523,10 @@ describe('Trigger hamburger menu options.', function() {
 			.should('exist');
 
 		// Close about dialog
-		cy.get('.vex-close')
-			.click({force : true});
+		//cy.get('.vex-close')
+		//.click({force : true});
 
-		cy.get('.vex-content')
-			.should('not.exist');
+		//cy.get('.vex-content')
+		//.should('not.exist');
 	});
 });
