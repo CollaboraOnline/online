@@ -3350,7 +3350,7 @@ public:
         , _pid(0)
         , _socketFD(0)
     {
-        LOG_TRC("PrisonerRequestDispatcher");
+        LOG_TRC_S("PrisonerRequestDispatcher");
     }
     ~PrisonerRequestDispatcher()
     {
@@ -3370,13 +3370,13 @@ private:
     /// Keep our socket around ...
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
-        setSocket(socket);
-        LOG_TRC('#' << socket->getFD() << " Prisoner connected.");
+        WebSocketHandler::onConnect(socket);
+        LOG_TRC("Prisoner connected");
     }
 
     void onDisconnect() override
     {
-        LOG_DBG('#' << _socketFD << " Prisoner connection disconnected");
+        LOG_DBG("Prisoner connection disconnected");
 
         // Notify the broker that we're done.
         std::shared_ptr<ChildProcess> child = _childProcess.lock();
@@ -3532,7 +3532,7 @@ private:
         if (socket)
         {
             assert(socket->getFD() == _socketFD && "Socket FD changed unexpectedly");
-            LOG_TRC('#' << socket->getFD() << " Prisoner message [" << message->abbr() << ']');
+            LOG_TRC("Prisoner message [" << message->abbr() << ']');
         }
         else
             LOG_WRN("Message handler called but without valid socket. Expected #" << _socketFD);
