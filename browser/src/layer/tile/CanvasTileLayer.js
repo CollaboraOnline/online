@@ -2228,7 +2228,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._onUpdateGraphicSelection();
 
-		if (msgData.length > 5) {
+		if (msgData && msgData.length > 5) {
 			var extraInfo = msgData[5];
 			if (extraInfo.url !== undefined) {
 				this._onEmbeddedVideoContent(JSON.stringify(extraInfo));
