@@ -1092,8 +1092,8 @@ public:
     const std::shared_ptr<const Response>
     syncDownload(const Request& req, const std::string& saveToFilePath, SocketPoll& poller)
     {
-        LOG_TRC("syncDownload: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
-                                 << req.getUrl());
+        LOG_TRC_S("syncDownload: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
+                                   << req.getUrl());
 
         newRequest(req);
 
@@ -1117,8 +1117,8 @@ public:
     /// The payload body of the response, if any, can be read via getBody().
     const std::shared_ptr<const Response> syncRequest(const Request& req, SocketPoll& poller)
     {
-        LOG_TRC("syncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
-                                << req.getUrl());
+        LOG_TRC_S("syncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
+                                  << req.getUrl());
 
         newRequest(req);
         syncRequestImpl(poller);
@@ -1159,8 +1159,8 @@ public:
     /// use multiple SocketPoll instances on the same Session).
     bool asyncRequest(const Request& req, SocketPoll& poll)
     {
-        LOG_TRC("asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
-                                 << req.getUrl());
+        LOG_TRC("new asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
+                                     << req.getUrl());
 
         newRequest(req);
 
@@ -1186,6 +1186,9 @@ public:
             // In that case, we will timeout and no request will be sent.
             poll.wakeup();
         }
+
+        LOG_DBG("starting asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
+                                          << req.getUrl());
 
         return true;
     }
@@ -1233,6 +1236,9 @@ private:
 
             poller.insertNewSocket(socket);
         }
+
+        LOG_TRC("Starting syncRequest: " << _request.getVerb() << ' ' << host() << ':' << port()
+                                         << ' ' << _request.getUrl());
 
         poller.poll(timeout);
         while (!_response->done())
@@ -1581,12 +1587,13 @@ private:
         _socket = socket;
         if (socket)
         {
+            setLogContext(socket->getFD());
             if (_fd >= 0 || _pos >= 0)
             {
-                LOG_TRC('#' << socket->getFD() << " Connected");
+                LOG_TRC("Connected");
                 _connected = true;
 
-                LOG_DBG('#' << socket->getFD() << " Sending header with size " << _size);
+                LOG_DBG("Sending header with size " << _size);
                 http::Response httpResponse(http::StatusCode::OK);
                 httpResponse.set("Content-Length", std::to_string(_size));
                 httpResponse.set("Content-Type", _mimeType);
@@ -1598,7 +1605,7 @@ private:
                 return;
             }
 
-            LOG_DBG('#' << socket->getFD() << " Has no data to send back");
+            LOG_DBG("Has no data to send back");
             http::Response httpResponse(http::StatusCode::BadRequest);
             httpResponse.set("Content-Length", "0");
             socket->sendAndShutdown(httpResponse);
@@ -1637,7 +1644,6 @@ private:
 
     virtual void handleIncomingMessage(SocketDisposition& /*disposition*/) override
     {
-        // std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (!isConnected())
         {
             LOG_ERR("handleIncomingMessage called when not connected.");
@@ -1646,7 +1652,7 @@ private:
         }
 
         assert(_socket && "No valid socket to handleIncomingMessage.");
-        LOG_TRC('#' << _socket->getFD() << " handleIncomingMessage.");
+        LOG_TRC("handleIncomingMessage");
     }
 
     void performWrites(std::size_t capacity) override
@@ -1655,8 +1661,7 @@ private:
         if (_socket)
         {
             const Buffer& out = _socket->getOutBuffer();
-            LOG_TRC('#' << _socket->getFD() << ": performWrites: " << out.size()
-                        << " bytes, capacity: " << capacity);
+            LOG_TRC("performWrites: " << out.size() << " bytes, capacity: " << capacity);
 
             while (_fd >= 0 && capacity > 0)
             {
@@ -1671,11 +1676,11 @@ private:
                 {
                     if (n == 0)
                     {
-                        LOG_TRC('#' << _socket->getFD() << ": performWrites finished uploading");
+                        LOG_TRC("performWrites finished uploading");
                     }
                     else
                     {
-                        LOG_SYS('#' << _socket->getFD() << ": failed to upload file");
+                        LOG_SYS("Failed to upload file");
                     }
 
                     close(_fd);
@@ -1687,8 +1692,7 @@ private:
                 _socket->send(buffer, n);
                 LOG_ASSERT(static_cast<std::size_t>(n) <= capacity);
                 capacity -= n;
-                LOG_TRC('#' << _socket->getFD() << ": performWrites wrote " << n
-                            << " bytes, capacity: " << capacity);
+                LOG_TRC("performWrites wrote " << n << " bytes, capacity: " << capacity);
             }
         }
     }
@@ -1698,7 +1702,7 @@ private:
         // Make sure the socket is disconnected and released.
         if (_socket)
         {
-            LOG_TRC('#' << _socket->getFD() << ": onDisconnect");
+            LOG_TRC("onDisconnect");
 
             _socket->shutdown(); // Flag for shutdown for housekeeping in SocketPoll.
             _socket->closeConnection(); // Immediately disconnect.
