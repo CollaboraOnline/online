@@ -393,9 +393,10 @@ L.Map.include({
 
 		if (this.uiManager.isUIBlocked())
 			return;
-		if (this.dialog.hasOpenedDialog() && !command.startsWith('.uno:ToolbarMode'))
+		if ((this.dialog.hasOpenedDialog() || (this.jsdialog && this.jsdialog.hasDialogOpened()))
+			&& !command.startsWith('.uno:ToolbarMode')) {
 			this.dialog.blinkOpenDialog();
-		else if (this.isEditMode() || isAllowedInReadOnly) {
+		} else if (this.isEditMode() || isAllowedInReadOnly) {
 			if (!this.messageNeedsToBeRedirected(command))
 				app.socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 		}
