@@ -1,6 +1,13 @@
 name: Add add-pr-to-project
-
 on:
+  workflow_call:
+    inputs:
+      config-path:
+        required: true
+        type: string
+    secrets:
+      envPAT:
+        required: true
   pull_request:
     types:
       - opened
@@ -13,4 +20,4 @@ jobs:
       - uses: actions/add-to-project@v0.4.0
         with:
           project-url: https://github.com/users/pedropintosilva/projects/1
-          github-token: ${{ secrets.projectSecret || github.token}}
+          github-token: ${{ secrets.projectSecret || github.token || secrets.ENVPAT}}
