@@ -580,8 +580,11 @@ L.Control.JSDialog = L.Control.extend({
 		if (data.control.has_default === true && (data.control.type === 'pushbutton' || data.control.type === 'okbutton'))
 			L.DomUtil.addClass(newControl, 'button-primary');
 
-		if (focusedId)
-			dialog.querySelector('[id=\'' + focusedId + '\']').focus();
+		if (focusedId) {
+			var found = dialog.querySelector('[id=\'' + focusedId + '\']');
+			if (found)
+				found.focus();
+		}
 
 		var dialogInfo = this.dialogs[data.id];
 		if (dialogInfo.isDocumentAreaPopup) {
