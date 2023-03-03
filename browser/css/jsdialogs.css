@@ -298,7 +298,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-treeview.disabled {
-	background-color: var(--color-background-lighter);
+	background-color: var(--color-background-dark) !important;
 	color: var(--color-text-lighter) !important;
 }
 
@@ -341,6 +341,10 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	background-color: var(--color-background-lighter);
 }
 
+.ui-treeview.disabled .ui-treeview-entry:not(.autofilter) {
+	background-color: var(--color-background-dark);
+}
+
 input[type='checkbox'].autofilter, .jsdialog input[type='checkbox'] {
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -375,6 +379,11 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 .ui-listview-entry.selected {
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
+}
+
+.ui-treeview.disabled .ui-treeview-entry.selected,
+.ui-treeview.disabled .ui-listview-entry.selected {
+	background-color: var(--color-background-darker) !important;
 }
 
 .ui-treeview-entry:hover,
