@@ -95,7 +95,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['panel'] = this._panelHandler;
 		this._controlHandlers['calcfuncpanel'] = this._calcFuncListPanelHandler;
 		this._controlHandlers['tabcontrol'] = this._tabsControlHandler;
-		this._controlHandlers['tabpage'] = this._containerHandler;
+		this._controlHandlers['tabpage'] = this._tabPageHandler;
 		this._controlHandlers['paneltabs'] = this._panelTabsHandler;
 		this._controlHandlers['singlepanel'] = this._singlePanelHandler;
 		this._controlHandlers['container'] = this._containerHandler;
@@ -523,6 +523,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		return true;
+	},
+
+	// used inside tab control and assistant (chart wizard, where it should create own container)
+	_tabPageHandler: function(parentContainer, data, builder) {
+		var page = L.DomUtil.create('div', builder.options.cssClass + ' ui-tabpage', parentContainer);
+		page.id = data.id;
+
+		builder.build(page, data.children, false);
+
+		return false;
 	},
 
 	_alignmentHandler: function(parentContainer, data, builder) {
