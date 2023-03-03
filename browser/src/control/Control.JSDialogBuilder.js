@@ -78,6 +78,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['multilineedit'] = JSDialog.multilineEdit;
 		this._controlHandlers['pushbutton'] = this._pushbuttonControl;
 		this._controlHandlers['okbutton'] = this._pushbuttonControl;
+		this._controlHandlers['helpbutton'] = this._pushbuttonControl;
+		this._controlHandlers['cancelbutton'] = this._pushbuttonControl;
 		this._controlHandlers['combobox'] = this._comboboxControl;
 		this._controlHandlers['comboboxentry'] = this._comboboxEntry;
 		this._controlHandlers['listbox'] = this._listboxControl;
@@ -642,7 +644,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		for (i in leftAlignButtons) {
 			child = leftAlignButtons[i];
-			builder._controlHandlers[child.type](left, child, builder);
+			if (builder._controlHandlers[child.type])
+				builder._controlHandlers[child.type](left, child, builder);
 		}
 
 		var right = L.DomUtil.create('div', builder.options.cssClass + ' ui-button-box-right', container);
@@ -651,7 +654,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		for (i in rightAlignButton) {
 			child = rightAlignButton[i];
-			builder._controlHandlers[child.type](right, child, builder);
+			if (builder._controlHandlers[child.type])
+				builder._controlHandlers[child.type](right, child, builder);
 		}
 
 		return false;
