@@ -1090,7 +1090,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						return function(event) {
 							builder._createTabClick(builder, id, tabs, contentDivs, tabIds)(event);
 							if (data.tabs[id].id - 1 >= 0)
-								builder.callback('tabcontrol', 'selecttab', tabsContainer, id, builder);
+								builder.callback('tabcontrol', 'selecttab', tabWidgetRootContainer, id, builder);
 						};
 					};
 					$(tabs[t]).click(fn(t));
