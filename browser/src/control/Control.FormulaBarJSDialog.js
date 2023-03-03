@@ -32,61 +32,79 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 	},
 
 	createFormulabar: function(text) {
-		var data = [
-			{
-				type: 'toolbox',
-				children: [
-					{
-						id: 'functiondialog',
-						type: 'toolitem',
-						text: _('Function Wizard'),
-						command: '.uno:FunctionDialog'
-					},
-					(!window.mode.isMobile()) ? (
+		if (!window.mode.isMobile()) {
+			var data = [
+				{
+					type: 'toolbox',
+					children: [
+						{
+							id: 'functiondialog',
+							type: 'toolitem',
+							text: _('Function Wizard'),
+							command: '.uno:FunctionDialog'
+						},
 						{
 							id: 'autosummenu:AutoSumMenu',
 							type: 'menubutton',
 							command: '.uno:AutoSumMenu'
-						}
-					) : {},
-					{
-						id: 'startformula',
-						type: 'customtoolitem',
-						text: _('Formula'),
-					},
-					// on mobile we show other buttons on the top bar
-					(!window.mode.isMobile()) ? (
+						},
 						{
+							id: 'startformula',
+							type: 'customtoolitem',
+							text: _('Formula'),
+						},
+						{
+							// on mobile we show other buttons on the top bar
 							id: 'acceptformula',
 							type: 'customtoolitem',
 							text: _('Accept'),
 							visible: false
-						}
-					) : {},
-					(!window.mode.isMobile()) ? (
+						},
 						{
 							id: 'cancelformula',
 							type: 'customtoolitem',
 							text: _UNO('.uno:Cancel', 'spreadsheet'),
 							visible: false
-						}
-					) : {},
-					{
-						id: 'sc_input_window',
-						type: 'multilineedit',
-						text: text ? text : '',
-						rawKeyEvents: window.mode.isDesktop() ? true : undefined,
-						useTextInput: window.mode.isDesktop() ? undefined : true
-					},
-					{
-						id: 'expand',
-						type: 'pushbutton',
-						text: '',
-						symbol: 'SPIN_DOWN',
-					}
-				]
-			}
-		];
+						},
+						{
+							id: 'sc_input_window',
+							type: 'multilineedit',
+							text: text ? text : '',
+							rawKeyEvents: window.mode.isDesktop() ? true : undefined,
+							useTextInput: window.mode.isDesktop() ? undefined : true
+						},
+						{
+							id: 'expand',
+							type: 'pushbutton',
+							text: '',
+							symbol: 'SPIN_DOWN',
+						}]
+				}];
+		} else {
+			var data = [
+				{
+					type: 'toolbox',
+					children: [
+						{
+							id: 'functiondialog',
+							type: 'toolitem',
+							text: _('Function Wizard'),
+							command: '.uno:FunctionDialog'
+						}, {
+							id: 'sc_input_window',
+							type: 'multilineedit',
+							text: text ? text : '',
+							rawKeyEvents: undefined,
+							useTextInput: true
+						},
+						{
+							id: 'expand',
+							type: 'pushbutton',
+							text: '',
+							symbol: 'SPIN_DOWN',
+						}]
+				}];
+		}
 
 		var wrapper = document.getElementById('calc-inputbar-wrapper');
 		wrapper.style.display = 'block';
