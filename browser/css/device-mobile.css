@@ -425,6 +425,20 @@ button.button-secondary.vex-dialog-button.vex-last {
 nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolbar {
 	border-color: transparent;
 }
+.formulabar.unotoolbutton {
+	margin: 0 !important;
+}
+#expand.formulabar {
+	margin-inline-start: -8px !important
+}
+.formulabar.toolbox {
+	grid-column-gap: 8px;
+	/* fx = inputfield expander */
+	grid-template-columns: 24px auto 16px 0;
+	display: grid;
+	grid-auto-flow: column;
+	align-items: center;
+}
 #formulabar {
 	padding: 0px !important;
 	border-top: 1px solid #bbbbbb !important;
