@@ -473,10 +473,10 @@ L.Map.WOPI = L.Handler.extend({
 			if (msg.Values) {
 				if (msg.Values.Filename !== null && msg.Values.Filename !== undefined) {
 					this._notifySave = msg.Values['Notify'];
-					var dotPos = msg.Values.Filename.indexOf('.');
+					var nameParts = msg.Values.Filename.split('.');
 					var format = undefined;
-					if (dotPos > 0)
-						format = msg.Values.Filename.substr(dotPos + 1);
+					if (nameParts.length > 1)
+						format = nameParts.pop();
 					else {
 						this._map.uiManager.showInfoModal('error', _('Error'), _('File name should contain an extension.'), '', _('OK'));
 						return;
