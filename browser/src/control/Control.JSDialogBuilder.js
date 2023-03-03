@@ -65,7 +65,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		// list of types which can have multiple children but are not considered as containers
 		this._nonContainerType = ['buttonbox', 'treelistbox', 'iconview', 'combobox', 'listbox',
-			'scrollwindow', 'grid', 'tabcontrol'];
+			'scrollwindow', 'grid', 'tabcontrol', 'multilineedit'];
 
 		this._controlHandlers = {};
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
@@ -491,7 +491,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.id)
 			scrollwindow.id = data.id;
 
-		builder.build(scrollwindow, data.children, false, true);
+		builder.build(scrollwindow, data.children, false);
 
 		return false;
 	},
