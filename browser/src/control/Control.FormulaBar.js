@@ -141,16 +141,18 @@ L.Map.include({
 	onFormulaBarFocus: function() {
 		var mobileTopBar = w2ui['actionbar'];
 		var jsdialogFormulabar = this.formulabar;
+		var target = jsdialogFormulabar;
 
-		var target = window.mode.isMobile() ? mobileTopBar : jsdialogFormulabar;
+		if (window.mode.isMobile() === true) {
+			mobileTopBar.hide('undo');
+			mobileTopBar.hide('redo');
+			target = mobileTopBar;
+		} else {
+			jsdialogFormulabar.hide('startformula');
+			jsdialogFormulabar.hide('AutoSumMenu');
+		}
 		target.show('cancelformula');
 		target.show('acceptformula');
-
-		mobileTopBar.hide('undo');
-		mobileTopBar.hide('redo');
-
-		jsdialogFormulabar.hide('startformula');
-		jsdialogFormulabar.hide('AutoSumMenu');
 	},
 
 	onFormulaBarBlur: function() {
