@@ -13,4 +13,4 @@ jobs:
       - uses: actions/add-to-project@v0.4.0
         with:
           project-url: https://github.com/users/pedropintosilva/projects/1
-          github-token: ${{ secrets.projectSecret }}
+          github-token: ${{ secrets.projectSecret || github.token}}
