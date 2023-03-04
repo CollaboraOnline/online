@@ -2010,7 +2010,7 @@ static void flushTraceEventRecordings()
     {
         std::vector<std::string> &r = traceEventRecords[n];
 
-        if (r.size() == 0)
+        if (r.empty())
             return;
 
         std::size_t totalLength = 0;
@@ -2501,7 +2501,7 @@ int pollCallback(void* pData, int timeoutUs)
             v.push_back(p);
     }
     lock.unlock();
-    if (v.size() == 0)
+    if (v.empty())
     {
         std::this_thread::sleep_for(std::chrono::microseconds(timeoutUs));
     }
@@ -2526,7 +2526,7 @@ void wakeCallback(void* pData)
         return reinterpret_cast<KitSocketPoll*>(pData)->wakeup();
 #else
     std::unique_lock<std::mutex> lock(KitSocketPoll::KSPollsMutex);
-    if (KitSocketPoll::KSPolls.size() == 0)
+    if (KitSocketPoll::KSPolls.empty())
         return;
 
     std::vector<std::shared_ptr<KitSocketPoll>> v;

@@ -531,7 +531,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens.equals(0, "sallogoverride"))
         {
-            if (tokens.size() == 0 || tokens.equals(1, "default"))
+            if (tokens.empty() || tokens.equals(1, "default"))
             {
                 getLOKit()->setOption("sallogoverride", nullptr);
             }
@@ -1081,9 +1081,10 @@ bool ChildSession::downloadAs(const StringVector& tokens)
     const std::string url = jailDoc + urlToSend;
     const std::string urlAnonym = jailDoc + tmpDir + '/' + Poco::Path(nameAnonym).getFileName();
 
-    LOG_DBG("Calling LOK's saveAs with: url='" << urlAnonym << "', format='" <<
-            (format.empty() ? "(nullptr)" : format.c_str()) << "', ' filterOptions=" <<
-            (filterOptions.empty() ? "(nullptr)" : filterOptions.c_str()) << "'.");
+    LOG_DBG("Calling LOK's saveAs with URL: ["
+            << urlAnonym << "], Format: [" << (format.empty() ? "(nullptr)" : format.c_str())
+            << "], Filter Options: ["
+            << (filterOptions.empty() ? "(nullptr)" : filterOptions.c_str()) << ']');
 
     bool success = getLOKitDocument()->saveAs(url.c_str(),
                                format.empty() ? nullptr : format.c_str(),
@@ -2405,7 +2406,7 @@ bool ChildSession::saveAs(const StringVector& tokens)
         std::vector<std::string> pathSegments;
         wopiURL.getPathSegments(pathSegments);
 
-        if (pathSegments.size() == 0)
+        if (pathSegments.empty())
         {
             sendTextFrameAndLogError("error: cmd=saveas kind=syntax");
             return false;
@@ -2490,9 +2491,9 @@ bool ChildSession::saveAs(const StringVector& tokens)
                     << "], Filter Options: ["
                     << (filterOptions.empty() ? "(nullptr)" : filterOptions.c_str()) << ']');
 
-            success = getLOKitDocument()->saveAs(encodedURL.c_str(),
-                    format.size() == 0 ? nullptr :format.c_str(),
-                    filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
+            success = getLOKitDocument()->saveAs(
+                encodedURL.c_str(), format.empty() ? nullptr : format.c_str(),
+                filterOptions.empty() ? nullptr : filterOptions.c_str());
         }
     }
 
@@ -2521,7 +2522,7 @@ bool ChildSession::exportAs(const StringVector& tokens)
         std::vector<std::string> pathSegments;
         wopiURL.getPathSegments(pathSegments);
 
-        if (pathSegments.size() == 0)
+        if (pathSegments.empty())
         {
             sendTextFrameAndLogError("error: cmd=exportas kind=syntax");
             return false;

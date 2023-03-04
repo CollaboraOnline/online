@@ -192,7 +192,7 @@ void DeltaTests::testDeltaSequence()
                        reinterpret_cast<unsigned char *>(&text[0]),
                        0, 0, width, height, width, height,
                        TileLocation(1, 2, 3, 0, 1), delta, textWid, false) == false);
-    LOK_ASSERT(delta.size() == 0);
+    LOK_ASSERT(delta.empty());
 
     // Build a delta between text2 & textWid
     LOK_ASSERT(gen.createDelta(
