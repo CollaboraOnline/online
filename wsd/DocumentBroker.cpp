@@ -3641,9 +3641,6 @@ bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std:
     _clientSession = std::make_shared<ClientSession>(nullPtr, id, docBroker, getPublicUri(), isReadOnly, requestDetails);
     _clientSession->construct();
 
-    if (!_clientSession)
-        return false;
-
     docBroker->setupTransfer(disposition, [docBroker] (const std::shared_ptr<Socket> &moveSocket)
         {
             auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
@@ -3736,9 +3733,6 @@ bool RenderSearchResultBroker::executeCommand(SocketDisposition& disposition, st
     RequestDetails requestDetails("render-search-result");
     _clientSession = std::make_shared<ClientSession>(emptyProtocolHandler, id, docBroker, getPublicUri(), isReadOnly, requestDetails);
     _clientSession->construct();
-
-    if (!_clientSession)
-        return false;
 
     docBroker->setupTransfer(disposition, [docBroker] (std::shared_ptr<Socket>const & moveSocket)
     {
