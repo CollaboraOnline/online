@@ -1371,7 +1371,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			// the zoom level has changed
 			app.socket.sendMessage('clientzoom ' + newClientZoom);
 
-			if (!this._map._fatal && this._map._active && app.socket.connected())
+			if (!this._map._fatal && app.idleHandler._active && app.socket.connected())
 				this._clientZoom = newClientZoom;
 		}
 	},
@@ -6192,7 +6192,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._clientVisibleArea !== newClientVisibleArea || forceUpdate) {
 			// Visible area is dirty, update it on the server
 			app.socket.sendMessage(newClientVisibleArea);
-			if (!this._map._fatal && this._map._active && app.socket.connected())
+			if (!this._map._fatal && app.idleHandler._active && app.socket.connected())
 				this._clientVisibleArea = newClientVisibleArea;
 			if (this._debug) {
 				this._debugInfo.clearLayers();

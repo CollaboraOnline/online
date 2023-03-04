@@ -3,15 +3,16 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-function isAnyVexDialogActive() {
+window.isAnyVexDialogActive = function() {
 	var res = false;
 	for (var vexId in vex.getAll()) {
 		res = res || vex.getById(vexId).isOpen;
 	}
 	return res;
-}
+};
 
-/* global app vex $ _ Cursor */
+/* global app vex _ Cursor */
+
 L.Map = L.Evented.extend({
 
 	statics: {
@@ -69,8 +70,6 @@ L.Map = L.Evented.extend({
 
 	context: {context: ''},
 
-	lastActiveTime: Date.now(),
-
 	initialize: function (id, options) { // (HTMLElement or String, Object)
 		options = L.setOptions(this, options);
 
@@ -115,12 +114,9 @@ L.Map = L.Evented.extend({
 		this._zoomBoundLayers = {};
 		this._sizeChanged = true;
 		this._bDisableKeyboard = false;
-		this._active = true;
 		this._fatal = false;
 		this._enabled = true;
 		this._debugAlwaysActive = false; // disables the dimming / document inactivity when true
-		this._serverRecycling = false;
-		this._documentIdle = false;
 		this._disableDefaultAction = {}; // The events for which the default handler is disabled and only issues postMessage.
 		this.showSidebar = false;
 		this._previewQueue = [];
@@ -292,12 +288,12 @@ L.Map = L.Evented.extend({
 			this._docLoaded = e.status;
 			if (this._docLoaded) {
 				app.socket.sendMessage('blockingcommandstatus isRestrictedUser=' + this.Restriction.isRestrictedUser + ' isLockedUser=' + this.Locking.isLockedUser);
-				this.notifyActive();
+				app.idleHandler.notifyActive();
 				if (!document.hasFocus()) {
 					this.fire('editorgotfocus');
 					this.focus();
 				}
-				this._activate();
+				app.idleHandler._activate();
 				if (window.ThisIsTheAndroidApp) {
 					window.postMobileMessage('hideProgressbar');
 				}
@@ -1353,195 +1349,6 @@ L.Map = L.Evented.extend({
 			wrapper.style.display = 'block';
 	},
 
-	makeActive: function() {
-		// window.app.console.log('Force active');
-		this.lastActiveTime = Date.now();
-		return this._activate();
-	},
-
-	_activate: function () {
-		if (this._serverRecycling || this._documentIdle) {
-			return false;
-		}
-
-		// window.app.console.debug('_activate:');
-		clearTimeout(vex.timer);
-
-		if (!this._active) {
-			// Only activate when we are connected.
-			if (app.socket.connected()) {
-				// window.app.console.debug('sending useractive');
-				app.socket.sendMessage('useractive');
-				this._active = true;
-				var docLayer = this._docLayer;
-				if (docLayer && docLayer.isCalc() && docLayer.options.sheetGeometryDataEnabled) {
-					docLayer.requestSheetGeometryData();
-				}
-				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
-
-				if (isAnyVexDialogActive()) {
-					for (var vexId in vex.getAll()) {
-						var opts = vex.getById(vexId).options;
-						if (!opts.overlayClosesOnClick || !opts.escapeButtonCloses) {
-							return false;
-						}
-					}
-
-					this._startInactiveTimer();
-					if (window.mode.isDesktop()) {
-						this.focus();
-					}
-					return vex.closeAll();
-				}
-			} else {
-				this.loadDocument();
-			}
-		}
-
-		this._startInactiveTimer();
-		if (window.mode.isDesktop() && !isAnyVexDialogActive()) {
-			this.focus();
-		}
-		return false;
-	},
-
-	documentHidden: function(unknownValue) {
-		var hidden = unknownValue;
-		if (typeof document.hidden !== 'undefined') {
-			hidden = document.hidden;
-		} else if (typeof document.msHidden !== 'undefined') {
-			hidden = document.msHidden;
-		} else if (typeof document.webkitHidden !== 'undefined') {
-			hidden = document.webkitHidden;
-		} else {
-			window.app.console.debug('Unusual browser, cant determine if hidden');
-		}
-		return hidden;
-	},
-
-	_dim: function() {
-		if (this.options.alwaysActive || this._debugAlwaysActive === true) {
-			return;
-		}
-
-		// window.app.console.debug('_dim:');
-		if (!app.socket.connected() || isAnyVexDialogActive()) {
-			return;
-		}
-
-		clearTimeout(vex.timer);
-
-		if (window.ThisIsTheAndroidApp) {
-			window.postMobileMessage('DIM_SCREEN');
-			return;
-		}
-
-		var map = this;
-		var inactiveMs = Date.now() - this.lastActiveTime;
-		var multiplier = 1;
-		if (!this.documentHidden(true))
-		{
-			// window.app.console.debug('document visible');
-			multiplier = 4; // quadruple the grace period
-		}
-		if (inactiveMs <= this.options.outOfFocusTimeoutSecs * 1000 * multiplier) {
-			// window.app.console.debug('had activity ' + inactiveMs + 'ms ago vs. threshold ' +
-			//	      (this.options.outOfFocusTimeoutSecs * 1000 * multiplier) +
-			//	      ' - so fending off the dim');
-			vex.timer = setTimeout(function() {
-				map._dim();
-			}, map.options.outOfFocusTimeoutSecs * 1000);
-			return;
-		}
-
-		this._active = false;
-
-		var message = '';
-		if (!map['wopi'].DisableInactiveMessages) {
-			message = '<h3 class="title">' + vex._escapeHtml(_('Inactive document')) + '</h3>';
-			message += '<p class="content">' + vex._escapeHtml(_('Please click to resume editing')) + '</p>';
-		}
-
-		vex.open({
-			unsafeContent: message,
-			contentClassName: 'cool-user-idle',
-			afterOpen: function() {
-				var $vexContent = $(this.contentEl);
-				$vexContent.bind('click.vex', function() {
-					// window.app.console.debug('_dim: click.vex function');
-					return map._activate();
-				});
-			},
-			showCloseButton: false
-		});
-
-		$('.vex-overlay').addClass('cool-user-idle-overlay');
-		if (message === '')
-			$('.cool-user-idle').css('display', 'none');
-
-		this._doclayer && this._docLayer._onMessage('textselection:', null);
-		// window.app.console.debug('_dim: sending userinactive');
-		map.fire('postMessage', {msgId: 'User_Idle'});
-		app.socket.sendMessage('userinactive');
-	},
-
-	notifyActive : function() {
-		this.lastActiveTime = Date.now();
-		if (window.ThisIsTheAndroidApp) {
-			window.postMobileMessage('LIGHT_SCREEN');
-		}
-	},
-
-	_dimIfInactive: function () {
-		// window.app.console.debug('_dimIfInactive: diff=' + (Date.now() - this.lastActiveTime));
-		if (this._docLoaded && // don't dim if document hasn't been loaded yet
-		    (Date.now() - this.lastActiveTime) >= this.options.idleTimeoutSecs * 1000) {
-			this._dim();
-		} else {
-			this._startInactiveTimer();
-		}
-	},
-
-	_startInactiveTimer: function () {
-		if (this._serverRecycling || this._documentIdle || !this._docLoaded) {
-			return;
-		}
-
-		// window.app.console.debug('_startInactiveTimer:');
-		clearTimeout(vex.timer);
-		var map = this;
-		vex.timer = setTimeout(function() {
-			map._dimIfInactive();
-		}, 1 * 60 * 1000); // Check once a minute
-	},
-
-	_deactivate: function () {
-		if (this._serverRecycling || this._documentIdle || !this._docLoaded) {
-			return;
-		}
-
-		// window.app.console.debug('_deactivate:');
-		clearTimeout(vex.timer);
-
-		if (!this._active || isAnyVexDialogActive()) {
-			// A dialog is already dimming the screen and probably
-			// shows an error message. Leave it alone.
-			this._active = false;
-			this._docLayer && this._docLayer._onMessage('textselection:', null);
-			if (app.socket.connected()) {
-				// window.app.console.debug('_deactivate: sending userinactive');
-				app.socket.sendMessage('userinactive');
-			}
-
-			return;
-		}
-
-		var map = this;
-		vex.timer = setTimeout(function() {
-			map._dim();
-		}, map.options.outOfFocusTimeoutSecs * 1000);
-	},
-
 	// Change the focus to a dialog or editor.
 	// @dialog is the instance of the dialog class.
 	// @winId is the ID of the dialog/sidebar, or 0 for the editor.
@@ -1567,7 +1374,7 @@ L.Map = L.Evented.extend({
 
 	// Our browser tab lost focus.
 	_onLostFocus: function () {
-		this._deactivate();
+		app.idleHandler._deactivate();
 	},
 
 	// The editor got focus (probably a dialog closed or user clicked to edit).
@@ -1586,7 +1393,7 @@ L.Map = L.Evented.extend({
 			this._activeDialog.focus(this.getWinId());
 		}
 
-		this._activate();
+		app.idleHandler._activate();
 	},
 
 	// Event to change the focus to dialog or editor.
@@ -1629,7 +1436,7 @@ L.Map = L.Evented.extend({
 	},
 
 	_handleDOMEvent: function (e) {
-		this.notifyActive();
+		app.idleHandler.notifyActive();
 
 		if (!this._docLayer || !this._loaded || !this._enabled || L.DomEvent._skipped(e)) { return; }
 

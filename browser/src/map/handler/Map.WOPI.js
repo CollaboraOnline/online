@@ -343,7 +343,7 @@ L.Map.WOPI = L.Handler.extend({
 		}
 
 		if (msg.MessageId === 'Grab_Focus') {
-			this._map.makeActive();
+			app.idleHandler._activate();
 			return;
 		}
 

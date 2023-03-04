@@ -200,7 +200,7 @@ L.TextInput = L.Layer.extend({
 		onoff(this._textArea, 'keyup', this._onKeyUp, this);
 		onoff(this._textArea, 'copy cut paste', this._map._handleDOMEvent, this._map);
 
-		this._map.notifyActive();
+		app.idleHandler.notifyActive();
 
 		if (ev.type === 'blur' && this._isComposing) {
 			this._abortComposition(ev);
@@ -589,7 +589,7 @@ L.TextInput = L.Layer.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
-		this._map.notifyActive();
+		app.idleHandler.notifyActive();
 
 		if (this._ignoreInputCount > 0) {
 			window.app.console.log('ignoring synthetic input ' + this._ignoreInputCount);
@@ -837,7 +837,7 @@ L.TextInput = L.Layer.extend({
 	// Handled only in legacy situations ('input' events with an inputType
 	// property are preferred).
 	_onCompositionUpdate: function(ev) {
-		this._map.notifyActive();
+		app.idleHandler.notifyActive();
 		this._onInput(ev);
 	},
 
@@ -847,7 +847,7 @@ L.TextInput = L.Layer.extend({
 	// The approach here is to use "compositionend" events *only in Chrome* to mark
 	// the composing text as committed to the text area.
 	_onCompositionEnd: function(ev) {
-		this._map.notifyActive();
+		app.idleHandler.notifyActive();
 		this._isComposing = false;
 		this._onInput(ev);
 	},
@@ -907,7 +907,7 @@ L.TextInput = L.Layer.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
-		this._map.notifyActive();
+		app.idleHandler.notifyActive();
 		if (!this._isComposing && (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
 			ev.key === 'ArrowUp' || ev.key === 'ArrowDown' ||
 			ev.key === 'Home' || ev.key === 'End' ||

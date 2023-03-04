@@ -831,16 +831,12 @@ L.Control.LokDialog = L.Control.extend({
 		app.socket.sendMessage('windowmouse id=' + winid +  ' type=' + type +
 		                              ' x=' + x + ' y=' + y + ' count=' + count +
 		                              ' buttons=' + buttons + ' modifier=' + modifier);
-		// Keep map active while user is playing with dialog.
-		this._map.lastActiveTime = Date.now();
 	},
 
 	_postWindowGestureEvent: function(winid, type, x, y, offset) {
 		// window.app.console.log('x ' + x + ' y ' + y + ' o ' + offset);
 		app.socket.sendMessage('windowgesture id=' + winid +  ' type=' + type +
 		                              ' x=' + x + ' y=' + y + ' offset=' + offset);
-		// Keep map active while user is playing with dialog.
-		this._map.lastActiveTime = Date.now();
 	},
 
 	_closeChildWindows: function(dialogId) {
