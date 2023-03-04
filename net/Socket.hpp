@@ -1192,7 +1192,7 @@ public:
             len = readData(buf.data(), available);
             assert(len == available);
             _bytesRecvd += len;
-            assert(_inBuffer.size() == 0);
+            assert(_inBuffer.empty());
             _inBuffer.append(buf.data(), len);
         }
 #endif

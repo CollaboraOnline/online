@@ -87,7 +87,7 @@ protected:
 
             StringVector tokens(StringVector::tokenize(line, ' '));
 
-            if (tokens.size() == 0)
+            if (tokens.empty())
                 continue;
 
             if (tokens.equals(0, "?") || tokens.equals(0, "help"))
