@@ -300,7 +300,7 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
     if (user_name != nullptr)
         userNameString = std::string(user_name);
 #endif
-    if (userNameString.size() == 0)
+    if (userNameString.empty())
         userNameString = "LocalUser#" + userId;
 
     return std::unique_ptr<LocalStorage::LocalFileInfo>(
