@@ -63,7 +63,7 @@ void Stress::printHelp()
 
 int Stress::main(const std::vector<std::string>& args)
 {
-    if (args.size() == 0)
+    if (args.empty())
     {
         printHelp();
         return EX_NOINPUT;

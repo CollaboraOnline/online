@@ -404,7 +404,7 @@ class DeltaGenerator {
             }
         }
         LOG_TRC("Created delta of size " << output.size());
-        if (output.size() == 0)
+        if (output.empty())
         {
             // The tile content is identical to what the client already has, so skip it
             LOG_TRC("Identical / un-changed tile");

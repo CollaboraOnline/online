@@ -566,7 +566,7 @@ ssize_t fakeSocketRead(int fd, void *buf, size_t nbytes)
     // If peer is closed or shut down, we continue to be readable
     if (pair.fd[N] == -1 || pair.shutdown[N])
         pair.readable[K] = true;
-    else if (pair.buffer[K].size() == 0)
+    else if (pair.buffer[K].empty())
         pair.readable[K] = false;
 
     FAKESOCKET_LOG(2, "FakeSocket Read from #" << fd << " got " << result << (result == 1 ? " byte" : " bytes") << flush());
