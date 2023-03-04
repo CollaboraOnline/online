@@ -138,6 +138,7 @@ coolwsd_sources = common/Crypto.cpp \
                   wsd/ProxyRequestHandler.cpp \
                   wsd/FileServerUtil.cpp \
                   wsd/RequestDetails.cpp \
+                  wsd/RequestVettingStation.cpp \
                   wsd/Storage.cpp \
                   wsd/StorageConnectionManager.cpp \
                   wsd/HostUtil.cpp \
@@ -283,6 +284,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/COOLWSD.hpp \
               wsd/ProofKey.hpp \
               wsd/RequestDetails.hpp \
+              wsd/RequestVettingStation.hpp \
               wsd/SenderQueue.hpp \
               wsd/ServerURL.hpp \
               wsd/Storage.hpp \
