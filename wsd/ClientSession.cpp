@@ -63,6 +63,7 @@ ClientSession::ClientSession(
     _auth(Authorization::create(uriPublic)),
     _isDocumentOwner(false),
     _state(SessionState::DETACHED),
+    _lastStateTime(std::chrono::steady_clock::now()),
     _keyEvents(1),
     _clientVisibleArea(0, 0, 0, 0),
     _splitX(0),
@@ -84,9 +85,6 @@ ClientSession::ClientSession(
     // populate with random values.
     for (auto it : _clipboardKeys)
         rotateClipboardKey(false);
-
-    // get timestamp set
-    setState(SessionState::DETACHED);
 
     // Emit metadata Trace Events for the synthetic pid used for the Trace Events coming in from the
     // client's cool, and for its dummy thread.
