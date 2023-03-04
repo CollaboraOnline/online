@@ -129,7 +129,7 @@ span#main-menu-btn-icon {
 
 .no-color-control-label, .auto-color-control-label {
 	display: table-cell;
-	padding-left: 4px;
+	padding-left: 8px;
 	vertical-align: middle;
 }
 
