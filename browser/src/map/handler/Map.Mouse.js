@@ -3,7 +3,7 @@
  * L.Map.Mouse is handling mouse interaction with the document
  */
 
-/* global UNOModifier */
+/* global UNOModifier app */
 
 L.Map.mergeOptions({
 	mouse: true
@@ -43,7 +43,7 @@ L.Map.Mouse = L.Handler.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
-		this._map.notifyActive();
+		app.idleHandler.notifyActive();
 		var docLayer = this._map._docLayer;
 		if (!docLayer || (this._map.slideShow && this._map.slideShow.fullscreen) || this._map.rulerActive) {
 			return;

@@ -19,6 +19,25 @@ L.LOUtil = {
 		[209, 118,   0]
 	],
 
+	// https://stackoverflow.com/a/32726412
+	onRemoveHTMLElement: function(element, onDetachCallback) {
+		var observer = new MutationObserver(function () {
+			function isDetached(el) {
+				return !el.closest('html');
+			}
+
+			if (isDetached(element)) {
+				onDetachCallback();
+				observer.disconnect();
+			}
+		});
+
+		observer.observe(document, {
+			 childList: true,
+			 subtree: true
+		});
+	},
+
 	startSpinner: function (spinnerCanvas, spinnerSpeed) {
 		var spinnerInterval;
 		spinnerCanvas.width = 50;

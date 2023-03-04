@@ -71,6 +71,7 @@ map.addControl(map.uiManager);
 map.uiManager.initializeBasicUI();
 
 L.Map.THIS = map;
+app.idleHandler.map = map;
 
 if (window.ThisIsTheEmscriptenApp) {
 	var Module = {

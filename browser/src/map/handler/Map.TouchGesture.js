@@ -145,7 +145,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
-		this._map.notifyActive();
+		app.idleHandler.notifyActive();
 
 		// Function/Formula Wizard keeps the formula cell active all the time,
 		// so the usual range selection doesn't work here.
@@ -294,7 +294,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			setTimeout(waitForSelectionMsg, 300);
 		}
 
-		this._map.notifyActive();
+		app.idleHandler.notifyActive();
 		e.preventDefault();
 	},
 

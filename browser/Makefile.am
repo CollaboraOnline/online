@@ -219,6 +219,7 @@ COOL_JS_LST =\
 	src/geo/crs/CRS.Simple.js \
 	src/control/IFrameDialog.js \
 	src/map/Map.js \
+	src/control/Control.IdleHandler.ts \
 	src/map/Clipboard.js \
 	src/layer/tile/SheetSwitch.ts \
 	src/layer/Layer.js \

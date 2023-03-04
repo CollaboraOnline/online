@@ -125,7 +125,7 @@ app.definitions.Socket = L.Class.extend({
 			return;
 		}
 
-		if (!this._map._active) {
+		if (!app.idleHandler._active) {
 			// Avoid communicating when we're inactive.
 			if (typeof msg !== 'string')
 				return;
@@ -167,8 +167,8 @@ app.definitions.Socket = L.Class.extend({
 
 	_onSocketOpen: function () {
 		window.app.console.debug('_onSocketOpen:');
-		this._map._serverRecycling = false;
-		this._map._documentIdle = false;
+		app.idleHandler._serverRecycling = false;
+		app.idleHandler._documentIdle = false;
 
 		// Always send the protocol version number.
 		// TODO: Move the version number somewhere sensible.
@@ -225,7 +225,7 @@ app.definitions.Socket = L.Class.extend({
 		}
 		this._msgQueue = [];
 
-		this._map._activate();
+		app.idleHandler._activate();
 	},
 
 	_utf8ToString: function (data) {
@@ -701,7 +701,7 @@ app.definitions.Socket = L.Class.extend({
 				} else {
 					msg = _('Idle document - please tap to reload and resume editing');
 				}
-				this._map._documentIdle = true;
+				app.idleHandler._documentIdle = true;
 				this._map._docLayer._documentInfo = undefined;
 				postMsgData['Reason'] = 'DocumentIdle';
 				if (textMsg === 'oom')
@@ -717,8 +717,8 @@ app.definitions.Socket = L.Class.extend({
 			}
 			else if (textMsg === 'recycling') {
 				msg = _('Server is down, restarting automatically. Please wait.');
-				this._map._active = false;
-				this._map._serverRecycling = true;
+				app.idleHandler._active = false;
+				app.idleHandler._serverRecycling = true;
 
 				// Prevent reconnecting the world at the same time.
 				var min = 5000;
@@ -726,12 +726,12 @@ app.definitions.Socket = L.Class.extend({
 				var timeoutMs = Math.floor(Math.random() * (max - min) + min);
 
 				var socket = this;
-				map = this._map;
-				clearTimeout(vex.timer);
-				vex.timer = setInterval(function() {
+				var map = this._map;
+				clearTimeout(this.timer);
+				this.timer = setInterval(function() {
 					if (socket.connected()) {
 						// We're connected: cancel timer and dialog.
-						clearTimeout(vex.timer);
+						clearTimeout(this.timer);
 						vex.closeAll();
 						return;
 					}
@@ -769,13 +769,13 @@ app.definitions.Socket = L.Class.extend({
 				this.close();
 
 				// Reload the document
-				this._map._active = false;
+				app.idleHandler._active = false;
 				map = this._map;
-				clearTimeout(vex.timer);
-				vex.timer = setInterval(function() {
+				clearTimeout(this.timer);
+				this.timer = setInterval(function() {
 					try {
 						// Activate and cancel timer and dialogs.
-						map._activate();
+						app.idleHandler._activate();
 					} catch (error) {
 						window.app.console.warn('Cannot activate map');
 					}
@@ -784,39 +784,15 @@ app.definitions.Socket = L.Class.extend({
 
 			// Close any open dialogs first.
 			vex.closeAll();
+			this._map.jsdialog.closeAll();
 
 			var message = '';
 			if (!this._map['wopi'].DisableInactiveMessages) {
 				message = msg;
 			}
 
-			var dialogOptions = {
-				message: message,
-				contentClassName: 'cool-user-idle'
-			};
-
-			var restartConnectionFn;
 			if (textMsg === 'idle' || textMsg === 'oom') {
-				var map = this._map;
-				restartConnectionFn = function() {
-					if (map._documentIdle)
-					{
-						window.app.console.debug('idleness: reactivating');
-						map._documentIdle = false;
-						map._docLayer._setCursorVisible();
-						return map._activate();
-					}
-					return false;
-				};
-				dialogOptions.afterClose = restartConnectionFn;
-
-				var dialogOpened = vex.dialog.open(dialogOptions);
-				this._map._textInput.hideCursor();
-				dialogOpened.contentEl.onclick = restartConnectionFn;
-				$('.vex-overlay').addClass('cool-user-idle-overlay');
-
-				if (message === '')
-					$('.cool-user-idle').css('display', 'none');
+				app.idleHandler._dim(message);
 			}
 
 			if (postMsgData['Reason']) {
@@ -1017,19 +993,18 @@ app.definitions.Socket = L.Class.extend({
 				this._map.fire('error', {msg: errorMessages.docloadtimeout});
 			} else if (errorKind.startsWith('docunloading')) {
 				// The document is unloading. Have to wait a bit.
-				this._map._active = false;
+				app.idleHandler._active = false;
 
-				clearTimeout(vex.timer);
+				clearTimeout(this.timer);
 				if (this.ReconnectCount++ >= 10) {
 					this._map.fire('error', {msg: errorMessages.docunloadinggiveup});
 					return; // Give up.
 				}
 
-				map = this._map;
-				vex.timer = setInterval(function() {
+				this.timer = setInterval(function() {
 					try {
 						// Activate and cancel timer and dialogs.
-						map._activate();
+						app.idleHandler._activate();
 					} catch (error) {
 						window.app.console.warn('Cannot activate map');
 					}
@@ -1082,7 +1057,7 @@ app.definitions.Socket = L.Class.extend({
 				textMsg = errorMessages.serviceunavailable;
 			}
 			this._map._fatal = true;
-			this._map._active = false; // Practically disconnected.
+			app.idleHandler._active = false; // Practically disconnected.
 			this._map.fire('error', {msg: textMsg});
 		}
 		else if (textMsg.startsWith('fontsmissing:')) {
@@ -1154,7 +1129,7 @@ app.definitions.Socket = L.Class.extend({
 			if (textMsg.startsWith('statusindicator: ready')) {
 				// We're connected: cancel timer and dialog.
 				this.ReconnectCount = 0;
-				clearTimeout(vex.timer);
+				clearTimeout(this.timer);
 				vex.closeAll();
 			}
 		}
@@ -1552,9 +1527,9 @@ app.definitions.Socket = L.Class.extend({
 		if (this.ReconnectCount > 0)
 			return;
 
-		var isActive = this._map._active;
+		var isActive = app.idleHandler._active;
 		this._map.hideBusy();
-		this._map._active = false;
+		app.idleHandler._active = false;
 
 		if (this._map._docLayer) {
 			this._map._docLayer.removeAllViews();
@@ -1581,9 +1556,9 @@ app.definitions.Socket = L.Class.extend({
 		setTimeout(function () {
 			if (!that._reconnecting) {
 				that._reconnecting = true;
-				if (!that._map._documentIdle)
+				if (!app.idleHandler._documentIdle)
 					that._map.showBusy(_('Reconnecting...'), false);
-				that._map._activate();
+				app.idleHandler._activate();
 			}
 		}, 1 /* ms */);
 

@@ -392,7 +392,7 @@ L.Map.Keyboard = L.Handler.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
-		this._map.notifyActive();
+		app.idleHandler.notifyActive();
 		if (this._map.slideShow && this._map.slideShow.fullscreen) {
 			return;
 		}
