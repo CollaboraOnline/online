@@ -391,6 +391,16 @@ public:
     /// Must be called at startup to configure.
     static void initialize();
 
+    STATE_ENUM(StorageType,
+               Unsupported, //< An unsupported type.
+               Unauthorized, //< The host is not allowed by the admin.
+               FileSystem, //< File-System storage. Only for testing.
+               Wopi //< WOPI-like storage.
+    );
+
+    /// Validates the given URI.
+    static StorageType validate(const Poco::URI& uri, bool takeOwnership);
+
     /// Storage object creation factory.
     /// @takeOwnership is for local files that are temporary,
     /// such as convert-to requests.
