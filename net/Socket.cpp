@@ -953,8 +953,8 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
         addr.append(std::to_string(CREDS_PID(creds)));
         _socket->setClientAddress(addr);
 
-        LOG_DBG("Accepted socket is UDS - address " << addr <<
-                " and uid/gid " << CREDS_UID(creds) << '/' << CREDS_GID(creds));
+        LOG_DBG("Accepted socket #" << rc << " is UDS - address " << addr << " and uid/gid "
+                                    << CREDS_UID(creds) << '/' << CREDS_GID(creds));
         return _socket;
     }
     catch (const std::exception& ex)

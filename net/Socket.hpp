@@ -143,11 +143,12 @@ public:
 
     virtual ~Socket()
     {
-        LOG_TRC("Socket dtor.");
+        LOG_TRC("Socket dtor");
 
         // Doesn't block on sockets; no error handling needed.
 #if !MOBILEAPP
         ::close(_fd);
+        LOG_DBG("Closed socket to [" << clientAddress() << ']');
 #else
         fakeSocketClose(_fd);
 #endif

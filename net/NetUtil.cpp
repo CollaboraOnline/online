@@ -138,7 +138,11 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
                         socket = StreamSocket::create<StreamSocket>(host, fd, true, protocolHandler);
 
                     if (socket)
+                    {
+                        LOG_DBG('#' << fd << " New socket connected to " << host << ':' << port
+                                    << " (" << (isSSL ? "SSL)" : "Unencrypted)"));
                         break;
+                    }
 
                     LOG_ERR("Failed to allocate socket for client websocket " << host);
                     ::close(fd);

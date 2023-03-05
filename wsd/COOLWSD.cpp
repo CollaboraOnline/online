@@ -5378,7 +5378,7 @@ private:
         ClientPortNumber = port;
 
 #if !MOBILEAPP
-        LOG_INF('#' << socket->getFD() << "Listening to client connections on port " << port);
+        LOG_INF('#' << socket->getFD() << " Listening to client connections on port " << port);
 #else
         LOG_INF("Listening to client connections on #" << socket->getFD());
 #endif
