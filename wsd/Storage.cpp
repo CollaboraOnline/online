@@ -200,6 +200,64 @@ bool isTemplate(const std::string& filename)
     return false;
 }
 
+StorageBase::StorageType StorageBase::validate(const Poco::URI& uri, bool takeOwnership)
+{
+    if (uri.isRelative() || uri.getScheme() == "file")
+    {
+        LOG_DBG("Public URI [" << COOLWSD::anonymizeUrl(uri.toString()) << "] is a file");
+
+#if ENABLE_DEBUG
+        if (std::getenv("FAKE_UNAUTHORIZED"))
+        {
+            LOG_DBG("FAKE_UNAUTHORIZED envar is set, unauthorized uri ["
+                    << COOLWSD::anonymizeUrl(uri.toString()) << ']');
+            return StorageBase::StorageType::Unauthorized;
+        }
+#endif
+        if (FilesystemEnabled || takeOwnership)
+        {
+            LOG_DBG("Validated URI [" << COOLWSD::anonymizeUrl(uri.toString())
+                                      << "] as FileSystem");
+            return StorageBase::StorageType::FileSystem;
+        }
+
+        LOG_DBG("Local Storage is disabled by default. Enable in the config file or on the "
+                "command-line to enable.");
+    }
+#if !MOBILEAPP
+    else if (HostUtil::isWopiEnabled())
+    {
+        const auto& targetHost = uri.getHost();
+        HostUtil::setFirstHost(uri);
+        if (HostUtil::allowedWopiHost(targetHost) || isLocalhost(targetHost))
+        {
+            LOG_DBG("Validated URI [" << COOLWSD::anonymizeUrl(uri.toString()) << "] as WOPI");
+            return StorageBase::StorageType::Wopi;
+        }
+
+        // check if the IP address is in the list of allowed hosts
+        const auto hostAddresses(Poco::Net::DNS::resolve(targetHost));
+        for (const auto& address : hostAddresses.addresses())
+        {
+            if (HostUtil::allowedWopiHost(address.toString()))
+            {
+                LOG_DBG("Validated URI [" << COOLWSD::anonymizeUrl(uri.toString()) << "] as WOPI");
+                return StorageBase::StorageType::Wopi;
+            }
+        }
+
+        LOG_DBG("No acceptable WOPI hosts found matching the target host ["
+                << targetHost << "] in config for URI [" << COOLWSD::anonymizeUrl(uri.toString())
+                << ']');
+        return StorageBase::StorageType::Unauthorized;
+    }
+#endif
+
+    LOG_DBG("No Storage configured or invalid URI [" << COOLWSD::anonymizeUrl(uri.toString())
+                                                     << ']');
+    return StorageBase::StorageType::Unsupported;
+}
+
 std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std::string& jailRoot,
                                                  const std::string& jailPath, bool takeOwnership)
 {
