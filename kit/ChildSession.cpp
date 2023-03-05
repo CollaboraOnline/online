@@ -246,7 +246,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         InputProcessingManager processInput(getProtocol(), false);
         _isDocLoaded = loadDocument(tokens);
 
-        LOG_TRC("isDocLoaded state after loadDocument: " << _isDocLoaded << '.');
+        LOG_TRC("isDocLoaded state after loadDocument: " << _isDocLoaded);
         return _isDocLoaded;
     }
     else if (!_isDocLoaded)
@@ -785,7 +785,7 @@ bool ChildSession::loadDocument(const StringVector& tokens)
     }
 
     // Respond by the document status
-    LOG_DBG("Sending status after loading view " << _viewId << '.');
+    LOG_DBG("Sending status after loading view " << _viewId);
     const std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
     if (status.empty() || !sendTextFrame("status: " + status))
     {
@@ -2449,9 +2449,10 @@ bool ChildSession::saveAs(const StringVector& tokens)
     // We don't have the FileId at this point, just a new filename to save-as.
     // So here the filename will be obfuscated with some hashing, which later will
     // get a proper FileId that we will use going forward.
-    LOG_DBG("Calling LOK's saveAs with: '" << anonymizeUrl(wopiFilename) << "', '" <<
-            (format.size() == 0 ? "(nullptr)" : format.c_str()) << "', '" <<
-            (filterOptions.size() == 0 ? "(nullptr)" : filterOptions.c_str()) << "'.");
+    LOG_DBG("Calling LOK's saveAs with URL: ["
+            << anonymizeUrl(wopiFilename) << "], Format: ["
+            << (format.empty() ? "(nullptr)" : format.c_str()) << "], Filter Options: ["
+            << (filterOptions.empty() ? "(nullptr)" : filterOptions.c_str()) << ']');
 
     getLOKitDocument()->setView(_viewId);
 
@@ -2484,9 +2485,10 @@ bool ChildSession::saveAs(const StringVector& tokens)
 
         if (retry)
         {
-            LOG_DBG("Retry: calling LOK's saveAs with: '" << url.c_str() << "', '" <<
-                    (format.size() == 0 ? "(nullptr)" : format.c_str()) << "', '" <<
-                    (filterOptions.size() == 0 ? "(nullptr)" : filterOptions.c_str()) << "'.");
+            LOG_DBG("Retry: calling LOK's saveAs with URL: ["
+                    << url << "], Format: [" << (format.empty() ? "(nullptr)" : format.c_str())
+                    << "], Filter Options: ["
+                    << (filterOptions.empty() ? "(nullptr)" : filterOptions.c_str()) << ']');
 
             success = getLOKitDocument()->saveAs(encodedURL.c_str(),
                     format.size() == 0 ? nullptr :format.c_str(),
@@ -2545,7 +2547,7 @@ bool ChildSession::exportAs(const StringVector& tokens)
         // We don't have the FileId at this point, just a new filename to save-as.
         // So here the filename will be obfuscated with some hashing, which later will
         // get a proper FileId that we will use going forward.
-        LOG_DBG("Calling LOK's exportAs with: '" << anonymizeUrl(wopiFilename) << "'.");
+        LOG_DBG("Calling LOK's exportAs with: [" << anonymizeUrl(wopiFilename) << ']');
 
         getLOKitDocument()->setView(_viewId);
 
