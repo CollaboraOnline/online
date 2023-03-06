@@ -978,7 +978,7 @@ L.Control.UIManager = L.Control.extend({
 	/// message - message
 	/// buttonText - text inside OK button
 	/// callback - callback on button press
-	showConfirmModal: function(id, title, message, buttonText, callback) {
+	showConfirmModal: function(id, title, message, buttonText, callback, hideCancelButton) {
 		var dialogId = this.generateModalId(id);
 		var json = this._modalDialogJSON(id, title, !window.mode.isDesktop(), [
 			{
@@ -996,6 +996,7 @@ L.Control.UIManager = L.Control.extend({
 						id: 'response-cancel',
 						type: 'pushbutton',
 						text: _('Cancel'),
+						hidden: hideCancelButton === true ? true: false
 					},
 					{
 						id: 'response-ok',
