@@ -115,7 +115,8 @@ span#main-menu-btn-icon {
 
 .colors-container-no-color-row, .colors-container-auto-color-row{
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-start;
+	align-items: center;
 	height: 50px;
 }
 
