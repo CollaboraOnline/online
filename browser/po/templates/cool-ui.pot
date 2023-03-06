@@ -289,6 +289,10 @@ msgstr ""
 msgid "Failed to authenticate this session over protocol %0"
 msgstr ""
 
+#: admin/src/AdminSocketOverview.js:397
+msgid "Warning"
+msgstr ""
+
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
 msgstr ""
