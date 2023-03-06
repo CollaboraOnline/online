@@ -99,7 +99,7 @@ class IdleHandler {
 			return;
 		}
 
-		if (!this._active || isAnyVexDialogActive() || this.map.jsdialog.hasDialogOpened()) {
+		if (!this._active || isAnyVexDialogActive() || (this.map.jsdialog && this.map.jsdialog.hasDialogOpened())) {
 			// A dialog is already dimming the screen and probably
 			// shows an error message. Leave it alone.
 			this._active = false;

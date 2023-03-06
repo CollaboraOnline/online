@@ -16,29 +16,21 @@ L.Control.AlertDialog = L.Control.extend({
 			// TODO. queue message errors and pop-up dialogs
 			// Close other dialogs before presenting a new one.
 			vex.closeAll();
+			if (this._map.jsdialog)
+				this._map.jsdialog.closeAll();
 		}
 
 		if (e.msg) {
 			if (window.ThisIsAMobileApp && this._map._fatal) {
-				var buttonsList = [];
-				buttonsList.push({
-					text: _('Close'),
-					type: 'button',
-					className: 'button-primary',
-					click: function() {
-						window.postMobileMessage('BYE');
-						vex.closeAll();
-					}
-				});
-
-				vex.dialog.alert({
-					message: e.msg,
-					buttons: buttonsList,
-					callback: function() {},
-				});
+				this._map.uiManager.showConfirmModal('cool_alert', '', e.msg, _('Close'), function() {
+					window.postMobileMessage('BYE');
+					vex.closeAll();
+					if (this._map.jsdialog)
+						this._map.jsdialog.closeAll();
+				}.bind(this), true /* Hide cancel button */);
 			}
 			else
-				vex.dialog.alert(e.msg);
+				this._map.uiManager.showConfirmModal('cool_alert', '', e.msg, _('Close'), function() { /* Do nothing. */ }, true);
 		}
 		else if (e.cmd == 'load' && e.kind == 'docunloading') {
 			// Handled by transparently retrying.
@@ -67,7 +59,7 @@ L.Control.AlertDialog = L.Control.extend({
 			var msg = _('The server encountered a %0 error while parsing the %1 command.');
 			msg = msg.replace('%0', e.kind);
 			msg = msg.replace('%1', e.cmd);
-			vex.dialog.alert(msg);
+			this._map.uiManager.showInfoModal('cool_alert', '', msg, '', _('Close'), function() { /* Do nothing. */ }, false);
 		}
 	}
 });
