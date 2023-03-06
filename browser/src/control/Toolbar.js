@@ -340,7 +340,7 @@ L.Map.include({
 		}
 	},
 
-	sendUnoCommand: function (command, json) {
+	sendUnoCommand: function (command, json, force) {
 		if ((command.startsWith('.uno:Sidebar') && !command.startsWith('.uno:SidebarShow')) ||
 			command.startsWith('.uno:SlideChangeWindow') || command.startsWith('.uno:CustomAnimation') ||
 			command.startsWith('.uno:MasterSlidesPanel') || command.startsWith('.uno:ModifyPage')) {
@@ -394,7 +394,8 @@ L.Map.include({
 		if (this.uiManager.isUIBlocked())
 			return;
 		if ((this.dialog.hasOpenedDialog() || (this.jsdialog && this.jsdialog.hasDialogOpened()))
-			&& !command.startsWith('.uno:ToolbarMode')) {
+			&& !command.startsWith('.uno:ToolbarMode') && !force) {
+			console.debug('Cannot execute: ' + command + ' when dialog is opened.');
 			this.dialog.blinkOpenDialog();
 		} else if (this.isEditMode() || isAllowedInReadOnly) {
 			if (!this.messageNeedsToBeRedirected(command))
@@ -801,6 +802,7 @@ L.Map.include({
 		// It prevents launching multiple instances of the same dialog.
 		if (this.dialog.hasOpenedDialog() || (this.jsdialog && this.jsdialog.hasDialogOpened())) {
 			this.dialog.blinkOpenDialog();
+			console.debug('Cannot dispatch: ' + action + ' when dialog is opened.');
 			return;
 		}
 
