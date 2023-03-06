@@ -2,7 +2,7 @@
 /*
 	Socket to be intialized on opening the overview page in Admin console
 */
-/* global DlgYesNo _ vex $ Util AdminSocketBase Admin */
+/* global DlgYesNo _ $ Util AdminSocketBase Admin */
 
 
 function getCollapsibleClass(id) {
@@ -243,9 +243,6 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				$(this).html(Util.humanizeSecs(newSecs));
 			});
 		}, 1000);
-
-		// Dialog uses <a href='#' - which triggers popstate
-		vex.defaultOptions.closeAllOnPopState = false;
 	},
 
 	onSocketMessage: function(e) {
@@ -394,7 +391,14 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				msg =  _('Failed to authenticate this session over protocol %0');
 				msg = msg.replace('%0', window.location.protocol);
 			}
-			vex.dialog.alert({ message: msg });
+
+			var dialog = (new DlgYesNo())
+				.title(_('Warning'))
+				.text(_(msg))
+				.yesButtonText(_('OK'))
+				.noButtonText(_('Cancel'))
+				.type('warning');
+			dialog.open();
 		}
 	},
 
