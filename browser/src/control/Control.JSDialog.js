@@ -59,7 +59,7 @@ L.Control.JSDialog = L.Control.extend({
 	closeAll: function() {
 		var dialogs = Object.keys(this.dialogs);
 		for (var i = 0; i < dialogs.length; i++)
-			this.close(dialogs[i]);
+			this.close(dialogs[i], true);
 	},
 
 	closeDialog: function(id, sendCloseEvent) {
