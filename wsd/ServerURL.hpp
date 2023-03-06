@@ -80,6 +80,14 @@ public:
         return schemeProtocol + "://" + _schemeAuthority;
     }
 
+    std::string getWebServerUrl() const
+    {
+        std::string schemeProtocol = "http";
+        if (_ssl)
+            schemeProtocol += 's';
+        return schemeProtocol + "://" + _schemeAuthority;
+    }
+
     std::string getSubURLForEndpoint(const std::string &path) const
     {
         return std::string("http") + (_ssl ? "s" : "") + "://" + _schemeAuthority + _pathPlus + path;
