@@ -196,7 +196,7 @@ L.Control.DocumentRepair = L.Control.extend({
 			type: 'unsigned short',
 			value: index + 1
 		};
-		this._map.sendUnoCommand('.uno:' + action, command);
+		this._map.sendUnoCommand('.uno:' + action, command, true);
 	}
 });
 
