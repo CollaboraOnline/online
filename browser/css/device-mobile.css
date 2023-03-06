@@ -391,7 +391,6 @@ button.button-secondary.vex-dialog-button.vex-last {
 /* Related to toolbar.css */
 @-moz-document url-prefix() {
 	#formulabar #formulaInput, #formulabar #addressInput{
-		margin-left: 5px;
 		color: var(--color-main-text);
 		border: 1px solid var(--color-border) !important;
 		border-radius: 0px;
@@ -476,6 +475,7 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 	transform: rotate(180deg);
 }
 #addressInput{
+	margin-inline-start: 8px;
 	width: 50px;
 	height: 23px;
 	text-align: center;
