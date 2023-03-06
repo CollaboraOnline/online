@@ -93,8 +93,19 @@ static std::atomic<unsigned> appDocIdCounter(1);
 
     const unsigned char *ubufp = (const unsigned char *)buffer;
     std::vector<char> data;
+    bool newlineFound = false;
     for (int i = 0; i < length; i++) {
-        if (ubufp[i] < ' ' || ubufp[i] >= 0x80 || ubufp[i] == '\'' || ubufp[i] == '\\') {
+        if (!newlineFound && ubufp[i] == '\n')
+            newlineFound = true;
+
+        // Fix issue #5843 escape non-ASCII characters only for image data
+        // Passing non-ASCII, UTF-8 text from native to JavaScript works
+        // fine, but images become corrupted if any non-ASCII bytes are
+        // not escaped.
+        // The Socket._extractTextImg() JavaScript function assumes that,
+        // in the iOS app, the first newline separates text from image data
+        // so assume all bytes after the first new line are image data.
+        if (ubufp[i] < ' ' || ubufp[i] == '\'' || ubufp[i] == '\\' || (newlineFound && ubufp[i] >= 0x80)) {
             data.push_back('\\');
             data.push_back('x');
             data.push_back("0123456789abcdef"[(ubufp[i] >> 4) & 0x0F]);
