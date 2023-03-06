@@ -137,8 +137,10 @@ L.Control.UIManager = L.Control.extend({
 						}
 					]
 				};
-				if (app.socket)
-					app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json)});
+				if (app.socket) {
+					var builderCallback = function() { /* Do nothing. */ };
+					app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json), callback: builderCallback});
+				}
 			}, 700);
 		};
 
