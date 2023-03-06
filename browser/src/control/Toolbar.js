@@ -732,7 +732,7 @@ L.Map.include({
 							value: map.makeURLFromStr(link.value)
 						}
 					};
-					map.sendUnoCommand('.uno:SetHyperlink', command);
+					map.sendUnoCommand('.uno:SetHyperlink', command, true);
 				}
 
 				map.uiManager.closeModal(dialogId);
