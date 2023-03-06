@@ -12,17 +12,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-27 15:07+0100\n"
-"PO-Revision-Date: 2023-02-11 17:35+0000\n"
-"Last-Translator: Andrej Shadura <andrew@shadura.me>\n"
+"PO-Revision-Date: 2023-03-01 12:36+0000\n"
+"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <="
-" 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 4.16-dev\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Weblate 4.16-rc\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -364,7 +364,7 @@ msgstr "Automatická barva"
 
 #: src/control/Control.AlertDialog.js:56
 msgid "External link"
-msgstr ""
+msgstr "Externí odkaz"
 
 #: src/control/Control.AlertDialog.js:57
 msgid "Open link"
@@ -584,12 +584,11 @@ msgstr "Žádný (bez kontroly pravopisu)"
 
 #: src/control/Control.LanguageDialog.js:72
 msgid "Select language"
-msgstr ""
+msgstr "Vyberte jazyk"
 
 #: src/control/Control.LanguageDialog.js:93
-#, fuzzy
 msgid "Language"
-msgstr "Jazyk:"
+msgstr "Jazyk"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:80
 #: src/control/Control.Menubar.js:894
@@ -972,11 +971,11 @@ msgstr "Nastavení stránky"
 
 #: src/control/Control.Menubar.js:1057
 msgid "Define print area"
-msgstr ""
+msgstr "Definovat oblast tisku"
 
 #: src/control/Control.Menubar.js:1058
 msgid "Remove print area"
-msgstr ""
+msgstr "Odstranit oblast tisku"
 
 #: src/control/Control.Menubar.js:1331 src/control/Control.StatusBar.js:553
 msgid "Reset to Default Language"
@@ -1276,7 +1275,7 @@ msgstr "Smazat sloupce"
 #: src/control/Control.NotebookbarImpress.js:336
 #: src/control/Control.NotebookbarWriter.js:1053
 msgid "Read mode"
-msgstr ""
+msgstr "Režim čtení"
 
 #: src/control/Control.NotebookbarCalc.js:1024
 #: src/control/Control.NotebookbarDraw.js:288
@@ -2229,6 +2228,7 @@ msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
 msgstr ""
+"Opouštíte dokument. Následující webová stránka se otevře na nové kartě: "
 
 #: src/errormessages.js:28
 msgid ""
