@@ -876,6 +876,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	margin: 6px 8px;
 	font-size: 14px;
 	line-height: 1;
+	overflow: hidden;
 }
 
 #hyperlink-pop-up {
@@ -1038,4 +1039,9 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 #hyperlink-pop-up-preview img {
 	max-height: 150px;
 	max-width: 250px;
+}
+
+#hyperlink-pop-up-preview p {
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
