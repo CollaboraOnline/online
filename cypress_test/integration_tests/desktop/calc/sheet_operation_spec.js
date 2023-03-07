@@ -106,7 +106,7 @@ describe('Sheet Operations.', function () {
 
 		selectOptionFromContextMenu('Delete Sheet...');
 
-		clickVexDialogButton('OK');
+		cy.get('#delete-sheet-modal-response').click();
 
 		assertNumberofSheets(1);
 	});
