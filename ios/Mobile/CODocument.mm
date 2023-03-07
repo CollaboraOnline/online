@@ -33,6 +33,12 @@
 #import "MobileApp.hpp"
 #import "Protocol.hpp"
 
+static inline bool isMessageOfType(const char *message, const char *type, size_t lengthOfMessage) {
+    // Note: message is not zero terminated but type is
+    size_t typeLen = strlen(type);
+    return (typeLen <= lengthOfMessage && !strncmp(message, type, typeLen));
+}
+
 @implementation CODocument
 
 - (id)contentsForType:(NSString*)typeName error:(NSError **)errorPtr {
@@ -94,8 +100,16 @@ static std::atomic<unsigned> appDocIdCounter(1);
     const unsigned char *ubufp = (const unsigned char *)buffer;
     std::vector<char> data;
     bool newlineFound = false;
+    bool binaryMessage = (isMessageOfType(buffer, "tile:", length) ||
+                          isMessageOfType(buffer, "tilecombine:", length) ||
+                          isMessageOfType(buffer, "delta:", length) ||
+                          isMessageOfType(buffer, "renderfont:", length) ||
+                          isMessageOfType(buffer, "rendersearchlist:", length) ||
+                          isMessageOfType(buffer, "windowpaint:", length));
     for (int i = 0; i < length; i++) {
-        if (!newlineFound && ubufp[i] == '\n')
+        // Another fix for issue #5843 limit non-ASCII escaping to only
+        // certain message types
+        if (binaryMessage && !newlineFound && ubufp[i] == '\n')
             newlineFound = true;
 
         // Fix issue #5843 escape non-ASCII characters only for image data
@@ -116,8 +130,16 @@ static std::atomic<unsigned> appDocIdCounter(1);
     }
     data.push_back(0);
 
+    NSString *escapedData = [NSString stringWithUTF8String:data.data()];
+    if (!escapedData) {
+        char outBuf[length + 1];
+        memcpy(outBuf, buffer, length);
+        outBuf[length] = '\0';
+        LOG_ERR("Couldn't create NSString with message: " << outBuf);
+        return;
+    }
     js = @"window.TheFakeWebSocket.onmessage({'data': '";
-    js = [js stringByAppendingString:[NSString stringWithUTF8String:data.data()]];
+    js = [js stringByAppendingString:escapedData];
     js = [js stringByAppendingString:@"'});"];
 
     NSString *subjs = [js substringToIndex:std::min(100ul, js.length)];
