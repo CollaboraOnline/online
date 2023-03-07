@@ -55,7 +55,7 @@ describe('Multiuser sheet operations', function() {
 		cy.iframe(frameId2).contains('.context-menu-link', 'Delete Sheet...')
 			.click();
 
-		cy.customGet('.vex-dialog-form .button-primary', frameId2)
+		cy.customGet('#delete-sheet-modal-response', frameId2)
 			.click();
 
 		//assert for user-1/2

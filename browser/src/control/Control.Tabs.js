@@ -3,7 +3,7 @@
  * L.Control.Tabs is used to switch sheets in Calc
  */
 
-/* global $ vex _ _UNO Hammer */
+/* global $ _ _UNO Hammer */
 L.Control.Tabs = L.Control.extend({
 	onAdd: function(map) {
 		map.on('updatepermission', this._onUpdatePermission, this);
@@ -297,20 +297,12 @@ L.Control.Tabs = L.Control.extend({
 	},
 
 	_deleteSheet: function() {
-		var map = this._map;
 		var nPos = this._tabForContextMenu;
-		vex.dialog.confirm({
-			message: _('Are you sure you want to delete sheet, %sheet%?').replace('%sheet%', $('#spreadsheet-tab' + this._tabForContextMenu).text()),
-			buttons: [
-				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
-				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') })
-			],
-			callback: function(data) {
-				if (data) {
-					map.deletePage(nPos);
-				}
-			}
-		});
+		var message = _('Are you sure you want to delete sheet, %sheet%?').replace('%sheet%', $('#spreadsheet-tab' + this._tabForContextMenu).text());
+
+		this._map.uiManager.showInfoModal('delete-sheet-modal', '', message, '', _('OK'), function() {
+			this._map.deletePage(nPos);
+		}.bind(this), true);
 	},
 
 	_renameSheet: function() {

@@ -799,13 +799,13 @@ L.Control.UIManager = L.Control.extend({
 	/// shows modal dialog
 	/// json - JSON for building the dialog
 	/// callbacks - array of { id: widgetId, type: eventType, func: functionToCall }
-	showModal: function(json, callbacks) {
+	showModal: function(json, callbacks, cancelButtonId) {
 		var that = this;
 		var builderCallback = function(objectType, eventType, object, data) {
 			window.app.console.debug('modal action: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
 
 			// default close methods
-			callbacks.push({id: 'response-cancel', func: function() { that.closeModal(json.id); }});
+			callbacks.push({id: (cancelButtonId ? cancelButtonId: 'response-cancel'), func: function() { that.closeModal(json.id); }});
 			callbacks.push({id: '__POPOVER__', func: function() { that.closeModal(json.id); }});
 
 			for (var i in callbacks) {
@@ -914,7 +914,7 @@ L.Control.UIManager = L.Control.extend({
 					callback();
 				that.closeModal(dialogId);
 			}}
-		]);
+		], cancelButtonId);
 	},
 
 	/// shows simple input modal (message + input + (cancel + ok) button)

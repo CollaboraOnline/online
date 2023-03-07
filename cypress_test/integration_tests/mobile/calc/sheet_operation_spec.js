@@ -88,7 +88,7 @@ describe('Sheet Operation', function () {
 
 		selectOptionMobileWizard('Delete Sheet...');
 
-		clickVexDialogButton('OK');
+		cy.get('#delete-sheet-modal-response').click();
 
 		assertNumberofSheets(1);
 	});
