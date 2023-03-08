@@ -3076,7 +3076,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				L.DomUtil.addClass(entry, 'selected');
 				var blockOption = this._scrollIntoViewBlockOption('nearest');
 				entry.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
-			} else
+			} else if (pos != -1)
 				console.warn('not found entry: "' + pos + '" in: "' + data.control_id + '"');
 
 			break;
