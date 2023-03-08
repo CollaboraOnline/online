@@ -304,10 +304,18 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         bool success = false;
         const int width = 120;
         const int height = 120;
+
+        // These arbitrary magic numbers are from the original interrupted WIP, surely this will need more work.
+        constexpr float zoom = 0.5f;
+        constexpr int pixelWidthTwips = width * 15 / zoom;
+        constexpr int pixelHeightTwips = height * 15 / zoom;
+        constexpr int offsetXTwips = 15 * 15; // start 15 px/twips before the target to get a clearer thumbnail
+        constexpr int offsetYTwips = 15 * 15;
+
         const auto mode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
 
         std::vector<unsigned char> thumbnail(width * height * 4);
-        getLOKitDocument()->paintThumbnail(thumbnail.data(), x, y);
+        getLOKitDocument()->paintTile(thumbnail.data(), width, height, x - offsetXTwips, y - offsetYTwips, pixelWidthTwips, pixelHeightTwips);
 
         std::vector<char> pngThumbnail;
         if (Png::encodeBufferToPNG(thumbnail.data(), width, height, pngThumbnail, mode))
