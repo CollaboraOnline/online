@@ -485,9 +485,13 @@ void AdminModel::addBytes(const std::string& docKey, uint64_t sent, uint64_t rec
     _recvBytesTotal += recv;
 }
 
-void AdminModel::modificationAlert(const std::string& /*docKey*/, pid_t pid, bool value)
+void AdminModel::modificationAlert(const std::string& docKey, pid_t pid, bool value)
 {
     assertCorrectThread();
+
+    auto doc = _documents.find(docKey);
+    if (doc != _documents.end())
+        doc->second->setModified(value);
 
     std::ostringstream oss;
     oss << "modifications "
