@@ -900,7 +900,8 @@ bool Socket::isLocal() const
         return true;
     if (_clientAddress == "::1")
         return true;
-    return  _clientAddress.rfind("127.0.0.", 0);
+    return  _clientAddress.rfind("::ffff:127.0.0.", 0) != std::string::npos ||
+                _clientAddress.rfind("127.0.0.", 0) != std::string::npos;
 }
 
 std::shared_ptr<Socket> LocalServerSocket::accept()
