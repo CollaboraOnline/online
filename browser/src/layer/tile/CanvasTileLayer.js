@@ -1755,9 +1755,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			var section = app.sectionContainer.getSectionWithName(L.CSections.ContentControl.name);
 			section.drawContentControl(JSON.parse(textMsg));
 		}
-		else if (textMsg.startsWith('infobar:')) {
-			obj = JSON.parse(textMsg.substring('infobar:'.length + 1));
-			this._map.fire('infobar', obj);
+		else if (textMsg.startsWith('versionbar:')) {
+			obj = JSON.parse(textMsg.substring('versionbar:'.length + 1));
+			this._map.fire('versionbar', obj);
 		}
 	},
 

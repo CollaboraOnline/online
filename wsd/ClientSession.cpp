@@ -533,17 +533,17 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         return true;
     }
 
-    if (tokens.equals(0, "infobar"))
+    if (tokens.equals(0, "versionbar"))
     {
 #if !MOBILEAPP
-        std::string infobar;
+        std::string versionBar;
         {
             std::lock_guard<std::mutex> lock(COOLWSD::FetchUpdateMutex);
-            infobar = COOLWSD::LatestVersion;
+            versionBar = COOLWSD::LatestVersion;
         }
 
-        if (!infobar.empty())
-            sendTextFrame("infobar: " + infobar);
+        if (!versionBar.empty())
+            sendTextFrame("versionbar: " + versionBar);
 #endif
     }
     else if (tokens.equals(0, "jserror") || tokens.equals(0, "jsexception"))

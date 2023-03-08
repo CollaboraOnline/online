@@ -1,21 +1,17 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Map.Infobar.
+ * L.Map.VersionBar.
  */
 /* global app _ */
 
-L.Map.mergeOptions({
-	infobar: true
-});
-
-L.Map.Infobar = L.Handler.extend({
-	addHooks: function () {
+L.Map.VersionBar = L.Handler.extend({
+	onAdd: function () {
 		this._map.on('updateviewslist', this.onUpdateInfo, this);
-		this._map.on('infobar', this.onInfobar, this);
+		this._map.on('versionbar', this.onversionbar, this);
 	},
 
-	removeHooks: function () {
-		this._map.off('infobar', this.onInfobar, this);
+	onRemove: function () {
+		this._map.off('versionbar', this.onversionbar, this);
 		this._map.off('updateviewlist', this.onUpdateInfo, this);
 	},
 
@@ -38,11 +34,11 @@ L.Map.Infobar = L.Handler.extend({
 			}
 
 			if (currentDate > laterDate)
-				app.socket.sendMessage('infobar');
+				app.socket.sendMessage('versionbar');
 		}
 	},
 
-	onInfobar: function (e) {
+	onversionbar: function (e) {
 		if (e && e.coolwsd_version) {
 			var latestVersion = e.coolwsd_version.split('.');
 			var currentVersion = app.socket.WSDServer.Version.split('.');
@@ -68,5 +64,5 @@ L.Map.Infobar = L.Handler.extend({
 });
 
 if (window.isLocalStorageAllowed) {
-	L.Map.addInitHook('addHandler', 'infobar', L.Map.Infobar);
+	L.Map.versionBar = new L.Map.VersionBar();
 }

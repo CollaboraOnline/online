@@ -299,7 +299,7 @@ COOL_JS_LST =\
 	src/map/handler/Map.Keyboard.js \
 	src/map/handler/Map.Welcome.js \
 	src/map/handler/Map.Feedback.js \
-	src/map/handler/Map.Infobar.js \
+	src/map/handler/Map.VersionBar.js \
 	src/dom/DomEvent.MultiClick.js \
 	src/map/handler/Map.Mouse.js \
 	src/map/handler/Map.Print.js \
