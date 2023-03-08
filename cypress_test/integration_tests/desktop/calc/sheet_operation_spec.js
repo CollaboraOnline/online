@@ -19,13 +19,6 @@ describe('Sheet Operations.', function () {
 		cy.get('button.spreadsheet-tab').should('have.length', n);
 	}
 
-	function clickVexDialogButton(buttonText) {
-		cy.get('.vex-content').should('exist');
-
-		cy.contains('.vex-dialog-buttons button', buttonText)
-			.click();
-	}
-
 	function selectOptionFromContextMenu(contextMenu) {
 		cy.wait(1000);
 
@@ -139,11 +132,11 @@ describe('Sheet Operations.', function () {
 		//show sheet
 		selectOptionFromContextMenu('Show Sheet');
 
-		cy.get('.vex-content').should('exist');
+		cy.get('#show-sheets-modal').should('exist');
 
 		cy.get('#hidden-part-checkbox-1').check();
 
-		clickVexDialogButton('Show Selected Sheets');
+		cy.get('#show-sheets-modal-response').click();
 
 		assertNumberofSheets(2);
 	});

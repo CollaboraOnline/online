@@ -3,7 +3,7 @@
  * Document parts switching and selecting handler
  */
 
-/* global app vex $ _ */
+/* global app _ */
 
 L.Map.include({
 	setPart: function (part, external, calledFromSetPartHandler) {
@@ -424,26 +424,19 @@ L.Map.include({
 				}
 			}
 
-			var socket_ = app.socket;
-			vex.dialog.open({
-				unsafeMessage: container.outerHTML,
-				buttons: [
-					$.extend({}, vex.dialog.buttons.NO, { text: _('Close') }),
-					$.extend({}, vex.dialog.buttons.YES, { text: _('Show Selected Sheets') })
-				],
-				callback: function (value) {
-					if (value === true) {
-						var checkboxList = document.querySelectorAll('input[id^="hidden-part-checkbox"]');
-						for (var i = 0; i < checkboxList.length; i++) {
-							if (checkboxList[i].checked === true) {
-								var partName_ = partNames_[parseInt(checkboxList[i].id.replace('hidden-part-checkbox-', ''))];
-								var argument = {aTableName: {type: 'string', value: partName_}};
-								socket_.sendMessage('uno .uno:Show ' + JSON.stringify(argument));
-							}
-						}
+			var callback = function() {
+				var checkboxList = document.querySelectorAll('input[id^="hidden-part-checkbox"]');
+				for (var i = 0; i < checkboxList.length; i++) {
+					if (checkboxList[i].checked === true) {
+						var partName_ = partNames_[parseInt(checkboxList[i].id.replace('hidden-part-checkbox-', ''))];
+						var argument = {aTableName: {type: 'string', value: partName_}};
+						app.socket.sendMessage('uno .uno:Show ' + JSON.stringify(argument));
 					}
 				}
-			});
+			};
+
+			this.uiManager.showInfoModal('show-sheets-modal', '', ' ', ' ', _('Close'), callback, true);
+			document.getElementById('show-sheets-modal').querySelectorAll('p')[0].outerHTML = container.outerHTML;
 		}
 	},
 
