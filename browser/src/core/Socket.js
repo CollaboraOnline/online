@@ -439,16 +439,31 @@ app.definitions.Socket = L.Class.extend({
 	_extractTextImg: function (e) {
 
 		if ((window.ThisIsTheiOSApp || window.ThisIsTheEmscriptenApp) && typeof (e.data) === 'string') {
-			var index;
-			index = e.data.indexOf('\n');
-			if (index < 0)
-				index = e.data.length;
-			e.imgBytes = new Uint8Array(e.data.length);
-			for (var i = 0; i < e.data.length; i++) {
-				e.imgBytes[i] = e.data.charCodeAt(i);
+			// Another fix for issue #5843 limit splitting on the first newline
+			// to only certain message types on iOS. Also, fix mangled UTF-8
+			// text on iOS in jsdialogs when using languages like Greek and
+			// Japanese by only setting the image bytes for only the same set
+			// of message types.
+			if (window.ThisIsTheEmscriptenApp ||
+					e.data.startsWith('tile:') ||
+					e.data.startsWith('tilecombine:') ||
+					e.data.startsWith('delta:') ||
+					e.data.startsWith('renderfont:') ||
+					e.data.startsWith('rendersearchlist:') ||
+					e.data.startsWith('windowpaint:')) {
+				var index;
+				index = e.data.indexOf('\n');
+				if (index < 0)
+					index = e.data.length;
+				e.imgBytes = new Uint8Array(e.data.length);
+				for (var i = 0; i < e.data.length; i++) {
+					e.imgBytes[i] = e.data.charCodeAt(i);
+				}
+				e.imgIndex = index + 1;
+				e.textMsg = e.data.substring(0, index);
+			} else {
+				e.textMsg = e.data;
 			}
-			e.imgIndex = index + 1;
-			e.textMsg = e.data.substring(0, index);
 		} else if (typeof (e.data) === 'string') {
 			e.textMsg = e.data;
 		} else if (typeof (e.data) === 'object') {
@@ -1086,7 +1101,8 @@ app.definitions.Socket = L.Class.extend({
 				}
 			}
 
-			// Decode UTF-8 in case it is binary frame
+			// Decode UTF-8 in case it is binary frame. Disable this block
+			// in the iOS app as the image data is not URL encoded.
 			if (typeof e.data === 'object') {
 				// FIXME: Not sure what this code is supposed to do. Doesn't
 				// decodeURIComponent() exactly reverse what window.escape() (which
