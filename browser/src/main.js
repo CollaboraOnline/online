@@ -70,6 +70,9 @@ map.addControl(map.uiManager);
 
 map.uiManager.initializeBasicUI();
 
+if (L.Map.versionBar)
+	map.addControl(L.Map.versionBar);
+
 L.Map.THIS = map;
 app.idleHandler.map = map;
 
