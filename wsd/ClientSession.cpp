@@ -1851,6 +1851,18 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
     }
     else if (tokens.equals(0, "graphicselection:") || tokens.equals(0, "graphicviewselection:"))
     {
+        if (_thumbnailSession)
+        {
+            int x, y;
+            if (stringToInteger(tokens[1], x) &&
+                stringToInteger(tokens[2], y))
+            {
+                std::ostringstream renderThumbnailCmd;
+                renderThumbnailCmd << "getthumbnail x=" << x << " y=" << y;
+                docBroker->forwardToChild(client_from_this(), renderThumbnailCmd.str());
+            }
+        }
+
         if (payload->find("url", 3) >= 0)
         {
             std::string json(payload->data().data(), payload->size());
