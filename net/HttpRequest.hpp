@@ -1370,8 +1370,9 @@ private:
         return events;
     }
 
-    virtual void handleIncomingMessage(SocketDisposition& disposition) override
+    void handleIncomingMessage(SocketDisposition& disposition) override
     {
+        LOG_TRC("handleIncomingMessage");
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (isConnected() && socket)
         {
