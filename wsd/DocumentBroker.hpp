@@ -1517,6 +1517,8 @@ public:
 protected:
     bool isConvertTo() const override { return true; }
 
+    virtual bool isGetThumbnail() const { return false; }
+
     virtual void sendStartMessage(std::shared_ptr<ClientSession> clientSession, const std::string& encodedFrom);
 };
 
@@ -1549,6 +1551,9 @@ public:
                     : ConvertToBroker(uri, uriPublic, docKey, std::string(), std::string(), lang)
                     , _target(target)
                     {}
+
+protected:
+    bool isGetThumbnail() const override { return true; }
 
 private:
     void sendStartMessage(std::shared_ptr<ClientSession> clientSession, const std::string& encodedFrom) override;
