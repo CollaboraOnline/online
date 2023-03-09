@@ -1529,6 +1529,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled === 'false' || data.enabled === false)
 			$(pushbutton).prop('disabled', true);
 
+		if (data.visible === 'false' || data.visible === false)
+			L.DomUtil.addClass(pushbutton, 'hidden');
+
 		if (customCallback)
 			pushbutton.onclick = customCallback;
 		else if (builder._responses[pushbutton.id] !== undefined)
