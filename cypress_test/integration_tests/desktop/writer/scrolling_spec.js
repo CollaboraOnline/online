@@ -9,10 +9,10 @@ describe('Scroll through document', function() {
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
 
-		cy.get('#toolbar-up .w2ui-scroll-right')
+		cy.get('#menu-view')
 			.click();
 
-		cy.get('#tb_editbar_item_sidebar')
+		cy.get('#menu-showsidebar')
 			.click();
 	});
 
