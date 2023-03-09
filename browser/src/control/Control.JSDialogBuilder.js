@@ -668,6 +668,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder._controlHandlers[child.type](right, child, builder);
 		}
 
+		if (data.vertical === 'true' || data.vertical === true) {
+			left.style.display = 'grid';
+			left.style.margin = 'auto';
+			right.style.display = 'grid';
+			right.style.margin = 'auto';
+		}
+
 		return false;
 	},
 
