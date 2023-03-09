@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-06 13:17+0100\n"
-"PO-Revision-Date: 2023-03-02 20:22+0000\n"
+"PO-Revision-Date: 2023-03-09 13:38+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -768,7 +768,7 @@ msgstr "Tudo"
 #: src/control/Control.NotebookbarImpress.js:943
 #: src/control/Control.NotebookbarWriter.js:847
 msgid "Pick Link"
-msgstr ""
+msgstr "Escolher hiperligação"
 
 #: src/control/Control.Menubar.js:209
 msgid "Text orientation"
@@ -2202,23 +2202,23 @@ msgstr ""
 "Parâmetro WOPISrc inválido ou inexistente. Deve contactar o suporte técnico."
 
 #: src/errormessages.js:23
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
 "A sua sessão irá expirar em %time. Por favor guarde o seu trabalho e "
-"atualize a sessão (ou página web) para continuar."
+"atualize a sessão (ou página web) para continuar. Pode ter de iniciar a "
+"sessão novamente."
 
 #: src/errormessages.js:24
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
-"A sua sessão expirou. Futuras alterações no documento poderão não ser "
-"guardadas. Por favor atualize a sessão (ou a página web) para continuar."
+"A sua sessão expirou. As alterações posteriores feitas no documento poderão "
+"não ser guardadas. Por favor atualize a sessão (ou a página web) para "
+"continuar. Pode ter de iniciar a sessão novamente."
 
 #: src/errormessages.js:25
 msgid ""
