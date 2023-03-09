@@ -127,7 +127,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
 					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
-					{uno: '.uno:Sidebar'},
+					{uno: '.uno:Sidebar', id: 'showsidebar'},
 					{type: 'separator'},
 					{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action'},
 					{uno: '.uno:ControlCodes'},
@@ -412,7 +412,7 @@ L.Control.Menubar = L.Control.extend({
 				   {name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 				   {name: _('Show Ruler'), id: 'showruler', type: 'action'},
 				   {name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
-				   {uno: '.uno:Sidebar'},
+				   {uno: '.uno:Sidebar', id: 'showsidebar'},
 				   {type: 'separator'},
 				   {uno: '.uno:SlideMasterPage'},
 				   {uno: '.uno:ModifyPage'},
@@ -550,7 +550,7 @@ L.Control.Menubar = L.Control.extend({
 				]).concat([
 					{type: 'separator'},
 					{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
-					{uno: '.uno:Sidebar'},
+					{uno: '.uno:Sidebar', id: 'showsidebar'},
 					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'}
 				])},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
@@ -678,7 +678,7 @@ L.Control.Menubar = L.Control.extend({
 				   {type: 'separator'},
 				   {name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 				   {name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
-				   {uno: '.uno:Sidebar'},
+				   {uno: '.uno:Sidebar', id: 'showsidebar'},
 				   {name: _UNO('.uno:FreezePanes', 'spreadsheet', true), id: 'FreezePanes', type: 'action', uno: '.uno:FreezePanes'},
 				   {name: _UNO('.uno:FreezeCellsMenu', 'spreadsheet', true), id: 'FreezeCellsMenu', type: 'menu', uno: '.uno:FreezeCellsMenu', menu: [
 					   {name: _UNO('.uno:FreezePanesColumn', 'spreadsheet', true), id: 'FreezePanesColumn', type: 'action', uno: '.uno:FreezePanesColumn'},
