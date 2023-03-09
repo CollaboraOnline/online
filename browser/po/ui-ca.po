@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-06 13:17+0100\n"
-"PO-Revision-Date: 2023-02-07 21:49+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2023-03-09 13:38+0000\n"
+"Last-Translator: Joan Montané <jmontane@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16-dev\n"
+"X-Generator: Weblate 4.16.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -363,7 +363,7 @@ msgstr "Color automàtic"
 
 #: src/control/Control.AlertDialog.js:56
 msgid "External link"
-msgstr ""
+msgstr "Enllaç extern"
 
 #: src/control/Control.AlertDialog.js:57
 msgid "Open link"
@@ -583,12 +583,11 @@ msgstr "Cap (no verifiquis l'ortografia)"
 
 #: src/control/Control.LanguageDialog.js:72
 msgid "Select language"
-msgstr ""
+msgstr "Trieu una llengua"
 
 #: src/control/Control.LanguageDialog.js:93
-#, fuzzy
 msgid "Language"
-msgstr "Llengua:"
+msgstr "Llengua"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:80
 #: src/control/Control.Menubar.js:898
@@ -770,7 +769,7 @@ msgstr "Tot"
 #: src/control/Control.NotebookbarImpress.js:943
 #: src/control/Control.NotebookbarWriter.js:847
 msgid "Pick Link"
-msgstr ""
+msgstr "Trieu un enllaç"
 
 #: src/control/Control.Menubar.js:209
 msgid "Text orientation"
@@ -980,11 +979,11 @@ msgstr "Configuració de la pàgina"
 
 #: src/control/Control.Menubar.js:1061
 msgid "Define print area"
-msgstr ""
+msgstr "Defineix l'àrea d'impressió"
 
 #: src/control/Control.Menubar.js:1062
 msgid "Remove print area"
-msgstr ""
+msgstr "Suprimeix l'àrea d'impressió"
 
 #: src/control/Control.Menubar.js:1335 src/control/Control.StatusBar.js:553
 msgid "Reset to Default Language"
@@ -1284,7 +1283,7 @@ msgstr "Suprimeix les columnes"
 #: src/control/Control.NotebookbarImpress.js:336
 #: src/control/Control.NotebookbarWriter.js:1058
 msgid "Read mode"
-msgstr ""
+msgstr "Mode lectura"
 
 #: src/control/Control.NotebookbarCalc.js:1024
 #: src/control/Control.NotebookbarDraw.js:288
@@ -2208,23 +2207,23 @@ msgstr ""
 "el servei tècnic."
 
 #: src/errormessages.js:23
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
 "La sessió finalitzarà en %time. Deseu la feina i actualitzeu la sessió (o la "
-"pàgina web) per a continuar."
+"pàgina web) per a continuar. Pot ser que hàgiu d'iniciar sessió una altra "
+"vegada."
 
 #: src/errormessages.js:24
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
 "La sessió ha finalitzat. Els canvis futurs en el document potser no es "
-"desin. Actualitzeu la sessió (o la pàgina web) per a continuar."
+"desin. Actualitzeu la sessió (o la pàgina web) per a continuar. Pot ser que "
+"hàgiu d'iniciar sessió una altra vegada."
 
 #: src/errormessages.js:25
 msgid ""
@@ -2243,6 +2242,8 @@ msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
 msgstr ""
+"Esteu sortint del document. La pàgina web següent s'obrirà en una pestanya "
+"nova: "
 
 #: src/errormessages.js:28
 msgid ""
