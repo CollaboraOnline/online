@@ -2468,7 +2468,22 @@ void COOLWSD::innerInitialize(Application& self)
 
     FileUtil::registerFileSystemForDiskSpaceChecks(ChildRoot);
 
-    const auto maxConcurrency = getConfigValue<int>(conf, "per_document.max_concurrency", 4);
+    int nThreads = std::max<int>(std::thread::hardware_concurrency(), 1);
+    int maxConcurrency = getConfigValue<int>(conf, "per_document.max_concurrency", 4);
+
+    if (maxConcurrency > 16)
+    {
+        LOG_WRN("Using a large number of threads for every document puts pressure on "
+                "the scheduler, and consumes memory, while providing marginal gains "
+                "consider lowering max_concurrency from " << maxConcurrency);
+    }
+    if (maxConcurrency > nThreads)
+    {
+        LOG_ERR("Setting concurrency above the number of physical "
+                "threads yields extra latency and memory usage for no benefit. "
+                "Clamping " << maxConcurrency << " to " << nThreads << " threads.");
+        maxConcurrency = nThreads;
+    }
     if (maxConcurrency > 0)
     {
         setenv("MAX_CONCURRENCY", std::to_string(maxConcurrency).c_str(), 1);
