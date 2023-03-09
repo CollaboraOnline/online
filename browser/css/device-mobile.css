@@ -439,7 +439,7 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 	align-items: center;
 }
 .expanded .formulabar.toolbox {
-	align-items: center;
+	align-items: flex-start;
 }
 #formulabar {
 	padding: 0px !important;
