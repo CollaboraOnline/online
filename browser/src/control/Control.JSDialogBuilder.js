@@ -1840,7 +1840,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			L.DomUtil.addClass(fixedtext, 'ui-text');
 		}
 
-		if (data.hidden)
+		if (data.hidden || data.visible === 'false' || data.visible === false)
 			$(fixedtext).hide();
 
 		return false;
