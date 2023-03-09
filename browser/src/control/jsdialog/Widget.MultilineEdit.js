@@ -21,6 +21,14 @@
 
 /* global JSDialog */
 
+function _sendSimpleSelection(edit, builder) {
+	var startPos = edit.selectionStart;
+	var endPos = edit.selectionEnd;
+
+	var selection = startPos + ';' + endPos;
+	builder.callback('edit', 'textselection', edit, selection, builder);
+}
+
 function _multiLineEditControl(parentContainer, data, builder, callback) {
 	var controlType = 'textarea';
 	if (data.cursor && (data.cursor === 'false' || data.cursor === false))
@@ -47,6 +55,29 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 			callback(this.value);
 
 		builder.callback('edit', 'change', edit, this.value, builder);
+	});
+
+	edit.addEventListener('mouseup', function (event) {
+		if (edit.disabled) {
+			event.preventDefault();
+			return;
+		}
+
+		_sendSimpleSelection(event.target, builder);
+	});
+
+	edit.addEventListener('keydown', function (event) {
+		if (edit.disabled) {
+			event.preventDefault();
+			return;
+		}
+
+		if (event.key === 'Left' || event.key === 'ArrowLeft'
+			|| event.key === 'Right' || event.key === 'ArrowRight'
+			|| event.key === 'Up' || event.key === 'ArrowUp'
+			|| event.key === 'Down' || event.key === 'ArrowDown') {
+			setTimeout(function () { _sendSimpleSelection(edit, builder); }, 0);
+		}
 	});
 
 	if (data.hidden)
