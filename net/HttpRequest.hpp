@@ -1373,45 +1373,38 @@ private:
     virtual void handleIncomingMessage(SocketDisposition& disposition) override
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
-        if (!isConnected())
+        if (isConnected() && socket)
         {
-            LOG_ERR("handleIncomingMessage called when not connected.");
-            assert(!socket && "Expected no socket when not connected.");
-            return;
+            // Consume the incoming data by parsing and processing the body.
+            Buffer& data = socket->getInBuffer();
+            if (data.empty())
+            {
+                LOG_DBG("No data to process from the socket");
+                return;
+            }
+
+            LOG_TRC("HandleIncomingMessage: buffer has:\n"
+                    << Util::dumpHex(std::string(data.data(), std::min(data.size(), 256UL))));
+
+            const int64_t read = _response->readData(data.data(), data.size());
+            if (read >= 0)
+            {
+                // Remove consumed data.
+                if (read)
+                    data.eraseFirst(read);
+                return;
+            }
+        }
+        else
+        {
+            LOG_ERR("handleIncomingMessage called when not connected");
+            assert(!socket && "Expected no socket when not connected");
+            assert(!isConnected() && "Expected not connected when no socket");
         }
 
-        assert(socket && "No valid socket to handleIncomingMessage.");
-
-        Buffer& data = socket->getInBuffer();
-        if (data.empty())
-        {
-            LOG_DBG("No data to process from the socket");
-            return;
-        }
-
-        LOG_TRC("HandleIncomingMessage: buffer has:\n"
-                << Util::dumpHex(std::string(data.data(), std::min(data.size(), 256UL))));
-
-        // Consume the incoming data by parsing and processing the body.
-        bool close = false;
-        const int64_t read = _response->readData(data.data(), data.size());
-        if (read > 0)
-        {
-            // Remove consumed data.
-            data.eraseFirst(read);
-            close = !isConnected();
-        }
-        else if (read < 0)
-        {
-            // Protocol error: Interrupt the transfer.
-            close = true;
-        }
-
-        if (close)
-        {
-            disposition.setClosed();
-            onDisconnect();
-        }
+        // Protocol error: Interrupt the transfer.
+        disposition.setClosed();
+        onDisconnect();
     }
 
     void performWrites(std::size_t capacity) override
