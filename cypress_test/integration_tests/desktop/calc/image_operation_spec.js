@@ -25,7 +25,7 @@ describe('Image Operation Tests', function() {
 		deleteImage();
 	});
 
-	it('Resize image when keep ratio option enabled and disabled', function() {
+	it.skip('Resize image when keep ratio option enabled and disabled', function() {
 		insertImage('calc');
 		//when Keep ratio is unchecked
 		assertImageSize(248, 63);

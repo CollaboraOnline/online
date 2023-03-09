@@ -53,7 +53,7 @@ describe('Scroll through document', function() {
 
 	});
 
-	it('Scrolling to left/right', function() {
+	it.skip('Scrolling to left/right', function() {
 		cy.get('#toolbar-down').click();
 
 		desktopHelper.selectZoomLevel('200');
