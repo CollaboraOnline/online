@@ -13,18 +13,18 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-06 13:17+0100\n"
-"PO-Revision-Date: 2023-03-01 12:36+0000\n"
+"PO-Revision-Date: 2023-03-07 02:32+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<"
-"12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) ||"
-" (n%100>=12 && n%100<=14) ? 2 : 3);\n"
-"X-Generator: Weblate 4.16-rc\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Weblate 4.16.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -772,7 +772,7 @@ msgstr "Wszystko"
 #: src/control/Control.NotebookbarImpress.js:943
 #: src/control/Control.NotebookbarWriter.js:847
 msgid "Pick Link"
-msgstr ""
+msgstr "Wybierz łącze"
 
 #: src/control/Control.Menubar.js:209
 msgid "Text orientation"
@@ -2208,23 +2208,22 @@ msgstr ""
 "Błędny lub brakujący parametr WOPISrc, skontaktuj się z pomocą techniczną."
 
 #: src/errormessages.js:23
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Twoja sesja wygaśnie w %time. Zapisz swoją pracę i odśwież sesję (lub stronę "
-"internetową), aby kontynuować."
+"Twoja sesja wygaśnie za %time. Zapisz swoją pracę i odśwież sesję (lub "
+"stronę internetową), aby kontynuować. Może być konieczne ponowne zalogowanie."
 
 #: src/errormessages.js:24
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
 "Twoja sesja wygasła. Dalsze zmiany w dokumencie mogą nie zostać zapisane. "
-"Odśwież sesję (lub stronę internetową), aby kontynuować."
+"Odśwież sesję (lub stronę internetową), aby kontynuować. Może być konieczne "
+"ponowne zalogowanie."
 
 #: src/errormessages.js:25
 msgid ""
