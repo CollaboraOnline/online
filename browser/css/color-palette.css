@@ -34,11 +34,12 @@
 	--color-error: #e9322d;
 	--color-warning: #eca700;
 	--color-success: #46ba61;
+	--color-overlay: #d3d3d3;
 
 	--color-box-shadow: rgba(77, 77, 77, 0.5);
 	--border-radius: 4px; /* buttons, widgets */
 	--border-radius-large: 10px; /* dialog */
-
+	
 	--default-font-size: 12px;
 	--header-font-size: 16px;
 
@@ -47,4 +48,7 @@
 
 	/* Annotations */
 	--annotation-input-size: 240px;
+
+	/* Toolbar drop down menu default font size */
+	--toolbar-drop-menu-font-size: 16px;
 }
