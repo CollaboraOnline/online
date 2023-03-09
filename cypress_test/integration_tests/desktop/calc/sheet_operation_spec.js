@@ -54,7 +54,7 @@ describe('Sheet Operations.', function () {
 		cy.get('#tb_spreadsheet-toolbar_item_insertsheet').click();
 		assertNumberofSheets(2);
 
-		cy.get('#spreadsheet-tab1').click();
+		helper.clickOnIdle('#spreadsheet-tab1');
 
 		calcHelper.ensureViewContainsCellCursor();
 
@@ -62,10 +62,7 @@ describe('Sheet Operations.', function () {
 
 		calcHelper.ensureViewContainsCellCursor();
 
-		helper.waitUntilIdle('#spreadsheet-tab0');
-
-		cy.get('#spreadsheet-tab0').click();
-
+		helper.clickOnIdle('#spreadsheet-tab0');
 		calcHelper.ensureViewContainsCellCursor();
 	});
 

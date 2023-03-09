@@ -206,6 +206,7 @@ describe('Comment Scrolling',function() {
 		addSlide(2);
 		insertMultipleComment('impress', 1, true);
 		cy.get('.jsdialog-overlay').click({force: true}).should('not.exist');
+		helper.waitUntilIdle('.leaflet-control-scroll-up');
 		cy.get('.leaflet-control-scroll-up').should('be.visible');
 		cy.get('.leaflet-control-scroll-up').click().wait(300);
 		cy.get('#PageStatus').should('contain','Slide 1 of 3');
