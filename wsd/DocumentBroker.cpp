@@ -3651,6 +3651,9 @@ void ConvertToBroker::setLoaded()
 {
     DocumentBroker::setLoaded();
 
+    if (isGetThumbnail())
+        return;
+
     // FIXME: Check for security violations.
     Poco::Path toPath(getPublicUri().getPath());
     toPath.setExtension(_format);
