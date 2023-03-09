@@ -846,7 +846,7 @@ public:
         _bodyFile.open(path, std::ios_base::out | std::ios_base::binary);
         _onBodyWriteCb = [this](const char* p, int64_t len)
         {
-            LOG_TRC("Writing " << len << " bytes.");
+            LOG_TRC("Writing " << len << " bytes");
             if (_bodyFile.good())
                 _bodyFile.write(p, len);
             return _bodyFile.good() ? len : -1;
@@ -1324,6 +1324,7 @@ private:
         if (socket)
         {
             _fd = socket->getFD();
+            _response->setLogContext(_fd);
             LOG_TRC("Connected");
             _connected = true;
         }
