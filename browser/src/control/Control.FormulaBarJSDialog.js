@@ -68,7 +68,7 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 						},
 						{
 							id: 'sc_input_window',
-							type: 'multilineedit',
+							type: 'formulabaredit',
 							text: text ? text : '',
 							rawKeyEvents: window.mode.isDesktop() ? true : undefined,
 							useTextInput: window.mode.isDesktop() ? undefined : true
@@ -92,7 +92,7 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 							command: '.uno:FunctionDialog'
 						}, {
 							id: 'sc_input_window',
-							type: 'multilineedit',
+							type: 'formulabaredit',
 							text: text ? text : '',
 							rawKeyEvents: undefined,
 							useTextInput: true

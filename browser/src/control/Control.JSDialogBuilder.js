@@ -65,7 +65,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		// list of types which can have multiple children but are not considered as containers
 		this._nonContainerType = ['buttonbox', 'treelistbox', 'iconview', 'combobox', 'listbox',
-			'scrollwindow', 'grid', 'tabcontrol', 'multilineedit'];
+			'scrollwindow', 'grid', 'tabcontrol', 'multilineedit', 'formulabaredit'];
 
 		this._controlHandlers = {};
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
@@ -75,6 +75,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['metricfield'] = this._metricfieldControl;
 		this._controlHandlers['formattedfield'] = this._formattedfieldControl;
 		this._controlHandlers['edit'] = this._editControl;
+		this._controlHandlers['formulabaredit'] = JSDialog.formulabarEdit;
 		this._controlHandlers['multilineedit'] = JSDialog.multilineEdit;
 		this._controlHandlers['pushbutton'] = this._pushbuttonControl;
 		this._controlHandlers['okbutton'] = this._pushbuttonControl;
