@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-06 13:17+0100\n"
-"PO-Revision-Date: 2023-03-01 12:36+0000\n"
+"PO-Revision-Date: 2023-03-07 02:32+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.16-rc\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.16.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -758,7 +758,7 @@ msgstr "Локальне зображення..."
 #: src/control/Control.Menubar.js:159 src/control/Control.Menubar.js:161
 #: src/control/Control.Menubar.js:1139 src/control/Control.Menubar.js:1141
 msgid "All"
-msgstr "Все"
+msgstr "Усе"
 
 #: src/control/Control.Menubar.js:170 src/control/Control.Menubar.js:434
 #: src/control/Control.Menubar.js:564 src/control/Control.Menubar.js:701
@@ -767,7 +767,7 @@ msgstr "Все"
 #: src/control/Control.NotebookbarImpress.js:943
 #: src/control/Control.NotebookbarWriter.js:847
 msgid "Pick Link"
-msgstr ""
+msgstr "Вибрати посилання"
 
 #: src/control/Control.Menubar.js:209
 msgid "Text orientation"
@@ -2201,23 +2201,22 @@ msgstr ""
 "службою підтримки."
 
 #: src/errormessages.js:23
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Ваш сеанс завершиться через %time. Будь ласка, збережіть вашу роботу та "
-"оновіть цей сеанс (чи веб-сторінку) для продовження."
+"Ваш сеанс завершиться за %time. Збережіть свою роботу та оновіть цей сеанс ("
+"чи вебсторінку) для продовження. Можливо вам доведеться ввійти повторно."
 
 #: src/errormessages.js:24
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
-"Ваш сеанс завершився. Подальші зміни у документі не збережуться. Будь ласка, "
-"оновіть цей сеанс (чи веб-сторінку) для продовження."
+"Ваш сеанс завершився. Подальші зміни в документі можуть не зберегтись. "
+"Оновіть цей сеанс (чи вебсторінку) для продовження. Можливо вам доведеться "
+"ввійти повторно."
 
 #: src/errormessages.js:25
 msgid ""
