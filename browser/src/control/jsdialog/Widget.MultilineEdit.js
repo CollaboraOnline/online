@@ -49,12 +49,12 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 	if (data.enabled === 'false' || data.enabled === false)
 		edit.disabled = true;
 
-	// todo: change -> keyup to provide real-time updates
-	edit.addEventListener('change', function() {
+	edit.addEventListener('keyup', function() {
 		if (callback)
 			callback(this.value);
 
 		builder.callback('edit', 'change', edit, this.value, builder);
+		setTimeout(function () { _sendSimpleSelection(edit, builder); }, 0);
 	});
 
 	edit.addEventListener('mouseup', function (event) {
@@ -64,20 +64,6 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 		}
 
 		_sendSimpleSelection(event.target, builder);
-	});
-
-	edit.addEventListener('keydown', function (event) {
-		if (edit.disabled) {
-			event.preventDefault();
-			return;
-		}
-
-		if (event.key === 'Left' || event.key === 'ArrowLeft'
-			|| event.key === 'Right' || event.key === 'ArrowRight'
-			|| event.key === 'Up' || event.key === 'ArrowUp'
-			|| event.key === 'Down' || event.key === 'ArrowDown') {
-			setTimeout(function () { _sendSimpleSelection(edit, builder); }, 0);
-		}
 	});
 
 	if (data.hidden)
