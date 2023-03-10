@@ -3,7 +3,7 @@
  * Feature blocking handler
  */
 
-/* global $ vex _ isAnyVexDialogActive*/
+/* global $ _ isAnyVexDialogActive*/
 
 L.Map.include({
 
@@ -60,12 +60,6 @@ L.Map.include({
 	openUnlockPopup: function(cmd) {
 		if ((this.isRestrictedUser() && this.isRestrictedItem(cmd)) || isAnyVexDialogActive())
 			return;
-		var lockingOnMobile = '';
-
-		if (window.mode.isMobile()) {
-			lockingOnMobile = 'mobile';
-		}
-		var that = this;
 		var message = [
 			'<div class="container">',
 			'<div id="unlock-image" class="item illustration"></div>',
@@ -81,19 +75,13 @@ L.Map.include({
 		});
 		message.push('</ul>', '</div>', '<div>');
 
-		vex.dialog.confirm({
-			unsafeMessage: message.join(''),
-			showCloseButton: false,
-			contentClassName: 'vex-content vex-locking ' + lockingOnMobile,
-			callback: function (value) {
-				if (value)
-					window.open(that.Locking.unlockLink, '_blank');
-			},
-			buttons: [
-				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
-				$.extend({}, vex.dialog.buttons.YES, { text: _('Unlock') })
-			]
-		});
+		message = message.join();
+
+		this.uiManager.showInfoModal('unlock-features-popup', this.Locking.unlockTitle, ' ', ' ', _('Unlock'), function() {
+			window.open(this.Locking.unlockLink, '_blank');
+			this.uiManager.closeModal(this.uiManager.generateModalId('unlock-features-popup'));
+		}.bind(this), true);
+		document.getElementById('unlock-features-popup').querySelectorAll('p')[0].outerHTML = message;
 
 		var unlockImage = L.DomUtil.get('unlock-image');
 		if (this.Locking.unlockImageUrlPath) {
