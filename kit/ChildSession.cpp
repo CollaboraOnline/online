@@ -558,6 +558,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens.equals(0, "userinactive"))
         {
             setIsActive(false);
+            _docManager->trimIfInactive();
         }
         else if (tokens.equals(0, "windowcommand"))
         {

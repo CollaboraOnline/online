@@ -237,11 +237,13 @@ class DeltaGenerator {
     std::unordered_set<std::shared_ptr<DeltaData>, DeltaHasher, DeltaCompare> _deltaEntries;
     size_t _maxEntries;
 
-    void rebalanceDeltasT()
+    void rebalanceDeltasT(bool bDropAll = false)
     {
-        if (_deltaEntries.size() > _maxEntries)
+        if (_deltaEntries.size() > _maxEntries || bDropAll)
         {
-            size_t toRemove = _deltaEntries.size() - (_maxEntries * 3 / 4);
+            size_t toRemove = _deltaEntries.size();
+            if (!bDropAll)
+                toRemove -= (_maxEntries * 3 / 4);
             std::vector<std::shared_ptr<DeltaData>> entries;
             entries.insert(entries.end(), _deltaEntries.begin(), _deltaEntries.end());
             std::sort(entries.begin(), entries.end(),
@@ -462,6 +464,12 @@ class DeltaGenerator {
     void setSessionCount(size_t count)
     {
         rebalanceDeltas(std::max(count, size_t(1)) * 24);
+    }
+
+    void dropCache()
+    {
+        std::unique_lock<std::mutex> guard(_deltaGuard);
+        rebalanceDeltasT(true);
     }
 
     void dumpState(std::ostream& oss)
