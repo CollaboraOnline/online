@@ -933,6 +933,25 @@ public:
         return _mobileAppDocId;
     }
 
+    void trimIfInactive() override
+    {
+        LOG_TRC("Should we trim our caches ?");
+        // FIXME: multi-document mobile optimization ?
+        for (auto it : _sessions)
+        {
+            if (it.second->isActive())
+            {
+                LOG_TRC("have active session, don't trim");
+                return;
+            }
+        }
+        // FIXME: be more clever - detect if we rendered recently,
+        // measure memory pressure etc.
+        LOG_WRN("Sessions are all inactive - trim memory");
+        _loKit->trimMemory(4096);
+        _deltaGen.dropCache();
+    }
+
     static void GlobalCallback(const int type, const char* p, void* data)
     {
         if (SigUtil::getTerminationFlag())
