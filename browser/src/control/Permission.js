@@ -2,7 +2,7 @@
 /*
  * Document permission handler
  */
-/* global app $ _ vex */
+/* global app $ _ */
 L.Map.include({
 	readonlyStartingFormats: {
 		'txt': { canEdit: true, odfFormat: 'odt' },
@@ -148,30 +148,31 @@ L.Map.include({
 	_switchToEditMode: function () {
 		// This will be handled by the native mobile app instead
 		if (this._shouldStartReadOnly() && !window.ThisIsAMobileApp) {
-			var that = this;
 			var fileName = this['wopi'].BaseFileName;
 			var extension = this._getFileExtension(fileName);
 			var extensionInfo = this.readonlyStartingFormats[extension];
 
-			var buttonList = [];
-			if (!this['wopi'].UserCanNotWriteRelative) {
-				buttonList.push($.extend({}, vex.dialog.buttons.YES, { text: _('Save as ODF format') }));
-			}
-			buttonList.push($.extend({}, vex.dialog.buttons.NO, { text: extensionInfo.canEdit ? _('Continue editing') : _('Continue read only')}));
+			var yesButtonText = !this['wopi'].UserCanNotWriteRelative ? _('Save as ODF format'): null;
+			var noButtonText = extensionInfo.canEdit ? _('Continue editing') : _('Continue read only');
 
-			vex.dialog.open({
-				message: _('This document may contain formatting or content that cannot be saved in the current file format.'),
-				overlayClosesOnClick: false,
-				callback: L.bind(function (value) {
-					if (value) {
-						// offer save-as instead
-						this._offerSaveAs();
-					} else {
-						this._proceedEditMode();
-					}
-				}, that),
-				buttons: buttonList
-			});
+			if (!yesButtonText) {
+				yesButtonText = noButtonText;
+				noButtonText = null;
+			}
+
+			var yesFunction = !noButtonText ? function() { this._proceedEditMode(); }.bind(this) : function() { this._offerSaveAs(); }.bind(this);
+			var noFunction = function() { this._proceedEditMode(); }.bind(this);
+
+			this.uiManager.showYesNoButton(
+				'switch-to-edit-mode-modal', // id.
+				'', // Title.
+				_('This document may contain formatting or content that cannot be saved in the current file format.'), // Message.
+				yesButtonText,
+				noButtonText,
+				yesFunction,
+				noFunction,
+				false // Cancellable.
+			);
 		} else {
 			this._proceedEditMode();
 		}

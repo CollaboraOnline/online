@@ -83,7 +83,7 @@ describe('Open different file types', function () {
 			.should('be.visible')
 			.click();
 
-		cy.get('.vex-content button').click();
+		cy.get('#modal-dialog-switch-to-edit-mode-modal-yesbutton').click();
 
 		assertData();
 	});
@@ -94,19 +94,17 @@ describe('Open different file types', function () {
 		cy.get('#mobile-edit-button').should('be.visible')
 			.click();
 
-		cy.get('.vex-overlay').should('be.visible');
+		cy.get('#modal-dialog-switch-to-edit-mode-modal-overlay').should('be.visible');
 
-		cy.get('.vex-dialog-message')
+		cy.get('#modal-dialog-switch-to-edit-mode-modal-label')
 			.should('have.text', 'This document may contain formatting or content that cannot be saved in the current file format.');
 
-		cy.get('.vex-dialog-buttons button')
+		cy.get('#modal-dialog-switch-to-edit-mode-modal-yesbutton')
 			.should('have.text', 'Continue read only')
 			.click();
 
 		cy.get('#PermissionMode').should('be.visible')
 			.should('have.text', ' Read-only ');
-
-		cy.get('.vex-overlay').should('be.visible');
 	});
 
 	it('Open xlsm file' ,function() {
