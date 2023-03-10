@@ -950,10 +950,10 @@ section). Others are just response messages to some client command.
 
 [*] routing_rmdoc <wopiSrc>
 
-    <wopiSrc> of the document that is getting removed
-    
+    <wopiSrc> of the document that is getting removed, fired when all the views gets expired
+
     note: This might get additional parameters in future
-    
+
 InvalidAuthToken
 
     This is sent when invalid auth token is provided in 'auth' command. See
