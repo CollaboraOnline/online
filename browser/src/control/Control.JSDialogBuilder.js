@@ -122,7 +122,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['spinner'] = this._spinnerControl;
 		this._controlHandlers['spinnerimg'] = this._spinnerImgControl;
 		this._controlHandlers['image'] = this._imageHandler;
-		this._controlHandlers['scrollwindow'] = this._scrollWindowControl;
+		this._controlHandlers['scrollwindow'] = JSDialog.scrolledWindow;
 		this._controlHandlers['customtoolitem'] = this._mapDispatchToolItem;
 		this._controlHandlers['bigcustomtoolitem'] = this._mapBigDispatchToolItem;
 
@@ -482,16 +482,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder.build(toolbox, data.children, false, false);
 
 		builder.options.noLabelsForUnoButtons = noLabels;
-
-		return false;
-	},
-
-	_scrollWindowControl: function(parentContainer, data, builder) {
-		var scrollwindow = L.DomUtil.create('div', builder.options.cssClass + ' ui-scrollwindow', parentContainer);
-		if (data.id)
-			scrollwindow.id = data.id;
-
-		builder.build(scrollwindow, data.children, false);
 
 		return false;
 	},
