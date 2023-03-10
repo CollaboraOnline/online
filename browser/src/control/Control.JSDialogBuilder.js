@@ -640,7 +640,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		for (i in leftAlignButtons) {
 			child = leftAlignButtons[i];
-			builder._controlHandlers[child.type](left, child, builder);
+			if (builder._controlHandlers[child.type]) {
+				builder._controlHandlers[child.type](left, child, builder);
+				builder.postProcess(left, child);
+			}
 		}
 
 		var right = L.DomUtil.create('div', builder.options.cssClass + ' ui-button-box-right', container);
@@ -649,7 +652,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		for (i in rightAlignButton) {
 			child = rightAlignButton[i];
-			builder._controlHandlers[child.type](right, child, builder);
+			if (builder._controlHandlers[child.type]) {
+				builder._controlHandlers[child.type](right, child, builder);
+				builder.postProcess(right, child);
+			}
 		}
 
 		return false;
