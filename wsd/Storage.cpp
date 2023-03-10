@@ -982,7 +982,7 @@ StorageBase::LockUpdateResult WopiStorage::updateLockState(const Authorization& 
         if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
         {
             lockCtx._isLocked = lock;
-            lockCtx._lastLockTime = std::chrono::steady_clock::now();
+            lockCtx.bumpTimer();
             return LockUpdateResult::OK;
         }
         else
