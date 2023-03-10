@@ -70,6 +70,9 @@ public:
     virtual void alertAllUsers(const std::string& cmd, const std::string& kind) = 0;
 
     virtual unsigned getMobileAppDocId() const = 0;
+
+    /// See if we should clear out our memory
+    virtual void trimIfInactive() = 0;
 };
 
 struct RecordedEvent

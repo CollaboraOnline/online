@@ -608,6 +608,10 @@ public:
     {
         return 0;
     }
+
+    void trimIfInactive()
+    {
+    }
 };
 
 void WhiteBoxTests::testEmptyCellCursor()
