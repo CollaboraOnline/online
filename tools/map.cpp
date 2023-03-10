@@ -217,16 +217,24 @@ public:
     }
 
     bool isCStringAtOffset(const std::vector<unsigned char> &data, size_t i,
-                           std::string &str)
+                           std::string &str, size_t &skip)
     {
         str = "C_";
-        for (size_t j = i; j < data.size(); j++)
+        size_t j;
+        for (j = i; j < data.size(); j++)
         {
             if (isascii(data[j]) && !iscntrl(data[j]))
                 str += static_cast<char>(data[j]);
             else
-                return data[j] == '\0' && str.length() > 7;
+                break;
         }
+        if (data[j] == '\0' && str.length() > 7)
+            return true;
+
+        // avoid large chunks of non-null-terminated ASCII creating work.
+        if (j > i + 4)
+            skip = j - i - 4;
+
         return false;
     }
 
@@ -252,7 +260,8 @@ public:
                     i += ((4 + str.length() * (isUnicode ? 2 : 1)) >>2 ) * 4;
                 }
             }
-            if ((i%8 == 0) && isCStringAtOffset(data, i, str))
+            size_t skip = 0;
+            if ((i%8 == 0) && isCStringAtOffset(data, i, str, skip))
             {
                 StringData &sdata = _strings[2];
                 sdata.setCount(sdata.getCount() + 1);
@@ -260,6 +269,8 @@ public:
                 _addrToStr[map.getStart() + i] = str;
                 i += (str.length() >> 2) * 4;
             }
+            else
+                i += skip;
         }
     }
 
