@@ -1006,6 +1006,65 @@ L.Control.UIManager = L.Control.extend({
 		}
 	},
 
+	// Opens a yesno modal with configurable buttons.
+	showYesNoButton: function(id, title, message, yesButtonText, noButtonText, yesFunction, noFunction, cancellable) {
+		var dialogId = this.generateModalId(id);
+
+		var json = this._modalDialogJSON(id, title, cancellable, [
+			{
+				id:  dialogId + '-title',
+				type: 'fixedtext',
+				text: title,
+				hidden: !window.mode.isMobile()
+			},
+			{
+				id: dialogId + '-label',
+				type: 'fixedtext',
+				text: message
+			},
+			{
+				id: '',
+				type: 'buttonbox',
+				text: '',
+				enabled: true,
+				children: [
+					noButtonText ? {
+						id: dialogId + '-nobutton',
+						type: 'pushbutton',
+						text: noButtonText
+					} : { type: 'container' },
+					{
+						id: dialogId + '-yesbutton',
+						type: 'pushbutton',
+						text: yesButtonText,
+					}
+				],
+				vertical: false,
+				layoutstyle: 'end'
+			},
+		]);
+
+		this.showModal(json,
+		[
+			{
+				id: dialogId + '-nobutton',
+				func: function() {
+					if (typeof noFunction === 'function')
+						noFunction();
+					this.closeModal(dialogId);
+				}.bind(this)
+			},
+			{
+				id: dialogId + '-yesbutton',
+				func: function() {
+					if (typeof yesFunction === 'function')
+						yesFunction();
+					this.closeModal(dialogId);
+				}.bind(this)
+			}
+		]);
+	},
+
 	/// shows simple confirm modal (message + (cancel + ok) button)
 	/// id - id of a dialog
 	/// title - title of a dialog
