@@ -2036,9 +2036,15 @@ void DocumentBroker::refreshLock()
 
     const std::shared_ptr<ClientSession> session = getWriteableSession();
     if (!session)
+    {
         LOG_ERR("No write-able session to refresh lock with");
+        _lockCtx->bumpTimer();
+    }
     else if (session->getAuthorization().isExpired())
+    {
         LOG_ERR("No write-able session with valid authorization to refresh lock with");
+        _lockCtx->bumpTimer();
+    }
     else
     {
         const std::string savingSessionId = session->getId();
