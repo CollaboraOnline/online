@@ -1095,7 +1095,7 @@ public:
     std::chrono::microseconds getTimeout() const { return _timeout; }
 
     std::shared_ptr<Response> response() { return _response; }
-    std::shared_ptr<const Response> response() const { return _response; }
+    const std::shared_ptr<Response>& response() const { return _response; }
     const std::string& getUrl() const { return _request.getUrl(); }
 
     /// The onFinished callback handler signature.
