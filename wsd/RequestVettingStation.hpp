@@ -10,6 +10,7 @@
  */
 
 #include "RequestDetails.hpp"
+#include <Storage.hpp>
 #include "WebSocketHandler.hpp"
 
 #include <string>
@@ -34,7 +35,8 @@ public:
 
 private:
     void createDocBroker(const std::string& docKey, const std::string& url,
-                         const Poco::URI& uriPublic, const bool isReadOnly);
+                         const Poco::URI& uriPublic, const bool isReadOnly,
+                         Poco::JSON::Object::Ptr wopiInfo = nullptr);
 
 private:
     const std::string _id;
@@ -42,5 +44,7 @@ private:
     const RequestDetails _requestDetails;
     const std::shared_ptr<StreamSocket> _socket;
     std::shared_ptr<http::Session> _httpSession;
-    unsigned _mobileAppDocId;
+    const unsigned _mobileAppDocId;
+    std::unique_ptr<WopiStorage::WOPIFileInfo> _wopiInfo;
+    LockContext _lockCtx;
 };
