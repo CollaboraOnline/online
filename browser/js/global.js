@@ -687,9 +687,6 @@ window.app = {
 		this.onopen = function () {};
 
 		this.close = function() {
-			this.innerSocket.onerror = function () {};
-			this.innerSocket.onclose = function () {};
-			this.innerSocket.onmessage = function () {};
 			this.innerSocket.close();
 		};
 
@@ -718,6 +715,9 @@ window.app = {
 				that.innerSocket.onclose = function() {
 					that.readyState = 3;
 					that.onclose();
+					that.innerSocket.onerror = function () {};
+					that.innerSocket.onclose = function () {};
+					that.innerSocket.onmessage = function () {};
 				};
 				that.innerSocket.onopen = function() {
 					that.readyState = 1;
