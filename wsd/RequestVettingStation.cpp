@@ -47,7 +47,7 @@ void sendLoadResult(const std::shared_ptr<ClientSession>& clientSession, bool su
 
 } // anonymous namespace
 
-void RequestVettingStation::handleRequest(SocketPoll& poll)
+void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& disposition)
 {
     const std::string url = _requestDetails.getDocumentURI();
 
@@ -106,8 +106,15 @@ void RequestVettingStation::handleRequest(SocketPoll& poll)
                 "] in config");
             break;
         case StorageBase::StorageType::FileSystem:
+            // Remove from the current poll.
+            disposition.setMove([](auto) {});
+
+            return createDocBroker(docKey, url, uriPublic, isReadOnly);
             break;
         case StorageBase::StorageType::Wopi:
+            // Remove from the current poll.
+            disposition.setMove([](auto) {});
+
             break;
     }
 
@@ -177,88 +184,93 @@ void RequestVettingStation::handleRequest(SocketPoll& poll)
                                                uriAnonym);
         }
 
-        // Request a kit process for this doc.
-        std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
-            std::static_pointer_cast<ProtocolHandlerInterface>(_ws),
-            DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic, _mobileAppDocId);
-        if (!docBroker)
-        {
-            throw ServiceUnavailableException("Failed to create DocBroker with docKey [" + docKey +
-                                              ']');
-        }
-
-        LOG_DBG("DocBroker [" << docKey << "] acquired for [" << url << ']');
-        std::shared_ptr<ClientSession> clientSession =
-            docBroker->createNewClientSession(_ws, _id, uriPublic, isReadOnly, _requestDetails);
-        if (!clientSession)
-        {
-            LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey
-                                                                << ']');
-            throw std::runtime_error("Cannot create client session for doc " + docKey);
-        }
-
-        LOG_DBG("ClientSession [" << clientSession->getName() << "] for [" << docKey
-                                  << "] acquired for [" << url << ']');
-
-        // Transfer the client socket to the DocumentBroker when we get back to the poll:
-        docBroker->setupTransfer(
-            _socket,
-            [docBroker, clientSession, this](const std::shared_ptr<Socket>& moveSocket)
-            {
-                try
-                {
-                    LOG_DBG_S("Transfering docBroker [" << docBroker->getDocKey() << ']');
-
-                    auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
-
-                    // Set WebSocketHandler's socket after its construction for shared_ptr goodness.
-                    streamSocket->setHandler(_ws);
-
-                    LOG_DBG_S('#' << moveSocket->getFD() << " handler is "
-                                  << clientSession->getName());
-
-                    // Add and load the session.
-                    docBroker->addSession(clientSession);
-
-                    COOLWSD::checkDiskSpaceAndWarnClients(true);
-                    // Users of development versions get just an info
-                    // when reaching max documents or connections
-                    COOLWSD::checkSessionLimitsAndWarnClients();
-
-                    sendLoadResult(clientSession, true, "");
-                }
-                catch (const UnauthorizedRequestException& exc)
-                {
-                    LOG_ERR_S("Unauthorized Request while starting session on "
-                              << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
-                              << ". Terminating connection. Error: " << exc.what());
-                    const std::string msg = "error: cmd=internal kind=unauthorized";
-                    _ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
-                    moveSocket->ignoreInput();
-                }
-                catch (const StorageConnectionException& exc)
-                {
-                    LOG_ERR_S("Storage error while starting session on "
-                              << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
-                              << ". Terminating connection. Error: " << exc.what());
-                    const std::string msg = "error: cmd=storage kind=loadfailed";
-                    _ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
-                    moveSocket->ignoreInput();
-                }
-                catch (const std::exception& exc)
-                {
-                    LOG_ERR_S("Error while starting session on "
-                              << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
-                              << ". Terminating connection. Error: " << exc.what());
-                    const std::string msg = "error: cmd=storage kind=loadfailed";
-                    _ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
-                    moveSocket->ignoreInput();
-                }
-            });
+        createDocBroker(docKey, url, uriPublic, isReadOnly);
     };
 
     _httpSession->setFinishedHandler(finishedCallback);
 
     // Run the CheckFileInfo request on the WebServer Poll.
     _httpSession->asyncRequest(httpRequest, poll);
+}
+
+void RequestVettingStation::createDocBroker(const std::string& docKey, const std::string& url,
+                                            const Poco::URI& uriPublic, const bool isReadOnly)
+{
+    // Request a kit process for this doc.
+    std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
+        std::static_pointer_cast<ProtocolHandlerInterface>(_ws),
+        DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic, _mobileAppDocId);
+    if (!docBroker)
+    {
+        throw ServiceUnavailableException("Failed to create DocBroker with docKey [" + docKey +
+                                          ']');
+    }
+
+    LOG_DBG("DocBroker [" << docKey << "] acquired for [" << url << ']');
+    std::shared_ptr<ClientSession> clientSession =
+        docBroker->createNewClientSession(_ws, _id, uriPublic, isReadOnly, _requestDetails);
+    if (!clientSession)
+    {
+        LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey
+                                                            << ']');
+        throw std::runtime_error("Cannot create client session for doc " + docKey);
+    }
+
+    LOG_DBG("ClientSession [" << clientSession->getName() << "] for [" << docKey
+                              << "] acquired for [" << url << ']');
+
+    // Transfer the client socket to the DocumentBroker when we get back to the poll:
+    docBroker->setupTransfer(
+        _socket,
+        [docBroker, clientSession, this](const std::shared_ptr<Socket>& moveSocket)
+        {
+            try
+            {
+                LOG_DBG_S("Transfering docBroker [" << docBroker->getDocKey() << ']');
+
+                auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
+
+                // Set WebSocketHandler's socket after its construction for shared_ptr goodness.
+                streamSocket->setHandler(_ws);
+
+                LOG_DBG_S('#' << moveSocket->getFD() << " handler is " << clientSession->getName());
+
+                // Add and load the session.
+                docBroker->addSession(clientSession);
+
+                COOLWSD::checkDiskSpaceAndWarnClients(true);
+                // Users of development versions get just an info
+                // when reaching max documents or connections
+                COOLWSD::checkSessionLimitsAndWarnClients();
+
+                sendLoadResult(clientSession, true, "");
+            }
+            catch (const UnauthorizedRequestException& exc)
+            {
+                LOG_ERR_S("Unauthorized Request while starting session on "
+                          << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
+                          << ". Terminating connection. Error: " << exc.what());
+                const std::string msg = "error: cmd=internal kind=unauthorized";
+                _ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
+                moveSocket->ignoreInput();
+            }
+            catch (const StorageConnectionException& exc)
+            {
+                LOG_ERR_S("Storage error while starting session on "
+                          << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
+                          << ". Terminating connection. Error: " << exc.what());
+                const std::string msg = "error: cmd=storage kind=loadfailed";
+                _ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
+                moveSocket->ignoreInput();
+            }
+            catch (const std::exception& exc)
+            {
+                LOG_ERR_S("Error while starting session on "
+                          << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
+                          << ". Terminating connection. Error: " << exc.what());
+                const std::string msg = "error: cmd=storage kind=loadfailed";
+                _ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
+                moveSocket->ignoreInput();
+            }
+        });
 }

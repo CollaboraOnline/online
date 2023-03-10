@@ -18,12 +18,11 @@ class RequestVettingStation
 {
 public:
     RequestVettingStation(std::string id, std::shared_ptr<WebSocketHandler> ws,
-                          const RequestDetails& requestDetails, SocketDisposition& disposition,
+                          const RequestDetails& requestDetails,
                           const std::shared_ptr<StreamSocket>& socket, unsigned mobileAppDocId)
         : _id(std::move(id))
         , _ws(ws)
         , _requestDetails(requestDetails)
-        , _disposition(disposition)
         , _socket(socket)
         , _mobileAppDocId(mobileAppDocId)
     {
@@ -31,13 +30,16 @@ public:
 
     inline void logPrefix(std::ostream& os) const { os << '#' << _socket->getFD() << ": "; }
 
-    void handleRequest(SocketPoll& poll);
+    void handleRequest(SocketPoll& poll, SocketDisposition& disposition);
+
+private:
+    void createDocBroker(const std::string& docKey, const std::string& url,
+                         const Poco::URI& uriPublic, const bool isReadOnly);
 
 private:
     const std::string _id;
     std::shared_ptr<WebSocketHandler> _ws;
     const RequestDetails _requestDetails;
-    SocketDisposition _disposition;
     const std::shared_ptr<StreamSocket> _socket;
     std::shared_ptr<http::Session> _httpSession;
     unsigned _mobileAppDocId;
