@@ -163,8 +163,15 @@ void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& d
             throw StorageConnectionException("WOPI::CheckFileInfo failed: " + wopiResponse);
         }
 
-        Poco::JSON::Object::Ptr object;
-        if (!JsonUtil::parseJSON(wopiResponse, object))
+        Poco::JSON::Object::Ptr wopiInfo;
+        if (JsonUtil::parseJSON(wopiResponse, wopiInfo))
+        {
+            if (COOLWSD::AnonymizeUserData)
+                LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): anonymizing...");
+            else
+                LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): " << wopiResponse);
+        }
+        else
         {
             if (COOLWSD::AnonymizeUserData)
                 wopiResponse = "obfuscated";
@@ -179,7 +186,7 @@ void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& d
                                                uriAnonym);
         }
 
-        createDocBroker(docKey, url, uriPublic, isReadOnly);
+        createDocBroker(docKey, url, uriPublic, isReadOnly, wopiInfo);
     };
 
     _httpSession->setFinishedHandler(finishedCallback);
@@ -189,7 +196,8 @@ void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& d
 }
 
 void RequestVettingStation::createDocBroker(const std::string& docKey, const std::string& url,
-                                            const Poco::URI& uriPublic, const bool isReadOnly)
+                                            const Poco::URI& uriPublic, const bool isReadOnly,
+                                            Poco::JSON::Object::Ptr wopiInfo)
 {
     // Request a kit process for this doc.
     std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
@@ -217,7 +225,8 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
     docBroker->setupTransfer(
         _socket,
-        [docBroker, clientSession, this](const std::shared_ptr<Socket>& moveSocket)
+        [docBroker, clientSession, uriPublic, wopiInfo,
+         this](const std::shared_ptr<Socket>& moveSocket)
         {
             try
             {
@@ -230,8 +239,34 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
 
                 LOG_DBG_S('#' << moveSocket->getFD() << " handler is " << clientSession->getName());
 
+                std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo;
+                if (wopiInfo)
+                {
+                    std::size_t size = 0;
+                    std::string filename, ownerId, lastModifiedTime;
+
+                    JsonUtil::findJSONValue(wopiInfo, "Size", size);
+                    JsonUtil::findJSONValue(wopiInfo, "OwnerId", ownerId);
+                    JsonUtil::findJSONValue(wopiInfo, "BaseFileName", filename);
+                    JsonUtil::findJSONValue(wopiInfo, "LastModifiedTime", lastModifiedTime);
+
+                    StorageBase::FileInfo fileInfo =
+                        StorageBase::FileInfo({ filename, ownerId, lastModifiedTime });
+                    // setFileInfo(fileInfo);
+
+                    // if (COOLWSD::AnonymizeUserData)
+                    //     Util::mapAnonymized(Util::getFilenameFromURL(filename),
+                    //                         Util::getFilenameFromURL(getUri().toString()));
+                    wopiFileInfo =
+                        std::make_unique<WopiStorage::WOPIFileInfo>(fileInfo, wopiInfo, uriPublic);
+
+                    // if (_wopiInfo->getSupportsLocks())
+                    //     _lockCtx.initSupportsLocks();
+                }
+
                 // Add and load the session.
-                docBroker->addSession(clientSession);
+                // Will download synchronously.
+                docBroker->addSession(clientSession, std::move(wopiFileInfo));
 
                 COOLWSD::checkDiskSpaceAndWarnClients(true);
                 // Users of development versions get just an info
