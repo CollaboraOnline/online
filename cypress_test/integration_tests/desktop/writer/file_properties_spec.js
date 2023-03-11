@@ -26,7 +26,14 @@ describe('File Property Tests', function() {
 		// sometimes it doesn't finish typing
 		helper.waitUntilIdle('#title.ui-edit');
 
-		cy.get('#comments.ui-textarea').type('New Comments');
+		// Fixme: type now char by char because we receive update messages
+		//        can be reverted after core update
+		cy.get('#comments.ui-textarea').type('N');
+		cy.wait(500);
+		cy.get('#comments.ui-textarea').type('e');
+		cy.wait(500);
+		cy.get('#comments.ui-textarea').type('w');
+		cy.wait(500);
 
 		helper.waitUntilIdle('#comments.ui-textarea');
 
@@ -39,7 +46,7 @@ describe('File Property Tests', function() {
 		cy.get('#description-tab-label').click();
 
 		cy.get('#title.ui-edit').should('have.value', 'New Title');
-		cy.get('#comments.ui-textarea').should('have.value', 'New Comments');
+		cy.get('#comments.ui-textarea').should('have.value', 'New');
 
 		helper.clickOnIdle('#cancel.ui-pushbutton');
 	});
