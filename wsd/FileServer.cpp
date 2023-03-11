@@ -50,6 +50,7 @@
 #include <Protocol.hpp>
 #include <Util.hpp>
 #include <common/ConfigUtil.hpp>
+#include <common/LangUtil.hpp>
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
 #endif
@@ -850,28 +851,6 @@ constexpr char BRANDING[] = "branding";
 constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 #endif
 
-namespace
-{
-    bool isRtlLanguage(const std::string& language)
-    {
-        if (language.rfind("ar", 0) == 0 ||
-            language.rfind("arc", 0) == 0 ||
-            language.rfind("dv", 0) == 0 ||
-            language.rfind("fa", 0) == 0 ||
-            language.rfind("ha", 0) == 0 ||
-            language.rfind("he", 0) == 0 ||
-            language.rfind("khw", 0) == 0 ||
-            language.rfind("ks", 0) == 0 ||
-            language.rfind("ku", 0) == 0 ||
-            language.rfind("ps", 0) == 0 ||
-            language.rfind("ur", 0) == 0 ||
-            language.rfind("yi", 0) == 0)
-            return true;
-
-        return false;
-    }
-}
-
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
                                               const RequestDetails &requestDetails,
                                               Poco::MemoryInputStream& message,
@@ -1051,7 +1030,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%USER_INTERFACE_MODE%"), userInterfaceMode);
 
     std::string uiRtlSettings;
-    if (isRtlLanguage(requestDetails.getParam("lang")))
+    if (LangUtil::isRtlLanguage(requestDetails.getParam("lang")))
         uiRtlSettings = " dir=\"rtl\" ";
     Poco::replaceInPlace(preprocess, std::string("%UI_RTL_SETTINGS%"), uiRtlSettings);
 

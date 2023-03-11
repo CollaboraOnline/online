@@ -15,6 +15,7 @@
 @end
 
 extern NSString *app_locale;
+extern NSString *app_text_direction;
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:
 
