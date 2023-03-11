@@ -2128,7 +2128,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
     if (!isModified() && !force)
     {
         // Nothing to do.
-        LOG_TRC("Nothing to autosave [" << _docKey << "].");
+        LOG_TRC("Nothing to autosave [" << _docKey << ']');
         return false;
     }
 
@@ -2172,9 +2172,13 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
             = std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastActivityTime);
         const auto timeSinceLastSave = std::min(_saveManager.timeSinceLastSaveRequest(),
                                                 _storageManager.timeSinceLastUploadResponse());
-        LOG_TRC("Time since last save of docKey [" << _docKey << "] is " << timeSinceLastSave
-                                                     << " and most recent activity was "
-                                                     << inactivityTime << " ago.");
+        LOG_TRC("DocKey [" << _docKey << "] is modified. It has been " << timeSinceLastSave
+                           << " since last save and the most recent activity was " << inactivityTime
+                           << " ago. Idle save is "
+                           << (_saveManager.isIdleSaveEnabled() ? "" : "not ")
+                           << "enabled, auto save is "
+                           << (_saveManager.isAutoSaveEnabled() ? "" : "not ")
+                           << "enabled with interval of " << _saveManager.autoSaveInterval());
 
         // Either we've been idle long enough, or it's auto-save time.
         bool save = _saveManager.isIdleSaveEnabled() &&
@@ -2584,7 +2588,7 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
             // We must be the last session, flag to destroy if unload is requested.
             LOG_ASSERT_MSG(countActiveSessions() <= 1, "Unload-requested with multiple sessions");
             LOG_TRC("Unload requested while disconnecting session ["
-                    << id << "], having " << _sessions.size() << " sessions, marking to destroy.");
+                    << id << "], having " << _sessions.size() << " sessions, marking to destroy");
             _docState.markToDestroy();
         }
 
@@ -2601,17 +2605,18 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
         {
             LOG_ERR("Failed to unlock docKey [" << _docKey
                                                 << "] before disconnecting last editable session ["
-                                                << session->getId() << "]: " << error);
+                                                << session->getName() << "]: " << error);
         }
 
         bool hardDisconnect;
         if (session->inWaitDisconnected())
         {
-            LOG_TRC("hard disconnecting while waiting for disconnected handshake.");
+            LOG_TRC("Removing session [" << id << "] while waiting for disconnected handshake");
             hardDisconnect = true;
         }
         else
         {
+            LOG_DBG("Disconnecting session [" << id << "] from Kit");
             hardDisconnect = session->disconnectFromKit();
 
 #if !MOBILEAPP
@@ -2623,8 +2628,9 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
                 // If at the end of loading it shows a dialog (such as the macro or
                 // csv import dialogs), it will wait for their dismissal indefinetely.
                 // Neither would our load-timeout kick in, since we would be gone.
-                LOG_INF("Session [" << id << "] disconnected but DocKey [" << _docKey
-                                    << "] isn't loaded yet. Terminating the child roughly.");
+                LOG_INF("Session [" << session->getName() << "] disconnected but DocKey ["
+                                    << _docKey
+                                    << "] isn't loaded yet. Terminating the child roughly");
                 _childProcess->terminate();
             }
 #endif
