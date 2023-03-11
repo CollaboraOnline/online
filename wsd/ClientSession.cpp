@@ -163,6 +163,7 @@ bool ClientSession::disconnectFromKit()
         docBroker->forwardToChild(client_from_this(), "getclipboard");
 #endif
         // handshake nicely; so wait for 'disconnected'
+        LOG_TRC("Sending 'disconnect' command to session " << getId());
         docBroker->forwardToChild(client_from_this(), "disconnect");
 
         return false;
