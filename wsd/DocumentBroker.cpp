@@ -913,8 +913,24 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
                                               << localStorage->getFileExtension() << ']');
                     session->setAllowChangeComments(true);
                 }
+                // Related to fix for issue #5887: only send a read-only
+                // message for "view file extension" document types
+                session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
             }
-            session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
+#ifdef IOS
+            else
+            {
+                // Fix issue #5887 by assuming that documents are writable on iOS
+                // The iOS app saves directly to local disk so, other than for
+                // "view file extension" document types or other cases that
+                // I am missing, we can assume the document is writable until
+                // a write failure occurs.
+                LOG_DBG("Setting session [" << sessionId << "] to writable and allowing comments");
+                session->setWritable(true);
+                session->setReadOnly(false);
+                session->setAllowChangeComments(true);
+            }
+#endif
         }
     }
 
