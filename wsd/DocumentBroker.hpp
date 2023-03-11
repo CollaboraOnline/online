@@ -504,9 +504,6 @@ private:
     /// Note that if there is no loaded and writable session, the first will be returned.
     std::shared_ptr<ClientSession> getWriteableSession() const;
 
-    /// Return the SessionId of the first writable session.
-    std::string getWriteableSessionId() const;
-
     void refreshLock();
 
     /// Loads a document from the public URI into the jail.
@@ -568,7 +565,7 @@ private:
             return CanSave::NotLoaded;
         }
 
-        if (_sessions.empty() || getWriteableSessionId().empty())
+        if (_sessions.empty() || !getWriteableSession())
         {
             return CanSave::NoWriteSession;
         }

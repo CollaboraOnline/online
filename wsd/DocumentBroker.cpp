@@ -2044,12 +2044,6 @@ std::shared_ptr<ClientSession> DocumentBroker::getWriteableSession() const
     return savingSession;
 }
 
-std::string DocumentBroker::getWriteableSessionId() const
-{
-    const auto session = getWriteableSession();
-    return session ? session->getId() : std::string();
-}
-
 void DocumentBroker::refreshLock()
 {
     assertCorrectThread();
