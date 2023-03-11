@@ -29,7 +29,10 @@
 #import "SetupKitEnvironment.hpp"
 #import "Util.hpp"
 
+#import <common/LangUtil.hpp>
+
 NSString *app_locale;
+NSString *app_text_direction;
 
 static void download(NSURL *source, NSURL *destination) {
     [[[NSURLSession sharedSession] downloadTaskWithURL:source
@@ -232,6 +235,11 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
         app_locale = [NSString stringWithUTF8String:lang];
     else
         app_locale = [[NSLocale preferredLanguages] firstObject];
+
+    if (LangUtil::isRtlLanguage(std::string([app_locale UTF8String])))
+        app_text_direction = @"rtl";
+    else
+        app_text_direction = @"";
 
     lo_kit = lok_init_2(nullptr, nullptr);
 
