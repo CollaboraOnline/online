@@ -3359,14 +3359,17 @@ static std::shared_ptr<DocumentBroker>
 /// Handles the socket that the prisoner kit connected to WSD on.
 class PrisonerRequestDispatcher : public WebSocketHandler
 {
+    std::weak_ptr<ChildProcess> _childProcess;
     int _pid; //< The Kit's PID (for logging).
     int _socketFD; //< The socket FD to the Kit (for logging).
-    std::weak_ptr<ChildProcess> _childProcess;
+    bool _associatedWithDoc; //< True when/if we get a DocBroker.
+
 public:
     PrisonerRequestDispatcher()
         : WebSocketHandler(/* isClient = */ false, /* isMasking = */ true)
         , _pid(0)
         , _socketFD(0)
+        , _associatedWithDoc(false)
     {
         LOG_TRC_S("PrisonerRequestDispatcher");
     }
@@ -3418,7 +3421,7 @@ private:
             std::unique_lock<std::mutex> lock = docBroker->getLock();
             docBroker->disconnectedFromKit();
         }
-        else if (!SigUtil::getShutdownRequestFlag())
+        else if (!_associatedWithDoc && !SigUtil::getShutdownRequestFlag())
         {
             LOG_WRN("Unassociated Kit (" << _pid << ") disconnected unexpectedly");
         }
@@ -3565,6 +3568,7 @@ private:
         if (docBroker)
         {
             assert(child->getPid() == _pid && "Child PID changed unexpectedly");
+            _associatedWithDoc = true;
             docBroker->handleInput(message);
         }
         else if (child && child->getPid() > 0)
