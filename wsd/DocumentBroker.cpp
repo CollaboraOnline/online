@@ -2313,7 +2313,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     {
         LOG_TRC("Too soon to issue another save on ["
                 << getDocKey() << "]: " << _saveManager.timeSinceLastSaveRequest()
-                << " since last save request and " << _saveManager.timeSinceLastSaveRequest()
+                << " since last save request and " << _saveManager.timeSinceLastSaveResponse()
                 << " since last save response. Min time between saves: "
                 << _saveManager.minTimeBetweenSaves());
     }
