@@ -913,7 +913,7 @@ private:
             }
         }
 
-        /// Marks the last save request as now.
+        /// Marks the last save request time as now.
         void markLastSaveRequestTime() { _request.markLastRequestTime(); }
 
         /// Returns whether the last save was successful or not.
@@ -1123,6 +1123,9 @@ private:
 
         /// True iff an upload is in progress (requested but not completed).
         bool isUploading() const { return _request.isActive(); }
+
+        /// Marks the last upload request time as now.
+        void markLastUploadRequestTime() { _request.markLastRequestTime(); }
 
         /// The duration elapsed since we sent the last upload request to storage.
         std::chrono::milliseconds timeSinceLastUploadRequest() const
