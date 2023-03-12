@@ -626,15 +626,22 @@ DocumentBroker::~DocumentBroker()
 {
     assertCorrectThread();
 
-    LOG_INF("~DocumentBroker [" << _docKey <<
-            "] destroyed with " << _sessions.size() << " sessions left.");
+    LOG_INF("~DocumentBroker [" << _docKey << "] destroyed with " << _sessions.size()
+                                << " sessions left");
 
     // Do this early - to avoid operating on _childProcess from two threads.
     _poll->joinThread();
 
-    if (!_sessions.empty())
-        LOG_WRN("Destroying DocumentBroker [" << _docKey << "] while having " << _sessions.size()
-                                              << " unremoved sessions.");
+    for (const auto& sessionIt : _sessions)
+    {
+        if (sessionIt.second->isLive())
+        {
+            LOG_WRN("Destroying DocumentBroker ["
+                    << _docKey << "] while having " << _sessions.size()
+                    << " unremoved sessions, at least one is still live");
+            break;
+        }
+    }
 
     // Need to first make sure the child exited, socket closed,
     // and thread finished before we are destroyed.
