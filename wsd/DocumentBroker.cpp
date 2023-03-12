@@ -1692,6 +1692,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
 
     _nextStorageAttrs.reset();
 
+    _storageManager.markLastUploadRequestTime();
     _storage->uploadLocalFileToStorageAsync(session->getAuthorization(), *_lockCtx, saveAsPath,
                                             saveAsFilename, isRename, _currentStorageAttrs, *_poll,
                                             asyncUploadCallback);
