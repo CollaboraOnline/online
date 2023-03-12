@@ -776,12 +776,12 @@ private:
         /// Checks whether or not we can issue a new request now.
         /// Returns true iff there is no active request and sufficient
         /// time has elapsed since the last request, including that
-        /// more time than the last request's duration has passed.
+        /// more time than half the last request's duration has passed.
         bool canRequestNow() const
         {
             const auto now = RequestManager::now();
             return !isActive() && std::min(timeSinceLastRequest(now), timeSinceLastResponse(now)) >=
-                                      std::max(_minTimeBetweenRequests, _lastRequestDuration);
+                                      std::max(_minTimeBetweenRequests, _lastRequestDuration / 2);
         }
 
         /// Sets the last request's result, either to success or failure.
