@@ -6,9 +6,6 @@ App Store "Test Details" text for the last TestFlight build
 
 This version includes the latest 22.05.10 code and fixes the following bugs:
 
-• Presentation documents saved in outline view would display as an empty document
-• The font selection button would display as non-tappable text
-• Tapping on a font in the native font picker popup would not close the popup
-• Non-ASCII characters would be misencoded in the sidebar panel
-
-Also, the obsolete Template List URL setting  was removed from the Collabora Office panel in the Settings app.
+• Pressing the Save, Paste, or certain other buttons would display an error or silently fail
+• Localizations for several languages were missing
+• When running the app with the user interface set to Hebrew, Arabic, or one of the other right to left (RTL) languages, the user interface would still be arranged left to right
