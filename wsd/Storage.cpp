@@ -1260,8 +1260,10 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
 
     const std::string uriAnonym = COOLWSD::anonymizeUrl(uriObject.toString());
 
-    LOG_INF("Uploading " << size << " bytes from [" << filePathAnonym << "] to URI via WOPI ["
-                         << uriAnonym << "].");
+    const std::string wopiLog(isSaveAs ? "WOPI::PutRelativeFile"
+                                       : (isRename ? "WOPI::RenameFile" : "WOPI::PutFile"));
+    LOG_INF(wopiLog << " uploading " << size << " bytes from [" << filePathAnonym
+                    << "] to URI via WOPI [" << uriAnonym << ']');
 
     const auto startTime = std::chrono::steady_clock::now();
     try
@@ -1310,9 +1312,10 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
             std::string suggestedTarget = '.' + Poco::Path(saveAsFilename).getExtension();
 
             //TODO: Perhaps we should cache this descriptor and reuse, as iconv_open might be expensive.
-            const iconv_t cd = iconv_open("UTF-7", "UTF-8");
+            iconv_t cd = iconv_open("UTF-7", "UTF-8");
             if (cd == (iconv_t) -1)
-                LOG_ERR("Failed to initialize iconv for UTF-7 conversion, using '" << suggestedTarget << "'.");
+                LOG_ERR(wopiLog << " failed to initialize iconv for UTF-7 conversion, using ["
+                                << suggestedTarget << ']');
             else
             {
                 std::vector<char> input(saveAsFilename.begin(), saveAsFilename.end());
@@ -1324,12 +1327,14 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
                 std::size_t out_left = buffer.size();
 
                 if (iconv(cd, &in, &in_left, &out, &out_left) == (size_t) -1)
-                    LOG_ERR("Failed to convert '" << saveAsFilename << "' to UTF-7, using '" << suggestedTarget << "'.");
+                    LOG_ERR(wopiLog << " failed to convert [" << saveAsFilename
+                                    << "] to UTF-7, using [" << suggestedTarget << ']');
                 else
                 {
                     // conversion succeeded
                     suggestedTarget = std::string(&buffer[0], buffer.size() - out_left);
-                    LOG_TRC("Converted '" << saveAsFilename << "' to UTF-7 as '" << suggestedTarget << "'.");
+                    LOG_TRC(wopiLog << " converted [" << saveAsFilename << "] to UTF-7 as ["
+                                    << suggestedTarget << ']');
                 }
 
                 iconv_close(cd);
@@ -1367,7 +1372,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
 
             _wopiSaveDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::steady_clock::now() - startTime);
-            LOG_TRC("Finished async uploading in " << _wopiSaveDuration);
+            LOG_TRC(wopiLog << " finished async uploading in " << _wopiSaveDuration);
 
             WopiUploadDetails details = { filePathAnonym,
                                           uriAnonym,
@@ -1387,7 +1392,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
 
         _uploadHttpSession->setFinishedHandler(finishedCallback);
 
-        LOG_DBG("Async upload request: " << httpRequest.header().toString());
+        LOG_DBG(wopiLog << " async upload request: " << httpRequest.header().toString());
 
         // Make the request.
         _uploadHttpSession->asyncRequest(httpRequest, socketPoll);
@@ -1398,13 +1403,14 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
     }
     catch (const Poco::Exception& ex)
     {
-        LOG_ERR("Cannot upload file to WOPI storage uri ["
-                << uriAnonym << "]. Error: " << ex.displayText()
-                << (ex.nested() ? " (" + ex.nested()->displayText() + ')' : ""));
+        LOG_ERR(wopiLog << " cannot upload file to WOPI storage uri [" << uriAnonym
+                        << "]. Error: " << ex.displayText()
+                        << (ex.nested() ? " (" + ex.nested()->displayText() + ')' : ""));
     }
     catch (const std::exception& ex)
     {
-        LOG_ERR("Cannot upload file to WOPI storage uri [" + uriAnonym + "]. Error: " << ex.what());
+        LOG_ERR(wopiLog << " cannot upload file to WOPI storage uri [" + uriAnonym + "]. Error: "
+                        << ex.what());
     }
 
     scopedInvokeCallback.setArg(AsyncUpload(
