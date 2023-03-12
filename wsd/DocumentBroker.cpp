@@ -2526,9 +2526,13 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
 
         // So just go down the same code path as for normal Online:
 
-        // If last editable, save and don't remove until after uploading to storage.
-        if (!lastEditableSession || !autoSave(isPossiblyModified(), dontSaveIfUnmodified))
+        // If last editable, save (if not saving already) and
+        // don't remove until after uploading to storage.
+        if (!lastEditableSession ||
+            (!_saveManager.isSaving() && !autoSave(isPossiblyModified(), dontSaveIfUnmodified)))
+        {
             disconnectSessionInternal(session);
+        }
 
         // Last view going away; can destroy?
         if (activeSessionCount <= 1)
