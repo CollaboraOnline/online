@@ -1516,7 +1516,8 @@ protected:
 
     virtual bool isGetThumbnail() const { return false; }
 
-    virtual void sendStartMessage(std::shared_ptr<ClientSession> clientSession, const std::string& encodedFrom);
+    virtual void sendStartMessage(const std::shared_ptr<ClientSession>& clientSession,
+                                  const std::string& encodedFrom);
 };
 
 class ExtractLinkTargetsBroker final : public ConvertToBroker
@@ -1531,7 +1532,8 @@ public:
                     {}
 
 private:
-    void sendStartMessage(std::shared_ptr<ClientSession> clientSession, const std::string& encodedFrom) override;
+    void sendStartMessage(const std::shared_ptr<ClientSession>& clientSession,
+                          const std::string& encodedFrom) override;
 };
 
 class GetThumbnailBroker final : public ConvertToBroker
@@ -1553,7 +1555,8 @@ protected:
     bool isGetThumbnail() const override { return true; }
 
 private:
-    void sendStartMessage(std::shared_ptr<ClientSession> clientSession, const std::string& encodedFrom) override;
+    void sendStartMessage(const std::shared_ptr<ClientSession>& clientSession,
+                          const std::string& encodedFrom) override;
 };
 
 class RenderSearchResultBroker final : public StatelessBatchBroker
