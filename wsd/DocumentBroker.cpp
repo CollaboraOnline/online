@@ -3693,17 +3693,19 @@ bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std:
     return true;
 }
 
-void ConvertToBroker::sendStartMessage(std::shared_ptr<ClientSession> clientSession, const std::string& encodedFrom)
+void ConvertToBroker::sendStartMessage(const std::shared_ptr<ClientSession>& clientSession,
+                                       const std::string& encodedFrom)
 {
     // add batch mode, no interactive dialogs
-    std::string _load = "load url=" + encodedFrom + " batch=true";
+    std::string load = "load url=" + encodedFrom + " batch=true";
     if (!getLang().empty())
-        _load += " lang=" + getLang();
-    std::vector<char> loadRequest(_load.begin(), _load.end());
+        load += " lang=" + getLang();
+    std::vector<char> loadRequest(load.begin(), load.end());
     clientSession->handleMessage(loadRequest);
 }
 
-void ExtractLinkTargetsBroker::sendStartMessage(std::shared_ptr<ClientSession> clientSession, const std::string& encodedFrom)
+void ExtractLinkTargetsBroker::sendStartMessage(const std::shared_ptr<ClientSession>& clientSession,
+                                                const std::string& encodedFrom)
 {
     ConvertToBroker::sendStartMessage(clientSession, encodedFrom);
 
@@ -3711,7 +3713,8 @@ void ExtractLinkTargetsBroker::sendStartMessage(std::shared_ptr<ClientSession> c
     forwardToChild(clientSession, command);
 }
 
-void GetThumbnailBroker::sendStartMessage(std::shared_ptr<ClientSession> clientSession, const std::string& encodedFrom)
+void GetThumbnailBroker::sendStartMessage(const std::shared_ptr<ClientSession>& clientSession,
+                                          const std::string& encodedFrom)
 {
     clientSession->setThumbnailSession(true);
     clientSession->setThumbnailTarget(_target);
