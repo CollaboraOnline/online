@@ -2223,9 +2223,8 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     const NeedToSave needToSave = needToSaveToDisk();
     const NeedToUpload needToUpload = needToUploadToStorage();
     bool canStop = (needToSave == NeedToSave::No && needToUpload == NeedToUpload::No);
-    LOG_TRC("autoSaveAndStop for docKey [" << getDocKey() << "] needToSave: " << name(needToSave)
-                                           << ", needToUpload: " << name(needToUpload)
-                                           << ", canStop: " << canStop);
+    LOG_TRC("autoSaveAndStop for docKey [" << getDocKey() << "]: " << name(needToSave) << ", "
+                                           << name(needToUpload) << ", canStop: " << canStop);
 
     if (!canStop && needToSave == NeedToSave::No && !isStorageOutdated())
     {
@@ -2313,9 +2312,10 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     {
         LOG_TRC("Too soon to issue another save on ["
                 << getDocKey() << "]: " << _saveManager.timeSinceLastSaveRequest()
-                << " since last save request and " << _saveManager.timeSinceLastSaveResponse()
-                << " since last save response. Min time between saves: "
-                << _saveManager.minTimeBetweenSaves());
+                << " since last save request, " << _saveManager.timeSinceLastSaveResponse()
+                << " since last save response, and last save took "
+                << _saveManager.lastSaveDuration()
+                << ". Min time between saves: " << _saveManager.minTimeBetweenSaves());
     }
 
     if (canStop)
