@@ -571,7 +571,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background: url('images/jquery-ui-lightness/ui-icons_222222_256x240.png') no-repeat transparent;
 	background-position: -67px -18px !important;
 	display: inline-block;
-	position: absolute;
+	position: relative;
 	width: 11px;
 	height: 11px;
 	cursor: pointer;
