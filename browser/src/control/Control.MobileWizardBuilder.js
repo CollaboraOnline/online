@@ -4,7 +4,7 @@
  * from the JSON description provided by the server.
  */
 
-/* global $ _UNO _ */
+/* global $ _UNO _ JSDialog */
 
 L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 	_customizeOptions: function() {
@@ -24,7 +24,8 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['panel'] = this._panelHandler;
 		this._controlHandlers['toolbox'] = this._toolboxHandler;
 		this._controlHandlers['mobile-popup-container'] = this._mobilePopupContainer;
-		this._controlHandlers['tabcontrol'] = this._tabsToPanelConverter;
+		this._controlHandlers['tabcontrol'] = JSDialog.mobileTabControl;
+		this._controlHandlers['paneltabs'] = JSDialog.mobilePanelControl;
 		this._controlHandlers['scrollwindow'] = undefined;
 
 		this._toolitemHandlers['.uno:FontworkAlignmentFloater'] = function () { return false; };
@@ -39,55 +40,6 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:FontworkShapeType'] = this._fontworkShapeControl;
 		this._toolitemHandlers['SelectWidth'] = this._lineWidthControl;
 		this._toolitemHandlers['.uno:XLineStyle'] = this._explorableToolItemHandler;
-	},
-
-	// use unified tabs handling in mobile wizard so Tab Control is show exactly like Panels
-	_tabsToPanelConverter: function(parentContainer, data, builder, tabTooltip) {
-		var tabs = 0;
-		var tabObjects = [];
-		for (var tabIdx = 0; data.children && tabIdx < data.children.length; tabIdx++) {
-			if (data.children[tabIdx].type === 'tabpage') {
-				tabs++;
-				tabObjects.push(data.children[tabIdx]);
-			}
-		}
-		var isMultiTabJSON = tabs > 1;
-
-		if (data.tabs) {
-			for (tabIdx = 0; data.tabs && tabIdx < data.tabs.length; tabIdx++) {
-				var isSelectedTab = data.selected == data.tabs[tabIdx].id;
-				if (isSelectedTab) {
-					var singleTabId = tabIdx;
-				}
-			}
-		}
-
-		if (isMultiTabJSON) {
-			var tabId = 0;
-			for (tabIdx = 0; tabIdx < data.children.length; tabIdx++) {
-				var tab = data.children[tabIdx];
-
-				if (tab.type !== 'tabpage')
-					continue;
-
-				tabObjects[tabId].text = data.tabs[tabId].text;
-				tabId++;
-			}
-		} else {
-			for (tabIdx = 0; tabIdx < data.children.length; tabIdx++) {
-				tab = data.children[tabIdx];
-
-				if (tab.type !== 'tabpage')
-					continue;
-
-				tabObjects[singleTabId].text = data.tabs[singleTabId].text;
-				break;
-			}
-		}
-
-		builder._panelTabsHandler(parentContainer, tabObjects, builder, tabTooltip);
-
-		return false;
 	},
 
 	baseSpinField: function(parentContainer, data, builder, customCallback) {

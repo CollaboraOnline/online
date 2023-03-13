@@ -332,6 +332,7 @@ COOL_JS_LST =\
 	src/control/ColorPicker.js \
 	src/control/jsdialog/Widget.LanguageSelector.js \
 	src/control/jsdialog/Widget.FormulabarEdit.js \
+	src/control/jsdialog/Widget.MobileTabControl.js \
 	src/control/jsdialog/Widget.MultilineEdit.js \
 	src/control/jsdialog/Widget.TreeView.js \
 	src/control/Control.JSDialog.js \
