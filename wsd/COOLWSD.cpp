@@ -4692,7 +4692,7 @@ private:
                             (exc.nested() ? " (" + exc.nested()->displayText() + ")" : ""));
                 }
 
-                FileUtil::removeFile(File(filePath.parent()).path(), true);
+                FileUtil::removeFile(filePath.toString());
             }
             else
             {
