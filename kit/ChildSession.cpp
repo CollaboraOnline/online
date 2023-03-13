@@ -302,11 +302,11 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             y = 0;
 
         bool success = false;
-        const int width = 120;
-        const int height = 120;
 
-        // These arbitrary magic numbers are from the original interrupted WIP, surely this will need more work.
-        constexpr float zoom = 0.5f;
+        constexpr int width = 1200;
+        constexpr int height = 630;
+
+        constexpr float zoom = 1;
         constexpr int pixelWidthTwips = width * 15 / zoom;
         constexpr int pixelHeightTwips = height * 15 / zoom;
         constexpr int offsetXTwips = 15 * 15; // start 15 px/twips before the target to get a clearer thumbnail
