@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-06 13:17+0100\n"
-"PO-Revision-Date: 2023-03-07 02:32+0000\n"
+"PO-Revision-Date: 2023-03-13 06:38+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
@@ -539,7 +539,7 @@ msgstr "Opmaakprofiel"
 
 #: src/control/Control.JSDialogBuilder.js:2052
 msgid "reply"
-msgstr "antwoord"
+msgstr "beantwoorden"
 
 #: src/control/Control.JSDialogBuilder.js:2055
 msgid "replies"
@@ -2392,7 +2392,7 @@ msgstr "Wijzigen"
 #: src/layer/tile/CommentListSection.ts:808
 #: src/layer/tile/CommentSection.ts:117
 msgid "Reply"
-msgstr "Antwoord"
+msgstr "Beantwoorden"
 
 #: src/layer/tile/CommentListSection.ts:814
 msgid "Remove"
