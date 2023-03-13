@@ -1017,31 +1017,7 @@ app.definitions.Socket = L.Class.extend({
 			}
 
 			if (passwordNeeded) {
-				// Ask the user for password
-				vex.dialog.open({
-					contentClassName: 'vex-has-inputs',
-					message: msg,
-					input: '<input name="password" type="password" required />',
-					buttons: [
-						$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
-						$.extend({}, vex.dialog.buttons.YES, { text: _('OK') })
-					],
-					callback: L.bind(function(data) {
-						if (data) {
-							this._map._docPassword = data.password;
-							if (window.ThisIsAMobileApp) {
-								window.postMobileMessage('loadwithpassword password=' + data.password);
-							}
-							this._map.loadDocument();
-						} else if (passwordType === 'to-modify') {
-							this._map._docPassword = '';
-							this._map.loadDocument();
-						} else {
-							this._map.fire('postMessage', {msgId: 'UI_Cancel_Password'});
-							this._map.hideBusy();
-						}
-					}, this)
-				});
+				this._askForDocumentPassword(passwordType, msg);
 				return;
 			}
 		}
@@ -1245,6 +1221,24 @@ app.definitions.Socket = L.Class.extend({
 	_exportAsCallback: function(command) {
 		this._map.hideBusy();
 		this._map.uiManager.showInfoModal('exported-success', _('Exported to storage'), _('Successfully exported: ') + decodeURIComponent(command.filename), '', _('OK'));
+	},
+
+	_askForDocumentPassword: function(passwordType, msg) {
+		this._map.uiManager.showInputModal('password-popup', '', msg, '', _('OK'), function(data) {
+			if (data) {
+				this._map._docPassword = data;
+				if (window.ThisIsAMobileApp) {
+					window.postMobileMessage('loadwithpassword password=' + data);
+				}
+				this._map.loadDocument();
+			} else if (passwordType === 'to-modify') {
+				this._map._docPassword = '';
+				this._map.loadDocument();
+			} else {
+				this._map.fire('postMessage', {msgId: 'UI_Cancel_Password'});
+				this._map.hideBusy();
+			}
+		}.bind(this), true /* password input */);
 	},
 
 	_renameOrSaveAsCallback: function(textMsg, command) {

@@ -924,7 +924,7 @@ L.Control.UIManager = L.Control.extend({
 	/// defaultValue - default value of an input
 	/// buttonText - text inside OK button
 	/// callback - callback on button press
-	showInputModal: function(id, title, message, defaultValue, buttonText, callback) {
+	showInputModal: function(id, title, message, defaultValue, buttonText, callback, passwordInput) {
 		var dialogId = this.generateModalId(id);
 		var json = this._modalDialogJSON(id, title, !window.mode.isDesktop(), [
 			{
@@ -935,6 +935,7 @@ L.Control.UIManager = L.Control.extend({
 			{
 				id: 'input-modal-input',
 				type: 'edit',
+				password: !!passwordInput,
 				text: defaultValue
 			},
 			{
