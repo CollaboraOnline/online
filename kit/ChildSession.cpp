@@ -303,19 +303,24 @@ bool ChildSession::_handleInput(const char *buffer, int length)
 
         bool success = false;
 
+        // Size of thumbnail in pixels
         constexpr int width = 1200;
         constexpr int height = 630;
 
+        // Unclear what this "zoom" level means
         constexpr float zoom = 1;
-        constexpr int pixelWidthTwips = width * 15 / zoom;
-        constexpr int pixelHeightTwips = height * 15 / zoom;
-        constexpr int offsetXTwips = 15 * 15; // start 15 px/twips before the target to get a clearer thumbnail
+
+        // The magic number 15 is the number of twips per pixel for a resolution of 96 pixels per
+        // inch, which apparently is some "standard".
+        constexpr int widthTwips = width * 15 / zoom;
+        constexpr int heightTwips = height * 15 / zoom;
+        constexpr int offsetXTwips = 15 * 15; // start 15 pixels before the target to get a clearer thumbnail
         constexpr int offsetYTwips = 15 * 15;
 
         const auto mode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
 
         std::vector<unsigned char> thumbnail(width * height * 4);
-        getLOKitDocument()->paintTile(thumbnail.data(), width, height, x - offsetXTwips, y - offsetYTwips, pixelWidthTwips, pixelHeightTwips);
+        getLOKitDocument()->paintTile(thumbnail.data(), width, height, x - offsetXTwips, y - offsetYTwips, widthTwips, heightTwips);
 
         std::vector<char> pngThumbnail;
         if (Png::encodeBufferToPNG(thumbnail.data(), width, height, pngThumbnail, mode))
