@@ -1115,12 +1115,11 @@ app.definitions.Socket = L.Class.extend({
 			textMsg = textMsg.substring(len);
 			if (textMsg.startsWith('saveas:')) {
 				var userName = command.username ? command.username : _('Someone');
-				vex.dialog.confirm({
-					message: _('%userName saved this document as %fileName. Do you want to join?').replace('%userName', userName).replace('%fileName', command.filename),
-					callback: L.bind(function (val) {
-						if (val) this._renameOrSaveAsCallback(textMsg, command);
-					}, this)
-				});
+				var message = _('%userName saved this document as %fileName. Do you want to join?').replace('%userName', userName).replace('%fileName', command.filename);
+
+				this._map.uiManager.showConfirmModal('save-as-warning', '', message, _('OK'), function() {
+					this._renameOrSaveAsCallback(textMsg, command);
+				}.bind(this));
 			}
 		}
 		else if (textMsg.startsWith('statusindicator:')) {
