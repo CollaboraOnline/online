@@ -917,6 +917,55 @@ L.Control.UIManager = L.Control.extend({
 		], cancelButtonId);
 	},
 
+	/// buttonObjectList: [{id: button's id, text: button's text, ..other properties if needed}, ...]
+	/// callbackList: [{id: button's id, func_: function}, ...]
+	showModalWithCustomButtons: function(id, title, message, cancellable, buttonObjectList, callbackList) {
+		var dialogId = this.generateModalId(id);
+
+		for (var i = 0; i < buttonObjectList.length; i++)
+			buttonObjectList[i].type = 'pushbutton';
+
+		var json = this._modalDialogJSON(id, title, !!cancellable, [
+			{
+				id: 'info-modal-tile-m',
+				type: 'fixedtext',
+				text: title,
+				hidden: !window.mode.isMobile()
+			},
+			{
+				id: 'info-modal-label1',
+				type: 'fixedtext',
+				text: message
+			},
+			{
+				id: '',
+				type: 'buttonbox',
+				text: '',
+				enabled: true,
+				children: buttonObjectList,
+				vertical: false,
+				layoutstyle: 'end'
+			},
+		]);
+
+		buttonObjectList.forEach(function(button) {
+			callbackList.forEach(function(callback) {
+				if (button.id === callback.id) {
+					if (typeof callback.func_ === 'function') {
+						callback.func = function() {
+							callback.func_();
+							this.closeModal(dialogId);
+						}.bind(this);
+					}
+					else
+						callback.func = function() { this.closeModal(dialogId); }.bind(this);
+				}
+			}.bind(this));
+		}.bind(this));
+
+		this.showModal(json, callbackList);
+	},
+
 	/// shows simple input modal (message + input + (cancel + ok) button)
 	/// id - id of a dialog
 	/// title - title of a dialog
