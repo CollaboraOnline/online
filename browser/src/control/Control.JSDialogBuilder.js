@@ -97,7 +97,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['calcfuncpanel'] = this._calcFuncListPanelHandler;
 		this._controlHandlers['tabcontrol'] = this._tabsControlHandler;
 		this._controlHandlers['tabpage'] = this._tabPageHandler;
-		this._controlHandlers['paneltabs'] = this._panelTabsHandler;
 		this._controlHandlers['singlepanel'] = this._singlePanelHandler;
 		this._controlHandlers['container'] = this._containerHandler;
 		this._controlHandlers['dialog'] = this._containerHandler;
@@ -1152,73 +1151,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			return false;
 		}
-	},
-
-	_panelTabsHandler: function(parentContainer, data, builder) {
-		if (!builder.options.useSetTabs)
-			console.warn('mobile panelTabsHandler: setTabs will be used ignoring useSetTabs property');
-
-		var tabsContainer = L.DomUtil.create('div', 'ui-tabs ' + builder.options.cssClass + ' ui-widget');
-		var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content ' + builder.options.cssClass + ' ui-widget', parentContainer);
-
-		for (var tabIdx = data.length - 1; tabIdx >= 0; tabIdx--) {
-			var item = data[tabIdx];
-			if (item.hidden === true)
-				data.splice(tabIdx, 1);
-		}
-
-		var tabs = [];
-		var contentDivs = [];
-		var labels = [];
-		for (tabIdx = 0; tabIdx < data.length; tabIdx++) {
-			item = data[tabIdx];
-
-			var title = builder._cleanText(item.text);
-
-			var tab = L.DomUtil.create('div', 'ui-tab ' + builder.options.cssClass, tabsContainer);
-			tab.id = title;
-			tabs[tabIdx] = tab;
-
-			var label = L.DomUtil.create('span', 'ui-tab-content ' + builder.options.cssClass + ' unolabel', tab);
-			label.textContent = title;
-			labels[tabIdx] = title;
-
-			var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
-			contentDiv.title = title;
-
-			builder._currentDepth++;
-			if (item.children)
-			{
-				for (var i = 0; i < item.children.length; i++) {
-					builder.build(contentDiv, [item.children[i]]);
-				}
-			}
-			else // build ourself inside there
-			{
-				builder.build(contentDiv, [item]);
-			}
-			builder._currentDepth--;
-
-			$(contentDiv).hide();
-			contentDivs[tabIdx] = contentDiv;
-		}
-
-		if (builder.wizard) {
-			builder.wizard.setTabs(tabsContainer, builder);
-
-			for (var t = 0; t < tabs.length; t++) {
-				// to get capture of 't' right has to be a sub fn.
-				var fn = builder._createTabClick(
-					builder, t, tabs, contentDivs, labels);
-				$(tabs[t]).click(fn);
-			}
-		} else {
-			window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
-		}
-		$(tabs[0]).click();
-		builder.wizard.goLevelDown(contentsContainer);
-
-		return false;
 	},
 
 	_singlePanelHandler: function(parentContainer, data, builder) {
