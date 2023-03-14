@@ -330,8 +330,9 @@ COOL_JS_LST =\
 	src/control/Control.LokDialog.js \
 	src/control/Control.AlertDialog.js \
 	src/control/ColorPicker.js \
-	src/control/jsdialog/Widget.LanguageSelector.js \
+	src/control/jsdialog/Widget.DrawingArea.js \
 	src/control/jsdialog/Widget.FormulabarEdit.js \
+	src/control/jsdialog/Widget.LanguageSelector.js \
 	src/control/jsdialog/Widget.MobileTabControl.js \
 	src/control/jsdialog/Widget.MultilineEdit.js \
 	src/control/jsdialog/Widget.ScrolledWindow.js \

@@ -113,7 +113,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['borderstyle'] = this._borderControl;
 		this._controlHandlers['treelistbox'] = JSDialog.treeView;
 		this._controlHandlers['iconview'] = this._iconViewControl;
-		this._controlHandlers['drawingarea'] = this._drawingAreaControl;
+		this._controlHandlers['drawingarea'] = JSDialog.drawingArea;
 		this._controlHandlers['rootcomment'] = this._rootCommentControl;
 		this._controlHandlers['comment'] = this._commentControl;
 		this._controlHandlers['emptyCommentWizard'] = this._rootCommentControl;
@@ -1793,47 +1793,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		} else {
 			L.DomUtil.addClass(target, 'horizontal');
 		}
-
-		return false;
-	},
-
-	_drawingAreaControl: function(parentContainer, data, builder) {
-		var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-drawing-area-container', parentContainer);
-		container.id = data.id;
-
-		if (!data.image)
-			return;
-
-		var image = L.DomUtil.create('img', builder.options.cssClass + ' ui-drawing-area', container);
-		image.src = data.image.replace(/\\/g, '');
-		image.alt = data.text;
-		image.title = data.text;
-		builder.map.uiManager.enableTooltip(image);
-
-		if (data.loading && data.loading === 'true') {
-			var loaderContainer = L.DomUtil.create('div', 'ui-drawing-area-loader-container', container);
-			L.DomUtil.create('div', 'ui-drawing-area-loader', loaderContainer);
-		}
-		if (data.placeholderText && data.placeholderText === 'true') {
-			var spanContainer = L.DomUtil.create('div', 'ui-drawing-area-placeholder-container', container);
-			var span = L.DomUtil.create('span', 'ui-drawing-area-placeholder', spanContainer);
-			span.innerText = data.text;
-		}
-		L.DomEvent.on(image, 'click touchend', function(e) {
-			var x = 0;
-			var y = 0;
-
-			if (e.offsetX) {
-				x = e.offsetX;
-				y = e.offsetY;
-			} else if (e.changedTouches && e.changedTouches.length) {
-				x = e.changedTouches[e.changedTouches.length-1].pageX - $(image).offset().left;
-				y = e.changedTouches[e.changedTouches.length-1].pageY - $(image).offset().top;
-			}
-
-			var coordinates = (x / image.offsetWidth) + ';' + (y / image.offsetHeight);
-			builder.callback('drawingarea', 'click', container, coordinates, builder);
-		}, this);
 
 		return false;
 	},
