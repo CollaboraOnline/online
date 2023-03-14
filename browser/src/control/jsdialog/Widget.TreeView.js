@@ -23,7 +23,7 @@
  *         { row: 1, columns [ { text: 'a2' }, { text: 'b2' }, selected: true ]}
  *     ]
  * }
- * 
+ *
  * 'row' property is used in the callback to differentiate entries
  * 'state' property defines if entry has the checkbox (false/true), when is missing - no checkbox
  * 'ondemand' property can be set to provide nodes lazy loading
@@ -156,7 +156,7 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder) {
 			var listElements = $('#' + treeViewData.id + ' li');
 			var currIndex = parseInt(entry.row);
 			var treeLength = treeViewData.entries.length;
-			var spanElement = 'span.ui-treeview-cell';
+			var spanElement = 'span.ui-treeview-cell-text';
 			if (event.key === 'Enter') {
 				clickFunction();
 				preventDef = true;
