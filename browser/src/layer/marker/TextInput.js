@@ -728,7 +728,7 @@ L.TextInput = L.Layer.extend({
 			if (removeBefore === 0) {
 				docLayer._mentionText.push(ev.data);
 				var regEx = /^[0-9a-zA-Z ]+$/;
-				if (ev.data.match(regEx))
+				if (ev.data && ev.data.match(regEx))
 					this._map.fire('sendmentiontext', {data: docLayer._mentionText});
 				else {
 					this._map.fire('closementionpopup', { 'typingMention': false });
@@ -911,7 +911,7 @@ L.TextInput = L.Layer.extend({
 		if (!this._isComposing && (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
 			ev.key === 'ArrowUp' || ev.key === 'ArrowDown' ||
 			ev.key === 'Home' || ev.key === 'End' ||
-			ev.key === 'PageUp' || ev.key === 'PageDown' || 
+			ev.key === 'PageUp' || ev.key === 'PageDown' ||
 			ev.key === 'Escape'))
 			this._emptyArea();
 	},
