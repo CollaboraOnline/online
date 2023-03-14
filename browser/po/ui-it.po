@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-06 13:17+0100\n"
-"PO-Revision-Date: 2023-01-22 13:13+0000\n"
-"Last-Translator: Translator-3000 <weblate.m1d0h@8shield.net>\n"
+"PO-Revision-Date: 2023-03-14 08:03+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/it/>\n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15.1\n"
+"X-Generator: Weblate 4.16.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -369,7 +369,7 @@ msgstr "Colore automatico"
 
 #: src/control/Control.AlertDialog.js:56
 msgid "External link"
-msgstr ""
+msgstr "Link esterno"
 
 #: src/control/Control.AlertDialog.js:57
 msgid "Open link"
@@ -589,12 +589,11 @@ msgstr "Nessuno (non eseguire il controllo ortografico)"
 
 #: src/control/Control.LanguageDialog.js:72
 msgid "Select language"
-msgstr ""
+msgstr "Selezionare la lingua"
 
 #: src/control/Control.LanguageDialog.js:93
-#, fuzzy
 msgid "Language"
-msgstr "Lingua:"
+msgstr "Lingua"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:80
 #: src/control/Control.Menubar.js:898
@@ -776,7 +775,7 @@ msgstr "Tutto"
 #: src/control/Control.NotebookbarImpress.js:943
 #: src/control/Control.NotebookbarWriter.js:847
 msgid "Pick Link"
-msgstr ""
+msgstr "Scegliere il link"
 
 #: src/control/Control.Menubar.js:209
 msgid "Text orientation"
@@ -986,11 +985,11 @@ msgstr "Configurazione della pagina"
 
 #: src/control/Control.Menubar.js:1061
 msgid "Define print area"
-msgstr ""
+msgstr "Definire l'area di stampa"
 
 #: src/control/Control.Menubar.js:1062
 msgid "Remove print area"
-msgstr ""
+msgstr "Rimuovere l'area di stampa"
 
 #: src/control/Control.Menubar.js:1335 src/control/Control.StatusBar.js:553
 msgid "Reset to Default Language"
@@ -1160,7 +1159,6 @@ msgstr "Salva Come"
 #: src/control/Control.NotebookbarDraw.js:147
 #: src/control/Control.NotebookbarImpress.js:181
 #: src/control/Control.NotebookbarWriter.js:143
-#, fuzzy
 msgid "Export As"
 msgstr "Esporta come"
 
@@ -1291,7 +1289,7 @@ msgstr "Elimina colonne"
 #: src/control/Control.NotebookbarImpress.js:336
 #: src/control/Control.NotebookbarWriter.js:1058
 msgid "Read mode"
-msgstr ""
+msgstr "Modalità di lettura"
 
 #: src/control/Control.NotebookbarCalc.js:1024
 #: src/control/Control.NotebookbarDraw.js:288
@@ -1613,13 +1611,16 @@ msgstr "La chiave API di Zotero è incorretta"
 
 #: src/control/Control.Zotero.js:171
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Avviso di Zotero"
 
 #: src/control/Control.Zotero.js:172
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Il documento contiene alcune citazioni che potrebbero essere irraggiungibili "
+"attraverso l'API web. Ciò può causare alcuni problemi durante la modifica "
+"delle citazioni o della bibliografia."
 
 #: src/control/Control.Zotero.js:228 src/core/Socket.js:1128
 msgid "Loading..."
@@ -1643,11 +1644,11 @@ msgstr "Preferiti"
 
 #: src/control/Control.Zotero.js:389
 msgid "Footnotes"
-msgstr ""
+msgstr "Piè pagina"
 
 #: src/control/Control.Zotero.js:389
 msgid "Endnotes"
-msgstr ""
+msgstr "Note di chiusura"
 
 #: src/control/Control.Zotero.js:453
 msgid "My Publications"
@@ -1703,13 +1704,15 @@ msgstr "Impossibile caricare gli elementi"
 
 #: src/control/Control.Zotero.js:1125
 msgid "Citation warning"
-msgstr ""
+msgstr "Avviso di citazione"
 
 #: src/control/Control.Zotero.js:1126
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Una volta inserite le citazioni, il loro tipo di archiviazione e "
+"visualizzazione non può essere modificato."
 
 #: src/control/Control.Zotero.js:1127 src/control/Control.Zotero.js:1429
 msgid "Confirm"
@@ -2123,11 +2126,11 @@ msgstr "Il documento è stato rinominato e verrà ricaricato a breve"
 
 #: src/core/Socket.js:1248
 msgid "Exported to storage"
-msgstr ""
+msgstr "Esportato in magazzino"
 
 #: src/core/Socket.js:1248
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Esportato con successo: "
 
 #: src/core/Socket.js:1543
 msgid ""
@@ -2205,23 +2208,23 @@ msgstr ""
 "Parametro WOPISrc mancante o errato, si prega di contattare l'assistenza."
 
 #: src/errormessages.js:23
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
 "La sessione scadrà in %time. Per continuare, salva il tuo lavoro e aggiorna "
-"la sessione (o la pagina web)."
+"la sessione (o la pagina web). Potrebbe essere necessario effettuare "
+"nuovamente l'accesso."
 
 #: src/errormessages.js:24
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
 "La sessione è scaduta. Ulteriori modifiche al documento potrebbero non "
-"essere salvate. Per continuare, aggiorna la sessione (o la pagina web)."
+"essere salvate. Per continuare, aggiorna la sessione (o la pagina web). "
+"Potrebbe essere necessario effettuare nuovamente l'accesso."
 
 #: src/errormessages.js:25
 msgid ""
@@ -2240,6 +2243,8 @@ msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
 msgstr ""
+"State lasciando il documento. La seguente pagina web si aprirà in una nuova "
+"scheda: "
 
 #: src/errormessages.js:28
 msgid ""
@@ -2543,11 +2548,11 @@ msgstr "Creazione di un nuovo file da modello..."
 
 #: src/map/handler/Map.WOPI.js:481
 msgid "Error"
-msgstr ""
+msgstr "Errore"
 
 #: src/map/handler/Map.WOPI.js:481
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "Il nome del file deve contenere un'estensione."
 
 #: src/map/handler/Map.WOPI.js:489
 msgid "Creating copy..."

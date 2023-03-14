@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-06 13:17+0100\n"
-"PO-Revision-Date: 2023-03-01 12:36+0000\n"
+"PO-Revision-Date: 2023-03-14 08:03+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16-rc\n"
+"X-Generator: Weblate 4.16.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -365,7 +365,7 @@ msgstr "Couleur automatique"
 
 #: src/control/Control.AlertDialog.js:56
 msgid "External link"
-msgstr ""
+msgstr "Lien externe"
 
 #: src/control/Control.AlertDialog.js:57
 msgid "Open link"
@@ -586,7 +586,7 @@ msgstr "Aucune (pas de vérification orthographique)"
 
 #: src/control/Control.LanguageDialog.js:72
 msgid "Select language"
-msgstr ""
+msgstr "Sélection de la langue"
 
 #: src/control/Control.LanguageDialog.js:93
 msgid "Language"
@@ -772,7 +772,7 @@ msgstr "Tout"
 #: src/control/Control.NotebookbarImpress.js:943
 #: src/control/Control.NotebookbarWriter.js:847
 msgid "Pick Link"
-msgstr ""
+msgstr "Choisir un lien"
 
 #: src/control/Control.Menubar.js:209
 msgid "Text orientation"
@@ -982,11 +982,11 @@ msgstr "Configuration de la page"
 
 #: src/control/Control.Menubar.js:1061
 msgid "Define print area"
-msgstr ""
+msgstr "Définir la zone d’impression"
 
 #: src/control/Control.Menubar.js:1062
 msgid "Remove print area"
-msgstr ""
+msgstr "Supprimer la zone d’impression"
 
 #: src/control/Control.Menubar.js:1335 src/control/Control.StatusBar.js:553
 msgid "Reset to Default Language"
@@ -1286,7 +1286,7 @@ msgstr "Supprimer des colonnes"
 #: src/control/Control.NotebookbarImpress.js:336
 #: src/control/Control.NotebookbarWriter.js:1058
 msgid "Read mode"
-msgstr ""
+msgstr "Mode de lecture"
 
 #: src/control/Control.NotebookbarCalc.js:1024
 #: src/control/Control.NotebookbarDraw.js:288
@@ -1608,13 +1608,16 @@ msgstr "La clé API de Zotero est incorrecte"
 
 #: src/control/Control.Zotero.js:171
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Avertissement Zotero"
 
 #: src/control/Control.Zotero.js:172
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Le document contient des citations qui peuvent être inaccessibles via l’API "
+"Web. Cela peut causer des problèmes lors de l’édition des citations ou de la "
+"bibliographie."
 
 #: src/control/Control.Zotero.js:228 src/core/Socket.js:1128
 msgid "Loading..."
@@ -1698,13 +1701,15 @@ msgstr "Échec du chargement des éléments"
 
 #: src/control/Control.Zotero.js:1125
 msgid "Citation warning"
-msgstr ""
+msgstr "Avertissement de citation"
 
 #: src/control/Control.Zotero.js:1126
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Une fois les citations saisies, leur stockage et leur type d’affichage ne "
+"peuvent pas être modifiés."
 
 #: src/control/Control.Zotero.js:1127 src/control/Control.Zotero.js:1429
 msgid "Confirm"
@@ -2207,16 +2212,15 @@ msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr "Paramètre WOPISrc manquant ou faux, veuillez contacter le support."
 
 #: src/errormessages.js:23
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
 "La session va expirer dans %time. Veuillez enregistrer votre travail et "
-"rafraîchir la session (ou page web) pour continuer."
+"rafraîchir la session (ou page web) pour continuer. Il se peut que vous "
+"deviez vous connecter à nouveau."
 
 #: src/errormessages.js:24
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
@@ -2224,7 +2228,7 @@ msgid ""
 msgstr ""
 "La session a expiré. Les modifications apportées au document peuvent ne pas "
 "être enregistrées. Veuillez rafraîchir la session (ou la page web) pour "
-"continuer."
+"continuer. Il se peut que vous deviez vous connecter à nouveau."
 
 #: src/errormessages.js:25
 msgid ""
@@ -2243,6 +2247,8 @@ msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
 msgstr ""
+"Vous quittez le document. La page Web suivante s’ouvrira dans un nouvel "
+"onglet : "
 
 #: src/errormessages.js:28
 msgid ""
