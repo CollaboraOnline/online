@@ -872,6 +872,33 @@ namespace
     }
 }
 
+void FileServerRequestHandler::substituteVariables(std::string& file, const std::unordered_map<std::string, std::string>& varMap){
+    std::string processedFile;
+    processedFile.reserve(static_cast<size_t>(1.2*file.size()));
+
+    std::string::size_type lastNonVarIdx = 0;
+    std::string::size_type varStartIdx = file.find('%');
+    while(std::string::npos != varStartIdx){
+        //copy the part until the variable
+        processedFile += std::string_view(file.c_str()+lastNonVarIdx, varStartIdx-lastNonVarIdx);
+
+        std::string::size_type varEndIdx = file.find('%', varStartIdx+1);
+        if (std::string::npos == varEndIdx) { //enclosing '%' could not be found
+            lastNonVarIdx = varStartIdx; //to copy the rest of the string starting from the "stray" '%'
+            break;
+        }
+        lastNonVarIdx = varEndIdx+1;
+        std::string variable = file.substr(varStartIdx, varEndIdx-varStartIdx+1);
+        processedFile += (varMap.find(variable) != varMap.end()) ? varMap.at(variable) : variable;
+        varStartIdx = file.find('%', varEndIdx+1);
+    }
+    //last copy is needed in two cases (which are basically the same case)
+    //1. no variables found to substitute in the first place
+    //2. after some substitutions no variable left and we skipped to end
+    processedFile += std::string_view(file.c_str()+lastNonVarIdx);
+    file = std::move(processedFile);
+}
+
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
                                               const RequestDetails &requestDetails,
                                               Poco::MemoryInputStream& message,
@@ -942,35 +969,36 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         }
     }
 
+    std::unordered_map<std::string, std::string> variableMap; //map to hold variables to be replaced with their corresponding values
+
     std::string socketProxy = "false";
     if (requestDetails.isProxy())
         socketProxy = "true";
-    Poco::replaceInPlace(preprocess, std::string("%SOCKET_PROXY%"), socketProxy);
+
+    variableMap["%SOCKET_PROXY%"] = socketProxy;
 
     std::string responseRoot = cnxDetails.getResponseRoot();
     std::string userInterfaceMode;
 
-    Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
-    Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), std::to_string(tokenTtl));
-    Poco::replaceInPlace(preprocess, std::string("%ACCESS_HEADER%"), escapedAccessHeader);
-    Poco::replaceInPlace(preprocess, std::string("%HOST%"), cnxDetails.getWebSocketUrl());
-    Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(COOLWSD_VERSION_HASH));
-    Poco::replaceInPlace(preprocess, std::string("%COOLWSD_VERSION%"), std::string(COOLWSD_VERSION));
-    Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
-    Poco::replaceInPlace(preprocess, std::string("%UI_DEFAULTS%"), uiDefaultsToJSON(uiDefaults, userInterfaceMode));
-    Poco::replaceInPlace(preprocess, std::string("%POSTMESSAGE_ORIGIN%"), escapedPostmessageOrigin);
-    Poco::replaceInPlace(preprocess, std::string("%CHECK_FILE_INFO_OVERRIDE%"),
-                         checkFileInfoToJSON(checkfileinfo_override));
+    variableMap["%ACCESS_TOKEN%"]              = escapedAccessToken;
+    variableMap["%ACCESS_TOKEN_TTL%"]          = std::to_string(tokenTtl);
+    variableMap["%ACCESS_HEADER%"]             = escapedAccessHeader;
+    variableMap["%HOST%"]                      = cnxDetails.getWebSocketUrl();
+    variableMap["%VERSION%"]                   = std::string(COOLWSD_VERSION_HASH);
+    variableMap["%COOLWSD_VERSION%"]           = std::string(COOLWSD_VERSION);
+    variableMap["%SERVICE_ROOT%"]              = responseRoot;
+    variableMap["%UI_DEFAULTS%"]               = uiDefaultsToJSON(uiDefaults, userInterfaceMode);
+    variableMap["%POSTMESSAGE_ORIGIN%"]        = escapedPostmessageOrigin;
+    variableMap["%CHECK_FILE_INFO_OVERRIDE%"]  = checkFileInfoToJSON(checkfileinfo_override);
 
     const auto& config = Application::instance().config();
 
     std::string protocolDebug = stringifyBoolFromConfig(config, "logging.protocol", false);
-    Poco::replaceInPlace(preprocess, std::string("%PROTOCOL_DEBUG%"), protocolDebug);
+    variableMap["%PROTOCOL_DEBUG%"] = protocolDebug;
 
     static const std::string hexifyEmbeddedUrls =
         COOLWSD::getConfigValue<bool>("hexify_embedded_urls", false) ? "true" : "false";
-    Poco::replaceInPlace(preprocess, std::string("%HEXIFY_URL%"), hexifyEmbeddedUrls);
-
+    variableMap["%HEXIFY_URL%"] = hexifyEmbeddedUrls;
 
     bool useIntegrationTheme = config.getBool("user_interface.use_integration_theme", true);
     bool hasIntegrationTheme = (theme != "") && FileUtil::Stat(COOLWSD::FileServerRoot + "/browser/dist/" + theme).exists();
@@ -1005,16 +1033,17 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         Poco::URI::encode(documentSigningURL, "'", escapedDocumentSigningURL);
     }
     Poco::replaceInPlace(preprocess, std::string("<!--%DOCUMENT_SIGNING_DIV%-->"), documentSigningDiv);
-    Poco::replaceInPlace(preprocess, std::string("%DOCUMENT_SIGNING_URL%"), escapedDocumentSigningURL);
+    variableMap["%DOCUMENT_SIGNING_URL%"] = escapedDocumentSigningURL;
 
     const auto coolLogging = stringifyBoolFromConfig(config, "browser_logging", false);
-    Poco::replaceInPlace(preprocess, std::string("%BROWSER_LOGGING%"), coolLogging);
+    variableMap["%BROWSER_LOGGING%"] = coolLogging;
     const auto groupDownloadAs = stringifyBoolFromConfig(config, "per_view.group_download_as", true);
-    Poco::replaceInPlace(preprocess, std::string("%GROUP_DOWNLOAD_AS%"), groupDownloadAs);
+    variableMap["%GROUP_DOWNLOAD_AS%"] = groupDownloadAs;
     const unsigned int outOfFocusTimeoutSecs = config.getUInt("per_view.out_of_focus_timeout_secs", 60);
-    Poco::replaceInPlace(preprocess, std::string("%OUT_OF_FOCUS_TIMEOUT_SECS%"), std::to_string(outOfFocusTimeoutSecs));
+    variableMap["%OUT_OF_FOCUS_TIMEOUT_SECS%"] = std::to_string(outOfFocusTimeoutSecs);
     const unsigned int idleTimeoutSecs = config.getUInt("per_view.idle_timeout_secs", 900);
-    Poco::replaceInPlace(preprocess, std::string("%IDLE_TIMEOUT_SECS%"), std::to_string(idleTimeoutSecs));
+    variableMap["%IDLE_TIMEOUT_SECS%"] = std::to_string(idleTimeoutSecs);
+
 
     #if ENABLE_WELCOME_MESSAGE
         std::string enableWelcomeMessage = "true";
@@ -1028,8 +1057,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         std::string autoShowWelcome = stringifyBoolFromConfig(config, "welcome.enable", false);
     #endif
 
-    Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG%"), enableWelcomeMessage);
-    Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_WELCOME%"), autoShowWelcome);
+    variableMap["%ENABLE_WELCOME_MSG%"] = enableWelcomeMessage;
+    variableMap["%AUTO_SHOW_WELCOME%"]  = autoShowWelcome;
 
     // the config value of 'notebookbar/tabbed' or 'classic/compact' overrides the UIMode
     // from the WOPI
@@ -1047,35 +1076,35 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     // nonsensical
     if (userInterfaceMode != "classic" && userInterfaceMode != "notebookbar")
         userInterfaceMode = "notebookbar";
-
-    Poco::replaceInPlace(preprocess, std::string("%USER_INTERFACE_MODE%"), userInterfaceMode);
+    variableMap["%USER_INTERFACE_MODE%"] = userInterfaceMode;
 
     std::string uiRtlSettings;
     if (isRtlLanguage(requestDetails.getParam("lang")))
         uiRtlSettings = " dir=\"rtl\" ";
-    Poco::replaceInPlace(preprocess, std::string("%UI_RTL_SETTINGS%"), uiRtlSettings);
+    variableMap["%UI_RTL_SETTINGS%"]  = uiRtlSettings;
 
     const std::string useIntegrationThemeString = useIntegrationTheme && hasIntegrationTheme ? "true" : "false";
-    Poco::replaceInPlace(preprocess, std::string("%USE_INTEGRATION_THEME%"), useIntegrationThemeString);
+    variableMap["%USE_INTEGRATION_THEME%"] = useIntegrationThemeString;
 
     std::string enableMacrosExecution = stringifyBoolFromConfig(config, "security.enable_macros_execution", false);
-    Poco::replaceInPlace(preprocess, std::string("%ENABLE_MACROS_EXECUTION%"), enableMacrosExecution);
+    variableMap["%ENABLE_MACROS_EXECUTION%"] = enableMacrosExecution;
 
     if (!config.getBool("feedback.show", true) && config.getBool("home_mode.enable", false))
     {
-        Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_FEEDBACK%"), (std::string)"false");
+        variableMap["%AUTO_SHOW_FEEDBACK%"] = (std::string)"false";
     }
     else
     {
-        Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_FEEDBACK%"), (std::string)"true");
+        variableMap["%AUTO_SHOW_FEEDBACK%"] = (std::string)"true";
     }
-    Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_URL%"), std::string(FEEDBACK_URL));
-    Poco::replaceInPlace(preprocess, std::string("%WELCOME_URL%"), std::string(WELCOME_URL));
-    Poco::replaceInPlace(preprocess, std::string("%BUYPRODUCT_URL%"), buyProduct);
-    Poco::replaceInPlace(preprocess, std::string("%DEEPL_ENABLED%"), (config.getBool("deepl.enabled", false) ? std::string("true"): std::string("false")));
-    Poco::replaceInPlace(preprocess, std::string("%ZOTERO_ENABLED%"), (config.getBool("zotero.enable", true) ? std::string("true"): std::string("false")));
+
+    variableMap["%FEEDBACK_URL%"]    = std::string(FEEDBACK_URL);
+    variableMap["%WELCOME_URL%"]     = std::string(WELCOME_URL);
+    variableMap["%BUYPRODUCT_URL%"]  = std::string(buyProduct);
+    variableMap["%DEEPL_ENABLED%"]   = (config.getBool("deepl.enabled", false) ? std::string("true"): std::string("false"));
+    variableMap["%ZOTERO_ENABLED%"]  = (config.getBool("zotero.enable", true) ? std::string("true"): std::string("false"));
     Poco::URI indirectionURI(config.getString("indirection_endpoint.url", ""));
-    Poco::replaceInPlace(preprocess, std::string("%INDIRECTION_URL%"), indirectionURI.toString());
+    variableMap["%INDIRECTION_URL%"] = indirectionURI.toString();
 
     const std::string mimeType = "text/html";
 
@@ -1128,7 +1157,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
                 << "frame-ancestors " << frameAncestors;
         std::string escapedFrameAncestors;
         Poco::URI::encode(frameAncestors, "'", escapedFrameAncestors);
-        Poco::replaceInPlace(preprocess, std::string("%FRAME_ANCESTORS%"), escapedFrameAncestors);
+        variableMap["%FRAME_ANCESTORS%"] = escapedFrameAncestors;
     }
     else
     {
@@ -1137,6 +1166,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     }
 
     cspOss << "\r\n";
+
+    substituteVariables(preprocess, variableMap);
 
     std::ostringstream oss;
     oss << "HTTP/1.1 200 OK\r\n"
