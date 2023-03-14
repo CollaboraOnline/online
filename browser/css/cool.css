@@ -1013,12 +1013,25 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	background-position: 0;
 }
 
+#mentionPopup {
+	border: none !important;
+}
+
 #mentionPopup .lokdialog.ui-dialog-content.ui-widget-content {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	min-height: 100px;
 	min-width: 100px;
+	padding: 0;
+}
+
+#mentionPopup .ui-treeview-entry:not(.autofilter) {
+	padding: 0 1em;
+}
+
+#mentionPopup .lokdialog.ui-dialog-content.ui-widget-content .root-container {
+	flex-grow: 1;
 }
 
 #hyperlink-pop-up-preview {
