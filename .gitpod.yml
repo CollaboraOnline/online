@@ -36,9 +36,9 @@ tasks:
   - name: Get Core & Configure
     before: |
       cd ..
-      wget https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-22.05-assets.tar.gz
-      tar xvf core-co-22.05-assets.tar.gz
-      rm core-co-22.05-assets.tar.gz
+      wget https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-23.05-assets.tar.gz
+      tar xvf core-co-23.05-assets.tar.gz
+      rm core-co-23.05-assets.tar.gz
       cd online
     init: |
       ./autogen.sh
