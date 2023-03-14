@@ -289,6 +289,7 @@ shared_headers = common/Common.hpp \
                  common/JsonUtil.hpp \
                  common/FileUtil.hpp \
                  common/JailUtil.hpp \
+                 common/LangUtil.hpp \
                  common/Log.hpp \
                  common/Protocol.hpp \
                  common/StateEnum.hpp \
