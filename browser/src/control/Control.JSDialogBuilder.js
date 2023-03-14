@@ -1830,7 +1830,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			});
 
 			builder.options.noLabelsForUnoButtons = noLabels;
-		} else if (data.text) {
+		} else if (data.text || data.image) {
 			var button = L.DomUtil.create('div', 'menubutton ' + builder.options.cssClass, parentContainer);
 			button.id = data.id;
 			if (data.image) {
@@ -1838,7 +1838,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				image.src = data.image;
 			}
 			var label = L.DomUtil.create('span', '', button);
-			label.innerText = data.text;
+			label.innerText = data.text ? data.text : '';
 			L.DomUtil.create('i', 'arrow', button);
 
 			$(button).click(function () {
