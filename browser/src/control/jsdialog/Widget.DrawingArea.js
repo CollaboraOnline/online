@@ -41,20 +41,40 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		var span = L.DomUtil.create('span', 'ui-drawing-area-placeholder', spanContainer);
 		span.innerText = data.text;
 	}
-	L.DomEvent.on(image, 'click touchend', function(e) {
-		var x = 0;
-		var y = 0;
+
+	var getCoordinatesFromEvent = function (e) {
+		var ret = [0, 0];
 
 		if (e.offsetX) {
-			x = e.offsetX;
-			y = e.offsetY;
+			ret[0] = e.offsetX;
+			ret[1] = e.offsetY;
 		} else if (e.changedTouches && e.changedTouches.length) {
-			x = e.changedTouches[e.changedTouches.length-1].pageX - $(image).offset().left;
-			y = e.changedTouches[e.changedTouches.length-1].pageY - $(image).offset().top;
+			ret[0] = e.changedTouches[e.changedTouches.length-1].pageX - $(image).offset().left;
+			ret[1] = e.changedTouches[e.changedTouches.length-1].pageY - $(image).offset().top;
 		}
 
-		var coordinates = (x / image.offsetWidth) + ';' + (y / image.offsetHeight);
-		builder.callback('drawingarea', 'click', container, coordinates, builder);
+		ret[0] = ret[0] / image.offsetWidth;
+		ret[1] = ret[1] / image.offsetHeight;
+
+		return ret;
+	};
+
+	var tapTimer = null;
+	L.DomEvent.on(image, 'click touchend', function(e) {
+		var pos = getCoordinatesFromEvent(e);
+		var coordinates = pos[0] + ';' + pos[1];
+
+		if (tapTimer == null) {
+			tapTimer = setTimeout(function () {
+				tapTimer = null;
+				builder.callback('drawingarea', 'click', container, coordinates, builder);
+			}, 300);
+		} else {
+			clearTimeout(tapTimer);
+			tapTimer = null;
+			builder.callback('drawingarea', 'click', container, coordinates, builder);
+			builder.callback('drawingarea', 'dblclick', container, coordinates, builder);
+		}
 	}, this);
 
 	return false;
