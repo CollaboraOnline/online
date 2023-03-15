@@ -3,7 +3,7 @@
  * L.Control.Dialog used for displaying alerts
  */
 
-/* global _ vex sanitizeUrl */
+/* global _ sanitizeUrl */
 L.Control.AlertDialog = L.Control.extend({
 	onAdd: function (map) {
 		// TODO: Better distinction between warnings and errors
@@ -13,20 +13,14 @@ L.Control.AlertDialog = L.Control.extend({
 
 	_onError: function(e) {
 		if (!this._map._fatal) {
-			// TODO. queue message errors and pop-up dialogs
-			// Close other dialogs before presenting a new one.
-			vex.closeAll();
-			if (this._map.jsdialog)
-				this._map.jsdialog.closeAll();
+			this._map.uiManager.closeAll();
 		}
 
 		if (e.msg) {
 			if (window.ThisIsAMobileApp && this._map._fatal) {
 				this._map.uiManager.showConfirmModal('cool_alert', '', e.msg, _('Close'), function() {
 					window.postMobileMessage('BYE');
-					vex.closeAll();
-					if (this._map.jsdialog)
-						this._map.jsdialog.closeAll();
+					this._map.uiManager.closeAll();
 				}.bind(this), true /* Hide cancel button */);
 			}
 			else

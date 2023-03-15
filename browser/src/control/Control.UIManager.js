@@ -824,6 +824,13 @@ L.Control.UIManager = L.Control.extend({
 		app.socket._onMessage({ textMsg: 'jsdialog: ' + JSON.stringify(closeMessage) });
 	},
 
+	closeAll: function() {
+		if (this.map.jsdialog)
+			this.map.jsdialog.closeAll();
+		else
+			this.mobileWizard._closeWizard();
+	},
+
 	/// Returns generated (or to be generated) id for the modal container.
 	generateModalId: function(givenId) {
 		return this.modalIdPretext + givenId;
