@@ -52,6 +52,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
 		$(control.container).tooltip({disabled: true});
+		$(control.container).addClass('menubutton');
 
 		$(control.container).unbind('click');
 		$(control.container).click(function () {
