@@ -3,7 +3,7 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global app _ vex $ errorMessages Uint8Array brandProductName */
+/* global app _ $ errorMessages Uint8Array brandProductName */
 
 app.definitions.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
@@ -679,11 +679,6 @@ app.definitions.Socket = L.Class.extend({
 		else if (textMsg.startsWith('commandresult: ')) {
 			var commandresult = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 			if (commandresult['command'] === 'savetostorage' || commandresult['command'] === 'save') {
-				if (commandresult['success']) {
-					// Close any open confirmation dialogs
-					vex.closeAll();
-				}
-
 				var postMessageObj = {
 					success: commandresult['success'],
 					result: commandresult['result'],
@@ -747,7 +742,6 @@ app.definitions.Socket = L.Class.extend({
 					if (socket.connected()) {
 						// We're connected: cancel timer and dialog.
 						clearTimeout(this.timer);
-						vex.closeAll();
 						return;
 					}
 
@@ -798,8 +792,7 @@ app.definitions.Socket = L.Class.extend({
 			}
 
 			// Close any open dialogs first.
-			vex.closeAll();
-			this._map.jsdialog.closeAll();
+			this._map.uiManager.closeAll();
 
 			var message = '';
 			if (!this._map['wopi'].DisableInactiveMessages) {
@@ -1042,7 +1035,6 @@ app.definitions.Socket = L.Class.extend({
 				// We're connected: cancel timer and dialog.
 				this.ReconnectCount = 0;
 				clearTimeout(this.timer);
-				vex.closeAll();
 			}
 		}
 		else if (window.ThisIsAMobileApp && textMsg.startsWith('mobile:')) {
