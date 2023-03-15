@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CStyleData $ _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array */
+/* global app L CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CStyleData $ _ CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -3765,7 +3765,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		} else {
 			this._map._textInput.hideCursor();
 			// Maintain input if a dialog or search-box has the focus.
-			if (this._map.editorHasFocus() && !isAnyVexDialogActive() && !this._map.isSearching()
+			if (this._map.editorHasFocus() && !this._map.uiManager.isAnyDialogOpen() && !this._map.isSearching()
 				&& !this._isAnyInputFocused())
 				this._map.focus(false);
 		}
@@ -5498,7 +5498,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		map.on('statusindicator',
 			function (e) {
 				if (e.statusType === 'alltilesloaded' && this._docType === 'spreadsheet') {
-					if (!isAnyVexDialogActive())
+					if (!this._map.uiManager.isAnyDialogOpen())
 						this._onCellCursorShift(true);
 				}
 			},

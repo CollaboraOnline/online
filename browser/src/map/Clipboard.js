@@ -3,7 +3,7 @@
  * L.Clipboard is used to abstract our storage and management of
  * local & remote clipboard data.
  */
-/* global app _ brandProductName isAnyVexDialogActive $ */
+/* global app _ brandProductName $ */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -518,7 +518,7 @@ L.Clipboard = L.Class.extend({
 
 		var isJSDialogOpen = this._map.jsdialog ? this._map.jsdialog.hasDialogOpened(): document.getElementById('mobile-wizard-content').length > 0;
 
-		if ((isAnyVexDialogActive() || isJSDialogOpen) && !this.isPasteSpecialDialogOpen())
+		if ((this._map.uiManager.isAnyDialogOpen() || isJSDialogOpen) && !this.isPasteSpecialDialogOpen())
 			return true;
 
 		if ($('.annotation-active').length && $('.cool-annotation-edit').is(':visible'))

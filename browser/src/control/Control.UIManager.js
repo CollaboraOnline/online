@@ -831,6 +831,13 @@ L.Control.UIManager = L.Control.extend({
 			this.mobileWizard._closeWizard();
 	},
 
+	isAnyDialogOpen: function() {
+		if (this.map.jsdialog)
+			return this.map.jsdialog.hasDialogOpened();
+		else
+			return this.mobileWizard.isOpen();
+	},
+
 	/// Returns generated (or to be generated) id for the modal container.
 	generateModalId: function(givenId) {
 		return this.modalIdPretext + givenId;
