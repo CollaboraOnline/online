@@ -3,7 +3,7 @@
  * Feature blocking handler
  */
 
-/* global $ _ isAnyVexDialogActive*/
+/* global $ _ */
 
 L.Map.include({
 
@@ -58,7 +58,7 @@ L.Map.include({
 	},
 
 	openUnlockPopup: function(cmd) {
-		if ((this.isRestrictedUser() && this.isRestrictedItem(cmd)) || isAnyVexDialogActive())
+		if ((this.isRestrictedUser() && this.isRestrictedItem(cmd)) || this.uiManager.isAnyDialogOpen())
 			return;
 		var message = [
 			'<div class="container">',

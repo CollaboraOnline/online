@@ -8,7 +8,7 @@
  * text area itself.
  */
 
-/* global app isAnyVexDialogActive */
+/* global app */
 
 L.TextInput = L.Layer.extend({
 	initialize: function() {
@@ -211,10 +211,6 @@ L.TextInput = L.Layer.extend({
 	// @acceptInput (only on "mobile" (= mobile phone) or on iOS and Android in general) true if we want to
 	// accept key input, and show the virtual keyboard.
 	focus: function(acceptInput) {
-		if (isAnyVexDialogActive())
-			return;
-		// window.app.console.trace('L.TextInput.focus(' + acceptInput + ')');
-
 		// Note that the acceptInput parameter intentionally
 		// is a tri-state boolean: undefined, false, or true.
 
