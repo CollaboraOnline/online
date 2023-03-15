@@ -118,7 +118,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['comment'] = this._commentControl;
 		this._controlHandlers['emptyCommentWizard'] = this._rootCommentControl;
 		this._controlHandlers['separator'] = this._separatorControl;
-		this._controlHandlers['menubutton'] = this._menubuttonControl;
+		this._controlHandlers['menubutton'] = JSDialog.menubuttonControl;
 		this._controlHandlers['spinner'] = this._spinnerControl;
 		this._controlHandlers['spinnerimg'] = this._spinnerImgControl;
 		this._controlHandlers['image'] = this._imageHandler;
@@ -1802,60 +1802,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			L.DomUtil.addClass(target, 'vertical');
 		} else {
 			L.DomUtil.addClass(target, 'horizontal');
-		}
-
-		return false;
-	},
-
-	_menubuttonControl: function(parentContainer, data, builder) {
-		var ids = data.id.split(':');
-
-		var menuId = null;
-		if (ids.length > 1)
-			menuId = ids[1];
-
-		data.id = ids[0];
-
-		if (menuId && builder._menus[menuId]) {
-			var noLabels = builder.options.noLabelsForUnoButtons;
-			builder.options.noLabelsForUnoButtons = false;
-
-			// command is needed to generate image
-			if (!data.command)
-				data.command = menuId;
-
-			var options = {hasDropdownArrow: true};
-			var control = builder._unoToolButton(parentContainer, data, builder, options);
-
-			$(control.container).tooltip({disabled: true});
-
-			$(control.container).unbind('click');
-			$(control.container).click(function () {
-				$(control.container).w2menu({
-					items: builder._menus[menuId],
-					onSelect: function (event) {
-						builder.map.sendUnoCommand('.uno:' + event.item.uno);
-					}
-				});
-			});
-
-			builder.options.noLabelsForUnoButtons = noLabels;
-		} else if (data.text || data.image) {
-			var button = L.DomUtil.create('div', 'menubutton ' + builder.options.cssClass, parentContainer);
-			button.id = data.id;
-			if (data.image) {
-				var image = L.DomUtil.create('img', '', button);
-				image.src = data.image;
-			}
-			var label = L.DomUtil.create('span', '', button);
-			label.innerText = data.text ? data.text : '';
-			L.DomUtil.create('i', 'arrow', button);
-
-			$(button).click(function () {
-				builder.callback('menubutton', 'toggle', button, undefined, builder);
-			});
-		} else {
-			window.app.console.warn('Not found menu "' + menuId + '"');
 		}
 
 		return false;
