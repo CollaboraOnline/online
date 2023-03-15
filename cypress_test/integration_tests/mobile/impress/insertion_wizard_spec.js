@@ -79,7 +79,7 @@ describe('Impress insertion wizard.', function() {
 		cy.get('#comment-container-new').should('exist');
 
 		// Add some comment
-		cy.get('#new-mobile-comment-input-area').type('some text');
+		cy.get('#input-modal-input').type('some text');
 
 		cy.get('.button-primary').click();
 

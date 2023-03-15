@@ -30,7 +30,6 @@ L.Map.include({
 
 declare var L: any;
 declare var app: any;
-declare var vex: any;
 declare var $: any;
 declare var _: any;
 
@@ -375,39 +374,44 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
-	public newAnnotationVex (comment: any, addCommentFn: any, isMod: any): void {
+	public newAnnotationMobile (comment: any, addCommentFn: any, isMod: any): void {
 		var commentData = comment.sectionProperties.data;
 
-		var dialog = vex.dialog.open({
-			contentClassName: 'vex-has-inputs',
-			message: '',
-			input: [
-				'<textarea name="comment" id="new-mobile-comment-input-area" class="cool-annotation-textarea" required>' + (commentData.text && isMod ? commentData.text: '') + '</textarea>'
-			].join(''),
-			buttons: [
-				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') }),
-				$.extend({}, vex.dialog.buttons.YES, { text: _('Save') })
-			],
-			callback: function (data: any) {
-				if (data) {
-					var annotation = comment;
+		this.map.uiManager.showInputModal('new-annotation-dialog', '', '', '', _('Save'), function(data: string) {
+			if (data) {
+				var annotation = comment;
 
-					annotation.sectionProperties.data.text = data.comment;
-					comment.text = data.comment;
+				annotation.sectionProperties.data.text = data;
+				comment.text = data;
 
-					addCommentFn.call(annotation, annotation, comment);
-					if (!isMod)
-						this.containerObject.removeSection(annotation);
-				}
-				else {
-					this.cancel(comment);
-				}
-			}.bind(this),
+				addCommentFn.call(annotation, annotation, comment);
+				if (!isMod)
+					this.containerObject.removeSection(annotation);
+			}
+			else {
+				this.cancel(comment);
+			}
+		}.bind(this), false);
 
-			// Allow close on click away only in desktop (in case of reduced window size otherwise we wont use vex).
-			// Refer: vex.defaultOptions in vex.combined.js
-			overlayClosesOnClick: (<any>window).mode.isMobile() || (<any>window).mode.isTablet(),
-		});
+		document.getElementById('response-cancel').addEventListener('click', function() { this.cancel(comment); }.bind(this));
+
+		document.getElementById('input-modal-input').outerHTML = '<textarea name="comment" id="input-modal-input" class="cool-annotation-textarea" required>' + (commentData.text && isMod ? commentData.text: '') + '</textarea>';
+
+		// Allow close on click away only in desktop.
+		if (document.getElementsByClassName('mobile-wizard jsdialog-overlay cancellable').length > 0) {
+			document.getElementsByClassName('mobile-wizard jsdialog-overlay cancellable')[0].addEventListener('click', function() {
+				this.cancel(comment);
+			}.bind(this));
+		}
+		else {
+			document.getElementById('modal-dialog-new-annotation-dialog-overlay').addEventListener('click', function() {
+				var id = this.map.uiManager.generateModalId('new-annotation-dialog');
+				if (<any>window.mode.isDesktop())
+					this.map.uiManager.closeModal(id);
+				this.cancel(comment);
+			}.bind(this));
+		}
+
 
 		var tagTd = 'td',
 		empty = '',
@@ -439,9 +443,9 @@ export class CommentSection extends CanvasSectionObject {
 			$(contentDate).text(isNaN(d.getTime()) ? comment.dateTime: d.toLocaleDateString((<any>String).locale, <any>dateOptions));
 		}
 
-		dialog.contentEl.insertBefore(author, dialog.contentEl.childNodes[0]);
-
-		$(dialog.contentEl).find('textarea').focus();
+		var parent = document.getElementById('new-annotation-dialog').parentElement;
+		parent.insertBefore(author, parent.childNodes[0]);
+		document.getElementById('input-modal-input').focus();
 	}
 
 	public hightlightComment (comment: any): void {
@@ -503,11 +507,11 @@ export class CommentSection extends CanvasSectionObject {
 			};
 			if (app.file.fileBasedView) {
 				this.map.setPart(this.sectionProperties.docLayer._selectedPart, false);
-				this.map.sendUnoCommand('.uno:InsertAnnotation', comment);
+				this.map.sendUnoCommand('.uno:InsertAnnotation', comment, true /* force */);
 				this.map.setPart(0, false);
 			}
 			else {
-				this.map.sendUnoCommand('.uno:InsertAnnotation', comment);
+				this.map.sendUnoCommand('.uno:InsertAnnotation', comment, true /* force */);
 			}
 
 			this.removeItem(annotation.sectionProperties.data.id);
@@ -522,7 +526,7 @@ export class CommentSection extends CanvasSectionObject {
 					value: annotation.sectionProperties.data.text
 				}
 			};
-			this.map.sendUnoCommand('.uno:CommentChangeTracking', comment);
+			this.map.sendUnoCommand('.uno:CommentChangeTracking', comment, true /* force */);
 		} else {
 			comment = {
 				Id: {
@@ -538,7 +542,7 @@ export class CommentSection extends CanvasSectionObject {
 					value: annotation.sectionProperties.data.text
 				}
 			};
-			this.map.sendUnoCommand('.uno:EditAnnotation', comment);
+			this.map.sendUnoCommand('.uno:EditAnnotation', comment, true /* force */);
 		}
 		this.unselect();
 		this.map.focus();
@@ -553,7 +557,7 @@ export class CommentSection extends CanvasSectionObject {
 			}
 
 			if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
-				this.newAnnotationVex(annotation, annotation.onReplyClick, /* isMod */ false);
+				this.newAnnotationMobile(annotation, annotation.onReplyClick, /* isMod */ false);
 			}
 			else {
 				var replyAnnotation = {
@@ -570,7 +574,7 @@ export class CommentSection extends CanvasSectionObject {
 				var replyAnnotationSection = new cool.Comment(replyAnnotation, replyAnnotation.id === 'new' ? {noMenu: true} : {}, this);
 				replyAnnotationSection.name += '-reply';
 
-				this.newAnnotationVex(replyAnnotationSection, annotation.onReplyClick, /* isMod */ false);
+				this.newAnnotationMobile(replyAnnotationSection, annotation.onReplyClick, /* isMod */ false);
 			}
 		}
 		else {
@@ -586,7 +590,7 @@ export class CommentSection extends CanvasSectionObject {
 	public modify (annotation: any): void {
 		var newAnnotationInCollapsedMode = this.isCollapsed && annotation.isCollapsed;
 		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet() || newAnnotationInCollapsedMode) {
-			this.newAnnotationVex(annotation, function(annotation: any) {
+			this.newAnnotationMobile(annotation, function(annotation: any) {
 				this.save(annotation);
 			}.bind(this), /* isMod */ true);
 		} else {

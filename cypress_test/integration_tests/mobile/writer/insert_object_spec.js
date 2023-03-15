@@ -43,9 +43,9 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('.cool-annotation-table').should('exist');
 
 		// Add some comment
-		cy.get('#new-mobile-comment-input-area').type('some text');
+		cy.get('#input-modal-input').type('some text');
 
-		cy.get('.button-primary').click();
+		cy.get('#response-ok').click();
 
 		cy.get('#comment-container-1').should('exist');
 
