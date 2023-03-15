@@ -2425,10 +2425,26 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						$(div).removeClass('selected');
 					}
 
-					if (state && state === 'disabled')
-						$(div).addClass('disabled');
-					else
+					if (state && state === 'disabled') {
+						if (data.command === '.uno:Paste') {
+							// Fix GitHub issue #5839 and never disable Paste toolbar button
+							// Behave the same as Contol.Menubar and never
+							// disable Paste toolbar button. Native clients
+							// that run LibreOffice locally may send a
+							// "statechanged: .uno:Paste=disabled" message when
+							// opening a document if the system clipboard is
+							// empty, So, we ignore such messages or else the
+							// current document's Paste toolbar button will
+							// never be enabled.
+							$(div).removeClass('disabled');
+							window.app.console.log('do not disable paste based on server side data');
+						} else {
+							$(div).addClass('disabled');
+						}
+					}
+					else {
 						$(div).removeClass('disabled');
+					}
 				};
 
 				updateFunction();
