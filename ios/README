@@ -4,8 +4,6 @@ See https://collaboraonline.github.io/post/build-code-ios/
 App Store "Test Details" text for the last TestFlight build
 -----------------------------------------------------------
 
-This version includes the latest 22.05.10 code and fixes the following bugs:
+This version includes the latest 22.05.11 code and fixes the following bugs:
 
-• Pressing the Save, Paste, or certain other buttons would display an error or silently fail
-• Localizations for several languages were missing
-• When running the app with the user interface set to Hebrew, Arabic, or one of the other right to left (RTL) languages, the user interface would still be arranged left to right
+• The Paste button in the toolbar would sometimes be disabled even when there was content in the system pasteboard
