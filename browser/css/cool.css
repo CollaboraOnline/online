@@ -441,7 +441,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	color: var(--color-main-text);
 	border: none;
 	border-radius: var(--border-radius);
-	width: var(--annotation-input-size);
+	width: auto;
 }
 .cool-annotation-content-wrapper:hover, .cool-annotation-redline-content-wrapper:hover {
 	background-color: var(--color-background-dark);
@@ -451,7 +451,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 .annotation-active.modify-annotation-container .cool-annotation-content-wrapper,
 .annotation-active.reply-annotation-container .cool-annotation-content-wrapper,
 .cool-annotation-collapsed.modalpopup {
-	width: var(--annotation-input-size);
+	width: auto;
 }
 
 .cool-annotation-content {
@@ -573,7 +573,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	box-sizing: border-box;
 }
 
-#new-mobile-comment-input-area.cool-annotation-textarea {
+#input-modal-input.cool-annotation-textarea {
 	height: var(--annotation-input-size);
 }
 

@@ -68,7 +68,7 @@ describe('Help dialog screenshot updation', function() {
 		cy.get('#menu-editmenu').click()
 			.get('#menu-repair').click();
 
-		cy.get('.jsdialog-container.lokdialog_container') 
+		cy.get('.jsdialog-container.lokdialog_container')
 			.should('exist');
 
 		helper.waitUntilIdle('.jsdialog-container.lokdialog_container');
@@ -87,7 +87,7 @@ describe('Help dialog screenshot updation', function() {
 		cy.get('#tb_editbar_item_insertannotation')
 			.click();
 
-		cy.get('#new-mobile-comment-input-area').type('comment added');
+		cy.get('#input-modal-input').type('comment added');
 
 		cy.get('.vex-dialog-buttons .button-primary').click(); // save button
 

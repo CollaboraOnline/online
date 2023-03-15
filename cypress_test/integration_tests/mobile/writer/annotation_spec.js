@@ -53,7 +53,7 @@ describe.skip('Annotation tests.', function() {
 
 		//cy.get('.blinking-cursor').should('be.visible');
 
-		cy.get('#new-mobile-comment-input-area').type('{home}modified ');
+		cy.get('#input-modal-input').type('{home}modified ');
 
 		cy.get('.button-primary').click();
 
@@ -69,9 +69,9 @@ describe.skip('Annotation tests.', function() {
 
 		cy.get('#comment-container-1').should('exist');
 
-		cy.get('#new-mobile-comment-input-area').should('have.text', '');
+		cy.get('#input-modal-input').should('have.text', '');
 
-		cy.get('#new-mobile-comment-input-area').type('reply');
+		cy.get('#input-modal-input').type('reply');
 
 		cy.get('.button-primary').click();
 

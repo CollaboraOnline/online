@@ -357,7 +357,7 @@ function insertComment() {
 
 	cy.get('.cool-annotation-table').should('exist');
 
-	cy.get('#new-mobile-comment-input-area').type('some text');
+	cy.get('#input-modal-input').type('some text');
 
 	cy.get('.vex-dialog-buttons .button-primary').click();
 

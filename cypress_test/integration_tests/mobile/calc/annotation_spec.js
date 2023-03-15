@@ -52,7 +52,7 @@ describe('Annotation Tests',function() {
 
 		cy.get('#annotation-content-area-1').should('have.text', 'some text');
 
-		cy.get('#new-mobile-comment-input-area').type('modified ');
+		cy.get('#input-modal-input').type('modified ');
 
 		cy.get('.vex-dialog-buttons .button-primary').click();
 
