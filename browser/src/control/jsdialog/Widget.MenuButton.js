@@ -28,6 +28,18 @@ function _menubuttonControl (parentContainer, data, builder) {
 
 	data.id = ids[0];
 
+	// import menu
+	if (data.menu) {
+		menuId = data.id + '-menu';
+		builder._menus[menuId] = [];
+		for (var i in data.menu) {
+			builder._menus[menuId].push({
+				id: data.menu[i].id,
+				text: data.menu[i].text
+			});
+		}
+	}
+
 	if (menuId && builder._menus[menuId]) {
 		var noLabels = builder.options.noLabelsForUnoButtons;
 		builder.options.noLabelsForUnoButtons = false;
@@ -46,7 +58,10 @@ function _menubuttonControl (parentContainer, data, builder) {
 			$(control.container).w2menu({
 				items: builder._menus[menuId],
 				onSelect: function (event) {
-					builder.map.sendUnoCommand('.uno:' + event.item.uno);
+					if (event.item.uno)
+						builder.map.sendUnoCommand('.uno:' + event.item.uno);
+					else
+						builder.callback('menubutton', 'select', control.container, event.item.id, builder);
 				}
 			});
 		});
