@@ -93,10 +93,18 @@ L.Control.UIManager = L.Control.extend({
 		if (selectedMode) {
 			this.setSavedState('darkTheme',false);
 			this.loadLightMode();
+			var cmd = {
+				'NewTheme': { 'type': 'string', 'value': 'COLOR_SCHEME_LIBREOFFICE_AUTOMATIC' }
+			};
+			app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
 		}
 		else {
 			this.setSavedState('darkTheme',true);
 			this.loadDarkMode();
+			var cmd = {
+				'NewTheme': { 'type': 'string', 'value': 'COLOR_SCHEME_LIBREOFFICE_DARK' }
+			};
+			app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
 		}
 	},
 
@@ -104,6 +112,10 @@ L.Control.UIManager = L.Control.extend({
 		var selectedMode = this.getDarkModeState();
 		if (selectedMode) {
 			this.loadDarkMode();
+			var cmd = {
+				'NewTheme': { 'type': 'string', 'value': 'COLOR_SCHEME_LIBREOFFICE_DARK' }
+			};
+			app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
 		}
 		else {
 			this.loadLightMode();
