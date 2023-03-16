@@ -1577,7 +1577,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
     LOG_ASSERT_MSG(session, "Must have a valid ClientSession");
 
     const std::string sessionId = session->getId();
-    if (session->isReadOnly())
+    if (!session->isEditable())
     {
         LOG_WRN("Session [" << sessionId << "] is read-only and cannot upload docKey [" << _docKey
                             << ']');
