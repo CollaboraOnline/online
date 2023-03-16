@@ -133,16 +133,10 @@ describe('AutoFilter', function() {
 		//empty
 		openAutoFilterMenu(true);
 
-		cy.contains('.autofilter', 'Empty')
+		cy.get('#check_list_box > tbody > ul > li:nth-child(1) > span > input')
 			.click();
 
-		assertDataOnFilter(['Cypress Test', 'Status', 'Test 4', '']);
-
-		//non-empty
-		openAutoFilterMenu(true);
-
-		cy.contains('.autofilter', 'Not Empty')
-			.click();
+		cy.get('#ok').click();
 
 		assertDataOnFilter(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 5', 'Fail']);
 	});

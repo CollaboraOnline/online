@@ -40,7 +40,7 @@ describe('Statubar tests.', function() {
 			.click();
 
 		cy.get('#StatePageNumber')
-			.should('have.text', 'Page 2 of 2');
+			.should('have.text', 'Pages 1 and 2 of 2');
 
 		cy.get('#tb_actionbar_item_prev')
 			.click();
@@ -52,7 +52,7 @@ describe('Statubar tests.', function() {
 			.click();
 
 		cy.get('#StatePageNumber')
-			.should('have.text', 'Page 2 of 2');
+			.should('have.text', 'Pages 1 and 2 of 2');
 	});
 
 	it('Text entering mode.', function() {
