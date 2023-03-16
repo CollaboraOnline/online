@@ -1660,7 +1660,7 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         if (resultURL.getScheme() == "file" && !COOLWSD::NoCapsForKit)
         {
             std::string relative;
-            if (isConvertTo)
+            if (isConvertTo || isExportAs)
                 Poco::URI::decode(resultURL.getPath(), relative);
             else
                 relative = resultURL.getPath();
