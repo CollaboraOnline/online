@@ -569,14 +569,9 @@ describe('Trigger hamburger menu options.', function() {
 			.should('exist');
 
 		// Check the version
-		//cy.contains('#lokit-version', 'Collabora Office')
-		//.should('exist');
+		cy.contains('#lokit-version', 'Collabora Office').should('exist');
 
 		// Close about dialog
-		//cy.get('.vex-close')
-		//.click({force : true});
-
-		//cy.get('.vex-content')
-		//.should('not.exist');
+		cy.get('div.mobile-wizard.jsdialog-overlay.cancellable').click({force : true});
 	});
 });
