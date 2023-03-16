@@ -539,6 +539,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	cursor: pointer;
 }
 /* listbox */
+.jsdialog.ui-listbox-container {
+	display: flex;
+	margin: auto 0;
+}
+
 .jsdialog.ui-listbox {
 	box-sizing: border-box;
 	-webkit-appearance: none;
