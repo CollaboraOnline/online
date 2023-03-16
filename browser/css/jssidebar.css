@@ -16,6 +16,7 @@ img.sidebar.ui-image {
 }
 
 .sidebar .ui-content .unobutton {
+	box-sizing: border-box;
 	margin: 0;
 }
 
