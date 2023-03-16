@@ -474,9 +474,13 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 /* Radio button */
 
+.radiobutton.jsdialog {
+	display: flex;
+}
+
 .jsdialog input[type='radio'] {
 	vertical-align: middle;
-	margin: 0px 3px 0px 2px;
+	margin: auto 3px auto 2px;
 	border: none;
 }
 
@@ -487,6 +491,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 .jsdialog input[type='radio'][disabled='disabled'] ~ label {
 	color: var(--color-text-lighter);
 }
+
 /* spinfield */
 
 .spinfieldcontainer input {
