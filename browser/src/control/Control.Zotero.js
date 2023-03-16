@@ -129,17 +129,26 @@ L.Control.Zotero = L.Control.extend({
 			this.map.uiManager.showSnackbar(_('Zotero API key is not configured'));
 	},
 
+	refreshUI: function () {
+		if (this.map.uiManager.notebookbar)
+			this.map.uiManager.refreshNotebookbar();
+		else
+			this.map.uiManager.refreshMenubar();
+	},
+
 	updateUserID: function () {
+		if (this.apiKey === '') {
+			this.refreshUI();
+			return;
+		}
+
 		var that = this;
 		fetch('https://api.zotero.org/keys/' + this.apiKey)
 			.then(function (response) { return response.json(); })
 			.then(function (data) {
 				that.userID = data.userID;
 				that.enable = !!that.userID;
-				if (that.map.uiManager.notebookbar)
-					that.map.uiManager.refreshNotebookbar();
-				else
-					that.map.uiManager.refreshMenubar();
+				that.refreshUI();
 				that.updateGroupIdList();
 			}, function () { that.map.uiManager.showSnackbar(_('Zotero API key is incorrect')); });
 	},
