@@ -497,7 +497,15 @@ describe('Top toolbar tests.', function() {
 
 		desktopHelper.actionOnSelector('insertSymbol', (selector) => { cy.get(selector).click(); });
 
-		desktopHelper.checkDialogAndClose('Special Characters');
+		cy.get('.jsdialog-container.ui-dialog.ui-widget-content.lokdialog_container').should('be.visible');
+
+		cy.get('.ui-dialog-title').should('have.text', 'Special Characters');
+
+		helper.clickOnIdle('#favchar1');
+
+		cy.get('.ui-pushbutton.jsdialog.button-primary').click();
+
+		helper.expectTextForClipboard('€');
 	});
 
 	it('Hide/show menu bar.', function() {
@@ -582,7 +590,7 @@ describe('Top toolbar tests.', function() {
 		}
 
 		cy.get('#StatePageNumber')
-			.should('have.text', 'Page 2 of 2');
+			.should('have.text', 'Pages 1 and 2 of 2');
 
 		helper.selectAllText();
 

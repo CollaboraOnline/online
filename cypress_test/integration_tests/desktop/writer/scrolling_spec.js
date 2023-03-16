@@ -21,33 +21,36 @@ describe('Scroll through document', function() {
 	});
 
 	it('Scrolling to bottom/top', function() {
+
+		desktopHelper.selectZoomLevel('40');
+
+		helper.typeIntoDocument('{ctrl}{home}');
+
 		//scroll to bottom
 		cy.get('#StatePageNumber').should('have.text', 'Page 1 of 4');
 
-		desktopHelper.pressKey(3, 'pagedown');
+		desktopHelper.pressKey(2, 'pagedown');
 
 		cy.get('#StatePageNumber').should('have.text', 'Page 2 of 4');
 
-		desktopHelper.pressKey(3, 'pagedown');
+		desktopHelper.pressKey(1, 'pagedown');
 
 		cy.get('#StatePageNumber').should('have.text', 'Page 3 of 4');
 
-		desktopHelper.pressKey(3, 'pagedown');
-
-		desktopHelper.pressKey(2, 'pagedown');
+		desktopHelper.pressKey(1, 'pagedown');
 
 		cy.get('#StatePageNumber').should('have.text', 'Page 4 of 4');
 
 		//scroll to top
-		desktopHelper.pressKey(3, 'pageup');
+		desktopHelper.pressKey(1, 'pageup');
 
 		cy.get('#StatePageNumber').should('have.text', 'Page 3 of 4');
 
-		desktopHelper.pressKey(3, 'pageup');
+		desktopHelper.pressKey(1, 'pageup');
 
 		cy.get('#StatePageNumber').should('have.text', 'Page 2 of 4');
 
-		desktopHelper.pressKey(3, 'pageup');
+		desktopHelper.pressKey(2, 'pageup');
 
 		cy.get('#StatePageNumber').should('have.text', 'Page 1 of 4');
 

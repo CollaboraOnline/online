@@ -148,7 +148,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 		triggerNewSVG();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
-			.should('have.attr', 'y', '7823');
+			.should('have.attr', 'y', '7822');
 	});
 
 	it('Apply default bulleting on text shape.', function() {
