@@ -1,9 +1,7 @@
 /* -*- js-indent-level: 8 -*- */
 
-/* global vex _ getParameterByName */
+/* global _ getParameterByName */
 var errorMessages = {};
-
-vex.defaultOptions.className = 'vex-theme-plain';
 
 var lang = getParameterByName('lang');
 if (lang) {

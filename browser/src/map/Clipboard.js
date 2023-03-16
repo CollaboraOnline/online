@@ -905,7 +905,7 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_openPasteSpecialPopup: function () {
-		var msg = _('<p>Your browser has very limited access to the clipboard</p><p>Please press now: <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd> to see more options</p><p class="vex-footnote">Close popup to ignore paste special</p>');
+		var msg = _('<p>Your browser has very limited access to the clipboard</p><p>Please press now: <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd> to see more options</p><p>Close popup to ignore paste special</p>');
 		msg = L.Util.replaceCtrlAltInMac(msg);
 
 		this._map.uiManager.showInfoModal('paste_special_dialog');

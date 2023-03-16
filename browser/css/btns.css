@@ -1,10 +1,6 @@
 /* For btns hover status see device-desktop.css */
 
 .jsdialog-container .ui-button-box button,
-.vex.vex-theme-plain .vex-dialog-button {
-	font-family: var(--jquery-ui-font);
-	text-transform: full-size-kana;
-}
 
 .jsdialog *[disabled] {
 	color: var(--color-text-lighter);
@@ -18,8 +14,7 @@ button.jsdialog img {
 	max-height: 100%;
 }
 
-.annotation-btns-container,
-.vex-dialog-buttons {
+.annotation-btns-container {
 	display: flex;
 	flex-direction: row;
 	justify-content: end;
@@ -52,10 +47,6 @@ button:not(.ui-corner-all):not(.button-primary) {
 	border-radius: var(--border-radius);
 	margin: 5px;
 	vertical-align: middle;
-}
-
-.vex.vex-theme-plain .vex-dialog-form .vex-dialog-buttons {
-	margin-right: -5px; /* Account for child element (button)'s margin */
 }
 
 .jsdialog.ui-button-box.end {
