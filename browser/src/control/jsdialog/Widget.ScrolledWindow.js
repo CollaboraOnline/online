@@ -55,6 +55,8 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 	var realContentHeight = content.clientHeight;
 	var realContentWidth = content.clientWidth;
 
+	var margin = 15;
+
 	var verticalSteps = (data.vertical.upper - data.vertical.lower - data.vertical.page_size) * 10;
 	if (verticalSteps < 0 || noVertical)
 		verticalSteps = 0;
@@ -75,8 +77,9 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 
 		content.style.height = (realContentHeight + verticalSteps) + 'px';
 		content.style.width = (realContentWidth + horizontalSteps) + 'px';
-		scrollwindow.style.height = realContentHeight + 'px';
-		scrollwindow.style.width = realContentWidth + 'px';
+		content.style.margin = '0 ' + margin + 'px ' + margin + 'px 0';
+		scrollwindow.style.height = (realContentHeight + margin) + 'px';
+		scrollwindow.style.width = (realContentWidth + margin) + 'px';
 	};
 
 	setTimeout(updateSize, 0);
@@ -88,7 +91,7 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 			// keep content at the same place on the screen
 			var scrollTop = scrollwindow.scrollTop;
 			var scrollLeft = scrollwindow.scrollLeft;
-			content.style.margin = scrollTop + 'px 0 0 ' + scrollLeft + 'px';
+			content.style.margin = scrollTop + 'px ' + margin + 'px ' + margin + 'px ' + scrollLeft + 'px';
 			content.style.height = (realContentHeight - scrollTop + verticalSteps) + 'px';
 			content.style.width = (realContentWidth - scrollLeft + horizontalSteps) + 'px';
 
