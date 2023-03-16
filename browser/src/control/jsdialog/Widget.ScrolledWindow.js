@@ -38,7 +38,7 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 	builder.build(content, data.children, false);
 
 	if (!data.vertical && !data.horizontal)
-		return;
+		return false;
 
 	var noVertical = data.vertical.policy === 'never';
 	if (noVertical)
@@ -77,9 +77,11 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 
 		content.style.height = (realContentHeight + verticalSteps) + 'px';
 		content.style.width = (realContentWidth + horizontalSteps) + 'px';
-		content.style.margin = '0 ' + margin + 'px ' + margin + 'px 0';
 		scrollwindow.style.height = (realContentHeight + margin) + 'px';
 		scrollwindow.style.width = (realContentWidth + margin) + 'px';
+		content.scrollTop = data.vertical.value * 10;
+		content.scrollLeft = data.horizontal.value * 10;
+		content.style.margin = content.scrollTop + 'px ' + margin + 'px ' + margin + 'px ' + content.scrollLeft + 'px';
 	};
 
 	setTimeout(updateSize, 0);
@@ -91,9 +93,12 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 			// keep content at the same place on the screen
 			var scrollTop = scrollwindow.scrollTop;
 			var scrollLeft = scrollwindow.scrollLeft;
-			content.style.margin = scrollTop + 'px ' + margin + 'px ' + margin + 'px ' + scrollLeft + 'px';
-			content.style.height = (realContentHeight - scrollTop + verticalSteps) + 'px';
-			content.style.width = (realContentWidth - scrollLeft + horizontalSteps) + 'px';
+
+			if (data.user_managed_scrolling !== false) {
+				content.style.margin = scrollTop + 'px ' + margin + 'px ' + margin + 'px ' + scrollLeft + 'px';
+				content.style.height = (realContentHeight - scrollTop + verticalSteps) + 'px';
+				content.style.width = (realContentWidth - scrollLeft + horizontalSteps) + 'px';
+			}
 
 			if (sendTimer)
 				clearTimeout(sendTimer);
