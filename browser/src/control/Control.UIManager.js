@@ -756,7 +756,7 @@ L.Control.UIManager = L.Control.extend({
 		var userPrivateInfo = this.map._docLayer ? this.map._viewInfo[this.map._docLayer._viewId].userprivateinfo : null;
 		if (userPrivateInfo) {
 			var apiKey = userPrivateInfo.ZoteroAPIKey;
-			if (apiKey) {
+			if (apiKey !== undefined) {
 				this.map.zotero = L.control.zotero(this.map);
 				this.map.zotero.apiKey = apiKey;
 				this.map.addControl(this.map.zotero);
