@@ -123,7 +123,7 @@ public:
         if (::kill(_pid, 0) == 0)
         {
             LOG_INF("Killing child [" << _pid << "].");
-#if CODE_COVERAGE
+#if CODE_COVERAGE || VALGRIND_COOLFORKIT
             constexpr auto signal = SIGTERM;
 #else
             constexpr auto signal = SIGKILL;
