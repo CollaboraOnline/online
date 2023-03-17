@@ -4822,10 +4822,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._map.on('moveend', this._updateScrollOffset, this);
 	},
 
-	_onRequestLOKSession: function () {
-		app.socket.sendMessage('requestloksession');
-	},
-
 	// This is really just called on zoomend
 	_fitWidthZoom: function (e, maxZoom) {
 		if (this.isCalc())
@@ -5631,7 +5627,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		map.on('zoomend', L.bind(this.eachView, this, this._viewCursors, this._onUpdateViewCursor, this, false));
 		map.on('dragstart', this._onDragStart, this);
-		map.on('requestloksession', this._onRequestLOKSession, this);
 		map.on('error', this._mapOnError, this);
 		if (map.options.autoFitWidth !== false) {
 			// always true since autoFitWidth is never set

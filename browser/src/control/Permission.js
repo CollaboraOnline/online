@@ -193,7 +193,6 @@ L.Map.include({
 	_enterEditMode: function (perm) {
 		this._permission = perm;
 
-		app.socket.sendMessage('requestloksession');
 		if (!L.Browser.touch) {
 			this.dragging.disable();
 		}
@@ -237,7 +236,6 @@ L.Map.include({
 		if (this.isEditMode()) {
 			return;
 		}
-		app.socket.sendMessage('requestloksession');
 		this.dragging.disable();
 	},
 

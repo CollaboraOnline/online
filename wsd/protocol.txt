@@ -180,11 +180,6 @@ renderfont font=<font> char=<characters>
     The font parameter is URL encoded
     The char parameter is URL encoded
 
-requestloksession
-
-    requests the initialization of a LOK process in an attempt to predict the user's
-    interaction with the document
-
 resetselection
 
 saveas url=<url> format=<format> options=<options>
