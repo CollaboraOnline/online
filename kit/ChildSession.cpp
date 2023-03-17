@@ -405,10 +405,6 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     {
         assert(false && "Tile traffic should go through the DocumentBroker-LoKit WS.");
     }
-    else if (tokens.equals(0, "requestloksession"))
-    {
-        // Just ignore these.
-    }
     else if (tokens.equals(0, "blockingcommandstatus"))
     {
 #if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION
