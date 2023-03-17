@@ -160,14 +160,25 @@ static NSString *mapTemplateExtensionToActual(NSString *templateName) {
     doc->pClass->saveAs(doc, [[newURL absoluteString] UTF8String], nullptr, nullptr);
     doc->pClass->destroy(doc);
 
-    self.importHandler(newURL, UIDocumentBrowserImportModeMove);
-
     // Partial fix for issue #1962 Set import handler to nil after use
-    self.importHandler = nil;
+    if (self.importHandler) {
+        self.importHandler(newURL, UIDocumentBrowserImportModeMove);
+        self.importHandler = nil;
+    }
 
     [self dismissViewControllerAnimated:YES completion:nil];
 
     return YES;
+}
+
+- (void)cancel {
+    // Partial fix for issue #1962 Set import handler to nil after use
+    if (self.importHandler) {
+        self.importHandler(nil, UIDocumentBrowserImportModeNone);
+        self.importHandler = nil;
+    }
+
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
