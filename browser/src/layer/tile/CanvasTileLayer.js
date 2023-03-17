@@ -5384,7 +5384,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			var hasMobileWizardOpened = this._map.uiManager.mobileWizard ? this._map.uiManager.mobileWizard.isOpen() : false;
 			var hasIframeModalOpened = $('.iframe-dialog-modal').is(':visible');
-			if (window.mode.isMobile() && !hasMobileWizardOpened && !hasIframeModalOpened) {
+			// when integrator has opened dialog in parent frame (eg. save as) we shouldn't steal the focus
+			var focusedUI = document.activeElement === document.body;
+			if (window.mode.isMobile() && !hasMobileWizardOpened && !hasIframeModalOpened && !focusedUI) {
 				if (heightIncreased) {
 					// if the keyboard is hidden - be sure we setup correct state in TextInput
 					this._map.setAcceptInput(false);
