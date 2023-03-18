@@ -59,9 +59,14 @@
 - (void)documentBrowser:(UIDocumentBrowserViewController *)controller didRequestDocumentCreationWithHandler:(void (^)(NSURL * _Nullable, UIDocumentBrowserImportMode))importHandler {
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     TemplateCollectionViewController *templateCollectionViewController = [storyBoard instantiateViewControllerWithIdentifier:@"TemplateCollectionViewController"];
-
+    [templateCollectionViewController removeFromParentViewController];
     templateCollectionViewController.importHandler = importHandler;
-    [self presentViewController:templateCollectionViewController animated:YES completion:nil];
+
+    // Fix issue #1962 Use UINavigationController to add a cancel button
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:templateCollectionViewController];
+    templateCollectionViewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:templateCollectionViewController action:@selector(cancel)];
+    [self.view addSubview:navController.view];
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 -(void)documentBrowser:(UIDocumentBrowserViewController *)controller didPickDocumentsAtURLs:(NSArray<NSURL *> *)documentURLs {
