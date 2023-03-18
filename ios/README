@@ -7,3 +7,4 @@ App Store "Test Details" text for the last TestFlight build
 This version includes the latest 22.05.11 code and fixes the following bugs:
 
 • The Paste button in the toolbar would sometimes be disabled even when there was content in the system pasteboard
+• The Create Document dialog could not be dismissed by tapping outside the dialog or pressing a button
