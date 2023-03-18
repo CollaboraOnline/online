@@ -12,6 +12,8 @@
 
 @property (copy) void (^ _Nullable importHandler)(NSURL * _Nullable, UIDocumentBrowserImportMode);
 
+- (void)cancel;
+
 @end
 
 // vim:set shiftwidth=4 softtabstop=4 expandtab:
