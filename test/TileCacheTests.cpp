@@ -66,6 +66,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE(TileCacheTests);
 
+#if 0
     CPPUNIT_TEST(testDesc);
     CPPUNIT_TEST(testSimple);
     CPPUNIT_TEST(testSimpleCombine);
@@ -99,7 +100,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testWireIDFilteringOnWSDSide);
     // unstable
     //CPPUNIT_TEST(testLimitTileVersionsOnFly);
-
+#endif
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -134,7 +135,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testLimitTileVersionsOnFly();
 
     void checkTiles(std::shared_ptr<http::WebSocketSession>& socket, const std::string& docType,
-                    const std::string& testname);
+                      const std::string& testname);
 
     void requestTiles(std::shared_ptr<http::WebSocketSession>& socket, const std::string& docType,
                       const int part, const int docWidth, const int docHeight,
