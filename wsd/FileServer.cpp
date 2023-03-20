@@ -977,18 +977,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_JS%-->"), brandJS);
     Poco::replaceInPlace(preprocess, std::string("<!--%CSS_VARIABLES%-->"), cssVarsToStyle(cssVars));
 
-    // Customization related to document signing.
-    std::string documentSigningDiv;
-    std::string escapedDocumentSigningURL;
-    const std::string documentSigningURL = config.getString("per_document.document_signing_url", "");
-    if (!documentSigningURL.empty())
-    {
-        documentSigningDiv = "<div id=\"document-signing-bar\"></div>";
-        Poco::URI::encode(documentSigningURL, "'", escapedDocumentSigningURL);
-    }
-    Poco::replaceInPlace(preprocess, std::string("<!--%DOCUMENT_SIGNING_DIV%-->"), documentSigningDiv);
-    Poco::replaceInPlace(preprocess, std::string("%DOCUMENT_SIGNING_URL%"), escapedDocumentSigningURL);
-
     const auto coolLogging = stringifyBoolFromConfig(config, "browser_logging", false);
     Poco::replaceInPlace(preprocess, std::string("%BROWSER_LOGGING%"), coolLogging);
     const auto groupDownloadAs = stringifyBoolFromConfig(config, "per_view.group_download_as", true);
@@ -1067,12 +1055,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     const std::string mimeType = "text/html";
 
-    // Document signing: if endpoint URL is configured, whitelist that for
-    // iframe purposes.
     std::ostringstream cspOss;
     cspOss << "Content-Security-Policy: default-src 'none'; "
-        "frame-src 'self' " << WELCOME_URL << " " << FEEDBACK_URL << " " << buyProduct <<
-        " blob: " << documentSigningURL << "; "
+        "frame-src 'self' " << WELCOME_URL << " " << FEEDBACK_URL << " " << buyProduct << "; "
            "connect-src 'self' https://www.zotero.org https://api.zotero.org "
            << cnxDetails.getWebSocketUrl() << " " << cnxDetails.getWebServerUrl() << " "
            << indirectionURI.getAuthority() << "; "

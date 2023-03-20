@@ -145,7 +145,6 @@ L.Control.UIManager = L.Control.extend({
 				this.map.addControl(this.map.topToolbar);
 			}
 
-			this.map.addControl(L.control.signingBar());
 			this.map.addControl(L.control.statusBar());
 
 			this.map.jsdialog = L.control.jsDialog();

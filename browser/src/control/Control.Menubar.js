@@ -82,7 +82,6 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Word Document (.docx)'), id: 'downloadas-docx', type: 'action'},
 					{name: _('Rich Text (.rtf)'), id: 'downloadas-rtf', type: 'action'},
 					{name: _('EPUB (.epub)'), id: !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub', type: 'action'}]},
-				{name: _('Sign document'), id: 'signdocument', type: 'action'},
 				{name: _UNO('.uno:SetDocumentProperties', 'text'), uno: '.uno:SetDocumentProperties', id: 'properties'},
 				{type: 'separator'},
 				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Print', 'text'), L.Control.MenubarShortcuts.shortcuts.PRINT), id: 'print', type: 'action'},
@@ -893,7 +892,6 @@ L.Control.Menubar = L.Control.extend({
 				]},
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
-				{name: _('Sign document'), id: 'signdocument', type: 'action'},
 				{type: 'separator'},
 				{name: _UNO('.uno:Print', 'text'), id: 'print', type: 'action'},
 				{name: _UNO('.uno:SetDocumentProperties', 'text'), uno: '.uno:SetDocumentProperties', id: 'properties'}
@@ -1806,8 +1804,6 @@ L.Control.Menubar = L.Control.extend({
 			|| id === 'remotelink'
 			|| id === 'toggledarktheme') {
 			this._map.dispatch(id);
-		} else if (id === 'signdocument') {
-			this._map.showSignDocument();
 		} else if (id === 'insertcomment') {
 			this._map.insertComment();
 		} else if (id === 'insertgraphic') {
@@ -1970,9 +1966,6 @@ L.Control.Menubar = L.Control.extend({
 			return false;
 		}
 		if (menuItem.id === 'about' && (L.DomUtil.get('about-dialog') === null)) {
-			return false;
-		}
-		if (menuItem.id === 'signdocument' && (L.DomUtil.get('document-signing-bar') === null)) {
 			return false;
 		}
 		if (menuItem.id === 'fontworkgalleryfloater' && !this._isFileODF) {

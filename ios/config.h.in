@@ -124,8 +124,5 @@
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
 
-/* Default value of per_documents.document_signing_url */
-#define VEREIGN_URL ""
-
 /* Version number of package */
 /* #undef VERSION */

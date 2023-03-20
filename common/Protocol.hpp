@@ -245,8 +245,7 @@ namespace COOLProtocol
         if (tokens.equals(0, "key") || tokens.equals(0, "outlinestate") ||
             tokens.equals(0, "paste") || tokens.equals(0, "insertfile") ||
             tokens.equals(0, "textinput") || tokens.equals(0, "windowkey") ||
-            tokens.equals(0, "windowmouse") || tokens.equals(0, "windowgesture") ||
-            tokens.equals(0, "signdocument"))
+            tokens.equals(0, "windowmouse") || tokens.equals(0, "windowgesture"))
         {
             return true;
         }

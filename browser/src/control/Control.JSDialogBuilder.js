@@ -2263,7 +2263,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'modifypage': 'sidebar',
 			'parapropertypanel': 'paragraphdialog',
 			'tablecellbackgroundcolor': 'fillcolor',
-			'signdocument':'signature',
 			'zoteroArtwork':  'zoteroThesis',
 			'zoteroAudioRecording':  'zoteroThesis',
 			'zoteroBill':  'zoteroThesis',
