@@ -318,6 +318,8 @@ describe('Insert objects via insertion wizard.', function() {
 		cy.get('#response-ok')
 			.click();
 
+		helper.typeIntoDocument('{leftArrow}');
+
 		cy.get('#hyperlink-pop-up').click();
 
 		cy.get('#info-modal-label2')
