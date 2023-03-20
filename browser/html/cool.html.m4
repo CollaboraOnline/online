@@ -259,14 +259,6 @@ m4_ifelse(MOBILEAPP,[true],
      </tr>
     </table>
 
-    <!--%DOCUMENT_SIGNING_DIV%-->
-    <script>
-    m4_ifelse(MOBILEAPP,[true],
-      [ window.documentSigningURL = ''; ],
-      [ window.documentSigningURL = decodeURIComponent('%DOCUMENT_SIGNING_URL%'); ]
-    )
-    </script>
-
     <input id="insertgraphic" aria-labelledby="menu-insertgraphic" type="file" accept="image/*" style="position: fixed; top: -100em">
     <input id="selectbackground" aria-labelledby="menu-selectbackground" type="file" accept="image/*" style="position: fixed; top: -100em">
 

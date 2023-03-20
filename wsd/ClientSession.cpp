@@ -1036,10 +1036,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens.equals(0, "userinactive") ||
              tokens.equals(0, "paintwindow") ||
              tokens.equals(0, "windowcommand") ||
-             tokens.equals(0, "signdocument") ||
              tokens.equals(0, "asksignaturestatus") ||
-             tokens.equals(0, "uploadsigneddocument") ||
-             tokens.equals(0, "exportsignanduploaddocument") ||
              tokens.equals(0, "rendershapeselection") ||
              tokens.equals(0, "resizewindow") ||
              tokens.equals(0, "removetextcontext") ||

@@ -97,9 +97,6 @@
 /* Default value of feature_lock.unlock_title */
 #undef UNLOCK_TITLE
 
-/* Default value of per_documents.document_signing_url */
-#undef VEREIGN_URL
-
 /* The welcome url of the build. */
 #undef WELCOME_URL
 

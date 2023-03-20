@@ -369,10 +369,6 @@ AC_ARG_ENABLE([werror],
             AS_HELP_STRING([--disable-werror],
                           [Do not turn warnings into errors.]))
 
-AC_ARG_ENABLE([vereign],
-            AS_HELP_STRING([--enable-vereign],
-                          [Set Vereign document_signing_url configuration key to the default app.vereign.com.]))
-
 AC_ARG_ENABLE([cypress],
             AS_HELP_STRING([--enable-cypress],
                            [Enable cypress tests.]))
@@ -913,13 +909,6 @@ AC_SUBST_FILE([WELCOME_CONFIG_FRAGMENT])
 AC_DEFINE_UNQUOTED([ENABLE_WELCOME_MESSAGE],$ENABLE_WELCOME_MESSAGE,[Should the Release notes message be shown on upgrade])
 AM_CONDITIONAL([ENABLE_WELCOME_MESSAGE], [test "$ENABLE_WELCOME_MESSAGE" = "1"])
 AC_DEFINE_UNQUOTED([WELCOME_URL],["$WELCOME_URL"],[The welcome url of the build.])
-
-VEREIGN_URL=
-if test "$enable_vereign" = "yes"; then
-    VEREIGN_URL="https://app.vereign.com"
-fi
-AC_DEFINE_UNQUOTED([VEREIGN_URL],["$VEREIGN_URL"],[Default value of per_documents.document_signing_url])
-AC_SUBST(VEREIGN_URL)
 
 # Test for build environment
 

@@ -315,10 +315,6 @@ asksignaturestatus
 
     Requests a signing status of the document.
 
-signdocument
-
-    Sign the current document with the input certificate and private key.
-
 rendershapeselection mimetype=<mimeType>
 
     Request rendering of selected shapes into an SVG format.

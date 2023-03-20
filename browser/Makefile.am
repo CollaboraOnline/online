@@ -351,7 +351,6 @@ COOL_JS_LST =\
 	src/control/Control.FormulaBarJSDialog.js \
 	src/control/Control.SheetsBar.js \
 	src/control/Control.PresentationBar.js \
-	src/control/Control.SigningBar.js \
 	src/control/Control.TopToolbar.js \
 	src/control/Control.UIManager.js \
 	src/control/Control.DocumentNameInput.js \

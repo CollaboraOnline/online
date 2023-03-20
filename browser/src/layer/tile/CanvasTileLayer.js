@@ -1692,10 +1692,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			var signstatus = textMsg.substring('signaturestatus:'.length + 1);
 			this._map.onChangeSignStatus(signstatus);
 		}
-		else if (textMsg.startsWith('signeddocumentuploadstatus:')) {
-			var status = textMsg.substring('signeddocumentuploadstatus:'.length + 1);
-			this._map.onVereignUploadStatus(status);
-		}
 		else if (textMsg.startsWith('removesession')) {
 			var viewId = parseInt(textMsg.substring('removesession'.length + 1));
 			if (this._map._docLayer._viewId === viewId) {

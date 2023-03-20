@@ -93,7 +93,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	},
 
 	getFileTab: function() {
-		var hasSigning = L.DomUtil.get('document-signing-bar') !== null;
 		var hasRevisionHistory = L.Params.revHistoryEnabled;
 		var hasPrint = !this._map['wopi'].HidePrintOption;
 		var hasRepair = !this._map['wopi'].HideRepairOption;
@@ -261,16 +260,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			'children': [
 				hasRepair? {
 					'id': 'repair',
-					'type': (hasSigning ? '' : 'big') + 'menubartoolitem',
+					'type': 'bigmenubartoolitem',
 					'text': _('Repair'),
 					'command': _('Repair')
 				} : {},
-				hasSigning? {
-					'id': 'signdocument',
-					'type': 'menubartoolitem',
-					'text': _('Sign document'),
-					'command': ''
-				} : {}
 			],
 			'vertical': 'true'
 		});

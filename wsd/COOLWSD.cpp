@@ -2003,7 +2003,6 @@ void COOLWSD::innerInitialize(Application& self)
         { "per_document.cleanup.limit_cpu_per", "85" },
         { "per_document.cleanup.lost_kit_grace_period_secs", "120" },
         { "per_document.cleanup[@enable]", "false" },
-        { "per_document.document_signing_url", VEREIGN_URL },
         { "per_document.idle_timeout_secs", "3600" },
         { "per_document.idlesave_duration_secs", "30" },
         { "per_document.limit_file_size_mb", "0" },
