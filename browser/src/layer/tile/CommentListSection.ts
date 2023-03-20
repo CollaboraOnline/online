@@ -377,7 +377,7 @@ export class CommentSection extends CanvasSectionObject {
 	public newAnnotationMobile (comment: any, addCommentFn: any, isMod: any): void {
 		var commentData = comment.sectionProperties.data;
 
-		this.map.uiManager.showInputModal('new-annotation-dialog', '', '', '', _('Save'), function(data: string) {
+		var callback = function(data: string) {
 			if (data) {
 				var annotation = comment;
 
@@ -391,11 +391,52 @@ export class CommentSection extends CanvasSectionObject {
 			else {
 				this.cancel(comment);
 			}
-		}.bind(this), false);
+		}.bind(this);
 
-		document.getElementById('response-cancel').addEventListener('click', function() { this.cancel(comment); }.bind(this));
+		var id = 'new-annotation-dialog';
+		var dialogId = this.map.uiManager.generateModalId(id);
+		var json = this.map.uiManager._modalDialogJSON(id, '', !window.mode.isDesktop(), [
+			{
+				id: 'input-modal-input',
+				type: 'multilineedit',
+				text: (commentData.text && isMod ? commentData.text: '')
+			},
+			{
+				id: '',
+				type: 'buttonbox',
+				text: '',
+				enabled: true,
+				children: [
+					{
+						id: 'response-cancel',
+						type: 'pushbutton',
+						text: _('Cancel'),
+					},
+					{
+						id: 'response-ok',
+						type: 'pushbutton',
+						text: _('Save'),
+						'has_default': true,
+					}
+				],
+				vertical: false,
+				layoutstyle: 'end'
+			},
+		]);
 
-		document.getElementById('input-modal-input').outerHTML = '<textarea name="comment" id="input-modal-input" class="cool-annotation-textarea" required>' + (commentData.text && isMod ? commentData.text: '') + '</textarea>';
+		this.map.uiManager.showModal(json, [
+			{id: 'response-ok', func: function() {
+				if (typeof callback === 'function') {
+					var input = document.getElementById('input-modal-input') as HTMLTextAreaElement;
+					callback(input.value);
+				}
+				this.map.uiManager.closeModal(dialogId);
+			}.bind(this)},
+			{id: 'response-cancel', func: function() {
+				this.cancel(comment);
+				this.map.uiManager.closeModal(dialogId);
+			}.bind(this)}
+		]);
 
 		// Allow close on click away only in desktop.
 		if (document.getElementsByClassName('mobile-wizard jsdialog-overlay cancellable').length > 0) {
