@@ -1724,6 +1724,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		else if (textMsg.startsWith('formfieldbutton:')) {
 			this._onFormFieldButtonMsg(textMsg);
 		}
+		else if (textMsg.startsWith('canonicalidchange:')) {
+			if (this._debugData) {
+				var payload = textMsg.substring('canonicalidchange:'.length + 1);
+				var viewId = payload.split('=')[1].split(' ')[0];
+				var canonicalId = payload.split('=')[2].split(' ')[0];
+				this._debugData['canonicalViewId'].setPrefix('Canonical id changed to: ' + canonicalId + ' for view id: ' + viewId);
+			}
+		}
 		else if (textMsg.startsWith('comment:')) {
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
 			if (obj.comment.cellPos) {
@@ -4935,7 +4943,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugDeltasDetail = false;
 		if (!this._debugData) {
 			this._debugData = {};
-			this._debugDataNames = ['tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount', 'postMessage'];
+			this._debugDataNames = ['canonicalViewId', 'tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount', 'postMessage'];
 			for (var i = 0; i < this._debugDataNames.length; i++) {
 				this._debugData[this._debugDataNames[i]] = L.control.attribution({prefix: '', position: 'bottomleft'}).addTo(this._map);
 			}
@@ -6886,6 +6894,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			var msg = 'requested: ' + this._tiles[key]._debugInvalidateCount + '<br>rec-tiles: ' + this._tiles[key]._debugLoadTile + '<br>recv-delta: ' + this._tiles[key]._debugLoadDelta;
 			if (tile._debugTime.date !== 0)
 				msg += '<br>' + this._debugSetTimes(tile._debugTime, +new Date() - tile._debugTime.date).replace(/, /g, '<br>');
+			msg += '<br>nviewid: ' + tileMsgObj.nviewid;
 			tile._debugPopup.setContent(msg);
 
 			if (tile._debugTile) // deltas in yellow
