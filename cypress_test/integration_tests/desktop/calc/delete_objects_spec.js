@@ -53,7 +53,7 @@ describe('Delete Objects', function() {
 		cy.get('#tb_editbar_item_insertobjectchart')
 			.click();
 
-		cy.get('.ui-pushbutton.jsdialog.button-primary').click();
+		helper.clickOnIdle('.ui-pushbutton.jsdialog.button-primary');
 
 		cy.get('.leaflet-control-buttons-disabled path.leaflet-interactive')
 			.should('exist');

@@ -268,7 +268,9 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		helper.clickOnIdle('.unoSetMinimalRowHeight');
 
-		selectFullTable();
+		helper.moveCursor('up', 'shift');
+		helper.moveCursor('up', 'shift');
+		helper.moveCursor('left', 'shift');
 
 		// Check new row height
 		cy.get('#copy-paste-container td')
@@ -291,7 +293,9 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		helper.clickOnIdle('.unoSetOptimalRowHeight');
 
-		selectFullTable();
+		helper.moveCursor('up', 'shift');
+		helper.moveCursor('up', 'shift');
+		helper.moveCursor('left', 'shift');
 
 		cy.get('#copy-paste-container table td')
 			.should('have.length', 6);
@@ -313,7 +317,9 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		helper.clickOnIdle('.unoDistributeRows');
 
-		selectFullTable();
+		helper.moveCursor('up', 'shift');
+		helper.moveCursor('up', 'shift');
+		helper.moveCursor('left', 'shift');
 
 		// Check new row height
 		cy.get('#copy-paste-container td')
@@ -342,7 +348,9 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		helper.clickOnIdle('.unoSetMinimalColumnWidth');
 
-		selectFullTable();
+		helper.moveCursor('up', 'shift');
+		helper.moveCursor('up', 'shift');
+		helper.moveCursor('left', 'shift');
 
 		cy.get('#copy-paste-container td')
 			.should('have.attr', 'width', '24');
@@ -385,7 +393,9 @@ describe('Change table properties / layout via mobile wizard.', function() {
 
 		helper.clickOnIdle('.unoDistributeColumns');
 
-		selectFullTable();
+		helper.moveCursor('up', 'shift');
+		helper.moveCursor('up', 'shift');
+		helper.moveCursor('left', 'shift');
 
 		cy.get('#copy-paste-container td')
 			.should('have.attr', 'width', '323');

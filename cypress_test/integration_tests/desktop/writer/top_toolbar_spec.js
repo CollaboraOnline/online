@@ -23,6 +23,11 @@ describe('Top toolbar tests.', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
+	function refreshCopyPasteContainer() {
+		helper.typeIntoDocument('{rightArrow}');
+		writerHelper.selectAllTextOfDoc();
+	}
+
 	it('Apply highlight color.', function() {
 		desktopHelper.actionOnSelector('backColor', (selector) => { cy.get(selector).click(); });
 
@@ -56,6 +61,8 @@ describe('Top toolbar tests.', function() {
 			desktopHelper.selectFromListbox('Title');
 		}
 
+		refreshCopyPasteContainer();
+
 		cy.get('#copy-paste-container p font font')
 			.should('have.attr', 'style', 'font-size: 28pt');
 	});
@@ -64,6 +71,8 @@ describe('Top toolbar tests.', function() {
 		desktopHelper.actionOnSelector('fontName', (selector) => { cy.get(selector).click(); });
 
 		desktopHelper.selectFromListbox('Alef');
+
+		refreshCopyPasteContainer();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'face', 'Alef, sans-serif');
@@ -110,6 +119,8 @@ describe('Top toolbar tests.', function() {
 		desktopHelper.actionOnSelector('fontSize', (selector) => { cy.get(selector).click(); });
 
 		desktopHelper.selectFromListbox('72');
+
+		refreshCopyPasteContainer();
 
 		cy.get('#copy-paste-container p font')
 			.should('have.attr', 'style', 'font-size: 72pt');
@@ -503,7 +514,7 @@ describe('Top toolbar tests.', function() {
 
 		helper.clickOnIdle('#favchar1');
 
-		cy.get('.ui-pushbutton.jsdialog.button-primary').click();
+		helper.clickOnIdle('.ui-pushbutton.jsdialog.button-primary');
 
 		helper.expectTextForClipboard('€');
 	});

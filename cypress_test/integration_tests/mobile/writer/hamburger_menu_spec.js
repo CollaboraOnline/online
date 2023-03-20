@@ -537,6 +537,8 @@ describe('Trigger hamburger menu options.', function() {
 		// Then disable it again.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Formatting Marks']);
 
+		helper.typeIntoDocument('{home}{end}');
+
 		helper.canvasShouldBeFullWhite(canvas);
 	});
 
@@ -554,6 +556,8 @@ describe('Trigger hamburger menu options.', function() {
 
 		// Then disable it again.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
+
+		helper.typeIntoDocument('{home}{end}');
 
 		helper.canvasShouldBeFullWhite(canvas);
 	});
