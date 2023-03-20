@@ -399,6 +399,19 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	border-color: transparent transparent transparent var(--color-background-lighter);
 }
 
+/* With RTL write direction the arrow of the context menu's submenu should be flipped */
+
+[dir='rtl'] .context-menu-submenu:after {
+	right: unset;
+	left: .5em;
+	border-color: transparent #2f2f2f transparent transparent;
+	border-width: .25em .25em .25em 0;
+}
+
+[dir='rtl'] .context-menu-submenu.context-menu-hover:after {
+	border-color: transparent var(--color-background-lighter) transparent transparent;
+}
+
 .cool-annotation {
 	position: absolute;
 	text-align: center;
