@@ -469,8 +469,12 @@ L.Control.MobileWizardWindow = L.Control.extend({
 					// normal popup - continue to open mobile wizard
 					var overlay = L.DomUtil.create('div', 'mobile-wizard jsdialog-overlay ' + (data.cancellable ? 'cancellable' : ''), document.body);
 					var that = this;
-					if (data.cancellable)
-						overlay.onclick = function () { that.parent.removeWindow(that); };
+					if (data.cancellable) {
+						overlay.onclick = function () {
+							that.parent.removeWindow(that);
+							that._builder.callback('popover', 'close', {id: '__POPOVER__'}, null, that._builder);
+						};
+					}
 				}
 			}
 

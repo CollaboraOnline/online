@@ -395,7 +395,7 @@ export class CommentSection extends CanvasSectionObject {
 
 		var id = 'new-annotation-dialog';
 		var dialogId = this.map.uiManager.generateModalId(id);
-		var json = this.map.uiManager._modalDialogJSON(id, '', !window.mode.isDesktop(), [
+		var json = this.map.uiManager._modalDialogJSON(id, '', true, [
 			{
 				id: 'input-modal-input',
 				type: 'multilineedit',
@@ -424,6 +424,11 @@ export class CommentSection extends CanvasSectionObject {
 			},
 		]);
 
+		var cancelFunction = function() {
+			this.cancel(comment);
+			this.map.uiManager.closeModal(dialogId);
+		}.bind(this);
+
 		this.map.uiManager.showModal(json, [
 			{id: 'response-ok', func: function() {
 				if (typeof callback === 'function') {
@@ -432,27 +437,10 @@ export class CommentSection extends CanvasSectionObject {
 				}
 				this.map.uiManager.closeModal(dialogId);
 			}.bind(this)},
-			{id: 'response-cancel', func: function() {
-				this.cancel(comment);
-				this.map.uiManager.closeModal(dialogId);
-			}.bind(this)}
+			{id: 'response-cancel', func: cancelFunction},
+			{id: '__POPOVER__', func: cancelFunction},
+			{id: '__DIALOG__', func: cancelFunction}
 		]);
-
-		// Allow close on click away only in desktop.
-		if (document.getElementsByClassName('mobile-wizard jsdialog-overlay cancellable').length > 0) {
-			document.getElementsByClassName('mobile-wizard jsdialog-overlay cancellable')[0].addEventListener('click', function() {
-				this.cancel(comment);
-			}.bind(this));
-		}
-		else {
-			document.getElementById('modal-dialog-new-annotation-dialog-overlay').addEventListener('click', function() {
-				var id = this.map.uiManager.generateModalId('new-annotation-dialog');
-				if (<any>window.mode.isDesktop())
-					this.map.uiManager.closeModal(id);
-				this.cancel(comment);
-			}.bind(this));
-		}
-
 
 		var tagTd = 'td',
 		empty = '',
