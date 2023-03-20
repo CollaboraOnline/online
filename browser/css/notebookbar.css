@@ -35,6 +35,12 @@
 	display: none;
 }
 
+.ui-tab.notebookbar > button {
+	background-color: transparent;
+	border: none;
+	pointer-events: none;
+}
+
 .ui-tab.selected.notebookbar {
 	color: var(--color-text-darker);
 	background: var(--color-background-dark);

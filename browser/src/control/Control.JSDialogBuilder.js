@@ -1084,7 +1084,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				tabs[tabIdx] = tab;
 				tabIds[tabIdx] = item.name;
 
-				var label = L.DomUtil.create('span', 'ui-tab-content ' + builder.options.cssClass + ' unolabel', tab);
+				var label;
+				if (builder.options.cssClass.includes('notebookbar'))
+					label = L.DomUtil.create('button', 'ui-tab-content ' + builder.options.cssClass + ' unolabel', tab);
+				else
+					label = L.DomUtil.create('span', 'ui-tab-content ' + builder.options.cssClass + ' unolabel', tab);
+
 				label.textContent = title;
 
 				var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
