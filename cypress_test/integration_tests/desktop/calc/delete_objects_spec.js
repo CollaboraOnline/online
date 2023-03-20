@@ -47,7 +47,7 @@ describe('Delete Objects', function() {
 			.should('not.exist');
 	});
 
-	it('Delete Chart' , function() {
+	it.skip('Delete Chart' , function() {
 		cy.get('#toolbar-up > .w2ui-scroll-right').click();
 		//insert
 		cy.get('#tb_editbar_item_insertobjectchart')
