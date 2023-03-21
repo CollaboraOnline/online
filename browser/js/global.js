@@ -891,6 +891,7 @@ window.app = {
 	}
 
 	var lang = encodeURIComponent(global.getParameterByName('lang'));
+	window.langParam = lang;
 	global.queueMsg = [];
 	if (window.ThisIsTheEmscriptenApp)
 		// Temporary hack
