@@ -27,6 +27,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		return;
 
 	var image = L.DomUtil.create('img', builder.options.cssClass + ' ui-drawing-area', container);
+	image.id = data.id + '-img';
 	image.src = data.image.replace(/\\/g, '');
 	image.alt = data.text;
 	image.title = data.text;
