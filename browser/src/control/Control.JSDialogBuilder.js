@@ -1104,17 +1104,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (builder.options.useSetTabs)
 					builder.wizard.setTabs(tabsContainer, builder);
 
-				for (var t = 0; t < tabs.length; t++) {
-					// to get capture of 't' right has to be a sub fn.
-					var fn = function(id) {
-						return function(event) {
-							builder._createTabClick(builder, id, tabs, contentDivs, tabIds)(event);
-							if (data.tabs[id].id - 1 >= 0)
-								builder.callback('tabcontrol', 'selecttab', tabWidgetRootContainer, id, builder);
-						};
-					};
-					$(tabs[t]).click(fn(t));
-				}
+				tabs.forEach(function (tab, index) {
+					tab.addEventListener('click', function(event) {
+						builder._createTabClick(builder, index, tabs, contentDivs, tabIds)(event);
+						if (data.tabs[index].index - 1 >= 0)
+							builder.callback('tabcontrol', 'selecttab', tabWidgetRootContainer, index, builder);
+					});
+				});
+
+				// We are adding this to distinguish "enter" key from real click events.
+				tabs.forEach(function (tab) {
+					tab.addEventListener('keypress', function(e) {
+						if (e.keyCode === 13)
+							tab.enterPressed = true;
+						});
+					}
+				);
 			} else {
 				window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
 			}

@@ -370,9 +370,13 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			$(window).resize();
 			builder.wizard.selectedTab(tabIds[t]);
 
-			// don't lose focus on tab change
-			event.preventDefault();
-			builder.map.focus();
+			// Keep focus if user is navigating via keyboard.
+			if (!tabs[t].enterPressed) {
+				// don't lose focus on tab change
+				event.preventDefault();
+				builder.map.focus();
+				t.enterPressed = false;
+			}
 		};
 	},
 
