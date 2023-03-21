@@ -66,7 +66,6 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE(TileCacheTests);
 
-#if 0
     CPPUNIT_TEST(testDesc);
     CPPUNIT_TEST(testSimple);
     CPPUNIT_TEST(testSimpleCombine);
@@ -93,14 +92,17 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     //CPPUNIT_TEST(testTileInvalidatePartImpress);
     CPPUNIT_TEST(testTileRequestByInvalidation);
     CPPUNIT_TEST(testTileRequestByZoom);
+#if 0
     CPPUNIT_TEST(testTileWireIDHandling);
+#endif
     CPPUNIT_TEST(testTileProcessed);
     // CPPUNIT_TEST(testTileInvalidatedOutside); // Disabled as it's failing locally on even very old commits.
     CPPUNIT_TEST(testTileBeingRenderedHandling);
+#if 0
     CPPUNIT_TEST(testWireIDFilteringOnWSDSide);
+#endif
     // unstable
     //CPPUNIT_TEST(testLimitTileVersionsOnFly);
-#endif
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -1395,7 +1397,7 @@ void TileCacheTests::requestTiles(std::shared_ptr<http::WebSocketSession>& socke
             // expected tile: part= width= height= tileposx= tileposy= tilewidth= tileheight=
             StringVector tokens(StringVector::tokenize(tile, ' '));
             LOK_ASSERT_EQUAL(std::string("tile:"), tokens[0]);
-            LOK_ASSERT_EQUAL(0, std::stoi(tokens[1].substr(std::string("nviewid=").size())));
+            LOK_ASSERT_EQUAL(1000, std::stoi(tokens[1].substr(std::string("nviewid=").size())));
             LOK_ASSERT_EQUAL(part, std::stoi(tokens[2].substr(std::string("part=").size())));
             LOK_ASSERT_EQUAL(pixTileSize,
                              std::stoi(tokens[3].substr(std::string("width=").size())));
