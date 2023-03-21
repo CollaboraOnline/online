@@ -190,7 +190,7 @@ using Poco::XML::InputSource;
 using Poco::XML::NodeList;
 
 /// Port for external clients to connect to
-int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
+int ClientPortNumber = 0;
 /// Protocols to listen on
 Socket::Type ClientPortProto = Socket::Type::All;
 
@@ -5220,7 +5220,7 @@ public:
 
     void findClientPort()
     {
-        _serverSocket = findServerPort(ClientPortNumber);
+        _serverSocket = findServerPort();
     }
 
     void startPrisoners()
@@ -5398,9 +5398,16 @@ private:
     }
 
     /// Create the externally listening public socket
-    std::shared_ptr<ServerSocket> findServerPort(int port)
+    std::shared_ptr<ServerSocket> findServerPort()
     {
         std::shared_ptr<SocketFactory> factory;
+
+        if (ClientPortNumber <= 0)
+        {
+            // Avoid using the default port for unit-tests altogether.
+            // This avoids interfering with a running test instance.
+            ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER + (UnitWSD::isUnitTesting() ? 1 : 0);
+        }
 
 #if ENABLE_SSL
         if (COOLWSD::isSSLEnabled())
@@ -5410,8 +5417,9 @@ private:
             factory = std::make_shared<PlainSocketFactory>();
 
         std::shared_ptr<ServerSocket> socket = ServerSocket::create(
-            ClientListenAddr, port, ClientPortProto, *WebServerPoll, factory);
+            ClientListenAddr, ClientPortNumber, ClientPortProto, *WebServerPoll, factory);
 
+        const int firstPortNumber = ClientPortNumber;
         while (!socket &&
 #ifdef BUILDING_TESTS
                true
@@ -5420,23 +5428,23 @@ private:
 #endif
             )
         {
-            ++port;
-            LOG_INF("Client port " << (port - 1) << " is busy, trying " << port << '.');
-            socket = ServerSocket::create(ClientListenAddr, port, ClientPortProto,
+            ++ClientPortNumber;
+            LOG_INF("Client port " << (ClientPortNumber - 1) << " is busy, trying "
+                                   << ClientPortNumber);
+            socket = ServerSocket::create(ClientListenAddr, ClientPortNumber, ClientPortProto,
                                           *WebServerPoll, factory);
         }
 
         if (!socket)
         {
-            LOG_FTL("Failed to listen on Server port(s) (" <<
-                    ClientPortNumber << '-' << port << "). Exiting.");
+            LOG_FTL("Failed to listen on Server port(s) (" << firstPortNumber << '-'
+                                                           << ClientPortNumber << "). Exiting");
             Util::forcedExit(EX_SOFTWARE);
         }
 
-        ClientPortNumber = port;
-
 #if !MOBILEAPP
-        LOG_INF('#' << socket->getFD() << " Listening to client connections on port " << port);
+        LOG_INF('#' << socket->getFD() << " Listening to client connections on port "
+                    << ClientPortNumber);
 #else
         LOG_INF("Listening to client connections on #" << socket->getFD());
 #endif
