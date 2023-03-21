@@ -143,9 +143,17 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 /* keep structure with hidden elements correct */
+.ui-grid {
+	/* don't show scroll for hidden objects */
+	overflow: hidden;
+}
+
 .ui-grid > .hidden {
 	visibility: hidden;
 	display: initial !important;
+	/* don't occupy space showing empty area */
+	width: 0px;
+	height: 0px;
 }
 
 /* vertical alignment in the grid */
