@@ -4,8 +4,15 @@
 <!-- tdf#106488 - reverse hostname lookup can go badly wrong -->
 <item oor:path="/org.openoffice.Office.Common/Misc"><prop oor:name="UseLocking" oor:op="fuse"><value>false</value></prop></item>
 
+<!-- Dialogs have limited real estate, limit drop-down height -->
+<item oor:path="/org.openoffice.Office.Common/Accessibility"><prop oor:name="ListBoxMaximumLineCount" oor:op="fuse"><value>11</value></prop></item>
+
 <!-- Disable two capitals at start autocorrect -->
 <item oor:path="/org.openoffice.Office.Common/AutoCorrect"><prop oor:name="TwoCapitalsAtStart" oor:op="fuse"><value>false</value></prop></item>
+
+<!-- The Help root URL, or empty for no help (hides the help buttons) -->
+<!-- On mobile UI there should be no tunnelled dialogs. But if there are some, by mistake, at least they should not have a non-working Help button -->
+<item oor:path="/org.openoffice.Office.Common/Help"><prop oor:name="HelpRootURL" oor:op="fuse"><value></value></prop></item>
 
 <!-- Enable spell-checking by default -->
 <item oor:path="/org.openoffice.Office.Linguistic/SpellChecking"><prop oor:name="IsSpellAuto" oor:op="fuse"><value>true</value></prop></item>
@@ -13,21 +20,22 @@
 <!-- Save memory by avoiding collecting autocompletion words  -->
 <item oor:path="/org.openoffice.Office.Writer/AutoFunction/Completion"><prop oor:name="Enable" oor:op="fuse"><value>false</value></prop></item>
 
-<!-- Disable complex text options - unless your locale needs them -->
-<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="AsianTypography" oor:op="fuse"><value>false</value></prop></item>
-<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="CJKFont" oor:op="fuse"><value>false</value></prop></item>
-<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="ChangeCaseMap" oor:op="fuse"><value>false</value></prop></item>
-<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="DoubleLines" oor:op="fuse"><value>false</value></prop></item>
-<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="EmphasisMarks" oor:op="fuse"><value>false</value></prop></item>
-<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="JapaneseFind" oor:op="fuse"><value>false</value></prop></item>
-<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="Ruby" oor:op="fuse"><value>false</value></prop></item>
-<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="VerticalCallOut" oor:op="fuse"><value>false</value></prop></item>
-<item oor:path="/org.openoffice.Office.Common/I18N/CJK"><prop oor:name="VerticalText" oor:op="fuse"><value>false</value></prop></item>
-<item oor:path="/org.openoffice.Office.Common/I18N/CTL"><prop oor:name="CTLFont" oor:op="fuse"><value>false</value></prop></item>
+<!-- Enable thumbnail generation by default (disabling saves CPU time) -->
+<item oor:path="/org.openoffice.Office.Common/Save/Document"><prop oor:name="GenerateThumbnail" oor:op="fuse"><value>true</value></prop></item>
 
-<!-- The Help root URL, or empty for no help (hides the help buttons) -->
-<!-- On mobile UI there should be no tunnelled dialogs. But if there are some, by mistake, at least they should not have a non-working Help button -->
-<item oor:path="/org.openoffice.Office.Common/Help"><prop oor:name="HelpRootURL" oor:op="fuse"><value></value></prop></item>
+<!-- To show Hidden Characters and Hidden Text/Paragraph fields -->
+<item oor:path="/org.openoffice.Office.Writer/Content/NonprintingCharacter"><prop oor:name="HiddenCharacter" oor:op="fuse"><value>false</value></prop></item>
+<item oor:path="/org.openoffice.Office.Writer/Content/NonprintingCharacter"><prop oor:name="HiddenText" oor:op="fuse"><value>false</value></prop></item>
+<item oor:path="/org.openoffice.Office.Writer/Content/NonprintingCharacter"><prop oor:name="HiddenParagraph" oor:op="fuse"><value>false</value></prop></item>
+
+<!-- Disable GIO UCP we don't want -->
+<item oor:path="/org.openoffice.ucb.Configuration/ContentProviders/Local/SecondaryKeys/Office/ProviderData/Provider999"><prop oor:name="URLTemplate" oor:op="fuse"><value>NeverMatchAnyUrlSuffix</value></prop></item>
+
+<!-- Default font for new documents. Most of the languages use 'en' settings. For those that do not, it's better not to touch their settings, because it's unlikely that Calibri (or Carlito) is better than current default. -->
+<item oor:path="/org.openoffice.VCL/DefaultFonts/org.openoffice.VCL:LocalizedDefaultFonts['en']"><prop oor:name="LATIN_HEADING" oor:op="fuse" oor:type="xs:string"><value>Calibri;Carlito;Liberation Sans;Albany AMT;Albany;Arial;Noto Sans;Arimo;Nimbus Sans L;DejaVu Sans;Helvetica;Lucida;Geneva;Helmet;Arial;Noto Sans Unicode MS;Lucida Sans Unicode;Tahoma;SansSerif</value></prop></item>
+<item oor:path="/org.openoffice.VCL/DefaultFonts/org.openoffice.VCL:LocalizedDefaultFonts['en']"><prop oor:name="LATIN_PRESENTATION" oor:op="fuse" oor:type="xs:string"><value>Calibri;Carlito;Liberation Sans;Albany AMT;Albany;Arial;Noto Sans;Arimo;Nimbus Sans L;DejaVu Sans;Helvetica;Lucida;Geneva;Helmet;Arial;Noto Sans Unicode MS;Lucida Sans Unicode;Tahoma;SansSerif</value></prop></item>
+<item oor:path="/org.openoffice.VCL/DefaultFonts/org.openoffice.VCL:LocalizedDefaultFonts['en']"><prop oor:name="LATIN_SPREADSHEET" oor:op="fuse" oor:type="xs:string"><value>Calibri;Carlito;Liberation Sans;Albany AMT;Albany;Arial;Noto Sans;Arimo;Nimbus Sans L;DejaVu Sans;Helvetica;Lucida;Geneva;Helmet;Arial;Noto Sans Unicode MS;Lucida Sans Unicode;Tahoma;SansSerif</value></prop></item>
+<item oor:path="/org.openoffice.VCL/DefaultFonts/org.openoffice.VCL:LocalizedDefaultFonts['en']"><prop oor:name="LATIN_TEXT" oor:op="fuse" oor:type="xs:string"><value>Calibri;Carlito;Liberation Sans;Albany AMT;Albany;Arial;Noto Sans;Arimo;Nimbus Sans L;DejaVu Sans;Helvetica;Lucida;Geneva;Helmet;Arial;Noto Sans Unicode MS;Lucida Sans Unicode;Tahoma;SansSerif</value></prop></item>
 
 <!-- Don't show the document boundaries by default, gh#3491.  Using many names so that it works with all kinds of the builds. -->
 <item oor:path="/org.openoffice.Office.UI/ColorScheme/ColorSchemes/org.openoffice.Office.UI:ColorScheme['Collabora Office']/DocBoundaries"><prop oor:name="IsVisible" oor:op="fuse"><value>false</value></prop></item>
@@ -35,5 +43,7 @@
 <item oor:path="/org.openoffice.Office.UI/ColorScheme/ColorSchemes/org.openoffice.Office.UI:ColorScheme['LibreOffice']/DocBoundaries"><prop oor:name="IsVisible" oor:op="fuse"><value>false</value></prop></item>
 <item oor:path="/org.openoffice.Office.UI/ColorScheme/ColorSchemes/org.openoffice.Office.UI:ColorScheme['LibreOfficeDev']/DocBoundaries"><prop oor:name="IsVisible" oor:op="fuse"><value>false</value></prop></item>
 
-</oor:items>
+<!-- Hide MediaPlaybackPanel on sidebar. It does not work in Online. Video playback controls are implemented by the browser.  -->
+<item oor:path="/org.openoffice.Office.UI.Sidebar/Content/PanelList/org.openoffice.Office.UI.Sidebar:Panel['MediaPlaybackPanel']"><prop oor:name="ContextList" oor:op="fuse"><value><it>any</it><it>default</it><it>hidden</it></value></prop></item>
 
+</oor:items>
