@@ -1806,13 +1806,14 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 }
             }
         }
-    } else if (tokens.equals(0, "textselectioncontent:")) {
-
+    }
+    else if (tokens.equals(0, "textselectioncontent:"))
+    {
         postProcessCopyPayload(payload);
         return forwardToClient(payload);
-
-    } else if (tokens.equals(0, "clipboardcontent:")) {
-
+    }
+    else if (tokens.equals(0, "clipboardcontent:"))
+    {
 #if !MOBILEAPP // Most likely nothing of this makes sense in a mobile app
 
         // FIXME: Ash: we need to return different content depending
@@ -1868,8 +1869,9 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
 #endif
         _clipSockets.clear();
         return true;
-    } else if (tokens.equals(0, "disconnected:")) {
-
+    }
+    else if (tokens.equals(0, "disconnected:"))
+    {
         LOG_INF("End of disconnection handshake for " << getId());
         docBroker->finalRemoveSession(client_from_this());
         return true;

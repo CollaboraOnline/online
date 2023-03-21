@@ -1319,7 +1319,7 @@ DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
         return NeedToUpload::Yes;
     }
 
-    // Force uploading only for retryable failures, not conflicts. See FIXME below.
+    // Retry uploading only for retryable failures, not conflicts.
     if (!_storageManager.lastUploadSuccessful() && !_documentChangedInStorage)
     {
         LOG_DBG("Uploading to storage as last attempt had failed");
@@ -1345,7 +1345,7 @@ bool DocumentBroker::isStorageOutdated() const
     if (!st.exists())
     {
         LOG_TRC("File to upload to storage [" << _storage->getRootFilePathUploading()
-                                              << "] does not exist.");
+                                              << "] does not exist");
         return false;
     }
 
@@ -1356,7 +1356,7 @@ bool DocumentBroker::isStorageOutdated() const
     LOG_TRC("File to upload to storage ["
             << _storage->getRootFilePathUploading() << "] was modified at " << currentModifiedTime
             << " and the last uploaded file was modified at " << lastModifiedTime << ", which are "
-            << (currentModifiedTime == lastModifiedTime ? "identical." : "different."));
+            << (currentModifiedTime == lastModifiedTime ? "identical" : "different"));
 
     // Compare to the last uploaded file's modified-time.
     return currentModifiedTime != lastModifiedTime;
@@ -1452,7 +1452,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
                 }
                 else
                 {
-                    LOG_DBG("Renaming in storage as there is no new version to upload first.");
+                    LOG_DBG("Renaming in storage as there is no new version to upload first");
                     std::string uploadAsPath;
                     constexpr bool isRename = true;
                     uploadAsToStorage(it->second, uploadAsPath, _renameFilename, isRename, /*isExport*/false);
@@ -1481,7 +1481,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
         // We are unloading but have possible modifications. Save again (done in poll).
         LOG_DBG("Document [" << getDocKey()
                              << "] is unloading, but was possibly modified during saving. Skipping "
-                                "upload to save again before unloading.");
+                                "upload to save again before unloading");
         return;
     }
 #endif
@@ -1503,7 +1503,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
             // Stop so we get cleaned up and removed.
             LOG_DBG("Stopping after saving because "
                     << (_sessions.empty() ? "there are no active sessions left."
-                                          : "the document is marked to destroy."));
+                                          : "the document is marked to destroy"));
             stop("unloading");
         }
     }
@@ -2778,7 +2778,7 @@ void DocumentBroker::unregisterDownloadId(const std::string& downloadId)
 /// Handles input from the prisoner / child kit process
 bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
 {
-    LOG_TRC("DocumentBroker handling child message: [" << message->abbr() << "].");
+    LOG_TRC("DocumentBroker handling child message: [" << message->abbr() << ']');
 
 #if !MOBILEAPP
     if (COOLWSD::TraceDumper)
@@ -3930,8 +3930,8 @@ void DocumentBroker::dumpState(std::ostream& os)
     if (_limitLifeSeconds > std::chrono::seconds::zero())
         os << "\n  life limit in seconds: " << _limitLifeSeconds.count();
     os << "\n  idle time: " << getIdleTimeSecs();
-    os << "\n  cursor X: " << _cursorPosX << ", Y: " << _cursorPosY
-      << ", W:" << _cursorWidth << ", H: " << _cursorHeight;
+    os << "\n  cursor X: " << _cursorPosX << ", Y: " << _cursorPosY << ", W: " << _cursorWidth
+       << ", H: " << _cursorHeight;
 
     os << "\n  DocumentState:";
     _docState.dumpState(os, "\n    ");
