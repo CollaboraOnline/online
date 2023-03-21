@@ -81,7 +81,7 @@ describe('Impress insertion wizard.', function() {
 		// Add some comment
 		cy.get('#input-modal-input').type('some text');
 
-		cy.get('.button-primary').click();
+		cy.get('#response-ok').click();
 
 		cy.get('#comment-container-1').should('exist');
 

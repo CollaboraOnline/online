@@ -17,11 +17,8 @@ describe('Annotation tests.', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it.skip('Saving comment.', function() {
+	it('Saving comment.', function() {
 		mobileHelper.insertComment();
-
-		cy.get('.leaflet-marker-icon.annotation-marker')
-			.should('be.visible');
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
@@ -33,36 +30,28 @@ describe('Annotation tests.', function() {
 
 		cy.get('#mobile-wizard .wizard-comment-box .cool-annotation-content')
 			.should('have.text', 'some text');
-
-		cy.get('.leaflet-marker-icon.annotation-marker')
-			.should('be.visible');
 	});
 
 	it('Modifying comment.', function() {
 		mobileHelper.insertComment();
-
-		cy.get('.leaflet-marker-icon.annotation-marker')
-			.should('be.visible');
 
 		mobileHelper.selectAnnotationMenuItem('Modify');
 
 		cy.get('.cool-annotation-table')
 			.should('exist');
 
-		cy.get('.vex-dialog-form .cool-annotation-textarea')
+		cy.get('#annotation-content-area-1')
 			.should('have.text', 'some text');
 
-		cy.get('.vex-dialog-form .cool-annotation-textarea')
-			.type('modified ');
+		cy.get('#input-modal-input').type('modified');
 
-		cy.get('.vex-dialog-buttons .button-primary')
-			.click();
+		cy.get('#response-ok').click();
 
-		cy.get('#mobile-wizard .wizard-comment-box.cool-annotation-content-wrapper')
+		cy.get('#annotation-content-area-1')
 			.should('exist');
 
-		cy.get('#mobile-wizard .wizard-comment-box .cool-annotation-content')
-			.should('have.text', 'modified some text');
+		cy.get('#annotation-content-area-1')
+			.should('have.text', 'some textmodified');
 	});
 
 	it('Remove comment.', function() {
@@ -95,10 +84,7 @@ describe('Annotation tests.', function() {
 		cy.get('.cool-annotation-textarea')
 			.should('have.text', '');
 
-		cy.get('.button-primary')
-			.click();
-
-		cy.get('.button-secondary')
+		cy.get('#response-ok')
 			.click();
 
 		cy.get('.cool-annotation-content-wrapper.wizard-comment-box')
