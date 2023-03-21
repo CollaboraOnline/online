@@ -52,13 +52,13 @@ describe('Annotation Tests',function() {
 
 		cy.get('#annotation-content-area-1').should('have.text', 'some text');
 
-		cy.get('#input-modal-input').type('modified ');
+		cy.get('#input-modal-input').type('modified');
 
-		cy.get('.vex-dialog-buttons .button-primary').click();
+		cy.get('#response-ok').click();
 
 		cy.get('#comment-container-1').should('exist');
 
-		cy.get('#annotation-content-area-1').should('have.text', 'modified some text');
+		cy.get('#annotation-content-area-1').should('have.text', 'some textmodified');
 	});
 
 	it('Remove comment.', function() {
@@ -87,11 +87,7 @@ describe('Annotation Tests',function() {
 		cy.get('.cool-annotation-textarea')
 			.should('have.text', '');
 
-		cy.get('.vex-dialog-buttons .button-primary')
-			.click();
-
-		cy.get('.vex-dialog-buttons .button-secondary')
-			.click();
+		cy.get('#response-ok').click();
 
 		cy.get('.cool-annotation-content-wrapper.wizard-comment-box')
 			.should('not.exist');

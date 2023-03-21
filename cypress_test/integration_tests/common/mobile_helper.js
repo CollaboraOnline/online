@@ -359,7 +359,7 @@ function insertComment() {
 
 	cy.get('#input-modal-input').type('some text');
 
-	cy.get('.vex-dialog-buttons .button-primary').click();
+	cy.get('#response-ok').click();
 
 	cy.get('#comment-container-1').should('exist')
 		.wait(300);
