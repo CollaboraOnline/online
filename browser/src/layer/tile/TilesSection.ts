@@ -428,6 +428,13 @@ class TilesSection extends CanvasSectionObject {
 		}.bind(this));
 	}
 
+	public onClick(point: Array<number>, e: MouseEvent) {
+		// Slides pane is not focusable, we are using a variable to follow its focused state.
+		// Until the pane is focusable, we will need to keep below check here.
+		if (this.map._docLayer._docType === 'presentation' || this.map._docLayer._docType === 'drawing')
+			this.map._docLayer._preview.partsFocused = false; // Parts (slide preview pane) is no longer focused, we need to set this here to avoid unwanted behavior.
+	}
+
 	// Return the fraction of intersection area with area1.
 	static getTileIntersectionAreaFraction(tileBounds: any, viewBounds: any): number {
 
