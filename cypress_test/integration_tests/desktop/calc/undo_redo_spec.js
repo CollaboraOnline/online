@@ -16,7 +16,7 @@ describe('Editing Operations', function() {
 	});
 
 	function undo() {
-		helper.typeText('textarea.clipboard', 'Hello World');
+		helper.typeText('#clipboard-area', 'Hello World');
 
 		helper.typeIntoDocument('{ctrl}z');
 
