@@ -249,7 +249,7 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 		if (!control)
 			return;
 
-		return this.map._textInput._preSpaceChar + control.value + this.map._textInput._postSpaceChar;
+		return control.value;
 	},
 
 	setValue: function(newValue) {
@@ -321,8 +321,7 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 			this.builder.executeAction(this.container, innerData);
 
 			if (!window.mode.isDesktop() && messageForInputField && this.hasFocus()) {
-				var newContent = textInput.getValueAsCodePoints().slice(1, -1);
-				textInput.setupLastContent(newContent);
+				textInput.updateLastContent();
 			}
 
 			if (keepInputFocus)
