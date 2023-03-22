@@ -136,6 +136,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 		var hasPrint = !this._map['wopi'].HidePrintOption;
 		var hasRepair = !this._map['wopi'].HideRepairOption;
 		var hasSaveAs = !this._map['wopi'].UserCanNotWriteRelative;
+		var hideDownload = this._map['wopi'].HideExportOption;
 		var hasShare = this._map['wopi'].EnableShare;
 		var hasGroupedDownloadAs = !!window.groupDownloadAsForNb;
 		var hasGroupedSaveAs = window.uiDefaults && window.uiDefaults.saveAsMode === 'group';
@@ -227,7 +228,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				} : {}
 		]);
 
-		if (hasGroupedDownloadAs) {
+		if (hasGroupedDownloadAs && !hideDownload) {
 			content.push({
 				'id': 'downloadas',
 				'type': 'bigmenubartoolitem',
@@ -248,7 +249,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'vertical': 'true'
 				});
 			}
-		} else {
+		} else if (!hideDownload) {
 			content = content.concat([
 				{
 					'id': 'file-downloadas-odp-downloadas-odg',
@@ -309,6 +310,19 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'vertical': 'true'
 				}
 			]);
+		} else if (hasRepair) {
+			content.push({
+				'type': 'container',
+				'children': [
+					{
+						'id': 'repair',
+						'type': 'bigmenubartoolitem',
+						'text': _('Repair'),
+						'command': _('Repair')
+					}
+				],
+				'vertical': 'true'
+			});
 		}
 
 		content.push({
