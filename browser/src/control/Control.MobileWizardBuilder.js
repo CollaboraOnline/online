@@ -701,6 +701,9 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 			var childData = data[childIndex];
 			if (!childData)
 				continue;
+
+			this._handleResponses(childData, this);
+
 			this._parentize(childData);
 			var childType = childData.type;
 			var processChildren = true;

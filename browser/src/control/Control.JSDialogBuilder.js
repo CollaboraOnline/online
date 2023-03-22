@@ -495,6 +495,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return builder._containerHandler(parentContainer, data, builder);
 	},
 
+	_handleResponses: function(data, builder) {
+		// Dialogue is a parent container of a buttonbox, so we will save the responses first, then we will check them while creating the buttons.
+		if (data.responses) {
+			for (var i in data.responses) {
+				// Button id = response
+				builder._responses[data.responses[i].id] = data.responses[i].response;
+			}
+		}
+	},
+
 	_containerHandler: function(parentContainer, data, builder) {
 		if (data.cols && data.rows) {
 			return builder._gridHandler(parentContainer, data, builder);
@@ -502,15 +512,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (parentContainer && !parentContainer.id)
 			parentContainer.id = data.id;
-
-		// Dialogue is a parent container of a buttonbox, so we will save the responses first, then we will check them while creating the buttons.
-		if ((data.type === 'dialog' || data.type === 'messagebox' || data.type === 'modelessdialog')
-			&& data.responses) {
-			for (var i in data.responses) {
-				// Button id = response
-				builder._responses[data.responses[i].id] = data.responses[i].response;
-			}
-		}
 
 		return true;
 	},
@@ -3066,6 +3067,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				continue;
 
 			var childType = childData.type;
+
+			this._handleResponses(childData, this);
 
 			var containerToInsert = parent;
 
