@@ -99,6 +99,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var hasRepair = !this._map['wopi'].HideRepairOption;
 		var hasSaveAs = !this._map['wopi'].UserCanNotWriteRelative;
 		var hasShare = this._map['wopi'].EnableShare;
+		var hideDownload = this._map['wopi'].HideExportOption;
 		var hasGroupedDownloadAs = !!window.groupDownloadAsForNb;
 		var hasGroupedSaveAs = window.uiDefaults && window.uiDefaults.saveAsMode === 'group';
 		var hasRunMacro = !(window.enableMacrosExecution  === 'false');
@@ -188,13 +189,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				} : {}
 		]);
 
-		if (hasGroupedDownloadAs) {
+		if (hasGroupedDownloadAs && !hideDownload) {
 			content.push({
 				'id': 'downloadas',
 				'type': 'bigmenubartoolitem',
 				'text': _('Download')
 			});
-		} else {
+		} else if (!hideDownload) {
 			content = content.concat([
 				{
 					'type': 'container',
