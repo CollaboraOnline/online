@@ -3,7 +3,7 @@
  * Impress tile layer is used to display a presentation document
  */
 
-/* global app $ L isAnyVexDialogActive */
+/* global app $ L */
 
 L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
@@ -133,7 +133,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	onUpdateParts: function () {
-		if (isAnyVexDialogActive()) // Need this check else vex loses focus
+		if (this._map.uiManager.isAnyDialogOpen()) // Need this check else dialog loses focus
 			return;
 
 		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onPartChange();
