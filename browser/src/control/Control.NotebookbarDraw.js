@@ -117,6 +117,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 		var hasPrint = !this._map['wopi'].HidePrintOption;
 		var hasRepair = !this._map['wopi'].HideRepairOption;
 		var hasSaveAs = !this._map['wopi'].UserCanNotWriteRelative;
+		var hideDownload = this._map['wopi'].HideExportOption;
 		var hasShare = this._map['wopi'].EnableShare;
 		var hasSave = !this._map['wopi'].HideSaveOption;
 
@@ -174,7 +175,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					'text': _UNO('.uno:Print', 'presentation'),
 					'command': '.uno:Print'
 				} : {},
-			{
+			hideDownload ? {} : {
 				'id': 'file-downloadas-odg-downloadas-png',
 				'type': 'container',
 				'children': [
