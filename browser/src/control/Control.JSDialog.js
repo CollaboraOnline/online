@@ -271,8 +271,8 @@ L.Control.JSDialog = L.Control.extend({
 
 		var popupParent = instance.popupParent ? L.DomUtil.get(instance.popupParent) : null;
 
-		if (instance.isModalPopUp || instance.isDocumentAreaPopup) {
-			// close when focus goes out using 'tab' key
+		if (instance.isPopUp) {
+			// loop using tab key
 			var beginMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-begin-marker');
 			var endMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-end-marker');
 
@@ -284,8 +284,17 @@ L.Control.JSDialog = L.Control.extend({
 
 			instance.container.addEventListener('focusin', function(event) {
 				if (event.target == beginMarker || event.target == endMarker) {
-					instance.that.close(instance.id, true);
-					instance.that.map.focus();
+					var firstFocusElement = instance.container.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker, .jsdialog-end-marker)');
+					if (firstFocusElement)
+						firstFocusElement.focus();
+					else if (document.getElementById(instance.init_focus_id)) {
+						document.getElementById(instance.init_focus_id).focus();
+					}
+					else {
+						app.console.error('There is no focusable element in the modal. Either focusId should be given or modal should have a response button.');
+						instance.that.close(instance.id, true);
+						instance.that.map.focus();
+					}
 				}
 			});
 		}
