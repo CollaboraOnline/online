@@ -20,6 +20,10 @@ L.TextInput = L.Layer.extend({
 		// pressed sometimes - consider '  foo' -> ' foo'
 		this._deleteHint = ''; // or 'delete' or 'backspace'
 
+		// When <enter> key is hit a <div> element is created and appended to the editable area:
+		// inputType: insertParagraph. No new char is added to the editable area textContent property.
+		this._newlineHint = false;
+
 		// We need to detect line break in the tunneled formula
 		// input window for the multiline case.
 		this._linebreakHint = false;
@@ -36,16 +40,12 @@ L.TextInput = L.Layer.extend({
 		this._hasWorkingSelectionStart = undefined; // does it work ?
 		this._ignoreNextBackspace = false;
 
-		this._preSpaceChar = ' ';
-		// Might need to be \xa0 in some legacy browsers ?
-		if (L.Browser.android && L.Browser.webkit) {
-			// fool GBoard into not auto-capitalizing constantly
-			this._preSpaceChar = '\xa0';
-		}
-		this._postSpaceChar = ' ';
+		this._preSpaceChar = '<img id="pre-space" alt=" ">';
+		this._postSpaceChar = '<img id="post-space" alt=" ">';
+		this._initialContent = this._preSpaceChar + this._postSpaceChar;
 
 		// Debug flag, used in fancyLog(). See the debug() method.
-		//this._isDebugOn = true;
+		// this._isDebugOn = true;
 		this._isDebugOn = false;
 
 		this._initLayout();
@@ -180,7 +180,6 @@ L.TextInput = L.Layer.extend({
 
 	_onFocusBlur: function(ev) {
 		this._fancyLog(ev.type, '');
-
 		var onoff = (ev.type == 'focus' ? L.DomEvent.on : L.DomEvent.off).bind(L.DomEvent);
 
 		// Debug - connect first for saner logging.
@@ -190,6 +189,12 @@ L.TextInput = L.Layer.extend({
 			this._onEvent,
 			this
 		);
+
+		// we already do the same in _onBeforeInput, anyway for Safari on iOS is too late:
+		// the selection is messed up, so we miss the first typed key
+		if (ev.type === 'focus' && !this._isSelectionValid()) {
+			this._emptyArea();
+		}
 
 		onoff(this._textArea, 'input', this._onInput, this);
 		onoff(this._textArea, 'beforeinput', this._onBeforeInput, this);
@@ -285,14 +290,26 @@ L.TextInput = L.Layer.extend({
 	// Marks the content of the textarea/contenteditable as selected,
 	// for system clipboard interaction.
 	select: function() {
-		this._textArea.select();
+		this._setSelectionRange(0, this.getPlainTextContent().length);
 	},
 
 	getValue: function() {
-		var value = this._textArea.value;
-		if (this._map.formulabar && this._map.formulabar.hasFocus())
-			value = this._map.formulabar.getValue();
+		var value = this.getPlainTextContent();
+		if (this._map && this._map.formulabar && this._map.formulabar.hasFocus())
+			value =  this._map.formulabar.getValue();
 		return value;
+	},
+
+	getPlainTextContent: function() {
+		return 	this._textArea.textContent;
+	},
+
+	getHTML: function() {
+		return 	this._textArea.innerHTML;
+	},
+
+	resetContent: function() {
+		this._textArea.innerHTML = this._initialContent;
 	},
 
 	// Convert an array of Unicode code points to a string of UTF-16 code units. Workaround
@@ -354,12 +371,12 @@ L.TextInput = L.Layer.extend({
 	_initLayout: function() {
 		this._container = L.DomUtil.create('div', 'clipboard-container');
 		this._container.id = 'doc-clipboard-container';
-
 		// The textarea allows the keyboard to pop up and so on.
 		// Note that the contents of the textarea are NOT deleted on each composed
 		// word, in order to make
-		this._textArea = L.DomUtil.create('textarea', 'clipboard', this._container);
+		this._textArea = L.DomUtil.create('div', 'clipboard', this._container);
 		this._textArea.id = 'clipboard-area';
+		this._textArea.setAttribute('contenteditable', 'true');
 		this._textArea.setAttribute('autocapitalize', 'off');
 		this._textArea.setAttribute('autofocus', 'true');
 		this._textArea.setAttribute('autocorrect', 'off');
@@ -502,7 +519,7 @@ L.TextInput = L.Layer.extend({
 			state += this._ignoreNextBackspace ? 'I' : '-';
 			state += ' ';
 
-			var textSel = this._textArea.selectionStart + '!' + this._textArea.selectionEnd;
+			var textSel = this._getSelectionStart() + '!' + this._getSelectionEnd();
 			state += textSel + ' ';
 
 			var sel = window.getSelection();
@@ -552,9 +569,9 @@ L.TextInput = L.Layer.extend({
 
 		this._ignoreNextBackspace = false;
 		if (this._hasWorkingSelectionStart) {
-			var value = this._textArea.value;
-			if (value.length == 2 && value === this._preSpaceChar + this._postSpaceChar &&
-			    this._textArea.selectionStart === 0)
+			if (!this._isSelectionValid()) {
+				this._emptyArea();
+			} else if (this._isInitialContent() && this._isCursorAtBeginning())
 			{
 				// It seems some inputs eg. GBoard can magically move the cursor from " | " to "|  "
 				window.app.console.log('Oh dear, gboard sabotaged our cursor position, fixing');
@@ -570,8 +587,9 @@ L.TextInput = L.Layer.extend({
 		}
 	},
 
-	setupLastContent: function(oldContent) {
-		this._lastContent = oldContent;
+	// Used by FormulaBarJSDialog
+	updateLastContent: function() {
+		this._lastContent = this.getValueAsCodePoints();
 	},
 
 	_isDigit: function(asciiChar) {
@@ -607,43 +625,26 @@ L.TextInput = L.Layer.extend({
 		var content = this.getValueAsCodePoints();
 		// Note that content is an array of Unicode code points
 
-		var preSpaceChar = this._preSpaceChar.charCodeAt(0);
-		var postSpaceChar = this._postSpaceChar.charCodeAt(0);
+		if (this._newlineHint) {
+			this._sendNewlineEvent();
+			return;
+		}
 
 		// We use a different leading and terminal space character
 		// to differentiate backspace from delete, then replace the character.
-		if (content.length < 1 || content[0] !== preSpaceChar) { // missing initial space
+		if (!this._hasPreSpace()) { // missing initial space
 			window.app.console.log('Sending backspace');
 			if (!ignoreBackspace)
 				this._removeTextContent(1, 0);
 			this._emptyArea();
 			return;
 		}
-		if (content[content.length-1] !== postSpaceChar) { // missing trailing space.
+		if (!this._hasPostSpace()) { // missing trailing space.
 			window.app.console.log('Sending delete');
 			this._removeTextContent(0, 1);
 			this._emptyArea();
 			return;
 		}
-		if (content.length < 2) {
-			window.app.console.log('Missing terminal nodes: ' + this._deleteHint);
-			if (this._deleteHint == 'backspace' ||
-			    this._textArea.selectionStart === 0)
-			{
-				if (!ignoreBackspace)
-					this._removeTextContent(1, 0);
-			}
-			else if (this._deleteHint == 'delete' ||
-				 this._textArea.selectionStart === 1)
-				this._removeTextContent(0, 1);
-			else
-				window.app.console.log('Cant detect delete or backspace');
-			this._emptyArea();
-			return;
-		}
-
-		// remove leading & tailing spaces.
-		content = content.slice(1, -1);
 
 		// In the android keyboard when you try to erase in an empty area
 		// and then enter some character,
@@ -652,7 +653,7 @@ L.TextInput = L.Layer.extend({
 		// cursor position is never updated by keyboard (I know it is strange)
 		// so here we manually correct the position
 		if (content.length === 1 && this._lastContent.length === 0)
-			this._setCursorPosition(2);
+			this._setCursorPosition(1);
 
 		var matchTo = 0;
 		var sharedLength = Math.min(content.length, this._lastContent.length);
@@ -765,11 +766,7 @@ L.TextInput = L.Layer.extend({
 		// MSIE/Edge cannot compare a string to "\n" for whatever reason,
 		// so compare charcode as well
 		if (text === '\n' || (text.length === 1 && text.charCodeAt(0) === 13)) {
-			// The composition messages doesn't play well with just a line break,
-			// therefore send a keystroke.
-			var unoKeyCode = this._linebreakHint ? 5376 : 1280;
-			this._sendKeyEvent(13, unoKeyCode);
-			this._emptyArea();
+			this._sendNewlineEvent();
 		} else {
 			// The composition messages doesn't play well with line breaks inside
 			// the composed word (e.g. word and a newline are queued client-side
@@ -809,20 +806,19 @@ L.TextInput = L.Layer.extend({
 		// window.app.console.log('Set old/lastContent to empty');
 		this._lastContent = [];
 
-		this._textArea.value = this._preSpaceChar + this._postSpaceChar;
+		this.resetContent();
+
 		if (this._map && this._map.formulabar && this._map.formulabar.hasFocus())
 			this._map.formulabar.setValue('');
 
 		// avoid setting the focus keyboard
-		if (!noSelect) {
-			this._setCursorPosition(1);
-
+		if (!noSelect && document.getElementById(this._textArea.id)) {
+			this._setCursorPosition(0);
 			if (this._hasWorkingSelectionStart === undefined)
-				this._hasWorkingSelectionStart = (this._textArea.selectionStart === 1);
+				this._hasWorkingSelectionStart = (this._getSelectionStart() === 0);
 		}
 
 		this._fancyLog('empty-area-end');
-
 		this._ignoreInputCount--;
 	},
 
@@ -845,6 +841,8 @@ L.TextInput = L.Layer.extend({
 	_onCompositionEnd: function(ev) {
 		app.idleHandler.notifyActive();
 		this._isComposing = false;
+		if (ev.data && ev.data.charCodeAt(ev.data.length-1) === 10) // 10 === charCode('\n')
+			this._newlineHint = true;
 		this._onInput(ev);
 	},
 
@@ -870,8 +868,9 @@ L.TextInput = L.Layer.extend({
 			this._deleteHint = 'delete';
 		else {
 			this._deleteHint = '';
-			this._linebreakHint = ev.keyCode === 13 && ev.shiftKey;
 		}
+		this._newlineHint = ev.keyCode === 13;
+		this._linebreakHint = this._newlineHint && ev.shiftKey;
 
 		var mentionPopup = L.DomUtil.get('mentionPopup');
 		if (mentionPopup) {
@@ -986,6 +985,15 @@ L.TextInput = L.Layer.extend({
 		}
 	},
 
+	_sendNewlineEvent: function() {
+		// The composition messages doesn't play well with just a line break,
+		// therefore send a keystroke.
+		var unoKeyCode = this._linebreakHint ? 5376 : 1280;
+		this._sendKeyEvent(13, unoKeyCode);
+		this._newlineHint = false;
+		this._emptyArea();
+	},
+
 	_onCursorHandlerDragEnd: function(ev) {
 		var cursorPos = this._map._docLayer._latLngToTwips(ev.target.getLatLng());
 		this._map._docLayer._postMouseEvent('buttondown', cursorPos.x, cursorPos.y, 1, 1, 0);
@@ -994,7 +1002,7 @@ L.TextInput = L.Layer.extend({
 
 	_setCursorPosition: function(pos) {
 		try {
-			this._textArea.setSelectionRange(pos, pos);
+			this._setSelectionRange(pos, pos);
 		} catch (err) {
 			// old firefox throws an exception on start.
 		}
@@ -1010,6 +1018,149 @@ L.TextInput = L.Layer.extend({
 			this._textArea.setAttribute('data-accept-input', accept);
 		}
 		this._acceptInput = accept;
+	},
+
+	_hasPreSpace: function() {
+		var child = this._textArea.firstChild;
+		return child && child.id === 'pre-space';
+	},
+
+	_hasPostSpace: function() {
+		var child = this._textArea.lastChild;
+		return child && child.id === 'post-space';
+	},
+
+	_isInitialContent: function() {
+		var children = this._textArea.childNodes;
+		return children.length === 2 && this._hasPreSpace() && this._hasPostSpace();
+	},
+
+	_isCursorAtBeginning: function() {
+		var selection = window.getSelection();
+		return selection.isCollapsed && this._getSelectionStart() === -1;
+	},
+
+	_isSelectionValid: function() {
+		return typeof this._getSelectionStart() === 'number' && typeof this._getSelectionEnd() === 'number';
+	},
+
+	// When the cursor is on a text node return the position wrt the whole plain text content
+	// When the cursor is on a pre- / post-space node return -1 / -2
+	// Otherwise return undefined
+	_getSelection: function(isStart) {
+		var selection = window.getSelection();
+		var node, offset;
+		if (isStart) {
+			node = selection.anchorNode;
+			offset = selection.anchorOffset;
+		} else {
+			node = selection.focusNode;
+			offset = selection.focusOffset;
+		}
+
+		if (!node)
+			return;
+		if (node.id === 'pre-space')      // cursor position: <div><img>|</img> ... <img></img></div>
+			return -1;
+		if (node.id === 'post-space')     // cursor position: <div><img></img> ... <img>|</img></div>
+			return -2;
+		if (node.id === this._textArea.id) {
+			if (this._hasPreSpace()) {
+				if (offset === 0)         // cursor position: <div>|<img></img> ... <img></img></div>
+					return -1;
+				else if (offset === 1)    // cursor position: <div><img></img>| ... <img></img></div>
+					return 0;
+			} else if (this._hasPostSpace()) {
+				if (offset === node.childNodes.length)    // cursor position: <div><img></img> ... <img></img>|</div>
+					return -2;
+			}
+		}
+		if (node.nodeType !== Node.TEXT_NODE)
+			return;
+
+		var walker = document.createTreeWalker(this._textArea, NodeFilter.SHOW_TEXT);
+		var currentNode = walker.nextNode();
+		var pos = 0;
+		while (currentNode) {
+			if (currentNode === node) {
+				return pos + offset;
+			}
+			pos += currentNode.textContent.length;
+			currentNode = walker.nextNode();
+		}
+	},
+
+	_getSelectionStart: function() {
+		return this._getSelection(true);
+	},
+
+	_getSelectionEnd: function() {
+		return this._getSelection(false);
+	},
+
+	// set the selection range
+	// start/end refer to the string represented by the whole plain text content
+	// it's not possible to set range start/end position at <img> delimiters
+	_setSelectionRange: function(start, end) {
+		var selection = window.getSelection();
+		selection.removeAllRanges();
+		var range = document.createRange();
+
+		// at the beginning we have no text node, so set cursor between <img> delimiters
+		if (this._isInitialContent()) {
+			range.setStart(this._textArea, 1);
+			range.setEnd(this._textArea, 1);
+			selection.addRange(range);
+			window.console.log('_setSelectionRange: cursor set between pre-/post-space');
+			return;
+		}
+
+		// Normalize input parameters
+		var l = this.getPlainTextContent().length;
+		if (start < 0)
+			start = 0;
+		if (end < 0)
+			end = 0;
+		if (start > l)
+			start = l;
+		if (end > l)
+			end = l;
+		if (start > end) {
+			var t = start;
+			start = end;
+			end = t;
+		}
+		var msg = '_setSelectionRange:\n' +
+			      '    start: ' + start + ', end: ' + end +'\n';
+
+		var startContainer = null;
+		var walker = document.createTreeWalker(this._textArea, NodeFilter.SHOW_TEXT);
+		var currentNode = walker.nextNode(); // first text node in <div>
+		var pos = 0;
+		// walker iterates over text nodes only
+		while (currentNode) {
+			msg += '    current node: ' + currentNode + ', text content: "' + currentNode.textContent + '"\n';
+			var len = currentNode.textContent.length;
+			msg += '    pos: ' + pos + ', len: ' + len +'\n';
+			if (!startContainer && start <= pos + len) {
+				startContainer = currentNode;
+				range.setStart(currentNode, start - pos);
+				msg += '    current node set as start: offset: ' + (start - pos) + '\n';
+			}
+			// The range end is set only after the range start has been set.
+			if (startContainer && end <= pos + len) {
+				range.setEnd(currentNode, end - pos);
+				msg += '    current node set as end:   offset: ' + (end - pos) + '\n';
+				break;
+			}
+			pos += len;
+			currentNode = walker.nextNode();
+		}
+
+		// Get the selection object and add the range to it
+		selection.addRange(range);
+		window.console.log(msg);
+		this._dbg('_setSelectionRange ]');
 	}
 });
 
