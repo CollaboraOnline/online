@@ -1488,7 +1488,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
 
     if (needToUploadState != NeedToUpload::No)
     {
-        uploadToStorage(session, /*force=*/needToUploadState == NeedToUpload::Force);
+        uploadToStorage(session, /*force=*/false);
     }
 
     if (!isAsyncUploading())
