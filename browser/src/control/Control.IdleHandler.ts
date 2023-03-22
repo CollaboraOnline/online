@@ -4,7 +4,6 @@
 
 /* global app L */
 
-declare var isAnyVexDialogActive: any;
 declare var mode: any;
 declare var ThisIsTheAndroidApp: any;
 declare var postMobileMessage: any;
@@ -47,7 +46,7 @@ class IdleHandler {
 			}
 		}
 
-		if (window.mode.isDesktop() && !isAnyVexDialogActive()) {
+		if (window.mode.isDesktop() && !this.map.uiManager.isAnyDialogOpen()) {
 			this.map.focus();
 		}
 
@@ -99,7 +98,7 @@ class IdleHandler {
 			return;
 		}
 
-		if (!this._active || isAnyVexDialogActive() || (this.map.jsdialog && this.map.jsdialog.hasDialogOpened())) {
+		if (window.mode.isDesktop() && (!this._active || this.map.uiManager.isAnyDialogOpen())) {
 			// A dialog is already dimming the screen and probably
 			// shows an error message. Leave it alone.
 			this._active = false;
