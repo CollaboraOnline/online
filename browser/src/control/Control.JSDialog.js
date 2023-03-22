@@ -332,9 +332,9 @@ L.Control.JSDialog = L.Control.extend({
 		var calculated = false;
 
 		if (instance.nonModal || instance.popupParent) {
-			calculated = true;
 			// in case of toolbox we want to create popup positioned by toolitem not toolbox
 			if (updatedPos) {
+				calculated = true;
 				instance.posx = updatedPos.x;
 				instance.posy = updatedPos.y;
 			}
@@ -357,6 +357,7 @@ L.Control.JSDialog = L.Control.extend({
 			}
 
 			if (parent) {
+				calculated = true;
 				instance.posx = parent.getBoundingClientRect().left;
 				instance.posy = parent.getBoundingClientRect().bottom + 5;
 
@@ -368,6 +369,7 @@ L.Control.JSDialog = L.Control.extend({
 			else {
 				var height = instance.container.getBoundingClientRect().height;
 				if (instance.posy + height > instance.containerParent.getBoundingClientRect().height) {
+					calculated = true;
 					var newTopPosition = instance.posy - height;
 					if (newTopPosition < 0)
 						newTopPosition = 0;
@@ -376,6 +378,7 @@ L.Control.JSDialog = L.Control.extend({
 
 				var width = instance.container.getBoundingClientRect().width;
 				if (instance.posx + width > instance.containerParent.getBoundingClientRect().width) {
+					calculated = true;
 					var newLeftPosition = instance.posx - width;
 					if (newLeftPosition < 0)
 						newLeftPosition = 0;
@@ -388,10 +391,9 @@ L.Control.JSDialog = L.Control.extend({
 			instance.posy = window.innerHeight - instance.container.offsetHeight - 40;
 		}
 
-		if (calculated) {
-			instance.container.style.marginLeft = instance.posx + 'px';
-			instance.container.style.marginTop = instance.posy + 'px';
-		}
+		var positionNotSet = !instance.container.style || !instance.container.style.marginLeft;
+		if (calculated || positionNotSet)
+			this.updatePosition(instance.container, instance.posx, instance.posy);
 	},
 
 	calculateAutoFilterPosition: function(instance) {
@@ -434,8 +436,7 @@ L.Control.JSDialog = L.Control.extend({
 		instance.posx = left + offsetX;
 		instance.posy = top + offsetY;
 
-		instance.container.style.marginLeft = instance.posx + 'px';
-		instance.container.style.marginTop = instance.posy + 'px';
+		this.updatePosition(instance.container, instance.posx, instance.posy);
 	},
 
 	onJSDialog: function(e) {
