@@ -1113,11 +1113,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				});
 
 				// We are adding this to distinguish "enter" key from real click events.
-				tabs.forEach(function (tab) {
-					tab.addEventListener('keypress', function(e) {
-						if (e.keyCode === 13)
-							tab.enterPressed = true;
-						});
+				tabs.forEach(function (tab)
+					{
+						tab.addEventListener('keydown', function(e) {
+							if (e.key === 'Enter')
+								tab.enterPressed = true;
+							else if (e.key === 'Escape')
+								builder.map.focus();
+							}
+						);
 					}
 				);
 			} else {
