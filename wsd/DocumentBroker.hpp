@@ -589,11 +589,9 @@ private:
     }
 
     /// Encodes whether or not uploading is needed.
-    STATE_ENUM(
-        NeedToUpload,
-        No, //< No need to upload, data up-to-date.
-        Yes, //< Data is out of date.
-        Force //< Force uploading, typically because always_save_on_exit is set.
+    STATE_ENUM(NeedToUpload,
+               No, //< No need to upload, data up-to-date.
+               Yes, //< Data is out of date.
     );
 
     /// Returns the state of the need to upload.
@@ -644,7 +642,6 @@ private:
                Maybe, //< We have activity post saving.
                Yes_Modified, //< Data is out of date.
                Yes_LastSaveFailed, //< Yes, need to produce file on disk.
-               Force //< Force saving, typically because the user requested.
     );
 
     /// Returns the state of the need to save.
