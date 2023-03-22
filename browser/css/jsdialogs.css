@@ -142,6 +142,14 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: grid;
 }
 
+/* Find and replace dialog */
+#search_grid, #replace_grid {
+	grid-template-columns: minmax(100px, min-content) auto !important;
+}
+#searchframe input[type='checkbox'] {
+	margin-inline-start: 0;
+}
+
 /* keep structure with hidden elements correct */
 .ui-grid {
 	/* don't show scroll for hidden objects */
