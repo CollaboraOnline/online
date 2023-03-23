@@ -3,7 +3,7 @@
  * Toolbar handler
  */
 
-/* global app $ window vex sanitizeUrl brandProductName brandProductURL _ */
+/* global app $ window sanitizeUrl brandProductName brandProductURL _ */
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
@@ -781,9 +781,7 @@ L.Map.include({
 	},
 
 	formulabarBlur: function() {
-		var hasJSDialogOpened = this.jsdialog && this.jsdialog.hasDialogOpened();
-		var hasVexOpened = Object.keys(vex.getAll()).length > 0;
-		if (!hasVexOpened && !hasJSDialogOpened)
+		if (!this.uiManager.isAnyDialogOpen())
 			this.focus();
 	},
 
