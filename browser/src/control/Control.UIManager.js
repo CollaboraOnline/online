@@ -933,7 +933,7 @@ L.Control.UIManager = L.Control.extend({
 	/// buttonText - text inside button
 	/// callback - callback on button press
 	/// withCancel - specifies if needs cancal button also
-	showInfoModal: function(id, title, message1, message2, buttonText, callback, withCancel) {
+	showInfoModal: function(id, title, message1, message2, buttonText, callback, withCancel, focusId) {
 		var dialogId = this.generateModalId(id);
 		var responseButtonId = id + '-response';
 		var cancelButtonId = id + '-cancel';
@@ -977,7 +977,7 @@ L.Control.UIManager = L.Control.extend({
 				vertical: false,
 				layoutstyle: 'end'
 			},
-		]);
+		], focusId);
 
 		var that = this;
 		this.showModal(json, [

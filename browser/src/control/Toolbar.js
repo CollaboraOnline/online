@@ -644,7 +644,7 @@ L.Map.include({
 
 		var map = this;
 
-		map.uiManager.showInfoModal(aboutDialogId + '-box', '', '', '', '', null, false);
+		map.uiManager.showInfoModal(aboutDialogId + '-box', '', '', '', '', null, false, 'about-dialog');
 		document.getElementById(aboutDialogId + '-box').innerHTML = content.outerHTML;
 
 		var form = document.getElementById('modal-dialog-about-dialog-box');
