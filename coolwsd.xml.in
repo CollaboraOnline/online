@@ -286,8 +286,8 @@
 
     @FEATURE_RESTRICTION_CONFIGURATION@
 
-    <zotero dec="Zotero plugin configuration. For more details about Zotero visit https://www.zotero.org/">
-        <enable dec="Enable Zotero plugin." type="bool" default="true">true</enable>
+    <zotero desc="Zotero plugin configuration. For more details about Zotero visit https://www.zotero.org/">
+        <enable desc="Enable Zotero plugin." type="bool" default="true">true</enable>
     </zotero>
 
 </config>
