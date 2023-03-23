@@ -1462,7 +1462,7 @@ L.Control.Menubar = L.Control.extend({
 							self._map.fire('mobilewizard', {data: menuData});
 							$('#toolbar-hamburger').removeClass('menuwizard-closed').addClass('menuwizard-opened');
 							$('#mobile-wizard-header').hide();
-							$('#toolbar-mobile-back').hide();
+							$('#toolbar-mobile-back').css('visibility', 'hidden');
 							$('#formulabar').hide();
 						}
 					} else if (!window.mode.isMobile()) {
@@ -1474,7 +1474,7 @@ L.Control.Menubar = L.Control.extend({
 						window.mobileMenuWizard = false;
 						self._map.fire('closemobilewizard');
 						$('#toolbar-hamburger').removeClass('menuwizard-opened').addClass('menuwizard-closed');
-						$('#toolbar-mobile-back').show();
+						$('#toolbar-mobile-back').css('visibility', '');
 						if (self._map.getDocType() === 'spreadsheet')
 							$('#formulabar').show();
 					}
