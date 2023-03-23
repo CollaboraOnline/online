@@ -2677,7 +2677,7 @@ void lokit_main(
 {
 #if !MOBILEAPP
 
-    SigUtil::setFatalSignals("kit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
+    SigUtil::setFatalSignals("kit startup of Online: " COOLWSD_VERSION " " COOLWSD_VERSION_HASH " Core: " CORE_VERSION " " CORE_VERSION_HASH);
     SigUtil::setUserSignals();
 
     Util::setThreadName("kit_spare_" + Util::encodeId(numericIdentifier, 3));
