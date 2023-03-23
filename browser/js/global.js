@@ -727,8 +727,23 @@ window.app = {
 					that.readyState = that.innerSocket.readyState;
 					that.onmessage(e);
 				};
+			} else if (this.status === 202) {
+				var msg = {
+					'MessageId': 'App_LoadingStatus',
+					'SendTime': Date.now(),
+					'Values': {
+						Status: 'Loading_Progress'
+					}
+				};
+				window.parent.postMessage(JSON.stringify(msg), '*');
+				var timeoutFn = function (indirectionUrl, uri) {
+					console.warn('Requesting again for URI with RouteToken');
+					this.open('GET', indirectionUrl + '?Uri=' + encodeURIComponent(uri), true);
+					this.send();
+				}.bind(this);
+				setTimeout(timeoutFn, 10000, global.indirectionUrl, that.uri);
 			} else {
-				window.app.console.debug('Indirection url: error on incoming response ' + this.status);
+				window.app.console.error('Indirection url: error on incoming response ' + this.status);
 			}
 		});
 		http.send();
