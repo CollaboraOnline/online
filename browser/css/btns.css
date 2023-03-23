@@ -22,7 +22,7 @@ button.jsdialog img {
 }
 
 .button-secondary,
-button:not(.ui-corner-all):not(.button-primary) {
+button:not(.ui-tab-content):not(.ui-corner-all):not(.button-primary) {
 	box-sizing: border-box;
 	height: 32px;
 	line-height: 0em;
