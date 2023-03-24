@@ -3,9 +3,8 @@
 	----------------------------------*/
 	--cool-font: 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
 	/*investigate what are the drawback in consisntly use --cool-fonts
-	for vex, jquery-ui and perhaps mobile*/
+	for jquery-ui and perhaps mobile*/
 	--mobile-font: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
-	--vex-font: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
 	--jquery-ui-font: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
 
 	--docs-font: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -878,10 +877,6 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 .drop-down-field-list-item:hover {
 	background-color: var(--color-primary);
-}
-
-.word-wrap-for-vex-dialog {
-	overflow-wrap: break-word;
 }
 
 .hyperlink-popup .leaflet-popup-content {
