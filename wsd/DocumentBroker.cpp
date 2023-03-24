@@ -1372,10 +1372,30 @@ bool DocumentBroker::isStorageOutdated() const
     return currentModifiedTime != lastModifiedTime;
 }
 
-void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& session, bool success,
-                                        const std::string& result)
+void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& session,
+                                        const Poco::JSON::Object::Ptr& json)
 {
     assertCorrectThread();
+
+    const bool success = json->get("success").toString() == "true";
+    std::string result;
+    if (json->has("result"))
+    {
+        const Poco::Dynamic::Var parsedResultJSON = json->get("result");
+        const auto& resultObj = parsedResultJSON.extract<Poco::JSON::Object::Ptr>();
+        if (resultObj->get("type").toString() == "string")
+            result = resultObj->get("value").toString();
+    }
+
+    if (json->has("wasModified"))
+    {
+        // If Core reports the modified state before saving,
+        // use it to report to the Storage with more confidence.
+        const bool wasModified = (json->get("wasModified").toString() == "true");
+        LOG_DBG("Core reported that the file was " << (wasModified ? "" : "not ")
+                                                   << "modified before saving");
+        _nextStorageAttrs.setUserModified(wasModified);
+    }
 
     // Record that we got a response to avoid timing out on saving.
     _saveManager.setLastSaveResult(success || result == "unmodified");
@@ -2400,6 +2420,7 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     oss << '}';
 
     // At this point, if we have any potential modifications, we need to capture the fact.
+    // If Core does report something different after saving, we'll update this flag.
     _nextStorageAttrs.setUserModified(isModified() || haveModifyActivityAfterSaveRequest());
 
     // Note: It's odd to capture these here, but this function is used from ClientSession too.
