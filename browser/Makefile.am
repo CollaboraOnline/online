@@ -111,7 +111,6 @@ NODE_MODULES_SRC =\
 	autolinker@3.14.1 \
 	json-js@1.1.2 \
 	select2@4.0.13 \
-	vex-js@4.1.0 \
 	l10n-for-node@0.0.1 \
 	@braintree/sanitize-url@6.0.0
 
@@ -135,9 +134,6 @@ COOL_CSS_LST =\
 	$(srcdir)/css/editor.css \
 	$(srcdir)/css/iframedialog.css \
 	$(builddir)/node_modules/jquery-contextmenu/dist/jquery.contextMenu.css \
-	$(builddir)/node_modules/vex-js/dist/css/vex.css \
-	$(builddir)/node_modules/vex-js/dist/css/vex-theme-plain.css \
-	$(builddir)/node_modules/vex-js/dist/css/vex-theme-bottom-right-corner.css \
 	$(builddir)/node_modules/smartmenus/dist/css/sm-core-css.css \
 	$(builddir)/node_modules/smartmenus/dist/css/sm-simple/sm-simple.css \
 	$(srcdir)/css/welcome.css \
@@ -147,7 +143,6 @@ COOL_CSS_LST =\
 	$(srcdir)/css/btns.css \
 	$(srcdir)/css/notebookbar.css \
 	$(srcdir)/css/jssidebar.css \
-	$(srcdir)/css/override-vex.css \
 	$(srcdir)/css/override-smartmenus.css \
 	$(srcdir)/css/jquery-ui-lightness.css \
 	$(srcdir)/css/infobar.css
@@ -175,7 +170,6 @@ COOL_LIBS_JS =\
 	Autolinker.js \
 	json2.js \
 	select2.js \
-	vex.combined.js \
 	sanitize-url.js
 
 if !ENABLE_MOBILEAPP

@@ -3,15 +3,7 @@
  * L.Map is the central class of the API - it is used to create a map.
  */
 
-window.isAnyVexDialogActive = function() {
-	var res = false;
-	for (var vexId in vex.getAll()) {
-		res = res || vex.getById(vexId).isOpen;
-	}
-	return res;
-};
-
-/* global app vex _ Cursor */
+/* global app _ Cursor */
 
 L.Map = L.Evented.extend({
 
@@ -134,8 +126,6 @@ L.Map = L.Evented.extend({
 		// True only when searching within the doc, as we need to use winId==0.
 		this._isSearching = false;
 
-
-		vex.dialogID = -1;
 
 		this.callInitHooks();
 
