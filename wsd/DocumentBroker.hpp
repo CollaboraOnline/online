@@ -290,8 +290,8 @@ public:
 
     /// Handle the save response from Core and upload to storage as necessary.
     /// Also notifies clients of the result.
-    void handleSaveResponse(const std::shared_ptr<ClientSession>& session, bool success,
-                            const std::string& result);
+    void handleSaveResponse(const std::shared_ptr<ClientSession>& session,
+                            const Poco::JSON::Object::Ptr& json);
 
     /// Check if uploading is needed, and start uploading.
     /// The current state of uploading must be introspected separately.
