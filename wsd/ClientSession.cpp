@@ -1552,18 +1552,8 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 const auto& object = parsedJSON.extract<Poco::JSON::Object::Ptr>();
                 if (object->get("commandName").toString() == ".uno:Save")
                 {
-                    const bool success = object->get("success").toString() == "true";
-                    std::string result;
-                    if (object->has("result"))
-                    {
-                        const Poco::Dynamic::Var parsedResultJSON = object->get("result");
-                        const auto& resultObj = parsedResultJSON.extract<Poco::JSON::Object::Ptr>();
-                        if (resultObj->get("type").toString() == "string")
-                            result = resultObj->get("value").toString();
-                    }
-
                     // Save to Storage and log result.
-                    docBroker->handleSaveResponse(client_from_this(), success, result);
+                    docBroker->handleSaveResponse(client_from_this(), object);
 
                     if (!isCloseFrame())
                         forwardToClient(payload);
