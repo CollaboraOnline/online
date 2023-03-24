@@ -609,7 +609,7 @@ public:
         return 0;
     }
 
-    void trimIfInactive()
+    void trimIfInactive() override
     {
     }
 };
