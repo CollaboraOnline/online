@@ -1,7 +1,5 @@
 /* For btns hover status see device-desktop.css */
 
-.jsdialog-container .ui-button-box button,
-
 .jsdialog *[disabled] {
 	color: var(--color-text-lighter);
 	border: 1px solid var(--color-btn-border-dis);
