@@ -30,6 +30,30 @@
         window.frames[0].postMessage(JSON.stringify(msg), '*');
       }
 
+      function sendBoldUNOCommand() {
+        post({'MessageId': 'Send_UNO_Command',
+              'Values': { 'Command': '.uno:Bold' }
+            });
+      }
+
+      function sendInsertBookMarkUNOCommand() {
+        post({'MessageId': 'Send_UNO_Command',
+              'Values': {
+                'Command': '.uno:InsertBookmark',
+                'Args': {
+                  Bookmark: {
+                    type: 'string',
+                    value: 'Test Insert BookMark'
+                  },
+                  BookmarkText: {
+                    type: 'string',
+                    value: 'Text of the Test Insert BookMark'
+                  }
+                }
+              }
+            });
+      }
+
       function insertText(text) {
         post({'MessageId': 'CallPythonScript',
               'SendTime': Date.now(),
@@ -308,6 +332,12 @@
       <p>
       <button onclick="ShowNotebookbar(false); return false;">Compact Toolbar</button>
       <button onclick="ShowNotebookbar(true); return false;">Tabbed Toolbar</button>
+    </form>
+
+    <h3>Send UNO Commands</h3>
+    <form id="menubar-toggle">
+      <button onclick="sendBoldUNOCommand(); return false;">Send Bold UNO Command (and example without args)</button>
+      <button onclick="sendInsertBookMarkUNOCommand(); return false;">Send InsertBookmark UNO Command (an example with args)</button>
     </form>
 
     <h3>Document frame</h3>
