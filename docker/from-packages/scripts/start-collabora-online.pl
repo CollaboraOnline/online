@@ -97,6 +97,7 @@ sub rewrite_config($) {
     open(CONFIG, '<', $config) or die $!;
 
     my $in_aliases = 0;
+    my $in_remote_font_config = 0;
     while (<CONFIG>) {
         if (/<remote_url (.*)>.*<\/remote_url>/) {
             my $remoteurl = $ENV{'remoteconfigurl'};
@@ -107,6 +108,21 @@ sub rewrite_config($) {
             else {
                 $output .= $_;
             }
+        }
+        elsif (/<remote_font_config/) {
+            $in_remote_font_config = 1;
+            $output .= $_;
+        }
+        elsif ($in_remote_font_config && /<url /) {
+            my $remoteurl = $ENV{'remotefontconfigurl'};
+            if ($remoteurl) {
+                s/<url (.*)>.*<\/url>/<url $1>$remoteurl<\/url>/;
+                $output .= $_;
+            }
+            else {
+                $output .= $_;
+            }
+            $in_remote_font_config = 0;
         }
         elsif (/<alias_groups/) {
             $in_aliases = 1;
@@ -128,7 +144,7 @@ sub rewrite_config($) {
             $in_aliases = 0;
             $output .= $_;
         }
-        elsif (!$in_aliases) {
+        elsif (!$in_aliases && !$in_remote_font_config) {
             $output .= $_;
         }
     }

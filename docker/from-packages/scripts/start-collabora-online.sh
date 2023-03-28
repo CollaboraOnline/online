@@ -35,7 +35,7 @@ SAL_LOG="-INFO-WARN"
 fi
 
 # Replace trusted host and set admin username and password - only if they are set
-if test -n "${aliasgroup1}" -o -n "${domain}" -o -n "${remoteconfigurl}"; then
+if test -n "${aliasgroup1}" -o -n "${domain}" -o -n "${remoteconfigurl}" -o -n "${remotefontconfigurl}"; then
     perl -w /start-collabora-online.pl || { exit 1; }
 fi
 if test -n "${username}"; then
