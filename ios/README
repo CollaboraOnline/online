@@ -6,6 +6,5 @@ App Store "Test Details" text for the last TestFlight build
 
 This version includes the latest 22.05.11 code and fixes the following bugs:
 
-• The Paste button in the toolbar would sometimes be disabled even when there was content in the system pasteboard
-• The Create Document dialog could not be dismissed by tapping outside the dialog or pressing a button
-• A document's text direction could not be changed to right-to-left (RTL) or vertical because the Complex Text Layout (CTL) and Chinese/Japanese/Korean (CJK) text layout features could not be enabled
+• The bold, underline, and italics toolbar buttons used the wrong localization
+• Some buttons in the Sidebar in Writer were misaligned or drawn outside of the visable area
