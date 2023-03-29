@@ -32,6 +32,8 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	image.alt = data.text;
 	image.title = data.text;
 	image.tabIndex = 0;
+	image.draggable = false;
+	image.ondragstart = function() { return false; };
 	builder.map.uiManager.enableTooltip(image);
 
 	if (data.loading && data.loading === 'true') {
