@@ -55,7 +55,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Text'] = this._insertTextBoxControl;
 		this._toolitemHandlers['.uno:DrawText'] = this._insertTextBoxControl;
 		this._toolitemHandlers['.uno:VerticalText'] = this._insertTextBoxControl;
-		this._toolitemHandlers['.uno:ShowResolvedAnnotations'] = this._showResolvedAnnotationsControl;
 		this._toolitemHandlers['.uno:OnlineHelp'] = this._onlineHelpControl;
 		this._toolitemHandlers['.uno:ForumHelp'] = this._onlineHelpControl;
 		this._toolitemHandlers['.uno:KeyboardShortcuts'] = this._onlineHelpControl;
@@ -697,19 +696,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			builder.map.sendUnoCommand(data.command + '?CreateDirectly:bool=true');
-		});
-		builder._preventDocumentLosingFocusOnClick(control.container);
-	},
-
-	_showResolvedAnnotationsControl: function(parentContainer, data, builder) {
-		var control = builder._unoToolButton(parentContainer, data, builder);
-
-		$(control.container).unbind('click.toolbutton');
-		$(control.container).click(function () {
-			var items = builder.map['stateChangeHandler'];
-			var val = items.getItemValue('.uno:ShowResolvedAnnotations');
-			val = (val === 'true' || val === true);
-			builder.map.showResolvedComments(!val);
 		});
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},

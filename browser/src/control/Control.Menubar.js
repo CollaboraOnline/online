@@ -1812,7 +1812,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'zoomin' && this._map.getZoom() < this._map.getMaxZoom()) {
 			this._map.zoomIn(1, null, true /* animate? */);
 		} else if (id === 'showresolved') {
-			this._map.showResolvedComments(!$(itNode).hasClass('lo-menu-item-checked'));
+			this._map.dispatch('showresolvedannotations');
 		} else if (id === 'zoomout' && this._map.getZoom() > this._map.getMinZoom()) {
 			this._map.zoomOut(1, null, true /* animate? */);
 		} else if (id === 'zoomreset') {

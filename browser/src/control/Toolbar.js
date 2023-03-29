@@ -950,6 +950,12 @@ L.Map.include({
 		case 'closetablet':
 			this.uiManager.enterReadonlyOrClose();
 			break;
+		case 'showresolvedannotations':
+			var items = this['stateChangeHandler'];
+			var val = items.getItemValue('.uno:ShowResolvedAnnotations');
+			val = (val === 'true' || val === true);
+			this.showResolvedComments(!val);
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}

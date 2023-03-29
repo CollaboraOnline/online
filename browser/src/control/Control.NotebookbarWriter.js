@@ -1680,9 +1680,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:InsertAnnotation'
 			},
 			{
-				'type': 'bigtoolitem',
+				'type': 'bigcustomtoolitem',
 				'text': _UNO('.uno:ShowResolvedAnnotations', 'text'),
-				'command': '.uno:ShowResolvedAnnotations'
+				'command': 'showresolvedannotations'
 			},
 			{
 				'type': 'container',
