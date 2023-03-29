@@ -1397,6 +1397,13 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
         _nextStorageAttrs.setUserModified(wasModified);
     }
 
+    // Update the storage attributes to capture what's
+    // new and applies to this new version and reset the next.
+    // These are the attributes of the version to be uploaded.
+    // Note: these are owned by us and this is thread-safe.
+    _currentStorageAttrs.merge(_nextStorageAttrs);
+    _nextStorageAttrs.reset();
+
     // Record that we got a response to avoid timing out on saving.
     _saveManager.setLastSaveResult(success || result == "unmodified");
 
@@ -1704,27 +1711,24 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
         }
     };
 
-    // Update the storage attributes to capture what's
-    // new and applies to this new version and reset the next.
-    // These are the attributes of the next version to be uploaded.
-    // Note: these are owned by us and this is thread-safe.
-    _currentStorageAttrs.merge(_nextStorageAttrs);
+    _lastStorageAttrs = _currentStorageAttrs;
+    _currentStorageAttrs.reset();
 
     // Once set, isUnloading shouldn't be unset.
-    _currentStorageAttrs.setIsExitSave(isUnloading());
+    _lastStorageAttrs.setIsExitSave(isUnloading());
 
     if (force)
     {
         // Don't reset the force flag if it was set
         // (which would imply we failed to upload).
-        _currentStorageAttrs.setForced(true);
+        _lastStorageAttrs.setForced(true);
     }
 
     _nextStorageAttrs.reset();
 
     _storageManager.markLastUploadRequestTime();
     _storage->uploadLocalFileToStorageAsync(session->getAuthorization(), *_lockCtx, saveAsPath,
-                                            saveAsFilename, isRename, _currentStorageAttrs, *_poll,
+                                            saveAsFilename, isRename, _lastStorageAttrs, *_poll,
                                             asyncUploadCallback);
 }
 
@@ -1779,10 +1783,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
             _documentChangedInStorage = false;
 
             // Reset the storage attributes; They've been used and we can discard them.
-            _currentStorageAttrs.reset();
-            // In case there was an update while we were uploading, merge it.
-            _currentStorageAttrs.merge(_nextStorageAttrs);
-            _nextStorageAttrs.reset();
+            _lastStorageAttrs.reset();
 
             LOG_DBG("Uploaded docKey ["
                     << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
@@ -2008,6 +2009,10 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
             stop("conflict");
         }
     }
+
+    // We failed to upload, merge the last attributes into the current one.
+    _currentStorageAttrs.merge(_lastStorageAttrs);
+    _lastStorageAttrs.reset();
 }
 
 void DocumentBroker::broadcastSaveResult(bool success, const std::string& result, const std::string& errorMsg)
@@ -4000,6 +4005,8 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  StorageManager:";
     _storageManager.dumpState(os, "\n    ");
 
+    os << "\n    Last StorageAttributes:";
+    _lastStorageAttrs.dumpState(os, "\n      ");
     os << "\n    Current StorageAttributes:";
     _currentStorageAttrs.dumpState(os, "\n      ");
     os << "\n    Next StorageAttributes:";
