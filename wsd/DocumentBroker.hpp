@@ -1397,13 +1397,15 @@ private:
 
     std::unique_ptr<StorageBase> _storage;
 
-    /// The current upload request's attributes. Re-used to retry after failure.
-    /// Updated right before uploading.
-    StorageBase::Attributes _currentStorageAttrs;
-    /// The next upload request's attributes. Avoids clobbering
-    /// _currentStorageAttrs until the current request succeeds.
-    /// Updated right before saving.
+    /// The next upload request's attributes, used during uno:Save only.
+    /// Updated right before saving and when saving is completed.
     StorageBase::Attributes _nextStorageAttrs;
+    /// The current upload request's attributes.
+    /// Updated after saving and merged with 'last' when upload fails.
+    StorageBase::Attributes _currentStorageAttrs;
+    /// The last upload request's attributes. Re-used to retry after failure.
+    /// Updated right before uploading.
+    StorageBase::Attributes _lastStorageAttrs;
 
     std::unique_ptr<TileCache> _tileCache;
     std::atomic<bool> _isModified;
