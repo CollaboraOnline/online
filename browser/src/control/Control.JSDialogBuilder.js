@@ -2231,6 +2231,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var isRealUnoCommand = true;
 
+		if (data.text)
+			data.text = data.text.replace('...', '');
+
 		if (data.command || data.postmessage === true) {
 			var id = data.id ? data.id : (data.command && data.command !== '') ? data.command : data.text;
 			var isUnoCommand = data.command && data.command.indexOf('.uno:') >= 0;
