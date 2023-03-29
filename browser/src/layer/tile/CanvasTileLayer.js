@@ -1755,7 +1755,12 @@ L.CanvasTileLayer = L.Layer.extend({
 				this.coreDocBGColor = textMsg.substring('documentbackgroundcolor:'.length + 1).trim();
 				app.sectionContainer.setClearColor('#' + this.coreDocBGColor);
 			}
-		} else if (textMsg.startsWith('contentcontrol:')) {
+		}
+		else if (textMsg.startsWith('applicationbackgroundcolor:')) {
+			app.sectionContainer.setClearColor('#' + textMsg.substring('applicationbackgroundcolor:'.length + 1).trim());
+			app.sectionContainer.requestReDraw();
+		}
+		else if (textMsg.startsWith('contentcontrol:')) {
 			textMsg = textMsg.substring('contentcontrol:'.length + 1);
 			if (!app.sectionContainer.doesSectionExist(L.CSections.ContentControl.name)) {
 				app.sectionContainer.addSection(new app.definitions.ContentControlSection());
