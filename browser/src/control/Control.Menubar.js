@@ -1797,7 +1797,8 @@ L.Control.Menubar = L.Control.extend({
 			|| id.startsWith('export')
 			|| id.startsWith('zotero')
 			|| id === 'deletepage'
-			|| id === 'remotelink') {
+			|| id === 'remotelink'
+			|| id === 'toggledarktheme') {
 			this._map.dispatch(id);
 		} else if (id === 'signdocument') {
 			this._map.showSignDocument();
@@ -1821,8 +1822,6 @@ L.Control.Menubar = L.Control.extend({
 			L.toggleFullScreen();
 		} else if (id === 'showruler') {
 			this._map.uiManager.toggleRuler();
-		} else if (id == 'toggledarktheme') {
-			this._map.uiManager.toggleDarkMode();
 		} else if (id === 'toggleuimode') {
 			if (this._map.uiManager.shouldUseNotebookbarMode()) {
 				this._map.uiManager.onChangeUIMode({mode: 'classic', force: true});

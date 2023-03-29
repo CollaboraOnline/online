@@ -956,6 +956,9 @@ L.Map.include({
 			val = (val === 'true' || val === true);
 			this.showResolvedComments(!val);
 			break;
+		case 'toggledarktheme':
+			this.uiManager.toggleDarkMode();
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}

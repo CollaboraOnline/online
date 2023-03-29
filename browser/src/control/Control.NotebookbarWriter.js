@@ -1140,9 +1140,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'id':'toggledarktheme',
-				'type': 'bigmenubartoolitem',
-				'text': _('Dark Mode'),
-				'command':_('Dark Mode')
+				'type': 'bigcustomtoolitem',
+				'text': _('Dark Mode')
 			},
 			{
 				'type': 'bigtoolitem',
