@@ -432,15 +432,15 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         std::vector<int> toErase;
 
         size_t i = _pollStartIndex;
-        LOG_TRC('#' << _pollFds[i].fd << ": Starting handling poll events of " << _name
-                    << " at index " << i << " (of " << size << "): 0x" << std::hex
-                    << _pollFds[i].revents << std::dec);
-
         for (std::size_t j = 0; j < size; ++j)
         {
             SocketDisposition disposition(_pollSockets[i]);
             try
             {
+                LOG_TRC('#' << _pollFds[i].fd << ": Handling poll events of " << _name
+                            << " at index " << i << " (of " << size << "): 0x" << std::hex
+                            << _pollFds[i].revents << std::dec);
+
                 _pollSockets[i]->handlePoll(disposition, newNow,
                                             _pollFds[i].revents);
             }
@@ -462,6 +462,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             else
                 i--;
         }
+
         if (!toErase.empty())
         {
             std::sort(toErase.begin(), toErase.end(), [](int a, int b) { return a > b; });
