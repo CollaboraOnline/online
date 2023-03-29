@@ -1,3 +1,8 @@
+label.mobile-wizard {
+	display: block;
+	float: left;
+}
+
 .menuwizard .menu-entry-icon{
 	padding-left: 4%;
 }
@@ -129,9 +134,11 @@ span#main-menu-btn-icon {
 }
 
 .no-color-control-label, .auto-color-control-label {
-	display: table-cell;
+	display: table-cell !important;
 	padding-left: 8px;
 	vertical-align: middle;
+	white-space: nowrap;
+	float: initial !important;
 }
 
 .no-color-control-mark, .auto-color-control-mark {
@@ -141,7 +148,7 @@ span#main-menu-btn-icon {
 }
 
 .no-color-control-icon, .auto-color-control-icon {
-	display: table-cell;
+	display: table-cell !important;
 	height: 32px !important;
 	width: 32px !important;
 	text-align: center;
@@ -150,6 +157,7 @@ span#main-menu-btn-icon {
 	font-weight: 300;
 	color: #ff0000 !important;
 	background: url('images/lc_square_rounded_unfilled.svg') no-repeat center;
+	float: initial !important;
 }
 
 .colors-container-basic-color-mark {
@@ -605,7 +613,7 @@ input.ui-edit.mobile-wizard,
 }
 
 /*insert table special layout*/
-.inserttablecontrols p.ui-text{
+.inserttablecontrols label.ui-text{
 	margin-left: 14%;
 	width: 50%;
 	border: none;
@@ -731,13 +739,13 @@ a.leaflet-control-zoom-in {
 }
 
 #mobile-wizard #StyleNewByExample + div, #mobile-wizard #AlignTop,
-#mobile-wizard #AlignBottom + p, #mobile-wizard #mergecells, #mobile-wizard #BackgroundColor + p,
+#mobile-wizard #AlignBottom + label, #mobile-wizard #mergecells, #mobile-wizard #BackgroundColor + label,
 #mobile-wizard #LineSpacing, #mobile-wizard #indentlabel, #mobile-wizard #spacinglabel,
 #mobile-wizard #sizelabel {
 	clear: both;
 }
 
-#mobile-wizard #BackgroundColor + p, #mobile-wizard #LineSpacing + p,
+#mobile-wizard #BackgroundColor + label, #mobile-wizard #LineSpacing + label,
 #mobile-wizard #denominatorplaceslabel, #mobile-wizard #decimalplaceslabel,
 #mobile-wizard #leadingzeroeslabel, #mobile-wizard #leftindentlabel,
 #mobile-wizard #orientationlabel, #mobile-wizard #cellbackgroundlabel,
@@ -980,7 +988,7 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 	float: right;
 	margin: 24px 0px;
 }
-div#enablecontour + p, #arrangelabel, #SetMinimalRowHeight {clear: both;}
+div#enablecontour + label, #arrangelabel, #SetMinimalRowHeight {clear: both;}
 
 label.disabled {
 	color: var(--color-text-lighter) !important;

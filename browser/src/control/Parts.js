@@ -436,7 +436,7 @@ L.Map.include({
 			};
 
 			this.uiManager.showInfoModal('show-sheets-modal', '', ' ', ' ', _('Close'), callback, true);
-			document.getElementById('show-sheets-modal').querySelectorAll('p')[0].outerHTML = container.outerHTML;
+			document.getElementById('show-sheets-modal').querySelectorAll('label')[0].outerHTML = container.outerHTML;
 		}
 	},
 

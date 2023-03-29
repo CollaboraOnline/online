@@ -59,14 +59,15 @@
 	line-height: 1.5;
 }
 
-.jsdialog.vertical p, .ui-frame-label {
+.jsdialog.vertical label, .ui-frame-label {
 	margin: auto 0px;
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
 	line-height: var(--default-height);
+	padding-left: inherit;
 }
-#glowframe > div.ui-frame.jsdialog.sidebar > span,
-#softedgeframe > div.ui-frame.jsdialog.sidebar > span {
+#glowframe > div.ui-frame.jsdialog.sidebar > label,
+#softedgeframe > div.ui-frame.jsdialog.sidebar > label {
 	color: var(--color-main-text);
 	font-size: var(--header-font-size);
 	line-height: var(--header-height);
@@ -832,7 +833,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* Macros dialos */
 
-#MacroWarnMedium p {
+#MacroWarnMedium label {
 	max-width: 400px;
 	color: var(--color-main-text);
 	text-transform: none;
