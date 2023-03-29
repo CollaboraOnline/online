@@ -3289,6 +3289,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_DOCUMENT_BACKGROUND_COLOR:
         sendTextFrame("documentbackgroundcolor: " + payload);
         break;
+    case LOK_CALLBACK_APPLICATION_BACKGROUND_COLOR:
+        sendTextFrame("applicationbackgroundcolor: " + payload);
+        break;
     case LOK_CALLBACK_MEDIA_SHAPE:
         sendTextFrame("mediashape: " + payload);
         break;
