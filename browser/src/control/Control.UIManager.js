@@ -1051,13 +1051,15 @@ L.Control.UIManager = L.Control.extend({
 			{
 				id: 'info-modal-label1',
 				type: 'fixedtext',
-				text: message
+				text: message,
+				labelFor: 'input-modal-input',
 			},
 			{
 				id: 'input-modal-input',
 				type: 'edit',
 				password: !!passwordInput,
-				text: defaultValue
+				text: defaultValue,
+				labelledBy: 'info-modal-label1'
 			},
 			{
 				id: '',

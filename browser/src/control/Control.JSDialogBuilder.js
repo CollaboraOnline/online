@@ -952,9 +952,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			container.id = data.id;
 
 			var frame = L.DomUtil.create('div', 'ui-frame ' + builder.options.cssClass, container);
-			var label = L.DomUtil.create('span', 'ui-frame-label ' + builder.options.cssClass, frame);
+			frame.id = data.id + '-frame';
+			var label = L.DomUtil.create('label', 'ui-frame-label ' + builder.options.cssClass, frame);
 			label.innerText = builder._cleanText(data.children[0].text);
 			label.id = data.children[0].id;
+			label.for = frame.id;
 			if (data.children[0].visible === false)
 				L.DomUtil.addClass(label, 'hidden');
 			builder.postProcess(frame, data.children[0]);
@@ -1776,7 +1778,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_fixedtextControl: function(parentContainer, data, builder) {
-		var fixedtext = L.DomUtil.create('p', builder.options.cssClass, parentContainer);
+		var fixedtext = L.DomUtil.create('label', builder.options.cssClass, parentContainer);
+
+		if (data.labelFor)
+			fixedtext.htmlFor = data.labelFor;
 
 		if (data.text)
 			fixedtext.textContent = builder._cleanText(data.text);
@@ -2659,7 +2664,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_borderControl: function(parentContainer, data, builder) {
-		var bordercontrollabel = L.DomUtil.create('p', builder.options.cssClass + ' ui-text', parentContainer);
+		var bordercontrollabel = L.DomUtil.create('label', builder.options.cssClass + ' ui-text', parentContainer);
 		bordercontrollabel.textContent = _('Cell borders');
 		bordercontrollabel.id = data.id + 'label';
 		var current = builder._getCurrentBorderNumber(builder);

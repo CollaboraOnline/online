@@ -675,22 +675,26 @@ L.Map.include({
 			{
 				id: 'hyperlink-text-box-label',
 				type: 'fixedtext',
-				text: _('Text')
+				text: _('Text'),
+				labelFor: 'hyperlink-text-box'
 			},
 			{
 				id: 'hyperlink-text-box',
 				type: 'multilineedit',
-				text: defaultText
+				text: defaultText,
+				labelledBy: 'hyperlink-text-box-label'
 			},
 			{
 				id: 'hyperlink-link-box-label',
 				type: 'fixedtext',
-				text: _('Link')
+				text: _('Link'),
+				labelFor: 'hyperlink-link-box'
 			},
 			{
 				id: 'hyperlink-link-box',
 				type: 'edit',
-				text: defaultLink
+				text: defaultLink,
+				labelledBy: 'hyperlink-link-box-label'
 			},
 			{
 				type: 'buttonbox',
