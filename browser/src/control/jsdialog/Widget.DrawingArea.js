@@ -117,7 +117,6 @@ function _drawingAreaControl (parentContainer, data, builder) {
 			event.preventDefault();
 		} else if (event.key === 'Tab') {
 			builder.callback('drawingarea', 'keypress', container, UNOKey.TAB | modifier, builder);
-			event.preventDefault();
 		} else if (event.key === 'Shift') {
 			modifier = modifier | UNOModifier.SHIFT;
 			event.preventDefault();
