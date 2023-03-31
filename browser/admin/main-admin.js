@@ -4,7 +4,6 @@
 var $ = require('jquery');
 global.$ = global.jQuery = $;
 
-require('json-js/json2');
 require('l10n-for-node');
 
 global._ = function (string) {
