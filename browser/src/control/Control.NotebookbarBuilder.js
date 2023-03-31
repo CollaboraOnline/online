@@ -506,14 +506,14 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'text': _('Word 2003 Document (.doc)')
 				},
 				{
-					'id': 'exportepub',
+					'id': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub',
 					'text': _('EPUB (.epub)'),
-					'command': 'exportepub'
+					'command': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub'
 				},
 				{
-					'id': 'exportpdf',
+					'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
-					'command': 'exportpdf'
+					'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf'
 				}
 			];
 		} else if (docType === 'spreadsheet') {
@@ -535,9 +535,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'text': _('CSV File (.csv)')
 				},
 				{
-					'id': 'exportpdf',
+					'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
-					'command': 'exportpdf',
+					'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf'
 				}
 			];
 		} else if (docType === 'presentation') {
@@ -559,9 +559,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'text': _('PowerPoint 2003 Presentation (.ppt)')
 				},
 				{
-					'id': 'exportpdf',
+					'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
 					'text': _('PDF Document (.pdf)'),
-					'command': 'exportpdf',
+					'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf'
 				}
 			];
 		}
