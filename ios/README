@@ -4,7 +4,9 @@ See https://collaboraonline.github.io/post/build-code-ios/
 App Store "Test Details" text for the last TestFlight build
 -----------------------------------------------------------
 
-This version includes the latest 22.05.11 code and fixes the following bugs:
+This version includes the latest 22.05.12 code and fixes the following bugs:
 
 • The bold, underline, and italics toolbar buttons used the wrong localization
 • Some buttons in the Sidebar in Writer were misaligned or drawn outside of the visable area
+• Tapping an Export as PDF menu item or toolbar button would cause the app to hang
+• Tapping an Export as EPUB menu item or toolbar button would silently fail
