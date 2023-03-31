@@ -1060,9 +1060,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				var title = builder._cleanText(item.text);
 
-				var tab = L.DomUtil.create('div', 'ui-tab ' + builder.options.cssClass, tabsContainer);
+				var tab = L.DomUtil.create('button', 'ui-tab ' + builder.options.cssClass, tabsContainer);
 				tab.id = item.name + '-tab-label';
 				tab.number = item.id - 1;
+				tab.setAttribute('tabIndex', '0');
 
 				var isSelectedTab = data.selected == item.id;
 				if (isSelectedTab) {
@@ -3036,6 +3037,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		// natural tab-order when using keyboard navigation
 		if (control && !control.hasAttribute('tabIndex')
 			&& data.type !== 'container'
+			&& data.type !== 'tabpage'
+			&& data.type !== 'tabcontrol'
 			&& data.type !== 'grid'
 			&& data.type !== 'toolbox'
 			&& data.type !== 'listbox'

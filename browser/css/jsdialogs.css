@@ -193,39 +193,40 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-tab.jsdialog {
-	float: left;
-	font-size: var(--default-font-size);
-	font-family: var(--cool-font);
-	line-height: normal;
-	color: dimgray;
-	color: var(--color-text-dark);
-	height: 24px;
-	display: flex;
-	align-items: center;
-	padding: 0px 1em;
-	border-radius: var(--border-radius);
-	background-color: var(--color-main-background);
-	margin-inline-end: 12px;
+	float: left !important;
+	font-size: var(--default-font-size) !important;
+	font-family: var(--cool-font) !important;
+	line-height: normal !important;
+	color: dimgray !important;
+	color: var(--color-text-dark) !important;
+	height: 24px !important;
+	display: flex !important;
+	align-items: center !important;
+	padding: 0px 1em !important;
+	border: solid 1px transparent !important;
+	border-radius: var(--border-radius) !important;
+	background-color: var(--color-main-background) !important;
+	margin-inline-end: 12px !important;
 }
 
 .ui-tab.jsdialog:first-child {
-	margin-inline-start: 12px;
+	margin-inline-start: 12px !important;
 }
 
 .ui-tab.hidden.jsdialog {
-	visibility: hidden;
+	visibility: hidden !important;
 }
 
 .ui-tab.selected.jsdialog {
-	background-color: var(--color-background-lighter);
-	color: var(--color-text-darker);
-	box-shadow: 0 0 2px 1px #cfcfcf;
+	background-color: var(--color-background-lighter) !important;
+	color: var(--color-text-darker) !important;
+	box-shadow: 0 0 2px 1px #cfcfcf !important;
 }
 
 .ui-tab.jsdialog:not(.selected):hover {
-	cursor: pointer;
-	background-color: var(--color-background-darker);
-	color: var(--color-text-darker);
+	cursor: pointer !important;
+	background-color: var(--color-background-darker) !important;
+	color: var(--color-text-darker) !important;
 }
 
 /* Expander */
