@@ -201,10 +201,10 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'container',
 				'children': [
 					{
-						'id': 'exportpdf',
+						'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
 						'type': 'customtoolitem',
 						'text': _('PDF Document (.pdf)'),
-						'command': 'exportpdf',
+						'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
 						'inlineLabel': true
 					},
 					hasRepair? {
