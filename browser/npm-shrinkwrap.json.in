@@ -30,7 +30,6 @@
         "jquery-contextmenu": "2.9.2",
         "jquery-mousewheel": "3.1.13",
         "jquery-ui": "1.13.2",
-        "json-js": "1.1.2",
         "l10n-for-node": "0.0.1",
         "mocha": "8.2.1",
         "pako": "2.0.4",
@@ -38,7 +37,6 @@
         "shrinkpack": "1.0.0-alpha",
         "smartmenus": "1.0.0",
         "stylelint": "13.7.0",
-        "stylelint-config-standard": "20.0.0",
         "typescript": "4.2.3",
         "uglify-js": "3.9.4",
         "uglifycss": "0.0.29",
@@ -4560,12 +4558,6 @@
         "node": ">=4"
       }
     },
-    "node_modules/json-js": {
-      "version": "1.1.2",
-      "resolved": "https://registry.npmjs.org/json-js/-/json-js-1.1.2.tgz",
-      "integrity": "sha512-IDp4by+J1JluT5Vsv3GDoDIJP6Xc+Tg/qyzDSS7eVux7Jf5aLbu7uSaEm+vGCFxSBlftOZg3I6FcefG197TfWA==",
-      "dev": true
-    },
     "node_modules/json-parse-better-errors": {
       "version": "1.0.2",
       "resolved": "https://registry.npmjs.org/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz",
@@ -7741,27 +7733,6 @@
       "funding": {
         "type": "opencollective",
         "url": "https://opencollective.com/stylelint"
-      }
-    },
-    "node_modules/stylelint-config-recommended": {
-      "version": "3.0.0",
-      "resolved": "https://registry.npmjs.org/stylelint-config-recommended/-/stylelint-config-recommended-3.0.0.tgz",
-      "integrity": "sha512-F6yTRuc06xr1h5Qw/ykb2LuFynJ2IxkKfCMf+1xqPffkxh0S09Zc902XCffcsw/XMFq/OzQ1w54fLIDtmRNHnQ==",
-      "dev": true,
-      "peerDependencies": {
-        "stylelint": ">=10.1.0"
-      }
-    },
-    "node_modules/stylelint-config-standard": {
-      "version": "20.0.0",
-      "resolved": "https://registry.npmjs.org/stylelint-config-standard/-/stylelint-config-standard-20.0.0.tgz",
-      "integrity": "sha512-IB2iFdzOTA/zS4jSVav6z+wGtin08qfj+YyExHB3LF9lnouQht//YyB0KZq9gGz5HNPkddHOzcY8HsUey6ZUlA==",
-      "dev": true,
-      "dependencies": {
-        "stylelint-config-recommended": "^3.0.0"
-      },
-      "peerDependencies": {
-        "stylelint": ">=10.1.0"
       }
     },
     "node_modules/stylelint/node_modules/ajv": {
@@ -12804,12 +12775,6 @@
       "integrity": "sha512-LwNnL5lTMq/bGtZeqAy721qOB+Bu/M0/NmpmJrKGikHqtNgS8H+x8b8zLEqTg3IKenhSpF7ZHPE2TtOajiv2LA== sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==",
       "dev": true
     },
-    "json-js": {
-      "version": "1.1.2",
-      "resolved": "file:archived-packages/json-js-1.1.2-203a786f2.tar",
-      "integrity": "sha512-odfggqTVvefEsix8QfFoZMgTYJXp1zAD3KMWKXZHQTUblTgv/UJDAvocSIiYFiuUllydj6y8kDvY8NkaF5GNVg== sha512-IDp4by+J1JluT5Vsv3GDoDIJP6Xc+Tg/qyzDSS7eVux7Jf5aLbu7uSaEm+vGCFxSBlftOZg3I6FcefG197TfWA==",
-      "dev": true
-    },
     "json-parse-better-errors": {
       "version": "1.0.2",
       "resolved": "file:archived-packages/json-parse-better-errors-1.0.2-9abab264a.tar",
@@ -15463,22 +15428,6 @@
             "isexe": "^2.0.0"
           }
         }
-      }
-    },
-    "stylelint-config-recommended": {
-      "version": "3.0.0",
-      "resolved": "file:archived-packages/stylelint-config-recommended-3.0.0-17ac9346e.tar",
-      "integrity": "sha512-4SQqDxpRBjO+pvjNDlrjskfBuZrV5gjQZ5Vlh78vLLAx5f9P3QPLwivaCkyJOFEQYTA0VH5XVi3HbVUiS2VjuQ== sha512-F6yTRuc06xr1h5Qw/ykb2LuFynJ2IxkKfCMf+1xqPffkxh0S09Zc902XCffcsw/XMFq/OzQ1w54fLIDtmRNHnQ==",
-      "dev": true,
-      "requires": {}
-    },
-    "stylelint-config-standard": {
-      "version": "20.0.0",
-      "resolved": "file:archived-packages/stylelint-config-standard-20.0.0-201da215d.tar",
-      "integrity": "sha512-+wFOoyiLV8SXjAtSf0/4ljcGvYW9rp3iZgz01C01/w3gG296sS2j7qArkcQIReS0zW9OOAW04diHio9PWhUuIw== sha512-IB2iFdzOTA/zS4jSVav6z+wGtin08qfj+YyExHB3LF9lnouQht//YyB0KZq9gGz5HNPkddHOzcY8HsUey6ZUlA==",
-      "dev": true,
-      "requires": {
-        "stylelint-config-recommended": "^3.0.0"
       }
     },
     "subarg": {

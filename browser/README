@@ -29,7 +29,7 @@ To update any of the dependency, process often goes like this:
 1.) Change version of the dependency in package.json
 2.) Do an `npm update <package_name>', which fetches the new module from npm registry. Make sure that
     only the module that you want to update is updated.
-3.) `npm shrinkwrap --dev` to update npm-shrinkwrap.json with newer information. You might see
+3.) `npm shrinkwrap --include=dev` to update npm-shrinkwrap.json with newer information. You might see
     that this tool updates path convention of tarballs inside node_shrinkwrap/ also, but this
     should get corrected in next step.
 4.) Do `shrinkpack', which should remove the old tarball, add new one, and make appropriate

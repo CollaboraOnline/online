@@ -168,7 +168,6 @@ NODE_MODULES_JS =\
 COOL_LIBS_JS =\
 	ResizeObserverPolyfill.js \
 	Autolinker.js \
-	json2.js \
 	select2.js \
 	sanitize-url.js
 
