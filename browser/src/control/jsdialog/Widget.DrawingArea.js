@@ -27,7 +27,8 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		return;
 
 	var image = L.DomUtil.create('img', builder.options.cssClass + ' ui-drawing-area', container);
-	image.id = data.id + '-img';
+	var imageId = data.id + '-img';
+	image.id = imageId;
 	image.src = data.image.replace(/\\/g, '');
 	image.alt = data.text;
 	image.title = data.text;
@@ -47,26 +48,34 @@ function _drawingAreaControl (parentContainer, data, builder) {
 	}
 
 	var getCoordinatesFromEvent = function (e) {
+		var imageElement = document.getElementById(imageId);
 		var ret = [0, 0];
 
 		if (e.offsetX) {
 			ret[0] = e.offsetX;
 			ret[1] = e.offsetY;
 		} else if (e.changedTouches && e.changedTouches.length) {
-			ret[0] = e.changedTouches[e.changedTouches.length-1].pageX - $(image).offset().left;
-			ret[1] = e.changedTouches[e.changedTouches.length-1].pageY - $(image).offset().top;
+			ret[0] = e.changedTouches[e.changedTouches.length-1].pageX - $(imageElement).offset().left;
+			ret[1] = e.changedTouches[e.changedTouches.length-1].pageY - $(imageElement).offset().top;
 		}
 
-		ret[0] = ret[0] / image.offsetWidth;
-		ret[1] = ret[1] / image.offsetHeight;
+		ret[0] = ret[0] / imageElement.offsetWidth;
+		ret[1] = ret[1] / imageElement.offsetHeight;
 
 		return ret;
 	};
 
 	var tapTimer = null;
+	var moveTimer = null;
+	var moveFunc = null;
+
 	L.DomEvent.on(image, 'click touchend', function(e) {
 		var pos = getCoordinatesFromEvent(e);
 		var coordinates = pos[0] + ';' + pos[1];
+
+		clearTimeout(moveTimer);
+		moveTimer = null;
+		moveFunc = null;
 
 		if (tapTimer == null) {
 			tapTimer = setTimeout(function () {
@@ -80,6 +89,49 @@ function _drawingAreaControl (parentContainer, data, builder) {
 			builder.callback('drawingarea', 'dblclick', container, coordinates, builder);
 		}
 	}, this);
+
+	var onMove = function (e) {
+		if (moveTimer && moveFunc) {
+			clearTimeout(moveTimer);
+			moveTimer = null;
+			moveFunc();
+			moveFunc = null;
+		}
+
+		var pos = getCoordinatesFromEvent(e);
+		var coordinates = pos[0] + ';' + pos[1];
+		builder.callback('drawingarea', 'mousemove', container, coordinates, builder);
+	};
+
+	var endMove = function (e) {
+		clearTimeout(moveTimer);
+		moveTimer = null;
+		moveFunc = null;
+
+		window.removeEventListener('mousemove', onMove);
+		window.removeEventListener('mouseup', endMove);
+
+		var pos = getCoordinatesFromEvent(e);
+		var coordinates = pos[0] + ';' + pos[1];
+		builder.callback('drawingarea', 'mouseup', container, coordinates, builder);
+	};
+
+	image.addEventListener('mousedown', function (e) {
+		moveFunc = function () {
+			var pos = getCoordinatesFromEvent(e);
+			var coordinates = pos[0] + ';' + pos[1];
+			builder.callback('drawingarea', 'mousedown', container, coordinates, builder);
+		};
+
+		moveTimer = setTimeout(function () {
+			moveFunc();
+			moveFunc = null;
+			moveTimer = null;
+		}, 200);
+
+		window.addEventListener('mousemove', onMove);
+		window.addEventListener('mouseup', endMove);
+	});
 
 	var modifier = 0;
 
