@@ -15,12 +15,13 @@
 }
 
 .ui-tab.notebookbar {
-	height: 24px;
-	display: flex;
-	align-items: center;
-	padding: 0px 1em;
-	border: 1px solid transparent;
-	border-radius: var(--border-radius);
+	height: 24px !important;
+	display: flex !important;
+	align-items: center !important;
+	padding: 0px 1em !important;
+	border: 1px solid transparent !important;
+	border-radius: var(--border-radius) !important;
+	background-color: transparent !important;
 }
 
 .ui-tab.notebookbar[style*='block'] {
@@ -28,7 +29,7 @@
 }
 
 .ui-tab.hidden.notebookbar {
-	display: none;
+	display: none !important;
 }
 
 .ui-tab.notebookbar > button {
@@ -42,19 +43,19 @@
 }
 
 .ui-tab.selected.notebookbar {
-	background: var(--color-background-dark);
-	border: 1px solid var(--color-border-dark);
+	background: var(--color-background-dark) !important;
+	border: 1px solid var(--color-border-dark) !important;
 }
 .ui-tab.selected.notebookbar > button {
-	color: var(--color-text-darker);
+	color: var(--color-text-darker) !important;
 }
 .ui-tab.notebookbar:hover {
-	background: var(--color-background-darker);
-	border: 1px solid var(--color-border-darker);
-	cursor: pointer;
+	background: var(--color-background-darker) !important;
+	border: 1px solid var(--color-border-darker) !important;
+	cursor: pointer !important;
 }
 .ui-tab.notebookbar:hover > button {
-	color: var(--color-text-darker);
+	color: var(--color-text-darker) !important;
 }
 /* Document Logo */
 .main-nav.hasnotebookbar #document-header {
