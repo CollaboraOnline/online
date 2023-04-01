@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.sanitizeUrl = void 0;
 var invalidProtocolRegex = /^([^\w]*)(javascript|data|vbscript)/im;
 var htmlEntitiesRegex = /&#(\w+)(^\w|;)?/g;
 var htmlCtrlEntityRegex = /&(newline|tab);/gi;
@@ -37,4 +34,5 @@ function sanitizeUrl(url) {
     }
     return sanitizedUrl;
 }
-exports.sanitizeUrl = sanitizeUrl;
+
+window.sanitizeUrl = sanitizeUrl;

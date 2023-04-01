@@ -631,7 +631,7 @@ L.Map.include({
 		var productString = _('This version of %productName is powered by');
 		var productNameWithURL;
 		if (!window.ThisIsAMobileApp)
-			productNameWithURL = '<a href="' + sanitizeUrl.sanitizeUrl(productURL) +
+			productNameWithURL = '<a href="' + sanitizeUrl(productURL) +
 								 '" target="_blank">' + productName + '</a>';
 		else
 			productNameWithURL = productName;
