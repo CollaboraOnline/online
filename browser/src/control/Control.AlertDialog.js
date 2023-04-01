@@ -33,7 +33,7 @@ L.Control.AlertDialog = L.Control.extend({
 			var url = e.url;
 			var messageText = window.errorMessages.leaving;
 
-			var isLinkValid = sanitizeUrl.sanitizeUrl(url) !== 'about:blank';
+			var isLinkValid = sanitizeUrl(url) !== 'about:blank';
 
 			if (!isLinkValid) {
 				messageText = window.errorMessages.invalidLink;
