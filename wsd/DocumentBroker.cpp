@@ -2118,9 +2118,34 @@ DocumentBroker::NeedToSave DocumentBroker::needToSaveToDisk() const
     return NeedToSave::No;
 }
 
+bool DocumentBroker::manualSave(const std::shared_ptr<ClientSession>& session,
+                                bool dontTerminateEdit, bool dontSaveIfUnmodified,
+                                const std::string& extendedData)
+{
+    // If we aren't saving already.
+    if (_docState.activity() != DocumentState::Activity::Save)
+
+    {
+        LOG_DBG("Manual save by " << session->getName() << " on docKey [" << _docKey << ']');
+        return sendUnoSave(session, dontTerminateEdit, dontSaveIfUnmodified,
+                           /*isAutosave=*/false, extendedData);
+    }
+
+    LOG_DBG("Document [" << _docKey << "] is currently saving and cannot issue another save");
+    return false;
+}
+
 bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
 {
     assertCorrectThread();
+
+    // If we aren't saving already.
+    if (_docState.activity() == DocumentState::Activity::Save)
+    {
+        LOG_DBG("Document [" << _docKey
+                             << "] is currently saving and cannot issue another save for autosave");
+        return true; // We are saving, wait for the results.
+    }
 
     _saveManager.autoSaveChecked();
 
