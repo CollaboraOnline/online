@@ -521,8 +521,6 @@ private:
         return std::chrono::duration_cast<std::chrono::seconds>(duration).count();
     }
 
-    std::unique_lock<std::mutex> getDeferredLock() { return std::unique_lock<std::mutex>(_mutex, std::defer_lock); }
-
     void handleTileResponse(const std::shared_ptr<Message>& message);
     void handleDialogPaintResponse(const std::vector<char>& payload, bool child);
     void handleTileCombinedResponse(const std::shared_ptr<Message>& message);
