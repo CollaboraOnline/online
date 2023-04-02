@@ -95,6 +95,36 @@ namespace Util
         std::string getFilename(const size_t length);
     }
 
+    /// A utility class to track relative time from some arbitrary
+    /// origin, and to check if a certain amount has elapsed or not.
+    class Stopwatch
+    {
+    public:
+        Stopwatch()
+            : _startTime(std::chrono::steady_clock::now())
+        {
+        }
+
+        void restart() { _startTime = std::chrono::steady_clock::now(); }
+
+        /// Returns true iff at least the given amount of time has elapsed.
+        template <typename T>
+        T
+        elapsed(std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now()) const
+        {
+            return std::chrono::duration_cast<T>(now - _startTime);
+        }
+
+        /// Returns true iff at least the given amount of time has elapsed.
+        template <typename T> bool elapsed(T duration) const
+        {
+            return elapsed<std::chrono::nanoseconds>() >= duration;
+        }
+
+    private:
+        std::chrono::steady_clock::time_point _startTime;
+    };
+
 #if !MOBILEAPP
     /// Get number of threads in this process or -1 on error
     int getProcessThreadCount();
