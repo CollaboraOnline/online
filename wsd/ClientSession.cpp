@@ -685,9 +685,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 }
             }
 
-            constexpr bool isAutosave = false;
-            docBroker->sendUnoSave(client_from_this(), dontTerminateEdit != 0,
-                                   dontSaveIfUnmodified != 0, isAutosave, extendedData);
+            docBroker->manualSave(client_from_this(), dontTerminateEdit != 0,
+                                  dontSaveIfUnmodified != 0, extendedData);
         }
     }
     else if (tokens.equals(0, "savetostorage"))

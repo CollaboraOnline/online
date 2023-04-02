@@ -452,10 +452,9 @@ public:
             _lastEditingSessionId = viewId;
     }
 
-    /// Sends the .uno:Save command to LoKit.
-    bool sendUnoSave(const std::shared_ptr<ClientSession>& session, bool dontTerminateEdit = true,
-                     bool dontSaveIfUnmodified = true, bool isAutosave = false,
-                     const std::string& extendedData = std::string());
+    /// User wants to issue a save on the document.
+    bool manualSave(const std::shared_ptr<ClientSession>& session, bool dontTerminateEdit,
+                    bool dontSaveIfUnmodified, const std::string& extendedData);
 
     /// Sends a message to all sessions.
     /// Returns the number of sessions sent the message to.
@@ -607,6 +606,11 @@ private:
 
     /// Handles the completion of uploading to storage, both success and failure cases.
     void handleUploadToStorageResponse(const StorageBase::UploadResult& uploadResult);
+
+    /// Sends the .uno:Save command to LoKit.
+    bool sendUnoSave(const std::shared_ptr<ClientSession>& session, bool dontTerminateEdit = true,
+                     bool dontSaveIfUnmodified = true, bool isAutosave = false,
+                     const std::string& extendedData = std::string());
 
     /**
      * Report back the save result to PostMessage users (Action_Save_Resp)
