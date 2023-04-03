@@ -656,7 +656,13 @@ window.app = {
 			};
 			var sheets = document.styleSheets;
 			for (var i = 0; i < sheets.length; ++i) {
-				var relBases = sheets[i].href.split('/');
+				var relBases;
+				try {
+					relBases = sheets[i].href.split('/');
+				} catch (err) {
+					window.app.console.log('Missing href from CSS number ' + i);
+					continue;
+				}
 				relBases.pop(); // bin last - css name.
 				var replaceBase = 'url("' + relBases.join('/');
 
