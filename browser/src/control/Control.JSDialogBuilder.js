@@ -65,7 +65,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		// list of types which can have multiple children but are not considered as containers
 		this._nonContainerType = ['buttonbox', 'treelistbox', 'iconview', 'combobox', 'listbox',
-			'scrollwindow', 'grid', 'tabcontrol', 'multilineedit', 'formulabaredit'];
+			'scrollwindow', 'grid', 'tabcontrol', 'multilineedit', 'formulabaredit', 'frame'];
 
 		this._controlHandlers = {};
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
@@ -956,12 +956,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var label = L.DomUtil.create('label', 'ui-frame-label ' + builder.options.cssClass, frame);
 			label.innerText = builder._cleanText(data.children[0].text);
 			label.id = data.children[0].id;
-			label.for = frame.id;
 			if (data.children[0].visible === false)
 				L.DomUtil.addClass(label, 'hidden');
 			builder.postProcess(frame, data.children[0]);
 
 			var frameChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, container);
+			frameChildren.id = data.id + '-content';
+			label.htmlFor = frameChildren.id;
 			$(frameChildren).addClass('expanded');
 
 			var children = [];
