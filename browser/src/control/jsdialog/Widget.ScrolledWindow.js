@@ -77,8 +77,10 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 
 		content.style.height = (realContentHeight + verticalSteps) + 'px';
 		content.style.width = (realContentWidth + horizontalSteps) + 'px';
-		scrollwindow.style.height = (realContentHeight + margin) + 'px';
-		scrollwindow.style.width = (realContentWidth + margin) + 'px';
+		if (!noVertical)
+			scrollwindow.style.height = (realContentHeight + margin) + 'px';
+		if (!noHorizontal)
+			scrollwindow.style.width = (realContentWidth + margin) + 'px';
 		content.scrollTop = data.vertical.value * 10;
 		content.scrollLeft = data.horizontal.value * 10;
 		content.style.margin = content.scrollTop + 'px ' + margin + 'px ' + margin + 'px ' + content.scrollLeft + 'px';
