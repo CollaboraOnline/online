@@ -22,15 +22,15 @@ static_assert(false, "config.h must be included in the .cpp being compiled");
 /// Handles incoming connections and dispatches to the appropriate handler.
 class ServerRequestHandler final : public SimpleSocketHandler
 {
-public:
-    ServerRequestHandler() {}
-
 private:
     /// Set the socket associated with this ResponseClient.
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
+        LOG_ASSERT_MSG(socket, "Invalid socket passed to ServerRequestHandler::onConnect");
+
         _socket = socket;
-        LOG_TRC('#' << socket->getFD() << ": Connected to ServerRequestHandler");
+        setLogContext(socket->getFD());
+        LOG_TRC("Connected to ServerRequestHandler");
     }
 
     /// Called after successful socket reads.
