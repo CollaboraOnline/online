@@ -1731,6 +1731,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				var canonicalId = payload.split('=')[2].split(' ')[0];
 				this._debugData['canonicalViewId'].setPrefix('Canonical id changed to: ' + canonicalId + ' for view id: ' + viewId);
 			}
+			this._requestNewTiles();
 		}
 		else if (textMsg.startsWith('comment:')) {
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
