@@ -14,15 +14,16 @@
 	height: 100%;
 }
 
-.ui-tab.notebookbar {
-	height: 24px !important;
-	display: flex !important;
-	align-items: center !important;
+button.ui-tab.notebookbar {
+	box-sizing: border-box;
+	height: 24px;
+	display: flex;
+	align-items: center;
 	justify-content: center;
-	padding: 0px 1em !important;
-	border: 1px solid transparent !important;
-	border-radius: var(--border-radius) !important;
-	background-color: transparent !important;
+	padding: 0px 1em;
+	border: 1px solid transparent;
+	border-radius: var(--border-radius);
+	background-color: transparent;
 	font-size: var(--header-font-size);
 	font-family: var(--cool-font);
 	line-height: normal;
