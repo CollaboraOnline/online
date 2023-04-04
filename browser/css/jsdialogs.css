@@ -527,13 +527,13 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	box-sizing: border-box;
 	margin-right: 1px;
 	min-width: 70px;
+	width: 100%;
 }
 
 .spinfieldunit {
 	font-size: var(--default-font-size);
 	color: var(--color-text-dark);
 	margin: 5px;
-	position: absolute;
 	margin-inline-start: calc(-40px);
 }
 /* spinfield (number) */
@@ -566,6 +566,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	-moz-appearance: none;
 	appearance: none;
 	min-width: 100px;
+	width: 100%;
 	height: 28px;
 	line-height: normal;
 	font-size: var(--default-font-size);
