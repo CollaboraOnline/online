@@ -18,10 +18,15 @@
 	height: 24px !important;
 	display: flex !important;
 	align-items: center !important;
+	justify-content: center;
 	padding: 0px 1em !important;
 	border: 1px solid transparent !important;
 	border-radius: var(--border-radius) !important;
 	background-color: transparent !important;
+	font-size: var(--header-font-size);
+	font-family: var(--cool-font);
+	line-height: normal;
+	color: var(--color-main-text);
 }
 
 .ui-tab.notebookbar[style*='block'] {
@@ -32,31 +37,19 @@
 	display: none !important;
 }
 
-.ui-tab.notebookbar > button {
-	font-size: var(--header-font-size);
-	font-family: var(--cool-font);
-	line-height: normal;
-	color: var(--color-main-text);
-	background-color: transparent;
-	border: none;
-	pointer-events: none;
-}
-
 .ui-tab.selected.notebookbar {
 	background: var(--color-background-dark) !important;
 	border: 1px solid var(--color-border-dark) !important;
-}
-.ui-tab.selected.notebookbar > button {
 	color: var(--color-text-darker) !important;
 }
+
 .ui-tab.notebookbar:hover {
 	background: var(--color-background-darker) !important;
 	border: 1px solid var(--color-border-darker) !important;
 	cursor: pointer !important;
-}
-.ui-tab.notebookbar:hover > button {
 	color: var(--color-text-darker) !important;
 }
+
 /* Document Logo */
 .main-nav.hasnotebookbar #document-header {
 	height: 100%;
