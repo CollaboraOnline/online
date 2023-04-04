@@ -342,6 +342,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		spinfield.tabIndex = '0';
 		controls['spinfield'] = spinfield;
 
+		if (data.labelledBy)
+			spinfield.setAttribute('aria-labelledby', data.labelledBy);
+
 		if (data.unit) {
 			var unit = L.DomUtil.create('span', builder.options.cssClass + ' spinfieldunit', div);
 			unit.textContent = builder._unitToVisibleString(data.unit);
@@ -3042,6 +3045,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (control && data.width) {
 			control.style.gridColumn = 'span ' + parseInt(data.width);
 		}
+
+		if (data.labelledBy)
+			control.setAttribute('aria-labelledby', data.labelledBy);
 
 		// natural tab-order when using keyboard navigation
 		if (control && !control.hasAttribute('tabIndex')
