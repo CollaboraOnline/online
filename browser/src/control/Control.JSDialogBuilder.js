@@ -1238,9 +1238,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.group)
 			radiobutton.name = data.group;
 
-		var radiobuttonLabel = L.DomUtil.create('label', '', container);
+		var radiobuttonLabel = L.DomUtil.createWithId('label', data.id + '-label', container);
 		radiobuttonLabel.textContent = builder._cleanText(data.text);
 		radiobuttonLabel.htmlFor = data.id;
+
+		radiobutton.setAttribute('aria-labelledby', radiobuttonLabel.id);
 
 		var toggleFunction = function() {
 			builder.callback('radiobutton', 'change', container, this.checked, builder);
@@ -1274,9 +1276,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		checkbox.type = 'checkbox';
 		checkbox.id = data.id + '-input';
 		checkbox.tabIndex = '0';
+
 		var checkboxLabel = L.DomUtil.create('label', builder.options.cssClass, div);
+		checkboxLabel.id = data.id + '-label';
 		checkboxLabel.textContent = builder._cleanText(data.text);
 		checkboxLabel.htmlFor = data.id;
+
+		checkbox.setAttribute('aria-labelledby', checkboxLabel.id);
 
 		var toggleFunction = function() {
 			builder.callback('checkbox', 'change', div, this.checked, builder);
@@ -1666,6 +1672,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		listbox.id = data.id + '-input';
 		var listboxArrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', container);
 		listboxArrow.id = 'listbox-arrow-' + data.id;
+
+		if (data.labelledBy)
+			listbox.setAttribute('aria-labelledby', data.labelledBy);
 
 		if (data.enabled === false || data.enabled === 'false')
 			$(listbox).attr('disabled', 'disabled');
