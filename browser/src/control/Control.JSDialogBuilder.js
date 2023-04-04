@@ -3046,7 +3046,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			control.style.gridColumn = 'span ' + parseInt(data.width);
 		}
 
-		if (data.labelledBy)
+		if (control && data.labelledBy)
 			control.setAttribute('aria-labelledby', data.labelledBy);
 
 		// natural tab-order when using keyboard navigation
