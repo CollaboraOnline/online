@@ -2232,6 +2232,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		controls['container'] = div;
+		div.tabIndex = -1;
 
 		var isRealUnoCommand = true;
 
@@ -2262,16 +2263,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var icon = data.icon ? data.icon : builder._createIconURL(data.command);
 			var buttonId = id + 'img';
 
-			button = L.DomUtil.create('img', 'ui-content unobutton', div);
-			button.src = (data.image && !isUnoCommand) ? data.image : icon;
+			button = L.DomUtil.create('button', 'ui-content unobutton', div);
 			button.id = buttonId;
 			button.setAttribute('alt', id);
+
+			var imagePath = (data.image && !isUnoCommand) ? data.image : icon;
+			var buttonImage = L.DomUtil.create('img', '', button);
+			buttonImage.src = imagePath;
 
 			controls['button'] = button;
 
 			if (builder.options.noLabelsForUnoButtons !== true) {
-				var label = L.DomUtil.create('span', 'ui-content unolabel', div);
-				label.for = buttonId;
+				var label = L.DomUtil.create('label', 'ui-content unolabel', button);
+				label.htmlFor = buttonId;
 				label.textContent = builder._cleanText(data.text);
 
 				controls['label'] = label;

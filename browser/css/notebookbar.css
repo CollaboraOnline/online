@@ -228,9 +228,19 @@ button.ui-tab.notebookbar {
 
 .unotoolbutton.notebookbar .unobutton {
 	box-sizing: border-box;
-	width: 24px !important;
-	height: 24px !important;
-	margin-inline-end: 0px !important;
+	width: auto;
+	height: 24px;
+	background-color: transparent;
+	margin: 0;
+	border: none;
+	line-height: 0em;
+	color: var(--color-main-text);
+	font-size: var(--default-font-size);
+	border-radius: var(--border-radius);
+}
+
+.unotoolbutton.notebookbar .unobutton > img{
+	height: 100%;
 }
 
 .has-dropdown--color.notebookbar {
@@ -296,6 +306,8 @@ button.ui-tab.notebookbar {
 }
 #zoomreset, .unotoolbutton.notebookbar.has-label > *{ /*so they stay side by side*/
 	display: table-cell;
+	width: 100%;
+	height: 100%;
 }
 
 .unotoolbutton.notebookbar.has-label {

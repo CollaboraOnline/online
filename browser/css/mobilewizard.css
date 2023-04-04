@@ -400,7 +400,6 @@ p.mobile-wizard.ui-combobox-text.selected {
 	padding-left: 4%;
 }
 .ui-content.unolabel {
-	display: table-cell;
 	vertical-align: middle;
 }
 
@@ -677,7 +676,7 @@ a.leaflet-control-zoom-in {
 	background-size: 20px !important;
 }
 .ui-content label{
-	line-height: 44px;
+	line-height: 25px;
 	vertical-align: top;
 	padding-left: 4%;
 }

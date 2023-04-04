@@ -885,7 +885,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* dropdown arrow */
 .unoarrow, .menubutton .arrow {
-	width: 0px;
+	width: auto !important;
 	height: 0px;
 	font-size: 0;
 	line-height: 0;
@@ -1232,10 +1232,20 @@ input[type='number']:hover::-webkit-outer-spin-button {
 /* toolbuttons */
 
 .jsdialog .ui-content.unobutton {
-	width: 24px;
+	width: 30px;
 	height: 24px;
 	margin-inline-end: 5px;
 	vertical-align: middle;
+	background-color: transparent;
+	border: none;
+}
+
+.jsdialog .ui-content.unobutton > img{
+	height: 100%;
+}
+
+.unotoolbutton.jsdialog.sidebar.ui-content > .arrowbackground {
+	width: auto;
 }
 
 /* handling show/hide state */
