@@ -3,7 +3,7 @@
  * L.Control.JSDialog
  */
 
-/* global Hammer app */
+/* global Hammer app _ */
 L.Control.JSDialog = L.Control.extend({
 	options: {
 		snackbarTimeout: 10000
@@ -204,6 +204,7 @@ L.Control.JSDialog = L.Control.extend({
 			var title = L.DomUtil.create('span', 'ui-dialog-title', instance.titlebar);
 			title.innerText = instance.title;
 			instance.titleCloseButton = L.DomUtil.create('button', 'ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close', instance.titlebar);
+			instance.titleCloseButton.setAttribute('aria-label', _('Close dialog'));
 			L.DomUtil.create('span', 'ui-button-icon ui-icon ui-icon-closethick', instance.titleCloseButton);
 		}
 
