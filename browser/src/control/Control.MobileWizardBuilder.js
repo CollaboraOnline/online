@@ -67,6 +67,9 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		spinfield.dir = document.documentElement.dir;
 		controls['spinfield'] = spinfield;
 
+		if (data.labelledBy)
+			spinfield.setAttribute('aria-labelledby', data.labelledBy);
+
 		if (data.unit) {
 			var unit = L.DomUtil.create('span', 'spinfieldunit', div);
 			unit.textContent = builder._unitToVisibleString(data.unit);
