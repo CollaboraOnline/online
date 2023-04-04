@@ -1265,6 +1265,16 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	to { opacity: 0 }
 }
 
+/* images */
+
+.ui-image {
+	margin: auto;
+}
+
+.ui-drawing-area-container {
+	margin: auto;
+}
+
 /* formulabar */
 #sc_input_window.formulabar {
 	height: 28px;
