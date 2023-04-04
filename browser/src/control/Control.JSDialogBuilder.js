@@ -1070,6 +1070,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				tab.id = item.name + '-tab-label';
 				tab.number = item.id - 1;
 				tab.setAttribute('tabIndex', '0');
+				tab.textContent = title;
 
 				var isSelectedTab = data.selected == item.id;
 				if (isSelectedTab) {
@@ -1091,14 +1092,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				tabs[tabIdx] = tab;
 				tabIds[tabIdx] = item.name;
-
-				var label;
-				if (builder.options.cssClass.includes('notebookbar'))
-					label = L.DomUtil.create('button', 'ui-tab-content ' + builder.options.cssClass + ' unolabel', tab);
-				else
-					label = L.DomUtil.create('span', 'ui-tab-content ' + builder.options.cssClass + ' unolabel', tab);
-
-				label.textContent = title;
 
 				var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
 				contentDiv.id = item.name;
