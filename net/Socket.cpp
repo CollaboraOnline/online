@@ -657,7 +657,7 @@ void SocketDisposition::execute()
     }
 }
 
-void WebSocketHandler::dumpState(std::ostream& os)
+void WebSocketHandler::dumpState(std::ostream& os) const
 {
     os << (_shuttingDown ? "shutd " : "alive ");
 #if !MOBILEAPP
@@ -736,7 +736,7 @@ bool StreamSocket::sendAndShutdown(http::Response& response)
     return false;
 }
 
-void SocketPoll::dumpState(std::ostream& os)
+void SocketPoll::dumpState(std::ostream& os) const
 {
     // FIXME: NOT thread-safe! _pollSockets is modified from the polling thread!
     os << "\n  SocketPoll:";
