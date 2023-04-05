@@ -86,3 +86,13 @@ if (activateValidation) {
 }
 
 window.JSDialog = {}; // initialize jsdialog module
+
+// Add a global listener for "alt" key. We will activate and deactivate a css rule when "alt" key is pressed and released.
+window.addEventListener('keydown', function(event) {
+	if (event.altKey || event.code === 'AltLeft')
+		document.body.classList.add('activate-underlines');
+});
+window.addEventListener('keyup', function(event) {
+	if (event.altKey || event.code === 'AltLeft')
+		document.body.classList.remove('activate-underlines');
+});

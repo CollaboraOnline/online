@@ -413,14 +413,48 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
+	_stressAccessKey: function(element, accessKey) {
+		if (!accessKey)
+			return;
+
+		var text = element.textContent;
+		var index = text.indexOf(accessKey);
+		if (index >= 0) {
+			// Element text contains the access char.
+			// We will make the access char bold in order to make it recognizable.
+			element.textContent = '';
+
+			var part1 = text.substring(0, index);
+			var part2 = text.substring(index + 1, text.length);
+
+			var s1 = document.createElement('span');
+			s1.textContent = part1;
+
+			var s2 = document.createElement('u');
+			s2.textContent = accessKey;
+			s2.className = 'access-key';
+
+			var s3 = document.createElement('span');
+			s3.textContent = part2;
+
+			if (s1.textContent !== '')
+				element.appendChild(s1);
+
+			element.appendChild(s2);
+
+			if (s2.textContent !== '')
+				element.appendChild(s3);
+		}
+	},
+
 	_setAccessKey: function(element, key) {
 		if (key)
-			element.accessKey = key;
+				element.accessKey = key;
 	},
 
 	_getAccessKeyFromText: function(text) {
 		var nextChar = null;
-		if (text.includes('~')) {
+		if (text && text.includes('~')) {
 			var index = text.indexOf('~');
 			if (index < text.length - 1) {
 				nextChar = text.charAt(index + 1);
@@ -1088,6 +1122,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				tab.setAttribute('tabIndex', '0');
 				tab.textContent = title;
 				builder._setAccessKey(tab, builder._getAccessKeyFromText(item.text));
+				builder._stressAccessKey(tab, tab.accessKey);
 
 				var isSelectedTab = data.selected == item.id;
 				if (isSelectedTab) {
@@ -1481,6 +1516,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			image.src = data.image;
 			var text = L.DomUtil.create('span', '', pushbutton);
 			text.innerText = pushbuttonText;
+			builder._stressAccessKey(text, pushbutton.accessKey);
 		} else if (data.image) {
 			L.DomUtil.addClass(pushbutton, 'has-img d-flex align-content-center justify-content-center align-items-center');
 			var image = L.DomUtil.create('img', '', pushbutton);
@@ -1491,6 +1527,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			image.src = L.LOUtil.getImageURL('symbol_' + data.symbol + '.svg');
 		} else {
 			pushbutton.innerText = pushbuttonText;
+			builder._stressAccessKey(pushbutton, pushbutton.accessKey);
 		}
 
 		if (data.enabled === 'false' || data.enabled === false)
@@ -2296,7 +2333,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var label = L.DomUtil.create('label', 'ui-content unolabel', button);
 				label.htmlFor = buttonId;
 				label.textContent = builder._cleanText(data.text);
-
+				builder._stressAccessKey(label, button.accessKey);
 				controls['label'] = label;
 				$(div).addClass('has-label');
 			} else if (builder.options.useInLineLabelsForUnoButtons === true) {
