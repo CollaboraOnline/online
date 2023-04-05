@@ -1055,11 +1055,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	{
 		return function() {
 			$(tabs[t]).addClass('selected');
+			tabs[t].setAttribute('aria-selected', 'true');
+
 			for (var i = 0; i < tabs.length; i++) {
 				if (i !== t)
 				{
 					$(tabs[i]).removeClass('selected');
 					$(contentDivs[i]).hide();
+					tabs[i].setAttribute('aria-selected', 'false');
 				}
 			}
 			$(contentDivs[t]).show();
@@ -1083,6 +1086,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			tabWidgetRootContainer.id = data.id;
 
 			var tabsContainer = L.DomUtil.create('div', 'ui-tabs ' + builder.options.cssClass + ' ui-widget', builder.options.useSetTabs ? undefined : tabWidgetRootContainer);
+			tabsContainer.setAttribute('role', 'tablist');
+
 			var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content ' + builder.options.cssClass + ' ui-widget', tabWidgetRootContainer);
 
 			var tabs = [];
@@ -1097,16 +1102,20 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var tab = L.DomUtil.create('button', 'ui-tab ' + builder.options.cssClass, tabsContainer);
 				tab.id = item.name + '-tab-label';
 				tab.number = item.id - 1;
-				tab.setAttribute('tabIndex', '0');
+				tab.tabIndex = '0';
 				tab.textContent = title;
+				tab.setAttribute('role', 'tab');
 				builder._setAccessKey(tab, builder._getAccessKeyFromText(item.text));
 				builder._stressAccessKey(tab, tab.accessKey);
 
 				var isSelectedTab = data.selected == item.id;
 				if (isSelectedTab) {
 					$(tab).addClass('selected');
+					tab.setAttribute('aria-selected', 'true');
 					tab.title = tabTooltip;
 					singleTabId = tabIdx;
+				} else {
+					tab.setAttribute('aria-selected', 'false');
 				}
 
 				var tabContext = item.context;
@@ -1125,6 +1134,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
 				contentDiv.id = item.name;
+				contentDiv.setAttribute('role', 'tabpanel');
 
 				if (!isSelectedTab)
 					$(contentDiv).hide();
