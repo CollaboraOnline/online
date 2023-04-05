@@ -56,7 +56,7 @@ public:
     void shutdown(bool goingAway = false, const std::string &statusMessage = "") override;
     void getIOStats(uint64_t &sent, uint64_t &recv) override;
     // don't duplicate ourselves for every socket
-    void dumpState(std::ostream&) override {}
+    void dumpState(std::ostream&) const override {}
     // instead do it centrally.
     void dumpProxyState(std::ostream& os);
     bool parseEmitIncoming(const std::shared_ptr<StreamSocket> &socket);
