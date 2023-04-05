@@ -413,6 +413,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
+	_setAccessKey: function(element, key) {
+		if (key)
+			element.accessKey = key;
+	},
+
+	_getAccessKeyFromText: function(text) {
+		var nextChar = null;
+		if (text.includes('~')) {
+			var index = text.indexOf('~');
+			if (index < text.length - 1) {
+				nextChar = text.charAt(index + 1);
+			}
+		}
+		return nextChar;
+	},
+
 	_cleanText: function(text) {
 		if (!text)
 			return '';
@@ -1071,6 +1087,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				tab.number = item.id - 1;
 				tab.setAttribute('tabIndex', '0');
 				tab.textContent = title;
+				builder._setAccessKey(tab, builder._getAccessKeyFromText(item.text));
 
 				var isSelectedTab = data.selected == item.id;
 				if (isSelectedTab) {
@@ -1455,6 +1472,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var wrapper = L.DomUtil.create('div', '', parentContainer); // need for locking overlay
 		var pushbutton = L.DomUtil.create('button', 'ui-pushbutton ' + builder.options.cssClass, wrapper);
 		pushbutton.id = data.id;
+		builder._setAccessKey(pushbutton, builder._getAccessKeyFromText(data.text));
 		var pushbuttonText = builder._customPushButtonTextForId(data.id) !== '' ? builder._customPushButtonTextForId(data.id) : builder._cleanText(data.text);
 
 		if (data.image && pushbuttonText !== '') {
@@ -2266,6 +2284,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			button = L.DomUtil.create('button', 'ui-content unobutton', div);
 			button.id = buttonId;
 			button.setAttribute('alt', id);
+			builder._setAccessKey(button, builder._getAccessKeyFromText(data.text));
 
 			var imagePath = (data.image && !isUnoCommand) ? data.image : icon;
 			var buttonImage = L.DomUtil.create('img', '', button);
