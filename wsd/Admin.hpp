@@ -140,7 +140,7 @@ public:
     void updateLastActivityTime(const std::string& docKey);
     void addBytes(const std::string& docKey, uint64_t sent, uint64_t recv);
 
-    void dumpState(std::ostream& os) override;
+    void dumpState(std::ostream& os) const override;
 
     const DocProcSettings& getDefDocProcSettings() const { return _defDocProcSettings; }
     void setDefDocProcSettings(const DocProcSettings& docProcSettings, bool notifyKit)
