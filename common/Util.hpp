@@ -1439,6 +1439,15 @@ int main(int argc, char**argv)
         return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
     }
 
+    /// Dump an object that supports .dumpState into a string.
+    /// Helpful for logging.
+    template <typename T> std::string dump(const T& object, const std::string& indent = ", ")
+    {
+        std::ostringstream oss;
+        object.dumpState(oss, indent);
+        return oss.str().substr(indent.size());
+    }
+
     /**
      * Similar to std::atoi() but does not require p to be null-terminated.
      *

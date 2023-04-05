@@ -877,7 +877,7 @@ void Admin::cleanupLostKits()
         Admin::instance().addLostKitsTerminated(lostKitsTerminated);
 }
 
-void Admin::dumpState(std::ostream& os)
+void Admin::dumpState(std::ostream& os) const
 {
     // FIXME: be more helpful ...
     SocketPoll::dumpState(os);

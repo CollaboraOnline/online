@@ -994,7 +994,7 @@ private:
         /// True if we aren't saving and the minimum time since last save has elapsed.
         bool canSaveNow() const { return _request.canRequestNow(); }
 
-        void dumpState(std::ostream& os, const std::string& indent = "\n  ")
+        void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
             const auto now = std::chrono::steady_clock::now();
             os << indent << "isSaving now: " << std::boolalpha << isSaving();
@@ -1170,7 +1170,7 @@ private:
         /// True if we aren't uploading and the minimum time since last upload has elapsed.
         bool canUploadNow() const { return _request.canRequestNow(); }
 
-        void dumpState(std::ostream& os, const std::string& indent = "\n  ")
+        void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
             const auto now = std::chrono::steady_clock::now();
             os << indent << "isUploading now: " << std::boolalpha << isUploading();
@@ -1310,7 +1310,7 @@ private:
         void setDisconnected() { _disconnected = true; }
         bool isDisconnected() const { return _disconnected; }
 
-        void dumpState(std::ostream& os, const std::string& indent = "\n  ")
+        void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
             os << indent << "doc state: " << toString(status());
             os << indent << "doc activity: " << toString(activity());
