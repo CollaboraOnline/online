@@ -900,6 +900,9 @@ L.TextInput = L.Layer.extend({
 	// Across browsers, arrow up/down / home / end would move the caret to
 	// the beginning/end of the textarea/contenteditable.
 	_onKeyUp: function(ev) {
+		// We also add this handler here because keyup event is not fired for page when map is active.
+		document.body.classList.remove('activate-underlines');
+
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
