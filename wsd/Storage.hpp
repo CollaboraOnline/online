@@ -179,7 +179,7 @@ public:
         const std::string& getExtendedData() const { return _extendedData; }
 
         /// Dump the internals of this instance.
-        void dumpState(std::ostream& os, const std::string& indent = "\n  ")
+        void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
             os << indent << "forced: " << std::boolalpha << isForced();
             os << indent << "user-modified: " << std::boolalpha << isUserModified();

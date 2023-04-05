@@ -493,7 +493,7 @@ public:
     virtual void getIOStats(uint64_t &sent, uint64_t &recv) = 0;
 
     /// Append pretty printed internal state to a line
-    virtual void dumpState(std::ostream& os) { os << '\n'; }
+    virtual void dumpState(std::ostream& os) const { os << '\n'; }
 };
 
 // Forward declare WebSocketHandler, which is inherited from ProtocolHandlerInterface.
@@ -797,7 +797,7 @@ public:
             wakeup();
     }
 
-    virtual void dumpState(std::ostream& os);
+    virtual void dumpState(std::ostream& os) const;
 
     size_t getSocketCount() const
     {

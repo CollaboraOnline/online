@@ -5254,7 +5254,7 @@ public:
 #endif
     }
 
-    void dumpState(std::ostream& os)
+    void dumpState(std::ostream& os) const
     {
         // FIXME: add some stop-world magic before doing the dump(?)
         Socket::InhibitThreadChecks = true;
