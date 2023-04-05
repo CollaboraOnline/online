@@ -572,7 +572,7 @@ window.app = {
 			var hadData = this.sendQueue.length > 0;
 			this.sendQueue = this.sendQueue.concat(
 				'B0x' + this.outSerial.toString(16) + '\n' +
-				'0x' + msg.length.toString(16) + '\n' + msg + '\n');
+				'0x' + (new TextEncoder().encode(msg)).length.toString(16) + '\n' + msg + '\n');
 			this.outSerial++;
 
 			// Send ASAP, if we have throttled.
