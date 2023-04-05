@@ -52,8 +52,7 @@ L.Clipboard = L.Class.extend({
 
 	// We can do a much better job when we fetch text/plain too.
 	stripHTML: function(html) {
-		var tmp = document.createElement('div');
-		tmp.innerHTML = html;
+		var tmp = new DOMParser().parseFromString(html, 'text/html').body;
 		// attempt to cleanup unwanted elements
 		var styles = tmp.querySelectorAll('style');
 		for (var i = 0; i < styles.length; i++) {
