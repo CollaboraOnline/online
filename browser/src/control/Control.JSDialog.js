@@ -440,7 +440,7 @@ L.Control.JSDialog = L.Control.extend({
 		// after some updates, eg. drawing areas window can be bigger than initially
 		// update position according to that with small delay
 		// styleOnly - don't change position
-		var initialPositionSetup = function (force, styleOnly) {
+		var initialPositionSetup = function (force, styleOnly, focusedId) {
 			if (!styleOnly) {
 				setupPosition(force);
 				that.updatePosition(container, posX, posY);
@@ -457,7 +457,7 @@ L.Control.JSDialog = L.Control.extend({
 				container.appendChild(endMarker);
 			}
 
-			if (canHaveFocus && initialFocusElement)
+			if (!focusedId && canHaveFocus && initialFocusElement)
 				initialFocusElement.focus();
 
 			if (toRemove)
@@ -560,7 +560,7 @@ L.Control.JSDialog = L.Control.extend({
 
 		if (dialogInfo.setupPosFunc) {
 			var styleOnly = dialogInfo.invalidated === true;
-			setTimeout(function () { dialogInfo.setupPosFunc(!styleOnly, styleOnly); }, 100);
+			setTimeout(function () { dialogInfo.setupPosFunc(!styleOnly, styleOnly, focusedId); }, 100);
 			dialogInfo.invalidated = true;
 		}
 	},
