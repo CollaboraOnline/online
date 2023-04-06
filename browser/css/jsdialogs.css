@@ -493,11 +493,12 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 .radiobutton.jsdialog {
 	display: flex;
+	align-items: center;
+	justify-content: flex-start;
 }
 
 .jsdialog input[type='radio'] {
-	vertical-align: middle;
-	margin: auto 3px auto 2px;
+	margin: 0;
 	border: none;
 }
 
