@@ -68,6 +68,13 @@ L.Control.JSDialog = L.Control.extend({
 			return;
 		}
 
+		try {
+			this.dialogs[id].lastFocusedElement.focus();
+		}
+		catch (error) {
+			this.map.focus();
+		}
+
 		var builder = this.clearDialog(id);
 		if (sendCloseEvent !== false && builder)
 			builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
@@ -440,9 +447,6 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	onJSDialog: function(e) {
-		// We will pass this here and there, so we can split the code into smaller functions.
-		// Then we will save this into this.dialogs[].
-
 		/*
 			Dialog types:
 				* Modal (isModalPopUp = true): non-movable + overlay + dimmed background.
@@ -450,7 +454,12 @@ L.Control.JSDialog = L.Control.extend({
 				* Popup (Non-dialog) (isDocumentAreaPopup = true): overlay + no dim.
 		*/
 
+		// We will pass this here and there, so we can split the code into smaller functions.
+		// Then we will save this into this.dialogs[].
 		var instance = e.data;
+
+		// Save last focused element, we will set the focus back to this element after this popup is closed.
+		instance.lastFocusedElement = document.activeElement;
 
 		instance.callback = e.callback;
 		instance.isSnackbar = e.data.type === 'snackbar';
@@ -493,9 +502,6 @@ L.Control.JSDialog = L.Control.extend({
 				var initialFocusElement =
 					container.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker)');
 				initialFocusElement.focus();
-			}
-			else if (!this.hasDialogOpened()) {
-				this._map.fire('editorgotfocus');
 			}
 		}
 		else {
@@ -657,7 +663,6 @@ L.Control.JSDialog = L.Control.extend({
 			if (dialogs.length) {
 				var lastKey = dialogs[dialogs.length - 1];
 				this.close(lastKey, true);
-				this.map.focus();
 				return true;
 			}
 		}
