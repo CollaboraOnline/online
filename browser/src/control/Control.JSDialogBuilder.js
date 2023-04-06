@@ -1504,6 +1504,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_pushbuttonControl: function(parentContainer, data, builder, customCallback) {
+		if (data.id && data.id === 'changepass' && builder.map['wopi'].IsOwner === false) {
+			data.enabled = false;
+		}
 		var wrapper = L.DomUtil.create('div', '', parentContainer); // need for locking overlay
 		var pushbutton = L.DomUtil.create('button', 'ui-pushbutton ' + builder.options.cssClass, wrapper);
 		pushbutton.id = data.id;

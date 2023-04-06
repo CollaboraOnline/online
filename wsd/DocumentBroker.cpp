@@ -799,6 +799,13 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
             session->setAllowChangeComments(true);
         }
 
+        // Mark the session as 'Document owner' if WOPI hosts supports it
+        if (userId == _storage->getFileInfo().getOwnerId())
+        {
+            LOG_DBG("Session [" << sessionId << "] is the document owner");
+            session->setDocumentOwner(true);
+        }
+
         // We will send the client about information of the usage type of the file.
         // Some file types may be treated differently than others.
         session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
@@ -854,6 +861,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         wopiInfo->set("UserCanWrite", wopifileinfo->getUserCanWrite());
         if (wopifileinfo->getHideChangeTrackingControls() != WopiStorage::WOPIFileInfo::TriState::Unset)
             wopiInfo->set("HideChangeTrackingControls", wopifileinfo->getHideChangeTrackingControls() == WopiStorage::WOPIFileInfo::TriState::True);
+        wopiInfo->set("IsOwner", session->isDocumentOwner());
 
         std::ostringstream ossWopiInfo;
         wopiInfo->stringify(ossWopiInfo);
@@ -864,13 +872,6 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         // frame. Important to send this message immediately and not enqueue it so that in case
         // document load fails, cool is able to tell its parent frame via PostMessage API.
         session->sendMessage("wopi: " + wopiInfoString);
-
-        // Mark the session as 'Document owner' if WOPI hosts supports it
-        if (userId == _storage->getFileInfo().getOwnerId())
-        {
-            LOG_DBG("Session [" << sessionId << "] is the document owner");
-            session->setDocumentOwner(true);
-        }
 
         if (config::getBool("logging.userstats", false))
         {
