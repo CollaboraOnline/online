@@ -174,7 +174,7 @@ describe('Focus tests', function() {
 		// Apply bold
 		helper.clickOnIdle('.unoBold');
 
-		cy.get('.unoBold img')
+		cy.get('.unoBold')
 			.should('have.class', 'selected');
 
 		// No focus
