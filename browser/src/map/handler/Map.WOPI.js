@@ -128,6 +128,7 @@ L.Map.WOPI = L.Handler.extend({
 			app.file.permission = (app.file.permission === 'edit' ? 'edit': app.file.permission);
 		else
 			app.file.permission = 'readonly';
+		this.IsOwner = !!wopiInfo['IsOwner'];
 
 		if (wopiInfo['HideUserList'])
 			this.HideUserList = wopiInfo['HideUserList'].split(',');

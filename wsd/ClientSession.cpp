@@ -848,7 +848,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "removesession"))
     {
-        if (tokens.size() > 1 && (_isDocumentOwner || !isReadOnly()))
+        if (tokens.size() > 1 && (isDocumentOwner() || !isReadOnly()))
         {
             std::string sessionId = Util::encodeId(std::stoi(tokens[1]), 4);
             docBroker->broadcastMessage(firstLine);
@@ -879,8 +879,31 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
         return true;
     }
-    else if (tokens.equals(0, "dialogevent") ||
-             tokens.equals(0, "formfieldevent") ||
+    else if (tokens.equals(0, "dialogevent"))
+    {
+        if (tokens.size() > 2)
+        {
+            std::string jsonString = tokens.cat("", 2);
+            try
+            {
+                Poco::JSON::Parser parser;
+                const Poco::Dynamic::Var result = parser.parse(jsonString);
+                const auto& object = result.extract<Poco::JSON::Object::Ptr>();
+                const std::string id = object->has("id") ? object->get("id").toString() : "";
+                if (id == "changepass" && _wopiFileInfo && !isDocumentOwner())
+                {
+                    sendTextFrameAndLogError("error: cmd=dialogevent kind=cantchangepass");
+                    return false;
+                }
+            }
+            catch (const std::exception& exception)
+            {
+                // Child will handle this case
+            }
+        }
+        return forwardToChild(firstLine, docBroker);
+    }
+    else if (tokens.equals(0, "formfieldevent") ||
              tokens.equals(0, "sallogoverride") ||
              tokens.equals(0, "contentcontrolevent"))
     {
