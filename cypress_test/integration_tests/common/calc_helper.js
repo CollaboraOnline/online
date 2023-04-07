@@ -35,7 +35,7 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 	cy.log('Param - firstClick: ' + firstClick);
 	cy.log('Param - dblClick: ' + dblClick);
 
-	cy.wait(1000);
+	cy.wait(2000);
 	// Use the tile's edge to find the first cell's position
 	cy.cGet('#map')
 		.then(function(items) {

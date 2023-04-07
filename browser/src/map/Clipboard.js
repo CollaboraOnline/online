@@ -699,6 +699,12 @@ L.Clipboard = L.Class.extend({
 		}
 
 		app.socket.sendMessage('uno .uno:' + unoName);
+		if (ev.clipboardData && unoName === 'Cut') {
+			// Cut text is not removed from the editable area,
+			// so we need to request the focused paragraph.
+			this._map._textInput._abortComposition(ev);
+		}
+
 		if (preventDefault) {
 			ev.preventDefault();
 			return false;
