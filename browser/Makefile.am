@@ -249,6 +249,7 @@ COOL_JS_LST =\
 	src/layer/ImageOverlay.js \
 	src/layer/marker/ProgressOverlay.js \
 	src/layer/marker/TextInput.js \
+	src/layer/marker/A11yTextInput.js \
 	src/layer/marker/Icon.js \
 	src/layer/marker/Icon.Default.js \
 	src/layer/marker/Marker.js \

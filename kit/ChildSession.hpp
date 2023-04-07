@@ -320,6 +320,8 @@ private:
     bool formFieldEvent(const char* buffer, int length, const StringVector& tokens);
     bool contentControlEvent(const StringVector& tokens);
     bool renderSearchResult(const char* buffer, int length, const StringVector& tokens);
+    bool getA11yFocusedParagraph();
+    bool getA11yCaretPosition();
 
     void rememberEventsForInactiveUser(const int type, const std::string& payload);
 
