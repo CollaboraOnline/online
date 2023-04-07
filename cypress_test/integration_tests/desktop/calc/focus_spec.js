@@ -27,7 +27,7 @@ describe('Calc focus tests', function() {
 
 		// Type some text.
 		var text1 = 'Hello from Calc';
-		helper.typeText('#clipboard-area', text1);
+		helper.typeText('textarea.clipboard', text1);
 		calcHelper.typeIntoFormulabar('{enter}');
 
 		// Select the first cell to edit the same one.
@@ -46,7 +46,7 @@ describe('Calc focus tests', function() {
 		calcHelper.clickFormulaBar();
 		helper.assertCursorAndFocus();
 		var text2 = ', this is a test.';
-		helper.typeText('#clipboard-area', text2);
+		helper.typeText('textarea.clipboard', text2);
 		// Validate.
 		calcHelper.typeIntoFormulabar('{ctrl}a');
 		helper.expectTextForClipboard(text1 + text2);

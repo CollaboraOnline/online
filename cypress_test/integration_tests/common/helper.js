@@ -406,13 +406,13 @@ function checkIfDocIsLoaded(frameId) {
 
 // Assert that NO keyboard input is accepted (i.e. keyboard should be HIDDEN).
 function assertNoKeyboardInput() {
-	cy.get('#clipboard-area')
+	cy.get('textarea.clipboard')
 		.should('have.attr', 'data-accept-input', 'false');
 }
 
 // Assert that keyboard input is accepted (i.e. keyboard should be VISIBLE).
 function assertHaveKeyboardInput(frameId) {
-	cy.customGet('#clipboard-area', frameId)
+	cy.customGet('textarea.clipboard', frameId)
 		.should('have.attr', 'data-accept-input', 'true');
 }
 
@@ -1063,7 +1063,7 @@ function moveCursor(direction, modifier,
 function typeIntoDocument(text, frameId) {
 	cy.log('Typing into document - start.');
 
-	cy.customGet('#clipboard-area', frameId)
+	cy.customGet('textarea.clipboard', frameId)
 		.type(text, {force: true});
 
 	cy.log('Typing into document - end.');
