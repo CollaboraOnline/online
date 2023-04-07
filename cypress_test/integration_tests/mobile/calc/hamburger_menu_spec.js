@@ -119,7 +119,7 @@ describe('Trigger hamburger menu options.', function() {
 		// Type a new character
 		calcHelper.clickOnFirstCell(true, true);
 
-		cy.get('#clipboard-area')
+		cy.get('textarea.clipboard')
 			.type('{q}');
 
 		calcHelper.selectEntireSheet();
@@ -155,7 +155,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		// Type a new character
 		calcHelper.clickOnFirstCell(true, true);
-		cy.get('#clipboard-area')
+		cy.get('textarea.clipboard')
 			.type('{q}');
 
 		calcHelper.selectEntireSheet();
