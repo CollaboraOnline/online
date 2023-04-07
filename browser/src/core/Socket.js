@@ -1327,6 +1327,9 @@ app.definitions.Socket = L.Class.extend({
 		}
 
 		if (!this._map._docLayer) {
+			// initialize and append text input before doc layer
+			this._map.initTextInput(command.type);
+
 			// first status message, we need to create the document layer
 			var tileWidthTwips = this._map.options.tileWidthTwips;
 			var tileHeightTwips = this._map.options.tileHeightTwips;

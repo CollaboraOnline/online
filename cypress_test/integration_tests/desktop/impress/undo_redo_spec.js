@@ -41,6 +41,7 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 	it('Repair Document', function() {
 		helper.typeIntoDocument('Hello World');
 		impressHelper.triggerNewSVGForShapeInTheCenter();
+		impressHelper.selectTextOfShape();
 		helper.typeIntoDocument('Overwrite Text');
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 		repairHelper.rollbackPastChange('Undo');

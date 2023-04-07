@@ -436,7 +436,9 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens.equals(0, "traceeventrecording") ||
                tokens.equals(0, "sallogoverride") ||
                tokens.equals(0, "rendersearchresult") ||
-               tokens.equals(0, "contentcontrolevent"));
+               tokens.equals(0, "contentcontrolevent") ||
+               tokens.equals(0, "geta11yfocusedparagraph") ||
+               tokens.equals(0, "geta11ycaretposition"));
 
         std::string pzName("ChildSession::_handleInput:" + tokens[0]);
         ProfileZone pz(pzName.c_str());
@@ -625,6 +627,14 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens.equals(0, "rendersearchresult"))
         {
             return renderSearchResult(buffer, length, tokens);
+        }
+        else if (tokens.equals(0, "geta11yfocusedparagraph"))
+        {
+            return getA11yFocusedParagraph();
+        }
+        else if (tokens.equals(0, "geta11ycaretposition"))
+        {
+            return getA11yCaretPosition();
         }
         else
         {
@@ -2481,6 +2491,26 @@ bool ChildSession::removeTextContext(const StringVector& tokens)
     return true;
 }
 
+bool ChildSession::getA11yFocusedParagraph()
+{
+    getLOKitDocument()->setView(_viewId);
+
+    char* paragraphContent = nullptr;
+    paragraphContent = getLOKitDocument()->getA11yFocusedParagraph();
+    std::string paragraph(paragraphContent);
+    free(paragraphContent);
+    sendTextFrame("a11yfocusedparagraph: " + paragraph);
+    return true;
+}
+
+bool ChildSession::getA11yCaretPosition()
+{
+    getLOKitDocument()->setView(_viewId);
+    int pos = getLOKitDocument()->getA11yCaretPosition();
+    sendTextFrame("a11ycaretposition: " + std::to_string(pos));
+    return true;
+}
+
 /* If the user is inactive we have to remember important events so that when
  * the user becomes active again, we can replay the events.
  */
@@ -2502,7 +2532,10 @@ void ChildSession::rememberEventsForInactiveUser(const int type, const std::stri
              type == LOK_CALLBACK_INVALIDATE_HEADER ||
              type == LOK_CALLBACK_INVALIDATE_SHEET_GEOMETRY ||
              type == LOK_CALLBACK_CELL_ADDRESS ||
-             type == LOK_CALLBACK_REFERENCE_MARKS)
+             type == LOK_CALLBACK_REFERENCE_MARKS ||
+             type == LOK_CALLBACK_A11Y_FOCUS_CHANGED ||
+             type == LOK_CALLBACK_A11Y_CARET_CHANGED ||
+             type == LOK_CALLBACK_A11Y_TEXT_SELECTION_CHANGED)
     {
         _stateRecorder.recordEvent(type, payload);
     }
@@ -3030,6 +3063,21 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         _docManager->sendFrame(docBrokerMessage.c_str(), docBrokerMessage.length());
         std::string message = "downloadas: downloadid=" + downloadId + " port=" + std::to_string(ClientPortNumber) + " id=export";
         sendTextFrame(message);
+        break;
+    }
+    case LOK_CALLBACK_A11Y_FOCUS_CHANGED:
+    {
+        sendTextFrame("a11yfocuschanged: " + payload);
+        break;
+    }
+    case LOK_CALLBACK_A11Y_CARET_CHANGED:
+    {
+        sendTextFrame("a11ycaretchanged: " + payload);
+        break;
+    }
+    case LOK_CALLBACK_A11Y_TEXT_SELECTION_CHANGED:
+    {
+        sendTextFrame("a11ytextselectionchanged: " + payload);
         break;
     }
     default:

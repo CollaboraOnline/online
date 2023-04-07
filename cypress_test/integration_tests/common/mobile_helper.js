@@ -40,6 +40,9 @@ function enableEditingMobile() {
 			.should('be.visible');
 	});
 
+	// wait editable area for receiving paragraph content
+	cy.wait(500);
+
 	cy.log('Enabling editing mode - end.');
 }
 
