@@ -267,6 +267,7 @@ void HTTPWSTest::testInactiveClient()
                     // 0, 0"}', which is probably fine, given that other invalidations are also
                     // expected.
                     LOK_ASSERT_MESSAGE("unexpected message: " + msg,
+                                            token == "a11yfocuschanged:" ||
                                             token == "cursorvisible:" ||
                                             token == "graphicselection:" ||
                                             token == "graphicviewselection:" ||

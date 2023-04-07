@@ -194,6 +194,10 @@ L.Map.include({
 			this.dragging.disable();
 		}
 
+		if ((window.mode.isMobile() || window.mode.isTablet()) && this._textInput) {
+			this._textInput.setSwitchedToEditMode();
+		}
+
 		this.fire('updatepermission', {perm : perm});
 
 		if (this._docLayer._docType === 'text') {
