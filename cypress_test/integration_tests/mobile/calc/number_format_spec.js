@@ -36,8 +36,7 @@ describe('Apply number formatting.', function() {
 	it('Select percent format from list.', function() {
 		selectFormatting('Percent');
 
-		cy.get('.unoNumberFormatPercent img')
-			.should('have.class', 'selected');
+		cy.get('.unoNumberFormatPercent').should('have.class', 'selected');
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
@@ -60,7 +59,7 @@ describe('Apply number formatting.', function() {
 	it('Push percent button.', function() {
 		helper.clickOnIdle('#NumberFormatPercent');
 
-		cy.get('.unoNumberFormatPercent img')
+		cy.get('.unoNumberFormatPercent')
 			.should('have.class', 'selected');
 
 		cy.get('#numberformatcombobox .ui-header-left')
@@ -87,7 +86,7 @@ describe('Apply number formatting.', function() {
 	it('Select currency format from list.', function() {
 		selectFormatting('Currency');
 
-		cy.get('.unoNumberFormatCurrency img')
+		cy.get('.unoNumberFormatCurrency')
 			.should('have.class', 'selected');
 
 		// Decimal and leading zeros are changed.
@@ -111,7 +110,7 @@ describe('Apply number formatting.', function() {
 	it('Push currency button.', function() {
 		helper.clickOnIdle('#NumberFormatCurrency');
 
-		cy.get('.unoNumberFormatCurrency img')
+		cy.get('.unoNumberFormatCurrency')
 			.should('have.class', 'selected');
 
 		cy.get('#numberformatcombobox .ui-header-left')
@@ -139,7 +138,7 @@ describe('Apply number formatting.', function() {
 		// Change to currency first
 		helper.clickOnIdle('#NumberFormatCurrency');
 
-		cy.get('.unoNumberFormatCurrency img')
+		cy.get('.unoNumberFormatCurrency')
 			.should('have.class', 'selected');
 
 		// Decimal and leading zeros are changed.
@@ -171,7 +170,7 @@ describe('Apply number formatting.', function() {
 		// Change to number formatting
 		helper.clickOnIdle('.unoNumberFormatDecimal');
 
-		cy.get('.unoNumberFormatDecimal img')
+		cy.get('.unoNumberFormatDecimal')
 			.should('have.class', 'selected');
 
 		cy.get('#numberformatcombobox .ui-header-left')
