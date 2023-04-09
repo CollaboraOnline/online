@@ -456,8 +456,27 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		// handle help - F1
-		if (ev.type === 'keydown' && !this.modifier && keyCode === this.keyCodes.F1) {
+		if (ev.type === 'keydown' && !ev.altKey && !this.modifier && keyCode === this.keyCodes.F1) {
 			this._map.showHelp('online-help');
+			ev.preventDefault();
+			return;
+		}
+
+		if (ev.type === 'keydown' && ev.altKey && ev.keyCode === this.keyCodes.F1) {
+			var tabsContainer = document.getElementsByClassName('notebookbar-tabs-container')[0].children[0];
+			var elementToFocus;
+			if (tabsContainer) {
+				for (var i = 0; i < tabsContainer.children.length; i++) {
+					if (tabsContainer.children[i].classList.contains('selected')) {
+						elementToFocus = tabsContainer.children[i];
+						break;
+					}
+				}
+			}
+			if (!elementToFocus)
+				elementToFocus = document.getElementById('Home-tab-label');
+
+			elementToFocus.focus();
 			ev.preventDefault();
 			return;
 		}
