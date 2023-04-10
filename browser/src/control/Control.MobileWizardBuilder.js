@@ -227,7 +227,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 
 		var checkboxLabel = L.DomUtil.create('label', '', div);
 		checkboxLabel.textContent = builder._cleanText(data.text);
-		checkboxLabel.for = data.id;
+		checkboxLabel.htmlFor = data.id;
 		var checkbox = L.DomUtil.createWithId('input', data.id, div);
 		checkbox.type = 'checkbox';
 
@@ -263,7 +263,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 
 		var radiobuttonLabel = L.DomUtil.create('label', '', container);
 		radiobuttonLabel.textContent = builder._cleanText(data.text);
-		radiobuttonLabel.for = data.id;
+		radiobuttonLabel.htmlFor = data.id;
 
 		if (data.enabled === 'false' || data.enabled === false)
 			$(radiobutton).attr('disabled', 'disabled');
