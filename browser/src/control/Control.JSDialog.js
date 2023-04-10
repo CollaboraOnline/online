@@ -171,6 +171,7 @@ L.Control.JSDialog = L.Control.extend({
 	createContainer: function(instance, parentContainer) {
 		// it has to be form to handle default button
 		instance.container = L.DomUtil.create('form', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', parentContainer);
+		instance.container.setAttribute('role', 'dialog');
 		instance.container.id = instance.id;
 
 		// Prevent overlay from getting the click.
