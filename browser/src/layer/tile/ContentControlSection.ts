@@ -295,7 +295,7 @@ export class ContentControlSection extends CanvasSectionObject {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	private onClickDropdown(event: any): void {
+	public onClickDropdown(event: any): void {
 		if (this.sectionProperties.datePicker) {
 			this.showDatePicker();
 		} else if (this.sectionProperties.json.items) {
@@ -305,6 +305,7 @@ export class ContentControlSection extends CanvasSectionObject {
 			}
 			this.map.fire(fireEvent, {data: this.openDropdownJson(), callback: this.callback});
 		}
+
 		L.DomEvent.stopPropagation(event);
 	}
 
