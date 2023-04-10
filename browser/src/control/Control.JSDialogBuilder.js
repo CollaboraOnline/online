@@ -2360,9 +2360,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		div.tabIndex = -1;
 
 		var isRealUnoCommand = true;
+		var hasPopUp = false;
 
-		if (data.text)
+		if (data.text && data.text.endsWith('...')) {
 			data.text = data.text.replace('...', '');
+			hasPopUp = true;
+		}
 
 		if (data.command || data.postmessage === true) {
 			var id = data.id ? data.id : (data.command && data.command !== '') ? data.command : data.text;
@@ -2392,6 +2395,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			button.id = buttonId;
 			button.setAttribute('alt', id);
 			builder._setAccessKey(button, builder._getAccessKeyFromText(data.text));
+			if (hasPopUp)
+				button.setAttribute('aria-haspopup', true);
+
 
 			var imagePath = (data.image && !isUnoCommand) ? data.image : icon;
 			var buttonImage = L.DomUtil.create('img', '', button);
