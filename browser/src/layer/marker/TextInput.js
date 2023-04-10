@@ -873,6 +873,16 @@ L.TextInput = L.Layer.extend({
 			this._linebreakHint = ev.keyCode === 13 && ev.shiftKey;
 		}
 
+		// We want to open drowdown menu when cursor is above a dropdown content control.
+		if (ev.code === 'Space' || ev.code === 'Enter') {
+			if (this._map['stateChangeHandler'].getItemValue('.uno:ContentControlProperties') === 'enabled') {
+				if (app.sectionContainer.doesSectionExist(L.CSections.ContentControl.name)) {
+					var section = app.sectionContainer.getSectionWithName(L.CSections.ContentControl.name);
+					section.onClickDropdown(ev);
+				}
+			}
+		}
+
 		var mentionPopup = L.DomUtil.get('mentionPopup');
 		if (mentionPopup) {
 			if (ev.key === 'ArrowDown') {
