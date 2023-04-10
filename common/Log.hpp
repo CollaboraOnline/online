@@ -179,6 +179,11 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOG_FILE_NAME(f) (&f[skipPathPrefix(f)])
 #endif
 
+// Macro expansion doesn't happen when # or ## operators are used,
+// so we need an indirection to expand macros before using the result.
+#define CONCATINATE_IMPL(X, Y) X##Y
+#define CONCATINATE(X, Y) CONCATINATE_IMPL(X, Y)
+#define STRINGIFY(X) #X
 #define STRING(X) STRINGIFY(X)
 
 #ifdef __ANDROID__
@@ -309,15 +314,16 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOG_ASSERT_INTERNAL(condition, message, LOG)                                               \
     do                                                                                             \
     {                                                                                              \
-        if (!(condition))                                                                          \
+        auto&& CONCATINATE(cond, __LINE__) = !!(condition);                                        \
+        if (!CONCATINATE(cond, __LINE__))                                                          \
         {                                                                                          \
-            std::ostringstream oss##__LINE__;                                                      \
-            oss##__LINE__ << message;                                                              \
-            const auto msg##__LINE__ = oss##__LINE__.str();                                        \
+            std::ostringstream CONCATINATE(oss, __LINE__);                                         \
+            CONCATINATE(oss, __LINE__) << message;                                                 \
+            const auto CONCATINATE(msg, __LINE__) = CONCATINATE(oss, __LINE__).str();              \
             LOG("ERROR: Assertion failure: "                                                       \
-                << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ". ")                             \
-                << "Condition: " << (#condition));                                                 \
-            assert(!#condition); /* NOLINT(misc-static-assert) */                                  \
+                << (CONCATINATE(msg, __LINE__).empty() ? "" : CONCATINATE(msg, __LINE__) + ". ")   \
+                << "Condition: " << STRING(condition));                                            \
+            assert(!STRING(condition)); /* NOLINT(misc-static-assert) */                           \
         }                                                                                          \
     } while (false)
 
