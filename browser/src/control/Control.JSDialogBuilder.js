@@ -1240,7 +1240,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var radiobuttonLabel = L.DomUtil.create('label', '', container);
 		radiobuttonLabel.textContent = builder._cleanText(data.text);
-		radiobuttonLabel.for = data.id;
+		radiobuttonLabel.htmlFor = data.id;
 
 		var toggleFunction = function() {
 			builder.callback('radiobutton', 'change', container, this.checked, builder);
@@ -1276,7 +1276,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		checkbox.tabIndex = '0';
 		var checkboxLabel = L.DomUtil.create('label', builder.options.cssClass, div);
 		checkboxLabel.textContent = builder._cleanText(data.text);
-		checkboxLabel.for = data.id;
+		checkboxLabel.htmlFor = data.id;
 
 		var toggleFunction = function() {
 			builder.callback('checkbox', 'change', div, this.checked, builder);
@@ -2347,7 +2347,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (builder.options.useInLineLabelsForUnoButtons === true) {
 				$(div).addClass('inline');
 				label = L.DomUtil.create('span', 'ui-content unolabel', div);
-				label.for = buttonId;
+				label.htmlFor = buttonId;
 				label.textContent = builder._cleanText(data.text);
 
 				controls['label'] = label;
