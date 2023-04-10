@@ -934,6 +934,10 @@ L.Control.Menubar = L.Control.extend({
 			{id: 'watermark', uno: '.uno:Watermark'},
 			{name: _('Page Setup'), id: 'pagesetup', type: 'action'},
 			{uno: '.uno:WordCountDialog'},
+			window.deeplEnabled ?
+				{
+					uno: '.uno:Translate'
+				} : {},
 			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 			{name: _('Send Feedback'), id: 'feedback', type: 'action', mobileapp: false},
