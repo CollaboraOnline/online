@@ -85,13 +85,7 @@ button.ui-tab.notebookbar {
 }
 
 .notebookbar-shortcuts-bar .notebookbar.unotoolbutton {
-	height: 27px;
-	width: 24px;
-	display: flex;
 	margin: 0px !important;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
 }
 
 .notebookbar-shortcuts-bar .cell.notebookbar {
