@@ -241,6 +241,34 @@ L.Control.JSDialog = L.Control.extend({
 			L.DomUtil.addClass(primaryBtn, 'button-primary');
 	},
 
+	addFocusHandler: function(instance) {
+		// loop using tab key
+		var beginMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-begin-marker');
+		var endMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-end-marker');
+
+		beginMarker.tabIndex = 0;
+		endMarker.tabIndex = 0;
+
+		instance.container.insertBefore(beginMarker, instance.container.firstChild);
+		instance.container.appendChild(endMarker);
+
+		instance.container.addEventListener('focusin', function(event) {
+			if (event.target == beginMarker || event.target == endMarker) {
+				var firstFocusElement = instance.container.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker, .jsdialog-end-marker)');
+				if (firstFocusElement)
+					firstFocusElement.focus();
+				else if (document.getElementById(instance.init_focus_id)) {
+					document.getElementById(instance.init_focus_id).focus();
+				}
+				else {
+					app.console.error('There is no focusable element in the modal. Either focusId should be given or modal should have a response button.');
+					instance.that.close(instance.id, true);
+					instance.that.map.focus();
+				}
+			}
+		});
+	},
+
 	addHandlers: function(instance) {
 		var onInput = function(ev) {
 			if (ev.isFirst)
@@ -278,33 +306,7 @@ L.Control.JSDialog = L.Control.extend({
 
 		var popupParent = instance.popupParent ? L.DomUtil.get(instance.popupParent) : null;
 
-		if (instance.isPopUp) {
-			// loop using tab key
-			var beginMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-begin-marker');
-			var endMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-end-marker');
-
-			beginMarker.tabIndex = 0;
-			endMarker.tabIndex = 0;
-
-			instance.container.insertBefore(beginMarker, instance.container.firstChild);
-			instance.container.appendChild(endMarker);
-
-			instance.container.addEventListener('focusin', function(event) {
-				if (event.target == beginMarker || event.target == endMarker) {
-					var firstFocusElement = instance.container.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker, .jsdialog-end-marker)');
-					if (firstFocusElement)
-						firstFocusElement.focus();
-					else if (document.getElementById(instance.init_focus_id)) {
-						document.getElementById(instance.init_focus_id).focus();
-					}
-					else {
-						app.console.error('There is no focusable element in the modal. Either focusId should be given or modal should have a response button.');
-						instance.that.close(instance.id, true);
-						instance.that.map.focus();
-					}
-				}
-			});
-		}
+		this.addFocusHandler(instance); // Loop focus for all dialogues.
 
 		var clickToCloseId = instance.clickToClose;
 		if (clickToCloseId && clickToCloseId.indexOf('.uno:') === 0)
