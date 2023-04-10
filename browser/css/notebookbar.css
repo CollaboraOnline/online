@@ -78,7 +78,7 @@ button.ui-tab.notebookbar {
 	height: 31px;
 }
 
-.notebookbar-shortcuts-bar .unotoolbutton.notebookbar .unobutton {
+.notebookbar-shortcuts-bar .unotoolbutton.notebookbar .unobutton img {
 	width: 16px !important;
 	height: 16px !important;
 	margin: 0 !important;
@@ -239,8 +239,9 @@ button.ui-tab.notebookbar {
 	border-radius: var(--border-radius);
 }
 
-.unotoolbutton.notebookbar .unobutton > img{
-	height: 100%;
+.ui-tabs-content .unobutton > img {
+	width: 24px;
+	height: 24px;
 }
 
 .has-dropdown--color.notebookbar {
