@@ -526,7 +526,7 @@ void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPReq
     const std::string& path = requestUri.getPath();
     std::ostringstream oss;
     oss << "HTTP/1.1 " << errorCode << "\r\n"
-        "Content-Type: text/html charset=UTF-8\r\n"
+        "Content-Type: text/plain charset=UTF-8\r\n"
         "Date: " << Util::getHttpTimeNow() << "\r\n"
         "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
         << extraHeader
@@ -535,9 +535,9 @@ void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPReq
     {
         std::string pathSanitized;
         Poco::URI::encode(path, "", pathSanitized);
-        oss << "<h1>Error: " << shortMessage << "</h1>"
-            "<p>" << longMessage << ' ' << pathSanitized << "</p>"
-            "<p>Please contact your system administrator.</p>";
+        oss << "Error: " << shortMessage << '\n' <<
+            longMessage << ' ' << pathSanitized << '\n' <<
+            "Please contact your system administrator.";
     }
     socket->send(oss.str());
 }
