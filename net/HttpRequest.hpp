@@ -1374,12 +1374,19 @@ private:
         }
 
         assert(socket && "No valid socket to handleIncomingMessage.");
-        LOG_TRC("handleIncomingMessage");
 
-        bool close = false;
         Buffer& data = socket->getInBuffer();
+        if (data.empty())
+        {
+            LOG_DBG("No data to process from the socket");
+            return;
+        }
+
+        LOG_TRC("HandleIncomingMessage: buffer has:\n"
+                << Util::dumpHex(std::string(data.data(), std::min(data.size(), 256UL))));
 
         // Consume the incoming data by parsing and processing the body.
+        bool close = false;
         const int64_t read = _response->readData(data.data(), data.size());
         if (read > 0)
         {
