@@ -397,7 +397,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		return true;
 	},
 
-	_makeW2MenuFocusable: function(builder, id, menu, parentId) {
+	_makeW2MenuFocusable: function(builder, id, menu, parentId, itemCallback) {
 		var element = document.getElementById(id);
 		var rows = element.getElementsByTagName('tr');
 		rows = Array.from(rows);
@@ -429,7 +429,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				row.tabIndex = index + tabStartIndex;
 				row.onkeydown = function(e) {
 					if (e.code === 'Enter' || e.code === 'Space') {
-						builder.map._clip.filterExecCopyPaste('.uno:' + menu[index].uno);
+						itemCallback({ item: menu[index] });
 						document.getElementById(id).style.display = 'none';
 					}
 					else if (e.code === 'Escape') {
@@ -930,17 +930,19 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					{text: _UNO('.uno:PasteSpecial', 'text'), uno: 'PasteSpecial', hint: L.Control.MenubarShortcuts.shortcuts.PASTE_SPECIAL},
 				];
 
+				var itemCallback = function(event) {
+					if (event.item)
+						builder.map._clip.filterExecCopyPaste('.uno:' + event.item.uno);
+				};
+
 				$(control.container).unbind('click.toolbutton');
 				$(control.container).click(function () {
 					$(control.container).w2menu({
 						name: 'pastemenu',
 						items: menu,
-						onSelect: function (event) {
-							if (event.item)
-								builder.map._clip.filterExecCopyPaste('.uno:' + event.item.uno);
-						}
+						onSelect: itemCallback
 					});
-					builder._makeW2MenuFocusable(builder, 'w2ui-overlay-pastemenu', menu, data.id);
+					builder._makeW2MenuFocusable(builder, 'w2ui-overlay-pastemenu', menu, data.id, itemCallback);
 				});
 			} else {
 				$(control.container).unbind('click.toolbutton');
@@ -969,19 +971,25 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					return false;
 			};
 
+			var menu = [
+				{id: 'space1', text: _('Very Tight'), uno: 'Spacing?Spacing:short=-60', checked: isChecked(-60)},
+				{id: 'space1', text: _('Tight'), uno: 'Spacing?Spacing:short=-30', checked: isChecked(-30)},
+				{id: 'space15', text: _('Normal'), uno: 'Spacing?Spacing:short=0', checked: isChecked(0)},
+				{id: 'space2', text: _('Loose'), uno: 'Spacing?Spacing:short=60', checked: isChecked(60)},
+				{id: 'space2', text: _('Very Loose'), uno: 'Spacing?Spacing:short=120', checked: isChecked(120)},
+			];
+
+			var itemCallback = function(event) {
+				builder.map.sendUnoCommand('.uno:' + event.item.uno);
+			};
+
 			$(control.container).w2menu({
-				items: [
-					{id: 'space1', text: _('Very Tight'), uno: 'Spacing?Spacing:short=-60', checked: isChecked(-60)},
-					{id: 'space1', text: _('Tight'), uno: 'Spacing?Spacing:short=-30', checked: isChecked(-30)},
-					{id: 'space15', text: _('Normal'), uno: 'Spacing?Spacing:short=0', checked: isChecked(0)},
-					{id: 'space2', text: _('Loose'), uno: 'Spacing?Spacing:short=60', checked: isChecked(60)},
-					{id: 'space2', text: _('Very Loose'), uno: 'Spacing?Spacing:short=120', checked: isChecked(120)},
-				],
+				name: 'char-space-menu',
+				items: menu,
 				type: 'menu',
-				onSelect: function (event) {
-					builder.map.sendUnoCommand('.uno:' + event.item.uno);
-				}
+				onSelect: itemCallback
 			});
+			builder._makeW2MenuFocusable(builder, 'w2ui-overlay-char-space-menu', menu, data.id, itemCallback);
 		});
 	},
 
