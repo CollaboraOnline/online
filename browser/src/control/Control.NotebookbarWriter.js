@@ -850,7 +850,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			(this._map['wopi'].EnableRemoteLinkPicker) ? {
 				'type': 'bigcustomtoolitem',
-				'text': _('Pick Link'),
+				'text': _('Smart Picker'),
 				'command': 'remotelink'
 			} : {},
 			{
