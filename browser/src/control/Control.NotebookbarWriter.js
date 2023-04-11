@@ -2453,13 +2453,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			'enabled': 'true',
 			'children': [
 				{
-					'id': tabName + ' Tab',
+					'id': tabName + '-Tab',
 					'type': 'container',
 					'text': '',
 					'enabled': 'true',
 					'children': [
 						{
-							'id': tabName,
+							'id': tabName + '-container',
 							'type': 'container',
 							'text': '',
 							'enabled': 'true',
