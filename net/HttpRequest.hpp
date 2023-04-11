@@ -14,6 +14,7 @@
 #include <sys/socket.h>
 #include <sys/stat.h>
 
+#include <algorithm>
 #include <chrono>
 #include <cstdint>
 #include <iostream>
@@ -1374,12 +1375,20 @@ private:
         }
 
         assert(socket && "No valid socket to handleIncomingMessage.");
-        LOG_TRC("handleIncomingMessage");
 
-        bool close = false;
         Buffer& data = socket->getInBuffer();
+        if (data.empty())
+        {
+            LOG_DBG("No data to process from the socket");
+            return;
+        }
+
+        LOG_TRC("HandleIncomingMessage: buffer has:\n"
+                << Util::dumpHex(
+                       std::string(data.data(), std::min(static_cast<long>(data.size()), 256L))));
 
         // Consume the incoming data by parsing and processing the body.
+        bool close = false;
         const int64_t read = _response->readData(data.data(), data.size());
         if (read > 0)
         {
