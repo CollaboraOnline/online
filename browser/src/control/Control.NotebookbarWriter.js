@@ -14,7 +14,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'name': 'File',
 			},
 			{
-				'text': _('~Home'),
+				'text': _('Hom~e'),
 				'id': this.HOME_TAB_ID,
 				'name': 'Home',
 				'context': 'default|Text|DrawText'
@@ -40,12 +40,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'name': 'Review'
 			},
 			{
-				'text': _('Format'),
+				'text': _('F~ormat'),
 				'id': '-3',
 				'name': 'Format',
 			},
 			{
-				'text': _('Form'),
+				'text': _('For~m'),
 				'id': 'Form',
 				'name': 'Form',
 			},
@@ -56,7 +56,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'context': 'Table'
 			},
 			{
-				'text': _('~Draw'),
+				'text': _('Dra~w'),
 				'id': '-9',
 				'name': 'Draw',
 				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork'

@@ -58,7 +58,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'name': 'File',
 			},
 			{
-				'text': _('~Home'),
+				'text': _('Hom~e'),
 				'id': this.HOME_TAB_ID,
 				'name': 'Home',
 				'context': 'default|DrawText'
@@ -79,7 +79,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'name': 'Review'
 			},
 			{
-				'text': _('Format'),
+				'text': _('F~ormat'),
 				'id': '-3',
 				'name': 'Format',
 			},
@@ -90,7 +90,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'context': 'Table'
 			},
 			{
-				'text': '~Draw',
+				'text': 'Dra~w',
 				'id': '-11',
 				'name': 'Draw',
 				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork'
