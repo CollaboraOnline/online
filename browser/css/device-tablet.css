@@ -120,7 +120,7 @@
 }
 
 .main-nav.readonly.hasnotebookbar #document-title-pencil {
-	min-width: 24px;
+	min-width: var(--btn-size);
 	margin: 0;
 }
 

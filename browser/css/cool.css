@@ -12,6 +12,8 @@
 
 	/* Shared color for cell and selection border */
 	--cell-cursor-selection-border-color: var(--color-primary);
+
+	--btn-size: 24px;
 }
 
 .access-key {
@@ -119,8 +121,8 @@
 .table-column-resize-marker {
 	margin-left: 0px;
 	margin-top: 0px;
-	width: 24px;
-	height: 24px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 	background-image: url('images/table-column-resize-marker.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
@@ -130,8 +132,8 @@
 .table-column-resize-marker:hover {
 	margin-left: 0px;
 	margin-top: 0px;
-	width: 24px;
-	height: 24px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 	background-image: url('images/table-column-resize-marker-hover.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
@@ -141,8 +143,8 @@
 .table-row-resize-marker {
 	margin-left: 0px;
 	margin-top: 0px;
-	width: 24px;
-	height: 24px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 	background-image: url('images/table-row-resize-marker.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
@@ -152,8 +154,8 @@
 .table-row-resize-marker:hover {
 	margin-left: 0px;
 	margin-top: 0px;
-	width: 24px;
-	height: 24px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 	background-image: url('images/table-row-resize-marker-hover.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
@@ -162,8 +164,8 @@
 
 .table-select-marker {
 	margin: 0px;
-	width: 24px;
-	height: 24px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 	background: url('images/table-row-or-column-select-marker.svg') no-repeat center center /12px;
 	cursor: pointer;
 }
@@ -197,8 +199,8 @@
 .table-move-marker {
 	margin-left: 0px;
 	margin-top: 0px;
-	width: 24px;
-	height: 24px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 	background-image: url('images/table-move-marker.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
@@ -307,8 +309,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	position: relative;
 	margin-inline-start: 16px;
 	top: 16px;
-	width: 24px;
-	height: 24px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 	background: url('images/baseline-edit-24px.svg') no-repeat center !important;
 	transform: rotate(0deg);
 	transition: transform 0.5s;
@@ -352,8 +354,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 .annotation-marker {
 	margin-left: 0px;
 	margin-top: 0px;
-	width: 24px;
-	height: 24px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 	background-image: url('images/note.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
@@ -491,8 +493,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	border-radius: 50%;
 	z-index: 10;
 	position: absolute;
-	width: 24px;
-	height: 24px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 	left: 26px;
 	top: -10px;
 }
@@ -643,8 +645,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 
 .user-info {
 	border-radius: 50%;
-	width: 24px;
-	height: 24px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 	overflow: auto;
 	margin: auto;
 }
@@ -663,8 +665,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	margin: 0 !important;
 	padding: 0 !important;
 	min-width: initial !important;
-	width: 24px !important;
-	height: 24px !important;
+	width: var(--btn-size) !important;
+	height: var(--btn-size) !important;
 	vertical-align: top;
 	border: 1px solid transparent !important;
 	display: inline-block !important;
