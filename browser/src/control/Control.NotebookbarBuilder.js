@@ -426,7 +426,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			// Loop focus inside menu - end.
 
 			rows.forEach(function(row, index) {
-				row.tabIndex = index + tabStartIndex;
+				if (menu[index].type !== 'break')
+					row.tabIndex = index + tabStartIndex;
+
 				row.onkeydown = function(e) {
 					if (e.code === 'Enter' || e.code === 'Space') {
 						itemCallback({ item: menu[index] });
@@ -1008,20 +1010,26 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					return false;
 			};
 
+			var menu = [
+				{id: 'spacepara1', img: 'spacepara1', text: _UNO('.uno:SpacePara1'), uno: 'SpacePara1', checked: isChecked('.uno:SpacePara1')},
+				{id: 'spacepara15', img: 'spacepara15', text: _UNO('.uno:SpacePara15'), uno: 'SpacePara15', checked: isChecked('.uno:SpacePara15')},
+				{id: 'spacepara2', img: 'spacepara2', text: _UNO('.uno:SpacePara2'), uno: 'SpacePara2', checked: isChecked('.uno:SpacePara2')},
+				{type: 'break'},
+				{id: 'paraspaceincrease', img: 'paraspaceincrease', text: _UNO('.uno:ParaspaceIncrease'), uno: 'ParaspaceIncrease'},
+				{id: 'paraspacedecrease', img: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: 'ParaspaceDecrease'}
+			];
+
+			var itemCallback = function(event) {
+				builder.map.sendUnoCommand('.uno:' + event.item.uno);
+			};
+
 			$(control.container).w2menu({
-				items: [
-					{id: 'spacepara1', img: 'spacepara1', text: _UNO('.uno:SpacePara1'), uno: 'SpacePara1', checked: isChecked('.uno:SpacePara1')},
-					{id: 'spacepara15', img: 'spacepara15', text: _UNO('.uno:SpacePara15'), uno: 'SpacePara15', checked: isChecked('.uno:SpacePara15')},
-					{id: 'spacepara2', img: 'spacepara2', text: _UNO('.uno:SpacePara2'), uno: 'SpacePara2', checked: isChecked('.uno:SpacePara2')},
-					{type: 'break'},
-					{id: 'paraspaceincrease', img: 'paraspaceincrease', text: _UNO('.uno:ParaspaceIncrease'), uno: 'ParaspaceIncrease'},
-					{id: 'paraspacedecrease', img: 'paraspacedecrease', text: _UNO('.uno:ParaspaceDecrease'), uno: 'ParaspaceDecrease'}
-				],
+				items: menu,
+				name: 'line-spacing-menu',
 				type: 'menu',
-				onSelect: function (event) {
-					builder.map.sendUnoCommand('.uno:' + event.item.uno);
-				}
+				onSelect: itemCallback
 			});
+			builder._makeW2MenuFocusable(builder, 'w2ui-overlay-line-spacing-menu', menu, data.id, itemCallback);
 		});
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
