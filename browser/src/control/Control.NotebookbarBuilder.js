@@ -426,16 +426,19 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			// Loop focus inside menu - end.
 
 			rows.forEach(function(row, index) {
-				if (menu[index].type !== 'break')
+				if (!menu[index].type || (menu[index].type !== 'break' && menu[index].type !== 'separator'))
 					row.tabIndex = index + tabStartIndex;
 
 				row.onkeydown = function(e) {
+					var elementToHide = document.getElementById(id);
 					if (e.code === 'Enter' || e.code === 'Space') {
 						itemCallback({ item: menu[index] });
-						document.getElementById(id).style.display = 'none';
+						if (elementToHide)
+							elementToHide.style.display = 'none';
 					}
 					else if (e.code === 'Escape') {
-						document.getElementById(id).style.display = 'none';
+						if (elementToHide)
+							elementToHide.style.display = 'none';
 						document.getElementById(parentId).focus();
 					}
 				};
@@ -836,34 +839,38 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			if (!$('#conditionalformatmenu-grid').length) {
+				var itemCallback = function(event) {
+					if (event.item.html && !$('#w2ui-overlay-conditionalformatmenu-sub').length) {
+						$(event.originalEvent.target).w2overlay({
+							name: 'conditionalformatmenu-sub',
+							html: event.item.html,
+							left: 100,
+							top: -20,
+							noTip: true,
+							onHide: function() {
+								closeAll(this.name);
+							}
+						});
+						if ($('#iconsetoverlay').length) {
+							$('#iconsetoverlay').click(function() {
+								builder.map.sendUnoCommand('.uno:IconSetFormatDialog');
+								closeAll();
+							});
+						}
+					} else if (!event.item.html) {
+						builder.map.sendUnoCommand('.uno:' + event.item.uno);
+						closeAll();
+					}
+				};
+
 				$(control.container).w2menu({
 					name: 'conditionalformatmenu',
 					items: menu,
 					keepOpen: true,
-					onSelect: function (event) {
-						if (event.item.html && !$('#w2ui-overlay-conditionalformatmenu-sub').length) {
-							$(event.originalEvent.target).w2overlay({
-								name: 'conditionalformatmenu-sub',
-								html: event.item.html,
-								left: 100,
-								top: -20,
-								noTip: true,
-								onHide: function() {
-									closeAll(this.name);
-								}
-							});
-							if ($('#iconsetoverlay').length) {
-								$('#iconsetoverlay').click(function() {
-									builder.map.sendUnoCommand('.uno:IconSetFormatDialog');
-									closeAll();
-								});
-							}
-						} else if (!event.item.html) {
-							builder.map.sendUnoCommand('.uno:' + event.item.uno);
-							closeAll();
-						}
-					}
+					onSelect: itemCallback
 				});
+
+				builder._makeW2MenuFocusable(builder, 'w2ui-overlay-conditionalformatmenu', menu, data.id, itemCallback);
 			}
 		});
 		builder._preventDocumentLosingFocusOnClick(control.container);
