@@ -717,10 +717,11 @@ void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPReq
         Poco::URI requestUri(request.getURI());
         std::string pathSanitized;
         Poco::URI::encode(requestUri.getPath(), "", pathSanitized);
-        headers += "Content-Type: text/html charset=UTF-8\r\n";
-        body = "<h1>Error: " + shortMessage + "</h1>" +
-            "<p>" + longMessage + ' ' + pathSanitized + "</p>" +
-            "<p>Please contact your system administrator.</p>";
+        // Let's keep message as plain text to avoid complications.
+        headers += "Content-Type: text/plain charset=UTF-8\r\n";
+        body = "Error: " + shortMessage + '\n' +
+            longMessage + ' ' + pathSanitized + '\n' +
+            "Please contact your system administrator.";
     }
     HttpHelper::sendError(errorCode, socket, body, headers);
 }
