@@ -900,19 +900,25 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			if (builder.map['wopi'].EnableInsertRemoteImage) {
-				$(control.container).w2menu({
-					items: [
-						{id: 'localgraphic', text: _('Insert Local Image')},
-						{id: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)}
-					],
-					onSelect: function (event) {
-						if (event.item.id === 'localgraphic') {
-							L.DomUtil.get('insertgraphic').click();
-						} else if (event.item.id === 'remotegraphic') {
-							builder.map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
-						}
+				var menu = [
+					{id: 'localgraphic', text: _('Insert Local Image')},
+					{id: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)}
+				];
+
+				var itemCallback = function(event) {
+					if (event.item.id === 'localgraphic') {
+						L.DomUtil.get('insertgraphic').click();
+					} else if (event.item.id === 'remotegraphic') {
+						builder.map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
 					}
+				};
+
+				$(control.container).w2menu({
+					name: 'insert-graphic-menu',
+					items: menu,
+					onSelect: itemCallback
 				});
+				builder._makeW2MenuFocusable(builder, 'w2ui-overlay-insert-graphic-menu', menu, data.id, itemCallback);
 			} else {
 				L.DomUtil.get('insertgraphic').click();
 			}
