@@ -1240,10 +1240,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border: none;
 }
 
-.jsdialog .ui-content.unobutton > img{
-	height: 100%;
-}
-
 .unotoolbutton.jsdialog.sidebar.ui-content > .arrowbackground {
 	width: auto;
 }
