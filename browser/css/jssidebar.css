@@ -20,6 +20,11 @@ img.sidebar.ui-image {
 	margin: 0;
 }
 
+.sidebar .unobutton > img {
+	width: var(--btn-size);
+	height: var(--btn-size);
+}
+
 #document-container:not(.mobile) + #sidebar-dock-wrapper {
 	padding: 0;
 	box-sizing: border-box;
