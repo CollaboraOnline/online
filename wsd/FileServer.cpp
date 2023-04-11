@@ -960,7 +960,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
 
     bool useIntegrationTheme = config.getBool("user_interface.use_integration_theme", true);
-    const std::string themePreFix = (theme == "nextcloud") && useIntegrationTheme ? theme + "/" : "";
+    std::string escapedTheme;
+    Poco::URI::encode(theme, "'", escapedTheme);
+    const std::string themePreFix = (escapedTheme == "nextcloud") && useIntegrationTheme ? escapedTheme + "/" : "";
     const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/browser/" COOLWSD_VERSION_HASH "/" + themePreFix + "%s.css\">");
     const std::string scriptJS("<script src=\"%s/browser/" COOLWSD_VERSION_HASH "/" + themePreFix + "%s.js\"></script>");
 
