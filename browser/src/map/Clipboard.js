@@ -865,10 +865,12 @@ L.Clipboard = L.Class.extend({
 			msg = L.Util.replaceCtrlAltInMac(msg);
 		}
 
-		this._map.uiManager.showInfoModal('copy_paste_warning');
-		document.getElementById('copy_paste_warning').innerHTML = msg;
-		document.getElementById('copy_paste_warning').tabIndex = 0;
-		document.getElementById('copy_paste_warning').focus(); // We hid the OK button, we need to set focus manually on the popup.
+		var id = 'copy_paste_warning';
+		this._map.uiManager.showYesNoButton(id + '-box', '', '', _('OK'), null, null, null, true);
+		var box = document.getElementById(id + '-box');
+		var innerDiv = L.DomUtil.create('div', '', null);
+		box.insertBefore(innerDiv, box.firstChild);
+		innerDiv.innerHTML = msg;
 	},
 
 	_substProductName: function (msg) {
@@ -906,14 +908,15 @@ L.Clipboard = L.Class.extend({
 		var msg = _('<p>Your browser has very limited access to the clipboard</p><p>Please press now: <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd> to see more options</p><p>Close popup to ignore paste special</p>');
 		msg = L.Util.replaceCtrlAltInMac(msg);
 
-		this._map.uiManager.showInfoModal('paste_special_dialog');
-
 		// We will use this for closing the dialog.
 		this.pasteSpecialDialogId = this._map.uiManager.generateModalId('paste_special_dialog');
 
-		document.getElementById('paste_special_dialog').innerHTML = msg;
-		document.getElementById('paste_special_dialog').tabIndex = 0;
-		document.getElementById('paste_special_dialog').focus(); // We hid the OK button, we need to set focus manually on the popup.
+		var id = 'paste_special_dialog';
+		this._map.uiManager.showYesNoButton(id + '-box', '', '', _('OK'), null, null, null, true);
+		var box = document.getElementById(id + '-box');
+		var innerDiv = L.DomUtil.create('div', '', null);
+		box.insertBefore(innerDiv, box.firstChild);
+		innerDiv.innerHTML = msg;
 	},
 });
 
