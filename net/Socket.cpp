@@ -465,11 +465,15 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
         if (!toErase.empty())
         {
+            LOG_TRC("Removing " << toErase.size() << " socket" << (toErase.size() > 1 ? "s" : ""));
+            LOG_ASSERT(_pollSockets.size() > 0);
+            LOG_ASSERT(toErase.size() <= _pollSockets.size());
             std::sort(toErase.begin(), toErase.end(), [](int a, int b) { return a > b; });
             for (const int eraseIndex : toErase)
             {
                 LOG_TRC('#' << _pollFds[eraseIndex].fd << ": Removing socket (at " << eraseIndex
-                            << " of " << _pollSockets.size() << ") from " << _name);
+                            << " of " << _pollSockets.size() << ") from " << _name << " to have "
+                            << _pollSockets.size() - 1 << " sockets");
                 _pollSockets.erase(_pollSockets.begin() + eraseIndex);
             }
         }
