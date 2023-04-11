@@ -548,9 +548,12 @@ L.Map.include({
 			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition (unbranded)';
 		}
 
-		map.uiManager.showInfoModal(id, '', '', '', null, false);
+		map.uiManager.showYesNoButton(id + '-box', productName, '', _('OK'), null, null, null, true);
+		var box = document.getElementById(id + '-box');
+		var innerDiv = L.DomUtil.create('div', '', null);
+		box.insertBefore(innerDiv, box.firstChild);
+		innerDiv.innerHTML = data;
 
-		document.getElementById(id).innerHTML = data;
 		this.onHelpOpen(id, map, productName);
 	},
 
@@ -644,8 +647,11 @@ L.Map.include({
 
 		var map = this;
 
-		map.uiManager.showInfoModal(aboutDialogId + '-box', '', '', '', '', null, false, 'about-dialog');
-		document.getElementById(aboutDialogId + '-box').innerHTML = content.outerHTML;
+		map.uiManager.showYesNoButton(aboutDialogId + '-box', productName, '', _('OK'), null, null, null, true);
+		var box = document.getElementById(aboutDialogId + '-box');
+		var innerDiv = L.DomUtil.create('div', '', null);
+		box.insertBefore(innerDiv, box.firstChild);
+		innerDiv.innerHTML = content.outerHTML;
 
 		var form = document.getElementById('modal-dialog-about-dialog-box');
 		form.addEventListener('click', this.aboutDialogClickHandler.bind(this));
