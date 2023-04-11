@@ -37,15 +37,4 @@
 	--color-success: #46ba61;
 
 	--color-box-shadow: rgba(77, 77, 77, 0.5);
-	--border-radius: 4px; /* buttons, widgets */
-	--border-radius-large: 10px; /* dialog */
-
-	--default-font-size: 12px;
-	--header-font-size: 16px;
-
-	--default-height: 24px;
-	--header-height: 38px;
-
-	/* Annotations */
-	--annotation-input-size: 100px;
 }
