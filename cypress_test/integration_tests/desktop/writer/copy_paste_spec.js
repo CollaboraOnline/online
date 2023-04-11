@@ -30,6 +30,6 @@ describe('Clipboard operations.', function() {
 		cy.contains('.context-menu-link', 'Copy')
 			.click();
 
-		cy.get('#copy_paste_warning').should('exist');
+		cy.get('#copy_paste_warning-box').should('exist');
 	});
 });

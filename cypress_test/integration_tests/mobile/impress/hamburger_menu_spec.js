@@ -183,7 +183,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Cut']);
 
-		cy.get('#copy_paste_warning').should('exist');
+		cy.get('#mobile-wizard-content-modal-dialog-copy_paste_warning-box').should('exist');
 	});
 
 	it('Copy.', function() {
@@ -194,7 +194,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Copy']);
 
-		cy.get('#copy_paste_warning').should('exist');
+		cy.get('#mobile-wizard-content-modal-dialog-copy_paste_warning-box').should('exist');
 	});
 
 	it('Paste.', function() {
@@ -205,7 +205,7 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['Edit', 'Paste']);
 
-		cy.get('#copy_paste_warning').should('exist');
+		cy.get('#mobile-wizard-content-modal-dialog-copy_paste_warning-box').should('exist');
 	});
 
 	it('Select all.', function() {
