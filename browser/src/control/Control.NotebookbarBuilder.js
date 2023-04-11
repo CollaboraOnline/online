@@ -1070,6 +1070,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				$(table).addClass(this.options.cssClass);
 				$(table).addClass('vertical');
 				var childObject = L.DomUtil.create('div', 'row ' + this.options.cssClass, table);
+				childObject.id = tableId ? tableId + '-row' : '';
 			} else {
 				childObject = td;
 			}
