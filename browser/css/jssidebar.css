@@ -29,8 +29,8 @@ img.sidebar.ui-image {
 	border-inline-start: 1px solid var(--color-border);
 }
 .sidebar .menu-entry-icon {
-	width: 24px;
-	height: 24px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 }
 
 

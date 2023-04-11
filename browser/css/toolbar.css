@@ -1177,8 +1177,8 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 
 #userListHeader .user-info,
 #userListHeader .avatar-img {
-	width: 24px;
-	height: 24px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 	background-color: var(--color-background-lighter);
 	background-position: center;
 	background-size: cover;

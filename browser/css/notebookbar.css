@@ -234,12 +234,12 @@ button.ui-tab.notebookbar {
 }
 
 .ui-tabs-content .unobutton > img {
-	width: 24px;
-	height: 24px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 }
 
 .has-dropdown--color.notebookbar {
-	height: 24px !important;
+	height: var(--btn-size) !important;
 }
 
 .unotoolbutton.notebookbar .unolabel {
