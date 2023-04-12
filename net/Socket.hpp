@@ -627,24 +627,6 @@ public:
         wakeup();
     }
 
-    void removeSockets()
-    {
-        LOG_DBG("Removing all sockets from SocketPoll thread " << _name);
-        assertCorrectThread();
-
-        while (!_pollSockets.empty())
-        {
-            const std::shared_ptr<Socket>& socket = _pollSockets.back();
-            assert(socket);
-
-            LOG_DBG("Removing socket #" << socket->getFD() << " from " << _name);
-            ASSERT_CORRECT_SOCKET_THREAD(socket);
-            socket->resetThreadOwner();
-
-            _pollSockets.pop_back();
-        }
-    }
-
     bool isAlive() const { return (_threadStarted && !_threadFinished) || _runOnClientThread; }
 
     /// Check if we should continue polling
@@ -886,6 +868,9 @@ private:
     /// The polling thread entry.
     /// Used to set the thread name and mark the thread as stopped when done.
     void pollingThreadEntry();
+
+    /// Remove all the sockets we own.
+    void removeSockets();
 
     /// Debug name used for logging.
     const std::string _name;
