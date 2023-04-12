@@ -414,17 +414,17 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         }
     }
 
-    // This should only happen when we're stopping.
-
-    // FIXME: A few dozen lines above we have potentially inserted new elements in _pollSockets, so
-    // clearly its size can now be larger than what it was when we came to this function, which got
-    // saved in the size variable.
-
     if (_pollSockets.size() != size)
-        return rc;
+    {
+        LOG_DBG("PollSocket container size has changed from " << _pollSockets.size() << " to "
+                                                              << size);
+    }
 
+    // If we had sockets to process.
     if (size > 0)
     {
+        assert(!_pollSockets.empty() && "All existing sockets disappeared from the SocketPoll");
+
         // Fire the poll callbacks and remove dead fds.
         std::chrono::steady_clock::time_point newNow = std::chrono::steady_clock::now();
 
@@ -439,28 +439,37 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         size_t i = _pollStartIndex;
         for (std::size_t j = 0; j < size; ++j)
         {
-            SocketDisposition disposition(_pollSockets[i]);
-            try
+            if (_pollFds[i].fd == _pollSockets[i]->getFD())
             {
-                LOG_TRC('#' << _pollFds[i].fd << ": Handling poll events of " << _name
-                            << " at index " << i << " (of " << size << "): 0x" << std::hex
-                            << _pollFds[i].revents << std::dec);
+                SocketDisposition disposition(_pollSockets[i]);
+                try
+                {
+                    LOG_TRC('#' << _pollFds[i].fd << ": Handling poll events of " << _name
+                                << " at index " << i << " (of " << size << "): 0x" << std::hex
+                                << _pollFds[i].revents << std::dec);
 
-                _pollSockets[i]->handlePoll(disposition, newNow,
-                                            _pollFds[i].revents);
+                    _pollSockets[i]->handlePoll(disposition, newNow, _pollFds[i].revents);
+                }
+                catch (const std::exception& exc)
+                {
+                    LOG_ERR('#' << _pollFds[i].fd << ": Error while handling poll at " << i
+                                << " in " << _name << ": " << exc.what());
+                    disposition.setClosed();
+                    rc = -1;
+                }
+
+                if (!disposition.isContinue())
+                    toErase.push_back(i);
+
+                disposition.execute();
             }
-            catch (const std::exception& exc)
+            else
             {
-                LOG_ERR('#' << _pollFds[i].fd << ": Error while handling poll at " << i << " in "
-                            << _name << ": " << exc.what());
-                disposition.setClosed();
-                rc = -1;
+                LOG_DBG("Unexpected socket in the wrong position. Expected #"
+                        << _pollFds[i].fd << " at index " << i << " but found "
+                        << _pollSockets[i]->getFD() << " instead. Skipping");
+                assert(!"Unexpected socket at the wrong position");
             }
-
-            if (!disposition.isContinue())
-                toErase.push_back(i);
-
-            disposition.execute();
 
             if (i == 0)
                 i = size - 1;
