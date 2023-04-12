@@ -5654,29 +5654,27 @@ int COOLWSD::innerMain()
 #endif
 
 #if ENABLE_DEBUG
-    std::string postMessageURI =
+    const std::string postMessageURI =
         getServiceURI("/browser/dist/framed.doc.html?file_path=" DEBUG_ABSSRCDIR
                       "/" COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER);
-    std::cerr << "\nLaunch one of these in your browser:\n\n"
-              << "    Writer:      " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER)
-              << '\n'
-              << "    Calc:        " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC)
-              << '\n'
-              << "    Impress:     " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_IMPRESS)
-              << '\n'
-              << "    Draw:        " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_DRAW)
-              << '\n'
-              << "    postMessage: " << postMessageURI << std::endl;
+    std::ostringstream oss;
+    oss << "\nLaunch one of these in your browser:\n\n"
+        << "    Writer:      " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER) << '\n'
+        << "    Calc:        " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC) << '\n'
+        << "    Impress:     " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_IMPRESS) << '\n'
+        << "    Draw:        " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_DRAW) << '\n'
+        << "    postMessage: " << postMessageURI << std::endl;
 
     const std::string adminURI = getServiceURI(COOLWSD_TEST_ADMIN_CONSOLE, true);
     if (!adminURI.empty())
-        std::cerr << "\nOr for the admin, monitoring, capabilities & discovery:\n\n"
-                  << adminURI << '\n'
-                  << getServiceURI(COOLWSD_TEST_METRICS, true) << '\n'
-                  << getServiceURI("/hosting/capabilities") << '\n'
-                  << getServiceURI("/hosting/discovery") << '\n';
+        oss << "\nOr for the admin, monitoring, capabilities & discovery:\n\n"
+            << adminURI << '\n'
+            << getServiceURI(COOLWSD_TEST_METRICS, true) << '\n'
+            << getServiceURI("/hosting/capabilities") << '\n'
+            << getServiceURI("/hosting/discovery") << '\n';
 
-    std::cerr << std::endl;
+    oss << std::endl;
+    std::cerr << oss.str();
 #endif
 
     const auto startStamp = std::chrono::steady_clock::now();
