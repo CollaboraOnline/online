@@ -366,7 +366,8 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
             // Clear the data.
 #if !MOBILEAPP
-            int dump = ::read(_wakeup[0], &dump, sizeof(dump));
+            int dump[32];
+            dump[0] = ::read(_wakeup[0], &dump, sizeof(dump));
 #else
             LOG_TRC("Wakeup pipe read");
             int dump = fakeSocketRead(_wakeup[0], &dump, sizeof(dump));
