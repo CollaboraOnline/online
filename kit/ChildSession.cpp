@@ -1304,7 +1304,15 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const Stri
             url = "file://" + jailDoc + "insertfile/" + name;
         }
         else if (type == "graphicurl")
+        {
             URI::decode(name, url);
+            if (!Util::startsWith(Util::toLower(url), "http"))
+            {
+                // Do not allow arbitrary schemes, especially "file://".
+                sendTextFrameAndLogError("error: cmd=insertfile kind=syntax");
+                return false;
+            }
+        }
 #else
         assert(type == "graphic");
         auto binaryData = decodeBase64(data);
