@@ -418,12 +418,11 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
     if (_pollSockets.size() != size)
         return rc;
 
-    // Fire the poll callbacks and remove dead fds.
-    std::chrono::steady_clock::time_point newNow =
-        std::chrono::steady_clock::now();
-
     if (size > 0)
     {
+        // Fire the poll callbacks and remove dead fds.
+        std::chrono::steady_clock::time_point newNow = std::chrono::steady_clock::now();
+
         // We use the _pollStartIndex to start the polling at a different index each time. Do some
         // sanity check first to handle the case where we removed one or several sockets last time.
         if (_pollStartIndex > size - 1)
