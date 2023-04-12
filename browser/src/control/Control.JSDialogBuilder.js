@@ -652,6 +652,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		}
 
+		table.addEventListener('click', function() {
+			builder.callback('grid', 'mousepress', table, undefined, builder);
+		});
+
 		return false;
 	},
 

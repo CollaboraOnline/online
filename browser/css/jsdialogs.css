@@ -1405,3 +1405,34 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: var(--color-background-lighter);
 	border: 1px solid var(--color-border-darker);
 }
+
+/* Conditional formatting dialog */
+
+#ConditionalFormatDialog #list > .ui-scrollwindow {
+	border: solid black 1px;
+}
+
+#ConditionalFormatDialog #list [id^='number'],
+#ConditionalFormatDialog #list [id^='condition'] {
+	cursor: pointer;
+}
+
+#ConditionalFormatDialog #list > .ui-scrollwindow > .ui-grid {
+	grid-template-columns: repeat(3, 1fr) !important;
+}
+
+#ConditionalFormatDialog [id^='colorformat']:not(.hidden),
+#ConditionalFormatDialog [id^='datetype']:not(.hidden),
+#ConditionalFormatDialog [id^='typeis']:not(.hidden) {
+	grid-row: 1 !important;
+	grid-column: 2 !important;
+}
+
+#ConditionalFormatDialog [id^='formula']:not(.hidden) {
+	grid-row: 1 !important;
+	grid-column: 2/4 !important;
+}
+
+#ConditionalFormatDialog [id^='lbcolmax']:not(.hidden) {
+	grid-column: 3 !important;
+}

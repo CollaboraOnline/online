@@ -52,6 +52,10 @@ button:not(.ui-tab):not(.ui-corner-all):not(.button-primary):not(.unobutton) {
 	justify-content: space-between;
 }
 
+.jsdialog.ui-button-box {
+	display: flex;
+}
+
 .jsdialog.ui-button-box button[disabled='disabled'] {
 	color: var(--color-text-lighter) !important;
 	background-color: var(--color-background-lighter) !important;
