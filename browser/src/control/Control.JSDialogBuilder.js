@@ -1077,6 +1077,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	{
 		return function() {
 			$(tabs[t]).addClass('selected');
+			tabs[t].removeAttribute('tabindex');
 			tabs[t].setAttribute('aria-selected', 'true');
 
 			for (var i = 0; i < tabs.length; i++) {
@@ -1085,6 +1086,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					$(tabs[i]).removeClass('selected');
 					$(contentDivs[i]).hide();
 					tabs[i].setAttribute('aria-selected', 'false');
+					tabs[i].tabIndex = -1;
 				}
 			}
 			$(contentDivs[t]).show();
@@ -1124,7 +1126,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var tab = L.DomUtil.create('button', 'ui-tab ' + builder.options.cssClass, tabsContainer);
 				tab.id = item.name + '-tab-label';
 				tab.number = item.id - 1;
-				tab.tabIndex = '0';
 				tab.textContent = title;
 				tab.setAttribute('role', 'tab');
 				builder._setAccessKey(tab, builder._getAccessKeyFromText(item.text));
@@ -1134,10 +1135,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (isSelectedTab) {
 					$(tab).addClass('selected');
 					tab.setAttribute('aria-selected', 'true');
+					tab.removeAttribute('tabindex');
 					tab.title = tabTooltip;
 					singleTabId = tabIdx;
 				} else {
 					tab.setAttribute('aria-selected', 'false');
+					tab.tabIndex = -1;
 				}
 
 				var tabContext = item.context;
@@ -1175,16 +1178,83 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					});
 				});
 
+				var isTabVisible = function (tab) {
+					return !$(tab).hasClass('hidden');
+				};
+
+				var findNextVisibleTab = function (tab, backwards) {
+					var diff = (backwards ? -1 : 1);
+					var nextTab = tabs[tabs.indexOf(tab) + diff];
+
+					while (!isTabVisible(nextTab) && nextTab != tab) {
+						if (backwards && tabs.indexOf(nextTab) == 0)
+							nextTab = tabs[tabs.length - 1];
+						else if (!backwards && tabs.indexOf(nextTab) == tabs.length - 1)
+							nextTab = tabs[0];
+						else
+							nextTab = tabs[tabs.indexOf(nextTab) + diff];
+					}
+
+					return nextTab;
+				};
+
+				var moveFocusToPreviousTab = function(tab) {
+					if (tab === tabs[0])
+						tabs[tabs.length - 1].focus();
+					else
+						findNextVisibleTab(tab, true).focus();
+				};
+
+				var moveFocusToNextTab = function(tab) {
+					if (tab === tabs[tabs.length - 1])
+						tabs[0].focus();
+					else
+						findNextVisibleTab(tab, false).focus();
+				};
+
 				// We are adding this to distinguish "enter" key from real click events.
 				tabs.forEach(function (tab)
 					{
 						tab.addEventListener('keydown', function(e) {
-							if (e.key === 'Enter' || e.key == ' ')
-								tab.enterPressed = true;
-							else if (e.key === 'Escape')
-								builder.map.focus();
+							var currentTab = e.currentTarget;
+
+							switch (e.key) {
+							case 'ArrowLeft':
+								moveFocusToPreviousTab(currentTab);
+								break;
+
+							case 'ArrowRight':
+								moveFocusToNextTab(currentTab);
+								break;
+
+							case 'Home':
+							{
+								var firstTab = tabs[0];
+								if (!isTabVisible(firstTab))
+									firstTab = findNextVisibleTab(firstTab, false);
+								firstTab.focus();
+								break;
 							}
-						);
+
+							case 'End':
+							{
+								var lastTab = tabs[tabs.length - 1];
+								if (!isTabVisible(lastTab))
+									lastTab = findNextVisibleTab(lastTab, true);
+								lastTab.focus();
+								break;
+							}
+
+							case 'Enter':
+							case ' ':
+								tab.enterPressed = true;
+								break;
+
+							case 'Escape':
+								builder.map.focus();
+								break;
+							}
+						});
 					}
 				);
 			} else {
