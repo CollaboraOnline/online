@@ -69,8 +69,9 @@ function _menubuttonControl (parentContainer, data, builder) {
 
 		builder.options.noLabelsForUnoButtons = noLabels;
 	} else if (data.text || data.image) {
-		var button = L.DomUtil.create('div', 'menubutton ' + builder.options.cssClass, parentContainer);
+		var button = L.DomUtil.create('button', 'menubutton ' + builder.options.cssClass, parentContainer);
 		button.id = data.id;
+		button.setAttribute('aria-haspopup', true);
 		if (data.image) {
 			var image = L.DomUtil.create('img', '', button);
 			image.src = data.image;
