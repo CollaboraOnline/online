@@ -372,15 +372,17 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             LOG_TRC("Wakeup pipe read");
             int dump = fakeSocketRead(_wakeup[0], &dump, sizeof(dump));
 #endif
-            // Copy the new sockets over and clear.
-            _pollSockets.insert(_pollSockets.end(),
-                                _newSockets.begin(), _newSockets.end());
+            if (!_newSockets.empty())
+            {
+                // Update thread ownership.
+                for (auto& i : _newSockets)
+                    i->setThreadOwner(std::this_thread::get_id());
 
-            // Update thread ownership.
-            for (auto &i : _newSockets)
-                i->setThreadOwner(std::this_thread::get_id());
+                // Copy the new sockets over and clear.
+                _pollSockets.insert(_pollSockets.end(), _newSockets.begin(), _newSockets.end());
 
-            _newSockets.clear();
+                _newSockets.clear();
+            }
 
             // Extract list of callbacks to process
             std::swap(_newCallbacks, invoke);
