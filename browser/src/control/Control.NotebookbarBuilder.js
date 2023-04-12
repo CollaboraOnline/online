@@ -359,10 +359,12 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 			$(tabs[t]).addClass('selected');
 			tabs[t].setAttribute('aria-selected', 'true');
+			tabs[t].removeAttribute('tabindex');
 			for (var i = 0; i < tabs.length; i++) {
 				if (i !== t) {
 					$(tabs[i]).removeClass('selected');
 					tabs[i].setAttribute('aria-selected', 'false');
+					tabs[i].tabIndex = -1;
 					$(tabs[i]).prop('title', '');
 					$(contentDivs[i]).hide();
 				}
