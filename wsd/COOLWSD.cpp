@@ -190,7 +190,7 @@ using Poco::XML::InputSource;
 using Poco::XML::NodeList;
 
 /// Port for external clients to connect to
-int ClientPortNumber = 0;
+int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
 /// Protocols to listen on
 Socket::Type ClientPortProto = Socket::Type::All;
 
@@ -5402,7 +5402,7 @@ private:
     {
         std::shared_ptr<SocketFactory> factory;
 
-        if (ClientPortNumber <= 0)
+        if (ClientPortNumber == DEFAULT_CLIENT_PORT_NUMBER)
         {
             // Avoid using the default port for unit-tests altogether.
             // This avoids interfering with a running test instance.
