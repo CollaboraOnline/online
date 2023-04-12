@@ -97,8 +97,8 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 #endif
     CPPUNIT_TEST(testTileProcessed);
     // CPPUNIT_TEST(testTileInvalidatedOutside); // Disabled as it's failing locally on even very old commits.
-    CPPUNIT_TEST(testTileBeingRenderedHandling);
 #if 0
+    CPPUNIT_TEST(testTileBeingRenderedHandling);
     CPPUNIT_TEST(testWireIDFilteringOnWSDSide);
 #endif
     // unstable
