@@ -1232,8 +1232,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 /* toolbuttons */
 
 .jsdialog .ui-content.unobutton {
-	width: 30px;
-	height: 24px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 	margin-inline-end: 5px;
 	vertical-align: middle;
 	background-color: transparent;
