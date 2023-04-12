@@ -1179,7 +1179,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				tabs.forEach(function (tab)
 					{
 						tab.addEventListener('keydown', function(e) {
-							if (e.key === 'Enter')
+							if (e.key === 'Enter' || e.key == ' ')
 								tab.enterPressed = true;
 							else if (e.key === 'Escape')
 								builder.map.focus();
