@@ -910,14 +910,6 @@ export class CommentSection extends CanvasSectionObject {
 		this.containerObject.requestReDraw();
 	}
 
-	public onDraw (): void {
-		return;
-	}
-
-	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent): void {
-		return;
-	}
-
 	public onNewDocumentTopLeft (): void {
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
 			if (this.sectionProperties.selectedComment)
@@ -1408,10 +1400,6 @@ export class CommentSection extends CanvasSectionObject {
 				this.sectionProperties.commentList[idx].updateScaling(scaleFactor, this.sectionProperties.initialLayoutData);
 			}
 		}
-	}
-
-	private twipsToCorePixels (twips: any): number[] {
-		return [twips.x / this.sectionProperties.docLayer._tileWidthTwips * this.sectionProperties.docLayer._tileSize, twips.y / this.sectionProperties.docLayer._tileHeightTwips * this.sectionProperties.docLayer._tileSize];
 	}
 
 	// If the file type is presentation or drawing then we shall check the selected part in order to hide comments from other parts.
