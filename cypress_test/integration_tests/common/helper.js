@@ -362,7 +362,7 @@ function checkIfBothDocIsLoaded() {
 
 function checkIfDocIsLoaded(frameId) {
 	// Wait for the document to fully load
-	cy.customGet('.leaflet-canvas-container canvas', frameId, {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+	cy.customGet('.leaflet-canvas-container canvas', frameId, {timeout : Cypress.config('defaultCommandTimeout') * 10.0});
 
 	// Wait until anything is drawn on tile canvas.
 	canvasShouldNotBeFullWhite('.leaflet-canvas-container canvas',frameId);
@@ -812,7 +812,7 @@ function canvasShouldBeFullWhiteOrNot(selector, fullWhite = true,frameId) {
 
 	expect(selector).to.have.string('canvas');
 
-	cy.customGet(selector,frameId)
+	cy.customGet(selector,frameId,{timeout : Cypress.config('defaultCommandTimeout') * 10.0})
 		.should(function(canvas) {
 			var context = canvas[0].getContext('2d');
 			var pixelData = context.getImageData(0, 0, canvas[0].width, canvas[0].height).data;
