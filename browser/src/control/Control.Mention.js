@@ -43,10 +43,10 @@ L.Control.Mention = L.Control.extend({
 	},
 
 	getCurrentCursorPosition: function () {
-		var cursorCorePixels = this.map._docLayer._cursorCorePixels;
+		var currPos = this.map._docLayer._corePixelsToCss(this.map._docLayer._cursorCorePixels.getBottomLeft());
 		var origin = this.map.getPixelOrigin();
 		var panePos = this.map._getMapPanePos();
-		return new L.Point(Math.round(cursorCorePixels.max.x + panePos.x - origin.x), Math.round(cursorCorePixels.max.y + panePos.y - origin.y));
+		return new L.Point(Math.round(currPos.x + panePos.x - origin.x), Math.round(currPos.y + panePos.y - origin.y));
 	},
 
 	openMentionPopup: function (ev) {
