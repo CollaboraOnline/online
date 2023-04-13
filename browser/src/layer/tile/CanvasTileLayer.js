@@ -2294,7 +2294,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._cellCursor = L.LatLngBounds.createDefault();
 			this._cellCursorXY = new L.Point(-1, -1);
 			this._cellCursorPixels = null;
-			app.file.calc.cellCursor.visible = false;
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellCursor(null);
 			if (this._map._clip)
@@ -2323,11 +2322,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				autofillMarkerSection.calculatePositionViaCellCursor([this._cellCursorPixels.getX2(), this._cellCursorPixels.getY2()]);
 
 			this._cellCursorXY = new L.Point(parseInt(strTwips[4]), parseInt(strTwips[5]));
-
-			app.file.calc.cellCursor.visible = true;
-			app.file.calc.cellCursor.rectangle.twips = this._cellCursorTwips.toRectangle();
-			app.file.calc.cellCursor.rectangle.pixels = [start.x, start.y, offsetPixels.x, offsetPixels.y];
-			app.file.calc.cellCursor.address = [parseInt(strTwips[4]), parseInt(strTwips[5])];
 		}
 
 		var horizontalDirection = 0;
