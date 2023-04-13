@@ -38,6 +38,7 @@
 function _createCheckbox(parentContainer, treeViewData, builder, entry) {
 	var checkbox = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', parentContainer);
 	checkbox.type = 'checkbox';
+	checkbox.tabIndex = -1;
 
 	if (entry.state === 'true' || entry.state === true)
 		checkbox.checked = true;
@@ -57,7 +58,24 @@ function _createCheckbox(parentContainer, treeViewData, builder, entry) {
 	return checkbox;
 }
 
-function _treelistboxEntry(parentContainer, treeViewData, entry, builder) {
+function _selectEntry(span, checkbox) {
+	L.DomUtil.addClass(span, 'selected');
+	span.setAttribute('aria-selected', true);
+	span.tabIndex = 0;
+	if (checkbox)
+		checkbox.removeAttribute('tabindex');
+}
+
+function _unselectEntry(item) {
+	L.DomUtil.removeClass(item, 'selected');
+	item.removeAttribute('aria-selected');
+	item.removeAttribute('tabindex');
+	var itemCheckbox = item.querySelector('input');
+	if (itemCheckbox)
+		itemCheckbox.tabIndex = -1;
+}
+
+function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTreeView) {
 	if (entry.text == '<dummy>')
 		return;
 	var disabled = treeViewData.enabled === 'false' || treeViewData.enabled === false;
@@ -83,14 +101,15 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder) {
 	}
 
 	var span = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-entry ' + (entry.children ? ' ui-treeview-expandable' : 'ui-treeview-notexpandable'), li);
+	span.setAttribute('role', isTreeView ? 'treeitem' : 'option');
 
 	var expander = L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview-expander ', span);
 
-	if (entry.selected && (entry.selected === 'true' || entry.selected === true))
-		L.DomUtil.addClass(span, 'selected');
-
 	if (entry.state !== undefined)
 		var checkbox = _createCheckbox(span, treeViewData, builder, entry);
+
+	if (entry.selected && (entry.selected === 'true' || entry.selected === true))
+		_selectEntry(span, checkbox);
 
 	var text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', span);
 	for (var i in entry.columns) {
@@ -106,14 +125,13 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder) {
 		} else if (entry.columns[i].text) {
 			var innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', text);
 			innerText.innerText = entry.columns[i].text || entry.text;
-			innerText.tabIndex = 0;
 		}
 	}
 
 	if (entry.children) {
 		var ul = L.DomUtil.create('ul', builder.options.cssClass, li);
 		for (var i in entry.children) {
-			_treelistboxEntry(ul, treeViewData, entry.children[i], builder);
+			_treelistboxEntry(ul, treeViewData, entry.children[i], builder, isTreeView);
 		}
 
 		var toggleFunction = function() {
@@ -145,8 +163,9 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder) {
 		var singleClick = treeViewData.singleclickactivate === 'true' || treeViewData.singleclickactivate === true;
 		var clickFunction = function() {
 			parentContainer.querySelectorAll('.ui-treeview-entry')
-				.forEach(function (item) { L.DomUtil.removeClass(item, 'selected'); });
-			L.DomUtil.addClass(span, 'selected');
+				.forEach(function (item) { _unselectEntry(item); });
+
+			_selectEntry(span, checkbox);
 
 			builder.callback('treeview', 'select', treeViewData, entry.row, builder);
 			if (singleClick) {
@@ -188,8 +207,9 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder) {
 		if (!singleClick) {
 			$(text).dblclick(function() {
 				parentContainer.querySelectorAll('.ui-treeview-entry')
-					.forEach(function (item) { L.DomUtil.removeClass(item, 'selected'); });
-				L.DomUtil.addClass(span, 'selected');
+					.forEach(function (item) { _unselectEntry(item); });
+
+					_selectEntry(span, checkbox);
 
 				builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
 			});
@@ -200,16 +220,17 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder) {
 function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 	var disabled = treeViewData.enabled === 'false' || treeViewData.enabled === false;
 
-	if (entry.selected && (entry.selected === 'true' || entry.selected === true))
-		L.DomUtil.addClass(parentContainer, 'selected');
-
 	if (entry.state !== undefined) {
 		var td = L.DomUtil.create('td', '', parentContainer);
-		_createCheckbox(td, treeViewData, builder, entry);
+		var checkbox = _createCheckbox(td, treeViewData, builder, entry);
 	}
+
+	if (entry.selected && (entry.selected === 'true' || entry.selected === true))
+		_selectEntry(parentContainer, checkbox);
 
 	for (var i in entry.columns) {
 		var td = L.DomUtil.create('td', '', parentContainer);
+		td.setAttribute('role', 'gridcell');
 
 		if (entry.columns[i].collapsed || entry.columns[i].expanded) {
 			var iconId = entry.columns[i].collapsed ? entry.columns[i].collapsed : entry.columns[i].expanded;
@@ -227,8 +248,9 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 		if (!disabled) {
 			var clickFunction = function() {
 				parentContainer.parentNode.querySelectorAll('.ui-listview-entry')
-					.forEach(function (item) { L.DomUtil.removeClass(item, 'selected'); });
-				L.DomUtil.addClass(parentContainer, 'selected');
+					.forEach(function (item) { _unselectEntry(item); });
+
+				_selectEntry(parentContainer, checkbox);
 
 				builder.callback('treeview', 'select', treeViewData, entry.row, builder);
 			};
@@ -261,6 +283,7 @@ function _hasIcon(columns) {
 
 function _createHeaders(tbody, data, builder) {
 	var headers = L.DomUtil.create('tr', builder.options.cssClass + ' ui-treeview-header', tbody);
+	headers.setAttribute('role', 'row');
 	var hasCheckboxes = data.entries && data.entries.length && data.entries[0].state !== undefined;
 	if (hasCheckboxes)
 		data.headers = [{ text: '' }].concat(data.headers);
@@ -269,6 +292,7 @@ function _createHeaders(tbody, data, builder) {
 		data.headers = [{ text: '' }].concat(data.headers);
 	for (var h in data.headers) {
 		var header = L.DomUtil.create('th', builder.options.cssClass, headers);
+		header.setAttribute('role', 'columnheader');
 		var headerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-header-text', header);
 		headerText.innerText = data.headers[h].text;
 		var headerSortIcon = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-header-sort-icon', header);
@@ -340,6 +364,7 @@ function _createHeaders(tbody, data, builder) {
 function _treelistboxControl(parentContainer, data, builder) {
 	var table = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview', parentContainer);
 	table.id = data.id;
+	table.tabIndex = 0;
 	var disabled = data.enabled === 'false' || data.enabled === false;
 	if (disabled)
 		L.DomUtil.addClass(table, 'disabled');
@@ -369,19 +394,30 @@ function _treelistboxControl(parentContainer, data, builder) {
 
 	if (isHeaderListBox) {
 		// list view with headers
-		for (var i in data.entries) {
+		table.setAttribute('role', 'treegrid');
+
+		for (i in data.entries) {
 			var tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry', tbody);
-			tr.tabIndex = 0;
+			tr.setAttribute('role', 'row');
 			_headerlistboxEntry(tr, data, data.entries[i], builder);
 		}
 
 		var firstSelected = tbody.querySelector('.ui-listview-entry.selected');
 	} else {
 		// tree view
+		var isRealTreeView = false;
+		for (var i in data.entries) {
+			if (data.entries[i].children && data.entries[i].children.length) {
+				isRealTreeView = true;
+				break;
+			}
+		}
+		table.setAttribute('role', isRealTreeView ? 'tree' : 'listbox');
+
 		var ul = L.DomUtil.create('ul', builder.options.cssClass, tbody);
 
 		for (i in data.entries) {
-			_treelistboxEntry(ul, data, data.entries[i], builder);
+			_treelistboxEntry(ul, data, data.entries[i], builder, isRealTreeView);
 		}
 
 		firstSelected = tbody.querySelector('.ui-treeview-entry.selected');
