@@ -422,6 +422,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				.yesButtonText(_('OK'))
 				.noButtonText(_('Cancel'))
 				.type('warning');
+			this.pageWillBeRefreshed = true;
 			dialog.open();
 		}
 	},
