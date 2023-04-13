@@ -75,6 +75,22 @@ function _unselectEntry(item) {
 		itemCheckbox.tabIndex = -1;
 }
 
+function _createClickFunction(entryClass, parentContainer, span, checkbox, select, activate,
+	builder, treeViewData, entry) {
+	return function () {
+		parentContainer.querySelectorAll(entryClass)
+			.forEach(function (item) { _unselectEntry(item); });
+
+		_selectEntry(span, checkbox);
+
+		if (select)
+			builder.callback('treeview', 'select', treeViewData, entry.row, builder);
+
+		if (activate)
+			builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
+	};
+}
+
 function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTreeView) {
 	if (entry.text == '<dummy>')
 		return;
@@ -161,17 +177,8 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 
 	if (!disabled && entry.state == null) {
 		var singleClick = treeViewData.singleclickactivate === 'true' || treeViewData.singleclickactivate === true;
-		var clickFunction = function() {
-			parentContainer.querySelectorAll('.ui-treeview-entry')
-				.forEach(function (item) { _unselectEntry(item); });
-
-			_selectEntry(span, checkbox);
-
-			builder.callback('treeview', 'select', treeViewData, entry.row, builder);
-			if (singleClick) {
-				builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
-			}
-		};
+		var clickFunction = _createClickFunction('.ui-treeview-entry', parentContainer, span, checkbox,
+			true, singleClick, builder, treeViewData, entry);
 
 		text.addEventListener('click', clickFunction);
 		text.addEventListener('keydown', function onEvent(event) {
@@ -205,14 +212,8 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 		});
 
 		if (!singleClick) {
-			$(text).dblclick(function() {
-				parentContainer.querySelectorAll('.ui-treeview-entry')
-					.forEach(function (item) { _unselectEntry(item); });
-
-					_selectEntry(span, checkbox);
-
-				builder.callback('treeview', 'activate', treeViewData, entry.row, builder);
-			});
+			$(text).dblclick(_createClickFunction('.ui-treeview-entry', parentContainer, span, checkbox,
+				false, true, builder, treeViewData, entry));
 		}
 	}
 }
@@ -246,14 +247,8 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 			td.innerText = entry.columns[i].text;
 
 		if (!disabled) {
-			var clickFunction = function() {
-				parentContainer.parentNode.querySelectorAll('.ui-listview-entry')
-					.forEach(function (item) { _unselectEntry(item); });
-
-				_selectEntry(parentContainer, checkbox);
-
-				builder.callback('treeview', 'select', treeViewData, entry.row, builder);
-			};
+			var clickFunction = _createClickFunction('.ui-listview-entry', parentContainer.parentNode,
+				parentContainer, checkbox, true, false, builder, treeViewData, entry);
 
 			$(td).click(clickFunction);
 
