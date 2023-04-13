@@ -95,6 +95,8 @@ export class Comment extends CanvasSectionObject {
 		this.name = data.id === 'new' ? 'new comment': 'comment ' + data.id;
 
 		this.sectionProperties.isRemoved = false;
+
+		this.convertRectanglesToCoreCoordinates(); // Convert rectangle coordiantes into core pixels on initialization.
 	}
 
 	// Comments import can be costly if the document has a lot of them. If they are all imported/initialized
@@ -104,7 +106,7 @@ export class Comment extends CanvasSectionObject {
 		if (!this.pendingInit)
 			return;
 
-		if (!force && !this.convertRectanglesToCoreCoordinates())
+		if (!force && !this.convertRectanglesToViewCoordinates())
 			return;
 
 		var button = L.DomUtil.create('div', 'annotation-btns-container', this.sectionProperties.nodeModify);
@@ -458,9 +460,35 @@ export class Comment extends CanvasSectionObject {
 		return false;
 	}
 
+	private convertRectanglesToCoreCoordinates() {
+		var pixelBasedOrgRectangles = new Array<Array<number>>();
+
+		var originals = this.sectionProperties.data.rectanglesOriginal;
+		var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+		var pos: number[], size: number[];
+
+		if (originals) {
+			for (var i = 0; i < originals.length; i++) {
+				pos = [
+					Math.round(originals[i][0] * ratio),
+					Math.round(originals[i][1] * ratio)
+				];
+				size = [
+					Math.round(originals[i][2] * ratio),
+					Math.round(originals[i][3] * ratio)
+				];
+
+				pixelBasedOrgRectangles.push([pos[0], pos[1], size[0], size[1]]);
+			}
+
+			this.sectionProperties.pixelBasedOrgRectangles = pixelBasedOrgRectangles;
+		}
+	}
+
 	// This is for svg elements that will be bound to document-container.
 	// This also returns whether any rectangle has an intersection with the visible area/panes.
-	private convertRectanglesToCoreCoordinates () : boolean {
+	// This function calculates the core pixel coordinates then converts them into view coordinates.
+	private convertRectanglesToViewCoordinates () : boolean {
 		var rectangles = this.sectionProperties.data.rectangles;
 		var originals = this.sectionProperties.data.rectanglesOriginal;
 		var viewContext = this.map.getTileSectionMgr()._paintContext();
@@ -533,7 +561,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	private updatePosition (): void {
-		this.convertRectanglesToCoreCoordinates();
+		this.convertRectanglesToViewCoordinates();
 		this.setPositionAndSize();
 	}
 
@@ -847,6 +875,10 @@ export class Comment extends CanvasSectionObject {
 		this.updatePosition();
 	}
 
+	private isSelected(): boolean {
+		return this.sectionProperties.commentListSection.sectionProperties.selectedComment === this;
+	}
+
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private doesRectangleContainPoint (rectangle: any, point: Array<number>): boolean {
 		if (point[0] >= rectangle[0] && point[0] <= rectangle[0] + rectangle[2]) {
@@ -857,22 +889,33 @@ export class Comment extends CanvasSectionObject {
 		return false;
 	}
 
-	public onClick (point: Array<number>, e: MouseEvent): void {
-		if (this.sectionProperties.docLayer._docType === 'text') {
-			var rectangles = this.sectionProperties.data.rectangles;
-			point[0] = point[0] + this.myTopLeft[0];
-			point[1] = point[1] + this.myTopLeft[1];
-			if (rectangles) { // A text file.
-				for (var i: number = 0; i < rectangles.length; i++) {
-					if (this.doesRectangleContainPoint(rectangles[i], point)) {
-						this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
-						e.stopPropagation();
-						this.stopPropagating();
-					}
-				}
+	private checkIfCursorIsOnThisCommentWriter(rectangles: any, point: Array<number>) {
+		for (var i: number = 0; i < rectangles.length; i++) {
+			if (this.doesRectangleContainPoint(rectangles[i], point)) {
+				if (!this.isSelected())
+					this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
+				this.stopPropagating();
+				return;
 			}
 		}
-		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
+		if (this.isSelected()) {
+			this.sectionProperties.commentListSection.unselect();
+			if (this.sectionProperties.commentListSection.isCollapsed)
+				app.map.fire('mobilewizardpopupclose');
+		}
+	}
+
+	/// This event is writer-only. Fired by CanvasSectionContainer.
+	public onCursorPositionChanged(newPosition: Array<number>) {
+		var x = newPosition[0];
+		var y = Math.round(newPosition[1] + (newPosition[3]) * 0.5);
+		if (this.sectionProperties.pixelBasedOrgRectangles) {
+			this.checkIfCursorIsOnThisCommentWriter(this.sectionProperties.pixelBasedOrgRectangles, [x, y]);
+		}
+	}
+
+	public onClick (point: Array<number>, e: MouseEvent): void {
+		if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
 			this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
 			e.stopPropagation();
 			this.stopPropagating();
