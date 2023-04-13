@@ -91,6 +91,16 @@ function _createClickFunction(entryClass, parentContainer, span, checkbox, selec
 	};
 }
 
+function _getCellIconId(cellData) {
+	var iconId = cellData.collapsed ? cellData.collapsed : cellData.expanded;
+	var newLength = iconId.lastIndexOf('.');
+	if (newLength > 0)
+		iconId = iconId.substr(0, newLength).replaceAll('/', '');
+	else
+		iconId = iconId.replaceAll('/', '');
+	return iconId;
+}
+
 function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTreeView) {
 	if (entry.text == '<dummy>')
 		return;
@@ -130,13 +140,8 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 	var text = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell', span);
 	for (var i in entry.columns) {
 		if (entry.columns[i].collapsed || entry.columns[i].expanded) {
-			var iconId = entry.columns[i].collapsed ? entry.columns[i].collapsed : entry.columns[i].expanded;
-			var newLength = iconId.lastIndexOf('.');
-			if (newLength > 0)
-				iconId = iconId.substr(0, newLength).replaceAll('/', '');
-			else
-				iconId = iconId.replaceAll('/', '');
 			var icon = L.DomUtil.create('img', 'ui-listview-icon', text);
+			var iconId = _getCellIconId(entry.columns[i]);
 			icon.src = builder._createIconURL(iconId, true);
 		} else if (entry.columns[i].text) {
 			var innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', text);
@@ -234,13 +239,8 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 		td.setAttribute('role', 'gridcell');
 
 		if (entry.columns[i].collapsed || entry.columns[i].expanded) {
-			var iconId = entry.columns[i].collapsed ? entry.columns[i].collapsed : entry.columns[i].expanded;
-			var newLength = iconId.lastIndexOf('.');
-			if (newLength > 0)
-				iconId = iconId.substr(0, newLength).replaceAll('/', '');
-			else
-				iconId = iconId.replaceAll('/', '');
 			var icon = L.DomUtil.create('img', 'ui-listview-icon', td);
+			var iconId = _getCellIconId(entry.columns[i]);
 			L.DomUtil.addClass(icon, iconId + 'img');
 			icon.src = builder._createIconURL(iconId, true);
 		} else if (entry.columns[i].text)
