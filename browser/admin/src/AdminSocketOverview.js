@@ -394,6 +394,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				msg =  _('Failed to authenticate this session over protocol %0');
 				msg = msg.replace('%0', window.location.protocol);
 			}
+			this.pageWillBeRefreshed = true;
 			vex.dialog.alert({ message: msg });
 		}
 	},
