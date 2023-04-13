@@ -25,6 +25,7 @@ interface SectionCallbacks {
 	onDrawArea?: (area?: cool.Bounds, paneTopLeft?: cool.Point, canvasContext?: CanvasRenderingContext2D) => void;
 	onNewDocumentTopLeft?: (size: Array<number>) => void;
 	onRemove?: () => void;
+	onCursorPositionChanged?: (newPosition: Array<number>) => void;
 	onAnimationEnded?: (frameCount: number, elapsedTime: number) => void;
 }
 
@@ -221,6 +222,11 @@ class CanvasSectionObject {
 	onInitialize(): void {
 		if (this.callbacks.onInitialize)
 			return this.callbacks.onInitialize();
+	}
+
+	onCursorPositionChanged(newPosition: Array<number>) {
+		if (this.callbacks.onCursorPositionChanged)
+			return this.callbacks.onCursorPositionChanged(newPosition);
 	}
 
 	/// Parameters: Point [x, y], DragDistance [x, y] (null when not dragging), e (native event object)
@@ -915,6 +921,30 @@ class CanvasSectionContainer {
 			this.drawSections();
 	}
 
+	public propagateCursorPositionChanged() {
+		// There is no target section for cursor position change, this event comes from core side.
+		// Sections with interactable = false will not be targeted.
+		// Window sections can still stop the propagation of the event. Others cannot.
+
+		var propagate: boolean = true;
+
+		for (var j: number = 0; j < this.windowSectionList.length; j++) {
+			var windowSection = this.windowSectionList[j];
+			if (windowSection.interactable)
+				windowSection.onCursorPositionChanged(app.file.writer.cursorPosition);
+
+			if (this.lowestPropagatedBoundSection === windowSection.name)
+				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
+		}
+
+		if (propagate) {
+			for (var i: number = this.sections.length - 1; i > -1; i--) {
+				if (this.sections[i].interactable)
+					this.sections[i].onCursorPositionChanged(app.file.writer.cursorPosition);
+			}
+		}
+	}
+
 	private propagateOnClick(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
 		this.targetSection = section.name;
 
@@ -1220,6 +1250,19 @@ class CanvasSectionContainer {
 				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 					break; // Stop propagation.
 			}
+		}
+	}
+
+	/*
+		Cursor position is sent from the core side.
+		The event is handled in CanvasTileLayer file.
+		CanvasTileLayer then informs CanvasSectionContainer.
+		This is for writer. Other apps may need other functions. To be checked..
+	*/
+	public onCursorPositionChanged() {
+		if (app.map._docLayer._docType === 'text') {
+			// Global state holder should already have the latest information: app.file.writer.cursorPosition.
+			this.propagateCursorPositionChanged();
 		}
 	}
 

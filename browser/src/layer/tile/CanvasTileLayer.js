@@ -2508,6 +2508,15 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._twipsToLatLng(recCursor.getTopLeft(), this._map.getZoom()),
 			this._twipsToLatLng(recCursor.getBottomRight(), this._map.getZoom()));
 		this._cursorCorePixels = this._twipsToCorePixelsBounds(recCursor);
+		if (this._docType === 'text') {
+			app.file.writer.cursorPosition = [
+				Math.round(this._cursorCorePixels.getTopLeft().x), // x
+				Math.round(this._cursorCorePixels.getTopLeft().y), // y
+				Math.round(this._cursorCorePixels.getSize().x), // width
+				Math.round(this._cursorCorePixels.getSize().y) // height
+			];
+			app.sectionContainer.onCursorPositionChanged();
+		}
 
 		var cursorPos = this._visibleCursor.getNorthWest();
 		var docLayer = this._map._docLayer;
