@@ -4,6 +4,7 @@ window.app = { // Shouldn't have any functions defined.
 	definitions: {}, // Class instances are created using definitions under this variable.
 	dpiScale: window.devicePixelRatio,
 	roundedDpiScale: Math.round(window.devicePixelRatio),
+	map: null, // Make map object a part of this.
 	twipsToPixels: 0, // Twips to pixels multiplier.
 	pixelsToTwips: 0, // Pixels to twips multiplier.
 	file: {
@@ -28,7 +29,15 @@ window.app = { // Shouldn't have any functions defined.
 			}
 		},
 		writer: {
-			pageRectangleList: [] // Array of arrays: [x, y, w, h] (as usual) // twips only. Pixels will be calculated on the fly. Corresponding pixels may change too ofte
+			pageRectangleList: [], // Array of arrays: [x, y, w, h] (as usual) // twips only. Pixels will be calculated on the fly. Corresponding pixels may change too ofte
+
+			/*
+				Starts as null, so we can see if the first invalidation happened or not.
+				This is a rectangle: [x, y, w, h].
+				One should consider this as a document object coordinate  as in CanvasSectionContainer.
+				This gives the coordinate relative to the document, not relative to the UI.
+			*/
+			cursorPosition: null,
 		},
 	},
 	view: {

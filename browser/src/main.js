@@ -77,6 +77,7 @@ if (L.Map.versionBar)
 	map.addControl(L.Map.versionBar);
 
 L.Map.THIS = map;
+app.map = map;
 app.idleHandler.map = map;
 
 if (window.ThisIsTheEmscriptenApp) {
