@@ -427,7 +427,7 @@ function _treelistboxControl(parentContainer, data, builder) {
 
 	if (isHeaderListBox) {
 		// list view with headers
-		table.setAttribute('role', 'treegrid');
+		table.setAttribute('role', 'grid');
 
 		for (i in data.entries) {
 			var tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry', tbody);
