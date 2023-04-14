@@ -248,6 +248,7 @@ button.ui-tab.notebookbar {
 	font-family: var(--cool-font);
 	color: var(--color-main-text);
 	padding: 0px 5px !important;
+	line-height: normal;
 }
 
 #table-HomeTab .unospan-uptoolbar:not(.disabled) {
