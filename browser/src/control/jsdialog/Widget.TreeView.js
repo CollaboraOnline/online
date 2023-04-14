@@ -101,9 +101,12 @@ function _getCellIconId(cellData) {
 	return iconId;
 }
 
-function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTreeView) {
+function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTreeView, treeRoot) {
 	if (entry.text == '<dummy>')
 		return;
+
+	treeRoot = treeRoot ? treeRoot : parentContainer;
+
 	var disabled = treeViewData.enabled === 'false' || treeViewData.enabled === false;
 
 	var li = L.DomUtil.create('li', builder.options.cssClass, parentContainer);
@@ -152,7 +155,7 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 	if (entry.children) {
 		var ul = L.DomUtil.create('ul', builder.options.cssClass, li);
 		for (var i in entry.children) {
-			_treelistboxEntry(ul, treeViewData, entry.children[i], builder, isTreeView);
+			_treelistboxEntry(ul, treeViewData, entry.children[i], builder, isTreeView, treeRoot);
 		}
 
 		var toggleFunction = function() {
@@ -182,43 +185,24 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 
 	if (!disabled && entry.state == null) {
 		var singleClick = treeViewData.singleclickactivate === 'true' || treeViewData.singleclickactivate === true;
-		var clickFunction = _createClickFunction('.ui-treeview-entry', parentContainer, span, checkbox,
+		var clickFunction = _createClickFunction('.ui-treeview-entry', treeRoot, span, checkbox,
 			true, singleClick, builder, treeViewData, entry);
 
 		text.addEventListener('click', clickFunction);
-		text.addEventListener('keydown', function onEvent(event) {
-			var preventDef = false;
-			var listElements = $('#' + treeViewData.id + ' li');
-			var currIndex = parseInt(entry.row);
-			var treeLength = treeViewData.entries.length;
-			var spanElement = 'span.ui-treeview-cell-text';
-			if (event.key === 'Enter') {
+		span.addEventListener('keydown', function onEvent(event) {
+			if (event.key === 'Enter' || event.key === ' ') {
 				clickFunction();
-				preventDef = true;
-			} else if (event.key === 'ArrowDown') {
-				if (currIndex === treeLength - 1)
-					listElements.eq(0).find(spanElement).focus();
-				else
-					listElements.eq(currIndex + 1).find(spanElement).focus();
-				preventDef = true;
-			} else if (event.key === 'ArrowUp') {
-				if (currIndex === 0)
-					listElements.eq(treeLength - 1).find(spanElement).focus();
-				else
-					listElements.eq(currIndex - 1).find(spanElement).focus();
-				preventDef = true;
-			} else if (builder.callback('treeview', 'keydown', { treeViewData: treeViewData, key: event.key }, entry.row, builder)) {
-				// used in mentions
-				preventDef = true;
-			}
-			if (preventDef) {
 				event.preventDefault();
 				event.stopPropagation();
+			} else if (event.key === 'Tab') {
+				if (!L.DomUtil.hasClass(span, 'selected'))
+					_unselectEntry(span, checkbox); // remove tabIndex
+
 			}
 		});
 
 		if (!singleClick) {
-			$(text).dblclick(_createClickFunction('.ui-treeview-entry', parentContainer, span, checkbox,
+			$(text).dblclick(_createClickFunction('.ui-treeview-entry', treeRoot, span, checkbox,
 				false, true, builder, treeViewData, entry));
 		}
 	}
@@ -480,6 +464,35 @@ function _treelistboxControl(parentContainer, data, builder) {
 		for (i in data.entries) {
 			_treelistboxEntry(ul, data, data.entries[i], builder, isRealTreeView);
 		}
+
+		table.addEventListener('keydown', function onEvent(event) {
+			var preventDef = false;
+			var listElements = $(ul).find(isRealTreeView ? '.ui-treeview-cell-text' : '.ui-treeview-entry');
+			var treeLength = listElements.length;
+
+			var currIndex = _getCurrentEntry(listElements);
+
+			if (event.key === 'ArrowDown') {
+				if (currIndex < 0)
+					_changeFocusedRow(listElements, currIndex, 0);
+				else if (currIndex < treeLength - 1)
+					_changeFocusedRow(listElements, currIndex, currIndex + 1);
+				preventDef = true;
+			} else if (event.key === 'ArrowUp') {
+				if (currIndex < 0)
+					_changeFocusedRow(listElements, currIndex, treeLength - 1);
+				else if (currIndex > 0)
+					_changeFocusedRow(listElements, currIndex, currIndex - 1);
+				preventDef = true;
+			} else if (builder.callback('treeview', 'keydown', { id: data.id, key: event.key }, currIndex, builder)) {
+				// used in mentions
+				preventDef = true;
+			}
+			if (preventDef) {
+				event.preventDefault();
+				event.stopPropagation();
+			}
+		});
 
 		firstSelected = tbody.querySelector('.ui-treeview-entry.selected');
 	}
