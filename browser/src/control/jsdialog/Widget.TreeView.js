@@ -152,24 +152,25 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 		}
 	}
 
+	var toggleFunction = function() {
+		$(span).toggleClass('collapsed');
+	};
+
+	var expandFunction = function () {
+		if (entry.ondemand && L.DomUtil.hasClass(span, 'collapsed'))
+			builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
+		toggleFunction();
+	};
+
 	if (entry.children) {
 		var ul = L.DomUtil.create('ul', builder.options.cssClass, li);
 		for (var i in entry.children) {
 			_treelistboxEntry(ul, treeViewData, entry.children[i], builder, isTreeView, treeRoot);
 		}
 
-		var toggleFunction = function() {
-			$(span).toggleClass('collapsed');
-		};
-
 		if (!disabled) {
 			if (entry.ondemand) {
-				expander.tabIndex = 0;
-				L.DomEvent.on(expander, 'click', function() {
-					if (entry.ondemand && L.DomUtil.hasClass(span, 'collapsed'))
-						builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
-					toggleFunction();
-				});
+				L.DomEvent.on(expander, 'click', expandFunction);
 			} else {
 				$(expander).click(toggleFunction);
 			}
@@ -190,14 +191,25 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 
 		text.addEventListener('click', clickFunction);
 		span.addEventListener('keydown', function onEvent(event) {
+			var preventDef = false;
 			if (event.key === 'Enter' || event.key === ' ') {
 				clickFunction();
-				event.preventDefault();
-				event.stopPropagation();
+				preventDef = true;
+			} else if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+				if (entry.ondemand)
+					expandFunction();
+				else
+					toggleFunction();
+				preventDef = true;
 			} else if (event.key === 'Tab') {
 				if (!L.DomUtil.hasClass(span, 'selected'))
 					_unselectEntry(span, checkbox); // remove tabIndex
 
+			}
+
+			if (preventDef) {
+				event.preventDefault();
+				event.stopPropagation();
 			}
 		});
 
