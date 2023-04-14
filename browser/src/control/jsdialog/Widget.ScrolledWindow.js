@@ -75,18 +75,23 @@ function _scrolledWindowControl(parentContainer, data, builder) {
 			return;
 		}
 
-		content.style.height = (realContentHeight + verticalSteps) + 'px';
-		content.style.width = (realContentWidth + horizontalSteps) + 'px';
-		if (!noVertical)
+		if (!noVertical) {
+			content.style.height = (realContentHeight + verticalSteps) + 'px';
 			scrollwindow.style.height = (realContentHeight + margin) + 'px';
-		if (!noHorizontal)
+		}
+		if (!noHorizontal) {
+			content.style.width = (realContentWidth + horizontalSteps) + 'px';
 			scrollwindow.style.width = (realContentWidth + margin) + 'px';
+		}
+
 		content.scrollTop = data.vertical.value * 10;
 		content.scrollLeft = data.horizontal.value * 10;
+
 		content.style.margin = content.scrollTop + 'px ' + margin + 'px ' + margin + 'px ' + content.scrollLeft + 'px';
 	};
 
-	setTimeout(updateSize, 0);
+	if (data.user_managed_scrolling !== false)
+		setTimeout(updateSize, 0);
 
 	var sendTimer = null;
 
