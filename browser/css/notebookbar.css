@@ -222,6 +222,7 @@ button.ui-tab.notebookbar {
 
 .unotoolbutton.notebookbar .unobutton {
 	box-sizing: border-box;
+	padding: 0;
 	width: auto;
 	height: 24px;
 	background-color: transparent;
