@@ -1243,6 +1243,19 @@ void DocumentBroker::endRenameFileCommand()
 
 bool DocumentBroker::updateStorageLockState(ClientSession& session, bool lock, std::string& error)
 {
+    if (session.getAuthorization().isExpired())
+    {
+        error = "Expired authorization token";
+        return false;
+    }
+
+    if (lock && session.isReadOnly())
+    {
+        // Readonly sessions cannot lock, only editors can.
+        error = "Readonly session";
+        return false;
+    }
+
     const StorageBase::LockUpdateResult result = _storage->updateLockState(
         session.getAuthorization(), *_lockCtx, lock, _currentStorageAttrs);
     error = _lockCtx->_lockFailureReason;
