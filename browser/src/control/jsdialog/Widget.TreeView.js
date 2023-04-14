@@ -254,14 +254,14 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 			$(td).click(clickFunction);
 
 			parentContainer.addEventListener('keydown', function onEvent(event) {
-				var preventDef = false;
-				if (event.key === 'Enter') {
+				if (event.key === 'Enter' || event.key === ' ') {
 					clickFunction();
-					preventDef = true;
-				}
-				if (preventDef) {
+					parentContainer.focus();
 					event.preventDefault();
 					event.stopPropagation();
+				} else if (event.key === 'Tab') {
+					if (!L.DomUtil.hasClass(parentContainer, 'selected'))
+						_unselectEntry(parentContainer, checkbox); // remove tabIndex
 				}
 			});
 		}
@@ -355,6 +355,44 @@ function _createHeaders(tbody, data, builder) {
 	}
 }
 
+function _changeFocusedRow(listElements, fromIndex, toIndex) {
+	var nextElement = listElements.eq(toIndex).get(0);
+	nextElement.tabIndex = 0;
+	nextElement.focus();
+
+	var nextInput = listElements.eq(toIndex).find('td input');
+	if (nextInput && nextInput.length)
+		nextInput.get(0).removeAttribute('tabindex');
+
+	if (fromIndex >= 0) {
+		var oldElement = listElements.eq(fromIndex).get(0);
+		if (L.DomUtil.hasClass(oldElement, 'selected'))
+			return;
+
+		oldElement.removeAttribute('tabindex');
+		var oldInput = listElements.eq(fromIndex).find('td input');
+		if (oldInput && oldInput.length)
+			oldInput.get(0).tabIndex = -1;
+	}
+}
+
+function _getCurrentEntry(listElements) {
+	var focusedElement = document.activeElement;
+	// tr - row itself
+	var currIndex = listElements.index(focusedElement);
+	// input - child of a row
+	if (currIndex < 0)
+		currIndex = listElements.index(focusedElement.parentNode.parentNode);
+	// no focused entry - try with selected one
+	if (currIndex < 0) {
+		var selected = listElements.filter('.selected');
+		if (selected && selected.length)
+			currIndex = listElements.index(selected.get(0));
+	}
+
+	return currIndex;
+}
+
 function _treelistboxControl(parentContainer, data, builder) {
 	var table = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview', parentContainer);
 	table.id = data.id;
@@ -395,6 +433,35 @@ function _treelistboxControl(parentContainer, data, builder) {
 			tr.setAttribute('role', 'row');
 			_headerlistboxEntry(tr, data, data.entries[i], builder);
 		}
+
+		table.addEventListener('keydown', function onEvent(event) {
+			var preventDef = false;
+			var listElements = $(tbody).children('.ui-listview-entry');
+			var treeLength = listElements.length;
+
+			var currIndex = _getCurrentEntry(listElements);
+
+			if (event.key === 'ArrowDown') {
+				if (currIndex < 0)
+					_changeFocusedRow(listElements, currIndex, 0);
+				else if (currIndex < treeLength - 1)
+					_changeFocusedRow(listElements, currIndex, currIndex + 1);
+
+				preventDef = true;
+			} else if (event.key === 'ArrowUp') {
+				if (currIndex < 0)
+					_changeFocusedRow(listElements, currIndex, treeLength - 1);
+				else if (currIndex > 0)
+					_changeFocusedRow(listElements, currIndex, currIndex - 1);
+
+				preventDef = true;
+			}
+
+			if (preventDef) {
+				event.preventDefault();
+				event.stopPropagation();
+			}
+		});
 
 		var firstSelected = tbody.querySelector('.ui-listview-entry.selected');
 	} else {
