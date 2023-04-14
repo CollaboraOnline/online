@@ -19,8 +19,8 @@
  *     type: 'treelistbox',
  *     headers: [ { text: 'first column' }, { text: 'second' }],
  *     entries: [
- *         { row: 0, columns [ { text: 'a' }, { text: 'b' } ] },
- *         { row: 1, columns [ { text: 'a2' }, { text: 'b2' }, selected: true ]}
+ *         { row: 0, columns [ { text: 'a' }, { collapsed: 'collapsedIcon.svg' } ] },
+ *         { row: 1, columns [ { text: 'a2' }, { expanded: 'expandedIcon.svg' }, selected: true ]}
  *     ]
  * }
  *
