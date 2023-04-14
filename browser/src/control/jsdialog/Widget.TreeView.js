@@ -184,7 +184,7 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 			L.DomUtil.addClass(span, 'collapsed');
 	}
 
-	if (!disabled && entry.state == null) {
+	if (!disabled) {
 		var singleClick = treeViewData.singleclickactivate === 'true' || treeViewData.singleclickactivate === true;
 		var clickFunction = _createClickFunction('.ui-treeview-entry', treeRoot, span, checkbox,
 			true, singleClick, builder, treeViewData, entry);
@@ -194,6 +194,8 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 			var preventDef = false;
 			if (event.key === 'Enter' || event.key === ' ') {
 				clickFunction();
+				if (checkbox)
+					checkbox.click();
 				preventDef = true;
 			} else if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
 				if (entry.ondemand)
@@ -231,6 +233,9 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 	if (entry.selected && (entry.selected === 'true' || entry.selected === true))
 		_selectEntry(parentContainer, checkbox);
 
+	var clickFunction = _createClickFunction('.ui-listview-entry', parentContainer.parentNode,
+		parentContainer, checkbox, true, false, builder, treeViewData, entry);
+
 	for (var i in entry.columns) {
 		var td = L.DomUtil.create('td', '', parentContainer);
 		td.setAttribute('role', 'gridcell');
@@ -243,24 +248,24 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 		} else if (entry.columns[i].text)
 			td.innerText = entry.columns[i].text;
 
-		if (!disabled) {
-			var clickFunction = _createClickFunction('.ui-listview-entry', parentContainer.parentNode,
-				parentContainer, checkbox, true, false, builder, treeViewData, entry);
-
+		if (!disabled)
 			$(td).click(clickFunction);
+	}
 
-			parentContainer.addEventListener('keydown', function onEvent(event) {
-				if (event.key === 'Enter' || event.key === ' ') {
-					clickFunction();
-					parentContainer.focus();
-					event.preventDefault();
-					event.stopPropagation();
-				} else if (event.key === 'Tab') {
-					if (!L.DomUtil.hasClass(parentContainer, 'selected'))
-						_unselectEntry(parentContainer, checkbox); // remove tabIndex
-				}
-			});
-		}
+	if (!disabled) {
+		parentContainer.addEventListener('keydown', function onEvent(event) {
+			if (event.key === 'Enter' || event.key === ' ') {
+				clickFunction();
+				if (checkbox)
+					checkbox.click();
+				parentContainer.focus();
+				event.preventDefault();
+				event.stopPropagation();
+			} else if (event.key === 'Tab') {
+				if (!L.DomUtil.hasClass(parentContainer, 'selected'))
+					_unselectEntry(parentContainer, checkbox); // remove tabIndex
+			}
+		});
 	}
 }
 
