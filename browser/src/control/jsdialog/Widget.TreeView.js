@@ -208,6 +208,7 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 					listElements.eq(currIndex - 1).find(spanElement).focus();
 				preventDef = true;
 			} else if (builder.callback('treeview', 'keydown', { treeViewData: treeViewData, key: event.key }, entry.row, builder)) {
+				// used in mentions
 				preventDef = true;
 			}
 			if (preventDef) {
@@ -256,8 +257,6 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 				var preventDef = false;
 				if (event.key === 'Enter') {
 					clickFunction();
-					preventDef = true;
-				} else if (builder.callback('treeview', 'keydown', { treeViewData: treeViewData, key: event.key }, entry.row, builder)) {
 					preventDef = true;
 				}
 				if (preventDef) {
