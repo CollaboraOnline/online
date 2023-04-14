@@ -906,9 +906,9 @@ L.TextInput = L.Layer.extend({
 		var mentionPopup = L.DomUtil.get('mentionPopup');
 		if (mentionPopup) {
 			if (ev.key === 'ArrowDown') {
-				var initialFocusElement =
-					document.querySelector('#mentionPopup span[tabIndex="0"]');
+				var initialFocusElement = document.querySelector('#mentionPopup span');
 				if (initialFocusElement) {
+					initialFocusElement.tabIndex = 0;
 					initialFocusElement.focus();
 					ev.preventDefault();
 					ev.stopPropagation();
