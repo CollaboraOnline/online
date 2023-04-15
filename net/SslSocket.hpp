@@ -123,7 +123,10 @@ public:
 
         const int rc = doHandshake();
         if (rc <= 0)
+        {
+            // 0 means shutdown.
             return rc;
+        }
 
         // Default implementation.
         return StreamSocket::readIncomingData();
@@ -136,6 +139,7 @@ public:
         const int rc = doHandshake();
         if (rc <= 0)
         {
+            // 0 means shutdown.
             return rc;
         }
 
@@ -230,7 +234,10 @@ private:
             {
                 rc = handleSslState(rc, "handshake");
                 if (rc <= 0)
-                    return rc != 0;
+                {
+                    // 0 means shutdown.
+                    return rc;
+                }
             }
 
             if (rc == 1)
@@ -244,8 +251,13 @@ private:
                 {
                     LOG_WRN("Failed to verify the certificate of [" << hostname() << ']');
                     closeConnection();
-                    return 0;
+                    return 0; // Connection is closed.
                 }
+            }
+            else
+            {
+                LOG_ERR("Unexpected return code from SSL_do_handshake: " << rc);
+                return rc;
             }
         }
 
