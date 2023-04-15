@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-06 13:17+0100\n"
-"PO-Revision-Date: 2022-05-04 14:13+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2023-03-30 08:41+0000\n"
+"Last-Translator: Cosmin <cosmin@fsfe.org>\n"
 "Language-Team: Romanian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ro/>\n"
-"Language: \n"
+"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.17-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -46,7 +46,7 @@ msgstr "Istoric"
 
 #: admin/admin.strings.js:12
 msgid "Log"
-msgstr ""
+msgstr "Jurnal"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
@@ -57,9 +57,8 @@ msgid "Users online"
 msgstr "Utilizatori activi"
 
 #: admin/admin.strings.js:15
-#, fuzzy
 msgid "User Name"
-msgstr "Nume utilizator"
+msgstr "Nume de utilizator"
 
 #: admin/admin.strings.js:16
 #, fuzzy
@@ -69,12 +68,11 @@ msgstr "Documente deschise"
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:122 admin/src/AdminSocketOverview.js:341
 msgid " user(s)."
-msgstr ""
+msgstr " utilizator(i)."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:195
-#, fuzzy
 msgid " document(s) open."
-msgstr "Documente deschise"
+msgstr " document(e) deschis(e)."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -118,7 +116,7 @@ msgstr "Modificat"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "Gazdă WOPI"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -130,15 +128,15 @@ msgstr "Grafice"
 
 #: admin/admin.strings.js:32
 msgid "Memory Graph"
-msgstr ""
+msgstr "Grafic de memorie"
 
 #: admin/admin.strings.js:33
 msgid "CPU Graph"
-msgstr ""
+msgstr "Grafic de CPU"
 
 #: admin/admin.strings.js:34
 msgid "Network Graph"
-msgstr ""
+msgstr "Grafic de rețea"
 
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:258
 #: src/control/Control.NotebookbarCalc.js:101
@@ -170,28 +168,31 @@ msgstr "Intervalul statistici despre CPU (ms) "
 
 #: admin/admin.strings.js:40 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "Termină sesiunea."
 
 #: admin/admin.strings.js:41
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
+"Memorie virtuală maximă pentru procesul de document (în MB) - doar reducere"
 
 #: admin/admin.strings.js:42
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
+"Memorie maximă a stivei pentru procesul de document (în KB) - doar reducere"
 
 #: admin/admin.strings.js:43
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
+"Dimensiunea maximă de fișier autorizată pentru scriere pe disc (în MB) - "
+"doar reducere"
 
 #: admin/admin.strings.js:44
-#, fuzzy
 msgid "Documents:"
-msgstr "Document"
+msgstr "Documente:"
 
 #: admin/admin.strings.js:45
 msgid "Expired:"
-msgstr ""
+msgstr "Expirate:"
 
 #: admin/admin.strings.js:46 admin/src/AdminSocketBase.js:53
 #: src/control/Control.Zotero.js:193
@@ -200,20 +201,19 @@ msgstr "Actualizează"
 
 #: admin/admin.strings.js:47
 msgid "Shutdown Server"
-msgstr ""
+msgstr "Oprește serverul"
 
 #: admin/admin.strings.js:48
 msgid "Server uptime"
-msgstr ""
+msgstr "Timpul de activitate a serverului"
 
 #: admin/admin.strings.js:49
-#, fuzzy
 msgid "Refresh Log"
-msgstr "Actualizează"
+msgstr "Actualizează jurnalul"
 
 #: admin/admin.strings.js:50
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Filtru de canal:"
 
 #: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:436
 #: src/control/Control.StatusBar.js:332
@@ -222,38 +222,38 @@ msgstr "Nimic"
 
 #: admin/admin.strings.js:52
 msgid "Set Log Levels"
-msgstr ""
+msgstr "Setează nivelele de jurnalizare"
 
 #: admin/admin.strings.js:53
 msgid "Log Levels"
-msgstr ""
+msgstr "Nivele de jurnalizare"
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
 #: src/control/Control.Zotero.js:173 src/control/Parts.js:431
 #: src/control/Signing.js:611 src/core/Socket.js:1075 src/core/Socket.js:1080
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
-msgstr ""
+msgstr "Închide"
 
 #: admin/admin.strings.js:55
 msgid "Update Log Levels"
-msgstr ""
+msgstr "Actualizează nivelele de jurnalizare"
 
 #: admin/admin.strings.js:56
 msgid "Version Information"
-msgstr ""
+msgstr "Informații despre versiune"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
-msgstr ""
+msgstr "Primit"
 
 #: admin/src/AdminSocketAnalytics.js:209
 msgid "Sent"
-msgstr ""
+msgstr "Trimis"
 
 #: admin/src/AdminSocketBase.js:54
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "Serverul a fost închis; te rugăm să reîncarci pagina."
 
 #: admin/src/AdminSocketBase.js:55 admin/src/AdminSocketBase.js:66
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
@@ -264,7 +264,7 @@ msgstr ""
 #: src/control/Toolbar.js:924 src/core/Socket.js:1027 src/core/Socket.js:1248
 #: src/map/handler/Map.Feedback.js:83 src/map/handler/Map.WOPI.js:481
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: admin/src/AdminSocketBase.js:64 admin/src/AdminSocketBase.js:65
 msgid "Connection error"
@@ -272,7 +272,7 @@ msgstr "Eroare de conexiune"
 
 #: admin/src/AdminSocketOverview.js:97 admin/src/AdminSocketSettings.js:34
 msgid "Confirmation"
-msgstr ""
+msgstr "Confirmare"
 
 #: admin/src/AdminSocketOverview.js:98
 msgid "Are you sure you want to terminate this session?"
@@ -292,14 +292,15 @@ msgstr "Renunţă"
 #: admin/src/AdminSocketOverview.js:390
 msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr ""
+"Nu s-a putut seta cookie de autentificare jwt pe o conexiune nesecurizată"
 
 #: admin/src/AdminSocketOverview.js:394
 msgid "Failed to authenticate this session over protocol %0"
-msgstr ""
+msgstr "Nu s-a putut autentifica această sesiune pe protocolul %0"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
-msgstr ""
+msgstr "Ești sigur că vrei să închizi serverul?"
 
 #: admin/src/Util.js:14
 msgid "kB"
@@ -319,23 +320,23 @@ msgstr "TB"
 
 #: admin/src/Util.js:14
 msgid "PB"
-msgstr ""
+msgstr "PB"
 
 #: admin/src/Util.js:14
 msgid "EB"
-msgstr ""
+msgstr "EB"
 
 #: admin/src/Util.js:14
 msgid "ZB"
-msgstr ""
+msgstr "ZB"
 
 #: admin/src/Util.js:14
 msgid "YB"
-msgstr ""
+msgstr "YB"
 
 #: admin/src/Util.js:14
 msgid "BB"
-msgstr ""
+msgstr "BB"
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
@@ -351,35 +352,35 @@ msgstr " s"
 
 #: js/w2ui-1.5.rc1.js:2920
 msgid "Recent"
-msgstr ""
+msgstr "Recent"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
-msgstr ""
+msgstr "Nicio culoare"
 
 #: src/control/ColorPicker.js:123
 msgid "Automatic color"
-msgstr ""
+msgstr "Culoare automată"
 
 #: src/control/Control.AlertDialog.js:56
 msgid "External link"
-msgstr ""
+msgstr "Legătură externă"
 
 #: src/control/Control.AlertDialog.js:57
 msgid "Open link"
-msgstr ""
+msgstr "Deschide legătura"
 
 #: src/control/Control.AlertDialog.js:67
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr ""
+msgstr "Serverul a întâmpinat o eroare %0 analizând comanda %1."
 
 #: src/control/Control.Command.js:94
 msgid "Unlock"
-msgstr ""
+msgstr "Deblochează"
 
 #: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:923
 msgid "Delete"
-msgstr ""
+msgstr "Șterge"
 
 #: src/control/Control.ContextMenu.js:207
 msgid "Paste Special"
@@ -387,66 +388,68 @@ msgstr "Lipire specială"
 
 #: src/control/Control.DocumentNameInput.js:77
 msgid "Path"
-msgstr ""
+msgstr "Cale"
 
 #: src/control/Control.DocumentRepair.js:18
 #: src/control/Control.DocumentRepair.js:19
 msgid "Repair Document"
-msgstr ""
+msgstr "Repară documentul"
 
 #: src/control/Control.DocumentRepair.js:115
 #: src/control/Control.UserList.js:295
 msgid "You"
-msgstr ""
+msgstr "Tu"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "Type"
-msgstr ""
+msgstr "Tip"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "What?"
-msgstr ""
+msgstr "Ce?"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "Who?"
-msgstr ""
+msgstr "Cine?"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "When?"
-msgstr ""
+msgstr "Când?"
 
 #: src/control/Control.DocumentRepair.js:150
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "Nu ai făcut încă nimic care să necesite o revenire..."
 
 #: src/control/Control.DocumentRepair.js:160
 msgid "Redo"
-msgstr ""
+msgstr "Refă"
 
 #: src/control/Control.DocumentRepair.js:161
 msgid "Undo"
-msgstr ""
+msgstr "Anulează"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid "Start download"
-msgstr ""
+msgstr "Pornește descărcarea"
 
 #: src/control/Control.DownloadProgress.js:62
+#, fuzzy
 msgid "Confirm copy to clipboard"
-msgstr ""
+msgstr "Confirmă copierea în clipboard"
 
 #: src/control/Control.FormulaBar.js:45
+#, fuzzy
 msgid "cell address"
-msgstr ""
+msgstr "adresă celulară"
 
 #: src/control/Control.FormulaBarJSDialog.js:42
 #, fuzzy
 msgid "Function Wizard"
-msgstr "Funcție"
+msgstr "Asistent funcții"
 
 #: src/control/Control.FormulaBarJSDialog.js:55
 msgid "Formula"
-msgstr ""
+msgstr "Formulă"
 
 #: src/control/Control.FormulaBarJSDialog.js:62
 #: src/control/Control.MobileTopBar.js:40
@@ -456,7 +459,7 @@ msgstr "Acceptă"
 #: src/control/Control.JSDialogBuilder.js:149
 #: src/control/Control.StatusBar.js:330
 msgid "Sum"
-msgstr "Sum"
+msgstr "Sumă"
 
 #: src/control/Control.JSDialogBuilder.js:150
 #: src/control/Control.StatusBar.js:325
@@ -465,11 +468,11 @@ msgstr "Medie"
 
 #: src/control/Control.JSDialogBuilder.js:151
 msgid "Min"
-msgstr ""
+msgstr "Min"
 
 #: src/control/Control.JSDialogBuilder.js:152
 msgid "Max"
-msgstr ""
+msgstr "Max"
 
 #: src/control/Control.JSDialogBuilder.js:153
 #: src/control/Control.StatusBar.js:327
@@ -482,35 +485,35 @@ msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:442
 msgid "Linear"
-msgstr ""
+msgstr "Liniar"
 
 #: src/control/Control.JSDialogBuilder.js:445
 msgid "Axial"
-msgstr ""
+msgstr "Axial"
 
 #: src/control/Control.JSDialogBuilder.js:448
 msgid "Radial"
-msgstr ""
+msgstr "Radial"
 
 #: src/control/Control.JSDialogBuilder.js:451
 msgid "Ellipsoid"
-msgstr ""
+msgstr "Elipsoid"
 
 #: src/control/Control.JSDialogBuilder.js:455
 msgid "Quadratic"
-msgstr ""
+msgstr "Cvadratic"
 
 #: src/control/Control.JSDialogBuilder.js:458
 msgid "Square"
-msgstr ""
+msgstr "Pătrat"
 
 #: src/control/Control.JSDialogBuilder.js:461
 msgid "Fixed size"
-msgstr ""
+msgstr "Dimensiune fixă"
 
 #: src/control/Control.JSDialogBuilder.js:1380
 msgid "From"
-msgstr ""
+msgstr "De la"
 
 #: src/control/Control.JSDialogBuilder.js:1383
 msgid "To"
