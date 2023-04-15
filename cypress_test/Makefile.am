@@ -166,7 +166,7 @@ define start_coolwsd
 	../coolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			--o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			--o:security.capabilities="$(CAPABILITIES)" \
-			--disable-ssl \
+			--disable-ssl --forcecaching \
 			--o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			--o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			--o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
