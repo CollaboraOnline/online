@@ -34,6 +34,8 @@
 NSString *app_locale;
 NSString *app_text_direction;
 
+#if 0 // Remove template list URL from application settings
+
 static void download(NSURL *source, NSURL *destination) {
     [[[NSURLSession sharedSession] downloadTaskWithURL:source
                                      completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
@@ -179,6 +181,8 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
         }
     }
 }
+
+#endif
 
 @implementation AppDelegate
 
