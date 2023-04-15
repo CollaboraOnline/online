@@ -1327,6 +1327,12 @@ protected:
                 LOG_DBG("Closed but will drain incoming data per POLLIN");
                 closed = false;
             }
+            else if (read < 0 && closed && (last_errno == EAGAIN || last_errno == EINTR))
+            {
+                LOG_DBG("Ignoring POLLHUP to drain incoming data as we had POLLIN but got "
+                        << Util::symbolicErrno(last_errno) << " on read");
+                closed = false;
+            }
             else if (read == 0 || (read < 0 && (last_errno == EPIPE || last_errno == ECONNRESET)))
             {
                 LOG_DBG("Closed after reading");
