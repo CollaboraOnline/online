@@ -3195,7 +3195,42 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			control.setAttribute('tabIndex', '0');
 	},
 
+	catchedEl: null,
+
+	findElementInJson: function(json, id) {
+		try {
+			if (json.id === id)
+				this.catchedEl = json;
+
+			if (!this.catchedEl && json.children) {
+				for (var i = 0; i < json.children.length; i++) {
+					if (!this.catchedEl)
+						this.findElementInJson(json.children[i], id);
+				}
+			}
+		}
+		catch (error) {
+			console.error(error);
+		}
+	},
+
+	dialogStyleSpecialCases: function(data) {
+		if (Array.isArray(data) &&  data[0].dialogid === 'FormulaDialog') {
+			this.catchedEl = null;
+			this.findElementInJson(data[0], 'box3');
+			if (this.catchedEl)
+				this.catchedEl.style = { property: 'textAlign', value: 'right' };
+
+			this.catchedEl = null;
+			this.findElementInJson(data[0], 'ed_formula');
+			if (this.catchedEl)
+				this.catchedEl.style = { property: 'marginTop', value: '10px' };
+		}
+	},
+
 	build: function(parent, data, hasVerticalParent) {
+
+		this.dialogStyleSpecialCases(data);
 
 		// TODO: check and probably remove additional containers
 		if (hasVerticalParent === undefined) {
@@ -3257,6 +3292,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				}
 
 				var childObject = table;
+
+				if (childData.style)
+					childObject.style[childData.style['property']] = childData.style.value;
 
 				this.postProcess(containerToInsert, childData);
 			} else {

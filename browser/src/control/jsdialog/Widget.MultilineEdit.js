@@ -36,6 +36,9 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 
 	var edit = L.DomUtil.create(controlType, 'ui-textarea ' + builder.options.cssClass, parentContainer);
 
+	if (data.style)
+		edit.style[data.style['property']] = data.style.value;
+
 	if (controlType === 'textarea')
 		edit.value = builder._cleanText(data.text);
 	else
