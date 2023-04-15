@@ -212,6 +212,24 @@ L.Map.TouchGesture = L.Handler.extend({
 		window.IgnorePanning = undefined;
 	},
 
+	// Cypress' runner injects 'click' events to get focus for
+	// its '.text' method to execute properly. On click events
+	// we send mouse-clicks or double-clicks etc. to the core
+	// this is not what is required for each key-press in most
+	// cases. Therefore ignore these when we already have a
+	// focused _textInput.
+	_detectBogusCypressClick: function (e) {
+		if (e.target === this._map._textInput._textArea &&
+		    document.activeElement == e.target &&
+		    L.Browser.cypressTest)
+		{
+			window.app.console.log('Skip click mouse ' + e.type + ' event emission during cypress test');
+			return true;
+		}
+		else
+			return false;
+	},
+
 	_onPress: function (e) {
 		if (this._map.uiManager.isUIBlocked())
 			return;
@@ -359,7 +377,9 @@ L.Map.TouchGesture = L.Handler.extend({
 		var acceptInput = false; // No keyboard by default.
 		var sendMouseEvents = true; // By default, this is a single-click.
 		if (docLayer) {
-			if (docLayer.hasGraphicSelection()) {
+			if (this._detectBogusCypressClick(e)) {
+				sendMouseEvents = false;
+			} else if (docLayer.hasGraphicSelection()) {
 				// Need keyboard when cursor is visible.
 				acceptInput = this._map._docLayer.isCursorVisible();
 			} else if (docLayer._docType === 'text') {
@@ -395,6 +415,9 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
+		if (this._detectBogusCypressClick(e))
+			return;
+
 		var point = e.pointers[0],
 		    containerPoint = this._map.mouseEventToContainerPoint(point),
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
@@ -425,6 +448,9 @@ L.Map.TouchGesture = L.Handler.extend({
 
 	_onTripleTap: function (e) {
 		if (this._map.uiManager.isUIBlocked())
+			return;
+
+		if (this._detectBogusCypressClick(e))
 			return;
 
 		var point = e.pointers[0],
