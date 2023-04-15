@@ -416,8 +416,8 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
     if (_pollSockets.size() != size)
     {
-        LOG_DBG("PollSocket container size has changed from " << _pollSockets.size() << " to "
-                                                              << size);
+        LOG_TRC("PollSocket container size has changed from " << size << " to "
+                                                              << _pollSockets.size());
     }
 
     // If we had sockets to process.
