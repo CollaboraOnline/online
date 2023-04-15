@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-06 13:17+0100\n"
-"PO-Revision-Date: 2023-03-14 08:03+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2023-03-31 12:37+0000\n"
+"Last-Translator: Jérôme Herbinet <j.herbinet@protonmail.ch>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16.2-dev\n"
+"X-Generator: Weblate 4.17-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -772,7 +772,7 @@ msgstr "Tout"
 #: src/control/Control.NotebookbarImpress.js:943
 #: src/control/Control.NotebookbarWriter.js:847
 msgid "Pick Link"
-msgstr "Choisir un lien"
+msgstr "Insérer un lien"
 
 #: src/control/Control.Menubar.js:209
 msgid "Text orientation"
