@@ -408,9 +408,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                                                           + std::to_string(getpid() + SYNTHETIC_COOL_PID_OFFSET)
                                                           + ",\"tid\":1},\n");
                     }
+                    // Should the first getTokenUInt64()'s return value really
+                    // be ignored?
                     else if ((ph == "S" || ph == "F") &&
-                             getTokenUInt64(tokens[4], "id", id),
-                             getTokenUInt64(tokens[5], "tid", tid))
+                             (static_cast<void>(getTokenUInt64(tokens[4], "id", id)),
+                             getTokenUInt64(tokens[5], "tid", tid)))
                     {
                         COOLWSD::writeTraceEventRecording("{\"name\":\""
                                                           + name
