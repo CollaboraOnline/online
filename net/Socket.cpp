@@ -364,18 +364,20 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
                 << _pollFds[size].revents << std::dec);
     if (_pollFds[size].revents)
     {
+        // Clear the data.
+#if !MOBILEAPP
+        int dump[32];
+        dump[0] = ::read(_wakeup[0], &dump, sizeof(dump));
+        LOG_TRC("Wakup pipe read " << dump[0] << " bytes");
+#else
+        LOG_TRC("Wakeup pipe read");
+        int dump = fakeSocketRead(_wakeup[0], &dump, sizeof(dump));
+#endif
+
         std::vector<CallbackFn> invoke;
         {
             std::lock_guard<std::mutex> lock(_mutex);
 
-            // Clear the data.
-#if !MOBILEAPP
-            int dump[32];
-            dump[0] = ::read(_wakeup[0], &dump, sizeof(dump));
-#else
-            LOG_TRC("Wakeup pipe read");
-            int dump = fakeSocketRead(_wakeup[0], &dump, sizeof(dump));
-#endif
             if (!_newSockets.empty())
             {
                 LOG_TRC("Inserting " << _newSockets.size() << " new sockets after the existing "
