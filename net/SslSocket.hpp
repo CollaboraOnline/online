@@ -60,13 +60,17 @@ public:
 
         if (isClient)
         {
+            LOG_TRC("Setting SSL into connect state");
             SSL_set_connect_state(_ssl);
             if (SSL_connect(_ssl) == 0)
                 LOG_DBG("SslStreamSocket connect #" << getFD() << " failed ");
             // else -1 is quite possibly SSL_ERROR_WANT_READ
         }
         else // We are a server-side socket.
+        {
+            LOG_TRC("Setting SSL into accept state");
             SSL_set_accept_state(_ssl);
+        }
     }
 
     ~SslStreamSocket()
