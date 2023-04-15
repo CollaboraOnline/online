@@ -205,7 +205,7 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 				preventDef = true;
 			} else if (event.key === 'Tab') {
 				if (!L.DomUtil.hasClass(span, 'selected'))
-					_unselectEntry(span, checkbox); // remove tabIndex
+					_unselectEntry(span); // remove tabIndex
 
 			}
 
@@ -263,7 +263,7 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 				event.stopPropagation();
 			} else if (event.key === 'Tab') {
 				if (!L.DomUtil.hasClass(parentContainer, 'selected'))
-					_unselectEntry(parentContainer, checkbox); // remove tabIndex
+					_unselectEntry(parentContainer); // remove tabIndex
 			}
 		});
 	}
@@ -429,7 +429,7 @@ function _treelistboxControl(parentContainer, data, builder) {
 		// list view with headers
 		table.setAttribute('role', 'grid');
 
-		for (i in data.entries) {
+		for (var i in data.entries) {
 			var tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry', tbody);
 			tr.setAttribute('role', 'row');
 			_headerlistboxEntry(tr, data, data.entries[i], builder);
@@ -468,7 +468,7 @@ function _treelistboxControl(parentContainer, data, builder) {
 	} else {
 		// tree view
 		var isRealTreeView = false;
-		for (var i in data.entries) {
+		for (i in data.entries) {
 			if (data.entries[i].children && data.entries[i].children.length) {
 				isRealTreeView = true;
 				break;
