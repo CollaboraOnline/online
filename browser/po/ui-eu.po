@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-06 13:17+0100\n"
-"PO-Revision-Date: 2023-03-13 06:38+0000\n"
+"PO-Revision-Date: 2023-04-02 17:54+0000\n"
 "Last-Translator: Alex Gabilondo <alexgabi@disroot.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "ui/eu/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.2-dev\n"
+"X-Generator: Weblate 4.17-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -2203,23 +2203,22 @@ msgstr ""
 "teknikariekin."
 
 #: src/errormessages.js:23
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
 "Zure saioa %time barru bukatuko da. Gorde zure lana eta freskatu saioa (edo "
-"orrialdea) jarraitzeko."
+"orrialdea) jarraitzeko. Baliteke berriro saioa hasi behar izatea."
 
 #: src/errormessages.js:24
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
 "Zure saioa bukatu da. Hemendik aurrera dokumentuan egindako aldaketak agian "
-"ez dira gordeko. Freskatu saioa (edo orrialdea) jarraitzeko."
+"ez dira gordeko. Freskatu saioa (edo orrialdea) jarraitzeko. Baliteke "
+"berriro saioa hasi behar izatea."
 
 #: src/errormessages.js:25
 msgid ""
