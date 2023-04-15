@@ -251,6 +251,7 @@ public:
     static std::string RouteToken;
 #if ENABLE_DEBUG
     static bool SingleKit;
+    static bool ForceCaching;
 #endif
     static std::shared_ptr<ForKitProcess> ForKitProc;
     static std::atomic<int> ForKitProcId;

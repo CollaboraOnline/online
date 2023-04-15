@@ -487,7 +487,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
     {
         bool noCache = false;
 #if ENABLE_DEBUG
-        noCache = true;
+        noCache = !COOLWSD::ForceCaching; // for cypress
 #endif
         Poco::Net::HTTPResponse response;
 
