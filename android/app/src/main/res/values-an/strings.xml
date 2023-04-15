@@ -3,7 +3,7 @@
     <string name="action_about">Arredol de</string>
     <string name="title_activity_show_html">Arredol de</string>
     <string name="open">Ubrir</string>
-    <string name="share">Compartir</string>
+    <string name="share">Fer partache</string>
     <string name="title_recents">Fichers recients</string>
     <string name="title_browser">Totz os fichers</string>
     <string name="app_name_settings">Achustes</string>
@@ -24,4 +24,12 @@
     <string name="action_cancel">Cancelar</string>
     <string name="negative_cancel">Cancelar</string>
     <string name="positive_ok">Acceptar</string>
+    <string name="failed_to_load_file">No s\'ha puesto determinar o fichero a cargar</string>
+    <string name="pref_sort_title">Orden d\'os fichers</string>
+    <string name="list_view">Lista</string>
+    <string name="share_via">Fer partache vía</string>
+    <string name="storage_permission_required">Se requiere permiso d\'almacenache</string>
+    <string name="sort_za">Z-A</string>
+    <string name="sort_az">A-Z</string>
+    <string name="temp_file_saving_disabled">Iste fichero ye solo que de lectura; o alzau ye desactivau.</string>
 </resources>
