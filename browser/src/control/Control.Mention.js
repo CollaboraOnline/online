@@ -88,6 +88,7 @@ L.Control.Mention = L.Control.extend({
 				'text': '',
 				'enabled': true,
 				'singleclickactivate': false,
+				'fireKeyEvents': true
 			};
 			// update the popup with list if mentionList already exist
 			if (L.DomUtil.get('mentionList')) {
