@@ -1,2 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name_settings">ക്രമീകരണങ്ങൾ</string>
+    <string name="about_notice">സൂചന കാണിക്കുക</string>
+    <string name="app_vendor">ഈ പ്രകാശനം $VENDOR ആണ് വിതരണം ചെയ്തത്.</string>
+    <string name="no_items">ഇനങ്ങളില്ല</string>
+    <string name="about_license">അധികാരപത്രം കാണിക്കുക</string>
+    <string name="storage_permission_required">സംഭരണ അനുമതി ആവശ്യമാണ്</string>
+    <string name="list_view">പട്ടിക</string>
+    <string name="pref_category_editor">തിരുത്തൽ ക്രമീകരണങ്ങൾ</string>
+    <string name="action_about">കുറിച്ച്</string>
+    <string name="open">തുറക്കുക</string>
+    <string name="pref_user_name">ഉപയോക്തൃനാമം</string>
+    <string name="pref_user_name_info">ഒരു അഭിപ്രായം ചേർക്കുമ്പോൾ ഉപയോഗിക്കുന്നു</string>
+    <string name="about_moreinfo">കൂടുതൽ വിവരങ്ങൾ</string>
+    <string name="new_textdocument">പുതിയ വാചക പ്രമാണം</string>
+    <string name="new_presentation">പുതിയ അവതരണം</string>
+    <string name="default_document_name">ശീർഷകമില്ലാത്ത</string>
+    <string name="sort">ഇങ്ങനെ അടുക്കുക</string>
+    <string name="sort_smallest">ആദ്യം ഏറ്റവും ചെറുത്</string>
+    <string name="sort_largest">ആദ്യം ഏറ്റവും വലുത്</string>
+    <string name="sort_oldest">ഏറ്റവും പഴയത് ആദ്യം</string>
+    <string name="action_settings">ക്രമീകരണങ്ങൾ</string>
+    <string name="user_name">ഉപയോക്തൃനാമം</string>
+    <string name="confirm_label">സ്ഥിരീകരിക്കുക</string>
+    <string name="cancel_label">റദ്ദാക്കുക</string>
+    <string name="search_label">പോകൂ</string>
+    <string name="positive_ok">ശരി</string>
+    <string name="theme_light">വെളിച്ചം</string>
+    <string name="theme_dark">ഇരുട്ട്</string>
+    <string name="pref_user_name_guest">അതിഥി ഉപയോക്താവ്</string>
+    <string name="share">പങ്കിടുക</string>
+    <string name="remove_from_list">പട്ടികയിൽ നിന്ന് നീക്കം ചെയ്യുക</string>
+    <string name="share_via">വഴി പങ്കിടുക</string>
+    <string name="filter_documents">പ്രമാണങ്ങൾ</string>
+    <string name="filter_presentations">അവതരണങ്ങൾ</string>
+    <string name="document_locations">പ്രമാണ സ്ഥാനങ്ങൾ</string>
+    <string name="close_document_locations">പ്രമാണ സ്ഥാനങ്ങൾ അടയ്ക്കുക</string>
+    <string name="negative_im_sure">എനിക്ക് ഉറപ്പാണ്</string>
+    <string name="negative_cancel">റദ്ദാക്കുക</string>
+    <string name="action_cancel">റദ്ദാക്കുക</string>
+    <string name="action_create">സൃഷ്ടിക്കുക</string>
+    <string name="action_overwrite">തിരുത്തിയെഴുതുക</string>
+    <string name="share_document">പ്രമാണം പങ്കിടുക</string>
+    <string name="sort_newest">ഏറ്റവും പുതിയത് ആദ്യം</string>
+    <string name="filter_everything">എല്ലാം</string>
+    <string name="external_sd_file_system">ബാഹ്യ എസ്ഡി</string>
+    <string name="title_permission_required">അനുമതി ആവശ്യമാണ്</string>
+    <string name="reason_required_to_read_documents">നിങ്ങളുടെ പ്രമാണങ്ങൾ വായിക്കുന്നതിന് സംഭരണ അനുമതി ആവശ്യമാണ്.</string>
+    <string name="create_new_document_title">പുതിയ പ്രമാണം സൃഷ്ടിക്കുക</string>
+    <string name="unable_to_go_further">കൂടുതൽ മുന്നോട്ട് പോകാൻ കഴിയുന്നില്ല.</string>
+    <string name="title_activity_show_html">കുറിച്ച്</string>
+    <string name="choose_theme">പ്രതിപാദ്യം തിരഞ്ഞെടുക്കുക</string>
+    <string name="theme">പ്രതിപാദ്യം</string>
+</resources>

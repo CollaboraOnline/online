@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="edit_copy">ഒരു പകർപ്പ് തിരുത്തുക</string>
+    <string name="storage_permission_required">സംഭരണ അനുമതി ആവശ്യമാണ്</string>
+    <string name="failed_to_insert_image">ചിത്രം ചേർക്കുന്നതിൽ പരാജയപ്പെട്ടു</string>
+    <string name="preparing_for_the_first_start_after_an_update">ഒരു പുതുക്കലിനുശേഷം ആദ്യ തുടക്കത്തിനായി തയ്യാറെടുക്കുന്നു.</string>
+    <string name="rate_now">ഇപ്പോൾ നിരക്ക് ചെയ്യുക</string>
+    <string name="later">പിന്നീട്</string>
+    <string name="rate_our_app_title">%1$s ഉപയോഗിച്ചതിന് നന്ദി!</string>
+    <string name="exiting">പുറത്തുകടക്കുന്നു...</string>
+    <string name="restarting">പുനരാരംഭിക്കുന്നു...</string>
+    <string name="view_only">കാണുക മാത്രം</string>
+    <string name="cant_open_the_document">പ്രമാണം തുറക്കാനായില്ല</string>
+    <string name="ask_for_copy">ഈ പ്രമാണം വായിക്കാൻ മാത്രമുള്ളതാണ്. തിരുത്താൻ നിങ്ങൾക്ക് ഒരു പകർപ്പ് നിർമ്മിക്കണോ\?</string>
+    <string name="rate_our_app_text">നിങ്ങൾക്കിത് ഇഷ്‌ടമാണെങ്കിൽ, ഗൂഗിൾ പ്ലേസ്റ്റോറിൽ ഞങ്ങൾക്ക് 5 നക്ഷത്രങ്ങൾ നൽകുക. നിങ്ങളുടെ നല്ല അവലോകനങ്ങളാണ് ഞങ്ങളുടെ മികച്ച പ്രചോദനം.</string>
+</resources>
