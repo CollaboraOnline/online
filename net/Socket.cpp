@@ -360,6 +360,8 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             timeoutMaxMicroS << "us)" << ((rc==0) ? "(timedout)" : ""));
 
     // First process the wakeup pipe (always the last entry).
+    LOG_TRC('#' << _pollFds[size].fd << ": Handling events of wakeup pipe: 0x" << std::hex
+                << _pollFds[size].revents << std::dec);
     if (_pollFds[size].revents)
     {
         std::vector<CallbackFn> invoke;
@@ -376,6 +378,9 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 #endif
             if (!_newSockets.empty())
             {
+                LOG_TRC("Inserting " << _newSockets.size() << " new sockets after the existing "
+                                     << _pollSockets.size());
+
                 // Update thread ownership.
                 for (auto& i : _newSockets)
                     i->setThreadOwner(std::this_thread::get_id());
@@ -390,6 +395,7 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             std::swap(_newCallbacks, invoke);
         }
 
+        LOG_TRC("Invoking " << invoke.size() << " callbacks");
         for (const auto& callback : invoke)
         {
             try
