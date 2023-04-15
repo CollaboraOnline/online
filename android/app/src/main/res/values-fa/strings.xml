@@ -4,7 +4,14 @@
     <string name="app_version_and_hash">نسخه: %1$s
 \nبرخط git-hash: %2$s
 \nهسته git-hash: %3$s</string>
-    <string name="app_description">$APP_NAME یک محصول کامل و مدرن و متن باز با کاربری آسان برای واژه پرداری، صفحات گسترده، ارائه ها و... است.</string>
+    <string name="app_description">$APP_NAME یک محصول کامل و مدرن و متن باز با کاربری آسان برای واژه پردازی، صفحات گسترده، ارائه ها و... است.</string>
     <string name="app_vendor">این انتشار توسط $VENDOR فراهم شده است.</string>
-    <string name="no_recent_items">لطفا یک پرونده با استفاده از شمایل پوشه از نوارابزار باز کنید.</string>
+    <string name="no_recent_items">لطفا یک پرونده را با استفاده از آیکون پوشه از نوارابزار باز کنید.</string>
+    <string name="no_items">هیچ مورد</string>
+    <string name="temp_file_saving_disabled">این فایل فقط برای خواندن است، ذخیره غیر فعال شده است.</string>
+    <string name="file_exists_warning">فایلی با این نام موجود میباشد و (فایل شما)دوباره روی فایل موجود باز نویسی میشود.</string>
+    <string name="file_creation_failed">ساخت فایل ناموفق بود</string>
+    <string name="storage_permission_required">دسترسی به حافظه لازم است</string>
+    <string name="failed_to_load_file">تعیین کردن فایل برای خوانش فایل ناموفق بود</string>
+    <string name="list_view">لیست</string>
 </resources>

@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="temp_file_saving_disabled">این فایل فقط برای خواندن است، ذخیره غیر فعال شده است.</string>
+    <string name="storage_permission_required">دسترسی به حافظه لازم است</string>
+    <string name="failed_to_load_file">تعیین کردن فایل برای خوانش فایل ناموفق بود</string>
+</resources>
