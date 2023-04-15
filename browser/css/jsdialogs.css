@@ -321,6 +321,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	overflow-y: auto;
 	overflow-x: hidden;
 	max-width: 1000px;
+	padding: 1px;
+	padding-inline-end: 3px;
 }
 
 .ui-treeview.disabled {
@@ -363,7 +365,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-treeview-entry:not(.autofilter) {
-	padding-left: 2px;
+	padding-inline-start: 2px;
+	margin-inline-end: 2px;
 	background-color: var(--color-background-lighter);
 }
 
