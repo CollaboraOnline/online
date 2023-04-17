@@ -2318,6 +2318,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			app.file.calc.cellCursor.rectangle.pixels = [Math.round(start.x), Math.round(start.y), Math.round(offsetPixels.x), Math.round(offsetPixels.y)];
 			app.file.calc.cellCursor.rectangle.twips = this._cellCursorTwips.toRectangle();
 			app.file.calc.cellCursor.visible = true;
+			app.sectionContainer.onCellAddressChanged();
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellCursor([this._cellCursorPixels.getX2(), this._cellCursorPixels.getY2()]);
 
