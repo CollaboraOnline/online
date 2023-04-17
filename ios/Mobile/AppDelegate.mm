@@ -231,8 +231,11 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
     // language, as it might be hard to find the way to set it back to a known language.
 
     char *lang = std::getenv("LANG");
+    // Fix assert failure when running "My Mac (Designed for iPad)" in Xcode
+    // LANG values such as en_US.UTF-8 trigger an assert in the LibreOffice
+    // code so replace all "_" characters with "-" characters.
     if (lang != nullptr)
-        app_locale = [NSString stringWithUTF8String:lang];
+        app_locale = [[NSString stringWithUTF8String:lang] stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
     else
         app_locale = [[NSLocale preferredLanguages] firstObject];
 
