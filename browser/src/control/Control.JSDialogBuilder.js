@@ -419,31 +419,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var text = element.textContent;
 		var index = text.indexOf(accessKey);
-		if (index >= 0) {
-			// Element text contains the access char.
-			// We will make the access char bold in order to make it recognizable.
-			element.textContent = '';
-
-			var part1 = text.substring(0, index);
-			var part2 = text.substring(index + 1, text.length);
-
-			var s1 = document.createElement('span');
-			s1.textContent = part1;
-
-			var s2 = document.createElement('u');
-			s2.textContent = accessKey;
-			s2.className = 'access-key';
-
-			var s3 = document.createElement('span');
-			s3.textContent = part2;
-
-			if (s1.textContent !== '')
-				element.appendChild(s1);
-
-			element.appendChild(s2);
-
-			if (s2.textContent !== '')
-				element.appendChild(s3);
+			if (index >= 0) {
+					var title = text.replace(accessKey, '<u class="access-key">' + accessKey.replace('~', '') + '</u>');
+					element.innerHTML = title;
 		}
 	},
 
