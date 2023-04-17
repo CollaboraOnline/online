@@ -26,6 +26,7 @@ interface SectionCallbacks {
 	onNewDocumentTopLeft?: (size: Array<number>) => void;
 	onRemove?: () => void;
 	onCursorPositionChanged?: (newPosition: Array<number>) => void;
+	onCellAddressChanged?: (cursorInfo: any) => void;
 	onAnimationEnded?: (frameCount: number, elapsedTime: number) => void;
 }
 
@@ -227,6 +228,11 @@ class CanvasSectionObject {
 	onCursorPositionChanged(newPosition: Array<number>) {
 		if (this.callbacks.onCursorPositionChanged)
 			return this.callbacks.onCursorPositionChanged(newPosition);
+	}
+
+	onCellAddressChanged(cursorInfo: any) {
+		if (this.callbacks.onCellAddressChanged)
+			return this.callbacks.onCellAddressChanged(cursorInfo);
 	}
 
 	/// Parameters: Point [x, y], DragDistance [x, y] (null when not dragging), e (native event object)
@@ -921,7 +927,7 @@ class CanvasSectionContainer {
 			this.drawSections();
 	}
 
-	public propagateCursorPositionChanged() {
+	private propagateCursorPositionChanged() {
 		// There is no target section for cursor position change, this event comes from core side.
 		// Sections with interactable = false will not be targeted.
 		// Window sections can still stop the propagation of the event. Others cannot.
@@ -941,6 +947,30 @@ class CanvasSectionContainer {
 			for (var i: number = this.sections.length - 1; i > -1; i--) {
 				if (this.sections[i].interactable)
 					this.sections[i].onCursorPositionChanged(app.file.writer.cursorPosition);
+			}
+		}
+	}
+
+	private propagateCellAddressChanged() {
+		// There is no target section for cell address change, this event comes from core side.
+		// Sections with interactable = false will not be targeted.
+		// Window sections can still stop the propagation of the event. Others cannot.
+
+		var propagate: boolean = true;
+
+		for (var j: number = 0; j < this.windowSectionList.length; j++) {
+			var windowSection = this.windowSectionList[j];
+			if (windowSection.interactable)
+				windowSection.onCellAddressChanged(app.file.calc.cellCursor);
+
+			if (this.lowestPropagatedBoundSection === windowSection.name)
+				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
+		}
+
+		if (propagate) {
+			for (var i: number = this.sections.length - 1; i > -1; i--) {
+				if (this.sections[i].interactable)
+					this.sections[i].onCellAddressChanged(app.file.calc.cellCursor);
 			}
 		}
 	}
@@ -1257,12 +1287,24 @@ class CanvasSectionContainer {
 		Cursor position is sent from the core side.
 		The event is handled in CanvasTileLayer file.
 		CanvasTileLayer then informs CanvasSectionContainer.
-		This is for writer. Other apps may need other functions. To be checked..
+		This is for Writer. Other apps may need other functions. To be checked..
 	*/
 	public onCursorPositionChanged() {
 		if (app.map._docLayer._docType === 'text') {
 			// Global state holder should already have the latest information: app.file.writer.cursorPosition.
 			this.propagateCursorPositionChanged();
+		}
+	}
+
+	/*
+		Cell position is sent from the core side.
+		The event is handled in CanvasTileLayer file.
+		This is for Calc.
+	*/
+	public onCellAddressChanged() {
+		if (app.map._docLayer._docType === 'spreadsheet') {
+			// We should have set the variable to latest state already.
+			this.propagateCellAddressChanged();
 		}
 	}
 
