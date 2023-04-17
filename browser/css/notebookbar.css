@@ -234,6 +234,10 @@ button.ui-tab.notebookbar {
 	border-radius: var(--border-radius);
 }
 
+.jsdialog .ui-tabs-content {
+	margin-top: 10px;
+}
+
 .ui-tabs-content .unobutton > img {
 	width: var(--btn-size);
 	height: var(--btn-size);
