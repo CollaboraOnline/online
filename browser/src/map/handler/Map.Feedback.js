@@ -111,6 +111,9 @@ L.Map.Feedback = L.Handler.extend({
 	},
 
 	onMessage: function (e) {
+		if (typeof e.data !== 'string')
+			return; // Some extensions may inject scripts resulting in load events that are not strings
+
 		if (e.data.startsWith('updatecheck-show'))
 			return;
 
