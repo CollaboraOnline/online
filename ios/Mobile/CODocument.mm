@@ -149,7 +149,15 @@ static std::atomic<unsigned> appDocIdCounter(1);
 
     data.push_back(0);
 
-    NSString *js = [NSString stringWithUTF8String:data.data()];
+    // Related to issue #5876: don't autorelease large NSStrings
+    // The +[NSString string...] selectors won't be released until
+    // an enclosing autorelease pool is released. But since we use
+    // ARC, we don't know where the compiler has inserted the
+    // autorelease pool so JS messages may not be released until
+    // after a very long time potentially causing an out of memory
+    // crash. So, use the -[[NSString alloc] init...] selectors
+    // instead.
+    NSString *js = [[NSString alloc] initWithUTF8String:data.data()];
     if (!js) {
         char outBuf[length + 1];
         memcpy(outBuf, buffer, length);
