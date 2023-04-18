@@ -441,6 +441,7 @@ L.Control.Notebookbar = L.Control.extend({
 				for (var context in contexts) {
 					if (contexts[context] === event.context) {
 						tabElement.show();
+						tabElement.removeClass('hidden');
 						if (!tabElement.hasClass('selected'))
 							contextTab = tabElement;
 					} else if (contexts[context] === 'default') {
