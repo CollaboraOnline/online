@@ -199,13 +199,6 @@ button.ui-tab.notebookbar {
 
 /* unobuttons */
 
-.hasnotebookbar .ui-content .unobutton {
-	width: 32px;
-	height: 32px;
-	margin-inline-end: 5px;
-	vertical-align: middle;
-}
-
 /* avoid bug with arrow in new line when window is small */
 #table-Home-Section-Insert #table-LineB9 #InsertGraphic.notebookbar,
 #table-Home-Section-Insert #table-GroupB20 #InsertTable.notebookbar {
@@ -223,10 +216,11 @@ button.ui-tab.notebookbar {
 .unotoolbutton.notebookbar .unobutton {
 	box-sizing: border-box;
 	padding: 0;
-	width: auto;
-	height: 24px;
+	width: var(--btn-size);
+	height: var(--btn-size);
 	background-color: transparent;
 	margin: 0;
+	vertical-align: middle;
 	border: none;
 	line-height: 0em;
 	color: var(--color-main-text);
