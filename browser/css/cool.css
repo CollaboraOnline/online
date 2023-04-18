@@ -830,6 +830,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	border-radius: calc(var(--border-radius)/2);
 }
 
+.lokdialog.ui-dialog-content [Id$='Page'] {
+	grid-column-gap: 24px;
+}
+
 .lokdialog_container:not(.jsdialog-container) .lokdialog.ui-dialog-content.ui-widget-content {
 	padding: 0px;
 }
