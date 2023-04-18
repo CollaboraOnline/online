@@ -883,6 +883,20 @@ L.TextInput = L.Layer.extend({
 			}
 		}
 
+		if (ev.altKey && ev.code === 'KeyC') {
+			// We want to focus on the comment menu if a comment is currently shown in Writer or Calc.
+			// This is the key combination (Alt+C or Alt+Shift+C) for focusing on the comment menu.
+			var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+			if (section) {
+				if (section.sectionProperties.selectedComment) {
+					var id = section.sectionProperties.selectedComment.sectionProperties.menu.id;
+					var element = document.getElementById(id);
+					if (element)
+						element.focus();
+				}
+			}
+		}
+
 		var mentionPopup = L.DomUtil.get('mentionPopup');
 		if (mentionPopup) {
 			if (ev.key === 'ArrowDown') {
