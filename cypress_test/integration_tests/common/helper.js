@@ -629,7 +629,8 @@ function closeDocument(fileName, testState) {
 			return;
 		}
 
-		cy.get('#uptime')
+		// ensure the page is fully loaded & active.
+		cy.get('#uptime').should('exist')
 			.should('not.have.text', '0');
 
 		// We have all lines of document infos as one long string.
