@@ -6765,8 +6765,22 @@ L.CanvasTileLayer = L.Layer.extend({
 			offset += len;
 		}
 
-	        if (imgData)
+		if (imgData)
 			ctx.putImageData(imgData, 0, 0);
+
+		// Partial fix for issue #5876 discard canvas contexts immediately
+		// WKWebView has a hardcoded memory limit for all canvas contexts
+		// so immediately convert the canvas to an image and release the
+		// canvas context's backing store.
+		// This bug only appears in the iOS app because most .png tiles are
+		// passed as raw data, not as "data:" strings, in the iOS app.
+		if (window.ThisIsTheiOSApp) {
+			tile.el = document.createElement('img');
+			tile.el.src = canvas.toDataURL();
+			canvas.width = 0;
+			canvas.height = 0;
+			canvas = null;
+		}
 
 		if (traceEvent)
 			traceEvent.finish();
