@@ -30,15 +30,17 @@ function plugin(on, config) {
 		});
 	}
 
-	if (process.env.ENABLE_LOGGING) {
-		on('before:browser:launch', function(browser, launchOptions) {
-			if (browser.family === 'chromium') {
+	on('before:browser:launch', function(browser, launchOptions) {
+		if (browser.family === 'chromium') {
+			if (process.env.ENABLE_LOGGING) {
 				launchOptions.args.push('--enable-logging=stderr');
 				launchOptions.args.push('--v=2');
-				return launchOptions;
 			}
-		});
-	}
+			launchOptions.args.push('--simulate-outdated-no-au=\'2099-12-31T23:59:59.000000+00:00\'');
+		}
+
+		return launchOptions;
+	});
 
 	if (process.env.CYPRESS_INTEGRATION === 'php-proxy') {
 		config.defaultCommandTimeout = 10000;
