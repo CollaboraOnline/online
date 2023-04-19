@@ -17,6 +17,10 @@
 #include <csignal>
 #include <poll.h>
 
+#ifdef HAVE_GETENTROPY
+#  include <unistd.h>
+#endif
+
 #ifdef HAVE_SYS_RANDOM_H
 #  include <sys/random.h>
 #endif
@@ -111,12 +115,24 @@ namespace Util
             std::vector<char> v(length);
 
             int len = 0;
-#ifdef HAVE_SYS_RANDOM_H
+            /* use "/dev/[u]random" by default in case of
+            getentropy() or getrandom() fails,
+            or they don't available */
+            bool useDevRandom = true;
+#ifdef HAVE_GETENTROPY
+            len = getentropy(v.data(), length);
+
+            // getentropy() works, no need to use "/dev/[u]random"
+            if (len != -1)
+                useDevRandom = false;
+#elif defined HAVE_SYS_RANDOM_H
             len = getrandom(v.data(), length, GRND_NONBLOCK);
 
-            // if getrandom() fails, we fall back to "/dev/[u]random" approach.
-            if (len != length)
+            // getrandom() works, no need to use "/dev/[u]random"
+            if (len != -1)
+                useDevRandom = false;
 #endif
+            if (useDevRandom)
             {
                 const int fd = open("/dev/urandom", O_RDONLY);
                 if (fd < 0 ||
