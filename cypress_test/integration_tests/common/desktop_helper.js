@@ -302,7 +302,11 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) 
 	}
 
 	if (docType === 'writer' && mode !== 'notebookbar') {
-		cy.get('#toolbar-up .w2ui-scroll-right').click();
+		cy.get('#toolbar-up .w2ui-scroll-right').then($button => {
+			if ($button.is(':visible'))	{
+				$button.click();
+			}
+		});
 	}
 
 	for (var n=0;n<numberOfComments;n++) {
