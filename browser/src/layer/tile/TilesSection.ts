@@ -83,7 +83,7 @@ class TilesSection extends CanvasSectionObject {
 		return extendedBounds;
 	}
 
-	paintWithPanes (tile: any, ctx: any, async: boolean) {
+	paintWithPanes (tile: any, ctx: any, async: boolean, now: Date) {
 		var tileTopLeft = tile.coords.getPos();
 		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
 
@@ -106,12 +106,12 @@ class TilesSection extends CanvasSectionObject {
 				paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
 				paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
 
-				this.drawTileInPane(tile, tileBounds, paneBounds, paneOffset, this.context, async);
+				this.drawTileInPane(tile, tileBounds, paneBounds, paneOffset, this.context, async, now);
 			}
 
 			if (extendedBounds.intersects(tileBounds)) {
 				var offset = extendedBounds.getTopLeft();
-				this.drawTileInPane(tile, tileBounds, extendedBounds, offset, this.oscCtxs[i], async);
+				this.drawTileInPane(tile, tileBounds, extendedBounds, offset, this.oscCtxs[i], async, now);
 			}
 		}
 	}
@@ -132,7 +132,7 @@ class TilesSection extends CanvasSectionObject {
 		}
 	}
 
-	drawTileInPane (tile: any, tileBounds: any, paneBounds: any, paneOffset: any, canvasCtx: CanvasRenderingContext2D, clearBackground: boolean) {
+	drawTileInPane (tile: any, tileBounds: any, paneBounds: any, paneOffset: any, canvasCtx: CanvasRenderingContext2D, clearBackground: boolean, now: Date) {
 		// intersect - to avoid state thrash through clipping
 		var crop = new L.Bounds(tileBounds.min, tileBounds.max);
 		crop.min.x = Math.max(paneBounds.min.x, tileBounds.min.x);
@@ -158,7 +158,8 @@ class TilesSection extends CanvasSectionObject {
 			}
 
 			this.beforeDraw(canvasCtx);
-			canvasCtx.drawImage(tile.el,
+			this.ensureCanvas(tile, now);
+			canvasCtx.drawImage(tile.canvas,
 				crop.min.x - tileBounds.min.x,
 				crop.min.y - tileBounds.min.y,
 				cropWidth, cropHeight,
@@ -185,7 +186,7 @@ class TilesSection extends CanvasSectionObject {
 		this.context.fillText(tile.coords.x + ' ' + tile.coords.y + ' ' + tile.coords.part + ' ' + (tile.loaded ? 'y': 'n'), Math.round(offset.x + tileSize * 0.5), Math.round(offset.y + tileSize * 0.5));
 	}
 
-	paintSimple (tile: any, ctx: any, async: boolean) {
+	paintSimple (tile: any, ctx: any, async: boolean, now: Date) {
 		ctx.viewBounds.round();
 		var offset = new L.Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
 		var halfExtraSize = this.sectionProperties.osCanvasExtraSize / 2;
@@ -208,17 +209,19 @@ class TilesSection extends CanvasSectionObject {
 			offset.y = tile.coords.part * partHeightPixels + tile.coords.y - this.documentTopLeft[1];
 			extendedOffset.y = offset.y + halfExtraSize;
 
-			this.context.drawImage(tile.el, offset.x, offset.y, tileSize, tileSize);
-			this.oscCtxs[0].drawImage(tile.el, extendedOffset.x, extendedOffset.y, tileSize, tileSize);
+			this.ensureCanvas(tile, now);
+			this.context.drawImage(tile.canvas, offset.x, offset.y, tileSize, tileSize);
+			this.oscCtxs[0].drawImage(tile.canvas, extendedOffset.x, extendedOffset.y, tileSize, tileSize);
 			//this.pdfViewDrawTileBorders(tile, offset, tileSize);
 		}
 		else {
-			this.context.drawImage(tile.el, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
-			this.oscCtxs[0].drawImage(tile.el, extendedOffset.x, extendedOffset.y, ctx.tileSize.x, ctx.tileSize.y);
+			this.ensureCanvas(tile, now);
+			this.context.drawImage(tile.canvas, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
+			this.oscCtxs[0].drawImage(tile.canvas, extendedOffset.x, extendedOffset.y, ctx.tileSize.x, ctx.tileSize.y);
 		}
 	}
 
-	public paint (tile: any, ctx: any, async: boolean = false) {
+	public paint (tile: any, ctx: any, async: boolean, now: Date) {
 		if (this.containerObject.isInZoomAnimation() || this.sectionProperties.tsManager.waitForTiles())
 			return;
 
@@ -228,9 +231,9 @@ class TilesSection extends CanvasSectionObject {
 		this.containerObject.setPenPosition(this);
 
 		if (ctx.paneBoundsActive === true)
-			this.paintWithPanes(tile, ctx, async);
+			this.paintWithPanes(tile, ctx, async, now);
 		else
-			this.paintSimple(tile, ctx, async);
+			this.paintSimple(tile, ctx, async, now);
 	}
 
 	private forEachTileInView(zoom: number, part: number, mode: number, ctx: any,
@@ -409,19 +412,15 @@ class TilesSection extends CanvasSectionObject {
 
 		var docLayer = this.sectionProperties.docLayer;
 		var doneTiles = new Set();
+		var now = new Date();
 		this.forEachTileInView(zoom, part, mode, ctx, function (tile: any, coords: any): boolean {
 			if (doneTiles.has(coords.key()))
 				return true;
 
 			// Ensure tile is loaded and is within document bounds.
 			if (tile && tile.loaded && docLayer._isValidTile(coords)) {
-				if (this.isJSDOM) // perf-test code
-				{
-					if (tile.el && (tile.el instanceof HTMLCanvasElement))
-						this.paint(tile, ctx, false /* async? */);
-				}
-				else
-					this.paint(tile, ctx, false /* async? */);
+				if (!this.isJSDOM) // perf-test code
+				   this.paint(tile, ctx, false /* async? */, now);
 			}
 			doneTiles.add(coords.key());
 			return true; // continue with remaining tiles.
@@ -456,7 +455,7 @@ class TilesSection extends CanvasSectionObject {
 	}
 
 	private forEachTileInArea(area: any, zoom: number, part: number, mode: number, ctx: any,
-		callback: (tile: any, coords: any) => boolean) {
+		callback: (tile: any, coords: any, section: TilesSection) => boolean) {
 		var docLayer = this.sectionProperties.docLayer;
 
 		if (app.file.fileBasedView) {
@@ -466,12 +465,8 @@ class TilesSection extends CanvasSectionObject {
 				var coords = coordList[k];
 				var key = coords.key();
 				var tile = docLayer._tiles[key];
-				if (!tile) {
-					var img = docLayer._tileCache[key];
-					if (img)
-						tile = { el: img, loaded: true, coords: coords };
-				}
-				callback(tile, coords);
+				if (tile)
+					callback(tile, coords, this);
 			}
 
 			return;
@@ -490,12 +485,8 @@ class TilesSection extends CanvasSectionObject {
 
 				var key = coords.key();
 				var tile = docLayer._tiles[key];
-				if (!tile) {
-					var img = docLayer._tileCache[key];
-					if (img)
-						tile = { el: img, loaded: true, coords: coords };
-				}
-				callback(tile, coords);
+				if (tile)
+					callback(tile, coords, this);
 			}
 		}
 	}
@@ -538,8 +529,8 @@ class TilesSection extends CanvasSectionObject {
 			//console.log('DEBUG:: areaAtZoom = ' + areaAtZoom);
 			var relScale = this.map.getZoomScale(zoom, areaZoom);
 
-			this.forEachTileInArea(areaAtZoom, zoom, part, mode, ctx, function(tile, coords) {
-				if (tile && tile.el) {
+			this.forEachTileInArea(areaAtZoom, zoom, part, mode, ctx, function(tile, coords, section) {
+				if (tile && tile.canvas) {
 					var tilePos = coords.getPos();
 
 					if (app.file.fileBasedView) {
@@ -576,6 +567,11 @@ class TilesSection extends CanvasSectionObject {
 		}
 
 		return bestZoomLevel;
+	}
+
+	public ensureCanvas(tile: any, now: Date)
+	{
+		this.sectionProperties.docLayer.ensureCanvas(tile, now);
 	}
 
 	// Called by tsManager to draw a zoom animation frame.
@@ -651,8 +647,9 @@ class TilesSection extends CanvasSectionObject {
 			var relScale = (bestZoomSrc == zoom) ? 1 : this.map.getZoomScale(bestZoomSrc, zoom);
 
 			this.beforeDraw(canvasContext);
-			this.forEachTileInArea(docRangeScaled, bestZoomSrc, part, mode, ctx, function (tile: any, coords: any): boolean {
-				if (!tile || !tile.loaded || !docLayer._isValidTile(coords))
+			var now = new Date();
+			this.forEachTileInArea(docRangeScaled, bestZoomSrc, part, mode, ctx, function (tile, coords, section): boolean {
+				if (!tile || !tile.hasContent() || !docLayer._isValidTile(coords))
 					return false;
 
 				var tileCoords = tile.coords.getPos();
@@ -675,7 +672,8 @@ class TilesSection extends CanvasSectionObject {
 				var tileOffset = crop.min.subtract(tileBounds.min);
 				var paneOffset = crop.min.subtract(docRangeScaled.min.subtract(destPosScaled));
 				if (cropWidth && cropHeight) {
-					canvasContext.drawImage(tile.el,
+					section.ensureCanvas(tile, now);
+					canvasContext.drawImage(tile.canvas,
 						tileOffset.x, tileOffset.y, // source x, y
 						cropWidth, cropHeight, // source size
 						// Destination x, y, w, h (In non-Chrome browsers it leaves lines without the 0.5 correction).

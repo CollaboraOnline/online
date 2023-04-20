@@ -213,7 +213,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 					}
 				}
 				else {
-					// tile outside of the visible area, just remove it
+					// tile outside of the visible area, remove it.
+					// FIXME: keep it around and mark it old,
+					// so we fetch new if made visible ?
 					this._removeTile(key);
 				}
 			}
@@ -223,20 +225,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			&& command.mode === this._selectedMode && this._debug)
 		{
 			this._debugAddInvalidationMessage(textMsg);
-		}
-
-		for (key in this._tileCache) {
-			// compute the rectangle that each tile covers in the document based
-			// on the zoom level
-			coords = this._keyToTileCoords(key);
-			if (coords.part !== command.part || coords.mode !== command.mode) {
-				continue;
-			}
-
-			bounds = this._coordsToTileBounds(coords);
-			if (invalidBounds.intersects(bounds)) {
-				delete this._tileCache[key];
-			}
 		}
 
 		this._previewInvalidations.push(invalidBounds);

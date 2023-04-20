@@ -122,16 +122,6 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			this._debugAddInvalidationMessage(textMsg);
 		}
 
-		for (key in this._tileCache) {
-			// compute the rectangle that each tile covers in the document based
-			// on the zoom level
-			coords = this._keyToTileCoords(key);
-			bounds = this._coordsToTileBounds(coords);
-			if (invalidBounds.intersects(bounds)) {
-				delete this._tileCache[key];
-			}
-		}
-
 		this._previewInvalidations.push(invalidBounds);
 		// 1s after the last invalidation, update the preview
 		clearTimeout(this._previewInvalidator);
