@@ -114,7 +114,7 @@ wsd_sources = \
             ../wsd/TileCache.cpp \
             ../wsd/ProofKey.cpp
 
-test_base_source = \
+test_base_sources = \
 	TileQueueTests.cpp \
 	RequestDetailsTests.cpp \
 	StringVectorTests.cpp \
@@ -150,10 +150,10 @@ unithttplib_LDADD = $(CPPUNIT_LIBS)
 
 unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT -g
 unittest_SOURCES = \
-    $(test_base_source) \
+	$(test_base_sources) \
 	$(common_sources) \
-    ../wsd/TestStubs.cpp \
-    test.cpp
+	../wsd/TestStubs.cpp \
+	test.cpp
 
 unittest_LDADD = $(CPPUNIT_LIBS)
 unit_base_la_LIBADD = $(CPPUNIT_LIBS)
@@ -171,7 +171,7 @@ fakesockettest_SOURCES = fakesockettest.cpp  ../net/FakeSocket.cpp ../common/Dum
 fakesockettest_LDADD = $(CPPUNIT_LIBS)
 
 # old-style unit tests - bootstrapped via UnitClient
-unit_base_la_SOURCES = UnitClient.cpp ${test_base_source}
+unit_base_la_SOURCES = UnitClient.cpp ${test_base_sources}
 unit_tiletest_la_SOURCES = UnitClient.cpp TileCacheTests.cpp
 unit_tiletest_la_LIBADD = $(CPPUNIT_LIBS)
 unit_integration_la_SOURCES = UnitClient.cpp integration-http-server.cpp
