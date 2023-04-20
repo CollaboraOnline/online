@@ -6651,6 +6651,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 
 			if (dropTile) {
+				this._reclaimTileCanvasMemory(tile);
 				delete this._tiles[key];
 				if (this._debug && this._debugDataCancelledTiles) {
 					this._debugCancelledTiles++;
@@ -6709,6 +6710,19 @@ L.CanvasTileLayer = L.Layer.extend({
 		return new L.LatLngBounds(nw, se);
 	},
 
+	_reclaimTileCanvasMemory: function (tile) {
+		// Partial fix for #5876 allow immediate reuse of canvas context memory
+		// WKWebView has a hard limit on the number of bytes of canvas
+		// context memory that can be allocated. Reducing the canvas
+		// size to zero is a way to reduce the number of bytes counted
+		// against this limit.
+		if (tile && tile.el && tile.el instanceof HTMLCanvasElement) {
+			tile.el.width = 0;
+			tile.el.height = 0;
+			delete tile.el;
+		}
+	},
+
 	_removeTile: function (key) {
 		var tile = this._tiles[key];
 		if (!tile) { return; }
@@ -6728,6 +6742,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._debug && this._debugInfo && this._tiles[key]._debugPopup) {
 			this._debugInfo.removeLayer(this._tiles[key]._debugPopup);
 		}
+		this._reclaimTileCanvasMemory(tile);
 		delete this._tiles[key];
 
 		this.fire('tileunload', {
@@ -6803,6 +6818,30 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var imgData;
 		var ctx = canvas.getContext('2d');
+
+		// Partial fix for issue #5876 discard excess canvas contexts
+		// WKWebView has a hardcoded memory limit for all canvas contexts
+		// so if canvas.getContext('2d') returns null, convert the canvas
+		// of other tiles to an image until canvas.getContext('2d') succeeds.
+		if (!ctx) {
+			for (var key in this._tiles) {
+				var value = this._tiles[key];
+				if (value && value !== tile && value.el && value.el instanceof HTMLCanvasElement) {
+					var imageSrc = value.el.toDataURL();
+					this._reclaimTileCanvasMemory(value);
+					value.el = document.createElement('img');
+					value.el.src = imageSrc;
+					if (!(value._invalidCount > 0) && this._tileCache[key])
+						this._tileCache[key] = value.el;
+					ctx = canvas.getContext('2d');
+				}
+			}
+
+			// If we can't free up enough canvas context, there is nothing
+			// more we can do. Is there a better way to handle this?
+			if (!ctx)
+				return;
+		}
 
 		while (offset < allDeltas.length)
 		{
