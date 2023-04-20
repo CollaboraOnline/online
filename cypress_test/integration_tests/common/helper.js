@@ -75,11 +75,13 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser, 
 		}});
 
 	if (!isMultiUser) {
+		cy.iframe('#coolframe').then(cy.wrap).as('coolIFrameGlobal');
+
 		Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
-			if (selector === '@coolIFrameGlobal' || selector == 'body')
-				return cy.iframe('#coolframe');
 			if (!selector.startsWith('@') && !selector.includes('#coolframe')) {
-				return cy.iframe('#coolframe').find(selector, options);
+				if (selector === 'body')
+					return cy.get('@coolIFrameGlobal', options);
+				return cy.get('@coolIFrameGlobal', options).find(selector, options);
 			}
 			return originalFn(selector, options);
 		});
