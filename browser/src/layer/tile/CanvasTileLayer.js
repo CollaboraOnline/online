@@ -882,6 +882,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._cellCursorOnPgDn = null;
 		this._shapeGridOffset = new L.Point(0, 0);
 
+		// Tile garbage collection counter
+		this._gcCounter = 0;
+
 		// Position and size of the selection start (as if there would be a cursor caret there).
 
 		// View cursors with viewId to 'cursor info' mapping
@@ -1399,13 +1402,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		return boundsList;
 	},
 
-	_noTilesToLoad: function () {
-		for (var key in this._tiles) {
-			if (!this._tiles[key].loaded) { return false; }
-		}
-		return true;
-	},
-
 	_initPreFetchPartTiles: function() {
 		// check existing timeout and clear it before the new one
 		if (this._partTilePreFetcher)
@@ -1434,7 +1430,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					continue;
 
 				var key = this._tileCoordsToKey(coords);
-				if (this._tileCache[key])
+				if (this._tileHasContent(key))
 					continue;
 
 				var twips = this._coordsToTwips(coords);
@@ -1523,16 +1519,34 @@ L.CanvasTileLayer = L.Layer.extend({
 		return this;
 	},
 
-	// eslint-disable-next-line no-unused-vars
-	createTile: function (coords, done) {
-		var tile = document.createElement('img');
-
-		if (this.options.crossOrigin) {
-			tile.crossOrigin = '';
+	createTile: function (coords, key) {
+		if (this._tiles[key])
+		{
+			if (this._debugDeltas)
+				window.app.console.debug('Already created tile ' + key);
+			return this._tiles[key];
 		}
-
+		var tile = {
+			wid: 0,
+			coords: coords,
+			current: true, // is this currently visible
+			retain: false, // was it previously visible cf. _pruneTiles
+			canvas: null,  // canvas ready to render
+			rawDeltas: null, // deltas ready to decompress
+			loaded: false, // is the tile data present & valid
+			lastRendered: new Date(),
+			hasContent: function() {
+				return tile.canvas || (tile.rawDeltas && tile.rawDeltas.length > 0);
+			}
+		};
 		this._emptyTilesCount += 1;
+		this._tiles[key] = tile;
 		return tile;
+	},
+
+	_tileHasContent: function(key) {
+		var tile = this._tiles[key];
+		return tile && tile.hasContent();
 	},
 
 	_getToolbarCommandsValues: function() {
@@ -5543,8 +5557,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		map.addLayer(this._searchResultsLayer);
 
 		this._levels = {};
-		this._tiles = {};
-		this._tileCache = {};
+		this._tiles = {}; // stores all tiles, keyed by coordinates, and cached, compressed deltas
 
 		app.socket.sendMessage('commandvalues command=.uno:AcceptTrackedChanges');
 
@@ -5773,6 +5786,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var key, tile;
 
+		// keep everything current visible
 		for (key in this._tiles) {
 			tile = this._tiles[key];
 			tile.retain = tile.current;
@@ -6125,27 +6139,12 @@ L.CanvasTileLayer = L.Layer.extend({
 			for (var i = 0; i < queue.length; i++) {
 				var key = this._tileCoordsToKey(queue[i]);
 				var tile = this._tiles[key];
-				if (!tile) {
-					tile = this.createTile(this._wrapCoords(queue[i]), L.bind(this._tileReady, this, queue[i]));
-
-					// save tile in cache
-					this._tiles[key] = {
-						el: tile,
-						wid: 0,
-						coords: queue[i],
-						current: true
-					};
-
-					if (tile && this._tileCache[key]) {
-						tile.el = this._tileCache[key];
-					}
-					else {
-						this._sendTileCombineRequest(queue[i].part, queue[i].mode, (queue[i].x / this._tileSize) * this._tileWidthTwips, (queue[i].y / this._tileSize) * this._tileHeightTwips);
-					}
-				}
-				else if (!tile.loaded) {
-					this._sendTileCombineRequest(queue[i].part, queue[i].mode, (queue[i].x / this._tileSize) * this._tileWidthTwips, (queue[i].y / this._tileSize) * this._tileHeightTwips);
-				}
+				if (!tile)
+					tile = this.createTile(queue[i], key);
+				if (!tile.loaded || !this.hasContent())
+					this._sendTileCombineRequest(queue[i].part, queue[i].mode,
+								     (queue[i].x / this._tileSize) * this._tileWidthTwips,
+								     (queue[i].y / this._tileSize) * this._tileHeightTwips);
 			}
 		}
 	},
@@ -6298,7 +6297,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 					key = this._tileCoordsToKey(coords);
 					tile = this._tiles[key];
-					if (tile) {
+					if (tile && tile.loaded) {
 						tile.current = true;
 					} else {
 						queue.push(coords);
@@ -6315,26 +6314,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			for (i = 0; i < queue.length; i++) {
 				coords = queue[i];
 				key = this._tileCoordsToKey(coords);
-				tile = undefined;
-				if (coords.part === this._selectedPart && coords.mode === this._selectedMode) {
-					var tileImg = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
+				tile = this._tiles[key];
+				if (!tile)
+					tile = this.createTile(coords, key);
 
-					// if createTile is defined with a second argument ("done" callback),
-					// we know that tile is async and will be ready later; otherwise
-					if (this.createTile.length < 2) {
-						// mark tile as ready, but delay one frame for opacity animation to happen
-						setTimeout(L.bind(this._tileReady, this, coords, null, tileImg), 0);
-					}
-
-					// save tile in cache
-					this._tiles[key] = tile = {
-						el: tileImg,
-						coords: coords,
-						current: true
-					};
-				}
-
-				if (!this._tileCache[key]) {
+				if (!this._tileHasContent(key)) {
 					// request each tile just once in these tilecombines
 					if (added[key])
 						continue;
@@ -6349,10 +6333,6 @@ L.CanvasTileLayer = L.Layer.extend({
 						tilePositionsY += ',';
 					}
 					tilePositionsY += twips.y;
-				}
-				else if (tile) {
-					tile.el = this._tileCache[key];
-					tile.loaded = true;
 				}
 			}
 
@@ -6369,14 +6349,12 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._initPreFetchPartTiles();
 	},
 
-	// eslint-disable-next-line no-unused-vars
-	_tileReady: function (coords, err, tile) {
-		if (!this._map) { return; }
-
+	_tileReady: function (coords) {
 		var key = this._tileCoordsToKey(coords);
 
-		tile = this._tiles[key];
-		if (!tile) { return; }
+		var tile = this._tiles[key];
+		if (!tile)
+			return;
 
 		var emptyTilesCountChanged = false;
 		if (this._emptyTilesCount > 0) {
@@ -6384,7 +6362,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			emptyTilesCountChanged = true;
 		}
 
-		if (emptyTilesCountChanged && this._emptyTilesCount === 0) {
+		if (this._map && emptyTilesCountChanged && this._emptyTilesCount === 0) {
 			this._map.fire('statusindicator', { statusType: 'alltilesloaded' });
 		}
 
@@ -6396,46 +6374,20 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._painter.coordsIntersectVisible(coords)) {
 			this._painter._sectionContainer.setDirty();
 		}
-
-		if (this._noTilesToLoad()) {
-			this.fire('load');
-			this._pruneTiles();
-		}
 	},
 
 	_addTiles: function (coordsQueue) {
 		var coords, key, tile;
-		// first take care of the DOM
+
 		for (var i = 0; i < coordsQueue.length; i++) {
 			coords = coordsQueue[i];
 
 			key = this._tileCoordsToKey(coords);
 
-			if (coords.part === this._selectedPart && coords.mode === this._selectedMode) {
-				if (!this._tiles[key]) {
-					var tileImg = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
-
-					// if createTile is defined with a second argument ("done" callback),
-					// we know that tile is async and will be ready later; otherwise
-					if (this.createTile.length < 2) {
-						// mark tile as ready, but delay one frame for opacity animation to happen
-						setTimeout(L.bind(this._tileReady, this, coords, null, tileImg), 0);
-					}
-
-					// save tile in cache
-					this._tiles[key] = tile = {
-						el: tileImg,
-						wid: 0,
-						coords: coords,
-						current: true
-					};
-
-					if (tile && this._tileCache[key]) {
-						tile.el = this._tileCache[key];
-						tile.loaded = true;
-					}
-				}
-			}
+			if (coords.part === this._selectedPart &&
+			    coords.mode === this._selectedMode &&
+			    !this._tiles[key])
+				this.createTile(coords, key);
 		}
 
 		// sort the tiles by the rows
@@ -6454,9 +6406,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			// tiles that do not interest us
 			key = this._tileCoordsToKey(coords);
-			if (this._tileCache[key]
-				|| coords.part !== this._selectedPart
-				|| coords.mode !== this._selectedMode) {
+			if (this._tileHasContent(key)
+			    || coords.part !== this._selectedPart
+			    || coords.mode !== this._selectedMode) {
 				coordsQueue.splice(0, 1);
 				continue;
 			}
@@ -6597,26 +6549,43 @@ L.CanvasTileLayer = L.Layer.extend({
 		return new L.LatLngBounds(nw, se);
 	},
 
+	// Fix for cool#5876 allow immediate reuse of canvas context memory
+	// WKWebView has a hard limit on the number of bytes of canvas
+	// context memory that can be allocated. Reducing the canvas
+	// size to zero is a way to reduce the number of bytes counted
+	// against this limit.
+	_reclaimTileCanvasMemory: function (tile) {
+		if (tile && tile.canvas) {
+			tile.canvas.width = 0;
+			tile.canvas.height = 0;
+			delete tile.canvas;
+		}
+	},
+
 	_removeTile: function (key) {
 		var tile = this._tiles[key];
-		if (!tile) { return; }
+		if (!tile)
+			return;
 
-		// FIXME: this _tileCache is used for prev/next slide; but it is
-		// dangerous in connection with typing / invalidation
-		if (!(this._tiles[key]._invalidCount > 0)) {
-			if (tile.el.src || tile.el instanceof HTMLCanvasElement) {
-				this._tileCache[key] = tile.el;
-			}
-		}
-
-		if (!tile.loaded && this._emptyTilesCount > 0) {
+		if (!tile.loaded && this._emptyTilesCount > 0)
 			this._emptyTilesCount -= 1;
-		}
 
-		if (this._debug && this._debugInfo && this._tiles[key]._debugPopup) {
+		if (this._debug && this._debugInfo && this._tiles[key]._debugPopup)
 			this._debugInfo.removeLayer(this._tiles[key]._debugPopup);
-		}
+
+		this._reclaimTileCanvasMemory(tile);
 		delete this._tiles[key];
+	},
+
+	// We keep tile content around, but it will need
+	// refreshing if we show it again.
+	_invalidateTile: function (key) {
+		var tile = this._tiles[key];
+		if (!tile)
+			return;
+		tile.loaded = false;
+		if (!tile.hasContent())
+			this._removeTile(key);
 	},
 
 	_prefetchTilesSync: function () {
@@ -6651,6 +6620,172 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
+	// Ensure we have a renderable canvas for a given tile
+	// Use this immediately before drawing a tile, pass in the time.
+	ensureCanvas: function(tile, now)
+	{
+		if (!tile)
+			return;
+		if (!tile.canvas)
+		{
+			// This allocation is usually cheap and reliable,
+			// getting the canvas context, not so much.
+			var canvas = document.createElement('canvas');
+			canvas.width = window.tileSize;
+			canvas.height = window.tileSize;
+
+			tile.canvas = canvas;
+
+			// re-hydrate recursively from cached data
+			if (tile.rawDeltas)
+			{
+				if (this._debugDeltas)
+					window.app.console.log('Restoring a tile from cached delta at ' +
+							       this._tileCoordsToKey(tile.coords));
+				this._applyDelta(tile, tile.rawDeltas, true);
+			}
+		}
+		tile.lastRendered = now;
+	},
+
+	_maybeGarbageCollect: function() {
+		if (!(++this._gcCounter % 53))
+			this._garbageCollect();
+	},
+
+	// FIXME: could trim quite hard here, and do this at idle ...
+
+	// Set a high and low watermark of how many canvases we want
+	// and expire old ones
+	_garbageCollect: function() {
+		// 4k screen -> 8Mpixel, each tile is 64kpixel uncompressed
+		var highNumCanvases = 250; // ~60Mb.
+		var lowNumCanvases = 125;  // ~30Mb
+		// real RAM sizes for keyframes + delta cache in memory.
+		var highDeltaMemory = 120 * 1024 * 1024; // 120Mb
+		var lowDeltaMemory = 60 * 1024 * 1024;   // 60Mb
+		// number of tiles
+		var highTileCount = 2 * 1024;
+		var lowTileCount = 1024;
+
+		if (this._debugDeltas)
+			window.app.console.log('Garbage collect! iter: ' + this._gcCounter);
+
+		/* uncomment to exercise me harder.
+		   highNumCanvases = 3; lowNumCanvases = 2;
+		   highDeltaMemory = 1024*1024; lowDeltaMemory = 1024*128; */
+
+		var keys = [];
+		for (var key in this._tiles) // no .keys() method.
+			keys.push(key);
+		// sort by oldest.
+		keys.sort(function(a,b) { return b.lastRendered - a.lastRendered; });
+
+		var canvasKeys = [];
+		var totalSize = 0;
+		for (var i = 0; i < keys.length; ++i)
+		{
+			var tile = this._tiles[keys[i]];
+			if (tile.canvas)
+				canvasKeys.push(keys[i]);
+			totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
+		}
+
+		// Trim ourselves down to size.
+		if (canvasKeys.length > highNumCanvases)
+		{
+			for (var i = 0; i < canvasKeys.length - lowNumCanvases; ++i)
+			{
+				var key = canvasKeys[i];
+				var tile = this._tiles[key];
+				if (this._debugDeltas)
+					window.app.console.log('Reclaim canvas ' + key +
+							       ' last rendered: ' + tile.lastRendered);
+				this._reclaimTileCanvasMemory(tile);
+			}
+		}
+
+		// Trim memory down to size.
+		if (totalSize > highDeltaMemory)
+		{
+			for (var i = 0; i < keys.length && totalSize > lowDeltaMemory; ++i)
+			{
+				var key = keys[i];
+				var tile = this._tiles[key];
+				if (tile.rawDeltas)
+				{
+					totalSize -= tile.rawDeltas.length;
+					if (this._debugDeltas)
+						window.app.console.log('Reclaim delta ' + key + ' memory: ' +
+								       tile.rawDeltas.length + ' bytes');
+					tile.rawDeltas = null;
+					tile.loaded = false;
+				}
+			}
+		}
+
+		// Trim the number of tiles down too ...
+		if (keys.length > highTileCount)
+		{
+			for (var i = 0; i < keys.length - lowTileCount; ++i)
+			{
+				var key = keys[i];
+				var tile = this._tiles[key];
+				if (!tile.current)
+					this._removeTile(keys[i]);
+			}
+		}
+	},
+
+	// work hard to ensure we get a canvas context to render with
+	_ensureContext: function(tile)
+	{
+		var ctx;
+
+		this._maybeGarbageCollect();
+
+		// important this is after the garbagecollect
+		if (!tile.canvas)
+			this.ensureCanvas(tile);
+
+		if ((ctx = tile.canvas.getContext('2d')))
+			return ctx;
+
+		// Not a good result - we ran out of canvas memory
+		this._garbageCollect();
+
+		if (!tile.canvas)
+			this.ensureCanvas(tile);
+		if ((ctx = tile.canvas.getContext('2d')))
+			return ctx;
+
+		// Free non-current canvas' and start again.
+		if (this._debugDeltas)
+			window.app.console.log('Free non-current tiles canvas memory');
+		for (var key in this._tiles) {
+			var t = this._tiles[key];
+			if (t && !t.current)
+				this._reclaimTileCanvasMemory(t);
+		}
+		if (!tile.canvas)
+			this.ensureCanvas(tile);
+		if ((ctx = tile.canvas.getContext('2d')))
+			return ctx;
+
+		if (this._debugDeltas)
+			window.app.console.log('Throw everything overbarod to free all tiles canvas memory');
+		for (var key in this._tiles) {
+			var t = this._tiles[key];
+			this._reclaimTileCanvasMemory(t);
+		}
+		if (!tile.canvas)
+			this.ensureCanvas(tile);
+		ctx = tile.canvas.getContext('2d');
+		if (!ctx)
+			window.app.console.log('Error: out of canvas memory.');
+		return ctx;
+	},
+
 	_applyDelta: function(tile, rawDelta, isKeyframe) {
 		if (this._debugDeltas)
 			window.app.console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
@@ -6662,20 +6797,33 @@ L.CanvasTileLayer = L.Layer.extend({
 		var traceEvent = app.socket.createCompleteTraceEvent('L.CanvasTileLayer.applyDelta',
 								     { keyFrame: isKeyframe, length: rawDelta.length });
 
-		// 'Uint8Array' delta
-		var canvas;
-		var initCanvas = false;
-		if (tile.el && (tile.el instanceof HTMLCanvasElement))
-			canvas = tile.el;
-		else
-		{
-			canvas = document.createElement('canvas');
-			canvas.width = window.tileSize;
-			canvas.height = window.tileSize;
-			initCanvas = true;
-		}
-		tile.el = canvas;
 		tile.lastKeyframe = isKeyframe;
+
+		// store the compressed version for later in its current
+		// form as byte arrays, so that we can manage our canvases
+		// better.
+		if (isKeyframe)
+		{
+			if (tile.rawDeltas && tile.rawDeltas != rawDelta) // help the gc?
+				tile.rawDeltas.length = 0;
+			tile.rawDeltas = rawDelta; // overwrite
+		}
+		else // assume we already have a delta.
+		{
+			// FIXME: this is not beautiful; but no concatenate here.
+			var tmp = new Uint8Array(tile.rawDeltas.byteLength + rawDelta.byteLength);
+			tmp.set(tile.rawDeltas, 0);
+			tmp.set(rawDelta, tile.rawDeltas.byteLength);
+			tile.rawDeltas = tmp;
+		}
+
+		// 'Uint8Array' delta
+		if (!tile.canvas)
+		{
+			// defer constructing the image & applying these deltas
+			// until the tile is rendered via ensureCanvas.
+			return;
+		}
 
 		// apply potentially several deltas in turn.
 		var i = 0;
@@ -6685,7 +6833,13 @@ L.CanvasTileLayer = L.Layer.extend({
 		var allDeltas = window.fzstd.decompress(rawDelta);
 
 		var imgData;
-		var ctx = canvas.getContext('2d');
+		var ctx = this._ensureContext(tile);
+
+		if (!ctx) // out of canvas / texture memory.
+			return;
+
+		// May have been changed by _ensureContext garbage collection
+		var canvas = tile.canvas;
 
 		while (offset < allDeltas.length)
 		{
@@ -6716,9 +6870,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 			else
 			{
-				if (initCanvas && tile.el) // render old image data to the canvas
-					ctx.drawImage(tile.el, 0, 0);
-
 				if (!imgData) // no keyframe
 				{
 					if (this._debugDeltas)
@@ -6735,7 +6886,6 @@ L.CanvasTileLayer = L.Layer.extend({
 							       ' at stream offset ' + offset + ' size ' + len);
 			}
 
-			initCanvas = false;
 			isKeyframe = false;
 			offset += len;
 		}
@@ -6844,7 +6994,11 @@ L.CanvasTileLayer = L.Layer.extend({
 		var coords = this._tileMsgToCoords(tileMsgObj);
 		var key = this._tileCoordsToKey(coords);
 		var tile = this._tiles[key];
-		if (this._debug && tile) {
+
+		if (!tile)
+			tile = this.createTile(coords, key);
+
+		if (this._debug) {
 			if (tile._debugLoadTile === undefined) {
 				tile._debugLoadTile = 0;
 				tile._debugLoadDelta = 0;
@@ -6879,6 +7033,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (tile._debugTime.date !== 0)
 				msg += '<br>' + this._debugSetTimes(tile._debugTime, +new Date() - tile._debugTime.date).replace(/, /g, '<br>');
 			msg += '<br>nviewid: ' + tileMsgObj.nviewid;
+			if (tile.rawDeltas)
+				msg += '<br>rawdeltas: ' + tile.rawDeltas.length;
 			var node = document.createElement('p');
 			node.innerHTML = msg;
 			tile._debugPopup.setHTMLContent(node);
@@ -6888,36 +7044,24 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			this._debugShowTileData();
 		}
-		if (tile) {
-			tile.lastKeyframe = false;
 
-			if (this._tiles[key]._invalidCount > 0)
-				this._tiles[key]._invalidCount -= 1;
+		tile.lastKeyframe = false;
 
-			tile.wireId = tileMsgObj.wireId;
-			if (this._map._canvasDevicePixelGrid)
-				// browser/test/pixel-test.png - debugging pixel alignment.
-				tile.el.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5QEIChoQ0oROpwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACfklEQVR42u3dO67CQBBFwbnI+9/yJbCQLDIkPsZdFRAQjjiv3S8YZ63VNsl6aLvgop5+6vFzZ3QP/uQz2c0RIAAQAAzcASwAmAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACADGBnC8iQ5MABAACAB+zsVYjLZ9dOvd3zzg/QOYADByB/BvUCzBIAAQAFiCwQQAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAwIgAXb2ECgABAAPDaI7SLsZhs+79kvX8AEwDsAM8DASzBIAAQAFiCwQQAAYAAQAAgABAAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAI4LSSOAQBgABAAPDVR9C2ToGxNkfww623bZL98/ilUzIBwA4wbCAgABAACAAswWACgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAAAjAESAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAGAAEAAIAAQAAgABAACAAGAAEAAIAAQAAgAPiaJAEAAIAB48yNWW6fAWJsj4LRbb9sk++fxSxMA7AAMGwgCAAGAAMASDCYACAAEAAIAAYAAQAAgABAACAAEAAIAASAAR4AAQAAgABAACAAEANeW9e675sAEAAGAAODUO4AFgMnu7t9h2ahA0pgAAAAASUVORK5CYII=';
+		if (this._tiles[key]._invalidCount > 0)
+			this._tiles[key]._invalidCount -= 1;
 
-			else if (tile && img.rawData)
-				this._applyDelta(tile, img.rawData, img.isKeyframe);
+		tile.wireId = tileMsgObj.wireId;
 
-			else
-				tile.el = img;
-			tile.loaded = true;
-			this._tileReady(coords, null /* err */, tile);
+/*		if (this._map._canvasDevicePixelGrid)
+		{
+			// FIXME: render this onto the canvas with hairlines (?)
+			// browser/test/pixel-test.png - debugging pixel alignment.
+			tile.el.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5QEIChoQ0oROpwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACfklEQVR42u3dO67CQBBFwbnI+9/yJbCQLDIkPsZdFRAQjjiv3S8YZ63VNsl6aLvgop5+6vFzZ3QP/uQz2c0RIAAQAAzcASwAmAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACADGBnC8iQ5MABAACAB+zsVYjLZ9dOvd3zzg/QOYADByB/BvUCzBIAAQAFiCwQQAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAwIgAXb2ECgABAAPDaI7SLsZhs+79kvX8AEwDsAM8DASzBIAAQAFiCwQQAAYAAQAAgABAAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAI4LSSOAQBgABAAPDVR9C2ToGxNkfww623bZL98/ilUzIBwA4wbCAgABAACAAswWACgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAAAjAESAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAGAAEAAIAAQAAgABAACAAGAAEAAIAAQAAgAPiaJAEAAIAB48yNWW6fAWJsj4LRbb9sk++fxSxMA7AAMGwgCAAGAAMASDCYACAAEAAIAAYAAQAAgABAACAAEAAIAASAAR4AAQAAgABAACAAEANeW9e675sAEAAGAAODUO4AFgMnu7t9h2ahA0pgAAAAASUVORK5CYII=';
 		}
+		else */
+		this._applyDelta(tile, img.rawData, img.isKeyframe);
+		this._tileReady(coords);
 
-		// CollaboraOnline#6423 cache the following parts tiles,
-		// this will help avoiding the tear effect when switching to the next part
-		if (!tile && this._selectedPart !== coords.part && !this._tileCache[key]) {
-			tile = document.createElement('img');
-			if (img.rawData)
-				this._applyDelta(tile, img.rawData, img.isKeyframe);
-			else
-				tile.el = img;
-			this._tileCache[key] = tile.el;
-		}
 		L.Log.log(textMsg, 'INCOMING', key);
 
 		// Queue acknowledgment, that the tile message arrived
@@ -7209,12 +7353,10 @@ L.TilesPreFetcher = L.Class.extend({
 					coords.mode = this._preFetchMode;
 					var key = this._docLayer._tileCoordsToKey(coords);
 
-					if (!this._docLayer._isValidTile(coords) ||
-						this._docLayer._tiles[key] ||
-						this._docLayer._tileCache[key] ||
-						visitedTiles[key]) {
+					if (visitedTiles[key] ||
+					    !this._docLayer._isValidTile(coords) ||
+					    this._docLayer._tileHasContent(key))
 						continue;
-					}
 
 					if (tilesToFetch > 0) {
 						visitedTiles[key] = true;
