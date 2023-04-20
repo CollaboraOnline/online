@@ -37,6 +37,7 @@ function clickOnFirstCell(firstClick = true, dblClick = false, frameId) {
 	cy.log('Param - firstClick: ' + firstClick);
 	cy.log('Param - dblClick: ' + dblClick);
 
+	cy.wait(1000);
 	// Use the tile's edge to find the first cell's position
 	cy.customGet('#map', frameId)
 		.then(function(items) {
@@ -66,7 +67,6 @@ function clickOnFirstCell(firstClick = true, dblClick = false, frameId) {
 		});
 
 	if (firstClick && !dblClick) {
-		cy.wait(1000);
 		cy.customGet('#test-div-overlay-cell-cursor-border-0', frameId)
 			.should(function (elem) {
 				expect(helper.Bounds.parseBoundsJson(elem.text()).left).to.be.equal(0);
