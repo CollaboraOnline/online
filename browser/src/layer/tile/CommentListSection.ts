@@ -70,11 +70,13 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.layoutTimer = null;
 		this.sectionProperties.width = Math.round(1 * app.dpiScale); // Configurable variable.
 		this.sectionProperties.scrollAnnotation = null; // For impress, when 1 or more comments exist.
+		// This (commentsAreListed) variable means that comments are shown as a list on the right side of the document.
+		this.sectionProperties.commentsAreListed = (this.sectionProperties.docLayer._docType === 'text' || this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') && !(<any>window).mode.isMobile();
 		this.idIndexMap = new Map<any, number>();
 	}
 
 	public onInitialize (): void {
-		this.setExpanded();
+		this.checkCollapseState();
 
 		this.map.on('RedlineAccept', this.onRedlineAccept, this);
 		this.map.on('RedlineReject', this.onRedlineReject, this);
@@ -88,7 +90,6 @@ export class CommentSection extends CanvasSectionObject {
 		}, this);
 
 		this.map.on('zoomend', function() {
-			this.map.fire('mobilewizardpopupclose');
 			this.checkCollapseState();
 			this.layout(true);
 		}, this);
@@ -108,10 +109,15 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private checkCollapseState(): void {
-		if (this.shouldCollapse())
-			this.setCollapsed();
-		else
-			this.setExpanded();
+		if (!(<any>window).mode.isMobile()) {
+			if (this.shouldCollapse())
+				this.setCollapsed();
+			else
+				this.setExpanded();
+
+			if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing')
+				this.showHideComments();
+		}
 	}
 
 	private findNextPartWithComment (currentPart: number): number {
@@ -146,28 +152,6 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
-	private hideCommentListPanel (): void {
-		if (this.size[0] !== 0) {
-			this.size[0] = 0;
-
-			this.containerObject.reNewAllSections(true);
-			this.sectionProperties.docLayer._syncTileContainerSize();
-
-			app.sectionContainer.requestReDraw();
-		}
-	}
-
-	private showCommentListPanel (): void {
-		if (this.size[0] !== this.sectionProperties.width) {
-			this.size[0] = this.sectionProperties.width;
-
-			this.containerObject.reNewAllSections(true);
-			this.sectionProperties.docLayer._syncTileContainerSize();
-
-			app.sectionContainer.requestReDraw();
-		}
-	}
-
 	private checkSize (): void {
 		// When there is no comment || file is a spreadsheet || view type is mobile, we set this section's size to [0, 0].
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile() || this.sectionProperties.commentList.length === 0)
@@ -176,68 +160,33 @@ export class CommentSection extends CanvasSectionObject {
 				this.map.removeControl(this.sectionProperties.scrollAnnotation);
 				this.sectionProperties.scrollAnnotation = null;
 			}
-
-			this.hideCommentListPanel();
 		}
 		else if (this.sectionProperties.docLayer._docType === 'presentation') { // If there are comments but none of them are on the selected part.
 			if (!this.sectionProperties.scrollAnnotation) {
 				this.sectionProperties.scrollAnnotation = L.control.scrollannotation();
 				this.sectionProperties.scrollAnnotation.addTo(this.map);
 			}
-
-			var hide = true;
-			for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
-				var comment = this.sectionProperties.commentList[i];
-				if (comment.sectionProperties.partIndex === this.sectionProperties.docLayer._selectedPart) {
-					hide = false;
-					break;
-				}
-			}
-			if (hide) {
-				this.hideCommentListPanel();
-			}
-			else {
-				this.showCommentListPanel();
-			}
-		}
-		else {
-			this.showCommentListPanel();
 		}
 	}
 
 	public setCollapsed(): void {
-		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
-			return;
-
 		this.isCollapsed = true;
-		this.removeHighlighters();
 		this.unselect();
 		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
 			if (this.sectionProperties.commentList[i].sectionProperties.data.id !== 'new')
 				this.sectionProperties.commentList[i].setCollapsed();
 		}
-
-		if ((<any>window).mode.isMobile()
-			|| this.sectionProperties.docLayer._docType === 'spreadsheet'
-			|| this.sectionProperties.commentList.length === 0)
-			return;
 	}
 
 	public setExpanded(): void {
 		this.isCollapsed = false;
-		this.removeHighlighters();
 		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
 			this.sectionProperties.commentList[i].setExpanded();
 		}
-
-		if ((<any>window).mode.isMobile()
-			|| this.sectionProperties.docLayer._docType === 'spreadsheet'
-			|| this.sectionProperties.commentList.length === 0)
-			return;
 	}
 
 	public shouldCollapse (): boolean {
-		if (!this.containerObject.getDocumentAnchorSection())
+		if (!this.containerObject.getDocumentAnchorSection() || this.sectionProperties.docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile())
 			return false;
 
 		var commentWidth = 300;
@@ -578,7 +527,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public reply (annotation: any): void {
-		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
+		if ((<any>window).mode.isMobile()) {
 			var avatar = undefined;
 			var author = this.map.getViewName(this.sectionProperties.docLayer._viewId);
 			if (author in this.map._viewInfoByUserName) {
@@ -611,25 +560,39 @@ export class CommentSection extends CanvasSectionObject {
 			annotation.reply();
 			this.select(annotation);
 			annotation.focus();
-			if (this.isCollapsed)
-				this.map.fire('mobilewizardpopupresize');
 		}
 	}
 
 	public modify (annotation: any): void {
-		var newAnnotationInCollapsedMode = this.isCollapsed && annotation.isCollapsed;
-		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet() || newAnnotationInCollapsedMode) {
+		if ((<any>window).mode.isMobile()) {
 			this.newAnnotationMobile(annotation, function(annotation: any) {
 				this.save(annotation);
 			}.bind(this), /* isMod */ true);
-		} else {
-			this.unselect();
+		}
+		else {
+			if (this.sectionProperties.docLayer._docType !== 'spreadsheet')
+				this.unselect();
+
 			annotation.edit();
 			this.select(annotation);
 			annotation.focus();
-			if (this.isCollapsed)
-				this.map.fire('mobilewizardpopupresize');
 		}
+	}
+
+	private showCollapsedReplies(rootIndex: number, rootId: number) {
+		var lastChild = this.getLastChildIndexOf(rootId);
+
+		for (var i = lastChild; i > rootIndex; i--) {
+			this.sectionProperties.commentList[i].sectionProperties.container.style.display = '';
+			this.sectionProperties.commentList[i].sectionProperties.container.style.visibility = '';
+		}
+	}
+
+	private collapseReplies(rootIndex: number, rootId: number) {
+		var lastChild = this.getLastChildIndexOf(rootId);
+
+		for (var i = lastChild; i > rootIndex; i--)
+			this.sectionProperties.commentList[i].sectionProperties.container.style.display = 'none';
 	}
 
 	public select (annotation: any): void {
@@ -654,10 +617,13 @@ export class CommentSection extends CanvasSectionObject {
 				}
 			}
 
-			this.update();
+			if (this.isCollapsed) {
+				this.showCollapsedReplies(idx, annotation.sectionProperties.data.id);
+				if (this.sectionProperties.docLayer._docType === 'text')
+					this.sectionProperties.selectedComment.sectionProperties.replyCountNode.style.display = 'none';
+			}
 
-			if (!(<any>window).mode.isMobile() && annotation.isCollapsed && this.sectionProperties.docLayer._docType !== 'spreadsheet')
-				this.openMobileWizardPopup(annotation);
+			this.update();
 		}
 	}
 
@@ -684,6 +650,10 @@ export class CommentSection extends CanvasSectionObject {
 			if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 				this.sectionProperties.selectedComment.hide();
 
+			if (this.sectionProperties.commentsAreListed && this.sectionProperties.selectedComment.isCollapsed) {
+				this.sectionProperties.selectedComment.setCollapsed();
+				this.collapseReplies(this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id), this.sectionProperties.selectedComment.sectionProperties.data.id);
+			}
 			this.sectionProperties.selectedComment = null;
 
 			this.update();
@@ -981,7 +951,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.orderCommentList();
 		this.checkSize();
 
-		if (this.isCollapsed)
+		if (this.isCollapsed && comment.id !== 'new')
 			annotation.setCollapsed();
 
 		// check if we are the author
@@ -1096,12 +1066,6 @@ export class CommentSection extends CanvasSectionObject {
 				this.map.focus();
 			}
 			annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj[dataroot].id)];
-			if (!(<any>window).mode.isMobile()) {
-				this.update();
-				var newAnnotation = this.sectionProperties.commentList[this.getIndexOf(obj[dataroot].id)];
-				if (newAnnotation.sectionProperties.data.parent !== '0' && this.isCollapsed)
-					this.openMobileWizardPopup(annotation);
-			}
 		} else if (action === 'Remove') {
 			if ((<any>window).mode.isMobile() && obj[dataroot].id === annotation.sectionProperties.data.id) {
 				var child = this.sectionProperties.commentList[this.getIndexOf(obj[dataroot].id) + 1];
@@ -1118,11 +1082,9 @@ export class CommentSection extends CanvasSectionObject {
 				this.removeItem(id);
 				if (this.sectionProperties.selectedComment === removed) {
 					this.unselect();
-				} else {
-					this.update();
 				}
-				if (!(<any>window).mode.isMobile() && this.isCollapsed) {
-					this.openMobileWizardPopup(parent);
+				else {
+					this.update();
 				}
 			}
 		} else if (action === 'Modify') {
@@ -1143,10 +1105,6 @@ export class CommentSection extends CanvasSectionObject {
 				modified.setData(modifiedObj);
 				modified.update();
 				this.update();
-				if (!(<any>window).mode.isMobile() && this.isCollapsed && this.sectionProperties.selectedComment) {
-					var parent = this.sectionProperties.commentList[this.getRootIndexOf(modified.sectionProperties.data.id)];
-					this.openMobileWizardPopup(parent);
-				}
 			}
 		} else if (action === 'Resolve') {
 			id = obj[dataroot].id;
@@ -1168,9 +1126,6 @@ export class CommentSection extends CanvasSectionObject {
 				resolved.update();
 				this.showHideComment(resolved);
 				this.update();
-				if (!(<any>window).mode.isMobile() && this.isCollapsed) {
-					this.openMobileWizardPopup(parent);
-				}
 			}
 		}
 		if ((<any>window).mode.isMobile()) {
@@ -1189,14 +1144,7 @@ export class CommentSection extends CanvasSectionObject {
 	public selectById (commentId: any): void {
 		var idx = this.getRootIndexOf(commentId);
 		var annotation = this.sectionProperties.commentList[idx];
-		var justOpened = annotation !== this.sectionProperties.selectedComment;
-		this.sectionProperties.selectedComment = annotation;
-		this.update();
-
-		if (justOpened && !(<any>window).mode.isMobile() && annotation.isCollapsed &&
-			this.sectionProperties.docLayer._docType !== 'spreadsheet') {
-			this.openMobileWizardPopup(annotation);
-		}
+		this.select(annotation);
 	}
 
 	public stringToRectangles (str: string): number[][] {
@@ -1456,9 +1404,10 @@ export class CommentSection extends CanvasSectionObject {
 			lastY = subList[i].sectionProperties.data.anchorPix[1] > lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY;
 
 			var isRTL = document.documentElement.dir === 'rtl';
+			var deflection = this.isCollapsed ? 160: 60;
 
-			if (selectedComment && !this.sectionProperties.selectedComment.isCollapsed)
-				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale) - 60 * (isRTL ? -1 : 1), y: Math.round(lastY / app.dpiScale)});
+			if (selectedComment)
+				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale) - deflection * (isRTL ? -1 : 1), y: Math.round(lastY / app.dpiScale)});
 			else
 				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)});
 
@@ -1624,23 +1573,9 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private update (): void {
-		this.updateReplyCount();
+		if (this.sectionProperties.docLayer._docType === 'text')
+			this.updateReplyCount();
 		this.layout();
-	}
-
-	private openMobileWizardPopup (annotation: any): void {
-		if (!annotation) {
-			this.map.fire('mobilewizardpopupclose');
-			return;
-		}
-
-		var commentsData = this.map._docLayer.getCommentWizardStructure(undefined, annotation); // thread only
-		if (commentsData.children.length && commentsData.children[0].id !== 'emptyWizard') {
-			commentsData.popupParent = annotation.sectionProperties.container.id;
-			this.map.fire('mobilewizardpopup', {data: commentsData});
-		} else {
-			this.map.fire('mobilewizardpopupclose');
-		}
 	}
 
 	private updateReplyCount(): void {
@@ -1655,13 +1590,10 @@ export class CommentSection extends CanvasSectionObject {
 					replyCount++;
 			}
 
-			if (replyCount > 1) {
+			if (replyCount > 1)
 				comment.sectionProperties.replyCountNode.innerText = replyCount;
-				comment.sectionProperties.replyCountNode.style.display = '';
-			} else {
+			else
 				comment.sectionProperties.replyCountNode.innerText = '';
-				comment.sectionProperties.replyCountNode.style.display = 'none';
-			}
 		}
 	}
 
@@ -1772,6 +1704,9 @@ export class CommentSection extends CanvasSectionObject {
 
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 			this.hideAllComments(); // Apply drawing orders.
+
+		if (!(<any>window).mode.isMobile() && (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing'))
+			this.showHideComments();
 	}
 
 	// Accepts redlines/changes comments.
