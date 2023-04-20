@@ -223,18 +223,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			this._debugAddInvalidationMessage(textMsg);
 		}
 
-		for (key in this._tileCache) {
-			// compute the rectangle that each tile covers in the document based
-			// on the zoom level
-			coords = this._keyToTileCoords(key);
-			if (coords.part !== command.part || coords.mode !== command.mode) {
-				continue;
-			}
-			bounds = this._coordsToTileBounds(coords);
-			if (invalidBounds.intersects(bounds)) {
-				delete this._tileCache[key];
-			}
-		}
 		if (command.part === this._selectedPart &&
 			command.mode === this._selectedMode &&
 			command.part !== this._lastValidPart) {
