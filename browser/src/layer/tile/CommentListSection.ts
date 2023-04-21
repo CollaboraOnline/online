@@ -63,7 +63,6 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.commentList = new Array(0);
 		this.sectionProperties.selectedComment = null;
 		this.sectionProperties.arrow = null;
-		this.sectionProperties.initialLayoutData = null;
 		this.sectionProperties.showResolved = null;
 		this.sectionProperties.marginY = 10 * app.dpiScale;
 		this.sectionProperties.offset = 5 * app.dpiScale;
@@ -1298,61 +1297,6 @@ export class CommentSection extends CanvasSectionObject {
 		return index;
 	}
 
-	private updateScaling (): void {
-		if ((<any>window).mode.isDesktop() || this.sectionProperties.commentList.length === 0)
-			return;
-
-		var contentWrapperClassName, menuClassName;
-		if (this.sectionProperties.commentList[0].sectionProperties.data.trackchange) {
-			contentWrapperClassName = '.cool-annotation-redline-content-wrapper';
-			menuClassName = '.cool-annotation-menu-redline';
-		} else {
-			contentWrapperClassName = '.cool-annotation-content-wrapper';
-			menuClassName = '.cool-annotation-menu';
-		}
-
-		var initNeeded = (this.sectionProperties.initialLayoutData === null);
-		var contentWrapperClass = $(contentWrapperClassName);
-
-		if (initNeeded) {
-			var contentAuthor = $('.cool-annotation-content-author');
-			var dateClass = $('.cool-annotation-date');
-
-			this.sectionProperties.initialLayoutData = {
-				wrapperWidth: parseInt(contentWrapperClass.css('width')),
-				wrapperFontSize: parseInt(contentWrapperClass.css('font-size')),
-				authorContentHeight: parseInt(contentAuthor.css('height')),
-				dateFontSize: parseInt(dateClass.css('font-size')),
-			};
-		}
-
-		var menuClass = $(menuClassName);
-		if ((this.sectionProperties.initialLayoutData.menuWidth === undefined) && menuClass.length > 0) {
-			this.sectionProperties.initialLayoutData.menuWidth = parseInt(menuClass.css('width'));
-			this.sectionProperties.initialLayoutData.menuHeight = parseInt(menuClass.css('height'));
-		}
-
-		var scaleFactor = this.getScaleFactor();
-		var idx;
-		if (this.sectionProperties.selectedComment) {
-			var selectIndexFirst = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
-			var selectIndexLast = this.getLastChildIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
-			for (idx = 0; idx < this.sectionProperties.commentList.length; idx++) {
-				if (idx < selectIndexFirst || idx >  selectIndexLast) {
-					this.sectionProperties.commentList[idx].updateScaling(scaleFactor, this.sectionProperties.initialLayoutData);
-				}
-				else {
-					this.sectionProperties.commentList[idx].updateScaling(1, this.sectionProperties.initialLayoutData);
-				}
-			}
-		}
-		else {
-			for (idx = 0; idx < this.sectionProperties.commentList.length; idx++) {
-				this.sectionProperties.commentList[idx].updateScaling(scaleFactor, this.sectionProperties.initialLayoutData);
-			}
-		}
-	}
-
 	// If the file type is presentation or drawing then we shall check the selected part in order to hide comments from other parts.
 	// But if file is in fileBasedView, then we will not hide any comments from not-selected/viewed parts.
 	private mustCheckSelectedPart (): boolean {
@@ -1508,8 +1452,6 @@ export class CommentSection extends CanvasSectionObject {
 
 		if (this.sectionProperties.commentList.length > 0) {
 			this.orderCommentList();
-
-			this.updateScaling();
 
 			var isRTL = document.documentElement.dir === 'rtl';
 
