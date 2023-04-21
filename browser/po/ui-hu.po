@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-17 19:35+0200\n"
-"PO-Revision-Date: 2023-03-07 02:32+0000\n"
+"PO-Revision-Date: 2023-04-18 12:53+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.2-dev\n"
+"X-Generator: Weblate 4.17\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -304,7 +304,7 @@ msgstr "Nem lehet hitelesíteni ezt a munkamenetet %0 protokollon keresztül"
 
 #: admin/src/AdminSocketOverview.js:396
 msgid "Warning"
-msgstr ""
+msgstr "Figyelmeztetés"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
@@ -771,7 +771,7 @@ msgstr "Állapotsor megjelenítése"
 #: src/control/Control.NotebookbarImpress.js:419
 #: src/control/Control.NotebookbarWriter.js:1149
 msgid "Dark Mode"
-msgstr ""
+msgstr "Sötét mód"
 
 #: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:426
 #: src/control/Control.Menubar.js:560 src/control/Control.Menubar.js:693
@@ -792,7 +792,7 @@ msgstr "Összes"
 #: src/control/Control.NotebookbarImpress.js:962
 #: src/control/Control.NotebookbarWriter.js:853
 msgid "Smart Picker"
-msgstr ""
+msgstr "Intelligens választó"
 
 #: src/control/Control.Menubar.js:210
 msgid "Text orientation"
@@ -1112,7 +1112,7 @@ msgstr "~Fájl"
 #: src/control/Control.NotebookbarImpress.js:61
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "Hom~e"
-msgstr ""
+msgstr "K~ezdőlap"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:55
@@ -1143,15 +1143,14 @@ msgstr "~Véleményezés"
 #: src/control/Control.NotebookbarDraw.js:70
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:43
-#, fuzzy
 msgid "F~ormat"
-msgstr "Formátum"
+msgstr "F~ormátum"
 
 #: src/control/Control.NotebookbarCalc.js:48
 #: src/control/Control.NotebookbarDraw.js:81
 #: src/control/Control.NotebookbarWriter.js:59
 msgid "Dra~w"
-msgstr ""
+msgstr "R~ajzolás"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:87
@@ -1372,9 +1371,8 @@ msgid "Reference~s"
 msgstr "Hi~vatkozások"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "For~m"
-msgstr "Űrlap"
+msgstr "Ű~rlap"
 
 #: src/control/Control.NotebookbarWriter.js:206
 msgid "ODF Text Document (.odt)"
@@ -1987,7 +1985,7 @@ msgstr "A megadott jelszó nem jó. Próbálja újra."
 
 #: src/core/Socket.js:955
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Csak a dokumentum tulajdonosa módosíthatja a jelszót."
 
 #: src/core/Socket.js:986 src/core/Socket.js:991
 msgid "Missing Fonts"
@@ -2408,17 +2406,15 @@ msgstr ""
 "mielőtt egy új letöltést kezdeményez.</p>"
 
 #: src/map/Clipboard.js:906
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
 "more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
 "<p>A böngészője csak korlátozottan fér hozzá a vágólaphoz.</p><p>A további "
-"lehetőséget megtekintéséhez használja az alábbi gyorsbillentyűt: "
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>.</p><p class"
-"=\"vex-footnote\">A speciális beillesztés elvetéséhez zárja be ezt a felugró "
-"ablakot.</p>"
+"lehetőséget megtekintéséhez használja az alábbi gyorsbillentyűt: <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>.</p><p>A speciális "
+"beillesztés elvetéséhez zárja be ezt a felugró ablakot.</p>"
 
 #: src/map/Map.js:218
 msgid "Initializing..."
