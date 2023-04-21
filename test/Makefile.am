@@ -61,6 +61,7 @@ all_la_unit_tests = \
 	unit-rendering-options.la \
 	unit-paste.la \
 	unit-large-paste.la \
+	unit-quarantine.la \
 	unit-typing.la \
 	unit-wopi-httpredirectloop.la \
 	unit-render-shape.la \
@@ -286,6 +287,8 @@ unit_bad_doc_load_la_SOURCES = UnitBadDocLoad.cpp
 unit_bad_doc_load_la_LIBADD = $(CPPUNIT_LIBS)
 unit_hosting_la_SOURCES = UnitHosting.cpp
 unit_hosting_la_LIBADD = $(CPPUNIT_LIBS)
+unit_quarantine_la_SOURCES = UnitQuarantine.cpp
+unit_quarantine_la_LIBADD = $(CPPUNIT_LIBS)
 
 if HAVE_LO_PATH
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
