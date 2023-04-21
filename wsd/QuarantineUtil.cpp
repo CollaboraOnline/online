@@ -194,4 +194,14 @@ namespace Quarantine
 
         return false;
     }
+
+    void removeQuarantinedFiles(const std::string& docKey)
+    {
+        for (const auto& file : COOLWSD::QuarantineMap[docKey])
+        {
+            FileUtil::removeFile(file);
+        }
+
+        COOLWSD::QuarantineMap.erase(docKey);
+    }
 }

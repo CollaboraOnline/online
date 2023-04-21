@@ -16,4 +16,7 @@ namespace Quarantine
     void createQuarantineMap();
 
     bool quarantineFile(DocumentBroker* docBroker, const std::string& docName);
+
+    /// Removes the quarantined files for the given DocKey when we unload gracefully.
+    void removeQuarantinedFiles(const std::string& docKey);
 }
