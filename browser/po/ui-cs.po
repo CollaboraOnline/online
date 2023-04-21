@@ -12,17 +12,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-17 19:35+0200\n"
-"PO-Revision-Date: 2023-03-09 13:38+0000\n"
+"PO-Revision-Date: 2023-04-19 16:57+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <="
-" 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 4.16.2-dev\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -305,7 +305,7 @@ msgstr "Tuto relaci se nepodařilo autentizovat přes protokol %0"
 
 #: admin/src/AdminSocketOverview.js:396
 msgid "Warning"
-msgstr ""
+msgstr "Upozornění"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
@@ -772,7 +772,7 @@ msgstr "Zobrazovat stavový řádek"
 #: src/control/Control.NotebookbarImpress.js:419
 #: src/control/Control.NotebookbarWriter.js:1149
 msgid "Dark Mode"
-msgstr ""
+msgstr "Tmavý režim"
 
 #: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:426
 #: src/control/Control.Menubar.js:560 src/control/Control.Menubar.js:693
@@ -793,7 +793,7 @@ msgstr "Vše"
 #: src/control/Control.NotebookbarImpress.js:962
 #: src/control/Control.NotebookbarWriter.js:853
 msgid "Smart Picker"
-msgstr ""
+msgstr "Chytrý výběr"
 
 #: src/control/Control.Menubar.js:210
 msgid "Text orientation"
@@ -1113,7 +1113,7 @@ msgstr "~Soubor"
 #: src/control/Control.NotebookbarImpress.js:61
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "Hom~e"
-msgstr ""
+msgstr "~Domů"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:55
@@ -1144,15 +1144,14 @@ msgstr "~Revize"
 #: src/control/Control.NotebookbarDraw.js:70
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:43
-#, fuzzy
 msgid "F~ormat"
-msgstr "Formát"
+msgstr "~Formát"
 
 #: src/control/Control.NotebookbarCalc.js:48
 #: src/control/Control.NotebookbarDraw.js:81
 #: src/control/Control.NotebookbarWriter.js:59
 msgid "Dra~w"
-msgstr ""
+msgstr "~Kresba"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:87
@@ -1373,9 +1372,8 @@ msgid "Reference~s"
 msgstr "~Odkazy"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "For~m"
-msgstr "Formulář"
+msgstr "For~mulář"
 
 #: src/control/Control.NotebookbarWriter.js:206
 msgid "ODF Text Document (.odt)"
@@ -1986,7 +1984,7 @@ msgstr "Chybné heslo. Zkuste ho zadat znovu."
 
 #: src/core/Socket.js:955
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Heslo může změnit pouze vlastník dokumentu."
 
 #: src/core/Socket.js:986 src/core/Socket.js:991
 msgid "Missing Fonts"
@@ -2397,7 +2395,6 @@ msgstr ""
 "na jeho dokončení, nebo ho před zahájením nového nejprve zrušte.</p>"
 
 #: src/map/Clipboard.js:906
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
@@ -2405,8 +2402,7 @@ msgid ""
 msgstr ""
 "<p>Prohlížeč má velmi omezený přístup ke schránce</p><p>Stisknutím "
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> zobrazíte "
-"další možnosti</p><p class=\"vex-footnote\">Zavřením vyskakovacího okna "
-"vložení jinak zrušíte</p>"
+"další možnosti</p><p>Zavřením vyskakovacího okna vložení jinak zrušíte</p>"
 
 #: src/map/Map.js:218
 msgid "Initializing..."
