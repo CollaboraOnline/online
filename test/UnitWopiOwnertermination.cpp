@@ -12,8 +12,8 @@
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
 #include "helpers.hpp"
+
 #include <Poco/Net/HTTPRequest.h>
-#include <Poco/Util/LayeredConfiguration.h>
 
 class UnitWopiOwnertermination : public WopiTestServer
 {

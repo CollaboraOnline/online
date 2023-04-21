@@ -310,13 +310,13 @@ public:
         fileInfo->set("UserCanWrite", "false");
         fileInfo->set("UserCanNotWriteRelative", "true");
 
-        if (_scenario == Scenario ::Edit)
+        if (_scenario == Scenario::Edit)
         {
             // An extension that doesn't allow commenting. By omitting this,
             // we allow commenting and consider the document editable.
             fileInfo->set("BaseFileName", "doc.odt");
         }
-        else if (_scenario == Scenario ::ViewWithComment)
+        else if (_scenario == Scenario::ViewWithComment)
         {
             // An extension that allows commenting.
             fileInfo->set("BaseFileName", "doc.pdf");
