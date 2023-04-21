@@ -109,7 +109,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	private checkCollapseState(): void {
-		if (!(<any>window).mode.isMobile()) {
+		if (!(<any>window).mode.isMobile() && this.sectionProperties.docLayer._docType !== 'spreadsheet') {
 			if (this.shouldCollapse())
 				this.setCollapsed();
 			else
