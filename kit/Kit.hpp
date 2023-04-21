@@ -145,6 +145,9 @@ std::string anonymizeUrl(const std::string& url);
 /// Anonymize usernames.
 std::string anonymizeUsername(const std::string& username);
 
+/// Ensure there is no fatal system setup problem
+void consistencyCheckJail();
+
 #ifdef __ANDROID__
 /// For the Android app, for now, we need access to the one and only document open to perform eg. saveAs() for printing.
 std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly();

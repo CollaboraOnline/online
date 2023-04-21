@@ -1170,6 +1170,8 @@ bool ChildSession::downloadAs(const StringVector& tokens)
         jailDoc = jailDoc.substr(0, jailDoc.find(JAILED_DOCUMENT_ROOT)) + JAILED_DOCUMENT_ROOT;
     }
 
+    consistencyCheckJail();
+
     // The file is removed upon downloading.
     const std::string tmpDir = FileUtil::createRandomDir(jailDoc);
     const std::string urlToSend = tmpDir + '/' + filenameParam.getFileName();
@@ -2560,6 +2562,8 @@ bool ChildSession::saveAs(const StringVector& tokens)
         // url is already encoded
         encodedURL = url;
 
+    consistencyCheckJail();
+
     std::string encodedWopiFilename;
     Poco::URI::encode(wopiFilename, "", encodedWopiFilename);
 
@@ -3101,6 +3105,8 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         if (!commandName.isEmpty() && commandName.toString() == ".uno:Save")
         {
 #if !MOBILEAPP
+            consistencyCheckJail();
+
             // Create the 'upload' file regardless of success or failure,
             // because we don't know if the last upload worked or not.
             // DocBroker will have to decide to upload or skip.
