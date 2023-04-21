@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name_settings">ସେଟିଂ</string>
+    <string name="sort">ଏହା ଅନୁଯାୟୀ ସଜାନ୍ତୁ</string>
+    <string name="action_about">ଵିଷୟରେ</string>
+    <string name="action_settings">ସେଟିଂ</string>
+    <string name="search_label">ଯାଅ</string>
+    <string name="positive_ok">ଠିକ୍ ଅଛି</string>
+    <string name="password">ପାସ୍‍ୱର୍ଡ଼</string>
+    <string name="title_activity_show_html">ଵିଷୟରେ</string>
+    <string name="theme">ଥିମ୍</string>
+    <string name="theme_dark">ଗାଢ଼</string>
+    <string name="theme_light">ହାଲୁକା</string>
+    <string name="pref_category_editor">ସମ୍ପାଦକ ସେଟିଂ</string>
+    <string name="about_moreinfo">ଅଧିକ ସୂଚନା</string>
+</resources>
