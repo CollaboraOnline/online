@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-17 19:35+0200\n"
-"PO-Revision-Date: 2023-04-02 17:54+0000\n"
+"PO-Revision-Date: 2023-04-18 12:53+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17-dev\n"
+"X-Generator: Weblate 4.17\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -303,7 +303,7 @@ msgstr "No se pudo autenticar esta sesión mediante el protocolo %0"
 
 #: admin/src/AdminSocketOverview.js:396
 msgid "Warning"
-msgstr ""
+msgstr "Atención"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
@@ -771,7 +771,7 @@ msgstr "Mostrar barra de estado"
 #: src/control/Control.NotebookbarImpress.js:419
 #: src/control/Control.NotebookbarWriter.js:1149
 msgid "Dark Mode"
-msgstr ""
+msgstr "Modo oscuro"
 
 #: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:426
 #: src/control/Control.Menubar.js:560 src/control/Control.Menubar.js:693
@@ -792,7 +792,7 @@ msgstr "Todo"
 #: src/control/Control.NotebookbarImpress.js:962
 #: src/control/Control.NotebookbarWriter.js:853
 msgid "Smart Picker"
-msgstr ""
+msgstr "Selector inteligente"
 
 #: src/control/Control.Menubar.js:210
 msgid "Text orientation"
@@ -1112,7 +1112,7 @@ msgstr "~Archivo"
 #: src/control/Control.NotebookbarImpress.js:61
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "Hom~e"
-msgstr ""
+msgstr "~Inicio"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:55
@@ -1143,9 +1143,8 @@ msgstr "~Revisión"
 #: src/control/Control.NotebookbarDraw.js:70
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:43
-#, fuzzy
 msgid "F~ormat"
-msgstr "Formato"
+msgstr "F~ormato"
 
 #: src/control/Control.NotebookbarCalc.js:48
 #: src/control/Control.NotebookbarDraw.js:81
@@ -2406,7 +2405,6 @@ msgstr ""
 "nueva</p>"
 
 #: src/map/Clipboard.js:906
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
@@ -2414,8 +2412,8 @@ msgid ""
 msgstr ""
 "<p>El navegador posee un acceso muy limitado al portapapeles</p><p>Presione "
 "ahora: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> para "
-"ver más opciones</p><p class=\"vex-footnote\">Cierre el cuadro emergente "
-"para ignorar el pegado especial</p>"
+"ver más opciones</p><p>Cierre el cuadro emergente para ignorar el pegado "
+"especial</p>"
 
 #: src/map/Map.js:218
 msgid "Initializing..."
