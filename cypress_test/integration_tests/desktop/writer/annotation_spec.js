@@ -107,7 +107,7 @@ describe('Collapsed Annotation Tests', function() {
 	});
 
 	it('Insert',function() {
-		insertMultipleComment('writer', 1, true);
+		insertMultipleComment('writer', 1, false);
 
 		cy.get('.cool-annotation-content-wrapper').should('exist');
 
@@ -115,52 +115,59 @@ describe('Collapsed Annotation Tests', function() {
 	});
 
 	it('Modify',function() {
-		insertMultipleComment('writer', 1, true);
+		insertMultipleComment('writer', 1, false);
 
 		cy.get('.cool-annotation-content-wrapper').should('exist');
 
 		cy.get('#annotation-content-area-1').should('contain','some text0');
 
-		cy.get('#mobile-wizard-popup #comment-annotation-menu-1').click();
+		cy.get('.cool-annotation-img').click();
+
+		cy.get('#comment-annotation-menu-1').click();
 
 		cy.contains('.context-menu-item','Modify').click();
 
-		cy.get('#mobile-wizard-popup  #annotation-modify-textarea-1').type('some other text, ');
+		cy.get('#annotation-modify-textarea-1').type('some other text, ');
 
-		cy.get('#mobile-wizard-popup  #annotation-save-1').click();
+		cy.get('#annotation-save-1').click();
 
-		cy.get('#mobile-wizard-popup .cool-annotation-content-wrapper').should('exist');
+		cy.get('.cool-annotation-content-wrapper').should('exist');
 
-		cy.get('#mobile-wizard-popup #annotation-content-area-1').should('contain','some other text, some text0');
+		cy.get('#annotation-content-area-1').should('contain','some other text, some text0');
 	});
 
 	it('Reply',function() {
-		insertMultipleComment('writer', 1, true);
+		insertMultipleComment('writer', 1, false);
 
 		cy.get('.cool-annotation-content-wrapper').should('exist');
 
 		cy.get('#annotation-content-area-1').should('contain','some text');
 
-		cy.get('#mobile-wizard-popup #comment-annotation-menu-1').click();
+		cy.get('.cool-annotation-img').click();
+
+		cy.get('#comment-annotation-menu-1').click();
 
 		cy.contains('.context-menu-item','Reply').click();
 
-		cy.get('#mobile-wizard-popup #annotation-reply-textarea-1').type('some reply text');
+		cy.get('#annotation-reply-textarea-1').type('some reply text');
 
-		cy.get('#mobile-wizard-popup #annotation-reply-1').click();
+		cy.get('#annotation-reply-1').click();
 
-		cy.get('#mobile-wizard-popup #annotation-content-area-2').should('contain','some reply text');
+
+		cy.get('#annotation-content-area-2').should('contain','some reply text');
 	});
 
 	it('Remove',function() {
-		insertMultipleComment('writer', 1, true);
+		insertMultipleComment('writer', 1, false);
 
 		cy.get('.cool-annotation-content-wrapper').should('exist');
 
 		cy.get('.cool-annotation-content > div')
 			.should('contain','some text');
 
-		cy.get('#mobile-wizard-popup .cool-annotation-menu').click();
+		cy.get('.cool-annotation-img').click();
+
+		cy.get('.cool-annotation-menu').click();
 
 		cy.contains('.context-menu-item','Remove')
 			.click();
