@@ -146,6 +146,8 @@ static std::string JailRoot;
 static void flushTraceEventRecordings();
 #endif
 
+
+
 // Abnormally we get LOK events from another thread, which must be
 // push safely into our main poll loop to process to keep all
 // socket buffer & event processing in a single, thread.
@@ -157,6 +159,36 @@ static LokHookFunction2* initFunction = nullptr;
 
 namespace
 {
+    // for later consistency checking.
+    static std::string UserDirPath;
+    static std::string InstDirPath;
+
+    std::string pathFromFileURL(const std::string &uri)
+    {
+        std::string decoded;
+        Poco::URI::decode(uri, decoded);
+        if (decoded.rfind("file://", 0) != 0)
+        {
+            LOG_ERR("Asked to load a very unusual file path: '" << uri << "' -> '" << decoded << "'");
+            return std::string();
+        }
+        return decoded.substr(7);
+    }
+
+    void consistencyCheckFileExists(const std::string &uri)
+    {
+        std::string path = pathFromFileURL(uri);
+        if (path.empty())
+            return;
+        FileUtil::Stat stat(path);
+        if (!stat.good() && stat.isFile())
+            LOG_ERR("Fatal system error: created file passed into document doesn't exist: '" << path << "'");
+        else
+            LOG_TRC("File path '" << path << "' exists of length " << stat.size());
+
+        consistencyCheckJail();
+    }
+
 #ifndef BUILDING_TESTS
     enum class LinkOrCopyType
     {
@@ -1115,7 +1147,7 @@ public:
             }
             else
             {
-                // This shouldn't happen, but for sanity.
+                // This shouldn't happen, but for consistency.
                 LOG_ERR("Failed to downcast DocumentManagerInterface to Document");
             }
             return;
@@ -1470,6 +1502,8 @@ private:
         const std::string& enableMacrosExecution = session->getEnableMacrosExecution();
         const std::string& macroSecurityLevel = session->getMacroSecurityLevel();
         const std::string& userTimezone = session->getTimezone();
+
+        consistencyCheckFileExists(uri);
 
         std::string options;
         if (!lang.empty())
@@ -2899,6 +2933,9 @@ void lokit_main(
         LOG_DBG("Initializing LOK with instdir [" << instdir_path << "] and userdir ["
                                                   << userdir_url << "].");
 
+        UserDirPath = pathFromFileURL(userdir_url);
+        InstDirPath = instdir_path;
+
         LibreOfficeKit *kit;
         {
             const char *instdir = instdir_path.c_str();
@@ -3125,6 +3162,37 @@ void runKitLoopInAThread()
 #endif // IOS
 
 #endif // !BUILDING_TESTS
+
+void consistencyCheckJail()
+{
+    static bool warned = false;
+    if (!warned)
+    {
+        bool failedTmp, failedLo, failedUser;
+        FileUtil::Stat tmp("/tmp");
+        if ((failedTmp = (!tmp.good() || !tmp.isDirectory())))
+            LOG_ERR("Fatal system error: Kit jail is missing its /tmp directory");
+
+        FileUtil::Stat lo(InstDirPath + "/unorc");
+        if ((failedLo = (!lo.good() || !lo.isFile())))
+            LOG_ERR("Fatal system error: Kit jail is missing its LibreOfficeKit directory at '" << InstDirPath << "'");
+
+        FileUtil::Stat user(UserDirPath);
+        if ((failedUser = (!user.good() || !user.isDirectory())))
+            LOG_ERR("Fatal system error: Kit jail is missing its user directory at '" << UserDirPath << "'");
+
+        if (failedTmp || failedLo || failedUser)
+        {
+            LOG_ERR("A fatal system error indicates that, outside the control of COOL "
+                    "major structural changes have occured in our filesystem. These are "
+                    "potentially indicative of an operator damaging the system, and will "
+                    "inevitably cause document data-loss and/or malfunction.");
+            warned = true;
+        }
+        else
+            LOG_TRC("Passed system consistency check");
+    }
+}
 
 std::string anonymizeUrl(const std::string& url)
 {
