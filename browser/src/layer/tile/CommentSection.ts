@@ -599,43 +599,6 @@ export class Comment extends CanvasSectionObject {
 			);
 	}
 
-	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-	public updateScaling (scaleFactor: number, initialLayoutData: any): void {
-		if ((<any>window).mode.isDesktop())
-			return;
-
-		this.doPendingInitializationInView();
-
-		var wrapperWidth = Math.round(initialLayoutData.wrapperWidth * scaleFactor);
-		this.sectionProperties.wrapper.style.width = wrapperWidth + 'px';
-		var wrapperFontSize = Math.round(initialLayoutData.wrapperFontSize * scaleFactor);
-		this.sectionProperties.wrapper.style.fontSize = wrapperFontSize + 'px';
-		var contentAuthorHeight = Math.round(initialLayoutData.authorContentHeight * scaleFactor);
-		this.sectionProperties.contentAuthor.style.height = contentAuthorHeight + 'px';
-		var dateFontSize = Math.round(initialLayoutData.dateFontSize * scaleFactor);
-		this.sectionProperties.contentDate.style.fontSize = dateFontSize + 'px';
-		if (this.sectionProperties.menu) {
-			var menuWidth = Math.round(initialLayoutData.menuWidth * scaleFactor);
-			this.sectionProperties.menu.style.width = menuWidth + 'px';
-			var menuHeight = Math.round(initialLayoutData.menuHeight * scaleFactor);
-			this.sectionProperties.menu.style.height = menuHeight + 'px';
-
-			if (this.sectionProperties.acceptButton) {
-				this.sectionProperties.acceptButton.style.width = menuWidth + 'px';
-				this.sectionProperties.acceptButton.style.height = menuHeight + 'px';
-			}
-			if (this.sectionProperties.rejectButton) {
-				this.sectionProperties.rejectButton.style.width = menuWidth + 'px';
-				this.sectionProperties.rejectButton.style.height = menuHeight + 'px';
-			}
-		}
-
-		var authorImageWidth = Math.round(this.sectionProperties.imgSize[0] * scaleFactor);
-		var authorImageHeight = Math.round(this.sectionProperties.imgSize[1] * scaleFactor);
-		this.sectionProperties.authorAvatarImg.setAttribute('width', authorImageWidth);
-		this.sectionProperties.authorAvatarImg.setAttribute('height', authorImageHeight);
-	}
-
 	private update (): void {
 		this.updateContent();
 		this.updateLayout();
