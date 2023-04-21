@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-17 19:35+0200\n"
-"PO-Revision-Date: 2023-03-07 02:32+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2023-04-19 16:57+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.2-dev\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -307,7 +307,7 @@ msgstr "Fehler beim Authentifizieren dieser Sitzung über Protokoll %0"
 
 #: admin/src/AdminSocketOverview.js:396
 msgid "Warning"
-msgstr ""
+msgstr "Warnung"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
@@ -775,7 +775,7 @@ msgstr "Statusleiste anzeigen"
 #: src/control/Control.NotebookbarImpress.js:419
 #: src/control/Control.NotebookbarWriter.js:1149
 msgid "Dark Mode"
-msgstr ""
+msgstr "Dunkler Modus"
 
 #: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:426
 #: src/control/Control.Menubar.js:560 src/control/Control.Menubar.js:693
@@ -1147,9 +1147,8 @@ msgstr "~Änderungen"
 #: src/control/Control.NotebookbarDraw.js:70
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:43
-#, fuzzy
 msgid "F~ormat"
-msgstr "Format"
+msgstr "F~ormat"
 
 #: src/control/Control.NotebookbarCalc.js:48
 #: src/control/Control.NotebookbarDraw.js:81
@@ -1376,9 +1375,8 @@ msgid "Reference~s"
 msgstr "~Bezüge"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "For~m"
-msgstr "Formular"
+msgstr "For~mular"
 
 #: src/control/Control.NotebookbarWriter.js:206
 msgid "ODF Text Document (.odt)"
@@ -1996,7 +1994,7 @@ msgstr ""
 
 #: src/core/Socket.js:955
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Nur der Eigentümer des Dokuments kann das Passwort ändern."
 
 #: src/core/Socket.js:986 src/core/Socket.js:991
 msgid "Missing Fonts"
