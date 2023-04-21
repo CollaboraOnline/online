@@ -454,6 +454,10 @@ export class Comment extends CanvasSectionObject {
 		return false;
 	}
 
+	/*
+		This function doesn't take topleft positions of sections into account.
+		This just returns bare pixel coordinates of the rectangles.
+	*/
 	private convertRectanglesToCoreCoordinates() {
 		var pixelBasedOrgRectangles = new Array<Array<number>>();
 
@@ -556,6 +560,7 @@ export class Comment extends CanvasSectionObject {
 
 	private updatePosition (): void {
 		this.convertRectanglesToViewCoordinates();
+		this.convertRectanglesToCoreCoordinates();
 		this.setPositionAndSize();
 	}
 
@@ -955,27 +960,33 @@ export class Comment extends CanvasSectionObject {
 		return false;
 	}
 
+	/*
+		point is the core pixel coordinate of the cursor.
+		Not adjusted according to the view.
+		For adjusting, we need to take document top left and documentAnchor top left into account.
+		No need to do that for now.
+	*/
 	private checkIfCursorIsOnThisCommentWriter(rectangles: any, point: Array<number>) {
 		for (var i: number = 0; i < rectangles.length; i++) {
 			if (this.doesRectangleContainPoint(rectangles[i], point)) {
 				if (!this.isSelected()) {
 					this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
-
-
 				}
 				this.stopPropagating();
 				return;
 			}
 		}
+
+		// If we are here, this comment is not selected.
 		if (this.isSelected()) {
-			this.sectionProperties.commentListSection.unselect();
 			if (this.isCollapsed)
-				this.sectionProperties.container.style.visibility = 'hidden';
+				this.setCollapsed();
+			this.sectionProperties.commentListSection.unselect();
 		}
 	}
 
 	/// This event is Writer-only. Fired by CanvasSectionContainer.
-	public onCursorPositionChanged(newPosition: Array<number>) {
+	public onCursorPositionChanged(newPosition: Array<number>): void {
 		var x = newPosition[0];
 		var y = Math.round(newPosition[1] + (newPosition[3]) * 0.5);
 		if (this.sectionProperties.pixelBasedOrgRectangles) {
@@ -984,7 +995,7 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	/// This event is Calc-only. Fired by CanvasSectionContainer.
-	public onCellAddressChanged(cursorInfo: any) {
+	public onCellAddressChanged(cursorInfo: any): void {
 		if (cursorInfo.rectangle.pixels && this.sectionProperties.data.rectangles) {
 			var midX = this.containerObject.getDocumentAnchor()[0] + Math.round(cursorInfo.rectangle.pixels[0] + (cursorInfo.rectangle.pixels[2]) * 0.5);
 			var midY = this.containerObject.getDocumentAnchor()[1] + Math.round(cursorInfo.rectangle.pixels[1] + (cursorInfo.rectangle.pixels[3]) * 0.5);
