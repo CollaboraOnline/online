@@ -13,6 +13,9 @@
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
 #include "helpers.hpp"
+#include "lokassert.hpp"
+#include "testlog.hpp"
+#include "FileUtil.hpp"
 
 #include <Poco/Net/HTTPRequest.h>
 
@@ -26,6 +29,7 @@ class UnitQuarantineConflict : public WOPIUploadConflictCommon
 
     using Base::OriginalDocContent;
 
+    std::string _quarantinePath;
     bool _unloadingModifiedDocDetected;
 
     static constexpr std::size_t LimitStoreFailures = 2;
@@ -45,6 +49,13 @@ public:
         // Small value to shorten the test run time.
         config.setUInt("per_document.limit_store_failures", LimitStoreFailures);
         config.setBool("per_document.always_save_on_exit", SaveOnExit);
+
+        config.setBool("quarantine_files[@enable]", true);
+        auto rootPath = Poco::Path(config.getString("child_root_path", ""));
+        rootPath.popDirectory().pushDirectory("quarantine");
+        _quarantinePath = FileUtil::createRandomTmpDir(rootPath.toString());
+        LOG_TST("Quarantine path set to [" << _quarantinePath << ']');
+        config.setString("quarantine_files.path", _quarantinePath);
     }
 
     void onDocBrokerCreate(const std::string& docKey) override
@@ -168,6 +179,21 @@ public:
         // Uploading fails and we can't have anything but the original.
         LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage", std::string(OriginalDocContent),
                                  getFileContent());
+
+        std::vector<std::string> files;
+        Poco::File(_quarantinePath).list(files);
+
+        // VerifyOverwrite doesn't modify the document.
+        if (_scenario == Scenario::VerifyOverwrite)
+        {
+            LOK_ASSERT_MESSAGE("Expected no quaratined files in [" << _quarantinePath << ']',
+                               files.empty());
+        }
+        else
+        {
+            LOK_ASSERT_MESSAGE("Expected quaratined files in [" << _quarantinePath << ']',
+                               !files.empty());
+        }
 
         Base::onDocBrokerDestroy(docKey);
     }
