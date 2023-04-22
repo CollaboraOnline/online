@@ -69,6 +69,9 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.layoutTimer = null;
 		this.sectionProperties.width = Math.round(1 * app.dpiScale); // Configurable variable.
 		this.sectionProperties.scrollAnnotation = null; // For impress, when 1 or more comments exist.
+		this.sectionProperties.commentWidth = 300 * 1.2; // CSS pixels.
+		this.sectionProperties.collapsedMarginToTheEdge = (<any>window).mode.isTablet() ? 120: 70; // CSS pixels.
+		this.sectionProperties.deflectionOfSelectedComment = 160; // CSS pixels.
 		// This (commentsAreListed) variable means that comments are shown as a list on the right side of the document.
 		this.sectionProperties.commentsAreListed = (this.sectionProperties.docLayer._docType === 'text' || this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') && !(<any>window).mode.isMobile();
 		this.idIndexMap = new Map<any, number>();
@@ -109,10 +112,14 @@ export class CommentSection extends CanvasSectionObject {
 
 	private checkCollapseState(): void {
 		if (!(<any>window).mode.isMobile() && this.sectionProperties.docLayer._docType !== 'spreadsheet') {
-			if (this.shouldCollapse())
+			if (this.shouldCollapse()) {
+				this.sectionProperties.deflectionOfSelectedComment = 180;
 				this.setCollapsed();
-			else
+			}
+			else {
+				this.sectionProperties.deflectionOfSelectedComment = 70;
 				this.setExpanded();
+			}
 
 			if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing')
 				this.showHideComments();
@@ -184,13 +191,17 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
+	private calculateAvailableSpace() {
+		var availableSpace = (this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0]) * 0.5;
+		availableSpace = Math.round(availableSpace / app.dpiScale);
+		return availableSpace;
+	}
+
 	public shouldCollapse (): boolean {
 		if (!this.containerObject.getDocumentAnchorSection() || this.sectionProperties.docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile())
 			return false;
 
-		var commentWidth = 300;
-		var availableSpace = this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0];
-		return availableSpace < commentWidth * 2;
+		return this.calculateAvailableSpace() < this.sectionProperties.commentWidth;
 	}
 
 	public hideAllComments (): void {
@@ -1351,10 +1362,9 @@ export class CommentSection extends CanvasSectionObject {
 			lastY = subList[i].sectionProperties.data.anchorPix[1] > lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY;
 
 			var isRTL = document.documentElement.dir === 'rtl';
-			var deflection = this.isCollapsed ? 160: 60;
 
 			if (selectedComment)
-				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale) - deflection * (isRTL ? -1 : 1), y: Math.round(lastY / app.dpiScale)});
+				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale) - this.sectionProperties.deflectionOfSelectedComment * (isRTL ? -1 : 1), y: Math.round(lastY / app.dpiScale)});
 			else
 				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)});
 
@@ -1459,10 +1469,9 @@ export class CommentSection extends CanvasSectionObject {
 			var yOrigin = null;
 			var selectedIndex = null;
 			var x = isRTL ? 0 : topRight[0];
-			var commentWidth = this.isCollapsed ? 70 : 300;
-			var availableSpace = this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0];
+			var availableSpace = this.calculateAvailableSpace();
 
-			if (availableSpace > commentWidth) {
+			if (availableSpace > this.sectionProperties.commentWidth) {
 				if (isRTL)
 					x = Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0]) * 0.5) - this.containerObject.getDocumentAnchorSection().size[0];
 				else
@@ -1470,7 +1479,7 @@ export class CommentSection extends CanvasSectionObject {
 			} else if (isRTL)
 				x = -this.containerObject.getDocumentAnchorSection().size[0];
 			else
-				x -= commentWidth;
+				x -= this.sectionProperties.collapsedMarginToTheEdge;
 
 			if (this.sectionProperties.selectedComment) {
 				selectedIndex = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
