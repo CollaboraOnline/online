@@ -965,12 +965,15 @@ export class Comment extends CanvasSectionObject {
 
 			if (midX > this.sectionProperties.data.rectangles[0][0] && midX < this.sectionProperties.data.rectangles[0][0] + this.sectionProperties.data.rectangles[0][2]
 				&& midY > this.sectionProperties.data.rectangles[0][1] && midY < this.sectionProperties.data.rectangles[0][1] + this.sectionProperties.data.rectangles[0][3]) {
-					this.show();
+				this.sectionProperties.commentListSection.sectionProperties.calcCurrentComment = this;
 			}
-			else {
+			else if (this.isSelected()) {
 				this.hide();
 				app.view.commentHasFocus = false;
+				this.sectionProperties.commentListSection.sectionProperties.calcCurrentComment = null;
 			}
+			else if (this.sectionProperties.commentListSection.sectionProperties.calcCurrentComment == this)
+				this.sectionProperties.commentListSection.sectionProperties.calcCurrentComment = null;
 		}
 	}
 

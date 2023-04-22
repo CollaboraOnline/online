@@ -72,6 +72,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.commentWidth = 300 * 1.2; // CSS pixels.
 		this.sectionProperties.collapsedMarginToTheEdge = (<any>window).mode.isTablet() ? 120: 70; // CSS pixels.
 		this.sectionProperties.deflectionOfSelectedComment = 160; // CSS pixels.
+		this.sectionProperties.calcCurrentComment = null; // We don't automatically show a Calc comment when cursor is on its cell. But we remember it to show if user presses Alt+C keys.
 		// This (commentsAreListed) variable means that comments are shown as a list on the right side of the document.
 		this.sectionProperties.commentsAreListed = (this.sectionProperties.docLayer._docType === 'text' || this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') && !(<any>window).mode.isMobile();
 		this.idIndexMap = new Map<any, number>();
