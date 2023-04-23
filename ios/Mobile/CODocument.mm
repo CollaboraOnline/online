@@ -100,6 +100,12 @@ static std::atomic<unsigned> appDocIdCounter(1);
 
     const unsigned char *ubufp = (const unsigned char *)buffer;
     std::vector<char> data;
+    // Reserve the maxiumum possible length after encoding
+    // This avoids an excessive number of reallocations. This is overkill
+    // for non-binary messages, but most non-binary messages appear to be
+    // under 1K bytes in length. In contrast, it appears that binary
+    // messags routinely use at least 75% of the maximum possible length.
+    data.reserve((length * 4) + 1);
     bool newlineFound = false;
     bool binaryMessage = (isMessageOfType(buffer, "tile:", length) ||
                           isMessageOfType(buffer, "tilecombine:", length) ||
