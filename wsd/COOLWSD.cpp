@@ -226,7 +226,7 @@ extern "C"
 
 #if ENABLE_DEBUG && !MOBILEAPP
 static std::chrono::milliseconds careerSpanMs(std::chrono::milliseconds::zero());
-#endif
+#endif // ENABLE_DEBUG && !MOBILEAPP
 
 /// The timeout for a child to spawn, initially high, then reset to the default.
 int ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS * 4;
@@ -5667,7 +5667,7 @@ int COOLWSD::innerMain()
     }
 #endif
 
-#if ENABLE_DEBUG
+#if ENABLE_DEBUG && !MOBILEAPP
     const std::string postMessageURI =
         getServiceURI("/browser/dist/framed.doc.html?file_path=" DEBUG_ABSSRCDIR
                       "/" COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER);

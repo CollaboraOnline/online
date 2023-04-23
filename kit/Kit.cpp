@@ -1503,7 +1503,9 @@ private:
         const std::string& macroSecurityLevel = session->getMacroSecurityLevel();
         const std::string& userTimezone = session->getTimezone();
 
+#if !MOBILEAPP
         consistencyCheckFileExists(uri);
+#endif
 
         std::string options;
         if (!lang.empty())
@@ -3163,8 +3165,10 @@ void runKitLoopInAThread()
 
 #endif // !BUILDING_TESTS
 
+
 void consistencyCheckJail()
 {
+#if !MOBILEAPP
     static bool warned = false;
     if (!warned)
     {
@@ -3192,6 +3196,7 @@ void consistencyCheckJail()
         else
             LOG_TRC("Passed system consistency check");
     }
+#endif // !MOBILEAPP
 }
 
 std::string anonymizeUrl(const std::string& url)
