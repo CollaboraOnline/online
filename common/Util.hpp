@@ -152,7 +152,7 @@ namespace Util
             if ((offset + i) >= buffer.size())
                 break;
 
-            sprintf(scratch, "%.2x", static_cast<unsigned char>(buffer[offset + i]));
+            snprintf(scratch, sizeof(scratch), "%.2x", static_cast<unsigned char>(buffer[offset + i]));
             os << scratch;
         }
 
@@ -451,7 +451,7 @@ namespace Util
         os << legend;
         for (j = 0; j < buffer.size() + width - 1; j += width)
         {
-            sprintf (scratch, "%s0x%.4x  ", prefix, j);
+            snprintf (scratch, sizeof(scratch), "%s0x%.4x  ", prefix, j);
             os << scratch;
 
             std::string line = stringifyHexLine(buffer, j, width);
@@ -1055,7 +1055,7 @@ int main(int argc, char**argv)
     inline void vectorAppendHex(std::vector<char> &vector, uint64_t number)
     {
         char output[32];
-        sprintf(output, "%" PRIx64, number);
+        snprintf(output, sizeof(output), "%" PRIx64, number);
         vectorAppend(vector, output);
     }
 
