@@ -1,4 +1,4 @@
-/* global describe it cy Cypress require afterEach expect */
+/* global describe it cy require afterEach expect */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -23,8 +23,7 @@ describe('Trigger hamburger menu options.', function() {
 		before('hamburger_menu.ods');
 		calcHelper.selectEntireSheet();
 
-		cy.get('#copy-paste-container table td')
-			.should('contain.text', 'Textx');
+		cy.get('#copy-paste-container table td').should('contain.text', 'Textx');
 
 		calcHelper.clickOnFirstCell(true, true);
 
@@ -38,11 +37,6 @@ describe('Trigger hamburger menu options.', function() {
 			.should('contain.text', 'new');
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
-
-		//reset get to original function
-		Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
-			return originalFn(selector, options);
-		});
 
 		// Reopen the document and check content.
 		helper.reload(testFileName, 'calc', true);
