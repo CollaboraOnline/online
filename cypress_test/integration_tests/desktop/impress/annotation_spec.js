@@ -47,6 +47,7 @@ describe('Annotation Tests', function() {
 
 		cy.contains('.context-menu-item','Modify').click();
 
+		cy.get('#annotation-modify-textarea-1').type('{home}');
 		cy.get('#annotation-modify-textarea-1').type('some other text, ');
 
 		cy.get('#annotation-save-1').click();
@@ -113,40 +114,43 @@ describe('Collapsed Annotation Tests', function() {
 
 
 	it('Insert', function() {
-		insertMultipleComment('impress', 1, true);
+		insertMultipleComment('impress', 1, false);
 		cy.get('.leaflet-marker-icon').should('exist');
 		cy.get('.cool-annotation-content > div')
 			.should('contain','some text');
 	});
 
 	it('Modify', function() {
-		insertMultipleComment('impress', 1, true);
+		insertMultipleComment('impress', 1, false);
 
 		cy.get('.leaflet-marker-icon').should('exist');
 
 		cy.get('#annotation-content-area-1').should('contain','some text0');
 
-		cy.get('#mobile-wizard-popup .cool-annotation-menu').click();
+		cy.get('.avatar-img').click();
+		cy.get('.cool-annotation-menu').click();
 
 		cy.contains('.context-menu-item','Modify').click();
 
-		cy.get('#mobile-wizard-popup #annotation-modify-textarea-1').type('some other text, ');
+		cy.get('#annotation-modify-textarea-1').type('{home}');
+		cy.get('#annotation-modify-textarea-1').type('some other text, ');
 
-		cy.get('#mobile-wizard-popup #annotation-save-1').click();
+		cy.get('#annotation-save-1').click();
 
-		cy.get('#mobile-wizard-popup #annotation-content-area-1').should('contain','some other text, some text0');
+		cy.get('#annotation-content-area-1').should('contain','some other text, some text0');
 
 		cy.get('.leaflet-marker-icon').should('exist');
 	});
 
 	it('Remove',function() {
-		insertMultipleComment('impress', 1, true);
+		insertMultipleComment('impress', 1, false);
 
 		cy.get('.leaflet-marker-icon').should('exist');
 
 		cy.get('.cool-annotation-content > div').should('contain','some text');
 
-		cy.get('#mobile-wizard-popup .cool-annotation-menu').click();
+		cy.get('.avatar-img').click();
+		cy.get('.cool-annotation-menu').click();
 
 		cy.contains('.context-menu-item','Remove')
 			.click();
@@ -155,19 +159,20 @@ describe('Collapsed Annotation Tests', function() {
 	});
 
 	it('Reply',function() {
-		insertMultipleComment('impress', 1, true);
+		insertMultipleComment('impress', 1, false);
 
 		cy.get('.leaflet-marker-icon').should('exist');
 
 		cy.get('.cool-annotation-content > div').should('contain','some text');
 
-		cy.get('#mobile-wizard-popup .cool-annotation-menu').click();
+		cy.get('.avatar-img').click();
+		cy.get('.cool-annotation-menu').click();
 
 		cy.contains('.context-menu-item','Reply').click();
 
-		cy.get('#mobile-wizard-popup #annotation-reply-textarea-1').type('some reply text');
+		cy.get('#annotation-reply-textarea-1').type('some reply text');
 
-		cy.get('#mobile-wizard-popup #annotation-reply-1').click();
+		cy.get('#annotation-reply-1').click();
 
 		cy.get('.cool-annotation-content > div').should('include.text','some reply text');
 	});
@@ -195,17 +200,16 @@ describe('Comment Scrolling',function() {
 	it('no comment or one comment', function() {
 		cy.wait(1000);
 		cy.get('.leaflet-control-scroll-down').should('not.exist');
-		insertMultipleComment('impress', 1, true);
+		insertMultipleComment('impress', 1, false);
 		cy.get('.leaflet-marker-icon').should('exist');
 	});
 
 	it('omit slides without comments', function() {
 		cy.wait(1000);
 		//scroll up
-		insertMultipleComment('impress', 1, true);
+		insertMultipleComment('impress', 1, false);
 		addSlide(2);
-		insertMultipleComment('impress', 1, true);
-		cy.get('.jsdialog-overlay').click({force: true}).should('not.exist');
+		insertMultipleComment('impress', 1, false);
 		helper.waitUntilIdle('.leaflet-control-scroll-up');
 		cy.get('.leaflet-control-scroll-up').should('be.visible');
 		cy.get('.leaflet-control-scroll-up').click().wait(300);
@@ -220,11 +224,10 @@ describe('Comment Scrolling',function() {
 
 	it('switch to previous or next slide',function() {
 		addSlide(1);
-		insertMultipleComment('impress', 2, true);
+		insertMultipleComment('impress', 2, false);
 
 		//scroll up
 		addSlide(1);
-		cy.get('.jsdialog-overlay').click({force: true});
 		cy.get('.leaflet-control-scroll-up').should('exist');
 		cy.get('.leaflet-control-scroll-up').click().wait(300);
 		cy.get('#PageStatus').should('contain','Slide 2 of 3');

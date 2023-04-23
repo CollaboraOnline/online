@@ -282,8 +282,8 @@ describe('Top toolbar tests.', function() {
 			.should('not.contain', 'margin-left: 0.49in');
 	});
 
-	it('Insert comment.', function() {
-		desktopHelper.insertMultipleComment('writer', 1, true);
+	it.only('Insert comment.', function() {
+		desktopHelper.insertMultipleComment('writer', 1, false);
 
 		cy.get('.cool-annotation-content-wrapper').should('exist');
 
