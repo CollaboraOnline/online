@@ -6,4 +6,4 @@ App Store "Test Details" text for the last TestFlight build
 
 This version includes the latest 22.05.12 code and fixes the following bugs:
 
-• Icons would fail to load for any menu items and toolbar buttons that export a document to PDF or EPUB
+• The currently open document would be replaced by a blank screen that could not be closed if the app's underlying WKWebView crashed. The app will now close the document and try to save any unsaved changes if such a crash occurs.
