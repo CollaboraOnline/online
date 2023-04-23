@@ -2303,6 +2303,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'zoterounlink': 'unlinkcitation',
 			'zoteroaddeditbibliography': 'addeditbibliography',
 			'zoterosetdocprefs': 'formproperties',
+			// Fix issue #6145 by adding aliases for the PDF and EPUB icons
+			// The fix for issues #6103 and #6104 changes the name of these
+			// icons so map the new names to the old names.
+			'downloadas-pdf': 'exportpdf',
+			'downloadas-epub': 'exportepub',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
