@@ -47,6 +47,8 @@ describe('Annotation tests.', function() {
 
 		cy.get('#response-ok').click();
 
+		cy.get('#tb_actionbar_item_comment_wizard').click();
+
 		cy.get('#annotation-content-area-1')
 			.should('exist');
 
@@ -81,7 +83,7 @@ describe('Annotation tests.', function() {
 		cy.get('.cool-annotation-table')
 			.should('exist');
 
-		cy.get('.cool-annotation-textarea')
+		cy.get('#input-modal-input')
 			.should('have.text', '');
 
 		cy.get('#response-ok')

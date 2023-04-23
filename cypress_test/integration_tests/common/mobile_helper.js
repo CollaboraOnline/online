@@ -16,24 +16,10 @@ function enableEditingMobile() {
 
 	cy.log('Enabling editing mode - start.');
 
-	cy.get('#mobile-edit-button')
-		.then(function(button) {
-			if (button.css('display') !== 'none') {
+	cy.get('#mobile-edit-button').click();
 
-				cy.get('#toolbar-mobile-back')
-					.should('not.have.class', 'editmode-on')
-					.and('have.class', 'editmode-off');
-
-				// Click until it registers
-				cy.get('#mobile-edit-button')
-					.should($button => $button.trigger('click'))
-					.should('not.be.visible');
-			}
-		});
-
-	cy.get('#toolbar-mobile-back')
-		.should('have.class', 'editmode-on')
-		.and('not.have.class', 'editmode-off');
+	cy.get('#toolbar-mobile-back').should('have.class', 'editmode-on');
+	cy.get('#toolbar-mobile-back').should('not.have.class', 'editmode-off');
 
 	// Wait until all UI update is finished.
 	cy.get('#toolbar-down')

@@ -1097,8 +1097,8 @@ export class Comment extends CanvasSectionObject {
 
 		this.sectionProperties.commentListSection.hideArrow();
 		var container = this.sectionProperties.container;
+		this.hideMarker();
 		if (container && container.parentElement) {
-			this.hideMarker();
 			var c: number = 0;
 			while (c < 10) {
 				try {

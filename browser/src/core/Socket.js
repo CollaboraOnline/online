@@ -1529,7 +1529,7 @@ app.definitions.Socket = L.Class.extend({
 			this._map.setPermission('view');
 		}
 
-		if (!this._map['wopi'].DisableInactiveMessages)
+		if (!this._map['wopi'].DisableInactiveMessages && !app.sectionContainer.testing)
 			this._map.uiManager.showSnackbar(_('The server has been disconnected.'));
 	},
 
