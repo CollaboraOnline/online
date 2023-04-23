@@ -6742,6 +6742,8 @@ L.CanvasTileLayer = L.Layer.extend({
 					if (!(value._invalidCount > 0) && this._tileCache[key])
 						this._tileCache[key] = value.el;
 					ctx = canvas.getContext('2d');
+					if (ctx)
+						break;
 				}
 			}
 
