@@ -4,6 +4,6 @@ See https://collaboraonline.github.io/post/build-code-ios/
 App Store "Test Details" text for the last TestFlight build
 -----------------------------------------------------------
 
-This version includes the latest 22.05.12 code and fixes the following bugs:
+This version includes the latest 22.05.13 code and fixes the following bugs:
 
 • Icons would fail to load for any menu items and toolbar buttons that export a document to PDF or EPUB
