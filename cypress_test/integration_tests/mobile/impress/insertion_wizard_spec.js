@@ -76,7 +76,7 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Comment insertion dialog is opened
-		cy.get('#comment-container-new').should('exist');
+		cy.get('#mobile-wizard-content-modal-dialog-new-annotation-dialog').should('exist');
 
 		// Add some comment
 		cy.get('#input-modal-input').type('some text');
