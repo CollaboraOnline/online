@@ -143,6 +143,8 @@ describe('Collapsed Annotation Tests', function() {
 
 		cy.get('#annotation-content-area-1').should('contain','some text');
 
+		cy.wait(300);
+
 		cy.get('.cool-annotation-img').click();
 
 		cy.get('#comment-annotation-menu-1').click();
@@ -165,6 +167,7 @@ describe('Collapsed Annotation Tests', function() {
 		cy.get('.cool-annotation-content > div')
 			.should('contain','some text');
 
+		cy.wait(300);
 		cy.get('.cool-annotation-img').click();
 
 		cy.get('.cool-annotation-menu').click();
