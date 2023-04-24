@@ -32,8 +32,6 @@ describe('AutoFilter', function() {
 	//If we select entire sheet , there is no data about table in copy-paste-container when autofilter
 	//is enabled
 	function assertDataOnFilter(arr1) {
-		cy.wait(500);
-
 		calcHelper.clickOnFirstCell();
 
 		for (let i=0; i < arr1.length; i+=2) {
@@ -89,6 +87,8 @@ describe('AutoFilter', function() {
 
 		cy.get('.autofilter .ui-button-box-right #ok')
 			.click();
+		
+		cy.get('.autofilter .vertical').should('not.exist');
 
 		assertDataOnFilter(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 3', 'Pass']);
 
@@ -137,6 +137,8 @@ describe('AutoFilter', function() {
 			.click();
 
 		cy.get('#ok').click();
+
+		cy.get('#check_list_box').should('not.exist');
 
 		assertDataOnFilter(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 5', 'Fail']);
 	});

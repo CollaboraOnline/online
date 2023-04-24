@@ -366,7 +366,7 @@ function checkIfDocIsLoaded(frameId) {
 	cy.customGet('.leaflet-canvas-container canvas', frameId, {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
 	// Wait until anything is drawn on tile canvas.
-	canvasShouldNotBeFullWhite('.leaflet-canvas-container canvas',frameId);
+	canvasShouldNotBeFullWhite('.leaflet-canvas-container canvas', frameId);
 
 	// With php-proxy the client is irresponsive for some seconds after load, because of the incoming messages.
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
