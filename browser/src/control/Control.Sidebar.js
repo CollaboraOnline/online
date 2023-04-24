@@ -126,6 +126,7 @@ L.Control.Sidebar = L.Control.extend({
 		this.map.uiManager.setSavedState('SdSlideTransitionDeck', false);
 		this.map.uiManager.setSavedState('SdCustomAnimationDeck', false);
 		this.map.uiManager.setSavedState('SdMasterPagesDeck', false);
+		this.map.uiManager.setSavedState('NavigatorDeck', false);
 	},
 
 	commandForDeck: function(deckId) {
@@ -137,6 +138,8 @@ L.Control.Sidebar = L.Control.extend({
 			return '.uno:CustomAnimation';
 		else if (deckId === 'SdMasterPagesDeck')
 			return '.uno:MasterSlidesPanel';
+		else if (deckId === 'NavigatorDeck')
+			return '.uno:Navigator';
 		return '';
 	},
 

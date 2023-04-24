@@ -2212,9 +2212,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			// Workaround for tdf#123874. For some reason the handling of the
 			// shapeselectioncontent messages that we get back causes the WebKit process
 			// to crash on iOS.
-			if (!window.ThisIsTheiOSApp && this._graphicSelection.extraInfo.isDraggable && !this._graphicSelection.extraInfo.svg) {
-				app.socket.sendMessage('rendershapeselection mimetype=image/svg+xml');
-			}
+			//ATTILA: removed temporary.. else it throw error on goto Frame
+			//if (!window.ThisIsTheiOSApp && this._graphicSelection.extraInfo.isDraggable && !this._graphicSelection.extraInfo.svg) {
+			//	app.socket.sendMessage('rendershapeselection mimetype=image/svg+xml');
+			//}
 		}
 
 		// Graphics are by default complex selections, unless Core tells us otherwise.
@@ -3663,7 +3664,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (!zoom
 		&& scroll !== false
-		&& this._map._isCursorVisible
+		&& (this._map._isCursorVisible ||
+			(this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)))
 		// Do not center view in Calc if no new cursor coordinates have arrived yet.
 		// ie, 'invalidatecursor' has not arrived after 'cursorvisible' yet.
 		&& (!this.isCalc() || this._lastVisibleCursorRef !== this._visibleCursor)
