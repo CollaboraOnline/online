@@ -357,7 +357,7 @@ static void cleanupChildren()
     while (i-- > 0)
     {
         const std::string path = cleanupJailPaths[i];
-        JailUtil::removeJail(path);
+        JailUtil::tryRemoveJail(path);
         const FileUtil::Stat st(path);
         if (st.good() && st.isDirectory())
             LOG_DBG("Could not remove jail path [" << path << "]. Will retry later.");

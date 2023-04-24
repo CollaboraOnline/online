@@ -37,7 +37,7 @@ void markJailCopied(const std::string& root);
 bool isJailCopied(const std::string& root);
 
 /// Remove the jail directory and all its contents.
-void removeJail(const std::string& root);
+bool tryRemoveJail(const std::string& root);
 
 /// Remove all jails.
 void cleanupJails(const std::string& jailRoot);

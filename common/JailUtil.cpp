@@ -149,9 +149,18 @@ static bool safeRemoveDir(const std::string& path)
     return true;
 }
 
-void removeJail(const std::string& root)
+void removeAuxFolders(const std::string &root)
 {
-    LOG_INF("Removing jail [" << root << ']');
+    FileUtil::removeFile(Poco::Path(root, "tmp").toString(), true);
+    FileUtil::removeFile(Poco::Path(root, "linkable").toString(), true);
+}
+
+bool tryRemoveJail(const std::string& root)
+{
+    if (!FileUtil::Stat(root + '/' + LO_JAIL_SUBPATH).exists())
+        return false; // not a jail.
+
+    LOG_TRC("Do remove of jail [" << root << ']');
 
     // Unmount the tmp directory. Don't care if we fail.
     const std::string tmpPath = Poco::Path(root, "tmp").toString();
@@ -167,6 +176,8 @@ void removeJail(const std::string& root)
 
     // Unmount/delete the jail (sysTemplate).
     safeRemoveDir(root);
+
+    return true;
 }
 
 /// This cleans up the jails directories.
@@ -181,43 +192,72 @@ void cleanupJails(const std::string& root)
     FileUtil::Stat stRoot(root);
     if (!stRoot.exists() || !stRoot.isDirectory())
     {
-        LOG_TRC("Directory [" << root << "] is not a directory or doesn't exist.");
+        LOG_TRC("Directory [" << root << "] is not a jail directory or doesn't exist.");
         return;
     }
 
-    if (FileUtil::Stat(root + '/' + LO_JAIL_SUBPATH).exists())
-    {
-        // This is a jail.
-        removeJail(root);
-    }
-    else
-    {
-        // Not a jail, recurse. UnitTest creates sub-directories.
-        LOG_TRC("Directory [" << root << "] is not a jail, recursing.");
+    std::vector<std::string> jails;
+    Poco::File(root).list(jails);
 
-        std::vector<std::string> jails;
-        Poco::File(root).list(jails);
-        for (const auto& jail : jails)
+    // legacy jails at the top-level
+    for (const auto& jail : jails)
+    {
+        std::string childDir = Poco::Path(root, jail).toString();
+        FileUtil::Stat stChild(childDir);
+        if (stChild.exists() && !stChild.isLink() && stChild.isDirectory())
         {
-            const Poco::Path path(root, jail);
-            // Postpone deleting "tmp" directory until we clean all the jails
-            // On FreeBSD the "tmp" dir contains a devfs moint point. Normally,
-            // it gets unmounted by coolmount during shutdown, but coolmount
-            // does nothing if it is called on the non-existing path.
-            // Removing this dir there prevents clean unmounting of devfs later.
-            if (jail == "tmp")
-                continue;
-            // Delete tmp and link cache with prejudice.
-            if (jail == "linkable")
-                FileUtil::removeFile(path.toString(), true);
-            else
-                cleanupJails(path.toString());
+            // Modern jails should look like this:
+            //   jails/<coolwsd-pid>-<random>/<random>/
+            size_t pidSepPos = jail.find('-');
+            if (pidSepPos != std::string::npos)
+            {
+                bool skip = false;
+                std::string pidStr = jail.substr(0, pidSepPos);
+                try {
+                    int pid = std::stoi(pidStr);
+                    LOG_TRC("Checking pid for jail " << pid << " " << root);
+                    if (pid != getpid() && kill(pid, 0) == 0)
+                    {
+                        LOG_TRC("Skipping cleaning jails directory for running coolwsd with pid " << pid);
+                        skip = true;
+                    }
+                } catch(...) {
+                    // Problematic - may delete a jail that is not ours then ...
+                    LOG_WRN("Exception parsing pid '" << pidStr << "' from '" << jail << "'");
+                }
+                if (!skip)
+                {
+                    std::vector<std::string> newJails;
+                    Poco::File(childDir).list(newJails);
+
+                    // legacy jails at the top-level
+                    for (const auto& newJail : newJails)
+                    {
+                        tryRemoveJail(Poco::Path(childDir, newJail).toString());
+                    }
+
+                    // top level linkable and tmp mount point.
+                    removeAuxFolders(childDir);
+
+                    // top level per-coolwsd jails directory.
+                    safeRemoveDir(childDir);
+                }
+            }
+            // Remove legacy things that look like jails
+            else if (tryRemoveJail(childDir))
+            {
+                static size_t warned = 0;
+                if (!(warned++))
+                    LOG_WRN("Cleaned legacy jail without pid prefix after upgrade " << childDir);
+            }
+            // else legacy tmp or linkable
         }
-        const Poco::Path tmpPath(root, "tmp");
-        FileUtil::removeFile(tmpPath.toString(), true);
     }
 
-    // Remove empty directories.
+    // Cleanup legacy top-level 'tmp' and 'linkable' directories if empty
+    removeAuxFolders(root);
+
+    // Cleanup top-level 'jails' directory if empty
     if (FileUtil::isEmptyDirectory(root))
         safeRemoveDir(root);
     else
