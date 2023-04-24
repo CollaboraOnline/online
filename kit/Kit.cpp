@@ -2839,7 +2839,7 @@ void lokit_main(
                 if (!mountJail())
                 {
                     LOG_INF("Cleaning up jail before linking/copying.");
-                    JailUtil::removeJail(jailPathStr);
+                    JailUtil::tryRemoveJail(jailPathStr);
                     bindMount = false;
                     JailUtil::disableBindMounting();
                 }
@@ -3188,6 +3188,7 @@ void consistencyCheckJail()
                     "potentially indicative of an operator damaging the system, and will "
                     "inevitably cause document data-loss and/or malfunction.");
             warned = true;
+            assert(!"Fatal system error with jail setup.");
         }
         else
             LOG_TRC("Passed system consistency check");

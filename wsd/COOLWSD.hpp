@@ -261,6 +261,7 @@ public:
     static std::string ConfigDir;
     static std::string SysTemplate;
     static std::string LoTemplate;
+    static std::string CleanupChildRoot;
     static std::string ChildRoot;
     static std::string ServerName;
     static std::string FileServerRoot;
