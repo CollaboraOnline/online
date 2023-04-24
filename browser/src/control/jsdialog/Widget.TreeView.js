@@ -337,6 +337,9 @@ function _createHeaders(tbody, data, builder) {
 	}
 }
 
+//var lastselected = ''; //aszucs: TODO: find a better way to store previous selected
+					   //i would put it into table, but that is locally created..
+					   //some frontend experience would be useful for this :)
 function _treelistboxControl(parentContainer, data, builder) {
 	var table = L.DomUtil.create('table', builder.options.cssClass + ' ui-treeview', parentContainer);
 	table.id = data.id;
@@ -388,19 +391,32 @@ function _treelistboxControl(parentContainer, data, builder) {
 	}
 
 	if (firstSelected) {
-		var observer = new IntersectionObserver(function (entries, observer) {
-			entries.forEach(function (entry) {
-				if (entry.intersectionRatio > 0) {
-					if (isHeaderListBox)
-						table.scrollTop = firstSelected.offsetTop - tbody.offsetTop;
-					else
-						table.scrollTop = firstSelected.parentNode.offsetTop - tbody.offsetTop;
-					observer.disconnect();
-				}
-			});
-		});
+		//aszucs: why this observe is needed
+		//without it, firstSelected.offsetTop == 0    maybe it calculated by the observer?
+		//but before the observer is created, the treelist jumb back to top.. (reset/recreated?)
+		//      except if we clicking only inside of headings ... ?
+		//if (lastselected != firstSelected.textContent) {
+			var observer = new IntersectionObserver(function (entries, observer) {
 
-		observer.observe(tbody);
+				var offsetTop;
+				if (isHeaderListBox)
+					offsetTop = firstSelected.offsetTop;
+				else
+					offsetTop = firstSelected.parentNode.offsetTop;
+
+				var scrollNeeded=offsetTop-tbody.offsetTop;
+
+				if (table.scrollTop>scrollNeeded) {
+					table.scrollTop = scrollNeeded;
+				} else if (table.scrollTop+table.clientHeight-firstSelected.clientHeight<scrollNeeded) {
+					table.scrollTop = scrollNeeded-table.clientHeight+firstSelected.clientHeight;
+				}
+
+				observer.disconnect();
+			});
+			observer.observe(tbody);
+			//lastselected = firstSelected.textContent;
+		//}
 	}
 
 	table.filterEntries = function (filter) {
