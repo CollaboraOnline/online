@@ -35,20 +35,13 @@ To run cypress test cases selectively, you need to
 go in to the cypress_test folder first and run one of
 the following commands.
 
-To run all desktop tests:
+To run all desktop tests (this includes notebookbar UI related tests):
 
     make check-desktop
 
 To run all mobile tests:
 
     make check-mobile
-
-To run all notebookbar tests:
-
-    make USER_INTERFACE="notebookbar" check-desktop
-
-    Note: Currently all the test spec listed in cypress_test/plugins/whitelists.js
-          are supported for notebookbar
 
 To run one specific test suite of desktop tests,
 use spec argument with a relative path to
@@ -61,15 +54,6 @@ use spec argument with a relative path to
 cypress_test/integration_tests/mobile/:
 
     make check-mobile spec=writer/toolbar_spec.js
-
-To run one specific test suite of desktop notebookbar tests,
-use spec argument with a relative path to
-cypress_test/integration_tests/desktop/:
-
-    make USER_INTERFACE="notebookbar" check-desktop spec=writer/top_toolbar_spec.js
-
-    Note: Currently all the test spec listed in cypress_test/plugins/whitelists.js
-          are supported for notebookbar
 
 Running one specific test
 -------------------------
@@ -111,13 +95,6 @@ To open mobile tests in the test runner:
 
     make run-mobile
 
-To open desktop notebookbar tests in the test runner:
-
-    make USER_INTERFACE="notebookbar" run-desktop
-
-    Note: Currently all the test spec listed in cypress_test/plugins/whitelists.js
-          are supported for notebookbar
-
 To open one specific test suite of desktop tests,
 use spec argument with a relative path to
 cypress_test/integration_tests/desktop/:
@@ -129,15 +106,6 @@ use spec argument with a relative path to
 cypress_test/integration_tests/mobile/:
 
     make run-mobile spec=writer/toolbar_spec.js
-
-To open one specific test suite of desktop notebookbar tests,
-use spec argument with a relative path to
-cypress_test/integration_tests/desktop/:
-
-    make USER_INTERFACE="notebookbar" run-desktop spec=writer/top_toolbar_spec.js
-
-    Note: Currently all the test spec listed in cypress_test/plugins/whitelists.js
-          are supported for notebookbar
 
 During the build we run the tests with Chrome browser, so make sure
 you select Chrome browser on the GUI while checking tests.

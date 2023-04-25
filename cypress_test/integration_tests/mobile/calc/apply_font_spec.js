@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Apply font changes.', function() {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font changes.', function() {
 	var origTestFileName = 'apply_font.ods';
 	var testFileName;
 
@@ -26,20 +26,14 @@ describe('Apply font changes.', function() {
 
 	it('Apply bold.', function() {
 		helper.clickOnIdle('#Bold');
-
 		calcHelper.selectEntireSheet();
-
-		cy.get('#copy-paste-container table td b')
-			.should('exist');
+		cy.cGet('#copy-paste-container table td b').should('exist');
 	});
 
 	it('Apply italic.', function() {
 		helper.clickOnIdle('#Italic');
-
 		calcHelper.selectEntireSheet();
-
-		cy.get('#copy-paste-container table td i')
-			.should('exist');
+		cy.cGet('#copy-paste-container table td i').should('exist');
 	});
 
 	it('Apply underline.', function() {
@@ -47,7 +41,7 @@ describe('Apply font changes.', function() {
 
 		calcHelper.selectEntireSheet();
 
-		cy.get('#copy-paste-container table td u')
+		cy.cGet('#copy-paste-container table td u')
 			.should('exist');
 	});
 
@@ -56,7 +50,7 @@ describe('Apply font changes.', function() {
 
 		calcHelper.selectEntireSheet();
 
-		cy.get('#copy-paste-container table td s')
+		cy.cGet('#copy-paste-container table td s')
 			.should('exist');
 	});
 
@@ -69,20 +63,24 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply font name.', function() {
-		mobileHelper.selectListBoxItem('#fontnamecombobox', 'Linux Libertine G');
+		cy.cGet('#TextPropertyPanel').click();
+		cy.cGet('#fontnamecombobox').click();
+		cy.cGet('#fontnamecombobox').contains('.mobile-wizard.ui-combobox-text', 'Linux Libertine G').click();
 
 		calcHelper.selectEntireSheet();
 
-		cy.get('#copy-paste-container table td font')
+		cy.cGet('#copy-paste-container table td font')
 			.should('have.attr', 'face', 'Linux Libertine G');
 	});
 
 	it('Apply font size.', function() {
-		mobileHelper.selectListBoxItem('#fontsizecombobox', '14 pt');
+		cy.cGet('#TextPropertyPanel').click();
+		cy.cGet('#fontsizecombobox').click();
+		cy.cGet('#fontsizecombobox').contains('.mobile-wizard.ui-combobox-text', '14 pt').click();
 
 		calcHelper.selectEntireSheet();
 
-		cy.get('#copy-paste-container table td font')
+		cy.cGet('#copy-paste-container table td font')
 			.should('have.attr', 'size', '4');
 	});
 
@@ -93,7 +91,7 @@ describe('Apply font changes.', function() {
 
 		calcHelper.selectEntireSheet();
 
-		cy.get('#copy-paste-container table td font')
+		cy.cGet('#copy-paste-container table td font')
 			.should('have.attr', 'color', '#00FF00');
 	});
 });

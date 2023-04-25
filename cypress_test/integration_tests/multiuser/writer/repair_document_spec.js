@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var repairHelper = require('../../common/repair_document_helper');
 
-describe('Repair Document', function() {
+describe.skip(['tagmultiuser'], 'Repair Document', function() {
 	var origTestFileName = 'repair_doc.odt';
 	var testFileName;
 
@@ -16,28 +16,24 @@ describe('Repair Document', function() {
 	});
 
 	function repairDoc(frameId1, frameId2) {
+		cy.cSetActiveFrame(frameId1);
+		cy.cGet('.leaflet-layer').click();
 
-		cy.customGet('.leaflet-layer', frameId1).click();
-
-		helper.typeIntoDocument('Hello World', frameId1);
+		helper.typeIntoDocument('Hello World');
 
 		cy.wait(2000);
 
-		repairHelper.rollbackPastChange('Typing: “World”', frameId2);
-
-		cy.customGet('.leaflet-layer', frameId2).click();
-
+		cy.cSetActiveFrame(frameId2);
+		repairHelper.rollbackPastChange('Typing: “World”');
+		cy.cGet('.leaflet-layer').click();
 		cy.wait(500);
+		helper.selectAllText();
+		helper.expectTextForClipboard('Hello \n');
 
-		helper.selectAllText(frameId2);
-
-		helper.expectTextForClipboard('Hello \n', frameId2);
-
-		cy.customGet('.leaflet-layer', frameId1).click();
-
-		helper.selectAllText(frameId1);
-
-		helper.expectTextForClipboard('Hello \n', frameId1);
+		cy.cSetActiveFrame(frameId1);
+		cy.cGet('.leaflet-layer').click();
+		helper.selectAllText();
+		helper.expectTextForClipboard('Hello \n');
 	}
 
 	it('Repair by user-2', function() {

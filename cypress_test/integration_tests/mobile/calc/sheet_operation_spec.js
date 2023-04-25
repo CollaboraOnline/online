@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Sheet Operation', function () {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Sheet Operation', function () {
 	var origTestFileName = 'sheet_operation.ods';
 	var testFileName;
 
@@ -18,7 +18,7 @@ describe('Sheet Operation', function () {
 	});
 
 	function assertNumberofSheets(n) {
-		cy.get('button.spreadsheet-tab').should('have.length', n);
+		cy.cGet('button.spreadsheet-tab').should('have.length', n);
 	}
 
 	function clickVexDialogButton(buttonText) {
@@ -35,18 +35,18 @@ describe('Sheet Operation', function () {
 			pointerType: 'mouse'
 		};
 
-		cy.get('.spreadsheet-tab.spreadsheet-tab-selected')
+		cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000);
 
-		cy.contains('.ui-header.level-0.mobile-wizard.ui-widget', menu)
+		cy.cGet('body').contains('.ui-header.level-0.mobile-wizard.ui-widget', menu)
 			.click();
 	}
 
 	it('Insert sheet', function () {
 		assertNumberofSheets(1);
 
-		cy.get('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
 
 		assertNumberofSheets(2);
 	});
@@ -54,35 +54,35 @@ describe('Sheet Operation', function () {
 	it('Insert sheet before', function () {
 		assertNumberofSheets(1);
 
-		cy.get('#spreadsheet-tab0').should('have.text', 'Sheet1');
+		cy.cGet('#spreadsheet-tab0').should('have.text', 'Sheet1');
 
 		selectOptionMobileWizard('Insert sheet before this');
 
 		assertNumberofSheets(2);
 
-		cy.get('#spreadsheet-tab0').should('have.text', 'Sheet2');
+		cy.cGet('#spreadsheet-tab0').should('have.text', 'Sheet2');
 
-		cy.get('#spreadsheet-tab1').should('have.text', 'Sheet1');
+		cy.cGet('#spreadsheet-tab1').should('have.text', 'Sheet1');
 	});
 
 	it('Insert sheet after', function () {
 		assertNumberofSheets(1);
 
-		cy.get('#spreadsheet-tab0').should('have.text', 'Sheet1');
+		cy.cGet('#spreadsheet-tab0').should('have.text', 'Sheet1');
 
 		selectOptionMobileWizard('Insert sheet after this');
 
 		assertNumberofSheets(2);
 
-		cy.get('#spreadsheet-tab0').should('have.text', 'Sheet1');
+		cy.cGet('#spreadsheet-tab0').should('have.text', 'Sheet1');
 
-		cy.get('#spreadsheet-tab1').should('have.text', 'Sheet2');
+		cy.cGet('#spreadsheet-tab1').should('have.text', 'Sheet2');
 	});
 
 	it('Delete sheet', function () {
 		assertNumberofSheets(1);
 
-		cy.get('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
 
 		assertNumberofSheets(2);
 
@@ -96,23 +96,20 @@ describe('Sheet Operation', function () {
 	it('Rename sheet', function () {
 		assertNumberofSheets(1);
 
-		cy.get('.spreadsheet-tab.spreadsheet-tab-selected').should('have.text', 'Sheet1');
+		cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected').should('have.text', 'Sheet1');
 
 		selectOptionMobileWizard('Rename Sheet...');
 
-		cy.get('#mobile-wizard-content-modal-dialog-rename-calc-sheet').should('exist');
-
-		cy.get('#input-modal-input').clear().type('renameSheet');
-
-		cy.get('#response-ok').click();
-
-		cy.get('.spreadsheet-tab.spreadsheet-tab-selected').should('have.text', 'renameSheet');
+		cy.cGet('#mobile-wizard-content-modal-dialog-rename-calc-sheet').should('exist');
+		cy.cGet('#input-modal-input').clear().type('renameSheet');
+		cy.cGet('#response-ok').click();
+		cy.cGet('.spreadsheet-tab.spreadsheet-tab-selected').should('have.text', 'renameSheet');
 	});
 
 	it('Hide/Show sheet', function () {
 		assertNumberofSheets(1);
 
-		cy.get('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
 
 		assertNumberofSheets(2);
 
@@ -124,9 +121,9 @@ describe('Sheet Operation', function () {
 		//show sheet
 		selectOptionMobileWizard('Show Sheet');
 
-		cy.get('.vex-content').should('exist');
+		cy.cGet('.vex-content').should('exist');
 
-		cy.get('#hidden-part-checkbox-1').check();
+		cy.cGet('#hidden-part-checkbox-1').check();
 
 		clickVexDialogButton('Show Selected Sheets');
 
@@ -136,20 +133,20 @@ describe('Sheet Operation', function () {
 	it('Move sheet left/right', function () {
 		assertNumberofSheets(1);
 
-		cy.get('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
 
 		assertNumberofSheets(2);
 
-		cy.get('#spreadsheet-tab0').should('have.text', 'Sheet1');
+		cy.cGet('#spreadsheet-tab0').should('have.text', 'Sheet1');
 
 		//left
 		selectOptionMobileWizard('Move Sheet Left');
 
-		cy.get('#spreadsheet-tab0').should('have.text', 'Sheet2');
+		cy.cGet('#spreadsheet-tab0').should('have.text', 'Sheet2');
 
 		//right
 		selectOptionMobileWizard('Move Sheet Right');
 
-		cy.get('#spreadsheet-tab0').should('have.text', 'Sheet1');
+		cy.cGet('#spreadsheet-tab0').should('have.text', 'Sheet1');
 	});
 });

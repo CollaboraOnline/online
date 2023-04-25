@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Slide operations', function() {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Slide operations', function() {
 	var origTestFileName = 'slide_operations.odp';
 	var testFileName;
 
@@ -19,29 +19,25 @@ describe('Slide operations', function() {
 	});
 
 	it('Add slides', function() {
-		cy.get('.leaflet-control-zoom-in')
-			.click();
+		cy.cGet('.leaflet-control-zoom-in').click();
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 	});
 
 	it('Remove Slides', function() {
 		//add slides
-		cy.get('.leaflet-control-zoom-in')
-			.click();
-
+		cy.cGet('.leaflet-control-zoom-in').click();
 		impressHelper.assertNumberOfSlidePreviews(2);
-
 		//remove slides
 		mobileHelper.openHamburgerMenu();
 
-		cy.get('.menu-entry-icon.slidemenu').parent()
+		cy.cGet('.menu-entry-icon.slidemenu').parent()
 			.click();
 
-		cy.get('.menu-entry-icon.deletepage').parent()
+		cy.cGet('.menu-entry-icon.deletepage').parent()
 			.click();
 
-		cy.get('#response').click();
+		cy.cGet('#response').click();
 
 		impressHelper.assertNumberOfSlidePreviews(1);
 	});
@@ -49,11 +45,8 @@ describe('Slide operations', function() {
 	it('Duplicate Slide', function() {
 		mobileHelper.openHamburgerMenu();
 
-		cy.get('.menu-entry-icon.slidemenu').parent()
-			.click();
-
-		cy.get('.menu-entry-icon.duplicatepage').parent()
-			.click();
+		cy.cGet('.menu-entry-icon.slidemenu').parent().click();
+		cy.cGet('.menu-entry-icon.duplicatepage').parent().click();
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 	});

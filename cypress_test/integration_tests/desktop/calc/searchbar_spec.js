@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var searchHelper = require('../../common/search_helper');
 
-describe('Searching via search bar.', function() {
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar.', function() {
 	var origTestFileName = 'search_bar.ods';
 	var testFileName;
 
@@ -21,52 +21,37 @@ describe('Searching via search bar.', function() {
 		searchHelper.searchNextDesktop();
 
 		// First cell should be selected
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'A1');
-
-		cy.get('#copy-paste-container table td')
-			.should('have.text', 'a');
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 	});
 
 	it('Search not existing word.', function() {
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'A2');
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'A2');
 
 		searchHelper.typeIntoSearchFieldDesktop('q');
 
 		// Should be no new selection
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'A2');
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'A2');
 	});
 
 	it('Search next / prev instance.', function() {
 		searchHelper.typeIntoSearchFieldDesktop('a');
-
 		searchHelper.searchNextDesktop();
 
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'A1');
-
-		cy.get('#copy-paste-container table td')
-			.should('have.text', 'a');
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance
 		searchHelper.searchNextDesktop();
 
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'B1');
-
-		cy.get('#copy-paste-container table td')
-			.should('have.text', 'a');
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'B1');
+		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search prev instance
 		searchHelper.searchPrevDesktop();
 
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'A1');
-
-		cy.get('#copy-paste-container table td')
-			.should('have.text', 'a');
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 	});
 
 	it('Search wrap at document end', function() {
@@ -74,29 +59,20 @@ describe('Searching via search bar.', function() {
 
 		searchHelper.searchNextDesktop();
 
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'A1');
-
-		cy.get('#copy-paste-container table td')
-			.should('have.text', 'a');
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance
 		searchHelper.searchNextDesktop();
 
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'B1');
-
-		cy.get('#copy-paste-container table td')
-			.should('have.text', 'a');
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'B1');
+		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Search next instance, which is in the beginning of the document.
 		searchHelper.searchNextDesktop();
 
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'A1');
-
-		cy.get('#copy-paste-container table td')
-			.should('have.text', 'a');
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 	});
 
 	it('Cancel search.', function() {
@@ -104,17 +80,13 @@ describe('Searching via search bar.', function() {
 
 		searchHelper.searchNextDesktop();
 
-		cy.get('input#addressInput')
-			.should('have.prop', 'value', 'A1');
-
-		cy.get('#copy-paste-container table td')
-			.should('have.text', 'a');
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
+		cy.cGet('#copy-paste-container table td').should('have.text', 'a');
 
 		// Cancel search -> selection removed
 		searchHelper.cancelSearchDesktop();
 
-		cy.get('input#search-input')
-			.should('be.visible');
+		cy.cGet('input#search-input').should('be.visible');
 	});
 
 });

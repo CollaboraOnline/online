@@ -1,11 +1,10 @@
-/* global describe  cy beforeEach it Cypress expect require afterEach  */
+/* global describe  cy beforeEach it expect require afterEach  */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var impressHelper = require('../../common/impress_helper');
-var mode = Cypress.env('USER_INTERFACE');
 
-describe('Table operations', function() {
+describe(['tagdesktop'], 'Table operations', function() {
 	var origTestFileName = 'table_operation.odp';
 	var testFileName;
 
@@ -18,19 +17,8 @@ describe('Table operations', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	function selectOptionClassic(mainMenuId,hasSubMenu,subMenu1,subOption) {
-		cy.get(mainMenuId).click();
-
-		if (hasSubMenu) {
-			cy.contains(mainMenuId + ' li .has-submenu', subMenu1).trigger('click');
-		} else {
-			subOption = subMenu1;
-		}
-		cy.contains(mainMenuId + ' li', subOption).click();
-	}
-
 	function selectOptionNotebookbar(optionId) {
-		cy.get(optionId).click();
+		cy.cGet(optionId).click();
 	}
 
 	function retriggerNewSvgForTableInTheCenter() {
@@ -44,272 +32,257 @@ describe('Table operations', function() {
 
 		impressHelper.selectTableInTheCenter();
 
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 3);
 
-		cy.get('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 2);
 
-		cy.get('text.SVGTextShape').click({force: true});
+		cy.cGet('text.SVGTextShape').click({force: true});
 
 		cy.wait(1000);
 	}
 
 	it('Insert Row Before', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-
-		mode === 'notebookbar' ? selectOptionNotebookbar('#InsertRowsBefore') : selectOptionClassic('#menu-table', true, 'Insert', 'Insert Row Above');
-
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
-			.should('have.length', 4);
-
+		selectOptionNotebookbar('#InsertRowsBefore');
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
 		retriggerNewSvgForTableInTheCenter();
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
-			.should('have.class', 'com.sun.star.drawing.TableShape');
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g').should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(8);
 			});
 
 		//assert the text position
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '6643');
 	});
 
-
 	it('Insert Row After', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
+		selectOptionNotebookbar('#InsertRowsAfter');
 
-		mode === 'notebookbar' ? selectOptionNotebookbar('#InsertRowsAfter') : selectOptionClassic('#menu-table', true, 'Insert', 'Insert Row Below');
-
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
-			.should('have.length', 4);
-
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(8);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
 	it('Insert column before.', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
+		selectOptionNotebookbar('#InsertColumnsBefore');
 
-		mode === 'notebookbar' ? selectOptionNotebookbar('#InsertColumnsBefore') : selectOptionClassic('#menu-table', true, 'Insert', 'Insert Column Before');
-
-		cy.get('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(9);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '14339');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
 	it('Insert column after.', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
+		selectOptionNotebookbar('#InsertColumnsAfter');
 
-		mode === 'notebookbar' ? selectOptionNotebookbar('#InsertColumnsAfter') : selectOptionClassic('#menu-table', true, 'Insert', 'Insert Column After');
-
-		cy.get('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(9);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
 	it('Delete row.', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
+		selectOptionNotebookbar('#DeleteRows');
 
-		mode === 'notebookbar' ? selectOptionNotebookbar('#DeleteRows') : selectOptionClassic('#menu-table', true, 'Delete', 'Delete Row');
-
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 2);
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(4);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('not.exist');
 	});
 
 	it('Delete Column.', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
+		selectOptionNotebookbar('#InsertColumnsBefore');
 
-		mode === 'notebookbar' ? selectOptionNotebookbar('#InsertColumnsBefore') : selectOptionClassic('#menu-table', true, 'Insert', 'Insert Column Before');
-
-		cy.get('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
 
-		mode === 'notebookbar' ? selectOptionNotebookbar('#DeleteColumns') : selectOptionClassic('#menu-table', true, 'Delete', 'Delete Column');
+		selectOptionNotebookbar('#DeleteColumns');
 
-		cy.get('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 2);
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(6);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
 	it('Delete Table', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-
-		mode === 'notebookbar' ? selectOptionNotebookbar('.unospan-Table.unoDeleteTable') : selectOptionClassic('#menu-table', true, 'Delete', 'Delete Table');
+		selectOptionNotebookbar('.cell.notebookbar #DeleteTable');
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('not.exist');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('not.exist');
 	});
 
 	it('Merge Row', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
 
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 3);
 
-		mode === 'notebookbar' ? selectOptionNotebookbar('#EntireRow') : selectOptionClassic('#menu-table', true, 'Select', 'Select Row');
-
+		selectOptionNotebookbar('#EntireRow');
 		cy.wait(1000);
-
-		mode === 'notebookbar' ? selectOptionNotebookbar('#MergeCells') : selectOptionClassic('#menu-table', false, 'Merge Cells');
+		selectOptionNotebookbar('#MergeCells');
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(5);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
 	it('Merge Column', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
 
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 3);
 
-		mode === 'notebookbar' ? selectOptionNotebookbar('#EntireColumn') : selectOptionClassic('#menu-table', true, 'Select', 'Select Column');
-
+		selectOptionNotebookbar('#EntireColumn');
 		cy.wait(1000);
-
-		mode === 'notebookbar' ? selectOptionNotebookbar('#MergeCells') : selectOptionClassic('#menu-table', false, 'Merge Cells');
+		selectOptionNotebookbar('#MergeCells');
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(4);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
-	it('Split Cells', function() {
-		//FIXME: https://github.com/CollaboraOnline/online/issues/3964
-		if (mode !== 'notebookbar') {
-			return;
-		}
-
+	it.skip('Split Cells', function() {
+		// ToDo: Merge cells before calling split cells function.
+		desktopHelper.switchUIToNotebookbar();
 		impressHelper.selectTableInTheCenter();
 
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 3);
 
-		helper.waitUntilIdle('.unospan-Table.unoSplitCell');
+		selectOptionNotebookbar('.cell.notebookbar #SplitCell');
 
-		selectOptionNotebookbar('.unospan-Table.unoSplitCell');
+		cy.cGet('#SplitCellsDialog').should('be.visible');
 
-		cy.get('#SplitCellsDialog').should('be.visible');
-
-		cy.get('#SplitCellsDialog .ui-pushbutton.jsdialog.button-primary')
+		cy.cGet('#SplitCellsDialog .ui-pushbutton.jsdialog.button-primary')
 			.click();
 
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
 	});
 });

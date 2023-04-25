@@ -25,7 +25,6 @@ DESKTOP_TEST_FOLDER = $(abs_srcdir)/integration_tests/desktop
 DESKTOP_DATA_FOLDER = $(abs_srcdir)/data/desktop/
 DESKTOP_DATA_WORKDIR = $(abs_builddir)/workdir/data/desktop/
 DESKTOP_TRACK_FOLDER=$(abs_builddir)/workdir/track/desktop
-DESKTOP_NB_TRACK_FOLDER=$(abs_builddir)/workdir/track/notebookbar
 
 MOBILE_USER_AGENT = "cypress-mobile"
 MOBILE_TEST_FOLDER = $(abs_srcdir)/integration_tests/mobile
@@ -80,9 +79,6 @@ MOBILE_TEST_FILES_DONE= \
 DESKTOP_TEST_FILES_DONE= \
 	$(foreach test_file,$(DESKTOP_TEST_FILES),$(DESKTOP_TRACK_FOLDER)/$(test_file).done)
 
-DESKTOP_NB_TEST_FILES_DONE= \
-	$(foreach test_file,$(DESKTOP_TEST_FILES),$(DESKTOP_NB_TRACK_FOLDER)/$(test_file).done)
-
 MULTIUSER_TESTS_DONE= \
 	$(MULTIUSER_TRACK_FOLDER)/multiuser_tests.done
 
@@ -90,11 +86,6 @@ check-local: do-check
 	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
 
 do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(MULTIUSER_TESTS_DONE)
-	@$(KILL_COMMAND) || true
-	$(if $(HEADLESS_BUILD),@pkill Xvfb,)
-	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
-
-check-notebookbar: $(DESKTOP_NB_TEST_FILES_DONE)
 	@$(KILL_COMMAND) || true
 	$(if $(HEADLESS_BUILD),@pkill Xvfb,)
 	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
@@ -123,17 +114,6 @@ $(DESKTOP_TEST_FILES_DONE): $(PID_FILE)
 		@mkdir -p $(dir $@) && touch $@\
 		,\
 		@$(foreach done_file,$(DESKTOP_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
-	)
-
-$(DESKTOP_NB_TEST_FILES_DONE): export USER_INTERFACE = notebookbar
-$(DESKTOP_NB_TEST_FILES_DONE): $(PID_FILE)
-	$(if $(PARALLEL_BUILD),\
-		$(call run_desktop_tests,$(subst $(DESKTOP_NB_TRACK_FOLDER)/,,$(basename $@)),$(basename $@).log),\
-		$(call run_desktop_tests))
-	$(if $(PARALLEL_BUILD),\
-		@mkdir -p $(dir $@) && touch $@\
-		,\
-		@$(foreach done_file,$(DESKTOP_NB_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
 	)
 
 $(MULTIUSER_TESTS_DONE): $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
@@ -241,10 +221,10 @@ run-mobile: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 MOBILE_CONFIG = \
-	integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT)
+	specPattern=$(MOBILE_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT)
 
 MOBILE_ENV = \
-	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MOBILE_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	CYPRESS_INCLUDE_TAGS=tagmobile,DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MOBILE_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run one mobile test / all mobile tests in interactive test runner.
 # Parameters:
@@ -302,10 +282,10 @@ run-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 DESKTOP_CONFIG = \
-	integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
+	specPattern=$(DESKTOP_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
 
 DESKTOP_ENV = \
-	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(DESKTOP_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),SCREENSHOT_FOLDER=$(abs_srcdir)/cypress/screenshots,IMAGES_FOLDER=$(abs_top_srcdir)/browser/images/help/en/
+	CYPRESS_INCLUDE_TAGS=tagdesktop,DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(DESKTOP_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),SCREENSHOT_FOLDER=$(abs_srcdir)/cypress/screenshots,IMAGES_FOLDER=$(abs_top_srcdir)/browser/images/help/en/
 
 # Run one desktop test / all desktop tests in interactive test runner.
 # Parameters:
@@ -328,7 +308,7 @@ endef
 # 2 - log (optional):	log file for cypress run, needed for parallel build only.
 # 3 - +env (optional):	additional env variables (will be appended to $(DESKTOP_ENV).
 define run_desktop_tests
-	@echo $(if $(1),"Running cypress desktop $(USER_INTERFACE) mode test: $(1)","Running cypress desktop $(USER_INTERFACE) mode tests...")
+	@echo $(if $(1),"Running cypress desktop mode test: $(1)","Running cypress desktop mode tests...")
 	@echo
 	$(eval ENV_EXTENDED=$(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)))
 	$(if $(and $(PARALLEL_BUILD), $(1)),\
@@ -364,10 +344,10 @@ run-multi: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 MULTIUSER_CONFIG = \
-	integrationFolder=$(MULTIUSER_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
+	specPattern=$(MULTIUSER_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
 
 MULTIUSER_ENV = \
-	DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	CYPRESS_INCLUDE_TAGS=tagmultiuser,DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run all multi-user tests in headless mode.
 # Parameters:
@@ -443,16 +423,16 @@ run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 INTERFER_MOBILE_CONFIG1 = \
-	integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000
+	specPattern=$(MOBILE_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000
 
 INTERFER_MOBILE_ENV1 = \
-	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
+	CYPRESS_INCLUDE_TAGS=tagmobile,DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
 
 INTERFER_MOBILE_CONFIG2 = \
 	supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000,retries=0
 
 INTERFER_MOBILE_ENV2 = \
-	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	CYPRESS_INCLUDE_TAGS=tagmobile,DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run all mobile interference tests in headless mode.
 define run_mobile_interference_tests
@@ -516,7 +496,7 @@ run-interfer-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 INTERFER_DESKTOP_CONFIG1 = \
-	integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000
+	specPattern=$(DESKTOP_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000
 
 INTERFER_DESKTOP_ENV1 = \
 	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
@@ -588,6 +568,7 @@ do-run-cov: @JAILS_PATH@ $(NODE_BINS)
 # 1 - config: cypress configuration (e.g. cypress' --config argument).
 # 2 - env:    list of environment variables (e.g. cypress' --env argument).
 define run_interactive_all
+	DEBUG='cypress:*' \
 	DISPLAY=$(if $(HEADLESS_BUILD),$(HEADLESS_DISPLAY),$(DISPLAY)) \
 		$(CYPRESS_BINARY) open \
 		--config $(1) \
@@ -601,6 +582,7 @@ endef
 # 2 - env:    list of environment variables (e.g. cypress' --env argument).
 # 3 - spec:   test file path (e.g. cypress' --spec argument)
 define run_interactive_single
+	DEBUG='cypress:*' \
 	DISPLAY=$(if $(HEADLESS_BUILD),$(HEADLESS_DISPLAY),$(DISPLAY)) \
 		$(CYPRESS_BINARY) run \
 		--browser $(BROWSER) \

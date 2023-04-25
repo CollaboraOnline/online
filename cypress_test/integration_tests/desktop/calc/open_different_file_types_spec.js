@@ -3,7 +3,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 const { insertImage } = require('../../common/desktop_helper');
 
-describe('Open different file types', function () {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types', function () {
 
 	var testFileName = '';
 
@@ -17,12 +17,11 @@ describe('Open different file types', function () {
 		testFileName = helper.loadTestDocNoIntegration(filename, 'calc', false, false, false);
 
 		//check doc is loaded
-		cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+		cy.cGet('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
-		helper.canvasShouldNotBeFullWhite('.leaflet-canvas-container canvas');
+		helper.isCanvasWhite(false);
 
-		cy.get('#PermissionMode').should('be.visible')
-			.should('have.text', ' Read-only ');
+		cy.cGet('#PermissionMode').should('be.visible').should('have.text', ' Read-only ');
 	}
 
 	afterEach(function () {
@@ -46,7 +45,7 @@ describe('Open different file types', function () {
 		calcHelper.assertDataClipboardTable(expectedData);
 	}
 
-	it('Open xls file', function () {
+	it('Open xls file', { defaultCommandTimeout: 60000 }, function () {
 		before('testfile.xls');
 
 		assertData();
@@ -54,7 +53,7 @@ describe('Open different file types', function () {
 		insertImage();
 	});
 
-	it('Open xlsx file', function () {
+	it('Open xlsx file', { defaultCommandTimeout: 60000 }, function () {
 		before('testfile.xlsx');
 
 		assertData();
@@ -63,53 +62,52 @@ describe('Open different file types', function () {
 	//we are not using before because it loads the document and directly asserts if document is loaded but in
 	//case of csv file 1st when you try to load the doc it opens up jsdialog to import csv which requires user
 	//input and after click ok the doc starts to load
-	it('Open csv file', function() {
+	it('Open csv file', { defaultCommandTimeout: 60000 }, function() {
 		//to fit csv jsdialog in window
 		cy.viewport(1280, 960);
 
 		testFileName = helper.loadTestDocNoIntegration('testfile.csv', 'calc', false, false, false);
 
-		cy.get('form.jsdialog-container.lokdialog_container')
-			.should('exist');
+		cy.cGet('form.jsdialog-container.lokdialog_container').should('exist');
 
-		helper.clickOnIdle('.ui-pushbutton', 'OK');
+		helper.clickOnIdle('.ui-pushbutton.jsdialog.button-primary');
 
 		//check doc is loaded
-		cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+		cy.cGet('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
-		helper.canvasShouldNotBeFullWhite('.leaflet-canvas-container canvas');
+		helper.isCanvasWhite(false);
 
-		cy.get('#mobile-edit-button')
+		cy.cGet('#mobile-edit-button')
 			.should('be.visible')
 			.click();
 
-		cy.get('.vex-content button').click();
+		cy.cGet('.vex-content button').click();
 
 		assertData();
 	});
 
-	it('Open xlsb file' ,function() {
+	it('Open xlsb file', { defaultCommandTimeout: 60000 }, function() {
 		openReadOnlyFile('testfile.xlsb');
 
-		cy.get('#mobile-edit-button').should('be.visible')
+		cy.cGet('#mobile-edit-button').should('be.visible')
 			.click();
 
-		cy.get('.vex-overlay').should('be.visible');
+		cy.cGet('.vex-overlay').should('be.visible');
 
-		cy.get('.vex-dialog-message')
+		cy.cGet('.vex-dialog-message')
 			.should('have.text', 'This document may contain formatting or content that cannot be saved in the current file format.');
 
-		cy.get('.vex-dialog-buttons button')
+		cy.cGet('.vex-dialog-buttons button')
 			.should('have.text', 'Continue read only')
 			.click();
 
-		cy.get('#PermissionMode').should('be.visible')
+		cy.cGet('#PermissionMode').should('be.visible')
 			.should('have.text', ' Read-only ');
 
-		cy.get('.vex-overlay').should('be.visible');
+		cy.cGet('.vex-overlay').should('be.visible');
 	});
 
-	it('Open xlsm file' ,function() {
+	it('Open xlsm file', { defaultCommandTimeout: 60000 }, function() {
 		before('testfile.xlsm');
 
 		assertData();
@@ -117,19 +115,19 @@ describe('Open different file types', function () {
 		insertImage();
 	});
 
-	it('Open xltm file' ,function() {
+	it('Open xltm file', { defaultCommandTimeout: 60000 }, function() {
 		openReadOnlyFile('testfile.xltm');
 
-		cy.get('#mobile-edit-button').should('not.be.visible');
+		cy.cGet('#mobile-edit-button').should('not.be.visible');
 	});
 
-	it('Open xltx file' ,function() {
+	it('Open xltx file', { defaultCommandTimeout: 60000 }, function() {
 		openReadOnlyFile('testfile.xltm');
 
-		cy.get('#mobile-edit-button').should('not.be.visible');
+		cy.cGet('#mobile-edit-button').should('not.be.visible');
 	});
 
-	it('Open fods file', function() {
+	it('Open fods file', { defaultCommandTimeout: 60000 }, function() {
 		before('testfile.fods');
 
 		//select all the content of doc

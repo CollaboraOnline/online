@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe('Form field button tests.', function() {
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Form field button tests.', function() {
 	var testFileName = 'shape_operations.odt';
 
 	function before(fileName) {
@@ -16,7 +16,7 @@ describe('Form field button tests.', function() {
 		// Blinking cursor is not visible for some reason.
 		helper.typeIntoDocument('x');
 
-		cy.get('.blinking-cursor')
+		cy.cGet('.blinking-cursor')
 			.should('be.visible');
 	}
 	afterEach(function() {
@@ -24,34 +24,24 @@ describe('Form field button tests.', function() {
 	});
 
 	function buttonShouldNotExist() {
-		cy.get('.form-field-frame')
-			.should('not.exist');
-
-		cy.get('.form-field-button')
-			.should('not.exist');
-
-		cy.get('.drop-down-field-list')
-			.should('not.exist');
+		cy.cGet('.form-field-frame').should('not.exist');
+		cy.cGet('.form-field-button').should('not.exist');
+		cy.cGet('.drop-down-field-list').should('not.exist');
 	}
 
 	function buttonShouldExist() {
-		cy.get('.form-field-frame')
-			.should('exist');
-
-		cy.get('.form-field-button')
-			.should('exist');
-
-		cy.get('.drop-down-field-list')
-			.should('exist');
+		cy.cGet('.form-field-frame').should('exist');
+		cy.cGet('.form-field-button').should('exist');
+		cy.cGet('.drop-down-field-list').should('exist');
 
 		// Check also the position relative to the blinking cursor
-		cy.get('.blinking-cursor')
+		cy.cGet('.blinking-cursor')
 			.then(function(cursors) {
 				// TODO: why we have two blinking cursors here?
 				//expect(cursors).to.have.lengthOf(1);
 
 				var cursorRect = cursors[0].getBoundingClientRect();
-				cy.get('.form-field-frame')
+				cy.cGet('.form-field-frame')
 					.should(function(frames) {
 						expect(frames).to.have.lengthOf(1);
 						var frameRect = frames[0].getBoundingClientRect();
@@ -98,11 +88,10 @@ describe('Form field button tests.', function() {
 
 		buttonShouldExist();
 
-		cy.get('.drop-down-field-list')
-			.should('not.be.visible');
+		cy.cGet('.drop-down-field-list').should('not.be.visible');
 
 		// Check content of the list
-		cy.get('.drop-down-field-list')
+		cy.cGet('.drop-down-field-list')
 			.should(function(list) {
 				expect(list[0].children.length).to.be.equal(4);
 				expect(list[0].children[0]).to.have.text('February');
@@ -111,25 +100,15 @@ describe('Form field button tests.', function() {
 				expect(list[0].children[3]).to.have.text('July');
 			});
 
-		cy.get('.drop-down-field-list-item.selected')
-			.should('have.text', 'February');
-
+		cy.cGet('.drop-down-field-list-item.selected').should('have.text', 'February');
 		// Select a new item
-		cy.get('.form-field-button')
-			.click();
-
-		cy.get('.drop-down-field-list')
-			.should('be.visible');
-
-		cy.contains('.drop-down-field-list-item', 'July')
-			.click();
+		cy.cGet('.form-field-button').click();
+		cy.cGet('.drop-down-field-list').should('be.visible');
+		cy.cGet('body').contains('.drop-down-field-list-item', 'July').click();
 
 		// List is hidden, but have the right selected element
-		cy.get('.drop-down-field-list')
-			.should('not.be.visible');
-
-		cy.get('.drop-down-field-list-item.selected')
-			.should('have.text', 'July');
+		cy.cGet('.drop-down-field-list').should('not.be.visible');
+		cy.cGet('.drop-down-field-list-item.selected').should('have.text', 'July');
 	});
 
 	it('Test field editing', function() {
@@ -139,17 +118,10 @@ describe('Form field button tests.', function() {
 		helper.moveCursor('right');
 
 		// Select a new item
-		cy.get('.form-field-button')
-			.click();
-
-		cy.get('.drop-down-field-list')
-			.should('be.visible');
-
-		cy.contains('.drop-down-field-list-item', 'January')
-			.click();
-
-		cy.get('.drop-down-field-list-item.selected')
-			.should('have.text', 'January');
+		cy.cGet('.form-field-button').click();
+		cy.cGet('.drop-down-field-list').should('be.visible');
+		cy.cGet('body').contains('.drop-down-field-list-item', 'January').click();
+		cy.cGet('.drop-down-field-list-item.selected').should('have.text', 'January');
 
 		// Move the cursor away and back
 		helper.moveCursor('left');
@@ -161,8 +133,7 @@ describe('Form field button tests.', function() {
 
 		buttonShouldExist();
 
-		cy.get('.drop-down-field-list-item.selected')
-			.should('have.text', 'January');
+		cy.cGet('.drop-down-field-list-item.selected').should('have.text', 'January');
 
 		// Do the same from the right side of the field.
 		helper.moveCursor('right');
@@ -170,17 +141,10 @@ describe('Form field button tests.', function() {
 		buttonShouldExist();
 
 		// Select a new item
-		cy.get('.form-field-button')
-			.click();
-
-		cy.get('.drop-down-field-list')
-			.should('be.visible');
-
-		cy.contains('.drop-down-field-list-item', 'December')
-			.click();
-
-		cy.get('.drop-down-field-list-item.selected')
-			.should('have.text', 'December');
+		cy.cGet('.form-field-button').click();
+		cy.cGet('.drop-down-field-list').should('be.visible');
+		cy.cGet('body').contains('.drop-down-field-list-item', 'December').click();
+		cy.cGet('.drop-down-field-list-item.selected').should('have.text', 'December');
 	});
 
 	it('Multiple form field button activation.', function() {
@@ -222,7 +186,7 @@ describe('Form field button tests.', function() {
 
 		buttonShouldExist();
 
-		cy.get('.drop-down-field-list-item.selected')
+		cy.cGet('.drop-down-field-list-item.selected')
 			.should('not.exist');
 	});
 
@@ -234,23 +198,12 @@ describe('Form field button tests.', function() {
 
 		buttonShouldExist();
 
-		cy.get('.drop-down-field-list-item')
-			.should('have.text', 'No Item specified');
-
-		cy.get('.drop-down-field-list-item.selected')
-			.should('not.exist');
-
-		cy.get('.form-field-button')
-			.click();
-
-		cy.get('.drop-down-field-list')
-			.should('be.visible');
-
-		cy.contains('.drop-down-field-list-item', 'No Item specified')
-			.click();
-
-		cy.get('.drop-down-field-list-item.selected')
-			.should('not.exist');
+		cy.cGet('.drop-down-field-list-item').should('have.text', 'No Item specified');
+		cy.cGet('.drop-down-field-list-item.selected').should('not.exist');
+		cy.cGet('.form-field-button').click();
+		cy.cGet('.drop-down-field-list').should('be.visible');
+		cy.cGet('body').contains('.drop-down-field-list-item', 'No Item specified').click();
+		cy.cGet('.drop-down-field-list-item.selected').should('not.exist');
 	});
 
 	it('Test field button after zoom.', function() {
@@ -290,7 +243,7 @@ describe('Form field button tests.', function() {
 
 		// Get the initial font size from the style.
 		var prevFontSize = '';
-		cy.get('.drop-down-field-list-item')
+		cy.cGet('.drop-down-field-list-item')
 			.should(function(item) {
 				prevFontSize = item.css('font-size');
 				expect(prevFontSize).to.not.equal('');
@@ -301,14 +254,14 @@ describe('Form field button tests.', function() {
 		buttonShouldExist();
 
 		// Check that the font size was changed
-		cy.get('.drop-down-field-list-item')
+		cy.cGet('.drop-down-field-list-item')
 			.should(function(item) {
 				var prevSize = parseInt(prevFontSize, 10);
 				var currentSize = parseInt(item.css('font-size'), 10);
 				expect(currentSize).to.be.greaterThan(prevSize);
 			});
 
-		cy.get('.drop-down-field-list-item')
+		cy.cGet('.drop-down-field-list-item')
 			.invoke('css', 'font-size')
 			.as('prevFontSize');
 
@@ -317,7 +270,7 @@ describe('Form field button tests.', function() {
 		buttonShouldExist();
 
 		// Check that the font size was changed back
-		cy.get('.drop-down-field-list-item')
+		cy.cGet('.drop-down-field-list-item')
 			.should(function(item) {
 				expect(item.css('font-size')).to.be.equal(prevFontSize);
 			});

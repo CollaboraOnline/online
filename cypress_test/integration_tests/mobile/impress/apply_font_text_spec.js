@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe('Apply font on selected text.', function() {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply font on selected text.', function() {
 	var origTestFileName = 'apply_font_text.odp';
 	var testFileName;
 
@@ -34,7 +34,7 @@ describe('Apply font on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-weight', '700');
 	});
 
@@ -47,7 +47,7 @@ describe('Apply font on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-style', 'italic');
 	});
 
@@ -60,7 +60,7 @@ describe('Apply font on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'text-decoration', 'underline');
 	});
 
@@ -73,7 +73,7 @@ describe('Apply font on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'text-decoration', 'line-through');
 	});
 
@@ -92,35 +92,30 @@ describe('Apply font on selected text.', function() {
 
 	it('Change font name of selected text.', function() {
 		impressHelper.selectTextOfShape();
-
 		mobileHelper.openTextPropertiesPanel();
-
-		mobileHelper.selectListBoxItem('#fontnamecombobox', 'Linux Libertine G');
+		cy.cGet('#font').click();
+		cy.cGet('#fontnamecombobox').contains('.mobile-wizard.ui-combobox-text', 'Linux Libertine G').click();
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-family', 'Linux Libertine G');
 	});
 
 	it('Change font size of selected text.', function() {
 		impressHelper.selectTextOfShape();
-
 		mobileHelper.openTextPropertiesPanel();
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
-			.should('have.attr', 'font-size', '635px');
-
-		mobileHelper.selectListBoxItem('#fontsizecombobox', '24 pt');
+		cy.cGet('#fontsizecombobox').click();
+		cy.cGet('#fontsizecombobox').contains('.mobile-wizard.ui-combobox-text', '24 pt').click();
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '847px');
 	});
 
 	it('Apply text color on selected text.', function() {
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.attr', 'fill', 'rgb(0,0,0)');
 
 		impressHelper.selectTextOfShape();
@@ -133,7 +128,7 @@ describe('Apply font on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.attr', 'fill', 'rgb(106,168,79)');
 	});
 
@@ -146,7 +141,7 @@ describe('Apply font on selected text.', function() {
 
 		mobileHelper.selectFromColorPicker('#CharBackColor', 2, 2);
 
-		cy.get('#CharBackColor .color-sample-selected')
+		cy.cGet('#CharBackColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
 
 		triggerNewSVG();
@@ -158,7 +153,7 @@ describe('Apply font on selected text.', function() {
 
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.get('#CharBackColor .color-sample-selected')
+		cy.cGet('#CharBackColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
 	});
 
@@ -167,18 +162,18 @@ describe('Apply font on selected text.', function() {
 
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
 			.should('have.attr', 'y', '3495');
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
 		helper.clickOnIdle('.unoSuperScript');
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
 			.should('have.attr', 'y', '3285');
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '368px');
 	});
 
@@ -187,18 +182,18 @@ describe('Apply font on selected text.', function() {
 
 		mobileHelper.openTextPropertiesPanel();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
 			.should('have.attr', 'y', '3495');
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
 		helper.clickOnIdle('.unoSubScript');
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
 			.should('have.attr', 'y', '3546');
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '368px');
 	});
 });

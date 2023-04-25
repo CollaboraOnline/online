@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var nextcloudHelper = require('../../common/nextcloud_helper');
 
-describe('Nextcloud specific tests.', function() {
+describe(['tagnextcloud'], 'Nextcloud specific tests.', function() {
 	var origTestFileName = 'nextcloud.ods';
 	var testFileName;
 
@@ -35,20 +35,20 @@ describe('Nextcloud specific tests.', function() {
 		nextcloudHelper.saveFileAs('1' + testFileName);
 
 		// Close the document
-		cy.get('#mobile-edit-button')
+		cy.cGet('#mobile-edit-button')
 			.should('be.visible');
 
-		cy.get('#toolbar-mobile-back')
+		cy.cGet('#toolbar-mobile-back')
 			.then(function(item) {
 				cy.wrap(item)
 					.click();
 				Cypress.env('IFRAME_LEVEL', '');
 			});
 
-		cy.get('tr[data-file=\'1' + testFileName + '\']')
+		cy.cGet('tr[data-file=\'1' + testFileName + '\']')
 			.should('be.visible');
 
-		cy.get('tr[data-file=\'' + testFileName + '\']')
+		cy.cGet('tr[data-file=\'' + testFileName + '\']')
 			.should('be.visible');
 	});
 

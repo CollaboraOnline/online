@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Complex image operation test', function() {
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Complex image operation test', function() {
 	var origTestFileName = 'complex_image_operation.odt';
 	var testFileName;
 
@@ -24,7 +24,7 @@ describe('Complex image operation test', function() {
 					var img = new Image();
 
 					img.onerror = function() {
-						cy.contains('Tile is not valid').should('not.exist');
+						cy.cGet('body').contains('Tile is not valid').should('not.exist');
 					};
 
 					img.onload = function() {

@@ -3,17 +3,13 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe('Scroll through document', function() {
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', function() {
 	var testFileName = 'scrolling.ods';
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
-
-		cy.get('#toolbar-up .w2ui-scroll-right')
-			.click();
-
-		cy.get('#tb_editbar_item_sidebar')
-			.click();
+		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#tb_editbar_item_sidebar').click();
 	});
 
 	afterEach(function() {
@@ -22,27 +18,18 @@ describe('Scroll through document', function() {
 
 	it('Scrolling to bottom/top', function() {
 		desktopHelper.assertScrollbarPosition('vertical', 19, 21);
-
 		desktopHelper.pressKey(3,'pagedown');
-
 		desktopHelper.assertScrollbarPosition('vertical', 191, 230);
-
 		desktopHelper.pressKey(3,'pageup');
-
 		desktopHelper.assertScrollbarPosition('vertical', 19, 21);
 	});
 
 	it('Scrolling to left/right', function() {
 		desktopHelper.selectZoomLevel('200');
-
 		helper.typeIntoDocument('{home}');
-
 		desktopHelper.assertScrollbarPosition('horizontal', 48, 60);
-
 		helper.typeIntoDocument('{end}');
-
 		cy.wait(500);
-
 		desktopHelper.assertScrollbarPosition('horizontal', 250, 270);
 	});
 });

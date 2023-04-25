@@ -1379,7 +1379,6 @@ AC_SUBST(ENABLE_SETCAP)
 AC_CONFIG_LINKS([discovery.xml:discovery.xml])
 AC_CONFIG_LINKS([browser/package.json:browser/package.json])
 AC_CONFIG_LINKS([cypress_test/package.json:cypress_test/package.json])
-AC_CONFIG_LINKS([cypress_test/cypress.json:cypress_test/cypress.json])
 AC_CONFIG_COMMANDS_PRE([
 if test "$srcdir" != '.'; then
    dst_dirs="cypress_test/plugins cypress_test/eslint_plugin browser/archived-packages"
