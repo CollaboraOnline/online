@@ -287,7 +287,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-listview-icon {
-	height: 24px;
+	height: var(--btn-size);
+	width: var(--btn-size);
 	margin-inline-end: 8px;
 }
 
