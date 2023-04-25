@@ -3,24 +3,26 @@
   "version": "1.0.0",
   "description": "Cypress integration test suit",
   "license": "MPL-2.0",
-  "dependencies": {
+  "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
-    "cypress": "6.8.0",
-    "cypress-failed-log": "2.9.1",
-    "cypress-file-upload": "5.0.2",
+    "cypress": "12.11.0",
+    "cypress-failed-log": "2.10.0",
+    "cypress-file-upload": "5.0.8",
     "cypress-iframe": "1.0.1",
     "cypress-log-to-output": "1.1.2",
-    "cypress-select-tests": "1.7.0",
-    "cypress-wait-until": "1.7.1",
+    "cypress-wait-until": "1.7.2",
     "eslint": "7.19.0",
     "eslint-plugin-cypress-rules": "file:eslint_plugin",
     "get-port-cli": "2.0.0",
-    "typescript": "3.9.5",
-    "wait-on": "5.2.1"
+    "typescript": "5.0.4",
+    "wait-on": "7.0.1"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/CollaboraOnline/online.git"
+  },
+  "dependencies": {
+    "cypress-tags": "^1.1.2"
   }
 }

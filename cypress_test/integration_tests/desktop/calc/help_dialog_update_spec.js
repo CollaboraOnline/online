@@ -8,7 +8,7 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe('Help dialog update', function() {
+describe(['tagscreenshot'], 'Help dialog update', function() {
 	var testFileName = 'help_dialog.ods';
 
 	beforeEach(function() {
@@ -22,23 +22,20 @@ describe('Help dialog update', function() {
 	it('Chart selected sidebar open', function() {
 		calcHelper.selectFirstColumn();
 
-		cy.get('#menu-insert')
-			.click()
-			.contains('Chart...')
-			.click();
+		cy.cGet('#menu-insert').click();
+		cy.cGet('body').contains('Chart...').click();
 
 		helper.waitUntilIdle('.lokdialog_container');
 
-		cy.get('.lokdialog_container')
-			.click();
+		cy.cGet('.lokdialog_container').click();
 
 		helper.typeIntoDocument('{shift}{enter}');
 
-		cy.get('#btnEditChart').click();
+		cy.cGet('#finish').click();
 
 		cy.wait(1000);
 
-		cy.get('#main-document-content').screenshot('chart-wizard');
+		cy.cGet('#main-document-content').screenshot('chart-wizard');
 
 		cy.task('copyFile', {
 			sourceDir: Cypress.env('SCREENSHOT_FOLDER')+ '/calc/help_dialog_update_spec.js/',

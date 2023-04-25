@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var desktophelper = require('../../common/desktop_helper');
 
-describe('Calc bottom bar tests.', function() {
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Calc bottom bar tests.', function() {
 	var origTestFileName = 'BottomBar.ods';
 	var testFileName;
 
@@ -17,11 +17,11 @@ describe('Calc bottom bar tests.', function() {
 	});
 
 	it('Bottom tool bar.', function() {
-		cy.get('#map').focus();
+		cy.cGet('#map').focus();
 		calcHelper.clickOnFirstCell();
 		desktophelper.makeZoomItemsVisible();
-		cy.get('#tb_actionbar_item_StateTableCellMenu .w2ui-button').click();
+		cy.cGet('#tb_actionbar_item_StateTableCellMenu .w2ui-button').click();
 		// If it clicks, it passes.
-		cy.contains('.w2ui-drop-menu .menu-text', 'CountA').click();
+		cy.cGet('body').contains('.w2ui-drop-menu .menu-text', 'CountA').click();
 	});
 });

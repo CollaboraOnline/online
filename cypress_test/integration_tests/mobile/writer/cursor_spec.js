@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
-describe('Text cursor tests.', function() {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Text cursor tests.', function() {
 	var testFileName;
 
 	function before(fileName) {
@@ -39,18 +39,11 @@ describe('Text cursor tests.', function() {
 
 	it('Cursor is visible after text selection.', function() {
 		before('cursor.odt');
-
 		writerHelper.selectAllTextOfDoc();
-
-		cy.get('.blinking-cursor')
-			.should('be.visible');
-
+		cy.cGet('.blinking-cursor').should('be.visible');
 		// Blinking cursor and so the view should be at the end of the text selection.
-		cy.get('.leaflet-selection-marker-end')
-			.should('be.visible');
-
-		cy.get('.leaflet-selection-marker-start')
-			.should('not.be.visible');
+		cy.cGet('.leaflet-selection-marker-end').should('be.visible');
+		cy.cGet('.leaflet-selection-marker-start').should('not.be.visible');
 	});
 
 	it('Move cursor through table.', function() {

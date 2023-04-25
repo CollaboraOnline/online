@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe('Slide operations', function() {
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Slide operations', function() {
 	var origTestFileName = 'slide_operations.odp';
 	var testFileName;
 
@@ -28,13 +28,13 @@ describe('Slide operations', function() {
 		impressHelper.assertNumberOfSlidePreviews(2);
 
 		// Remove Slides
-		cy.get('#tb_presentation-toolbar_item_deletepage')
+		cy.cGet('#tb_presentation-toolbar_item_deletepage')
 			.should('not.have.class', 'disabled')
 			.click();
 
-		cy.get('#modal-dialog-deleteslide-modal .button-primary').click();
+		cy.cGet('#modal-dialog-deleteslide-modal .button-primary').click();
 
-		cy.get('#tb_presentation-toolbar_item_deletepage')
+		cy.cGet('#tb_presentation-toolbar_item_deletepage')
 			.should('have.class', 'disabled');
 
 		impressHelper.assertNumberOfSlidePreviews(1);

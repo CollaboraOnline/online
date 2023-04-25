@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe('macro dialog tests', function() {
+describe(['tagdesktop', 'tagproxy'], 'macro dialog tests', function() {
 	var testFileName = 'macro.ods';
 
 	function acceptMacroExecution() {
@@ -24,7 +24,7 @@ describe('macro dialog tests', function() {
 	});
 
 	function expandEntryInTreeView(entryText) {
-		cy.contains('.jsdialog.ui-treeview-cell', entryText)
+		cy.cGet().contains('.jsdialog.ui-treeview-cell', entryText)
 			.siblings('.ui-treeview-expander')
 			.click();
 	}
@@ -32,33 +32,33 @@ describe('macro dialog tests', function() {
 	it.skip('Macro execution warning appears before loading the document.', function() {
 		calcHelper.selectEntireSheet();
 
-		cy.get('#copy-paste-container table td')
+		cy.cGet('#copy-paste-container table td')
 			.should('not.have.text', 'Macro Executed');
 
-		cy.get('#menu-tools > a')
+		cy.cGet('#menu-tools > a')
 			.click();
 
-		cy.get('#menu-runmacro')
+		cy.cGet('#menu-runmacro')
 			.click();
 
-		cy.get('#MacroSelectorDialog.jsdialog')
+		cy.cGet('#MacroSelectorDialog.jsdialog')
 			.should('exist');
 
 		expandEntryInTreeView('macro.ods');
 		expandEntryInTreeView('VBAProject');
 
-		cy.contains('.jsdialog.ui-treeview-cell', 'Module1')
+		cy.cGet().contains('.jsdialog.ui-treeview-cell', 'Module1')
 			.click();
 
-		cy.contains('#commands .ui-treeview-cell', 'test_macro')
+		cy.cGet().contains('#commands .ui-treeview-cell', 'test_macro')
 			.click();
 
-		cy.get('#MacroSelectorDialog.jsdialog #ok')
+		cy.cGet('#MacroSelectorDialog.jsdialog #ok')
 			.click();
 
 		calcHelper.selectEntireSheet();
 
-		cy.get('#copy-paste-container table td')
+		cy.cGet('#copy-paste-container table td')
 			.should('have.text', 'Macro Executed');
 	});
 });

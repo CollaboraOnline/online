@@ -16,39 +16,27 @@ describe.skip('Repair Document', function() {
 	});
 
 	function repairDoc(frameId1, frameId2) {
-
-		helper.typeIntoDocument('Hello World{enter}', frameId1);
-
-		calcHelper.selectEntireSheet(frameId2);
-
-		calcHelper.assertDataClipboardTable(['Hello World\n'], frameId2);
-
-		calcHelper.selectEntireSheet(frameId1);
-
-		calcHelper.assertDataClipboardTable(['Hello World\n'], frameId1);
-
-		cy.customGet('#menu-editmenu', frameId2).click()
-			.customGet('#menu-repair', frameId2).click();
-
-		cy.customGet('#DocumentRepairDialog', frameId2).should('exist');
-		cy.customGet('#versions', frameId2).should('exist');
-
-		cy.iframe(frameId2).contains('#versions .ui-treeview-body .ui-listview-entry td','Input')
-			.click();
-
-		cy.customGet('#ok.ui-pushbutton.jsdialog', frameId2).should('exist');
-
-		cy.customGet('#ok.ui-pushbutton.jsdialog', frameId2).click();
-
+		cy.cSetActiveFrame(frameId1);
+		helper.typeIntoDocument('Hello World{enter}');
+		cy.cSetActiveFrame(frameId2);
+		calcHelper.selectEntireSheet();
+		calcHelper.assertDataClipboardTable(['Hello World\n']);
+		cy.cSetActiveFrame(frameId1);
+		calcHelper.selectEntireSheet();
+		calcHelper.assertDataClipboardTable(['Hello World\n']);
+		cy.cSetActiveFrame(frameId2);
+		cy.cGet('#menu-editmenu').click().cGet('#menu-repair').click();
+		cy.cGet('#DocumentRepairDialog').should('exist');
+		cy.cGet('#versions').should('exist');
+		cy.cGet('body').contains('#versions .ui-treeview-body .ui-listview-entry td','Input').click();
+		cy.cGet('#ok.ui-pushbutton.jsdialog').should('exist');
+		cy.cGet('#ok.ui-pushbutton.jsdialog').click();
 		cy.wait(500);
-
-		calcHelper.selectEntireSheet(frameId2);
-
-		helper.expectTextForClipboard('', frameId2);
-
-		calcHelper.selectEntireSheet(frameId1);
-
-		helper.expectTextForClipboard('', frameId1);
+		calcHelper.selectEntireSheet();
+		helper.expectTextForClipboard('');
+		cy.cSetActiveFrame(frameId1);
+		calcHelper.selectEntireSheet();
+		helper.expectTextForClipboard('');
 	}
 
 	it('Repair by user-2', function() {

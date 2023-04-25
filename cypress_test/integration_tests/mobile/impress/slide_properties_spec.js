@@ -3,17 +3,14 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Changing slide properties.', function() {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.', function() {
 	var origTestFileName = 'slide_properties.odp';
 	var testFileName;
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'impress');
-
 		mobileHelper.enableEditingMobile();
-
 		previewShouldBeFullWhite();
-
 		mobileHelper.openMobileWizard();
 	});
 
@@ -24,26 +21,24 @@ describe('Changing slide properties.', function() {
 	function previewShouldBeFullWhite(fullWhite = true, slideNumber = 1) {
 		var selector = '.preview-frame:nth-of-type(' + (slideNumber + 1).toString() + ') img';
 		if (fullWhite)
-			helper.imageShouldBeFullWhite(selector);
+			helper.isImageWhite(selector, true);
 		else
-			helper.imageShouldNotBeFullWhite(selector);
+			helper.isImageWhite(selector, false);
 	}
 
 	function switchToMasterView() {
 		helper.clickOnIdle('#masterslidebutton');
-
-		cy.get('#closemasterslide')
-			.should('exist');
-
+		cy.cGet('#closemasterslide').should('exist');
 		previewShouldBeFullWhite(false);
 	}
 
 	it.skip('Apply solid color background.', function() {
 		// Change fill style
-		mobileHelper.selectListBoxItem2('#fillstyle', 'Color');
+		cy.cGet('#fillstyle').click();
+		cy.cGet('#fillstyle').contains('Color').click();
 
 		// Check the default color
-		cy.get('#fillattr .color-sample-selected')
+		cy.cGet('#fillattr .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(114, 159, 207);');
 
 		// Change the color
@@ -51,7 +46,7 @@ describe('Changing slide properties.', function() {
 
 		mobileHelper.selectFromColorPalette(0, 5);
 
-		cy.get('#fillattr .color-sample-selected')
+		cy.cGet('#fillattr .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(0, 255, 0);');
 
 		previewShouldBeFullWhite(false);
@@ -60,23 +55,18 @@ describe('Changing slide properties.', function() {
 		mobileHelper.closeMobileWizard();
 		mobileHelper.openMobileWizard();
 
-		cy.get('#fillstyle .ui-header-left')
-			.should('have.text', 'Color');
-
-		cy.get('#fillattr .color-sample-selected')
-			.should('have.attr', 'style', 'background-color: rgb(0, 255, 0);');
+		cy.cGet('#fillstyle .ui-header-left').should('have.text', 'Color');
+		cy.cGet('#fillattr .color-sample-selected').should('have.attr', 'style', 'background-color: rgb(0, 255, 0);');
 	});
 
 	it.skip('Apply gradient fill.', function() {
 		// Change fill style
-		mobileHelper.selectListBoxItem2('#fillstyle', 'Gradient');
+		cy.cGet('#fillstyle').click();
+		cy.cGet('#fillstyle').contains('Gradient').click();
 
 		// Check the default color
-		cy.get('#fillattr2 .color-sample-selected')
-			.should('have.attr', 'style', 'background-color: rgb(221, 232, 203);');
-
-		cy.get('#fillattr3 .color-sample-selected')
-			.should('have.attr', 'style', 'background-color: rgb(255, 215, 215);');
+		cy.cGet('#fillattr2 .color-sample-selected').should('have.attr', 'style', 'background-color: rgb(221, 232, 203);');
+		cy.cGet('#fillattr3 .color-sample-selected').should('have.attr', 'style', 'background-color: rgb(255, 215, 215);');
 
 		// Change the colors
 		helper.clickOnIdle('#fillattr2');
@@ -87,11 +77,8 @@ describe('Changing slide properties.', function() {
 
 		mobileHelper.selectFromColorPalette(1, 4);
 
-		cy.get('#fillattr2 .color-sample-selected')
-			.should('have.attr', 'style', 'background-color: rgb(255, 0, 0);');
-
-		cy.get('#fillattr3 .color-sample-selected')
-			.should('have.attr', 'style', 'background-color: rgb(255, 255, 0);');
+		cy.cGet('#fillattr2 .color-sample-selected').should('have.attr', 'style', 'background-color: rgb(255, 0, 0);');
+		cy.cGet('#fillattr3 .color-sample-selected').should('have.attr', 'style', 'background-color: rgb(255, 255, 0);');
 
 		previewShouldBeFullWhite(false);
 
@@ -99,26 +86,22 @@ describe('Changing slide properties.', function() {
 		mobileHelper.closeMobileWizard();
 		mobileHelper.openMobileWizard();
 
-		cy.get('#fillstyle .ui-header-left')
-			.should('have.text', 'Gradient');
-
-		cy.get('#fillattr2 .color-sample-selected')
-			.should('have.attr', 'style', 'background-color: rgb(255, 0, 0);');
-
-		cy.get('#fillattr3 .color-sample-selected')
-			.should('have.attr', 'style', 'background-color: rgb(255, 255, 0);');
+		cy.cGet('#fillstyle .ui-header-left').should('have.text', 'Gradient');
+		cy.cGet('#fillattr2 .color-sample-selected').should('have.attr', 'style', 'background-color: rgb(255, 0, 0);');
+		cy.cGet('#fillattr3 .color-sample-selected').should('have.attr', 'style', 'background-color: rgb(255, 255, 0);');
 	});
 
 	it.skip('Apply hatching fill.', function() {
 		// Change fill style
-		mobileHelper.selectListBoxItem2('#fillstyle', 'Hatching');
+		cy.cGet('#fillstyle').click();
+		cy.cGet('#fillstyle').contains('Hatching').click();
 
 		// Check the default value
-		cy.get('#fillattr1 .ui-header-left')
-			.should('have.text', 'Black 0 Degrees');
+		cy.cGet('#fillattr1 .ui-header-left').should('have.text', 'Black 0 Degrees');
 
 		// Change the hatching
-		mobileHelper.selectListBoxItem2('#fillattr1', 'Blue Triple 90 Degrees');
+		cy.cGet('#fillattr1').click();
+		cy.cGet('#fillattr1').contains('Blue Triple 90 Degrees').click();
 
 		previewShouldBeFullWhite(false);
 
@@ -126,23 +109,21 @@ describe('Changing slide properties.', function() {
 		mobileHelper.closeMobileWizard();
 		mobileHelper.openMobileWizard();
 
-		cy.get('#fillstyle .ui-header-left')
-			.should('have.text', 'Hatching');
-
-		cy.get('#fillattr1 .ui-header-left')
-			.should('have.text', 'Blue Triple 90 Degrees');
+		cy.cGet('#fillstyle .ui-header-left').should('have.text', 'Hatching');
+		cy.cGet('#fillattr1 .ui-header-left').should('have.text', 'Blue Triple 90 Degrees');
 	});
 
 	it.skip('Apply bitmap fill.', function() {
 		// Change fill style
-		mobileHelper.selectListBoxItem2('#fillstyle', 'Bitmap');
+		cy.cGet('#fillstyle').click();
+		cy.cGet('#fillstyle').contains('Bitmap').click();
 
 		// Check the default value
-		cy.get('#fillattr1 .ui-header-left')
-			.should('have.text', 'Painted White');
+		cy.cGet('#fillattr1 .ui-header-left').should('have.text', 'Painted White');
 
 		// Change the value
-		mobileHelper.selectListBoxItem2('#fillattr1', 'Wooden Board');
+		cy.cGet('#fillattr1').click();
+		cy.cGet('#fillattr1').contains('Wooden Board').click();
 
 		previewShouldBeFullWhite(false);
 
@@ -150,23 +131,21 @@ describe('Changing slide properties.', function() {
 		mobileHelper.closeMobileWizard();
 		mobileHelper.openMobileWizard();
 
-		cy.get('#fillstyle .ui-header-left')
-			.should('have.text', 'Bitmap');
-
-		cy.get('#fillattr1 .ui-header-left')
-			.should('have.text', 'Wooden Board');
+		cy.cGet('#fillstyle .ui-header-left').should('have.text', 'Bitmap');
+		cy.cGet('#fillattr1 .ui-header-left').should('have.text', 'Wooden Board');
 	});
 
 	it.skip('Apply pattern fill.', function() {
 		// Change fill style
-		mobileHelper.selectListBoxItem2('#fillstyle', 'Pattern');
+		cy.cGet('#fillstyle').click();
+		cy.cGet('#fillstyle').contains('Pattern').click();
 
 		// Check the default value
-		cy.get('#fillattr1 .ui-header-left')
-			.should('have.text', '5 Percent');
+		cy.cGet('#fillattr1 .ui-header-left').should('have.text', '5 Percent');
 
 		// Change the value
-		mobileHelper.selectListBoxItem2('#fillattr1', '50 Percent');
+		cy.cGet('#fillattr1').click();
+		cy.cGet('#fillattr1').contains('50 Percent').click();
 
 		previewShouldBeFullWhite(false);
 
@@ -174,16 +153,14 @@ describe('Changing slide properties.', function() {
 		mobileHelper.closeMobileWizard();
 		mobileHelper.openMobileWizard();
 
-		cy.get('#fillstyle .ui-header-left')
-			.should('have.text', 'Pattern');
-
-		cy.get('#fillattr1 .ui-header-left')
-			.should('have.text', '50 Percent');
+		cy.cGet('#fillstyle .ui-header-left').should('have.text', 'Pattern');
+		cy.cGet('#fillattr1 .ui-header-left').should('have.text', '50 Percent');
 	});
 
 	it('Remove slide fill.', function() {
 		// Apply color fill first
-		mobileHelper.selectListBoxItem2('#fillstyle', 'Color');
+		cy.cGet('#fillstyle').click();
+		cy.cGet('#fillstyle').contains('Color').click();
 
 		previewShouldBeFullWhite(false);
 
@@ -191,11 +168,11 @@ describe('Changing slide properties.', function() {
 		mobileHelper.closeMobileWizard();
 		mobileHelper.openMobileWizard();
 
-		cy.get('#fillstyle .ui-header-left')
-			.should('have.text', 'Color');
+		cy.cGet('#fillstyle .ui-header-left').should('have.text', 'Color');
 
 		// Remove fill
-		mobileHelper.selectListBoxItem2('#fillstyle', 'None');
+		cy.cGet('#fillstyle').click();
+		cy.cGet('#fillstyle').contains('None').click();
 
 		previewShouldBeFullWhite();
 
@@ -203,14 +180,14 @@ describe('Changing slide properties.', function() {
 		mobileHelper.closeMobileWizard();
 		mobileHelper.openMobileWizard();
 
-		cy.get('#fillstyle .ui-header-left')
-			.should('have.text', 'None');
+		cy.cGet('#fillstyle .ui-header-left').should('have.text', 'None');
 	});
 
 	it('Change master background.', function() {
 		// The default master slide does not have background
 		// So switch to a different master slide first
-		mobileHelper.selectListBoxItem2('#masterslide', 'Colored');
+		cy.cGet('#masterslide').click();
+		cy.cGet('#masterslide').contains('Colored').click();
 
 		previewShouldBeFullWhite(false);
 
@@ -224,8 +201,7 @@ describe('Changing slide properties.', function() {
 
 		helper.clickOnIdle('input#displaymasterbackground');
 
-		cy.get('input#displaymasterbackground')
-			.should('not.have.prop', 'checked', true);
+		cy.cGet('input#displaymasterbackground').should('not.have.prop', 'checked', true);
 
 		previewShouldBeFullWhite();
 	});
@@ -234,13 +210,11 @@ describe('Changing slide properties.', function() {
 		previewShouldBeFullWhite();
 
 		// Master objects are disabled, enable the settings first
-		cy.get('input#displaymasterobjects')
-			.should('not.have.prop', 'checked', true);
+		cy.cGet('input#displaymasterobjects').should('not.have.prop', 'checked', true);
 
 		helper.clickOnIdle('input#displaymasterobjects');
 
-		cy.get('input#displaymasterobjects')
-			.should('have.prop', 'checked', true);
+		cy.cGet('input#displaymasterobjects').should('have.prop', 'checked', true);
 
 		// We have an image which changes the preview
 		previewShouldBeFullWhite(false);
@@ -255,8 +229,7 @@ describe('Changing slide properties.', function() {
 
 		helper.clickOnIdle('input#displaymasterobjects');
 
-		cy.get('input#displaymasterobjects')
-			.should('not.have.prop', 'checked', true);
+		cy.cGet('input#displaymasterobjects').should('not.have.prop', 'checked', true);
 
 		previewShouldBeFullWhite();
 	});
@@ -264,20 +237,21 @@ describe('Changing slide properties.', function() {
 	it('Change paper format.', function() {
 		var EPS = 0.1;
 
-		cy.get('#paperformat .ui-header-left')
-			.should('have.text', 'Screen 16:9');
+		cy.cGet('#paperformat .ui-header-left').should('have.text', 'Screen 16:9');
 
 		// Preview should have the correct ratio
-		cy.get('.preview-frame:nth-of-type(2) img')
+		cy.cGet('.preview-frame:nth-of-type(2) img')
 			.should(function(previews) {
 				var sizeRatio = previews[0].width / previews[0].height;
 				expect(sizeRatio).to.be.greaterThan(16 / 9 - EPS);
 				expect(sizeRatio).to.be.lessThan(16 / 9 + EPS);
 			});
 
-		mobileHelper.selectListBoxItem2('#paperformat', 'Screen 4:3');
 
-		cy.get('.preview-frame:nth-of-type(2) img')
+		cy.cGet('#paperformat').click();
+		cy.cGet('#paperformat').contains('Screen 4:3').click();
+
+		cy.cGet('.preview-frame:nth-of-type(2) img')
 			.should(function(previews) {
 				var sizeRatio = previews[0].width / previews[0].height;
 				expect(sizeRatio).to.be.greaterThan(4 / 3 - EPS);
@@ -288,23 +262,22 @@ describe('Changing slide properties.', function() {
 		mobileHelper.closeMobileWizard();
 		mobileHelper.openMobileWizard();
 
-		cy.get('#paperformat .ui-header-left')
-			.should('have.text', 'Screen 4:3');
+		cy.cGet('#paperformat .ui-header-left').should('have.text', 'Screen 4:3');
 	});
 
 	it('Change slide orientation.', function() {
 		// Preview should have the correct ratio (16/9)
-		cy.get('.preview-frame:nth-of-type(2) img')
+		cy.cGet('.preview-frame:nth-of-type(2) img')
 			.should(function(previews) {
 				expect(previews[0].width).to.be.greaterThan(previews[0].height);
 			});
 
-		cy.get('#orientation .ui-header-left')
-			.should('have.text', 'Landscape');
+		cy.cGet('#orientation .ui-header-left').should('have.text', 'Landscape');
 
-		mobileHelper.selectListBoxItem2('#orientation', 'Portrait');
+		cy.cGet('#orientation').click();
+		cy.cGet('#orientation').contains('Portrait').click();
 
-		cy.get('.preview-frame:nth-of-type(2) img')
+		cy.cGet('.preview-frame:nth-of-type(2) img')
 			.should(function(previews) {
 				expect(previews[0].width).to.be.lessThan(previews[0].height);
 			});
@@ -321,10 +294,10 @@ describe('Changing slide properties.', function() {
 	it('Apply master slide layout.', function() {
 		// We have white background by deafult checked by before() method
 		// Select a new master slide with a background color
-		cy.get('#masterslide .ui-header-left')
-			.should('have.text', 'Default');
+		cy.cGet('#masterslide .ui-header-left').should('have.text', 'Default');
 
-		mobileHelper.selectListBoxItem2('#masterslide', 'Colored');
+		cy.cGet('#masterslide').click();
+		cy.cGet('#masterslide').contains('Colored').click();
 
 		previewShouldBeFullWhite(false);
 
@@ -332,8 +305,7 @@ describe('Changing slide properties.', function() {
 		mobileHelper.closeMobileWizard();
 		mobileHelper.openMobileWizard();
 
-		cy.get('#masterslide .ui-header-left')
-			.should('have.text', 'Colored');
+		cy.cGet('#masterslide .ui-header-left').should('have.text', 'Colored');
 	});
 
 	it.skip('Apply layout.', function() {
@@ -356,8 +328,7 @@ describe('Changing slide properties.', function() {
 
 		helper.clickOnIdle('#Layouts');
 
-		cy.get('.layout:nth-of-type(3)')
-			.should('have.class', 'cool-context-down');
+		cy.cGet('.layout:nth-of-type(3)').should('have.class', 'cool-context-down');
 	});
 
 	it('Change paper format in master view.', function() {
@@ -365,20 +336,20 @@ describe('Changing slide properties.', function() {
 
 		switchToMasterView();
 
-		cy.get('#paperformat .ui-header-left')
-			.should('have.text', 'Screen 16:9');
+		cy.cGet('#paperformat .ui-header-left').should('have.text', 'Screen 16:9');
 
 		// Preview should have the correct ratio
-		cy.get('.preview-frame:nth-of-type(2) img')
+		cy.cGet('.preview-frame:nth-of-type(2) img')
 			.should(function(previews) {
 				var sizeRatio = previews[0].width / previews[0].height;
 				expect(sizeRatio).to.be.greaterThan(16 / 9 - EPS);
 				expect(sizeRatio).to.be.lessThan(16 / 9 + EPS);
 			});
 
-		mobileHelper.selectListBoxItem2('#paperformat', 'Screen 4:3');
+		cy.cGet('#paperformat').click();
+		cy.cGet('#paperformat').contains('Screen 4:3').click();
 
-		cy.get('.preview-frame:nth-of-type(2) img')
+		cy.cGet('.preview-frame:nth-of-type(2) img')
 			.should(function(previews) {
 				var sizeRatio = previews[0].width / previews[0].height;
 				expect(sizeRatio).to.be.greaterThan(4 / 3 - EPS);
@@ -389,25 +360,24 @@ describe('Changing slide properties.', function() {
 		mobileHelper.closeMobileWizard();
 		mobileHelper.openMobileWizard();
 
-		cy.get('#paperformat .ui-header-left')
-			.should('have.text', 'Screen 4:3');
+		cy.cGet('#paperformat .ui-header-left').should('have.text', 'Screen 4:3');
 	});
 
 	it('Change orientation in master view.', function() {
 		switchToMasterView();
 
 		// Preview should have the correct ratio (16/9)
-		cy.get('.preview-frame:nth-of-type(2) img')
+		cy.cGet('.preview-frame:nth-of-type(2) img')
 			.should(function(previews) {
 				expect(previews[0].width).to.be.greaterThan(previews[0].height);
 			});
 
-		cy.get('#orientation .ui-header-left')
-			.should('have.text', 'Landscape');
+		cy.cGet('#orientation .ui-header-left').should('have.text', 'Landscape');
 
-		mobileHelper.selectListBoxItem2('#orientation', 'Portrait');
+		cy.cGet('#orientation').click();
+		cy.cGet('#orientation').contains('Portrait').click();
 
-		cy.get('.preview-frame:nth-of-type(2) img')
+		cy.cGet('.preview-frame:nth-of-type(2) img')
 			.should(function(previews) {
 				expect(previews[0].width).to.be.lessThan(previews[0].height);
 			});
@@ -423,46 +393,28 @@ describe('Changing slide properties.', function() {
 	it('Check disabled elements in master view.', function() {
 		switchToMasterView();
 
-		cy.get('#masterslide')
-			.should('not.exist');
-
-		cy.get('#displaymasterbackground label')
-			.should('have.class', 'disabled');
-
-		cy.get('#displaymasterobjects label')
-			.should('have.class', 'disabled');
+		cy.cGet('#masterslide').should('not.exist');
+		cy.cGet('#displaymasterbackground label').should('have.class', 'disabled');
+		cy.cGet('#displaymasterobjects label').should('have.class', 'disabled');
 
 		// Reopen mobile wizard and check the settings again
 		mobileHelper.closeMobileWizard();
 		mobileHelper.openMobileWizard();
 
-		cy.get('#closemasterslide')
-			.should('exist');
-
-		cy.get('#masterslide')
-			.should('not.exist');
-
-		cy.get('#displaymasterbackground label')
-			.should('have.class', 'disabled');
-
-		cy.get('#displaymasterobjects label')
-			.should('have.class', 'disabled');
+		cy.cGet('#closemasterslide').should('exist');
+		cy.cGet('#masterslide').should('not.exist');
+		cy.cGet('#displaymasterbackground label').should('have.class', 'disabled');
+		cy.cGet('#displaymasterobjects label').should('have.class', 'disabled');
 
 		// Switch back to normal mode
 		helper.clickOnIdle('#closemasterslide');
 
-		cy.get('#masterslidebutton')
-			.should('exist');
+		cy.cGet('#masterslidebutton').should('exist');
 
 		previewShouldBeFullWhite();
 
-		cy.get('#masterslide')
-			.should('exist');
-
-		cy.get('#displaymasterbackground label')
-			.should('not.have.class', 'disabled');
-
-		cy.get('#displaymasterobjects label')
-			.should('not.have.class', 'disabled');
+		cy.cGet('#masterslide').should('exist');
+		cy.cGet('#displaymasterbackground label').should('not.have.class', 'disabled');
+		cy.cGet('#displaymasterobjects label').should('not.have.class', 'disabled');
 	});
 });
