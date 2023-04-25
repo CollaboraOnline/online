@@ -356,12 +356,6 @@ function checkIfBothDocIsLoaded() {
 }
 
 function checkIfDocIsLoaded(frameId) {
-	// To debug exceptions more easily - enable this:
-/*	Cypress.on('fail', () => {
-		// eslint-disable-next-line no-debugger
-		debugger;
-	}); */
-
 	// Wait for the document to fully load
 	cy.customGet('.leaflet-canvas-container canvas', frameId, {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 

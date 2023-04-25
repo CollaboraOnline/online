@@ -16,6 +16,14 @@ if (Cypress.env('INTEGRATION') === 'php-proxy') {
 var COMMAND_DELAY = 1000;
 
 if (Cypress.browser.isHeaded) {
+	// To debug exceptions more easily - enable this:
+	Cypress.on('fail', () => {
+		// eslint-disable-next-line no-debugger
+		debugger;
+	});
+}
+
+if (Cypress.browser.isHeaded) {
 	Cypress.Commands.overwriteQuery('get', function(originalFn, selector, options) {
 		return new Promise(function(resolve) {
 			setTimeout(function() {
