@@ -16,7 +16,7 @@ describe('Annotation Tests', function() {
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
 		} else if (Cypress.env('USER_INTERFACE') === 'notebookbar') {
-			cy.get('.unospan-optionstoolboxdown.unoModifyPage').click();
+			cy.cGet('.unospan-optionstoolboxdown.unoModifyPage').click();
 		} else {
 			desktopHelper.hideSidebar();
 		}
@@ -31,63 +31,43 @@ describe('Annotation Tests', function() {
 
 	it('Insert', function() {
 		insertMultipleComment('impress');
-		cy.get('.leaflet-marker-icon').should('exist');
-		cy.get('.cool-annotation-content > div')
-			.should('contain','some text');
+		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 	});
 
 	it('Modify', function() {
 		insertMultipleComment('impress');
 
-		cy.get('.leaflet-marker-icon').should('exist');
-
-		cy.get('#annotation-content-area-1').should('contain','some text0');
-
-		cy.get('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
-
-		cy.contains('.context-menu-item','Modify').click();
-
-		cy.get('#annotation-modify-textarea-1').type('{home}');
-		cy.get('#annotation-modify-textarea-1').type('some other text, ');
-
-		cy.get('#annotation-save-1').click();
-
-		cy.get('#annotation-content-area-1').should('contain','some other text, some text0');
-
-		cy.get('.leaflet-marker-icon').should('exist');
+		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('#annotation-content-area-1').should('contain','some text0');
+		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
+		cy.cGet('body').contains('.context-menu-item','Modify').click();
+		cy.cGet('#annotation-modify-textarea-1').type('{home}');
+		cy.cGet('#annotation-modify-textarea-1').type('some other text, ');
+		cy.cGet('#annotation-save-1').click();
+		cy.cGet('#annotation-content-area-1').should('contain','some other text, some text0');
+		cy.cGet('.leaflet-marker-icon').should('exist');
 	});
 
 	it('Remove',function() {
 		insertMultipleComment('impress');
 
-		cy.get('.leaflet-marker-icon').should('exist');
-
-		cy.get('.cool-annotation-content > div').should('contain','some text');
-
-		cy.get('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
-
-		cy.contains('.context-menu-item','Remove')
-			.click();
-
-		cy.get('.leaflet-marker-icon').should('not.exist');
+		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.cool-annotation-content > div').should('contain','some text');
+		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
+		cy.cGet('body').contains('.context-menu-item','Remove').click();
+		cy.cGet('.leaflet-marker-icon').should('not.exist');
 	});
 
 	it('Reply',function() {
 		insertMultipleComment('impress');
-
-		cy.get('.leaflet-marker-icon').should('exist');
-
-		cy.get('.cool-annotation-content > div').should('contain','some text');
-
-		cy.get('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
-
-		cy.contains('.context-menu-item','Reply').click();
-
-		cy.get('#annotation-reply-textarea-1').type('some reply text');
-
-		cy.get('#annotation-reply-1').click();
-
-		cy.get('.cool-annotation-content > div').should('include.text','some reply text');
+		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.cool-annotation-content > div').should('contain','some text');
+		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
+		cy.cGet('body').contains('.context-menu-item','Reply').click();
+		cy.cGet('#annotation-reply-textarea-1').type('some reply text');
+		cy.cGet('#annotation-reply-1').click();
+		cy.cGet('.cool-annotation-content > div').should('include.text','some reply text');
 	});
 });
 
@@ -100,7 +80,7 @@ describe('Collapsed Annotation Tests', function() {
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
 		} else if (Cypress.env('USER_INTERFACE') === 'notebookbar') {
-			cy.get('.unospan-optionstoolboxdown.unoModifyPage').click();
+			cy.cGet('.unospan-optionstoolboxdown.unoModifyPage').click();
 		} else {
 			desktopHelper.hideSidebar();
 		}
@@ -115,66 +95,47 @@ describe('Collapsed Annotation Tests', function() {
 
 	it('Insert', function() {
 		insertMultipleComment('impress', 1, false);
-		cy.get('.leaflet-marker-icon').should('exist');
-		cy.get('.cool-annotation-content > div')
-			.should('contain','some text');
+		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 	});
 
 	it('Modify', function() {
 		insertMultipleComment('impress', 1, false);
 
-		cy.get('.leaflet-marker-icon').should('exist');
-
-		cy.get('#annotation-content-area-1').should('contain','some text0');
-
-		cy.get('.avatar-img').click();
-		cy.get('.cool-annotation-menu').click();
-
-		cy.contains('.context-menu-item','Modify').click();
-
-		cy.get('#annotation-modify-textarea-1').type('{home}');
-		cy.get('#annotation-modify-textarea-1').type('some other text, ');
-
-		cy.get('#annotation-save-1').click();
-
-		cy.get('#annotation-content-area-1').should('contain','some other text, some text0');
-
-		cy.get('.leaflet-marker-icon').should('exist');
+		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('#annotation-content-area-1').should('contain','some text0');
+		cy.cGet('.avatar-img').click();
+		cy.cGet('.cool-annotation-menu').click();
+		cy.cGet('body').contains('.context-menu-item','Modify').click();
+		cy.cGet('#annotation-modify-textarea-1').type('{home}');
+		cy.cGet('#annotation-modify-textarea-1').type('some other text, ');
+		cy.cGet('#annotation-save-1').click();
+		cy.cGet('#annotation-content-area-1').should('contain','some other text, some text0');
+		cy.cGet('.leaflet-marker-icon').should('exist');
 	});
 
 	it('Remove',function() {
 		insertMultipleComment('impress', 1, false);
 
-		cy.get('.leaflet-marker-icon').should('exist');
-
-		cy.get('.cool-annotation-content > div').should('contain','some text');
-
-		cy.get('.avatar-img').click();
-		cy.get('.cool-annotation-menu').click();
-
-		cy.contains('.context-menu-item','Remove')
-			.click();
-
-		cy.get('.leaflet-marker-icon').should('not.exist');
+		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.cool-annotation-content > div').should('contain','some text');
+		cy.cGet('.avatar-img').click();
+		cy.cGet('.cool-annotation-menu').click();
+		cy.cGet('body').contains('.context-menu-item','Remove').click();
+		cy.cGet('.leaflet-marker-icon').should('not.exist');
 	});
 
 	it('Reply',function() {
 		insertMultipleComment('impress', 1, false);
 
-		cy.get('.leaflet-marker-icon').should('exist');
-
-		cy.get('.cool-annotation-content > div').should('contain','some text');
-
-		cy.get('.avatar-img').click();
-		cy.get('.cool-annotation-menu').click();
-
-		cy.contains('.context-menu-item','Reply').click();
-
-		cy.get('#annotation-reply-textarea-1').type('some reply text');
-
-		cy.get('#annotation-reply-1').click();
-
-		cy.get('.cool-annotation-content > div').should('include.text','some reply text');
+		cy.cGet('.leaflet-marker-icon').should('exist');
+		cy.cGet('.cool-annotation-content > div').should('contain','some text');
+		cy.cGet('.avatar-img').click();
+		cy.cGet('.cool-annotation-menu').click();
+		cy.cGet('body').contains('.context-menu-item','Reply').click();
+		cy.cGet('#annotation-reply-textarea-1').type('some reply text');
+		cy.cGet('#annotation-reply-1').click();
+		cy.cGet('.cool-annotation-content > div').should('include.text','some reply text');
 	});
 });
 
@@ -186,7 +147,7 @@ describe('Comment Scrolling',function() {
 		testFileName = helper.beforeAll(origTestFileName, 'impress');
 
 		if (Cypress.env('USER_INTERFACE') === 'notebookbar') {
-			cy.get('.unospan-optionstoolboxdown.unoModifyPage').click();
+			cy.cGet('.unospan-optionstoolboxdown.unoModifyPage').click();
 		} else {
 			desktopHelper.hideSidebar();
 		}
@@ -199,9 +160,9 @@ describe('Comment Scrolling',function() {
 
 	it('no comment or one comment', function() {
 		cy.wait(1000);
-		cy.get('.leaflet-control-scroll-down').should('not.exist');
+		cy.cGet('.leaflet-control-scroll-down').should('not.exist');
 		insertMultipleComment('impress', 1, false);
-		cy.get('.leaflet-marker-icon').should('exist');
+		cy.cGet('.leaflet-marker-icon').should('exist');
 	});
 
 	it('omit slides without comments', function() {
@@ -211,14 +172,14 @@ describe('Comment Scrolling',function() {
 		addSlide(2);
 		insertMultipleComment('impress', 1, false);
 		helper.waitUntilIdle('.leaflet-control-scroll-up');
-		cy.get('.leaflet-control-scroll-up').should('be.visible');
-		cy.get('.leaflet-control-scroll-up').click().wait(300);
-		cy.get('#PageStatus').should('contain','Slide 1 of 3');
+		cy.cGet('.leaflet-control-scroll-up').should('be.visible');
+		cy.cGet('.leaflet-control-scroll-up').click().wait(300);
+		cy.cGet('#PageStatus').should('contain','Slide 1 of 3');
 
 		//scroll down
-		cy.get('.leaflet-control-scroll-down').should('exist');
-		cy.get('.leaflet-control-scroll-down').click().wait(1000);
-		cy.get('#PageStatus').should('contain','Slide 3 of 3');
+		cy.cGet('.leaflet-control-scroll-down').should('exist');
+		cy.cGet('.leaflet-control-scroll-down').click().wait(1000);
+		cy.cGet('#PageStatus').should('contain','Slide 3 of 3');
 	});
 
 
@@ -228,14 +189,14 @@ describe('Comment Scrolling',function() {
 
 		//scroll up
 		addSlide(1);
-		cy.get('.leaflet-control-scroll-up').should('exist');
-		cy.get('.leaflet-control-scroll-up').click().wait(300);
-		cy.get('#PageStatus').should('contain','Slide 2 of 3');
+		cy.cGet('.leaflet-control-scroll-up').should('exist');
+		cy.cGet('.leaflet-control-scroll-up').click().wait(300);
+		cy.cGet('#PageStatus').should('contain','Slide 2 of 3');
 
 		//scroll down
 		changeSlide(1,'previous');
-		cy.get('.leaflet-control-scroll-down').should('exist');
-		cy.get('.leaflet-control-scroll-down').click().wait(300);
-		cy.get('#PageStatus').should('contain','Slide 2 of 3');
+		cy.cGet('.leaflet-control-scroll-down').should('exist');
+		cy.cGet('.leaflet-control-scroll-down').click().wait(300);
+		cy.cGet('#PageStatus').should('contain','Slide 2 of 3');
 	});
 });

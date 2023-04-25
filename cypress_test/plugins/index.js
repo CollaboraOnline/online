@@ -5,11 +5,16 @@ var uuid = require('uuid');
 
 var tasks = require('./tasks');
 var blacklists = require('./blacklists');
-var selectTests = require('cypress-select-tests');
+
+//const registerCypressGrep = require('@cypress/grep');
+//registerCypressGrep();
+
+require('@cypress/grep/src/plugin');
 
 function plugin(on, config) {
 	if (config.env.COVERAGE_RUN)
 		require('@cypress/code-coverage/task')(on, config);
+
 	on('task', {
 		copyFile: tasks.copyFile,
 		failed: require('cypress-failed-log/src/failed')(),
@@ -50,7 +55,8 @@ function plugin(on, config) {
 		config.env.USER_INTERFACE = 'notebookbar';
 	}
 
-	on('file:preprocessor', (file) => {
+	/*eslint-disable-next-line*/
+	var onFilePreprocessor = function (file) {
 		if (file.outputPath.endsWith('support/index.js')) {
 			var runUuid = uuid.v4();
 			var truncLength = file.outputPath.length - ('index.js').length;
@@ -58,8 +64,12 @@ function plugin(on, config) {
 			file.outputPath += runUuid + 'index.js';
 		}
 
-		return selectTests(config, pickTests)(file);
-	});
+		//return Cypress.grep(config, pickTests)(file);
+		pickTests(null, null);
+		return file;
+	};
+
+	//on('file:preprocessor', onFilePreprocessor);
 
 	return config;
 }
@@ -84,6 +94,9 @@ function isNotebookbarTest(filename, notebookbarOnlyList) {
 }
 
 function pickTests(filename, foundTests) {
+	if (true)
+		return;
+
 	var testsToRun = foundTests;
 
 	if (process.env.CYPRESS_INTEGRATION === 'nextcloud') {

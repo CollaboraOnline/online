@@ -241,7 +241,7 @@ run-mobile: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 MOBILE_CONFIG = \
-	integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT)
+	specPattern=$(MOBILE_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT)
 
 MOBILE_ENV = \
 	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MOBILE_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
@@ -302,7 +302,7 @@ run-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 DESKTOP_CONFIG = \
-	integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
+	supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
 
 DESKTOP_ENV = \
 	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(DESKTOP_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),SCREENSHOT_FOLDER=$(abs_srcdir)/cypress/screenshots,IMAGES_FOLDER=$(abs_top_srcdir)/browser/images/help/en/
@@ -364,7 +364,7 @@ run-multi: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 MULTIUSER_CONFIG = \
-	integrationFolder=$(MULTIUSER_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
+	specPattern=$(MULTIUSER_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
 
 MULTIUSER_ENV = \
 	DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
@@ -443,7 +443,7 @@ run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 INTERFER_MOBILE_CONFIG1 = \
-	integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000
+	specPattern=$(MOBILE_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000
 
 INTERFER_MOBILE_ENV1 = \
 	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
@@ -516,7 +516,7 @@ run-interfer-desktop: @JAILS_PATH@ $(NODE_BINS)
 	@$(KILL_COMMAND) || true
 
 INTERFER_DESKTOP_CONFIG1 = \
-	integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000
+	specPattern=$(DESKTOP_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000
 
 INTERFER_DESKTOP_ENV1 = \
 	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
@@ -588,6 +588,7 @@ do-run-cov: @JAILS_PATH@ $(NODE_BINS)
 # 1 - config: cypress configuration (e.g. cypress' --config argument).
 # 2 - env:    list of environment variables (e.g. cypress' --env argument).
 define run_interactive_all
+	DEBUG='cypress:*' \
 	DISPLAY=$(if $(HEADLESS_BUILD),$(HEADLESS_DISPLAY),$(DISPLAY)) \
 		$(CYPRESS_BINARY) open \
 		--config $(1) \
@@ -601,6 +602,7 @@ endef
 # 2 - env:    list of environment variables (e.g. cypress' --env argument).
 # 3 - spec:   test file path (e.g. cypress' --spec argument)
 define run_interactive_single
+	DEBUG='cypress:*' \
 	DISPLAY=$(if $(HEADLESS_BUILD),$(HEADLESS_DISPLAY),$(DISPLAY)) \
 		$(CYPRESS_BINARY) run \
 		--browser $(BROWSER) \

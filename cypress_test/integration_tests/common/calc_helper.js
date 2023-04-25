@@ -17,10 +17,8 @@ function clickFormulaBar() {
 		helper.waitUntilIdle('#sc_input_window.formulabar');
 	});
 
-	cy.get('#sc_input_window.formulabar')
-		.focus();
-
-	cy.get('body').trigger('mouseover');
+	cy.cGet('#sc_input_window.formulabar').focus();
+	cy.cGet('body').trigger('mouseover');
 }
 
 // Click on the first cell of the sheet (A1), we use the document
@@ -39,50 +37,32 @@ function clickOnFirstCell(firstClick = true, dblClick = false, frameId) {
 
 	cy.wait(1000);
 	// Use the tile's edge to find the first cell's position
-	cy.customGet('#map', frameId)
+	cy.cGet('#map')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
 			var XPos = items[0].getBoundingClientRect().left + 10;
 			var YPos = items[0].getBoundingClientRect().top + 10;
-			if (dblClick) {
-				if (frameId) {
-					cy.get(frameId)
-						.then(($iframe) => {
-							const $body = $iframe.contents().find('body');
-
-							cy.wrap($body)
-								.click(XPos, YPos)
-								.wait(500)
-								.dblclick(XPos, YPos);
-						});
-				} else {
-					cy.get('body')
-						.click(XPos, YPos)
-						.dblclick(XPos, YPos);
-				}
-			} else {
-				cy.get('body')
-					.click(XPos, YPos);
-			}
+			if (dblClick)
+				cy.cGet('body').click(XPos, YPos).dblclick(XPos, YPos);
+			else
+				cy.cGet('body').click(XPos, YPos);
 		});
 
 	if (firstClick && !dblClick) {
-		cy.customGet('#test-div-overlay-cell-cursor-border-0', frameId)
+		cy.cGet('#test-div-overlay-cell-cursor-border-0')
 			.should(function (elem) {
 				expect(helper.Bounds.parseBoundsJson(elem.text()).left).to.be.equal(0);
 				expect(helper.Bounds.parseBoundsJson(elem.text()).top).to.be.equal(0);
 			});
 	} else {
-		cy.customGet('.cursor-overlay .blinking-cursor', frameId)
-			.should('be.visible');
+		cy.cGet('.cursor-overlay .blinking-cursor').should('be.visible');
 
 		helper.doIfOnDesktop(function() {
 			cy.wait(500);
 		});
 	}
 
-	cy.customGet('input#addressInput', frameId)
-		.should('have.prop', 'value', 'A1');
+	cy.cGet('input#addressInput').should('have.prop', 'value', 'A1');
 
 	cy.log('Clicking on first cell - end.');
 }
@@ -98,34 +78,26 @@ function dblClickOnFirstCell(frameId) {
 function typeIntoFormulabar(text) {
 	cy.log('Typing into formulabar - start.');
 
-	cy.get('#calc-inputbar .lokdialog-cursor')
+	cy.cGet('#calc-inputbar .lokdialog-cursor')
 		.then(function(cursor) {
 			if (!Cypress.dom.isVisible(cursor)) {
 				clickFormulaBar();
 			}
 		});
 
-	cy.get('#calc-inputbar .lokdialog-cursor')
-		 .should('have.focus');
+		cy.cGet('#calc-inputbar .lokdialog-cursor').should('have.focus');
 
 	helper.doIfOnMobile(function() {
-		cy.get('#tb_actionbar_item_acceptformula')
-			.should('be.visible');
-
-		cy.get('#tb_actionbar_item_cancelformula')
-			.should('be.visible');
+		cy.cGet('#tb_actionbar_item_acceptformula').should('be.visible');
+		cy.cGet('#tb_actionbar_item_cancelformula').should('be.visible');
 	});
 
 	helper.doIfOnDesktop(function() {
-		cy.get('#acceptformula')
-			.should('be.visible');
-
-		cy.get('#cancelformula')
-			.should('be.visible');
+		cy.cGet('#acceptformula').should('be.visible');
+		cy.cGet('#cancelformula').should('be.visible');
 	});
 
-	cy.get('body')
-		.type(text);
+	cy.cGet('body').type(text);
 
 	cy.log('Typing into formulabar - end.');
 }
@@ -136,7 +108,7 @@ function typeIntoFormulabar(text) {
 function removeTextSelection() {
 	cy.log('Removing text selection - start.');
 
-	cy.get('[id="test-div-row header"]')
+	cy.cGet('[id="test-div-row header"]')
 		.then(function(header) {
 			expect(header).to.have.lengthOf(1);
 			var rect = header[0].getBoundingClientRect();
@@ -145,12 +117,11 @@ function removeTextSelection() {
 
 			var moveY = 0.0;
 			cy.waitUntil(function() {
-				cy.get('body')
-					.click(posX, posY + moveY);
+				cy.cGet('body').click(posX, posY + moveY);
 
 				moveY += 1.0;
 				var regex = /A([0-9]+):(AMJ|XFD)\1$/;
-				return cy.get('input#addressInput')
+				return cy.cGet('input#addressInput')
 					.should('have.prop', 'value')
 					.then(function(value) {
 						return regex.test(value);
@@ -173,23 +144,21 @@ function selectEntireSheet() {
 
 	removeTextSelection();
 
-	cy.get('[id="test-div-corner header"]')
+	cy.cGet('[id="test-div-corner header"]')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
 			var corner = items[0];
 			var XPos = (corner.getBoundingClientRect().right + items[0].getBoundingClientRect().left) / 2;
 			var YPos = items[0].getBoundingClientRect().bottom - 10;
-			cy.get('body')
-				.click(XPos, YPos);
+			cy.cGet('body').click(XPos, YPos);
 		});
 
 	helper.doIfOnMobile(function() {
-		cy.get('.spreadsheet-cell-resize-marker')
-			.should('be.visible');
+		cy.cGet('.spreadsheet-cell-resize-marker').should('be.visible');
 	});
 
 	var regex = /^A1:(AMJ|XFD)1048576$/;
-	cy.get('input#addressInput')
+	cy.cGet('input#addressInput')
 		.should('have.prop', 'value')
 		.then(function(value) {
 			return regex.test(value);
@@ -203,19 +172,17 @@ function selectEntireSheet() {
 // of the column headers. Of course if the first column
 // has a very small width, then this might fail.
 function selectFirstColumn() {
-	cy.get('[id="test-div-column header"]')
+	cy.cGet('[id="test-div-column header"]')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
 
 			var bounds = items[0].getBoundingClientRect();
 			var XPos = bounds.left + 10;
 			var YPos = (bounds.top + bounds.bottom) / 2;
-			cy.get('body')
-				.click(XPos, YPos);
+			cy.cGet('body').click(XPos, YPos);
 		});
 
-	cy.get('input#addressInput')
-		.should('have.prop', 'value', 'A1:A1048576');
+		cy.cGet('input#addressInput').should('have.prop', 'value', 'A1:A1048576');
 }
 
 function ensureViewContainsCellCursor() {
@@ -232,14 +199,14 @@ function ensureViewContainsCellCursor() {
 }
 
 function assertDataClipboardTable(expectedData) {
-	cy.get('#copy-paste-container table td')
+	cy.cGet('#copy-paste-container table td')
 		.should(function(cells) {
 			expect(cells).to.have.lengthOf(expectedData.length);
 		});
 
 	var data = [];
 
-	cy.get('#copy-paste-container tbody').find('td').each(($el) => {
+	cy.cGet('#copy-paste-container tbody').find('td').each(($el) => {
 		cy.wrap($el)
 			.invoke('text')
 			.then(text => {

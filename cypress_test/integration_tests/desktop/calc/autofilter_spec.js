@@ -24,9 +24,7 @@ describe('AutoFilter', function() {
 	function toggleAutofilter() {
 		//enable/disable autofilter
 		helper.clickOnIdle('#menu-data');
-
-		cy.contains('#menu-data li', 'AutoFilter')
-			.click();
+		cy.cGet('body').contains('#menu-data li', 'AutoFilter').click();
 	}
 
 	//If we select entire sheet , there is no data about table in copy-paste-container when autofilter
@@ -43,7 +41,7 @@ describe('AutoFilter', function() {
 
 			var tableData = [];
 
-			cy.get('#copy-paste-container tbody').find('td').each(($el) => {
+			cy.cGet('#copy-paste-container tbody').find('td').each(($el) => {
 				cy.wrap($el)
 					.invoke('text')
 					.then(text => {
@@ -64,13 +62,12 @@ describe('AutoFilter', function() {
 		if (secondColumn) {
 			x += 105;
 		}
-		cy.get('#map')
+		cy.cGet('#map')
 			.then(function(items) {
 				expect(items).to.have.lengthOf(1);
 				var XPos = items[0].getBoundingClientRect().left + x;
 				var YPos = items[0].getBoundingClientRect().top + 10;
-				cy.get('body')
-					.click(XPos, YPos);
+				cy.cGet('body').click(XPos, YPos);
 			});
 	}
 
@@ -79,16 +76,10 @@ describe('AutoFilter', function() {
 		//filter by pass
 		openAutoFilterMenu(true);
 
-		cy.get('.autofilter .vertical').should('be.visible');
-
-		cy.get('.autofilter .ui-treeview-checkbox').eq(0)
-			.uncheck();
-
-		cy.get('.autofilter .ui-treeview-checkbox').eq(1)
-			.uncheck();
-
-		cy.get('.autofilter .ui-button-box-right #ok')
-			.click();
+		cy.cGet('.autofilter .vertical').should('be.visible');
+		cy.cGet('.autofilter .ui-treeview-checkbox').eq(0).uncheck();
+		cy.cGet('.autofilter .ui-treeview-checkbox').eq(1).uncheck();
+		cy.cGet('.autofilter .ui-button-box-right #ok').click();
 
 		assertDataOnFilter(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 3', 'Pass']);
 
@@ -105,8 +96,7 @@ describe('AutoFilter', function() {
 		openAutoFilterMenu();
 
 		//sort by descending order
-		cy.contains('.autofilter', 'Sort Descending')
-			.click();
+		cy.cGet('body').contains('.autofilter', 'Sort Descending').click();
 
 		helper.waitUntilIdle('#copy-paste-container tbody');
 
@@ -116,8 +106,7 @@ describe('AutoFilter', function() {
 		//sort by ascending order
 		openAutoFilterMenu();
 
-		cy.contains('.autofilter', 'Sort Ascending')
-			.click();
+		cy.cGet('body').contains('.autofilter', 'Sort Ascending').click();
 
 		// Without this the copy-paste-container doesn't seem to get updated although the table
 		// has correct values.
@@ -133,10 +122,9 @@ describe('AutoFilter', function() {
 		//empty
 		openAutoFilterMenu(true);
 
-		cy.get('#check_list_box > tbody > ul > li:nth-child(1) > span > input')
-			.click();
+		cy.cGet('#check_list_box > tbody > ul > li:nth-child(1) > span > input').click();
 
-		cy.get('#ok').click();
+		cy.cGet('#ok').click();
 
 		assertDataOnFilter(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 5', 'Fail']);
 	});
