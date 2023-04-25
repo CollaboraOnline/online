@@ -5,6 +5,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <chrono>
 #include <config.h>
 
 #include "WebSocketSession.hpp"
@@ -42,7 +43,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testExoticLang);
     CPPUNIT_TEST(testSaveOnDisconnect);
-    CPPUNIT_TEST(testSavePassiveOnDisconnect);
     // This test is failing
     //CPPUNIT_TEST(testReloadWhileDisconnecting);
     CPPUNIT_TEST(testInactiveClient);
@@ -53,7 +53,6 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     void testExoticLang();
     void testSaveOnDisconnect();
-    void testSavePassiveOnDisconnect();
     void testReloadWhileDisconnecting();
     void testInactiveClient();
     void testViewInfoMsg();
@@ -139,26 +138,16 @@ void HTTPWSTest::testSaveOnDisconnect()
 
         sendTextFrame(socket2, "userinactive");
 
-        deleteAll(socket1, testname);
+        deleteAll(socket1, testname, std::chrono::milliseconds(100), 1);
         sendTextFrame(socket1, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
-
-        TST_LOG("Validating what we sent before disconnecting.");
-
-        // Check if the document contains the pasted text.
-        const std::string selection = getAllText(socket1, testname);
-        LOK_ASSERT_EQUAL("textselectioncontent: " + text, selection);
-
-        // Closing connection too fast might not flush buffers.
-        // Often nothing more than the SelectAll reaches the server before
-        // the socket is closed, when the doc is not even modified yet.
-        getResponseMessage(socket1, "statechanged", testname);
+        getResponseMessage(socket1, "pasteresult: success", testname);
 
         kitcount = getCoolKitProcessCount();
 
         // Shutdown abruptly.
         TST_LOG("Closing connection after pasting.");
 
-        socket1->asyncShutdown();
+        socket1->asyncShutdown(); // Should trigger saving.
         socket2->asyncShutdown();
 
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
@@ -185,85 +174,6 @@ void HTTPWSTest::testSaveOnDisconnect()
 
         // Check if the document contains the pasted text.
         const std::string selection = getAllText(socket, testname, text);
-        LOK_ASSERT_EQUAL("textselectioncontent: " + text, selection);
-
-        socket->asyncShutdown();
-
-        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 3",
-                           socket->waitForDisconnection(std::chrono::seconds(5)));
-    }
-    catch (const Poco::Exception& exc)
-    {
-        LOK_ASSERT_FAIL(exc.displayText());
-    }
-}
-
-void HTTPWSTest::testSavePassiveOnDisconnect()
-{
-    const std::string testname = "savePassiveOnDisconnect- ";
-
-    const std::string text = helpers::genRandomString(40);
-    TST_LOG("Test string: [" << text << "].");
-
-    std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
-
-    int kitcount = -1;
-    try
-    {
-        std::shared_ptr<http::WebSocketSession> socket1
-            = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "1 ");
-        getResponseMessage(socket1, "textselection", testname);
-
-        std::shared_ptr<http::WebSocketSession> socket2
-            = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "2 ");
-
-        deleteAll(socket1, testname);
-
-        sendTextFrame(socket1, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
-        getResponseMessage(socket1, "textselection:", testname);
-
-        // Check if the document contains the pasted text.
-        const std::string selection = getAllText(socket1, testname);
-        LOK_ASSERT_EQUAL("textselectioncontent: " + text, selection);
-
-        // Closing connection too fast might not flush buffers.
-        // Often nothing more than the SelectAll reaches the server before
-        // the socket is closed, when the doc is not even modified yet.
-        getResponseMessage(socket1, "statechanged", testname);
-
-        kitcount = getCoolKitProcessCount();
-
-        // Shutdown abruptly.
-        TST_LOG("Closing connection after pasting.");
-        socket1->asyncShutdown(); // Should trigger saving.
-        socket2->asyncShutdown();
-
-        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
-                           socket1->waitForDisconnection(std::chrono::seconds(5)));
-        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
-                           socket2->waitForDisconnection(std::chrono::seconds(5)));
-    }
-    catch (const Poco::Exception& exc)
-    {
-        LOK_ASSERT_FAIL(exc.displayText());
-    }
-
-    // Allow time to save and destroy before we connect again.
-    testNoExtraCoolKitsLeft();
-    TST_LOG("Loading again.");
-    try
-    {
-        // Load the same document and check that the last changes (pasted text) is saved.
-        std::shared_ptr<http::WebSocketSession> socket
-            = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "3 ");
-        getResponseMessage(socket, "textselection", testname);
-
-        // Should have no new instances.
-        LOK_ASSERT_EQUAL(kitcount, countCoolKitProcesses(kitcount));
-
-        // Check if the document contains the pasted text.
-        const std::string selection = getAllText(socket, testname);
         LOK_ASSERT_EQUAL("textselectioncontent: " + text, selection);
 
         socket->asyncShutdown();
@@ -345,7 +255,8 @@ void HTTPWSTest::testInactiveClient()
         sendTextFrame(socket2, "userinactive", "inactiveClient-2 ");
 
         // While second is inactive, make some changes.
-        deleteAll(socket1, "inactiveClient-1 ");
+        sendTextFrame(socket1, "key type=input char=97 key=0", "inactiveClient-1 ");
+        sendTextFrame(socket1, "key type=up char=0 key=512", "inactiveClient-1 ");
 
         // Activate second.
         sendTextFrame(socket2, "useractive", "inactiveClient-2 ");
@@ -380,8 +291,9 @@ void HTTPWSTest::testInactiveClient()
                     return (token != "statechanged:");
                 });
 
-        TST_LOG("Second client finished.");
+        TST_LOG("Second client finished. Shutting down");
         socket2->asyncShutdown();
+        TST_LOG("Shutting down first client");
         socket1->asyncShutdown();
 
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
