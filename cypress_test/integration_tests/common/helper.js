@@ -541,6 +541,8 @@ function beforeAll(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad,
 }
 
 function afterAll(fileName, testState) {
+	if (Cypress.browser.isHeaded)
+		cy.wait(2000);
 	closeDocument(fileName, testState);
 }
 
