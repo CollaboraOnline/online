@@ -1,4 +1,4 @@
-/* global require cy Cypress Promise */
+/* global require cy Cypress */
 
 require('cypress-failed-log');
 require('cypress-wait-until');
@@ -24,21 +24,13 @@ if (Cypress.browser.isHeaded) {
 }
 
 if (Cypress.browser.isHeaded) {
-	Cypress.Commands.overwriteQuery('get', function(originalFn, selector, options) {
-		return new Promise(function(resolve) {
-			setTimeout(function() {
-				resolve(originalFn(selector, options));
-			}, COMMAND_DELAY);
-		});
-	});
-
-	Cypress.Commands.overwriteQuery('contains', function(originalFn, selector, content, options) {
-		return new Promise(function(resolve) {
-			setTimeout(function() {
-				resolve(originalFn(selector, content, options));
-			}, COMMAND_DELAY);
-		});
-	});
+	const runCommand = cy.queue.runCommand.bind(cy.queue);
+	cy.queue.runCommand = function slowRunCommand(cmd) {
+		if (cmd != 'get' && cmd != 'contains')
+			return runCommand(cmd);
+		else
+			return Cypress.Promise.delay(COMMAND_DELAY).then(() => runCommand(cmd));
+	};
 }
 
 // reduce poll interval when waiting.
