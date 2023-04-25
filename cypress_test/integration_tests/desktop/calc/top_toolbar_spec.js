@@ -33,7 +33,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_save')
 			.click();
 
-		Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
+		Cypress.Commands.overwriteQuery('get', function(originalFn, selector, options) {
 			return originalFn(selector, options);
 		});
 

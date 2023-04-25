@@ -27,7 +27,7 @@ describe.skip('Annotation tests.', function() {
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
 		//reset get to original function
-		Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
+		Cypress.Commands.overwriteQuery('get', function(originalFn, selector, options) {
 			return originalFn(selector, options);
 		});
 

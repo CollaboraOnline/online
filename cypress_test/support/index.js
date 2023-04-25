@@ -16,7 +16,7 @@ if (Cypress.env('INTEGRATION') === 'php-proxy') {
 var COMMAND_DELAY = 1000;
 
 if (Cypress.browser.isHeaded) {
-	Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
+	Cypress.Commands.overwriteQuery('get', function(originalFn, selector, options) {
 		return new Promise(function(resolve) {
 			setTimeout(function() {
 				resolve(originalFn(selector, options));
@@ -24,7 +24,7 @@ if (Cypress.browser.isHeaded) {
 		});
 	});
 
-	Cypress.Commands.overwrite('contains', function(originalFn, selector, content, options) {
+	Cypress.Commands.overwriteQuery('contains', function(originalFn, selector, content, options) {
 		return new Promise(function(resolve) {
 			setTimeout(function() {
 				resolve(originalFn(selector, content, options));
