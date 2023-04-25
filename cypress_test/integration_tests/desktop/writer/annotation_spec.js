@@ -9,7 +9,9 @@ describe('Annotation Tests', function() {
 
 	beforeEach(function() {
 		cy.viewport(1400, 600);
+		cy.log('could reach 1');
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		cy.log('could reach 2');
 		var mode = Cypress.env('USER_INTERFACE');
 		if (mode === 'notebookbar') {
 			cy.get('.unospan-optionstoolboxdown.unoSidebar')

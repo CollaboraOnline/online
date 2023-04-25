@@ -77,7 +77,7 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser, 
 	if (!isMultiUser) {
 		cy.iframe('#coolframe').then(cy.wrap).as('coolIFrameGlobal');
 
-		Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
+		Cypress.Commands.overwriteQuery('get', function(originalFn, selector, options) {
 			if (!selector.startsWith('@') && !selector.includes('#coolframe')) {
 				if (selector === 'body')
 					return cy.get('@coolIFrameGlobal', options);
@@ -86,7 +86,7 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser, 
 			return originalFn(selector, options);
 		});
 
-		Cypress.Commands.overwrite('contains', function(originalFn, selector, content, options) {
+		Cypress.Commands.overwriteQuery('contains', function(originalFn, selector, content, options) {
 			return cy.get('#document-container').parent().wrap(originalFn(selector, content, options));
 		});
 	}
@@ -147,7 +147,7 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 		}
 	};
 
-	Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
+	Cypress.Commands.overwriteQuery('get', function(originalFn, selector, options) {
 		var iFrameLevel = Cypress.env('IFRAME_LEVEL');
 		if ((iFrameLevel === '1' || iFrameLevel === '2') && !selector.startsWith('@'))
 			if (selector === 'body')
@@ -158,7 +158,7 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 			return originalFn(selector, options);
 	});
 
-	Cypress.Commands.overwrite('contains', function(originalFn, selector, content, options) {
+	Cypress.Commands.overwriteQuery('contains', function(originalFn, selector, content, options) {
 		if (Cypress.env('IFRAME_LEVEL') === '2')
 			return cy.get('#document-container').parent().wrap(originalFn(selector, content, options));
 		else
@@ -616,7 +616,7 @@ function closeDocument(fileName, testState) {
 			cy.wait(2000);
 		}
 
-		Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
+		Cypress.Commands.overwriteQuery('get', function(originalFn, selector, options) {
 			return originalFn(selector, options);
 		});
 		// Make sure that the document is closed
