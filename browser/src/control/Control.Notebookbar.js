@@ -53,6 +53,7 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
 
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
+		$('.main-nav').removeProp('overflow');
 		$('.main-nav').addClass('hasnotebookbar');
 		$('.main-nav').addClass(docType + '-color-indicator');
 		document.getElementById('document-container').classList.add('notebookbar-active');
