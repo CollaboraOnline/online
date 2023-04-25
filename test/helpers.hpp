@@ -758,7 +758,7 @@ inline bool svgMatch(const std::string& testname, const std::vector<char>& respo
 }
 
 /// Sends a command and waits for an event in response, with retrying.
-inline void sendAndWait(const std::shared_ptr<http::WebSocketSession>& ws,
+inline bool sendAndWait(const std::shared_ptr<http::WebSocketSession>& ws,
                         const std::string& testname, const std::string& command,
                         const std::string& response,
                         std::chrono::milliseconds timeoutPerAttempt = std::chrono::seconds(10),
@@ -769,8 +769,21 @@ inline void sendAndWait(const std::shared_ptr<http::WebSocketSession>& ws,
         TST_LOG("Sending [" << command << "], waiting for [" << response << "], attempt #" << i);
         sendTextFrame(ws, command, testname);
         if (!getResponseString(ws, response, testname, timeoutPerAttempt).empty())
-            break;
+            return true;
     }
+
+    return false;
+}
+
+/// Drain all events.
+/// Draining happens until nothing is received for @timeoutDrain.
+inline void drain(const std::shared_ptr<http::WebSocketSession>& ws, const std::string& testname,
+                  std::chrono::milliseconds timeoutDrain = std::chrono::milliseconds(300))
+{
+    TST_LOG("Draining events");
+
+    while (!getResponseString(ws, "", testname, timeoutDrain).empty())
+        ; // Skip.
 }
 
 /// Sends a command and drain an event in response.
@@ -800,23 +813,30 @@ inline bool sendAndDrain(const std::shared_ptr<http::WebSocketSession>& ws,
 }
 
 /// Select all and wait for the text selection update.
-inline void selectAll(const std::shared_ptr<http::WebSocketSession>& ws,
+inline bool selectAll(const std::shared_ptr<http::WebSocketSession>& ws,
                       const std::string& testname,
                       std::chrono::milliseconds timeoutPerAttempt = std::chrono::seconds(10),
-                      int repeat = COMMAND_RETRY_COUNT)
+                      int retry = COMMAND_RETRY_COUNT)
 {
-    sendAndWait(ws, testname, "uno .uno:SelectAll", "textselection:", timeoutPerAttempt, repeat);
+    return sendAndWait(ws, testname, "uno .uno:SelectAll", "textselection:", timeoutPerAttempt,
+                       retry);
 }
 
 /// Delete all and wait for the text selection update.
-inline void deleteAll(const std::shared_ptr<http::WebSocketSession>& ws,
+inline bool deleteAll(const std::shared_ptr<http::WebSocketSession>& ws,
                       const std::string& testname,
                       std::chrono::milliseconds timeoutPerAttempt = std::chrono::seconds(10),
-                      int repeat = COMMAND_RETRY_COUNT)
+                      int retry = COMMAND_RETRY_COUNT)
 {
-    selectAll(ws, testname, timeoutPerAttempt, repeat);
+    for (int i = 1; i <= retry; ++i)
+    {
+        selectAll(ws, testname, timeoutPerAttempt, retry);
 
-    sendAndWait(ws, testname, "uno .uno:Delete", "textselection:", timeoutPerAttempt, repeat);
+        if (sendAndWait(ws, testname, "uno .uno:Delete", "textselection:", timeoutPerAttempt, 1))
+            return true;
+    }
+
+    return false;
 }
 
 inline std::string getAllText(const std::shared_ptr<http::WebSocketSession>& socket,
