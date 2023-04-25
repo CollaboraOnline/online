@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Annotation tests.', function() {
+describe(['tagmobile'], 'Annotation tests.', function() {
 	var origTestFileName = 'annotation.odp';
 	var testFileName;
 
@@ -31,7 +31,7 @@ describe('Annotation tests.', function() {
 
 		mobileHelper.openCommentWizard();
 
-		cy.get('#mobile-wizard .wizard-comment-box .cool-annotation-content')
+		cy.cGet('#mobile-wizard .wizard-comment-box .cool-annotation-content')
 			.should('have.text', 'some text');
 
 		cy.get('.leaflet-marker-icon.annotation-marker')
@@ -46,65 +46,36 @@ describe('Annotation tests.', function() {
 
 		mobileHelper.selectAnnotationMenuItem('Modify');
 
-		cy.get('.cool-annotation-table')
-			.should('exist');
-
-		cy.get('.vex-dialog-form .cool-annotation-textarea')
-			.should('have.text', 'some text');
-
-		cy.get('.vex-dialog-form .cool-annotation-textarea')
-			.type('modified ');
-
-		cy.get('.vex-dialog-buttons .button-primary')
-			.click();
-
-		cy.get('#mobile-wizard .wizard-comment-box.cool-annotation-content-wrapper')
-			.should('exist');
-
-		cy.get('#mobile-wizard .wizard-comment-box .cool-annotation-content')
-			.should('have.text', 'modified some text');
+		cy.cGet('.cool-annotation-table').should('exist');
+		cy.cGet('.vex-dialog-form .cool-annotation-textarea').should('have.text', 'some text');
+		cy.cGet('.vex-dialog-form .cool-annotation-textarea').type('modified ');
+		cy.cGet('.vex-dialog-buttons .button-primary').click();
+		cy.cGet('#mobile-wizard .wizard-comment-box.cool-annotation-content-wrapper').should('exist');
+		cy.cGet('#mobile-wizard .wizard-comment-box .cool-annotation-content').should('have.text', 'modified some text');
 	});
 
 	it('Remove comment.', function() {
 		mobileHelper.insertComment();
 
-		cy.get('.leaflet-marker-icon.annotation-marker')
-			.should('be.visible');
-
-		cy.get('#mobile-wizard .wizard-comment-box .cool-annotation-content')
-			.should('have.text', 'some text');
+		cy.cGet('.leaflet-marker-icon.annotation-marker').should('be.visible');
+		cy.cGet('#mobile-wizard .wizard-comment-box .cool-annotation-content').should('have.text', 'some text');
 
 		mobileHelper.selectAnnotationMenuItem('Remove');
 
-		cy.get('#mobile-wizard .wizard-comment-box .cool-annotation-content')
-			.should('not.exist');
-
-		cy.get('.leaflet-marker-icon.annotation-marker')
-			.should('not.exist');
+		cy.cGet('#mobile-wizard .wizard-comment-box .cool-annotation-content').should('not.exist');
+		cy.cGet('.leaflet-marker-icon.annotation-marker').should('not.exist');
 	});
 
 	it('Try to insert empty comment.', function() {
 		mobileHelper.openInsertionWizard();
 
-		cy.contains('.menu-entry-with-icon', 'Comment')
-			.click();
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Comment').click();
 
-		cy.get('.cool-annotation-table')
-			.should('exist');
-
-		cy.get('.cool-annotation-textarea')
-			.should('have.text', '');
-
-		cy.get('.button-primary')
-			.click();
-
-		cy.get('.button-secondary')
-			.click();
-
-		cy.get('.cool-annotation-content-wrapper.wizard-comment-box')
-			.should('not.exist');
-
-		cy.get('#mobile-wizard .wizard-comment-box .cool-annotation-content')
-			.should('not.exist');
+		cy.cGet('.cool-annotation-table').should('exist');
+		cy.cGet('.cool-annotation-textarea').should('have.text', '');
+		cy.cGet('.button-primary').click();
+		cy.cGet('.button-secondary').click();
+		cy.cGet('.cool-annotation-content-wrapper.wizard-comment-box').should('not.exist');
+		cy.cGet('#mobile-wizard .wizard-comment-box .cool-annotation-content').should('not.exist');
 	});
 });

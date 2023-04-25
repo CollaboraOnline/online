@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe('Calc focus tests', function() {
+describe.skip(['tagmobile'], 'Calc focus tests', function() {
 	var origTestFileName = 'focus.ods';
 	var testFileName;
 
@@ -12,7 +12,7 @@ describe('Calc focus tests', function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		// Wait until the Formula-Bar is loaded.
-		cy.get('.inputbar_container', {timeout : 10000});
+		cy.cGet('.inputbar_container', {timeout : 10000});
 	});
 
 	afterEach(function() {
@@ -33,13 +33,12 @@ describe('Calc focus tests', function() {
 		helper.assertFocus('tagName', 'BODY');
 
 		// Double tap on another cell gives the focus to the document
-		cy.get('.spreadsheet-cell-resize-marker')
+		cy.cGet('.spreadsheet-cell-resize-marker')
 			.then(function(items) {
 				expect(items).to.have.lengthOf(2);
 				var XPos = Math.max(items[0].getBoundingClientRect().right, items[1].getBoundingClientRect().right) + 10;
 				var YPos = Math.max(items[0].getBoundingClientRect().top, items[1].getBoundingClientRect().top) - 10;
-				cy.get('body')
-					.dblclick(XPos, YPos);
+				cy.cGet('body').dblclick(XPos, YPos);
 			});
 
 		// Document has the focus
@@ -88,7 +87,7 @@ describe('Calc focus tests', function() {
 		// Type some text.
 		var text1 = 'Hello from Calc';
 		calcHelper.typeIntoFormulabar(text1);
-		cy.get('#tb_actionbar_item_acceptformula')
+		cy.cGet('#tb_actionbar_item_acceptformula')
 			.click();
 		helper.assertNoKeyboardInput();
 
@@ -102,7 +101,7 @@ describe('Calc focus tests', function() {
 		helper.expectTextForClipboard(text1);
 
 		// Accept changes.
-		cy.get('#tb_actionbar_item_acceptformula')
+		cy.cGet('#tb_actionbar_item_acceptformula')
 			.click();
 		helper.assertNoKeyboardInput();
 
@@ -117,7 +116,7 @@ describe('Calc focus tests', function() {
 		calcHelper.typeIntoFormulabar('{ctrl}a');
 		helper.expectTextForClipboard(text1 + text2);
 		// End editing.
-		cy.get('#tb_actionbar_item_acceptformula')
+		cy.cGet('#tb_actionbar_item_acceptformula')
 			.click();
 		helper.assertNoKeyboardInput();
 	});

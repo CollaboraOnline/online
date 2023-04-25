@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Calc spell checking menu.', function() {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Calc spell checking menu.', function() {
 	var origTestFileName = 'spellchecking.ods';
 	var testFileName;
 
@@ -27,7 +27,7 @@ describe('Calc spell checking menu.', function() {
 		helper.typeIntoDocument('{ctrl}a');
 
 		// Open context menu
-		cy.get('.leaflet-selection-marker-start,.leaflet-selection-marker-end')
+		cy.cGet('.leaflet-selection-marker-start,.leaflet-selection-marker-end')
 			.then(function(markers) {
 				expect(markers.length).to.be.equal(2);
 				for (var i = 0; i < markers.length; i++) {
@@ -41,14 +41,14 @@ describe('Calc spell checking menu.', function() {
 				}
 
 				// Remove selection
-				cy.get('#tb_actionbar_item_acceptformula').then($ele =>{
+				cy.cGet('#tb_actionbar_item_acceptformula').then($ele =>{
 					cy.wait(1000);
 					if (Cypress.dom.isVisible($ele)) {
 						cy.wrap($ele).click();
 					}
 				});
 
-				cy.get('.cursor-overlay .blinking-cursor')
+				cy.cGet('.cursor-overlay .blinking-cursor')
 					.should('not.exist');
 
 				// Step into edit mode again
@@ -57,42 +57,39 @@ describe('Calc spell checking menu.', function() {
 				mobileHelper.longPressOnDocument(XPos, YPos);
 			});
 
-		cy.get('#mobile-wizard-content')
+		cy.cGet('#mobile-wizard-content')
 			.should('be.visible');
 	}
 
 	it('Apply suggestion.', function() {
 		openContextMenu();
 
-		cy.contains('.context-menu-link', 'hello')
+		cy.cGet('body').contains('.context-menu-link', 'hello')
 			.click();
 
 		calcHelper.selectEntireSheet();
 
-		cy.get('#copy-paste-container table td')
+		cy.cGet('#copy-paste-container table td')
 			.should('contain.text', 'hello');
 	});
 
 	it('Ignore all.', function() {
 		openContextMenu();
 
-		cy.contains('.context-menu-link', 'Ignore All')
-			.click();
+		cy.cGet('body').contains('.context-menu-link', 'Ignore All').click();
 
 		// Click outside of the cell
-		cy.get('.leaflet-marker-icon')
+		cy.cGet('.leaflet-marker-icon')
 			.then(function(items) {
 				expect(items).to.have.length(2);
 				var XPos = items[0].getBoundingClientRect().right;
 				var YPos = items[0].getBoundingClientRect().bottom + 10;
-				cy.get('body')
-					.click(XPos, YPos);
+				cy.cGet('body').click(XPos, YPos);
 			});
 
 		openContextMenu();
 
 		// We don't get the spell check context menu any more
-		cy.contains('.context-menu-link', 'Paste')
-			.should('be.visible');
+		cy.cGet('body').contains('.context-menu-link', 'Paste').should('be.visible');
 	});
 });

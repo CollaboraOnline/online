@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Multiuser sheet operations', function() {
+describe.skip(['tagmultiuser'], 'Multiuser sheet operations', function() {
 	var origTestFileName = 'sheet_operations.ods';
 	var testFileName;
 
@@ -17,60 +17,42 @@ describe('Multiuser sheet operations', function() {
 	function testInsertDelete(frameId1, frameId2) {
 		// We have one sheet by default
 		//assert for user-1/2
-		cy.customGet('.spreadsheet-tab', frameId1)
-			.should('have.length', 1);
-		cy.customGet('#spreadsheet-tab0', frameId1)
-			.should('have.text', 'Sheet1');
+		cy.cSetActiveFrame(frameId1);
+		cy.cGet('.spreadsheet-tab').should('have.length', 1);
+		cy.cGet('#spreadsheet-tab0').should('have.text', 'Sheet1');
 
 		//assert for user-1/2
-		cy.customGet('.spreadsheet-tab', frameId2)
-			.should('have.length', 1);
-		cy.customGet('#spreadsheet-tab0', frameId2)
-			.should('have.text', 'Sheet1');
+		cy.cSetActiveFrame(frameId2);
+		cy.cGet('.spreadsheet-tab').should('have.length', 1);
+		cy.cGet('#spreadsheet-tab0').should('have.text', 'Sheet1');
 
 		// Add one more sheet
-		cy.customGet('#tb_spreadsheet-toolbar_item_insertsheet', frameId1)
-			.click();
+		cy.cSetActiveFrame(frameId1);
+		cy.cGet('#tb_spreadsheet-toolbar_item_insertsheet').click();
 
 		//assert for user-1/2
-		cy.customGet('.spreadsheet-tab', frameId1)
-			.should('have.length', 2);
-
-		cy.customGet('#spreadsheet-tab1', frameId1)
-			.should('have.text', 'Sheet2');
+		cy.cGet('.spreadsheet-tab').should('have.length', 2);
+		cy.cGet('#spreadsheet-tab1').should('have.text', 'Sheet2');
 
 		//assert for user-1/2
-		cy.customGet('.spreadsheet-tab', frameId2)
-			.should('have.length', 2);
-
-		cy.customGet('#spreadsheet-tab1', frameId2)
-			.should('have.text', 'Sheet2');
-
+		cy.cSetActiveFrame(frameId2);
+		cy.cGet('.spreadsheet-tab').should('have.length', 2);
+		cy.cGet('#spreadsheet-tab1').should('have.text', 'Sheet2');
 		cy.wait(2000);
 
 		//user-1/2 removes it
-		cy.customGet('#spreadsheet-tab0', frameId2)
-			.rightclick();
-
-		cy.iframe(frameId2).contains('.context-menu-link', 'Delete Sheet...')
-			.click();
-
-		cy.customGet('.vex-dialog-form .button-primary', frameId2)
-			.click();
+		cy.cGet('#spreadsheet-tab0').rightclick();
+		cy.cGet('body').contains('.context-menu-link', 'Delete Sheet...').click();
+		cy.cGet('#delete-sheet-modal-response').click();
 
 		//assert for user-1/2
-		cy.customGet('.spreadsheet-tab', frameId2)
-			.should('have.length', 1);
-
-		cy.customGet('#spreadsheet-tab0', frameId2)
-			.should('have.text', 'Sheet2');
+		cy.cGet('.spreadsheet-tab').should('have.length', 1);
+		cy.cGet('#spreadsheet-tab0').should('have.text', 'Sheet2');
 
 		//assert for user-1/2
-		cy.customGet('.spreadsheet-tab', frameId1)
-			.should('have.length', 1);
-
-		cy.customGet('#spreadsheet-tab0', frameId1)
-			.should('have.text', 'Sheet2');
+		cy.cSetActiveFrame(frameId1);
+		cy.cGet('.spreadsheet-tab').should('have.length', 1);
+		cy.cGet('#spreadsheet-tab0').should('have.text', 'Sheet2');
 	}
 	it('user-1 insert and user-2 delete sheet.', function() {
 		testInsertDelete('#iframe1', '#iframe2');

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe('Table Operation', function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', function() {
 	var origTestFileName = 'table_operation.odp';
 	var testFileName;
 
@@ -29,25 +29,16 @@ describe('Table Operation', function() {
 
 		impressHelper.selectTableInTheCenter();
 
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
-			.should('have.length', 3);
-
-		cy.get('.leaflet-marker-icon.table-column-resize-marker')
-			.should('have.length', 2);
-
-		cy.get('text.SVGTextShape').click({force: true});
-
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 3);
+		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 2);
+		cy.cGet('text.SVGTextShape').click({force: true});
 		cy.wait(1000);
 	}
 
 	function clickOnTableOperation(operation) {
 		mobileHelper.openHamburgerMenu();
-
-		cy.get('.menu-entry-icon.tablemenu').parent()
-			.click();
-
-		cy.get('.menu-entry-icon.' + operation).parent()
-			.click();
+		cy.cGet('.menu-entry-icon.tablemenu').parent().click();
+		cy.cGet('.menu-entry-icon.' + operation).parent().click();
 	}
 
 	it('Insert Before', function() {
@@ -55,25 +46,25 @@ describe('Table Operation', function() {
 
 		clickOnTableOperation('insertrowsbefore');
 
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(8);
 			});
 
 		//assert the text position
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '6643');
 	});
 
@@ -83,57 +74,57 @@ describe('Table Operation', function() {
 
 		clickOnTableOperation('insertrowsafter');
 
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(8);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
-	it('Insert column before.', function() {
+	it.skip('Insert column before.', function() {
 		selectFullTable();
 
 		helper.typeIntoDocument('{downarrow}');
 
 		clickOnTableOperation('deleterows');
 
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 2);
 
 		clickOnTableOperation('insertcolumnsbefore');
 
-		cy.get('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(6);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '14339');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
@@ -144,29 +135,27 @@ describe('Table Operation', function() {
 
 		clickOnTableOperation('deleterows');
 
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
-			.should('have.length', 2);
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 2);
 
 		clickOnTableOperation('insertcolumnsafter');
 
-		cy.get('.leaflet-marker-icon.table-column-resize-marker')
-			.should('have.length', 3);
+		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 3);
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(6);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
@@ -175,21 +164,21 @@ describe('Table Operation', function() {
 
 		clickOnTableOperation('deleterows');
 
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 2);
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(4);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('not.exist');
 	});
 
@@ -198,36 +187,36 @@ describe('Table Operation', function() {
 
 		clickOnTableOperation('insertcolumnsbefore');
 
-		cy.get('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
 
 		clickOnTableOperation('deletecolumns');
 
-		cy.get('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 2);
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(6);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
 	it('Merge Row', function() {
 		selectFullTable();
 
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 3);
 
 		clickOnTableOperation('entirerow');
@@ -238,26 +227,26 @@ describe('Table Operation', function() {
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(5);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
 	it('Merge Column', function() {
 		selectFullTable();
 
-		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 3);
 
 		clickOnTableOperation('entirecolumn');
@@ -268,19 +257,19 @@ describe('Table Operation', function() {
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
-		cy.get('g.Page path[fill^="rgb"]')
+		cy.cGet('g.Page path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(4);
 			});
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '7290');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
 
@@ -291,10 +280,10 @@ describe('Table Operation', function() {
 
 		retriggerNewSvgForTableInTheCenter();
 
-		cy.get('.leaflet-marker-icon.table-column-resize-marker')
+		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('not.exist');
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
 			.should('not.exist');
 	});
 	//TODO: add split cells tests

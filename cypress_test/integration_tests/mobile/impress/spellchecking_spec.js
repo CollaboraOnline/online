@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Spell checking menu.', function() {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Spell checking menu.', function() {
 	var origTestFileName = 'spellchecking.odp';
 	var testFileName;
 
@@ -20,13 +20,12 @@ describe('Spell checking menu.', function() {
 
 	function openContextMenu() {
 		// Click on the center of the slide to step into text edit mode
-		cy.get('#document-container')
+		cy.cGet('#document-container')
 			.then(function(items) {
 				expect(items).to.have.length(1);
 				var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
 				var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
-				cy.get('body')
-					.dblclick(XPos, YPos);
+				cy.cGet('body').dblclick(XPos, YPos);
 			});
 
 		helper.typeIntoDocument('{leftArrow}');
@@ -34,7 +33,7 @@ describe('Spell checking menu.', function() {
 		helper.textSelectionShouldNotExist();
 
 		// Open context menu
-		cy.get('g path.leaflet-interactive')
+		cy.cGet('g path.leaflet-interactive')
 			.then(function(shape) {
 				expect(shape.length).to.be.equal(1);
 				var XPos = (shape[0].getBoundingClientRect().left + shape[0].getBoundingClientRect().right) / 2;
@@ -43,15 +42,13 @@ describe('Spell checking menu.', function() {
 				mobileHelper.longPressOnDocument(XPos, YPos);
 			});
 
-		cy.get('#mobile-wizard-content')
-			.should('be.visible');
+		cy.cGet('#mobile-wizard-content').should('be.visible');
 	}
 
 	it('Apply suggestion.', function() {
 		openContextMenu();
 
-		cy.contains('.context-menu-link', 'hello')
-			.click();
+		cy.cGet('body').contains('.context-menu-link', 'hello').click();
 
 		helper.selectAllText();
 
@@ -61,13 +58,11 @@ describe('Spell checking menu.', function() {
 	it('Ignore all.', function() {
 		openContextMenu();
 
-		cy.contains('.context-menu-link', 'Ignore All')
-			.click();
+		cy.cGet('body').contains('.context-menu-link', 'Ignore All').click();
 
 		openContextMenu();
 
 		// We don't get the spell check context menu any more
-		cy.contains('.context-menu-link', 'Paste')
-			.should('be.visible');
+		cy.cGet('body').contains('.context-menu-link', 'Paste').should('be.visible');
 	});
 });

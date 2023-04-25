@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe('Apply paragraph properties on selected text.', function() {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties on selected text.', function() {
 	var origTestFileName = 'apply_paragraph_props_text.odp';
 	var testFileName;
 
@@ -30,8 +30,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		helper.clickOnIdle('#ParaPropertyPanel');
 
-		cy.get('.unoParaLeftToRight')
-			.should('be.visible');
+		cy.cGet('.unoParaLeftToRight').should('be.visible');
 	}
 
 	function openListsPropertiesPanel() {
@@ -39,12 +38,11 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		helper.clickOnIdle('#ListsPropertyPanel');
 
-		cy.get('.unoDefaultBullet')
-			.should('be.visible');
+		cy.cGet('.unoDefaultBullet').should('be.visible');
 	}
 
 	it('Apply left/right alignment on selected text.', function() {
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
 		impressHelper.selectTextOfShape();
@@ -56,7 +54,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '23586');
 
 		// Set left alignment
@@ -68,12 +66,12 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 	});
 
 	it('Apply center alignment on selected text.', function() {
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
 		impressHelper.selectTextOfShape();
@@ -84,12 +82,12 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '12493');
 	});
 
 	it('Apply justified alignment on selected text.', function() {
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
 		impressHelper.selectTextOfShape();
@@ -101,7 +99,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '23586');
 
 		impressHelper.selectTextOfShape();
@@ -113,12 +111,12 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 	});
 
 	it('Set top/bottom alignment on selected text.', function() {
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 
 		impressHelper.selectTextOfShape();
@@ -130,7 +128,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '10811');
 
 		impressHelper.selectTextOfShape();
@@ -142,12 +140,12 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 	});
 
 	it('Apply center vertical alignment on selected text.', function() {
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 
 		impressHelper.selectTextOfShape();
@@ -158,13 +156,13 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
-			.should('have.attr', 'y', '7823');
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+			.should('have.attr', 'y', '7822');
 	});
 
 	it('Apply default bulleting on selected text.', function() {
 		// We have no bulleting by default
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
 			.should('not.exist');
 
 		impressHelper.selectTextOfShape();
@@ -175,13 +173,13 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
 			.should('exist');
 	});
 
 	it('Apply default numbering on selected text.', function() {
 		// We have no bulleting by default
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape tspan')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape tspan')
 			.should('not.have.attr', 'ooo:numbering-type');
 
 		impressHelper.selectTextOfShape();
@@ -192,12 +190,12 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape tspan')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape tspan')
 			.should('have.attr', 'ooo:numbering-type', 'number-style');
 	});
 
 	it('Apply spacing above on selected text.', function() {
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
 		impressHelper.selectTextOfShape();
@@ -208,12 +206,12 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '11180');
 	});
 
 	it('Apply spacing below on selected text.', function() {
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
 		impressHelper.selectTextOfShape();
@@ -224,12 +222,12 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '11180');
 	});
 
 	it('Increase/decrease spacing of selected text.', function() {
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
 		impressHelper.selectTextOfShape();
@@ -240,7 +238,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6700');
 
 		impressHelper.selectTextOfShape();
@@ -251,12 +249,12 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 	});
 
 	it('Change writing direction of selected text.', function() {
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
 		// Change right-to-left first
@@ -268,7 +266,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '23586');
 
 		// Change back to the default left-to-right
@@ -280,13 +278,13 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 	});
 
 	it('Change bulleting level of selected text.', function() {
 		// We have no bulleting by default
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
 			.should('not.exist');
 
 		// Apply bulleting first
@@ -298,9 +296,9 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
 			.should('exist');
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChar:nth-of-type(2) g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChar:nth-of-type(2) g')
 			.should('have.attr', 'transform', 'translate(1700,4563)');
 
 		// Change bulleting level
@@ -312,7 +310,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChar:nth-of-type(2) g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChar:nth-of-type(2) g')
 			.should('have.attr', 'transform', 'translate(2900,4536)');
 
 		// Change bulleting level back to default
@@ -324,7 +322,7 @@ describe('Apply paragraph properties on selected text.', function() {
 
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChar:nth-of-type(2) g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChar:nth-of-type(2) g')
 			.should('have.attr', 'transform', 'translate(1700,4563)');
 	});
 });

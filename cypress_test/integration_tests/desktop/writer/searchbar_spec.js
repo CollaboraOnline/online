@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var searchHelper = require('../../common/search_helper');
 var writerHelper = require('../../common/writer_helper');
 
-describe('Searching via search bar' ,function() {
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Searching via search bar' ,function() {
 	var origTestFileName = 'search_bar.odt';
 	var testFileName;
 
@@ -27,84 +27,44 @@ describe('Searching via search bar' ,function() {
 
 	it('Search not existing word.', function() {
 		writerHelper.selectAllTextOfDoc();
-
-		cy.get('input#search-input')
-			.clear()
-			.type('q');
-
-		cy.get('input#search-input')
-			.should('have.prop', 'value', 'q');
-
-		cy.get('#tb_actionbar_item_searchprev')
-			.should('have.class', 'disabled');
-
-		cy.get('#tb_actionbar_item_searchnext')
-			.should('have.class', 'disabled');
-
-		cy.get('#tb_actionbar_item_cancelsearch')
-			.should('not.be.visible');
-
+		cy.cGet('input#search-input').clear().type('q');
+		cy.cGet('input#search-input').should('have.prop', 'value', 'q');
+		cy.cGet('#tb_actionbar_item_searchprev').should('have.class', 'disabled');
+		cy.cGet('#tb_actionbar_item_searchnext').should('have.class', 'disabled');
+		cy.cGet('#tb_actionbar_item_cancelsearch').should('not.be.visible');
 		helper.textSelectionShouldNotExist();
 	});
 
 	it('Search next / prev instance.', function() {
 		searchHelper.typeIntoSearchFieldDesktop('a');
-
 		helper.textSelectionShouldExist();
-
 		helper.expectTextForClipboard('a');
-
-		cy.get('#copy-paste-container p b')
-			.should('not.exist');
-
+		cy.cGet('#copy-paste-container p b').should('not.exist');
 		//search next instance
 		searchHelper.searchNextDesktop();
-
-		cy.get('#copy-paste-container p b')
-			.should('exist');
-
+		cy.cGet('#copy-paste-container p b').should('exist');
 		helper.textSelectionShouldExist();
-
 		helper.expectTextForClipboard('a');
-
 		// Search prev instance
 		searchHelper.searchPrevDesktop();
-
-		cy.get('#copy-paste-container p b')
-			.should('not.exist');
-
+		cy.cGet('#copy-paste-container p b').should('not.exist');
 		helper.textSelectionShouldExist();
-
 		helper.expectTextForClipboard('a');
 	});
 	it('Search wrap at document end.', function() {
 		searchHelper.typeIntoSearchFieldDesktop('a');
-
 		helper.textSelectionShouldExist();
-
 		helper.expectTextForClipboard('a');
-
-		cy.get('#copy-paste-container p b')
-			.should('not.exist');
-
+		cy.cGet('#copy-paste-container p b').should('not.exist');
 		// Search next instance
 		searchHelper.searchNextDesktop();
-
-		cy.get('#copy-paste-container p b')
-			.should('exist');
-
+		cy.cGet('#copy-paste-container p b').should('exist');
 		helper.textSelectionShouldExist();
-
 		helper.expectTextForClipboard('a');
-
 		// Search next instance, which is in the beginning of the document.
 		searchHelper.searchNextDesktop();
-
-		cy.get('#copy-paste-container p b')
-			.should('not.exist');
-
+		cy.cGet('#copy-paste-container p b').should('not.exist');
 		helper.textSelectionShouldExist();
-
 		helper.expectTextForClipboard('a');
 	});
 
@@ -121,7 +81,6 @@ describe('Searching via search bar' ,function() {
 
 		helper.textSelectionShouldNotExist();
 
-		cy.get('input#search-input')
-			.should('be.visible');
+		cy.cGet('input#search-input').should('be.visible');
 	});
 });
