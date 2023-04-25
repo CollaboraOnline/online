@@ -107,8 +107,9 @@ namespace Util
 
         void restart() { _startTime = std::chrono::steady_clock::now(); }
 
-        /// Returns true iff at least the given amount of time has elapsed.
-        template <typename T>
+        /// Returns the time that has elapsed since starting, in the units required.
+        /// Units defaults to milliseconds.
+        template <typename T = std::chrono::milliseconds>
         T
         elapsed(std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now()) const
         {

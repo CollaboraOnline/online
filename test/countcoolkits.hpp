@@ -18,6 +18,7 @@
 #include <Poco/StreamCopier.h>
 
 #include <Common.hpp>
+#include "Util.hpp"
 #include "test.hpp"
 #include "helpers.hpp"
 
@@ -27,6 +28,8 @@ static int countCoolKitProcesses(const int expected,
 {
     const auto testname = "countCoolKitProcesses ";
     TST_LOG_BEGIN("Waiting until coolkit processes are exactly " << expected << ". Coolkits: ");
+
+    Util::Stopwatch stopwatch;
 
     // This does not need to depend on any constant from Common.hpp.
     // The shorter the better (the quicker the test runs).
@@ -73,7 +76,7 @@ static int countCoolKitProcesses(const int expected,
     oss << "Test kit pids are [";
     for (pid_t i : pids)
         oss << i << ' ';
-    oss << ']';
+    oss << "] after waiting for " << stopwatch.elapsed();
     TST_LOG(oss.str());
 
     return count;
