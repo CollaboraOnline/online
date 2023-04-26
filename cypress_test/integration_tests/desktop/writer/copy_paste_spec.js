@@ -18,18 +18,18 @@ describe('Clipboard operations.', function() {
 		// Select some text
 		helper.selectAllText();
 
-		cy.get('.leaflet-marker-icon')
+		cy.cGet('.leaflet-marker-icon')
 			.then(function(marker) {
 				expect(marker).to.have.lengthOf(2);
 				var XPos =  (marker[0].getBoundingClientRect().right + marker[1].getBoundingClientRect().left) / 2;
 				var YPos = marker[0].getBoundingClientRect().top - 5;
 
-				cy.get('body').rightclick(XPos, YPos);
+				cy.cGet('body').rightclick(XPos, YPos);
 			});
 
-		cy.contains('.context-menu-link', 'Copy')
+		cy.cGet('body').contains('.context-menu-link', 'Copy')
 			.click();
 
-		cy.get('#copy_paste_warning-box').should('exist');
+		cy.cGet('#copy_paste_warning-box').should('exist');
 	});
 });

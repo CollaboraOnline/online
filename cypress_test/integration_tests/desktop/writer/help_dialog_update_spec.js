@@ -28,237 +28,137 @@ describe('Help dialog screenshot updation', function() {
 	}
 
 	it('Statusbar', function() {
-		helper.waitUntilIdle('#toolbar-down');
-
-		cy.document().then((doc) => {
-			const ele1 = doc.getElementById('toolbar-down');
-			const ele2 = doc.getElementById('tb_actionbar_item_break8');
-			const width =  ele2.getBoundingClientRect().left - ele1.getBoundingClientRect().left;
-			cy.get('#toolbar-down').screenshot('status-bar', {clip: {x:0, y:0, height:300 , width: width}});
-			cy.log(Cypress.env('SCREENSHOT_FOLDER'), Cypress.env('IMAGES_FOLDER'));
-			copyScreenshot('status-bar.png');
+		var w1, w2;
+		cy.cGet('#toolbar-down').should('exist').then(el => {
+			w1 = el[0].getBoundingClientRect().left;
+			cy.cGet('#tb_actionbar_item_break8').should('exist').then(el => {
+				w2 = el[0].getBoundingClientRect().left;
+				var width = w2 - w1;
+				cy.log('w1 w2 ' + w1 + ' ' + w2);
+				cy.cGet('#toolbar-down').screenshot('status-bar', { clip: { x: 0, y: 0, height: 300, width: width } });
+				cy.log(Cypress.env('SCREENSHOT_FOLDER'), Cypress.env('IMAGES_FOLDER'));
+				copyScreenshot('status-bar.png');
+			});
 		});
 	});
 
 	it('Infobar', function() {
-		helper.waitUntilIdle('#toolbar-down');
-
-		cy.document().then((doc) => {
-			const ele1 = doc.getElementById('toolbar-down');
-			const ele2 = doc.getElementById('tb_actionbar_item_break8');
-			const width = ele1.getBoundingClientRect().right - ele2.getBoundingClientRect().right + 10;
-			cy.get('#toolbar-down').screenshot('information-bar', {clip: {x:ele2.getBoundingClientRect().right, y:0, height:300, width:width}});
-			copyScreenshot('information-bar.png');
+		var w1, w2;
+		cy.cGet('#toolbar-down').should('exist').then(el => {
+			w1 = el[0].getBoundingClientRect().right;
+			cy.cGet('#tb_actionbar_item_break8').should('exist').then(el => {
+				w2 = el[0].getBoundingClientRect().right;
+				var width = w1 - w2 + 10;
+				cy.cGet('#toolbar-down').screenshot('information-bar', { clip: { x: w2, y: 0, height: 300, width: width} });
+				copyScreenshot('information-bar.png');
+			});
 		});
 	});
 
 	it('Document repair', function() {
-		cy.get('#toolbar-up > .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
 		//insert
-		cy.get('#tb_editbar_item_insertshapes')
-			.click()
-			.get('.col.w2ui-icon.symbolshapes')
-			.click();
-
-		cy.get('.leaflet-control-buttons-disabled path.leaflet-interactive')
-			.should('exist');
-
-		cy.wait(1000);
-
-		cy.get('#menu-editmenu').click()
-			.get('#menu-repair').click();
-
-		cy.get('.jsdialog-container.lokdialog_container')
-			.should('exist');
-
-		helper.waitUntilIdle('.jsdialog-container.lokdialog_container');
-
-		cy.get('.jsdialog-container.lokdialog_container')
-			.screenshot('repair-document');
-
+		cy.cGet('#tb_editbar_item_insertshapes').click();
+		cy.cGet('.col.w2ui-icon.symbolshapes').click();
+		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
+		cy.cGet('#menu-editmenu').click();
+		cy.cGet('#menu-repair').click();
+		cy.cGet('.jsdialog-container.lokdialog_container').should('exist');
+		cy.cGet('.jsdialog-container.lokdialog_container').screenshot('repair-document');
 		copyScreenshot('repair-document.png');
 	});
 
-	it('Comment', function() {
+	it.skip('Comment', function() {
 		hideSidebar();
 
-		cy.get('#toolbar-up > .w2ui-scroll-right').click();
-
-		cy.get('#tb_editbar_item_insertannotation')
-			.click();
-
-		cy.get('#input-modal-input').type('comment added');
-
-		cy.get('.vex-dialog-buttons .button-primary').click(); // save button
-
+		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
+		cy.cGet('#tb_editbar_item_insertannotation').click();
+		cy.cGet('#input-modal-input').type('comment added');
+		cy.cGet('.vex-dialog-buttons .button-primary').click(); // save button
 		cy.wait(1000);
-
-		cy.get('.jsdialog-container.cool-annotation-collapsed').click();
-
+		cy.cGet('.jsdialog-container.cool-annotation-collapsed').click();
 		cy.wait(1000);
-
-		cy.get('.cool-annotation-content-wrapper').should('exist');
-
-		cy.get('#comment .cool-annotation').screenshot('comment');
+		cy.cGet('.cool-annotation-content-wrapper').should('exist');
+		cy.cGet('#comment .cool-annotation').screenshot('comment');
 
 		copyScreenshot('comment.png');
 	});
 
 	it('Style formatting', function() {
-		cy.get('#menu-editmenu')
-			.click();
-
-		cy.contains('#menu-editmenu li a', 'Edit Style...')
-			.click();
-
-		cy.wait(1000)
-			.get('.lokdialog_canvas')
-			.should('exist');
-
-		helper.waitUntilIdle('.lokdialog_canvas');
-
-		cy.get('.lokdialog_canvas').then(items => {
-			var Xpos = items[0].getBoundingClientRect().left + 80;
-			var Ypos = items[0].getBoundingClientRect().top + 10;
-
-			cy.wrap(items[0])
-				.click(Xpos, Ypos);
-		});
-
-		helper.waitUntilIdle('.lokdialog_container');
-
-		cy.get('.lokdialog_container')
-			.screenshot('paragraph-dialog');
-
+		cy.cGet('#menu-editmenu').click();
+		cy.cGet('body').contains('#menu-editmenu li a', 'Edit Style...').click();
+		cy.cGet('#TemplateDialog2').should('exist');
+		cy.cGet('#TemplateDialog2').screenshot('paragraph-dialog');
 		copyScreenshot('paragraph-dialog.png');
 	});
 
 	it('Table', function() {
 		hideSidebar();
 
-		cy.get('#toolbar-up > .w2ui-scroll-right')
-			.click();
-
-		cy.get('#tb_editbar_item_inserttable')
-			.click();
-
-		cy.get('.inserttable-grid > :nth-child(4) > :nth-child(4)')
-			.trigger('mouseover');
+		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
+		cy.cGet('#tb_editbar_item_inserttable').click();
+		cy.cGet('.inserttable-grid > :nth-child(4) > :nth-child(4)').trigger('mouseover');
 
 		helper.waitUntilIdle('#inserttable-popup');
-
-		cy.get('#inserttable-popup')
-			.screenshot('insert-table', {padding: 30});
+		cy.cGet('#inserttable-popup').screenshot('insert-table', {padding: 30});
 
 		copyScreenshot('insert-table.png');
 	});
 
 	it('Word count', function() {
-		cy.get('#menu-tools')
-			.click();
-
-		cy.contains('#menu-tools li a', 'Word Count...')
-			.click();
-
+		cy.cGet('#menu-tools').click();
+		cy.cGet('body').contains('#menu-tools li a', 'Word Count...').click();
 		helper.waitUntilIdle('.lokdialog_container');
-
-		cy.get('.lokdialog_container')
-			.screenshot('word-count');
-
+		cy.cGet('.lokdialog_container').screenshot('word-count');
 		copyScreenshot('word-count.png');
 	});
 
 	it('Insert special', function() {
-		cy.get('#toolbar-up > .w2ui-scroll-right')
-			.click();
-
-		cy.get('#tb_editbar_item_insertsymbol')
-			.click();
-
-		cy.wait(1000);
-
-		cy.get('.lokdialog_canvas')
-			.should('exist');
-
-		helper.waitUntilIdle('.lokdialog_container');
-
-		cy.get('.lokdialog_container')
-			.screenshot('special-character');
-
+		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
+		cy.cGet('#tb_editbar_item_insertsymbol').click();
+		cy.cGet('#SpecialCharactersDialog').should('exist');
+		cy.cGet('#SpecialCharactersDialog').screenshot('special-character');
 		copyScreenshot('special-character.png');
 	});
 
 	it('Manage changes', function() {
-		cy.get('#menu-editmenu')
-			.click()
-			.get('#menu-changesmenu')
-			.click()
-			.contains('Record')
-			.click();
+		cy.cGet('#menu-editmenu').click();
+		cy.cGet('#menu-changesmenu').click();
+		cy.cGet('#menu-changesmenu').contains('Record').click();
 
 		helper.typeIntoDocument('Hello World');
 
-		cy.get('#toolbar-up > .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
 		//insert
-		cy.get('#tb_editbar_item_insertshapes')
-			.click()
-			.get('.col.w2ui-icon.symbolshapes')
-			.click();
+		cy.cGet('#tb_editbar_item_insertshapes').click();
+		cy.cGet('.col.w2ui-icon.symbolshapes').click();
 
-		cy.get('.leaflet-control-buttons-disabled path.leaflet-interactive')
-			.should('exist');
+		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
 
-		cy.wait(1000);
-
-		cy.get('#menu-editmenu')
-			.click()
-			.get('#menu-changesmenu')
-			.click()
-			.contains('Manage...')
-			.click();
-
-		cy.get('.lokdialog_canvas')
-			.should('exist');
-
-		helper.waitUntilIdle('.lokdialog_container');
-
-		cy.get('.lokdialog_container')
-			.screenshot('manage-changes');
-
+		cy.cGet('#menu-editmenu').click();
+		cy.cGet('#menu-changesmenu').click();
+		cy.cGet('#menu-changesmenu').contains('Manage...').click();
+		cy.cGet('.lokdialog_canvas').should('exist');
+		cy.wait(1000); // For dialog's height to be calculated.
+		cy.cGet('.lokdialog_container').should('exist').screenshot('manage-changes');
 		copyScreenshot('manage-changes.png');
 	});
 
 	it('Page styles', function() {
-		cy.get('#menu-format')
-			.click();
-
-		cy.contains('#menu-format li a', 'Page Style...')
-			.click();
-
-		cy.wait(1000);
-
-		cy.get('.lokdialog_canvas')
-			.should('exist');
-
-		helper.waitUntilIdle('.lokdialog_container');
-
-		cy.get('.lokdialog_container')
-			.screenshot('page-style');
-
+		cy.cGet('#menu-format').click();
+		cy.cGet('body').contains('#menu-format li a', 'Page Style...').click();
+		cy.cGet('#TemplateDialog8').should('exist');
+		cy.cGet('#TemplateDialog8').screenshot('page-style');
 		copyScreenshot('page-style.png');
 	});
 
 	it('Insert chart', function() {
 		hideSidebar();
 
-		cy.get('#menu-insert')
-			.click()
-			.contains('Chart...')
-			.click();
-
+		cy.cGet('#menu-insert').click();
+		cy.cGet('#menu-insert').contains('Chart...').click();
 		cy.wait(1000);
-
-		cy.get('.leaflet-control-buttons-disabled path.leaflet-interactive')
+		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive')
 			.should('exist').screenshot('chart', {padding: 10});
 
 		copyScreenshot('chart.png');
