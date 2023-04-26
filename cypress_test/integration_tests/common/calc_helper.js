@@ -30,7 +30,7 @@ function clickFormulaBar() {
 //              one makes the document to step in cell editing.
 // dblClick - to do a double click or not. The result of double click is that the cell
 //            editing it triggered both on desktop and mobile.
-function clickOnFirstCell(firstClick = true, dblClick = false, frameId) {
+function clickOnFirstCell(firstClick = true, dblClick = false) {
 	cy.log('Clicking on first cell - start.');
 	cy.log('Param - firstClick: ' + firstClick);
 	cy.log('Param - dblClick: ' + dblClick);
@@ -68,8 +68,8 @@ function clickOnFirstCell(firstClick = true, dblClick = false, frameId) {
 }
 
 // Double click on the A1 cell.
-function dblClickOnFirstCell(frameId) {
-	clickOnFirstCell(false, true, frameId);
+function dblClickOnFirstCell() {
+	clickOnFirstCell(false, true);
 }
 
 // Type some text into the formula bar.
@@ -192,7 +192,7 @@ function ensureViewContainsCellCursor() {
 	helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', sheetCursorBounds);
 	helper.getItemBounds('#test-div-tiles', sheetViewBounds);
 
-	cy.wrap(null).should(function () {
+	cy.wrap(true).should(function () {
 		cy.log('ensureViewContainsCellCursor: cursor-area is ' + sheetCursorBounds.toString() + ' view-area is ' + sheetViewBounds.toString());
 		expect(sheetViewBounds.contains(sheetCursorBounds)).to.equal(true, 'view-area must contain cursor-area');
 	});
@@ -216,7 +216,7 @@ function assertDataClipboardTable(expectedData) {
 }
 
 function selectCellsInRange(range) {
-	cy.get('#tb_formulabar_item_address #addressInput')
+	cy.cGet('#tb_formulabar_item_address #addressInput')
 		.clear()
 		.type(range + '{enter}');
 }

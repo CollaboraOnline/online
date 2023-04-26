@@ -9,11 +9,8 @@ describe('AutoFilter', function() {
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
-
 		toggleAutofilter();
-
 		calcHelper.selectEntireSheet();
-
 		calcHelper.assertDataClipboardTable(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);
 	});
 
@@ -100,8 +97,7 @@ describe('AutoFilter', function() {
 
 		helper.waitUntilIdle('#copy-paste-container tbody');
 
-		calcHelper.assertDataClipboardTable(['Cypress Test', 'Status', 'Test 5', 'Fail', 'Test 4', '',
-			'Test 3', 'Pass', 'Test 2', 'Fail', 'Test 1', 'Pass']);
+		calcHelper.assertDataClipboardTable(['Cypress Test', 'Status', 'Test 5', 'Fail', 'Test 4', '', 'Test 3', 'Pass', 'Test 2', 'Fail', 'Test 1', 'Pass']);
 
 		//sort by ascending order
 		openAutoFilterMenu();
@@ -114,8 +110,7 @@ describe('AutoFilter', function() {
 
 		helper.waitUntilIdle('#copy-paste-container tbody');
 
-		calcHelper.assertDataClipboardTable(['Cypress Test', 'Status', 'Test 1', 'Pass',
-			'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);
+		calcHelper.assertDataClipboardTable(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);
 	});
 
 	it('Filter empty/non-empty cells', function() {

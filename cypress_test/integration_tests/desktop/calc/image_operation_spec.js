@@ -19,7 +19,7 @@ describe('Image Operation Tests', function() {
 		insertImage('calc');
 
 		//make sure that image is in focus
-		cy.get('.leaflet-pane.leaflet-overlay-pane svg g.leaflet-control-buttons-disabled')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g.leaflet-control-buttons-disabled')
 			.should('exist');
 
 		deleteImage();
@@ -32,27 +32,27 @@ describe('Image Operation Tests', function() {
 
 		helper.waitUntilIdle('.ui-expander-label');
 
-		cy.contains('.ui-expander-label', 'Position and Size')
+		cy.cGet().contains('.ui-expander-label', 'Position and Size')
 			.click();
 
 		helper.waitUntilIdle('#selectwidth input');
 
-		cy.get('#selectwidth input').clear({force:true})
+		cy.cGet('#selectwidth input').clear({force:true})
 			.type('3{enter}', {force:true});
 
 		helper.waitUntilIdle('#selectheight input');
 
-		cy.get('#selectheight input').clear({force:true})
+		cy.cGet('#selectheight input').clear({force:true})
 			.type('2{enter}', {force:true});
 
 		assertImageSize(139, 93);
 
 		//Keep ratio checked
-		cy.get('#ratio input').check();
+		cy.cGet('#ratio input').check();
 
 		helper.waitUntilIdle('#selectheight input');
 
-		cy.get('#selectheight input').clear({force:true})
+		cy.cGet('#selectheight input').clear({force:true})
 			.type('5{enter}', {force:true});
 
 		assertImageSize(347, 232);

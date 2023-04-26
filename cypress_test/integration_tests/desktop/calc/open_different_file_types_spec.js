@@ -1,4 +1,4 @@
-/* global describe it cy require Cypress afterEach expect isCanvasWhite */
+/* global describe it cy require Cypress afterEach */
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 const { insertImage } = require('../../common/desktop_helper');
@@ -17,12 +17,11 @@ describe('Open different file types', function () {
 		testFileName = helper.loadTestDocNoIntegration(filename, 'calc', false, false, false);
 
 		//check doc is loaded
-		cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+		cy.cGet('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
-		expect(isCanvasWhite(cy.cGet('#document-canvas'))).to.be.false;
+		helper.isCanvasWhite(false);
 
-		cy.get('#PermissionMode').should('be.visible')
-			.should('have.text', ' Read-only ');
+		cy.cGet('#PermissionMode').should('be.visible').should('have.text', ' Read-only ');
 	}
 
 	afterEach(function () {
@@ -69,21 +68,20 @@ describe('Open different file types', function () {
 
 		testFileName = helper.loadTestDocNoIntegration('testfile.csv', 'calc', false, false, false);
 
-		cy.get('form.jsdialog-container.lokdialog_container')
-			.should('exist');
+		cy.cGet('form.jsdialog-container.lokdialog_container').should('exist');
 
-		helper.clickOnIdle('.ui-pushbutton', 'OK');
+		helper.clickOnIdle('.ui-pushbutton.jsdialog.button-primary');
 
 		//check doc is loaded
-		cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+		cy.cGet('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
-		expect(isCanvasWhite(cy.cGet('#document-canvas'))).to.be.false;
+		helper.isCanvasWhite(false);
 
-		cy.get('#mobile-edit-button')
+		cy.cGet('#mobile-edit-button')
 			.should('be.visible')
 			.click();
 
-		cy.get('#modal-dialog-switch-to-edit-mode-modal-yesbutton').click();
+		cy.cGet('#modal-dialog-switch-to-edit-mode-modal-yesbutton').click();
 
 		assertData();
 	});
@@ -91,20 +89,13 @@ describe('Open different file types', function () {
 	it('Open xlsb file' ,function() {
 		openReadOnlyFile('testfile.xlsb');
 
-		cy.get('#mobile-edit-button').should('be.visible')
-			.click();
-
-		cy.get('#modal-dialog-switch-to-edit-mode-modal-overlay').should('be.visible');
-
-		cy.get('#modal-dialog-switch-to-edit-mode-modal-label')
+		cy.cGet('#mobile-edit-button').should('be.visible').click();
+		cy.cGet('#modal-dialog-switch-to-edit-mode-modal-overlay').should('be.visible');
+		cy.cGet('#modal-dialog-switch-to-edit-mode-modal-label')
 			.should('have.text', 'This document may contain formatting or content that cannot be saved in the current file format.');
 
-		cy.get('#modal-dialog-switch-to-edit-mode-modal-yesbutton')
-			.should('have.text', 'Continue read only')
-			.click();
-
-		cy.get('#PermissionMode').should('be.visible')
-			.should('have.text', ' Read-only ');
+		cy.cGet('#modal-dialog-switch-to-edit-mode-modal-yesbutton').should('have.text', 'Continue read only').click();
+		cy.cGet('#PermissionMode').should('be.visible').should('have.text', ' Read-only ');
 	});
 
 	it('Open xlsm file' ,function() {
@@ -118,13 +109,13 @@ describe('Open different file types', function () {
 	it('Open xltm file' ,function() {
 		openReadOnlyFile('testfile.xltm');
 
-		cy.get('#mobile-edit-button').should('not.be.visible');
+		cy.cGet('#mobile-edit-button').should('not.be.visible');
 	});
 
 	it('Open xltx file' ,function() {
 		openReadOnlyFile('testfile.xltm');
 
-		cy.get('#mobile-edit-button').should('not.be.visible');
+		cy.cGet('#mobile-edit-button').should('not.be.visible');
 	});
 
 	it('Open fods file', function() {

@@ -15,7 +15,7 @@ describe('Row Column Operation', function() {
 
 		calcHelper.clickOnFirstCell(true,false);
 
-		mode === 'notebookbar' ? cy.get('#toolbar-up .w2ui-scroll-right').click() : '';
+		mode === 'notebookbar' ? cy.cGet('#toolbar-up .w2ui-scroll-right').click() : '';
 	});
 
 	afterEach(function() {
@@ -23,55 +23,42 @@ describe('Row Column Operation', function() {
 	});
 
 	function selectOption(submenu, option) {
-		cy.get('#menu-sheet').click();
+		cy.cGet('#menu-sheet').click();
 
-		cy.contains('#menu-sheet li', submenu)
-			.click();
+		cy.cGet('body').contains('#menu-sheet li', submenu).click();
 
-		if (typeof option !== 'undefined') {
-			cy.contains('#menu-sheet li li', option)
-				.click();
+		if (option) {
+			cy.cGet('body').contains('#menu-sheet li li', option).click();
 		}
 	}
 
 	it('Insert/Delete row' , function() {
 		//Insert row above
-		mode === 'notebookbar' ?
-			cy.get('#Home-Section-Cell1 #InsertRowsBefore').click() :
-			selectOption('Insert Rows', 'Rows Above');
+		mode === 'notebookbar' ? cy.cGet('#Home-Section-Cell1 #InsertRowsBefore').click() :	selectOption('Insert Rows', 'Rows Above');
 
 		calcHelper.selectEntireSheet();
-
 		calcHelper.assertDataClipboardTable(['','','Hello','Hi','World','Bye']);
 
 		//delete row
 		calcHelper.clickOnFirstCell(true, false);
 
-		mode === 'notebookbar' ?
-			cy.get('#Home-Section-Cell1 #DeleteRows').click() :
-			selectOption('Delete Rows');
+		mode === 'notebookbar' ? cy.cGet('#Home-Section-Cell1 #DeleteRows').click() : selectOption('Delete Rows');
 
 		calcHelper.selectEntireSheet();
-
 		calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
 
 		//insert row below
 		calcHelper.clickOnFirstCell(true, false);
 
-		mode === 'notebookbar' ?
-			cy.get('#Home-Section-Cell1 #InsertRowsAfter').click() :
-			selectOption('Insert Rows', 'Rows Below');
+		mode === 'notebookbar' ? cy.cGet('#Home-Section-Cell1 #InsertRowsAfter').click() : selectOption('Insert Rows', 'Rows Below');
 
 		calcHelper.selectEntireSheet();
-
 		calcHelper.assertDataClipboardTable(['Hello','Hi','','','World','Bye']);
 	});
 
 	it('Insert/Delete Column', function() {
 		//insert column before
-		mode === 'notebookbar' ?
-			cy.get('#Home-Section-Cell1 #InsertColumnsBefore').click() :
-			selectOption('Insert Columns', 'Columns Before');
+		mode === 'notebookbar' ? cy.cGet('#Home-Section-Cell1 #InsertColumnsBefore').click() : selectOption('Insert Columns', 'Columns Before');
 
 		calcHelper.selectEntireSheet();
 
@@ -80,9 +67,7 @@ describe('Row Column Operation', function() {
 		calcHelper.clickOnFirstCell(true, false);
 
 		//delete column
-		mode === 'notebookbar' ?
-			cy.get('#Home-Section-Cell1 #DeleteColumns').click() :
-			selectOption('Delete Columns');
+		mode === 'notebookbar' ? cy.cGet('#Home-Section-Cell1 #DeleteColumns').click() : selectOption('Delete Columns');
 
 		calcHelper.selectEntireSheet();
 
@@ -93,9 +78,7 @@ describe('Row Column Operation', function() {
 		calcHelper.clickOnFirstCell(true,false);
 
 		//insert column after
-		mode === 'notebookbar' ?
-			cy.get('#Home-Section-Cell1 #InsertColumnsAfter').click() :
-			selectOption('Insert Columns', 'Columns After');
+		mode === 'notebookbar' ? cy.cGet('#Home-Section-Cell1 #InsertColumnsAfter').click() : selectOption('Insert Columns', 'Columns After');
 
 		calcHelper.selectEntireSheet();
 

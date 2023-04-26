@@ -49,16 +49,16 @@ Cypress.Commands.add('cSetActiveFrame', function(frameID) {
 	cy.then(function() { cy.cActiveFrame = frameID; });
 });
 
-Cypress.Commands.add('cGet', function(selector) {
+Cypress.Commands.add('cGet', function(selector, options) {
 	if (!cy.cActiveFrame)
 		cy.cActiveFrame = '#coolframe';
 	//cy.frameLoaded(cy.cActiveFrame);
 	if (cy.cActiveFrame === '#coolframe')
 		if (true) {
 			if (selector)
-				return cy.get(cy.cActiveFrame).its('0.contentDocument').should('exist').then(cy.wrap).find(selector);
+				return cy.get(cy.cActiveFrame, options).its('0.contentDocument').should('exist').then(cy.wrap).find(selector);
 			else
-				return cy.get(cy.cActiveFrame).its('0.contentDocument').should('exist').then(cy.wrap);
+				return cy.get(cy.cActiveFrame, options).its('0.contentDocument').should('exist').then(cy.wrap);
 		}
 		else {
 			return cy.waitUntil(() => {
