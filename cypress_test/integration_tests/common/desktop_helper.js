@@ -304,13 +304,10 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) 
 
 		if (isMobile) {
 			helper.cFrame().find('#input-modal-input').type('some text' + n);
-
 			helper.cFrame().find('#response-ok').click();
 		} else {
 			helper.cFrame().find('#annotation-modify-textarea-new').type('some text' + n);
-
 			cy.wait(500);
-
 			helper.cFrame().find('#annotation-save-new').click();
 		}
 	}
