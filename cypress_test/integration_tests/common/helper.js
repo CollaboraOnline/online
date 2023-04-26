@@ -591,9 +591,6 @@ function closeDocument(fileName, testState) {
 			cy.wait(2000);
 		}
 
-		Cypress.Commands.overwriteQuery('get', function(originalFn, selector, options) {
-			return originalFn(selector, options);
-		});
 		// Make sure that the document is closed
 		cy.visit('http://admin:admin@localhost:' +
 			Cypress.env('SERVER_PORT') +

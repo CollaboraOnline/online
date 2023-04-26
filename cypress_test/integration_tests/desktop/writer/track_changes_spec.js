@@ -15,36 +15,26 @@ describe('Track Changes', function () {
 	});
 
 	function confirmChange(action) {
-		cy.get('#menu-editmenu')
-			.click()
-			.get('#menu-changesmenu')
-			.click()
-			.contains(action)
-			.click();
+		cy.cGet('#menu-editmenu').click();
+		cy.cGet('#menu-changesmenu').click();
+		cy.cGet('#menu-changesmenu').contains(action).click();
 	}
 
 	//enable record for track changes
 	function enableRecord() {
-		cy.get('#menu-editmenu')
-			.click()
-			.get('#menu-changesmenu')
-			.click()
-			.contains('Record')
-			.click();
+		cy.cGet('#menu-editmenu').click();
+		cy.cGet('#menu-changesmenu').click();
+		cy.cGet('#menu-changesmenu').contains('Record').click();
 
 		//if we don't wait , the test will fail in CLI
 		cy.wait(200);
 
-		cy.get('#menu-editmenu')
-			.click()
-			.get('#menu-changesmenu')
-			.click()
-			.contains('Record')
-			.should('have.class', 'lo-menu-item-checked');
+		cy.cGet('#menu-editmenu').click();
+		cy.cGet('#menu-changesmenu').click();
+		cy.cGet('#menu-changesmenu').contains('Record').should('have.class', 'lo-menu-item-checked');
 
 		//to close
-		cy.get('#menu-changesmenu')
-			.click();
+		cy.cGet('#menu-changesmenu').click();
 	}
 
 	it('Accept All', function () {
@@ -85,7 +75,7 @@ describe('Track Changes', function () {
 
 		cy.wait(200);
 
-		cy.get('.leaflet-layer').click();
+		cy.cGet('.leaflet-layer').click();
 
 		helper.selectAllText();
 

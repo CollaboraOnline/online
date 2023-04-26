@@ -19,7 +19,7 @@ if (Cypress.browser.isHeaded) {
 	// To debug exceptions more easily - enable this:
 	Cypress.on('fail', () => {
 		// eslint-disable-next-line no-debugger
-		debugger;
+		//debugger;
 	});
 }
 
