@@ -126,14 +126,13 @@ function removeShapeSelection() {
 
 		cy.wait(2000);
 
-		return cy.get('.leaflet-overlay-pane svg')
-			.then(function(overlay) {
+		return helper.cFrame().find('.leaflet-overlay-pane svg')
+		.then(function(overlay) {
 				return overlay.children('g').length === 0;
 			});
 	});
 
-	cy.get('.leaflet-drag-transform-marker')
-		.should('not.exist');
+	helper.cFrame().find('.leaflet-drag-transform-marker').should('not.exist');
 
 	cy.log('Removing shape selection - end.');
 }
@@ -167,7 +166,7 @@ function selectTextOfShape(selectAllText = true) {
 
 	// Double click onto the selected shape
 	cy.waitUntil(function() {
-		cy.get('svg g .leaflet-interactive')
+		helper.cFrame().find('svg g .leaflet-interactive')
 			.then(function(items) {
 				expect(items).to.have.length(1);
 				// Slide does not fit the viewport in cypress.
@@ -176,8 +175,7 @@ function selectTextOfShape(selectAllText = true) {
 				const clientRect = helper.getVisibleBounds(items[0].getBoundingClientRect());
 				const XPos = (clientRect.left + clientRect.right) / 2;
 				const YPos = (clientRect.top + clientRect.bottom) / 2;
-				cy.get('body')
-					.dblclick(XPos, YPos);
+				helper.cFrame().find('body').dblclick(XPos, YPos);
 			});
 
 		cy.wait(2000);
@@ -188,8 +186,7 @@ function selectTextOfShape(selectAllText = true) {
 			});
 	});
 
-	cy.get('.leaflet-cursor.blinking-cursor')
-		.should('exist');
+	helper.cFrame().find('.leaflet-cursor.blinking-cursor').should('exist');
 
 	if (selectAllText)
 		helper.selectAllText();
@@ -217,10 +214,9 @@ function dblclickOnSelectedShape() {
 //add multiple slides
 function addSlide(numberOfSlides) {
 	helper.waitUntilIdle('#tb_presentation-toolbar_item_insertpage');
-	var insertSlideButton = cy.get('#tb_presentation-toolbar_item_insertpage');
-	for (let i=0;i<numberOfSlides;i++) {
-		insertSlideButton.should('not.have.class', 'disabled')
-			.click();
+	var insertSlideButton = helper.cFrame().find('#tb_presentation-toolbar_item_insertpage');
+	for (let i = 0; i < numberOfSlides; i++) {
+		insertSlideButton.should('not.have.class', 'disabled').click();
 	}
 }
 
@@ -228,12 +224,12 @@ function addSlide(numberOfSlides) {
 function changeSlide(changeNum,direction) {
 	var slideButton;
 	if (direction === 'next') {
-		slideButton = cy.get('#tb_actionbar_item_next');
+		slideButton = helper.cFrame().find('#tb_actionbar_item_next');
 	} else if (direction === 'previous') {
-		slideButton = cy.get('#tb_actionbar_item_prev');
+		slideButton = helper.cFrame().find('#tb_actionbar_item_prev');
 	}
 	if (slideButton) {
-		for (var n=0;n<changeNum;n++) {
+		for (var n = 0; n < changeNum; n++) {
 			slideButton.click();
 		}
 	}
