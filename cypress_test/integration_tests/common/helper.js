@@ -659,6 +659,8 @@ function initAliasToNegative(aliasName) {
 
 // Run a code snippet if we are inside Calc.
 function doIfInCalc(callback, frame) {
+	if (!frame)
+		frame = cFrame();
 	frame.find('#document-container')
 		.then(function(doc) {
 			if (doc.hasClass('spreadsheet-doctype')) {
