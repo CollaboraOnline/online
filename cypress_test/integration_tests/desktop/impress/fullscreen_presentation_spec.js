@@ -7,8 +7,7 @@ describe('Fullscreen Presentation.', function() {
 	var testFileName = 'text_fields.odp';
 
 	function getSlideShowContent() {
-		return cy.get('@coolIFrameGlobal')
-			.find('.leaflet-slideshow').then(($iframe) =>{
+		return cy.cGet().find('.leaflet-slideshow').then(($iframe) =>{
 				cy.wrap($iframe.contents());
 			});
 	}
@@ -23,10 +22,8 @@ describe('Fullscreen Presentation.', function() {
 			desktopHelper.hideSidebar();
 		}
 
-		cy.get('#menu-slide > a')
-			.click();
-		cy.get('#menu-fullscreen-presentation > a')
-			.click();
+		cy.cGet('#menu-slide > a').click();
+		cy.cGet('#menu-fullscreen-presentation > a').click();
 	}
 
 	afterEach(function() {

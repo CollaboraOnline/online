@@ -14,9 +14,9 @@ describe('Open different file types', function() {
 
 		selectZoomLevel('50');
 
-		cy.get('#toolbar-up .w2ui-scroll-right').click();
+		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 
-		cy.get('#tb_editbar_item_modifypage').click();
+		cy.cGet('#tb_editbar_item_modifypage').click();
 	}
 
 	afterEach(function() {
@@ -28,7 +28,7 @@ describe('Open different file types', function() {
 		helper.typeIntoDocument('{ctrl}{a}');
 
 		//assert image and size
-		cy.get('.leaflet-overlay-pane g.Graphic image').should('exist')
+		cy.cGet('.leaflet-overlay-pane g.Graphic image').should('exist')
 		    .then($ele => {
 		        const width = parseInt($ele.attr('width'));
 		        const height = parseInt($ele.attr('height'));
@@ -38,26 +38,26 @@ describe('Open different file types', function() {
 
 		var selector = '.leaflet-pane.leaflet-overlay-pane g.Page';
 
-		cy.get(selector + ' g')
+		cy.cGet(selector + ' g')
 			.should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of table cells
-		cy.get(selector + ' path[fill^="rgb"]')
+		cy.cGet(selector + ' path[fill^="rgb"]')
 			.should(function(cells) {
 				expect(cells).to.have.lengthOf(6);
 			});
 
 		//assert text properties
-		cy.get(selector + ' g')
+		cy.cGet(selector + ' g')
 			.should('have.class', 'com.sun.star.drawing.CustomShape');
 
-		cy.get(selector + ' .TextParagraph')
+		cy.cGet(selector + ' .TextParagraph')
 			.should('have.attr', 'font-family', 'Calibri, sans-serif');
 
-		cy.get(selector + ' .TextParagraph')
+		cy.cGet(selector + ' .TextParagraph')
 			.should('have.attr', 'font-size', '1552px');
 
-		cy.get(selector + ' .TextParagraph .TextPosition tspan')
+		cy.cGet(selector + ' .TextParagraph .TextPosition tspan')
 			.should('have.text', 'LibreOffice');
 	}
 
