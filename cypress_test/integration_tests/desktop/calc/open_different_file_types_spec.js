@@ -1,4 +1,4 @@
-/* global describe it cy require Cypress afterEach */
+/* global describe it cy require Cypress afterEach expect isCanvasWhite */
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 const { insertImage } = require('../../common/desktop_helper');
@@ -19,7 +19,7 @@ describe('Open different file types', function () {
 		//check doc is loaded
 		cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
-		helper.canvasShouldNotBeFullWhite('.leaflet-canvas-container canvas');
+		expect(isCanvasWhite(helper.cFrame().get('#document-canvas'))).to.be.false;
 
 		cy.get('#PermissionMode').should('be.visible')
 			.should('have.text', ' Read-only ');
@@ -77,7 +77,7 @@ describe('Open different file types', function () {
 		//check doc is loaded
 		cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
-		helper.canvasShouldNotBeFullWhite('.leaflet-canvas-container canvas');
+		expect(isCanvasWhite(helper.cFrame().get('#document-canvas'))).to.be.false;
 
 		cy.get('#mobile-edit-button')
 			.should('be.visible')

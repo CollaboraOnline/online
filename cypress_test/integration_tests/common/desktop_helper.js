@@ -8,43 +8,33 @@ var helper = require('./helper');
 function showSidebar(frameId) {
 	cy.log('Showing sidebar - start.');
 
-	cy.customGet('#tb_editbar_item_sidebar .w2ui-button', frameId)
-		.should('not.have.class', 'checked');
+	helper.cFrame().find('#tb_editbar_item_sidebar .w2ui-button', frameId).should('not.have.class', 'checked');
 
-	cy.customGet('#sidebar-dock-wrapper', frameId)
-		.should('not.be.visible');
+	helper.cFrame().find('#sidebar-dock-wrapper', frameId).should('not.be.visible');
 
-	cy.customGet('#tb_editbar_item_sidebar .w2ui-button', frameId)
-		.click({force: true});
+	helper.cFrame().find('#tb_editbar_item_sidebar .w2ui-button', frameId).click({force: true});
 
-	cy.customGet('#tb_editbar_item_sidebar .w2ui-button', frameId)
-		.should('have.class', 'checked');
+	helper.cFrame().find('#tb_editbar_item_sidebar .w2ui-button', frameId).should('have.class', 'checked');
 
-	cy.customGet('#sidebar-dock-wrapper', frameId)
-		.should('be.visible');
+	helper.cFrame().find('#sidebar-dock-wrapper', frameId).should('be.visible');
 
 	cy.log('Showing sidebar - end.');
 }
 
 // Hide the sidebar by clicking on the corresponding toolbar item.
 // We assume that the sidebar is visible, when this method is called.
-function hideSidebar(frameId) {
+function hideSidebar() {
 	cy.log('Hiding sidebar - start.');
 
-	cy.customGet('#tb_editbar_item_sidebar .w2ui-button', frameId)
-		.should('have.class', 'checked');
+	helper.cFrame().find('#tb_editbar_item_sidebar .w2ui-button').should('have.class', 'checked');
 
-	cy.customGet('#sidebar-dock-wrapper', frameId)
-		.should('be.visible');
+	helper.cFrame().find('#sidebar-dock-wrapper').should('be.visible');
 
-	cy.customGet('#tb_editbar_item_sidebar .w2ui-button', frameId)
-		.click({force: true});
+	helper.cFrame().find('#tb_editbar_item_sidebar .w2ui-button').click({force: true});
 
-	cy.customGet('#tb_editbar_item_sidebar .w2ui-button', frameId)
-		.should('not.have.class', 'checked');
+	helper.cFrame().find('#tb_editbar_item_sidebar .w2ui-button').should('not.have.class', 'checked');
 
-	cy.customGet('#sidebar-dock-wrapper', frameId)
-		.should('not.be.visible');
+	helper.cFrame().find('#sidebar-dock-wrapper').should('not.be.visible');
 
 	cy.log('Hiding sidebar - end.');
 }
@@ -115,8 +105,7 @@ function selectFromListbox(item) {
 		.should('be.visible');
 
 	// We use force because the tooltip sometimes hides the items.
-	cy.contains('.select2-results__option', item)
-		.click({force: true});
+	helper.cFrame().contains('.select2-results__option', item).click({force: true});
 
 	cy.get('.select2-dropdown')
 		.should('not.exist');
@@ -148,24 +137,21 @@ function checkDialogAndClose(dialogTitle) {
 // Parameters:
 // zoomLevel        the expected zoom level (e.g. '100' means 100%).
 function shouldHaveZoomLevel(zoomLevel) {
-	cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')
-		.should('have.text', zoomLevel);
+	helper.cFrame().find('#tb_actionbar_item_zoom .w2ui-tb-caption').should('have.text', zoomLevel);
 }
 
 // Make the zoom related status bar items visible if they are hidden.
 // The status bar van be long to not fit on the screen. We have a scroll
 // item for navigation in this case.
 function makeZoomItemsVisible() {
-	cy.get('.w2ui-tb-image.w2ui-icon.zoomin')
+	helper.cFrame().find('.w2ui-tb-image.w2ui-icon.zoomin')
 		.then(function(zoomInItem) {
 			if (!Cypress.dom.isVisible(zoomInItem)) {
-				cy.get('#toolbar-down .w2ui-scroll-right')
-					.click();
+				helper.cFrame().find('#toolbar-down .w2ui-scroll-right').click();
 			}
 		});
 
-	cy.get('.w2ui-tb-image.w2ui-icon.zoomin')
-		.should('be.visible');
+	helper.cFrame().find('.w2ui-tb-image.w2ui-icon.zoomin').should('be.visible');
 }
 
 // Increase / decrease the zoom level using the status bar related items.
@@ -215,8 +201,8 @@ function selectZoomLevel(zoomLevel) {
 
 	helper.clickOnIdle('#tb_actionbar_item_zoom');
 
-	cy.contains('.w2ui-drop-menu .menu-text', zoomLevel)
-		.click();
+	cy.log(zoomLevel);
+	helper.cFrame().contains('.w2ui-drop-menu .menu-text', zoomLevel).click();
 
 	shouldHaveZoomLevel(zoomLevel);
 }
@@ -225,8 +211,7 @@ function selectZoomLevel(zoomLevel) {
 function resetZoomLevel() {
 	makeZoomItemsVisible();
 
-	cy.get('#tb_actionbar_item_zoomreset')
-		.click();
+	helper.cFrame().find('#tb_actionbar_item_zoomreset').click();
 
 	shouldHaveZoomLevel('100');
 }
@@ -234,25 +219,21 @@ function resetZoomLevel() {
 function insertImage(docType) {
 	selectZoomLevel('50');
 
-	cy.get('#toolbar-up .w2ui-scroll-right')
-		.click();
+	helper.cFrame().find('#toolbar-up .w2ui-scroll-right').click();
 
 	const mode = Cypress.env('USER_INTERFACE');
-	mode === 'notebookbar' ? cy.get('#toolbar-up .w2ui-scroll-right').click() : '';
+	mode === 'notebookbar' ? helper.cFrame().find('#toolbar-up .w2ui-scroll-right').click() : '';
 
-	if (docType === 'calc' &&  mode === 'notebookbar') {
-		cy.get('#Insert-tab-label').click();
-	}
+	if (docType === 'calc' &&  mode === 'notebookbar')
+		helper.cFrame().find('#Insert-tab-label').click();
 
 	actionOnSelector('insertGraphic', (selector) => {
-		cy.get(selector).click();
+		helper.cFrame().find(selector).click();
 	});
 
-	cy.get('#insertgraphic[type=file]')
-		.attachFile('/desktop/writer/image_to_insert.png');
+	helper.cFrame().find('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');
 
-	cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
-		.should('exist');
+	helper.cFrame().find('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
 }
 
 function deleteImage() {
@@ -260,12 +241,11 @@ function deleteImage() {
 
 	helper.waitUntilIdle('.leaflet-pane.leaflet-overlay-pane');
 
-	cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
-		.should('not.exist');
+	helper.cFrame().find('.leaflet-pane.leaflet-overlay-pane svg g').should('not.exist');
 }
 
 function assertImageSize(expectedWidth, expectedHeight) {
-	cy.get('.leaflet-pane.leaflet-overlay-pane svg svg')
+	helper.cFrame().find('.leaflet-pane.leaflet-overlay-pane svg svg')
 		.should('exist')
 		.then($ele => {
 			const actualWidth = parseInt($ele.attr('width'));
@@ -284,7 +264,7 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) 
 	}
 
 	if (docType !== 'draw') {
-		cy.get('#toolbar-up .w2ui-scroll-right').then($button => {
+		helper.cFrame().find('#toolbar-up .w2ui-scroll-right').then($button => {
 			if ($button.is(':visible'))	{
 				$button.click();
 			}
@@ -294,7 +274,7 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) 
 	if (mode === 'notebookbar') {
 		cy.wait(500);
 
-		cy.get('#Insert-tab-label').then($button => {
+		helper.cFrame().find('#Insert-tab-label').then($button => {
 			if (!$button.hasClass('selected')) {
 				$button.click();
 			}
@@ -302,7 +282,7 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) 
 	}
 
 	if (docType === 'writer' && mode !== 'notebookbar') {
-		cy.get('#toolbar-up .w2ui-scroll-right').then($button => {
+		helper.cFrame().find('#toolbar-up .w2ui-scroll-right').then($button => {
 			if ($button.is(':visible'))	{
 				$button.click();
 			}
@@ -312,27 +292,27 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) 
 	for (var n=0;n<numberOfComments;n++) {
 
 		if (docType === 'draw') {
-			cy.get('#menu-insert').click().get('#menu-insertcomment').click();
+			helper.cFrame().find('#menu-insert').click().get('#menu-insertcomment').click();
 		} else {
 			actionOnSelector('insertAnnotation', (selector) => {
-				cy.get(selector).click();
+				helper.cFrame().find(selector).click();
 			});
 		}
 
 		cy.wait(100);
 
-		cy.get('.cool-annotation-table').should('exist');
+		helper.cFrame().find('.cool-annotation-table').should('exist');
 
 		if (isMobile) {
-			cy.get('#input-modal-input').type('some text' + n);
+			helper.cFrame().find('#input-modal-input').type('some text' + n);
 
-			cy.get('#response-ok').click();
+			helper.cFrame().find('#response-ok').click();
 		} else {
-			cy.get('#annotation-modify-textarea-new').type('some text' + n);
+			helper.cFrame().find('#annotation-modify-textarea-new').type('some text' + n);
 
 			cy.wait(500);
 
-			cy.get('#annotation-save-new').click();
+			helper.cFrame().find('#annotation-save-new').click();
 		}
 	}
 }
@@ -353,7 +333,7 @@ function actionOnSelector(name,func) {
 function assertScrollbarPosition(type, lowerBound, upperBound) {
 	cy.wait(500);
 
-	cy.get('#test-div-' + type + '-scrollbar')
+	helper.cFrame().find('#test-div-' + type + '-scrollbar')
 		.then(function($item) {
 			const x = parseInt($item.text());
 			expect(x).to.be.within(lowerBound, upperBound);
@@ -372,11 +352,11 @@ function openReadOnlyFile(type, filename) {
 	var testFileName = helper.loadTestDocNoIntegration(filename, type, false, false, false);
 
 	//check doc is loaded
-	cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+	helper.cFrame().get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
-	helper.canvasShouldNotBeFullWhite('.leaflet-canvas-container canvas');
+	expect(helper.isCanvasWhite(helper.cFrame().get('#document-canvas'))).to.be.false;
 
-	cy.get('#PermissionMode').should('be.visible')
+	helper.cFrame().find('#PermissionMode').should('be.visible')
 		.should('have.text', ' Read-only ');
 
 	return testFileName;
