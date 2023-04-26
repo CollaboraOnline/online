@@ -67,17 +67,23 @@ function generateDocumentURI(URL, subFolder, newFileName) {
 }
 
 function checkCoolFrameGlobal() {
+	cy.log('checkCoolFrameGlobal - start.');
 	cy.get('#coolframe').its('0.contentDocument').should('exist').its('body').should('not.be.undefined');
+	cy.log('checkCoolFrameGlobal - end.');
 }
 
 function checkFirstCoolFrameGlobal() {
+	cy.log('checkFirstCoolFrameGlobal - start.');
 	cy.get('#iframe1').its('0.contentDocument').should('exist').its('body').should('not.be.undefined')
-	.find('#coolframe').should('exist');
+		.find('#coolframe').should('exist');
+	cy.log('checkFirstCoolFrameGlobal - end.');
 }
 
 function checkSecondCoolFrameGlobal() {
+	cy.log('checkSecondCoolFrameGlobal - start.');
 	cy.get('#iframe2').its('0.contentDocument').should('exist').its('body').should('not.be.undefined')
-	.find('#coolframe').should('exist');
+		.find('#coolframe').should('exist');
+	cy.log('checkSecondCoolFrameGlobal - end.');
 }
 
 function setActiveFrame(frameID) {
@@ -342,7 +348,9 @@ function loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoa
 }
 
 function documentChecks() {
-	cFrame().find('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0}).should('exist');
+	cy.log('documentChecks - start.');
+
+	cy.cGet('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0}).should('exist');
 
 	//cFrame().find('#document-canvas').then(canvas => {
 		//var white = isCanvasWhite(canvas);
@@ -382,9 +390,13 @@ function documentChecks() {
 	if (Cypress.env('INTERFERENCE_TEST') === true) {
 		waitForInterferingUser();
 	}
+
+	cy.log('documentChecks - end.');
 }
 
 function checkIfDocIsLoaded(isMultiUser) {
+	cy.log('checkIfDocIsLoaded - start.');
+
 	if (isMultiUser) {
 		cy.frameLoaded('#iframe1');
 		cy.frameLoaded('#iframe2');
@@ -403,6 +415,8 @@ function checkIfDocIsLoaded(isMultiUser) {
 		setActiveFrame('#coolframe');
 		documentChecks();
 	}
+
+	cy.log('checkIfDocIsLoaded - end.');
 
 	cy.log('Loading test document - end.');
 }

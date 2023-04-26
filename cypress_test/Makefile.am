@@ -588,6 +588,7 @@ do-run-cov: @JAILS_PATH@ $(NODE_BINS)
 # 1 - config: cypress configuration (e.g. cypress' --config argument).
 # 2 - env:    list of environment variables (e.g. cypress' --env argument).
 define run_interactive_all
+	DEBUG='cypress:*' \
 	DISPLAY=$(if $(HEADLESS_BUILD),$(HEADLESS_DISPLAY),$(DISPLAY)) \
 		$(CYPRESS_BINARY) open \
 		--config $(1) \
@@ -601,6 +602,7 @@ endef
 # 2 - env:    list of environment variables (e.g. cypress' --env argument).
 # 3 - spec:   test file path (e.g. cypress' --spec argument)
 define run_interactive_single
+	DEBUG='cypress:*' \
 	DISPLAY=$(if $(HEADLESS_BUILD),$(HEADLESS_DISPLAY),$(DISPLAY)) \
 		$(CYPRESS_BINARY) run \
 		--browser $(BROWSER) \
