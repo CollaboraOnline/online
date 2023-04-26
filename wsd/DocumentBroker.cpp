@@ -2292,8 +2292,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         // very late, or not at all. We care that there is nothing to upload
         // and the last save succeeded, possibly because there was no
         // modifications, and there has been no activity since.
-        if (!haveActivityAfterSaveRequest() &&
-            _saveManager.lastSaveRequestTime() < _saveManager.lastSaveResponseTime() &&
+        if (!haveActivityAfterSaveRequest() && !_saveManager.isSaving() &&
             _saveManager.lastSaveSuccessful())
         {
             // We can stop, but the modified flag is set. Delayed ModifiedStatus?
