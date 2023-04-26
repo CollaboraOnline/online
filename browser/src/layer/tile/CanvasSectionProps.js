@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * CanvasSectionProps
  *
