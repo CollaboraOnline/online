@@ -152,21 +152,19 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 	upLoadFileToNextCloud(fileName, subFolder, subsequentLoad);
 
 	// Open test document
-	cy.get('tr[data-file=\'' + fileName + '\']')
-		.click();
+	cy.cGet('tr[data-file=\'' + fileName + '\']').click();
 
-	cy.get('iframe#richdocumentsframe')
-		.should('be.visible', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+	cy.cGet('iframe#richdocumentsframe').should('be.visible', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
 	cy.wait(10000);
 
 	// We create global aliases for iframes, so it's faster to reach them.
-	cy.get('iframe#richdocumentsframe')
+	cy.cGet('iframe#richdocumentsframe')
 		.its('0.contentDocument').should('exist')
 		.its('body').should('not.be.undefined')
 		.then(cy.wrap).as('richdocumentsIFrameGlobal');
 
-	cy.get('@richdocumentsIFrameGlobal')
+	cy.cGet('@richdocumentsIFrameGlobal')
 		.find('iframe#coolframe')
 		.its('0.contentDocument').should('exist')
 		.its('body').should('not.be.undefined')
@@ -174,7 +172,7 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 
 	// The IFRAME_LEVEL environment variable will indicate
 	// in which iframe we have.
-	cy.get('iframe#richdocumentsframe')
+	cy.cGet('iframe#richdocumentsframe')
 		.then(function() {
 			Cypress.env('IFRAME_LEVEL', '2');
 		});
@@ -188,10 +186,10 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 function hideNCFirstRunWizard() {
 	// Hide first run wizard if it's there
 	cy.wait(2000); // Wait some time to the wizard become visible, if it's there.
-	cy.get('body')
+	cy.cGet('body')
 		.then(function(body) {
 			if (body.find('#firstrunwizard').length !== 0) {
-				cy.get('#firstrunwizard')
+				cy.cGet('#firstrunwizard')
 					.then(function(wizard) {
 						wizard.hide();
 					});
@@ -217,42 +215,33 @@ function upLoadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 
 	// Log in with cypress test user / password (if this is the first time)
 	if (subsequentLoad !== true) {
-		cy.get('input#user')
-			.clear()
-			.type('cypress_test');
+		cy.cGet('input#user').clear().type('cypress_test');
 
-		cy.get('input#password')
-			.clear()
-			.type('cypress_test');
+		cy.cGet('input#password').clear().type('cypress_test');
 
-		cy.get('input#submit-form')
-			.click();
+		cy.cGet('input#submit-form').click();
 
-		cy.get('.button.new')
-			.should('be.visible');
+		cy.cGet('.button.new').should('be.visible');
 
 		// Wait for free space calculation before uploading document
-		cy.get('#free_space')
-			.should('not.have.attr', 'value', '');
+		cy.cGet('#free_space').should('not.have.attr', 'value', '');
 
 		hideNCFirstRunWizard();
 
 		// Remove all existing file, so we make sure the test document is removed
 		// and then we can upload a new one.
-		cy.get('#fileList')
+		cy.cGet('#fileList')
 			.then(function(filelist) {
 				if (filelist.find('tr').length !== 0) {
 					cy.waitUntil(function() {
-						cy.get('#fileList tr:nth-of-type(1) .action-menu.permanent')
+						cy.cGet('#fileList tr:nth-of-type(1) .action-menu.permanent')
 							.click();
 
-						cy.get('.menuitem.action.action-delete.permanent')
-							.click();
+						cy.cGet('.menuitem.action.action-delete.permanent')	.click();
 
-						cy.get('#uploadprogressbar')
-							.should('not.be.visible');
+						cy.cGet('#uploadprogressbar').should('not.be.visible');
 
-						return cy.get('#fileList')
+						return cy.cGet('#fileList')
 							.then(function(filelist) {
 								return filelist.find('tr').length === 0;
 							});
@@ -261,14 +250,12 @@ function upLoadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 			});
 	} else {
 		// Wait for free space calculation before uploading document
-		cy.get('#free_space')
-			.should('not.have.attr', 'value', '');
+		cy.cGet('#free_space').should('not.have.attr', 'value', '');
 
 		hideNCFirstRunWizard();
 	}
 
-	cy.get('tr[data-file=\'' + fileName + '\']')
-		.should('not.exist');
+	cy.cGet('tr[data-file=\'' + fileName + '\']').should('not.exist');
 
 	// Upload test document
 	var fileURI = '';
@@ -278,18 +265,18 @@ function upLoadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 		fileURI += subFolder + '/' + fileName;
 	}
 	doIfOnDesktop(function() {
-		cy.get('input#file_upload_start')
+		cy.cGet('input#file_upload_start')
 			.attachFile({ filePath: 'desktop/' + fileURI, encoding: 'binary' });
 	});
 	doIfOnMobile(function() {
-		cy.get('input#file_upload_start')
+		cy.cGet('input#file_upload_start')
 			.attachFile({ filePath: 'mobile/' + fileURI, encoding: 'binary' });
 	});
 
-	cy.get('#uploadprogressbar')
+	cy.cGet('#uploadprogressbar')
 		.should('not.be.visible');
 
-	cy.get('tr[data-file=\'' + fileName + '\']')
+	cy.cGet('tr[data-file=\'' + fileName + '\']')
 		.should('be.visible');
 
 	cy.log('Uploading test document into nextcloud - end.');
@@ -300,7 +287,7 @@ function upLoadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 // So we can be sure the interference actions are made during the test
 // user does the actual test steps.
 function waitForInterferingUser() {
-	cy.get('#tb_actionbar_item_userlist', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
+	cy.cGet('#tb_actionbar_item_userlist', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
 		.should('be.visible');
 
 	cy.wait(10000);
@@ -347,11 +334,6 @@ function documentChecks() {
 	cy.log('documentChecks - start.');
 
 	cy.cGet('#document-canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0}).should('exist');
-
-	//cy.cGet().find('#document-canvas').then(canvas => {
-		//var white = isCanvasWhite(canvas);
-		//expect(white).to.be.true;
-	//});
 
 	// With php-proxy the client is irresponsive for some seconds after load, because of the incoming messages.
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
@@ -427,7 +409,7 @@ function assertHaveKeyboardInput() {
 }
 
 // Assert that we have cursor and focus on the text area of the document.
-function assertCursorAndFocus(frameId) {
+function assertCursorAndFocus() {
 	cy.log('Verifying Cursor and Focus - start');
 
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
@@ -439,35 +421,35 @@ function assertCursorAndFocus(frameId) {
 	cy.cGet('.leaflet-cursor.blinking-cursor').should('exist');
 	cy.cGet('.leaflet-cursor-container').should('exist');
 
-	assertHaveKeyboardInput(frameId);
+	assertHaveKeyboardInput();
 
 	cy.log('Verifying Cursor and Focus - end');
 }
 
 // Select all text via CTRL+A shortcut.
-function selectAllText(frameId) {
+function selectAllText() {
 	cy.log('Select all text - start');
 
-	typeIntoDocument('{ctrl}a',frameId);
+	typeIntoDocument('{ctrl}a');
 
-	textSelectionShouldExist(frameId);
+	textSelectionShouldExist();
 
 	cy.log('Select all text - end');
 }
 
 // Clear all text by selecting all and deleting.
-function clearAllText(frameId) {
+function clearAllText() {
 	cy.log('Clear all text - start');
 
-	//assertCursorAndFocus(frameId);
+	//assertCursorAndFocus();
 
 	// Trigger select all
-	selectAllText(frameId);
+	selectAllText();
 
 	// Then remove
-	typeIntoDocument('{backspace}',frameId);
+	typeIntoDocument('{backspace}');
 
-	textSelectionShouldNotExist(frameId);
+	textSelectionShouldNotExist();
 
 	cy.log('Clear all text - end');
 }
@@ -475,38 +457,38 @@ function clearAllText(frameId) {
 // Check that the clipboard text matches with the specified text.
 // Parameters:
 // expectedPlainText - a string, the clipboard container should have.
-function expectTextForClipboard(expectedPlainText, frameId) {
-	cy.log('Text:' + expectedPlainText ,  'FrameID:' + frameId);
+function expectTextForClipboard(expectedPlainText) {
+	cy.log('Text:' + expectedPlainText);
 	doIfInWriter(function() {
 		// for backward compatibility allow '/nTEXT' and 'TEXT'
 		const expectedRegex = RegExp('/^(\n' + expectedPlainText + ')|(' + expectedPlainText + ')$/');
 		cy.cGet('#copy-paste-container p')
 			.then(function(pItem) {
 				if (pItem.children('font').length !== 0) {
-					cy.customGet('#copy-paste-container p font', frameId)
+					cy.customGet('#copy-paste-container p font')
 						.invoke('text')
 						.then(function(value) {
 							return expectedRegex.test(value);
 						});
 				} else {
-					cy.customGet('#copy-paste-container p', frameId)
+					cy.customGet('#copy-paste-container p')
 						.invoke('text')
 						.then(function(value) {
 							return expectedRegex.test(value);
 						});
 				}
 			});
-	}, frameId);
+	});
 
 	doIfInCalc(function() {
-		cy.customGet('#copy-paste-container pre', frameId)
+		cy.cGet('#copy-paste-container pre')
 			.should('have.text', expectedPlainText);
-	}, frameId);
+	});
 
 	doIfInImpress(function() {
-		cy.customGet('#copy-paste-container pre', frameId)
+		cy.cGet('#copy-paste-container pre')
 			.should('have.text', expectedPlainText);
-	}, frameId);
+	});
 }
 
 // Check that the clipboard text matches with the
@@ -623,8 +605,7 @@ function closeDocument(fileName, testState) {
 			return;
 		}
 
-		cy.get('#uptime').its('text')
-			.should('not.eq', '0');
+		cy.get('#uptime').its('text').should('not.eq', '0');
 
 		// We have all lines of document infos as one long string.
 		// We have PID number before the file names, with matching
@@ -653,13 +634,12 @@ function initAliasToNegative(aliasName) {
 	cy.log('Initializing alias to a negative value - start.');
 	cy.log('Param - aliasName: ' + aliasName);
 
-	cy.get('#copy-paste-container')
+	cy.cGet('#copy-paste-container')
 		.invoke('offset')
 		.its('top')
 		.as(aliasName);
 
-	cy.get('@' + aliasName)
-		.should('be.lessThan', 0);
+	cy.get('@' + aliasName).should('be.lessThan', 0);
 
 	cy.log('Initializing alias to a negative value - end.');
 }
@@ -677,8 +657,8 @@ function doIfInCalc(callback, frame) {
 }
 
 // Run a code snippet if we are *NOT* inside Calc.
-function doIfNotInCalc(callback, frameId) {
-	cy.customGet('#document-container', frameId)
+function doIfNotInCalc(callback) {
+	cFrame().find('#document-container')
 		.then(function(doc) {
 			if (!doc.hasClass('spreadsheet-doctype')) {
 				callback();
@@ -718,7 +698,7 @@ function doIfInWriter(callback) {
 
 // Run a code snippet if we are *NOT* inside Writer.
 function doIfNotInWriter(callback) {
-	cy.get('#document-container')
+	cy.cGet('#document-container')
 		.then(function(doc) {
 			if (!doc.hasClass('text-doctype')) {
 				callback();
@@ -733,7 +713,7 @@ function doIfNotInWriter(callback) {
 // selector - a CSS selector to query a DOM element to type in.
 // text - a text, what we'll type char-by-char.
 // delayMs - delay in ms between the characters.
-function typeText(selector, text, delayMs=0, frameId) {
+function typeText(selector, text, delayMs = 0) {
 	for (var i = 0; i < text.length; i++) {
 		cy.cGet(selector).type(text.charAt(i));
 		if (delayMs > 0)
@@ -753,7 +733,7 @@ function imageShouldNotBeFullWhiteOrNot(selector, fullWhite = true) {
 
 	expect(selector).to.have.string('img');
 
-	cy.get(selector)
+	cy.cGet(selector)
 		.should(function(images) {
 			var img = images[0];
 
@@ -793,15 +773,23 @@ function imageShouldNotBeFullWhite(selector) {
 	imageShouldNotBeFullWhiteOrNot(selector, false);
 }
 
-function isCanvasWhite(canvas) {
+function isCanvasWhite(expectWhite = true) {
 	cy.log('Check whether a canvas is full white or not - start.');
-	var context = canvas.getContext('2d');
-	var pixelData = context.getImageData(0, 0, canvas.width, canvas.height).data;
-	for (var i = 0; i < pixelData.length; ++i) {
-		if (pixelData[i] !== 255)
-			return false;
-	}
-	return true;
+	cy.wait(300);
+	cy.cGet('#document-canvas').should('exist').then(function(canvas) {
+		var result = true;
+		var context = canvas[0].getContext('2d');
+		var pixelData = context.getImageData(0, 0, canvas[0].width, canvas[0].height).data;
+		for (var i = 0; i < pixelData.length; i++) {
+			if (pixelData[i] !== 255)
+				result = false;
+		}
+
+		if (expectWhite)
+			expect(result).to.be.true;
+		else
+			expect(result).to.be.false;
+	});
 }
 
 // Waits until a DOM element becomes idle (does not change for a given time).
@@ -891,7 +879,7 @@ function clickOnIdle(selector, content, waitingTime = mobileWizardIdleTime) {
 	waitUntilIdle(selector, content, waitingTime);
 
 	if (content)
-		cy.cGet().contains(selector, content).click();
+		cy.cGet('body').contains(selector, content).click();
 	else
 		cy.cGet(selector).click();
 
@@ -909,7 +897,7 @@ function inputOnIdle(selector, input, waitingTime = mobileWizardIdleTime) {
 
 	waitUntilIdle(selector, undefined, waitingTime);
 
-	cy.get(selector)
+	cy.cGet(selector)
 		.clear()
 		.type(input)
 		.type('{enter}');
@@ -946,7 +934,7 @@ function doIfOnDesktop(callback) {
 // cursorSelector - selector for the cursor DOM element (document cursor is the default).
 function moveCursor(direction, modifier,
 	checkCursorVis = true,
-	cursorSelector = '.cursor-overlay .blinking-cursor', frameId) {
+	cursorSelector = '.cursor-overlay .blinking-cursor') {
 	cy.log('Moving text cursor - start.');
 	cy.log('Param - direction: ' + direction);
 	cy.log('Param - modifier: ' + modifier);
@@ -993,7 +981,7 @@ function moveCursor(direction, modifier,
 		key += '{end}';
 	}
 
-	typeIntoDocument(key, frameId);
+	typeIntoDocument(key);
 
 	// Make sure the cursor position was changed.
 	cy.cGet(cursorSelector)
@@ -1020,7 +1008,7 @@ function moveCursor(direction, modifier,
 }
 
 // Type something into the document. It can be some text or special characters too.
-function typeIntoDocument(text, frameId) {
+function typeIntoDocument(text) {
 	cy.log('Typing into document - start.');
 
 	cy.cGet('textarea.clipboard').type(text, {force: true});
@@ -1036,7 +1024,7 @@ function typeIntoDocument(text, frameId) {
 function getCursorPos(offsetProperty, aliasName, cursorSelector = '.cursor-overlay .blinking-cursor') {
 	initAliasToNegative(aliasName);
 
-	cy.get(cursorSelector)
+	cy.cGet(cursorSelector)
 		.invoke('offset')
 		.its(offsetProperty)
 		.as(aliasName);
@@ -1046,7 +1034,7 @@ function getCursorPos(offsetProperty, aliasName, cursorSelector = '.cursor-overl
 }
 
 // We make sure we have a text selection..
-function textSelectionShouldExist(frameId) {
+function textSelectionShouldExist() {
 	cy.log('Make sure text selection exists - start.');
 
 	cy.cGet('.leaflet-selection-marker-start').should('exist');
@@ -1059,14 +1047,11 @@ function textSelectionShouldExist(frameId) {
 }
 
 // We make sure we don't have a text selection..
-function textSelectionShouldNotExist(frameId) {
+function textSelectionShouldNotExist() {
 	cy.log('Make sure there is no text selection - start.');
 
-	cy.customGet('.leaflet-selection-marker-start', frameId)
-		.should('not.exist');
-
-	cy.customGet('.leaflet-selection-marker-end', frameId)
-		.should('not.exist');
+	cy.customGet('.leaflet-selection-marker-start').should('not.exist');
+	cy.customGet('.leaflet-selection-marker-end').should('not.exist');
 
 	cy.log('Make sure there is no text selection - end.');
 }
@@ -1135,7 +1120,7 @@ class Bounds {
 // bounds - A Bounds object in which this function stores the bounds of the overlay item.
 //          The bounds unit is core pixels in document coordinates.
 function getItemBounds(itemDivId, bounds) {
-	cy.get(itemDivId)
+	cy.cGet(itemDivId)
 		.should(function (itemDiv) {
 			bounds.parseSetJson(itemDiv.text());
 			expect(bounds.isValid()).to.be.true;
@@ -1150,7 +1135,7 @@ var getOverlayItemBounds = getItemBounds;
 // bounds - A Bounds object with the expected bounds data.
 //          The bounds unit should be core pixels in document coordinates.
 function overlayItemHasBounds(itemDivId, expectedBounds) {
-	cy.get(itemDivId)
+	cy.cGet(itemDivId)
 		.should(function (elem) {
 			expect(Bounds.parseBoundsJson(elem.text()))
 				.to.deep.equal(expectedBounds, 'Bounds of ' + itemDivId);
@@ -1164,7 +1149,7 @@ function overlayItemHasBounds(itemDivId, expectedBounds) {
 // bounds - A Bounds object with the bounds data to compare.
 function overlayItemHasDifferentBoundsThan(itemDivId, bounds) {
 	cy.log(bounds.toString());
-	cy.get(itemDivId)
+	cy.cGet(itemDivId)
 		.should(function (elem) {
 			expect(elem.text()).to.not.equal(bounds.toString());
 		});
@@ -1179,18 +1164,12 @@ function typeIntoInputField(selector, text, clearBefore = true)
 {
 	cy.log('Typing into input field - start.');
 
-	if (clearBefore) {
-		cy.get(selector)
-			.focus()
-			.clear()
-			.type(text + '{enter}');
-	} else {
-		cy.get(selector)
-			.type(text + '{enter}');
-	}
+	if (clearBefore)
+		cy.cGet(selector).focus().clear().type(text + '{enter}');
+	else
+		cy.cGet(selector).type(text + '{enter}');
 
-	cy.get(selector)
-		.should('have.value', text);
+	cy.cGet(selector).should('have.value', text);
 
 	cy.log('Typing into input field - end.');
 }
@@ -1204,10 +1183,7 @@ function getVisibleBounds(domRect) {
 }
 
 function assertFocus(selectorType, selector) {
-	cy.get('#coolframe')
-		.its('0.contentDocument')
-		.its('activeElement.'+selectorType)
-		.should('be.eq', selector);
+	cy.cGet().its('activeElement.'+selectorType).should('be.eq', selector);
 }
 
 function getCoolFrameWindow() {

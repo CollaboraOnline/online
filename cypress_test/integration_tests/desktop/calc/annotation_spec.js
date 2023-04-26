@@ -15,7 +15,6 @@ describe('Annotation Tests', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-
 	it('Insert',function() {
 		insertMultipleComment('calc');
 

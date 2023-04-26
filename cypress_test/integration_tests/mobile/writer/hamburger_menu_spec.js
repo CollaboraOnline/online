@@ -1,4 +1,4 @@
-/* global describe it cy Cypress beforeEach require afterEach expect isCanvasWhite */
+/* global describe it cy Cypress beforeEach require afterEach expect */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -526,38 +526,38 @@ describe('Trigger hamburger menu options.', function() {
 		// Hide text so the document is full white.
 		hideText();
 
-		expect(isCanvasWhite(cy.cGet('#document-canvas'))).to.be.true;
+		helper.isCanvasWhite(true);
 
 		// Enable it first -> spaces will be visible.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Formatting Marks']);
 
-		expect(isCanvasWhite(cy.cGet('#document-canvas'))).to.be.false;
+		helper.isCanvasWhite(false);
 
 		// Then disable it again.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Formatting Marks']);
 
 		helper.typeIntoDocument('{home}{end}');
 
-		expect(isCanvasWhite(cy.cGet('#document-canvas'))).to.be.true;
+		helper.isCanvasWhite(true);
 	});
 
 	it('Automatic spell checking.', function() {
 		// Hide text so the document is full white.
 		hideText();
 
-		expect(isCanvasWhite(cy.cGet('#document-canvas'))).to.be.true;
+		helper.isCanvasWhite(true);
 
 		// Enable it first.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 
-		expect(isCanvasWhite(cy.cGet('#document-canvas'))).to.be.false;
+		helper.isCanvasWhite(false);
 
 		// Then disable it again.
 		mobileHelper.selectHamburgerMenuItem(['View', 'Automatic Spell Checking']);
 
 		helper.typeIntoDocument('{home}{end}');
 
-		expect(isCanvasWhite(cy.cGet('#document-canvas'))).to.be.true;
+		helper.isCanvasWhite(true);
 	});
 
 	it('Check version information.', function() {

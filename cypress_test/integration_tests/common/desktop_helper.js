@@ -34,7 +34,7 @@ function hideSidebar() {
 // Make the status bar visible if it's hidden at the moment.
 // We use the menu option under 'View' menu to make it visible.
 function showStatusBarIfHidden() {
-	cy.get('#toolbar-down')
+	cy.cGet('#toolbar-down')
 		.then(function(statusbar) {
 			if (!Cypress.dom.isVisible(statusbar[0])) {
 				cy.get('#menu-view')
@@ -45,8 +45,7 @@ function showStatusBarIfHidden() {
 			}
 		});
 
-	cy.get('#toolbar-down')
-		.should('be.visible');
+	cy.cGet('#toolbar-down').should('be.visible');
 }
 
 // Make the sidebar visible if it's hidden at the moment.
@@ -79,28 +78,19 @@ function hideSidebarIfVisible() {
 // Parameters:
 // color - a hexadecimal color code without the '#' mark (e.g. 'FF011B')
 function selectColorFromPalette(color) {
-	cy.get('.w2ui-overlay')
-		.should('be.visible');
-
-	cy.get('.w2ui-color [name="' + color + '"]')
-		.click();
-
-	cy.get('.w2ui-overlay')
-		.should('not.exist');
+	cy.cGet('.w2ui-overlay').should('be.visible');
+	cy.cGet('.w2ui-color [name="' + color + '"]').click();
+	cy.cGet('.w2ui-overlay').should('not.exist');
 }
 
 // Select an item from a listbox widget used on top toolbar.
 // Parameters:
 // item - item string, that we use a selector to find the right list item.
 function selectFromListbox(item) {
-	cy.get('.select2-dropdown')
-		.should('be.visible');
-
+	cy.cGet('.select2-dropdown').should('be.visible');
 	// We use force because the tooltip sometimes hides the items.
-	cy.cGet().contains('.select2-results__option', item).click({force: true});
-
-	cy.get('.select2-dropdown')
-		.should('not.exist');
+	cy.cGet('body').contains('.select2-results__option', item).click({force: true});
+	cy.cGet('.select2-dropdown').should('not.exist');
 }
 
 // Make sure the right dialog is opened and then we close it.
@@ -111,18 +101,12 @@ function selectFromListbox(item) {
 // dialogTitle - a title string to make sure the right dialog was opened.
 function checkDialogAndClose(dialogTitle) {
 	// Dialog is opened
-	cy.get('.lokdialog_canvas')
-		.should('be.visible');
-
-	cy.get('.ui-dialog-title')
-		.should('have.text', dialogTitle);
+	cy.cGet('.lokdialog_canvas').should('be.visible');
+	cy.cGet('.ui-dialog-title').should('have.text', dialogTitle);
 
 	// Close the dialog
-	cy.get('body')
-		.type('{esc}');
-
-	cy.get('.lokdialog_canvas')
-		.should('not.exist');
+	cy.cGet('body').type('{esc}');
+	cy.cGet('.lokdialog_canvas').should('not.exist');
 }
 
 // Checks wether the document has the given zoom level according to the status bar.
@@ -153,21 +137,21 @@ function doZoom(zoomIn) {
 	makeZoomItemsVisible();
 
 	var prevZoom = '';
-	cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')
+	cy.cGet('#tb_actionbar_item_zoom .w2ui-tb-caption')
 		.should(function(zoomLevel) {
 			prevZoom = zoomLevel.text();
 			expect(prevZoom).to.not.equal('');
 		});
 
 	if (zoomIn) {
-		cy.get('.w2ui-tb-image.w2ui-icon.zoomin').click({force: true});
+		cy.cGet('.w2ui-tb-image.w2ui-icon.zoomin').click({force: true});
 		cy.wait(500);
 	} else {
-		cy.get('.w2ui-tb-image.w2ui-icon.zoomout').click({force: true});
+		cy.cGet('.w2ui-tb-image.w2ui-icon.zoomout').click({force: true});
 		cy.wait(500);
 	}
 
-	cy.get('#tb_actionbar_item_zoom .w2ui-tb-caption')
+	cy.cGet('#tb_actionbar_item_zoom .w2ui-tb-caption')
 		.should(function(zoomLevel) {
 			expect(zoomLevel.text()).to.not.equal(prevZoom);
 		});
@@ -213,7 +197,9 @@ function insertImage(docType) {
 	cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 
 	const mode = Cypress.env('USER_INTERFACE');
-	mode === 'notebookbar' ? cy.cGet('#toolbar-up .w2ui-scroll-right').click() : '';
+
+	if (mode === 'notebookbar')
+		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 
 	if (docType === 'calc' &&  mode === 'notebookbar')
 		cy.cGet('#Insert-tab-label').click();
@@ -338,7 +324,7 @@ function openReadOnlyFile(type, filename) {
 	//check doc is loaded
 	cy.cGet('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
-	expect(helper.isCanvasWhite(cy.cGet('#document-canvas'))).to.be.false;
+	helper.isCanvasWhite(false);
 
 	cy.cGet('#PermissionMode').should('be.visible').should('have.text', ' Read-only ');
 
