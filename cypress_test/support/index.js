@@ -50,3 +50,18 @@ Cypress.Commands.add('customGet', function(selector, frameId, options) {
 		return cy.iframe(frameId).find(selector,options);
 	}
 });
+
+Cypress.Commands.add('cSetActiveFrame', function(frameID) {
+	cy.cActiveFrame = frameID;
+	// ensure it is also set logically when we execute the test
+	cy.then(function() { cy.cActiveFrame = frameID; });
+});
+
+Cypress.Commands.add('cGet', function(selector, options) {
+	if (!cy.cActiveFrame)
+		cy.cActiveFrame = '#coolframe';
+	if (cy.cActiveFrame === '#coolframe')
+		return cy.get(cy.cActiveFrame).its('0.contentDocument').get(selector,options);
+	else
+		return cy.get(cy.cActiveFrame).its('0.contentDocument').find('#coolframe').its('0.contentDocument').get(selector,options);
+});

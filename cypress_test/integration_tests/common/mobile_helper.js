@@ -16,7 +16,7 @@ function enableEditingMobile() {
 
 	cy.log('Enabling editing mode - start.');
 
-	cy.get('#mobile-edit-button').click();
+	cy.cGet('#mobile-edit-button').click();
 
 	cy.get('#toolbar-mobile-back').should('have.class', 'editmode-on');
 	cy.get('#toolbar-mobile-back').should('not.have.class', 'editmode-off');

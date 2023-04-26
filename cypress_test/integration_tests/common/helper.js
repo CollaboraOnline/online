@@ -80,16 +80,15 @@ function checkSecondCoolFrameGlobal() {
 	.find('#coolframe').should('exist');
 }
 
-var activeFrame = '#coolframe';
 function setActiveFrame(frameID) {
-	activeFrame = frameID;
+	cy.cSetActiveFrame(frameID);
 }
 
 function cFrame() {
-	if (activeFrame === '#coolframe')
-		return cy.get(activeFrame).its('0.contentDocument').then(cy.wrap);
+	if (cy.cActiveFrame === '#coolframe')
+		return cy.get(cy.cActiveFrame).its('0.contentDocument').then(cy.wrap);
 	else {
-		return cy.get(activeFrame).its('0.contentDocument').find('#coolframe').its('0.contentDocument').then(cy.wrap);
+		return cy.get(cy.cActiveFrame).its('0.contentDocument').find('#coolframe').its('0.contentDocument').then(cy.wrap);
 	}
 }
 
@@ -670,8 +669,8 @@ function doIfInCalc(callback, frame) {
 }
 
 // Run a code snippet if we are *NOT* inside Calc.
-function doIfNotInCalc(callback) {
-	cy.get('#document-container')
+function doIfNotInCalc(callback, frameId) {
+	cy.customGet('#document-container', frameId)
 		.then(function(doc) {
 			if (!doc.hasClass('spreadsheet-doctype')) {
 				callback();
