@@ -201,8 +201,7 @@ function selectZoomLevel(zoomLevel) {
 
 	helper.clickOnIdle('#tb_actionbar_item_zoom');
 
-	cy.log(zoomLevel);
-	helper.cFrame().contains('.w2ui-drop-menu .menu-text', zoomLevel).click();
+	helper.cFrame().find('#w2ui-overlay-actionbar').contains('.menu-text', zoomLevel).click();
 
 	shouldHaveZoomLevel(zoomLevel);
 }

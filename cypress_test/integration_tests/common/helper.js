@@ -567,45 +567,29 @@ function closeDocument(fileName, testState) {
 		if (Cypress.env('IFRAME_LEVEL') === '2') {
 			// Close the document, with the close button.
 			doIfOnMobile(function() {
-				cy.get('#toolbar-mobile-back')
-					.click();
-
-				cy.get('#mobile-edit-button')
-					.should('be.visible');
-
-				cy.get('#toolbar-mobile-back')
-					.then(function(item) {
-						cy.wrap(item)
-							.click();
+				cFrame().find('#toolbar-mobile-back').click();
+				cFrame().find('#mobile-edit-button').should('be.visible');
+				cFrame().find('#toolbar-mobile-back').then(function(item) {
+						cy.wrap(item).click();
 						Cypress.env('IFRAME_LEVEL', '');
 					});
 			});
 			doIfOnDesktop(function() {
-				cy.get('#closebutton')
-					.then(function(item) {
-						cy.wrap(item)
-							.click();
+				cFrame().find('#closebutton').then(function(item) {
+						cy.wrap(item).click();
 						Cypress.env('IFRAME_LEVEL', '');
 					});
 			});
 
-			cy.get('#filestable')
-				.should('be.visible');
-
-			cy.get('#filestable')
-				.should('not.have.class', 'hidden');
+			cFrame().find('#filestable').should('be.visible');
+			cFrame().find('#filestable').should('not.have.class', 'hidden');
 
 			cy.wait(3000);
 
 			// Remove the document
-			cy.get('tr[data-file=\'' + fileName + '\'] .action-menu.permanent')
-				.click();
-
-			cy.get('.menuitem.action.action-delete.permanent')
-				.click();
-
-			cy.get('tr[data-file=\'' + fileName + '\']')
-				.should('not.exist');
+			cFrame().find('tr[data-file=\'' + fileName + '\'] .action-menu.permanent').click();
+			cFrame().find('.menuitem.action.action-delete.permanent').click();
+			cFrame().find('tr[data-file=\'' + fileName + '\']').should('not.exist');
 
 		}
 	// For php-proxy admin console does not work, so we just open
@@ -621,9 +605,6 @@ function closeDocument(fileName, testState) {
 			cy.wait(2000);
 		}
 
-		Cypress.Commands.overwriteQuery('get', function(originalFn, selector, options) {
-			return originalFn(selector, options);
-		});
 		// Make sure that the document is closed
 		cy.visit('http://admin:admin@localhost:' +
 			Cypress.env('SERVER_PORT') +

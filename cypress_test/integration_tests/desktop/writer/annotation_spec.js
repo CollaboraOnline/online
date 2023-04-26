@@ -31,7 +31,6 @@ describe('Annotation Tests', function() {
 		insertMultipleComment('writer');
 
 		helper.cFrame().find('.cool-annotation-content-wrapper').should('exist');
-
 		helper.cFrame().find('#annotation-content-area-1').should('contain','some text0');
 	});
 
@@ -39,19 +38,12 @@ describe('Annotation Tests', function() {
 		insertMultipleComment('writer');
 
 		helper.cFrame().find('.cool-annotation-content-wrapper').should('exist');
-
 		helper.cFrame().find('#annotation-content-area-1').should('contain','some text0');
-
 		helper.cFrame().find('#comment-annotation-menu-1').click();
-
-		helper.cFrame().contains('.context-menu-item','Modify').click();
-
+		helper.cFrame().find('body').contains('.context-menu-item', 'Modify').click();
 		helper.cFrame().find('#annotation-modify-textarea-1').type('some other text, ');
-
 		helper.cFrame().find('#annotation-save-1').click();
-
 		helper.cFrame().find('.cool-annotation-content-wrapper').should('exist');
-
 		helper.cFrame().find('#annotation-content-area-1').should('contain','some other text, some text0');
 	});
 
@@ -59,17 +51,11 @@ describe('Annotation Tests', function() {
 		insertMultipleComment('writer');
 
 		helper.cFrame().find('.cool-annotation-content-wrapper').should('exist');
-
 		helper.cFrame().find('#annotation-content-area-1').should('contain','some text');
-
 		helper.cFrame().find('#comment-annotation-menu-1').click();
-
-		helper.cFrame().contains('.context-menu-item','Reply').click();
-
+		helper.cFrame().find('body').contains('.context-menu-item', 'Reply').click();
 		helper.cFrame().find('#annotation-reply-textarea-1').type('some reply text');
-
 		helper.cFrame().find('#annotation-reply-1').click();
-
 		helper.cFrame().find('#annotation-content-area-2').should('contain','some reply text');
 	});
 
@@ -77,13 +63,9 @@ describe('Annotation Tests', function() {
 		insertMultipleComment('writer');
 
 		helper.cFrame().find('.cool-annotation-content-wrapper').should('exist');
-
 		helper.cFrame().find('.cool-annotation-content > div').should('contain','some text');
-
 		helper.cFrame().find('.cool-annotation-menu').click();
-
-		helper.cFrame().contains('.context-menu-item','Remove').click();
-
+		helper.cFrame().find('body').contains('.context-menu-item', 'Remove').click();
 		helper.cFrame().find('.cool-annotation-content-wrapper').should('not.exist');
 	});
 
@@ -112,21 +94,13 @@ describe('Collapsed Annotation Tests', function() {
 		insertMultipleComment('writer', 1, false);
 
 		helper.cFrame().find('.cool-annotation-content-wrapper').should('exist');
-
 		helper.cFrame().find('#annotation-content-area-1').should('contain','some text0');
-
 		helper.cFrame().find('.cool-annotation-img').click();
-
 		helper.cFrame().find('#comment-annotation-menu-1').click();
-
-		helper.cFrame().contains('.context-menu-item','Modify').click();
-
+		helper.cFrame().find('body').contains('.context-menu-item','Modify').click();
 		helper.cFrame().find('#annotation-modify-textarea-1').type('some other text, ');
-
 		helper.cFrame().find('#annotation-save-1').click();
-
 		helper.cFrame().find('.cool-annotation-content-wrapper').should('exist');
-
 		helper.cFrame().find('#annotation-content-area-1').should('contain','some other text, some text0');
 	});
 
@@ -134,19 +108,12 @@ describe('Collapsed Annotation Tests', function() {
 		insertMultipleComment('writer', 1, false);
 
 		helper.cFrame().find('.cool-annotation-content-wrapper').should('exist');
-
 		helper.cFrame().find('#annotation-content-area-1').should('contain','some text');
-
 		helper.cFrame().find('.cool-annotation-img').click();
-
 		helper.cFrame().find('#comment-annotation-menu-1').click();
-
-		helper.cFrame().contains('.context-menu-item','Reply').click();
-
+		helper.cFrame().find('body').contains('.context-menu-item','Reply').click();
 		helper.cFrame().find('#annotation-reply-textarea-1').type('some reply text');
-
 		helper.cFrame().find('#annotation-reply-1').click();
-
 		helper.cFrame().find('#annotation-content-area-2').should('contain','some reply text');
 	});
 
@@ -154,15 +121,10 @@ describe('Collapsed Annotation Tests', function() {
 		insertMultipleComment('writer', 1, false);
 
 		helper.cFrame().find('.cool-annotation-content-wrapper').should('exist');
-
 		helper.cFrame().find('.cool-annotation-content > div').should('contain','some text');
-
 		helper.cFrame().find('.cool-annotation-img').click();
-
 		helper.cFrame().find('.cool-annotation-menu').click();
-
-		helper.cFrame().contains('.context-menu-item','Remove').click();
-
+		helper.cFrame().find('body').contains('.context-menu-item','Remove').click();
 		helper.cFrame().find('.cool-annotation-content-wrapper').should('not.exist');
 	});
 
