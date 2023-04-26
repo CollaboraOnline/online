@@ -52,7 +52,7 @@ if test -n "${dictionaries}"; then
 fi
 
 # Restart when /etc/coolwsd/coolwsd.xml changes
-[ -x /usr/bin/inotifywait -a /usr/bin/killall ] && (
+[ -x /usr/bin/inotifywait -a -x /usr/bin/killall ] && (
   /usr/bin/inotifywait -e modify /etc/coolwsd/coolwsd.xml
   echo "$(ls -l /etc/coolwsd/coolwsd.xml) modified --> restarting"
   /usr/bin/killall -1 coolwsd
