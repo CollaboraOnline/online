@@ -13,7 +13,7 @@ Name:           coolwsd
 %endif
 Version:        @PACKAGE_VERSION@
 Release:        1
-Vendor:         %{vendor}
+Vendor:         Collabora Productivity Ltd.
 Summary:        Collabora Online WebSocket Daemon
 License:        EULA
 Source0:        coolwsd-@PACKAGE_VERSION@.tar.gz
