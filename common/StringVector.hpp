@@ -11,6 +11,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <cstdint>
 
 /**
  * Stores an offset and a length into the single underlying string of StringVector.
