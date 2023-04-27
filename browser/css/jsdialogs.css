@@ -556,11 +556,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .ui-listbox::-ms-expand {
 	display: none;
 }
-@media (prefers-color-scheme: dark) {
-	.ui-listbox-arrow {
-		background: url('images/jquery-ui-lightness/ui-icons_ffffff_256x240.png') no-repeat transparent !important;
-	}
-}
+
 .ui-listbox-arrow {
 	content: '';
 	background: url('images/jquery-ui-lightness/ui-icons_222222_256x240.png') no-repeat transparent;
@@ -574,6 +570,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin-block-start: 8px;
 	margin-inline-start: -16px;
 	margin-inline-end: 4px;
+}
+
+[data-theme='dark'] .ui-listbox-arrow {
+	background: url('images/jquery-ui-lightness/ui-icons_ffffff_256x240.png') no-repeat transparent;
 }
 
 .ui-listbox[disabled='disabled'] ~ .ui-listbox-arrow {
