@@ -9,7 +9,7 @@ Package: coolwsd
 Section: web
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
- adduser, fontconfig, cpio, libcap2-bin, openssh-client
+ adduser, fontconfig, cpio, libcap2-bin, openssh-client,
  collaboraofficebasis-calc,
  collaboraofficebasis-core,
  collaboraofficebasis-graphicfilter,
