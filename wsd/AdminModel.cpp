@@ -501,6 +501,19 @@ void AdminModel::modificationAlert(const std::string& docKey, pid_t pid, bool va
     notify(oss.str());
 }
 
+void AdminModel::uploadedAlert(const std::string& docKey, pid_t pid, bool value)
+{
+    assertCorrectThread();
+
+    auto doc = _documents.find(docKey);
+    if (doc != _documents.end())
+        doc->second->setUploaded(value);
+
+    std::ostringstream oss;
+    oss << "uploaded " << pid << ' ' << (value ? "Yes" : "No");
+    notify(oss.str());
+}
+
 void AdminModel::addDocument(const std::string& docKey, pid_t pid,
                              const std::string& filename, const std::string& sessionId,
                              const std::string& userName, const std::string& userId,
@@ -789,6 +802,7 @@ std::string AdminModel::getDocuments() const
                 << "\"elapsedTime\"" << ':' << it.second->getElapsedTime() << ','
                 << "\"idleTime\"" << ':' << it.second->getIdleTime() << ','
                 << "\"modified\"" << ':' << '"' << (it.second->getModifiedStatus() ? "Yes" : "No") << '"' << ','
+                << "\"uploaded\"" << ':' << '"' << (it.second->getUploadedStatus() ? "Yes" : "No") << '"' << ','
                 << "\"views\"" << ':' << '[';
             std::map<std::string, View> viewers = it.second->getViews();
             std::string separator;

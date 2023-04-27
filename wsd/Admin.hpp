@@ -100,6 +100,9 @@ public:
     size_t getTotalCpuUsage();
 
     void modificationAlert(const std::string& dockey, pid_t pid, bool value);
+
+    void uploadedAlert(const std::string& dockey, pid_t pid, bool value);
+
     /// Update the Admin Model.
     void update(const std::string& message);
 

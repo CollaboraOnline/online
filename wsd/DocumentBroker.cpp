@@ -1752,10 +1752,11 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
 #if !MOBILEAPP
     if (lastUploadSuccessful && !isModified())
     {
-        // Flag the document as un-modified in the admin console.
-        // But only when we have uploaded successfully and the document
-        // is current not flagged as modified by Core.
-        Admin::instance().modificationAlert(_docKey, getPid(), false);
+        // Flag the document as uploaded in the admin console.
+        // But only when isModified() == false because it might happen
+        // by the time we finish uploading there is further modification
+        // to the document.
+        Admin::instance().uploadedAlert(_docKey, getPid(), lastUploadSuccessful);
     }
 #endif
 
@@ -3424,12 +3425,12 @@ std::size_t DocumentBroker::countActiveSessions() const
 void DocumentBroker::setModified(const bool value)
 {
 #if !MOBILEAPP
-    if (value)
-    {
-        // Flag the document as modified in the admin console.
-        // But only flag it as unmodified when we do upload it.
-        Admin::instance().modificationAlert(_docKey, getPid(), value);
-    }
+    // Flag the document as modified in the admin console.
+    Admin::instance().modificationAlert(_docKey, getPid(), value);
+
+    // Flag the document as uploaded in the admin console.
+    Admin::instance().uploadedAlert(
+        _docKey, getPid(), !isAsyncUploading() && needToUploadToStorage() == NeedToUpload::No);
 #endif
 
     LOG_DBG("Modified state set to " << value << " for Doc [" << _docId << ']');
