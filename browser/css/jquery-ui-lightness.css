@@ -896,10 +896,10 @@ button.ui-button::-moz-focus-inner {
 	font-size: 1em;
 }
 .ui-widget.ui-widget-content {
-	border: 1px solid var(--color-border-dark);
+	border: 1px solid var(--color-border-lighter);
 }
 .ui-widget-content {
-	border: 1px solid #dddddd;
+	border: 1px solid var(--color-border-lighter);
 	background: var(--color-background-lighter);
 	color: #333333;
 }
@@ -925,7 +925,7 @@ button.ui-button::-moz-focus-inner {
 	position: absolute;
 	z-index: 9999;
 	max-width: 300px;
-	background: #2a2a2a;
+	background: var(--color-background-lighter);
 }
 body .ui-tooltip,
 [data-title]:after {
@@ -934,8 +934,8 @@ body .ui-tooltip,
 .ui-tooltip-content,
 [data-title]:after {
 	font-size: 0.8em;
-	color: #fff;
-	background: #2a2a2a;
+	color: var(--color-text-lighter);
+	background: var(--color-background-lighter);
 }
 
 /* Interaction states
@@ -1325,6 +1325,6 @@ a.ui-button:active,
 }
 .ui-widget-shadow,
 [data-title]:after {
-	-webkit-box-shadow: 0px 0px 4px 2px rgb(217, 217, 217);
-	box-shadow: 0px 0px 4px 2px rgb(217, 217, 217);
+	-webkit-box-shadow: 0px 0px 4px 2px var(--color-box-shadow);
+	box-shadow: 0px 0px 4px 2px var(--color-box-shadow);
 }
