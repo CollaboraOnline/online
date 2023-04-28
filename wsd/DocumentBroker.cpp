@@ -1917,7 +1917,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
                    "WOPI host might be low on disk or hitting a quota limit. Making all sessions "
                    "on doc read-only and notifying clients.");
 
-        // Make everyone readonly and tell everyone that storage is low on diskspace.
+        // Make everyone readonly and tell everyone that the file is too large for the storage.
         for (const auto& sessionIt : _sessions)
         {
             sessionIt.second->sendTextFrameAndLogError("error: cmd=storage kind=savetoolarge");
