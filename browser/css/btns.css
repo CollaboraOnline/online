@@ -64,12 +64,13 @@ button:not(.ui-tab):not(.ui-corner-all):not(.button-primary):not(.unobutton) {
 
 .ui-pushbutton[disabled] {
 	color: var(--color-text-lighter) !important;
-	background-color: white !important;
+	background-color: var(--color-background-lighter) !important;
+	border: 1px solid var(--color-border-lighter) !important;
 }
 
 .ui-pushbutton[disabled]:hover {
 	cursor: not-allowed !important;
-	background: white !important;
+	background: var(--color-background-darker) !important;
 }
 
 /* button box */
