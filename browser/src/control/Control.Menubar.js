@@ -232,7 +232,6 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:FormatBulletsMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:DefaultBullet'},
 					{uno: '.uno:DefaultNumbering'},
-					{uno: '.uno:ThemeDialog'},
 					{type: 'separator'},
 					{uno: '.uno:DecrementLevel'},
 					{uno: '.uno:IncrementLevel'},
@@ -258,6 +257,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:FontDialog'},
 				{uno: '.uno:ParagraphDialog'},
 				{uno: '.uno:OutlineBullet'},
+				{uno: '.uno:ThemeDialog'},
 				{type: 'separator'},
 				{uno: '.uno:PageDialog'},
 				{uno: '.uno:TitlePageDialog'},
