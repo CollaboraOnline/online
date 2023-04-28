@@ -213,6 +213,9 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 	border: 1px solid transparent;
 	margin-right: 5px;
 }
+.sidebar.unotoolbutton.has-dropdown {
+	display: flex;
+}
 .sidebar.jsdialog.checkbutton {
 	font-size: var(--default-font-size);
 }
