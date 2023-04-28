@@ -512,6 +512,8 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 .spinfieldcontainer input {
 	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
+	background: var(--color-background-dark);
+	color: var(--color-text-dark);
 }
 
 .spinfieldcontainer input:hover {
