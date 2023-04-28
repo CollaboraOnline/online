@@ -267,7 +267,8 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) 
 
 	for (var n=0;n<numberOfComments;n++) {
 		if (docType === 'draw') {
-			cy.cGet('#menu-insert').click().get('#menu-insertcomment').click();
+			cy.cGet('#menu-insert').click();
+			cy.cGet('#menu-insertcomment').click();
 		} else {
 			actionOnSelector('insertAnnotation', (selector) => {
 				cy.cGet(selector).click();
