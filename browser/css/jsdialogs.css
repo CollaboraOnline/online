@@ -222,7 +222,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .ui-tab.selected.jsdialog {
 	background-color: var(--color-background-lighter) !important;
 	color: var(--color-text-darker) !important;
-	box-shadow: 0 0 2px 1px #cfcfcf !important;
+	box-shadow: 0 0 2px 1px var(--box-shadow) !important;
 }
 
 .ui-tab.jsdialog:not(.selected):hover {
@@ -576,10 +576,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	line-height: normal;
 	font-size: var(--default-font-size);
 	font-family: var(--jquery-ui-font);
-	border: 1px solid #CCC;
+	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 	padding: 0 14px 0 4px;
-	background-color: #F1F1F1;
+	background-color: var(--color-background-dark);
+	color: var(--color-text-dark);
 }
 
 .ui-listbox option {
