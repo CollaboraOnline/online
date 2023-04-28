@@ -57,9 +57,13 @@ var
 	var req  = new XHR(),
 		data = {};
 
-	// sadly, this has to be blocking to allow for a graceful degrading API
-	req.open("GET", uri, FALSE);
-	req.send(null);
+	try {
+		// sadly, this has to be blocking to allow for a graceful degrading API
+		req.open("GET", uri, FALSE);
+		req.send(null);
+	} catch (e) {
+		console.log('Localization Error: Unable to get localization data: ' + uri, e);
+	}
 
 	// Status codes can be inconsistent across browsers so we simply try to parse
 	// the response text and catch any errors. This deals with failed requests as
