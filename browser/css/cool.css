@@ -835,7 +835,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 
 .lokdialog.ui-dialog-content.ui-widget-content {
 	overflow: auto;
-	border-radius: calc(var(--border-radius)/2);
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: var(--border-radius);
+	border-bottom-right-radius: var(--border-radius);
 }
 
 .lokdialog.ui-dialog-content [Id$='Page'] {
