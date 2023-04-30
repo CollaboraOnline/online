@@ -387,10 +387,6 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	background-image: url('images/lc_checkbox.svg');
 }
 
-.ui-textarea.jsdialog {
-	max-width: 400px;
-}
-
 .ui-treeview-entry span {
 	width: 100%;
 }
@@ -619,6 +615,15 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .ui-listbox[disabled='disabled'] ~ .ui-listbox-arrow {
 	opacity: 0.5;
 	cursor: auto;
+}
+
+/* ui-textarea */
+.jsdialog.ui-textarea {
+	max-width: 400px;
+	color: var(--color-text-dark);
+	background-color: var(--color-background-dark);
+	border: 1px solid var(--color-border-dark);
+	border-radius: var(--border-radius);
 }
 
 /* buttons: btns.css */
@@ -1366,4 +1371,14 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .jsdialog[id^='zotero'][id$='-label']:not(:first-child) {
 	margin-inline-start: 24px;
+}
+
+/* hover effect */
+.jsdialog.menubutton:hover,
+.jsdialog.ui-listbox:hover,
+.jsdialog.ui-edit:hover,
+.jsdialog.ui-textarea:hover {
+	color: var(--color-text-darker);
+	background-color: var(--color-background-lighter);
+	border: 1px solid var(--color-border-darker);
 }
