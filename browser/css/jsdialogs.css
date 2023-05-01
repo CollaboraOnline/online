@@ -184,16 +184,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 /* Tabs */
-.jsdialog-tabs {
-	display: flex;
-	width: 100%;
-	background: var(--color-background-lighter);
-}
-
-.jsdialog-tabs:empty {
-	display: none;
-}
-
 .ui-tab.jsdialog {
 	float: left !important;
 	font-size: var(--default-font-size) !important;

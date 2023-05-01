@@ -113,16 +113,8 @@ L.Control.JSDialog = L.Control.extend({
 		}
 	},
 
-	setTabs: function(tabs, builder) {
-		var dialog = this.dialogs[builder.windowId.toString()];
-		if (dialog) {
-			var tabsContainer = dialog.tabs;
-
-			while (tabsContainer.firstChild)
-				tabsContainer.removeChild(tabsContainer.firstChild);
-
-			tabsContainer.appendChild(tabs);
-		}
+	setTabs: function() {
+		console.error('setTabs: not implemented in dialogs.');
 	},
 
 	selectedTab: function() {
@@ -218,13 +210,9 @@ L.Control.JSDialog = L.Control.extend({
 		if (instance.isSnackbar)
 			L.DomUtil.addClass(instance.container, 'snackbar');
 
-		instance.tabs = L.DomUtil.create('div', 'jsdialog-tabs', instance.container);
 		instance.content = L.DomUtil.create('div', 'lokdialog ui-dialog-content ui-widget-content', instance.container);
 
-		// required to exist before builder was launched (for setTabs)
-		this.dialogs[instance.id] = {
-			tabs: instance.tabs
-		};
+		this.dialogs[instance.id] = {};
 	},
 
 	createDialog: function(instance) {
