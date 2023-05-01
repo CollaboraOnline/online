@@ -642,15 +642,12 @@ function initAliasToNegative(aliasName) {
 }
 
 // Run a code snippet if we are inside Calc.
-function doIfInCalc(callback, frame) {
-	if (!frame)
-		frame = cy.cGet();
-	frame.find('#document-container')
-		.then(function(doc) {
-			if (doc.hasClass('spreadsheet-doctype')) {
-				callback();
-			}
-		});
+function doIfInCalc(callback) {
+	cy.cGet('#document-container').then(function(doc) {
+		if (doc.hasClass('spreadsheet-doctype')) {
+			callback();
+		}
+	});
 }
 
 // Run a code snippet if we are *NOT* inside Calc.
@@ -1025,6 +1022,11 @@ function getCursorPos(offsetProperty, aliasName, cursorSelector = '.cursor-overl
 		.invoke('offset')
 		.its(offsetProperty)
 		.as(aliasName);
+
+	cy.get('@' + aliasName).then(aliasValue => {
+		var value = aliasValue;
+		cy.wrap(value).as(aliasName);
+	});
 
 	cy.get('@' + aliasName)
 		.should('be.greaterThan', 0);

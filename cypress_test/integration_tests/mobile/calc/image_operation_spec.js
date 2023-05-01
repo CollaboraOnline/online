@@ -31,15 +31,15 @@ describe('Image Operation Tests', function() {
 			pointerType: 'mouse'
 		};
 
-		cy.get('.bottomright-svg-pane > .leaflet-control-buttons-disabled > .leaflet-interactive')
+		cy.cGet('.bottomright-svg-pane > .leaflet-control-buttons-disabled > .leaflet-interactive')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000)
 			.trigger('pointerup', eventOptions);
 
-		cy.contains('.menu-entry-with-icon', 'Delete')
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Delete')
 			.should('be.visible').click();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g')
 			.should('not.exist');
 	});
 });
