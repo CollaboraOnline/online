@@ -19,41 +19,28 @@ describe('Slide operations', function() {
 	});
 
 	it('Add slides', function() {
-		cy.get('.leaflet-control-zoom-in')
-			.click();
+		cy.cGet('.leaflet-control-zoom-in').click();
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 	});
 
 	it('Remove Slides', function() {
 		//add slides
-		cy.get('.leaflet-control-zoom-in')
-			.click();
-
+		cy.cGet('.leaflet-control-zoom-in').click();
 		impressHelper.assertNumberOfSlidePreviews(2);
-
 		//remove slides
 		mobileHelper.openHamburgerMenu();
-
-		cy.get('.menu-entry-icon.slidemenu').parent()
-			.click();
-
-		cy.get('.menu-entry-icon.deletepage').parent()
-			.click();
-
-		cy.get('#deleteslide-modal-response').click();
-
+		cy.cGet('.menu-entry-icon.slidemenu').parent().click();
+		cy.cGet('.menu-entry-icon.deletepage').parent().click();
+		cy.cGet('#deleteslide-modal-response').click();
 		impressHelper.assertNumberOfSlidePreviews(1);
 	});
 
 	it('Duplicate Slide', function() {
 		mobileHelper.openHamburgerMenu();
 
-		cy.get('.menu-entry-icon.slidemenu').parent()
-			.click();
-
-		cy.get('.menu-entry-icon.duplicatepage').parent()
-			.click();
+		cy.cGet('.menu-entry-icon.slidemenu').parent().click();
+		cy.cGet('.menu-entry-icon.duplicatepage').parent().click();
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 	});

@@ -498,16 +498,13 @@ function expectTextForClipboard(expectedPlainText) {
 //          https://docs.cypress.io/api/commands/contains.html#Regular-Expression
 function matchClipboardText(regexp) {
 	doIfInWriter(function() {
-		cy.cGet().contains('#copy-paste-container p font', regexp)
-			.should('exist');
+		cy.cGet('body').contains('#copy-paste-container p font', regexp).should('exist');
 	});
 	doIfInCalc(function() {
-		cy.cGet().contains('#copy-paste-container pre', regexp)
-			.should('exist');
+		cy.cGet('body').contains('#copy-paste-container pre', regexp).should('exist');
 	});
 	doIfInImpress(function() {
-		cy.cGet().contains('#copy-paste-container pre', regexp)
-			.should('exist');
+		cy.cGet('body').contains('#copy-paste-container pre', regexp).should('exist');
 	});
 }
 
@@ -716,14 +713,8 @@ function typeText(selector, text, delayMs = 0) {
 }
 
 // Check whether an img DOM element has only white colored pixels or not.
-// Parameters:
-// selector - a CSS selector to query the img DOM element.
-// fullWhite - this specifies what we expect here, that the image is full white
-//             or on the contrary.
-function imageShouldNotBeFullWhiteOrNot(selector, fullWhite = true) {
+function isImageWhite(selector, expectWhite = true) {
 	cy.log('Check whether an image is full white or not - start.');
-	cy.log('Param - selector: ' + selector);
-	cy.log('Param - fullWhite: ' + fullWhite);
 
 	expect(selector).to.have.string('img');
 
@@ -744,27 +735,20 @@ function imageShouldNotBeFullWhiteOrNot(selector, fullWhite = true) {
 				img.width - 2 * ignoredPixels,
 				img.height - 2 * ignoredPixels).data;
 
-			var allIsWhite = true;
+			var result = true;
 			for (var i = 0; i < pixelData.length; ++i) {
-				allIsWhite = allIsWhite && pixelData[i] == 255;
+				if (pixelData[i] !== 255) {
+					result = false;
+					break;
+				}
 			}
-			if (fullWhite)
-				expect(allIsWhite).to.be.true;
+			if (expectWhite)
+				expect(result).to.be.true;
 			else
-				expect(allIsWhite).to.be.false;
+				expect(result).to.be.false;
 		});
 
 	cy.log('Check whether an image is full white or not - end.');
-}
-
-// Check whether an img DOM element consist of only white pixels.
-function imageShouldBeFullWhite(selector) {
-	imageShouldNotBeFullWhiteOrNot(selector, true);
-}
-
-// Check whether an img DOM element has any non-white pixels.
-function imageShouldNotBeFullWhite(selector) {
-	imageShouldNotBeFullWhiteOrNot(selector, false);
 }
 
 function isCanvasWhite(expectWhite = true) {
@@ -775,8 +759,10 @@ function isCanvasWhite(expectWhite = true) {
 		var context = canvas[0].getContext('2d');
 		var pixelData = context.getImageData(0, 0, canvas[0].width, canvas[0].height).data;
 		for (var i = 0; i < pixelData.length; i++) {
-			if (pixelData[i] !== 255)
+			if (pixelData[i] !== 255) {
 				result = false;
+				break;
+			}
 		}
 
 		if (expectWhite)
@@ -1211,8 +1197,7 @@ module.exports.doIfNotInImpress = doIfNotInImpress;
 module.exports.doIfNotInWriter = doIfNotInWriter;
 module.exports.beforeAll = beforeAll;
 module.exports.typeText = typeText;
-module.exports.imageShouldBeFullWhite = imageShouldBeFullWhite;
-module.exports.imageShouldNotBeFullWhite = imageShouldNotBeFullWhite;
+module.exports.isImageWhite = isImageWhite;
 module.exports.isCanvasWhite = isCanvasWhite;
 module.exports.clickOnIdle = clickOnIdle;
 module.exports.inputOnIdle = inputOnIdle;

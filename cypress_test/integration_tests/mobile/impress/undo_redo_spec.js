@@ -16,7 +16,7 @@ describe('Editing Operations', function() {
 
 		impressHelper.selectTextShapeInTheCenter();
 
-		cy.get('g.leaflet-control-buttons-disabled svg').dblclick({force:true});
+		cy.cGet('g.leaflet-control-buttons-disabled svg').dblclick({force:true});
 
 		cy.wait(1000);
 
@@ -29,12 +29,12 @@ describe('Editing Operations', function() {
 
 
 	function undo() {
-		cy.get('path.leaflet-interactive').dblclick();
+		cy.cGet('path.leaflet-interactive').dblclick();
 
 		//if we don't wait tests in CLI is failing
 		cy.wait(3000);
 
-		cy.get('#tb_actionbar_item_undo').click();
+		cy.cGet('#tb_actionbar_item_undo').click();
 
 		helper.selectAllText();
 
@@ -51,7 +51,7 @@ describe('Editing Operations', function() {
 	it('Redo',function() {
 		undo();
 
-		cy.get('#tb_actionbar_item_redo').click();
+		cy.cGet('#tb_actionbar_item_redo').click();
 
 		helper.selectAllText();
 

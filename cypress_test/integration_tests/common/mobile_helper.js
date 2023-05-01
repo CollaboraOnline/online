@@ -264,8 +264,7 @@ function openTextPropertiesPanel() {
 
 	helper.clickOnIdle('#TextPropertyPanel');
 
-	cy.cGet('#Bold')
-		.should('be.visible');
+	cy.cGet('#Bold').should('be.visible');
 }
 
 function selectHamburgerMenuItem(menuItems) {
