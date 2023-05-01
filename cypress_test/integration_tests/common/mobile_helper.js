@@ -24,8 +24,7 @@ function enableEditingMobile() {
 	cy.log('Enabling editing mode - now editable.');
 
 	// Wait until all UI update is finished.
-	cy.cGet('#toolbar-down')
-		.should('be.visible');
+	cy.cGet('#toolbar-down').should('be.visible');
 
 	cy.log('Enabling editing mode - toolbar update done.');
 
@@ -156,7 +155,7 @@ function executeCopyFromContextMenu(XPos, YPos) {
 	longPressOnDocument(XPos, YPos);
 
 	// Execute copy
-	cy.contains('.menu-entry-with-icon', 'Copy')
+	cy.cGet('body').contains('.menu-entry-with-icon', 'Copy')
 		.click();
 
 	// Close warning about clipboard operations
@@ -276,7 +275,7 @@ function selectHamburgerMenuItem(menuItems) {
 	openHamburgerMenu();
 
 	for (var i = 0; i < menuItems.length; i++) {
-		cy.contains('.menu-entry-with-icon', menuItems[i])
+		cy.cGet('body').contains('.menu-entry-with-icon', menuItems[i])
 			.click();
 
 		if (Cypress.env('INTEGRATION') !== 'nextcloud') {
@@ -298,7 +297,7 @@ function selectAnnotationMenuItem(menuItem) {
 	cy.cGet('.context-menu-list')
 		.should('exist');
 
-	cy.contains('.context-menu-item', menuItem)
+	cy.cGet('body').contains('.context-menu-item', menuItem)
 		.click();
 
 	cy.log('Selecting annotation menu item - end.');
@@ -339,18 +338,11 @@ function selectListBoxItem2(listboxSelector, item) {
 }
 function insertComment() {
 	openInsertionWizard();
-
-	cy.contains('.menu-entry-with-icon', 'Comment').click();
-
+	cy.cGet('body').contains('.menu-entry-with-icon', 'Comment').click();
 	cy.cGet('.cool-annotation-table').should('exist');
-
 	cy.cGet('#input-modal-input').type('some text');
-
 	cy.cGet('#response-ok').click();
-
-	cy.cGet('#comment-container-1').should('exist')
-		.wait(300);
-
+	cy.cGet('#comment-container-1').should('exist').wait(300);
 	cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
 }
 
@@ -358,7 +350,7 @@ function insertImage() {
 	openInsertionWizard();
 
 	// We can't use the menu item directly, because it would open file picker.
-	cy.contains('.menu-entry-with-icon', 'Local Image...')
+	cy.cGet('body').contains('.menu-entry-with-icon', 'Local Image...')
 		.should('be.visible');
 
 	cy.cGet('#insertgraphic[type=file]')
@@ -381,7 +373,7 @@ function deleteImage() {
 		.wait(1000)
 		.trigger('pointerup', eventOptions);
 
-	cy.contains('.menu-entry-with-icon', 'Delete')
+	cy.cGet('body').contains('.menu-entry-with-icon', 'Delete')
 		.should('be.visible').click();
 
 	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g')
@@ -389,7 +381,7 @@ function deleteImage() {
 }
 
 function pressPushButtonOfDialog(name) {
-	cy.contains('.ui-pushbutton', name).click();
+	cy.cGet('body').contains('.ui-pushbutton', name).click();
 }
 
 module.exports.enableEditingMobile = enableEditingMobile;

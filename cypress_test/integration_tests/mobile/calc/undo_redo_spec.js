@@ -26,12 +26,12 @@ describe('Editing Operations', function() {
 
 		helper.typeIntoDocument('Hello World');
 
-		cy.get('#tb_actionbar_item_acceptformula').click();
+		cy.cGet('#tb_actionbar_item_acceptformula').click();
 
 		//if we don't wait tests in CLI is failing
 		cy.wait(3000);
 
-		cy.get('#tb_actionbar_item_undo').click();
+		cy.cGet('#tb_actionbar_item_undo').click();
 
 		calcHelper.dblClickOnFirstCell();
 
@@ -39,7 +39,7 @@ describe('Editing Operations', function() {
 
 		helper.textSelectionShouldNotExist();
 
-		cy.get('#tb_actionbar_item_acceptformula').click();
+		cy.cGet('#tb_actionbar_item_acceptformula').click();
 	}
 
 	it('Undo', function() {
@@ -51,7 +51,7 @@ describe('Editing Operations', function() {
 
 		cy.wait(3000);
 
-		cy.get('#tb_actionbar_item_redo').click();
+		cy.cGet('#tb_actionbar_item_redo').click();
 
 		calcHelper.dblClickOnFirstCell();
 
@@ -67,7 +67,7 @@ describe('Editing Operations', function() {
 
 		cy.wait(3000);
 
-		cy.get('#tb_actionbar_item_acceptformula').click();
+		cy.cGet('#tb_actionbar_item_acceptformula').click();
 
 		calcHelper.dblClickOnFirstCell();
 
@@ -77,7 +77,7 @@ describe('Editing Operations', function() {
 
 		cy.wait(3000);
 
-		cy.get('#tb_actionbar_item_acceptformula').click();
+		cy.cGet('#tb_actionbar_item_acceptformula').click();
 
 		repairHelper.rollbackPastChange('Undo', undefined, true);
 
