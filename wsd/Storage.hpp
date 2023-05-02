@@ -692,7 +692,7 @@ protected:
         const std::string filePathAnonym;
         const std::string uriAnonym;
         const std::string httpResponseReason;
-        const long httpResponseCode;
+        const http::StatusCode httpResponseCode;
         const std::size_t size;
         const bool isSaveAs;
         const bool isRename;

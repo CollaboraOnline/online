@@ -126,8 +126,7 @@ void HTTPServerTest::testCoolGet()
     const std::shared_ptr<const http::Response> httpResponse
         = http::get(_uri.toString(), pathAndQuery);
 
-    LOK_ASSERT_EQUAL(static_cast<unsigned>(Poco::Net::HTTPResponse::HTTP_OK),
-                     httpResponse->statusLine().statusCode());
+    LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
     LOK_ASSERT_EQUAL(std::string("text/html"), httpResponse->header().getContentType());
 
     //FIXME: Replace with own URI parser.

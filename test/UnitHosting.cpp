@@ -50,7 +50,7 @@ UnitBase::TestResult UnitHosting::testDiscovery()
 
     LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
     LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
-    LOK_ASSERT_EQUAL(200U, httpResponse->statusLine().statusCode());
+    LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
     LOK_ASSERT(httpResponse->statusLine().statusCategory()
                == http::StatusLine::StatusCodeClass::Successful);
     LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
@@ -67,7 +67,7 @@ UnitBase::TestResult UnitHosting::testDiscovery()
 
     LOK_ASSERT(!httpResponse2->statusLine().httpVersion().empty());
     LOK_ASSERT(!httpResponse2->statusLine().reasonPhrase().empty());
-    LOK_ASSERT_EQUAL(200U, httpResponse2->statusLine().statusCode());
+    LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse2->statusLine().statusCode());
     LOK_ASSERT(httpResponse2->statusLine().statusCategory()
                == http::StatusLine::StatusCodeClass::Successful);
     LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse2->statusLine().httpVersion());
@@ -92,7 +92,7 @@ UnitBase::TestResult UnitHosting::testCapabilities()
     // Get discovery first and extract the urlsrc of the capabilities end point
     std::string capabilitiesURI;
     {
-        LOK_ASSERT_EQUAL(200U, httpResponse->statusLine().statusCode());
+        LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
         LOK_ASSERT_EQUAL(std::string("text/xml"), httpResponse->header().getContentType());
 
         const std::string discoveryXML = httpResponse->getBody();
@@ -126,7 +126,7 @@ UnitBase::TestResult UnitHosting::testCapabilities()
         LOK_ASSERT(httpResponse->done());
         LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
 
-        LOK_ASSERT_EQUAL(200U, httpResponse->statusLine().statusCode());
+        LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse->statusLine().statusCode());
         LOK_ASSERT_EQUAL(std::string("application/json"), httpResponse->header().getContentType());
 
         const std::string responseString = httpResponse->getBody();

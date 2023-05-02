@@ -644,10 +644,11 @@ WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& aut
         callDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - startTime);
 
-        if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_FOUND ||
-            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_MOVED_PERMANENTLY ||
-            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_TEMPORARY_REDIRECT ||
-            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_PERMANENT_REDIRECT)
+        const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
+        if (statusCode == http::StatusCode::MovedPermanently ||
+            statusCode == http::StatusCode::Found ||
+            statusCode == http::StatusCode::TemporaryRedirect ||
+            statusCode == http::StatusCode::PermanentRedirect)
         {
             if (redirectLimit)
             {
@@ -666,8 +667,7 @@ WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& aut
 
         // Note: we don't log the response if obfuscation is enabled, except for failures.
         wopiResponse = httpResponse->getBody();
-        const bool failed
-            = (httpResponse->statusLine().statusCode() != Poco::Net::HTTPResponse::HTTP_OK);
+        const bool failed = (httpResponse->statusLine().statusCode() != http::StatusCode::OK);
 
         Log::StreamLogger logRes = failed ? Log::error() : Log::trace();
         if (logRes.enabled())
@@ -685,7 +685,7 @@ WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& aut
 
         if (failed)
         {
-            if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_FORBIDDEN)
+            if (httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden)
                 throw UnauthorizedRequestException(
                     "Access denied, 403. WOPI::CheckFileInfo failed on: " + uriAnonym);
 
@@ -1119,16 +1119,17 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
     const std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::steady_clock::now() - startTime);
 
-    if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_OK)
+    const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
+    if (statusCode == http::StatusCode::OK)
     {
         // Log the response header.
         LOG_TRC("WOPI::GetFile response header for URI [" << uriAnonym << "]:\n"
                                                           << httpResponse->header());
     }
-    else if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_FOUND ||
-            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_MOVED_PERMANENTLY ||
-            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_TEMPORARY_REDIRECT ||
-            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_PERMANENT_REDIRECT)
+    else if (statusCode == http::StatusCode::MovedPermanently ||
+             statusCode == http::StatusCode::Found ||
+             statusCode == http::StatusCode::TemporaryRedirect ||
+             statusCode == http::StatusCode::PermanentRedirect)
     {
         if (redirectLimit)
         {
@@ -1449,7 +1450,7 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
                             << details.httpResponseReason << ": " << responseString);
         }
 
-        if (details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_OK)
+        if (details.httpResponseCode == http::StatusCode::OK)
         {
             result.setResult(StorageBase::UploadResult::Result::OK);
             Poco::JSON::Object::Ptr object;
@@ -1476,20 +1477,20 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
                 LOG_ERR("Invalid or missing JSON in " << wopiLog << " HTTP_OK response.");
             }
         }
-        else if (details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_REQUEST_ENTITY_TOO_LARGE)
+        else if (details.httpResponseCode == http::StatusCode::PayloadTooLarge)
         {
             result.setResult(StorageBase::UploadResult::Result::TOO_LARGE);
         }
-        else if (details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED ||
-                 details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_FORBIDDEN ||
-                 details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_NOT_FOUND)
+        else if (details.httpResponseCode == http::StatusCode::Unauthorized ||
+                 details.httpResponseCode == http::StatusCode::Forbidden ||
+                 details.httpResponseCode == http::StatusCode::NotFound)
         {
             // The ms-wopi specs recognizes 401 and 404 for invalid token
             // and file unknown/user unauthorized, respectively.
             // We also handle 403 that some implementation use.
             result.setResult(StorageBase::UploadResult::Result::UNAUTHORIZED);
         }
-        else if (details.httpResponseCode == Poco::Net::HTTPResponse::HTTP_CONFLICT)
+        else if (details.httpResponseCode == http::StatusCode::Conflict)
         {
             result.setResult(StorageBase::UploadResult::Result::CONFLICT);
             Poco::JSON::Object::Ptr object;
