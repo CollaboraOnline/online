@@ -352,7 +352,7 @@ namespace
             if (errno == ENOENT)
             {
                 File(Path(linkableCopy).parent()).createDirectories();
-                if (!FileUtil::copy(fpath, linkableCopy.c_str(), /*log=*/false, /*throw_on_error=*/false))
+                if (!FileUtil::copy(fpath, linkableCopy, /*log=*/false, /*throw_on_error=*/false))
                     LOG_TRC("Failed to create linkable copy [" << fpath << "] to [" << linkableCopy.c_str() << "]");
                 else {
                     // Match system permissions, so a file we can write is not shared across jails.
@@ -487,9 +487,7 @@ namespace
         return FTW_CONTINUE;
     }
 
-    void linkOrCopy(std::string source,
-                    const Poco::Path& destination,
-                    std::string linkable,
+    void linkOrCopy(std::string source, const Poco::Path& destination, const std::string& linkable,
                     LinkOrCopyType type)
     {
         std::string resolved = FileUtil::realpath(source);
