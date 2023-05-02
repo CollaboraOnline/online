@@ -1,3 +1,96 @@
+/* Global */
+
+#mobile-wizard {
+	width: 100%;
+	position: relative;
+	bottom: 0px;
+	z-index: 2001;
+	box-shadow: 0px -2px 4px 1px #00000030;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+#mobile-wizard.menuwizard {
+	z-index: 1001;
+}
+
+#mobile-wizard-content *{
+	font-family: var(--mobile-font);
+	color: var(--color-main-text);
+}
+
+/* Titlebar */
+
+.mobile-wizard-titlebar {
+	background-color: var(--color-background-lighter);
+	top: 63px;
+	height: var(--header-height);
+	color: var(--color-main-text);
+	border-bottom: 1px solid var(--color-border);
+	position: sticky;
+	z-index: 2;
+}
+
+#toolbar-mobile-back.editmode-on {
+	width: 59px;
+}
+
+.menuwizard .mobile-wizard-back {
+	padding-left: 4%;
+	padding-right: 10px;
+	background-position-x: 22px;
+}
+
+td#mobile-wizard-back {}
+.mobile-wizard-back.close-button {
+	transform: rotate(-90deg);
+	background-position-x: center;
+}
+.mobile-wizard-back {
+	background-image: url('images/lc_closedocmobile.svg');
+	background-repeat: no-repeat;
+	width: 48px;
+	background-position-x: 16px;
+	background-position-y: center;
+	height: 20px;
+}
+
+/* Toolbar - Hamburger */
+
+#mobile-wizard:not(.menuwizard) #mobile-wizard-content > .ui-header.level-0.mobile-wizard.ui-widget{
+	padding-left: 2% !important;
+	width: 100%;
+}
+#mobile-wizard-content {
+	background: var(--color-main-background);
+	overflow-y: hidden;
+	overflow-x: hidden;
+	position: static;
+	width: 100%;
+	min-height: 100%;
+}
+#mobile-wizard.funcwizard div#mobile-wizard-content.hideHelpBG {
+	background: none !important;
+}
+#mobile-wizard.funcwizard div#mobile-wizard-content.showHelpBG {
+	background: url('images/lc_helpindex_secondary.svg') no-repeat right 16px bottom 88px / 124px !important;
+}
+
+#toolbar-hamburger.menuwizard-opened {
+	z-index: 1501 !important;
+	position: relative !important;
+	background-color: var(--color-primary);
+	border-radius: 0 0 0 var(--border-radius-large);
+}
+
+.menuwizard-opened .main-menu-btn-icon,
+.menuwizard-opened .main-menu-btn-icon:before,
+.menuwizard-opened .main-menu-btn-icon:after {
+	background: var(--color-primary-text);
+}
+
+/*  */
+
 label.mobile-wizard {
 	display: block;
 	float: left;
@@ -15,21 +108,6 @@ span.menu-entry-icon img {
 	margin: 4px !important;
 }
 
-#mobile-wizard.menuwizard .mobile-wizard-back.close-button{
-	visibility: hidden !important;
-}
-
-#toolbar-hamburger.menuwizard-opened{
-	z-index: 1501 !important;
-	position: relative !important;
-	background-color: var(--color-primary-lighter) !important;
-	padding-left: 3px !important;
-	border-radius: 0 0 0 15px !important;
-}
-
-#mobile-wizard.menuwizard .mobile-wizard-titlebar{
-	border: none !important;
-}
 span#main-menu-btn-icon {
 	filter: none !important;
 }
@@ -185,13 +263,6 @@ p.mobile-wizard.ui-combobox-text {
 	font-size: var(--default-font-size);
 	padding-left: 4%;
 }
-.menuwizard #mobile-wizard-content > div .ui-widget {
-	padding-left: 0px !important;
-}
-#mobile-wizard:not(.menuwizard) #mobile-wizard-content > .ui-header.level-0.mobile-wizard.ui-widget{
-	padding-left: 2% !important;
-	width: 100%;
-}
 .menu-entry-icon.inserttable, .menu-entry-icon.insertfield, .menu-entry-icon.insertheaderfooter, .menu-entry-icon.formattingmark, .menu-entry-icon.formatformmenu {
 	padding-left: 2% !important;
 }
@@ -206,19 +277,6 @@ p.mobile-wizard.ui-combobox-text.selected {
 	background: url('images/lc_listitem-selected.svg') no-repeat right;
 	background-position-x: 94%;
 	color: var(--color-primary) !important;
-}
-#mobile-wizard-content {
-	overflow-y: hidden;
-	overflow-x: hidden;
-	position: static;
-	width: 100%;
-	min-height: 100%;
-}
-#mobile-wizard.funcwizard div#mobile-wizard-content.hideHelpBG {
-	background: none !important;
-}
-#mobile-wizard.funcwizard div#mobile-wizard-content.showHelpBG {
-	background: url('images/lc_helpindex_secondary.svg') no-repeat right 16px bottom 88px / 124px !important;
 }
 
 #ParaPropertyPanel + .ui-content{
@@ -258,54 +316,6 @@ p.mobile-wizard.ui-combobox-text.selected {
 	float: left;
 	margin-bottom: 4%;
 }
-.menuwizard .mobile-wizard-back {
-	background-position-x: 22px;
-	width: 52px;
-}
-.mobile-wizard-back.close-button {
-	transform: rotate(-90deg);
-	background-position-x: center;
-}
-.mobile-wizard-back {
-	background-image: url('images/lc_closedocmobile.svg');
-	background-repeat: no-repeat;
-	width: 48px;
-	background-position-x: 16px;
-	background-position-y: center;
-	height: 20px;
-}
-
-#mobile-wizard {
-	width: 100%;
-	position: relative;
-	bottom: 0px;
-	z-index: 2001;
-	background-color: var(--color-main-background);
-	box-shadow: 0px -2px 4px 1px #00000030;
-	overflow-x: hidden;
-	overflow-y: auto;
-}
-
-#mobile-wizard.menuwizard {
-	z-index: 1001;
-	background-color: var(--color-background-lighter);
-}
-
-#mobile-wizard-content *{
-	font-family: var(--mobile-font);
-	color: var(--color-main-text);
-}
-
-.mobile-wizard-titlebar {
-	background-color: var(--color-background-lighter);
-	top: 63px;
-	height: var(--header-height);
-	color: var(--color-main-text);
-	border-bottom: 1px solid var(--color-border) !important;
-	position: sticky;
-	z-index: 2;
-}
-
 .ui-content.mobile-wizard:not(.unotoolbutton) {
 	background-color: var(--color-main-background) !important;
 	border: none !important;
@@ -330,11 +340,8 @@ p.mobile-wizard.ui-combobox-text.selected {
 	box-shadow: inset 0px 0px 0px 2px #0867af !important;
 }
 .ui-header.mobile-wizard {
-	width: 100%;
-	height: 56px !important;
+	height: 56px;
 	font-size: var(--default-font-size) !important;
-	margin: 0px;
-	padding: 0px;
 	border: solid 1px transparent;
 	display: flex;
 	flex-direction: row;
