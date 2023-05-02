@@ -321,6 +321,32 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             LOG_ERR("Failed to update the route token, invalid JSON parsing: " << tokens[1]);
         }
     }
+    else if (tokens.equals(0, "migrate") && tokens.size() > 1)
+    {
+        const std::string& reason = tokens[1];
+        const std::string& dockey = tokens[2];
+        const std::string& routeToken = tokens[3];
+
+        if (!dockey.empty() && !routeToken.empty())
+        {
+            if ((reason == "readonly" && model.isDocReadOnly(dockey)) || (reason == "saved" && model.isDocSaved(dockey)))
+            {
+                LOG_DBG("migrate document with docKey:" << dockey << " routeToken:" << routeToken);
+                COOLWSD::alertUserInternal(dockey, "close: migrate " + routeToken);
+            }
+        }
+        else
+        {
+            LOG_WRN("Document migration failed for dockey:" + dockey +
+                        ", reason has been changed");
+        }
+    }
+    else if (tokens.equals(0, "save") && tokens.size() > 1)
+    {
+        const std::string& docKey = tokens[1];
+        LOG_DBG("Saving document: DocKey [" << docKey << "].");
+        COOLWSD::autoSave(docKey);
+    }
 }
 
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
@@ -559,9 +585,9 @@ void Admin::uploadedAlert(const std::string& dockey, pid_t pid, bool value)
 
 void Admin::addDoc(const std::string& docKey, pid_t pid, const std::string& filename,
                    const std::string& sessionId, const std::string& userName, const std::string& userId,
-                   const int smapsFD, const Poco::URI& wopiSrc)
+                   const int smapsFD, const Poco::URI& wopiSrc, bool readOnly)
 {
-    addCallback([=] { _model.addDocument(docKey, pid, filename, sessionId, userName, userId, smapsFD, wopiSrc); });
+    addCallback([=] { _model.addDocument(docKey, pid, filename, sessionId, userName, userId, smapsFD, wopiSrc, readOnly); });
 }
 
 void Admin::rmDoc(const std::string& docKey, const std::string& sessionId)

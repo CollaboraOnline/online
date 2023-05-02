@@ -905,17 +905,18 @@ Commands marked with [*] are notifications that are delivered only if client is
 subscribed to these commands using `subscribe` (see client->admin
 section). Others are just response messages to some client command.
 
-[*] adddoc <pid> <filename> <viewid> <memory consumed>
+[*] adddoc <pid> <filename> <sessionid> <username> <userid> <memory consumed> <wopiHost> <isViewReadOnly> <wopiSrc>
 
     <pid> process id hosting the document
     <filename> URL encoded name of the file
-    <viewid> string identifying the view of this document
+    <sessionid> string identifying the view of this document
     <memory consumed> RSS of <pid> in kilobytes
+    <wopihost> storage host on which document exist
 
-[*] rmdoc <pid> <viewid>
+[*] rmdoc <pid> <sessionid>
 
     <pid> process id hosting the document
-    <viewid> view which was closed
+    <sessionid> view which was closed
 
 [*] mem_stats <memory consumed>
 

@@ -759,7 +759,7 @@ window.app = {
 				}.bind(this);
 				setTimeout(timeoutFn, 10000, global.indirectionUrl, that.uri);
 			} else {
-				window.app.console.debug('Indirection url: error on incoming response ' + this.status);
+				window.app.console.error('Indirection url: error on incoming response ' + this.status);
 			}
 		});
 		http.send();
@@ -773,7 +773,7 @@ window.app = {
 		if (global.socketProxy) {
 			window.socketProxy = true;
 			return new global.ProxySocket(uri);
-		} else if (global.indirectionUrl != '') {
+		} else if (global.indirectionUrl != '' && !global.migrating) {
 			window.indirectSocket = true;
 			return new global.IndirectSocket(uri);
 		} else {

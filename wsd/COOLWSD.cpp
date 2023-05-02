@@ -293,6 +293,20 @@ void COOLWSD::alertAllUsersInternal(const std::string& msg)
         docBroker->addCallback([msg, docBroker](){ docBroker->alertAllUsers(msg); });
     }
 }
+
+void COOLWSD::alertUserInternal(const std::string& dockey, const std::string& msg)
+{
+    std::lock_guard<std::mutex> docBrokersLock(DocBrokersMutex);
+
+    LOG_INF("Alerting document users with dockey: [" << dockey << ']' << " msg: [" << msg << ']');
+
+    for (auto& brokerIt : DocBrokers)
+    {
+        std::shared_ptr<DocumentBroker> docBroker = brokerIt.second;
+        if (docBroker->getDocKey() == dockey)
+            docBroker->addCallback([msg, docBroker](){ docBroker->alertAllUsers(msg); });
+    }
+}
 #endif
 
 void COOLWSD::writeTraceEventRecording(const char *data, std::size_t nbytes)

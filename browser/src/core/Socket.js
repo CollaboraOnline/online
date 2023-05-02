@@ -558,7 +558,7 @@ app.definitions.Socket = L.Class.extend({
 
 			this.WSDServer = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 
-			if (oldId && oldVersion && sameFile) {
+			if (oldId && oldVersion && sameFile && !window.migrating) {
 				if (this.WSDServer.Id !== oldId || this.WSDServer.Version !== oldVersion) {
 					var reloadMessage = _('Server is now reachable. We have to refresh the page now.');
 					if (window.mode.isMobile())
@@ -572,6 +572,8 @@ app.definitions.Socket = L.Class.extend({
 					setTimeout(reloadFunc, 5000);
 				}
 			}
+
+			window.migrating = false;
 
 			$('#coolwsd-version-label').text(_('COOLWSD version:'));
 			var h = this.WSDServer.Hash;
@@ -768,6 +770,12 @@ app.definitions.Socket = L.Class.extend({
 				msg = _('Reloading the document after rename');
 				showMsgAndReload = true;
 			}
+			else if (textMsg.startsWith('migrate') && window.indirectSocket) {
+				window.routeToken = textMsg.split(' ')[1];
+				msg = _('Please wait the document is migrating');
+				window.migrating = true;
+				showMsgAndReload = true;
+			}
 
 			if (showMsgAndReload) {
 				if (this._map._docLayer) {
@@ -799,7 +807,7 @@ app.definitions.Socket = L.Class.extend({
 				message = msg;
 			}
 
-			if (textMsg === 'idle' || textMsg === 'oom') {
+			if (textMsg === 'idle' || textMsg === 'oom' || textMsg.startsWith('migrate')) {
 				app.idleHandler._dim(message);
 			}
 
@@ -1082,7 +1090,7 @@ app.definitions.Socket = L.Class.extend({
 				this._map.openUnlockPopup(blockedInfo.errorCmd);
 			return;
 		}
-		else if (textMsg.startsWith('updateroutetoken') && window.indirectionUrl != '') {
+		else if (textMsg.startsWith('updateroutetoken') && window.indirectSocket) {
 			window.routeToken = textMsg.split(' ')[1];
 			window.app.console.log('updated routeToken: ' + window.routeToken);
 		}
