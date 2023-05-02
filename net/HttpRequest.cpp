@@ -473,9 +473,9 @@ int64_t Response::readData(const char* p, int64_t len)
             // Assume we have a body unless we have reason to expect otherwise.
             _parserStage = ParserStage::Body;
 
-            if (_statusLine.statusCategory() == StatusLine::StatusCodeClass::Informational
-                || _statusLine.statusCode() == 204 /*No Content*/
-                || _statusLine.statusCode() == 304 /*Not Modified*/) // || HEAD request
+            if (_statusLine.statusCategory() == StatusLine::StatusCodeClass::Informational ||
+                _statusLine.statusCode() == http::StatusCode::NoContent ||
+                _statusLine.statusCode() == http::StatusCode::NotModified) // || HEAD request
             // || 2xx on CONNECT request
             {
                 // No body, we are done.

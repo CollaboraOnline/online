@@ -1137,9 +1137,9 @@ public:
                     const std::shared_ptr<const http::Response> httpResponse =
                         httpSession->syncRequest(request);
 
-                    unsigned int statusCode = httpResponse->statusLine().statusCode();
+                    const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
 
-                    if (statusCode == Poco::Net::HTTPResponse::HTTP_OK)
+                    if (statusCode == http::StatusCode::OK)
                     {
                         _eTagValue = httpResponse->get("ETag");
 
@@ -1167,15 +1167,14 @@ public:
                             LOG_ERR("Could not parse the remote config JSON");
                         }
                     }
-                    else if (statusCode == Poco::Net::HTTPResponse::HTTP_NOT_MODIFIED)
+                    else if (statusCode == http::StatusCode::NotModified)
                     {
                         LOG_DBG("Not modified since last time: " << remoteServerURI.toString());
                         handleUnchangedJSON();
                     }
                     else
                     {
-                        LOG_ERR("Remote config server has response status code: " +
-                                std::to_string(statusCode));
+                        LOG_ERR("Remote config server has response status code: " << statusCode);
                     }
                 }
                 catch (...)
@@ -1807,9 +1806,7 @@ private:
         const std::shared_ptr<const http::Response> httpResponse
             = httpSession->syncRequest(request);
 
-        const unsigned int statusCode = httpResponse->statusLine().statusCode();
-
-        if (statusCode == Poco::Net::HTTPResponse::HTTP_NOT_MODIFIED)
+        if (httpResponse->statusLine().statusCode() == http::StatusCode::NotModified)
         {
             LOG_DBG("Not modified since last time: " << uri);
             return true;
@@ -1834,9 +1831,7 @@ private:
         const std::shared_ptr<const http::Response> httpResponse
             = httpSession->syncRequest(request);
 
-        const unsigned int statusCode = httpResponse->statusLine().statusCode();
-
-        if (statusCode == Poco::Net::HTTPResponse::HTTP_NOT_MODIFIED)
+        if (httpResponse->statusLine().statusCode() == http::StatusCode::NotModified)
         {
             LOG_DBG("Not modified since last time: " << uri);
             return true;
@@ -1851,9 +1846,7 @@ private:
 
     bool finishDownload(const std::string& uri, const std::shared_ptr<const http::Response> httpResponse)
     {
-        const unsigned int statusCode = httpResponse->statusLine().statusCode();
-
-        if (statusCode != Poco::Net::HTTPResponse::HTTP_OK)
+        if (httpResponse->statusLine().statusCode() != http::StatusCode::OK)
         {
             LOG_WRN("Could not fetch " << uri);
             return false;
@@ -5459,7 +5452,7 @@ void COOLWSD::processFetchUpdate()
 
         const std::shared_ptr<const http::Response> httpResponse =
             sessionFetch->syncRequest(request);
-        if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_OK)
+        if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
         {
             LOG_DBG("Infobar update returned: " << httpResponse->getBody());
 

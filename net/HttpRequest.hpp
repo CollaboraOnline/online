@@ -178,7 +178,9 @@ enum class StatusCode : unsigned
     SeeOther = 303,
     NotModified = 304,
     UseProxy = 305,
+    // Unused: 306
     TemporaryRedirect = 307,
+    PermanentRedirect = 308,
 
     // Client Error
     BadRequest = 400,
@@ -313,6 +315,11 @@ static inline const char* getReasonPhraseForCode(int code)
 #undef CASE
 
     return "Unknown";
+}
+
+static inline const char* getReasonPhraseForCode(StatusCode statusCode)
+{
+    return getReasonPhraseForCode(static_cast<unsigned>(statusCode));
 }
 
 /// The callback signature for handling IO writes.
@@ -749,7 +756,7 @@ public:
     const std::string& httpVersion() const { return _httpVersion; }
     unsigned versionMajor() const { return _versionMajor; }
     unsigned versionMinor() const { return _versionMinor; }
-    unsigned statusCode() const { return _statusCode; }
+    StatusCode statusCode() const { return static_cast<StatusCode>(_statusCode); }
     const std::string& reasonPhrase() const { return _reasonPhrase; }
 
 private:
@@ -1758,6 +1765,18 @@ inline std::ostream& operator<<(std::ostream& os, const http::Header& header)
         os << '\t' << pair.first << ": " << pair.second << " / ";
     }
 
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const http::StatusCode& statusCode)
+{
+    os << getReasonPhraseForCode(statusCode);
+    return os;
+}
+
+inline std::ostringstream& operator<<(std::ostringstream& os, const http::StatusCode& statusCode)
+{
+    os << getReasonPhraseForCode(statusCode);
     return os;
 }
 
