@@ -95,6 +95,22 @@ namespace FileUtil
         copy(fromPath, toPath, /*log=*/true, /*throw_on_error=*/true);
     }
 
+    /// Try to hard-link, and fallback to copying it linking fails.
+    /// Returns true iff either linking or copying succeeds.
+    inline bool linkOrCopyFile(const std::string& source, const std::string& newPath)
+    {
+        // first try a simple hard-link
+        if (link(source.c_str(), newPath.c_str()) == 0)
+            return true;
+
+        const auto onrre = errno;
+        LOG_DBG("Failed to link [" << source << "] to [" << newPath << "] ("
+                                   << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre)
+                                   << "), will try to copy");
+
+        return FileUtil::copy(source, newPath, /*log=*/true, /*throw_on_error=*/false);
+    }
+
     /// Returns the system temporary directory.
     std::string getSysTempDirectoryPath();
 
