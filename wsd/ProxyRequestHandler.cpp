@@ -52,7 +52,7 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
                 {
                     const auto callbackNow = std::chrono::system_clock::now();
                     std::shared_ptr<http::Response> httpResponse = httpSession->response();
-                    if (httpResponse->statusLine().statusCode() == 200)
+                    if (httpResponse->statusLine().statusCode() == http::StatusCode::OK)
                     {
                         if (MaxAge == zero)
                         {

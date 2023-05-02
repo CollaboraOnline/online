@@ -969,8 +969,7 @@ protected:
         http::Response response(
             [&]()
             {
-                if (response.statusLine().statusCode() ==
-                        Poco::Net::HTTPResponse::HTTP_SWITCHING_PROTOCOLS &&
+                if (response.statusLine().statusCode() == http::StatusCode::SwitchingProtocols &&
                     Util::iequal(response.get("Upgrade"), "websocket") &&
                     Util::iequal(response.get("Connection", ""), "Upgrade") &&
                     response.get("Sec-WebSocket-Accept", "") ==

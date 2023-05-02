@@ -52,10 +52,13 @@ void HttpWhiteBoxTests::testStatusLineParserValidComplete()
     const unsigned expVersionMinor = 1;
     const std::string expVersion
         = "HTTP/" + std::to_string(expVersionMajor) + '.' + std::to_string(expVersionMinor);
-    const unsigned expStatusCode = 101;
+    const http::StatusCode expStatusCode = http::StatusCode::SwitchingProtocols;
     const std::string expReasonPhrase = "Something Something";
-    const std::string data
-        = expVersion + ' ' + std::to_string(expStatusCode) + ' ' + expReasonPhrase + "\r\n";
+
+    std::ostringstream oss;
+    oss << expVersion << ' ' << static_cast<unsigned>(expStatusCode) << ' ' << expReasonPhrase
+        << "\r\n";
+    const std::string data = oss.str();
 
     http::StatusLine statusLine;
 
@@ -76,10 +79,13 @@ void HttpWhiteBoxTests::testStatusLineParserValidComplete_NoReason()
     const unsigned expVersionMinor = 1;
     const std::string expVersion
         = "HTTP/" + std::to_string(expVersionMajor) + '.' + std::to_string(expVersionMinor);
-    const unsigned expStatusCode = 101;
+    const http::StatusCode expStatusCode = http::StatusCode::SwitchingProtocols;
     const std::string expReasonPhrase;
-    const std::string data
-        = expVersion + ' ' + std::to_string(expStatusCode) + ' ' + expReasonPhrase + "\r\n";
+
+    std::ostringstream oss;
+    oss << expVersion << ' ' << static_cast<unsigned>(expStatusCode) << ' ' << expReasonPhrase
+        << "\r\n";
+    const std::string data = oss.str();
 
     http::StatusLine statusLine;
 
@@ -100,10 +106,13 @@ void HttpWhiteBoxTests::testStatusLineParserValidIncomplete()
     const unsigned expVersionMinor = 1;
     const std::string expVersion
         = "HTTP/" + std::to_string(expVersionMajor) + '.' + std::to_string(expVersionMinor);
-    const unsigned expStatusCode = 101;
+    const http::StatusCode expStatusCode = http::StatusCode::SwitchingProtocols;
     const std::string expReasonPhrase = "Something Something";
-    const std::string data
-        = expVersion + ' ' + std::to_string(expStatusCode) + "    " + expReasonPhrase + "\r\n";
+
+    std::ostringstream oss;
+    oss << expVersion << ' ' << static_cast<unsigned>(expStatusCode) << ' ' << expReasonPhrase
+        << "\r\n";
+    const std::string data = oss.str();
 
     http::StatusLine statusLine;
 
