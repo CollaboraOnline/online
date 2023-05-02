@@ -10,7 +10,6 @@ describe('Insert objects via insertion wizard.', function() {
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
-
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 	});
@@ -21,127 +20,75 @@ describe('Insert objects via insertion wizard.', function() {
 
 	it('Insert local image.', function() {
 		mobileHelper.openInsertionWizard();
-
 		// We can't use the menu item directly, because it would open file picker.
-		cy.contains('.menu-entry-with-icon', 'Local Image...')
-			.should('be.visible');
-
-		cy.get('#insertgraphic[type=file]')
-			.attachFile('/mobile/writer/image_to_insert.png');
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Graphic')
-			.should('exist');
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Local Image...').should('be.visible');
+		cy.cGet('#insertgraphic[type=file]').attachFile('/mobile/writer/image_to_insert.png');
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g.Graphic').should('exist');
 	});
 
 	it('Insert comment.', function() {
 		mobileHelper.openInsertionWizard();
-
-		cy.contains('.menu-entry-with-icon', 'Comment')
-			.click();
-
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Comment').click();
 		// Comment insertion dialog is opened
-		cy.get('.cool-annotation-table').should('exist');
-
+		cy.cGet('.cool-annotation-table').should('exist');
 		// Add some comment
-		cy.get('#input-modal-input').type('some text');
-
-		cy.get('#response-ok').click();
-
-		cy.get('#comment-container-1').should('exist');
-
-		cy.get('#annotation-content-area-1').should('have.text', 'some text');
+		cy.cGet('#input-modal-input').type('some text');
+		cy.cGet('#response-ok').click();
+		cy.cGet('#comment-container-1').should('exist');
+		cy.cGet('#annotation-content-area-1').should('have.text', 'some text');
 	});
 
 	it('Insert default table.', function() {
 		mobileHelper.openInsertionWizard();
-
 		// Open Table submenu
-		cy.contains('.ui-header.level-0.mobile-wizard.ui-widget', 'Table')
-			.click();
-
-		cy.get('.mobile-wizard.ui-text')
-			.should('be.visible');
-
+		cy.cGet('body').contains('.ui-header.level-0.mobile-wizard.ui-widget', 'Table').click();
+		cy.cGet('.mobile-wizard.ui-text').should('be.visible');
 		// Push insert table button
-		cy.get('.inserttablecontrols button')
-			.should('be.visible')
-			.click();
-
+		cy.cGet('.inserttablecontrols button').should('be.visible').click();
 		// Table is inserted with the markers shown
-		cy.get('.leaflet-marker-icon.table-column-resize-marker')
-			.should('exist');
-
+		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('exist');
 		helper.typeIntoDocument('{ctrl}a');
-
 		// Two rows
-		cy.get('#copy-paste-container tr')
-			.should('have.length', 2);
+		cy.cGet('#copy-paste-container tr').should('have.length', 2);
 		// Four cells
-		cy.get('#copy-paste-container td')
-			.should('have.length', 4);
+		cy.cGet('#copy-paste-container td').should('have.length', 4);
 	});
 
 	it('Insert custom table.', function() {
 		mobileHelper.openInsertionWizard();
-
 		// Open Table submenu
-		cy.contains('.ui-header.level-0.mobile-wizard.ui-widget', 'Table')
-			.click();
-		cy.get('.mobile-wizard.ui-text')
-			.should('be.visible');
-
+		cy.cGet('body').contains('.ui-header.level-0.mobile-wizard.ui-widget', 'Table').click();
+		cy.cGet('.mobile-wizard.ui-text').should('be.visible');
 		// Change rows and columns
-		cy.get('.inserttablecontrols #rows .spinfieldcontrols .plus')
-			.click();
-		cy.get('.inserttablecontrols #cols .spinfieldcontrols .plus')
-			.click();
-
+		cy.cGet('.inserttablecontrols #rows .spinfieldcontrols .plus').click();
+		cy.cGet('.inserttablecontrols #cols .spinfieldcontrols .plus').click();
 		// Push insert table button
-		cy.get('.inserttablecontrols button')
-			.should('be.visible')
-			.click();
-
+		cy.cGet('.inserttablecontrols button').should('be.visible').click();
 		// Table is inserted with the markers shown
-		cy.get('.leaflet-marker-icon.table-column-resize-marker')
-			.should('exist');
-
+		cy.cGet('.leaflet-marker-icon.table-column-resize-marker').should('exist');
 		helper.typeIntoDocument('{ctrl}a');
-
 		// Three rows
-		cy.get('#copy-paste-container tr')
-			.should('have.length', 3);
+		cy.cGet('#copy-paste-container tr').should('have.length', 3);
 		// Nine cells
-		cy.get('#copy-paste-container td')
-			.should('have.length', 9);
+		cy.cGet('#copy-paste-container td').should('have.length', 9);
 	});
 
 	it('Insert header.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xx{enter}');
-
 		helper.typeText('body', 'xxxx', 500);
-
 		helper.getCursorPos('left', 'cursorOrigLeft');
-
 		mobileHelper.openInsertionWizard();
-
 		// Open header/footer submenu
-		cy.contains('.menu-entry-with-icon', 'Header and Footer')
-			.click();
-		cy.get('.ui-header.level-1.mobile-wizard.ui-widget')
-			.should('be.visible');
-
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Header and Footer').click();
+		cy.cGet('.ui-header.level-1.mobile-wizard.ui-widget').should('be.visible');
 		// Open header submenu
-		cy.contains('.ui-header.level-1.mobile-wizard.ui-widget', 'Header')
-			.click();
-
+		cy.cGet('body').contains('.ui-header.level-1.mobile-wizard.ui-widget', 'Header').click();
 		// Insert header for All
-		cy.contains('.menu-entry-no-icon', 'All')
-			.click();
-
+		cy.cGet('body').contains('.menu-entry-no-icon', 'All').click();
 		cy.get('@cursorOrigLeft')
 			.then(function(cursorOrigLeft) {
-				cy.get('.blinking-cursor')
+				cy.cGet('.blinking-cursor')
 					.should(function(cursor) {
 						expect(cursor.offset().left).to.be.lessThan(cursorOrigLeft);
 					});
@@ -151,29 +98,19 @@ describe('Insert objects via insertion wizard.', function() {
 	it('Insert footer.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xxxx');
-
 		helper.getCursorPos('top', 'cursorOrigTop');
-
 		mobileHelper.openInsertionWizard();
-
 		// Open header/footer submenu
-		cy.contains('.menu-entry-with-icon', 'Header and Footer')
-			.click();
-		cy.get('.ui-header.level-1.mobile-wizard.ui-widget')
-			.should('be.visible');
-
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Header and Footer').click();
+		cy.cGet('.ui-header.level-1.mobile-wizard.ui-widget').should('be.visible');
 		// Open footer submenu
-		cy.contains('.ui-header.level-1.mobile-wizard.ui-widget', 'Footer')
-			.click();
-
+		cy.cGet('body').contains('.ui-header.level-1.mobile-wizard.ui-widget', 'Footer').click();
 		// Insert footer for All
-		cy.contains('.ui-content.level-1.mobile-wizard[title~="Footer"] .ui-header.level-2.mobile-wizard.ui-widget .menu-entry-no-icon', 'All')
-			.click();
-
+		cy.cGet('body').contains('.ui-content.level-1.mobile-wizard[title~="Footer"] .ui-header.level-2.mobile-wizard.ui-widget .menu-entry-no-icon', 'All').click();
 		// Check that the cursor was moved
 		cy.get('@cursorOrigTop')
 			.then(function(cursorOrigTop) {
-				cy.get('.blinking-cursor')
+				cy.cGet('.blinking-cursor')
 					.should(function(cursor) {
 						expect(cursor.offset().top).to.be.greaterThan(cursorOrigTop);
 					});
@@ -183,19 +120,14 @@ describe('Insert objects via insertion wizard.', function() {
 	it('Insert footnote.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xxxx');
-
 		helper.getCursorPos('top', 'cursorOrigTop');
-
 		mobileHelper.openInsertionWizard();
-
 		// Insert footnote
-		cy.contains('.menu-entry-with-icon', 'Footnote')
-			.click();
-
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Footnote').click();
 		// Check that the cursor was moved
 		cy.get('@cursorOrigTop')
 			.then(function(cursorOrigTop) {
-				cy.get('.blinking-cursor')
+				cy.cGet('.blinking-cursor')
 					.should(function(cursor) {
 						expect(cursor.offset().top).to.be.greaterThan(cursorOrigTop);
 					});
@@ -205,19 +137,14 @@ describe('Insert objects via insertion wizard.', function() {
 	it('Insert endnote.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xxxx');
-
 		helper.getCursorPos('top', 'cursorOrigTop');
-
 		mobileHelper.openInsertionWizard();
-
 		// Insert endnote
-		cy.contains('.menu-entry-with-icon', 'Endnote')
-			.click();
-
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Endnote').click();
 		// Check that the cursor was moved
 		cy.get('@cursorOrigTop')
 			.then(function(cursorOrigTop) {
-				cy.get('.blinking-cursor')
+				cy.cGet('.blinking-cursor')
 					.should(function(cursor) {
 						expect(cursor.offset().top).to.be.greaterThan(cursorOrigTop);
 					});
@@ -227,19 +154,14 @@ describe('Insert objects via insertion wizard.', function() {
 	it('Insert page break.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xxxx');
-
 		helper.getCursorPos('top', 'cursorOrigTop');
-
 		mobileHelper.openInsertionWizard();
-
 		// Insert page break
-		cy.contains('.menu-entry-with-icon', 'Page Break')
-			.click();
-
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Page Break').click();
 		// Check that the cursor was moved
 		cy.get('@cursorOrigTop')
 			.then(function(cursorOrigTop) {
-				cy.get('.blinking-cursor')
+				cy.cGet('.blinking-cursor')
 					.should(function(cursor) {
 						expect(cursor.offset().top).to.be.greaterThan(cursorOrigTop);
 					});
@@ -249,19 +171,14 @@ describe('Insert objects via insertion wizard.', function() {
 	it('Insert column break.', function() {
 		// Get the blinking cursor pos
 		helper.typeIntoDocument('xxxx');
-
 		helper.getCursorPos('top', 'cursorOrigTop');
-
 		mobileHelper.openInsertionWizard();
-
 		// Do insertion
-		cy.contains('.menu-entry-with-icon', 'Column Break')
-			.click();
-
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Column Break').click();
 		// Check that the cursor was moved
 		cy.get('@cursorOrigTop')
 			.then(function(cursorOrigTop) {
-				cy.get('.blinking-cursor')
+				cy.cGet('.blinking-cursor')
 					.should(function(cursor) {
 						expect(cursor.offset().top).to.be.greaterThan(cursorOrigTop);
 					});
@@ -270,80 +187,46 @@ describe('Insert objects via insertion wizard.', function() {
 
 	it('Insert hyperlink.', function() {
 		mobileHelper.openInsertionWizard();
-
 		// Open hyperlink dialog
-		cy.contains('.menu-entry-with-icon', 'Hyperlink...')
-			.click();
-
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Hyperlink...').click();
 		// Dialog is opened
-		cy.get('#hyperlink-link-box')
-			.should('exist');
-
+		cy.cGet('#hyperlink-link-box').should('exist');
 		// Type text and link
-		cy.get('#hyperlink-text-box')
-			.type('some text');
-		cy.get('#hyperlink-link-box')
-			.type('www.something.com');
-
+		cy.cGet('#hyperlink-text-box').type('some text');
+		cy.cGet('#hyperlink-link-box').type('www.something.com');
 		// Insert
-		cy.get('#response-ok')
-			.click();
-
+		cy.cGet('#response-ok').click();
 		writerHelper.selectAllTextOfDoc();
-
 		helper.expectTextForClipboard('some text');
-
-		cy.get('#copy-paste-container p a')
-			.should('have.attr', 'href', 'http://www.something.com/');
+		cy.cGet('#copy-paste-container p a').should('have.attr', 'href', 'http://www.something.com/');
 	});
 
 	it('Open inserted hyperlink.', function() {
 		mobileHelper.openInsertionWizard();
-
 		// Open hyperlink dialog
-		cy.contains('.menu-entry-with-icon', 'Hyperlink...')
-			.click();
-
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Hyperlink...').click();
 		// Dialog is opened
-		cy.get('#hyperlink-link-box')
-			.should('exist');
-
+		cy.cGet('#hyperlink-link-box').should('exist');
 		// Type text and link
-		cy.get('#hyperlink-text-box')
-			.type('some text');
-		cy.get('#hyperlink-link-box')
-			.type('www.something.com');
-
+		cy.cGet('#hyperlink-text-box').type('some text');
+		cy.cGet('#hyperlink-link-box').type('www.something.com');
 		// Insert
-		cy.get('#response-ok')
-			.click();
-
+		cy.cGet('#response-ok').click();
 		helper.typeIntoDocument('{leftArrow}');
-
-		cy.get('#hyperlink-pop-up').click();
-
-		cy.get('#info-modal-label2')
-			.should('have.text', 'http://www.something.com');
+		cy.cGet('#hyperlink-pop-up').click();
+		cy.cGet('#info-modal-label2').should('have.text', 'http://www.something.com');
 	});
 
 	it('Insert shape.', function() {
 		mobileHelper.openInsertionWizard();
-
 		// Do insertion
-		cy.contains('.menu-entry-with-icon', 'Shape')
-			.click();
-
-		cy.get('.col.w2ui-icon.basicshapes_rectangle').
-			click();
-
+		cy.cGet('body').contains('.menu-entry-with-icon', 'Shape').click();
+		cy.cGet('.col.w2ui-icon.basicshapes_rectangle').click();
 		// Check that the shape is there
-		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
-			.should('exist');
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane svg')
-			.then(function(svg) {
-				expect(svg[0].getBBox().width).to.be.greaterThan(0);
-				expect(svg[0].getBBox().height).to.be.greaterThan(0);
-			});
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg').then(function(svg) {
+			expect(svg[0].getBBox().width).to.be.greaterThan(0);
+			expect(svg[0].getBBox().height).to.be.greaterThan(0);
+		});
 	});
 });
