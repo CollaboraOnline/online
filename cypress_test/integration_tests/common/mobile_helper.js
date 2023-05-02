@@ -219,22 +219,13 @@ function closeInsertionWizard() {
 /// deprecated: see selectFromColorPicker function instead
 function selectFromColorPalette(paletteNum, groupNum, paletteAfterChangeNum, colorNum) {
 	cy.log('Selecting a color from the color palette - start.');
-
-	cy.cGet('#color-picker-' + paletteNum.toString() + '-basic-color-' + groupNum.toString())
-		.click();
-
+	cy.cGet('#color-picker-' + paletteNum.toString() + '-basic-color-' + groupNum.toString()).click();
 	cy.wait(1000);
-
 	if (paletteAfterChangeNum !== undefined && colorNum !== undefined) {
-		cy.cGet('#color-picker-' + paletteAfterChangeNum.toString() + '-tint-' + colorNum.toString())
-			.click();
+		cy.cGet('#color-picker-' + paletteAfterChangeNum.toString() + '-tint-' + colorNum.toString()).click();
 	}
-
 	cy.wait(1000);
-
-	cy.cGet('#mobile-wizard-back')
-		.click();
-
+	cy.cGet('#mobile-wizard-back').click();
 	cy.log('Selecting a color from the color palette - end.');
 }
 
