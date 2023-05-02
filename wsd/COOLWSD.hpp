@@ -487,6 +487,8 @@ public:
         return FileUtil::anonymizeUsername(username);
     }
     static void alertAllUsersInternal(const std::string& msg);
+    static void alertUserInternal(const std::string& dockey, const std::string& msg);
+
 
 #if ENABLE_DEBUG
     /// get correct server URL with protocol + port number for this running server
