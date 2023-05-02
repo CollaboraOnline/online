@@ -953,6 +953,10 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 #mobile-wizard #FontworkSameLetterHeights > img {
 	filter: brightness(3);
 }
+#mobile-wizard .unotoolbutton.no-label button {
+	background-color: transparent;
+	border: 1px solid transparent;
+}
 #mobile-wizard button,
 #mobile-wizard #FontworkSameLetterHeights {
 	height: 44px;
