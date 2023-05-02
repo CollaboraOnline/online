@@ -304,6 +304,12 @@ button.ui-tab.notebookbar {
 	margin-inline-end: 5px !important;
 	text-align: center;
 }
+
+.unotoolbutton.notebookbar.has-dropdown {
+	display: flex;
+	align-items: center;
+}
+
 #zoomreset, .unotoolbutton.notebookbar.has-label > *{ /*so they stay side by side*/
 	display: table-cell;
 	width: 100%;
