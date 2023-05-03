@@ -1055,7 +1055,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	{
 		return function() {
 			$(tabs[t]).addClass('selected');
-			tabs[t].removeAttribute('tabindex');
+			tabs[t].tabIndex = '0';
 			tabs[t].setAttribute('aria-selected', 'true');
 
 			for (var i = 0; i < tabs.length; i++) {
@@ -1113,7 +1113,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (isSelectedTab) {
 					$(tab).addClass('selected');
 					tab.setAttribute('aria-selected', 'true');
-					tab.removeAttribute('tabindex');
+					tab.tabIndex = '0';
 					tab.title = tabTooltip;
 					singleTabId = tabIdx;
 				} else {
