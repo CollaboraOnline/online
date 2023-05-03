@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_license">Показати ліцензію</string>
-    <string name="pref_enable_chrome_debugger_info">Використовувати в документі зневаджувальні засоби Chrome</string>
-    <string name="pref_enable_chrome_debugger">Зневадження Chrome</string>
-    <string name="pref_show_debug_info_summary">Показувати зневаджувальну інформацію в переглядачі документів</string>
-    <string name="pref_show_debug_info">Показати зневаджувальну інформацію</string>
+    <string name="pref_enable_chrome_debugger_info">Використовувати в документі засоби налагодження Chrome</string>
+    <string name="pref_enable_chrome_debugger">Налагодження Chrome</string>
+    <string name="pref_show_debug_info_summary">Показувати інформацію налагодження в переглядачі документів</string>
+    <string name="pref_show_debug_info">Показати інформацію налагодження</string>
     <string name="pref_filter_summary">Задайте, який фільтр файлів буде типовим.</string>
     <string name="pref_filter_title">Типовий фільтр файлів</string>
     <string name="pref_sort_title">Порядок файлів</string>
