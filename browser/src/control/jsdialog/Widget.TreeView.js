@@ -498,17 +498,24 @@ function _treelistboxControl(parentContainer, data, builder) {
 
 	if (firstSelected) {
 		var observer = new IntersectionObserver(function (entries, observer) {
-			entries.forEach(function (entry) {
-				if (entry.intersectionRatio > 0) {
-					if (isHeaderListBox)
-						table.scrollTop = firstSelected.offsetTop - tbody.offsetTop;
-					else
-						table.scrollTop = firstSelected.parentNode.offsetTop - tbody.offsetTop;
-					observer.disconnect();
-				}
-			});
-		});
+			var offsetTop;
+			if (isHeaderListBox)
+				offsetTop = firstSelected.offsetTop;
+			else
+				offsetTop = firstSelected.parentNode.offsetTop;
 
+			var scrollNeeded = offsetTop - tbody.offsetTop;
+
+			// scroll only if the selected line is not visible
+			// and scroll the minimum required to make the selected line fully visible
+			if (table.scrollTop > scrollNeeded) {
+				table.scrollTop = scrollNeeded;
+			} else if (table.scrollTop + table.clientHeight - firstSelected.clientHeight < scrollNeeded) {
+				table.scrollTop = scrollNeeded - table.clientHeight + firstSelected.clientHeight;
+			}
+
+			observer.disconnect();
+		});
 		observer.observe(tbody);
 	}
 
