@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-17 19:35+0200\n"
-"PO-Revision-Date: 2023-04-19 16:57+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2023-04-29 00:49+0000\n"
+"Last-Translator: \"Jörg S.\" <joerg.schwerdtfeger@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -1154,7 +1154,7 @@ msgstr "F~ormat"
 #: src/control/Control.NotebookbarDraw.js:81
 #: src/control/Control.NotebookbarWriter.js:59
 msgid "Dra~w"
-msgstr ""
+msgstr "~Zeichnen"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:87
@@ -1239,7 +1239,7 @@ msgstr "Wissenschaftlich"
 
 #: src/control/Control.NotebookbarCalc.js:561
 msgid "Fraction"
-msgstr "Fraktion"
+msgstr "Bruch"
 
 #: src/control/Control.NotebookbarCalc.js:562
 msgid "Boolean Value"
