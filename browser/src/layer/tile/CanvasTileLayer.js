@@ -3670,7 +3670,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (!zoom
 		&& scroll !== false
-		&& this._map._isCursorVisible
+		&& (this._map._isCursorVisible
+		  || (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)))
 		// Do not center view in Calc if no new cursor coordinates have arrived yet.
 		// ie, 'invalidatecursor' has not arrived after 'cursorvisible' yet.
 		&& (!this.isCalc() || this._lastVisibleCursorRef !== this._visibleCursor)
