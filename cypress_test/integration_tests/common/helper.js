@@ -74,24 +74,14 @@ function checkCoolFrameGlobal() {
 
 function checkFirstCoolFrameGlobal() {
 	cy.log('checkFirstCoolFrameGlobal - start.');
-	cy.get('#iframe1').its('0.contentDocument').should('exist').its('body').should('not.be.undefined')
-		.find('#coolframe').should('exist');
+	cy.get('#iframe1').its('0.contentDocument').should('exist').its('body').should('not.be.undefined');
 	cy.log('checkFirstCoolFrameGlobal - end.');
 }
 
 function checkSecondCoolFrameGlobal() {
 	cy.log('checkSecondCoolFrameGlobal - start.');
-	cy.get('#iframe2').its('0.contentDocument').should('exist').its('body').should('not.be.undefined')
-		.find('#coolframe').should('exist');
+	cy.get('#iframe2').its('0.contentDocument').should('exist').its('body').should('not.be.undefined');
 	cy.log('checkSecondCoolFrameGlobal - end.');
-}
-
-function cFrame() {
-	if (cy.cActiveFrame === '#coolframe')
-		return cy.get(cy.cActiveFrame).its('0.contentDocument').then(cy.wrap);
-	else {
-		return cy.get(cy.cActiveFrame).its('0.contentDocument').find('#coolframe').its('0.contentDocument').then(cy.wrap);
-	}
 }
 
 /*
@@ -360,7 +350,7 @@ function documentChecks() {
 			// Check also that the inputbar is drawn in Calc.
 			doIfInCalc(function() {
 				cy.cGet('#sc_input_window.formulabar').should('exist');
-			}, cFrame());
+			});
 		});
 	}
 
@@ -465,13 +455,13 @@ function expectTextForClipboard(expectedPlainText) {
 		cy.cGet('#copy-paste-container p')
 			.then(function(pItem) {
 				if (pItem.children('font').length !== 0) {
-					cy.customGet('#copy-paste-container p font')
+					cy.cGet('#copy-paste-container p font')
 						.invoke('text')
 						.then(function(value) {
 							return expectedRegex.test(value);
 						});
 				} else {
-					cy.customGet('#copy-paste-container p')
+					cy.cGet('#copy-paste-container p')
 						.invoke('text')
 						.then(function(value) {
 							return expectedRegex.test(value);
@@ -523,6 +513,10 @@ function reload(fileName, subFolder, noFileCopy, subsequentLoad) {
 
 // noRename - whether or not to give the file a unique name, if noFileCopy is false.
 function beforeAll(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename) {
+	// Set defaults here in order to remove checks from cy.cGet function.
+	cy.cSetActiveFrame('#coolframe');
+	cy.cSetLevel('1');
+
 	return loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename);
 }
 
@@ -649,7 +643,7 @@ function doIfInCalc(callback) {
 
 // Run a code snippet if we are *NOT* inside Calc.
 function doIfNotInCalc(callback) {
-	cFrame().find('#document-container')
+	cy.cGet('#document-container')
 		.then(function(doc) {
 			if (!doc.hasClass('spreadsheet-doctype')) {
 				callback();
@@ -1035,8 +1029,8 @@ function textSelectionShouldExist() {
 function textSelectionShouldNotExist() {
 	cy.log('Make sure there is no text selection - start.');
 
-	cy.customGet('.leaflet-selection-marker-start').should('not.exist');
-	cy.customGet('.leaflet-selection-marker-end').should('not.exist');
+	cy.cGet('.leaflet-selection-marker-start').should('not.exist');
+	cy.cGet('.leaflet-selection-marker-end').should('not.exist');
 
 	cy.log('Make sure there is no text selection - end.');
 }
