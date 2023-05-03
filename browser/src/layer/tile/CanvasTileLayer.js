@@ -2219,6 +2219,22 @@ L.CanvasTileLayer = L.Layer.extend({
 			{
 				app.socket.sendMessage('rendershapeselection mimetype=image/svg+xml');
 			}
+
+			// scroll to selected graphics, if it has no cursor
+			if (!this.isWriter() && !this._isEmptyRectangle(this._graphicSelection)
+				&& this._allowViewJump()) {
+
+				var docLayer = this._map._docLayer;
+				var paneRectsInLatLng = this.getPaneLatLngRectangles();
+				if (!this._graphicSelection.isInAny(paneRectsInLatLng) &&
+					!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
+					!(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
+					!(docLayer._followEditor || docLayer._followUser) &&
+					!this._map.calcInputBarHasFocus()) {
+					this.scrollToPos(this._graphicSelection.getNorthWest());
+				}
+			}
+
 		}
 
 		// Graphics are by default complex selections, unless Core tells us otherwise.
