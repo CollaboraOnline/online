@@ -323,6 +323,7 @@ var unoCommandsArray = {
 	'MoveUpSubItems':{text:{menu:_('Move Up with Subpoints'),},},
 	'MovingAverageDialog':{spreadsheet:{menu:_('~Moving Average...'),},},
 	'NamesMenu':{spreadsheet:{menu:_('~Named Ranges and Expressions'),},},
+	'Navigator':{global:{context:_('Show Navigator Window'),menu:_('Na~vigator'),},},
 	'NextTrackedChange':{text:{context:_('Next Track Change'),menu:_('Next'),},},
 	'NumberFormatCurrency':{spreadsheet:{context:_('Format as Currency'),menu:_('Currency'),},text:{menu:_('Number Format: Currency'),},},
 	'NumberFormatDate':{spreadsheet:{context:_('Format as Date'),menu:_('Date'),},text:{menu:_('Number Format: Date'),},},
