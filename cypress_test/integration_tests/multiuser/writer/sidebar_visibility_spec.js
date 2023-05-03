@@ -17,20 +17,20 @@ describe('Sidebar visibility', function() {
 
 	function testSidebarVisiblity(frameId1 ,frameId2) {
 		// Visible by default
-		cy.customGet('#sidebar-dock-wrapper', frameId1)
-			.should('be.visible');
-
-		desktopHelper.hideSidebar(frameId1);
+		cy.cSetActiveFrame(frameId1);
+		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
+		desktopHelper.hideSidebar();
 
 		//sidebar should be visible of user-2
-		cy.customGet('#sidebar-dock-wrapper', frameId2)
-			.should('be.visible');
+		cy.cSetActiveFrame(frameId2);
+		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
 
 		// Show sidebar again
-		desktopHelper.showSidebar(frameId1);
+		cy.cSetActiveFrame(frameId1);
+		desktopHelper.showSidebar();
 
-		cy.customGet('#sidebar-dock-wrapper', frameId2)
-			.should('be.visible');
+		cy.cSetActiveFrame(frameId2);
+		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
 	}
 	it('Show/hide sidebar:user-1', function() {
 		testSidebarVisiblity('#iframe1', '#iframe2');

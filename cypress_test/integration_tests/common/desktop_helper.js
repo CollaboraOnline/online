@@ -5,14 +5,14 @@ var helper = require('./helper');
 // Make the sidebar visible by clicking on the corresponding toolbar item.
 // We assume that the sidebar is hidden, when this method is called.
 
-function showSidebar(frameId) {
+function showSidebar() {
 	cy.log('Showing sidebar - start.');
 
-	cy.cGet('#tb_editbar_item_sidebar .w2ui-button', frameId).should('not.have.class', 'checked');
-	cy.cGet('#sidebar-dock-wrapper', frameId).should('not.be.visible');
-	cy.cGet('#tb_editbar_item_sidebar .w2ui-button', frameId).click({force: true});
-	cy.cGet('#tb_editbar_item_sidebar .w2ui-button', frameId).should('have.class', 'checked');
-	cy.cGet('#sidebar-dock-wrapper', frameId).should('be.visible');
+	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').should('not.have.class', 'checked');
+	cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
+	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').click({force: true});
+	cy.cGet('#tb_editbar_item_sidebar .w2ui-button').should('have.class', 'checked');
+	cy.cGet('#sidebar-dock-wrapper').should('be.visible');
 
 	cy.log('Showing sidebar - end.');
 }
