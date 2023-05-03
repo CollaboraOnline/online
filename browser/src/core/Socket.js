@@ -1114,7 +1114,7 @@ app.definitions.Socket = L.Class.extend({
 				msg += fontsMissingObj.fontsmissing[i];
 			}
 
-			if (!this._map.welcome.isGuest() && this._map.welcome.shouldWelcome() && window.autoShowWelcome)
+			if (this._map.welcome && !this._map.welcome.isGuest() && this._map.welcome.shouldWelcome() && window.autoShowWelcome)
 			{
 				setTimeout(function() {
 					this._map.uiManager.showInfoModal('fontsmissing', _('Missing Fonts'), msg, null, _('Close'));
