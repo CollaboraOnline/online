@@ -70,7 +70,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:DesignerDialog'] = function() {};
 		this._toolitemHandlers['.uno:Zoom'] = function() {};
 		this._toolitemHandlers['.uno:PrintPreview'] = function() {};
-		this._toolitemHandlers['.uno:Navigator'] = function() {};
 		this._toolitemHandlers['.uno:InsertObject'] = function() {};
 		this._toolitemHandlers['.uno:Gallery'] = function() {};
 		this._toolitemHandlers['.uno:InsertAVMedia'] = function() {};

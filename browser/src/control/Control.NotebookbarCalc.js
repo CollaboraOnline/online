@@ -6,6 +6,21 @@
 /* global _ _UNO */
 L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 
+	getOptionsSectionData: function() {
+		return this.buildOptionsSectionData([
+			{
+				'type': 'toolitem',
+				'text': _UNO('.uno:Sidebar', '', true),
+				'command': '.uno:Sidebar'
+			},
+			{
+				'type': 'toolitem',
+				'text': _UNO('.uno:Navigator'),
+				'command': '.uno:Navigator'
+			}
+		]);
+	},
+
 	getTabs: function() {
 		return [
 			{
