@@ -839,7 +839,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			return;
 		}
 
-		var newSplitIndex = Math.floor(parseInt(e.state));
+		var values = e.state.split('/');
+		var newSplitIndex = Math.floor(parseInt(values[0]));
 		window.app.console.assert(!isNaN(newSplitIndex) && newSplitIndex >= 0, 'invalid argument for ' + e.commandName);
 
 		// This stores the current split-cell state of core, so this should not be modified.
