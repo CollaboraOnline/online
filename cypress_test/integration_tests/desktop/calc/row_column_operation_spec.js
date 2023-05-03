@@ -15,7 +15,8 @@ describe('Row Column Operation', function() {
 
 		calcHelper.clickOnFirstCell(true,false);
 
-		mode === 'notebookbar' ? cy.cGet('#toolbar-up .w2ui-scroll-right').click() : '';
+		if (mode === 'notebookbar')
+			cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 	});
 
 	afterEach(function() {
