@@ -3179,6 +3179,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			&& data.type !== 'tabcontrol'
 			&& data.type !== 'drawingarea'
 			&& data.type !== 'grid'
+			&& data.type !== 'image'
 			&& data.type !== 'toolbox'
 			&& data.type !== 'listbox'
 			&& data.type !== 'combobox'

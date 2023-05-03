@@ -243,6 +243,10 @@ L.Control.JSDialog = L.Control.extend({
 			L.DomUtil.addClass(primaryBtn, 'button-primary');
 	},
 
+	getFirstFocusableElement: function(widget) {
+		return widget.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker):not([disabled]):not(.hidden)');
+	},
+
 	addFocusHandler: function(instance) {
 		// loop using tab key
 		var beginMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-begin-marker');
@@ -256,7 +260,7 @@ L.Control.JSDialog = L.Control.extend({
 
 		instance.container.addEventListener('focusin', function(event) {
 			if (event.target == beginMarker || event.target == endMarker) {
-				var firstFocusElement = instance.container.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker, .jsdialog-end-marker)');
+				var firstFocusElement = instance.container.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker, .jsdialog-end-marker):not([disabled]):not(.hidden)');
 				if (firstFocusElement)
 					firstFocusElement.focus();
 				else if (document.getElementById(instance.init_focus_id)) {
@@ -327,7 +331,7 @@ L.Control.JSDialog = L.Control.extend({
 		instance.clickToClose = clickToCloseElement;
 
 		// setup initial focus and helper elements for closing popup
-		var initialFocusElement = instance.container.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker)');
+		var initialFocusElement = this.getFirstFocusableElement(instance.container);
 
 		if (instance.canHaveFocus && initialFocusElement)
 			initialFocusElement.focus();
@@ -335,8 +339,13 @@ L.Control.JSDialog = L.Control.extend({
 		var focusWidget = instance.init_focus_id ? instance.container.querySelector('[id=\'' + instance.init_focus_id + '\']') : null;
 		if (focusWidget)
 			focusWidget.focus();
-		if (focusWidget && document.activeElement !== focusWidget)
-			console.error('cannot get focus for widget: "' + instance.init_focus_id + '"');
+		if (focusWidget && document.activeElement !== focusWidget) {
+			var firstFocusable = this.getFirstFocusableElement(focusWidget);
+			if (firstFocusable)
+				firstFocusable.focus();
+			else
+				console.error('cannot get focus for widget: "' + instance.init_focus_id + '"');
+		}
 	},
 
 	setPosition: function(instance, updatedPos) {
@@ -503,8 +512,7 @@ L.Control.JSDialog = L.Control.extend({
 				var lastKey = dialogs[dialogs.length - 1];
 				var container = this.dialogs[lastKey].container;
 				container.focus();
-				var initialFocusElement =
-					container.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker)');
+				var initialFocusElement = this.getFirstFocusableElement(container);
 				initialFocusElement.focus();
 			}
 		}
