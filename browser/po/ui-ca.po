@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-17 19:35+0200\n"
-"PO-Revision-Date: 2023-03-09 13:38+0000\n"
+"PO-Revision-Date: 2023-04-26 12:49+0000\n"
 "Last-Translator: Joan Montané <jmontane@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.2-dev\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -304,7 +304,7 @@ msgstr "No s'ha pogut autenticar aquesta sessió amb el protocol %0"
 
 #: admin/src/AdminSocketOverview.js:396
 msgid "Warning"
-msgstr ""
+msgstr "Atenció"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
@@ -771,7 +771,7 @@ msgstr "Mostra la barra d'estat"
 #: src/control/Control.NotebookbarImpress.js:419
 #: src/control/Control.NotebookbarWriter.js:1149
 msgid "Dark Mode"
-msgstr ""
+msgstr "Mode nocturn"
 
 #: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:426
 #: src/control/Control.Menubar.js:560 src/control/Control.Menubar.js:693
@@ -792,7 +792,7 @@ msgstr "Tot"
 #: src/control/Control.NotebookbarImpress.js:962
 #: src/control/Control.NotebookbarWriter.js:853
 msgid "Smart Picker"
-msgstr ""
+msgstr "Selector intel·ligent"
 
 #: src/control/Control.Menubar.js:210
 msgid "Text orientation"
@@ -1112,7 +1112,7 @@ msgstr "~Fitxer"
 #: src/control/Control.NotebookbarImpress.js:61
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "Hom~e"
-msgstr ""
+msgstr "~Inici"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:55
@@ -1143,15 +1143,14 @@ msgstr "~Revisió"
 #: src/control/Control.NotebookbarDraw.js:70
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:43
-#, fuzzy
 msgid "F~ormat"
-msgstr "Format"
+msgstr "F~ormat"
 
 #: src/control/Control.NotebookbarCalc.js:48
 #: src/control/Control.NotebookbarDraw.js:81
 #: src/control/Control.NotebookbarWriter.js:59
 msgid "Dra~w"
-msgstr ""
+msgstr "~Dibuixa"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:87
@@ -1372,9 +1371,8 @@ msgid "Reference~s"
 msgstr "Referèncie~s"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "For~m"
-msgstr "Formulari"
+msgstr "For~mulari"
 
 #: src/control/Control.NotebookbarWriter.js:206
 msgid "ODF Text Document (.odt)"
@@ -1987,7 +1985,7 @@ msgstr "Heu indicat una contrasenya errònia. Torneu-ho a intentar."
 
 #: src/core/Socket.js:955
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Només el propietari del document pot canviar-ne la contrasenya."
 
 #: src/core/Socket.js:986 src/core/Socket.js:991
 msgid "Missing Fonts"
@@ -2404,16 +2402,15 @@ msgstr ""
 "una altra</p>"
 
 #: src/map/Clipboard.js:906
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
 "more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>El vostre navegador té un accés molt limitat al porta-retalls</p><p>"
-"Premeu ara:<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> per "
-"a veure més opcions</p><p class=\"vex-footnote\">Tanqueu la finestra "
-"emergent per a ignorar l'enganxament especial</p>"
+"<p>El vostre navegador té un accés molt limitat al porta-retalls</"
+"p><p>Premeu ara:<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</"
+"kbd> per a veure més opcions</p><p>Tanqueu la finestra emergent per a "
+"ignorar l'enganxament especial</p>"
 
 #: src/map/Map.js:218
 msgid "Initializing..."
