@@ -1,4 +1,5 @@
 import { defineConfig } from 'cypress';
+import plugin from './plugins/index.js';
 
 export default defineConfig({
   video: false,
@@ -11,13 +12,8 @@ export default defineConfig({
     openMode: 0,
   },
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
-      //require('@cypress/grep/src/plugin')(config);
-      //return config;
-      /*eslint-disable-next-line*/
-      return require('./plugins/index.js')(on, config);
+      plugin(on, config);
     },
     specPattern: 'integration_tests/**/*_spec.js',
   },
