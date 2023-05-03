@@ -2212,7 +2212,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			// Workaround for tdf#123874. For some reason the handling of the
 			// shapeselectioncontent messages that we get back causes the WebKit process
 			// to crash on iOS.
-			if (!window.ThisIsTheiOSApp && this._graphicSelection.extraInfo.isDraggable && !this._graphicSelection.extraInfo.svg) {
+			// Note2: scroll to frame in writer would result an error:
+			//   svgexport.cxx:810: ...UnknownPropertyException message: "Background
+			if (!window.ThisIsTheiOSApp && this._graphicSelection.extraInfo.isDraggable && !this._graphicSelection.extraInfo.svg
+				&& (extraInfo.type != 601 || !extraInfo.isWriterGraphic))
+			{
 				app.socket.sendMessage('rendershapeselection mimetype=image/svg+xml');
 			}
 		}
