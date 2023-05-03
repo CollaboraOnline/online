@@ -513,6 +513,11 @@ L.Control.Notebookbar = L.Control.extend({
 			},
 			{
 				'type': 'toolitem',
+				'text': _UNO('.uno:Navigator'),
+				'command': '.uno:Navigator'
+			},
+			{
+				'type': 'toolitem',
 				// dummy node to avoid creating labels
 			}
 		]);
