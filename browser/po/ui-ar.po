@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-17 19:35+0200\n"
+"POT-Creation-Date: 2023-05-03 16:53+0200\n"
 "PO-Revision-Date: 2022-02-11 21:22+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
@@ -145,7 +145,7 @@ msgstr "رسم بياني للشبكة"
 #: src/control/Control.NotebookbarImpress.js:20
 #: src/control/Control.NotebookbarImpress.js:154
 #: src/control/Control.NotebookbarWriter.js:116
-#: src/layer/tile/CommentListSection.ts:418
+#: src/layer/tile/CommentListSection.ts:378
 #: src/layer/tile/CommentSection.ts:114
 msgid "Save"
 msgstr "احفظ"
@@ -227,7 +227,7 @@ msgid "Log Levels"
 msgstr "مستويات السجل"
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:21
-#: src/control/Control.AlertDialog.js:27 src/control/Control.AlertDialog.js:56
+#: src/control/Control.AlertDialog.js:27 src/control/Control.AlertDialog.js:58
 #: src/control/Control.Zotero.js:182 src/control/Parts.js:438
 #: src/core/Socket.js:986 src/core/Socket.js:991
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
@@ -256,15 +256,17 @@ msgstr "تم إغلاق الخادم؛ يرجى إعادة تحميل الصفح
 
 #: admin/src/AdminSocketBase.js:55 admin/src/AdminSocketBase.js:66
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketOverview.js:398
-#: admin/src/AdminSocketSettings.js:36
+#: admin/src/AdminSocketSettings.js:36 src/control/Control.AlertDialog.js:43
 #: src/control/Control.DocumentRepair.js:68
 #: src/control/Control.LanguageDialog.js:109 src/control/Control.Tabs.js:303
 #: src/control/Control.Tabs.js:312 src/control/Control.Zotero.js:328
 #: src/control/Control.Zotero.js:366 src/control/Permission.js:76
 #: src/control/Permission.js:86 src/control/Permission.js:136
-#: src/control/Toolbar.js:711 src/control/Toolbar.js:936
+#: src/control/Toolbar.js:551 src/control/Toolbar.js:650
+#: src/control/Toolbar.js:717 src/control/Toolbar.js:942
 #: src/core/Socket.js:956 src/core/Socket.js:1031 src/core/Socket.js:1158
-#: src/core/Socket.js:1162 src/main.js:70 src/main.js:73 src/main.js:109
+#: src/core/Socket.js:1162 src/main.js:70 src/main.js:73 src/main.js:110
+#: src/map/Clipboard.js:868 src/map/Clipboard.js:914
 #: src/map/handler/Map.Feedback.js:83 src/map/handler/Map.WOPI.js:484
 msgid "OK"
 msgstr "موافق"
@@ -286,8 +288,8 @@ msgstr "أمتأكد من إنهاء هذه الجلسة؟"
 #: src/control/Control.DocumentRepair.js:62
 #: src/control/Control.LanguageDialog.js:103
 #: src/control/Control.MobileTopBar.js:41 src/control/Control.Zotero.js:323
-#: src/control/Toolbar.js:706 src/core/Socket.js:1183
-#: src/layer/tile/CommentListSection.ts:413
+#: src/control/Toolbar.js:712 src/core/Socket.js:1183
+#: src/layer/tile/CommentListSection.ts:373
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
 msgid "Cancel"
 msgstr "ألغِ"
@@ -376,7 +378,7 @@ msgstr ""
 msgid "Open link"
 msgstr "افتح الرابط"
 
-#: src/control/Control.AlertDialog.js:53
+#: src/control/Control.AlertDialog.js:55
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "واجه الخادوم خطأ %0 أثناء تحليل الأمر %1."
 
@@ -384,7 +386,7 @@ msgstr "واجه الخادوم خطأ %0 أثناء تحليل الأمر %1."
 msgid "Unlock"
 msgstr "الغاء القفل"
 
-#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:935
+#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:941
 msgid "Delete"
 msgstr "حذف"
 
@@ -554,9 +556,9 @@ msgid "replies"
 msgstr "ردود"
 
 #: src/control/Control.JSDialogBuilder.js:2062
-#: src/layer/tile/CanvasTileLayer.js:5139
-#: src/layer/tile/CanvasTileLayer.js:5150
-#: src/layer/tile/CommentListSection.ts:888
+#: src/layer/tile/CanvasTileLayer.js:5137
+#: src/layer/tile/CanvasTileLayer.js:5148
+#: src/layer/tile/CommentListSection.ts:873
 msgid "Comment"
 msgstr "التعليق"
 
@@ -569,12 +571,12 @@ msgid "Cell borders"
 msgstr "حدود الخلية"
 
 #: src/control/Control.JSDialogBuilder.js:3006
-#: src/control/Control.Menubar.js:787
+#: src/control/Control.Menubar.js:788
 msgid "Rows"
 msgstr "صفوف"
 
 #: src/control/Control.JSDialogBuilder.js:3007
-#: src/control/Control.Menubar.js:790
+#: src/control/Control.Menubar.js:791
 msgid "Columns"
 msgstr "أعمدة"
 
@@ -582,10 +584,10 @@ msgstr "أعمدة"
 msgid "Insert Table"
 msgstr "إدراج جدول"
 
-#: src/control/Control.LanguageDialog.js:54 src/control/Control.Menubar.js:334
-#: src/control/Control.Menubar.js:336 src/control/Control.Menubar.js:338
-#: src/control/Control.Menubar.js:495 src/control/Control.Menubar.js:621
-#: src/control/Control.Menubar.js:867 src/control/Control.StatusBar.js:554
+#: src/control/Control.LanguageDialog.js:54 src/control/Control.Menubar.js:335
+#: src/control/Control.Menubar.js:337 src/control/Control.Menubar.js:339
+#: src/control/Control.Menubar.js:496 src/control/Control.Menubar.js:622
+#: src/control/Control.Menubar.js:868 src/control/Control.StatusBar.js:554
 msgid "None (Do not check spelling)"
 msgstr "بلا (لا تدقّق الإملاء)"
 
@@ -598,14 +600,14 @@ msgid "Language"
 msgstr ""
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:80
-#: src/control/Control.Menubar.js:902
+#: src/control/Control.Menubar.js:903
 #: src/control/Control.NotebookbarBuilder.js:496
 #: src/control/Control.NotebookbarBuilder.js:585
 msgid "ODF text document (.odt)"
 msgstr "ملف ODF نصي ‪(‎.odt)"
 
 #: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:81
-#: src/control/Control.Menubar.js:903
+#: src/control/Control.Menubar.js:904
 #: src/control/Control.NotebookbarBuilder.js:508
 #: src/control/Control.NotebookbarBuilder.js:597
 #: src/control/Control.NotebookbarWriter.js:224
@@ -613,7 +615,7 @@ msgid "Word 2003 Document (.doc)"
 msgstr "مستند وورد ٢٠٠٣ (‎.doc)"
 
 #: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:82
-#: src/control/Control.Menubar.js:904
+#: src/control/Control.Menubar.js:905
 #: src/control/Control.NotebookbarBuilder.js:504
 #: src/control/Control.NotebookbarBuilder.js:593
 #: src/control/Control.NotebookbarWriter.js:230
@@ -621,7 +623,7 @@ msgid "Word Document (.docx)"
 msgstr "مستند وورد (‎.docx)"
 
 #: src/control/Control.Menubar.js:70 src/control/Control.Menubar.js:83
-#: src/control/Control.Menubar.js:905
+#: src/control/Control.Menubar.js:906
 #: src/control/Control.NotebookbarBuilder.js:500
 #: src/control/Control.NotebookbarBuilder.js:589
 #: src/control/Control.NotebookbarWriter.js:212
@@ -629,17 +631,6 @@ msgid "Rich Text (.rtf)"
 msgstr "نص غنيّ (‎.rtf)"
 
 #: src/control/Control.Menubar.js:72 src/control/Control.Menubar.js:78
-#: src/control/Control.Menubar.js:372 src/control/Control.Menubar.js:378
-#: src/control/Control.Menubar.js:515 src/control/Control.Menubar.js:522
-#: src/control/Control.Menubar.js:642 src/control/Control.Menubar.js:647
-#: src/control/Control.Menubar.js:888 src/control/Control.Menubar.js:900
-#: src/control/Control.Menubar.js:952 src/control/Control.Menubar.js:961
-#: src/control/Control.Menubar.js:1012 src/control/Control.Menubar.js:1020
-#: src/control/Control.Menubar.js:1062 src/control/Control.Menubar.js:1073
-msgid "Export as"
-msgstr "تصدير ك"
-
-#: src/control/Control.Menubar.js:73 src/control/Control.Menubar.js:79
 #: src/control/Control.Menubar.js:373 src/control/Control.Menubar.js:379
 #: src/control/Control.Menubar.js:516 src/control/Control.Menubar.js:523
 #: src/control/Control.Menubar.js:643 src/control/Control.Menubar.js:648
@@ -647,6 +638,17 @@ msgstr "تصدير ك"
 #: src/control/Control.Menubar.js:953 src/control/Control.Menubar.js:962
 #: src/control/Control.Menubar.js:1013 src/control/Control.Menubar.js:1021
 #: src/control/Control.Menubar.js:1063 src/control/Control.Menubar.js:1074
+msgid "Export as"
+msgstr "تصدير ك"
+
+#: src/control/Control.Menubar.js:73 src/control/Control.Menubar.js:79
+#: src/control/Control.Menubar.js:374 src/control/Control.Menubar.js:380
+#: src/control/Control.Menubar.js:517 src/control/Control.Menubar.js:524
+#: src/control/Control.Menubar.js:644 src/control/Control.Menubar.js:649
+#: src/control/Control.Menubar.js:890 src/control/Control.Menubar.js:902
+#: src/control/Control.Menubar.js:954 src/control/Control.Menubar.js:963
+#: src/control/Control.Menubar.js:1014 src/control/Control.Menubar.js:1022
+#: src/control/Control.Menubar.js:1064 src/control/Control.Menubar.js:1075
 #: src/control/Control.NotebookbarBuilder.js:517
 #: src/control/Control.NotebookbarBuilder.js:541
 #: src/control/Control.NotebookbarBuilder.js:565
@@ -662,48 +664,48 @@ msgid "PDF Document (.pdf)"
 msgstr "ملف ‪PDF ‏(.pdf)"
 
 #: src/control/Control.Menubar.js:74 src/control/Control.Menubar.js:84
-#: src/control/Control.Menubar.js:890 src/control/Control.Menubar.js:906
+#: src/control/Control.Menubar.js:891 src/control/Control.Menubar.js:907
 #: src/control/Control.NotebookbarBuilder.js:512
 #: src/control/Control.NotebookbarBuilder.js:650
 msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
-#: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:376
-#: src/control/Control.Menubar.js:519 src/control/Control.Menubar.js:645
-#: src/control/Control.Menubar.js:892 src/control/Control.Menubar.js:955
-#: src/control/Control.Menubar.js:1015 src/control/Control.Menubar.js:1065
+#: src/control/Control.Menubar.js:76 src/control/Control.Menubar.js:377
+#: src/control/Control.Menubar.js:520 src/control/Control.Menubar.js:646
+#: src/control/Control.Menubar.js:893 src/control/Control.Menubar.js:956
+#: src/control/Control.Menubar.js:1016 src/control/Control.Menubar.js:1066
 msgid "Share..."
 msgstr "شارك..."
 
-#: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:377
-#: src/control/Control.Menubar.js:521 src/control/Control.Menubar.js:646
-#: src/control/Control.Menubar.js:893 src/control/Control.Menubar.js:956
-#: src/control/Control.Menubar.js:1017 src/control/Control.Menubar.js:1066
+#: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:378
+#: src/control/Control.Menubar.js:522 src/control/Control.Menubar.js:647
+#: src/control/Control.Menubar.js:894 src/control/Control.Menubar.js:957
+#: src/control/Control.Menubar.js:1018 src/control/Control.Menubar.js:1067
 msgid "See revision history"
 msgstr "طالع تأريخ المراجعات"
 
-#: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:378
-#: src/control/Control.Menubar.js:522 src/control/Control.Menubar.js:647
-#: src/control/Control.Menubar.js:900 src/control/Control.Menubar.js:961
-#: src/control/Control.Menubar.js:1020 src/control/Control.Menubar.js:1073
+#: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:379
+#: src/control/Control.Menubar.js:523 src/control/Control.Menubar.js:648
+#: src/control/Control.Menubar.js:901 src/control/Control.Menubar.js:962
+#: src/control/Control.Menubar.js:1021 src/control/Control.Menubar.js:1074
 msgid "Download as"
 msgstr "نزّل ك‍"
 
-#: src/control/Control.Menubar.js:85 src/control/Control.Menubar.js:894
+#: src/control/Control.Menubar.js:85 src/control/Control.Menubar.js:895
 #: src/control/Control.NotebookbarWriter.js:271
 msgid "Sign document"
 msgstr "وقع المستند"
 
-#: src/control/Control.Menubar.js:89 src/control/Control.Menubar.js:387
-#: src/control/Control.Menubar.js:528 src/control/Control.Menubar.js:656
+#: src/control/Control.Menubar.js:89 src/control/Control.Menubar.js:388
+#: src/control/Control.Menubar.js:529 src/control/Control.Menubar.js:657
 #: src/control/Control.Toolbar.js:1166
 msgid "Close document"
 msgstr "أغلق المستند"
 
-#: src/control/Control.Menubar.js:94 src/control/Control.Menubar.js:392
-#: src/control/Control.Menubar.js:533 src/control/Control.Menubar.js:661
-#: src/control/Control.Menubar.js:911 src/control/Control.Menubar.js:971
-#: src/control/Control.Menubar.js:1027 src/control/Control.Menubar.js:1082
+#: src/control/Control.Menubar.js:94 src/control/Control.Menubar.js:393
+#: src/control/Control.Menubar.js:534 src/control/Control.Menubar.js:662
+#: src/control/Control.Menubar.js:912 src/control/Control.Menubar.js:972
+#: src/control/Control.Menubar.js:1028 src/control/Control.Menubar.js:1083
 #: src/control/Control.NotebookbarCalc.js:193
 #: src/control/Control.NotebookbarCalc.js:194
 #: src/control/Control.NotebookbarCalc.js:254
@@ -724,71 +726,71 @@ msgid "Repair"
 msgstr "أصلح"
 
 #: src/control/Control.Menubar.js:118 src/control/Control.Menubar.js:124
-#: src/control/Control.Menubar.js:404 src/control/Control.Menubar.js:410
-#: src/control/Control.Menubar.js:545 src/control/Control.Menubar.js:551
-#: src/control/Control.Menubar.js:673 src/control/Control.Menubar.js:679
+#: src/control/Control.Menubar.js:405 src/control/Control.Menubar.js:411
+#: src/control/Control.Menubar.js:546 src/control/Control.Menubar.js:552
+#: src/control/Control.Menubar.js:674 src/control/Control.Menubar.js:680
 #: src/control/Control.NotebookbarCalc.js:1004
 #: src/control/Control.NotebookbarCalc.js:1005
 #: src/control/Control.NotebookbarDraw.js:255
 #: src/control/Control.NotebookbarDraw.js:256
 #: src/control/Control.NotebookbarImpress.js:368
 #: src/control/Control.NotebookbarImpress.js:369
-#: src/control/Control.NotebookbarWriter.js:1081
-#: src/control/Control.NotebookbarWriter.js:1082
+#: src/control/Control.NotebookbarWriter.js:1086
+#: src/control/Control.NotebookbarWriter.js:1087
 #: src/control/Control.StatusBar.js:206
 msgid "Reset zoom"
 msgstr "صفّر مستوى التكبير"
 
-#: src/control/Control.Menubar.js:127 src/control/Control.Menubar.js:413
-#: src/control/Control.Menubar.js:554 src/control/Control.Menubar.js:682
+#: src/control/Control.Menubar.js:127 src/control/Control.Menubar.js:414
+#: src/control/Control.Menubar.js:555 src/control/Control.Menubar.js:683
 #: src/control/Control.NotebookbarCalc.js:1039
 #: src/control/Control.NotebookbarDraw.js:290
 #: src/control/Control.NotebookbarImpress.js:403
-#: src/control/Control.NotebookbarWriter.js:1116
+#: src/control/Control.NotebookbarWriter.js:1121
 msgid "Toggle UI Mode"
 msgstr ""
 
-#: src/control/Control.Menubar.js:128 src/control/Control.Menubar.js:414
-#: src/control/Control.NotebookbarWriter.js:1128
+#: src/control/Control.Menubar.js:128 src/control/Control.Menubar.js:415
+#: src/control/Control.NotebookbarWriter.js:1133
 msgid "Show Ruler"
 msgstr "أظهر المسطرة"
 
-#: src/control/Control.Menubar.js:129 src/control/Control.Menubar.js:415
-#: src/control/Control.Menubar.js:557 src/control/Control.Menubar.js:683
+#: src/control/Control.Menubar.js:129 src/control/Control.Menubar.js:416
+#: src/control/Control.Menubar.js:558 src/control/Control.Menubar.js:684
 #: src/control/Control.NotebookbarCalc.js:1045
 #: src/control/Control.NotebookbarDraw.js:296
 #: src/control/Control.NotebookbarImpress.js:409
-#: src/control/Control.NotebookbarWriter.js:1139
+#: src/control/Control.NotebookbarWriter.js:1144
 msgid "Show Status Bar"
 msgstr "أظهر شريط الحالة"
 
-#: src/control/Control.Menubar.js:130 src/control/Control.Menubar.js:416
-#: src/control/Control.Menubar.js:555 src/control/Control.Menubar.js:684
+#: src/control/Control.Menubar.js:130 src/control/Control.Menubar.js:417
+#: src/control/Control.Menubar.js:556 src/control/Control.Menubar.js:685
 #: src/control/Control.NotebookbarCalc.js:1050
 #: src/control/Control.NotebookbarDraw.js:301
 #: src/control/Control.NotebookbarImpress.js:419
-#: src/control/Control.NotebookbarWriter.js:1149
+#: src/control/Control.NotebookbarWriter.js:1154
 msgid "Dark Mode"
 msgstr ""
 
-#: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:426
-#: src/control/Control.Menubar.js:560 src/control/Control.Menubar.js:693
-#: src/control/Control.Menubar.js:1130 src/control/Control.Menubar.js:1180
-#: src/control/Control.Menubar.js:1194 src/control/Control.Menubar.js:1217
+#: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:427
+#: src/control/Control.Menubar.js:561 src/control/Control.Menubar.js:694
+#: src/control/Control.Menubar.js:1131 src/control/Control.Menubar.js:1181
+#: src/control/Control.Menubar.js:1195 src/control/Control.Menubar.js:1218
 msgid "Local Image..."
 msgstr "صورة محلية ..."
 
 #: src/control/Control.Menubar.js:160 src/control/Control.Menubar.js:162
-#: src/control/Control.Menubar.js:1147 src/control/Control.Menubar.js:1149
+#: src/control/Control.Menubar.js:1148 src/control/Control.Menubar.js:1150
 msgid "All"
 msgstr "الكل"
 
-#: src/control/Control.Menubar.js:171 src/control/Control.Menubar.js:436
-#: src/control/Control.Menubar.js:567 src/control/Control.Menubar.js:705
+#: src/control/Control.Menubar.js:171 src/control/Control.Menubar.js:437
+#: src/control/Control.Menubar.js:568 src/control/Control.Menubar.js:706
 #: src/control/Control.NotebookbarCalc.js:1146
 #: src/control/Control.NotebookbarDraw.js:938
 #: src/control/Control.NotebookbarImpress.js:962
-#: src/control/Control.NotebookbarWriter.js:853
+#: src/control/Control.NotebookbarWriter.js:858
 msgid "Smart Picker"
 msgstr ""
 
@@ -796,245 +798,245 @@ msgstr ""
 msgid "Text orientation"
 msgstr "اتجاه النص"
 
-#: src/control/Control.Menubar.js:271
+#: src/control/Control.Menubar.js:272
 #, fuzzy
 msgid "References"
 msgstr "المرجع ~ ق"
 
-#: src/control/Control.Menubar.js:274
-#: src/control/Control.NotebookbarWriter.js:1440
+#: src/control/Control.Menubar.js:275
+#: src/control/Control.NotebookbarWriter.js:1445
 msgid "Update Index"
 msgstr ""
 
-#: src/control/Control.Menubar.js:283
-#: src/control/Control.NotebookbarWriter.js:1523
+#: src/control/Control.Menubar.js:284
+#: src/control/Control.NotebookbarWriter.js:1528
 msgid "Add Citation"
 msgstr ""
 
-#: src/control/Control.Menubar.js:284
-#: src/control/Control.NotebookbarWriter.js:1534
+#: src/control/Control.Menubar.js:285
+#: src/control/Control.NotebookbarWriter.js:1539
 msgid "Add Citation Note"
 msgstr ""
 
-#: src/control/Control.Menubar.js:285
-#: src/control/Control.NotebookbarWriter.js:1511
+#: src/control/Control.Menubar.js:286
+#: src/control/Control.NotebookbarWriter.js:1516
 msgid "Add Bibliography"
 msgstr ""
 
-#: src/control/Control.Menubar.js:287
-#: src/control/Control.NotebookbarWriter.js:1551
+#: src/control/Control.Menubar.js:288
+#: src/control/Control.NotebookbarWriter.js:1556
 msgid "Refresh Citations"
 msgstr ""
 
-#: src/control/Control.Menubar.js:288
-#: src/control/Control.NotebookbarWriter.js:1562
+#: src/control/Control.Menubar.js:289
+#: src/control/Control.NotebookbarWriter.js:1567
 #: src/control/Control.Zotero.js:1436
 msgid "Unlink Citations"
 msgstr ""
 
-#: src/control/Control.Menubar.js:289
-#: src/control/Control.NotebookbarWriter.js:1573
+#: src/control/Control.Menubar.js:290
+#: src/control/Control.NotebookbarWriter.js:1578
 msgid "Citation Preferences"
 msgstr ""
 
-#: src/control/Control.Menubar.js:317 src/control/Control.Menubar.js:1169
+#: src/control/Control.Menubar.js:318 src/control/Control.Menubar.js:1170
 msgid "Insert Rich Text"
 msgstr ""
 
-#: src/control/Control.Menubar.js:318 src/control/Control.Menubar.js:1170
+#: src/control/Control.Menubar.js:319 src/control/Control.Menubar.js:1171
 msgid "Insert Checkbox"
 msgstr ""
 
-#: src/control/Control.Menubar.js:319 src/control/Control.Menubar.js:1171
+#: src/control/Control.Menubar.js:320 src/control/Control.Menubar.js:1172
 msgid "Insert Dropdown"
 msgstr ""
 
-#: src/control/Control.Menubar.js:320 src/control/Control.Menubar.js:1172
+#: src/control/Control.Menubar.js:321 src/control/Control.Menubar.js:1173
 msgid "Insert Picture"
 msgstr ""
 
-#: src/control/Control.Menubar.js:321 src/control/Control.Menubar.js:1173
+#: src/control/Control.Menubar.js:322 src/control/Control.Menubar.js:1174
 #, fuzzy
 msgid "Insert Date"
 msgstr "إدراج جدول"
 
-#: src/control/Control.Menubar.js:322 src/control/Control.Menubar.js:1174
+#: src/control/Control.Menubar.js:323 src/control/Control.Menubar.js:1175
 #: src/control/Control.NotebookbarCalc.js:282
 #: src/control/Control.NotebookbarDraw.js:227
 #: src/control/Control.NotebookbarImpress.js:334
 #: src/control/Control.NotebookbarWriter.js:284
-#: src/control/Control.NotebookbarWriter.js:1049
+#: src/control/Control.NotebookbarWriter.js:1054
 msgid "Properties"
 msgstr ""
 
-#: src/control/Control.Menubar.js:353
+#: src/control/Control.Menubar.js:354
 #: src/control/Control.NotebookbarWriter.js:309
 msgid "Forum"
 msgstr "المنتدى"
 
-#: src/control/Control.Menubar.js:354 src/control/Control.Menubar.js:501
-#: src/control/Control.Menubar.js:624 src/control/Control.Menubar.js:873
+#: src/control/Control.Menubar.js:355 src/control/Control.Menubar.js:502
+#: src/control/Control.Menubar.js:625 src/control/Control.Menubar.js:874
 #: src/control/Control.NotebookbarWriter.js:320
 msgid "Online Help"
 msgstr "مساعدة عبر الانترنت"
 
-#: src/control/Control.Menubar.js:355 src/control/Control.Menubar.js:502
-#: src/control/Control.Menubar.js:625 src/control/Control.Menubar.js:874
+#: src/control/Control.Menubar.js:356 src/control/Control.Menubar.js:503
+#: src/control/Control.Menubar.js:626 src/control/Control.Menubar.js:875
 #: src/control/Control.NotebookbarWriter.js:331
 msgid "Keyboard shortcuts"
 msgstr "اختصارات لوحة المفاتيح"
 
-#: src/control/Control.Menubar.js:356 src/control/Control.Menubar.js:503
-#: src/control/Control.Menubar.js:626 src/control/Control.Menubar.js:875
+#: src/control/Control.Menubar.js:357 src/control/Control.Menubar.js:504
+#: src/control/Control.Menubar.js:627 src/control/Control.Menubar.js:876
 #: src/control/Control.NotebookbarWriter.js:348
 msgid "Report an issue"
 msgstr "بلغ عن خطأ"
-
-#: src/control/Control.Menubar.js:357 src/control/Control.Menubar.js:504
-#: src/control/Control.Menubar.js:627 src/control/Control.Menubar.js:876
-#: src/control/Control.Menubar.js:942 src/control/Control.Menubar.js:1002
-#: src/control/Control.Menubar.js:1052 src/control/Control.Menubar.js:1122
-#: src/control/Control.NotebookbarWriter.js:360
-msgid "Latest Updates"
-msgstr "آخر التحديثات"
 
 #: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:505
 #: src/control/Control.Menubar.js:628 src/control/Control.Menubar.js:877
 #: src/control/Control.Menubar.js:943 src/control/Control.Menubar.js:1003
 #: src/control/Control.Menubar.js:1053 src/control/Control.Menubar.js:1123
-#: src/control/Control.NotebookbarWriter.js:372
-msgid "Send Feedback"
-msgstr "ارسل رأيك"
+#: src/control/Control.NotebookbarWriter.js:360
+msgid "Latest Updates"
+msgstr "آخر التحديثات"
 
 #: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:506
 #: src/control/Control.Menubar.js:629 src/control/Control.Menubar.js:878
 #: src/control/Control.Menubar.js:944 src/control/Control.Menubar.js:1004
 #: src/control/Control.Menubar.js:1054 src/control/Control.Menubar.js:1124
+#: src/control/Control.NotebookbarWriter.js:372
+msgid "Send Feedback"
+msgstr "ارسل رأيك"
+
+#: src/control/Control.Menubar.js:360 src/control/Control.Menubar.js:507
+#: src/control/Control.Menubar.js:630 src/control/Control.Menubar.js:879
+#: src/control/Control.Menubar.js:945 src/control/Control.Menubar.js:1005
+#: src/control/Control.Menubar.js:1055 src/control/Control.Menubar.js:1125
 #: src/control/Control.NotebookbarWriter.js:384
 msgid "About"
 msgstr "عن"
 
-#: src/control/Control.Menubar.js:361 src/control/Control.Menubar.js:508
-#: src/control/Control.Menubar.js:631 src/control/Control.Menubar.js:880
+#: src/control/Control.Menubar.js:362 src/control/Control.Menubar.js:509
+#: src/control/Control.Menubar.js:632 src/control/Control.Menubar.js:881
 msgid "Last modification"
 msgstr "اخر تعديل"
 
-#: src/control/Control.Menubar.js:368 src/control/Control.Menubar.js:380
-#: src/control/Control.Menubar.js:963
+#: src/control/Control.Menubar.js:369 src/control/Control.Menubar.js:381
+#: src/control/Control.Menubar.js:964
 #: src/control/Control.NotebookbarBuilder.js:549
 #: src/control/Control.NotebookbarBuilder.js:619
 msgid "ODF presentation (.odp)"
 msgstr "عرض ODF ‏(‎.odp)"
 
-#: src/control/Control.Menubar.js:369 src/control/Control.Menubar.js:381
-#: src/control/Control.Menubar.js:964
+#: src/control/Control.Menubar.js:370 src/control/Control.Menubar.js:382
+#: src/control/Control.Menubar.js:965
 #: src/control/Control.NotebookbarBuilder.js:561
 #: src/control/Control.NotebookbarBuilder.js:627
 #: src/control/Control.NotebookbarImpress.js:280
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "عرض پورپوينت ٢٠٠٣ تقديمي (‎.ppt)"
 
-#: src/control/Control.Menubar.js:370 src/control/Control.Menubar.js:382
-#: src/control/Control.Menubar.js:965
+#: src/control/Control.Menubar.js:371 src/control/Control.Menubar.js:383
+#: src/control/Control.Menubar.js:966
 #: src/control/Control.NotebookbarBuilder.js:557
 #: src/control/Control.NotebookbarBuilder.js:623
 #: src/control/Control.NotebookbarImpress.js:286
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "عرض پورپوينت تقديمي (‎.pptx)"
 
-#: src/control/Control.Menubar.js:375 src/control/Control.Menubar.js:518
+#: src/control/Control.Menubar.js:376 src/control/Control.Menubar.js:519
 msgid "Save Comments"
 msgstr "حفظ التعليقات"
 
-#: src/control/Control.Menubar.js:488 src/control/Control.Menubar.js:1000
+#: src/control/Control.Menubar.js:489 src/control/Control.Menubar.js:1001
 #: src/control/Control.PresentationBar.js:57
 msgid "Fullscreen presentation"
 msgstr "عرض بملء الشاشة"
 
-#: src/control/Control.Menubar.js:489
+#: src/control/Control.Menubar.js:490
 msgid "Present current slide"
 msgstr "عرض الشريحة الحالية"
 
-#: src/control/Control.Menubar.js:524 src/control/Control.Menubar.js:966
-#: src/control/Control.Menubar.js:1022
+#: src/control/Control.Menubar.js:525 src/control/Control.Menubar.js:967
+#: src/control/Control.Menubar.js:1023
 #: src/control/Control.NotebookbarBuilder.js:553
 #: src/control/Control.NotebookbarDraw.js:187
 #: src/control/Control.NotebookbarImpress.js:267
 msgid "ODF Drawing (.odg)"
 msgstr "رسم ODF ‏(‎.odp)"
 
-#: src/control/Control.Menubar.js:638 src/control/Control.Menubar.js:649
-#: src/control/Control.Menubar.js:1075
+#: src/control/Control.Menubar.js:639 src/control/Control.Menubar.js:650
+#: src/control/Control.Menubar.js:1076
 #: src/control/Control.NotebookbarBuilder.js:525
 #: src/control/Control.NotebookbarBuilder.js:604
 msgid "ODF spreadsheet (.ods)"
 msgstr "عرض ODF ‏(‎.ods)"
 
-#: src/control/Control.Menubar.js:639 src/control/Control.Menubar.js:650
-#: src/control/Control.Menubar.js:1076
+#: src/control/Control.Menubar.js:640 src/control/Control.Menubar.js:651
+#: src/control/Control.Menubar.js:1077
 #: src/control/Control.NotebookbarBuilder.js:533
 #: src/control/Control.NotebookbarBuilder.js:612
 #: src/control/Control.NotebookbarCalc.js:228
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "ورقة إكسل ٢٠٠٣ ممتدّة (‎.xls)"
 
-#: src/control/Control.Menubar.js:640 src/control/Control.Menubar.js:651
-#: src/control/Control.Menubar.js:1077
+#: src/control/Control.Menubar.js:641 src/control/Control.Menubar.js:652
+#: src/control/Control.Menubar.js:1078
 #: src/control/Control.NotebookbarBuilder.js:529
 #: src/control/Control.NotebookbarBuilder.js:608
 #: src/control/Control.NotebookbarCalc.js:234
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "ورقة إكسل ممتدّة (‎.xlsx)"
 
-#: src/control/Control.Menubar.js:652
+#: src/control/Control.Menubar.js:653
 msgid "CSV file (.csv)"
 msgstr "ملف (.csv) CSV"
 
-#: src/control/Control.Menubar.js:884 src/control/Control.Menubar.js:948
-#: src/control/Control.Menubar.js:1008 src/control/Control.Menubar.js:1058
+#: src/control/Control.Menubar.js:885 src/control/Control.Menubar.js:949
+#: src/control/Control.Menubar.js:1009 src/control/Control.Menubar.js:1059
 #: src/control/Control.StatusBar.js:191 src/control/Control.Zotero.js:211
 msgid "Search"
 msgstr "البحث"
 
-#: src/control/Control.Menubar.js:935
+#: src/control/Control.Menubar.js:936
 msgid "Page Setup"
 msgstr "اعداد الصفحة"
 
-#: src/control/Control.Menubar.js:1069
+#: src/control/Control.Menubar.js:1070
 msgid "Define print area"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1070
+#: src/control/Control.Menubar.js:1071
 msgid "Remove print area"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1343 src/control/Control.StatusBar.js:553
+#: src/control/Control.Menubar.js:1344 src/control/Control.StatusBar.js:553
 msgid "Reset to Default Language"
 msgstr "صفّر إلى اللغة المبدئيّة"
 
-#: src/control/Control.Menubar.js:1374 src/control/Control.Menubar.js:1375
-#: src/control/Control.Menubar.js:1376 src/control/Control.StatusBar.js:575
+#: src/control/Control.Menubar.js:1375 src/control/Control.Menubar.js:1376
+#: src/control/Control.Menubar.js:1377 src/control/Control.StatusBar.js:575
 #: src/control/Control.Toolbar.js:241 src/control/Control.Toolbar.js:269
 msgid "More..."
 msgstr "أكثر..."
 
-#: src/control/Control.Menubar.js:1677
+#: src/control/Control.Menubar.js:1678
 msgid "Use Compact view"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1679
+#: src/control/Control.Menubar.js:1680
 msgid "Use Tabbed view"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1720 src/control/Control.Menubar.js:1733
+#: src/control/Control.Menubar.js:1721 src/control/Control.Menubar.js:1734
 msgid "Read-only mode"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1747
+#: src/control/Control.Menubar.js:1748
 msgid "Insert Shape"
 msgstr "إدراج الشكل"
 
-#: src/control/Control.Menubar.js:1954
+#: src/control/Control.Menubar.js:1955
 msgid "file type icon"
 msgstr "رمز نوع الملف"
 
@@ -1222,7 +1224,7 @@ msgid "Currency"
 msgstr "عملة"
 
 #: src/control/Control.NotebookbarCalc.js:558
-#: src/control/Control.NotebookbarWriter.js:1044
+#: src/control/Control.NotebookbarWriter.js:1049
 #: src/control/Control.Zotero.js:1073 src/control/Control.Zotero.js:1509
 msgid "Date"
 msgstr "تاريخ"
@@ -1243,7 +1245,7 @@ msgstr "جزء"
 msgid "Boolean Value"
 msgstr "القيمة المنطقية"
 
-#: src/control/Control.NotebookbarCalc.js:563 src/control/Toolbar.js:678
+#: src/control/Control.NotebookbarCalc.js:563 src/control/Toolbar.js:684
 msgid "Text"
 msgstr "نص"
 
@@ -1306,21 +1308,21 @@ msgstr "حذف الأعمدة"
 #: src/control/Control.NotebookbarCalc.js:992
 #: src/control/Control.NotebookbarDraw.js:243
 #: src/control/Control.NotebookbarImpress.js:350
-#: src/control/Control.NotebookbarWriter.js:1064
+#: src/control/Control.NotebookbarWriter.js:1069
 msgid "Read mode"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1038
 #: src/control/Control.NotebookbarDraw.js:289
 #: src/control/Control.NotebookbarImpress.js:402
-#: src/control/Control.NotebookbarWriter.js:1115
+#: src/control/Control.NotebookbarWriter.js:1120
 msgid "Compact view"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1044
 #: src/control/Control.NotebookbarDraw.js:295
 #: src/control/Control.NotebookbarImpress.js:408
-#: src/control/Control.NotebookbarWriter.js:1138
+#: src/control/Control.NotebookbarWriter.js:1143
 msgid "Status Bar"
 msgstr ""
 
@@ -1335,8 +1337,8 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:746
 #: src/control/Control.NotebookbarImpress.js:1029
 #: src/control/Control.NotebookbarImpress.js:1864
-#: src/control/Control.NotebookbarWriter.js:936
-#: src/control/Control.NotebookbarWriter.js:2334
+#: src/control/Control.NotebookbarWriter.js:941
+#: src/control/Control.NotebookbarWriter.js:2339
 msgid "Shapes"
 msgstr ""
 
@@ -1385,23 +1387,23 @@ msgstr "مستند نصي ODF (.odt)"
 msgid "EPUB Document (.epub)"
 msgstr "مستند EPUB (.epub)"
 
-#: src/control/Control.NotebookbarWriter.js:1024
+#: src/control/Control.NotebookbarWriter.js:1029
 msgid "Rich Text"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1029
+#: src/control/Control.NotebookbarWriter.js:1034
 msgid "Checkbox"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1034
+#: src/control/Control.NotebookbarWriter.js:1039
 msgid "Dropdown"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1039
+#: src/control/Control.NotebookbarWriter.js:1044
 msgid "Picture"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1127
+#: src/control/Control.NotebookbarWriter.js:1132
 msgid "Ruler"
 msgstr ""
 
@@ -1858,27 +1860,27 @@ msgstr "يحفظ..."
 msgid "Renaming..."
 msgstr "إعادة تسمية ..."
 
-#: src/control/Toolbar.js:631
+#: src/control/Toolbar.js:634
 msgid "This version of %productName is powered by"
 msgstr "هذا الإصدار من %productName مدعوم من قبل"
 
-#: src/control/Toolbar.js:643
+#: src/control/Toolbar.js:646
 msgid "\"Slow Proxy\""
 msgstr "\"وكيل بطيء\""
 
-#: src/control/Toolbar.js:671
+#: src/control/Toolbar.js:677
 msgid "Insert hyperlink"
 msgstr "إدراج ارتباط تشعبي"
 
-#: src/control/Toolbar.js:690
+#: src/control/Toolbar.js:696
 msgid "Link"
 msgstr "رابط"
 
-#: src/control/Toolbar.js:930
+#: src/control/Toolbar.js:936
 msgid "Are you sure you want to delete this slide?"
 msgstr "أمتأكد من حذف هذه الشريحة؟"
 
-#: src/control/Toolbar.js:933
+#: src/control/Toolbar.js:939
 msgid "Are you sure you want to delete this page?"
 msgstr "أمتأكد من حذف هذه الصفحة؟"
 
@@ -2193,14 +2195,10 @@ msgstr ""
 "(%storageserver)."
 
 #: src/errormessages.js:42
-#, javascript-format
 msgid ""
-"Save failed due to no disk space left on storage server. Document will now "
-"be read-only. Please contact the server (%storageserver) administrator to "
-"continue editing."
+"Save failed due to no storage space left. Document will now be read-only. "
+"Please make sure enough disk space is available and try to save again."
 msgstr ""
-"فشل الحفظ بسبب نفاذ مساحة قرص خادوم التخزين. سيكون المستند الآن للقراءة فقط. "
-"رجاءً تواصل مع إدارة الخادوم (%storageserver) لمتابعة التحرير."
 
 #: src/errormessages.js:43
 #, javascript-format
@@ -2242,96 +2240,96 @@ msgstr "فشل تحميل الملف إلى الخادم، الملف كبير �
 msgid "Functions"
 msgstr "الدوال"
 
-#: src/layer/tile/CanvasTileLayer.js:2412
+#: src/layer/tile/CanvasTileLayer.js:2401
 msgid "Copy link location"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2420
+#: src/layer/tile/CanvasTileLayer.js:2409
 msgid "Edit link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2428
+#: src/layer/tile/CanvasTileLayer.js:2417
 msgid "Remove link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:5167
+#: src/layer/tile/CanvasTileLayer.js:5165
 msgid "No Comments"
 msgstr "لا تعليقات"
 
-#: src/layer/tile/CommentListSection.ts:835
+#: src/layer/tile/CommentListSection.ts:820
 msgid "Modify"
 msgstr "عدّل"
 
-#: src/layer/tile/CommentListSection.ts:841
+#: src/layer/tile/CommentListSection.ts:826
 #: src/layer/tile/CommentSection.ts:117
 msgid "Reply"
 msgstr "رُدّ"
 
-#: src/layer/tile/CommentListSection.ts:847
+#: src/layer/tile/CommentListSection.ts:832
 msgid "Remove"
 msgstr "أزل"
 
-#: src/layer/tile/CommentListSection.ts:853
+#: src/layer/tile/CommentListSection.ts:838
 msgid "Remove Thread"
 msgstr "إزالة مؤشر الترابط"
 
-#: src/layer/tile/CommentListSection.ts:859
+#: src/layer/tile/CommentListSection.ts:844
 msgid "Resolve"
 msgstr "حل"
 
-#: src/layer/tile/CommentListSection.ts:859
+#: src/layer/tile/CommentListSection.ts:844
 msgid "Unresolve"
 msgstr "غير محلول"
 
-#: src/layer/tile/CommentListSection.ts:865
+#: src/layer/tile/CommentListSection.ts:850
 msgid "Unresolve Thread"
 msgstr "مؤشر ترابط غير محلول"
 
-#: src/layer/tile/CommentListSection.ts:865
+#: src/layer/tile/CommentListSection.ts:850
 msgid "Resolve Thread"
 msgstr "مؤشر ترابط محلول"
 
-#: src/layer/tile/CommentSection.ts:248
+#: src/layer/tile/CommentSection.ts:245
 msgid "Open menu"
 msgstr "افتح القائمة"
 
-#: src/layer/tile/CommentSection.ts:266 src/layer/tile/CommentSection.ts:267
+#: src/layer/tile/CommentSection.ts:263 src/layer/tile/CommentSection.ts:264
 msgid "Accept change"
 msgstr "اقبل التغيير"
 
-#: src/layer/tile/CommentSection.ts:273 src/layer/tile/CommentSection.ts:274
+#: src/layer/tile/CommentSection.ts:270 src/layer/tile/CommentSection.ts:271
 msgid "Reject change"
 msgstr "ارفض التغيير"
 
-#: src/layer/tile/CommentSection.ts:297
+#: src/layer/tile/CommentSection.ts:294
 #, fuzzy
 msgid "Resolved"
 msgstr "حل"
 
-#: src/main.js:109
+#: src/main.js:110
 msgid "Warning! The browser you are using is not supported."
 msgstr "تحذير! المتصفح الذي تستخدمه غير مدعوم."
 
-#: src/map/Clipboard.js:126
+#: src/map/Clipboard.js:125
 msgid ""
 "To paste outside %productName, please first click the 'download' button"
 msgstr "للصق خارج %productName، يرجى النقر أولا على زر \"تنزيل\""
 
-#: src/map/Clipboard.js:136
+#: src/map/Clipboard.js:135
 msgid "Copying from the document disabled"
 msgstr "النسخ من المستند غير مفعل"
 
-#: src/map/Clipboard.js:297
+#: src/map/Clipboard.js:296
 msgid "Failed to download clipboard, please re-copy"
 msgstr "فشل تنزيل الحافظة، يرجى إعادة النسخ"
 
-#: src/map/Clipboard.js:862
+#: src/map/Clipboard.js:861
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 "<p> الرجاء استخدام أزرار النسخ/اللصق على لوحة المفاتيح التي تظهر على الشاشة. "
 "</p>"
 
-#: src/map/Clipboard.js:864
+#: src/map/Clipboard.js:863
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2347,7 +2345,7 @@ msgstr ""
 "+</span><kbd>V</kbd></td></tr><tr><td>نسخ</td><td>قص</td><td>لصق</td></tr></t"
 "able>"
 
-#: src/map/Clipboard.js:883
+#: src/map/Clipboard.js:884
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -2360,7 +2358,7 @@ msgstr ""
 "الاكتمال انقر فوق \"تأكيد نسخة إلى الحافظة\". </p> <p> إذا كنت تقوم بالنسخ "
 "واللصق بين المستندات داخل %productName، فلا حاجة لتنزيلها. </p>"
 
-#: src/map/Clipboard.js:897
+#: src/map/Clipboard.js:898
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2369,7 +2367,7 @@ msgstr ""
 "<p> بدأ بالفعل التنزيل بسبب عملية نسخ / لصق كبيرة. من فضلك، انتظر التنزيل "
 "الحالي أو قم بإلغائه قبل بدء تنزيل جديد </p>"
 
-#: src/map/Clipboard.js:906
+#: src/map/Clipboard.js:907
 #, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
@@ -2483,6 +2481,15 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+
+#, javascript-format
+#~ msgid ""
+#~ "Save failed due to no disk space left on storage server. Document will now "
+#~ "be read-only. Please contact the server (%storageserver) administrator to "
+#~ "continue editing."
+#~ msgstr ""
+#~ "فشل الحفظ بسبب نفاذ مساحة قرص خادوم التخزين. سيكون المستند الآن للقراءة فقط. "
+#~ "رجاءً تواصل مع إدارة الخادوم (%storageserver) لمتابعة التحرير."
 
 #~ msgid "~Home"
 #~ msgstr "~الصفحة الرئيسية"
