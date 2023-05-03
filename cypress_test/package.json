@@ -5,9 +5,9 @@
   "license": "MPL-2.0",
   "devDependencies": {
     "@cypress/grep": "^3.1.5",
-    "@typescript-eslint/eslint-plugin": "^5.59.0",
-    "@typescript-eslint/parser": "^5.59.0",
-    "cypress": "12.10.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
+    "cypress": "12.11.0",
     "cypress-failed-log": "2.10.0",
     "cypress-file-upload": "5.0.8",
     "cypress-iframe": "1.0.1",
