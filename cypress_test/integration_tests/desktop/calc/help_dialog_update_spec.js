@@ -8,7 +8,7 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe(['tagdesktop'], 'Help dialog update', function() {
+describe(['tagscreenshot'], 'Help dialog update', function() {
 	var testFileName = 'help_dialog.ods';
 
 	beforeEach(function() {

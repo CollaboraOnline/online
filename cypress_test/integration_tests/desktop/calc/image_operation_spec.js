@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var { insertImage, deleteImage, assertImageSize } = require('../../common/desktop_helper');
 
-describe(['tagdesktop'], 'Image Operation Tests', function() {
+describe(['tagnotebookbar'], 'Image Operation Tests', function() {
 	var origTestFileName = 'image_operation.ods';
 	var testFileName;
 

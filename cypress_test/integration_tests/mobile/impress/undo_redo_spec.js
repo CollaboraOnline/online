@@ -5,7 +5,7 @@ var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 var repairHelper = require('../../common/repair_document_helper');
 
-describe(['tagmobile'], 'Editing Operations', function() {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', function() {
 	var testFileName = 'undo_redo.odp';
 
 	beforeEach(function() {

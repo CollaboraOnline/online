@@ -5,7 +5,7 @@ var desktopHelper = require('../../common/desktop_helper');
 var writerHelper = require('../../common/writer_helper');
 var mode = Cypress.env('USER_INTERFACE');
 
-describe(['tagdesktop'], 'Top toolbar tests.', function() {
+describe(['tagnotebookbar'], 'Top toolbar tests.', function() {
 	var origTestFileName = 'top_toolbar.odt';
 	var testFileName;
 

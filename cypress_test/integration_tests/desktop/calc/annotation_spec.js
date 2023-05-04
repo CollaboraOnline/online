@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var { insertMultipleComment } = require('../../common/desktop_helper');
 
-describe(['tagdesktop'], 'Annotation Tests', function() {
+describe(['tagnotebookbar'], 'Annotation Tests', function() {
 	var origTestFileName = 'annotation.ods';
 	var testFileName;
 

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
-describe(['tagmobile'], 'Insert objects via insertion wizard.', function() {
+describe(['tagmobile', 'tagnextcloud'], 'Insert objects via insertion wizard.', function() {
 	var origTestFileName = 'insert_object.odt';
 	var testFileName;
 

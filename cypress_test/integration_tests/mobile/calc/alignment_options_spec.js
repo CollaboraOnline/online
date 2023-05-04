@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile'], 'Change alignment settings.', function() {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change alignment settings.', function() {
 	var origTestFileName = 'alignment_options.ods';
 	var testFileName;
 

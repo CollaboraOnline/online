@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile'], 'Apply number formatting.', function() {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply number formatting.', function() {
 	var origTestFileName = 'number_format.ods';
 	var testFileName;
 
