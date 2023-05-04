@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe('Sheet Operations.', function () {
+describe(['tagdesktop'], 'Sheet Operations.', function () {
 	var origTestFileName = 'sheet_operation.ods';
 	var testFileName;
 

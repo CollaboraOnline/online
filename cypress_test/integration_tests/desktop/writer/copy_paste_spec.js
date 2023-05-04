@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Clipboard operations.', function() {
+describe(['tagdesktop'], 'Clipboard operations.', function() {
 	var origTestFileName = 'copy_paste.odt';
 	var testFileName;
 

@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe('Calc focus tests', function() {
+describe(['tagdesktop'], 'Calc focus tests', function() {
 	var origTestFileName = 'focus.ods';
 	var testFileName;
 

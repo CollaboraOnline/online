@@ -3,7 +3,7 @@ var helper = require('../../common/helper');
 const { selectZoomLevel, openReadOnlyFile } = require('../../common/desktop_helper');
 // const { selectTextShapeInTheCenter } = require('../../common/impress_helper');
 
-describe('Open different file types', function() {
+describe(['tagdesktop'], 'Open different file types', function() {
 
 	var testFileName = '';
 

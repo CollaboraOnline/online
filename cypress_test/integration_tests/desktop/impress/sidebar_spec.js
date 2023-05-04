@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe('Sidebar Tests', function() {
+describe(['tagdesktop'], 'Sidebar Tests', function() {
 	var testFileName = 'sidebar.odp';
 
 	beforeEach(function() {

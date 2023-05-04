@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var desktophelper = require('../../common/desktop_helper');
 
-describe('Calc bottom bar tests.', function() {
+describe(['tagdesktop'], 'Calc bottom bar tests.', function() {
 	var origTestFileName = 'BottomBar.ods';
 	var testFileName;
 

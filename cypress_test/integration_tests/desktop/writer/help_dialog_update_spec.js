@@ -8,7 +8,7 @@
 
 const { hideSidebar } = require('../../common/desktop_helper');
 var helper = require('../../common/helper');
-describe('Help dialog screenshot updation', function() {
+describe(['tagdesktop'], 'Help dialog screenshot updation', function() {
 	var testFileName = 'help_dialog.odt';
 
 	beforeEach(function() {

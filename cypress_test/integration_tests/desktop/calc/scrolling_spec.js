@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe('Scroll through document', function() {
+describe(['tagdesktop'], 'Scroll through document', function() {
 	var testFileName = 'scrolling.ods';
 
 	beforeEach(function() {

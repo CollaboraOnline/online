@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Focus tests', function() {
+describe(['tagdesktop'], 'Focus tests', function() {
 	var origTestFileName = 'focus.odt';
 	var testFileName;
 

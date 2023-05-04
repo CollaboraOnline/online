@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe('AutoFilter', function() {
+describe(['tagdesktop'], 'AutoFilter', function() {
 	var origTestFileName = 'autofilter.ods';
 	var testFileName;
 

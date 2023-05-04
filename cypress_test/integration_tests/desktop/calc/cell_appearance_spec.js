@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe('Change cell appearance.', function() {
+describe(['tagdesktop'], 'Change cell appearance.', function() {
 	var origTestFileName = 'cell_appearance.ods';
 	var testFileName;
 
