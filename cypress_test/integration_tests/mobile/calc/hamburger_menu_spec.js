@@ -5,7 +5,7 @@ var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 var repairHelper = require('../../common/repair_document_helper');
 
-describe('Trigger hamburger menu options.', function() {
+describe(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	var testFileName;
 
 	function before(testFile) {

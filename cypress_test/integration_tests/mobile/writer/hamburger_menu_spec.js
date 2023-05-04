@@ -5,7 +5,7 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 var repairHelper = require('../../common/repair_document_helper');
 
-describe('Trigger hamburger menu options.', function() {
+describe(['tagmobile'], 'Trigger hamburger menu options.', function() {
 	var origTestFileName = 'hamburger_menu.odt';
 	var testFileName;
 

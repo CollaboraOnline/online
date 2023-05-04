@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Calc insertion wizard.', function() {
+describe(['tagmobile'], 'Calc insertion wizard.', function() {
 	var origTestFileName = 'insertion_wizard.ods';
 	var testFileName;
 

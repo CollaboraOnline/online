@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var searchHelper = require('../../common/search_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Searching via search bar.', function() {
+describe(['tagmobile'], 'Searching via search bar.', function() {
 	var origTestFileName = 'search_bar.ods';
 	var testFileName;
 

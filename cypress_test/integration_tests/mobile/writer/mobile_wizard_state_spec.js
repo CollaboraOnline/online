@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Mobile wizard state tests', function() {
+describe(['tagmobile'], 'Mobile wizard state tests', function() {
 	var origTestFileName = 'mobile_wizard_state.odt';
 	var testFileName;
 
