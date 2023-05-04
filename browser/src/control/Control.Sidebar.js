@@ -131,7 +131,7 @@ L.Control.Sidebar = L.Control.extend({
 
 	commandForDeck: function(deckId) {
 		if (deckId === 'PropertyDeck')
-			return ''; // not important for us
+			return '.uno:SidebarDeck.PropertyDeck';
 		else if (deckId === 'SdSlideTransitionDeck')
 			return '.uno:SlideChangeWindow';
 		else if (deckId === 'SdCustomAnimationDeck')
