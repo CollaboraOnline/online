@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
-describe('Change table properties / layout via mobile wizard.', function() {
+describe(['tagmobile'], 'Change table properties / layout via mobile wizard.', function() {
 	var testFileName = '';
 
 	function before(testFile) {

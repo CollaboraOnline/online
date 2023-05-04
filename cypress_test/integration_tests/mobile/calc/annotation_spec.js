@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Annotation Tests',function() {
+describe(['tagmobile'], 'Annotation Tests',function() {
 	var origTestFileName = 'annotation.ods';
 	var testFileName;
 

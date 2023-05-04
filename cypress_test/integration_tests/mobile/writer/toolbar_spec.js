@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Toolbar tests', function() {
+describe(['tagmobile'], 'Toolbar tests', function() {
 	var origTestFileName = 'toolbar.odt';
 	var testFileName;
 

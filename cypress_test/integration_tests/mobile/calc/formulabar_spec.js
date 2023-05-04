@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Formula bar tests.', function() {
+describe(['tagmobile'], 'Formula bar tests.', function() {
 	var origTestFileName = 'formulabar.ods';
 	var testFileName;
 

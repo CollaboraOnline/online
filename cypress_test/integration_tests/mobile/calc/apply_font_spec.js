@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Apply font changes.', function() {
+describe(['tagmobile'], 'Apply font changes.', function() {
 	var origTestFileName = 'apply_font.ods';
 	var testFileName;
 

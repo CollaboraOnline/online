@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Delete Objects', function() {
+describe(['tagmobile'], 'Delete Objects', function() {
 	var origTestFileName = 'delete_objects.odt';
 	var testFileName;
 

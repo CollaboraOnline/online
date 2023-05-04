@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Sheet Operation', function () {
+describe(['tagmobile'], 'Sheet Operation', function () {
 	var origTestFileName = 'sheet_operation.ods';
 	var testFileName;
 

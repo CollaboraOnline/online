@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe('Chart tests.', function() {
+describe(['tagmobile'], 'Chart tests.', function() {
 	var origTestFileName = 'chart.ods';
 	var testFileName;
 

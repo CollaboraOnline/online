@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe('Table Operation', function() {
+describe(['tagmobile'], 'Table Operation', function() {
 	var origTestFileName = 'table_operation.odp';
 	var testFileName;
 
