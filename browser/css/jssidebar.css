@@ -330,3 +330,10 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 #rotationlabel {
 	height: 0;
 }
+
+
+/* navigator */
+
+span.jsdialog.sidebar.ui-treeview-entry.ui-treeview-notexpandable {
+	margin-left: 15px;
+}
