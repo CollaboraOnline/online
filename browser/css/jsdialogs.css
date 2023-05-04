@@ -1336,6 +1336,18 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: var(--color-main-background) !important;
 }
 
+/* Navigator */
+
+#NavigatorDeck #contenttree,
+#NavigatorDeck #tree {
+	position: absolute;
+	top: 50px;
+	bottom: 10px;
+	left: 10px;
+	right: 10px;
+	background-color: var(--color-background-lighter);
+}
+
 /* Zotero dialog*/
 
 #ZoteroDialog-mainbox.jsdialog .ui-treeview {
