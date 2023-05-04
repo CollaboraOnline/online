@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe(['tagmobile'], 'Impress insertion wizard.', function() {
+describe(['tagmobile', 'tagnextcloud'], 'Impress insertion wizard.', function() {
 	var origTestFileName = 'insertion_wizard.odp';
 	var testFileName;
 

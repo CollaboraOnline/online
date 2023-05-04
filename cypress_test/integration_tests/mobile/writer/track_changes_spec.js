@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile'], 'Track Changes', function() {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Track Changes', function() {
 	var origTestFileName = 'track_changes.odt';
 	var testFileName;
 

@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
-describe(['tagmobile'], 'Text cursor tests.', function() {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Text cursor tests.', function() {
 	var testFileName;
 
 	function before(fileName) {

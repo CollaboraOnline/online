@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe(['tagdesktop'], 'Complex image operation test', function() {
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Complex image operation test', function() {
 	var origTestFileName = 'complex_image_operation.odt';
 	var testFileName;
 

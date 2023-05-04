@@ -7,7 +7,7 @@ var mobileHelper = require('../../common/mobile_helper');
 var origTestFileName = 'overlays.ods';
 var testFileName;
 
-describe(['tagmobile'], 'Overlay bounds.', function () {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Overlay bounds.', function () {
 
 	beforeEach(function () {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');

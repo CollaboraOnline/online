@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile'], 'Spell checking menu.', function() {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Spell checking menu.', function() {
 	var origTestFileName = 'spellchecking.odp';
 	var testFileName;
 

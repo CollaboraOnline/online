@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe(['tagmobile'], 'Delete Objects',function() {
+describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Delete Objects',function() {
 	var origTestFileName = 'delete_objects.ods';
 	var testFileName;
 

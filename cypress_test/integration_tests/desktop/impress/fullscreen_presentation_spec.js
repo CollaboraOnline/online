@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagdesktop'], 'Fullscreen Presentation.', function() {
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentation.', function() {
 	var testFileName = 'text_fields.odp';
 
 	function getSlideShowContent() {

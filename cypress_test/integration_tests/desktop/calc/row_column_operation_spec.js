@@ -3,7 +3,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mode = Cypress.env('USER_INTERFACE');
 
-describe(['tagdesktop'], 'Row Column Operation', function() {
+describe(['tagnotebookbar'], 'Row Column Operation', function() {
 	var testFileName = 'row_column_operation.ods';
 
 	beforeEach(function() {

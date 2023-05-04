@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var repairHelper = require('../../common/repair_document_helper');
 
-describe(['tagdesktop'], 'Editing Operations', function() {
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing Operations', function() {
 	var testFileName = 'undo_redo.ods';
 
 	beforeEach(function() {
