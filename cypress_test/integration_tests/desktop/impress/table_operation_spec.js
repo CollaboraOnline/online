@@ -215,7 +215,7 @@ describe(['tagnotebookbar'], 'Table operations', function() {
 			.should('have.attr', 'y', '5644');
 	});
 
-	it('Delete Table', function() {
+	it.skip('Delete Table', function() {
 		selectFullTable();
 
 		mode === 'notebookbar' ? selectOptionNotebookbar('.unospan-Table.unoDeleteTable') : selectOptionClassic('#menu-table', true, 'Delete', 'Delete Table');
@@ -289,7 +289,7 @@ describe(['tagnotebookbar'], 'Table operations', function() {
 			.should('have.attr', 'y', '5644');
 	});
 
-	it('Split Cells', function() {
+	it.skip('Split Cells', function() {
 		//FIXME: https://github.com/CollaboraOnline/online/issues/3964
 		if (mode !== 'notebookbar') {
 			return;

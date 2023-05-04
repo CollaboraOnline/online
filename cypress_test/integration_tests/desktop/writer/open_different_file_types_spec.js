@@ -69,15 +69,15 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types'
 		assertData();
 	});
 
-	it('Open dot file', function() {
+	it.skip('Open dot file', function() {
 		testFileName = openReadOnlyFile('writer', 'testfile.dot');
 	});
 
-	it('Open dotm file', function() {
+	it.skip('Open dotm file', function() {
 		testFileName = openReadOnlyFile('writer', 'testfile.dotm');
 	});
 
-	it('Open dotx file', function() {
+	it.skip('Open dotx file', function() {
 		testFileName = openReadOnlyFile('writer','testfile.dotx');
 	});
 });

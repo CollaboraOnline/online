@@ -1,5 +1,6 @@
 import { defineConfig } from 'cypress';
 import plugin from './plugins/index.js';
+import 'process';
 
 export default defineConfig({
   video: false,
@@ -7,6 +8,7 @@ export default defineConfig({
   modifyObstructiveCode: false,
   fixturesFolder: 'data',
   chromeWebSecurity: false,
+  env: { USER_INTERFACE: process.env.USER_INTERFACE },
   retries: {
     runMode: 1,
     openMode: 0,

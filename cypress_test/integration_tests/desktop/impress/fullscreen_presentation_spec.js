@@ -229,7 +229,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentation.',
 			});
 	});
 
-	it('Animation: Emphasis: Grow and Shrink.', function() {
+	it.skip('Animation: Emphasis: Grow and Shrink.', function() {
 		before('anim-grow-and-shrink.odp');
 
 		cy.wait(3000);

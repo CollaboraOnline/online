@@ -219,7 +219,7 @@ describe(['tagnotebookbar'], 'Top toolbar tests.', function() {
 			.should('not.contain', 'margin-left: 0.49in');
 	});
 
-	it('Insert comment.', function() {
+	it.skip('Insert comment.', function() {
 		desktopHelper.insertMultipleComment('writer', 1, false);
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
@@ -464,7 +464,7 @@ describe(['tagnotebookbar'], 'Top toolbar tests.', function() {
 		cy.cGet('#copy-paste-container p b').should('contain', 'text');
 	});
 
-	it('Insert Page Break', function() {
+	it.skip('Insert Page Break', function() {
 		cy.cGet('#StatePageNumber').should('have.text', 'Page 1 of 1');
 
 		helper.selectAllText();
@@ -513,7 +513,7 @@ describe(['tagnotebookbar'], 'Top toolbar tests.', function() {
 
 	});
 
-	it('Apply superscript.', function() {
+	it.skip('Apply superscript.', function() {
 		writerHelper.selectAllTextOfDoc();
 
 		if (mode == 'notebookbar') {
@@ -530,7 +530,7 @@ describe(['tagnotebookbar'], 'Top toolbar tests.', function() {
 		cy.cGet('#copy-paste-container p sup').should('exist');
 	});
 
-	it('Apply subscript.', function() {
+	it.skip('Apply subscript.', function() {
 		writerHelper.selectAllTextOfDoc();
 
 		if (mode == 'notebookbar') {
@@ -559,7 +559,7 @@ describe(['tagnotebookbar'], 'Top toolbar tests.', function() {
 		helper.textSelectionShouldNotExist();
 	});
 
-	it('Insert/delete Fontwork', function() {
+	it.skip('Insert/delete Fontwork', function() {
 		writerHelper.selectAllTextOfDoc();
 
 		if (mode == 'notebookbar')

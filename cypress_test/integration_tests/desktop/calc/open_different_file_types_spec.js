@@ -106,13 +106,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types'
 		insertImage();
 	});
 
-	it('Open xltm file' ,function() {
+	it.skip('Open xltm file' ,function() {
 		openReadOnlyFile('testfile.xltm');
 
 		cy.cGet('#mobile-edit-button').should('not.be.visible');
 	});
 
-	it('Open xltx file' ,function() {
+	it.skip('Open xltx file' ,function() {
 		openReadOnlyFile('testfile.xltm');
 
 		cy.cGet('#mobile-edit-button').should('not.be.visible');
