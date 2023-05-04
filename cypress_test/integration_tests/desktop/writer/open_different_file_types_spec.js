@@ -2,7 +2,7 @@
 const { assertImageSize, openReadOnlyFile } = require('../../common/desktop_helper');
 var helper = require('../../common/helper');
 
-describe('Open different file types', function() {
+describe(['tagdesktop'], 'Open different file types', function() {
 
 	var testFileName = '';
 

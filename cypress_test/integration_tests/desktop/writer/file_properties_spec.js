@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var writerHelper = require('../../common/writer_helper');
 
-describe('File Property Tests', function() {
+describe(['tagdesktop'], 'File Property Tests', function() {
 	var origTestFileName = 'file_properties.odt';
 	var testFileName;
 

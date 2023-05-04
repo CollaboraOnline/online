@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe('macro dialog tests', function() {
+describe(['tagdesktop'], 'macro dialog tests', function() {
 	var testFileName = 'macro.ods';
 
 	function acceptMacroExecution() {

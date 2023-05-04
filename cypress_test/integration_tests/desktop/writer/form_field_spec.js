@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe('Form field button tests.', function() {
+describe(['tagdesktop'], 'Form field button tests.', function() {
 	var testFileName = 'shape_operations.odt';
 
 	function before(fileName) {

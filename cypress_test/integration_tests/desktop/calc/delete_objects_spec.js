@@ -2,7 +2,7 @@
 var helper = require('../../common/helper');
 
 
-describe('Delete Objects', function() {
+describe(['tagdesktop'], 'Delete Objects', function() {
 	var origTestFileName = 'delete_objects.ods';
 	var testFileName;
 

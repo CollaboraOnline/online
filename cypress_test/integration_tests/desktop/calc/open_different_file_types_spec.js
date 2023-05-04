@@ -3,7 +3,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 const { insertImage } = require('../../common/desktop_helper');
 
-describe('Open different file types', function () {
+describe(['tagdesktop'], 'Open different file types', function () {
 
 	var testFileName = '';
 

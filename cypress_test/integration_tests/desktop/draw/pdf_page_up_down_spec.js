@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe('PDF View Tests', function() {
+describe(['tagdesktop'], 'PDF View Tests', function() {
 	var origTestFileName = 'pdf_page_up_down.pdf';
 	var testFileName;
 
