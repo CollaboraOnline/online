@@ -2303,6 +2303,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			'zoterounlink': 'unlinkcitation',
 			'zoteroaddeditbibliography': 'addeditbibliography',
 			'zoterosetdocprefs': 'formproperties',
+			'sidebardeck.propertydeck' : 'sidebar',
 		};
 		if (iconURLAliases[cleanName]) {
 			cleanName = iconURLAliases[cleanName];
