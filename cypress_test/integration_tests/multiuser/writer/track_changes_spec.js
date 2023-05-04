@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Track Changes', function () {
+describe(['tagmultiuser'], 'Track Changes', function () {
 	var origTestFileName = 'track_changes.odt';
 	var testFileName;
 
