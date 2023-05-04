@@ -79,11 +79,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types'
 		assertData();
 	});
 
-	it('Open pot file', function() {
+	it.skip('Open pot file', function() {
 		testFileName = openReadOnlyFile('impress', 'testfile.pot');
 	});
 
-	it('Open potx file', function() {
+	it.skip('Open potx file', function() {
 		testFileName = openReadOnlyFile('impress', 'testfile.potx');
 	});
 

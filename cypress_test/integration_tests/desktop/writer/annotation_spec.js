@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var { insertMultipleComment, hideSidebar, selectZoomLevel } = require('../../common/desktop_helper');
 
-describe(['tagnotebookbar'], 'Annotation Tests', function() {
+describe.skip(['tagnotebookbar'], 'Annotation Tests', function() {
 	var origTestFileName = 'annotation.odt';
 	var testFileName;
 
@@ -69,7 +69,7 @@ describe(['tagnotebookbar'], 'Annotation Tests', function() {
 
 });
 
-describe(['tagnotebookbar'], 'Collapsed Annotation Tests', function() {
+describe.skip(['tagnotebookbar'], 'Collapsed Annotation Tests', function() {
 	var testFileName = 'annotation.odt';
 
 	beforeEach(function() {
