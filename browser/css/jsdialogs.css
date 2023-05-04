@@ -1328,6 +1328,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* Navigator */
 
+#NavigatorDeck #contentbox,
 #NavigatorDeck #contenttree,
 #NavigatorDeck #tree {
 	position: absolute;
