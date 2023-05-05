@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentation.', function() {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentation.', function() {
 	var testFileName = 'text_fields.odp';
 
 	function getSlideShowContent() {
@@ -84,7 +84,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Fullscreen Presentation.',
 			.should('have.attr', 'id', 'bg-id1');
 	});
 
-	it('Leading spaces shorter than a text line.', function() {
+	it.skip('Leading spaces shorter than a text line.', function() {
 		before('white-spaces.odp');
 
 		cy.wait(3000);

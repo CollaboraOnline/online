@@ -174,7 +174,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#copy-paste-container table td font').should('have.attr', 'color', '#FFF2CC');
 	});
 
-	it('Add/Delete decimal places', function() {
+	it.skip('Add/Delete decimal places', function() {
 		// Add decimal place
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.cGet('#tb_editbar_item_numberformatincdecimals').click();

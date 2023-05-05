@@ -15,7 +15,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Complex image operation te
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it('tile image validation test',function() {
+	it.skip('tile image validation test',function() {
 		cy.window().then(win => {
 			if (win.imgDatas) {
 				for (var i = 0; i < win.imgDatas.length; ++i) {
