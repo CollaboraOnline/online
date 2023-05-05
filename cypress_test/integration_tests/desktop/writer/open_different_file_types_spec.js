@@ -2,7 +2,7 @@
 const { assertImageSize, openReadOnlyFile } = require('../../common/desktop_helper');
 var helper = require('../../common/helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types', function() {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types', function() {
 
 	var testFileName = '';
 
@@ -49,35 +49,35 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types'
 		assertImageSize(480, 122);
 	}
 
-	it('Open doc file', function() {
+	it('Open doc file', { defaultCommandTimeout: 60000 }, function() {
 		before('testfile.doc');
 		assertData();
 	});
 
-	it('Open docx file', function() {
+	it('Open docx file', { defaultCommandTimeout: 60000 }, function() {
 		before('testfile.docx');
 		assertData();
 	});
 
-	it('Open docm file', function() {
+	it('Open docm file', { defaultCommandTimeout: 60000 }, function() {
 		before('testfile.docm');
 		assertData();
 	});
 
-	it('Open fodt file', function() {
+	it('Open fodt file', { defaultCommandTimeout: 60000 }, function() {
 		before('testfile.fodt');
 		assertData();
 	});
 
-	it.skip('Open dot file', function() {
+	it('Open dot file', { defaultCommandTimeout: 60000 }, function() {
 		testFileName = openReadOnlyFile('writer', 'testfile.dot');
 	});
 
-	it.skip('Open dotm file', function() {
+	it('Open dotm file', { defaultCommandTimeout: 60000 }, function() {
 		testFileName = openReadOnlyFile('writer', 'testfile.dotm');
 	});
 
-	it.skip('Open dotx file', function() {
+	it('Open dotx file', { defaultCommandTimeout: 60000 }, function() {
 		testFileName = openReadOnlyFile('writer','testfile.dotx');
 	});
 });

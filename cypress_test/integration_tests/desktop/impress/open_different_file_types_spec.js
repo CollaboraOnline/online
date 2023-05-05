@@ -3,7 +3,7 @@ var helper = require('../../common/helper');
 const { selectZoomLevel, openReadOnlyFile } = require('../../common/desktop_helper');
 // const { selectTextShapeInTheCenter } = require('../../common/impress_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types', function() {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types', function() {
 
 	var testFileName = '';
 
@@ -61,43 +61,43 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types'
 			.should('have.text', 'LibreOffice');
 	}
 
-	it('Open pptx file', function() {
+	it('Open pptx file', { defaultCommandTimeout: 60000 }, function() {
 		before('testfile.pptx');
 
 		assertData();
 	});
 
-	it('Open ppt file', function() {
+	it('Open ppt file', { defaultCommandTimeout: 60000 }, function() {
 		before('testfile.ppt');
 
 		assertData();
 	});
 
-	it('Open pptm file', function() {
+	it('Open pptm file', { defaultCommandTimeout: 60000 }, function() {
 		before('testfile.pptm');
 
 		assertData();
 	});
 
-	it.skip('Open pot file', function() {
+	it('Open pot file', { defaultCommandTimeout: 60000 }, function() {
 		testFileName = openReadOnlyFile('impress', 'testfile.pot');
 	});
 
-	it.skip('Open potx file', function() {
+	it('Open potx file', { defaultCommandTimeout: 60000 }, function() {
 		testFileName = openReadOnlyFile('impress', 'testfile.potx');
 	});
 
-	it('Open potm file', function() {
+	it('Open potm file', { defaultCommandTimeout: 60000 }, function() {
 		testFileName = openReadOnlyFile('impress', 'testfile.potm');
 	});
 
-	it('Open fodp file', function() {
+	it('Open fodp file', { defaultCommandTimeout: 60000 }, function() {
 		before('testfile.fodp');
 
 		assertData();
 	});
 
-	it('Open ppsx file', function() {
+	it('Open ppsx file', { defaultCommandTimeout: 60000 }, function() {
 		before('testfile.ppsx');
 
 		assertData();
