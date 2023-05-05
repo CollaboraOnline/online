@@ -12,9 +12,9 @@ describe.skip(['tagnotebookbar'], 'Annotation Tests', function() {
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
 		var mode = Cypress.env('USER_INTERFACE');
 		if (mode === 'notebookbar') {
-			cy.cGet('.unospan-optionstoolboxdown.unoSidebar').should('have.class', 'selected');
-			cy.cGet('.unospan-optionstoolboxdown.unoSidebar').click();
-			cy.cGet('.unospan-optionstoolboxdown.unoSidebar').should('not.have.class', 'selected');
+			cy.cGet('.unospan-optionstoolboxdown.unoSidebarDeck\.PropertyDeck').should('have.class', 'selected');
+			cy.cGet('.unospan-optionstoolboxdown.unoSidebarDeck\.PropertyDeck').click();
+			cy.cGet('.unospan-optionstoolboxdown.unoSidebarDeck\.PropertyDeck').should('not.have.class', 'selected');
 		} else {
 			hideSidebar();
 		}

@@ -28,7 +28,7 @@ module.exports.list = {
 	insertChart: ['#InsertObjectChart', '#tb_editbar_item_insertobjectchart'],
 	insertSymbol: ['#CharmapControl', '#tb_editbar_item_insertsymbol'],
 	formatBrush: ['#FormatPaintbrush', '#tb_editbar_item_formatpaintbrush'],
-	sidebar: ['.unospan-optionstoolboxdown.unoSidebar', '#tb_editbar_item_sidebar'],
+	sidebar: ['.unospan-optionstoolboxdown.unoSidebarDeck\.PropertyDeck', '#tb_editbar_item_sidebar'],
 	backColor: ['#Home #BackColor .arrowbackground', '#tb_editbar_item_backcolor'],
 	borderStyle: ['#SetBorderStyle', '#tb_editbar_item_setborderstyle'],
 	backgroundColor: ['#Home #BackgroundColor .arrowbackground','#tb_editbar_item_backgroundcolor'],
