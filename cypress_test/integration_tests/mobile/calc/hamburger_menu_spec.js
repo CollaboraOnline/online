@@ -86,7 +86,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 
 		// Type a new character
 		calcHelper.clickOnFirstCell(true, true);
-		cy.cGet('textarea.clipboard').type('{q}');
+		cy.cGet('div.clipboard').type('{q}');
 		calcHelper.selectEntireSheet();
 		cy.cGet('#copy-paste-container table td').should('contain.text', 'q');
 
@@ -112,7 +112,7 @@ describe.skip(['tagmobile'], 'Trigger hamburger menu options.', function() {
 
 		// Type a new character
 		calcHelper.clickOnFirstCell(true, true);
-		cy.cGet('textarea.clipboard').type('{q}');
+		cy.cGet('div.clipboard').type('{q}');
 
 		calcHelper.selectEntireSheet();
 
