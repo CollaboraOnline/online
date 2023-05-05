@@ -453,6 +453,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	max-height: 32px;
 	width: auto;
 	width: -webkit-fill-available;
+	width: -moz-available;
 	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 	overflow: hidden;
