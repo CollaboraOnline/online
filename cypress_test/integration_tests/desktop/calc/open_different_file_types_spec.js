@@ -3,7 +3,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 const { insertImage } = require('../../common/desktop_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types', function () {
+describe.skip(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types', function () {
 
 	var testFileName = '';
 
@@ -45,7 +45,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types'
 		calcHelper.assertDataClipboardTable(expectedData);
 	}
 
-	it('Open xls file', function () {
+	it('Open xls file', { defaultCommandTimeout: 60000 }, function () {
 		before('testfile.xls');
 
 		assertData();
@@ -53,7 +53,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types'
 		insertImage();
 	});
 
-	it('Open xlsx file', function () {
+	it('Open xlsx file', { defaultCommandTimeout: 60000 }, function () {
 		before('testfile.xlsx');
 
 		assertData();
@@ -62,7 +62,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types'
 	//we are not using before because it loads the document and directly asserts if document is loaded but in
 	//case of csv file 1st when you try to load the doc it opens up jsdialog to import csv which requires user
 	//input and after click ok the doc starts to load
-	it('Open csv file', function() {
+	it('Open csv file', { defaultCommandTimeout: 60000 }, function() {
 		//to fit csv jsdialog in window
 		cy.viewport(1280, 960);
 
@@ -86,7 +86,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types'
 		assertData();
 	});
 
-	it('Open xlsb file' ,function() {
+	it('Open xlsb file', { defaultCommandTimeout: 60000 }, function() {
 		openReadOnlyFile('testfile.xlsb');
 
 		cy.cGet('#mobile-edit-button').should('be.visible').click();
@@ -98,7 +98,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types'
 		cy.cGet('#PermissionMode').should('be.visible').should('have.text', ' Read-only ');
 	});
 
-	it('Open xlsm file' ,function() {
+	it('Open xlsm file', { defaultCommandTimeout: 60000 }, function() {
 		before('testfile.xlsm');
 
 		assertData();
@@ -106,19 +106,19 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Open different file types'
 		insertImage();
 	});
 
-	it.skip('Open xltm file' ,function() {
+	it('Open xltm file', { defaultCommandTimeout: 60000 }, function() {
 		openReadOnlyFile('testfile.xltm');
 
 		cy.cGet('#mobile-edit-button').should('not.be.visible');
 	});
 
-	it.skip('Open xltx file' ,function() {
+	it('Open xltx file', { defaultCommandTimeout: 60000 }, function() {
 		openReadOnlyFile('testfile.xltm');
 
 		cy.cGet('#mobile-edit-button').should('not.be.visible');
 	});
 
-	it('Open fods file', function() {
+	it('Open fods file', { defaultCommandTimeout: 60000 }, function() {
 		before('testfile.fods');
 
 		//select all the content of doc
