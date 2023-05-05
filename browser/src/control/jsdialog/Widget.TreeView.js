@@ -395,6 +395,15 @@ function _getCurrentEntry(listElements) {
 		if (selected && selected.length)
 			currIndex = listElements.index(selected.get(0));
 	}
+	if (currIndex < 0) {
+		for (var i in listElements) {
+			var parent = listElements[i].parentNode.parentNode;
+			if (parent && L.DomUtil.hasClass(parent, 'selected')) {
+				currIndex = listElements.index(listElements[i]);
+				break;
+			}
+		}
+	}
 
 	return currIndex;
 }
