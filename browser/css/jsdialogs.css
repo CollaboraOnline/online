@@ -1336,9 +1336,25 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	bottom: 10px;
 	left: 10px;
 	right: 10px;
-	background-color: var(--color-background-lighter);
+	border: none;
 }
-
+#NavigatorDeck .ui-treeview-entry {
+	background-color: transparent;
+	margin-block-end: 8px;
+}
+#NavigatorDeck .ui-listview-icon {
+	width: var(--btn-size-s);
+	height: var(--btn-size-s);
+}
+#NavigatorDeck .ui-treeview-cell-text {
+	/* good to move this into css var*/
+	font-size: 14px;
+}
+#NavigatorDeck .ui-treeview-cell {
+	/* Move this whole block away and fix in the main control */
+	display: flex;
+	align-items: center;
+}
 /* Zotero dialog*/
 
 #ZoteroDialog-mainbox.jsdialog .ui-treeview {
