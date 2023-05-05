@@ -212,7 +212,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .ui-tab.selected.jsdialog {
 	background-color: var(--color-background-lighter) !important;
 	color: var(--color-text-darker) !important;
-	box-shadow: 0 0 2px 1px var(--box-shadow) !important;
+	box-shadow: 0 0 2px 1px var(--color-box-shadow) !important;
 }
 
 .ui-tab.jsdialog:not(.selected):hover {
