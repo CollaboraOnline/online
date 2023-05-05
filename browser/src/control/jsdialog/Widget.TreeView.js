@@ -188,12 +188,18 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 		var singleClick = treeViewData.singleclickactivate === 'true' || treeViewData.singleclickactivate === true;
 		var clickFunction = _createClickFunction('.ui-treeview-entry', treeRoot, span, checkbox,
 			true, singleClick, builder, treeViewData, entry);
+		var doubleClickFunction = _createClickFunction('.ui-treeview-entry', treeRoot, span, checkbox,
+			false, true, builder, treeViewData, entry);
 
 		text.addEventListener('click', clickFunction);
 		span.addEventListener('keydown', function onEvent(event) {
 			var preventDef = false;
 			if (event.key === 'Enter' || event.key === ' ') {
-				clickFunction();
+				if (event.key === 'Enter')
+					doubleClickFunction();
+				else
+					clickFunction();
+
 				if (checkbox)
 					checkbox.click();
 				preventDef = true;
@@ -216,8 +222,7 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 		});
 
 		if (!singleClick) {
-			$(text).dblclick(_createClickFunction('.ui-treeview-entry', treeRoot, span, checkbox,
-				false, true, builder, treeViewData, entry));
+			$(text).dblclick(doubleClickFunction);
 		}
 	}
 }
