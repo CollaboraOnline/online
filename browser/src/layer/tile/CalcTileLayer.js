@@ -235,7 +235,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 			bounds = this._coordsToTileBounds(coords);
 			if (invalidBounds.intersects(bounds)) {
-				this._reclaimTileCanvasMemory(this._tileCache[key]);
 				delete this._tileCache[key];
 			}
 		}

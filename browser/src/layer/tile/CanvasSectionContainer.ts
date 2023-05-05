@@ -1510,20 +1510,6 @@ class CanvasSectionContainer {
 		this.canvas.width = newWidth;
 		this.canvas.height = newHeight;
 
-		// Partial fix for #5876 reduce size if canvas context is null
-		// WKWebView has a hard limit on the number of bytes of canvas
-		// context memory that can be allocated. Canvas with sizes that
-		// are too large will return a null context so reduce the size
-		// of the canvas until a non-null context is obtained.
-		this.context = this.canvas.getContext('2d', { alpha: false });
-		while (!this.context && this.canvas.width >= 2 && this.canvas.height >= 2) {
-			this.canvas.width /= 2;
-			this.canvas.height /= 2;
-			this.context = this.canvas.getContext('2d', { alpha: false });
-		}
-		for (var i: number = 0; i < this.sections.length; i++)
-			this.sections[i].context = this.context;
-
 		// CSS pixels can be fractional, but need to round to the same real pixels
 		var cssWidth: number = newWidth / app.dpiScale; // NB. beware
 		var cssHeight: number = newHeight / app.dpiScale;

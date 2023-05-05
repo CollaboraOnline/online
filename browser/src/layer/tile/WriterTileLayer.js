@@ -128,7 +128,6 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			coords = this._keyToTileCoords(key);
 			bounds = this._coordsToTileBounds(coords);
 			if (invalidBounds.intersects(bounds)) {
-				this._reclaimTileCanvasMemory(this._tileCache[key]);
 				delete this._tileCache[key];
 			}
 		}
