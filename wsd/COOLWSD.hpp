@@ -206,7 +206,7 @@ private:
 
 #if !MOBILEAPP
 
-class ForKitProcWSHandler : public WebSocketHandler
+class ForKitProcWSHandler final : public WebSocketHandler
 {
 public:
     ForKitProcWSHandler(const std::weak_ptr<StreamSocket>& socket,
@@ -218,7 +218,7 @@ public:
     virtual void handleMessage(const std::vector<char>& data) override;
 };
 
-class ForKitProcess : public WSProcess
+class ForKitProcess final : public WSProcess
 {
 public:
     ForKitProcess(int pid, std::shared_ptr<StreamSocket>& socket, const Poco::Net::HTTPRequest &request)
@@ -232,7 +232,7 @@ public:
 
 /// The Server class which is responsible for all
 /// external interactions.
-class COOLWSD : public Poco::Util::ServerApplication
+class COOLWSD final : public Poco::Util::ServerApplication
 {
 public:
     COOLWSD();
