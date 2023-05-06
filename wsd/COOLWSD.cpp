@@ -3367,7 +3367,6 @@ public:
     {
         LOG_TRC_S("PrisonerRequestDispatcher");
     }
-
     ~PrisonerRequestDispatcher()
     {
         LOG_TRC("~PrisonerRequestDispatcher");
@@ -3439,18 +3438,44 @@ private:
             return;
         }
 
-        Poco::MemoryInputStream message(&socket->getInBuffer()[0],
-                                        socket->getInBuffer().size());
-        Poco::Net::HTTPRequest request;
+        Buffer& data = socket->getInBuffer();
+        if (data.empty())
+        {
+            LOG_DBG("No data to process from the socket");
+            return;
+        }
+
+#ifdef LOG_SOCKET_DATA
+        LOG_TRC("HandleIncomingMessage: buffer has:\n"
+                << Util::dumpHex(std::string(data.data(), std::min(data.size(), 256UL))));
+#endif
+
+        // Consume the incoming data by parsing and processing the body.
+        http::Request request;
+        const int64_t read = request.readData(data.data(), data.size());
+        if (read < 0)
+        {
+            LOG_ERR("Error parsing prisoner socket data");
+            return;
+        }
+
+        if (read == 0)
+        {
+            // Not enough data.
+            return;
+        }
+
+        assert(read > 0 && "Must have read some data!");
+
+        // Remove consumed data.
+        data.eraseFirst(read);
 
         try
         {
 #if !MOBILEAPP
-            if (!socket->parseHeader("Prisoner", message, request))
-                return;
-
-            LOG_TRC("Child connection with URI [" << COOLWSD::anonymizeUrl(request.getURI()) << ']');
-            Poco::URI requestURI(request.getURI());
+            LOG_TRC("Child connection with URI [" << COOLWSD::anonymizeUrl(request.getUrl())
+                                                  << ']');
+            Poco::URI requestURI(request.getUrl());
 #ifndef KIT_IN_PROCESS
             if (requestURI.getPath() == FORKIT_URI)
             {
@@ -3461,6 +3486,7 @@ private:
                     return;
                 }
                 COOLWSD::ForKitProc = std::make_shared<ForKitProcess>(COOLWSD::ForKitProcId, socket, request);
+                LOG_ASSERT_MSG(socket->getInBuffer().empty(), "Unexpected data in prisoner socket");
                 socket->getInBuffer().clear();
                 PrisonerPoll->setForKitProcess(COOLWSD::ForKitProc);
                 return;
@@ -3491,18 +3517,19 @@ private:
 
             if (pid <= 0)
             {
-                LOG_ERR("Invalid PID in child URI [" << COOLWSD::anonymizeUrl(request.getURI())
+                LOG_ERR("Invalid PID in child URI [" << COOLWSD::anonymizeUrl(request.getUrl())
                                                      << ']');
                 return;
             }
 
             if (jailId.empty())
             {
-                LOG_ERR("Invalid JailId in child URI [" << COOLWSD::anonymizeUrl(request.getURI())
+                LOG_ERR("Invalid JailId in child URI [" << COOLWSD::anonymizeUrl(request.getUrl())
                                                         << ']');
                 return;
             }
 
+            LOG_ASSERT_MSG(socket->getInBuffer().empty(), "Unexpected data in prisoner socket");
             socket->getInBuffer().clear();
 
             LOG_INF("New child [" << pid << "], jailId: " << jailId);
@@ -3511,6 +3538,7 @@ private:
 #else
             pid_t pid = 100;
             std::string jailId = "jail";
+            LOG_ASSERT_MSG(socket->getInBuffer().empty(), "Unexpected data in prisoner socket");
             socket->getInBuffer().clear();
 #endif
             LOG_TRC("Calling make_shared<ChildProcess>, for NewChildren?");
