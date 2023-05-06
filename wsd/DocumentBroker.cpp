@@ -2727,17 +2727,14 @@ void DocumentBroker::finalRemoveSession(const std::shared_ptr<ClientSession>& se
         // in question, lest we destroy from underneath them.
         _sessions.erase(sessionId);
 
-        Log::StreamLogger logger = Log::trace();
-        if (logger.enabled())
-        {
-            logger << "Removed " << (readonly ? "" : "non-") << "readonly session [" << sessionId
-                   << "] from docKey [" << _docKey << "] to have " << _sessions.size()
-                   << " sessions:";
-            for (const auto& pair : _sessions)
-                logger << pair.second->getId() << ' ';
-
-            LOG_END_FLUSH(logger);
-        }
+        LOG_TRC("Removed " << (readonly ? "" : "non-") << "readonly session [" << sessionId
+                           << "] from docKey [" << _docKey << "] to have " << _sessions.size()
+                           << " sessions:" <<
+                [&](auto& log)
+                {
+                    for (const auto& pair : _sessions)
+                        log << pair.second->getId() << ' ';
+                });
     }
     catch (const std::exception& ex)
     {

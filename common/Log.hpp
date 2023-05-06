@@ -225,6 +225,12 @@ inline void operator<<(Log::StreamLogger& lhs, const Log::_end_marker&) { lhs.fl
 /// Any context can implement this to prefix its log entries.
 inline void logPrefix(std::ostream&) {}
 
+inline std::ostream& operator<<(std::ostream& lhs, const std::function<void(std::ostream&)>& f)
+{
+    f(lhs);
+    return lhs;
+}
+
 #ifdef IOS
 // We know that when building with Xcode, __FILE__ will always be a full path, with several slashes,
 // so this will always work. We want just the file name, they are unique anyway.

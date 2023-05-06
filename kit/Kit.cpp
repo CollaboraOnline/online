@@ -2436,24 +2436,21 @@ protected:
             return;
 #endif
         StringVector tokens = StringVector::tokenize(message);
-        Log::StreamLogger logger = Log::debug();
-        if (logger.enabled())
-        {
-            logger << _socketName << ": recv [";
-            for (const auto& token : tokens)
-            {
-                // Don't log user-data, there are anonymized versions that get logged instead.
-                if (tokens.startsWith(token, "jail") ||
-                    tokens.startsWith(token, "author") ||
-                    tokens.startsWith(token, "name") ||
-                    tokens.startsWith(token, "url"))
-                    continue;
 
-                logger << tokens.getParam(token) << ' ';
-            }
+        LOG_DBG(_socketName << ": recv [" <<
+                [&](auto& log)
+                {
+                    for (const auto& token : tokens)
+                    {
+                        // Don't log user-data, there are anonymized versions that get logged instead.
+                        if (tokens.startsWith(token, "jail") ||
+                            tokens.startsWith(token, "author") ||
+                            tokens.startsWith(token, "name") || tokens.startsWith(token, "url"))
+                            continue;
 
-            LOG_END_FLUSH(logger);
-        }
+                        log << tokens.getParam(token) << ' ';
+                    }
+                });
 
         // Note: Syntax or parsing errors here are unexpected and fatal.
         if (SigUtil::getTerminationFlag())

@@ -1126,21 +1126,15 @@ bool StreamSocket::parseHeader(const char *clientName,
     {
         request.read(message);
 
-        Log::StreamLogger logger = Log::info();
-        if (logger.enabled())
-        {
-            logger << '#' << getFD() << ": " << clientName << " HTTP Request: "
-                   << request.getMethod() << ' '
-                   << request.getURI() << ' '
-                   << request.getVersion();
-
-            for (const auto& it : request)
-            {
-                logger << " / " << it.first << ": " << it.second;
-            }
-
-            LOG_END_FLUSH(logger);
-        }
+        LOG_INF('#' << getFD() << ": " << clientName << " HTTP Request: " << request.getMethod()
+                    << ' ' << request.getURI() << ' ' << request.getVersion() <<
+                [&](auto& log)
+                {
+                    for (const auto& it : request)
+                    {
+                        log << " / " << it.first << ": " << it.second;
+                    }
+                });
 
         const std::streamsize contentLength = request.getContentLength();
         const auto offset = itBody - _inBuffer.begin();

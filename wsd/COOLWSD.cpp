@@ -404,17 +404,15 @@ void cleanupDocBrokers()
 
     if (count != DocBrokers.size())
     {
-        Log::StreamLogger logger = Log::trace();
-        if (logger.enabled())
-        {
-            logger << "Have " << DocBrokers.size() << " DocBrokers after cleanup.\n";
-            for (auto& pair : DocBrokers)
-            {
-                logger << "DocumentBroker [" << pair.first << "].\n";
-            }
-
-            LOG_END_FLUSH(logger);
-        }
+        LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after cleanup.\n"
+                        <<
+                [&](auto& log)
+                {
+                    for (auto& pair : DocBrokers)
+                    {
+                        log << "DocumentBroker [" << pair.first << "].\n";
+                    }
+                });
 
 #if !MOBILEAPP && ENABLE_DEBUG
         if (COOLWSD::SingleKit && DocBrokers.empty())

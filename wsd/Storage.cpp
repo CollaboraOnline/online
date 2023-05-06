@@ -635,17 +635,15 @@ WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& aut
 
         const auto startTime = std::chrono::steady_clock::now();
 
-        Log::StreamLogger logger = Log::trace();
-        if (logger.enabled())
-        {
-            logger << "WOPI::CheckFileInfo request header for URI [" << uriAnonym << "]:\n";
-            for (const auto& pair : httpRequest.header())
-            {
-                logger << '\t' << pair.first << ": " << pair.second << " / ";
-            }
-
-            LOG_END_FLUSH(logger);
-        }
+        LOG_TRC("WOPI::CheckFileInfo request header for URI [" << uriAnonym << "]:\n"
+                                                               <<
+                [&](auto& log)
+                {
+                    for (const auto& pair : httpRequest.header())
+                    {
+                        log << '\t' << pair.first << ": " << pair.second << " / ";
+                    }
+                });
 
         const std::shared_ptr<const http::Response> httpResponse
             = httpSession->syncRequest(httpRequest);
@@ -1134,17 +1132,15 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
     if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_OK)
     {
         // Log the response header.
-        Log::StreamLogger logger = Log::trace();
-        if (logger.enabled())
-        {
-            logger << "WOPI::GetFile response header for URI [" << uriAnonym << "]:\n";
-            for (const auto& pair : httpResponse->header())
-            {
-                logger << '\t' << pair.first << ": " << pair.second << " / ";
-            }
-
-            LOG_END_FLUSH(logger);
-        }
+        LOG_TRC("WOPI::GetFile response header for URI [" << uriAnonym << "]:\n"
+                                                          <<
+                [&](auto& log)
+                {
+                    for (const auto& pair : httpResponse->header())
+                    {
+                        log << '\t' << pair.first << ": " << pair.second << " / ";
+                    }
+                });
     }
     else if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_FOUND ||
             httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_MOVED_PERMANENTLY ||
