@@ -99,21 +99,15 @@ private:
         {
             request.read(message);
 
-            Log::StreamLogger logger = Log::info();
-            if (logger.enabled())
-            {
-                logger << '#' << socket->getFD() << ": Client HTTP Request: "
-                       << request.getMethod() << ' '
-                       << request.getURI() << ' '
-                       << request.getVersion();
-
-                for (const auto& it : request)
-                {
-                    logger << " / " << it.first << ": " << it.second;
-                }
-
-                LOG_END_FLUSH(logger);
-            }
+            LOG_INF('#' << socket->getFD() << ": Client HTTP Request: " << request.getMethod()
+                        << ' ' << request.getURI() << ' ' << request.getVersion() <<
+                    [&](auto& log)
+                    {
+                        for (const auto& it : request)
+                        {
+                            log << " / " << it.first << ": " << it.second;
+                        }
+                    });
 
             const std::streamsize contentLength = request.getContentLength();
             const auto offset = itBody - in.begin();
