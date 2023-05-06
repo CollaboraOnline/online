@@ -3434,7 +3434,7 @@ private:
         std::shared_ptr<StreamSocket> socket = getSocket().lock();
         if (!socket)
         {
-            LOG_ERR("Invalid socket while reading incoming message.");
+            LOG_ERR("Invalid socket while reading incoming message");
             return;
         }
 
@@ -3448,14 +3448,15 @@ private:
             if (!socket->parseHeader("Prisoner", message, request))
                 return;
 
-            LOG_TRC("Child connection with URI [" << COOLWSD::anonymizeUrl(request.getURI()) << "].");
+            LOG_TRC("Child connection with URI [" << COOLWSD::anonymizeUrl(request.getURI()) << ']');
             Poco::URI requestURI(request.getURI());
 #ifndef KIT_IN_PROCESS
             if (requestURI.getPath() == FORKIT_URI)
             {
                 if (socket->getPid() != COOLWSD::ForKitProcId)
                 {
-                    LOG_WRN("Connection request received on " << FORKIT_URI << " endpoint from unexpected ForKit process. Skipped.");
+                    LOG_WRN("Connection request received on "
+                            << FORKIT_URI << " endpoint from unexpected ForKit process. Skipped");
                     return;
                 }
                 COOLWSD::ForKitProc = std::make_shared<ForKitProcess>(COOLWSD::ForKitProcId, socket, request);
@@ -3489,19 +3490,21 @@ private:
 
             if (pid <= 0)
             {
-                LOG_ERR("Invalid PID in child URI [" << COOLWSD::anonymizeUrl(request.getURI()) << "].");
+                LOG_ERR("Invalid PID in child URI [" << COOLWSD::anonymizeUrl(request.getURI())
+                                                     << ']');
                 return;
             }
 
             if (jailId.empty())
             {
-                LOG_ERR("Invalid JailId in child URI [" << COOLWSD::anonymizeUrl(request.getURI()) << "].");
+                LOG_ERR("Invalid JailId in child URI [" << COOLWSD::anonymizeUrl(request.getURI())
+                                                        << ']');
                 return;
             }
 
             socket->getInBuffer().clear();
 
-            LOG_INF("New child [" << pid << "], jailId: " << jailId << '.');
+            LOG_INF("New child [" << pid << "], jailId: " << jailId);
 
             UnitWSD::get().newChild(*this);
 #else
@@ -3531,7 +3534,7 @@ private:
         catch (const std::bad_weak_ptr&)
         {
             // Using shared_from_this() from a constructor is not good.
-            assert(false);
+            assert(!"Got std::bad_weak_ptr. Are we using shared_from_this() from a constructor?");
         }
         catch (const std::exception& exc)
         {
@@ -4886,7 +4889,8 @@ private:
                 }
             }
 
-            LOG_INF("URL [" << COOLWSD::anonymizeUrl(url) << "] is " << (isReadOnly ? "readonly" : "writable") << '.');
+            LOG_INF("URL [" << COOLWSD::anonymizeUrl(url) << "] is "
+                            << (isReadOnly ? "readonly" : "writable"));
 
             // Request a kit process for this doc.
             std::shared_ptr<DocumentBroker> docBroker = findOrCreateDocBroker(
