@@ -209,8 +209,8 @@ private:
 class ForKitProcWSHandler : public WebSocketHandler
 {
 public:
-    ForKitProcWSHandler(const std::weak_ptr<StreamSocket>& socket,
-                        const Poco::Net::HTTPRequest& request)
+    template <typename T>
+    ForKitProcWSHandler(const std::weak_ptr<StreamSocket>& socket, const T& request)
         : WebSocketHandler(socket.lock(), request)
     {
     }
@@ -221,7 +221,8 @@ public:
 class ForKitProcess : public WSProcess
 {
 public:
-    ForKitProcess(int pid, std::shared_ptr<StreamSocket>& socket, const Poco::Net::HTTPRequest &request)
+    template <typename T>
+    ForKitProcess(int pid, std::shared_ptr<StreamSocket>& socket, const T& request)
         : WSProcess("ForKit", pid, socket, std::make_shared<ForKitProcWSHandler>(socket, request))
     {
         socket->setHandler(getWSHandler());
