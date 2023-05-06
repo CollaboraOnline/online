@@ -1753,6 +1753,16 @@ private:
 
 } // namespace http
 
+inline std::ostream& operator<<(std::ostream& os, const http::Header& header)
+{
+    for (const auto& pair : header)
+    {
+        os << '\t' << pair.first << ": " << pair.second << " / ";
+    }
+
+    return os;
+}
+
 inline std::ostream& operator<<(std::ostream& os, const http::FieldParseState& fieldParseState)
 {
     os << http::name(fieldParseState);
