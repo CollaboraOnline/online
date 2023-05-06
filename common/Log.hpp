@@ -171,44 +171,6 @@ namespace Log
              : StreamLogger();
     }
 
-    template <typename U>
-    StreamLogger& operator<<(StreamLogger& lhs, const U& rhs)
-    {
-        if (lhs.enabled())
-        {
-            lhs.getStream() << rhs;
-        }
-
-        return lhs;
-    }
-
-    template <typename U>
-    StreamLogger& operator<<(StreamLogger&& lhs, U&& rhs)
-    {
-        if (lhs.enabled())
-        {
-            lhs.getStream() << rhs;
-        }
-
-        return lhs;
-    }
-
-    inline StreamLogger& operator<<(StreamLogger& lhs, const std::chrono::system_clock::time_point& rhs)
-    {
-        if (lhs.enabled())
-        {
-            lhs.getStream() << Util::getIso8601FracformatTime(rhs);
-        }
-
-        return lhs;
-    }
-
-    inline void operator<<(StreamLogger& lhs, const _end_marker&)
-    {
-        (void)end;
-        lhs.flush();
-    }
-
     /// Dump the invalid id as 0, otherwise dump in hex.
     /// Note: std::thread::id defines operator<< which
     /// serializes in decimal. We need this for hex.
@@ -223,7 +185,41 @@ namespace Log
 
         return "0";
     }
+
+} // namespace Log
+
+template <typename U> Log::StreamLogger& operator<<(Log::StreamLogger& lhs, const U& rhs)
+{
+    if (lhs.enabled())
+    {
+        lhs.getStream() << rhs;
+    }
+
+    return lhs;
 }
+
+template <typename U> Log::StreamLogger& operator<<(Log::StreamLogger&& lhs, U&& rhs)
+{
+    if (lhs.enabled())
+    {
+        lhs.getStream() << rhs;
+    }
+
+    return lhs;
+}
+
+inline Log::StreamLogger& operator<<(Log::StreamLogger& lhs,
+                                     const std::chrono::system_clock::time_point& rhs)
+{
+    if (lhs.enabled())
+    {
+        lhs.getStream() << Util::getIso8601FracformatTime(rhs);
+    }
+
+    return lhs;
+}
+
+inline void operator<<(Log::StreamLogger& lhs, const Log::_end_marker&) { lhs.flush(); }
 
 /// A default implementation that is a NOP.
 /// Any context can implement this to prefix its log entries.
