@@ -1751,7 +1751,15 @@ private:
 };
 }
 
-} // namespace http
+inline std::ostream& operator<<(std::ostream& os, const http::Header& header)
+{
+    for (const auto& pair : header)
+    {
+        os << '\t' << pair.first << ": " << pair.second << " / ";
+    }
+
+    return os;
+}
 
 inline std::ostream& operator<<(std::ostream& os, const http::FieldParseState& fieldParseState)
 {
@@ -1770,5 +1778,28 @@ inline std::ostream& operator<<(std::ostream& os, const http::Response::State& s
     os << http::Response::name(state);
     return os;
 }
+
+/// Format seconds with the units suffix until we migrate to C++20.
+inline std::ostream& operator<<(std::ostream& os, const std::chrono::seconds& s)
+{
+    os << s.count() << 's';
+    return os;
+}
+
+/// Format milliseconds with the units suffix until we migrate to C++20.
+inline std::ostream& operator<<(std::ostream& os, const std::chrono::milliseconds& ms)
+{
+    os << ms.count() << "ms";
+    return os;
+}
+
+/// Format microseconds with the units suffix until we migrate to C++20.
+inline std::ostream& operator<<(std::ostream& os, const std::chrono::microseconds& ms)
+{
+    os << ms.count() << "us";
+    return os;
+}
+
+} // namespace http
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
