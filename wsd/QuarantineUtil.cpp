@@ -24,12 +24,13 @@ namespace Quarantine
 
     bool isQuarantineEnabled()
     {
-        return COOLWSD::getConfigValue<bool>("quarantine_files[@enable]", false);
+        return !QuarantinePath.empty();
     }
 
     void createQuarantineMap(const std::string& path)
     {
-        if (!isQuarantineEnabled())
+        if (!COOLWSD::getConfigValue<bool>("quarantine_files[@enable]", false) ||
+            isQuarantineEnabled())
             return;
 
         std::vector<std::string> files;
