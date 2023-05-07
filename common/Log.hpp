@@ -188,13 +188,6 @@ namespace Log
 
 } // namespace Log
 
-namespace http
-{
-class Header;
-}
-
-inline std::ostream& operator<<(std::ostream& os, const http::Header& header);
-
 template <typename U> Log::StreamLogger& operator<<(Log::StreamLogger& lhs, const U& rhs)
 {
     if (lhs.enabled())
