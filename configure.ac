@@ -1023,6 +1023,20 @@ else
     AC_MSG_ERROR(Compiler doesn't support C++17)
 fi
 
+# Check if we have clang, rather than gcc, which
+# doesn't like -pthread on the linker command-line.
+AC_MSG_CHECKING([whether the compiler is clang])
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([
+    #if !defined(__clang__)
+    #error not clang
+    #endif
+])],
+                    [AC_MSG_RESULT([yes])
+                    AC_DEFINE([HAVE_CLANG],1,[whether the C++ compiler is clang])],
+                    [AC_MSG_RESULT([no])
+                    AC_DEFINE([HAVE_CLANG],0,[whether the C++ compiler is clang])])
+AM_CONDITIONAL([HAVE_CLANG], [test "$HAVE_CLANG" = "1"])
+
 AS_IF([test "$ENABLE_GTKAPP" != true],
 [CXXFLAGS="$CXXFLAGS $CXXFLAGS_CXXSTD"])
 

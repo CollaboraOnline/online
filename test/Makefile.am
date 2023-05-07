@@ -93,7 +93,12 @@ endif
 noinst_LTLIBRARIES = ${all_la_unit_tests}
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
-AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION) $(ZLIB_LIBS) $(ZSTD_LIBS) ${PNG_LIBS}
+AM_LDFLAGS = -module $(MAGIC_TO_FORCE_SHLIB_CREATION) $(ZLIB_LIBS) $(ZSTD_LIBS) ${PNG_LIBS}
+
+# Clang's linker doesn't like -pthread.
+if !HAVE_CLANG
+AM_LDFLAGS += -pthread
+endif
 
 if ENABLE_SSL
 AM_LDFLAGS += ${OPENSSL_LIBS}

@@ -83,7 +83,12 @@ if !ENABLE_DEBUG
 AM_CPPFLAGS += -DNDEBUG
 endif
 
-AM_LDFLAGS = -pthread -Wl,-E -lpam $(ZLIB_LIBS) $(ZSTD_LIBS) ${PNG_LIBS}
+AM_LDFLAGS = -Wl,-E -lpam $(ZLIB_LIBS) $(ZSTD_LIBS) ${PNG_LIBS}
+
+# Clang's linker doesn't like -pthread.
+if !HAVE_CLANG
+AM_LDFLAGS += -pthread
+endif
 
 if ENABLE_SSL
 AM_LDFLAGS += ${OPENSSL_LIBS}
