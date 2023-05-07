@@ -13,7 +13,7 @@
 class DocumentBroker;
 namespace Quarantine
 {
-    void createQuarantineMap();
+    void createQuarantineMap(const std::string& path);
 
     bool quarantineFile(DocumentBroker* docBroker, const std::string& docName);
 

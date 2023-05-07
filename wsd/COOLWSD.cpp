@@ -927,7 +927,6 @@ static std::string UnitTestLibrary;
 unsigned int COOLWSD::NumPreSpawnedChildren = 0;
 std::unique_ptr<TraceFileWriter> COOLWSD::TraceDumper;
 std::unordered_map<std::string, std::vector<std::string>> COOLWSD::QuarantineMap;
-std::string COOLWSD::QuarantinePath;
 #if !MOBILEAPP
 std::unique_ptr<ClipboardCache> COOLWSD::SavedClipboards;
 #endif
@@ -2444,17 +2443,39 @@ void COOLWSD::innerInitialize(Application& self)
     LOG_DBG("FileServerRoot after config: " << FileServerRoot);
 
     //creating quarantine directory
-    if(getConfigValue<bool>(conf, "quarantine_files[@enable]", false))
+    if (getConfigValue<bool>(conf, "quarantine_files[@enable]", false))
     {
-        QuarantinePath = getPathFromConfig("quarantine_files.path");
-        if (QuarantinePath[QuarantinePath.size() - 1] != '/')
-            QuarantinePath += '/';
+        std::string path = Util::trimmed(getPathFromConfig("quarantine_files.path"));
+        if (path.empty())
+        {
+            LOG_WRN("Quarantining is enabled via quarantine_files config, but no path is set in "
+                    "quarantine_files.path. Disabling quarantine");
+        }
+        else
+        {
+            if (path[path.size() - 1] != '/')
+                path += '/';
 
-        Poco::File p(QuarantinePath);
-        p.createDirectories();
-        LOG_INF("Created quarantine directory " + p.path());
+            Poco::File p(path);
+            try
+            {
+                LOG_TRC("Creating quarantine directory [" + path << ']');
+                p.createDirectories();
 
-        Quarantine::createQuarantineMap();
+                LOG_DBG("Created quarantine directory [" + path << ']');
+            }
+            catch (const std::exception& ex)
+            {
+                LOG_WRN("Failed to create quarantine directory [" << path
+                                                                  << "]. Disabling quaratine");
+            }
+
+            if (FileUtil::Stat(path).exists())
+            {
+                LOG_INF("Initializing quarantine at [" + path << ']');
+                Quarantine::createQuarantineMap(path);
+            }
+        }
     }
 
     NumPreSpawnedChildren = getConfigValue<int>(conf, "num_prespawn_children", 1);
