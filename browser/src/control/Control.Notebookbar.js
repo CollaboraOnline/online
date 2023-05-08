@@ -514,7 +514,7 @@ L.Control.Notebookbar = L.Control.extend({
 			{
 				'type': 'toolitem',
 				'text': _UNO('.uno:Navigator'),
-				'command': '.uno:Navigator'
+				'command': '.uno:SidebarDeck.NavigatorDeck'
 			},
 			{
 				'type': 'toolitem',
