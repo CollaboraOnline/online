@@ -1910,6 +1910,24 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		else if (data.html)
 			fixedtext.innerHTML = data.html;
 
+		var accKey = builder._getAccessKeyFromText(data.text);
+		builder._stressAccessKey(fixedtext, accKey);
+
+		setTimeout(function () {
+			var labelledControl = document.getElementById(data.labelFor);
+			if (labelledControl) {
+				var target = labelledControl;
+				var input = labelledControl.querySelector('input');
+				if (input)
+					target = input;
+				var select = labelledControl.querySelector('select');
+				if (select)
+					target = select;
+
+				builder._setAccessKey(target, accKey);
+			}
+		}, 0);
+
 		fixedtext.id = data.id;
 		if (data.style && data.style.length) {
 			L.DomUtil.addClass(fixedtext, data.style);
