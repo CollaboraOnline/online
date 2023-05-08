@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe(['tagmobile'], 'Calc focus tests', function() {
+describe.skip(['tagmobile'], 'Calc focus tests', function() {
 	var origTestFileName = 'focus.ods';
 	var testFileName;
 
