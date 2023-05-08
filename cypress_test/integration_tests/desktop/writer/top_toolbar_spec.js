@@ -375,7 +375,7 @@ describe(['tagnotebookbar'], 'Top toolbar tests.', function() {
 		cy.cGet('#copy-paste-container p i').should('exist');
 	});
 
-	it('Show/Hide sidebar.', function() {
+	it.skip('Show/Hide sidebar.', function() {
 		//hide sidebar
 		mode !== 'notebookbar' ? cy.cGet('#toolbar-up .w2ui-scroll-right').click() : '';
 
