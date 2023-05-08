@@ -24,6 +24,7 @@
 #include <Poco/URI.h>
 
 #include "Log.hpp"
+#include "QuarantineUtil.hpp"
 #include "TileDesc.hpp"
 #include "Util.hpp"
 #include "net/Socket.hpp"
@@ -1406,6 +1407,9 @@ private:
     /// The last upload request's attributes. Re-used to retry after failure.
     /// Updated right before uploading.
     StorageBase::Attributes _lastStorageAttrs;
+
+    /// The Quarantine manager.
+    Quarantine _quarantine;
 
     std::unique_ptr<TileCache> _tileCache;
     std::atomic<bool> _isModified;

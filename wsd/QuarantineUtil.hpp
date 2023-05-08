@@ -15,24 +15,31 @@ class DocumentBroker;
 class Quarantine
 {
 public:
+    Quarantine(DocumentBroker& docBroker)
+        : _docBroker(docBroker)
+    {
+    }
+
     static void initialize(const std::string& path);
 
-    static bool quarantineFile(DocumentBroker* docBroker, const std::string& docName);
+    bool quarantineFile(const std::string& docName);
 
     /// Removes the quarantined files for the given DocKey when we unload gracefully.
-    static void removeQuarantinedFiles(const std::string& docKey);
+    void removeQuarantinedFiles();
 
 private:
-    static bool isQuarantineEnabled() { return !QuarantinePath.empty(); }
+    bool isQuarantineEnabled() const { return !QuarantinePath.empty(); }
 
-    static std::size_t quarantineSize();
+    std::size_t quarantineSize();
 
-    static void makeQuarantineSpace();
+    void makeQuarantineSpace();
 
-    static void clearOldQuarantineVersions(const std::string& docKey);
+    void clearOldQuarantineVersions(const std::string& docKey);
 
-    static void removeQuarantine();
+    void removeQuarantine();
 
 private:
     static std::string QuarantinePath;
+
+    DocumentBroker& _docBroker;
 };
