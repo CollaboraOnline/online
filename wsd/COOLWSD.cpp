@@ -2473,7 +2473,7 @@ void COOLWSD::innerInitialize(Application& self)
             if (FileUtil::Stat(path).exists())
             {
                 LOG_INF("Initializing quarantine at [" + path << ']');
-                Quarantine::createQuarantineMap(path);
+                Quarantine::initialize(path);
             }
         }
     }

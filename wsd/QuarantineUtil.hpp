@@ -11,12 +11,28 @@
 #include <string>
 
 class DocumentBroker;
-namespace Quarantine
-{
-    void createQuarantineMap(const std::string& path);
 
-    bool quarantineFile(DocumentBroker* docBroker, const std::string& docName);
+class Quarantine
+{
+public:
+    static void initialize(const std::string& path);
+
+    static bool quarantineFile(DocumentBroker* docBroker, const std::string& docName);
 
     /// Removes the quarantined files for the given DocKey when we unload gracefully.
-    void removeQuarantinedFiles(const std::string& docKey);
-}
+    static void removeQuarantinedFiles(const std::string& docKey);
+
+private:
+    static bool isQuarantineEnabled() { return !QuarantinePath.empty(); }
+
+    static std::size_t quarantineSize();
+
+    static void makeQuarantineSpace();
+
+    static void clearOldQuarantineVersions(const std::string& docKey);
+
+    static void removeQuarantine();
+
+private:
+    static std::string QuarantinePath;
+};
