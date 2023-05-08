@@ -135,6 +135,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
                        "per_document.min_time_between_saves_ms", 500)))
     , _storageManager(std::chrono::milliseconds(
           COOLWSD::getConfigValueNonZero<int>("per_document.min_time_between_uploads_ms", 5000)))
+    , _quarantine(*this)
     , _isModified(false)
     , _cursorPosX(0)
     , _cursorPosY(0)
@@ -604,13 +605,13 @@ void DocumentBroker::pollThread()
         // Quarantine the last copy, if different.
         LOG_DBG("Data loss detected, will quarantine last version of [" << getDocKey()
                                                                         << "] if necessary");
-        Quarantine::quarantineFile(this, _filename);
+        _quarantine.quarantineFile(_filename);
     }
     else
     {
         // Gracefully unloaded.
         LOG_DBG("Cleaning up quarantined files for [" << getDocKey() << ']');
-        Quarantine::removeQuarantinedFiles(getDocKey());
+        _quarantine.removeQuarantinedFiles();
     }
 
     // Async cleanup.
@@ -1133,7 +1134,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 
         _filename = fileInfo.getFilename();
 #if !MOBILEAPP
-        Quarantine::quarantineFile(this, _filename);
+        _quarantine.quarantineFile(_filename);
 #endif
         if (!templateSource.empty())
         {
@@ -1462,7 +1463,7 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
         LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
     }
 
-    Quarantine::quarantineFile(this, Util::splitLast(newName, '/').second);
+    _quarantine.quarantineFile(Util::splitLast(newName, '/').second);
 #endif //!MOBILEAPP
 
     // Let the clients know of any save failures.
