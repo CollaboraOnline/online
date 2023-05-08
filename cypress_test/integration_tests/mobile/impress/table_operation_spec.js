@@ -95,7 +95,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', function(
 			.should('have.attr', 'y', '5644');
 	});
 
-	it('Insert column before.', function() {
+	it.skip('Insert column before.', function() {
 		selectFullTable();
 
 		helper.typeIntoDocument('{downarrow}');

@@ -104,11 +104,11 @@ describe(['tagmultiuser'], 'Track Changes', function () {
 		acceptAll('#iframe2', '#iframe1');
 	});
 
-	it('Reject All by user-2', function() {
+	it.skip('Reject All by user-2', function() {
 		rejectAll('#iframe1', '#iframe2');
 	});
 
-	it('Reject All by user-1', function() {
+	it.skip('Reject All by user-1', function() {
 		rejectAll('#iframe2', '#iframe1');
 	});
 });

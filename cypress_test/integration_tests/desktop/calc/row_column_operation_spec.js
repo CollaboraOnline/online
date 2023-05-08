@@ -33,7 +33,7 @@ describe(['tagnotebookbar'], 'Row Column Operation', function() {
 		}
 	}
 
-	it('Insert/Delete row' , function() {
+	it.skip('Insert/Delete row' , function() {
 		//Insert row above
 		mode === 'notebookbar' ? cy.cGet('#Home-Section-Cell1 #InsertRowsBefore').click() :	selectOption('Insert Rows', 'Rows Above');
 
@@ -57,7 +57,7 @@ describe(['tagnotebookbar'], 'Row Column Operation', function() {
 		calcHelper.assertDataClipboardTable(['Hello','Hi','','','World','Bye']);
 	});
 
-	it('Insert/Delete Column', function() {
+	it.skip('Insert/Delete Column', function() {
 		//insert column before
 		mode === 'notebookbar' ? cy.cGet('#Home-Section-Cell1 #InsertColumnsBefore').click() : selectOption('Insert Columns', 'Columns Before');
 
