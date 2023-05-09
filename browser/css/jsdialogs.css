@@ -171,6 +171,14 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	margin: auto 0px;
 }
 
+/* Page number dialog placed under Insert menu */
+#PageNumberDialog #rightVBox,
+#PageNumberDialog #leftVBox {
+	display: flex;
+	flex-direction: column;
+	margin: 5px;
+}
+
 /* Scrollwindow - used eg. in accessibility check in writer */
 .jsdialog.ui-scrollwindow:not(.formulabar) {
 	overflow: auto;
