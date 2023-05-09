@@ -290,6 +290,12 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) 
 	}
 }
 
+function switchUIToNotebookbar() {
+	cy.cGet('#menu-view').click();
+	cy.cGet('#menu-toggleuimode').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
+	Cypress.env('USER_INTERFACE', 'notebookbar');
+}
+
 function actionOnSelector(name,func) {
 	cy.task('getSelectors', {
 		mode: Cypress.env('USER_INTERFACE'),
@@ -354,3 +360,4 @@ module.exports.assertScrollbarPosition = assertScrollbarPosition;
 module.exports.pressKey = pressKey;
 module.exports.assertImageSize = assertImageSize;
 module.exports.openReadOnlyFile = openReadOnlyFile;
+module.exports.switchUIToNotebookbar = switchUIToNotebookbar;
