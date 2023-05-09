@@ -130,12 +130,12 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 	position: absolute;
 	display: block;
 	width: auto;
-	background-color: var(--color-background-darker);
+	background-color: transparent;
 	color: var(--color-text-darker);
-	padding: 2px 4px;
+	padding: 10px 4px;
 	border-radius: var(--border-radius);
 	white-space: nowrap;
-	margin-inline-start: -14px;
+	margin-inline-start: 2px;
 }
 
 .sidebar.ui-grid.ui-grid-cell .menubutton {
