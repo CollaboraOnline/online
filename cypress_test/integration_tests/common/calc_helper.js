@@ -78,14 +78,16 @@ function dblClickOnFirstCell() {
 function typeIntoFormulabar(text) {
 	cy.log('Typing into formulabar - start.');
 
-	cy.cGet('#calc-inputbar .lokdialog-cursor')
+	cy.cGet('#sc_input_window.formulabar')
 		.then(function(cursor) {
 			if (!Cypress.dom.isVisible(cursor)) {
 				clickFormulaBar();
 			}
 		});
 
-		cy.cGet('#calc-inputbar .lokdialog-cursor').should('have.focus');
+	cy.cGet('#sc_input_window.formulabar').should('have.focus');
+	cy.cGet('#sc_input_window.formulabar').click(); // This probably shouldn't be here, but acceptformula doesn't get visible without a click.
+	cy.cGet('body').type(text);
 
 	helper.doIfOnMobile(function() {
 		cy.cGet('#tb_actionbar_item_acceptformula').should('be.visible');
@@ -96,8 +98,6 @@ function typeIntoFormulabar(text) {
 		cy.cGet('#acceptformula').should('be.visible');
 		cy.cGet('#cancelformula').should('be.visible');
 	});
-
-	cy.cGet('body').type(text);
 
 	cy.log('Typing into formulabar - end.');
 }
