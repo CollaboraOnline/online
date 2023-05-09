@@ -1,6 +1,5 @@
-/* global describe it cy require afterEach beforeEach */
+/* global describe it cy require afterEach beforeEach expect Cypress*/
 var helper = require('../../common/helper');
-
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function() {
 	var origTestFileName = 'delete_objects.ods';
@@ -27,10 +26,8 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 	it('Delete Shapes', function() {
 		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
 
-		cy.cGet('#tb_editbar_item_insertshapes')
-			.click()
-			.cGet('.col.w2ui-icon.symbolshapes')
-			.click();
+		cy.cGet('#tb_editbar_item_insertshapes').click();
+		cy.cGet('.col.w2ui-icon.symbolshapes').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 
 		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive')
 			.should('exist');
@@ -42,23 +39,14 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 			.should('not.exist');
 	});
 
-	it.skip('Delete Chart' , function() {
+	it('Delete Chart' , function() {
 		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
 		//insert
-		cy.cGet('#tb_editbar_item_insertobjectchart')
-			.click();
-
-		helper.clickOnIdle('.ui-pushbutton.jsdialog.button-primary');
-
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive')
-			.should('exist');
-
+		cy.cGet('#tb_editbar_item_insertobjectchart').click();
+		cy.cGet('.ui-pushbutton.jsdialog.button-primary').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
+		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
 		//delete
 		helper.typeIntoDocument('{del}');
-
-		cy.wait(2000);
-
-		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive')
-			.should('not.exist');
+		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('not.exist');
 	});
 });
