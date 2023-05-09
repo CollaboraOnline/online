@@ -65,7 +65,7 @@ function _panelTabsHandler(parentContainer, data, builder, tabTooltip, isTabCont
 		}
 		builder._currentDepth--;
 
-		$(contentDiv).hide();
+		$(contentDiv).addClass('hidden');
 		contentDivs[tabIdx] = contentDiv;
 	}
 
