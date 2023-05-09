@@ -194,15 +194,12 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	height: 24px !important;
 	display: flex !important;
 	align-items: center !important;
+	justify-content: center;
 	padding: 0px 1em !important;
 	border: solid 1px transparent !important;
 	border-radius: var(--border-radius) !important;
 	background-color: var(--color-main-background) !important;
 	margin-inline-end: 12px !important;
-}
-
-.ui-tab.jsdialog:first-child {
-	margin-inline-start: 12px !important;
 }
 
 .ui-tab.hidden.jsdialog {
@@ -219,6 +216,12 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	cursor: pointer !important;
 	background-color: var(--color-background-darker) !important;
 	color: var(--color-text-darker) !important;
+}
+
+.ui-tabs.jsdialog {
+	display: grid;
+	grid-template-columns: repeat(5, auto);
+	row-gap: 6px;
 }
 
 /* Expander */
