@@ -184,6 +184,29 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 /* Tabs */
+
+.ui-tabs-content.jsdialog {
+	display: grid;
+}
+
+.ui-tabs-content.jsdialog > .ui-content {
+	grid-row: 1;
+	grid-column: 1;
+	display: flex;
+	justify-items: stretch;
+	align-items: stretch;
+}
+
+.ui-tabs-content.jsdialog > .ui-content.hidden {
+	display: inherit !important;
+	visibility: hidden;
+}
+
+.ui-tabpage.jsdialog {
+	width: 100%;
+	height: 100%;
+}
+
 .ui-tab.jsdialog {
 	float: left !important;
 	font-size: var(--default-font-size) !important;

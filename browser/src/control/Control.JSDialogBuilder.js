@@ -1062,12 +1062,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (i !== t)
 				{
 					$(tabs[i]).removeClass('selected');
-					$(contentDivs[i]).hide();
+					$(contentDivs[i]).addClass('hidden');
 					tabs[i].setAttribute('aria-selected', 'false');
 					tabs[i].tabIndex = -1;
 				}
 			}
-			$(contentDivs[t]).show();
+			$(contentDivs[t]).removeClass('hidden');
 			builder.wizard.selectedTab(tabIds[t]);
 		};
 	},
@@ -1140,7 +1140,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				contentDiv.setAttribute('role', 'tabpanel');
 
 				if (!isSelectedTab)
-					$(contentDiv).hide();
+					$(contentDiv).addClass('hidden');
 				contentDivs[tabIdx] = contentDiv;
 			}
 
