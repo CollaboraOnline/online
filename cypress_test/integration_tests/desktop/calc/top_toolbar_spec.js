@@ -174,11 +174,10 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#copy-paste-container table td font').should('have.attr', 'color', '#FFF2CC');
 	});
 
-	it.skip('Add/Delete decimal places', function() {
+	it('Add/Delete decimal places', function() {
 		// Add decimal place
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.cGet('#tb_editbar_item_numberformatincdecimals').click();
-
 		calcHelper.selectEntireSheet();
 
 		var regex = new RegExp(';0;0.0$');
@@ -192,7 +191,6 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#tb_editbar_item_numberformatdecdecimals').click();
 
 		calcHelper.selectEntireSheet();
-
 		regex = new RegExp(';0;0$');
 		cy.cGet('#copy-paste-container table td')
 			.should('have.attr', 'sdnum')
