@@ -218,6 +218,18 @@ namespace FileUtil
         bool exists() const { return good() || (_errno != ENOENT && _errno != ENOTDIR); }
 
         /// Returns true if both files exist and have
+        /// the same size and same contents.
+        bool isIdenticalTo(const Stat& other) const
+        {
+            // No need to check whether they are linked or not,
+            // since if they are, the following check will match,
+            // and if they aren't, we still need to rely on the following.
+            // Finally, compare the contents, to avoid costly copying if we fail to update.
+            return (exists() && other.exists() && !isDirectory() && !other.isDirectory() &&
+                    size() == other.size() && compareFileContents(_path, other._path));
+        }
+
+        /// Returns true if both files exist and have
         /// the same size and modified timestamp.
         bool isUpToDate(const Stat& other) const
         {
@@ -225,8 +237,7 @@ namespace FileUtil
             // since if they are, the following check will match,
             // and if they aren't, we still need to rely on the following.
             // Finally, compare the contents, to avoid costly copying if we fail to update.
-            if (exists() && other.exists() && !isDirectory() && !other.isDirectory()
-                && size() == other.size() && compareFileContents(_path, other._path))
+            if (isIdenticalTo(other))
             {
                 return true;
             }
