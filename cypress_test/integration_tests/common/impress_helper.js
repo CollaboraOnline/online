@@ -1,4 +1,4 @@
-/* global cy require expect */
+/* global cy require expect Cypress */
 
 var helper = require('./helper');
 
@@ -62,11 +62,10 @@ function selectTextShapeInTheCenter() {
 			expect(items).to.have.length(1);
 			var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
 			var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
-			cy.cGet('body')
-				.click(XPos, YPos);
+			cy.cGet('body').click(XPos, YPos);
 		});
 
-	cy.cGet('.leaflet-drag-transform-marker').should('be.visible');
+	cy.cGet('.leaflet-drag-transform-marker').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).should('be.visible');
 	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g.Page g').should('exist');
 	cy.log('Selecting text shape - end.');
 }
@@ -83,7 +82,7 @@ function selectTableInTheCenter() {
 			cy.cGet('body').click(XPos, YPos);
 		});
 
-	cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('be.visible');
+	cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).should('be.visible');
 	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g.Page g').should('exist');
 
 	cy.log('Selecting table - end.');
