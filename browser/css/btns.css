@@ -32,6 +32,7 @@ button:not(.ui-tab):not(.ui-corner-all):not(.button-primary):not(.unobutton) {
 	border-radius: var(--border-radius);
 	margin: 5px;
 	vertical-align: middle;
+	width: max-content;
 }
 
 .button-primary {
@@ -44,6 +45,7 @@ button:not(.ui-tab):not(.ui-corner-all):not(.button-primary):not(.unobutton) {
 	border-radius: var(--border-radius);
 	margin: 5px;
 	vertical-align: middle;
+	width: max-content;
 }
 
 .jsdialog.ui-button-box.end {

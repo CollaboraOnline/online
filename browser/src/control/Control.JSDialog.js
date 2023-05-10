@@ -162,11 +162,11 @@ L.Control.JSDialog = L.Control.extend({
 
 	createContainer: function(instance, parentContainer) {
 		// it has to be form to handle default button
-		instance.container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', parentContainer);
+		instance.container = L.DomUtil.create('div', 'jsdialog-window', parentContainer);
 		instance.container.setAttribute('role', 'dialog');
 		instance.container.id = instance.id;
 
-		instance.form = L.DomUtil.create('form', '', instance.container);
+		instance.form = L.DomUtil.create('form', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', instance.container);
 
 		// Prevent overlay from getting the click.
 		instance.container.onclick = function(e) { e.stopPropagation(); };
@@ -209,8 +209,10 @@ L.Control.JSDialog = L.Control.extend({
 		if (instance.isModalPopUp && !instance.popupParent) // Special case for menu popups (they are also modal dialogues).
 			instance.overlay.classList.add('dimmed');
 
-		if (instance.isSnackbar)
+		if (instance.isSnackbar) {
 			L.DomUtil.addClass(instance.container, 'snackbar');
+			L.DomUtil.addClass(instance.form, 'snackbar');
+		}
 
 		instance.content = L.DomUtil.create('div', 'lokdialog ui-dialog-content ui-widget-content', instance.form);
 
@@ -377,7 +379,7 @@ L.Control.JSDialog = L.Control.extend({
 					instance.posy -= instance.posy + instance.content.clientHeight + 10 - window.innerHeight;
 			}
 			else {
-				var height = instance.container.getBoundingClientRect().height;
+				var height = instance.form.getBoundingClientRect().height;
 				if (instance.posy + height > instance.containerParent.getBoundingClientRect().height) {
 					calculated = true;
 					var newTopPosition = instance.posy - height;
@@ -386,7 +388,7 @@ L.Control.JSDialog = L.Control.extend({
 					instance.posy = newTopPosition;
 				}
 
-				var width = instance.container.getBoundingClientRect().width;
+				var width = instance.form.getBoundingClientRect().width;
 				if (instance.posx + width > instance.containerParent.getBoundingClientRect().width) {
 					calculated = true;
 					var newLeftPosition = instance.posx - width;
@@ -397,8 +399,8 @@ L.Control.JSDialog = L.Control.extend({
 			}
 		} else if (instance.isSnackbar) {
 			calculated = true;
-			instance.posx = window.innerWidth/2 - instance.container.offsetWidth/2;
-			instance.posy = window.innerHeight - instance.container.offsetHeight - 40;
+			instance.posx = window.innerWidth/2 - instance.form.offsetWidth/2;
+			instance.posy = window.innerHeight - instance.form.offsetHeight - 40;
 		}
 
 		var positionNotSet = !instance.container.style || !instance.container.style.marginLeft;
@@ -530,8 +532,8 @@ L.Control.JSDialog = L.Control.extend({
 
 			// Special case for nonModal dialogues. Core side doesn't send their initial coordinates. We need to center them.
 			if (instance.nonModal) {
-				var height = instance.container.getBoundingClientRect().height;
-				var width = instance.container.getBoundingClientRect().width;
+				var height = instance.form.getBoundingClientRect().height;
+				var width = instance.form.getBoundingClientRect().width;
 				instance.startX = instance.posx = (window.innerWidth - width) / 2;
 				instance.startY = instance.posy = (window.innerHeight - height) / 2;
 			}
