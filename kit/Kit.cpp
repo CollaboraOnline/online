@@ -1166,6 +1166,22 @@ public:
             }
             return;
         }
+        else if (type == LOK_CALLBACK_DOCUMENT_PASSWORD_RESET)
+        {
+            Document* document = dynamic_cast<Document*>(descriptor->getDoc());
+            Poco::JSON::Object::Ptr object;
+            if (document && JsonUtil::parseJSON(payload, object))
+            {
+                std::string password = JsonUtil::getJSONValue<std::string>(object, "password");
+                bool isToModify = JsonUtil::getJSONValue<bool>(object, "isToModify");
+                document->_isDocPasswordProtected = !password.empty();
+                document->_haveDocPassword = document->_isDocPasswordProtected;
+                document->_docPassword = password;
+                document->_docPasswordType =
+                    isToModify ? PasswordType::ToModify : PasswordType::ToView;
+            }
+            return;
+        }
 
         // merge various callback types together if possible
         if (type == LOK_CALLBACK_INVALIDATE_TILES ||
