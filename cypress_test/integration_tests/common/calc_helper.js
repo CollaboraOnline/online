@@ -192,7 +192,7 @@ function ensureViewContainsCellCursor() {
 	helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', sheetCursorBounds);
 	helper.getItemBounds('#test-div-tiles', sheetViewBounds);
 
-	cy.wrap(true).should(function () {
+	cy.wrap(true).then(function () {
 		cy.log('ensureViewContainsCellCursor: cursor-area is ' + sheetCursorBounds.toString() + ' view-area is ' + sheetViewBounds.toString());
 		expect(sheetViewBounds.contains(sheetCursorBounds)).to.equal(true, 'view-area must contain cursor-area');
 	});
