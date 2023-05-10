@@ -162,9 +162,11 @@ L.Control.JSDialog = L.Control.extend({
 
 	createContainer: function(instance, parentContainer) {
 		// it has to be form to handle default button
-		instance.container = L.DomUtil.create('form', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', parentContainer);
+		instance.container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', parentContainer);
 		instance.container.setAttribute('role', 'dialog');
 		instance.container.id = instance.id;
+
+		instance.form = L.DomUtil.create('form', '', instance.container);
 
 		// Prevent overlay from getting the click.
 		instance.container.onclick = function(e) { e.stopPropagation(); };
@@ -173,7 +175,7 @@ L.Control.JSDialog = L.Control.extend({
 			L.DomUtil.addClass(instance.container, 'collapsed');
 
 		// prevent from reloading
-		instance.container.addEventListener('submit', function (event) { event.preventDefault(); });
+		instance.form.addEventListener('submit', function (event) { event.preventDefault(); });
 
 		instance.defaultButtonId = this._getDefaultButtonId(instance.children);
 
@@ -193,7 +195,7 @@ L.Control.JSDialog = L.Control.extend({
 		};
 
 		if (instance.haveTitlebar) {
-			instance.titlebar = L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', instance.container);
+			instance.titlebar = L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', instance.form);
 			var title = L.DomUtil.create('span', 'ui-dialog-title', instance.titlebar);
 			title.innerText = instance.title;
 			instance.titleCloseButton = L.DomUtil.create('button', 'ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close', instance.titlebar);
@@ -210,7 +212,7 @@ L.Control.JSDialog = L.Control.extend({
 		if (instance.isSnackbar)
 			L.DomUtil.addClass(instance.container, 'snackbar');
 
-		instance.content = L.DomUtil.create('div', 'lokdialog ui-dialog-content ui-widget-content', instance.container);
+		instance.content = L.DomUtil.create('div', 'lokdialog ui-dialog-content ui-widget-content', instance.form);
 
 		this.dialogs[instance.id] = {};
 	},
