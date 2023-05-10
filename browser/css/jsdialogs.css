@@ -23,13 +23,22 @@
 	background: #1c5fa814;
 }
 
-.lokdialog_container.ui-dialog.ui-widget-content.modalpopup {
+.lokdialog_container.ui-dialog.ui-widget-content.modalpopup,
+.jsdialog-window.modalpopup {
 	z-index: 2001;
+}
+
+.jsdialog-window {
+	position: absolute;
+	z-index: 1105;
 }
 
 .jsdialog-container {
 	position: absolute;
-	z-index: 1105;
+}
+
+.jsdialog-window:not(.modalpopup) .jsdialog-container:not(.snackbar) {
+	min-width: 400px;
 }
 
 .jsdialog.one-child-popup {
@@ -37,7 +46,7 @@
 	margin: 0 !important;
 }
 
-.jsdialog-container.modalpopup {
+.jsdialog-window.modalpopup {
 	min-width: 198px;
 	max-width: 498px;
 	border: 1px solid #a4a4a4 !important;
@@ -49,6 +58,10 @@
 	max-height: calc(100% - 30px);
 }
 
+.jsdialog-window.modalpopup .jsdialog-container {
+	position: relative;
+}
+
 .jsdialog-container .ui-dialog-titlebar {
 	background-color: var(--color-background-lighter);
 }
@@ -57,6 +70,10 @@
 	background-color: var(--color-background-lighter) !important;
 	font-family: var(--jquery-ui-font);
 	line-height: 1.5;
+}
+
+.jsdialog-container .lokdialog.ui-dialog-content.ui-widget-content {
+	overflow: hidden;
 }
 
 .jsdialog.vertical label, .ui-frame-label {
@@ -153,10 +170,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 /* keep structure with hidden elements correct */
-.ui-grid {
-	/* don't show scroll for hidden objects */
-	overflow: hidden;
-}
 
 .ui-grid > .hidden {
 	visibility: hidden;
@@ -230,10 +243,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	border-radius: var(--border-radius) !important;
 	background-color: var(--color-main-background) !important;
 	margin-inline-end: 12px !important;
-}
-
-.ui-tab.jsdialog:first-child {
-	margin-inline-start: 12px !important;
+	margin-bottom: 6px;
 }
 
 .ui-tab.hidden.jsdialog {
@@ -1207,12 +1217,17 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #snackbar {
 	border: none !important;
 }
+.snackbar.jsdialog-window {
+	overflow: visible;
+}
 #mobile-wizard.popup.snackbar,
 .snackbar.jsdialog-container .ui-dialog-content {
 	min-width: 200px;
 	background-color: #323232 !important;
 }
-
+.snackbar.jsdialog-container .ui-dialog-content {
+	width: max-content !important;
+}
 #mobile-wizard.popup.snackbar #label,
 .snackbar.jsdialog-container #label,
 #mobile-wizard.popup.snackbar #label-no-action,

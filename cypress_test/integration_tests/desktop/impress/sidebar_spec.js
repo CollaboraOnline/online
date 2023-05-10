@@ -32,7 +32,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 		cy.cGet('#fillattr3').should('be.visible');
 		helper.waitUntilIdle('#fillattr2');
 		cy.cGet('#fillattr2').click();
-		cy.cGet('.modalpopup').should('be.visible');
+		cy.cGet('.modalpopup .jsdialog-container').should('be.visible');
 		cy.cGet('#colorset').should('be.visible');
 	});
 
@@ -42,7 +42,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 		impressHelper.selectTextOfShape();
 		cy.cGet('#layoutvalueset').should('not.be.visible');
 		cy.cGet('#Underline .arrowbackground').click();
-		cy.cGet('.modalpopup').should('be.visible');
+		cy.cGet('.modalpopup .jsdialog-container').should('be.visible');
 		cy.cGet('#single').click();
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
