@@ -12,11 +12,11 @@
 #include "ClientSession.hpp"
 #include "COOLWSD.hpp"
 #include "DocumentBroker.hpp"
+#include "FileUtil.hpp"
 
 #include <common/Common.hpp>
 #include <common/StringVector.hpp>
 #include <common/Log.hpp>
-#include <common/JailUtil.hpp>
 
 std::string Quarantine::QuarantinePath;
 
@@ -131,7 +131,7 @@ void Quarantine::clearOldQuarantineVersions(const std::string& docKey)
     }
 }
 
-bool Quarantine::quarantineFile(const std::string& docName)
+bool Quarantine::quarantineFile(const std::string& docPath)
 {
     if (!isQuarantineEnabled())
         return false;
@@ -143,17 +143,7 @@ bool Quarantine::quarantineFile(const std::string& docName)
     const std::string ts = std::to_string(
         std::chrono::duration_cast<std::chrono::seconds>(timeNow.time_since_epoch()).count());
 
-    std::string sourcefilePath;
-    if (JailUtil::isBindMountingEnabled())
-    {
-        sourcefilePath = COOLWSD::ChildRoot + "tmp/cool-" + _docBroker.getJailId() + "/user/docs/" +
-                         _docBroker.getJailId() + '/' + docName;
-    }
-    else
-    {
-        sourcefilePath = COOLWSD::ChildRoot + _docBroker.getJailId() + "/tmp/user/docs/" +
-                         _docBroker.getJailId() + '/' + docName;
-    }
+    const std::string docName = Poco::Path(docPath).getFileName();
 
     std::string linkedFileName =
         ts + '_' + std::to_string(_docBroker.getPid()) + '_' + docKey + '_' + docName;
@@ -162,40 +152,31 @@ bool Quarantine::quarantineFile(const std::string& docName)
     auto& fileList = COOLWSD::QuarantineMap[_docBroker.getDocKey()];
     if (!fileList.empty())
     {
-        FileUtil::Stat sourceStat(sourcefilePath);
+        FileUtil::Stat sourceStat(docPath);
         FileUtil::Stat lastFileStat(fileList[fileList.size() - 1]);
 
-        if (lastFileStat.inodeNumber() == sourceStat.inodeNumber())
+        if (lastFileStat.isIdenticalTo(sourceStat))
         {
-            LOG_INF("Quarantining of file "
-                    << sourcefilePath << " to " << linkedFilePath
-                    << " is skipped because this file version is already quarantined.");
+            LOG_INF("Quarantining of file ["
+                    << docPath << "] to [" << linkedFilePath
+                    << "] is skipped because this file version is already quarantined");
             return false;
         }
     }
 
     makeQuarantineSpace();
 
-    int result_link = link(sourcefilePath.c_str(), linkedFilePath.c_str());
-
-    if (result_link == 0)
+    if (FileUtil::linkOrCopyFile(docPath, linkedFilePath))
     {
         fileList.emplace_back(linkedFilePath);
         clearOldQuarantineVersions(docKey);
         makeQuarantineSpace();
 
-        LOG_INF("Quarantined " << sourcefilePath << " to " << linkedFilePath);
+        LOG_INF("Quarantined [" << docPath << "] to [" << linkedFilePath << ']');
         return true;
     }
-    else
-    {
-        int saved_errno = errno;
-        LOG_ERR("Quarantining of file " << sourcefilePath << " to " << linkedFilePath
-                                        << " failed: " << Util::symbolicErrno(saved_errno) << ": "
-                                        << std::strerror(saved_errno));
-        return false;
-    }
 
+    LOG_ERR("Quarantining of file [" << docPath << "] to [" << linkedFilePath << "] failed");
     return false;
 }
 

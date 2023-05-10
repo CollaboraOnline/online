@@ -605,7 +605,30 @@ void DocumentBroker::pollThread()
         // Quarantine the last copy, if different.
         LOG_DBG("Data loss detected, will quarantine last version of [" << getDocKey()
                                                                         << "] if necessary");
-        _quarantine.quarantineFile(_filename);
+        if (_storage)
+        {
+            const std::string uploading = _storage->getRootFilePathUploading();
+            if (FileUtil::Stat(uploading).exists())
+            {
+                LOG_DBG("Quarantining the .uploading file: " << uploading);
+                _quarantine.quarantineFile(uploading);
+            }
+            else
+            {
+                const std::string upload = _storage->getRootFilePathToUpload();
+                if (FileUtil::Stat(upload).exists())
+                {
+                    LOG_DBG("Quarantining the .upload file: " << upload);
+                    _quarantine.quarantineFile(upload);
+                }
+                else
+                {
+                    // Fallback to quarantining to the original document.
+                    LOG_DBG("Quarantining the original document file: " << _filename);
+                    _quarantine.quarantineFile(_filename);
+                }
+            }
+        }
     }
     else
     {
@@ -1463,7 +1486,7 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
         LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
     }
 
-    _quarantine.quarantineFile(Util::splitLast(newName, '/').second);
+    _quarantine.quarantineFile(newName);
 #endif //!MOBILEAPP
 
     // Let the clients know of any save failures.
