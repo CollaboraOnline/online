@@ -2,9 +2,10 @@
 
 var helper = require('../../common/helper');
 var { insertImage, deleteImage, assertImageSize } = require('../../common/desktop_helper');
+var desktopHelper = require('../../common/desktop_helper');
 var { triggerNewSVGForShapeInTheCenter } = require('../../common/impress_helper');
 
-describe(['tagnotebookbar'], 'Image Operation Tests', function() {
+describe(['tagdesktop'], 'Image Operation Tests', function() {
 	var origTestFileName = 'image_operation.odp';
 	var testFileName;
 
@@ -17,6 +18,7 @@ describe(['tagnotebookbar'], 'Image Operation Tests', function() {
 	});
 
 	it('Insert/Delete image',function() {
+		desktopHelper.switchUIToNotebookbar();
 		insertImage();
 
 		//make sure that image is in focus
@@ -27,6 +29,7 @@ describe(['tagnotebookbar'], 'Image Operation Tests', function() {
 	});
 
 	it('Resize image when keep ratio option enabled and disabled', function() {
+		desktopHelper.switchUIToNotebookbar();
 		insertImage();
 		//when Keep ratio is unchecked
 		assertImageSize(438, 111);
