@@ -1139,6 +1139,32 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': 'remotelink'
 			} : {},
 			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertCurrentDate', 'spreadsheet'),
+								'command': '.uno:InsertCurrentDate'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertCurrentTime', 'spreadsheet'),
+								'command': '.uno:InsertCurrentTime'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
 				'id': 'Insert-Section-NameRangesTable-Ext',
 				'type': 'container',
 				'children': [
