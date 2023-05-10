@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var searchHelper = require('../../common/search_helper');
 
-describe.skip('Searching via search bar' ,function() {
+describe.skip(['tagdesktop'], 'Searching via search bar' ,function() {
 	var origTestFileName = 'search_bar.odp';
 	var testFileName;
 
@@ -17,9 +17,7 @@ describe.skip('Searching via search bar' ,function() {
 
 	it('Search existing word.', function() {
 		searchHelper.typeIntoSearchFieldDesktop('a');
-
 		searchHelper.searchNextDesktop();
-
 		// A shape and some text should be selected
 		//cy.get('.transform-handler--rotate')
 		//	.should('be.not.visible');
@@ -30,19 +28,12 @@ describe.skip('Searching via search bar' ,function() {
 
 	it('Search not existing word.', function() {
 		cy.cGet('.leaflet-layer').dblclick('center');
-
 		cy.wait(2000);
-
 		helper.selectAllText();
-
 		cy.wait(2000);
-
 		helper.textSelectionShouldExist();
-
 		searchHelper.typeIntoSearchFieldDesktop('q');
-
 		searchHelper.searchNextDesktop();
-
 		helper.textSelectionShouldNotExist();
 	});
 
@@ -69,7 +60,7 @@ describe.skip('Searching via search bar' ,function() {
 
 		helper.expectTextForClipboard('a');
 
-		cy.cGet('@cursorOrigLeft')
+		cy.get('@cursorOrigLeft')
 			.then(function(cursorOrigLeft) {
 				cy.cGet('.blinking-cursor')
 					.should(function(cursor) {
@@ -87,13 +78,13 @@ describe.skip('Searching via search bar' ,function() {
 
 		helper.expectTextForClipboard('a');
 
-		//cy.get('@cursorOrigLeft')
-		//	.then(function(cursorOrigLeft) {
-		//		cy.get('.blinking-cursor')
-		//			.should(function(cursor) {
-		//				expect(cursor.offset().left).to.be.equal(cursorOrigLeft);
-		//			});
-		//	});
+		cy.get('@cursorOrigLeft')
+			.then(function(cursorOrigLeft) {
+				cy.cGet('.blinking-cursor')
+					.should(function(cursor) {
+						expect(cursor.offset().left).to.be.equal(cursorOrigLeft);
+					});
+			});
 	});
 
 	it('Search wrap at the document end.', function() {
