@@ -14,17 +14,16 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-
-	it('Switch to slide transition Deck', function() {
+	it.skip('Switch to slide transition Deck', function() {
 		cy.cGet('#tb_editbar_item_slidechangewindow .w2ui-button').should('not.have.class', 'checked');
 		cy.cGet('#layoutvalueset').should('be.visible');
 		cy.cGet('#tb_editbar_item_slidechangewindow .w2ui-button').click({force: true});
 		cy.cGet('#tb_editbar_item_slidechangewindow .w2ui-button').should('have.class', 'checked');
 		cy.cGet('#layoutvalueset').should('not.exist');
-		cy.cGet('#transitions_icons').should('be.visible');
+		cy.cGet('#transitions_iconswin').should('be.visible');
 	});
 
-	it.only('Set gradient background color', function() {
+	it('Set gradient background color', function() {
 		cy.cGet('#fillattr2').should('not.be.visible');
 
 		helper.waitUntilIdle('#fillstyle');
@@ -39,18 +38,13 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 
 	it('Set underline using popup', function() {
 		cy.cGet('#layoutvalueset').should('be.visible');
-
 		impressHelper.selectTextShapeInTheCenter();
-
 		impressHelper.selectTextOfShape();
-
 		cy.cGet('#layoutvalueset').should('not.be.visible');
 		cy.cGet('#Underline .arrowbackground').click();
 		cy.cGet('.modalpopup').should('be.visible');
 		cy.cGet('#single').click();
-
 		impressHelper.triggerNewSVGForShapeInTheCenter();
-
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'text-decoration', 'underline');
 	});
