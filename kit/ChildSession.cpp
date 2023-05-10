@@ -3240,6 +3240,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_PROFILE_FRAME:
     case LOK_CALLBACK_DOCUMENT_PASSWORD:
     case LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY:
+    case LOK_CALLBACK_DOCUMENT_PASSWORD_RESET:
         // these are not handled here.
         break;
     case LOK_CALLBACK_CELL_SELECTION_AREA:
