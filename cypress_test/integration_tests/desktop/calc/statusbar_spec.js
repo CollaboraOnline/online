@@ -36,7 +36,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		cy.cGet('#RowColSelCount').should('have.text', '\u00a0Select multiple cells\u00a0');
 	});
 
-	it.skip('Text editing mode.', function() {
+	it('Text editing mode.', function() {
 		cy.cGet('#InsertMode').should('have.text', '\u00a0Insert mode: inactive\u00a0');
 		calcHelper.dblClickOnFirstCell();
 		cy.cGet('#InsertMode').should('have.text', 'Insert');
