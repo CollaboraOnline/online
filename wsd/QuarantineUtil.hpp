@@ -40,7 +40,7 @@ private:
 private:
     static std::string QuarantinePath;
 
-    DocumentBroker& _docBroker;
+    const std::string _docKey;
     const std::string _quarantinedFilenamePrefix;
     std::string _docName;
 };
