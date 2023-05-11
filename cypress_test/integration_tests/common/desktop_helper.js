@@ -232,7 +232,7 @@ function assertImageSize(expectedWidth, expectedHeight) {
 		});
 }
 
-function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) {
+function insertMultipleComment(docType, numberOfComments = 1, isMobile = false, selector) {
 	var mode = Cypress.env('USER_INTERFACE');
 
 	if (docType === 'calc') {
@@ -265,15 +265,18 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) 
 		});
 	}
 
-	for (var n=0;n<numberOfComments;n++) {
+	for (var n = 0; n < numberOfComments; n++) {
 		if (docType === 'draw') {
 			cy.cGet('#menu-insert').click();
 			cy.cGet('#menu-insertcomment').click();
-		} else {
+		}
+		else if (!selector) {
 			actionOnSelector('insertAnnotation', (selector) => {
 				cy.cGet(selector).click();
 			});
 		}
+		else
+			cy.cGet(selector).click();
 
 		cy.wait(100);
 
