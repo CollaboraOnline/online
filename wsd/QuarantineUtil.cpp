@@ -36,6 +36,8 @@ std::string createQuarantinedFilename(DocumentBroker& docBroker)
 Quarantine::Quarantine(DocumentBroker& docBroker)
     : _docKey(docBroker.getDocKey())
     , _quarantinedFilenamePrefix(createQuarantinedFilename(docBroker))
+    , _maxSizeBytes(COOLWSD::getConfigValue<std::size_t>("quarantine_files.limit_dir_size_mb", 0) *
+                    1024 * 1024)
 {
 }
 
@@ -100,9 +102,6 @@ void Quarantine::makeQuarantineSpace()
     if (!isQuarantineEnabled())
         return;
 
-    std::size_t sizeLimit =
-        COOLWSD::getConfigValue<std::size_t>("quarantine_files.limit_dir_size_mb", 0) * 1024 * 1024;
-
     std::vector<std::string> files;
     Poco::File(QuarantinePath).list(files);
 
@@ -123,7 +122,7 @@ void Quarantine::makeQuarantineSpace()
                                     .count();
         bool isExpired = static_cast<std::size_t>(ts - modifyTime) > timeLimit * 60;
 
-        if ((file.hardLinkCount() == 1) && (isExpired || (currentSize >= sizeLimit)))
+        if ((file.hardLinkCount() == 1) && (isExpired || (currentSize >= _maxSizeBytes)))
         {
             currentSize -= file.size();
             FileUtil::removeFile(QuarantinePath + *index, true);

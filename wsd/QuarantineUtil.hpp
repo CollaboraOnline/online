@@ -42,5 +42,6 @@ private:
 
     const std::string _docKey;
     const std::string _quarantinedFilenamePrefix;
+    const std::size_t _maxSizeBytes;
     std::string _docName;
 };
