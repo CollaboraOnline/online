@@ -498,6 +498,17 @@ function matchClipboardText(regexp) {
 	});
 }
 
+function clipboardTextShouldBeDifferentThan(text) {
+	doIfInWriter(function() {
+		cy.cGet('body').contains('#copy-paste-container p font', text).should('not.exist');
+	});
+	doIfInCalc(function() {
+		cy.cGet('body').contains('#copy-paste-container pre', text).should('not.exist');
+	});
+	doIfInImpress(function() {
+		cy.cGet('body').contains('#copy-paste-container pre', text).should('not.exist');
+	});
+}
 
 // This is called during a test to reload the same document after
 // some modification. The purpose is typically to verify that
@@ -1179,6 +1190,7 @@ module.exports.selectAllText = selectAllText;
 module.exports.clearAllText = clearAllText;
 module.exports.expectTextForClipboard = expectTextForClipboard;
 module.exports.matchClipboardText = matchClipboardText;
+module.exports.clipboardTextShouldBeDifferentThan = clipboardTextShouldBeDifferentThan;
 module.exports.closeDocument = closeDocument;
 module.exports.reload = reload;
 module.exports.afterAll = afterAll;
