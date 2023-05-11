@@ -204,8 +204,21 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	vertical-align: unset !important;
 }
 
+.ui-button-box.jsdialog, .ui-tabs-content.jsdialog.ui-widget {
+	padding: .5em 1em;
+}
+
 /* Tabs */
 
+.jsdialog-container.ui-dialog.ui-widget-content.lokdialog_container > .lokdialog.ui-dialog-content {
+	padding: 0px;
+}
+#tabcontrol > div.ui-tabs.jsdialog.ui-widget.ui-tabs.jsdialog.ui-widget {
+	background-color: var(--color-main-background) !important;
+	display: flex;
+	flex-wrap: wrap;
+	padding: .5em 1em;
+}
 .ui-tabs-content.jsdialog {
 	display: grid;
 }
@@ -230,11 +243,11 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-tab.jsdialog {
 	float: left !important;
-	font-size: var(--default-font-size) !important;
+	font-size: var(--header-font-size) !important;
 	font-family: var(--cool-font) !important;
 	line-height: normal !important;
 	color: dimgray !important;
-	color: var(--color-text-dark) !important;
+	color: var(--color-main-text) !important;
 	height: 24px !important;
 	display: flex !important;
 	align-items: center !important;
@@ -251,14 +264,15 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-tab.selected.jsdialog {
-	background-color: var(--color-background-lighter) !important;
+	background-color: var(--color-background-dark) !important;
 	color: var(--color-text-darker) !important;
-	box-shadow: 0 0 2px 1px var(--color-box-shadow) !important;
+	border: 1px solid var(--color-border) !important;
 }
 
 .ui-tab.jsdialog:not(.selected):hover {
+	background: var(--color-background-darker) !important;
+	border: 1px solid var(--color-border-darker) !important;
 	cursor: pointer !important;
-	background-color: var(--color-background-darker) !important;
 	color: var(--color-text-darker) !important;
 }
 
