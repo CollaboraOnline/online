@@ -38,6 +38,7 @@ Quarantine::Quarantine(DocumentBroker& docBroker)
     , _quarantinedFilenamePrefix(createQuarantinedFilename(docBroker))
     , _maxSizeBytes(COOLWSD::getConfigValue<std::size_t>("quarantine_files.limit_dir_size_mb", 0) *
                     1024 * 1024)
+    , _maxAgeSecs(COOLWSD::getConfigValue<std::size_t>("quarantine_files.expiry_min", 30) * 60)
 {
 }
 
@@ -107,7 +108,6 @@ void Quarantine::makeQuarantineSpace()
 
     std::sort(files.begin(), files.end());
 
-    std::size_t timeLimit = COOLWSD::getConfigValue<std::size_t>("quarantine_files.expiry_min", 30);
     const auto timeNow = std::chrono::system_clock::now();
     const auto ts =
         std::chrono::duration_cast<std::chrono::seconds>(timeNow.time_since_epoch()).count();
@@ -120,7 +120,7 @@ void Quarantine::makeQuarantineSpace()
         const auto modifyTime = std::chrono::duration_cast<std::chrono::seconds>(
                                     file.modifiedTimepoint().time_since_epoch())
                                     .count();
-        bool isExpired = static_cast<std::size_t>(ts - modifyTime) > timeLimit * 60;
+        bool isExpired = static_cast<std::size_t>(ts - modifyTime) > _maxAgeSecs;
 
         if ((file.hardLinkCount() == 1) && (isExpired || (currentSize >= _maxSizeBytes)))
         {
