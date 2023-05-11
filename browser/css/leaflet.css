@@ -882,7 +882,6 @@ input.clipboard {
 	margin: 0px; /*Ruler styling*/
 }
 .cool-ruler {
-	background-color: var(--color-main-background);
 	height: 20px;
 	width: 100vw;
 	margin: 0px !important;
@@ -951,7 +950,6 @@ input.clipboard {
 
 .cool-ruler-face {
 	height: 100%;
-	background-color: var(--color-background-lighter);
 }
 
 .cool-ruler-maj {
@@ -1000,7 +998,6 @@ input.clipboard {
 
 .cool-ruler-margin {
 	height: 100%;
-	background-color: var(--color-main-background);
 }
 
 .cool-ruler-left {
