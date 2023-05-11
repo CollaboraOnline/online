@@ -851,7 +851,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					L.DomUtil.addClass(label, 'hidden');
 				builder.postProcess(expander, data.children[0]);
 
-				if (data.children.length > 1)
+				if (data.children.length > 1 && data.expanded === true)
 					$(label).addClass('expanded');
 
 				var toggleFunction = function () {
@@ -873,7 +873,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			var expanderChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, container);
-			$(expanderChildren).addClass('expanded');
+
+			if (data.expanded === true)
+				$(expanderChildren).addClass('expanded');
 
 			var children = [];
 			var startPos = 1;
@@ -884,13 +886,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			for (var i = startPos; i < data.children.length; i++) {
+				if (data.children[i].visible === false)
+					data.children[i].visible = true;
 				children.push(data.children[i]);
 			}
 
 			builder.build(expanderChildren, children);
-
-			if (data.expanded === false)
-				$(expander).click();
 		} else {
 			return true;
 		}
