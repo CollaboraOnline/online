@@ -34,7 +34,7 @@ std::string createQuarantinedFilename(DocumentBroker& docBroker)
 } // namespace
 
 Quarantine::Quarantine(DocumentBroker& docBroker)
-    : _docBroker(docBroker)
+    : _docKey(docBroker.getDocKey())
     , _quarantinedFilenamePrefix(createQuarantinedFilename(docBroker))
 {
 }
@@ -141,9 +141,8 @@ void Quarantine::clearOldQuarantineVersions()
 
     std::size_t maxVersionCount = std::max<size_t>(
         COOLWSD::getConfigValue<std::size_t>("quarantine_files.max_versions_to_maintain", 2), 1);
-    const std::string& docKey = _docBroker.getDocKey();
     std::string decoded;
-    Poco::URI::decode(docKey, decoded);
+    Poco::URI::decode(_docKey, decoded);
     while (COOLWSD::QuarantineMap[decoded].size() > maxVersionCount)
     {
         FileUtil::removeFile(COOLWSD::QuarantineMap[decoded][0]);
@@ -161,9 +160,9 @@ bool Quarantine::quarantineFile(const std::string& docPath)
         std::chrono::duration_cast<std::chrono::seconds>(timeNow.time_since_epoch()).count();
 
     const std::string linkedFilePath =
-        QuarantinePath + std::to_string(ts) + _quarantinedFilename + _docName;
+        QuarantinePath + std::to_string(ts) + _quarantinedFilenamePrefix + _docName;
 
-    auto& fileList = COOLWSD::QuarantineMap[_docBroker.getDocKey()];
+    auto& fileList = COOLWSD::QuarantineMap[_docKey];
     if (!fileList.empty())
     {
         FileUtil::Stat sourceStat(docPath);
@@ -196,11 +195,10 @@ bool Quarantine::quarantineFile(const std::string& docPath)
 
 void Quarantine::removeQuarantinedFiles()
 {
-    const std::string& docKey = _docBroker.getDocKey();
-    for (const auto& file : COOLWSD::QuarantineMap[docKey])
+    for (const auto& file : COOLWSD::QuarantineMap[_docKey])
     {
         FileUtil::removeFile(file);
     }
 
-    COOLWSD::QuarantineMap.erase(docKey);
+    COOLWSD::QuarantineMap.erase(_docKey);
 }
