@@ -115,13 +115,14 @@ void Quarantine::makeQuarantineSpace()
     }
 }
 
-void Quarantine::clearOldQuarantineVersions(const std::string& docKey)
+void Quarantine::clearOldQuarantineVersions()
 {
     if (!isQuarantineEnabled())
         return;
 
     std::size_t maxVersionCount = std::max<size_t>(
         COOLWSD::getConfigValue<std::size_t>("quarantine_files.max_versions_to_maintain", 2), 1);
+    const std::string& docKey = _docBroker.getDocKey();
     std::string decoded;
     Poco::URI::decode(docKey, decoded);
     while (COOLWSD::QuarantineMap[decoded].size() > maxVersionCount)
@@ -169,7 +170,7 @@ bool Quarantine::quarantineFile(const std::string& docPath)
     if (FileUtil::linkOrCopyFile(docPath, linkedFilePath))
     {
         fileList.emplace_back(linkedFilePath);
-        clearOldQuarantineVersions(docKey);
+        clearOldQuarantineVersions();
         makeQuarantineSpace();
 
         LOG_INF("Quarantined [" << docPath << "] to [" << linkedFilePath << ']');
