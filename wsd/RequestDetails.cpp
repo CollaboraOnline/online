@@ -34,34 +34,6 @@ std::map<std::string, std::string> getParams(const std::string& uri)
 
     return result;
 }
-
-/// Returns true iff the two containers are equal.
-template <typename T> bool equal(const T& lhs, const T& rhs)
-{
-    if (lhs.size() != rhs.size())
-    {
-        LOG_ERR("!!! Size mismatch: [" << lhs.size() << "] != [" << rhs.size() << "].");
-        return false;
-    }
-
-    const auto endLeft = std::end(lhs);
-
-    auto itRight = std::begin(rhs);
-
-    for (auto itLeft = std::begin(lhs); itLeft != endLeft; ++itLeft, ++itRight)
-    {
-        const auto subLeft = lhs.getParam(*itLeft);
-        const auto subRight = rhs.getParam(*itRight);
-
-        if (subLeft != subRight)
-        {
-            LOG_ERR("!!! Data mismatch: [" << subLeft << "] != [" << subRight << ']');
-            return false;
-        }
-    }
-
-    return true;
-}
 }
 
 RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::string& serviceRoot)
