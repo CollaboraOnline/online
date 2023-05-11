@@ -24,21 +24,10 @@
 std::string Quarantine::QuarantinePath;
 std::unordered_map<std::string, std::vector<std::string>> Quarantine::QuarantineMap;
 
-namespace
-{
-
-std::string createQuarantinedFilename(DocumentBroker& docBroker)
-{
-    std::string docKey;
-    Poco::URI::encode(docBroker.getDocKey(), "?#/", docKey);
-    return '_' + std::to_string(docBroker.getPid()) + '_' + docKey + '_';
-}
-
-} // namespace
-
 Quarantine::Quarantine(DocumentBroker& docBroker)
     : _docKey(docBroker.getDocKey())
-    , _quarantinedFilenamePrefix(createQuarantinedFilename(docBroker))
+    , _quarantinedFilenamePrefix('_' + std::to_string(docBroker.getPid()) + '_' +
+                                 docBroker.getDocKey() + '_')
     , _maxSizeBytes(COOLWSD::getConfigValue<std::size_t>("quarantine_files.limit_dir_size_mb", 0) *
                     1024 * 1024)
     , _maxAgeSecs(COOLWSD::getConfigValue<std::size_t>("quarantine_files.expiry_min", 30) * 60)
@@ -54,22 +43,24 @@ void Quarantine::initialize(const std::string& path)
         !QuarantinePath.empty())
         return;
 
-    std::vector<std::string> files;
-    Poco::File(path).list(files);
     QuarantineMap.clear();
 
-    std::vector<StringToken> tokens;
-    std::string decoded;
+    std::vector<std::string> files;
+    Poco::File(path).list(files);
 
+    //FIXME: This is lexicographical and won't sort timestamps correctly.
     std::sort(files.begin(), files.end());
+
+    std::vector<StringToken> tokens;
     for (const auto& file : files)
     {
         StringVector::tokenize(file.c_str(), file.size(), '_', tokens);
-        Poco::URI::decode(file.substr(tokens[2]._index), decoded);
-        QuarantineMap[decoded].emplace_back(path + file);
+        if (tokens.size() > 2)
+        {
+            QuarantineMap[file.substr(tokens[2]._index)].emplace_back(path + file);
+        }
 
         tokens.clear();
-        decoded.clear();
     }
 
     QuarantinePath = path;
@@ -144,12 +135,10 @@ void Quarantine::clearOldQuarantineVersions()
     if (!isQuarantineEnabled())
         return;
 
-    std::string decoded;
-    Poco::URI::decode(_docKey, decoded);
-    while (QuarantineMap[decoded].size() > _maxVersions)
+    while (QuarantineMap[_docKey].size() > _maxVersions)
     {
-        FileUtil::removeFile(QuarantineMap[decoded][0]);
-        QuarantineMap[decoded].erase(QuarantineMap[decoded].begin());
+        FileUtil::removeFile(QuarantineMap[_docKey][0]);
+        QuarantineMap[_docKey].erase(QuarantineMap[_docKey].begin());
     }
 }
 
