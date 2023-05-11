@@ -1,11 +1,10 @@
-/* global describe  cy beforeEach it Cypress expect require afterEach  */
+/* global describe  cy beforeEach it expect require afterEach  */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var impressHelper = require('../../common/impress_helper');
-var mode = Cypress.env('USER_INTERFACE');
 
-describe(['tagnotebookbar'], 'Table operations', function() {
+describe(['tagdesktop'], 'Table operations', function() {
 	var origTestFileName = 'table_operation.odp';
 	var testFileName;
 
@@ -17,17 +16,6 @@ describe(['tagnotebookbar'], 'Table operations', function() {
 	afterEach(function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
-
-	function selectOptionClassic(mainMenuId,hasSubMenu,subMenu1,subOption) {
-		cy.cGet(mainMenuId).click();
-
-		if (hasSubMenu) {
-			cy.cGet('body').contains(mainMenuId + ' li .has-submenu', subMenu1).trigger('click');
-		} else {
-			subOption = subMenu1;
-		}
-		cy.cGet('body').contains(mainMenuId + ' li', subOption).click();
-	}
 
 	function selectOptionNotebookbar(optionId) {
 		cy.cGet(optionId).click();
@@ -56,17 +44,12 @@ describe(['tagnotebookbar'], 'Table operations', function() {
 	}
 
 	it('Insert Row Before', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-
-		mode === 'notebookbar' ? selectOptionNotebookbar('#InsertRowsBefore') : selectOptionClassic('#menu-table', true, 'Insert', 'Insert Row Above');
-
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
-			.should('have.length', 4);
-
+		selectOptionNotebookbar('#InsertRowsBefore');
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
 		retriggerNewSvgForTableInTheCenter();
-
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
-			.should('have.class', 'com.sun.star.drawing.TableShape');
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g').should('have.class', 'com.sun.star.drawing.TableShape');
 
 		//assert the number of cells
 		cy.cGet('g.Page path[fill^="rgb"]')
@@ -82,15 +65,12 @@ describe(['tagnotebookbar'], 'Table operations', function() {
 			.should('have.attr', 'y', '6643');
 	});
 
-
 	it('Insert Row After', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
+		selectOptionNotebookbar('#InsertRowsAfter');
 
-		mode === 'notebookbar' ? selectOptionNotebookbar('#InsertRowsAfter') : selectOptionClassic('#menu-table', true, 'Insert', 'Insert Row Below');
-
-		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
-			.should('have.length', 4);
-
+		cy.cGet('.leaflet-marker-icon.table-row-resize-marker').should('have.length', 4);
 		retriggerNewSvgForTableInTheCenter();
 
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page g')
@@ -110,9 +90,9 @@ describe(['tagnotebookbar'], 'Table operations', function() {
 	});
 
 	it('Insert column before.', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-
-		mode === 'notebookbar' ? selectOptionNotebookbar('#InsertColumnsBefore') : selectOptionClassic('#menu-table', true, 'Insert', 'Insert Column Before');
+		selectOptionNotebookbar('#InsertColumnsBefore');
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
@@ -136,9 +116,9 @@ describe(['tagnotebookbar'], 'Table operations', function() {
 	});
 
 	it('Insert column after.', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-
-		mode === 'notebookbar' ? selectOptionNotebookbar('#InsertColumnsAfter') : selectOptionClassic('#menu-table', true, 'Insert', 'Insert Column After');
+		selectOptionNotebookbar('#InsertColumnsAfter');
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
@@ -162,9 +142,9 @@ describe(['tagnotebookbar'], 'Table operations', function() {
 	});
 
 	it('Delete row.', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-
-		mode === 'notebookbar' ? selectOptionNotebookbar('#DeleteRows') : selectOptionClassic('#menu-table', true, 'Delete', 'Delete Row');
+		selectOptionNotebookbar('#DeleteRows');
 
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 2);
@@ -185,14 +165,14 @@ describe(['tagnotebookbar'], 'Table operations', function() {
 	});
 
 	it('Delete Column.', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-
-		mode === 'notebookbar' ? selectOptionNotebookbar('#InsertColumnsBefore') : selectOptionClassic('#menu-table', true, 'Insert', 'Insert Column Before');
+		selectOptionNotebookbar('#InsertColumnsBefore');
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
 
-		mode === 'notebookbar' ? selectOptionNotebookbar('#DeleteColumns') : selectOptionClassic('#menu-table', true, 'Delete', 'Delete Column');
+		selectOptionNotebookbar('#DeleteColumns');
 
 		cy.cGet('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 2);
@@ -215,10 +195,10 @@ describe(['tagnotebookbar'], 'Table operations', function() {
 			.should('have.attr', 'y', '5644');
 	});
 
-	it.skip('Delete Table', function() {
+	it('Delete Table', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-
-		mode === 'notebookbar' ? selectOptionNotebookbar('.unospan-Table.unoDeleteTable') : selectOptionClassic('#menu-table', true, 'Delete', 'Delete Table');
+		selectOptionNotebookbar('.cell.notebookbar #DeleteTable');
 
 		retriggerNewSvgForTableInTheCenter();
 
@@ -230,16 +210,15 @@ describe(['tagnotebookbar'], 'Table operations', function() {
 	});
 
 	it('Merge Row', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
 
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 3);
 
-		mode === 'notebookbar' ? selectOptionNotebookbar('#EntireRow') : selectOptionClassic('#menu-table', true, 'Select', 'Select Row');
-
+		selectOptionNotebookbar('#EntireRow');
 		cy.wait(1000);
-
-		mode === 'notebookbar' ? selectOptionNotebookbar('#MergeCells') : selectOptionClassic('#menu-table', false, 'Merge Cells');
+		selectOptionNotebookbar('#MergeCells');
 
 		retriggerNewSvgForTableInTheCenter();
 
@@ -260,16 +239,15 @@ describe(['tagnotebookbar'], 'Table operations', function() {
 	});
 
 	it('Merge Column', function() {
+		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
 
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 3);
 
-		mode === 'notebookbar' ? selectOptionNotebookbar('#EntireColumn') : selectOptionClassic('#menu-table', true, 'Select', 'Select Column');
-
+		selectOptionNotebookbar('#EntireColumn');
 		cy.wait(1000);
-
-		mode === 'notebookbar' ? selectOptionNotebookbar('#MergeCells') : selectOptionClassic('#menu-table', false, 'Merge Cells');
+		selectOptionNotebookbar('#MergeCells');
 
 		retriggerNewSvgForTableInTheCenter();
 
@@ -290,19 +268,14 @@ describe(['tagnotebookbar'], 'Table operations', function() {
 	});
 
 	it.skip('Split Cells', function() {
-		//FIXME: https://github.com/CollaboraOnline/online/issues/3964
-		if (mode !== 'notebookbar') {
-			return;
-		}
-
+		// ToDo: Merge cells before calling split cells function.
+		desktopHelper.switchUIToNotebookbar();
 		impressHelper.selectTableInTheCenter();
 
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 3);
 
-		helper.waitUntilIdle('.unospan-Table.unoSplitCell');
-
-		selectOptionNotebookbar('.unospan-Table.unoSplitCell');
+		selectOptionNotebookbar('.cell.notebookbar #SplitCell');
 
 		cy.cGet('#SplitCellsDialog').should('be.visible');
 
