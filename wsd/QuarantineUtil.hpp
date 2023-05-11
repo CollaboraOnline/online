@@ -34,7 +34,7 @@ private:
 
     void makeQuarantineSpace();
 
-    void clearOldQuarantineVersions(const std::string& docKey);
+    void clearOldQuarantineVersions();
 
     void removeQuarantine();
 
