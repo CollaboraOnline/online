@@ -841,6 +841,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var container = L.DomUtil.create('div', 'ui-expander-container ' + builder.options.cssClass, parentContainer);
 			container.id = data.id;
 
+			var expanded = data.expanded === true || (data.children[0] && data.children[0].checked === true);
 			if (data.children[0].text && data.children[0].text !== '') {
 				var expander = L.DomUtil.create('div', 'ui-expander ' + builder.options.cssClass, container);
 				expander.tabIndex = '0';
@@ -851,7 +852,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					L.DomUtil.addClass(label, 'hidden');
 				builder.postProcess(expander, data.children[0]);
 
-				if (data.children.length > 1 && data.expanded === true)
+				if (data.children.length > 1 && expanded)
 					$(label).addClass('expanded');
 
 				var toggleFunction = function () {
@@ -874,7 +875,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var expanderChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, container);
 
-			if (data.expanded === true)
+			if (expanded)
 				$(expanderChildren).addClass('expanded');
 
 			var children = [];
