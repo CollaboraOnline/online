@@ -320,14 +320,14 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 
 /* not available commands*/
 
-#orientationcontrol,
-#rotation {
+.sidebar #orientationcontrol,
+.sidebar #rotation {
 	visibility: hidden;
 }
 
-#orientationcontrol,
-#rotation, #grid1-cell-5-1,
-#rotationlabel {
+.sidebar #orientationcontrol,
+.sidebar #rotation, .sidebar #grid1-cell-5-1,
+.sidebar #rotationlabel {
 	height: 0;
 }
 
