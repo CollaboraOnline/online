@@ -37,7 +37,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 		cy.cGet('#StatePageNumber').should('have.text', 'Page 1 of 4');
 	});
 
-	it.skip('Scrolling to left/right', function() {
+	it('Scrolling to left/right', function() {
 		cy.cGet('#toolbar-down').click();
 		desktopHelper.selectZoomLevel('200');
 		//show horizontal scrollbar
