@@ -14,11 +14,30 @@
 #include "DocumentBroker.hpp"
 #include "FileUtil.hpp"
 
+#include <chrono>
 #include <common/Common.hpp>
 #include <common/StringVector.hpp>
 #include <common/Log.hpp>
 
 std::string Quarantine::QuarantinePath;
+
+namespace
+{
+
+std::string createQuarantinedFilename(DocumentBroker& docBroker)
+{
+    std::string docKey;
+    Poco::URI::encode(docBroker.getDocKey(), "?#/", docKey);
+    return '_' + std::to_string(docBroker.getPid()) + '_' + docKey + '_';
+}
+
+} // namespace
+
+Quarantine::Quarantine(DocumentBroker& docBroker)
+    : _docBroker(docBroker)
+    , _quarantinedFilenamePrefix(createQuarantinedFilename(docBroker))
+{
+}
 
 void Quarantine::initialize(const std::string& path)
 {
