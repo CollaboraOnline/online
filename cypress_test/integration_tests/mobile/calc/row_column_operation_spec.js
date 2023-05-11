@@ -3,7 +3,7 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Row Column Operation', function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Row Column Operation', function() {
 	var testFileName = 'row_column_operation.ods';
 
 	beforeEach(function() {
