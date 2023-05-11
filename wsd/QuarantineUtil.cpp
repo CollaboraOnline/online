@@ -156,18 +156,12 @@ bool Quarantine::quarantineFile(const std::string& docPath)
     if (!isQuarantineEnabled())
         return false;
 
-    std::string docKey;
-    Poco::URI::encode(_docBroker.getDocKey(), "?#/", docKey);
-
     const auto timeNow = std::chrono::system_clock::now();
-    const std::string ts = std::to_string(
-        std::chrono::duration_cast<std::chrono::seconds>(timeNow.time_since_epoch()).count());
+    const auto ts =
+        std::chrono::duration_cast<std::chrono::seconds>(timeNow.time_since_epoch()).count();
 
-    const std::string docName = Poco::Path(docPath).getFileName();
-
-    std::string linkedFileName =
-        ts + '_' + std::to_string(_docBroker.getPid()) + '_' + docKey + '_' + docName;
-    std::string linkedFilePath = QuarantinePath + linkedFileName;
+    const std::string linkedFilePath =
+        QuarantinePath + std::to_string(ts) + _quarantinedFilename + _docName;
 
     auto& fileList = COOLWSD::QuarantineMap[_docBroker.getDocKey()];
     if (!fileList.empty())

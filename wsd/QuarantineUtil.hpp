@@ -19,6 +19,8 @@ public:
 
     static void initialize(const std::string& path);
 
+    void setDocumentName(const std::string& docName) { _docName = docName; }
+
     bool quarantineFile(const std::string& docName);
 
     /// Removes the quarantined files for the given DocKey when we unload gracefully.
