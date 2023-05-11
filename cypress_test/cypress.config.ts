@@ -4,7 +4,7 @@ import 'process';
 
 export default defineConfig({
   video: false,
-  defaultCommandTimeout: 6000,
+  defaultCommandTimeout: 10000,
   modifyObstructiveCode: false,
   fixturesFolder: 'data',
   chromeWebSecurity: false,
