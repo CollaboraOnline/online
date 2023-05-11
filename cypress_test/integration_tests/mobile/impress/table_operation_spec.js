@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', function() {
+describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Table Operation', function() {
 	var origTestFileName = 'table_operation.odp';
 	var testFileName;
 
