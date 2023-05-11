@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <config.h>
 #include <string>
 
 class DocumentBroker;
