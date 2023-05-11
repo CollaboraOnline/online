@@ -8,6 +8,8 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
+#include <vector>
 
 class DocumentBroker;
 
@@ -37,6 +39,7 @@ private:
     void removeQuarantine();
 
 private:
+    static std::unordered_map<std::string, std::vector<std::string>> QuarantineMap;
     static std::string QuarantinePath;
 
     const std::string _docKey;
