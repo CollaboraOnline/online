@@ -15,7 +15,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Complex image operation te
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it.skip('tile image validation test',function() {
+	it('tile image validation test',function() {
 		cy.window().then(win => {
 			if (win.imgDatas) {
 				for (var i = 0; i < win.imgDatas.length; ++i) {
@@ -24,7 +24,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Complex image operation te
 					var img = new Image();
 
 					img.onerror = function() {
-						cy.contains('Tile is not valid').should('not.exist');
+						cy.cGet('body').contains('Tile is not valid').should('not.exist');
 					};
 
 					img.onload = function() {
