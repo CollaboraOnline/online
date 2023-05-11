@@ -282,7 +282,6 @@ public:
     static bool IsProxyPrefixEnabled;
     static std::atomic<unsigned> NumConnections;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
-    static std::unordered_map<std::string, std::vector<std::string>> QuarantineMap;
 #if !MOBILEAPP
     static std::unique_ptr<ClipboardCache> SavedClipboards;
 #endif
