@@ -15,10 +15,7 @@ class DocumentBroker;
 class Quarantine
 {
 public:
-    Quarantine(DocumentBroker& docBroker)
-        : _docBroker(docBroker)
-    {
-    }
+    Quarantine(DocumentBroker& docBroker);
 
     static void initialize(const std::string& path);
 
@@ -42,4 +39,6 @@ private:
     static std::string QuarantinePath;
 
     DocumentBroker& _docBroker;
+    const std::string _quarantinedFilenamePrefix;
+    std::string _docName;
 };
