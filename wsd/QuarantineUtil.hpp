@@ -44,5 +44,6 @@ private:
     const std::string _quarantinedFilenamePrefix;
     const std::size_t _maxSizeBytes;
     const std::size_t _maxAgeSecs;
+    const std::size_t _maxVersions;
     std::string _docName;
 };
