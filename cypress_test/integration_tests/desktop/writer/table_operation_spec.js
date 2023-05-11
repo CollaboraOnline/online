@@ -4,12 +4,13 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var mode = Cypress.env('USER_INTERFACE');
 
-describe(['tagnotebookbar', 'tagnextcloud', 'tagproxy'], 'Table operations', function() {
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Table operations', function() {
 	var origTestFileName = 'table_operation.odt';
 	var testFileName;
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		desktopHelper.switchUIToNotebookbar();
 		desktopHelper.selectZoomLevel('70');
 	});
 
