@@ -2,13 +2,15 @@
 
 var helper = require('../../common/helper');
 var { insertMultipleComment } = require('../../common/desktop_helper');
+var desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagnotebookbar'], 'Annotation Tests', function() {
+describe(['tagdesktop'], 'Annotation Tests', function() {
 	var origTestFileName = 'annotation.ods';
 	var testFileName;
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		desktopHelper.switchUIToNotebookbar();
 	});
 
 	afterEach(function() {
