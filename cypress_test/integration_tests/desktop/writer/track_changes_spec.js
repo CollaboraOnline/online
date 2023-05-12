@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach*/
+/* global describe it cy beforeEach require afterEach Cypress expect */
 
 var helper = require('../../common/helper');
 
@@ -16,8 +16,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 
 	function confirmChange(action) {
 		cy.cGet('#menu-editmenu').click();
-		cy.cGet('#menu-changesmenu').click();
-		cy.cGet('#menu-changesmenu').contains(action).click();
+		cy.cGet('#menu-changesmenu').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
+		cy.cGet('#menu-changesmenu').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).contains(action).click();
+		cy.cGet('body').type('{esc}');
+		cy.cGet('#menu-changesmenu').should('not.be.visible');
 	}
 
 	//enable record for track changes
@@ -26,8 +28,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		cy.cGet('#menu-changesmenu').click();
 		cy.cGet('#menu-changesmenu').contains('Record').click();
 
-		//if we don't wait , the test will fail in CLI
-		cy.wait(200);
+		cy.cGet('body').type('{esc}');
 
 		cy.cGet('#menu-editmenu').click();
 		cy.cGet('#menu-changesmenu').click();
@@ -38,47 +39,23 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 	}
 
 	it('Accept All', function () {
-
 		helper.typeIntoDocument('Hello World');
-
 		enableRecord();
-
 		helper.clearAllText();
-		//if we don't wait , the test will fail in CLI
-		cy.wait(200);
-
 		helper.selectAllText();
-
 		confirmChange('Accept All');
-
-		cy.wait(200);
-
 		helper.typeIntoDocument('{ctrl}a');
-
 		helper.textSelectionShouldNotExist();
 	});
 
-	it.skip('Reject All', function () {
-
+	it('Reject All', function () {
 		helper.typeIntoDocument('Hello World');
-
 		enableRecord();
-
 		helper.clearAllText();
-
-		//if we don't wait , the test will fail in CLI
-		cy.wait(600);
-
 		helper.selectAllText();
-
 		confirmChange('Reject All');
-
-		cy.wait(200);
-
-		cy.cGet('.leaflet-layer').click();
-
+		cy.cGet('#document-container').click();
 		helper.selectAllText();
-
 		helper.expectTextForClipboard('Hello World');
 	});
 });
