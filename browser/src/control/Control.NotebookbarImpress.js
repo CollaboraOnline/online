@@ -972,12 +972,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertSlideField', 'presentation'),
-								'command': '.uno:InsertSlideField'
+								'command': '.uno:InsertPageField'
 							},
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertSlidesField', 'presentation'),
-								'command': '.uno:InsertSlidesField'
+								'command': '.uno:InsertPagesField'
 							}
 						]
 					},
@@ -997,7 +997,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertSlideTitleField', 'presentation'),
-								'command': '.uno:InsertSlideTitleField'
+								'command': '.uno:InsertPageTitleField'
 							}
 						]
 					}
