@@ -299,7 +299,7 @@ function switchUIToNotebookbar() {
 	Cypress.env('USER_INTERFACE', 'notebookbar');
 }
 
-function actionOnSelector(name,func) {
+function actionOnSelector(name, func) {
 	cy.task('getSelectors', {
 		mode: Cypress.env('USER_INTERFACE'),
 		name: name,
