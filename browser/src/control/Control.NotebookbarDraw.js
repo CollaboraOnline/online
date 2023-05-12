@@ -956,13 +956,13 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertSlideField', 'presentation'),
-								'command': '.uno:InsertSlideField'
+								'text': _UNO('.uno:InsertPageField', 'presentation'),
+								'command': '.uno:InsertPageField'
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertSlidesField', 'presentation'),
-								'command': '.uno:InsertSlidesField'
+								'text': _UNO('.uno:InsertPagesField', 'presentation'),
+								'command': '.uno:InsertPagesField'
 							}
 						]
 					},
@@ -981,8 +981,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertSlideTitleField', 'presentation'),
-								'command': '.uno:InsertSlideTitleField'
+								'text': _UNO('.uno:InsertPageTitleField', 'presentation'),
+								'command': '.uno:InsertPageTitleField'
 							}
 						]
 					}
