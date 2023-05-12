@@ -2,13 +2,15 @@
 
 var helper = require('../../common/helper');
 var { insertImage, deleteImage, assertImageSize } = require('../../common/desktop_helper');
+var desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagnotebookbar'], 'Image Operation Tests', function() {
+describe(['tagdesktop'], 'Image Operation Tests', function() {
 	var origTestFileName = 'image_operation.ods';
 	var testFileName;
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		desktopHelper.switchUIToNotebookbar();
 	});
 
 	afterEach(function() {
