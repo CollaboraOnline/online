@@ -16,11 +16,9 @@ class DocumentBroker;
 class Quarantine
 {
 public:
-    Quarantine(DocumentBroker& docBroker);
+    Quarantine(DocumentBroker& docBroker, const std::string& docName);
 
     static void initialize(const std::string& path);
-
-    void setDocumentName(const std::string& docName) { _docName = docName; }
 
     bool quarantineFile(const std::string& docName);
 
@@ -43,9 +41,9 @@ private:
     static std::string QuarantinePath;
 
     const std::string _docKey;
+    const std::string _docName;
     const std::string _quarantinedFilenamePrefix;
     const std::size_t _maxSizeBytes;
     const std::size_t _maxAgeSecs;
     const std::size_t _maxVersions;
-    std::string _docName;
 };

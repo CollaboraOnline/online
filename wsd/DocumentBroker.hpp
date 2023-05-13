@@ -1409,7 +1409,7 @@ private:
     StorageBase::Attributes _lastStorageAttrs;
 
     /// The Quarantine manager.
-    Quarantine _quarantine;
+    std::unique_ptr<Quarantine> _quarantine;
 
     std::unique_ptr<TileCache> _tileCache;
     std::atomic<bool> _isModified;
