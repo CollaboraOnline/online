@@ -148,10 +148,23 @@ void Quarantine::clearOldQuarantineVersions()
     if (!isQuarantineEnabled())
         return;
 
-    while (QuarantineMap[_docKey].size() > _maxVersions)
+    auto& container = QuarantineMap[_docKey];
+    if (container.size() > _maxVersions)
     {
-        FileUtil::removeFile(QuarantineMap[_docKey][0]);
-        QuarantineMap[_docKey].erase(QuarantineMap[_docKey].begin());
+        const std::size_t excess = container.size() - _maxVersions;
+        LOG_TRC("Removing " << excess << " excess quarantined file versions for [" << _docKey
+                            << ']');
+        for (std::size_t i = 0; i < excess; ++i)
+        {
+            const std::string& path = container[i];
+            LOG_TRC("Removing excess quarantined file version #" << (i + 1) << " [" << path
+                                                                 << "] for [" << _docKey << ']');
+
+            FileUtil::removeFile(path);
+        }
+
+        // And remove them from the container.
+        container.erase(container.begin(), container.begin() + excess);
     }
 }
 
