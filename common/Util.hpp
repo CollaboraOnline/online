@@ -263,6 +263,7 @@ namespace Util
     void setProcessAndThreadPriorities(const pid_t pid, int prio);
 #endif
 
+    /// Replace substring @a in string @s with string @b.
     std::string replace(std::string s, const std::string& a, const std::string& b);
 
     std::string formatLinesForLog(const std::string& s);
