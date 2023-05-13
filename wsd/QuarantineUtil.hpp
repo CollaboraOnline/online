@@ -28,6 +28,7 @@ public:
 private:
     bool isQuarantineEnabled() const { return !QuarantinePath.empty(); }
 
+    /// Returns quarantine directory size in bytes.
     std::size_t quarantineSize();
 
     void makeQuarantineSpace();
