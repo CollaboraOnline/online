@@ -213,8 +213,10 @@ bool Quarantine::quarantineFile(const std::string& docPath)
 
 void Quarantine::removeQuarantinedFiles()
 {
+    LOG_DBG("Removing all quarantined files for [" << _docKey << ']');
     for (const auto& file : QuarantineMap[_docKey])
     {
+        LOG_TRC("Removing quarantined file [" << file << "] for [" << _docKey << ']');
         FileUtil::removeFile(file);
     }
 
