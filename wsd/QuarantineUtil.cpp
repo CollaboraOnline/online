@@ -27,9 +27,9 @@ std::unordered_map<std::string, std::vector<std::string>> Quarantine::Quarantine
 
 Quarantine::Quarantine(DocumentBroker& docBroker, const std::string& docName)
     : _docKey(docBroker.getDocKey())
-    , _docName(docName)
-    , _quarantinedFilename('_' + std::to_string(docBroker.getPid()) + '_' + docBroker.getDocKey() +
-                           '_' + _docName)
+    , _docName(Util::encodeURIComponent(docName, std::string(",/?:@&=+$#") + Delimiter))
+    , _quarantinedFilename(Delimiter + std::to_string(docBroker.getPid()) + Delimiter +
+                           docBroker.getDocKey() + Delimiter + _docName)
     , _maxSizeBytes(COOLWSD::getConfigValue<std::size_t>("quarantine_files.limit_dir_size_mb", 0) *
                     1024 * 1024)
     , _maxAgeSecs(COOLWSD::getConfigValue<std::size_t>("quarantine_files.expiry_min", 30) * 60)
@@ -57,10 +57,15 @@ void Quarantine::initialize(const std::string& path)
     std::vector<StringToken> tokens;
     for (const auto& file : files)
     {
-        StringVector::tokenize(file.c_str(), file.size(), '_', tokens);
-        if (tokens.size() > 2)
+        StringVector::tokenize(file.c_str(), file.size(), Delimiter, tokens);
+        if (tokens.size() >= 3)
         {
-            QuarantineMap[file.substr(tokens[2]._index)].emplace_back(path + file);
+            const auto docKey = file.substr(tokens[2]._index, tokens[tokens.size() - 1]._index -
+                                                                  tokens[2]._index - 1);
+            const auto fullpath = path + file;
+            LOG_TRC("Adding quarantine file [" << fullpath << "] for docKey [" << docKey
+                                               << "] from quarantine directory");
+            QuarantineMap[docKey].emplace_back(fullpath);
         }
 
         tokens.clear();
@@ -119,7 +124,8 @@ void Quarantine::makeQuarantineSpace()
         bool purge = currentSize >= _maxSizeBytes;
         if (!purge)
         {
-            const auto pair = Util::u64FromString(Util::split(*index, '_').first);
+            // Parse the timestamp from the quarantined filename (first token).
+            const auto pair = Util::u64FromString(Util::split(*index, Delimiter).first);
             const auto age = (ts - pair.first);
             if (!pair.second || age > _maxAgeSecs)
             {
