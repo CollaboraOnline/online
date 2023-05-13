@@ -15,6 +15,7 @@
 #include "COOLWSD.hpp"
 #include "DocumentBroker.hpp"
 #include "FileUtil.hpp"
+#include "Util.hpp"
 
 #include <chrono>
 #include <common/Common.hpp>
@@ -113,14 +114,26 @@ void Quarantine::makeQuarantineSpace()
     auto index = files.begin();
     while (index != files.end() && !files.empty())
     {
-        FileUtil::Stat file(QuarantinePath + *index);
-        const auto modifyTime = std::chrono::duration_cast<std::chrono::seconds>(
-                                    file.modifiedTimepoint().time_since_epoch())
-                                    .count();
-        bool isExpired = static_cast<std::size_t>(ts - modifyTime) > _maxAgeSecs;
-
-        if ((file.hardLinkCount() == 1) && (isExpired || (currentSize >= _maxSizeBytes)))
+        bool purge = currentSize >= _maxSizeBytes;
+        if (!purge)
         {
+            const auto pair = Util::u64FromString(Util::split(*index, '_').first);
+            const auto age = (ts - pair.first);
+            if (!pair.second || age > _maxAgeSecs)
+            {
+                LOG_TRC("Will remove quarantined file [" << *index << "] which is " << age
+                                                         << " secs old (max " << _maxAgeSecs
+                                                         << " secs)");
+                purge = true;
+            }
+        }
+
+        if (purge)
+        {
+            FileUtil::Stat file(QuarantinePath + *index);
+            LOG_TRC("Removing quarantined file ["
+                    << *index << "] (" << file.size() << " bytes). Current quarantine size: "
+                    << currentSize << " (max " << _maxSizeBytes << " bytes)");
             currentSize -= file.size();
             FileUtil::removeFile(QuarantinePath + *index, true);
             files.erase(index);
