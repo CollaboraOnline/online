@@ -135,7 +135,6 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
                        "per_document.min_time_between_saves_ms", 500)))
     , _storageManager(std::chrono::milliseconds(
           COOLWSD::getConfigValueNonZero<int>("per_document.min_time_between_uploads_ms", 5000)))
-    , _quarantine(*this)
     , _isModified(false)
     , _cursorPosX(0)
     , _cursorPosY(0)
@@ -605,13 +604,13 @@ void DocumentBroker::pollThread()
         // Quarantine the last copy, if different.
         LOG_DBG("Data loss detected, will quarantine last version of [" << getDocKey()
                                                                         << "] if necessary");
-        if (_storage)
+        if (_storage && _quarantine)
         {
             const std::string uploading = _storage->getRootFilePathUploading();
             if (FileUtil::Stat(uploading).exists())
             {
                 LOG_DBG("Quarantining the .uploading file: " << uploading);
-                _quarantine.quarantineFile(uploading);
+                _quarantine->quarantineFile(uploading);
             }
             else
             {
@@ -619,22 +618,22 @@ void DocumentBroker::pollThread()
                 if (FileUtil::Stat(upload).exists())
                 {
                     LOG_DBG("Quarantining the .upload file: " << upload);
-                    _quarantine.quarantineFile(upload);
+                    _quarantine->quarantineFile(upload);
                 }
                 else
                 {
                     // Fallback to quarantining to the original document.
                     LOG_DBG("Quarantining the original document file: " << _filename);
-                    _quarantine.quarantineFile(_filename);
+                    _quarantine->quarantineFile(_filename);
                 }
             }
         }
     }
-    else
+    else if (_quarantine)
     {
         // Gracefully unloaded.
         LOG_DBG("Cleaning up quarantined files for [" << getDocKey() << ']');
-        _quarantine.removeQuarantinedFiles();
+        _quarantine->removeQuarantinedFiles();
     }
 
     // Async cleanup.
@@ -1157,8 +1156,9 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 
         _filename = fileInfo.getFilename();
 #if !MOBILEAPP
-        _quarantine.setDocumentName(_filename);
+        _quarantine = Util::make_unique<Quarantine>(*this, _filename);
 #endif
+
         if (!templateSource.empty())
         {
             // Invalid timestamp for templates, to force uploading once we save-after-loading.
@@ -1486,7 +1486,8 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
         LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
     }
 
-    _quarantine.quarantineFile(newName);
+    if (_quarantine)
+        _quarantine->quarantineFile(newName);
 #endif //!MOBILEAPP
 
     // Let the clients know of any save failures.

@@ -25,8 +25,9 @@
 std::string Quarantine::QuarantinePath;
 std::unordered_map<std::string, std::vector<std::string>> Quarantine::QuarantineMap;
 
-Quarantine::Quarantine(DocumentBroker& docBroker)
+Quarantine::Quarantine(DocumentBroker& docBroker, const std::string& docName)
     : _docKey(docBroker.getDocKey())
+    , _docName(docName)
     , _quarantinedFilenamePrefix('_' + std::to_string(docBroker.getPid()) + '_' +
                                  docBroker.getDocKey() + '_')
     , _maxSizeBytes(COOLWSD::getConfigValue<std::size_t>("quarantine_files.limit_dir_size_mb", 0) *
@@ -36,6 +37,7 @@ Quarantine::Quarantine(DocumentBroker& docBroker)
           COOLWSD::getConfigValue<std::size_t>("quarantine_files.max_versions_to_maintain", 2),
           1UL))
 {
+    LOG_DBG("Quarantine ctor for [" << _docKey << ']');
 }
 
 void Quarantine::initialize(const std::string& path)
