@@ -528,7 +528,7 @@ namespace Util
             std::string::size_type pos = 0;
             while ((pos = result.find(a, pos)) != std::string::npos)
             {
-                result = result.replace(pos, aSize, b);
+                result.replace(pos, aSize, b);
                 pos += bSize; // Skip the replacee to avoid endless recursion.
             }
         }
