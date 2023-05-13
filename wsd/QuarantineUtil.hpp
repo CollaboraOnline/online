@@ -40,8 +40,15 @@ private:
     static std::unordered_map<std::string, std::vector<std::string>> QuarantineMap;
     static std::string QuarantinePath;
 
+    /// The delimiter used in the quarantine filename.
+    static constexpr char Delimiter = '_';
+
     const std::string _docKey;
     const std::string _docName;
+    /// The quarantined filename is a multi-part string, formed
+    /// from the timestamp, pid, docKey, and document filename.
+    /// The Delimiter is used to join and later tokenize it.
+    /// The document filename is encoded to ensure tokenization.
     const std::string _quarantinedFilename;
     const std::size_t _maxSizeBytes;
     const std::size_t _maxAgeSecs;
