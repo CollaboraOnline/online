@@ -82,9 +82,6 @@ void Quarantine::removeQuarantine()
     FileUtil::removeFile(QuarantinePath, true);
 }
 
-// returns quarantine directory size in bytes
-// files with hardlink count of more than 1 is not counted
-// because they are originally stored in jails
 std::size_t Quarantine::quarantineSize()
 {
     if (!isQuarantineEnabled())
@@ -96,10 +93,9 @@ std::size_t Quarantine::quarantineSize()
     for (const auto& file : files)
     {
         FileUtil::Stat f(QuarantinePath + file);
-
-        if (f.hardLinkCount() == 1)
-            size += f.size();
+        size += f.size();
     }
+
     return size;
 }
 
