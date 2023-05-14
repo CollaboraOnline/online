@@ -21,9 +21,11 @@
 #include <common/Common.hpp>
 #include <common/StringVector.hpp>
 #include <common/Log.hpp>
+#include <mutex>
 
 std::string Quarantine::QuarantinePath;
 std::unordered_map<std::string, std::vector<std::string>> Quarantine::QuarantineMap;
+std::mutex Quarantine::Mutex;
 
 Quarantine::Quarantine(DocumentBroker& docBroker, const std::string& docName)
     : _docKey(docBroker.getDocKey())
@@ -45,6 +47,9 @@ void Quarantine::initialize(const std::string& path)
     if (!COOLWSD::getConfigValue<bool>("quarantine_files[@enable]", false) ||
         !QuarantinePath.empty())
         return;
+
+    // This function should ever be called once, but for consistency, take the lock.
+    std::lock_guard<std::mutex> lock(Mutex);
 
     QuarantineMap.clear();
 
@@ -104,6 +109,8 @@ void Quarantine::makeQuarantineSpace()
     if (!isQuarantineEnabled())
         return;
 
+    LOG_ASSERT_MSG(!Mutex.try_lock(), "Quarantine Mutex must be taken");
+
     std::vector<std::string> files;
     Poco::File(QuarantinePath).list(files);
 
@@ -152,6 +159,8 @@ void Quarantine::clearOldQuarantineVersions()
     if (!isQuarantineEnabled())
         return;
 
+    LOG_ASSERT_MSG(!Mutex.try_lock(), "Quarantine Mutex must be taken");
+
     auto& container = QuarantineMap[_docKey];
     if (container.size() > _maxVersions)
     {
@@ -182,6 +191,8 @@ bool Quarantine::quarantineFile(const std::string& docPath)
         std::chrono::duration_cast<std::chrono::seconds>(timeNow.time_since_epoch()).count();
 
     const std::string linkedFilePath = QuarantinePath + std::to_string(ts) + _quarantinedFilename;
+
+    std::lock_guard<std::mutex> lock(Mutex);
 
     auto& fileList = QuarantineMap[_docKey];
     if (!fileList.empty())
@@ -216,6 +227,8 @@ bool Quarantine::quarantineFile(const std::string& docPath)
 
 void Quarantine::removeQuarantinedFiles()
 {
+    std::lock_guard<std::mutex> lock(Mutex);
+
     LOG_DBG("Removing all quarantined files for [" << _docKey << ']');
     for (const auto& file : QuarantineMap[_docKey])
     {
