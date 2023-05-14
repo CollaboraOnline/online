@@ -10,10 +10,6 @@
 <!-- Disable two capitals at start autocorrect -->
 <item oor:path="/org.openoffice.Office.Common/AutoCorrect"><prop oor:name="TwoCapitalsAtStart" oor:op="fuse"><value>false</value></prop></item>
 
-<!-- The Help root URL, or empty for no help (hides the help buttons) -->
-<!-- On mobile UI there should be no tunnelled dialogs. But if there are some, by mistake, at least they should not have a non-working Help button -->
-<item oor:path="/org.openoffice.Office.Common/Help"><prop oor:name="HelpRootURL" oor:op="fuse"><value></value></prop></item>
-
 <!-- Enable spell-checking by default -->
 <item oor:path="/org.openoffice.Office.Linguistic/SpellChecking"><prop oor:name="IsSpellAuto" oor:op="fuse"><value>true</value></prop></item>
 
