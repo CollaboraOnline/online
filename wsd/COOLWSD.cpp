@@ -2081,7 +2081,8 @@ void COOLWSD::innerInitialize(Application& self)
         { "deepl.auth_key", "" },
         { "deepl.enabled", "false" },
         { "zotero.enable", "true" },
-        { "indirection_endpoint.url", "" }
+        { "indirection_endpoint.url", "" },
+        { "help_url", HELP_URL }
     };
 
     // Set default values, in case they are missing from the config file.
@@ -2546,6 +2547,15 @@ void COOLWSD::innerInitialize(Application& self)
     const std::string authKey = getConfigValue<std::string>(conf, "deepl.auth_key", "");
     setenv("DEEPL_API_URL", apiURL.c_str(), 1);
     setenv("DEEPL_AUTH_KEY", authKey.c_str(), 1);
+
+#if !MOBILEAPP
+    const std::string helpUrl = getConfigValue<std::string>(conf, "help_url", HELP_URL);
+    setenv("LOK_HELP_URL", helpUrl.c_str(), 1);
+#else
+    // On mobile UI there should be no tunnelled dialogs. But if there are some, by mistake,
+    // at least they should not have a non-working Help button.
+    setenv("LOK_HELP_URL", "", 1);
+#endif
 
 #if ENABLE_SUPPORT_KEY
     const std::string supportKeyString = getConfigValue<std::string>(conf, "support_key", "");

@@ -61,6 +61,9 @@
 /* Whether the std::filesystem is in the experimental header. */
 #undef HAVE_STD_FILESYSTEM_EXPERIMENTAL
 
+/* Default value of help root URL */
+#undef HELP_URL
+
 /* Default value of feature_lock.impress_unlock_highlights */
 #undef IMPRESS_UNLOCK_HIGHLIGHTS
 

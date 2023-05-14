@@ -289,4 +289,6 @@
         <enable desc="Enable Zotero plugin." type="bool" default="true">true</enable>
     </zotero>
 
+    <help_url desc="The Help root URL, or empty for no help (hides the Help buttons)" type="string" default="@HELP_URL@">@HELP_URL@</help_url>
+
 </config>
