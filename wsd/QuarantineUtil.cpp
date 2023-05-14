@@ -56,8 +56,13 @@ void Quarantine::initialize(const std::string& path)
     std::vector<std::string> files;
     Poco::File(path).list(files);
 
-    //FIXME: This is lexicographical and won't sort timestamps correctly.
-    std::sort(files.begin(), files.end());
+    std::sort(files.begin(), files.end(),
+              [](const auto& lhs, const auto& rhs)
+              {
+                  const auto lhsPair = Util::u64FromString(Util::split(lhs, Delimiter).first);
+                  const auto rhsPair = Util::u64FromString(Util::split(rhs, Delimiter).first);
+                  return lhsPair.first && rhsPair.first && lhsPair.second < rhsPair.second;
+              });
 
     std::vector<StringToken> tokens;
     for (const auto& file : files)
@@ -113,8 +118,16 @@ void Quarantine::makeQuarantineSpace()
 
     std::vector<std::string> files;
     Poco::File(QuarantinePath).list(files);
+    if (files.empty())
+        return;
 
-    std::sort(files.begin(), files.end());
+    std::sort(files.begin(), files.end(),
+              [](const auto& lhs, const auto& rhs)
+              {
+                  const auto lhsPair = Util::u64FromString(Util::split(lhs, Delimiter).first);
+                  const auto rhsPair = Util::u64FromString(Util::split(rhs, Delimiter).first);
+                  return lhsPair.first && rhsPair.first && lhsPair.second < rhsPair.second;
+              });
 
     const auto timeNow = std::chrono::system_clock::now();
     const auto ts =
