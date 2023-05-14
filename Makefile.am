@@ -363,7 +363,6 @@ EXTRA_DIST = discovery.xml \
              coolwsd.spec \
              coolwsd.xml.in \
              coolwsd.service \
-             sysconfig.coolwsd \
              debian/compat \
              debian/copyright \
              debian/coolwsd.preinst \

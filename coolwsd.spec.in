@@ -1,16 +1,12 @@
 # spec file for package coolwsd
 #
-# Copyright (c) 2015 Collabora
+# Copyright (c) 2023 Collabora
 #
 # This file is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-%if 0%{?name_suffix:1}
-Name:           coolwsd%{name_suffix}
-%else
 Name:           coolwsd
-%endif
 Version:        @PACKAGE_VERSION@
 Release:        1
 Vendor:         Collabora Productivity Ltd.
@@ -18,43 +14,13 @@ Summary:        Collabora Online WebSocket Daemon
 License:        EULA
 Source0:        coolwsd-@PACKAGE_VERSION@.tar.gz
 BuildRequires:  libcap-devel pam-devel gcc-c++ cppunit-devel pam-devel fontconfig make
-
-# Red Hat and CentOS
-%if 0%{?rhel} == 7
-BuildRequires:  libpcap kernel-headers python36-polib python36-lxml
-%endif
-
-%if 0%{?rhel} == 8
-BuildRequires:  libpcap kernel-headers python3-polib python3-lxml
-%endif
-
-# openSUSE Leap 15.x, SLES12, SLES15
-%if 0%{?suse_version}
-BuildRequires:  libcap-progs linux-glibc-devel systemd-rpm-macros python3-polib python3-lxml
-%endif
-
 Requires:       collaboraoffice collaboraoffice-ure collaboraofficebasis-core collaboraofficebasis-writer collaboraofficebasis-impress collaboraofficebasis-graphicfilter collaboraofficebasis-en-US collaboraofficebasis-calc collaboraofficebasis-ooofonts collaboraofficebasis-images collaboraofficebasis-draw collaboraofficebasis-extension-pdf-import collaboraofficebasis-ooolinguistic collaboraofficebasis-math
-Requires(post): coreutils grep sed cpio
-
-%if 0%{?rhel}
-# coolwsd dependencies
-Requires:       openssh-clients
-%endif
-
-%if 0%{?suse_version}
-# coolwsd dependencies
-Requires(post): libcap-progs
-Requires:       %{fillup_prereq}
-%endif
-
+Requires(post): coreutils grep sed cpio /usr/bin/setcap /usr/bin/ssh-keygen
 Provides: loolwsd
 Obsoletes: loolwsd
 
 %description
 
-%if 0%{?suse_version}
-%debug_package
-%endif
 %prep
 %setup -n coolwsd-@PACKAGE_VERSION@
 
@@ -75,22 +41,10 @@ env BUILDING_FROM_RPMBUILD=yes make %{?_smp_mflags}
 
 %install
 env BUILDING_FROM_RPMBUILD=yes make install DESTDIR=%{buildroot}
-install -d -m 755 %{buildroot}/var/adm/fillup-templates
-%if 0%{?rhel}
-install -D -m 444 coolwsd.service %{buildroot}%{_unitdir}/coolwsd.service
-# systemd in RHEL 7 does not understand these options
-%if 0%{?rhel} <= 7
-sed -i "/^ReadWritePaths/d;/^ProtectControlGroups/d;/^ProtectSystem/d" %{buildroot}%{_unitdir}/coolwsd.service
-%endif
-install -D -m 644 sysconfig.coolwsd %{buildroot}/etc/sysconfig/coolwsd
+install -D -m 444 coolwsd.service %{buildroot}/usr/lib/systemd/system/coolwsd.service
+# Apache webserver on RH-like distributions
 install -d -m 755 %{buildroot}/etc/httpd/conf
 install -D -m 755 etc/apache2/coolwsd.conf %{buildroot}/etc/httpd/conf
-rm %{buildroot}/etc/apache2/conf-available/coolwsd.conf
-%endif
-%if 0%{?suse_version}
-install -D -m 444 coolwsd.service %{buildroot}%{_unitdir}/coolwsd.service
-install -D -m 644 sysconfig.coolwsd %{buildroot}/var/adm/fillup-templates
-%endif
 mkdir -p %{buildroot}/etc/pam.d
 echo "auth       required     pam_unix.so" > %{buildroot}/etc/pam.d/coolwsd
 echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
@@ -124,97 +78,61 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 /usr/share/man/man1/coolwsd-systemplate-setup.1.gz
 /usr/share/man/man1/coolwsd-generate-proof-key.1.gz
 /usr/share/man/man1/coolmount.1.gz
-%{_unitdir}/coolwsd.service
-%if 0%{?rhel}
-%config(noreplace) /etc/sysconfig/coolwsd
-%endif
-%if 0%{?suse_version}
-/var/adm/fillup-templates/sysconfig.coolwsd
-%endif
+/usr/lib/systemd/system/coolwsd.service
 
 %config(noreplace) /etc/pam.d/coolwsd
 %config(noreplace) %attr(640, cool, root) /etc/coolwsd/coolwsd.xml
 %config /etc/coolwsd/coolkitconfig.xcu
 %config(noreplace) /etc/nginx/snippets/coolwsd.conf
-%if 0%{?suse_version} > 0
 %config(noreplace) /etc/apache2/conf-available/coolwsd.conf
-%endif
-%if 0%{?rhel} > 0
 %config(noreplace) /etc/httpd/conf/coolwsd.conf
-%endif
 
 %doc README.md
 
 %pre
-%if 0%{?suse_version}
-%service_add_pre coolwsd.service
-%endif
-
 getent group cool >/dev/null || groupadd -r cool
 getent passwd cool >/dev/null || useradd -g cool -r cool -d /opt/cool -s /bin/bash
 
-# for filename in `find /opt/cool/systemplate -type f`;do stripped=$(echo -ne $filename | sed -e "s|/opt/cool/systemplate||");rpm -qf --qf="%{NAME}\n" $stripped;done | grep -v devel | grep -v 32bit | grep -v -- -fonts | sort | uniq
-%triggerin -- expat fontconfig freetype freetype2 glibc glibc-locale kernel keyutils-libs krb5 krb5-libs libbz2-1 libcap libcap-ng libcap2 libexpat1 libfreetype6 libgcc libgcc_s1 libgcrypt libiscsi libpng libpng12 libpng12-0 libpng15-15 libpng16-16 libstdc++ libstdc++6 libuuid libuuid1 libz1 lsb nss-mdns nss-softokn-freebl pcre sssd sssd-client systemd-libs timezone tzdata zlib
+%post
+setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit
+setcap cap_sys_admin=ep /usr/bin/coolmount
+if [ -f /etc/loolwsd/loolwsd.xml ]; then /usr/bin/coolconfig migrateconfig --write; fi
+# systemd in RHEL 7 does not understand these options
+if grep -q -F 'REDHAT_SUPPORT_PRODUCT_VERSION="7"' /etc/os-release; then
+sed -i "/^ReadWritePaths/d;/^ProtectControlGroups/d;/^ProtectSystem/d" /usr/lib/systemd/system/coolwsd.service
+fi
 
-echo -ne "Triggered update of coolwsd systemplate..."
+if [ $1 -eq 1 ] ; then
+    # Initial installation
+    systemctl preset coolwsd.service >/dev/null 2>&1 || :
+fi
 
-%if 0%{?rhel} >= 7 || 0%{?suse_version} >= 1300
 systemctl is-active -q coolwsd && COOLWSD_IS_ACTIVE=1 || COOLWSD_IS_ACTIVE=0
 if [ $COOLWSD_IS_ACTIVE == "1" ]; then systemctl stop coolwsd; fi
-%endif
 
-# Figure out where LO is installed, let's hope it is not a mount point
+# Figure out where LOKit is installed, let's hope it is not a mount point
 # Create a directory for coolwsd on the same file system
-loroot=/opt/collaboraoffice
-coolparent=`cd ${loroot} && cd .. && /bin/pwd`
+lokitroot=/opt/collaboraoffice
+coolparent=`cd ${lokitroot} && cd .. && /bin/pwd`
 
 rm -rf ${coolparent}/cool
 mkdir -p ${coolparent}/cool/child-roots
 chown cool:cool ${coolparent}/cool
 chown cool:cool ${coolparent}/cool/child-roots
 
-fc-cache ${loroot}/share/fonts/truetype
-coolwsd-systemplate-setup ${coolparent}/cool/systemplate ${loroot} >/dev/null 2>&1
+fc-cache ${lokitroot}/share/fonts/truetype
+coolwsd-systemplate-setup ${coolparent}/cool/systemplate ${lokitroot} >/dev/null 2>&1
 coolwsd-generate-proof-key >/dev/null 2>&1
 
-%if 0%{?rhel} || 0%{?suse_version}
 if [ $COOLWSD_IS_ACTIVE == "1" ]; then systemctl start coolwsd; fi
-%endif
-
-echo "   Done."
-
-%post
-setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit
-setcap cap_sys_admin=ep /usr/bin/coolmount
-if [ -f /etc/loolwsd/loolwsd.xml ]; then /usr/bin/coolconfig migrateconfig --write; fi
-
-%if 0%{?rhel} >= 7
-%systemd_post coolwsd.service
-%else
-%if 0%{?suse_version}
-%service_add_post coolwsd.service
-%{fillup_only -n coolwsd}
-%endif
-%endif
 
 
 %preun
-%if 0%{?rhel} >= 7
-%systemd_preun coolwsd.service
-%else
-%if 0%{?suse_version}
-%service_del_preun coolwsd.service
-%endif
-%endif
+systemctl --no-reload disable coolwsd.service > /dev/null 2>&1 || :
+systemctl stop coolwsd.service > /dev/null 2>&1 || :
 
 %postun
-%if 0%{?rhel} >= 7
-%systemd_postun coolwsd.service
-%else
-%if 0%{?suse_version}
-%service_del_postun coolwsd.service
-%endif
-%endif
+systemctl daemon-reload >/dev/null 2>&1 || :
 
 %changelog
 * Mon Aug 03 2015 Mihai Varga
