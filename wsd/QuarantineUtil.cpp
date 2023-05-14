@@ -23,6 +23,16 @@
 #include <common/Log.hpp>
 #include <mutex>
 
+namespace
+{
+std::size_t getSecondsSinceEpoch()
+{
+    const auto timeNow = std::chrono::system_clock::now();
+    return std::chrono::duration_cast<std::chrono::seconds>(timeNow.time_since_epoch()).count();
+}
+
+} // namespace
+
 std::string Quarantine::QuarantinePath;
 std::unordered_map<std::string, std::vector<std::string>> Quarantine::QuarantineMap;
 std::mutex Quarantine::Mutex;
@@ -129,9 +139,7 @@ void Quarantine::makeQuarantineSpace()
                   return lhsPair.first && rhsPair.first && lhsPair.second < rhsPair.second;
               });
 
-    const auto timeNow = std::chrono::system_clock::now();
-    const auto ts =
-        std::chrono::duration_cast<std::chrono::seconds>(timeNow.time_since_epoch()).count();
+    const std::size_t now = getSecondsSinceEpoch();
 
     std::size_t currentSize = quarantineSize();
     auto index = files.begin();
@@ -142,8 +150,8 @@ void Quarantine::makeQuarantineSpace()
         {
             // Parse the timestamp from the quarantined filename (first token).
             const auto pair = Util::u64FromString(Util::split(*index, Delimiter).first);
-            const auto age = (ts - pair.first);
-            if (!pair.second || age > _maxAgeSecs)
+            const auto age = (now - pair.first);
+            if (!pair.second || (now > pair.first && age > _maxAgeSecs))
             {
                 LOG_TRC("Will remove quarantined file [" << *index << "] which is " << age
                                                          << " secs old (max " << _maxAgeSecs
@@ -199,11 +207,8 @@ bool Quarantine::quarantineFile(const std::string& docPath)
     if (!isQuarantineEnabled())
         return false;
 
-    const auto timeNow = std::chrono::system_clock::now();
-    const auto ts =
-        std::chrono::duration_cast<std::chrono::seconds>(timeNow.time_since_epoch()).count();
-
-    const std::string linkedFilePath = QuarantinePath + std::to_string(ts) + _quarantinedFilename;
+    const std::string linkedFilePath =
+        QuarantinePath + std::to_string(getSecondsSinceEpoch()) + _quarantinedFilename;
 
     std::lock_guard<std::mutex> lock(Mutex);
 
