@@ -28,8 +28,8 @@ std::unordered_map<std::string, std::vector<std::string>> Quarantine::Quarantine
 Quarantine::Quarantine(DocumentBroker& docBroker, const std::string& docName)
     : _docKey(docBroker.getDocKey())
     , _docName(docName)
-    , _quarantinedFilenamePrefix('_' + std::to_string(docBroker.getPid()) + '_' +
-                                 docBroker.getDocKey() + '_')
+    , _quarantinedFilename('_' + std::to_string(docBroker.getPid()) + '_' + docBroker.getDocKey() +
+                           '_' + _docName)
     , _maxSizeBytes(COOLWSD::getConfigValue<std::size_t>("quarantine_files.limit_dir_size_mb", 0) *
                     1024 * 1024)
     , _maxAgeSecs(COOLWSD::getConfigValue<std::size_t>("quarantine_files.expiry_min", 30) * 60)
@@ -179,8 +179,7 @@ bool Quarantine::quarantineFile(const std::string& docPath)
     const auto ts =
         std::chrono::duration_cast<std::chrono::seconds>(timeNow.time_since_epoch()).count();
 
-    const std::string linkedFilePath =
-        QuarantinePath + std::to_string(ts) + _quarantinedFilenamePrefix + _docName;
+    const std::string linkedFilePath = QuarantinePath + std::to_string(ts) + _quarantinedFilename;
 
     auto& fileList = QuarantineMap[_docKey];
     if (!fileList.empty())
