@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <mutex>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -39,6 +40,8 @@ private:
 
 private:
     static std::unordered_map<std::string, std::vector<std::string>> QuarantineMap;
+    /// Protects the shared QuarantineMap from concurrent modification.
+    static std::mutex Mutex;
     static std::string QuarantinePath;
 
     /// The delimiter used in the quarantine filename.
