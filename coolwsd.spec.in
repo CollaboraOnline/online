@@ -15,7 +15,7 @@ License:        EULA
 Source0:        coolwsd-@PACKAGE_VERSION@.tar.gz
 BuildRequires:  libcap-devel pam-devel gcc-c++ cppunit-devel pam-devel fontconfig make
 Requires:       collaboraoffice collaboraoffice-ure collaboraofficebasis-core collaboraofficebasis-writer collaboraofficebasis-impress collaboraofficebasis-graphicfilter collaboraofficebasis-en-US collaboraofficebasis-calc collaboraofficebasis-ooofonts collaboraofficebasis-images collaboraofficebasis-draw collaboraofficebasis-extension-pdf-import collaboraofficebasis-ooolinguistic collaboraofficebasis-math
-Requires(post): coreutils grep sed cpio /usr/bin/setcap /usr/bin/ssh-keygen
+Requires(post): coreutils grep sed cpio /usr/sbin/setcap /usr/bin/ssh-keygen
 Provides: loolwsd
 Obsoletes: loolwsd
 
