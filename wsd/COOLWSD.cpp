@@ -926,7 +926,6 @@ static std::string UnitTestLibrary;
 
 unsigned int COOLWSD::NumPreSpawnedChildren = 0;
 std::unique_ptr<TraceFileWriter> COOLWSD::TraceDumper;
-std::unordered_map<std::string, std::vector<std::string>> COOLWSD::QuarantineMap;
 std::string COOLWSD::QuarantinePath;
 #if !MOBILEAPP
 std::unique_ptr<ClipboardCache> COOLWSD::SavedClipboards;
