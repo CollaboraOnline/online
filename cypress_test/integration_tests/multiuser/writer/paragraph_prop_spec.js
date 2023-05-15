@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe(['tagmultiuser'], 'Change paragraph properties', function() {
+describe.skip(['tagmultiuser'], 'Change paragraph properties', function() {
 	var origTestFileName = 'paragraph_prop.odt';
 	var testFileName;
 

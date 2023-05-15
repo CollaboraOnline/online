@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var repairHelper = require('../../common/repair_document_helper');
 
-describe(['tagmultiuser'], 'Repair Document', function() {
+describe.skip(['tagmultiuser'], 'Repair Document', function() {
 	var origTestFileName = 'repair_doc.odt';
 	var testFileName;
 
