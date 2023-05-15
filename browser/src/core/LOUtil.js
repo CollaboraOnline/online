@@ -108,11 +108,34 @@ L.LOUtil = {
 		url += path;
 		return url;
 	},
-
-	getImageURL: function(imgName) {
-		return this.getURL('images/' + imgName);
+	setImage: function(img, name, doctype) {
+		img.src = this.getImageURL(name, doctype);
+		this.checkIfImageExists(img);
 	},
-
+	getImageURL: function(imgName, docType) {
+		var defaultImageURL = this.getURL('images/' + imgName);
+		if (window.isLocalStorageAllowed) {
+			var state = localStorage.getItem('UIDefaults_' + docType + '_darkTheme');
+			if (state && (/true/).test(state.toLowerCase())) {
+				return this.getURL('images/dark/' + imgName);
+			}
+		}
+		return defaultImageURL;
+	},
+	checkIfImageExists : function(imageElement) {
+		imageElement.addEventListener('error', function() {
+			if (imageElement.src && imageElement.src.includes('images/branding/dark')) {
+				imageElement.src = imageElement.src.replace('images/branding/dark', 'images/dark');
+				return;
+			}
+			if (imageElement.src && (imageElement.src.includes('images/dark')|| imageElement.src.includes('images/branding'))) {
+				imageElement.src = imageElement.src.replace('images/dark', 'images');
+				imageElement.src = imageElement.src.replace('images/branding', 'images');
+				return;
+			}
+			imageElement.style.display = 'none';
+			});
+		},
 	/// oldFileName = Example.odt, suffix = new
 	/// returns: Example_new.odt
 	generateNewFileName: function(oldFileName, suffix) {

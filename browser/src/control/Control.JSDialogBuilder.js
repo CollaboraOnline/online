@@ -726,17 +726,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		case 'SdTableDesignPanel':
 		case 'ChartTypePanel':
 		case 'rotation':
-			iconURL = L.LOUtil.getImageURL('lc_'+ sectionTitle.id.toLowerCase() +'.svg');
+			iconURL = L.LOUtil.getImageURL('lc_'+ sectionTitle.id.toLowerCase() +'.svg', builder.map.getDocType());
 			break;
 		}
 		if (iconURL) {
 			var icon = L.DomUtil.create('img', 'menu-entry-icon', leftDiv);
-			icon.src = iconURL;
+			L.LOUtil.setImage(icon, 'lc_'+ sectionTitle.id.toLowerCase() +'.svg', builder.map.getDocType());
 			icon.alt = '';
 			titleClass = 'menu-entry-with-icon';
-			icon.addEventListener('error', function() {
-				icon.style.display = 'none';
-			});
+
 		}
 		var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
 
@@ -944,9 +942,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			icon = L.DomUtil.create('img', '', iconSpan);
 			icon.src = iconURL;
 			icon.alt = '';
-			icon.addEventListener('error', function() {
-				icon.style.display = 'none';
-			});
+			L.LOUtil.checkIfImageExists(icon);
 
 			var titleSpan2 = L.DomUtil.create('span', 'menu-entry-with-icon flex-fullwidth', sectionTitle);
 			titleSpan2.innerHTML = title;
@@ -1578,27 +1574,26 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		pushbutton.id = data.id;
 		builder._setAccessKey(pushbutton, builder._getAccessKeyFromText(data.text));
 		var pushbuttonText = builder._customPushButtonTextForId(data.id) !== '' ? builder._customPushButtonTextForId(data.id) : builder._cleanText(data.text);
-
+		var image;
 		if (data.image && pushbuttonText !== '') {
 			L.DomUtil.addClass(pushbutton, 'has-img d-flex align-content-center justify-content-center align-items-center');
-			var image = L.DomUtil.create('img', '', pushbutton);
+			image = L.DomUtil.create('img', '', pushbutton);
 			image.src = data.image;
 			var text = L.DomUtil.create('span', '', pushbutton);
 			text.innerText = pushbuttonText;
 			builder._stressAccessKey(text, pushbutton.accessKey);
 		} else if (data.image) {
 			L.DomUtil.addClass(pushbutton, 'has-img d-flex align-content-center justify-content-center align-items-center');
-			var image = L.DomUtil.create('img', '', pushbutton);
+			image = L.DomUtil.create('img', '', pushbutton);
 			image.src = data.image;
 		} else if (data.symbol) {
 			L.DomUtil.addClass(pushbutton, 'has-img d-flex align-content-center justify-content-center align-items-center');
-			var image = L.DomUtil.create('img', '', pushbutton);
-			image.src = L.LOUtil.getImageURL('symbol_' + data.symbol + '.svg');
+			image = L.DomUtil.create('img', '', pushbutton);
+			L.LOUtil.setImage(image, 'symbol_' + data.symbol + '.svg', builder.map.getDocType());
 		} else {
 			pushbutton.innerText = pushbuttonText;
 			builder._stressAccessKey(pushbutton, pushbutton.accessKey);
 		}
-
 		if (data.enabled === 'false' || data.enabled === false)
 			$(pushbutton).prop('disabled', true);
 
@@ -1864,13 +1859,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (image) {
 				image = image.substr(0, image.lastIndexOf('.'));
 				image = image.substr(image.lastIndexOf('/') + 1);
-				image = 'url("' + L.LOUtil.getImageURL(image + '.svg') + '")';
+				image = 'url("' + L.LOUtil.getImageURL(image + '.svg', builder.map.getDocType()) + '")';
 			}
 
 			if (image64) {
 				image = 'url("' + image64 + '")';
 			}
-
+			L.LOUtil.checkIfImageExists(image);
 			elem = L.DomUtil.create('div', 'layout ' +
 				(data.entries[index].selected ? ' cool-context-down' : ''), parentContainer);
 			$(elem).data('id', data.entries[index].id);
@@ -2135,8 +2130,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		L.DomUtil.addClass(parentContainer, 'content-has-no-comments');
 		var emptyCommentWizard = L.DomUtil.create('figure', 'empty-comment-wizard-container', parentContainer);
 		var imgNode = L.DomUtil.create('img', 'empty-comment-wizard-img', emptyCommentWizard);
-		imgNode.src = L.LOUtil.getImageURL('lc_showannotations.svg');
+		L.LOUtil.setImage(imgNode, 'lc_showannotations.svg', builder.map.getDocType());
 		imgNode.alt = data.text;
+		
 		var textNode = L.DomUtil.create('figcaption', 'empty-comment-wizard', emptyCommentWizard);
 		textNode.innerText = data.text;
 		L.DomUtil.create('br', 'empty-comment-wizard', textNode);
@@ -2333,7 +2329,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			cleanName = iconURLAliases[cleanName];
 		}
 
-		return L.LOUtil.getImageURL('lc_' + cleanName + '.svg');
+		return L.LOUtil.getImageURL('lc_' + cleanName + '.svg', this.map.getDocType());
 	},
 
 	// make a class identifier from parent's id by walking up the tree
@@ -2429,7 +2425,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			buttonImage.src = imagePath;
 
 			controls['button'] = button;
-
 			if (builder.options.noLabelsForUnoButtons !== true) {
 				var label = L.DomUtil.create('label', 'ui-content unolabel', button);
 				label.htmlFor = buttonId;
@@ -2505,6 +2500,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(button).addClass('selected');
 				$(div).addClass('selected');
 			}
+			L.LOUtil.checkIfImageExists(buttonImage);
+			
 		} else {
 			button = L.DomUtil.create('label', 'ui-content unolabel', div);
 			button.textContent = builder._cleanText(data.text);
@@ -2805,9 +2802,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var buttonId = 'border-' + i;
 		button = L.DomUtil.create('img', 'ui-content borderbutton', div);
-		button.src = L.LOUtil.getImageURL('fr0' + i + '.svg');
+		L.LOUtil.setImage(button, 'fr0' + i + '.svg', builder.map.getDocType());
 		button.id = buttonId;
-
 		if (selected)
 			$(button).addClass('selected');
 
@@ -2874,11 +2870,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var icon = builder._createIconURL(data.command);
 			var buttonId = id + 'img';
-
 			var button = L.DomUtil.create('img', 'ui-content unobutton', div);
 			button.src = icon;
 			button.id = buttonId;
 			button.setAttribute('alt', id);
+			L.LOUtil.checkIfImageExists(button);
 
 			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
 			L.DomUtil.create('i', 'unoarrow', arrowbackground);
