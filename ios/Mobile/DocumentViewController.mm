@@ -267,7 +267,9 @@ static IMP standardImpOfInputAccessoryView = nil;
 }
 
 - (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView {
-    LOG_ERR("WebContent process terminated! What should we do?");
+    // Fix issue #5876 by closing the document if the content process dies
+    [self bye];
+    LOG_ERR("WebContent process terminated! Is closing the document enough?");
 }
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
