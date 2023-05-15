@@ -98,8 +98,6 @@ static std::atomic<unsigned> appDocIdCounter(1);
 - (void)send2JS:(const char *)buffer length:(int)length {
     LOG_TRC("To JS: " << COOLProtocol::getAbbreviatedMessage(buffer, length).c_str());
 
-    NSString *js;
-
     const unsigned char *ubufp = (const unsigned char *)buffer;
     std::vector<char> data;
     bool newlineFound = false;
@@ -109,6 +107,12 @@ static std::atomic<unsigned> appDocIdCounter(1);
                           isMessageOfType(buffer, "renderfont:", length) ||
                           isMessageOfType(buffer, "rendersearchlist:", length) ||
                           isMessageOfType(buffer, "windowpaint:", length));
+
+    const char *pretext = "window.TheFakeWebSocket.onmessage({'data': '";
+    const int pretextlen = strlen(pretext);
+    for (int i = 0; i < pretextlen; i++)
+        data.push_back(pretext[i]);
+
     for (int i = 0; i < length; i++) {
         // Another fix for issue #5843 limit non-ASCII escaping to only
         // certain message types
@@ -131,19 +135,22 @@ static std::atomic<unsigned> appDocIdCounter(1);
             data.push_back(ubufp[i]);
         }
     }
+
+    const char *posttext = "'});";
+    const int posttextlen = strlen(posttext);
+    for (int i = 0; i < posttextlen; i++)
+        data.push_back(posttext[i]);
+
     data.push_back(0);
 
-    NSString *escapedData = [NSString stringWithUTF8String:data.data()];
-    if (!escapedData) {
+    NSString *js = [NSString stringWithUTF8String:data.data()];
+    if (!js) {
         char outBuf[length + 1];
         memcpy(outBuf, buffer, length);
         outBuf[length] = '\0';
         LOG_ERR("Couldn't create NSString with message: " << outBuf);
         return;
     }
-    js = @"window.TheFakeWebSocket.onmessage({'data': '";
-    js = [js stringByAppendingString:escapedData];
-    js = [js stringByAppendingString:@"'});"];
 
     NSString *subjs = [js substringToIndex:std::min(100ul, js.length)];
     if (subjs.length < js.length)
