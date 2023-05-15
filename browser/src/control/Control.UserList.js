@@ -376,13 +376,14 @@ L.control.createAvatar = function (viewId, userName, extraInfo, color) {
 	if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
 		img = L.DomUtil.create('img', 'avatar-img');
 		img.src = extraInfo.avatar;
-		var altImg = L.LOUtil.getImageURL('user.svg');
+		var altImg = L.LOUtil.getImageURL('user.svg', this._map._docLayer._docType);
 		img.setAttribute('onerror', 'this.onerror=null;this.src=\'' + altImg + '\';');
 		$(img).css({'border-color': color});
 	} else {
 		img = L.DomUtil.create('div', 'user-info');
-		$(img).css({'border-color': color, 'background-color': '#eee', 'background-image': 'url("' + L.LOUtil.getImageURL('user.svg') + '")'});
+		$(img).css({'border-color': color, 'background-color': '#eee', 'background-image': 'url("' + L.LOUtil.getImageURL('user.svg', this._map._docLayer._docType) + '")'});
 	}
 	img.setAttribute('data-view-id', viewId);
+	L.LOUtil.checkIfImageExists(img);
 	return img;
 };

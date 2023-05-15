@@ -47,7 +47,7 @@ L.Map.include({
 			if (window.mode.isMobile()) {
 				var overlay = L.DomUtil.create('div', 'locking-overlay', DOMParentElement);
 				var lock = L.DomUtil.create('img', 'locking-overlay-lock', overlay);
-				lock.src = L.LOUtil.getImageURL('lc_lock.svg');
+				L.LOUtil.setImage(lock, 'lc_lock.svg', this._docLayer._docType);
 			}
 
 			$(DOMParentElement).click(function(event) {

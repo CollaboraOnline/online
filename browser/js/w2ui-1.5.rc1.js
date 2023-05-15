@@ -6427,7 +6427,8 @@ w2utils.event = {
                 // event after
                 this.trigger($.extend(edata, { phase: 'after' }));
             }
-        }
+        },
+
     };
 
     $.extend(w2toolbar.prototype, w2utils.event);

@@ -219,10 +219,9 @@ export class Comment extends CanvasSectionObject {
 		if (this.sectionProperties.commentListSection.sectionProperties.commentsAreListed)
 			tdImg.style.visibility = 'visible';
 
-		imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg'));
+		L.LOUtil.setImage(imgAuthor, 'user.svg', this.sectionProperties.docLayer._docType);
 		imgAuthor.setAttribute('width', this.sectionProperties.imgSize[0]);
 		imgAuthor.setAttribute('height', this.sectionProperties.imgSize[1]);
-		imgAuthor.onerror = function () { imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg')); };
 
 		if (this.sectionProperties.docLayer._docType === 'text') {
 			this.sectionProperties.replyCountNode = L.DomUtil.create('div', 'cool-annotation-reply-count-collapsed', tdImg);

@@ -106,8 +106,15 @@ L.Control.UIManager = L.Control.extend({
 			};
 			app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
 		}
+		if (this.getSavedStateOrDefault('CompactMode', null)) {
+			this.refreshMenubar();
+		}
+		else { 
+			this.refreshNotebookbar();
+		}
+		this.refreshSidebar();
+		this.refreshToolbar();
 	},
-
 	initDarkModeFromSettings: function() {
 		var selectedMode = this.getDarkModeState();
 		if (selectedMode) {
@@ -404,7 +411,20 @@ L.Control.UIManager = L.Control.extend({
 	refreshMenubar: function() {
 		this.map.menubar._onRefresh();
 	},
+	refreshSidebar: function(ms) {
+		ms = ms !== undefined ? ms : 400;
+		setTimeout(function () {
+			var message = 'dialogevent ' +
+			    (window.sidebarId !== undefined ? window.sidebarId : -1) +
+			    ' {"id":"-1"}';
+			app.socket.sendMessage(message);
+		}, ms);
 
+	},
+	refreshToolbar: function() {
+		w2ui['editbar'].refresh();
+		w2ui['actionbar'].refresh();
+	},
 	addNotebookbarUI: function() {
 		this.refreshNotebookbar();
 		this.map._docLayer._resetClientVisArea();
@@ -582,6 +602,7 @@ L.Control.UIManager = L.Control.extend({
 		var obj = $('.unfold');
 		obj.removeClass('w2ui-icon unfold');
 		obj.addClass('w2ui-icon fold');
+		
 	},
 
 	hideMenubar: function() {
@@ -595,6 +616,7 @@ L.Control.UIManager = L.Control.extend({
 		var obj = $('.fold');
 		obj.removeClass('w2ui-icon fold');
 		obj.addClass('w2ui-icon unfold');
+
 	},
 
 	isMenubarHidden: function() {
