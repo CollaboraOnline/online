@@ -17,9 +17,13 @@
 #include <common/StringVector.hpp>
 #include <common/Log.hpp>
 #include <common/JailUtil.hpp>
+#include <mutex>
 
 namespace Quarantine
 {
+    std::unordered_map<std::string, std::vector<std::string>> QuarantineMap;
+    std::mutex Mutex;
+
     bool isQuarantineEnabled()
     {
         return COOLWSD::getConfigValue<bool>("quarantine_files[@enable]", false);
@@ -30,9 +34,11 @@ namespace Quarantine
         if (!isQuarantineEnabled())
             return;
 
+        std::lock_guard<std::mutex> lock(Mutex);
+
         std::vector<std::string> files;
         Poco::File(COOLWSD::QuarantinePath).list(files);
-        COOLWSD::QuarantineMap.clear();
+        QuarantineMap.clear();
 
         std::vector<StringToken> tokens;
         std::string decoded;
@@ -43,7 +49,7 @@ namespace Quarantine
 
             StringVector::tokenize(file.c_str(), file.size(), '_', tokens);
             Poco::URI::decode(file.substr(tokens[2]._index), decoded);
-            COOLWSD::QuarantineMap[decoded].emplace_back(COOLWSD::QuarantinePath + file);
+            QuarantineMap[decoded].emplace_back(COOLWSD::QuarantinePath + file);
 
             tokens.clear();
             decoded.clear();
@@ -119,14 +125,16 @@ namespace Quarantine
         if (!isQuarantineEnabled())
             return;
 
+        assert(!Mutex.try_lock() && "Mutex must be taken already");
+
         std::size_t maxVersionCount =
             std::max<size_t>(COOLWSD::getConfigValue<std::size_t>("quarantine_files.max_versions_to_maintain", 2), 1);
         std::string decoded;
         Poco::URI::decode(docKey, decoded);
-        while (COOLWSD::QuarantineMap[decoded].size() > maxVersionCount)
+        while (QuarantineMap[decoded].size() > maxVersionCount)
         {
-            FileUtil::removeFile(COOLWSD::QuarantineMap[decoded][0]);
-            COOLWSD::QuarantineMap[decoded].erase(COOLWSD::QuarantineMap[decoded].begin());
+            FileUtil::removeFile(QuarantineMap[decoded][0]);
+            QuarantineMap[decoded].erase(QuarantineMap[decoded].begin());
         }
     }
 
@@ -153,10 +161,12 @@ namespace Quarantine
                              docBroker->getJailId() + '/' + docName;
         }
 
+        std::lock_guard<std::mutex> lock(Mutex);
+
         std::string linkedFileName = ts + '_' + std::to_string(docBroker->getPid()) + '_' + docKey + '_' + docName;
         std::string linkedFilePath = COOLWSD::QuarantinePath + linkedFileName;
 
-        auto& fileList = COOLWSD::QuarantineMap[docBroker->getDocKey()];
+        auto& fileList = QuarantineMap[docBroker->getDocKey()];
         if(!fileList.empty())
         {
             FileUtil::Stat sourceStat(sourcefilePath);
