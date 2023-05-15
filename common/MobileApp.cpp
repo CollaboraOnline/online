@@ -38,7 +38,8 @@ DocumentData & DocumentData::get(unsigned docId)
 void DocumentData::deallocate(unsigned docId)
 {
     assert(idToDocDataMap.find(docId) != idToDocDataMap.end());
-    DocumentData &d = get(docId);
+    // Does get() really need to called during the destructor?
+    get(docId);
     auto p = idToDocDataMap.find(docId);
     delete p->second;
     idToDocDataMap.erase(docId);
