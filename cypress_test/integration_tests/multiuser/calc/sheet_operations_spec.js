@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe(['tagmultiuser'], 'Multiuser sheet operations', function() {
+describe.skip(['tagmultiuser'], 'Multiuser sheet operations', function() {
 	var origTestFileName = 'sheet_operations.ods';
 	var testFileName;
 

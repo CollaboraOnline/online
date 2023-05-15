@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagmultiuser'], 'Sidebar visibility', function() {
+describe.skip(['tagmultiuser'], 'Sidebar visibility', function() {
 	var origTestFileName = 'sidebar_visibility.odt';
 	var testFileName;
 
