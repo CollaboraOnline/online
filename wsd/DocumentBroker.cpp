@@ -1030,8 +1030,13 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
                                  << ", Actual: " << fileInfo.getLastModifiedTime());
 
             _documentChangedInStorage = true;
-            const std::string message = isModified() ? "error: cmd=storage kind=documentconflict"
-                                                     : "close: documentconflict";
+            // Do not reload the document ("close: documentconflict") if there are
+            // any changes in the loaded document, either saved or unsaved.
+            const std::string message =
+                (_lastStorageAttrs.isUserModified() || _currentStorageAttrs.isUserModified() ||
+                 isPossiblyModified())
+                    ? "error: cmd=storage kind=documentconflict"
+                    : "close: documentconflict";
 
             session->sendTextFrame(message);
             broadcastMessage(message);
@@ -2029,8 +2034,12 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
     {
         LOG_ERR("PutFile says that Document [" << _docKey << "] changed in storage");
         _documentChangedInStorage = true;
-        const std::string message
-            = isPossiblyModified() ? "error: cmd=storage kind=documentconflict" : "close: documentconflict";
+        // Do not reload the document ("close: documentconflict") if there are
+        // any changes in the loaded document, either saved or unsaved.
+        const std::string message = (_lastStorageAttrs.isUserModified() ||
+                                     _currentStorageAttrs.isUserModified() || isPossiblyModified())
+                                        ? "error: cmd=storage kind=documentconflict"
+                                        : "close: documentconflict";
 
         const std::size_t activeClients = broadcastMessage(message);
         broadcastSaveResult(false, "Conflict: Document changed in storage",
