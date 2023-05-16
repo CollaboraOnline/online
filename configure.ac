@@ -1030,6 +1030,7 @@ fi
 
 # Check if we have clang, rather than gcc, which
 # doesn't like -pthread on the linker command-line.
+HAVE_CLANG=false
 AC_MSG_CHECKING([whether the compiler is clang])
 AC_COMPILE_IFELSE([AC_LANG_SOURCE([
     #if !defined(__clang__)
@@ -1037,10 +1038,11 @@ AC_COMPILE_IFELSE([AC_LANG_SOURCE([
     #endif
 ])],
                     [AC_MSG_RESULT([yes])
-                    AC_DEFINE([HAVE_CLANG],1,[whether the C++ compiler is clang])],
+                    AC_DEFINE([HAVE_CLANG],true,[whether the C++ compiler is clang])],
                     [AC_MSG_RESULT([no])
-                    AC_DEFINE([HAVE_CLANG],0,[whether the C++ compiler is clang])])
-AM_CONDITIONAL([HAVE_CLANG], [test "$HAVE_CLANG" = "1"])
+                    AC_DEFINE([HAVE_CLANG],false,[whether the C++ compiler is clang])])
+AM_CONDITIONAL([HAVE_CLANG], [test "$HAVE_CLANG" = "true"])
+AC_SUBST(HAVE_CLANG)
 
 AS_IF([test "$ENABLE_GTKAPP" != true],
 [CXXFLAGS="$CXXFLAGS $CXXFLAGS_CXXSTD"])
