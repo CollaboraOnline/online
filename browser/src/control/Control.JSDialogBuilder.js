@@ -2738,6 +2738,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_getCurrentColor: function(data, builder) {
 		var selectedColor = parseInt(builder.map['stateChangeHandler'].getItemValue(data.command));
+		if (isNaN(selectedColor))
+			return undefined;
 
 		if (!selectedColor || selectedColor < 0)
 			selectedColor = builder._getUnoStateForItemId(data.id, builder);
