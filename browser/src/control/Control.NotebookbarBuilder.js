@@ -245,6 +245,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				$('#Save').removeClass('savemodified');
 			}
 		}
+
+		// reset last selected color
+		if (this._colorLastSelection[commandName])
+			this._colorLastSelection[commandName] = undefined;
 	},
 
 	_createiOsFontButton: function(parentContainer, data, builder) {
