@@ -66,6 +66,7 @@ public:
 
 UnitBase::TestResult UnitSession::testBadRequest()
 {
+    setTestname(__func__);
     TST_LOG("Starting Test: " << testname);
     try
     {
@@ -97,6 +98,7 @@ UnitBase::TestResult UnitSession::testBadRequest()
 
 UnitBase::TestResult UnitSession::testHandshake()
 {
+    setTestname(__func__);
     TST_LOG("Starting Test: " << testname);
 
     std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>(testname);
@@ -146,6 +148,7 @@ UnitBase::TestResult UnitSession::testHandshake()
 
 UnitBase::TestResult UnitSession::testSlideShow()
 {
+    setTestname(__func__);
     TST_LOG("Starting Test: " << testname);
     try
     {
