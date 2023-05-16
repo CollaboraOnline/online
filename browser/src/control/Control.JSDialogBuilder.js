@@ -2894,7 +2894,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (builder._colorLastSelection[data.command] !== undefined)
 					selectedColor = builder._colorLastSelection[data.command];
 				else
+				{
 					selectedColor = builder._getCurrentColor(data, builder);
+					if (typeof selectedColor !== 'string')
+						return;
+				}
 
 				valueNode.style.backgroundColor = color ? color : selectedColor;
 				builder._colorLastSelection[data.command] = color ? color : selectedColor;
