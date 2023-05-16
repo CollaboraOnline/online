@@ -797,21 +797,22 @@ app.definitions.Socket = L.Class.extend({
 				}, 3000);
 			}
 
-			// Close any open dialogs first.
-			vex.closeAll();
-
-			var message = '';
-			if (!this._map['wopi'].DisableInactiveMessages) {
-				message = msg;
-			}
-
-			var dialogOptions = {
-				message: message,
-				contentClassName: 'cool-user-idle'
-			};
-
-			var restartConnectionFn;
 			if (textMsg === 'idle' || textMsg === 'oom') {
+				// Close any open dialogs first.
+				vex.closeAll();
+
+				var message = '';
+				if (!this._map['wopi'].DisableInactiveMessages) {
+					message = msg;
+				}
+
+				var dialogOptions = {
+					message: message,
+					contentClassName: 'cool-user-idle'
+				};
+
+				var restartConnectionFn;
+
 				var map = this._map;
 				restartConnectionFn = function() {
 					if (map._documentIdle)
@@ -953,6 +954,7 @@ app.definitions.Socket = L.Class.extend({
 							if (value === 'discard') {
 								// They want to refresh the page and load document again for all
 								that.sendMessage('closedocument');
+								window.location.reload();
 							} else if (value === 'overwrite') {
 								// They want to overwrite
 								that.sendMessage('savetostorage force=1');
