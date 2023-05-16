@@ -44,11 +44,6 @@ function plugin(on, config) {
 		config.defaultCommandTimeout = 10000;
 	}
 
-	if (process.env.USER_INTERFACE === 'notebookbar') {
-		config.env.USER_INTERFACE = 'notebookbar';
-		config.env.CYPRESS_INCLUDE_TAGS = 'tagnotebookbar';
-	}
-
 	on('file:preprocessor', tagify.tagify(config));
 
 	return config;
