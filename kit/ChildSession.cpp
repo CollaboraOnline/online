@@ -309,7 +309,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         constexpr int height = 630;
 
         // Unclear what this "zoom" level means
-        constexpr float zoom = 1;
+        constexpr float zoom = 2;
 
         // The magic number 15 is the number of twips per pixel for a resolution of 96 pixels per
         // inch, which apparently is some "standard".
