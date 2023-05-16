@@ -3463,6 +3463,7 @@ private:
                 << Util::dumpHex(std::string(data.data(), std::min(data.size(), 256UL))));
 #endif
 
+#if !MOBILEAPP
         // Consume the incoming data by parsing and processing the body.
         http::Request request;
         const int64_t read = request.readData(data.data(), data.size());
@@ -3482,6 +3483,9 @@ private:
 
         // Remove consumed data.
         data.eraseFirst(read);
+#else
+        Poco::Net::HTTPRequest request;
+#endif
 
         try
         {
@@ -3551,7 +3555,6 @@ private:
 #else
             pid_t pid = 100;
             std::string jailId = "jail";
-            LOG_ASSERT_MSG(socket->getInBuffer().empty(), "Unexpected data in prisoner socket");
             socket->getInBuffer().clear();
 #endif
             LOG_TRC("Calling make_shared<ChildProcess>, for NewChildren?");
