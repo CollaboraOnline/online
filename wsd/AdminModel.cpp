@@ -195,18 +195,6 @@ void Subscriber::unsubscribe(const std::string& command)
     _subscriptions.erase(command);
 }
 
-void AdminModel::assertCorrectThread() const
-{
-    // FIXME: share this code [!]
-    const bool sameThread = std::this_thread::get_id() == _owner;
-    if (!sameThread)
-        LOG_ERR("Admin command invoked from foreign thread. Expected: " <<
-        Log::to_string(_owner) << " but called from " <<
-        std::this_thread::get_id() << " (" << Util::getThreadId() << ").");
-
-    assert(sameThread);
-}
-
 AdminModel::~AdminModel()
 {
     LOG_TRC("History:\n\n" << getAllHistory() << '\n');
@@ -238,7 +226,7 @@ std::string AdminModel::getAllHistory() const
 
 std::string AdminModel::query(const std::string& command)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     const auto token = COOLProtocol::getFirstToken(command);
     if (token == "documents")
@@ -288,7 +276,7 @@ std::string AdminModel::query(const std::string& command)
 /// Returns memory consumed by all active coolkit processes
 unsigned AdminModel::getKitsMemoryUsage()
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     unsigned totalMem = 0;
     unsigned docs = 0;
@@ -316,7 +304,7 @@ unsigned AdminModel::getKitsMemoryUsage()
 
 size_t AdminModel::getKitsJiffies()
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     size_t totalJ = 0;
     for (auto& it : _documents)
@@ -341,7 +329,7 @@ size_t AdminModel::getKitsJiffies()
 
 void AdminModel::subscribe(int sessionId, const std::weak_ptr<WebSocketHandler>& ws)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     const auto ret = _subscribers.emplace(sessionId, Subscriber(ws));
     if (!ret.second)
@@ -352,7 +340,7 @@ void AdminModel::subscribe(int sessionId, const std::weak_ptr<WebSocketHandler>&
 
 void AdminModel::subscribe(int sessionId, const std::string& command)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     auto subscriber = _subscribers.find(sessionId);
     if (subscriber != _subscribers.end())
@@ -363,7 +351,7 @@ void AdminModel::subscribe(int sessionId, const std::string& command)
 
 void AdminModel::unsubscribe(int sessionId, const std::string& command)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     auto subscriber = _subscribers.find(sessionId);
     if (subscriber != _subscribers.end())
@@ -372,7 +360,7 @@ void AdminModel::unsubscribe(int sessionId, const std::string& command)
 
 void AdminModel::addMemStats(unsigned memUsage)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     _memStats.push_back(memUsage);
     if (_memStats.size() > _memStatsSize)
@@ -383,7 +371,7 @@ void AdminModel::addMemStats(unsigned memUsage)
 
 void AdminModel::addCpuStats(unsigned cpuUsage)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     _cpuStats.push_back(cpuUsage);
     if (_cpuStats.size() > _cpuStatsSize)
@@ -394,7 +382,7 @@ void AdminModel::addCpuStats(unsigned cpuUsage)
 
 void AdminModel::addSentStats(uint64_t sent)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     _sentStats.push_back(sent);
     if (_sentStats.size() > _sentStatsSize)
@@ -405,7 +393,7 @@ void AdminModel::addSentStats(uint64_t sent)
 
 void AdminModel::addRecvStats(uint64_t recv)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     _recvStats.push_back(recv);
     if (_recvStats.size() > _recvStatsSize)
@@ -416,7 +404,7 @@ void AdminModel::addRecvStats(uint64_t recv)
 
 void AdminModel::setCpuStatsSize(unsigned size)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     int wasteValuesLen = _cpuStats.size() - size;
     while (wasteValuesLen-- > 0)
@@ -435,7 +423,7 @@ void AdminModel::setCpuStatsSize(unsigned size)
 
 void AdminModel::setMemStatsSize(unsigned size)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     int wasteValuesLen = _memStats.size() - size;
     while (wasteValuesLen-- > 0)
@@ -454,7 +442,7 @@ void AdminModel::setMemStatsSize(unsigned size)
 
 void AdminModel::notify(const std::string& message)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     if (!_subscribers.empty())
     {
@@ -475,7 +463,7 @@ void AdminModel::notify(const std::string& message)
 
 void AdminModel::addBytes(const std::string& docKey, uint64_t sent, uint64_t recv)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     auto doc = _documents.find(docKey);
     if(doc != _documents.end())
@@ -487,7 +475,7 @@ void AdminModel::addBytes(const std::string& docKey, uint64_t sent, uint64_t rec
 
 void AdminModel::modificationAlert(const std::string& docKey, pid_t pid, bool value)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     auto doc = _documents.find(docKey);
     if (doc != _documents.end())
@@ -503,7 +491,7 @@ void AdminModel::modificationAlert(const std::string& docKey, pid_t pid, bool va
 
 void AdminModel::uploadedAlert(const std::string& docKey, pid_t pid, bool value)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     auto doc = _documents.find(docKey);
     if (doc != _documents.end())
@@ -519,7 +507,7 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
                              const std::string& userName, const std::string& userId,
                              const int smapsFD, const Poco::URI& wopiSrc)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
     const auto ret = _documents.emplace(docKey, std::unique_ptr<Document>(new Document(docKey, pid, filename, wopiSrc)));
     ret.first->second->setProcSMapsFD(smapsFD);
     ret.first->second->takeSnapshot();
@@ -593,7 +581,7 @@ void AdminModel::doRemove(std::map<std::string, std::unique_ptr<Document>>::iter
 
 void AdminModel::removeDocument(const std::string& docKey, const std::string& sessionId)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     auto docIt = _documents.find(docKey);
     if (docIt != _documents.end() && !docIt->second->isExpired())
@@ -615,7 +603,7 @@ void AdminModel::removeDocument(const std::string& docKey, const std::string& se
 
 void AdminModel::removeDocument(const std::string& docKey)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     auto docIt = _documents.find(docKey);
     if (docIt != _documents.end())
@@ -639,7 +627,7 @@ void AdminModel::removeDocument(const std::string& docKey)
 
 std::string AdminModel::getMemStats()
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     std::ostringstream oss;
     for (const auto& i: _memStats)
@@ -652,7 +640,7 @@ std::string AdminModel::getMemStats()
 
 std::string AdminModel::getCpuStats()
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     std::ostringstream oss;
     for (const auto& i: _cpuStats)
@@ -665,7 +653,7 @@ std::string AdminModel::getCpuStats()
 
 std::string AdminModel::getSentActivity()
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     std::ostringstream oss;
     for (const auto& i: _sentStats)
@@ -678,7 +666,7 @@ std::string AdminModel::getSentActivity()
 
 std::string AdminModel::getRecvActivity()
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     std::ostringstream oss;
     for (const auto& i: _recvStats)
@@ -691,7 +679,7 @@ std::string AdminModel::getRecvActivity()
 
 unsigned AdminModel::getTotalActiveViews()
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     unsigned numTotalViews = 0;
     for (const auto& it: _documents)
@@ -781,7 +769,7 @@ void AdminModel::cleanupResourceConsumingDocs()
 
 std::string AdminModel::getDocuments() const
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     std::ostringstream oss;
     oss << '{' << "\"documents\"" << ':' << '[';
@@ -828,7 +816,7 @@ std::string AdminModel::getDocuments() const
 
 void AdminModel::updateLastActivityTime(const std::string& docKey)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD_OWNER(_owner);
 
     auto docIt = _documents.find(docKey);
     if (docIt != _documents.end())

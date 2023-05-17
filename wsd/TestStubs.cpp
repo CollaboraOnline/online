@@ -15,7 +15,7 @@
 
 #include "ClientSession.hpp"
 
-void DocumentBroker::assertCorrectThread() const {}
+void DocumentBroker::assertCorrectThread(const char*, int) const {}
 
 void ClientSession::traceTileBySend(const TileDesc& /*tile*/, bool /*deduplicated = false*/) {}
 
