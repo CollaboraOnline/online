@@ -339,7 +339,7 @@ public:
 
     /// Are we running in either shutdown, or the polling thread.
     /// Asserts in the debug builds, otherwise just logs.
-    void assertCorrectThread() const;
+    void assertCorrectThread(const char* filename = "?", int line = 0) const;
 
     /// Pretty print internal state to a stream.
     void dumpState(std::ostream& os);

@@ -265,8 +265,7 @@ public:
 
     // Debugging bits ...
     void dumpState(std::ostream& os);
-    void setThreadOwner(const std::thread::id &id) { _owner = id; }
-    void assertCorrectThread();
+    void setThreadOwner(const std::thread::id& id) { _owner = id; }
     void assertCacheSize();
 
 private:

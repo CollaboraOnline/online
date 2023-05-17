@@ -337,20 +337,10 @@ public:
     const std::thread::id& getThreadOwner() const { return _owner; }
 
     /// Asserts in the debug builds, otherwise just logs.
-    void assertCorrectThread(const char* fileName, int lineNo)
+    void assertCorrectThread(const char* fileName = "", int lineNo = 0) const
     {
-        if (InhibitThreadChecks)
-            return;
-        // uninitialized owner means detached and can be invoked by any thread.
-        const bool sameThread = (_owner == std::thread::id() || std::this_thread::get_id() == _owner);
-        if (!sameThread)
-            LOG_ERR("Invoked from foreign thread. Expected: "
-                    << Log::to_string(_owner) << " but called from "
-                    << Log::to_string(std::this_thread::get_id()) << " (" << Util::getThreadId()
-                    << ")"
-                    << " (" << fileName << ":" << lineNo << ")");
-
-        // assert(sameThread);
+        if (!InhibitThreadChecks)
+            Util::assertCorrectThread(_owner, fileName, lineNo);
     }
 
     bool ignoringInput() const { return _ignoreInput; }
@@ -645,18 +635,10 @@ public:
 
     /// Are we running in either shutdown, or the polling thread.
     /// Asserts in the debug builds, otherwise just logs.
-    void assertCorrectThread() const
+    void assertCorrectThread(const char* fileName = "?", int lineNo = 0) const
     {
-        if (InhibitThreadChecks)
-            return;
-        // uninitialized owner means detached and can be invoked by any thread.
-        const bool sameThread = (!isAlive() || _owner == std::thread::id() || std::this_thread::get_id() == _owner);
-        if (!sameThread)
-            LOG_ERR("Incorrect thread affinity for "
-                    << _name << ". Expected: " << _owner << " (" << Util::getThreadId()
-                    << ") but called from " << std::this_thread::get_id() << ", stop: " << _stop);
-
-        assert(_stop || sameThread);
+        if (!InhibitThreadChecks && isAlive())
+            Util::assertCorrectThread(_owner, fileName, lineNo);
     }
 
     /// Kit poll can be called from LOK's Yield in any thread, adapt to that.
@@ -774,7 +756,7 @@ public:
 
     size_t getSocketCount() const
     {
-        assertCorrectThread();
+        ASSERT_CORRECT_THREAD();
         return _pollSockets.size();
     }
 

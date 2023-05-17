@@ -190,9 +190,9 @@ void DocumentBroker::setupTransfer(SocketDisposition &disposition,
     disposition.setTransfer(*_poll, std::move(transferFn));
 }
 
-void DocumentBroker::assertCorrectThread() const
+void DocumentBroker::assertCorrectThread(const char* filename, int line) const
 {
-    _poll->assertCorrectThread();
+    _poll->assertCorrectThread(filename, line);
 }
 
 // The inner heart of the DocumentBroker - our poll loop.
@@ -657,7 +657,7 @@ bool DocumentBroker::isAlive() const
 
 DocumentBroker::~DocumentBroker()
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     LOG_INF("~DocumentBroker [" << _docKey << "] destroyed with " << _sessions.size()
                                 << " sessions left");
@@ -716,7 +716,7 @@ void DocumentBroker::stop(const std::string& reason)
 
 bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, const std::string& jailId)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     const std::string sessionId = session->getId();
 
@@ -1418,7 +1418,7 @@ bool DocumentBroker::isStorageOutdated() const
 void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& session,
                                         const Poco::JSON::Object::Ptr& json)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     const bool success = json->get("success").toString() == "true";
     std::string result;
@@ -1594,7 +1594,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
 
 void DocumentBroker::uploadToStorage(const std::shared_ptr<ClientSession>& session, bool force)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     LOG_TRC("uploadToStorage [" << session->getId() << "]: " << (force ? "" : "not") << " forced");
 
@@ -1619,7 +1619,7 @@ void DocumentBroker::uploadAsToStorage(const std::shared_ptr<ClientSession>& ses
                                        const std::string& uploadAsFilename, const bool isRename,
                                        const bool isExport)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     uploadToStorageInternal(session, uploadAsPath, uploadAsFilename, isRename, isExport, /*force=*/false);
 }
@@ -1654,7 +1654,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
                                              const std::string& saveAsFilename, const bool isRename,
                                              const bool isExport, const bool force)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
     LOG_ASSERT_MSG(session, "Must have a valid ClientSession");
 
     const std::string sessionId = session->getId();
@@ -2106,7 +2106,7 @@ void DocumentBroker::setInteractive(bool value)
 
 std::shared_ptr<ClientSession> DocumentBroker::getWriteableSession() const
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     std::shared_ptr<ClientSession> savingSession;
     for (const auto& sessionIt : _sessions)
@@ -2136,7 +2136,7 @@ std::shared_ptr<ClientSession> DocumentBroker::getWriteableSession() const
 
 void DocumentBroker::refreshLock()
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     const std::shared_ptr<ClientSession> session = getWriteableSession();
     if (!session)
@@ -2216,7 +2216,7 @@ bool DocumentBroker::manualSave(const std::shared_ptr<ClientSession>& session,
 
 bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     // If we aren't saving already.
     if (_docState.activity() == DocumentState::Activity::Save)
@@ -2436,7 +2436,7 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
                                  bool dontTerminateEdit, bool dontSaveIfUnmodified, bool isAutosave,
                                  const std::string& extendedData)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     LOG_ASSERT_MSG(session, "Got null ClientSession");
     const std::string sessionId = session->getId();
@@ -2534,7 +2534,7 @@ std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& ses
 
 std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& session)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     try
     {
@@ -2598,7 +2598,7 @@ std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSessi
 
 std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& session)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     LOG_ASSERT_MSG(session, "Got null ClientSession");
     const std::string id = session->getId();
@@ -2685,7 +2685,7 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
 
 void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSession>& session)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     LOG_ASSERT_MSG(session, "Got null ClientSession");
     const std::string id = session->getId();
@@ -2760,7 +2760,7 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
 
 void DocumentBroker::finalRemoveSession(const std::shared_ptr<ClientSession>& session)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     LOG_ASSERT_MSG(session, "Got null ClientSession");
     const std::string sessionId = session->getId();
@@ -2848,7 +2848,7 @@ void DocumentBroker::addSocketToPoll(const std::shared_ptr<Socket>& socket)
 
 void DocumentBroker::alertAllUsers(const std::string& msg)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     if (_unitWsd.filterAlertAllusers(msg))
         return;
@@ -2865,7 +2865,7 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 
 void DocumentBroker::setKitLogLevel(const std::string& level)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
     _childProcess->sendTextFrame("setloglevel " + level);
 }
 
@@ -2997,7 +2997,7 @@ std::size_t DocumentBroker::getMemorySize() const
 void DocumentBroker::handleTileRequest(const StringVector &tokens, bool forceKeyframe,
                                        const std::shared_ptr<ClientSession>& session)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
     std::unique_lock<std::mutex> lock(_mutex);
 
     TileDesc tile = TileDesc::parse(tokens);
@@ -3440,7 +3440,7 @@ void DocumentBroker::handleTileCombinedResponse(const std::shared_ptr<Message>& 
 
 bool DocumentBroker::haveAnotherEditableSession(const std::string& id) const
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     for (const auto& it : _sessions)
     {
@@ -3457,7 +3457,7 @@ bool DocumentBroker::haveAnotherEditableSession(const std::string& id) const
 
 std::size_t DocumentBroker::countActiveSessions() const
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     std::size_t count = 0;
     for (const auto& it : _sessions)
@@ -3499,7 +3499,7 @@ void DocumentBroker::setInitialSetting(const std::string& name)
 bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& session,
                                     const std::string& message, bool binary)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
     LOG_ASSERT_MSG(session, "Must have a valid ClientSession");
     LOG_ASSERT_MSG(_sessions.find(session->getId()) != _sessions.end(),
                    "ClientSession must be known");
@@ -3541,7 +3541,7 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
 
 bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     const std::string& prefix = payload->forwardToken();
     LOG_TRC("Forwarding payload to [" << prefix << "]: " << payload->abbr());
@@ -3587,7 +3587,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
 
 void DocumentBroker::shutdownClients(const std::string& closeReason)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
     LOG_INF("Terminating " << _sessions.size() << " clients of doc [" << _docKey << "] with reason: " << closeReason);
 
     // First copy into local container, since removeSession
@@ -3619,7 +3619,7 @@ void DocumentBroker::shutdownClients(const std::string& closeReason)
 
 void DocumentBroker::terminateChild(const std::string& closeReason)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     LOG_INF("Terminating doc [" << _docKey << "] with reason: " << closeReason);
 
@@ -3638,7 +3638,7 @@ void DocumentBroker::terminateChild(const std::string& closeReason)
 
 void DocumentBroker::closeDocument(const std::string& reason)
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     _docState.setCloseRequested();
     _closeReason = reason;
@@ -3673,7 +3673,7 @@ void DocumentBroker::disconnectedFromKit()
 
 std::size_t DocumentBroker::broadcastMessage(const std::string& message) const
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     LOG_DBG("Broadcasting message [" << message << "] to all " << _sessions.size() << " sessions.");
     std::size_t count = 0;
@@ -3687,7 +3687,7 @@ std::size_t DocumentBroker::broadcastMessage(const std::string& message) const
 
 void DocumentBroker::broadcastMessageToOthers(const std::string& message, const std::shared_ptr<ClientSession>& _session) const
 {
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
 
     LOG_DBG("Broadcasting message [" << message << "] to all, except for " << _session->getId() << _sessions.size() <<  " sessions.");
     for (const auto& sessionIt : _sessions)
@@ -3716,7 +3716,7 @@ void DocumentBroker::getIOStats(uint64_t &sent, uint64_t &recv)
 {
     sent = 0;
     recv = 0;
-    assertCorrectThread();
+    ASSERT_CORRECT_THREAD();
     for (const auto& sessionIt : _sessions)
     {
         uint64_t s = 0, r = 0;

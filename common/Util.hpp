@@ -31,9 +31,7 @@
 
 #include <memory.h>
 
-#ifndef __linux__
 #include <thread>
-#endif
 
 #include <Poco/File.h>
 #include <Poco/Path.h>
@@ -1449,6 +1447,16 @@ int main(int argc, char**argv)
         object.dumpState(oss, indent);
         return oss.str().substr(indent.size());
     }
+
+    /// Asserts in the debug builds, otherwise just logs.
+    void assertCorrectThread(std::thread::id owner, const char* fileName, int lineNo);
+
+#ifndef ASSERT_CORRECT_THREAD
+#define ASSERT_CORRECT_THREAD() assertCorrectThread(__FILE__, __LINE__)
+#endif
+#ifndef ASSERT_CORRECT_THREAD_OWNER
+#define ASSERT_CORRECT_THREAD_OWNER(OWNER) Util::assertCorrectThread(OWNER, __FILE__, __LINE__)
+#endif
 
     /**
      * Similar to std::atoi() but does not require p to be null-terminated.

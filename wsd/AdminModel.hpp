@@ -330,10 +330,6 @@ public:
     /// All methods here must be called from the Admin socket-poll
     void setThreadOwner(const std::thread::id &id) { _owner = id; }
 
-    /// In debug mode check that code is running in the correct thread.
-    /// Asserts in the debug builds, otherwise just logs.
-    void assertCorrectThread() const;
-
     std::string query(const std::string& command);
     std::string getAllHistory() const;
 

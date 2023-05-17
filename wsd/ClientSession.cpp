@@ -2223,7 +2223,7 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
 
     const std::shared_ptr<DocumentBroker> docBroker = _docBroker.lock();
     LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
-    docBroker->assertCorrectThread();
+    docBroker->ASSERT_CORRECT_THREAD();
 
     std::unique_ptr<TileDesc> tile;
     if (data->firstTokenMatches("tile:"))
@@ -2309,7 +2309,7 @@ void ClientSession::onDisconnect()
 
     const std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
     LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );
-    docBroker->assertCorrectThread();
+    docBroker->ASSERT_CORRECT_THREAD();
     const std::string docKey = docBroker->getDocKey();
 
     // Keep self alive, so that our own dtor runs only at the end of this function. Without this,

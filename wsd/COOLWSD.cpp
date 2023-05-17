@@ -947,7 +947,7 @@ public:
     // Resets the forkit process object
     void setForKitProcess(const std::weak_ptr<ForKitProcess>& forKitProc)
     {
-        assertCorrectThread();
+        assertCorrectThread(__FILE__, __LINE__);
         _forKitProc = forKitProc;
     }
 
