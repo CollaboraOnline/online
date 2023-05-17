@@ -218,6 +218,10 @@ public:
 
     const std::string& getThumbnailTarget() const { return _thumbnailTarget; }
 
+    void setThumbnailPosition(const std::pair<int, int>& pos) { _thumbnailPosition = pos; }
+
+    const std::pair<int, int>& getThumbnailPosition() const { return _thumbnailPosition; }
+
     bool thumbnailSession() { return _thumbnailSession; }
 
     /// Do we recognize this clipboard ?
@@ -377,6 +381,9 @@ private:
 
     /// Target used for thumbnail rendering
     std::string _thumbnailTarget;
+
+    // Position used for thumbnail rendering
+    std::pair<int, int> _thumbnailPosition;
 
     /// Rotating clipboard remote access identifiers - protected by GlobalSessionMapMutex
     std::string _clipboardKeys[2];
