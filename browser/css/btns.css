@@ -40,6 +40,7 @@ button:not(.ui-corner-all):not(.button-primary) {
 	border-radius: var(--border-radius);
 	margin: 5px;
 	vertical-align: middle;
+	width: max-content;
 }
 
 .button-primary {
