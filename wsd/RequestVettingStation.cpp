@@ -101,9 +101,15 @@ void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& d
                 "] in config");
             break;
         case StorageBase::StorageType::FileSystem:
+            // Remove from the current poll.
+            disposition.setMove([](auto) {});
+
             return createDocBroker(docKey, url, uriPublic, isReadOnly);
             break;
         case StorageBase::StorageType::Wopi:
+            // Remove from the current poll.
+            disposition.setMove([](auto) {});
+
             break;
     }
 
@@ -121,9 +127,6 @@ void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& d
 
     LOG_TRC("WOPI::CheckFileInfo request header for URI [" << uriAnonym << "]:\n"
                                                            << httpRequest.header());
-
-    // Remove from the current poll.
-    disposition.setMove([](auto) {});
 
     http::Session::FinishedCallback finishedCallback =
         [this, docKey, startTime, url, uriObject, uriPublic, isReadOnly,
