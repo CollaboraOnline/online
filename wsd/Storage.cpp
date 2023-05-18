@@ -808,9 +808,9 @@ void WopiStorage::WOPIFileInfo::init()
     _hideChangeTrackingControls = WOPIFileInfo::TriState::Unset;
 }
 
-WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
+WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo,
                                         std::chrono::milliseconds callDurationMs,
-                                        Poco::JSON::Object::Ptr &object, Poco::URI &uriObject)
+                                        Poco::JSON::Object::Ptr& object, const Poco::URI& uriObject)
 {
     init();
 
