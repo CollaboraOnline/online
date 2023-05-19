@@ -298,10 +298,10 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#View-tab-label').click();
 		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
 		// Hide.
-		cy.cGet('#Sidebar').click();
+		cy.cGet('[id="SidebarDeck.PropertyDeck"]').click();
 		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 		// Show.
-		cy.cGet('#Sidebar').click();
+		cy.cGet('[id="SidebarDeck.PropertyDeck"]').click();
 		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
 	});
 

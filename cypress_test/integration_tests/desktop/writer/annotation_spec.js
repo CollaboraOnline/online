@@ -12,7 +12,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.viewport(1400, 600);
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
 		desktopHelper.switchUIToNotebookbar();
-		cy.cGet('[id="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
+		cy.cGet('#optionscontainer div[id^="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
 		selectZoomLevel('50');
 	});
 
@@ -70,7 +70,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
 		desktopHelper.switchUIToNotebookbar();
-		cy.cGet('[id="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
+		cy.cGet('#optionscontainer div[id^="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
 	});
 
 	afterEach(function() {

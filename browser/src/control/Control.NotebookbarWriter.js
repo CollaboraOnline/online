@@ -1149,7 +1149,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Sidebar'),
-				'command': '.uno:Sidebar'
+				'command': '.uno:SidebarDeck.PropertyDeck'
 			},
 			{
 				'type': 'bigtoolitem',
