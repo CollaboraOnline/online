@@ -153,7 +153,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_docLoaded: function(e) {
 		if (!e.status) {
-			$('.lokdialog_container').remove();
+			$('.lokdialog_container:not(.jsdialog-container)').remove();
 			$('.lokdialogchild-canvas').remove();
 		}
 	},
