@@ -289,8 +289,8 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	height: auto;
 }
 
-/* fixes sidebar width in calc (textorientbox, alignment buttons were too big) */
-#AlignmentPropertyPanel button {
+/* fixes sidebar width in calc (textorientbox) */
+#textorientbox button {
 	min-width: 32px;
 	width: 32px;
 	margin: 0 2px;
