@@ -342,6 +342,7 @@ L.Control.JSDialog = L.Control.extend({
 
 	setPosition: function(instance, updatedPos) {
 		var calculated = false;
+		var isRTL = document.documentElement.dir === 'rtl';
 
 		if (instance.nonModal || instance.popupParent) {
 			// in case of toolbox we want to create popup positioned by toolitem not toolbox
@@ -373,6 +374,9 @@ L.Control.JSDialog = L.Control.extend({
 				instance.posx = parent.getBoundingClientRect().left;
 				instance.posy = parent.getBoundingClientRect().bottom + 5;
 
+				if (isRTL)
+					instance.posx = window.innerWidth - instance.posx;
+
 				if (instance.posx + instance.content.clientWidth > window.innerWidth)
 					instance.posx -= instance.posx + instance.content.clientWidth + 10 - window.innerWidth;
 				if (instance.posy + instance.content.clientHeight > window.innerHeight)
@@ -389,6 +393,9 @@ L.Control.JSDialog = L.Control.extend({
 				}
 
 				var width = instance.form.getBoundingClientRect().width;
+				if (isRTL)
+					width = width * -1;
+
 				if (instance.posx + width > instance.containerParent.getBoundingClientRect().width) {
 					calculated = true;
 					var newLeftPosition = instance.posx - width;
@@ -403,7 +410,7 @@ L.Control.JSDialog = L.Control.extend({
 			instance.posy = window.innerHeight - instance.form.offsetHeight - 40;
 		}
 
-		var positionNotSet = !instance.container.style || !instance.container.style.marginLeft;
+		var positionNotSet = !instance.container.style || !instance.container.style.marginInlineStart;
 		if (calculated || positionNotSet)
 			this.updatePosition(instance.container, instance.posx, instance.posy);
 	},
@@ -532,9 +539,10 @@ L.Control.JSDialog = L.Control.extend({
 
 			// Special case for nonModal dialogues. Core side doesn't send their initial coordinates. We need to center them.
 			if (instance.nonModal) {
+				var isRTL = document.documentElement.dir === 'rtl';
 				var height = instance.form.getBoundingClientRect().height;
 				var width = instance.form.getBoundingClientRect().width;
-				instance.startX = instance.posx = (window.innerWidth - width) / 2;
+				instance.startX = instance.posx = (window.innerWidth - (isRTL ? (-1 * width) : width)) / 2;
 				instance.startY = instance.posy = (window.innerHeight - height) / 2;
 			}
 
@@ -634,10 +642,12 @@ L.Control.JSDialog = L.Control.extend({
 	onPan: function (ev) {
 		var target = this.draggingObject;
 		if (target) {
+			var isRTL = document.documentElement.dir === 'rtl';
+
 			var startX = target.startX ? target.startX : 0;
 			var startY = target.startY ? target.startY : 0;
 
-			var newX = startX + ev.deltaX;
+			var newX = startX + ev.deltaX * (isRTL ? -1 : 1);
 			var newY = startY + ev.deltaY;
 
 			// Don't allow to put dialog outside the view
@@ -653,7 +663,7 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	updatePosition: function (target, newX, newY) {
-		target.style.marginLeft = newX + 'px';
+		target.style.marginInlineStart = newX + 'px';
 		target.style.marginTop = newY + 'px';
 	},
 
