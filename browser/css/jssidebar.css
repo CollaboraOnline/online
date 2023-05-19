@@ -101,6 +101,7 @@ img.sidebar.ui-image {
 	display: flex;
 }
 
+#TableEditPanel.sidebar div div,
 div.sidebar.ui-grid-cell.checkbutton,
 div.sidebar.ui-grid .checkbutton.sidebar,
 #ShadowPropertyPanel #SHOW_SHADOW,
