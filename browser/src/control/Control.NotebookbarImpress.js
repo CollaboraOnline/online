@@ -426,7 +426,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Sidebar'),
-				'command': '.uno:Sidebar'
+				'command': '.uno:SidebarDeck.PropertyDeck'
 			},
 			{
 				'type': 'bigtoolitem',
