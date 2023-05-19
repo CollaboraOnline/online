@@ -415,7 +415,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:SlideMasterPage', 'presentation'),
+				'text': _('Master View'),
 				'command': '.uno:SlideMasterPage'
 			},
 			{
@@ -427,11 +427,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Sidebar'),
 				'command': '.uno:SidebarDeck.PropertyDeck'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Navigator'),
-				'command': '.uno:Navigator'
 			},
 		];
 
@@ -1198,6 +1193,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					}
 				],
 				'vertical': 'true'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Navigator'),
+				'command': '.uno:Navigator'
 			},
 			{
 				'type': 'bigtoolitem',
