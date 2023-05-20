@@ -452,9 +452,9 @@ void LocalStorage::uploadLocalFileToStorageAsync(const Authorization& /*auth*/,
 
         // update its fileinfo object. This is used later to check if someone else changed the
         // document while we are/were editing it
-        getFileInfo().setLastModifiedTime(
+        setLastModifiedTime(
             Util::getIso8601FracformatTime(FileUtil::Stat(path).modifiedTimepoint()));
-        LOG_TRC("New FileInfo modified time in storage " << getFileInfo().getLastModifiedTime());
+        LOG_TRC("New FileInfo modified time in storage " << getLastModifiedTime());
         res = UploadResult(UploadResult::Result::OK);
     }
     catch (const Poco::Exception& exc)
@@ -1317,8 +1317,8 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
             if (!attribs.isForced())
             {
                 // Request WOPI host to not overwrite if timestamps mismatch
-                httpHeader.set("X-COOL-WOPI-Timestamp", getFileInfo().getLastModifiedTime());
-                httpHeader.set("X-LOOL-WOPI-Timestamp", getFileInfo().getLastModifiedTime());
+                httpHeader.set("X-COOL-WOPI-Timestamp", getLastModifiedTime());
+                httpHeader.set("X-LOOL-WOPI-Timestamp", getLastModifiedTime());
             }
         }
         else
@@ -1495,7 +1495,7 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
                 const std::string lastModifiedTime
                     = JsonUtil::getJSONValue<std::string>(object, "LastModifiedTime");
                 LOG_TRC(wopiLog << " returns LastModifiedTime [" << lastModifiedTime << "].");
-                getFileInfo().setLastModifiedTime(lastModifiedTime);
+                setLastModifiedTime(lastModifiedTime);
 
                 if (details.isSaveAs || details.isRename)
                 {

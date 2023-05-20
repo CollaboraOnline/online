@@ -342,8 +342,13 @@ public:
     void setFileInfo(const FileInfo& fileInfo) { _fileInfo = fileInfo; }
 
     /// Returns the basic information about the file.
-    FileInfo& getFileInfo() { return _fileInfo; }
     const FileInfo& getFileInfo() const { return _fileInfo; }
+
+    const std::string& getLastModifiedTime() const { return _fileInfo.getLastModifiedTime(); }
+    void setLastModifiedTime(const std::string& modifiedTime)
+    {
+        _fileInfo.setLastModifiedTime(modifiedTime);
+    }
 
     std::string getFileExtension() const { return Poco::Path(_fileInfo.getFilename()).getExtension(); }
 
