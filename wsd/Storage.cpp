@@ -782,39 +782,12 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
     return getWOPIFileInfoForUri(uriObject, auth, lockCtx, RedirectionLimit);
 }
 
-void WopiStorage::WOPIFileInfo::init()
-{
-    _userCanWrite = false;
-    _enableOwnerTermination = false;
-    _hidePrintOption = false;
-    _hideSaveOption = false;
-    _hideExportOption = false;
-    _hideRepairOption = false;
-    _disablePrint = false;
-    _disableExport = false;
-    _disableCopy = false;
-    _disableInactiveMessages = false;
-    _downloadAsPostMessage = false;
-    _userCanNotWriteRelative = true;
-    _enableInsertRemoteImage = false;
-    _enableRemoteLinkPicker = false;
-    _enableShare = false;
-    _supportsLocks = false;
-    _supportsRename = false;
-    _userCanRename = false;
-    _hideUserList = "false";
-    _disableChangeTrackingRecord = WOPIFileInfo::TriState::Unset;
-    _disableChangeTrackingShow = WOPIFileInfo::TriState::Unset;
-    _hideChangeTrackingControls = WOPIFileInfo::TriState::Unset;
-}
-
 WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo,
                                         const Poco::JSON::Object::Ptr& object,
                                         const Poco::URI& uriObject)
     : FileInfo(fileInfo)
+    , _hideUserList("false")
 {
-    init();
-
     JsonUtil::findJSONValue(object, "UserId", _userId);
     JsonUtil::findJSONValue(object, "UserFriendlyName", _username);
     JsonUtil::findJSONValue(object, "TemplateSaveAs", _templateSaveAs);

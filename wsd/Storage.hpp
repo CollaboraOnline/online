@@ -586,6 +586,7 @@ public:
         const std::string& getBreadcrumbDocName() const { return _breadcrumbDocName; }
         const std::string& getFileUrl() const { return _fileUrl; }
         const std::string& getPostMessageOrigin() { return _postMessageOrigin; }
+        const std::string& getHideUserList() { return _hideUserList; }
 
         bool getUserCanWrite() const { return _userCanWrite; }
         void setHidePrintOption(bool hidePrintOption) { _hidePrintOption = hidePrintOption; }
@@ -608,10 +609,11 @@ public:
         bool getSupportsRename() const { return _supportsRename; }
         bool getSupportsLocks() const { return _supportsLocks; }
         bool getUserCanRename() const { return _userCanRename; }
-        std::string& getHideUserList() { return _hideUserList; }
+
         TriState getDisableChangeTrackingShow() const { return _disableChangeTrackingShow; }
         TriState getDisableChangeTrackingRecord() const { return _disableChangeTrackingRecord; }
         TriState getHideChangeTrackingControls() const { return _hideChangeTrackingControls; }
+
     private:
         /// User id of the user accessing the file
         std::string _userId;
@@ -633,54 +635,56 @@ public:
         std::string _breadcrumbDocName;
         /// The optional FileUrl, used to download the document if provided.
         std::string _fileUrl;
-        /// If user accessing the file has write permission
-        bool _userCanWrite;
         /// WOPI Post message property
         std::string _postMessageOrigin;
-        /// Hide print button from UI
-        bool _hidePrintOption;
-        /// Hide save button from UI
-        bool _hideSaveOption;
-        /// Hide 'Download as' button/menubar item from UI
-        bool _hideExportOption;
-        /// Hide the 'Repair' button/item from the UI
-        bool _hideRepairOption;
-        /// If WOPI host has enabled owner termination feature on
-        bool _enableOwnerTermination;
-        /// If WOPI host has allowed the user to print the document
-        bool _disablePrint;
-        /// If WOPI host has allowed the user to export the document
-        bool _disableExport;
-        /// If WOPI host has allowed the user to copy to/from the document
-        bool _disableCopy;
-        /// If WOPI host has allowed the cool to show texts on the overlay informing about inactivity, or if the integration is handling that.
-        bool _disableInactiveMessages;
-        /// For the (mobile) integrations, to indicate that the downloading for printing, exporting or slideshows should be intercepted and sent as a postMessage instead of handling directly.
-        bool _downloadAsPostMessage;
-        /// If set to false, users can access the save-as functionality
-        bool _userCanNotWriteRelative;
-        /// If set to true, users can access the insert remote image functionality
-        bool _enableInsertRemoteImage;
-        /// If set to true, users can access the remote link picker functionality
-        bool _enableRemoteLinkPicker;
-        /// If set to true, users can access the file share functionality
-        bool _enableShare;
         /// If set to "true", user list on the status bar will be hidden
         /// If set to "mobile" | "tablet" | "desktop", will be hidden on a specified device
         /// (may be joint, delimited by commas eg. "mobile,tablet")
         std::string _hideUserList;
         /// If we should disable change-tracking visibility by default (meaningful at loading).
-        TriState _disableChangeTrackingShow;
+        TriState _disableChangeTrackingShow = WOPIFileInfo::TriState::Unset;
         /// If we should disable change-tracking ability by default (meaningful at loading).
-        TriState _disableChangeTrackingRecord;
+        TriState _disableChangeTrackingRecord = WOPIFileInfo::TriState::Unset;
         /// If we should hide change-tracking commands for this user.
-        TriState _hideChangeTrackingControls;
+        TriState _hideChangeTrackingControls = WOPIFileInfo::TriState::Unset;
+        /// If user accessing the file has write permission
+        bool _userCanWrite = false;
+        /// Hide print button from UI
+        bool _hidePrintOption = false;
+        /// Hide save button from UI
+        bool _hideSaveOption = false;
+        /// Hide 'Download as' button/menubar item from UI
+        bool _hideExportOption = false;
+        /// Hide the 'Repair' button/item from the UI
+        bool _hideRepairOption = false;
+        /// If WOPI host has enabled owner termination feature on
+        bool _enableOwnerTermination = false;
+        /// If WOPI host has allowed the user to print the document
+        bool _disablePrint = false;
+        /// If WOPI host has allowed the user to export the document
+        bool _disableExport = false;
+        /// If WOPI host has allowed the user to copy to/from the document
+        bool _disableCopy = false;
+        /// If WOPI host has allowed the cool to show texts on the overlay informing about
+        /// inactivity, or if the integration is handling that.
+        bool _disableInactiveMessages = false;
+        /// For the (mobile) integrations, to indicate that the downloading for printing, exporting,
+        /// or slideshows should be intercepted and sent as a postMessage instead of handling directly.
+        bool _downloadAsPostMessage = false;
+        /// If set to false, users can access the save-as functionality
+        bool _userCanNotWriteRelative = true;
+        /// If set to true, users can access the insert remote image functionality
+        bool _enableInsertRemoteImage = false;
+        /// If set to true, users can access the remote link picker functionality
+        bool _enableRemoteLinkPicker = false;
+        /// If set to true, users can access the file share functionality
+        bool _enableShare = false;
         /// If WOPI host supports locking
-        bool _supportsLocks;
+        bool _supportsLocks = false;
         /// If WOPI host supports rename
-        bool _supportsRename;
+        bool _supportsRename = false;
         /// If user is allowed to rename the document
-        bool _userCanRename;
+        bool _userCanRename = false;
     };
 
     /// Returns the response of CheckFileInfo WOPI call for URI that was
