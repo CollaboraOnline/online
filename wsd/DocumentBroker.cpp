@@ -754,7 +754,9 @@ void DocumentBroker::stop(const std::string& reason)
     _poll->wakeup();
 }
 
-bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, const std::string& jailId)
+bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session,
+                              const std::string& jailId,
+                              std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
 {
     ASSERT_CORRECT_THREAD();
 
@@ -836,8 +838,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     {
         LOG_DBG("CheckFileInfo for docKey [" << _docKey << ']');
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-        std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo =
-            wopiStorage->getWOPIFileInfo(session->getAuthorization(), *_lockCtx);
+        if (!wopiFileInfo)
+            wopiFileInfo = wopiStorage->getWOPIFileInfo(session->getAuthorization(), *_lockCtx);
 
         checkFileInfoCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - start);
@@ -2630,11 +2632,12 @@ std::string DocumentBroker::getJailRoot() const
     return Poco::Path(COOLWSD::ChildRoot, _jailId).toString();
 }
 
-std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
+std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session,
+                                       std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
 {
     try
     {
-        return addSessionInternal(session);
+        return addSessionInternal(session, std::move(wopiFileInfo));
     }
     catch (const std::exception& exc)
     {
@@ -2649,14 +2652,16 @@ std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& ses
     }
 }
 
-std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& session)
+std::size_t
+DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSession>& session,
+                                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo)
 {
     ASSERT_CORRECT_THREAD();
 
     try
     {
         // First, download the document, since this can fail.
-        if (!download(session, _childProcess->getJailId()))
+        if (!download(session, _childProcess->getJailId(), std::move(wopiFileInfo)))
         {
             const auto msg = "Failed to load document with URI [" + session->getPublicUri().toString() + "].";
             LOG_ERR(msg);

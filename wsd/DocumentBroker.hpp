@@ -404,7 +404,8 @@ public:
     std::string getJailRoot() const;
 
     /// Add a new session. Returns the new number of sessions.
-    std::size_t addSession(const std::shared_ptr<ClientSession>& session);
+    std::size_t addSession(const std::shared_ptr<ClientSession>& session,
+                           std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo = nullptr);
 
     /// Removes a session by ID. Returns the new number of sessions.
     std::size_t removeSession(const std::shared_ptr<ClientSession>& session);
@@ -570,7 +571,8 @@ private:
     void refreshLock();
 
     /// Loads a document from the public URI into the jail.
-    bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId);
+    bool download(const std::shared_ptr<ClientSession>& session, const std::string& jailId,
+                  std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
     bool isLoaded() const { return _docState.hadLoaded(); }
     bool isInteractive() const { return _docState.isInteractive(); }
 
@@ -761,7 +763,8 @@ private:
     std::size_t countActiveSessions() const;
 
     /// Loads a new session and adds to the sessions container.
-    std::size_t addSessionInternal(const std::shared_ptr<ClientSession>& session);
+    std::size_t addSessionInternal(const std::shared_ptr<ClientSession>& session,
+                                   std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo);
 
     /// Starts the Kit <-> DocumentBroker shutdown handshake
     void disconnectSessionInternal(const std::shared_ptr<ClientSession>& session);
