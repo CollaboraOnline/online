@@ -795,21 +795,21 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     {
         LOG_DBG("CheckFileInfo for docKey [" << _docKey << ']');
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo =
+        std::unique_ptr<WopiStorage::WOPIFileInfo> wopiFileInfo =
             wopiStorage->getWOPIFileInfo(session->getAuthorization(), *_lockCtx);
 
         checkFileInfoCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - start);
 
-        userId = wopifileinfo->getUserId();
-        username = wopifileinfo->getUsername();
-        userExtraInfo = wopifileinfo->getUserExtraInfo();
-        userPrivateInfo = wopifileinfo->getUserPrivateInfo();
-        watermarkText = wopifileinfo->getWatermarkText();
-        templateSource = wopifileinfo->getTemplateSource();
+        userId = wopiFileInfo->getUserId();
+        username = wopiFileInfo->getUsername();
+        userExtraInfo = wopiFileInfo->getUserExtraInfo();
+        userPrivateInfo = wopiFileInfo->getUserPrivateInfo();
+        watermarkText = wopiFileInfo->getWatermarkText();
+        templateSource = wopiFileInfo->getTemplateSource();
 
         _isViewFileExtension = COOLWSD::IsViewFileExtension(wopiStorage->getFileExtension());
-        if (!wopifileinfo->getUserCanWrite()) // Readonly.
+        if (!wopiFileInfo->getUserCanWrite()) // Readonly.
         {
             LOG_DBG("Setting session [" << sessionId << "] to readonly for UserCanWrite=false");
             session->setWritable(false);
@@ -849,55 +849,59 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 
         // Construct a JSON containing relevant WOPI host properties
         Object::Ptr wopiInfo = new Object();
-        if (!wopifileinfo->getPostMessageOrigin().empty())
+        if (!wopiFileInfo->getPostMessageOrigin().empty())
         {
             // Update the scheme to https if ssl or ssl termination is on
-            if (wopifileinfo->getPostMessageOrigin().substr(0, 7) == "http://" &&
+            if (wopiFileInfo->getPostMessageOrigin().substr(0, 7) == "http://" &&
                 (COOLWSD::isSSLEnabled() || COOLWSD::isSSLTermination()))
             {
-                wopifileinfo->getPostMessageOrigin().replace(0, 4, "https");
-                LOG_DBG("Updating PostMessageOrigin scheme to HTTPS. Updated origin is [" << wopifileinfo->getPostMessageOrigin() << "].");
+                wopiFileInfo->getPostMessageOrigin().replace(0, 4, "https");
+                LOG_DBG("Updating PostMessageOrigin scheme to HTTPS. Updated origin is ["
+                        << wopiFileInfo->getPostMessageOrigin() << "].");
             }
 
-            wopiInfo->set("PostMessageOrigin", wopifileinfo->getPostMessageOrigin());
+            wopiInfo->set("PostMessageOrigin", wopiFileInfo->getPostMessageOrigin());
         }
 
         // If print, export are disabled, order client to hide these options in the UI
-        if (wopifileinfo->getDisablePrint())
-            wopifileinfo->setHidePrintOption(true);
-        if (wopifileinfo->getDisableExport())
-            wopifileinfo->setHideExportOption(true);
+        if (wopiFileInfo->getDisablePrint())
+            wopiFileInfo->setHidePrintOption(true);
+        if (wopiFileInfo->getDisableExport())
+            wopiFileInfo->setHideExportOption(true);
 
         wopiInfo->set("BaseFileName", wopiStorage->getFileInfo().getFilename());
-        if (wopifileinfo->getBreadcrumbDocName().size())
-            wopiInfo->set("BreadcrumbDocName", wopifileinfo->getBreadcrumbDocName());
+        if (wopiFileInfo->getBreadcrumbDocName().size())
+            wopiInfo->set("BreadcrumbDocName", wopiFileInfo->getBreadcrumbDocName());
 
-        if (!wopifileinfo->getTemplateSaveAs().empty())
-            wopiInfo->set("TemplateSaveAs", wopifileinfo->getTemplateSaveAs());
+        if (!wopiFileInfo->getTemplateSaveAs().empty())
+            wopiInfo->set("TemplateSaveAs", wopiFileInfo->getTemplateSaveAs());
 
         if (!templateSource.empty())
                 wopiInfo->set("TemplateSource", templateSource);
 
-        wopiInfo->set("HidePrintOption", wopifileinfo->getHidePrintOption());
-        wopiInfo->set("HideSaveOption", wopifileinfo->getHideSaveOption());
-        wopiInfo->set("HideExportOption", wopifileinfo->getHideExportOption());
-        wopiInfo->set("HideRepairOption", wopifileinfo->getHideRepairOption());
-        wopiInfo->set("DisablePrint", wopifileinfo->getDisablePrint());
-        wopiInfo->set("DisableExport", wopifileinfo->getDisableExport());
-        wopiInfo->set("DisableCopy", wopifileinfo->getDisableCopy());
-        wopiInfo->set("DisableInactiveMessages", wopifileinfo->getDisableInactiveMessages());
-        wopiInfo->set("DownloadAsPostMessage", wopifileinfo->getDownloadAsPostMessage());
-        wopiInfo->set("UserCanNotWriteRelative", wopifileinfo->getUserCanNotWriteRelative());
-        wopiInfo->set("EnableInsertRemoteImage", wopifileinfo->getEnableInsertRemoteImage());
-        wopiInfo->set("EnableRemoteLinkPicker", wopifileinfo->getEnableRemoteLinkPicker());
-        wopiInfo->set("EnableShare", wopifileinfo->getEnableShare());
-        wopiInfo->set("HideUserList", wopifileinfo->getHideUserList());
-        wopiInfo->set("SupportsRename", wopifileinfo->getSupportsRename());
-        wopiInfo->set("UserCanRename", wopifileinfo->getUserCanRename());
-        wopiInfo->set("FileUrl", wopifileinfo->getFileUrl());
-        wopiInfo->set("UserCanWrite", wopifileinfo->getUserCanWrite());
-        if (wopifileinfo->getHideChangeTrackingControls() != WopiStorage::WOPIFileInfo::TriState::Unset)
-            wopiInfo->set("HideChangeTrackingControls", wopifileinfo->getHideChangeTrackingControls() == WopiStorage::WOPIFileInfo::TriState::True);
+        wopiInfo->set("HidePrintOption", wopiFileInfo->getHidePrintOption());
+        wopiInfo->set("HideSaveOption", wopiFileInfo->getHideSaveOption());
+        wopiInfo->set("HideExportOption", wopiFileInfo->getHideExportOption());
+        wopiInfo->set("HideRepairOption", wopiFileInfo->getHideRepairOption());
+        wopiInfo->set("DisablePrint", wopiFileInfo->getDisablePrint());
+        wopiInfo->set("DisableExport", wopiFileInfo->getDisableExport());
+        wopiInfo->set("DisableCopy", wopiFileInfo->getDisableCopy());
+        wopiInfo->set("DisableInactiveMessages", wopiFileInfo->getDisableInactiveMessages());
+        wopiInfo->set("DownloadAsPostMessage", wopiFileInfo->getDownloadAsPostMessage());
+        wopiInfo->set("UserCanNotWriteRelative", wopiFileInfo->getUserCanNotWriteRelative());
+        wopiInfo->set("EnableInsertRemoteImage", wopiFileInfo->getEnableInsertRemoteImage());
+        wopiInfo->set("EnableRemoteLinkPicker", wopiFileInfo->getEnableRemoteLinkPicker());
+        wopiInfo->set("EnableShare", wopiFileInfo->getEnableShare());
+        wopiInfo->set("HideUserList", wopiFileInfo->getHideUserList());
+        wopiInfo->set("SupportsRename", wopiFileInfo->getSupportsRename());
+        wopiInfo->set("UserCanRename", wopiFileInfo->getUserCanRename());
+        wopiInfo->set("FileUrl", wopiFileInfo->getFileUrl());
+        wopiInfo->set("UserCanWrite", wopiFileInfo->getUserCanWrite());
+        if (wopiFileInfo->getHideChangeTrackingControls() !=
+            WopiStorage::WOPIFileInfo::TriState::Unset)
+                wopiInfo->set("HideChangeTrackingControls",
+                              wopiFileInfo->getHideChangeTrackingControls() ==
+                                  WopiStorage::WOPIFileInfo::TriState::True);
         wopiInfo->set("IsOwner", session->isDocumentOwner());
 
         std::ostringstream ossWopiInfo;
@@ -914,10 +918,10 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         {
             // using json because fetching details from json string is easier and will be consistent
             Object::Ptr userStats = new Object();
-            userStats->set("PostMessageOrigin", wopifileinfo->getPostMessageOrigin());
+            userStats->set("PostMessageOrigin", wopiFileInfo->getPostMessageOrigin());
             userStats->set("UserID", COOLWSD::anonymizeUsername(userId));
             userStats->set("BaseFileName", wopiStorage->getFileInfo().getFilename());
-            userStats->set("UserCanWrite", wopifileinfo->getUserCanWrite());
+            userStats->set("UserCanWrite", wopiFileInfo->getUserCanWrite());
 
             std::ostringstream ossUserStats;
             userStats->stringify(ossUserStats);
@@ -927,7 +931,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         }
 
         // Pass the ownership to client session
-        session->setWopiFileInfo(wopifileinfo);
+        session->setWopiFileInfo(wopiFileInfo);
     }
     else
 #endif
