@@ -896,6 +896,15 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo,
     JsonUtil::findJSONValue(object, "BreadcrumbDocName", _breadcrumbDocName);
     JsonUtil::findJSONValue(object, "FileUrl", _fileUrl);
 
+    // Update the scheme to https if ssl or ssl termination is on
+    if (Util::startsWith(_postMessageOrigin, "http://") &&
+        (COOLWSD::isSSLEnabled() || COOLWSD::isSSLTermination()))
+    {
+        _postMessageOrigin.replace(0, 4, "https");
+        LOG_DBG("Updating PostMessageOrigin scheme to HTTPS. Updated origin is now ["
+                << _postMessageOrigin << ']');
+    }
+
 #if ENABLE_FEATURE_LOCK
     bool isUserLocked = false;
     JsonUtil::findJSONValue(object, "IsUserLocked", isUserLocked);

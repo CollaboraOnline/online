@@ -561,9 +561,9 @@ public:
         const std::string& getTemplateSource() const { return _templateSource; }
         const std::string& getBreadcrumbDocName() const { return _breadcrumbDocName; }
         const std::string& getFileUrl() const { return _fileUrl; }
+        const std::string& getPostMessageOrigin() { return _postMessageOrigin; }
 
         bool getUserCanWrite() const { return _userCanWrite; }
-        std::string& getPostMessageOrigin() { return _postMessageOrigin; }
         void setHidePrintOption(bool hidePrintOption) { _hidePrintOption = hidePrintOption; }
         bool getHidePrintOption() const { return _hidePrintOption; }
         bool getHideSaveOption() const { return _hideSaveOption; }
