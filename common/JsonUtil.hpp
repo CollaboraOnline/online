@@ -7,6 +7,9 @@
 
 #pragma once
 
+#include "Util.hpp"
+#include <Log.hpp>
+
 #include <cassert>
 #include <cstddef>
 #include <set>
@@ -15,9 +18,6 @@
 
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
-
-#include <Log.hpp>
-
 namespace JsonUtil
 {
 
@@ -93,10 +93,9 @@ T getJSONValue(const Poco::JSON::Object::Ptr &object, const std::string& key)
 /// Upon successful search, fills `value` with value found in object.
 /// Removes the entry from the JSON object if @bRemove == true.
 template <typename T>
-bool findJSONValue(Poco::JSON::Object::Ptr &object, const std::string& key, T& value, bool bRemove = true)
+bool findJSONValue(const Poco::JSON::Object::Ptr& object, const std::string& key, T& value)
 {
-    std::string keyLower(key);
-    std::transform(begin(key), end(key), begin(keyLower), ::tolower);
+    const std::string keyLower = Util::toLower(key);
 
     std::vector<std::string> propertyNames;
     object->getNames(propertyNames);
@@ -107,10 +106,9 @@ bool findJSONValue(Poco::JSON::Object::Ptr &object, const std::string& key, T& v
     {
         if (key != userInput)
         {
-            std::string userInputLower(userInput);
-            std::transform(begin(userInput), end(userInput), begin(userInputLower), ::tolower);
+            const std::string userInputLower = Util::toLower(userInput);
 
-             // Mis-spelling tolerance.
+            // Mis-spelling tolerance.
             const int levDist = getLevenshteinDist(keyLower, userInputLower);
             if (levDist > 2)
                 continue; // Not even close, keep searching.
@@ -124,14 +122,12 @@ bool findJSONValue(Poco::JSON::Object::Ptr &object, const std::string& key, T& v
         }
 
         value = getJSONValue<T>(object, userInput);
-        if (bRemove)
-            object->remove(userInput);
 
         LOG_TRC("Found JSON property [" << userInput << "] => [" << value << ']');
         return true;
     }
 
-    LOG_INF("Missing JSON property [" << key << "] will default to [" << value << "].");
+    LOG_INF("Missing JSON property [" << key << "] will default to [" << value << ']');
     return false;
 }
 

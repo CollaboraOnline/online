@@ -840,7 +840,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Ob
     // Anonymize key values.
     if (COOLWSD::AnonymizeUserData)
     {
-        JsonUtil::findJSONValue(object, "ObfuscatedUserId", _obfuscatedUserId, false);
+        JsonUtil::findJSONValue(object, "ObfuscatedUserId", _obfuscatedUserId);
         if (!_obfuscatedUserId.empty())
         {
             Util::mapAnonymized(ownerId, _obfuscatedUserId);
