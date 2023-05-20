@@ -624,7 +624,7 @@ public:
             }
         }
 #endif
-        wakeup();
+        speedwakeup();
     }
 
     bool isAlive() const { return (_threadStarted && !_threadFinished) || _runOnClientThread; }
@@ -719,6 +719,16 @@ public:
         wakeup(_wakeup[1]);
     }
 
+void speedwakeup()
+{
+    if (_newSockets.empty() && _newCallbacks.empty())
+    {
+        _newSockets.push_back(Socket);
+        _newCallbacks.push_back(CallbackFn);
+        wakeup();
+    }
+}
+
     /// Global wakeup - signal safe: wakeup all socket polls.
     static void wakeupWorld();
 
@@ -737,7 +747,7 @@ public:
 
             std::lock_guard<std::mutex> lock(_mutex);
             _newSockets.emplace_back(std::move(newSocket));
-            wakeup();
+            speedwakeup();
         }
     }
 
@@ -767,7 +777,7 @@ public:
         bool wasEmpty = _newCallbacks.empty();
         _newCallbacks.emplace_back(fn);
         if (wasEmpty)
-            wakeup();
+            speedwakeup();
     }
 
     virtual void dumpState(std::ostream& os) const;
