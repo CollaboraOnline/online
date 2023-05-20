@@ -241,14 +241,11 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 #PosSizePropertyPanel.sidebar #ratio input[type='checkbox'] {
 	margin-inline-start: 0;
 }
+
+#ParaPropertyPanel.sidebar #indentfieldbox,
 #ParaPropertyPanel.sidebar #box3 {
 	display: grid;
 	justify-content: start;
-	row-gap: 4px;
-}
-
-#ParaPropertyPanel.sidebar #indentfieldbox {
-	display: grid;
 	row-gap: 4px;
 }
 
@@ -264,8 +261,14 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	left: -10px;
 }
 
-#ParaPropertyPanel.sidebar.ui-grid #indentfieldbox {
-	width: 158px;
+#TableEditPanel.sidebar.ui-grid #grid1,
+#ParaPropertyPanel.sidebar.ui-grid #grid1 {
+	grid-template-columns: 1fr 1fr !important;
+	column-gap: 16px;
+}
+
+#numberbullet {
+	width: 143px; /* to much conent break grid columns width */
 }
 
 #TableEditPanel.sidebar.ui-grid #delete_label {
