@@ -93,6 +93,25 @@ public:
         {
         }
 
+        FileInfo(const FileInfo& fileInfo)
+            : _filename(fileInfo._filename)
+            , _ownerId(fileInfo._ownerId)
+            , _modifiedTime(fileInfo._modifiedTime)
+        {
+        }
+
+        FileInfo& operator=(const FileInfo& rhs)
+        {
+            if (this != &rhs)
+            {
+                _filename = rhs._filename;
+                _ownerId = rhs._ownerId;
+                _modifiedTime = rhs._modifiedTime;
+            }
+
+            return *this;
+        }
+
         bool isValid() const
         {
             // 0-byte files are valid; LO will open them as new docs.
@@ -542,7 +561,7 @@ public:
                 << COOLWSD::anonymizeUrl(uri.toString()) << ']');
     }
 
-    class WOPIFileInfo
+    class WOPIFileInfo : public FileInfo
     {
         void init();
     public:
