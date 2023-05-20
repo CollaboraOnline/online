@@ -71,22 +71,28 @@ int getLevenshteinDist(const std::string& string1, const std::string& string2)
     return matrix[string1.size()][string2.size()];
 }
 
-// Gets value for `key` directly from the given JSON in `object`
-template <typename T>
-T getJSONValue(const Poco::JSON::Object::Ptr &object, const std::string& key)
+/// Converts the given @valueVar to the type T, if possible.
+/// @key is used for logging only.
+template <typename T> T getJSONValue(const std::string& key, const Poco::Dynamic::Var valueVar)
 {
     try
     {
-        const Poco::Dynamic::Var valueVar = object->get(key);
         return valueVar.convert<T>();
     }
     catch (const Poco::Exception& exc)
     {
-        LOG_ERR("getJSONValue for [" << key << "]: " << exc.displayText() <<
-                (exc.nested() ? " (" + exc.nested()->displayText() + ')' : ""));
+        LOG_ERR("getJSONValue for ["
+                << key << "]: " << exc.displayText()
+                << (exc.nested() ? " (" + exc.nested()->displayText() + ')' : ""));
     }
 
     return T();
+}
+
+/// Gets value for @key directly from the given JSON in @object.
+template <typename T> T getJSONValue(const Poco::JSON::Object::Ptr& object, const std::string& key)
+{
+    return getJSONValue<T>(key, object->get(key));
 }
 
 /// Function that searches `object` for `key` and warns if there are minor mis-spellings involved.
@@ -95,13 +101,22 @@ T getJSONValue(const Poco::JSON::Object::Ptr &object, const std::string& key)
 template <typename T>
 bool findJSONValue(const Poco::JSON::Object::Ptr& object, const std::string& key, T& value)
 {
-    const std::string keyLower = Util::toLower(key);
+    // Try exact match first.
+    const Poco::Dynamic::Var var = object->get(key);
+    if (!var.isEmpty())
+    {
+        value = getJSONValue<T>(key, var);
+
+        LOG_TRC("Found JSON property [" << key << "] => [" << value << ']');
+        return true;
+    }
 
     std::vector<std::string> propertyNames;
     object->getNames(propertyNames);
 
     // Check each property name against given key
     // and warn for mis-spells with tolerance of 2.
+    const std::string keyLower = Util::toLower(key);
     for (const std::string& userInput : propertyNames)
     {
         if (key != userInput)
