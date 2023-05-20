@@ -752,7 +752,7 @@ WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& aut
         if (COOLWSD::AnonymizeUserData)
             Util::mapAnonymized(Util::getFilenameFromURL(filename), Util::getFilenameFromURL(getUri().toString()));
 
-        auto wopiInfo = Util::make_unique<WopiStorage::WOPIFileInfo>(fileInfo, callDurationMs, object, uriObject);
+        auto wopiInfo = Util::make_unique<WopiStorage::WOPIFileInfo>(fileInfo, object, uriObject);
         if (wopiInfo->getSupportsLocks())
             lockCtx.initSupportsLocks();
 
@@ -808,9 +808,8 @@ void WopiStorage::WOPIFileInfo::init()
     _hideChangeTrackingControls = WOPIFileInfo::TriState::Unset;
 }
 
-WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo,
-                                        std::chrono::milliseconds callDurationMs,
-                                        Poco::JSON::Object::Ptr& object, const Poco::URI& uriObject)
+WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Object::Ptr& object,
+                                        const Poco::URI& uriObject)
 {
     init();
 
@@ -868,7 +867,7 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo,
     else
         object->stringify(wopiResponse);
 
-    LOG_DBG("WOPI::CheckFileInfo (" << callDurationMs << "): " << wopiResponse.str());
+    LOG_DBG("WOPI::CheckFileInfo: " << wopiResponse.str());
 
     JsonUtil::findJSONValue(object, "UserExtraInfo", _userExtraInfo);
     JsonUtil::findJSONValue(object, "UserPrivateInfo", _userPrivateInfo);
