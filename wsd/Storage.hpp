@@ -549,8 +549,8 @@ public:
         };
 
         /// warning - removes items from object.
-        WOPIFileInfo(const FileInfo& fileInfo, std::chrono::milliseconds callDurationMs,
-                     Poco::JSON::Object::Ptr& object, const Poco::URI& uriObject);
+        WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Object::Ptr& object,
+                     const Poco::URI& uriObject);
 
         const std::string& getUserId() const { return _userId; }
         const std::string& getUsername() const { return _username; }
