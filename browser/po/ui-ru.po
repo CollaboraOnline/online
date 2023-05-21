@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 16:53+0200\n"
-"PO-Revision-Date: 2023-01-18 07:13+0000\n"
-"Last-Translator: Mike Kaganski <mikekaganski@hotmail.com>\n"
+"PO-Revision-Date: 2023-05-13 13:49+0000\n"
+"Last-Translator: Roman Kirilenko <rkirilenko@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
-"Language: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.15.1-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -308,7 +308,7 @@ msgstr "Ошибка аутентификации сессии через про
 
 #: admin/src/AdminSocketOverview.js:396
 msgid "Warning"
-msgstr ""
+msgstr "Предупреждение"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
@@ -376,7 +376,7 @@ msgstr "Автоматический цвет"
 
 #: src/control/Control.AlertDialog.js:42
 msgid "External link"
-msgstr ""
+msgstr "Внешняя ссылка"
 
 #: src/control/Control.AlertDialog.js:43
 msgid "Open link"
@@ -597,12 +597,11 @@ msgstr "Нет (не проверять орфографию)"
 
 #: src/control/Control.LanguageDialog.js:72
 msgid "Select language"
-msgstr ""
+msgstr "Выберите язык"
 
 #: src/control/Control.LanguageDialog.js:93
-#, fuzzy
 msgid "Language"
-msgstr "Язык:"
+msgstr "Язык"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:80
 #: src/control/Control.Menubar.js:903
@@ -776,7 +775,7 @@ msgstr "Показать строку состояния"
 #: src/control/Control.NotebookbarImpress.js:419
 #: src/control/Control.NotebookbarWriter.js:1154
 msgid "Dark Mode"
-msgstr ""
+msgstr "Темная тема"
 
 #: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:427
 #: src/control/Control.Menubar.js:561 src/control/Control.Menubar.js:694
@@ -797,7 +796,7 @@ msgstr "Все"
 #: src/control/Control.NotebookbarImpress.js:962
 #: src/control/Control.NotebookbarWriter.js:858
 msgid "Smart Picker"
-msgstr ""
+msgstr "Умный подбор"
 
 #: src/control/Control.Menubar.js:210
 msgid "Text orientation"
@@ -1007,11 +1006,11 @@ msgstr "Параметры страницы"
 
 #: src/control/Control.Menubar.js:1070
 msgid "Define print area"
-msgstr ""
+msgstr "Выберите область печати"
 
 #: src/control/Control.Menubar.js:1071
 msgid "Remove print area"
-msgstr ""
+msgstr "Убрать область печати"
 
 #: src/control/Control.Menubar.js:1344 src/control/Control.StatusBar.js:553
 msgid "Reset to Default Language"
@@ -1117,7 +1116,7 @@ msgstr "~Файл"
 #: src/control/Control.NotebookbarImpress.js:61
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "Hom~e"
-msgstr ""
+msgstr "Дом"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:55
@@ -1148,15 +1147,14 @@ msgstr "~Рецензирование"
 #: src/control/Control.NotebookbarDraw.js:70
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:43
-#, fuzzy
 msgid "F~ormat"
-msgstr "Формат"
+msgstr "Ф~ормат"
 
 #: src/control/Control.NotebookbarCalc.js:48
 #: src/control/Control.NotebookbarDraw.js:81
 #: src/control/Control.NotebookbarWriter.js:59
 msgid "Dra~w"
-msgstr ""
+msgstr "Рисовать"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:87
@@ -1182,7 +1180,6 @@ msgstr "Сохранить как"
 #: src/control/Control.NotebookbarDraw.js:148
 #: src/control/Control.NotebookbarImpress.js:182
 #: src/control/Control.NotebookbarWriter.js:144
-#, fuzzy
 msgid "Export As"
 msgstr "Экспортировать как"
 
@@ -1313,7 +1310,7 @@ msgstr "Удалить столбцы"
 #: src/control/Control.NotebookbarImpress.js:350
 #: src/control/Control.NotebookbarWriter.js:1069
 msgid "Read mode"
-msgstr ""
+msgstr "Режим чтения"
 
 #: src/control/Control.NotebookbarCalc.js:1038
 #: src/control/Control.NotebookbarDraw.js:289
@@ -1632,17 +1629,20 @@ msgstr "Ключ Zotero API не настроен"
 
 #: src/control/Control.Zotero.js:153
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Некорректный ключ Zotero API"
 
 #: src/control/Control.Zotero.js:180
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Предупреждение Zotero"
 
 #: src/control/Control.Zotero.js:181
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Документ содержит некоторые цитаты, которые могут быть недоступны через web "
+"API. Это может вызвать некоторые проблемы при редактировании цитат или "
+"библиографии."
 
 #: src/control/Control.Zotero.js:237 src/core/Socket.js:1038
 msgid "Loading..."
@@ -1666,11 +1666,11 @@ msgstr "Закладки"
 
 #: src/control/Control.Zotero.js:398
 msgid "Footnotes"
-msgstr ""
+msgstr "Сноски"
 
 #: src/control/Control.Zotero.js:398
 msgid "Endnotes"
-msgstr ""
+msgstr "Примечания"
 
 #: src/control/Control.Zotero.js:462
 msgid "My Publications"
@@ -1726,17 +1726,18 @@ msgstr "Не удалось загрузить элементы"
 
 #: src/control/Control.Zotero.js:1134
 msgid "Citation warning"
-msgstr ""
+msgstr "Предупреждение цитирования"
 
 #: src/control/Control.Zotero.js:1135
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"После ввода цитат их место хранения и тип отображения не могут быть изменены."
 
 #: src/control/Control.Zotero.js:1136 src/control/Control.Zotero.js:1438
 msgid "Confirm"
-msgstr ""
+msgstr "Подтверждение"
 
 #: src/control/Control.Zotero.js:1242
 msgid "Add Note"
@@ -1767,6 +1768,8 @@ msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Отвязка цитат не позволит Collabora Online обновлять цитаты и библиографию в "
+"этом документе."
 
 #: src/control/Permission.js:72
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -1986,11 +1989,11 @@ msgstr "Неправильный пароль. Попробуйте снова."
 
 #: src/core/Socket.js:955
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Только владелец документа может изменить пароль."
 
 #: src/core/Socket.js:986 src/core/Socket.js:991
 msgid "Missing Fonts"
-msgstr "Отсутствуют шрифты:"
+msgstr "Отсутствуют шрифты"
 
 #: src/core/Socket.js:1028
 msgid "Someone"
@@ -2011,11 +2014,11 @@ msgstr "Документ переименовывается и вскоре пе
 
 #: src/core/Socket.js:1158
 msgid "Exported to storage"
-msgstr ""
+msgstr "Экспортировано в хранилище"
 
 #: src/core/Socket.js:1158
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Успешно экспортировано: "
 
 #: src/core/Socket.js:1186
 msgid "Discard"
@@ -2119,23 +2122,23 @@ msgstr ""
 "службу технической поддержки."
 
 #: src/errormessages.js:21
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
 "Ваша сессия истекает через %time. Пожалуйста, сохраните работу и обновите "
-"сессию (или веб-страницу) для продолжения."
+"сессию (или веб-страницу) для продолжения. Вам может понадобиться повторный "
+"вход."
 
 #: src/errormessages.js:22
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
 "Сессия истекла. Дальнейшие изменения в документе могли не сохраниться. "
-"Пожалуйста, обновите сессию (или веб-страницу) для продолжения."
+"Пожалуйста, обновите сессию (или веб-страницу) для продолжения. Вам может "
+"понадобиться повторный вход."
 
 #: src/errormessages.js:23
 msgid ""
@@ -2153,7 +2156,7 @@ msgstr "Неправильная ссылка: '%url'"
 msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
-msgstr ""
+msgstr "Вы покидаете документ. Веб-страница будет открыта в новой вкладке: "
 
 #: src/errormessages.js:26
 msgid ""
@@ -2219,6 +2222,9 @@ msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Сохранение невозможно из-за исчерпания свободного места в хранилище. "
+"Документ будет доступен только для чтения. Перед тем, как снова сохранить "
+"его, убедитесь, что свободного места достаточно."
 
 #: src/errormessages.js:43
 #, javascript-format
@@ -2396,7 +2402,6 @@ msgstr ""
 "дождитесь завершения загрузки или отмените её, чтобы начать новую</p>"
 
 #: src/map/Clipboard.js:907
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
@@ -2404,8 +2409,8 @@ msgid ""
 msgstr ""
 "<p>Ваш браузер имеет очень ограниченный доступ к буферу обмена</p><p>Нажмите:"
 " <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>для просмотра "
-"дополнительных опций</p><p class=\"vex-footnote\">Закройте всплывающее окно "
-"для игнорирования специальной вставки</p>"
+"дополнительных опций</p><p>Закройте всплывающее окно для игнорирования "
+"специальной вставки</p>"
 
 #: src/map/Map.js:218
 msgid "Initializing..."
@@ -2446,11 +2451,11 @@ msgstr "Создать новый файл из шаблона..."
 
 #: src/map/handler/Map.WOPI.js:484
 msgid "Error"
-msgstr ""
+msgstr "Ошибка"
 
 #: src/map/handler/Map.WOPI.js:484
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "Имя файла должно включать расширение."
 
 #: src/map/handler/Map.WOPI.js:492
 msgid "Creating copy..."
