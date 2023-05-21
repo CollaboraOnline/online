@@ -1,18 +1,25 @@
 {
 "Background Color":"Color d'o fundo",
 "Column":"Columna",
-"Comm~ent":"Com~entarios",
 "Date":"Calendata",
+"Fontwork...":"Fontwork...",
+"Formatting Mark":"Marca de formatación",
+"For~matting Marks":"~Marcas de formatación",
+"General":"Cheneral",
 "Language":"Luenga",
 "None":"Garra",
 "Number":"Numero",
 "Percent":"Percentache",
 "Propert~ies...":"Prop~iedatz...",
 "Rename S~heet...":"Cambiar nombre a la fuella...",
+"R~ight-To-Left":"De ~dreita a cucha",
+"Scientific":"Scientifico",
 "Stop":"Aturar",
 "Thousands Separator":"Separador de milars",
 "~Arrange":"~Ordenar",
 "~File":"~Fichero",
 "~Help":"~Aduya",
-"~Pivot Table":"Tabla ~dinamica"
+"~Insert":"F~icar",
+"~Pivot Table":"Tabla ~dinamica",
+"~Properties...":"~Propiedatz..."
 }
