@@ -16,6 +16,8 @@
 
 #include <Poco/Net/HTTPRequest.h>
 
+#include <string>
+
 class UnitWopiHttpRedirectLoop : public WopiTestServer
 {
     STATE_ENUM(Phase, Load, Redirected) _phase;
@@ -35,7 +37,6 @@ public:
     {
         Poco::URI uriReq(request.getURI());
         Poco::RegularExpression regInfo("/wopi/files/[0-9]+");
-        std::string redirectUri = "/wopi/files/";
         static unsigned redirectionCount = 0;
 
         LOG_INF("FakeWOPIHost: Request URI [" << uriReq.toString() << "]:\n");
@@ -61,13 +62,11 @@ public:
 
             TRANSITION_STATE(_phase, Phase::Redirected);
 
-            std::ostringstream oss;
-            oss << "HTTP/1.1 302 Found\r\n"
-                "Location: " << helpers::getTestServerURI() << redirectUri << redirectionCount << "?" << params << "\r\n"
-                "\r\n";
-
-            socket->send(oss.str());
-            socket->shutdown();
+            http::Response httpResponse(http::StatusCode::Found);
+            const std::string location = helpers::getTestServerURI() + "/wopi/files/" +
+                                         std::to_string(redirectionCount) + '?' + params;
+            httpResponse.set("Location", location);
+            socket->sendAndShutdown(httpResponse);
 
             redirectionCount++;
 
