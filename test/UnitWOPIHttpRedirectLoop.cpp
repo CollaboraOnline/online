@@ -18,19 +18,13 @@
 
 class UnitWopiHttpRedirectLoop : public WopiTestServer
 {
-    enum class Phase
-    {
-        Load,
-        Redirected,
-        Polling
-    } _phase;
+    STATE_ENUM(Phase, Load, Redirected) _phase;
 
     const std::string params = "access_token=anything";
-    static constexpr auto testname = "UnitWopiHttpRedirectLoop";
 
 public:
     UnitWopiHttpRedirectLoop()
-        : WopiTestServer(testname)
+        : WopiTestServer("UnitWopiHttpRedirectLoop")
         , _phase(Phase::Load)
     {
     }
@@ -56,11 +50,16 @@ public:
             std::string sExpectedMessage = "It is expected to stop requesting after " + std::to_string(RedirectionLimit) + " redirections";
             LOK_ASSERT_MESSAGE(sExpectedMessage, redirectionCount <= RedirectionLimit);
 
-            LOK_ASSERT_MESSAGE("Expected to be in Phase::Load or Phase::Redirected", _phase == Phase::Load || _phase == Phase::Redirected);
-            _phase = Phase::Redirected;
+            LOK_ASSERT_MESSAGE("Expected to be in Phase::Load or Phase::Redirected",
+                               _phase == Phase::Load || _phase == Phase::Redirected);
 
             if (redirectionCount == RedirectionLimit)
-                _phase = Phase::Polling;
+            {
+                exitTest(TestResult::Ok);
+                return true;
+            }
+
+            TRANSITION_STATE(_phase, Phase::Redirected);
 
             std::ostringstream oss;
             oss << "HTTP/1.1 302 Found\r\n"
@@ -92,11 +91,6 @@ public:
             }
             case Phase::Redirected:
             {
-                break;
-            }
-            case Phase::Polling:
-            {
-                exitTest(TestResult::Ok);
                 break;
             }
         }
