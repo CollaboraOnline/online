@@ -118,13 +118,32 @@ protected:
     }
 
     std::size_t getCountCheckFileInfo() const { return _countCheckFileInfo; }
-    void resetCountCheckFileInfo() { _countCheckFileInfo = 0; }
+    void resetCountCheckFileInfo()
+    {
+        LOG_TST("Resetting countCheckFileInfo [" << _countCheckFileInfo << "] to zero");
+        _countCheckFileInfo = 0;
+    }
+
     std::size_t getCountGetFile() const { return _countGetFile; }
-    void resetCountGetFile() { _countGetFile = 0; }
+    void resetCountGetFile()
+    {
+        LOG_TST("Resetting countGetFile [" << _countGetFile << "] to zero");
+        _countGetFile = 0;
+    }
+
     std::size_t getCountPutRelative() const { return _countPutRelative; }
-    void resetCountPutRelative() { _countPutRelative = 0; }
+    void resetCountPutRelative()
+    {
+        LOG_TST("Resetting countPutRelative [" << _countPutRelative << "] to zero");
+        _countPutRelative = 0;
+    }
+
     std::size_t getCountPutFile() const { return _countPutFile; }
-    void resetCountPutFile() { _countPutFile = 0; }
+    void resetCountPutFile()
+    {
+        LOG_TST("Resetting countPutFile [" << _countPutFile << "] to zero");
+        _countPutFile = 0;
+    }
 
     virtual void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& /*request*/)
     {
