@@ -1298,7 +1298,14 @@ private:
             if (_onFinished)
             {
                 LOG_TRC("onFinished calling client");
-                _onFinished(std::static_pointer_cast<Session>(shared_from_this()));
+                try
+                {
+                    _onFinished(std::static_pointer_cast<Session>(shared_from_this()));
+                }
+                catch (const std::exception& exc)
+                {
+                    LOG_ERR("Error while invoking onFinished client callback: " << exc.what());
+                }
             }
 
             if (_response->get("Connection", "") == "close")
