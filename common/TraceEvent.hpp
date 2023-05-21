@@ -126,7 +126,7 @@ protected:
     const std::string _name;
 
     NamedEvent(const std::string& name)
-        : TraceEvent("")
+        : TraceEvent(std::string())
         , _name(name)
     {
     }
@@ -172,7 +172,7 @@ public:
     }
 
     ProfileZone(const char* id)
-        : ProfileZone(id, "")
+        : ProfileZone(id, std::string())
     {
     }
 
