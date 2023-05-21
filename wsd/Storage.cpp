@@ -267,71 +267,40 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
     // but that is just my personal preference.
 
     std::unique_ptr<StorageBase> storage;
-
     if (UnitWSD::get().createStorage(uri, jailRoot, jailPath, storage))
     {
-        LOG_INF("Storage create hooked");
         if (storage)
         {
+            LOG_INF("Storage create hooked via UnitWSD");
             return storage;
         }
     }
-    else if (uri.isRelative() || uri.getScheme() == "file")
-    {
-        LOG_INF("Public URI [" << COOLWSD::anonymizeUrl(uri.toString()) << "] is a file");
 
-#if ENABLE_DEBUG
-        if (std::getenv("FAKE_UNAUTHORIZED"))
-        {
-            LOG_FTL("Faking an UnauthorizedRequestException");
+    const StorageBase::StorageType type = validate(uri, takeOwnership);
+    switch (type)
+    {
+        case StorageBase::StorageType::Unsupported:
+            LOG_ERR("Unsupported URI [" << COOLWSD::anonymizeUrl(uri.toString())
+                                        << "] or no storage configured");
+            throw BadRequestException("No Storage configured or invalid URI " +
+                                      COOLWSD::anonymizeUrl(uri.toString()) + ']');
+
+            break;
+        case StorageBase::StorageType::Unauthorized:
+            LOG_ERR("No acceptable WOPI hosts found matching the target host [" << uri.getHost()
+                                                                                << "] in config");
             throw UnauthorizedRequestException(
-                "No acceptable WOPI hosts found matching the target host in config");
-        }
-#endif
-        if (FilesystemEnabled || takeOwnership)
-        {
+                "No acceptable WOPI hosts found matching the target host [" + uri.getHost() +
+                "] in config");
+            break;
+        case StorageBase::StorageType::FileSystem:
             return std::unique_ptr<StorageBase>(
                 new LocalStorage(uri, jailRoot, jailPath, takeOwnership));
-        }
-
-        LOG_ERR("Local Storage is disabled by default. Enable in the config file or on the "
-                "command-line to enable");
-    }
-#if !MOBILEAPP
-    else if (HostUtil::isWopiEnabled())
-    {
-        LOG_INF("Public URI [" << COOLWSD::anonymizeUrl(uri.toString()) << "] considered WOPI");
-        const auto& targetHost = uri.getHost();
-        bool allowed(false);
-        HostUtil::setFirstHost(uri);
-        if (HostUtil::allowedWopiHost(targetHost) ||
-            isLocalhost(targetHost))
-        {
-            allowed = true;
-        }
-        if (!allowed)
-        {
-            // check if the IP address is in the list of allowed hosts
-            const auto hostAddresses(Poco::Net::DNS::resolve(targetHost));
-            for (auto &address : hostAddresses.addresses())
-            {
-                if (HostUtil::allowedWopiHost(address.toString()))
-                {
-                    allowed = true;
-                    break;
-                }
-            }
-        }
-        if (allowed)
+            break;
+        case StorageBase::StorageType::Wopi:
             return std::unique_ptr<StorageBase>(new WopiStorage(uri, jailRoot, jailPath));
-
-        LOG_ERR("No acceptable WOPI hosts found matching the target host [" << targetHost
-                                                                            << "] in config");
-        throw UnauthorizedRequestException(
-            "No acceptable WOPI hosts found matching the target host [" + targetHost +
-            "] in config");
+            break;
     }
-#endif
 
     throw BadRequestException("No Storage configured or invalid URI " +
                               COOLWSD::anonymizeUrl(uri.toString()) + ']');
