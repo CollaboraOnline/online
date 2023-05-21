@@ -96,20 +96,21 @@ public:
         setTimeout(std::chrono::seconds(90));
     }
 
-    void onDocBrokerCreate(const std::string&) override
+    void startNewTest()
     {
-        LOG_TST("Testing " << toString(_scenario) << ": resetting the document in storage");
+        LOG_TST("===== Starting " << name(_scenario) << " test scenario =====");
+
+        LOG_TST("Resetting the document in storage");
         setFileContent(OriginalDocContent); // Reset to test overwriting.
 
         resetCountCheckFileInfo();
         resetCountGetFile();
-        setExpectedGetFile(1); // All the test GetFile once.
-
         resetCountPutFile();
+        resetCountPutRelative();
 
         // We always load once per scenario.
         setExpectedCheckFileInfo(1);
-        setExpectedGetFile(1);
+        setExpectedGetFile(1); // All the tests GetFile once.
         setExpectedPutRelative(0); // No renaming in these tests.
 
         if (_scenario == Scenario::VerifyOverwrite)
@@ -284,7 +285,7 @@ public:
     // Wait for clean unloading.
     void onDocBrokerDestroy(const std::string& docKey) override
     {
-        LOG_TST("Testing " << toString(_scenario) << " with dockey [" << docKey << "] closed.");
+        LOG_TST("Testing " << name(_scenario) << " with dockey [" << docKey << "] closed.");
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         LOK_ASSERT_EQUAL(getExpectedCheckFileInfo(), getCountCheckFileInfo());
@@ -292,6 +293,7 @@ public:
         LOK_ASSERT_EQUAL(getExpectedPutRelative(), getCountPutRelative());
         // LOK_ASSERT_EQUAL(getExpectedPutFile(), getCountPutFile()); //FIXME: unreliable for some tests.
 
+        LOG_TST("===== Finished " << name(_scenario) << " test scenario =====");
         switch (_scenario)
         {
             case Scenario::Disconnect:
@@ -320,6 +322,8 @@ public:
         {
             case Phase::Load:
             {
+                startNewTest();
+
                 LOG_TST("Loading the document for " << toString(_scenario));
 
                 TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
