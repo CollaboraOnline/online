@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 16:53+0200\n"
-"PO-Revision-Date: 2023-03-13 06:38+0000\n"
+"PO-Revision-Date: 2023-05-06 11:48+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (New Zealand) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_NZ/>\n"
-"Language: \n"
+"Language: en_NZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16.2-dev\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -300,7 +300,7 @@ msgstr "Failed to authenticate this session over protocol %0"
 
 #: admin/src/AdminSocketOverview.js:396
 msgid "Warning"
-msgstr ""
+msgstr "Warning"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
@@ -767,7 +767,7 @@ msgstr "Show Status Bar"
 #: src/control/Control.NotebookbarImpress.js:419
 #: src/control/Control.NotebookbarWriter.js:1154
 msgid "Dark Mode"
-msgstr ""
+msgstr "Dark Mode"
 
 #: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:427
 #: src/control/Control.Menubar.js:561 src/control/Control.Menubar.js:694
@@ -788,7 +788,7 @@ msgstr "All"
 #: src/control/Control.NotebookbarImpress.js:962
 #: src/control/Control.NotebookbarWriter.js:858
 msgid "Smart Picker"
-msgstr ""
+msgstr "Smart Picker"
 
 #: src/control/Control.Menubar.js:210
 msgid "Text orientation"
@@ -1108,7 +1108,7 @@ msgstr "~File"
 #: src/control/Control.NotebookbarImpress.js:61
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "Hom~e"
-msgstr ""
+msgstr "Hom~e"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:55
@@ -1139,15 +1139,14 @@ msgstr "~Review"
 #: src/control/Control.NotebookbarDraw.js:70
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:43
-#, fuzzy
 msgid "F~ormat"
-msgstr "Format"
+msgstr "F~ormat"
 
 #: src/control/Control.NotebookbarCalc.js:48
 #: src/control/Control.NotebookbarDraw.js:81
 #: src/control/Control.NotebookbarWriter.js:59
 msgid "Dra~w"
-msgstr ""
+msgstr "Dra~w"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:87
@@ -1368,9 +1367,8 @@ msgid "Reference~s"
 msgstr "Reference~s"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "For~m"
-msgstr "Form"
+msgstr "For~m"
 
 #: src/control/Control.NotebookbarWriter.js:206
 msgid "ODF Text Document (.odt)"
@@ -1976,7 +1974,7 @@ msgstr "Wrong password provided. Please try again."
 
 #: src/core/Socket.js:955
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Only the document owner can change the password."
 
 #: src/core/Socket.js:986 src/core/Socket.js:991
 msgid "Missing Fonts"
@@ -2205,6 +2203,8 @@ msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Save failed due to no storage space left. Document will now be read-only. "
+"Please make sure enough disk space is available and try to save again."
 
 #: src/errormessages.js:43
 #, javascript-format
@@ -2382,7 +2382,6 @@ msgstr ""
 "one</p>"
 
 #: src/map/Clipboard.js:907
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
@@ -2390,8 +2389,7 @@ msgid ""
 msgstr ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
-"more options</p><p class=\"vex-footnote\">Close popup to ignore paste "
-"special</p>"
+"more options</p><p>Close popup to ignore paste special</p>"
 
 #: src/map/Map.js:218
 msgid "Initializing..."

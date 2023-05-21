@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-03 16:53+0200\n"
-"PO-Revision-Date: 2023-01-24 15:11+0000\n"
+"PO-Revision-Date: 2023-05-06 11:48+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (Australia) <https://hosted.weblate.org/projects/"
 "collabora-online/help/en_AU/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.18-dev\n"
 "X-POOTLE-MTIME: 1463059002.000000\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
@@ -2913,7 +2913,7 @@ msgstr "Set the page margins in the dialogue box."
 
 #: html/cool-help.html%2Bdiv.div.h4:592-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr "How do I change the page orientation to landscape inside my document?"
+msgstr "How do I change the page orientation to landscape inside my document"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:594-11
 msgid ""
