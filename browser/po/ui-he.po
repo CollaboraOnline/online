@@ -2444,12 +2444,12 @@ msgstr "לגלות את כל השינויים"
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
 "Check the <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
-"code-22-05-release-notes/\">release notes</a> and learn all about: The "
+"code-23-05-release-notes/\">release notes</a> and learn all about: The "
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
 "ב<a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
-"code-22-05-release-notes/\">הערות ההפצה</a> אפשר ללמוד עוד על: מהדורת הפיתוח "
+"code-23-05-release-notes/\">הערות ההפצה</a> אפשר ללמוד עוד על: מהדורת הפיתוח "
 "האחרונה של Collabora Online, שמיועדת למשתמשים ביתיים ולצוותים קטנים."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
