@@ -283,20 +283,19 @@ UnitBase::TestResult UnitLoad::testOverload()
 
 void UnitLoad::invokeWSDTest()
 {
-    static bool once = true;
-    if (once)
-    {
-        testOverload();
-        once = false;
-    }
+    // static bool once = true;
+    // if (once)
+    // {
+    //     testOverload();
+    //     once = false;
+    // }
 
     // FIXME fails on Jenkins for some reason.
     // UnitBase::TestResult result = testOverload();
     // if (result != TestResult::Ok)
     //     exitTest(result);
 
-#if 0
-    result = testLoad();
+    UnitBase::TestResult result = testLoad();
     if (result != TestResult::Ok)
         exitTest(result);
 
@@ -317,9 +316,8 @@ void UnitLoad::invokeWSDTest()
     // result = testReload();
     // if (result != TestResult::Ok)
     //     exitTest(result);
-#endif
 
-    // exitTest(TestResult::Ok);
+    exitTest(TestResult::Ok);
 }
 
 UnitBase* unit_create_wsd(void) { return new UnitLoad(); }
