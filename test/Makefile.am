@@ -63,7 +63,6 @@ all_la_unit_tests = \
 	unit-large-paste.la \
 	unit-quarantine.la \
 	unit-typing.la \
-	unit-wopi-httpredirectloop.la \
 	unit-render-shape.la \
 	unit-cursor.la \
 	unit-session.la \
@@ -254,8 +253,6 @@ unit_wopi_httpheaders_la_SOURCES = UnitWOPIHttpHeaders.cpp
 unit_wopi_httpheaders_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_httpredirect_la_SOURCES = UnitWOPIHttpRedirect.cpp
 unit_wopi_httpredirect_la_LIBADD = $(CPPUNIT_LIBS)
-unit_wopi_httpredirectloop_la_SOURCES = UnitWOPIHttpRedirectLoop.cpp
-unit_wopi_httpredirectloop_la_LIBADD = $(CPPUNIT_LIBS)
 unit_tiff_load_la_SOURCES = UnitTiffLoad.cpp
 unit_tiff_load_la_LIBADD = $(CPPUNIT_LIBS)
 unit_large_paste_la_SOURCES = UnitLargePaste.cpp

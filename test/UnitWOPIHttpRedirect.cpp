@@ -12,8 +12,11 @@
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>
 #include <helpers.hpp>
+#include <wsd/Storage.hpp>
 
 #include <Poco/Net/HTTPRequest.h>
+
+#include <string>
 
 class UnitWopiHttpRedirect : public WopiTestServer
 {
@@ -156,6 +159,89 @@ public:
     }
 };
 
-UnitBase* unit_create_wsd(void) { return new UnitWopiHttpRedirect(); }
+class UnitWopiHttpRedirectLoop : public WopiTestServer
+{
+    STATE_ENUM(Phase, Load, Redirected) _phase;
+
+    const std::string params = "access_token=anything";
+
+public:
+    UnitWopiHttpRedirectLoop()
+        : WopiTestServer("UnitWopiHttpRedirectLoop")
+        , _phase(Phase::Load)
+    {
+    }
+
+    virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request,
+                                   Poco::MemoryInputStream& /*message*/,
+                                   std::shared_ptr<StreamSocket>& socket) override
+    {
+        Poco::URI uriReq(request.getURI());
+        Poco::RegularExpression regInfo("/wopi/files/[0-9]+");
+        static unsigned redirectionCount = 0;
+
+        LOG_INF("FakeWOPIHost: Request URI [" << uriReq.toString() << "]:\n");
+
+        // CheckFileInfo - always returns redirect response
+        if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
+        {
+            LOG_INF("FakeWOPIHost: Handling CheckFileInfo");
+
+            assertCheckFileInfoRequest(request);
+
+            std::string sExpectedMessage = "It is expected to stop requesting after " +
+                                           std::to_string(RedirectionLimit) + " redirections";
+            LOK_ASSERT_MESSAGE(sExpectedMessage, redirectionCount <= RedirectionLimit);
+
+            LOK_ASSERT_MESSAGE("Expected to be in Phase::Load or Phase::Redirected",
+                               _phase == Phase::Load || _phase == Phase::Redirected);
+
+            if (redirectionCount == RedirectionLimit)
+            {
+                exitTest(TestResult::Ok);
+                return true;
+            }
+
+            TRANSITION_STATE(_phase, Phase::Redirected);
+
+            http::Response httpResponse(http::StatusCode::Found);
+            const std::string location = helpers::getTestServerURI() + "/wopi/files/" +
+                                         std::to_string(redirectionCount) + '?' + params;
+            httpResponse.set("Location", location);
+            socket->sendAndShutdown(httpResponse);
+
+            redirectionCount++;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::Load:
+            {
+                initWebsocket("/wopi/files/0?" + params);
+
+                WSD_CMD("load url=" + getWopiSrc());
+
+                break;
+            }
+            case Phase::Redirected:
+            {
+                break;
+            }
+        }
+    }
+};
+
+UnitBase** unit_create_wsd_multi(void)
+{
+    return new UnitBase* [3]
+    { new UnitWopiHttpRedirect(), new UnitWopiHttpRedirectLoop(), nullptr };
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
