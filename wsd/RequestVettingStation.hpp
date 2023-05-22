@@ -43,7 +43,7 @@ private:
                          Poco::JSON::Object::Ptr wopiInfo = nullptr);
 
     void checkFileInfo(SocketPoll& poll, const std::string& url, const Poco::URI& uriPublic,
-                       const std::string& docKey, bool isReadOnly);
+                       const std::string& docKey, bool isReadOnly, int redirectionLimit);
 
 private:
     const std::string _id;
