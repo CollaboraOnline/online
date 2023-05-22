@@ -17,21 +17,13 @@
 
 class UnitWopiHttpRedirect : public WopiTestServer
 {
-    enum class Phase
-    {
-        Load,
-        Redirected,
-        GetFile,
-        Redirected2,
-        Loaded
-    } _phase;
+    STATE_ENUM(Phase, Load, Redirected, GetFile, Redirected2, Done) _phase;
 
     const std::string params = "access_token=anything";
-    static constexpr auto testname = "UnitWopiHttpRedirect";
 
 public:
     UnitWopiHttpRedirect()
-        : WopiTestServer(testname)
+        : WopiTestServer("UnitWopiHttpRedirect")
         , _phase(Phase::Load)
     {
     }
@@ -77,9 +69,10 @@ public:
 
             assertCheckFileInfoRequest(request);
 
-            LOK_ASSERT_MESSAGE("Expected to be in Phase::Redirected or Phase::Loaded", _phase == Phase::Redirected || _phase == Phase::Loaded);
+            LOK_ASSERT_MESSAGE("Expected to be in Phase::Redirected or Phase::Done",
+                               _phase == Phase::Redirected || _phase == Phase::Done);
             if (_phase == Phase::Redirected)
-                _phase = Phase::GetFile;
+                TRANSITION_STATE(_phase, Phase::GetFile);
 
             Poco::LocalDateTime now;
             const std::string fileName(uriReq.getPath() == "/wopi/files/3" ? "he%llo.txt" : "hello.txt");
@@ -113,8 +106,7 @@ public:
             assertGetFileRequest(request);
 
             LOK_ASSERT_MESSAGE("Expected to be in Phase::GetFile", _phase == Phase::GetFile);
-            _phase = Phase::Redirected2;
-
+            TRANSITION_STATE(_phase, Phase::Redirected2);
             std::ostringstream oss;
             oss << "HTTP/1.1 302 Found\r\n"
                 "Location: " << helpers::getTestServerURI() << redirectUri2 << "?" << params << "\r\n"
@@ -133,7 +125,7 @@ public:
             assertGetFileRequest(request);
 
             LOK_ASSERT_MESSAGE("Expected to be in Phase::Redirected2", _phase == Phase::Redirected2);
-            _phase = Phase::Loaded;
+            TRANSITION_STATE(_phase, Phase::Done);
 
             http::Response httpResponse(http::StatusCode::OK);
             httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
@@ -163,12 +155,8 @@ public:
             case Phase::Redirected:
             case Phase::Redirected2:
             case Phase::GetFile:
+            case Phase::Done:
             {
-                break;
-            }
-            case Phase::Loaded:
-            {
-                exitTest(TestResult::Ok);
                 break;
             }
         }
