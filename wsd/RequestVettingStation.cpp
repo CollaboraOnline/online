@@ -101,26 +101,43 @@ void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& d
                 "] in config");
             break;
         case StorageBase::StorageType::FileSystem:
-            // Remove from the current poll.
-            disposition.setMove([](auto) {});
+            // Remove from the current poll and transfer.
+            disposition.setMove(
+                [this, docKey, url, uriPublic,
+                 isReadOnly](const std::shared_ptr<Socket>& moveSocket)
+                {
+                    LOG_TRC_S('#' << moveSocket->getFD()
+                                  << ": Dissociating client socket from "
+                                     "ClientRequestDispatcher and creating DocBroker for ["
+                                  << docKey << ']');
 
-            return createDocBroker(docKey, url, uriPublic, isReadOnly);
+                    // Create the DocBroker.
+                    createDocBroker(docKey, url, uriPublic, isReadOnly);
+                });
             break;
         case StorageBase::StorageType::Wopi:
-            // Remove from the current poll.
-            disposition.setMove([](auto) {});
+            // Remove from the current poll and transfer.
+            disposition.setMove(
+                [this, &poll, docKey, url, uriPublic,
+                 isReadOnly](const std::shared_ptr<Socket>& moveSocket)
+                {
+                    LOG_TRC_S('#' << moveSocket->getFD()
+                                  << ": Dissociating client socket from "
+                                     "ClientRequestDispatcher and invoking CheckFileInfo for ["
+                                  << docKey << ']');
 
+                    // CheckFileInfo and only when it's good create DocBroker.
+                    checkFileInfo(poll, url, uriPublic, docKey, isReadOnly, RedirectionLimit);
+                });
             break;
     }
-
-    return checkFileInfo(poll, url, uriPublic, docKey, isReadOnly);
 }
 
 void RequestVettingStation::checkFileInfo(SocketPoll& poll, const std::string& url,
                                           const Poco::URI& uriPublic, const std::string& docKey,
-                                          bool isReadOnly)
+                                          bool isReadOnly, int redirectLimit)
 {
-    ProfileZone profileZone("WopiStorage::getWOPIFileInfo", { { "url", url } });
+    ProfileZone profileZone("WopiStorage::getWOPIFileInfo", { { "url", url } }); // Move to ctor.
 
     const std::string uriAnonym = COOLWSD::anonymizeUrl(uriPublic.toString());
 
@@ -135,10 +152,40 @@ void RequestVettingStation::checkFileInfo(SocketPoll& poll, const std::string& u
                                                            << httpRequest.header());
 
     http::Session::FinishedCallback finishedCallback =
-        [this, docKey, startTime, url, uriPublic, isReadOnly,
-         uriAnonym](const std::shared_ptr<http::Session>& session)
+        [this, &poll, docKey, startTime, url, uriPublic, isReadOnly, uriAnonym,
+         redirectLimit](const std::shared_ptr<http::Session>& session)
     {
+        if (SigUtil::getShutdownRequestFlag())
+        {
+            LOG_DBG("Shutdown flagged, giving up on in-flight requests");
+            return;
+        }
+
         const std::shared_ptr<const http::Response> httpResponse = session->response();
+        LOG_TRC("WOPI::CheckFileInfo returned " << httpResponse->statusLine().statusCode());
+
+        const http::StatusCode statusCode = httpResponse->statusLine().statusCode();
+        if (statusCode == http::StatusCode::MovedPermanently ||
+            statusCode == http::StatusCode::Found ||
+            statusCode == http::StatusCode::TemporaryRedirect ||
+            statusCode == http::StatusCode::PermanentRedirect)
+        {
+            if (redirectLimit)
+            {
+                const std::string& location = httpResponse->get("Location");
+                LOG_TRC("WOPI::CheckFileInfo redirect to URI [" << COOLWSD::anonymizeUrl(location)
+                                                                << "]");
+
+                checkFileInfo(poll, location, Poco::URI(location), docKey, isReadOnly,
+                              redirectLimit - 1);
+                return;
+            }
+            else
+            {
+                LOG_WRN("WOPI::CheckFileInfo redirected too many times. Giving up on URI ["
+                        << uriAnonym << ']');
+            }
+        }
 
         std::chrono::milliseconds callDurationMs =
             std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
