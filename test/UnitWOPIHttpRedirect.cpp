@@ -52,13 +52,9 @@ public:
             LOK_ASSERT_MESSAGE("Expected to be in Phase::Load", _phase == Phase::Load);
             _phase = Phase::Redirected;
 
-            std::ostringstream oss;
-            oss << "HTTP/1.1 302 Found\r\n"
-                "Location: " << helpers::getTestServerURI() << redirectUri << "?" << params << "\r\n"
-                "\r\n";
-
-            socket->send(oss.str());
-            socket->shutdown();
+            http::Response httpResponse(http::StatusCode::Found);
+            httpResponse.set("Location", helpers::getTestServerURI() + redirectUri + '?' + params);
+            socket->sendAndShutdown(httpResponse);
 
             return true;
         }
@@ -107,13 +103,10 @@ public:
 
             LOK_ASSERT_MESSAGE("Expected to be in Phase::GetFile", _phase == Phase::GetFile);
             TRANSITION_STATE(_phase, Phase::Redirected2);
-            std::ostringstream oss;
-            oss << "HTTP/1.1 302 Found\r\n"
-                "Location: " << helpers::getTestServerURI() << redirectUri2 << "?" << params << "\r\n"
-                "\r\n";
 
-            socket->send(oss.str());
-            socket->shutdown();
+            http::Response httpResponse(http::StatusCode::Found);
+            httpResponse.set("Location", helpers::getTestServerURI() + redirectUri2 + '?' + params);
+            socket->sendAndShutdown(httpResponse);
 
             return true;
         }
