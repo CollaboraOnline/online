@@ -798,8 +798,6 @@ check-local: $(MOCHA_TS_JS_FILES)
 		exit 1; \
 	fi
 
-SSL_FLAG = `xmllint --xpath 'string(/config/ssl/enable)' $(abs_top_builddir)/coolwsd.xml`
-
 # the delay (in milliseconds) between each emulated key stroke for each view
 typing_speed=100
 # The duration of the typing (in milliseconds)
@@ -818,6 +816,6 @@ perf-test:
 		echo 'Making fresh copy of the perf-test-edit.odt document'; \
 		cp $(abs_top_srcdir)/test/data/perf-test.odt $(abs_top_builddir)/test/data/perf-test-edit.odt; \
 	fi
-	$(NODE) $(abs_srcdir)/test/bootstrap.js $(SSL_FLAG) $(abs_top_builddir) $(abs_srcdir) $(typing_speed) $(single_view) $(typing_duration) $(node_inspect) ${record_stats}
+	$(NODE) $(abs_srcdir)/test/bootstrap.js $(abs_top_builddir) $(abs_srcdir) $(typing_speed) $(single_view) $(typing_duration) $(node_inspect) ${record_stats}
 # for now - unwinding ts and js deps for different targets is a real pain.
 .NOTPARALLEL:
