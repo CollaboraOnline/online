@@ -704,10 +704,8 @@ WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& aut
             logRes << "WOPI::CheckFileInfo " << (failed ? "failed" : "returned") << " for URI ["
                    << uriAnonym << "]: " << httpResponse->statusLine().statusCode() << ' '
                    << httpResponse->statusLine().reasonPhrase()
-                   << ". Headers: " << httpResponse->header();
-
-            if (failed)
-                logRes << "\tBody: [" << wopiResponse << "]";
+                   << ". Headers: " << httpResponse->header()
+                   << (failed ? "\tBody: [" + wopiResponse + ']' : std::string());
 
             LOG_END_FLUSH(logRes);
         }
