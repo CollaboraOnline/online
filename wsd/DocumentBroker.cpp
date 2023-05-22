@@ -2803,6 +2803,12 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
             LOG_WRN("DocBroker [" << getDocKey()
                                   << "] is unloading. Rejecting client request to load session ["
                                   << id << ']');
+            if (ws)
+            {
+                const std::string msg("error: cmd=load kind=docunloading");
+                ws->sendTextMessage(msg.data(), msg.size());
+                ws->shutdown(true, msg);
+            }
 
             return nullptr;
         }
