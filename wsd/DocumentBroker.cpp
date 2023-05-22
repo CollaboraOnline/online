@@ -2800,9 +2800,9 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
     {
         if (isMarkedToDestroy() || _docState.isUnloadRequested())
         {
-            LOG_INF("DocumentBroker ["
-                    << getDocKey()
-                    << "] is marked to destroy and will not create new client sessions.");
+            LOG_WRN("DocBroker [" << getDocKey()
+                                  << "] is unloading. Rejecting client request to load session ["
+                                  << id << ']');
 
             return nullptr;
         }
