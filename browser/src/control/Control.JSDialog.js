@@ -363,6 +363,7 @@ L.Control.JSDialog = L.Control.extend({
 				// popup was trigerred not by toolbar or menu button, probably on tile area
 				if (instance.isAutofilter) {
 					// we are already done
+					return;
 				}
 				else {
 					console.warn('other popup than autofilter in the document area');
@@ -432,9 +433,6 @@ L.Control.JSDialog = L.Control.extend({
 		var left = parseInt(instance.posx) * scale;
 		var top = parseInt(instance.posy) * scale;
 
-		if (left < 0)
-			left = -1 * left;
-
 		var splitPanesContext = this.map.getSplitPanesContext();
 		var splitPos = new L.Point(0, 0);
 
@@ -454,6 +452,10 @@ L.Control.JSDialog = L.Control.extend({
 
 		instance.posx = left + offsetX;
 		instance.posy = top + offsetY;
+
+		var width = instance.form.getBoundingClientRect().width;
+		if (instance.posx + width > window.innerWidth)
+			instance.posx = window.innerWidth - width;
 
 		this.updatePosition(instance.container, instance.posx, instance.posy);
 	},
