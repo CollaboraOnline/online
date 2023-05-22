@@ -28,50 +28,50 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
 # 'Finished in' in the `make check` output.
 # When adding new tests, please maintain order.
 all_la_unit_tests = \
-	unit-tiletest.la \
 	unit-wopi-async-slow.la \
+	unit-tiletest.la \
 	unit-wopi-fail-upload.la \
 	unit-each-view.la \
 	unit-wopi-stuck-save.la \
+	unit-load.la \
+	unit-integration.la \
+	unit-httpws.la \
+	unit-quarantine.la \
 	unit-load-torture.la \
 	unit-copy-paste.la \
-	unit-httpws.la \
 	unit-crash.la \
 	unit-wopi-fileurl.la \
 	unit-wopi-save-on-exit.la \
-	unit-integration.la \
-	unit-insert-delete.la \
-	unit-password-protected.la \
-	unit-wopi-ownertermination.la \
 	unit-wopi-documentconflict.la \
 	unit-close.la \
+	unit-wopi-languages.la \
+	unit-insert-delete.la \
+	unit-password-protected.la \
 	unit-uno-command.la \
 	unit-wopi-httpredirect.la \
-	unit-wopi-httpheaders.la \
+	unit-calc.la \
 	unit-http.la \
 	unit-wopi-temp.la \
-	unit-wopi.la \
 	unit_wopi_watermark.la \
+	unit-session.la \
+	unit-render-shape.la \
+	unit-wopi-lock.la \
+	unit-wopi-ownertermination.la \
+	unit-wopi-httpheaders.la \
+	unit-wopi.la \
 	unit-wopi-crash-modified.la \
 	unit-oauth.la \
-	unit-calc.la \
-	unit-wopi-languages.la \
 	unit-wopi-versionrestore.la \
 	unit-convert.la \
 	unit-rendering-options.la \
 	unit-paste.la \
 	unit-large-paste.la \
-	unit-quarantine.la \
 	unit-typing.la \
-	unit-render-shape.la \
 	unit-cursor.la \
-	unit-session.la \
-	unit-wopi-lock.la \
 	unit-wopi-unlock.la \
 	unit-render-search-result.la \
 	unit-tiff-load.la \
 	unit-wopi-saveas-with-encoded-file-name.la \
-	unit-load.la \
 	unit-storage.la \
 	unit-wopi-async-upload-modifyclose.la \
 	unit-wopi-saveas.la \
