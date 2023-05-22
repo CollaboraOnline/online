@@ -27,6 +27,10 @@ public:
         , _socket(socket)
         , _mobileAppDocId(mobileAppDocId)
     {
+        // Indicate to the client that document broker is searching.
+        static const std::string status("statusindicator: find");
+        LOG_TRC("Sending to Client [" << status << "].");
+        _ws->sendMessage(status);
     }
 
     inline void logPrefix(std::ostream& os) const { os << '#' << _socket->getFD() << ": "; }
@@ -37,6 +41,9 @@ private:
     void createDocBroker(const std::string& docKey, const std::string& url,
                          const Poco::URI& uriPublic, const bool isReadOnly,
                          Poco::JSON::Object::Ptr wopiInfo = nullptr);
+
+    void checkFileInfo(SocketPoll& poll, const std::string& url, const Poco::URI& uriPublic,
+                       const std::string& docKey, bool isReadOnly);
 
 private:
     const std::string _id;
