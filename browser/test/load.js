@@ -203,37 +203,6 @@ window.onload = function() {
 	console.debug('socket ' + window.app.socket);
 	var map = window.app.map;
 
-	// no need to slurp since there's no actual layout rendering
-	var original = window.socket._onMessage.bind(window.socket);
-	var injectedOnMessage = function(e) {
-		if (record_stats)
-			socketMessageCount++;
-		window.socket._extractTextImg(e);
-		let textMsg = e.textMsg;
-		if (!single_view) {
-			if (!textMsg) return;
-			if (textMsg.indexOf('.uno:ModifiedStatus') >= 0)
-				map.fire('docloaded');
-			if (!record_stats) return;
-		}
-		// processing images takes significant amount of cpu time on JSDOM
-		if (textMsg.startsWith('tile:')) {
-			if (record_stats) {
-				processedTiles.push(new Date().getTime());
-			}
-			var command = window.socket.parseServerCmd(textMsg);
-			let sendMsg = `tileprocessed tile=0:${command.x}:${command.y}:${command.tileWidth}:${command.tileHeight}:0`;
-			window.socket._doSend(sendMsg);
-			return;
-		}
-		if (!single_view && !record_stats)
-			return;
-		original(e);
-	}
-	window.socket.socket.onmessage = injectedOnMessage.bind(window.socket);
-	window.socket._emitSlurpedEvents = function() {}
-	clearTimeout(window.socket._slurpTimer);
-
 	console.debug('Initialize / size map pieces ' + map);
 
 	// Force some sizes onto key pieces:
