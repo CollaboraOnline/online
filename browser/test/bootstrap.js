@@ -2,18 +2,21 @@ const https = require("https");
 const http = require("http");
 
 const { spawn, fork } = require('child_process');
-if (process.argv.length < 5 || process.argv[2] == '--help') {
-	console.debug('bootstrap.js <ssl_true_or_false> <abs_top_builddir> <abs_srcdir>');
+if (process.argv.length < 4 || process.argv[2] == '--help') {
+	console.debug('bootstrap.js <abs_top_builddir> <abs_srcdir>');
 	process.exit(0);
 }
-const ssl_flag = process.argv[2];
-const top_builddir = process.argv[3];
-const srcdir = process.argv[4];
-const typing_speed = process.argv[5];
-const single_view = process.argv[6];
-const typing_duration = process.argv[7];
-const inspect = process.argv[8];
-const recordStats = process.argv[9];
+
+// Websocket can't cope with SSL certificates.
+const ssl_flag = false;
+
+const top_builddir = process.argv[2];
+const srcdir = process.argv[3];
+const typing_speed = process.argv[4];
+const single_view = process.argv[5];
+const typing_duration = process.argv[6];
+const inspect = process.argv[7];
+const recordStats = process.argv[8];
 
 // verbose console output
 const debug = false;
