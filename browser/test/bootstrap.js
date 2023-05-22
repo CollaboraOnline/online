@@ -78,7 +78,7 @@ function serverReady() {
     let execArgs = [];
 
     if (inspect === 'true')
-	execArgs.push('--inspect');
+	execArgs.push('--inspect-brk');
     childNodes.push(
 	fork(`${srcdir}/test/load.js`, [ssl_flag, top_builddir, `${top_builddir}/test/data/perf-test-edit.odt`, `testEdit_1`, `${port}`, `${typing_speed}`, `${typing_duration}`, `${recordStats}`, `${single_view}`], {execArgv: execArgs})
 );
