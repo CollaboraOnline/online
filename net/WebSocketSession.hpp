@@ -176,7 +176,9 @@ public:
         // might prove expensive and we don't expect draining
         // the queue to take anywhere close to the timeout.
         std::unique_lock<std::mutex> lock(_inMutex);
-        do
+
+        Util::Stopwatch sw;
+        for (;;)
         {
             // Drain the queue, first.
             while (!_inQueue.isEmpty())
@@ -190,11 +192,17 @@ public:
                 break;
 
             // Timed wait, if we must.
-        } while (_inCv.wait_for(
-            lock, timeout,
-            [this]() { return !_inQueue.isEmpty() || SigUtil::getShutdownRequestFlag(); }));
+            const std::chrono::milliseconds elapsed = sw.elapsed<std::chrono::milliseconds>();
+            if (elapsed >= timeout)
+                break;
 
-        LOG_DBG(context << "Giving up polling after " << timeout);
+            const std::chrono::milliseconds remaining = timeout - elapsed;
+            _inCv.wait_for(lock, remaining / 20,
+                           [this]()
+                           { return !_inQueue.isEmpty() || SigUtil::getShutdownRequestFlag(); });
+        }
+
+        LOG_DBG(context << "Giving up polling after " << sw.elapsed());
         return std::vector<char>();
     }
 
