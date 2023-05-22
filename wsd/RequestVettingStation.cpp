@@ -94,12 +94,13 @@ void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& d
 
             break;
         case StorageBase::StorageType::Unauthorized:
-            LOG_ERR("No acceptable WOPI hosts found matching the target host ["
-                    << uriPublic.getHost() << "] in config");
-            throw UnauthorizedRequestException(
-                "No acceptable WOPI hosts found matching the target host [" + uriPublic.getHost() +
-                "] in config");
+            LOG_ERR("No authorized hosts found matching the target host [" << uriPublic.getHost()
+                                                                           << "] in config");
+            _ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION,
+                          "error: cmd=internal kind=unauthorized");
+            _socket->ignoreInput();
             break;
+
         case StorageBase::StorageType::FileSystem:
             LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
                             << docKey << "] is for a FileSystem document");
@@ -215,10 +216,19 @@ void RequestVettingStation::checkFileInfo(SocketPoll& poll, const std::string& u
         if (failed)
         {
             if (httpResponse->statusLine().statusCode() == http::StatusCode::Forbidden)
-                throw UnauthorizedRequestException(
-                    "Access denied, 403. WOPI::CheckFileInfo failed on: " + uriAnonym);
+            {
+                LOG_ERR("Access denied to [" << uriAnonym << ']');
+                const std::string msg = "error: cmd=storage kind=unauthorized";
+                _ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
+                _socket->ignoreInput();
+                return;
+            }
 
-            throw StorageConnectionException("WOPI::CheckFileInfo failed: " + wopiResponse);
+            LOG_ERR("Invalid URI or access denied to [" << uriAnonym << ']');
+            const std::string msg = "error: cmd=storage kind=unauthorized";
+            _ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
+            _socket->ignoreInput();
+            return;
         }
 
         Poco::JSON::Object::Ptr wopiInfo;
@@ -263,8 +273,8 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
         DocumentBroker::ChildType::Interactive, url, docKey, _id, uriPublic, _mobileAppDocId);
     if (!docBroker)
     {
-        throw ServiceUnavailableException("Failed to create DocBroker with docKey [" + docKey +
-                                          ']');
+        LOG_ERR("Failed to create DocBroker [" << docKey << ']');
+        return;
     }
 
     LOG_DBG("DocBroker [" << docKey << "] acquired for [" << url << ']');
@@ -272,9 +282,8 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
         docBroker->createNewClientSession(_ws, _id, uriPublic, isReadOnly, _requestDetails);
     if (!clientSession)
     {
-        LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey
-                                                            << ']');
-        throw std::runtime_error("Cannot create client session for doc " + docKey);
+        LOG_ERR("Failed to create Client Session [" << _id << "] on docKey [" << docKey << ']');
+        return;
     }
 
     LOG_DBG("ClientSession [" << clientSession->getName() << "] for [" << docKey
