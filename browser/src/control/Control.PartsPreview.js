@@ -3,7 +3,7 @@
  * L.Control.PartsPreview
  */
 
-/* global _ app $ Hammer w2ui */
+/* global _ app $ Hammer w2ui _UNO */
 L.Control.PartsPreview = L.Control.extend({
 	options: {
 		fetchThumbnail: true,
@@ -218,6 +218,38 @@ L.Control.PartsPreview = L.Control.extend({
 			}
 			if (app.file.fileBasedView)
 				this._map._docLayer._checkSelectedPart();
+		}, this);
+
+		var that = this;
+		L.DomEvent.on(img, 'contextmenu', function(e) {
+			that._setPart(e);
+			$.contextMenu({
+				selector: '#' + img.id,
+				className: 'cool-font',
+				items: {
+					newslide: {
+						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:InsertSlide' : '.uno:InsertPage', 'presentation'),
+						callback: function() { that._map.insertPage(); }
+					},
+					duplicateslide: {
+						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:DuplicateSlide' : '.uno:DuplicatePage', 'presentation'),
+						callback: function() { that._map.duplicatePage(); }
+					},
+					delete: {
+						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:DeleteSlide' : '.uno:DeletePage', 'presentation'),
+						callback: function() { that._map.dispatch('deletepage'); },
+						visible: function() {
+							return that._map._docLayer._parts > 1;
+						}
+					},
+					slideproperties: {
+						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:SlideSetup' : '.uno:PageSetup', 'presentation'),
+						callback: function() {
+							app.socket.sendMessage('uno .uno:PageSetup');
+						}
+					}
+				}
+			});
 		}, this);
 
 		this._layoutPreview(i, img, bottomBound);
