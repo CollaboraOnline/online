@@ -487,7 +487,8 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
         if (!toErase.empty())
         {
-            LOG_TRC("Removing " << toErase.size() << " socket" << (toErase.size() > 1 ? "s" : ""));
+            LOG_TRC("Removing " << toErase.size() << " socket" << (toErase.size() > 1 ? "s" : "")
+                                << " of " << _pollSockets.size() << " total");
             LOG_ASSERT(_pollSockets.size() > 0);
             LOG_ASSERT(toErase.size() <= _pollSockets.size());
             std::sort(toErase.begin(), toErase.end(), [](int a, int b) { return a > b; });
@@ -1126,8 +1127,8 @@ bool StreamSocket::parseHeader(const char *clientName,
     {
         request.read(message);
 
-        LOG_INF('#' << getFD() << ": " << clientName << " HTTP Request: " << request.getMethod()
-                    << ' ' << request.getURI() << ' ' << request.getVersion() <<
+        LOG_INF(clientName << " HTTP Request: " << request.getMethod() << ' ' << request.getURI()
+                           << ' ' << request.getVersion() <<
                 [&](auto& log)
                 {
                     for (const auto& it : request)
