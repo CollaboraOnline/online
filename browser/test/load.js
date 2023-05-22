@@ -267,8 +267,9 @@ window.onload = function() {
 				console.debug(zoomMessage);
 				window.app.socket.sendMessage(zoomMessage);
 				await sleep(500);
-				// mesh the keyboard:
+				// mash the keyboard:
 				let dummyInput = 'askdjf ,asdhflkas r;we f;akdn.adh ;o wh;fa he;qw e.fkahsd ;vbawe.kguday;f vas.,mdb kaery kejraerga';
+				dummyInput = dummyInput.repeat(10);
 				map.focus();
 				let inputIndex = 0;
 				if (record_stats) {
