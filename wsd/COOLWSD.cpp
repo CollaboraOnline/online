@@ -3339,6 +3339,13 @@ static std::shared_ptr<DocumentBroker>
         // TerminationFlag implies ShutdownRequested.
         LOG_WRN((SigUtil::getTerminationFlag() ? "TerminationFlag" : "ShudownRequestedFlag")
                 << " set. Not loading new session [" << id << "] for docKey [" << docKey << ']');
+        if (proto)
+        {
+            const std::string msg("error: cmd=load kind=recycling");
+            proto->sendTextMessage(msg.data(), msg.size());
+            proto->shutdown(true, msg);
+        }
+
         return nullptr;
     }
 
@@ -3379,6 +3386,13 @@ static std::shared_ptr<DocumentBroker>
         // TerminationFlag implies ShutdownRequested.
         LOG_ERR((SigUtil::getTerminationFlag() ? "TerminationFlag" : "ShudownRequestedFlag")
                 << " set. Not loading new session [" << id << "] for docKey [" << docKey << ']');
+        if (proto)
+        {
+            const std::string msg("error: cmd=load kind=recycling");
+            proto->sendTextMessage(msg.data(), msg.size());
+            proto->shutdown(true, msg);
+        }
+
         return nullptr;
     }
 
