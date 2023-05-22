@@ -493,6 +493,12 @@ connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri
                 return ws;
             }
 
+            if (SigUtil::getShutdownRequestFlag())
+            {
+                TST_LOG("Shutdown requested, giving up connectLOKit");
+                break;
+            }
+
             TST_LOG("ERROR: Reconnecting (retry #" << (max_retries - retries) << ") to "
                                                    << uri.toString());
         }
