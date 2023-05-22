@@ -681,6 +681,8 @@ void ServerSocket::dumpState(std::ostream& os)
 
 void SocketDisposition::execute()
 {
+    LOG_TRC("Executing SocketDisposition of #" << _socket->getFD() << ": " << name(_disposition));
+
     // We should have hard ownership of this socket.
     ASSERT_CORRECT_SOCKET_THREAD(_socket);
     if (_socketMove)
