@@ -1,6 +1,7 @@
 var vm = require("vm");
 var fs = require("fs");
 var tmp = require('tmp');
+const WebSocket = require('ws');
 
 if (process.argv.length < 3 ||
     process.argv[2] == '--help') {
@@ -199,8 +200,8 @@ function dumpStats() {
 }
 
 window.onload = function() {
-	console.debug('socket ' + window.socket);
-	map = window.socket._map;
+	console.debug('socket ' + window.app.socket);
+	var map = window.app.map;
 
 	// no need to slurp since there's no actual layout rendering
 	var original = window.socket._onMessage.bind(window.socket);
@@ -232,11 +233,14 @@ window.onload = function() {
 	window.socket.socket.onmessage = injectedOnMessage.bind(window.socket);
 	window.socket._emitSlurpedEvents = function() {}
 	clearTimeout(window.socket._slurpTimer);
+
 	console.debug('Initialize / size map pieces ' + map);
 
 	// Force some sizes onto key pieces:
-	map._container.___clientWidth = 1024;
-	map._container.___clientHeight = 768;
+	map.innerWidth = 1920;
+	map.innerHeight = 1080
+	map._container.___clientWidth = 1920;
+	map._container.___clientHeight = 1080;
 
 	map.on('docloaded', function(){
 		if (docLoaded) return;
@@ -287,13 +291,13 @@ window.onload = function() {
 					}
 //					console.debug('sending input text= ' + dummyInput[inputIndex]);
 					if (dummyInput.charCodeAt(inputIndex) === 32) { // space
-						window.socket._doSend(
+						window.app.socket._doSend(
 							'key' +
 							' type=' + 'input' +
 							' char=' + dummyInput.charCodeAt(inputIndex) + ' key=0\n'
 						);
 					} else {
-						window.socket._doSend(`textinput id=0 text=${dummyInput[inputIndex]}`);
+						window.app.socket._doSend(`textinput id=0 text=${dummyInput[inputIndex]}`);
 					}
 					inputIndex = (inputIndex + 1) % dummyInput.length;
 				}, typing_speed);
