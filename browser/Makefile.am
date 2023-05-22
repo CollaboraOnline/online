@@ -801,7 +801,7 @@ check-local: $(MOCHA_TS_JS_FILES)
 # the delay (in milliseconds) between each emulated key stroke for each view
 typing_speed=100
 # The duration of the typing (in milliseconds)
-typing_duration=30000
+typing_duration=60000
 # By default 6 views are spawned in the document.
 single_view="false"
 # --inspect flag for the first view. Ideally should be used with single_view=true
