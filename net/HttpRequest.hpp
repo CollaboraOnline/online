@@ -1289,7 +1289,7 @@ private:
         // doesn't have our (Session) reference. Also,
         // it's good that we are notified that the request
         // has retired, so we can perform housekeeping.
-        Response::FinishedCallback onFinished = [&]()
+        Response::FinishedCallback onFinished = [this]()
         {
             LOG_TRC("onFinished");
             assert(_response && "Must have response object");
