@@ -60,11 +60,6 @@ void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& d
     LOG_INF("Starting GET request handler for session [" << _id << "] on url ["
                                                          << COOLWSD::anonymizeUrl(url) << ']');
 
-    // Indicate to the client that document broker is searching.
-    static const std::string status("statusindicator: find");
-    LOG_TRC("Sending to Client [" << status << ']');
-    _ws->sendMessage(status);
-
     LOG_INF("Sanitized URI [" << COOLWSD::anonymizeUrl(url) << "] to ["
                               << COOLWSD::anonymizeUrl(uriPublic.toString())
                               << "] and mapped to docKey [" << docKey << "] for session [" << _id
@@ -118,15 +113,21 @@ void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& d
             break;
     }
 
+    return checkFileInfo(poll, url, uriPublic, docKey, isReadOnly);
+}
+
+void RequestVettingStation::checkFileInfo(SocketPoll& poll, const std::string& url,
+                                          const Poco::URI& uriPublic, const std::string& docKey,
+                                          bool isReadOnly)
+{
     ProfileZone profileZone("WopiStorage::getWOPIFileInfo", { { "url", url } });
 
-    Poco::URI uriObject(uriPublic);
-    const std::string uriAnonym = COOLWSD::anonymizeUrl(uriObject.toString());
+    const std::string uriAnonym = COOLWSD::anonymizeUrl(uriPublic.toString());
 
     LOG_DBG("Getting info for wopi uri [" << uriAnonym << ']');
-    _httpSession = StorageConnectionManager::getHttpSession(uriObject);
+    _httpSession = StorageConnectionManager::getHttpSession(uriPublic);
     Authorization auth = Authorization::create(uriPublic);
-    http::Request httpRequest = StorageConnectionManager::createHttpRequest(uriObject, auth);
+    http::Request httpRequest = StorageConnectionManager::createHttpRequest(uriPublic, auth);
 
     const auto startTime = std::chrono::steady_clock::now();
 
@@ -134,7 +135,7 @@ void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& d
                                                            << httpRequest.header());
 
     http::Session::FinishedCallback finishedCallback =
-        [this, docKey, startTime, url, uriObject, uriPublic, isReadOnly,
+        [this, docKey, startTime, url, uriPublic, isReadOnly,
          uriAnonym](const std::shared_ptr<http::Session>& session)
     {
         const std::shared_ptr<const http::Response> httpResponse = session->response();
