@@ -188,7 +188,7 @@ std::string HostUtil::getNewUri(const Poco::URI& uri)
            newUri.getPath();
 }
 
-const Poco::URI HostUtil::getNewLockedUri(Poco::URI& uri)
+const Poco::URI HostUtil::getNewLockedUri(const Poco::URI& uri)
 {
     Poco::URI newUri(uri);
     const std::string value = Util::getValue(AliasHosts, newUri.getAuthority());
