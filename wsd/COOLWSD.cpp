@@ -2080,7 +2080,9 @@ void COOLWSD::innerInitialize(Application& self)
         { "deepl.enabled", "false" },
         { "zotero.enable", "true" },
         { "indirection_endpoint.url", "" },
+#if !MOBILEAPP
         { "help_url", HELP_URL },
+#endif
         { "product_name", APP_NAME}
     };
 
