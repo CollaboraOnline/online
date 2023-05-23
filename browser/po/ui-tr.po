@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-03 17:24+0200\n"
+"POT-Creation-Date: 2023-05-23 22:02+0200\n"
 "PO-Revision-Date: 2023-03-13 06:38+0000\n"
 "Last-Translator: \"PhD. Ayhan YALÇINSOY\" <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
@@ -230,7 +230,7 @@ msgstr "Günlük Tutma Düzeyleri"
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
 #: src/control/Control.Zotero.js:182 src/control/Parts.js:431
-#: src/control/Signing.js:611 src/core/Socket.js:1120 src/core/Socket.js:1125
+#: src/control/Signing.js:611 src/core/Socket.js:1122 src/core/Socket.js:1127
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Kapat"
@@ -273,8 +273,8 @@ msgstr "Bu oturumu kapatmak istediğinizden emin misiniz?"
 #: src/control/Control.LanguageDialog.js:109 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:320 src/control/Control.Zotero.js:328
 #: src/control/Control.Zotero.js:366 src/control/Toolbar.js:758
-#: src/control/Toolbar.js:969 src/core/Socket.js:1067 src/core/Socket.js:1090
-#: src/core/Socket.js:1294 src/map/handler/Map.Feedback.js:83
+#: src/control/Toolbar.js:969 src/core/Socket.js:1069 src/core/Socket.js:1092
+#: src/core/Socket.js:1296 src/map/handler/Map.Feedback.js:83
 #: src/map/handler/Map.WOPI.js:484
 msgid "OK"
 msgstr "Tamam"
@@ -284,7 +284,7 @@ msgstr "Tamam"
 #: src/control/Control.LanguageDialog.js:103
 #: src/control/Control.MobileTopBar.js:41 src/control/Control.Tabs.js:305
 #: src/control/Control.Zotero.js:323 src/control/Toolbar.js:757
-#: src/core/Socket.js:926 src/core/Socket.js:936 src/core/Socket.js:1066
+#: src/core/Socket.js:927 src/core/Socket.js:937 src/core/Socket.js:1068
 #: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
 msgid "Cancel"
@@ -1621,7 +1621,7 @@ msgstr ""
 "Belge, web API aracılığıyla erişilemeyen bazı alıntılar içermektedir. "
 "Alıntıları veya kaynakçayı düzenlerken bazı sorunlara neden olabilir."
 
-#: src/control/Control.Zotero.js:237 src/core/Socket.js:1173
+#: src/control/Control.Zotero.js:237 src/core/Socket.js:1175
 msgid "Loading..."
 msgstr "Yükleniyor..."
 
@@ -2061,23 +2061,23 @@ msgstr ""
 msgid "Reloading the document after rename"
 msgstr "Yeniden adlandırmadan sonra belge tekrar yükleniyor"
 
-#: src/core/Socket.js:897
+#: src/core/Socket.js:898
 msgid "Discard"
 msgstr "Kaydetme"
 
-#: src/core/Socket.js:904
+#: src/core/Socket.js:905
 msgid "Overwrite"
 msgstr "Üstüne yaz"
 
-#: src/core/Socket.js:919
+#: src/core/Socket.js:920
 msgid "Save to new file"
 msgstr "Yeni dosyaya kaydet"
 
-#: src/core/Socket.js:946
+#: src/core/Socket.js:947
 msgid "Document has been changed"
 msgstr "Belge değiştirildi"
 
-#: src/core/Socket.js:946
+#: src/core/Socket.js:947
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -2085,65 +2085,65 @@ msgstr ""
 "Belge kaydedildiği yerde değiştirildi. Kaydedilmemiş değişiklikleri ne "
 "yapmak istiyorsunuz?"
 
-#: src/core/Socket.js:1017
+#: src/core/Socket.js:1019
 msgid "Document requires password to view."
 msgstr "Belgenin görüntülenebilmesi için bir parola gerekiyor."
 
-#: src/core/Socket.js:1020
+#: src/core/Socket.js:1022
 msgid "Document requires password to modify."
 msgstr "Belgenin düzenlenebilmesi için parola gerekiyor."
 
-#: src/core/Socket.js:1022
+#: src/core/Socket.js:1024
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Sadece görüntüleme kipinde açmak için İptal'e tıklayın."
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1028
 msgid "Wrong password provided. Please try again."
 msgstr "Hatalı parola. Lütfen tekrar deneyin."
 
-#: src/core/Socket.js:1089
+#: src/core/Socket.js:1091
 msgid "Only the document owner can change the password."
 msgstr "Parolayı yalnızca belge sahibi değiştirebilir."
 
-#: src/core/Socket.js:1120 src/core/Socket.js:1125
+#: src/core/Socket.js:1122 src/core/Socket.js:1127
 msgid "Missing Fonts"
 msgstr "Eksik Yazı Tipleri"
 
-#: src/core/Socket.js:1162
+#: src/core/Socket.js:1164
 msgid "Someone"
 msgstr "Biri"
 
-#: src/core/Socket.js:1164
+#: src/core/Socket.js:1166
 msgid "%userName saved this document as %fileName. Do you want to join?"
 msgstr "%userName bu belgeyi %fileName olarak kaydetti. Katılmak ister misin?"
 
-#: src/core/Socket.js:1173
+#: src/core/Socket.js:1175
 msgid "Connecting..."
 msgstr "Bağlanıyor..."
 
-#: src/core/Socket.js:1191
+#: src/core/Socket.js:1193
 msgid "The document is being renamed and will reload shortly"
 msgstr "Belge yeniden adlandırılıyor ve kısa süre içinde yeniden yüklenecek"
 
-#: src/core/Socket.js:1294
+#: src/core/Socket.js:1296
 msgid "Exported to storage"
 msgstr "Depoya aktarıldı"
 
-#: src/core/Socket.js:1294
+#: src/core/Socket.js:1296
 msgid "Successfully exported: "
 msgstr "Başarıyla dışa aktarıldı: "
 
-#: src/core/Socket.js:1589
+#: src/core/Socket.js:1591
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Utanç verici ama belgenize bağlanamadık. Lütfen tekrar deneyin."
 
-#: src/core/Socket.js:1606
+#: src/core/Socket.js:1608
 msgid "Reconnecting..."
 msgstr "Yeniden Bağlanıyor..."
 
-#: src/core/Socket.js:1616
+#: src/core/Socket.js:1618
 msgid "The server has been disconnected."
 msgstr "Sunucu bağlantısı kesildi."
 
@@ -2310,6 +2310,9 @@ msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Depolama alanı kalmadığı için kaydetme işlemi başarısız oldu. Belge artık "
+"salt okunur olacaktır. Lütfen yeterli disk alanı olduğundan emin olun ve "
+"tekrar kaydetmeyi deneyin."
 
 #: src/errormessages.js:45
 #, javascript-format
