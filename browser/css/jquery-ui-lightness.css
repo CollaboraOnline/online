@@ -934,7 +934,7 @@ body .ui-tooltip,
 .ui-tooltip-content,
 [data-title]:after {
 	font-size: 0.8em;
-	color: var(--color-text-lighter);
+	color: var(--color-main-text);
 	background: var(--color-background-lighter);
 }
 
