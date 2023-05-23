@@ -932,7 +932,8 @@ body .ui-tooltip,
 	border-width: 2px;
 }
 .ui-tooltip-content,
-[data-title]:after {
+[data-title]:after,
+.menubutton.sidebar:hover span {
 	font-size: 0.8em;
 	color: var(--color-main-text);
 	background: var(--color-background-lighter);
@@ -1324,7 +1325,8 @@ a.ui-button:active,
 	filter: Alpha(Opacity=50); /* support: IE8 */
 }
 .ui-widget-shadow,
-[data-title]:after {
+[data-title]:after,
+.menubutton.sidebar:hover span {
 	-webkit-box-shadow: 0px 0px 4px 2px var(--color-box-shadow);
 	box-shadow: 0px 0px 4px 2px var(--color-box-shadow);
 }

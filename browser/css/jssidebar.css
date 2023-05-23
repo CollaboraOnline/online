@@ -123,19 +123,18 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 
 .menubutton.sidebar span {
 	display: none;
-	font-size: var(--default-font-size);
 }
 
 .menubutton.sidebar:hover span {
 	position: absolute;
+	font-size: var(--default-font-size);
 	display: block;
 	width: auto;
-	background-color: var(--color-background-darker);
-	color: var(--color-text-darker);
-	padding: 2px 4px;
+	padding: 14px 4px;
 	border-radius: var(--border-radius);
 	white-space: nowrap;
 	margin-inline-start: -14px;
+	margin-block-start: 2px;
 }
 
 .sidebar.ui-grid.ui-grid-cell .menubutton {
