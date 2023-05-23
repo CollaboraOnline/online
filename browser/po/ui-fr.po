@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-03 17:24+0200\n"
+"POT-Creation-Date: 2023-05-23 22:02+0200\n"
 "PO-Revision-Date: 2023-03-14 08:03+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
@@ -229,7 +229,7 @@ msgstr "Niveaux de journalisation"
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
 #: src/control/Control.Zotero.js:182 src/control/Parts.js:431
-#: src/control/Signing.js:611 src/core/Socket.js:1120 src/core/Socket.js:1125
+#: src/control/Signing.js:611 src/core/Socket.js:1122 src/core/Socket.js:1127
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Fermer"
@@ -272,8 +272,8 @@ msgstr "Voulez-vous vraiment terminer cette session ?"
 #: src/control/Control.LanguageDialog.js:109 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:320 src/control/Control.Zotero.js:328
 #: src/control/Control.Zotero.js:366 src/control/Toolbar.js:758
-#: src/control/Toolbar.js:969 src/core/Socket.js:1067 src/core/Socket.js:1090
-#: src/core/Socket.js:1294 src/map/handler/Map.Feedback.js:83
+#: src/control/Toolbar.js:969 src/core/Socket.js:1069 src/core/Socket.js:1092
+#: src/core/Socket.js:1296 src/map/handler/Map.Feedback.js:83
 #: src/map/handler/Map.WOPI.js:484
 msgid "OK"
 msgstr "OK"
@@ -283,7 +283,7 @@ msgstr "OK"
 #: src/control/Control.LanguageDialog.js:103
 #: src/control/Control.MobileTopBar.js:41 src/control/Control.Tabs.js:305
 #: src/control/Control.Zotero.js:323 src/control/Toolbar.js:757
-#: src/core/Socket.js:926 src/core/Socket.js:936 src/core/Socket.js:1066
+#: src/core/Socket.js:927 src/core/Socket.js:937 src/core/Socket.js:1068
 #: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
 msgid "Cancel"
@@ -1624,7 +1624,7 @@ msgstr ""
 "Web. Cela peut causer des problèmes lors de l’édition des citations ou de la "
 "bibliographie."
 
-#: src/control/Control.Zotero.js:237 src/core/Socket.js:1173
+#: src/control/Control.Zotero.js:237 src/core/Socket.js:1175
 msgid "Loading..."
 msgstr "Chargement…"
 
@@ -2070,23 +2070,23 @@ msgstr ""
 msgid "Reloading the document after rename"
 msgstr "Rechargement du document après renommage"
 
-#: src/core/Socket.js:897
+#: src/core/Socket.js:898
 msgid "Discard"
 msgstr "Abandonner"
 
-#: src/core/Socket.js:904
+#: src/core/Socket.js:905
 msgid "Overwrite"
 msgstr "Écraser"
 
-#: src/core/Socket.js:919
+#: src/core/Socket.js:920
 msgid "Save to new file"
 msgstr "Enregistrer dans un nouveau fichier"
 
-#: src/core/Socket.js:946
+#: src/core/Socket.js:947
 msgid "Document has been changed"
 msgstr "Le document a été modifié"
 
-#: src/core/Socket.js:946
+#: src/core/Socket.js:947
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -2094,56 +2094,56 @@ msgstr ""
 "Le document a été modifié dans le stockage. Que voulez-vous faire des "
 "modifications non sauvegardées ?"
 
-#: src/core/Socket.js:1017
+#: src/core/Socket.js:1019
 msgid "Document requires password to view."
 msgstr "Le document requiert un mot de passe pour être affiché."
 
-#: src/core/Socket.js:1020
+#: src/core/Socket.js:1022
 msgid "Document requires password to modify."
 msgstr "Le document requiert un mot de passe pour être modifié."
 
-#: src/core/Socket.js:1022
+#: src/core/Socket.js:1024
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Appuyez sur Annuler pour ouvrir en mode lecture seule."
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1028
 msgid "Wrong password provided. Please try again."
 msgstr "Mot de passe fournit incorrect. Veuillez réessayer."
 
-#: src/core/Socket.js:1089
+#: src/core/Socket.js:1091
 msgid "Only the document owner can change the password."
 msgstr ""
 
-#: src/core/Socket.js:1120 src/core/Socket.js:1125
+#: src/core/Socket.js:1122 src/core/Socket.js:1127
 msgid "Missing Fonts"
 msgstr "Polices manquantes"
 
-#: src/core/Socket.js:1162
+#: src/core/Socket.js:1164
 msgid "Someone"
 msgstr "Quelqu'un"
 
-#: src/core/Socket.js:1164
+#: src/core/Socket.js:1166
 msgid "%userName saved this document as %fileName. Do you want to join?"
 msgstr ""
 "%userName a enregistré ce document sous %fileName. Voulez-vous le rejoindre ?"
 
-#: src/core/Socket.js:1173
+#: src/core/Socket.js:1175
 msgid "Connecting..."
 msgstr "Connexion..."
 
-#: src/core/Socket.js:1191
+#: src/core/Socket.js:1193
 msgid "The document is being renamed and will reload shortly"
 msgstr "Le document est en train d'être renommé et sera rechargé sous peu"
 
-#: src/core/Socket.js:1294
+#: src/core/Socket.js:1296
 msgid "Exported to storage"
 msgstr "Exporter vers le stockage"
 
-#: src/core/Socket.js:1294
+#: src/core/Socket.js:1296
 msgid "Successfully exported: "
 msgstr "Export réussi : "
 
-#: src/core/Socket.js:1589
+#: src/core/Socket.js:1591
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -2151,11 +2151,11 @@ msgstr ""
 "Bon, c'est embarrassant, votre document ne peut pas être connecté. Veuillez "
 "réessayer."
 
-#: src/core/Socket.js:1606
+#: src/core/Socket.js:1608
 msgid "Reconnecting..."
 msgstr "Reconnexion..."
 
-#: src/core/Socket.js:1616
+#: src/core/Socket.js:1618
 msgid "The server has been disconnected."
 msgstr "Le serveur a été déconnecté."
 

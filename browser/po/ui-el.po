@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-03 17:24+0200\n"
+"POT-Creation-Date: 2023-05-23 22:02+0200\n"
 "PO-Revision-Date: 2022-09-28 21:23+0000\n"
 "Last-Translator: george kitsoukakis <norhorn@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
@@ -225,7 +225,7 @@ msgstr "Επίπεδα σύνδεσης"
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
 #: src/control/Control.Zotero.js:182 src/control/Parts.js:431
-#: src/control/Signing.js:611 src/core/Socket.js:1120 src/core/Socket.js:1125
+#: src/control/Signing.js:611 src/core/Socket.js:1122 src/core/Socket.js:1127
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
 msgstr "Κλείσιμο"
@@ -270,8 +270,8 @@ msgstr "Είστε βέβαιοι ότι θέλετε να τερματίσετ�
 #: src/control/Control.LanguageDialog.js:109 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:320 src/control/Control.Zotero.js:328
 #: src/control/Control.Zotero.js:366 src/control/Toolbar.js:758
-#: src/control/Toolbar.js:969 src/core/Socket.js:1067 src/core/Socket.js:1090
-#: src/core/Socket.js:1294 src/map/handler/Map.Feedback.js:83
+#: src/control/Toolbar.js:969 src/core/Socket.js:1069 src/core/Socket.js:1092
+#: src/core/Socket.js:1296 src/map/handler/Map.Feedback.js:83
 #: src/map/handler/Map.WOPI.js:484
 msgid "OK"
 msgstr "Εντάξει"
@@ -281,7 +281,7 @@ msgstr "Εντάξει"
 #: src/control/Control.LanguageDialog.js:103
 #: src/control/Control.MobileTopBar.js:41 src/control/Control.Tabs.js:305
 #: src/control/Control.Zotero.js:323 src/control/Toolbar.js:757
-#: src/core/Socket.js:926 src/core/Socket.js:936 src/core/Socket.js:1066
+#: src/core/Socket.js:927 src/core/Socket.js:937 src/core/Socket.js:1068
 #: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
 msgid "Cancel"
@@ -1621,7 +1621,7 @@ msgid ""
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
 
-#: src/control/Control.Zotero.js:237 src/core/Socket.js:1173
+#: src/control/Control.Zotero.js:237 src/core/Socket.js:1175
 msgid "Loading..."
 msgstr "Φόρτωση..."
 
@@ -2069,23 +2069,23 @@ msgstr ""
 msgid "Reloading the document after rename"
 msgstr "Επαναφόρτωση του εγγράφου μετά τη μετονομασία"
 
-#: src/core/Socket.js:897
+#: src/core/Socket.js:898
 msgid "Discard"
 msgstr "Απόρριψη"
 
-#: src/core/Socket.js:904
+#: src/core/Socket.js:905
 msgid "Overwrite"
 msgstr "Αντικατάσταση"
 
-#: src/core/Socket.js:919
+#: src/core/Socket.js:920
 msgid "Save to new file"
 msgstr "Αποθήκευση σε νέο αρχείο"
 
-#: src/core/Socket.js:946
+#: src/core/Socket.js:947
 msgid "Document has been changed"
 msgstr "Το έγγραφο έχει αλλάξει"
 
-#: src/core/Socket.js:946
+#: src/core/Socket.js:947
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -2093,55 +2093,55 @@ msgstr ""
 "Το έγγραφο έχει αλλαχθεί στην αποθήκευση. Τι θα θέλατε να κάνετε με τις μη "
 "αποθηκευμένες αλλαγές σας;"
 
-#: src/core/Socket.js:1017
+#: src/core/Socket.js:1019
 msgid "Document requires password to view."
 msgstr "Για την προβολή του εγγράφου απαιτείται κωδικός πρόσβασης."
 
-#: src/core/Socket.js:1020
+#: src/core/Socket.js:1022
 msgid "Document requires password to modify."
 msgstr "Για την τροποποίηση του εγγράφου απαιτείται κωδικός πρόσβασης."
 
-#: src/core/Socket.js:1022
+#: src/core/Socket.js:1024
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Πατήστε Άκυρο για να ανοιχθεί σε κατάσταση μόνο για προβολή."
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1028
 msgid "Wrong password provided. Please try again."
 msgstr "Εσφαλμένος κωδικός πρόσβασης. Παρακαλούμε, ξαναπροσπαθήστε."
 
-#: src/core/Socket.js:1089
+#: src/core/Socket.js:1091
 msgid "Only the document owner can change the password."
 msgstr ""
 
-#: src/core/Socket.js:1120 src/core/Socket.js:1125
+#: src/core/Socket.js:1122 src/core/Socket.js:1127
 msgid "Missing Fonts"
 msgstr ""
 
-#: src/core/Socket.js:1162
+#: src/core/Socket.js:1164
 msgid "Someone"
 msgstr "Κάποιος"
 
-#: src/core/Socket.js:1164
+#: src/core/Socket.js:1166
 msgid "%userName saved this document as %fileName. Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1173
+#: src/core/Socket.js:1175
 msgid "Connecting..."
 msgstr "Συνδέεται..."
 
-#: src/core/Socket.js:1191
+#: src/core/Socket.js:1193
 msgid "The document is being renamed and will reload shortly"
 msgstr "Το έγγραφο μετονομάστηκε και θα γίνει ανανέωση σύντομα"
 
-#: src/core/Socket.js:1294
+#: src/core/Socket.js:1296
 msgid "Exported to storage"
 msgstr ""
 
-#: src/core/Socket.js:1294
+#: src/core/Socket.js:1296
 msgid "Successfully exported: "
 msgstr ""
 
-#: src/core/Socket.js:1589
+#: src/core/Socket.js:1591
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -2149,11 +2149,11 @@ msgstr ""
 "Δυστυχώς, δεν μπορούμε να συνδεθούμε με το έγγραφό σας. Παρακαλούμε, "
 "ξαναπροσπαθήστε."
 
-#: src/core/Socket.js:1606
+#: src/core/Socket.js:1608
 msgid "Reconnecting..."
 msgstr "Επανασύνδεση..."
 
-#: src/core/Socket.js:1616
+#: src/core/Socket.js:1618
 msgid "The server has been disconnected."
 msgstr "Ο διακομιστής έχει αποσυνδεθεί."
 
