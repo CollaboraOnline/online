@@ -47,7 +47,7 @@ public:
     static bool isWopiEnabled() { return WopiEnabled; }
 
     /// replace the authority of aliashost to realhost if it matches
-    static const Poco::URI getNewLockedUri(Poco::URI& uri);
+    static const Poco::URI getNewLockedUri(const Poco::URI& uri);
 
     static void setFirstHost(const Poco::URI& uri);
 };
