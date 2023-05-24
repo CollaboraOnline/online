@@ -94,10 +94,8 @@ img.sidebar.ui-image {
 	line-height: var(--default-height);
 }
 
-#fontheight,
-#AlignmentPropertyPanel #textorientbox,
 .sidebar.ui-grid.ui-grid-cell > div {
-	justify-content: end;
+	justify-content: start;
 	display: flex;
 }
 
@@ -289,10 +287,13 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 }
 
 /* fixes sidebar width in calc (textorientbox) */
+#textorientbox {
+	grid-template-columns: repeat(auto-fill, minmax(32px, 1fr));
+	grid-gap: inherit;
+}
 #textorientbox button {
-	min-width: 32px;
-	width: 32px;
-	margin: 0 2px;
+	min-width: auto;
+	width: auto;
 }
 
 
