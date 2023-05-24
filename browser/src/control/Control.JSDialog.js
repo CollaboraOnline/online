@@ -68,12 +68,7 @@ L.Control.JSDialog = L.Control.extend({
 			return;
 		}
 
-		try {
-			this.dialogs[id].lastFocusedElement.focus();
-		}
-		catch (error) {
-			this.map.focus();
-		}
+		this.focusToLastElement(id);
 
 		var builder = this.clearDialog(id);
 		if (sendCloseEvent !== false && builder)
@@ -110,6 +105,17 @@ L.Control.JSDialog = L.Control.extend({
 		}
 		else {
 			this.clearDialog(id);
+		}
+
+		this.focusToLastElement(id);
+	},
+
+	focusToLastElement: function(id) {
+		try {
+			this.dialogs[id].lastFocusedElement.focus();
+		}
+		catch (error) {
+			this.map.focus();
 		}
 	},
 
@@ -473,7 +479,8 @@ L.Control.JSDialog = L.Control.extend({
 		var instance = e.data;
 
 		// Save last focused element, we will set the focus back to this element after this popup is closed.
-		instance.lastFocusedElement = document.activeElement;
+		if (!this.dialogs[instance.id] || !this.dialogs[instance.id].lastFocusedElement) // Avoid to reset while updates.
+			instance.lastFocusedElement = document.activeElement;
 
 		instance.callback = e.callback;
 		instance.isSnackbar = e.data.type === 'snackbar';
