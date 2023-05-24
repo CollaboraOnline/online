@@ -2059,16 +2059,12 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         {
             if (_thumbnailSession)
             {
-                bool cursorAlreadyAtTargetPosition = getThumbnailTarget().empty();
-                if (cursorAlreadyAtTargetPosition)
-                {
-                    // fallback in case we setup target at first character in the text document,
-                    // or not existing target and we will not enter invalidatecursor second time
-                    std::ostringstream renderThumbnailCmd;
-                    auto position = getThumbnailPosition();
-                    renderThumbnailCmd << "getthumbnail x=" << position.first << " y=" << position.second;
-                    docBroker->forwardToChild(client_from_this(), renderThumbnailCmd.str());
-                }
+                // fallback in case we setup target at first character in the text document,
+                // or not existing target and we will not enter invalidatecursor second time
+                std::ostringstream renderThumbnailCmd;
+                auto position = getThumbnailPosition();
+                renderThumbnailCmd << "getthumbnail x=" << position.first << " y=" << position.second;
+                docBroker->forwardToChild(client_from_this(), renderThumbnailCmd.str());
             }
         }
         else if (tokens.equals(0, "invalidatecursor:"))
