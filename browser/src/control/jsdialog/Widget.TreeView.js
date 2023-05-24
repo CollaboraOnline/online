@@ -145,6 +145,7 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 		if (entry.columns[i].collapsed || entry.columns[i].expanded) {
 			var icon = L.DomUtil.create('img', 'ui-listview-icon', text);
 			var iconId = _getCellIconId(entry.columns[i]);
+			L.DomUtil.addClass(icon, iconId + 'img');
 			icon.src = builder._createIconURL(iconId, true);
 		} else if (entry.columns[i].text) {
 			var innerText = L.DomUtil.create('span', builder.options.cssClass + ' ui-treeview-cell-text', text);
