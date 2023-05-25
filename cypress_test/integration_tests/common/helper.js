@@ -390,12 +390,12 @@ function checkIfDocIsLoaded(isMultiUser) {
 
 // Assert that NO keyboard input is accepted (i.e. keyboard should be HIDDEN).
 function assertNoKeyboardInput() {
-	cy.cGet('textarea.clipboard').should('have.attr', 'data-accept-input', 'false');
+	cy.cGet('div.clipboard').should('have.attr', 'data-accept-input', 'false');
 }
 
 // Assert that keyboard input is accepted (i.e. keyboard should be VISIBLE).
 function assertHaveKeyboardInput() {
-	cy.cGet('textarea.clipboard').should('have.attr', 'data-accept-input', 'true');
+	cy.cGet('div.clipboard').should('have.attr', 'data-accept-input', 'true');
 }
 
 // Assert that we have cursor and focus on the text area of the document.
@@ -996,7 +996,7 @@ function moveCursor(direction, modifier,
 function typeIntoDocument(text) {
 	cy.log('Typing into document - start.');
 
-	cy.cGet('textarea.clipboard').type(text, {force: true});
+	cy.cGet('div.clipboard').type(text, {force: true});
 
 	cy.log('Typing into document - end.');
 }
