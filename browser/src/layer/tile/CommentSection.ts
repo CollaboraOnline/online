@@ -240,6 +240,7 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.menu.id = 'comment-annotation-menu-' + this.sectionProperties.data.id;
 		this.sectionProperties.menu.tabIndex = 0;
 		this.sectionProperties.menu.onclick = this.menuOnMouseClick.bind(this);
+		this.sectionProperties.menu.onkeypress = this.menuOnKeyPress.bind(this);
 		this.sectionProperties.menu.onfocus = function() { app.view.commentHasFocus = true; };
 		var divMenuTooltipText = _('Open menu');
 		this.sectionProperties.menu.dataset.title = divMenuTooltipText;
@@ -736,7 +737,16 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private menuOnMouseClick (e: any): void {
-		$(this.sectionProperties.menu).contextMenu();
+		var test = $(this.sectionProperties.menu).contextMenu();
+		if (test)
+			console.log('passed');
+		L.DomEvent.stopPropagation(e);
+	}
+
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	private menuOnKeyPress (e: any): void {
+		if (e.code === 'Space' || e.code === 'Enter')
+			$(this.sectionProperties.menu).contextMenu();
 		L.DomEvent.stopPropagation(e);
 	}
 
