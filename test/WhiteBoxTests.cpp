@@ -1028,20 +1028,21 @@ void WhiteBoxTests::testUIDefaults()
     constexpr auto testname = __func__;
 
     std::string uiMode;
+    std::string uiTheme;
 
     LOK_ASSERT_EQUAL(std::string("{\"uiMode\":\"classic\"}"),
-                     FileServerRequestHandler::uiDefaultsToJSON("UIMode=classic;huh=bleh;", uiMode));
+                     FileServerRequestHandler::uiDefaultsToJSON("UIMode=classic;huh=bleh;", uiMode, uiTheme));
     LOK_ASSERT_EQUAL(std::string("classic"), uiMode);
 
     LOK_ASSERT_EQUAL(std::string("{\"spreadsheet\":{\"ShowSidebar\":false},\"text\":{\"ShowRuler\":true}}"),
-                     FileServerRequestHandler::uiDefaultsToJSON("TextRuler=true;SpreadsheetSidebar=false", uiMode));
+                     FileServerRequestHandler::uiDefaultsToJSON("TextRuler=true;SpreadsheetSidebar=false", uiMode, uiTheme));
     LOK_ASSERT_EQUAL(std::string(""), uiMode);
 
     LOK_ASSERT_EQUAL(std::string("{\"presentation\":{\"ShowStatusbar\":false},\"spreadsheet\":{\"ShowSidebar\":false},\"text\":{\"ShowRuler\":true},\"uiMode\":\"notebookbar\"}"),
-                     FileServerRequestHandler::uiDefaultsToJSON(";;UIMode=notebookbar;;PresentationStatusbar=false;;TextRuler=true;;bah=ugh;;SpreadsheetSidebar=false", uiMode));
+                     FileServerRequestHandler::uiDefaultsToJSON(";;UIMode=notebookbar;;PresentationStatusbar=false;;TextRuler=true;;bah=ugh;;SpreadsheetSidebar=false", uiMode, uiTheme));
 
     LOK_ASSERT_EQUAL(std::string("{\"drawing\":{\"ShowStatusbar\":true},\"presentation\":{\"ShowStatusbar\":false},\"spreadsheet\":{\"ShowSidebar\":false},\"text\":{\"ShowRuler\":true},\"uiMode\":\"notebookbar\"}"),
-                     FileServerRequestHandler::uiDefaultsToJSON(";;UIMode=notebookbar;;PresentationStatusbar=false;;TextRuler=true;;bah=ugh;;SpreadsheetSidebar=false;;DrawingStatusbar=true", uiMode));
+                     FileServerRequestHandler::uiDefaultsToJSON(";;UIMode=notebookbar;;PresentationStatusbar=false;;TextRuler=true;;bah=ugh;;SpreadsheetSidebar=false;;DrawingStatusbar=true", uiMode, uiTheme));
 
     LOK_ASSERT_EQUAL(std::string("notebookbar"), uiMode);
 }
