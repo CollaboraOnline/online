@@ -305,7 +305,6 @@ L.control.contextMenu = function (options) {
 
 // Using 'click' and <a href='#' is vital for copy/paste security context.
 L.installContextMenu = function(options) {
-	options.itemClickEvent = 'click';
 	var rewrite = function(items) {
 		if (items === undefined)
 			return;
