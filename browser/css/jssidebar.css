@@ -261,10 +261,6 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	left: -10px;
 }
 
-#ParaPropertyPanel.sidebar.ui-grid #indentfieldbox {
-	width: 158px;
-}
-
 #TableEditPanel.sidebar.ui-grid #delete_label {
 	width: 118px;
 }
