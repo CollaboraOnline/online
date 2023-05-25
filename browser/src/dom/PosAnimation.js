@@ -10,6 +10,7 @@ L.PosAnimation = L.Class.extend({
 		this.stop();
 
 		this._el = el;
+		this._el.dataset.transitioning = true;
 		this._inProgress = true;
 		this._newPos = newPos;
 
@@ -92,6 +93,7 @@ L.PosAnimation = L.Class.extend({
 		clearInterval(this._stepTimer);
 
 		this.fire('step').fire('end');
+		this._el.dataset.transitioning = false;
 	}
 
 });

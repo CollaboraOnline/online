@@ -737,9 +737,7 @@ export class Comment extends CanvasSectionObject {
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	private menuOnMouseClick (e: any): void {
-		var test = $(this.sectionProperties.menu).contextMenu();
-		if (test)
-			console.log('passed');
+		$(this.sectionProperties.menu).contextMenu();
 		L.DomEvent.stopPropagation(e);
 	}
 
