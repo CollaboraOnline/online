@@ -262,6 +262,16 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	width: 118px;
 }
 
+#TableEditPanel.sidebar.ui-grid #grid1,
+#ParaPropertyPanel.sidebar.ui-grid #grid1 {
+	grid-template-columns: 1fr 1fr !important; /* all columns use same width */
+	column-gap: 16px;
+}
+
+#numberbullet {
+	width: 121px; /* to much conent break grid columns width */
+}
+
 /* calc */
 
 /* cell appearance use one row */
