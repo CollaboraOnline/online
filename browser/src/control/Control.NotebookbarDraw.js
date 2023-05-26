@@ -29,7 +29,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 		return this.buildOptionsSectionData([
 			{
 				'type': 'toolitem',
-				'text': _('Page layout'),
+				'text': _UNO('.uno:ModifyPage', 'drawing', true),
 				'command': '.uno:ModifyPage'
 			},
 			{
@@ -767,7 +767,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _('Page layout'),
+				'text': _UNO('.uno:ModifyPage', 'drawing', true),
 				'command': '.uno:ModifyPage'
 			},
 			{

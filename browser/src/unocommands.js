@@ -315,7 +315,7 @@ var unoCommandsArray = {
 	'LineSpacing':{global:{context:_('Set Line Spacing'),menu:_('Line Spacing'),},},
 	'MasterSlidesPanel':{presentation:{menu:_('Master Slides'),},},
 	'MergeCells':{global:{menu:_('Merge Cells'),},},
-	'ModifyPage':{presentation:{menu:_('Slide ~Layout'),},},
+	'ModifyPage':{drawing: {menu: _("Page ~Layout")},presentation:{menu:_('Slide ~Layout'),},},
 	'Move':{spreadsheet:{menu:_('~Move or Copy Sheet...'),},},
 	'MoveDown':{text:{menu:_('Move Item Down'),},},
 	'MoveDownSubItems':{text:{menu:_('Move Item Down with Subpoints'),},},
