@@ -614,6 +614,7 @@ public:
             }
         }
 #endif
+    if (!_newSockets.empty() || !_newCallbacks.empty())
         wakeup();
     }
 
@@ -718,8 +719,10 @@ public:
             newSocket->resetThreadOwner();
 
             std::lock_guard<std::mutex> lock(_mutex);
+            const bool wasEmpty = _newSockets.empty() && _newCallbacks.empty();
             _newSockets.emplace_back(std::move(newSocket));
-            wakeup();
+            if (wasEmpty)
+                wakeup();
         }
     }
 
@@ -746,7 +749,7 @@ public:
     void addCallback(const CallbackFn& fn)
     {
         std::lock_guard<std::mutex> lock(_mutex);
-        bool wasEmpty = _newCallbacks.empty();
+        const bool wasEmpty = _newSockets.empty() && _newCallbacks.empty();
         _newCallbacks.emplace_back(fn);
         if (wasEmpty)
             wakeup();
