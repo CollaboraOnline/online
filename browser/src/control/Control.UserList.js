@@ -91,6 +91,23 @@ L.Control.UserList = L.Control.extend({
 		w2ui['actionbar'].uncheck('userlist');
 	},
 
+	createAvatar: function (viewId, userName, extraInfo, color) {
+		var img;
+		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
+			img = L.DomUtil.create('img', 'avatar-img');
+			img.src = extraInfo.avatar;
+			var altImg = L.LOUtil.getImageURL('user.svg', this.map._docLayer._docType);
+			img.setAttribute('onerror', 'this.onerror=null;this.src=\'' + altImg + '\';');
+			$(img).css({'border-color': color});
+		} else {
+			img = L.DomUtil.create('div', 'user-info');
+			$(img).css({'border-color': color, 'background-color': '#eee', 'background-image': 'url("' + L.LOUtil.getImageURL('user.svg', this.map._docLayer._docType) + '")'});
+		}
+		img.setAttribute('data-view-id', viewId);
+		L.LOUtil.checkIfImageExists(img);
+		return img;
+	},
+
 	getUserItem: function(viewId, userName, extraInfo, color) {
 		var content = L.DomUtil.create('tr', 'useritem');
 		content.id = 'user-' + viewId;
@@ -99,7 +116,7 @@ L.Control.UserList = L.Control.extend({
 		var iconTd = L.DomUtil.create('td', 'usercolor', content);
 		var nameTd = L.DomUtil.create('td', 'username cool-font', content);
 
-		iconTd.appendChild(L.control.createAvatar(viewId, userName, extraInfo, color));
+		iconTd.appendChild(this.createAvatar(viewId, userName, extraInfo, color));
 		nameTd.textContent = userName;
 
 		return content;
@@ -138,8 +155,6 @@ L.Control.UserList = L.Control.extend({
 			return;
 		}
 
-		var that = this;
-
 		var headerUserList = this.options.listUser.slice(-this.options.userLimitHeader);
 
 		// Remove users that should no longer be in the header
@@ -156,9 +171,9 @@ L.Control.UserList = L.Control.extend({
 		// Summary rendering
 		headerUserList.forEach(function (user) {
 			if (!document.querySelector('#userListSummary [data-view-id="' + user.viewId + '"]')) {
-				document.getElementById('userListSummary').appendChild(L.control.createAvatar(user.viewId, user.userName, user.extraInfo, user.color));
+				document.getElementById('userListSummary').appendChild(this.createAvatar(user.viewId, user.userName, user.extraInfo, user.color));
 			}
-		});
+		}.bind(this));
 
 		// Popover rendering
 		this.options.listUser.forEach(function (user) {
@@ -178,15 +193,15 @@ L.Control.UserList = L.Control.extend({
 			var listItem = L.DomUtil.create('div', 'user-list-item');
 			listItem.setAttribute('data-view-id', user.viewId);
 			listItem.setAttribute('role', 'button');
-			listItem.appendChild(L.control.createAvatar(user.viewId, user.userName, user.extraInfo, user.color));
+			listItem.appendChild(this.createAvatar(user.viewId, user.userName, user.extraInfo, user.color));
 			listItem.appendChild(userLabelContainer);
 			listItem.addEventListener('click', function () {
-				that.followUser(user.viewId);
-			}, false);
+				this.followUser(user.viewId);
+			}.bind(this), false);
 
 			var popoverList = document.getElementById('userListPopover');
 			popoverList.insertBefore(listItem, popoverList.lastChild);
-		});
+		}.bind(this));
 
 		if (!document.getElementById('follow-editor')) {
 			var followEditorWrapper = L.DomUtil.create('div', '');
@@ -204,7 +219,7 @@ L.Control.UserList = L.Control.extend({
 			document.getElementById('userListPopover').appendChild(followEditorWrapper);
 		}
 
-		document.getElementById('follow-editor-checkbox').checked = that.map._docLayer._followEditor;
+		document.getElementById('follow-editor-checkbox').checked = this.map._docLayer._followEditor;
 	},
 
 	removeUserFromHeaderAvatars: function(viewId) {
@@ -369,21 +384,4 @@ L.control.createUserListWidget = function () {
 		'</table>' +
 		'<p id="currently-msg">' + _('Current') + ' - <b><span id="current-editor"></span></b></p>' +
 		'</div>';
-};
-
-L.control.createAvatar = function (viewId, userName, extraInfo, color) {
-	var img;
-	if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
-		img = L.DomUtil.create('img', 'avatar-img');
-		img.src = extraInfo.avatar;
-		var altImg = L.LOUtil.getImageURL('user.svg', this._map._docLayer._docType);
-		img.setAttribute('onerror', 'this.onerror=null;this.src=\'' + altImg + '\';');
-		$(img).css({'border-color': color});
-	} else {
-		img = L.DomUtil.create('div', 'user-info');
-		$(img).css({'border-color': color, 'background-color': '#eee', 'background-image': 'url("' + L.LOUtil.getImageURL('user.svg', this._map._docLayer._docType) + '")'});
-	}
-	img.setAttribute('data-view-id', viewId);
-	L.LOUtil.checkIfImageExists(img);
-	return img;
 };
