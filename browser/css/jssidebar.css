@@ -233,6 +233,7 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 
 /* writer */
 
+#ParaPropertyPanel.sidebar #backgroundcolor,
 #PosSizePropertyPanel.sidebar #selectrotationtype {
 	justify-content: end;
 }
