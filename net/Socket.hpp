@@ -614,6 +614,7 @@ public:
             }
         }
 #endif
+    if (!_newSockets.empty() || !_newCallbacks.empty())
         wakeup();
     }
 
@@ -697,7 +698,6 @@ public:
             LOG_WRN("Waking up dead poll thread ["
                     << _name << "], started: " << (_threadStarted ? "true" : "false")
                     << ", finished: " << _threadFinished);
-
         wakeup(_wakeup[1]);
     }
 
@@ -719,7 +719,8 @@ public:
 
             std::lock_guard<std::mutex> lock(_mutex);
             _newSockets.emplace_back(std::move(newSocket));
-            wakeup();
+            if (!_newSockets.empty() || !_newCallbacks.empty())
+                wakeup();
         }
     }
 
@@ -746,9 +747,8 @@ public:
     void addCallback(const CallbackFn& fn)
     {
         std::lock_guard<std::mutex> lock(_mutex);
-        bool wasEmpty = _newCallbacks.empty();
         _newCallbacks.emplace_back(fn);
-        if (wasEmpty)
+        if (!_newSockets.empty() || !_newCallbacks.empty())
             wakeup();
     }
 

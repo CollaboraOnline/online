@@ -367,11 +367,11 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
         // Clear the data.
 #if !MOBILEAPP
         int dump[32];
-        dump[0] = ::read(_wakeup[0], &dump, sizeof(dump));
+        dump[0] = ::read(_wakeup[i], &dump, sizeof(dump));
         LOG_TRC("Wakup pipe read " << dump[0] << " bytes");
 #else
         LOG_TRC("Wakeup pipe read");
-        int dump = fakeSocketRead(_wakeup[0], &dump, sizeof(dump));
+        int dump = fakeSocketRead(_wakeup[i], &dump, sizeof(dump));
 #endif
 
         std::vector<CallbackFn> invoke;
