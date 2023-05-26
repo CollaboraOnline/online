@@ -281,10 +281,10 @@ L.Clipboard = L.Class.extend({
 							app.socket.sendMessage('uno .uno:Paste');
 						}
 
-					},
+					}.bind(this),
 					function(progress) { return 50 + progress/2; }
 				);
-			},
+			}.bind(this),
 			function(progress) { return progress/2; },
 			function() {
 				window.app.console.log('failed to download clipboard using fallback html');
@@ -311,7 +311,7 @@ L.Clipboard = L.Class.extend({
 							app.socket.sendMessage('uno .uno:Paste');
 						}
 
-					},
+					}.bind(this),
 					function(progress) { return 50 + progress/2; },
 					function() {
 						that.dataTransferToDocumentFallback(null, fallbackHtml);
