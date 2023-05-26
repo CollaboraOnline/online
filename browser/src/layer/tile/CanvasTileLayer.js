@@ -247,9 +247,6 @@ L.TileSectionManager = L.Class.extend({
 
 		this._sectionContainer = new CanvasSectionContainer(this._canvas, this._layer.isCalc() /* disableDrawing? */);
 
-		if (this._layer.isCalc())
-			this._sectionContainer.setClearColor('white'); // will be overridden by 'documentbackgroundcolor' msg.
-
 		app.sectionContainer = this._sectionContainer;
 		if (L.Browser.cypressTest) // If cypress is active, create test divs.
 			this._sectionContainer.testing = true;
@@ -388,22 +385,12 @@ L.TileSectionManager = L.Class.extend({
 		canvasOverlay.bindToSection(L.CSections.Tiles.name);
 	},
 
-	shouldDrawCalcGrid: function () {
-		var defaultBG = 'ffffff';
-		if (this._layer.coreDocBGColor)
-			return (this._layer.coreDocBGColor === defaultBG);
-		else
-			return true;
-	},
-
 	_onDrawGridSection: function () {
 		if (this.containerObject.isInZoomAnimation() || this.sectionProperties.tsManager.waitForTiles())
 			return;
 
-		if (this.sectionProperties.tsManager.shouldDrawCalcGrid()) {
-			// grid-section's onDrawArea is TileSectionManager's _drawGridSectionArea().
-			this.onDrawArea();
-		}
+		// grid-section's onDrawArea is TileSectionManager's _drawGridSectionArea().
+		this.onDrawArea();
 	},
 
 	_drawGridSectionArea: function (repaintArea, paneTopLeft, canvasCtx) {
@@ -1788,12 +1775,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		else if (textMsg.startsWith('redlinetablechanged:')) {
 			obj = JSON.parse(textMsg.substring('redlinetablechanged:'.length + 1));
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
-		}
-		else if (textMsg.startsWith('documentbackgroundcolor:')) {
-			if (this.isCalc()) {
-				this.coreDocBGColor = textMsg.substring('documentbackgroundcolor:'.length + 1).trim();
-				app.sectionContainer.setClearColor('#' + this.coreDocBGColor);
-			}
 		}
 		else if (textMsg.startsWith('applicationbackgroundcolor:')) {
 			app.sectionContainer.setClearColor('#' + textMsg.substring('applicationbackgroundcolor:'.length + 1).trim());

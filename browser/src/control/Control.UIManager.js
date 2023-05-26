@@ -126,6 +126,10 @@ L.Control.UIManager = L.Control.extend({
 		}
 		else {
 			this.loadLightMode();
+			var cmd = {
+				'NewTheme': { 'type': 'string', 'value': 'Light' }
+			};
+			app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
 		}
 	},
 
