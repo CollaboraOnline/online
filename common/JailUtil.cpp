@@ -175,6 +175,11 @@ bool tryRemoveJail(const std::string& root)
     //FIXME: technically, the loTemplate directory may have any name.
     unmount(Poco::Path(root, "lo").toString());
 
+    // Unmount the test-mount directory too.
+    const std::string testMountPath = Poco::Path(root, "cool_test_mount").toString();
+    if (FileUtil::Stat(testMountPath).exists())
+        unmount(testMountPath);
+
     // Unmount/delete the jail (sysTemplate).
     safeRemoveDir(root);
 
