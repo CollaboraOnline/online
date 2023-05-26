@@ -238,14 +238,11 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 #PosSizePropertyPanel.sidebar #ratio input[type='checkbox'] {
 	margin-inline-start: 0;
 }
+
+#ParaPropertyPanel.sidebar #indentfieldbox,
 #ParaPropertyPanel.sidebar #box3 {
 	display: grid;
 	justify-content: start;
-	row-gap: 4px;
-}
-
-#ParaPropertyPanel.sidebar #indentfieldbox {
-	display: grid;
 	row-gap: 4px;
 }
 
