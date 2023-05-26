@@ -5665,7 +5665,7 @@ int COOLWSD::innerMain()
     }
 #endif
 
-#if ENABLE_DEBUG
+#if ENABLE_DEBUG && !MOBILEAPP
     const std::string postMessageURI =
         getServiceURI("/browser/dist/framed.doc.html?file_path=" DEBUG_ABSSRCDIR
                       "/" COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER);
