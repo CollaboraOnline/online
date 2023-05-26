@@ -10,7 +10,7 @@ if (lang) {
 	String.locale = 'en-US';
 }
 
-errorMessages.diskfull = _('No disk space left on server, please contact the server administrator to continue.');
+errorMessages.diskfull = _('No disk space left on server.');
 errorMessages.emptyhosturl = _('The host URL is empty. The coolwsd server is probably misconfigured, please contact the administrator.');
 errorMessages.limitreached = _('This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently.');
 errorMessages.infoandsupport = _('More information and support');
@@ -38,13 +38,13 @@ if (window.ThisIsAMobileApp) {
 	};
 } else {
 	errorMessages.storage = {
-		loadfailed: _('Failed to read document from storage. Please contact your storage server (%storageserver) administrator.'),
+		loadfailed: _('Failed to read document from storage, please try to load the document again.'),
 		savediskfull: _('Save failed due to no storage space left. Document will now be read-only. Please make sure enough disk space is available and try to save again.'),
-		savetoolarge: _('Save failed because the document is too large or disk quota exceeded. Document will now be read-only but you may still download it now to preserve a copy locally. Please contact the server (%storageserver) administrator to resolve the issue.'),
+		savetoolarge: _('Save failed because the document is too large or exceeds the remaining storage space. The document will now be read-only but you may still download it now to preserve a copy locally.'),
 		saveunauthorized: _('Document cannot be saved due to expired or invalid access token.'),
-		savefailed: _('Document cannot be saved. Check your permissions or contact the storage server administrator.'),
-		renamefailed: _('Document cannot be renamed. Check your permissions or contact the storage server administrator.'),
-		saveasfailed: _('Document cannot be exported. Please contact the storage server administrator.')
+		savefailed: _('Document cannot be saved, please check your permissions.'),
+		renamefailed: _('Document cannot be renamed, please check your permissions.'),
+		saveasfailed: _('Document cannot be exported. Please try again.')
 	};
 }
 
