@@ -224,6 +224,21 @@ void DocumentBroker::setupTransfer(SocketDisposition &disposition,
     disposition.setTransfer(*_poll, std::move(transferFn));
 }
 
+void DocumentBroker::setupTransfer(const std::shared_ptr<StreamSocket>& socket,
+                                   const SocketDisposition::MoveFunction& transferFn)
+{
+    // Drop pretentions of ownership before _socketMove.
+    socket->resetThreadOwner();
+
+    _poll->startThread();
+    _poll->addCallback(
+        [this, socket, transferFn]()
+        {
+            _poll->insertNewSocket(socket);
+            transferFn(socket);
+        });
+}
+
 void DocumentBroker::assertCorrectThread(const char* filename, int line) const
 {
     _poll->assertCorrectThread(filename, line);
