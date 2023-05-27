@@ -3663,14 +3663,11 @@ void COOLWSD::sendMessageToForKit(const std::string& message)
 /// Otherwise, creates and adds a new one to DocBrokers.
 /// May return null if terminating or MaxDocuments limit is reached.
 /// After returning a valid instance DocBrokers must be cleaned up after exceptions.
-static std::shared_ptr<DocumentBroker>
-    findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
-                          DocumentBroker::ChildType type,
-                          const std::string& uri,
-                          const std::string& docKey,
-                          const std::string& id,
-                          const Poco::URI& uriPublic,
-                          unsigned mobileAppDocId = 0)
+std::shared_ptr<DocumentBroker>
+findOrCreateDocBroker(const std::shared_ptr<ProtocolHandlerInterface>& proto,
+                      DocumentBroker::ChildType type, const std::string& uri,
+                      const std::string& docKey, const std::string& id, const Poco::URI& uriPublic,
+                      unsigned mobileAppDocId = 0)
 {
     LOG_INF("Find or create DocBroker for docKey ["
             << docKey << "] for session [" << id << "] on url ["
