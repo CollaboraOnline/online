@@ -272,6 +272,10 @@ public:
 
     void setViewRenderState(const std::string& state) { _viewRenderState = state; }
 
+    bool getDumpTiles() { return _isDumpingTiles; }
+
+    void setDumpTiles(bool dumpTiles) { _isDumpingTiles = dumpTiles; }
+
     std::string getViewRenderState() { return _viewRenderState; }
 private:
     bool loadDocument(const StringVector& tokens);
@@ -395,6 +399,9 @@ private:
 
     /// the canonical id unique to the set of rendering properties of this session
     int _canonicalViewId;
+
+    /// whether we are dumping tiles as they are being drawn
+    bool _isDumpingTiles;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

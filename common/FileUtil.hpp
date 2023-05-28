@@ -119,6 +119,9 @@ namespace FileUtil
     /// If root is empty, the current system temp directory is used.
     std::string createRandomTmpDir(std::string root = std::string());
 
+    /// Create a temporary directory in the root provided
+    std::string createTmpDir(std::string dirName, std::string root = std::string());
+
     /// Make a temp copy of a file, and prepend it with a prefix.
     /// Used by tests to avoid tainting the originals.
     std::string getTempFileCopyPath(const std::string& srcDir, const std::string& srcFilename,
