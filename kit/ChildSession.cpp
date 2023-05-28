@@ -439,6 +439,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens.equals(0, "contentcontrolevent") ||
                tokens.equals(0, "geta11yfocusedparagraph") ||
                tokens.equals(0, "geta11ycaretposition"));
+               tokens.equals(0, "toggletiledumping"));
 
         std::string pzName("ChildSession::_handleInput:" + tokens[0]);
         ProfileZone pz(pzName.c_str());
@@ -635,6 +636,9 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens.equals(0, "geta11ycaretposition"))
         {
             return getA11yCaretPosition();
+        else if (tokens.equals(0, "toggletiledumping"))
+        {
+            setDumpTiles(tokens[1] == "true");
         }
         else
         {

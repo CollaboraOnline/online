@@ -14,6 +14,8 @@
 #include <zstd.h>
 #include <Log.hpp>
 #include <Common.hpp>
+#include <FileUtil.hpp>
+#include <Png.hpp>
 
 #define ENABLE_DELTAS 1
 
@@ -547,8 +549,55 @@ class DeltaGenerator {
         int bufferWidth, int bufferHeight,
         const TileLocation &loc,
         std::vector<char>& output,
-        TileWireId wid, bool forceKeyframe)
+        TileWireId wid, bool forceKeyframe,
+        bool dumpTiles, LibreOfficeKitTileMode mode)
     {
+
+        // Dump the tiles to the child sessions chroot jail
+        int dumpedIndex = 1;
+        if (dumpTiles)
+        {
+            std::string path = FileUtil::getSysTempDirectoryPath() + "/tiledump";
+            bool directoryExists = !FileUtil::isEmptyDirectory(path);
+            if (!directoryExists)
+            {
+                FileUtil::createTmpDir("tiledump");
+                directoryExists = true;
+            }
+            if (directoryExists)
+            {
+                // filename format: tile-<viewid>-<part>-<left>-<top>-<index>.png
+                std::ostringstream oss;
+                oss << "tile-" << loc._canonicalViewId << "-" << loc._part << "-" << loc._left << "-" << loc._top << "-";
+                std::string baseFilename = oss.str();
+
+                // find the next available filename
+                bool found = false;
+                int index = 1;
+
+                while (!found)
+                {
+                    std::string filename = std::string("/") + baseFilename + std::to_string(index) + ".png";
+                    if (!FileUtil::Stat(path + filename).exists())
+                    {
+                        found = true;
+                        path += filename;
+                        dumpedIndex = index;
+                    }
+                    else
+                    {
+                        index++;
+                    }
+                }
+
+                std::ofstream tileFile(path, std::ios::binary);
+                std::vector<char> pngOutput;
+                Png::encodeSubBufferToPNG(pixmap, startX, startY, width, height,
+                                        bufferWidth, bufferHeight, pngOutput, mode);
+                tileFile.write(pngOutput.data(), pngOutput.size());
+            }
+        }
+
         if (!createDelta(pixmap, startX, startY, width, height,
                          bufferWidth, bufferHeight,
                          loc, output, wid, forceKeyframe))
@@ -607,6 +656,24 @@ class DeltaGenerator {
             size_t oldSize = output.size();
             output.resize(oldSize + compSize);
             memcpy(&output[oldSize], compressed.get(), compSize);
+        }
+        else
+        {
+            // Dump the delta
+            if (dumpTiles)
+            {
+                std::string path(FileUtil::getSysTempDirectoryPath());
+                path += std::string("tiledump");
+                std::ostringstream oss;
+                // filename format: tile-delta-<viewid>-<part>-<left>-<top>-<prev_index>_to_<index>.zstd
+                oss << "tile-delta-" << loc._canonicalViewId << "-" << loc._part << "-" << loc._left << "-" << loc._top
+                    << "-" << dumpedIndex - 1 << "_to_" << dumpedIndex << ".zstd";
+                path += oss.str();
+                std::ofstream tileFile(path, std::ios::binary);
+                // Skip first character which is a 'D' used to identify deltas
+                // The rest should be a zstd compressed delta
+                tileFile.write(output.data() + 1, output.size() - 1);
+            }
         }
 
         return output.size();
