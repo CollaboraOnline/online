@@ -8,6 +8,7 @@
 #pragma once
 
 #include <atomic>
+#include <string>
 #include <mutex>
 #include <signal.h>
 
