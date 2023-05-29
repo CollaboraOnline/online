@@ -7006,6 +7006,17 @@ L.CanvasTileLayer = L.Layer.extend({
 			tile.loaded = true;
 			this._tileReady(coords, null /* err */, tile);
 		}
+
+		// CollaboraOnline#6423 cache the following parts tiles,
+		// this will help avoiding the tear effect when switching to the next part
+		if (!tile && this._selectedPart !== coords.part && !this._tileCache[key]) {
+			tile = document.createElement('img');
+			if (img.rawData)
+				this._applyDelta(tile, img.rawData, img.isKeyframe);
+			else
+				tile.el = img;
+			this._tileCache[key] = tile.el;
+		}
 		L.Log.log(textMsg, 'INCOMING', key);
 
 		// Queue acknowledgment, that the tile message arrived
