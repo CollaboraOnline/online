@@ -6407,6 +6407,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._painter.update();
 			}
 		}
+		if (this._docType === 'presentation' || this._docType === 'drawing')
+			this._initPreFetchPartTiles();
 	},
 
 	_tileReady: function (coords, err, tile) {
@@ -6592,6 +6594,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			twips = this._coordsToTwips(coords);
 			this._sendTileCombineRequest(coords.part, this._selectedMode, tilePositionsX, tilePositionsY);
 		}
+		if (this._docType === 'presentation' || this._docType === 'drawing')
+			this._initPreFetchPartTiles();
 	},
 
 	_cancelTiles: function () {
