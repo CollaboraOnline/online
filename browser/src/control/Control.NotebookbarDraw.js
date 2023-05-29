@@ -30,7 +30,12 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			{
 				'type': 'toolitem',
 				'text': _UNO('.uno:ModifyPage', 'drawing', true),
-				'command': '.uno:ModifyPage'
+				'command': '.uno:SidebarDeck.PropertyDeck'
+			},
+			{
+				'type': 'toolitem',
+				'text': _UNO('.uno:Navigator'),
+				'command': '.uno:Navigator'
 			},
 			{
 				'type': 'toolitem',
@@ -303,7 +308,12 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Sidebar'),
-				'command': '.uno:Sidebar'
+				'command': '.uno:SidebarDeck.PropertyDeck'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Navigator'),
+				'command': '.uno:Navigator'
 			}
 		];
 
