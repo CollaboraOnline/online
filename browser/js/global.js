@@ -111,7 +111,11 @@ window.app = {
 			(window.DocumentTouch && document instanceof window.DocumentTouch)) && !chromebook;
 
 	var isInternetExplorer = (navigator.userAgent.toLowerCase().indexOf('msie') != -1 ||
-			navigator.userAgent.toLowerCase().indexOf('trident') != -1);
+				  navigator.userAgent.toLowerCase().indexOf('trident') != -1);
+
+	var navigatorLang = navigator.languages && navigator.languages.length ? navigator.languages[0] :
+	    (navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage);
+
 
 	global.L = {};
 
@@ -228,7 +232,11 @@ window.app = {
 
 		// @property retina: Boolean
 		// `true` for browsers on a high-resolution "retina" screen.
-		retina: (window.devicePixelRatio || (window.screen.deviceXDPI / window.screen.logicalXDPI)) > 1
+		retina: (window.devicePixelRatio || (window.screen.deviceXDPI / window.screen.logicalXDPI)) > 1,
+
+		// @property lang: String
+		// browser language locale
+		lang: navigatorLang
 	};
 
 	global.mode = {
