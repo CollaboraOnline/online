@@ -593,7 +593,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:OutlineBullet'}]
 			},
-			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
+			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), id: 'table', type: 'menu', menu: [
 				{name: _UNO('.uno:InsertTable', 'text'), uno: '.uno:InsertTable'},
 				{name: _UNO('.uno:TableInsertMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
 					{name: _UNO('.uno:InsertRowsBefore', 'presentation'), uno: '.uno:InsertRowsBefore'},
