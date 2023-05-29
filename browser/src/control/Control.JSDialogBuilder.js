@@ -302,6 +302,25 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
+	_preventNonNumericalInput: function(e) {
+		e = e || window.event;
+		var charCode = (typeof e.which == 'undefined') ? e.keyCode : e.which;
+		var charStr = String.fromCharCode(charCode);
+		var regex = new RegExp('^[0-9\\' + this._decimal + '\\' + this._minusSign + ']+$');
+		if (!charStr.match(regex))
+			return e.preventDefault();
+
+		var value = e.target.value;
+		if (!value)
+			return e.preventDefault();
+
+		// no dup
+		if (this._decimal === charStr || this._minusSign === charStr) {
+			if (value.indexOf(charStr) > -1)
+				return e.preventDefault();
+		}
+	},
+
 	// by default send new state to the core
 	_defaultCallbackHandler: function(objectType, eventType, object, data, builder) {
 
@@ -1536,6 +1555,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		controls = builder._controlHandlers['basespinfield'](parentContainer, data, builder, customCallback);
+		if (!L.Browser.cypressTest && !L.Browser.chrome) {
+			controls.spinfield.onkeypress = L.bind(builder._preventNonNumericalInput, builder);
+		}
 
 		builder.listenNumericChanges(data, builder, controls, customCallback);
 
@@ -1549,6 +1571,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_metricfieldControl: function(parentContainer, data, builder, customCallback) {
 		var value;
 		var controls = builder._controlHandlers['basespinfield'](parentContainer, data, builder, customCallback);
+		if (!L.Browser.cypressTest && !L.Browser.chrome) {
+			controls.spinfield.onkeypress = L.bind(builder._preventNonNumericalInput, builder);
+		}
+
 		builder.listenNumericChanges(data, builder, controls, customCallback);
 
 		value = parseFloat(data.value);
