@@ -6921,7 +6921,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (tile._debugTime.date !== 0)
 				msg += '<br>' + this._debugSetTimes(tile._debugTime, +new Date() - tile._debugTime.date).replace(/, /g, '<br>');
 			msg += '<br>nviewid: ' + tileMsgObj.nviewid;
-			tile._debugPopup.setContent(msg);
+			var node = document.createElement('p');
+			node.innerHTML = msg;
+			tile._debugPopup.setHTMLContent(node);
 
 			if (tile._debugTile) // deltas in yellow
 				tile._debugTile.setStyle({ fillOpacity: tile.lastKeyframe ? 0 : 0.1, fillColor: 'yellow' });
