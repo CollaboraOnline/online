@@ -43,6 +43,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_menus: null,
 	_colorPickers: null,
 	_colorLastSelection: {},
+	_decimal: '.',
+	_minusSign: '-',
 
 	// Responses are included in a parent container. While buttons are created, responses need to be checked.
 	// So we save the button ids and responses to check them later.
@@ -251,6 +253,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		];
 
 		this._currentDepth = 0;
+
+		if (typeof Intl !== 'undefined') {
+			var formatter = new Intl.NumberFormat(L.Browser.lang);
+			var that = this;
+			formatter.formatToParts(-11.1).map(function(item) {
+				switch (item.type) {
+				case 'decimal':
+					that._decimal = item.value;
+					break;
+				case 'minusSign':
+					that._minusSign = item.value;
+					break;
+				}
+			});
+		}
 	},
 
 	isContainerType: function(type) {
