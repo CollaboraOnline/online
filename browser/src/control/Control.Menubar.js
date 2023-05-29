@@ -556,6 +556,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 					{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 					{uno: '.uno:Sidebar'},
+					{uno: '.uno:Navigator', id: 'navigator'},
 					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'}
 				])},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
