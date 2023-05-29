@@ -778,7 +778,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ModifyPage', 'drawing', true),
-				'command': '.uno:ModifyPage'
+				'command': '.uno:SidebarDeck.PropertyDeck'
 			},
 			{
 				'type': 'bigtoolitem',
