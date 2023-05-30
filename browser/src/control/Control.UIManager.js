@@ -106,14 +106,14 @@ L.Control.UIManager = L.Control.extend({
 			};
 			app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
 		}
-		if (this.getSavedStateOrDefault('CompactMode', null)) {
+		if (this.getCurrentMode() === 'classic') {
 			this.refreshMenubar();
+			this.refreshToolbar();
 		}
 		else { 
 			this.refreshNotebookbar();
 		}
 		this.refreshSidebar();
-		this.refreshToolbar();
 	},
 	initDarkModeFromSettings: function() {
 		var selectedMode = this.getDarkModeState();
