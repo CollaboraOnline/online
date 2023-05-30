@@ -179,11 +179,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	height: 0px;
 }
 
-/* vertical alignment in the grid */
-.ui-grid-cell {
-	margin: auto 0px;
-}
-
 /* Page number dialog placed under Insert menu */
 #PageNumberDialog #rightVBox,
 #PageNumberDialog #leftVBox {
