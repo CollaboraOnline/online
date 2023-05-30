@@ -6657,8 +6657,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// FIXME: this _tileCache is used for prev/next slide; but it is
 		// dangerous in connection with typing / invalidation
-		if (!(this._tiles[key]._invalidCount > 0) && tile.el.src) {
-			this._tileCache[key] = tile.el;
+		if (!(this._tiles[key]._invalidCount > 0)) {
+			if (tile.el.src || tile.el instanceof HTMLCanvasElement) {
+				this._tileCache[key] = tile.el;
+			}
 		}
 
 		if (!tile.loaded && this._emptyTilesCount > 0) {
