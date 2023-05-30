@@ -242,25 +242,37 @@ protected:
         config.setBool("storage.ssl.as_scheme", false);
     }
 
-    /// Handles WOPI CheckFileInfo requests.
-    virtual bool handleCheckFileInfoRequest(const Poco::Net::HTTPRequest& request,
-                                            std::shared_ptr<StreamSocket>& socket)
+    /// Returns the default CheckFileInfo json.
+    Poco::JSON::Object::Ptr getDefaultCheckFileInfoPayload(const Poco::URI& uri)
     {
-        const Poco::URI uriReq(request.getURI());
-
         Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
-        fileInfo->set("BaseFileName", getFilename(uriReq));
+        fileInfo->set("BaseFileName", getFilename(uri));
         fileInfo->set("Size", getFileContent().size());
         fileInfo->set("Version", "1.0");
-        fileInfo->set("OwnerId", "test");
-        fileInfo->set("UserId", "test");
-        fileInfo->set("UserFriendlyName", "test");
+        fileInfo->set("OwnerId", "tuser");
+        fileInfo->set("UserId", "tuser");
+        fileInfo->set("UserFriendlyName", "Test User");
         fileInfo->set("UserCanWrite", "true");
         fileInfo->set("PostMessageOrigin", "localhost");
         fileInfo->set("LastModifiedTime",
                       Util::getIso8601FracformatTime(getFileLastModifiedTime()));
         fileInfo->set("EnableOwnerTermination", "true");
         fileInfo->set("SupportsLocks", "false");
+
+        return fileInfo;
+    }
+
+    /// Returns the default CheckFileInfo json.
+    Poco::JSON::Object::Ptr getDefaultCheckFileInfoPayload(const std::string& uri)
+    {
+        return getDefaultCheckFileInfoPayload(Poco::URI(uri));
+    }
+
+    /// Handles WOPI CheckFileInfo requests.
+    virtual bool handleCheckFileInfoRequest(const Poco::Net::HTTPRequest& request,
+                                            std::shared_ptr<StreamSocket>& socket)
+    {
+        Poco::JSON::Object::Ptr fileInfo = getDefaultCheckFileInfoPayload(request.getURI());
         configCheckFileInfo(fileInfo);
 
         std::ostringstream jsonStream;
