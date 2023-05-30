@@ -7,11 +7,14 @@
 
 #include <config.h>
 
+#include <HttpRequest.hpp>
 #include <WopiTestServer.hpp>
 #include <Log.hpp>
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>
 #include <helpers.hpp>
+#include <Util.hpp>
+
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/OAuth20Credentials.h>
 #include <Poco/Util/LayeredConfiguration.h>
@@ -77,10 +80,13 @@ public:
         assertRequest(request);
     }
 
-    void assertGetFileRequest(const Poco::Net::HTTPRequest& request) override
+    std::unique_ptr<http::Response>
+    assertGetFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         _getFileCalled = true;
         assertRequest(request);
+
+        return nullptr; // Success.
     }
 
     std::unique_ptr<http::Response>

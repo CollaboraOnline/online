@@ -47,12 +47,15 @@ public:
         config.setBool("per_document.always_save_on_exit", true);
     }
 
-    void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    std::unique_ptr<http::Response>
+    assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
         LOG_TST("Testing " << toString(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
         assertGetFileCount();
+
+        return nullptr; // Success.
     }
 
     std::unique_ptr<http::Response>

@@ -149,8 +149,10 @@ protected:
     {
     }
 
-    virtual void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/)
+    virtual std::unique_ptr<http::Response>
+    assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/)
     {
+        return nullptr; // Success.
     }
 
     /// Assert the PutFile request is valid and optionally return a response.
@@ -289,14 +291,31 @@ protected:
     /// Override to set the CheckFileInfo attributes.
     virtual void configCheckFileInfo(Poco::JSON::Object::Ptr /*fileInfo*/) {}
 
-    virtual bool handleGetFileRequest(const Poco::Net::HTTPRequest&,
+    virtual bool handleGetFileRequest(const Poco::Net::HTTPRequest& request,
                                       std::shared_ptr<StreamSocket>& socket)
     {
-        http::Response httpResponse(http::StatusCode::OK);
-        httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-        httpResponse.setBody(getFileContent(), "application/octet-stream");
-        socket->sendAndShutdown(httpResponse);
+        std::unique_ptr<http::Response> httpResponse = assertGetFileRequest(request);
+        if (!httpResponse)
+            httpResponse = Util::make_unique<http::Response>(http::StatusCode::OK);
 
+        if (httpResponse->statusLine().statusCategory() ==
+            http::StatusLine::StatusCodeClass::Successful)
+        {
+            LOG_TST("FakeWOPIHost: Response to GetFile " << Poco::URI(request.getURI()).getPath()
+                                                         << ": 200 OK (" << getFileContent().size()
+                                                         << " bytes)");
+            httpResponse->set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
+            httpResponse->setBody(getFileContent(), "application/octet-stream");
+        }
+        else
+        {
+            LOG_TST("FakeWOPIHost: Response to GetFile "
+                    << Poco::URI(request.getURI()).getPath()
+                    << httpResponse->statusLine().statusCode() << ' '
+                    << httpResponse->statusLine().reasonPhrase());
+        }
+
+        socket->sendAndShutdown(*httpResponse);
         return true;
     }
 
@@ -322,8 +341,6 @@ protected:
             ++_countGetFile;
             LOG_TST("FakeWOPIHost: Handling GetFile (#" << _countGetFile
                                                         << "): " << uriReq.getPath());
-
-            assertGetFileRequest(request);
 
             return handleGetFileRequest(request, socket);
         }

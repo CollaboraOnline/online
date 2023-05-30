@@ -26,10 +26,13 @@ protected:
         assertHeaders(request);
     }
 
-    void assertGetFileRequest(const Poco::Net::HTTPRequest& request) override
+    std::unique_ptr<http::Response>
+    assertGetFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         assertHeaders(request);
         exitTest(TestResult::Ok); //TODO: Remove when we add put/rename cases.
+
+        return nullptr; // Success.
     }
 
     std::unique_ptr<http::Response>
