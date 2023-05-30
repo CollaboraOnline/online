@@ -123,8 +123,8 @@ public:
                 const std::string filename = std::string(TDOC) + InvalidFilename;
                 LOG_TST("FakeWOPIHost: Request, WOPI::GetFile returning 404 for: " << filename);
 
-                socket->send(http::Response(http::StatusCode::NotFound));
-                socket->shutdown();
+                http::Response httpResponse(http::StatusCode::NotFound);
+                socket->sendAndShutdown(httpResponse);
 
                 return true;
             }
@@ -162,8 +162,7 @@ public:
             httpResponse.setBody("{\"LastModifiedTime\": \"" +
                                      Util::getHttpTime(getFileLastModifiedTime()) + "\" }",
                                  "application/json; charset=utf-8");
-            socket->send(httpResponse);
-            socket->shutdown();
+            socket->sendAndShutdown(httpResponse);
 
             LOG_TST("Closing document after PutFile");
             WSD_CMD("closedocument");
