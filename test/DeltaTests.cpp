@@ -23,12 +23,14 @@ class DeltaTests : public CPPUNIT_NS::TestFixture
 #if ENABLE_DELTAS
     CPPUNIT_TEST(testDeltaSequence);
     CPPUNIT_TEST(testRandomDeltas);
+    CPPUNIT_TEST(testDeltaCopyOutOfBounds);
 #endif
 
     CPPUNIT_TEST_SUITE_END();
 
     void testDeltaSequence();
     void testRandomDeltas();
+    void testDeltaCopyOutOfBounds();
 
     std::vector<char> loadPng(const char *relpath,
                               png_uint_32& height,
@@ -95,12 +97,14 @@ std::vector<char> DeltaTests::applyDelta(
         {
         case 'c': // copy row.
         {
-            int count = (uint8_t)(delta[i+1]);
-            int srcRow = (uint8_t)(delta[i+2]);
-            int destRow = (uint8_t)(delta[i+3]);
+            size_t count = static_cast<uint8_t>(delta[i+1]);
+            size_t srcRow = static_cast<uint8_t>(delta[i+2]);
+            size_t destRow = static_cast<uint8_t>(delta[i+3]);
+
+            LOK_ASSERT(srcRow + count <= height);
 
 //            std::cout << "copy " << count <<" row(s) " << srcRow << " to " << destRow << '\n';
-            for (int cnt = 0; cnt < count; ++cnt)
+            for (size_t cnt = 0; cnt < count; ++cnt)
             {
                 const char *src = &pixmap[width * (srcRow + cnt) * 4];
                 char *dest = &output[width * (destRow + cnt) * 4];
@@ -112,17 +116,24 @@ std::vector<char> DeltaTests::applyDelta(
         }
         case 'd': // new run
         {
-            int destRow = (uint8_t)(delta[i+1]);
-            int destCol = (uint8_t)(delta[i+2]);
-            size_t length = (uint8_t)(delta[i+3]);
+            size_t destRow = static_cast<uint8_t>(delta[i+1]);
+            size_t destCol = static_cast<uint8_t>(delta[i+2]);
+            size_t length = static_cast<uint8_t>(delta[i+3]);
             i += 4;
 
 //            std::cout << "new " << length << " at " << destCol << ", " << destRow << '\n';
             LOK_ASSERT(length <= width - destCol);
 
             char *dest = &output[width * destRow * 4 + destCol * 4];
-            for (size_t j = 0; j < length * 4 && i < delta.size(); ++j)
-                *dest++ = delta[i++];
+            for (size_t j = 0; j < length * 4 && i < delta.size(); j += 4)
+            {
+                // Swap BGR to RGB
+                *dest++ = delta[i + 2];
+                *dest++ = delta[i + 1];
+                *dest++ = delta[i];
+                *dest++ = delta[i + 3];
+                i += 4;
+            }
             break;
         }
         case 't': // termination
@@ -220,6 +231,47 @@ void DeltaTests::testDeltaSequence()
 
 void DeltaTests::testRandomDeltas()
 {
+}
+
+void DeltaTests::testDeltaCopyOutOfBounds()
+{
+    constexpr auto testname = __func__;
+
+    DeltaGenerator gen;
+
+    png_uint_32 height, width, rowBytes;
+    const TileWireId textWid = 1;
+    std::vector<char> text =
+        DeltaTests::loadPng(TDOC "/delta-graphic.png",
+                            height, width, rowBytes);
+    LOK_ASSERT(height == 256 && width == 256 && rowBytes == 256*4);
+    LOK_ASSERT_EQUAL(size_t(256 * 256 * 4), text.size());
+
+    const TileWireId text2Wid = 2;
+    std::vector<char> text2 =
+        DeltaTests::loadPng(TDOC "/delta-graphic2.png",
+                            height, width, rowBytes);
+    LOK_ASSERT(height == 256 && width == 256 && rowBytes == 256*4);
+    LOK_ASSERT_EQUAL(size_t(256 * 256 * 4), text2.size());
+
+    std::vector<char> delta;
+    // Stash it in the cache
+    LOK_ASSERT(gen.createDelta(
+                       reinterpret_cast<unsigned char *>(&text[0]),
+                       0, 0, width, height, width, height,
+                       TileLocation(1, 2, 3, 0, 1), delta, textWid, false) == false);
+    LOK_ASSERT(delta.empty());
+
+    // Build a delta between the two frames
+    LOK_ASSERT(gen.createDelta(
+                       reinterpret_cast<unsigned char *>(&text2[0]),
+                       0, 0, width, height, width, height,
+                       TileLocation(1, 2, 3, 0, 1), delta, text2Wid, false) == true);
+    LOK_ASSERT(delta.size() > 0);
+
+    // Apply it to move to the second frame
+    std::vector<char> reText2 = applyDelta(text, width, height, delta, testname);
+    assertEqual(reText2, text2, width, height, testname);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(DeltaTests);
