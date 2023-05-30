@@ -319,7 +319,8 @@ class DeltaGenerator {
         LOG_TRC("building delta of a " << cur.getWidth() << 'x' << cur.getHeight() << " bitmap " <<
                 "between old wid " << prev.getWid() << " and " << cur.getWid());
 
-        std::vector<char> output;
+        // let's use uint8_t instead of char to avoid implicit sign extension
+        std::vector<uint8_t> output;
         // guestimated upper-bound delta size
         output.reserve(cur.getWidth() * (cur.getHeight() + 4) * 4);
 
@@ -347,9 +348,12 @@ class DeltaGenerator {
                     // TODO: if offsets are >256 - use 16bits?
                     if (lastCopy > 0)
                     {
-                        char cnt = output[lastCopy];
-                        if (output[lastCopy + 1] + cnt == (char)(match) &&
-                            output[lastCopy + 2] + cnt == (char)(y))
+                        // check if we can extend the last copy
+                        uint8_t cnt = output[lastCopy];
+                        if (output[lastCopy + 1] + cnt == match &&
+                            output[lastCopy + 2] + cnt == y &&
+                            // make sure we're not copying from out of bounds of the previous tile
+                            output[lastCopy + 1] + cnt + 1 < prev.getHeight())
                         {
                             output[lastCopy]++;
                             matched = true;
@@ -552,12 +556,14 @@ class DeltaGenerator {
         TileWireId wid, bool forceKeyframe,
         bool dumpTiles, LibreOfficeKitTileMode mode)
     {
-
+        #if !ENABLE_DEBUG
+        dumpTiles = false;
+        #endif
         // Dump the tiles to the child sessions chroot jail
         int dumpedIndex = 1;
         if (dumpTiles)
         {
-            std::string path = FileUtil::getSysTempDirectoryPath() + "/tiledump";
+            std::string path = "/tmp/tiledump";
             bool directoryExists = !FileUtil::isEmptyDirectory(path);
             if (!directoryExists)
             {
@@ -662,8 +668,7 @@ class DeltaGenerator {
             // Dump the delta
             if (dumpTiles)
             {
-                std::string path(FileUtil::getSysTempDirectoryPath());
-                path += std::string("tiledump");
+                std::string path = "/tmp/tiledump";
                 std::ostringstream oss;
                 // filename format: tile-delta-<viewid>-<part>-<left>-<top>-<prev_index>_to_<index>.zstd
                 oss << "tile-delta-" << loc._canonicalViewId << "-" << loc._part << "-" << loc._left << "-" << loc._top
