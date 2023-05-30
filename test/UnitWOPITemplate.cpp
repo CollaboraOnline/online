@@ -48,18 +48,9 @@ public:
         {
             LOG_TST("FakeWOPIHost: Handling CheckFileInfo: " << uriReq.getPath());
 
-            Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
+            Poco::JSON::Object::Ptr fileInfo = getDefaultCheckFileInfoPayload(uriReq);
             fileInfo->set("BaseFileName", "test.odt");
             fileInfo->set("TemplateSource", helpers::getTestServerURI() + "/test.ott");
-            fileInfo->set("Size", getFileContent().size());
-            fileInfo->set("Version", "1.0");
-            fileInfo->set("OwnerId", "test");
-            fileInfo->set("UserId", "test");
-            fileInfo->set("UserFriendlyName", "test");
-            fileInfo->set("UserCanWrite", "true");
-            fileInfo->set("PostMessageOrigin", "localhost");
-            fileInfo->set("LastModifiedTime", Util::getIso8601FracformatTime(getFileLastModifiedTime()));
-            fileInfo->set("EnableOwnerTermination", "true");
 
             std::ostringstream jsonStream;
             fileInfo->stringify(jsonStream);
