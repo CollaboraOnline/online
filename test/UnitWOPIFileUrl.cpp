@@ -123,9 +123,7 @@ public:
                 const std::string filename = std::string(TDOC) + InvalidFilename;
                 LOG_TST("FakeWOPIHost: Request, WOPI::GetFile returning 404 for: " << filename);
 
-                socket->send("HTTP/1.1 404 Not Found\r\n"
-                             "User-Agent: " WOPI_AGENT_STRING "\r\n"
-                             "\r\n");
+                socket->send(http::Response(http::StatusCode::NotFound));
                 socket->shutdown();
 
                 return true;
@@ -160,14 +158,11 @@ public:
             std::streamsize size = request.getContentLength();
             LOK_ASSERT(size > 0);
 
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "\r\n"
-                << "{\"LastModifiedTime\": \"" << Util::getHttpTime(getFileLastModifiedTime())
-                << "\" }";
-
-            socket->send(oss.str());
+            http::Response httpResponse(http::StatusCode::OK);
+            httpResponse.setBody("{\"LastModifiedTime\": \"" +
+                                     Util::getHttpTime(getFileLastModifiedTime()) + "\" }",
+                                 "application/json; charset=utf-8");
+            socket->send(httpResponse);
             socket->shutdown();
 
             LOG_TST("Closing document after PutFile");

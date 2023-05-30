@@ -68,13 +68,9 @@ public:
         {
             LOG_TST("FakeWOPIHost: Handling " << request.getMethod() << " on " << uriReq.getPath());
 
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-                << "Allow: GET\r\n"
-                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "\r\n";
-
-            socket->send(oss.str());
+            http::Response httpResponse(http::StatusCode::OK);
+            httpResponse.set("Allow", "GET");
+            socket->send(httpResponse);
             socket->shutdown();
 
             return true;
