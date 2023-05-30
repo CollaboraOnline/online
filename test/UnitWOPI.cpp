@@ -7,10 +7,19 @@
 
 #include <config.h>
 
+#include "Util.hpp"
 #include "lokassert.hpp"
 
 #include <WopiTestServer.hpp>
+
+#include <wsd/DocumentBroker.hpp>
+#include <wsd/Admin.hpp>
+
 #include <Poco/Net/HTTPRequest.h>
+
+#include <thread>
+#include <sys/types.h>
+#include <unistd.h>
 
 class UnitWOPI : public WopiTestServer
 {
@@ -139,6 +148,119 @@ public:
     }
 };
 
-UnitBase* unit_create_wsd(void) { return new UnitWOPI(); }
+class UnitOverload : public WopiTestServer
+{
+    STATE_ENUM(Phase, HalfOpen, Load, WaitLoadStatus, WaitModifiedStatus, Done) _phase;
+
+    std::thread _dosThread;
+    std::vector<pid_t> _children;
+    std::vector<std::shared_ptr<http::WebSocketSession>> _webSessions;
+    int _count;
+
+    std::size_t getMemoryUsage() const
+    {
+        std::size_t total = Util::getMemoryUsageRSS(getpid()) + Util::getMemoryUsagePSS(getpid());
+        for (const pid_t pid : _children)
+            total += Util::getMemoryUsageRSS(pid) + Util::getMemoryUsagePSS(pid);
+
+        return total;
+    }
+
+public:
+    UnitOverload()
+        : WopiTestServer("UnitOverload")
+        , _phase(Phase::Load)
+        , _count(0)
+    {
+    }
+
+    void newChild(const std::shared_ptr<ChildProcess>& child) override
+    {
+        _children.emplace_back(child->getPid());
+        LOG_TST(">>> Child #" << _children.size());
+    }
+
+    virtual std::unique_ptr<http::Response>
+    assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    {
+        LOG_TST(">>> CheckFileInfo #" << _count << ", total memory: " << getMemoryUsage() << " KB");
+
+        SocketPoll::wakeupWorld();
+        return std::make_unique<http::Response>(http::StatusCode::NotFound);
+    }
+
+    void invokeWSDTest() override
+    {
+        switch (_phase)
+        {
+            case Phase::HalfOpen:
+            {
+                TRANSITION_STATE(_phase, Phase::Done);
+                ++_count;
+                LOG_TST("Open #" << _count);
+                initWebsocket("/wopi/files/" + std::to_string(_count) + "?access_token=anything");
+            }
+            break;
+
+            case Phase::Load:
+            {
+                TRANSITION_STATE(_phase, Phase::Done);
+                _dosThread = std::thread(
+                    [this]
+                    {
+                        for (;;)
+                        {
+                            ++_count;
+                            LOG_TST(">>> Open #" << _count << ", total memory: " << getMemoryUsage()
+                                                 << " KB");
+
+                            const std::string wopiPath = "/wopi/files/invalid_" +
+                                                         std::to_string(_count) +
+                                                         "?access_token=anything";
+                            const Poco::URI wopiURL(helpers::getTestServerURI() + wopiPath +
+                                                    "&testname=" + getTestname());
+
+                            std::string wopiSrc = Util::encodeURIComponent(wopiURL.toString());
+
+                            // This is just a client connection that is used from the tests.
+                            LOG_TST("Connecting test client to COOL (#"
+                                    << _count << " connection): /cool/" << wopiSrc << "/ws");
+
+                            Poco::URI uri(helpers::getTestServerURI());
+                            const std::string documentURL = "/cool/" + wopiSrc + "/ws";
+
+                            std::shared_ptr<http::WebSocketSession> ws =
+                                http::WebSocketSession::create(uri.toString());
+                            _webSessions.emplace_back(ws);
+
+                            TST_LOG("Connection to " << uri.toString() << " is "
+                                                     << (ws->secure() ? "secure" : "plain"));
+
+                            http::Request req(documentURL);
+                            ws->asyncRequest(req, socketPoll());
+
+                            LOG_TST("Load #" << _count);
+                            helpers::sendTextFrame(ws, "load url=" + wopiSrc, getTestname());
+                        }
+                    });
+            }
+            break;
+
+            case Phase::WaitLoadStatus:
+            case Phase::WaitModifiedStatus:
+            case Phase::Done:
+            {
+                // just wait for the results
+                break;
+            }
+        }
+    }
+};
+
+UnitBase** unit_create_wsd_multi(void)
+{
+    // return new UnitBase* [3] { new UnitWOPI(), new UnitOverload(), nullptr };
+    return new UnitBase* [2] { new UnitWOPI(), nullptr };
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
