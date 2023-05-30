@@ -75,7 +75,8 @@ public:
         }
     }
 
-    void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    std::unique_ptr<http::Response>
+    assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
         LOG_TST("Testing " << toString(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
@@ -86,6 +87,8 @@ public:
         // LOK_ASSERT_EQUAL_MESSAGE("Expected modified document detection to have triggered", true,
         //                          _unloadingModifiedDocDetected);
         _unloadingModifiedDocDetected = false; // Reset.
+
+        return nullptr; // Success.
     }
 
     std::unique_ptr<http::Response>
