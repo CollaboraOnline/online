@@ -284,7 +284,7 @@ protected:
             http::StatusLine::StatusCodeClass::Successful)
         {
             Poco::JSON::Object::Ptr fileInfo = getDefaultCheckFileInfoPayload(request.getURI());
-            configCheckFileInfo(fileInfo);
+            configCheckFileInfo(request, fileInfo);
 
             std::ostringstream jsonStream;
             fileInfo->stringify(jsonStream);
@@ -308,7 +308,10 @@ protected:
     }
 
     /// Override to set the CheckFileInfo attributes.
-    virtual void configCheckFileInfo(Poco::JSON::Object::Ptr /*fileInfo*/) {}
+    virtual void configCheckFileInfo(const Poco::Net::HTTPRequest& /*request*/,
+                                     Poco::JSON::Object::Ptr /*fileInfo*/)
+    {
+    }
 
     virtual bool handleGetFileRequest(const Poco::Net::HTTPRequest& request,
                                       std::shared_ptr<StreamSocket>& socket)

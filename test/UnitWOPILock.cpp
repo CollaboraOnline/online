@@ -38,7 +38,8 @@ public:
     {
     }
 
-    void configCheckFileInfo(Poco::JSON::Object::Ptr fileInfo) override
+    void configCheckFileInfo(const Poco::Net::HTTPRequest& /*request*/,
+                             Poco::JSON::Object::Ptr fileInfo) override
     {
         // Make the first session the editor, subsequent ones read-only.
         const bool firstView = _checkFileInfoCount == 0;
@@ -168,7 +169,8 @@ public:
         config.setUInt("storage.wopi.locking.refresh", RefreshPeriodSeconds);
     }
 
-    void configCheckFileInfo(Poco::JSON::Object::Ptr fileInfo) override
+    void configCheckFileInfo(const Poco::Net::HTTPRequest& /*request*/,
+                             Poco::JSON::Object::Ptr fileInfo) override
     {
         fileInfo->set("SupportsLocks", "true");
     }
