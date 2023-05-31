@@ -78,12 +78,12 @@ protected:
         socket.reset();
     }
 
-    void initWebsocket(const std::string& wopiName)
+    std::string initWebsocket(const std::string& wopiName)
     {
-        Poco::URI wopiURL(helpers::getTestServerURI() + wopiName + "&testname=" + getTestname());
+        const Poco::URI wopiURL(helpers::getTestServerURI() + wopiName +
+                                "&testname=" + getTestname());
 
-        _wopiSrc.clear();
-        Poco::URI::encode(wopiURL.toString(), ":/?", _wopiSrc);
+        _wopiSrc = Util::encodeURIComponent(wopiURL.toString());
 
         // This is just a client connection that is used from the tests.
         LOG_TST("Connecting test client to COOL (#" << (_wsList.size() + 1)
@@ -95,6 +95,28 @@ protected:
                                  socketPoll(), "/cool/" + _wopiSrc + "/ws", getTestname()));
 
         assert((*_ws).get());
+
+        return _wopiSrc;
+    }
+
+    std::string addWebSocket(const std::string& wopiName)
+    {
+        const Poco::URI wopiURL(helpers::getTestServerURI() + wopiName +
+                                "&testname=" + getTestname());
+
+        std::string wopiSrc = Util::encodeURIComponent(wopiURL.toString());
+
+        // This is just a client connection that is used from the tests.
+        LOG_TST("Connecting test client to COOL (#" << (_wsList.size() + 1)
+                                                    << " connection): /cool/" << wopiSrc << "/ws");
+
+        // Insert at the back.
+        const auto& _ws = _wsList.emplace(
+            _wsList.end(), Util::make_unique<UnitWebSocket>(
+                               socketPoll(), "/cool/" + wopiSrc + "/ws", getTestname()));
+        assert((*_ws).get());
+
+        return wopiSrc;
     }
 
     void addWebSocket()
