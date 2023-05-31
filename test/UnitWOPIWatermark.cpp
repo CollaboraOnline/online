@@ -13,7 +13,6 @@
 #include <UnitHTTP.hpp>
 #include <helpers.hpp>
 #include <Poco/Net/HTTPRequest.h>
-#include <Poco/Util/LayeredConfiguration.h>
 
 class UnitWOPIWatermark : public WopiTestServer
 {
@@ -61,16 +60,17 @@ public:
             {
                 WSD_CMD("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 "
                         "tileposy=0,0 tilewidth=3840 tileheight=3840");
-                std::string tile =
+                const std::string tile =
                     helpers::getResponseString(getWs()->getWebSocket(), "tile:", testName);
 
-                if(!tile.empty())
+                if (!tile.empty())
                 {
                     StringVector tokens(StringVector::tokenize(tile, ' '));
                     std::string nviewid = tokens[1].substr(std::string("nviewid=").size());
                     if (!nviewid.empty() && nviewid != "0")
                     {
-                        LOG_INF("Watermark is hashed into integer successfully nviewid=" << nviewid);
+                        LOG_INF(
+                            "Watermark is hashed into integer successfully nviewid=" << nviewid);
                         TRANSITION_STATE(_phase, Phase::Done);
                     }
                 }
@@ -80,9 +80,6 @@ public:
     }
 };
 
-UnitBase *unit_create_wsd(void)
-{
-    return new UnitWOPIWatermark();
-}
+UnitBase* unit_create_wsd(void) { return new UnitWOPIWatermark(); }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
