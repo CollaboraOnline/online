@@ -215,6 +215,7 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 }
 .sidebar.jsdialog.checkbutton {
 	font-size: var(--default-font-size);
+	align-items: center;
 }
 
 .sidebar.jsdialog.checkbutton label {
