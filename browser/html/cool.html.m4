@@ -324,6 +324,8 @@ m4_ifelse(MOBILEAPP,[true],
             m4_ifelse(MOBILEAPP,[],[<div id="served-by"><span id="served-by-label"></span>&nbsp;<span id="os-info"></span>&nbsp;<wbr><span id="coolwsd-id"></span></div>],[<p></p>])
             <div id="slow-proxy"></div>
             m4_ifelse(DEBUG,[true],[<div id="js-dialog">JSDialogs: <a href="javascript:void(function() { window.vex.closeTop(); app.socket.sendMessage('uno .uno:WidgetTestDialog') }() )">View widgets</a></div>])
+            <div id="serverId"></div>
+            <div id="routeToken"></div>
             <p style="margin-inline-end: auto;"><span dir="ltr">Copyright © _YEAR_, VENDOR.</span></p>
           </div>
         </div>
