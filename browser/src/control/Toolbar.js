@@ -621,7 +621,7 @@ L.Map.include({
 
 		content.find('#serverId').text('ServerId: ' + window.app.socket.WSDServer.Id);
 		if (window.indirectSocket)
-			content.find('#serverId').text('RouteToken: ' + window.routeToken);
+			content.find('#routeToken').text('RouteToken: ' + window.routeToken);
 
 		var w;
 		var iw = window.innerWidth;
