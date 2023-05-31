@@ -145,8 +145,10 @@ protected:
         _countPutFile = 0;
     }
 
-    virtual void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& /*request*/)
+    virtual std::unique_ptr<http::Response>
+    assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& /*request*/)
     {
+        return nullptr; // Success.
     }
 
     virtual std::unique_ptr<http::Response>
@@ -274,17 +276,34 @@ protected:
     virtual bool handleCheckFileInfoRequest(const Poco::Net::HTTPRequest& request,
                                             std::shared_ptr<StreamSocket>& socket)
     {
-        Poco::JSON::Object::Ptr fileInfo = getDefaultCheckFileInfoPayload(request.getURI());
-        configCheckFileInfo(fileInfo);
+        std::unique_ptr<http::Response> httpResponse = assertCheckFileInfoRequest(request);
+        if (!httpResponse)
+            httpResponse = Util::make_unique<http::Response>(http::StatusCode::OK);
 
-        std::ostringstream jsonStream;
-        fileInfo->stringify(jsonStream);
+        if (httpResponse->statusLine().statusCategory() ==
+            http::StatusLine::StatusCodeClass::Successful)
+        {
+            Poco::JSON::Object::Ptr fileInfo = getDefaultCheckFileInfoPayload(request.getURI());
+            configCheckFileInfo(fileInfo);
 
-        http::Response httpResponse(http::StatusCode::OK);
-        httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-        httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
-        socket->sendAndShutdown(httpResponse);
+            std::ostringstream jsonStream;
+            fileInfo->stringify(jsonStream);
+            const std::string json = jsonStream.str();
+            LOG_TST("FakeWOPIHost: Response to CheckFileInfo "
+                    << Poco::URI(request.getURI()).getPath() << ": 200 OK: " << json);
 
+            httpResponse->set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
+            httpResponse->setBody(json, "application/json; charset=utf-8");
+        }
+        else
+        {
+            LOG_TST("FakeWOPIHost: Response to CheckFileInfo "
+                    << Poco::URI(request.getURI()).getPath()
+                    << httpResponse->statusLine().statusCode() << ' '
+                    << httpResponse->statusLine().reasonPhrase());
+        }
+
+        socket->sendAndShutdown(*httpResponse);
         return true;
     }
 
@@ -331,8 +350,6 @@ protected:
             ++_countCheckFileInfo;
             LOG_TST("FakeWOPIHost: Handling CheckFileInfo (#" << _countCheckFileInfo
                                                               << "): " << uriReq.getPath());
-
-            assertCheckFileInfoRequest(request);
 
             return handleCheckFileInfoRequest(request, socket);
         }
