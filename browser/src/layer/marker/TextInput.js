@@ -210,6 +210,9 @@ L.TextInput = L.Layer.extend({
 		if (ev.type === 'blur' && this._isComposing) {
 			this._abortComposition(ev);
 		}
+
+		if (ev.type === 'blur' && this._hasFormulaBarFocus())
+			this._map.formulabar.blurField();
 	},
 
 	// Focus the textarea/contenteditable
@@ -295,8 +298,6 @@ L.TextInput = L.Layer.extend({
 
 	getValue: function() {
 		var value = this.getPlainTextContent();
-		if (this._map && this._map.formulabar && this._map.formulabar.hasFocus())
-			value =  this._map.formulabar.getValue();
 		return value;
 	},
 
@@ -607,15 +608,14 @@ L.TextInput = L.Layer.extend({
 		}
 	},
 
-	// Used by FormulaBarJSDialog
-	updateLastContent: function() {
-		this._lastContent = this.getValueAsCodePoints();
-	},
-
 	_isDigit: function(asciiChar) {
 		if (asciiChar >= 48 && asciiChar <= 57)
 			return true;
 		return false;
+	},
+
+	_hasFormulaBarFocus: function() {
+		return 	this._map && this._map.formulabar && this._map.formulabar.hasFocus();
 	},
 
 	// Fired when text has been inputed, *during* and after composing/spellchecking
@@ -760,11 +760,7 @@ L.TextInput = L.Layer.extend({
 	},
 
 	_finishFormulabarEditing: function() {
-		// now we use that only on touch devices
-		if (window.mode.isDesktop())
-			return;
-
-		if (this._map && this._map.formulabar && this._map.formulabar.hasFocus())
+		if (this._hasFormulaBarFocus())
 			this._map.dispatch('acceptformula');
 	},
 
@@ -828,9 +824,6 @@ L.TextInput = L.Layer.extend({
 
 		this.resetContent();
 
-		if (this._map && this._map.formulabar && this._map.formulabar.hasFocus())
-			this._map.formulabar.setValue('');
-
 		// avoid setting the focus keyboard
 		if (!noSelect && document.getElementById(this._textArea.id)) {
 			this._setCursorPosition(0);
@@ -874,8 +867,7 @@ L.TextInput = L.Layer.extend({
 		this._fancyLog('abort-composition', ev.type);
 		if (this._isComposing)
 			this._isComposing = false;
-		this._emptyArea((document.activeElement !== this._textArea)
-			&& (!this._map.formulabar || !this._map.formulabar.hasFocus()));
+		this._emptyArea(document.activeElement !== this._textArea);
 	},
 
 	_onKeyDown: function(ev) {
@@ -1022,7 +1014,7 @@ L.TextInput = L.Layer.extend({
 		if (!type) {
 			type = 'input';
 		}
-		if (this._map.editorHasFocus()) {
+		if (this._map.editorHasFocus() || this._hasFormulaBarFocus()) {
 			app.socket.sendMessage(
 				'key type=' + type + ' char=' + charCode + ' key=' + unoKeyCode + '\n'
 			);

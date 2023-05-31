@@ -7,7 +7,6 @@
 L.Control.FormulaBarJSDialog = L.Control.extend({
 	container: null,
 	builder: null,
-	dirty: true, // if we should allow to update based on servers setText
 
 	onAdd: function (map) {
 		this.map = map;
@@ -35,6 +34,7 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 		if (!window.mode.isMobile()) {
 			var data = [
 				{
+					id: 'formulabar-toolbox',
 					type: 'toolbox',
 					children: [
 						{
@@ -69,9 +69,7 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 						{
 							id: 'sc_input_window',
 							type: 'formulabaredit',
-							text: text ? text : '',
-							rawKeyEvents: window.mode.isDesktop() ? true : undefined,
-							useTextInput: window.mode.isDesktop() ? undefined : true
+							text: text ? text : ''
 						},
 						{
 							id: 'expand',
@@ -93,9 +91,7 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 						}, {
 							id: 'sc_input_window',
 							type: 'formulabaredit',
-							text: text ? text : '',
-							rawKeyEvents: undefined,
-							useTextInput: true
+							text: text ? text : ''
 						},
 						{
 							id: 'expand',
@@ -115,12 +111,6 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 		this.container.style.width = '100%';
 
 		this.builder.build(this.container, data);
-
-		var inputField = this.getInputField();
-		inputField.setAttribute('autocapitalize', 'off');
-		inputField.setAttribute('autocorrect', 'off');
-		inputField.setAttribute('autocomplete', 'off');
-		inputField.setAttribute('spellcheck', 'false');
 	},
 
 	toggleMultiLine: function(input) {
@@ -174,37 +164,44 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 			objectType = 'drawingarea';
 			if (eventType === 'keypress' && data === UNOKey.RETURN || data === UNOKey.ESCAPE)
 				builder.map.focus();
-			else if (eventType === 'grab_focus')
+			else if (eventType === 'grab_focus') {
+				this.focusField();
 				builder.map.onFormulaBarFocus();
+			}
 		}
 
 		builder._defaultCallbackHandler(objectType, eventType, object, data, builder);
 	},
 
-	focus: function() {
-		var that = this;
-		setTimeout(function() {
-			var input = that.getInputField();
-			if (input && document.activeElement !== input)
-				input.focus();
-		}, 0);
+	focusField: function() {
+		L.DomUtil.addClass(this.getInputField(), 'focused');
 	},
 
-	blur: function() {
-		if (!window.mode.isDesktop()) {
-			var textInput = this.map && this.map._textInput;
-			if (textInput && textInput._isComposing)
-				textInput._abortComposition();
-		}
+	blurField: function() {
+		L.DomUtil.removeClass(this.getInputField(), 'focused');
+	},
 
+	enable: function() {
 		var input = this.getInputField();
-		if (input)
-			input.blur();
+		if (!input)
+			return;
+
+		input.enable();
+	},
+
+	disable: function() {
+		var input = this.getInputField();
+		if (!input)
+			return;
+
+		input.disable();
 	},
 
 	hasFocus: function() {
 		var input = this.getInputField();
-		return document.activeElement === input;
+		if (!input)
+			return false;
+		return L.DomUtil.hasClass(input, 'focused');
 	},
 
 	show: function(action) {
@@ -242,22 +239,6 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 
 	getInputField: function() {
 		return this.getControl('sc_input_window');
-	},
-
-	getValue: function() {
-		var control = this.getInputField();
-		if (!control)
-			return;
-
-		return control.value;
-	},
-
-	setValue: function(newValue) {
-		var control = this.getInputField();
-		if (!control)
-			return;
-
-		control.value = newValue;
 	},
 
 	onFormulaBar: function(e) {
@@ -305,27 +286,23 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 		if (this.container) {
 			var messageForInputField = innerData && innerData.control_id === 'sc_input_window';
 			var isSetTextMessage = innerData && innerData.action_type === 'setText';
-			var keepInputFocus = messageForInputField && this.hasFocus();
-			var textInput = this.map._textInput;
+			var isGrabFocusMessage = innerData && innerData.action_type === 'grab_focus';
 
-			// on desktop we display what we get from the server
-			// on touch devices we allow to type into the field directly, so we cannot update always
-			var allowUpdate = window.mode.isDesktop()
-				|| !this.hasFocus() || (this.hasFocus() && this.dirty);
-
-			if (!allowUpdate && messageForInputField && isSetTextMessage)
+			if (messageForInputField && isGrabFocusMessage) {
+				this.focusField();
 				return;
-
-			this.dirty = false;
-
-			this.builder.executeAction(this.container, innerData);
-
-			if (!window.mode.isDesktop() && messageForInputField && this.hasFocus()) {
-				textInput.updateLastContent();
 			}
 
-			if (keepInputFocus)
-				this.focus();
+			if (messageForInputField && isSetTextMessage) {
+				var customEditArea = this.getInputField();
+				if (customEditArea) {
+					var selection = innerData.selection.split(';');
+					customEditArea.setText(innerData.text, selection);
+				}
+				return;
+			}
+
+			this.builder.executeAction(this.container, innerData);
 		} else
 			this.createFormulabar(innerData.text);
 	},

@@ -1359,13 +1359,51 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	height: 28px;
 	border: 1px solid var(--color-border);
 	flex-grow: 1;
-	resize: none !important;
-	max-width: unset !important;
-	font-size: calc(var(--default-font-size)*1.2) !important;
-	line-height: 1.2;
-	color: var(--color-main-text);
 	background-color: var(--color-background-lighter);
 	border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.ui-custom-textarea {
+	overflow: auto;
+	display: grid;
+}
+
+.ui-custom-textarea.focused {
+	border: 1px solid var(--color-primary) !important;
+}
+
+.ui-custom-textarea,
+.ui-custom-textarea-cursor-layer,
+.ui-custom-textarea-text-layer {
+	font-family: monospace;
+	line-height: 1.2;
+	font-size: calc(var(--default-font-size)*1.2) !important;
+	color: var(--color-main-text);
+	overflow-wrap: anywhere;
+}
+
+.ui-custom-textarea-cursor-layer,
+.ui-custom-textarea-text-layer {
+	padding: 4px;
+	grid-column: 1;
+	grid-row: 1;
+	white-space: pre-wrap;
+	text-wrap: wrap;
+}
+
+.ui-custom-textarea-cursor-layer {
+	color: transparent;
+	pointer-events: none;
+}
+
+.ui-custom-textarea.focused .ui-custom-textarea-cursor-layer span.cursor:not(.hidden) {
+	border-left: 1px solid black;
+	margin-left: -1px;
+}
+
+.ui-custom-textarea-cursor-layer span.selection:not(.hidden) {
+	background-color: var(--color-primary-darker);
+	color: var(--color-primary-text);
 }
 
 #sc_input_window.formulabar:focus {

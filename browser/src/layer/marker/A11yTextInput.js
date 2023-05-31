@@ -229,6 +229,9 @@ L.A11yTextInput = L.Layer.extend({
 		if (ev.type === 'blur' && this._isComposing) {
 			this._abortComposition(ev);
 		}
+
+		if (ev.type === 'blur' && this._hasFormulaBarFocus())
+			this._map.formulabar.blurField();
 	},
 
 	hasFocus: function() {
@@ -317,10 +320,7 @@ L.A11yTextInput = L.Layer.extend({
 	},
 
 	getValue: function() {
-		var value = this.getPlainTextContent();
-		if (this._hasFormulaBarFocus())
-			value =  this._map.formulabar.getValue();
-		return value;
+		return this.getPlainTextContent();
 	},
 
 	getPlainTextContent: function() {
@@ -807,7 +807,6 @@ L.A11yTextInput = L.Layer.extend({
 		this._dbg('_onBeforeInput ]');
 	},
 
-	// Used by FormulaBarJSDialog
 	updateLastContent: function() {
 		var value = this.getValue();
 		this._lastContent = this.getValueAsCodePoints(value);
@@ -1069,10 +1068,6 @@ L.A11yTextInput = L.Layer.extend({
 	},
 
 	_finishFormulabarEditing: function() {
-		// now we use that only on touch devices
-		if (window.mode.isDesktop())
-			return;
-
 		if (this._hasFormulaBarFocus())
 			this._map.dispatch('acceptformula');
 	},
@@ -1138,9 +1133,6 @@ L.A11yTextInput = L.Layer.extend({
 		this._setLastCursorPosition(0);
 
 		this.resetContent();
-
-		if (this._hasFormulaBarFocus())
-			this._map.formulabar.setValue('');
 
 		// avoid setting the focus keyboard
 		if (!noSelect && document.getElementById(this._textArea.id)) {

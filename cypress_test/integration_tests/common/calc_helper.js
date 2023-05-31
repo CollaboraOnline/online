@@ -86,7 +86,7 @@ function typeIntoFormulabar(text) {
 		});
 
 	cy.cGet('#sc_input_window.formulabar').click(); // This probably shouldn't be here, but acceptformula doesn't get visible without a click.
-	cy.cGet('#sc_input_window.formulabar').should('have.focus');
+	cy.cGet('#sc_input_window.formulabar').should('have.class', 'focused');
 	cy.cGet('body').type(text);
 
 	helper.doIfOnMobile(function() {
