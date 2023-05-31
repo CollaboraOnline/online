@@ -74,10 +74,13 @@ public:
         }
     }
 
-    void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& request) override
+    virtual std::unique_ptr<http::Response>
+    assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& request)
     {
         _checkFileInfoCalled = true;
         assertRequest(request);
+
+        return nullptr; // Success.
     }
 
     std::unique_ptr<http::Response>

@@ -21,9 +21,12 @@ class UnitWopiHttpHeaders : public WopiTestServer
     _phase;
 
 protected:
-    void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& request) override
+    virtual std::unique_ptr<http::Response>
+    assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& request)
     {
         assertHeaders(request);
+
+        return nullptr; // Success.
     }
 
     std::unique_ptr<http::Response>
