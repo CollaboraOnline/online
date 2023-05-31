@@ -34,7 +34,8 @@ public:
     {
     }
 
-    void configCheckFileInfo(Poco::JSON::Object::Ptr fileInfo) override
+    void configCheckFileInfo(const Poco::Net::HTTPRequest& /*request*/,
+                             Poco::JSON::Object::Ptr fileInfo) override
     {
         fileInfo->set("SupportsLocks", "true");
     }

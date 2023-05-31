@@ -306,7 +306,8 @@ public:
         config.setBool("per_document.always_save_on_exit", true);
     }
 
-    void configCheckFileInfo(Poco::JSON::Object::Ptr fileInfo) override
+    void configCheckFileInfo(const Poco::Net::HTTPRequest& /*request*/,
+                             Poco::JSON::Object::Ptr fileInfo) override
     {
         LOG_TST("CheckFileInfo: making read-only");
 

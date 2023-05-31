@@ -27,52 +27,14 @@ public:
     {
     }
 
-    virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request, Poco::MemoryInputStream& /*message*/, std::shared_ptr<StreamSocket>& socket) override
+    void configCheckFileInfo(const Poco::Net::HTTPRequest& request,
+                             Poco::JSON::Object::Ptr fileInfo) override
     {
-        Poco::URI uriReq(request.getURI());
-        Poco::RegularExpression regInfo("/wopi/files/[0-9]");
-        Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
-        LOG_INF("FakeWOPIHost: Request: " << uriReq.toString());
-
-        // CheckFileInfo
-        if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
-        {
-            LOG_INF("FakeWOPIHost: Handling CheckFileInfo: " << uriReq.getPath());
-
-            assertCheckFileInfoRequest(request);
-
-            Poco::JSON::Object::Ptr fileInfo = getDefaultCheckFileInfoPayload(uriReq);
-            const std::string fileName(uriReq.getPath() == "/wopi/files/3" ? "he%llo.txt"
-                                                                           : "hello.txt");
-            fileInfo->set("BaseFileName", fileName);
-            fileInfo->set("WatermarkText", "WatermarkTest");
-
-            std::ostringstream jsonStream;
-            fileInfo->stringify(jsonStream);
-
-            http::Response httpResponse(http::StatusCode::OK);
-            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-            httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
-            socket->sendAndShutdown(httpResponse);
-
-            return true;
-        }
-        // GetFile
-        else if (request.getMethod() == "GET" && regContent.match(uriReq.getPath()))
-        {
-            LOG_INF("FakeWOPIHost: Handling GetFile: " << uriReq.getPath());
-
-            assertGetFileRequest(request);
-
-            http::Response httpResponse(http::StatusCode::OK);
-            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
-            httpResponse.setBody(getFileContent(), "text/plain; charset=utf-8");
-            socket->sendAndShutdown(httpResponse);
-
-            return true;
-        }
-
-        return false;
+        const Poco::URI uriReq(request.getURI());
+        const std::string fileName(uriReq.getPath() == "/wopi/files/3" ? "he%llo.txt"
+                                                                       : "hello.txt");
+        fileInfo->set("BaseFileName", fileName);
+        fileInfo->set("WatermarkText", "WatermarkTest");
     }
 
     void invokeWSDTest() override
