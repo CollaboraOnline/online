@@ -713,6 +713,7 @@ window.app = {
 				var uriWithRouteToken = http.response.uri;
 				var params = (new URL(uriWithRouteToken)).searchParams;
 				global.routeToken = params.get('RouteToken');
+				window.app.console.log('updated routeToken: ' + global.routeToken);
 				that.innerSocket = new WebSocket(uriWithRouteToken);
 				that.innerSocket.binaryType = that.binaryType;
 				that.innerSocket.onerror = function() {
