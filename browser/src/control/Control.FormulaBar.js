@@ -97,7 +97,7 @@ L.Control.FormulaBar = L.Control.extend({
 		if (e.perm === 'edit') {
 			// Enable formula bar
 			$('#addressInput').prop('disabled', false);
-			$('#formulaInput').prop('disabled', false);
+			this.map.formulabar.enable();
 
 			if (toolbar) {
 				formulaBarButtons.forEach(function(id) {
@@ -107,7 +107,7 @@ L.Control.FormulaBar = L.Control.extend({
 		} else {
 			// Disable formula bar
 			$('#addressInput').prop('disabled', true);
-			$('#formulaInput').prop('disabled', true);
+			this.map.formulabar.disable();
 
 			if (toolbar) {
 				formulaBarButtons.forEach(function(id) {
@@ -184,6 +184,8 @@ L.Map.include({
 			// clear reference marks
 			map._docLayer._clearReferences();
 		}, 250);
+
+		map.formulabar.blurField();
 	}
 });
 

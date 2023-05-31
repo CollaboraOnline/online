@@ -7,14 +7,10 @@
  *     id: 'id',
  *     type: 'formulabaredit',
  *     test: 'text content\nsecond line',
- *     useTextInput: true,
- *     rawKeyEvents: false,
  *     cursor: true,
  *     enabled: false
  * }
  *
- * 'useTextInput' instead of typing into field, key events are sent using L.TextInput
- * 'rawKeyEvents' instead of typing into field, key events are sent only to the server using jsdialog events
  * 'cursor' specifies if user can type into the field or it is readonly
  * 'enabled' editable field can be temporarily disabled
  *
@@ -23,198 +19,205 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/* global JSDialog UNOKey UNOModifier */
+/* global JSDialog */
 
-function _sendSelection(edit, builder) {
-	var currentText = edit.value;
-	var startPos = edit.selectionStart;
-	var endPos = edit.selectionEnd;
+function _sendSelection(edit, builder, id) {
+	if (document.activeElement != edit)
+		return;
+
+	var currentText = edit.innerText;
+	var selection = document.getSelection();
+	var startPos = selection.anchorOffset;
+	var endPos = selection.focusOffset;
 	var startPara = 0;
 	var endPara = 0;
 
-	if (currentText.indexOf('\n') >= 0) {
-		var currentPos = 0;
-		var found = currentText.indexOf('\n', currentPos);
-		while (startPos > found) {
-			if (found === -1)
+	if (selection.anchorNode == edit) {
+		startPos = endPos = 0;
+		for (var i in edit.childNodes) {
+			if (i == selection.anchorOffset)
 				break;
-			currentPos = found + 1;
-			startPara++;
-			found = currentText.indexOf('\n', currentPos);
+			if (edit.childNodes[i].tagName == 'BR') {
+				startPara++;
+				endPara++;
+			}
+		}
+	} else if (currentText.indexOf('\n') >= 0) {
+		for (var i in edit.childNodes) {
+			if (edit.childNodes[i] != selection.anchorNode) {
+				if (edit.childNodes[i].tagName == 'BR') {
+					startPara++;
+				}
+			} else {
+				break;
+			}
 		}
 
-		startPos -= currentPos;
-
-		currentPos = 0;
-		found = currentText.indexOf('\n', currentPos);
-		while (endPos > found) {
-			if (found === -1)
+		for (var i in edit.childNodes) {
+			if (edit.childNodes[i] != selection.focusNode) {
+				if (edit.childNodes[i].tagName == 'BR') {
+					endPara++;
+				}
+			} else {
 				break;
-			currentPos = found + 1;
-			endPara++;
-			found = currentText.indexOf('\n', currentPos);
+			}
 		}
-
-		endPos -= currentPos;
 	}
 
 	var selection = startPos + ';' + endPos + ';' + startPara + ';' + endPara;
-	builder.callback('edit', 'textselection', edit, selection, builder);
+	builder.callback('edit', 'textselection', {id: id}, selection, builder);
+}
+
+function _appendText(cursorLayer, text, style) {
+	var span = L.DomUtil.create('span', style);
+	span.innerText = text;
+	cursorLayer.appendChild(span);
+}
+
+function _appendNewLine(cursorLayer) {
+	cursorLayer.appendChild(L.DomUtil.create('br', ''));
+}
+
+function _appendCursor(cursorLayer) {
+	var cursor = L.DomUtil.create('span', 'cursor');
+	cursorLayer.appendChild(cursor);
+	cursor.scrollIntoView();
+}
+
+function _setSelection(cursorLayer, text, startX, endX, startY, endY) {
+	cursorLayer.innerHTML = '';
+
+	var reversedSelection = false;
+	if (endY == startY && endX < startX) {
+		reversedSelection = true;
+
+		var tmp = startX;
+		startX = endX;
+		endX = tmp;
+	}
+
+	if (endY < startY) {
+		reversedSelection = true;
+
+		var tmp = startY;
+		startY = endY;
+		endY = tmp;
+
+		tmp = startX;
+		startX = endX;
+		endX = tmp;
+	}
+
+	for (var i in text) {
+		var line = text[i];
+
+		if (i < startY) {
+			_appendText(cursorLayer, line, '');
+			_appendNewLine(cursorLayer);
+		} else if (i == startY) {
+			_appendText(cursorLayer, line.substr(0, startX), '');
+
+			if (reversedSelection)
+				_appendCursor(cursorLayer);
+
+			_appendText(cursorLayer,
+				line.substr(startX, startY == endY ? endX - startX : undefined),
+				((startX != endX || startY != endY) ? 'selection' : ''));
+
+			if (startY == endY) {
+				if (!reversedSelection)
+					_appendCursor(cursorLayer);
+
+				_appendText(cursorLayer, line.substr(endX), '');
+				_appendNewLine(cursorLayer);
+			} else
+				_appendNewLine(cursorLayer);
+		} else if (i > startY && i < endY) {
+			_appendText(cursorLayer, line, 'selection');
+			_appendNewLine(cursorLayer);
+		} else if (i == endY && endY != startY) {
+			_appendText(cursorLayer, line.substr(0, endX), 'selection');
+			if (!reversedSelection)
+				_appendCursor(cursorLayer);
+			_appendText(cursorLayer, line.substr(endX), '');
+			_appendNewLine(cursorLayer);
+		} else if (i > endY) {
+			_appendText(cursorLayer, line, '');
+			_appendNewLine(cursorLayer);
+		}
+	}
 }
 
 function _formulabarEditControl(parentContainer, data, builder) {
-	var controlType = 'textarea';
-	if (data.cursor && (data.cursor === 'false' || data.cursor === false))
-		controlType = 'p';
+	var container = L.DomUtil.create('div', 'ui-custom-textarea ' + builder.options.cssClass, parentContainer);
+	container.id = data.id;
 
-	var edit = L.DomUtil.create(controlType, 'ui-textarea ' + builder.options.cssClass, parentContainer);
+	var textLayer = L.DomUtil.create('div', 'ui-custom-textarea-text-layer ' + builder.options.cssClass, container);
 
-	if (controlType === 'textarea')
-		edit.value = builder._cleanText(data.text);
-	else
-	{
-		data.text = data.text.replace(/(?:\r\n|\r|\n)/g, '<br>');
-		edit.textContent = builder._cleanText(data.text);
-	}
+	if (data.enabled !== false)
+		textLayer.setAttribute('contenteditable', 'true');
 
-	edit.id = data.id;
+	var cursorLayer = L.DomUtil.create('div', 'ui-custom-textarea-cursor-layer ' + builder.options.cssClass, container);
 
-	if (data.enabled === 'false' || data.enabled === false)
-		edit.disabled = true;
+	container.setText = function(text, selection) {
+		textLayer.innerText = text;
 
-	if (data.useTextInput) {
-		// uses TextInput.js logic and events handling (IME for mobile/touch devices)
-		edit.addEventListener('input', builder.map._textInput._onInput.bind(builder.map._textInput));
-		edit.addEventListener('beforeinput', builder.map._textInput._onBeforeInput.bind(builder.map._textInput));
-	} else if (data.rawKeyEvents) {
-		// sends key events over jsdialog
-		var modifier = 0;
+		var startX = parseInt(selection[0]);
+		var endX = parseInt(selection[1]);
+		var startY = parseInt(selection[2]);
+		var endY = parseInt(selection[3]);
 
-		edit.addEventListener('keydown', function(event) {
-			if (edit.disabled) {
+		text = text.split('\n');
+
+		_setSelection(cursorLayer, text, startX, endX, startY, endY);
+	};
+
+	container.enable = function() {
+		L.DomUtil.removeClass(container, 'disabled');
+		textLayer.setAttribute('contenteditable', 'true');
+	};
+	container.disable = function() {
+		L.DomUtil.addClass(container, 'disabled');
+		textLayer.setAttribute('contenteditable', 'false');
+	};
+
+	['click', 'dblclick'].forEach(function (ev) {
+		textLayer.addEventListener(ev, function(event) {
+			if (L.DomUtil.hasClass(container, 'disabled')) {
 				event.preventDefault();
 				return;
 			}
 
-			if (event.key === 'Enter') {
-				builder.callback('edit', 'keypress', edit, UNOKey.RETURN | modifier, builder);
-				event.preventDefault();
-			} else if (event.key === 'Escape' || event.key === 'Esc') {
-				builder.callback('edit', 'keypress', edit, UNOKey.ESCAPE | modifier, builder);
-				event.preventDefault();
-			} else if (event.key === 'Left' || event.key === 'ArrowLeft') {
-				builder.callback('edit', 'keypress', edit, UNOKey.LEFT | modifier, builder);
-				event.preventDefault();
-			} else if (event.key === 'Right' || event.key === 'ArrowRight') {
-				builder.callback('edit', 'keypress', edit, UNOKey.RIGHT | modifier, builder);
-				event.preventDefault();
-			} else if (event.key === 'Up' || event.key === 'ArrowUp') {
-				setTimeout(function () { _sendSelection(edit, builder); }, 0);
-			} else if (event.key === 'Down' || event.key === 'ArrowDown') {
-				setTimeout(function () { _sendSelection(edit, builder); }, 0);
-			} else if (event.key === 'Home') {
-				builder.callback('edit', 'keypress', edit, UNOKey.HOME | modifier, builder);
-				event.preventDefault();
-			} else if (event.key === 'End') {
-				builder.callback('edit', 'keypress', edit, UNOKey.END | modifier, builder);
-				event.preventDefault();
-			} else if (event.key === 'Backspace') {
-				builder.callback('edit', 'keypress', edit, UNOKey.BACKSPACE | modifier, builder);
-				event.preventDefault();
-			} else if (event.key === 'Delete') {
-				builder.callback('edit', 'keypress', edit, UNOKey.DELETE | modifier, builder);
-				event.preventDefault();
-			} else if (event.key === 'Space') {
-				builder.callback('edit', 'keypress', edit, UNOKey.SPACE | modifier, builder);
-				event.preventDefault();
-			} else if (event.key === 'Tab') {
-				builder.callback('edit', 'keypress', edit, UNOKey.TAB | modifier, builder);
-				event.preventDefault();
-			} else if (event.key === 'Shift') {
-				modifier = modifier | UNOModifier.SHIFT;
-				event.preventDefault();
-			} else if (event.key === 'Control') {
-				modifier = modifier | UNOModifier.CTRL;
-				event.preventDefault();
-			} else if (event.key === 'a' && event.ctrlKey) {
-				builder.callback('edit', 'keypress', edit, UNOKey.A | UNOModifier.CTRL, builder);
-			}
-		});
+			builder.callback('edit', 'grab_focus', container, null, builder);
+			_sendSelection(textLayer, builder, container.id);
 
-		edit.addEventListener('keyup', function(event) {
-			if (edit.disabled) {
-				event.preventDefault();
-				return;
-			}
-
-			if (event.key === 'Shift') {
-				modifier = modifier & (~UNOModifier.SHIFT);
-				event.preventDefault();
-			} else if (event.key === 'Control') {
-				modifier = modifier & (~UNOModifier.CTRL);
-				event.preventDefault();
-			}
-		});
-
-		edit.addEventListener('blur', function() {
-			modifier = 0;
-		});
-
-		edit.addEventListener('keypress', function(event) {
-			if (edit.disabled) {
-				event.preventDefault();
-				return;
-			}
-
-			if (event.key === 'Enter' ||
-				event.key === 'Escape' ||
-				event.key === 'Esc' ||
-				event.key === 'Left' ||
-				event.key === 'ArrowLeft' ||
-				event.key === 'Right' ||
-				event.key === 'ArrowRight' ||
-				event.key === 'Up' ||
-				event.key === 'ArrowUp' ||
-				event.key === 'Down' ||
-				event.key === 'ArrowDown' ||
-				event.key === 'Home' ||
-				event.key === 'End' ||
-				event.key === 'Backspace' ||
-				event.key === 'Delete' ||
-				event.key === 'Space' ||
-				event.key === 'Tab') {
-				// skip
-			} else {
-				var keyCode = event.keyCode;
-				if (event.ctrlKey) {
-					keyCode = event.key.toUpperCase().charCodeAt(0);
-					keyCode = builder.map.keyboard._toUNOKeyCode(keyCode);
-					keyCode |= UNOModifier.CTRL;
-				}
-
-				builder.callback('edit', 'keypress', edit, keyCode, builder);
-			}
+			builder.map.setWinId(0);
+			builder.map._textInput._emptyArea();
+			builder.map._textInput.focus(true);
 
 			event.preventDefault();
 		});
-	}
+	});
 
-	if (data.rawKeyEvents || data.useTextInput) {
-		edit.addEventListener('mouseup', function(event) {
-			if (edit.disabled) {
-				event.preventDefault();
-				return;
-			}
-
-			builder.callback('edit', 'grab_focus', edit, null, builder);
-
-			_sendSelection(event.target, builder);
-			event.preventDefault();
+	// hide old selection when user starts to select something else
+	textLayer.addEventListener('mousedown', function() {
+		cursorLayer.querySelectorAll('.selection').forEach(function (element) {
+			L.DomUtil.addClass(element, 'hidden');
 		});
-	}
+
+		var cursor = cursorLayer.querySelector('.cursor');
+		if (cursor)
+			L.DomUtil.addClass(cursor, 'hidden');
+	});
+
+	var text = builder._cleanText(data.text);
+	container.setText(text, [0, 0, 0, 0]);
+
+	if (data.enabled === false)
+		L.DomUtil.addClass(container, 'disabled');
 
 	if (data.hidden)
-		L.DomUtil.addClass(edit, 'hidden');
+		L.DomUtil.addClass(container, 'hidden');
 
 	return false;
 }
