@@ -96,6 +96,9 @@ void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& d
             break;
 
         case StorageBase::StorageType::FileSystem:
+            LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
+                            << docKey << "] is for a FileSystem document");
+
             // Remove from the current poll and transfer.
             disposition.setMove(
                 [this, docKey, url, uriPublic,
@@ -111,6 +114,8 @@ void RequestVettingStation::handleRequest(SocketPoll& poll, SocketDisposition& d
                 });
             break;
         case StorageBase::StorageType::Wopi:
+            LOG_INF("URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "] on docKey ["
+                            << docKey << "] is for a WOPI document");
             // Remove from the current poll and transfer.
             disposition.setMove(
                 [this, &poll, docKey, url, uriPublic,
