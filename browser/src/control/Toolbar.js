@@ -647,6 +647,8 @@ L.Map.include({
 			content.querySelector('#slow-proxy').innerText = _('"Slow Proxy"');
 
 		var map = this;
+		if (window.indirectSocket)
+			content.querySelector('#routeToken').innerText = 'RouteToken: ' + window.routeToken;
 
 		map.uiManager.showYesNoButton(aboutDialogId + '-box', productName, '', _('OK'), null, null, null, true);
 		var box = document.getElementById(aboutDialogId + '-box');
