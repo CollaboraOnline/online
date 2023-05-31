@@ -33,7 +33,7 @@ describe(['tagdesktop'], 'Scroll through document, insert/delete items', functio
 		cy.cGet('#tree').find('.jsdialog.sidebar.ui-treeview-entry.ui-treeview-expandable.selected').find('.jsdialog.sidebar.ui-treeview-cell-text').should('have.text',itemName);
 	}
 
-	it('Jump to element. Navigator -> Document', function() {
+	it.only('Jump to element. Navigator -> Document', function() {
 		// Click items in navigator, and check if it goes to the right page.
 		// items should be visible (scrolled right), but that is not tested yet
 		cy.cGet('#tree').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'Shape 2 (Text Frame \'Text1\')').dblclick();

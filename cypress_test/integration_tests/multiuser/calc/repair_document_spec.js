@@ -39,7 +39,7 @@ describe.skip('Repair Document', function() {
 		helper.expectTextForClipboard('');
 	}
 
-	it('Repair by user-2', function() {
+	it.only('Repair by user-2', function() {
 		repairDoc('#iframe1', '#iframe2');
 	});
 

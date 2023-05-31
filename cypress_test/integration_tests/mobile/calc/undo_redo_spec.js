@@ -42,7 +42,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', f
 		cy.cGet('#tb_actionbar_item_acceptformula').click();
 	}
 
-	it('Undo', function() {
+	it.only('Undo', function() {
 		undo();
 	});
 

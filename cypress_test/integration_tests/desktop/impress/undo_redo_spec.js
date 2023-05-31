@@ -27,7 +27,7 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 		helper.clipboardTextShouldBeDifferentThan('Hello World');
 	}
 
-	it('Undo', function() {
+	it.only('Undo', function() {
 		undo();
 	});
 

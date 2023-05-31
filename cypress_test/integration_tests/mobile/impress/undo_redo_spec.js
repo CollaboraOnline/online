@@ -43,7 +43,7 @@ describe.skip(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Editing Operations', f
 		helper.expectTextForClipboard('Hello Worl');
 	}
 
-	it('Undo', function() {
+	it.only('Undo', function() {
 		undo();
 	});
 

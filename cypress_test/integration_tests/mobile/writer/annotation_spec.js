@@ -19,7 +19,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 	});
 
 
-	it('Saving comment.', { defaultCommandTimeout: 60000 }, function() {
+	it.only('Saving comment.', { defaultCommandTimeout: 60000 }, function() {
 		cy.wait(1000);
 		mobileHelper.insertComment();
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);

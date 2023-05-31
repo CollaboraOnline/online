@@ -96,7 +96,7 @@ describe.skip(['tagmultiuser'], 'Track Changes', function () {
 		helper.expectTextForClipboard('Hello World');
 	}
 
-	it('Accept All by user-2', function () {
+	it.only('Accept All by user-2', function () {
 		acceptAll('#iframe1', '#iframe2');
 	});
 

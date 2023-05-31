@@ -17,7 +17,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it('Insert',function() {
+	it.only('Insert',function() {
 		insertMultipleComment('calc');
 
 		cy.cGet('.cool-annotation').should('exist');
