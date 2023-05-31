@@ -1422,3 +1422,16 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: var(--color-background-lighter);
 	border: 1px solid var(--color-border-darker);
 }
+
+
+/* Formula Wizard */
+
+#FormulaDialog #box2 {
+	grid-gap: 8px;
+}
+
+#FormulaDialog #box3 {
+	display: grid;
+	grid-gap: 8px;
+	min-width: 400px;
+}
