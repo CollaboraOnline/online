@@ -179,7 +179,7 @@ UnitBase::TestResult UnitLoad::testExcelLoad()
         helpers::sendTextFrame(socket, "status", testname);
         const auto status = helpers::assertResponseString(socket, "status:", testname);
 
-        // Expected format is something like 'status: type=text parts=2 current=0 width=12808 height=1142 viewid=0\n...'.
+        // Expected format is something like 'status: type=spreadsheet parts=1 current=0 width=20685 height=24885 viewid=0 lastcolumn=31 lastrow=12'
         StringVector tokens(StringVector::tokenize(status, ' '));
         LOK_ASSERT_EQUAL(static_cast<size_t>(9), tokens.size());
     }
