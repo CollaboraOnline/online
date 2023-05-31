@@ -116,7 +116,7 @@ L.LOUtil = {
 		var defaultImageURL = this.getURL('images/' + imgName);
 		if (window.isLocalStorageAllowed) {
 			var state = localStorage.getItem('UIDefaults_' + docType + '_darkTheme');
-			if (state && (/true/).test(state.toLowerCase())) {
+			if ((state && (/true/).test(state.toLowerCase())) || (state === null &&  window.uiDefaults['darkTheme'])) {
 				return this.getURL('images/dark/' + imgName);
 			}
 		}

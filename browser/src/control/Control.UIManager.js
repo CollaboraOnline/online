@@ -83,7 +83,7 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	getDarkModeState: function() {
-		return this.getSavedStateOrDefault('darkTheme', false);
+		return this.getSavedStateOrDefault('darkTheme', window.uiDefaults['darkTheme'] ?  window.uiDefaults['darkTheme'] : false);
 	},
 
 	toggleDarkMode: function() {
