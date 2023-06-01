@@ -956,10 +956,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + iconName, sectionTitle);
 			var iconURL = builder._createIconURL(iconName, true);
 			icon = L.DomUtil.create('img', '', iconSpan);
-			icon.src = iconURL;
+			L.LOUtil.setImage(icon, iconURL.split('/').pop(), builder.map.getDocType());
 			icon.alt = '';
-			L.LOUtil.checkIfImageExists(icon);
-
 			var titleSpan2 = L.DomUtil.create('span', 'menu-entry-with-icon flex-fullwidth', sectionTitle);
 			titleSpan2.innerHTML = title;
 		}
@@ -2887,10 +2885,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var icon = builder._createIconURL(data.command);
 			var buttonId = id + 'img';
 			var button = L.DomUtil.create('img', 'ui-content unobutton', div);
-			button.src = icon;
+			L.LOUtil.setImage(button, icon.split('/').pop(), builder.map.getDocType());
 			button.id = buttonId;
 			button.setAttribute('alt', id);
-			L.LOUtil.checkIfImageExists(button);
 
 			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
 			L.DomUtil.create('i', 'unoarrow', arrowbackground);
@@ -2990,11 +2987,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var iconSpan = L.DomUtil.create('span', 'menu-entry-icon ' + iconName, menuEntry);
 			var iconURL = builder._createIconURL(iconName, true);
 			icon = L.DomUtil.create('img', '', iconSpan);
-			icon.src = iconURL;
+			L.LOUtil.setImage(icon, iconURL.split('/').pop(), builder.map.getDocType());
 			icon.alt = '';
-			icon.addEventListener('error', function() {
-				icon.style.display = 'none';
-			});
 		}
 		if (data.checked && data.checked === true) {
 			L.DomUtil.addClass(menuEntry, 'menu-entry-checked');
