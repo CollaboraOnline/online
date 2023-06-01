@@ -57,6 +57,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		if (commandName && commandName.length && L.LOUtil.existsIconForCommand(commandName, builder.map.getDocType())) {
 			var image = L.DomUtil.create('img', 'spinfieldimage', div);
 			var icon = (data.id === 'Transparency') ? builder._createIconURL('settransparency') : builder._createIconURL(data.id);
+			L.LOUtil.setImage(image, icon.split('/').pop(), builder.map.getDocType());
 			image.src = icon;
 			icon.alt = '';
 		}
