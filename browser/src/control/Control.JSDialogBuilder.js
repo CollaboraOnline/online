@@ -356,8 +356,24 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.max != undefined)
 			$(spinfield).attr('max', data.max);
 
-		if (data.step != undefined)
-			$(spinfield).attr('step', data.step);
+		if (data.step != undefined) {
+			// we don't want to show error popups due to browser step validation
+			// so be sure all the values will be acceptted, check only precision
+			var step = data.step;
+			if (step < 0)
+				step = step * -1;
+
+			if (step < 0.01)
+				step = 0.001;
+			else if (step < 0.1)
+				step = 0.01;
+			else if (step < 1)
+				step = 0.1;
+			else if (step > 0)
+				step = 1;
+
+			$(spinfield).attr('step', step);
+		}
 
 		if (data.enabled === 'false' || data.enabled === false) {
 			$(spinfield).attr('disabled', 'disabled');
