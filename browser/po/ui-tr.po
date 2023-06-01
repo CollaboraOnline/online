@@ -14,11 +14,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-21 12:50+0200\n"
-"PO-Revision-Date: 2023-05-05 05:59+0000\n"
-"Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
+"PO-Revision-Date: 2023-05-30 11:24+0000\n"
+"Last-Translator: \"PhD. Ayhan YALÇINSOY\" <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -120,7 +120,7 @@ msgstr "Değiştirildi"
 
 #: admin/admin.strings.js:29
 msgid "Uploaded"
-msgstr ""
+msgstr "Yüklendi"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
