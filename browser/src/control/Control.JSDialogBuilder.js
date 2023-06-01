@@ -731,7 +731,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 		if (iconURL) {
 			var icon = L.DomUtil.create('img', 'menu-entry-icon', leftDiv);
-			L.LOUtil.setImage(icon, 'lc_'+ sectionTitle.id.toLowerCase() +'.svg', builder.map.getDocType());
+			L.LOUtil.setImage(icon, iconURL.split('/').pop(), builder.map.getDocType());
 			icon.alt = '';
 			titleClass = 'menu-entry-with-icon';
 
