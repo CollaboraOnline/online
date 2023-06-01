@@ -92,3 +92,8 @@ button:not(.ui-tab):not(.ui-corner-all):not(.button-primary):not(.unobutton):not
 	justify-self: start;
 	margin-inline-start: -5px;
 }
+
+/* Eg: Sidebar -> Animation -> Effects buttons shouldn't overflow the content */
+button.has-img {
+	min-width: auto !important;
+}
