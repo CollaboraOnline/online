@@ -36,5 +36,7 @@
 	--color-warning: #eca700;
 	--color-success: #46ba61;
 
+	--color-cursor-blink-background: #000;
+
 	--color-box-shadow: rgba(77, 77, 77, 0.5);
 }
