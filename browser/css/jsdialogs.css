@@ -1435,3 +1435,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #FormulaDialog label {
 	max-width: 400px;
 }
+#FormulaDialog #box3 {
+	display: grid;
+}
