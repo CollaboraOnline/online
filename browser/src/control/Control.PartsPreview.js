@@ -31,6 +31,7 @@ L.Control.PartsPreview = L.Control.extend({
 		this._container = container;
 		this._partsPreviewCont = preview;
 		this._partsPreviewCont.onscroll = this._onScroll.bind(this);
+		this._idNum = 0;
 	},
 
 	onAdd: function (map) {
@@ -171,13 +172,14 @@ L.Control.PartsPreview = L.Control.extend({
 	_createPreview: function (i, hashCode, bottomBound) {
 		var frameClass = 'preview-frame ' + this.options.frameClass;
 		var frame = L.DomUtil.create('div', frameClass, this._partsPreviewCont);
-		frame.id = 'preview-frame-part-' + i;
+		frame.id = 'preview-frame-part-' + this._idNum;
 		this._addDnDHandlers(frame);
 		L.DomUtil.create('span', 'preview-helper', frame);
 
 		var imgClassName = 'preview-img ' + this.options.imageClass;
 		var img = L.DomUtil.create('img', imgClassName, frame);
 		img.setAttribute('alt', _('preview of page ') + String(i + 1));
+		img.id = 'preview-img-part-' + this._idNum;
 		img.hash = hashCode;
 		L.LOUtil.setImage(img, 'preview_placeholder.png', this._map._docLayer._docType);
 		img.fetched = false;
@@ -219,6 +221,7 @@ L.Control.PartsPreview = L.Control.extend({
 		}, this);
 
 		this._layoutPreview(i, img, bottomBound);
+		this._idNum++;
 
 		return img;
 	},
