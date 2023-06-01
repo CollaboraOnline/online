@@ -491,6 +491,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 	overflow: hidden;
+	align-self: center;
 }
 
 #search_edit.ui-edit.autofilter {
@@ -1418,4 +1419,19 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	color: var(--color-text-darker);
 	background-color: var(--color-background-lighter);
 	border: 1px solid var(--color-border-darker);
+}
+
+/* Formula Wizard */
+#FormulaDialog #ParameterPage > .ui-grid-cell {
+	display: flex;
+	flex-direction: column;
+}
+
+#FormulaDialog > [id^='dialog-vbox'] > [id^='box'] > [id^='box'] {
+	grid-auto-columns: max-content;
+	grid-column-gap: 8px;
+}
+
+#FormulaDialog label {
+	max-width: 400px;
 }
