@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-21 12:50+0200\n"
-"PO-Revision-Date: 2023-05-23 18:53+0000\n"
+"PO-Revision-Date: 2023-06-01 08:50+0000\n"
 "Last-Translator: Nguyễn Hoàng Minh <mingu03@yandex.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/help/vi/>\n"
@@ -987,7 +987,6 @@ msgstr "Ngắt trang thủ công"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:123-62
 #: html/cool-help.html%2Bdiv.div.table.tr.td:231-78
 #: html/cool-help.html%2Bdiv.div.table.tr.td:288-85
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
 
@@ -1226,7 +1225,6 @@ msgstr ""
 "con trỏ."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-158
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 
@@ -2444,7 +2442,7 @@ msgid ""
 "formatting."
 msgstr ""
 "<span class=\"def\">Dấu định dạng:</span> Đoạn văn, trang và khoảng trắng "
-"không thể ngắt được hiển thị dưới dạng dấu để hỗ trợ căn chỉnh, chỉnh sửa và "
+"không ngắt được hiển thị dưới dạng các dấu để hỗ trợ căn chỉnh, chỉnh sửa và "
 "định dạng văn bản."
 
 #: html/cool-help.html%2Bdiv.div.p:494-5
@@ -3026,11 +3024,11 @@ msgid ""
 "necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\""
 ">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
 msgstr ""
-"Bạn đã bật AutoCorrection. AutoCorrection thay đổi văn bản vừa nhập vào một "
-"bảng nội bộ chứa văn bản tương ứng. Trong hầu hết các trường hợp, "
+"Bạn đã bật Tự động sửa lỗi. Tự động sửa lỗi thay đổi văn bản vừa nhập vào "
+"một bảng nội bộ chứa văn bản tương ứng. Trong hầu hết các trường hợp, "
 "AutoCorrection sẽ sửa lỗi chính tả khi bạn đang nhập văn bản. Nếu "
-"AutoCorrection là không cần thiết, hãy tắt tính năng này trong <span class=\""
-"ui\">Công cụ </span> → <span class=\"ui\">AutoCorrection </span> → <span "
+"AutoCorrection là không cần thiết, hãy tắt tính năng này trong <span class="
+"\"ui\">Công cụ </span> → <span class=\"ui\">AutoCorrection </span> → <span "
 "class=\"ui\">Trong khi nhập </span>."
 
 #: html/cool-help.html%2Bdiv.div.h4:619-5
