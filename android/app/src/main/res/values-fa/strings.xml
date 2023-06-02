@@ -14,4 +14,14 @@
     <string name="storage_permission_required">دسترسی به حافظه لازم است</string>
     <string name="failed_to_load_file">تعیین کردن فایل برای خوانش فایل ناموفق بود</string>
     <string name="list_view">لیست</string>
+    <string name="grid_view">توری</string>
+    <string name="pref_category_explorer">تنظیمات مدیر پرونده</string>
+    <string name="pref_category_editor">تنظیمات ویرایشگر</string>
+    <string name="pref_show_hidden_files">پرونده‌ها/پوشه‌های پنهان</string>
+    <string name="pref_show_hidden_files_summary">فعال کردن برای نمایش پرونده‌ها/پوشه‌های پنهان</string>
+    <string name="pref_sort_summary">انتخاب نحوه مرتب سازی: الفبایی، بر اساس اندازه یا براساس تاریخ.</string>
+    <string name="pref_viewmode_summary">نمایش پرونده‌ها به صورت فهرستی یا کنار هم.</string>
+    <string name="pref_file_explorer_title">چیدمان مدیر پرونده</string>
+    <string name="pref_sort_title">مرتب سازی پرونده</string>
+    <string name="pref_filter_title">غربال پیش‌فرض پرونده</string>
 </resources>
