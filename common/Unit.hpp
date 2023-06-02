@@ -25,6 +25,7 @@ class UnitWSD;
 class UnitKit;
 class UnitTimeout;
 
+class ChildProcess;
 class WebSocketHandler;
 class ClientSession;
 class Message;
@@ -403,7 +404,7 @@ public:
     }
 
     /// When a new child kit process reports
-    virtual void newChild(WebSocketHandler &/* socket */) {}
+    virtual void newChild(const std::shared_ptr<ChildProcess>& /*child*/) {}
     /// Intercept createStorage
     virtual bool createStorage(const Poco::URI& /* uri */,
                                const std::string& /* jailRoot */,
