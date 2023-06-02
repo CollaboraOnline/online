@@ -1,0 +1,14 @@
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"
+	 class="icn icn--text-color"
+     fill="none"
+     stroke="#fafafa"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     stroke-width="2"
+     >
+      <path d="M 12,19 V 5" />
+      <path d="M 5,12 H 19" />
+  </g>
+</svg>
