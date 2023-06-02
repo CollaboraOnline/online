@@ -50,6 +50,10 @@
 	color: var(--color-primary-text);
 	border-radius: var(--border-radius);
 }
+.mobile #PermissionMode.status-readonly-mode {
+	/* to do: replace hard coded px */
+	margin-top: 3px;
+}
 #tb_actionbar_item_zoom .w2ui-tb-caption{
 	min-width: 43px;
 }
