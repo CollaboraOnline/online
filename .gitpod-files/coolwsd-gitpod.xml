@@ -3,6 +3,10 @@
     <!-- Note: 'default' attributes are used to document a setting's default value as well as to use as fallback. -->
     <!-- Note: When adding a new entry, a default must be set in WSD in case the entry is missing upon deployment. -->
 
+    <accessibility desc="Accessibility settings">
+        <enable type="bool" desc="Controls whether accessibility support should be enabled or not." default="false">false</enable>
+    </accessibility>
+
     <allowed_languages desc="List of supported languages of Writing Aids (spell checker, grammar checker, thesaurus, hyphenation) on this instance. Allowing too many has negative effect on startup performance." default="de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru">de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru</allowed_languages>
 
     <sys_template_path desc="Path to a template tree with shared libraries etc to be used as source for chroot jails for child processes." type="path" relative="true" default="systemplate"></sys_template_path>

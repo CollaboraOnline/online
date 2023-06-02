@@ -256,6 +256,8 @@ public:
 
     const std::string& getMacroSecurityLevel() const { return _macroSecurityLevel; }
 
+    bool getEnableAccessibility() const { return _enableAccessibility; }
+
 protected:
     Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
             const std::string& name, const std::string& id, bool readonly);
@@ -372,6 +374,9 @@ private:
 
     /// Level of Macro security.
     std::string _macroSecurityLevel;
+
+    /// Specifies whether accessibility support is enabled in general.
+    bool _enableAccessibility;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

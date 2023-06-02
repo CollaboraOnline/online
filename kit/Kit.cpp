@@ -1499,6 +1499,7 @@ private:
         const std::string& batchMode = session->getBatchMode();
         const std::string& enableMacrosExecution = session->getEnableMacrosExecution();
         const std::string& macroSecurityLevel = session->getMacroSecurityLevel();
+        const bool enableAccessibility = session->getEnableAccessibility();
         const std::string& userTimezone = session->getTimezone();
 
 #if !MOBILEAPP
@@ -1646,7 +1647,7 @@ private:
 
         _loKitDocument->setViewLanguage(viewId, lang.c_str());
         _loKitDocument->setViewTimezone(viewId, userTimezone.c_str());
-        _loKitDocument->setAccessibilityState(viewId, true);
+        _loKitDocument->setAccessibilityState(viewId, enableAccessibility);
 
         // viewId's monotonically increase, and CallbackDescriptors are never freed.
         _viewIdToCallbackDescr.emplace(viewId,

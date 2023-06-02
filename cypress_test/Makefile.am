@@ -154,6 +154,7 @@ define start_coolwsd
 			--o:logging.file[@enable]=true --o:logging.level=trace \
 			--o:welcome.enable=false \
 			--o:user_interface.mode=$(USER_INTERFACE) \
+			--o:accessibility.enable=true \
 			--o:security.enable_macros_execution=true \
 			--port=$(FREE_PORT) \
 			--pidfile=$(PID_FILE) \
