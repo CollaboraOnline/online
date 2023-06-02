@@ -27,7 +27,9 @@ L.Control.MobileTopBar = L.Control.extend({
 			return [
 				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
-				{type: 'spacer'},
+				{type: 'spacer', id: 'before-PermissionMode'},
+				{type: 'html', id: 'PermissionMode', html:'<div id="PermissionMode" class="cool-font  status-readonly-mode" ""style="padding: 3px 10px;"> ' + _('Read-only') + '</div>', hidden: true},
+				{type: 'spacer', id: 'after-PermissionMode', hidden: true},
 				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
 				{type: 'button',  id: 'comment_wizard', img: 'viewcomments'},
@@ -203,6 +205,9 @@ L.Control.MobileTopBar = L.Control.extend({
 				toolbarDownButtons.forEach(function(id) {
 					toolbar.enable(id);
 				});
+				toolbar.hide('PermissionMode');
+				toolbar.hide('after-PermissionMode');
+				$('#tb_actionbar_item_before-PermissionMode').width('');
 			}
 		} else {
 			toolbar = w2ui['actionbar'];
@@ -211,6 +216,10 @@ L.Control.MobileTopBar = L.Control.extend({
 					toolbar.disable(id);
 				});
 				toolbar.enable('comment_wizard');
+				toolbar.show('PermissionMode');
+				toolbar.show('after-PermissionMode');
+				$('#tb_actionbar_item_before-PermissionMode').width('50%');
+				$('#tb_actionbar_item_after-PermissionMode').width('50%');
 			}
 		}
 	},
