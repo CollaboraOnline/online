@@ -1,0 +1,13 @@
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"
+	 class="icn icn--text-color"
+     fill="none"
+     stroke="#fafafa"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     stroke-width="2"
+     >
+      <path d="M 17,10.5 A 6.5,6.5 0 0 1 10.5,17 6.5,6.5 0 0 1 4,10.5 6.5,6.5 0 0 1 10.5,4 6.5,6.5 0 0 1 17,10.5 Z" />
+      <path d="M 20,20 16,16" />
+  </g>
+</svg>
