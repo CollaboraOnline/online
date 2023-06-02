@@ -14,11 +14,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-01 13:52+0200\n"
-"PO-Revision-Date: 2023-05-30 11:24+0000\n"
-"Last-Translator: \"PhD. Ayhan YALÇINSOY\" <ayhanyalcinsoy@pisilinux.org>\n"
+"PO-Revision-Date: 2023-06-02 05:49+0000\n"
+"Last-Translator: Gökay Şatır <gokaysatir@collabora.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -951,7 +951,7 @@ msgstr "Yorumları Kaydet"
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarImpress.js:418
 msgid "Master View"
-msgstr ""
+msgstr "Ana Görünüm"
 
 #: src/control/Control.Menubar.js:490 src/control/Control.Menubar.js:1003
 #: src/control/Control.PresentationBar.js:57
@@ -1606,7 +1606,7 @@ msgstr "0 kullanıcı"
 
 #: src/control/Control.UserList.js:188
 msgid "Following"
-msgstr "Takip eden"
+msgstr "Takip edilen"
 
 #: src/control/Control.UserList.js:216 src/control/Control.UserList.js:382
 msgid "Always follow the editor"
@@ -2052,7 +2052,7 @@ msgstr "Sunucu bağlantısı kesildi."
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
-msgstr ""
+msgstr "Sunucuda yeterli depolama alanı yok."
 
 #: src/errormessages.js:14
 msgid ""
@@ -2198,7 +2198,7 @@ msgstr "Belge yeniden adlandırılamadı."
 #: src/errormessages.js:41
 msgid ""
 "Failed to read document from storage, please try to load the document again."
-msgstr ""
+msgstr "Dosya okunamadı, lütfen yeniden deneyin."
 
 #: src/errormessages.js:42
 msgid ""
@@ -2215,18 +2215,21 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Dosya, çok büyük olduğundan veya izin verilen dosya boyutundan büyük "
+"olduğundan dolayı kaydedilemedi. Dosyayı salt okunur olarak görüntülemeye "
+"devam edebilirsiniz. Dosyanın bir kopyasını indirebilirsiniz."
 
 #: src/errormessages.js:45
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Dosya kaydedilemedi, lütfen izinlerinizi kontrol edin."
 
 #: src/errormessages.js:46
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "Dosyanın adı değiştirilemedi, lütfen izinlerinizi kontrol edin."
 
 #: src/errormessages.js:47
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Dosya dışa aktarılamadı. Lütfen tekrar deneyin."
 
 #: src/errormessages.js:52
 msgid "Uploading file to server failed, file not found."
