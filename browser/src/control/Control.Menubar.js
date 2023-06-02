@@ -1739,6 +1739,13 @@ L.Control.Menubar = L.Control.extend({
 					}
 				}
 			}
+
+			if (id === 'remotelink') {
+				if (self._map['wopi'].EnableRemoteLinkPicker)
+					$(aItem).show();
+				else
+					$(aItem).hide();
+			}
 		});
 	},
 
