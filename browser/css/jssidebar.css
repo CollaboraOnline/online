@@ -11,6 +11,11 @@ img.sidebar.ui-image {
 	padding: 6px;
 }
 
+/* Impress -> Master Slides images should fit in the visible width */
+img.sidebar.ui-drawing-area {
+	width: 300px;
+}
+
 .sidebar.ui-grid {
 	row-gap: 8px;
 }
