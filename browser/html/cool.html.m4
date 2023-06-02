@@ -368,6 +368,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.userInterfaceMode = '%USER_INTERFACE_MODE%';
       window.useIntegrationTheme = '%USE_INTEGRATION_THEME%';
       window.enableMacrosExecution = '%ENABLE_MACROS_EXECUTION%';
+      window.enableAccessibility = '%ENABLE_ACCESSIBILITY%';
       window.outOfFocusTimeoutSecs = %OUT_OF_FOCUS_TIMEOUT_SECS%;
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
       window.protocolDebug = %PROTOCOL_DEBUG%;

@@ -1938,6 +1938,7 @@ void COOLWSD::innerInitialize(Application& self)
     // 3) the default parameter of getConfigValue() call. That is used when the
     //    setting is present in coolwsd.xml, but empty (i.e. use the default).
     static const std::map<std::string, std::string> DefAppConfig = {
+        { "accessibility.enable", "false"},
         { "allowed_languages", "de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru" },
         { "admin_console.enable_pam", "false" },
         { "child_root_path", "jails" },
