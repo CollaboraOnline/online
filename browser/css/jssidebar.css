@@ -331,7 +331,11 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 #NavigatorDeck * {
 	border: none;
 }
+#NavigatorDeck .ui-expander-content > .root-container.jsdialog {
+	margin: 0;
+}
 #NavigatorDeck .ui-treeview-entry {
+	padding-inline-start: 0;
 	background-color: transparent;
 	margin-block-end: 8px;
 }
