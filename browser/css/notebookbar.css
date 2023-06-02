@@ -78,7 +78,7 @@ button.ui-tab.notebookbar {
 	height: 31px;
 }
 
-.notebookbar-shortcuts-bar .unotoolbutton.notebookbar .unobutton img {
+.notebookbar-shortcuts-bar .unotoolbutton.notebookbar .unobutton:not(#Saveimg) img {
 	width: 16px !important;
 	height: 16px !important;
 	margin: 0 !important;
