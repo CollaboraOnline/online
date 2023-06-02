@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-01 13:52+0200\n"
-"PO-Revision-Date: 2023-01-26 16:55+0000\n"
+"PO-Revision-Date: 2023-06-02 02:52+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "help/pl/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -93,33 +93,31 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:30-18
 msgid "Focus to notebookbar menu"
-msgstr ""
+msgstr "Uaktywnienie menu paska zeszytowego"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:30-70
-#, fuzzy
 msgid ""
 "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>F1"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>1"
+"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>F1"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:31-18
 msgid "Focus to document from menu"
-msgstr ""
+msgstr "Uaktywnienie dokumentu z menu"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:31-72
 msgid "ESC"
-msgstr ""
+msgstr "ESC"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:32-18
 msgid "Focus to selected comment's menu"
-msgstr ""
+msgstr "Uaktywnienie menu wybranego komentarza"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:32-77
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Delete"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C"
 
 #: html/cool-help.html%2Bdiv.div.h2:36-9
 #: html/cool-help.html%2Bdiv.div.h2:182-9
