@@ -77,6 +77,37 @@ public:
             tokens.emplace_back(start - data, end - start);
     }
 
+    // call func on each token until func returns true or we run out of tokens
+    template <class UnaryFunction>
+    static void tokenize_foreach(UnaryFunction& func, const char* data, const std::size_t size, const char delimiter = ' ')
+    {
+        if (size == 0 || data == nullptr || *data == '\0')
+            return;
+
+        size_t index = 0;
+
+        const char* start = data;
+        const char* end = data;
+        for (std::size_t i = 0; i < size && data[i] != '\n'; ++i, ++end)
+        {
+            if (data[i] == delimiter)
+            {
+                if (start != end && *start != delimiter)
+                {
+                    if (func(index++, std::string_view(start, end - start)))
+                        return;
+                }
+
+                start = end;
+            }
+            else if (*start == delimiter)
+                ++start;
+        }
+
+        if (start != end && *start != delimiter && *start != '\n')
+            func(index, std::string_view(start, end - start));
+    }
+
     /// Tokenize single-char delimited values until we hit new-line or the end.
     static StringVector tokenize(const char* data, const std::size_t size,
                                  const char delimiter = ' ')
