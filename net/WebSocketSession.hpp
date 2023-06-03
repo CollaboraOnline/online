@@ -147,6 +147,11 @@ public:
     const std::string& port() const { return _port; }
     Protocol protocol() const { return _protocol; }
     bool secure() const { return _protocol == Protocol::HttpSsl; }
+    bool isClosed() const
+    {
+        const auto socket = getSocket().lock();
+        return !socket || socket->isClosed();
+    }
 
     bool asyncRequest(http::Request& req, const std::shared_ptr<SocketPoll>& socketPoll)
     {

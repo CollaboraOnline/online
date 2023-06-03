@@ -231,16 +231,39 @@ public:
 
                             std::shared_ptr<http::WebSocketSession> ws =
                                 http::WebSocketSession::create(uri.toString());
-                            _webSessions.emplace_back(ws);
 
                             TST_LOG("Connection to " << uri.toString() << " is "
                                                      << (ws->secure() ? "secure" : "plain"));
 
                             http::Request req(documentURL);
-                            ws->asyncRequest(req, socketPoll());
+                            if (ws->asyncRequest(req, socketPoll()))
+                            {
+                                _webSessions.emplace_back(ws);
 
-                            LOG_TST("Load #" << _count);
-                            helpers::sendTextFrame(ws, "load url=" + wopiSrc, getTestname());
+                                LOG_TST("Load #" << _count);
+                                helpers::sendTextFrame(ws, "load url=" + wopiSrc, getTestname());
+                            }
+                            else
+                            {
+                                LOG_TST(">>> ERROR: failed async request");
+                            }
+
+                            if (_count % 16 == 0)
+                            {
+                                for (int i = _webSessions.size() - 1; i >= 0;)
+                                {
+                                    if (_webSessions[i]->isClosed())
+                                    {
+                                        _webSessions.erase(_webSessions.begin() + i);
+                                        continue;
+                                    }
+
+                                    --i;
+                                }
+
+                                LOG_TST(">>> Have " << _webSessions.size()
+                                                    << " outstanding requests");
+                            }
                         }
                     });
             }
