@@ -1181,6 +1181,39 @@ function getCoolFrameWindow() {
 		.its('0.contentWindow')
 		.should('exist');
 }
+
+// Create an alias to a point whose coordinate are the middle point of the blinking cursor
+// It should be used with clickAt (see function below)
+function getBlinkingCursorPosition(aliasName) {
+	var cursorSelector = '.cursor-overlay .blinking-cursor';
+	cy.cGet(cursorSelector).then(function(cursor) {
+		var boundRect = cursor[0].getBoundingClientRect();
+		var xPos = boundRect.right;
+		var yPos = (boundRect.top + boundRect.bottom) / 2;
+		cy.wrap({x: xPos, y: yPos}).as(aliasName);
+	});
+
+	cy.get('@' + aliasName).then(point => {
+		expect(point.x).to.be.greaterThan(0);
+		expect(point.y).to.be.greaterThan(0);
+	});
+}
+
+// Simulate a click at the point referenced by the passed alias.
+// If the 'double' parameter is true, a double click is simulated.
+// To be used in pair with getBlinkingCursorPosition (see function above)
+function clickAt(aliasName, double = false) {
+	cy.get('@' + aliasName).then(point => {
+		expect(point.x).to.be.greaterThan(0);
+		expect(point.y).to.be.greaterThan(0);
+		if (double) {
+			cy.cGet('body').dblclick(point.x, point.y);
+		} else {
+			cy.cGet('body').click(point.x, point.y);
+		}
+	});
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.checkIfDocIsLoaded = checkIfDocIsLoaded;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
@@ -1226,3 +1259,5 @@ module.exports.getVisibleBounds = getVisibleBounds;
 module.exports.assertFocus = assertFocus;
 module.exports.getCoolFrameWindow = getCoolFrameWindow;
 module.exports.loadTestDocNoIntegration = loadTestDocNoIntegration;
+module.exports.getBlinkingCursorPosition = getBlinkingCursorPosition;
+module.exports.clickAt = clickAt;
