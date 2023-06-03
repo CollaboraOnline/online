@@ -291,11 +291,12 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
                               << "] acquired for [" << url << ']');
 
     // Transfer the client socket to the DocumentBroker when we get back to the poll:
+    const auto ws = _ws;
     docBroker->setupTransfer(
         _socket,
-        [docBroker, clientSession, uriPublic, wopiInfo,
-         this](const std::shared_ptr<Socket>& moveSocket) mutable
-        {
+        [clientSession, uriPublic, wopiInfo, ws,
+         docBroker](const std::shared_ptr<Socket>& moveSocket) mutable
+         {
             try
             {
                 LOG_DBG_S("Transfering docBroker [" << docBroker->getDocKey() << ']');
@@ -303,7 +304,7 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
                 auto streamSocket = std::static_pointer_cast<StreamSocket>(moveSocket);
 
                 // Set WebSocketHandler's socket after its construction for shared_ptr goodness.
-                streamSocket->setHandler(_ws);
+                streamSocket->setHandler(ws);
 
                 LOG_DBG_S('#' << moveSocket->getFD() << " handler is " << clientSession->getName());
 
@@ -341,7 +342,7 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
                 LOG_ERR_S("Unauthorized Request while starting session on "
                           << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
-                sendErrorAndShutdown(_ws, moveSocket, "error: cmd=internal kind=unauthorized",
+                sendErrorAndShutdown(ws, moveSocket, "error: cmd=internal kind=unauthorized",
                                      WebSocketHandler::StatusCodes::POLICY_VIOLATION);
             }
             catch (const StorageConnectionException& exc)
@@ -349,7 +350,7 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
                 LOG_ERR_S("Storage error while starting session on "
                           << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
-                sendErrorAndShutdown(_ws, moveSocket, "error: cmd=storage kind=loadfailed",
+                sendErrorAndShutdown(ws, moveSocket, "error: cmd=storage kind=loadfailed",
                                      WebSocketHandler::StatusCodes::POLICY_VIOLATION);
             }
             catch (const StorageSpaceLowException& exc)
@@ -357,16 +358,15 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
                 LOG_ERR_S("Disk-Full error while starting session on "
                           << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
-                const std::string msg = "error: cmd=internal kind=diskfull";
-                _ws->shutdown(WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION, msg);
-                moveSocket->ignoreInput();
+                sendErrorAndShutdown(ws, moveSocket, "error: cmd=internal kind=diskfull",
+                                     WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION);
             }
             catch (const std::exception& exc)
             {
                 LOG_ERR_S("Error while starting session on "
                           << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
                           << ". Terminating connection. Error: " << exc.what());
-                sendErrorAndShutdown(_ws, moveSocket, "error: cmd=storage kind=loadfailed",
+                sendErrorAndShutdown(ws, moveSocket, "error: cmd=storage kind=loadfailed",
                                      WebSocketHandler::StatusCodes::POLICY_VIOLATION);
             }
         });
