@@ -26,6 +26,11 @@ void TileQueue::put_impl(const Payload& value)
 
     if (firstToken == "canceltiles")
     {
+        // #6514 given that all messages that can have "ver=" in them will
+        // also have "nviewid=", "oldwid=" and "wid=" then "id=" is always
+        // hit and this loop doesn't achieve anything, disable this for
+        // now and either drop canceltiles or repair it to do something
+#if 0
         const std::string msg = std::string(value.data(), value.size());
         LOG_TRC("Processing [" << COOLProtocol::getAbbreviatedMessage(msg)
                                << "]. Before canceltiles have " << getQueue().size()
@@ -54,6 +59,7 @@ void TileQueue::put_impl(const Payload& value)
 
         // Don't push canceltiles into the queue.
         LOG_TRC("After canceltiles have " << getQueue().size() << " in queue.");
+#endif
         return;
     }
     else if (firstToken == "tilecombine")
