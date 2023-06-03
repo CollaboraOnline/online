@@ -25,11 +25,15 @@ public:
         , _socket(socket)
         , _mobileAppDocId(mobileAppDocId)
     {
+        LOG_TRC("RequestVettingStation ctor");
+
         // Indicate to the client that document broker is searching.
         static const std::string status("statusindicator: find");
         LOG_TRC("Sending to Client [" << status << "].");
         _ws->sendMessage(status);
     }
+
+    ~RequestVettingStation() { LOG_TRC("~RequestVettingStation"); }
 
     inline void logPrefix(std::ostream& os) const { os << '#' << _socket->getFD() << ": "; }
 

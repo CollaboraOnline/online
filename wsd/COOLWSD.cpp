@@ -3906,9 +3906,9 @@ static std::shared_ptr<ConvertToBroker> getConvertToBrokerImplementation(const s
 class ClientRequestDispatcher final : public SimpleSocketHandler
 {
 public:
-    ClientRequestDispatcher()
-    {
-    }
+    ClientRequestDispatcher() { LOG_TRC("ClientRequestDispatcher ctor"); }
+
+    ~ClientRequestDispatcher() { LOG_TRC("~ClientRequestDispatcher"); }
 
     static void InitStaticFileContentCache()
     {
