@@ -232,7 +232,7 @@ function assertImageSize(expectedWidth, expectedHeight) {
 		});
 }
 
-function insertMultipleComment(docType, numberOfComments = 1, isMobile = false, selector) {
+function insertMultipleComment(docType, numberOfComments = 1, isMobile = false, selector, isCollapsed) {
 	var mode = Cypress.env('USER_INTERFACE');
 
 	if (docType === 'calc') {
@@ -257,7 +257,13 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false, 
 		});
 	}
 
-	if (docType === 'writer' && mode !== 'notebookbar') {
+	if (docType === 'writer') {
+		cy.cGet('#toolbar-up .w2ui-scroll-right').then($button => {
+			if ($button.is(':visible'))	{
+				$button.click();
+			}
+		});
+		cy.wait(300);
 		cy.cGet('#toolbar-up .w2ui-scroll-right').then($button => {
 			if ($button.is(':visible'))	{
 				$button.click();
@@ -286,7 +292,13 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false, 
 			cy.cGet('#new-mobile-comment-input-area').type('some text' + n);
 
 			cy.cGet('.vex-dialog-buttons .button-primary').click();
-		} else {
+		}
+		else if (isCollapsed) {
+			cy.cGet('#new-mobile-comment-input-area').type('some text' + n);
+			cy.wait(500);
+			cy.cGet('.button-primary.vex-last').click();
+		}
+		else {
 			cy.cGet('#annotation-modify-textarea-new').type('some text' + n);
 			cy.wait(500);
 			cy.cGet('#annotation-save-new').click();
