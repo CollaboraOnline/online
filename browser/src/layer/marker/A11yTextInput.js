@@ -800,7 +800,8 @@ L.A11yTextInput = L.Layer.extend({
 			this._getLastCursorPosition() === this.getPlainTextContent().length &&
 			this._deleteHint === 'delete') {
 			window.app.console.log('Sending delete');
-			this._removeTextContent(0, this._hasSelection && this._isLastSelectionEmpty() ? 2 : 1);
+			this._removeEmptySelectionIfAny();
+			this._removeTextContent(0, 1);
 			// this._emptyArea();
 		}
 		this._dbg('_onBeforeInput ]');
@@ -882,8 +883,10 @@ L.A11yTextInput = L.Layer.extend({
 		// to differentiate backspace from delete, then replace the character.
 		if (!this._hasPreSpace()) { // missing initial space
 			window.app.console.log('Sending backspace');
-			if (!ignoreBackspace)
-				this._removeTextContent(this._hasSelection && this._isLastSelectionEmpty() ? 2 : 1, 0);
+			if (!ignoreBackspace) {
+				this._removeEmptySelectionIfAny();
+				this._removeTextContent(1, 0);
+			}
 			// Lately we receive the new paragraph == above paragraph + current paragraph,
 			// except current paragraph is the first one.
 			// In this last case we need to restore the pre space.
@@ -962,10 +965,9 @@ L.A11yTextInput = L.Layer.extend({
 			removeBefore = (lastContent.length - matchTo) - removeAfter;
 		}
 		else if (this._deleteHint === 'backspace') {
-			// when in core there is an empty selection the first <backspace> deletes
-			// the selection instead of the previous char
+			this._removeEmptySelectionIfAny();
 			this._setSelectionFlag(false);
-			removeBefore = this._isLastSelectionEmpty() ? 2 : 1;
+			removeBefore = 1;
 		}
 		else if (this._deleteHint === 'delete') {
 			// when in core there is an empty selection the first <delete> deletes
@@ -1276,6 +1278,15 @@ L.A11yTextInput = L.Layer.extend({
 		);
 	},
 
+	_removeEmptySelectionIfAny: function() {
+		if (this._hasSelection && this._isLastSelectionEmpty()) {
+			// when in core there is an empty selection a <backspace> or a <delete> removes
+			// the selection instead of the previous or next char, so we send a fake <delete>
+			// in order to remove the empty selection.
+			this._sendDelete();
+		}
+	},
+
 	// Tiny helper - encapsulates sending a 'textinput' websocket message.
 	// sends a pair of "input" for a composition update paird with an "end"
 	_sendCompositionEvent: function(text) {
@@ -1332,6 +1343,10 @@ L.A11yTextInput = L.Layer.extend({
 				'\n'
 			);
 		}
+	},
+
+	_sendDelete: function() {
+		this._sendKeyEvent(46, 1286, 'input');
 	},
 
 	_sendNewlineEvent: function() {
