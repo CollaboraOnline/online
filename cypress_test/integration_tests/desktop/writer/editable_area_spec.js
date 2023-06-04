@@ -900,3 +900,198 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - More typin
 	});
 
 });
+
+// unordered_list.odt
+// A normal paragraph.
+// • Item 1
+//   ◦ Item 1.1
+//   ◦ Item 1.2
+// • Item 2
+// • Item 3
+describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - Unordered lists', function() {
+	var testFileName = 'unordered_list.odt';
+
+	beforeEach(function () {
+		helper.beforeAll(testFileName, 'writer');
+		cy.cGet('div.clipboard').as('clipboard');
+	});
+
+	afterEach(function () {
+		helper.afterAll(testFileName, this.currentTest.state);
+	});
+
+	it('Check content', function () {
+		ceHelper.checkPlainContent('A normal paragraph.');
+		ceHelper.moveCaret('down');
+		ceHelper.checkPlainContent('• Item 1');
+		ceHelper.moveCaret('down');
+		ceHelper.checkPlainContent('◦ Item 1.1');
+		ceHelper.moveCaret('down');
+		ceHelper.checkPlainContent('◦ Item 1.2');
+		ceHelper.moveCaret('down');
+		ceHelper.checkPlainContent('• Item 2');
+		ceHelper.moveCaret('down');
+		ceHelper.checkPlainContent('• Item 3');
+	});
+
+	it('Moving between entries', function () {
+		ceHelper.moveCaret('end');
+		ceHelper.moveCaret('right');
+		ceHelper.checkPlainContent('• Item 1');
+		ceHelper.checkCaretPosition(2);
+		ceHelper.moveCaret('left');
+		ceHelper.checkPlainContent('• Item 1');
+		ceHelper.checkCaretPosition(0);
+		ceHelper.moveCaret('left');
+		ceHelper.checkPlainContent('A normal paragraph.');
+		ceHelper.checkCaretPosition(19);
+		ceHelper.moveCaret('down');
+		ceHelper.moveCaret('end');
+		ceHelper.moveCaret('right');
+		ceHelper.checkPlainContent('◦ Item 1.1');
+		ceHelper.checkCaretPosition(2);
+		ceHelper.moveCaret('left');
+		ceHelper.checkPlainContent('◦ Item 1.1');
+		ceHelper.checkCaretPosition(0);
+		ceHelper.moveCaret('left');
+		ceHelper.checkPlainContent('• Item 1');
+		ceHelper.checkCaretPosition(8);
+		ceHelper.moveCaret('down', '', 3);
+		ceHelper.moveCaret('end');
+		ceHelper.moveCaret('right');
+		ceHelper.checkPlainContent('• Item 3');
+		ceHelper.checkCaretPosition(2);
+		ceHelper.moveCaret('left');
+		ceHelper.checkPlainContent('• Item 3');
+		ceHelper.checkCaretPosition(0);
+		ceHelper.moveCaret('left');
+		ceHelper.checkPlainContent('• Item 2');
+		ceHelper.checkCaretPosition(8);
+		ceHelper.moveCaret('home');
+		ceHelper.checkPlainContent('• Item 2');
+		ceHelper.checkCaretPosition(2);
+		ceHelper.moveCaret('home');
+		ceHelper.checkPlainContent('• Item 2');
+		ceHelper.checkCaretPosition(0);
+		ceHelper.moveCaret('end');
+		ceHelper.checkPlainContent('• Item 2');
+		ceHelper.checkCaretPosition(8);
+	});
+
+	it('Add entries', function () {
+		ceHelper.moveCaret('down');
+		ceHelper.moveCaret('end');
+		ceHelper.type('{enter}');
+		ceHelper.checkPlainContent('• ');
+		ceHelper.checkCaretPosition(2);
+		ceHelper.type('New item');
+		ceHelper.checkPlainContent('• New item');
+		ceHelper.moveCaret('down');
+		ceHelper.checkPlainContent('◦ Item 1.1');
+		ceHelper.moveCaret('end');
+		ceHelper.type('{enter}');
+		ceHelper.checkPlainContent('◦ ');
+		ceHelper.checkCaretPosition(2);
+		ceHelper.type('New sub-item');
+		ceHelper.checkPlainContent('◦ New sub-item');
+		ceHelper.moveCaret('down');
+		ceHelper.checkPlainContent('◦ Item 1.2');
+	});
+
+	it('Typing <backspace> at entry beginning', function () {
+		ceHelper.moveCaret('down');
+		ceHelper.checkPlainContent('• Item 1');
+		ceHelper.checkCaretPosition(2);
+		ceHelper.type('{backspace}');
+		ceHelper.checkPlainContent('Item 1');
+		ceHelper.checkCaretPosition(0);
+		ceHelper.type('{backspace}');
+		ceHelper.checkPlainContent('A normal paragraph.Item 1');
+		ceHelper.checkCaretPosition(19);
+		ceHelper.type('{ctrl+z}', 2);
+		ceHelper.checkPlainContent('• Item 1');
+		ceHelper.checkCaretPosition(2);
+		ceHelper.moveCaret('down');
+		ceHelper.checkPlainContent('◦ Item 1.1');
+		ceHelper.checkCaretPosition(2);
+		ceHelper.type('{backspace}');
+		ceHelper.checkPlainContent('Item 1.1');
+		ceHelper.checkCaretPosition(0);
+		ceHelper.type('{backspace}');
+		ceHelper.checkPlainContent('• Item 1Item 1.1');
+		ceHelper.checkCaretPosition(8);
+		ceHelper.type('{ctrl+z}', 2);
+		ceHelper.checkPlainContent('◦ Item 1.1');
+		ceHelper.checkCaretPosition(2);
+		ceHelper.moveCaret('down', '', 3);
+		ceHelper.moveCaret('home');
+		ceHelper.checkPlainContent('• Item 3');
+		ceHelper.checkCaretPosition(2);
+		ceHelper.type('{backspace}');
+		ceHelper.checkPlainContent('Item 3');
+		ceHelper.checkCaretPosition(0);
+		ceHelper.type('{backspace}');
+		ceHelper.checkPlainContent('• Item 2Item 3');
+		ceHelper.checkCaretPosition(8);
+		ceHelper.moveCaret('home', '', 2);
+		ceHelper.type('{backspace}');
+		ceHelper.checkPlainContent('Item 2Item 3');
+		ceHelper.checkCaretPosition(0);
+	});
+
+	it('Typing <delete> at entry end', function () {
+		ceHelper.moveCaret('end');
+		ceHelper.type('{del}');
+		ceHelper.checkPlainContent('A normal paragraph.Item 1');
+		ceHelper.checkCaretPosition(19);
+		ceHelper.type('{ctrl+z}');
+		ceHelper.checkPlainContent('• Item 1');
+		ceHelper.checkSelectionRange(0,2);
+		ceHelper.moveCaret('end');
+		ceHelper.type('{del}');
+		ceHelper.checkPlainContent('• Item 1Item 1.1');
+		ceHelper.checkCaretPosition(8);
+		ceHelper.type('{ctrl+z}');
+		ceHelper.checkPlainContent('◦ Item 1.1');
+		ceHelper.checkSelectionRange(0,2);
+		ceHelper.moveCaret('down', '', 2);
+		ceHelper.moveCaret('end');
+		ceHelper.type('{del}');
+		ceHelper.checkPlainContent('• Item 2Item 3');
+		ceHelper.checkCaretPosition(8);
+		ceHelper.moveCaret('home', '', 2);
+		ceHelper.type('{del}');
+		ceHelper.checkPlainContent('Item 2Item 3');
+		ceHelper.checkCaretPosition(0);
+	});
+
+	it('Selecting at entry beginning', function () {
+		ceHelper.moveCaret('end');
+		ceHelper.moveCaret('right', 'shift');
+		ceHelper.checkSelectionRange(0, 2);
+		ceHelper.moveCaret('end');
+		ceHelper.moveCaret('right', 'shift');
+		ceHelper.checkSelectionRange(0, 2);
+		ceHelper.moveCaret('end');
+		ceHelper.moveCaret('home', '', 2);
+		ceHelper.checkCaretPosition(0);
+		// shift should be ignored when caret is at position 0, that is before the entry symbol
+		ceHelper.moveCaret('right', 'shift');
+		ceHelper.checkSelectionIsEmpty(2);
+		ceHelper.type('{backspace}');
+		// <backspace> at the beginning of a list entry with symbol ignores the empty selection
+		ceHelper.checkPlainContent('Item 1.1');
+		ceHelper.checkSelectionIsNull();
+		ceHelper.checkCaretPosition(0);
+		// create empty selection
+		ceHelper.moveCaret('right', 'shift');
+		ceHelper.moveCaret('left', 'shift');
+		ceHelper.checkSelectionIsEmpty(0);
+		ceHelper.type('{backspace}');
+		// <backspace> at the beginning of a list entry without symbol ignores the empty selection
+		ceHelper.checkPlainContent('• Item 1Item 1.1');
+		ceHelper.checkSelectionIsNull();
+		ceHelper.checkCaretPosition(8);
+	});
+
+});
