@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-01 13:52+0200\n"
-"PO-Revision-Date: 2023-05-13 13:49+0000\n"
-"Last-Translator: Roman Kirilenko <rkirilenko@gmail.com>\n"
+"PO-Revision-Date: 2023-06-03 14:52+0000\n"
+"Last-Translator: Mike Kaganski <mikekaganski@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
-"Language: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.18-dev\n"
 
 #: admin/admin.strings.js:6
@@ -115,7 +115,7 @@ msgstr "Изменено"
 
 #: admin/admin.strings.js:29
 msgid "Uploaded"
-msgstr ""
+msgstr "Загружено"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
@@ -952,7 +952,7 @@ msgstr "Сохранить примечания"
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarImpress.js:418
 msgid "Master View"
-msgstr ""
+msgstr "Мастер-слайд"
 
 #: src/control/Control.Menubar.js:490 src/control/Control.Menubar.js:1003
 #: src/control/Control.PresentationBar.js:57
@@ -1374,7 +1374,6 @@ msgid "Reference~s"
 msgstr "~Ссылки"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "For~m"
 msgstr "Форма"
 
@@ -2059,7 +2058,7 @@ msgstr "Сервер был отключен."
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
-msgstr ""
+msgstr "На диске сервера закончилось место."
 
 #: src/errormessages.js:14
 msgid ""
@@ -2207,6 +2206,8 @@ msgstr "Документ не может быть переименован."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Не удалось прочитать документ из хранилища, попробуйте загрузить документ "
+"снова."
 
 #: src/errormessages.js:42
 msgid ""
@@ -2223,18 +2224,21 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Сохранение невозможно из-за слишком большого размера документа или нехватки "
+"доступного свободного места в хранилище. Документ будет заблокирован для "
+"редактирования, но вы можете загрузить его, чтобы сохранить локальную копию."
 
 #: src/errormessages.js:45
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Документ не может быть сохранён, проверьте ваши права доступа."
 
 #: src/errormessages.js:46
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "Документ не может быть переименован, проверьте ваши права доступа."
 
 #: src/errormessages.js:47
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Документ не может быть экспортирован. Попробуйте ещё раз."
 
 #: src/errormessages.js:52
 msgid "Uploading file to server failed, file not found."
