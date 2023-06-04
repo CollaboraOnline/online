@@ -5142,11 +5142,10 @@ private:
 #endif
             }
 
-            auto rvs = std::make_shared<RequestVettingStation>(_id, ws, requestDetails, socket,
-                                                               mobileAppDocId);
-            _requestVettingStations.emplace(_id, rvs);
-
-            rvs->handleRequest(*WebServerPoll, disposition);
+            // Fire off to the vetting station.
+            _requestVettingStation = std::make_unique<RequestVettingStation>(
+                _id, ws, requestDetails, socket, mobileAppDocId);
+            _requestVettingStation->handleRequest(*WebServerPoll, disposition);
         }
         catch (const std::exception& exc)
         {
@@ -5314,8 +5313,7 @@ private:
     std::string _id;
 
     /// External requests are first vetted before allocating DocBroker and Kit process.
-    /// This is a map of the request URI to the RequestVettingStation for vetting.
-    std::unordered_map<std::string, std::shared_ptr<RequestVettingStation>> _requestVettingStations;
+    std::unique_ptr<RequestVettingStation> _requestVettingStation;
 
     /// Cache for static files, to avoid reading and processing from disk.
     static std::map<std::string, std::string> StaticFileContentCache;
