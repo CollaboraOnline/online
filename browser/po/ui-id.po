@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-01 13:52+0200\n"
-"PO-Revision-Date: 2023-02-18 04:35+0000\n"
-"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
+"PO-Revision-Date: 2023-06-04 10:26+0000\n"
+"Last-Translator: Rizal Muttaqin <riz_17_oke@yahoo.co.id>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.16-dev\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -102,7 +102,7 @@ msgstr "Dokumen"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr "Tampilan"
+msgstr "Tilikan"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
@@ -118,7 +118,7 @@ msgstr "Diubah"
 
 #: admin/admin.strings.js:29
 msgid "Uploaded"
-msgstr ""
+msgstr "Terunggah"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
@@ -312,7 +312,7 @@ msgstr "Gagal mengautentikasi sesi ini lewat protokol %0"
 
 #: admin/src/AdminSocketOverview.js:420
 msgid "Warning"
-msgstr ""
+msgstr "Peringatan"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
@@ -380,7 +380,7 @@ msgstr "Warna otomatis"
 
 #: src/control/Control.AlertDialog.js:42
 msgid "External link"
-msgstr ""
+msgstr "Tautan luar"
 
 #: src/control/Control.AlertDialog.js:43
 msgid "Open link"
@@ -601,12 +601,11 @@ msgstr "Tidak (Jangan periksa ejaan)"
 
 #: src/control/Control.LanguageDialog.js:72
 msgid "Select language"
-msgstr ""
+msgstr "Pilih bahasa"
 
 #: src/control/Control.LanguageDialog.js:93
-#, fuzzy
 msgid "Language"
-msgstr "Bahasa:"
+msgstr "Bahasa"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:80
 #: src/control/Control.Menubar.js:905
@@ -775,7 +774,7 @@ msgstr "Tampilkan Bilah Status"
 #: src/control/Control.NotebookbarImpress.js:424
 #: src/control/Control.NotebookbarWriter.js:1147
 msgid "Dark Mode"
-msgstr ""
+msgstr "Modus Gelap"
 
 #: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:428
 #: src/control/Control.Menubar.js:563 src/control/Control.Menubar.js:697
@@ -796,7 +795,7 @@ msgstr "Semua"
 #: src/control/Control.NotebookbarImpress.js:967
 #: src/control/Control.NotebookbarWriter.js:851
 msgid "Smart Picker"
-msgstr ""
+msgstr "Pemetik Cerdas"
 
 #: src/control/Control.Menubar.js:210
 msgid "Text orientation"
@@ -953,7 +952,7 @@ msgstr "Simpan Komentar"
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarImpress.js:418
 msgid "Master View"
-msgstr ""
+msgstr "Tilikan Induk"
 
 #: src/control/Control.Menubar.js:490 src/control/Control.Menubar.js:1003
 #: src/control/Control.PresentationBar.js:57
@@ -1011,11 +1010,11 @@ msgstr "Pengaturan Halaman"
 
 #: src/control/Control.Menubar.js:1072
 msgid "Define print area"
-msgstr ""
+msgstr "Tentukan wilayah cetak"
 
 #: src/control/Control.Menubar.js:1073
 msgid "Remove print area"
-msgstr ""
+msgstr "Buang wilayah cetak"
 
 #: src/control/Control.Menubar.js:1346 src/control/Control.StatusBar.js:553
 msgid "Reset to Default Language"
@@ -1029,11 +1028,11 @@ msgstr "Lebih..."
 
 #: src/control/Control.Menubar.js:1680
 msgid "Use Compact view"
-msgstr "Gunakan tampilan Ringkas"
+msgstr "Gunakan tilikan Ringkas"
 
 #: src/control/Control.Menubar.js:1682
 msgid "Use Tabbed view"
-msgstr "Gunakan tampilan Bertab"
+msgstr "Gunakan tilikan Bertab"
 
 #: src/control/Control.Menubar.js:1723 src/control/Control.Menubar.js:1736
 msgid "Read-only mode"
@@ -1121,7 +1120,7 @@ msgstr "~Berkas"
 #: src/control/Control.NotebookbarImpress.js:66
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "Hom~e"
-msgstr ""
+msgstr "B~eranda"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:60
@@ -1146,28 +1145,27 @@ msgstr "~Data"
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:38
 msgid "~Review"
-msgstr "~Tinjauan"
+msgstr "~Ulasan"
 
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarDraw.js:75
 #: src/control/Control.NotebookbarImpress.js:87
 #: src/control/Control.NotebookbarWriter.js:43
-#, fuzzy
 msgid "F~ormat"
-msgstr "Format"
+msgstr "F~ormat"
 
 #: src/control/Control.NotebookbarCalc.js:48
 #: src/control/Control.NotebookbarDraw.js:86
 #: src/control/Control.NotebookbarWriter.js:59
 msgid "Dra~w"
-msgstr ""
+msgstr "Gam~bar"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:92
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:65
 msgid "~View"
-msgstr "~Tampilan"
+msgstr "~Tilik"
 
 #: src/control/Control.NotebookbarCalc.js:59
 #: src/control/Control.NotebookbarDraw.js:97
@@ -1316,14 +1314,14 @@ msgstr "Hapus Kolom"
 #: src/control/Control.NotebookbarImpress.js:355
 #: src/control/Control.NotebookbarWriter.js:1062
 msgid "Read mode"
-msgstr ""
+msgstr "Modus baca"
 
 #: src/control/Control.NotebookbarCalc.js:1038
 #: src/control/Control.NotebookbarDraw.js:294
 #: src/control/Control.NotebookbarImpress.js:407
 #: src/control/Control.NotebookbarWriter.js:1113
 msgid "Compact view"
-msgstr "Tampilan Ringkas"
+msgstr "Tilikan Ringkas"
 
 #: src/control/Control.NotebookbarCalc.js:1044
 #: src/control/Control.NotebookbarDraw.js:300
@@ -1376,9 +1374,8 @@ msgid "Reference~s"
 msgstr "~Acuan"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "For~m"
-msgstr "Formulir"
+msgstr "For~mulir"
 
 #: src/control/Control.NotebookbarWriter.js:205
 msgid "ODF Text Document (.odt)"
@@ -1410,7 +1407,7 @@ msgstr "Penggaris"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
-msgstr "pratinjau halaman "
+msgstr "pratilik halaman "
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1879,7 +1876,7 @@ msgstr "\"Proksi Lambat\""
 
 #: src/control/Toolbar.js:678
 msgid "Insert hyperlink"
-msgstr "Sisipkan pranala"
+msgstr "Sisipkan hipertaut"
 
 #: src/control/Toolbar.js:697
 msgid "Link"
@@ -1983,7 +1980,7 @@ msgstr "Dokumen perlu sandi untuk mengubah."
 
 #: src/core/Socket.js:913
 msgid "Hit Cancel to open in view-only mode."
-msgstr "Tekan Batal untuk membuka dalam mode hanya tilik."
+msgstr "Tekan Batal untuk membuka dalam modus hanya tilik."
 
 #: src/core/Socket.js:917
 msgid "Wrong password provided. Please try again."
@@ -1991,7 +1988,7 @@ msgstr "Sandi salah. Harap coba lagi."
 
 #: src/core/Socket.js:955
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Hanya pemilik dokumen yang bisa mengubah sandi."
 
 #: src/core/Socket.js:986 src/core/Socket.js:991
 msgid "Missing Fonts"
@@ -2065,7 +2062,7 @@ msgstr "Server telah terputus."
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
-msgstr ""
+msgstr "Tidak ada lagi ruang diska yang tersedia di peladen."
 
 #: src/errormessages.js:14
 msgid ""
@@ -2120,23 +2117,23 @@ msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr "Parameter WOPISrc salah atau hilang, silakan hubungi dukungan."
 
 #: src/errormessages.js:21
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
-"Sesi Anda akan kedaluwarsa dalam %time. Harap simpan pekerjaan Anda dan "
-"segarkan sesi (atau halaman web) untuk melanjutkan."
+"Sesi Anda akan kadaluwarsa dalam %time. Harap simpan pekerjaan Anda dan "
+"segarkan sesi (atau halaman web) untuk melanjutkan. Anda mungkin perlu untuk "
+"masuk log kembali."
 
 #: src/errormessages.js:22
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
-"Sesi Anda telah kedaluwarsa. Perubahan lebih lanjut pada dokumen mungkin "
-"tidak disimpan. Harap segarkan sesi (atau halaman web) untuk melanjutkan."
+"Sesi Anda telah kadaluwarsa. Perubahan lebih lanjut pada dokumen bisa saja "
+"tidak disimpan. Harap segarkan sesi (atau halaman web) untuk melanjutkan. "
+"Anda mungkin perlu untuk masuk log kembali."
 
 #: src/errormessages.js:23
 msgid ""
@@ -2155,6 +2152,8 @@ msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
 msgstr ""
+"Anda akan meninggalkan dokumen. Halaman web berikut akan dibuka pada tab "
+"baru: "
 
 #: src/errormessages.js:26
 msgid ""
@@ -2210,13 +2209,15 @@ msgstr "Dokumen tidak dapat diganti nama."
 #: src/errormessages.js:41
 msgid ""
 "Failed to read document from storage, please try to load the document again."
-msgstr ""
+msgstr "Gagal membaca dokumen dari penyimpanan, harap coba muat dokumen lagi."
 
 #: src/errormessages.js:42
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Penyimpanan gagal karena tidak tersedianya ruang. Dokumen akan menjadi hanya "
+"baca. Harap pastikan ruang diska sudah tersedia lalu coba simpan lagi."
 
 #: src/errormessages.js:43
 msgid ""
@@ -2224,18 +2225,21 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Penyimpanan gagal karena dokumen terlalu besar atau melewati batas ruang "
+"penyimpanan. Dokumen akan menjadi hanya baca tetapi Anda masih bisa "
+"mengunduhnya untuk menyediakan salinan lokal."
 
 #: src/errormessages.js:45
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Dokumen tidak dapat disimpan, harap pastikan izin Anda."
 
 #: src/errormessages.js:46
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "Dokumen tidak dapat dinamai ulang, harap periksa izin Anda."
 
 #: src/errormessages.js:47
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Dokumen tidak dapat diekspor. Harap coba lagi."
 
 #: src/errormessages.js:52
 msgid "Uploading file to server failed, file not found."
@@ -2251,15 +2255,15 @@ msgstr "Fungsi"
 
 #: src/layer/tile/CanvasTileLayer.js:2497
 msgid "Copy link location"
-msgstr "Salin lokasi pranala"
+msgstr "Salin lokasi tautan"
 
 #: src/layer/tile/CanvasTileLayer.js:2505
 msgid "Edit link"
-msgstr "Sunting pranala"
+msgstr "Sunting tautan"
 
 #: src/layer/tile/CanvasTileLayer.js:2513
 msgid "Remove link"
-msgstr "Buang pranala"
+msgstr "Buang tautan"
 
 #: src/layer/tile/CanvasTileLayer.js:5262
 msgid "No Comments"
@@ -2378,16 +2382,15 @@ msgstr ""
 "unduhan baru</p>"
 
 #: src/map/Clipboard.js:913
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
 "more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p> Browser Anda memiliki akses yang sangat terbatas ke clipboard</p><p>"
-"Silakan tekan: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> "
-"untuk melihat lebih banyak opsi</p><p class=\"vex-footnote\"> Tutup popup "
-"untuk mengabaikan paste special</p>"
+"<p> Browser Anda memiliki akses yang sangat terbatas ke papan klip</"
+"p><p>Silakan tekan: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</"
+"kbd> untuk melihat lebih banyak pilihan</p><p class=\"vex-footnote\"> Tutup "
+"popup untuk mengabaikan tempel khusus</p>"
 
 #: src/map/Map.js:215
 msgid "Initializing..."
