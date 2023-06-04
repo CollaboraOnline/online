@@ -31,6 +31,7 @@
 #include <common/SigUtil.hpp>
 #include <common/StringVector.hpp>
 #include <common/Message.hpp>
+#include <unistd.h>
 
 UnitKit *GlobalKit = nullptr;
 UnitWSD *GlobalWSD = nullptr;
@@ -508,6 +509,9 @@ void UnitBase::exitTest(TestResult result, const std::string& reason)
 
         if (GlobalResult == TestResult::Ok)
             GlobalResult = result;
+
+        LOG_TST("Dumping state");
+        ::kill(getpid(), SIGUSR1);
     }
 
     _result = result;
