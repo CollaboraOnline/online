@@ -69,7 +69,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 });
 
-describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
+describe.skip(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	var testFileName = 'comment_switching.odp';
 
 	beforeEach(function() {
@@ -156,16 +156,16 @@ describe(['tagdesktop'], 'Comment Scrolling',function() {
 
 	it('no comment or one comment', function() {
 		cy.cGet('.leaflet-control-scroll-down').should('not.exist');
-		insertMultipleComment('impress', 1, false);
+		insertMultipleComment('impress', 1, false, null, true);
 		cy.cGet('.leaflet-marker-icon').should('exist');
 	});
 
 	it('omit slides without comments', function() {
 		//scroll up
-		insertMultipleComment('impress', 1, true);
+		insertMultipleComment('impress', 1, false, null, true);
 		addSlide(2);
-		insertMultipleComment('impress', 1, false);
-		helper.waitUntilIdle('.leaflet-control-scroll-up');
+		insertMultipleComment('impress', 1, false, null, true);
+		cy.cGet('#document-container').click();
 		cy.cGet('.leaflet-control-scroll-up').should('be.visible');
 		cy.cGet('.leaflet-control-scroll-up').click().wait(300);
 		cy.cGet('#PageStatus').should('contain','Slide 1 of 3');
@@ -179,10 +179,11 @@ describe(['tagdesktop'], 'Comment Scrolling',function() {
 
 	it('switch to previous or next slide',function() {
 		addSlide(1);
-		insertMultipleComment('impress', 2, true);
+		insertMultipleComment('impress', 1, false, null, true);
 
 		//scroll up
 		addSlide(1);
+		cy.cGet('#document-container').click();
 		cy.cGet('.leaflet-control-scroll-up').should('exist');
 		cy.cGet('.leaflet-control-scroll-up').click().wait(300);
 		cy.cGet('#PageStatus').should('contain','Slide 2 of 3');

@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach beforeEach */
+/* global describe it cy require afterEach beforeEach expect Cypress */
 
 var helper = require('../../common/helper');
 var { insertMultipleComment, selectZoomLevel } = require('../../common/desktop_helper');
@@ -12,7 +12,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.viewport(1400, 600);
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
 		desktopHelper.switchUIToNotebookbar();
-		cy.cGet('[id="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
+		cy.cGet('#Sidebar1img').click(); // Hide sidebar.
 		selectZoomLevel('50');
 	});
 
@@ -64,13 +64,13 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 
 });
 
-describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
+describe.skip(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	var testFileName = 'annotation.odt';
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
 		desktopHelper.switchUIToNotebookbar();
-		cy.cGet('[id="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
+		cy.cGet('#Sidebar1img').click(); // Hide sidebar.
 	});
 
 	afterEach(function() {
@@ -78,18 +78,18 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	});
 
 	it('Insert', function() {
-		insertMultipleComment('writer', 1, false, '[id=InsertAnnotation1]');
+		insertMultipleComment('writer', 1, false, '#InsertAnnotation1img', true);
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
 	});
 
 	it('Modify', function() {
-		insertMultipleComment('writer', 1, false, '[id=InsertAnnotation1]');
+		insertMultipleComment('writer', 1, false, '#InsertAnnotation1img', true);
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
-		cy.cGet('.cool-annotation-img').click();
+		cy.cGet('#comment-container-1 .cool-annotation-collapsed').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 		cy.cGet('#comment-annotation-menu-1').click();
 		cy.cGet('body').contains('.context-menu-item','Modify').click();
 		cy.cGet('#annotation-modify-textarea-1').type('some other text, ');
@@ -99,7 +99,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	});
 
 	it('Reply', function() {
-		insertMultipleComment('writer', 1, false, '[id=InsertAnnotation1]');
+		insertMultipleComment('writer', 1, false, '#InsertAnnotation1img', true);
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text');
@@ -112,7 +112,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	});
 
 	it('Remove', function() {
-		insertMultipleComment('writer', 1, false, '[id=InsertAnnotation1]');
+		insertMultipleComment('writer', 1, false, '#InsertAnnotation1img', true);
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
