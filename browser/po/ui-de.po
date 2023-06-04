@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-01 13:52+0200\n"
-"PO-Revision-Date: 2023-05-21 10:43+0000\n"
-"Last-Translator: \"Jörg S.\" <joerg.schwerdtfeger@gmail.com>\n"
+"PO-Revision-Date: 2023-06-04 10:26+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -118,7 +118,7 @@ msgstr "Geändert"
 
 #: admin/admin.strings.js:29
 msgid "Uploaded"
-msgstr ""
+msgstr "Hochgeladen"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
@@ -2069,7 +2069,7 @@ msgstr "Die Verbindung zum Server wurde unterbrochen."
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
-msgstr ""
+msgstr "Kein Festplattenplatz mehr auf dem Server."
 
 #: src/errormessages.js:14
 msgid ""
@@ -2223,6 +2223,8 @@ msgstr "Dokument kann nicht umbenannt werden."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Fehler beim Lesen des Dokuments aus dem Speicher, bitte versuchen Sie, das "
+"Dokument erneut zu laden."
 
 #: src/errormessages.js:42
 msgid ""
@@ -2239,18 +2241,27 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Das Speichern ist fehlgeschlagen, weil das Dokument zu groß ist oder den "
+"verbleibenden Speicherplatz überschreitet. Das Dokument ist nun "
+"schreibgeschützt, aber Sie können es jetzt noch herunterladen, um eine Kopie "
+"lokal zu speichern."
 
 #: src/errormessages.js:45
 msgid "Document cannot be saved, please check your permissions."
 msgstr ""
+"Dokument kann nicht gespeichert werden, bitte überprüfen Sie Ihre "
+"Berechtigungen."
 
 #: src/errormessages.js:46
 msgid "Document cannot be renamed, please check your permissions."
 msgstr ""
+"Dokument kann nicht umbenannt werden, bitte überprüfen Sie Ihre "
+"Berechtigungen."
 
 #: src/errormessages.js:47
 msgid "Document cannot be exported. Please try again."
 msgstr ""
+"Das Dokument kann nicht exportiert werden. Bitte versuchen Sie es erneut."
 
 #: src/errormessages.js:52
 msgid "Uploading file to server failed, file not found."
