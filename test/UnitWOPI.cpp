@@ -7,6 +7,7 @@
 
 #include <config.h>
 
+#include "Unit.hpp"
 #include "Util.hpp"
 #include "lokassert.hpp"
 
@@ -156,6 +157,7 @@ class UnitOverload : public WopiTestServer
     std::vector<pid_t> _children;
     std::vector<std::shared_ptr<http::WebSocketSession>> _webSessions;
     int _count;
+    bool _stop;
 
     std::size_t getMemoryUsage() const
     {
@@ -171,6 +173,7 @@ public:
         : WopiTestServer("UnitOverload")
         , _phase(Phase::Load)
         , _count(0)
+        , _stop(false)
     {
     }
 
@@ -187,6 +190,14 @@ public:
 
         SocketPoll::wakeupWorld();
         return std::make_unique<http::Response>(http::StatusCode::NotFound);
+    }
+
+    void endTest(const std::string& reason) override
+    {
+        LOG_TST("Stopping: " << reason);
+        _stop = true;
+        _dosThread.join();
+        UnitWSD::endTest(reason);
     }
 
     void invokeWSDTest() override
@@ -208,7 +219,7 @@ public:
                 _dosThread = std::thread(
                     [this]
                     {
-                        for (;;)
+                        while (!_stop)
                         {
                             ++_count;
                             LOG_TST(">>> Open #" << _count << ", total memory: " << getMemoryUsage()
