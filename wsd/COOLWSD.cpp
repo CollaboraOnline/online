@@ -6173,7 +6173,6 @@ int COOLWSD::innerMain()
 
     const int returnValue = UnitBase::uninit();
 
-    UnitBase::uninit();
     LOG_INF("Process [coolwsd] finished with exit status: " << returnValue);
 
     // At least on centos7, Poco deadlocks while
