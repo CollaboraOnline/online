@@ -728,11 +728,10 @@ void StreamSocket::dumpState(std::ostream& os)
 {
     int64_t timeoutMaxMicroS = SocketPoll::DefaultPollTimeoutMicroS.count();
     const int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
-    os << '\t' << getFD() << '\t' << events << '\t'
-       << (ignoringInput() ? "ignore\t" : "process\t")
-       << _inBuffer.size() << '\t' << _outBuffer.size() << '\t'
-       << " r: " << _bytesRecvd << "\t w: " << _bytesSent << '\t'
-       << clientAddress() << '\t';
+    os << '\t' << std::setw(6) << getFD() << "\t0x" << std::hex << events << std::dec << '\t'
+       << (ignoringInput() ? "ignore\t" : "process\t") << std::setw(6) << _inBuffer.size() << '\t'
+       << std::setw(6) << _outBuffer.size() << '\t' << " r: " << std::setw(6) << _bytesRecvd
+       << "\t w: " << std::setw(6) << _bytesSent << '\t' << clientAddress() << '\t';
     _socketHandler->dumpState(os);
     if (_inBuffer.size() > 0)
         Util::dumpHex(os, _inBuffer, "\t\tinBuffer:\n", "\t\t");
@@ -793,13 +792,17 @@ bool StreamSocket::sendAndShutdown(http::Response& response)
 void SocketPoll::dumpState(std::ostream& os) const
 {
     // FIXME: NOT thread-safe! _pollSockets is modified from the polling thread!
+    const auto pollSockets = _pollSockets;
+
     os << "\n  SocketPoll:";
-    os << "\n    Poll [" << _pollSockets.size() << "] - wakeup r: "
-       << _wakeup[0] << " w: " << _wakeup[1] << '\n';
-    if (_newCallbacks.size() > 0)
-        os << "\tcallbacks: " << _newCallbacks.size() << '\n';
-    os << "\tfd\tevents\trsize\twsize\n";
-    for (const auto &i : _pollSockets)
+    os << "\n    Poll [" << name() << "] with " << pollSockets.size() << " socket"
+       << (pollSockets.size() == 1 ? "" : "s") << " - wakeup rfd: " << _wakeup[0]
+       << " wfd: " << _wakeup[1] << '\n';
+    const auto callbacks = _newCallbacks.size();
+    if (callbacks > 0)
+        os << "\tcallbacks: " << callbacks << '\n';
+    os << "\t    fd\tevents\trbuffered\twbuffered\trtotal\twtotal\tclientaddress\n";
+    for (const auto& i : pollSockets)
         i->dumpState(os);
 }
 
