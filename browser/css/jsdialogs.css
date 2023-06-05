@@ -58,6 +58,12 @@
 	max-height: calc(100% - 30px);
 }
 
+/* Overwrite .jsdialog-window.modalpopup width */
+#modal-dialog-about-dialog-box {
+	max-width: 94%;
+	width: 754px;
+}
+
 .jsdialog-window.modalpopup .jsdialog-container {
 	position: relative;
 }
