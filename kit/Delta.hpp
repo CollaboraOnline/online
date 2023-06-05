@@ -75,6 +75,45 @@ class DeltaGenerator {
                 return false;
             return !std::memcmp(_pixels, other._pixels, _pixSize * 4);
         }
+
+        // Create a diff from our state to new state in curRow
+        void diffRowTo(const DeltaBitmapRow &curRow,
+                       const int width, const int curY,
+                       std::vector<uint8_t> &output) const
+        {
+            for (int x = 0; x < width;)
+            {
+                int same;
+                for (same = 0; same + x < width &&
+                         _pixels[x+same] == curRow._pixels[x+same];)
+                    ++same;
+
+                x += same;
+
+                int diff;
+                for (diff = 0; diff + x < width &&
+                         (_pixels[x+diff] != curRow._pixels[x+diff] || diff < 3) &&
+                         diff < 254;)
+                    ++diff;
+                if (diff > 0)
+                {
+                    output.push_back('d');
+                    output.push_back(curY);
+                    output.push_back(x);
+                    output.push_back(diff);
+
+                    size_t dest = output.size();
+                    output.resize(dest + diff * 4);
+
+                    unpremult_copy(reinterpret_cast<unsigned char *>(&output[dest]),
+                                   (const unsigned char *)(curRow._pixels + x),
+                                   diff);
+
+                    LOG_TRC("row " << curY << " different " << diff << "pixels");
+                    x += diff;
+                }
+            }
+        }
     };
 
     /// A bitmap tile with annotated rows and details on its location
@@ -376,40 +415,7 @@ class DeltaGenerator {
                 continue;
 
             // Our row is just that different:
-            const DeltaBitmapRow &curRow = cur.getRow(y);
-            const DeltaBitmapRow &prevRow = prev.getRow(y);
-            for (int x = 0; x < prev.getWidth();)
-            {
-                int same;
-                for (same = 0; same + x < prev.getWidth() &&
-                         prevRow._pixels[x+same] == curRow._pixels[x+same];)
-                    ++same;
-
-                x += same;
-
-                int diff;
-                for (diff = 0; diff + x < prev.getWidth() &&
-                         (prevRow._pixels[x+diff] != curRow._pixels[x+diff] || diff < 3) &&
-                         diff < 254;)
-                    ++diff;
-                if (diff > 0)
-                {
-                    output.push_back('d');
-                    output.push_back(y);
-                    output.push_back(x);
-                    output.push_back(diff);
-
-                    size_t dest = output.size();
-                    output.resize(dest + diff * 4);
-
-                    unpremult_copy(reinterpret_cast<unsigned char *>(&output[dest]),
-                                   (const unsigned char *)(curRow._pixels + x),
-                                   diff);
-
-                    LOG_TRC("row " << y << " different " << diff << "pixels");
-                    x += diff;
-                }
-            }
+            prev.getRow(y).diffRowTo(cur.getRow(y), prev.getWidth(), y, output);
         }
         LOG_TRC("Created delta of size " << output.size());
         if (output.empty())
