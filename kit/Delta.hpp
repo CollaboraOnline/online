@@ -554,7 +554,8 @@ class DeltaGenerator {
         int bufferWidth, int bufferHeight,
         const TileLocation &loc,
         std::vector<char>& output,
-        TileWireId wid, bool forceKeyframe)
+        TileWireId wid, bool forceKeyframe,
+        std::shared_ptr<DeltaData> *pDelta = nullptr)
     {
         if ((width & 0x1) != 0) // power of two - RGBA
         {
@@ -661,9 +662,11 @@ class DeltaGenerator {
             }
         }
 
+        std::shared_ptr<DeltaData> deltaData;
         if (!createDelta(pixmap, startX, startY, width, height,
                          bufferWidth, bufferHeight,
-                         loc, output, wid, forceKeyframe))
+                         loc, output, wid, forceKeyframe,
+                         &deltaData))
         {
             // FIXME: should stream it in =)
             size_t maxCompressed = ZSTD_COMPRESSBOUND((size_t)width * height * 4);
@@ -685,6 +688,11 @@ class DeltaGenerator {
             outb.pos = 0;
 
             unsigned char fixedupLine[width * 4];
+
+            #warning send over the DeltaData ...
+            // Whack it all into the stream, compress it and handle
+            // on the other end ... - including unpremultiplying it ? ...
+            // and then do the rest of the fun on the other end ;-) ...
 
             // FIXME: should we RLE in pixels first ?
             for (int y = 0; y < height; ++y)
