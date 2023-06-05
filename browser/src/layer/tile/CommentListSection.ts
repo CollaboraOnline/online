@@ -69,7 +69,7 @@ export class CommentSection extends CanvasSectionObject {
 		this.sectionProperties.layoutTimer = null;
 		this.sectionProperties.width = Math.round(1 * app.dpiScale); // Configurable variable.
 		this.sectionProperties.scrollAnnotation = null; // For impress, when 1 or more comments exist.
-		this.sectionProperties.commentWidth = 300 * 1.2; // CSS pixels.
+		this.sectionProperties.commentWidth = 200 * 1.3; // CSS pixels.
 		this.sectionProperties.collapsedMarginToTheEdge = (<any>window).mode.isTablet() ? 120: 70; // CSS pixels.
 		this.sectionProperties.deflectionOfSelectedComment = 160; // CSS pixels.
 		this.sectionProperties.calcCurrentComment = null; // We don't automatically show a Calc comment when cursor is on its cell. But we remember it to show if user presses Alt+C keys.
