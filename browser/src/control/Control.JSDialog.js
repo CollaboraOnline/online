@@ -190,11 +190,11 @@ L.Control.JSDialog = L.Control.extend({
 			instance.isOnlyChild = true;
 
 		// it has to be first button in the form
-		var defaultButton = L.DomUtil.createWithId('button', 'default-button', instance.container);
+		var defaultButton = L.DomUtil.createWithId('button', 'default-button', instance.form);
 		defaultButton.style.display = 'none';
 		defaultButton.onclick = function() {
 			if (instance.defaultButtonId) {
-				var button = instance.container.querySelector('#' + instance.defaultButtonId);
+				var button = instance.form.querySelector('#' + instance.defaultButtonId);
 				if (button)
 					button.click();
 			}
