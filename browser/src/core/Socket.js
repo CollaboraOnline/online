@@ -572,7 +572,6 @@ app.definitions.Socket = L.Class.extend({
 					setTimeout(reloadFunc, 5000);
 				}
 			}
-
 			window.migrating = false;
 
 			$('#coolwsd-version-label').text(_('COOLWSD version:'));
@@ -686,6 +685,12 @@ app.definitions.Socket = L.Class.extend({
 					result: commandresult['result'],
 					errorMsg: commandresult['errorMsg']
 				};
+
+				if (!commandresult['success'] && window.migrating) {
+					//reset permissions if save failed while document migrating
+					this._map.setPermission(app.file.permission);
+					window.migrating = false;
+				}
 				this._map.fire('postMessage', {msgId: 'Action_Save_Resp', args: postMessageObj});
 			} else if (commandresult['command'] === 'load') {
 				postMessageObj = {
@@ -696,6 +701,20 @@ app.definitions.Socket = L.Class.extend({
 				this._map.fire('postMessage', {msgId: 'Action_Load_Resp', args: postMessageObj});
 			}
 			return;
+		}
+		else if (textMsg.startsWith('migrate:') && window.indirectSocket) {
+			var migrate = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+			window.migrating = true;
+			this._map.uiManager.closeAll();
+			if (this._map.isEditMode()) {
+				this._map.setPermission('view');
+				this._map.uiManager.showSnackbar(_('Document is getting migrated...'));
+			}
+			if (migrate.status == 'migrating') {
+				window.routeToken = migrate.routeToken;
+				this.connect();
+				this._map.uiManager.closeAll();
+			}
 		}
 		else if (textMsg.startsWith('close: ')) {
 			textMsg = textMsg.substring('close: '.length);
@@ -768,12 +787,6 @@ app.definitions.Socket = L.Class.extend({
 			}
 			else if (textMsg.startsWith('reloadafterrename')) {
 				msg = _('Reloading the document after rename');
-				showMsgAndReload = true;
-			}
-			else if (textMsg.startsWith('migrate') && window.indirectSocket) {
-				window.routeToken = textMsg.split(' ')[1];
-				msg = _('Please wait the document is migrating');
-				window.migrating = true;
 				showMsgAndReload = true;
 			}
 

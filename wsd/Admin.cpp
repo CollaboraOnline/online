@@ -323,16 +323,29 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     }
     else if (tokens.equals(0, "migrate") && tokens.size() > 1)
     {
-        const std::string& reason = tokens[1];
+        const std::string& docStatus = tokens[1];
         const std::string& dockey = tokens[2];
         const std::string& routeToken = tokens[3];
 
-        if (!dockey.empty() && !routeToken.empty())
+        if (!dockey.empty())
         {
-            if ((reason == "readonly" && model.isDocReadOnly(dockey)) || (reason == "saved" && model.isDocSaved(dockey)))
+            std::ostringstream oss;
+            oss << "migrate: {";
+            if (!routeToken.empty() && ((docStatus == "readonly" && model.isDocReadOnly(dockey)) ||
+                (docStatus == "saved" && model.isDocSaved(dockey))))
             {
+                oss << "\"status\"" << ':' << "\"migrating\"" << ',' << "\"routeToken\"" << ':'
+                    << "\"" << routeToken << "\"" << '}';
                 LOG_DBG("migrate document with docKey:" << dockey << " routeToken:" << routeToken);
-                COOLWSD::alertUserInternal(dockey, "close: migrate " + routeToken);
+                COOLWSD::alertUserInternal(dockey, oss.str());
+            }
+            else if (docStatus == "unsaved" && !model.isDocSaved(dockey))
+            {
+                oss << "\"status\"" << ':' << "\"saving\"" << '}';
+                std::cerr << oss.str() << "\n";
+                LOG_DBG("Saving document: DocKey [" << dockey << "].");
+                COOLWSD::alertUserInternal(dockey, oss.str());
+                COOLWSD::autoSave(dockey);
             }
         }
         else
@@ -340,12 +353,6 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             LOG_WRN("Document migration failed for dockey:" + dockey +
                         ", reason has been changed");
         }
-    }
-    else if (tokens.equals(0, "save") && tokens.size() > 1)
-    {
-        const std::string& docKey = tokens[1];
-        LOG_DBG("Saving document: DocKey [" << docKey << "].");
-        COOLWSD::autoSave(docKey);
     }
 }
 
