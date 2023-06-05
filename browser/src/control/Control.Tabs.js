@@ -302,7 +302,7 @@ L.Control.Tabs = L.Control.extend({
 
 		this._map.uiManager.showInfoModal('delete-sheet-modal', '', message, '', _('OK'), function() {
 			this._map.deletePage(nPos);
-		}.bind(this), true);
+		}.bind(this), true, 'delete-sheet-modal-response');
 	},
 
 	_renameSheet: function() {

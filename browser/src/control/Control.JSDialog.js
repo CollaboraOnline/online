@@ -206,6 +206,7 @@ L.Control.JSDialog = L.Control.extend({
 			title.innerText = instance.title;
 			instance.titleCloseButton = L.DomUtil.create('button', 'ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close', instance.titlebar);
 			instance.titleCloseButton.setAttribute('aria-label', _('Close dialog'));
+			instance.titleCloseButton.tabIndex = '-1';
 			L.DomUtil.create('span', 'ui-button-icon ui-icon ui-icon-closethick', instance.titleCloseButton);
 		}
 
@@ -241,16 +242,16 @@ L.Control.JSDialog = L.Control.extend({
 			L.DomUtil.addClass(primaryBtn, 'button-primary');
 	},
 
-	getFirstFocusableElement: function(widget) {
-		var ret = widget.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker):not([disabled]):not(.hidden)');
+	getFocusableElements: function(widget) {
+		var ret = widget.querySelectorAll('[tabIndex="0"]:not(.jsdialog-begin-marker, .jsdialog-end-marker):not([disabled]):not(.hidden)');
 		if (!ret)
-			ret = widget.querySelector('input:not([disabled]):not(.hidden)');
+			ret = widget.querySelectorAll('input:not([disabled]):not(.hidden)');
 		if (!ret)
-			ret = widget.querySelector('textarea:not([disabled]):not(.hidden)');
+			ret = widget.querySelectorAll('textarea:not([disabled]):not(.hidden)');
 		if (!ret)
-			ret = widget.querySelector('select:not([disabled]):not(.hidden)');
+			ret = widget.querySelectorAll('select:not([disabled]):not(.hidden)');
 		if (!ret)
-			ret = widget.querySelector('button:not([disabled]):not(.hidden)');
+			ret = widget.querySelectorAll('button:not([disabled]):not(.hidden)');
 		return ret;
 	},
 
@@ -266,13 +267,24 @@ L.Control.JSDialog = L.Control.extend({
 		instance.container.appendChild(endMarker);
 
 		instance.container.addEventListener('focusin', function(event) {
-			if (event.target == beginMarker || event.target == endMarker) {
-				var firstFocusElement = instance.container.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker, .jsdialog-end-marker):not([disabled]):not(.hidden)');
-				if (firstFocusElement)
-					firstFocusElement.focus();
-				else if (document.getElementById(instance.init_focus_id)) {
-					document.getElementById(instance.init_focus_id).focus();
+			if (event.target == endMarker) {
+				var firstFocusElement = instance.that.getFocusableElements(instance.container);
+				if (firstFocusElement && firstFocusElement.length) {
+					firstFocusElement[0].focus();
+					return;
 				}
+			} else if (event.target == beginMarker) {
+				var focusables = instance.that.getFocusableElements(instance.container);
+				var lastFocusElement = focusables.length ? focusables[focusables.length - 1] : null;
+				if (lastFocusElement) {
+					lastFocusElement.focus();
+					return;
+				}
+			}
+
+			if (event.target == endMarker || event.target == beginMarker) {
+				if (document.getElementById(instance.init_focus_id))
+					document.getElementById(instance.init_focus_id).focus();
 				else {
 					app.console.error('There is no focusable element in the modal. Either focusId should be given or modal should have a response button.');
 					instance.that.close(instance.id, true);
@@ -338,18 +350,18 @@ L.Control.JSDialog = L.Control.extend({
 		instance.clickToClose = clickToCloseElement;
 
 		// setup initial focus and helper elements for closing popup
-		var initialFocusElement = this.getFirstFocusableElement(instance.container);
+		var initialFocusElement = this.getFocusableElements(instance.container);
 
-		if (instance.canHaveFocus && initialFocusElement)
-			initialFocusElement.focus();
+		if (instance.canHaveFocus && initialFocusElement && initialFocusElement.length)
+			initialFocusElement[0].focus();
 
 		var focusWidget = instance.init_focus_id ? instance.container.querySelector('[id=\'' + instance.init_focus_id + '\']') : null;
 		if (focusWidget)
 			focusWidget.focus();
 		if (focusWidget && document.activeElement !== focusWidget) {
-			var firstFocusable = this.getFirstFocusableElement(focusWidget);
-			if (firstFocusable)
-				firstFocusable.focus();
+			var firstFocusable = this.getFocusableElements(focusWidget);
+			if (firstFocusable && firstFocusable.length)
+				firstFocusable[0].focus();
 			else
 				console.error('cannot get focus for widget: "' + instance.init_focus_id + '"');
 		}
@@ -529,8 +541,9 @@ L.Control.JSDialog = L.Control.extend({
 				var lastKey = dialogs[dialogs.length - 1];
 				var container = this.dialogs[lastKey].container;
 				container.focus();
-				var initialFocusElement = this.getFirstFocusableElement(container);
-				initialFocusElement.focus();
+				var initialFocusElement = this.getFocusableElements(container);
+				if (initialFocusElement && initialFocusElement.length)
+					initialFocusElement[0].focus();
 			}
 		}
 		else {
