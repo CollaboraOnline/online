@@ -64,75 +64,114 @@ class DeltaGenerator {
     static const int compressionLevel = -3;
 
     /// Bitmap row with a CRC for quick vertical shift detection
-    class DeltaBitmapRow {
-        uint64_t _crc;
-        size_t _pixSize;
-        uint32_t *_pixels;
+    class DeltaBitmapRow final {
+        size_t _rleSize;
+        uint64_t _rleMask[256/64];
+        uint32_t *_rleData;
     public:
-        DeltaBitmapRow()
-            : _crc(0)
-            , _pixSize(0)
-            , _pixels(nullptr)
+        class PixIterator final
         {
+            const DeltaBitmapRow &_row;
+            unsigned int _x;
+            const uint32_t *_rlePtr;
+        public:
+            PixIterator(const DeltaBitmapRow &row)
+                : _row(row), _x(0),
+                  _rlePtr(row._rleData)
+            {
+            }
+            uint32_t getPixel() const
+            {
+                return *_rlePtr;
+            }
+            bool identical(const PixIterator &i) const
+            {
+                return getPixel() == i.getPixel();
+            }
+            void next()
+            {
+                _x++;
+                if (!(_row._rleMask[_x>>6] & (uint64_t(1) << (_x & 63))))
+                    _rlePtr++;
+            }
+        };
+
+
+        DeltaBitmapRow()
+            : _rleSize(0)
+            , _rleData(nullptr)
+        {
+            memset(_rleMask, 0, sizeof(_rleMask));
         }
+        DeltaBitmapRow(const DeltaBitmapRow&) = delete;
 
         ~DeltaBitmapRow()
         {
-            if (_pixels)
-                free(_pixels);
+            if (_rleData)
+                free(_rleData);
         }
 
-        static inline uint64_t copyWithCrc(uint32_t *to, const uint32_t *from, unsigned int width)
+        void initRow(uint32_t *from, unsigned int width)
         {
-            assert ((width & 0x1) == 0); // copy 64bits at a time.
+            uint32_t scratch[width];
 
-            const uint64_t *src = reinterpret_cast<const uint64_t *>(from);
-            uint64_t *dest = reinterpret_cast<uint64_t *>(to);
-
-            // We get the hash ~for free as we copy - with a cheap hash.
-            uint64_t crc = 0x7fffffff - 1;
-            for (unsigned int x = 0; x < (width>>1); ++x)
+            unsigned int outp = 0;
+            scratch[0] = from[0];
+            _rleMask[0] = 1;
+            for (unsigned int x = 1; x < width; ++x)
             {
-                crc = (crc << 7) + crc + src[x];
-                dest[x] = src[x];
+                if (from[x] == scratch[outp]) // set for run
+                    _rleMask[x>>6] |= uint64_t(1) << (x & 63);
+                else
+                    scratch[++outp] = from[x];
             }
-            return crc;
-        }
-
-        void initRow(uint32_t *srcPixels, size_t width)
-        {
-            _pixels = (uint32_t *)malloc((size_t)width * 4);
-            _pixSize = width;
-            _crc = copyWithCrc(
-                const_cast<uint32_t *>(_pixels), srcPixels, width);
+            _rleSize = ++outp;
+            _rleData = (uint32_t *)malloc((size_t)_rleSize * 4);
+            memcpy(_rleData, scratch, _rleSize * 4);
         }
 
         bool identical(const DeltaBitmapRow &other) const
         {
-            if (_crc != other._crc)
+            if (_rleSize != other._rleSize)
                 return false;
-            return !std::memcmp(_pixels, other._pixels, _pixSize * 4);
+            if (memcmp(_rleMask, other._rleMask, sizeof(_rleMask)))
+                return false;
+            return !std::memcmp(_rleData, other._rleData, _rleSize * 4);
         }
 
         // Create a diff from our state to new state in curRow
         void diffRowTo(const DeltaBitmapRow &curRow,
                        const int width, const int curY,
-                       std::vector<char> &output) const
+                       std::vector<uint8_t> &output) const
         {
+            PixIterator oldPixels(*this);
+            PixIterator curPixels(curRow);
             for (int x = 0; x < width;)
             {
                 int same;
                 for (same = 0; same + x < width &&
-                         _pixels[x+same] == curRow._pixels[x+same];)
-                    ++same;
+                         oldPixels.identical(curPixels);)
+                {
+                    oldPixels.next();
+                    curPixels.next();
+                    same++;
+                }
 
                 x += same;
 
+                uint32_t scratch[256];
+
                 int diff;
                 for (diff = 0; diff + x < width &&
-                         (_pixels[x+diff] != curRow._pixels[x+diff] || diff < 3) &&
-                         diff < 254;)
+                         (!oldPixels.identical(curPixels) || diff < 3)
+                         && diff < 254;)
+                {
+                    oldPixels.next();
+                    scratch[diff] = curPixels.getPixel();
+                    curPixels.next();
                     ++diff;
+                }
+
                 if (diff > 0)
                 {
                     output.push_back('d');
@@ -144,7 +183,7 @@ class DeltaGenerator {
                     output.resize(dest + diff * 4);
 
                     unpremult_copy(reinterpret_cast<unsigned char *>(&output[dest]),
-                                   (const unsigned char *)(curRow._pixels + x),
+                                   (const unsigned char *)(scratch),
                                    diff);
 
                     LOG_TRC("row " << curY << " different " << diff << "pixels");
