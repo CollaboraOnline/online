@@ -1832,7 +1832,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		else if (textMsg.startsWith('colorpalettes:')) {
 			var json = JSON.parse(textMsg.substring('colorpalettes:'.length + 1));
-			this._map.fire('colorpalettes:', json);
+			app.colorPalettes['ThemeColors'].colors = json.ThemeColors;
 		}
 	},
 

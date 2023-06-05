@@ -1,4 +1,4 @@
-/* global Proxy */
+/* global Proxy _ */
 
 window.app = { // Shouldn't have any functions defined.
 	definitions: {}, // Class instances are created using definitions under this variable.
@@ -56,6 +56,10 @@ window.app = { // Shouldn't have any functions defined.
 	console: window.app.console,
 	languages: [], // all available languages, fetched from core
 	favouriteLanguages: ['de-DE', 'en-US', 'en-GB', 'es-ES', 'fr-FR', 'it', 'nl-NL', 'pt-BR', 'pt-PT', 'ru'],
+	colorPalettes: {
+		'ThemeColors': { name: _('Theme colors'), colors: [] },
+		'StandardColors': { name: _('Standard'), colors: [] }
+	},
 };
 
 var activateValidation = false;
