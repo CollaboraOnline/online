@@ -619,7 +619,6 @@ L.Map.include({
 		if (window.socketProxy)
 			content.find('#slow-proxy').text(_('"Slow Proxy"'));
 
-		content.find('#serverId').text('ServerId: ' + window.app.socket.WSDServer.Id);
 		if (window.indirectSocket)
 			content.find('#routeToken').text('RouteToken: ' + window.routeToken);
 
