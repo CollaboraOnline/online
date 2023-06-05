@@ -3083,6 +3083,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("a11ytextselectionchanged: " + payload);
         break;
     }
+    case LOK_CALLBACK_COLOR_PALETTES:
+        sendTextFrame("colorpalettes: " + payload);
+        break;
     default:
         LOG_ERR("Unknown callback event (" << lokCallbackTypeToString(type) << "): " << payload);
     }

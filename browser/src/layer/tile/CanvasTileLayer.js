@@ -1813,6 +1813,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			var pos = textMsg.substring('a11ycaretposition:'.length + 1);
 			this._map._textInput.setA11yCaretPosition(parseInt(pos));
 		}
+		else if (textMsg.startsWith('colorpalettes:')) {
+			var json = JSON.parse(textMsg.substring('colorpalettes:'.length + 1));
+			this._map.fire('colorpalettes:', json);
+		}
 	},
 
 	_onTabStopListUpdate: function (textMsg) {
