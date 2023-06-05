@@ -87,7 +87,7 @@ function selectColorFromPalette(color) {
 // Parameters:
 // item - item string, that we use a selector to find the right list item.
 function selectFromListbox(item) {
-	cy.cGet('.select2-dropdown').should('be.visible');
+	cy.cGet('.select2-dropdown').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).should('be.visible');
 	// We use force because the tooltip sometimes hides the items.
 	cy.cGet('body').contains('.select2-results__option', item).click({force: true});
 	cy.cGet('.select2-dropdown').should('not.exist');
