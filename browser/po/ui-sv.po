@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-01 13:52+0200\n"
-"PO-Revision-Date: 2023-04-25 07:48+0000\n"
-"Last-Translator: bittin1ddc447d824349b2 <bittin@reimu.nl>\n"
+"PO-Revision-Date: 2023-06-03 14:52+0000\n"
+"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -114,7 +114,7 @@ msgstr "Ändrad"
 
 #: admin/admin.strings.js:29
 msgid "Uploaded"
-msgstr ""
+msgstr "Uppladdad"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
@@ -947,7 +947,7 @@ msgstr "Spara kommentarer"
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarImpress.js:418
 msgid "Master View"
-msgstr ""
+msgstr "Master-vy"
 
 #: src/control/Control.Menubar.js:490 src/control/Control.Menubar.js:1003
 #: src/control/Control.PresentationBar.js:57
@@ -2050,7 +2050,7 @@ msgstr "Tjänsten är bortkopplad."
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
-msgstr ""
+msgstr "Serverns lagring är full."
 
 #: src/errormessages.js:14
 msgid ""
@@ -2195,12 +2195,16 @@ msgstr "Dokumentets namn kan inte ändras."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Kunde inte ladda dokumentet från lagringen. Prova att ladda om dokumentet."
 
 #: src/errormessages.js:42
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Kunde inte spara dokumentet på lagringen. Dokumentet är i endast-läs-läge. "
+"Kontrollera att det finns tillräckligt med utrymme på lagringen och försök "
+"spara igen."
 
 #: src/errormessages.js:43
 msgid ""
@@ -2208,26 +2212,29 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Kunde inte spara dokumentet då det är större än tillgängligt utrymme på "
+"lagringen. Dokumentet är i endast-läs-läge, men du kan ladda ner det för att "
+"ha en lokal kopia."
 
 #: src/errormessages.js:45
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Kunde inte spara dokumentet. Kontrollera rättigheterna."
 
 #: src/errormessages.js:46
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "Kunde inte byta namn på dokumentet. Kontrollera rättigheterna."
 
 #: src/errormessages.js:47
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Kunde inte exportera dokumentet. Försök igen."
 
 #: src/errormessages.js:52
 msgid "Uploading file to server failed, file not found."
-msgstr "Kunde inte uppladda filen till servern eftersom filen inte hittades."
+msgstr "Kunde inte ladda upp filen till servern eftersom filen inte hittades."
 
 #: src/errormessages.js:53
 msgid "Uploading file to server failed, the file is too large."
-msgstr "Kunde inte uppladda filen till servern eftersom filen är för stor."
+msgstr "Kunde inte ladda upp filen till servern eftersom filen är för stor."
 
 #: src/layer/tile/CanvasTileLayer.js:1929
 msgid "Functions"

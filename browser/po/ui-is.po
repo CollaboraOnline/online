@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-01 13:52+0200\n"
-"PO-Revision-Date: 2023-02-15 06:40+0000\n"
+"PO-Revision-Date: 2023-06-03 14:52+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/ui/is/>\n"
-"Language: \n"
+"Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Weblate 4.16-dev\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -114,7 +114,7 @@ msgstr "Breytt"
 
 #: admin/admin.strings.js:29
 msgid "Uploaded"
-msgstr ""
+msgstr "Sent inn"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
@@ -305,7 +305,7 @@ msgstr "Tókst ekki að auðkenna þessa setu með %0 samskiptamátanum"
 
 #: admin/src/AdminSocketOverview.js:420
 msgid "Warning"
-msgstr ""
+msgstr "Aðvörun"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
@@ -373,7 +373,7 @@ msgstr "Sjálfvirkur litur"
 
 #: src/control/Control.AlertDialog.js:42
 msgid "External link"
-msgstr ""
+msgstr "Ytri tengill"
 
 #: src/control/Control.AlertDialog.js:43
 msgid "Open link"
@@ -594,12 +594,11 @@ msgstr "Ekkert (ekki yfirfara stafsetningu)"
 
 #: src/control/Control.LanguageDialog.js:72
 msgid "Select language"
-msgstr ""
+msgstr "Veldu tungumál"
 
 #: src/control/Control.LanguageDialog.js:93
-#, fuzzy
 msgid "Language"
-msgstr "Tungumál:"
+msgstr "Tungumál"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:80
 #: src/control/Control.Menubar.js:905
@@ -768,7 +767,7 @@ msgstr "Sýna stöðustiku"
 #: src/control/Control.NotebookbarImpress.js:424
 #: src/control/Control.NotebookbarWriter.js:1147
 msgid "Dark Mode"
-msgstr ""
+msgstr "Dökkur hamur"
 
 #: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:428
 #: src/control/Control.Menubar.js:563 src/control/Control.Menubar.js:697
@@ -789,7 +788,7 @@ msgstr "Allt"
 #: src/control/Control.NotebookbarImpress.js:967
 #: src/control/Control.NotebookbarWriter.js:851
 msgid "Smart Picker"
-msgstr ""
+msgstr "Snjallval"
 
 #: src/control/Control.Menubar.js:210
 msgid "Text orientation"
@@ -946,7 +945,7 @@ msgstr "Vista athugasemdir"
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarImpress.js:418
 msgid "Master View"
-msgstr ""
+msgstr "Yfirsýn"
 
 #: src/control/Control.Menubar.js:490 src/control/Control.Menubar.js:1003
 #: src/control/Control.PresentationBar.js:57
@@ -1004,11 +1003,11 @@ msgstr "Uppsetning síðu"
 
 #: src/control/Control.Menubar.js:1072
 msgid "Define print area"
-msgstr ""
+msgstr "Skilgreindu prentsvæði"
 
 #: src/control/Control.Menubar.js:1073
 msgid "Remove print area"
-msgstr ""
+msgstr "Fjarlægja prentsvæði"
 
 #: src/control/Control.Menubar.js:1346 src/control/Control.StatusBar.js:553
 msgid "Reset to Default Language"
@@ -1114,7 +1113,7 @@ msgstr "~Skrá"
 #: src/control/Control.NotebookbarImpress.js:66
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "Hom~e"
-msgstr ""
+msgstr "H~eim"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:60
@@ -1145,15 +1144,14 @@ msgstr "Yfirfa~ra"
 #: src/control/Control.NotebookbarDraw.js:75
 #: src/control/Control.NotebookbarImpress.js:87
 #: src/control/Control.NotebookbarWriter.js:43
-#, fuzzy
 msgid "F~ormat"
-msgstr "Snið"
+msgstr "S~nið"
 
 #: src/control/Control.NotebookbarCalc.js:48
 #: src/control/Control.NotebookbarDraw.js:86
 #: src/control/Control.NotebookbarWriter.js:59
 msgid "Dra~w"
-msgstr ""
+msgstr "Tei~kna"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:92
@@ -1309,7 +1307,7 @@ msgstr "Eyða dálkum"
 #: src/control/Control.NotebookbarImpress.js:355
 #: src/control/Control.NotebookbarWriter.js:1062
 msgid "Read mode"
-msgstr ""
+msgstr "Leshamur"
 
 #: src/control/Control.NotebookbarCalc.js:1038
 #: src/control/Control.NotebookbarDraw.js:294
@@ -1369,9 +1367,8 @@ msgid "Reference~s"
 msgstr "Tilví~sanir"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "For~m"
-msgstr "Form"
+msgstr "For~m"
 
 #: src/control/Control.NotebookbarWriter.js:205
 msgid "ODF Text Document (.odt)"
@@ -1981,7 +1978,7 @@ msgstr "Rangt lykilorð, reyndu aftur."
 
 #: src/core/Socket.js:955
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Aðeins eigandi skjalsins getur breytt lykilorðinu."
 
 #: src/core/Socket.js:986 src/core/Socket.js:991
 msgid "Missing Fonts"
@@ -2053,7 +2050,7 @@ msgstr "Netþjónninn hefur verið aftengdur."
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
-msgstr ""
+msgstr "Ekki nægilegt diskpláss eftir á þjóni."
 
 #: src/errormessages.js:14
 msgid ""
@@ -2108,23 +2105,22 @@ msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr "WOPISrc viðfang er rangt eða vantar, hafðu samband við hjálparteymið."
 
 #: src/errormessages.js:21
-#, fuzzy
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
 "Setan þín rennur út eftir %time. Vistaðu skjölin þín og endurlestu setuna ("
-"eða vefsíðuna) til að halda áfram."
+"eða vefsíðuna) til að halda áfram. Þú gætir þurft að skrá þig inn aftur."
 
 #: src/errormessages.js:22
-#, fuzzy
 msgid ""
 "Your session has expired. Further changes to the document might not be "
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
 "Setan þín er útrunnin. Frekari breytingar á skjalinu verða ekki endilega "
-"vistaðar. Endurlestu setuna (eða vefsíðuna) til að halda áfram."
+"vistaðar. Endurlestu setuna (eða vefsíðuna) til að halda áfram. Þú gætir "
+"þurft að skrá þig inn aftur."
 
 #: src/errormessages.js:23
 msgid ""
@@ -2365,7 +2361,6 @@ msgstr ""
 "slíka aðgerð</p>"
 
 #: src/map/Clipboard.js:913
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
@@ -2373,8 +2368,8 @@ msgid ""
 msgstr ""
 "<p>Vafrinn þinn er með takmarkaðan aðgang að klippispjaldinu</p><p>Ýttu núna "
 "á: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> til að sjá "
-"fleiri valkosti</p><p class=\"vex-footnote\">Lokaðu sprettglugganum til að "
-"hunsa sérstaka límingu</p>"
+"fleiri valkosti</p><p>Lokaðu sprettglugganum til að hunsa sérstaka "
+"límingu</p>"
 
 #: src/map/Map.js:215
 msgid "Initializing..."
