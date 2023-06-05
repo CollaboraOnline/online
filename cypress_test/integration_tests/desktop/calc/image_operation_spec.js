@@ -34,7 +34,7 @@ describe(['tagdesktop'], 'Image Operation Tests', function() {
 
 		helper.waitUntilIdle('.ui-expander-label');
 
-		cy.cGet().contains('.ui-expander-label', 'Position and Size')
+		cy.cGet('body').contains('.ui-expander-label', 'Position and Size')
 			.click();
 
 		helper.waitUntilIdle('#selectwidth input');

@@ -43,7 +43,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
 		//insert
 		cy.cGet('#tb_editbar_item_insertobjectchart').click();
-		cy.cGet('.ui-pushbutton.jsdialog.button-primary').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
+
+		cy.cGet('.lokdialog_canvas').click();
+		helper.typeIntoDocument('{shift}{enter}');
+		cy.wait(2000);
+
 		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
 		//delete
 		helper.typeIntoDocument('{del}');

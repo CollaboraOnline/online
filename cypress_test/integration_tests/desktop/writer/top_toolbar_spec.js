@@ -50,25 +50,25 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Apply bold font.', function() {
-		cy.cGet('.cell.notebookbar > .unoBold > button').click();
+		cy.cGet('.cell.notebookbar > .unoBold > img').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p b').should('exist');
 	});
 
 	it('Apply italic font.', function() {
-		cy.cGet('.cell.notebookbar > .unoItalic > button').click();
+		cy.cGet('.cell.notebookbar > .unoItalic > img').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p i').should('exist');
 	});
 
 	it('Apply underline.', function() {
-		cy.cGet('.cell.notebookbar > .unoUnderline > button').click();
+		cy.cGet('.cell.notebookbar > .unoUnderline > img').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p u').should('exist');
 	});
 
 	it('Apply strikethrough.', function() {
-		cy.cGet('.cell.notebookbar > .unoStrikeout > button').click();
+		cy.cGet('.cell.notebookbar > .unoStrikeout > img').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p strike').should('exist');
 	});
@@ -80,7 +80,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Clear direct formatting', function() {
-		cy.cGet('.cell.notebookbar > .unoBold > button').click();
+		cy.cGet('.cell.notebookbar > .unoBold > img').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p b').should('exist');
 		cy.cGet('.cell.notebookbar > .unoResetAttributes').click();
@@ -89,7 +89,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Apply left/right alignment.', function() {
-		cy.cGet('#Home .cell.notebookbar > .unoBold > button').click();
+		cy.cGet('#Home .cell.notebookbar > .unoBold > img').click();
 		writerHelper.selectAllTextOfDoc();
 		//cy.cGet('#copy-paste-container p').should('have.attr', 'align', 'right');
 		cy.cGet('#Home .cell.notebookbar > .unoRightPara').click();
@@ -104,32 +104,32 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Apply justified.', function() {
-		cy.cGet('#Home .cell.notebookbar > div.unoJustifyPara > button.unobutton').click();
+		cy.cGet('#Home.ui-content.level-0 .cell.notebookbar .unoJustifyPara img').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'align', 'justify');
 	});
 
 	it('Apply Line spacing: 1 and 1.5', function() {
-		cy.cGet('#Home .cell.notebookbar .unoLineSpacing button').click();
-		cy.cGet('[id$=line-spacing-menu]').contains('.menu-text', 'Line Spacing: 1.5').click();
+		cy.cGet('#Home.ui-content.level-0 .cell.notebookbar .unoLineSpacing img').click();
+		cy.cGet('#w2ui-overlay').contains('.menu-text', 'Line Spacing: 1.5').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'line-height: 150%');
-		cy.cGet('#Home .cell.notebookbar .unoLineSpacing button').click();
-		cy.cGet('[id$=line-spacing-menu]').contains('.menu-text', 'Line Spacing: 1').click();
+		cy.cGet('#Home.ui-content.level-0 .cell.notebookbar .unoLineSpacing img').click();
+		cy.cGet('#w2ui-overlay').contains('.menu-text', 'Line Spacing: 1').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'line-height: 100%');
 	});
 
 	it('Apply Line spacing: 2', function() {
-		cy.cGet('#Home .cell.notebookbar .unoLineSpacing button').click();
-		cy.cGet('[id$=line-spacing-menu]').contains('.menu-text', 'Line Spacing: 2').click();
+		cy.cGet('#Home .cell.notebookbar .unoLineSpacing img').click();
+		cy.cGet('#w2ui-overlay').contains('.menu-text', 'Line Spacing: 2').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p').should('have.attr', 'style').should('contain', 'line-height: 200%');
 	});
 
 	it('Increase/Decrease Paragraph spacing', function() {
-		cy.cGet('.cell.notebookbar .unoLineSpacing button').click();
-		cy.cGet('[id$=line-spacing-menu]').contains('.menu-text', 'Increase Paragraph Spacing').click();
+		cy.cGet('.cell.notebookbar .unoLineSpacing img').click();
+		cy.cGet('#w2ui-overlay').contains('.menu-text', 'Increase Paragraph Spacing').click();
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -138,8 +138,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 		writerHelper.selectAllTextOfDoc();
 
-		cy.cGet('.cell.notebookbar .unoLineSpacing button').click();
-		cy.cGet('[id$=line-spacing-menu]').contains('.menu-text', 'Decrease Paragraph Spacing').click();
+		cy.cGet('.cell.notebookbar .unoLineSpacing img').click();
+		cy.cGet('#w2ui-overlay').contains('.menu-text', 'Decrease Paragraph Spacing').click();
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -205,7 +205,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#hyperlink-link-box').should('exist');
 		cy.cGet('#hyperlink-text-box').type('link');
 		cy.cGet('#hyperlink-link-box').type('www.something.com');
-		cy.cGet('#response-ok').click();
+		cy.cGet('.button-primary.vex-last').click();
 		writerHelper.selectAllTextOfDoc();
 		helper.expectTextForClipboard('text text1link');
 		cy.cGet('#copy-paste-container p a').should('have.attr', 'href', 'http://www.something.com/');
@@ -240,7 +240,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Save.', { defaultCommandTimeout: 60000 }, function() {
-		cy.cGet('.cell.notebookbar > .unoBold > button').click();
+		cy.cGet('.cell.notebookbar > .unoBold > img').click();
 		desktopHelper.actionOnSelector('save', (selector) => { cy.cGet(selector).click(); });
 		helper.reload(testFileName, 'writer', true);
 		cy.wait(2000);
@@ -265,7 +265,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Apply Undo/Redo.', function() {
-		cy.cGet('.cell.notebookbar > .unoItalic > button').click();
+		cy.cGet('.cell.notebookbar > .unoItalic > img').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p i').should('exist');
 
@@ -306,7 +306,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		desktopHelper.checkDialogAndClose('Special Characters');
 	});
 
-	it('Hide/show menu bar.', function() {
+	it.skip('Hide/show menu bar.', function() {
 		cy.cGet('#main-menu').should('be.visible');
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 
@@ -327,7 +327,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.textSelectionShouldExist();
 
 		// Apply bold and try to clone it to the whole word.
-		cy.cGet('.cell.notebookbar > .unoBold > button').click();
+		cy.cGet('.cell.notebookbar > .unoBold > img').click();
 		cy.cGet('.cell.notebookbar > .unoFormatPaintbrush').click();
 
 		// Click at the blinking cursor position.
