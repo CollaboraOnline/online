@@ -33,23 +33,32 @@ if (process.argv.length > 6) {
 }
 
 let typing_speed = 30;
-if (process.argv.length > 7) {
-	typing_speed = parseInt(process.argv[7]);
-}
-
 let typing_duration = 5000;
-if (process.argv.length > 8) {
-	typing_duration = parseInt(process.argv[8]);
-}
-
 let record_stats = false;
-if (process.argv.length > 9) {
-	record_stats = process.argv[9] === 'true';
-}
-
 let single_view = false;
-if (process.argv.length > 10) {
-	single_view = process.argv[10] === 'true';
+let reconnector = false;
+
+if (process.argv.length > 7) {
+	if (process.argv[7] == '--reconnector')
+	{
+		reconnector = true;
+	}
+	else
+	{
+		typing_speed = parseInt(process.argv[7]);
+
+		if (process.argv.length > 8) {
+			typing_duration = parseInt(process.argv[8]);
+		}
+
+		if (process.argv.length > 9) {
+			record_stats = process.argv[9] === 'true';
+		}
+
+		if (process.argv.length > 10) {
+			single_view = process.argv[10] === 'true';
+		}
+	}
 }
 /*
 global.console = {
@@ -212,10 +221,19 @@ window.onload = function() {
 	map._container.___clientHeight = 1080;
 
 	map.on('docloaded', function(){
-		if (docLoaded) return;
+		if (!reconnector && docLoaded)
+			return;
 		docLoaded = true;
 		console.debug('document loaded');
 		setTimeout(async function() {
+			if (reconnector)
+			{
+				setTimeout(async function() {
+					console.debug('Client re-loading...');
+					// window.location.reload(); - not available in jsdom.
+					window.app.socket.socket.close();
+				}, 1000 + Math.random() * 2000);
+			}
 			if (bookmark)
 			{
 				let nodeIndex = parseInt(bookmark.substring(bookmark.lastIndexOf('_')+1));

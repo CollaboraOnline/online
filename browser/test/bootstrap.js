@@ -88,8 +88,14 @@ function serverReady() {
 		fork(`${srcdir}/test/load.js`, [ssl_flag, top_builddir, `${top_builddir}/test/data/perf-test-edit.odt`, `testEdit_${i}`, `${port}`, `${typing_speed}`, `${typing_duration}`, 'false', 'false'])
 		);
 	}
+        // three windows just connecting and dis-connecting.
+	for (let i = 1; i <= 3; i++) {
+	    childNodes.push(
+		fork(`${srcdir}/test/load.js`, [ssl_flag, top_builddir, `${top_builddir}/test/data/perf-test-edit.odt`, `testEdit_${i}`, `${port}`, '--reconnector'])
+	        );
+	}
     }
-    setInterval(dumpMemoryUse, 3000);
+    setInterval(dumpMemoryUse, 6000);
 }
 
 function vacuumCleaner(kill, message, code) {
