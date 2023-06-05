@@ -206,6 +206,7 @@ L.Control.JSDialog = L.Control.extend({
 			title.innerText = instance.title;
 			instance.titleCloseButton = L.DomUtil.create('button', 'ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close', instance.titlebar);
 			instance.titleCloseButton.setAttribute('aria-label', _('Close dialog'));
+			instance.titleCloseButton.tabIndex = '-1';
 			L.DomUtil.create('span', 'ui-button-icon ui-icon ui-icon-closethick', instance.titleCloseButton);
 		}
 
@@ -257,18 +258,27 @@ L.Control.JSDialog = L.Control.extend({
 		instance.container.appendChild(endMarker);
 
 		instance.container.addEventListener('focusin', function(event) {
-			if (event.target == beginMarker || event.target == endMarker) {
+			if (event.target == endMarker) {
 				var firstFocusElement = instance.container.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker, .jsdialog-end-marker):not([disabled]):not(.hidden)');
-				if (firstFocusElement)
+				if (firstFocusElement) {
 					firstFocusElement.focus();
-				else if (document.getElementById(instance.init_focus_id)) {
-					document.getElementById(instance.init_focus_id).focus();
+					return;
 				}
-				else {
-					app.console.error('There is no focusable element in the modal. Either focusId should be given or modal should have a response button.');
-					instance.that.close(instance.id, true);
-					instance.that.map.focus();
+			} else if (event.target == beginMarker) {
+				var focusables = instance.container.querySelectorAll('[tabIndex="0"]:not(.jsdialog-begin-marker, .jsdialog-end-marker):not([disabled]):not(.hidden)');
+				var lastFocusElement = focusables.length ? focusables[focusables.length - 1] : null;
+				if (lastFocusElement) {
+					lastFocusElement.focus();
+					return;
 				}
+			}
+
+			if (document.getElementById(instance.init_focus_id))
+				document.getElementById(instance.init_focus_id).focus();
+			else {
+				app.console.error('There is no focusable element in the modal. Either focusId should be given or modal should have a response button.');
+				instance.that.close(instance.id, true);
+				instance.that.map.focus();
 			}
 		});
 	},
