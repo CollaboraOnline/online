@@ -942,7 +942,7 @@ L.Map.include({
 					msg = _('Are you sure you want to delete this page?');
 				}
 				map.uiManager.showInfoModal('deleteslide-modal', _('Delete'),
-					msg, '', _('OK'), function () { map.deletePage(); }, true);
+					msg, '', _('OK'), function () { map.deletePage(); }, true, 'deleteslide-modal-response');
 			}
 			break;
 		case 'hyperlinkdialog':

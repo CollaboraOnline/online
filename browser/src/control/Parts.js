@@ -433,7 +433,7 @@ L.Map.include({
 				}
 			};
 
-			this.uiManager.showInfoModal('show-sheets-modal', '', ' ', ' ', _('Close'), callback, true);
+			this.uiManager.showInfoModal('show-sheets-modal', '', ' ', ' ', _('Close'), callback, true, 'show-sheets-modal-response');
 			document.getElementById('show-sheets-modal').querySelectorAll('label')[0].outerHTML = container.outerHTML;
 		}
 	},

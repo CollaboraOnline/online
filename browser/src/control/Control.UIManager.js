@@ -1116,7 +1116,7 @@ L.Control.UIManager = L.Control.extend({
 				vertical: false,
 				layoutstyle: 'end'
 			},
-		]);
+		], 'input-modal-input');
 
 		var that = this;
 		this.showModal(json, [
