@@ -8,6 +8,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include <unordered_set>
 #include <assert.h>
 #include <zlib.h>
@@ -63,11 +64,48 @@ class DeltaGenerator {
     static const int compressionLevel = -3;
 
     /// Bitmap row with a CRC for quick vertical shift detection
-    struct DeltaBitmapRow {
-        // FIXME: add "whole row the same" flag.
-        uint64_t        _crc;
-        const uint32_t *_pixels; // FIXME: remove me.
-        size_t          _pixSize;
+    class DeltaBitmapRow {
+        uint64_t _crc;
+        size_t _pixSize;
+        uint32_t *_pixels;
+    public:
+        DeltaBitmapRow()
+            : _crc(0)
+            , _pixSize(0)
+            , _pixels(nullptr)
+        {
+        }
+
+        ~DeltaBitmapRow()
+        {
+            if (_pixels)
+                free(_pixels);
+        }
+
+        static inline uint64_t copyWithCrc(uint32_t *to, const uint32_t *from, unsigned int width)
+        {
+            assert ((width & 0x1) == 0); // copy 64bits at a time.
+
+            const uint64_t *src = reinterpret_cast<const uint64_t *>(from);
+            uint64_t *dest = reinterpret_cast<uint64_t *>(to);
+
+            // We get the hash ~for free as we copy - with a cheap hash.
+            uint64_t crc = 0x7fffffff - 1;
+            for (unsigned int x = 0; x < (width>>1); ++x)
+            {
+                crc = (crc << 7) + crc + src[x];
+                dest[x] = src[x];
+            }
+            return crc;
+        }
+
+        void initRow(uint32_t *srcPixels, size_t width)
+        {
+            _pixels = (uint32_t *)malloc((size_t)width * 4);
+            _pixSize = width;
+            _crc = copyWithCrc(
+                const_cast<uint32_t *>(_pixels), srcPixels, width);
+        }
 
         bool identical(const DeltaBitmapRow &other) const
         {
@@ -122,23 +160,6 @@ class DeltaGenerator {
         DeltaData(const DeltaData&) = delete;
         DeltaData& operator=(const DeltaData&) = delete;
 
-        static inline uint64_t copyWithCrc(uint32_t *to, const uint32_t *from, unsigned int width)
-        {
-            assert ((width & 0x1) == 0); // copy 64bits at a time.
-
-            const uint64_t *src = reinterpret_cast<const uint64_t *>(from);
-            uint64_t *dest = reinterpret_cast<uint64_t *>(to);
-
-            // We get the hash ~for free as we copy - with a cheap hash.
-            uint64_t crc = 0x7fffffff - 1;
-            for (unsigned int x = 0; x < (width>>1); ++x)
-            {
-                crc = (crc << 7) + crc + src[x];
-                dest[x] = src[x];
-            }
-            return crc;
-        }
-
         DeltaData (TileWireId wid,
                    unsigned char* pixmap, size_t startX, size_t startY,
                    int width, int height,
@@ -161,24 +182,17 @@ class DeltaGenerator {
                     << (width * height * 4) << " width " << width
                     << " height " << height);
 
-            _pixels = (uint32_t *)malloc((size_t)width * height * 4);
             for (int y = 0; y < height; ++y)
             {
                 size_t position = ((startY + y) * bufferWidth * 4) + (startX * 4);
                 DeltaBitmapRow &row = _rows[y];
-                row._pixels = _pixels + width * y;
-                row._pixSize = width;
-                row._crc = copyWithCrc(
-                    const_cast<uint32_t *>(row._pixels),
-                    reinterpret_cast<uint32_t *>(pixmap + position), width);
+                row.initRow(reinterpret_cast<uint32_t *>(pixmap + position), width);
             }
         }
 
         ~DeltaData()
         {
             delete[] _rows;
-            if (_pixels)
-                free (_pixels);
         }
 
         void setWid(TileWireId wid)
@@ -230,9 +244,6 @@ class DeltaGenerator {
             delete[] _rows;
             _rows = repl->_rows;
             repl->_rows = nullptr;
-            free (_pixels);
-            _pixels = repl->_pixels;
-            repl->_pixels = nullptr;
             repl.reset();
         }
 
@@ -254,7 +265,6 @@ class DeltaGenerator {
         TileWireId _wid;
         int _width;
         int _height;
-        uint32_t *_pixels;
         DeltaBitmapRow *_rows;
     };
 
