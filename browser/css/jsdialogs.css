@@ -99,7 +99,7 @@
 	text-transform: none;
 }
 
-.lokdialog_container.ui-dialog.ui-widget-content, .autofilter-container {
+*:not(#modal-dialog-about-dialog-box) > .lokdialog_container.ui-dialog.ui-widget-content, .autofilter-container {
 	border: 1px solid var(--color-border-darker);
 	-webkit-box-shadow: 0 0 3px var(--color-border-darker);
 	box-shadow: 0 0 3px var(--color-border-darker);
