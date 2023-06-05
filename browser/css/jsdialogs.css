@@ -49,9 +49,9 @@
 .jsdialog-window.modalpopup {
 	min-width: 198px;
 	max-width: 498px;
-	border: 1px solid #a4a4a4 !important;
+	border: 1px solid var(--color-border-darker) !important;
 	border-radius: var(--border-radius);
-	box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0 3px var(--color-border-darker);
 	overflow: auto;
 	position: relative;
 	margin: auto;
