@@ -227,6 +227,28 @@ L.Control.PartsPreview = L.Control.extend({
 				selector: '#' + img.id,
 				className: 'cool-font',
 				items: {
+					copy: {
+						name: _('Copy'),
+						callback: function() {
+							that.copiedSlide = e;
+						},
+						visible: function() {
+							return true;
+						}
+					},
+					paste: {
+						name: _('Paste'),
+						callback: function(key, options) {
+							var part = that._findClickedPart(options.$trigger[0].parentNode);
+							if (part !== null) {
+								that._setPart(that.copiedSlide);
+								that._map.duplicatePage(parseInt(part));
+							}
+						},
+						visible: function() {
+							return that.copiedSlide;
+						}
+					},
 					newslide: {
 						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:InsertSlide' : '.uno:InsertPage', 'presentation'),
 						callback: function() { that._map.insertPage(); }

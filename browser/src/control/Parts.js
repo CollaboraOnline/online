@@ -315,20 +315,18 @@ L.Map.include({
 		}
 	},
 
-	duplicatePage: function() {
+	duplicatePage: function(pos) {
 		if (!this.isPresentationOrDrawing()) {
 			return;
 		}
-		app.socket.sendMessage('uno .uno:DuplicatePage');
-		var docLayer = this._docLayer;
 
-		// At least for Impress, we should not fire this. It causes a circular reference.
-		if (!this.isPresentationOrDrawing()) {
-			this.fire('insertpage', {
-				selectedPart: docLayer._selectedPart,
-				parts:        docLayer._parts
-			});
+		if (pos === undefined) {
+			app.socket.sendMessage('uno .uno:DuplicatePage');
+		} else {
+			var argument = {InsertPos: {type: 'int16', value: pos}};
+			app.socket.sendMessage('uno .uno:DuplicatePage ' + JSON.stringify(argument));
 		}
+		var docLayer = this._docLayer;
 
 		docLayer._parts++;
 		this.setPart('next');
