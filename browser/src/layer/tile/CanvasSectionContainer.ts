@@ -555,7 +555,7 @@ class CanvasSectionContainer {
 		this.scrollLineHeight = parseInt(window.getComputedStyle(tempElement).fontSize);
 		document.body.removeChild(tempElement); // Remove the temporary element.
 
-		this.clearColor = window.getComputedStyle(document.getElementById('document-container')).backgroundColor;
+		this.clearColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas');
 
 		if (disableDrawing)
 			this.disableDrawing();
