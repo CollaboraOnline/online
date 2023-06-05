@@ -74,16 +74,27 @@ L.Control.UIManager = L.Control.extend({
 
 	loadLightMode: function() {
 		document.documentElement.setAttribute('data-theme','light');
+		this.setCanvasColorAfterModeChange();
 		this.map.fire('darkmodechanged');
 	},
 
 	loadDarkMode: function() {
 		document.documentElement.setAttribute('data-theme','dark');
+		this.setCanvasColorAfterModeChange();
 		this.map.fire('darkmodechanged');
 	},
 
 	getDarkModeState: function() {
 		return this.getSavedStateOrDefault('darkTheme', window.uiDefaults['darkTheme'] ?  window.uiDefaults['darkTheme'] : false);
+	},
+
+	setCanvasColorAfterModeChange: function() {
+		if (app.sectionContainer) {
+			app.sectionContainer.setBackgroundColorMode(false);
+			app.sectionContainer.setClearColor(window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas'));
+			//change back to it's default value after setting canvas color
+			app.sectionContainer.setBackgroundColorMode(true);
+		}
 	},
 
 	toggleDarkMode: function() {
