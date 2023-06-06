@@ -427,6 +427,8 @@ public:
     static int getKitPidsFromSystem(std::vector<int> *pids);
     bool isDocSaved(const std::string&);
     bool isDocReadOnly(const std::string&);
+    void setCurrentMigDoc(const std::string& docKey) { _currentMigDoc = docKey; }
+    std::string getCurrentMigDoc() { return _currentMigDoc; }
 
 private:
     void doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator &docIt);
@@ -475,6 +477,8 @@ private:
     std::thread::id _owner;
 
     DocProcSettings _defDocProcSettings;
+
+    std::string _currentMigDoc = std::string();
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

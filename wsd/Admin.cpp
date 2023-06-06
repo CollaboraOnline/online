@@ -334,6 +334,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             if (!routeToken.empty() && ((docStatus == "readonly" && model.isDocReadOnly(dockey)) ||
                 (docStatus == "saved" && model.isDocSaved(dockey))))
             {
+                model.setCurrentMigDoc(dockey);
                 oss << "\"status\"" << ':' << "\"migrating\"" << ',' << "\"routeToken\"" << ':'
                     << "\"" << routeToken << "\"" << '}';
                 LOG_DBG("migrate document with docKey:" << dockey << " routeToken:" << routeToken);

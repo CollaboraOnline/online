@@ -567,13 +567,21 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
 
 void AdminModel::doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator &docIt)
 {
-    std::ostringstream ostream;
-    ostream << "routing_rmdoc " << docIt->second->getWopiSrc();
-    notify(ostream.str());
+    std::string docItKey = docIt->first;
+    // don't send the routing_rmdoc if document is migrating
+    if (getCurrentMigDoc() != docItKey)
+    {
+        std::ostringstream ostream;
+        ostream << "routing_rmdoc " << docIt->second->getWopiSrc();
+        notify(ostream.str());
+    }
+    else
+    {
+        setCurrentMigDoc(std::string());
+    }
 
     std::unique_ptr<Document> doc;
     std::swap(doc, docIt->second);
-    std::string docItKey = docIt->first;
     _documents.erase(docIt);
     _expiredDocuments.emplace(docItKey + std::to_string(std::chrono::duration_cast<std::chrono::nanoseconds>(
                                                             std::chrono::steady_clock::now().time_since_epoch()).count()),
