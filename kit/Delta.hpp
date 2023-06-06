@@ -60,6 +60,8 @@ struct TileLocation {
 /// A quick and dirty, thread-safe delta generator for last tile changes
 class DeltaGenerator {
 
+    friend class DeltaTests;
+
     // fast - and deltas take lots of size off.
     static const int compressionLevel = -3;
 
@@ -111,7 +113,7 @@ class DeltaGenerator {
                 free(_rleData);
         }
 
-        void initRow(uint32_t *from, unsigned int width)
+        void initRow(const uint32_t *from, unsigned int width)
         {
             uint32_t scratch[width];
 
