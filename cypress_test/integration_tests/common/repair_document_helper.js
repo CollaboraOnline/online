@@ -1,5 +1,5 @@
 'use strict';
-/* global cy require */
+/* global cy require expect Cypress */
 
 var mobileHelper = require('./mobile_helper');
 
@@ -13,7 +13,9 @@ function openRepairDialog(mobile = false) {
 	if (mobile) {
 		return mobileHelper.selectHamburgerMenuItem(['Edit', 'Repair']);
 	}
-	cy.cGet('#menu-editmenu').click().cGet('#menu-repair').click();
+	cy.cGet('#menu-editmenu').trigger('mouseover');
+	cy.cGet('#menu-editmenu').click();
+	cy.cGet('#menu-repair').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
 }
 
 /**
@@ -30,9 +32,7 @@ function rollbackPastChange(selector, mobile = false) {
 
 	const versions = cy.cGet('#versions');
 
-	versions
-		.contains('.ui-listview-entry', selector)
-		.click();
+	versions.contains('.ui-listview-entry', selector).click();
 
 	if (mobile) {
 		cy.cGet('#ok.ui-pushbutton.mobile-wizard').click();
