@@ -1448,3 +1448,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #FormulaDialog #box3 {
 	display: grid;
 }
+
+div [id^='TemplateDialog'] {
+	min-width: 590px;
+}
+
+#CharacterPropertiesDialog {
+	min-width: 656px;
+}
