@@ -152,6 +152,18 @@ std::string extractUnoCommand(const std::string& command)
     return command;
 }
 
+bool containsUnoCommand(const std::string_view token, const std::string_view command)
+{
+    if (!COOLProtocol::matchPrefix(".uno:", token))
+        return false;
+
+    size_t equalPos = token.find('=');
+    if (equalPos != std::string::npos)
+        return token.substr(0, equalPos) == command;
+
+    return token == command;
+}
+
 /// Extract rectangle from the invalidation callback
 bool extractRectangle(const StringVector& tokens, int& x, int& y, int& w, int& h, int& part, int& mode)
 {
@@ -222,8 +234,7 @@ public:
             case 3:
                 // callback, the same target, state changed; now check it's
                 // the same .uno: command
-                std::string queuedUnoCommand = extractUnoCommand(std::string(token));
-                m_is_duplicate_command = m_unoCommand == queuedUnoCommand;
+                m_is_duplicate_command = containsUnoCommand(token, m_unoCommand);
                 // returns true to end tokenization as 4 is all we need
                 return true;
             break;
