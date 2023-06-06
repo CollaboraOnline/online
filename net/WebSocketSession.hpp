@@ -74,7 +74,11 @@ private:
 public:
     /// Destroy WebSocketSession.
     /// Note: must never be called with the owning poll thread still active.
-    ~WebSocketSession() { shutdown(); }
+    ~WebSocketSession()
+    {
+        LOG_TRC("~WebSocketSession");
+        shutdown();
+    }
 
     /// Create a new HTTP WebSocketSession to the given host.
     /// The port defaults to the protocol's default port.
