@@ -180,21 +180,21 @@ namespace COOLProtocol
     }
 
     inline
-    bool matchPrefix(const std::string& prefix, const std::string& message)
+    bool matchPrefix(const std::string_view prefix, const std::string_view message)
     {
         return (message.size() >= prefix.size() &&
                 message.compare(0, prefix.size(), prefix) == 0);
     }
 
     inline
-    bool matchPrefix(const std::string& prefix, const std::vector<char>& message)
+    bool matchPrefix(const std::string_view prefix, const std::vector<char>& message)
     {
         return (message.size() >= prefix.size() &&
                 prefix.compare(0, prefix.size(), message.data(), prefix.size()) == 0);
     }
 
     inline
-    bool matchPrefix(const std::string& prefix, const std::string& message, const bool ignoreWhitespace)
+    bool matchPrefix(const std::string_view prefix, const std::string_view message, const bool ignoreWhitespace)
     {
         if (ignoreWhitespace)
         {
