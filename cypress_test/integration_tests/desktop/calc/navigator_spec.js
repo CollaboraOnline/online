@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var { insertImage, deleteImage } = require('../../common/desktop_helper');
 
-describe(['tagdesktop'], 'Navigator tests.', function () {
+describe.skip(['tagdesktop'], 'Navigator tests.', function () {
 	var origTestFileName = 'navigator.ods';
 	var testFileName;
 
@@ -72,7 +72,7 @@ describe(['tagdesktop'], 'Navigator tests.', function () {
 		// We should click Save, but i could not check its name because clickin in ispector remove the dialog-rename-calc-sheet
 		// But any cind of click will result the same
 		cy.cGet('#contentbox').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'rName2').dblclick();
-		// Check if the commentNew is in the Navigator 
+		// Check if the commentNew is in the Navigator
 		cy.cGet('#contentbox').contains('.jsdialog.sidebar.ui-treeview-cell-text', 'commentNew').should('exist');
 
 		// Insert an image

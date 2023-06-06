@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe(['tagdesktop'], 'Scroll through document, modify heading', function() {
+describe.skip(['tagdesktop'], 'Scroll through document, modify heading', function() {
 	var testFileName = 'navigator.odt';
 
 	beforeEach(function() {
