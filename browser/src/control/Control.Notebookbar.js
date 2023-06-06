@@ -49,6 +49,8 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.on('statusbarchanged', this.onStatusbarChange, this);
 		this.map.on('rulerchanged', this.onRulerChange, this);
 		this.map.on('darkmodechanged', this.onDarkModeToggleChange, this);
+		this.map.on('updateparts', this.onSlideHideToggle, this);
+		this.map.on('toggleslidehide', this.onSlideHideToggle, this);
 
 		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
 
@@ -458,6 +460,18 @@ L.Control.Notebookbar = L.Control.extend({
 			contextTab.click();
 		else if (defaultTab)
 			defaultTab.click();
+	},
+
+	onSlideHideToggle: function() {
+		if (!this.map._docLayer.isHiddenSlide(this.map.getCurrentPartNumber()))
+			$('#showslide').hide();
+		else
+			$('#showslide').show();
+
+		if (this.map._docLayer.isHiddenSlide(this.map.getCurrentPartNumber()))
+			$('#hideslide').hide();
+		else
+			$('#hideslide').show();
 	},
 
 	onStatusbarChange: function() {

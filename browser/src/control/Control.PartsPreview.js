@@ -139,6 +139,10 @@ L.Control.PartsPreview = L.Control.extend({
 			for (i = 0; i < parts; i++) {
 				L.DomUtil.removeClass(this._previewTiles[i], removePreviewImg);
 				L.DomUtil.addClass(this._previewTiles[i], addPreviewImg);
+				if (this._map._docLayer._hiddenSlides.has(i))
+					L.DomUtil.addClass(this._previewTiles[i], 'hidden-slide');
+				else
+					L.DomUtil.removeClass(this._previewTiles[i], 'hidden-slide');
 			}
 
 			var previewFrame = $(this._partsPreviewCont).find('.preview-frame');
@@ -268,6 +272,32 @@ L.Control.PartsPreview = L.Control.extend({
 						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:SlideSetup' : '.uno:PageSetup', 'presentation'),
 						callback: function() {
 							app.socket.sendMessage('uno .uno:PageSetup');
+						}
+					},
+					showslide: {
+						name: _UNO('.uno:ShowSlide', 'presentation'),
+						callback: function(key, options) {
+							var part = that._findClickedPart(options.$trigger[0].parentNode);
+							if (part !== null) {
+								that._map.showSlide(parseInt(part) - 1);
+							}
+						},
+						visible: function(key, options) {
+							var part = that._findClickedPart(options.$trigger[0].parentNode);
+							return that._map._docLayer._docType == 'presentation' && that._map._docLayer.isHiddenSlide(parseInt(part) - 1);
+						}
+					},
+					hideslide: {
+						name: _UNO('.uno:HideSlide', 'presentation'),
+						callback: function(key, options) {
+							var part = that._findClickedPart(options.$trigger[0].parentNode);
+							if (part !== null) {
+								that._map.hideSlide(parseInt(part) - 1);
+							}
+						},
+						visible: function(key, options) {
+							var part = that._findClickedPart(options.$trigger[0].parentNode);
+							return that._map._docLayer._docType == 'presentation' && !that._map._docLayer.isHiddenSlide(parseInt(part) - 1);
 						}
 					}
 				}
