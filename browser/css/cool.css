@@ -96,6 +96,12 @@
 	height: 100%;
 }
 
+.auto-color-button {
+	width: 100% !important;
+	padding: 0;
+	margin: auto !important;
+}
+
 #toolbar-wrapper.readonly {
 	display: none;
 }

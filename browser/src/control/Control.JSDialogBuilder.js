@@ -2146,7 +2146,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var imgNode = L.DomUtil.create('img', 'empty-comment-wizard-img', emptyCommentWizard);
 		L.LOUtil.setImage(imgNode, 'lc_showannotations.svg', builder.map.getDocType());
 		imgNode.alt = data.text;
-		
+
 		var textNode = L.DomUtil.create('figcaption', 'empty-comment-wizard', emptyCommentWizard);
 		textNode.innerText = data.text;
 		L.DomUtil.create('br', 'empty-comment-wizard', textNode);
@@ -2515,7 +2515,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(div).addClass('selected');
 			}
 			L.LOUtil.checkIfImageExists(buttonImage);
-			
+
 		} else {
 			button = L.DomUtil.create('label', 'ui-content unolabel', div);
 			button.textContent = builder._cleanText(data.text);
@@ -2922,7 +2922,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				if (!colorToApply || colorToApply === '#')
 					return;
 
-				var color = colorToApply.indexOf('#') === 0 ? colorToApply.substr(1) : colorToApply;
+				var color = -1;
+				if (colorToApply !== -1)
+					color = colorToApply.indexOf('#') === 0 ? colorToApply.substr(1) : colorToApply;
+
 				builder._sendColorCommand(builder, data, color);
 			};
 
@@ -2942,6 +2945,28 @@ L.Control.JSDialogBuilder = L.Control.extend({
 							}
 						}
 					});
+
+					if (data.command === '.uno:FontColor' || data.command === '.uno:Color') {
+						var autoColorButton = document.createElement('button');
+						autoColorButton.textContent = _('Automatic');
+						autoColorButton.classList.add('auto-color-button');
+
+						autoColorButton.onclick = function() {
+							updateFunction(-1);
+							builder.map['stateChangeHandler'].setItemValue(data.command, -1);
+
+							var parameters;
+							if (data.command === '.uno:FontColor')
+								parameters = { FontColor: { type: 'long', value: -1 } };
+							else
+								parameters = { Color: { type: 'long', value: -1 } };
+							builder.map.sendUnoCommand(data.command, parameters);
+							document.getElementById('document-container').click();
+						}.bind(this);
+
+						var colorDiv = document.getElementById('w2ui-overlay');
+						colorDiv.insertBefore(autoColorButton, colorDiv.firstChild);
+					}
 				}
 			});
 			builder._preventDocumentLosingFocusOnClick(div);
