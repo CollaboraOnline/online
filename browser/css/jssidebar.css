@@ -185,6 +185,7 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 }
 /* selected */
 .hasnotebookbar .ui-content.unotoolbutton.selected.has-label,
+[data-theme='dark'] #toggledarktheme,
 .hasnotebookbar .ui-content.unotoolbutton.selected.inline,
 .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline),
 .sidebar.unotoolbutton.selected {
