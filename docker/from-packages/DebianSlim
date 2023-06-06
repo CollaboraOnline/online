@@ -15,6 +15,9 @@ ARG type
 # Optional. If defined then brand package will not be installed.
 ARG nobrand
 
+# Optional. If defined then the inotifywait will not monitor the changes of the config file
+ARG noinotifywait
+
 # UTF-8 locale is needed to handle file names with non-ASCII characters
 ENV LC_CTYPE C.UTF-8
 
@@ -100,6 +103,10 @@ RUN --mount=type=secret,id=secret_key \
             apt-get -y install code-brand; \
         fi; \
     fi && \
+# Setup inotifywait
+    if [ -z "$noinotifywait" ]; then \
+        apt-get -y install inotify-tools psmisc; \
+    fi && \
 # Fix permissions of files that will be modified on start of the container by cool user
     chown cool:cool /opt/cool/systemplate/etc/hosts /opt/cool/systemplate/etc/resolv.conf && \
 # Remove packages that are not needed
@@ -122,6 +129,12 @@ USER 101
 
 # Fix name resolution from jails
 CMD cp /etc/resolv.conf /etc/hosts /opt/cool/systemplate/etc/ && \
+# Restart when /etc/coolwsd/coolwsd.xml changes
+    [ -x /usr/bin/inotifywait -a -x /usr/bin/killall ] && ( \ 
+        /usr/bin/inotifywait -e modify /etc/coolwsd/coolwsd.xml \
+        echo "$(ls -l /etc/coolwsd/coolwsd.xml) modified --> restarting" \
+        /usr/bin/killall -1 coolwsd \
+    ) & ; \
 # Execute coolwsd server
     exec /usr/bin/coolwsd \
         --version \
