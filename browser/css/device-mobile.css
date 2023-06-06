@@ -819,6 +819,11 @@ div#fontstyletoolbox + div#style.mobile-wizard {
 	font-size: 29px;
 }
 
+#modal-dialog-about-dialog-box-title,
+#about-dialog-box #mobile-wizard .mobile-wizard.ui-text {
+	display: none;
+}
+
 /* Mobile specific buttons */
 .mobile-wizard-titlebar-btn {
 	height: 24px !important;
