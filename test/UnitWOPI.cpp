@@ -18,6 +18,7 @@
 
 #include <Poco/Net/HTTPRequest.h>
 
+#include <chrono>
 #include <thread>
 #include <sys/types.h>
 #include <unistd.h>
@@ -151,13 +152,15 @@ public:
 
 class UnitOverload : public WopiTestServer
 {
-    STATE_ENUM(Phase, HalfOpen, Load, WaitLoadStatus, WaitModifiedStatus, Done) _phase;
+    STATE_ENUM(Phase, Load, WaitLoadStatus, Done) _phase;
 
     std::thread _dosThread;
     std::vector<pid_t> _children;
     std::vector<std::shared_ptr<http::WebSocketSession>> _webSessions;
     int _count;
-    bool _stop;
+    int _countCheckFileInfo;
+    std::atomic_bool _valid;
+    std::atomic_bool _stop;
 
     std::size_t getMemoryUsage() const
     {
@@ -173,53 +176,63 @@ public:
         : WopiTestServer("UnitOverload")
         , _phase(Phase::Load)
         , _count(0)
+        , _countCheckFileInfo(0)
+        , _valid(false)
         , _stop(false)
     {
+    }
+
+    bool onDocumentLoaded(const std::string& message) override
+    {
+        LOG_TST("Loaded: " << message);
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        LOG_TST("Stopping as test finished");
+        _stop = true;
+        _dosThread.join();
+
+        passTest("Loaded document successfully");
+
+        return true;
     }
 
     void newChild(const std::shared_ptr<ChildProcess>& child) override
     {
         _children.emplace_back(child->getPid());
-        LOG_TST(">>> Child #" << _children.size());
+        LOG_TST("New Child #" << _children.size() << ", pid: " << child->getPid());
     }
 
     virtual std::unique_ptr<http::Response>
     assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
-        LOG_TST(">>> CheckFileInfo #" << _count << ", total memory: " << getMemoryUsage() << " KB");
+        LOG_TST("CheckFileInfo #" << _countCheckFileInfo << ", total memory: " << getMemoryUsage()
+                                  << " KB");
 
-        SocketPoll::wakeupWorld();
-        return std::make_unique<http::Response>(http::StatusCode::NotFound);
+        return _valid ? std::make_unique<http::Response>(http::StatusCode::OK)
+                      : std::make_unique<http::Response>(http::StatusCode::NotFound);
     }
 
-    void endTest(const std::string& reason) override
+    void timeout() override
     {
-        LOG_TST("Stopping: " << reason);
+        LOG_TST("Stopping on timeout");
         _stop = true;
         _dosThread.join();
-        UnitWSD::endTest(reason);
+
+        UnitBase::timeout();
     }
 
     void invokeWSDTest() override
     {
         switch (_phase)
         {
-            case Phase::HalfOpen:
-            {
-                TRANSITION_STATE(_phase, Phase::Done);
-                ++_count;
-                LOG_TST("Open #" << _count);
-                initWebsocket("/wopi/files/" + std::to_string(_count) + "?access_token=anything");
-            }
-            break;
-
             case Phase::Load:
             {
                 TRANSITION_STATE(_phase, Phase::Done);
                 _dosThread = std::thread(
                     [this]
                     {
-                        while (!_stop)
+                        Util::Stopwatch sp;
+                        while (!sp.elapsed(std::chrono::seconds(10)) && !_stop)
                         {
                             ++_count;
                             LOG_TST(">>> Open #" << _count << ", total memory: " << getMemoryUsage()
@@ -231,7 +244,8 @@ public:
                             const Poco::URI wopiURL(helpers::getTestServerURI() + wopiPath +
                                                     "&testname=" + getTestname());
 
-                            std::string wopiSrc = Util::encodeURIComponent(wopiURL.toString());
+                            const std::string wopiSrc =
+                                Util::encodeURIComponent(wopiURL.toString());
 
                             // This is just a client connection that is used from the tests.
                             LOG_TST("Connecting test client to COOL (#"
@@ -259,21 +273,77 @@ public:
                                 LOG_TST(">>> ERROR: failed async request");
                             }
 
+                            // break;
+
                             if (_count % 16 == 0)
                             {
-                                for (int i = _webSessions.size() - 1; i >= 0;)
+                                for (int i = _webSessions.size() - 1; i >= 0; --i)
                                 {
                                     if (_webSessions[i]->isClosed())
                                     {
                                         _webSessions.erase(_webSessions.begin() + i);
-                                        continue;
                                     }
-
-                                    --i;
                                 }
 
                                 LOG_TST(">>> Have " << _webSessions.size()
                                                     << " outstanding requests");
+                            }
+                        }
+
+                        LOG_TST(">>> Draining");
+                        while (!_webSessions.empty() && !_stop)
+                        {
+                            for (int i = _webSessions.size() - 1; i >= 0; --i)
+                            {
+                                if (_webSessions[i]->isClosed())
+                                {
+                                    _webSessions.erase(_webSessions.begin() + i);
+                                }
+                            }
+
+                            LOG_TST(">>> Have " << _webSessions.size() << " outstanding requests");
+                            std::this_thread::sleep_for(std::chrono::milliseconds(70));
+                        }
+
+                        // Load a document.
+                        if (!_stop)
+                        {
+                            TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
+
+                            _valid = true;
+                            ++_count;
+                            LOG_TST(">>> Open #" << _count << ", total memory: " << getMemoryUsage()
+                                                 << " KB");
+
+                            const std::string wopiPath = "/wopi/files/invalid_" +
+                                                         std::to_string(_count) +
+                                                         "?access_token=anything";
+                            const Poco::URI wopiURL(helpers::getTestServerURI() + wopiPath +
+                                                    "&testname=" + getTestname());
+
+                            const std::string wopiSrc =
+                                Util::encodeURIComponent(wopiURL.toString());
+
+                            // This is just a client connection that is used from the tests.
+                            LOG_TST("Connecting test client to COOL (#"
+                                    << _count << " connection): /cool/" << wopiSrc << "/ws");
+
+                            Poco::URI uri(helpers::getTestServerURI());
+                            const std::string documentURL = "/cool/" + wopiSrc + "/ws";
+
+                            std::shared_ptr<http::WebSocketSession> ws =
+                                http::WebSocketSession::create(uri.toString());
+
+                            TST_LOG("Connection to " << uri.toString() << " is "
+                                                     << (ws->secure() ? "secure" : "plain"));
+
+                            http::Request req(documentURL);
+                            if (ws->asyncRequest(req, socketPoll()))
+                            {
+                                _webSessions.emplace_back(ws);
+
+                                LOG_TST("Load #" << _count);
+                                helpers::sendTextFrame(ws, "load url=" + wopiSrc, getTestname());
                             }
                         }
                     });
@@ -281,7 +351,6 @@ public:
             break;
 
             case Phase::WaitLoadStatus:
-            case Phase::WaitModifiedStatus:
             case Phase::Done:
             {
                 // just wait for the results
