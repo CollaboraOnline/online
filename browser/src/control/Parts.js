@@ -445,6 +445,24 @@ L.Map.include({
 		}
 	},
 
+	hideSlide: function(slideNum) {
+		if (slideNum === undefined)
+			slideNum = this.getCurrentPartNumber();
+		L.DomUtil.addClass(this._docLayer._preview._previewTiles[slideNum], 'hidden-slide');
+		this._docLayer._hiddenSlides.add(slideNum);
+		app.socket.sendMessage('uno .uno:HideSlide');
+		this.fire('toggleslidehide');
+	},
+
+	showSlide: function(slideNum) {
+		if (slideNum === undefined)
+			slideNum = this.getCurrentPartNumber();
+		L.DomUtil.removeClass(this._docLayer._preview._previewTiles[slideNum], 'hidden-slide');
+		this._docLayer._hiddenSlides.delete(slideNum);
+		app.socket.sendMessage('uno .uno:ShowSlide');
+		this.fire('toggleslidehide');
+	},
+
 	isHiddenPart: function (part) {
 		if (this.getDocType() !== 'spreadsheet')
 			return false;

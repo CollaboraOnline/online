@@ -428,6 +428,18 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'text': _UNO('.uno:Sidebar'),
 				'command': '.uno:SidebarDeck.PropertyDeck'
 			},
+			{
+				'id': 'showslide',
+				'type': 'bigmenubartoolitem',
+				'text': _UNO('.uno:ShowSlide', 'presentation'),
+				'command': '.uno:ShowSlide'
+			},
+			{
+				'id': 'hideslide',
+				'type': 'bigmenubartoolitem',
+				'text': _UNO('.uno:HideSlide', 'presentation'),
+				'command': '.uno:HideSlide'
+			}
 		];
 
 		return this.getTabPage('View', content);

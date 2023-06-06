@@ -488,7 +488,10 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'},
 				{type: 'separator', id: 'fullscreen-presentation-separator'},
 				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
-				{name: _('Present current slide'), id: 'presentation-currentslide', type: 'action'}]
+				{name: _('Present current slide'), id: 'presentation-currentslide', type: 'action'},
+				{type: 'separator', id: 'slide-show-hide-separator'},
+				{name: _UNO('.uno:ShowSlide', 'presentation'), id: 'showslide', type: 'action'},
+				{name: _UNO('.uno:HideSlide', 'presentation'), id: 'hideslide', type: 'action'}]
 			},
 			{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellDialog'},
@@ -1681,6 +1684,16 @@ L.Control.Menubar = L.Control.extend({
 						} else {
 							$(aItem).text(_('Use Tabbed view'));
 						}
+					} else if (id === 'showslide') {
+						if (!self._map._docLayer.isHiddenSlide(self._map.getCurrentPartNumber()))
+							$(aItem).hide();
+						else
+							$(aItem).show();
+					} else if (id === 'hideslide') {
+						if (self._map._docLayer.isHiddenSlide(self._map.getCurrentPartNumber()))
+							$(aItem).hide();
+						else
+							$(aItem).show();
 					} else if (self._map.getDocType() === 'presentation' && (id === 'deletepage' || id === 'insertpage' || id === 'duplicatepage')) {
 						if (id === 'deletepage') {
 							itemState = self._map['stateChangeHandler'].getItemValue('.uno:DeletePage');
@@ -1888,6 +1901,10 @@ L.Control.Menubar = L.Control.extend({
 			this._map.sendUnoCommand('.uno:LOKSidebarWriterPage');
 			this._map.fire('showwizardsidebar', {noRefresh: true});
 			window.pageMobileWizard = true;
+		} else if (id === 'showslide') {
+			this._map.showSlide();
+		} else if (id === 'hideslide') {
+			this._map.hideSlide();
 		} else if (id.indexOf('morelanguages-') != -1) {
 			this._map.fire('morelanguages', { applyto: id.substr('morelanguages-'.length) });
 		}

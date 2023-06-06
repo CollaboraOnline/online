@@ -3,7 +3,7 @@
  * Impress tile layer is used to display a presentation document
  */
 
-/* global app $ L */
+/* global app $ L Set */
 
 L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
@@ -298,6 +298,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			var partMatch = textMsg.match(/[^\r\n]+/g);
 			// only get the last matches
 			this._partHashes = partMatch.slice(partMatch.length - this._parts);
+			this._hiddenSlides = new Set(command.hiddenparts);
 			this._map.fire('updateparts', {
 				selectedPart: this._selectedPart,
 				selectedParts: this._selectedParts,
@@ -324,5 +325,15 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	_removeHighlightSelectedWizardComment: function() {
 		if (this.lastWizardCommentHighlight)
 			this.lastWizardCommentHighlight.removeClass('impress-comment-highlight');
-	}
+	},
+
+	isHiddenSlide: function(slideNum) {
+		return this._hiddenSlides.has(slideNum);
+	},
+
+	hiddenSlides: function () {
+		if (!this._hiddenSlides)
+			return 0;
+		return this._hiddenSlides.length;
+	},
 });

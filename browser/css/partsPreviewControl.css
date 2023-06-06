@@ -53,3 +53,7 @@
 .preview-img-dropsite {
 	border-bottom: 20px solid var(--color-primary);
 }
+
+.hidden-slide {
+	opacity: 0.5;
+}
