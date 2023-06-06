@@ -242,7 +242,16 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	getFirstFocusableElement: function(widget) {
-		return widget.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker):not([disabled]):not(.hidden)');
+		var ret = widget.querySelector('[tabIndex="0"]:not(.jsdialog-begin-marker):not([disabled]):not(.hidden)');
+		if (!ret)
+			ret = widget.querySelector('input:not([disabled]):not(.hidden)');
+		if (!ret)
+			ret = widget.querySelector('textarea:not([disabled]):not(.hidden)');
+		if (!ret)
+			ret = widget.querySelector('select:not([disabled]):not(.hidden)');
+		if (!ret)
+			ret = widget.querySelector('button:not([disabled]):not(.hidden)');
+		return ret;
 	},
 
 	addFocusHandler: function(instance) {
