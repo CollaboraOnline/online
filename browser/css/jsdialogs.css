@@ -364,8 +364,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	color: var(--color-text-lighter) !important;
 }
 
-/*.ui-treeview-body needs this max-height both in dialogs
- and within sidebar e.g.: animation > effect*/
 .ui-treeview-body,
 #custom_animation_label_parent {
 	color: var(--color-main-text);
