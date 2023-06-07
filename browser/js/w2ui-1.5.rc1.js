@@ -2873,8 +2873,10 @@ w2utils.event = {
                 onHide: function () {
                     var data = $(el).data('_color');
                     var theme = $(el).data('_theme');
-                    if (typeof callBack == 'function') callBack(theme ? theme : data);
+                    if (typeof callBack == 'function') 
+                        callBack(data, theme);
                     $(el).removeData('_color');
+                    $(el).removeData('_theme');
                 }
             });
         } else { // only refresh contents
