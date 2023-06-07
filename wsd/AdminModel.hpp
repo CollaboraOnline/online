@@ -429,6 +429,9 @@ public:
     bool isDocReadOnly(const std::string&);
     void setCurrentMigDoc(const std::string& docKey) { _currentMigDoc = docKey; }
     std::string getCurrentMigDoc() { return _currentMigDoc; }
+    void setCurrentMigToken(const std::string& routeToken) { _currentMigToken = routeToken; }
+    std::string getCurrentMigToken() { return _currentMigToken; }
+    void sendMigrateMsgAfterSave(bool lastSaveSuccessful, const std::string& docKey);
 
 private:
     void doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator &docIt);
@@ -479,6 +482,8 @@ private:
     DocProcSettings _defDocProcSettings;
 
     std::string _currentMigDoc = std::string();
+
+    std::string _currentMigToken = std::string();
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

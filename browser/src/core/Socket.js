@@ -686,11 +686,6 @@ app.definitions.Socket = L.Class.extend({
 					errorMsg: commandresult['errorMsg']
 				};
 
-				if (!commandresult['success'] && window.migrating) {
-					//reset permissions if save failed while document migrating
-					this._map.setPermission(app.file.permission);
-					window.migrating = false;
-				}
 				this._map.fire('postMessage', {msgId: 'Action_Save_Resp', args: postMessageObj});
 			} else if (commandresult['command'] === 'load') {
 				postMessageObj = {
@@ -704,17 +699,32 @@ app.definitions.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('migrate:') && window.indirectSocket) {
 			var migrate = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			window.migrating = true;
-			this._map.uiManager.closeAll();
-			if (this._map.isEditMode()) {
-				this._map.setPermission('view');
-				this._map.uiManager.showSnackbar(_('Document is getting migrated...'));
+			console.log(migrate);
+			var afterSave = migrate.afterSave;
+			if (!afterSave) {
+				window.migrating = true;
+				this._map.uiManager.closeAll();
+				if (this._map.isEditMode()) {
+					this._map.setPermission('view');
+					this._map.uiManager.showSnackbar(_('Document is getting migrated...'));
+				}
+				if (migrate.saved) {
+					window.routeToken = migrate.routeToken;
+					this.connect();
+					this._map.uiManager.closeAll();
+				}
+				return;
 			}
-			if (migrate.status == 'migrating') {
+			// even after save attempt, if document is unsaved reset the file permission
+			if (migrate.saved) {
 				window.routeToken = migrate.routeToken;
 				this.connect();
 				this._map.uiManager.closeAll();
+			} else {
+				this._map.setPermission(app.file.permission);
+				window.migrating = false;
 			}
+			return;
 		}
 		else if (textMsg.startsWith('close: ')) {
 			textMsg = textMsg.substring('close: '.length);
@@ -820,7 +830,7 @@ app.definitions.Socket = L.Class.extend({
 				message = msg;
 			}
 
-			if (textMsg === 'idle' || textMsg === 'oom' || textMsg.startsWith('migrate')) {
+			if (textMsg === 'idle' || textMsg === 'oom') {
 				app.idleHandler._dim(message);
 			}
 

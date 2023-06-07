@@ -1802,6 +1802,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         // to the document.
         Admin::instance().uploadedAlert(_docKey, getPid(), lastUploadSuccessful);
     }
+    Admin::instance().getModel().sendMigrateMsgAfterSave(lastUploadSuccessful, _docKey);
 #endif
 
     if (uploadResult.getResult() == StorageBase::UploadResult::Result::OK)

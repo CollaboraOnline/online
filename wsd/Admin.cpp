@@ -326,28 +326,25 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         const std::string& docStatus = tokens[1];
         const std::string& dockey = tokens[2];
         const std::string& routeToken = tokens[3];
-
-        if (!dockey.empty())
+        if (!dockey.empty() && !routeToken.empty())
         {
             std::ostringstream oss;
             oss << "migrate: {";
-            if (!routeToken.empty() && ((docStatus == "readonly" && model.isDocReadOnly(dockey)) ||
-                (docStatus == "saved" && model.isDocSaved(dockey))))
+            model.setCurrentMigDoc(dockey);
+            model.setCurrentMigToken(routeToken);
+            oss << "\"afterSave\"" << ":false,";
+            if (docStatus == "unsaved" && !model.isDocSaved(dockey))
             {
-                model.setCurrentMigDoc(dockey);
-                oss << "\"status\"" << ':' << "\"migrating\"" << ',' << "\"routeToken\"" << ':'
-                    << "\"" << routeToken << "\"" << '}';
-                LOG_DBG("migrate document with docKey:" << dockey << " routeToken:" << routeToken);
-                COOLWSD::alertUserInternal(dockey, oss.str());
-            }
-            else if (docStatus == "unsaved" && !model.isDocSaved(dockey))
-            {
-                oss << "\"status\"" << ':' << "\"saving\"" << '}';
-                std::cerr << oss.str() << "\n";
-                LOG_DBG("Saving document: DocKey [" << dockey << "].");
-                COOLWSD::alertUserInternal(dockey, oss.str());
                 COOLWSD::autoSave(dockey);
+                oss << "\"saved\"" << ":false,";
             }
+            else if ((docStatus == "readonly" && model.isDocReadOnly(dockey)) ||
+                     (docStatus == "saved" && model.isDocSaved(dockey)))
+            {
+                oss << "\"saved\"" << ":true,";
+            }
+            oss << "\"routeToken\"" << ':' << "\"" << routeToken << "\"" << '}';
+            COOLWSD::alertUserInternal(dockey, oss.str());
         }
         else
         {
