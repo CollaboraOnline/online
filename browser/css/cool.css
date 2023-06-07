@@ -841,8 +841,9 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	z-index: 1105;
 }
 
-.lokdialog_container.ui-dialog.ui-widget-content.jsdialog-container {
-	background: var(--color-background-darker) !important;
+.lokdialog_container.ui-dialog.ui-widget-content.jsdialog-container,
+.lokdialog_container .ui-dialog-titlebar.ui-widget-header {
+	background: var(--color-main-background) !important;
 }
 
 .lokdialog.ui-dialog-content.ui-widget-content {
