@@ -846,6 +846,19 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	background: var(--color-main-background) !important;
 }
 
+.ui-dialog .ui-dialog-titlebar-close {
+	background: transparent url('images/close_toolbar.svg');
+	border-color: transparent;
+}
+
+.ui-dialog .ui-dialog-titlebar-close:hover {
+	background: transparent url('images/close_toolbar.svg');
+	border-color: var(--color-border-lighter);
+}
+.ui-dialog .ui-dialog-titlebar-close > .ui-button-icon {
+	display: none;
+}
+
 .lokdialog.ui-dialog-content.ui-widget-content {
 	overflow: auto;
 	border-top-left-radius: 0px;
