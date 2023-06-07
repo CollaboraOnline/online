@@ -317,7 +317,7 @@ TEST_EXTENSIONS = .la
 LA_LOG_DRIVER = ${top_builddir}/test/run_unit.sh
 LOG_DRIVER = ${top_builddir}/test/run_unit_standalone.sh
 
-EXTRA_DIST = data/delta-text.png data/delta-text2.png data/hello.odt data/hello.txt $(test_SOURCES) $(unittest_SOURCES) run_unit.sh run_unit_standalone.sh
+EXTRA_DIST = data/delta-text.png data/delta-text2.png data/delta-graphic.png data/delta-graphic2.png data/hello.odt data/hello.txt $(test_SOURCES) $(unittest_SOURCES) run_unit.sh run_unit_standalone.sh
 
 check_valgrind: all
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
