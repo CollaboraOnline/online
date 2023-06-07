@@ -1499,6 +1499,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'Review-Section-Language1',
+				'type': 'container',
 				'children': [
 					{
 						'id': 'LineA19',
