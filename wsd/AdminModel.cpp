@@ -578,6 +578,7 @@ void AdminModel::doRemove(std::map<std::string, std::unique_ptr<Document>>::iter
     else
     {
         setCurrentMigDoc(std::string());
+        setCurrentMigToken(std::string());
     }
 
     std::unique_ptr<Document> doc;
@@ -1261,6 +1262,27 @@ bool AdminModel::isDocReadOnly(const std::string& docKey)
     }
     LOG_DBG("cannot find document with docKey " << docKey);
     return false;
+}
+
+void AdminModel::sendMigrateMsgAfterSave(bool lastSaveSuccessful, const std::string& docKey)
+{
+    if (getCurrentMigDoc() != docKey)
+    {
+        return;
+    }
+    if (!lastSaveSuccessful)
+    {
+        setCurrentMigToken(std::string());
+        setCurrentMigDoc(std::string());
+    }
+    std::string saveSuccessful = lastSaveSuccessful ? "true" : "false";
+    std::ostringstream oss;
+    oss << "migrate: {";
+    oss << "\"afterSave\"" << ":true,";
+    oss << "\"saved\":" << saveSuccessful << ',';
+    oss << "\"routeToken\"" << ':' << "\"" << getCurrentMigToken()
+        << "\"" << '}';
+    COOLWSD::alertUserInternal(docKey, oss.str());
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
