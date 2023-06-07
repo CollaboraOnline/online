@@ -207,8 +207,12 @@ L.A11yTextInput = L.Layer.extend({
 		// we already do the same in _onBeforeInput, anyway for Safari on iOS is too late:
 		// the selection is messed up, so we miss the first typed key.
 		// Needed also after a Ctrl+C.
-		if (ev.type === 'focus' && (!this._isSelectionValid() || this._isCursorAtBeginning())) {
-			this._setSelectionRange(this._lastSelectionStart, this._lastSelectionEnd);
+		if (ev.type === 'focus') {
+			if (!this._isSelectionValid() || this._isCursorAtBeginning()) {
+				this._setSelectionRange(this._lastSelectionStart, this._lastSelectionEnd);
+			} else {
+				this._updateFocusedParagraph();
+			}
 		}
 
 		onoff(this._textArea, 'input', this._onInput, this);
@@ -259,7 +263,6 @@ L.A11yTextInput = L.Layer.extend({
 
 		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone') {
 			this._textArea.focus();
-			this._updateFocusedParagraph();
 		} else if (acceptInput === true) {
 			// On the iPhone, only call the textarea's focus() when we get an explicit
 			// true parameter. On the other hand, never call the textarea's blur().
@@ -278,7 +281,6 @@ L.A11yTextInput = L.Layer.extend({
 			// _onMessage (the WebSocket message handler in Socket.js).
 
 			this._textArea.focus();
-			this._updateFocusedParagraph();
 		}
 
 		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone' && !window.mode.isChromebook()) {
@@ -424,10 +426,19 @@ L.A11yTextInput = L.Layer.extend({
 	},
 
 	_updateFocusedParagraph: function() {
+		window.app.console.log('_updateFocusedParagraph');
 		if (this._remoteContent !== undefined) {
 			this._setFocudeParagraph(this._remoteContent, this._remotePosition,
 				this._remoteSelectionStart, this._remoteSelectionEnd);
+		} else if (this._remoteSelectionEnd !== undefined) {
+			this._updateSelection(this._remotePosition, this._remoteSelectionStart, this._remoteSelectionEnd);
+		} else if (this._remotePosition !== undefined) {
+			this._updateCursorPosition(this._remotePosition);
 		}
+		this._remoteContent = undefined;
+		this._remotePosition = undefined;
+		this._remoteSelectionStart = undefined;
+		this._remoteSelectionEnd = undefined;
 	},
 
 	onAccessibilityFocusChanged: function(content, pos, start, end, force) {
@@ -453,7 +464,8 @@ L.A11yTextInput = L.Layer.extend({
 		window.app.console.log('onAccessibilityCaretChanged: \n' +
 			'    position: ' + nPos + '\n' +
 			'    _isComposing: ' + this._isComposing);
-		if (this._isComposing) {
+		if (!this.hasFocus() || this._isComposing) {
+			this._remotePosition = nPos;
 			this._setLastCursorPosition(nPos);
 		}
 		else if (!this._hasFormulaBarFocus()) {
@@ -468,7 +480,13 @@ L.A11yTextInput = L.Layer.extend({
 	},
 
 	onAccessibilityTextSelectionChanged: function(start, end) {
-		this._updateSelection(this._lastCursorPosition, start, end);
+		if (!this.hasFocus() || this._isComposing) {
+			this._remoteSelectionStart = start;
+			this._remoteSelectionEnd = end;
+			this._remotePosition = end;
+		} else {
+			this._updateSelection(this._lastCursorPosition, start, end);
+		}
 	},
 
 	// Check if a UTF-16 pair represents a Unicode code point
