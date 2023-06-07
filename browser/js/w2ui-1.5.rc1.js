@@ -2812,6 +2812,56 @@ w2utils.event = {
         var el    = $(this)[0];
         var index = [-1, -1];
 
+        function bindEvents(pal) {
+            $('#w2ui-overlay .color')
+                .off('.w2color')
+                .on('mousedown.w2color', function (event) {
+                    var color = $(event.originalEvent.target).attr('name');
+                    index = $(event.originalEvent.target).attr('index').split(':');
+                    var theme = $(event.originalEvent.target).attr('theme');
+                    $(el).data('_color', color);
+                    $(el).data('_theme', theme);
+                    var recentRow = $.fn.w2colorPalette[pal.length - 1];
+                    if (recentRow.indexOf(color) !== -1) {
+                        recentRow.splice(recentRow.indexOf(color), 1);
+                    }
+                    recentRow.unshift(color);
+                    localStorage.setItem('recentColor', JSON.stringify(recentRow));
+                })
+                .on('mouseup.w2color', function () {
+                    setTimeout(function () {
+                        if ($("#w2ui-overlay").length > 0) $('#w2ui-overlay').removeData('keepOpen')[0].hide();
+                    }, 10);
+                });
+            $('#w2ui-overlay input')
+                .off('.w2color')
+                .on('mousedown.w2color', function (event) {
+                    $('#w2ui-overlay').data('keepOpen', true);
+                    setTimeout(function () { $('#w2ui-overlay').data('keepOpen', true); }, 10);
+                    event.stopPropagation();
+                })
+                .on('keyup.w2color', function (event) {
+                    if (this.value !== '' && this.value[0] !== '#') this.value = '#' + this.value;
+                })
+                .on('change.w2color', function (event) {
+                    var tmp = this.value;
+                    if (tmp.substr(0, 1) == '#') tmp = tmp.substr(1);
+                    if (tmp.length != 6) {
+                        $(this).w2tag('Invalid color.');
+                        return;
+                    }
+                    var customColorRow = $.fn.w2colorPalette[pal.length - 2];
+                    if (customColorRow.indexOf(tmp) !== -1) {
+                        customColorRow.splice(customColorRow.indexOf(tmp), 1);
+                    }
+                    customColorRow.unshift(tmp.toUpperCase());
+                    localStorage.setItem('customColor', JSON.stringify(customColorRow));
+                    $(el).w2color(options, callBack);
+                    setTimeout(function() { $('#w2ui-overlay input')[0].focus(); }, 100);
+                })
+                .w2field('hex');
+        }
+
         var currentPalette = (localStorage && localStorage.colorPalette) ? localStorage.colorPalette : 'StandardColors';
 
         var pal = generatePalette(currentPalette, options);
@@ -2821,7 +2871,9 @@ w2utils.event = {
         if ($('#w2ui-overlay').length === 0) {
             $(el).w2overlay(getColorHTML(pal, options), {
                 onHide: function () {
-                    if (typeof callBack == 'function') callBack($(el).data('_color'));
+                    var data = $(el).data('_color');
+                    var theme = $(el).data('_theme');
+                    if (typeof callBack == 'function') callBack(theme ? theme : data);
                     $(el).removeData('_color');
                 }
             });
@@ -2829,52 +2881,7 @@ w2utils.event = {
             $('#w2ui-overlay .w2ui-color').parent().html(getColorHTML(pal, options));
         }
 
-        // bind events
-        $('#w2ui-overlay .color')
-            .off('.w2color')
-            .on('mousedown.w2color', function (event) {
-                var color = $(event.originalEvent.target).attr('name');
-                index = $(event.originalEvent.target).attr('index').split(':');
-                $(el).data('_color', color);
-                var recentRow = $.fn.w2colorPalette[pal.length - 1];
-                if (recentRow.indexOf(color) !== -1) {
-                    recentRow.splice(recentRow.indexOf(color), 1);
-                }
-                recentRow.unshift(color);
-                localStorage.setItem('recentColor', JSON.stringify(recentRow));
-            })
-            .on('mouseup.w2color', function () {
-                setTimeout(function () {
-                    if ($("#w2ui-overlay").length > 0) $('#w2ui-overlay').removeData('keepOpen')[0].hide();
-                }, 10);
-            });
-        $('#w2ui-overlay input')
-            .off('.w2color')
-            .on('mousedown.w2color', function (event) {
-                $('#w2ui-overlay').data('keepOpen', true);
-                setTimeout(function () { $('#w2ui-overlay').data('keepOpen', true); }, 10);
-                event.stopPropagation();
-            })
-            .on('keyup.w2color', function (event) {
-                if (this.value !== '' && this.value[0] !== '#') this.value = '#' + this.value;
-            })
-            .on('change.w2color', function (event) {
-                var tmp = this.value;
-                if (tmp.substr(0, 1) == '#') tmp = tmp.substr(1);
-                if (tmp.length != 6) {
-                    $(this).w2tag('Invalid color.');
-                    return;
-                }
-                var customColorRow = $.fn.w2colorPalette[pal.length - 2];
-                if (customColorRow.indexOf(tmp) !== -1) {
-                    customColorRow.splice(customColorRow.indexOf(tmp), 1);
-                }
-                customColorRow.unshift(tmp.toUpperCase());
-                localStorage.setItem('customColor', JSON.stringify(customColorRow));
-                $(el).w2color(options, callBack);
-                setTimeout(function() { $('#w2ui-overlay input')[0].focus(); }, 100);
-            })
-            .w2field('hex');
+        bindEvents(pal);
 
         var hasPaletteSelector = window.app.map._docLayer._docType === 'text';
 
@@ -2884,6 +2891,7 @@ w2utils.event = {
                 localStorage.setItem('colorPalette', palette);
                 var pal = generatePalette(palette, options);
                 $('#w2ui-overlay .w2ui-color').parent().html(getColorHTML(pal, options));
+                bindEvents(pal);
                 $('#w2ui-overlay .color-palette-selector')
                     .on('change', updatePalette);
             };
@@ -2921,22 +2929,27 @@ w2utils.event = {
             var html = '';
 
             var hasPaletteSelector = window.app.map._docLayer._docType === 'text';
+            var currentPalette = localStorage && localStorage.colorPalette ? localStorage.colorPalette : 'StandardColors';
+
             if (hasPaletteSelector) {
-                var currentPalette = localStorage ? localStorage.colorPalette : null;
                 html += '<select class="color-palette-selector">';
                 for (var i in window.app.colorPalettes)
                     html += '<option value="' + i + '" ' + (i === currentPalette ? 'selected="selected"' : '') + '>' + window.app.colorPalettes[i].name + '</option>';
                 html += '</select>';
             }
 
+            var detailedPalette = window.app.colorPalettes[currentPalette].colors
+
             html += '<div class="w2ui-color" onmousedown="event.stopPropagation(); event.preventDefault()">'+ // prevent default is needed otherwiser selection gets unselected
                         '<table cellspacing="5"><tbody>';
             for (var i = 0; i < pal.length - 2; i++) {
                 html += '<tr>';
                 for (var j = 0; j < pal[i].length; j++) {
+                    var themeData = detailedPalette[i][j].Data ?
+                        JSON.stringify(detailedPalette[i][j].Data) : undefined;
                     html += '<td>'+
                             '    <div class="color '+ (pal[i][j] === '' ? 'no-color' : '') +'" style="background-color: #'+ pal[i][j] +';" ' +
-                            '       name="'+ pal[i][j] +'" index="'+ i + ':' + j +'">'+ (options.color == pal[i][j] ? '&#149;' : '&#160;') +
+                            '       name="'+ pal[i][j] +'" index="'+ i + ':' + j +'" ' + (themeData ? 'theme=\'' + themeData : '') + '\'>'+ (options.color == pal[i][j] ? '&#149;' : '&#160;') +
                             '    </div>'+
                             '</td>';
                     if (options.color == pal[i][j]) index = [i, j];
