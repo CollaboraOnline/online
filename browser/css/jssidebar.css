@@ -339,7 +339,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 #NavigatorDeck #contenttree,
 #NavigatorDeck #tree {
 	position: absolute;
-	top: 30px;
+	top: 0;
 	bottom: 10px;
 	left: 10px;
 	right: 10px;
