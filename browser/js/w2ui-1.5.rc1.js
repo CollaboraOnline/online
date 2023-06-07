@@ -2776,23 +2776,23 @@ w2utils.event = {
     $.fn.w2color = function (options, callBack) {
         var el    = $(this)[0];
         var index = [-1, -1];
-        if ($.fn.w2colorPalette == null) {
-            $.fn.w2colorPalette = toW2Palette(window.app.colorPalettes['StandardColors'].colors);
-            var customColorRow = localStorage.customColor;
-            var recentRow = localStorage.recentColor;
 
-            if (typeof customColorRow !== 'undefined') {
-                $.fn.w2colorPalette.push(JSON.parse(customColorRow));
-            } else {
-                $.fn.w2colorPalette.push(['F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2']);  // custom colors (up to 4)
-            }
+        $.fn.w2colorPalette = toW2Palette(window.app.colorPalettes['StandardColors'].colors);
+        var customColorRow = localStorage.customColor;
+        var recentRow = localStorage.recentColor;
 
-            if (typeof recentRow !== 'undefined') {
-                $.fn.w2colorPalette.push(JSON.parse(recentRow));
-            } else {
-                $.fn.w2colorPalette.push(['F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2']); // recent colors (up to 8)
-            }
+        if (typeof customColorRow !== 'undefined') {
+            $.fn.w2colorPalette.push(JSON.parse(customColorRow));
+        } else {
+            $.fn.w2colorPalette.push(['F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2']);  // custom colors (up to 4)
         }
+
+        if (typeof recentRow !== 'undefined') {
+            $.fn.w2colorPalette.push(JSON.parse(recentRow));
+        } else {
+            $.fn.w2colorPalette.push(['F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2']); // recent colors (up to 8)
+        }
+
         var pal = $.fn.w2colorPalette;
         if (typeof options == 'string') options = {
             color: options,
