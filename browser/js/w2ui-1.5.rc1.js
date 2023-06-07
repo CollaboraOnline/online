@@ -2761,11 +2761,23 @@ w2utils.event = {
         }
     };
 
+    var toW2Palette = function (corePalette) {
+        var pal = [];
+        for (var i = 0; i < corePalette.length; i++) {
+            var row = [];
+            for (var j = 0; j < corePalette[i].length; j++) {
+                row.push(corePalette[i][j].Value);
+            }
+            pal.push(row);
+        }
+        return pal;
+    };
+
     $.fn.w2color = function (options, callBack) {
         var el    = $(this)[0];
         var index = [-1, -1];
         if ($.fn.w2colorPalette == null) {
-            $.fn.w2colorPalette = window.app.colorPalettes['StandardColors'].colors;
+            $.fn.w2colorPalette = toW2Palette(window.app.colorPalettes['StandardColors'].colors);
             var customColorRow = localStorage.customColor;
             var recentRow = localStorage.recentColor;
 
