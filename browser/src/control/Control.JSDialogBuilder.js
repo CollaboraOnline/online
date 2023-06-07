@@ -2737,7 +2737,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return parseInt('0x' + color);
 	},
 
-	_sendColorCommand: function(builder, data, color) {
+	_sendColorCommand: function(builder, data, color, themeData) {
 		var gradientItem;
 
 		// complex color properties
@@ -2775,12 +2775,23 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var params = {};
-		params[data.id] = {
+		var colorParameterID = data.id + '.Color';
+		var themeParameterID = data.id + '.ComplexColorJSON';
+
+		params[colorParameterID] = {
 			type : 'long',
 			value : builder.parseHexColor(color)
 		};
 
-		builder.map['stateChangeHandler'].setItemValue(data.command, params[data.id].value);
+		if (themeData != null)
+		{
+			params[themeParameterID] = {
+				type : 'string',
+				value : themeData
+			};
+		}
+
+		builder.map['stateChangeHandler'].setItemValue(data.command, params[colorParameterID].value);
 		builder.map.sendUnoCommand(data.command, params);
 	},
 
@@ -2981,11 +2992,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			$(arrowbackground).click(function() {
 				if (!$(div).hasClass('disabled')) {
-					$(div).w2color({ color: builder._colorLastSelection[data.command], transparent: noColorControl }, function (color) {
+					$(div).w2color({ color: builder._colorLastSelection[data.command], transparent: noColorControl }, function (color, themeData) {
 						if (color != null) {
 							if (color) {
 								updateFunction('#' + color);
-								builder._sendColorCommand(builder, data, color);
+								builder._sendColorCommand(builder, data, color, themeData);
 							} else {
 								updateFunction('#FFFFFF');
 								builder._sendColorCommand(builder, data, 'transparent');
