@@ -102,6 +102,11 @@
 	margin: auto !important;
 }
 
+.color-palette-selector {
+	width: 100% !important;
+	margin-top: 8px !important;
+}
+
 #toolbar-wrapper.readonly {
 	display: none;
 }

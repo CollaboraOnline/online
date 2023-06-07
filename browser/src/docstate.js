@@ -57,7 +57,6 @@ window.app = { // Shouldn't have any functions defined.
 	languages: [], // all available languages, fetched from core
 	favouriteLanguages: ['de-DE', 'en-US', 'en-GB', 'es-ES', 'fr-FR', 'it', 'nl-NL', 'pt-BR', 'pt-PT', 'ru'],
 	colorPalettes: {
-		'ThemeColors': { name: _('Theme colors'), colors: [] },
 		'StandardColors': { name: _('Standard'), colors: [
 			[{Value: '000000'}, {Value: '555555'}, {Value: '888888'}, {Value: 'BBBBBB'}, {Value: 'DDDDDD'}, {Value: 'EEEEEE'}, {Value: 'F7F7F7'}, {Value: 'FFFFFF'}],
 			[{Value: 'FF011B'}, {Value: 'FF9838'}, {Value: 'FFFD59'}, {Value: '01FD55'}, {Value: '00FFFE'}, {Value: '006CE7'}, {Value: '9B24F4'}, {Value: 'FF21F5'}],
@@ -69,6 +68,7 @@ window.app = { // Shouldn't have any functions defined.
 			[{Value: '99050C'}, {Value: 'B45F17'}, {Value: 'BF901F'}, {Value: '37761D'}, {Value: '124F5C'}, {Value: '0A5394'}, {Value: '351C75'}, {Value: '741B47'}],
 			// ['660205', '783F0B', '7F6011', '274E12', '0C343D', '063762', '20124D', '4C1030'],
 		] },
+		'ThemeColors': { name: _('Theme colors'), colors: [] },
 	},
 };
 
