@@ -2773,11 +2773,8 @@ w2utils.event = {
         return pal;
     };
 
-    $.fn.w2color = function (options, callBack) {
-        var el    = $(this)[0];
-        var index = [-1, -1];
-
-        $.fn.w2colorPalette = toW2Palette(window.app.colorPalettes['StandardColors'].colors);
+    var generatePalette = function (paletteName, options) {
+        $.fn.w2colorPalette = toW2Palette(window.app.colorPalettes[paletteName].colors);
         var customColorRow = localStorage.customColor;
         var recentRow = localStorage.recentColor;
 
@@ -2807,17 +2804,29 @@ w2utils.event = {
             pal[0].splice(1, 0, '555555');
             pal[0].pop();
         }
+
+        return pal;
+    };
+
+    $.fn.w2color = function (options, callBack) {
+        var el    = $(this)[0];
+        var index = [-1, -1];
+
+        var currentPalette = (localStorage && localStorage.colorPalette) ? localStorage.colorPalette : 'StandardColors';
+
+        var pal = generatePalette(currentPalette, options);
+
         if (options.color) options.color = String(options.color).toUpperCase();
 
         if ($('#w2ui-overlay').length === 0) {
-            $(el).w2overlay(getColorHTML(options), {
+            $(el).w2overlay(getColorHTML(pal, options), {
                 onHide: function () {
                     if (typeof callBack == 'function') callBack($(el).data('_color'));
                     $(el).removeData('_color');
                 }
             });
         } else { // only refresh contents
-            $('#w2ui-overlay .w2ui-color').parent().html(getColorHTML(options));
+            $('#w2ui-overlay .w2ui-color').parent().html(getColorHTML(pal, options));
         }
 
         // bind events
@@ -2867,6 +2876,18 @@ w2utils.event = {
             })
             .w2field('hex');
 
+        var updatePalette = function () {
+            var palette = $('#w2ui-overlay .color-palette-selector option:selected').get(0).value;
+            localStorage.setItem('colorPalette', palette);
+            var pal = generatePalette(palette, options);
+            $('#w2ui-overlay .w2ui-color').parent().html(getColorHTML(pal, options));
+            $('#w2ui-overlay .color-palette-selector')
+                .on('change', updatePalette);
+        };
+
+        $('#w2ui-overlay .color-palette-selector')
+            .on('change', updatePalette);
+
         el.nav = function (direction) {
             switch (direction) {
                 case 'up':
@@ -2892,8 +2913,14 @@ w2utils.event = {
             return color;
         };
 
-        function getColorHTML(options) {
-            var html  = '<div class="w2ui-color" onmousedown="event.stopPropagation(); event.preventDefault()">'+ // prevent default is needed otherwiser selection gets unselected
+        function getColorHTML(pal, options) {
+            var currentPalette = localStorage ? localStorage.colorPalette : null;
+            var html = '<select class="color-palette-selector">';
+            for (var i in window.app.colorPalettes)
+                html += '<option value="' + i + '" ' + (i === currentPalette ? 'selected="selected"' : '') + '>' + window.app.colorPalettes[i].name + '</option>';
+            html += '</select>';
+
+            html += '<div class="w2ui-color" onmousedown="event.stopPropagation(); event.preventDefault()">'+ // prevent default is needed otherwiser selection gets unselected
                         '<table cellspacing="5"><tbody>';
             for (var i = 0; i < pal.length - 2; i++) {
                 html += '<tr>';
