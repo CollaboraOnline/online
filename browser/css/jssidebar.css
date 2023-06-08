@@ -185,7 +185,6 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 }
 /* selected */
 .hasnotebookbar .ui-content.unotoolbutton.selected.has-label,
-[data-theme='dark'] #toggledarktheme,
 .hasnotebookbar .ui-content.unotoolbutton.selected.inline,
 .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline),
 .sidebar.unotoolbutton.selected {
@@ -193,6 +192,14 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 	border: 1px solid var(--color-border-dark);
 	color: var(--color-text-dark);
 	border-radius: var(--border-radius);
+}
+[data-theme='dark'] .hasnotebookbar .ui-content.unotoolbutton.selected.has-label,
+[data-theme='dark'] #toggledarktheme,
+[data-theme='dark'] .hasnotebookbar .ui-content.unotoolbutton.selected.inline,
+[data-theme='dark'] .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline),
+[data-theme='dark'] .sidebar.unotoolbutton.selected {
+	background-color: var(--color-background-darker);
+	border-color: var(--color-border-darker);
 }
 /* selected hover */
 .hasnotebookbar .ui-content.unotoolbutton.selected:hover,
