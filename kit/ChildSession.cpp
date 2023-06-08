@@ -108,7 +108,8 @@ ChildSession::ChildSession(
     _viewId(-1),
     _isDocLoaded(false),
     _copyToClipboard(false),
-    _canonicalViewId(-1)
+    _canonicalViewId(-1),
+    _isDumpingTiles(false)
 {
     LOG_INF("ChildSession ctor [" << getName() << "]. JailRoot: [" << _jailRoot << ']');
 }
