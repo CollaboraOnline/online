@@ -357,6 +357,21 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	width: var(--btn-size-s);
 	height: var(--btn-size-s);
 }
+#NavigatorDeck .ui-treeview-entry.ui-listview-expandable-with-icon {
+	cursor: grab;
+}
+#NavigatorDeck .ui-treeview-entry.selected {
+	background-color: var(--color-background-dark);
+	color: var(--color-primary);
+}
+#NavigatorDeck .ui-treeview-entry.selected:not(.ui-listview-expandable-with-icon)::before {
+	content: '–';
+	font-size: 17px;
+	font-weight: 500;
+	line-height: 1.2;
+	position: absolute;
+	left: 20px;
+}
 #NavigatorDeck .ui-treeview-cell-text {
 	/* good to move this into css var*/
 	font-size: 14px;
