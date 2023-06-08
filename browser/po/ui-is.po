@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-01 13:52+0200\n"
-"PO-Revision-Date: 2023-06-03 14:52+0000\n"
+"PO-Revision-Date: 2023-06-05 17:53+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/ui/is/>\n"
@@ -2139,6 +2139,8 @@ msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
 msgstr ""
+"Þú ert að fara út úr skjalinu. Eftirfarandi vefsíða mun opnast í nýjum flipa:"
+" "
 
 #: src/errormessages.js:26
 msgid ""
@@ -2195,12 +2197,16 @@ msgstr "Ekki er hægt að endurnefna skjal."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Mistókst að lesa skjalið úr gagnageymslu, prófaðu að hlaða því inn aftur."
 
 #: src/errormessages.js:42
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Vistun mistókst vegna þess að ekkert pláss er eftir. Skjalið verður núna "
+"skrifvarið. Gakktu úr skugga um að nægilegt pláss sé í boði og prófaðu aftur "
+"að vista."
 
 #: src/errormessages.js:43
 msgid ""
@@ -2208,18 +2214,21 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Vistun mistókst vegna þess að skjalið er of stórt eða fyllir allt pláss sem "
+"eftir er. Skjalið verður núna skrifvarið en þú getur ennþá sótt það og "
+"vistað hjá þér."
 
 #: src/errormessages.js:45
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Ekki er hægt að vista skjalið, athugaðu heimildirnar þínar."
 
 #: src/errormessages.js:46
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "Ekki er hægt að endurnefna skjalið, athugaðu heimildirnar þínar."
 
 #: src/errormessages.js:47
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Ekki er hægt að flytja út skjalið. Prófaðu aftur."
 
 #: src/errormessages.js:52
 msgid "Uploading file to server failed, file not found."
