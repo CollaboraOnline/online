@@ -35,6 +35,8 @@
 
 /* global $ _ JSDialog */
 
+var treeType = '';
+
 function _createCheckbox(parentContainer, treeViewData, builder, entry) {
 	var checkbox = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', parentContainer);
 	checkbox.type = 'checkbox';
@@ -112,7 +114,7 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 	var li = L.DomUtil.create('li', builder.options.cssClass, parentContainer);
 
 	if (!disabled && entry.state == null) {
-		li.draggable = true;
+		li.draggable = treeType === 'navigator' ? false: true;
 
 		li.ondragstart = function drag(ev) {
 			ev.dataTransfer.setData('text', entry.row);
@@ -144,6 +146,10 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 	for (var i in entry.columns) {
 		if (entry.columns[i].collapsed || entry.columns[i].expanded) {
 			var icon = L.DomUtil.create('img', 'ui-listview-icon', text);
+
+			if (treeType === 'navigator')
+				icon.draggable = false;
+
 			var iconId = _getCellIconId(entry.columns[i]);
 			L.DomUtil.addClass(icon, iconId + 'img');
 			var iconURL = builder._createIconURL(iconId, true);
@@ -587,6 +593,9 @@ function _treelistboxControl(parentContainer, data, builder) {
 }
 
 JSDialog.treeView = function (parentContainer, data, builder) {
+	if (data.parent && data.parent.parent && data.parent.parent.parent && data.parent.parent.parent.id.startsWith('Navigator'))
+		treeType = 'navigator';
+
 	var buildInnerData = _treelistboxControl(parentContainer, data, builder);
 	return buildInnerData;
 };
