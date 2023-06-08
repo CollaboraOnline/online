@@ -1085,11 +1085,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     {
         if (param.first == "WOPISrc")
         {
-            std::string wopiFrameAncestor;
-            Poco::URI::decode(param.second, wopiFrameAncestor);
-            Poco::URI uriWopiFrameAncestor(wopiFrameAncestor);
+            const Poco::URI uriWopiFrameAncestor(Util::decodeURIComponent(param.second));
             // Remove parameters from URL
-            wopiFrameAncestor = uriWopiFrameAncestor.getHost();
+            const std::string& wopiFrameAncestor = uriWopiFrameAncestor.getHost();
             if (wopiFrameAncestor != uriHost.getHost() && wopiFrameAncestor != configFrameAncestor)
             {
                 frameAncestors += ' ' + wopiFrameAncestor + ":*";
