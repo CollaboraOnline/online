@@ -54,6 +54,8 @@
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
 #endif
+#include <ContentSecurityPolicy.hpp>
+
 using Poco::Net::HTMLForm;
 using Poco::Net::HTTPBasicCredentials;
 using Poco::Net::HTTPRequest;
@@ -1059,17 +1061,31 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     const std::string mimeType = "text/html";
 
+    ContentSecurityPolicy csp;
+    csp.appendDirective("default-src", "'none'");
+    csp.appendDirective("frame-src", "'self'");
+    csp.appendDirective("frame-src", WELCOME_URL);
+    csp.appendDirective("frame-src", FEEDBACK_URL);
+    csp.appendDirective("frame-src", buyProduct);
+    csp.appendDirective("frame-src", "blob:"); // Equivalent to unsafe-eval!
+    csp.appendDirective("connect-src", "'self'");
+    csp.appendDirective("connect-src", "https://www.zotero.org");
+    csp.appendDirective("connect-src", "https://api.zotero.org");
+    csp.appendDirective("connect-src", cnxDetails.getWebSocketUrl());
+    csp.appendDirective("connect-src", cnxDetails.getWebServerUrl());
+    csp.appendDirective("connect-src", indirectionURI.getAuthority());
+    csp.appendDirective("script-src", "'self'");
+    csp.appendDirective("script-src", "'unsafe-inline'");
+    csp.appendDirective("style-src", "'self'");
+    csp.appendDirective("style-src", "'unsafe-inline'");
+    csp.appendDirective("font-src", "'self'");
+    csp.appendDirective("font-src", "data:"); // Equivalent to unsafe-inline!
+    csp.appendDirective("object-src", "'self'");
+    csp.appendDirective("object-src", "blob:"); // Equivalent to unsafe-eval!
+    csp.appendDirective("media-src", "'self'");
+
     std::ostringstream cspOss;
-    cspOss << "Content-Security-Policy: default-src 'none'; "
-        "frame-src 'self' " << WELCOME_URL << " " << FEEDBACK_URL << " " << buyProduct << "; "
-           "connect-src 'self' https://www.zotero.org https://api.zotero.org "
-           << cnxDetails.getWebSocketUrl() << " " << cnxDetails.getWebServerUrl() << " "
-           << indirectionURI.getAuthority() << "; "
-           "script-src 'unsafe-inline' 'self'; "
-           "style-src 'self' 'unsafe-inline'; "
-           "font-src 'self' data:; "
-           "object-src 'self' blob:; "
-           "media-src 'self'; ";
+    cspOss << "Content-Security-Policy: " << csp.generate();
 
     // Frame ancestors: Allow coolwsd host, wopi host and anything configured.
     std::string configFrameAncestor = config.getString("net.frame_ancestors", "");

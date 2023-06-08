@@ -264,6 +264,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/AdminModel.hpp \
               wsd/Auth.hpp \
               wsd/ClientSession.hpp \
+              wsd/ContentSecurityPolicy.hpp \
               wsd/DocumentBroker.hpp \
               wsd/ProxyProtocol.hpp \
               wsd/Exceptions.hpp \
