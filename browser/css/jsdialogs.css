@@ -299,6 +299,11 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	filter: brightness(0.5);
 }
 
+[data-theme='dark'] .ui-expander-label::before,
+[data-theme='dark'] .ui-treeview-expandable > .ui-treeview-expander::before  {
+	filter: brightness(1);
+}
+
 .ui-treeview-expandable > .ui-treeview-expander::before {
 	margin-inline-end: 7px !important;
 	display: inline-block;
