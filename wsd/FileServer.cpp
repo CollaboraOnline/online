@@ -1088,11 +1088,14 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     csp.appendDirective("object-src", "'self'");
     csp.appendDirective("object-src", "blob:"); // Equivalent to unsafe-eval!
     csp.appendDirective("media-src", "'self'");
+    csp.appendDirective("img-src", "'self'");
+    csp.appendDirective("img-src", "data:"); // Equivalent to unsafe-inline!
+    csp.appendDirective("img-src", "https://www.collaboraoffice.com/");
 
     // Document signing: if endpoint URL is configured, whitelist that for
     // iframe purposes.
     std::ostringstream cspOss;
-    cspOss << "Content-Security-Policy: " << csp.generate();
+    cspOss << "Content-Security-Policy: ";
 
     // Frame ancestors: Allow coolwsd host, wopi host and anything configured.
     std::string configFrameAncestor = config.getString("net.frame_ancestors", "");
@@ -1117,25 +1120,23 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         }
     }
 
-    std::string imgSrc = "img-src 'self' data: https://www.collaboraoffice.com/";
     if (!frameAncestors.empty())
     {
         LOG_TRC("Allowed frame ancestors: " << frameAncestors);
         // X-Frame-Options supports only one ancestor, ignore that
         //(it's deprecated anyway and CSP works in all major browsers)
-        // frame anchestors are also allowed for img-src in order to load the views avatars
-        cspOss << imgSrc << " " << frameAncestors << "; "
-                << "frame-ancestors " << frameAncestors;
+        // frame ancestors are also allowed for img-src in order to load the views avatars
+        csp.appendDirective("img-src", frameAncestors);
+        csp.appendDirective("frame-ancestors", frameAncestors);
         const std::string escapedFrameAncestors = Util::encodeURIComponent(frameAncestors, "'");
         Poco::replaceInPlace(preprocess, std::string("%FRAME_ANCESTORS%"), escapedFrameAncestors);
     }
     else
     {
         LOG_TRC("Denied all frame ancestors");
-        cspOss << imgSrc << "; ";
     }
 
-    cspOss << "\r\n";
+    cspOss << csp.generate() << "\r\n";
 
     std::ostringstream oss;
     oss << "HTTP/1.1 200 OK\r\n"
