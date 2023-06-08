@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-01 13:52+0200\n"
-"PO-Revision-Date: 2023-06-03 14:52+0000\n"
+"PO-Revision-Date: 2023-06-05 17:53+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/help/hr/>\n"
@@ -93,7 +93,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:30-18
 msgid "Focus to notebookbar menu"
-msgstr ""
+msgstr "Fokusiraj izbornik trake bilježnica"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:30-70
 msgid ""
@@ -105,7 +105,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:31-18
 msgid "Focus to document from menu"
-msgstr ""
+msgstr "Fokusiraj dokument iz izbornika"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:31-72
 msgid "ESC"
@@ -113,7 +113,7 @@ msgstr "ESC"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:32-18
 msgid "Focus to selected comment's menu"
-msgstr ""
+msgstr "Fokusiraj odabrani izbornik komentara"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:32-77
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C"
