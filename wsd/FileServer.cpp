@@ -714,9 +714,9 @@ void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPReq
     std::string headers = extraHeader;
     if (!shortMessage.empty())
     {
-        Poco::URI requestUri(request.getURI());
-        std::string pathSanitized;
-        Poco::URI::encode(requestUri.getPath(), "", pathSanitized);
+        const Poco::URI requestUri(request.getURI());
+        const std::string pathSanitized =
+            Util::encodeURIComponent(requestUri.getPath(), std::string());
         // Let's keep message as plain text to avoid complications.
         headers += "Content-Type: text/plain charset=UTF-8\r\n";
         body = "Error: " + shortMessage + '\n' +
@@ -898,10 +898,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     // Escape bad characters in access token.
     // This is placed directly in javascript in cool.html, we need to make sure
     // that no one can do anything nasty with their clever inputs.
-    std::string escapedAccessToken, escapedAccessHeader, escapedPostmessageOrigin;
-    Poco::URI::encode(accessToken, "'", escapedAccessToken);
-    Poco::URI::encode(accessHeader, "'", escapedAccessHeader);
-    Poco::URI::encode(postMessageOrigin, "'", escapedPostmessageOrigin);
+    const std::string escapedAccessToken = Util::encodeURIComponent(accessToken, "'");
+    const std::string escapedAccessHeader = Util::encodeURIComponent(accessHeader, "'");
+    const std::string escapedPostmessageOrigin = Util::encodeURIComponent(postMessageOrigin, "'");
 
     unsigned long tokenTtl = 0;
     if (!accessToken.empty())
@@ -958,8 +957,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     bool useIntegrationTheme = config.getBool("user_interface.use_integration_theme", true);
     bool hasIntegrationTheme = (theme != "") && FileUtil::Stat(COOLWSD::FileServerRoot + "/browser/dist/" + theme).exists();
-    std::string escapedTheme;
-    Poco::URI::encode(theme, "'", escapedTheme);
+    const std::string escapedTheme = Util::encodeURIComponent(theme, "'");
     const std::string themePreFix = hasIntegrationTheme && useIntegrationTheme ? escapedTheme + "/" : "";
     const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/browser/" COOLWSD_VERSION_HASH "/" + themePreFix + "%s.css\">");
     const std::string scriptJS("<script src=\"%s/browser/" COOLWSD_VERSION_HASH "/" + themePreFix + "%s.js\"></script>");
@@ -1051,8 +1049,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_URL%"), std::string(FEEDBACK_URL));
     Poco::replaceInPlace(preprocess, std::string("%WELCOME_URL%"), std::string(WELCOME_URL));
 
-    std::string escapedBuyProduct;
-    Poco::URI::encode(buyProduct, "'", escapedBuyProduct);
+    const std::string escapedBuyProduct = Util::encodeURIComponent(buyProduct, "'");
     Poco::replaceInPlace(preprocess, std::string("%BUYPRODUCT_URL%"), escapedBuyProduct);
 
     Poco::replaceInPlace(preprocess, std::string("%DEEPL_ENABLED%"), (config.getBool("deepl.enabled", false) ? std::string("true"): std::string("false")));
@@ -1106,8 +1103,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         // frame anchestors are also allowed for img-src in order to load the views avatars
         cspOss << imgSrc << " " << frameAncestors << "; "
                 << "frame-ancestors " << frameAncestors;
-        std::string escapedFrameAncestors;
-        Poco::URI::encode(frameAncestors, "'", escapedFrameAncestors);
+        const std::string escapedFrameAncestors = Util::encodeURIComponent(frameAncestors, "'");
         Poco::replaceInPlace(preprocess, std::string("%FRAME_ANCESTORS%"), escapedFrameAncestors);
     }
     else
