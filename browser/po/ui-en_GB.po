@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-01 13:52+0200\n"
-"PO-Revision-Date: 2023-05-25 07:19+0000\n"
-"Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
+"PO-Revision-Date: 2023-06-05 17:53+0000\n"
+"Last-Translator: Andi Chandler <andi@gowling.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_GB/>\n"
-"Language: \n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -944,7 +944,7 @@ msgstr "Save Comments"
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarImpress.js:418
 msgid "Master View"
-msgstr ""
+msgstr "Master View"
 
 #: src/control/Control.Menubar.js:490 src/control/Control.Menubar.js:1003
 #: src/control/Control.PresentationBar.js:57
@@ -2045,7 +2045,7 @@ msgstr "The server has been disconnected."
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
-msgstr ""
+msgstr "No disk space left on server."
 
 #: src/errormessages.js:14
 msgid ""
@@ -2188,6 +2188,7 @@ msgstr "Document cannot be renamed."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Failed to read document from storage, please try to load the document again."
 
 #: src/errormessages.js:42
 msgid ""
@@ -2203,18 +2204,21 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Save failed because the document is too large or exceeds the remaining "
+"storage space. The document will now be read-only but you may still download "
+"it now to preserve a copy locally."
 
 #: src/errormessages.js:45
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Document cannot be saved, please check your permissions."
 
 #: src/errormessages.js:46
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "Document cannot be renamed, please check your permissions."
 
 #: src/errormessages.js:47
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Document cannot be exported. Please try again."
 
 #: src/errormessages.js:52
 msgid "Uploading file to server failed, file not found."
