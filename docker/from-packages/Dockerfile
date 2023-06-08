@@ -36,10 +36,10 @@ RUN --mount=type=secret,id=secret_key \
 # Setup Collabora repo
     repourl="https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/"; \
     secret_key=$(cat /run/secrets/secret_key); \
-    if [ "$type" == "cool" ] && [ -n ${secret_key+set} ]; then \
+    if [ "$type" = "cool" ] && [ -n ${secret_key+set} ]; then \
         echo "Based on the provided build arguments Collabora Online from customer repo will be used."; \
         repourl="${repourl}23.05/customer-deb-${secret_key}/"; \
-    elif [ "$type" == "key" ]; then \
+    elif [ "$type" = "key" ]; then \
         echo "Based on the provided build arguments license key enabled Collabora Online will be used."; \
         repourl="${repourl}23.05-key/"; \
     else \
@@ -48,7 +48,7 @@ RUN --mount=type=secret,id=secret_key \
     fi && \
     echo "deb [signed-by=/usr/share/keyrings/collaboraonline-release-keyring.gpg] ${repourl} /" > /etc/apt/sources.list.d/collabora.list && \
 # Download Collabora package signing key
-    if [ "$repo" == "repos-snapshot" ]; then \
+    if [ "$repo" = "repos-snapshot" ]; then \
         curl https://www.collaboraoffice.com/downloads/gpg/collaboraonline-snapshot-keyring.gpg --output /usr/share/keyrings/collaboraonline-snapshot-keyring.gpg; \
         sed -i "s/collaboraonline-release-keyring/collaboraonline-snapshot-keyring/" /etc/apt/sources.list.d/collabora.list; \
     else \
@@ -103,7 +103,7 @@ RUN --mount=type=secret,id=secret_key \
                        collaboraofficebasis-zh-tw && \
 # Install brand package (or not)
     if [ -z "$nobrand" ]; then \
-        if [ "$type" == "cool" ] || [ "$type" == "key" ]; then \
+        if [ "$type" = "cool" ] || [ "$type" = "key" ]; then \
             apt-get -y install collabora-online-brand; \
         else \
             apt-get -y install code-brand; \
@@ -142,7 +142,7 @@ USER 101
 ## Fix name resolution from jails
 #CMD cp /etc/resolv.conf /etc/hosts /opt/cool/systemplate/etc/ && \
 ## Restart when /etc/coolwsd/coolwsd.xml changes
-#    [ -x /usr/bin/inotifywait -a -x /usr/bin/killall ] && ( \ 
+#    [ -x /usr/bin/inotifywait -a -x /usr/bin/killall ] && ( \
 #        /usr/bin/inotifywait -e modify /etc/coolwsd/coolwsd.xml \
 #        echo "$(ls -l /etc/coolwsd/coolwsd.xml) modified --> restarting" \
 #        /usr/bin/killall -1 coolwsd \
