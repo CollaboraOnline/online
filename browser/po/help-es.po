@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-01 13:52+0200\n"
-"PO-Revision-Date: 2023-06-03 14:52+0000\n"
-"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
+"PO-Revision-Date: 2023-06-08 17:47+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "help/es/>\n"
 "Language: es\n"
@@ -86,7 +86,7 @@ msgstr "Ctrl + Mayús + ?"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:30-18
 msgid "Focus to notebookbar menu"
-msgstr "Centrarte en el menú de la barra de los portátiles"
+msgstr "Dar el foco al menú de la omnibarra"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:30-70
 msgid ""
@@ -98,15 +98,15 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:31-18
 msgid "Focus to document from menu"
-msgstr "Enfoca al documento desde el menú"
+msgstr "Dar el foco al documento desde el menú"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:31-72
 msgid "ESC"
-msgstr "ESC"
+msgstr "Esc"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:32-18
 msgid "Focus to selected comment's menu"
-msgstr "Centrarte en el menú del comentario seleccionado"
+msgstr "Dar el foco al menú del comentario seleccionado"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:32-77
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C"

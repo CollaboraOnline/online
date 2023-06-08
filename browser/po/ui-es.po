@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-01 13:52+0200\n"
-"PO-Revision-Date: 2023-06-03 14:52+0000\n"
-"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
+"PO-Revision-Date: 2023-06-08 17:47+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
 "Language: es\n"
@@ -950,7 +950,7 @@ msgstr "Guardar comentarios"
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarImpress.js:418
 msgid "Master View"
-msgstr "Vista principal"
+msgstr "Vista de patrón"
 
 #: src/control/Control.Menubar.js:490 src/control/Control.Menubar.js:1003
 #: src/control/Control.PresentationBar.js:57
@@ -1373,7 +1373,7 @@ msgstr "Referencia~s"
 
 #: src/control/Control.NotebookbarWriter.js:48
 msgid "For~m"
-msgstr "For~mular"
+msgstr "For~mulario"
 
 #: src/control/Control.NotebookbarWriter.js:205
 msgid "ODF Text Document (.odt)"
@@ -2207,7 +2207,7 @@ msgstr "No se puede cambiar el nombre del documento."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
-"No se ha podido leer el documento del almacenamiento, intenta cargarlo de "
+"No se pudo leer el documento desde el almacenamiento; pruebe a cargarlo de "
 "nuevo."
 
 #: src/errormessages.js:42
@@ -2215,9 +2215,9 @@ msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
-"No se ha podido guardar porque no quedaba espacio en el almacenamiento. El "
-"documento será de sólo lectura. Por favor, asegúrate de que hay suficiente "
-"espacio en el disco e intenta guardarlo de nuevo."
+"No se pudo guardar porque no queda más espacio de almacenamiento. El "
+"documento será de solo lectura. Cerciórese de que haya espacio suficiente "
+"antes de intentar nuevamente."
 
 #: src/errormessages.js:43
 msgid ""
@@ -2225,21 +2225,21 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
-"No se pudo guardar porque el documento es demasiado grande o excede del "
+"No se pudo guardar porque el documento es demasiado grande o supera el "
 "espacio de almacenamiento restante. El documento ahora será de solo lectura, "
-"pero aún puedes descargarlo ahora para conservar una copia localmente."
+"pero puede descargarlo ahora para conservar una copia local."
 
 #: src/errormessages.js:45
 msgid "Document cannot be saved, please check your permissions."
-msgstr "El documento no se puede guardar, verifica los permisos."
+msgstr "No se puede guardar el documento; compruebe sus permisos."
 
 #: src/errormessages.js:46
 msgid "Document cannot be renamed, please check your permissions."
-msgstr "El documento no puede ser renombrado, por favor comprueba tus permisos."
+msgstr "No se puede cambiar el nombre del documento; compruebe sus permisos."
 
 #: src/errormessages.js:47
 msgid "Document cannot be exported. Please try again."
-msgstr "No se puede exportar el documento. Por favor, inténtelo de nuevo."
+msgstr "No se puede exportar el documento. Inténtelo de nuevo."
 
 #: src/errormessages.js:52
 msgid "Uploading file to server failed, file not found."
