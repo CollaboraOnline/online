@@ -12,6 +12,7 @@
 #include "ClientSession.hpp"
 #include "COOLWSD.hpp"
 #include "DocumentBroker.hpp"
+#include "Util.hpp"
 
 #include <common/Common.hpp>
 #include <common/StringVector.hpp>
@@ -41,18 +42,16 @@ namespace Quarantine
         QuarantineMap.clear();
 
         std::vector<StringToken> tokens;
-        std::string decoded;
 
         std::sort(files.begin(), files.end());
         for (const auto& file : files)
         {
-
             StringVector::tokenize(file.c_str(), file.size(), '_', tokens);
-            Poco::URI::decode(file.substr(tokens[2]._index), decoded);
+            const std::string decoded =
+                Util::decodeURIComponent(tokens.size() > 2 ? file.substr(tokens[2]._index) : file);
             QuarantineMap[decoded].emplace_back(COOLWSD::QuarantinePath + file);
 
             tokens.clear();
-            decoded.clear();
         }
     }
 
