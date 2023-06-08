@@ -12,44 +12,36 @@ The Dockerfile uses the --mount parameter of RUN command. Actually it is used fo
 building  Collabora Online images for Collabora Partners/Customers, who have the secret
 URL of supported packages. The --mount parameter requires BuildKit.
 
-  export DOCKER_BUILDKIT=1
+   export DOCKER_BUILDKIT=1
 
 Examples:
 
-1. Build latest CODE based on Ubuntu 18.04 LTS
+1. Build latest CODE
 
-  cd from-packages
-  docker build --no-cache -t mydomain/code -f Ubuntu .
+   cd from-packages
+   docker build --no-cache -t mydomain/code .
 
-2. Build latest CODE based on Ubuntu 18.04 LTS 100% open source
+2. Build latest CODE 100% open source
 
 The brand package of CODE is not open source. To build an image without it:
 
-  cd from-packages
-  docker build --no-cache --build-arg nobrand=yes -t mydomain/code -f Ubuntu .
+   cd from-packages
+   docker build --no-cache --build-arg nobrand=yes -t mydomain/code .
 
-3. Build Collabora Online 22.05 based on Ubuntu 18.04 LTS
-
-  cd from-packages
-  # Get your secret URL key from https://support.collaboraoffice.com/ (Collabora Partners/Customers)
-  # e.g. the secret key is Example-413539ece39485afc35b4a469adfde0a279d2fd2
-  echo Example-413539ece39485afc35b4a469adfde0a279d2fd2 > secret_key
-  docker build --no-cache --secret id=secret_key,src=secret_key --build-arg type=cool -t mydomain/cool -f Ubuntu .
-
-4. Build Collabora Online 22.05 based on RHEL8
-
-  cd from-packages
-  # Get your secret URL key from https://support.collaboraoffice.com/ (Collabora Partners/Customers)
-  # e.g. the secret key is Example-413539ece39485afc35b4a469adfde0a279d2fd2
-  echo Example-413539ece39485afc35b4a469adfde0a279d2fd2 > secret_key
-  docker build --no-cache --secret id=secret_key,src=secret_key --build-arg type=cool -t mydomain/cool -f RHEL8 .
-
-5. Build Collabora Online 22.05 license key enabled version based on Ubuntu 18.04 LTS
+3. Build Collabora Online
 
    cd from-packages
-   docker build --no-cache --build-arg type=key -t mydomain/cool -f Ubuntu .
+   # Get your secret URL key from https://support.collaboraoffice.com/ (Collabora Partners/Customers)
+   # e.g. the secret key is Example-413539ece39485afc35b4a469adfde0a279d2fd2
+   echo Example-413539ece39485afc35b4a469adfde0a279d2fd2 > secret_key
+   docker build --no-cache --secret id=secret_key,src=secret_key --build-arg type=cool -t mydomain/cool .
 
-6. Build Collabora Online from master branch (from source code)
+4. Build Collabora Online license key enabled version
+
+   cd from-packages
+   docker build --no-cache --build-arg type=key -t mydomain/cool .
+
+5. Build Collabora Online from master branch (from source code)
 
    cd from-source
    ./build.sh
