@@ -655,7 +655,7 @@ L.TextInput = L.Layer.extend({
 		// And that is caused because after entering the first character
 		// cursor position is never updated by keyboard (I know it is strange)
 		// so here we manually correct the position
-		if (content.length === 1 && this._lastContent.length === 0)
+		if (window.mode.isMobile() && content.length === 1 && this._lastContent.length === 0)
 			this._setCursorPosition(2);
 
 		var matchTo = 0;
