@@ -121,7 +121,7 @@ L.Control.UIManager = L.Control.extend({
 			this.refreshMenubar();
 			this.refreshToolbar();
 		}
-		else { 
+		else {
 			this.refreshNotebookbar();
 		}
 		this.refreshSidebar();
@@ -518,7 +518,7 @@ L.Control.UIManager = L.Control.extend({
 				if (style.length == 0)
 					$('html > head').append('<style/>');
 				$('html > head > style').append('.w2ui-icon.' + encodeURIComponent(button.id) +
-					'{background: url("' + encodeURIComponent(button.imgurl) + '") no-repeat center !important; }');
+					'{background: url("' + encodeURI(button.imgurl) + '") no-repeat center !important; }');
 
 				// Position: Either specified by the caller, or defaulting to first position (before save)
 				var insertBefore = button.insertBefore || 'save';
@@ -617,7 +617,7 @@ L.Control.UIManager = L.Control.extend({
 		var obj = $('.unfold');
 		obj.removeClass('w2ui-icon unfold');
 		obj.addClass('w2ui-icon fold');
-		
+
 	},
 
 	hideMenubar: function() {
