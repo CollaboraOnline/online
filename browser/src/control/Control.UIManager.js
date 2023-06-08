@@ -117,11 +117,11 @@ L.Control.UIManager = L.Control.extend({
 			};
 			app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
 		}
-		if (this.getCurrentMode() === 'classic') {
+		if (this.getCurrentMode() === 'classic' || this.map.isReadOnlyMode()) {
 			this.refreshMenubar();
 			this.refreshToolbar();
 		}
-		else { 
+		else {
 			this.refreshNotebookbar();
 		}
 		this.refreshSidebar();
@@ -617,7 +617,7 @@ L.Control.UIManager = L.Control.extend({
 		var obj = $('.unfold');
 		obj.removeClass('w2ui-icon unfold');
 		obj.addClass('w2ui-icon fold');
-		
+
 	},
 
 	hideMenubar: function() {
