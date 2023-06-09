@@ -10,7 +10,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
-
+		desktopHelper.switchUIToCompact();
 		calcHelper.clickOnFirstCell();
 	});
 

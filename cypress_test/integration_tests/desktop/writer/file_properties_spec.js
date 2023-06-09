@@ -2,6 +2,7 @@
 
 var helper = require('../../common/helper');
 var writerHelper = require('../../common/writer_helper');
+const desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', function() {
 	var origTestFileName = 'file_properties.odt';
@@ -9,6 +10,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		desktopHelper.switchUIToCompact();
 	});
 
 	afterEach(function() {

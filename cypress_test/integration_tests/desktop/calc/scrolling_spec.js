@@ -8,6 +8,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
+		desktopHelper.switchUIToCompact();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.cGet('#tb_editbar_item_sidebar').click();
 	});
@@ -19,7 +20,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 	it('Scrolling to bottom/top', function() {
 		desktopHelper.assertScrollbarPosition('vertical', 19, 21);
 		desktopHelper.pressKey(3,'pagedown');
-		desktopHelper.assertScrollbarPosition('vertical', 191, 230);
+		desktopHelper.assertScrollbarPosition('vertical', 170, 200);
 		desktopHelper.pressKey(3,'pageup');
 		desktopHelper.assertScrollbarPosition('vertical', 19, 21);
 	});

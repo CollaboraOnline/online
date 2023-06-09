@@ -2,12 +2,14 @@
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
+const desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function() {
 	var testFileName = 'sidebar.odp';
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'impress');
+		desktopHelper.switchUIToCompact();
 	});
 
 	afterEach(function() {

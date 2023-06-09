@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach Cypress expect */
 
 var helper = require('../../common/helper');
+const desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function () {
 	var origTestFileName = 'track_changes.odt';
@@ -8,6 +9,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 
 	beforeEach(function () {
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		desktopHelper.switchUIToCompact();
 	});
 
 	afterEach(function () {

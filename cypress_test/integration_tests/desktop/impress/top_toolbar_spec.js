@@ -10,6 +10,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		desktopHelper.switchUIToCompact();
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();

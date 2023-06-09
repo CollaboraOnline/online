@@ -1005,6 +1005,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG%"), enableWelcomeMessage);
     Poco::replaceInPlace(preprocess, std::string("%AUTO_SHOW_WELCOME%"), autoShowWelcome);
 
+    std::string enableAccessibility = stringifyBoolFromConfig(config, "accessibility.enable", false);
+    Poco::replaceInPlace(preprocess, std::string("%ENABLE_ACCESSIBILITY%"), enableAccessibility);
+
     // the config value of 'notebookbar/tabbed' or 'classic/compact' overrides the UIMode
     // from the WOPI
     std::string userInterfaceModeConfig = config.getString("user_interface.mode", "default");
@@ -1019,7 +1022,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     // default to the notebookbar if the value is "default" or whatever
     // nonsensical
-    if (userInterfaceMode != "classic" && userInterfaceMode != "notebookbar")
+    if (enableAccessibility == "true" || (userInterfaceMode != "classic" && userInterfaceMode != "notebookbar"))
         userInterfaceMode = "notebookbar";
 
     Poco::replaceInPlace(preprocess, std::string("%USER_INTERFACE_MODE%"), userInterfaceMode);
@@ -1035,8 +1038,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     std::string enableMacrosExecution = stringifyBoolFromConfig(config, "security.enable_macros_execution", false);
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_MACROS_EXECUTION%"), enableMacrosExecution);
 
-    std::string enableAccessibility = stringifyBoolFromConfig(config, "accessibility.enable", false);
-    Poco::replaceInPlace(preprocess, std::string("%ENABLE_ACCESSIBILITY%"), enableAccessibility);
 
     if (!config.getBool("feedback.show", true) && config.getBool("home_mode.enable", false))
     {

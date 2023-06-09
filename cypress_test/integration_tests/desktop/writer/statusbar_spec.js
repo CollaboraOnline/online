@@ -9,6 +9,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		desktopHelper.switchUIToCompact();
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showStatusBarIfHidden ();
@@ -29,11 +30,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Statubar tests.', function
 		cy.cGet('#StatePageNumber').should('have.text', 'Page 1 of 1');
 		cy.cGet('#menu-insert').click();
 		cy.cGet('body').contains('#menu-insert li a', 'Page Break').click();
-		cy.cGet('#StatePageNumber').should('have.text', 'Pages 1 and 2 of 2');
+		cy.cGet('#StatePageNumber').should('have.text', 'Page 2 of 2');
 		cy.cGet('#tb_actionbar_item_prev').click();
 		cy.cGet('#StatePageNumber').should('have.text', 'Page 1 of 2');
 		cy.cGet('#tb_actionbar_item_next').click();
-		cy.cGet('#StatePageNumber').should('have.text', 'Pages 1 and 2 of 2');
+		cy.cGet('#StatePageNumber').should('have.text', 'Page 2 of 2');
 	});
 
 	it('Text entering mode.', function() {
