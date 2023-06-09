@@ -603,6 +603,7 @@ static void total_smaps(unsigned proc_id, unsigned parent_id,
             }
         }
     }
+    fclose(file_pointer);
     space.scanMapsForStrings();
 
     printf("%s\n", cmdline);
