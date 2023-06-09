@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-01 13:52+0200\n"
+"POT-Creation-Date: 2023-06-09 07:33+0200\n"
 "PO-Revision-Date: 2023-01-11 08:47+0000\n"
 "Last-Translator: ERYpTION <eryption.x6tf8@simplelogin.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/collabora-online/"
@@ -216,7 +216,7 @@ msgstr "Opdatér Loggen"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:52 src/control/Control.JSDialogBuilder.js:469
+#: admin/admin.strings.js:52 src/control/Control.JSDialogBuilder.js:485
 #: src/control/Control.StatusBar.js:332
 msgid "None"
 msgstr "Ingen"
@@ -231,7 +231,7 @@ msgstr "Logningsniveauer"
 
 #: admin/admin.strings.js:55 src/control/Control.AlertDialog.js:21
 #: src/control/Control.AlertDialog.js:27 src/control/Control.AlertDialog.js:58
-#: src/control/Control.Zotero.js:182 src/control/Parts.js:438
+#: src/control/Control.Zotero.js:182 src/control/Parts.js:436
 #: src/core/Socket.js:986 src/core/Socket.js:991
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
@@ -265,10 +265,10 @@ msgstr "Serveren er blevet lukket ned, venligst genindlæs siden."
 #: src/control/Control.Tabs.js:312 src/control/Control.Zotero.js:328
 #: src/control/Control.Zotero.js:366 src/control/Permission.js:76
 #: src/control/Permission.js:86 src/control/Permission.js:136
-#: src/control/Toolbar.js:552 src/control/Toolbar.js:651
-#: src/control/Toolbar.js:718 src/control/Toolbar.js:943
-#: src/core/Socket.js:956 src/core/Socket.js:1031 src/core/Socket.js:1158
-#: src/core/Socket.js:1162 src/main.js:70 src/main.js:73 src/main.js:110
+#: src/control/Toolbar.js:552 src/control/Toolbar.js:653
+#: src/control/Toolbar.js:720 src/control/Toolbar.js:945
+#: src/core/Socket.js:956 src/core/Socket.js:1031 src/core/Socket.js:1159
+#: src/core/Socket.js:1163 src/main.js:70 src/main.js:73 src/main.js:110
 #: src/map/Clipboard.js:874 src/map/Clipboard.js:920
 #: src/map/handler/Map.Feedback.js:83 src/map/handler/Map.WOPI.js:484
 msgid "OK"
@@ -290,8 +290,8 @@ msgstr "Vil du virkelig afslutte denne session?"
 #: admin/src/AdminSocketSettings.js:37
 #: src/control/Control.DocumentRepair.js:62
 #: src/control/Control.LanguageDialog.js:103
-#: src/control/Control.MobileTopBar.js:41 src/control/Control.Zotero.js:323
-#: src/control/Toolbar.js:713 src/core/Socket.js:1183
+#: src/control/Control.MobileTopBar.js:43 src/control/Control.Zotero.js:323
+#: src/control/Toolbar.js:715 src/core/Socket.js:1184
 #: src/layer/tile/CommentListSection.ts:373
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
 msgid "Cancel"
@@ -391,7 +391,7 @@ msgstr "Serveren har fundet en %0-fejl under udførelse af kommandoen %1."
 msgid "Unlock"
 msgstr "Lås op"
 
-#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:942
+#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:944
 msgid "Delete"
 msgstr "Slet"
 
@@ -463,7 +463,7 @@ msgid "Formula"
 msgstr ""
 
 #: src/control/Control.FormulaBarJSDialog.js:60
-#: src/control/Control.MobileTopBar.js:40
+#: src/control/Control.MobileTopBar.js:42
 msgid "Accept"
 msgstr "Accepter"
 
@@ -490,103 +490,107 @@ msgstr ""
 msgid "Count"
 msgstr "Antal"
 
-#: src/control/Control.JSDialogBuilder.js:472
+#: src/control/Control.JSDialogBuilder.js:488
 msgid "Solid"
 msgstr "Massiv"
 
-#: src/control/Control.JSDialogBuilder.js:475
+#: src/control/Control.JSDialogBuilder.js:491
 msgid "Linear"
 msgstr "Lineær"
 
-#: src/control/Control.JSDialogBuilder.js:478
+#: src/control/Control.JSDialogBuilder.js:494
 msgid "Axial"
 msgstr "Aksial"
 
-#: src/control/Control.JSDialogBuilder.js:481
+#: src/control/Control.JSDialogBuilder.js:497
 msgid "Radial"
 msgstr "Radial"
 
-#: src/control/Control.JSDialogBuilder.js:484
+#: src/control/Control.JSDialogBuilder.js:500
 msgid "Ellipsoid"
 msgstr "Ellipsoid"
 
-#: src/control/Control.JSDialogBuilder.js:488
+#: src/control/Control.JSDialogBuilder.js:504
 msgid "Quadratic"
 msgstr "Kvadratisk"
 
-#: src/control/Control.JSDialogBuilder.js:491
+#: src/control/Control.JSDialogBuilder.js:507
 msgid "Square"
 msgstr "Kvadrat"
 
-#: src/control/Control.JSDialogBuilder.js:494
+#: src/control/Control.JSDialogBuilder.js:510
 msgid "Fixed size"
 msgstr "Fast størrelse"
 
-#: src/control/Control.JSDialogBuilder.js:1457
+#: src/control/Control.JSDialogBuilder.js:1471
 msgid "From"
 msgstr "Fra"
 
-#: src/control/Control.JSDialogBuilder.js:1460
+#: src/control/Control.JSDialogBuilder.js:1474
 msgid "To"
 msgstr "Til"
 
-#: src/control/Control.JSDialogBuilder.js:1463
+#: src/control/Control.JSDialogBuilder.js:1477
 msgid "Color"
 msgstr "Farve"
 
-#: src/control/Control.JSDialogBuilder.js:1563
+#: src/control/Control.JSDialogBuilder.js:1577
 msgid "Select range"
 msgstr "Vælg område"
 
-#: src/control/Control.JSDialogBuilder.js:1617
+#: src/control/Control.JSDialogBuilder.js:1631
 #: src/control/Control.NotebookbarBuilder.js:230
 msgid "Font Name"
 msgstr "Skrifttype"
 
-#: src/control/Control.JSDialogBuilder.js:1619 src/control/Toolbar.js:123
+#: src/control/Control.JSDialogBuilder.js:1633 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "Skriftstørrelse"
 
-#: src/control/Control.JSDialogBuilder.js:1621
+#: src/control/Control.JSDialogBuilder.js:1635
 #: src/control/Control.TopToolbar.js:499
 msgid "Style"
 msgstr "Typografi"
 
-#: src/control/Control.JSDialogBuilder.js:2063
+#: src/control/Control.JSDialogBuilder.js:2077
 #, fuzzy
 msgid "reply"
 msgstr "Svar"
 
-#: src/control/Control.JSDialogBuilder.js:2066
+#: src/control/Control.JSDialogBuilder.js:2080
 msgid "replies"
 msgstr "svar"
 
-#: src/control/Control.JSDialogBuilder.js:2077
-#: src/layer/tile/CanvasTileLayer.js:5234
-#: src/layer/tile/CanvasTileLayer.js:5245
+#: src/control/Control.JSDialogBuilder.js:2091
+#: src/layer/tile/CanvasTileLayer.js:5221
+#: src/layer/tile/CanvasTileLayer.js:5232
 #: src/layer/tile/CommentListSection.ts:891
 msgid "Comment"
 msgstr "Kommentar"
 
-#: src/control/Control.JSDialogBuilder.js:2141
+#: src/control/Control.JSDialogBuilder.js:2155
 msgid "Insert Comment"
 msgstr "Indsæt Kommentar"
 
-#: src/control/Control.JSDialogBuilder.js:2822
+#: src/control/Control.JSDialogBuilder.js:2836
 msgid "Cell borders"
 msgstr "Cellekanter"
 
-#: src/control/Control.JSDialogBuilder.js:3033
+#: src/control/Control.JSDialogBuilder.js:2951
+msgid "Automatic"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:3068
 #: src/control/Control.Menubar.js:791
 msgid "Rows"
 msgstr "Rækker"
 
-#: src/control/Control.JSDialogBuilder.js:3034
+#: src/control/Control.JSDialogBuilder.js:3069
 #: src/control/Control.Menubar.js:794
 msgid "Columns"
 msgstr "Kolonner"
 
-#: src/control/Control.JSDialogBuilder.js:3054
+#: src/control/Control.JSDialogBuilder.js:3089
 #, fuzzy
 msgid "Insert Table"
 msgstr "Indsæt tabel"
@@ -1039,11 +1043,11 @@ msgstr ""
 msgid "Read-only mode"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1750
+#: src/control/Control.Menubar.js:1757
 msgid "Insert Shape"
 msgstr "Indsæt figur"
 
-#: src/control/Control.Menubar.js:1955
+#: src/control/Control.Menubar.js:1962
 msgid "file type icon"
 msgstr "fil type ikon"
 
@@ -1058,15 +1062,20 @@ msgstr "Vis søgelinje"
 msgid "Borders"
 msgstr "Kanter"
 
-#: src/control/Control.MobileWizardBuilder.js:510
+#: src/control/Control.MobileTopBar.js:31 src/control/Control.StatusBar.js:456
+#, fuzzy
+msgid "Read-only"
+msgstr "Skrivebeskyttet"
+
+#: src/control/Control.MobileWizardBuilder.js:511
 msgid "Background Color"
 msgstr "Baggrundsfarve"
 
-#: src/control/Control.MobileWizardBuilder.js:512
+#: src/control/Control.MobileWizardBuilder.js:513
 msgid "Gradient Start"
 msgstr "Begynd farveforløb"
 
-#: src/control/Control.MobileWizardBuilder.js:514
+#: src/control/Control.MobileWizardBuilder.js:515
 msgid "Gradient End"
 msgstr "Farveforløbets slutfarve"
 
@@ -1254,7 +1263,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:563 src/control/Toolbar.js:685
+#: src/control/Control.NotebookbarCalc.js:563 src/control/Toolbar.js:687
 msgid "Text"
 msgstr "Tekst"
 
@@ -1340,7 +1349,7 @@ msgid "Sparkline"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:1222
-#: src/control/Control.NotebookbarCalc.js:1873
+#: src/control/Control.NotebookbarCalc.js:1874
 #: src/control/Control.NotebookbarDraw.js:638
 #: src/control/Control.NotebookbarDraw.js:1015
 #: src/control/Control.NotebookbarImpress.js:751
@@ -1413,9 +1422,17 @@ msgstr ""
 msgid "Ruler"
 msgstr ""
 
-#: src/control/Control.PartsPreview.js:180
+#: src/control/Control.PartsPreview.js:181
 msgid "preview of page "
 msgstr "forhåndsvisning af side "
+
+#: src/control/Control.PartsPreview.js:231
+msgid "Copy"
+msgstr ""
+
+#: src/control/Control.PartsPreview.js:240
+msgid "Paste"
+msgstr ""
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1508,11 +1525,6 @@ msgstr "Antal dias"
 #: src/control/Control.StatusBar.js:456 src/control/Control.StatusBar.js:457
 msgid "Permission Mode"
 msgstr ""
-
-#: src/control/Control.StatusBar.js:456
-#, fuzzy
-msgid "Read-only"
-msgstr "Skrivebeskyttet"
 
 #: src/control/Control.StatusBar.js:457
 msgid "Edit"
@@ -1876,21 +1888,25 @@ msgstr "Denne version af %productName drives af"
 msgid "\"Slow Proxy\""
 msgstr "\"Langsom Proxy\""
 
-#: src/control/Toolbar.js:678
+#: src/control/Toolbar.js:680
 msgid "Insert hyperlink"
 msgstr "Indsæt hyperlink"
 
-#: src/control/Toolbar.js:697
+#: src/control/Toolbar.js:699
 msgid "Link"
 msgstr "Hyperlink"
 
-#: src/control/Toolbar.js:937
+#: src/control/Toolbar.js:939
 msgid "Are you sure you want to delete this slide?"
 msgstr "Er du sikker på, at du vil slette dette dias?"
 
-#: src/control/Toolbar.js:940
+#: src/control/Toolbar.js:942
 msgid "Are you sure you want to delete this page?"
 msgstr "Er du sikker på, at du vil slette denne side?"
+
+#: src/control/jsdialog/Widget.TreeView.js:475
+msgid "Headings and objects that you add to the document will appear here"
+msgstr ""
 
 #: src/core/Socket.js:55
 #, fuzzy
@@ -2011,37 +2027,37 @@ msgstr "Forbinder..."
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1158
+#: src/core/Socket.js:1159
 msgid "Exported to storage"
 msgstr ""
 
-#: src/core/Socket.js:1158
+#: src/core/Socket.js:1159
 msgid "Successfully exported: "
 msgstr ""
 
-#: src/core/Socket.js:1186
+#: src/core/Socket.js:1187
 msgid "Discard"
 msgstr "Kassér"
 
-#: src/core/Socket.js:1187
+#: src/core/Socket.js:1188
 msgid "Overwrite"
 msgstr "Overskriv"
 
-#: src/core/Socket.js:1198
+#: src/core/Socket.js:1199
 msgid "Save to new file"
 msgstr "Gem som en ny fil"
 
-#: src/core/Socket.js:1208
+#: src/core/Socket.js:1209
 msgid "Document has been changed"
 msgstr "Dokumentet er blevet ændret"
 
-#: src/core/Socket.js:1209
+#: src/core/Socket.js:1210
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr "Dokumentet i lageret er ændret. Hvad vil du gøre med dine ændringer?"
 
-#: src/core/Socket.js:1509
+#: src/core/Socket.js:1510
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -2049,12 +2065,12 @@ msgstr ""
 "Øhh, det er pinligt, vi kan ikke komme i forbindelse med dit dokument. Prøv "
 "venligst igen."
 
-#: src/core/Socket.js:1526
+#: src/core/Socket.js:1527
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "Forbinder..."
 
-#: src/core/Socket.js:1536
+#: src/core/Socket.js:1537
 msgid "The server has been disconnected."
 msgstr ""
 
@@ -2237,24 +2253,24 @@ msgstr "Upload af filen til server slog fejl, filen ikke fundet."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Upload af filen til server slog fejl, filen er for stor."
 
-#: src/layer/tile/CanvasTileLayer.js:1929
+#: src/layer/tile/CanvasTileLayer.js:1910
 #, fuzzy
 msgid "Functions"
 msgstr "Funktionsguide"
 
-#: src/layer/tile/CanvasTileLayer.js:2497
+#: src/layer/tile/CanvasTileLayer.js:2478
 msgid "Copy link location"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2505
+#: src/layer/tile/CanvasTileLayer.js:2486
 msgid "Edit link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:2513
+#: src/layer/tile/CanvasTileLayer.js:2494
 msgid "Remove link"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:5262
+#: src/layer/tile/CanvasTileLayer.js:5249
 msgid "No Comments"
 msgstr "Ingen Kommentarer"
 
@@ -2374,7 +2390,7 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Initialiserer..."
 
-#: src/map/Map.js:431 src/map/Map.js:434 src/map/Map.js:437 src/map/Map.js:440
+#: src/map/Map.js:432 src/map/Map.js:435 src/map/Map.js:438 src/map/Map.js:441
 msgid "Last saved:"
 msgstr "Sidst gemt:"
 

@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-01 13:52+0200\n"
+"POT-Creation-Date: 2023-06-09 07:33+0200\n"
 "PO-Revision-Date: 2023-06-03 14:52+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: he\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -214,7 +214,7 @@ msgstr "רענון היומן"
 msgid "Channel Filter:"
 msgstr "מסנן ערוצים:"
 
-#: admin/admin.strings.js:52 src/control/Control.JSDialogBuilder.js:469
+#: admin/admin.strings.js:52 src/control/Control.JSDialogBuilder.js:485
 #: src/control/Control.StatusBar.js:332
 msgid "None"
 msgstr "ללא"
@@ -229,7 +229,7 @@ msgstr "רמות תיעוד ביומן"
 
 #: admin/admin.strings.js:55 src/control/Control.AlertDialog.js:21
 #: src/control/Control.AlertDialog.js:27 src/control/Control.AlertDialog.js:58
-#: src/control/Control.Zotero.js:182 src/control/Parts.js:438
+#: src/control/Control.Zotero.js:182 src/control/Parts.js:436
 #: src/core/Socket.js:986 src/core/Socket.js:991
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
@@ -263,10 +263,10 @@ msgstr "השרת נכבה, נא לרענן את העמוד."
 #: src/control/Control.Tabs.js:312 src/control/Control.Zotero.js:328
 #: src/control/Control.Zotero.js:366 src/control/Permission.js:76
 #: src/control/Permission.js:86 src/control/Permission.js:136
-#: src/control/Toolbar.js:552 src/control/Toolbar.js:651
-#: src/control/Toolbar.js:718 src/control/Toolbar.js:943
-#: src/core/Socket.js:956 src/core/Socket.js:1031 src/core/Socket.js:1158
-#: src/core/Socket.js:1162 src/main.js:70 src/main.js:73 src/main.js:110
+#: src/control/Toolbar.js:552 src/control/Toolbar.js:653
+#: src/control/Toolbar.js:720 src/control/Toolbar.js:945
+#: src/core/Socket.js:956 src/core/Socket.js:1031 src/core/Socket.js:1159
+#: src/core/Socket.js:1163 src/main.js:70 src/main.js:73 src/main.js:110
 #: src/map/Clipboard.js:874 src/map/Clipboard.js:920
 #: src/map/handler/Map.Feedback.js:83 src/map/handler/Map.WOPI.js:484
 msgid "OK"
@@ -288,8 +288,8 @@ msgstr "לסיים את הפעילות הנוכחית?"
 #: admin/src/AdminSocketSettings.js:37
 #: src/control/Control.DocumentRepair.js:62
 #: src/control/Control.LanguageDialog.js:103
-#: src/control/Control.MobileTopBar.js:41 src/control/Control.Zotero.js:323
-#: src/control/Toolbar.js:713 src/core/Socket.js:1183
+#: src/control/Control.MobileTopBar.js:43 src/control/Control.Zotero.js:323
+#: src/control/Toolbar.js:715 src/core/Socket.js:1184
 #: src/layer/tile/CommentListSection.ts:373
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
 msgid "Cancel"
@@ -387,7 +387,7 @@ msgstr "השרת נתקל בשגיאת %0 בעת פענוח הפקודה %1."
 msgid "Unlock"
 msgstr "שחרור"
 
-#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:942
+#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:944
 msgid "Delete"
 msgstr "מחיקה"
 
@@ -459,7 +459,7 @@ msgid "Formula"
 msgstr "נוסחה"
 
 #: src/control/Control.FormulaBarJSDialog.js:60
-#: src/control/Control.MobileTopBar.js:40
+#: src/control/Control.MobileTopBar.js:42
 msgid "Accept"
 msgstr "אישור"
 
@@ -486,102 +486,106 @@ msgstr "מרבי"
 msgid "Count"
 msgstr "כמות"
 
-#: src/control/Control.JSDialogBuilder.js:472
+#: src/control/Control.JSDialogBuilder.js:488
 msgid "Solid"
 msgstr "אחיד"
 
-#: src/control/Control.JSDialogBuilder.js:475
+#: src/control/Control.JSDialogBuilder.js:491
 msgid "Linear"
 msgstr "קווי"
 
-#: src/control/Control.JSDialogBuilder.js:478
+#: src/control/Control.JSDialogBuilder.js:494
 msgid "Axial"
 msgstr "צירי"
 
-#: src/control/Control.JSDialogBuilder.js:481
+#: src/control/Control.JSDialogBuilder.js:497
 msgid "Radial"
 msgstr "מעגלי"
 
-#: src/control/Control.JSDialogBuilder.js:484
+#: src/control/Control.JSDialogBuilder.js:500
 msgid "Ellipsoid"
 msgstr "סגלגלי"
 
-#: src/control/Control.JSDialogBuilder.js:488
+#: src/control/Control.JSDialogBuilder.js:504
 msgid "Quadratic"
 msgstr "ריבועי"
 
-#: src/control/Control.JSDialogBuilder.js:491
+#: src/control/Control.JSDialogBuilder.js:507
 msgid "Square"
 msgstr "ריבוע"
 
-#: src/control/Control.JSDialogBuilder.js:494
+#: src/control/Control.JSDialogBuilder.js:510
 msgid "Fixed size"
 msgstr "גודל קבוע"
 
-#: src/control/Control.JSDialogBuilder.js:1457
+#: src/control/Control.JSDialogBuilder.js:1471
 msgid "From"
 msgstr "מ־"
 
-#: src/control/Control.JSDialogBuilder.js:1460
+#: src/control/Control.JSDialogBuilder.js:1474
 msgid "To"
 msgstr "עד"
 
-#: src/control/Control.JSDialogBuilder.js:1463
+#: src/control/Control.JSDialogBuilder.js:1477
 msgid "Color"
 msgstr "צבע"
 
-#: src/control/Control.JSDialogBuilder.js:1563
+#: src/control/Control.JSDialogBuilder.js:1577
 msgid "Select range"
 msgstr "בחירת טווח"
 
-#: src/control/Control.JSDialogBuilder.js:1617
+#: src/control/Control.JSDialogBuilder.js:1631
 #: src/control/Control.NotebookbarBuilder.js:230
 msgid "Font Name"
 msgstr "שם הגופן"
 
-#: src/control/Control.JSDialogBuilder.js:1619 src/control/Toolbar.js:123
+#: src/control/Control.JSDialogBuilder.js:1633 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "גודל הגופן"
 
-#: src/control/Control.JSDialogBuilder.js:1621
+#: src/control/Control.JSDialogBuilder.js:1635
 #: src/control/Control.TopToolbar.js:499
 msgid "Style"
 msgstr "סגנון"
 
-#: src/control/Control.JSDialogBuilder.js:2063
+#: src/control/Control.JSDialogBuilder.js:2077
 msgid "reply"
 msgstr "תגובה"
 
-#: src/control/Control.JSDialogBuilder.js:2066
+#: src/control/Control.JSDialogBuilder.js:2080
 msgid "replies"
 msgstr "תגובות"
 
-#: src/control/Control.JSDialogBuilder.js:2077
-#: src/layer/tile/CanvasTileLayer.js:5234
-#: src/layer/tile/CanvasTileLayer.js:5245
+#: src/control/Control.JSDialogBuilder.js:2091
+#: src/layer/tile/CanvasTileLayer.js:5221
+#: src/layer/tile/CanvasTileLayer.js:5232
 #: src/layer/tile/CommentListSection.ts:891
 msgid "Comment"
 msgstr "הערה"
 
-#: src/control/Control.JSDialogBuilder.js:2141
+#: src/control/Control.JSDialogBuilder.js:2155
 msgid "Insert Comment"
 msgstr "הוספת הערה"
 
-#: src/control/Control.JSDialogBuilder.js:2822
+#: src/control/Control.JSDialogBuilder.js:2836
 msgid "Cell borders"
 msgstr "גבולות התא"
 
-#: src/control/Control.JSDialogBuilder.js:3033
+#: src/control/Control.JSDialogBuilder.js:2951
+msgid "Automatic"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:3068
 #: src/control/Control.Menubar.js:791
 msgid "Rows"
 msgstr "שורות"
 
-#: src/control/Control.JSDialogBuilder.js:3034
+#: src/control/Control.JSDialogBuilder.js:3069
 #: src/control/Control.Menubar.js:794
 msgid "Columns"
 msgstr "עמודות"
 
-#: src/control/Control.JSDialogBuilder.js:3054
+#: src/control/Control.JSDialogBuilder.js:3089
 msgid "Insert Table"
 msgstr "הוספת טבלה"
 
@@ -1031,11 +1035,11 @@ msgstr "להשתמש בתצוגה בלשוניות"
 msgid "Read-only mode"
 msgstr "מצב לקריאה בלבד"
 
-#: src/control/Control.Menubar.js:1750
+#: src/control/Control.Menubar.js:1757
 msgid "Insert Shape"
 msgstr "הוספת צורה"
 
-#: src/control/Control.Menubar.js:1955
+#: src/control/Control.Menubar.js:1962
 msgid "file type icon"
 msgstr "סמל סוג קובץ"
 
@@ -1050,15 +1054,19 @@ msgstr "הצגת סרגל החיפוש"
 msgid "Borders"
 msgstr "גבולות"
 
-#: src/control/Control.MobileWizardBuilder.js:510
+#: src/control/Control.MobileTopBar.js:31 src/control/Control.StatusBar.js:456
+msgid "Read-only"
+msgstr "קריאה בלבד"
+
+#: src/control/Control.MobileWizardBuilder.js:511
 msgid "Background Color"
 msgstr "צבע הרקע"
 
-#: src/control/Control.MobileWizardBuilder.js:512
+#: src/control/Control.MobileWizardBuilder.js:513
 msgid "Gradient Start"
 msgstr "התחלת מדרג"
 
-#: src/control/Control.MobileWizardBuilder.js:514
+#: src/control/Control.MobileWizardBuilder.js:515
 msgid "Gradient End"
 msgstr "סוף מדרג"
 
@@ -1242,7 +1250,7 @@ msgstr "שבר"
 msgid "Boolean Value"
 msgstr "ערך בוליאני"
 
-#: src/control/Control.NotebookbarCalc.js:563 src/control/Toolbar.js:685
+#: src/control/Control.NotebookbarCalc.js:563 src/control/Toolbar.js:687
 msgid "Text"
 msgstr "טקסט"
 
@@ -1328,7 +1336,7 @@ msgid "Sparkline"
 msgstr "תרשים מזערי"
 
 #: src/control/Control.NotebookbarCalc.js:1222
-#: src/control/Control.NotebookbarCalc.js:1873
+#: src/control/Control.NotebookbarCalc.js:1874
 #: src/control/Control.NotebookbarDraw.js:638
 #: src/control/Control.NotebookbarDraw.js:1015
 #: src/control/Control.NotebookbarImpress.js:751
@@ -1398,9 +1406,17 @@ msgstr "תמונה"
 msgid "Ruler"
 msgstr "סרגל"
 
-#: src/control/Control.PartsPreview.js:180
+#: src/control/Control.PartsPreview.js:181
 msgid "preview of page "
 msgstr "תצוגה מקדימה של עמוד "
+
+#: src/control/Control.PartsPreview.js:231
+msgid "Copy"
+msgstr ""
+
+#: src/control/Control.PartsPreview.js:240
+msgid "Paste"
+msgstr ""
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1493,10 +1509,6 @@ msgstr "מספר שקופיות"
 #: src/control/Control.StatusBar.js:456 src/control/Control.StatusBar.js:457
 msgid "Permission Mode"
 msgstr "מצב הרשאה"
-
-#: src/control/Control.StatusBar.js:456
-msgid "Read-only"
-msgstr "קריאה בלבד"
 
 #: src/control/Control.StatusBar.js:457
 msgid "Edit"
@@ -1859,21 +1871,25 @@ msgstr "גרסה זו של %productName מופעלת על גבי"
 msgid "\"Slow Proxy\""
 msgstr "„מתווך אטי”"
 
-#: src/control/Toolbar.js:678
+#: src/control/Toolbar.js:680
 msgid "Insert hyperlink"
 msgstr "הוספת קישור"
 
-#: src/control/Toolbar.js:697
+#: src/control/Toolbar.js:699
 msgid "Link"
 msgstr "קישור"
 
-#: src/control/Toolbar.js:937
+#: src/control/Toolbar.js:939
 msgid "Are you sure you want to delete this slide?"
 msgstr "למחוק את השקופית הזו?"
 
-#: src/control/Toolbar.js:940
+#: src/control/Toolbar.js:942
 msgid "Are you sure you want to delete this page?"
 msgstr "למחוק עמוד זה?"
+
+#: src/control/jsdialog/Widget.TreeView.js:475
+msgid "Headings and objects that you add to the document will appear here"
+msgstr ""
 
 #: src/core/Socket.js:55
 msgid "Oops, there is a problem connecting to %productName: "
@@ -1987,47 +2003,47 @@ msgstr "מתבצעת התחברות…"
 msgid "The document is being renamed and will reload shortly"
 msgstr "שם המסמך נערך והוא ירוענן בעוד זמן קצר"
 
-#: src/core/Socket.js:1158
+#: src/core/Socket.js:1159
 msgid "Exported to storage"
 msgstr "ייוצא לאחסון"
 
-#: src/core/Socket.js:1158
+#: src/core/Socket.js:1159
 msgid "Successfully exported: "
 msgstr "ייוצא בהצלחה: "
 
-#: src/core/Socket.js:1186
+#: src/core/Socket.js:1187
 msgid "Discard"
 msgstr "התעלמות"
 
-#: src/core/Socket.js:1187
+#: src/core/Socket.js:1188
 msgid "Overwrite"
 msgstr "דריסה"
 
-#: src/core/Socket.js:1198
+#: src/core/Socket.js:1199
 msgid "Save to new file"
 msgstr "שמירה לקובץ חדש"
 
-#: src/core/Socket.js:1208
+#: src/core/Socket.js:1209
 msgid "Document has been changed"
 msgstr "המסמך נערך"
 
-#: src/core/Socket.js:1209
+#: src/core/Socket.js:1210
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr "המסמך נערך באחסון. מה ברצונך לעשות בנוגע לשינויים שלא שמרת?"
 
-#: src/core/Socket.js:1509
+#: src/core/Socket.js:1510
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "ובכן, לא נעים, לא הצלחנו להתחבר למסמך שלך. נא לנסות שוב מאוחר יותר."
 
-#: src/core/Socket.js:1526
+#: src/core/Socket.js:1527
 msgid "Reconnecting..."
 msgstr "התחברות מחדש…"
 
-#: src/core/Socket.js:1536
+#: src/core/Socket.js:1537
 msgid "The server has been disconnected."
 msgstr "השרת התנתק."
 
@@ -2206,23 +2222,23 @@ msgstr "העלאת הקובץ לשרת נכשלה, הקובץ לא נמצא."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "העלאת הקובץ לשרת נכשלה, הקובץ גדול מדי."
 
-#: src/layer/tile/CanvasTileLayer.js:1929
+#: src/layer/tile/CanvasTileLayer.js:1910
 msgid "Functions"
 msgstr "פונקציות"
 
-#: src/layer/tile/CanvasTileLayer.js:2497
+#: src/layer/tile/CanvasTileLayer.js:2478
 msgid "Copy link location"
 msgstr "העתקת מיקום הקישור"
 
-#: src/layer/tile/CanvasTileLayer.js:2505
+#: src/layer/tile/CanvasTileLayer.js:2486
 msgid "Edit link"
 msgstr "עריכת קישור"
 
-#: src/layer/tile/CanvasTileLayer.js:2513
+#: src/layer/tile/CanvasTileLayer.js:2494
 msgid "Remove link"
 msgstr "הסרת קישור"
 
-#: src/layer/tile/CanvasTileLayer.js:5262
+#: src/layer/tile/CanvasTileLayer.js:5249
 msgid "No Comments"
 msgstr "אין הערות"
 
@@ -2349,7 +2365,7 @@ msgstr ""
 msgid "Initializing..."
 msgstr "באתחול…"
 
-#: src/map/Map.js:431 src/map/Map.js:434 src/map/Map.js:437 src/map/Map.js:440
+#: src/map/Map.js:432 src/map/Map.js:435 src/map/Map.js:438 src/map/Map.js:441
 msgid "Last saved:"
 msgstr "שמירה אחרונה:"
 

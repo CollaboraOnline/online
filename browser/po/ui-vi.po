@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-01 13:52+0200\n"
+"POT-Creation-Date: 2023-06-09 07:33+0200\n"
 "PO-Revision-Date: 2023-06-05 17:53+0000\n"
 "Last-Translator: Nguyễn Hoàng Minh <mingu03@yandex.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/vi/>\n"
-"Language: vi\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -213,7 +213,7 @@ msgstr "Tải lại nhật kí"
 msgid "Channel Filter:"
 msgstr "Bộ lọc kệnh:"
 
-#: admin/admin.strings.js:52 src/control/Control.JSDialogBuilder.js:469
+#: admin/admin.strings.js:52 src/control/Control.JSDialogBuilder.js:485
 #: src/control/Control.StatusBar.js:332
 msgid "None"
 msgstr "Không có"
@@ -228,7 +228,7 @@ msgstr "Cấp độ nhật kí"
 
 #: admin/admin.strings.js:55 src/control/Control.AlertDialog.js:21
 #: src/control/Control.AlertDialog.js:27 src/control/Control.AlertDialog.js:58
-#: src/control/Control.Zotero.js:182 src/control/Parts.js:438
+#: src/control/Control.Zotero.js:182 src/control/Parts.js:436
 #: src/core/Socket.js:986 src/core/Socket.js:991
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
@@ -262,10 +262,10 @@ msgstr "Máy chủ đã bị tắt; vui lòng tải lại trang."
 #: src/control/Control.Tabs.js:312 src/control/Control.Zotero.js:328
 #: src/control/Control.Zotero.js:366 src/control/Permission.js:76
 #: src/control/Permission.js:86 src/control/Permission.js:136
-#: src/control/Toolbar.js:552 src/control/Toolbar.js:651
-#: src/control/Toolbar.js:718 src/control/Toolbar.js:943
-#: src/core/Socket.js:956 src/core/Socket.js:1031 src/core/Socket.js:1158
-#: src/core/Socket.js:1162 src/main.js:70 src/main.js:73 src/main.js:110
+#: src/control/Toolbar.js:552 src/control/Toolbar.js:653
+#: src/control/Toolbar.js:720 src/control/Toolbar.js:945
+#: src/core/Socket.js:956 src/core/Socket.js:1031 src/core/Socket.js:1159
+#: src/core/Socket.js:1163 src/main.js:70 src/main.js:73 src/main.js:110
 #: src/map/Clipboard.js:874 src/map/Clipboard.js:920
 #: src/map/handler/Map.Feedback.js:83 src/map/handler/Map.WOPI.js:484
 msgid "OK"
@@ -287,8 +287,8 @@ msgstr "Bạn có chắc chắn muốn kết thúc phiên này không?"
 #: admin/src/AdminSocketSettings.js:37
 #: src/control/Control.DocumentRepair.js:62
 #: src/control/Control.LanguageDialog.js:103
-#: src/control/Control.MobileTopBar.js:41 src/control/Control.Zotero.js:323
-#: src/control/Toolbar.js:713 src/core/Socket.js:1183
+#: src/control/Control.MobileTopBar.js:43 src/control/Control.Zotero.js:323
+#: src/control/Toolbar.js:715 src/core/Socket.js:1184
 #: src/layer/tile/CommentListSection.ts:373
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
 msgid "Cancel"
@@ -386,7 +386,7 @@ msgstr "Máy chủ gặp lỗi %0 khi phân tích cú pháp lệnh %1."
 msgid "Unlock"
 msgstr "Mở khoá"
 
-#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:942
+#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:944
 msgid "Delete"
 msgstr "Xóa"
 
@@ -458,7 +458,7 @@ msgid "Formula"
 msgstr "Công thức"
 
 #: src/control/Control.FormulaBarJSDialog.js:60
-#: src/control/Control.MobileTopBar.js:40
+#: src/control/Control.MobileTopBar.js:42
 msgid "Accept"
 msgstr "Chấp nhận"
 
@@ -485,102 +485,106 @@ msgstr "Tối đa"
 msgid "Count"
 msgstr "Đếm"
 
-#: src/control/Control.JSDialogBuilder.js:472
+#: src/control/Control.JSDialogBuilder.js:488
 msgid "Solid"
 msgstr "Đậm"
 
-#: src/control/Control.JSDialogBuilder.js:475
+#: src/control/Control.JSDialogBuilder.js:491
 msgid "Linear"
 msgstr "Tuyến tính"
 
-#: src/control/Control.JSDialogBuilder.js:478
+#: src/control/Control.JSDialogBuilder.js:494
 msgid "Axial"
 msgstr "Trục"
 
-#: src/control/Control.JSDialogBuilder.js:481
+#: src/control/Control.JSDialogBuilder.js:497
 msgid "Radial"
 msgstr "Xuyên tâm"
 
-#: src/control/Control.JSDialogBuilder.js:484
+#: src/control/Control.JSDialogBuilder.js:500
 msgid "Ellipsoid"
 msgstr "Elip-soi"
 
-#: src/control/Control.JSDialogBuilder.js:488
+#: src/control/Control.JSDialogBuilder.js:504
 msgid "Quadratic"
 msgstr "Phương trình bậc hai"
 
-#: src/control/Control.JSDialogBuilder.js:491
+#: src/control/Control.JSDialogBuilder.js:507
 msgid "Square"
 msgstr "Ô vuông"
 
-#: src/control/Control.JSDialogBuilder.js:494
+#: src/control/Control.JSDialogBuilder.js:510
 msgid "Fixed size"
 msgstr "Kích thước cố định"
 
-#: src/control/Control.JSDialogBuilder.js:1457
+#: src/control/Control.JSDialogBuilder.js:1471
 msgid "From"
 msgstr "Từ"
 
-#: src/control/Control.JSDialogBuilder.js:1460
+#: src/control/Control.JSDialogBuilder.js:1474
 msgid "To"
 msgstr "Đến"
 
-#: src/control/Control.JSDialogBuilder.js:1463
+#: src/control/Control.JSDialogBuilder.js:1477
 msgid "Color"
 msgstr "Màu"
 
-#: src/control/Control.JSDialogBuilder.js:1563
+#: src/control/Control.JSDialogBuilder.js:1577
 msgid "Select range"
 msgstr "Chọn phạm vi"
 
-#: src/control/Control.JSDialogBuilder.js:1617
+#: src/control/Control.JSDialogBuilder.js:1631
 #: src/control/Control.NotebookbarBuilder.js:230
 msgid "Font Name"
 msgstr "Tên phông chữ"
 
-#: src/control/Control.JSDialogBuilder.js:1619 src/control/Toolbar.js:123
+#: src/control/Control.JSDialogBuilder.js:1633 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "Cỡ phông chữ"
 
-#: src/control/Control.JSDialogBuilder.js:1621
+#: src/control/Control.JSDialogBuilder.js:1635
 #: src/control/Control.TopToolbar.js:499
 msgid "Style"
 msgstr "Kiểu"
 
-#: src/control/Control.JSDialogBuilder.js:2063
+#: src/control/Control.JSDialogBuilder.js:2077
 msgid "reply"
 msgstr "Phản hồi"
 
-#: src/control/Control.JSDialogBuilder.js:2066
+#: src/control/Control.JSDialogBuilder.js:2080
 msgid "replies"
 msgstr "Phản hồi"
 
-#: src/control/Control.JSDialogBuilder.js:2077
-#: src/layer/tile/CanvasTileLayer.js:5234
-#: src/layer/tile/CanvasTileLayer.js:5245
+#: src/control/Control.JSDialogBuilder.js:2091
+#: src/layer/tile/CanvasTileLayer.js:5221
+#: src/layer/tile/CanvasTileLayer.js:5232
 #: src/layer/tile/CommentListSection.ts:891
 msgid "Comment"
 msgstr "Chú thích"
 
-#: src/control/Control.JSDialogBuilder.js:2141
+#: src/control/Control.JSDialogBuilder.js:2155
 msgid "Insert Comment"
 msgstr "Chèn bình luận"
 
-#: src/control/Control.JSDialogBuilder.js:2822
+#: src/control/Control.JSDialogBuilder.js:2836
 msgid "Cell borders"
 msgstr "Đường viền ô"
 
-#: src/control/Control.JSDialogBuilder.js:3033
+#: src/control/Control.JSDialogBuilder.js:2951
+msgid "Automatic"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:3068
 #: src/control/Control.Menubar.js:791
 msgid "Rows"
 msgstr "Hàng"
 
-#: src/control/Control.JSDialogBuilder.js:3034
+#: src/control/Control.JSDialogBuilder.js:3069
 #: src/control/Control.Menubar.js:794
 msgid "Columns"
 msgstr "Cột"
 
-#: src/control/Control.JSDialogBuilder.js:3054
+#: src/control/Control.JSDialogBuilder.js:3089
 msgid "Insert Table"
 msgstr "Chèn bảng"
 
@@ -1030,11 +1034,11 @@ msgstr "Sử dụng chế độ xem theo thẻ"
 msgid "Read-only mode"
 msgstr "Chế độ chỉ đọc"
 
-#: src/control/Control.Menubar.js:1750
+#: src/control/Control.Menubar.js:1757
 msgid "Insert Shape"
 msgstr "Chèn hình dạng"
 
-#: src/control/Control.Menubar.js:1955
+#: src/control/Control.Menubar.js:1962
 msgid "file type icon"
 msgstr "biểu tượng loại tệp"
 
@@ -1049,15 +1053,19 @@ msgstr "Hiển thị thanh tìm kiếm"
 msgid "Borders"
 msgstr "Viền"
 
-#: src/control/Control.MobileWizardBuilder.js:510
+#: src/control/Control.MobileTopBar.js:31 src/control/Control.StatusBar.js:456
+msgid "Read-only"
+msgstr "Chỉ đọc"
+
+#: src/control/Control.MobileWizardBuilder.js:511
 msgid "Background Color"
 msgstr "Màu nền"
 
-#: src/control/Control.MobileWizardBuilder.js:512
+#: src/control/Control.MobileWizardBuilder.js:513
 msgid "Gradient Start"
 msgstr "Bắt đầu chuyển màu"
 
-#: src/control/Control.MobileWizardBuilder.js:514
+#: src/control/Control.MobileWizardBuilder.js:515
 msgid "Gradient End"
 msgstr "Kết thúc chuyển màu"
 
@@ -1241,7 +1249,7 @@ msgstr "Phân số"
 msgid "Boolean Value"
 msgstr "Giá trị boolean"
 
-#: src/control/Control.NotebookbarCalc.js:563 src/control/Toolbar.js:685
+#: src/control/Control.NotebookbarCalc.js:563 src/control/Toolbar.js:687
 msgid "Text"
 msgstr "Bản văn"
 
@@ -1327,7 +1335,7 @@ msgid "Sparkline"
 msgstr "Biểu đồ thu nhỏ"
 
 #: src/control/Control.NotebookbarCalc.js:1222
-#: src/control/Control.NotebookbarCalc.js:1873
+#: src/control/Control.NotebookbarCalc.js:1874
 #: src/control/Control.NotebookbarDraw.js:638
 #: src/control/Control.NotebookbarDraw.js:1015
 #: src/control/Control.NotebookbarImpress.js:751
@@ -1397,9 +1405,17 @@ msgstr "Hình ảnh"
 msgid "Ruler"
 msgstr "Thước kẻ"
 
-#: src/control/Control.PartsPreview.js:180
+#: src/control/Control.PartsPreview.js:181
 msgid "preview of page "
 msgstr "xem trước trang "
+
+#: src/control/Control.PartsPreview.js:231
+msgid "Copy"
+msgstr ""
+
+#: src/control/Control.PartsPreview.js:240
+msgid "Paste"
+msgstr ""
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1492,10 +1508,6 @@ msgstr "Số lượng trang chiếu"
 #: src/control/Control.StatusBar.js:456 src/control/Control.StatusBar.js:457
 msgid "Permission Mode"
 msgstr "Chế độ quyền"
-
-#: src/control/Control.StatusBar.js:456
-msgid "Read-only"
-msgstr "Chỉ đọc"
 
 #: src/control/Control.StatusBar.js:457
 msgid "Edit"
@@ -1865,21 +1877,25 @@ msgstr "Phiên bản %productName này được cung cấp bởi"
 msgid "\"Slow Proxy\""
 msgstr "\"Proxy chậm\""
 
-#: src/control/Toolbar.js:678
+#: src/control/Toolbar.js:680
 msgid "Insert hyperlink"
 msgstr "Chèn siêu liên kết"
 
-#: src/control/Toolbar.js:697
+#: src/control/Toolbar.js:699
 msgid "Link"
 msgstr "Liên kết"
 
-#: src/control/Toolbar.js:937
+#: src/control/Toolbar.js:939
 msgid "Are you sure you want to delete this slide?"
 msgstr "Bạn có chắc chắn muốn xóa trang trình chiếu này không?"
 
-#: src/control/Toolbar.js:940
+#: src/control/Toolbar.js:942
 msgid "Are you sure you want to delete this page?"
 msgstr "Bạn có chắc chắn muốn xóa trang này không?"
+
+#: src/control/jsdialog/Widget.TreeView.js:475
+msgid "Headings and objects that you add to the document will appear here"
+msgstr ""
 
 #: src/core/Socket.js:55
 msgid "Oops, there is a problem connecting to %productName: "
@@ -2003,31 +2019,31 @@ msgstr "Đang kết nối..."
 msgid "The document is being renamed and will reload shortly"
 msgstr "Tài liệu đang được đổi tên và sắp tải lại"
 
-#: src/core/Socket.js:1158
+#: src/core/Socket.js:1159
 msgid "Exported to storage"
 msgstr "Đã xuất sang bộ nhớ"
 
-#: src/core/Socket.js:1158
+#: src/core/Socket.js:1159
 msgid "Successfully exported: "
 msgstr "Đã xuất thành công: "
 
-#: src/core/Socket.js:1186
+#: src/core/Socket.js:1187
 msgid "Discard"
 msgstr "Hủy bỏ"
 
-#: src/core/Socket.js:1187
+#: src/core/Socket.js:1188
 msgid "Overwrite"
 msgstr "Ghi đè"
 
-#: src/core/Socket.js:1198
+#: src/core/Socket.js:1199
 msgid "Save to new file"
 msgstr "Lưu vào tệp mới"
 
-#: src/core/Socket.js:1208
+#: src/core/Socket.js:1209
 msgid "Document has been changed"
 msgstr "Tài liệu đã được thay đổi"
 
-#: src/core/Socket.js:1209
+#: src/core/Socket.js:1210
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -2035,17 +2051,17 @@ msgstr ""
 "Tài liệu đã được thay đổi trong bộ nhớ. Bạn muốn làm gì với những thay đổi "
 "chưa được lưu của mình?"
 
-#: src/core/Socket.js:1509
+#: src/core/Socket.js:1510
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Chúng tôi không thể kết nối với tài liệu của bạn. Vui lòng thử lại."
 
-#: src/core/Socket.js:1526
+#: src/core/Socket.js:1527
 msgid "Reconnecting..."
 msgstr "Đang kết nối lại..."
 
-#: src/core/Socket.js:1536
+#: src/core/Socket.js:1537
 msgid "The server has been disconnected."
 msgstr "Máy chủ đã bị ngắt kết nối."
 
@@ -2233,23 +2249,23 @@ msgstr "Tải tệp lên máy chủ không thành công, không tìm thấy tệ
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Tải tệp lên máy chủ không thành công, tệp quá lớn."
 
-#: src/layer/tile/CanvasTileLayer.js:1929
+#: src/layer/tile/CanvasTileLayer.js:1910
 msgid "Functions"
 msgstr "Chức năng"
 
-#: src/layer/tile/CanvasTileLayer.js:2497
+#: src/layer/tile/CanvasTileLayer.js:2478
 msgid "Copy link location"
 msgstr "Sao chép vị trí liên kết"
 
-#: src/layer/tile/CanvasTileLayer.js:2505
+#: src/layer/tile/CanvasTileLayer.js:2486
 msgid "Edit link"
 msgstr "Chỉnh sửa liên kết"
 
-#: src/layer/tile/CanvasTileLayer.js:2513
+#: src/layer/tile/CanvasTileLayer.js:2494
 msgid "Remove link"
 msgstr "Xoá liên kết"
 
-#: src/layer/tile/CanvasTileLayer.js:5262
+#: src/layer/tile/CanvasTileLayer.js:5249
 msgid "No Comments"
 msgstr "Không có bình luận"
 
@@ -2372,8 +2388,8 @@ msgid ""
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
 "more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Trình duyệt của bạn có quyền truy cập rất hạn chế vào bộ nhớ tạm</"
-"p><p>Vui lòng nhấn ngay: <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+"<p>Trình duyệt của bạn có quyền truy cập rất hạn chế vào bộ nhớ tạm</p><p>"
+"Vui lòng nhấn ngay: <kbd>Ctrl</kbd><span class=\"kbd--plus\""
 ">+</span><kbd>V</kbd> để xem thêm tuỳ chọn</p><p>Đóng cửa sổ popup để bỏ qua "
 "dán đặc biệt</p>"
 
@@ -2381,7 +2397,7 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Đang khởi tạo..."
 
-#: src/map/Map.js:431 src/map/Map.js:434 src/map/Map.js:437 src/map/Map.js:440
+#: src/map/Map.js:432 src/map/Map.js:435 src/map/Map.js:438 src/map/Map.js:441
 msgid "Last saved:"
 msgstr "Lưu lần cuối:"
 
@@ -2446,8 +2462,8 @@ msgid ""
 "android-ios/\">apps</a> are also available for mobile."
 msgstr ""
 "Tận hưởng những phát triển mới nhất về năng suất trực tuyến, miễn phí để bạn "
-"sử dụng, khám phá và sử dụng với những người khác trong trình duyệt. Nhiều "
-"<a target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
+"sử dụng, khám phá và sử dụng với những người khác trong trình duyệt. Nhiều <"
+"a target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
 "collabora-office-android-ios/\">ứng dụng</a> cũng có sẵn cho thiết bị di "
 "động."
 
@@ -2486,13 +2502,13 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
-"Bạn có quan tâm đến việc đóng góp nhưng không biết bắt đầu từ đâu? Hãy xem "
-"<a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
-"build-code/\">hướng dẫn từng bước</a> và tạo CODE từ đầu. Bạn cũng có thể "
-"trợ giúp bằng <a target=\"_blank\" href=\"https://collaboraonline.github.io/"
-"post/translate/\">bản dịch</a> hoặc bằng <a target=\"_blank\" href=\"https"
-"://collaboraonline.github.io/post/filebugs/\">gửi báo cáo lỗi</a> cùng với "
-"tất cả các bước cần thiết về cách tạo lại lỗi đó."
+"Bạn có quan tâm đến việc đóng góp nhưng không biết bắt đầu từ đâu? Hãy xem <"
+"a target=\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/"
+"\">hướng dẫn từng bước</a> và tạo CODE từ đầu. Bạn cũng có thể trợ giúp bằng "
+"<a target=\"_blank\" href=\"https://collaboraonline.github.io/post/translate/"
+"\">bản dịch</a> hoặc bằng <a target=\"_blank\" href=\""
+"https://collaboraonline.github.io/post/filebugs/\">gửi báo cáo lỗi</a> cùng "
+"với tất cả các bước cần thiết về cách tạo lại lỗi đó."
 
 #~ msgid "Page layout"
 #~ msgstr "Bố cục trang"

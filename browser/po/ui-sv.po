@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-01 13:52+0200\n"
+"POT-Creation-Date: 2023-06-09 07:33+0200\n"
 "PO-Revision-Date: 2023-06-03 14:52+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: sv\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -215,7 +215,7 @@ msgstr "Uppdatera logg"
 msgid "Channel Filter:"
 msgstr "Kanalfilter:"
 
-#: admin/admin.strings.js:52 src/control/Control.JSDialogBuilder.js:469
+#: admin/admin.strings.js:52 src/control/Control.JSDialogBuilder.js:485
 #: src/control/Control.StatusBar.js:332
 msgid "None"
 msgstr "Ingen"
@@ -230,7 +230,7 @@ msgstr "Loggnivåer"
 
 #: admin/admin.strings.js:55 src/control/Control.AlertDialog.js:21
 #: src/control/Control.AlertDialog.js:27 src/control/Control.AlertDialog.js:58
-#: src/control/Control.Zotero.js:182 src/control/Parts.js:438
+#: src/control/Control.Zotero.js:182 src/control/Parts.js:436
 #: src/core/Socket.js:986 src/core/Socket.js:991
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
@@ -264,10 +264,10 @@ msgstr "Tjänsten har stängts av eller startas om, ladda om sidan."
 #: src/control/Control.Tabs.js:312 src/control/Control.Zotero.js:328
 #: src/control/Control.Zotero.js:366 src/control/Permission.js:76
 #: src/control/Permission.js:86 src/control/Permission.js:136
-#: src/control/Toolbar.js:552 src/control/Toolbar.js:651
-#: src/control/Toolbar.js:718 src/control/Toolbar.js:943
-#: src/core/Socket.js:956 src/core/Socket.js:1031 src/core/Socket.js:1158
-#: src/core/Socket.js:1162 src/main.js:70 src/main.js:73 src/main.js:110
+#: src/control/Toolbar.js:552 src/control/Toolbar.js:653
+#: src/control/Toolbar.js:720 src/control/Toolbar.js:945
+#: src/core/Socket.js:956 src/core/Socket.js:1031 src/core/Socket.js:1159
+#: src/core/Socket.js:1163 src/main.js:70 src/main.js:73 src/main.js:110
 #: src/map/Clipboard.js:874 src/map/Clipboard.js:920
 #: src/map/handler/Map.Feedback.js:83 src/map/handler/Map.WOPI.js:484
 msgid "OK"
@@ -289,8 +289,8 @@ msgstr "Är du säker på att du vill avsluta sessionen?"
 #: admin/src/AdminSocketSettings.js:37
 #: src/control/Control.DocumentRepair.js:62
 #: src/control/Control.LanguageDialog.js:103
-#: src/control/Control.MobileTopBar.js:41 src/control/Control.Zotero.js:323
-#: src/control/Toolbar.js:713 src/core/Socket.js:1183
+#: src/control/Control.MobileTopBar.js:43 src/control/Control.Zotero.js:323
+#: src/control/Toolbar.js:715 src/core/Socket.js:1184
 #: src/layer/tile/CommentListSection.ts:373
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
 msgid "Cancel"
@@ -389,7 +389,7 @@ msgstr "Servern stötte på ett %0-fel vid utförandet av kommandot %1."
 msgid "Unlock"
 msgstr "Lås upp"
 
-#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:942
+#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:944
 msgid "Delete"
 msgstr "Radera"
 
@@ -461,7 +461,7 @@ msgid "Formula"
 msgstr "Formel"
 
 #: src/control/Control.FormulaBarJSDialog.js:60
-#: src/control/Control.MobileTopBar.js:40
+#: src/control/Control.MobileTopBar.js:42
 msgid "Accept"
 msgstr "Acceptera"
 
@@ -488,102 +488,106 @@ msgstr "Max"
 msgid "Count"
 msgstr "Antal"
 
-#: src/control/Control.JSDialogBuilder.js:472
+#: src/control/Control.JSDialogBuilder.js:488
 msgid "Solid"
 msgstr "Stabil"
 
-#: src/control/Control.JSDialogBuilder.js:475
+#: src/control/Control.JSDialogBuilder.js:491
 msgid "Linear"
 msgstr "Linjär"
 
-#: src/control/Control.JSDialogBuilder.js:478
+#: src/control/Control.JSDialogBuilder.js:494
 msgid "Axial"
 msgstr "Axial"
 
-#: src/control/Control.JSDialogBuilder.js:481
+#: src/control/Control.JSDialogBuilder.js:497
 msgid "Radial"
 msgstr "Radiell"
 
-#: src/control/Control.JSDialogBuilder.js:484
+#: src/control/Control.JSDialogBuilder.js:500
 msgid "Ellipsoid"
 msgstr "Ellipsoid"
 
-#: src/control/Control.JSDialogBuilder.js:488
+#: src/control/Control.JSDialogBuilder.js:504
 msgid "Quadratic"
 msgstr "Kvadratisk"
 
-#: src/control/Control.JSDialogBuilder.js:491
+#: src/control/Control.JSDialogBuilder.js:507
 msgid "Square"
 msgstr "Kvadrat"
 
-#: src/control/Control.JSDialogBuilder.js:494
+#: src/control/Control.JSDialogBuilder.js:510
 msgid "Fixed size"
 msgstr "Fixerad storlek"
 
-#: src/control/Control.JSDialogBuilder.js:1457
+#: src/control/Control.JSDialogBuilder.js:1471
 msgid "From"
 msgstr "Från"
 
-#: src/control/Control.JSDialogBuilder.js:1460
+#: src/control/Control.JSDialogBuilder.js:1474
 msgid "To"
 msgstr "Till"
 
-#: src/control/Control.JSDialogBuilder.js:1463
+#: src/control/Control.JSDialogBuilder.js:1477
 msgid "Color"
 msgstr "Färg"
 
-#: src/control/Control.JSDialogBuilder.js:1563
+#: src/control/Control.JSDialogBuilder.js:1577
 msgid "Select range"
 msgstr "Välj intervall"
 
-#: src/control/Control.JSDialogBuilder.js:1617
+#: src/control/Control.JSDialogBuilder.js:1631
 #: src/control/Control.NotebookbarBuilder.js:230
 msgid "Font Name"
 msgstr "Teckensnitt"
 
-#: src/control/Control.JSDialogBuilder.js:1619 src/control/Toolbar.js:123
+#: src/control/Control.JSDialogBuilder.js:1633 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "Teckensnittsstorlek"
 
-#: src/control/Control.JSDialogBuilder.js:1621
+#: src/control/Control.JSDialogBuilder.js:1635
 #: src/control/Control.TopToolbar.js:499
 msgid "Style"
 msgstr "Format"
 
-#: src/control/Control.JSDialogBuilder.js:2063
+#: src/control/Control.JSDialogBuilder.js:2077
 msgid "reply"
 msgstr "svara"
 
-#: src/control/Control.JSDialogBuilder.js:2066
+#: src/control/Control.JSDialogBuilder.js:2080
 msgid "replies"
 msgstr "svar"
 
-#: src/control/Control.JSDialogBuilder.js:2077
-#: src/layer/tile/CanvasTileLayer.js:5234
-#: src/layer/tile/CanvasTileLayer.js:5245
+#: src/control/Control.JSDialogBuilder.js:2091
+#: src/layer/tile/CanvasTileLayer.js:5221
+#: src/layer/tile/CanvasTileLayer.js:5232
 #: src/layer/tile/CommentListSection.ts:891
 msgid "Comment"
 msgstr "Kommentar"
 
-#: src/control/Control.JSDialogBuilder.js:2141
+#: src/control/Control.JSDialogBuilder.js:2155
 msgid "Insert Comment"
 msgstr "Infoga kommentar"
 
-#: src/control/Control.JSDialogBuilder.js:2822
+#: src/control/Control.JSDialogBuilder.js:2836
 msgid "Cell borders"
 msgstr "Kantlinjer"
 
-#: src/control/Control.JSDialogBuilder.js:3033
+#: src/control/Control.JSDialogBuilder.js:2951
+msgid "Automatic"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:3068
 #: src/control/Control.Menubar.js:791
 msgid "Rows"
 msgstr "Rader"
 
-#: src/control/Control.JSDialogBuilder.js:3034
+#: src/control/Control.JSDialogBuilder.js:3069
 #: src/control/Control.Menubar.js:794
 msgid "Columns"
 msgstr "Kolumner"
 
-#: src/control/Control.JSDialogBuilder.js:3054
+#: src/control/Control.JSDialogBuilder.js:3089
 msgid "Insert Table"
 msgstr "Infoga Tabell"
 
@@ -1033,11 +1037,11 @@ msgstr "Använd flikvy"
 msgid "Read-only mode"
 msgstr "Läs-endast läge"
 
-#: src/control/Control.Menubar.js:1750
+#: src/control/Control.Menubar.js:1757
 msgid "Insert Shape"
 msgstr "Infoga form"
 
-#: src/control/Control.Menubar.js:1955
+#: src/control/Control.Menubar.js:1962
 msgid "file type icon"
 msgstr "filtypsikon"
 
@@ -1052,15 +1056,19 @@ msgstr "Visa sökningsbalken"
 msgid "Borders"
 msgstr "Kanter"
 
-#: src/control/Control.MobileWizardBuilder.js:510
+#: src/control/Control.MobileTopBar.js:31 src/control/Control.StatusBar.js:456
+msgid "Read-only"
+msgstr "Skrivskyddat"
+
+#: src/control/Control.MobileWizardBuilder.js:511
 msgid "Background Color"
 msgstr "Bakgrundsfärg"
 
-#: src/control/Control.MobileWizardBuilder.js:512
+#: src/control/Control.MobileWizardBuilder.js:513
 msgid "Gradient Start"
 msgstr "Toning startfärg"
 
-#: src/control/Control.MobileWizardBuilder.js:514
+#: src/control/Control.MobileWizardBuilder.js:515
 msgid "Gradient End"
 msgstr "Toning slutfärg"
 
@@ -1244,7 +1252,7 @@ msgstr "Fraktion"
 msgid "Boolean Value"
 msgstr "Boolskt värde"
 
-#: src/control/Control.NotebookbarCalc.js:563 src/control/Toolbar.js:685
+#: src/control/Control.NotebookbarCalc.js:563 src/control/Toolbar.js:687
 msgid "Text"
 msgstr "Text"
 
@@ -1330,7 +1338,7 @@ msgid "Sparkline"
 msgstr "Miniatyrdiagram"
 
 #: src/control/Control.NotebookbarCalc.js:1222
-#: src/control/Control.NotebookbarCalc.js:1873
+#: src/control/Control.NotebookbarCalc.js:1874
 #: src/control/Control.NotebookbarDraw.js:638
 #: src/control/Control.NotebookbarDraw.js:1015
 #: src/control/Control.NotebookbarImpress.js:751
@@ -1400,9 +1408,17 @@ msgstr "Bild"
 msgid "Ruler"
 msgstr "Linjal"
 
-#: src/control/Control.PartsPreview.js:180
+#: src/control/Control.PartsPreview.js:181
 msgid "preview of page "
 msgstr "förhandsgranskning av sidan "
+
+#: src/control/Control.PartsPreview.js:231
+msgid "Copy"
+msgstr ""
+
+#: src/control/Control.PartsPreview.js:240
+msgid "Paste"
+msgstr ""
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1495,10 +1511,6 @@ msgstr "Antal bilder"
 #: src/control/Control.StatusBar.js:456 src/control/Control.StatusBar.js:457
 msgid "Permission Mode"
 msgstr "Behörighetsläge"
-
-#: src/control/Control.StatusBar.js:456
-msgid "Read-only"
-msgstr "Skrivskyddat"
 
 #: src/control/Control.StatusBar.js:457
 msgid "Edit"
@@ -1868,21 +1880,25 @@ msgstr "Denna version av %productName drivs av"
 msgid "\"Slow Proxy\""
 msgstr "\"Långsam proxy\""
 
-#: src/control/Toolbar.js:678
+#: src/control/Toolbar.js:680
 msgid "Insert hyperlink"
 msgstr "Lägg in hyperlänk"
 
-#: src/control/Toolbar.js:697
+#: src/control/Toolbar.js:699
 msgid "Link"
 msgstr "Länk"
 
-#: src/control/Toolbar.js:937
+#: src/control/Toolbar.js:939
 msgid "Are you sure you want to delete this slide?"
 msgstr "Är du säker på att du vill ta bort presentationsbilden?"
 
-#: src/control/Toolbar.js:940
+#: src/control/Toolbar.js:942
 msgid "Are you sure you want to delete this page?"
 msgstr "Är du säker på att du vill ta bort denna sida?"
+
+#: src/control/jsdialog/Widget.TreeView.js:475
+msgid "Headings and objects that you add to the document will appear here"
+msgstr ""
 
 #: src/core/Socket.js:55
 msgid "Oops, there is a problem connecting to %productName: "
@@ -2002,31 +2018,31 @@ msgstr "Ansluter..."
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokumentet byter namn och laddas snart om"
 
-#: src/core/Socket.js:1158
+#: src/core/Socket.js:1159
 msgid "Exported to storage"
 msgstr "Exporterad till lagring"
 
-#: src/core/Socket.js:1158
+#: src/core/Socket.js:1159
 msgid "Successfully exported: "
 msgstr "Har exporterats: "
 
-#: src/core/Socket.js:1186
+#: src/core/Socket.js:1187
 msgid "Discard"
 msgstr "Glöm"
 
-#: src/core/Socket.js:1187
+#: src/core/Socket.js:1188
 msgid "Overwrite"
 msgstr "Skriv över"
 
-#: src/core/Socket.js:1198
+#: src/core/Socket.js:1199
 msgid "Save to new file"
 msgstr "Spara i en ny fil"
 
-#: src/core/Socket.js:1208
+#: src/core/Socket.js:1209
 msgid "Document has been changed"
 msgstr "Dokumentet har ändrats"
 
-#: src/core/Socket.js:1209
+#: src/core/Socket.js:1210
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -2034,17 +2050,17 @@ msgstr ""
 "Dokumented har ändrats på lagringen. Vad vill du göra med dina inte sparade "
 "ändringar?"
 
-#: src/core/Socket.js:1509
+#: src/core/Socket.js:1510
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Kan inte ansluta till ditt dokument. Vänligen försök igen."
 
-#: src/core/Socket.js:1526
+#: src/core/Socket.js:1527
 msgid "Reconnecting..."
 msgstr "Ansluter ..."
 
-#: src/core/Socket.js:1536
+#: src/core/Socket.js:1537
 msgid "The server has been disconnected."
 msgstr "Tjänsten är bortkopplad."
 
@@ -2236,23 +2252,23 @@ msgstr "Kunde inte ladda upp filen till servern eftersom filen inte hittades."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Kunde inte ladda upp filen till servern eftersom filen är för stor."
 
-#: src/layer/tile/CanvasTileLayer.js:1929
+#: src/layer/tile/CanvasTileLayer.js:1910
 msgid "Functions"
 msgstr "Funktioner"
 
-#: src/layer/tile/CanvasTileLayer.js:2497
+#: src/layer/tile/CanvasTileLayer.js:2478
 msgid "Copy link location"
 msgstr "Kopiera länkplats"
 
-#: src/layer/tile/CanvasTileLayer.js:2505
+#: src/layer/tile/CanvasTileLayer.js:2486
 msgid "Edit link"
 msgstr "Redigera länk"
 
-#: src/layer/tile/CanvasTileLayer.js:2513
+#: src/layer/tile/CanvasTileLayer.js:2494
 msgid "Remove link"
 msgstr "Ta bort länk"
 
-#: src/layer/tile/CanvasTileLayer.js:5262
+#: src/layer/tile/CanvasTileLayer.js:5249
 msgid "No Comments"
 msgstr "Inga kommentarer"
 
@@ -2385,7 +2401,7 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Initierar..."
 
-#: src/map/Map.js:431 src/map/Map.js:434 src/map/Map.js:437 src/map/Map.js:440
+#: src/map/Map.js:432 src/map/Map.js:435 src/map/Map.js:438 src/map/Map.js:441
 msgid "Last saved:"
 msgstr "Senast sparad:"
 
