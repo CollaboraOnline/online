@@ -1061,6 +1061,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     const std::string mimeType = "text/html";
 
+    // Document signing: if endpoint URL is configured, whitelist that for
+    // iframe purposes.
     ContentSecurityPolicy csp;
     csp.appendDirective("default-src", "'none'");
     csp.appendDirective("frame-src", "'self'");
@@ -1087,11 +1089,20 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     csp.appendDirective("img-src", "data:"); // Equivalent to unsafe-inline!
     csp.appendDirective("img-src", "https://www.collaboraoffice.com/");
 
-    std::ostringstream cspOss;
-    cspOss << "Content-Security-Policy: ";
-
     // Frame ancestors: Allow coolwsd host, wopi host and anything configured.
-    std::string configFrameAncestor = config.getString("net.frame_ancestors", "");
+    const std::string configFrameAncestor = config.getString("net.frame_ancestors", "");
+    if (!configFrameAncestor.empty())
+    {
+        static bool warned = false;
+        if (!warned)
+        {
+            warned = true;
+            LOG_WRN("The config entry net.frame_ancestors is obsolete and will be removed in the "
+                    "future. Please add 'frame-ancestors "
+                    << configFrameAncestor << "' in the net.content_security_policy config");
+        }
+    }
+
     std::string frameAncestors = configFrameAncestor;
     Poco::URI uriHost(cnxDetails.getWebSocketUrl());
     if (uriHost.getHost() != configFrameAncestor)
@@ -1129,7 +1140,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         LOG_TRC("Denied all frame ancestors");
     }
 
-    cspOss << csp.generate() << "\r\n";
+    csp.merge(config.getString("net.content_security_policy", ""));
 
     std::ostringstream oss;
     oss << "HTTP/1.1 200 OK\r\n"
@@ -1145,7 +1156,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         "Referrer-Policy: no-referrer\r\n";
 
     // Append CSP to response headers too
-    oss << cspOss.str();
+    oss << "Content-Security-Policy: " << csp.generate() << "\r\n";
 
     // Setup HTTP Public key pinning
     if ((COOLWSD::isSSLEnabled() || COOLWSD::isSSLTermination()) && config.getBool("ssl.hpkp[@enable]", false))

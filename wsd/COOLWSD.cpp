@@ -1979,6 +1979,8 @@ void COOLWSD::innerInitialize(Application& self)
         { "net.proto", "all" },
         { "net.service_root", "" },
         { "net.proxy_prefix", "false" },
+        { "net.content_security_policy", "" },
+        { "net.frame_ancestors", "" },
         { "num_prespawn_children", "1" },
         { "per_document.always_save_on_exit", "false" },
         { "per_document.autosave_duration_secs", "300" },
@@ -2080,7 +2082,7 @@ void COOLWSD::innerInitialize(Application& self)
 #if !MOBILEAPP
         { "help_url", HELP_URL },
 #endif
-        { "product_name", APP_NAME}
+        { "product_name", APP_NAME }
     };
 
     // Set default values, in case they are missing from the config file.
