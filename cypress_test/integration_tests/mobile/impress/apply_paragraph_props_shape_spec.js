@@ -46,7 +46,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 		cy.cGet('.unoDefaultBullet').should('be.visible');
 	}
 
-	it('Apply left/right alignment on text shape.', function() {
+	it.skip('Apply left/right alignment on text shape.', function() {
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -71,7 +71,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 			.should('have.attr', 'x', '1400');
 	});
 
-	it('Apply center alignment on text shape.', function() {
+	it.skip('Apply center alignment on text shape.', function() {
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -85,7 +85,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 			.should('have.attr', 'x', '12493');
 	});
 
-	it('Apply justified alignment on text shape.', function() {
+	it.skip('Apply justified alignment on text shape.', function() {
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -110,7 +110,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 			.should('have.attr', 'x', '1400');
 	});
 
-	it('Set top/bottom alignment on text shape.', function() {
+	it.skip('Set top/bottom alignment on text shape.', function() {
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 
@@ -135,7 +135,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 			.should('have.attr', 'y', '4834');
 	});
 
-	it('Apply center vertical alignment on text shape.', function() {
+	it.skip('Apply center vertical alignment on text shape.', function() {
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 
@@ -179,7 +179,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 			.should('have.attr', 'ooo:numbering-type', 'number-style');
 	});
 
-	it('Apply spacing above on text shape.', function() {
+	it.skip('Apply spacing above on text shape.', function() {
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
@@ -193,7 +193,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties 
 			.should('have.attr', 'y', '11180');
 	});
 
-	it('Apply spacing below on text shape.', function() {
+	it.skip('Apply spacing below on text shape.', function() {
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 

@@ -8,6 +8,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Scroll through document', 
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'impress');
+		desktopHelper.switchUIToCompact();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.cGet('#tb_editbar_item_modifypage').click();
 		desktopHelper.selectZoomLevel('200');

@@ -10,6 +10,7 @@ describe(['tagdesktop'], 'Editing Operations', function() {
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'impress');
+		desktopHelper.switchUIToCompact();
 		desktopHelper.selectZoomLevel('30');
 		impressHelper.selectTextShapeInTheCenter();
 		impressHelper.selectTextOfShape(false);

@@ -294,9 +294,32 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false, 
 }
 
 function switchUIToNotebookbar() {
-	cy.cGet('#menu-view').click();
-	cy.cGet('#menu-toggleuimode').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
-	Cypress.env('USER_INTERFACE', 'notebookbar');
+	cy.window().then(win => {
+		var userInterfaceMode = win['0'].userInterfaceMode;
+		if (userInterfaceMode !== 'notebookbar') {
+			cy.log('switchUIToNotebookbar start');
+			cy.cGet('#menu-view').click();
+			cy.cGet('#menu-toggleuimode').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();
+			cy.log('switchUIToNotebookbar end');
+		} else {
+			cy.log('switchUIToNotebookbar: already notebookbar UI');
+		}
+		Cypress.env('USER_INTERFACE', 'notebookbar');
+	});
+}
+
+function switchUIToCompact() {
+	cy.window().then(win => {
+		var userInterfaceMode = win['0'].userInterfaceMode;
+		if (userInterfaceMode === 'notebookbar') {
+			cy.log('switchUIToCompact start');
+			cy.cGet('#View-tab-label').click();
+			cy.cGet('#toggleuimode').click();
+			cy.log('switchUIToCompact end');
+		} else {
+			cy.log('switchUIToCompact: already compact UI');
+		}
+	});
 }
 
 function actionOnSelector(name, func) {
@@ -364,3 +387,4 @@ module.exports.pressKey = pressKey;
 module.exports.assertImageSize = assertImageSize;
 module.exports.openReadOnlyFile = openReadOnlyFile;
 module.exports.switchUIToNotebookbar = switchUIToNotebookbar;
+module.exports.switchUIToCompact = switchUIToCompact;

@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach */
 
 var helper = require('../../common/helper');
+const desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagproxy'], 'Focus tests', function() {
 	var origTestFileName = 'focus.odt';
@@ -8,6 +9,7 @@ describe(['tagdesktop', 'tagproxy'], 'Focus tests', function() {
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
+		desktopHelper.switchUIToCompact();
 	});
 
 	afterEach(function() {

@@ -899,6 +899,7 @@ std::string COOLWSD::LOKitVersion;
 std::string COOLWSD::ConfigFile = COOLWSD_CONFIGDIR "/coolwsd.xml";
 std::string COOLWSD::ConfigDir = COOLWSD_CONFIGDIR "/conf.d";
 bool COOLWSD::EnableTraceEventLogging = false;
+bool COOLWSD::EnableAccessibility = false;
 FILE *COOLWSD::TraceEventFile = NULL;
 std::string COOLWSD::LogLevel = "trace";
 std::string COOLWSD::LogLevelStartup = "trace";
@@ -2124,6 +2125,8 @@ void COOLWSD::innerInitialize(Application& self)
     // Experimental features.
     EnableExperimental = getConfigValue<bool>(conf, "experimental_features", false);
 
+    EnableAccessibility = getConfigValue<bool>(conf, "accessibility.enable", false);
+
     // Setup user interface mode
     UserInterface = getConfigValue<std::string>(conf, "user_interface.mode", "default");
 
@@ -2131,6 +2134,9 @@ void COOLWSD::innerInitialize(Application& self)
         UserInterface = "classic";
 
     if (UserInterface == "tabbed")
+        UserInterface = "notebookbar";
+
+    if (EnableAccessibility)
         UserInterface = "notebookbar";
 
     // Set the log-level after complete initialization to force maximum details at startup.

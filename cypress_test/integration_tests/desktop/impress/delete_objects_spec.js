@@ -9,6 +9,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		desktopHelper.switchUIToCompact();
 	});
 
 	afterEach(function() {
@@ -28,6 +29,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Delete Objects', function(
 
 	it('Delete Shapes', function() {
 		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
+		cy.wait(1000);
 		//insert
 		cy.cGet('#tb_editbar_item_insertshapes').click();
 		cy.cGet('.col.w2ui-icon.symbolshapes').should($el => { expect(Cypress.dom.isDetached($el)).to.eq(false); }).click();

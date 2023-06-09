@@ -2,6 +2,7 @@
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
+var desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 	var origTestFileName = 'autofilter.ods';
@@ -9,6 +10,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
+		desktopHelper.switchUIToCompact();
 		toggleAutofilter();
 		calcHelper.selectEntireSheet();
 		calcHelper.assertDataClipboardTable(['Cypress Test', 'Status', 'Test 1', 'Pass', 'Test 2', 'Fail', 'Test 3', 'Pass', 'Test 4', '', 'Test 5', 'Fail']);

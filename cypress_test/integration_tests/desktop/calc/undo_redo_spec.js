@@ -3,12 +3,14 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var repairHelper = require('../../common/repair_document_helper');
+const desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing Operations', function() {
 	var testFileName = 'undo_redo.ods';
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
+		desktopHelper.switchUIToCompact();
 	});
 
 	afterEach(function() {

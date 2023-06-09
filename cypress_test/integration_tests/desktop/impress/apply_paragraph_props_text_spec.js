@@ -2,6 +2,7 @@
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
+const desktopHelper = require('../../common/desktop_helper');
 
 describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties on selected shape.', function() {
 	var origTestFileName = 'apply_paragraph_props_text.odp';
@@ -9,6 +10,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Apply paragraph properties
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'impress');
+		desktopHelper.switchUIToCompact();
 		cy.cGet('#toolbar-up > .w2ui-scroll-right').click();
 		cy.cGet('#tb_editbar_item_modifypage').click();
 		impressHelper.selectTextShapeInTheCenter();
