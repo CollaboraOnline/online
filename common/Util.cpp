@@ -384,6 +384,7 @@ namespace Util
                     break;
                 }
             }
+            fclose(file);
         }
 
         return totalMemKb;
