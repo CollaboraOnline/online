@@ -420,6 +420,7 @@ L.TextInput = L.Layer.extend({
 			this._textArea.style.caretColor = 'transparent';
 			this._textArea.style.resize = 'none';
 		}
+		this._textArea.style['white-space'] = 'pre';
 	},
 
 	debug: function(debugOn) {
