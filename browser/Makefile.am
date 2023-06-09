@@ -736,6 +736,7 @@ pot:
 		src/control/Ruler.js \
 		src/control/Signing.js \
 		src/control/Toolbar.js \
+		src/control/jsdialog/Widget.TreeView.js \
 		src/core/Socket.js \
 		src/errormessages.js \
 		src/layer/tile/CanvasTileLayer.js \

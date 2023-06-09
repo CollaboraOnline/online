@@ -33,7 +33,7 @@
  * SPDX-License-Identifier: MPL-2.0
  */
 
-/* global $ JSDialog */
+/* global $ _ JSDialog */
 
 function _createCheckbox(parentContainer, treeViewData, builder, entry) {
 	var checkbox = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', parentContainer);
@@ -469,7 +469,13 @@ function _treelistboxControl(parentContainer, data, builder) {
 	}
 
 	if (!data.entries || data.entries.length === 0) {
-		L.DomUtil.addClass(table, 'empty');
+		if (data.id === 'contenttree') {
+			var tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry', tbody);
+			tr.setAttribute('role', 'row');
+			tr.innerText = _('Headings and objects that you add to the document will appear here');
+		} else {
+			L.DomUtil.addClass(table, 'empty');
+		}
 		return false;
 	}
 
