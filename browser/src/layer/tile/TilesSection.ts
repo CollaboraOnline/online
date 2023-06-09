@@ -158,6 +158,7 @@ class TilesSection extends CanvasSectionObject {
 			}
 
 			this.beforeDraw(canvasCtx);
+			this.ensureCanvas(tile);
 			canvasCtx.drawImage(tile.el,
 				crop.min.x - tileBounds.min.x,
 				crop.min.y - tileBounds.min.y,
@@ -208,11 +209,13 @@ class TilesSection extends CanvasSectionObject {
 			offset.y = tile.coords.part * partHeightPixels + tile.coords.y - this.documentTopLeft[1];
 			extendedOffset.y = offset.y + halfExtraSize;
 
+			this.ensureCanvas(tile);
 			this.context.drawImage(tile.el, offset.x, offset.y, tileSize, tileSize);
 			this.oscCtxs[0].drawImage(tile.el, extendedOffset.x, extendedOffset.y, tileSize, tileSize);
 			//this.pdfViewDrawTileBorders(tile, offset, tileSize);
 		}
 		else {
+			this.ensureCanvas(tile);
 			this.context.drawImage(tile.el, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
 			this.oscCtxs[0].drawImage(tile.el, extendedOffset.x, extendedOffset.y, ctx.tileSize.x, ctx.tileSize.y);
 		}
@@ -578,6 +581,11 @@ class TilesSection extends CanvasSectionObject {
 		return bestZoomLevel;
 	}
 
+	public ensureCanvas(tile: any)
+	{
+		this.sectionProperties.docLayer.ensureCanvas(tile);
+	}
+
 	// Called by tsManager to draw a zoom animation frame.
 	public drawZoomFrame(ctx?: any) {
 		var tsManager = this.sectionProperties.tsManager;
@@ -650,6 +658,7 @@ class TilesSection extends CanvasSectionObject {
 			var destPosScaled = (bestZoomSrc == zoom) ? destPos : this.scalePosForZoom(destPos, bestZoomSrc, zoom);
 			var relScale = (bestZoomSrc == zoom) ? 1 : this.map.getZoomScale(bestZoomSrc, zoom);
 
+			var ensureCanvas = this.ensureCanvas;
 			this.beforeDraw(canvasContext);
 			this.forEachTileInArea(docRangeScaled, bestZoomSrc, part, mode, ctx, function (tile: any, coords: any): boolean {
 				if (!tile || !tile.loaded || !docLayer._isValidTile(coords))
@@ -675,6 +684,7 @@ class TilesSection extends CanvasSectionObject {
 				var tileOffset = crop.min.subtract(tileBounds.min);
 				var paneOffset = crop.min.subtract(docRangeScaled.min.subtract(destPosScaled));
 				if (cropWidth && cropHeight) {
+					ensureCanvas(tile);
 					canvasContext.drawImage(tile.el,
 						tileOffset.x, tileOffset.y, // source x, y
 						cropWidth, cropHeight, // source size

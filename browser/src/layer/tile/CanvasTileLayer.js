@@ -858,10 +858,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			options.subdomains = options.subdomains.split('');
 		}
 
-		// for https://github.com/Leaflet/Leaflet/issues/137
-		if (!L.Browser.android) {
-			this.on('tileunload', this._onTileRemove);
-		}
 		// text, presentation, spreadsheet, etc
 		this._docType = options.docType;
 		this._documentInfo = '';
@@ -3488,6 +3484,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_tileOnError: function (done, tile, e) {
 		var errorUrl = this.options.errorTileUrl;
 		if (errorUrl) {
+			// FIXME: old & broken code-path
 			tile.src = errorUrl;
 		}
 		done(e, tile);
@@ -3497,10 +3494,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (e.msg && this._map.isEditMode() && e.critical !== false) {
 			this._map.setPermission('view');
 		}
-	},
-
-	_onTileRemove: function (e) {
-		e.tile.onload = null;
 	},
 
 	_clearSelections: function (calledFromSetPartHandler) {
@@ -6710,7 +6703,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		return new L.LatLngBounds(nw, se);
 	},
 
-	_reclaimTileCanvasMemory: function (tile) {
+	_reclaimTileCanvasMemory: function (tile,freeDelta) {
 		// Partial fix for #5876 allow immediate reuse of canvas context memory
 		// WKWebView has a hard limit on the number of bytes of canvas
 		// context memory that can be allocated. Reducing the canvas
@@ -6720,6 +6713,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			tile.el.width = 0;
 			tile.el.height = 0;
 			delete tile.el;
+		}
+		if (freeDelta !== undefined && freeDelta && tile.rawDeltas) // help the GC
+		{
+			tile.rawDeltas.length = 0;
+			delete tile.rawDeltas;
 		}
 	},
 
@@ -6744,11 +6742,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		this._reclaimTileCanvasMemory(tile);
 		delete this._tiles[key];
-
-		this.fire('tileunload', {
-			tile: tile.el,
-			coords: this._keyToTileCoords(key)
-		});
 	},
 
 	_prefetchTilesSync: function () {
@@ -6783,6 +6776,51 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
+	// Ensure we have a renderable canvas for a given tile
+	// Use this before drawing a tile.
+	ensureCanvas: function(tile)
+	{
+		if (!tile)
+			return null;
+
+		var canvas = document.createElement('canvas');
+
+		// FIXME: if this fails - go attack the cache ...
+		canvas.width = window.tileSize;
+		canvas.height = window.tileSize;
+
+		// FIXME: rename tile.el -> tile.canvas
+		tile.el = canvas;
+
+		// re-hydrate recursively from cached data
+		if (tile.rawDeltas)
+		{
+			window.app.console.log('Restoring a tile from cached delta at ' +
+					       this._tileCoordsToKey(tile.coords));
+			this._applyDelta(tile, tile.rawDeltas, true);
+		}
+	},
+
+	_ensureContext: function(tile)
+	{
+		var ctx = tile.el.getContext('2d');
+
+		// Not a good result - we ran out of memory, FIXME: manage it better.
+		if (!ctx)
+		{
+			// Free all our canvas' and start again.
+			window.app.console.log('Free all tiles canvas memory ');
+			for (var key in this._tiles) {
+				this._reclaimTileCanvasMemory(this._tiles[key], false);
+			}
+			ctx = tile.el.getContext('2d');
+			if (!ctx)
+				window.app.console.log('out of canvas memory, and now ideas.');
+		}
+
+		return ctx;
+	},
+
 	_applyDelta: function(tile, rawDelta, isKeyframe) {
 		if (this._debugDeltas)
 			window.app.console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
@@ -6794,20 +6832,29 @@ L.CanvasTileLayer = L.Layer.extend({
 		var traceEvent = app.socket.createCompleteTraceEvent('L.CanvasTileLayer.applyDelta',
 								     { keyFrame: isKeyframe, length: rawDelta.length });
 
-		// 'Uint8Array' delta
-		var canvas;
-		var initCanvas = false;
-		if (tile.el && (tile.el instanceof HTMLCanvasElement))
-			canvas = tile.el;
-		else
-		{
-			canvas = document.createElement('canvas');
-			canvas.width = window.tileSize;
-			canvas.height = window.tileSize;
-			initCanvas = true;
-		}
-		tile.el = canvas;
 		tile.lastKeyframe = isKeyframe;
+
+		// store the compressed version for later in its current
+		// form as byte arrays, so that we can manage our canvases
+		// better.
+		if (isKeyframe)
+		{
+			if (tile.rawDeltas) // help the gc?
+				tile.rawDeltas.length = 0;
+			tile.rawDeltas = rawDelta; // overwrite
+		}
+		else // assume we already have a delta.
+			tile.rawDeltas = tile.rawDeltas.concatenate(rawDelta);
+
+		// 'Uint8Array' delta
+		if (!tile.el || !(tile.el instanceof HTMLCanvasElement))
+		{
+			// defer constructing the image & applying these deltas
+			// until the tile is rendered via ensureCanvas.
+			return;
+		}
+
+		var canvas = tile.el;
 
 		// apply potentially several deltas in turn.
 		var i = 0;
@@ -6817,31 +6864,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		var allDeltas = window.fzstd.decompress(rawDelta);
 
 		var imgData;
-		var ctx = canvas.getContext('2d');
+		var ctx = this._ensureContext(tile);
 
-		// Partial fix for issue #5876 discard excess canvas contexts
-		// WKWebView has a hardcoded memory limit for all canvas contexts
-		// so if canvas.getContext('2d') returns null, convert the canvas
-		// of other tiles to an image until canvas.getContext('2d') succeeds.
-		if (!ctx) {
-			for (var key in this._tiles) {
-				var value = this._tiles[key];
-				if (value && value !== tile && value.el && value.el instanceof HTMLCanvasElement) {
-					var imageSrc = value.el.toDataURL();
-					this._reclaimTileCanvasMemory(value);
-					value.el = document.createElement('img');
-					value.el.src = imageSrc;
-					if (!(value._invalidCount > 0) && this._tileCache[key])
-						this._tileCache[key] = value.el;
-					ctx = canvas.getContext('2d');
-				}
-			}
-
-			// If we can't free up enough canvas context, there is nothing
-			// more we can do. Is there a better way to handle this?
-			if (!ctx)
-				return;
-		}
+		if (!ctx) // out of canvas / texture memory.
+			return;
 
 		while (offset < allDeltas.length)
 		{
@@ -6872,9 +6898,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 			else
 			{
-				if (initCanvas && tile.el) // render old image data to the canvas
-					ctx.drawImage(tile.el, 0, 0);
-
 				if (!imgData) // no keyframe
 				{
 					if (this._debugDeltas)
@@ -6891,7 +6914,6 @@ L.CanvasTileLayer = L.Layer.extend({
 							       ' at stream offset ' + offset + ' size ' + len);
 			}
 
-			initCanvas = false;
 			isKeyframe = false;
 			offset += len;
 		}
@@ -7020,6 +7042,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (tile._debugTime.date !== 0)
 				msg += '<br>' + this._debugSetTimes(tile._debugTime, +new Date() - tile._debugTime.date).replace(/, /g, '<br>');
 			msg += '<br>nviewid: ' + tileMsgObj.nviewid;
+			if (tile.rawDeltas)
+				msg += '<br>rawdeltas: ' + tile.rawDeltas.length;
 			var node = document.createElement('p');
 			node.innerHTML = msg;
 			tile._debugPopup.setHTMLContent(node);
@@ -7048,14 +7072,19 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			tile.wireId = tileMsgObj.wireId;
 			if (this._map._canvasDevicePixelGrid)
+			{
+				// FIXME: render this onto the canvas with hairlines (?)
 				// browser/test/pixel-test.png - debugging pixel alignment.
 				tile.el.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5QEIChoQ0oROpwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACfklEQVR42u3dO67CQBBFwbnI+9/yJbCQLDIkPsZdFRAQjjiv3S8YZ63VNsl6aLvgop5+6vFzZ3QP/uQz2c0RIAAQAAzcASwAmAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACADGBnC8iQ5MABAACAB+zsVYjLZ9dOvd3zzg/QOYADByB/BvUCzBIAAQAFiCwQQAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAwIgAXb2ECgABAAPDaI7SLsZhs+79kvX8AEwDsAM8DASzBIAAQAFiCwQQAAYAAQAAgABAAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAI4LSSOAQBgABAAPDVR9C2ToGxNkfww623bZL98/ilUzIBwA4wbCAgABAACAAswWACgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAAAjAESAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAGAAEAAIAAQAAgABAACAAGAAEAAIAAQAAgAPiaJAEAAIAB48yNWW6fAWJsj4LRbb9sk++fxSxMA7AAMGwgCAAGAAMASDCYACAAEAAIAAYAAQAAgABAACAAEAAIAASAAR4AAQAAgABAACAAEANeW9e675sAEAAGAAODUO4AFgMnu7t9h2ahA0pgAAAAASUVORK5CYII=';
-
+			}
 			else if (tile && img.rawData)
 				this._applyDelta(tile, img.rawData, img.isKeyframe);
 
 			else
+			{
+				app.console.debug('This should never happen');
 				tile.el = img;
+			}
 			tile.loaded = true;
 			this._tileReady(coords, null /* err */, tile);
 		}
