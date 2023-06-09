@@ -61,7 +61,7 @@ protected:
 
         std::string result = "{";
         bool first = true;
-        for (auto i : args)
+        for (const auto& i : args)
         {
             if (!first)
                 result += ',';
