@@ -255,12 +255,14 @@ void Session::handleMessage(const std::vector<char> &data)
     try
     {
         std::unique_ptr< std::vector<char> > replace;
+#if defined ENABLE_DEBUG && !MOBILEAPP
         if (!Util::isFuzzing() && UnitBase::get().filterSessionInput(this, &data[0], data.size(), replace))
         {
             if (!replace || replace->empty())
                 _handleInput(replace->data(), replace->size());
             return;
         }
+#endif
 
         if (!data.empty())
             _handleInput(&data[0], data.size());

@@ -45,7 +45,7 @@ private:
     const bool _isClient;
 
     // Last member.
-#ifdef ENABLE_DEBUG
+#if defined ENABLE_DEBUG && !MOBILEAPP
     /// The UnitBase instance. We capture it here since
     /// this is our instance, but the test framework
     /// has a single global instance via UnitWSD::get().
@@ -83,7 +83,7 @@ public:
 #endif
         _shuttingDown(false)
         , _isClient(isClient)
-#ifdef ENABLE_DEBUG
+#if defined ENABLE_DEBUG && !MOBILEAPP
         , _unit(UnitBase::get())
 #endif
     {
@@ -669,12 +669,14 @@ public:
     /// 0 for closed socket, and -1 for other errors.
     int sendMessage(const char* data, const size_t len, const WSOpCode code, const bool flush) const
     {
+#if !MOBILEAPP
         if (!Util::isFuzzing())
         {
             int unitReturn = -1;
             if (_unit.filterSendWebSocketMessage(data, len, code, flush, unitReturn))
                 return unitReturn;
         }
+#endif
 
         //TODO: Support fragmented messages.
 

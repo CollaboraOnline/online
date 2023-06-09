@@ -149,7 +149,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _wopiDownloadDuration(0)
     , _mobileAppDocId(mobileAppDocId)
     , _alwaysSaveOnExit(COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false))
-#ifdef ENABLE_DEBUG
+#if defined ENABLE_DEBUG && !MOBILEAPP
     , _unitWsd(UnitWSD::get())
 #endif
 {
@@ -167,10 +167,12 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
                                << "] created with docKey [" << _docKey
                                << "], always_save_on_exit: " << _alwaysSaveOnExit);
 
+#if defined ENABLE_DEBUG && !MOBILEAPP
     if (UnitWSD::isUnitTesting())
     {
         _unitWsd.onDocBrokerCreate(_docKey);
     }
+#endif
 }
 
 void DocumentBroker::setupPriorities()
@@ -290,11 +292,13 @@ void DocumentBroker::pollThread()
             break;
         }
 
+#if defined ENABLE_DEBUG && !MOBILEAPP
         if (UnitWSD::isUnitTesting() && _unitWsd.isFinished())
         {
             stop("UnitTestFinished");
             break;
         }
+#endif
 
 #if !MOBILEAPP
         const auto now = std::chrono::steady_clock::now();
@@ -543,13 +547,16 @@ void DocumentBroker::pollThread()
             dataLoss = true;
             reason = isModified() ? "flagged as modified" : "not uploaded to storage";
 
+#if defined ENABLE_DEBUG && !MOBILEAPP
             // The test may override (if it was expected).
             if (UnitWSD::isUnitTesting() &&
                 !_unitWsd.onDataLoss("Data-loss detected while exiting [" + _docKey + ']'))
                 reason.clear();
+#endif
         }
     }
 
+#if defined ENABLE_DEBUG && !MOBILEAPP
     if (!reason.empty() || (UnitWSD::isUnitTesting() && _unitWsd.isFinished() && _unitWsd.failed()))
     {
         std::stringstream state;
@@ -558,6 +565,7 @@ void DocumentBroker::pollThread()
         dumpState(state);
         LOG_WRN(state.str());
     }
+#endif
 
     // Flush socket data first, if any.
     if (_poll->getSocketCount())
@@ -685,10 +693,12 @@ DocumentBroker::~DocumentBroker()
     Admin::instance().rmDoc(_docKey);
 #endif
 
+#if defined ENABLE_DEBUG && !MOBILEAPP
     if (UnitWSD::isUnitTesting())
     {
         _unitWsd.DocBrokerDestroy(_docKey);
     }
+#endif
 }
 
 void DocumentBroker::joinThread()
@@ -723,11 +733,13 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     LOG_INF("Loading [" << _docKey << "] for session [" << sessionId << "] in jail [" << jailId
                         << ']');
 
+#if defined ENABLE_DEBUG && !MOBILEAPP
     {
         bool result;
         if (_unitWsd.filterLoad(sessionId, jailId, result))
             return result;
     }
+#endif
 
     if (_docState.isMarkedToDestroy())
     {
@@ -1789,7 +1801,9 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
     LOG_TRC("lastUploadSuccessful: " << lastUploadSuccessful);
     _storageManager.setLastUploadResult(lastUploadSuccessful);
 
+#if defined ENABLE_DEBUG && !MOBILEAPP
     _unitWsd.onDocumentUploaded(lastUploadSuccessful);
+#endif
 
 #if !MOBILEAPP
     if (lastUploadSuccessful && !isModified())
@@ -2477,7 +2491,9 @@ bool DocumentBroker::sendUnoSave(const std::shared_ptr<ClientSession>& session,
     _nextStorageAttrs.setUserModified(isModified() || haveModifyActivityAfterSaveRequest());
 
     // Note: It's odd to capture these here, but this function is used from ClientSession too.
+#if defined ENABLE_DEBUG && !MOBILEAPP
     _nextStorageAttrs.setIsAutosave(isAutosave || _unitWsd.isAutosave());
+#endif
     _nextStorageAttrs.setExtendedData(extendedData);
 
     const std::string saveArgs = oss.str();
@@ -2583,10 +2599,12 @@ std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSessi
             " session [" << id << "] to docKey [" <<
             _docKey << "] to have " << count << " sessions.");
 
+#if defined ENABLE_DEBUG && !MOBILEAPP
     if (UnitWSD::isUnitTesting())
     {
         _unitWsd.onDocBrokerAddSession(_docKey, session);
     }
+#endif
 
     return count;
 }
@@ -2761,11 +2779,13 @@ void DocumentBroker::finalRemoveSession(const std::shared_ptr<ClientSession>& se
     const std::string sessionId = session->getId();
     try
     {
+#if defined ENABLE_DEBUG && !MOBILEAPP
         if (UnitWSD::isUnitTesting())
         {
             // Notify test code before removal.
             _unitWsd.onDocBrokerRemoveSession(_docKey, session);
         }
+#endif
 
         const bool readonly = session->isReadOnly();
         session->dispose();
@@ -2845,8 +2865,10 @@ void DocumentBroker::alertAllUsers(const std::string& msg)
 {
     ASSERT_CORRECT_THREAD();
 
+#if defined ENABLE_DEBUG && !MOBILEAPP
     if (_unitWsd.filterAlertAllusers(msg))
         return;
+#endif
 
     auto payload = std::make_shared<Message>(msg, Message::Dir::Out);
 
@@ -2890,8 +2912,10 @@ bool DocumentBroker::handleInput(const std::shared_ptr<Message>& message)
         COOLWSD::dumpOutgoingTrace(getJailId(), "0", message->abbr());
 #endif
 
+#if defined ENABLE_DEBUG && !MOBILEAPP
     if (_unitWsd.filterLOKitMessage(message))
         return true;
+#endif
 
     if (COOLProtocol::getFirstToken(message->forwardToken(), '-') == "client")
     {
