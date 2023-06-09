@@ -967,7 +967,7 @@ public:
     {
         LOG_TRC("Should we trim our caches ?");
         // FIXME: multi-document mobile optimization ?
-        for (auto it : _sessions)
+        for (const auto& it : _sessions)
         {
             if (it.second->isActive())
             {
