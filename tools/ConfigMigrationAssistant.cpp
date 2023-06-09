@@ -42,7 +42,7 @@ void MigrateLevel(const XMLConfiguration &sourceConfig, XMLConfiguration &target
 {
     Poco::Util::AbstractConfiguration::Keys subKeys;
     sourceConfig.keys(sourceLevel, subKeys);
-    for (auto key: subKeys)
+    for (const auto& key: subKeys)
     {
         const std::string fullKey = sourceLevel + "." + key;
         MigrateLevel(sourceConfig, targetConfig, fullKey);
