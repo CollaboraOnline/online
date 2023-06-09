@@ -500,6 +500,7 @@ namespace Util
                         pos = s.find(' ', pos + 1);
                     }
                 }
+                fclose(fp);
             }
         }
         return 0;
