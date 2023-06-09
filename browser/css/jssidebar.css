@@ -364,9 +364,6 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	width: var(--btn-size-s);
 	height: var(--btn-size-s);
 }
-#NavigatorDeck .ui-treeview-entry.ui-listview-expandable-with-icon {
-	cursor: grab;
-}
 #NavigatorDeck .ui-treeview-entry.selected {
 	background-color: var(--color-background-dark);
 	color: var(--color-primary);
