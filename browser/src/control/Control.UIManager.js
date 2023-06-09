@@ -421,6 +421,8 @@ L.Control.UIManager = L.Control.extend({
 		$('#map').addClass('notebookbar-opened');
 		this.insertCustomButtons();
 		this.map.sendInitUNOCommands();
+		if (this.map.getDocType() === 'presentation')
+			this.map.fire('toggleslidehide');
 	},
 
 	refreshMenubar: function() {
