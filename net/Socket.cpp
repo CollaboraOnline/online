@@ -187,7 +187,7 @@ SocketPoll::SocketPoll(std::string threadName)
 #endif
         )
     {
-        throw std::runtime_error("Failed to allocate pipe for SocketPoll [" + threadName + "] waking.");
+        throw std::runtime_error("Failed to allocate pipe for SocketPoll [" + _name + "] waking.");
     }
 
     LOG_DBG("New SocketPoll [" << _name << "] owned by " << Log::to_string(_owner));
