@@ -24,45 +24,7 @@ void TileQueue::put_impl(const Payload& value)
 {
     const std::string firstToken = COOLProtocol::getFirstToken(value);
 
-    if (firstToken == "canceltiles")
-    {
-        // #6514 given that all messages that can have "ver=" in them will
-        // also have "nviewid=", "oldwid=" and "wid=" then "id=" is always
-        // hit and this loop doesn't achieve anything, disable this for
-        // now and either drop canceltiles or repair it to do something
-#if 0
-        const std::string msg = std::string(value.data(), value.size());
-        LOG_TRC("Processing [" << COOLProtocol::getAbbreviatedMessage(msg)
-                               << "]. Before canceltiles have " << getQueue().size()
-                               << " in queue.");
-        const std::string seqs = msg.substr(12);
-        StringVector tokens(StringVector::tokenize(seqs, ','));
-        getQueue().erase(std::remove_if(getQueue().begin(), getQueue().end(),
-                [&tokens](const Payload& v)
-                {
-                    const std::string s(v.data(), v.size());
-                    // Tile is for a thumbnail, don't cancel it
-                    if (s.find("id=") != std::string::npos)
-                        return false;
-                    for (size_t i = 0; i < tokens.size(); ++i)
-                    {
-                        if (s.find("ver=" + tokens[i]) != std::string::npos)
-                        {
-                            LOG_TRC("Matched " << tokens[i] << ", Removing [" << s << ']');
-                            return true;
-                        }
-                    }
-
-                    return false;
-
-                }), getQueue().end());
-
-        // Don't push canceltiles into the queue.
-        LOG_TRC("After canceltiles have " << getQueue().size() << " in queue.");
-#endif
-        return;
-    }
-    else if (firstToken == "tilecombine")
+    if (firstToken == "tilecombine")
     {
         // Breakup tilecombine and deduplicate (we are re-combining the tiles
         // in the get_impl() again)

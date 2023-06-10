@@ -385,11 +385,9 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     {
         assert(false && "Tile traffic should go through the DocumentBroker-LoKit WS.");
     }
-    else if (tokens.equals(0, "requestloksession") ||
-             tokens.equals(0, "canceltiles"))
+    else if (tokens.equals(0, "requestloksession"))
     {
         // Just ignore these.
-        // FIXME: We probably should do something for "canceltiles" at least?
     }
     else if (tokens.equals(0, "blockingcommandstatus"))
     {

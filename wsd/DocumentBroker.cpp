@@ -3348,28 +3348,6 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     }
 }
 
-void DocumentBroker::cancelTileRequests(const std::shared_ptr<ClientSession>& session)
-{
-    std::unique_lock<std::mutex> lock(_mutex);
-
-    // Clear tile requests
-    session->clearTilesOnFly();
-
-    session->getRequestedTiles().clear();
-
-    session->resetWireIdMap();
-
-    if (!hasTileCache())
-        return;
-
-    const std::string canceltiles = tileCache().cancelTiles(session);
-    if (!canceltiles.empty())
-    {
-        LOG_DBG("Forwarding canceltiles request: " << canceltiles);
-        _childProcess->sendTextFrame(canceltiles);
-    }
-}
-
 void DocumentBroker::handleTileResponse(const std::shared_ptr<Message>& message)
 {
     const std::string firstLine = message->firstLine();

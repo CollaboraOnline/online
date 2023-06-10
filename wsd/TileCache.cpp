@@ -473,52 +473,6 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
     }
 }
 
-std::string TileCache::cancelTiles(const std::shared_ptr<ClientSession> &subscriber)
-{
-    assert(subscriber && "cancelTiles expects valid subscriber");
-    LOG_TRC("Cancelling tiles for " << subscriber->getName());
-
-    ASSERT_CORRECT_THREAD_OWNER(_owner);
-
-    const ClientSession* sub = subscriber.get();
-
-    std::ostringstream oss;
-
-    for (auto it = _tilesBeingRendered.begin(); it != _tilesBeingRendered.end(); )
-    {
-        if (it->second->getTile().getId() >= 0)
-        {
-            // Tile is for a thumbnail, don't cancel it
-            ++it;
-            continue;
-        }
-
-        auto& subscribers = it->second->getSubscribers();
-        LOG_TRC("Tile " << it->first.serialize() << " has " << subscribers.size() << " subscribers.");
-
-        const auto itRem = std::find_if(subscribers.begin(), subscribers.end(),
-                                        [sub](std::weak_ptr<ClientSession>& ptr){ return ptr.lock().get() == sub; });
-        if (itRem != subscribers.end())
-        {
-            LOG_TRC("Tile " << it->first.serialize() << " has " << subscribers.size() <<
-                    " subscribers. Removing " << subscriber->getName() << '.');
-            subscribers.erase(itRem, itRem + 1);
-            if (subscribers.empty())
-            {
-                // No other subscriber, remove it from the render queue.
-                oss << it->second->getVersion() << ',';
-                it = _tilesBeingRendered.erase(it);
-                continue;
-            }
-        }
-
-        ++it;
-    }
-
-    const std::string canceltiles = oss.str();
-    return canceltiles.empty() ? canceltiles : "canceltiles " + canceltiles;
-}
-
 Tile TileCache::findTile(const TileDesc &desc)
 {
     const auto it = _cache.find(desc);

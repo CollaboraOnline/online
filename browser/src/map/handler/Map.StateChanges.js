@@ -44,7 +44,6 @@ L.Map.StateChangeHandler = L.Handler.extend({
 		}
 
 		if (e.commandName === '.uno:SlideMasterPage') {
-			this._map._docLayer._masterPageChanged = true;
 			this._map._docLayer._selectedMode = (state === true || state === 'true') ? 1 : 0;
 		}
 
