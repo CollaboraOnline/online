@@ -1583,7 +1583,8 @@ private:
     bool _sentHTTPContinue;
 
     /// True when shutdown was requested via shutdown().
-    bool _shutdownSignalled;
+    /// It's accessed from different threads.
+    std::atomic_bool _shutdownSignalled;
     int _incomingFD;
     ReadType _readType;
     std::atomic_bool _inputProcessingEnabled;
