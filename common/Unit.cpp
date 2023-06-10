@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <condition_variable>
 #include <dlfcn.h>
 #include <fstream>
 #include <mutex>
@@ -40,9 +41,14 @@ char* UnitBase::UnitLibPath = nullptr;
 void* UnitBase::DlHandle = nullptr;
 UnitBase::TestOptions UnitBase::GlobalTestOptions;
 UnitBase::TestResult UnitBase::GlobalResult = UnitBase::TestResult::Ok;
-static std::thread TimeoutThread;
-static std::atomic<bool> TimeoutThreadRunning(false);
-std::timed_mutex TimeoutThreadMutex;
+
+namespace
+{
+std::thread TimeoutThread;
+std::mutex TimeoutThreadMutex;
+std::condition_variable TimeoutConditionVariable;
+
+} // namespace
 
 /// Controls whether experimental features/behavior is enabled or not.
 bool EnableExperimental = false;
@@ -236,17 +242,18 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
 
                 if (instance && type == UnitType::Kit)
                 {
-                    TimeoutThreadMutex.lock();
+                    std::unique_lock<std::mutex> lock(TimeoutThreadMutex);
                     TimeoutThread = std::thread(
                         [instance]
                         {
-                            TimeoutThreadRunning = true;
                             Util::setThreadName("unit timeout");
 
-                            if (TimeoutThreadMutex.try_lock_for(instance->_timeoutMilliSeconds))
+                            std::unique_lock<std::mutex> lock2(TimeoutThreadMutex);
+                            if (TimeoutConditionVariable.wait_for(lock2,
+                                                                  instance->_timeoutMilliSeconds) ==
+                                std::cv_status::no_timeout)
                             {
                                 LOG_DBG(instance->getTestname() << ": Unit test finished in time");
-                                TimeoutThreadMutex.unlock();
                             }
                             else
                             {
@@ -254,7 +261,6 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
                                                                 << instance->_timeoutMilliSeconds);
                                 instance->timeout();
                             }
-                            TimeoutThreadRunning = false;
                         });
                 }
 
@@ -390,7 +396,7 @@ bool UnitBase::isUnitTesting()
 
 void UnitBase::setTimeout(std::chrono::milliseconds timeoutMilliSeconds)
 {
-    assert(!TimeoutThreadRunning);
+    assert(!TimeoutThread.joinable() && "setTimeout must be called before starting a test");
     _timeoutMilliSeconds = timeoutMilliSeconds;
     LOG_TST(getTestname() << ": setTimeout: " << _timeoutMilliSeconds);
 }
@@ -535,7 +541,7 @@ void UnitBase::endTest(const std::string& reason)
     _socketPoll->joinThread();
 
     // tell the timeout thread that the work has finished
-    TimeoutThreadMutex.unlock();
+    TimeoutConditionVariable.notify_all();
     if (TimeoutThread.joinable())
         TimeoutThread.join();
 
