@@ -6138,6 +6138,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (!tile) {
 					tile = this.createTile(this._wrapCoords(queue[i]), L.bind(this._tileReady, this, queue[i]));
 
+					app.window.console.log('ARGH - what are we doing re-creating tiles !?');
+
 					// save tile in cache
 					this._tiles[key] = {
 						el: tile,
@@ -6703,7 +6705,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		return new L.LatLngBounds(nw, se);
 	},
 
-	_reclaimTileCanvasMemory: function (tile,freeDelta) {
+	_reclaimTileCanvasMemory: function (tile) {
 		// Partial fix for #5876 allow immediate reuse of canvas context memory
 		// WKWebView has a hard limit on the number of bytes of canvas
 		// context memory that can be allocated. Reducing the canvas
@@ -6713,11 +6715,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			tile.el.width = 0;
 			tile.el.height = 0;
 			delete tile.el;
-		}
-		if (freeDelta !== undefined && freeDelta && tile.rawDeltas) // help the GC
-		{
-			tile.rawDeltas.length = 0;
-			delete tile.rawDeltas;
 		}
 	},
 
@@ -6805,13 +6802,24 @@ L.CanvasTileLayer = L.Layer.extend({
 	{
 		var ctx = tile.el.getContext('2d');
 
-		// Not a good result - we ran out of memory, FIXME: manage it better.
+		// Not a good result - we ran out of memory, FIXME: manage this pro-actively.
 		if (!ctx)
 		{
-			// Free all our canvas' and start again.
-			window.app.console.log('Free all tiles canvas memory ');
+			// Free non-current canvas' and start again.
+			window.app.console.log('Free non-current tiles canvas memory');
 			for (var key in this._tiles) {
-				this._reclaimTileCanvasMemory(this._tiles[key], false);
+				var t = this._tiles[key];
+				if (t && !t.current)
+					this._reclaimTileCanvasMemory(t);
+			}
+			ctx = tile.el.getContext('2d');
+			if (!ctx)
+			{
+				window.app.console.log('Free all tiles canvas memory');
+				for (var key in this._tiles) {
+					var t = this._tiles[key];
+					this._reclaimTileCanvasMemory(t);
+				}
 			}
 			ctx = tile.el.getContext('2d');
 			if (!ctx)
@@ -6839,7 +6847,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// better.
 		if (isKeyframe)
 		{
-			if (tile.rawDeltas) // help the gc?
+			if (tile.rawDeltas && tile.rawDeltas != rawDelta) // help the gc?
 				tile.rawDeltas.length = 0;
 			tile.rawDeltas = rawDelta; // overwrite
 		}

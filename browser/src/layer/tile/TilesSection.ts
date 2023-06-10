@@ -459,7 +459,7 @@ class TilesSection extends CanvasSectionObject {
 	}
 
 	private forEachTileInArea(area: any, zoom: number, part: number, mode: number, ctx: any,
-		callback: (tile: any, coords: any) => boolean) {
+		callback: (tile: any, coords: any, section: TilesSection) => boolean) {
 		var docLayer = this.sectionProperties.docLayer;
 
 		if (app.file.fileBasedView) {
@@ -474,7 +474,7 @@ class TilesSection extends CanvasSectionObject {
 					if (img)
 						tile = { el: img, loaded: true, coords: coords };
 				}
-				callback(tile, coords);
+				callback(tile, coords, this);
 			}
 
 			return;
@@ -498,7 +498,7 @@ class TilesSection extends CanvasSectionObject {
 					if (img)
 						tile = { el: img, loaded: true, coords: coords };
 				}
-				callback(tile, coords);
+				callback(tile, coords, this);
 			}
 		}
 	}
@@ -541,7 +541,7 @@ class TilesSection extends CanvasSectionObject {
 			//console.log('DEBUG:: areaAtZoom = ' + areaAtZoom);
 			var relScale = this.map.getZoomScale(zoom, areaZoom);
 
-			this.forEachTileInArea(areaAtZoom, zoom, part, mode, ctx, function(tile, coords) {
+			this.forEachTileInArea(areaAtZoom, zoom, part, mode, ctx, function(tile, coords, section) {
 				if (tile && tile.el) {
 					var tilePos = coords.getPos();
 
@@ -658,9 +658,8 @@ class TilesSection extends CanvasSectionObject {
 			var destPosScaled = (bestZoomSrc == zoom) ? destPos : this.scalePosForZoom(destPos, bestZoomSrc, zoom);
 			var relScale = (bestZoomSrc == zoom) ? 1 : this.map.getZoomScale(bestZoomSrc, zoom);
 
-			var ensureCanvas = this.ensureCanvas;
 			this.beforeDraw(canvasContext);
-			this.forEachTileInArea(docRangeScaled, bestZoomSrc, part, mode, ctx, function (tile: any, coords: any): boolean {
+			this.forEachTileInArea(docRangeScaled, bestZoomSrc, part, mode, ctx, function (tile, coords, section): boolean {
 				if (!tile || !tile.loaded || !docLayer._isValidTile(coords))
 					return false;
 
@@ -684,7 +683,7 @@ class TilesSection extends CanvasSectionObject {
 				var tileOffset = crop.min.subtract(tileBounds.min);
 				var paneOffset = crop.min.subtract(docRangeScaled.min.subtract(destPosScaled));
 				if (cropWidth && cropHeight) {
-					ensureCanvas(tile);
+					section.ensureCanvas(tile);
 					canvasContext.drawImage(tile.el,
 						tileOffset.x, tileOffset.y, // source x, y
 						cropWidth, cropHeight, // source size
