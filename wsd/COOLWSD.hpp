@@ -199,7 +199,7 @@ protected:
 
 private:
     std::string _name;
-    pid_t _pid;
+    std::atomic<pid_t> _pid; //< The process-id, which can be access from different threads.
     std::shared_ptr<WebSocketHandler> _ws;
     std::shared_ptr<Socket> _socket;
 };
