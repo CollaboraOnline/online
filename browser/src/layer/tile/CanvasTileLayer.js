@@ -1387,13 +1387,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		return boundsList;
 	},
 
-	_noTilesToLoad: function () {
-		for (var key in this._tiles) {
-			if (!this._tiles[key].loaded) { return false; }
-		}
-		return true;
-	},
-
 	_initPreFetchPartTiles: function() {
 		// check existing timeout and clear it before the new one
 		if (this._partTilePreFetcher)
@@ -1511,21 +1504,20 @@ L.CanvasTileLayer = L.Layer.extend({
 		return this;
 	},
 
-	createTile: function (coords, done) {
-		var tile = document.createElement('img');
-
-		tile.onerror = L.bind(this._tileOnError, this, done, tile);
-
-		if (this.options.crossOrigin) {
-			tile.crossOrigin = '';
+	createTile: function (coords, key) {
+		if (this._tiles[key])
+		{
+			window.app.console.debug('Already created tile ' + key);
+			return tile;
 		}
-
-		/*
-		 Alt tag is set to empty string to keep screen readers from reading URL and for compliance reasons
-		 http://www.w3.org/TR/WCAG20-TECHS/H67
-		*/
-		tile.alt = '';
+		var tile = [
+			canvas: this._tileCache[key],
+			wid: 0,
+			coords: coords,
+			current: true
+		];
 		this._emptyTilesCount += 1;
+		this._tiles[key] = tile;
 		return tile;
 	},
 
@@ -3479,15 +3471,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		// e.type refers to signal type
 		dialogMsg.winType = dialogMsg.type;
 		this._map.fire('window', dialogMsg);
-	},
-
-	_tileOnError: function (done, tile, e) {
-		var errorUrl = this.options.errorTileUrl;
-		if (errorUrl) {
-			// FIXME: old & broken code-path
-			tile.src = errorUrl;
-		}
-		done(e, tile);
 	},
 
 	_mapOnError: function (e) {
@@ -5548,8 +5531,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		map.addLayer(this._searchResultsLayer);
 
 		this._levels = {};
-		this._tiles = {};
-		this._tileCache = {};
+		this._tiles = {}; // stores all tiles, co-ords and cached, compressed deltas
+		this._canvasCache = {}; // cache all live canvases.
 
 		app.socket.sendMessage('commandvalues command=.uno:AcceptTrackedChanges');
 
@@ -6136,22 +6119,9 @@ L.CanvasTileLayer = L.Layer.extend({
 				var key = this._tileCoordsToKey(queue[i]);
 				var tile = this._tiles[key];
 				if (!tile) {
-					tile = this.createTile(this._wrapCoords(queue[i]), L.bind(this._tileReady, this, queue[i]));
-
-					app.window.console.log('ARGH - what are we doing re-creating tiles !?');
-
-					// save tile in cache
-					this._tiles[key] = {
-						el: tile,
-						wid: 0,
-						coords: queue[i],
-						current: true
-					};
-
-					if (tile && this._tileCache[key]) {
-						tile.el = this._tileCache[key];
-					}
-					else {
+					tile = this.createTile(queue[i], key);
+					if (!tile.canvas)
+					{
 						this._sendTileCombineRequest(queue[i].part, queue[i].mode, (queue[i].x / this._tileSize) * this._tileWidthTwips, (queue[i].y / this._tileSize) * this._tileHeightTwips);
 					}
 				}
@@ -6365,23 +6335,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				coords = queue[i];
 				key = this._tileCoordsToKey(coords);
 				tile = undefined;
-				if (coords.part === this._selectedPart && coords.mode === this._selectedMode) {
-					var tileImg = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
-
-					// if createTile is defined with a second argument ("done" callback),
-					// we know that tile is async and will be ready later; otherwise
-					if (this.createTile.length < 2) {
-						// mark tile as ready, but delay one frame for opacity animation to happen
-						setTimeout(L.bind(this._tileReady, this, coords, null, tileImg), 0);
-					}
-
-					// save tile in cache
-					this._tiles[key] = tile = {
-						el: tileImg,
-						coords: coords,
-						current: true
-					};
-				}
+				if (coords.part === this._selectedPart && coords.mode === this._selectedMode)
+					tile = this.createTile(coords, key);
 
 				if (!this._tileCache[key]) {
 					// request each tile just once in these tilecombines
@@ -6418,16 +6373,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._initPreFetchPartTiles();
 	},
 
-	_tileReady: function (coords, err, tile) {
+	_tileReady: function (coords) {
 		if (!this._map) { return; }
-
-		if (err) {
-			this.fire('tileerror', {
-				error: err,
-				tile: tile,
-				coords: coords
-			});
-		}
 
 		var key = this._tileCoordsToKey(coords);
 
@@ -6452,46 +6399,20 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._painter.coordsIntersectVisible(coords)) {
 			this._painter._sectionContainer.setDirty();
 		}
-
-		if (this._noTilesToLoad()) {
-			this.fire('load');
-			this._pruneTiles();
-		}
 	},
 
 	_addTiles: function (coordsQueue) {
 		var coords, key, tile;
-		// first take care of the DOM
+
 		for (var i = 0; i < coordsQueue.length; i++) {
 			coords = coordsQueue[i];
 
 			key = this._tileCoordsToKey(coords);
 
-			if (coords.part === this._selectedPart && coords.mode === this._selectedMode) {
-				if (!this._tiles[key]) {
-					var tileImg = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
-
-					// if createTile is defined with a second argument ("done" callback),
-					// we know that tile is async and will be ready later; otherwise
-					if (this.createTile.length < 2) {
-						// mark tile as ready, but delay one frame for opacity animation to happen
-						setTimeout(L.bind(this._tileReady, this, coords, null, tileImg), 0);
-					}
-
-					// save tile in cache
-					this._tiles[key] = tile = {
-						el: tileImg,
-						wid: 0,
-						coords: coords,
-						current: true
-					};
-
-					if (tile && this._tileCache[key]) {
-						tile.el = this._tileCache[key];
-						tile.loaded = true;
-					}
-				}
-			}
+			if (coords.part === this._selectedPart &&
+			    coords.mode === this._selectedMode &&
+			    !this._tiles[key])
+				this.createTile(coords, key);
 		}
 
 		// sort the tiles by the rows
@@ -6855,14 +6776,15 @@ L.CanvasTileLayer = L.Layer.extend({
 			tile.rawDeltas = tile.rawDeltas.concatenate(rawDelta);
 
 		// 'Uint8Array' delta
-		if (!tile.el || !(tile.el instanceof HTMLCanvasElement))
+		if (!tile.canvas)
 		{
 			// defer constructing the image & applying these deltas
 			// until the tile is rendered via ensureCanvas.
 			return;
 		}
+		app.window.console.assert(tile.canvas instanceof HTMLCanvasElement);
 
-		var canvas = tile.el;
+		var canvas = tile.canvas;
 
 		// apply potentially several deltas in turn.
 		var i = 0;
@@ -7094,18 +7016,14 @@ L.CanvasTileLayer = L.Layer.extend({
 				tile.el = img;
 			}
 			tile.loaded = true;
-			this._tileReady(coords, null /* err */, tile);
+			this._tileReady(coords);
 		}
 
 		// CollaboraOnline#6423 cache the following parts tiles,
 		// this will help avoiding the tear effect when switching to the next part
-		if (!tile && this._selectedPart !== coords.part && !this._tileCache[key]) {
-			tile = document.createElement('img');
-			if (img.rawData)
-				this._applyDelta(tile, img.rawData, img.isKeyframe);
-			else
-				tile.el = img;
-			this._tileCache[key] = tile.el;
+		if (!tile && this._selectedPart !== coords.part && img.rawData) {
+			tile = this.createTile(coords, key);
+			this._applyDelta(tile, img.rawData, img.isKeyframe);
 		}
 		L.Log.log(textMsg, 'INCOMING', key);
 
