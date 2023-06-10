@@ -6775,7 +6775,13 @@ L.CanvasTileLayer = L.Layer.extend({
 			tile.rawDeltas = rawDelta; // overwrite
 		}
 		else // assume we already have a delta.
-			tile.rawDeltas = tile.rawDeltas.concatenate(rawDelta);
+		{
+			// FIXME: this is not beautiful; but no concatenate here.
+			var tmp = new Uint8Array(tile.rawDeltas.byteLength + rawDelta.byteLength);
+			tmp.set(tile.rawDeltas, 0);
+			tmp.set(rawDelta, tile.rawDeltas.byteLength);
+			tile.rawDeltas = tmp;
+		}
 
 		// 'Uint8Array' delta
 		if (!tile.canvas)
