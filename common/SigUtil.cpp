@@ -295,6 +295,8 @@ namespace SigUtil
     static
     void handleTerminationSignal(const int signal)
     {
+        const auto onrre = errno; // Save.
+
         bool hardExit = false;
         const char *domain;
         if (!ShutdownRequestFlag && (signal == SIGINT || signal == SIGTERM))
@@ -329,8 +331,11 @@ namespace SigUtil
 #endif
 
             ::signal (signal, SIG_DFL);
+            errno = onrre; // Restore.
             ::raise (signal);
         }
+
+        errno = onrre; // Restore.
     }
 
     void requestShutdown()
