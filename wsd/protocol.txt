@@ -78,13 +78,6 @@ TRACEEVENT name=<name> ph=<letter> ts=<timestamp> <more parameters>... [ args=<J
     between the beginning of the thing being timed and the time when
     the 'X' message was emitted, also in microseconds.
 
-canceltiles
-
-    All outstanding tile messages from the client to the server are
-    dropped and will not be handled, except tile messages with an id
-    parameter. There is no guarantee of exactly which tile: messages
-    might still be sent back to the client.
-
 tileprocessed tile=<tileid>
 
     Previously sent tile (server -> client) arrived and processed by the client.

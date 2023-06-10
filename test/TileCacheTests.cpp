@@ -70,9 +70,6 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testSimple);
     CPPUNIT_TEST(testSimpleCombine);
     CPPUNIT_TEST(testSize);
-    CPPUNIT_TEST(testCancelTiles);
-    // unstable
-    // CPPUNIT_TEST(testCancelTilesMultiView);
     CPPUNIT_TEST(testDisconnectMultiView);
     CPPUNIT_TEST(testUnresponsiveClient);
     CPPUNIT_TEST(testImpressTiles);
@@ -110,8 +107,6 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testSimple();
     void testSimpleCombine();
     void testSize();
-    void testCancelTiles();
-    void testCancelTilesMultiView();
     void testDisconnectMultiView();
     void testUnresponsiveClient();
     void testImpressTiles();
@@ -343,133 +338,6 @@ void TileCacheTests::testSize()
     LOK_ASSERT_MESSAGE("tile cache too big", tc.getMemorySize() < maxSize);
 }
 
-void TileCacheTests::testCancelTiles()
-{
-    const char* testname = "cancelTiles ";
-
-    // The tile response can race past the canceltiles,
-    // so be forgiving to avoid spurious failures.
-    constexpr size_t repeat = 2;
-    for (size_t i = 1; i <= repeat; ++i)
-    {
-        TST_LOG("cancelTiles try #" << i);
-
-        // Wait to clear previous sessions.
-        countCoolKitProcesses(InitialCoolKitCount);
-
-        std::shared_ptr<http::WebSocketSession> socket
-            = loadDocAndGetSession(_socketPoll, "setclientpart.ods", _uri, testname);
-
-        // Request a huge tile, and cancel immediately.
-        sendTextFrame(socket,
-                      "tilecombine nviewid=0 part=0 width=2560 height=2560 tileposx=0 tileposy=0 "
-                      "tilewidth=38400 tileheight=38400",
-                      testname);
-        sendTextFrame(socket, "canceltiles", testname);
-
-        const auto res = getResponseString(socket, "tile:", testname, std::chrono::seconds(1));
-        if (!res.empty())
-        {
-            if (i == repeat)
-            {
-                LOK_ASSERT_MESSAGE("Did not expect getting message [" + res + "].", res.empty());
-            }
-
-            TST_LOG("Unexpected: [" << res << ']');
-        }
-
-        socket->asyncShutdown();
-        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
-                           socket->waitForDisconnection(std::chrono::seconds(5)));
-        if (res.empty())
-            break;
-    }
-}
-
-void TileCacheTests::testCancelTilesMultiView()
-{
-    const std::string testname = "testCancelTilesMultiView-";
-
-    // The tile response can race past the canceltiles,
-    // so be forgiving to avoid spurious failures.
-    constexpr size_t repeat = 2;
-    for (size_t j = 1; j <= repeat; ++j)
-    {
-        std::string documentPath, documentURL;
-        getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL, testname);
-
-        TST_LOG("cancelTilesMultiView try #" << j);
-
-        // Wait to clear previous sessions.
-        countCoolKitProcesses(InitialCoolKitCount);
-
-        // Request a huge tile, and cancel immediately.
-        std::shared_ptr<http::WebSocketSession> socket1
-            = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "1 ");
-        std::shared_ptr<http::WebSocketSession> socket2
-            = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "2 ");
-
-        sendTextFrame(socket1,
-                      "tilecombine nviewid=0 part=0 width=256 height=256 "
-                      "tileposx=0,3840,7680,11520,0,3840,7680,11520 "
-                      "tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840",
-                      testname + "1 ");
-        sendTextFrame(socket2,
-                      "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,0 "
-                      "tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840",
-                      testname + "2 ");
-
-        sendTextFrame(socket1, "canceltiles", testname + "1 ");
-        const auto res1
-            = getResponseString(socket1, "tile:", testname + "1 ", std::chrono::milliseconds(500));
-        if (!res1.empty())
-        {
-            if (j == repeat)
-            {
-                LOK_ASSERT_MESSAGE("Did not expect getting message [" + res1 + "].", res1.empty());
-            }
-
-            TST_LOG("Unexpected: [" << res1 << ']');
-            continue;
-        }
-
-        for (int i = 0; i < 4; ++i)
-        {
-            getTileMessage(socket2, testname + "2 ");
-        }
-
-        // Should never get more than 4 tiles on socket2.
-        // Though in practice we get the rendering result from socket1's request and ours.
-        // This happens because we currently always send back tiles even if they are of old version
-        // because we want to be responsive, since we've rendered them anyway.
-        const auto res2
-            = getResponseString(socket2, "tile:", testname + "2 ", std::chrono::milliseconds(500));
-        if (!res2.empty())
-        {
-            if (j == repeat)
-            {
-                LOK_ASSERT_MESSAGE("Did not expect getting message [" + res2 + "].", res1.empty());
-            }
-
-            TST_LOG("Unexpected: [" << res2 << ']');
-            continue;
-        }
-
-        socket1->asyncShutdown();
-        socket2->asyncShutdown();
-
-        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
-                           socket1->waitForDisconnection(std::chrono::seconds(5)));
-        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
-                           socket2->waitForDisconnection(std::chrono::seconds(5)));
-
-        if (res1.empty() && res2.empty())
-        {
-            break;
-        }
-
-    }
-}
 
 void TileCacheTests::testDisconnectMultiView()
 {
@@ -577,8 +445,7 @@ void TileCacheTests::testUnresponsiveClient()
             LOK_ASSERT_MESSAGE("Did not receive tile #" + std::to_string(i+1) + " of 8: message as expected", !tile.empty());
         }
 
-        /// Send canceltiles message to clear tiles-on-fly list, otherwise wsd waits for tileprocessed messages
-        sendTextFrame(socket2, "canceltiles", testname + "2 ");
+        // FIXME: removed canceltiles here ...
     }
 
     socket1->asyncShutdown();

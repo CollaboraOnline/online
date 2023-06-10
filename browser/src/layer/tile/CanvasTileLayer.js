@@ -885,7 +885,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._cellCursorOnPgUp = null;
 		this._cellCursorOnPgDn = null;
 		this._shapeGridOffset = new L.Point(0, 0);
-		this._masterPageChanged = false;
 
 		// Position and size of the selection start (as if there would be a cursor caret there).
 
@@ -5015,8 +5014,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_debugShowTileData: function() {
 		this._debugData['loadCount'].setPrefix('Total of requested tiles: ' +
 				this._debugInvalidateCount + ', recv-tiles: ' + this._debugLoadTile +
-				', recv-delta: ' + this._debugLoadDelta +
-				', cancelled: ' + this._debugCancelledTiles);
+						       ', recv-delta: ' + this._debugLoadDelta);
 	},
 
 	_debugInit: function() {
@@ -5025,7 +5023,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugInvalidBoundsMessage = {};
 		this._debugTimeout();
 		this._debugId = 0;
-		this._debugCancelledTiles = 0;
 		this._debugLoadTile = 0;
 		this._debugLoadDelta = 0;
 		this._debugInvalidateCount = 0;
@@ -6136,17 +6133,12 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._tiles[i].current = false; // Visible ones's "current" property will be set to true below.
 			}
 
-			var allNewTiles = true;
 			for (i = 0; i < queue.length; i++) {
 				var tempTile = this._tiles[this._tileCoordsToKey(queue[i])];
 				if (tempTile && tempTile.loaded) {
 					tempTile.current = true;
-					allNewTiles = false;
 				}
 			}
-
-			if (allNewTiles && !checkOnly)
-				this._cancelTiles();
 		}
 
 		if (checkOnly) {
@@ -6222,12 +6214,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 		}
 
-		// If there are panes that need new tiles for its entire area, cancel previous requests.
-		var cancelTiles = false;
-		var paneNewView;
 		// create a queue of coordinates to load tiles from
 		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
-			paneNewView = true;
 			var tileRange = tileRanges[rangeIdx];
 			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
 				for (var i = tileRange.min.x; i <= tileRange.max.x; ++i) {
@@ -6245,7 +6233,6 @@ L.CanvasTileLayer = L.Layer.extend({
 					var invalid = tile && tile._invalidCount && tile._invalidCount > 0;
 					if (tile && tile.loaded && !invalid) {
 						tile.current = true;
-						paneNewView = false;
 					} else if (invalid) {
 						tile._invalidCount = 1;
 						queue.push(coords);
@@ -6254,31 +6241,13 @@ L.CanvasTileLayer = L.Layer.extend({
 					}
 				}
 			}
-
-			if (paneNewView) {
-				cancelTiles = true;
-			}
 		}
 
 		this._sendClientVisibleArea();
 		this._sendClientZoom();
 
-		if (this._masterPageChanged) {
-			// avoid cancelling tiles on masterpage view switches
-			// it will be cancelled updateOnPartChange when necessary
-			this._masterPageChanged = false;
-			cancelTiles = false;
-		}
-
-		if (queue.length !== 0) {
-			if (cancelTiles) {
-				// we know that a new set of tiles (that completely cover one/more panes) has been requested
-				// so we're able to cancel the previous requests that are being processed
-				this._cancelTiles();
-			}
-
+		if (queue.length !== 0)
 			this._addTiles(queue);
-		}
 	},
 
 	_sendClientVisibleArea: function (forceUpdate) {
@@ -6339,12 +6308,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 		}
 
-		// If there are panes that need new tiles for its entire area, cancel previous requests.
-		var cancelTiles = false;
-		var paneNewView;
 		// create a queue of coordinates to load tiles from
 		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
-			paneNewView = true;
 			var tileRange = tileRanges[rangeIdx];
 			for (var j = tileRange.min.y; j <= tileRange.max.y; j++) {
 				for (var i = tileRange.min.x; i <= tileRange.max.x; i++) {
@@ -6361,24 +6326,14 @@ L.CanvasTileLayer = L.Layer.extend({
 					tile = this._tiles[key];
 					if (tile) {
 						tile.current = true;
-						paneNewView = false;
 					} else {
 						queue.push(coords);
 					}
 				}
 			}
-			if (paneNewView) {
-				cancelTiles = true;
-			}
 		}
 
 		if (queue.length !== 0) {
-			if (cancelTiles) {
-				// we know that a new set of tiles (that completely cover one/more panes) has been requested
-				// so we're able to cancel the previous requests that are being processed
-				this._cancelTiles();
-			}
-
 			var tilePositionsX = '';
 			var tilePositionsY = '';
 			var added = {};
@@ -6625,57 +6580,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		if (this._docType === 'presentation' || this._docType === 'drawing')
 			this._initPreFetchPartTiles();
-	},
-
-	_cancelTiles: function () {
-		app.socket.sendMessage('canceltiles');
-		for (var key in this._tiles) {
-			var tile = this._tiles[key];
-			// When _invalidCount > 0 the tile has been invalidated, however the new tile content
-			// has not yet been fetched and because of `canceltiles` message it will never be
-			// so we need to remove the tile, or when the tile is back inside the visible area
-			// its content would be the old invalidated one. Drop only those tiles which are not in
-			// the new visible area.
-			// example: a tile is invalidated but a sudden scroll to the cell cursor position causes
-			// to move the tile out of the visible area before the new content is fetched
-
-			var dropTile = !tile.loaded;
-			var coords = tile.coords;
-			if (coords.part === this._selectedPart && coords.mode === this._selectedMode) {
-
-				var tileBounds;
-				if (!this._splitPanesContext) {
-					var tileTopLeft = this._coordsToTwips(coords);
-					var tileBottomRight = new L.Point(this._tileWidthTwips, this._tileHeightTwips);
-					tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(tileBottomRight));
-					var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
-					var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
-					var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
-
-					dropTile |= (tile._invalidCount > 0 && !visibleArea.intersects(tileBounds));
-				}
-				else
-				{
-					var tilePos = coords.getPos();
-					tileBounds = new L.Bounds(tilePos, tilePos.add(new L.Point(this._tileSize, this._tileSize)));
-					dropTile |= (tile._invalidCount > 0 &&
-						!this._splitPanesContext.intersectsVisible(tileBounds));
-				}
-			}
-			else {
-				dropTile |= tile._invalidCount > 0;
-			}
-
-
-			if (dropTile) {
-				delete this._tiles[key];
-				if (this._debug && this._debugDataCancelledTiles) {
-					this._debugCancelledTiles++;
-					this._debugDataCancelledTiles.setPrefix('Cancelled tiles: ' + this._debugCancelledTiles);
-				}
-			}
-		}
-		this._emptyTilesCount = 0;
 	},
 
 	_checkTileMsgObject: function (msgObj) {
