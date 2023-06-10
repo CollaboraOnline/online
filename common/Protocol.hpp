@@ -217,7 +217,7 @@ namespace COOLProtocol
     inline
     bool tokenIndicatesUserInteraction(const std::string_view token)
     {
-        // Exclude tokens that include these keywords, such as canceltiles statusindicator.
+        // Exclude tokens that include these keywords, such as statusindicator.
 
         // FIXME: This is wrong. That the token happens to contain (or not) a certain substring is
         // no guarantee that it "indicates user interaction". It might be like that at the moment,
