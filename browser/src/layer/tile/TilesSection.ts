@@ -159,7 +159,7 @@ class TilesSection extends CanvasSectionObject {
 
 			this.beforeDraw(canvasCtx);
 			this.ensureCanvas(tile);
-			canvasCtx.drawImage(tile.el,
+			canvasCtx.drawImage(tile.canvas,
 				crop.min.x - tileBounds.min.x,
 				crop.min.y - tileBounds.min.y,
 				cropWidth, cropHeight,
@@ -210,14 +210,14 @@ class TilesSection extends CanvasSectionObject {
 			extendedOffset.y = offset.y + halfExtraSize;
 
 			this.ensureCanvas(tile);
-			this.context.drawImage(tile.el, offset.x, offset.y, tileSize, tileSize);
-			this.oscCtxs[0].drawImage(tile.el, extendedOffset.x, extendedOffset.y, tileSize, tileSize);
+			this.context.drawImage(tile.canvas, offset.x, offset.y, tileSize, tileSize);
+			this.oscCtxs[0].drawImage(tile.canvas, extendedOffset.x, extendedOffset.y, tileSize, tileSize);
 			//this.pdfViewDrawTileBorders(tile, offset, tileSize);
 		}
 		else {
 			this.ensureCanvas(tile);
-			this.context.drawImage(tile.el, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
-			this.oscCtxs[0].drawImage(tile.el, extendedOffset.x, extendedOffset.y, ctx.tileSize.x, ctx.tileSize.y);
+			this.context.drawImage(tile.canvas, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
+			this.oscCtxs[0].drawImage(tile.canvas, extendedOffset.x, extendedOffset.y, ctx.tileSize.x, ctx.tileSize.y);
 		}
 	}
 
@@ -420,7 +420,7 @@ class TilesSection extends CanvasSectionObject {
 			if (tile && tile.loaded && docLayer._isValidTile(coords)) {
 				if (this.isJSDOM) // perf-test code
 				{
-					if (tile.el && (tile.el instanceof HTMLCanvasElement))
+					if (tile.canvas && (tile.canvas instanceof HTMLCanvasElement))
 						this.paint(tile, ctx, false /* async? */);
 				}
 				else
@@ -470,9 +470,11 @@ class TilesSection extends CanvasSectionObject {
 				var key = coords.key();
 				var tile = docLayer._tiles[key];
 				if (!tile) {
-					var img = docLayer._tileCache[key];
-					if (img)
-						tile = { el: img, loaded: true, coords: coords };
+				// FIXME: this looks like madness - transient _tiles[] what is up there ?
+				// docLayer.createTile(coords, key)
+					var canvas = docLayer._canvasCache[key];
+					if (canvas)
+						tile = { canvas: canvas, loaded: true, coords: coords };
 				}
 				callback(tile, coords, this);
 			}
@@ -494,9 +496,10 @@ class TilesSection extends CanvasSectionObject {
 				var key = coords.key();
 				var tile = docLayer._tiles[key];
 				if (!tile) {
-					var img = docLayer._tileCache[key];
-					if (img)
-						tile = { el: img, loaded: true, coords: coords };
+				// FIXME: this looks like madness too ...
+					var canvas = docLayer._canvasCache[key];
+					if (canvas)
+						tile = { canvas: canvas, loaded: true, coords: coords };
 				}
 				callback(tile, coords, this);
 			}
@@ -542,7 +545,7 @@ class TilesSection extends CanvasSectionObject {
 			var relScale = this.map.getZoomScale(zoom, areaZoom);
 
 			this.forEachTileInArea(areaAtZoom, zoom, part, mode, ctx, function(tile, coords, section) {
-				if (tile && tile.el) {
+				if (tile && tile.canvas) {
 					var tilePos = coords.getPos();
 
 					if (app.file.fileBasedView) {
@@ -684,7 +687,7 @@ class TilesSection extends CanvasSectionObject {
 				var paneOffset = crop.min.subtract(docRangeScaled.min.subtract(destPosScaled));
 				if (cropWidth && cropHeight) {
 					section.ensureCanvas(tile);
-					canvasContext.drawImage(tile.el,
+					canvasContext.drawImage(tile.canvas,
 						tileOffset.x, tileOffset.y, // source x, y
 						cropWidth, cropHeight, // source size
 						// Destination x, y, w, h (In non-Chrome browsers it leaves lines without the 0.5 correction).

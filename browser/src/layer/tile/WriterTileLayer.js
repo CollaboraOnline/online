@@ -122,14 +122,14 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			this._debugAddInvalidationMessage(textMsg);
 		}
 
-		for (key in this._tileCache) {
+		for (key in this._canvasCache) {
 			// compute the rectangle that each tile covers in the document based
 			// on the zoom level
 			coords = this._keyToTileCoords(key);
 			bounds = this._coordsToTileBounds(coords);
 			if (invalidBounds.intersects(bounds)) {
-				this._reclaimTileCanvasMemory(this._tileCache[key]);
-				delete this._tileCache[key];
+				this._reclaimTileCanvasMemory(this._canvasCache[key]);
+				delete this._canvasCache[key];
 			}
 		}
 

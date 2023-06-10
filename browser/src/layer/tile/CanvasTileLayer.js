@@ -1415,7 +1415,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					continue;
 
 				var key = this._tileCoordsToKey(coords);
-				if (this._tileCache[key])
+				if (this._canvasCache[key])
 					continue;
 
 				var twips = this._coordsToTwips(coords);
@@ -1508,14 +1508,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._tiles[key])
 		{
 			window.app.console.debug('Already created tile ' + key);
-			return tile;
+			return this._tiles[key];
 		}
-		var tile = [
-			canvas: this._tileCache[key],
+		var tile = {
 			wid: 0,
 			coords: coords,
 			current: true
-		];
+		};
+		tile.canvas = this._canvasCache[key];
 		this._emptyTilesCount += 1;
 		this._tiles[key] = tile;
 		return tile;
@@ -6338,7 +6338,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (coords.part === this._selectedPart && coords.mode === this._selectedMode)
 					tile = this.createTile(coords, key);
 
-				if (!this._tileCache[key]) {
+				if (!this._canvasCache[key]) {
 					// request each tile just once in these tilecombines
 					if (added[key])
 						continue;
@@ -6355,7 +6355,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					tilePositionsY += twips.y;
 				}
 				else if (tile) {
-					tile.el = this._tileCache[key];
+					tile.canvas = this._canvasCache[key];
 					tile.loaded = true;
 				}
 			}
@@ -6378,8 +6378,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var key = this._tileCoordsToKey(coords);
 
-		tile = this._tiles[key];
-		if (!tile) { return; }
+		var tile = this._tiles[key];
+		if (!tile)
+			return;
 
 		var emptyTilesCountChanged = false;
 		if (this._emptyTilesCount > 0) {
@@ -6431,7 +6432,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			// tiles that do not interest us
 			key = this._tileCoordsToKey(coords);
-			if (this._tileCache[key]
+			if (this._canvasCache[key]
 				|| coords.part !== this._selectedPart
 				|| coords.mode !== this._selectedMode) {
 				coordsQueue.splice(0, 1);
@@ -6567,7 +6568,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 
 			if (dropTile) {
-				this._reclaimTileCanvasMemory(tile);
+				this._reclaimTileCanvasMemory(tile, key);
 				delete this._tiles[key];
 				if (this._debug && this._debugDataCancelledTiles) {
 					this._debugCancelledTiles++;
@@ -6626,16 +6627,17 @@ L.CanvasTileLayer = L.Layer.extend({
 		return new L.LatLngBounds(nw, se);
 	},
 
-	_reclaimTileCanvasMemory: function (tile) {
+	_reclaimTileCanvasMemory: function (tile, key) {
 		// Partial fix for #5876 allow immediate reuse of canvas context memory
 		// WKWebView has a hard limit on the number of bytes of canvas
 		// context memory that can be allocated. Reducing the canvas
 		// size to zero is a way to reduce the number of bytes counted
 		// against this limit.
-		if (tile && tile.el && tile.el instanceof HTMLCanvasElement) {
-			tile.el.width = 0;
-			tile.el.height = 0;
-			delete tile.el;
+		if (tile && tile.canvas) {
+			tile.canvas.width = 0;
+			tile.canvas.height = 0;
+			delete tile.canvas;
+			delete this._canvasCache[key];
 		}
 	},
 
@@ -6643,13 +6645,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		var tile = this._tiles[key];
 		if (!tile) { return; }
 
-		// FIXME: this _tileCache is used for prev/next slide; but it is
+		/* Very odd ...
+		// FIXME: this _canvasCache is used for prev/next slide; but it is
 		// dangerous in connection with typing / invalidation
 		if (!(this._tiles[key]._invalidCount > 0)) {
 			if (tile.el.src || tile.el instanceof HTMLCanvasElement) {
-				this._tileCache[key] = tile.el;
+				this._canvasCache[key] = tile.canvas;
 			}
-		}
+		} */
 
 		if (!tile.loaded && this._emptyTilesCount > 0) {
 			this._emptyTilesCount -= 1;
@@ -6658,7 +6661,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._debug && this._debugInfo && this._tiles[key]._debugPopup) {
 			this._debugInfo.removeLayer(this._tiles[key]._debugPopup);
 		}
-		this._reclaimTileCanvasMemory(tile);
+		this._reclaimTileCanvasMemory(tile, key);
 		delete this._tiles[key];
 	},
 
@@ -6701,14 +6704,13 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!tile)
 			return null;
 
+		// This allocation is usually cheap and reliable,
+		// getting the canvas context, not so much.
 		var canvas = document.createElement('canvas');
-
-		// FIXME: if this fails - go attack the cache ...
 		canvas.width = window.tileSize;
 		canvas.height = window.tileSize;
 
-		// FIXME: rename tile.el -> tile.canvas
-		tile.el = canvas;
+		tile.canvas = canvas;
 
 		// re-hydrate recursively from cached data
 		if (tile.rawDeltas)
@@ -6721,7 +6723,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_ensureContext: function(tile)
 	{
-		var ctx = tile.el.getContext('2d');
+		var ctx = tile.canvas.getContext('2d');
 
 		// Not a good result - we ran out of memory, FIXME: manage this pro-actively.
 		if (!ctx)
@@ -6731,18 +6733,18 @@ L.CanvasTileLayer = L.Layer.extend({
 			for (var key in this._tiles) {
 				var t = this._tiles[key];
 				if (t && !t.current)
-					this._reclaimTileCanvasMemory(t);
+					this._reclaimTileCanvasMemory(t, key);
 			}
-			ctx = tile.el.getContext('2d');
+			ctx = tile.canvas.getContext('2d');
 			if (!ctx)
 			{
 				window.app.console.log('Free all tiles canvas memory');
 				for (var key in this._tiles) {
 					var t = this._tiles[key];
-					this._reclaimTileCanvasMemory(t);
+					this._reclaimTileCanvasMemory(t, key);
 				}
 			}
-			ctx = tile.el.getContext('2d');
+			ctx = tile.canvas.getContext('2d');
 			if (!ctx)
 				window.app.console.log('out of canvas memory, and now ideas.');
 		}
@@ -6782,7 +6784,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			// until the tile is rendered via ensureCanvas.
 			return;
 		}
-		app.window.console.assert(tile.canvas instanceof HTMLCanvasElement);
+		window.app.console.assert(tile.canvas instanceof HTMLCanvasElement);
 
 		var canvas = tile.canvas;
 
@@ -7001,20 +7003,16 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._tiles[key]._invalidCount -= 1;
 
 			tile.wireId = tileMsgObj.wireId;
-			if (this._map._canvasDevicePixelGrid)
+
+/*			if (this._map._canvasDevicePixelGrid)
 			{
 				// FIXME: render this onto the canvas with hairlines (?)
 				// browser/test/pixel-test.png - debugging pixel alignment.
 				tile.el.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5QEIChoQ0oROpwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACfklEQVR42u3dO67CQBBFwbnI+9/yJbCQLDIkPsZdFRAQjjiv3S8YZ63VNsl6aLvgop5+6vFzZ3QP/uQz2c0RIAAQAAzcASwAmAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACADGBnC8iQ5MABAACAB+zsVYjLZ9dOvd3zzg/QOYADByB/BvUCzBIAAQAFiCwQQAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAwIgAXb2ECgABAAPDaI7SLsZhs+79kvX8AEwDsAM8DASzBIAAQAFiCwQQAAYAAQAAgABAAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAI4LSSOAQBgABAAPDVR9C2ToGxNkfww623bZL98/ilUzIBwA4wbCAgABAACAAswWACgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAAAjAESAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAGAAEAAIAAQAAgABAACAAGAAEAAIAAQAAgAPiaJAEAAIAB48yNWW6fAWJsj4LRbb9sk++fxSxMA7AAMGwgCAAGAAMASDCYACAAEAAIAAYAAQAAgABAACAAEAAIAASAAR4AAQAAgABAACAAEANeW9e675sAEAAGAAODUO4AFgMnu7t9h2ahA0pgAAAAASUVORK5CYII=';
 			}
-			else if (tile && img.rawData)
-				this._applyDelta(tile, img.rawData, img.isKeyframe);
+			else */
+			this._applyDelta(tile, img.rawData, img.isKeyframe);
 
-			else
-			{
-				app.console.debug('This should never happen');
-				tile.el = img;
-			}
 			tile.loaded = true;
 			this._tileReady(coords);
 		}
@@ -7318,7 +7316,7 @@ L.TilesPreFetcher = L.Class.extend({
 
 					if (!this._docLayer._isValidTile(coords) ||
 						this._docLayer._tiles[key] ||
-						this._docLayer._tileCache[key] ||
+						this._docLayer._canvasCache[key] ||
 						visitedTiles[key]) {
 						continue;
 					}
