@@ -463,7 +463,6 @@ setup-wsd: all @JAILS_PATH@
 
 COMMON_PARAMS = \
 	--o:sys_template_path="@SYSTEMPLATE_PATH@" \
-	--o:security.capabilities="$(CAPABILITIES)" \
 	--o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 	--o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 	--o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
@@ -472,14 +471,16 @@ COMMON_PARAMS = \
 
 run: setup-wsd
 	./coolwsd $(COMMON_PARAMS) \
-		--o:logging.file[@enable]=${OUTPUT_TO_FILE} --o:logging.level=trace \
-		--o:trace_event[@enable]=true
+			--o:security.capabilities="$(CAPABILITIES)" \
+			--o:logging.file[@enable]=${OUTPUT_TO_FILE} --o:logging.level=trace \
+			--o:trace_event[@enable]=true
 
 if ENABLE_DEBUG
 run-one: setup-wsd
 	./coolwsd $(COMMON_PARAMS) \
-		--o:logging.file[@enable]=true --o:logging.level=trace \
-		--singlekit
+			--o:security.capabilities="$(CAPABILITIES)" \
+			--o:logging.file[@enable]=true --o:logging.level=trace \
+			--singlekit
 endif
 
 sync-writer:
@@ -492,62 +493,37 @@ sync-impress:
 	browser-sync start --config browsersync-config.js --startPath "browser/96c23f663/cool.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odp"
 
 run-trace: setup-wsd
-	./coolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
-			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
-			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
-			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
-			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
-			  --o:admin_console.username=admin --o:admin_console.password=admin \
-			  --o:logging.file[@enable]=false --o:logging.level=trace \
-                          --o:trace[@enable]=true --o:trace.path=${builddir}/trace.txt.gz \
-                          --o:trace.outgoing.record=false
+	./coolwsd $(COMMON_PARAMS) \
+			--o:logging.file[@enable]=false --o:logging.level=trace \
+			--o:trace[@enable]=true --o:trace.path=${builddir}/trace.txt.gz \
+			--o:trace.outgoing.record=false
 
 run-valgrind: setup-wsd
 	@echo "Launching coolwsd under valgrind (but not forkit/coolkit, yet)"
 	valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \
-		./coolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
-			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
-			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
-			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
-			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
-			  --o:admin_console.username=admin --o:admin_console.password=admin \
-			  --o:logging.file[@enable]=false --o:logging.level=trace
+		./coolwsd $(COMMON_PARAMS) \
+			--o:logging.file[@enable]=false --o:logging.level=trace
 
 run-gdb: setup-wsd
 	@echo "Launching coolwsd under gdb"
 	$(RUN_GDB) \
-		./coolwsd --o:security.capabilities="false" \
-			  --o:sys_template_path="@SYSTEMPLATE_PATH@" \
-			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
-			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
-			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
-			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
-			  --o:admin_console.username=admin --o:admin_console.password=admin \
-			  --o:logging.file[@enable]=false --o:logging.level=error
+		./coolwsd $(COMMON_PARAMS) \
+			--o:security.capabilities="false" \
+			--o:logging.file[@enable]=false --o:logging.level=error
 
 run-callgrind: setup-wsd
 	@echo "Launching coolwsd under valgrind's callgrind"
 	valgrind --tool=callgrind --simulate-cache=yes --dump-instr=yes --num-callers=50 --error-limit=no --trace-children=yes \
-		./coolwsd --o:security.capabilities="false" \
-			  --o:sys_template_path="@SYSTEMPLATE_PATH@" \
-			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
-			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
-			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
-			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
-			  --o:admin_console.username=admin --o:admin_console.password=admin \
-			  --o:logging.file[@enable]=false --o:logging.level=error
+		./coolwsd $(COMMON_PARAMS) \
+			--o:security.capabilities="false" \
+			--o:logging.file[@enable]=false --o:logging.level=error
 
 run-strace: setup-wsd
 	@echo "Launching coolwsd under strace"
 	strace -o strace.log -f -tt -s 256 \
-		./coolwsd --o:security.capabilities="false" \
-			  --o:sys_template_path="@SYSTEMPLATE_PATH@" \
-			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
-			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
-			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
-			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
-			  --o:admin_console.username=admin --o:admin_console.password=admin \
-			  --o:logging.file[@enable]=false --o:logging.level=error
+		./coolwsd $(COMMON_PARAMS) \
+			--o:security.capabilities="false" \
+			--o:logging.file[@enable]=false --o:logging.level=error
 
 else
 
