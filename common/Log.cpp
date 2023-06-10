@@ -36,6 +36,55 @@ namespace Log
 {
     using namespace Poco;
 
+    class ConsoleChannel : public Poco::Channel
+    {
+    protected:
+        static constexpr std::size_t BufferSize = 64 * 1024;
+
+    public:
+        /// Write the given buffer to stderr directly.
+        static inline bool writeRaw(const char* data, std::size_t size)
+        {
+            return ::write(STDERR_FILENO, data, size) == static_cast<ssize_t>(size);
+        }
+
+        template <std::size_t N> inline void writeRaw(const char (&data)[N])
+        {
+            writeRaw(data, N - 1); // Minus the null.
+        }
+
+        inline void writeRaw(const std::string& string) { writeRaw(string.data(), string.size()); }
+
+        /// Flush the stderr file data.
+        static inline bool flush() { return ::fflush(stderr) == 0; }
+
+        /// Overloaded log function that takes a naked data pointer to log.
+        /// Appends new-line to the given data.
+        inline void log(const char* data, std::size_t size)
+        {
+            static char buffer[BufferSize];
+            if (size < sizeof(buffer) - 1)
+            {
+                memcpy(buffer, data, size);
+                buffer[size] = '\n';
+                writeRaw(buffer, size + 1);
+            }
+            else
+            {
+                // The buffer is too small, we must split the write.
+                writeRaw(data, size);
+                writeRaw("\n", 1);
+            }
+        }
+
+        /// Implement the Channel log virtual.
+        void log(const Poco::Message& msg) override
+        {
+            const std::string& s = msg.getText();
+            log(s.data(), s.size());
+        }
+    };
+
     /// Helper to avoid destruction ordering issues.
     static struct StaticHelper
     {
@@ -284,7 +333,7 @@ namespace Log
 
         if (logToFile)
         {
-            channel = static_cast<Poco::Channel*>(new FileChannel("coolwsd.log"));
+            channel = static_cast<Poco::Channel*>(new Poco::FileChannel("coolwsd.log"));
             for (const auto& pair : config)
             {
                 channel->setProperty(pair.first, pair.second);
@@ -297,7 +346,7 @@ namespace Log
             channel->setProperty("warningColor", "magenta");
         }
         else
-            channel = static_cast<Poco::Channel*>(new Poco::ConsoleChannel());
+            channel = static_cast<Poco::Channel*>(new Log::ConsoleChannel());
 
         /**
          * Open the channel explicitly, instead of waiting for first log message
