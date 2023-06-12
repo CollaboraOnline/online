@@ -787,6 +787,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
                 strm.avail_in = size;
                 strm.avail_out = compSize;
                 strm.next_out = (unsigned char *)&cbuf[0];
+                strm.total_out = strm.total_in = 0;
 
                 deflate(&strm, Z_FINISH);
 
