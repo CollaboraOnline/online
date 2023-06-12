@@ -146,6 +146,7 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _lockCtx(Util::make_unique<LockContext>())
     , _tileVersion(0)
     , _debugRenderedTileCount(0)
+    , _loadDuration(0)
     , _wopiDownloadDuration(0)
     , _mobileAppDocId(mobileAppDocId)
     , _alwaysSaveOnExit(COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false))
