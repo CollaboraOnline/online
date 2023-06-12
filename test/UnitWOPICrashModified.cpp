@@ -25,6 +25,7 @@ public:
     UnitWOPICrashModified()
         : WopiTestServer("UnitWOPICrashModified")
         , _phase(Phase::Load)
+        , _pid(-1)
     {
     }
 
