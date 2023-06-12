@@ -241,7 +241,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
     }
 
     // Check if the user is allowed to use the admin console
-    if (config.getBool("admin_console.enable_pam", "false"))
+    if (config.getBool("admin_console.enable_pam", false))
     {
         // use PAM - it needs the username too
         if (!isPamAuthOk(userProvidedUsr, userProvidedPwd))
