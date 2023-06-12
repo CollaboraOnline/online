@@ -593,7 +593,9 @@ function _treelistboxControl(parentContainer, data, builder) {
 }
 
 JSDialog.treeView = function (parentContainer, data, builder) {
-	if (data.parent && data.parent.parent && data.parent.parent.parent && data.parent.parent.parent.id.startsWith('Navigator'))
+	var id = data.parent ? (data.parent.parent ? (data.parent.parent.parent ? (data.parent.parent.parent.id ? data.parent.parent.parent.id: null): null): null): null;
+
+	if (id && typeof(id) === 'string' && id.startsWith('Navigator'))
 		treeType = 'navigator';
 
 	var buildInnerData = _treelistboxControl(parentContainer, data, builder);
