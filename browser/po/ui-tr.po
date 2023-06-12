@@ -14,11 +14,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-09 07:33+0200\n"
-"PO-Revision-Date: 2023-06-02 05:49+0000\n"
-"Last-Translator: Gökay Şatır <gokaysatir@collabora.com>\n"
+"PO-Revision-Date: 2023-06-12 08:54+0000\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -579,7 +579,7 @@ msgstr "Hücre kenarlıkları"
 
 #: src/control/Control.JSDialogBuilder.js:2951
 msgid "Automatic"
-msgstr ""
+msgstr "Otomatik"
 
 #: src/control/Control.JSDialogBuilder.js:3068
 #: src/control/Control.Menubar.js:791
@@ -1418,11 +1418,11 @@ msgstr "sayfa önizleme "
 
 #: src/control/Control.PartsPreview.js:231
 msgid "Copy"
-msgstr ""
+msgstr "Kopyala"
 
 #: src/control/Control.PartsPreview.js:240
 msgid "Paste"
-msgstr ""
+msgstr "Yapıştır"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1901,7 +1901,7 @@ msgstr "Bu sayfayı silmek istediğinizden emin misiniz?"
 
 #: src/control/jsdialog/Widget.TreeView.js:475
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Belgeye eklediğiniz başlıklar ve nesneler burada görünecek"
 
 #: src/core/Socket.js:55
 msgid "Oops, there is a problem connecting to %productName: "
