@@ -2445,7 +2445,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (!url.startsWith('#'))
 				map_.fire('warn', {url: url, map: map_, cmd: 'openlink'});
 			else
-				map_.sendUnoCommand('.uno:JumpToMark?Bookmark:string=' + url.substring(1));
+				map_.sendUnoCommand('.uno:JumpToMark?Bookmark:string=' + encodeURIComponent(url.substring(1)));
 		});
 		this._setupClickFuncForId('hyperlink-pop-up-copy', function () {
 			map_.sendUnoCommand('.uno:CopyHyperlinkLocation');
