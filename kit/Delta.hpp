@@ -455,7 +455,9 @@ class DeltaGenerator {
     }
 
   public:
-    DeltaGenerator() {}
+    DeltaGenerator()
+        : _maxEntries(0)
+    {}
 
     /// Re-balances the cache size to fit the number of sessions
     void rebalanceDeltas(ssize_t limit = -1)
