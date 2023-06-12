@@ -272,8 +272,8 @@ L.Clipboard = L.Class.extend({
 				that._doAsyncDownload(
 					'POST', dest, formData, false,
 					function() {
-						if (this.isPasteSpecialDialogOpen()) {
-							this._map.jsdialog.closeDialog(this.pasteSpecialDialogId, false);
+						if (that.isPasteSpecialDialogOpen()) {
+							that._map.jsdialog.closeDialog(that.pasteSpecialDialogId, false);
 							window.app.console.log('up-load done, now paste special');
 							app.socket.sendMessage('uno .uno:PasteSpecial');
 						} else {
@@ -302,8 +302,8 @@ L.Clipboard = L.Class.extend({
 				that._doAsyncDownload(
 					'POST', dest, formData, false,
 					function() {
-						if (this.isPasteSpecialDialogOpen()) {
-							this._map.jsdialog.closeDialog(this.pasteSpecialDialogId, false);
+						if (that.isPasteSpecialDialogOpen()) {
+							that._map.jsdialog.closeDialog(that.pasteSpecialDialogId, false);
 							window.app.console.log('up-load of fallback done, now paste special');
 							app.socket.sendMessage('uno .uno:PasteSpecial');
 						} else {
