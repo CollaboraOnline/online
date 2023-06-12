@@ -620,6 +620,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	font-size: var(--default-font-size);
 	border: 1px solid var(--color-border);
 	background-color: var(--color-background-dark);
+	color: var(--color-main-text);
 	overflow-x: hidden;
 	height: 50px;
 	width: 100%;
