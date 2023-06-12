@@ -432,6 +432,7 @@ public:
     void setCurrentMigToken(const std::string& routeToken) { _currentMigToken = routeToken; }
     std::string getCurrentMigToken() { return _currentMigToken; }
     void sendMigrateMsgAfterSave(bool lastSaveSuccessful, const std::string& docKey);
+    std::string getWopiSrcMap();
 
 private:
     void doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator &docIt);

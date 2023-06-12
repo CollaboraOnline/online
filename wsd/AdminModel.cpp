@@ -1285,4 +1285,27 @@ void AdminModel::sendMigrateMsgAfterSave(bool lastSaveSuccessful, const std::str
     COOLWSD::alertUserInternal(docKey, oss.str());
 }
 
+std::string AdminModel::getWopiSrcMap()
+{
+    std::ostringstream oss;
+    oss << "wopiSrcMap: {";
+    oss << "\"routeToken\": \"" << COOLWSD::RouteToken << "\",";
+    oss << "\"wopiSrc\": [";
+    size_t count = 0;
+    for (const auto& it : _documents)
+    {
+        if (!it.second->isExpired())
+        {
+            oss << "\"" << it.second->getWopiSrc() << "\"";
+            if (count < _documents.size() - 1)
+            {
+                oss << ',';
+            }
+        }
+        count++;
+    }
+    oss << "]}";
+    return oss.str();
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
