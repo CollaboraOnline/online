@@ -558,7 +558,6 @@ button.leaflet-control-search-next
 
 #setborderstyle-grid tr td {
 	color: var(--color-text-dark);
-	background: var(--color-background-dark);
 	border: 1px solid transparent;
 	border-radius: var(--border-radius);
 	box-sizing: border-box;
