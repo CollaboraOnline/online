@@ -797,6 +797,9 @@ public:
     /// Used for generating an outgoing response.
     explicit Response(StatusLine statusLineObj, int fd = -1)
         : _statusLine(std::move(statusLineObj))
+        , _state(State::New)
+        , _parserStage(ParserStage::StatusLine)
+        , _recvBodySize(0)
         , _fd(fd)
     {
         _header.add("Date", Util::getHttpTimeNow());
