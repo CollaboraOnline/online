@@ -758,7 +758,7 @@ button.leaflet-control-search-next
 .w2ui-icon.frame10 { background: url('images/fr010.svg') no-repeat center; }
 .w2ui-icon.frame11 { background: url('images/fr011.svg') no-repeat center; }
 .w2ui-icon.frame12 { background: url('images/fr012.svg') no-repeat center; }
-.w2ui-icon.frame13 { width: 108px; }
+.w2ui-icon.frame13 { width: 108px !important; }
 #div-frame13 { width: 102px; height: 18px; text-align: center; display: table-cell; vertical-align: middle; cursor: default; }
 
 .w2ui-icon.iconset00 { background: url('images/icon-set-colorarrows-down.svg') no-repeat, url('images/icon-set-colorarrows-same.svg') no-repeat, url('images/icon-set-colorarrows-up.svg') no-repeat;
