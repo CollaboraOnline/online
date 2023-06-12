@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-09 07:33+0200\n"
-"PO-Revision-Date: 2023-06-04 10:26+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2023-06-12 08:54+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -582,7 +582,7 @@ msgstr "Zellumrandung"
 
 #: src/control/Control.JSDialogBuilder.js:2951
 msgid "Automatic"
-msgstr ""
+msgstr "Automatisch"
 
 #: src/control/Control.JSDialogBuilder.js:3068
 #: src/control/Control.Menubar.js:791
@@ -801,7 +801,7 @@ msgstr "Alle"
 #: src/control/Control.NotebookbarImpress.js:967
 #: src/control/Control.NotebookbarWriter.js:851
 msgid "Smart Picker"
-msgstr ""
+msgstr "Smart Picker"
 
 #: src/control/Control.Menubar.js:210
 msgid "Text orientation"
@@ -958,7 +958,7 @@ msgstr "Kommentare speichern"
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarImpress.js:418
 msgid "Master View"
-msgstr ""
+msgstr "Masteransicht"
 
 #: src/control/Control.Menubar.js:490 src/control/Control.Menubar.js:1003
 #: src/control/Control.PresentationBar.js:57
@@ -1130,7 +1130,7 @@ msgstr "~Datei"
 #: src/control/Control.NotebookbarImpress.js:66
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "Hom~e"
-msgstr ""
+msgstr "~Start"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:60
@@ -1421,11 +1421,11 @@ msgstr "Voransicht der Seite "
 
 #: src/control/Control.PartsPreview.js:231
 msgid "Copy"
-msgstr ""
+msgstr "Kopieren"
 
 #: src/control/Control.PartsPreview.js:240
 msgid "Paste"
-msgstr ""
+msgstr "Einfügen"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1909,6 +1909,8 @@ msgstr "Sind Sie sicher, dass Sie diese Folie löschen möchten?"
 #: src/control/jsdialog/Widget.TreeView.js:475
 msgid "Headings and objects that you add to the document will appear here"
 msgstr ""
+"Überschriften und Objekte, die Sie dem Dokument hinzufügen, werden hier "
+"angezeigt"
 
 #: src/core/Socket.js:55
 msgid "Oops, there is a problem connecting to %productName: "
