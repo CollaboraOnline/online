@@ -46,7 +46,7 @@
 	margin: 0 !important;
 }
 
-.jsdialog-window.modalpopup {
+.jsdialog-window.modalpopup:not(.snackbar) {
 	min-width: 198px;
 	max-width: 498px;
 	border: 1px solid var(--color-border-darker) !important;
