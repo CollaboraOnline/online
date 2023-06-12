@@ -83,6 +83,7 @@ private:
 struct UserInfo
 {
     UserInfo()
+        : _readOnly(false)
     {
     }
 
