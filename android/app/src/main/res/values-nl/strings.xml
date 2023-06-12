@@ -35,8 +35,8 @@
     <string name="otg_missing_error">Ongeldig rootbestand. Controleer uw OTG-apparaat en/of configuratie.</string>
     <string name="ext_document_provider_error">Ongeldig rootbestand. Controleer uw sd-kaartconfiguratie.</string>
     <string name="owncloud_unspecified_error">Onbekende fout bij het verbinden met de cloud-server. Controleer uw configuratie en/of probeer het later.</string>
-    <string name="owncloud_unauthorized">Kan geen verbinding maken met de cloud-server. Controleer uw configuratie.</string>
-    <string name="owncloud_wrong_connection">Kan geen verbinding maken met de cloud-server. Controleer uw configuratie.</string>
+    <string name="owncloud_unauthorized">Kan niet aanmelden op de cloud-server. Controleer uw configuratie.</string>
+    <string name="owncloud_wrong_connection">Kan geen verbinding met de cloud-server maken. Controleer uw configuratie.</string>
     <string name="usb_connected_configure">USB aangesloten, stel uw apparaat in.</string>
     <string name="remote_server">Externe server</string>
     <string name="otg_file_system">OTG-apparaat (experimenteel)</string>
