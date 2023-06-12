@@ -906,7 +906,12 @@ L.Clipboard = L.Class.extend({
 	},
 
 	isPasteSpecialDialogOpen: function() {
-		return document.getElementById('paste_special_dialog') ? true: false;
+		if (!this.pasteSpecialDialogId)
+			return false;
+		else {
+			var result = document.getElementById(this.pasteSpecialDialogId);
+			return result !== undefined && result !== null ? true: false;
+		}
 	},
 
 	_openPasteSpecialPopup: function () {
@@ -914,7 +919,7 @@ L.Clipboard = L.Class.extend({
 		msg = L.Util.replaceCtrlAltInMac(msg);
 
 		// We will use this for closing the dialog.
-		this.pasteSpecialDialogId = this._map.uiManager.generateModalId('paste_special_dialog');
+		this.pasteSpecialDialogId = this._map.uiManager.generateModalId('paste_special_dialog') + '-box';
 
 		var id = 'paste_special_dialog';
 		this._map.uiManager.showYesNoButton(id + '-box', '', '', _('OK'), null, null, null, true);
