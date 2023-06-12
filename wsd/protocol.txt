@@ -898,6 +898,10 @@ kill <pid>
      <pid> process id of the document to kill. All sessions of document would be
      killed. There is no way yet to kill individual sessions.
 
+wopiSrcMap
+
+    get map of wopiSrc<->routeToken
+
 admin -> client
 ===============
 
@@ -943,6 +947,15 @@ section). Others are just response messages to some client command.
     <wopiSrc> of the document that is getting removed, fired when all the views gets expired
 
     note: This might get additional parameters in future
+
+[*] wopiSrcMap <JSON string>
+
+    wopiSrcMap:
+    {
+        "routeToken": "abcpqr"
+        "wopiSrc" : ["wopiSrc1", "wopiSrc2"]
+    }
+    <JSON string> contains the map wopiSrc<->routeToken
 
 InvalidAuthToken
 

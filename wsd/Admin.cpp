@@ -352,6 +352,10 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
                         ", reason has been changed");
         }
     }
+    else if (tokens.equals(0, "wopiSrcMap"))
+    {
+        sendTextFrame(model.getWopiSrcMap());
+    }
 }
 
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
