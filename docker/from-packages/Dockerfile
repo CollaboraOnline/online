@@ -115,6 +115,7 @@ RUN --mount=type=secret,id=secret_key \
     fi && \
 # Fix permissions of files that will be modified on start of the container by cool user
     chown cool:cool /opt/cool/systemplate/etc/hosts /opt/cool/systemplate/etc/resolv.conf && \
+    chown cool:cool /etc/coolwsd && \
 # Remove packages that are not needed
 # FIXME: long way to go, the commands below remove coolwsd, too.
 #    apt-get remove -y --allow-remove-essential adduser apt bsdutils debconf debian-archive-keyring debianutils \
