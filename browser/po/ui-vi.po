@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-23 22:02+0200\n"
+"POT-Creation-Date: 2023-06-13 14:01+0200\n"
 "PO-Revision-Date: 2022-05-04 14:13+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
@@ -265,9 +265,9 @@ msgstr "Bạn có chắc chắn muốn kết thúc phiên này không?"
 #: src/control/Control.DocumentRepair.js:68
 #: src/control/Control.LanguageDialog.js:109 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:320 src/control/Control.Zotero.js:328
-#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:758
-#: src/control/Toolbar.js:969 src/core/Socket.js:1069 src/core/Socket.js:1092
-#: src/core/Socket.js:1296 src/map/handler/Map.Feedback.js:83
+#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:761
+#: src/control/Toolbar.js:972 src/core/Socket.js:1069 src/core/Socket.js:1092
+#: src/core/Socket.js:1297 src/map/handler/Map.Feedback.js:83
 #: src/map/handler/Map.WOPI.js:484
 msgid "OK"
 msgstr "Đồng ý"
@@ -276,7 +276,7 @@ msgstr "Đồng ý"
 #: src/control/Control.Command.js:93 src/control/Control.DocumentRepair.js:62
 #: src/control/Control.LanguageDialog.js:103
 #: src/control/Control.MobileTopBar.js:41 src/control/Control.Tabs.js:305
-#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:757
+#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:760
 #: src/core/Socket.js:927 src/core/Socket.js:937 src/core/Socket.js:1068
 #: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
@@ -357,7 +357,7 @@ msgstr "Màu tự động"
 
 #: src/control/Control.AlertDialog.js:56
 msgid "External link"
-msgstr ""
+msgstr "Đường dẫn bên ngoài"
 
 #: src/control/Control.AlertDialog.js:57
 msgid "Open link"
@@ -371,7 +371,7 @@ msgstr "Máy chủ gặp lỗi %0 khi phân tích cú pháp lệnh %1."
 msgid "Unlock"
 msgstr "Mở khoá"
 
-#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:968
+#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:971
 msgid "Delete"
 msgstr "Xóa"
 
@@ -399,19 +399,19 @@ msgstr "Kiểu"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "What?"
-msgstr ""
+msgstr "Cái gì?"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "Who?"
-msgstr ""
+msgstr "Ai?"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "When?"
-msgstr ""
+msgstr "Khi nào?"
 
 #: src/control/Control.DocumentRepair.js:150
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "Bạn chưa làm bất cứ điều gì để khôi phục cả ..."
 
 #: src/control/Control.DocumentRepair.js:160
 msgid "Redo"
@@ -440,7 +440,7 @@ msgstr "Chèn hàm"
 
 #: src/control/Control.FormulaBarJSDialog.js:54
 msgid "Formula"
-msgstr ""
+msgstr "Công thức"
 
 #: src/control/Control.FormulaBarJSDialog.js:60
 #: src/control/Control.MobileTopBar.js:40
@@ -459,11 +459,11 @@ msgstr "Trung bình"
 
 #: src/control/Control.JSDialogBuilder.js:149
 msgid "Min"
-msgstr ""
+msgstr "Tối thiểu"
 
 #: src/control/Control.JSDialogBuilder.js:150
 msgid "Max"
-msgstr ""
+msgstr "Tối đa"
 
 #: src/control/Control.JSDialogBuilder.js:151
 #: src/control/Control.StatusBar.js:327
@@ -578,11 +578,11 @@ msgstr "Không có (Không kiểm tra chính tả)"
 
 #: src/control/Control.LanguageDialog.js:72
 msgid "Select language"
-msgstr ""
+msgstr "Lựa chọn ngôn ngữ"
 
 #: src/control/Control.LanguageDialog.js:93
 msgid "Language"
-msgstr ""
+msgstr "Ngôn ngữ"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:80
 #: src/control/Control.Menubar.js:898
@@ -733,7 +733,7 @@ msgstr "Đặt lại thu phóng"
 #: src/control/Control.NotebookbarImpress.js:400
 #: src/control/Control.NotebookbarWriter.js:1107
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "Chuyển đổi chế độ giao diện người dùng"
 
 #: src/control/Control.Menubar.js:128 src/control/Control.Menubar.js:413
 #: src/control/Control.NotebookbarWriter.js:1119
@@ -782,54 +782,54 @@ msgstr "Tham chiếu"
 #: src/control/Control.Menubar.js:273
 #: src/control/Control.NotebookbarWriter.js:1426
 msgid "Update Index"
-msgstr ""
+msgstr "Cập nhật chỉ mục"
 
 #: src/control/Control.Menubar.js:282
 #: src/control/Control.NotebookbarWriter.js:1509
 msgid "Add Citation"
-msgstr ""
+msgstr "Thêm trích dẫn"
 
 #: src/control/Control.Menubar.js:283
 #: src/control/Control.NotebookbarWriter.js:1520
 msgid "Add Citation Note"
-msgstr ""
+msgstr "Thêm ghi chú trích dẫn"
 
 #: src/control/Control.Menubar.js:284
 #: src/control/Control.NotebookbarWriter.js:1497
 msgid "Add Bibliography"
-msgstr ""
+msgstr "Thêm văn mục"
 
 #: src/control/Control.Menubar.js:286
 #: src/control/Control.NotebookbarWriter.js:1537
 msgid "Refresh Citations"
-msgstr ""
+msgstr "Làm mới trích dẫn"
 
 #: src/control/Control.Menubar.js:287
 #: src/control/Control.NotebookbarWriter.js:1548
 #: src/control/Control.Zotero.js:1436
 msgid "Unlink Citations"
-msgstr ""
+msgstr "Hủy liên kết trích dẫn"
 
 #: src/control/Control.Menubar.js:288
 #: src/control/Control.NotebookbarWriter.js:1559
 msgid "Citation Preferences"
-msgstr ""
+msgstr "Tùy chọn trích dẫn"
 
 #: src/control/Control.Menubar.js:316 src/control/Control.Menubar.js:1165
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "Chèn văn bản có định dạng"
 
 #: src/control/Control.Menubar.js:317 src/control/Control.Menubar.js:1166
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "Chèn hộp kiểm"
 
 #: src/control/Control.Menubar.js:318 src/control/Control.Menubar.js:1167
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "Chèn danh sách thả xuống"
 
 #: src/control/Control.Menubar.js:319 src/control/Control.Menubar.js:1168
 msgid "Insert Picture"
-msgstr ""
+msgstr "Chèn ảnh"
 
 #: src/control/Control.Menubar.js:320 src/control/Control.Menubar.js:1169
 #, fuzzy
@@ -843,7 +843,7 @@ msgstr "Chèn bảng"
 #: src/control/Control.NotebookbarWriter.js:282
 #: src/control/Control.NotebookbarWriter.js:1040
 msgid "Properties"
-msgstr ""
+msgstr "Thuộc tính"
 
 #: src/control/Control.Menubar.js:352
 #: src/control/Control.NotebookbarWriter.js:307
@@ -980,11 +980,11 @@ msgstr "Thiết lập trang"
 
 #: src/control/Control.Menubar.js:1065
 msgid "Define print area"
-msgstr ""
+msgstr "Xác định vùng in"
 
 #: src/control/Control.Menubar.js:1066
 msgid "Remove print area"
-msgstr ""
+msgstr "Xóa vùng in"
 
 #: src/control/Control.Menubar.js:1339 src/control/Control.StatusBar.js:553
 msgid "Reset to Default Language"
@@ -998,15 +998,15 @@ msgstr "Thêm..."
 
 #: src/control/Control.Menubar.js:1668
 msgid "Use Compact view"
-msgstr ""
+msgstr "Sử dụng chế độ xem Thu gọn"
 
 #: src/control/Control.Menubar.js:1670
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "Sử dụng chế độ xem theo thẻ"
 
 #: src/control/Control.Menubar.js:1712 src/control/Control.Menubar.js:1725
 msgid "Read-only mode"
-msgstr ""
+msgstr "Chế độ chỉ đọc"
 
 #: src/control/Control.Menubar.js:1739
 msgid "Insert Shape"
@@ -1041,12 +1041,12 @@ msgstr "Kết thúc chuyển màu"
 
 #: src/control/Control.NotebookbarBuilder.js:351
 msgid "Tap to expand"
-msgstr ""
+msgstr "Nhấn để mở rộng"
 
 #: src/control/Control.NotebookbarBuilder.js:352
 #: src/control/Control.NotebookbarBuilder.js:386
 msgid "Tap to collapse"
-msgstr ""
+msgstr "Nhấn để thu gọn"
 
 #: src/control/Control.NotebookbarBuilder.js:535
 #: src/control/Control.NotebookbarCalc.js:213
@@ -1135,7 +1135,7 @@ msgstr "Vẽ"
 #: src/control/Control.NotebookbarImpress.js:105
 #: src/control/Control.NotebookbarWriter.js:65
 msgid "~View"
-msgstr ""
+msgstr "Xem (~V)"
 
 #: src/control/Control.NotebookbarCalc.js:59
 #: src/control/Control.NotebookbarDraw.js:92
@@ -1148,7 +1148,7 @@ msgstr "Trợ giúp"
 #: src/control/Control.NotebookbarImpress.js:166
 #: src/control/Control.NotebookbarWriter.js:128
 msgid "Save As"
-msgstr ""
+msgstr "Lưu dưới dạng"
 
 #: src/control/Control.NotebookbarCalc.js:130
 #: src/control/Control.NotebookbarDraw.js:148
@@ -1176,7 +1176,7 @@ msgstr "Xem lịch sử"
 #: src/control/Control.NotebookbarImpress.js:233
 #: src/control/Control.NotebookbarWriter.js:194
 msgid "Download"
-msgstr ""
+msgstr "Tải xuống"
 
 #: src/control/Control.NotebookbarCalc.js:207
 msgid "ODF Spreadsheet (.ods)"
@@ -1220,7 +1220,7 @@ msgstr "Phân số"
 msgid "Boolean Value"
 msgstr "Giá trị boolean"
 
-#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:753
+#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:756
 msgid "Text"
 msgstr "Bản văn"
 
@@ -1250,11 +1250,11 @@ msgstr "Tệ"
 
 #: src/control/Control.NotebookbarCalc.js:799
 msgid "Row Height"
-msgstr ""
+msgstr "Chiều cao hàng"
 
 #: src/control/Control.NotebookbarCalc.js:805
 msgid "Column Width"
-msgstr ""
+msgstr "Chiều rộng cột"
 
 #: src/control/Control.NotebookbarCalc.js:816
 msgid "Insert Rows Above"
@@ -1285,28 +1285,28 @@ msgstr "Xóa cột"
 #: src/control/Control.NotebookbarImpress.js:348
 #: src/control/Control.NotebookbarWriter.js:1055
 msgid "Read mode"
-msgstr ""
+msgstr "Chế độ đọc"
 
 #: src/control/Control.NotebookbarCalc.js:1036
 #: src/control/Control.NotebookbarDraw.js:287
 #: src/control/Control.NotebookbarImpress.js:399
 #: src/control/Control.NotebookbarWriter.js:1106
 msgid "Compact view"
-msgstr ""
+msgstr "Chế độ xem nhỏ gọn"
 
 #: src/control/Control.NotebookbarCalc.js:1042
 #: src/control/Control.NotebookbarDraw.js:293
 #: src/control/Control.NotebookbarImpress.js:405
 #: src/control/Control.NotebookbarWriter.js:1129
 msgid "Status Bar"
-msgstr ""
+msgstr "Thanh trạng thái"
 
 #: src/control/Control.NotebookbarCalc.js:1099
 msgid "Sparkline"
 msgstr "Biểu đồ thu nhỏ"
 
-#: src/control/Control.NotebookbarCalc.js:1183
-#: src/control/Control.NotebookbarCalc.js:1833
+#: src/control/Control.NotebookbarCalc.js:1209
+#: src/control/Control.NotebookbarCalc.js:1860
 #: src/control/Control.NotebookbarDraw.js:621
 #: src/control/Control.NotebookbarDraw.js:997
 #: src/control/Control.NotebookbarImpress.js:738
@@ -1315,7 +1315,7 @@ msgstr "Biểu đồ thu nhỏ"
 #: src/control/Control.NotebookbarWriter.js:928
 #: src/control/Control.NotebookbarWriter.js:2320
 msgid "Shapes"
-msgstr ""
+msgstr "Hình dạng"
 
 #: src/control/Control.NotebookbarDraw.js:32
 #: src/control/Control.NotebookbarDraw.js:763
@@ -1334,7 +1334,7 @@ msgstr "Hình ảnh (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:99
 msgid "~Master"
-msgstr ""
+msgstr "Chính (~M)"
 
 #: src/control/Control.NotebookbarImpress.js:259
 msgid "ODF Presentation (.odp)"
@@ -1364,23 +1364,23 @@ msgstr "Tài liệu EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:1015
 msgid "Rich Text"
-msgstr ""
+msgstr "Văn bản có định dạng"
 
 #: src/control/Control.NotebookbarWriter.js:1020
 msgid "Checkbox"
-msgstr ""
+msgstr "Hộp kiểm"
 
 #: src/control/Control.NotebookbarWriter.js:1025
 msgid "Dropdown"
-msgstr ""
+msgstr "Danh sách thả xuống"
 
 #: src/control/Control.NotebookbarWriter.js:1030
 msgid "Picture"
-msgstr ""
+msgstr "Hình ảnh"
 
 #: src/control/Control.NotebookbarWriter.js:1118
 msgid "Ruler"
-msgstr ""
+msgstr "Thước kẻ"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1524,7 +1524,7 @@ msgstr "Bạn có chắc muốn xóa trang tính, %sheet%?"
 
 #: src/control/Control.Tabs.js:320
 msgid "Rename sheet"
-msgstr ""
+msgstr "Đổi tên trang tính"
 
 #: src/control/Control.Tabs.js:320
 msgid "Enter new sheet name"
@@ -1584,7 +1584,7 @@ msgstr "0 người dùng"
 
 #: src/control/Control.UserList.js:173
 msgid "Following"
-msgstr ""
+msgstr "Tiếp theo"
 
 #: src/control/Control.UserList.js:201 src/control/Control.UserList.js:367
 msgid "Always follow the editor"
@@ -1600,21 +1600,23 @@ msgstr "Hiện tại"
 
 #: src/control/Control.Zotero.js:129
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "Khóa API Zotero chưa được định cấu hình"
 
 #: src/control/Control.Zotero.js:153
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Khóa API Zotero không chính xác"
 
 #: src/control/Control.Zotero.js:180
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Cảnh báo Zotero"
 
 #: src/control/Control.Zotero.js:181
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Tài liệu chứa một số trích dẫn có thể không truy cập được thông qua API web. "
+"Nó có thể gây ra một số vấn đề trong khi chỉnh sửa trích dẫn hoặc văn mục."
 
 #: src/control/Control.Zotero.js:237 src/core/Socket.js:1175
 msgid "Loading..."
@@ -1622,51 +1624,51 @@ msgstr "Đang tải..."
 
 #: src/control/Control.Zotero.js:255
 msgid "Language:"
-msgstr ""
+msgstr "Ngôn ngữ:"
 
 #: src/control/Control.Zotero.js:270
 msgid "Store as:"
-msgstr ""
+msgstr "Lưu trữ dưới dạng:"
 
 #: src/control/Control.Zotero.js:276 src/control/Control.Zotero.js:400
 msgid "Fields"
-msgstr ""
+msgstr "Trường"
 
 #: src/control/Control.Zotero.js:277 src/control/Control.Zotero.js:400
 msgid "Bookmarks"
-msgstr ""
+msgstr "Dấu trang"
 
 #: src/control/Control.Zotero.js:398
 msgid "Footnotes"
-msgstr ""
+msgstr "Chú thích cuối trang"
 
 #: src/control/Control.Zotero.js:398
 msgid "Endnotes"
-msgstr ""
+msgstr "Chú thích cuối tài liệu"
 
 #: src/control/Control.Zotero.js:462
 msgid "My Publications"
-msgstr ""
+msgstr "Ấn phẩm của tôi"
 
 #: src/control/Control.Zotero.js:468 src/control/Control.Zotero.js:693
 msgid "My Library"
-msgstr ""
+msgstr "Thư viện của tôi"
 
 #: src/control/Control.Zotero.js:469
 msgid "Group Libraries"
-msgstr ""
+msgstr "Nhóm thư viện"
 
 #: src/control/Control.Zotero.js:709
 msgid "Failed to load groups"
-msgstr ""
+msgstr "Không tải được nhóm"
 
 #: src/control/Control.Zotero.js:727 src/control/Control.Zotero.js:1045
 msgid "Failed to load collections"
-msgstr ""
+msgstr "Không tải được bộ sưu tập"
 
 #: src/control/Control.Zotero.js:741
 msgid "Citation Style"
-msgstr ""
+msgstr "Kiểu trích dẫn"
 
 #: src/control/Control.Zotero.js:746
 #, fuzzy
@@ -1675,11 +1677,11 @@ msgstr "Kiểu"
 
 #: src/control/Control.Zotero.js:746
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "Đã xảy ra lỗi khi tìm nạp danh sách kiểu"
 
 #: src/control/Control.Zotero.js:754
 msgid "Failed to load styles"
-msgstr ""
+msgstr "Không thể tải kiểu"
 
 #: src/control/Control.Zotero.js:1073 src/control/Control.Zotero.js:1509
 msgid "Title"
@@ -1687,59 +1689,63 @@ msgstr "Tiêu đề"
 
 #: src/control/Control.Zotero.js:1073 src/control/Control.Zotero.js:1509
 msgid "Creator(s)"
-msgstr ""
+msgstr "Người sáng tạo"
 
 #: src/control/Control.Zotero.js:1073 src/control/Control.Zotero.js:1509
 msgid "Your library is empty"
-msgstr ""
+msgstr "Thư viện của bạn trống"
 
 #: src/control/Control.Zotero.js:1084
 msgid "Failed to load items"
-msgstr ""
+msgstr "Không thể tải các mục"
 
 #: src/control/Control.Zotero.js:1134
 msgid "Citation warning"
-msgstr ""
+msgstr "Cảnh báo trích dẫn"
 
 #: src/control/Control.Zotero.js:1135
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"Một khi các trích dẫn được nhập vào thì không thể thay đổi kiểu lưu trữ và "
+"hiển thị của chúng."
 
 #: src/control/Control.Zotero.js:1136 src/control/Control.Zotero.js:1438
 msgid "Confirm"
-msgstr ""
+msgstr "Xác nhận"
 
 #: src/control/Control.Zotero.js:1242
 msgid "Add Note"
-msgstr ""
+msgstr "Thêm ghi chú"
 
 #: src/control/Control.Zotero.js:1245
 msgid "Notes"
-msgstr ""
+msgstr "Ghi chú"
 
 #: src/control/Control.Zotero.js:1245
 msgid "An error occurred while fetching notes"
-msgstr ""
+msgstr "Đã xảy ra lỗi khi tìm nạp ghi chú"
 
 #: src/control/Control.Zotero.js:1376
 msgid "Updated citations"
-msgstr ""
+msgstr "Trích dẫn đã cập nhật"
 
 #: src/control/Control.Zotero.js:1378
 msgid "Citations update failed"
-msgstr ""
+msgstr "Cập nhật trích dẫn không thành công"
 
 #: src/control/Control.Zotero.js:1382
 msgid "Updating citations"
-msgstr ""
+msgstr "Đang cập nhật trích dẫn"
 
 #: src/control/Control.Zotero.js:1437
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Việc hủy liên kết các trích dẫn sẽ ngăn Collabora Online cập nhật các trích "
+"dẫn và thư mục trong tài liệu này."
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
@@ -1961,19 +1967,19 @@ msgstr "Phiên bản %productName này được cung cấp bởi"
 msgid "\"Slow Proxy\""
 msgstr "\"Proxy chậm\""
 
-#: src/control/Toolbar.js:750
+#: src/control/Toolbar.js:753
 msgid "Insert hyperlink"
 msgstr "Chèn siêu liên kết"
 
-#: src/control/Toolbar.js:754
+#: src/control/Toolbar.js:757
 msgid "Link"
 msgstr "Liên kết"
 
-#: src/control/Toolbar.js:963
+#: src/control/Toolbar.js:966
 msgid "Are you sure you want to delete this slide?"
 msgstr "Bạn có chắc chắn muốn xóa trang trình chiếu này không?"
 
-#: src/control/Toolbar.js:966
+#: src/control/Toolbar.js:969
 msgid "Are you sure you want to delete this page?"
 msgstr "Bạn có chắc chắn muốn xóa trang này không?"
 
@@ -2099,11 +2105,11 @@ msgstr "Đã cung cấp sai mật khẩu. Vui lòng thử lại."
 
 #: src/core/Socket.js:1091
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Chỉ chủ sở hữu tài liệu mới có thể thay đổi mật khẩu."
 
 #: src/core/Socket.js:1122 src/core/Socket.js:1127
 msgid "Missing Fonts"
-msgstr ""
+msgstr "Thiếu phông chữ"
 
 #: src/core/Socket.js:1164
 msgid "Someone"
@@ -2112,6 +2118,8 @@ msgstr "Ai đó"
 #: src/core/Socket.js:1166
 msgid "%userName saved this document as %fileName. Do you want to join?"
 msgstr ""
+"%userName đã lưu tài liệu này dưới dạng %fileName. Bạn có muốn tham gia "
+"không?"
 
 #: src/core/Socket.js:1175
 msgid "Connecting..."
@@ -2121,35 +2129,31 @@ msgstr "Đang kết nối..."
 msgid "The document is being renamed and will reload shortly"
 msgstr "Tài liệu đang được đổi tên và sắp tải lại"
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Exported to storage"
-msgstr ""
+msgstr "Đã xuất sang bộ nhớ"
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Đã xuất thành công: "
 
-#: src/core/Socket.js:1591
+#: src/core/Socket.js:1592
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Chúng tôi không thể kết nối với tài liệu của bạn. Vui lòng thử lại."
 
-#: src/core/Socket.js:1608
+#: src/core/Socket.js:1609
 msgid "Reconnecting..."
 msgstr "Đang kết nối lại..."
 
-#: src/core/Socket.js:1618
+#: src/core/Socket.js:1619
 msgid "The server has been disconnected."
 msgstr "Máy chủ đã bị ngắt kết nối."
 
 #: src/errormessages.js:15
-msgid ""
-"No disk space left on server, please contact the server administrator to "
-"continue."
-msgstr ""
-"Không còn dung lượng đĩa trên máy chủ, vui lòng liên hệ với quản trị viên "
-"máy chủ để tiếp tục."
+msgid "No disk space left on server."
+msgstr "Không còn dung lượng đĩa trên máy chủ."
 
 #: src/errormessages.js:16
 msgid ""
@@ -2239,7 +2243,7 @@ msgstr "Liên kết không hợp lệ: '%url'"
 msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
-msgstr ""
+msgstr "Bạn đang rời khỏi tài liệu. Trang web sau đây sẽ mở trong một tab mới: "
 
 #: src/errormessages.js:28
 msgid ""
@@ -2276,6 +2280,8 @@ msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"Tài liệu quá lớn hoặc không còn dung lượng đĩa để lưu. Tài liệu bây giờ sẽ ở "
+"chế độ chỉ đọc."
 
 #: src/errormessages.js:37 src/errormessages.js:46
 msgid "Document cannot be saved due to expired or invalid access token."
@@ -2290,52 +2296,39 @@ msgid "Document cannot be renamed."
 msgstr "Không thể đổi tên tài liệu."
 
 #: src/errormessages.js:43
-#, javascript-format
 msgid ""
-"Failed to read document from storage. Please contact your storage server "
-"(%storageserver) administrator."
-msgstr ""
-"Không thể đọc tài liệu từ bộ nhớ. Vui lòng liên hệ với quản trị viên máy chủ "
-"lưu trữ (%storageserver) của bạn."
+"Failed to read document from storage, please try to load the document again."
+msgstr "Không thể đọc tài liệu từ bộ lưu trữ, vui lòng thử tải lại tài liệu."
 
 #: src/errormessages.js:44
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Lưu không thành công do không còn dung lượng lưu trữ. Tài liệu bây giờ sẽ ở "
+"chế độ chỉ đọc. Vui lòng đảm bảo có đủ dung lượng đĩa trống và thử lưu lại."
 
 #: src/errormessages.js:45
-#, javascript-format
 msgid ""
-"Save failed because the document is too large or disk quota exceeded. "
-"Document will now be read-only but you may still download it now to "
-"preserve a copy locally. Please contact the server (%storageserver) "
-"administrator to resolve the issue."
+"Save failed because the document is too large or exceeds the remaining "
+"storage space. The document will now be read-only but you may still "
+"download it now to preserve a copy locally."
 msgstr ""
+"Lưu không thành công do tài liệu quá lớn hoặc vượt quá dung lượng lưu trữ "
+"còn lại. Bây giờ tài liệu sẽ ở chế độ chỉ đọc nhưng bạn vẫn có thể tải xuống "
+"ngay bây giờ để lưu bản sao cục bộ."
 
 #: src/errormessages.js:47
-msgid ""
-"Document cannot be saved. Check your permissions or contact the storage "
-"server administrator."
-msgstr ""
-"Không thể lưu tài liệu. Kiểm tra quyền của bạn hoặc liên hệ với quản trị "
-"viên máy chủ lưu trữ."
+msgid "Document cannot be saved, please check your permissions."
+msgstr "Không thể lưu tài liệu, vui lòng kiểm tra quyền của bạn."
 
 #: src/errormessages.js:48
-msgid ""
-"Document cannot be renamed. Check your permissions or contact the storage "
-"server administrator."
-msgstr ""
-"Không thể đổi tên tài liệu. Kiểm tra quyền của bạn hoặc liên hệ với quản trị "
-"viên máy chủ lưu trữ."
+msgid "Document cannot be renamed, please check your permissions."
+msgstr "Không thể đổi tên tài liệu, vui lòng kiểm tra quyền của bạn."
 
 #: src/errormessages.js:49
-msgid ""
-"Document cannot be exported. Please contact the storage server "
-"administrator."
-msgstr ""
-"Không thể xuất tài liệu. Vui lòng liên lạc với quản trị viên của máy chủ lưu "
-"trữ."
+msgid "Document cannot be exported. Please try again."
+msgstr "Không thể xuất tài liệu. Vui lòng thử lại."
 
 #: src/errormessages.js:54
 msgid "Uploading file to server failed, file not found."
@@ -2351,15 +2344,15 @@ msgstr "Chức năng"
 
 #: src/layer/tile/CanvasTileLayer.js:2412
 msgid "Copy link location"
-msgstr ""
+msgstr "Sao chép vị trí liên kết"
 
 #: src/layer/tile/CanvasTileLayer.js:2420
 msgid "Edit link"
-msgstr ""
+msgstr "Chỉnh sửa liên kết"
 
 #: src/layer/tile/CanvasTileLayer.js:2428
 msgid "Remove link"
-msgstr ""
+msgstr "Xoá liên kết"
 
 #: src/layer/tile/CanvasTileLayer.js:5167
 msgid "No Comments"
@@ -2509,7 +2502,7 @@ msgstr "Vui lòng nhấn chuột để tiếp tục chỉnh sửa"
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "Xin vui lòng gửi cho chúng tôi thông tin phản hồi của bạn"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
@@ -2537,11 +2530,11 @@ msgstr "Tạo tệp mới từ mẫu..."
 
 #: src/map/handler/Map.WOPI.js:484
 msgid "Error"
-msgstr ""
+msgstr "Lỗi"
 
 #: src/map/handler/Map.WOPI.js:484
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "Tên tệp phải chứa phần mở rộng."
 
 #: src/map/handler/Map.WOPI.js:492
 msgid "Creating copy..."
@@ -2549,7 +2542,7 @@ msgstr "Đang tạo bản sao ..."
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "Collabora Online Chào mừng"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 #, fuzzy
@@ -2568,6 +2561,11 @@ msgid ""
 "\" href=\"https://www.collaboraoffice.com/solutions/collabora-office-"
 "android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"Tận hưởng những phát triển mới nhất về năng suất trực tuyến, miễn phí để bạn "
+"sử dụng, khám phá và sử dụng với những người khác trong trình duyệt. Nhiều <"
+"a target=\"_blank\" href=\"https://www.collaboraoffice.com/solutions/"
+"collabora-office-android-ios/\">ứng dụng</a> cũng có sẵn cho thiết bị di "
+"động."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 #, fuzzy
@@ -2584,11 +2582,11 @@ msgstr ""
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "Tham gia"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
@@ -2601,6 +2599,49 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"Bạn có quan tâm đến việc đóng góp nhưng không biết bắt đầu từ đâu? Hãy xem <"
+"a target=\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/"
+"\">hướng dẫn từng bước</a> và tạo CODE từ đầu. Bạn cũng có thể trợ giúp bằng "
+"<a target=\"_blank\" href=\"https://collaboraonline.github.io/post/translate/"
+"\">bản dịch</a> hoặc bằng <a target=\"_blank\" href=\""
+"https://collaboraonline.github.io/post/filebugs/\">gửi báo cáo lỗi</a> cùng "
+"với tất cả các bước cần thiết về cách tạo lại lỗi đó."
+
+#~ msgid ""
+#~ "No disk space left on server, please contact the server administrator to "
+#~ "continue."
+#~ msgstr ""
+#~ "Không còn dung lượng đĩa trên máy chủ, vui lòng liên hệ với quản trị viên "
+#~ "máy chủ để tiếp tục."
+
+#, javascript-format
+#~ msgid ""
+#~ "Failed to read document from storage. Please contact your storage server "
+#~ "(%storageserver) administrator."
+#~ msgstr ""
+#~ "Không thể đọc tài liệu từ bộ nhớ. Vui lòng liên hệ với quản trị viên máy "
+#~ "chủ lưu trữ (%storageserver) của bạn."
+
+#~ msgid ""
+#~ "Document cannot be saved. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Không thể lưu tài liệu. Kiểm tra quyền của bạn hoặc liên hệ với quản trị "
+#~ "viên máy chủ lưu trữ."
+
+#~ msgid ""
+#~ "Document cannot be renamed. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Không thể đổi tên tài liệu. Kiểm tra quyền của bạn hoặc liên hệ với quản "
+#~ "trị viên máy chủ lưu trữ."
+
+#~ msgid ""
+#~ "Document cannot be exported. Please contact the storage server "
+#~ "administrator."
+#~ msgstr ""
+#~ "Không thể xuất tài liệu. Vui lòng liên lạc với quản trị viên của máy chủ "
+#~ "lưu trữ."
 
 #, javascript-format
 #~ msgid ""

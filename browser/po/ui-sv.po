@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-23 22:02+0200\n"
+"POT-Creation-Date: 2023-06-13 14:01+0200\n"
 "PO-Revision-Date: 2023-03-07 02:32+0000\n"
 "Last-Translator: tygyh <jonis9898@hotmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
@@ -267,9 +267,9 @@ msgstr "Är du säker på att du vill avsluta sessionen?"
 #: src/control/Control.DocumentRepair.js:68
 #: src/control/Control.LanguageDialog.js:109 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:320 src/control/Control.Zotero.js:328
-#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:758
-#: src/control/Toolbar.js:969 src/core/Socket.js:1069 src/core/Socket.js:1092
-#: src/core/Socket.js:1296 src/map/handler/Map.Feedback.js:83
+#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:761
+#: src/control/Toolbar.js:972 src/core/Socket.js:1069 src/core/Socket.js:1092
+#: src/core/Socket.js:1297 src/map/handler/Map.Feedback.js:83
 #: src/map/handler/Map.WOPI.js:484
 msgid "OK"
 msgstr "OK"
@@ -278,7 +278,7 @@ msgstr "OK"
 #: src/control/Control.Command.js:93 src/control/Control.DocumentRepair.js:62
 #: src/control/Control.LanguageDialog.js:103
 #: src/control/Control.MobileTopBar.js:41 src/control/Control.Tabs.js:305
-#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:757
+#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:760
 #: src/core/Socket.js:927 src/core/Socket.js:937 src/core/Socket.js:1068
 #: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
@@ -374,7 +374,7 @@ msgstr "Servern stötte på ett %0-fel vid utförandet av kommandot %1."
 msgid "Unlock"
 msgstr "Lås upp"
 
-#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:968
+#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:971
 msgid "Delete"
 msgstr "Radera"
 
@@ -1220,7 +1220,7 @@ msgstr "Fraktion"
 msgid "Boolean Value"
 msgstr "Boolskt värde"
 
-#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:753
+#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:756
 msgid "Text"
 msgstr "Text"
 
@@ -1305,8 +1305,8 @@ msgstr "Statusrad"
 msgid "Sparkline"
 msgstr "Miniatyrdiagram"
 
-#: src/control/Control.NotebookbarCalc.js:1183
-#: src/control/Control.NotebookbarCalc.js:1833
+#: src/control/Control.NotebookbarCalc.js:1209
+#: src/control/Control.NotebookbarCalc.js:1860
 #: src/control/Control.NotebookbarDraw.js:621
 #: src/control/Control.NotebookbarDraw.js:997
 #: src/control/Control.NotebookbarImpress.js:738
@@ -1965,19 +1965,19 @@ msgstr "Denna version av %productName drivs av"
 msgid "\"Slow Proxy\""
 msgstr "\"Långsam proxy\""
 
-#: src/control/Toolbar.js:750
+#: src/control/Toolbar.js:753
 msgid "Insert hyperlink"
 msgstr "Lägg in hyperlänk"
 
-#: src/control/Toolbar.js:754
+#: src/control/Toolbar.js:757
 msgid "Link"
 msgstr "Länk"
 
-#: src/control/Toolbar.js:963
+#: src/control/Toolbar.js:966
 msgid "Are you sure you want to delete this slide?"
 msgstr "Är du säker på att du vill ta bort presentationsbilden?"
 
-#: src/control/Toolbar.js:966
+#: src/control/Toolbar.js:969
 msgid "Are you sure you want to delete this page?"
 msgstr "Är du säker på att du vill ta bort denna sida?"
 
@@ -2123,33 +2123,31 @@ msgstr "Ansluter..."
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokumentet byter namn och laddas snart om"
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Exported to storage"
 msgstr "Exporterad till lagring"
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Successfully exported: "
 msgstr "Har exporterats: "
 
-#: src/core/Socket.js:1591
+#: src/core/Socket.js:1592
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Kan inte ansluta till ditt dokument. Vänligen försök igen."
 
-#: src/core/Socket.js:1608
+#: src/core/Socket.js:1609
 msgid "Reconnecting..."
 msgstr "Ansluter ..."
 
-#: src/core/Socket.js:1618
+#: src/core/Socket.js:1619
 msgid "The server has been disconnected."
 msgstr "Tjänsten är bortkopplad."
 
 #: src/errormessages.js:15
-msgid ""
-"No disk space left on server, please contact the server administrator to "
-"continue."
-msgstr "Inget utrymme kvar på servern, vänligen kontakta serveradministratören."
+msgid "No disk space left on server."
+msgstr "Serverns lagring är full."
 
 #: src/errormessages.js:16
 msgid ""
@@ -2291,55 +2289,41 @@ msgid "Document cannot be renamed."
 msgstr "Dokumentets namn kan inte ändras."
 
 #: src/errormessages.js:43
-#, javascript-format
 msgid ""
-"Failed to read document from storage. Please contact your storage server "
-"(%storageserver) administrator."
+"Failed to read document from storage, please try to load the document again."
 msgstr ""
-"Misslyckades med att läsa dokumentet från lagringsutrymmet. Vänligen "
-"kontakta administratören av servern (%storageserver)."
+"Kunde inte ladda dokumentet från lagringen. Prova att ladda om dokumentet."
 
 #: src/errormessages.js:44
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Kunde inte spara dokumentet på lagringen. Dokumentet är i endast-läs-läge. "
+"Kontrollera att det finns tillräckligt med utrymme på lagringen och försök "
+"spara igen."
 
 #: src/errormessages.js:45
-#, javascript-format
 msgid ""
-"Save failed because the document is too large or disk quota exceeded. "
-"Document will now be read-only but you may still download it now to "
-"preserve a copy locally. Please contact the server (%storageserver) "
-"administrator to resolve the issue."
+"Save failed because the document is too large or exceeds the remaining "
+"storage space. The document will now be read-only but you may still "
+"download it now to preserve a copy locally."
 msgstr ""
-"Det gick inte att spara eftersom dokumentet är för stort eller diskkvoten "
-"överskrids. Dokumentet kommer nu att vara skrivskyddat men du kan "
-"fortfarande ladda ner det nu för att bevara en kopia lokalt. Kontakta "
-"serveradministratören (%storageserver) för att lösa problemet."
+"Kunde inte spara dokumentet då det är större än tillgängligt utrymme på "
+"lagringen. Dokumentet är i endast-läs-läge, men du kan ladda ner det för att "
+"ha en lokal kopia."
 
 #: src/errormessages.js:47
-msgid ""
-"Document cannot be saved. Check your permissions or contact the storage "
-"server administrator."
-msgstr ""
-"Dokumentet kan inte sparas till disk. Kontrollera dina rättigheter eller "
-"kontakta lagringsserverns administratör."
+msgid "Document cannot be saved, please check your permissions."
+msgstr "Kunde inte spara dokumentet. Kontrollera rättigheterna."
 
 #: src/errormessages.js:48
-msgid ""
-"Document cannot be renamed. Check your permissions or contact the storage "
-"server administrator."
-msgstr ""
-"Dokumentets namn kan inte ändras. Kontrollera dina rättigheter eller "
-"kontakta lagringsserverns administratör."
+msgid "Document cannot be renamed, please check your permissions."
+msgstr "Kunde inte byta namn på dokumentet. Kontrollera rättigheterna."
 
 #: src/errormessages.js:49
-msgid ""
-"Document cannot be exported. Please contact the storage server "
-"administrator."
-msgstr ""
-"Dokumentet kan inte exporteras. Kontakta administratören för lagringsservern."
+msgid "Document cannot be exported. Please try again."
+msgstr "Kunde inte exportera dokumentet. Försök igen."
 
 #: src/errormessages.js:54
 msgid "Uploading file to server failed, file not found."
@@ -2619,6 +2603,53 @@ msgstr ""
 "translate/\">översättningar</a> eller <a target=\"_blank\" href=\""
 "https://collaboraonline.github.io/post/filebugs/\">skriva buggrapporter</a> "
 "med nödvändig information och steg för att reproducera felet."
+
+#~ msgid ""
+#~ "No disk space left on server, please contact the server administrator to "
+#~ "continue."
+#~ msgstr ""
+#~ "Inget utrymme kvar på servern, vänligen kontakta serveradministratören."
+
+#, javascript-format
+#~ msgid ""
+#~ "Failed to read document from storage. Please contact your storage server "
+#~ "(%storageserver) administrator."
+#~ msgstr ""
+#~ "Misslyckades med att läsa dokumentet från lagringsutrymmet. Vänligen "
+#~ "kontakta administratören av servern (%storageserver)."
+
+#, javascript-format
+#~ msgid ""
+#~ "Save failed because the document is too large or disk quota exceeded. "
+#~ "Document will now be read-only but you may still download it now to "
+#~ "preserve a copy locally. Please contact the server (%storageserver) "
+#~ "administrator to resolve the issue."
+#~ msgstr ""
+#~ "Det gick inte att spara eftersom dokumentet är för stort eller diskkvoten "
+#~ "överskrids. Dokumentet kommer nu att vara skrivskyddat men du kan "
+#~ "fortfarande ladda ner det nu för att bevara en kopia lokalt. Kontakta "
+#~ "serveradministratören (%storageserver) för att lösa problemet."
+
+#~ msgid ""
+#~ "Document cannot be saved. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Dokumentet kan inte sparas till disk. Kontrollera dina rättigheter eller "
+#~ "kontakta lagringsserverns administratör."
+
+#~ msgid ""
+#~ "Document cannot be renamed. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Dokumentets namn kan inte ändras. Kontrollera dina rättigheter eller "
+#~ "kontakta lagringsserverns administratör."
+
+#~ msgid ""
+#~ "Document cannot be exported. Please contact the storage server "
+#~ "administrator."
+#~ msgstr ""
+#~ "Dokumentet kan inte exporteras. Kontakta administratören för "
+#~ "lagringsservern."
 
 #, javascript-format
 #~ msgid ""

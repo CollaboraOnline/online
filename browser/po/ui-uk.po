@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-23 22:02+0200\n"
+"POT-Creation-Date: 2023-06-13 14:01+0200\n"
 "PO-Revision-Date: 2023-03-07 02:32+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
@@ -268,9 +268,9 @@ msgstr "Ви справді бажаєте закінчити цей сеанс?
 #: src/control/Control.DocumentRepair.js:68
 #: src/control/Control.LanguageDialog.js:109 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:320 src/control/Control.Zotero.js:328
-#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:758
-#: src/control/Toolbar.js:969 src/core/Socket.js:1069 src/core/Socket.js:1092
-#: src/core/Socket.js:1296 src/map/handler/Map.Feedback.js:83
+#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:761
+#: src/control/Toolbar.js:972 src/core/Socket.js:1069 src/core/Socket.js:1092
+#: src/core/Socket.js:1297 src/map/handler/Map.Feedback.js:83
 #: src/map/handler/Map.WOPI.js:484
 msgid "OK"
 msgstr "OK"
@@ -279,7 +279,7 @@ msgstr "OK"
 #: src/control/Control.Command.js:93 src/control/Control.DocumentRepair.js:62
 #: src/control/Control.LanguageDialog.js:103
 #: src/control/Control.MobileTopBar.js:41 src/control/Control.Tabs.js:305
-#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:757
+#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:760
 #: src/core/Socket.js:927 src/core/Socket.js:937 src/core/Socket.js:1068
 #: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
@@ -375,7 +375,7 @@ msgstr "Сервер зіткнувся з %0 помилок під час оп�
 msgid "Unlock"
 msgstr "Розблокувати"
 
-#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:968
+#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:971
 msgid "Delete"
 msgstr "Видалити"
 
@@ -1221,7 +1221,7 @@ msgstr "Частка"
 msgid "Boolean Value"
 msgstr "Логічне значення"
 
-#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:753
+#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:756
 msgid "Text"
 msgstr "Текст"
 
@@ -1306,8 +1306,8 @@ msgstr "Панель стану"
 msgid "Sparkline"
 msgstr "Мінідіаграма"
 
-#: src/control/Control.NotebookbarCalc.js:1183
-#: src/control/Control.NotebookbarCalc.js:1833
+#: src/control/Control.NotebookbarCalc.js:1209
+#: src/control/Control.NotebookbarCalc.js:1860
 #: src/control/Control.NotebookbarDraw.js:621
 #: src/control/Control.NotebookbarDraw.js:997
 #: src/control/Control.NotebookbarImpress.js:738
@@ -1966,19 +1966,19 @@ msgstr "Ця версія %productName працює на"
 msgid "\"Slow Proxy\""
 msgstr "\"Повільний проксі\""
 
-#: src/control/Toolbar.js:750
+#: src/control/Toolbar.js:753
 msgid "Insert hyperlink"
 msgstr "Вставити гіперпосилання"
 
-#: src/control/Toolbar.js:754
+#: src/control/Toolbar.js:757
 msgid "Link"
 msgstr "Посилання"
 
-#: src/control/Toolbar.js:963
+#: src/control/Toolbar.js:966
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ви дійсно бажаєте видалити цей слайд?"
 
-#: src/control/Toolbar.js:966
+#: src/control/Toolbar.js:969
 msgid "Are you sure you want to delete this page?"
 msgstr "Ви дійсно бажаєте видалити цю сторінку?"
 
@@ -2123,15 +2123,15 @@ msgstr "З'єднання..."
 msgid "The document is being renamed and will reload shortly"
 msgstr "Документ перейменовується і незабаром перезавантажиться"
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Exported to storage"
 msgstr "Експортовано в сховище"
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Successfully exported: "
 msgstr "Успішно експортовано: "
 
-#: src/core/Socket.js:1591
+#: src/core/Socket.js:1592
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -2139,21 +2139,17 @@ msgstr ""
 "Нам ганьба, бо ми не можемо під'єднатися до вашого документа. Будь ласка, "
 "спробуйте знову."
 
-#: src/core/Socket.js:1608
+#: src/core/Socket.js:1609
 msgid "Reconnecting..."
 msgstr "Повторне з'єднання..."
 
-#: src/core/Socket.js:1618
+#: src/core/Socket.js:1619
 msgid "The server has been disconnected."
 msgstr "Сервер від'єднано."
 
 #: src/errormessages.js:15
-msgid ""
-"No disk space left on server, please contact the server administrator to "
-"continue."
-msgstr ""
-"Не лишилося вільного простору на сервері. Будь ласка, зв'яжіться з "
-"адміністратором сервера для продовження."
+msgid "No disk space left on server."
+msgstr "На сервері не залишилося дискового простору."
 
 #: src/errormessages.js:16
 msgid ""
@@ -2298,13 +2294,11 @@ msgid "Document cannot be renamed."
 msgstr "Документ неможливо перейменувати."
 
 #: src/errormessages.js:43
-#, javascript-format
 msgid ""
-"Failed to read document from storage. Please contact your storage server "
-"(%storageserver) administrator."
+"Failed to read document from storage, please try to load the document again."
 msgstr ""
-"Не вдалося зчитати документ зі сховища. Будь ласка, зв'яжіться з "
-"адміністратором сервера (%storageserver)."
+"Не вдалося прочитати документ зі сховища. Спробуйте завантажити документ ще "
+"раз."
 
 #: src/errormessages.js:44
 msgid ""
@@ -2316,41 +2310,26 @@ msgstr ""
 "достатньо місця, і спробуйте повторити збереження."
 
 #: src/errormessages.js:45
-#, javascript-format
 msgid ""
-"Save failed because the document is too large or disk quota exceeded. "
-"Document will now be read-only but you may still download it now to "
-"preserve a copy locally. Please contact the server (%storageserver) "
-"administrator to resolve the issue."
+"Save failed because the document is too large or exceeds the remaining "
+"storage space. The document will now be read-only but you may still "
+"download it now to preserve a copy locally."
 msgstr ""
-"Не вдалося зберегти, оскільки документ завеликий або перевищено квоту диска. "
-"Тепер документ буде доступний лише для читання, але ви все одно можете "
-"завантажити його зараз, щоб зберегти локальну копію. Зверніться до "
-"адміністратора сервера (%storageserver), щоб усунути цю проблему."
+"Не вдалося зберегти, оскільки документ завеликий або перевищує вільний "
+"простір. Тепер документ буде доступним лише для читання, але ви можете "
+"завантажити його зараз, щоб зберегти копію локально."
 
 #: src/errormessages.js:47
-msgid ""
-"Document cannot be saved. Check your permissions or contact the storage "
-"server administrator."
-msgstr ""
-"Документ не можна зберегти на носії. Перевірте ваші права або зв'яжіться з "
-"адміністратором сервера."
+msgid "Document cannot be saved, please check your permissions."
+msgstr "Документ не може бути збережений. Перевірте свої дозволи."
 
 #: src/errormessages.js:48
-msgid ""
-"Document cannot be renamed. Check your permissions or contact the storage "
-"server administrator."
-msgstr ""
-"Документ неможливо перейменувати. Перевірте ваші права або зверніться до "
-"адміністратора сервера."
+msgid "Document cannot be renamed, please check your permissions."
+msgstr "Документ не може бути перейменований. Перевірте свої дозволи."
 
 #: src/errormessages.js:49
-msgid ""
-"Document cannot be exported. Please contact the storage server "
-"administrator."
-msgstr ""
-"Не вдалося експортувати документ. Зверніться до адміністратора сервера "
-"зберігання."
+msgid "Document cannot be exported. Please try again."
+msgstr "Документ не можна експортувати. Повторіть спробу."
 
 #: src/errormessages.js:54
 msgid "Uploading file to server failed, file not found."
@@ -2628,6 +2607,54 @@ msgstr ""
 "translate/\">перекладом</a> або <a target=\"_blank\" href=\""
 "https://collaboraonline.github.io/post/filebugs/\">повідомте про помилку</a> "
 "вказавши всі важливі кроки для її відтворення."
+
+#~ msgid ""
+#~ "No disk space left on server, please contact the server administrator to "
+#~ "continue."
+#~ msgstr ""
+#~ "Не лишилося вільного простору на сервері. Будь ласка, зв'яжіться з "
+#~ "адміністратором сервера для продовження."
+
+#, javascript-format
+#~ msgid ""
+#~ "Failed to read document from storage. Please contact your storage server "
+#~ "(%storageserver) administrator."
+#~ msgstr ""
+#~ "Не вдалося зчитати документ зі сховища. Будь ласка, зв'яжіться з "
+#~ "адміністратором сервера (%storageserver)."
+
+#, javascript-format
+#~ msgid ""
+#~ "Save failed because the document is too large or disk quota exceeded. "
+#~ "Document will now be read-only but you may still download it now to "
+#~ "preserve a copy locally. Please contact the server (%storageserver) "
+#~ "administrator to resolve the issue."
+#~ msgstr ""
+#~ "Не вдалося зберегти, оскільки документ завеликий або перевищено квоту "
+#~ "диска. Тепер документ буде доступний лише для читання, але ви все одно "
+#~ "можете завантажити його зараз, щоб зберегти локальну копію. Зверніться до "
+#~ "адміністратора сервера (%storageserver), щоб усунути цю проблему."
+
+#~ msgid ""
+#~ "Document cannot be saved. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Документ не можна зберегти на носії. Перевірте ваші права або зв'яжіться "
+#~ "з адміністратором сервера."
+
+#~ msgid ""
+#~ "Document cannot be renamed. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Документ неможливо перейменувати. Перевірте ваші права або зверніться до "
+#~ "адміністратора сервера."
+
+#~ msgid ""
+#~ "Document cannot be exported. Please contact the storage server "
+#~ "administrator."
+#~ msgstr ""
+#~ "Не вдалося експортувати документ. Зверніться до адміністратора сервера "
+#~ "зберігання."
 
 #, javascript-format
 #~ msgid ""

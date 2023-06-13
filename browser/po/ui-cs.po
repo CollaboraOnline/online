@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-23 22:02+0200\n"
+"POT-Creation-Date: 2023-06-13 14:01+0200\n"
 "PO-Revision-Date: 2023-03-09 13:38+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
@@ -271,9 +271,9 @@ msgstr "Opravdu si přejete ukončit tuto relaci?"
 #: src/control/Control.DocumentRepair.js:68
 #: src/control/Control.LanguageDialog.js:109 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:320 src/control/Control.Zotero.js:328
-#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:758
-#: src/control/Toolbar.js:969 src/core/Socket.js:1069 src/core/Socket.js:1092
-#: src/core/Socket.js:1296 src/map/handler/Map.Feedback.js:83
+#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:761
+#: src/control/Toolbar.js:972 src/core/Socket.js:1069 src/core/Socket.js:1092
+#: src/core/Socket.js:1297 src/map/handler/Map.Feedback.js:83
 #: src/map/handler/Map.WOPI.js:484
 msgid "OK"
 msgstr "OK"
@@ -282,7 +282,7 @@ msgstr "OK"
 #: src/control/Control.Command.js:93 src/control/Control.DocumentRepair.js:62
 #: src/control/Control.LanguageDialog.js:103
 #: src/control/Control.MobileTopBar.js:41 src/control/Control.Tabs.js:305
-#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:757
+#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:760
 #: src/core/Socket.js:927 src/core/Socket.js:937 src/core/Socket.js:1068
 #: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
@@ -378,7 +378,7 @@ msgstr "Server zaznamenal během zpracovávání příkazu %1 chybu %0."
 msgid "Unlock"
 msgstr "Odemknout"
 
-#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:968
+#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:971
 msgid "Delete"
 msgstr "Smazat"
 
@@ -1224,7 +1224,7 @@ msgstr "Zlomek"
 msgid "Boolean Value"
 msgstr "Booleovská hodnota"
 
-#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:753
+#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:756
 msgid "Text"
 msgstr "Text"
 
@@ -1309,8 +1309,8 @@ msgstr "Stavový řádek"
 msgid "Sparkline"
 msgstr "Minigraf"
 
-#: src/control/Control.NotebookbarCalc.js:1183
-#: src/control/Control.NotebookbarCalc.js:1833
+#: src/control/Control.NotebookbarCalc.js:1209
+#: src/control/Control.NotebookbarCalc.js:1860
 #: src/control/Control.NotebookbarDraw.js:621
 #: src/control/Control.NotebookbarDraw.js:997
 #: src/control/Control.NotebookbarImpress.js:738
@@ -1968,19 +1968,19 @@ msgstr "Tato verze aplikace %productName využívá"
 msgid "\"Slow Proxy\""
 msgstr "„Pomalé proxy“"
 
-#: src/control/Toolbar.js:750
+#: src/control/Toolbar.js:753
 msgid "Insert hyperlink"
 msgstr "Vložit hypertextový odkaz"
 
-#: src/control/Toolbar.js:754
+#: src/control/Toolbar.js:757
 msgid "Link"
 msgstr "Odkaz"
 
-#: src/control/Toolbar.js:963
+#: src/control/Toolbar.js:966
 msgid "Are you sure you want to delete this slide?"
 msgstr "Opravdu si přejete smazat tento snímek?"
 
-#: src/control/Toolbar.js:966
+#: src/control/Toolbar.js:969
 msgid "Are you sure you want to delete this page?"
 msgstr "Opravdu si přejete smazat tuto stránku?"
 
@@ -2130,36 +2130,32 @@ msgstr "Připojování…"
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokument se právě přejmenovává a brzy se znovu načte"
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Exported to storage"
 msgstr "Exportováno do úložiště"
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Successfully exported: "
 msgstr "Úspěšně exportováno: "
 
-#: src/core/Socket.js:1591
+#: src/core/Socket.js:1592
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
 "Toto je nepříjemné, nepodařilo se připojit k dokumentu. Zkuste to znovu."
 
-#: src/core/Socket.js:1608
+#: src/core/Socket.js:1609
 msgid "Reconnecting..."
 msgstr "Opětovné připojování…"
 
-#: src/core/Socket.js:1618
+#: src/core/Socket.js:1619
 msgid "The server has been disconnected."
 msgstr "Server byl odpojen."
 
 #: src/errormessages.js:15
-msgid ""
-"No disk space left on server, please contact the server administrator to "
-"continue."
-msgstr ""
-"Nedostatek volného místa na serveru. Pokud chcete pokračovat, obraťte se na "
-"správce serveru."
+msgid "No disk space left on server."
+msgstr "Na serveru nezbývá volné místo nad disku."
 
 #: src/errormessages.js:16
 msgid ""
@@ -2300,13 +2296,9 @@ msgid "Document cannot be renamed."
 msgstr "Dokument nelze přejmenovat."
 
 #: src/errormessages.js:43
-#, javascript-format
 msgid ""
-"Failed to read document from storage. Please contact your storage server "
-"(%storageserver) administrator."
-msgstr ""
-"Nepodařilo se načíst dokument. Kontaktujte správce síťového úložiště "
-"(%storageserver)."
+"Failed to read document from storage, please try to load the document again."
+msgstr "Nepodařilo se načíst dokument z úložiště, zkuste to znovu."
 
 #: src/errormessages.js:44
 msgid ""
@@ -2318,39 +2310,26 @@ msgstr ""
 "uložit znovu."
 
 #: src/errormessages.js:45
-#, javascript-format
 msgid ""
-"Save failed because the document is too large or disk quota exceeded. "
-"Document will now be read-only but you may still download it now to "
-"preserve a copy locally. Please contact the server (%storageserver) "
-"administrator to resolve the issue."
+"Save failed because the document is too large or exceeds the remaining "
+"storage space. The document will now be read-only but you may still "
+"download it now to preserve a copy locally."
 msgstr ""
-"Dokument se nepodařilo uložit, protože je příliš velký nebo na disku nezbývá "
-"dostatek místa. Dokument je nyní pouze pro čtení, ale stále jej může "
-"stáhnout, pokud chcete uchovat jeho kopii lokálně. Chcete-li problém "
-"vyřešit, obraťte se na správce serveru (%storageserver)."
+"Uložení se nezdařilo, protože dokument je příliš velký nebo jeho velikost "
+"převyšuje zbývající prostor v úložišti. Dokument bude nyní pouze pro čtení, "
+"ale stále jej může stáhnout, pokud chcete uchovat jeho kopii lokálně."
 
 #: src/errormessages.js:47
-msgid ""
-"Document cannot be saved. Check your permissions or contact the storage "
-"server administrator."
-msgstr ""
-"Dokument nelze uložit. Ujistěte se, zda máte dostatečná oprávnění, nebo se "
-"obraťte na správce serveru."
+msgid "Document cannot be saved, please check your permissions."
+msgstr "Dokument nelze uložit, zkontrolujte, zda máte dostatečná oprávnění."
 
 #: src/errormessages.js:48
-msgid ""
-"Document cannot be renamed. Check your permissions or contact the storage "
-"server administrator."
-msgstr ""
-"Dokument se nepodařilo přejmenovat. Ověřte, zda máte dostatečná oprávnění, "
-"nebo se obraťte na správce serveru."
+msgid "Document cannot be renamed, please check your permissions."
+msgstr "Dokument nelze přejmenovat, zkontrolujte, zda máte potřebná oprávnění."
 
 #: src/errormessages.js:49
-msgid ""
-"Document cannot be exported. Please contact the storage server "
-"administrator."
-msgstr "Dokument se nepodařilo vyexportovat. Obraťte se na správce serveru."
+msgid "Document cannot be exported. Please try again."
+msgstr "Dokument se nepodařilo vyexportovat, zkuste to znovu."
 
 #: src/errormessages.js:54
 msgid "Uploading file to server failed, file not found."
@@ -2628,6 +2607,52 @@ msgstr ""
 "nebo prostřednictvím <a target=\"_blank\" href=\""
 "https://collaboraonline.github.io/post/filebugs/\">vyplňování hlášení "
 "chyb</a>, jejichž součástí je popis kroků nezbytných k vyvolání chyby."
+
+#~ msgid ""
+#~ "No disk space left on server, please contact the server administrator to "
+#~ "continue."
+#~ msgstr ""
+#~ "Nedostatek volného místa na serveru. Pokud chcete pokračovat, obraťte se "
+#~ "na správce serveru."
+
+#, javascript-format
+#~ msgid ""
+#~ "Failed to read document from storage. Please contact your storage server "
+#~ "(%storageserver) administrator."
+#~ msgstr ""
+#~ "Nepodařilo se načíst dokument. Kontaktujte správce síťového úložiště "
+#~ "(%storageserver)."
+
+#, javascript-format
+#~ msgid ""
+#~ "Save failed because the document is too large or disk quota exceeded. "
+#~ "Document will now be read-only but you may still download it now to "
+#~ "preserve a copy locally. Please contact the server (%storageserver) "
+#~ "administrator to resolve the issue."
+#~ msgstr ""
+#~ "Dokument se nepodařilo uložit, protože je příliš velký nebo na disku "
+#~ "nezbývá dostatek místa. Dokument je nyní pouze pro čtení, ale stále jej "
+#~ "může stáhnout, pokud chcete uchovat jeho kopii lokálně. Chcete-li problém "
+#~ "vyřešit, obraťte se na správce serveru (%storageserver)."
+
+#~ msgid ""
+#~ "Document cannot be saved. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Dokument nelze uložit. Ujistěte se, zda máte dostatečná oprávnění, nebo "
+#~ "se obraťte na správce serveru."
+
+#~ msgid ""
+#~ "Document cannot be renamed. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Dokument se nepodařilo přejmenovat. Ověřte, zda máte dostatečná "
+#~ "oprávnění, nebo se obraťte na správce serveru."
+
+#~ msgid ""
+#~ "Document cannot be exported. Please contact the storage server "
+#~ "administrator."
+#~ msgstr "Dokument se nepodařilo vyexportovat. Obraťte se na správce serveru."
 
 #, javascript-format
 #~ msgid ""

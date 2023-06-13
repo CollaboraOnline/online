@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-23 22:02+0200\n"
+"POT-Creation-Date: 2023-06-13 14:01+0200\n"
 "PO-Revision-Date: 2021-09-01 18:50+0000\n"
 "Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
@@ -1081,6 +1081,9 @@ msgid ""
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
+"Di chuyển con trỏ đến viền trái của khu vực dữ liệu hiện tại. Nếu như cột "
+"bên trái ô có chứa con trỏ trống, con trỏ sẽ di chuyển đến cột tiếp theo bên "
+"trái có chứa dữ liệu"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:140-245
 #, fuzzy
@@ -1093,6 +1096,9 @@ msgid ""
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
 msgstr ""
+"Di chuyển con trỏ đến viền phải của khu vực dữ liệu hiện tại. Nếu như cột "
+"bên phải ô có chứa con trỏ trống, con trỏ sẽ di chuyển đến cột tiếp theo bên "
+"phải có chứa dữ liệu."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-249
 #, fuzzy
@@ -1105,6 +1111,9 @@ msgid ""
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
 msgstr ""
+"Di chuyển con trỏ đến viền trên của khu vực dữ liệu hiện tại. Nếu như hàng "
+"bên trên ô có chứa con trỏ trống, con trỏ sẽ di chuyển đến hàng tiếp theo "
+"bên trên có chứa dữ liệu."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-221
 #, fuzzy
@@ -1117,6 +1126,9 @@ msgid ""
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
+"Di chuyển con trỏ đến viền dưới của khu vực dữ liệu hiện tại. Nếu như hàng "
+"bên dưới ô có chứa con trỏ trống, con trỏ sẽ di chuyển đến hàng tiếp theo "
+"phía dưới có chứa dữ liệu."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-226
 #, fuzzy
@@ -1130,6 +1142,9 @@ msgid ""
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
 msgstr ""
+"Lựa chọn tất cả các ô có chứa dữ liệu từ ô hiện tại đến phía cuối của dãy ô "
+"dữ liệu liên tiếp, theo hướng mũi tên được nhấn. Nếu sử dụng để chọn hàng và "
+"cột cùng với nhau, một khoảng ô hình chữ nhật sẽ được chọn."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-272
 #, fuzzy
@@ -1142,7 +1157,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "Di chuyển một sheet sang bên trái."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-73
 #, fuzzy
@@ -1151,7 +1166,7 @@ msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "Di chuyển một trang màn hình sang bên phải."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-80
 #, fuzzy
@@ -1164,6 +1179,9 @@ msgid ""
 "sheets in a spreadsheet are selected, this shortcut key combination only "
 "selects the previous sheet. Makes the previous sheet the current sheet."
 msgstr ""
+"Thêm một trang vào lựa chọn các trang hiện tại. Nếu như tất cả các trang "
+"trong trang tính được chọn, tổ hợp phím tắt chỉ chọn trang trước đó. Làm cho "
+"trang trước đó thành trang hiện tại."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-260
 #, fuzzy
@@ -1180,6 +1198,9 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
+"Thêm một trang tiếp theo vào lựa chọn các trang hiện tại. Nếu như tất cả các "
+"trang trong trang tính được chọn, tổ hợp phóm tắt mày chỉ chọn trang tính "
+"tiếp theo. Làm cho trang tính tiếp theo thành trang tính hiện tại."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-248
 #, fuzzy
@@ -1196,6 +1217,9 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"nơi dấu (*) ở trên bang phím số. Lựa chọn khoảng dữ liệu chứa con trỏ. Một "
+"khoản là một khoảng các ô liên tiếp nhau chứa dữ liệu và được liên kết bởi "
+"các hàng và cột trống."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-249
 #, fuzzy
@@ -1207,6 +1231,8 @@ msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
 msgstr ""
+"(/) là phím chia trên bàn phím số. Lựa chọn khoảng công thức ma trận có chứa "
+"con trỏ."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-158
 #, fuzzy
@@ -1215,7 +1241,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "Thêm cột (như menu Chèn - Ô)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-85
 #, fuzzy
@@ -1224,7 +1250,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr ""
+msgstr "Xoá ô (như menu Chỉnh sửa - Xoá ô)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-90
 #, fuzzy
@@ -3173,11 +3199,11 @@ msgid "Set the properties of the element of the object."
 msgstr "Đặt các thuộc tính của phần tử của đối tượng."
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span>B"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span>B"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span>B"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span>B"
 
 #~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
 #~ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
@@ -3198,11 +3224,11 @@ msgstr "Đặt các thuộc tính của phần tử của đối tượng."
 #~ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>A"
 
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span>Arrow Down"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span>Arrow Down"
 #~ msgstr ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span>Mũi tên xuống"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span>Mũi tên xuống"
 
 #~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
 #~ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"

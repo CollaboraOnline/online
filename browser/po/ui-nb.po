@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-23 22:02+0200\n"
+"POT-Creation-Date: 2023-06-13 14:01+0200\n"
 "PO-Revision-Date: 2023-01-03 16:01+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -266,9 +266,9 @@ msgstr "Er du sikker på at du vil avslutte denne økten?"
 #: src/control/Control.DocumentRepair.js:68
 #: src/control/Control.LanguageDialog.js:109 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:320 src/control/Control.Zotero.js:328
-#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:758
-#: src/control/Toolbar.js:969 src/core/Socket.js:1069 src/core/Socket.js:1092
-#: src/core/Socket.js:1296 src/map/handler/Map.Feedback.js:83
+#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:761
+#: src/control/Toolbar.js:972 src/core/Socket.js:1069 src/core/Socket.js:1092
+#: src/core/Socket.js:1297 src/map/handler/Map.Feedback.js:83
 #: src/map/handler/Map.WOPI.js:484
 msgid "OK"
 msgstr "OK"
@@ -277,7 +277,7 @@ msgstr "OK"
 #: src/control/Control.Command.js:93 src/control/Control.DocumentRepair.js:62
 #: src/control/Control.LanguageDialog.js:103
 #: src/control/Control.MobileTopBar.js:41 src/control/Control.Tabs.js:305
-#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:757
+#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:760
 #: src/core/Socket.js:927 src/core/Socket.js:937 src/core/Socket.js:1068
 #: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
@@ -372,7 +372,7 @@ msgstr "Serveren fikk en %0 feil under kjøring av %1 kommandoen."
 msgid "Unlock"
 msgstr "Lås opp"
 
-#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:968
+#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:971
 msgid "Delete"
 msgstr "Slett"
 
@@ -1225,7 +1225,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr "Boolsk verdi"
 
-#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:753
+#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:756
 msgid "Text"
 msgstr "Tekst"
 
@@ -1310,8 +1310,8 @@ msgstr ""
 msgid "Sparkline"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1183
-#: src/control/Control.NotebookbarCalc.js:1833
+#: src/control/Control.NotebookbarCalc.js:1209
+#: src/control/Control.NotebookbarCalc.js:1860
 #: src/control/Control.NotebookbarDraw.js:621
 #: src/control/Control.NotebookbarDraw.js:997
 #: src/control/Control.NotebookbarImpress.js:738
@@ -1970,19 +1970,19 @@ msgstr "Denne versjonen av %productName kjøres på"
 msgid "\"Slow Proxy\""
 msgstr "\"Sen Proxy\""
 
-#: src/control/Toolbar.js:750
+#: src/control/Toolbar.js:753
 msgid "Insert hyperlink"
 msgstr "Sett inn hyperlenke"
 
-#: src/control/Toolbar.js:754
+#: src/control/Toolbar.js:757
 msgid "Link"
 msgstr "Lenke"
 
-#: src/control/Toolbar.js:963
+#: src/control/Toolbar.js:966
 msgid "Are you sure you want to delete this slide?"
 msgstr "Er du sikker på at du vil slette dette lysbildet?"
 
-#: src/control/Toolbar.js:966
+#: src/control/Toolbar.js:969
 msgid "Are you sure you want to delete this page?"
 msgstr "Er du sikker på at du vil slette denne siden?"
 
@@ -2126,34 +2126,32 @@ msgstr "Kobler til …"
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Exported to storage"
 msgstr ""
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Successfully exported: "
 msgstr ""
 
-#: src/core/Socket.js:1591
+#: src/core/Socket.js:1592
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Vi kan ikke koble til ditt dokument nå. Prøv å koble til på nytt."
 
-#: src/core/Socket.js:1608
+#: src/core/Socket.js:1609
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "Kobler til …"
 
-#: src/core/Socket.js:1618
+#: src/core/Socket.js:1619
 msgid "The server has been disconnected."
 msgstr ""
 
 #: src/errormessages.js:15
-msgid ""
-"No disk space left on server, please contact the server administrator to "
-"continue."
-msgstr "Ingen ledig plass på serveren, vennligst kontakt administator."
+msgid "No disk space left on server."
+msgstr ""
 
 #: src/errormessages.js:16
 msgid ""
@@ -2293,13 +2291,9 @@ msgid "Document cannot be renamed."
 msgstr "Dokument kan ikke bli gitt nytt navn."
 
 #: src/errormessages.js:43
-#, javascript-format
 msgid ""
-"Failed to read document from storage. Please contact your storage server "
-"(%storageserver) administrator."
+"Failed to read document from storage, please try to load the document again."
 msgstr ""
-"Mislyktes i å lese dokumentet fra lagringssted. Vennligst kontakt "
-"administratoren for lagringsserveren (%storageserver)"
 
 #: src/errormessages.js:44
 msgid ""
@@ -2308,34 +2302,22 @@ msgid ""
 msgstr ""
 
 #: src/errormessages.js:45
-#, javascript-format
 msgid ""
-"Save failed because the document is too large or disk quota exceeded. "
-"Document will now be read-only but you may still download it now to "
-"preserve a copy locally. Please contact the server (%storageserver) "
-"administrator to resolve the issue."
+"Save failed because the document is too large or exceeds the remaining "
+"storage space. The document will now be read-only but you may still "
+"download it now to preserve a copy locally."
 msgstr ""
 
 #: src/errormessages.js:47
-msgid ""
-"Document cannot be saved. Check your permissions or contact the storage "
-"server administrator."
+msgid "Document cannot be saved, please check your permissions."
 msgstr ""
-"Dokumentet kan ikke lagres. Sjekk dine tillatelser eller kontakt "
-"serveradministratøren."
 
 #: src/errormessages.js:48
-msgid ""
-"Document cannot be renamed. Check your permissions or contact the storage "
-"server administrator."
+msgid "Document cannot be renamed, please check your permissions."
 msgstr ""
-"Dokumentet kan ikke lagres. Sjekk dine tillatelser eller kontakt "
-"serveradministratøren."
 
 #: src/errormessages.js:49
-msgid ""
-"Document cannot be exported. Please contact the storage server "
-"administrator."
+msgid "Document cannot be exported. Please try again."
 msgstr ""
 
 #: src/errormessages.js:54
@@ -2590,6 +2572,33 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+
+#~ msgid ""
+#~ "No disk space left on server, please contact the server administrator to "
+#~ "continue."
+#~ msgstr "Ingen ledig plass på serveren, vennligst kontakt administator."
+
+#, javascript-format
+#~ msgid ""
+#~ "Failed to read document from storage. Please contact your storage server "
+#~ "(%storageserver) administrator."
+#~ msgstr ""
+#~ "Mislyktes i å lese dokumentet fra lagringssted. Vennligst kontakt "
+#~ "administratoren for lagringsserveren (%storageserver)"
+
+#~ msgid ""
+#~ "Document cannot be saved. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Dokumentet kan ikke lagres. Sjekk dine tillatelser eller kontakt "
+#~ "serveradministratøren."
+
+#~ msgid ""
+#~ "Document cannot be renamed. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Dokumentet kan ikke lagres. Sjekk dine tillatelser eller kontakt "
+#~ "serveradministratøren."
 
 #, javascript-format
 #~ msgid ""
