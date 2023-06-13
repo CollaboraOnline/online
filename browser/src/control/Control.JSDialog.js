@@ -547,6 +547,13 @@ L.Control.JSDialog = L.Control.extend({
 			}
 		}
 		else {
+			// Is the target dialog already open. So don't let the open same dialog again
+			var dialogs = Object.keys(this.dialogs);
+			for (var i = 0; i < dialogs.length; i++) {
+				if (this.dialogs[dialogs[i]].dialogid === instance.dialogid)
+					return;
+			}
+
 			// There is no action, so we create a new dialogue.
 			if (instance.isModalPopUp || instance.isDocumentAreaPopup)
 				this.getOrCreateOverlay(instance);
