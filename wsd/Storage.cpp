@@ -266,6 +266,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
     // here much earlier. Also, using exceptions is lame and makes understanding the code harder,
     // but that is just my personal preference.
 
+#if !MOBILEAPP
     std::unique_ptr<StorageBase> storage;
     if (UnitWSD::get().createStorage(uri, jailRoot, jailPath, storage))
     {
@@ -275,6 +276,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
             return storage;
         }
     }
+#endif
 
     const StorageBase::StorageType type = validate(uri, takeOwnership);
     switch (type)
@@ -298,7 +300,9 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
                 new LocalStorage(uri, jailRoot, jailPath, takeOwnership));
             break;
         case StorageBase::StorageType::Wopi:
+#if !MOBILEAPP
             return std::unique_ptr<StorageBase>(new WopiStorage(uri, jailRoot, jailPath));
+#endif
             break;
     }
 

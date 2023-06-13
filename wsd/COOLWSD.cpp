@@ -3489,6 +3489,7 @@ private:
 
         // Consume the incoming data by parsing and processing the body.
         http::Request request;
+#if !MOBILEAPP
         const int64_t read = request.readData(data.data(), data.size());
         if (read < 0)
         {
@@ -3506,6 +3507,7 @@ private:
 
         // Remove consumed data.
         data.eraseFirst(read);
+#endif
 
         try
         {
@@ -3575,7 +3577,6 @@ private:
 #else
             pid_t pid = 100;
             std::string jailId = "jail";
-            LOG_ASSERT_MSG(socket->getInBuffer().empty(), "Unexpected data in prisoner socket");
             socket->getInBuffer().clear();
 #endif
             LOG_TRC("Calling make_shared<ChildProcess>, for NewChildren?");
@@ -3612,8 +3613,10 @@ private:
     /// Prisoner websocket fun ... (for now)
     virtual void handleMessage(const std::vector<char> &data) override
     {
+#if !MOBILEAPP
         if (UnitWSD::get().filterChildMessage(data))
             return;
+#endif
 
         auto message = std::make_shared<Message>(data.data(), data.size(), Message::Dir::Out);
         std::shared_ptr<StreamSocket> socket = getSocket().lock();
