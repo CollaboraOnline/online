@@ -1460,7 +1460,7 @@ private:
     const bool _alwaysSaveOnExit;
 
     // Last member.
-#ifdef ENABLE_DEBUG
+#if !MOBILEAPP
     /// The UnitWSD instance. We capture it here since
     /// this is our instance, but the test framework
     /// has a single global instance via UnitWSD::get().
