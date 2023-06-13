@@ -65,9 +65,18 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		return ret;
 	};
 
-	var tapTimer = null;
 	var moveTimer = null;
 	var moveFunc = null;
+
+	L.DomEvent.on(image, 'dblclick', function(e) {
+		var pos = getCoordinatesFromEvent(e);
+		var coordinates = pos[0] + ';' + pos[1];
+
+		clearTimeout(moveTimer);
+		moveTimer = null;
+		moveFunc = null;
+		builder.callback('drawingarea', 'dblclick', container, coordinates, builder);
+	}, this);
 
 	L.DomEvent.on(image, 'click touchend', function(e) {
 		var pos = getCoordinatesFromEvent(e);
@@ -77,17 +86,7 @@ function _drawingAreaControl (parentContainer, data, builder) {
 		moveTimer = null;
 		moveFunc = null;
 
-		if (tapTimer == null) {
-			tapTimer = setTimeout(function () {
-				tapTimer = null;
-				builder.callback('drawingarea', 'click', container, coordinates, builder);
-			}, 300);
-		} else {
-			clearTimeout(tapTimer);
-			tapTimer = null;
-			builder.callback('drawingarea', 'click', container, coordinates, builder);
-			builder.callback('drawingarea', 'dblclick', container, coordinates, builder);
-		}
+		builder.callback('drawingarea', 'click', container, coordinates, builder);
 	}, this);
 
 	var onMove = function (e) {
