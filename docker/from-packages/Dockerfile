@@ -138,7 +138,7 @@ COPY /scripts/start-collabora-online.pl /
 EXPOSE 9980
 
 # Switch to cool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
-USER 101
+USER 100
 
 ## Fix name resolution from jails
 #CMD cp /etc/resolv.conf /etc/hosts /opt/cool/systemplate/etc/ && \
