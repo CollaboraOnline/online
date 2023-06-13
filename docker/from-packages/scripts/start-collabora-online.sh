@@ -24,9 +24,9 @@ else
 openssl req -key certs/servers/localhost/privkey.pem -new -sha256 -out certs/tmp/localhost.csr.pem -subj "/C=DE/ST=BW/L=Stuttgart/O=Dummy Authority/CN=${cert_domain}"
 fi
 openssl x509 -req -in certs/tmp/localhost.csr.pem -CA certs/ca/root.crt.pem -CAkey certs/ca/root.key.pem -CAcreateserial -out certs/servers/localhost/cert.pem -days 9131
-mv certs/servers/localhost/privkey.pem /etc/coolwsd/key.pem
-mv certs/servers/localhost/cert.pem /etc/coolwsd/cert.pem
-mv certs/ca/root.crt.pem /etc/coolwsd/ca-chain.cert.pem
+mv -f certs/servers/localhost/privkey.pem /etc/coolwsd/key.pem
+mv -f certs/servers/localhost/cert.pem /etc/coolwsd/cert.pem
+mv -f certs/ca/root.crt.pem /etc/coolwsd/ca-chain.cert.pem
 fi
 
 # Disable warning/info messages of LOKit by default
