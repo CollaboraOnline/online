@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-23 22:02+0200\n"
+"POT-Creation-Date: 2023-06-13 14:01+0200\n"
 "PO-Revision-Date: 2023-02-07 21:49+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
@@ -3215,8 +3215,8 @@ msgstr "Ajuste las propiedades del elemento del objeto."
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span>B"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span>B"
 #~ msgstr "Ctrl + Mayús + B"
 
 #, fuzzy
@@ -3245,28 +3245,44 @@ msgstr "Ajuste las propiedades del elemento del objeto."
 
 #, fuzzy
 #~ msgid ""
-#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-#~ "\"kbd--plus\">+</span>Arrow Down"
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span "
+#~ "class=\"kbd--plus\">+</span>Arrow Down"
 #~ msgstr "Ctrl + Mayús + ↓"
 
 #, fuzzy
 #~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
 #~ msgstr "Ctrl + Intro"
 
-#~ msgid "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
+#~ msgid ""
+#~ "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages "
+#~ "formats."
 #~ msgstr "Además, puede ver los formatos de Visio, Keynote, Numbers y Pages."
 
-#~ msgid "Click on the clone formatting icon. The mouse pointer turns to a paint bucket."
-#~ msgstr "Clic en el icono Clonar formato. El puntero del ratón cambia a un cubo de tinta."
+#~ msgid ""
+#~ "Click on the clone formatting icon. The mouse pointer turns to a paint "
+#~ "bucket."
+#~ msgstr ""
+#~ "Clic en el icono Clonar formato. El puntero del ratón cambia a un cubo de "
+#~ "tinta."
 
 #~ msgid "Choose menu Tools and uncheck “Automatic Spell Checking”."
-#~ msgstr "Seleccione el menú Herramientas y desactive la opción \"Revisión ortográfica automática\""
+#~ msgstr ""
+#~ "Seleccione el menú Herramientas y desactive la opción \"Revisión "
+#~ "ortográfica automática\""
 
 #~ msgid "Type the new file name in the text box and press Enter."
-#~ msgstr "Escriba un nuevo nombre de archivo en el cuadro de texto y pulse <kbd>Enter</kbd>."
+#~ msgstr ""
+#~ "Escriba un nuevo nombre de archivo en el cuadro de texto y pulse "
+#~ "<kbd>Enter</kbd>."
 
-#~ msgid "You can paste as unformatted text with the keyboard shortcut: Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>V"
-#~ msgstr "Puede pegar texto sin formato con las teclas de acceso directo Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>V."
+#~ msgid ""
+#~ "You can paste as unformatted text with the keyboard shortcut: Ctrl</"
+#~ "kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>V"
+#~ msgstr ""
+#~ "Puede pegar texto sin formato con las teclas de acceso directo Ctrl</"
+#~ "kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+#~ "plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>V."
 
 #, fuzzy
 #~ msgid "Editing Spreadsheets"
@@ -3277,5 +3293,7 @@ msgstr "Ajuste las propiedades del elemento del objeto."
 #~ msgstr "Formato de hoja de cálculo"
 
 #, fuzzy
-#~ msgid "Your documents are stored and managed in <span class=\"productname\">%productName</span>."
+#~ msgid ""
+#~ "Your documents are stored and managed in <span class=\"productname\">"
+#~ "%productName</span>."
 #~ msgstr "Sus documentos se almacenan en "

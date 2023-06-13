@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-23 22:02+0200\n"
+"POT-Creation-Date: 2023-06-13 14:01+0200\n"
 "PO-Revision-Date: 2023-03-14 08:03+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
@@ -271,9 +271,9 @@ msgstr "Voulez-vous vraiment terminer cette session ?"
 #: src/control/Control.DocumentRepair.js:68
 #: src/control/Control.LanguageDialog.js:109 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:320 src/control/Control.Zotero.js:328
-#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:758
-#: src/control/Toolbar.js:969 src/core/Socket.js:1069 src/core/Socket.js:1092
-#: src/core/Socket.js:1296 src/map/handler/Map.Feedback.js:83
+#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:761
+#: src/control/Toolbar.js:972 src/core/Socket.js:1069 src/core/Socket.js:1092
+#: src/core/Socket.js:1297 src/map/handler/Map.Feedback.js:83
 #: src/map/handler/Map.WOPI.js:484
 msgid "OK"
 msgstr "OK"
@@ -282,7 +282,7 @@ msgstr "OK"
 #: src/control/Control.Command.js:93 src/control/Control.DocumentRepair.js:62
 #: src/control/Control.LanguageDialog.js:103
 #: src/control/Control.MobileTopBar.js:41 src/control/Control.Tabs.js:305
-#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:757
+#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:760
 #: src/core/Socket.js:927 src/core/Socket.js:937 src/core/Socket.js:1068
 #: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
@@ -380,7 +380,7 @@ msgstr ""
 msgid "Unlock"
 msgstr "Déverrouiller"
 
-#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:968
+#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:971
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -1226,7 +1226,7 @@ msgstr "Fraction"
 msgid "Boolean Value"
 msgstr "Valeur booléenne"
 
-#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:753
+#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:756
 msgid "Text"
 msgstr "Texte"
 
@@ -1311,8 +1311,8 @@ msgstr "Barre d'état"
 msgid "Sparkline"
 msgstr "Sparkline"
 
-#: src/control/Control.NotebookbarCalc.js:1183
-#: src/control/Control.NotebookbarCalc.js:1833
+#: src/control/Control.NotebookbarCalc.js:1209
+#: src/control/Control.NotebookbarCalc.js:1860
 #: src/control/Control.NotebookbarDraw.js:621
 #: src/control/Control.NotebookbarDraw.js:997
 #: src/control/Control.NotebookbarImpress.js:738
@@ -1974,19 +1974,19 @@ msgstr "Cette version de %productName est fournie par"
 msgid "\"Slow Proxy\""
 msgstr "\"Proxy lent\""
 
-#: src/control/Toolbar.js:750
+#: src/control/Toolbar.js:753
 msgid "Insert hyperlink"
 msgstr "Insérer un hyperlien"
 
-#: src/control/Toolbar.js:754
+#: src/control/Toolbar.js:757
 msgid "Link"
 msgstr "Lien"
 
-#: src/control/Toolbar.js:963
+#: src/control/Toolbar.js:966
 msgid "Are you sure you want to delete this slide?"
 msgstr "Voulez-vous vraiment supprimer cette diapo ?"
 
-#: src/control/Toolbar.js:966
+#: src/control/Toolbar.js:969
 msgid "Are you sure you want to delete this page?"
 msgstr "Voulez-vous vraiment supprimer cette page ?"
 
@@ -2112,7 +2112,7 @@ msgstr "Mot de passe fournit incorrect. Veuillez réessayer."
 
 #: src/core/Socket.js:1091
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Seul le propriétaire du document peut changer le mot de passe."
 
 #: src/core/Socket.js:1122 src/core/Socket.js:1127
 msgid "Missing Fonts"
@@ -2135,15 +2135,15 @@ msgstr "Connexion..."
 msgid "The document is being renamed and will reload shortly"
 msgstr "Le document est en train d'être renommé et sera rechargé sous peu"
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Exported to storage"
 msgstr "Exporter vers le stockage"
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Successfully exported: "
 msgstr "Export réussi : "
 
-#: src/core/Socket.js:1591
+#: src/core/Socket.js:1592
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -2151,21 +2151,17 @@ msgstr ""
 "Bon, c'est embarrassant, votre document ne peut pas être connecté. Veuillez "
 "réessayer."
 
-#: src/core/Socket.js:1608
+#: src/core/Socket.js:1609
 msgid "Reconnecting..."
 msgstr "Reconnexion..."
 
-#: src/core/Socket.js:1618
+#: src/core/Socket.js:1619
 msgid "The server has been disconnected."
 msgstr "Le serveur a été déconnecté."
 
 #: src/errormessages.js:15
-msgid ""
-"No disk space left on server, please contact the server administrator to "
-"continue."
+msgid "No disk space left on server."
 msgstr ""
-"Pas d'espace disque restant sur le serveur, veuillez contacter "
-"l'administrateur du serveur pour continuer."
 
 #: src/errormessages.js:16
 msgid ""
@@ -2312,57 +2308,37 @@ msgid "Document cannot be renamed."
 msgstr "Le document n'a pas pu être renommé."
 
 #: src/errormessages.js:43
-#, javascript-format
 msgid ""
-"Failed to read document from storage. Please contact your storage server "
-"(%storageserver) administrator."
+"Failed to read document from storage, please try to load the document again."
 msgstr ""
-"Échec de la lecture du document à partir du stockage. Veuillez contacter "
-"votre administrateur de serveur de stockage (%storageserver)."
 
 #: src/errormessages.js:44
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"La sauvegarde a échoué car il n'y a plus d'espace de stockage restant. Le "
+"document sera désormais en lecture seule. Assurez-vous qu'il y a "
+"suffisamment d'espace de stockage disponible puis réessayez."
 
 #: src/errormessages.js:45
-#, javascript-format
 msgid ""
-"Save failed because the document is too large or disk quota exceeded. "
-"Document will now be read-only but you may still download it now to "
-"preserve a copy locally. Please contact the server (%storageserver) "
-"administrator to resolve the issue."
+"Save failed because the document is too large or exceeds the remaining "
+"storage space. The document will now be read-only but you may still "
+"download it now to preserve a copy locally."
 msgstr ""
-"L'enregistrement a échoué, car le document est trop lourd ou le quota de "
-"disque a été dépassé. Le document est désormais en lecture seule, mais vous "
-"pouvez toujours le télécharger maintenant pour en conserver une copie "
-"localement. Veuillez contacter l'administrateur du serveur (%storageserver) "
-"pour résoudre ce problème."
 
 #: src/errormessages.js:47
-msgid ""
-"Document cannot be saved. Check your permissions or contact the storage "
-"server administrator."
+msgid "Document cannot be saved, please check your permissions."
 msgstr ""
-"Le document ne peut pas être sauvegardé. Vérifiez vos permissions ou "
-"contactez l'administrateur du serveur de stockage."
 
 #: src/errormessages.js:48
-msgid ""
-"Document cannot be renamed. Check your permissions or contact the storage "
-"server administrator."
+msgid "Document cannot be renamed, please check your permissions."
 msgstr ""
-"Le document ne peut pas être renommé. Vérifiez vos permissions ou contactez "
-"l'administrateur du serveur de stockage."
 
 #: src/errormessages.js:49
-msgid ""
-"Document cannot be exported. Please contact the storage server "
-"administrator."
+msgid "Document cannot be exported. Please try again."
 msgstr ""
-"Le document ne peut pas être exporté. Veuillez contacter l'administrateur du "
-"serveur."
 
 #: src/errormessages.js:54
 msgid "Uploading file to server failed, file not found."
@@ -2651,6 +2627,55 @@ msgstr ""
 "target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/\">"
 "rapportant un rapport de bogue</a> en y détaillant les étapes essentielles "
 "sur la façon dont le reproduire."
+
+#~ msgid ""
+#~ "No disk space left on server, please contact the server administrator to "
+#~ "continue."
+#~ msgstr ""
+#~ "Pas d'espace disque restant sur le serveur, veuillez contacter "
+#~ "l'administrateur du serveur pour continuer."
+
+#, javascript-format
+#~ msgid ""
+#~ "Failed to read document from storage. Please contact your storage server "
+#~ "(%storageserver) administrator."
+#~ msgstr ""
+#~ "Échec de la lecture du document à partir du stockage. Veuillez contacter "
+#~ "votre administrateur de serveur de stockage (%storageserver)."
+
+#, javascript-format
+#~ msgid ""
+#~ "Save failed because the document is too large or disk quota exceeded. "
+#~ "Document will now be read-only but you may still download it now to "
+#~ "preserve a copy locally. Please contact the server (%storageserver) "
+#~ "administrator to resolve the issue."
+#~ msgstr ""
+#~ "L'enregistrement a échoué, car le document est trop lourd ou le quota de "
+#~ "disque a été dépassé. Le document est désormais en lecture seule, mais "
+#~ "vous pouvez toujours le télécharger maintenant pour en conserver une "
+#~ "copie localement. Veuillez contacter l'administrateur du serveur "
+#~ "(%storageserver) pour résoudre ce problème."
+
+#~ msgid ""
+#~ "Document cannot be saved. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Le document ne peut pas être sauvegardé. Vérifiez vos permissions ou "
+#~ "contactez l'administrateur du serveur de stockage."
+
+#~ msgid ""
+#~ "Document cannot be renamed. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Le document ne peut pas être renommé. Vérifiez vos permissions ou "
+#~ "contactez l'administrateur du serveur de stockage."
+
+#~ msgid ""
+#~ "Document cannot be exported. Please contact the storage server "
+#~ "administrator."
+#~ msgstr ""
+#~ "Le document ne peut pas être exporté. Veuillez contacter l'administrateur "
+#~ "du serveur."
 
 #, javascript-format
 #~ msgid ""

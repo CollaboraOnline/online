@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-23 22:02+0200\n"
+"POT-Creation-Date: 2023-06-13 14:01+0200\n"
 "PO-Revision-Date: 2023-01-29 15:18+0000\n"
 "Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/"
@@ -269,9 +269,9 @@ msgstr "Jeni të sigurt se doni të përfundohet ky sesion?"
 #: src/control/Control.DocumentRepair.js:68
 #: src/control/Control.LanguageDialog.js:109 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:320 src/control/Control.Zotero.js:328
-#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:758
-#: src/control/Toolbar.js:969 src/core/Socket.js:1069 src/core/Socket.js:1092
-#: src/core/Socket.js:1296 src/map/handler/Map.Feedback.js:83
+#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:761
+#: src/control/Toolbar.js:972 src/core/Socket.js:1069 src/core/Socket.js:1092
+#: src/core/Socket.js:1297 src/map/handler/Map.Feedback.js:83
 #: src/map/handler/Map.WOPI.js:484
 msgid "OK"
 msgstr "OK"
@@ -280,7 +280,7 @@ msgstr "OK"
 #: src/control/Control.Command.js:93 src/control/Control.DocumentRepair.js:62
 #: src/control/Control.LanguageDialog.js:103
 #: src/control/Control.MobileTopBar.js:41 src/control/Control.Tabs.js:305
-#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:757
+#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:760
 #: src/core/Socket.js:927 src/core/Socket.js:937 src/core/Socket.js:1068
 #: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
@@ -377,7 +377,7 @@ msgstr "Shërbyesi hasi një gabim %0 teksa analizonte urdhrin."
 msgid "Unlock"
 msgstr "Shkyçe"
 
-#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:968
+#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:971
 msgid "Delete"
 msgstr "Fshije"
 
@@ -1225,7 +1225,7 @@ msgstr "Thyesë"
 msgid "Boolean Value"
 msgstr "Vlerë Boleane"
 
-#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:753
+#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:756
 msgid "Text"
 msgstr "Tekst"
 
@@ -1310,8 +1310,8 @@ msgstr "Shtyllë Gjendjesh"
 msgid "Sparkline"
 msgstr "Vijëzor"
 
-#: src/control/Control.NotebookbarCalc.js:1183
-#: src/control/Control.NotebookbarCalc.js:1833
+#: src/control/Control.NotebookbarCalc.js:1209
+#: src/control/Control.NotebookbarCalc.js:1860
 #: src/control/Control.NotebookbarDraw.js:621
 #: src/control/Control.NotebookbarDraw.js:997
 #: src/control/Control.NotebookbarImpress.js:738
@@ -1971,19 +1971,19 @@ msgstr "Ky version i %productName bazohet në"
 msgid "\"Slow Proxy\""
 msgstr "“Ndërmjetës i Ngadaltë”"
 
-#: src/control/Toolbar.js:750
+#: src/control/Toolbar.js:753
 msgid "Insert hyperlink"
 msgstr "Futni tejlidhje"
 
-#: src/control/Toolbar.js:754
+#: src/control/Toolbar.js:757
 msgid "Link"
 msgstr "Lidhje"
 
-#: src/control/Toolbar.js:963
+#: src/control/Toolbar.js:966
 msgid "Are you sure you want to delete this slide?"
 msgstr "Jeni i sigurt se doni të fshihet ky diapozitiv?"
 
-#: src/control/Toolbar.js:966
+#: src/control/Toolbar.js:969
 msgid "Are you sure you want to delete this page?"
 msgstr "Jeni i sigurt se doni të fshihet kjo faqe?"
 
@@ -2131,15 +2131,15 @@ msgstr "Po lidhet…"
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokumenti po riemërtohet dhe do të ringarkohet pas pak"
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Exported to storage"
 msgstr ""
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Successfully exported: "
 msgstr ""
 
-#: src/core/Socket.js:1591
+#: src/core/Socket.js:1592
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -2147,21 +2147,17 @@ msgstr ""
 "Hëm, kjo është turpëruese, s’lidhemi dot me dokumentin tuaj. Ju lutemi, "
 "riprovoni."
 
-#: src/core/Socket.js:1608
+#: src/core/Socket.js:1609
 msgid "Reconnecting..."
 msgstr "Po rilidhet…"
 
-#: src/core/Socket.js:1618
+#: src/core/Socket.js:1619
 msgid "The server has been disconnected."
 msgstr "Shërbyesi është shkëputur."
 
 #: src/errormessages.js:15
-msgid ""
-"No disk space left on server, please contact the server administrator to "
-"continue."
+msgid "No disk space left on server."
 msgstr ""
-"S’ka më hapësirë në shërbyes, ju lutemi, që të vazhdohet, lidhuni me "
-"përgjegjësin e shërbyesit."
 
 #: src/errormessages.js:16
 msgid ""
@@ -2307,13 +2303,9 @@ msgid "Document cannot be renamed."
 msgstr "Dokumenti s’mund të riemërtohet."
 
 #: src/errormessages.js:43
-#, javascript-format
 msgid ""
-"Failed to read document from storage. Please contact your storage server "
-"(%storageserver) administrator."
+"Failed to read document from storage, please try to load the document again."
 msgstr ""
-"S’u arrit të lexohej dokument prej depoje. Ju lutemi, lidhuni me "
-"përgjegjësin e shërbyesit tuaj depozitë (%storageserver)."
 
 #: src/errormessages.js:44
 msgid ""
@@ -2322,41 +2314,23 @@ msgid ""
 msgstr ""
 
 #: src/errormessages.js:45
-#, javascript-format
 msgid ""
-"Save failed because the document is too large or disk quota exceeded. "
-"Document will now be read-only but you may still download it now to "
-"preserve a copy locally. Please contact the server (%storageserver) "
-"administrator to resolve the issue."
+"Save failed because the document is too large or exceeds the remaining "
+"storage space. The document will now be read-only but you may still "
+"download it now to preserve a copy locally."
 msgstr ""
-"Ruajtja dështoi, ngaqë dokumenti është shumë i madh, ose janë tejkaluar "
-"kuota disku. Tani dokumenti do të jetë vetëm-lexim, por mundeni prapë ta "
-"shkarkoni, për të ruajtur një kopje lokalisht. Ju lutemi, që të zgjidhni "
-"problemin, lidhuni me përgjegjësin e shërbyesit (%storageserver)."
 
 #: src/errormessages.js:47
-msgid ""
-"Document cannot be saved. Check your permissions or contact the storage "
-"server administrator."
+msgid "Document cannot be saved, please check your permissions."
 msgstr ""
-"Dokumenti s’mund të ruhet. Kontrolloni lejet tuaja, ose lidhuni me "
-"përgjegjësin e shërbyesit depozitë."
 
 #: src/errormessages.js:48
-msgid ""
-"Document cannot be renamed. Check your permissions or contact the storage "
-"server administrator."
+msgid "Document cannot be renamed, please check your permissions."
 msgstr ""
-"Dokumenti s’mund të riemërtohet. Kontrolloni lejet tuaja, ose lidhuni me "
-"përgjegjësin e shërbyesit depozitë."
 
 #: src/errormessages.js:49
-msgid ""
-"Document cannot be exported. Please contact the storage server "
-"administrator."
+msgid "Document cannot be exported. Please try again."
 msgstr ""
-"Dokumenti s’mund të eksportohet. Ju lutemi, lidhuni me përgjegjësin e "
-"shërbyesit depozitë."
 
 #: src/errormessages.js:54
 msgid "Uploading file to server failed, file not found."
@@ -2641,6 +2615,54 @@ msgstr ""
 "target=\"_blank\" href=\"https://collaboraonline.github.io/post/filebugs/\">"
 "duke parashtruar një njoftim të mete</a> me krejt hapat thelbësorë se si të "
 "riprodhohet ajo."
+
+#~ msgid ""
+#~ "No disk space left on server, please contact the server administrator to "
+#~ "continue."
+#~ msgstr ""
+#~ "S’ka më hapësirë në shërbyes, ju lutemi, që të vazhdohet, lidhuni me "
+#~ "përgjegjësin e shërbyesit."
+
+#, javascript-format
+#~ msgid ""
+#~ "Failed to read document from storage. Please contact your storage server "
+#~ "(%storageserver) administrator."
+#~ msgstr ""
+#~ "S’u arrit të lexohej dokument prej depoje. Ju lutemi, lidhuni me "
+#~ "përgjegjësin e shërbyesit tuaj depozitë (%storageserver)."
+
+#, javascript-format
+#~ msgid ""
+#~ "Save failed because the document is too large or disk quota exceeded. "
+#~ "Document will now be read-only but you may still download it now to "
+#~ "preserve a copy locally. Please contact the server (%storageserver) "
+#~ "administrator to resolve the issue."
+#~ msgstr ""
+#~ "Ruajtja dështoi, ngaqë dokumenti është shumë i madh, ose janë tejkaluar "
+#~ "kuota disku. Tani dokumenti do të jetë vetëm-lexim, por mundeni prapë ta "
+#~ "shkarkoni, për të ruajtur një kopje lokalisht. Ju lutemi, që të zgjidhni "
+#~ "problemin, lidhuni me përgjegjësin e shërbyesit (%storageserver)."
+
+#~ msgid ""
+#~ "Document cannot be saved. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Dokumenti s’mund të ruhet. Kontrolloni lejet tuaja, ose lidhuni me "
+#~ "përgjegjësin e shërbyesit depozitë."
+
+#~ msgid ""
+#~ "Document cannot be renamed. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Dokumenti s’mund të riemërtohet. Kontrolloni lejet tuaja, ose lidhuni me "
+#~ "përgjegjësin e shërbyesit depozitë."
+
+#~ msgid ""
+#~ "Document cannot be exported. Please contact the storage server "
+#~ "administrator."
+#~ msgstr ""
+#~ "Dokumenti s’mund të eksportohet. Ju lutemi, lidhuni me përgjegjësin e "
+#~ "shërbyesit depozitë."
 
 #, javascript-format
 #~ msgid ""

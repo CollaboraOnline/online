@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-23 22:02+0200\n"
+"POT-Creation-Date: 2023-06-13 14:01+0200\n"
 "PO-Revision-Date: 2023-01-18 07:13+0000\n"
 "Last-Translator: Mike Kaganski <mikekaganski@hotmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
@@ -272,9 +272,9 @@ msgstr "Действительно завершить сеанс?"
 #: src/control/Control.DocumentRepair.js:68
 #: src/control/Control.LanguageDialog.js:109 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:320 src/control/Control.Zotero.js:328
-#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:758
-#: src/control/Toolbar.js:969 src/core/Socket.js:1069 src/core/Socket.js:1092
-#: src/core/Socket.js:1296 src/map/handler/Map.Feedback.js:83
+#: src/control/Control.Zotero.js:366 src/control/Toolbar.js:761
+#: src/control/Toolbar.js:972 src/core/Socket.js:1069 src/core/Socket.js:1092
+#: src/core/Socket.js:1297 src/map/handler/Map.Feedback.js:83
 #: src/map/handler/Map.WOPI.js:484
 msgid "OK"
 msgstr "ОК"
@@ -283,7 +283,7 @@ msgstr "ОК"
 #: src/control/Control.Command.js:93 src/control/Control.DocumentRepair.js:62
 #: src/control/Control.LanguageDialog.js:103
 #: src/control/Control.MobileTopBar.js:41 src/control/Control.Tabs.js:305
-#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:757
+#: src/control/Control.Zotero.js:323 src/control/Toolbar.js:760
 #: src/core/Socket.js:927 src/core/Socket.js:937 src/core/Socket.js:1068
 #: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
@@ -365,7 +365,7 @@ msgstr "Автоматический цвет"
 
 #: src/control/Control.AlertDialog.js:56
 msgid "External link"
-msgstr ""
+msgstr "Внешняя ссылка"
 
 #: src/control/Control.AlertDialog.js:57
 msgid "Open link"
@@ -379,7 +379,7 @@ msgstr "Сервер столкнулся с ошибкой %0 при анали
 msgid "Unlock"
 msgstr "Разблокировать"
 
-#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:968
+#: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:971
 msgid "Delete"
 msgstr "Удалить"
 
@@ -586,7 +586,7 @@ msgstr "Нет (не проверять орфографию)"
 
 #: src/control/Control.LanguageDialog.js:72
 msgid "Select language"
-msgstr ""
+msgstr "Выберите язык"
 
 #: src/control/Control.LanguageDialog.js:93
 #, fuzzy
@@ -987,11 +987,11 @@ msgstr "Параметры страницы"
 
 #: src/control/Control.Menubar.js:1065
 msgid "Define print area"
-msgstr ""
+msgstr "Выберите область печати"
 
 #: src/control/Control.Menubar.js:1066
 msgid "Remove print area"
-msgstr ""
+msgstr "Убрать область печати"
 
 #: src/control/Control.Menubar.js:1339 src/control/Control.StatusBar.js:553
 msgid "Reset to Default Language"
@@ -1227,7 +1227,7 @@ msgstr "Дробь"
 msgid "Boolean Value"
 msgstr "Логический"
 
-#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:753
+#: src/control/Control.NotebookbarCalc.js:561 src/control/Toolbar.js:756
 msgid "Text"
 msgstr "Текст"
 
@@ -1292,7 +1292,7 @@ msgstr "Удалить столбцы"
 #: src/control/Control.NotebookbarImpress.js:348
 #: src/control/Control.NotebookbarWriter.js:1055
 msgid "Read mode"
-msgstr ""
+msgstr "Режим чтения"
 
 #: src/control/Control.NotebookbarCalc.js:1036
 #: src/control/Control.NotebookbarDraw.js:287
@@ -1312,8 +1312,8 @@ msgstr "Строка состояния"
 msgid "Sparkline"
 msgstr "Спарклайн"
 
-#: src/control/Control.NotebookbarCalc.js:1183
-#: src/control/Control.NotebookbarCalc.js:1833
+#: src/control/Control.NotebookbarCalc.js:1209
+#: src/control/Control.NotebookbarCalc.js:1860
 #: src/control/Control.NotebookbarDraw.js:621
 #: src/control/Control.NotebookbarDraw.js:997
 #: src/control/Control.NotebookbarImpress.js:738
@@ -1610,17 +1610,20 @@ msgstr "Ключ Zotero API не настроен"
 
 #: src/control/Control.Zotero.js:153
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "Некорректный ключ Zotero API"
 
 #: src/control/Control.Zotero.js:180
 msgid "Zotero Warning"
-msgstr ""
+msgstr "Предупреждение Zotero"
 
 #: src/control/Control.Zotero.js:181
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"Документ содержит некоторые цитаты, которые могут быть недоступны через web "
+"API. Это может вызвать некоторые проблемы при редактировании цитат или "
+"библиографии."
 
 #: src/control/Control.Zotero.js:237 src/core/Socket.js:1175
 msgid "Loading..."
@@ -1644,11 +1647,11 @@ msgstr "Закладки"
 
 #: src/control/Control.Zotero.js:398
 msgid "Footnotes"
-msgstr ""
+msgstr "Сноски"
 
 #: src/control/Control.Zotero.js:398
 msgid "Endnotes"
-msgstr ""
+msgstr "Примечания"
 
 #: src/control/Control.Zotero.js:462
 msgid "My Publications"
@@ -1704,17 +1707,18 @@ msgstr "Не удалось загрузить элементы"
 
 #: src/control/Control.Zotero.js:1134
 msgid "Citation warning"
-msgstr ""
+msgstr "Предупреждение цитирования"
 
 #: src/control/Control.Zotero.js:1135
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"После ввода цитат их место хранения и тип отображения не могут быть изменены."
 
 #: src/control/Control.Zotero.js:1136 src/control/Control.Zotero.js:1438
 msgid "Confirm"
-msgstr ""
+msgstr "Подтверждение"
 
 #: src/control/Control.Zotero.js:1242
 msgid "Add Note"
@@ -1745,6 +1749,8 @@ msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"Отвязка цитат не позволит Collabora Online обновлять цитаты и библиографию в "
+"этом документе."
 
 #: src/control/Parts.js:432
 msgid "Show Selected Sheets"
@@ -1966,19 +1972,19 @@ msgstr "Эта версия %productName работает на"
 msgid "\"Slow Proxy\""
 msgstr "\"Медленный прокси\""
 
-#: src/control/Toolbar.js:750
+#: src/control/Toolbar.js:753
 msgid "Insert hyperlink"
 msgstr "Вставить гиперссылку"
 
-#: src/control/Toolbar.js:754
+#: src/control/Toolbar.js:757
 msgid "Link"
 msgstr "Связь"
 
-#: src/control/Toolbar.js:963
+#: src/control/Toolbar.js:966
 msgid "Are you sure you want to delete this slide?"
 msgstr "Действительно удалить этот слайд?"
 
-#: src/control/Toolbar.js:966
+#: src/control/Toolbar.js:969
 msgid "Are you sure you want to delete this page?"
 msgstr "Действительно удалить эту страницу?"
 
@@ -2104,7 +2110,7 @@ msgstr "Неправильный пароль. Попробуйте снова."
 
 #: src/core/Socket.js:1091
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Только владелец документа может изменить пароль."
 
 #: src/core/Socket.js:1122 src/core/Socket.js:1127
 msgid "Missing Fonts"
@@ -2127,35 +2133,31 @@ msgstr "Соединение..."
 msgid "The document is being renamed and will reload shortly"
 msgstr "Документ переименовывается и вскоре перезагрузится"
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Exported to storage"
-msgstr ""
+msgstr "Экспортировано в хранилище"
 
-#: src/core/Socket.js:1296
+#: src/core/Socket.js:1297
 msgid "Successfully exported: "
-msgstr ""
+msgstr "Успешно экспортировано: "
 
-#: src/core/Socket.js:1591
+#: src/core/Socket.js:1592
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Не удалось подключиться к документу. Попробуйте снова."
 
-#: src/core/Socket.js:1608
+#: src/core/Socket.js:1609
 msgid "Reconnecting..."
 msgstr "Переподключение..."
 
-#: src/core/Socket.js:1618
+#: src/core/Socket.js:1619
 msgid "The server has been disconnected."
 msgstr "Сервер был отключен."
 
 #: src/errormessages.js:15
-msgid ""
-"No disk space left on server, please contact the server administrator to "
-"continue."
-msgstr ""
-"Закончилось место на сервере, для продолжения свяжитесь с его "
-"администратором."
+msgid "No disk space left on server."
+msgstr "На диске сервера закончилось место."
 
 #: src/errormessages.js:16
 msgid ""
@@ -2247,7 +2249,7 @@ msgstr "Неправильная ссылка: '%url'"
 msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
-msgstr ""
+msgstr "Вы покидаете документ. Веб-страница будет открыта в новой вкладке: "
 
 #: src/errormessages.js:28
 msgid ""
@@ -2300,13 +2302,11 @@ msgid "Document cannot be renamed."
 msgstr "Документ не может быть переименован."
 
 #: src/errormessages.js:43
-#, javascript-format
 msgid ""
-"Failed to read document from storage. Please contact your storage server "
-"(%storageserver) administrator."
+"Failed to read document from storage, please try to load the document again."
 msgstr ""
-"Сбой чтения документа из хранилища. Свяжитесь с администратором хранилища "
-"(%storageserver)."
+"Не удалось прочитать документ из хранилища, попробуйте загрузить документ "
+"снова."
 
 #: src/errormessages.js:44
 msgid ""
@@ -2318,41 +2318,26 @@ msgstr ""
 "его, убедитесь, что свободного места достаточно."
 
 #: src/errormessages.js:45
-#, javascript-format
 msgid ""
-"Save failed because the document is too large or disk quota exceeded. "
-"Document will now be read-only but you may still download it now to "
-"preserve a copy locally. Please contact the server (%storageserver) "
-"administrator to resolve the issue."
+"Save failed because the document is too large or exceeds the remaining "
+"storage space. The document will now be read-only but you may still "
+"download it now to preserve a copy locally."
 msgstr ""
-"Сохранение не удалось, поскольку документ слишком большой или превышена "
-"квота. Документ теперь будет доступен только для чтения, но вы можете "
-"загрузить его сейчас, чтобы сохранить копию локально. Пожалуйста, свяжитесь "
-"с администратором сервера (%storageserver) для решения проблемы."
+"Сохранение невозможно из-за слишком большого размера документа или нехватки "
+"доступного свободного места в хранилище. Документ будет заблокирован для "
+"редактирования, но вы можете загрузить его, чтобы сохранить локальную копию."
 
 #: src/errormessages.js:47
-msgid ""
-"Document cannot be saved. Check your permissions or contact the storage "
-"server administrator."
-msgstr ""
-"Не удалось сохранить документ. Проверьте права доступа или свяжитесь с "
-"администратором хранилища."
+msgid "Document cannot be saved, please check your permissions."
+msgstr "Документ не может быть сохранён, проверьте ваши права доступа."
 
 #: src/errormessages.js:48
-msgid ""
-"Document cannot be renamed. Check your permissions or contact the storage "
-"server administrator."
-msgstr ""
-"Документ не может быть переименован. Проверьте ваши права доступа или "
-"свяжитесь с администратором серверного хранилища."
+msgid "Document cannot be renamed, please check your permissions."
+msgstr "Документ не может быть переименован, проверьте ваши права доступа."
 
 #: src/errormessages.js:49
-msgid ""
-"Document cannot be exported. Please contact the storage server "
-"administrator."
-msgstr ""
-"Документ не может быть экспортирован. Обратитесь к администратору сервера "
-"хранения."
+msgid "Document cannot be exported. Please try again."
+msgstr "Документ не может быть экспортирован. Попробуйте ещё раз."
 
 #: src/errormessages.js:54
 msgid "Uploading file to server failed, file not found."
@@ -2551,11 +2536,11 @@ msgstr "Создать новый файл из шаблона..."
 
 #: src/map/handler/Map.WOPI.js:484
 msgid "Error"
-msgstr ""
+msgstr "Ошибка"
 
 #: src/map/handler/Map.WOPI.js:484
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "Имя файла должно включать расширение."
 
 #: src/map/handler/Map.WOPI.js:492
 msgid "Creating copy..."
@@ -2629,6 +2614,54 @@ msgstr ""
 "\"> переводами</a> или <a target=\"_blank\" href=\""
 "https://collaboraonline.github.io/post/filebugs/\"> подачей сообщения об "
 "ошибке</a> со всеми необходимыми шагами по ее воспроизведению."
+
+#~ msgid ""
+#~ "No disk space left on server, please contact the server administrator to "
+#~ "continue."
+#~ msgstr ""
+#~ "Закончилось место на сервере, для продолжения свяжитесь с его "
+#~ "администратором."
+
+#, javascript-format
+#~ msgid ""
+#~ "Failed to read document from storage. Please contact your storage server "
+#~ "(%storageserver) administrator."
+#~ msgstr ""
+#~ "Сбой чтения документа из хранилища. Свяжитесь с администратором хранилища "
+#~ "(%storageserver)."
+
+#, javascript-format
+#~ msgid ""
+#~ "Save failed because the document is too large or disk quota exceeded. "
+#~ "Document will now be read-only but you may still download it now to "
+#~ "preserve a copy locally. Please contact the server (%storageserver) "
+#~ "administrator to resolve the issue."
+#~ msgstr ""
+#~ "Сохранение не удалось, поскольку документ слишком большой или превышена "
+#~ "квота. Документ теперь будет доступен только для чтения, но вы можете "
+#~ "загрузить его сейчас, чтобы сохранить копию локально. Пожалуйста, "
+#~ "свяжитесь с администратором сервера (%storageserver) для решения проблемы."
+
+#~ msgid ""
+#~ "Document cannot be saved. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Не удалось сохранить документ. Проверьте права доступа или свяжитесь с "
+#~ "администратором хранилища."
+
+#~ msgid ""
+#~ "Document cannot be renamed. Check your permissions or contact the storage "
+#~ "server administrator."
+#~ msgstr ""
+#~ "Документ не может быть переименован. Проверьте ваши права доступа или "
+#~ "свяжитесь с администратором серверного хранилища."
+
+#~ msgid ""
+#~ "Document cannot be exported. Please contact the storage server "
+#~ "administrator."
+#~ msgstr ""
+#~ "Документ не может быть экспортирован. Обратитесь к администратору сервера "
+#~ "хранения."
 
 #, javascript-format
 #~ msgid ""
