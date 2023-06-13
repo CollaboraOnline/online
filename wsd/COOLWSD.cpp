@@ -1238,7 +1238,7 @@ public:
         fetchRemoteFontConfig(newAppConfig, remoteJson);
 
         // before resetting get monitors list
-        std::vector<std::string> oldMonitors = Admin::instance().getMonitorList();
+        std::vector<std::pair<std::string,int>> oldMonitors = Admin::instance().getMonitorList();
 
         _persistConfig->reset(newAppConfig);
 
