@@ -954,14 +954,14 @@ void MonitorSocketHandler::onDisconnect()
 {
     bool reconnect = false;
     // schedule monitor reconnect only if monitor uri exist in configuration
-    for (std::string uri : Admin::instance().getMonitorList())
+    for (auto monitor : Admin::instance().getMonitorList())
     {
         const std::string uriWithoutParam = _uri.substr(0, _uri.find('?'));
-        if (Util::iequal(uri, uriWithoutParam))
+        if (Util::iequal(monitor.first, uriWithoutParam))
         {
-            LOG_ERR("Monitor " << _uri << " dis-connected, re-trying in 20 seconds");
-            Admin::instance().scheduleMonitorConnect(_uri, std::chrono::steady_clock::now() +
-                                                               std::chrono::seconds(20));
+            LOG_ERR("Monitor " << _uri << " dis-connected, re-trying in " << monitor.second  << " seconds");
+            Admin::instance().scheduleMonitorConnect(
+                _uri, std::chrono::steady_clock::now() + std::chrono::seconds(monitor.second));
             Admin::instance().deleteMonitorSocket(uriWithoutParam);
             reconnect = true;
             break;
@@ -1028,21 +1028,22 @@ void Admin::start()
     startThread();
 }
 
-std::vector<std::string> Admin::getMonitorList()
+std::vector<std::pair<std::string, int>> Admin::getMonitorList()
 {
     const auto& config = Application::instance().config();
-    std::vector<std::string> monitorList;
+    std::vector<std::pair<std::string, int>> monitorList;
     for (size_t i = 0;; ++i)
     {
         const std::string path = "monitors.monitor[" + std::to_string(i) + ']';
         const std::string uri = config.getString(path, "");
+        const auto retryInterval = COOLWSD::getConfigValue<int>(path + "[@retryInterval]", 20);
         if (!config.has(path))
             break;
         if (!uri.empty())
         {
             Poco::URI monitor(uri);
             if (monitor.getScheme() == "wss" || monitor.getScheme() == "ws")
-                monitorList.push_back(uri);
+                monitorList.push_back(std::make_pair(uri, retryInterval));
             else
                 LOG_ERR("Unhandled monitor URI: '" << uri << "' should be \"wss://foo:1234/baa\"");
         }
@@ -1053,12 +1054,12 @@ std::vector<std::string> Admin::getMonitorList()
 void Admin::startMonitors()
 {
     bool haveMonitors = false;
-    for (std::string uri : getMonitorList())
+    for (auto monitor : getMonitorList())
     {
         addCallback(
             [=]
             {
-                scheduleMonitorConnect(uri + "?ServerId=" + Util::getProcessIdentifier(),
+                scheduleMonitorConnect(monitor.first + "?ServerId=" + Util::getProcessIdentifier(),
                                        std::chrono::steady_clock::now());
             });
         haveMonitors = true;
@@ -1068,7 +1069,7 @@ void Admin::startMonitors()
         LOG_TRC("No monitors configured.");
 }
 
-void Admin::updateMonitors(std::vector<std::string>& oldMonitors)
+void Admin::updateMonitors(std::vector<std::pair<std::string,int>>& oldMonitors)
 {
     if (oldMonitors.empty())
     {
@@ -1077,21 +1078,21 @@ void Admin::updateMonitors(std::vector<std::string>& oldMonitors)
     }
 
     std::unordered_map<std::string, bool> currentMonitorMap;
-    for (std::string uri : getMonitorList())
+    for (auto monitor : getMonitorList())
     {
-        currentMonitorMap[uri] = true;
+        currentMonitorMap[monitor.first] = true;
     }
 
     // shutdown monitors which doesnot not exist in currentMonitorMap
-    for (std::string uri : oldMonitors)
+    for (auto monitor : oldMonitors)
     {
-        if (!currentMonitorMap[uri])
+        if (!currentMonitorMap[monitor.first])
         {
-            auto socketHandler = _monitorSockets[uri];
+            auto socketHandler = _monitorSockets[monitor.first];
             if (socketHandler != nullptr)
             {
                 socketHandler->shutdown();
-                _monitorSockets.erase(uri);
+                _monitorSockets.erase(monitor.first);
             }
         }
     }
