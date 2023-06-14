@@ -486,12 +486,11 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:InsertSlide', 'presentation'), id: 'insertpage', type: 'action'},
 				{name: _UNO('.uno:DuplicateSlide', 'presentation'), id: 'duplicatepage', type: 'action'},
 				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'},
+				{name: _UNO('.uno:ShowSlide', 'presentation'), id: 'showslide', type: 'action'},
+				{name: _UNO('.uno:HideSlide', 'presentation'), id: 'hideslide', type: 'action'},
 				{type: 'separator', id: 'fullscreen-presentation-separator'},
 				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
-				{name: _('Present current slide'), id: 'presentation-currentslide', type: 'action'},
-				{type: 'separator', id: 'slide-show-hide-separator'},
-				{name: _UNO('.uno:ShowSlide', 'presentation'), id: 'showslide', type: 'action'},
-				{name: _UNO('.uno:HideSlide', 'presentation'), id: 'hideslide', type: 'action'}]
+				{name: _('Present current slide'), id: 'presentation-currentslide', type: 'action'}]
 			},
 			{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellDialog'},
