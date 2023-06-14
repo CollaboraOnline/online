@@ -136,7 +136,7 @@ struct Stats {
         // how much from each command ?
         std::vector<std::string> sortKeys;
         size_t total = 0;
-        for(auto it : map)
+        for(const auto& it : map)
         {
             sortKeys.push_back(it.first);
             total += it.second.size;
