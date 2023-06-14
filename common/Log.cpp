@@ -104,6 +104,85 @@ namespace Log
         }
     };
 
+    class BufferedConsoleChannel : public ConsoleChannel
+    {
+    protected:
+        std::size_t size() const { return _size; }
+        std::size_t available() const { return BufferSize - _size; }
+
+        inline void flush()
+        {
+            if (_size)
+            {
+                writeRaw(_buffer, _size);
+                _size = 0;
+                ConsoleChannel::flush();
+            }
+        }
+
+        inline void buffer(const char* data, std::size_t size)
+        {
+            assert(_size + size <= BufferSize && "Buffer overflow");
+
+            memcpy(_buffer + _size, data, size);
+            _size += size;
+
+            assert(_size <= BufferSize && "Buffer overflow");
+        }
+
+        template <std::size_t N> inline void buffer(const char (&data)[N])
+        {
+            buffer(data, N - 1); // Minus the null.
+        }
+
+        inline void buffer(const std::string& string) { buffer(string.data(), string.size()); }
+
+    public:
+        ~BufferedConsoleChannel() { flush(); }
+
+        void close() override { flush(); }
+
+        inline void log(const char* data, std::size_t size, bool force)
+        {
+            if (_size + size > BufferSize - 1)
+            {
+                flush();
+                if (size > BufferSize - 1)
+                {
+                    // The buffer is too small, we must split the write.
+                    writeRaw(data, size);
+                    writeRaw("\n", 1);
+                    return;
+                }
+            }
+
+            // Fits.
+            memcpy(_buffer + _size, data, size);
+            _size += size;
+            _buffer[_size] = '\n';
+            ++_size;
+
+            // Flush important messages and large caches immediately.
+            if (force || _size >= BufferSize / 2)
+            {
+                flush();
+            }
+        }
+
+        void log(const Poco::Message& msg) override
+        {
+            const std::string& s = msg.getText();
+            log(s.data(), s.size(), msg.getPriority() <= Message::PRIO_WARNING);
+        }
+
+    private:
+        static thread_local char _buffer[BufferSize];
+        static thread_local std::size_t _size;
+    };
+
+    thread_local char BufferedConsoleChannel::_buffer[BufferSize];
+    thread_local std::size_t BufferedConsoleChannel::_size = 0;
+
     /// Helper to avoid destruction ordering issues.
     static struct StaticHelper
     {
@@ -367,7 +446,7 @@ namespace Log
         else
         {
             if (EnableExperimental)
-                channel = static_cast<Poco::Channel*>(new Log::ConsoleChannel());
+                channel = static_cast<Poco::Channel*>(new Log::BufferedConsoleChannel());
             else
                 channel = static_cast<Poco::Channel*>(new Poco::ConsoleChannel());
         }
