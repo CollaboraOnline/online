@@ -932,6 +932,8 @@ button.leaflet-control-search-next
 .w2ui-icon.color{ background: url('images/lc_color.svg') no-repeat center; }
 .w2ui-icon.deletepage{ background: url('images/lc_deletepage.svg') no-repeat center; }
 .w2ui-icon.duplicatepage{ background: url('images/lc_duplicatepage.svg') no-repeat center; }
+.w2ui-icon.showslide{ background: url('images/lc_showslide.svg') no-repeat center; }
+.w2ui-icon.hideslide{ background: url('images/lc_hideslide.svg') no-repeat center; }
 .w2ui-icon.equal{ background: url('images/lc26049.svg') no-repeat center; }
 .w2ui-icon.help{ background: url('images/lc_helpindex.svg') no-repeat center; }
 .w2ui-icon.insertpage{ background: url('images/lc_insertpage.svg') no-repeat center; }

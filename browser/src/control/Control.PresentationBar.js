@@ -17,6 +17,11 @@ L.Control.PresentationBar = L.Control.extend({
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('updatepermission', this.onUpdatePermission, this);
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
+
+		if (this.map.getDocType() === 'presentation') {
+			this.map.on('updateparts', this.onSlideHideToggle, this);
+			this.map.on('toggleslidehide', this.onSlideHideToggle, this);
+		}
 	},
 
 	create: function() {
@@ -32,6 +37,8 @@ L.Control.PresentationBar = L.Control.extend({
 				{type: 'button',  id: 'insertpage', img: 'insertpage', hint: this._getItemUnoName('insertpage')},
 				{type: 'button',  id: 'duplicatepage', img: 'duplicatepage', hint: this._getItemUnoName('duplicatepage')},
 				{type: 'button',  id: 'deletepage', img: 'deletepage', hint: this._getItemUnoName('deletepage')},
+				{type: 'button', id: 'showslide', img: 'showslide', hidden: that.map.getDocType() !== 'presentation', hint: _UNO('.uno:ShowSlide', 'presentation')},
+				{type: 'button', id: 'hideslide', img: 'hideslide', hidden: that.map.getDocType() !== 'presentation', hint: _UNO('.uno:HideSlide', 'presentation')},
 				{type: 'html',  id: 'right'}
 			],
 			onClick: function (e) {
@@ -97,6 +104,12 @@ L.Control.PresentationBar = L.Control.extend({
 		}
 		else if (id === 'deletepage') {
 			this.map.dispatch('deletepage');
+		}
+		else if (id === 'showslide') {
+			this.map.showSlide();
+		}
+		else if (id === 'hideslide') {
+			this.map.hideSlide();
 		}
 	},
 
@@ -176,6 +189,23 @@ L.Control.PresentationBar = L.Control.extend({
 				}
 			}
 		}
+	},
+
+	onSlideHideToggle: function() {
+		if (this.map.getDocType() !== 'presentation')
+			return;
+
+
+		if (!this.map._docLayer.isHiddenSlide(this.map.getCurrentPartNumber()))
+			w2ui['presentation-toolbar'].hide('showslide');
+
+		else
+		w2ui['presentation-toolbar'].show('showslide');
+
+		if (this.map._docLayer.isHiddenSlide(this.map.getCurrentPartNumber()))
+			w2ui['presentation-toolbar'].hide('hideslide');
+		else
+		w2ui['presentation-toolbar'].show('hideslide');
 	},
 });
 

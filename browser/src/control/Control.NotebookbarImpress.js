@@ -427,18 +427,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Sidebar'),
 				'command': '.uno:SidebarDeck.PropertyDeck'
-			},
-			{
-				'id': 'showslide',
-				'type': 'bigmenubartoolitem',
-				'text': _UNO('.uno:ShowSlide', 'presentation'),
-				'command': '.uno:ShowSlide'
-			},
-			{
-				'id': 'hideslide',
-				'type': 'bigmenubartoolitem',
-				'text': _UNO('.uno:HideSlide', 'presentation'),
-				'command': '.uno:HideSlide'
 			}
 		];
 
@@ -1142,6 +1130,18 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertSlide', 'presentation'),
 				'command': '.uno:InsertPage'
+			},
+			{
+				'id': 'showslide',
+				'type': 'bigmenubartoolitem',
+				'text': _UNO('.uno:ShowSlide', 'presentation'),
+				'command': '.uno:ShowSlide'
+			},
+			{
+				'id': 'hideslide',
+				'type': 'bigmenubartoolitem',
+				'text': _UNO('.uno:HideSlide', 'presentation'),
+				'command': '.uno:HideSlide'
 			},
 			{
 				'type': 'container',
