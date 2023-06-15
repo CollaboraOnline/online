@@ -267,7 +267,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
     // but that is just my personal preference.
 
     std::unique_ptr<StorageBase> storage;
-    if (UnitWSD::get().createStorage(uri, jailRoot, jailPath, storage))
+    if (UnitBase::isUnitTesting() && UnitWSD::get().createStorage(uri, jailRoot, jailPath, storage))
     {
         if (storage)
         {
@@ -298,7 +298,9 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
                 new LocalStorage(uri, jailRoot, jailPath, takeOwnership));
             break;
         case StorageBase::StorageType::Wopi:
+#if !MOBILEAPP
             return std::unique_ptr<StorageBase>(new WopiStorage(uri, jailRoot, jailPath));
+#endif
             break;
     }
 

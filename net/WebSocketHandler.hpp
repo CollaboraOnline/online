@@ -45,12 +45,10 @@ private:
     const bool _isClient;
 
     // Last member.
-#ifdef ENABLE_DEBUG
     /// The UnitBase instance. We capture it here since
     /// this is our instance, but the test framework
     /// has a single global instance via UnitWSD::get().
-    UnitBase& _unit;
-#endif
+    UnitBase* const _unit;
 
 protected:
     struct WSFrameMask
@@ -83,9 +81,7 @@ public:
 #endif
         _shuttingDown(false)
         , _isClient(isClient)
-#ifdef ENABLE_DEBUG
-        , _unit(UnitBase::get())
-#endif
+        , _unit(UnitBase::isUnitTesting() ? &UnitBase::get() : nullptr)
     {
 #if MOBILEAPP
         (void) isMasking;
@@ -669,10 +665,10 @@ public:
     /// 0 for closed socket, and -1 for other errors.
     int sendMessage(const char* data, const size_t len, const WSOpCode code, const bool flush) const
     {
-        if (!Util::isFuzzing())
+        if (UnitBase::isUnitTesting() && !Util::isFuzzing())
         {
             int unitReturn = -1;
-            if (_unit.filterSendWebSocketMessage(data, len, code, flush, unitReturn))
+            if (_unit->filterSendWebSocketMessage(data, len, code, flush, unitReturn))
                 return unitReturn;
         }
 

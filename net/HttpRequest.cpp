@@ -116,7 +116,7 @@ static inline int64_t findEndOfToken(const char* p, int64_t off, int64_t len)
 
 int64_t Header::parse(const char* p, int64_t len)
 {
-    LOG_TRC("Parsing header given " << len << " bytes: " << std::string(p, std::min(len, 80L)));
+    LOG_TRC("Parsing header given " << len << " bytes: " << std::string(p, std::min<int64_t>(len, 80L)));
     if (len < 4)
     {
         // Incomplete; we need at least \r\n\r\n.
@@ -307,7 +307,13 @@ int64_t Request::readData(const char* p, const int64_t len)
     if (_stage == Stage::Header)
     {
         // First line is the status line.
+#if !MOBILEAPP
         if (p == nullptr || len < MinRequestHeaderLen)
+#else
+        // Fix infinite loop on mobile by skipping the minimum request header
+        // length check
+        if (p == nullptr)
+#endif
         {
             LOG_TRC("Request::readData: len < MinRequestHeaderLen");
             return 0;

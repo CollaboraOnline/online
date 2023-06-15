@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F3B54DD2A3928D100063C01 /* HttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B54DB2A39288500063C01 /* HttpRequest.cpp */; };
+		3F3B54E02A392CCB00063C01 /* NetUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B54DE2A392C9C00063C01 /* NetUtil.cpp */; };
 		BE00F8A021396585001CE2D4 /* cool.html in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89621396585001CE2D4 /* cool.html */; };
 		BE00F8A121396585001CE2D4 /* bundle.css in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89721396585001CE2D4 /* bundle.css */; };
 		BE00F8A321396585001CE2D4 /* bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89921396585001CE2D4 /* bundle.js */; };
@@ -76,6 +78,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F3B54DB2A39288500063C01 /* HttpRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpRequest.cpp; sourceTree = "<group>"; };
+		3F3B54DC2A39288500063C01 /* HttpRequest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HttpRequest.hpp; sourceTree = "<group>"; };
+		3F3B54DE2A392C9C00063C01 /* NetUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NetUtil.cpp; sourceTree = "<group>"; };
+		3F3B54DF2A392C9C00063C01 /* NetUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NetUtil.hpp; sourceTree = "<group>"; };
 		BE00F89621396585001CE2D4 /* cool.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = cool.html; path = ../../../browser/dist/cool.html; sourceTree = "<group>"; };
 		BE00F89721396585001CE2D4 /* bundle.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = bundle.css; path = ../../../browser/dist/bundle.css; sourceTree = "<group>"; };
 		BE00F89921396585001CE2D4 /* bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = ../../../browser/dist/bundle.js; sourceTree = "<group>"; };
@@ -2891,6 +2897,10 @@
 			isa = PBXGroup;
 			children = (
 				BEA2835F214ACA8500848631 /* FakeSocket.cpp */,
+				3F3B54DB2A39288500063C01 /* HttpRequest.cpp */,
+				3F3B54DC2A39288500063C01 /* HttpRequest.hpp */,
+				3F3B54DE2A392C9C00063C01 /* NetUtil.cpp */,
+				3F3B54DF2A392C9C00063C01 /* NetUtil.hpp */,
 				BEA2835C21498AD400848631 /* Socket.cpp */,
 				BEA2835E214A8E2000848631 /* Socket.hpp */,
 				BE636210215101D000F4237E /* WebSocketHandler.hpp */,
@@ -3615,12 +3625,14 @@
 				BEFB1EE121C29CC70081D757 /* L10n.mm in Sources */,
 				BEDCC8992456FFAD00FB02BD /* SceneDelegate.mm in Sources */,
 				BE5EB5C6213FE29900E0826C /* SigUtil.cpp in Sources */,
+				3F3B54E02A392CCB00063C01 /* NetUtil.cpp in Sources */,
 				BE5EB5C1213FE29900E0826C /* Log.cpp in Sources */,
 				BEDCC84E2452F82800FB02BD /* MobileApp.cpp in Sources */,
 				BE5EB5DA2140363100E0826C /* ios.mm in Sources */,
 				BE5EB5D421400DC100E0826C /* DocumentBroker.cpp in Sources */,
 				BEA28377214FFD8C00848631 /* Unit.cpp in Sources */,
 				BE5EB5CF213FE2D000E0826C /* ClientSession.cpp in Sources */,
+				3F3B54DD2A3928D100063C01 /* HttpRequest.cpp in Sources */,
 				BEBF3EB0246EB1C800415E87 /* RequestDetails.cpp in Sources */,
 				BE5EB5C2213FE29900E0826C /* SpookyV2.cpp in Sources */,
 				BE8D77402136762600AC58EA /* main.m in Sources */,
