@@ -975,6 +975,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._selectedTextContent = '';
 		this._typingMention = false;
 		this._mentionText = [];
+
+		this._moveInProgress = false;
 	},
 
 	_initContainer: function () {
@@ -1327,12 +1329,27 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_moveStart: function () {
 		this._resetPreFetching();
+		this._moveInProgress = true;
 	},
 
 	_move: function () {
+		// We throttle the "move" event, but in moveEnd we always call
+		// a _move anyway, so if there are throttled moves still
+		// pending by the time moveEnd is called then there is no point
+		// processing them after _moveEnd because we are up to date
+		// already when they arrive and to do would just duplicate tile
+		// requests
+		if (!this._moveInProgress)
+			return;
+
 		this._update();
 		this._resetPreFetching(true);
 		this._onCurrentPageUpdate();
+	},
+
+	_moveEnd: function () {
+		this._move();
+		this._moveInProgress = false;
 	},
 
 	_requestNewTiles: function () {
@@ -5663,9 +5680,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		var events = {
 			viewreset: this._viewReset,
 			movestart: this._moveStart,
-			moveend: this._move,
 			// update tiles on move, but not more often than once per given interval
 			move: L.Util.throttle(this._move, this.options.updateInterval, this),
+			moveend: this._moveEnd,
 			splitposchanged: this._move,
 		};
 
