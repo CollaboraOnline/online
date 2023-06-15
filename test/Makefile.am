@@ -1,3 +1,5 @@
+if ENABLE_TESTS
+
 # Cap threadpools to 4 threads.
 export MAX_CONCURRENCY=4
 AUTOMAKE_OPTION = serial-tests
@@ -335,3 +337,4 @@ all-local: unittest
 	@$(CLEANUP_COMMAND)
 
 .PRECIOUS: $(TEST_LOGS)
+endif
