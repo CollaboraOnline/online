@@ -308,7 +308,7 @@ L.Control.PartsPreview = L.Control.extend({
 						callback: function(key, options) {
 							var part = that._findClickedPart(options.$trigger[0].parentNode);
 							if (part !== null) {
-								that._map.showSlide(parseInt(part) - 1);
+								that._map.showSlide();
 							}
 						},
 						visible: function(key, options) {
@@ -321,7 +321,7 @@ L.Control.PartsPreview = L.Control.extend({
 						callback: function(key, options) {
 							var part = that._findClickedPart(options.$trigger[0].parentNode);
 							if (part !== null) {
-								that._map.hideSlide(parseInt(part) - 1);
+								that._map.hideSlide();
 							}
 						},
 						visible: function(key, options) {
