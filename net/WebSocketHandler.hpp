@@ -45,12 +45,10 @@ private:
     const bool _isClient;
 
     // Last member.
-#if !MOBILEAPP
     /// The UnitBase instance. We capture it here since
     /// this is our instance, but the test framework
     /// has a single global instance via UnitWSD::get().
-    UnitBase& _unit;
-#endif
+    UnitBase* _unit;
 
 protected:
     struct WSFrameMask
@@ -83,13 +81,14 @@ public:
 #endif
         _shuttingDown(false)
         , _isClient(isClient)
-#if !MOBILEAPP
-        , _unit(UnitBase::get())
-#endif
+        , _unit(nullptr)
     {
 #if MOBILEAPP
         (void) isMasking;
 #endif
+
+        if (UnitBase::isUnitTesting())
+            _unit = &UnitBase::get();
     }
 
     /// Upgrades itself to a websocket directly.
@@ -669,14 +668,12 @@ public:
     /// 0 for closed socket, and -1 for other errors.
     int sendMessage(const char* data, const size_t len, const WSOpCode code, const bool flush) const
     {
-#if !MOBILEAPP
-        if (!Util::isFuzzing())
+        if (UnitBase::isUnitTesting() && !Util::isFuzzing())
         {
             int unitReturn = -1;
-            if (_unit.filterSendWebSocketMessage(data, len, code, flush, unitReturn))
+            if (_unit->filterSendWebSocketMessage(data, len, code, flush, unitReturn))
                 return unitReturn;
         }
-#endif
 
         //TODO: Support fragmented messages.
 

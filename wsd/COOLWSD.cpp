@@ -3613,10 +3613,8 @@ private:
     /// Prisoner websocket fun ... (for now)
     virtual void handleMessage(const std::vector<char> &data) override
     {
-#if !MOBILEAPP
-        if (UnitWSD::get().filterChildMessage(data))
+        if (UnitWSD::isUnitTesting() && UnitWSD::get().filterChildMessage(data))
             return;
-#endif
 
         auto message = std::make_shared<Message>(data.data(), data.size(), Message::Dir::Out);
         std::shared_ptr<StreamSocket> socket = getSocket().lock();
@@ -3868,7 +3866,7 @@ private:
             }
 
             // Routing
-            if (UnitWSD::get().handleHttpRequest(request, message, socket))
+            if (UnitWSD::isUnitTesting() && UnitWSD::get().handleHttpRequest(request, message, socket))
             {
                 // Unit testing, nothing to do here
             }
