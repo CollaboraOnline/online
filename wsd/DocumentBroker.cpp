@@ -149,13 +149,10 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _wopiDownloadDuration(0)
     , _mobileAppDocId(mobileAppDocId)
     , _alwaysSaveOnExit(COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false))
-    , _unitWsd(nullptr)
+    , _unitWsd(UnitWSD::isUnitTesting() ? &UnitWSD::get() : nullptr)
 {
     assert(!_docKey.empty());
     assert(!COOLWSD::ChildRoot.empty());
-
-    if (UnitWSD::isUnitTesting())
-        _unitWsd = &UnitWSD::get();
 
 #if !MOBILEAPP
     assert(_mobileAppDocId == 0 && "Unexpected to have mobileAppDocId in the non-mobile build");
