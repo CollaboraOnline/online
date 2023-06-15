@@ -86,7 +86,7 @@ inline int hasAnyCapability()
     }
 
     cap_t caps_none = cap_init();
-    if (caps == nullptr)
+    if (caps_none == nullptr)
     {
         fprintf(stderr, "Error: cap_init() failed.\n");
         cap_free(caps);
