@@ -48,7 +48,7 @@ private:
     /// The UnitBase instance. We capture it here since
     /// this is our instance, but the test framework
     /// has a single global instance via UnitWSD::get().
-    UnitBase* _unit;
+    UnitBase* const _unit;
 
 protected:
     struct WSFrameMask
@@ -81,14 +81,11 @@ public:
 #endif
         _shuttingDown(false)
         , _isClient(isClient)
-        , _unit(nullptr)
+        , _unit(UnitBase::isUnitTesting() ? &UnitBase::get() : nullptr)
     {
 #if MOBILEAPP
         (void) isMasking;
 #endif
-
-        if (UnitBase::isUnitTesting())
-            _unit = &UnitBase::get();
     }
 
     /// Upgrades itself to a websocket directly.
