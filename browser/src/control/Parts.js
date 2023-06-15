@@ -445,20 +445,24 @@ L.Map.include({
 		}
 	},
 
-	hideSlide: function(slideNum) {
-		if (slideNum === undefined)
-			slideNum = this.getCurrentPartNumber();
-		L.DomUtil.addClass(this._docLayer._preview._previewTiles[slideNum], 'hidden-slide');
-		this._docLayer._hiddenSlides.add(slideNum);
+	hideSlide: function() {
+		for (var index = 0; index < this._docLayer._selectedParts.length; index++) {
+			var id = this._docLayer._selectedParts[index];
+			L.DomUtil.addClass(this._docLayer._preview._previewTiles[id], 'hidden-slide');
+			this._docLayer._hiddenSlides.add(id);
+		}
+
 		app.socket.sendMessage('uno .uno:HideSlide');
 		this.fire('toggleslidehide');
 	},
 
-	showSlide: function(slideNum) {
-		if (slideNum === undefined)
-			slideNum = this.getCurrentPartNumber();
-		L.DomUtil.removeClass(this._docLayer._preview._previewTiles[slideNum], 'hidden-slide');
-		this._docLayer._hiddenSlides.delete(slideNum);
+	showSlide: function() {
+		for (var index = 0; index < this._docLayer._selectedParts.length; index++) {
+			var id = this._docLayer._selectedParts[index];
+			L.DomUtil.removeClass(this._docLayer._preview._previewTiles[id], 'hidden-slide');
+			this._docLayer._hiddenSlides.delete(id);
+		}
+
 		app.socket.sendMessage('uno .uno:ShowSlide');
 		this.fire('toggleslidehide');
 	},
