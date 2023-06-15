@@ -68,6 +68,7 @@ Obsoletes: loolwsd
 	--with-lokit-path=bundled/include \
 	--with-lo-path=/opt/collaboraoffice \
 	--disable-setcap \
+	--disable-tests \
 %if 0%{?config_options:1}
 	%{config_options}
 %endif
