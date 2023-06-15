@@ -377,6 +377,10 @@ AC_ARG_ENABLE([cypress],
             AS_HELP_STRING([--enable-cypress],
                            [Enable cypress tests.]))
 
+AC_ARG_ENABLE([tests],
+            AS_HELP_STRING([--disable-tests],
+                           [Do not build and run unit tests.]))
+
 AC_ARG_WITH([help-url],
             AS_HELP_STRING([--with-help-url=<url>],
                 [Set the base URL of the online help. Default is https://help.collaboraoffice.com/help.html?])
@@ -1459,6 +1463,15 @@ else
    ENABLE_CYPRESS=false
 fi
 AM_CONDITIONAL([ENABLE_CYPRESS], [$ENABLE_CYPRESS])
+
+ENABLE_TESTS=true
+if test "$enable_tests" = "no"; then
+    ENABLE_TESTS=false
+else
+    ENABLE_TESTS=true
+fi
+AM_CONDITIONAL([ENABLE_TESTS], [$ENABLE_TESTS])
+
 
 AC_MSG_CHECKING([for URL of online help])
 if test -n "$with_help_url" -a "$with_help_url" != "no"; then
