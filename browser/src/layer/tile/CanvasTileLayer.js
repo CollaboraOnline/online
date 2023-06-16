@@ -858,10 +858,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			options.subdomains = options.subdomains.split('');
 		}
 
-		// for https://github.com/Leaflet/Leaflet/issues/137
-		if (!L.Browser.android) {
-			this.on('tileunload', this._onTileRemove);
-		}
 		// text, presentation, spreadsheet, etc
 		this._docType = options.docType;
 		this._documentInfo = '';
@@ -1204,10 +1200,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!noUpdate && (hard || tileZoomChanged)) {
 			this._resetClientVisArea();
 
-			if (this._abortLoading) {
-				this._abortLoading();
-			}
-
 			this._tileZoom = tileZoom;
 			if (tileZoomChanged) {
 				this._updateTileTwips();
@@ -1531,20 +1523,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		return this;
 	},
 
+	// eslint-disable-next-line no-unused-vars
 	createTile: function (coords, done) {
 		var tile = document.createElement('img');
-
-		tile.onerror = L.bind(this._tileOnError, this, done, tile);
 
 		if (this.options.crossOrigin) {
 			tile.crossOrigin = '';
 		}
 
-		/*
-		 Alt tag is set to empty string to keep screen readers from reading URL and for compliance reasons
-		 http://www.w3.org/TR/WCAG20-TECHS/H67
-		*/
-		tile.alt = '';
 		this._emptyTilesCount += 1;
 		return tile;
 	},
@@ -3501,22 +3487,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._map.fire('window', dialogMsg);
 	},
 
-	_tileOnError: function (done, tile, e) {
-		var errorUrl = this.options.errorTileUrl;
-		if (errorUrl) {
-			tile.src = errorUrl;
-		}
-		done(e, tile);
-	},
-
 	_mapOnError: function (e) {
 		if (e.msg && this._map.isEditMode() && e.critical !== false) {
 			this._map.setPermission('view');
 		}
-	},
-
-	_onTileRemove: function (e) {
-		e.tile.onload = null;
 	},
 
 	_clearSelections: function (calledFromSetPartHandler) {
@@ -6395,16 +6369,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._initPreFetchPartTiles();
 	},
 
+	// eslint-disable-next-line no-unused-vars
 	_tileReady: function (coords, err, tile) {
 		if (!this._map) { return; }
-
-		if (err) {
-			this.fire('tileerror', {
-				error: err,
-				tile: tile,
-				coords: coords
-			});
-		}
 
 		var key = this._tileCoordsToKey(coords);
 
@@ -6650,11 +6617,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._debugInfo.removeLayer(this._tiles[key]._debugPopup);
 		}
 		delete this._tiles[key];
-
-		this.fire('tileunload', {
-			tile: tile.el,
-			coords: this._keyToTileCoords(key)
-		});
 	},
 
 	_prefetchTilesSync: function () {
@@ -6864,6 +6826,21 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onTileMsg: function (textMsg, img) {
 		var tileMsgObj = app.socket.parseServerCmd(textMsg);
 		this._checkTileMsgObject(tileMsgObj);
+
+		// a rather different code-path with a png; should have its own msg perhaps.
+		if (tileMsgObj.id !== undefined) {
+			this._map.fire('tilepreview', {
+				tile: img,
+				id: tileMsgObj.id,
+				width: tileMsgObj.width,
+				height: tileMsgObj.height,
+				part: tileMsgObj.part,
+				mode: (tileMsgObj.mode !== undefined) ? tileMsgObj.mode : 0,
+				docType: this._docType
+			});
+			return;
+		}
+
 		var coords = this._tileMsgToCoords(tileMsgObj);
 		var key = this._tileCoordsToKey(coords);
 		var tile = this._tiles[key];
@@ -6911,18 +6888,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			this._debugShowTileData();
 		}
-		if (tileMsgObj.id !== undefined) {
-			this._map.fire('tilepreview', {
-				tile: img,
-				id: tileMsgObj.id,
-				width: tileMsgObj.width,
-				height: tileMsgObj.height,
-				part: tileMsgObj.part,
-				mode: (tileMsgObj.mode !== undefined) ? tileMsgObj.mode : 0,
-				docType: this._docType
-			});
-		}
-		else if (tile) {
+		if (tile) {
 			tile.lastKeyframe = false;
 
 			if (this._tiles[key]._invalidCount > 0)
