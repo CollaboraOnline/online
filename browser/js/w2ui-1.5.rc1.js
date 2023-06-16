@@ -6055,9 +6055,9 @@ w2utils.event = {
                             }
                             if (['color', 'text-color'].indexOf(it.type) != -1) {
                                 if (it.transparent == null) it.transparent = true;
-                                $(el).w2color({ color: it.color, transparent: it.transparent }, function (color, index) {
+                                $(el).w2color({ color: it.color, transparent: it.transparent }, function (color, themeData) {
                                     if (color != null) {
-                                        obj.colorClick({ name: obj.name, item: it, color: color, originalEvent: event.originalEvent });
+                                        obj.colorClick({ name: obj.name, item: it, color: color, themeData: themeData, originalEvent: event.originalEvent });
                                     }
                                     hideDrop();
                                 });
@@ -6470,7 +6470,7 @@ w2utils.event = {
             if (event.item && !event.item.disabled) {
                 // event before
                 var edata = this.trigger({ phase: 'before', type: 'click', target: event.item.id, item: event.item,
-                    color: event.color, originalEvent: event.originalEvent });
+                    color: event.color, themeData: event.themeData, originalEvent: event.originalEvent });
                 if (edata.isCancelled === true) return;
 
                 // default behavior
