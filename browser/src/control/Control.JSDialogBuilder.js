@@ -266,6 +266,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
+	reportValidity: function() {
+		var isValid = true;
+		if (!this._container)
+			return isValid;
+
+		var inputs = this._container.querySelectorAll('input[type="number"]');
+		for (var item = 0; item < inputs.length; item++) {
+			isValid = inputs[item].reportValidity();
+			if (!isValid)
+				break;
+		}
+
+		return isValid;
+	},
+
 	isContainerType: function(type) {
 		return this._nonContainerType.indexOf(type) < 0;
 	},
@@ -323,8 +338,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	// by default send new state to the core
 	_defaultCallbackHandler: function(objectType, eventType, object, data, builder) {
-
 		if (builder.map.uiManager.isUIBlocked())
+			return;
+
+		if (objectType === 'responsebutton' && data === 1 && !builder.reportValidity())
 			return;
 
 		window.app.console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
