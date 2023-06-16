@@ -226,19 +226,39 @@ int main(int argc, char** argv)
     {
         const char* source = argv[2];
         struct stat sb;
-        if (stat(source, &sb) != 0 || !S_ISDIR(sb.st_mode))
+        if (stat(source, &sb))
         {
-            fprintf(stderr, "%s: cannot mount from invalid source directory [%s].\n", program,
-                    source);
+            fprintf(stderr, "%s: cannot mount from invalid source [%s]. stat failed with %s\n",
+                    program, source, strerror(errno));
+            return EX_USAGE;
+        }
+
+        const bool isDir = S_ISDIR(sb.st_mode);
+        const bool isFile = S_ISCHR(sb.st_mode); // We don't support regular files.
+        if (!isDir && !isFile)
+        {
+            fprintf(stderr,
+                    "%s: cannot mount from invalid source [%s], it is neither a file nor a "
+                    "directory.\n",
+                    program, source);
             return EX_USAGE;
         }
 
         const char* target = argv[3];
-        const bool target_exists = (stat(target, &sb) == 0 && S_ISDIR(sb.st_mode));
+        if (stat(target, &sb))
+        {
+            fprintf(stderr, "%s: cannot mount on invalid target [%s]. stat failed with %s\n",
+                    program, target, strerror(errno));
+            return EX_USAGE;
+        }
+
+        const bool target_exists =
+            ((isDir && S_ISDIR(sb.st_mode)) || (isFile && S_ISREG(sb.st_mode)));
         if (!target_exists)
         {
-            fprintf(stderr, "%s: cannot mount on invalid target directory [%s].\n", program,
-                    target);
+            fprintf(stderr,
+                    "%s: cannot mount on invalid target [%s], it is not a %s as the source\n",
+                    program, target, isDir ? "directory" : "file");
             return EX_USAGE;
         }
 
