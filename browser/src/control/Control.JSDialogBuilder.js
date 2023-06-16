@@ -274,6 +274,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return this._nonContainerType.indexOf(type) < 0;
 	},
 
+	setContainer: function(container) {
+		this._container = container;
+	},
+
 	_clearColorPickers: function() {
 		this._colorPickers = [];
 		L.ColorPicker.ID = 0;
