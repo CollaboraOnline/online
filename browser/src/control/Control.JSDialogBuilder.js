@@ -2218,6 +2218,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var iconURLAliases = {
+			'addmb-menu': 'ok',
 			'closetablet': 'view',
 			'defineprintarea': 'menuprintranges',
 			'deleteprintarea': 'delete',
