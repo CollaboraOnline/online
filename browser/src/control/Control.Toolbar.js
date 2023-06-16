@@ -140,13 +140,13 @@ function onClick(e, id, item) {
 		map.fire('mobilewizard', {data: getColorPickerData('Highlight Color')});
 	}
 	else if (id === 'fontcolor' && typeof e.color !== 'undefined') {
-		onColorPick(id, e.color);
+		onColorPick(id, e.color, e.themeData);
 	}
 	else if (id === 'backcolor' && typeof e.color !== 'undefined') {
-		onColorPick(id, e.color);
+		onColorPick(id, e.color, e.themeData);
 	}
 	else if (id === 'backgroundcolor' && typeof e.color !== 'undefined') {
-		onColorPick(id, e.color);
+		onColorPick(id, e.color, e.themeData);
 	}
 	else if (id === 'fold' || id === 'hamburger-tablet') {
 		map.uiManager.toggleMenubar();
@@ -577,9 +577,9 @@ function showColorPicker(id) {
 	var obj = w2ui['editbar'];
 	var el = '#tb_editbar_item_' + id;
 	if (it.transparent == null) it.transparent = true;
-	$(el).w2color({ color: it.color, transparent: it.transparent }, function (color) {
+	$(el).w2color({ color: it.color, transparent: it.transparent }, function (color, themeData) {
 		if (color != null) {
-			obj.colorClick({ name: obj.name, item: it, color: color });
+			obj.colorClick({ name: obj.name, item: it, color: color, themeData: themeData });
 		}
 		closePopup();
 	});
@@ -624,7 +624,7 @@ function getColorPickerData(type) {
 	return data;
 }
 
-function onColorPick(id, color) {
+function onColorPick(id, color, themeData) {
 	if (!map.isEditMode()) {
 		return;
 	}
@@ -637,34 +637,40 @@ function onColorPick(id, color) {
 		color = parseInt(color.replace('#', ''), 16);
 	}
 	var command = {};
-	var fontcolor, backcolor;
+
 	if (id === 'fontcolor') {
-		fontcolor = {'text': 'FontColor',
+		var commandId = {'text': 'FontColor',
 			     'spreadsheet': 'Color',
 			     'presentation': 'Color'}[map.getDocType()];
-		command[fontcolor] = {};
-		command[fontcolor].type = 'long';
-		command[fontcolor].value = color;
-		var uno = '.uno:' + fontcolor;
 	}
 	// "backcolor" can be used in Writer and Impress and translates to "Highlighting" while
 	// "backgroundcolor" can be used in Writer and Calc and translates to "Background color".
 	else if (id === 'backcolor') {
-		backcolor = {'text': 'BackColor',
+		commandId = {'text': 'BackColor',
 			     'presentation': 'CharBackColor'}[map.getDocType()];
-		command[backcolor] = {};
-		command[backcolor].type = 'long';
-		command[backcolor].value = color;
-		uno = '.uno:' + backcolor;
 	}
 	else if (id === 'backgroundcolor') {
-		backcolor = {'text': 'BackgroundColor',
+		commandId = {'text': 'BackgroundColor',
 			     'spreadsheet': 'BackgroundColor'}[map.getDocType()];
-		command[backcolor] = {};
-		command[backcolor].type = 'long';
-		command[backcolor].value = color;
-		uno = '.uno:' + backcolor;
 	}
+
+	var uno = '.uno:' + commandId;
+	var colorParameterID = commandId + '.Color';
+	var themeParameterID = commandId + '.ComplexColorJSON';
+
+	command[colorParameterID] = {
+		type : 'long',
+		value : color
+	};
+
+	if (themeData != null)
+	{
+		command[themeParameterID] = {
+			type : 'string',
+			value : themeData
+		};
+	}
+
 	map.sendUnoCommand(uno, command);
 	map.focus();
 }
