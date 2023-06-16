@@ -263,6 +263,63 @@ void setupChildRoot(bool bindMount, const std::string& childRoot, const std::str
                 "mount_jail_tree config in coolwsd.xml.");
 }
 
+/// Create a random device, either via mknod or by bind-mounting.
+bool createRandomDeviceInJail(const std::string& root, const std::string& devicePath, dev_t dev)
+{
+    const std::string absPath = root + devicePath;
+
+    if (FileUtil::Stat(absPath).exists())
+    {
+        LOG_DBG("Random device [" << devicePath << "] already exits");
+        return true;
+    }
+
+    LOG_DBG("Making [" << devicePath << "] node in [" << root << "/dev]");
+
+    if (mknod((absPath).c_str(),
+              S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH, dev) == 0)
+    {
+        LOG_DBG("Created random device [" << absPath << ']');
+        return true;
+    }
+
+    const auto mknodErrno = errno;
+
+    if (isBindMountingEnabled())
+    {
+        LOG_DBG("Failed to create random device via mknod("
+                << absPath << "). Mount must not use nodev flag. Will try bind-mounting instead: "
+                << strerror(mknodErrno));
+
+        Poco::File(absPath).createFile();
+        if (coolmount("-b", devicePath, absPath))
+        {
+            LOG_DBG("Bind mounted [" << devicePath << "] -> [" << absPath << ']');
+            return true;
+        }
+
+        LOG_INF("Failed to bind mount [" << devicePath << "] -> [" << absPath << ']');
+    }
+    else
+    {
+        LOG_INF("Failed to create random device via mknod("
+                << absPath << "). Mount must not use nodev flag, or bind-mount must be enabled: "
+                << strerror(mknodErrno));
+    }
+
+    static bool warned = false;
+    if (!warned)
+    {
+        warned = true;
+        LOG_ERR("Failed to create random device ["
+                << devicePath << "] at [" << absPath
+                << "]. Please either allow creating devices or enable bind-mounting. Some "
+                   "features, such us password-protection and document-signing, might not work");
+    }
+
+    return false;
+}
+
 // This is the second stage of setting up /dev/[u]random
 // in the jails. Here we create the random devices in
 // /tmp/dev/ in the jail chroot. See setupRandomDeviceLinks().
@@ -288,30 +345,9 @@ void setupJailDevNodes(const std::string& root)
     }
 
 #ifndef __FreeBSD__
-    // Create the urandom and random devices.
-    if (!FileUtil::Stat(root + "/dev/random").exists())
-    {
-        LOG_DBG("Making /dev/random node in [" << root << "/dev].");
-        if (mknod((root + "/dev/random").c_str(),
-                  S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-                  makedev(1, 8))
-            != 0)
-        {
-            LOG_SYS("mknod(" << root << "/dev/random) failed. Mount must not use nodev flag.");
-        }
-    }
-
-    if (!FileUtil::Stat(root + "/dev/urandom").exists())
-    {
-        LOG_DBG("Making /dev/urandom node in [" << root << "/dev].");
-        if (mknod((root + "/dev/urandom").c_str(),
-                  S_IFCHR | S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH,
-                  makedev(1, 9))
-            != 0)
-        {
-            LOG_SYS("mknod(" << root << "/dev/urandom) failed. Mount must not use nodev flag.");
-        }
-    }
+    // Create the random and urandom devices.
+    createRandomDeviceInJail(root, "/dev/random", makedev(1, 8));
+    createRandomDeviceInJail(root, "/dev/urandom", makedev(1, 9));
 #else
     if (!FileUtil::Stat(root + "/dev/random").exists())
     {
@@ -528,7 +564,12 @@ void setupRandomDeviceLink(const std::string& sysTemplate, const std::string& na
     }
 
     if (symlink(target.c_str(), linkpath.c_str()) == -1)
-        LOG_SYS("Failed to symlink(\"" << target << "\", \"" << linkpath << "\")");
+    {
+        LOG_SYS(
+            "Failed to create symlink to ["
+            << name << "] device at [" << target << "] pointing to source [" << linkpath
+            << "]. Some features, such us password-protection and document-signing might not work");
+    }
 }
 
 // The random devices are setup in two stages.
