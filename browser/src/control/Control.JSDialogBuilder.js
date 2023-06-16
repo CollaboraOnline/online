@@ -430,7 +430,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		spinfield.addEventListener('change', function() {
 			var attrdisabled = $(spinfield).attr('disabled');
-			if (attrdisabled !== 'disabled') {
+			var isValid = this.checkValidity();
+			if (attrdisabled !== 'disabled' && isValid) {
 				if (customCallback)
 					customCallback('spinfield', 'change', div, this.value, builder);
 				else
@@ -443,6 +444,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	listenNumericChanges: function (data, builder, controls, customCallback) {
 		controls.spinfield.addEventListener('change', function() {
+			if (!this.checkValidity())
+				return;
+
 			if (customCallback)
 				customCallback();
 			else
