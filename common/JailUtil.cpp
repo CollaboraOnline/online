@@ -289,7 +289,7 @@ void setupJailDevNodes(const std::string& root)
 
 #ifndef __FreeBSD__
     // Create the urandom and random devices.
-    if (!Poco::File(root + "/dev/random").exists())
+    if (!FileUtil::Stat(root + "/dev/random").exists())
     {
         LOG_DBG("Making /dev/random node in [" << root << "/dev].");
         if (mknod((root + "/dev/random").c_str(),
@@ -301,7 +301,7 @@ void setupJailDevNodes(const std::string& root)
         }
     }
 
-    if (!Poco::File(root + "/dev/urandom").exists())
+    if (!FileUtil::Stat(root + "/dev/urandom").exists())
     {
         LOG_DBG("Making /dev/urandom node in [" << root << "/dev].");
         if (mknod((root + "/dev/urandom").c_str(),
@@ -313,7 +313,7 @@ void setupJailDevNodes(const std::string& root)
         }
     }
 #else
-    if (!Poco::File(root + "/dev/random").exists())
+    if (!FileUtil::Stat(root + "/dev/random").exists())
     {
          const bool res = coolmount("-d", "", root + "/dev");
          if (res)
