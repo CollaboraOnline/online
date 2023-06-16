@@ -297,6 +297,7 @@ L.Control.JSDialog = L.Control.extend({
 		}
 
 		builder.build(content, [data]);
+		builder.setContainer(content);
 		var primaryBtn = content.querySelector('#' + defaultButtonId);
 		if (primaryBtn)
 			L.DomUtil.addClass(primaryBtn, 'button-primary');
