@@ -21,6 +21,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <unordered_map>
 
 #include <Poco/AutoPtr.h>
 #include <Poco/ConsoleChannel.h>
@@ -182,6 +183,66 @@ namespace Log
 
     thread_local char BufferedConsoleChannel::_buffer[BufferSize];
     thread_local std::size_t BufferedConsoleChannel::_size = 0;
+
+    /// Colored Console channel (needs to be buffered).
+    class ColorConsoleChannel : public BufferedConsoleChannel
+    {
+    public:
+        ColorConsoleChannel()
+        {
+            _colorByPriority.emplace(Message::PRIO_FATAL, "\033[1;31m"); // Bold Red
+            _colorByPriority.emplace(Message::PRIO_CRITICAL, "\033[1;31m"); // Bold Red
+            _colorByPriority.emplace(Message::PRIO_ERROR, "\033[1;35m"); // Bold Magenta
+            _colorByPriority.emplace(Message::PRIO_WARNING, "\033[1;33m"); // Bold Yellow
+            _colorByPriority.emplace(Message::PRIO_NOTICE, "\033[0;34m"); // Blue
+            _colorByPriority.emplace(Message::PRIO_INFORMATION, "\033[0;34m"); // Blue
+            _colorByPriority.emplace(Message::PRIO_DEBUG, "\033[0;36m"); // Teal
+            _colorByPriority.emplace(Message::PRIO_TRACE, "\033[0;37m"); // Grey
+        }
+
+        void log(const Poco::Message& msg) override
+        {
+            const auto it = _colorByPriority.find(msg.getPriority());
+
+            const std::string& s = msg.getText();
+            const std::size_t need = s.size() + 12; // + Colors.
+
+            if (available() < need)
+            {
+                flush();
+                if (BufferSize < need)
+                {
+                    // Write directly, it will not fit.
+                    if (it != _colorByPriority.end())
+                    {
+                        writeRaw(it->second);
+                    }
+
+                    writeRaw(s);
+                    writeRaw("\033[0m\n"); // Restore default color.
+                    return;
+                }
+            }
+
+            // Fits.
+            if (it != _colorByPriority.end())
+            {
+                buffer(it->second);
+            }
+
+            buffer(s);
+            buffer("\033[0m\n"); // Restore default color.
+
+            // Flush important messages and large caches immediately.
+            if (msg.getPriority() <= Message::PRIO_WARNING || size() >= BufferSize / 2)
+            {
+                flush();
+            }
+        }
+
+    private:
+        std::unordered_map<Poco::Message::Priority, std::string> _colorByPriority;
+    };
 
     /// Helper to avoid destruction ordering issues.
     static struct StaticHelper
@@ -439,9 +500,10 @@ namespace Log
         }
         else if (withColor)
         {
-            channel = static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel());
-            channel->setProperty("traceColor", "green");
-            channel->setProperty("warningColor", "magenta");
+            if (EnableExperimental)
+                channel = static_cast<Poco::Channel*>(new Log::ColorConsoleChannel());
+            else
+                channel = static_cast<Poco::Channel*>(new Poco::ColorConsoleChannel());
         }
         else
         {
