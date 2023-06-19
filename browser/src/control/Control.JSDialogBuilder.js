@@ -386,6 +386,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			unit.textContent = builder._unitToVisibleString(data.unit);
 		}
 
+		var getPrecision = function (data) {
+			data = Math.abs(data);
+			var counter = 1;
+
+			while (Math.floor(data * counter) < (data * counter))
+				counter *= 10;
+
+			return 1/counter;
+		};
+
 		if (data.min != undefined)
 			$(spinfield).attr('min', data.min);
 
@@ -395,18 +405,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.step != undefined) {
 			// we don't want to show error popups due to browser step validation
 			// so be sure all the values will be acceptted, check only precision
-			var step = data.step;
-			if (step < 0)
-				step = step * -1;
+			var step = getPrecision(data.step);
+			var minStep = getPrecision(data.min);
+			var maxStep = getPrecision(data.max);
 
-			if (step < 0.01)
-				step = 0.001;
-			else if (step < 0.1)
-				step = 0.01;
-			else if (step < 1)
-				step = 0.1;
-			else if (step > 0)
-				step = 1;
+			step = Math.min(step, minStep, maxStep);
 
 			$(spinfield).attr('step', step);
 		}
