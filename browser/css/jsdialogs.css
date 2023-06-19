@@ -555,6 +555,12 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	color: var(--color-text-lighter);
 }
 
+/* text label */
+
+.jsdialog.ui-text {
+	padding-inline-start: 8px;
+}
+
 /* spinfield */
 
 .spinfieldcontainer input {
