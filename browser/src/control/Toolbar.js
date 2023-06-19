@@ -865,6 +865,21 @@ L.Map.include({
 			this.formulabar.dirty = true;
 	},
 
+	setAccessibilityState: function(enable) {
+		if (this._accessibilityState === enable)
+			return;
+		this._accessibilityState = enable;
+		app.socket.sendMessage('a11ystate ' + enable);
+
+		this.removeLayer(this._textInput);
+		this._textInput = enable ? L.a11yTextInput() : L.textInput();
+		this.addLayer(this._textInput);
+		if (enable) {
+			this._textInput._requestFocusedParagraph();
+		}
+		this._textInput.showCursor();
+	},
+
 	// map.dispatch() will be used to call some actions so we can share the code
 	dispatch: function(action) {
 		// Don't allow to execute new actions while any dialog is visible.

@@ -49,6 +49,7 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.on('statusbarchanged', this.onStatusbarChange, this);
 		this.map.on('rulerchanged', this.onRulerChange, this);
 		this.map.on('darkmodechanged', this.onDarkModeToggleChange, this);
+		this.map.on('a11ystatechanged', this.onAccessibilityToggleChange, this);
 		if (docType === 'presentation') {
 			this.map.on('updateparts', this.onSlideHideToggle, this);
 			this.map.on('toggleslidehide', this.onSlideHideToggle, this);
@@ -477,6 +478,14 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 		else {
 			$('#toggledarktheme').removeClass('selected');
+		}
+	},
+
+	onAccessibilityToggleChange: function() {
+		if (this.map.uiManager.getAccessibilityState()) {
+			$('#togglea11ystate').addClass('selected');
+		} else {
+			$('#togglea11ystate').removeClass('selected');
 		}
 	},
 

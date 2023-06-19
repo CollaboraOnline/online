@@ -144,10 +144,23 @@ L.Control.UIManager = L.Control.extend({
 		}
 	},
 
+	getAccessibilityState: function() {
+		return window.isLocalStorageAllowed && window.localStorage.getItem('accessibilityState') === 'true';
+	},
+
+	toggleAccessibilityState: function() {
+		var savedA11yState = this.getAccessibilityState();
+		if (window.isLocalStorageAllowed)
+			window.localStorage.setItem('accessibilityState', !savedA11yState ? 'true' : 'false');
+		this.map.fire('a11ystatechanged');
+		this.map.setAccessibilityState(!savedA11yState);
+	},
+
 	initializeBasicUI: function() {
 		var enableNotebookbar = this.shouldUseNotebookbarMode();
 		var that = this;
 
+		this.map._accessibilityState = this.getAccessibilityState();
 
 		if (window.mode.isMobile() || !enableNotebookbar) {
 			var menubar = L.control.menubar();
@@ -262,6 +275,8 @@ L.Control.UIManager = L.Control.extend({
 		}
 
 		this.initDarkModeFromSettings();
+
+		this.map.fire('a11ystatechanged');
 
 		if (docType === 'spreadsheet') {
 			this.map.addControl(L.control.sheetsBar({shownavigation: isDesktop || window.mode.isTablet()}));
@@ -510,6 +525,7 @@ L.Control.UIManager = L.Control.extend({
 		this.map.fire('darkmodechanged');
 		this.map.fire('rulerchanged');
 		this.map.fire('statusbarchanged');
+		this.map.fire('a11ystatechanged');
 	},
 
 	// UI modification

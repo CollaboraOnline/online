@@ -310,6 +310,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getHelpTab: function() {
 		var hasLatestUpdates = window.enableWelcomeMessage;
 		var hasFeedback = this._map.feedback;
+		var hasAccessibilitySupport = window.enableAccessibility;
 		var hasAccessibilityCheck = this._map.getDocType() === 'text';
 		var hasAbout = L.DomUtil.get('about-dialog') !== null;
 
@@ -351,6 +352,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							}
 						]
 					},
+					hasAccessibilitySupport ?
+						{
+							'id':'togglea11ystate',
+							'type': 'bigmenubartoolitem',
+							'text': _('Accessibility Support')
+						} : {},
 					hasAccessibilityCheck ?
 						{
 							'type': 'bigtoolitem',

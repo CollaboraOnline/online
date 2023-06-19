@@ -437,6 +437,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens.equals(0, "sallogoverride") ||
                tokens.equals(0, "rendersearchresult") ||
                tokens.equals(0, "contentcontrolevent") ||
+               tokens.equals(0, "a11ystate") ||
                tokens.equals(0, "geta11yfocusedparagraph") ||
                tokens.equals(0, "geta11ycaretposition") ||
                tokens.equals(0, "toggletiledumping"));
@@ -628,6 +629,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens.equals(0, "rendersearchresult"))
         {
             return renderSearchResult(buffer, length, tokens);
+        }
+        else if (tokens.equals(0, "a11ystate"))
+        {
+            return setAccessibilityState(tokens[1] == "true");
         }
         else if (tokens.equals(0, "geta11yfocusedparagraph"))
         {
@@ -2493,6 +2498,12 @@ bool ChildSession::removeTextContext(const StringVector& tokens)
     getLOKitDocument()->setView(_viewId);
     getLOKitDocument()->removeTextContext(id, before, after);
 
+    return true;
+}
+
+bool ChildSession::setAccessibilityState(bool enable)
+{
+    getLOKitDocument()->setAccessibilityState(_viewId, enable);
     return true;
 }
 
