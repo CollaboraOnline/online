@@ -126,6 +126,12 @@ L.Map = L.Evented.extend({
 		// True only when searching within the doc, as we need to use winId==0.
 		this._isSearching = false;
 
+		this._accessibilityState = false;
+
+		if (L.Browser.cypressTest && window.enableAccessibility && window.isLocalStorageAllowed) {
+			this._accessibilityState = true;
+			window.localStorage.setItem('accessibilityState', 'true');
+		}
 
 		this.callInitHooks();
 
@@ -308,7 +314,7 @@ L.Map = L.Evented.extend({
 	},
 
 	initTextInput: function(docType) {
-		var hasAccessibilitySupport = window.enableAccessibility  === 'true';
+		var hasAccessibilitySupport = window.enableAccessibility && this._accessibilityState;
 		this._textInput = hasAccessibilitySupport && docType === 'text' ? L.a11yTextInput() : L.textInput();
 		this.addLayer(this._textInput);
 	},

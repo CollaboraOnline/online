@@ -340,6 +340,8 @@ L.Control.Menubar = L.Control.extend({
 						{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 				]},
 				{uno: '.uno:WordCountDialog'},
+				window.enableAccessibility ?
+					{name: _('Accessibility Support'), id: 'togglea11ystate', type: 'action'} : {},
 				{uno: '.uno:AccessibilityCheck'},
 				{type: 'separator'},
 				{name: _UNO('.uno:AutoFormatMenu', 'text'), type: 'menu', menu: [
@@ -941,6 +943,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action', uno: '.uno:ShowResolvedAnnotations'},
 			]
 			},
+			window.enableAccessibility ?
+				{name: _('Accessibility Support'), id: 'togglea11ystate', type: 'action'} : {},
 			{id: 'watermark', uno: '.uno:Watermark'},
 			{name: _('Page Setup'), id: 'pagesetup', type: 'action'},
 			{uno: '.uno:WordCountDialog'},
@@ -1702,6 +1706,13 @@ L.Control.Menubar = L.Control.extend({
 							$(aItem).hide();
 						else
 							$(aItem).show();
+					} else if (id === 'togglea11ystate') {
+						var enabled = self._map.uiManager.getAccessibilityState();
+						if (enabled) {
+							$(aItem).addClass(constChecked);
+						} else {
+							$(aItem).removeClass(constChecked);
+						}
 					} else if (self._map.getDocType() === 'presentation' && (id === 'deletepage' || id === 'insertpage' || id === 'duplicatepage')) {
 						if (id === 'deletepage') {
 							itemState = self._map['stateChangeHandler'].getItemValue('.uno:DeletePage');
@@ -1855,6 +1866,8 @@ L.Control.Menubar = L.Control.extend({
 			L.toggleFullScreen();
 		} else if (id === 'showruler') {
 			this._map.uiManager.toggleRuler();
+		} else if (id === 'togglea11ystate') {
+			this._map.uiManager.toggleAccessibilityState();
 		} else if (id === 'toggleuimode') {
 			if (this._map.uiManager.shouldUseNotebookbarMode()) {
 				this._map.uiManager.onChangeUIMode({mode: 'classic', force: true});
@@ -2318,6 +2331,9 @@ L.Control.Menubar = L.Control.extend({
 			if (this._map['stateChangeHandler'].getItemValue(item.uno) === 'true') {
 				menuStructure['checked'] = true;
 			}
+		} else if (item.id === 'togglea11ystate') {
+			if (this._map.uiManager.getAccessibilityState())
+				menuStructure['checked'] = true;
 		}
 
 		if (item.menu)

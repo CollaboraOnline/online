@@ -217,6 +217,10 @@ app.definitions.Socket = L.Class.extend({
 			if (spellOnline) {
 				msg += ' spellOnline=' + spellOnline;
 			}
+
+			var accessibilityState = window.localStorage.getItem('accessibilityState') === 'true';
+			accessibilityState = accessibilityState || L.Browser.cypressTest;
+			msg += ' accessibilityState=' + accessibilityState;
 		}
 
 		this._doSend(msg);
