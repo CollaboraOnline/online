@@ -57,7 +57,7 @@ public:
                               const std::shared_ptr<StreamSocket>& socket);
 
     /// Read all files that we can serve into memory and compress them.
-    static void initialize();
+    static void initialize(const std::string& root);
 
     /// Clean cached files.
     static void uninitialize() { FileHash.clear(); }
