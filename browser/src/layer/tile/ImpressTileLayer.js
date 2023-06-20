@@ -336,6 +336,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	hiddenSlides: function () {
 		if (!this._hiddenSlides)
 			return 0;
-		return this._hiddenSlides.length;
+		return this._hiddenSlides.size;
 	},
 });

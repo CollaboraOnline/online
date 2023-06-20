@@ -3,6 +3,7 @@
  * L.Map.SlideShow is handling the slideShow action
  */
 
+/* global _ */
 L.Map.mergeOptions({
 	slideShow: true
 });
@@ -33,6 +34,12 @@ L.Map.SlideShow = L.Handler.extend({
 	_onFullScreen: function (e) {
 		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
 			window.postMobileMessage('SLIDESHOW');
+			return;
+		}
+
+		if (this._map._docLayer.hiddenSlides() >= this._map.getNumberOfParts()) {
+			this._map.uiManager.showInfoModal('allslidehidden-modal', _('Empty Slide Show'),
+					'All slides are hidden!', '', _('OK'), function () { }, false, 'allslidehidden-modal-response');
 			return;
 		}
 
