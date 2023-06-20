@@ -990,6 +990,41 @@ constexpr char BRANDING[] = "branding";
 constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 #endif
 
+/// Per user request variables.
+/// Holds access_token, css_variables, postmessage_origin, etc.
+class UserRequestVars
+{
+    std::string extractVariable(const HTMLForm& form, const std::string& field,
+                                const std::string& var)
+    {
+        std::string value = form.get(field, "");
+        const std::string escaped = Util::encodeURIComponent(value, "'");
+        _vars[var] = escaped;
+
+        LOG_TRC("Field [" << field << "] for var [" << var << "] = [" << escaped << ']');
+
+        return value;
+    }
+
+public:
+    UserRequestVars(const HTTPRequest& /*request*/, const Poco::Net::HTMLForm& /*form*/)
+    {
+        // We need to pass certain parameters from the cool html GET URI
+        // to the embedded document URI. Here we extract those params
+        // from the GET URI and set them in the generated html (see cool.html.m4).
+    }
+
+    const std::string& operator[](const std::string& key) const
+    {
+        const auto it = _vars.find(key);
+        return it != _vars.end() ? it->second : _blank;
+    }
+
+private:
+    std::unordered_map<std::string, std::string> _vars;
+    const std::string _blank;
+};
+
 void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
                                               const RequestDetails &requestDetails,
                                               Poco::MemoryInputStream& message,
