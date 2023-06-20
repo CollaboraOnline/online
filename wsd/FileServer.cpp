@@ -777,13 +777,13 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
         LOG_TRC("Pre-read " << fileCount << " file(s) from directory: " << basePath << path << ": " << filesRead);
 }
 
-void FileServerRequestHandler::initialize()
+void FileServerRequestHandler::initialize(const std::string& root)
 {
     // cool files
     try {
-        readDirToHash(COOLWSD::FileServerRoot, "/browser/dist");
+        readDirToHash(root, "/browser/dist");
     } catch (...) {
-        LOG_ERR("Failed to read from directory " << COOLWSD::FileServerRoot);
+        LOG_ERR("Failed to read from directory " << root);
     }
 }
 
