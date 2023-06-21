@@ -6141,7 +6141,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				var tile = this._tiles[key];
 				if (!tile)
 					tile = this.createTile(queue[i], key);
-				if (!tile.loaded || !this.hasContent())
+				if (!tile.loaded || !tile.hasContent())
 					this._sendTileCombineRequest(queue[i].part, queue[i].mode,
 								     (queue[i].x / this._tileSize) * this._tileWidthTwips,
 								     (queue[i].y / this._tileSize) * this._tileHeightTwips);
