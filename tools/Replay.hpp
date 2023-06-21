@@ -145,7 +145,7 @@ struct Stats {
                   [&](const std::string &a, const std::string &b)
                       { return map[a].size > map[b].size; } );
         std::cout << "size\tcount\tcommand\n";
-        for (auto it : sortKeys)
+        for (const auto& it : sortKeys)
         {
             std::cout << map[it].size << "\t"
                       << map[it].count << "\t" << it << "\n";
