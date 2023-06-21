@@ -52,6 +52,7 @@ window.app = { // Shouldn't have any functions defined.
 			twips: [0, 0]
 		}
 	},
+	notebookbarAccessibility: null,
 	socket: window.app.socket,
 	console: window.app.console,
 	languages: [], // all available languages, fetched from core
@@ -95,13 +96,3 @@ if (activateValidation) {
 }
 
 window.JSDialog = {}; // initialize jsdialog module
-
-// Add a global listener for "alt" key. We will activate and deactivate a css rule when "alt" key is pressed and released.
-window.addEventListener('keydown', function(event) {
-	if (event.altKey || event.code === 'AltLeft')
-		document.body.classList.add('activate-underlines');
-});
-window.addEventListener('keyup', function(event) {
-	if (event.altKey || event.code === 'AltLeft')
-		document.body.classList.remove('activate-underlines');
-});

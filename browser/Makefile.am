@@ -286,6 +286,8 @@ COOL_JS_LST =\
 	src/layer/FormFieldButtonLayer.js \
 	src/dom/DomEvent.js \
 	src/dom/Draggable.js \
+	src/dom/NotebookbarAccessibilityDefinitions.js \
+	src/dom/NotebookbarAccessibility.js \
 	src/map/handler/Map.Drag.js \
 	src/map/handler/Map.Scroll.js \
 	src/map/handler/Map.DoubleClickZoom.js \
