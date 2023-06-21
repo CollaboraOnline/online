@@ -778,11 +778,16 @@ protected:
             size_t offset = Util::isValidUtf8((unsigned char*)data, len);
             if (offset < len)
             {
-                std::string raw(data, len);
-                std::cerr << "attempting to send invalid UTF-8 message '" << raw << "' "
-                          << " error at offset " << std::hex << "0x" << offset << std::dec
-                          << " bytes, string: " << Util::dumpHex(raw) << "\n";
-                assert("invalid utf-8 - check Message::detectType()" && false);
+                static const char *imgModel = "child-000 paste mimetype=image/";
+                static std::regex imgRegex("^child-[0-9a-f]{3} paste mimetype=image/$");
+                bool isImagePaste = std::regex_match(data, data + strlen(imgModel), imgRegex);
+                if (!isImagePaste) {
+                    std::string raw(data, len);
+                    std::cerr << "attempting to send invalid UTF-8 message '" << raw << "' "
+                            << " error at offset " << std::hex << "0x" << offset << std::dec
+                            << " bytes, string: " << Util::dumpHex(raw) << "\n";
+                    assert("invalid utf-8 - check Message::detectType()" && false);
+                }
             }
         }
 #endif
