@@ -65,10 +65,12 @@ class DeltaGenerator {
     // fast - and deltas take lots of size off.
     static const int compressionLevel = -3;
 
+    static constexpr size_t _rleMaskUnits = 256 / 64;
+
     /// Bitmap row with a CRC for quick vertical shift detection
     class DeltaBitmapRow final {
         size_t _rleSize;
-        uint64_t _rleMask[256/64];
+        uint64_t _rleMask[_rleMaskUnits];
         uint32_t *_rleData;
     public:
         class PixIterator final
@@ -93,7 +95,8 @@ class DeltaGenerator {
             void next()
             {
                 _x++;
-                if (!(_row._rleMask[_x>>6] & (uint64_t(1) << (_x & 63))))
+                size_t index = _x >> 6;
+                if (index < _rleMaskUnits && !(_row._rleMask[index] & (uint64_t(1) << (_x & 63))))
                     _rlePtr++;
             }
         };
