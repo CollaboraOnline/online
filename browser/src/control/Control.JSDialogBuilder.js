@@ -45,6 +45,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_colorLastSelection: {},
 	_decimal: '.',
 	_minusSign: '-',
+	_naviLastScrollPos: 0,
 
 	// Responses are included in a parent container. While buttons are created, responses need to be checked.
 	// So we save the button ids and responses to check them later.

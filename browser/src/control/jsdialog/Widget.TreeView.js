@@ -475,6 +475,7 @@ function _treelistboxControl(parentContainer, data, builder) {
 	}
 
 	if (!data.entries || data.entries.length === 0) {
+		// contentbox and tree can never be empty, 1 page or 1 sheet always exists
 		if (data.id === 'contenttree') {
 			var tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry', tbody);
 			tr.setAttribute('role', 'row');
@@ -526,8 +527,17 @@ function _treelistboxControl(parentContainer, data, builder) {
 		firstSelected = tbody.querySelector('.ui-treeview-entry.selected');
 	}
 
+    if (data.id === 'contenttree' || data.id === 'contentbox' || data.id === 'tree') {
+        table.addEventListener('scroll', function onEvent() {
+            builder._naviLastScrollPos = table.scrollTop;
+        });
+	}
+
 	if (firstSelected) {
 		var observer = new IntersectionObserver(function (entries, observer) {
+			if (data.id === 'contenttree' || data.id === 'contentbox' || data.id === 'tree') {
+				table.scrollTop = builder._naviLastScrollPos;
+			}
 			var offsetTop;
 			if (isHeaderListBox)
 				offsetTop = firstSelected.offsetTop;
