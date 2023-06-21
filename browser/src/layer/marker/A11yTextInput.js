@@ -1205,6 +1205,9 @@ L.A11yTextInput = L.Layer.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
+		if (app.notebookbarAccessibility)
+			app.notebookbarAccessibility.onDocumentKeyDown(ev);
+
 		if (ev.keyCode === 8)
 			this._deleteHint = 'backspace';
 		else if (ev.keyCode === 46)
@@ -1252,14 +1255,14 @@ L.A11yTextInput = L.Layer.extend({
 	// whitespace around the caret.
 	// Across browsers, arrow up/down / home / end would move the caret to
 	// the beginning/end of the textarea/contenteditable.
-	_onKeyUp: function(/*ev*/) {
-		// We also add this handler here because keyup event is not fired for page when map is active.
-		document.body.classList.remove('activate-underlines');
-
+	_onKeyUp: function(ev) {
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
 		app.idleHandler.notifyActive();
+
+		if (app.notebookbarAccessibility)
+			app.notebookbarAccessibility.onDocumentKeyUp(ev);
 	},
 
 	// Used in the deleteContentBackward for deleting multiple characters with a single

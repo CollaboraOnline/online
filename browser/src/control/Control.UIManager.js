@@ -409,6 +409,8 @@ L.Control.UIManager = L.Control.extend({
 
 		this.notebookbar = notebookbar;
 		this.map.addControl(notebookbar);
+
+		app.notebookbarAccessibility.initialize();
 	},
 
 	refreshNotebookbar: function() {

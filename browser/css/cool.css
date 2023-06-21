@@ -36,6 +36,28 @@
 	text-decoration: underline;
 }
 
+.accessibility-info-box {
+	width: 26px;
+	height: 16px;
+	font-size: 12px;
+	line-height: 16px;
+	text-align: center;
+	background-color: yellow;
+	color: rgb(68, 24, 24);
+	position: absolute;
+	z-index: 20;
+	border: 1px solid black;
+	display: none;
+}
+
+.activate-info-boxes .accessibility-info-box {
+	display: block;
+}
+
+.activate-info-boxes .accessibility-info-box.filtered_out {
+	display: none;
+}
+
 /* Flexbox */
 .d-flex {
 	display: flex;
@@ -494,7 +516,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	width: auto;
 }
 
-.cool-annotation:not(.annotation-active) .cool-annotation-content-wrapper:hover, 
+.cool-annotation:not(.annotation-active) .cool-annotation-content-wrapper:hover,
 .cool-annotation:not(.annotation-active) .cool-annotation-redline-content-wrapper:hover {
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
