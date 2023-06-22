@@ -1149,53 +1149,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	_retainParent: function (x, y, z, part, mode, minZoom) {
-		var x2 = Math.floor(x / 1.2),
-		    y2 = Math.floor(y / 1.2),
-		    z2 = z - 1;
-
-		var key = x2 + ':' + y2 + ':' + z2 + ':' + part + ':' + mode,
-		    tile = this._tiles[key];
-
-		if (tile && tile.active) {
-			tile.retain = true;
-			return true;
-
-		} else if (tile && tile.loaded) {
-			tile.retain = true;
-		}
-
-		if (z2 > minZoom) {
-			return this._retainParent(x2, y2, z2, part, mode, minZoom);
-		}
-
-		return false;
-	},
-
-	_retainChildren: function (x, y, z, part, mode, maxZoom) {
-
-		for (var i = 1.2 * x; i < 1.2 * x + 2; i++) {
-			for (var j = 1.2 * y; j < 1.2 * y + 2; j++) {
-
-				var key = Math.floor(i) + ':' + Math.floor(j) + ':' +
-					(z + 1) + ':' + part + ':' + mode,
-				    tile = this._tiles[key];
-
-				if (tile && tile.active) {
-					tile.retain = true;
-					continue;
-
-				} else if (tile && tile.loaded) {
-					tile.retain = true;
-				}
-
-				if (z + 1 < maxZoom) {
-					this._retainChildren(i, j, z + 1, part, mode, maxZoom);
-				}
-			}
-		}
-	},
-
 	_reset: function (center, zoom, hard, noPrune, noUpdate) {
 		var tileZoom = Math.round(zoom),
 		    tileZoomChanged = this._tileZoom !== tileZoom;
@@ -5796,16 +5749,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		for (key in this._tiles) {
-			tile = this._tiles[key];
-			if (tile.current && !tile.active) {
-				var coords = tile.coords;
-				if (!this._retainParent(coords.x, coords.y, coords.z, coords.part, coords.mode, coords.z - 5)) {
-					this._retainChildren(coords.x, coords.y, coords.z, coords.part, coords.mode, coords.z + 2);
-				}
-			}
-		}
-
-		for (key in this._tiles) {
 			if (!this._tiles[key].retain) {
 				this._removeTile(key);
 			}
@@ -6370,7 +6313,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		tile.loaded = +new Date();
-		tile.active = true;
 
 		// Don't paint the tile, only dirty the sectionsContainer if it is in the visible area.
 		// _emitSlurpedTileEvents() will repaint canvas (if it is dirty).
