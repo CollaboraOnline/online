@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-09 07:33+0200\n"
-"PO-Revision-Date: 2023-05-30 11:24+0000\n"
-"Last-Translator: Jean Mareilles <waged1266@tutanota.com>\n"
+"PO-Revision-Date: 2023-06-16 14:48+0000\n"
+"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 4.18.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -581,7 +581,7 @@ msgstr "Bordures de cellule"
 
 #: src/control/Control.JSDialogBuilder.js:2951
 msgid "Automatic"
-msgstr ""
+msgstr "Automatique"
 
 #: src/control/Control.JSDialogBuilder.js:3068
 #: src/control/Control.Menubar.js:791
@@ -957,7 +957,7 @@ msgstr "Enregistrer les commentaires"
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarImpress.js:418
 msgid "Master View"
-msgstr ""
+msgstr "Vue principale"
 
 #: src/control/Control.Menubar.js:490 src/control/Control.Menubar.js:1003
 #: src/control/Control.PresentationBar.js:57
@@ -1420,11 +1420,11 @@ msgstr "aperçu de la page "
 
 #: src/control/Control.PartsPreview.js:231
 msgid "Copy"
-msgstr ""
+msgstr "Copier"
 
 #: src/control/Control.PartsPreview.js:240
 msgid "Paste"
-msgstr ""
+msgstr "Coller"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1907,7 +1907,7 @@ msgstr "Voulez-vous vraiment supprimer cette page ?"
 
 #: src/control/jsdialog/Widget.TreeView.js:475
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Les titres et les objets que vous ajoutez au document apparaîtront ici"
 
 #: src/core/Socket.js:55
 msgid "Oops, there is a problem connecting to %productName: "
@@ -2080,7 +2080,7 @@ msgstr "Le serveur a été déconnecté."
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
-msgstr ""
+msgstr "Il n'y a plus d'espace disque sur le serveur."
 
 #: src/errormessages.js:14
 msgid ""
@@ -2230,6 +2230,8 @@ msgstr "Le document n'a pas pu être renommé."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Échec de la lecture du document depuis le stockage, veuillez essayer de "
+"recharger le document."
 
 #: src/errormessages.js:42
 msgid ""
@@ -2246,18 +2248,21 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"L'enregistrement a échoué car le document est trop lourd ou dépasse l'espace "
+"de stockage restant. Le document sera désormais en lecture seule mais vous "
+"pouvez toujours le télécharger pour en conserver une copie locale."
 
 #: src/errormessages.js:45
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Le document n'a pas pu être enregistré, veuillez vérifier vos droits."
 
 #: src/errormessages.js:46
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "Le document n'a pas pu être renommé, veuillez vérifier vos droits."
 
 #: src/errormessages.js:47
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Le document n'a pa pu être exporté. Veuillez réessayer."
 
 #: src/errormessages.js:52
 msgid "Uploading file to server failed, file not found."
