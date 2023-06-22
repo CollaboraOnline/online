@@ -235,6 +235,12 @@ failure only in headless mode and we need to debug the client-side JS code.
 
     ENABLE_CONSOLE_LOG="1" make check-mobile spec=writer/apply_font_spec.js
 
+3. CYPRESS_A11Y (true|false, default: true)
+You can enable/disable accessibility support during running a test suite.
+Moreover in describe you can use the taga11yenabled tag for tests that should
+be run only when accessibility is enabled, and the taga11ydisabled tag
+for tests that should be run only when accessibility is disabled.
+
 Known issues
 ------------
 
