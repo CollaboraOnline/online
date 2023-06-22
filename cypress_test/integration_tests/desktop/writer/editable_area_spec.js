@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var ceHelper = require('../../common/contenteditable_helper');
 // var repairHelper = require('../../common/repair_document_helper');
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - Empty paragraph', function() {
+describe(['taga11yenabled'], 'Editable area - Empty paragraph', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
@@ -51,7 +51,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - Empty para
 	});
 });
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - Basic typing and caret moving', function() {
+describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
@@ -351,7 +351,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - Basic typi
 	});
 });
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - Inner selection', function() {
+describe(['taga11yenabled'], 'Editable area - Inner selection', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
@@ -495,7 +495,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - Inner sele
 	});
 });
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - Multi-paragraph selection', function() {
+describe(['taga11yenabled'], 'Editable area - Multi-paragraph selection', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
@@ -650,7 +650,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - Multi-para
 	});
 });
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - Empty selection', function() {
+describe(['taga11yenabled'], 'Editable area - Empty selection', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
@@ -736,7 +736,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - Empty sele
 	});
 });
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - Undo/Redo', function() {
+describe(['taga11yenabled'], 'Editable area - Undo/Redo', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function () {
@@ -816,7 +816,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - Undo/Redo'
 	});
 });
 
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - More typing', function() {
+describe(['taga11yenabled'], 'Editable area - More typing', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function() {
@@ -908,7 +908,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - More typin
 //   ◦ Item 1.2
 // • Item 2
 // • Item 3
-describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editable area - Unordered lists', function() {
+describe(['taga11yenabled'], 'Editable area - Unordered lists', function() {
 	var testFileName = 'unordered_list.odt';
 
 	beforeEach(function () {

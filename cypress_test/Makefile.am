@@ -59,6 +59,8 @@ SPACE :=$(EMPTY) $(EMPTY)
 CORE_VERSION := $(subst $(SPACE),_,$(shell "@LO_PATH@"/program/soffice.bin --version 2> /dev/null))
 
 BROWSER:=$(if $(CYPRESS_BROWSER),$(CYPRESS_BROWSER),$(CHROME))
+A11Y_ENABLE:=$(if $(CYPRESS_A11Y),$(CYPRESS_A11Y),true)
+A11Y_TAG:=$(if $(findstring true,$(A11Y_ENABLE)),taga11yenabled,taga11ydisabled)
 
 if ENABLE_DEBUG
 FILTER_DEBUG=cypress:electron,cypress:launcher
@@ -154,7 +156,7 @@ define start_coolwsd
 			--o:logging.file[@enable]=true --o:logging.level=trace \
 			--o:welcome.enable=false \
 			--o:user_interface.mode=$(USER_INTERFACE) \
-			--o:accessibility.enable=true \
+			--o:accessibility.enable=$(A11Y_ENABLE) \
 			--o:security.enable_macros_execution=true \
 			--port=$(FREE_PORT) \
 			--pidfile=$(PID_FILE) \
@@ -286,7 +288,10 @@ DESKTOP_CONFIG = \
 	specPattern=$(DESKTOP_TEST_FOLDER)/**/*_spec.js,supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
 
 DESKTOP_ENV = \
-	CYPRESS_INCLUDE_TAGS=tagdesktop,DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(DESKTOP_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),SCREENSHOT_FOLDER=$(abs_srcdir)/cypress/screenshots,IMAGES_FOLDER=$(abs_top_srcdir)/browser/images/help/en/
+	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(DESKTOP_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),SCREENSHOT_FOLDER=$(abs_srcdir)/cypress/screenshots,IMAGES_FOLDER=$(abs_top_srcdir)/browser/images/help/en/
+
+DESKTOP_INCLUDE_TAGS = \
+	tagdesktop,$(A11Y_TAG)
 
 # Run one desktop test / all desktop tests in interactive test runner.
 # Parameters:
@@ -294,6 +299,10 @@ DESKTOP_ENV = \
 define run_interactive_desktop
 	@echo "Open cypress with desktop tests..."
 	@echo
+	$(eval CYPRESS_INCLUDE_TAGS=$(DESKTOP_INCLUDE_TAGS))
+	@echo Cypress tags: $(CYPRESS_INCLUDE_TAGS)
+	@echo
+	$(eval export CYPRESS_INCLUDE_TAGS)
 	$(if $(1),\
 		$(eval SPEC_FILE=$(DESKTOP_TEST_FOLDER)/$(1))\
 		$(call check_spec_existence,$(1),desktop)\
@@ -311,6 +320,10 @@ endef
 define run_desktop_tests
 	@echo $(if $(1),"Running cypress desktop mode test: $(1)","Running cypress desktop mode tests...")
 	@echo
+	$(eval CYPRESS_INCLUDE_TAGS=$(DESKTOP_INCLUDE_TAGS))
+	@echo Cypress tags: $(CYPRESS_INCLUDE_TAGS)
+	@echo
+	$(eval export CYPRESS_INCLUDE_TAGS)
 	$(eval ENV_EXTENDED=$(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)))
 	$(if $(and $(PARALLEL_BUILD), $(1)),\
 		@$(call run_test_parallel,\
