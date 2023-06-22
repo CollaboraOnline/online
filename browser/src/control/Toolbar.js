@@ -656,10 +656,46 @@ L.Map.include({
 		box.insertBefore(innerDiv, box.firstChild);
 		innerDiv.innerHTML = content.outerHTML;
 
-		var form = document.getElementById('modal-dialog-about-dialog-box');
+		var form = document.getElementById('about-dialog-box');
+
 		form.addEventListener('click', this.aboutDialogClickHandler.bind(this));
 		form.addEventListener('keyup', this.aboutDialogKeyHandler.bind(this));
 		form.querySelector('#coolwsd-version').querySelector('a').focus();
+		var copyversion = L.DomUtil.create('button', 'ui-pushbutton jsdialog', null);
+		copyversion.setAttribute('id', 'modal-dialog-about-dialog-box-copybutton');
+		copyversion.innerHTML = 'Copy version';
+		copyversion.addEventListener('click', this.copyVersionInfoToClipboard.bind(this));
+		var aboutok = document.getElementById('modal-dialog-about-dialog-box-yesbutton');
+		if (aboutok) {
+			aboutok.before(copyversion);
+		}
+	},
+
+	getVersionInfoFromClass: function(className) {
+		var versionElement = document.getElementById(className);
+		var versionInfo = versionElement.innerText;
+
+		var gitHashIndex = versionInfo.indexOf('git hash');
+		if (gitHashIndex > -1) {
+		  versionInfo = versionInfo.slice(0, gitHashIndex) + '(' + versionInfo.slice(gitHashIndex) + ')';
+		}
+
+		return versionInfo;
+	},
+
+	copyVersionInfoToClipboard: function() {
+		var text = 'COOLWSD version: ' + this.getVersionInfoFromClass('coolwsd-version') + '\n';
+		text += 'LOkit version: ' + this.getVersionInfoFromClass('lokit-version') + '\n';
+		text += 'Served by: ' + document.getElementById('os-info').innerText + '\n';
+		text += 'coolwsd id: ' + document.getElementById('coolwsd-id').innerText + '\n';
+
+		navigator.clipboard.writeText(text)
+		.then(function() {
+		  window.console.log('Text copied to clipboard');
+		})
+		.catch(function(error) {
+		  window.console.error('Error copying text to clipboard:', error);
+		});
 	},
 
 	extractContent: function(html) {
