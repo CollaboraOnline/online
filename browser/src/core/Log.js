@@ -11,6 +11,14 @@ L.Log = {
 		if (!this._logs) {
 			this._logs = [];
 		}
+		// Limit memory usage of log by only keeping the latest entries
+		var maxEntries = 100;
+		while (this._logs.length > maxEntries)
+			this._logs.shift();
+		// Limit memory usage of log by limiting length of message
+		var maxMsgLen = 128;
+		if (msg.length > maxMsgLen)
+			msg = msg.substring(0, maxMsgLen);
 		msg = msg.replace(/(\r\n|\n|\r)/gm, ' ');
 		this._logs.push({msg : msg, direction : direction,
 			coords : tileCoords, time : time});
