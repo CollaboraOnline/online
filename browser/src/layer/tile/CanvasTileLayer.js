@@ -6301,7 +6301,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.fire('statusindicator', { statusType: 'alltilesloaded' });
 		}
 
-		tile.loaded = +new Date();
+		var now = new Date();
+		tile.loaded = +now;
+
+		// Newly (pre)-fetched tiles, rendered or not should be privileged.
+		tile.lastRendered = now;
 
 		// Don't paint the tile, only dirty the sectionsContainer if it is in the visible area.
 		// _emitSlurpedTileEvents() will repaint canvas (if it is dirty).
