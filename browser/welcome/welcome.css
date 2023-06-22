@@ -1,3 +1,19 @@
+:root {
+	--welcome-text: #222;
+	--welcome-anchor: #444;
+	--welcome-gradient: 186, 186, 186;
+	--welcome-highlight: #efefef;
+	--welcome-btn-border: #444;
+	--welcome-glow-img: #e5e5e5;
+}
+[data-theme='dark'] {
+	--welcome-text: #e8e8e8;
+	--welcome-anchor: #121212;
+	--welcome-gradient: 69, 69, 69;
+	--welcome-highlight: black;
+	--welcome-btn-border: #e8e8e8;
+	--welcome-glow-img: black;
+}
 * {
 	box-sizing: border-box;
 	scrollbar-color: transparent transparent;
@@ -67,7 +83,7 @@
 	display: inline-flex;
 	width: 14px;
 	height: 14px;
-	background: linear-gradient(to top, #d6d6d6, #bababa);
+	background: linear-gradient(to top, rgba(var(--welcome-gradient), 0.7), rgba(var(--welcome-gradient), 1));
 	text-decoration: none;
 	align-items: center;
 	justify-content: center;
@@ -83,8 +99,8 @@
 
 .slides h2 > a {
 	text-decoration: none;
-	color: #222;
-	background: #efefef;
+	color: var(--welcome-text);
+	background: var(--welcome-highlight);
 	padding: 0 4px;
 	border-radius: 8px;
 }
@@ -97,11 +113,11 @@
 
 .slider > a:active,
 .slider > a.active {
-	background: #444;
+	background: var(--welcome-anchor);
 }
 
 .slider > a:focus {
-	background: #444;
+	background: var(--welcome-anchor);
 }
 
 /* Don't need button navigation */
@@ -125,20 +141,20 @@ body {
 	font-size: 22px;
 	font-weight: normal;
 	margin-bottom: 4px;
-	color: #222;
+	color: var(--welcome-text);
 }
 
 .slides h2 {
 	font-size: 16px;
 	font-weight: normal;
 	margin-top: 0;
-	color: #222;
+	color: var(--welcome-text);
 }
 
 .slides p {
 	font-size: 14px;
 	font-weight: normal;
-	color: #222;
+	color: var(--welcome-text);
 }
 
 .slides a {
@@ -152,8 +168,10 @@ body {
 	margin: 16px auto 12px auto;
 }
 
-#slide-1 fig {
+html:not([data-theme='dark']) #slide-1 fig {
 	background: linear-gradient(to top, #e6e6e6c4, #e6e6e64f 3%, white 33%);
+}
+#slide-1 fig {
 	border-radius: 0 0 50% 50%;
 	display: flex;
 	justify-content: center;
@@ -191,7 +209,7 @@ body {
 
 #slide-3 fig {
 	background: url('slide3.png') no-repeat center;
-	box-shadow: 0 0 8px 1px #e5e5e5;
+	box-shadow: 0 0 8px 1px var(--welcome-glow-img);
 	width: 342px;
 	border-radius: 8px;
 }
@@ -209,7 +227,7 @@ body {
 }
 
 .arrow {
-	border: solid #444;
+	border: solid var(--welcome-btn-border);
 	border-width: 0 3px 3px 0;
 	display: inline-block;
 	padding: 3px;
@@ -247,7 +265,7 @@ body {
 }
 
 button {
-	border: 1px solid #efefef;
+	border: 1px solid var(--welcome-btn-border);
 	background-color: transparent;
 	border-radius: 50%;
 	width: 48px;
@@ -260,7 +278,7 @@ button:active {
 }
 
 button:hover {
-	background-color: #efefef;
+	background-color: var(--welcome-highlight);
 }
 
 button:hover .arrow.right.close {
