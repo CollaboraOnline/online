@@ -353,7 +353,7 @@ class DeltaGenerator {
         }
     }
 
-    // Unpremultiplies data and converts native endian ARGB => RGBA bytes
+    // Unpremultiplies data
     static void
     unpremult_copy (unsigned char *dest, const unsigned char *srcBytes, unsigned int count)
     {
@@ -378,9 +378,9 @@ class DeltaGenerator {
             alpha = (pix & 0xff000000) >> 24;
             if (alpha == 255)
             {
-                dest[0] = ((pix & 0xff0000) >> 16);
+                dest[0] = ((pix & 0x0000ff) >>  0);
                 dest[1] = ((pix & 0x00ff00) >>  8);
-                dest[2] = ((pix & 0x0000ff) >>  0);
+                dest[2] = ((pix & 0xff0000) >> 16);
                 dest[3] = 255;
             }
             else if (alpha == 0)
@@ -388,9 +388,9 @@ class DeltaGenerator {
 
             else
             {
-                dest[0] = (((pix & 0xff0000) >> 16) * 255 + alpha / 2) / alpha;
+                dest[0] = (((pix & 0x0000ff) >>  0) * 255 + alpha / 2) / alpha;
                 dest[1] = (((pix & 0x00ff00) >>  8) * 255 + alpha / 2) / alpha;
-                dest[2] = (((pix & 0x0000ff) >>  0) * 255 + alpha / 2) / alpha;
+                dest[2] = (((pix & 0xff0000) >> 16) * 255 + alpha / 2) / alpha;
                 dest[3] = alpha;
             }
             dest += 4;

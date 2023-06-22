@@ -213,10 +213,9 @@ std::vector<char> DeltaTests::applyDelta(
             char *dest = &output[width * destRow * 4 + destCol * 4];
             for (size_t j = 0; j < length * 4 && i < delta.size(); j += 4)
             {
-                // Swap BGR to RGB
-                *dest++ = delta[i + 2];
-                *dest++ = delta[i + 1];
                 *dest++ = delta[i];
+                *dest++ = delta[i + 1];
+                *dest++ = delta[i + 2];
                 *dest++ = delta[i + 3];
                 i += 4;
             }
