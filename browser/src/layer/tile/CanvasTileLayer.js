@@ -6691,6 +6691,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (tile.canvas)
 				canvasKeys.push(keys[i]);
 			totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
+			// unconditionally ditch any imgData cache entries if the tile isn't current
+			if (!tile.current && tile.imgDataCache)
+				tile.imgDataCache = null;
 		}
 
 		// Trim ourselves down to size.
@@ -6908,6 +6911,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			else
 			{
 				if (!imgData) // no keyframe
+					imgData = tile.imgDataCache;
+				if (!imgData)
 				{
 					if (this._debugDeltas)
 						window.app.console.log('Fetch canvas contents');
@@ -6927,8 +6932,12 @@ L.CanvasTileLayer = L.Layer.extend({
 			offset += len;
 		}
 
-	        if (imgData)
+		if (imgData)
+		{
+			// hold onto the original imgData for reuse in the no keyframe case
+			tile.imgDataCache = imgData;
 			ctx.putImageData(imgData, 0, 0);
+		}
 
 		if (traceEvent)
 			traceEvent.finish();
