@@ -1,3 +1,4 @@
+/* global process */
 import { defineConfig } from 'cypress';
 import plugin from './plugins/index.js';
 import 'process';
