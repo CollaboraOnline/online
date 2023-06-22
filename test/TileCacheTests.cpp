@@ -720,8 +720,8 @@ void TileCacheTests::testSimultaneousTilesRenderedJustOnce()
     assertResponseString(socket1, "statechanged:", "client1 ");
     assertResponseString(socket2, "statechanged:", "client2 ");
 
-    sendTextFrame(socket1, "tile nviewid=0 part=42 width=400 height=400 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
-    sendTextFrame(socket2, "tile nviewid=0 part=42 width=400 height=400 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
+    sendTextFrame(socket1, "tile nviewid=0 part=42 width=256 height=256 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
+    sendTextFrame(socket2, "tile nviewid=0 part=42 width=256 height=256 tileposx=1000 tileposy=2000 tilewidth=3000 tileheight=3000");
 
     const auto response1 = assertResponseString(socket1, "tile:", "client1 ");
     const auto response2 = assertResponseString(socket2, "tile:", "client2 ");

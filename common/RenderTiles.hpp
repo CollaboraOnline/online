@@ -218,6 +218,7 @@ namespace RenderTiles
         const int pixelWidth = tileCombined.getWidth();
         const int pixelHeight = tileCombined.getHeight();
         assert (pixelWidth > 0 && pixelHeight > 0);
+        assert (pixelWidth <= 256 && pixelHeight <= 256);
         const size_t pixmapWidth = tilesByX * pixelWidth;
         const size_t pixmapHeight = tilesByY * pixelHeight;
 

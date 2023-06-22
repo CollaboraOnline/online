@@ -95,7 +95,7 @@ UnitBase::TestResult UnitCalc::testCalcEditRendering()
 
     helpers::assertResponseString(socket, "cellformula: abc", testname);
 
-    const char* req = "tilecombine nviewid=0 part=0 width=512 height=512 tileposx=3840 tileposy=0 "
+    const char* req = "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=3840 tileposy=0 "
                       "tilewidth=7680 tileheight=7680";
     helpers::sendTextFrame(socket, req, testname);
 
@@ -116,9 +116,9 @@ UnitBase::TestResult UnitCalc::testCalcEditRendering()
 
     Blob img = DeltaGenerator::expand(zimg);
 
-    png_uint_32 height = 512;
-    png_uint_32 width = 512;
-    png_uint_32 rowBytes = 512 * 4;
+    png_uint_32 height = 256;
+    png_uint_32 width = 256;
+    png_uint_32 rowBytes = 256 * 4;
     LOK_ASSERT_EQUAL(img->size(), (size_t)rowBytes * height);
 
     std::vector<png_bytep> rows;
@@ -126,7 +126,7 @@ UnitBase::TestResult UnitCalc::testCalcEditRendering()
         rows.push_back((png_bytep)img->data() + rowBytes * i);
 
     const std::vector<char> exp
-        = helpers::readDataFromFile("calc_render_0_512x512.3840,0.7680x7680.png");
+        = helpers::readDataFromFile("calc_render_0_256x256.3840,0.7680x7680.png");
     std::stringstream streamExp;
     std::copy(exp.begin(), exp.end(), std::ostream_iterator<char>(streamExp));
 
