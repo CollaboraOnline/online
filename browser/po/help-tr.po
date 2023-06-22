@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-09 07:33+0200\n"
-"PO-Revision-Date: 2023-01-22 13:13+0000\n"
-"Last-Translator: PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>\n"
+"PO-Revision-Date: 2023-06-13 16:29+0000\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "help/tr/>\n"
 "Language: tr\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -92,33 +92,31 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:30-18
 msgid "Focus to notebookbar menu"
-msgstr ""
+msgstr "Not defteri çubuğu menüsüne odaklan"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:30-70
-#, fuzzy
 msgid ""
 "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>F1"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>1"
+"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>F1"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:31-18
 msgid "Focus to document from menu"
-msgstr ""
+msgstr "Menüden belgeye odaklan"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:31-72
 msgid "ESC"
-msgstr ""
+msgstr "ESC"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:32-18
 msgid "Focus to selected comment's menu"
-msgstr ""
+msgstr "Seçili yorum menüsüne odaklan"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:32-77
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C"
 
 #: html/cool-help.html%2Bdiv.div.h2:36-9
 #: html/cool-help.html%2Bdiv.div.h2:182-9
