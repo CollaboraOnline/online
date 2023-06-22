@@ -5737,22 +5737,11 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_pruneTiles: function () {
+		// update tile.current for the view
 		if (app.file.fileBasedView)
 			this._updateFileBasedView(true);
 
-		var key, tile;
-
-		// keep everything current visible
-		for (key in this._tiles) {
-			tile = this._tiles[key];
-			tile.retain = tile.current;
-		}
-
-		for (key in this._tiles) {
-			if (!this._tiles[key].retain) {
-				this._removeTile(key);
-			}
-		}
+		this._garbageCollect();
 	},
 
 	_setZoomTransforms: function () {
