@@ -6793,10 +6793,29 @@ L.CanvasTileLayer = L.Layer.extend({
 		var i = start;
 		var resIndex = 0;
 		while (i < start + len) {
-			result[resIndex++] = rawDelta[i + 2];
-			result[resIndex++] = rawDelta[i + 1];
-			result[resIndex++] = rawDelta[i];
-			result[resIndex++] = rawDelta[i + 3];
+			// premultiplied brga -> unpremultiplied rgba
+			var alpha = rawDelta[i + 3];
+			if (alpha == 255)
+			{
+				result[resIndex++] = rawDelta[i + 2];
+				result[resIndex++] = rawDelta[i + 1];
+				result[resIndex++] = rawDelta[i];
+				result[resIndex++] = 255;
+			}
+			else if (alpha == 0)
+			{
+				result[resIndex++] = 0;
+				result[resIndex++] = 0;
+				result[resIndex++] = 0;
+				result[resIndex++] = 0;
+			}
+			else
+			{
+				result[resIndex++] = Math.ceil(rawDelta[i + 2] * 255 / alpha);
+				result[resIndex++] = Math.ceil(rawDelta[i + 1] * 255 / alpha);
+				result[resIndex++] = Math.ceil(rawDelta[i] * 255 / alpha);
+				result[resIndex++] = alpha;
+			}
 			i += 4;
 		}
 		return result;
