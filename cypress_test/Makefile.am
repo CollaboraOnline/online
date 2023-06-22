@@ -9,6 +9,7 @@ WAIT_ON_BINARY = $(abs_builddir)/node_modules/wait-on/bin/wait-on
 GET_PORT_BINARY = $(abs_builddir)/node_modules/get-port-cli/cli.js
 NPM_INSTALLED = $(abs_builddir)/workdir/npm_installed
 CAPABILITIES = $(if @ENABLE_SETCAP@,true,false)
+CYPRESS_CONFIG = $(abs_srcdir)/cypress.config.ts
 
 PARALLEL_SCRIPT = $(abs_srcdir)/run_parallel.sh
 
@@ -579,12 +580,14 @@ do-run-cov: @JAILS_PATH@ $(NODE_BINS)
 # Open cypress interactive test runner window with all tests in it.
 #
 # Parameters:
-# 1 - config: cypress configuration (e.g. cypress' --config argument).
-# 2 - env:    list of environment variables (e.g. cypress' --env argument).
+# 1 - config-file: cypress configuration file (e.g. cypress.config.ts).
+# 2 - config: cypress configuration (e.g. cypress' --config argument).
+# 3 - env:    list of environment variables (e.g. cypress' --env argument).
 define run_interactive_all
 	DEBUG='cypress:*' \
 	DISPLAY=$(if $(HEADLESS_BUILD),$(HEADLESS_DISPLAY),$(DISPLAY)) \
 		$(CYPRESS_BINARY) open \
+		--config-file $(CYPRESS_CONFIG) \
 		--config $(1) \
 		--env $(2)
 endef
@@ -592,15 +595,17 @@ endef
 # Run single test in cypress interactive test runner.
 #
 # Parameters:
-# 1 - config: cypress configuration (e.g. cypress' --config argument).
-# 2 - env:    list of environment variables (e.g. cypress' --env argument).
-# 3 - spec:   test file path (e.g. cypress' --spec argument)
+# 1 - config-file: cypress configuration file (e.g. cypress.config.ts).
+# 2 - config: cypress configuration (e.g. cypress' --config argument).
+# 3 - env:    list of environment variables (e.g. cypress' --env argument).
+# 4 - spec:   test file path (e.g. cypress' --spec argument)
 define run_interactive_single
 	DEBUG='cypress:*' \
 	DISPLAY=$(if $(HEADLESS_BUILD),$(HEADLESS_DISPLAY),$(DISPLAY)) \
 		$(CYPRESS_BINARY) run \
 		--browser $(BROWSER) \
 		--headed --no-exit \
+		--config-file $(CYPRESS_CONFIG) \
 		--config $(1),retries=0 \
 		--env $(2) \
 		--spec=$(3)
@@ -614,6 +619,7 @@ endef
 # 3 - spec:   test file path (e.g. cypress' --spec argument)
 # 4 - type:   test type (e.g. mobile, desktop, multi-user)
 # 5 - log:    log file path
+# 6 - config-file: cypress configuration file (e.g. cypress.config.ts)
 define run_test_parallel
 	$(PARALLEL_SCRIPT) \
 		--browser $(BROWSER) \
@@ -621,19 +627,22 @@ define run_test_parallel
 		--env $(2) \
 		--spec $(3) \
 		--type $(4) \
-		--log-file $(5)
+		--log-file $(5) \
+		--config-file $(CYPRESS_CONFIG)
 endef
 
 # Run one test \ tests in headless mode.
 #
 # Parameters:
-# 1 - config:		 cypress configuration (e.g. cypress' --config argument).
-# 2 - env:		 list of environment variables (e.g. cypress' --env argument).
-# 3 - spec (optional):   test file path (e.g. cypress' --spec argument)
+# 1 - config-file:	 cypress configuration file (e.g. cypress.config.ts).
+# 2 - config:		 cypress configuration (e.g. cypress' --config argument).
+# 3 - env:		 list of environment variables (e.g. cypress' --env argument).
+# 4 - spec (optional):   test file path (e.g. cypress' --spec argument)
 define run_test_headless
 	$(CYPRESS_BINARY) run \
 		--browser $(BROWSER) \
 		--headless \
+		--config-file $(CYPRESS_CONFIG) \
 		--config $(1) \
 		--env $(2) \
 		$(if $(3),--spec=$(3)) \

@@ -32,6 +32,7 @@ print_help ()
 TEST_FILE=
 TEST_LOG=
 TEST_CONFIG=
+TEST_CONFIG_FILE=
 TEST_ENV=
 TEST_TYPE=
 BROWSER=
@@ -40,6 +41,7 @@ while test $# -gt 0; do
   case $1 in
       --spec)             TEST_FILE=$2; shift;;
       --log-file)         TEST_LOG=$2; shift;;
+      --config-file)      TEST_CONFIG_FILE=$2; shift;;
       --config)           TEST_CONFIG=$2; shift;;
       --env)              TEST_ENV=$2; shift;;
       --type)             TEST_TYPE=$2; shift;;
@@ -65,6 +67,7 @@ fi
 RUN_COMMAND="${CYPRESS_BINARY} run \
     --browser ${BROWSER} \
     --headless \
+    --config-file ${TEST_CONFIG_FILE}\
     --config ${TEST_CONFIG}\
     --env ${TEST_ENV}\
     --spec=${TEST_FILE_PATH}"
