@@ -6788,6 +6788,20 @@ L.CanvasTileLayer = L.Layer.extend({
 		return ctx;
 	},
 
+	_rgba: function(rawDelta, start, len) {
+		var result = new Uint8ClampedArray(len);
+		var i = start;
+		var resIndex = 0;
+		while (i < start + len) {
+			result[resIndex++] = rawDelta[i];
+			result[resIndex++] = rawDelta[i + 1];
+			result[resIndex++] = rawDelta[i + 2];
+			result[resIndex++] = rawDelta[i + 3];
+			i += 4;
+		}
+		return result;
+	},
+
 	_applyDelta: function(tile, rawDelta, isKeyframe) {
 		if (this._debugDeltas)
 			window.app.console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
@@ -6863,7 +6877,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			{
 				// FIXME: use zstd to de-compress directly into a Uint8ClampedArray
 				len = canvas.width * canvas.height * 4;
-				var pixelArray = new Uint8ClampedArray(delta.subarray(0, len));
+				var pixelArray = this._rgba(delta, 0, len);
 				imgData = new ImageData(pixelArray, canvas.width, canvas.height);
 
 				if (this._debugDeltas)
@@ -6955,10 +6969,11 @@ L.CanvasTileLayer = L.Layer.extend({
 							       ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 				i += 4;
 				span *= 4;
+				var pixelData = this._rgba(delta, i, span);
 				// imgData.data[offset + 1] = 256; // debug - greener start
-				while (span-- > 0) {
-					imgData.data[offset++] = delta[i++];
-				}
+				for (var j = 0; j < span; ++j)
+					imgData.data[offset++] = pixelData[j];
+				i += span;
 				// imgData.data[offset - 2] = 256; // debug - blue terminator
 				break;
 			case 116: // 't': // terminate delta new one next
