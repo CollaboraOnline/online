@@ -2410,6 +2410,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			// The fix for issues #6103 and #6104 changes the name of these
 			// icons so map the new names to the old names.
 			'downloadas-pdf': 'exportpdf',
+			'downloadas-direct-pdf': 'exportdirectpdf',
 			'downloadas-epub': 'exportepub',
 		};
 		if (iconURLAliases[cleanName]) {

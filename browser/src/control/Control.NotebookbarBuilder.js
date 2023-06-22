@@ -568,8 +568,13 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'command': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub'
 				},
 				{
-					'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+					'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
 					'text': _('PDF Document (.pdf)'),
+					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf'
+				},
+				{
+					'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+					'text': _('PDF Document (.pdf) as...'),
 					'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf'
 				}
 			];
