@@ -1226,13 +1226,18 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
 void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
                                                      const RequestDetails &/*requestDetails*/,
-                                                     Poco::MemoryInputStream& /*message*/,
+                                                     Poco::MemoryInputStream& message,
                                                      const std::shared_ptr<StreamSocket>& socket)
 {
     Poco::Net::HTTPResponse response;
     const std::string relPath = getRequestPathname(request);
     LOG_DBG("Preprocessing file: " << relPath);
     std::string templateWelcome = *getUncompressedFile(relPath);
+
+    HTMLForm form(request, message);
+    std::string uiTheme = form.get("ui_theme", "");
+    uiTheme = (uiTheme == "dark") ? "dark" : "light";
+    Poco::replaceInPlace(templateWelcome, std::string("%UI_THEME%"), uiTheme);
 
     // Ask UAs to block if they detect any XSS attempt
     response.add("X-XSS-Protection", "1; mode=block");

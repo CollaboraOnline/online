@@ -74,7 +74,10 @@ L.Map.Welcome = L.Handler.extend({
 		if (this._iframeWelcome && this._iframeWelcome.queryContainer())
 			this.remove();
 
-		this._iframeWelcome = L.iframeDialog(this._url, null, null, { prefix: 'iframe-welcome' });
+		var uiTheme = this._map.uiManager.getDarkModeState() ? 'dark' : 'light';
+		var params = [{'ui_theme' : uiTheme}];
+
+		this._iframeWelcome = L.iframeDialog(this._url, params, null, { prefix: 'iframe-welcome' });
 	},
 
 	removeHooks: function () {
