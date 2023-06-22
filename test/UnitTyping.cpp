@@ -308,7 +308,7 @@ public:
                     {
                         std::ostringstream oss;
                         std::uniform_int_distribution<int> distribution(0,32);
-                        oss << "tilecombine nviewid=0 part=0 width=512 height=512"
+                        oss << "tilecombine nviewid=0 part=0 width=256 height=256"
                             << " tileposx=" << 3840*distribution(randDev)
                             << " tileposy=" << 3840*distribution(randDev)
                             << " tilewidth=7680 tileheight=7680";

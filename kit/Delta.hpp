@@ -95,8 +95,7 @@ class DeltaGenerator {
             void next()
             {
                 _x++;
-                size_t rleMaskIndex = _x >> 6;
-                if (rleMaskIndex >= _rleMaskUnits || !(_row._rleMask[rleMaskIndex] & (uint64_t(1) << (_x & 63))))
+                if (!(_row._rleMask[_x >> 6] & (uint64_t(1) << (_x & 63))))
                     _rlePtr++;
             }
         };
@@ -125,9 +124,8 @@ class DeltaGenerator {
             _rleMask[0] = 1;
             for (unsigned int x = 1; x < width; ++x)
             {
-                size_t rleMaskIndex = x >> 6;
-                if (rleMaskIndex < _rleMaskUnits && from[x] == scratch[outp]) // set for run
-                    _rleMask[rleMaskIndex] |= uint64_t(1) << (x & 63);
+                if (from[x] == scratch[outp]) // set for run
+                    _rleMask[x>>6] |= uint64_t(1) << (x & 63);
                 else
                     scratch[++outp] = from[x];
             }
