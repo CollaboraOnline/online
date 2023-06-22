@@ -990,6 +990,8 @@ constexpr char BRANDING[] = "branding";
 constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 #endif
 
+static const std::string ACCESS_TOKEN = "%ACCESS_TOKEN%";
+
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
 class UserRequestVars
@@ -1007,11 +1009,13 @@ class UserRequestVars
     }
 
 public:
-    UserRequestVars(const HTTPRequest& /*request*/, const Poco::Net::HTMLForm& /*form*/)
+    UserRequestVars(const HTTPRequest& /*request*/, const Poco::Net::HTMLForm& form)
     {
         // We need to pass certain parameters from the cool html GET URI
         // to the embedded document URI. Here we extract those params
         // from the GET URI and set them in the generated html (see cool.html.m4).
+
+        const std::string accessToken = extractVariable(form, "access_token", ACCESS_TOKEN);
     }
 
     const std::string& operator[](const std::string& key) const
@@ -1043,6 +1047,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     // to the embedded document URI. Here we extract those params
     // from the GET URI and set them in the generated html (see cool.html.m4).
     HTMLForm form(request, message);
+
+    const UserRequestVars urv(request, form);
+
     const std::string accessToken = form.get("access_token", "");
     const std::string accessTokenTtl = form.get("access_token_ttl", "");
     LOG_TRC("access_token=" << accessToken << ", access_token_ttl=" << accessTokenTtl);
@@ -1070,7 +1077,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     // Escape bad characters in access token.
     // This is placed directly in javascript in cool.html, we need to make sure
     // that no one can do anything nasty with their clever inputs.
-    const std::string escapedAccessToken = Util::encodeURIComponent(accessToken, "'");
     const std::string escapedAccessHeader = Util::encodeURIComponent(accessHeader, "'");
     const std::string escapedPostmessageOrigin = Util::encodeURIComponent(postMessageOrigin, "'");
 
@@ -1104,7 +1110,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     std::string userInterfaceTheme;
     std::string savedUIState = "true";
 
-    Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
+    Poco::replaceInPlace(preprocess, ACCESS_TOKEN, urv[ACCESS_TOKEN]);
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), std::to_string(tokenTtl));
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_HEADER%"), escapedAccessHeader);
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), cnxDetails.getWebSocketUrl());
