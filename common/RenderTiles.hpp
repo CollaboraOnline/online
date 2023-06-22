@@ -169,6 +169,15 @@ namespace RenderTiles
         renderedTiles.back().setImgSize(imgSize);
     }
 
+    // FIXME: we should perhaps increment only on a plausible edit
+    static TileWireId getCurrentWireId(bool increment = false)
+    {
+        static TileWireId nextId = 0;
+        if (increment)
+            nextId++;
+        return nextId;
+    }
+
     bool doRender(std::shared_ptr<lok::Document> document,
                   DeltaGenerator &deltaGen,
                   TileCombined &tileCombined,
@@ -278,9 +287,8 @@ namespace RenderTiles
             // FIXME: prettify this.
             bool forceKeyframe = tiles[tileIndex].getOldWireId() == 0;
 
-            // FIXME: we should perhaps increment only on a plausible edit
-            static TileWireId nextId = 0;
-            TileWireId wireId = ++nextId;
+            // FIXME: share the same wireId for all tiles concurrently rendered.
+            TileWireId wireId = getCurrentWireId(true);
 
             bool skipCompress = false;
             if (!skipCompress)

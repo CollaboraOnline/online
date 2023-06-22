@@ -182,7 +182,7 @@ class TilesSection extends CanvasSectionObject {
 		this.context.strokeRect(offset.x, offset.y, tileSize, tileSize);
 		this.context.font = '20px Verdana';
 		this.context.fillStyle = 'black';
-		this.context.fillText(tile.coords.x + ' ' + tile.coords.y + ' ' + tile.coords.part + ' ' + (tile.loaded ? 'y': 'n'), Math.round(offset.x + tileSize * 0.5), Math.round(offset.y + tileSize * 0.5));
+		this.context.fillText(tile.coords.x + ' ' + tile.coords.y + ' ' + tile.coords.part, Math.round(offset.x + tileSize * 0.5), Math.round(offset.y + tileSize * 0.5));
 	}
 
 	paintSimple (tile: any, ctx: any, async: boolean, now: Date) {
@@ -278,17 +278,17 @@ class TilesSection extends CanvasSectionObject {
 		part = part || this.sectionProperties.docLayer._selectedPart;
 		ctx = ctx || this.sectionProperties.tsManager._paintContext();
 
-		var allTilesLoaded = true;
+		var allTilesFetched = true;
 		this.forEachTileInView(zoom, part, mode, ctx, function (tile: any): boolean {
-			// Ensure tile is loaded.
-			if (!tile || !tile.loaded) {
-				allTilesLoaded = false;
+			// Ensure all tile are available.
+			if (!tile || tile.needsFetch()) {
+				allTilesFetched = false;
 				return false; // stop search.
 			}
 			return true; // continue checking remaining tiles.
 		});
 
-		return allTilesLoaded;
+		return allTilesFetched;
 	}
 
 	private drawPageBackgroundWriter (ctx: any, rectangle: any, pageNumber: number) {
@@ -417,7 +417,7 @@ class TilesSection extends CanvasSectionObject {
 				return true;
 
 			// Ensure tile is loaded and is within document bounds.
-			if (tile && tile.loaded && docLayer._isValidTile(coords)) {
+			if (tile && tile.hasContent() && docLayer._isValidTile(coords)) {
 				if (!this.isJSDOM) // perf-test code
 				   this.paint(tile, ctx, false /* async? */, now);
 			}
