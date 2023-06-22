@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-09 07:33+0200\n"
-"PO-Revision-Date: 2023-05-03 07:50+0000\n"
+"PO-Revision-Date: 2023-06-18 21:50+0000\n"
 "Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "ui/eu/>\n"
-"Language: \n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 4.18.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -114,7 +114,7 @@ msgstr "Aldatua"
 
 #: admin/admin.strings.js:29
 msgid "Uploaded"
-msgstr ""
+msgstr "Kargatuta"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
@@ -577,7 +577,7 @@ msgstr "Gelaxka-ertzak"
 
 #: src/control/Control.JSDialogBuilder.js:2951
 msgid "Automatic"
-msgstr ""
+msgstr "Automatikoa"
 
 #: src/control/Control.JSDialogBuilder.js:3068
 #: src/control/Control.Menubar.js:791
@@ -954,7 +954,7 @@ msgstr "Gorde iruzkinak"
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarImpress.js:418
 msgid "Master View"
-msgstr ""
+msgstr "Ikuspegi nagusia"
 
 #: src/control/Control.Menubar.js:490 src/control/Control.Menubar.js:1003
 #: src/control/Control.PresentationBar.js:57
@@ -1419,11 +1419,11 @@ msgstr "orriaren aurreikuspena "
 
 #: src/control/Control.PartsPreview.js:231
 msgid "Copy"
-msgstr ""
+msgstr "Kopiatu"
 
 #: src/control/Control.PartsPreview.js:240
 msgid "Paste"
-msgstr ""
+msgstr "Itsatsi"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1905,6 +1905,7 @@ msgstr "Ziur orri hau ezabatu nahi duzula?"
 #: src/control/jsdialog/Widget.TreeView.js:475
 msgid "Headings and objects that you add to the document will appear here"
 msgstr ""
+"Dokumentuan gehitzen dituzun goiburuak eta objektuak hemen agertuko dira"
 
 #: src/core/Socket.js:55
 msgid "Oops, there is a problem connecting to %productName: "
@@ -2075,7 +2076,7 @@ msgstr "Zerbitzaria deskonektatu da."
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
-msgstr ""
+msgstr "Zerbitzarian ez da diskoko lekurik geratzen."
 
 #: src/errormessages.js:14
 msgid ""
@@ -2222,12 +2223,17 @@ msgstr "Dokumentuari ezin izan zaio izena aldatu."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Ezin izan da dokumentua biltegitik irakurri. Saiatu berriro dokumentua "
+"kargatzen."
 
 #: src/errormessages.js:42
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Ezin izan da gorde biltegiratzeko tokirik ez dagoelako. Dokumentua "
+"irakurtzeko soilik izango da orain. Ziurtatu nahikoa leku eskuragarri "
+"dagoela eta saiatu berriro gordetzen."
 
 #: src/errormessages.js:43
 msgid ""
@@ -2235,18 +2241,21 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Ezin izan da gorde dokumentua handiegia delako edo geratzen den biltegiratze-"
+"lekua gainditzen duelako. Dokumentua irakurtzeko soilik izango da orain, "
+"baina orain deskargatu dezakezu kopia bat lokalean gordetzeko."
 
 #: src/errormessages.js:45
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "Ezin da dokumentua gorde; egiaztatu zure baimenak."
 
 #: src/errormessages.js:46
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "Dokumentuari ezin zaio izena aldatu; egiaztatu zure baimenak."
 
 #: src/errormessages.js:47
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "Ezin da dokumentua esportatu. Saiatu berriro."
 
 #: src/errormessages.js:52
 msgid "Uploading file to server failed, file not found."
