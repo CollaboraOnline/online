@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-09 07:33+0200\n"
-"PO-Revision-Date: 2023-01-26 16:55+0000\n"
+"PO-Revision-Date: 2023-06-22 19:42+0000\n"
 "Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "help/de/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.18.1\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -92,7 +92,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:30-18
 msgid "Focus to notebookbar menu"
-msgstr ""
+msgstr "Fokus auf das Notebookbar-Menü"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:30-70
 #, fuzzy
@@ -105,20 +105,19 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:31-18
 msgid "Focus to document from menu"
-msgstr ""
+msgstr "Fokus auf das Dokument vom Menü"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:31-72
 msgid "ESC"
-msgstr ""
+msgstr "Esc"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:32-18
 msgid "Focus to selected comment's menu"
-msgstr ""
+msgstr "Fokus auf das Menü des ausgewählten Kommentars"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:32-77
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Entf"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C"
 
 #: html/cool-help.html%2Bdiv.div.h2:36-9
 #: html/cool-help.html%2Bdiv.div.h2:182-9
