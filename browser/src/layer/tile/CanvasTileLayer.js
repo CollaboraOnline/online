@@ -1383,7 +1383,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					continue;
 
 				var key = this._tileCoordsToKey(coords);
-				if (this._tileHasContent(key))
+				if (!this._tileNeedsFetch(key))
 					continue;
 
 				var twips = this._coordsToTwips(coords);
@@ -1480,26 +1480,37 @@ L.CanvasTileLayer = L.Layer.extend({
 			return this._tiles[key];
 		}
 		var tile = {
-			wid: 0,
 			coords: coords,
 			current: true, // is this currently visible
-			retain: false, // was it previously visible cf. _pruneTiles
 			canvas: null,  // canvas ready to render
 			rawDeltas: null, // deltas ready to decompress
-			loaded: false, // is the tile data present & valid
+			viewId: 0, // canonical view id
+			wireId: 0, // monotonic timestamp for optimizing fetch
+			invalidFrom: 0, // a wireId - for avoiding races on invalidation
 			lastRendered: new Date(),
 			hasContent: function() {
-				return tile.canvas || (tile.rawDeltas && tile.rawDeltas.length > 0);
+				return this.canvas || (this.rawDeltas && this.rawDeltas.length > 0);
+			},
+			needsFetch: function() {
+				return this.invalidFrom >= this.wireId || !this.hasContent();
 			}
 		};
 		this._emptyTilesCount += 1;
 		this._tiles[key] = tile;
+
+		if (this._debug)
+		{
+			tile._debugLoadTile = 0;
+			tile._debugLoadDelta = 0;
+			tile._debugInvalidateCount = 0;
+		}
+
 		return tile;
 	},
 
-	_tileHasContent: function(key) {
+	_tileNeedsFetch: function(key) {
 		var tile = this._tiles[key];
-		return tile && tile.hasContent();
+		return !tile || tile.needsFetch();
 	},
 
 	_getToolbarCommandsValues: function() {
@@ -6058,9 +6069,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			for (i = 0; i < queue.length; i++) {
 				var tempTile = this._tiles[this._tileCoordsToKey(queue[i])];
-				if (tempTile && tempTile.loaded) {
+				if (tempTile)
 					tempTile.current = true;
-				}
 			}
 		}
 
@@ -6076,7 +6086,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				var tile = this._tiles[key];
 				if (!tile)
 					tile = this.createTile(queue[i], key);
-				if (!tile.loaded || !tile.hasContent())
+				if (tile.needsFetch())
 					this._sendTileCombineRequest(queue[i].part, queue[i].mode,
 								     (queue[i].x / this._tileSize) * this._tileWidthTwips,
 								     (queue[i].y / this._tileSize) * this._tileHeightTwips);
@@ -6138,15 +6148,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 					key = this._tileCoordsToKey(coords);
 					var tile = this._tiles[key];
-					var invalid = tile && tile._invalidCount && tile._invalidCount > 0;
-					if (tile && tile.loaded && !invalid) {
+					if (tile && !tile.needsFetch())
 						tile.current = true;
-					} else if (invalid) {
-						tile._invalidCount = 1;
+					else
 						queue.push(coords);
-					} else {
-						queue.push(coords);
-					}
 				}
 			}
 		}
@@ -6233,11 +6238,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 					key = this._tileCoordsToKey(coords);
 					tile = this._tiles[key];
-					if (tile && tile.loaded) {
+					if (tile && !tile.needsFetch())
 						tile.current = true;
-					} else {
+					else
 						queue.push(coords);
-					}
 				}
 			}
 		}
@@ -6253,7 +6257,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (!this._tiles[key])
 					this.createTile(coords, key);
 
-				if (!this._tileHasContent(key)) {
+				if (this._tileNeedsFetch(key)) {
 					// request each tile just once in these tilecombines
 					if (added[key])
 						continue;
@@ -6302,7 +6306,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		var now = new Date();
-		tile.loaded = +now;
 
 		// Newly (pre)-fetched tiles, rendered or not should be privileged.
 		tile.lastRendered = now;
@@ -6346,7 +6349,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			// tiles that do not interest us
 			key = this._tileCoordsToKey(coords);
-			if (this._tileHasContent(key)
+			if (!this._tileNeedsFetch(key)
 			    || coords.part !== this._selectedPart
 			    || coords.mode !== this._selectedMode) {
 				coordsQueue.splice(0, 1);
@@ -6507,25 +6510,33 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!tile)
 			return;
 
-		if (!tile.loaded && this._emptyTilesCount > 0)
+		if (!tile.hasContent() && this._emptyTilesCount > 0)
 			this._emptyTilesCount -= 1;
-
-		if (this._debug && this._debugInfo && this._tiles[key]._debugPopup)
-			this._debugInfo.removeLayer(this._tiles[key]._debugPopup);
 
 		this._reclaimTileCanvasMemory(tile);
 		delete this._tiles[key];
 	},
 
 	// We keep tile content around, but it will need
-	// refreshing if we show it again.
-	_invalidateTile: function (key) {
+	// refreshing if we show it again - and we need to
+	// know what monotonic time the invalidate came from
+	// so we match this to a new incoming tile to unset
+	// the invalid state later.
+	_invalidateTile: function (key, wireId) {
 		var tile = this._tiles[key];
 		if (!tile)
 			return;
-		tile.loaded = false;
 		if (!tile.hasContent())
 			this._removeTile(key);
+		else
+		{
+			if (this._debugDeltas)
+				window.app.console.debug('invalidate tile ' + key + ' with wireId ' + wireId);
+			if (wireId)
+				tile.invalidFrom = wireId;
+			else
+				tile.invalidFrom = tile.wireId;
+		}
 	},
 
 	_prefetchTilesSync: function () {
@@ -6618,7 +6629,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		var keys = [];
 		for (var key in this._tiles) // no .keys() method.
 			keys.push(key);
-		// sort by oldest.
+
+		// FIXME: should we sort by wireId - which is monotonic server ~time
+		// sort by oldest
 		keys.sort(function(a,b) { return b.lastRendered - a.lastRendered; });
 
 		var canvasKeys = [];
@@ -6662,7 +6675,6 @@ L.CanvasTileLayer = L.Layer.extend({
 						window.app.console.log('Reclaim delta ' + key + ' memory: ' +
 								       tile.rawDeltas.length + ' bytes');
 					tile.rawDeltas = null;
-					tile.loaded = false;
 				}
 			}
 		}
@@ -6960,6 +6972,47 @@ L.CanvasTileLayer = L.Layer.extend({
 		return i;
 	},
 
+	// Update debug overlay for a tile
+	_showDebugForTile: function(key) {
+		if (!this._debug)
+			return;
+
+		var tile = this._tiles[key];
+		if (!tile._debugPopup) {
+			var tileBound = this._keyToBounds(key);
+			tile._debugPopup = L.popup({ className: 'debug', offset: new L.Point(0, 0), autoPan: false, closeButton: false, closeOnClick: false })
+				.setLatLng(new L.LatLng(tileBound.getSouth(), tileBound.getWest() + (tileBound.getEast() - tileBound.getWest()) / 5));
+			this._debugInfo.addLayer(tile._debugPopup);
+			if (this._debugTiles[key]) {
+				this._debugInfo.removeLayer(this._debugTiles[key]);
+			}
+			tile._debugTile = L.rectangle(tileBound, { color: 'blue', weight: 1, fillOpacity: 0, pointerEvents: 'none' });
+			this._debugTiles[key] = tile._debugTile;
+			tile._debugTime = this._debugGetTimeArray();
+			this._debugInfo.addLayer(tile._debugTile);
+		}
+
+		var msg = 'requested: ' + this._tiles[key]._debugInvalidateCount +
+		    '<br>rec-tiles: ' + this._tiles[key]._debugLoadTile +
+		    '<br>recv-delta: ' + this._tiles[key]._debugLoadDelta;
+		if (tile._debugTime.date !== 0)
+			msg += '<br>' + this._debugSetTimes(tile._debugTime, +new Date() - tile._debugTime.date).replace(/, /g, '<br>');
+		msg += '<br>nviewid: ' + tile.viewId;
+		msg += '<br>wireId: ' + tile.wireId;
+		msg += '<br>invalidFrom: ' + tile.invalidFrom;
+		if (tile.rawDeltas)
+			msg += '<br>rawdeltas: ' + tile.rawDeltas.length;
+
+		var node = document.createElement('p');
+		node.innerHTML = msg;
+		tile._debugPopup.setHTMLContent(node);
+
+		if (tile._debugTile) // deltas in yellow
+			tile._debugTile.setStyle({ fillOpacity: tile.lastKeyframe ? 0 : 0.1, fillColor: 'yellow' });
+
+		this._debugShowTileData();
+	},
+
 	_onTileMsg: function (textMsg, img) {
 		var tileMsgObj = app.socket.parseServerCmd(textMsg);
 		this._checkTileMsgObject(tileMsgObj);
@@ -6983,7 +7036,11 @@ L.CanvasTileLayer = L.Layer.extend({
 		var tile = this._tiles[key];
 
 		if (!tile)
-			tile = this.createTile(coords, key);
+			tile = this.createTile(coords, key, tileMsgObj.wireId);
+
+		tile.viewId = tileMsgObj.nviewid;
+		// update monotonic timestamp
+		tile.wireId = +tileMsgObj.wireId;
 
 		if (this._debug) {
 			if (tile._debugLoadTile === undefined) {
@@ -7001,43 +7058,10 @@ L.CanvasTileLayer = L.Layer.extend({
 				tile._debugLoadTile++;
 				this._debugLoadTile++;
 			}
-
-			if (!tile._debugPopup) {
-				var tileBound = this._keyToBounds(key);
-				tile._debugPopup = L.popup({ className: 'debug', offset: new L.Point(0, 0), autoPan: false, closeButton: false, closeOnClick: false })
-					.setLatLng(new L.LatLng(tileBound.getSouth(), tileBound.getWest() + (tileBound.getEast() - tileBound.getWest()) / 5));
-				this._debugInfo.addLayer(tile._debugPopup);
-				if (this._debugTiles[key]) {
-					this._debugInfo.removeLayer(this._debugTiles[key]);
-				}
-				tile._debugTile = L.rectangle(tileBound, { color: 'blue', weight: 1, fillOpacity: 0, pointerEvents: 'none' });
-				this._debugTiles[key] = tile._debugTile;
-				tile._debugTime = this._debugGetTimeArray();
-				this._debugInfo.addLayer(tile._debugTile);
-			}
-
-			var msg = 'requested: ' + this._tiles[key]._debugInvalidateCount + '<br>rec-tiles: ' + this._tiles[key]._debugLoadTile + '<br>recv-delta: ' + this._tiles[key]._debugLoadDelta;
-			if (tile._debugTime.date !== 0)
-				msg += '<br>' + this._debugSetTimes(tile._debugTime, +new Date() - tile._debugTime.date).replace(/, /g, '<br>');
-			msg += '<br>nviewid: ' + tileMsgObj.nviewid;
-			if (tile.rawDeltas)
-				msg += '<br>rawdeltas: ' + tile.rawDeltas.length;
-			var node = document.createElement('p');
-			node.innerHTML = msg;
-			tile._debugPopup.setHTMLContent(node);
-
-			if (tile._debugTile) // deltas in yellow
-				tile._debugTile.setStyle({ fillOpacity: tile.lastKeyframe ? 0 : 0.1, fillColor: 'yellow' });
-
-			this._debugShowTileData();
 		}
+		this._showDebugForTile(key);
 
 		tile.lastKeyframe = false;
-
-		if (this._tiles[key]._invalidCount > 0)
-			this._tiles[key]._invalidCount -= 1;
-
-		tile.wireId = tileMsgObj.wireId;
 
 /*		if (this._map._canvasDevicePixelGrid)
 		{
@@ -7342,7 +7366,7 @@ L.TilesPreFetcher = L.Class.extend({
 
 					if (visitedTiles[key] ||
 					    !this._docLayer._isValidTile(coords) ||
-					    this._docLayer._tileHasContent(key))
+					    !this._docLayer._tileNeedsFetch(key))
 						continue;
 
 					if (tilesToFetch > 0) {

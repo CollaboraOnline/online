@@ -199,22 +199,13 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			var bounds = this._coordsToTileBounds(coords);
 			if (coords.part === command.part && invalidBounds.intersects(bounds) &&
 				coords.mode === command.mode) {
-				if (this._tiles[key]._invalidCount) {
-					this._tiles[key]._invalidCount += 1;
-				}
-				else {
-					this._tiles[key]._invalidCount = 1;
-				}
 				if (visibleArea.intersects(bounds)) {
 					needsNewTiles = true;
 					if (this._debug) {
 						this._debugAddInvalidationData(this._tiles[key]);
 					}
 				}
-				else if (!app.file.fileBasedView || !this._tiles[key].current) {
-					// tile outside of the visible area, just remove it
-					this._removeTile(key);
-				}
+				this._invalidateTile(key, command.wireId);
 			}
 		}
 

@@ -98,22 +98,13 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			var bounds = this._coordsToTileBounds(coords);
 			if (coords.part === command.part && coords.mode === command.mode &&
 				invalidBounds.intersects(bounds)) {
-				if (this._tiles[key]._invalidCount) {
-					this._tiles[key]._invalidCount += 1;
-				}
-				else {
-					this._tiles[key]._invalidCount = 1;
-				}
 				if (visibleArea.intersects(bounds)) {
 					needsNewTiles = true;
 					if (this._debug) {
 						this._debugAddInvalidationData(this._tiles[key]);
 					}
 				}
-				else {
-					// tile outside of the visible area, just remove it
-					this._removeTile(key);
-				}
+				this._invalidateTile(key, command.wireId);
 			}
 		}
 

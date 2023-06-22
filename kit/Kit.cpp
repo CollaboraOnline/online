@@ -1174,7 +1174,8 @@ public:
         {
             // no point in handling invalidations or page resizes per-view,
             // all views have to be in sync
-            tileQueue->put("callback all " + std::to_string(type) + ' ' + payload);
+            tileQueue->put("callback all " + std::to_string(type) + ' ' + payload +
+                           " wid=" + std::to_string(RenderTiles::getCurrentWireId()));
         }
         else
             tileQueue->put("callback " + std::to_string(descriptor->getViewId()) + ' ' + std::to_string(type) + ' ' + payload);
