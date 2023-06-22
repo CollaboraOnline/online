@@ -12,17 +12,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-09 07:33+0200\n"
-"PO-Revision-Date: 2023-06-07 09:51+0000\n"
+"PO-Revision-Date: 2023-06-17 20:49+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <="
-" 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Weblate 4.18.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -579,7 +579,7 @@ msgstr "Ohraničení buněk"
 
 #: src/control/Control.JSDialogBuilder.js:2951
 msgid "Automatic"
-msgstr ""
+msgstr "Automaticky"
 
 #: src/control/Control.JSDialogBuilder.js:3068
 #: src/control/Control.Menubar.js:791
@@ -1418,11 +1418,11 @@ msgstr "náhled stránky "
 
 #: src/control/Control.PartsPreview.js:231
 msgid "Copy"
-msgstr ""
+msgstr "Kopírovat"
 
 #: src/control/Control.PartsPreview.js:240
 msgid "Paste"
-msgstr ""
+msgstr "Vložit"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1901,7 +1901,7 @@ msgstr "Opravdu si přejete smazat tuto stránku?"
 
 #: src/control/jsdialog/Widget.TreeView.js:475
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Na tomto místě se zobrazí nadpisy a objekty přidané do dokumentu"
 
 #: src/core/Socket.js:55
 msgid "Oops, there is a problem connecting to %productName: "
