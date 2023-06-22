@@ -370,7 +370,8 @@ L.Map.include({
 		if (this.isPermissionEditForComments()) {
 			allowedCommands.push('.uno:InsertAnnotation','.uno:DeleteCommentThread', '.uno:DeleteAnnotation', '.uno:DeleteNote',
 				'.uno:DeleteComment', '.uno:ReplyComment', '.uno:ReplyToAnnotation', '.uno:ResolveComment',
-				'.uno:ResolveCommentThread', '.uno:ResolveComment', '.uno:EditAnnotation', '.uno:ExportToEPUB', '.uno:ExportToPDF');
+				'.uno:ResolveCommentThread', '.uno:ResolveComment', '.uno:EditAnnotation', '.uno:ExportToEPUB', '.uno:ExportToPDF',
+				'.uno:ExportDirectToPDF');
 		}
 
 		for (var i in allowedCommands) {
@@ -950,6 +951,16 @@ L.Map.include({
 		case 'exportpdf':
 			{
 				this.sendUnoCommand('.uno:ExportToPDF', {
+					'SynchronMode': {
+						'type': 'boolean',
+						'value': false
+					}
+				});
+			}
+			break;
+		case 'exportdirectpdf':
+			{
+				this.sendUnoCommand('.uno:ExportDirectToPDF', {
 					'SynchronMode': {
 						'type': 'boolean',
 						'value': false
