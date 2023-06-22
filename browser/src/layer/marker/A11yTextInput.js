@@ -27,9 +27,6 @@ L.A11yTextInput = L.Layer.extend({
 		// inputType: insertParagraph. No new char is added to the editable area textContent property.
 		this._newlineHint = false;
 
-		// <tab> is inserted into document but not inside the editable area
-		this._tabHint = false;
-
 		// We need to detect line break in the tunneled formula
 		// input window for the multiline case.
 		this._linebreakHint = false;
@@ -118,7 +115,6 @@ L.A11yTextInput = L.Layer.extend({
 		// this._emptyArea();
 
 		this._map.on('updatepermission', this._onPermission, this);
-		this._map.on('commandresult', this._onCommandResult, this);
 		L.DomEvent.on(this._textArea, 'focus blur', this._onFocusBlur, this);
 
 		// Do not wait for a 'focus' event to attach events if the
@@ -177,20 +173,6 @@ L.A11yTextInput = L.Layer.extend({
 		}
 	},
 
-	_onCommandResult: function(e) {
-		if (e.commandName === '.uno:Undo' || e.commandName === '.uno:Redo') {
-			//undoing something on mobile does not trigger any input method
-			//this causes problem in mobile working with suggestions
-			//i.e: type "than" and then select "thank" from suggestion
-			//now undo and then again select "thanks" from suggestions
-			//final output is "thans"
-			//this happens because undo doesn't change the textArea value
-			//and no other way to maintain the history
-			//So better to clean the textarea so no suggestions appear
-			// this._emptyArea();
-		}
-	},
-
 	_onFocusBlur: function(ev) {
 		this._fancyLog(ev.type, '');
 		this._dbg('_onFocusBlur');
@@ -234,6 +216,7 @@ L.A11yTextInput = L.Layer.extend({
 			this._map.formulabar.blurField();
 	},
 
+	//## A11y only
 	hasFocus: function() {
 		return this._textArea && this._textArea === document.activeElement;
 	},
@@ -417,7 +400,6 @@ L.A11yTextInput = L.Layer.extend({
 			+ '\n    start: ' + start + ', end: ' + end);
 
 		this._isComposing = false;
-		this._onComposingContent = undefined;
 		if (!this._hasFormulaBarFocus()) {
 			this.setHTML(content);
 			this.updateLastContent();
@@ -1148,10 +1130,6 @@ L.A11yTextInput = L.Layer.extend({
 
 	_onCompositionStart: function(/*ev*/) {
 		this._isComposing = true;
-		this._onComposingContent = this.getPlainTextContent();
-		this._onComposingPosition = this._getLastCursorPosition();
-		this._onComposingSelectionStart = this._lastSelectionStart;
-		this._onComposingSelectionEnd = this._lastSelectionEnd;
 	},
 
 	// Handled only in legacy situations ('input' events with an inputType
@@ -1207,7 +1185,6 @@ L.A11yTextInput = L.Layer.extend({
 		}
 		this._newlineHint = ev.keyCode === 13;
 		this._linebreakHint = this._newlineHint && ev.shiftKey;
-		this._tabHint = ev.keyCode === 9; // detect 'tab' key
 
 		// We want to open drowdown menu when cursor is above a dropdown content control.
 		if (ev.code === 'Space' || ev.code === 'Enter') {
@@ -1433,10 +1410,6 @@ L.A11yTextInput = L.Layer.extend({
 
 	_isSelectionValid: function() {
 		return typeof this._getSelectionStart() === 'number' && typeof this._getSelectionEnd() === 'number';
-	},
-
-	_isTextContentEmpty: function() {
-		return this.getPlainTextContent().length === 0;
 	},
 
 	_isWrappedBySpan: function() {
