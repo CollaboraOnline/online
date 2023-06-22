@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-09 07:33+0200\n"
-"PO-Revision-Date: 2023-06-02 02:52+0000\n"
+"PO-Revision-Date: 2023-06-15 11:48+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.18\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -576,7 +576,7 @@ msgstr "Краї комірки"
 
 #: src/control/Control.JSDialogBuilder.js:2951
 msgid "Automatic"
-msgstr ""
+msgstr "Автоматично"
 
 #: src/control/Control.JSDialogBuilder.js:3068
 #: src/control/Control.Menubar.js:791
@@ -1415,11 +1415,11 @@ msgstr "попередній перегляд сторінки "
 
 #: src/control/Control.PartsPreview.js:231
 msgid "Copy"
-msgstr ""
+msgstr "Скопіювати"
 
 #: src/control/Control.PartsPreview.js:240
 msgid "Paste"
-msgstr ""
+msgstr "Вставити"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1899,7 +1899,7 @@ msgstr "Ви дійсно бажаєте видалити цю сторінку?
 
 #: src/control/jsdialog/Widget.TreeView.js:475
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Тут з'являться заголовки та об'єкти, які ви додасте до документа"
 
 #: src/core/Socket.js:55
 msgid "Oops, there is a problem connecting to %productName: "
