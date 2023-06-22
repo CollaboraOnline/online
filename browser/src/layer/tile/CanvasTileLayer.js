@@ -6315,9 +6315,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			for (i = 0; i < queue.length; i++) {
 				coords = queue[i];
 				key = this._tileCoordsToKey(coords);
-				tile = this._tiles[key];
-				if (!tile)
-					tile = this.createTile(coords, key);
+				if (!this._tiles[key])
+					this.createTile(coords, key);
 
 				if (!this._tileHasContent(key)) {
 					// request each tile just once in these tilecombines
