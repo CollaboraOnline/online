@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CStyleData $ _ CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array */
+/* global app L CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CStyleData $ _ CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array Uint32Array */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -6788,37 +6788,39 @@ L.CanvasTileLayer = L.Layer.extend({
 		return ctx;
 	},
 
-	_brgatorgba: function(rawDelta, start, len) {
-		var result = new Uint8ClampedArray(len);
-		var i = start;
-		var resIndex = 0;
-		while (i < start + len) {
+	_brgatorgba: function(rawDelta) {
+		var len = rawDelta.byteLength / 4;
+		var delta32 = new Uint32Array(rawDelta.buffer, rawDelta.byteOffset, len);
+		var resultu8 = new Uint8ClampedArray(rawDelta.byteLength);
+		var resultu32 = new Uint32Array(resultu8.buffer, resultu8.byteOffset, len);
+		for (var i32 = 0; i32 < len; ++i32) {
 			// premultiplied brga -> unpremultiplied rgba
-			var alpha = rawDelta[i + 3];
-			if (alpha == 255)
-			{
-				result[resIndex++] = rawDelta[i + 2];
-				result[resIndex++] = rawDelta[i + 1];
-				result[resIndex++] = rawDelta[i];
-				result[resIndex++] = 255;
-			}
-			else if (alpha == 0)
-			{
-				result[resIndex++] = 0;
-				result[resIndex++] = 0;
-				result[resIndex++] = 0;
-				result[resIndex++] = 0;
-			}
+			// If the previous input pixel was the same as the current input pixel
+			// just copy the previous output pixel as the current output pixel
+			if (i32 > 0 && delta32[i32] === delta32[i32 - 1])
+				resultu32[i32] = resultu32[i32 - 1];
 			else
 			{
-				result[resIndex++] = Math.ceil(rawDelta[i + 2] * 255 / alpha);
-				result[resIndex++] = Math.ceil(rawDelta[i + 1] * 255 / alpha);
-				result[resIndex++] = Math.ceil(rawDelta[i] * 255 / alpha);
-				result[resIndex++] = alpha;
+				var i8 = i32 * 4;
+				var alpha = rawDelta[i8 + 3];
+				if (alpha === 255) {
+					resultu8[i8] = rawDelta[i8 + 2];
+					resultu8[i8 + 1] = rawDelta[i8 + 1];
+					resultu8[i8 + 2] = rawDelta[i8];
+					resultu8[i8 + 3] = 255;
+				}
+				else if (alpha === 0)
+					resultu32[i32] = 0;
+				else // forced to do the math
+				{
+					resultu8[i8] = Math.ceil(rawDelta[i8 + 2] * 255 / alpha);
+					resultu8[i8 + 1] = Math.ceil(rawDelta[i8 + 1] * 255 / alpha);
+					resultu8[i8 + 2] = Math.ceil(rawDelta[i8] * 255 / alpha);
+					resultu8[i8 + 3] = alpha;
+				}
 			}
-			i += 4;
 		}
-		return result;
+		return resultu8;
 	},
 
 	_applyDelta: function(tile, rawDelta, isKeyframe) {
@@ -6896,7 +6898,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			{
 				// FIXME: use zstd to de-compress directly into a Uint8ClampedArray
 				len = canvas.width * canvas.height * 4;
-				var pixelArray = this._brgatorgba(delta, 0, len);
+				var pixelArray = this._brgatorgba(delta.subarray(0, len));
 				imgData = new ImageData(pixelArray, canvas.width, canvas.height);
 
 				if (this._debugDeltas)
@@ -6988,7 +6990,7 @@ L.CanvasTileLayer = L.Layer.extend({
 							       ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 				i += 4;
 				span *= 4;
-				var pixelData = this._brgatorgba(delta, i, span);
+				var pixelData = this._brgatorgba(delta.subarray(i, i + span));
 				// imgData.data[offset + 1] = 256; // debug - greener start
 				for (var j = 0; j < span; ++j)
 					imgData.data[offset++] = pixelData[j];
