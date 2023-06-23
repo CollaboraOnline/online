@@ -19,7 +19,7 @@ describe('Interfering second user.', function() {
 
 		cy.waitUntil(function() {
 			// Wait for the user-1 to open the document
-			cy.visit('http://admin:admin@localhost:' +
+			cy.visit('http://admin:admin@' + Cypress.env('SERVER') + ':' +
 				Cypress.env('SERVER_PORT') +
 				'/browser/dist/admin/admin.html');
 
@@ -69,7 +69,7 @@ describe('Interfering second user.', function() {
 
 			// Check admin console, whether the first user is still active
 			// If there is no more document we can assume the test is finished.
-			cy.visit('http://admin:admin@localhost:' +
+			cy.visit('http://admin:admin@' + Cypress.env('SERVER') + ':' +
 				Cypress.env('SERVER_PORT') +
 				'/browser/dist/admin/admin.html');
 
