@@ -164,6 +164,25 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 	},
 
+	isPaddingClick: function (element, e, part) {
+		var style = window.getComputedStyle(element, null);
+		var nTop = parseInt(style.getPropertyValue('padding-top'));
+		var nRight = parseFloat(style.getPropertyValue('padding-right'));
+		var nLeft = parseFloat(style.getPropertyValue('padding-left'));
+		var nBottom = parseFloat(style.getPropertyValue('padding-bottom'));
+		var width = element.offsetWidth;
+		var height = element.offsetHeight;
+		var x = parseFloat(e.offsetX);
+		var y = parseFloat(e.offsetY);
+
+		if (part === 'top')         // Clicked on top padding?
+			return !(y > nTop);
+		else if (part === 'bottom') // Clicked on bottom padding?
+			return !(y < height - nBottom);
+		else                        // Clicked on any padding?
+			return !((x > nLeft && x < width - nRight) && (y > nTop && y < height - nBottom));
+	},
+
 	_createPreview: function (i, hashCode) {
 		var frameClass = 'preview-frame ' + this.options.frameClass;
 		var frame = L.DomUtil.create('div', frameClass, this._partsPreviewCont);
@@ -216,19 +235,25 @@ L.Control.PartsPreview = L.Control.extend({
 		}, this);
 
 		var that = this;
-		var pcw = document.getElementById('presentation-controls-wrapper');
-
-		L.DomEvent.on(pcw, 'contextmenu', function(e) {
+		L.DomEvent.on(frame, 'contextmenu', function(e) {
 			var isMasterView = this._map['stateChangeHandler'].getItemValue('.uno:SlideMasterPage');
+			var pcw = document.getElementById('presentation-controls-wrapper');
 			var $trigger = $(pcw);
 			if (isMasterView === 'true') {
 				$trigger.contextMenu(false);
 				return;
 			}
+
+			var nPos = undefined;
+			if (this.isPaddingClick(frame, e, 'top'))
+				nPos = that._findClickedPart(frame) - 1;
+			else if (this.isPaddingClick(frame, e, 'bottom'))
+				nPos = that._findClickedPart(frame);
+
 			$trigger.contextMenu(true);
 			that._setPart(e);
 			$.contextMenu({
-				selector: '#presentation-controls-wrapper',
+				selector: '#'+frame.id,
 				className: 'cool-font',
 				items: {
 					paste: {
@@ -246,7 +271,7 @@ L.Control.PartsPreview = L.Control.extend({
 					},
 					newslide: {
 						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:InsertSlide' : '.uno:InsertPage', 'presentation'),
-						callback: function() { that._map.insertPage(); }
+						callback: function() { that._map.insertPage(nPos); }
 					}
 				}
 			});

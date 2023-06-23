@@ -336,7 +336,13 @@ L.Map.include({
 		}
 
 		if (this.isPresentationOrDrawing()) {
-			app.socket.sendMessage('uno .uno:InsertPage');
+			if (nPos === undefined) {
+				app.socket.sendMessage('uno .uno:InsertPage');
+			}
+			else {
+				var argument = {InsertPos: {type: 'int16', value: nPos}};
+				app.socket.sendMessage('uno .uno:InsertPage ' + JSON.stringify(argument));
+			}
 		}
 		else if (this.getDocType() === 'spreadsheet') {
 			this._docLayer._sheetSwitch.updateOnSheetInsertion(nPos);
