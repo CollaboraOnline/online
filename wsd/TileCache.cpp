@@ -36,7 +36,7 @@ TileCache::TileCache(std::string docURL, const std::chrono::system_clock::time_p
     : _docURL(std::move(docURL))
     , _dontCache(dontCache)
     , _cacheSize(0)
-    , _maxCacheSize(512 * 1024)
+    , _maxCacheSize(1024 * 1024)
 {
 #ifndef BUILDING_TESTS
     LOG_INF("TileCache ctor for uri [" << COOLWSD::anonymizeUrl(_docURL) <<
