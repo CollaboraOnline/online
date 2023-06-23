@@ -993,6 +993,7 @@ constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 #endif
 
 static const std::string ACCESS_TOKEN = "%ACCESS_TOKEN%";
+static const std::string ACCESS_TOKEN_TTL = "%ACCESS_TOKEN_TTL%";
 
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
@@ -1018,6 +1019,38 @@ public:
         // from the GET URI and set them in the generated html (see cool.html.m4).
 
         const std::string accessToken = extractVariable(form, "access_token", ACCESS_TOKEN);
+        const std::string accessTokenTtl =
+            extractVariable(form, "access_token_ttl", ACCESS_TOKEN_TTL);
+
+        unsigned long tokenTtl = 0;
+        if (!accessToken.empty())
+        {
+            if (!accessTokenTtl.empty())
+            {
+                try
+                {
+                    tokenTtl = std::stoul(accessTokenTtl);
+                }
+                catch (const std::exception& exc)
+                {
+                    LOG_ERR(
+                        "access_token_ttl ["
+                        << accessTokenTtl
+                        << "] must be represented as the number of milliseconds "
+                           "since January 1, 1970 UTC, when the token will expire. Defaulting to "
+                        << tokenTtl);
+                }
+            }
+            else
+            {
+                LOG_INF("WOPI host did not pass optional access_token_ttl");
+            }
+        }
+
+        _vars[ACCESS_TOKEN_TTL] = std::to_string(tokenTtl);
+        LOG_TRC("Field ["
+                << "access_token_ttl"
+                << "] for var [" << ACCESS_TOKEN_TTL << "] = [" << tokenTtl << ']');
     }
 
     const std::string& operator[](const std::string& key) const
@@ -1052,9 +1085,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     const UserRequestVars urv(request, form);
 
-    const std::string accessToken = form.get("access_token", "");
-    const std::string accessTokenTtl = form.get("access_token_ttl", "");
-    LOG_TRC("access_token=" << accessToken << ", access_token_ttl=" << accessTokenTtl);
     const std::string accessHeader = form.get("access_header", "");
     LOG_TRC("access_header=" << accessHeader);
     const std::string uiDefaults = form.get("ui_defaults", "");
@@ -1082,26 +1112,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     const std::string escapedAccessHeader = Util::encodeURIComponent(accessHeader, "'");
     const std::string escapedPostmessageOrigin = Util::encodeURIComponent(postMessageOrigin, "'");
 
-    unsigned long tokenTtl = 0;
-    if (!accessToken.empty())
-    {
-        if (!accessTokenTtl.empty())
-        {
-            try
-            {
-                tokenTtl = std::stoul(accessTokenTtl);
-            }
-            catch (const std::exception& exc)
-            {
-                LOG_ERR("access_token_ttl must be represented as the number of milliseconds since January 1, 1970 UTC, when the token will expire");
-            }
-        }
-        else
-        {
-            LOG_INF("WOPI host did not pass optional access_token_ttl");
-        }
-    }
-
     std::string socketProxy = "false";
     if (requestDetails.isProxy())
         socketProxy = "true";
@@ -1113,7 +1123,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     std::string savedUIState = "true";
 
     Poco::replaceInPlace(preprocess, ACCESS_TOKEN, urv[ACCESS_TOKEN]);
-    Poco::replaceInPlace(preprocess, std::string("%ACCESS_TOKEN_TTL%"), std::to_string(tokenTtl));
+    Poco::replaceInPlace(preprocess, ACCESS_TOKEN_TTL, urv[ACCESS_TOKEN_TTL]);
     Poco::replaceInPlace(preprocess, std::string("%ACCESS_HEADER%"), escapedAccessHeader);
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), cnxDetails.getWebSocketUrl());
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(COOLWSD_VERSION_HASH));
