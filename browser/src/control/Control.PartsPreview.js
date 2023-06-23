@@ -173,6 +173,25 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 	},
 
+	isPaddingClick: function (element, e, part) {
+		var style = window.getComputedStyle(element, null);
+		var nTop = parseInt(style.getPropertyValue('padding-top'));
+		var nRight = parseFloat(style.getPropertyValue('padding-right'));
+		var nLeft = parseFloat(style.getPropertyValue('padding-left'));
+		var nBottom = parseFloat(style.getPropertyValue('padding-bottom'));
+		var width = element.offsetWidth;
+		var height = element.offsetHeight;
+		var x = parseFloat(e.offsetX);
+		var y = parseFloat(e.offsetY);
+
+		if (part === 'top')         // Clicked on top padding?
+			return !(y > nTop);
+		else if (part === 'bottom') // Clicked on bottom padding?
+			return !(y < height - nBottom);
+		else                        // Clicked on any padding?
+			return !((x > nLeft && x < width - nRight) && (y > nTop && y < height - nBottom));
+	},
+
 	_createPreview: function (i, hashCode, bottomBound) {
 		var frameClass = 'preview-frame ' + this.options.frameClass;
 		var frame = L.DomUtil.create('div', frameClass, this._partsPreviewCont);
@@ -225,12 +244,20 @@ L.Control.PartsPreview = L.Control.extend({
 		}, this);
 
 		var that = this;
-		var pcw = document.getElementById('presentation-controls-wrapper');
+		L.DomEvent.on(frame, 'contextmenu', function(e) {
+			var nPos = undefined;
+			if (this.isPaddingClick(frame, e, 'top')) {
+				nPos = frame.id.replace(/^\D+/g, '');
+				console.debug('top padding clicked: nPos: ' + nPos);
+			}
+			else if (this.isPaddingClick(frame, e, 'bottom')) {
+				nPos = parseInt(frame.id.replace(/^\D+/g, ''), 10) + 1;
+				console.debug('bottom padding clicked: nPos: ' + nPos);
+			}
 
-		L.DomEvent.on(pcw, 'contextmenu', function(e) {
 			that._setPart(e);
 			$.contextMenu({
-				selector: '#presentation-controls-wrapper',
+				selector: '#'+frame.id,
 				className: 'cool-font',
 				items: {
 					paste: {
@@ -248,7 +275,7 @@ L.Control.PartsPreview = L.Control.extend({
 					},
 					newslide: {
 						name: _UNO(that._map._docLayer._docType == 'presentation' ? '.uno:InsertSlide' : '.uno:InsertPage', 'presentation'),
-						callback: function() { that._map.insertPage(); }
+						callback: function() { that._map.insertPage(nPos); }
 					}
 				}
 			});
