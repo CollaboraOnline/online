@@ -557,7 +557,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 /* text label */
 
-.jsdialog.ui-text {
+.ui-dialog-content .jsdialog.ui-text {
 	padding-inline-start: 8px;
 }
 
