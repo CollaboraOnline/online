@@ -234,8 +234,19 @@ int main(int argc, char** argv)
         }
 
         const bool isDir = S_ISDIR(sb.st_mode);
-        const bool isFile = S_ISCHR(sb.st_mode); // We don't support regular files.
-        if (!isDir && !isFile)
+        const bool isCharDev = S_ISCHR(sb.st_mode); // We don't support regular files.
+        if (isCharDev)
+        {
+            // Even for character devices, we only support the random devices.
+            if (strstr("/dev/random", source) && strstr("/dev/urandom", source))
+            {
+                fprintf(stderr, "%s: cannot mount untrusted character-device [%s]", program,
+                        source);
+                return EX_USAGE;
+            }
+        }
+
+        if (!isDir && !isCharDev)
         {
             fprintf(stderr,
                     "%s: cannot mount from invalid source [%s], it is neither a file nor a "
@@ -253,7 +264,7 @@ int main(int argc, char** argv)
         }
 
         const bool target_exists =
-            ((isDir && S_ISDIR(sb.st_mode)) || (isFile && S_ISREG(sb.st_mode)));
+            ((isDir && S_ISDIR(sb.st_mode)) || (isCharDev && S_ISREG(sb.st_mode)));
         if (!target_exists)
         {
             fprintf(stderr,
