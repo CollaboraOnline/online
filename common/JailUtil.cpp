@@ -328,9 +328,13 @@ bool createRandomDeviceInJail(const std::string& root, const std::string& device
 
     if (isBindMountingEnabled())
     {
-        LOG_DBG("Failed to create random device via mknod("
-                << absPath << "). Mount must not use nodev flag. Will try bind-mounting instead: "
-                << strerror(mknodErrno));
+        static bool warned = false;
+        if (!warned)
+        {
+            warned = true;
+            LOG_WRN("Performance issue: nodev mount permission or mknod fails. Have to bind mount "
+                    "random devices");
+        }
 
         Poco::File(absPath).createFile();
         if (coolmount("-b", devicePath, absPath))
