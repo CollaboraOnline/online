@@ -41,7 +41,7 @@ function logLoadingParameters(fileName, subFolder, noFileCopy, isMultiUser, subs
 }
 
 function generateDocumentURL() {
-	var URI = 'http://localhost';
+	var URI = 'http://' + Cypress.env('SERVER');
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
 		URI += '/richproxy/proxy.php?req=';
 	} else {
@@ -201,7 +201,8 @@ function upLoadFileToNextCloud(fileName, subFolder, subsequentLoad) {
 	cy.log('Param - subsequentLoad: ' + subsequentLoad);
 
 	// Open local nextcloud installation
-	cy.visit('http://localhost/nextcloud/index.php/apps/files');
+	var url = 'http://' + Cypress.env('SERVER') + 'nextcloud/index.php/apps/files';
+	cy.visit(url);
 
 	// Log in with cypress test user / password (if this is the first time)
 	if (subsequentLoad !== true) {
@@ -575,7 +576,7 @@ function closeDocument(fileName, testState) {
 	// For php-proxy admin console does not work, so we just open
 	// localhost and wait some time for the test document to be closed.
 	} else if (Cypress.env('INTEGRATION') === 'php-proxy') {
-		cy.visit('http://localhost/', {failOnStatusCode: false});
+		cy.visit('http://' + Cypress.env('SERVER') + '/', {failOnStatusCode: false});
 
 		cy.wait(5000);
 	} else {
@@ -586,7 +587,7 @@ function closeDocument(fileName, testState) {
 		}
 
 		// Make sure that the document is closed
-		cy.visit('http://admin:admin@localhost:' +
+		cy.visit('http://admin:admin@' + Cypress.env('SERVER') + ':' +
 			Cypress.env('SERVER_PORT') +
 			'/browser/dist/admin/admin.html');
 
