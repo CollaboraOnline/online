@@ -298,9 +298,10 @@ void DocumentBroker::pollThread()
 #if !MOBILEAPP
         const auto now = std::chrono::steady_clock::now();
 
-        // a tile's data is ~8k, a 4k screen is ~256 256x256 tiles
+        // a tile's data is ~8k, a 4k screen is ~256 256x256 tiles -
+        // so double that - 4Mb per view.
         if (_tileCache)
-            _tileCache->setMaxCacheSize(8 * 1024 * 256 * _sessions.size());
+            _tileCache->setMaxCacheSize(8 * 1024 * 256 * 2 * _sessions.size());
 
         if (isInteractive())
         {
