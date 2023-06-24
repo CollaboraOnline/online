@@ -103,14 +103,7 @@ export class ContentControlSection extends CanvasSectionObject {
 		if (!this.sectionProperties.json || !this.sectionProperties.json.rectangles)
 			return;
 
-		var rectangles: Array<number>[] = [];
-		//convert string to number coordinates
-		var matches = this.sectionProperties.json.rectangles.match(/\d+/g);
-		if (matches !== null) {
-			for (var i: number = 0; i < matches.length; i += 4) {
-				rectangles.push([parseInt(matches[i]), parseInt(matches[i + 1]), parseInt(matches[i + 2]), parseInt(matches[i + 3])]);
-			}
-		}
+		var rectangles: Array<number>[] = this.getRectangles(this.sectionProperties.json.rectangles);
 
 		var xMin: number = Infinity, yMin: number = Infinity, xMax: number = 0, yMax: number = 0;
 		for (var i = 0; i < rectangles.length; i++) {
@@ -168,6 +161,41 @@ export class ContentControlSection extends CanvasSectionObject {
 		if (!this.sectionProperties.json)
 			return;
 
+		var text:string = this.sectionProperties.json.alias;
+		if (text) {
+			var rectangles: Array<number>[] = this.getRectangles(this.sectionProperties.json.rectangles);
+			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+			var x: number = rectangles[rectangles.length-1][0] * ratio;
+			var y: number = rectangles[rectangles.length-1][1] * ratio;
+
+			// fixed height for alias tag
+			var h: number = 20;
+			var startX: number = x - this.position[0] + 5;
+			var startY: number = y - this.position[1];
+			var padding: number = 10;
+			var fontStyle = getComputedStyle(document.body).getPropertyValue('--docs-font').split(',')[0].replace(/'/g, '');
+			var fontSize = getComputedStyle(document.body).getPropertyValue('--default-font-size');
+			var font = fontSize + ' ' + fontStyle;
+			var textWidth: number = L.Util.getTextWidth(text, font) + padding;
+
+			// draw rectangle with backgroundcolor
+			this.context.beginPath();
+			this.context.fillStyle = '#E6FFFF';
+			this.context.font = font;
+			this.context.fillRect(startX, startY - h, textWidth, h);
+
+			// add text to the rectangle
+			this.context.textAlign = 'center';
+			this.context.textBaseline = 'middle';
+			this.context.fillStyle = '#026296';
+			this.context.fillText(text, startX + textWidth / 2, startY - h / 2);
+
+			// draw borders around the rectangle
+			this.context.strokeStyle = '#026296';
+			this.context.lineWidth = app.dpiScale;
+			this.context.strokeRect(startX - 0.5, startY - h - 0.5, textWidth, h);
+
+		}
 		if (this.sectionProperties.json.items || this.sectionProperties.datePicker) {
 			this.addDropDownBtn();
 		}
@@ -317,6 +345,18 @@ export class ContentControlSection extends CanvasSectionObject {
 			datePicker.style.top = this.sectionProperties.framePos.y + this.sectionProperties.frameHeight + 'px';
 			$('#datepicker').show();
 		}
+	}
+
+	private getRectangles(rect: string): Array<number>[] {
+		var rectangles: Array<number>[] = [];
+		//convert string to number coordinates
+		var matches = rect.match(/\d+/g);
+		if (matches !== null) {
+			for (var i: number = 0; i < matches.length; i += 4) {
+				rectangles.push([parseInt(matches[i]), parseInt(matches[i + 1]), parseInt(matches[i + 2]), parseInt(matches[i + 3])]);
+			}
+		}
+		return rectangles;
 	}
 }
 
