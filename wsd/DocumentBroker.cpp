@@ -1565,6 +1565,8 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
         LOG_DBG("Document [" << getDocKey()
                              << "] is unloading, but was possibly modified during saving. Skipping "
                                 "upload to save again before unloading");
+
+        assert(canSaveToDisk() == CanSave::Yes && "Cannot save to disk");
         return;
     }
 #endif
@@ -2166,34 +2168,30 @@ void DocumentBroker::refreshLock()
 
 DocumentBroker::NeedToSave DocumentBroker::needToSaveToDisk() const
 {
-    // Cannot save without a kit, a loaded doc, and a valid session.
-    if (canSaveToDisk() == CanSave::Yes)
+    if (!_saveManager.lastSaveSuccessful())
     {
-        if (!_saveManager.lastSaveSuccessful())
+        // When saving is attempted and fails, we have no file on disk.
+        return NeedToSave::Yes_LastSaveFailed;
+    }
+
+    if (isModified())
+    {
+        // ViewFileExtensions do not update the ModifiedStatus, but,
+        // we expect a successful save anyway (including unmodified).
+        if (!_isViewFileExtension)
         {
-            // When saving is attempted and fails, we have no file on disk.
-            return NeedToSave::Yes_LastSaveFailed;
+            return NeedToSave::Yes_Modified;
         }
 
-        if (isModified())
-        {
-            // ViewFileExtensions do not update the ModifiedStatus, but,
-            // we expect a successful save anyway (including unmodified).
-            if (!_isViewFileExtension)
-            {
-                return NeedToSave::Yes_Modified;
-            }
+        assert(_isViewFileExtension && "Not a view-file");
+        // Fallback to check for activity post-saving.
+    }
 
-            assert(_isViewFileExtension && "Not a view-file");
-            // Fallback to check for activity post-saving.
-        }
+    assert(_saveManager.lastSaveSuccessful() && "Last save failed");
 
-        assert(_saveManager.lastSaveSuccessful() && "Last save failed");
-
-        if (haveActivityAfterSaveRequest())
-        {
-            return NeedToSave::Maybe;
-        }
+    if (haveActivityAfterSaveRequest())
+    {
+        return NeedToSave::Maybe;
     }
 
     return NeedToSave::No;
@@ -2338,6 +2336,18 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         LOG_TRC("autoSaveAndStop for docKey ["
                 << getDocKey() << "] has nothing to save and Storage is up-to-date, canStop: true");
         canStop = true;
+    }
+
+    if (!canStop && needToSave != NeedToSave::No)
+    {
+        // Check that we *can* save, now that we know we need to.
+        const CanSave canSave = canSaveToDisk();
+        if (canSave != CanSave::Yes)
+        {
+            LOG_ERR("Cannot save because " << name(canSave) << " though " << name(needToSave)
+                                           << ". May have data loss, but must stop");
+            canStop = true;
+        }
     }
 
     if (!canStop && needToUpload == NeedToUpload::No)
