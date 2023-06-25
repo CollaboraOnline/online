@@ -45,8 +45,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		enableRecord();
 		helper.clearAllText();
 		helper.selectAllText();
+		cy.wait(500);
 		confirmChange('Accept All');
 		helper.typeIntoDocument('{ctrl}a');
+		cy.wait(500);
 		helper.textSelectionShouldNotExist();
 	});
 
@@ -55,9 +57,11 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Track Changes', function (
 		enableRecord();
 		helper.clearAllText();
 		helper.selectAllText();
+		cy.wait(500);
 		confirmChange('Reject All');
 		cy.cGet('#document-container').click();
 		helper.selectAllText();
+		cy.wait(500);
 		helper.expectTextForClipboard('Hello World');
 	});
 });
