@@ -14,6 +14,7 @@
 #include <sys/socket.h>
 #include <sys/stat.h>
 
+#include <algorithm>
 #include <chrono>
 #include <cstdint>
 #include <iostream>
