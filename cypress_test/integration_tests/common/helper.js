@@ -450,22 +450,14 @@ function clearAllText() {
 function expectTextForClipboard(expectedPlainText) {
 	cy.log('Text:' + expectedPlainText);
 	doIfInWriter(function() {
-		// for backward compatibility allow '/nTEXT' and 'TEXT'
-		const expectedRegex = RegExp('/^(\n' + expectedPlainText + ')|(' + expectedPlainText + ')$/');
 		cy.cGet('#copy-paste-container p')
 			.then(function(pItem) {
 				if (pItem.children('font').length !== 0) {
 					cy.cGet('#copy-paste-container p font')
-						.invoke('text')
-						.then(function(value) {
-							return expectedRegex.test(value);
-						});
+						.should('have.text', expectedPlainText);
 				} else {
 					cy.cGet('#copy-paste-container p')
-						.invoke('text')
-						.then(function(value) {
-							return expectedRegex.test(value);
-						});
+						.should('have.text', expectedPlainText);
 				}
 			});
 	});

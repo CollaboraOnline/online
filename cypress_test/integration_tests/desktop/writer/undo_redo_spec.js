@@ -1,4 +1,4 @@
-/* global describe it beforeEach require afterEach*/
+/* global cy describe it beforeEach require afterEach*/
 
 var helper = require('../../common/helper');
 var repairHelper = require('../../common/repair_document_helper');
@@ -23,7 +23,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing Operations', funct
 
 		helper.selectAllText();
 
-		helper.expectTextForClipboard('Hello \n');
+		helper.expectTextForClipboard('Hello ');
 	}
 
 	it('Undo', function() {
@@ -36,7 +36,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing Operations', funct
 		helper.typeIntoDocument('{ctrl}y');
 
 		helper.selectAllText();
-
+		cy.wait(500);
 		helper.expectTextForClipboard('Hello World');
 	});
 
@@ -47,6 +47,6 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Editing Operations', funct
 
 		helper.selectAllText();
 
-		helper.expectTextForClipboard('Hello \n');
+		helper.expectTextForClipboard('Hello ');
 	});
 });
