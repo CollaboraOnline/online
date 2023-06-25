@@ -1811,7 +1811,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
 #if !MOBILEAPP
         WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
         if (wopiStorage != nullptr)
-            Admin::instance().setDocWopiUploadDuration(_docKey, std::chrono::duration_cast<std::chrono::milliseconds>(wopiStorage->getWopiSaveDuration()));
+            Admin::instance().setDocWopiUploadDuration(_docKey, wopiStorage->getWopiSaveDuration());
 #endif
 
         if (!_uploadRequest->isSaveAs() && !_uploadRequest->isRename())
