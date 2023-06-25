@@ -308,6 +308,12 @@ L.TextInput = L.Layer.extend({
 		return 	this._textArea.innerHTML;
 	},
 
+	_wrapContent: function(content) {
+		return content.length === 0
+			? this._initialContent
+			: this._preSpaceChar + content + this._postSpaceChar;
+	},
+
 	resetContent: function() {
 		this._textArea.innerHTML = this._initialContent;
 	},
@@ -395,6 +401,19 @@ L.TextInput = L.Layer.extend({
 
 		// Prevent autofocus
 		this._textArea.setAttribute('disabled', true);
+
+		if (L.Browser.cypressTest) {
+			var that = this;
+			this._textArea._wrapContent = function(content) {
+				return that._wrapContent(content);
+			};
+			this._textArea._getSelectionStart = function() {
+				return that._getSelectionStart();
+			};
+			this._textArea._getSelectionEnd = function() {
+				return that._getSelectionEnd();
+			};
+		}
 
 		this._setupStyles();
 
