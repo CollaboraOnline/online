@@ -28,18 +28,18 @@ SUPPORT_FILE = $(if $(findstring $(abs_srcdir),$(abs_builddir)),support/index.js
 DESKTOP_USER_AGENT = "cypress"
 DESKTOP_TEST_FOLDER = $(abs_srcdir)/integration_tests/desktop
 DESKTOP_DATA_FOLDER = $(abs_srcdir)/data/desktop/
-DESKTOP_DATA_WORKDIR = $(abs_builddir)/workdir/data/desktop/
-DESKTOP_TRACK_FOLDER=$(abs_builddir)/workdir/track/desktop
+DESKTOP_DATA_WORKDIR = $(if $(coolwsd),$(DESKTOP_DATA_FOLDER),$(abs_builddir)/workdir/data/desktop/)
+DESKTOP_TRACK_FOLDER = $(abs_builddir)/workdir/track/desktop
 
 MOBILE_USER_AGENT = "cypress-mobile"
 MOBILE_TEST_FOLDER = $(abs_srcdir)/integration_tests/mobile
 MOBILE_DATA_FOLDER = $(abs_srcdir)/data/mobile/
-MOBILE_DATA_WORKDIR = $(abs_builddir)/workdir/data/mobile/
-MOBILE_TRACK_FOLDER=$(abs_builddir)/workdir/track/mobile
+MOBILE_DATA_WORKDIR = $(if $(coolwsd),$(MOBILE_DATA_FOLDER),$(abs_builddir)/workdir/data/mobile/)
+MOBILE_TRACK_FOLDER = $(abs_builddir)/workdir/track/mobile
 
 MULTIUSER_TEST_FOLDER = $(abs_srcdir)/integration_tests/multiuser
 MULTIUSER_DATA_FOLDER = $(abs_srcdir)/data/multiuser/
-MULTIUSER_DATA_WORKDIR = $(abs_builddir)/workdir/data/multiuser/
+MULTIUSER_DATA_WORKDIR = $(if $(coolwsd),$(MULTIUSER_DATA_FOLDER),$(abs_builddir)/workdir/data/multiuser/)
 MULTIUSER_TRACK_FOLDER=$(abs_builddir)/workdir/track/multiuser
 
 USER_INTERFACE = classic
