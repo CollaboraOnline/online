@@ -216,10 +216,12 @@ L.Control.MobileTopBar = L.Control.extend({
 					toolbar.disable(id);
 				});
 				toolbar.enable('comment_wizard');
-				toolbar.show('PermissionMode');
-				toolbar.show('after-PermissionMode');
-				$('#tb_actionbar_item_before-PermissionMode').width('50%');
-				$('#tb_actionbar_item_after-PermissionMode').width('50%');
+				if ($('#mobile-edit-button').is(':hidden')) {
+					toolbar.show('PermissionMode');
+					toolbar.show('after-PermissionMode');
+					$('#tb_actionbar_item_before-PermissionMode').width('50%');
+					$('#tb_actionbar_item_after-PermissionMode').width('50%');
+				}
 			}
 		}
 	},
