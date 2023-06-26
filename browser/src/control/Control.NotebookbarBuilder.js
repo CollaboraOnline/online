@@ -599,8 +599,13 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'text': _('CSV File (.csv)')
 				},
 				{
-					'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+					'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
 					'text': _('PDF Document (.pdf)'),
+					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf'
+				},
+				{
+					'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+					'text': _('PDF Document (.pdf) - Expert'),
 					'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf'
 				}
 			];
@@ -623,8 +628,13 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					'text': _('PowerPoint 2003 Presentation (.ppt)')
 				},
 				{
-					'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+					'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
 					'text': _('PDF Document (.pdf)'),
+					'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf'
+				},
+				{
+					'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+					'text': _('PDF Document (.pdf) - Expert'),
 					'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf'
 				}
 			];

@@ -182,21 +182,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'type': 'bigmenubartoolitem',
 				'text': _('Download')
 			});
-
-			if (hasRepair) {
-				content.push({
-					'type': 'container',
-					'children': [
-						{
-							'id': 'repair',
-							'type': 'bigmenubartoolitem',
-							'text': _('Repair'),
-							'command': _('Repair')
-						}
-					],
-					'vertical': 'true'
-				});
-			}
 		} else if (!hideDownload) {
 			content = content.concat([
 				{
@@ -242,23 +227,26 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					'type': 'container',
 					'children': [
 						{
-							'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+							'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
 							'type': 'customtoolitem',
 							'text': _('PDF Document (.pdf)'),
+							'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
+							'inlineLabel': true
+						},
+						{
+							'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+							'type': 'customtoolitem',
+							'text': _('PDF Document (.pdf) - Expert'),
 							'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
 							'inlineLabel': true
 						},
-						hasRepair? {
-							'id': 'repair',
-							'type': 'menubartoolitem',
-							'text': _('Repair'),
-							'command': _('Repair')
-						} : {}
 					],
 					'vertical': 'true'
 				}
 			]);
-		} else if (hasRepair) {
+		}
+
+		if (hasRepair) {
 			content.push({
 				'type': 'container',
 				'children': [
