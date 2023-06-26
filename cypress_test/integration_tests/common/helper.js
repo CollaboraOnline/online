@@ -297,6 +297,7 @@ function waitForInterferingUser() {
 //                  with the username + password only for the first time.
 // noRename - whether or not to give the file a unique name, if noFileCopy is false.
 function loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename) {
+	var server = Cypress.env('SERVER');
 	cy.log('Loading test document - start.');
 	logLoadingParameters(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename);
 
@@ -309,6 +310,9 @@ function loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoa
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
 		loadTestDocNextcloud(fileName, subFolder, subsequentLoad);
 	} else {
+		if (server !== 'localhost') {
+			noFileCopy = noRename = true;
+		}
 		destFileName = loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser, noRename);
 	}
 
