@@ -199,22 +199,38 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'container',
 				'children': [
 					{
-						'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+						'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
 						'type': 'customtoolitem',
 						'text': _('PDF Document (.pdf)'),
+						'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
+						'inlineLabel': true
+					},
+					{
+						'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+						'type': 'customtoolitem',
+						'text': _('PDF Document (.pdf) - Expert'),
 						'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
 						'inlineLabel': true
 					},
-					hasRepair? {
-						'id': 'repair',
-						'type': 'menubartoolitem',
-						'text': _('Repair'),
-						'command': _('Repair')
-					} : {}
 				],
 				'vertical': 'true'
 			}
 		];
+
+
+		if (hasRepair) {
+			content.push({
+				'type': 'container',
+				'children': [
+					{
+						'id': 'repair',
+						'type': 'bigtoolitem',
+						'text': _('Repair'),
+						'command': _('Repair')
+					}
+				]
+			});
+		}
 
 		content.push({
 			'type': 'container',
