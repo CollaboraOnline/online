@@ -2579,7 +2579,7 @@ void COOLWSD::innerInitialize(Application& self)
     setenv("LANGUAGETOOL_USERNAME", userName.c_str(), 1);
     const std::string apiKey = getConfigValue<std::string>(conf, "languagetool.api_key", "");
     setenv("LANGUAGETOOL_APIKEY", apiKey.c_str(), 1);
-    bool sslVerification = getConfigValue<bool>(conf, "languagetool.ssl_verification", "");
+    bool sslVerification = getConfigValue<bool>(conf, "languagetool.ssl_verification", true);
     setenv("LANGUAGETOOL_SSL_VERIFICATION", sslVerification ? "true" : "false", 1);
     const std::string restProtocol = getConfigValue<std::string>(conf, "languagetool.rest_protocol", "");
     setenv("LANGUAGETOOL_RESTPROTOCOL", restProtocol.c_str(), 1);
