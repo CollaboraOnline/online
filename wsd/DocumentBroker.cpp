@@ -1575,21 +1575,17 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
     {
         uploadToStorage(session, /*force=*/false);
     }
-
-    if (!isAsyncUploading())
+    else if (!isAsyncUploading())
     {
-        // If marked to destroy, or session is disconnected, remove.
-        if (_docState.isMarkedToDestroy() || session->isCloseFrame())
-            disconnectSessionInternal(session);
-
-        // If marked to destroy, then this was the last session.
-        if (_docState.isMarkedToDestroy() || _sessions.empty())
+        // If session is disconnected, remove.
+        LOG_TRC("Nothing to upload, disconnecting closed sessions");
+        for (const auto& pair : _sessions)
         {
-            // Stop so we get cleaned up and removed.
-            LOG_DBG("Stopping after saving because "
-                    << (_sessions.empty() ? "there are no active sessions left."
-                                          : "the document is marked to destroy"));
-            stop("unloading");
+            if (pair.second->isCloseFrame() && !pair.second->inWaitDisconnected())
+            {
+                LOG_TRC("Disconnecting session [" << pair.second->getName() << ']');
+                disconnectSessionInternal(pair.second);
+            }
         }
     }
 }
@@ -1958,6 +1954,15 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
                     << (_sessions.empty() ? "there are no active sessions left."
                                           : "the document is marked to destroy."));
             stop("unloading");
+        }
+
+        // After uploading, disconnect the sessions pending disconnection.
+        for (const auto& pair : _sessions)
+        {
+            if (pair.second->isCloseFrame() && !pair.second->inWaitDisconnected())
+            {
+                disconnectSessionInternal(pair.second);
+            }
         }
 
         return;
