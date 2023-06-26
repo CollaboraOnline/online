@@ -1,7 +1,3 @@
-[![Build Status](https://cpci.cbg.collabora.co.uk:8080/view/Gerrit/job/Gerrit%20for%20core%20(co-2021)%20side%20of%20online%20co-21-11/badge/icon?subject=Gerrit%20core%20co-2021)](https://cpci.cbg.collabora.co.uk:8080/view/Gerrit/job/Gerrit%20for%20core%20(co-2021)%20side%20of%20online%20co-21-11/) [![Build Status](https://cpci.cbg.collabora.co.uk:8080/view/Gerrit/job/Gerrit%20for%20core%20(co-22.05)%20side%20of%20online%20master/badge/icon?subject=Gerrit%20core%20co-22.05)](https://cpci.cbg.collabora.co.uk:8080/view/Gerrit/job/Gerrit%20for%20core%20(co-22.05)%20side%20of%20online%20master/)
-
-[![Build Status](https://cpci.cbg.collabora.co.uk:8080/view/Tinderbox/job/Tinderbox%20for%20online%20co-21-11//badge/icon?subject=co-21-11%20vs%20co-2021)](https://cpci.cbg.collabora.co.uk:8080/view/Tinderbox/job/Tinderbox%20for%20online%20co-21-11/)  [![Build Status](https://cpci.cbg.collabora.co.uk:8080/view/Gerrit/job/Tinderbox%20for%20online%20master%20against%20co-22.05/badge/icon?subject=master%20vs%20co-22.05)](https://cpci.cbg.collabora.co.uk:8080/view/Gerrit/job/Tinderbox%20for%20online%20master%20against%20co-22.05/)
-
 <p align="right"><a href="#gitpod"><img alt="Open in Gitpod" src="https://gitpod.io/button/open-in-gitpod.svg"></a></p>
 
 # Collabora Online
