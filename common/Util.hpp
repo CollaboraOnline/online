@@ -280,7 +280,7 @@ namespace Util
     void getVersionInfo(std::string& version, std::string& hash);
 
     ///< A random hex string that identifies the current process.
-    std::string getProcessIdentifier();
+    const std::string& getProcessIdentifier();
 
     std::string getVersionJSON(bool enableExperimental);
 
