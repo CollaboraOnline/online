@@ -68,6 +68,10 @@ L.Control.JSDialog = L.Control.extend({
 			return;
 		}
 
+		var newestDialog = Math.max.apply(null, Object.keys(this.dialogs).map(function(i) { return parseInt(i);}));
+		if (newestDialog > parseInt(id))
+			return;
+
 		this.focusToLastElement(id);
 
 		var builder = this.clearDialog(id);
