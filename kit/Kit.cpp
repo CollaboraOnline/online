@@ -455,18 +455,19 @@ namespace
             {
                 const std::size_t size = sb->st_size;
                 std::vector<char> target(size + 1);
-                const ssize_t written = readlink(fpath, target.data(), size);
+                char* target_data = target.data();
+                const ssize_t written = readlink(fpath, target_data, size);
                 if (written <= 0 || static_cast<std::size_t>(written) > size)
                 {
                     LOG_SYS("nftw: readlink(\"" << fpath << "\") failed");
                     Util::forcedExit(EX_SOFTWARE);
                 }
-                target[written] = '\0';
+                target_data[written] = '\0';
 
                 Poco::File(newPath.parent()).createDirectories();
-                if (symlink(target.data(), newPath.toString().c_str()) == -1)
+                if (symlink(target_data, newPath.toString().c_str()) == -1)
                 {
-                    LOG_SYS("nftw: symlink(\"" << target.data() << "\", \"" << newPath.toString()
+                    LOG_SYS("nftw: symlink(\"" << target_data << "\", \"" << newPath.toString()
                                                << "\") failed");
                     return FTW_STOP;
                 }
