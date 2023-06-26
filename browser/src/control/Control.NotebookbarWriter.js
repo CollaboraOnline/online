@@ -105,6 +105,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var hasSave = !this._map['wopi'].HideSaveOption;
 		var content = [];
 
+		var addRepairToDownloads = hasRepair && !hideDownload;
+		var addRepairToColumn = hasRepair && (hideDownload || hasGroupedDownloadAs);
+
 		if (hasSave) {
 			content.push({
 				'type': 'toolbox',
@@ -236,12 +239,25 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'type': 'container',
 					'children': [
 						{
-							'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+							'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
 							'type': 'customtoolitem',
 							'text': _('PDF Document (.pdf)'),
+							'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
+							'inlineLabel': true
+						},
+						{
+							'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+							'type': 'customtoolitem',
+							'text': _('PDF Document (.pdf) - Expert'),
 							'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
 							'inlineLabel': true
 						},
+					],
+					'vertical': 'true'
+				},
+				{
+					'type': 'container',
+					'children': [
 						{
 							'id': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub',
 							'type': 'customtoolitem',
@@ -249,24 +265,32 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'command': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub',
 							'inlineLabel': true
 						},
+						addRepairToDownloads? {
+							'id': 'repair',
+							'type': 'menubartoolitem',
+							'text': _('Repair'),
+							'command': _('Repair')
+						} : {}
 					],
 					'vertical': 'true'
 				}
 			]);
 		}
 
-		content.push({
-			'type': 'container',
-			'children': [
-				hasRepair? {
-					'id': 'repair',
-					'type': 'bigmenubartoolitem',
-					'text': _('Repair'),
-					'command': _('Repair')
-				} : {},
-			],
-			'vertical': 'true'
-		});
+		if (addRepairToColumn) {
+			content.push({
+				'type': 'container',
+				'children': [
+					{
+						'id': 'repair',
+						'type': 'bigmenubartoolitem',
+						'text': _('Repair'),
+						'command': _('Repair')
+					}
+				],
+				'vertical': 'true'
+			});
+		}
 
 		content.push({
 			'type': 'container',
