@@ -74,12 +74,12 @@ public:
         LOG_TST("getClipboard: sent request: " << clipURI.getPathAndQuery());
 
         try {
-            std::istringstream responseStream(httpResponse->getBody());
-            LOG_TST("getClipboard: HTTP get request returned reason: " << httpResponse->statusLine().reasonPhrase());
+            LOG_TST("getClipboard: HTTP get request returned: "
+                    << httpResponse->statusLine().statusCode());
 
             if (httpResponse->statusLine().statusCode() != expected)
             {
-                LOK_ASSERT_EQUAL_MESSAGE("clipboard status mismatches expected", expected,
+                LOK_ASSERT_EQUAL_MESSAGE("clipboard status mismatches", expected,
                                          httpResponse->statusLine().statusCode());
                 exitTest(TestResult::Failed);
                 return std::shared_ptr<ClipboardData>();
@@ -89,6 +89,7 @@ public:
                                      std::string("application/octet-stream"),
                                      httpResponse->header().getContentType());
 
+            std::istringstream responseStream(httpResponse->getBody());
             auto clipboard = std::make_shared<ClipboardData>();
             clipboard->read(responseStream);
             std::ostringstream oss;
