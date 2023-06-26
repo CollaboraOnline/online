@@ -383,7 +383,7 @@ void DocumentBroker::pollThread()
             refreshLock();
 #endif
 
-        LOG_TRC("Poll: current activity: " << DocumentState::toString(_docState.activity()));
+        LOG_TRC("Poll: current activity: " << DocumentState::name(_docState.activity()));
         switch (_docState.activity())
         {
             case DocumentState::Activity::None:
@@ -1447,16 +1447,16 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
     _saveManager.setLastSaveResult(success || result == "unmodified");
 
     if (success)
-        LOG_DBG("Save result from Core: saved (during "
-                << DocumentState::toString(_docState.activity()) << ") in "
-                << _saveManager.lastSaveDuration());
+        LOG_DBG("Save result from Core: saved (during " << DocumentState::name(_docState.activity())
+                                                        << ") in "
+                                                        << _saveManager.lastSaveDuration());
     else if (result == "unmodified")
         LOG_DBG("Save result from Core: unmodified (during "
-                << DocumentState::toString(_docState.activity()) << ") in "
+                << DocumentState::name(_docState.activity()) << ") in "
                 << _saveManager.lastSaveDuration());
     else // Failure with error.
         LOG_WRN("Save result from Core (failure): " << result << " (during "
-                                                    << DocumentState::toString(_docState.activity())
+                                                    << DocumentState::name(_docState.activity())
                                                     << ") in " << _saveManager.lastSaveDuration());
 
 #if !MOBILEAPP
@@ -1510,6 +1510,10 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
 
     // See if we have anything to upload.
     const NeedToUpload needToUploadState = needToUploadToStorage();
+
+    LOG_TRC("checkAndUploadToStorage with session ["
+            << session->getId() << ", activity: " << DocumentState::name(_docState.activity())
+            << ", needToUpload: " << name(needToUploadState));
 
     // Handle activity-specific logic.
     switch (_docState.activity())
@@ -1711,13 +1715,13 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
         {
             case StorageBase::AsyncUpload::State::Running:
                 LOG_TRC("Async upload of [" << _docKey << "] is in progress during "
-                                            << DocumentState::toString(_docState.activity()));
+                                            << DocumentState::name(_docState.activity()));
                 return;
 
             case StorageBase::AsyncUpload::State::Complete:
             {
                 LOG_TRC("Finished uploading [" << _docKey << "] during "
-                                               << DocumentState::toString(_docState.activity())
+                                               << DocumentState::name(_docState.activity())
                                                << ", processing results.");
                 return handleUploadToStorageResponse(asyncUp.result());
             }
@@ -1729,7 +1733,7 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
         }
 
         LOG_WRN("Failed to upload [" << _docKey << "] asynchronously. "
-                                     << DocumentState::toString(_docState.activity()));
+                                     << DocumentState::name(_docState.activity()));
         _storageManager.setLastUploadResult(false);
 
         switch (_docState.activity())
@@ -1835,7 +1839,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
                     << _docKey << "] to URI [" << _uploadRequest->uriAnonym()
                     << "] and updated timestamps. Document modified timestamp: "
                     << _storageManager.getLastModifiedTime()
-                    << ". Current Activity: " << DocumentState::toString(_docState.activity()));
+                    << ". Current Activity: " << DocumentState::name(_docState.activity()));
 
             // Handle activity-specific logic.
             switch (_docState.activity())
@@ -2201,7 +2205,6 @@ bool DocumentBroker::manualSave(const std::shared_ptr<ClientSession>& session,
 {
     // If we aren't saving already.
     if (_docState.activity() != DocumentState::Activity::Save)
-
     {
         LOG_DBG("Manual save by " << session->getName() << " on docKey [" << _docKey << ']');
         return sendUnoSave(session, dontTerminateEdit, dontSaveIfUnmodified,
@@ -2706,7 +2709,8 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
 
         LOG_TRC("Disconnect session internal "
                 << id << ", LastEditableSession: " << lastEditableSession << " destroy? "
-                << _docState.isMarkedToDestroy() << " locked? " << _lockCtx->_isLocked);
+                << _docState.isMarkedToDestroy() << " locked? " << _lockCtx->_isLocked << ", have "
+                << _sessions.size() << " sessions (inclusive)");
 
         // Unlock the document, if last editable sessions, before we lose a token that can unlock.
         std::string error;
