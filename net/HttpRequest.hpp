@@ -1388,7 +1388,7 @@ private:
             }
 
             LOG_TRC("HandleIncomingMessage: buffer has:\n"
-                    << Util::dumpHex(std::string(data.data(), std::min(data.size(), 256UL))));
+                    << Util::dumpHex(std::string(data.data(), std::min<size_t>(data.size(), 256UL))));
 
             const int64_t read = _response->readData(data.data(), data.size());
             if (read >= 0)
