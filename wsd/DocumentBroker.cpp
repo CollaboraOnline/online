@@ -3020,7 +3020,7 @@ void DocumentBroker::handleTileRequest(const StringVector &tokens, bool forceKey
     Tile cachedTile = _tileCache->lookupTile(tile);
     if (cachedTile && cachedTile->isValid())
     {
-        session->sendTile(tile, cachedTile);
+        session->sendTileNow(tile, cachedTile);
         return;
     }
 
@@ -3312,7 +3312,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
             if (cachedTile && cachedTile->isValid())
             {
                 // TODO: Combine the response to reduce latency.
-                session->sendTile(tile, cachedTile);
+                session->sendTileNow(tile, cachedTile);
             }
             else
             {
