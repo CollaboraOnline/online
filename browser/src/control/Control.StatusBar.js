@@ -16,6 +16,7 @@ L.Control.StatusBar = L.Control.extend({
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
 		map.on('contextchange', this.onContextChange, this);
 		map.on('updatepermission', this.onPermissionChanged, this);
+		map.on('updatestatepagenumber', this.onPageChange, this);
 		this.create();
 
 		$(window).resize(function() {
@@ -176,7 +177,12 @@ L.Control.StatusBar = L.Control.extend({
 			this.map.fire('morelanguages', { applyto: 'all' });
 		}
 	},
-
+	onPageChange: function(e) {
+		var statusbar = w2ui['actionbar'];
+		var state = e.state;
+		state = this.toLocalePattern('Page %1 of %2', 'Page (\\d+) of (\\d+)', state, '%1', '%2');
+		this.updateToolbarItem(statusbar, 'StatePageNumber', $('#StatePageNumber').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
+	},
 	create: function() {
 		var toolbar = $('#toolbar-down');
 		var that = this;
@@ -535,8 +541,7 @@ L.Control.StatusBar = L.Control.extend({
 			}
 		}
 		else if (commandName === '.uno:StatePageNumber') {
-			state = this.toLocalePattern('Page %1 of %2', 'Page (\\d+) of (\\d+)', state, '%1', '%2');
-			this.updateToolbarItem(statusbar, 'StatePageNumber', $('#StatePageNumber').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
+			this.onPageChange(e);
 		}
 		else if (commandName === '.uno:StateWordCount') {
 			state = this.toLocalePattern('%1 words, %2 characters', '([\\d,]+) words, ([\\d,]+) characters', state, '%1', '%2');
