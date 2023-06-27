@@ -146,7 +146,8 @@ class DeltaGenerator {
         // Create a diff from our state to new state in curRow
         void diffRowTo(const DeltaBitmapRow &curRow,
                        const int width, const int curY,
-                       std::vector<uint8_t> &output) const
+                       std::vector<uint8_t> &output,
+                       LibreOfficeKitTileMode mode) const
         {
             PixIterator oldPixels(*this);
             PixIterator curPixels(curRow);
@@ -188,7 +189,7 @@ class DeltaGenerator {
 
                     copy_row(reinterpret_cast<unsigned char *>(&output[dest]),
                               (const unsigned char *)(scratch),
-                              diff);
+                              diff, mode);
 
                     LOG_TRC("row " << curY << " different " << diff << "pixels");
                     x += diff;
@@ -352,15 +353,26 @@ class DeltaGenerator {
     }
 
     static void
-    copy_row (unsigned char *dest, const unsigned char *srcBytes, unsigned int count)
+    copy_row (unsigned char *dest, const unsigned char *srcBytes, unsigned int count, LibreOfficeKitTileMode mode)
     {
-        std::memcpy(dest, srcBytes, count * 4);
+        switch (mode)
+        {
+            case LOK_TILEMODE_RGBA:
+                std::memcpy(dest, srcBytes, count * 4);
+                break;
+            case LOK_TILEMODE_BGRA:
+                std::memcpy(dest, srcBytes, count * 4);
+                for (size_t j = 0; j < count * 4; j += 4)
+                    std::swap(dest[j], dest[j+2]);
+                break;
+        }
     }
 
     bool makeDelta(
         const DeltaData &prev,
         const DeltaData &cur,
-        std::vector<char>& outStream)
+        std::vector<char>& outStream,
+        LibreOfficeKitTileMode mode)
     {
         // TODO: should we split and compress alpha separately ?
         if (prev.getWidth() != cur.getWidth() || prev.getHeight() != cur.getHeight())
@@ -430,7 +442,7 @@ class DeltaGenerator {
                 continue;
 
             // Our row is just that different:
-            prev.getRow(y).diffRowTo(cur.getRow(y), prev.getWidth(), y, output);
+            prev.getRow(y).diffRowTo(cur.getRow(y), prev.getWidth(), y, output, mode);
         }
         LOG_TRC("Created delta of size " << output.size());
         if (output.empty())
@@ -520,7 +532,8 @@ class DeltaGenerator {
         int bufferWidth, int bufferHeight,
         const TileLocation &loc,
         std::vector<char>& output,
-        TileWireId wid, bool forceKeyframe)
+        TileWireId wid, bool forceKeyframe,
+        LibreOfficeKitTileMode mode)
     {
         if ((width & 0x1) != 0) // power of two - RGBA
         {
@@ -557,7 +570,7 @@ class DeltaGenerator {
 
         bool delta = false;
         if (!forceKeyframe)
-            delta = makeDelta(*cacheEntry, *update, output);
+            delta = makeDelta(*cacheEntry, *update, output, mode);
 
         // no two threads can be working on the same DeltaData.
         cacheEntry->replaceAndFree(update);
@@ -629,7 +642,7 @@ class DeltaGenerator {
 
         if (!createDelta(pixmap, startX, startY, width, height,
                          bufferWidth, bufferHeight,
-                         loc, output, wid, forceKeyframe))
+                         loc, output, wid, forceKeyframe, mode))
         {
             // FIXME: should stream it in =)
             size_t maxCompressed = ZSTD_COMPRESSBOUND((size_t)width * height * 4);
@@ -655,7 +668,7 @@ class DeltaGenerator {
             // FIXME: should we RLE in pixels first ?
             for (int y = 0; y < height; ++y)
             {
-                copy_row(fixedupLine, pixmap + ((startY + y) * bufferWidth * 4) + (startX * 4), width);
+                copy_row(fixedupLine, pixmap + ((startY + y) * bufferWidth * 4) + (startX * 4), width, mode);
 
                 ZSTD_inBuffer inb;
                 inb.src = fixedupLine;
