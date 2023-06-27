@@ -529,7 +529,13 @@ delta: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=
     A delta command is like a tile: command but the payload is purely
     an incremental patch on top of a previous tile.
 
+update: <as delta>
+
+    An update command simply informs the client of any updated wid
+    ie. this tile was re-rendered and returned an empty delta.
+
 commandresult: <payload>
+
     This is used to acknowledge the commands from the client.
     <payload> is { command: <command name>, success: 'true' }
 

@@ -1523,7 +1523,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onMessage: function (textMsg, img) {
 		this._saveMessageForReplay(textMsg);
 		// 'tile:' is the most common message type; keep this the first.
-		if (textMsg.startsWith('tile:') || textMsg.startsWith('delta:')) {
+		if (textMsg.startsWith('tile:') || textMsg.startsWith('delta:') ||
+		    textMsg.startsWith('update:')) {
 			this._onTileMsg(textMsg, img);
 		}
 		else if (textMsg.startsWith('commandvalues:')) {
@@ -7069,16 +7070,20 @@ L.CanvasTileLayer = L.Layer.extend({
 			tile.el.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5QEIChoQ0oROpwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACfklEQVR42u3dO67CQBBFwbnI+9/yJbCQLDIkPsZdFRAQjjiv3S8YZ63VNsl6aLvgop5+6vFzZ3QP/uQz2c0RIAAQAAzcASwAmAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACADGBnC8iQ5MABAACAB+zsVYjLZ9dOvd3zzg/QOYADByB/BvUCzBIAAQAFiCwQQAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAwIgAXb2ECgABAAPDaI7SLsZhs+79kvX8AEwDsAM8DASzBIAAQAFiCwQQAAYAAQAAgABAAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAI4LSSOAQBgABAAPDVR9C2ToGxNkfww623bZL98/ilUzIBwA4wbCAgABAACAAswWACgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAAAjAESAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAGAAEAAIAAQAAgABAACAAGAAEAAIAAQAAgAPiaJAEAAIAB48yNWW6fAWJsj4LRbb9sk++fxSxMA7AAMGwgCAAGAAMASDCYACAAEAAIAAYAAQAAgABAACAAEAAIAASAAR4AAQAAgABAACAAEANeW9e675sAEAAGAAODUO4AFgMnu7t9h2ahA0pgAAAAASUVORK5CYII=';
 		}
 		else */
-		this._applyDelta(tile, img.rawData, img.isKeyframe);
-		this._tileReady(coords);
-
 		L.Log.log(textMsg, 'INCOMING', key);
 
-		// Queue acknowledgment, that the tile message arrived
-		var mode = (tileMsgObj.mode !== undefined) ? tileMsgObj.mode : 0;
-		var tileID = tileMsgObj.part + ':' + mode + ':' + tileMsgObj.x + ':' + tileMsgObj.y + ':'
-			+ tileMsgObj.tileWidth + ':' + tileMsgObj.tileHeight + ':' + tileMsgObj.nviewid;
-		this._queuedProcessed.push(tileID);
+		// updates don't need more chattiness with a tileprocessed
+		if (!textMsg.startsWith('update:'))
+		{
+			this._applyDelta(tile, img.rawData, img.isKeyframe);
+			this._tileReady(coords);
+
+			// Queue acknowledgment, that the tile message arrived
+			var mode = (tileMsgObj.mode !== undefined) ? tileMsgObj.mode : 0;
+			var tileID = tileMsgObj.part + ':' + mode + ':' + tileMsgObj.x + ':' + tileMsgObj.y + ':'
+			    + tileMsgObj.tileWidth + ':' + tileMsgObj.tileHeight + ':' + tileMsgObj.nviewid;
+			this._queuedProcessed.push(tileID);
+		}
 	},
 
 	_sendProcessedResponse: function() {

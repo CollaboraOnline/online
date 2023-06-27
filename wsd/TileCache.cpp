@@ -188,11 +188,23 @@ void TileCache::saveTileAndNotify(const TileDesc& desc, const char *data, const 
     {
         LOG_TRC("Zero sized cache tile: " << cacheFileName(desc));
 
-        // un-subscribe subscribers, if any.
         if (tileBeingRendered)
         {
+            const size_t subscriberCount = tileBeingRendered->getSubscribers().size();
+
+            // notify that the tile was re-rendered, with no change.
+            for (size_t i = 0; i < subscriberCount; ++i)
+            {
+                auto& subscriber = tileBeingRendered->getSubscribers()[i];
+                std::shared_ptr<ClientSession> session = subscriber.lock();
+                if (session)
+                    session->sendUpdateNow(desc);
+            }
+
             LOG_DBG("STATISTICS: tile " << desc.getVersion() << " internal roundtrip to empty tile " <<
                     tileBeingRendered->getElapsedTimeMs());
+
+            // un-subscribe subscribers, if any.
             forgetTileBeingRendered(desc, tileBeingRendered);
         }
         return;
