@@ -95,7 +95,7 @@ public:
         _tracker.resetTileSeq(desc);
     }
 
-    bool sendTile(const TileDesc &desc, const Tile &tile)
+    bool sendTileNow(const TileDesc &desc, const Tile &tile)
     {
         TileWireId lastSentId = _tracker.updateTileSeq(desc);
 
