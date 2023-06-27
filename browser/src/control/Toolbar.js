@@ -663,7 +663,10 @@ L.Map.include({
 		form.querySelector('#coolwsd-version').querySelector('a').focus();
 		var copyversion = L.DomUtil.create('button', 'ui-pushbutton jsdialog', null);
 		copyversion.setAttribute('id', 'modal-dialog-about-dialog-box-copybutton');
-		copyversion.innerHTML = 'Copy version';
+		copyversion.setAttribute('title', _('Copy all version information in English'));
+		var img = L.DomUtil.create('img', null, null);
+		L.LOUtil.setImage(img, 'lc_copy.svg', this._docLayer._docType);
+		copyversion.innerHTML = '<img src="' + img.src +'" width="18px" height="18px">';
 		copyversion.addEventListener('click', this.copyVersionInfoToClipboard.bind(this));
 		var aboutok = document.getElementById('modal-dialog-about-dialog-box-yesbutton');
 		if (aboutok) {
@@ -685,9 +688,9 @@ L.Map.include({
 
 	copyVersionInfoToClipboard: function() {
 		var text = 'COOLWSD version: ' + this.getVersionInfoFromClass('coolwsd-version') + '\n';
-		text += 'LOkit version: ' + this.getVersionInfoFromClass('lokit-version') + '\n';
+		text += 'LOKit version: ' + this.getVersionInfoFromClass('lokit-version') + '\n';
 		text += 'Served by: ' + document.getElementById('os-info').innerText + '\n';
-		text += 'coolwsd id: ' + document.getElementById('coolwsd-id').innerText + '\n';
+		text += 'Server ID: ' + document.getElementById('coolwsd-id').innerText + '\n';
 
 		navigator.clipboard.writeText(text)
 		.then(function() {
