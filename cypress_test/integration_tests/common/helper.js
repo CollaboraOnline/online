@@ -23,7 +23,7 @@ function copyFile(fileName, newFileName, subFolder) {
 function getRandomFileName(noRename, noFileCopy, originalName) {
 	if (noRename !== true && noFileCopy !== true) {
 		var randomName = (Math.random() + 1).toString(36).substring(7);
-		return randomName + '_' + originalName;
+		return Cypress.currentTest.title.replace(/[\/\\ ]/g, '-') + '-'+ randomName + '-' + originalName;
 	}
 	else {
 		return originalName;
