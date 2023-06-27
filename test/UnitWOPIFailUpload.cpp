@@ -309,7 +309,7 @@ public:
     void configCheckFileInfo(const Poco::Net::HTTPRequest& /*request*/,
                              Poco::JSON::Object::Ptr fileInfo) override
     {
-        LOG_TST("CheckFileInfo: making read-only");
+        LOG_TST("CheckFileInfo: making read-only for " << name(_scenario));
 
         fileInfo->set("UserCanWrite", "false");
         fileInfo->set("UserCanNotWriteRelative", "true");
