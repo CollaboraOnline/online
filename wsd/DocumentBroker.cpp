@@ -535,17 +535,22 @@ void DocumentBroker::pollThread()
     // Check for data-loss.
     std::string reason;
     bool dataLoss = false;
-    if (isModified() || isStorageOutdated())
+    if (haveModifyActivityAfterSaveRequest() || !_saveManager.lastSaveSuccessful() ||
+        !_storageManager.lastUploadSuccessful() || isStorageOutdated())
     {
         // If we are exiting because the owner discarded conflict changes, don't detect data loss.
         if (!(_docState.isCloseRequested() && _documentChangedInStorage))
         {
             dataLoss = true;
-            reason = isModified() ? "flagged as modified" : "not uploaded to storage";
+            if (haveModifyActivityAfterSaveRequest())
+                reason = "have unsaved modifications";
+            else
+                reason = !_saveManager.lastSaveSuccessful() ? "flagged as modified"
+                                                            : "not uploaded to storage";
 
             // The test may override (if it was expected).
-            if (_unitWsd &&
-                !_unitWsd->onDataLoss("Data-loss detected while exiting [" + _docKey + ']'))
+            if (_unitWsd && !_unitWsd->onDataLoss("Data-loss detected while exiting [" + _docKey +
+                                                  "]: " + reason))
                 reason.clear();
         }
     }
