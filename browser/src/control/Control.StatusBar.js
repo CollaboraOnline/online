@@ -289,6 +289,7 @@ L.Control.StatusBar = L.Control.extend({
 		var statusbar = w2ui['actionbar'];
 		var docType = this.map.getDocType();
 		var isReadOnly = this.map.isReadOnlyMode();
+		var canUserWrite = this.map.canUserWrite();
 
 		switch (docType) {
 		case 'spreadsheet':
@@ -341,7 +342,7 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'break', id: 'break9', mobile: false},
 					{
 						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
-						html: this._getPermissionModeHtml(isReadOnly)
+						html: this._getPermissionModeHtml(isReadOnly, canUserWrite)
 					}
 				]);
 			}
@@ -377,7 +378,7 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'break', id: 'break8', mobile: false},
 					{
 						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
-						html: this._getPermissionModeHtml(isReadOnly)
+						html: this._getPermissionModeHtml(isReadOnly, canUserWrite)
 					}
 				]);
 			}
@@ -398,7 +399,7 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'break', id: 'break8', mobile: false},
 					{
 						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
-						html: this._getPermissionModeHtml(isReadOnly)
+						html: this._getPermissionModeHtml(isReadOnly, canUserWrite)
 					}
 				]);
 			}
@@ -418,7 +419,7 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'break', id: 'break8', mobile: false},
 					{
 						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
-						html: this._getPermissionModeHtml(isReadOnly)
+						html: this._getPermissionModeHtml(isReadOnly, canUserWrite)
 					}
 				]);
 			}
@@ -456,11 +457,16 @@ L.Control.StatusBar = L.Control.extend({
 		this.map._onGotFocus();
 	},
 
-	_getPermissionModeHtml: function(isReadOnly) {
-		return '<div id="PermissionMode" class="cool-font ' +
-			(isReadOnly
-				? ' status-readonly-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Read-only') + ' </div>'
-				: ' status-edit-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Edit') + ' </div>');
+	_getPermissionModeHtml: function(isReadOnly, canUserWrite) {
+		var permissionModeDiv = '<div id="PermissionMode" class="cool-font ';
+		if (isReadOnly && !canUserWrite) {
+			permissionModeDiv += ' status-readonly-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Read-only') + ' </div>';
+		} else if (isReadOnly && canUserWrite) {
+			permissionModeDiv += ' status-readonly-transient-mode" style="display: none;"></div>';
+		} else {
+			permissionModeDiv += ' status-edit-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Edit') + ' </div>';
+		}
+		return permissionModeDiv;
 	},
 
 	onPermissionChanged: function(event) {
@@ -470,7 +476,7 @@ L.Control.StatusBar = L.Control.extend({
 		} else {
 			$('#toolbar-down').removeClass('readonly');
 		}
-		$('#PermissionMode').parent().html(this._getPermissionModeHtml(isReadOnly));
+		$('#PermissionMode').parent().html(this._getPermissionModeHtml(isReadOnly, this.map.canUserWrite()));
 	},
 
 	onCommandStateChanged: function(e) {
