@@ -129,6 +129,6 @@ L.Map.Welcome = L.Handler.extend({
 	}
 });
 
-if (window.enableWelcomeMessage && window.isLocalStorageAllowed) {
+if (!L.Browser.cypressTest && window.enableWelcomeMessage && window.isLocalStorageAllowed) {
 	L.Map.addInitHook('addHandler', 'welcome', L.Map.Welcome);
 }
