@@ -80,9 +80,9 @@ extern "C"
 }
 
 
-/* Unpremultiplies data and converts native endian ARGB => RGBA bytes */
+/* Unpremultiplies data and converts native endian BGRA => RGBA bytes */
 static void
-unpremultiply_data (png_structp /*png*/, png_row_infop row_info, png_bytep data)
+unpremultiply_bgra_data (png_structp /*png*/, png_row_infop row_info, png_bytep data)
 {
     unsigned int i;
 
@@ -115,6 +115,40 @@ unpremultiply_data (png_structp /*png*/, png_row_infop row_info, png_bytep data)
         }
     }
 }
+
+/* Unpremultiplies data already in RGBA order*/
+static void
+unpremultiply_rgba_data (png_structp /*png*/, png_row_infop row_info, png_bytep data)
+{
+    unsigned int i;
+
+    for (i = 0; i < row_info->rowbytes; i += 4)
+    {
+        uint8_t *b = &data[i];
+        uint32_t pix;
+        uint8_t  alpha;
+
+        std::memcpy (&pix, b, sizeof (uint32_t));
+
+        alpha = (pix & 0xff000000) >> 24;
+        if (alpha == 255)
+        {
+            std::memcpy(b, &pix, sizeof (uint32_t));
+        }
+        else if (alpha == 0)
+        {
+            b[0] = b[1] = b[2] = b[3] = 0;
+        }
+        else
+        {
+            b[0] = (((pix & 0x0000ff) >>  0) * 255 + alpha / 2) / alpha;
+            b[1] = (((pix & 0x00ff00) >>  8) * 255 + alpha / 2) / alpha;
+            b[2] = (((pix & 0xff0000) >> 16) * 255 + alpha / 2) / alpha;
+            b[3] = alpha;
+        }
+    }
+}
+
 
 /// This function uses setjmp which may clobbers non-trivial objects.
 /// So we can't use logging or create complex C++ objects in this frame.
@@ -161,9 +195,14 @@ inline bool impl_encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size
 
     png_write_info(png_ptr, info_ptr);
 
-    if (mode == LOK_TILEMODE_BGRA)
+    switch (mode)
     {
-        png_set_write_user_transform_fn (png_ptr, unpremultiply_data);
+        case LOK_TILEMODE_BGRA:
+            png_set_write_user_transform_fn (png_ptr, unpremultiply_bgra_data);
+            break;
+        case LOK_TILEMODE_RGBA:
+            png_set_write_user_transform_fn (png_ptr, unpremultiply_rgba_data);
+            break;
     }
 
     for (int y = 0; y < height; ++y)
