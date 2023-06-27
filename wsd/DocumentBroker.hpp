@@ -322,7 +322,7 @@ public:
     /// @param dontSaveIfUnmodified when true, save will fail if the document is not modified.
     /// @return true if attempts to save or it also waits
     /// and receives save notification. Otherwise, false.
-    bool autoSave(const bool force, const bool dontSaveIfUnmodified = true);
+    bool autoSave(const bool force, const bool dontSaveIfUnmodified);
 
     /// Saves the document and stops if there was nothing to autosave.
     void autoSaveAndStop(const std::string& reason);

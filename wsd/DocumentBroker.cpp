@@ -447,8 +447,8 @@ void DocumentBroker::pollThread()
                 }
                 else if (!_stop && _saveManager.needAutoSaveCheck())
                 {
-                    LOG_TRC("Triggering an autosave.");
-                    autoSave(false);
+                    LOG_TRC("Triggering an autosave by timer");
+                    autoSave(/*force=*/false, /*dontSaveIfUnmodified=*/true);
                 }
                 else if (!isAsyncUploading() && !_storageManager.lastUploadSuccessful() &&
                          needToUploadToStorage() != NeedToUpload::No)
@@ -470,14 +470,14 @@ void DocumentBroker::pollThread()
                 {
                     // We will never save. No need to wait for timeout.
                     LOG_DBG("Doc disconnected while saving. Ending save activity.");
-                    _saveManager.setLastSaveResult(false);
+                    _saveManager.setLastSaveResult(/*success=*/false);
                     endActivity();
                 }
                 else
                 if (_saveManager.hasSavingTimedOut())
                 {
                     LOG_DBG("Saving timedout. Ending save activity.");
-                    _saveManager.setLastSaveResult(false);
+                    _saveManager.setLastSaveResult(/*success=*/false);
                     endActivity();
                 }
             }
@@ -2395,7 +2395,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
                               << "] before terminating. isPossiblyModified: "
                               << (possiblyModified ? "yes" : "no")
                               << ", conflict: " << (_documentChangedInStorage ? "yes" : "no"));
-        if (!autoSave(possiblyModified))
+        if (!autoSave(/*force=*/possiblyModified, /*dontSaveIfUnmodified=*/true))
         {
             // Nothing to save. Try to upload if necessary.
             const auto session = getWriteableSession();
@@ -2656,7 +2656,8 @@ std::size_t DocumentBroker::removeSession(const std::shared_ptr<ClientSession>& 
         // If last editable, save (if not saving already) and
         // don't remove until after uploading to storage.
         if (!lastEditableSession ||
-            (!_saveManager.isSaving() && !autoSave(isPossiblyModified(), dontSaveIfUnmodified)))
+            (!_saveManager.isSaving() &&
+             !autoSave(/*force=*/isPossiblyModified(), dontSaveIfUnmodified)))
         {
             disconnectSessionInternal(session);
         }
