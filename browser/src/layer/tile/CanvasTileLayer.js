@@ -6786,13 +6786,14 @@ L.CanvasTileLayer = L.Layer.extend({
 			window.app.console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
 					       ' of length ' + rawDelta.length + ' hex: ' + hex2string(rawDelta));
 
+		tile.lastKeyframe = isKeyframe;
+
 		if (rawDelta.length === 0)
 			return; // that was easy!
 
 		var traceEvent = app.socket.createCompleteTraceEvent('L.CanvasTileLayer.applyDelta',
 								     { keyFrame: isKeyframe, length: rawDelta.length });
 
-		tile.lastKeyframe = isKeyframe;
 
 		// store the compressed version for later in its current
 		// form as byte arrays, so that we can manage our canvases
@@ -7063,8 +7064,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 		}
 		this._showDebugForTile(key);
-
-		tile.lastKeyframe = false;
 
 /*		if (this._map._canvasDevicePixelGrid)
 		{
