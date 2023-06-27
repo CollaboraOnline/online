@@ -95,6 +95,15 @@ public:
         _tracker.resetTileSeq(desc);
     }
 
+    // no tile data - just notify the client the ids/versions updated
+    bool sendUpdateNow(const TileDesc &desc)
+    {
+        TileWireId lastSentId = _tracker.updateTileSeq(desc);
+        std::string header = desc.serialize("tile:", "\n");
+        LOG_TRC("Sending update from " << lastSentId << " to " << header);
+        return sendTextFrame(header.data(), header.size());
+    }
+
     bool sendTileNow(const TileDesc &desc, const Tile &tile)
     {
         TileWireId lastSentId = _tracker.updateTileSeq(desc);
