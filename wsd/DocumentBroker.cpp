@@ -457,7 +457,7 @@ void DocumentBroker::pollThread()
                     const auto session = getWriteableSession();
                     if (session && !session->getAuthorization().isExpired())
                     {
-                        checkAndUploadToStorage(session);
+                        checkAndUploadToStorage(session, /*justSaved=*/false);
                     }
                 }
             }
@@ -1503,21 +1503,23 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
         broadcastSaveResult(false, "Could not save the document");
     }
 
-    checkAndUploadToStorage(session);
+    checkAndUploadToStorage(session, /*justSaved=*/success || result == "unmodified");
 }
 
 // This is called when either we just got save response, or,
 // there was nothing to save and want to check for uploading.
-void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession>& session)
+void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession>& session,
+                                             bool justSaved)
 {
     const std::string sessionId = session->getId();
-    LOG_TRC("checkAndUploadToStorage with session " << sessionId);
+    LOG_TRC("checkAndUploadToStorage with session [" << sessionId << "], justSaved: " << justSaved);
 
     // See if we have anything to upload.
     const NeedToUpload needToUploadState = needToUploadToStorage();
 
     LOG_TRC("checkAndUploadToStorage with session ["
-            << session->getId() << ", activity: " << DocumentState::name(_docState.activity())
+            << session->getId() << "], justSaved: " << justSaved
+            << ", activity: " << DocumentState::name(_docState.activity())
             << ", needToUpload: " << name(needToUploadState));
 
     // Handle activity-specific logic.
@@ -1564,7 +1566,11 @@ void DocumentBroker::checkAndUploadToStorage(const std::shared_ptr<ClientSession
 
 #if !MOBILEAPP
     // Avoid multiple uploads during unloading if we know we need to save a new version.
-    if (_docState.isUnloadRequested() && needToSaveToDisk() != NeedToSave::No)
+    const bool unloading = isUnloading();
+    const bool modified =
+        justSaved ? haveModifyActivityAfterSaveRequest() : needToSaveToDisk() != NeedToSave::No;
+
+    if (modified && unloading)
     {
         // We are unloading but have possible modifications. Save again (done in poll).
         LOG_DBG("Document [" << getDocKey()
@@ -2411,7 +2417,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
             const auto session = getWriteableSession();
             if (session && !session->getAuthorization().isExpired())
             {
-                checkAndUploadToStorage(session);
+                checkAndUploadToStorage(session, /*justSaved=*/false);
                 if (isAsyncUploading())
                 {
                     LOG_DBG("Uploading document before stopping.");

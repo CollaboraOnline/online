@@ -297,7 +297,7 @@ public:
 
     /// Check if uploading is needed, and start uploading.
     /// The current state of uploading must be introspected separately.
-    void checkAndUploadToStorage(const std::shared_ptr<ClientSession>& session);
+    void checkAndUploadToStorage(const std::shared_ptr<ClientSession>& session, bool justSaved);
 
     /// Upload the document to Storage if it needs persisting.
     /// Results are logged and broadcast to users.
