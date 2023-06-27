@@ -162,14 +162,14 @@ public:
     }
 };
 
-/// Test Async uploading with always_save_on_exit.
-/// The test verifies the headers only.
-/// Load, Save, Upload -> verify IsModifiedByUser=false.
+/// Test upload behavior with always_save_on_exit.
+/// The test verifies that an unmodified document
+/// is *not* uploaded when always_save_on_exit=true.
 class UnitSaveOnExitUnmodified : public WopiTestServer
 {
     using Base = WopiTestServer;
 
-    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitPutFile, WaitDestroy, Done)
+    STATE_ENUM(Phase, Load, WaitLoadStatus, WaitDestroy, Done)
     _phase;
 
 public:
@@ -188,23 +188,11 @@ public:
     }
 
     std::unique_ptr<http::Response>
-    assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
+    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
         LOG_TST("Checking X-COOL-WOPI headers");
 
-        // No modifications.
-        LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsModifiedByUser"));
-        LOK_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
-
-        // Closing, no auto-save expected.
-        LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
-        LOK_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsAutosave"));
-
-        // Exiting, certainly.
-        LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsExitSave"));
-        LOK_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsExitSave"));
-
-        TRANSITION_STATE(_phase, Phase::WaitDestroy);
+        failTest("Unexpected PutFile on unmodified document");
         return nullptr;
     }
 
@@ -214,7 +202,7 @@ public:
         LOG_TST("onDocumentLoaded: [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
-        TRANSITION_STATE(_phase, Phase::WaitPutFile);
+        TRANSITION_STATE(_phase, Phase::WaitDestroy);
         WSD_CMD("closedocument");
 
         return true;
@@ -253,7 +241,6 @@ public:
                 break;
             }
             case Phase::WaitLoadStatus:
-            case Phase::WaitPutFile:
             case Phase::WaitDestroy:
             case Phase::Done:
             {

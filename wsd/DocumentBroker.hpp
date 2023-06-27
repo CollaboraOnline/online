@@ -655,7 +655,7 @@ private:
     /// since there are race conditions vis-a-vis user activity while saving.
     bool isPossiblyModified() const
     {
-        if (haveActivityAfterSaveRequest())
+        if (haveModifyActivityAfterSaveRequest())
         {
             // Always assume possible modification when we have
             // user input after sending a .uno:Save, due to racing.

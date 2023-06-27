@@ -2194,7 +2194,7 @@ DocumentBroker::NeedToSave DocumentBroker::needToSaveToDisk() const
 
     assert(_saveManager.lastSaveSuccessful() && "Last save failed");
 
-    if (haveActivityAfterSaveRequest())
+    if (haveModifyActivityAfterSaveRequest())
     {
         return NeedToSave::Maybe;
     }
@@ -2361,7 +2361,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         // very late, or not at all. We care that there is nothing to upload
         // and the last save succeeded, possibly because there was no
         // modifications, and there has been no activity since.
-        if (!haveActivityAfterSaveRequest() && !_saveManager.isSaving() &&
+        if (!haveModifyActivityAfterSaveRequest() && !_saveManager.isSaving() &&
             _saveManager.lastSaveSuccessful())
         {
             // We can stop, but the modified flag is set. Delayed ModifiedStatus?
