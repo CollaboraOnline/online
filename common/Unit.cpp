@@ -612,7 +612,8 @@ void UnitWSD::DocBrokerDestroy(const std::string& key)
             GlobalWSD = nullptr;
             GlobalTool = nullptr;
 
-            if (GlobalArray[GlobalIndex] != nullptr)
+            if (GlobalArray[GlobalIndex] != nullptr && !SigUtil::getShutdownRequestFlag() &&
+                (_result == TestResult::Ok || GlobalTestOptions.getKeepgoing()))
             {
                 rememberInstance(_type, GlobalArray[GlobalIndex]);
 
@@ -621,10 +622,10 @@ void UnitWSD::DocBrokerDestroy(const std::string& key)
                 if (GlobalWSD)
                     GlobalWSD->configure(Poco::Util::Application::instance().config());
                 GlobalArray[GlobalIndex]->initialize();
-
-                // Wake-up so the previous test stops.
-                SocketPoll::wakeupWorld();
             }
+
+            // Wake-up so the previous test stops.
+            SocketPoll::wakeupWorld();
         }
     }
 }
