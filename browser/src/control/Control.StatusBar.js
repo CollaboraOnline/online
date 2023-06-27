@@ -282,7 +282,7 @@ L.Control.StatusBar = L.Control.extend({
 	onDocLayerInit: function () {
 		var statusbar = w2ui['actionbar'];
 		var docType = this.map.getDocType();
-		var isReadOnly = this.map.isReadOnlyMode();
+		var isReadOnlyPermanent = this.map.isReadOnlyMode() && !this.map.canUserWrite();
 
 		switch (docType) {
 		case 'spreadsheet':
@@ -334,8 +334,8 @@ L.Control.StatusBar = L.Control.extend({
 					},
 					{type: 'break', id: 'break9', mobile: false},
 					{
-						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
-						html: this._getPermissionModeHtml(isReadOnly)
+						type: 'html', id: ' PermissionMode', mobile: false, tablet: true,
+						html: this._getPermissionModeHtml(isReadOnlyPermanent)
 					}
 				]);
 			}
@@ -371,7 +371,7 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'break', id: 'break8', mobile: false},
 					{
 						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
-						html: this._getPermissionModeHtml(isReadOnly)
+						html: this._getPermissionModeHtml(isReadOnlyPermanent)
 					}
 				]);
 			}
@@ -392,7 +392,7 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'break', id: 'break8', mobile: false},
 					{
 						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
-						html: this._getPermissionModeHtml(isReadOnly)
+						html: this._getPermissionModeHtml(isReadOnlyPermanent)
 					}
 				]);
 			}
@@ -412,7 +412,7 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'break', id: 'break8', mobile: false},
 					{
 						type: 'html', id: 'PermissionMode', mobile: false, tablet: true,
-						html: this._getPermissionModeHtml(isReadOnly)
+						html: this._getPermissionModeHtml(isReadOnlyPermanent)
 					}
 				]);
 			}
@@ -450,21 +450,21 @@ L.Control.StatusBar = L.Control.extend({
 		this.map._onGotFocus();
 	},
 
-	_getPermissionModeHtml: function(isReadOnly) {
+	_getPermissionModeHtml: function(isReadOnlyPermanent) {
 		return '<div id="PermissionMode" class="cool-font ' +
-			(isReadOnly
+			(isReadOnlyPermanent
 				? ' status-readonly-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Read-only') + ' </div>'
 				: ' status-edit-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Edit') + ' </div>');
 	},
 
 	onPermissionChanged: function(event) {
-		var isReadOnly = event.perm === 'readonly';
-		if (isReadOnly) {
+		var isReadOnlyPermanent = event.perm === 'readonly' && !this.map.canUserWrite();
+		if (isReadOnlyPermanent) {
 			$('#toolbar-down').addClass('readonly');
 		} else {
 			$('#toolbar-down').removeClass('readonly');
 		}
-		$('#PermissionMode').parent().html(this._getPermissionModeHtml(isReadOnly));
+		$('#PermissionMode').parent().html(this._getPermissionModeHtml(isReadOnlyPermanent));
 	},
 
 	onCommandStateChanged: function(e) {
