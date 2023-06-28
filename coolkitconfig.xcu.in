@@ -241,7 +241,7 @@
                 <value>2293980</value>
             </prop>
             <prop oor:name="IsVisible" oor:op="fuse">
-                <value>true</value>
+                <value>false</value>
             </prop>
         </node>
         <node oor:name="CalcTextOverflow">
