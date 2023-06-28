@@ -3745,6 +3745,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		&& (!this.isCalc() || this._lastVisibleCursorRef !== this._visibleCursor)
 		&& this._allowViewJump()) {
 
+			// Cursor invalidation should take most precedence among all the scrolling to follow the cursor
+			// so here we disregard all the pending scrolling
+			this._map._docLayer._painter._sectionContainer.getSectionWithName(L.CSections.Scroll.name).pendingScrollEvent = null;
 			var paneRectsInLatLng = this.getPaneLatLngRectangles();
 			if (!this._visibleCursor.isInAny(paneRectsInLatLng)) {
 				if (!(this._selectionHandles.start && this._selectionHandles.start.isDragged) &&
