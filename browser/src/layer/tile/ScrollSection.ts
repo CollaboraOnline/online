@@ -813,6 +813,7 @@ export class ScrollSection extends CanvasSectionObject {
 		if (!(<any>window).mode.isDesktop())
 			return;
 
+		L.DomUtil.addClass(document.documentElement, 'prevent-select');
 		var props = this.getVerticalScrollProperties();
 		var midY = (props.startY + props.startY + props.scrollSize - this.sectionProperties.scrollBarThickness) * 0.5;
 
@@ -845,6 +846,7 @@ export class ScrollSection extends CanvasSectionObject {
 		if (!(<any>window).mode.isDesktop())
 			return;
 
+		L.DomUtil.addClass(document.documentElement, 'prevent-select');
 		var props = this.getHorizontalScrollProperties();
 		const sizeX = props.scrollSize - this.sectionProperties.scrollBarThickness;
 		const docWidth: number = this.map.getPixelBoundsCore().getSize().x;
@@ -941,6 +943,7 @@ export class ScrollSection extends CanvasSectionObject {
 	}
 
 	public onMouseUp (point: Array<number>, e: MouseEvent): void {
+		L.DomUtil.removeClass(document.documentElement, 'prevent-select');
 		this.map.scrollingIsHandled = false;
 		this.clearQuickScrollTimeout();
 

@@ -1132,3 +1132,9 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	text-overflow: ellipsis;
 	overflow: hidden;
 }
+
+.prevent-select {
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
