@@ -653,8 +653,10 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 
 		if (go) {
+			app.sectionContainer.pauseDrawing();
 			this.map.scroll(0, offset / app.dpiScale, {});
 			this.onUpdateScrollOffset();
+			app.sectionContainer.resumeDrawing();
 			if (app.file.fileBasedView)
 				this.map._docLayer._checkSelectedPart();
 		}
@@ -676,8 +678,10 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 
 		if (go) {
+			app.sectionContainer.pauseDrawing();
 			this.map.scroll(offset / app.dpiScale, 0, {});
 			this.onUpdateScrollOffset();
+			app.sectionContainer.resumeDrawing();
 		}
 	}
 
