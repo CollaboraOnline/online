@@ -92,6 +92,13 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 		// uses TextInput.js logic and events handling (IME for mobile/touch devices)
 		edit.addEventListener('input', builder.map._textInput._onInput.bind(builder.map._textInput));
 		edit.addEventListener('beforeinput', builder.map._textInput._onBeforeInput.bind(builder.map._textInput));
+		edit.addEventListener('keydown', builder.map._textInput._onKeyDown.bind(builder.map._textInput));
+		edit.addEventListener('keydown', function(event) {
+			if (event.key === 'Enter' && !event.shiftKey) {
+				builder.callback('edit', 'keypress', edit, UNOKey.RETURN | modifier, builder);
+				event.preventDefault();
+			}
+		});
 	} else if (data.rawKeyEvents) {
 		// sends key events over jsdialog
 		var modifier = 0;

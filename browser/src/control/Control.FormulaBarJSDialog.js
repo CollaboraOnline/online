@@ -70,8 +70,8 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 							id: 'sc_input_window',
 							type: 'multilineedit',
 							text: text ? text : '',
-							rawKeyEvents: window.mode.isDesktop() ? true : undefined,
-							useTextInput: window.mode.isDesktop() ? undefined : true
+							rawKeyEvents: undefined,
+							useTextInput: true
 						},
 						{
 							id: 'expand',
@@ -191,11 +191,9 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 	},
 
 	blur: function() {
-		if (!window.mode.isDesktop()) {
-			var textInput = this.map && this.map._textInput;
-			if (textInput && textInput._isComposing)
-				textInput._abortComposition();
-		}
+		var textInput = this.map && this.map._textInput;
+		if (textInput && textInput._isComposing)
+			textInput._abortComposition();
 
 		var input = this.getInputField();
 		if (input)
@@ -308,10 +306,8 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 			var keepInputFocus = messageForInputField && this.hasFocus();
 			var textInput = this.map._textInput;
 
-			// on desktop we display what we get from the server
-			// on touch devices we allow to type into the field directly, so we cannot update always
-			var allowUpdate = window.mode.isDesktop()
-				|| !this.hasFocus() || (this.hasFocus() && this.dirty);
+			// we allow user to type into the field directly, so we cannot update always
+			var allowUpdate = !this.hasFocus() || (this.hasFocus() && this.dirty);
 
 			if (!allowUpdate && messageForInputField && isSetTextMessage)
 				return;
@@ -320,7 +316,7 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 
 			this.builder.executeAction(this.container, innerData);
 
-			if (!window.mode.isDesktop() && messageForInputField && this.hasFocus()) {
+			if (messageForInputField && this.hasFocus()) {
 				var newContent = textInput.getValueAsCodePoints().slice(1, -1);
 				textInput.setupLastContent(newContent);
 			}
