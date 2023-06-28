@@ -829,9 +829,6 @@ function onInsertBackground() {
 
 function onWopiProps(e) {
 	if (e.DisableCopy) {
-		$('input#formulaInput').bind('copy', function(evt) {
-			evt.preventDefault();
-		});
 		$('input#addressInput').bind('copy', function(evt) {
 			evt.preventDefault();
 		});
