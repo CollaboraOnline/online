@@ -1796,6 +1796,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			app.sectionContainer.setClearColor('#' + textMsg.substring('applicationbackgroundcolor:'.length + 1).trim());
 			app.sectionContainer.requestReDraw();
 		}
+		else if (textMsg.startsWith('documentbackgroundcolor:')) {
+			app.sectionContainer.setDocumentBackgroundColor('#' + textMsg.substring('documentbackgroundcolor:'.length + 1).trim());
+		}
 		else if (textMsg.startsWith('contentcontrol:')) {
 			textMsg = textMsg.substring('contentcontrol:'.length + 1);
 			if (!app.sectionContainer.doesSectionExist(L.CSections.ContentControl.name)) {
