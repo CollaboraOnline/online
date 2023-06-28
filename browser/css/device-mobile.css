@@ -250,7 +250,7 @@ textarea.cool-annotation-textarea {
 
 /* Related to toolbar.css */
 @-moz-document url-prefix() {
-	#formulabar #formulaInput, #formulabar #addressInput{
+	#formulabar #addressInput{
 		color: var(--color-main-text);
 		border: 1px solid var(--color-border) !important;
 		border-radius: 0px;
@@ -345,13 +345,6 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 	border-color: 1px solid #808080 !important;
 }
 .w2ui-icon.equal, .w2ui-icon.autosum{width: 38px !important;}
-#formulaInput{
-	border: 1px solid #bbbbbb;
-	border-bottom: none;
-	border-top: none;
-	border-right: none;
-	height: 35px !important;
-}
 
 #calc-inputbar-wrapper {
 	display: block;
