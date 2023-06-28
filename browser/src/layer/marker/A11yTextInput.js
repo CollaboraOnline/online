@@ -1196,8 +1196,6 @@ L.A11yTextInput = L.Layer.extend({
 		this._fancyLog('abort-composition', ev.type);
 		if (this._isComposing)
 			this._isComposing = false;
-		this._emptyArea((document.activeElement !== this._textArea)
-			&& !this._hasFormulaBarFocus());
 		this._requestFocusedParagraph();
 	},
 
