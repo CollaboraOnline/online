@@ -642,13 +642,13 @@ export class ScrollSection extends CanvasSectionObject {
 		if (offset > 0) {
 			if (this.documentTopLeft[1] + offset > this.sectionProperties.yMax)
 				offset = this.sectionProperties.yMax - this.documentTopLeft[1];
-			if (offset < 0)
+			if (offset <= 0)
 				go = false;
 		}
 		else {
 			if (this.documentTopLeft[1] + offset < this.sectionProperties.yMin)
 				offset = this.sectionProperties.yMin - this.documentTopLeft[1];
-			if (offset > 0)
+			if (offset >= 0)
 				go = false;
 		}
 
@@ -667,13 +667,13 @@ export class ScrollSection extends CanvasSectionObject {
 		if (offset > 0) {
 			if (this.documentTopLeft[0] + offset > this.sectionProperties.xMax)
 				offset = this.sectionProperties.xMax - this.documentTopLeft[0];
-			if (offset < 0)
+			if (offset <= 0)
 				go = false;
 		}
 		else {
 			if (this.documentTopLeft[0] + offset < this.sectionProperties.xMin)
 				offset = this.sectionProperties.xMin - this.documentTopLeft[0];
-			if (offset > 0)
+			if (offset >= 0)
 				go = false;
 		}
 
