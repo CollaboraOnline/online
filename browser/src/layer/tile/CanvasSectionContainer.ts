@@ -492,6 +492,7 @@ class CanvasSectionContainer {
 	private touchCenter: Array<number> = null;
 	private potentialLongPress: boolean = false;
 	private clearColor: string = '#f8f9fa';
+	private documentBackgroundColor = '#ffffff'; // This is the background color of the document
 	private useCSSForBackgroundColor = true;
 	private touchEventInProgress: boolean = false; // This prevents multiple calling of mouse down and up events.
 	public testing: boolean = false; // If this set to true, container will create a div element for every section. So, cypress tests can find where to click etc.
@@ -556,6 +557,9 @@ class CanvasSectionContainer {
 		document.body.removeChild(tempElement); // Remove the temporary element.
 
 		this.clearColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas');
+		// Set document background color to the app background color for now until we get the real color from the kit
+		// through a LOK_CALLBACK_DOCUMENT_BACKGROUND_COLOR
+		this.documentBackgroundColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas');
 
 		if (disableDrawing)
 			this.disableDrawing();
@@ -601,6 +605,14 @@ class CanvasSectionContainer {
 
 	getClearColor () {
 		return this.clearColor;
+	}
+
+	setDocumentBackgroundColor (color: string) {
+		this.documentBackgroundColor = color;
+	}
+
+	getDocumentBackgroundColor () {
+		return this.documentBackgroundColor;
 	}
 
 	public getCanvasStyle(): CSSStyleDeclaration {

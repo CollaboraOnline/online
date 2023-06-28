@@ -33,7 +33,6 @@ class TilesSection extends CanvasSectionObject {
 		this.sectionProperties.tsManager = this.sectionProperties.docLayer._painter;
 		this.sectionProperties.pageBackgroundInnerMargin = 0; // In core pixels. We don't want backgrounds to have exact same borders with tiles for not making them visible when tiles are rendered.
 		this.sectionProperties.pageBackgroundBorderColor = 'lightgrey';
-		this.sectionProperties.pageBackgroundFillColorWriter = 'white';
 		this.sectionProperties.pageBackgroundTextColor = 'grey';
 		this.sectionProperties.pageBackgroundFont = String(40 * app.roundedDpiScale) + 'px Arial';
 
@@ -295,7 +294,7 @@ class TilesSection extends CanvasSectionObject {
 	private drawPageBackgroundWriter (ctx: any, rectangle: any, pageNumber: number) {
 		rectangle = [Math.round(rectangle[0] * app.twipsToPixels), Math.round(rectangle[1] * app.twipsToPixels), Math.round(rectangle[2] * app.twipsToPixels), Math.round(rectangle[3] * app.twipsToPixels)];
 
-		this.context.fillStyle = this.sectionProperties.pageBackgroundFillColorWriter;
+		this.context.fillStyle = this.containerObject.getDocumentBackgroundColor(); // used to be pageBackgroundFillColorWriter (see below)
 		this.context.fillRect(rectangle[0] - ctx.viewBounds.min.x + this.sectionProperties.pageBackgroundInnerMargin,
 			rectangle[1] - ctx.viewBounds.min.y + this.sectionProperties.pageBackgroundInnerMargin,
 			rectangle[2] - this.sectionProperties.pageBackgroundInnerMargin,
