@@ -546,7 +546,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				},
 				{
 					'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
-					'text': _('PDF Document (.pdf) - Expert'),
+					'text': _('PDF Document (.pdf) as...'),
 					'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf'
 				}
 			];
@@ -575,7 +575,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				},
 				{
 					'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
-					'text': _('PDF Document (.pdf) - Expert'),
+					'text': _('PDF Document (.pdf) as...'),
 					'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf'
 				}
 			];
