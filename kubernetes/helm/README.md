@@ -34,9 +34,10 @@ How to test this specific setup:
 
         image:
           tag: "latest"
+          pullPolicy: Always
       ```
 
-      Important notes: 
+      Important notes:
       1. If you have multiple host and aliases setup set aliasgroups in my_values.yaml
           ```yaml
           collabora:
@@ -53,7 +54,8 @@ How to test this specific setup:
   5. Install helm-chart using below command (with a new namespace collabora)
 
       ```bash
-      helm install --create-namespace --namespace collabora collabora-online ./kubernetes/helm/collabora-online/ -f my_values.yaml
+      helm repo add collabora https://genofire.github.io/collaboraonline-helm/
+      helm install --create-namespace --namespace collabora collabora-online collabora/collabora-online -f my_values.yaml
       ```
 
   6. Finally spin the collabora-online in kubernetes
@@ -136,7 +138,7 @@ How to test this specific setup:
 
 * To uninstall the helm chart
   ```bash
-  helm uninstall collabora-online -n collabora
+  helm uninstall --namespace collabora collabora-online
   ```
 
 ## Notes:
