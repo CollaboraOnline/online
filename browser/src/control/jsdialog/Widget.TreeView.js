@@ -426,15 +426,24 @@ function _handleKeyEvent(event, listElements, builder, data) {
 	if (event.key === 'ArrowDown') {
 		if (currIndex < 0)
 			_changeFocusedRow(listElements, currIndex, 0);
-		else if (currIndex < treeLength - 1)
-			_changeFocusedRow(listElements, currIndex, currIndex + 1);
-
+		else {
+			var nextIndex = currIndex + 1;
+			while (nextIndex < treeLength - 1 && listElements[nextIndex].clientHeight <= 0)
+				nextIndex++;
+			if (nextIndex < treeLength)
+				_changeFocusedRow(listElements, currIndex, nextIndex);
+		}
 		preventDef = true;
 	} else if (event.key === 'ArrowUp') {
 		if (currIndex < 0)
 			_changeFocusedRow(listElements, currIndex, treeLength - 1);
-		else if (currIndex > 0)
-			_changeFocusedRow(listElements, currIndex, currIndex - 1);
+		else {
+			var nextIndex = currIndex - 1;
+			while (nextIndex >= 0 && listElements[nextIndex].clientHeight <= 0)
+				nextIndex--;
+			if (nextIndex >= 0)
+				_changeFocusedRow(listElements, currIndex, nextIndex);
+		}
 
 		preventDef = true;
 	} else if (data.fireKeyEvents && builder.callback('treeview', 'keydown', { id: data.id, key: event.key }, currIndex, builder)) {
