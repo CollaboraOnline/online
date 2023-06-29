@@ -669,6 +669,7 @@ L.Map.include({
 		L.LOUtil.setImage(img, 'lc_copy.svg', this._docLayer._docType);
 		copyversion.innerHTML = '<img src="' + img.src +'" width="18px" height="18px">';
 		copyversion.addEventListener('click', this.copyVersionInfoToClipboard.bind(this));
+		map.uiManager.enableTooltip(copyversion);
 		var aboutok = document.getElementById('modal-dialog-about-dialog-box-yesbutton');
 		if (aboutok) {
 			aboutok.before(copyversion);
