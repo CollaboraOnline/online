@@ -693,13 +693,30 @@ L.Map.include({
 		text += 'Served by: ' + document.getElementById('os-info').innerText + '\n';
 		text += 'Server ID: ' + document.getElementById('coolwsd-id').innerText + '\n';
 
-		navigator.clipboard.writeText(text)
-		.then(function() {
-		  window.console.log('Text copied to clipboard');
-		})
-		.catch(function(error) {
-		  window.console.error('Error copying text to clipboard:', error);
-		});
+		if (navigator.clipboard && window.isSecureContext) {
+			navigator.clipboard.writeText(text)
+			.then(function() {
+				window.console.log('Text copied to clipboard');
+			})
+			.catch(function(error) {
+				window.console.error('Error copying text to clipboard:', error);
+			});
+		} else {
+			var textArea = document.createElement('textarea');
+			textArea.style.position = 'absolute';
+			textArea.style.opacity = 0;
+			textArea.value = text;
+			document.body.appendChild(textArea);
+			textArea.select();
+			try {
+				document.execCommand('copy');
+				window.console.log('Text copied to clipboard');
+			} catch (error) {
+				window.console.error('Error copying text to clipboard:', error);
+			} finally {
+				document.body.removeChild(textArea);
+			}
+		}
 	},
 
 	extractContent: function(html) {
