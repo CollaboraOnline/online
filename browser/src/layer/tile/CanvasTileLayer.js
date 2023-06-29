@@ -6796,23 +6796,18 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_brgatorgba: function(rawDelta) {
 		var len = rawDelta.byteLength / 4;
+		var delta32 = new Uint32Array(rawDelta.buffer, rawDelta.byteOffset, len);
 		var resultu32 = new Uint32Array(len);
 		var resultu8 = new Uint8ClampedArray(resultu32.buffer, resultu32.byteOffset, resultu32.byteLength);
 		for (var i32 = 0; i32 < len; ++i32) {
 			// premultiplied brga -> unpremultiplied rgba
 			// If the previous input pixel was the same as the current input pixel
 			// just copy the previous output pixel as the current output pixel
-			// rawDelta may not be suitably aligned to use a Uint32Array view of it
-			var i8 = i32 * 4;
-			if (i32 > 0 && rawDelta[i8] === rawDelta[i8 - 4] &&
-				       rawDelta[i8 + 1] === rawDelta[i8 - 3] &&
-				       rawDelta[i8 + 2] === rawDelta[i8 - 2] &&
-				       rawDelta[i8 + 3] === rawDelta[i8 - 1])
-			{
+			if (i32 > 0 && delta32[i32] === delta32[i32 - 1])
 				resultu32[i32] = resultu32[i32 - 1];
-			}
 			else
 			{
+				var i8 = i32 * 4;
 				var alpha = rawDelta[i8 + 3];
 				if (alpha === 255) {
 					resultu8[i8] = rawDelta[i8 + 2];
@@ -7007,7 +7002,9 @@ L.CanvasTileLayer = L.Layer.extend({
 							       ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 				i += 4;
 				span *= 4;
-				var pixelData = this._brgatorgba(delta.subarray(i, i + span));
+				// copy so this is suitably aligned for a Uint32Array view
+				var tmpu8 = new Uint8Array(delta.subarray(i, i + span));
+				var pixelData = this._brgatorgba(tmpu8);
 				// imgData.data[offset + 1] = 256; // debug - greener start
 				for (var j = 0; j < span; ++j)
 					imgData.data[offset++] = pixelData[j];
