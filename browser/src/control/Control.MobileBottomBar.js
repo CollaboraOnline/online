@@ -33,7 +33,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: '.uno:Underline', context: ['default', 'Text', 'DrawText', 'Table']},
 				{type: 'break', id: 'breakcolor', context: ['default', 'Text', 'DrawText', 'Table']},
 				{type: 'button',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor'), lockUno: '.uno:FontColor', context: ['default', 'Text', 'DrawText', 'Table']},
-				{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackColor'), lockUno: '.uno:BackColor', context: ['default', 'Text', 'DrawText', 'Table']},
+				{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackColor', 'text'), lockUno: '.uno:BackColor', context: ['default', 'Text', 'DrawText', 'Table']},
 				{type: 'drop',  id: 'setborderstyle',  img: 'setborderstyle', hint: _('Borders'), hidden: true, html: window.getBorderStyleMenuHtml(), context: ['Table']},
 				{type: 'break', id: 'breakalign-text', context: ['default', 'Text', 'DrawText']},
 				{type: 'menu', id: 'align-text', img: 'alignblock', hint: _UNO('.uno:TextAlign'), lockUno: '.uno:TextAlign', context: ['default', 'Text'],
