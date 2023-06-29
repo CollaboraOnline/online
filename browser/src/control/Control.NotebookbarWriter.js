@@ -784,30 +784,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:InsertPagebreak'
 			},
 			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:TitlePageDialog', 'text'),
-								'command': '.uno:TitlePageDialog'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:InsertSection', 'text'),
-								'command': '.uno:InsertSection'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:InsertTable', 'text'),
+				'command': '.uno:InsertTable'
 			},
 			{
 				'type': 'bigtoolitem',
@@ -822,8 +801,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertTable', 'text'),
-								'command': '.uno:InsertTable'
+								'text': _('Shapes'),
+								'command': '.uno:BasicShapes'
 							}
 						]
 					},
@@ -840,27 +819,17 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
-			{
-				'id': 'HyperlinkDialog',
-				'type': 'bigcustomtoolitem',
-				'text': _UNO('.uno:HyperlinkDialog'),
-				'command': 'hyperlinkdialog'
-			},
 			(this._map['wopi'].EnableRemoteLinkPicker) ? {
-				'type': 'bigcustomtoolitem',
-				'text': _('Smart Picker'),
-				'command': 'remotelink'
-			} : {},
-			{
 				'type': 'container',
 				'children': [
 					{
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:InsertBookmark', 'text'),
-								'command': '.uno:InsertBookmark'
+								'id': 'HyperlinkDialog',
+								'type': 'customtoolitem',
+								'text': _UNO('.uno:HyperlinkDialog'),
+								'command': 'hyperlinkdialog'
 							}
 						]
 					},
@@ -868,24 +837,24 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:InsertReferenceField', 'text'),
-								'command': '.uno:InsertReferenceField'
+								'type': 'customtoolitem',
+								'text': _('Smart Picker'),
+								'command': 'remotelink'
 							}
 						]
 					}
 				],
 				'vertical': 'true'
+			} : {
+				'id': 'HyperlinkDialog',
+				'type': 'bigcustomtoolitem',
+				'text': _UNO('.uno:HyperlinkDialog'),
+				'command': 'hyperlinkdialog'
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:PageNumberWizard', 'text'),
-				'command': '.uno:PageNumberWizard'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertFieldCtrl', 'text'),
-				'command': '.uno:InsertFieldCtrl'
+				'text': _UNO('.uno:InsertAnnotation', 'text'),
+				'command': '.uno:InsertAnnotation'
 			},
 			{
 				'type': 'container',
@@ -914,14 +883,30 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:DrawText'),
-				'command': '.uno:DrawText'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertObjectStarMath', 'text'),
-				'command': '.uno:InsertObjectStarMath'
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:PageNumberWizard', 'text'),
+								'command': '.uno:PageNumberWizard'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertFieldCtrl', 'text'),
+								'command': '.uno:InsertFieldCtrl'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
 			},
 			{
 				'type': 'container',
@@ -931,8 +916,65 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _('Shapes'),
-								'command': '.uno:BasicShapes'
+								'text': _UNO('.uno:TitlePageDialog', 'text'),
+								'command': '.uno:TitlePageDialog'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertSection', 'text'),
+								'command': '.uno:InsertSection'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertBookmark', 'text'),
+								'command': '.uno:InsertBookmark'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertReferenceField', 'text'),
+								'command': '.uno:InsertReferenceField'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:DrawText'),
+				'command': '.uno:DrawText'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:VerticalText', 'text'),
+								'command': '.uno:VerticalText'
 							}
 						]
 					},
@@ -950,32 +992,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:FontworkGalleryFloater'),
-								'command': '.uno:FontworkGalleryFloater',
-								// Fontwork export/import not supported in other formats.
-								'visible': isODF ? 'true' : 'false',
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:VerticalText', 'text'),
-								'command': '.uno:VerticalText'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FontworkGalleryFloater'),
+				'command': '.uno:FontworkGalleryFloater',
+				// Fontwork export/import not supported in other formats.
+				'visible': isODF ? 'true' : 'false',
 			},
 			{
 				'id': 'FormattingMarkMenu:FormattingMarkMenu',
@@ -1002,8 +1023,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertAnnotation', 'text'),
-								'command': '.uno:InsertAnnotation'
+								'text': _UNO('.uno:InsertObjectStarMath', 'text'),
+								'command': '.uno:InsertObjectStarMath'
 							}
 						]
 					}
