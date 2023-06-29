@@ -8,8 +8,8 @@
  *     id: 'id',
  *     type: 'treelistbox',
  *     entries: [
- *         { row: 0, text: 'first entry', children: [ { row: 2, text: 'first subentry' } ] },
- *         { row: 1, text: 'second entry', selected: true, state: false, ondemand: true }
+ *         { row: 0, text: 'first entry', collapsed: true, children: [ { row: 1, text: 'first subentry' } ] },
+ *         { row: 2, text: 'second entry', selected: true, state: false, ondemand: true }
  *     ]
  * }
  *
@@ -27,6 +27,8 @@
  * 'row' property is used in the callback to differentiate entries
  * 'state' property defines if entry has the checkbox (false/true), when is missing - no checkbox
  * 'ondemand' property can be set to provide nodes lazy loading
+ * 'collapsed' property means, this entry have childrens, but they are not visible, because
+ *             this branch is collapsed.
  *
  * Copyright the Collabora Online contributors.
  *
@@ -162,19 +164,25 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 	}
 
 	var toggleFunction = function() {
+		if (L.DomUtil.hasClass(span, 'collapsed'))
+			builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
+		else
+			builder.callback('treeview', 'collapse', treeViewData, entry.row, builder);
 		$(span).toggleClass('collapsed');
 	};
 
 	var expandFunction = function () {
 		if (entry.ondemand && L.DomUtil.hasClass(span, 'collapsed'))
 			builder.callback('treeview', 'expand', treeViewData, entry.row, builder);
-		toggleFunction();
+		$(span).toggleClass('collapsed');
 	};
 
 	if (entry.children) {
 		var ul = L.DomUtil.create('ul', builder.options.cssClass, li);
-		for (var i in entry.children) {
-			_treelistboxEntry(ul, treeViewData, entry.children[i], builder, isTreeView, treeRoot);
+		if (!entry.collapsed) {
+			for (var i in entry.children) {
+				_treelistboxEntry(ul, treeViewData, entry.children[i], builder, isTreeView, treeRoot);
+			}
 		}
 
 		if (!disabled) {
@@ -189,7 +197,7 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 				$(checkbox).click(toggleFunction);
 		}
 
-		if (entry.ondemand)
+		if (entry.ondemand || entry.collapsed)
 			L.DomUtil.addClass(span, 'collapsed');
 	}
 
@@ -484,6 +492,7 @@ function _treelistboxControl(parentContainer, data, builder) {
 	}
 
 	if (!data.entries || data.entries.length === 0) {
+		// contentbox and tree can never be empty, 1 page or 1 sheet always exists
 		if (data.id === 'contenttree') {
 			var tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry', tbody);
 			tr.setAttribute('role', 'row');
