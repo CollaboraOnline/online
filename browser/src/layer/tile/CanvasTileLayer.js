@@ -6100,6 +6100,37 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
+	_getMissingTiles: function (pixelBounds, zoom) {
+		var tileRanges = this._pxBoundsToTileRanges(pixelBounds);
+		var queue = [];
+
+		// create a queue of coordinates to load tiles from
+		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
+			var tileRange = tileRanges[rangeIdx];
+			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
+				for (var i = tileRange.min.x; i <= tileRange.max.x; ++i) {
+					var coords = new L.TileCoordData(
+						i * this._tileSize,
+						j * this._tileSize,
+						zoom,
+						this._selectedPart,
+						this._selectedMode);
+
+					if (!this._isValidTile(coords)) { continue; }
+
+					var key = this._tileCoordsToKey(coords);
+					var tile = this._tiles[key];
+					if (tile && !tile.needsFetch())
+						tile.current = true;
+					else
+						queue.push(coords);
+				}
+			}
+		}
+
+		return queue;
+	},
+
 	_update: function (center, zoom) {
 		var map = this._map;
 		if (!map || this._documentInfo === '') {
@@ -6125,10 +6156,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (center === undefined) { center = map.getCenter(); }
 		if (zoom === undefined) { zoom = Math.round(map.getZoom()); }
 
-		var pixelBounds = map.getPixelBoundsCore(center, zoom);
-		var tileRanges = this._pxBoundsToTileRanges(pixelBounds);
-		var queue = [];
-
 		for (var key in this._tiles) {
 			var thiscoords = this._keyToTileCoords(key);
 			if (thiscoords.z !== zoom ||
@@ -6138,29 +6165,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 		}
 
-		// create a queue of coordinates to load tiles from
-		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
-			var tileRange = tileRanges[rangeIdx];
-			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
-				for (var i = tileRange.min.x; i <= tileRange.max.x; ++i) {
-					var coords = new L.TileCoordData(
-						i * this._tileSize,
-						j * this._tileSize,
-						zoom,
-						this._selectedPart,
-						this._selectedMode);
-
-					if (!this._isValidTile(coords)) { continue; }
-
-					key = this._tileCoordsToKey(coords);
-					var tile = this._tiles[key];
-					if (tile && !tile.needsFetch())
-						tile.current = true;
-					else
-						queue.push(coords);
-				}
-			}
-		}
+		var pixelBounds = map.getPixelBoundsCore(center, zoom);
+		var queue = this._getMissingTiles(pixelBounds, zoom);
 
 		this._sendClientVisibleArea();
 		this._sendClientZoom();
