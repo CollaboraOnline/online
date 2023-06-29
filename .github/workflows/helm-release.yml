@@ -36,3 +36,4 @@ jobs:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
           charts_dir: "kubernetes/helm"
+          config: kubernetes/helm/cr.yaml
