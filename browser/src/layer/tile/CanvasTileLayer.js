@@ -6181,6 +6181,34 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (queue.length !== 0)
 			this._addTiles(queue);
+
+		if (this.isCalc() || this.isWriter()) {
+			// Extend what we request to include enough to populate a full
+			// scroll after or before the current viewport
+			//
+			// request separately from the current viewPort to get
+			// those tiles first.
+			var pixelHeight = pixelBounds.getSize().y;
+			var pixelPrevNextHeight = pixelHeight;
+			var pixelTopLeft = pixelBounds.getTopLeft();
+			var pixelBottomRight = pixelBounds.getBottomRight();
+
+			if (this.isCalc())
+				pixelPrevNextHeight = ~~ (pixelPrevNextHeight * 1.5);
+
+			pixelTopLeft.y += pixelHeight;
+			pixelBottomRight.y += pixelPrevNextHeight;
+			pixelBounds = new L.Bounds(pixelTopLeft, pixelBottomRight);
+			queue = this._getMissingTiles(pixelBounds, zoom);
+
+			pixelTopLeft.y -= pixelHeight + pixelPrevNextHeight;
+			pixelBottomRight.y -= pixelHeight + pixelPrevNextHeight;
+			pixelBounds = new L.Bounds(pixelTopLeft, pixelBottomRight);
+			queue = queue.concat(this._getMissingTiles(pixelBounds, zoom));
+
+			if (queue.length !== 0)
+				this._addTiles(queue);
+		}
 	},
 
 	_sendClientVisibleArea: function (forceUpdate) {
