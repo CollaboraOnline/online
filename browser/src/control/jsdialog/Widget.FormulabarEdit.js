@@ -21,16 +21,28 @@
 
 /* global JSDialog */
 
-function _sendSelection(edit, builder, id) {
+function _sendSelection(edit, builder, id, event) {
 	if (document.activeElement != edit)
 		return;
 
-	var currentText = edit.innerText;
 	var selection = document.getSelection();
-	var startPos = selection.anchorOffset;
-	var endPos = selection.focusOffset;
+	var startPos = 0;
+	var anchorOffset = selection.anchorOffset;
+	var endPos = 0;
+	var focusOffset = selection.focusOffset;
 	var startPara = 0;
 	var endPara = 0;
+
+	var startElement = selection.anchorNode;
+	var endElement = selection.focusNode;
+
+	if (!window.mode.isDesktop()) {
+		var element = document.elementFromPoint(event.clientX, event.clientY);
+		startElement = element;
+		endElement = element;
+		anchorOffset = 0;
+		focusOffset = 0;
+	}
 
 	if (selection.anchorNode == edit) {
 		startPos = endPos = 0;
@@ -42,11 +54,14 @@ function _sendSelection(edit, builder, id) {
 				endPara++;
 			}
 		}
-	} else if (currentText.indexOf('\n') >= 0) {
+	} else {
 		for (var i in edit.childNodes) {
-			if (edit.childNodes[i] != selection.anchorNode) {
+			if (edit.childNodes[i] != startElement && edit.childNodes[i].firstChild != startElement) {
 				if (edit.childNodes[i].tagName == 'BR') {
 					startPara++;
+					startPos = 0;
+				} else {
+					startPos++;
 				}
 			} else {
 				break;
@@ -54,9 +69,12 @@ function _sendSelection(edit, builder, id) {
 		}
 
 		for (var i in edit.childNodes) {
-			if (edit.childNodes[i] != selection.focusNode) {
+			if (edit.childNodes[i] != endElement && edit.childNodes[i].firstChild != endElement) {
 				if (edit.childNodes[i].tagName == 'BR') {
 					endPara++;
+					endPos = 0;
+				} else {
+					endPos++;
 				}
 			} else {
 				break;
@@ -64,7 +82,7 @@ function _sendSelection(edit, builder, id) {
 		}
 	}
 
-	var selection = startPos + ';' + endPos + ';' + startPara + ';' + endPara;
+	var selection = (startPos + anchorOffset) + ';' + (endPos + focusOffset) + ';' + startPara + ';' + endPara;
 	builder.callback('edit', 'textselection', {id: id}, selection, builder);
 }
 
@@ -160,7 +178,13 @@ function _formulabarEditControl(parentContainer, data, builder) {
 	var cursorLayer = L.DomUtil.create('div', 'ui-custom-textarea-cursor-layer ' + builder.options.cssClass, container);
 
 	container.setText = function(text, selection) {
-		textLayer.innerText = text;
+		textLayer.innerHTML = '';
+		for (var c = 0; c < text.length; c++) {
+			if (text[c] == '\n')
+				_appendNewLine(textLayer);
+			else
+				_appendText(textLayer, text[c], '');
+		}
 
 		var startX = parseInt(selection[0]);
 		var endX = parseInt(selection[1]);
@@ -189,7 +213,7 @@ function _formulabarEditControl(parentContainer, data, builder) {
 			}
 
 			builder.callback('edit', 'grab_focus', container, null, builder);
-			_sendSelection(textLayer, builder, container.id);
+			_sendSelection(textLayer, builder, container.id, event);
 
 			builder.map.setWinId(0);
 			builder.map._textInput._emptyArea();
