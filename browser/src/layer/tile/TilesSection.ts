@@ -11,6 +11,7 @@ class TilesSection extends CanvasSectionObject {
 	offscreenCanvases: Array<any> = new Array(0);
 	oscCtxs: Array<any> = new Array(0);
 	isJSDOM: boolean = false; // testing
+	checkpattern: any;
 
 	constructor () {
 		super({
@@ -37,6 +38,28 @@ class TilesSection extends CanvasSectionObject {
 		this.sectionProperties.pageBackgroundFont = String(40 * app.roundedDpiScale) + 'px Arial';
 
 		this.isJSDOM = typeof window === 'object' && window.name === 'nodejs';
+
+		this.checkpattern = this.makeCheckPattern();
+	}
+
+	private makeCheckPattern() {
+		var canvas = document.createElement('canvas');
+		canvas.width = 256;
+		canvas.height = 256;
+		var drawctx = canvas.getContext('2d');
+		var patternOn = true;
+		for (var y = 0; y < 256; y+=32) {
+			for (var x = 0; x < 256; x+=32) {
+				if (patternOn)
+					drawctx.fillStyle = 'darkgray';
+				else
+					drawctx.fillStyle = 'gray';
+				patternOn = !patternOn;
+				drawctx.fillRect(x, y, 32, 32);
+			}
+			patternOn = !patternOn;
+		}
+		return canvas;
 	}
 
 	public onInitialize () {
@@ -416,10 +439,20 @@ class TilesSection extends CanvasSectionObject {
 			if (doneTiles.has(coords.key()))
 				return true;
 
-			// Ensure tile is loaded and is within document bounds.
-			if (tile && tile.hasContent() && docLayer._isValidTile(coords)) {
-				if (!this.isJSDOM) // perf-test code
-				   this.paint(tile, ctx, false /* async? */, now);
+			// Ensure tile is within document bounds.
+			if (tile && docLayer._isValidTile(coords)) {
+				if (!this.isJSDOM) { // perf-test code
+					if (tile.hasContent()) { // Ensure tile is loaded
+						this.paint(tile, ctx, false /* async? */, now);
+					}
+					else if (this.sectionProperties.docLayer._debug) {
+						// when debugging draw a checkerboard for the missing tile
+						var oldcanvas = tile.canvas;
+						tile.canvas = this.checkpattern;
+						this.paint(tile, ctx, false /* async? */, now);
+						tile.canvas = oldcanvas;
+					}
+				}
 			}
 			doneTiles.add(coords.key());
 			return true; // continue with remaining tiles.
