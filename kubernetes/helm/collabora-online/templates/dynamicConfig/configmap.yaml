@@ -1,4 +1,4 @@
-{{- if and .Values.dynamicConfig.enabled (not .Values.dynamicConfig.existingConfigMap.enabled) -}}
+{{- if and .Values.dynamicConfig.enabled (not .Values.dynamicConfig.upload.enabled) (not .Values.dynamicConfig.existingConfigMap.enabled) -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
