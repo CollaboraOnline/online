@@ -13,7 +13,7 @@ How to test this specific setup:
       Here an example `my_values.yaml`:
       ```yaml
       replicaCount: 3
-      
+
       ingress:
         enabled: true
         annotations:
@@ -54,7 +54,7 @@ How to test this specific setup:
   5. Install helm-chart using below command (with a new namespace collabora)
 
       ```bash
-      helm repo add collabora https://genofire.github.io/collaboraonline-helm/
+      helm repo add collabora https://collaboraonline.github.io/online/
       helm install --create-namespace --namespace collabora collabora-online collabora/collabora-online -f my_values.yaml
       ```
 
@@ -149,21 +149,21 @@ How to test this specific setup:
     env:
       - name: remoteconfigurl
         value: https://dynconfig.public.example.com/config/config.json
-  
+
   dynamicConfig:
     enabled: true
-  
+
     ingress:
       enabled: true
       annotations:
-        "cert-manager.io/issuer": letsencrypt-zprod 
+        "cert-manager.io/issuer": letsencrypt-zprod
       hosts:
         - host: "dynconfig.public.example.com"
       tls:
         - secretName: "collabora-online-dynconfig-tls"
           hosts:
             - "dynconfig.public.example.com"
-  
+
     configuration:
        kind: "configuration"
        storage:
@@ -192,6 +192,6 @@ How to test this specific setup:
         release: "kube-prometheus-stack"
   grafana:
     dashboards:
-      enabled: true # will deploy default dashboards 
+      enabled: true # will deploy default dashboards
   ```
-  PS: The labels `release=kube-prometheus-stack` is setup with the helmchart of the Prometheus Operator. For Grafana Dashboards it maybe need scan enable to scan in correct namespaces (or ALL), enabled by `sidecar.dashboards.searchNamespace` in [Helmchart of grafana](https://artifacthub.io/packages/helm/grafana/grafana) (which is part of PrometheusOperator, so `grafana.sidecar.dashboards.searchNamespace`) 
+  PS: The labels `release=kube-prometheus-stack` is setup with the helmchart of the Prometheus Operator. For Grafana Dashboards it maybe need scan enable to scan in correct namespaces (or ALL), enabled by `sidecar.dashboards.searchNamespace` in [Helmchart of grafana](https://artifacthub.io/packages/helm/grafana/grafana) (which is part of PrometheusOperator, so `grafana.sidecar.dashboards.searchNamespace`)
