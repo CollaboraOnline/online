@@ -37,6 +37,20 @@
 
 var treeType = '';
 
+function _findEntryWithRow(entries, row) {
+	for (var i in entries) {
+		if (i == row)
+			return entries[i];
+		else if (entries[i].children) {
+			var found = _findEntryWithRow(entries[i].children, row);
+			if (found)
+				return found;
+		}
+	}
+
+	return null;
+}
+
 function _createCheckbox(parentContainer, treeViewData, builder, entry) {
 	var checkbox = L.DomUtil.create('input', builder.options.cssClass + ' ui-treeview-checkbox', parentContainer);
 	checkbox.type = 'checkbox';
@@ -48,10 +62,14 @@ function _createCheckbox(parentContainer, treeViewData, builder, entry) {
 	if (treeViewData.enabled !== false && treeViewData.enabled !== 'false') {
 		$(checkbox).change(function() {
 			if (this.checked) {
-				treeViewData.entries[entry.row].state = true;
+				var foundEntry = _findEntryWithRow(treeViewData.entries, entry.row);
+				if (foundEntry)
+					foundEntry.state = true;
 				builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: true}, builder);
 			} else {
-				treeViewData.entries[entry.row].state = false;
+				var foundEntry = _findEntryWithRow(treeViewData.entries, entry.row);
+				if (foundEntry)
+					foundEntry.state = false;
 				builder.callback('treeview', 'change', treeViewData, {row: entry.row, value: false}, builder);
 			}
 		});
