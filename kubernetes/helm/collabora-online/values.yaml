@@ -83,6 +83,7 @@ grafana:
     enabled: false
     labels:
       grafana_dashboard: "1"
+    annotations: {}
 
 
 podAnnotations: {}

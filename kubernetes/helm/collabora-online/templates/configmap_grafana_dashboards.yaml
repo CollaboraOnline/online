@@ -8,6 +8,8 @@ metadata:
   labels:
     {{- include "collabora-online.labels" $ | nindent 4 }}
     {{- toYaml $.Values.grafana.dashboards.labels | nindent 4 }}
+  annotations:
+    {{- toYaml $.Values.grafana.dashboards.annotations | nindent 4 }}
 data:
   {{- ($.Files.Glob $path ).AsConfig | nindent 2 }}
 {{- end }}
