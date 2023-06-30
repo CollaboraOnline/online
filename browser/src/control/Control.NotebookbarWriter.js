@@ -935,32 +935,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:InsertBookmark', 'text'),
-								'command': '.uno:InsertBookmark'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:InsertReferenceField', 'text'),
-								'command': '.uno:InsertReferenceField'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:DrawText'),
 				'command': '.uno:DrawText'
