@@ -1,12 +1,13 @@
-{{- if and .Values.dynamicConfig.enabled (not .Values.dynamicConfig.upload.enabled)  -}}
+{{- if and .Values.dynamicConfig.enabled .Values.dynamicConfig.upload.enabled  -}}
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "collabora-online.fullname" . }}-dynconfig
   labels:
     {{- include "collabora-online.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.dynamicConfig.replicaCount }}
+  serviceName: {{ include "collabora-online.fullname" . }}-dynconfig
+  replicas: 1
   selector:
     matchLabels:
       {{- include "collabora-online.selectorLabels" . | nindent 6 }}
@@ -80,6 +81,17 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /usr/share/nginx/html/config
+        - name: {{ .Chart.Name }}-dynconfig-upload
+          image: {{ .Values.dynamicConfig.upload.image.repository }}@sha256:{{ .Values.dynamicConfig.upload.image.digest }}
+          envFrom:
+            - secretRef:
+                name: {{ include "collabora-online.fullname" . }}-upload-env
+          ports:
+            - name: "upload-http"
+              containerPort: 3000
+          volumeMounts:
+            - name: "config"
+              mountPath: "/config"
       {{- with .Values.dynamicConfig.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -92,12 +104,15 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      volumes:
-        - name: config
-          configMap:
-          {{- if .Values.dynamicConfig.existingConfigMap.enabled }}
-            name: {{ .Values.dynamicConfig.existingConfigMap.name }}
-          {{- else }}
-            name: {{ include "collabora-online.fullname" . }}-dynconfig
-          {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: config
+      spec:
+        accessModes: [ "{{ .Values.dynamicConfig.upload.pvc.accessMode }}" ]
+        resources:
+          requests:
+            storage: {{ .Values.dynamicConfig.upload.pvc.size }}
+        {{- if .Values.dynamicConfig.upload.pvc.storageClassName }}
+        storageClassName: {{ .Values.dynamicConfig.upload.pvc.storageClassName }}
+        {{- end }}
 {{- end }}
