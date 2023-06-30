@@ -15,12 +15,19 @@ if (Cypress.env('INTEGRATION') === 'php-proxy') {
 
 var COMMAND_DELAY = 1000;
 
-if (Cypress.browser.isHeaded) {
-	// To debug exceptions more easily - enable this:
-	Cypress.on('fail', () => {
-		// eslint-disable-next-line no-debugger
-		//debugger;
+// Ignore exceptions coming from nextcloud.
+if (Cypress.env('INTEGRATION') === 'nextcloud') {
+    Cypress.on('uncaught:exception', function() {
+	return false;
+    });
+} else {
+    Cypress.on('window:before:load', function(appWindow) {
+	appWindow.addEventListener('error', function(event) {
+	    Cypress.log({ name:'uncaught:exception',
+			  message: (event.error.message ? event.error.message : 'no message')
+			  + '\n' + (event.error.stack ? event.error.stack : 'no stack') });
 	});
+    });
 }
 
 if (Cypress.browser.isHeaded) {

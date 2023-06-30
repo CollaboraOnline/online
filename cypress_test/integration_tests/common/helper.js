@@ -114,7 +114,7 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser, 
 		URI = URI.replace('debug.html', 'cypress-multiuser.html');
 	}
 
-	cy.visit(URI, { onLoad: function(win) { win.onerror = cy.onUncaughtException; } });
+	cy.visit(URI);
 
 	cy.log('Loading test document with a local build - end.');
 
@@ -133,11 +133,6 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
 	cy.log('Param - subsequentLoad: ' + subsequentLoad);
-
-	// Ignore exceptions coming from nextcloud.
-	Cypress.on('uncaught:exception', function() {
-		return false;
-	});
 
 	upLoadFileToNextCloud(fileName, subFolder, subsequentLoad);
 
