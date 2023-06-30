@@ -1681,7 +1681,10 @@
   "refresh": "",
   "schemaVersion": 36,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "collabora",
+    "app"
+  ],
   "templating": {
     "list": []
   },
