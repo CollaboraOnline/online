@@ -13,6 +13,12 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    {{- if .Values.dynamicConfig.upload.enabled }}
+    - port: {{ .Values.dynamicConfig.upload.service.port }}
+      targetPort: upload-http
+      protocol: TCP
+      name: upload-http
+    {{- end }}
   selector:
     {{- include "collabora-online.selectorLabels" . | nindent 4 }}
     type: dynconfig

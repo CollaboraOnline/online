@@ -1,3 +1,4 @@
+---
 # Default values for newchart.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
@@ -89,17 +90,17 @@ grafana:
 podAnnotations: {}
 
 podSecurityContext: {}
-  # fsGroup: 2000
+#  fsGroup: 2000
 
 securityContext: {}
-  # readOnlyRootFilesystem: false
-  # privileged: true
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+#  readOnlyRootFilesystem: false
+#  privileged: true
+#  capabilities:
+#    drop:
+#    - ALL
+#  readOnlyRootFilesystem: true
+#  runAsNonRoot: true
+#  runAsUser: 1000
 
 service:
   type: ClusterIP
@@ -143,18 +144,18 @@ ingress:
   enabled: false
   className: ""
   annotations: {}
-    # # nginx
-    # nginx.ingress.kubernetes.io/upstream-hash-by: "$arg_WOPISrc"
-    # # HAProxy
-    # haproxy.org/timeout-tunnel: "3600s"
-    # haproxy.org/backend-config-snippet: |
-    #  mode http
-    #   balance leastconn
-    #   stick-table type string len 2048 size 1k store conn_cur
-    #   http-request set-var(txn.wopisrcconns) url_param(WOPISrc),table_conn_cur()
-    #   http-request track-sc1 url_param(WOPISrc)
-    #   stick match url_param(WOPISrc) if { var(txn.wopisrcconns) -m int gt 0 }
-    #   stick store-request url_param(WOPISrc)
+  # # nginx
+  #  nginx.ingress.kubernetes.io/upstream-hash-by: "$arg_WOPISrc"
+  # # HAProxy
+  #  haproxy.org/timeout-tunnel: "3600s"
+  #  haproxy.org/backend-config-snippet: |
+  #    mode http
+  #    balance leastconn
+  #    stick-table type string len 2048 size 1k store conn_cur
+  #    http-request set-var(txn.wopisrcconns) url_param(WOPISrc),table_conn_cur()
+  #    http-request track-sc1 url_param(WOPISrc)
+  #    stick match url_param(WOPISrc) if { var(txn.wopisrcconns) -m int gt 0 }
+  #    stick store-request url_param(WOPISrc)
   hosts:
     - host: chart-example.local
       paths:
@@ -165,17 +166,17 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+# We usually recommend not to specify default resources and to leave this as a conscious
+# choice for the user. This also increases chances charts run on environments with little
+# resources, such as Minikube. If you do want to specify resources, uncomment the following
+# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
 resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+#  limits:
+#    cpu: 100m
+#    memory: 128Mi
+#  requests:
+#    cpu: 100m
+#    memory: 128Mi
 
 replicaCount: 1
 
@@ -188,20 +189,47 @@ autoscaling:
 
 dynamicConfig:
   enabled: false
+  image:
+    repository: nginx
+    tag: 1.23
+    pullPolicy: IfNotPresent
 
-  replicaCount: 2
+  replicaCount: 1
   podAnnotations: []
   podSecurityContext: {}
   securityContext: {}
+
+  # configVolumeType: configMap # configMap or pvc
 
   existingConfigMap:
     enabled: false
     name: ""
 
-  image:
-    repository: nginx
-    tag: 1.23
-    pullPolicy: IfNotPresent
+  upload:
+    enabled: false
+    image:
+      repository: "twostoryrobot/simple-file-upload"
+      digest: 8648a554c42c81db317bf51fbb59d3ee884f0d4e6e216835a31bf2e6872d4947
+    key: TESTKEY
+    pvc:
+      size: 1Gi
+      accessMode: "ReadWriteOnce"
+      # storageClassName: ""
+    service:
+      port: 8090
+    ingress:
+      enabled: false
+      className: ""
+      annotations: {}
+      hosts:
+        - host: chart-example.local
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      tls: []
+      #  - secretName: chart-example-tls
+      #    hosts:
+      #      - chart-example.local
 
   containerPort: 80
 
