@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+0200\n"
-"PO-Revision-Date: 2023-06-12 08:54+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2023-07-01 12:58+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1089,9 +1089,8 @@ msgid "Tap to collapse"
 msgstr "Antippen zum Zuklappen"
 
 #: src/control/Control.NotebookbarBuilder.js:577
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "PDF-Dokument (.pdf)"
+msgstr "PDF-Dokument (.pdf) als..."
 
 #: src/control/Control.NotebookbarBuilder.js:597
 #: src/control/Control.NotebookbarCalc.js:215
@@ -1426,7 +1425,7 @@ msgstr "Voransicht der Seite "
 
 #: src/control/Control.PartsPreview.js:237
 msgid "Paste Slide"
-msgstr ""
+msgstr "Folie einfügen"
 
 #: src/control/Control.PartsPreview.js:264
 msgid "Copy"
@@ -1901,7 +1900,7 @@ msgstr "\"Langsamer Proxy\""
 
 #: src/control/Toolbar.js:667
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Alle Versionsinformationen auf Englisch kopieren"
 
 #: src/control/Toolbar.js:721
 msgid "Insert hyperlink"
@@ -1944,7 +1943,7 @@ msgstr "NEU LADEN"
 
 #: src/core/Socket.js:577
 msgid "COOLWSD version:"
-msgstr "COOLWSD Version:"
+msgstr "COOLWSD-Version:"
 
 #: src/core/Socket.js:589
 msgid "Served by:"
@@ -1956,11 +1955,11 @@ msgstr "Diese Serverversion wird nicht unterstützt."
 
 #: src/core/Socket.js:599
 msgid "LOKit version:"
-msgstr "LOKit Version:"
+msgstr "LOKit-Version:"
 
 #: src/core/Socket.js:709
 msgid "Document is getting migrated..."
-msgstr ""
+msgstr "Dokument wird migriert..."
 
 #: src/core/Socket.js:736
 msgid "Session terminated by document owner"
