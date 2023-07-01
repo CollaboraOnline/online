@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+0200\n"
-"PO-Revision-Date: 2023-06-09 10:32+0000\n"
+"PO-Revision-Date: 2023-07-01 12:58+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1085,9 +1085,8 @@ msgid "Tap to collapse"
 msgstr "Koppintson az összecsukáshoz"
 
 #: src/control/Control.NotebookbarBuilder.js:577
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "PDF dokumentum (.pdf)"
+msgstr "PDF dokumentum (.pdf) ..."
 
 #: src/control/Control.NotebookbarBuilder.js:597
 #: src/control/Control.NotebookbarCalc.js:215
@@ -1421,9 +1420,8 @@ msgid "preview of page "
 msgstr "oldal előnézete "
 
 #: src/control/Control.PartsPreview.js:237
-#, fuzzy
 msgid "Paste Slide"
-msgstr "Diasablonok"
+msgstr "Dia beillesztése"
 
 #: src/control/Control.PartsPreview.js:264
 msgid "Copy"
@@ -1897,7 +1895,7 @@ msgstr "„Lassú proxy üzemmód”"
 
 #: src/control/Toolbar.js:667
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Összes verzióinformáció másolása angolul"
 
 #: src/control/Toolbar.js:721
 msgid "Insert hyperlink"
@@ -1953,7 +1951,7 @@ msgstr "LOKit verzió:"
 
 #: src/core/Socket.js:709
 msgid "Document is getting migrated..."
-msgstr ""
+msgstr "A dokumentum áttelepítése folyamatban van..."
 
 #: src/core/Socket.js:736
 msgid "Session terminated by document owner"
