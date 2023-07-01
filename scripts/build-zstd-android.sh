@@ -31,6 +31,8 @@ for p in $PLATFORMS; do
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_SYSTEM_NAME=Android \
         -DCMAKE_SYSTEM_VERSION=21 \
+        -DZSTD_BUILD_PROGRAMS:BOOL=OFF \
+        -DZSTD_BUILD_SHARED:BOOL=OFF \
         $TOP_PATH/build/cmake || exit 1;
     make
 done
