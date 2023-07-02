@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+0200\n"
-"PO-Revision-Date: 2023-06-12 08:54+0000\n"
+"PO-Revision-Date: 2023-07-02 16:17+0000\n"
 "Last-Translator: Andi Chandler <andi@gowling.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_GB/>\n"
-"Language: \n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1079,9 +1079,8 @@ msgid "Tap to collapse"
 msgstr "Tap to collapse"
 
 #: src/control/Control.NotebookbarBuilder.js:577
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "PDF Document (.pdf)"
+msgstr "PDF Document (.pdf) as..."
 
 #: src/control/Control.NotebookbarBuilder.js:597
 #: src/control/Control.NotebookbarCalc.js:215
@@ -1190,7 +1189,7 @@ msgstr "Save as"
 #: src/control/Control.NotebookbarImpress.js:187
 #: src/control/Control.NotebookbarWriter.js:143
 msgid "Export As"
-msgstr "Export as"
+msgstr "Export As"
 
 #: src/control/Control.NotebookbarCalc.js:143
 #: src/control/Control.NotebookbarDraw.js:163
@@ -1415,9 +1414,8 @@ msgid "preview of page "
 msgstr "preview of page "
 
 #: src/control/Control.PartsPreview.js:237
-#, fuzzy
 msgid "Paste Slide"
-msgstr "Master Slides"
+msgstr "Paste Slide"
 
 #: src/control/Control.PartsPreview.js:264
 msgid "Copy"
@@ -1887,7 +1885,7 @@ msgstr "\"Slow Proxy\""
 
 #: src/control/Toolbar.js:667
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Copy all version information in English"
 
 #: src/control/Toolbar.js:721
 msgid "Insert hyperlink"
@@ -1943,7 +1941,7 @@ msgstr "LOKit version:"
 
 #: src/core/Socket.js:709
 msgid "Document is getting migrated..."
-msgstr ""
+msgstr "Document is getting migrated..."
 
 #: src/core/Socket.js:736
 msgid "Session terminated by document owner"
