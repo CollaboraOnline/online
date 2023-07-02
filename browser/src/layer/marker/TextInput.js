@@ -589,22 +589,20 @@ L.TextInput = L.Layer.extend({
 			return;
 
 		this._ignoreNextBackspace = false;
-		if (this._hasWorkingSelectionStart) {
-			if (!this._isSelectionValid()) {
-				this._emptyArea();
-			} else if (this._isInitialContent() && this._isCursorAtBeginning())
+		if (!this._isSelectionValid()) {
+			this._emptyArea();
+		} else if (this._isInitialContent() && this._isCursorAtBeginning())
+		{
+			// It seems some inputs eg. GBoard can magically move the cursor from " | " to "|  "
+			window.app.console.log('Oh dear, gboard sabotaged our cursor position, fixing');
+			// But when we detect the problem only emit a delete when we have one.
+			if (ev.inputType && ev.inputType === 'deleteContentBackward')
 			{
-				// It seems some inputs eg. GBoard can magically move the cursor from " | " to "|  "
-				window.app.console.log('Oh dear, gboard sabotaged our cursor position, fixing');
-				// But when we detect the problem only emit a delete when we have one.
-				if (ev.inputType && ev.inputType === 'deleteContentBackward')
-				{
-					this._removeTextContent(1, 0);
-					// Having mended it we now get a real backspace on input (sometimes)
-					this._ignoreNextBackspace = true;
-				}
-				this._emptyArea();
+				this._removeTextContent(1, 0);
+				// Having mended it we now get a real backspace on input (sometimes)
+				this._ignoreNextBackspace = true;
 			}
+			this._emptyArea();
 		}
 	},
 
