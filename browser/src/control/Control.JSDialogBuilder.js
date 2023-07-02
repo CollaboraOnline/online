@@ -2437,21 +2437,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			parentContainer);
 	},
 
-	_makeIdUnique: function(id) {
-		var counter = 0;
-		var found = document.querySelector('[id="' + id + '"]');
-
-		while (found) {
-			counter++;
-			found = document.querySelector('[id="' + id + counter + '"]');
-		}
-
-		if (counter)
-			id = id + counter;
-
-		return id;
-	},
-
 	_unoToolButton: function(parentContainer, data, builder, options) {
 		var button = null;
 
@@ -2479,9 +2464,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.command || data.postmessage === true) {
 			var id = data.id ? data.id : (data.command && data.command !== '') ? data.command : data.text;
 			var isUnoCommand = data.command && data.command.indexOf('.uno:') >= 0;
-			if (isUnoCommand)
-				id = encodeURIComponent(data.command.substr('.uno:'.length));
-			else
+			if (!isUnoCommand)
 				isRealUnoCommand = false;
 
 			if (id)
@@ -2491,14 +2474,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			L.DomUtil.addClass(div, 'uno' + id);
 
-			if (isRealUnoCommand)
-				id = builder._makeIdUnique(id);
-
 			div.id = id;
 			data.id = id; // change in input data for postprocess
 
 			var icon = data.icon ? data.icon : builder._createIconURL(data.command);
-			var buttonId = id + 'img';
+			var buttonId = id + '-button';
 
 			button = L.DomUtil.create('button', 'ui-content unobutton', div);
 			button.id = buttonId;

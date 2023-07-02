@@ -457,7 +457,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				return false;
 		}
 
-		data.command = data.id;
+		if (!data.command)
+			data.command = data.id;
 
 		var isDownloadAsGroup = data.id === 'downloadas';
 		var isSaveAsGroup = data.id === 'saveas';

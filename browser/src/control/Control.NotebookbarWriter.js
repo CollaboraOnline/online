@@ -110,7 +110,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'toolbox',
 				'children': [
 					{
-						'id': 'file-save',
+						'id': 'file-file-save',
 						'type': 'bigtoolitem',
 						'text': _('Save'),
 						'command': '.uno:Save'
@@ -122,13 +122,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		if (hasSaveAs) {
 			if (hasGroupedSaveAs) {
 				content.push({
-					'id': 'saveas',
+					'id': 'file-saveas',
 					'type': 'bigmenubartoolitem',
 					'text': _('Save As'),
 				});
 			} else {
 				content.push({
-					'id': 'file-saveas',
+					'id': 'file-file-saveas',
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:SaveAs', 'text'),
 					'command': '.uno:SaveAs'
@@ -138,7 +138,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 		if (hasSaveAs) {
 			content.push({
-				'id': 'exportas',
+				'id': 'file-exportas',
 				'type': 'bigmenubartoolitem',
 				'text': _('Export As'),
 			});
@@ -150,7 +150,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'children': [
 					hasShare ?
 						{
-							'id': 'ShareAs',
+							'id': 'file-ShareAs',
 							'type': 'customtoolitem',
 							'text': _('Share'),
 							'command': 'shareas',
@@ -158,7 +158,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						} : {},
 					hasRevisionHistory ?
 						{
-							'id': 'Rev-History',
+							'id': 'file-Rev-History',
 							'type': 'customtoolitem',
 							'text': _('See history'),
 							'command': 'rev-history',
@@ -169,7 +169,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			hasPrint ?
 				{
-					'id': 'print',
+					'id': 'file-print',
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:Print', 'text'),
 					'command': '.uno:Print'
@@ -179,7 +179,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'type': 'toolbox',
 					'children': [
 						{
-							'id': 'runmacro',
+							'id': 'file-runmacro',
 							'type': 'bigtoolitem',
 							'text': _UNO('.uno:RunMacro', 'text'),
 							'command': '.uno:RunMacro'
@@ -200,13 +200,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'type': 'container',
 					'children': [
 						{
-							'id': 'downloadas-odt',
+							'id': 'file-downloadas-odt',
 							'type': 'menubartoolitem',
 							'text': _('ODF Text Document (.odt)'),
 							'command': ''
 						},
 						{
-							'id': 'downloadas-rtf',
+							'id': 'file-downloadas-rtf',
 							'type': 'menubartoolitem',
 							'text': _('Rich Text (.rtf)'),
 							'command': ''
@@ -218,13 +218,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'type': 'container',
 					'children': [
 						{
-							'id': 'downloadas-doc',
+							'id': 'file-downloadas-doc',
 							'type': 'menubartoolitem',
 							'text': _('Word 2003 Document (.doc)'),
 							'command': ''
 						},
 						{
-							'id': 'downloadas-docx',
+							'id': 'file-downloadas-docx',
 							'type': 'menubartoolitem',
 							'text': _('Word Document (.docx)'),
 							'command': ''
@@ -236,14 +236,14 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'type': 'container',
 					'children': [
 						{
-							'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+							'id': !window.ThisIsAMobileApp ? 'file-exportpdf' : 'file-downloadas-pdf',
 							'type': 'customtoolitem',
 							'text': _('PDF Document (.pdf)'),
 							'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
 							'inlineLabel': true
 						},
 						{
-							'id': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub',
+							'id': !window.ThisIsAMobileApp ? 'file-exportepub' : 'file-downloadas-epub',
 							'type': 'customtoolitem',
 							'text': _('EPUB Document (.epub)'),
 							'command': !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub',
@@ -259,7 +259,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			'type': 'container',
 			'children': [
 				hasRepair? {
-					'id': 'repair',
+					'id': 'file-repair',
 					'type': 'bigmenubartoolitem',
 					'text': _('Repair'),
 					'command': _('Repair')
@@ -272,7 +272,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			'type': 'container',
 			'children': [
 				{
-					'id': 'properties',
+					'id': 'file-properties',
 					'type': 'bigtoolitem',
 					'text': _('Properties'),
 					'command': '.uno:SetDocumentProperties'
@@ -291,13 +291,14 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 		var content = [
 			{
+				'id': 'Help-container',
 				'type': 'container',
 				'children': [
 					{
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'forum',
+								'id': 'help-forum',
 								'type': 'bigtoolitem',
 								'text': _('Forum'),
 								'command': '.uno:ForumHelp'
@@ -308,7 +309,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'online-help',
+								'id': 'help-online-help',
 								'type': 'bigtoolitem',
 								'text': _('Online Help'),
 								'command': '.uno:OnlineHelp'
@@ -319,7 +320,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'keyboard-shortcuts',
+								'id': 'help-keyboard-shortcuts',
 								'type': 'bigtoolitem',
 								'text': _('Keyboard shortcuts'),
 								'command': '.uno:KeyboardShortcuts'
@@ -328,6 +329,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					},
 					hasAccessibilityCheck ?
 						{
+							'id': 'help-accessibility-check',
 							'type': 'bigtoolitem',
 							'text': _UNO('.uno:AccessibilityCheck', 'text'),
 							'command': '.uno:AccessibilityCheck'
@@ -336,7 +338,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'report-an-issue',
+								'id': 'help-report-an-issue',
 								'type': 'bigtoolitem',
 								'text': _('Report an issue'),
 								'command': '.uno:ReportIssue'
@@ -348,7 +350,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'type': 'toolbox',
 							'children': [
 								{
-									'id': 'latestupdates',
+									'id': 'help-latestupdates',
 									'type': 'bigtoolitem',
 									'text': _('Latest Updates'),
 									'command': '.uno:LatestUpdates'
@@ -360,7 +362,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'type': 'toolbox',
 							'children': [
 								{
-									'id': 'feedback',
+									'id': 'help-feedback',
 									'type': 'bigtoolitem',
 									'text': _('Send Feedback'),
 									'command': '.uno:Feedback'
@@ -372,7 +374,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'type': 'toolbox',
 							'children': [
 								{
-									'id': 'about',
+									'id': 'help-about',
 									'type': 'bigtoolitem',
 									'text': _('About'),
 									'command': '.uno:About'
@@ -393,11 +395,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'container',
 				'children': [
 					{
+						'id': 'home-undo',
 						'type': 'toolitem',
 						'text': _UNO('.uno:Undo'),
 						'command': '.uno:Undo'
 					},
 					{
+						'id': 'home-redo',
 						'type': 'toolitem',
 						'text': _UNO('.uno:Redo'),
 						'command': '.uno:Redo'
@@ -417,6 +421,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'home-cut',
 								'type': 'toolitem',
 								'text': _UNO('.uno:Cut'),
 								'command': '.uno:Cut'
@@ -432,11 +437,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'home-copy',
 								'type': 'toolitem',
 								'text': _UNO('.uno:Copy'),
 								'command': '.uno:Copy'
 							},
 							{
+								'id': 'home-resetattributes',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ResetAttributes'),
 								'command': '.uno:ResetAttributes'
@@ -453,7 +460,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'container',
 						'children': [
 							{
-								'id': 'fontnamecombobox',
+								'id': 'home-fontnamecombobox',
 								'type': 'combobox',
 								'text': 'Carlito',
 								'entries': [
@@ -466,7 +473,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'command': '.uno:CharFontName'
 							},
 							{
-								'id': 'fontsize',
+								'id': 'home-fontsize',
 								'type': 'combobox',
 								'text': '12 pt',
 								'entries': [
@@ -479,11 +486,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'command': '.uno:FontHeight'
 							},
 							{
+								'id': 'home-grow',
 								'type': 'toolitem',
 								'text': _UNO('.uno:Grow'),
 								'command': '.uno:Grow'
 							},
 							{
+								'id': 'home-shrink',
 								'type': 'toolitem',
 								'text': _UNO('.uno:Shrink'),
 								'command': '.uno:Shrink'
@@ -498,46 +507,55 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'type': 'toolbox',
 								'children': [
 									{
+										'id': 'home-bold',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Bold'),
 										'command': '.uno:Bold'
 									},
 									{
+										'id': 'home-italic',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Italic'),
 										'command': '.uno:Italic'
 									},
 									{
+										'id': 'home-underline',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Underline'),
 										'command': '.uno:Underline'
 									},
 									{
+										'id': 'home-strikeout',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Strikeout'),
 										'command': '.uno:Strikeout'
 									},
 									{
+										'id': 'home-subscript',
 										'type': 'toolitem',
 										'text': _UNO('.uno:SubScript'),
 										'command': '.uno:SubScript'
 									},
 									{
+										'id': 'home-superscript',
 										'type': 'toolitem',
 										'text': _UNO('.uno:SuperScript'),
 										'command': '.uno:SuperScript'
 									},
 									{
+										'id': 'home-spacing',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Spacing'),
 										'command': '.uno:CharSpacing'
 									},
 									{
+										'id': 'home-backcolor',
 										'type': 'toolitem',
 										'text': _UNO('.uno:BackColor', 'text'),
 										'command': '.uno:BackColor'
 									},
 									{
+										'id': 'home-color',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Color'),
 										'command': '.uno:Color'
@@ -560,36 +578,43 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'type': 'toolbox',
 								'children': [
 									{
+										'id': 'home-defaultbullet',
 										'type': 'toolitem',
 										'text': _UNO('.uno:DefaultBullet'),
 										'command': '.uno:DefaultBullet'
 									},
 									{
+										'id': 'home-defaultnumbering',
 										'type': 'toolitem',
 										'text': _UNO('.uno:DefaultNumbering'),
 										'command': '.uno:DefaultNumbering'
 									},
 									{
+										'id': 'home-incrementindent',
 										'type': 'toolitem',
 										'text': _UNO('.uno:IncrementIndent'),
 										'command': '.uno:IncrementIndent'
 									},
 									{
+										'id': 'home-decrementindent',
 										'type': 'toolitem',
 										'text': _UNO('.uno:DecrementIndent'),
 										'command': '.uno:DecrementIndent'
 									},
 									{
+										'id': 'home-controlcodes',
 										'type': 'toolitem',
 										'text': _UNO('.uno:ControlCodes', 'text'),
 										'command': '.uno:ControlCodes'
 									},
 									{
+										'id': 'home-paralefttoright',
 										'type': 'toolitem',
 										'text': _UNO('.uno:ParaLeftToRight'),
 										'command': '.uno:ParaLeftToRight'
 									},
 									{
+										'id': 'home-pararighttoleft',
 										'type': 'toolitem',
 										'text': _UNO('.uno:ParaRightToLeft'),
 										'command': '.uno:ParaRightToLeft'
@@ -606,31 +631,37 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'type': 'toolbox',
 								'children': [
 									{
+										'id': 'home-leftpara',
 										'type': 'toolitem',
 										'text': _UNO('.uno:LeftPara'),
 										'command': '.uno:LeftPara'
 									},
 									{
+										'id': 'home-centerpara',
 										'type': 'toolitem',
 										'text': _UNO('.uno:CenterPara'),
 										'command': '.uno:CenterPara'
 									},
 									{
+										'id': 'home-rightpara',
 										'type': 'toolitem',
 										'text': _UNO('.uno:RightPara'),
 										'command': '.uno:RightPara'
 									},
 									{
+										'id': 'home-justifypara',
 										'type': 'toolitem',
 										'text': _UNO('.uno:JustifyPara'),
 										'command': '.uno:JustifyPara'
 									},
 									{
+										'id': 'home-linespacing',
 										'type': 'toolitem',
 										'text': _UNO('.uno:LineSpacing'),
 										'command': '.uno:LineSpacing'
 									},
 									{
+										'id': 'home-backgroundcolor',
 										'type': 'toolitem',
 										'text': _UNO('.uno:BackgroundColor'),
 										'command': '.uno:BackgroundColor'
@@ -656,6 +687,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'home-inserttable',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertTable', 'text'),
 								'command': '.uno:InsertTable'
@@ -666,11 +698,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'home-insertgraphic',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertGraphic'),
 								'command': '.uno:InsertGraphic'
 							},
 							{
+								'id': 'home-insertpagebreak',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertPagebreak', 'text'),
 								'command': '.uno:InsertPagebreak'
@@ -682,6 +716,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'command': 'charmapcontrol'
 							},
 							{
+								'id': 'home-insertannotation',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertAnnotation'),
 								'command': '.uno:InsertAnnotation'
@@ -692,6 +727,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'home-searchdialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:SearchDialog'),
 				'command': '.uno:SearchDialog'
@@ -704,6 +740,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getFormatTab: function() {
 		var content = [
 			{
+				'id': 'format-fontdialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:FontDialog', 'text'),
 				'command': '.uno:FontDialog'
@@ -715,6 +752,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:FormatMenu'
 			},
 			{
+				'id': 'format-paragraphdialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ParagraphDialog', 'text'),
 				'command': '.uno:ParagraphDialog'
@@ -726,46 +764,55 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:FormatBulletsMenu'
 			},
 			{
+				'id': 'format-outlinebullet',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:OutlineBullet', 'text'),
 				'command': '.uno:OutlineBullet'
 			},
 			{
+				'id': 'format-pagedialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:PageDialog', 'text'),
 				'command': '.uno:PageDialog'
 			},
 			{
+				'id': 'format-formatcolumns',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:FormatColumns', 'text'),
 				'command': '.uno:FormatColumns'
 			},
 			{
+				'id': 'format-editregion',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:EditRegion', 'text'),
 				'command': '.uno:EditRegion'
 			},
 			{
+				'id': 'format-formatline',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:FormatLine'),
 				'command': '.uno:FormatLine'
 			},
 			{
+				'id': 'format-formatarea',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:FormatArea'),
 				'command': '.uno:FormatArea'
 			},
 			{
+				'id': 'format-transformdialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:TransformDialog'),
 				'command': '.uno:TransformDialog'
 			},
 			{
+				'id': 'format-chapternumberingdialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ChapterNumberingDialog', 'text'),
 				'command': '.uno:ChapterNumberingDialog'
 			},
 			{
+				'id': 'format-themedialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ThemeDialog'),
 				'command': '.uno:ThemeDialog'
@@ -779,6 +826,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var isODF = L.LOUtil.isFileODF(this._map);
 		var content = [
 			{
+				'id': 'insert-insertpagebreak',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertPagebreak', 'text'),
 				'command': '.uno:InsertPagebreak'
@@ -789,6 +837,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:InsertTable'
 			},
 			{
+				'id': 'insert-insertgraphic',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertGraphic'),
 				'command': '.uno:InsertGraphic'
@@ -800,6 +849,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'insert-inserttable',
 								'type': 'toolitem',
 								'text': _('Shapes'),
 								'command': '.uno:BasicShapes'
@@ -810,6 +860,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'insert-insertobjectchart',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertObjectChart'),
 								'command': '.uno:InsertObjectChart'
@@ -837,6 +888,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'insert-smartpicker',
 								'type': 'customtoolitem',
 								'text': _('Smart Picker'),
 								'command': 'remotelink'
@@ -852,6 +904,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': 'hyperlinkdialog'
 			},
 			{
+				'id': 'insert-pagenumberwizard',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertAnnotation', 'text'),
 				'command': '.uno:InsertAnnotation'
@@ -863,6 +916,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'insert-insertpageheader',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertPageHeader', 'text'),
 								'command': '.uno:InsertPageHeader'
@@ -873,6 +927,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'insert-insertpagefooter',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertPageFooter', 'text'),
 								'command': '.uno:InsertPageFooter'
@@ -889,6 +944,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'insert-pagenumberwizard',
 								'type': 'toolitem',
 								'text': _UNO('.uno:PageNumberWizard', 'text'),
 								'command': '.uno:PageNumberWizard'
@@ -899,6 +955,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'insert-insertfieldctrl',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertFieldCtrl', 'text'),
 								'command': '.uno:InsertFieldCtrl'
@@ -915,6 +972,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'insert-shapes',
 								'type': 'toolitem',
 								'text': _UNO('.uno:TitlePageDialog', 'text'),
 								'command': '.uno:TitlePageDialog'
@@ -956,6 +1014,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'insert-line',
 								'type': 'toolitem',
 								'text': _UNO('.uno:Line', 'text'),
 								'command': '.uno:Line'
@@ -966,6 +1025,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'insert-fontworkgalleryfloater',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:FontworkGalleryFloater'),
 				'command': '.uno:FontworkGalleryFloater',
@@ -985,7 +1045,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'CharmapControl',
+								'id': 'insert-CharmapControl',
 								'type': 'customtoolitem',
 								'text': _UNO('.uno:CharmapControl'),
 								'command': 'charmapcontrol'
@@ -996,6 +1056,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'insert-insertannotation',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertObjectStarMath', 'text'),
 								'command': '.uno:InsertObjectStarMath'
@@ -1013,31 +1074,37 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getFormTab: function() {
 		var content = [
 			{
+				'id': 'form-insertcontentcontrol',
 				'type': 'bigtoolitem',
 				'text':  _('Rich Text'),
 				'command': '.uno:InsertContentControl'
 			},
 			{
+				'id': 'form-insertcheckboxcontentcontrol',
 				'type': 'bigtoolitem',
 				'text': _('Checkbox'),
 				'command': '.uno:InsertCheckboxContentControl'
 			},
 			{
+				'id': 'form-insertdropdowncontentcontrol',
 				'type': 'bigtoolitem',
 				'text':  _('Dropdown'),
 				'command': '.uno:InsertDropdownContentControl'
 			},
 			{
+				'id': 'form-insertpicturecontentcontrol',
 				'type': 'bigtoolitem',
 				'text': _('Picture'),
 				'command': '.uno:InsertPictureContentControl'
 			},
 			{
+				'id': 'form-insertdatecontentcontrol',
 				'type': 'bigtoolitem',
 				'text': _('Date'),
 				'command': '.uno:InsertDateContentControl'
 			},
 			{
+				'id': 'form-contentcontrolproperties',
 				'type': 'bigtoolitem',
 				'text': _('Properties'),
 				'command': '.uno:ContentControlProperties'
@@ -1052,24 +1119,25 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var content = [
 			isTablet ?
 				{
-					'id': 'closemobile',
+					'id': 'view-closemobile',
 					'type': 'bigcustomtoolitem',
 					'text': _('Read mode'),
 					'command': 'closetablet',
 				} : {},
 			{
+				'id': 'view-controlcodes',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ControlCodes', 'text'),
 				'command': '.uno:ControlCodes'
 			},
 			{
-				'id': 'fullscreen',
+				'id': 'view-fullscreen',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:FullScreen'),
 				'command': '.uno:FullScreen'
 			},
 			{
-				'id': 'zoomreset',
+				'id': 'view-zoomreset',
 				'type': 'menubartoolitem',
 				'text': _('Reset zoom'),
 				'command': _('Reset zoom')
@@ -1081,7 +1149,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'zoomout',
+								'id': 'view-zoomout',
 								'type': 'menubartoolitem',
 								'text': _UNO('.uno:ZoomMinus'),
 								'command': '.uno:ZoomMinus'
@@ -1092,7 +1160,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'zoomin',
+								'id': 'view-zoomin',
 								'type': 'menubartoolitem',
 								'text': _UNO('.uno:ZoomPlus'),
 								'command': '.uno:ZoomPlus'
@@ -1103,7 +1171,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'toggleuimode',
+				'id': 'view-toggleuimode',
 				'type': 'bigmenubartoolitem',
 				'text': _('Compact view'),
 				'command': _('Toggle UI Mode')
@@ -1115,7 +1183,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'showruler',
+								'id': 'view-showruler',
 								'type': 'menubartoolitem',
 								'text': _('Ruler'),
 								'command': _('Show Ruler')
@@ -1126,7 +1194,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'showstatusbar',
+								'id': 'view-showstatusbar',
 								'type': 'menubartoolitem',
 								'text': _('Status Bar'),
 								'command': _('Show Status Bar')
@@ -1137,16 +1205,18 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id':'toggledarktheme',
+				'id':'view-toggledarktheme',
 				'type': 'bigcustomtoolitem',
 				'text': _('Dark Mode')
 			},
 			{
+				'id': 'view-sidebar',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Sidebar'),
 				'command': '.uno:SidebarDeck.PropertyDeck'
 			},
 			{
+				'id': 'view-navigator',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Navigator'),
 				'command': '.uno:Navigator'
@@ -1159,6 +1229,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getLayoutTab: function() {
 		var content = [
 			{
+				'id': 'layout-pagedialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:PageDialog'),
 				'command': '.uno:PageDialog'
@@ -1170,6 +1241,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-insertpagebreak',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertPagebreak', 'text'),
 								'command': '.uno:InsertPagebreak'
@@ -1180,6 +1252,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-insertbreak',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertBreak', 'text'),
 								'command': '.uno:InsertBreak'
@@ -1190,6 +1263,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'layout-titlepagedialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:TitlePageDialog', 'text'),
 				'command': '.uno:TitlePageDialog'
@@ -1201,6 +1275,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-formatcolumns',
 								'type': 'toolitem',
 								'text': _UNO('.uno:FormatColumns', 'text'),
 								'command': '.uno:FormatColumns'
@@ -1211,6 +1286,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-watermark',
 								'type': 'toolitem',
 								'text': _UNO('.uno:Watermark', 'text'),
 								'command': '.uno:Watermark'
@@ -1227,6 +1303,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-hyphenate',
 								'type': 'toolitem',
 								'text':  _UNO('.uno:Hyphenate', 'text'),
 								'command': '.uno:Hyphenate'
@@ -1237,6 +1314,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-linenumberingdialog',
 								'type': 'toolitem',
 								'text': _UNO('.uno:LineNumberingDialog', 'text'),
 								'command': '.uno:LineNumberingDialog'
@@ -1247,6 +1325,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'layout-selectall',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:SelectAll'),
 				'command': '.uno:SelectAll'
@@ -1258,16 +1337,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-wrapoff',
 								'type': 'toolitem',
 								'text': _UNO('.uno:WrapOff', 'text'),
 								'command': '.uno:WrapOff'
 							},
 							{
+								'id': 'layout-wrapon',
 								'type': 'toolitem',
 								'text': _UNO('.uno:WrapOn', 'text'),
 								'command': '.uno:WrapOn'
 							},
 							{
+								'id': 'layout-wrapideal',
 								'type': 'toolitem',
 								'text': _UNO('.uno:WrapIdeal', 'text'),
 								'command': '.uno:WrapIdeal'
@@ -1278,16 +1360,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-wrapleft',
 								'type': 'toolitem',
 								'text': _UNO('.uno:WrapLeft', 'text'),
 								'command': '.uno:WrapLeft'
 							},
 							{
+								'id': 'layout-wrapthrough',
 								'type': 'toolitem',
 								'text': _UNO('.uno:WrapThrough', 'text'),
 								'command': '.uno:WrapThrough'
 							},
 							{
+								'id': 'layout-wrapright',
 								'type': 'toolitem',
 								'text': _UNO('.uno:WrapRight', 'text'),
 								'command': '.uno:WrapRight'
@@ -1304,6 +1389,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-contourdialog',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ContourDialog'),
 								'command': '.uno:ContourDialog'
@@ -1314,6 +1400,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-textwrap',
 								'type': 'toolitem',
 								'text': _UNO('.uno:TextWrap'),
 								'command': '.uno:TextWrap'
@@ -1330,16 +1417,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-objectalignleft',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ObjectAlignLeft', 'text'),
 								'command': '.uno:ObjectAlignLeft'
 							},
 							{
+								'id': 'layout-aligncenter',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AlignCenter', 'text'),
 								'command': '.uno:AlignCenter'
 							},
 							{
+								'id': 'layout-objectalignright',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ObjectAlignRight', 'text'),
 								'command': '.uno:ObjectAlignRight'
@@ -1350,16 +1440,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-alignup',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AlignUp', 'text'),
 								'command': '.uno:AlignUp'
 							},
 							{
+								'id': 'layout-alignmiddle',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AlignMiddle', 'text'),
 								'command': '.uno:AlignMiddle'
 							},
 							{
+								'id': 'layout-aligndown',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AlignDown', 'text'),
 								'command': '.uno:AlignDown'
@@ -1376,11 +1469,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-objectforwardone',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ObjectForwardOne', 'text'),
 								'command': '.uno:ObjectForwardOne'
 							},
 							{
+								'id': 'layout-bringtofront',
 								'type': 'toolitem',
 								'text': _UNO('.uno:BringToFront', 'text'),
 								'command': '.uno:BringToFront'
@@ -1391,11 +1486,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-objectbackone',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ObjectBackOne', 'text'),
 								'command': '.uno:ObjectBackOne'
 							},
 							{
+								'id': 'layout-sendtoback',
 								'type': 'toolitem',
 								'text': _UNO('.uno:SendToBack', 'text'),
 								'command': '.uno:SendToBack'
@@ -1413,6 +1510,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getReferencesTab: function() {
 		var content = [
 			{
+				'id': 'references-indexesmenu',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:IndexesMenu', 'text'),
 				'command': '.uno:InsertMultiIndex'
@@ -1424,6 +1522,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'references-insertindexesentry',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertIndexesEntry', 'text'),
 								'command': '.uno:InsertIndexesEntry'
@@ -1434,6 +1533,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'references-updatecurrentindex',
 								'type': 'toolitem',
 								'text': _('Update Index'),
 								'command': '.uno:UpdateCurIndex'
@@ -1444,6 +1544,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'references-insertfootnote',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertFootnote', 'text'),
 				'command': '.uno:InsertFootnote'
@@ -1455,6 +1556,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'references-insertendnote',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertEndnote', 'text'),
 								'command': '.uno:InsertEndnote'
@@ -1465,6 +1567,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'references-footnotedialog',
 								'type': 'toolitem',
 								'text': _UNO('.uno:FootnoteDialog', 'text'),
 								'command': '.uno:FootnoteDialog'
@@ -1481,6 +1584,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'references-insertbookmark',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertBookmark', 'text'),
 								'command': '.uno:InsertBookmark'
@@ -1491,6 +1595,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'references-insertreferencefield',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertReferenceField', 'text'),
 								'command': '.uno:InsertReferenceField'
@@ -1516,7 +1621,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'type': 'toolbox',
 							'children': [
 								{
-									'id': 'zoteroAddEditCitation',
+									'id': 'references-zoteroAddEditCitation',
 									'type': 'customtoolitem',
 									'text': _('Add Citation'),
 									'command': 'zoteroaddeditcitation'
@@ -1527,7 +1632,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'type': 'toolbox',
 							'children': [
 								{
-									'id': 'zoteroaddnote',
+									'id': 'references-zoteroaddnote',
 									'type': 'customtoolitem',
 									'text': _('Add Citation Note'),
 									'command': 'zoteroaddnote'
@@ -1544,7 +1649,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'type': 'toolbox',
 							'children': [
 								{
-									'id': 'zoterorefresh',
+									'id': 'references-zoterorefresh',
 									'type': 'customtoolitem',
 									'text': _('Refresh Citations'),
 									'command': 'zoterorefresh'
@@ -1555,7 +1660,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'type': 'toolbox',
 							'children': [
 								{
-									'id': 'zoterounlink',
+									'id': 'references-zoterounlink',
 									'type': 'customtoolitem',
 									'text': _('Unlink Citations'),
 									'command': 'zoterounlink'
@@ -1566,7 +1671,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'vertical': 'true'
 				},
 				{
-					'id': 'zoteroSetDocPrefs',
+					'id': 'references-zoteroSetDocPrefs',
 					'type': 'bigcustomtoolitem',
 					'text': _('Citation Preferences'),
 					'command': 'zoterosetdocprefs'
@@ -1576,6 +1681,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 		content.push(
 			{
+				'id': 'references-insertfieldctrl',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertFieldCtrl', 'text'),
 				'command': '.uno:InsertFieldCtrl'
@@ -1587,11 +1693,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'references-insertpagenumberfield',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertPageNumberField'),
 								'command': '.uno:InsertPageNumberField'
 							},
 							{
+								'id': 'references-insertpagecountfield',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertPageCountField', 'text'),
 								'command': '.uno:InsertPageCountField'
@@ -1602,11 +1710,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'references-insertdatefield',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertDateField', 'text'),
 								'command': '.uno:InsertDateField'
 							},
 							{
+								'id': 'references-inserttitlefield',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertTitleField', 'text'),
 								'command': '.uno:InsertTitleField'
@@ -1617,6 +1727,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'references-updateall',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:UpdateAll', 'text'),
 				'command': '.uno:UpdateAll'
@@ -1629,23 +1740,26 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	 getReviewTab: function() {
 		var content = [
 			{
+				'id': 'review-spellingandgrammardialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:SpellingAndGrammarDialog'),
 				'command': '.uno:SpellingAndGrammarDialog'
 			},
 			{
+				'id': 'review-thesaurusdialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ThesaurusDialog'),
 				'command': '.uno:ThesaurusDialog'
 			},
 			{
-				'id': 'LanguageMenu',
+				'id': 'review-languagemenu',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:LanguageMenu'),
 				'command': '.uno:LanguageMenu'
 			},
 			window.deeplEnabled ?
 				{
+					'id': 'review-translate',
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:Translate', 'text'),
 					'command': '.uno:Translate'
@@ -1657,6 +1771,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-spellonline',
 								'type': 'toolitem',
 								'text': _UNO('.uno:SpellOnline'),
 								'command': '.uno:SpellOnline'
@@ -1667,6 +1782,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-wordcountdialog',
 								'type': 'toolitem',
 								'text': _UNO('.uno:WordCountDialog', 'text'),
 								'command': '.uno:WordCountDialog'
@@ -1677,11 +1793,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'review-insertannotation',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertAnnotation'),
 				'command': '.uno:InsertAnnotation'
 			},
 			{
+				'id': 'review-showresolvedannotations',
 				'type': 'bigcustomtoolitem',
 				'text': _UNO('.uno:ShowResolvedAnnotations', 'text'),
 				'command': 'showresolvedannotations'
@@ -1693,6 +1811,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-replycomment',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ReplyComment'),
 								'command': '.uno:ReplyComment'
@@ -1703,6 +1822,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-deletecomment',
 								'type': 'toolitem',
 								'text': _UNO('.uno:DeleteComment'),
 								'command': '.uno:DeleteComment'
@@ -1713,11 +1833,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'review-trackchanges',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:TrackChanges', 'text'),
 				'command': '.uno:TrackChanges'
 			},
 			{
+				'id': 'review-showtrackedchanges',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ShowTrackedChanges', 'text'),
 				'command': '.uno:ShowTrackedChanges'
@@ -1729,6 +1851,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-nexttrackedchange',
 								'type': 'toolitem',
 								'text': _UNO('.uno:NextTrackedChange', 'text'),
 								'command': '.uno:NextTrackedChange'
@@ -1739,6 +1862,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-previoustrackedchange',
 								'type': 'toolitem',
 								'text': _UNO('.uno:PreviousTrackedChange', 'text'),
 								'command': '.uno:PreviousTrackedChange'
@@ -1754,6 +1878,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-accepttrackedchange',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AcceptTrackedChange', 'text'),
 								'command': '.uno:AcceptTrackedChange'
@@ -1764,6 +1889,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-rejecttrackedchange',
 								'type': 'toolitem',
 								'text': _UNO('.uno:RejectTrackedChange', 'text'),
 								'command': '.uno:RejectTrackedChange'
@@ -1779,6 +1905,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-accepttrackedchangetonext',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AcceptTrackedChangeToNext', 'text'),
 								'command': '.uno:AcceptTrackedChangeToNext'
@@ -1789,6 +1916,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-rejecttrackedchangetonext',
 								'type': 'toolitem',
 								'text': _UNO('.uno:RejectTrackedChangeToNext', 'text'),
 								'command': '.uno:RejectTrackedChangeToNext'
@@ -1805,6 +1933,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-acceptalltrackedchanges',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AcceptAllTrackedChanges', 'text'),
 								'command': '.uno:AcceptAllTrackedChanges'
@@ -1815,6 +1944,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'review-rejectalltrackedchanges',
 								'type': 'toolitem',
 								'text': _UNO('.uno:RejectAllTrackedChanges', 'text'),
 								'command': '.uno:RejectAllTrackedChanges'
@@ -1825,11 +1955,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'review-accepttrackedchanges',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:AcceptTrackedChanges', 'text'),
 				'command': '.uno:AcceptTrackedChanges'
 			},
 			{
+				'id': 'review-accessibilitycheck',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:AccessibilityCheck', 'text'),
 				'command': '.uno:AccessibilityCheck'
@@ -1842,6 +1974,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getTableTab: function() {
 		var content = [
 			{
+				'id': 'table-tabledialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:TableDialog', 'text'),
 				'command': '.uno:TableDialog'
@@ -1853,16 +1986,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'table-insertcolumnsbefore',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertColumnsBefore', 'text'),
 								'command': '.uno:InsertColumnsBefore'
 							},
 							{
+								'id': 'table-insertcolumnsafter',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertColumnsAfter', 'text'),
 								'command': '.uno:InsertColumnsAfter'
 							},
 							{
+								'id': 'table-deletecolumns',
 								'type': 'toolitem',
 								'text': _UNO('.uno:DeleteColumns', 'text'),
 								'command': '.uno:DeleteColumns'
@@ -1873,16 +2009,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'table-insertrowsbefore',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertRowsBefore', 'text'),
 								'command': '.uno:InsertRowsBefore'
 							},
 							{
+								'id': 'table-insertrowsafter',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertRowsAfter', 'text'),
 								'command': '.uno:InsertRowsAfter'
 							},
 							{
+								'id': 'table-deleterows',
 								'type': 'toolitem',
 								'text': _UNO('.uno:DeleteRows', 'text'),
 								'command': '.uno:DeleteRows'
@@ -1893,6 +2032,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'table-mergecells',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:MergeCells', 'text'),
 				'command': '.uno:MergeCells'
@@ -1904,6 +2044,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'table-splitcell',
 								'type': 'toolitem',
 								'text': _UNO('.uno:SplitCell', 'text'),
 								'command': '.uno:SplitCell'
@@ -1914,6 +2055,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'table-splittable',
 								'type': 'toolitem',
 								'text': _UNO('.uno:SplitTable', 'text'),
 								'command': '.uno:SplitTable'
@@ -1930,6 +2072,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'table-protect',
 								'type': 'toolitem',
 								'text': _UNO('.uno:Protect', 'text'),
 								'command': '.uno:Protect'
@@ -1940,6 +2083,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'table-unsetcellsreadonly',
 								'type': 'toolitem',
 								'text': _UNO('.uno:UnsetCellsReadOnly', 'text'),
 								'command': '.uno:UnsetCellsReadOnly'
@@ -1950,6 +2094,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'table-entirecell',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:EntireCell', 'text'),
 				'command': '.uno:EntireCell'
@@ -1961,11 +2106,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'table-entirecolumn',
 								'type': 'toolitem',
 								'text': _UNO('.uno:EntireColumn', 'text'),
 								'command': '.uno:EntireColumn'
 							},
 							{
+								'id': 'table-selecttable',
 								'type': 'toolitem',
 								'text': _UNO('.uno:SelectTable', 'text'),
 								'command': '.uno:SelectTable'
@@ -1976,11 +2123,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'table-entirerow',
 								'type': 'toolitem',
 								'text': _UNO('.uno:EntireRow', 'text'),
 								'command': '.uno:EntireRow'
 							},
 							{
+								'id': 'table-deletetable',
 								'type': 'toolitem',
 								'text': _UNO('.uno:DeleteTable', 'text'),
 								'command': '.uno:DeleteTable'
@@ -1997,16 +2146,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'table-cellverttop',
 								'type': 'toolitem',
 								'text': _UNO('.uno:CellVertTop'),
 								'command': '.uno:CellVertTop'
 							},
 							{
+								'id': 'table-cellvertcenter',
 								'type': 'toolitem',
 								'text': _UNO('.uno:CellVertCenter'),
 								'command': '.uno:CellVertCenter'
 							},
 							{
+								'id': 'table-cellvertbottom',
 								'type': 'toolitem',
 								'text': _UNO('.uno:CellVertBottom'),
 								'command': '.uno:CellVertBottom'
@@ -2017,21 +2169,25 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'table-leftpara',
 								'type': 'toolitem',
 								'text': _UNO('.uno:LeftPara'),
 								'command': '.uno:LeftPara'
 							},
 							{
+								'id': 'table-centerpara',
 								'type': 'toolitem',
 								'text': _UNO('.uno:CenterPara'),
 								'command': '.uno:CenterPara'
 							},
 							{
+								'id': 'table-rightpara',
 								'type': 'toolitem',
 								'text': _UNO('.uno:RightPara'),
 								'command': '.uno:RightPara'
 							},
 							{
+								'id': 'table-justifypara',
 								'type': 'toolitem',
 								'text': _UNO('.uno:JustifyPara'),
 								'command': '.uno:JustifyPara'
@@ -2042,11 +2198,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'table-tablesort',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:TableSort', 'text'),
 				'command': '.uno:TableSort'
 			},
 			{
+				'id': 'table-tablenumberformatdialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:TableNumberFormatDialog', 'text'),
 				'command': '.uno:TableNumberFormatDialog'
@@ -2058,11 +2216,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'table-numberformatcurrency',
 								'type': 'toolitem',
 								'text': _UNO('.uno:NumberFormatCurrency', 'text'),
 								'command': '.uno:NumberFormatCurrency'
 							},
 							{
+								'id': 'table-numberformatdate',
 								'type': 'toolitem',
 								'text': _UNO('.uno:NumberFormatDate', 'text'),
 								'command': '.uno:NumberFormatDate'
@@ -2073,11 +2233,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'table-numberformatdecimal',
 								'type': 'toolitem',
 								'text': _UNO('.uno:NumberFormatDecimal', 'text'),
 								'command': '.uno:NumberFormatDecimal'
 							},
 							{
+								'id': 'table-numberformatpercent',
 								'type': 'toolitem',
 								'text': _UNO('.uno:NumberFormatPercent', 'text'),
 								'command': '.uno:NumberFormatPercent'
@@ -2088,6 +2250,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'table-insertcaptiondialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertCaptionDialog', 'text'),
 				'command': '.uno:InsertCaptionDialog'
@@ -2101,6 +2264,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var isODF = L.LOUtil.isFileODF(this._map);
 		var content = [
 			{
+				'id': 'draw-transformdialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:TransformDialog', 'text'),
 				'command': '.uno:TransformDialog'
@@ -2112,6 +2276,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-flipvertical',
 								'type': 'toolitem',
 								'text': _UNO('.uno:FlipVertical'),
 								'command': '.uno:FlipVertical'
@@ -2122,6 +2287,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-fliphorizontal',
 								'type': 'toolitem',
 								'text': _UNO('.uno:FlipHorizontal'),
 								'command': '.uno:FlipHorizontal'
@@ -2138,6 +2304,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-xlinecolor',
 								'type': 'toolitem',
 								'text': _UNO('.uno:XLineColor'),
 								'command': '.uno:XLineColor'
@@ -2148,6 +2315,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-fillcolor',
 								'type': 'toolitem',
 								'text': _UNO('.uno:FillColor'),
 								'command': '.uno:FillColor'
@@ -2164,16 +2332,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-wrapoff',
 								'type': 'toolitem',
 								'text': _UNO('.uno:WrapOff', 'text'),
 								'command': '.uno:WrapOff'
 							},
 							{
+								'id': 'draw-wrapon',
 								'type': 'toolitem',
 								'text': _UNO('.uno:WrapOn', 'text'),
 								'command': '.uno:WrapOn'
 							},
 							{
+								'id': 'draw-wrapideal',
 								'type': 'toolitem',
 								'text': _UNO('.uno:WrapIdeal', 'text'),
 								'command': '.uno:WrapIdeal'
@@ -2184,16 +2355,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-wrapleft',
 								'type': 'toolitem',
 								'text': _UNO('.uno:WrapLeft', 'text'),
 								'command': '.uno:WrapLeft'
 							},
 							{
+								'id': 'draw-wrapthrough',
 								'type': 'toolitem',
 								'text': _UNO('.uno:WrapThrough', 'text'),
 								'command': '.uno:WrapThrough'
 							},
 							{
+								'id': 'draw-wrapright',
 								'type': 'toolitem',
 								'text': _UNO('.uno:WrapRight', 'text'),
 								'command': '.uno:WrapRight'
@@ -2210,16 +2384,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-objectalignleft',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ObjectAlignLeft'),
 								'command': '.uno:ObjectAlignLeft'
 							},
 							{
+								'id': 'draw-aligncenter',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AlignCenter'),
 								'command': '.uno:AlignCenter'
 							},
 							{
+								'id': 'draw-objectalignright',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ObjectAlignRight'),
 								'command': '.uno:ObjectAlignRight'
@@ -2230,16 +2407,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-alignup',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AlignUp'),
 								'command': '.uno:AlignUp'
 							},
 							{
+								'id': 'draw-alignmiddle',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AlignMiddle'),
 								'command': '.uno:AlignMiddle'
 							},
 							{
+								'id': 'draw-aligndown',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AlignDown'),
 								'command': '.uno:AlignDown'
@@ -2256,11 +2436,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-bringtofront',
 								'type': 'toolitem',
 								'text': _UNO('.uno:BringToFront'),
 								'command': '.uno:BringToFront'
 							},
 							{
+								'id': 'draw-sendtoback',
 								'type': 'toolitem',
 								'text': _UNO('.uno:SendToBack'),
 								'command': '.uno:SendToBack'
@@ -2271,11 +2453,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-objectforwardone',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ObjectForwardOne'),
 								'command': '.uno:ObjectForwardOne'
 							},
 							{
+								'id': 'draw-objectbackone',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ObjectBackOne'),
 								'command': '.uno:ObjectBackOne'
@@ -2286,6 +2470,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'draw-formatgroup',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:FormatGroup'),
 				'command': '.uno:FormatGroup'
@@ -2297,6 +2482,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-entergroup',
 								'type': 'toolitem',
 								'text': _UNO('.uno:EnterGroup'),
 								'command': '.uno:EnterGroup'
@@ -2307,6 +2493,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-leavegroup',
 								'type': 'toolitem',
 								'text': _UNO('.uno:LeaveGroup'),
 								'command': '.uno:LeaveGroup'
@@ -2317,6 +2504,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'draw-text',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Text'),
 				'command': '.uno:Text'
@@ -2328,6 +2516,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-shapes',
 								'type': 'toolitem',
 								'text': _('Shapes'),
 								'command': '.uno:BasicShapes'
@@ -2338,6 +2527,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-line',
 								'type': 'toolitem',
 								'text': _UNO('.uno:Line', 'text'),
 								'command': '.uno:Line'
@@ -2354,6 +2544,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-fontworkgalleryfloater',
 								'type': 'toolitem',
 								'text': _UNO('.uno:FontworkGalleryFloater'),
 								'command': '.uno:FontworkGalleryFloater',
@@ -2366,6 +2557,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'draw-verticaltext',
 								'type': 'toolitem',
 								'text': _UNO('.uno:VerticalText', 'text'),
 								'command': '.uno:VerticalText'
