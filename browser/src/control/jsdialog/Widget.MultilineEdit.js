@@ -97,6 +97,8 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 			if (event.key === 'Enter' && !event.shiftKey) {
 				builder.callback('edit', 'keypress', edit, UNOKey.RETURN | modifier, builder);
 				event.preventDefault();
+			} else if (event.key === 'Escape' || event.key === 'Esc') {
+				builder.callback('edit', 'keypress', edit, UNOKey.ESCAPE | modifier, builder);
 			}
 		});
 	} else if (data.rawKeyEvents) {
