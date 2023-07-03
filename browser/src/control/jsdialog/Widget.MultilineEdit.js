@@ -222,7 +222,6 @@ function _multiLineEditControl(parentContainer, data, builder, callback) {
 			builder.callback('edit', 'grab_focus', edit, null, builder);
 
 			_sendSelection(event.target, builder);
-			event.preventDefault();
 		});
 	}
 
