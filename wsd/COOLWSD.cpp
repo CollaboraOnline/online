@@ -4240,13 +4240,12 @@ private:
             else if (it.first == "MimeType")
                 mime = it.second;
         }
-        LOG_TRC_S("Clipboard request for us: " << serverId << " with tag " << tag);
 
         if (serverId != Util::getProcessIdentifier())
         {
-            LOG_ERR_S("Cluster configuration error: mis-matching serverid "
-                      << serverId << " vs. " << Util::getProcessIdentifier()
-                      << "on request to URL: " << request.getURI());
+            LOG_ERR_S("Cluster configuration error: mis-matching serverid ["
+                      << serverId << "] vs. [" << Util::getProcessIdentifier() << "] with tag ["
+                      << tag << "] on request to URL: " << request.getURI());
 
             // we got the wrong request.
             http::Response httpResponse(http::StatusCode::BadRequest);
@@ -4257,6 +4256,8 @@ private:
         }
 
         const auto docKey = RequestDetails::getDocKey(WOPISrc);
+        LOG_TRC_S("Clipboard request for us: [" << serverId << "] with tag [" << tag
+                                                << "] on docKey [" << docKey << ']');
 
         std::shared_ptr<DocumentBroker> docBroker;
         {
@@ -4290,11 +4291,14 @@ private:
                 HTMLForm form(request, message, handler);
                 data = handler.getData();
                 if (!data || data->length() == 0)
-                    LOG_ERR_S("Invalid zero size set clipboard content");
+                    LOG_ERR_S("Invalid zero size set clipboard content with tag ["
+                              << tag << "] on docKey [" << docKey << ']');
             }
+
             // Do things in the right thread.
-            LOG_TRC_S("Move clipboard request " << tag << " to docbroker thread with data: "
-                                                << (data ? data->length() : 0) << " bytes");
+            LOG_TRC_S("Move clipboard request tag [" << tag << "] to docbroker thread with "
+                                                     << (data ? data->length() : 0)
+                                                     << " bytes of data");
             docBroker->setupTransfer(
                 disposition,
                 [docBroker, type, viewId, tag, data](const std::shared_ptr<Socket>& moveSocket)
@@ -4307,9 +4311,9 @@ private:
         // fallback to persistent clipboards if we can
         else if (!DocumentBroker::lookupSendClipboardTag(socket, tag, false))
         {
-            LOG_ERR_S("Invalid clipboard request: " << serverId << " with tag " << tag
-                                                    << " and broker: " << (docBroker ? "" : "not ")
-                                                    << "found");
+            LOG_ERR_S("Invalid clipboard request to server ["
+                      << serverId << "] with tag [" << tag << "] and broker [" << docKey
+                      << "]: " << (docBroker ? "" : "not ") << "found");
 
             std::string errMsg = "Empty clipboard item / session tag " + tag;
 
