@@ -298,8 +298,7 @@ L.TextInput = L.Layer.extend({
 	},
 
 	getValue: function() {
-		var value = this.getPlainTextContent();
-		return value;
+		return this.getPlainTextContent();
 	},
 
 	getPlainTextContent: function() {
@@ -338,8 +337,7 @@ L.TextInput = L.Layer.extend({
 
 	// As the name says, this returns this._textArea.value as an array of numbers that are
 	// Unicode code points. *Not* UTF-16 code units.
-	getValueAsCodePoints: function() {
-		var value = this.getValue();
+	getValueAsCodePoints: function(value) {
 		if (false) {
 			var s = '[';
 			for (var ii = 0; ii < value.length; ++ii) {
@@ -355,15 +353,6 @@ L.TextInput = L.Layer.extend({
 		for (var i = 0; i < value.length; ++i)
 		{
 			code = value.charCodeAt(i);
-
-			// if it were not for IE11: "for (code of value)" does the job.
-			if (code >= 0xd800 && code <= 0xdbff) // handle UTF16 pairs.
-			{
-				// TESTME: harder ...
-				var high = (code - 0xd800) << 10;
-				code = value.charCodeAt(++i);
-				code = high + code - 0xdc00 + 0x10000;
-			}
 			arr.push(code);
 		}
 		return arr;
@@ -427,11 +416,11 @@ L.TextInput = L.Layer.extend({
 			// Style for debugging
 			this._container.style.opacity = 0.5;
 			this._textArea.style.cssText = 'border:1px solid red !important';
-			this._textArea.style.width = '120px';
-			this._textArea.style.height = '50px';
+			this._textArea.style.width = L.Browser.cypressTest ? '1px' : '120px';
+			this._textArea.style.height = L.Browser.cypressTest ? '1px' : '50px';
 			this._textArea.style.overflow = 'display';
 
-			this._textArea.style.fontSize = '30px';
+			this._textArea.style.fontSize = '20px';
 			this._textArea.style.position = 'relative';
 			this._textArea.style.left = '10px';
 		} else {
@@ -501,6 +490,20 @@ L.TextInput = L.Layer.extend({
 	},
 
 	_setPos: function(pos) {
+		// the offset is needed since we have to move away from the edited text
+		// or double clicks for selecting text doesn't work properly
+		if (L.Browser.cypressTest) {
+			// Some cypress tests require for the editable area to be as near as possible
+			// to the caret overlay when editing. In fact a synthetic mouse click on
+			// the editable area is performed in order to make it focused and ready for the input.
+			// However, since this click is forwarded to core, it could change the current caret
+			// position causing a test failure.
+			pos.x += 10;
+			pos.y += 10;
+		}
+		else {
+			pos.y += this._isDebugOn ? 50 : 200;
+		}
 		L.DomUtil.setPosition(this._container, pos);
 	},
 
@@ -592,8 +595,8 @@ L.TextInput = L.Layer.extend({
 		this._ignoreNextBackspace = false;
 		if (!this._isSelectionValid()) {
 			this._emptyArea();
-		} else if (this._isInitialContent() && this._isCursorAtBeginning())
-		{
+		}
+		else if (this._isInitialContent() && this._isCursorAtBeginning()) {
 			// It seems some inputs eg. GBoard can magically move the cursor from " | " to "|  "
 			window.app.console.log('Oh dear, gboard sabotaged our cursor position, fixing');
 			// But when we detect the problem only emit a delete when we have one.
@@ -629,19 +632,18 @@ L.TextInput = L.Layer.extend({
 			return;
 		}
 
-		if (ev.inputType) {
+		if (this._deleteHint === '' && ev.inputType) {
 			if (ev.inputType == 'deleteContentForward')
 				this._deleteHint = 'delete';
 			else if (ev.inputType == 'deleteContentBackward')
 				this._deleteHint = 'backspace';
-			else
-				this._deleteHint = '';
 		}
 
 		var ignoreBackspace = this._ignoreNextBackspace;
 		this._ignoreNextBackspace = false;
 
-		var content = this.getValueAsCodePoints();
+		var value = this.getValue();
+		var content = this.getValueAsCodePoints(value);
 		// Note that content is an array of Unicode code points
 
 		if (this._newlineHint) {
