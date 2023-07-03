@@ -165,15 +165,16 @@ L.TextInput = L.Layer.extend({
 	},
 
 	_onCommandResult: function(e) {
-		if ((e.commandName === '.uno:Undo' || e.commandName === '.uno:Redo') && window.mode.isMobile()) {
-			//undoing something on mobile does not trigger any input method
-			//this causes problem in mobile working with suggestions
+		if (e.commandName === '.uno:Undo' || e.commandName === '.uno:Redo') {
+			//undoing something does not trigger any input method
+			// this causes the editable area content not to be a substring
+			// of the document text; moreover this causes problem
+			// in mobile working with suggestions:
 			//i.e: type "than" and then select "thank" from suggestion
 			//now undo and then again select "thanks" from suggestions
 			//final output is "thans"
-			//this happens because undo doesn't change the textArea value
-			//and no other way to maintain the history
-			//So better to clean the textarea so no suggestions appear
+			//this happens because undo doesn't change the editable area content.
+			//So better to clean the editable area content.
 			this._emptyArea();
 		}
 	},
