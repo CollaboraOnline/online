@@ -1188,6 +1188,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:PageDialog'
 			},
 			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FormatColumns', 'text'),
+				'command': '.uno:FormatColumns'
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
@@ -1214,37 +1219,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:TitlePageDialog', 'text'),
-				'command': '.uno:TitlePageDialog'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:FormatColumns', 'text'),
-								'command': '.uno:FormatColumns'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:Watermark', 'text'),
-								'command': '.uno:Watermark'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
 				'type': 'container',
 				'children': [
 					{
@@ -1264,6 +1238,32 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:LineNumberingDialog', 'text'),
 								'command': '.uno:LineNumberingDialog'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:TitlePageDialog', 'text'),
+								'command': '.uno:TitlePageDialog'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Watermark', 'text'),
+								'command': '.uno:Watermark'
 							}
 						]
 					}
