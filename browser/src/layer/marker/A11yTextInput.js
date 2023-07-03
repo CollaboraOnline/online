@@ -1196,12 +1196,32 @@ L.A11yTextInput = L.Layer.extend({
 			}
 		}
 
+		if (ev.altKey && ev.code === 'KeyC') {
+			// We want to focus on the comment menu if a comment is currently shown in Writer or Calc.
+			// This is the key combination (Alt+C or Alt+Shift+C) for focusing on the comment menu.
+
+			// On Calc, first press opens the comment, second press focuses on it.
+			var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+			if (section) {
+				if (section.sectionProperties.selectedComment) {
+					var id = section.sectionProperties.selectedComment.sectionProperties.menu.id;
+					var element = document.getElementById(id);
+					if (element)
+						element.focus();
+				}
+				else if (this._map._docLayer._docType === 'spreadsheet') {
+					if (section.sectionProperties.calcCurrentComment !== null)
+						section.sectionProperties.calcCurrentComment.show();
+				}
+			}
+		}
+
 		var mentionPopup = L.DomUtil.get('mentionPopup');
 		if (mentionPopup) {
 			if (ev.key === 'ArrowDown') {
-				var initialFocusElement =
-					document.querySelector('#mentionPopup span[tabIndex="0"]');
+				var initialFocusElement = document.querySelector('#mentionPopup span');
 				if (initialFocusElement) {
+					initialFocusElement.tabIndex = 0;
 					initialFocusElement.focus();
 					ev.preventDefault();
 					ev.stopPropagation();
