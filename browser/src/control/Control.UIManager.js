@@ -410,7 +410,7 @@ L.Control.UIManager = L.Control.extend({
 		this.notebookbar = notebookbar;
 		this.map.addControl(notebookbar);
 
-		app.notebookbarAccessibility.initialize();
+		app.UI.notebookbarAccessibility.initialize();
 	},
 
 	refreshNotebookbar: function() {
