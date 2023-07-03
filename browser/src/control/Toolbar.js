@@ -395,6 +395,16 @@ L.Map.include({
 
 		if (this.uiManager.isUIBlocked())
 			return;
+
+		// This check is necessary to allow the user to change a language in the More... modal
+		if (this.jsdialog
+			&& this.jsdialog.hasDialogOpened()
+			&& command.startsWith('.uno:LanguageStatus?Language')
+		) {
+			app.socket.sendMessage('uno ' + command);
+			return;
+		}
+
 		if ((this.dialog.hasOpenedDialog() || (this.jsdialog && this.jsdialog.hasDialogOpened()))
 			&& !command.startsWith('.uno:ToolbarMode') && !force) {
 			console.debug('Cannot execute: ' + command + ' when dialog is opened.');
