@@ -25,6 +25,14 @@ var NotebookbarAccessibility = function() {
 	this.combination = null;
 	this.filteredItem = null;
 
+	this.spaceSymbolText = '<svg width="10" height="6" xmlns="http://www.w3.org/2000/svg"> \
+	<g>\
+		<line stroke="#000" stroke-linecap="round" x1="2" y1="4" x2="8" y2="4"/>\
+		<line stroke="#000" stroke-linecap="round" x1="2" y1="2" x2="2" y2="4"/>\
+		<line stroke="#000" stroke-linecap="round" x1="8" y1="2" x2="8" y2="4"/>\
+	</g>\
+	</svg>';
+
 	this.addInfoBox = function(anchorElement) {
 		var infoBox = document.createElement('div');
 		infoBox.classList.add('accessibility-info-box');
@@ -33,6 +41,13 @@ var NotebookbarAccessibility = function() {
 		infoBox.style.top = (rectangle.top + 20) + 'px';
 		infoBox.style.left = rectangle.left + 'px';
 		document.body.appendChild(infoBox);
+
+		if (anchorElement.accessKey.endsWith(' ')) {
+			var span = document.createElement('span');
+			span.innerHTML = this.spaceSymbolText;
+			infoBox.appendChild(span);
+		}
+
 		return infoBox;
 	};
 
@@ -98,7 +113,7 @@ var NotebookbarAccessibility = function() {
 				if (event.keyCode === 18)
 					document.body.classList.add('activate-underlines');
 			}
-			else if (event.keyCode === 18) {
+			else if (event.keyCode === 18 || (event.keyCode === 18 && event.shiftKey)) {
 				this.mayShowAcceleratorInfoBoxes = true;
 			}
 		}
@@ -110,12 +125,14 @@ var NotebookbarAccessibility = function() {
 				if (event.keyCode === 18)
 					document.body.classList.remove('activate-underlines');
 			}
-			else if (this.mayShowAcceleratorInfoBoxes && event.keyCode === 18) {
+			else if (this.mayShowAcceleratorInfoBoxes && (event.keyCode === 18 || (event.keyCode === 18 && event.shiftKey))) { // 18: Alt key.
 				this.combination = null;
 				this.filteredItem = null;
 				this.filterOutNonMatchingInfoBoxes();
 				this.accessibilityInputElement.focus();
 			}
+			else if (event.keyCode === 16) // ShiftLeft.
+				return; // Ignore shift key.
 			else {
 				this.mayShowAcceleratorInfoBoxes = false;
 			}
@@ -153,6 +170,7 @@ var NotebookbarAccessibility = function() {
 					if (this.tabInfoList[tabId].combination === this.combination) {
 						this.filteredItem = this.tabInfoList[tabId];
 						this.filteredItem.id = tabId;
+						break;
 					}
 				}
 			}
@@ -164,6 +182,7 @@ var NotebookbarAccessibility = function() {
 			var item = this.activeTabPointers.contentList[i];
 			if (this.combination === item.combination) {
 				this.filteredItem = this.activeTabPointers.contentList[i];
+				break;
 			}
 		}
 	};
@@ -211,6 +230,8 @@ var NotebookbarAccessibility = function() {
 			else
 				app.map.focus();
 		}
+		else if (event.keyCode === 16) // ShiftLeft.
+			return; // Ignore shift key.
 		else if (this.combination === null) {
 			this.combination = key;
 			this.checkCombinationAgainstAcccelerators();
@@ -307,4 +328,6 @@ var NotebookbarAccessibility = function() {
 	};
 };
 
-app.notebookbarAccessibility = new NotebookbarAccessibility();
+app.definitions.NotebookbarAccessibility = NotebookbarAccessibility;
+
+app.UI.notebookbarAccessibility = new app.definitions.NotebookbarAccessibility();

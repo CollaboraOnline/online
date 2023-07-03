@@ -7,6 +7,13 @@ window.app = { // Shouldn't have any functions defined.
 	map: null, // Make map object a part of this.
 	twipsToPixels: 0, // Twips to pixels multiplier.
 	pixelsToTwips: 0, // Pixels to twips multiplier.
+	UI: {
+		language: {
+			fromURL: window.langParam, // This is set in global.js.
+			fromBrowser: L.Browser.lang, // Again in global.js.
+			notebookbarAccessibility: null
+		}
+	},
 	file: {
 		editComment: false,
 		readOnly: true,
@@ -52,9 +59,10 @@ window.app = { // Shouldn't have any functions defined.
 			twips: [0, 0]
 		}
 	},
-	notebookbarAccessibility: null,
 	socket: window.app.socket,
 	console: window.app.console,
+
+	// Below 2 are related to document. I guess we can move these into "file" property.
 	languages: [], // all available languages, fetched from core
 	favouriteLanguages: ['de-DE', 'en-US', 'en-GB', 'es-ES', 'fr-FR', 'it', 'nl-NL', 'pt-BR', 'pt-PT', 'ru'],
 	colorPalettes: {

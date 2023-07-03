@@ -874,8 +874,8 @@ L.TextInput = L.Layer.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
-		if (app.notebookbarAccessibility)
-			app.notebookbarAccessibility.onDocumentKeyDown(ev);
+		if (app.UI.notebookbarAccessibility)
+			app.UI.notebookbarAccessibility.onDocumentKeyDown(ev);
 
 		if (ev.keyCode === 8)
 			this._deleteHint = 'backspace';
@@ -955,8 +955,8 @@ L.TextInput = L.Layer.extend({
 			ev.key === 'Escape'))
 			this._emptyArea();
 
-		if (app.notebookbarAccessibility)
-			app.notebookbarAccessibility.onDocumentKeyUp(ev);
+		if (app.UI.notebookbarAccessibility)
+			app.UI.notebookbarAccessibility.onDocumentKeyUp(ev);
 	},
 
 	// Used in the deleteContentBackward for deleting multiple characters with a single
