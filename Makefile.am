@@ -622,7 +622,17 @@ else
 GEN_COVERAGE_COMMAND=true
 endif
 
-check: check-recursive
+# typically the system nss won't work in a jail and fail to init which is fatal for
+# exporting to pdf, which is something that gets tested
+check-for-system-nss:
+	@if test -e "@LO_PATH@/../config_host.mk"; then \
+		if grep -q SYSTEM_NSS=TRUE "@LO_PATH@/../config_host.mk"; then \
+			echo make check will fail unless core is configured using --without-system-nss; \
+			exit 1; \
+		fi \
+	fi
+
+check: check-for-system-nss check-recursive
 	$(GEN_COVERAGE_COMMAND)
 
 coverage-report:
