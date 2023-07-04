@@ -3317,6 +3317,16 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
             Tile cachedTile = _tileCache->lookupTile(tile);
             if (cachedTile && cachedTile->isValid())
             {
+                // It is typical for a request not to have a wireId. If the result is generated
+                // without using the cache then doRender will send a timecombine result with wireIds
+                // set. But if we use the cache here we send a response using the wireId of the request.
+
+                // With no wireId in the request the result will have wireId of 0 and
+                // in CanvasTileLayer.js tile::needsFetch such a tile will always return true
+                // for needsFetch and is wasted.
+                if (tile.getWireId() == 0)
+                    tile.setWireId(cachedTile->_wids.back());
+
                 // TODO: Combine the response to reduce latency.
                 session->sendTileNow(tile, cachedTile);
             }
