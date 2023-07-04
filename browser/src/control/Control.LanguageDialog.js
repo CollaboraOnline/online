@@ -17,7 +17,7 @@ L.Control.LanguageDialog = L.Control.extend({
 
 	_onItemSelected: function(language) {
 		var unoCommand = '.uno:LanguageStatus?Language:string=' + this.applyTo + '_' + language;
-		this.map.sendUnoCommand(unoCommand);
+		this.map.sendUnoCommand(unoCommand, null, true);
 	},
 
 	_getSelectedLanguage: function() {
