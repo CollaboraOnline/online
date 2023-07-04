@@ -24,6 +24,7 @@ var NotebookbarAccessibility = function() {
 	this.tabInfoList = null; // This is to be fetched from NotebookbarAccessibilityDefinitions class at initialization.
 	this.combination = null;
 	this.filteredItem = null;
+	this.state = 0; // 0: User needs to select a tab. 1: User needs to either select an acccess key of tab content or navigate by arrow keys.
 
 	this.spaceSymbolText = '<svg width="10" height="6" xmlns="http://www.w3.org/2000/svg"> \
 	<g>\
@@ -51,17 +52,6 @@ var NotebookbarAccessibility = function() {
 		return infoBox;
 	};
 
-	this.removeCurrentTabInfoBoxesAndAcceleratorKeys = function() {
-		for (var i = 0; i < this.activeTabPointers.contentList.length; i++) {
-			document.getElementById(this.activeTabPointers.contentList[i].id).accessKey = null;
-		}
-
-		for (i = this.activeTabPointers.infoBoxList.length - 1; i > -1; i--) {
-			if (this.activeTabPointers.infoBoxList[i].parentNode !== null)
-				document.body.removeChild(this.activeTabPointers.infoBoxList[i]);
-		}
-	};
-
 	// Checks the current tab's content.
 	this.getElementOfWhichIdStartsWith = function(id) {
 		var tab = document.getElementById(this.activeTabPointers.id.split('-')[0] + '-container');
@@ -77,7 +67,12 @@ var NotebookbarAccessibility = function() {
 			return element;
 	};
 
-	this.addCurrentTabInfoBoxesAndAcceleratorKeys = function(id) {
+	this.setupAcceleratorsForCurrentTab = function(id) {
+		if (id === undefined)
+			id = this.activeTabPointers.id;
+
+		this.removeAllInfoBoxes();
+
 		this.activeTabPointers.id = id;
 		this.activeTabPointers.contentList = this.tabInfoList[id].contentList;
 		this.activeTabPointers.infoBoxList = [];
@@ -92,14 +87,6 @@ var NotebookbarAccessibility = function() {
 			else
 				console.warn('NotebookbarAccessibility: Element with id ' + this.activeTabPointers.contentList[i].id + ' doesn\'t exist.');
 		}
-	};
-
-	this.setupAcceleratorsForCurrentTab = function(id) {
-		if (id === undefined)
-			id = this.activeTabPointers.id;
-
-		this.removeCurrentTabInfoBoxesAndAcceleratorKeys();
-		this.addCurrentTabInfoBoxesAndAcceleratorKeys(id);
 	};
 
 	/*
@@ -126,15 +113,14 @@ var NotebookbarAccessibility = function() {
 					document.body.classList.remove('activate-underlines');
 			}
 			else if (this.mayShowAcceleratorInfoBoxes && (event.keyCode === 18 || (event.keyCode === 18 && event.shiftKey))) { // 18: Alt key.
-				this.combination = null;
-				this.filteredItem = null;
-				this.filterOutNonMatchingInfoBoxes();
+				this.resetState();
+				this.addTabAccelerators();
 				this.accessibilityInputElement.focus();
 			}
 			else if (event.keyCode === 16) // ShiftLeft.
 				return; // Ignore shift key.
 			else {
-				this.mayShowAcceleratorInfoBoxes = false;
+				this.resetState();
 			}
 		}
 	};
@@ -190,9 +176,9 @@ var NotebookbarAccessibility = function() {
 	this.checkCombinationAgainstAcccelerators = function() {
 		this.filteredItem = null;
 
-		this.checkTabAccelerators();
-
-		if (this.filteredItem === null)
+		if (this.state === 0)
+			this.checkTabAccelerators();
+		else if (this.state === 1)
 			this.checkContentAccelerators();
 	};
 
@@ -202,13 +188,30 @@ var NotebookbarAccessibility = function() {
 			if (element) {
 				element.click();
 
-				if (this.filteredItem.focusBack === true)
+				if (this.state === 0) {
+					this.setupAcceleratorsForCurrentTab(element.id);
+					this.combination = null;
+					this.accessibilityInputElement.value = '';
+					this.accessibilityInputElement.focus();
+					this.state = 1;
+				}
+				else if (this.filteredItem.focusBack === true) {
 					app.map.focus();
+				}
 			}
 			this.filteredItem = null;
 		}
 		else
 			app.map.focus();
+	};
+
+	this.resetState = function() {
+		this.removeAllInfoBoxes();
+		this.state = 0;
+		this.accessibilityInputElement.value = '';
+		this.combination = null;
+		this.mayShowAcceleratorInfoBoxes = false;
+		this.filteredItem = null;
 	};
 
 	this.onInputKeyUp = function(event) {
@@ -220,8 +223,7 @@ var NotebookbarAccessibility = function() {
 			if (this.combination === null)
 				app.map.focus();
 			else {
-				this.combination = null;
-				this.filterOutNonMatchingInfoBoxes();
+				this.resetState();
 			}
 		}
 		else if (key === 'ENTER') {
@@ -240,16 +242,20 @@ var NotebookbarAccessibility = function() {
 		else {
 			this.combination += key;
 			this.checkCombinationAgainstAcccelerators();
-			this.clickOnFilteredItem();
+			this.filterOutNonMatchingInfoBoxes();
 		}
 	};
 
-	this.initTabAccelerators = function() {
-		// Remove all info boxes first.
+	this.removeAllInfoBoxes = function() {
 		var infoBoxes = document.getElementsByClassName('accessibility-info-box');
 		for (var i = infoBoxes.length - 1; i > -1; i--) {
 			document.body.removeChild(infoBoxes[i]);
 		}
+	};
+
+	this.addTabAccelerators = function() {
+		// Remove all info boxes first.
+		this.removeAllInfoBoxes();
 
 		for (var tabId in this.tabInfoList) {
 			if (Object.prototype.hasOwnProperty.call(this.tabInfoList, tabId)) {
@@ -275,15 +281,6 @@ var NotebookbarAccessibility = function() {
 		}.bind(this));
 	};
 
-	this.initSelectedTab = function() {
-		// Get the selected tab.
-		var selected = document.querySelectorAll('.ui-tab.notebookbar.selected');
-		if (selected.length === 1) {
-			selected = selected[0];
-			this.setupAcceleratorsForCurrentTab(selected.id);
-		}
-	};
-
 	this.initAccessibilityInputElement = function() {
 		// Create an input element for catching the events and prevent document from catching them.
 		this.accessibilityInputElement = document.createElement('input');
@@ -301,12 +298,6 @@ var NotebookbarAccessibility = function() {
 		document.body.appendChild(container);
 	};
 
-	this.initScrollListener = function() {
-		this.scroller.onscroll = function() {
-			this.setupAcceleratorsForCurrentTab();
-		}.bind(this);
-	};
-
 	this.initialize = function() {
 		setTimeout(function() {
 			if (window.mode.isDesktop()) {
@@ -314,12 +305,8 @@ var NotebookbarAccessibility = function() {
 					this.tabInfoList = this.definitions.getDefinitions();
 
 					if (this.tabInfoList !== null) {
-						this.scroller = document.getElementsByClassName('notebookbar-scroll-wrapper')[0];
-						this.initTabAccelerators();
 						this.initTabListeners();
-						this.initSelectedTab();
 						this.initAccessibilityInputElement();
-						this.initScrollListener();
 						this.initialized = true;
 					}
 				}
