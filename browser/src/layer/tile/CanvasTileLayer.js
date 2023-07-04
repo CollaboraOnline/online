@@ -3655,7 +3655,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onZoomEnd: function () {
 		this._isZooming = false;
 		if (!this.isCalc())
-			this._replayPrintTwipsMsgs();
+			this._replayPrintTwipsMsgs(false);
 		this._onUpdateCursor(null, true);
 		this.updateAllViewCursors();
 	},
@@ -5295,12 +5295,17 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._printTwipsMessagesForReplay.clear();
 	},
 
-	_replayPrintTwipsMsgs: function () {
+	_replayPrintTwipsMsgs: function (differentSheet) {
 		if (!this._printTwipsMessagesForReplay) {
 			return;
 		}
 
-		this._printTwipsMessagesForReplay.forEach(this._onMessage.bind(this));
+		this._printTwipsMessagesForReplay.forEach(function (msg) {
+			// don't try and replace graphic selection if the sheet/page has changed
+			var skipMessage = differentSheet && msg.startsWith('graphicselection:');
+			if (!skipMessage)
+				this._onMessage(msg);
+		}.bind(this));
 	},
 
 	_replayPrintTwipsMsg: function (msgType) {
