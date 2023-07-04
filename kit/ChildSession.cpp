@@ -1158,6 +1158,7 @@ bool ChildSession::getTextSelection(const StringVector& tokens)
 
 bool ChildSession::getClipboard(const StringVector& tokens)
 {
+    std::string token;
     const char **pMimeTypes = nullptr; // fetch all for now.
     const char  *pOneType[2];
     size_t       nOutCount = 0;
@@ -1166,7 +1167,6 @@ bool ChildSession::getClipboard(const StringVector& tokens)
     char       **pOutStreams = nullptr;
 
     bool hasMimeRequest = tokens.size() > 1;
-    std::string token;
     if (hasMimeRequest)
     {
         pMimeTypes = pOneType;
