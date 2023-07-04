@@ -143,7 +143,7 @@ void Quarantine::makeQuarantineSpace()
 
     std::size_t currentSize = quarantineSize();
     auto index = files.begin();
-    while (index != files.end() && !files.empty())
+    while (index != files.end())
     {
         bool purge = currentSize >= _maxSizeBytes;
         if (!purge)
@@ -168,7 +168,7 @@ void Quarantine::makeQuarantineSpace()
                     << currentSize << " (max " << _maxSizeBytes << " bytes)");
             currentSize -= file.size();
             FileUtil::removeFile(QuarantinePath + *index, true);
-            files.erase(index);
+            index = files.erase(index);
         }
         else
             index++;
