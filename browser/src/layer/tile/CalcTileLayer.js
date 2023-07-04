@@ -244,7 +244,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this.setSplitPosFromCell();
 		this._map.fire('zoomchanged');
 		this.refreshViewData();
-		this._replayPrintTwipsMsgs();
+		this._replayPrintTwipsMsgs(false);
 		app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 	},
 
@@ -678,7 +678,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
-	_handleSheetGeometryDataMsg: function (jsonMsgObj) {
+	_handleSheetGeometryDataMsg: function (jsonMsgObj, differentSheet) {
 		if (!this.sheetGeometry) {
 			this._sheetGeomFirstWait = false;
 			this.sheetGeometry = new L.SheetGeometry(jsonMsgObj,
@@ -693,7 +693,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this.sheetGeometry.update(jsonMsgObj, /* checkCompleteness */ false, this._selectedPart);
 		}
 
-		this._replayPrintTwipsMsgs();
+		this._replayPrintTwipsMsgs(differentSheet);
 
 		this.sheetGeometry.setViewArea(this._pixelsToTwips(this._map._getTopLeftPoint()),
 			this._pixelsToTwips(this._map.getSize()));
@@ -879,13 +879,14 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._updateHeadersGridLines(values);
 
 		} else if (values.commandName === '.uno:SheetGeometryData') {
+			var differentSheet = this.sheetGeometry === undefined || this._selectedPart !== this.sheetGeometry.getPart();
 			// duplicate sheet-geometry for same sheet triggers replay of other messages that
 			// disrupt the view restore during sheet switch.
-			if (this._oldSheetGeomMsg === textMsg && this._selectedPart === this.sheetGeometry.getPart())
+			if (this._oldSheetGeomMsg === textMsg && !differentSheet)
 				return;
 
 			this._oldSheetGeomMsg = textMsg;
-			this._handleSheetGeometryDataMsg(values);
+			this._handleSheetGeometryDataMsg(values, differentSheet);
 
 		} else if (values.comments) {
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).clearList();
