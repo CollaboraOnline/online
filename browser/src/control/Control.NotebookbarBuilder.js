@@ -3,7 +3,7 @@
  * L.Control.NotebookbarBuilder
  */
 
-/* global $ _ _UNO JSDialog */
+/* global $ _ _UNO JSDialog app */
 L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 	_customizeOptions: function() {
@@ -348,7 +348,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			var tabIsSelected = $(tabs[t]).hasClass('selected');
 			var notebookbarIsCollapsed = builder.wizard.isCollapsed();
 
-			if (tabIsSelected && !notebookbarIsCollapsed) {
+			var accessibilityInputElementHasFocus = app.UI.notebookbarAccessibility && app.UI.notebookbarAccessibility.accessibilityInputElement === document.activeElement ? true: false;
+
+			if (tabIsSelected && !notebookbarIsCollapsed && !accessibilityInputElementHasFocus) {
 				builder.wizard.collapse();
 				$(tabs[t]).prop('title', tooltipCollapsed);
 			} else if (notebookbarIsCollapsed) {
