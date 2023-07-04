@@ -46,7 +46,8 @@ class IdleHandler {
 			}
 		}
 
-		if (window.mode.isDesktop() && !this.map.uiManager.isAnyDialogOpen()) {
+		var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+		if (window.mode.isDesktop() && !this.map.uiManager.isAnyDialogOpen() && !section.sectionProperties.selectedComment) {
 			this.map.focus();
 		}
 
