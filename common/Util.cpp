@@ -145,7 +145,8 @@ namespace Util
                 {
                     LOG_ERR("failed to read " << length << " hard random bytes, got " << len << " for hash: " << errno);
                 }
-                close(fd);
+                if (fd >= 0)
+                    close(fd);
             }
 
             hex.rdbuf()->setLineLength(0); // Don't insert line breaks.
