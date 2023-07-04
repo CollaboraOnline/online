@@ -40,6 +40,7 @@ public:
 #elif MOBILEAPP && !defined(GTKAPP)
         maxConcurrency = std::max<int>(std::thread::hardware_concurrency(), 2);
 #else
+        // coverity[tainted_return_value] - we trust the contents of this variable
         const char *max = getenv("MAX_CONCURRENCY");
         if (max)
             maxConcurrency = atoi(max);
