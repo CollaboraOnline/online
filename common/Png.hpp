@@ -246,7 +246,7 @@ inline bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t st
         static uint64_t totalPixelBytes = 0;
         static uint64_t totalOutputBytes = 0;
 
-        totalPixelBytes += (width * height * 4);
+        totalPixelBytes += (static_cast<uint64_t>(width) * height * 4);
         totalOutputBytes += output.size();
 
         LOG_TRC("PNG compression took "
