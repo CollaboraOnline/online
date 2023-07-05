@@ -386,6 +386,10 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	width: 100%;
 }
 
+.ui-treeview.empty .ui-treeview-body {
+	color: var(--color-text-lighter);
+}
+
 .ui-treeview-cell.with-sub-dialog {
 	cursor: context-menu;
 }
