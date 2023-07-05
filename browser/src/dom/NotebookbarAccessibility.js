@@ -26,14 +26,6 @@ var NotebookbarAccessibility = function() {
 	this.filteredItem = null;
 	this.state = 0; // 0: User needs to select a tab. 1: User needs to either select an acccess key of tab content or navigate by arrow keys.
 
-	this.spaceSymbolText = '<svg width="10" height="6" xmlns="http://www.w3.org/2000/svg"> \
-	<g>\
-		<line stroke="#000" stroke-linecap="round" x1="2" y1="4" x2="8" y2="4"/>\
-		<line stroke="#000" stroke-linecap="round" x1="2" y1="2" x2="2" y2="4"/>\
-		<line stroke="#000" stroke-linecap="round" x1="8" y1="2" x2="8" y2="4"/>\
-	</g>\
-	</svg>';
-
 	this.addInfoBox = function(anchorElement) {
 		var infoBox = document.createElement('div');
 		infoBox.classList.add('accessibility-info-box');
@@ -42,12 +34,6 @@ var NotebookbarAccessibility = function() {
 		infoBox.style.top = (rectangle.top + 20) + 'px';
 		infoBox.style.left = rectangle.left + 'px';
 		document.body.appendChild(infoBox);
-
-		if (anchorElement.accessKey.endsWith(' ')) {
-			var span = document.createElement('span');
-			span.innerHTML = this.spaceSymbolText;
-			infoBox.appendChild(span);
-		}
 
 		return infoBox;
 	};

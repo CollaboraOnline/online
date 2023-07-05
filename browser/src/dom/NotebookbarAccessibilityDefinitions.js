@@ -17,7 +17,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 			},
 			'File-tab-label': {
 				focusBack: true,
-				combination: 'F ', de: 'D ',
+				combination: 'F', de: 'D',
 				contentList: [
 					{ id: 'Save1img',						focusBack: true,	combination: 'S',	de:	null	},
 					{ id: 'Printimg',						focusBack: true,	combination: 'P',	de:	'P'		},
@@ -28,7 +28,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 			},
 			'Home-tab-label': {
 				focusBack: true,
-				combination: 'H ', de: 'R ',
+				combination: 'H', de: 'R',
 				contentList: [
 					{ id: 'Redoimg',						focusBack: true,	combination: 'O',	de: 'W' 	},
 					{ id: 'Undoimg',						focusBack: true,	combination: 'ZZ',	de: 'ZZ'	},
@@ -62,7 +62,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 			},
 			'Insert-tab-label': {
 				focusBack: true,
-				combination: 'N ', de: 'I ',
+				combination: 'N', de: 'I',
 				contentList: [
 					{ id: 'InsertPagebreak',				focusBack: true,	combination: 'B',	de:	'SU'	},
 					{ id: 'TitlePageDialogimg',				focusBack: false,	combination: 'TI',	de:	null	},
@@ -86,7 +86,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 			},
 			'Layout-tab-label': {
 				focusBack: true,
-				combination: 'P ', de: 'S ',
+				combination: 'P', de: 'S',
 				contentList: [
 					{ id: 'PageDialogimg',					focusBack: false,	combination: 'M',	de:	'8'		},
 					{ id: 'InsertPagebreak2img',			focusBack: true,	combination: 'IB',	de:	null	},
@@ -117,7 +117,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 			},
 			'References-tab-label': {
 				focusBack: true,
-				combination: 'S ', de: 'C ',
+				combination: 'S', de: 'C',
 				contentList: [
 					{ id: 'InsertMultiIndeximg',			focusBack: false,	combination: 'T',	de:	'LA'	},
 					{ id: 'InsertIndexesEntryimg',			focusBack: false,	combination: 'I',	de:	null	},
@@ -137,7 +137,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 			},
 			'Review-tab-label': {
 				focusBack: true,
-				combination: 'R ', de: 'P ',
+				combination: 'R', de: 'P',
 				contentList: [
 					{ id: 'SpellingAndGrammarDialogimg',	focusBack: false,	combination: 'S',	de:	'C'		},
 					{ id: 'ThesaurusDialogimg',				focusBack: false,	combination: 'E',	de:	null	},
@@ -157,7 +157,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 			},
 			'Format-tab-label': {
 				focusBack: true,
-				combination: 'O ',
+				combination: 'O',
 				contentList: [
 					{ id: 'FontDialogimg',					focusBack: false,	combination: 'A',	de:	null	},
 					{ id: 'ParagraphDialogimg',				focusBack: false,	combination: 'B',	de:	null	},
@@ -173,7 +173,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 			},
 			'Form-tab-label': {
 				focusBack: true,
-				combination: 'M ',
+				combination: 'M',
 				contentList: [
 					{ id: 'InsertContentControlimg',		focusBack: true,	combination: 'A',	de:	null	},
 					{ id: 'InsertCheckboxContentControlimg',focusBack: true,	combination: 'B',	de:	null	},
@@ -185,7 +185,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 			},
 			'View-tab-label':{
 				focusBack: true,
-				combination: 'W ', de: 'F ',
+				combination: 'W', de: 'F',
 				contentList: [
 					{ id: 'ControlCodes',					focusBack: true,	combination: 'CC',	de:	null	},
 					{ id: 'FullScreenimg',					focusBack: true,	combination: 'F',	de:	'E'		},
@@ -202,7 +202,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 			},
 			'Help-tab-label': {
 				focusBack: true,
-				combination: 'Y ', de: 'E ',
+				combination: 'Y', de: 'E',
 				contentList: [
 					{ id: 'ForumHelpimg',					focusBack: true,	combination: 'C',	de:	null	},
 					{ id: 'OnlineHelpimg',					focusBack: false,	combination: 'H',	de:	null	},
