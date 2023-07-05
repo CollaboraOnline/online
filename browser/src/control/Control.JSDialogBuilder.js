@@ -2502,7 +2502,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			button = L.DomUtil.create('button', 'ui-content unobutton', div);
 			button.id = buttonId;
-			button.setAttribute('alt', id);
 			builder._setAccessKey(button, builder._getAccessKeyFromText(data.text));
 			if (hasPopUp)
 				button.setAttribute('aria-haspopup', true);
@@ -2517,6 +2516,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var label = L.DomUtil.create('label', 'ui-content unolabel', button);
 				label.htmlFor = buttonId;
 				label.textContent = builder._cleanText(data.text);
+				button.setAttribute('alt', label.textContent);
 				builder._stressAccessKey(label, button.accessKey);
 				controls['label'] = label;
 				$(div).addClass('has-label');
@@ -2524,6 +2524,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(div).addClass('no-label');
 			} else {
 				div.title = data.text;
+				button.setAttribute('alt', data.text);
 				builder.map.uiManager.enableTooltip(div);
 				$(div).addClass('no-label');
 			}
