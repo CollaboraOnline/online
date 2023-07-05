@@ -316,6 +316,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var content = [
 			{
 				'type': 'container',
+				'id': 'Help-container',
 				'children': [
 					{
 						'type': 'toolbox',

@@ -30,9 +30,18 @@ var NotebookbarAccessibilityDefinitions = function() {
 				focusBack: true,
 				combination: 'H', de: 'R',
 				contentList: [
-					{ id: 'Redoimg',						focusBack: true,	combination: 'O',	de: 'W' 	},
 					{ id: 'Undoimg',						focusBack: true,	combination: 'ZZ',	de: 'ZZ'	},
+					{ id: 'Redoimg',						focusBack: true,	combination: 'O',	de: 'W' 	},
+					{ id: 'Pasteimg',						focusBack: false,	combination: 'V',	de: null	},
+					{ id: 'CharSpacingimg',					focusBack: false,	combination: 'FT',	de: null	},
+					{ id: 'BackColor',						focusBack: true,	combination: 'I',	de:	null	},
+					{ id: 'FontColor',						focusBack: false,	combination: 'FC',	de: null	},
+					{ id: 'LineSpacingimg',					focusBack: false,	combination: 'K',	de: null	},
+					{ id: 'BackgroundColor',				focusBack: false,	combination: 'H',	de: null	},
 					{ id: 'Cutimg',							focusBack: true, 	combination: 'X',	de: 'X' 	},
+					{ id: 'FormatPaintbrushimg',			focusBack: true,	combination: 'FP',	de: null	},
+					{ id: 'fontnamecombobox',				focusBack: false,	combination: 'FF',	de: null	},
+					{ id: 'fontsize',						focusBack: false,	combination: 'FS',	de: null	},
 					{ id: 'Copyimg',						focusBack: true, 	combination: 'C',	de: 'C' 	},
 					{ id: 'ResetAttributesimg',				focusBack: true, 	combination: 'E',	de: 'Q' 	},
 					{ id: 'Boldimg',						focusBack: true, 	combination: '1',	de: '1' 	},
@@ -54,6 +63,8 @@ var NotebookbarAccessibilityDefinitions = function() {
 					{ id: 'ControlCodesimg',				focusBack: true, 	combination: 'FM',	de: 'FM'	},
 					{ id: 'ParaLeftToRightimg',				focusBack: true, 	combination: 'TL',	de: null	},
 					{ id: 'ParaRightToLeftimg',				focusBack: true, 	combination: 'TR',	de: 'EB'	},
+					{ id: 'InsertTable',					focusBack: false,	combination: 'IT',	de:	null	},
+					{ id: 'CharmapControlimg',				focusBack: false,	combination: 'IS',	de:	null	},
 					{ id: 'InsertGraphicimg',				focusBack: true, 	combination: 'IG',	de: null	},
 					{ id: 'InsertPagebreakimg',				focusBack: true, 	combination: 'IP',	de: null	},
 					{ id: 'InsertAnnotationimg',			focusBack: false, 	combination: 'ZC',	de: 'ZC'	},
@@ -65,6 +76,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 				combination: 'N', de: 'I',
 				contentList: [
 					{ id: 'InsertPagebreak',				focusBack: true,	combination: 'B',	de:	'SU'	},
+					{ id: 'InsertTable1img',				focusBack: false,	combination: 'T',	de: null	},
 					{ id: 'TitlePageDialogimg',				focusBack: false,	combination: 'TI',	de:	null	},
 					{ id: 'InsertSectionimg',				focusBack: false,	combination: 'IS',	de:	null	},
 					{ id: 'InsertGraphic',					focusBack: true,	combination: 'P',	de:	'BI'	},
@@ -80,6 +92,8 @@ var NotebookbarAccessibilityDefinitions = function() {
 					{ id: 'InsertObjectStarMathimg',		focusBack: true,	combination: 'ET',	de:	null	},
 					{ id: 'Lineimg',						focusBack: true,	combination: 'IL',	de:	null	},
 					{ id: 'FontworkGalleryFloaterimg',		focusBack: false,	combination: 'FG',	de:	null	},
+					{ id: 'FormattingMarkMenuimg',			focusBack: false,	combination: 'FM',	de: null	},
+					{ id: 'CharmapControlimg',				focusBack: false,	combination: 'ZS',	de: null	},
 					{ id: 'VerticalTextimg',				focusBack: false,	combination: 'VT',	de:	null	},
 					{ id: 'InsertAnnotation',				focusBack: false,	combination: 'L',	de:	'N'		}
 				]
@@ -141,6 +155,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 				contentList: [
 					{ id: 'SpellingAndGrammarDialogimg',	focusBack: false,	combination: 'S',	de:	'C'		},
 					{ id: 'ThesaurusDialogimg',				focusBack: false,	combination: 'E',	de:	null	},
+					{ id: 'LanguageMenuimg',				focusBack: false,	combination: 'ZL',	de: null	},
 					{ id: 'SpellOnlineimg',					focusBack: true,	combination: 'SO',	de:	null	},
 					{ id: 'WordCountDialogimg',				focusBack: false,	combination: 'W',	de:	'W'		},
 					{ id: 'InsertAnnotation2img',			focusBack: false,	combination: 'C',	de:	'N'		},
@@ -160,6 +175,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 				combination: 'O',
 				contentList: [
 					{ id: 'FontDialogimg',					focusBack: false,	combination: 'A',	de:	null	},
+					{ id: 'FormatMenuimg',					focusBack: false,	combination: 'FT',	de: null	},
 					{ id: 'ParagraphDialogimg',				focusBack: false,	combination: 'B',	de:	null	},
 					{ id: 'OutlineBulletimg',				focusBack: false,	combination: 'C',	de:	null	},
 					{ id: 'PageDialog',						focusBack: false,	combination: 'D',	de:	null	},
@@ -206,8 +222,8 @@ var NotebookbarAccessibilityDefinitions = function() {
 				contentList: [
 					{ id: 'ForumHelpimg',					focusBack: true,	combination: 'C',	de:	null	},
 					{ id: 'OnlineHelpimg',					focusBack: false,	combination: 'H',	de:	null	},
-					{ id: 'KeyboardShortcuts',				focusBack: false,	combination: 'S',	de:	null	},
-					{ id: 'AccessibilityCheck',				focusBack: false,	combination: 'A',	de:	null	},
+					{ id: 'KeyboardShortcutsimg',			focusBack: false,	combination: 'S',	de:	null	},
+					{ id: 'AccessibilityCheck1img',			focusBack: false,	combination: 'A',	de:	null	},
 					{ id: 'ReportIssueimg',					focusBack: true,	combination: 'K',	de:	null	},
 					{ id: 'Aboutimg',						focusBack: false,	combination: 'W',	de:	null	}
 				]
