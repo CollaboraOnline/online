@@ -220,15 +220,21 @@ var NotebookbarAccessibility = function() {
 		}
 		else if (event.keyCode === 16) // ShiftLeft.
 			return; // Ignore shift key.
-		else if (this.combination === null) {
-			this.combination = key;
-			this.checkCombinationAgainstAcccelerators();
-			this.filterOutNonMatchingInfoBoxes();
-		}
 		else {
-			this.combination += key;
-			this.checkCombinationAgainstAcccelerators();
-			this.filterOutNonMatchingInfoBoxes();
+			if (this.combination === null) {
+				this.combination = key;
+				this.checkCombinationAgainstAcccelerators();
+				this.filterOutNonMatchingInfoBoxes();
+			}
+			else {
+				this.combination += key;
+				this.checkCombinationAgainstAcccelerators();
+				this.filterOutNonMatchingInfoBoxes();
+			}
+
+			// So we checked the pressed key against available combinations. If there is no match, focus back to map.
+			if (this.filteredItem === null)
+				app.map.focus();
 		}
 	};
 
