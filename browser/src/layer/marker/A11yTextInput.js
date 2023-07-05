@@ -1315,7 +1315,7 @@ L.A11yTextInput = L.Layer.extend({
 		if (!type) {
 			type = 'input';
 		}
-		if (this._map.editorHasFocus()) {
+		if (this._map.editorHasFocus() || this._hasFormulaBarFocus()) {
 			app.socket.sendMessage(
 				'key type=' + type + ' char=' + charCode + ' key=' + unoKeyCode + '\n'
 			);
