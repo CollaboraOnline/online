@@ -671,7 +671,7 @@ export class CommentSection extends CanvasSectionObject {
 	}
 
 	public unselect (): void {
-		if (this.sectionProperties.selectedComment) {
+		if (this.sectionProperties.selectedComment && this.sectionProperties.selectedComment.sectionProperties.data.id != 'new') {
 			if (this.sectionProperties.selectedComment && $(this.sectionProperties.selectedComment.sectionProperties.container).hasClass('annotation-active'))
 				$(this.sectionProperties.selectedComment.sectionProperties.container).removeClass('annotation-active');
 
