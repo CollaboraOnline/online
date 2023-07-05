@@ -241,9 +241,7 @@ L.TextInput = L.Layer.extend({
 				this._textArea.setAttribute('readonly', true);
 		}
 
-		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone') {
-			this._textArea.focus();
-		} else if (acceptInput === true) {
+		if (acceptInput === true) {
 			// On the iPhone, only call the textarea's focus() when we get an explicit
 			// true parameter. On the other hand, never call the textarea's blur().
 
@@ -259,6 +257,9 @@ L.TextInput = L.Layer.extend({
 			// this function, and check when the topmost slot in the stack trace is
 			// "(anonymous function)" in hammer.js (an event handler), and when it is
 			// _onMessage (the WebSocket message handler in Socket.js).
+
+			// Even on android it is causing keyboard flicker so only foucs it on
+			// explicit true parameter
 
 			this._textArea.focus();
 		}
