@@ -220,6 +220,23 @@ var NotebookbarAccessibility = function() {
 		}
 		else if (event.keyCode === 16) // ShiftLeft.
 			return; // Ignore shift key.
+		else if (key === 'ARROWUP') {
+			// Try to set focus on tab button.
+			if (this.activeTabPointers.id)
+				document.getElementById(this.activeTabPointers.id).focus();
+		}
+		else if (key === 'ARROWDOWN') {
+			// Try to set focus on the first button of the tab content.
+			if (this.activeTabPointers.contentList.length > 0) {
+				for (var i = 0; i < this.activeTabPointers.contentList.length; i++) {
+					var element = document.getElementById(this.activeTabPointers.contentList[i].id);
+					if (element.tabIndex >= 0) {
+						element.focus();
+						break;
+					}
+				}
+			}
+		}
 		else {
 			if (this.combination === null) {
 				this.combination = key;
