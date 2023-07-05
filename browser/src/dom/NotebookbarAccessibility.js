@@ -41,16 +41,23 @@ var NotebookbarAccessibility = function() {
 	// Checks the current tab's content.
 	this.getElementOfWhichIdStartsWith = function(id) {
 		var tab = document.getElementById(this.activeTabPointers.id.split('-')[0] + '-container');
-		var element = tab.querySelector('[id^="' + id + '"]');
 
-		if (!element || element.length === 0)
-			return null;
-		if (element.length && element.length > 1) {
-			console.warn('NotebookbarAccessibility: Multiple elements inside the same tab with the same functionality.');
+		if (tab) {
+			var element = tab.querySelector('[id^="' + id + '"]');
+
+			if (!element || element.length === 0)
+				return null;
+			if (element.length && element.length > 1) {
+				console.warn('NotebookbarAccessibility: Multiple elements inside the same tab with the same functionality.');
+				return null;
+			}
+			else
+				return element;
+		}
+		else {
+			console.warn('Couldn\t find element: ' + id.split()[0] + '-container');
 			return null;
 		}
-		else
-			return element;
 	};
 
 	this.setupAcceleratorsForCurrentTab = function(id) {
@@ -118,6 +125,12 @@ var NotebookbarAccessibility = function() {
 	this.onInputBlur = function() {
 		document.body.classList.remove('activate-info-boxes');
 		app.map._textInput._abortComposition({ type: 'Notebookbar Accessibility' });
+	};
+
+	this.isAllFilteredOut = function() {
+		var count = document.querySelectorAll('.accessibility-info-box:not(.filtered_out)');
+		count = count.length;
+		return count === 0;
 	};
 
 	this.filterOutNonMatchingInfoBoxes = function() {
@@ -233,7 +246,7 @@ var NotebookbarAccessibility = function() {
 			}
 
 			// So we checked the pressed key against available combinations. If there is no match, focus back to map.
-			if (this.filteredItem === null)
+			if (this.isAllFilteredOut() === true)
 				app.map.focus();
 		}
 	};
