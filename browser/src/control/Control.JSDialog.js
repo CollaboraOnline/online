@@ -602,22 +602,6 @@ L.Control.JSDialog = L.Control.extend({
 		if (!dialog)
 			return;
 
-		var control = dialog.querySelector('[id=\'' + data.control.id + '\']');
-		if (!control) {
-			window.app.console.warn('jsdialogupdate: not found control with id: "' + data.control.id + '"');
-			return;
-		}
-
-		var parent = control.parentNode;
-		if (!parent)
-			return;
-
-		var scrollTop = control.scrollTop;
-		var focusedElement = document.activeElement;
-		var focusedElementInDialog = focusedElement ? dialog.querySelector('[id=\'' + focusedElement.id + '\']') : null;
-		var focusedId = focusedElementInDialog ? focusedElementInDialog.id : null;
-
-		control.style.visibility = 'hidden';
 		var builder = new L.control.jsDialogBuilder({windowId: data.id,
 			mobileWizard: this,
 			map: this.map,
@@ -625,26 +609,7 @@ L.Control.JSDialog = L.Control.extend({
 			callback: e.callback
 		});
 
-		var temporaryParent = L.DomUtil.create('div');
-		builder.build(temporaryParent, [data.control], false);
-		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
-		var backupGridSpan = control.style.gridColumn;
-		L.DomUtil.remove(control);
-
-		var newControl = dialog.querySelector('[id=\'' + data.control.id + '\']');
-		if (newControl) {
-			newControl.scrollTop = scrollTop;
-			newControl.style.gridColumn = backupGridSpan;
-		}
-
-		if (data.control.has_default === true && (data.control.type === 'pushbutton' || data.control.type === 'okbutton'))
-			L.DomUtil.addClass(newControl, 'button-primary');
-
-		if (focusedId) {
-			var found = dialog.querySelector('[id=\'' + focusedId + '\']');
-			if (found)
-				found.focus();
-		}
+		builder.updateWidget(dialog, data.control);
 
 		var dialogInfo = this.dialogs[data.id];
 		if (dialogInfo.isDocumentAreaPopup) {
