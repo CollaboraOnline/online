@@ -255,6 +255,13 @@ L.Control.PartsPreview = L.Control.extend({
 		}, this);
 
 		L.DomEvent.on(img, 'contextmenu', function(e) {
+			var isMasterView = this._map['stateChangeHandler'].getItemValue('.uno:SlideMasterPage');
+			var $trigger = $('#' + img.id);
+			if (isMasterView === 'true') {
+				$trigger.contextMenu(false);
+				return;
+			}
+			$trigger.contextMenu(true);
 			that._setPart(e);
 			$.contextMenu({
 				selector: '#' + img.id,
