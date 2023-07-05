@@ -982,15 +982,6 @@ L.A11yTextInput = L.Layer.extend({
 		if (removeBefore > 0 || removeAfter > 0)
 			this._removeTextContent(removeBefore, removeAfter);
 
-		var docLayer = this._map._docLayer;
-		if (removeBefore > 0 && docLayer._typingMention) {
-			var ch = docLayer._mentionText.pop();
-			if (ch === '@')
-				this._map.fire('closementionpopup', { 'typingMention': false });
-			else
-				this._map.fire('sendmentiontext', {data: docLayer._mentionText});
-		}
-
 		var newText = content;
 		if (matchTo > 0)
 			newText = newText.slice(matchTo);
@@ -1030,13 +1021,21 @@ L.A11yTextInput = L.Layer.extend({
 		}
 
 		// special handling for mentions
+		var docLayer = this._map._docLayer;
 		if (docLayer._typingMention)  {
-			if (removeBefore === 0) {
+			if (removeBefore > 0) {
+				var ch = docLayer._mentionText.pop();
+				if (ch === '@') {
+					this._map.fire('closementionpopup', { 'typingMention': false });
+				} else {
+					this._map.fire('sendmentiontext', {data: docLayer._mentionText});
+				}
+			} else if (removeBefore === 0) {
 				docLayer._mentionText.push(ev.data);
 				var regEx = /^[0-9a-zA-Z ]+$/;
-				if (ev.data && ev.data.match(regEx))
+				if (ev.data && ev.data.match(regEx)) {
 					this._map.fire('sendmentiontext', {data: docLayer._mentionText});
-				else {
+				} else {
 					this._map.fire('closementionpopup', { 'typingMention': false });
 				}
 			}
