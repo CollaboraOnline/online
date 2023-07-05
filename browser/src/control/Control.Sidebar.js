@@ -56,40 +56,10 @@ L.Control.Sidebar = L.Control.extend({
 		if (!this.container)
 			return;
 
-		var controlId = data.control.id;
-		var control = this.container.querySelector('[id=\'' + controlId + '\']');
-		if (!control) {
-			window.app.console.warn('jsdialogupdate: not found control with id: "' + data.control.id + '"');
-			return;
-		}
-
-		var parent = control.parentNode;
-		if (!parent)
-			return;
-
 		if (!this.builder)
 			return;
 
-		var scrollTop = control.scrollTop;
-		var focusedElement = document.activeElement;
-		var focusedElementInDialog = focusedElement ? this.container.querySelector('[id=\'' + focusedElement.id + '\']') : null;
-		var focusedId = focusedElementInDialog ? focusedElementInDialog.id : null;
-		control.style.visibility = 'hidden';
-
-		var temporaryParent = L.DomUtil.create('div');
-		this.builder.build(temporaryParent, [data.control], false);
-		parent.insertBefore(temporaryParent.querySelector('[id=\'' + controlId + '\']'), control.nextSibling);
-		var backupGridSpan = control.style.gridColumn;
-		L.DomUtil.remove(control);
-
-		var newControl = this.container.querySelector('[id=\'' + controlId + '\']');
-		if (newControl) {
-			newControl.scrollTop = scrollTop;
-			newControl.style.gridColumn = backupGridSpan;
-		}
-
-		if (focusedId)
-			this.container.querySelector('[id=\'' + focusedId + '\']').focus();
+		this.builder.updateWidget(this.container, data.control);
 	},
 
 	onJSAction: function (e) {

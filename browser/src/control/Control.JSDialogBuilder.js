@@ -3300,6 +3300,52 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
+	_updateWidgetImpl: function (container, data, buildFunc) {
+		var control = container.querySelector('[id=\'' + data.id + '\']');
+		if (!control) {
+			window.app.console.warn('jsdialogupdate: not found control with id: "' + data.id + '"');
+			return;
+		}
+
+		var parent = control.parentNode;
+		if (!parent)
+			return;
+
+		var scrollTop = control.scrollTop;
+		var focusedElement = document.activeElement;
+		var focusedElementInDialog = focusedElement ? container.querySelector('[id=\'' + focusedElement.id + '\']') : null;
+		var focusedId = focusedElementInDialog ? focusedElementInDialog.id : null;
+
+		control.style.visibility = 'hidden';
+
+		var temporaryParent = L.DomUtil.create('div');
+		buildFunc.bind(this)(temporaryParent, [data], false);
+		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
+		var backupGridSpan = control.style.gridColumn;
+		L.DomUtil.remove(control);
+
+		var newControl = container.querySelector('[id=\'' + data.id + '\']');
+		if (newControl) {
+			newControl.scrollTop = scrollTop;
+			newControl.style.gridColumn = backupGridSpan;
+
+			// todo: is that needed? should be in widget impl?
+			if (data.has_default === true && (data.type === 'pushbutton' || data.type === 'okbutton'))
+				L.DomUtil.addClass(newControl, 'button-primary');
+		}
+
+		if (focusedId) {
+			var found = container.querySelector('[id=\'' + focusedId + '\']');
+			if (found)
+				found.focus();
+		}
+	},
+
+	// replaces widget in-place with new instance with updated data
+	updateWidget: function (container, data) {
+		this._updateWidgetImpl(container, data, this.build);
+	},
+
 	postProcess: function(parent, data) {
 		if (!parent || !data || !data.id || data.id === '')
 			return;

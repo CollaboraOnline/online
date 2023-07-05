@@ -121,35 +121,12 @@ L.Control.Notebookbar = L.Control.extend({
 		if (!this.container)
 			return;
 
-		this.map._isNotebookbarLoadedOnCore = true;
-
-		var control = this.container.querySelector('[id=\'' + data.control.id + '\']');
-		if (!control) {
-			window.app.console.warn('jsdialogupdate: not found control with id: "' + data.control.id + '"');
-			return;
-		}
-
-		var parent = control.parentNode;
-		if (!parent)
-			return;
-
 		if (!this.builder)
 			return;
 
-		var scrollTop = control.scrollTop;
-		control.style.visibility = 'hidden';
+		this.map._isNotebookbarLoadedOnCore = true;
 
-		var temporaryParent = L.DomUtil.create('div');
-		this.builder.buildControl(temporaryParent, data.control);
-		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
-		var backupGridSpan = control.style.gridColumn;
-		L.DomUtil.remove(control);
-
-		var newControl = this.container.querySelector('[id=\'' + data.control.id + '\']');
-		if (newControl) {
-			newControl.scrollTop = scrollTop;
-			newControl.style.gridColumn = backupGridSpan;
-		}
+		this.builder.updateWidget(this.container, data.control);
 	},
 
 	onJSAction: function (e) {

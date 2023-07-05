@@ -1108,6 +1108,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	buildControl: function(parent, data) {
+		if (!data.length)
+			return;
+
+		data = data[0];
+
 		var type = data.type;
 		var handler = this._controlHandlers[type];
 
@@ -1126,6 +1131,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		}
 
 		this.options.useInLineLabelsForUnoButtons = false;
+	},
+
+	// replaces widget in-place with new instance with updated data
+	updateWidget: function (container, data) {
+		this._updateWidgetImpl(container, data, this.buildControl);
 	},
 
 	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
