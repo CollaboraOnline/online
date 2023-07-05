@@ -212,7 +212,7 @@ var NotebookbarAccessibility = function() {
 				this.resetState();
 			}
 		}
-		else if (key === 'ENTER') {
+		else if (key === 'ENTER' || key === ' ') {
 			if (this.filteredItem !== null)
 				this.clickOnFilteredItem();
 			else
