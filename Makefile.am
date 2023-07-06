@@ -29,8 +29,7 @@ else
 bin_PROGRAMS += coolwsd
 endif
 
-dist_bin_SCRIPTS = coolwsd-systemplate-setup \
-                   coolwsd-generate-proof-key
+dist_bin_SCRIPTS = coolwsd-systemplate-setup
 
 man_MANS = man/coolwsd.1 \
            man/coolforkit.1 \
@@ -38,7 +37,6 @@ man_MANS = man/coolwsd.1 \
            man/coolconfig.1 \
            man/coolstress.1 \
            man/coolwsd-systemplate-setup.1 \
-           man/coolwsd-generate-proof-key.1 \
            man/coolmount.1
 
 

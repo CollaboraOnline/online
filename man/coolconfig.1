@@ -1,4 +1,4 @@
-.TH COOLCONFIG "1" "Nov 2021" "coolconfig" "User Commands"
+.TH COOLCONFIG "1" "Jul 2023" "coolconfig" "User Commands"
 .SH NAME
 coolconfig \- Configuration tool for Collabora Online.
 .SH SYNOPSIS
@@ -50,5 +50,7 @@ The \fBupdate\-system\-template\fR command updates Collabora Online's system tem
 .PP
 update\-system\-template
 .PP
+.SS "generate\-proof\-key"
+The \fBgenerate\-proof\-key\fR command creates an RSA key pair in /etc/coolwsd for the WOPI Proof headers. The postinstall script of coolwsd package usually creates this RSA key pair in case of new installation.
 .SH "SEE ALSO"
-coolforkit(1), coolconvert(1), coolwsd(1), coolwsd-systemplate-setup(1), coolwsd-generate-proof-key(1), coolmount(1)
+coolforkit(1), coolconvert(1), coolwsd(1), coolwsd-systemplate-setup(1), coolmount(1)

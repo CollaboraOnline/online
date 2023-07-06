@@ -15,7 +15,7 @@ License:        EULA
 Source0:        coolwsd-@PACKAGE_VERSION@.tar.gz
 BuildRequires:  libcap-devel pam-devel gcc-c++ cppunit-devel pam-devel fontconfig make
 Requires:       collaboraoffice collaboraoffice-ure collaboraofficebasis-core collaboraofficebasis-writer collaboraofficebasis-impress collaboraofficebasis-graphicfilter collaboraofficebasis-en-US collaboraofficebasis-calc collaboraofficebasis-ooofonts collaboraofficebasis-images collaboraofficebasis-draw collaboraofficebasis-extension-pdf-import collaboraofficebasis-ooolinguistic collaboraofficebasis-math
-Requires(post): coreutils grep sed cpio /usr/sbin/setcap /usr/bin/ssh-keygen
+Requires(post): coreutils grep sed cpio /usr/sbin/setcap
 Provides: loolwsd
 Obsoletes: loolwsd collaboraoffice-dict-br collaboraoffice-dict-et collaboraoffice-dict-gd collaboraoffice-dict-gu collaboraoffice-dict-hi collaboraoffice-dict-lt collaboraoffice-dict-lv collaboraoffice-dict-ro collaboraoffice-dict-sr collaboraoffice-dict-te collaboraofficebasis-as collaboraofficebasis-bn-IN collaboraofficebasis-ast collaboraofficebasis-br collaboraofficebasis-ca-valencia collaboraofficebasis-cy collaboraofficebasis-et collaboraofficebasis-ga collaboraofficebasis-gd collaboraofficebasis-gu collaboraofficebasis-hi collaboraofficebasis-km collaboraofficebasis-kn collaboraofficebasis-lt collaboraofficebasis-lv collaboraofficebasis-ml collaboraofficebasis-mr collaboraofficebasis-nn collaboraofficebasis-or collaboraofficebasis-pa-IN collaboraofficebasis-ro collaboraofficebasis-sr collaboraofficebasis-sr-Latn collaboraofficebasis-ta collaboraofficebasis-te
 
@@ -56,7 +56,6 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 /usr/bin/loolwsd
 /usr/bin/coolwsd-systemplate-setup
 /usr/bin/loolwsd-systemplate-setup
-/usr/bin/coolwsd-generate-proof-key
 /usr/bin/coolforkit
 /usr/bin/coolconvert
 /usr/bin/coolconfig
@@ -77,7 +76,6 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 /usr/share/man/man1/coolconfig.1.gz
 /usr/share/man/man1/coolstress.1.gz
 /usr/share/man/man1/coolwsd-systemplate-setup.1.gz
-/usr/share/man/man1/coolwsd-generate-proof-key.1.gz
 /usr/share/man/man1/coolmount.1.gz
 /usr/lib/systemd/system/coolwsd.service
 
@@ -130,7 +128,7 @@ chown cool:cool ${coolparent}/cool/child-roots
 
 fc-cache ${lokitroot}/share/fonts/truetype
 coolwsd-systemplate-setup ${coolparent}/cool/systemplate ${lokitroot} >/dev/null 2>&1
-coolwsd-generate-proof-key >/dev/null 2>&1
+coolconfig generate-proof-key >/dev/null 2>&1
 
 if [ $COOLWSD_IS_ACTIVE == "1" ]; then systemctl start coolwsd; fi
 
