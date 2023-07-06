@@ -9,7 +9,10 @@
 
 #include <iostream>
 #include <iomanip>
+#include <pwd.h>
 #include <sstream>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <sysexits.h>
 #include <termios.h>
 #include <unistd.h>
@@ -17,6 +20,7 @@
 #include <openssl/rand.h>
 #include <openssl/evp.h>
 
+#include <Poco/Crypto/RSAKey.h>
 #include <Poco/Exception.h>
 #include <Poco/File.h>
 #include <Poco/Util/Application.h>
@@ -126,6 +130,7 @@ void Config::displayHelp()
               << "    set-support-key" << std::endl
 #endif
               << "    set <key> <value>" << std::endl
+              << "    generate-proof-key" << std::endl
               << "    update-system-template" << std::endl << std::endl;
 }
 
@@ -438,6 +443,47 @@ int Config::main(const std::vector<std::string>& args)
             }
             else
                 std::cout << "Migration of old configuration failed." << std::endl;
+        }
+    }
+    else if (args[0] == "generate-proof-key")
+    {
+        std::string proofKeyPath =
+#if ENABLE_DEBUG
+            DEBUG_ABSSRCDIR
+#else
+            COOLWSD_CONFIGDIR
+#endif
+            "/proof_key";
+
+#if !ENABLE_DEBUG
+        struct passwd* pwd;
+        pwd = getpwnam(COOL_USER_ID);
+        if (pwd == NULL)
+        {
+            std::cerr << "User '" COOL_USER_ID
+                         "' does not exist. Please reinstall coolwsd package, or in case of manual "
+                         "installation from source, create the '" COOL_USER_ID "' user manually."
+                      << std::endl;
+            return EX_NOUSER;
+        }
+#endif
+
+        Poco::File proofKeyFile(proofKeyPath);
+        if (!proofKeyFile.exists())
+        {
+            Poco::Crypto::RSAKey proofKey =
+                Poco::Crypto::RSAKey(Poco::Crypto::RSAKey::KeyLength::KL_2048,
+                                     Poco::Crypto::RSAKey::Exponent::EXP_LARGE);
+            proofKey.save(proofKeyPath + ".pub", proofKeyPath, "" /*no password*/);
+#if !ENABLE_DEBUG
+            chmod(proofKeyPath.c_str(), S_IRUSR | S_IWUSR);
+            chown(proofKeyPath.c_str(), pwd->pw_uid, -1);
+#endif
+        }
+        else
+        {
+            std::cerr << proofKeyPath << " exists already. New proof key was not generated."
+                      << std::endl;
         }
     }
     else
