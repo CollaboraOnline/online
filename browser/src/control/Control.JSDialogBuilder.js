@@ -2637,6 +2637,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			e.stopPropagation();
 		});
 
+		div.addEventListener('keydown', function(e) {
+			switch (e.key) {
+			case 'Escape':
+				builder.map.focus();
+				break;
+			}
+		});
+
 		builder._preventDocumentLosingFocusOnClick(div);
 
 		if (data.enabled === 'false' || data.enabled === false)
