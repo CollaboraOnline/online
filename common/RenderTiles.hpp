@@ -11,9 +11,10 @@
 #include <memory>
 #include <queue>
 #include <thread>
+#include <condition_variable>
+#include <fstream>
 #include <unordered_map>
 #include <vector>
-#include <common/SpookyV2.h>
 
 #include "Png.hpp"
 #include "Delta.hpp"
