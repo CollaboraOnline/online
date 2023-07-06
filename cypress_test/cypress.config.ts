@@ -9,6 +9,7 @@ export default defineConfig({
   modifyObstructiveCode: false,
   fixturesFolder: 'data',
   chromeWebSecurity: false,
+  screenshotOnRunFailure: false,
   env: { USER_INTERFACE: process.env.USER_INTERFACE },
   retries: {
     runMode: 1,
