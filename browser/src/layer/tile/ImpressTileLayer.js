@@ -197,8 +197,8 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		for (var key in this._tiles) {
 			var coords = this._tiles[key].coords;
 			var bounds = this._coordsToTileBounds(coords);
-			if (coords.part === command.part && invalidBounds.intersects(bounds) &&
-				coords.mode === command.mode) {
+			if (coords.part === command.part && coords.mode === command.mode &&
+			    invalidBounds.intersects(bounds)) {
 				if (visibleArea.intersects(bounds)) {
 					needsNewTiles = true;
 					if (this._debug) {
