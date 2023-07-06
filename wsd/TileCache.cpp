@@ -190,6 +190,8 @@ void TileCache::saveTileAndNotify(const TileDesc& desc, const char *data, const 
 
         if (tileBeingRendered)
         {
+            updateWidInCache(desc);
+
             const size_t subscriberCount = tileBeingRendered->getSubscribers().size();
 
             // notify that the tile was re-rendered, with no change.
@@ -495,6 +497,17 @@ Tile TileCache::findTile(const TileDesc &desc)
     }
 
     return Tile();
+}
+
+// Used when we get a zero delta - to update the wire-id
+void TileCache::updateWidInCache(const TileDesc& desc)
+{
+    Tile tile = _cache[desc];
+    if (tile)
+    {
+        LOG_TRC("Bumped wid on " << desc.serialize());
+        tile->bumpLastWid(desc.getWireId());
+    }
 }
 
 Tile TileCache::saveDataToCache(const TileDesc &desc, const char *data, const size_t size)

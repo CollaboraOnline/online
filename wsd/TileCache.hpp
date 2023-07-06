@@ -139,6 +139,13 @@ struct TileData
         return since < _wids[0];
     }
 
+    /// we now know this wid is really the latest
+    void bumpLastWid(TileWireId since)
+    {
+        assert(_wids.size() > 0);
+        _wids.back() = since;
+    }
+
     bool appendChangesSince(std::vector<char> &output, TileWireId since)
     {
         size_t i;
@@ -286,6 +293,7 @@ private:
     static bool intersectsTile(const TileDesc &tileDesc, int part, int mode, int x, int y,
                                int width, int height, int normalizedViewId);
 
+    void updateWidInCache(const TileDesc& desc);
     Tile saveDataToCache(const TileDesc& desc, const char* data, size_t size);
     void saveDataToStreamCache(StreamType type, const std::string& fileName, const char* data,
                                size_t size);
