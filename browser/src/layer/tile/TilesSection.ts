@@ -180,14 +180,13 @@ class TilesSection extends CanvasSectionObject {
 			}
 
 			this.beforeDraw(canvasCtx);
-			this.ensureCanvas(tile, now);
-			canvasCtx.drawImage(tile.canvas,
-				crop.min.x - tileBounds.min.x,
-				crop.min.y - tileBounds.min.y,
-				cropWidth, cropHeight,
-				crop.min.x - paneOffset.x,
-				crop.min.y - paneOffset.y,
-				cropWidth, cropHeight);
+			this.drawTileToCanvasCrop(tile, now, canvasCtx,
+									  crop.min.x - tileBounds.min.x,
+									  crop.min.y - tileBounds.min.y,
+									  cropWidth, cropHeight,
+									  crop.min.x - paneOffset.x,
+									  crop.min.y - paneOffset.y,
+									  cropWidth, cropHeight);
 			this.afterDraw(canvasCtx);
 		}
 
@@ -223,24 +222,22 @@ class TilesSection extends CanvasSectionObject {
 			this.context.fillRect(offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
 		}
 
+		var tileSizeX;
+		var tileSizeY;
 		if (app.file.fileBasedView) {
-			var tileSize = this.sectionProperties.docLayer._tileSize;
-			var ratio = tileSize / this.sectionProperties.docLayer._tileHeightTwips;
+			tileSizeX = tileSizeY = this.sectionProperties.docLayer._tileSize;
+			var ratio = tileSizeX / this.sectionProperties.docLayer._tileHeightTwips;
 			var partHeightPixels = Math.round((this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts) * ratio);
 
 			offset.y = tile.coords.part * partHeightPixels + tile.coords.y - this.documentTopLeft[1];
 			extendedOffset.y = offset.y + halfExtraSize;
+		} else {
+			tileSizeX = ctx.tileSize.x;
+			tileSizeY = ctx.tileSize.y;
+		}
 
-			this.ensureCanvas(tile, now);
-			this.context.drawImage(tile.canvas, offset.x, offset.y, tileSize, tileSize);
-			this.oscCtxs[0].drawImage(tile.canvas, extendedOffset.x, extendedOffset.y, tileSize, tileSize);
-			//this.pdfViewDrawTileBorders(tile, offset, tileSize);
-		}
-		else {
-			this.ensureCanvas(tile, now);
-			this.context.drawImage(tile.canvas, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
-			this.oscCtxs[0].drawImage(tile.canvas, extendedOffset.x, extendedOffset.y, ctx.tileSize.x, ctx.tileSize.y);
-		}
+		this.drawTileToCanvas(tile, now, this.context, offset.x, offset.y, tileSizeX, tileSizeY);
+		this.drawTileToCanvas(tile, now, this.oscCtxs[0], extendedOffset.x, extendedOffset.y, tileSizeX, tileSizeY);
 	}
 
 	public paint (tile: any, ctx: any, async: boolean, now: Date) {
@@ -606,6 +603,23 @@ class TilesSection extends CanvasSectionObject {
 		this.sectionProperties.docLayer.ensureCanvas(tile, now);
 	}
 
+	public drawTileToCanvas(tile: any, now: Date, canvas: CanvasRenderingContext2D,
+							dx: number, dy: number, dWidth: number, dHeight: number)
+	{
+		this.ensureCanvas(tile, now);
+		this.drawTileToCanvasCrop(tile, now, canvas,
+								  0, 0, tile.canvas.width, tile.canvas.height,
+								  dx, dy, dWidth, dHeight);
+	}
+
+	public drawTileToCanvasCrop(tile: any, now: Date, canvas: CanvasRenderingContext2D,
+								sx: number, sy: number, sWidth: number, sHeight: number,
+								dx: number, dy: number, dWidth: number, dHeight: number)
+	{
+		this.ensureCanvas(tile, now);
+		canvas.drawImage(tile.canvas, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+	}
+
 	// Called by tsManager to draw a zoom animation frame.
 	public drawZoomFrame(ctx?: any) {
 		var tsManager = this.sectionProperties.tsManager;
@@ -704,16 +718,15 @@ class TilesSection extends CanvasSectionObject {
 				var tileOffset = crop.min.subtract(tileBounds.min);
 				var paneOffset = crop.min.subtract(docRangeScaled.min.subtract(destPosScaled));
 				if (cropWidth && cropHeight) {
-					section.ensureCanvas(tile, now);
-					canvasContext.drawImage(tile.canvas,
-						tileOffset.x, tileOffset.y, // source x, y
-						cropWidth, cropHeight, // source size
-						// Destination x, y, w, h (In non-Chrome browsers it leaves lines without the 0.5 correction).
-						Math.floor(paneOffset.x / relScale * scale) + 0.5, // Destination x
-						Math.floor(paneOffset.y / relScale * scale) + 0.5, // Destination y
-
-						Math.floor((cropWidth / relScale) * scale) + 1.5,    // Destination width
-						Math.floor((cropHeight / relScale) * scale) + 1.5);    // Destination height
+						section.drawTileToCanvasCrop(
+								tile, now, canvasContext,
+								tileOffset.x, tileOffset.y, // source x, y
+								cropWidth, cropHeight, // source size
+								// Destination x, y, w, h (In non-Chrome browsers it leaves lines without the 0.5 correction).
+								Math.floor(paneOffset.x / relScale * scale) + 0.5, // Destination x
+								Math.floor(paneOffset.y / relScale * scale) + 0.5, // Destination y
+								Math.floor((cropWidth / relScale) * scale) + 1.5,    // Destination width
+								Math.floor((cropHeight / relScale) * scale) + 1.5);    // Destination height
 				}
 
 				return true;
