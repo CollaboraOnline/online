@@ -1484,6 +1484,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			canvas: null,  // canvas ready to render
 			imgDataCache: null, // flat byte array of canvas data
 			rawDeltas: null, // deltas ready to decompress
+			deltaCount: 0, // how many deltas on top of the keyframe
 			viewId: 0, // canonical view id
 			wireId: 0, // monotonic timestamp for optimizing fetch
 			invalidFrom: 0, // a wireId - for avoiding races on invalidation
@@ -5001,7 +5002,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_debugInit: function() {
-		this._debugTiles = {};
 		this._debugInvalidBounds = {};
 		this._debugInvalidBoundsMessage = {};
 		this._debugTimeout();
@@ -5104,6 +5104,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._map._docLayer._docType === 'spreadsheet') {
 			var section = this._map._docLayer._painter._sectionContainer.getSectionWithName('calc grid');
 			if (section) {
+				// FIXME: do we need this anymore ?
 				section.setDrawingOrder(L.CSections.CalcGrid.drawingOrderDebug);
 				section.sectionProperties.strokeStyle = 'blue';
 			}
@@ -5152,10 +5153,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_debugAddInvalidationData: function(tile) {
-		if (tile._debugTile) {
-			tile._debugTile.setStyle({fillOpacity: 0.5, fillColor: 'blue'});
+		if (tile._debugTime) {
 			tile._debugTime.date = +new Date();
-			tile._debugTile.date = +new Date();
 			tile._debugInvalidateCount++;
 			this._debugInvalidateCount++;
 		}
@@ -5187,14 +5186,6 @@ L.CanvasTileLayer = L.Layer.extend({
 						rect.setStyle({fillOpacity: 0, opacity: 1 - (this._debugId - key) / 7});
 					}
 				} else {
-					rect.setStyle({fillOpacity: opac - 0.04});
-				}
-			}
-			for (key in this._debugTiles) {
-				rect = this._debugTiles[key];
-				var col = rect.options.fillColor;
-				opac = rect.options.fillOpacity;
-				if (col === 'blue' && opac >= 0.04 && rect.date + 1000 < +new Date()) {
 					rect.setStyle({fillOpacity: opac - 0.04});
 				}
 			}
@@ -6216,7 +6207,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._debugInfo.clearLayers();
 				for (var key in this._tiles) {
 					this._tiles[key]._debugPopup = null;
-					this._tiles[key]._debugTile = null;
 				}
 			}
 		}
@@ -6792,14 +6782,16 @@ L.CanvasTileLayer = L.Layer.extend({
 			window.app.console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
 					       ' of length ' + rawDelta.length + ' hex: ' + hex2string(rawDelta));
 
-		tile.lastKeyframe = isKeyframe;
+		if (isKeyframe)
+			tile.deltaCount = 0;
+		else
+			tile.deltaCount++;
 
 		if (rawDelta.length === 0)
 			return; // that was easy!
 
 		var traceEvent = app.socket.createCompleteTraceEvent('L.CanvasTileLayer.applyDelta',
 								     { keyFrame: isKeyframe, length: rawDelta.length });
-
 
 		// store the compressed version for later in its current
 		// form as byte arrays, so that we can manage our canvases
@@ -6995,13 +6987,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			tile._debugPopup = L.popup({ className: 'debug', offset: new L.Point(0, 0), autoPan: false, closeButton: false, closeOnClick: false })
 				.setLatLng(new L.LatLng(tileBound.getSouth(), tileBound.getWest() + (tileBound.getEast() - tileBound.getWest()) / 5));
 			this._debugInfo.addLayer(tile._debugPopup);
-			if (this._debugTiles[key]) {
-				this._debugInfo.removeLayer(this._debugTiles[key]);
-			}
-			tile._debugTile = L.rectangle(tileBound, { color: 'blue', weight: 1, fillOpacity: 0, pointerEvents: 'none' });
-			this._debugTiles[key] = tile._debugTile;
 			tile._debugTime = this._debugGetTimeArray();
-			this._debugInfo.addLayer(tile._debugTile);
 		}
 
 		var msg = 'requested: ' + this._tiles[key]._debugInvalidateCount +
@@ -7018,9 +7004,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		var node = document.createElement('p');
 		node.innerHTML = msg;
 		tile._debugPopup.setHTMLContent(node);
-
-		if (tile._debugTile) // deltas in yellow
-			tile._debugTile.setStyle({ fillOpacity: tile.lastKeyframe ? 0 : 0.1, fillColor: 'yellow' });
 
 		this._debugShowTileData();
 	},

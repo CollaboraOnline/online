@@ -189,14 +189,6 @@ class TilesSection extends CanvasSectionObject {
 									  cropWidth, cropHeight);
 			this.afterDraw(canvasCtx);
 		}
-
-		if (this.sectionProperties.docLayer._debug)
-		{
-			canvasCtx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
-			this.beforeDraw(canvasCtx);
-			canvasCtx.strokeRect(tile.coords.x - paneBounds.min.x, tile.coords.y - paneBounds.min.y, 256, 256);
-			this.afterDraw(canvasCtx);
-		}
 	}
 
 	pdfViewDrawTileBorders (tile: any, offset: any, tileSize: number) {
@@ -432,6 +424,7 @@ class TilesSection extends CanvasSectionObject {
 		var docLayer = this.sectionProperties.docLayer;
 		var doneTiles = new Set();
 		var now = new Date();
+		var debugForcePaint = this.sectionProperties.docLayer._debug;
 		this.forEachTileInView(zoom, part, mode, ctx, function (tile: any, coords: any): boolean {
 			if (doneTiles.has(coords.key()))
 				return true;
@@ -439,7 +432,7 @@ class TilesSection extends CanvasSectionObject {
 			// Ensure tile is within document bounds.
 			if (tile && docLayer._isValidTile(coords)) {
 				if (!this.isJSDOM) { // perf-test code
-					if (tile.hasContent()) { // Ensure tile is loaded
+					if (tile.hasContent() || debugForcePaint) { // Ensure tile is loaded
 						this.paint(tile, ctx, false /* async? */, now);
 					}
 					else if (this.sectionProperties.docLayer._debug) {
@@ -617,7 +610,49 @@ class TilesSection extends CanvasSectionObject {
 								dx: number, dy: number, dWidth: number, dHeight: number)
 	{
 		this.ensureCanvas(tile, now);
+
 		canvas.drawImage(tile.canvas, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+
+		if (this.sectionProperties.docLayer._debug)
+		{
+			this.beforeDraw(canvas);
+
+			// blue boundary line on tiles
+			canvas.lineWidth = 1;
+			canvas.strokeStyle = 'rgba(0, 0, 255, 0.8)';
+			this.context.beginPath();
+			this.context.moveTo(dx + 0.5, dy + 0.5);
+			this.context.lineTo(dx + 0.5, dy + dHeight + 0.5);
+			this.context.lineTo(dx + dWidth + 0.5, dy + dHeight + 0.5);
+			this.context.lineTo(dx + dWidth + 0.5, dy + 0.5);
+			this.context.lineTo(dx + 0.5, dy + 0.5);
+			this.context.stroke();
+
+			// state of the tile
+			if (!tile.hasContent())
+				canvas.fillStyle = 'rgba(255, 0, 0, 0.8)';   // red
+			else if (tile.needsFetch())
+				canvas.fillStyle = 'rgba(255, 255, 0, 0.8)'; // yellow
+			else // present
+				canvas.fillStyle = 'rgba(0, 255, 0, 0.5)';   // green
+			this.context.fillRect(dx + 1.5, dy + 1.5, 12, 12);
+
+			// deltas graph
+			if (tile.deltaCount)
+			{
+				canvas.fillStyle = 'rgba(0, 0, 128, 0.3)';
+				var deltaSize = 4;
+				var maxDeltas = (256 - 16) / deltaSize;
+				var rowBlock = Math.floor(tile.deltaCount / maxDeltas);
+				var rowLeft = tile.deltaCount % maxDeltas;
+				if (rowBlock > 0)
+					this.context.fillRect(dx + 1.5 + 14, dy + 1.5, maxDeltas * deltaSize, rowBlock * deltaSize);
+
+					this.context.fillRect(dx + 1.5 + 14, dy + 1.5 + rowBlock * deltaSize, rowLeft * deltaSize, deltaSize);
+			}
+
+			this.afterDraw(canvas);
+		}
 	}
 
 	// Called by tsManager to draw a zoom animation frame.
