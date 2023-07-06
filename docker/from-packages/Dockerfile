@@ -113,8 +113,7 @@ RUN --mount=type=secret,id=secret_key \
     if [ -z "$noinotifywait" ]; then \
         apt-get -y install inotify-tools psmisc; \
     fi && \
-# Fix permissions of files that will be modified on start of the container by cool user
-    chown cool:cool /opt/cool/systemplate/etc/hosts /opt/cool/systemplate/etc/resolv.conf && \
+# Fix ownership of config directory that will be modified on start of the container by cool user
     chown cool:cool /etc/coolwsd && \
 # Remove packages that are not needed
 # FIXME: long way to go, the commands below remove coolwsd, too.
