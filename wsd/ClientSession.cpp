@@ -2430,10 +2430,9 @@ void ClientSession::handleTileInvalidation(const std::string& message,
         return;
     }
 
-    std::pair<TileCache::PartModePair, Util::Rectangle> result = TileCache::parseInvalidateMsg(message);
-    int part = result.first.first;
-    int mode = result.first.second;
-    Util::Rectangle& invalidateRect = result.second;
+    int part = 0, mode = 0;
+    TileWireId wireId = 0;
+    Util::Rectangle invalidateRect = TileCache::parseInvalidateMsg(message, part, mode, wireId);
 
     constexpr SplitPaneName panes[4] = {
         TOPLEFT_PANE,

@@ -335,42 +335,53 @@ void TileCache::invalidateTiles(int part, int mode, int x, int y, int width, int
 
 void TileCache::invalidateTiles(const std::string& tiles, int normalizedViewId)
 {
-    const std::pair<TileCache::PartModePair, Util::Rectangle> result = TileCache::parseInvalidateMsg(tiles);
-    const Util::Rectangle& invalidateRect = result.second;
-    int part = result.first.first;
-    int mode = result.first.second;
+    int part = 0, mode = 0;
+    TileWireId wireId = 0;
+    const Util::Rectangle invalidateRect = TileCache::parseInvalidateMsg(tiles, part, mode, wireId);
+
     invalidateTiles(part, mode, invalidateRect.getLeft(), invalidateRect.getTop(),
                     invalidateRect.getWidth(), invalidateRect.getHeight(), normalizedViewId);
 }
 
-std::pair<TileCache::PartModePair, Util::Rectangle> TileCache::parseInvalidateMsg(const std::string& tiles)
+Util::Rectangle TileCache::parseInvalidateMsg(const std::string& tiles, int &part, int &mode, TileWireId &wireId)
 {
     StringVector tokens = StringVector::tokenize(tiles);
 
     assert(!tokens.empty() && tokens.equals(0, "invalidatetiles:"));
 
+    mode = 0;
+    part = 0;
+    wireId = 0;
     if (tokens.size() == 2 && tokens.equals(1, "EMPTY"))
     {
-        return std::pair<PartModePair, Util::Rectangle>(
-            std::make_pair<int, int>(-1, 0), Util::Rectangle(0, 0, INT_MAX, INT_MAX));
+        part = -1;
+        return Util::Rectangle(0, 0, INT_MAX, INT_MAX);
     }
-
-    int mode = 0;
-    int part = 0;
-    if (tokens.size() == 3 && tokens.equals(1, "EMPTY,"))
+    else if (tokens.size() == 3 && tokens.equals(1, "EMPTY,"))
     {
-        if (stringToInteger(tokens[2], part))
-            return std::pair<PartModePair, Util::Rectangle>(
-                std::make_pair(part, mode), Util::Rectangle(0, 0, INT_MAX, INT_MAX));
+        part = -1;
+        if (!tokens.getUInt32(2, "wid", wireId))
+            assert(false && "missing wid");
+        return Util::Rectangle(0, 0, INT_MAX, INT_MAX);
     }
     else if (tokens.size() == 4 && tokens.equals(1, "EMPTY,"))
     {
         if (stringToInteger(tokens[2], part))
         {
+            if (!tokens.getUInt32(3, "wid", wireId))
+                assert(false && "missing wid");
+            return Util::Rectangle(0, 0, INT_MAX, INT_MAX);
+        }
+    }
+    else if (tokens.size() == 5 && tokens.equals(1, "EMPTY,"))
+    {
+        if (stringToInteger(tokens[2], part))
+        {
             if (stringToInteger(tokens[3], mode))
             {
-                return std::pair<PartModePair, Util::Rectangle>(
-                    std::make_pair(part, mode), Util::Rectangle(0, 0, INT_MAX, INT_MAX));
+                if (!tokens.getUInt32(4, "wid", wireId))
+                    assert(false && "missing wid");
+                return Util::Rectangle(0, 0, INT_MAX, INT_MAX);
             }
         }
     }
@@ -380,32 +391,33 @@ std::pair<TileCache::PartModePair, Util::Rectangle> TileCache::parseInvalidateMs
         int y = 0;
         int width = 0;
         int height = 0;
-        if (tokens.size() == 6 &&
+        if (tokens.size() == 7 &&
             getTokenInteger(tokens[1], "part", part) &&
             getNonNegTokenInteger(tokens[2], "x", x) &&
             getNonNegTokenInteger(tokens[3], "y", y) &&
             getNonNegTokenInteger(tokens[4], "width", width) &&
-            getNonNegTokenInteger(tokens[5], "height", height))
+            getNonNegTokenInteger(tokens[5], "height", height) &&
+            tokens.getUInt32(6, "wid", wireId))
         {
-            return std::pair<PartModePair, Util::Rectangle>(
-                std::make_pair(part, mode), Util::Rectangle(x, y, width, height));
+            return Util::Rectangle(x, y, width, height);
         }
-        else if (tokens.size() == 7 &&
+        else if (tokens.size() == 8 &&
             getTokenInteger(tokens[1], "part", part) &&
             getTokenInteger(tokens[2], "mode", mode) &&
             getNonNegTokenInteger(tokens[3], "x", x) &&
             getNonNegTokenInteger(tokens[4], "y", y) &&
             getNonNegTokenInteger(tokens[5], "width", width) &&
-            getNonNegTokenInteger(tokens[6], "height", height))
+            getNonNegTokenInteger(tokens[6], "height", height) &&
+            tokens.getUInt32(7, "wid", wireId))
         {
-            return std::pair<PartModePair, Util::Rectangle>(
-                std::make_pair(part, mode), Util::Rectangle(x, y, width, height));
+            return Util::Rectangle(x, y, width, height);
         }
     }
 
     LOG_ERR("Unexpected invalidatetiles request [" << tiles << "].");
-    return std::pair<PartModePair, Util::Rectangle>(
-        std::make_pair<int, int>(-1, 0), Util::Rectangle(0, 0, 0, 0));
+    assert(false && "Unexpected invalidatetiles request");
+    part = -1;
+    return Util::Rectangle(0, 0, 0, 0);
 }
 
 std::string TileCache::cacheFileName(const TileDesc& tile)
