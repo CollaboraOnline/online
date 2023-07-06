@@ -441,7 +441,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					else if (e.code === 'Escape') {
 						if (elementToHide)
 							elementToHide.style.display = 'none';
-						document.getElementById(parentId).focus();
+						var parentUNOButton = document.getElementById(parentId).querySelector('button');
+						parentUNOButton ? document.getElementById(parentId).querySelector('button').focus() : document.getElementById(parentId).focus();
 					}
 				};
 			});
