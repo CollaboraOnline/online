@@ -5971,16 +5971,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		return mostVisiblePart;
 	},
 
-	// TODO: unused method?
-	_doesQueueIncludeTileInfo: function (queue, part, mode, x, y) {
-		for (var i = 0; i < queue.length; i++) {
-			if (queue[i].part === part && queue[i].mode === mode &&
-				queue[i].x === x && queue[i].y === y)
-				return true;
-		}
-		return false;
-	},
-
 	_sortFileBasedQueue: function (queue) {
 		for (var i = 0; i < queue.length - 1; i++) {
 			for (var j = i + 1; j < queue.length; j++) {
