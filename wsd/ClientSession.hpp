@@ -99,7 +99,7 @@ public:
     bool sendUpdateNow(const TileDesc &desc)
     {
         TileWireId lastSentId = _tracker.updateTileSeq(desc);
-        std::string header = desc.serialize("tile:", "\n");
+        std::string header = desc.serialize("update:", "\n");
         LOG_TRC("Sending update from " << lastSentId << " to " << header);
         return sendTextFrame(header.data(), header.size());
     }

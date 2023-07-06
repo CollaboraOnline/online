@@ -12,6 +12,7 @@
 #include <string>
 
 #include <common/Util.hpp>
+#include <wsd/TileDesc.hpp>
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
@@ -148,6 +149,9 @@ std::string anonymizeUsername(const std::string& username);
 
 /// Ensure there is no fatal system setup problem
 void consistencyCheckJail();
+
+/// Fetch the latest montonically incrementing wire-id
+TileWireId getCurrentWireId(bool increment = false);
 
 #ifdef __ANDROID__
 /// For the Android app, for now, we need access to the one and only document open to perform eg. saveAs() for printing.

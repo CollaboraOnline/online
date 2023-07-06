@@ -463,14 +463,13 @@ getchildid: id=<id>
 
     Returns the child id
 
-invalidatetiles: part=<partNumber> x=<x> y=<y> width=<width> height=<height>
+invalidatetiles: part=<partNumber> x=<x> y=<y> width=<width> height=<height> wid=<wid>
 
     All parameters are numbers. Tells the client to invalidate any
     cached tiles for the document area specified (in twips), at any
     zoom level.
 
-invalidatetiles: EMPTY
-invalidatetiles: EMPTY, <partNumber>
+invalidatetiles: EMPTY, <partNumber>, <mode>, wid=<wid>
 
     Tells the client to invalidate all cached tiles.
 
