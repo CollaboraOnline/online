@@ -1572,13 +1572,38 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 			else {
 				var msg = 'invalidatetiles: ';
+
+				// see invalidatetiles: in wsd/protocol.txt for structure
+				var tmp = payload.substring('EMPTY'.length).replaceAll(',', ' , ');
+				var tokens = tmp.split(/[ \n]+/);
+
+				var wireIdToken = undefined;
+				var commaargs = [];
+
+				var commaarg = false;
+				for (var i = 0; i < tokens.length; i++) {
+					if (tokens[i] === ',') {
+						commaarg = true;
+						continue;
+					}
+					if (commaarg) {
+						commaargs.push(tokens[i]);
+						commaarg = false;
+					}
+					else if (tokens[i].startsWith('wid=')) {
+						wireIdToken = tokens[i];
+					}
+					else if (tokens[i])
+						console.error('unsupported invalidatetile token: ' + tokens[i]);
+				}
+
 				if (this.isWriter()) {
 					msg += 'part=0 ';
 				} else {
-					var tokens = payload.substring('EMPTY'.length + 1);
-					tokens = tokens.split(',');
-					var part = parseInt(tokens[0] ? tokens[0] : '');
-					var mode = parseInt((tokens.length > 1 && tokens[1]) ? tokens[1] : '');
+
+					var part = parseInt(commaargs.length > 0 ? commaargs[0] : '');
+					var mode = parseInt(commaargs.length > 1 ? commaargs[1] : '');
+
 					mode = (isNaN(mode) ? this._selectedMode : mode);
 					msg += 'part=' + (isNaN(part) ? this._selectedPart : part)
 						+ ((mode && mode !== 0) ? (' mode=' + mode) : '')
@@ -1587,6 +1612,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				msg += 'x=0 y=0 ';
 				msg += 'width=' + this._docWidthTwips + ' ';
 				msg += 'height=' + this._docHeightTwips;
+				if (wireIdToken !== undefined)
+					msg += ' ' + wireIdToken;
 				this._onInvalidateTilesMsg(msg);
 			}
 		}
