@@ -30,6 +30,22 @@ if (Cypress.env('INTEGRATION') === 'nextcloud') {
     });
 }
 
+Cypress.on('fail', function(error) {
+    Cypress.log({ name:'fail:',
+		  message: error.codeFrame.absoluteFile + ':'
+		  + error.codeFrame.line + ':'
+		  + error.codeFrame.column + '\n'
+		  + error.codeFrame.frame });
+
+    //https://stackoverflow.com/a/63519375/1592055
+    //returning false here prevents Cypress from failing the test */
+    if (error.message.includes('ResizeObserver loop limit exceeded')) {
+	return false;
+    }
+
+    throw error;
+});
+
 if (Cypress.browser.isHeaded) {
 	const runCommand = cy.queue.runCommand.bind(cy.queue);
 	cy.queue.runCommand = function slowRunCommand(cmd) {
