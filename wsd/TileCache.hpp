@@ -199,8 +199,6 @@ class TileCache
     std::shared_ptr<TileBeingRendered> findTileBeingRendered(const TileDesc& tile);
 
 public:
-    typedef std::pair<int, int> PartModePair;
-
     /// When the docURL is a non-file:// url, the timestamp has to be provided by the caller.
     /// For file:// url's, it's ignored.
     /// When it is missing for non-file:// url, it is assumed the document must be read, and no cached value used.
@@ -251,8 +249,8 @@ public:
     // The tiles parameter is an invalidatetiles: message as sent by the child process
     void invalidateTiles(const std::string& tiles, int normalizedViewId);
 
-    /// Parse invalidateTiles message to a part number and a rectangle of the invalidated area
-    static std::pair<PartModePair, Util::Rectangle> parseInvalidateMsg(const std::string& tiles);
+    /// Parse invalidateTiles message to rectangle and associated attributes of the invalidated area
+    static Util::Rectangle parseInvalidateMsg(const std::string& tiles, int &part, int &mode, TileWireId &wid);
 
     /// Forget the tile being rendered if it is the latest version we expect.
     void forgetTileBeingRendered(const TileDesc& descForKitReply,
