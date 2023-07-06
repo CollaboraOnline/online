@@ -6488,7 +6488,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var coords = this._twipsToCoords(tileMsg);
 		coords.z = tileMsg.zoom;
 		coords.part = tileMsg.part;
-		coords.mode = tileMsg.mode;
+		coords.mode = tileMsg.mode !== undefined ? tileMsg.mode : 0;
 		return coords;
 	},
 
