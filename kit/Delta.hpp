@@ -542,6 +542,13 @@ class DeltaGenerator {
             return false;
         }
 
+        if (width > 256 || height > 256)
+        {
+            LOG_TRC("Bad size << " << width << " x " << height << " to create deltas ");
+            assert(false && "shouldn't be possible to get tiles > 256x256");
+            return false;
+        }
+
         // FIXME: why duplicate this ? we could overwrite
         // as we make the delta into an existing cache entry,
         // and just do this as/when there is no entry.
