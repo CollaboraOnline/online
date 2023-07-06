@@ -3,9 +3,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-# Fix domain name resolution from jails
-cp /etc/resolv.conf /etc/hosts /opt/cool/systemplate/etc/
-
 if test "${DONT_GEN_SSL_CERT-set}" = set; then
 # Generate new SSL certificate instead of using the default
 mkdir -p /tmp/ssl/
