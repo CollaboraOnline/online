@@ -19,6 +19,7 @@
     "eslint": "7.19.0",
     "eslint-plugin-cypress-rules": "file:eslint_plugin",
     "get-port-cli": "2.0.0",
+    "semver": "^7.5.4",
     "typescript": "5.0.4",
     "wait-on": "7.0.1",
     "webpack": "^5.88.1"
