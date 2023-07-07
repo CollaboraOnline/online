@@ -3035,10 +3035,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder._sendColorCommand(builder, data, color);
 			};
 
-			$(button).click(applyFunction);
-			$(valueNode).click(applyFunction);
+			button.addEventListener('click', applyFunction);
+			valueNode.addEventListener('click', applyFunction);
 
-			$(arrowbackground).click(function() {
+			arrowbackground.tabIndex = 0;
+
+			var arrowEventHandler = function() {
 				if (!$(div).hasClass('disabled')) {
 					$(div).w2color({ color: builder._colorLastSelection[data.command], transparent: noColorControl }, function (color, themeData) {
 						if (color != null) {
@@ -3074,7 +3076,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						colorDiv.insertBefore(autoColorButton, colorDiv.firstChild);
 					}
 				}
+			};
+
+			arrowbackground.addEventListener('keydown', function(event) {
+				if (event.code === 'Enter' || event.ccode === 'Space') {
+					arrowEventHandler();
+					document.getElementById('w2ui-overlay').querySelector('.color-palette-selector').focus();
+				}
 			});
+			arrowbackground.addEventListener('click', arrowEventHandler);
 			builder._preventDocumentLosingFocusOnClick(div);
 		}
 
