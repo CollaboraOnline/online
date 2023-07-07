@@ -242,7 +242,6 @@ L.TileSectionManager = L.Class.extend({
 		this._canvas = this._layer._canvas;
 		this._map = this._layer._map;
 		var mapSize = this._map.getPixelBoundsCore().getSize();
-		this._oscCtxs = [];
 		this._tilesSection = null; // Shortcut.
 
 		this._sectionContainer = new CanvasSectionContainer(this._canvas, this._layer.isCalc() /* disableDrawing? */);
