@@ -41,12 +41,11 @@ function logLoadingParameters(fileName, subFolder, noFileCopy, isMultiUser, subs
 }
 
 function generateDocumentURL() {
-	var URI = 'http://' + Cypress.env('SERVER');
+	var URI = '';
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
-		URI += '/richproxy/proxy.php?req=';
-	} else {
-		URI += ':' + Cypress.env('SERVER_PORT');
+		URI += 'http://' + Cypress.env('SERVER') + '/richproxy/proxy.php?req=';
 	}
+
 	return URI;
 }
 

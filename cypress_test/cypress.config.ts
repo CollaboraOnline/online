@@ -16,6 +16,7 @@ export default defineConfig({
     openMode: 0,
   },
   e2e: {
+    baseUrl: 'http://' + process.env.COOLWSD_SERVER + ':' + process.env.FREE_PORT,
     setupNodeEvents(on, config) {
       installLogsPrinter(on);
       plugin(on, config);
