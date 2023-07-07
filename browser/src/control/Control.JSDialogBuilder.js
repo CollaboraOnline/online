@@ -1254,17 +1254,27 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				};
 
 				var moveFocusToPreviousTab = function(tab) {
-					if (tab === tabs[0])
+					if (tab === tabs[0]) {
+						tabs[tabs.length - 1].click();
 						tabs[tabs.length - 1].focus();
-					else
-						findNextVisibleTab(tab, true).focus();
+					}
+					else {
+						var nextTab = findNextVisibleTab(tab, true);
+						nextTab.click();
+						nextTab.focus(); // We add this or document gets the focus.
+					}
 				};
 
 				var moveFocusToNextTab = function(tab) {
-					if (tab === tabs[tabs.length - 1])
+					if (tab === tabs[tabs.length - 1]) {
+						tabs[0].click();
 						tabs[0].focus();
-					else
-						findNextVisibleTab(tab, false).focus();
+					}
+					else {
+						var nextTab = findNextVisibleTab(tab, false);
+						nextTab.click();
+						nextTab.focus(); // We add this or document gets the focus.
+					}
 				};
 
 				// We are adding this to distinguish "enter" key from real click events.
