@@ -605,9 +605,6 @@ L.TileSectionManager = L.Class.extend({
 		this._sectionContainer.requestReDraw();
 	},
 
-	_viewReset: function () {
-	},
-
 	_getZoomDocPos: function (pinchCenter, paneBounds, splitPos, scale, findFreePaneCenter) {
 		var inXBounds = (pinchCenter.x >= paneBounds.min.x) && (pinchCenter.x <= paneBounds.max.x);
 		var inYBounds = (pinchCenter.y >= paneBounds.min.y) && (pinchCenter.y <= paneBounds.max.y);
@@ -5733,8 +5730,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._docType === 'spreadsheet' && this._annotations !== 'undefined') {
 			app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		}
-
-		this._painter._viewReset();
 	},
 
 	_removeSplitters: function () {
