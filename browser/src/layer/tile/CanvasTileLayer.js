@@ -606,11 +606,6 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_viewReset: function () {
-		var ctx = this._paintContext();
-		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
-			this._tilesSection.oscCtxs[i].fillStyle = this._sectionContainer.getClearColor();
-			this._tilesSection.oscCtxs[i].fillRect(0, 0, this._tilesSection.offscreenCanvases[i].width, this._tilesSection.offscreenCanvases[i].height);
-		}
 	},
 
 	_getZoomDocPos: function (pinchCenter, paneBounds, splitPos, scale, findFreePaneCenter) {

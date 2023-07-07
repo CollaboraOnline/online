@@ -8,8 +8,6 @@ declare var app: any;
 
 class TilesSection extends CanvasSectionObject {
 	map: any;
-	offscreenCanvases: Array<any> = new Array(0);
-	oscCtxs: Array<any> = new Array(0);
 	isJSDOM: boolean = false; // testing
 	checkpattern: any;
 
@@ -63,10 +61,6 @@ class TilesSection extends CanvasSectionObject {
 	}
 
 	public onInitialize () {
-		for (var i = 0; i < 4; i++) {
-			this.offscreenCanvases.push(document.createElement('canvas'));
-			this.oscCtxs.push(this.offscreenCanvases[i].getContext('2d', { alpha: false }));
-		}
 		this.onResize();
 	}
 
@@ -74,10 +68,6 @@ class TilesSection extends CanvasSectionObject {
 		var tileSize = this.sectionProperties.docLayer._getTileSize();
 		var borderSize = 3;
 		this.sectionProperties.osCanvasExtraSize = 2 * borderSize * tileSize;
-		for (var i = 0; i < 4; ++i) {
-			this.offscreenCanvases[i].width = this.size[0] + this.sectionProperties.osCanvasExtraSize;
-			this.offscreenCanvases[i].height = this.size[1] + this.sectionProperties.osCanvasExtraSize;
-		}
 	}
 
 	extendedPaneBounds (paneBounds: any) {
@@ -129,11 +119,6 @@ class TilesSection extends CanvasSectionObject {
 				paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
 
 				this.drawTileInPane(tile, tileBounds, paneBounds, paneOffset, this.context, async, now);
-			}
-
-			if (extendedBounds.intersects(tileBounds)) {
-				var offset = extendedBounds.getTopLeft();
-				this.drawTileInPane(tile, tileBounds, extendedBounds, offset, this.oscCtxs[i], async, now);
 			}
 		}
 	}
@@ -229,7 +214,6 @@ class TilesSection extends CanvasSectionObject {
 		}
 
 		this.drawTileToCanvas(tile, now, this.context, offset.x, offset.y, tileSizeX, tileSizeY);
-		this.drawTileToCanvas(tile, now, this.oscCtxs[0], extendedOffset.x, extendedOffset.y, tileSizeX, tileSizeY);
 	}
 
 	public paint (tile: any, ctx: any, async: boolean, now: Date) {
@@ -414,11 +398,6 @@ class TilesSection extends CanvasSectionObject {
 			// Don't show page border and page numbers (drawn by drawPageBackgrounds) if zoom is changing
 			// after a zoom animation.
 			this.drawPageBackgrounds(ctx);
-		}
-
-		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
-			this.oscCtxs[i].fillStyle = this.containerObject.getClearColor();
-			this.oscCtxs[i].fillRect(0, 0, this.offscreenCanvases[i].width, this.offscreenCanvases[i].height);
 		}
 
 		var docLayer = this.sectionProperties.docLayer;
