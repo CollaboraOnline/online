@@ -205,6 +205,8 @@ $(NODE_BINS): $(NPM_INSTALLED);
 
 $(NPM_INSTALLED): package.json eslint_plugin/index.js eslint_plugin/package.json
 	$(V)npm install
+	$(V)echo node_modules:
+	$(V)ls node_modules
 	$(V)mkdir -p $(dir $(NPM_INSTALLED))
 	$(V)touch $(NPM_INSTALLED)
 
