@@ -1,8 +1,9 @@
-/* global require */
-
+/* global require __dirname */
 var process = require('process');
 var tasks = require('./tasks');
 var tagify = require('cypress-tags');
+var path = require('path');
+var webpackPreprocessor = require('@cypress/webpack-preprocessor');
 
 function plugin(on, config) {
 	if (config.env.COVERAGE_RUN)
@@ -43,7 +44,21 @@ function plugin(on, config) {
 		config.defaultCommandTimeout = 10000;
 	}
 
-	on('file:preprocessor', tagify.tagify(config));
+	var tagsFunc = tagify.tagify(config);
+	var webpackFunc = webpackPreprocessor({
+		webpackOptions: {
+			resolve: {
+				modules:[ path.resolve(__dirname, process.env.NODE_PATH)]
+			},
+		}
+	});
+
+	on('file:preprocessor', function(file) {
+		if (file.filePath.includes('integration')) {
+			return tagsFunc(file);
+		}
+		return webpackFunc(file);
+	});
 
 	return config;
 }
