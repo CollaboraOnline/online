@@ -1,7 +1,7 @@
-/* global process */
 import { defineConfig } from 'cypress';
 import plugin from './plugins/index.js';
-import 'process';
+import process from 'process';
+import installLogsPrinter from 'cypress-terminal-report/src/installLogsPrinter';
 
 export default defineConfig({
   video: false,
@@ -17,6 +17,7 @@ export default defineConfig({
   },
   e2e: {
     setupNodeEvents(on, config) {
+      installLogsPrinter(on);
       plugin(on, config);
     },
     specPattern: 'integration_tests/**/*_spec.js',

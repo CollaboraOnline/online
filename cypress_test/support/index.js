@@ -3,6 +3,9 @@
 require('cypress-wait-until');
 require('cypress-file-upload');
 require('cypress-iframe');
+import installLogsCollector from 'cypress-terminal-report/src/installLogsCollector';
+
+installLogsCollector();
 
 if (Cypress.env('INTEGRATION') === 'php-proxy') {
 	Cypress.Server.defaults({
