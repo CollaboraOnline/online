@@ -1,9 +1,1 @@
 See https://collaboraonline.github.io/post/build-code-ios/
-
-
-App Store "Test Details" text for the last TestFlight build
------------------------------------------------------------
-
-This version includes the latest 22.05.13 code and fixes the following bugs:
-
-• The currently open document would be replaced by a blank screen that could not be closed if the app's underlying WKWebView crashed. The app will now close the document and try to save any unsaved changes if such a crash occurs.
