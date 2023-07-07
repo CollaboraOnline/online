@@ -403,7 +403,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.labelledBy)
 			spinfield.setAttribute('aria-labelledby', data.labelledBy);
 
-		if (data.unit) {
+		if (data.unit && data.unit !== ':') {
 			var unit = L.DomUtil.create('span', builder.options.cssClass + ' spinfieldunit', div);
 			unit.textContent = builder._unitToVisibleString(data.unit);
 		}
@@ -1592,6 +1592,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		builder.listenNumericChanges(data, builder, controls, customCallback);
 
 		value = parseFloat(data.value);
+
+		// time formatter or empty field
+		if (data.unit === ':' || (!data.unit && !data.text)) {
+			controls.spinfield.type = undefined;
+			value = data.text;
+		}
+
 		$(controls.spinfield).val(value);
 
 		return false;
