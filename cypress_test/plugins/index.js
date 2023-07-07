@@ -44,14 +44,14 @@ function plugin(on, config) {
 		config.defaultCommandTimeout = 10000;
 	}
 
+	var options = {};
+	if (process.env.NODE_PATH) {
+		options.webpackOptions = {
+			resolve: { modules:[ path.resolve(__dirname, process.env.NODE_PATH)] }
+		};
+	}
 	var tagsFunc = tagify.tagify(config);
-	var webpackFunc = webpackPreprocessor({
-		webpackOptions: {
-			resolve: {
-				modules:[ path.resolve(__dirname, process.env.NODE_PATH)]
-			},
-		}
-	});
+	var webpackFunc = webpackPreprocessor(options);
 
 	on('file:preprocessor', function(file) {
 		if (file.filePath.includes('integration')) {
