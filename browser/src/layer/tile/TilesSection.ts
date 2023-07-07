@@ -159,8 +159,6 @@ class TilesSection extends CanvasSectionObject {
 	paintSimple (tile: any, ctx: any, async: boolean, now: Date) {
 		ctx.viewBounds.round();
 		var offset = new L.Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
-		var halfExtraSize = this.sectionProperties.osCanvasExtraSize / 2;
-		var extendedOffset = offset.add(new L.Point(halfExtraSize, halfExtraSize));
 
 		if ((async || this.containerObject.isZoomChanged()) && !app.file.fileBasedView) {
 			// Non Calc tiles(handled by paintSimple) can have transparent pixels,
@@ -179,7 +177,6 @@ class TilesSection extends CanvasSectionObject {
 			var partHeightPixels = Math.round((this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts) * ratio);
 
 			offset.y = tile.coords.part * partHeightPixels + tile.coords.y - this.documentTopLeft[1];
-			extendedOffset.y = offset.y + halfExtraSize;
 		} else {
 			tileSizeX = ctx.tileSize.x;
 			tileSizeY = ctx.tileSize.y;
