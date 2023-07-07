@@ -83,6 +83,9 @@ function _menubuttonControl (parentContainer, data, builder) {
 		$(button).click(function () {
 			builder.callback('menubutton', 'toggle', button, undefined, builder);
 		});
+
+		if (data.enabled === false)
+			button.setAttribute('disabled', true);
 	} else {
 		window.app.console.warn('Not found menu "' + menuId + '"');
 	}
