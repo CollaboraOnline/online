@@ -65,9 +65,7 @@ class TilesSection extends CanvasSectionObject {
 	}
 
 	public onResize () {
-		var tileSize = this.sectionProperties.docLayer._getTileSize();
-		var borderSize = 3;
-		this.sectionProperties.osCanvasExtraSize = 2 * borderSize * tileSize;
+		// empty: probably safe to remove this method and use parent CanvasSectionObject::onResize
 	}
 
 	paintWithPanes (tile: any, ctx: any, async: boolean, now: Date) {
