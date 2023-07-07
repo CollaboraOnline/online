@@ -281,6 +281,11 @@ Used Packages
 - cypress:
     Cypress integration test framework.
 
+- cypress-terminal-report:
+    This package makes cypress to dump test logs to the command line
+    when a test fails. You can write things to this log by calling
+    cy.log() in the test code.
+
 - cypress-log-to-output:
     This one can be used to dump console.error() messages to the command
     line. To enable this functionality you need to set ENABLE_CONSOLE_LOG
