@@ -176,6 +176,12 @@ L.Control.StatusBar = L.Control.extend({
 		else if (subItem && subItem.id === 'morelanguages') {
 			this.map.fire('morelanguages', { applyto: 'all' });
 		}
+		else if (subItem && subItem.id === 'langpara') {
+			this.map.fire('morelanguages', { applyto: 'paragraph' });
+		}
+		else if (subItem && subItem.id === 'langselection') {
+			this.map.fire('morelanguages', { applyto: 'selection' });
+		}
 	},
 	onPageChange: function(e) {
 		var statusbar = w2ui['actionbar'];
@@ -583,7 +589,12 @@ L.Control.StatusBar = L.Control.extend({
 
 		toolbaritems.push({ id: 'reset', text: resetLang, uno: constLang + constDefault });
 
-		toolbaritems.push({ id: 'morelanguages', text: _('More...') });
+		toolbaritems.push({ id: 'morelanguages', text: _('Set Language for All text') });
+
+		if (this.map.getDocType() === 'text') {
+			toolbaritems.push({ id: 'langpara', text: _('Set Language for Paragraph') });
+			toolbaritems.push({ id: 'langselection', text: _('Set Language for Selection') });
+		}
 
 		w2ui['actionbar'].set('LanguageStatus', {items: toolbaritems});
 	},
