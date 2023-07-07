@@ -1,6 +1,5 @@
 /* global require cy Cypress */
 
-require('cypress-failed-log');
 require('cypress-wait-until');
 require('cypress-file-upload');
 require('cypress-iframe');
