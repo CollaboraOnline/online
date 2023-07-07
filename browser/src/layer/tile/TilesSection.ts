@@ -70,31 +70,6 @@ class TilesSection extends CanvasSectionObject {
 		this.sectionProperties.osCanvasExtraSize = 2 * borderSize * tileSize;
 	}
 
-	extendedPaneBounds (paneBounds: any) {
-		var extendedBounds = paneBounds.clone();
-		var halfExtraSize = this.sectionProperties.osCanvasExtraSize / 2; // This is always an integer.
-		var spCxt = this.sectionProperties.docLayer.getSplitPanesContext();
-		if (spCxt) {
-			var splitPos = spCxt.getSplitPos().multiplyBy(app.dpiScale);
-			if (paneBounds.min.x) { // pane can move in x direction.
-				extendedBounds.min.x = Math.max(splitPos.x, extendedBounds.min.x - halfExtraSize);
-				extendedBounds.max.x += halfExtraSize;
-			}
-			if (paneBounds.min.y) { // pane can move in y direction.
-				extendedBounds.min.y = Math.max(splitPos.y, extendedBounds.min.y - halfExtraSize);
-				extendedBounds.max.y += halfExtraSize;
-			}
-		}
-		else {
-			extendedBounds.min.x -= halfExtraSize;
-			extendedBounds.max.x += halfExtraSize;
-			extendedBounds.min.y -= halfExtraSize;
-			extendedBounds.max.y += halfExtraSize;
-		}
-
-		return extendedBounds;
-	}
-
 	paintWithPanes (tile: any, ctx: any, async: boolean, now: Date) {
 		var tileTopLeft = tile.coords.getPos();
 		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
@@ -104,13 +79,10 @@ class TilesSection extends CanvasSectionObject {
 			var paneBounds = ctx.paneBoundsList[i];
 			// co-ordinates of the main-(bottom right) pane in core document pixels
 			var viewBounds = ctx.viewBounds;
-			// Extended pane bounds
-			var extendedBounds = this.extendedPaneBounds(paneBounds);
 
 			// into real pixel-land ...
 			paneBounds.round();
 			viewBounds.round();
-			extendedBounds.round();
 
 			if (paneBounds.intersects(tileBounds)) {
 				var paneOffset = paneBounds.getTopLeft(); // allocates
