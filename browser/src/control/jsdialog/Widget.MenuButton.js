@@ -68,7 +68,7 @@ function _menubuttonControl (parentContainer, data, builder) {
 		});
 
 		builder.options.noLabelsForUnoButtons = noLabels;
-	} else if (data.text || data.image) {
+	} else if (data.text !== undefined || data.image) {
 		var button = L.DomUtil.create('button', 'menubutton ' + builder.options.cssClass, parentContainer);
 		button.id = data.id;
 		button.setAttribute('aria-haspopup', true);
