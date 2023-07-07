@@ -1490,7 +1490,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			invalidFrom: 0, // a wireId - for avoiding races on invalidation
 			lastRendered: new Date(),
 			hasContent: function() {
-				return this.canvas || (this.rawDeltas && this.rawDeltas.length > 0);
+				return this.imgDataCache || (this.rawDeltas && this.rawDeltas.length > 0);
 			},
 			needsFetch: function() {
 				return this.invalidFrom >= this.wireId || !this.hasContent();
