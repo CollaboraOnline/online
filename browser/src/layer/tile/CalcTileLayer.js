@@ -202,9 +202,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				var intersectsVisible = visibleArea ? visibleArea.intersects(bounds) : bounds.intersectsAny(visiblePaneAreas);
 				if (intersectsVisible) {
 					needsNewTiles = true;
-					if (this._debug) {
-						this._debugAddInvalidationData(this._tiles[key]);
-					}
 				}
 				this._invalidateTile(key, command.wireId);
 			}

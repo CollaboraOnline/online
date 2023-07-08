@@ -1500,13 +1500,15 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._tiles[key] = tile;
 
 		if (this._debug)
-		{
-			tile._debugLoadTile = 0;
-			tile._debugLoadDelta = 0;
-			tile._debugInvalidateCount = 0;
-		}
+			this._tileDebugUpgrade(tile);
 
 		return tile;
+	},
+
+	_tileDebugUpgrade: function(tile) {
+		tile._debugLoadTile = 0;
+		tile._debugLoadDelta = 0;
+		tile._debugInvalidateCount = 0;
 	},
 
 	_tileNeedsFetch: function(key) {
@@ -5012,6 +5014,11 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugRenderCount = 0;
 		this._debugDeltas = true;
 		this._debugDeltasDetail = false;
+
+		// add blank metrics to those who didn't get any yet.
+		for (var key in this._tiles)
+			this._tileDebugUpgrade(this._tiles[key]);
+
 		if (!this._debugData) {
 			this._debugData = {};
 			this._debugDataNames = ['canonicalViewId', 'tileCombine', 'fromKeyInputToInvalidate', 'ping', 'loadCount', 'postMessage'];
@@ -5144,14 +5151,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		// pings will be paired with the pong messages
 		this._debugPINGQueue.push(+new Date());
 		app.socket.sendMessage('ping');
-	},
-
-	_debugAddInvalidationData: function(tile) {
-		if (tile._debugTime) {
-			tile._debugTime.date = +new Date();
-			tile._debugInvalidateCount++;
-			this._debugInvalidateCount++;
-		}
 	},
 
 	_debugAddInvalidationMessage: function(message) {
@@ -6563,6 +6562,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		var tile = this._tiles[key];
 		if (!tile)
 			return;
+
+		if (this._debug) {
+			tile._debugInvalidateCount++;
+			this._debugInvalidateCount++;
+		}
+
 		if (!tile.hasContent())
 			this._removeTile(key);
 		else
@@ -7044,11 +7049,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			window.app.console.debug('Nasty - updated wireId matches old one');
 
 		if (this._debug) {
-			if (tile._debugLoadTile === undefined) {
-				tile._debugLoadTile = 0;
-				tile._debugLoadDelta = 0;
-				tile._debugInvalidateCount = 0;
-			}
 			if (!img)
 			{ // update:
 			}

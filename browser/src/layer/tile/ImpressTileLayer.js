@@ -201,9 +201,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			    invalidBounds.intersects(bounds)) {
 				if (visibleArea.intersects(bounds)) {
 					needsNewTiles = true;
-					if (this._debug) {
-						this._debugAddInvalidationData(this._tiles[key]);
-					}
 				}
 				this._invalidateTile(key, command.wireId);
 			}
