@@ -364,6 +364,77 @@ function openReadOnlyFile(type, filename) {
 	return testFileName;
 }
 
+function checkAccessibilityEnabledToBe(state) {
+	cy.window().then(win => {
+		cy.log('check accessibility enabled to be: ' + state);
+		var isAccessibilityEnabledAtServerLevel = win['0'].enableAccessibility;
+		// expect(isAccessibilityEnabledAtServerLevel).to.eq(true);
+		if (isAccessibilityEnabledAtServerLevel) {
+			var userInterfaceMode = win['0'].userInterfaceMode;
+			if (userInterfaceMode === 'notebookbar') {
+				if (state) {
+					cy.cGet('#togglea11ystate').should('have.class', 'selected');
+				} else {
+					cy.cGet('#togglea11ystate').should('not.have.class', 'selected');
+				}
+			} else {
+				cy.cGet('#menu-tools').click();
+				if (state) {
+					cy.cGet('#menu-togglea11ystate a').should('have.class', 'lo-menu-item-checked');
+				} else {
+					cy.cGet('#menu-togglea11ystate a').should('not.have.class', 'lo-menu-item-checked');
+				}
+				cy.cGet('div.clipboard').type('{esc}', {force: true});
+			}
+			cy.cGet('div.clipboard').then((clipboard) => {
+				expect(clipboard.get(0)._hasAccessibilitySupport()).to.eq(state);
+			});
+		} else {
+			cy.log('accessibility disabled at server level');
+		}
+	});
+}
+
+function setAccessibilityState(enable) {
+	cy.window().then(win => {
+		cy.log('set accessibility state to: ' + enable);
+		var a11yEnabled = win['0'].enableAccessibility;
+		if (a11yEnabled) {
+			var userInterfaceMode = win['0'].userInterfaceMode;
+			if (userInterfaceMode === 'notebookbar') {
+				cy.cGet('#Help-tab-label').click();
+				cy.cGet('#togglea11ystate').then((button) => {
+					//var currentState = button.get(0).classList.contains('selected');
+					var currentState = button.hasClass('selected');
+					if (currentState !== enable) {
+						button.click();
+						cy.log('accessibility state changed: ' + enable);
+					} else {
+						cy.log('accessibility already in requested state: ' + enable);
+					}
+				});
+			} else  {
+				cy.cGet('#menu-tools').click();
+				cy.cGet('#menu-togglea11ystate a').then((item) => {
+					var currentState = item.hasClass('lo-menu-item-checked');
+					if (currentState !== enable) {
+						cy.cGet('#menu-togglea11ystate').click();
+						cy.log('accessibility state changed: ' + enable);
+					} else {
+						cy.log('accessibility already in requested state: ' + enable);
+					}
+				});
+			}
+			cy.wait(500);
+			cy.cGet('div.clipboard').then((clipboard) => {
+				expect(clipboard.get(0)._hasAccessibilitySupport()).to.eq(enable);
+			});
+		} else {
+			cy.log('accessibility disabled at server level');
+		}
+	});
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
@@ -388,3 +459,5 @@ module.exports.assertImageSize = assertImageSize;
 module.exports.openReadOnlyFile = openReadOnlyFile;
 module.exports.switchUIToNotebookbar = switchUIToNotebookbar;
 module.exports.switchUIToCompact = switchUIToCompact;
+module.exports.checkAccessibilityEnabledToBe = checkAccessibilityEnabledToBe;
+module.exports.setAccessibilityState = setAccessibilityState;

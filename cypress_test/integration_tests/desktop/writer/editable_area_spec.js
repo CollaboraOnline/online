@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach */
 
 var helper = require('../../common/helper');
+var desktopHelper = require('../../common/desktop_helper');
 var ceHelper = require('../../common/contenteditable_helper');
 // var repairHelper = require('../../common/repair_document_helper');
 
@@ -470,6 +471,17 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
 		ceHelper.moveCaret('left');
 		ceHelper.type('{del}');
 		ceHelper.checkPlainContent('Hello World');
+	});
+
+	it('Typing after switching accessibility state', function () {
+		ceHelper.type('r');
+		desktopHelper.setAccessibilityState(false);
+		ceHelper.checkPlainContent('');
+		ceHelper.type('e');
+		desktopHelper.setAccessibilityState(true);
+		ceHelper.checkPlainContent('re');
+		ceHelper.type('d');
+		ceHelper.checkPlainContent('red');
 	});
 });
 
