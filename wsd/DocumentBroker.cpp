@@ -470,14 +470,14 @@ void DocumentBroker::pollThread()
                 {
                     // We will never save. No need to wait for timeout.
                     LOG_DBG("Doc disconnected while saving. Ending save activity.");
-                    _saveManager.setLastSaveResult(/*success=*/false);
+                    _saveManager.setLastSaveResult(/*success=*/false, /*newVersion=*/false);
                     endActivity();
                 }
                 else
                 if (_saveManager.hasSavingTimedOut())
                 {
                     LOG_DBG("Saving timedout. Ending save activity.");
-                    _saveManager.setLastSaveResult(/*success=*/false);
+                    _saveManager.setLastSaveResult(/*success=*/false, /*newVersion=*/false);
                     endActivity();
                 }
             }
@@ -1352,7 +1352,7 @@ DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
 
     // When destroying, we might have to force uploading if always_save_on_exit=true.
     // If unloadRequested is set, assume we will unload after uploading and exit.
-    if (isUnloading() && _alwaysSaveOnExit)
+    if (isUnloading() && _alwaysSaveOnExit && _saveManager.version() > 0)
     {
         if (_documentChangedInStorage)
         {
@@ -1444,7 +1444,7 @@ void DocumentBroker::handleSaveResponse(const std::shared_ptr<ClientSession>& se
     _nextStorageAttrs.reset();
 
     // Record that we got a response to avoid timing out on saving.
-    _saveManager.setLastSaveResult(success || result == "unmodified");
+    _saveManager.setLastSaveResult(success || result == "unmodified", /*newVersion=*/success);
 
     if (success)
         LOG_DBG("Save result from Core: saved (during " << DocumentState::name(_docState.activity())
