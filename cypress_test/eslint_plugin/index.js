@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 module.exports = {
 	rules: {
 		'no-get-contains-chain': {

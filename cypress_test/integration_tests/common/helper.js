@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global cy Cypress expect */
 
 var mobileWizardIdleTime = 1250;

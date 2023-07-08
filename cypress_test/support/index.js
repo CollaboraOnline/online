@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global require cy Cypress */
 
 require('cypress-wait-until');
@@ -19,33 +20,34 @@ var COMMAND_DELAY = 1000;
 
 // Ignore exceptions coming from nextcloud.
 if (Cypress.env('INTEGRATION') === 'nextcloud') {
-    Cypress.on('uncaught:exception', function() {
-	return false;
-    });
-} else {
-    Cypress.on('window:before:load', function(appWindow) {
-	appWindow.addEventListener('error', function(event) {
-	    Cypress.log({ name:'uncaught:exception',
-			  message: (event.error.message ? event.error.message : 'no message')
-			  + '\n' + (event.error.stack ? event.error.stack : 'no stack') });
+	Cypress.on('uncaught:exception', function() {
+		return false;
 	});
-    });
+} else {
+	Cypress.on('window:before:load', function(appWindow) {
+		appWindow.addEventListener('error', function(event) {
+			Cypress.log({ name:'error:',
+				      message: (event.error.message ? event.error.message : 'no message')
+				      + '\n' + (event.error.stack ? event.error.stack : 'no stack') });
+		});
+
+	});
 }
 
 Cypress.on('fail', function(error) {
-    Cypress.log({ name:'fail:',
-		  message: error.codeFrame.absoluteFile + ':'
-		  + error.codeFrame.line + ':'
-		  + error.codeFrame.column + '\n'
-		  + error.codeFrame.frame });
+	Cypress.log({ name:'fail:',
+		      message: error.codeFrame.absoluteFile + ':'
+		      + error.codeFrame.line + ':'
+		      + error.codeFrame.column + '\n'
+		      + error.codeFrame.frame });
 
-    //https://stackoverflow.com/a/63519375/1592055
-    //returning false here prevents Cypress from failing the test */
-    if (error.message.includes('ResizeObserver loop limit exceeded')) {
-	return false;
-    }
+	//https://stackoverflow.com/a/63519375/1592055
+	//returning false here prevents Cypress from failing the test */
+	if (error.message.includes('ResizeObserver loop limit exceeded')) {
+		return false;
+	}
 
-    throw error;
+	throw error;
 });
 
 if (Cypress.browser.isHeaded) {
