@@ -273,66 +273,62 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
     class LocalFileInfo
     {
         public:
-
-            // Everytime we get new request of CheckFileInfo
-            // we create a LocalFileInfo object of the new file and add
-            // it to static vector so that we can use/update the file info
-            // when we get GetFile and PutFile request
-            static std::vector<LocalFileInfo> fileInfoVec;
-
             // Attributes of file
-            std::string fileName;
             std::string localPath;
+            std::string fileName;
             std::string size;
 
             // Last modified time of the file
             std::chrono::system_clock::time_point fileLastModifiedTime;
-
 
             enum class COOLStatusCode
             {
                 DocChanged = 1010  // Document changed externally in storage
             };
 
-        LocalFileInfo(){};
+        std::string getLastModifiedTime()
+        {
+            return Util::getIso8601FracformatTime(fileLastModifiedTime);
+        }
 
-        LocalFileInfo(std::string lpath, std::string fName)
+        LocalFileInfo() = delete;
+        LocalFileInfo(const std::string &lPath, const std::string &fName)
         {
             fileName = fName;
-            localPath = lpath;
+            localPath = lPath;
             const FileUtil::Stat stat(localPath);
             size = std::to_string(stat.size());
             fileLastModifiedTime = stat.modifiedTimepoint();
         }
+    private:
+        // Internal tracking of known files: to store various data
+        // on files - rather than writing it back to the file-system.
+        static std::vector<std::shared_ptr<LocalFileInfo>> fileInfoVec;
 
-        //Returns index if object with attribute localPath found in
-        //the vector else returns -1
-        static int getIndex(std::string lpath)
+    public:
+        // Lookup a file in our file-list
+        static std::shared_ptr<LocalFileInfo> getOrCreateFile(const std::string &lpath, const std::string &fname)
         {
-            auto it = std::find_if(fileInfoVec.begin(), fileInfoVec.end(), [&lpath](const LocalFileInfo& obj)
+            auto it = std::find_if(fileInfoVec.begin(), fileInfoVec.end(), [&lpath](const std::shared_ptr<LocalFileInfo> obj)
             {
-                return obj.localPath == lpath;
+                return obj->localPath == lpath;
             });
-
             if (it != fileInfoVec.end())
-            {
-                int index = std::distance(fileInfoVec.begin(), it);
-                return index;
-            }
-            else
-            {
-                return -1;
-            }
+                return *it;
+
+            auto fileInfo = std::make_shared<LocalFileInfo>(lpath, fname);
+            fileInfoVec.emplace_back(fileInfo);
+            return fileInfo;
         }
     };
     std::atomic<unsigned> lastLocalId;
-    std::vector<LocalFileInfo> LocalFileInfo::fileInfoVec;
+    std::vector<std::shared_ptr<LocalFileInfo>> LocalFileInfo::fileInfoVec;
 
     //handles request starts with /wopi/files
     void handleWopiRequest(const HTTPRequest& request,
-                        const RequestDetails &requestDetails,
-                        Poco::MemoryInputStream& message,
-                        const std::shared_ptr<StreamSocket>& socket)
+                           const RequestDetails &requestDetails,
+                           Poco::MemoryInputStream& message,
+                           const std::shared_ptr<StreamSocket>& socket)
     {
         Poco::URI requestUri(request.getURI());
         const Poco::Path path = requestUri.getPath();
@@ -356,27 +352,9 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
 
         if (request.getMethod() == "GET" && !Util::endsWith(path.toString(), suffix))
         {
-            LocalFileInfo localFile;
-            if (!LocalFileInfo::fileInfoVec.empty())
-            {
-                int index = LocalFileInfo::getIndex(localPath);
-                if (index == -1)
-                {
-                    LocalFileInfo fileInfo(localPath, path.getFileName());
-                    LocalFileInfo::fileInfoVec.emplace_back(fileInfo);
-                    localFile = fileInfo;
-                }
-                 else
-                {
-                    localFile = LocalFileInfo::fileInfoVec[index];
-                }
-            }
-            else
-            {
-                LocalFileInfo fileInfo(localPath, path.getFileName());
-                LocalFileInfo::fileInfoVec.emplace_back(fileInfo);
-                localFile = fileInfo;
-            }
+            std::shared_ptr<LocalFileInfo> localFile =
+                LocalFileInfo::getOrCreateFile(localPath, path.getFileName());
+
             std::string userId = std::to_string(lastLocalId++);
             std::string userNameString = "LocalUser#" + userId;
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
@@ -385,15 +363,15 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             config::isSslEnabled() ? postMessageOrigin = "https://" : postMessageOrigin = "http://";
             postMessageOrigin += requestDetails.getHostUntrusted();
 
-            fileInfo->set("BaseFileName", localFile.fileName);
-            fileInfo->set("Size", localFile.size);
+            fileInfo->set("BaseFileName", localFile->fileName);
+            fileInfo->set("Size", localFile->size);
             fileInfo->set("Version", "1.0");
             fileInfo->set("OwnerId", "test");
             fileInfo->set("UserId", userId);
             fileInfo->set("UserFriendlyName", userNameString);
             fileInfo->set("UserCanWrite", "true");
             fileInfo->set("PostMessageOrigin", postMessageOrigin);
-            fileInfo->set("LastModifiedTime", Util::getIso8601FracformatTime(localFile.fileLastModifiedTime));
+            fileInfo->set("LastModifiedTime", localFile->getLastModifiedTime());
             fileInfo->set("EnableOwnerTermination", "true");
 
             std::ostringstream jsonStream;
@@ -404,7 +382,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
 
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
-                "Last-Modified: " << Util::getHttpTime(localFile.fileLastModifiedTime) << "\r\n"
+                "Last-Modified: " << Util::getHttpTime(localFile->fileLastModifiedTime) << "\r\n"
                 "User-Agent: " WOPI_AGENT_STRING "\r\n"
                 "Content-Length: " << responseString.size() << "\r\n"
                 "Content-Type: " << mimeType << "\r\n"
@@ -416,17 +394,18 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
         }
         else if(request.getMethod() == "GET" && Util::endsWith(path.toString(), suffix))
         {
-            LocalFileInfo localFile = LocalFileInfo::fileInfoVec[LocalFileInfo::getIndex(localPath)];
+            std::shared_ptr<LocalFileInfo> localFile =
+                LocalFileInfo::getOrCreateFile(localPath,path.getFileName());
             auto ss = std::ostringstream{};
-            std::ifstream inputFile(localFile.localPath);
+            std::ifstream inputFile(localFile->localPath);
             ss << inputFile.rdbuf();
             const std::string content = ss.str();
             const std::string mimeType = "text/plain; charset=utf-8";
             std::ostringstream oss;
             oss << "HTTP/1.1 200 OK\r\n"
-                "Last-Modified: " << Util::getHttpTime(localFile.fileLastModifiedTime) << "\r\n"
+                "Last-Modified: " << Util::getHttpTime(localFile->fileLastModifiedTime) << "\r\n"
                 "User-Agent: " WOPI_AGENT_STRING "\r\n"
-                "Content-Length: " << localFile.size << "\r\n"
+                "Content-Length: " << localFile->size << "\r\n"
                 "Content-Type: " << mimeType << "\r\n"
                 "\r\n"
                 << content;
@@ -436,16 +415,16 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
         }
         else if (request.getMethod() == "POST" && Util::endsWith(path.toString(), suffix))
         {
-            int i = LocalFileInfo::getIndex(localPath);
+            std::shared_ptr<LocalFileInfo> localFile =
+                LocalFileInfo::getOrCreateFile(localPath,path.getFileName());
             std::string wopiTimestamp = request.get("X-COOL-WOPI-Timestamp", std::string());
+
             if (wopiTimestamp.empty())
-            {
                 wopiTimestamp = request.get("X-LOOL-WOPI-Timestamp", std::string());
-            }
+
             if (!wopiTimestamp.empty())
             {
-                const std::string fileModifiedTime = Util::getIso8601FracformatTime(LocalFileInfo::fileInfoVec[i].fileLastModifiedTime);
-                if (wopiTimestamp != fileModifiedTime)
+                if (wopiTimestamp != localFile->getLastModifiedTime())
                 {
                     http::Response httpResponse(http::StatusCode::Conflict);
                     httpResponse.setBody(
@@ -458,19 +437,19 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
                 }
             }
 
+
             std::streamsize size = request.getContentLength();
             std::vector<char> buffer(size);
             message.read(buffer.data(), size);
-            LocalFileInfo::fileInfoVec[i].fileLastModifiedTime = std::chrono::system_clock::now();
+            localFile->fileLastModifiedTime = std::chrono::system_clock::now();
 
             std::ofstream outfile;
-            outfile.open(LocalFileInfo::fileInfoVec[i].localPath, std::ofstream::binary);
+            outfile.open(localFile->localPath, std::ofstream::binary);
             outfile.write(buffer.data(), size);
             outfile.close();
 
             const std::string body = "{\"LastModifiedTime\": \"" +
-                                        Util::getIso8601FracformatTime(LocalFileInfo::fileInfoVec[i].fileLastModifiedTime) +
-                                        "\" }";
+                localFile->getLastModifiedTime() + "\" }";
             http::Response httpResponse(http::StatusCode::OK);
             httpResponse.setBody(body);
             socket->send(httpResponse);
