@@ -65,7 +65,7 @@ public:
         if (_scenario == Scenario::VerifyOverwrite)
         {
             // By default, we don't upload when verifying (unless always_save_on_exit is set).
-            setExpectedPutFile(SaveOnExit);
+            setExpectedPutFile(SaveOnExit ? 2 : 0);
         }
         else
         {
