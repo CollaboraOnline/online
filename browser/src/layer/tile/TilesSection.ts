@@ -611,22 +611,37 @@ class TilesSection extends CanvasSectionObject {
 	{
 		this.ensureCanvas(tile, now);
 
+		/* if (!(tile.wireId % 4)) // great for debugging tile grid alignment.
+				canvas.drawImage(this.checkpattern, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+		else */
 		canvas.drawImage(tile.canvas, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 
 		if (this.sectionProperties.docLayer._debug)
 		{
 			this.beforeDraw(canvas);
 
+			// clipping push - normally we avoid clipping for perf.
+			canvas.save();
+			const clipRegion = new Path2D();
+			clipRegion.rect(dx, dy, dWidth, dHeight);
+			canvas.clip(clipRegion);
+
+			// want to render our bits 'inside' the tile - but we may have only part of it.
+			// so offset our rendering and rely on clipping to help.
+			const ox = -sx;
+			const oy = -sy;
+			const tSize = 256;
+
 			// blue boundary line on tiles
 			canvas.lineWidth = 1;
 			canvas.strokeStyle = 'rgba(0, 0, 255, 0.8)';
-			this.context.beginPath();
-			this.context.moveTo(dx + 0.5, dy + 0.5);
-			this.context.lineTo(dx + 0.5, dy + dHeight + 0.5);
-			this.context.lineTo(dx + dWidth + 0.5, dy + dHeight + 0.5);
-			this.context.lineTo(dx + dWidth + 0.5, dy + 0.5);
-			this.context.lineTo(dx + 0.5, dy + 0.5);
-			this.context.stroke();
+			canvas.beginPath();
+			canvas.moveTo(ox + dx + 0.5, oy + dy + 0.5);
+			canvas.lineTo(ox + dx + 0.5, oy + dy + tSize + 0.5);
+			canvas.lineTo(ox + dx + tSize + 0.5, oy + dy + tSize + 0.5);
+			canvas.lineTo(ox + dx + tSize + 0.5, oy + dy + 0.5);
+			canvas.lineTo(ox + dx + 0.5, oy + dy + 0.5);
+			canvas.stroke();
 
 			// state of the tile
 			if (!tile.hasContent())
@@ -635,22 +650,23 @@ class TilesSection extends CanvasSectionObject {
 				canvas.fillStyle = 'rgba(255, 255, 0, 0.8)'; // yellow
 			else // present
 				canvas.fillStyle = 'rgba(0, 255, 0, 0.5)';   // green
-			this.context.fillRect(dx + 1.5, dy + 1.5, 12, 12);
+			canvas.fillRect(ox + dx + 1.5, oy + dy + 1.5, 12, 12);
 
 			// deltas graph
 			if (tile.deltaCount)
 			{
 				canvas.fillStyle = 'rgba(0, 0, 128, 0.3)';
 				var deltaSize = 4;
-				var maxDeltas = (256 - 16) / deltaSize;
+				var maxDeltas = (tSize - 16) / deltaSize;
 				var rowBlock = Math.floor(tile.deltaCount / maxDeltas);
 				var rowLeft = tile.deltaCount % maxDeltas;
 				if (rowBlock > 0)
-					this.context.fillRect(dx + 1.5 + 14, dy + 1.5, maxDeltas * deltaSize, rowBlock * deltaSize);
-
-					this.context.fillRect(dx + 1.5 + 14, dy + 1.5 + rowBlock * deltaSize, rowLeft * deltaSize, deltaSize);
+					canvas.fillRect(ox + dx + 1.5 + 14, oy + dy + 1.5, maxDeltas * deltaSize, rowBlock * deltaSize);
+				else
+					canvas.fillRect(ox + dx + 1.5 + 14, oy + dy + 1.5 + rowBlock * deltaSize, rowLeft * deltaSize, deltaSize);
 			}
 
+			canvas.restore();
 			this.afterDraw(canvas);
 		}
 	}
