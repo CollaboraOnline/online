@@ -1364,8 +1364,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		var zoom = this._map.getZoom();
 		var pixelBounds = this._map.getPixelBoundsCore(center, zoom);
 		var tileRange = this._pxBoundsToTileRange(pixelBounds);
-		var tilePositionsX = [];
-		var tilePositionsY = [];
+
+		var tileCombineQueue = [];
 		for (var j = tileRange.min.y; j <= tileRange.max.y; j++) {
 			for (var i = tileRange.min.x; i <= tileRange.max.x; i++) {
 				var coords = new L.TileCoordData(i * this._tileSize, j * this._tileSize, zoom, part, mode);
@@ -1377,29 +1377,70 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (!this._tileNeedsFetch(key))
 					continue;
 
+				tileCombineQueue.push(coords);
+			}
+		}
+		this._sendTileCombineRequest(tileCombineQueue);
+	},
+
+	_sendTileCombineRequest: function(tileCombineQueue) {
+		if (tileCombineQueue.length <= 0)
+			return;
+
+		// Sort into buckets of consistent part & mode.
+		var partMode = {};
+		for (var i = 0; i < tileCombineQueue.length; ++i)
+		{
+			var coords = tileCombineQueue[i];
+			// mode is a small number - give it 8 bits
+			var pmKey = (coords.part << 8) + coords.mode;
+			if (partMode[pmKey] === undefined)
+				partMode[pmKey] = [];
+			partMode[pmKey].push(coords);
+		}
+
+		for (var pmKey in partMode) // no keys method
+		{
+			var partTileQueue = partMode[pmKey];
+			var part = partTileQueue[0].part;
+			var mode = partTileQueue[0].mode;
+
+			var tilePositionsX = [];
+			var tilePositionsY = [];
+			var tileWids = [];
+
+			var added = {}; // uniqify
+			for (var i = 0; i < partTileQueue.length; ++i)
+			{
+				var coords = partTileQueue[i];
+				var key = this._tileCoordsToKey(coords);
+				// request each tile just once in these tilecombines
+				if (added[key])
+					continue;
+				added[key] = true;
+
+				// build parameters
+				var tile = this._tiles[key];
+				tileWids.push((tile && tile.wireId !== undefined) ? tile.wireId : 0);
+
 				var twips = this._coordsToTwips(coords);
 				tilePositionsX.push(twips.x);
 				tilePositionsY.push(twips.y);
 			}
-		}
-		if (tilePositionsX.length <= 0 || tilePositionsY.length <= 0) {
-			return;
-		}
-		this._sendTileCombineRequest(part, mode, tilePositionsX, tilePositionsY);
-	},
 
-	_sendTileCombineRequest: function(part, mode, tilePositionsX, tilePositionsY) {
-		var msg = 'tilecombine ' +
-			'nviewid=0 ' +
-			'part=' + part + ' ' +
-			((mode !== 0) ? ('mode=' + mode + ' ') : '') +
-			'width=' + this._tileWidthPx + ' ' +
-			'height=' + this._tileHeightPx + ' ' +
-			'tileposx=' + tilePositionsX + ' '	+
-			'tileposy=' + tilePositionsY + ' ' +
-			'tilewidth=' + this._tileWidthTwips + ' ' +
-			'tileheight=' + this._tileHeightTwips;
-		app.socket.sendMessage(msg, '');
+			var msg = 'tilecombine ' +
+			    'nviewid=0 ' +
+			    'part=' + part + ' ' +
+			    ((mode !== 0) ? ('mode=' + mode + ' ') : '') +
+			    'width=' + this._tileWidthPx + ' ' +
+			    'height=' + this._tileHeightPx + ' ' +
+		            'tileposx=' + tilePositionsX.join(',') + ' ' +
+		            'tileposy=' + tilePositionsY.join(',') + ' ' +
+		            'oldwid=' + tileWids.join(',') + ' ' +
+			    'tilewidth=' + this._tileWidthTwips + ' ' +
+			    'tileheight=' + this._tileHeightTwips;
+			app.socket.sendMessage(msg, '');
+		}
 	},
 
 	getMaxDocSize: function () {
@@ -6084,16 +6125,16 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._sendClientVisibleArea();
 			this._sendClientZoom();
 
+			var tileCombineQueue = [];
 			for (var i = 0; i < queue.length; i++) {
 				var key = this._tileCoordsToKey(queue[i]);
 				var tile = this._tiles[key];
 				if (!tile)
 					tile = this.createTile(queue[i], key);
 				if (tile.needsFetch())
-					this._sendTileCombineRequest(queue[i].part, queue[i].mode,
-								     (queue[i].x / this._tileSize) * this._tileWidthTwips,
-								     (queue[i].y / this._tileSize) * this._tileHeightTwips);
+					tileCombineQueue.push(queue[i]);
 			}
+			this._sendTileCombineRequest(tileCombineQueue);
 		}
 	},
 
@@ -6279,9 +6320,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		if (queue.length !== 0) {
-			var tilePositionsX = '';
-			var tilePositionsY = '';
-			var added = {};
+			var tileCombineQueue = [];
 
 			for (i = 0; i < queue.length; i++) {
 				coords = queue[i];
@@ -6290,27 +6329,13 @@ L.CanvasTileLayer = L.Layer.extend({
 					this.createTile(coords, key);
 
 				if (this._tileNeedsFetch(key)) {
-					// request each tile just once in these tilecombines
-					if (added[key])
-						continue;
-					added[key] = true;
-
-					var twips = this._coordsToTwips(coords);
-					if (tilePositionsX !== '') {
-						tilePositionsX += ',';
-					}
-					tilePositionsX += twips.x;
-					if (tilePositionsY !== '') {
-						tilePositionsY += ',';
-					}
-					tilePositionsY += twips.y;
+					tileCombineQueue.push(coords);
 				}
 			}
 
-			if (tilePositionsX !== '' && tilePositionsY !== '') {
-				this._sendTileCombineRequest(this._selectedPart, this._selectedMode, tilePositionsX, tilePositionsY);
-			}
-			else {
+			if (tileCombineQueue.length >= 0) {
+				this._sendTileCombineRequest(tileCombineQueue);
+			} else {
 				// We have all necessary tile images in the cache, schedule a paint..
 				// This may not be immediate if we are now in a slurp events call.
 				this._painter.update();
@@ -6352,7 +6377,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	// create tiles if needed for queued coordinates, and build a
 	// tilecombined request for any tiles we need to fetch.
 	_addTiles: function (coordsQueue) {
-		var coords, key, tile;
+		var coords, key;
 
 		for (var i = 0; i < coordsQueue.length; i++) {
 			coords = coordsQueue[i];
@@ -6437,41 +6462,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			rectangles.push(rectQueue);
 		}
 
-		var twips;
-		var added = {};
-		for (var r = 0; r < rectangles.length; ++r) {
-			rectQueue = rectangles[r];
-			var tilePositionsX = '';
-			var tilePositionsY = '';
-			var tileWids = '';
-			for (i = 0; i < rectQueue.length; i++) {
-				coords = rectQueue[i];
-				key = this._tileCoordsToKey(coords);
+		for (var r = 0; r < rectangles.length; ++r)
+			this._sendTileCombineRequest(rectangles[r]);
 
-				// request each tile just once in these tilecombines
-				if (added[key])
-					continue;
-				added[key] = true;
-
-				twips = this._coordsToTwips(coords);
-
-				if (tilePositionsX !== '')
-					tilePositionsX += ',';
-				tilePositionsX += twips.x;
-
-				if (tilePositionsY !== '')
-					tilePositionsY += ',';
-				tilePositionsY += twips.y;
-
-				tile = this._tiles[this._tileCoordsToKey(coords)];
-				if (tileWids !== '')
-					tileWids += ',';
-				tileWids += tile && tile.wireId !== undefined ? tile.wireId : 0;
-			}
-
-			twips = this._coordsToTwips(coords);
-			this._sendTileCombineRequest(coords.part, this._selectedMode, tilePositionsX, tilePositionsY);
-		}
 		if (this._docType === 'presentation' || this._docType === 'drawing')
 			this._initPreFetchPartTiles();
 	},
