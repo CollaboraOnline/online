@@ -6231,12 +6231,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			app.socket.sendMessage(newClientVisibleArea);
 			if (!this._map._fatal && app.idleHandler._active && app.socket.connected())
 				this._clientVisibleArea = newClientVisibleArea;
-			if (this._debug) {
+			if (this._debug)
 				this._debugInfo.clearLayers();
-				for (var key in this._tiles) {
-					this._tiles[key]._debugPopup = null;
-				}
-			}
 		}
 	},
 
@@ -7011,28 +7007,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 
 		var tile = this._tiles[key];
-		if (!tile._debugPopup) {
-			var tileBound = this._keyToBounds(key);
-			tile._debugPopup = L.popup({ className: 'debug', offset: new L.Point(0, 0), autoPan: false, closeButton: false, closeOnClick: false })
-				.setLatLng(new L.LatLng(tileBound.getSouth(), tileBound.getWest() + (tileBound.getEast() - tileBound.getWest()) / 5));
-			this._debugInfo.addLayer(tile._debugPopup);
-			tile._debugTime = this._debugGetTimeArray();
-		}
-
-		var msg = 'requested: ' + this._tiles[key]._debugInvalidateCount +
-		    '<br>rec-tiles: ' + this._tiles[key]._debugLoadTile +
-		    '<br>recv-delta: ' + this._tiles[key]._debugLoadDelta;
-		if (tile._debugTime.date !== 0)
-			msg += '<br>' + this._debugSetTimes(tile._debugTime, +new Date() - tile._debugTime.date).replace(/, /g, '<br>');
-		msg += '<br>nviewid: ' + tile.viewId;
-		msg += '<br>wireId: ' + tile.wireId;
-		msg += '<br>invalidFrom: ' + tile.invalidFrom;
-		if (tile.rawDeltas)
-			msg += '<br>rawdeltas: ' + tile.rawDeltas.length;
-
-		var node = document.createElement('p');
-		node.innerHTML = msg;
-		tile._debugPopup.setHTMLContent(node);
+		tile._debugTime = this._debugGetTimeArray();
 
 		this._debugShowTileData();
 	},
