@@ -2349,9 +2349,30 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
 
     if (!canStop && needToSave == NeedToSave::No && !isStorageOutdated())
     {
-        LOG_TRC("autoSaveAndStop for docKey ["
-                << getDocKey() << "] has nothing to save and Storage is up-to-date, canStop: true");
-        canStop = true;
+        if (_alwaysSaveOnExit && !_storageManager.lastUploadSuccessful())
+        {
+            const auto limStoreFailures =
+                COOLWSD::getConfigValue<int>("per_document.limit_store_failures", 5);
+
+            if (limStoreFailures > 0 &&
+                _storageManager.uploadFailureCount() >= static_cast<std::size_t>(limStoreFailures))
+            {
+                LOG_TRC("Uploads for always-save-on-exit are failing. Will stop");
+                canStop = true;
+            }
+            else
+            {
+                LOG_TRC("Always-save-on-exit is set but last upload failed. Cannot stop.");
+                canStop = false;
+            }
+        }
+        else
+        {
+            LOG_TRC("autoSaveAndStop for docKey ["
+                    << getDocKey()
+                    << "] has nothing to save and Storage is up-to-date, canStop: true");
+            canStop = true;
+        }
     }
 
     if (!canStop && needToSave != NeedToSave::No)
