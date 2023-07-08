@@ -1482,10 +1482,13 @@ L.CanvasTileLayer = L.Layer.extend({
 			invalidFrom: 0, // a wireId - for avoiding races on invalidation
 			lastRendered: new Date(),
 			hasContent: function() {
-				return this.imgDataCache || (this.rawDeltas && this.rawDeltas.length > 0);
+				return this.imgDataCache || this.hasKeyframe();
 			},
 			needsFetch: function() {
 				return this.invalidFrom >= this.wireId || !this.hasContent();
+			},
+			hasKeyframe: function() {
+				return this.rawDeltas && this.rawDeltas.length > 0;
 			}
 		};
 		this._emptyTilesCount += 1;
@@ -6623,7 +6626,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			tile.canvas = canvas;
 
 			// re-hydrate recursively from cached data
-			if (tile.rawDeltas)
+			if (tile.hasKeyframe())
 			{
 				if (this._debugDeltas)
 					window.app.console.log('Restoring a tile from cached delta at ' +
@@ -6710,6 +6713,9 @@ L.CanvasTileLayer = L.Layer.extend({
 						window.app.console.log('Reclaim delta ' + key + ' memory: ' +
 								       tile.rawDeltas.length + ' bytes');
 					tile.rawDeltas = null;
+					// force keyframe
+					tile.wireId = 0;
+					tile.invalidFrom = 0;
 				}
 			}
 		}
@@ -7040,6 +7046,17 @@ L.CanvasTileLayer = L.Layer.extend({
 		tile.wireId = +tileMsgObj.wireId;
 		if (tile.invalidFrom == tile.wireId)
 			window.app.console.debug('Nasty - updated wireId matches old one');
+
+		// obscure case: we could have garbage collected the
+		// keyframe content and now just have a delta with nothing
+		// to apply it to; if so, mark it bad to re-fetch.
+		if (img && !img.isKeyframe && !tile.hasKeyframe())
+		{
+			window.app.console.debug('Unusual: Delta sent - but we have no keyframe for ' + key);
+			// force keyframe
+			tile.wireId = 0;
+			tile.invalidFrom = 0;
+		}
 
 		if (this._debug) {
 			if (!img)
