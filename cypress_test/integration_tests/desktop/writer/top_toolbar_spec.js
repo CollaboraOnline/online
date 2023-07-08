@@ -294,6 +294,33 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#copy-paste-container p i').should('exist');
 	});
 
+	it('Enable/Disable Accessibility Support', function() {
+		// when accessibility is disabled at server level
+		// this unit passes but doesn't perform any check
+		desktopHelper.switchUIToNotebookbar();
+		desktopHelper.checkAccessibilityEnabledToBe(true);
+		desktopHelper.setAccessibilityState(false);
+		desktopHelper.checkAccessibilityEnabledToBe(false);
+		desktopHelper.setAccessibilityState(true);
+		desktopHelper.checkAccessibilityEnabledToBe(true);
+		desktopHelper.switchUIToCompact();
+		desktopHelper.checkAccessibilityEnabledToBe(true);
+		desktopHelper.setAccessibilityState(false);
+		desktopHelper.checkAccessibilityEnabledToBe(false);
+		desktopHelper.setAccessibilityState(true);
+		desktopHelper.checkAccessibilityEnabledToBe(true);
+		desktopHelper.setAccessibilityState(false);
+		desktopHelper.switchUIToNotebookbar();
+		desktopHelper.checkAccessibilityEnabledToBe(false);
+		desktopHelper.switchUIToCompact();
+		desktopHelper.setAccessibilityState(true);
+		desktopHelper.switchUIToNotebookbar();
+		desktopHelper.checkAccessibilityEnabledToBe(true);
+		desktopHelper.setAccessibilityState(false);
+		desktopHelper.switchUIToCompact();
+		desktopHelper.checkAccessibilityEnabledToBe(false);
+	});
+
 	it('Show/Hide sidebar.', function() {
 		cy.cGet('#View-tab-label').click();
 		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
