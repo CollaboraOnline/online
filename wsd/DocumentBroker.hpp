@@ -12,6 +12,7 @@
 #include <atomic>
 #include <chrono>
 #include <condition_variable>
+#include <cstddef>
 #include <deque>
 #include <map>
 #include <memory>
@@ -860,7 +861,9 @@ private:
             , _idleSaveInterval(idleSaveInterval)
             , _autoSaveInterval(autoSaveInterval)
             , _checkInterval(getCheckInterval(idleSaveInterval, autoSaveInterval))
+            , _savingTimeout(std::chrono::seconds::zero())
             , _lastAutosaveCheckTime(RequestManager::now())
+            , _version(0)
         {
             if (Log::traceEnabled())
             {
@@ -922,11 +925,14 @@ private:
         std::size_t saveFailureCount() const { return _request.lastRequestFailureCount(); }
 
         /// Sets whether the last save was successful or not.
-        void setLastSaveResult(bool success)
+        void setLastSaveResult(bool success, bool newVersion)
         {
-            LOG_DBG("Save " << (success ? "succeeded" : "failed") << " after "
-                            << _request.timeSinceLastRequest());
+            LOG_DBG("Saving version #" << version() + 1 << (success ? " succeeded" : " failed")
+                                       << " after " << _request.timeSinceLastRequest());
             _request.setLastRequestResult(success);
+
+            if (newVersion)
+                ++_version; // Bump the version.
         }
 
         /// Returns the last save request time.
@@ -995,12 +1001,17 @@ private:
             return _request.minTimeBetweenRequests();
         }
 
+        /// Returns the current saved version on disk, since loading.
+        /// 0 for original, as-loaded version.
+        std::size_t version() const { return _version.load(); }
+
         /// True if we aren't saving and the minimum time since last save has elapsed.
         bool canSaveNow() const { return _request.canRequestNow(); }
 
         void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
             const auto now = std::chrono::steady_clock::now();
+            os << indent << "version: " << version();
             os << indent << "isSaving now: " << std::boolalpha << isSaving();
             os << indent << "idle-save enabled: " << std::boolalpha << isIdleSaveEnabled();
             os << indent << "idle-save interval: " << idleSaveInterval();
@@ -1043,10 +1054,13 @@ private:
         const std::chrono::milliseconds _checkInterval;
 
         /// The maximum time to wait for saving to finish.
-        std::chrono::seconds _savingTimeout{};
+        std::chrono::seconds _savingTimeout;
 
         /// The last autosave check time.
         std::chrono::steady_clock::time_point _lastAutosaveCheckTime;
+
+        /// Current saved file version. Incremented after each successful save.
+        std::atomic_int_fast32_t _version;
     };
 
     /// Represents an upload request.
