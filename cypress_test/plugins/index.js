@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global require __dirname */
 var process = require('process');
 var tasks = require('./tasks');

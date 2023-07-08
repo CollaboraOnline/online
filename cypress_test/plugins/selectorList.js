@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 module.exports.list = {
 	fontColor: ['#Home #FontColor .arrowbackground', '#tb_editbar_item_fontcolor'],
 	fontName: ['#fontnamecombobox', '#tb_editbar_item_fonts'],

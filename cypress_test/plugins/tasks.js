@@ -1,3 +1,4 @@
+/* -*- js-indent-level: 8 -*- */
 /* global require Promise */
 
 var fs = require('fs');
