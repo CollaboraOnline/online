@@ -5102,12 +5102,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugLoremPos = 0;
 
 		if (this._map._docLayer._docType === 'spreadsheet') {
-			var section = this._map._docLayer._painter._sectionContainer.getSectionWithName('calc grid');
-			if (section) {
-				// FIXME: do we need this anymore ?
-				section.setDrawingOrder(L.CSections.CalcGrid.drawingOrderDebug);
-				section.sectionProperties.strokeStyle = 'blue';
-			}
 			this._map._docLayer._painter._addSplitsSection();
 			this._map._docLayer._painter._sectionContainer.reNewAllSections(true /* redraw */);
 		}

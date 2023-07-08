@@ -58,7 +58,6 @@ L.CSections.Tiles.drawingOrder = 					50; // Writer & Impress & Calc.
 L.CSections.CommentList.drawingOrder =				55; // Writer & Impress.
 L.CSections.Debug.TilePixelGrid.drawingOrder = 		60; // Writer & Impress & Calc.
 L.CSections.Overlays.drawingOrder =					71; // Writer & Impress & Calc.
-L.CSections.CalcGrid.drawingOrderDebug =            80; // Calc debug mode.
 L.CSections.Debug.Splits.drawingOrder = 			90; // Calc.
 L.CSections.RowGroup.drawingOrder =					100; // Calc.
 L.CSections.ColumnGroup.drawingOrder =				110; // Calc.
