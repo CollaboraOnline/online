@@ -666,6 +666,32 @@ class TilesSection extends CanvasSectionObject {
 					canvas.fillRect(ox + dx + 1.5 + 14, oy + dy + 1.5 + rowBlock * deltaSize, rowLeft * deltaSize, deltaSize);
 			}
 
+			// Metrics on-top of the tile:
+			var lines = [
+				'wireId: ' + tile.wireId,
+				'invalidFrom: ' + tile.invalidFrom,
+				'nviewid: ' + tile.viewId,
+				'requested: ' + tile._debugInvalidateCount,
+				'rec-tiles: ' + tile._debugLoadTile,
+				'recv-delta: ' + tile._debugLoadDelta,
+			];
+			if (tile._debugTime && tile._debugTime.date !== 0)
+					lines.push(this.sectionProperties.docLayer._debugSetTimes(tile._debugTime, +new Date() - tile._debugTime.date));
+			if (tile.rawDeltas)
+					lines.push('rawdeltas: ' + tile.rawDeltas.length);
+
+			const startY = tSize - 12 * lines.length;
+
+			// background
+			canvas.fillStyle = 'rgba(220, 220, 220, 0.5)'; // greyish
+			canvas.fillRect(ox + dx + 1.5, oy + dy + startY - 12.0, 128, 12 * lines.length + 4.0);
+
+			canvas.font = '12px sans';
+			canvas.fillStyle = 'rgba(0, 0, 0, 1.0)';   // black
+			canvas.textAlign = 'left';
+			for (var i = 0 ; i < lines.length; ++i)
+					canvas.fillText(lines[i], ox + dx + 5.5, oy + dy + startY + i*12);
+
 			canvas.restore();
 			this.afterDraw(canvas);
 		}
