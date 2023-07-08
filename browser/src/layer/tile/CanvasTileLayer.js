@@ -6808,7 +6808,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	_applyDelta: function(tile, rawDelta, isKeyframe) {
 		if (this._debugDeltas)
 			window.app.console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
-					       ' of length ' + rawDelta.length + ' hex: ' + hex2string(rawDelta));
+					       ' of length ' + rawDelta.length +
+					       (this._debugDeltasDetail ? (' hex: ' + hex2string(rawDelta)) : ''));
 
 		if (isKeyframe)
 			tile.deltaCount = 0;
