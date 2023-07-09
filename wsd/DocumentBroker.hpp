@@ -774,11 +774,14 @@ private:
         /// Returns true iff there is no active request and sufficient
         /// time has elapsed since the last request, including that
         /// more time than half the last request's duration has passed.
-        bool canRequestNow() const
+        /// When unloading, we reduce throttling significantly.
+        bool canRequestNow(bool unloading) const
         {
+            const std::chrono::milliseconds minTimeBetweenRequests =
+                unloading ? _minTimeBetweenRequests / 10 : _minTimeBetweenRequests;
             const auto now = RequestManager::now();
             return !isActive() && std::min(timeSinceLastRequest(now), timeSinceLastResponse(now)) >=
-                                      std::max(_minTimeBetweenRequests, _lastRequestDuration / 2);
+                                      std::max(minTimeBetweenRequests, _lastRequestDuration / 2);
         }
 
         /// Sets the last request's result, either to success or failure.
@@ -1006,7 +1009,7 @@ private:
         std::size_t version() const { return _version.load(); }
 
         /// True if we aren't saving and the minimum time since last save has elapsed.
-        bool canSaveNow() const { return _request.canRequestNow(); }
+        bool canSaveNow(bool unloading) const { return _request.canRequestNow(unloading); }
 
         void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
@@ -1186,7 +1189,7 @@ private:
         }
 
         /// True if we aren't uploading and the minimum time since last upload has elapsed.
-        bool canUploadNow() const { return _request.canRequestNow(); }
+        bool canUploadNow(bool unloading) const { return _request.canRequestNow(unloading); }
 
         void dumpState(std::ostream& os, const std::string& indent = "\n  ") const
         {
