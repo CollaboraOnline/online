@@ -1848,6 +1848,16 @@ L.CanvasTileLayer = L.Layer.extend({
 			obj = JSON.parse(textMsg.substring('a11ytextselectionchanged:'.length + 1));
 			this._map._textInput.onAccessibilityTextSelectionChanged(parseInt(obj.start), parseInt(obj.end));
 		}
+		else if (textMsg.startsWith('a11yfocusedcellchanged:')) {
+			obj = JSON.parse(textMsg.substring('a11yfocusedcellchanged:'.length + 1));
+			var outCount = obj.outCount !== undefined ? parseInt(obj.outCount) : 0;
+			var inList = obj.inList !== undefined ? obj.inList : [];
+			var row = parseInt(obj.row);
+			var col = parseInt(obj.col);
+			var rowSpan = obj.rowSpan !== undefined ? parseInt(obj.rowSpan) : 1;
+			var colSpan = obj.colSpan !== undefined ? parseInt(obj.colSpan) : 1;
+			this._map._textInput.onAccessibilityFocusedCellChanged(outCount, inList, row, col, rowSpan, colSpan, obj.paragraph);
+		}
 		else if (textMsg.startsWith('a11yfocusedparagraph:')) {
 			obj = JSON.parse(textMsg.substring('a11yfocusedparagraph:'.length + 1));
 			this._map._textInput.setA11yFocusedParagraph(obj.content, parseInt(obj.position), parseInt(obj.start), parseInt(obj.end));
