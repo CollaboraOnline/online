@@ -214,26 +214,12 @@ export class RowGroup extends GroupBase {
 		return null;
 	}
 
-	// Users can double click on group tails.
-	findTailsGroup (point: number[]): GroupEntry {
-		const mirrorX = this.isCalcRTL();
-		for (let i = 0; i < this._groups.length; i++) {
-			if (this._groups[i]) {
-				for (const group in this._groups[i]) {
-					if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
-						const group_ = this._groups[i][group];
-						const startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group_.level;
-						const startY = this.getRelativeY(group_.startPos);
-						const endX = startX + this._groupHeadSize; // Let's use this as thikcness. User doesn't have to double click on a pixel:)
-						const endY = group_.endPos + this._cornerHeaderHeight - this.documentTopLeft[1];
-
-						if (this.isPointInRect(point, startX, startY, endX, endY, mirrorX)) {
-							return group_;
-						}
-					}
-				}
-			}
-		}
+	getTailsGroupRect (group: GroupEntry): number[] {
+		const startX = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
+		const startY = this.getRelativeY(group.startPos);
+		const endX = startX + this._groupHeadSize; // Let's use this as thikcness. User doesn't have to double click on a pixel:)
+		const endY = group.endPos + this._cornerHeaderHeight - this.documentTopLeft[1];
+		return [startX, endX, startY, endY];
 	}
 
 	onRemove(): void {
