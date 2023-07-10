@@ -3117,6 +3117,11 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("a11ytextselectionchanged: " + payload);
         break;
     }
+    case LOK_CALLBACK_A11Y_FOCUSED_CELL_CHANGED:
+    {
+        sendTextFrame("a11yfocusedcellchanged: " + payload);
+        break;
+    }
     case LOK_CALLBACK_COLOR_PALETTES:
         sendTextFrame("colorpalettes: " + payload);
         break;
