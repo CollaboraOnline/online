@@ -213,25 +213,12 @@ export class ColumnGroup extends GroupBase {
 		return null;
 	}
 
-	// Users can double click on group tails.
-	findTailsGroup (point: number[]): GroupEntry {
-		const mirrorX = this.isCalcRTL();
-		for (let i = 0; i < this._groups.length; i++) {
-			if (this._groups[i]) {
-				for (const group in this._groups[i]) {
-					if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
-						const group_ = this._groups[i][group];
-						const startX = this.getRelativeX(group_.startPos);
-						const startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group_.level;
-						const endX = group_.endPos + this._cornerHeaderWidth - this.documentTopLeft[0];
-						const endY = startY + this._groupHeadSize;
-						if (this.isPointInRect(point, startX, startY, endX, endY, mirrorX)) {
-							return group_;
-						}
-					}
-				}
-			}
-		}
+	getTailsGroupRect (group: GroupEntry): number[] {
+		const startX = this.getRelativeX(group.startPos);
+		const startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
+		const endX = group.endPos + this._cornerHeaderWidth - this.documentTopLeft[0];
+		const endY = startY + this._groupHeadSize;
+		return [startX, endX, startY, endY];
 	}
 
 	onRemove(): void {
