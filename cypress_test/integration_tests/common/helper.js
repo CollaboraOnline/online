@@ -31,6 +31,11 @@ function getRandomFileName(noRename, noFileCopy, originalName) {
 	}
 }
 
+function logError(event) {
+	Cypress.log({ name:'error:', message: (event.error.message ? event.error.message : 'no message')
+		      + '\n' + (event.error.stack ? event.error.stack : 'no stack') });
+}
+
 function logLoadingParameters(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename) {
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
@@ -114,7 +119,16 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser, 
 		URI = URI.replace('debug.html', 'cypress-multiuser.html');
 	}
 
-	cy.visit(URI);
+	cy.visit(URI, {
+		onBeforeLoad: function(win) {
+			win.addEventListener('error', logError);
+			win.addEventListener('DOMContentLoaded', function () {
+				for (var i = 0; i < win.frames.length; i++) {
+					win.frames[i].addEventListener('error', logError);
+				}
+			});
+		}
+	});
 
 	cy.log('Loading test document with a local build - end.');
 
