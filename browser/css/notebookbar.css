@@ -452,8 +452,9 @@ button.ui-tab.notebookbar {
 	height: 30px;
 }
 
-[data-theme=dark] #stylesview {
-  filter: invert(0.85) !important;
+[data-theme='dark'] #stylesview {
+	filter: invert(0.85) hue-rotate(180deg) !important;
+	background-color: var(--color-primary-text);
 }
 
 /* Insert Tab */
