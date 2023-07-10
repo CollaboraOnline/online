@@ -210,7 +210,7 @@ L.Control.JSDialog = L.Control.extend({
 			L.DomUtil.create('span', 'ui-button-icon ui-icon ui-icon-closethick', instance.titleCloseButton);
 		}
 
-		if (instance.isModalPopUp || instance.isDocumentAreaPopup)
+		if (instance.isModalPopUp || instance.isDocumentAreaPopup || instance.isSnackbar)
 			L.DomUtil.addClass(instance.container, 'modalpopup');
 
 		if (instance.isModalPopUp && !instance.popupParent) // Special case for menu popups (they are also modal dialogues).
@@ -371,7 +371,11 @@ L.Control.JSDialog = L.Control.extend({
 		var calculated = false;
 		var isRTL = document.documentElement.dir === 'rtl';
 
-		if (instance.nonModal || instance.popupParent) {
+		if (instance.isSnackbar) {
+			calculated = true;
+			instance.posx = window.innerWidth/2 - instance.form.offsetWidth/2;
+			instance.posy = window.innerHeight - instance.form.offsetHeight - 40;
+		} else if (instance.nonModal || instance.popupParent) {
 			// in case of toolbox we want to create popup positioned by toolitem not toolbox
 			if (updatedPos) {
 				calculated = true;
@@ -432,10 +436,6 @@ L.Control.JSDialog = L.Control.extend({
 					instance.posx = newLeftPosition;
 				}
 			}
-		} else if (instance.isSnackbar) {
-			calculated = true;
-			instance.posx = window.innerWidth/2 - instance.form.offsetWidth/2;
-			instance.posy = window.innerHeight - instance.form.offsetHeight - 40;
 		}
 
 		var positionNotSet = !instance.container.style || !instance.container.style.marginInlineStart;
@@ -505,7 +505,7 @@ L.Control.JSDialog = L.Control.extend({
 
 		instance.callback = e.callback;
 		instance.isSnackbar = e.data.type === 'snackbar';
-		instance.isModalPopUp = e.data.type === 'modalpopup' || instance.isSnackbar;
+		instance.isModalPopUp = e.data.type === 'modalpopup';
 		instance.isOnlyChild = false;
 		instance.that = this;
 		instance.startX = e.data.posx;
@@ -513,11 +513,11 @@ L.Control.JSDialog = L.Control.extend({
 		instance.updatePos = null;
 		instance.canHaveFocus = !instance.isSnackbar && instance.id !== 'busypopup' && !instance.isMention;
 		instance.isDocumentAreaPopup = instance.popupParent === '_POPOVER_' && instance.posx !== undefined && instance.posy !== undefined;
-		instance.isPopUp = instance.isModalPopUp || instance.isDocumentAreaPopup;
+		instance.isPopUp = instance.isModalPopUp || instance.isDocumentAreaPopup || instance.isSnackbar;
 		instance.containerParent = instance.isDocumentAreaPopup ? document.getElementById('document-container'): document.body;
 		instance.isAutofilter = instance.isDocumentAreaPopup && this.map._docLayer.isCalc();
-		instance.haveTitlebar = !instance.isModalPopUp || (instance.hasClose && instance.title && instance.title !== '');
-		instance.nonModal = !instance.isModalPopUp && !instance.isDocumentAreaPopup;
+		instance.haveTitlebar = (!instance.isModalPopUp && !instance.isSnackbar) || (instance.hasClose && instance.title && instance.title !== '');
+		instance.nonModal = !instance.isModalPopUp && !instance.isDocumentAreaPopup && !instance.isSnackbar;
 
 		// Make a better seperation between popups and modals.
 		if (instance.isDocumentAreaPopup)
