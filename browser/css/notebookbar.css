@@ -452,6 +452,10 @@ button.ui-tab.notebookbar {
 	height: 30px;
 }
 
+[data-theme=dark] #stylesview {
+  filter: invert(0.85) !important;
+}
+
 /* Insert Tab */
 
 /* Layout Tab */
