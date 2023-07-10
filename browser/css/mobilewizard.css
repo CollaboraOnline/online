@@ -749,12 +749,13 @@ a.leaflet-control-zoom-in {
 #mobile-wizard #leadingzeroeslabel, #mobile-wizard #leftindentlabel,
 #mobile-wizard #orientationlabel, #mobile-wizard #cellbackgroundlabel,
 #mobile-wizard .mobile-wizard.ui-text {
-	border-bottom: 1px solid var(--color-primary-dark);
-	color: var(--color-primary) !important;
-	margin-left: 4%;
+	border-top: 1px solid var(--color-border);
+	color: var(--color-main-text) !important;
+	margin: 0 4%;
+	padding: 0px;
 	width: 92%;
+	line-height: var(--header-height);
 	font-size: var(--default-font-size);
-	font-weight: bold;
 	clear: both;
 }
 
