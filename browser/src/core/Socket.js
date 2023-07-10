@@ -846,9 +846,9 @@ app.definitions.Socket = L.Class.extend({
 			return;
 		}
 		else if (textMsg.startsWith('error:')
-			&& (command.errorCmd === 'storage' || command.errorCmd === 'saveas') || command.errorCmd === 'downloadas')  {
+			&& (command.errorCmd === 'storage' || command.errorCmd === 'SaveAs') || command.errorCmd === 'downloadas')  {
 
-			if (command.errorCmd === 'saveas') {
+			if (command.errorCmd === 'SaveAs') {
 				this._map.fire('postMessage', {
 					msgId: 'Action_Save_Resp',
 					args: {

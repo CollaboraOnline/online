@@ -63,7 +63,7 @@ L.Control.Menubar = L.Control.extend({
 		text:  [
 			{name: _UNO('.uno:PickList', 'text'), id: 'file', type: 'menu', menu: [
 				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Save', 'text'), L.Control.MenubarShortcuts.shortcuts.SAVE), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs', 'text'), id: 'saveas', type: window.uiDefaults && window.uiDefaults.saveAsMode === 'group' ? 'menu' : 'action', menu: [
+				{name: _UNO('.uno:SaveAs', 'text'), id: 'SaveAs', type: window.uiDefaults && window.uiDefaults.saveAsMode === 'group' ? 'menu' : 'action', menu: [
 					{name: _('ODF text document (.odt)'), id: 'saveas-odt', type: 'action'},
 					{name: _('Word 2003 Document (.doc)'), id: 'saveas-doc', type: 'action'},
 					{name: _('Word Document (.docx)'), id: 'saveas-docx', type: 'action'},
@@ -366,7 +366,7 @@ L.Control.Menubar = L.Control.extend({
 		presentation: [
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
 				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Save', 'presentation'), L.Control.MenubarShortcuts.shortcuts.SAVE), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: window.uiDefaults && window.uiDefaults.saveAsMode === 'group' ? 'menu' : 'action', menu: [
+				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'SaveAs', type: window.uiDefaults && window.uiDefaults.saveAsMode === 'group' ? 'menu' : 'action', menu: [
 					{name: _('ODF presentation (.odp)'), id: 'saveas-odp', type: 'action'},
 					{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'saveas-ppt', type: 'action'},
 					{name: _('PowerPoint Presentation (.pptx)'), id: 'saveas-pptx', type: 'action'},
@@ -517,7 +517,7 @@ L.Control.Menubar = L.Control.extend({
 		drawing: [
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
 				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Save', 'presentation'), L.Control.MenubarShortcuts.shortcuts.SAVE), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
+				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'SaveAs', type: 'action'},
 				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
 				]},
@@ -642,7 +642,7 @@ L.Control.Menubar = L.Control.extend({
 		spreadsheet: [
 			{name: _UNO('.uno:PickList', 'spreadsheet'), id: 'file', type: 'menu', menu: [
 				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Save', 'spreadsheet'), L.Control.MenubarShortcuts.shortcuts.SAVE), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs', 'spreadsheet'), id: 'saveas', type: window.uiDefaults && window.uiDefaults.saveAsMode === 'group' ? 'menu' : 'action', menu: [
+				{name: _UNO('.uno:SaveAs', 'spreadsheet'), id: 'SaveAs', type: window.uiDefaults && window.uiDefaults.saveAsMode === 'group' ? 'menu' : 'action', menu: [
 					{name: _('ODF spreadsheet (.ods)'), id: 'saveas-ods', type: 'action'},
 					{name: _('Excel 2003 Spreadsheet (.xls)'), id: 'saveas-xls', type: 'action'},
 					{name: _('Excel Spreadsheet (.xlsx)'), id: 'saveas-xlsx', type: 'action'},
@@ -894,7 +894,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _('Search'), id: 'searchdialog', type: 'action'},
 			{name: _UNO('.uno:PickList', 'text'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'text'), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs', 'text'), id: 'saveas', type: 'action'},
+				{name: _UNO('.uno:SaveAs', 'text'), id: 'SaveAs', type: 'action'},
 				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'},
 					{name: _('EPUB (.epub)'), id: 'exportas-epub', type: 'action'}
@@ -958,7 +958,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _('Search'), id: 'searchdialog', type: 'action'},
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
+				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'SaveAs', type: 'action'},
 				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
 				]},
@@ -1019,7 +1019,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _('Search'), id: 'searchdialog', type: 'action'},
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
+				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'SaveAs', type: 'action'},
 				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
 				]},
@@ -1070,7 +1070,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _('Search'), id: 'searchdialog', type: 'action'},
 			{name: _UNO('.uno:PickList', 'spreadsheet'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'spreadsheet'), id: 'save', type: 'action'},
-				{name: _UNO('.uno:SaveAs', 'spreadsheet'), id: 'saveas', type: 'action'},
+				{name: _UNO('.uno:SaveAs', 'spreadsheet'), id: 'SaveAs', type: 'action'},
 				{name: _('Export as'), id: 'exportas', type: 'menu', menu: [
 					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'}
 				]},
@@ -1814,7 +1814,7 @@ L.Control.Menubar = L.Control.extend({
 					this._map.save(false, false);
 				}
 			}
-		} else if (id === 'saveas' && type !== 'menu') { // jsdialog has no type='action'
+		} else if (id === 'SaveAs' && type !== 'menu') { // jsdialog has no type='action'
 			this._map.openSaveAs();
 		} else if (id === 'savecomments') {
 			if (this._map.isPermissionEditForComments()) {
@@ -2059,7 +2059,7 @@ L.Control.Menubar = L.Control.extend({
 		if (menuItem.id === 'save' && this._map['wopi'].HideSaveOption)
 			return false;
 
-		if (menuItem.id && (menuItem.id === 'saveas' || menuItem.id.startsWith('saveas-')) && this._map['wopi'].UserCanNotWriteRelative)
+		if (menuItem.id && (menuItem.id === 'SaveAs' || menuItem.id.startsWith('saveas-')) && this._map['wopi'].UserCanNotWriteRelative)
 			return false;
 
 		if (menuItem.id && (menuItem.id.startsWith('exportas')) && this._map['wopi'].UserCanNotWriteRelative)

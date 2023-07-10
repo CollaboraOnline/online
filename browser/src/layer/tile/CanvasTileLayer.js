@@ -2066,7 +2066,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (command.errorCmd === 'load') {
 			errorId = 2; // document cannot be loaded
 		}
-		else if (command.errorCmd === 'save' || command.errorCmd === 'saveas') {
+		else if (command.errorCmd === 'save' || command.errorCmd === 'SaveAs') {
 			errorId = 5; // document cannot be saved
 		}
 

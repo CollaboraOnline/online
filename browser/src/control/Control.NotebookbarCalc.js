@@ -109,7 +109,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 		if (hasSaveAs) {
 			if (hasGroupedSaveAs) {
 				content.push({
-					'id': 'saveas',
+					'id': 'SaveAs',
 					'type': 'bigmenubartoolitem',
 					'text': _('Save As'),
 				});

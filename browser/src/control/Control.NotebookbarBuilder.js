@@ -463,7 +463,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		data.command = data.id;
 
 		var isDownloadAsGroup = data.id === 'downloadas';
-		var isSaveAsGroup = data.id === 'saveas';
+		var isSaveAsGroup = data.id === 'SaveAs';
 		var isExportAsGroup = data.id === 'exportas';
 		var options = {};
 		var hasCustomMenu = isDownloadAsGroup || isSaveAsGroup || isExportAsGroup;
@@ -536,7 +536,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		switch (id) {
 		case 'downloadas':
 			return builder._getDownloadAsSubmenuOpts(docType);
-		case 'saveas':
+		case 'SaveAs':
 			return builder._getSaveAsSubmenuOpts(docType);
 		case 'exportas':
 			return builder._getExportAsSubmenuOpts(docType);
