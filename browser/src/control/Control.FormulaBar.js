@@ -120,6 +120,7 @@ L.Control.FormulaBar = L.Control.extend({
 	onAddressInput: function(e) {
 		if (e.keyCode === 13) {
 			// address control should not have focus anymore
+			$('#addressInput').blur();
 			this.map.focus();
 			var value = L.DomUtil.get('addressInput').value;
 			var command = {
@@ -132,6 +133,7 @@ L.Control.FormulaBar = L.Control.extend({
 			this.map.sendUnoCommand('.uno:GoToCell', command);
 		} else if (e.keyCode === 27) { // 27 = esc key
 			this.map.sendUnoCommand('.uno:Cancel');
+			$('#addressInput').blur();
 			this.map.focus();
 		}
 	}
