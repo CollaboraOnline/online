@@ -911,6 +911,9 @@ L.Control.UIManager = L.Control.extend({
 			if (object.id === 'button' && objectType === 'pushbutton' && eventType === 'click') {
 				if (callback)
 					callback();
+
+				var closeMessage = { id: 'snackbar', jsontype: 'dialog', type: 'snackbar', action: 'close' };
+				app.socket._onMessage({ textMsg: 'jsdialog: ' + JSON.stringify(closeMessage) });
 			}
 		};
 
