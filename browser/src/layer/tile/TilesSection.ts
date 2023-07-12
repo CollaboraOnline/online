@@ -551,6 +551,38 @@ class TilesSection extends CanvasSectionObject {
 								  dx, dy, dWidth, dHeight);
 	}
 
+	private drawDebugHistogram(canvas: CanvasRenderingContext2D, x: number, y: number, value: number, offset: number)
+	{
+			const tSize = 256;
+			const deltaSize = 4;
+			var maxDeltas = (tSize - 16) / deltaSize;
+
+			// offset vertically down to 'offset'
+			const yoff = Math.floor(offset / maxDeltas);
+			y += yoff * deltaSize;
+			offset -= yoff * maxDeltas;
+
+			var firstRowFill = Math.min(value, maxDeltas - offset);
+
+			// fill first row from offset
+			if (firstRowFill > 0)
+				canvas.fillRect(x + offset * deltaSize, y, firstRowFill * deltaSize, deltaSize);
+
+			// render the rest:
+			value = value - firstRowFill;
+
+			// central rectangle
+			var rowBlock = Math.floor(value / maxDeltas);
+
+			if (rowBlock > 0)
+				canvas.fillRect(x, y + deltaSize, maxDeltas * deltaSize, rowBlock * deltaSize);
+
+			// Fill last row
+			var rowLeft = value % maxDeltas;
+			if (rowLeft > 0)
+				canvas.fillRect(x, y + rowBlock * deltaSize + deltaSize, rowLeft * deltaSize, deltaSize);
+	}
+
 	public drawTileToCanvasCrop(tile: any, now: Date, canvas: CanvasRenderingContext2D,
 								sx: number, sy: number, sWidth: number, sHeight: number,
 								dx: number, dy: number, dWidth: number, dHeight: number)
@@ -601,15 +633,12 @@ class TilesSection extends CanvasSectionObject {
 			// deltas graph
 			if (tile.deltaCount)
 			{
-				canvas.fillStyle = 'rgba(0, 0, 128, 0.3)';
-				var deltaSize = 4;
-				var maxDeltas = (tSize - 16) / deltaSize;
-				var rowBlock = Math.floor(tile.deltaCount / maxDeltas);
-				var rowLeft = tile.deltaCount % maxDeltas;
-				if (rowBlock > 0)
-					canvas.fillRect(ox + dx + 1.5 + 14, oy + dy + 1.5, maxDeltas * deltaSize, rowBlock * deltaSize);
-				else
-					canvas.fillRect(ox + dx + 1.5 + 14, oy + dy + 1.5 + rowBlock * deltaSize, rowLeft * deltaSize, deltaSize);
+				// blue/grey deltas
+				canvas.fillStyle = 'rgba(0, 0, 256, 0.3)';
+				this.drawDebugHistogram(canvas, ox + dx + 1.5 + 14, oy + dy + 1.5, tile.deltaCount, 0);
+				// yellow/grey deltas
+				canvas.fillStyle = 'rgba(256, 256, 0, 0.3)';
+				this.drawDebugHistogram(canvas, ox + dx + 1.5 + 14, oy + dy + 1.5, tile.updateCount, tile.deltaCount);
 			}
 
 			// Metrics on-top of the tile:
@@ -617,10 +646,10 @@ class TilesSection extends CanvasSectionObject {
 				'wireId: ' + tile.wireId,
 				'invalidFrom: ' + tile.invalidFrom,
 				'nviewid: ' + tile.viewId,
-				'requested: ' + tile._debugInvalidateCount,
-				'rec-tiles: ' + tile._debugLoadTile,
-				'recv-delta: ' + tile._debugLoadDelta,
-				'rawdeltas: ' + (tile.rawDeltas ? tile.rawDeltas.length : 0)
+				'invalidates: ' + tile.invalidateCount,
+				'tile: ' + tile.loadCount + ' \u0394: ' + tile.deltaCount + ' upd: ' + tile.updateCount,
+				'misses: ' + tile.missingContent,
+				'dlta size/kB: ' + ((tile.rawDeltas ? tile.rawDeltas.length : 0)/1024).toFixed(2)
 			];
 // FIXME: generate metrics of how long a tile has been visible & invalid for.
 //			if (tile._debugTime && tile._debugTime.date !== 0)

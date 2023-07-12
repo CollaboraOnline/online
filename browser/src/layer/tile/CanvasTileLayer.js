@@ -1518,6 +1518,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			imgDataCache: null, // flat byte array of canvas data
 			rawDeltas: null, // deltas ready to decompress
 			deltaCount: 0, // how many deltas on top of the keyframe
+			updateCount: 0, // how many updates did we have
+			loadCount: 0, // how many times did we get a new keyframe
+			missingContent: 0, // how many times rendered without content
+			invalidateCount: 0, // how many invalidations touched this tile
 			viewId: 0, // canonical view id
 			wireId: 0, // monotonic timestamp for optimizing fetch
 			invalidFrom: 0, // a wireId - for avoiding races on invalidation
@@ -1535,16 +1539,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._emptyTilesCount += 1;
 		this._tiles[key] = tile;
 
-		if (this._debug)
-			this._tileDebugUpgrade(tile);
-
 		return tile;
-	},
-
-	_tileDebugUpgrade: function(tile) {
-		tile._debugLoadTile = 0;
-		tile._debugLoadDelta = 0;
-		tile._debugInvalidateCount = 0;
 	},
 
 	_tileNeedsFetch: function(key) {
@@ -5039,7 +5034,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	_debugShowTileData: function() {
 		this._debugData['loadCount'].setPrefix('Total of requested tiles: ' +
 				this._debugInvalidateCount + ', recv-tiles: ' + this._debugLoadTile +
-						       ', recv-delta: ' + this._debugLoadDelta);
+						       ', recv-delta: ' + this._debugLoadDelta +
+						       ', recv-update: ' + this._debugLoadUpdate);
 	},
 
 	_debugInit: function() {
@@ -5049,14 +5045,11 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugId = 0;
 		this._debugLoadTile = 0;
 		this._debugLoadDelta = 0;
+		this._debugLoadUpdate = 0;
 		this._debugInvalidateCount = 0;
 		this._debugRenderCount = 0;
 		this._debugDeltas = true;
 		this._debugDeltasDetail = false;
-
-		// add blank metrics to those who didn't get any yet.
-		for (var key in this._tiles)
-			this._tileDebugUpgrade(this._tiles[key]);
 
 		if (!this._debugData) {
 			this._debugData = {};
@@ -6552,10 +6545,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!tile)
 			return;
 
-		if (this._debug) {
-			tile._debugInvalidateCount++;
+		tile.invalidateCount++;
+
+		if (this._debug)
 			this._debugInvalidateCount++;
-		}
 
 		if (!tile.hasContent())
 			this._removeTile(key);
@@ -6628,6 +6621,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 		}
 		tile.lastRendered = now;
+		if (!tile.hasContent())
+			tile.missingContent++;
 	},
 
 	_maybeGarbageCollect: function() {
@@ -6803,9 +6798,12 @@ L.CanvasTileLayer = L.Layer.extend({
 			window.app.console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
 					       ' of length ' + rawDelta.length +
 					       (this._debugDeltasDetail ? (' hex: ' + hex2string(rawDelta)) : ''));
-
 		if (isKeyframe)
+		{
+			tile.loadCount++;
 			tile.deltaCount = 0;
+			tile.updateCount = 0;
+		}
 		else
 			tile.deltaCount++;
 
@@ -7053,18 +7051,14 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (this._debug) {
 			if (!img)
-			{ // update:
+			{
+				tile.updateCount++;
+				this._debugUpdates++;
 			}
 			else if (img.rawData && !img.isKeyframe)
-			{
-				tile._debugLoadDelta++;
 				this._debugLoadDelta++;
-			}
-			else
-			{
-				tile._debugLoadTile++;
+			else if (img.rawData)
 				this._debugLoadTile++;
-			}
 		}
 		this._showDebugForTile(key);
 
