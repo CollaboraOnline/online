@@ -633,5 +633,62 @@ button.ui-tab.notebookbar {
 }
 
 [class*='as-pptx-submenu-icon'] {
-	background: url('images/lc_downloadas-pptx.svg') center;
+	background: url('images/dark/lc_downloadas-pptx.svg') center;
+}
+
+/* dark icons for data-theme='dark' */
+[data-theme='dark'] [class*='as-odt-submenu-icon'] {
+	background: url('images/dark/lc_downloadas-odt.svg') center;
+}
+
+[data-theme='dark'] [class*='as-ods-submenu-icon'] {
+	background: url('images/dark/lc_downloadas-ods.svg') center;
+}
+
+[data-theme='dark'] [class*='as-odp-submenu-icon'] {
+	background: url('images/dark/lc_downloadas-odp.svg') center;
+}
+
+[data-theme='dark'] [class*='as-odg-submenu-icon'] {
+	background: url('images/dark/lc_downloadas-odg.svg') center;
+}
+
+[data-theme='dark'] [class*='as-rtf-submenu-icon'] {
+	background: url('images/dark/lc_downloadas-rtf.svg') center;
+}
+
+[data-theme='dark'] [class*='as-doc-submenu-icon'] {
+	background: url('images/dark/lc_downloadas-doc.svg') center;
+}
+
+[data-theme='dark'] [class*='as-docx-submenu-icon'] {
+	background: url('images/dark/lc_downloadas-docx.svg') center;
+}
+
+[data-theme='dark'] [class*='pdf-submenu-icon'] {
+	background: url('images/dark/lc_exportpdf.svg') center;
+}
+
+[data-theme='dark'] [class*='epub-submenu-icon'] {
+	background: url('images/dark/lc_exportepub.svg') center;
+}
+
+[data-theme='dark'] [class*='as-xls-submenu-icon'] {
+	background: url('images/dark/lc_downloadas-xls.svg') center;
+}
+
+[data-theme='dark'] [class*='as-xlsx-submenu-icon'] {
+	background: url('images/dark/lc_downloadas-xlsx.svg') center;
+}
+
+[data-theme='dark'] [class*='as-csv-submenu-icon'] {
+	background: url('images/dark/lc_downloadas-csv.svg') center;
+}
+
+[data-theme='dark'] [class*='as-ppt-submenu-icon'] {
+	background: url('images/dark/lc_downloadas-ppt.svg') center;
+}
+
+[data-theme='dark'] [class*='as-pptx-submenu-icon'] {
+	background: url('images/dark/lc_downloadas-pptx.svg') center;
 }
