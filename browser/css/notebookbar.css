@@ -633,7 +633,7 @@ button.ui-tab.notebookbar {
 }
 
 [class*='as-pptx-submenu-icon'] {
-	background: url('images/dark/lc_downloadas-pptx.svg') center;
+	background: url('images/lc_downloadas-pptx.svg') center;
 }
 
 /* dark icons for data-theme='dark' */
