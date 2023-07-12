@@ -228,6 +228,13 @@ L.Control.PartsPreview = L.Control.extend({
 		var pcw = document.getElementById('presentation-controls-wrapper');
 
 		L.DomEvent.on(pcw, 'contextmenu', function(e) {
+			var isMasterView = this._map['stateChangeHandler'].getItemValue('.uno:SlideMasterPage');
+			var $trigger = $(pcw);
+			if (isMasterView === 'true') {
+				$trigger.contextMenu(false);
+				return;
+			}
+			$trigger.contextMenu(true);
 			that._setPart(e);
 			$.contextMenu({
 				selector: '#presentation-controls-wrapper',
