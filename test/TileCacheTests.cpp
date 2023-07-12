@@ -280,10 +280,11 @@ void TileCacheTests::testSimpleCombine()
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
 
     sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
-    tile1a = getResponseMessage(socket1, "tile:", testname + "1 ");
-    LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1a.empty());
-    tile1b = getResponseMessage(socket1, "tile:", testname + "1 ");
-    LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
+    tile1a = getResponseMessage(socket1, "update:", testname + "1 ");
+    // no content in an update:
+    LOK_ASSERT_MESSAGE("did not receive a update: message as expected", tile1a.empty());
+    tile1b = getResponseMessage(socket1, "update:", testname + "1 ");
+    LOK_ASSERT_MESSAGE("did not receive a update: message as expected", tile1b.empty());
 
     // Second.
     TST_LOG("Connecting second client.");
