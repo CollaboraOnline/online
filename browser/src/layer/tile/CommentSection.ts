@@ -1108,6 +1108,8 @@ export class Comment extends CanvasSectionObject {
 	public setCollapsed(): void {
 		this.isCollapsed = true;
 
+		this.show();
+
 		if (this.isRootComment() || this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
 			this.sectionProperties.container.style.visibility = 'hidden';
 
