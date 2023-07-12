@@ -346,7 +346,8 @@ AC_ARG_WITH([infobar-url],
 AC_ARG_WITH([coverage],
              AS_HELP_STRING([--with-coverage=<gcov>],
                             [Enable a code-coverage method. Currently only gcov is supported (works with both gcc and clang).
-                            Output HTML in gcov/ directory.]))
+                            Output HTML in gcov/ directory.
+                            Generate report with 'make coverage-report'. Clean coverage files with 'make coverage-clean']))
 
 AC_ARG_WITH([sanitizer],
              AS_HELP_STRING([--with-sanitizer],
