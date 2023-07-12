@@ -121,10 +121,15 @@ public:
         std::memcpy(output.data(), header.data(), header.size());
         if (tile->appendChangesSince(output, tile->isPng() ? 0 : lastSentId))
         {
-            LOG_TRC(" Sending tile message: " << header << " lastSendId " << lastSentId);
+            LOG_TRC("Sending tile message: " << header << " lastSendId " << lastSentId);
             return sendBinaryFrame(output.data(), output.size());
         }
-        LOG_TRC("redundant tile request: " << lastSentId);
+        else
+        {
+            LOG_TRC("wasteful redundant tile request: " << lastSentId);
+            header = desc.serialize("update:", "\n");
+            return sendTextFrame(output.data(), output.size());
+        }
         return true;
     }
 
