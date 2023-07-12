@@ -1295,11 +1295,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._update();
 	},
 
-	toggleTileDebugMode: function() {
-		this.toggleTileDebugModeImpl();
-		this._requestNewTiles();
-	},
-
 	_sendClientZoom: function (forceUpdate) {
 		if (!this._map._docLoaded)
 			return;
@@ -1870,7 +1865,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._map.fire('tabstoplistupdate', json);
 	},
 
-	toggleTileDebugModeImpl: function() {
+	toggleTileDebugMode: function() {
 		this._debug = !this._debug;
 		if (!this._debug) {
 			this._map.removeLayer(this._debugInfo);
@@ -1898,6 +1893,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.addLayer(this._debugTrace);
 		else
 			this._map.removeLayer(this._debugTrace);
+
+		// redraw canvas with changed debug overlays
+		this._painter.update();
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
