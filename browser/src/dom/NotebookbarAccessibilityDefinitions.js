@@ -242,6 +242,9 @@ var NotebookbarAccessibilityDefinitions = function() {
 	};
 
 	this.applyLanguageSpecificCombinations = function(selectedDefinitions) {
+		if (!selectedDefinitions)
+			return;
+
 		// Browser language is not reflected to UI so we only check URL's language parameter.
 		if (app.UI.language.fromURL && app.UI.language.fromURL !== '') {
 			var lang = app.UI.language.fromURL;
