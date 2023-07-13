@@ -448,6 +448,17 @@ std::string TileQueue::removeCallbackDuplicate(const std::string& callbackMsg)
                         break;
                     }
                 }
+
+                // if cursor is not visible we can ignore cursor invalidate msgs too
+                if (callbackType ==  LOK_CALLBACK_CURSOR_VISIBLE
+                    && tokens.equals(3, "false")
+                    && static_cast<LibreOfficeKitCallbackType>(Util::i32FromString(queuedTokens[2]).first) == LOK_CALLBACK_INVALIDATE_VISIBLE_CURSOR)
+                    {
+                        LOG_TRC("Remove obsolete cursor invalidate callback: "
+                                << std::string(it.data(), it.size()) << " -> "
+                                << COOLProtocol::getAbbreviatedMessage(callbackMsg));
+                        getQueue().erase(getQueue().begin() + i);
+                    }
             }
         }
         break;
