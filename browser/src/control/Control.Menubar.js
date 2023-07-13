@@ -172,6 +172,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Smart Picker'), id: 'remotelink', type: 'action'},
 				{type: 'separator'},
 				{uno: '.uno:InsertSymbol'},
+				{uno: '.uno:InsertObjectStarMath'},
 				{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:InsertNonBreakingSpace'},
 					{uno: '.uno:InsertHardHyphen'},
