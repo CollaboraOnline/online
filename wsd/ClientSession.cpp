@@ -1328,7 +1328,8 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, co
 bool ClientSession::forwardToChild(const std::string& message,
                                    const std::shared_ptr<DocumentBroker>& docBroker)
 {
-    return docBroker->forwardToChild(client_from_this(), message);
+    const bool binary = Util::startsWith(message, "paste") ? true : false;
+    return docBroker->forwardToChild(client_from_this(), message, binary);
 }
 
 bool ClientSession::filterMessage(const std::string& message) const
