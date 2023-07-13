@@ -16,6 +16,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['combobox'] = this._comboboxControlHandler;
 		this._controlHandlers['listbox'] = this._comboboxControlHandler;
 		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
+		this._controlHandlers['tabpage'] = this._overriddenTabPageHandler;
 		this._controlHandlers['menubartoolitem'] = this._inlineMenubarToolItemHandler;
 		this._controlHandlers['bigmenubartoolitem'] = this._bigMenubarToolItemHandler;
 		this._controlHandlers['bigtoolitem'] = this._bigtoolitemHandler;
@@ -387,6 +388,15 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_overriddenTabsControlHandler: function(parentContainer, data, builder) {
 		data.tabs = builder.wizard.getTabs();
 		return builder._tabsControlHandler(parentContainer, data, builder, _('Tap to collapse'));
+	},
+
+	_overriddenTabPageHandler: function(parentContainer, data, builder) {
+		var result = builder._tabPageHandler(parentContainer, data, builder);
+
+		var tabPage = parentContainer.lastChild;
+		JSDialog.MakeFocusCycle(tabPage);
+
+		return result;
 	},
 
 	_toolboxHandler: function(parentContainer, data) {
