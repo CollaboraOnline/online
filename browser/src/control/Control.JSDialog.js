@@ -1,9 +1,9 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Control.JSDialog
+ * L.Control.JSDialog - class which creates and updates dialogs, popups, snackbar
  */
 
-/* global Hammer app _ */
+/* global JSDialog Hammer app _ */
 L.Control.JSDialog = L.Control.extend({
 	options: {
 		snackbarTimeout: 10000
@@ -247,56 +247,18 @@ L.Control.JSDialog = L.Control.extend({
 			L.DomUtil.addClass(primaryBtn, 'button-primary');
 	},
 
-	getFocusableElements: function(widget) {
-		var ret = widget.querySelectorAll('[tabIndex="0"]:not(.jsdialog-begin-marker, .jsdialog-end-marker):not([disabled]):not(.hidden)');
-		if (!ret)
-			ret = widget.querySelectorAll('input:not([disabled]):not(.hidden)');
-		if (!ret)
-			ret = widget.querySelectorAll('textarea:not([disabled]):not(.hidden)');
-		if (!ret)
-			ret = widget.querySelectorAll('select:not([disabled]):not(.hidden)');
-		if (!ret)
-			ret = widget.querySelectorAll('button:not([disabled]):not(.hidden)');
-		return ret;
-	},
-
 	addFocusHandler: function(instance) {
-		// loop using tab key
-		var beginMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-begin-marker');
-		var endMarker = L.DomUtil.create('div', 'jsdialog autofilter jsdialog-end-marker');
-
-		beginMarker.tabIndex = 0;
-		endMarker.tabIndex = 0;
-
-		instance.container.insertBefore(beginMarker, instance.container.firstChild);
-		instance.container.appendChild(endMarker);
-
-		instance.container.addEventListener('focusin', function(event) {
-			if (event.target == endMarker) {
-				var firstFocusElement = instance.that.getFocusableElements(instance.container);
-				if (firstFocusElement && firstFocusElement.length) {
-					firstFocusElement[0].focus();
-					return;
-				}
-			} else if (event.target == beginMarker) {
-				var focusables = instance.that.getFocusableElements(instance.container);
-				var lastFocusElement = focusables.length ? focusables[focusables.length - 1] : null;
-				if (lastFocusElement) {
-					lastFocusElement.focus();
-					return;
-				}
+		var failedToFindFocus = function() {
+			if (document.getElementById(instance.init_focus_id))
+				document.getElementById(instance.init_focus_id).focus();
+			else {
+				app.console.error('There is no focusable element in the modal. Either focusId should be given or modal should have a response button.');
+				instance.that.close(instance.id, true);
+				instance.that.map.focus();
 			}
+		};
 
-			if (event.target == endMarker || event.target == beginMarker) {
-				if (document.getElementById(instance.init_focus_id))
-					document.getElementById(instance.init_focus_id).focus();
-				else {
-					app.console.error('There is no focusable element in the modal. Either focusId should be given or modal should have a response button.');
-					instance.that.close(instance.id, true);
-					instance.that.map.focus();
-				}
-			}
-		});
+		JSDialog.MakeFocusCycle(instance.container, failedToFindFocus);
 	},
 
 	addHandlers: function(instance) {
@@ -355,7 +317,7 @@ L.Control.JSDialog = L.Control.extend({
 		instance.clickToClose = clickToCloseElement;
 
 		// setup initial focus and helper elements for closing popup
-		var initialFocusElement = this.getFocusableElements(instance.container);
+		var initialFocusElement = JSDialog.GetFocusableElements(instance.container);
 
 		if (instance.canHaveFocus && initialFocusElement && initialFocusElement.length)
 			initialFocusElement[0].focus();
@@ -364,7 +326,7 @@ L.Control.JSDialog = L.Control.extend({
 		if (focusWidget)
 			focusWidget.focus();
 		if (focusWidget && document.activeElement !== focusWidget) {
-			var firstFocusable = this.getFocusableElements(focusWidget);
+			var firstFocusable = JSDialog.GetFocusableElements(focusWidget);
 			if (firstFocusable && firstFocusable.length)
 				firstFocusable[0].focus();
 			else
@@ -546,7 +508,7 @@ L.Control.JSDialog = L.Control.extend({
 				var lastKey = dialogs[dialogs.length - 1];
 				var container = this.dialogs[lastKey].container;
 				container.focus();
-				var initialFocusElement = this.getFocusableElements(container);
+				var initialFocusElement = JSDialog.GetFocusableElements(container);
 				if (initialFocusElement && initialFocusElement.length)
 					initialFocusElement[0].focus();
 			}
