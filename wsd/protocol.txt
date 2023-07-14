@@ -241,6 +241,9 @@ tilecombine <parameters>
     comma-separated lists, and the number of elements in each must be
     same.
 
+    if oldwid=0 this forces returning from the previous keyframe
+    for this tile - suitable for force-refreshing the data.
+
 dialog <command>
 
     <command> is unique identifier for the dialog that needs to be painted.
@@ -527,11 +530,6 @@ delta: part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=
 
     A delta command is like a tile: command but the payload is purely
     an incremental patch on top of a previous tile.
-
-update: <as delta>
-
-    An update command simply informs the client of any updated wid
-    ie. this tile was re-rendered and returned an empty delta.
 
 commandresult: <payload>
 

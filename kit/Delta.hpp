@@ -450,8 +450,9 @@ class DeltaGenerator {
         {
             // The tile content is identical to what the client already has, so skip it
             LOG_TRC("Identical / un-changed tile");
-            // Return a zero byte image to inform WSD we didn't need that.
-            // This allows WSD side TileCache to free up waiting subscribers.
+            // Return a zero length delta to inform WSD we didn't need that.
+            // This allows WSD side TileCache to send updates to waiting subscribers.
+            outStream.push_back('D');
             return true;
         }
 
