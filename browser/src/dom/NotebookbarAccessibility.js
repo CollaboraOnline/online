@@ -225,12 +225,6 @@ var NotebookbarAccessibility = function() {
 				this.resetState();
 			}
 		}
-		else if (key === 'ENTER' || key === ' ') {
-			if (this.filteredItem !== null)
-				this.clickOnFilteredItem();
-			else
-				app.map.focus();
-		}
 		else if (event.keyCode === 16) // ShiftLeft.
 			return; // Ignore shift key.
 		else if (key === 'ARROWUP') {
@@ -261,7 +255,8 @@ var NotebookbarAccessibility = function() {
 				this.checkCombinationAgainstAcccelerators();
 				this.filterOutNonMatchingInfoBoxes();
 			}
-
+			if (this.filteredItem !== null)
+				this.clickOnFilteredItem();
 			// So we checked the pressed key against available combinations. If there is no match, focus back to map.
 			if (this.isAllFilteredOut() === true)
 				app.map.focus();
