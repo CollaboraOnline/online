@@ -3133,10 +3133,19 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
     {
         tile.setVersion(++_tileVersion);
 
-        // We used to ensure that a keyframe was forced for remote
-        // tilecombine calls, now we re-fetch if necessary later
-        // since we have a much larger client rawDeltas cache.
-        (void)forceKeyframe;
+        // client can force keyframe with an oldWid == 0 on tile
+        if (forceKeyframe && tile.getOldWireId() == 0)
+        {
+            // combinedtiles requests direct from the browser get flagged.
+            // The browser may have dropped / cleaned its cache, so we can't
+            // rely on what we think we have sent it to send a delta in this
+            // case; so forget what we last sent.
+            LOG_TRC("forcing a keyframe for tilecombined tile (" << tile.getPart() << ',' <<
+                    tile.getEditMode() << ',' << tile.getTilePosX() << ',' << tile.getTilePosY() << ").");
+            session->resetTileSeq(tile);
+            // don't force a keyframe to be rendered, only to be sent.
+            tile.setOldWireId(1);
+        }
 
         Tile cachedTile = _tileCache->lookupTile(tile);
         if(!cachedTile || !cachedTile->isValid())

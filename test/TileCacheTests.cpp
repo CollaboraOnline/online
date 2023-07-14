@@ -279,7 +279,7 @@ void TileCacheTests::testSimpleCombine()
     std::vector<char> tile1b = getResponseMessage(socket1, "tile:", testname + "1 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
 
-    sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
+    sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 oldwid=42,42 tilewidth=3840 tileheight=3840");
     tile1a = getResponseMessage(socket1, "update:", testname + "1 ");
     // no content in an update:
     LOK_ASSERT_MESSAGE("did not receive a update: message as expected", tile1a.empty());
@@ -297,6 +297,13 @@ void TileCacheTests::testSimpleCombine()
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2a.empty());
     std::vector<char> tile2b = getResponseMessage(socket2, "tile:", testname + "2 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2b.empty());
+
+    // First - check force keyframe
+    sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 oldwid=0,0 tilewidth=3840 tileheight=3840");
+    tile1a = getResponseMessage(socket1, "tile:", testname + "1 ");
+    LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1a.empty());
+    tile1b = getResponseMessage(socket1, "tile:", testname + "1 ");
+    LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
 
     socket1->asyncShutdown();
     socket2->asyncShutdown();
