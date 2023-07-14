@@ -677,6 +677,18 @@ void WhiteBoxTests::testTileData()
     out.clear();
     LOK_ASSERT_EQUAL(data.appendChangesSince(out, 43), true);
     LOK_ASSERT_EQUAL(std::string("baabaz"), Util::toString(out));
+
+    // append an empty delta
+    data.appendBlob(52, "D", 1);
+    LOK_ASSERT_EQUAL(data.size(), size_t(9));
+    LOK_ASSERT_EQUAL(data._wids.size(), size_t(4));
+    LOK_ASSERT_EQUAL(data._wids.back(), unsigned(52));
+
+    // the next empty delta should pack into the last one
+    data.appendBlob(54, "D", 1);
+    LOK_ASSERT_EQUAL(data.size(), size_t(9));
+    LOK_ASSERT_EQUAL(data._wids.size(), size_t(4));
+    LOK_ASSERT_EQUAL(data._wids.back(), unsigned(54));
 }
 
 void WhiteBoxTests::testRectanglesIntersect()

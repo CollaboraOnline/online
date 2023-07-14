@@ -93,12 +93,28 @@ struct TileData
 
         size_t oldSize = size();
 
-        // FIXME: too many/large deltas means we should reset -
-        // but not here - when requesting the tiles.
-        _wids.push_back(id);
-        _offsets.push_back(_deltas.size());
-        _deltas.resize(oldSize + dataSize - 1);
-        std::memcpy(_deltas.data() + oldSize, data + 1, dataSize - 1);
+        // If we have an empty delta at the end - then just
+        // bump the associated wid. There is no risk to sending
+        // an empty delta twice.x
+        if (dataSize == 1 && // just a 'D'
+            _offsets.size() > 1 &&
+            _offsets.back() == _deltas.size())
+        {
+            LOG_TRC("received empty delta - bumping wid from " << _wids.back() << " to " << id);
+            _wids.back() = id;
+        }
+        else
+        {
+            // FIXME: too many/large deltas means we should reset -
+            // but not here - when requesting the tiles.
+            _wids.push_back(id);
+            _offsets.push_back(_deltas.size());
+            if (dataSize > 1)
+            {
+                _deltas.resize(oldSize + dataSize - 1);
+                std::memcpy(_deltas.data() + oldSize, data + 1, dataSize - 1);
+            }
+        }
 
         // FIXME: possible race - should store a seq. from the invalidation(s) ?
         _valid = true;
@@ -137,13 +153,6 @@ struct TileData
     bool needsKeyframe(TileWireId since)
     {
         return since < _wids[0];
-    }
-
-    /// we now know this wid is really the latest
-    void bumpLastWid(TileWireId since)
-    {
-        assert(_wids.size() > 0);
-        _wids.back() = since;
     }
 
     bool appendChangesSince(std::vector<char> &output, TileWireId since)
@@ -291,7 +300,6 @@ private:
     static bool intersectsTile(const TileDesc &tileDesc, int part, int mode, int x, int y,
                                int width, int height, int normalizedViewId);
 
-    void updateWidInCache(const TileDesc& desc);
     Tile saveDataToCache(const TileDesc& desc, const char* data, size_t size);
     void saveDataToStreamCache(StreamType type, const std::string& fileName, const char* data,
                                size_t size);
