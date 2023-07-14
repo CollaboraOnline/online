@@ -22,14 +22,12 @@ class DeltaTests : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(DeltaTests);
 
-#if ENABLE_DELTAS
     CPPUNIT_TEST(testRle);
     CPPUNIT_TEST(testRleComplex);
     CPPUNIT_TEST(testRleIdentical);
     CPPUNIT_TEST(testDeltaSequence);
     CPPUNIT_TEST(testRandomDeltas);
     CPPUNIT_TEST(testDeltaCopyOutOfBounds);
-#endif
 
     CPPUNIT_TEST_SUITE_END();
 
