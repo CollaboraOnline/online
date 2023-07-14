@@ -6650,9 +6650,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._debugDeltas)
 			window.app.console.log('Garbage collect! iter: ' + this._gcCounter);
 
-		/* uncomment to exercise me harder.
-		   highNumCanvases = 3; lowNumCanvases = 2;
-		   highDeltaMemory = 1024*1024; lowDeltaMemory = 1024*128; */
+		/* uncomment to exercise me harder. */
+		/* highNumCanvases = 3; lowNumCanvases = 2;
+		   highDeltaMemory = 1024*1024; lowDeltaMemory = 1024*128;
+		   highTileCount = 100; lowTileCount = 50; */
 
 		var keys = [];
 		for (var key in this._tiles) // no .keys() method.
