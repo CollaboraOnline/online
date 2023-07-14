@@ -3553,8 +3553,10 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
 
     LOG_TRC("Forwarding payload to child [" << viewId << "]: " << getAbbreviatedMessage(message));
 
+#if 0 // extreme paste debugging - message can be giant and binary
     if (Log::traceEnabled() && Util::startsWith(message, "paste "))
         LOG_TRC("Logging paste payload (" << message.size() << " bytes) '" << message << "' end paste");
+#endif
 
     std::string msg = "child-" + viewId + ' ';
     if (Util::startsWith(message, "load "))
