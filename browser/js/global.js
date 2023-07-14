@@ -745,10 +745,11 @@ window.app = {
 				};
 			} else if (this.status === 202) {
 				var msg = {
-					'MessageId': 'App_LoadingStatus',
+					'MessageId': 'Action_Load_Resp',
 					'SendTime': Date.now(),
 					'Values': {
-						Status: 'Loading_Progress'
+						success: false,
+						errorMsg: http.response.errorMsg,
 					}
 				};
 				window.parent.postMessage(JSON.stringify(msg), '*');
