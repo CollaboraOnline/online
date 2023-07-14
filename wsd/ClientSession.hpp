@@ -117,20 +117,13 @@ public:
         // FIXME: performance - optimize away this copy ...
         std::vector<char> output;
 
+        // copy in the header
         output.resize(header.size());
         std::memcpy(output.data(), header.data(), header.size());
-        if (tile->appendChangesSince(output, tile->isPng() ? 0 : lastSentId))
-        {
-            LOG_TRC("Sending tile message: " << header << " lastSendId " << lastSentId);
-            return sendBinaryFrame(output.data(), output.size());
-        }
-        else
-        {
-            LOG_TRC("wasteful redundant tile request: " << lastSentId);
-            header = desc.serialize("update:", "\n");
-            return sendTextFrame(output.data(), output.size());
-        }
-        return true;
+
+        bool hasContent = tile->appendChangesSince(output, tile->isPng() ? 0 : lastSentId);
+        LOG_TRC("Sending tile message: " << header << " lastSendId " << lastSentId << " content " << hasContent);
+        return sendBinaryFrame(output.data(), output.size());
     }
 
     bool sendBlob(const std::string &header, const Blob &blob)

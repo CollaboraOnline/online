@@ -184,34 +184,6 @@ void TileCache::saveTileAndNotify(const TileDesc& desc, const char *data, const 
 
     std::shared_ptr<TileBeingRendered> tileBeingRendered = findTileBeingRendered(desc);
 
-    if (size <= 0)
-    {
-        LOG_TRC("Zero sized cache tile: " << cacheFileName(desc));
-
-        if (tileBeingRendered)
-        {
-            updateWidInCache(desc);
-
-            const size_t subscriberCount = tileBeingRendered->getSubscribers().size();
-
-            // notify that the tile was re-rendered, with no change.
-            for (size_t i = 0; i < subscriberCount; ++i)
-            {
-                auto& subscriber = tileBeingRendered->getSubscribers()[i];
-                std::shared_ptr<ClientSession> session = subscriber.lock();
-                if (session)
-                    session->sendUpdateNow(desc);
-            }
-
-            LOG_DBG("STATISTICS: tile " << desc.getVersion() << " internal roundtrip to empty tile " <<
-                    tileBeingRendered->getElapsedTimeMs());
-
-            // un-subscribe subscribers, if any.
-            forgetTileBeingRendered(desc, tileBeingRendered);
-        }
-        return;
-    }
-
     // Save to in-memory cache.
 
     // Ignore if we can't save the tile, things will work anyway, but slower.
@@ -228,7 +200,7 @@ void TileCache::saveTileAndNotify(const TileDesc& desc, const char *data, const 
         const size_t subscriberCount = tileBeingRendered->getSubscribers().size();
 
         // sendTile also does enqueueSendMessage underneath ...
-        if (tile && size > 0 && subscriberCount > 0)
+        if (tile && subscriberCount > 0)
         {
             for (size_t i = 0; i < subscriberCount; ++i)
             {
@@ -509,17 +481,6 @@ Tile TileCache::findTile(const TileDesc &desc)
     }
 
     return Tile();
-}
-
-// Used when we get a zero delta - to update the wire-id
-void TileCache::updateWidInCache(const TileDesc& desc)
-{
-    Tile tile = _cache[desc];
-    if (tile)
-    {
-        LOG_TRC("Bumped wid on " << desc.serialize());
-        tile->bumpLastWid(desc.getWireId());
-    }
 }
 
 Tile TileCache::saveDataToCache(const TileDesc &desc, const char *data, const size_t size)

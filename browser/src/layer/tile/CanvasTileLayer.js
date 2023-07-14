@@ -1552,8 +1552,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onMessage: function (textMsg, img) {
 		this._saveMessageForReplay(textMsg);
 		// 'tile:' is the most common message type; keep this the first.
-		if (textMsg.startsWith('tile:') || textMsg.startsWith('delta:') ||
-		    textMsg.startsWith('update:')) {
+		if (textMsg.startsWith('tile:') || textMsg.startsWith('delta:')) {
 			this._onTileMsg(textMsg, img);
 		}
 		else if (textMsg.startsWith('commandvalues:')) {
@@ -6807,11 +6806,13 @@ L.CanvasTileLayer = L.Layer.extend({
 			tile.deltaCount = 0;
 			tile.updateCount = 0;
 		}
+		else if (rawDelta.length === 0)
+		{
+			tile.updateCount++;
+			return; // that was easy
+		}
 		else
 			tile.deltaCount++;
-
-		if (rawDelta.length === 0)
-			return; // that was easy!
 
 		var traceEvent = app.socket.createCompleteTraceEvent('L.CanvasTileLayer.applyDelta',
 								     { keyFrame: isKeyframe, length: rawDelta.length });
@@ -6824,6 +6825,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (tile.rawDeltas && tile.rawDeltas != rawDelta) // help the gc?
 				tile.rawDeltas.length = 0;
 			tile.rawDeltas = rawDelta; // overwrite
+		}
+		else if (!tile.rawDeltas)
+		{
+			window.app.console.log('Unusual: attempt to append a delta when we have no keyframe.');
+			return;
 		}
 		else // assume we already have a delta.
 		{
@@ -7068,17 +7074,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		L.Log.log(textMsg, 'INCOMING', key);
 
 		// updates don't need more chattiness with a tileprocessed
-		if (!textMsg.startsWith('update:'))
-		{
-			this._applyDelta(tile, img.rawData, img.isKeyframe);
-			this._tileReady(coords);
+		this._applyDelta(tile, img.rawData, img.isKeyframe);
+		this._tileReady(coords);
 
-			// Queue acknowledgment, that the tile message arrived
-			var mode = (tileMsgObj.mode !== undefined) ? tileMsgObj.mode : 0;
-			var tileID = tileMsgObj.part + ':' + mode + ':' + tileMsgObj.x + ':' + tileMsgObj.y + ':'
-			    + tileMsgObj.tileWidth + ':' + tileMsgObj.tileHeight + ':' + tileMsgObj.nviewid;
-			this._queuedProcessed.push(tileID);
-		}
+		// Queue acknowledgment, that the tile message arrived
+		var mode = (tileMsgObj.mode !== undefined) ? tileMsgObj.mode : 0;
+		var tileID = tileMsgObj.part + ':' + mode + ':' + tileMsgObj.x + ':' + tileMsgObj.y + ':'
+		    + tileMsgObj.tileWidth + ':' + tileMsgObj.tileHeight + ':' + tileMsgObj.nviewid;
+		this._queuedProcessed.push(tileID);
 	},
 
 	_sendProcessedResponse: function() {
