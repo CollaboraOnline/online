@@ -73,6 +73,14 @@ public:
 
     /// See if we should clear out our memory
     virtual void trimIfInactive() = 0;
+
+    virtual bool isDocPasswordProtected() const = 0;
+
+    virtual bool haveDocPassword() const = 0;
+
+    virtual std::string getDocPassword() const = 0;
+
+    virtual DocumentPasswordType getDocPasswordType() const = 0;
 };
 
 struct RecordedEvent

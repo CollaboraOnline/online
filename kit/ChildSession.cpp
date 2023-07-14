@@ -2216,6 +2216,23 @@ bool ChildSession::saveAs(const StringVector& tokens)
         filterOptions = "EmbedImages";
     }
 
+    if (_docManager->isDocPasswordProtected() && _docManager->haveDocPassword())
+    {
+        if (_docManager->getDocPasswordType() == DocumentPasswordType::ToView)
+        {
+            filterOptions += std::string(",Password=") + _docManager->getDocPassword() +
+                             std::string("PASSWORDEND");
+        }
+        else
+        {
+            filterOptions += std::string(",PasswordToModify=") + _docManager->getDocPassword() +
+                             std::string("PASSWORDTOMODIFYEND");
+        }
+        // Password might have changed since load
+        setHaveDocPassword(true);
+        setDocPassword(_docManager->getDocPassword());
+    }
+
     // We don't have the FileId at this point, just a new filename to save-as.
     // So here the filename will be obfuscated with some hashing, which later will
     // get a proper FileId that we will use going forward.
