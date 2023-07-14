@@ -6865,8 +6865,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			var delta = allDeltas.subarray(offset);
 
 			// Debugging paranoia: if we get this wrong bad things happen.
-			if ((isKeyframe && delta.length != canvas.width * canvas.height * 4) ||
-			    (!isKeyframe && delta.length == canvas.width * canvas.height * 4))
+			if ((isKeyframe && delta.length < canvas.width * canvas.height * 4) ||
+			    (!isKeyframe && delta.length >= canvas.width * canvas.height * 4))
 			{
 				window.app.console.log('Unusual ' + (isKeyframe ? 'keyframe' : 'delta') +
 						       ' possibly mis-tagged, suspicious size vs. type ' +
