@@ -1530,3 +1530,8 @@ div [id^='TemplateDialog'] {
 #CharacterPropertiesDialog {
 	min-width: 656px;
 }
+
+/* Spellchecking dialog */
+#suggestionslb {
+	min-width: 540px;
+}
