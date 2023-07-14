@@ -612,6 +612,26 @@ public:
     void trimIfInactive() override
     {
     }
+
+    bool isDocPasswordProtected() const override
+    {
+        return false;
+    }
+
+    bool haveDocPassword() const override
+    {
+        return false;
+    }
+
+    std::string getDocPassword() const override
+    {
+        return "";
+    }
+
+    DocumentPasswordType getDocPasswordType() const override
+    {
+        return DocumentPasswordType::ToView;
+    }
 };
 
 void WhiteBoxTests::testEmptyCellCursor()
