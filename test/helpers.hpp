@@ -32,6 +32,7 @@
 #include <common/ConfigUtil.hpp>
 #include <common/Util.hpp>
 #include <net/WebSocketSession.hpp>
+#include <wsd/TileDesc.hpp>
 
 #include <iterator>
 #include <fstream>
@@ -396,6 +397,20 @@ inline std::vector<char> getResponseMessage(const std::shared_ptr<http::WebSocke
                                      = std::chrono::seconds(10))
 {
     return ws->waitForMessage(prefix, timeoutMs, testname);
+}
+
+inline std::shared_ptr<TileDesc> getResponseDesc(const std::shared_ptr<http::WebSocketSession>& ws,
+                                                 const std::string& prefix, const std::string& testname,
+                                                 const std::chrono::milliseconds timeoutMs
+                                                 = std::chrono::seconds(10))
+{
+    std::vector<char> tile = getResponseMessage(ws, prefix, testname, timeoutMs);
+
+    if (tile.empty())
+        return std::shared_ptr<TileDesc>();
+
+    return std::make_shared<TileDesc>(
+        TileDesc::parse(StringVector::tokenize(tile.data(), tile.size())));
 }
 
 inline std::string getResponseString(const std::shared_ptr<http::WebSocketSession>& ws,
