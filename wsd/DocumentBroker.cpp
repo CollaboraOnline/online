@@ -956,11 +956,11 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
                 // message for "view file extension" document types
                 session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
             }
-#ifdef IOS
+#ifdef MOBILEAPP
             else
             {
-                // Fix issue #5887 by assuming that documents are writable on iOS
-                // The iOS app saves directly to local disk so, other than for
+                // Fix issue #5887 by assuming that documents are writable on iOS and Android
+                // The iOS and Android app saves directly to local disk so, other than for
                 // "view file extension" document types or other cases that
                 // I am missing, we can assume the document is writable until
                 // a write failure occurs.
