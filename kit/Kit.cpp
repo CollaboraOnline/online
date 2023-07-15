@@ -3333,4 +3333,13 @@ void dump_kit_state()
     LOG_TRC(msg);
 }
 
+#if defined __GLIBC__
+#  include <malloc.h>
+void dump_malloc_state()
+{
+    malloc_info(0, stderr);
+    fflush(stderr);
+}
+#endif
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
