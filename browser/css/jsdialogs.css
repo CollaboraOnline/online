@@ -1030,6 +1030,15 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin: 5px 0px 5px 5px;
 }
 
+.jsdialog.menubutton[disabled] {
+	background-color: var(--color-background-lighter) !important;
+	color: var(--color-text-lighter) !important;
+}
+
+.jsdialog.menubutton[disabled] .arrow {
+	border-top-color: var(--color-text-lighter);
+}
+
 /* sum button in formulabar */
 .formulabar.menubutton {
 	padding: 0px !important;
