@@ -539,10 +539,22 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 	}
 
+	private increaseScrollBarThickness () : void {
+		this.sectionProperties.scrollBarThickness = 8 * app.roundedDpiScale;
+		this.containerObject.requestReDraw();
+	}
+
+	private decreaseScrollBarThickness () : void {
+		this.sectionProperties.scrollBarThickness = 6 * app.roundedDpiScale;
+		this.containerObject.requestReDraw();
+	}
+
 	private hideVerticalScrollBar (): void {
 		if (this.sectionProperties.mouseIsOnVerticalScrollBar) {
 			this.sectionProperties.mouseIsOnVerticalScrollBar = false;
 			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
+
+			this.decreaseScrollBarThickness();
 
 			if (!(<any>window).mode.isDesktop()) { // On desktop, we don't want to hide the vertical scroll bar.
 				this.sectionProperties.drawVerticalScrollBar = false;
@@ -564,6 +576,14 @@ export class ScrollSection extends CanvasSectionObject {
 			this.sectionProperties.drawVerticalScrollBar = true;
 			this.sectionProperties.mouseIsOnVerticalScrollBar = true;
 			this.sectionProperties.mapPane.style.cursor = 'pointer';
+
+			// Prevent Instant Mouse hover
+			setTimeout(() => {
+				if (this.sectionProperties.mouseIsOnVerticalScrollBar) {
+					this.increaseScrollBarThickness();
+				}
+			}, 100);
+
 			if (!this.containerObject.isDraggingSomething() && !(<any>window).mode.isDesktop())
 				this.containerObject.requestReDraw();
 		}
@@ -573,6 +593,8 @@ export class ScrollSection extends CanvasSectionObject {
 		if (this.sectionProperties.mouseIsOnHorizontalScrollBar) {
 			this.sectionProperties.mouseIsOnHorizontalScrollBar = false;
 			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
+
+			this.decreaseScrollBarThickness();
 
 			if (!(<any>window).mode.isDesktop()) {
 				this.sectionProperties.drawHorizontalScrollBar = false;
@@ -594,6 +616,14 @@ export class ScrollSection extends CanvasSectionObject {
 			this.sectionProperties.drawHorizontalScrollBar = true;
 			this.sectionProperties.mouseIsOnHorizontalScrollBar = true;
 			this.sectionProperties.mapPane.style.cursor = 'pointer';
+
+			// Prevent Instant Mouse hover
+			setTimeout(() => {
+				if (this.sectionProperties.mouseIsOnHorizontalScrollBar) {
+					this.increaseScrollBarThickness();
+				}
+			}, 100);
+
 			if (!this.containerObject.isDraggingSomething() && !(<any>window).mode.isDesktop())
 				this.containerObject.requestReDraw();
 		}
