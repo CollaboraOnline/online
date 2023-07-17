@@ -6624,7 +6624,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (this._debugDeltas)
 					window.app.console.log('Restoring a tile from cached delta at ' +
 							       this._tileCoordsToKey(tile.coords));
-				this._applyDelta(tile, tile.rawDeltas, true);
+				this._applyDelta(tile, tile.rawDeltas, true, false);
 			}
 		}
 		tile.lastRendered = now;
@@ -6799,7 +6799,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		return resultu8;
 	},
 
-	_applyDelta: function(tile, rawDelta, isKeyframe) {
+	_applyDelta: function(tile, rawDelta, isKeyframe, wireMessage) {
 		if (this._debugDeltas)
 			window.app.console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
 					       ' of length ' + rawDelta.length +
@@ -6811,19 +6811,24 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!ctx) // out of canvas / texture memory.
 			return;
 
-		if (isKeyframe)
+		// if re-creating a canvas from rawDeltas don't update counts
+		if (wireMessage)
 		{
-			tile.loadCount++;
-			tile.deltaCount = 0;
-			tile.updateCount = 0;
+			if (isKeyframe)
+			{
+				tile.loadCount++;
+				tile.deltaCount = 0;
+				tile.updateCount = 0;
+			}
+			else if (rawDelta.length === 0)
+			{
+				tile.updateCount++;
+				return; // that was easy
+			}
+			else
+				tile.deltaCount++;
 		}
-		else if (rawDelta.length === 0)
-		{
-			tile.updateCount++;
-			return; // that was easy
-		}
-		else
-			tile.deltaCount++;
+		// else - re-constituting from tile.rawData
 
 		var traceEvent = app.socket.createCompleteTraceEvent('L.CanvasTileLayer.applyDelta',
 								     { keyFrame: isKeyframe, length: rawDelta.length });
@@ -7093,7 +7098,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// updates don't need more chattiness with a tileprocessed
 		if (hasContent)
 		{
-			this._applyDelta(tile, img.rawData, img.isKeyframe);
+			this._applyDelta(tile, img.rawData, img.isKeyframe, true);
 			this._tileReady(coords);
 		}
 
