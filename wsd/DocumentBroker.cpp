@@ -4082,6 +4082,8 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  lastModifyActivityTime: " << Util::getTimeForLog(now, _lastModifyActivityTime);
     os << "\n  haveModifyActivityAfterSaveRequest: " << haveModifyActivityAfterSaveRequest();
     os << "\n  isViewFileExtension: " << _isViewFileExtension;
+    os << "\n  last quarantined version: "
+       << (_quarantine ? _quarantine->lastQuarantinedFilePath() : "<unavailable>");
 
     if (_limitLifeSeconds > std::chrono::seconds::zero())
         os << "\n  life limit in seconds: " << _limitLifeSeconds.count();
