@@ -648,7 +648,7 @@ class TilesSection extends CanvasSectionObject {
 				'nviewid: ' + tile.viewId,
 				'invalidates: ' + tile.invalidateCount,
 				'tile: ' + tile.loadCount + ' \u0394: ' + tile.deltaCount + ' upd: ' + tile.updateCount,
-				'misses: ' + tile.missingContent,
+				'misses: ' + tile.missingContent + ' gce: ' + tile.gcErrors,
 				'dlta size/kB: ' + ((tile.rawDeltas ? tile.rawDeltas.length : 0)/1024).toFixed(2)
 			];
 // FIXME: generate metrics of how long a tile has been visible & invalid for.

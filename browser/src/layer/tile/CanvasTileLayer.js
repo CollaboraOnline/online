@@ -876,6 +876,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Tile garbage collection counter
 		this._gcCounter = 0;
 
+		// Queue of tiles which were GC'd earlier than coolwsd expected
+		this._fetchKeyframeQueue = [];
+
 		// Position and size of the selection start (as if there would be a cursor caret there).
 
 		// View cursors with viewId to 'cursor info' mapping
@@ -1515,6 +1518,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			deltaCount: 0, // how many deltas on top of the keyframe
 			updateCount: 0, // how many updates did we have
 			loadCount: 0, // how many times did we get a new keyframe
+			gcErrors: 0, // count freed keyframe in JS, but kept in wsd.
 			missingContent: 0, // how many times rendered without content
 			invalidateCount: 0, // how many invalidations touched this tile
 			viewId: 0, // canonical view id
@@ -7051,15 +7055,25 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (tile.invalidFrom == tile.wireId)
 			window.app.console.debug('Nasty - updated wireId matches old one');
 
+		var hasContent = true;
+
 		// obscure case: we could have garbage collected the
-		// keyframe content and now just have a delta with nothing
-		// to apply it to; if so, mark it bad to re-fetch.
+		// keyframe content in JS but coolwsd still thinks we have
+		// it and now we just have a delta with nothing to apply
+		// it to; if so, mark it bad to re-fetch.
 		if (img && !img.isKeyframe && !tile.hasKeyframe())
 		{
 			window.app.console.debug('Unusual: Delta sent - but we have no keyframe for ' + key);
 			// force keyframe
 			tile.wireId = 0;
 			tile.invalidFrom = 0;
+			tile.gcErrors++;
+
+			// queue a later fetch of this and any other
+			// rogue tiles in this state
+			this._fetchKeyframeQueue.push(coords);
+
+			hasContent = false;
 		}
 
 		if (this._debug) {
@@ -7078,8 +7092,11 @@ L.CanvasTileLayer = L.Layer.extend({
 		L.Log.log(textMsg, 'INCOMING', key);
 
 		// updates don't need more chattiness with a tileprocessed
-		this._applyDelta(tile, img.rawData, img.isKeyframe);
-		this._tileReady(coords);
+		if (hasContent)
+		{
+			this._applyDelta(tile, img.rawData, img.isKeyframe);
+			this._tileReady(coords);
+		}
 
 		// Queue acknowledgment, that the tile message arrived
 		var mode = (tileMsgObj.mode !== undefined) ? tileMsgObj.mode : 0;
@@ -7094,6 +7111,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		// FIXME: new multi-tile-processed message.
 		for (var i = 0; i < toSend.length; i++) {
 			app.socket.sendMessage('tileprocessed tile=' + toSend[i]);
+		}
+		if (this._fetchKeyframeQueue.length > 0)
+		{
+			window.app.console.warn('re-fetching prematurely GCd keyframes');
+			this._sendTileCombineRequest(this._fetchKeyframeQueue);
+			this._fetchKeyframeQueue = [];
 		}
 	},
 
