@@ -6523,6 +6523,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			tile.canvas.height = 0;
 			delete tile.canvas;
 		}
+		if (tile.imgDataCache)
+			tile.imgDataCache = null;
 	},
 
 	_removeTile: function (key) {
@@ -6703,6 +6705,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					if (this._debugDeltas)
 						window.app.console.log('Reclaim delta ' + key + ' memory: ' +
 								       tile.rawDeltas.length + ' bytes');
+					this._reclaimTileCanvasMemory(tile);
 					tile.rawDeltas = null;
 					// force keyframe
 					tile.wireId = 0;
