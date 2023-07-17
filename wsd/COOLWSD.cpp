@@ -4247,10 +4247,7 @@ private:
                       << tag << "] on request to URL: " << request.getURI());
 
             // we got the wrong request.
-            http::Response httpResponse(http::StatusCode::BadRequest);
-            httpResponse.set("Content-Length", "0");
-            socket->sendAndShutdown(httpResponse);
-            socket->ignoreInput();
+            HttpHelper::sendErrorAndShutdown(400, socket, "wrong server");
             return;
         }
 
