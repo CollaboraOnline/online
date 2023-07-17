@@ -6527,8 +6527,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			tile.canvas.height = 0;
 			delete tile.canvas;
 		}
-		if (tile.imgDataCache)
-			tile.imgDataCache = null;
+		tile.imgDataCache = null;
 	},
 
 	_removeTile: function (key) {
@@ -6805,6 +6804,13 @@ L.CanvasTileLayer = L.Layer.extend({
 			window.app.console.log('Applying a raw ' + (isKeyframe ? 'keyframe' : 'delta') +
 					       ' of length ' + rawDelta.length +
 					       (this._debugDeltasDetail ? (' hex: ' + hex2string(rawDelta)) : ''));
+
+		// Important to recurse & re-constitute from tile.rawDeelts
+		// before appending rawDelta and then applying it again.
+		var ctx = this._ensureContext(tile);
+		if (!ctx) // out of canvas / texture memory.
+			return;
+
 		if (isKeyframe)
 		{
 			tile.loadCount++;
@@ -6861,10 +6867,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		var allDeltas = window.fzstd.decompress(rawDelta);
 
 		var imgData;
-		var ctx = this._ensureContext(tile);
-
-		if (!ctx) // out of canvas / texture memory.
-			return;
 
 		// May have been changed by _ensureContext garbage collection
 		var canvas = tile.canvas;
