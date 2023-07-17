@@ -6677,9 +6677,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (tile.canvas)
 				canvasKeys.push(keys[i]);
 			totalSize += tile.rawDeltas ? tile.rawDeltas.length : 0;
-			// unconditionally ditch any imgData cache entries if the tile isn't current
-			if (!tile.current && tile.imgDataCache)
-				tile.imgDataCache = null;
 		}
 
 		// Trim ourselves down to size.
@@ -6703,7 +6700,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			{
 				var key = keys[i];
 				var tile = this._tiles[key];
-				if (tile.rawDeltas)
+				if (tile.rawDeltas && !tile.current)
 				{
 					totalSize -= tile.rawDeltas.length;
 					if (this._debugDeltas)
