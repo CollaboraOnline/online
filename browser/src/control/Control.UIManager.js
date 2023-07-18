@@ -1057,6 +1057,13 @@ L.Control.UIManager = L.Control.extend({
 				that.closeModal(dialogId);
 			}}
 		], cancelButtonId);
+		if (!buttonText && !withCancel) {
+			// if no buttons better to set tabIndex to negative so the element is not reachable via sequential keyboard navigation but can be focused programatically
+			document.getElementById(dialogId).tabIndex = -1;
+			// We hid the OK button, we need to set focus manually on the popup.
+			document.getElementById(dialogId).focus();
+			document.getElementById(dialogId).className += ' focus-hidden';
+		}
 	},
 
 	/// buttonObjectList: [{id: button's id, text: button's text, ..other properties if needed}, ...]

@@ -27,6 +27,9 @@
 	/* Annotations */
 	--annotation-input-size: 100px;
 }
+.focus-hidden:focus {
+	outline: none;
+}
 
 .access-key {
 	text-decoration: none;

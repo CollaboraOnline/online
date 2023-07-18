@@ -74,8 +74,6 @@ class IdleHandler {
 
 		this.map.uiManager.showInfoModal('inactive_user_message');
 		document.getElementById('inactive_user_message').textContent = message;
-		document.getElementById('inactive_user_message').tabIndex = 0;
-		document.getElementById('inactive_user_message').focus(); // We hid the OK button, we need to set focus manually on the popup.
 
 		if (message === '') {
 			document.getElementById(this.map.uiManager.generateModalId('inactive_user_message')).style.display = 'none';

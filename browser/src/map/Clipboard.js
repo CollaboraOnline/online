@@ -895,8 +895,6 @@ L.Clipboard = L.Class.extend({
 
 		this._map.uiManager.showInfoModal('large_copy_paste_warning');
 		document.getElementById('large_copy_paste_warning').innerHTML = this._substProductName(msg);
-		document.getElementById('large_copy_paste_warning').tabIndex = 0;
-		document.getElementById('large_copy_paste_warning').focus(); // We hid the OK button, we need to set focus manually on the popup.
 	},
 
 	_warnLargeCopyPasteAlreadyStarted: function () {
