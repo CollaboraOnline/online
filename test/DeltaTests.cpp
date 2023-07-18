@@ -280,6 +280,18 @@ void DeltaTests::testRle()
         LOK_ASSERT_EQUAL(data[i], it.getPixel());
         it.next();
     }
+
+    const uint32_t empty[256] = { 0, };
+    DeltaGenerator::DeltaBitmapRow rowc;
+    rowc.initRow(empty, 256);
+    LOK_ASSERT(!rowa.identical(rowc));
+    LOK_ASSERT(!rowb.identical(rowc));
+    DeltaGenerator::DeltaBitmapRow::PixIterator it2(rowc);
+    for (uint32_t i = 0; i < 256; ++i)
+    {
+        LOK_ASSERT_EQUAL(empty[i], it2.getPixel());
+        it2.next();
+    }
 }
 
 void DeltaTests::testRleComplex()
