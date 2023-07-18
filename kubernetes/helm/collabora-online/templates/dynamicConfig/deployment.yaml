@@ -96,7 +96,7 @@ spec:
         - name: config
           configMap:
           {{- if .Values.dynamicConfig.existingConfigMap.enabled }}
-            name: {{- .Values.dynamicConfig.existingConfigMap.name }}
+            name: {{ .Values.dynamicConfig.existingConfigMap.name }}
           {{- else }}
             name: {{ include "collabora-online.fullname" . }}-dynconfig
           {{- end }}
