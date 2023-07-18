@@ -28,7 +28,9 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	hasDialogOpened: function() {
-		return Object.keys(this.dialogs).length > 0;
+		return Object.keys(this.dialogs)
+			.filter(function (key) { return key != 'snackbar'; })
+			.length > 0;
 	},
 
 	clearDialog: function(id) {
