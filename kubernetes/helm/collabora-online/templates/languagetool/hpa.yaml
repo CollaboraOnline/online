@@ -1,0 +1,32 @@
+{{- if and .Values.languagetool.enabled .Values.languagetool.autoscaling.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "collabora-online.fullname" . }}-languagetool
+  labels:
+    {{- include "collabora-online.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "collabora-online.fullname" . }}-languagetool
+  minReplicas: {{ .Values.languagetool.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.languagetool.autoscaling.maxReplicas }}
+  metrics:
+    {{- with .Values.languagetool.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ . }}
+    {{- end }}
+    {{- with .Values.languagetool.autoscaling.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ . }}
+    {{- end }}
+{{- end }}

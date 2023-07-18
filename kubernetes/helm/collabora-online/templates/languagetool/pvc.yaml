@@ -1,0 +1,30 @@
+{{- if and
+  .Values.languagetool.enabled
+  .Values.languagetool.ngram.enabled 
+  .Values.languagetool.ngram.persistence.enabled
+  (not .Values.languagetool.ngram.persistence.existingClaim)
+ -}}
+{{- with .Values.languagetool.ngram.persistence }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "collabora-online.fullname" $ }}-language-tool-ngram
+  labels:
+    {{- include "collabora-online.labels" $ | nindent 4 }}
+  {{- with .annotations }}
+  annotations:
+    {{ toYaml . | indent 4 }}
+  {{- end }}
+spec:
+  accessModes:
+    - "{{ .accessMode }}"
+  resources:
+    requests:
+      storage: "{{ .size }}"
+  {{- if (eq "-" .storageClass) }}
+  storageClassName: ""
+  {{- else }}
+  storageClassName: "{{ .storageClass }}"
+  {{- end }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,25 @@
+{{- if .Values.languagetool.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "collabora-online.fullname" . }}-languagetool
+  labels:
+    {{- include "collabora-online.labels" . | nindent 4 }}
+    type: languagetool
+spec:
+  type: {{ .Values.languagetool.service.type }}
+  ports:
+    - port: {{ .Values.languagetool.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  {{- if .Values.languagetool.metrics.enabled }}
+    - port: 9301
+      targetPort: metrics
+      protocol: TCP
+      name: metrics
+  {{- end }}
+  selector:
+    {{- include "collabora-online.selectorLabels" . | nindent 4 }}
+    type: languagetool
+{{- end }}
