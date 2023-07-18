@@ -559,10 +559,15 @@ class CanvasSectionContainer {
 		this.clearColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas');
 		// Set document background color to the app background color for now until we get the real color from the kit
 		// through a LOK_CALLBACK_DOCUMENT_BACKGROUND_COLOR
-		this.documentBackgroundColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-canvas');
+		this.documentBackgroundColor = window.getComputedStyle(document.documentElement).getPropertyValue('--color-background-document');
 
-		if (disableDrawing)
+		// If CanvasTileLayer.js:this._layer.isCalc()
+		if (disableDrawing) {
+			// On Calc cells have no color, so let's set canvas color with document bg
+			this.clearColor = this.documentBackgroundColor;
+
 			this.disableDrawing();
+		}
 	}
 
 	private clearCanvas() {
