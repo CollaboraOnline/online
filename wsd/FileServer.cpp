@@ -994,6 +994,7 @@ constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 
 static const std::string ACCESS_TOKEN = "%ACCESS_TOKEN%";
 static const std::string ACCESS_TOKEN_TTL = "%ACCESS_TOKEN_TTL%";
+static const std::string ACCESS_HEADER = "%ACCESS_HEADER%";
 
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
@@ -1051,6 +1052,8 @@ public:
         LOG_TRC("Field ["
                 << "access_token_ttl"
                 << "] for var [" << ACCESS_TOKEN_TTL << "] = [" << tokenTtl << ']');
+
+        extractVariable(form, "access_header", ACCESS_HEADER);
     }
 
     const std::string& operator[](const std::string& key) const
@@ -1085,8 +1088,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     const UserRequestVars urv(request, form);
 
-    const std::string accessHeader = form.get("access_header", "");
-    LOG_TRC("access_header=" << accessHeader);
     const std::string uiDefaults = form.get("ui_defaults", "");
     LOG_TRC("ui_defaults=" << uiDefaults);
     const std::string cssVars = form.get("css_variables", "");
@@ -1109,7 +1110,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     // Escape bad characters in access token.
     // This is placed directly in javascript in cool.html, we need to make sure
     // that no one can do anything nasty with their clever inputs.
-    const std::string escapedAccessHeader = Util::encodeURIComponent(accessHeader, "'");
     const std::string escapedPostmessageOrigin = Util::encodeURIComponent(postMessageOrigin, "'");
 
     std::string socketProxy = "false";
@@ -1124,7 +1124,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     Poco::replaceInPlace(preprocess, ACCESS_TOKEN, urv[ACCESS_TOKEN]);
     Poco::replaceInPlace(preprocess, ACCESS_TOKEN_TTL, urv[ACCESS_TOKEN_TTL]);
-    Poco::replaceInPlace(preprocess, std::string("%ACCESS_HEADER%"), escapedAccessHeader);
+    Poco::replaceInPlace(preprocess, ACCESS_HEADER, urv[ACCESS_HEADER]);
     Poco::replaceInPlace(preprocess, std::string("%HOST%"), cnxDetails.getWebSocketUrl());
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(COOLWSD_VERSION_HASH));
     Poco::replaceInPlace(preprocess, std::string("%COOLWSD_VERSION%"), std::string(COOLWSD_VERSION));
