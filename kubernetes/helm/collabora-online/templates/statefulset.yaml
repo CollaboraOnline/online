@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "collabora-online.labels" . | nindent 4 }}
 spec:
-  serviceName: "collabora"
+  serviceName: {{ include "collabora-online.fullname" . }}
   minReadySeconds: {{ .Values.deployment.minReadySeconds }}
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
