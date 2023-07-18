@@ -41,11 +41,6 @@
 	min-width: 400px;
 }
 
-img.ui-drawing-area {
-	width: -webkit-fill-available;
-	width: -moz-available;
-}
-
 .jsdialog.one-child-popup {
 	border: 0;
 	margin: 0 !important;
@@ -205,6 +200,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	overflow: auto;
 	max-height: 500px;
 	max-width: 700px;
+	width: max-content;
 }
 
 /* AccessibilityCheckDialog hack to prevent huge height in Firefox */
@@ -1529,9 +1525,4 @@ div [id^='TemplateDialog'] {
 
 #CharacterPropertiesDialog {
 	min-width: 656px;
-}
-
-/* Spellchecking dialog */
-#suggestionslb {
-	min-width: 540px;
 }
