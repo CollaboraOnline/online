@@ -30,3 +30,10 @@ maintainers:
   - name: "Geno"
     email: "geno+dev@fireorbit.de"
     url: "https://fireorbit.de"
+
+annotations:
+  artifacthub.io/images: |
+    - name: collabora
+      image: docker.io/collabora/code:23.05.1.2.1
+    - name: nginx
+      image: docker.io/nginx:1.23
