@@ -74,31 +74,53 @@ class DeltaGenerator {
         class PixIterator final
         {
             const DeltaBitmapRow &_row;
-            unsigned int _x;
-            const uint32_t *_rlePtr;
+            unsigned int _nMask; // which mask to operate on
+            uint32_t _lastPix; // last pixel (or possibly plain alpha)
+            uint64_t _lastMask; // holding slot for mask
+            uint64_t _bitToCheck; // which bit should we check.
+            const uint32_t *_rlePtr; // next pixel to read
+            const uint32_t *_endRleData; // end of pixel data
         public:
             PixIterator(const DeltaBitmapRow &row)
-                : _row(row), _x(0),
-                  _rlePtr(row._rleData)
+                : _row(row), _nMask(0),
+                  _lastPix(0x00000000),
+                  _lastMask(0),
+                  _bitToCheck(0),
+                  _rlePtr(row._rleData),
+                  _endRleData(row._rleData + row._rleSize)
             {
+                next();
             }
             uint32_t getPixel() const
             {
-                return *_rlePtr;
+                return _lastPix;
             }
             bool identical(const PixIterator &i) const
             {
-                return getPixel() == i.getPixel();
+                return _lastPix == i._lastPix;
             }
             void next()
             {
-                _x++;
-                size_t rleMaskIndex = _x >> 6;
-                if (rleMaskIndex >= _rleMaskUnits || !(_row._rleMask[rleMaskIndex] & (uint64_t(1) << (_x & 63))))
-                    _rlePtr++;
+                // already at end
+                if (_rlePtr == _endRleData)
+                    return;
+
+                if (!_bitToCheck)
+                { // slow path
+                    if (_nMask < 4)
+                        _lastMask = _row._rleMask[_nMask++];
+                    else
+                        _lastMask = 0xffffffffffffffff;
+                    _bitToCheck = 1;
+                }
+
+                // fast path
+                if (!(_lastMask & _bitToCheck))
+                    _lastPix = *(_rlePtr++);
+
+                _bitToCheck <<= 1;
             }
         };
-
 
         DeltaBitmapRow()
             : _rleSize(0)
@@ -123,19 +145,56 @@ class DeltaGenerator {
         {
             uint32_t scratch[width];
 
-            unsigned int outp = 0;
-            scratch[0] = from[0];
-            _rleMask[0] = 1;
-            for (unsigned int x = 1; x < width; ++x)
+            uint32_t lastPix = 0x00000000; // transparency
+            unsigned int x = 0, outp = 0;
+            for (unsigned int nMask = 0; nMask < 4; ++nMask)
             {
-                if (from[x] == scratch[outp]) // set for run
-                    _rleMask[x>>6] |= uint64_t(1) << (x & 63);
+                uint64_t rleMask = 0;
+                uint64_t bitToSet = 1;
+                if (width - x > 64)
+                {
+                    // simplified inner loop for 64bit chunks
+                    for (; bitToSet; ++x, bitToSet <<= 1)
+                    {
+                        if (from[x] == lastPix)
+                            rleMask |= bitToSet;
+                        else
+                        {
+                            lastPix = from[x];
+                            scratch[outp++] = lastPix;
+                        }
+                    }
+                }
                 else
-                    scratch[++outp] = from[x];
+                {
+                    // slower inner loop for odd lengths
+                    for (; x < width; ++x, bitToSet <<= 1)
+                    {
+                        if (from[x] == lastPix)
+                            rleMask |= bitToSet;
+                        else
+                        {
+                            lastPix = from[x];
+                            scratch[outp++] = lastPix;
+                        }
+                    }
+                }
+                _rleMask[nMask] = rleMask;
             }
-            _rleSize = ++outp;
-            _rleData = (uint32_t *)malloc((size_t)_rleSize * 4);
-            memcpy(_rleData, scratch, _rleSize * 4);
+            if (x < width)
+            {
+                memcpy(scratch + outp, from + x, (width - x) * 4);
+                outp += width-x;
+            }
+
+            _rleSize = outp;
+            if (outp > 0)
+            {
+                _rleData = (uint32_t *)malloc((size_t)_rleSize * 4);
+                memcpy(_rleData, scratch, _rleSize * 4);
+            }
+            else
+                _rleData = nullptr;
         }
 
         bool identical(const DeltaBitmapRow &other) const
@@ -143,6 +202,10 @@ class DeltaGenerator {
             if (_rleSize != other._rleSize)
                 return false;
             if (memcmp(_rleMask, other._rleMask, sizeof(_rleMask)))
+                return false;
+            if (!_rleData && !other._rleData)
+                return true;
+            if (!_rleData || !other._rleData)
                 return false;
             return !std::memcmp(_rleData, other._rleData, _rleSize * 4);
         }
