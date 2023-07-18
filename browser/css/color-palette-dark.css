@@ -12,6 +12,7 @@
 	--color-text-lighter: #fff; /* secondard text, disabled */
 
 	--color-canvas: #121212;
+	--color-background-document: #121212;
 	--color-main-background: #121212;
 	--color-background-dark: #1E1E1E;  /* select */
 	--color-background-darker: #000;  /* todo: apply to pressed (active), li:hover(top menu on classic mode)*/
