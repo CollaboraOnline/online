@@ -312,7 +312,7 @@ var NotebookbarAccessibility = function() {
 		container.style.overflow = 'hidden';
 		container.appendChild(this.accessibilityInputElement);
 
-		document.body.appendChild(container);
+		document.body.insertBefore(container, document.body.firstChild);
 	};
 
 	this.initialize = function() {
