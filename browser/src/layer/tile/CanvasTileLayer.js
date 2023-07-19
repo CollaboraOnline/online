@@ -6211,7 +6211,15 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (queue.length !== 0)
 			this._addTiles(queue);
 
-		if (this.isCalc() || this.isWriter()) {
+		if (this.isCalc() || this.isWriter())
+			this._initPreFetchAdjacentTiles(pixelBounds, zoom);
+	},
+
+	_initPreFetchAdjacentTiles: function (pixelBounds, zoom) {
+		if (this._adjacentTilePreFetcher)
+			clearTimeout(this._adjacentTilePreFetcher);
+
+		this._adjacentTilePreFetcher = setTimeout(function() {
 			// Extend what we request to include enough to populate a full
 			// scroll after or before the current viewport
 			//
@@ -6228,7 +6236,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			pixelTopLeft.y += pixelHeight;
 			pixelBottomRight.y += pixelPrevNextHeight;
 			pixelBounds = new L.Bounds(pixelTopLeft, pixelBottomRight);
-			queue = this._getMissingTiles(pixelBounds, zoom);
+			var queue = this._getMissingTiles(pixelBounds, zoom);
 
 			pixelTopLeft.y -= pixelHeight + pixelPrevNextHeight;
 			pixelBottomRight.y -= pixelHeight + pixelPrevNextHeight;
@@ -6237,7 +6245,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			if (queue.length !== 0)
 				this._addTiles(queue);
-		}
+
+		}.bind(this), 100 /*ms*/);
 	},
 
 	_sendClientVisibleArea: function (forceUpdate) {
