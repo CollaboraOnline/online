@@ -76,11 +76,11 @@
 }
 
 #tb_actionbar_item_prev .w2ui-icon.prev {
-	background: url('images/lc_prevrecord.svg') no-repeat center/24px !important;
+	background: url('images/lc_prevrecord.svg') no-repeat center/24px;
 }
 
 #tb_actionbar_item_next .w2ui-icon.next {
-	background: url('images/lc_nextrecord.svg') no-repeat center/24px !important;
+	background: url('images/lc_nextrecord.svg') no-repeat center/24px;
 }
 
 .w2ui-icon-check:before {
@@ -1318,11 +1318,11 @@ button.leaflet-control-search-next
 [data-theme='dark'] .w2ui-icon.frame12 { background: url('images/dark/fr012.svg') no-repeat center; }
 
 [data-theme='dark'] #tb_actionbar_item_prev .w2ui-icon.prev {
-	background: url('images/dark/lc_prevrecord.svg') no-repeat center/24px !important;
+	background: url('images/dark/lc_prevrecord.svg') no-repeat center/24px;
 }
 
 [data-theme='dark'] #tb_actionbar_item_next .w2ui-icon.next {
-	background: url('images/dark/lc_nextrecord.svg') no-repeat center/24px !important;
+	background: url('images/dark/lc_nextrecord.svg') no-repeat center/24px;
 }
 
 .inserttable-pop {
