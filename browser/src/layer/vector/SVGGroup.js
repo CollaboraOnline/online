@@ -57,8 +57,10 @@ L.SVGGroup = L.Layer.extend({
 	addEmbeddedVideo: function(svgString) {
 		var svgDoc = this.parseSVG(svgString);
 
-		if (svgDoc.lastChild.localName !== 'foreignObject')
+		if (svgDoc.lastChild.localName !== 'foreignObject') {
+			console.error('Failed to parse svg for embedded video');
 			return;
+		}
 
 		var svgLastChild = svgDoc.lastChild;
 

@@ -2173,7 +2173,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// proxy cannot identify RouteToken if it is encoded
 		var routeTokenIndex = videoDesc.url.indexOf('%26RouteToken=');
 		if (routeTokenIndex != -1) {
-			videoDesc.url = videoDesc.url.replace('%26RouteToken=', '&RouteToken=');
+			videoDesc.url = videoDesc.url.replace('%26RouteToken=', '&amp;RouteToken=');
 		}
 
 		var videoToInsert = '<?xml version="1.0" encoding="UTF-8"?>\
