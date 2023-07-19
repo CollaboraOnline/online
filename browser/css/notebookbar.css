@@ -331,6 +331,11 @@ button.ui-tab.notebookbar {
 	float: inline-start;
 }
 
+/* adding focus to tab in notebookbar */
+.ui-tab.selected.notebookbar.add-focus-to-tab {
+	border: 2px solid black !important
+}
+
 /* unobuttons with inline labels */
 
 .inline.notebookbar {

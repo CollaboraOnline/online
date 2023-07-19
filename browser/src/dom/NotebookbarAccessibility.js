@@ -119,12 +119,14 @@ var NotebookbarAccessibility = function() {
 	};
 
 	this.onInputFocus = function() {
+		this.addTabFocus();
 		document.body.classList.add('activate-info-boxes');
 	};
 
 	this.onInputBlur = function() {
 		document.body.classList.remove('activate-info-boxes');
 		app.map._textInput._abortComposition({ type: 'Notebookbar Accessibility' });
+		this.removeFocusFromTab();
 	};
 
 	this.isAllFilteredOut = function() {
@@ -185,8 +187,9 @@ var NotebookbarAccessibility = function() {
 		if (this.filteredItem !== null) {
 			var element = document.getElementById(this.filteredItem.id);
 			if (element) {
+				this.removeFocusFromTab();
 				element.click();
-
+				this.addTabFocus();
 				if (this.state === 0) {
 					this.setupAcceleratorsForCurrentTab(element.id);
 					this.combination = null;
@@ -195,13 +198,37 @@ var NotebookbarAccessibility = function() {
 					this.state = 1;
 				}
 				else if (this.filteredItem.focusBack === true) {
-					app.map.focus();
+					this.focusToMap();
 				}
 			}
 			this.filteredItem = null;
 		}
 		else
-			app.map.focus();
+			this.focusToMap();
+	};
+
+	this.addTabFocus = function() {
+		var element = this.getCurrentSelectedTab();
+		if (element) {
+			element.classList.add('add-focus-to-tab');
+		}
+	};
+
+	this.removeFocusFromTab = function() {
+		var element = this.getCurrentSelectedTab();
+		if (element) {
+			element.classList.remove('add-focus-to-tab');
+		}
+	};
+
+	this.focusToMap = function () {
+		app.map.focus();
+		this.mayShowAcceleratorInfoBoxes = false;
+		this.removeFocusFromTab();
+	};
+
+	this.getCurrentSelectedTab = function() {
+		return document.querySelector('button.ui-tab.notebookbar.selected');
 	};
 
 	this.resetState = function() {
@@ -220,7 +247,7 @@ var NotebookbarAccessibility = function() {
 
 		if (key === 'ESCAPE' || key === 'ALT') {
 			if (this.combination === null)
-				app.map.focus();
+				this.focusToMap();
 			else {
 				this.resetState();
 			}
@@ -229,8 +256,10 @@ var NotebookbarAccessibility = function() {
 			return; // Ignore shift key.
 		else if (key === 'ARROWUP') {
 			// Try to set focus on tab button.
-			if (this.activeTabPointers.id)
+			if (this.activeTabPointers.id) {
+				this.removeFocusFromTab();
 				document.getElementById(this.activeTabPointers.id).focus();
+			}
 		}
 		else if (key === 'ARROWDOWN') {
 			// Try to set focus on the first button of the tab content.
@@ -238,11 +267,18 @@ var NotebookbarAccessibility = function() {
 				for (var i = 0; i < this.activeTabPointers.contentList.length; i++) {
 					var element = document.getElementById(this.activeTabPointers.contentList[i].id);
 					if (element.tabIndex >= 0) {
+						this.removeFocusFromTab();
 						element.focus();
 						break;
 					}
 				}
 			}
+		}
+		else if (key === 'ARROWRIGHT') {
+			this.getNextTab('right');
+		}
+		else if (key === 'ARROWLEFT') {
+			this.getNextTab('left');
 		}
 		else {
 			if (this.combination === null) {
@@ -259,8 +295,28 @@ var NotebookbarAccessibility = function() {
 				this.clickOnFilteredItem();
 			// So we checked the pressed key against available combinations. If there is no match, focus back to map.
 			if (this.isAllFilteredOut() === true)
-				app.map.focus();
+				this.focusToMap();
 		}
+	};
+
+	this.getNextTab = function(move) {
+		var currentSelectedTab = this.getCurrentSelectedTab();
+		var isLeftMovement = move === 'left'? true : false;
+		var tab = isLeftMovement ? currentSelectedTab.previousElementSibling : currentSelectedTab.nextElementSibling;
+		if (!tab) {
+			var tabs = document.querySelectorAll('.ui-tab.notebookbar:not(.hidden)');
+			tab = isLeftMovement ? tabs[tabs.length - 1] : tabs[0];
+		}
+		while (tab) {
+			if (!tab.classList.contains('hidden')) {
+				// Found the next element without the "hidden" class
+				break;
+			}
+			tab = isLeftMovement ? tab.previousElementSibling : tab.nextElementSibling;
+		}
+		this.removeFocusFromTab();
+		tab.click();
+		tab.focus();
 	};
 
 	this.removeAllInfoBoxes = function() {
@@ -294,6 +350,12 @@ var NotebookbarAccessibility = function() {
 						this.setupAcceleratorsForCurrentTab(element.id);
 					}
 				}.bind(this));
+				element.addEventListener('keydown', function(event) {
+					if (event.key === 'Alt') {
+					  // focus back to document
+					  this.focusToMap();
+					}
+				  }.bind(this));
 			}
 		}.bind(this));
 	};
