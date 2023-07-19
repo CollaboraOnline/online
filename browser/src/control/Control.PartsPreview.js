@@ -395,7 +395,6 @@ L.Control.PartsPreview = L.Control.extend({
 		if (i === 0 || (previewFrameTop >= topBound && previewFrameTop <= bottomBound)
 			|| (previewFrameBottom >= topBound && previewFrameBottom <= bottomBound)) {
 			imgSize = this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate, fetchThumbnail: this.options.fetchThumbnail});
-			img.fetched = true;
 
 			if (this._direction === 'x') {
 				L.DomUtil.setStyle(img, 'width', '');
@@ -624,8 +623,10 @@ L.Control.PartsPreview = L.Control.extend({
 			this._map._processPreviewQueue();
 			if (!this._previewInitialized)
 				return;
-			if (this._previewTiles[e.id])
+			if (this._previewTiles[e.id]) {
 				this._previewTiles[e.id].src = e.tile.src;
+				this._previewTiles[e.id].fetched = true;
+			}
 		}
 	},
 
@@ -675,12 +676,10 @@ L.Control.PartsPreview = L.Control.extend({
 					if (this._direction === 'x') {
 						if ((previewFrameBB.left >= topBound && previewFrameBB.left <= bottomBound)
 						|| (previewFrameBB.right >= topBound && previewFrameBB.right <= bottomBound)) {
-							img.fetched = true;
 							this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate});
 						}
 					} else if ((previewFrameBB.top >= topBound && previewFrameBB.top <= bottomBound)
 						|| (previewFrameBB.bottom >= topBound && previewFrameBB.bottom <= bottomBound)) {
-						img.fetched = true;
 						this._map.getPreview(i, i, this.options.maxWidth, this.options.maxHeight, {autoUpdate: this.options.autoUpdate});
 					}
 				}
