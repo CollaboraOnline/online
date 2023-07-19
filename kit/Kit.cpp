@@ -1198,10 +1198,8 @@ public:
         }
 
         // merge various callback types together if possible
-        if (type == LOK_CALLBACK_INVALIDATE_TILES ||
-            type == LOK_CALLBACK_DOCUMENT_SIZE_CHANGED)
+        if (type == LOK_CALLBACK_INVALIDATE_TILES)
         {
-            // no point in handling invalidations or page resizes per-view,
             // all views have to be in sync
             tileQueue->put("callback all " + std::to_string(type) + ' ' + payload);
         }
