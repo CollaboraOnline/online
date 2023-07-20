@@ -1005,9 +1005,6 @@ public:
             LOG_DBG("Trimming Core caches");
             _loKit->trimMemory(4096);
 
-            LOG_DBG("Dropping delta caches");
-            _deltaGen.dropCache();
-
             _lastMemTrimTime = std::chrono::steady_clock::now();
         }
     }
