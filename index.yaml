@@ -6,6 +6,46 @@ entries:
         - name: collabora
           image: docker.io/collabora/code:23.05.1.3.1
         - name: nginx
+          image: docker.io/nginx:1.25
+        - name: twostoryrobot/simple-file-upload
+          image: docker.io/twostoryrobot/simple-file-upload@sha256:8648a554c42c81db317bf51fbb59d3ee884f0d4e6e216835a31bf2e6872d4947
+    apiVersion: v2
+    appVersion: 23.05.1.3.1
+    created: "2023-07-20T06:36:22.405267648Z"
+    description: Collabora Online helm chart
+    digest: a9f73351bce180d3efdcd7987456411a037db723ceff2905b3fb4b0c8bc08df6
+    home: https://www.collaboraoffice.com/code/
+    icon: https://avatars0.githubusercontent.com/u/22418908?s=200&v=4
+    keywords:
+    - collabora-online
+    - collabora
+    - code
+    - nextcloud
+    - office
+    maintainers:
+    - email: k.erber@erber-freelance.de
+      name: Klaus Erber
+      url: https://www.erber-freelance.de/
+    - email: martin.mueller@dataport.de
+      name: Martin Müller
+      url: https://dphoenixsuite.de
+    - email: geno+dev@fireorbit.de
+      name: Geno
+      url: https://fireorbit.de
+    name: collabora-online
+    sources:
+    - https://github.com/CollaboraOnline/online
+    - https://github.com/CollaboraOnline/online/tree/master/docker
+    - https://github.com/CollaboraOnline/online/tree/master/kubernetes/helm/collabora-online
+    type: application
+    urls:
+    - https://github.com/CollaboraOnline/online/releases/download/helm-collabora-online-1.1.0/collabora-online-1.1.0.tgz
+    version: 1.1.0
+  - annotations:
+      artifacthub.io/images: |-
+        - name: collabora
+          image: docker.io/collabora/code:23.05.1.3.1
+        - name: nginx
           image: docker.io/nginx:1.23
     apiVersion: v2
     appVersion: 23.05.1.3.1
@@ -71,4 +111,4 @@ entries:
     urls:
     - https://github.com/CollaboraOnline/online/releases/download/helm-collabora-online-1.0.1/collabora-online-1.0.1.tgz
     version: 1.0.1
-generated: "2023-07-18T14:18:40.565244954Z"
+generated: "2023-07-20T06:36:22.405295448Z"
