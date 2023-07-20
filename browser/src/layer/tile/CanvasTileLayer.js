@@ -6246,7 +6246,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (queue.length !== 0)
 				this._addTiles(queue);
 
-		}.bind(this), 100 /*ms*/);
+		}.bind(this), 250 /*ms*/);
 	},
 
 	_sendClientVisibleArea: function (forceUpdate) {
