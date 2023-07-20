@@ -1916,18 +1916,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
-	_scrollIntoViewBlockOption: function(option) {
-		if (option === 'nearest' || option === 'center') {
-			// compatibility with older firefox
-			var match = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./);
-			var firefoxVer = match ? parseInt(match[1]) : 58;
-			var blockOption = firefoxVer >= 58 ? option : 'start';
-			return blockOption;
-		}
-
-		return option;
-	},
-
 	_iconViewControl: function (parentContainer, data, builder) {
 		var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview', parentContainer);
 		container.id = data.id;
@@ -1941,7 +1929,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var firstSelected = $(container).children('.selected').get(0);
-		var blockOption = builder._scrollIntoViewBlockOption('nearest');
+		var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
 		if (firstSelected)
 			firstSelected.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
 
@@ -3245,7 +3233,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (entry) {
 				L.DomUtil.addClass(entry, 'selected');
-				var blockOption = this._scrollIntoViewBlockOption('nearest');
+				var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
 				entry.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
 			} else if (pos != -1)
 				console.warn('not found entry: "' + pos + '" in: "' + data.control_id + '"');
@@ -3560,6 +3548,18 @@ L.Control.JSDialogBuilder.getMenuStructureForMobileWizard = function(menu, mainM
 	}
 
 	return menuStructure;
+};
+
+JSDialog._scrollIntoViewBlockOption = function(option) {
+	if (option === 'nearest' || option === 'center') {
+		// compatibility with older firefox
+		var match = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./);
+		var firefoxVer = match ? parseInt(match[1]) : 58;
+		var blockOption = firefoxVer >= 58 ? option : 'start';
+		return blockOption;
+	}
+
+	return option;
 };
 
 L.control.jsDialogBuilder = function (options) {
