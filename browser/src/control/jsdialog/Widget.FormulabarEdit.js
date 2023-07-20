@@ -99,7 +99,8 @@ function _appendNewLine(cursorLayer) {
 function _appendCursor(cursorLayer) {
 	var cursor = L.DomUtil.create('span', 'cursor');
 	cursorLayer.appendChild(cursor);
-	cursor.scrollIntoView();
+	var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
+	cursor.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
 }
 
 function _setSelection(cursorLayer, text, startX, endX, startY, endY) {
