@@ -253,7 +253,7 @@ window.app = {
 				return true;
 			}
 
-			return L.Browser.mobile && (window.innerWidth < 768 || window.innerHeight < 768);
+			return L.Browser.mobile && (screen.width < 768 || screen.height < 768);
 		},
 		// Mobile device with big screen size.
 		isTablet: function() {
