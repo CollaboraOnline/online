@@ -407,7 +407,7 @@ var brandingLink = document.createElement('link');
 brandingLink.setAttribute("rel", "stylesheet");
 brandingLink.setAttribute("type", "text/css");
 
-var theme_name = document.getElementsByName("theme")[[0]] ? document.getElementsByName("theme")[[0]].value : '';
+var theme_name = '%BRANDING_THEME%';
 var theme_prefix = '';
 if(window.useIntegrationTheme === 'true' && theme_name !== '') {
     theme_prefix = theme_name + '/';
