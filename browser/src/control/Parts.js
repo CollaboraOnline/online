@@ -170,9 +170,14 @@ L.Map.include({
 		if (!this._docPreviews) {
 			this._docPreviews = {};
 		}
+
 		var autoUpdate = options ? !!options.autoUpdate : false;
 		var fetchThumbnail = options && options.fetchThumbnail ? options.fetchThumbnail : true;
 		this._docPreviews[id] = {id: id, index: index, maxWidth: maxWidth, maxHeight: maxHeight, autoUpdate: autoUpdate, invalid: false};
+
+		if (this._docLayer._canonicalViewId == -1) {
+			return;
+		}
 
 		var docLayer = this._docLayer;
 		if (docLayer._docType === 'text') {
@@ -198,7 +203,7 @@ L.Map.include({
 		if (fetchThumbnail) {
 			var mode = docLayer._selectedMode;
 			this._addPreviewToQueue(part, 'tile ' +
-							'nviewid=0' + ' ' +
+							'nviewid=' + this._docLayer._canonicalViewId + ' ' +
 							'part=' + part + ' ' +
 							((mode !== 0) ? ('mode=' + mode + ' ') : '') +
 							'width=' + maxWidth * app.roundedDpiScale + ' ' +
@@ -222,13 +227,18 @@ L.Map.include({
 		if (!this._docPreviews) {
 			this._docPreviews = {};
 		}
+
 		var autoUpdate = options ? options.autoUpdate : false;
 		this._docPreviews[id] = {id: id, part: part, width: width, height: height, tilePosX: tilePosX,
 			tilePosY: tilePosY, tileWidth: tileWidth, tileHeight: tileHeight, autoUpdate: autoUpdate, invalid: false};
 
+		if (this._docLayer._canonicalViewId == -1) {
+			return;
+		}
+
 		var mode = this._docLayer._selectedMode;
 		this._addPreviewToQueue(part, 'tile ' +
-							'nviewid=0' + ' ' +
+							'nviewid=' + this._docLayer._canonicalViewId + ' ' +
 							'part=' + part + ' ' +
 							((mode !== 0) ? ('mode=' + mode + ' ') : '') +
 							'width=' + width * app.roundedDpiScale + ' ' +
