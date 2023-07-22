@@ -969,6 +969,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._mentionText = [];
 
 		this._moveInProgress = false;
+		this._canonicalViewId = -1;
 	},
 
 	_initContainer: function () {
@@ -1385,6 +1386,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (tileCombineQueue.length <= 0)
 			return;
 
+		if (this._canonicalViewId == -1)
+			return;
+
 		// Sort into buckets of consistent part & mode.
 		var partMode = {};
 		for (var i = 0; i < tileCombineQueue.length; ++i)
@@ -1427,7 +1431,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 
 			var msg = 'tilecombine ' +
-			    'nviewid=0 ' +
+			    'nviewid=' + this._canonicalViewId + ' ' +
 			    'part=' + part + ' ' +
 			    ((mode !== 0) ? ('mode=' + mode + ' ') : '') +
 			    'width=' + this._tileWidthPx + ' ' +
@@ -1801,13 +1805,16 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._onFormFieldButtonMsg(textMsg);
 		}
 		else if (textMsg.startsWith('canonicalidchange:')) {
+			var payload = textMsg.substring('canonicalidchange:'.length + 1);
+			var canonicalId = payload.split('=')[2].split(' ')[0];
 			if (this._debugData) {
-				var payload = textMsg.substring('canonicalidchange:'.length + 1);
 				var viewId = payload.split('=')[1].split(' ')[0];
-				var canonicalId = payload.split('=')[2].split(' ')[0];
 				this._debugData['canonicalViewId'].setPrefix('Canonical id changed to: ' + canonicalId + ' for view id: ' + viewId);
 			}
+			this._canonicalViewId = canonicalId;
+			this._invalidateAllPreviews();
 			this._requestNewTiles();
+			this.redraw();
 		}
 		else if (textMsg.startsWith('comment:')) {
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
@@ -4867,6 +4874,16 @@ L.CanvasTileLayer = L.Layer.extend({
 			+ '&outputWidth=' + this._tileHeightPx
 			+ '&tileHeight=' + this._tileWidthTwips
 			+ '&tileWidth=' + this._tileHeightTwips);
+	},
+
+	_invalidateAllPreviews: function () {
+		this._previewInvalidations = [];
+		for (var key in this._map._docPreviews) {
+			var preview = this._map._docPreviews[key];
+			preview.invalid = true;
+			this._previewInvalidations.push(new L.Bounds(new L.Point(0, 0), new L.Point(preview.maxWidth, preview.maxHeight)));
+		}
+		this._invalidatePreviews();
 	},
 
 	_invalidatePreviews: function () {
