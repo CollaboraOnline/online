@@ -477,7 +477,9 @@ int Config::main(const std::vector<std::string>& args)
             proofKey.save(proofKeyPath + ".pub", proofKeyPath, "" /*no password*/);
 #if !ENABLE_DEBUG
             chmod(proofKeyPath.c_str(), S_IRUSR | S_IWUSR);
-            chown(proofKeyPath.c_str(), pwd->pw_uid, -1);
+            const int ChResult = chown(proofKeyPath.c_str(), pwd->pw_uid, -1);
+            if (ChResult != 0)
+                std::cerr << "Changing owner of " + proofKeyPath + " failed." << std::endl;
 #endif
         }
         else
