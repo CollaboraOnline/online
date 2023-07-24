@@ -395,7 +395,7 @@ else
 # Use coolwsd to cleanup jails, if any. If it fails, we may have a broken/old coolwsd binary, remove it to rebuild.
 # A CI box may switch branches without cleaning up the binaries, if coolwsd from a broken branch is used here
 # it will fail all subsequent builds, until it's rebuilt from the new branch. So removing coolwsd after failing is needed.
-CLEANUP_COMMAND=if test -s ./coolwsd; then echo "Cleaning up..." && ./coolwsd --disable-cool-user-checking --cleanup --o:logging.level=trace || rm ./coolwsd; fi
+CLEANUP_COMMAND=if test -s ./coolwsd; then echo "Cleaning up..." && ./coolwsd --disable-cool-user-checking --cleanup --o:logging.level=warning || rm ./coolwsd; fi
 endif
 
 if HAVE_LO_PATH
@@ -472,7 +472,7 @@ COMMON_PARAMS = \
 run: setup-wsd
 	./coolwsd $(COMMON_PARAMS) \
 			--o:security.capabilities="$(CAPABILITIES)" \
-			--o:logging.file[@enable]=${OUTPUT_TO_FILE} --o:logging.level=trace \
+			--o:logging.file[@enable]=${OUTPUT_TO_FILE} --o:logging.level=warning \
 			--o:trace_event[@enable]=true
 
 if ENABLE_DEBUG
@@ -494,7 +494,7 @@ sync-impress:
 
 run-trace: setup-wsd
 	./coolwsd $(COMMON_PARAMS) \
-			--o:logging.file[@enable]=false --o:logging.level=trace \
+			--o:logging.file[@enable]=false --o:logging.level=warning \
 			--o:trace[@enable]=true --o:trace.path=${builddir}/trace.txt.gz \
 			--o:trace.outgoing.record=false
 
@@ -502,7 +502,7 @@ run-valgrind: setup-wsd
 	@echo "Launching coolwsd under valgrind (but not forkit/coolkit, yet)"
 	valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \
 		./coolwsd $(COMMON_PARAMS) \
-			--o:logging.file[@enable]=false --o:logging.level=trace
+			--o:logging.file[@enable]=false --o:logging.level=warning
 
 run-gdb: setup-wsd
 	@echo "Launching coolwsd under gdb"
