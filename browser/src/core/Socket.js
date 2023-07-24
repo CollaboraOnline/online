@@ -995,9 +995,9 @@ app.definitions.Socket = L.Class.extend({
 			textMsg = textMsg.substring(6);
 			if (command.errorKind === 'hardlimitreached') {
 
-				textMsg = errorMessages.limitreachedprod;
-				textMsg = textMsg.replace(/%0/g, command.params[0]);
-				textMsg = textMsg.replace(/%1/g, command.params[1]);
+				// textMsg = errorMessages.limitreachedprod;
+				// textMsg = textMsg.replace(/%0/g, command.params[0]);
+				// textMsg = textMsg.replace(/%1/g, command.params[1]);
 			}
 			else if (command.errorKind === 'serviceunavailable') {
 				textMsg = errorMessages.serviceunavailable;
