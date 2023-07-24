@@ -11,31 +11,6 @@
 	border: 1px solid var(--color-border);
 }
 
-/* Keyboard input keys */
-kbd,
-.kbd {
-	background-color: var(--color-background-dark);
-	border-radius: var(--border-radius);
-	border: 1px solid var(--color-border-dark);
-	color: var(--color-text-dark);
-	display: inline-block;
-	font-family: monospace;
-	font-size: .85em;
-	line-height: 1;
-	padding: 4px;
-	white-space: nowrap;
-}
-
-.kbd--plus {
-	color: var(--color-text-dark);
-	padding: 0 4px;
-	font-size: 0.85em;
-}
-
-.warn-copy-paste {
-	width: 100%;
-}
-
 .slider, .slides > div {
 	width: 100%;
 }
