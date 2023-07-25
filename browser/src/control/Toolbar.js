@@ -698,7 +698,8 @@ L.Map.include({
 			navigator.clipboard.writeText(text)
 			.then(function() {
 				window.console.log('Text copied to clipboard');
-			})
+				this.contentHasBeenCopiedShowSnackbar();
+			}.bind(this))
 			.catch(function(error) {
 				window.console.error('Error copying text to clipboard:', error);
 			});
@@ -712,12 +713,23 @@ L.Map.include({
 			try {
 				document.execCommand('copy');
 				window.console.log('Text copied to clipboard');
+				this.contentHasBeenCopiedShowSnackbar();
 			} catch (error) {
 				window.console.error('Error copying text to clipboard:', error);
 			} finally {
 				document.body.removeChild(textArea);
 			}
 		}
+	},
+
+	contentHasBeenCopiedShowSnackbar: function() {
+		var timeout = 1000;
+		this.uiManager.showSnackbar('Version information has been copied', null, null, timeout);
+		var copybutton = document.querySelector('#modal-dialog-about-dialog-box-copybutton > img');
+		L.LOUtil.setImage(copybutton, 'lc_clipboard-check.svg', this._docLayer._docType);
+		setTimeout(function () {
+			L.LOUtil.setImage(copybutton, 'lc_copy.svg', this._docLayer._docType);
+		}.bind(this), timeout);
 	},
 
 	extractContent: function(html) {
