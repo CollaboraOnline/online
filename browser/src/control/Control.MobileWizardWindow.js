@@ -557,7 +557,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 				if (data.type === 'snackbar') {
 					var that = this;
 					this.isSnackBar = true;
-					this.snackBarTimout = setTimeout(function () { that.parent.removeWindow(that); }, this.options.snackbarTimeout);
+					this.snackBarTimout = setTimeout(function () { that.parent.removeWindow(that); }, data.timeout ? data.timeout : this.options.snackbarTimeout);
 				}
 			}
 

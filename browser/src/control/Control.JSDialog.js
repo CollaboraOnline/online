@@ -475,6 +475,7 @@ L.Control.JSDialog = L.Control.extend({
 		instance.callback = e.callback;
 		instance.isSnackbar = e.data.type === 'snackbar';
 		instance.isModalPopUp = e.data.type === 'modalpopup';
+		instance.snackbarTimeout = e.data.timeout || this.options.snackbarTimeout;
 		instance.isOnlyChild = false;
 		instance.that = this;
 		instance.startX = e.data.posx;
@@ -555,7 +556,7 @@ L.Control.JSDialog = L.Control.extend({
 			this.dialogs[instance.id] = instance;
 
 			if (instance.isSnackbar) {
-				setTimeout(function () { instance.that.closePopover(instance.id, false); }, this.options.snackbarTimeout);
+				setTimeout(function () { instance.that.closePopover(instance.id, false); }, instance.snackbarTimeout);
 			}
 		}
 	},

@@ -879,7 +879,7 @@ L.Control.UIManager = L.Control.extend({
 
 	// Snack bar
 
-	showSnackbar: function(label, action, callback) {
+	showSnackbar: function(label, action, callback, timeout) {
 		if (!app.socket)
 			return;
 
@@ -896,6 +896,7 @@ L.Control.UIManager = L.Control.extend({
 			id: 'snackbar',
 			jsontype: 'dialog',
 			type: 'snackbar',
+			timeout: timeout,
 			children: [
 				{
 					type: 'container',
