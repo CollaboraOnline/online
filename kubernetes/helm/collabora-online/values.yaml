@@ -209,7 +209,7 @@ dynamicConfig:
     enabled: false
     image:
       repository: "twostoryrobot/simple-file-upload"
-      digest: 8648a554c42c81db317bf51fbb59d3ee884f0d4e6e216835a31bf2e6872d4947
+      digest: 547fc4360b31d8604b7a26202914e87cd13609cc938fd83f412c77eb44aa1cc4
     key: TESTKEY
     pvc:
       size: 1Gi
