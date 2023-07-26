@@ -512,6 +512,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				element.accessKey = key;
 	},
 
+	_resetAccessKeyForCurrentTab: function() {
+		if (app.UI.notebookbarAccessibility)
+			app.UI.notebookbarAccessibility.resetAccessKeyForCurrentTab();
+	},
+
 	_getAccessKeyFromText: function(text) {
 		var nextChar = null;
 		if (text && text.includes('~')) {
@@ -1255,6 +1260,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				};
 
 				var moveFocusToPreviousTab = function(tab) {
+					builder._resetAccessKeyForCurrentTab();
 					if (tab === tabs[0]) {
 						tabs[tabs.length - 1].click();
 						tabs[tabs.length - 1].focus();
@@ -1267,6 +1273,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				};
 
 				var moveFocusToNextTab = function(tab) {
+					builder._resetAccessKeyForCurrentTab();
 					if (tab === tabs[tabs.length - 1]) {
 						tabs[0].click();
 						tabs[0].focus();

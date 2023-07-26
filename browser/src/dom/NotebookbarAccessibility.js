@@ -95,6 +95,7 @@ var NotebookbarAccessibility = function() {
 			}
 			else if (event.keyCode === 18 || (event.keyCode === 18 && event.shiftKey)) {
 				this.mayShowAcceleratorInfoBoxes = true;
+				this.resetAccessKeyForCurrentTab();
 			}
 		}
 	};
@@ -219,6 +220,7 @@ var NotebookbarAccessibility = function() {
 		if (element) {
 			element.classList.remove('add-focus-to-tab');
 		}
+		this.resetAccessKeyForCurrentTab();
 	};
 
 	this.focusToMap = function () {
@@ -238,6 +240,16 @@ var NotebookbarAccessibility = function() {
 		this.combination = null;
 		this.mayShowAcceleratorInfoBoxes = false;
 		this.filteredItem = null;
+	};
+
+	this.onInputKeyDown = function(event) {
+		var key = event.key.toUpperCase();
+		event.preventDefault();
+		event.stopPropagation();
+
+		if (key === 'ESCAPE' || key === 'ALT') {
+			this.resetAccessKeyForCurrentTab();
+		}
 	};
 
 	this.onInputKeyUp = function(event) {
@@ -326,6 +338,16 @@ var NotebookbarAccessibility = function() {
 		}
 	};
 
+	this.resetAccessKeyForCurrentTab = function() {
+		for (var i = 0; i < this.activeTabPointers.contentList.length; i++) {
+			var element = this.getElementOfWhichIdStartsWith(this.activeTabPointers.contentList[i].id);
+			if (element) {
+			  // Remove the accesskey attribute from the element
+			  element.removeAttribute('accesskey');
+			}
+		  }
+	};
+
 	this.addTabAccelerators = function() {
 		// Remove all info boxes first.
 		this.removeAllInfoBoxes();
@@ -368,6 +390,7 @@ var NotebookbarAccessibility = function() {
 		this.accessibilityInputElement.onfocus = this.onInputFocus.bind(this);
 		this.accessibilityInputElement.onblur = this.onInputBlur.bind(this);
 		this.accessibilityInputElement.onkeyup = this.onInputKeyUp.bind(this);
+		this.accessibilityInputElement.onkeydown = this.onInputKeyDown.bind(this);
 
 		var container = document.createElement('div');
 		container.style.width = container.style.height = '0';
