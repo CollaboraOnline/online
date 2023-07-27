@@ -432,11 +432,13 @@ L.Control.UIManager = L.Control.extend({
 		var selectedTab = $('.ui-tab.notebookbar[aria-selected="true"]').attr('id') || 'Home-tab-label';
 		this.removeNotebookbarUI();
 		this.createNotebookbarControl(this.map.getDocType());
+		if (this._map._permission === 'edit') {
+			$('.main-nav').removeClass('readonly');
+		}
 		$('#' + selectedTab).click();
 		this.makeSpaceForNotebookbar();
 		this.notebookbar._showNotebookbar = true;
 		this.notebookbar.showTabs();
-		$('.main-nav').removeClass('readonly');
 		$('#map').addClass('notebookbar-opened');
 		this.insertCustomButtons();
 		this.map.sendInitUNOCommands();
