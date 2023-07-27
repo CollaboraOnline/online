@@ -328,10 +328,12 @@ L.Control.UIManager = L.Control.extend({
 	refreshNotebookbar: function() {
 		this.removeNotebookbarUI();
 		this.createNotebookbarControl(this.map.getDocType());
+		if (this._map._permission === 'edit') {
+			$('.main-nav').removeClass('readonly');
+		}
 		this.makeSpaceForNotebookbar();
 		this.notebookbar._showNotebookbar = true;
 		this.notebookbar.showTabs();
-		$('.main-nav').removeClass('readonly');
 		$('#map').addClass('notebookbar-opened');
 		this.insertCustomButtons();
 		this.map.sendInitUNOCommands();
