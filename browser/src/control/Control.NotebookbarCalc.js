@@ -1027,10 +1027,32 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': _('Toggle UI Mode')
 			},
 			{
-				'id': 'showstatusbar',
-				'type': 'menubartoolitem',
-				'text': _('Status Bar'),
-				'command': _('Show Status Bar')
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'collapsenotebookbar',
+								'type': 'menubartoolitem',
+								'text': _('Collapse Tabs'),
+								'command': _('Collapse Notebook Bar')
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'showstatusbar',
+								'type': 'menubartoolitem',
+								'text': _('Status Bar'),
+								'command': _('Show Status Bar')
+							}
+						]
+					}
+				],
+				'vertical': 'true'
 			},
 			{
 				'id':'toggledarktheme',

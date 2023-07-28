@@ -1169,6 +1169,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'collapsenotebookbar',
+				'type': 'bigmenubartoolitem',
+				'text': _('Collapse Tabs'),
+				'command': _('Collapse Notebook Bar')
+			},
+			{
 				'id':'toggledarktheme',
 				'type': 'bigcustomtoolitem',
 				'text': _('Dark Mode')
