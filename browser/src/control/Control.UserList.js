@@ -151,7 +151,7 @@ L.Control.UserList = L.Control.extend({
 	},
 
 	renderHeaderAvatars: function() {
-		if (!window.mode.isDesktop() || this.hideUserList() || this.options.listUser.length === 1) {
+		if (window.mode.isMobile() || this.hideUserList() || this.options.listUser.length === 1) {
 			return;
 		}
 
