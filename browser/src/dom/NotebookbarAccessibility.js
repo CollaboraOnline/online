@@ -127,6 +127,7 @@ var NotebookbarAccessibility = function() {
 		document.body.classList.remove('activate-info-boxes');
 		app.map._textInput._abortComposition({ type: 'Notebookbar Accessibility' });
 		this.removeFocusFromTab();
+		this.resetState();
 	};
 
 	this.isAllFilteredOut = function() {
@@ -238,6 +239,9 @@ var NotebookbarAccessibility = function() {
 		this.combination = null;
 		this.mayShowAcceleratorInfoBoxes = false;
 		this.filteredItem = null;
+		for (var i = 0; i < this.activeTabPointers.contentList.length; i++) {
+			document.getElementById(this.activeTabPointers.contentList[i].id).accessKey = null;
+		}
 	};
 
 	this.onInputKeyUp = function(event) {
@@ -345,11 +349,6 @@ var NotebookbarAccessibility = function() {
 		Object.keys(this.tabInfoList).forEach(function(tabId) {
 			var element = document.getElementById(tabId);
 			if (element) {
-				element.addEventListener('click', function() {
-					if (this.activeTabPointers.id !== element.id) {
-						this.setupAcceleratorsForCurrentTab(element.id);
-					}
-				}.bind(this));
 				element.addEventListener('keydown', function(event) {
 					if (event.key === 'Alt') {
 					  // focus back to document
