@@ -1694,7 +1694,6 @@ L.Control.Menubar = L.Control.extend({
 						} else {
 							$(aItem).removeClass(constChecked);
 						}
-
 					} else if (id === 'toggleuimode') {
 						if (self._map.uiManager.shouldUseNotebookbarMode()) {
 							$(aItem).text(_('Use Compact view'));
@@ -1883,6 +1882,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.uiManager.toggleStatusBar();
 		} else if (id === 'togglemenubar') {
 			this._map.uiManager.toggleMenubar();
+		} else if (id === 'collapsenotebookbar') {
+			this._map.uiManager.collapseNotebookbar();
 		} else if (id === 'fullscreen-presentation' && this._map.getDocType() === 'presentation') {
 			this._map.fire('fullscreen');
 		} else if (id === 'presentation-currentslide' && this._map.getDocType() === 'presentation') {
