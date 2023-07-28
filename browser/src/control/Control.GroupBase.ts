@@ -27,7 +27,8 @@ export interface GroupEntryStrings {
 	This class is an extended version of "CanvasSectionObject".
 */
 
-export class GroupBase extends CanvasSectionObject {
+export abstract class GroupBase extends CanvasSectionObject {
+	_map: any;
 	_textColor: string;
 	_getFont: () => string;
 	_levelSpacing: number;
@@ -42,6 +43,26 @@ export class GroupBase extends CanvasSectionObject {
 		if (options.sectionProperties === undefined)
 			this.sectionProperties = {};
 	}
+
+	// This function is called by CanvasSectionContainer when the section is added to the sections list.
+	onInitialize(): void {
+		this._map = L.Map.THIS;
+		this.sectionProperties.docLayer = this._map._docLayer;
+		this._groups = null;
+
+		// group control styles
+		this._groupHeadSize = Math.round(12 * app.dpiScale);
+		this._levelSpacing = app.roundedDpiScale;
+
+		this._map.on('sheetgeometrychanged', this.update, this);
+		this._map.on('viewrowcolumnheaders', this.update, this);
+		this._createFont();
+		this.update();
+		this.isRemoved = false;
+	}
+
+	// override in subclasses
+	abstract update(): void;
 
 	// Create font for the group headers. Group headers are on the left side of corner header.
 	_createFont(): void {

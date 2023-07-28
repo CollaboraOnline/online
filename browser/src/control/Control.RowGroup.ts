@@ -15,8 +15,6 @@
 namespace cool {
 
 export class RowGroup extends GroupBase {
-
-	_map: any;
 	_sheetGeometry: cool.SheetGeometry;
 	_cornerHeaderHeight: number;
 	_splitPos: cool.Point;
@@ -35,23 +33,6 @@ export class RowGroup extends GroupBase {
 			sectionProperties: {},
 		});
 
-	}
-
-	// This function is called by CanvasSectionContainer when the section is added to the sections list.
-	onInitialize(): void {
-		this._map = L.Map.THIS;
-		this.sectionProperties.docLayer = this._map._docLayer;
-		this._groups = null;
-
-		// group control styles
-		this._groupHeadSize = Math.round(12 * app.dpiScale);
-		this._levelSpacing = app.roundedDpiScale;
-
-		this._map.on('sheetgeometrychanged', this.update, this);
-		this._map.on('viewrowcolumnheaders', this.update, this);
-		this._createFont();
-		this.update();
-		this.isRemoved = false;
 	}
 
 	update(): void {
