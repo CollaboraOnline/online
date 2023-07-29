@@ -595,6 +595,23 @@ public:
             size);
     }
 
+    void setBody(std::string body, std::string contentType = "text/html charset=UTF-8")
+    {
+        if (!body.empty()) // Type is only meaningful if there is a body.
+            _header.setContentType(std::move(contentType));
+
+        //FIXME: use generalized lambda capture to move the istringstream, available in C++14.
+        auto iss = std::make_shared<std::istringstream>(body, std::ios::binary);
+
+        setBodySource(
+            [=](char* buf, int64_t len) -> int64_t
+            {
+                iss->read(buf, len);
+                return iss->gcount();
+            },
+            body.size());
+    }
+
     Stage stage() const { return _stage; }
 
     bool writeData(Buffer& out, std::size_t capacity)
