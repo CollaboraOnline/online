@@ -993,6 +993,7 @@ constexpr char BRANDING_UNSUPPORTED[] = "branding-unsupported";
 static const std::string ACCESS_TOKEN = "%ACCESS_TOKEN%";
 static const std::string ACCESS_TOKEN_TTL = "%ACCESS_TOKEN_TTL%";
 static const std::string ACCESS_HEADER = "%ACCESS_HEADER%";
+static const std::string UI_DEFAULTS = "%UI_DEFAULTS%";
 
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
@@ -1052,6 +1053,8 @@ public:
                 << "] for var [" << ACCESS_TOKEN_TTL << "] = [" << tokenTtl << ']');
 
         extractVariable(form, "access_header", ACCESS_HEADER);
+
+        extractVariable(form, "ui_defaults", UI_DEFAULTS);
     }
 
     const std::string& operator[](const std::string& key) const
@@ -1086,8 +1089,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     const UserRequestVars urv(request, form);
 
-    const std::string uiDefaults = form.get("ui_defaults", "");
-    LOG_TRC("ui_defaults=" << uiDefaults);
     const std::string cssVars = form.get("css_variables", "");
     LOG_TRC("css_variables=" << cssVars);
     std::string buyProduct;
@@ -1127,7 +1128,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(COOLWSD_VERSION_HASH));
     Poco::replaceInPlace(preprocess, std::string("%COOLWSD_VERSION%"), std::string(COOLWSD_VERSION));
     Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
-    Poco::replaceInPlace(preprocess, std::string("%UI_DEFAULTS%"), uiDefaultsToJSON(uiDefaults, userInterfaceMode, userInterfaceTheme, savedUIState));
+    Poco::replaceInPlace(preprocess, UI_DEFAULTS,
+                         uiDefaultsToJSON(urv[UI_DEFAULTS], userInterfaceMode, userInterfaceTheme, savedUIState));
     Poco::replaceInPlace(preprocess, std::string("%UI_THEME%"), userInterfaceTheme); // UI_THEME refers to light or dark theme
     Poco::replaceInPlace(preprocess, std::string("%BRANDING_THEME%"), theme);
     Poco::replaceInPlace(preprocess, std::string("%SAVED_UI_STATE%"), savedUIState);
