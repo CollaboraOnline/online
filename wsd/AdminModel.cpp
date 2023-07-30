@@ -509,7 +509,8 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
                              const int smapsFD, const Poco::URI& wopiSrc, bool isViewReadOnly)
 {
     ASSERT_CORRECT_THREAD_OWNER(_owner);
-    const auto ret = _documents.emplace(docKey, std::unique_ptr<Document>(new Document(docKey, pid, filename, wopiSrc)));
+    const auto ret =
+        _documents.emplace(docKey, std::make_unique<Document>(docKey, pid, filename, wopiSrc));
     ret.first->second->setProcSMapsFD(smapsFD);
     ret.first->second->takeSnapshot();
     ret.first->second->addView(sessionId, userName, userId, isViewReadOnly);
