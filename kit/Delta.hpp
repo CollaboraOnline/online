@@ -354,7 +354,7 @@ class DeltaGenerator {
             assert (_loc == repl->_loc);
             if (repl.get() == this)
             {
-                assert("replacing with yourself should never happen");
+                assert(!"replacing with yourself should never happen");
                 return;
             }
             _wid = repl->_wid;
