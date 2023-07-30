@@ -735,7 +735,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             strm.opaque = Z_NULL;
             deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY);
 
-            std::unique_ptr<char[]> buf(new char[fileStat.st_size]);
+            std::unique_ptr<char[]> buf = std::make_unique<char[]>(fileStat.st_size);
             std::string compressedFile;
             compressedFile.reserve(fileStat.st_size);
             std::string uncompressedFile;

@@ -119,8 +119,7 @@ public:
         _session->setTimeout(Poco::Timespan(10, 0));
         HTTPRequest request(HTTPRequest::HTTP_GET, "/ws");
         HTTPResponse response;
-        return std::shared_ptr<WebSocket>(
-            new WebSocket(*_session, request, response));
+        return std::make_shared<WebSocket>(*_session, request, response);
     }
 };
 

@@ -48,7 +48,7 @@ void sendUncompressedFileContent(const std::shared_ptr<StreamSocket>& socket,
                                  const std::string& path, const int bufferSize)
 {
     std::ifstream file(path, std::ios::binary);
-    std::unique_ptr<char[]> buf(new char[bufferSize]);
+    std::unique_ptr<char[]> buf = std::make_unique<char[]>(bufferSize);
     do
     {
         file.read(&buf[0], bufferSize);
@@ -70,13 +70,13 @@ void sendDeflatedFileContent(const std::shared_ptr<StreamSocket>& socket, const 
     if (fileSize > 0)
     {
         std::ifstream file(path, std::ios::binary);
-        std::unique_ptr<char[]> buf(new char[fileSize]);
+        std::unique_ptr<char[]> buf = std::make_unique<char[]>(fileSize);
         file.read(&buf[0], fileSize);
 
         static const unsigned int Level = 1;
         const long unsigned int size = file.gcount();
         long unsigned int compSize = compressBound(size);
-        std::unique_ptr<char[]> cbuf(new char[compSize]);
+        std::unique_ptr<char[]> cbuf = std::make_unique<char[]>(compSize);
         compress2((Bytef*)&cbuf[0], &compSize, (Bytef*)&buf[0], size, Level);
 
         if (size > 0)

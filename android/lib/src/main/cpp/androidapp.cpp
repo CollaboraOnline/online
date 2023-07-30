@@ -347,7 +347,7 @@ Java_org_libreoffice_androidlib_LOActivity_createCOOLWSD(JNIEnv *env, jobject in
                         {
                             fakeClientFd = fakeSocketSocket();
                             LOG_DBG("createCOOLWSD created fakeClientFd: " << fakeClientFd);
-                            std::unique_ptr<COOLWSD> coolwsd(new COOLWSD());
+                            std::unique_ptr<COOLWSD> coolwsd = std::make_unique<COOLWSD>();
                             coolwsd->run(1, argv);
                         }
                         LOG_DBG("One run of COOLWSD completed");

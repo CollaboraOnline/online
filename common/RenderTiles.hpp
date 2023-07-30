@@ -366,9 +366,8 @@ namespace RenderTiles
 
             LOG_TRC("Sending back painted tiles for " << tileMsg << " of size " << output.size() << " bytes) for: " << tileMsg);
 
-            std::unique_ptr<char[]> response;
             const size_t responseSize = tileMsg.size() + output.size();
-            response.reset(new char[responseSize]);
+            std::unique_ptr<char[]> response(std::make_unique<char[]>(responseSize));
             std::copy(tileMsg.begin(), tileMsg.end(), response.get());
             std::copy(output.begin(), output.end(), response.get() + tileMsg.size());
             outputMessage(response.get(), responseSize);
@@ -380,8 +379,7 @@ namespace RenderTiles
             {
                 tileMsg = i.serialize("tile:", "\n");
                 const size_t responseSize = tileMsg.size() + i.getImgSize();
-                std::unique_ptr<char[]> response;
-                response.reset(new char[responseSize]);
+                std::unique_ptr<char[]> response(std::make_unique<char[]>(responseSize));
                 std::copy(tileMsg.begin(), tileMsg.end(), response.get());
                 std::copy(output.begin() + outputOffset, output.begin() + outputOffset + i.getImgSize(), response.get() + tileMsg.size());
                 outputMessage(response.get(), responseSize);
