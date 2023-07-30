@@ -224,8 +224,8 @@ public:
     {
         if (hasWatermark())
         {
-            _docWatermark.reset(
-                new Watermark(getLOKitDocument(), getWatermarkText(), getWatermarkOpacity()));
+            _docWatermark = std::make_shared<Watermark>(getLOKitDocument(), getWatermarkText(),
+                                                        getWatermarkOpacity());
         }
 
         return _docWatermark != nullptr;

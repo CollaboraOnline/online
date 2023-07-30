@@ -2284,8 +2284,7 @@ public:
 
     static std::shared_ptr<KitSocketPoll> create()
     {
-        KitSocketPoll *p = new KitSocketPoll();
-        auto result = std::shared_ptr<KitSocketPoll>(p);
+        std::shared_ptr<KitSocketPoll> result(new KitSocketPoll());
 
 #ifdef IOS
         std::unique_lock<std::mutex> lock(KSPollsMutex);

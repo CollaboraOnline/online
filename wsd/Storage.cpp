@@ -294,12 +294,11 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
                 "] in config");
             break;
         case StorageBase::StorageType::FileSystem:
-            return std::unique_ptr<StorageBase>(
-                new LocalStorage(uri, jailRoot, jailPath, takeOwnership));
+            return std::make_unique<LocalStorage>(uri, jailRoot, jailPath, takeOwnership);
             break;
         case StorageBase::StorageType::Wopi:
 #if !MOBILEAPP
-            return std::unique_ptr<StorageBase>(new WopiStorage(uri, jailRoot, jailPath));
+            return std::make_unique<WopiStorage>(uri, jailRoot, jailPath);
 #endif
             break;
     }
@@ -332,8 +331,7 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
     if (userNameString.empty())
         userNameString = "LocalUser#" + userId;
 
-    return std::unique_ptr<LocalStorage::LocalFileInfo>(
-        new LocalFileInfo({"LocalUser" + userId, userNameString}));
+    return std::make_unique<LocalStorage::LocalFileInfo>("LocalUser" + userId, userNameString);
 }
 
 std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth*/,

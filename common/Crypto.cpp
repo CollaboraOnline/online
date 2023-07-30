@@ -65,8 +65,8 @@ struct SupportKeyImpl
     }
 };
 
-SupportKey::SupportKey(const std::string &key) :
-    _impl(new SupportKeyImpl(key))
+SupportKey::SupportKey(const std::string& key)
+    : _impl(std::make_unique<SupportKeyImpl>(key))
 {
 }
 
