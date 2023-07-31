@@ -53,6 +53,7 @@
 <body>
     <!--%BRANDING_JS%-->
     <script>
+        window.accessToken = '%ACCESS_TOKEN%';
         if (typeof brandProductName !== 'undefined') {l10nstrings.strProductName = brandProductName}
         document.title = l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole;
         var host = (window.location.protocol === 'https:' ? 'wss://': 'ws://') + window.location.host + '%SERVICE_ROOT%/cool/adminws/';
