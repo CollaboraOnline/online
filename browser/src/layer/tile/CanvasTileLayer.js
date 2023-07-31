@@ -1553,6 +1553,17 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
+	_cellRangeToTwipRect: function(cellRange) {
+		var strTwips = cellRange.match(/\d+/g);
+		var startCellAddress = [parseInt(strTwips[0]), parseInt(strTwips[1])];
+		var startCellRectPixel = this.sheetGeometry.getCellRect(startCellAddress[0], startCellAddress[1]);
+		var topLeftTwips = this._corePixelsToTwips(startCellRectPixel.min);
+		var endCellAddress = [parseInt(strTwips[2]), parseInt(strTwips[3])];
+		var endCellRectPixel = this.sheetGeometry.getCellRect(endCellAddress[0], endCellAddress[1]);
+		var bottomRightTwips = this._corePixelsToTwips(endCellRectPixel.max);
+		return new L.Bounds(new L.Point(topLeftTwips.x, topLeftTwips.y), new L.Point(bottomRightTwips.x, bottomRightTwips.y));
+	},
+
 	_onMessage: function (textMsg, img) {
 		this._saveMessageForReplay(textMsg);
 		// 'tile:' is the most common message type; keep this the first.
@@ -1800,11 +1811,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		else if (textMsg.startsWith('comment:')) {
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
-			if (obj.comment.cellPos) {
-				// cellPos is in print-twips so convert to display twips.
-				var cellPos = L.Bounds.parse(obj.comment.cellPos);
-				cellPos = this._convertToTileTwipsSheetArea(cellPos);
-				obj.comment.cellPos = cellPos.toCoreString();
+			if (obj.comment.cellRange) {
+				// convert cellRange e.g. "A1 B2" to its bounds in display twips.
+				obj.comment.cellPos = this._cellRangeToTwipRect(obj.comment.cellRange).toCoreString();
 			}
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
 		}
