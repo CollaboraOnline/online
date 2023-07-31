@@ -261,12 +261,42 @@ var NotebookbarAccessibilityDefinitions = function() {
 		}
 	};
 
+	this.checkIntegratorButtons = function(selectedDefinitions) {
+		// The list of containers of the buttons which are added by integrations (via insertbutton post message etc).
+		var containerList = ['shortcutstoolbox'];
+
+		for (var i = 0; i < containerList.length; i++) {
+			var container = document.getElementById(containerList[i]);
+
+			if (container) {
+				// All the buttons inside the container.
+				var buttonList = container.querySelectorAll('button');
+
+				if (buttonList.length) {
+					for (var j = 0; j < buttonList.length; j++) {
+						var button = buttonList[j];
+						if (button.accessKey && button.id) {
+							if (selectedDefinitions[button.id] === undefined) {
+								selectedDefinitions[button.id] = {
+									focusBack: true,
+									combination: button.accessKey,
+									contentList: []
+								};
+							}
+						}
+					}
+				}
+			}
+		}
+	};
+
 	this.getDefinitions = function() {
 		var selectedDefinitions = null;
 		if (app.map.getDocType() === 'text')
 			selectedDefinitions = this.getWriterDefinitions();
 
 		this.applyLanguageSpecificCombinations(selectedDefinitions);
+		this.checkIntegratorButtons(selectedDefinitions);
 
 		return selectedDefinitions;
 	};
