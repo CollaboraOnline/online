@@ -4547,7 +4547,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			this._addDropDownMarker();
 
-			var dontFocusDocument = this._isAnyInputFocused();
+			var focusOutOfDocument = document.activeElement === document.body;
+			var dontFocusDocument = this._isAnyInputFocused() || focusOutOfDocument;
 
 			// when the cell cursor is moving, the user is in the document,
 			// and the focus should leave the cell input bar
