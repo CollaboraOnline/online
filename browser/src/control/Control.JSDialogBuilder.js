@@ -2508,7 +2508,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			button = L.DomUtil.create('button', 'ui-content unobutton', div);
 			button.id = buttonId;
-			builder._setAccessKey(button, builder._getAccessKeyFromText(data.text));
+			if (!data.accessKey)
+				builder._setAccessKey(button, builder._getAccessKeyFromText(data.text));
+			else
+				button.accessKey = data.accessKey;
+
 			if (hasPopUp)
 				button.setAttribute('aria-haspopup', true);
 
