@@ -3,7 +3,7 @@
 	Abstract class
 */
 
-/* global _ Util vex Base */
+/* global _ vex Base */
 
 var AdminSocketBase = Base.extend({
 	socket: null,
@@ -34,8 +34,8 @@ var AdminSocketBase = Base.extend({
 
 	onSocketOpen: function () {
 		// Authenticate
-		var cookie = Util.getCookie('jwt');
-		this.socket.send('auth ' + cookie);
+		var accessToken = window.accessToken;
+		this.socket.send('auth jwt=' + accessToken);
 	},
 
 	onSocketMessage: function () {
