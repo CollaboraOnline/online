@@ -304,6 +304,17 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			]
 		});
 
+		content.push({
+			'type': 'container',
+			'children': [
+				{
+					'id': 'renamedocument',
+					'type': 'bigcustomtoolitem',
+					'text': _('Rename'),
+				}
+			]
+		});
+
 		return this.getTabPage('File', content);
 	},
 
