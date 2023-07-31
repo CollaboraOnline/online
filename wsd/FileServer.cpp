@@ -1281,6 +1281,30 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     const std::string templatePath =
         Poco::Path(relPath).setFileName("admintemplate.html").toString();
     std::string templateFile = *getUncompressedFile(templatePath);
+
+    std::string jwtToken;
+    Poco::Net::NameValueCollection reqCookies;
+    std::vector<Poco::Net::HTTPCookie> resCookies;
+
+    request.getCookies(reqCookies);
+
+    if (reqCookies.has("jwt"))
+        jwtToken = reqCookies.get("jwt");
+    else
+    {
+        response.getCookies(resCookies);
+        for (size_t it = 0; it < resCookies.size(); ++it)
+        {
+            if (resCookies[it].getName() == "jwt")
+            {
+                jwtToken = resCookies[it].getValue();
+                break;
+            }
+        }
+    }
+
+    const std::string escapedAccessToken = Util::encodeURIComponent(jwtToken, "'");
+    Poco::replaceInPlace(templateFile, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
     Poco::replaceInPlace(templateFile, std::string("<!--%MAIN_CONTENT%-->"), adminFile); // Now template has the main content..
 
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
