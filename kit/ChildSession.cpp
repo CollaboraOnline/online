@@ -10,6 +10,7 @@
 #include "Kit.hpp"
 #include "ChildSession.hpp"
 #include "MobileApp.hpp"
+#include "COOLWSD.hpp"
 
 #include <climits>
 #include <fstream>
@@ -97,23 +98,48 @@ std::string formatUnoCommandInfo(const std::string& sessionId, const std::string
 
 }
 
-ChildSession::ChildSession(
-    const std::shared_ptr<ProtocolHandlerInterface> &protocol,
-    const std::string& id,
-    const std::string& jailId,
-    const std::string& jailRoot,
-    DocumentManagerInterface& docManager) :
-    Session(protocol, "ToMaster-" + id, id, false),
-    _jailId(jailId),
-    _jailRoot(jailRoot),
-    _docManager(&docManager),
-    _viewId(-1),
-    _isDocLoaded(false),
-    _copyToClipboard(false),
-    _canonicalViewId(0),
-    _isDumpingTiles(false),
-    _clientVisibleArea(0, 0, 0, 0)
+int sendURPToClient(void* pContext /* std::function* of sendBinaryFrame */,
+                    const signed char* pBuffer, int nLen)
 {
+    static const std::string header = "urp:\n";
+    size_t responseSize = header.size() + nLen;
+    char* response = new char[responseSize];
+    std::memcpy(response, header.data(), header.size());
+    std::memcpy(response + header.size(), pBuffer, nLen);
+    pushToMainThread([pContext, response, responseSize]() {
+        static_cast<ChildSession*>(pContext)->sendBinaryFrame(response, responseSize);
+    });
+    return 0;
+}
+
+ChildSession::ChildSession(const std::shared_ptr<ProtocolHandlerInterface>& protocol,
+                           const std::string& id, const std::string& jailId,
+                           const std::string& jailRoot, DocumentManagerInterface& docManager)
+    : Session(protocol, "ToMaster-" + id, id, false)
+    , _jailId(jailId)
+    , _jailRoot(jailRoot)
+    , _docManager(&docManager)
+    , _viewId(-1)
+    , _isDocLoaded(false)
+    , _copyToClipboard(false)
+    , _canonicalViewId(-1)
+    , _isDumpingTiles(false)
+    , _clientVisibleArea(0, 0, 0, 0)
+    , m_hasURP(false)
+{
+    if (isURPEnabled())
+    {
+        LOG_WRN("URP is enabled in the config: Starting a URP tunnel for this session ["
+                << getName() << "]");
+
+        m_hasURP = startURP(docManager.getLOKit(), this, &m_sendURPToLOContext, sendURPToClient,
+                            &m_sendURPToLO);
+
+        if (!m_hasURP)
+            LOG_INF("Failed to start a URP bridge for this session [" << getName()
+                                                                      << "], disabling URP");
+    }
+
     LOG_INF("ChildSession ctor [" << getName() << "]. JailRoot: [" << _jailRoot << ']');
 }
 
@@ -121,6 +147,11 @@ ChildSession::~ChildSession()
 {
     LOG_INF("~ChildSession dtor [" << getName() << ']');
     disconnect();
+
+    if (m_hasURP)
+    {
+        _docManager->getLOKit()->stopURP(m_sendURPToLOContext);
+    }
 }
 
 void ChildSession::disconnect()
@@ -346,6 +377,23 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
 
         return success;
+    }
+    else if (tokens.equals(0, "urp"))
+    {
+        if (length < 4)
+            return false;
+
+        if (m_hasURP)
+        {
+            m_sendURPToLO(m_sendURPToLOContext, (signed char*)(buffer + 4),
+                          length - 4); // HACK: not portable as char may be unsigned
+            return true;
+        }
+        else
+        {
+            sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=urpnotenabled");
+            return false;
+        }
     }
     else if (!_isDocLoaded)
     {

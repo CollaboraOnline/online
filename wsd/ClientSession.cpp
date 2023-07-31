@@ -488,6 +488,14 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         }
     }
 
+    if (tokens.equals(0, "urp"))
+    {
+        // This can't be pushed down into the long list of tokens that are
+        // forwarded to the child later as we need it to be able to run before
+        // documents are loaded
+        LOG_TRC("UNO remote protocol message (from client): " << firstLine);
+        return forwardToChild(std::string(buffer, length), docBroker);
+    }
     if (tokens.equals(0, "coolclient"))
     {
         if (tokens.size() < 2)
@@ -1058,6 +1066,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens.equals(0, "windowselecttext") ||
              tokens.equals(0, "setpage") ||
              tokens.equals(0, "uno") ||
+             tokens.equals(0, "urp") ||
              tokens.equals(0, "useractive") ||
              tokens.equals(0, "userinactive") ||
              tokens.equals(0, "paintwindow") ||
@@ -1365,7 +1374,7 @@ bool ClientSession::sendCombinedTiles(const char* /*buffer*/, int /*length*/, co
 bool ClientSession::forwardToChild(const std::string& message,
                                    const std::shared_ptr<DocumentBroker>& docBroker)
 {
-    const bool binary = Util::startsWith(message, "paste") ? true : false;
+    const bool binary = Util::startsWith(message, "paste") || Util::startsWith(message, "urp");
     return docBroker->forwardToChild(client_from_this(), message, binary);
 }
 

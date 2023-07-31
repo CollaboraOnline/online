@@ -127,6 +127,9 @@ static bool AnonymizeUserData = false;
 static uint64_t AnonymizationSalt = 82589933;
 #endif
 
+static bool EnableWebsocketURP = false;
+static int URPStartCount = 0;
+
 /// When chroot is enabled, this is blank as all
 /// the paths inside the jail, relative to it's jail.
 /// E.g. /tmp/user/docs/...
@@ -2276,10 +2279,10 @@ class KitSocketPoll final : public SocketPoll
     std::chrono::steady_clock::time_point _pollEnd;
     std::shared_ptr<Document> _document;
 
-    static KitSocketPoll *mainPoll;
+    static KitSocketPoll* mainPoll;
 
-    KitSocketPoll() :
-        SocketPoll("kit")
+    KitSocketPoll()
+        : SocketPoll("kit")
     {
 #ifdef IOS
         terminationFlag = false;
@@ -2294,7 +2297,7 @@ public:
         mainPoll = nullptr;
     }
 
-    static void dumpGlobalState(std::ostream &oss)
+    static void dumpGlobalState(std::ostream& oss)
     {
         if (mainPoll)
         {
@@ -2331,10 +2334,7 @@ public:
     }
 
     // called from inside poll, inside a wakeup
-    void wakeupHook()
-    {
-        _pollEnd = std::chrono::steady_clock::now();
-    }
+    void wakeupHook() { _pollEnd = std::chrono::steady_clock::now(); }
 
     // a LOK compatible poll function merging the functions.
     // returns the number of events signalled
@@ -2382,18 +2382,20 @@ public:
                 const auto now = std::chrono::steady_clock::now();
                 drainQueue();
 
-                timeoutMicroS = std::chrono::duration_cast<std::chrono::microseconds>(_pollEnd - now).count();
+                timeoutMicroS =
+                    std::chrono::duration_cast<std::chrono::microseconds>(_pollEnd - now).count();
                 ++eventsSignalled;
-            }
-            while (timeoutMicroS > 0 && !SigUtil::getTerminationFlag() && maxExtraEvents-- > 0);
+            } while (timeoutMicroS > 0 && !SigUtil::getTerminationFlag() && maxExtraEvents-- > 0);
         }
 
-        if (_document && checkForIdle && eventsSignalled == 0 &&
-            timeoutMicroS > 0 && !hasCallbacks() && !hasBuffered())
+        if (_document && checkForIdle && eventsSignalled == 0 && timeoutMicroS > 0 &&
+            !hasCallbacks() && !hasBuffered())
         {
             auto remainingTime = ProcessToIdleDeadline - startTime;
-            LOG_TRC("Poll of " << timeoutMicroS << " vs. remaining time of: " <<
-                    std::chrono::duration_cast<std::chrono::microseconds>(remainingTime).count());
+            LOG_TRC(
+                "Poll of "
+                << timeoutMicroS << " vs. remaining time of: "
+                << std::chrono::duration_cast<std::chrono::microseconds>(remainingTime).count());
             // would we poll until then if we could ?
             if (remainingTime < std::chrono::microseconds(timeoutMicroS))
                 _document->checkIdle();
@@ -2420,13 +2422,11 @@ public:
         return eventsSignalled;
     }
 
-    void setDocument(std::shared_ptr<Document> document)
-    {
-        _document = std::move(document);
-    }
+    void setDocument(std::shared_ptr<Document> document) { _document = std::move(document); }
 
     // unusual LOK event from another thread, push into our loop to process.
-    static bool pushToMainThread(LibreOfficeKitCallback callback, int type, const char *p, void *data)
+    static bool pushToMainThread(LibreOfficeKitCallback callback, int type, const char* p,
+                                 void* data)
     {
         if (mainPoll && mainPoll->getThreadOwner() != std::this_thread::get_id())
         {
@@ -2434,10 +2434,22 @@ public:
             std::shared_ptr<std::string> pCopy;
             if (p)
                 pCopy = std::make_shared<std::string>(p, strlen(p));
-            mainPoll->addCallback([=]{
+            mainPoll->addCallback([=] {
                 LOG_TRC("Unusual process callback in main thread");
                 callback(type, pCopy ? pCopy->c_str() : nullptr, data);
             });
+            return true;
+        }
+        return false;
+    }
+
+    // we can also directly push callbacks into the main thread when needed...
+    static bool pushToMainThread(const SocketPoll::CallbackFn& cb)
+    {
+        if (mainPoll && mainPoll->getThreadOwner() != std::this_thread::get_id())
+        {
+            LOG_TRC("Unusual directly push callback to main thread");
+            mainPoll->addCallback(cb);
             return true;
         }
         return false;
@@ -2459,6 +2471,11 @@ KitSocketPoll *KitSocketPoll::mainPoll = nullptr;
 bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char *p, void *data)
 {
     return KitSocketPoll::pushToMainThread(cb, type, p, data);
+}
+
+bool pushToMainThread(const SocketPoll::CallbackFn& cb)
+{
+    return KitSocketPoll::pushToMainThread(cb);
 }
 
 #ifdef IOS
@@ -2822,6 +2839,9 @@ void lokit_main(
     }
 
     LOG_INF("User-data anonymization is " << (AnonymizeUserData ? "enabled." : "disabled."));
+
+    const char* pEnableWebsocketURP = std::getenv("ENABLE_WEBSOCKET_URP");
+    EnableWebsocketURP = std::string(pEnableWebsocketURP) == "true";
 
     assert(!childRoot.empty());
     assert(!sysTemplate.empty());
@@ -3285,6 +3305,38 @@ std::string anonymizeUrl(const std::string& url)
 #else
     return url;
 #endif
+}
+
+bool isURPEnabled() { return EnableWebsocketURP; }
+
+bool startURP(std::shared_ptr<lok::Office> LOKit, void* pReceiveURPFromLOContext,
+              void** ppSendURPToLOContext,
+              int (*fnReceiveURPFromLO)(void* pContext, const signed char* pBuffer, int nLen),
+              int (**pfnSendURPToLO)(void* pContext, const signed char* pBuffer, int nLen))
+{
+    if (!isURPEnabled())
+    {
+        LOG_ERR("URP/WS: Attempted to start a URP session but URP is disabled");
+        return false;
+    }
+    if (URPStartCount > 0)
+    {
+        LOG_WRN("URP/WS: Not starting another URP session as one has already been opened for this "
+                "kit instance");
+        return false;
+    }
+
+    bool coreURPSuccess = LOKit->startURP(pReceiveURPFromLOContext, ppSendURPToLOContext,
+                                          fnReceiveURPFromLO, pfnSendURPToLO);
+
+    if (!coreURPSuccess)
+    {
+        LOG_ERR("URP/WS: tried to start a URP session but core did not let us");
+        return false;
+    }
+
+    URPStartCount++;
+    return true;
 }
 
 #if !MOBILEAPP
