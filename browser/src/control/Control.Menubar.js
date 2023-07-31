@@ -73,6 +73,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('PDF Document (.pdf)'), id: 'exportas-pdf', type: 'action'},
 					{name: _('EPUB (.epub)'), id: 'exportas-epub', type: 'action'}
 				]},
+				{name: _('Rename Document'), id: 'renamedocument', type: 'action'},
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
 				{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id: 'downloadas', type: 'menu', menu: [

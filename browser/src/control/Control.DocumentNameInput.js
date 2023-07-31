@@ -13,8 +13,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 		map.on('wopiprops', this.onWopiProps, this);
 	},
 
-	documentNameConfirm: function() {
-		var value = $('#document-name-input').val();
+	documentNameConfirm: function(value) {
 		if (value !== null && value != '' && value != this.map['wopi'].BaseFileName) {
 			if (this.map['wopi'].UserCanRename && this.map['wopi'].SupportsRename) {
 				if (value.lastIndexOf('.') > 0) {
@@ -45,7 +44,8 @@ L.Control.DocumentNameInput = L.Control.extend({
 
 	onDocumentNameKeyPress: function(e) {
 		if (e.keyCode === 13) { // Enter key
-			this.documentNameConfirm();
+			var value = $('#document-name-input').val();
+			this.documentNameConfirm(value);
 		} else if (e.keyCode === 27) { // Escape key
 			this.documentNameCancel();
 		}

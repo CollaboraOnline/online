@@ -1067,6 +1067,9 @@ L.Map.include({
 		case 'toggledarktheme':
 			this.uiManager.toggleDarkMode();
 			break;
+		case 'renamedocument':
+			this.uiManager.renameDocument();
+			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');
 		}
