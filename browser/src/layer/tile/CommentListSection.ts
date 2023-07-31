@@ -1658,6 +1658,12 @@ export class CommentSection extends CanvasSectionObject {
 		if (commentList.length > 0) {
 			for (var i = 0; i < commentList.length; i++) {
 				comment = commentList[i];
+
+				if (comment.cellRange) {
+				        // convert cellRange e.g. "A1 B2" to its bounds in display twips.
+				        comment.cellPos = this.sectionProperties.docLayer._cellRangeToTwipRect(comment.cellRange).toCoreString();
+				}
+
 				this.adjustComment(comment);
 				if (comment.author in this.map._viewInfoByUserName) {
 					comment.avatar = this.map._viewInfoByUserName[comment.author].userextrainfo.avatar;

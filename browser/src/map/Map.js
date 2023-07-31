@@ -328,7 +328,6 @@ L.Map = L.Evented.extend({
 	sendInitUNOCommands: function() {
 		// TODO: remove duplicated init code
 		app.socket.sendMessage('commandvalues command=.uno:LanguageStatus');
-		app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 		if (this._docLayer._docType === 'spreadsheet') {
 			this._docLayer._gotFirstCellCursor = false;
 			if (this._docLayer.options.sheetGeometryDataEnabled)
@@ -336,6 +335,9 @@ L.Map = L.Evented.extend({
 			this._docLayer.refreshViewData();
 			this._docLayer._update();
 		}
+		// For calc parsing this will need SheetGeometry, so send after
+		// requesting that
+		app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 		this._docLayer._getToolbarCommandsValues();
 	},
 

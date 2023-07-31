@@ -913,7 +913,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 						}
 					}
 					if (commentObject)
-						commentObject.sectionProperties.data.cellPos = section.stringToRectangles(comment.cellPos)[0];
+						commentObject.sectionProperties.data.cellPos = this._cellRangeToTwipRect(comment.cellRange).toRectangle();
 				}
 			}
 
