@@ -3081,7 +3081,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			arrowbackground.addEventListener('keydown', function(event) {
 				if (event.code === 'Enter' || event.ccode === 'Space') {
 					arrowEventHandler();
-					document.getElementById('w2ui-overlay').querySelector('.color-palette-selector').focus();
+					var w2uiElement = document.getElementById('w2ui-overlay');
+					w2uiElement.querySelector('.color-palette-selector').focus();
+					var tabCatcher = document.createElement('div');
+					tabCatcher.tabIndex = 0;
+					tabCatcher.onfocus = function() {
+						w2uiElement.querySelector('.color-palette-selector').focus();
+					};
+					w2uiElement.insertBefore(tabCatcher, w2uiElement.children[0]);
+
+					tabCatcher = document.createElement('div');
+					tabCatcher.tabIndex = 0;
+					tabCatcher.onfocus = function() {
+						w2uiElement.querySelector('.color-palette-selector').focus();
+					};
+					w2uiElement.appendChild(tabCatcher);
 				}
 			});
 			arrowbackground.addEventListener('click', arrowEventHandler);
