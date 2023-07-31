@@ -13,6 +13,7 @@
 
 #include <common/Util.hpp>
 #include <wsd/TileDesc.hpp>
+#include "Socket.hpp"
 
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
@@ -21,7 +22,6 @@
 
 #include "ClientSession.hpp"
 #include "DocumentBroker.hpp"
-#include "Socket.hpp"
 
 #endif
 
@@ -165,5 +165,18 @@ std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly();
 #endif
 
 extern _LibreOfficeKit* loKitPtr;
+
+// Abnormally we sometimes have functions to directly push
+// into the main thread
+bool pushToMainThread(const SocketPoll::CallbackFn& cb);
+
+/// Check if URP is enabled
+bool isURPEnabled();
+
+/// Start a URP connection, checking if URP is enabled and there is not already an active URP session
+bool startURP(std::shared_ptr<lok::Office> LOKit, void* pReceiveURPFromLOContext,
+              void** ppSendURPToLOContext,
+              int (*fnReceiveURPFromLO)(void* pContext, const signed char* pBuffer, int nLen),
+              int (**pfnSendURPToLO)(void* pContext, const signed char* pBuffer, int nLen));
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

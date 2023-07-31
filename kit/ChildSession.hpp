@@ -416,6 +416,12 @@ private:
     bool _isDumpingTiles;
 
     Util::Rectangle _clientVisibleArea;
+
+    void* m_sendURPToLOContext;
+    int (*m_sendURPToLO)(void* pContext, const signed char*, int);
+
+    /// whether there is a URP session created for this ChildSession
+    bool m_hasURP;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
