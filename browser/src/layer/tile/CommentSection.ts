@@ -368,10 +368,10 @@ export class Comment extends CanvasSectionObject {
 		}
 		else if (this.sectionProperties.data.cellPos && this.sectionProperties.docLayer._docType === 'spreadsheet') {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
-			const sizeX = this.sectionProperties.data.cellPos[2];
-			this.size = [Math.round(sizeX * ratio), Math.round(this.sectionProperties.data.cellPos[3] * ratio)];
+			this.size = this.calcCellSize();
 			let startX = this.sectionProperties.data.cellPos[0];
 			if (this.isCalcRTL()) { // Mirroring is done in setPosition
+				const sizeX = this.sectionProperties.data.cellPos[2];
 				startX += sizeX;  // but adjust for width of the cell.
 			}
 			this.showSection = true;
@@ -975,22 +975,37 @@ export class Comment extends CanvasSectionObject {
 	}
 
 	public onDraw (): void {
-		if (this.sectionProperties.docLayer._docType === 'text' && this.sectionProperties.showSelectedCoordinate) {
-			var rectangles: Array<any> = this.sectionProperties.data.rectangles;
-			if (rectangles) {
-				this.context.fillStyle = this.sectionProperties.usedTextColor;
-				this.context.globalAlpha = 0.25;
+		if (this.sectionProperties.showSelectedCoordinate) {
+			if (this.sectionProperties.docLayer._docType === 'text') {
+				var rectangles: Array<any> = this.sectionProperties.data.rectangles;
+				if (rectangles) {
+					this.context.fillStyle = this.sectionProperties.usedTextColor;
+					this.context.globalAlpha = 0.25;
 
-				for (var i: number = 0; i < this.sectionProperties.data.rectangles.length;i ++) {
-					var x = rectangles[i][0] - this.myTopLeft[0];
-					var y = rectangles[i][1] - this.myTopLeft[1];
-					var w = rectangles[i][2] > 3 ? rectangles[i][2]: 3;
-					var h = rectangles[i][3];
+					for (var i: number = 0; i < this.sectionProperties.data.rectangles.length;i ++) {
+						var x = rectangles[i][0] - this.myTopLeft[0];
+						var y = rectangles[i][1] - this.myTopLeft[1];
+						var w = rectangles[i][2] > 3 ? rectangles[i][2]: 3;
+						var h = rectangles[i][3];
 
-					this.context.fillRect(x, y, w , h);
+						this.context.fillRect(x, y, w , h);
+					}
+
+					this.context.globalAlpha = 1;
 				}
+			}
+			else if (this.sectionProperties.docLayer._docType === 'spreadsheet' &&
+				 parseInt(this.sectionProperties.data.tab) === this.sectionProperties.docLayer._selectedPart) {
 
-				this.context.globalAlpha = 1;
+				// For calc comments (aka postits) draw the same sort of square as ScOutputData::DrawNoteMarks
+				// does for offline
+				var margin = 3;
+				var squareDim = 6;
+				// this.size may currently have an artifically wide size if mouseEnter without moveLeave seen
+				// so fetch the real size
+				var x = this.isCalcRTL() ? margin : this.calcCellSize()[0] - (margin + squareDim);
+				this.context.fillStyle = '#FF0000';
+				this.context.fillRect(x, 0, squareDim, squareDim);
 			}
 		}
 	}
@@ -1031,6 +1046,11 @@ export class Comment extends CanvasSectionObject {
 		}
 	}
 
+	public calcCellSize (): number[] {
+		var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+		return [Math.round((this.sectionProperties.data.cellPos[2]) * ratio), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
+	}
+
 	public onMouseEnter (): void {
 		if (this.calcContinueWithMouseEvent()) {
 			// When mouse is above this section, comment's HTML element will be shown.
@@ -1059,8 +1079,7 @@ export class Comment extends CanvasSectionObject {
 		if (this.calcContinueWithMouseEvent()) {
 			if (parseInt(this.sectionProperties.data.tab) === this.sectionProperties.docLayer._selectedPart) {
 				// Revert the changes we did on "onMouseEnter" event.
-				var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
-				this.size = [Math.round((this.sectionProperties.data.cellPos[2]) * ratio), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
+				this.size = this.calcCellSize();
 				if (point) {
 					this.hide();
 				}
