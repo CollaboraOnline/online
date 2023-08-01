@@ -11,7 +11,6 @@ var AdminClusterOverview = AdminSocketBase.extend({
 
     _statsData: new Map(),
     _size: 20,
-    _memoryRequestedInMb: 2000,
 
     _graphDimensions:{
         x: 756,
@@ -119,7 +118,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
 
         card.appendChild(cardContent);
         var parentTile = document.createElement('div');
-        parentTile.className = 'tile is-parent is-6';
+        parentTile.className = 'tile is-parent is-4';
         parentTile.appendChild(card);
         var tileAncestor = document.getElementById('tileAncestor');
         tileAncestor.appendChild(parentTile);
