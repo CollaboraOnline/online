@@ -5,6 +5,63 @@
 // Every "set" function returns the instance. So you can do this:
 // (new DlgYesNo).Title('some title').Text('some text').YesButtonText('yes').NoButtonText('no').YesFunction(function () {/* */}).NoFunction(function() {/** */});
 // "Yes" and "No" buttons call callback function, close the modal and destroy the modal.
+class DlgLoading {
+    _instance: DlgLoading;
+    _modalID: string = "loadingdlg"
+
+    constructor() {
+        this._instance = this;
+        this.initialize();
+    }
+
+    private initialize() {
+        let html: string = this.getModalHTML();
+        let element: HTMLDivElement = document.createElement('div');
+        element.innerHTML = html;
+        document.getElementsByTagName('body')[0].appendChild(element);
+    }
+
+    private getModalHTML(): string {
+        let html: string = ' \
+        <div class="modal" id="modal-__created_id__"> \
+            <div class="modal-background" id="modal-background-__created_id__"></div> \
+            <div class="modal-card"> \
+                <section class="modal-card-body" id="modal-body-__created_id__"> \
+                </section> \
+            </div> \
+        </div>';
+
+        html = html.split('__created_id__').join(String(this._modalID));
+        return html;
+    }
+
+    text(text: string): DlgLoading {
+        let body: HTMLDivElement = <HTMLDivElement>document.getElementById('modal-body-' + String(this._modalID));
+        body.style.display = 'flex';
+        body.style.alignItems = 'center';
+        body.style.justifyContent = 'center';
+        body.style.flexDirection = 'column';
+        let progress: HTMLSpanElement = <HTMLSpanElement>document.createElement('progress');
+        progress.className = 'is-info';
+
+        let p: HTMLParagraphElement = <HTMLParagraphElement>document.createElement('p');
+        p.textContent = text;
+        body.appendChild(progress);
+        body.appendChild(p);
+        return this._instance;
+    }
+
+    open() {
+        let modal = document.getElementById('modal-' + String(this._modalID));
+        modal?.classList.add('is-active');
+    }
+
+    static close() {
+        let modal = document.getElementById('modal-loadingdlg');
+        modal?.classList.remove('is-active');
+        modal?.parentNode?.removeChild(modal);
+    }
+}
 
 class DlgYesNo {
     static _instanceCount: number = 0;
@@ -30,34 +87,39 @@ class DlgYesNo {
     }
 
     private initializeCrossButton() {
-        let element = document.getElementById('modal-' + String(this._modalID));
-        document.getElementById('modal-cross-button-' + String(this._modalID)).onclick = function() {
-            element.classList.remove('is-active');
-            element.parentNode.removeChild(element);
+        let modal = document.getElementById('modal-' + String(this._modalID));
+        let crossButton = document.getElementById('modal-cross-button-' + String(this._modalID))!;
+
+        crossButton.onclick = function () {
+            modal?.classList.remove('is-active');
+            modal?.parentNode?.removeChild(modal);
         };
     }
 
     private initializeBackgroundClick() {
-        let element = document.getElementById('modal-' + String(this._modalID));
-        document.getElementById('modal-background-' + String(this._modalID)).onclick = function() {
-            element.classList.remove('is-active');
-            element.parentNode.removeChild(element);
+        let modal = document.getElementById('modal-' + String(this._modalID));
+        let modalBackground = document.getElementById('modal-background-' + String(this._modalID))!;
+        modalBackground.onclick = function () {
+            modal?.classList.remove('is-active');
+            modal?.parentNode?.removeChild(modal);
         };
     }
 
     private initializeYesButton() {
-        let element = document.getElementById('modal-' + String(this._modalID));
-        document.getElementById('modal-yes-button-' + String(this._modalID)).onclick = function() {
-            element.classList.remove('is-active');
-            element.parentNode.removeChild(element);
+        let modal = document.getElementById('modal-' + String(this._modalID));
+        let yesButton = document.getElementById('modal-yes-button-' + String(this._modalID))!;
+        yesButton.onclick = function () {
+            modal?.classList.remove('is-active');
+            modal?.parentNode?.removeChild(modal);
         };
     }
 
     private initializeNoButton() {
-        let element = document.getElementById('modal-' + String(this._modalID));
-        document.getElementById('modal-no-button-' + String(this._modalID)).onclick = function() {
-            element.classList.remove('is-active');
-            element.parentNode.removeChild(element);
+        let modal = document.getElementById('modal-' + String(this._modalID));
+        let noButton = document.getElementById('modal-no-button-' + String(this._modalID))!;
+        noButton.onclick = function () {
+            modal?.classList.remove('is-active');
+            modal?.parentNode?.removeChild(modal);
         };
     }
 
@@ -113,26 +175,30 @@ class DlgYesNo {
     }
 
     yesFunction(f: any): DlgYesNo {
-        let element = document.getElementById('modal-' + String(this._modalID));
-        document.getElementById('modal-yes-button-' + String(this._modalID)).onclick = function(e: MouseEvent) {
+        let modal = document.getElementById('modal-' + String(this._modalID));
+        let yesButton = document.getElementById('modal-yes-button-' + String(this._modalID))!;
+        yesButton.onclick = function (e: MouseEvent) {
             f(e);
-            element.classList.remove('is-active');
-            element.parentNode.removeChild(element);
+            modal?.classList.remove('is-active');
+            modal?.parentNode?.removeChild(modal);
         };
         return this._instance;
     }
 
     noFunction(f: any): DlgYesNo {
-        let element = document.getElementById('modal-' + String(this._modalID));
-        document.getElementById('modal-no-button-' + String(this._modalID)).onclick = function(e: MouseEvent) {
+        let modal = document.getElementById('modal-' + String(this._modalID));
+        let noButton = document.getElementById('modal-no-button-' + String(this._modalID))!;
+
+        noButton.onclick = function (e: MouseEvent) {
             f(e);
-            element.classList.remove('is-active');
-            element.parentNode.removeChild(element);
+            modal?.classList.remove('is-active');
+            modal?.parentNode?.removeChild(modal);
         };
         return this._instance;
     }
 
     open() {
-        document.getElementById('modal-' + String(this._modalID)).classList.add('is-active');
+        let modal = document.getElementById('modal-' + String(this._modalID));
+        modal?.classList.add('is-active');
     }
 }
