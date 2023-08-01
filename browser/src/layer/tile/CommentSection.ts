@@ -383,14 +383,14 @@ export class Comment extends CanvasSectionObject {
 			splitPosCore.x *= app.dpiScale;
 			splitPosCore.y *= app.dpiScale;
 
-			if (position[0] <= splitPosCore.x)
+			if (position[0] < splitPosCore.x)
 				position[0] += this.documentTopLeft[0];
-			else if (position[0] - this.documentTopLeft[0] <= splitPosCore.x)
+			else if (position[0] - this.documentTopLeft[0] < splitPosCore.x)
 				this.showSection = false;
 
-			if (position[1] <= splitPosCore.y)
+			if (position[1] < splitPosCore.y)
 				position[1] += this.documentTopLeft[1];
-			else if (position[1] - this.documentTopLeft[1] <= splitPosCore.y)
+			else if (position[1] - this.documentTopLeft[1] < splitPosCore.y)
 				this.showSection = false;
 
 			this.setPosition(position[0], position[1]);
