@@ -91,7 +91,7 @@ protected:
 
         // Insert at the front.
         const auto& _ws = _wsList.emplace(
-            _wsList.begin(), Util::make_unique<UnitWebSocket>(
+            _wsList.begin(), std::make_unique<UnitWebSocket>(
                                  socketPoll(), "/cool/" + _wopiSrc + "/ws", getTestname()));
 
         assert((*_ws).get());
@@ -112,8 +112,8 @@ protected:
 
         // Insert at the back.
         const auto& _ws = _wsList.emplace(
-            _wsList.end(), Util::make_unique<UnitWebSocket>(
-                               socketPoll(), "/cool/" + wopiSrc + "/ws", getTestname()));
+            _wsList.end(), std::make_unique<UnitWebSocket>(socketPoll(), "/cool/" + wopiSrc + "/ws",
+                                                           getTestname()));
         assert((*_ws).get());
 
         return wopiSrc;
@@ -127,7 +127,7 @@ protected:
 
         // Insert at the back.
         const auto& _ws = _wsList.emplace(
-            _wsList.end(), Util::make_unique<UnitWebSocket>(
+            _wsList.end(), std::make_unique<UnitWebSocket>(
                                socketPoll(), "/cool/" + _wopiSrc + "/ws", getTestname()));
 
         assert((*_ws).get());
@@ -157,7 +157,7 @@ protected:
 
         LOG_TST("Connecting to local document [" << docFilename << "] with URL: " << documentURL);
         _wsList.emplace_back(
-            Util::make_unique<UnitWebSocket>(socketPoll(), documentURL, getTestname()));
+            std::make_unique<UnitWebSocket>(socketPoll(), documentURL, getTestname()));
 
         return documentURL;
     }

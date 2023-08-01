@@ -1428,17 +1428,6 @@ int main(int argc, char**argv)
         return std::string(s);
     }
 
-    /**
-     * Constructs an object of type T and wraps it in a std::unique_ptr.
-     *
-     * Can be replaced by std::make_unique when we allow C++14.
-     */
-    template<typename T, typename... Args>
-    typename std::unique_ptr<T> make_unique(Args&& ... args)
-    {
-        return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
-    }
-
     /// Dump an object that supports .dumpState into a string.
     /// Helpful for logging.
     template <typename T> std::string dump(const T& object, const std::string& indent = ", ")

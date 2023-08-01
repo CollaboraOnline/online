@@ -152,10 +152,10 @@ inline std::unique_ptr<Poco::Net::HTTPClientSession> createSession(const Poco::U
 {
 #if ENABLE_SSL
     if (uri.getScheme() == "https" || uri.getScheme() == "wss")
-        return Util::make_unique<Poco::Net::HTTPSClientSession>(uri.getHost(), uri.getPort());
+        return std::make_unique<Poco::Net::HTTPSClientSession>(uri.getHost(), uri.getPort());
 #endif
 
-    return Util::make_unique<Poco::Net::HTTPClientSession>(uri.getHost(), uri.getPort());
+    return std::make_unique<Poco::Net::HTTPClientSession>(uri.getHost(), uri.getPort());
 }
 
 /// Uses Poco to make an HTTP GET from the given URI.
