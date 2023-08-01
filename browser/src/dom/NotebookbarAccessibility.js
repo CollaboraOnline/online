@@ -3,7 +3,7 @@
 	This class is used for managing the accessibility keys of notebookbar control.
 */
 
-/* global app NotebookbarAccessibilityDefinitions */
+/* global app NotebookbarAccessibilityDefinitions _ */
 
 /*
 	This class relies on following id convention (example for "Home" tab):
@@ -107,6 +107,7 @@ var NotebookbarAccessibility = function() {
 			}
 			else if (this.mayShowAcceleratorInfoBoxes && (event.keyCode === 18 || (event.keyCode === 18 && event.shiftKey))) { // 18: Alt key.
 				this.resetState();
+				this.setTabDescription(this.getCurrentSelectedTab());
 				this.addTabAccelerators();
 				this.accessibilityInputElement.focus();
 			}
@@ -125,7 +126,6 @@ var NotebookbarAccessibility = function() {
 
 	this.onInputBlur = function() {
 		document.body.classList.remove('activate-info-boxes');
-		app.map._textInput._abortComposition({ type: 'Notebookbar Accessibility' });
 		this.removeFocusFromTab();
 		this.resetState();
 	};
@@ -188,18 +188,23 @@ var NotebookbarAccessibility = function() {
 		if (this.filteredItem !== null) {
 			var element = document.getElementById(this.filteredItem.id);
 			if (element) {
-				this.removeFocusFromTab();
-				element.click();
-				this.addTabFocus();
 				if (this.state === 0) {
+					this.removeFocusFromTab();
+					element.click();
+					this.addTabFocus();
 					this.setupAcceleratorsForCurrentTab(element.id);
 					this.combination = null;
 					this.accessibilityInputElement.value = '';
+					this.setTabDescription(element);
 					this.accessibilityInputElement.focus();
 					this.state = 1;
 				}
-				else if (this.filteredItem.focusBack === true) {
-					this.focusToMap();
+				else if (this.state === 1) {
+					this.setTabItemDescription(element);
+					element.click();
+					if (this.filteredItem.focusBack === true) {
+						this.focusToMap();
+					}
 				}
 			}
 			this.filteredItem = null;
@@ -232,10 +237,27 @@ var NotebookbarAccessibility = function() {
 		return document.querySelector('button.ui-tab.notebookbar.selected');
 	};
 
+	this.setTabDescription = function(tabElem) {
+		var tabDescr = tabElem ? tabElem.textContent + ' ' + _('tab') + ' ' + _('selected') : '';
+		this.accessibilityInputElement.setAttribute('aria-description', tabDescr);
+	};
+
+	this.setTabItemDescription = function(element) {
+		var descr = '';
+		if (element) {
+			var button = element.hasAttribute('alt') ? element : element.querySelector('button[alt]');
+			if (button) {
+				descr = button.getAttribute('alt');
+			}
+		}
+		this.accessibilityInputElement.setAttribute('aria-description', descr);
+	};
+
 	this.resetState = function() {
 		this.removeAllInfoBoxes();
 		this.state = 0;
 		this.accessibilityInputElement.value = '';
+		this.accessibilityInputElement.setAttribute('aria-description', '');
 		this.combination = null;
 		this.mayShowAcceleratorInfoBoxes = false;
 		this.filteredItem = null;
@@ -362,6 +384,13 @@ var NotebookbarAccessibility = function() {
 	this.initAccessibilityInputElement = function() {
 		// Create an input element for catching the events and prevent document from catching them.
 		this.accessibilityInputElement = document.createElement('input');
+		// type = 'submit' prevents the screen reader to report something like: "editable blank",
+		// when <alt> is pressed, since at start the input field is empty and obviously editable;
+		// note that an input element with type 'submit' still receives keyboard events
+		this.accessibilityInputElement.type = 'submit';
+		// role = 'tablist' prevents the screen reader to report "Submit button" when <alt> is pressed
+		// screen reader uses to report 'tablist' role as 'tab control'
+		this.accessibilityInputElement.setAttribute('role', 'tablist');
 		this.accessibilityInputElement.style.width = this.accessibilityInputElement.style.height = '0';
 		this.accessibilityInputElement.id = 'accessibilityInputElement';
 		this.accessibilityInputElement.onfocus = this.onInputFocus.bind(this);
