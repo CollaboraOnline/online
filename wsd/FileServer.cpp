@@ -543,7 +543,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 endPoint == "adminSettings.html" ||
                 endPoint == "adminHistory.html" ||
                 endPoint == "adminAnalytics.html" ||
-                endPoint == "adminLog.html")
+                endPoint == "adminLog.html" ||
+                endPoint == "adminClusterOverview.html")
             {
                 preprocessAdminFile(request, requestDetails, socket);
                 return;
@@ -1277,6 +1278,14 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
 
     const std::string escapedAccessToken = Util::encodeURIComponent(jwtToken, "'");
     Poco::replaceInPlace(templateFile, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
+    std::string bodyPath = std::string();
+    if (relPath == "/browser/dist/admin/adminClusterOverview.html") {
+        bodyPath = Poco::Path(relPath).setFileName("adminClusterOverview.html").toString();
+    } else {
+        bodyPath = Poco::Path(relPath).setFileName("adminBody.html").toString();
+    }
+    std::string bodyFile = *getUncompressedFile(bodyPath);
+    Poco::replaceInPlace(templateFile, std::string("<!--%BODY%-->"), bodyFile);
     Poco::replaceInPlace(templateFile, std::string("<!--%MAIN_CONTENT%-->"), adminFile); // Now template has the main content..
 
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
