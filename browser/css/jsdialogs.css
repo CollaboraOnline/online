@@ -14,6 +14,11 @@
 	display: flex;
 }
 
+.jsdialog.ui-treeview-body {
+	min-height: 300px;
+	max-height: none;
+}
+
 .jsdialog-overlay.cancellable {
 	-webkit-animation: none;
 	animation: none;
@@ -200,7 +205,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	overflow: auto;
 	max-height: 500px;
 	max-width: 700px;
-	width: max-content;
 }
 
 /* AccessibilityCheckDialog hack to prevent huge height in Firefox */
@@ -382,10 +386,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	width: 100%;
 }
 
-.ui-treeview.empty .ui-treeview-body {
-	color: var(--color-text-lighter);
-}
-
 .ui-treeview-cell.with-sub-dialog {
 	cursor: context-menu;
 }
@@ -429,17 +429,9 @@ input[type='checkbox'].autofilter, .jsdialog input[type='checkbox'] {
 	margin: 1px 8px;
 }
 
-[data-theme='dark'] input[type='checkbox'].autofilter, .jsdialog input[type='checkbox'] {
-	background: url('images/dark/lc_checkboxoff.svg') no-repeat center;
-}
-
 input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:checked {
 	border-color: transparent;
 	background-image: url('images/lc_checkbox.svg');
-}
-
-[data-theme='dark'] input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:checked {
-	background-image: url('images/dark/lc_checkbox.svg');
 }
 
 .ui-treeview-entry span {
@@ -568,12 +560,6 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	color: var(--color-text-lighter);
 }
 
-/* text label */
-
-.ui-dialog-content .jsdialog.ui-text {
-	padding-inline-start: 8px;
-}
-
 /* spinfield */
 
 .spinfieldcontainer input {
@@ -684,6 +670,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* ui-textarea */
 .jsdialog.ui-textarea {
+	max-width: 400px;
 	color: var(--color-text-dark);
 	background-color: var(--color-background-dark);
 	border: 1px solid var(--color-border-dark);
@@ -788,11 +775,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background: url('images/lc_checkbox.svg') no-repeat center;
 }
 
-[data-theme='dark'] #mobile-wizard #toggle_all.checkbutton + #select_current,
-.autofilter-container #select_current {
-	background: url('images/dark/lc_checkbox.svg') no-repeat center;
-}
-
 .autofilter-container #select_current {
 	/* Same size as #toggle_all.checkbutton > input */
 	height: 18px;
@@ -804,11 +786,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #mobile-wizard #toggle_all.checkbutton + #select_current + #unselect_current,
 .autofilter-container #unselect_current {
 	background: url('images/lc_checkboxoff.svg') no-repeat center;
-}
-
-[data-theme='dark'] #mobile-wizard #toggle_all.checkbutton + #select_current + #unselect_current,
-.autofilter-container #unselect_current {
-	background: url('images/dark/lc_checkboxoff.svg') no-repeat center;
 }
 
 .autofilter-container #unselect_current {
@@ -1024,15 +1001,6 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: table-cell !important;
 	float: right;
 	margin: 5px 0px 5px 5px;
-}
-
-.jsdialog.menubutton[disabled] {
-	background-color: var(--color-background-lighter) !important;
-	color: var(--color-text-lighter) !important;
-}
-
-.jsdialog.menubutton[disabled] .arrow {
-	border-top-color: var(--color-text-lighter);
 }
 
 /* sum button in formulabar */
@@ -1385,51 +1353,13 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	height: 28px;
 	border: 1px solid var(--color-border);
 	flex-grow: 1;
+	resize: none !important;
+	max-width: unset !important;
+	font-size: calc(var(--default-font-size)*1.2) !important;
+	line-height: 1.2;
+	color: var(--color-main-text);
 	background-color: var(--color-background-lighter);
 	border-radius: var(--border-radius) 0 0 var(--border-radius);
-}
-
-.ui-custom-textarea {
-	overflow: auto;
-	display: grid;
-}
-
-.ui-custom-textarea.focused {
-	border: 1px solid var(--color-primary) !important;
-}
-
-.ui-custom-textarea,
-.ui-custom-textarea-cursor-layer,
-.ui-custom-textarea-text-layer {
-	font-family: monospace;
-	line-height: 1.2;
-	font-size: calc(var(--default-font-size)*1.2) !important;
-	color: var(--color-main-text);
-	overflow-wrap: anywhere;
-}
-
-.ui-custom-textarea-cursor-layer,
-.ui-custom-textarea-text-layer {
-	padding: 4px;
-	grid-column: 1;
-	grid-row: 1;
-	white-space: pre-wrap;
-	text-wrap: wrap;
-}
-
-.ui-custom-textarea-cursor-layer {
-	color: transparent;
-	pointer-events: none;
-}
-
-.ui-custom-textarea.focused .ui-custom-textarea-cursor-layer span.cursor:not(.hidden) {
-	border-left: 1px solid black;
-	margin-left: -1px;
-}
-
-.ui-custom-textarea-cursor-layer span.selection:not(.hidden) {
-	background-color: var(--color-primary-darker);
-	color: var(--color-primary-text);
 }
 
 #sc_input_window.formulabar:focus {
@@ -1534,29 +1464,4 @@ div [id^='TemplateDialog'] {
 
 #CharacterPropertiesDialog {
 	min-width: 656px;
-}
-
-/* Keyboard input keys */
-kbd,
-.kbd {
-	background-color: var(--color-background-dark);
-	border-radius: var(--border-radius);
-	border: 1px solid var(--color-border-dark);
-	color: var(--color-text-dark);
-	display: inline-block;
-	font-family: monospace;
-	font-size: .85em;
-	line-height: 1;
-	padding: 4px;
-	white-space: nowrap;
-}
-
-.kbd--plus {
-	color: var(--color-text-dark);
-	padding: 0 4px;
-	font-size: 0.85em;
-}
-
-.warn-copy-paste {
-	width: 100%;
 }
