@@ -74,7 +74,12 @@ var AdminClusterOverview = AdminSocketBase.extend({
 
         var cardTitle = document.createElement('p');
         cardTitle.className = 'title has-text-centered';
-        cardTitle.textContent = server.serverId;
+        if (server.podname) {
+            cardTitle.textContent = server.podname;
+        } else {
+            console.warn('podname doesnot exist, using serverId instead of podname on card title');
+            cardTitle.textContent = server.serverId;
+        }
         cardContent.appendChild(cardTitle);
 
         var mainTile = document.createElement('div');
@@ -99,13 +104,18 @@ var AdminClusterOverview = AdminSocketBase.extend({
         mainTile.appendChild(memorySubTitle);
 
         tileParent = this.createGraph('mem',  data.mem, server.memory);
-
         mainTile.appendChild(tileParent);
 
+        var horizontalTile = document.createElement('div');
+        horizontalTile.className = 'tile is-fullwidth';
         tileParent = this.createParentTile(_('RouteToken'), server.routeToken, 'route');
-        mainTile.appendChild(tileParent);
+        horizontalTile.appendChild(tileParent);
+
+        tileParent = this.createParentTile(_('ServerId'), server.serverId, 'serverId');
+        horizontalTile.appendChild(tileParent);
 
         cardContent.appendChild(mainTile);
+        cardContent.appendChild(horizontalTile);
 
         card.appendChild(cardContent);
         var parentTile = document.createElement('div');
@@ -360,21 +370,26 @@ var AdminClusterOverview = AdminSocketBase.extend({
         return tileParent;
     },
 
-    createAnchor: function(srvStat) {
+    createAnchor: function(server) {
         var anchor = document.createElement('a');
         anchor.className = 'list-item';
-        anchor.id = 'anchor' + srvStat.serverId;
-        anchor.href = srvStat.ingressUrl + '/browser/dist/admin/admin.html?RouteToken=' + srvStat.routeToken;
+        anchor.id = 'anchor' + server.serverId;
+        anchor.href = server.ingressUrl + '/browser/dist/admin/admin.html?RouteToken=' + server.routeToken;
         anchor.setAttribute('target', '_blank');
-        anchor.textContent = srvStat.serverId;
+        if (server.podname) {
+            anchor.textContent = server.podname;
+        } else {
+            console.warn('podname doesnot exist, using serverId instead of podname on anchor tag');
+            anchor.textContent = server.serverId;
+        }
         return anchor;
     },
 
 
-    updateAnchor: function(srvStat) {
-        var anchor = document.getElementById('anchor' + srvStat.serverId);
-        anchor.id = 'anchor' + srvStat.serverId;
-        anchor.href = srvStat.ingressUrl + '/browser/dist/admin/admin.html?RouteToken=' + srvStat.routeToken;
+    updateAnchor: function(server) {
+        var anchor = document.getElementById('anchor' + server.serverId);
+        anchor.id = 'anchor' + server.serverId;
+        anchor.href = server.ingressUrl + '/browser/dist/admin/admin.html?RouteToken=' + server.routeToken;
     },
 
     onSocketMessage: function (e) {
