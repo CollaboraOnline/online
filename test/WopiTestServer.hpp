@@ -278,7 +278,7 @@ protected:
     {
         std::unique_ptr<http::Response> httpResponse = assertCheckFileInfoRequest(request);
         if (!httpResponse)
-            httpResponse = Util::make_unique<http::Response>(http::StatusCode::OK);
+            httpResponse = std::make_unique<http::Response>(http::StatusCode::OK);
 
         if (httpResponse->statusLine().statusCategory() ==
             http::StatusLine::StatusCodeClass::Successful)
@@ -318,7 +318,7 @@ protected:
     {
         std::unique_ptr<http::Response> httpResponse = assertGetFileRequest(request);
         if (!httpResponse)
-            httpResponse = Util::make_unique<http::Response>(http::StatusCode::OK);
+            httpResponse = std::make_unique<http::Response>(http::StatusCode::OK);
 
         if (httpResponse->statusLine().statusCategory() ==
             http::StatusLine::StatusCodeClass::Successful)

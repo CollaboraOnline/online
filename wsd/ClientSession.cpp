@@ -2239,7 +2239,7 @@ void ClientSession::enqueueSendMessage(const std::shared_ptr<Message>& data)
     if (data->firstTokenMatches("tile:"))
     {
         // Avoid sending tile if it has the same wireID as the previously sent tile
-        tile = Util::make_unique<TileDesc>(TileDesc::parse(data->firstLine()));
+        tile = std::make_unique<TileDesc>(TileDesc::parse(data->firstLine()));
         auto iter = _oldWireIds.find(tile->generateID());
         if(iter != _oldWireIds.end() && tile->getWireId() != 0 && tile->getWireId() == iter->second)
         {

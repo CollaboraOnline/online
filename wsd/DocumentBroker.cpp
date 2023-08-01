@@ -141,9 +141,9 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _cursorWidth(0)
     , _cursorHeight(0)
     , _poll(
-          Util::make_unique<DocumentBrokerPoll>("doc" SHARED_DOC_THREADNAME_SUFFIX + _docId, *this))
+          std::make_unique<DocumentBrokerPoll>("doc" SHARED_DOC_THREADNAME_SUFFIX + _docId, *this))
     , _stop(false)
-    , _lockCtx(Util::make_unique<LockContext>())
+    , _lockCtx(std::make_unique<LockContext>())
     , _tileVersion(0)
     , _debugRenderedTileCount(0)
     , _loadDuration(0)
@@ -1162,7 +1162,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 
         _filename = fileInfo.getFilename();
 #if !MOBILEAPP
-        _quarantine = Util::make_unique<Quarantine>(*this, _filename);
+        _quarantine = std::make_unique<Quarantine>(*this, _filename);
 #endif
 
         if (!templateSource.empty())
@@ -1187,8 +1187,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         dontUseCache = true;
 #endif
 
-        _tileCache = Util::make_unique<TileCache>(_storage->getUri().toString(),
-                                                  _saveManager.getLastModifiedTime(), dontUseCache);
+        _tileCache = std::make_unique<TileCache>(_storage->getUri().toString(),
+                                                 _saveManager.getLastModifiedTime(), dontUseCache);
         _tileCache->setThreadOwner(std::this_thread::get_id());
     }
 
@@ -1715,8 +1715,8 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
 
     LOG_DBG("Uploading [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
 
-    _uploadRequest = Util::make_unique<UploadRequest>(uriAnonym, newFileModifiedTime, session,
-                                                      isSaveAs, isExport, isRename);
+    _uploadRequest = std::make_unique<UploadRequest>(uriAnonym, newFileModifiedTime, session,
+                                                     isSaveAs, isExport, isRename);
 
     StorageBase::AsyncUploadCallback asyncUploadCallback =
         [this](const StorageBase::AsyncUpload& asyncUp)

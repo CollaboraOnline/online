@@ -106,7 +106,7 @@ public:
         LOK_ASSERT_EQUAL_MESSAGE("Unexpected overwritting the document in storage", false, force);
 
         // Internal Server Error.
-        return Util::make_unique<http::Response>(http::StatusCode::InternalServerError);
+        return std::make_unique<http::Response>(http::StatusCode::InternalServerError);
     }
 
     bool onDocumentModified(const std::string& message) override
