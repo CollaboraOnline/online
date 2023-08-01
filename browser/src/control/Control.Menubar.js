@@ -127,6 +127,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
 					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
+					{name: _('Hide Menu Bar'), id: 'togglemenubar', type: 'action'},
 					{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 					{uno: '.uno:SidebarDeck.PropertyDeck', name: _UNO('.uno:Sidebar')},
 					{uno: '.uno:Navigator', id: 'navigator'},
@@ -419,6 +420,7 @@ L.Control.Menubar = L.Control.extend({
 				   {name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 				   {name: _('Show Ruler'), id: 'showruler', type: 'action'},
 				   {name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
+				   {name: _('Hide Menu Bar'), id: 'togglemenubar', type: 'action'},
 				   {name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 				   {name: _('Master View'), uno: '.uno:SlideMasterPage'},
 				   {uno: '.uno:SidebarDeck.PropertyDeck', name: _UNO('.uno:Sidebar')},
@@ -565,7 +567,8 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 					{uno: '.uno:SidebarDeck.PropertyDeck', name: _UNO('.uno:Sidebar')},
 					{uno: '.uno:Navigator', id: 'navigator'},
-					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'}
+					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
+					{name: _('Hide Menu Bar'), id: 'togglemenubar', type: 'action'},
 				])},
 			{name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
@@ -693,6 +696,7 @@ L.Control.Menubar = L.Control.extend({
 				   {type: 'separator'},
 				   {name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 				   {name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
+				   {name: _('Hide Menu Bar'), id: 'togglemenubar', type: 'action'},
 				   {name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 				   {uno: '.uno:SidebarDeck.PropertyDeck', name: _UNO('.uno:Sidebar')},
 				   {uno: '.uno:Navigator', id: 'navigator'},
@@ -1266,7 +1270,7 @@ L.Control.Menubar = L.Control.extend({
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'downloadas-odg', !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf', // file menu
 			!window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf', !window.ThisIsAMobileApp ? 'exportepub' : 'downloadas-epub', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'downloadas-csv', 'closedocument', // file menu
-			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'showresolved', 'toggledarktheme', // view menu
+			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', 'showstatusbar', 'togglemenubar', 'showresolved', 'toggledarktheme', // view menu
 			'about', 'keyboard-shortcuts', 'latestupdates', 'feedback', 'online-help', 'report-an-issue', // help menu
 			'insertcomment'
 		]
@@ -1877,6 +1881,8 @@ L.Control.Menubar = L.Control.extend({
 			}
 		} else if (id === 'showstatusbar') {
 			this._map.uiManager.toggleStatusBar();
+		} else if (id === 'togglemenubar') {
+			this._map.uiManager.toggleMenubar();
 		} else if (id === 'fullscreen-presentation' && this._map.getDocType() === 'presentation') {
 			this._map.fire('fullscreen');
 		} else if (id === 'presentation-currentslide' && this._map.getDocType() === 'presentation') {
