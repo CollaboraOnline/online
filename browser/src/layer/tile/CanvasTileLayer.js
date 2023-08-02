@@ -4436,29 +4436,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._cellCursorMarker = undefined;
 		}
 		this._removeDropDownMarker();
-
-		//hyperlink pop-up from here
-		if (this._lastFormula && this._cellCursorMarker && this._lastFormula.substring(1, 10) == 'HYPERLINK')
-		{
-			var formula = this._lastFormula;
-			var targetURL = formula.substring(11, formula.length - 1).split(',')[0];
-			targetURL = targetURL.split('"').join('');
-			if (targetURL.startsWith('#')) {
-				targetURL = targetURL.split(';')[0];
-			} else {
-				targetURL = this._map.makeURLFromStr(targetURL);
-			}
-
-			this._closeURLPopUp();
-			if (targetURL) {
-				this._showURLPopUp(this._cellCursor.getNorthEast(), targetURL);
-			}
-
-		}
-		else if (this._map.hyperlinkPopup)
-		{
-			this._closeURLPopUp();
-		}
+		this._closeURLPopUp();
 	},
 
 	_onValidityListButtonMsg: function(textMsg) {
