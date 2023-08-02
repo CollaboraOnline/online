@@ -1278,15 +1278,14 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
 
     const std::string escapedAccessToken = Util::encodeURIComponent(jwtToken, "'");
     Poco::replaceInPlace(templateFile, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
-    std::string bodyPath = std::string();
     if (relPath == "/browser/dist/admin/adminClusterOverview.html") {
-        bodyPath = Poco::Path(relPath).setFileName("adminClusterOverview.html").toString();
+        Poco::replaceInPlace(templateFile, std::string("<!--%BODY%-->"), adminFile);
     } else {
-        bodyPath = Poco::Path(relPath).setFileName("adminBody.html").toString();
+        std::string bodyPath = Poco::Path(relPath).setFileName("adminBody.html").toString();
+        std::string bodyFile = *getUncompressedFile(bodyPath);
+        Poco::replaceInPlace(templateFile, std::string("<!--%BODY%-->"), bodyFile);
+        Poco::replaceInPlace(templateFile, std::string("<!--%MAIN_CONTENT%-->"), adminFile);  // Now template has the main content..
     }
-    std::string bodyFile = *getUncompressedFile(bodyPath);
-    Poco::replaceInPlace(templateFile, std::string("<!--%BODY%-->"), bodyFile);
-    Poco::replaceInPlace(templateFile, std::string("<!--%MAIN_CONTENT%-->"), adminFile); // Now template has the main content..
 
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
     std::string brandFooter;
