@@ -997,15 +997,18 @@ export class Comment extends CanvasSectionObject {
 			else if (this.sectionProperties.docLayer._docType === 'spreadsheet' &&
 				 parseInt(this.sectionProperties.data.tab) === this.sectionProperties.docLayer._selectedPart) {
 
-				// For calc comments (aka postits) draw the same sort of square as ScOutputData::DrawNoteMarks
-				// does for offline
-				var margin = 3;
-				var squareDim = 6;
-				// this.size may currently have an artifically wide size if mouseEnter without moveLeave seen
-				// so fetch the real size
-				var x = this.isCalcRTL() ? margin : this.calcCellSize()[0] - (margin + squareDim);
-				this.context.fillStyle = '#FF0000';
-				this.context.fillRect(x, 0, squareDim, squareDim);
+				var cellSize = this.calcCellSize();
+				if (cellSize[0] !== 0 && cellSize[1] !== 0) { // don't draw notes in hidden cells
+					// For calc comments (aka postits) draw the same sort of square as ScOutputData::DrawNoteMarks
+					// does for offline
+					var margin = 3;
+					var squareDim = 6;
+					// this.size may currently have an artifically wide size if mouseEnter without moveLeave seen
+					// so fetch the real size
+					var x = this.isCalcRTL() ? margin : cellSize[0] - (margin + squareDim);
+					this.context.fillStyle = '#FF0000';
+					this.context.fillRect(x, 0, squareDim, squareDim);
+				}
 			}
 		}
 	}
