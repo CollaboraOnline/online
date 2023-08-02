@@ -2529,7 +2529,12 @@ w2utils.event = {
             if (typeof options.onRender === 'function' && typeof options.render !== 'function') options.render = options.onRender;
             // since only one overlay can exist at a time
             $.fn.w2menuClick = function (event, index) {
-                var keepOpen = options.keepOpen || false;
+                if (event.type === 'keypress') {
+					if (event.code !== 'Enter' && event.code !== 'Space')
+						return;
+				}
+
+				var keepOpen = options.keepOpen || false;
                 if (['radio', 'check'].indexOf(options.type) != -1) {
                     if (event.shiftKey || event.metaKey || event.ctrlKey) keepOpen = true;
                 }
@@ -2554,7 +2559,12 @@ w2utils.event = {
                 }
             };
             $.fn.w2menuDown = function (event, index) {
-                var $el  = $(event.target).parents('tr');
+                if (event.type === 'keydown') {
+					if (event.code !== 'Enter' && event.code !== 'Space')
+						return;
+				}
+
+				var $el  = $(event.target).parents('tr');
                 var tmp  = $el.find('.w2ui-icon');
                 if ((options.type == 'check') || (options.type == 'radio')) {
                    var item = options.items[index];
@@ -2733,8 +2743,14 @@ w2utils.event = {
                         menu_html +=
                             '<tr index="'+ f + '" style="'+ (mitem.style ? mitem.style : '') +'" '+ (mitem.tooltip ? 'title="'+ w2utils.lang(mitem.tooltip) +'"' : '') +
                             '        class="'+ bg +' '+ (options.index === f ? 'w2ui-selected' : '') + ' ' + (mitem.disabled === true ? 'w2ui-disabled' : '') +'"'+
+							'        tabIndex=0' +
                             '        onmousedown="if ('+ (mitem.disabled === true ? 'true' : 'false') + ') return;'+
                             '               jQuery.fn.w2menuDown(event, \''+ f +'\');"'+
+                            '        onkeydown="if ('+ (mitem.disabled === true ? 'true' : 'false') + ') return;'+
+                            '               jQuery.fn.w2menuDown(event, \''+ f +'\');"'+
+                            '        onkeypress="event.stopPropagation(); '+
+                            '               if ('+ (mitem.disabled === true ? 'true' : 'false') + ') return;'+
+                            '               jQuery.fn.w2menuClick(event, \''+ f +'\');"'+
                             '        onclick="event.stopPropagation(); '+
                             '               if ('+ (mitem.disabled === true ? 'true' : 'false') + ') return;'+
                             '               jQuery.fn.w2menuClick(event, \''+ f +'\');">'+
