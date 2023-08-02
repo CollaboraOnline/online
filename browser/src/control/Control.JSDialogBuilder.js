@@ -2984,14 +2984,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var id = data.command.substr('.uno:'.length);
 			div.id = id;
+			div.tabIndex = -1;
 
 			div.title = data.text;
 			builder.map.uiManager.enableTooltip(div);
 
 			var icon = builder._createIconURL(data.command);
 			var buttonId = id + 'img';
-			var button = L.DomUtil.create('img', 'ui-content unobutton', div);
-			L.LOUtil.setImage(button, icon.split('/').pop(), builder.map.getDocType());
+			var button = L.DomUtil.create('button', 'ui-content unobutton', div);
+			button.style.background = 'url(' + L.LOUtil.getImageURL(icon.split('/').pop(), builder.map.getDocType()) + ')';
 			button.id = buttonId;
 			button.setAttribute('alt', id);
 
