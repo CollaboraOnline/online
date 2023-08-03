@@ -1079,7 +1079,7 @@ void Admin::updateMonitors(std::vector<std::pair<std::string,int>>& oldMonitors)
     }
 
     std::unordered_map<std::string, bool> currentMonitorMap;
-    for (auto monitor : getMonitorList())
+    for (const auto& monitor : getMonitorList())
     {
         currentMonitorMap[monitor.first] = true;
     }
