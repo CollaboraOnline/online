@@ -276,7 +276,7 @@ global.getConditionalFormatMenuHtml = getConditionalFormatMenuHtml;
 
 function getInsertTablePopupHtml() {
 	return '<div id="inserttable-wrapper">\
-					<div id="inserttable-popup" class="inserttable-pop ui-widget ui-corner-all">\
+					<div id="inserttable-popup" class="inserttable-pop ui-widget ui-corner-all" tabIndex=0>\
 						<div class="inserttable-grid"></div>\
 						<div id="inserttable-status" class="cool-font" style="padding: 5px;"><br/></div>\
 					</div>\
@@ -289,6 +289,9 @@ function insertTable() {
 	var $grid = $('.inserttable-grid');
 	var $status = $('#inserttable-status');
 
+	var selectedRow = 1;
+	var selectedColumn = 1;
+
 	// init
 	for (var r = 0; r < rows; r++) {
 		var $row = $('<div/>').addClass('row');
@@ -299,33 +302,87 @@ function insertTable() {
 		}
 	}
 
+	var sendInsertMessageFunction = function(col, row) {
+		$('.col').removeClass('bright');
+		$status.html('<br/>');
+		var msg = 'uno .uno:InsertTable {' +
+			' "Columns": { "type": "long","value": '
+			+ col +
+			' }, "Rows": { "type": "long","value": '
+			+ row + ' }}';
+
+		app.socket.sendMessage(msg);
+		closePopup();
+	};
+
+	var highlightFunction = function(col, row) {
+		$('.col').removeClass('bright');
+		$('.row:nth-child(-n+' + row + ') .col:nth-child(-n+' + col + ')')
+			.addClass('bright');
+		$status.html(col + 'x' + row);
+	};
+
+	if (document.getElementById('inserttable-popup')) {
+		document.getElementById('inserttable-popup').addEventListener('keydown', function(event) {
+			if (event.code === 'ArrowLeft') {
+				if (selectedColumn > 1)
+					selectedColumn--;
+
+				highlightFunction(selectedColumn, selectedRow);
+			}
+			else if (event.code === 'ArrowRight') {
+				if (selectedColumn < 10)
+					selectedColumn++;
+
+				highlightFunction(selectedColumn, selectedRow);
+			}
+			else if (event.code === 'ArrowUp') {
+				if (selectedRow > 1)
+					selectedRow--;
+
+				highlightFunction(selectedColumn, selectedRow);
+			}
+			else if (event.code === 'ArrowDown') {
+				if (selectedRow < 10)
+					selectedRow++;
+
+				highlightFunction(selectedColumn, selectedRow);
+			}
+			else if (event.code === 'Escape' || event.code === 'Tab') {
+				event.preventDefault();
+				event.stopPropagation();
+				var popUp = document.getElementById('w2ui-overlay');
+				popUp.remove();
+				app.map.focus();
+			}
+			else if (event.code === 'Enter') {
+				sendInsertMessageFunction(selectedColumn, selectedRow);
+			}
+			else if (event.code === 'Space') {
+				sendInsertMessageFunction(selectedColumn, selectedRow);
+			}
+		});
+	}
+
 	// events
 	$grid.on({
 		mouseover: function () {
 			var col = $(this).index() + 1;
 			var row = $(this).parent().index() + 1;
-			$('.col').removeClass('bright');
-			$('.row:nth-child(-n+' + row + ') .col:nth-child(-n+' + col + ')')
-				.addClass('bright');
-			$status.html(col + 'x' + row);
-
+			highlightFunction(col, row);
 		},
 		click: function() {
 			var col = $(this).index() + 1;
 			var row = $(this).parent().index() + 1;
-			$('.col').removeClass('bright');
-			$status.html('<br/>');
-			var msg = 'uno .uno:InsertTable {' +
-				' "Columns": { "type": "long","value": '
-				+ col +
-				' }, "Rows": { "type": "long","value": '
-				+ row + ' }}';
-
-			app.socket.sendMessage(msg);
-
-			closePopup();
+			sendInsertMessageFunction(col, row);
 		}
 	}, '.col');
+
+	if (document.getElementById('inserttable-popup')) {
+		setTimeout(function() {
+			document.getElementById('inserttable-popup').focus();
+		}, 100);
+	}
 }
 
 var shapes = {
