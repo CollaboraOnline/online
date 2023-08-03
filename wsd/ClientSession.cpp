@@ -326,7 +326,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
     }
 }
 
-void ClientSession::onTileProcessed(const std::string& tileID)
+void ClientSession::onTileProcessed(const std::string_view tileID)
 {
     auto iter = std::find_if(_tilesOnFly.begin(), _tilesOnFly.end(),
     [&tileID](const std::pair<std::string, std::chrono::steady_clock::time_point>& curTile)
@@ -830,9 +830,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "tileprocessed"))
     {
-        std::string tileID;
+        std::string tileIDs;
         if (tokens.size() != 2 ||
-            !getTokenString(tokens[1], "tile", tileID))
+            !getTokenString(tokens[1], "tile", tileIDs))
         {
             // Be forgiving and log instead of disconnecting.
             // sendTextFrameAndLogError("error: cmd=tileprocessed kind=syntax");
@@ -840,7 +840,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             return true;
         }
 
-        onTileProcessed(tileID);
+        // call onTileProcessed on each tileID of tileid1, tileid2, ...
+        auto lambda = [this](size_t /*nIndex*/, const std::string_view token){
+            onTileProcessed(token);
+            return false;
+        };
+        StringVector::tokenize_foreach(lambda, tileIDs.data(), tileIDs.size(), ',');
 
         docBroker->sendRequestedTiles(client_from_this());
         return true;
