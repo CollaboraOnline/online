@@ -582,6 +582,11 @@ bool SocketPoll::insertNewUnixSocket(
 {
     LOG_DBG("Connecting to local UDS " << location);
     const int fd = socket(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK, 0);
+    if (fd < 0)
+    {
+        LOG_SYS("Failed to connect to unix socket at " << location);
+        return false;
+    }
 
     struct sockaddr_un addrunix;
     std::memset(&addrunix, 0, sizeof(addrunix));
@@ -594,7 +599,7 @@ bool SocketPoll::insertNewUnixSocket(
     memcpy(&addrunix.sun_path[1], location.c_str(), location.length());
 
     const int res = connect(fd, (const struct sockaddr*)&addrunix, sizeof(addrunix));
-    if (fd < 0 || (res < 0 && errno != EINPROGRESS))
+    if (res < 0 && errno != EINPROGRESS)
     {
         LOG_SYS("Failed to connect to unix socket at " << location);
         ::close(fd);
