@@ -716,7 +716,11 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
         const std::string relPath = path + '/' + currentFile->d_name;
         struct stat fileStat;
-        stat ((basePath + relPath).c_str(), &fileStat);
+        if (stat ((basePath + relPath).c_str(), &fileStat) != 0)
+        {
+            LOG_ERR("Failed to stat " << relPath);
+            continue;
+        }
 
         if (S_ISDIR(fileStat.st_mode))
             readDirToHash(basePath, relPath);
