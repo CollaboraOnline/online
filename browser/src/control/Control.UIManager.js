@@ -583,6 +583,9 @@ L.Control.UIManager = L.Control.extend({
 		}
 
 		this.customButtons.push(button);
+		if (button.tablet === false && window.mode.isTablet()) {
+			return;
+		}
 		this.insertCustomButton(button);
 	},
 
