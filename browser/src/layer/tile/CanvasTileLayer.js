@@ -7125,9 +7125,11 @@ L.CanvasTileLayer = L.Layer.extend({
 	_sendProcessedResponse: function() {
 		var toSend = this._queuedProcessed;
 		this._queuedProcessed = [];
-		// FIXME: new multi-tile-processed message.
-		for (var i = 0; i < toSend.length; i++) {
-			app.socket.sendMessage('tileprocessed tile=' + toSend[i]);
+		if (toSend.length > 0) {
+			var msg = 'tileprocessed tile=' + toSend[0];
+			for (var i = 1; i < toSend.length; ++i)
+				msg += ',' + toSend[i];
+			app.socket.sendMessage(msg);
 		}
 		if (this._fetchKeyframeQueue.length > 0)
 		{
