@@ -202,7 +202,7 @@ var NotebookbarAccessibility = function() {
 				else if (this.state === 1) {
 					this.setTabItemDescription(element);
 					element.click();
-					if (this.filteredItem.focusBack === true) {
+					if (this.filteredItem && this.filteredItem.focusBack === true) {
 						this.focusToMap();
 					}
 				}
