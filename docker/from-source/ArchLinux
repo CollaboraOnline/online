@@ -23,7 +23,7 @@ COPY /start-collabora-online.pl /
 # Fix permissions
 RUN setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit && \
     setcap cap_sys_admin=ep /usr/bin/coolmount && \
-    useradd -r -U -d /opt/cool -m cool && \
+    useradd --system --user-group --create-home --home-dir /opt/cool cool && \
     rm -rf /opt/cool && \
     mkdir -p /opt/cool/child-roots && \
     coolwsd-systemplate-setup /opt/cool/systemplate /opt/lokit >/dev/null 2>&1 && \
@@ -34,7 +34,9 @@ RUN setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit 
 
 EXPOSE 9980
 
+RUN usermod -u 973 cool
+
 # switch to cool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
-USER 974
+USER 973
 
 CMD ["/start-collabora-online.sh"]
