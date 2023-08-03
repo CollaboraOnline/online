@@ -326,6 +326,20 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
     }
 }
 
+void ClientSession::onTileProcessed(const std::string& tileID)
+{
+    auto iter = std::find_if(_tilesOnFly.begin(), _tilesOnFly.end(),
+    [&tileID](const std::pair<std::string, std::chrono::steady_clock::time_point>& curTile)
+    {
+        return curTile.first == tileID;
+    });
+
+    if(iter != _tilesOnFly.end())
+        _tilesOnFly.erase(iter);
+    else
+        LOG_INF("Tileprocessed message with an unknown tile ID '" << tileID << "' from session " << getId());
+}
+
 bool ClientSession::_handleInput(const char *buffer, int length)
 {
     LOG_TRC("handling incoming [" << getAbbreviatedMessage(buffer, length) << ']');
@@ -826,16 +840,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             return true;
         }
 
-        auto iter = std::find_if(_tilesOnFly.begin(), _tilesOnFly.end(),
-        [&tileID](const std::pair<std::string, std::chrono::steady_clock::time_point>& curTile)
-        {
-            return curTile.first == tileID;
-        });
-
-        if(iter != _tilesOnFly.end())
-            _tilesOnFly.erase(iter);
-        else
-            LOG_INF("Tileprocessed message with an unknown tile ID '" << tileID << "' from session " << getId());
+        onTileProcessed(tileID);
 
         docBroker->sendRequestedTiles(client_from_this());
         return true;
