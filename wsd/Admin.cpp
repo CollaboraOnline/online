@@ -955,7 +955,7 @@ void MonitorSocketHandler::onDisconnect()
 {
     bool reconnect = false;
     // schedule monitor reconnect only if monitor uri exist in configuration
-    for (auto monitor : Admin::instance().getMonitorList())
+    for (const auto& monitor : Admin::instance().getMonitorList())
     {
         const std::string uriWithoutParam = _uri.substr(0, _uri.find('?'));
         if (Util::iequal(monitor.first, uriWithoutParam))
