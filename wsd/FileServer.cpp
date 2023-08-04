@@ -1211,7 +1211,6 @@ void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
                                                      Poco::MemoryInputStream& message,
                                                      const std::shared_ptr<StreamSocket>& socket)
 {
-    Poco::Net::HTTPResponse response;
     const std::string relPath = getRequestPathname(request);
     LOG_DBG("Preprocessing file: " << relPath);
     std::string templateWelcome = *getUncompressedFile(relPath);
@@ -1221,21 +1220,19 @@ void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
     uiTheme = (uiTheme == "dark") ? "dark" : "light";
     Poco::replaceInPlace(templateWelcome, std::string("%UI_THEME%"), uiTheme);
 
+    http::Response httpResponse(http::StatusCode::OK);
+
     // Ask UAs to block if they detect any XSS attempt
-    response.add("X-XSS-Protection", "1; mode=block");
+    httpResponse.add("X-XSS-Protection", "1; mode=block");
     // No referrer-policy
-    response.add("Referrer-Policy", "no-referrer");
-    response.add("X-Content-Type-Options", "nosniff");
-    response.set("Server", HTTP_SERVER_STRING);
-    response.set("Date", Util::getHttpTimeNow());
+    httpResponse.add("Referrer-Policy", "no-referrer");
+    httpResponse.add("X-Content-Type-Options", "nosniff");
+    httpResponse.set("Server", HTTP_SERVER_STRING);
+    httpResponse.set("Date", Util::getHttpTimeNow());
 
-    response.setContentType("text/html");
-    response.setChunkedTransferEncoding(false);
+    httpResponse.setBody(std::move(templateWelcome));
+    socket->send(httpResponse);
 
-    std::ostringstream oss;
-    response.write(oss);
-    oss << templateWelcome;
-    socket->send(oss.str());
     LOG_TRC("Sent file: " << relPath);
 }
 
