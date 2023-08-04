@@ -76,6 +76,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 				combination: 'N', de: 'I',
 				contentList: [
 					{ id: 'InsertPagebreak',				focusBack: true,	combination: 'B',	de:	'SU'	},
+					{ id: 'BasicShapesimg',					focusBack: false,	combination: 'IH',	de: null	},
 					{ id: 'InsertTable1img',				focusBack: false,	combination: 'T',	de: null	},
 					{ id: 'TitlePageDialogimg',				focusBack: false,	combination: 'TI',	de:	null	},
 					{ id: 'InsertSectionimg',				focusBack: false,	combination: 'IS',	de:	null	},
