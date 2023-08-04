@@ -3882,14 +3882,14 @@ private:
         Poco::Net::HTTPRequest request;
 
         StreamSocket::MessageMap map;
-        if (!socket->parseHeader("Client", startmessage, request, &map))
+        if (!socket->parseHeader("Client", startmessage, request, map))
             return;
 
         LOG_DBG("Handling request: " << request.getURI());
         try
         {
             // We may need to re-write the chunks moving the inBuffer.
-            socket->compactChunks(&map);
+            socket->compactChunks(map);
             Poco::MemoryInputStream message(&socket->getInBuffer()[0],
                                             socket->getInBuffer().size());
             // update the read cursor - headers are not altered by chunks.

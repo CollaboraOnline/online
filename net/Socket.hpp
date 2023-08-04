@@ -1230,14 +1230,14 @@ public:
 
     /// Compacts chunk headers away leaving just the data we want
     /// returns true if we did any re-sizing/movement of _inBuffer.
-    bool compactChunks(MessageMap *map);
+    bool compactChunks(MessageMap& map);
 
     /// Detects if we have an HTTP header in the provided message and
     /// populates a request for that.
     bool parseHeader(const char *clientLoggingName,
                      Poco::MemoryInputStream &message,
                      Poco::Net::HTTPRequest &request,
-                     MessageMap *map = nullptr);
+                     MessageMap& map);
 
     /// Get input/output statistics on this stream
     void getIOStats(uint64_t &sent, uint64_t &recv)
