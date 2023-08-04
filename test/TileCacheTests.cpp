@@ -1420,7 +1420,8 @@ void TileCacheTests::testTileRequestByInvalidation()
     assertResponseString(socket, "tile:", testname);
 
     socket->asyncShutdown();
-    socket->waitForDisconnection(std::chrono::seconds(5));
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
+                       socket->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::testTileRequestByZoom()
