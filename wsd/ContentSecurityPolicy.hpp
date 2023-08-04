@@ -48,7 +48,8 @@ public:
     void appendDirective(std::string directive, std::string value)
     {
         LOG_ASSERT_MSG(value.find_first_of(';') == std::string::npos,
-                       "Unexpected semicolon in CSP policy directive");
+                       "Unexpected semicolon in CSP source [" << value << "] for policy directive ["
+                                                              << directive << ']');
 
         Util::trim(directive);
         Util::trim(value);
