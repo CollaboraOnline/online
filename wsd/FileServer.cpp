@@ -840,7 +840,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
                                               Poco::MemoryInputStream& message,
                                               const std::shared_ptr<StreamSocket>& socket)
 {
-    ServerURL cnxDetails(requestDetails);
+    const ServerURL cnxDetails(requestDetails);
 
     const Poco::URI::QueryParameters params = Poco::URI(request.getURI()).getQueryParameters();
 
@@ -909,7 +909,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         socketProxy = "true";
     Poco::replaceInPlace(preprocess, std::string("%SOCKET_PROXY%"), socketProxy);
 
-    std::string responseRoot = cnxDetails.getResponseRoot();
+    const std::string responseRoot = cnxDetails.getResponseRoot();
     std::string userInterfaceMode;
     std::string userInterfaceTheme;
 
@@ -1251,8 +1251,8 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
         throw Poco::Net::NotAuthenticatedException("Invalid admin login");
 
-    ServerURL cnxDetails(requestDetails);
-    std::string responseRoot = cnxDetails.getResponseRoot();
+    const ServerURL cnxDetails(requestDetails);
+    const std::string responseRoot = cnxDetails.getResponseRoot();
 
     static const std::string scriptJS("<script src=\"%s/browser/" COOLWSD_VERSION_HASH "/%s.js\"></script>");
     static const std::string footerPage("<footer class=\"footer has-text-centered\"><strong>Key:</strong> %s &nbsp;&nbsp;<strong>Expiry Date:</strong> %s</footer>");
