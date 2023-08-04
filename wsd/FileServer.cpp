@@ -1056,6 +1056,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     csp.appendDirective("object-src", "'self'");
     csp.appendDirective("object-src", "blob:"); // Equivalent to unsafe-eval!
     csp.appendDirective("media-src", "'self'");
+    csp.appendDirective("media-src", cnxDetails.getWebServerUrl());
     csp.appendDirective("img-src", "'self'");
     csp.appendDirective("img-src", "data:"); // Equivalent to unsafe-inline!
     csp.appendDirective("img-src", "https://www.collaboraoffice.com/");
@@ -1070,7 +1071,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
             warned = true;
             LOG_WRN("The config entry net.frame_ancestors is obsolete and will be removed in the "
                     "future. Please add 'frame-ancestors "
-                    << configFrameAncestor << "' in the net.content_security_policy config");
+                    << configFrameAncestor << ";' in the net.content_security_policy config");
         }
     }
 
