@@ -996,6 +996,7 @@ static const std::string ACCESS_TOKEN = "%ACCESS_TOKEN%";
 static const std::string ACCESS_TOKEN_TTL = "%ACCESS_TOKEN_TTL%";
 static const std::string ACCESS_HEADER = "%ACCESS_HEADER%";
 static const std::string UI_DEFAULTS = "%UI_DEFAULTS%";
+static const std::string CSS_VARS = "<!--%CSS_VARIABLES%-->";
 
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
@@ -1005,10 +1006,27 @@ class UserRequestVars
                                 const std::string& var)
     {
         std::string value = form.get(field, "");
+
+        // Escape bad characters in access token.
+        // These are placed directly in javascript in cool.html, we need to make sure
+        // that no one can do anything nasty with their clever inputs.
         const std::string escaped = Util::encodeURIComponent(value, "'");
         _vars[var] = escaped;
 
         LOG_TRC("Field [" << field << "] for var [" << var << "] = [" << escaped << ']');
+
+        return value;
+    }
+
+    /// Like extractVariable, but without encoding the content.
+    std::string extractVariablePlain(const HTMLForm& form, const std::string& field,
+                                     const std::string& var)
+    {
+        std::string value = form.get(field, "");
+
+        _vars[var] = value;
+
+        LOG_TRC("Field [" << field << "] for var [" << var << "] = [" << value << ']');
 
         return value;
     }
@@ -1057,6 +1075,8 @@ public:
         extractVariable(form, "access_header", ACCESS_HEADER);
 
         extractVariable(form, "ui_defaults", UI_DEFAULTS);
+
+        extractVariablePlain(form, "css_variables", CSS_VARS);
     }
 
     const std::string& operator[](const std::string& key) const
@@ -1091,8 +1111,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     const UserRequestVars urv(request, form);
 
-    const std::string cssVars = form.get("css_variables", "");
-    LOG_TRC("css_variables=" << cssVars);
     std::string buyProduct;
     {
         std::lock_guard<std::mutex> lock(COOLWSD::RemoteConfigMutex);
@@ -1171,7 +1189,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_CSS%-->"), brandCSS);
     Poco::replaceInPlace(preprocess, std::string("<!--%BRANDING_JS%-->"), brandJS);
-    Poco::replaceInPlace(preprocess, std::string("<!--%CSS_VARIABLES%-->"), cssVarsToStyle(cssVars));
+    Poco::replaceInPlace(preprocess, CSS_VARS, cssVarsToStyle(urv[CSS_VARS]));
 
     const auto coolLogging = stringifyBoolFromConfig(config, "browser_logging", false);
     Poco::replaceInPlace(preprocess, std::string("%BROWSER_LOGGING%"), coolLogging);
