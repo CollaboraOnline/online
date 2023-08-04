@@ -339,6 +339,13 @@ void TileCacheTests::testTileSubscription()
     auto delta1b = getResponseDesc(socket1, "delta:", testname + "1 ");
     LOK_ASSERT_MESSAGE("did not receive a delta: message as expected", !!delta1b);
 
+    // ordering is undefined tiles arrive in so swap if needed:
+    if (tile1a->getTilePosX() != delta1a->getTilePosX())
+    {
+        std::swap(delta1a, delta1b);
+        TST_LOG("tiles re-ordered for once");
+    }
+
     // check WIDs variously
     LOK_ASSERT_EQUAL(tile1a->getWireId(), delta1a->getWireId());
     LOK_ASSERT_EQUAL(tile1b->getWireId(), delta1b->getWireId());
