@@ -130,9 +130,9 @@
 html,
 body {
 	height: 100%;
-	overflow: hidden;
 	margin: 0;
-
+	scrollbar-color: auto;
+	scrollbar-width: thin;
 	/* Same font as used in dialogs */
 	font-family: 'Helvetica Neue', sans-serif;
 }
