@@ -2529,11 +2529,6 @@ w2utils.event = {
             if (typeof options.onRender === 'function' && typeof options.render !== 'function') options.render = options.onRender;
             // since only one overlay can exist at a time
             $.fn.w2menuClick = function (event, index) {
-                if (event.type === 'keypress') {
-					if (event.code !== 'Enter' && event.code !== 'Space')
-						return;
-				}
-
 				var keepOpen = options.keepOpen || false;
                 if (['radio', 'check'].indexOf(options.type) != -1) {
                     if (event.shiftKey || event.metaKey || event.ctrlKey) keepOpen = true;
@@ -2560,8 +2555,15 @@ w2utils.event = {
             };
             $.fn.w2menuDown = function (event, index) {
                 if (event.type === 'keydown') {
-					if (event.code !== 'Enter' && event.code !== 'Space')
+					if (event.code === 'ArrowDown')
+						document.activeElement.nextElementSibling.focus();
+					else if (event.code === 'ArrowUp')
+						document.activeElement.previousElementSibling.focus();
+
+					if (event.code === 'Enter' || event.code === 'Space') {
+						document.activeElement.click();
 						return;
+					}
 				}
 
 				var $el  = $(event.target).parents('tr');
@@ -2748,9 +2750,6 @@ w2utils.event = {
                             '               jQuery.fn.w2menuDown(event, \''+ f +'\');"'+
                             '        onkeydown="if ('+ (mitem.disabled === true ? 'true' : 'false') + ') return;'+
                             '               jQuery.fn.w2menuDown(event, \''+ f +'\');"'+
-                            '        onkeypress="event.stopPropagation(); '+
-                            '               if ('+ (mitem.disabled === true ? 'true' : 'false') + ') return;'+
-                            '               jQuery.fn.w2menuClick(event, \''+ f +'\');"'+
                             '        onclick="event.stopPropagation(); '+
                             '               if ('+ (mitem.disabled === true ? 'true' : 'false') + ') return;'+
                             '               jQuery.fn.w2menuClick(event, \''+ f +'\');">'+
