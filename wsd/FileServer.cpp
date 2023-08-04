@@ -1256,20 +1256,22 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     Poco::Net::NameValueCollection reqCookies;
     std::vector<Poco::Net::HTTPCookie> resCookies;
 
-    request.getCookies(reqCookies);
-
-    if (reqCookies.has("jwt"))
-        jwtToken = reqCookies.get("jwt");
-    else
+    response.getCookies(resCookies);
+    for (size_t it = 0; it < resCookies.size(); ++it)
     {
-        response.getCookies(resCookies);
-        for (size_t it = 0; it < resCookies.size(); ++it)
+        if (resCookies[it].getName() == "jwt")
         {
-            if (resCookies[it].getName() == "jwt")
-            {
-                jwtToken = resCookies[it].getValue();
-                break;
-            }
+            jwtToken = resCookies[it].getValue();
+            break;
+        }
+    }
+
+    if (jwtToken.empty())
+    {
+        request.getCookies(reqCookies);
+        if (reqCookies.has("jwt"))
+        {
+            jwtToken = reqCookies.get("jwt");
         }
     }
 
