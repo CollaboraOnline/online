@@ -735,17 +735,19 @@ namespace Util
 
     /// Split a string in two at the delimiter and give the delimiter to the first.
     static
-    std::pair<std::string, std::string> splitLast2(const char* s, const int length, const char delimiter = ' ')
+    std::pair<std::string, std::string> splitLast2(const std::string& str, const char delimiter = ' ')
     {
-        if (s != nullptr && length > 0)
+        if (!str.empty())
         {
+            const char* s = str.c_str();
+            const int length = str.size();
             const int pos = getLastDelimiterPosition(s, length, delimiter);
             if (pos < length)
                 return std::make_pair(std::string(s, pos + 1), std::string(s + pos + 1));
         }
 
         // Not found; return in first.
-        return std::make_pair(std::string(s, length), std::string());
+        return std::make_pair(str, std::string());
     }
 
     std::tuple<std::string, std::string, std::string, std::string> splitUrl(const std::string& url)
@@ -756,7 +758,7 @@ namespace Util
         std::tie(base, params) = Util::split(url, '?', false);
 
         std::string filename;
-        std::tie(base, filename) = Util::splitLast2(base.c_str(), base.size(), '/');
+        std::tie(base, filename) = Util::splitLast2(base, '/');
         if (filename.empty())
         {
             // If no '/', then it's only filename.
