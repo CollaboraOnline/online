@@ -845,6 +845,7 @@ L.Map.include({
 		text += 'LOKit version: ' + this.getVersionInfoFromClass('lokit-version') + '\n';
 		text += 'Served by: ' + document.getElementById('os-info').innerText + '\n';
 		text += 'Server ID: ' + document.getElementById('coolwsd-id').innerText + '\n';
+		text = text.replace(/\u00A0/g, ' ');
 
 		if (navigator.clipboard && window.isSecureContext) {
 			navigator.clipboard.writeText(text)
