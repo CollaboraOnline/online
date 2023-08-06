@@ -204,6 +204,7 @@ void HTTPServerTest::testCoolPost()
         "access_token=choMXq0rSMcsm0RoZZWDWsrgAcE5AHwc&ui_defaults=TextRuler%3Dfalse%3BTextSidebar%"
         "3Dfalse%3BTextStatusbar%3Dfalse%3BPresentationSidebar%3Dfalse%3BPresentationStatusbar%"
         "3Dfalse%3BSpreadsheetSidebar%3Dfalse%3BSpreadsheetStatusbar%3Dfalse%3BUIMode%3Dclassic%3B&"
+        "postmessage_origin=https://www.example.com:8080&"
         "css_variables=--co-primary-text%3D%23ffffff%3B--co-primary-element%3D%230082c9%3B--co-"
         "text-accent%3D%230082c9%3B--co-primary-light%3D%23e6f3fa%3B--co-primary-element-light%3D%"
         "2317adff%3B--co-color-error%3D%23e9322d%3B--co-color-warning%3D%23eca700%3B--co-color-"
@@ -229,7 +230,8 @@ void HTTPServerTest::testCoolPost()
                std::string::npos);
     LOK_ASSERT(html.find("window.accessTokenTTL = '0';") != std::string::npos);
     LOK_ASSERT(html.find("window.accessHeader = '';") != std::string::npos);
-    LOK_ASSERT(html.find("window.postMessageOriginExt = '';") != std::string::npos);
+    LOK_ASSERT(html.find("window.postMessageOriginExt = 'https://www.example.com:8080';") !=
+               std::string::npos);
     LOK_ASSERT(
         html.find(
             "window.frameAncestors = decodeURIComponent('%20127.0.0.1:%2A%20localhost:%2A');") !=
