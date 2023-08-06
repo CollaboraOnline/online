@@ -17,6 +17,107 @@
 
 #include <Poco/JSON/Object.h>
 
+PreProcessedFile::PreProcessedFile(std::string filename, const std::string& data)
+    : _filename(std::move(filename))
+    , _size(data.length())
+{
+    std::size_t pos = 0; //< The current position to search from.
+    std::size_t lastpos = 0; //< The last position in a literal string.
+
+    do
+    {
+        std::size_t newpos = data.find_first_of("<%", pos);
+        if (newpos == std::string::npos || newpos + 2 >= _size)
+        {
+            // Not enough data to parse a variable.
+            break;
+        }
+
+        assert(newpos + 2 < _size && "Expected at least 3 characters for variable");
+
+        if (data[newpos] == '<')
+        {
+            if (newpos + 5 < _size && data.compare(newpos + 1, 4, "!--%") != 0)
+            {
+                // Just a tag; continue searching.
+                pos = newpos + 1;
+                continue;
+            }
+
+            std::size_t nestedpos = data.find_first_of("<>", newpos + 1);
+            if (nestedpos != std::string::npos && data[nestedpos] == '<')
+            {
+                // We expected to find the end of comment before a new tag.
+                // Resume searching.
+                pos = nestedpos;
+                continue;
+            }
+
+            // Find the matching closing comment
+            std::size_t endpos = data.find_first_of('>', newpos + 1);
+            if (endpos == std::string::npos)
+            {
+                // Broken comment.
+                break;
+            }
+
+            // Extract variable name.
+            const std::size_t varstart = data.find_first_of('%', newpos);
+            if (varstart == std::string::npos || varstart > endpos)
+            {
+                // Comment without a variable.
+                pos = endpos + 1;
+                continue;
+            }
+
+            const std::size_t varend = data.find_first_of('%', varstart + 1);
+            if (varend == std::string::npos || varend > endpos)
+            {
+                // Comment without a variable.
+                pos = endpos + 1;
+                continue;
+            }
+
+            // Insert previous literal.
+            if (newpos > lastpos)
+            {
+                _segments.emplace_back(false, data.substr(lastpos, newpos - lastpos));
+            }
+
+            lastpos = endpos + 1;
+            _segments.emplace_back(true, data.substr(varstart + 1, varend - varstart - 1));
+        }
+        else
+        {
+            assert(data[newpos] == '%' && "Expected '%' at given position");
+
+            // Extract variable name.
+            const std::size_t varend = data.find_first_of('%', newpos + 1);
+            if (varend == std::string::npos)
+            {
+                // Broken variable.
+                break;
+            }
+
+            // Insert previous literal.
+            if (newpos > lastpos)
+            {
+                _segments.emplace_back(false, data.substr(lastpos, newpos - lastpos));
+            }
+
+            lastpos = varend + 1;
+            _segments.emplace_back(true, data.substr(newpos + 1, varend - newpos - 1));
+        }
+
+        pos = lastpos;
+    } while (pos < _size);
+
+    if (lastpos < _size)
+    {
+        _segments.emplace_back(false, data.substr(lastpos));
+    }
+}
+
 std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefaults, std::string& uiMode, std::string& uiTheme, std::string& savedUIState)
 {
     static std::string previousUIDefaults;
