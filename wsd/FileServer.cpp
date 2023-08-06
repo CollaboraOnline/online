@@ -997,6 +997,7 @@ static const std::string ACCESS_TOKEN_TTL = "%ACCESS_TOKEN_TTL%";
 static const std::string ACCESS_HEADER = "%ACCESS_HEADER%";
 static const std::string UI_DEFAULTS = "%UI_DEFAULTS%";
 static const std::string CSS_VARS = "<!--%CSS_VARIABLES%-->";
+static const std::string POSTMESSAGE_ORIGIN = "%POSTMESSAGE_ORIGIN%";
 
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
@@ -1077,6 +1078,8 @@ public:
         extractVariable(form, "ui_defaults", UI_DEFAULTS);
 
         extractVariablePlain(form, "css_variables", CSS_VARS);
+
+        extractVariable(form, "postmessage_origin", POSTMESSAGE_ORIGIN);
     }
 
     const std::string& operator[](const std::string& key) const
@@ -1119,17 +1122,10 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     if (buyProduct.empty())
         buyProduct = form.get("buy_product", "");
     LOG_TRC("buy_product=" << buyProduct);
-    const std::string postMessageOrigin = form.get("postmessage_origin", "");
-    LOG_TRC("postmessage_origin" << postMessageOrigin);
     const std::string theme = form.get("theme", "");
     LOG_TRC("theme=" << theme);
     const std::string checkfileinfo_override = form.get("checkfileinfo_override", "");
     LOG_TRC("checkfileinfo_override=" << checkfileinfo_override);
-
-    // Escape bad characters in access token.
-    // This is placed directly in javascript in cool.html, we need to make sure
-    // that no one can do anything nasty with their clever inputs.
-    const std::string escapedPostmessageOrigin = Util::encodeURIComponent(postMessageOrigin, "'");
 
     std::string socketProxy = "false";
     if (requestDetails.isProxy())
@@ -1153,7 +1149,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%UI_THEME%"), userInterfaceTheme); // UI_THEME refers to light or dark theme
     Poco::replaceInPlace(preprocess, std::string("%BRANDING_THEME%"), theme);
     Poco::replaceInPlace(preprocess, std::string("%SAVED_UI_STATE%"), savedUIState);
-    Poco::replaceInPlace(preprocess, std::string("%POSTMESSAGE_ORIGIN%"), escapedPostmessageOrigin);
+    Poco::replaceInPlace(preprocess, POSTMESSAGE_ORIGIN, urv[POSTMESSAGE_ORIGIN]);
     Poco::replaceInPlace(preprocess, std::string("%CHECK_FILE_INFO_OVERRIDE%"),
                          checkFileInfoToJSON(checkfileinfo_override));
 
