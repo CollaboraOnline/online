@@ -17,7 +17,7 @@ class RequestDetails;
 /// Handles file requests over HTTP(S).
 class FileServerRequestHandler
 {
-    friend class WhiteBoxTests; // for unit testing
+    friend class FileServeTests; // for unit testing
 
     static std::string getRequestPathname(const Poco::Net::HTTPRequest& request);
 

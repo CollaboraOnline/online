@@ -54,8 +54,6 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testClockAsString);
     CPPUNIT_TEST(testBufferClass);
     CPPUNIT_TEST(testHexify);
-    CPPUNIT_TEST(testUIDefaults);
-    CPPUNIT_TEST(testCSSVars);
     CPPUNIT_TEST(testStat);
     CPPUNIT_TEST(testStringCompare);
     CPPUNIT_TEST(testParseUri);
@@ -87,8 +85,6 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testClockAsString();
     void testBufferClass();
     void testHexify();
-    void testUIDefaults();
-    void testCSSVars();
     void testStat();
     void testStringCompare();
     void testParseUri();
@@ -1065,47 +1061,6 @@ void WhiteBoxTests::testHexify()
         LOK_ASSERT_EQUAL(randStrLen, decoded2.size());
         LOK_ASSERT_EQUAL(Util::toString(s2), Util::toString(decoded2));
     }
-}
-
-void WhiteBoxTests::testUIDefaults()
-{
-    constexpr auto testname = __func__;
-
-    std::string uiMode;
-    std::string uiTheme;
-
-    LOK_ASSERT_EQUAL(std::string("{\"uiMode\":\"classic\"}"),
-                     FileServerRequestHandler::uiDefaultsToJSON("UIMode=classic;huh=bleh;", uiMode, uiTheme));
-    LOK_ASSERT_EQUAL(std::string("classic"), uiMode);
-
-    LOK_ASSERT_EQUAL(std::string("{\"spreadsheet\":{\"ShowSidebar\":false},\"text\":{\"ShowRuler\":true}}"),
-                     FileServerRequestHandler::uiDefaultsToJSON("TextRuler=true;SpreadsheetSidebar=false", uiMode, uiTheme));
-    LOK_ASSERT_EQUAL(std::string(""), uiMode);
-
-    LOK_ASSERT_EQUAL(std::string("{\"presentation\":{\"ShowStatusbar\":false},\"spreadsheet\":{\"ShowSidebar\":false},\"text\":{\"ShowRuler\":true},\"uiMode\":\"notebookbar\"}"),
-                     FileServerRequestHandler::uiDefaultsToJSON(";;UIMode=notebookbar;;PresentationStatusbar=false;;TextRuler=true;;bah=ugh;;SpreadsheetSidebar=false", uiMode, uiTheme));
-
-    LOK_ASSERT_EQUAL(std::string("{\"drawing\":{\"ShowStatusbar\":true},\"presentation\":{\"ShowStatusbar\":false},\"spreadsheet\":{\"ShowSidebar\":false},\"text\":{\"ShowRuler\":true},\"uiMode\":\"notebookbar\"}"),
-                     FileServerRequestHandler::uiDefaultsToJSON(";;UIMode=notebookbar;;PresentationStatusbar=false;;TextRuler=true;;bah=ugh;;SpreadsheetSidebar=false;;DrawingStatusbar=true", uiMode, uiTheme));
-
-    LOK_ASSERT_EQUAL(std::string("notebookbar"), uiMode);
-}
-
-void WhiteBoxTests::testCSSVars()
-{
-    constexpr auto testname = __func__;
-
-    LOK_ASSERT_EQUAL(std::string("<style>:root {--co-somestyle-text:#123456;--co-somestyle-size:15px;}</style>"),
-                     FileServerRequestHandler::cssVarsToStyle("--co-somestyle-text=#123456;--co-somestyle-size=15px;"));
-
-    LOK_ASSERT_EQUAL(std::string("<style>:root {--co-somestyle-text:#123456;--co-somestyle-size:15px;}</style>"),
-                     FileServerRequestHandler::cssVarsToStyle(";;--co-somestyle-text=#123456;;--co-somestyle-size=15px;;;"));
-
-    LOK_ASSERT_EQUAL(std::string("<style>:root {--co-somestyle-text:#123456;--co-somestyle-size:15px;}</style>"),
-                     FileServerRequestHandler::cssVarsToStyle("--co-somestyle-text=#123456;;--co-somestyle-size=15px;--co-sometext#324;;"));
-
-    LOK_ASSERT_EQUAL(std::string("<style>:root {--co-somestyle-text:#123456;}</style>"),
-                     FileServerRequestHandler::cssVarsToStyle("--co-somestyle-text=#123456;;--some-val=3453--some-other-val=4536;;"));
 }
 
 void WhiteBoxTests::testStat()
