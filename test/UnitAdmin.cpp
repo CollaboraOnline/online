@@ -100,13 +100,11 @@ private:
         LOK_ASSERT_EQUAL(std::string("jwt"), cookies[0].getName());
 
         // Check cookie properties
-        std::string cookiePath = cookies[0].getPath();
-        bool secure = cookies[0].getSecure();
-        std::string value = cookies[0].getValue();
+        const std::string cookiePath = cookies[0].getPath();
+        const bool secure = cookies[0].getSecure();
+        const std::string value = cookies[0].getValue();
         TestResult res = TestResult::Failed;
-        if (cookiePath.find_first_of("/browser/dist/admin/") == 0 &&
-            value != "" &&
-            secure)
+        if (cookiePath.find("/browser/dist/admin/") == 0 && !value.empty() && secure)
         {
             // Set JWT cookie to be used for subsequent tests
             _jwtCookie = value;
