@@ -199,6 +199,26 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
 
 }
 
+FileServerRequestHandler::FileServerRequestHandler(const std::string& root)
+{
+    // Read all files that we can serve into memory and compress them.
+    // cool files
+    try
+    {
+        readDirToHash(root, "/browser/dist");
+    }
+    catch (...)
+    {
+        LOG_ERR("Failed to read from directory " << root);
+    }
+}
+
+FileServerRequestHandler::~FileServerRequestHandler()
+{
+    // Clean cached files.
+    FileHash.clear();
+}
+
 bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
                                                HTTPResponse &response)
 {
@@ -780,16 +800,6 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
     if (fileCount > 0)
         LOG_TRC("Pre-read " << fileCount << " file(s) from directory: " << basePath << path << ": " << filesRead);
-}
-
-void FileServerRequestHandler::initialize(const std::string& root)
-{
-    // cool files
-    try {
-        readDirToHash(root, "/browser/dist");
-    } catch (...) {
-        LOG_ERR("Failed to read from directory " << root);
-    }
 }
 
 const std::string *FileServerRequestHandler::getCompressedFile(const std::string &path)
