@@ -950,6 +950,9 @@ unsigned int COOLWSD::NumPreSpawnedChildren = 0;
 std::unique_ptr<TraceFileWriter> COOLWSD::TraceDumper;
 #if !MOBILEAPP
 std::unique_ptr<ClipboardCache> COOLWSD::SavedClipboards;
+
+/// The file request handler used for file-serving.
+std::unique_ptr<FileServerRequestHandler> COOLWSD::FileRequestHandler;
 #endif
 
 /// This thread polls basic web serving, and handling of
@@ -2814,7 +2817,8 @@ void COOLWSD::innerInitialize(Application& self)
     SavedClipboards = std::make_unique<ClipboardCache>();
 
     LOG_TRC("Initialize FileServerRequestHandler");
-    FileServerRequestHandler::initialize(COOLWSD::FileServerRoot);
+    COOLWSD::FileRequestHandler =
+        std::make_unique<FileServerRequestHandler>(COOLWSD::FileServerRoot);
 #endif
 
     WebServerPoll = std::make_unique<TerminatingPoll>("websrv_poll");
@@ -4104,7 +4108,7 @@ private:
                 }
                 else
                 {
-                    FileServerRequestHandler::handleRequest(request, requestDetails, message, socket);
+                    COOLWSD::FileRequestHandler->handleRequest(request, requestDetails, message, socket);
                     socket->shutdown();
                 }
             }
@@ -4136,7 +4140,7 @@ private:
                     /* WARNING: security point, we may skip authentication */
                     bool skipAuthentication = COOLWSD::getConfigValue<bool>("security.enable_metrics_unauthenticated", false);
                     if (!skipAuthentication)
-                        if (!FileServerRequestHandler::isAdminLoggedIn(request, *response))
+                        if (!COOLWSD::FileRequestHandler->isAdminLoggedIn(request, *response))
                             throw Poco::Net::NotAuthenticatedException("Invalid admin login");
                 }
                 catch (const Poco::Net::NotAuthenticatedException& exc)
@@ -6197,7 +6201,7 @@ void COOLWSD::cleanup()
 #if !MOBILEAPP
         SavedClipboards.reset();
 
-        FileServerRequestHandler::uninitialize();
+        FileRequestHandler.reset();
         JWTAuth::cleanup();
 
 #if ENABLE_SSL
