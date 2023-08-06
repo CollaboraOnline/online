@@ -20,6 +20,26 @@
 #include <Poco/Util/LayeredConfiguration.h>
 
 class RequestDetails;
+
+/// Represents a file that is preprocessed for variable
+/// expansion/replacement before serving.
+class PreProcessedFile
+{
+    friend class FileServeTests;
+
+public:
+    PreProcessedFile(std::string filename, const std::string& data);
+
+    const std::string& filename() const { return _filename; }
+    std::size_t size() const { return _size; }
+
+private:
+    const std::string _filename; //< Filename on disk, with extension.
+    const std::size_t _size; //< Number of bytes in original file.
+    /// The segments of the file in <IsVariable, Data> pairs.
+    std::vector<std::pair<bool, std::string>> _segments;
+};
+
 /// Handles file requests over HTTP(S).
 class FileServerRequestHandler
 {

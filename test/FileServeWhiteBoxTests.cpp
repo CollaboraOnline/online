@@ -25,10 +25,12 @@ class FileServeTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(FileServeTests);
     CPPUNIT_TEST(testUIDefaults);
     CPPUNIT_TEST(testCSSVars);
+    CPPUNIT_TEST(testPreProcessedFile);
     CPPUNIT_TEST_SUITE_END();
 
     void testUIDefaults();
     void testCSSVars();
+    void testPreProcessedFile();
 };
 
 void FileServeTests::testUIDefaults()
@@ -91,6 +93,186 @@ void FileServeTests::testCSSVars()
     LOK_ASSERT_EQUAL(std::string("<style>:root {--co-somestyle-text:#123456;}</style>"),
                      FileServerRequestHandler::cssVarsToStyle(
                          "--co-somestyle-text=#123456;;--some-val=3453--some-other-val=4536;;"));
+}
+
+/// Tests file pre-processing through PreProcessedFile class.
+void FileServeTests::testPreProcessedFile()
+{
+    constexpr auto testname = __func__;
+
+    {
+        const std::string data = "Data %VAR% Data";
+        const PreProcessedFile ppf("filename", data);
+        LOK_ASSERT_EQUAL(ppf.filename(), std::string("filename"));
+        LOK_ASSERT_EQUAL(ppf.size(), data.size());
+        LOK_ASSERT_EQUAL(3UL, ppf._segments.size());
+        LOK_ASSERT_EQUAL(false, ppf._segments[0].first);
+        LOK_ASSERT_EQUAL(std::string("Data "), ppf._segments[0].second);
+        LOK_ASSERT_EQUAL(true, ppf._segments[1].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[1].second);
+        LOK_ASSERT_EQUAL(false, ppf._segments[2].first);
+        LOK_ASSERT_EQUAL(std::string(" Data"), ppf._segments[2].second);
+    }
+
+    {
+        const std::string data = "Data %VAR%";
+        const PreProcessedFile ppf("filename", data);
+        LOK_ASSERT_EQUAL(ppf.filename(), std::string("filename"));
+        LOK_ASSERT_EQUAL(ppf.size(), data.size());
+        LOK_ASSERT_EQUAL(2UL, ppf._segments.size());
+        LOK_ASSERT_EQUAL(false, ppf._segments[0].first);
+        LOK_ASSERT_EQUAL(std::string("Data "), ppf._segments[0].second);
+        LOK_ASSERT_EQUAL(true, ppf._segments[1].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[1].second);
+    }
+
+    {
+        const std::string data = "%VAR% Data";
+        const PreProcessedFile ppf("filename", data);
+        LOK_ASSERT_EQUAL(ppf.filename(), std::string("filename"));
+        LOK_ASSERT_EQUAL(ppf.size(), data.size());
+        LOK_ASSERT_EQUAL(2UL, ppf._segments.size());
+        LOK_ASSERT_EQUAL(true, ppf._segments[0].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[0].second);
+        LOK_ASSERT_EQUAL(false, ppf._segments[1].first);
+        LOK_ASSERT_EQUAL(std::string(" Data"), ppf._segments[1].second);
+    }
+
+    {
+        const std::string data = "%VAR%";
+        const PreProcessedFile ppf("filename", data);
+        LOK_ASSERT_EQUAL(ppf.filename(), std::string("filename"));
+        LOK_ASSERT_EQUAL(ppf.size(), data.size());
+        LOK_ASSERT_EQUAL(1UL, ppf._segments.size());
+        LOK_ASSERT_EQUAL(true, ppf._segments[0].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[0].second);
+    }
+
+    {
+        const std::string data = "%VAR%Data1 %VAR% Data%VAR%";
+        const PreProcessedFile ppf("filename", data);
+        LOK_ASSERT_EQUAL(ppf.filename(), std::string("filename"));
+        LOK_ASSERT_EQUAL(ppf.size(), data.size());
+        LOK_ASSERT_EQUAL(5UL, ppf._segments.size());
+        LOK_ASSERT_EQUAL(true, ppf._segments[0].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[0].second);
+        LOK_ASSERT_EQUAL(false, ppf._segments[1].first);
+        LOK_ASSERT_EQUAL(std::string("Data1 "), ppf._segments[1].second);
+        LOK_ASSERT_EQUAL(true, ppf._segments[2].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[2].second);
+        LOK_ASSERT_EQUAL(false, ppf._segments[3].first);
+        LOK_ASSERT_EQUAL(std::string(" Data"), ppf._segments[3].second);
+        LOK_ASSERT_EQUAL(true, ppf._segments[4].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[4].second);
+    }
+
+    {
+        const std::string data = "Data %VAR Data";
+        const PreProcessedFile ppf("filename", data);
+        LOK_ASSERT_EQUAL(ppf.filename(), std::string("filename"));
+        LOK_ASSERT_EQUAL(ppf.size(), data.size());
+        LOK_ASSERT_EQUAL(1UL, ppf._segments.size());
+        LOK_ASSERT_EQUAL(false, ppf._segments[0].first);
+        LOK_ASSERT_EQUAL(std::string("Data %VAR Data"), ppf._segments[0].second);
+    }
+
+    {
+        const std::string data = "Data <!--%VAR%--> Data";
+        const PreProcessedFile ppf("filename", data);
+        LOK_ASSERT_EQUAL(ppf.filename(), std::string("filename"));
+        LOK_ASSERT_EQUAL(ppf.size(), data.size());
+        LOK_ASSERT_EQUAL(3UL, ppf._segments.size());
+        LOK_ASSERT_EQUAL(false, ppf._segments[0].first);
+        LOK_ASSERT_EQUAL(std::string("Data "), ppf._segments[0].second);
+        LOK_ASSERT_EQUAL(true, ppf._segments[1].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[1].second);
+        LOK_ASSERT_EQUAL(false, ppf._segments[2].first);
+        LOK_ASSERT_EQUAL(std::string(" Data"), ppf._segments[2].second);
+    }
+
+    {
+        const std::string data = "Data <!--%VAR%-->";
+        const PreProcessedFile ppf("filename", data);
+        LOK_ASSERT_EQUAL(ppf.filename(), std::string("filename"));
+        LOK_ASSERT_EQUAL(ppf.size(), data.size());
+        LOK_ASSERT_EQUAL(2UL, ppf._segments.size());
+        LOK_ASSERT_EQUAL(false, ppf._segments[0].first);
+        LOK_ASSERT_EQUAL(std::string("Data "), ppf._segments[0].second);
+        LOK_ASSERT_EQUAL(true, ppf._segments[1].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[1].second);
+    }
+
+    {
+        const std::string data = "<!--%VAR%--> Data";
+        const PreProcessedFile ppf("filename", data);
+        LOK_ASSERT_EQUAL(ppf.filename(), std::string("filename"));
+        LOK_ASSERT_EQUAL(ppf.size(), data.size());
+        LOK_ASSERT_EQUAL(2UL, ppf._segments.size());
+        LOK_ASSERT_EQUAL(true, ppf._segments[0].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[0].second);
+        LOK_ASSERT_EQUAL(false, ppf._segments[1].first);
+        LOK_ASSERT_EQUAL(std::string(" Data"), ppf._segments[1].second);
+    }
+
+    {
+        const std::string data = "<!--%VAR%-->";
+        const PreProcessedFile ppf("filename", data);
+        LOK_ASSERT_EQUAL(ppf.filename(), std::string("filename"));
+        LOK_ASSERT_EQUAL(ppf.size(), data.size());
+        LOK_ASSERT_EQUAL(1UL, ppf._segments.size());
+        LOK_ASSERT_EQUAL(true, ppf._segments[0].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[0].second);
+    }
+
+    {
+        const std::string data = "<!--%VAR%-->Data1 <!--%VAR%--> Data2<!--%VAR%-->";
+        const PreProcessedFile ppf("filename", data);
+        LOK_ASSERT_EQUAL(ppf.filename(), std::string("filename"));
+        LOK_ASSERT_EQUAL(ppf.size(), data.size());
+        LOK_ASSERT_EQUAL(5UL, ppf._segments.size());
+        LOK_ASSERT_EQUAL(true, ppf._segments[0].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[0].second);
+        LOK_ASSERT_EQUAL(false, ppf._segments[1].first);
+        LOK_ASSERT_EQUAL(std::string("Data1 "), ppf._segments[1].second);
+        LOK_ASSERT_EQUAL(true, ppf._segments[2].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[2].second);
+        LOK_ASSERT_EQUAL(false, ppf._segments[3].first);
+        LOK_ASSERT_EQUAL(std::string(" Data2"), ppf._segments[3].second);
+        LOK_ASSERT_EQUAL(true, ppf._segments[4].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[4].second);
+    }
+
+    {
+        const std::string data = "<!--%VAR1% Data2 <!--%VAR3%--> Data4<!--%VAR5%-->";
+        const PreProcessedFile ppf("filename", data);
+        LOK_ASSERT_EQUAL(ppf.filename(), std::string("filename"));
+        LOK_ASSERT_EQUAL(ppf.size(), data.size());
+        LOK_ASSERT_EQUAL(4UL, ppf._segments.size());
+        LOK_ASSERT_EQUAL(false, ppf._segments[0].first);
+        LOK_ASSERT_EQUAL(std::string("<!--%VAR1% Data2 "), ppf._segments[0].second);
+        LOK_ASSERT_EQUAL(true, ppf._segments[1].first);
+        LOK_ASSERT_EQUAL(std::string("VAR3"), ppf._segments[1].second);
+        LOK_ASSERT_EQUAL(false, ppf._segments[2].first);
+        LOK_ASSERT_EQUAL(std::string(" Data4"), ppf._segments[2].second);
+        LOK_ASSERT_EQUAL(true, ppf._segments[3].first);
+        LOK_ASSERT_EQUAL(std::string("VAR5"), ppf._segments[3].second);
+    }
+
+    {
+        const std::string data = "<!--%VAR%-->Data1 <!--%VAR%--> Data2<!--%VAR%";
+        const PreProcessedFile ppf("filename", data);
+        LOK_ASSERT_EQUAL(ppf.filename(), std::string("filename"));
+        LOK_ASSERT_EQUAL(ppf.size(), data.size());
+        LOK_ASSERT_EQUAL(4UL, ppf._segments.size());
+        LOK_ASSERT_EQUAL(true, ppf._segments[0].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[0].second);
+        LOK_ASSERT_EQUAL(false, ppf._segments[1].first);
+        LOK_ASSERT_EQUAL(std::string("Data1 "), ppf._segments[1].second);
+        LOK_ASSERT_EQUAL(true, ppf._segments[2].first);
+        LOK_ASSERT_EQUAL(std::string("VAR"), ppf._segments[2].second);
+        LOK_ASSERT_EQUAL(false, ppf._segments[3].first);
+        LOK_ASSERT_EQUAL(std::string(" Data2<!--%VAR%"), ppf._segments[3].second);
+    }
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(FileServeTests);
