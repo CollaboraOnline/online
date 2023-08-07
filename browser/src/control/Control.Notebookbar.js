@@ -13,7 +13,7 @@ L.Control.Notebookbar = L.Control.extend({
 	container: null,
 	builder: null,
 
-	HOME_TAB_ID: '-10',
+	HOME_TAB_ID: 'Home-tab-label',
 
 	additionalShortcutButtons: [],
 	hiddenShortcutButtons: [],

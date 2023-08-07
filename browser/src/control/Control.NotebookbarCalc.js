@@ -10,7 +10,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 		return [
 			{
 				'text': _('~File'),
-				'id': '-1',
+				'id': 'File-tab-label',
 				'name': 'File',
 			},
 			{
@@ -21,43 +21,43 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'text': _('~Insert'),
-				'id': '-4',
+				'id': 'Insert-tab-label',
 				'name': 'Insert'
 			},
 			{
 				'text': _('~Layout'),
-				'id': '-3',
+				'id': 'Layout-tab-label',
 				'name': 'Layout'
 			},
 			{
 				'text': _('~Data'),
-				'id': '-5',
+				'id': 'Data-tab-label',
 				'name': 'Data'
 			},
 			{
 				'text': _('~Review'),
-				'id': '-6',
+				'id': 'Review-tab-label',
 				'name': 'Review'
 			},
 			{
 				'text': _('F~ormat'),
-				'id': '-7',
+				'id': 'Format-tab-label',
 				'name': 'Format'
 			},
 			{
 				'text': _('Dra~w'),
-				'id': '-9',
+				'id': 'Draw-tab-label',
 				'name': 'Draw',
 				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork'
 			},
 			{
 				'text': _('~View'),
-				'id': 'View',
+				'id': 'View-tab-label',
 				'name': 'View',
 			},
 			{
 				'text': _('~Help'),
-				'id': '-2',
+				'id': 'Help-tab-label',
 				'name': 'Help',
 			}
 		];
