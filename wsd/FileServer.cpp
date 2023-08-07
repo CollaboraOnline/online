@@ -1276,8 +1276,8 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
         }
     }
 
-    const std::string escapedAccessToken = Util::encodeURIComponent(jwtToken, "'");
-    Poco::replaceInPlace(templateFile, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
+    const std::string escapedJwtToken = Util::encodeURIComponent(jwtToken, "'");
+    Poco::replaceInPlace(templateFile, std::string("%JWT_TOKEN%"), escapedJwtToken);
     if (relPath == "/browser/dist/admin/adminClusterOverview.html") {
         Poco::replaceInPlace(templateFile, std::string("<!--%BODY%-->"), adminFile);
     } else {

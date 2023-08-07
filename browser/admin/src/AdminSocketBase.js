@@ -34,8 +34,7 @@ var AdminSocketBase = Base.extend({
 
 	onSocketOpen: function () {
 		// Authenticate
-		var accessToken = window.accessToken;
-		this.socket.send('auth jwt=' + accessToken);
+		this.socket.send('auth jwt=' + window.jwtToken);
 	},
 
 	onSocketMessage: function () {
