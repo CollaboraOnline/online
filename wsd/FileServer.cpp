@@ -1305,8 +1305,8 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
         }
     }
 
-    const std::string escapedAccessToken = Util::encodeURIComponent(jwtToken, "'");
-    Poco::replaceInPlace(templateFile, std::string("%ACCESS_TOKEN%"), escapedAccessToken);
+    const std::string escapedJwtToken = Util::encodeURIComponent(jwtToken, "'");
+    Poco::replaceInPlace(templateFile, std::string("%JWT_TOKEN%"), escapedJwtToken);
     Poco::replaceInPlace(templateFile, std::string("<!--%MAIN_CONTENT%-->"), adminFile); // Now template has the main content..
 
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
