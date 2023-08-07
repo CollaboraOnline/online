@@ -21,7 +21,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
         top: 5,
         right: 0,
         bottom: 5,
-        left: 25
+        left: 30
     },
 
     _interval: 5000,
@@ -226,6 +226,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
 
         var yAxis = svg.append('g')
             .attr('class', 'y-axis axis')
+            .style('font-size', '1em')
             .call(yAxisGenerator);
 
         yAxis.select('.domain').attr('stroke-width', 0);
