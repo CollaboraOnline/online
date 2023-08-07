@@ -58,61 +58,61 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 	getTabs: function() {
 		return [
 			{
-				'text': _('~File'),
+				'text': _('File'),
 				'id': 'File-tab-label',
 				'name': 'File',
 			},
 			{
-				'text': _('Hom~e'),
+				'text': _('Home'),
 				'id': this.HOME_TAB_ID,
 				'name': 'Home',
 				'context': 'default|DrawText'
 			},
 			{
-				'text': _('~Insert'),
+				'text': _('Insert'),
 				'id': 'Insert-tab-label',
 				'name': 'Insert'
 			},
 			{
-				'text': _('~Layout'),
+				'text': _('Layout'),
 				'id': 'Layout-tab-label',
 				'name': 'Layout'
 			},
 			{
-				'text': _('~Review'),
+				'text': _('Review'),
 				'id': 'Review-tab-label',
 				'name': 'Review'
 			},
 			{
-				'text': _('F~ormat'),
+				'text': _('Format'),
 				'id': 'Format-tab-label',
 				'name': 'Format',
 			},
 			{
-				'text': _('~Table'),
+				'text': _('Table'),
 				'id': 'Table-tab-label',
 				'name': 'Table',
 				'context': 'Table'
 			},
 			{
-				'text': 'Dra~w',
+				'text': 'Draw',
 				'id': 'Draw-tab-label',
 				'name': 'Draw',
 				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork'
 			},
 			{
-				'text': _('~Master'),
+				'text': _('Master'),
 				'id': 'MasterPage-tab-label',
 				'name': 'MasterPage',
 				'context': 'MasterPage'
 			},
 			{
-				'text': _('~View'),
+				'text': _('View'),
 				'id': 'View-tab-label',
 				'name': 'View',
 			},
 			{
-				'text': _('~Help'),
+				'text': _('Help'),
 				'id': 'Help-tab-label',
 				'name': 'Help',
 			}

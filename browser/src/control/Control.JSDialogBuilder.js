@@ -506,7 +506,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_setAccessKey: function(element, key) {
 		if (key)
-				element.accessKey = key;
+			element.accessKey = key;
 	},
 
 	_getAccessKeyFromText: function(text) {
