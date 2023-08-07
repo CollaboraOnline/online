@@ -13,13 +13,12 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_overrideHandlers: function() {
-		this._controlHandlers['combobox'] = this._comboboxControlHandler;
-		this._controlHandlers['listbox'] = this._comboboxControlHandler;
-		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
-		this._controlHandlers['tabpage'] = this._overriddenTabPageHandler;
-		this._controlHandlers['menubartoolitem'] = this._inlineMenubarToolItemHandler;
 		this._controlHandlers['bigmenubartoolitem'] = this._bigMenubarToolItemHandler;
 		this._controlHandlers['bigtoolitem'] = this._bigtoolitemHandler;
+		this._controlHandlers['combobox'] = this._comboboxControl;
+		this._controlHandlers['menubartoolitem'] = this._inlineMenubarToolItemHandler;
+		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
+		this._controlHandlers['tabpage'] = this._overriddenTabPageHandler;
 		this._controlHandlers['toolbox'] = this._toolboxHandler;
 
 		this._controlHandlers['pushbutton'] = function() { return false; };
@@ -289,54 +288,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			return false;
 		}
 
-		var container = L.DomUtil.createWithId('div', data.id, parentContainer);
-		L.DomUtil.addClass(container, builder.options.cssClass);
-		L.DomUtil.addClass(container, 'ui-combobox');
-		var select = L.DomUtil.create('select', builder.options.cssClass, container);
-		builder.map.uiManager.enableTooltip(container);
-
-		var processedData = [];
-
-		var isFontSizeSelector = (data.id === 'fontsize' || data.id === 'fontsizecombobox');
-		var isFontSelector = (data.id === 'fontnamecombobox');
-
-		if (isFontSelector) {
-			builder.map.createFontSelector('.notebookbar #' + data.id + ' select');
-			return;
-		} else if (isFontSizeSelector) {
-			builder.map.createFontSizeSelector('.notebookbar #' + data.id + ' select');
-			return;
-		}
-
-		data.entries.forEach(function (value, index) {
-			var selected = parseInt(data.selectedEntries[0]) == index;
-			var id = index;
-			if (isFontSizeSelector)
-				id = parseFloat(value);
-			if (isFontSelector)
-				id = value;
-			processedData.push({id: id, text: value, selected: selected});
-		});
-
-		$(select).select2({
-			data: processedData,
-			placeholder: _(builder._cleanText(data.text))
-		});
-
-		$(select).on('select2:select', function (e) {
-			var value = e.params.data.id + ';' + e.params.data.text;
-			builder.callback('combobox', 'selected', container, value, builder);
-		});
-
-		return false;
-	},
-
-	_comboboxControlHandler: function(parentContainer, data, builder) {
-		if ((data.command === '.uno:StyleApply' && builder.map.getDocType() === 'spreadsheet') ||
-			(data.id === ''))
-			return false;
-
-		return builder._comboboxControl(parentContainer, data, builder);
+		return JSDialog.combobox(parentContainer, data, builder);
 	},
 
 	// overriden

@@ -629,12 +629,19 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	cursor: pointer;
 }
 /* listbox */
-.jsdialog.ui-listbox-container {
+.ui-listbox-container,
+.ui-combobox {
 	display: flex;
 	margin: auto 0;
 }
 
-.jsdialog.ui-listbox {
+.ui-listbox {
+	padding: 0 14px 0 4px;
+	border: 1px solid var(--color-border-dark);
+}
+
+.ui-listbox,
+.ui-combobox {
 	box-sizing: border-box;
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -645,9 +652,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	line-height: normal;
 	font-size: var(--default-font-size);
 	font-family: var(--jquery-ui-font);
-	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
-	padding: 0 14px 0 4px;
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
 }
@@ -683,9 +688,37 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background: url('images/jquery-ui-lightness/ui-icons_ffffff_256x240.png') no-repeat transparent;
 }
 
-.ui-listbox[disabled='disabled'] ~ .ui-listbox-arrow {
+.ui-listbox[disabled='disabled'] ~ .ui-listbox-arrow,
+.ui-combobox[disabled='disabled'] ~ .ui-listbox-arrow {
 	opacity: 0.5;
 	cursor: auto;
+}
+
+/* ui-combobox */
+.ui-combobox {
+	border: 1px solid var(--color-border);
+}
+
+.ui-combobox-content {
+	width: 100%;
+	border: none;
+	border-radius: var(--border-radius);
+}
+
+.ui-combobox-button {
+	padding-left: 20px;
+	border-left: 1px solid var(--color-border);
+}
+
+.ui-combobox-dropdown {
+	position: absolute;
+	z-index: 2001;
+	padding: 0px;
+	overflow-y: auto;
+	max-height: 500px;
+	background-color: var(--color-background-dark);
+	border: 1px solid var(--color-border-dark);
+	border-radius: var(--border-radius);
 }
 
 /* ui-textarea */
@@ -1508,7 +1541,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 /* hover effect */
 .jsdialog.menubutton:hover,
-.jsdialog.ui-listbox:hover,
+.ui-listbox:hover,
 .jsdialog.ui-edit:hover,
 .jsdialog.ui-textarea:hover {
 	color: var(--color-text-darker);

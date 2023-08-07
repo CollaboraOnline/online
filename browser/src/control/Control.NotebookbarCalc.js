@@ -385,7 +385,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								'accessibility': { focusBack: true,	combination: 'FF', de: null }
 							},
 							{
-								'id': 'fontsize',
+								'id': 'fontsizecombobox',
 								'type': 'combobox',
 								'text': '10 pt',
 								'entries': [
