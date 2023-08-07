@@ -5,6 +5,29 @@
     Admin.ClusterOverview(host);
 </script>
 
+<style>
+  /* Set graph text size  */
+  svg g, svg text {
+      font-size: 1em; /* based on parent div */
+  }
+  /* Set to scroll otherwise tablets can spill over into other cards*/
+  .card {
+      overflow: auto;
+  }
+  /* Decrease left panel when on laptop  */
+  @media screen and (max-width: 1024px) {
+      #column-admin-panel {
+          width: 20% !important;
+      }
+  }
+  /* Hide left panel before reaching mobile (there is no space)  */
+  @media screen and (max-width: 960px) {
+      #column-admin-panel {
+          display: none !important;
+      }
+  }
+</style>
+
 <div class="is-fullwidth has-text-white" style="height:62px;background-color:#17191E;line-height:50px;">
     <a style="margin-left:12px;color:#9D998D;"><script>document.write(l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole)</script></a>
 </div>
