@@ -123,6 +123,8 @@ function _getCellIconId(cellData) {
 	return iconId;
 }
 
+var lastClickHelperRow = -1;
+var lastClickHelperId = '';
 function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTreeView, treeRoot) {
 	if (entry.text == '<dummy>')
 		return;
@@ -257,7 +259,21 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 		});
 
 		if (!singleClick) {
-			$(text).dblclick(doubleClickFunction);
+			if (window.ThisIsTheiOSApp) {
+				text.addEventListener('click', function() {
+					if (entry.row == lastClickHelperRow && treeViewData.id == lastClickHelperId)
+						doubleClickFunction();
+					else {
+						lastClickHelperRow = entry.row;
+						lastClickHelperId = treeViewData.id;
+						setTimeout(function() {
+							lastClickHelperRow = -1;
+						}, 300);
+					}
+				});
+			} else {
+				$(text).dblclick(doubleClickFunction);
+			}
 		}
 	}
 }
