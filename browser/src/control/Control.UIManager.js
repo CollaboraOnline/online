@@ -656,7 +656,7 @@ L.Control.UIManager = L.Control.extend({
 		var obj = $('.unfold');
 		obj.removeClass('w2ui-icon unfold');
 		obj.addClass('w2ui-icon fold');
-
+		$('#tb_editbar_item_fold').prop('title', _('Hide Menu'));
 	},
 
 	hideMenubar: function() {
@@ -670,7 +670,7 @@ L.Control.UIManager = L.Control.extend({
 		var obj = $('.fold');
 		obj.removeClass('w2ui-icon fold');
 		obj.addClass('w2ui-icon unfold');
-
+		$('#tb_editbar_item_fold').prop('title', _('Show Menu'));
 	},
 
 	isMenubarHidden: function() {
