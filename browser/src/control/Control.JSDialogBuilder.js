@@ -83,8 +83,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['okbutton'] = this._pushbuttonControl;
 		this._controlHandlers['helpbutton'] = this._pushbuttonControl;
 		this._controlHandlers['cancelbutton'] = this._pushbuttonControl;
-		this._controlHandlers['combobox'] = this._comboboxControl;
-		this._controlHandlers['comboboxentry'] = this._comboboxEntry;
+		this._controlHandlers['combobox'] = JSDialog.combobox;
+		this._controlHandlers['comboboxentry'] = JSDialog.comboboxEntry;
 		this._controlHandlers['listbox'] = this._listboxControl;
 		this._controlHandlers['valueset'] = this._valuesetControl;
 		this._controlHandlers['fixedtext'] = this._fixedtextControl;
@@ -1850,32 +1850,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 		else
 			$(sectionTitle).hide();
-	},
-
-	// todo: implement real combobox with entry field and listbox at the same time
-	_comboboxControl: function(parentContainer, data, builder) {
-		if (data.id === 'searchterm' ||
-			data.id === 'replaceterm') {
-			// Replace combobox with edit in mobile find & replace dialog
-			var callback = function(value) {
-				builder.callback('combobox', 'change', data, value, builder);
-			};
-
-			builder._controlHandlers['edit'](parentContainer, data, builder, callback);
-		} else if (data.id === 'applystyle' ||
-			data.id === 'fontnamecombobox' ||
-			data.id === 'fontsizecombobox' ||
-			data.id === 'fontsize' ||
-			data.id === 'FontBox' ||
-			data.id === 'rotation' ||
-			data.id === 'LB_ANGLE' ||
-			data.id === 'LB_DISTANCE' ||
-			!window.mode.isMobile()) {
-			builder._listboxControl(parentContainer, data, builder);
-		} else if (window.mode.isMobile())
-			builder._explorableEditControl(parentContainer, data, builder);
-		else
-			window.app.console.warn('Unsupported combobox control!');
 	},
 
 	_listboxControl: function(parentContainer, data, builder) {

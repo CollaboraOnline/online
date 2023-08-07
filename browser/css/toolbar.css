@@ -524,7 +524,7 @@ button.leaflet-control-search-next
 	margin-right: 5px;
 	width: 150px !important;
 }
-#fontnamecombobox {
+#fontnamecombobox.select2 {
 	border-color: transparent;
 	background-color: transparent;
 	line-height: 24px;

@@ -14,6 +14,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_overrideHandlers: function() {
+		this._controlHandlers['combobox'] = this._comboboxControl;
 		this._controlHandlers['grid'] = this._gridHandler;
 		this._controlHandlers['frame'] = this._frameHandler;
 		this._controlHandlers['listbox'] = this._listboxControl;
@@ -168,6 +169,25 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		}
 
 		return false;
+	},
+
+	_comboboxControl: function(parentContainer, data, builder) {
+		if (data.id === 'searchterm' ||
+			data.id === 'replaceterm') {
+			// Replace combobox with edit in mobile find & replace dialog
+			var callback = function(value) {
+				builder.callback('combobox', 'change', data, value, builder);
+			};
+
+			builder._controlHandlers['edit'](parentContainer, data, builder, callback);
+		} else if (data.id === 'applystyle' ||
+			data.id === 'fontnamecombobox' ||
+			data.id === 'fontsizecombobox' ||
+			data.id === 'fontsize' ||
+			data.id === 'FontBox') {
+			builder._listboxControl(parentContainer, data, builder);
+		} else
+			builder._explorableEditControl(parentContainer, data, builder);
 	},
 
 	_listboxControl: function(parentContainer, data, builder) {

@@ -625,7 +625,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'accessibility': { focusBack: true, combination: 'FN', de: null }
 							},
 							{
-								'id': 'fontsize',
+								'id': 'fontsizecombobox',
 								'type': 'combobox',
 								'text': '12 pt',
 								'entries': [

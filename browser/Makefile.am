@@ -330,6 +330,7 @@ COOL_JS_LST =\
 	src/control/ColorPicker.js \
 	src/control/jsdialog/Util.FocusCycle.js \
 	src/control/jsdialog/Widget.Calendar.js \
+	src/control/jsdialog/Widget.Combobox.js \
 	src/control/jsdialog/Widget.DrawingArea.js \
 	src/control/jsdialog/Widget.FormulabarEdit.js \
 	src/control/jsdialog/Widget.IconView.js \
