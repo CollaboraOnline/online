@@ -47,7 +47,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 		return [
 			{
 				'text': _('~File'),
-				'id': '-1',
+				'id': 'File-tab-label',
 				'name': 'File',
 			},
 			{
@@ -58,44 +58,44 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			},
 			{
 				'text': _('~Insert'),
-				'id': '-4',
+				'id': 'Insert-tab-label',
 				'name': 'Insert'
 			},
 			{
 				'text': _('~Layout'),
-				'id': '-5',
+				'id': 'Layout-tab-label',
 				'name': 'Layout'
 			},
 			{
 				'text': _('~Review'),
-				'id': '-7',
+				'id': 'Review-tab-label',
 				'name': 'Review'
 			},
 			{
 				'text': _('F~ormat'),
-				'id': '-3',
+				'id': 'Format-tab-label',
 				'name': 'Format',
 			},
 			{
 				'text': _('~Table'),
-				'id': '-8',
+				'id': 'Table-tab-label',
 				'name': 'Table',
 				'context': 'Table'
 			},
 			{
 				'text': _('Dra~w'),
-				'id': '-11',
+				'id': 'Draw-tab-label',
 				'name': 'Draw',
 				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork'
 			},
 			{
 				'text': _('~View'),
-				'id': 'View',
+				'id': 'View-tab-label',
 				'name': 'View',
 			},
 			{
 				'text': _('~Help'),
-				'id': '-2',
+				'id': 'Help-tab-label',
 				'name': 'Help',
 			}
 		];
