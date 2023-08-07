@@ -108,8 +108,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var addRepairToDownloads = hasRepair && !hideDownload;
 		var addRepairToColumn = hasRepair && (hideDownload || hasGroupedDownloadAs);
 
-		if (hasSave) {
-			content.push({
+		content = [
+			hasSave ? {
 				'type': 'toolbox',
 				'children': [
 					{
@@ -119,86 +119,70 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'command': '.uno:Save'
 					}
 				]
-			});
-		}
-
-		if (hasSaveAs) {
-			if (hasGroupedSaveAs) {
-				content.push({
+			}: {},
+			hasSaveAs ?
+				hasGroupedSaveAs ? {
 					'id': 'saveas',
 					'type': 'bigmenubartoolitem',
-					'text': _('Save As'),
-				});
-			} else {
-				content.push({
+					'text': _('Save As')
+				}:
+				{
 					'id': 'file-saveas',
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:SaveAs', 'text'),
 					'command': '.uno:SaveAs'
-				});
-			}
-		}
-
-		if (hasSaveAs) {
-			content.push({
+				}
+			: {},
+			hasSaveAs ? {
 				'id': 'exportas',
 				'type': 'bigmenubartoolitem',
-				'text': _('Export As'),
-			});
-		}
-
-		content = content.concat([
+				'text': _('Export As')
+			}: {},
 			{
 				'type': 'container',
 				'children': [
-					hasShare ?
-						{
-							'id': 'ShareAs',
-							'type': 'customtoolitem',
-							'text': _('Share'),
-							'command': 'shareas',
-							'inlineLabel': true
-						} : {},
-					hasRevisionHistory ?
-						{
-							'id': 'Rev-History',
-							'type': 'customtoolitem',
-							'text': _('See history'),
-							'command': 'rev-history',
-							'inlineLabel': true
-						} : {},
+					hasShare ? {
+						'id': 'ShareAs',
+						'type': 'customtoolitem',
+						'text': _('Share'),
+						'command': 'shareas',
+						'inlineLabel': true
+					}: {},
+					hasRevisionHistory ? {
+						'id': 'Rev-History',
+						'type': 'customtoolitem',
+						'text': _('See history'),
+						'command': 'rev-history',
+						'inlineLabel': true
+					}: {}
 				],
-				'vertical': 'true'
+				'vertical': true
 			},
 			hasPrint ?
-				{
-					'id': 'print',
-					'type': 'bigtoolitem',
-					'text': _UNO('.uno:Print', 'text'),
-					'command': '.uno:Print'
-				} : {},
+			{
+				'id': 'print',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Print', 'text'),
+				'command': '.uno:Print'
+			} : {},
 			hasRunMacro ?
-				{
-					'type': 'toolbox',
-					'children': [
-						{
-							'id': 'runmacro',
-							'type': 'bigtoolitem',
-							'text': _UNO('.uno:RunMacro', 'text'),
-							'command': '.uno:RunMacro'
-						}
-					]
-				} : {}
-		]);
-
-		if (hasGroupedDownloadAs && !hideDownload) {
-			content.push({
+			{
+				'type': 'toolbox',
+				'children': [
+					{
+						'id': 'runmacro',
+						'type': 'bigtoolitem',
+						'text': _UNO('.uno:RunMacro', 'text'),
+						'command': '.uno:RunMacro'
+					}
+				]
+			} : {},
+			hasGroupedDownloadAs && !hideDownload ? {
 				'id': 'downloadas',
 				'type': 'bigmenubartoolitem',
 				'text': _('Download')
-			});
-		} else if (!hideDownload) {
-			content = content.concat([
+			}:
+			!hideDownload ? (
 				{
 					'type': 'container',
 					'children': [
@@ -274,11 +258,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					],
 					'vertical': 'true'
 				}
-			]);
-		}
-
-		if (addRepairToColumn) {
-			content.push({
+			): {},
+			addRepairToColumn ? {
 				'type': 'container',
 				'children': [
 					{
@@ -289,20 +270,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					}
 				],
 				'vertical': 'true'
-			});
-		}
-
-		content.push({
-			'type': 'container',
-			'children': [
-				{
-					'id': 'properties',
-					'type': 'bigtoolitem',
-					'text': _('Properties'),
-					'command': '.uno:SetDocumentProperties'
-				}
-			]
-		});
+			}: {},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'properties',
+						'type': 'bigtoolitem',
+						'text': _('Properties'),
+						'command': '.uno:SetDocumentProperties'
+					}
+				]
+			}
+		];
 
 		return this.getTabPage('File', content);
 	},
@@ -2489,19 +2469,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			'enabled': 'true',
 			'children': [
 				{
-					'id': tabName + '-Tab',
+					'id': tabName + '-container',
 					'type': 'container',
 					'text': '',
 					'enabled': 'true',
-					'children': [
-						{
-							'id': tabName + '-container',
-							'type': 'container',
-							'text': '',
-							'enabled': 'true',
-							'children': this.cleanOpts(content)
-						}
-					]
+					'children': this.cleanOpts(content)
 				}
 			]
 		};
