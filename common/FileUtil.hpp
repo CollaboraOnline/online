@@ -150,6 +150,9 @@ namespace FileUtil
     /// have equal size and every byte of their contents match.
     bool compareFileContents(const std::string& rhsPath, const std::string& lhsPath);
 
+    /// Reads the whole file to memory. Only for small files.
+    std::unique_ptr<std::vector<char>> readFile(const std::string& path, int maxSize = 256 * 1024);
+
     /// File/Directory stat helper.
     class Stat
     {
