@@ -28,6 +28,13 @@ class PreProcessedFile
     friend class FileServeTests;
 
 public:
+    enum class SegmentType : char
+    {
+        Data,
+        Variable,
+        CommentedVariable
+    };
+
     PreProcessedFile(std::string filename, const std::string& data);
 
     const std::string& filename() const { return _filename; }
@@ -37,8 +44,26 @@ private:
     const std::string _filename; //< Filename on disk, with extension.
     const std::size_t _size; //< Number of bytes in original file.
     /// The segments of the file in <IsVariable, Data> pairs.
-    std::vector<std::pair<bool, std::string>> _segments;
+    std::vector<std::pair<SegmentType, std::string>> _segments;
 };
+
+inline std::ostream& operator<<(std::ostream& os, const PreProcessedFile::SegmentType type)
+{
+    switch (type)
+    {
+        case PreProcessedFile::SegmentType::Data:
+            os << "Data";
+            break;
+        case PreProcessedFile::SegmentType::Variable:
+            os << "Variable";
+            break;
+        case PreProcessedFile::SegmentType::CommentedVariable:
+            os << "CommentedVariable";
+            break;
+    }
+
+    return os;
+}
 
 /// Handles file requests over HTTP(S).
 class FileServerRequestHandler

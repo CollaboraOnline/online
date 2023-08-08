@@ -91,11 +91,12 @@ PreProcessedFile::PreProcessedFile(std::string filename, const std::string& data
             // Insert previous literal.
             if (newpos > lastpos)
             {
-                _segments.emplace_back(false, data.substr(lastpos, newpos - lastpos));
+                _segments.emplace_back(SegmentType::Data, data.substr(lastpos, newpos - lastpos));
             }
 
             lastpos = endpos + 1;
-            _segments.emplace_back(true, data.substr(varstart + 1, varend - varstart - 1));
+            _segments.emplace_back(SegmentType::CommentedVariable,
+                                   data.substr(varstart + 1, varend - varstart - 1));
         }
         else
         {
@@ -121,11 +122,12 @@ PreProcessedFile::PreProcessedFile(std::string filename, const std::string& data
             // Insert previous literal.
             if (newpos > lastpos)
             {
-                _segments.emplace_back(false, data.substr(lastpos, newpos - lastpos));
+                _segments.emplace_back(SegmentType::Data, data.substr(lastpos, newpos - lastpos));
             }
 
             lastpos = varend + 1;
-            _segments.emplace_back(true, data.substr(newpos + 1, varend - newpos - 1));
+            _segments.emplace_back(SegmentType::Variable,
+                                   data.substr(newpos + 1, varend - newpos - 1));
         }
 
         pos = lastpos;
@@ -133,7 +135,7 @@ PreProcessedFile::PreProcessedFile(std::string filename, const std::string& data
 
     if (lastpos < _size)
     {
-        _segments.emplace_back(false, data.substr(lastpos));
+        _segments.emplace_back(SegmentType::Data, data.substr(lastpos));
     }
 }
 
