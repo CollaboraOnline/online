@@ -17,6 +17,8 @@
 
 #include <Poco/JSON/Object.h>
 
+#include <cctype>
+
 PreProcessedFile::PreProcessedFile(std::string filename, const std::string& data)
     : _filename(std::move(filename))
     , _size(data.length())
@@ -70,8 +72,16 @@ PreProcessedFile::PreProcessedFile(std::string filename, const std::string& data
                 continue;
             }
 
-            const std::size_t varend = data.find_first_of('%', varstart + 1);
-            if (varend == std::string::npos || varend > endpos)
+            std::size_t varend = varstart + 1;
+            while (varend < endpos)
+            {
+                if (data[varend] == '%' || (!std::isalpha(data[varend]) && data[varend] != '_'))
+                    break;
+
+                ++varend;
+            }
+
+            if (varend >= endpos || data[varend] != '%')
             {
                 // Comment without a variable.
                 pos = endpos + 1;
@@ -92,11 +102,20 @@ PreProcessedFile::PreProcessedFile(std::string filename, const std::string& data
             assert(data[newpos] == '%' && "Expected '%' at given position");
 
             // Extract variable name.
-            const std::size_t varend = data.find_first_of('%', newpos + 1);
-            if (varend == std::string::npos)
+            std::size_t varend = newpos + 1;
+            while (varend < _size)
+            {
+                if (data[varend] == '%' || (!std::isalpha(data[varend]) && data[varend] != '_'))
+                    break;
+
+                ++varend;
+            }
+
+            if (varend > _size || data[varend] != '%')
             {
                 // Broken variable.
-                break;
+                pos = varend;
+                continue;
             }
 
             // Insert previous literal.
