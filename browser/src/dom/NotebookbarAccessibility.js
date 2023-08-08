@@ -262,7 +262,10 @@ var NotebookbarAccessibility = function() {
 		this.mayShowAcceleratorInfoBoxes = false;
 		this.filteredItem = null;
 		for (var i = 0; i < this.activeTabPointers.contentList.length; i++) {
-			document.getElementById(this.activeTabPointers.contentList[i].id).accessKey = null;
+			if (document.getElementById(this.activeTabPointers.contentList[i].id))
+				document.getElementById(this.activeTabPointers.contentList[i].id).accessKey = null;
+			else
+				console.warn('Accessibility - no element with id:' + this.activeTabPointers.contentList[i].id);
 		}
 	};
 
