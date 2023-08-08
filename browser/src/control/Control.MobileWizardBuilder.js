@@ -14,20 +14,21 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_overrideHandlers: function() {
-		this._controlHandlers['combobox'] = this._comboboxControl;
-		this._controlHandlers['grid'] = this._gridHandler;
-		this._controlHandlers['frame'] = this._frameHandler;
-		this._controlHandlers['listbox'] = this._listboxControl;
-		this._controlHandlers['checkbox'] = this._checkboxControl;
 		this._controlHandlers['basespinfield'] = this.baseSpinField;
-		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
+		this._controlHandlers['checkbox'] = this._checkboxControl;
+		this._controlHandlers['combobox'] = this._comboboxControl;
+		this._controlHandlers['comboboxentry'] = JSDialog.mobileComboboxEntry;
 		this._controlHandlers['edit'] = this._editControl;
-		this._controlHandlers['panel'] = this._panelHandler;
-		this._controlHandlers['toolbox'] = this._toolboxHandler;
+		this._controlHandlers['frame'] = this._frameHandler;
+		this._controlHandlers['grid'] = this._gridHandler;
+		this._controlHandlers['listbox'] = this._listboxControl;
 		this._controlHandlers['mobile-popup-container'] = this._mobilePopupContainer;
-		this._controlHandlers['tabcontrol'] = JSDialog.mobileTabControl;
+		this._controlHandlers['panel'] = this._panelHandler;
 		this._controlHandlers['paneltabs'] = JSDialog.mobilePanelControl;
+		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
 		this._controlHandlers['scrollwindow'] = undefined;
+		this._controlHandlers['tabcontrol'] = JSDialog.mobileTabControl;
+		this._controlHandlers['toolbox'] = this._toolboxHandler;
 
 		this._toolitemHandlers['.uno:FontworkAlignmentFloater'] = function () { return false; };
 		this._toolitemHandlers['.uno:FontworkCharacterSpacingFloater'] = function () { return false; };

@@ -721,6 +721,41 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border-radius: var(--border-radius);
 }
 
+.modalpopup[id$='-dropdown'] .ui-dialog-content {
+	padding: 0px;
+}
+
+.modalpopup[id$='-dropdown'] .ui-grid {
+	grid-gap: 0px;
+}
+
+.ui-combobox-entry {
+	width: calc(100% + 15px); /* + padding for scrollbar */
+}
+
+.ui-combobox-entry span:hover {
+	border: 1px solid var(--color-border-darker);
+	background-color: var(--color-background-darker);
+}
+
+.ui-combobox-entry span {
+	border: 1px solid transparent;
+	padding: 5px;
+	display: block;
+	width: 100%;
+	font-size: var(--default-font-size);
+	font-family: var(--jquery-ui-font);
+}
+
+.ui-combobox-entry img {
+	border: 1px solid transparent;
+}
+
+.ui-combobox-entry img:hover {
+	border: 1px solid var(--color-border-darker);
+	filter: contrast(0.5);
+}
+
 /* ui-textarea */
 .jsdialog.ui-textarea {
 	color: var(--color-text-dark);
