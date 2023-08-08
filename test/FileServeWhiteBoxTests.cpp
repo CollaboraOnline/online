@@ -28,7 +28,7 @@ class FileServeTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testUIDefaults);
     CPPUNIT_TEST(testCSSVars);
     CPPUNIT_TEST(testPreProcessedFile);
-    // CPPUNIT_TEST(testPreProcessedFileRoundtrip);
+    CPPUNIT_TEST(testPreProcessedFileRoundtrip);
     CPPUNIT_TEST_SUITE_END();
 
     void testUIDefaults();
@@ -356,12 +356,7 @@ void FileServeTests::testPreProcessedFileRoundtrip()
             LOK_ASSERT_EQUAL(file, ppf.filename());
             LOK_ASSERT_EQUAL(data->size(), ppf.size());
 
-            std::string recon;
-            recon.reserve(ppf.size());
-            for (const auto& seg : ppf._segments)
-            {
-                recon.append(seg.second);
-            }
+            std::string recon = ppf.substitute({});
 
             LOK_ASSERT_EQUAL(orig, recon);
         }

@@ -139,6 +139,50 @@ PreProcessedFile::PreProcessedFile(std::string filename, const std::string& data
     }
 }
 
+std::string PreProcessedFile::substitute(const std::unordered_map<std::string, std::string>& values)
+{
+    std::string recon;
+    recon.reserve(_size * 2);
+    for (const auto& seg : _segments)
+    {
+        switch (seg.first)
+        {
+            case SegmentType::Data:
+                recon.append(seg.second);
+                break;
+            case SegmentType::Variable:
+            case SegmentType::CommentedVariable:
+            {
+                const auto it = values.find(seg.second);
+                if (it == values.end())
+                {
+                    // Leave original variable as-is.
+                    if (seg.first == SegmentType::Variable)
+                    {
+                        recon.append("%");
+                        recon.append(seg.second);
+                        recon.append("%");
+                    }
+                    else if (seg.first == SegmentType::CommentedVariable)
+                    {
+                        recon.append("<!--%");
+                        recon.append(seg.second);
+                        recon.append("%-->");
+                    }
+                }
+                else
+                {
+                    // Substitute with the given value.
+                    recon.append(it->second);
+                }
+            }
+            break;
+        }
+    }
+
+    return recon;
+}
+
 std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefaults, std::string& uiMode, std::string& uiTheme, std::string& savedUIState)
 {
     static std::string previousUIDefaults;
