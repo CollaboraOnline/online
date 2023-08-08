@@ -52,6 +52,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_currentDepth: 0,
 
+	rendersCache: {}, // eg. custom renders for combobox entries
+
 	setWindowId: function (id) {
 		this.windowId = id;
 	},
@@ -1952,23 +1954,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_comboboxEntry: function(parentContainer, data, builder) {
-		var comboboxEntry = L.DomUtil.create('p', builder.options.cssClass, parentContainer);
-		comboboxEntry.textContent = builder._cleanText(data.text);
-
-		comboboxEntry.parent = data.parent;
-
-		if (data.style && data.style.length)
-			L.DomUtil.addClass(comboboxEntry, data.style);
-
-		$(comboboxEntry).click(function () {
-			builder.refreshSidebar = true;
-			if (builder.wizard)
-				builder.wizard.goLevelUp();
-			builder.callback('combobox', 'selected', comboboxEntry.parent, data.pos + ';' + comboboxEntry.textContent, builder);
-		});
-	},
-
 	_fixedtextControl: function(parentContainer, data, builder) {
 		var fixedtext = L.DomUtil.create('label', builder.options.cssClass, parentContainer);
 
@@ -3317,6 +3302,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						control.setSelectionRange(start, end);
 				}
 			}
+			break;
+
+		case 'rendered_combobox_entry':
+			if (!this.rendersCache[control.id])
+				this.rendersCache[control.id] = {};
+
+			this.rendersCache[control.id][data.pos] = data.image;
+
+			if (typeof control.updateRenders == 'function')
+				control.updateRenders(data.pos);
+
 			break;
 
 		default:
