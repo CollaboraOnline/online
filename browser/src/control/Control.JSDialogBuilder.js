@@ -2482,10 +2482,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.command || data.postmessage === true) {
 			var id = data.id ? data.id : (data.command && data.command !== '') ? data.command : data.text;
 			var isUnoCommand = data.command && data.command.indexOf('.uno:') >= 0;
-			if (isUnoCommand)
-				id = encodeURIComponent(data.command.substr('.uno:'.length));
-			else
-				isRealUnoCommand = false;
+
+			isRealUnoCommand = isUnoCommand;
 
 			if (id)
 				id.replace(/\%/g, '').replace(/\./g, '-').replace(' ', '');
@@ -2501,7 +2499,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			data.id = id; // change in input data for postprocess
 
 			var icon = data.icon ? data.icon : builder._createIconURL(data.command);
-			var buttonId = id + 'img';
+			var buttonId = id + '-button';
 
 			button = L.DomUtil.create('button', 'ui-content unobutton', div);
 			button.id = buttonId;
@@ -2820,8 +2818,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var params = {};
-		var colorParameterID = data.id + '.Color';
-		var themeParameterID = data.id + '.ComplexColorJSON';
+		var colorParameterID = data.command.replace('.uno:', '') + '.Color';
+		var themeParameterID = data.command.replace('.uno:', '') + '.ComplexColorJSON';
 
 		params[colorParameterID] = {
 			type : 'long',
@@ -2987,7 +2985,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder.map.uiManager.enableTooltip(div);
 
 			var icon = builder._createIconURL(data.command);
-			var buttonId = id + 'img';
+			var buttonId = data.id ? data.id: id + '-button';
 			var button = L.DomUtil.create('button', 'ui-content unobutton', div);
 			button.style.background = 'url(' + L.LOUtil.getImageURL(icon.split('/').pop(), builder.map.getDocType()) + ')';
 			button.id = buttonId;
