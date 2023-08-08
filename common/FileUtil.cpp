@@ -424,6 +424,37 @@ namespace FileUtil
                           std::istreambuf_iterator<char>(lhs.rdbuf()));
     }
 
+    std::unique_ptr<std::vector<char>> readFile(const std::string& path, int maxSize)
+    {
+        const int fd = ::open(path.c_str(), O_RDONLY);
+        struct stat st;
+        if (fd < 0 || ::fstat(fd, &st) != 0 || st.st_size > maxSize)
+            return nullptr;
+
+        auto data = std::make_unique<std::vector<char>>(st.st_size);
+        off_t off = 0;
+        for (;;)
+        {
+            int n;
+            while ((n = ::read(fd, &(*data)[off], st.st_size)) < 0 && errno == EINTR)
+            {
+            }
+
+            if (n <= 0)
+            {
+                if (n == 0) // EOF.
+                    break;
+
+                return nullptr; // Error.
+            }
+
+            off += n;
+        }
+
+        close(fd);
+        return data;
+    }
+
 } // namespace FileUtil
 
 namespace
