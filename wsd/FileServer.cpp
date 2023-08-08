@@ -783,12 +783,10 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
                 deflate(&strm, Z_FINISH);
 
-                const long unsigned int haveComp = compSize - strm.avail_out;
-                std::string partialcompFile(cbuf, haveComp);
-                std::string partialuncompFile(buf.get(), size);
-                compressedFile += partialcompFile;
-                uncompressedFile += partialuncompFile;
+                compressedFile.append(cbuf, compSize - strm.avail_out);
                 free(cbuf);
+
+                uncompressedFile.append(buf.get(), size);
 
             } while(true);
 
