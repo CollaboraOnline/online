@@ -213,9 +213,10 @@ class AutoFillMarkerSection extends CanvasSectionObject {
 			this.sectionProperties.inMouseDown = true;
 
 			// revert coordinates to global and fire event again with position in the center
+			// inverse of convertPositionToCanvasLocale
 			var canvasClientRect = this.containerObject.getCanvasBoundingClientRect();
-			point[0] = this.myTopLeft[0] / app.dpiScale + this.size[0] * 0.5 + 1 + canvasClientRect.left;
-			point[1] = this.myTopLeft[1] / app.dpiScale + this.size[1] * 0.5 + 1 + canvasClientRect.top;
+			point[0] = (this.myTopLeft[0] + this.size[0] * 0.5 + 1) / app.dpiScale + canvasClientRect.left;
+			point[1] = (this.myTopLeft[1] + this.size[1] * 0.5 + 1) / app.dpiScale + canvasClientRect.top;
 
 			var newPoint = {
 				clientX: point[0],
