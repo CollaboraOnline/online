@@ -583,14 +583,14 @@ L.Control.UIManager = L.Control.extend({
 		}
 
 		this.customButtons.push(button);
-		if (button.tablet === false && window.mode.isTablet()) {
-			return;
-		}
 		this.insertCustomButton(button);
 	},
 
 	// insert custom button to the current UI
 	insertCustomButton: function(button) {
+		if (button.tablet === false && window.mode.isTablet()) {
+			return;
+		}
 		if (!this.notebookbar)
 			this.insertButtonToClassicToolbar(button);
 		else
