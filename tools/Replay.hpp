@@ -409,7 +409,7 @@ public:
 
     static void addPollFor(SocketPoll &poll, const std::string &server,
                            const std::string &filePath, const std::string &tracePath,
-                           const std::shared_ptr<Stats> &optStats = nullptr)
+                           const std::shared_ptr<Stats> &optStats)
     {
         std::string file, wrap;
         std::string fileabs = Poco::Path(filePath).makeAbsolute().toString();
