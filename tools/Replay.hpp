@@ -423,19 +423,6 @@ public:
         if (optStats)
             optStats->addConnection();
     }
-
-    /// Attach to @server, load @filePath and replace @tracePath
-    static void replaySync(const std::string &server,
-                           const std::string &filePath,
-                           const std::string &tracePath)
-    {
-        TerminatingPoll poll("replay");
-
-        addPollFor(poll, server, filePath, tracePath);
-        do {
-            poll.poll(TerminatingPoll::DefaultPollTimeoutMicroS);
-        } while (poll.continuePolling() && poll.getSocketCount() > 0);
-    }
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
