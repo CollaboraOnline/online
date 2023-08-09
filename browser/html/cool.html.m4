@@ -396,6 +396,10 @@ m4_ifelse(IOSAPP,[true],
 m4_ifelse(ANDROIDAPP,[true],
      [window.userInterfaceMode = window.getParameterByName('userinterfacemode');])
 
+m4_ifelse(ANDROIDAPP,[true],
+     [var darkTheme = window.getParameterByName('darkTheme');
+      if (darkTheme) {window.uiDefaults = {'darkTheme': true};}])
+
 m4_ifelse(EMSCRIPTENAPP,[true],
      [window.userInterfaceMode = 'notebookbar';])
 
