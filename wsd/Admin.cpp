@@ -1055,7 +1055,7 @@ std::vector<std::pair<std::string, int>> Admin::getMonitorList()
 void Admin::startMonitors()
 {
     bool haveMonitors = false;
-    for (auto monitor : getMonitorList())
+    for (const auto& monitor : getMonitorList())
     {
         addCallback(
             [=]
