@@ -569,6 +569,7 @@ static void total_smaps(unsigned proc_id, unsigned parent_id,
                 if (!name)
                     name = "[anon]\n";
                 space.insert(start, end, name);
+                // coverity[tainted_data : FALSE] - this is entirely intentional
                 for (addr_t p = start; p < end; p += 0x1000)
                     pushTo->push_back(p);
             }
