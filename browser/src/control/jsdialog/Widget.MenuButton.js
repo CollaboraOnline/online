@@ -67,13 +67,12 @@ function _makeW2MenuFocusable(id, control, menu) {
 }
 
 function _menubuttonControl (parentContainer, data, builder) {
-	var ids = data.id.split(':');
+	if (!data.command) {
+		console.warn('Menu control without uno command: ' + data.id);
+		return;
+	}
 
-	var menuId = null;
-	if (ids.length > 1)
-		menuId = ids[1];
-
-	data.id = ids[0];
+	var menuId = data.command.replace('.uno:', '');
 
 	// import menu
 	if (data.menu) {

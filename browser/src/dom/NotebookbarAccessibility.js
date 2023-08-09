@@ -38,28 +38,6 @@ var NotebookbarAccessibility = function() {
 		return infoBox;
 	};
 
-	// Checks the current tab's content.
-	this.getElementOfWhichIdStartsWith = function(id) {
-		var tab = document.getElementById(this.activeTabPointers.id.split('-')[0] + '-container');
-
-		if (tab) {
-			var element = tab.querySelector('[id^="' + id + '"]');
-
-			if (!element || element.length === 0)
-				return null;
-			if (element.length && element.length > 1) {
-				console.warn('NotebookbarAccessibility: Multiple elements inside the same tab with the same functionality.');
-				return null;
-			}
-			else
-				return element;
-		}
-		else {
-			console.warn('Couldn\t find element: ' + id.split()[0] + '-container');
-			return null;
-		}
-	};
-
 	this.setupAcceleratorsForCurrentTab = function(id) {
 		if (id === undefined)
 			id = this.activeTabPointers.id;
@@ -71,9 +49,8 @@ var NotebookbarAccessibility = function() {
 		this.activeTabPointers.infoBoxList = [];
 
 		for (var i = 0; i < this.activeTabPointers.contentList.length; i++) {
-			var element = this.getElementOfWhichIdStartsWith(this.activeTabPointers.contentList[i].id);
+			var element = document.getElementById(this.activeTabPointers.contentList[i].id);
 			if (element) {
-				this.activeTabPointers.contentList[i].id = element.id; // Change the stored id so we can use getElementById from now.
 				element.accessKey = this.activeTabPointers.contentList[i].combination;
 				this.activeTabPointers.infoBoxList.push(this.addInfoBox(element));
 			}
