@@ -192,6 +192,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			{text: _UNO('.uno:EditPrintArea', 'spreadsheet'), uno: '.uno:EditPrintArea'},
 			{text: _UNO('.uno:DeletePrintArea', 'spreadsheet'), uno: '.uno:DeletePrintArea'}
 		];
+		this._menus['Print'] = [
+			{text: _('Active sheet'), id: 'print-active-sheet', type: 'action'},
+			{text: _('All Sheets'), id: 'print-all-sheets', type: 'action'},
+		];
 		this._menus['MenuRowHeight'] = [
 			{text: _UNO('.uno:RowHeight', 'spreadsheet'), uno: '.uno:RowHeight'},
 			{text: _UNO('.uno:SetOptimalRowHeight', 'spreadsheet'), uno: '.uno:SetOptimalRowHeight'},

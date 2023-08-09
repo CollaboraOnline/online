@@ -246,12 +246,12 @@ L.Map.include({
 			'options=' + options);
 	},
 
-	print: function () {
+	print: function (options) {
 		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
 			window.postMobileMessage('PRINT');
 		} else {
 			this.showBusy(_('Downloading...'), false);
-			this.downloadAs('print.pdf', 'pdf', null, 'print');
+			this.downloadAs('print.pdf', 'pdf', options, 'print');
 		}
 	},
 
@@ -1079,6 +1079,30 @@ L.Map.include({
 			break;
 		case 'renamedocument':
 			this.uiManager.renameDocument();
+			break;
+		case 'print-active-sheet':
+			this.sendUnoCommand('.uno:DeletePrintArea');
+			var currentSheet = this._docLayer._selectedPart + 1;
+			var options  = {
+				ExportFormFields: {
+					type: 'boolean',
+					value: false
+				},
+				ExportNotes: {
+					type: 'boolean',
+					value: false
+				},
+				SheetRange: {
+					type: 'string',
+					value: currentSheet + '-' + currentSheet
+				}
+			};
+			options = JSON.stringify(options);
+			this.print(options);
+			break;
+		case 'print-all-sheets':
+			this.sendUnoCommand('.uno:DeletePrintArea');
+			this.print();
 			break;
 		default:
 			console.error('unknown dispatch: "' + action + '"');

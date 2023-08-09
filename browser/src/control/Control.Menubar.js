@@ -671,7 +671,10 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('CSV file (.csv)'), id: 'downloadas-csv', type: 'action'}]},
 				{name: _UNO('.uno:SetDocumentProperties', 'spreadsheet'), uno: '.uno:SetDocumentProperties', id: 'properties'},
 				{type: 'separator'},
-				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Print', 'spreadsheet'), L.Control.MenubarShortcuts.shortcuts.PRINT), id: 'print', type: 'action'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Print', 'spreadsheet'), L.Control.MenubarShortcuts.shortcuts.PRINT), id: 'print', type: 'menu', menu: [
+					{name: _('Active sheet'), id: 'print-active-sheet', type: 'action'},
+					{name: _('All Sheets'), id: 'print-all-sheets', type: 'action'},
+				]},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'spreadsheet'), id: 'editmenu', type: 'menu', menu: [
@@ -1857,7 +1860,9 @@ L.Control.Menubar = L.Control.extend({
 			|| id === 'deletepage'
 			|| id === 'remotelink'
 			|| id === 'toggledarktheme'
-			|| id === 'home-search') {
+			|| id === 'home-search'
+			|| id === 'print-active-sheet'
+			|| id == 'print-all-sheets') {
 			this._map.dispatch(id);
 		} else if (id === 'insertcomment') {
 			this._map.insertComment();

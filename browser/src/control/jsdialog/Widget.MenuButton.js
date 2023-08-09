@@ -114,6 +114,8 @@ function _menubuttonControl (parentContainer, data, builder) {
 				onSelect: function (event) {
 					if (event.item.uno)
 						builder.map.sendUnoCommand('.uno:' + event.item.uno);
+					else if (event.item.type === 'action')
+						builder.map.dispatch(event.item.id);
 					else
 						builder.callback('menubutton', 'select', control.container, event.item.id, builder);
 				}
