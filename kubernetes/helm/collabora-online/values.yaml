@@ -146,6 +146,12 @@ ingress:
   annotations: {}
   # # nginx
   #  nginx.ingress.kubernetes.io/upstream-hash-by: "$arg_WOPISrc"
+  # # block admin urls from outside
+  #  nginx.ingress.kubernetes.io/server-snippet: |
+  #    location /cool/getMetrics { deny all; return 403; }
+  #    location /cool/adminws/ { deny all; return 403; }
+  #    location /browser/dist/admin/admin.html { deny all; return 403; }
+  #
   # # HAProxy
   #  haproxy.org/timeout-tunnel: "3600s"
   #  haproxy.org/backend-config-snippet: |
@@ -156,6 +162,18 @@ ingress:
   #    http-request track-sc1 url_param(WOPISrc)
   #    stick match url_param(WOPISrc) if { var(txn.wopisrcconns) -m int gt 0 }
   #    stick store-request url_param(WOPISrc)
+  #
+  # # HAProxy - Community: https://haproxy-ingress.github.io/
+  #  haproxy-ingress.github.io/timeout-tunnel: 3600s
+  #  haproxy-ingress.github.io/balance-algorithm: url_param WOPISrc check_post
+  #  haproxy-ingress.github.io/config-backend:
+  #    hash-type consistent
+  # # block admin urls from outside
+  #    acl admin_url path_beg /cool/getMetrics
+  #    acl admin_url path_beg /cool/adminws/
+  #    acl admin_url path_beg /browser/dist/admin/admin.html
+  #    http-request deny if admin_url
+  #
   hosts:
     - host: chart-example.local
       paths:
