@@ -579,7 +579,6 @@ public:
     /// Set the file to send as the body of the request.
     void setBodyFile(const std::string& path)
     {
-        //FIXME: use generalized lambda capture to move the ifstream, available in C++14.
         auto ifs = std::make_shared<std::ifstream>(path, std::ios::binary);
 
         ifs->seekg(0, std::ios_base::end);
@@ -587,7 +586,7 @@ public:
         ifs->seekg(0, std::ios_base::beg);
 
         setBodySource(
-            [=](char* buf, int64_t len) -> int64_t
+            [ ifs=std::move(ifs) ](char* buf, int64_t len) -> int64_t
             {
                 ifs->read(buf, len);
                 return ifs->gcount();
@@ -600,11 +599,10 @@ public:
         if (!body.empty()) // Type is only meaningful if there is a body.
             _header.setContentType(std::move(contentType));
 
-        //FIXME: use generalized lambda capture to move the istringstream, available in C++14.
         auto iss = std::make_shared<std::istringstream>(body, std::ios::binary);
 
         setBodySource(
-            [=](char* buf, int64_t len) -> int64_t
+            [ iss=std::move(iss) ](char* buf, int64_t len) -> int64_t
             {
                 iss->read(buf, len);
                 return iss->gcount();
