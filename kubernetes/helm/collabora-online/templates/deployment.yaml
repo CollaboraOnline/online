@@ -34,15 +34,9 @@ spec:
         {{- include "collabora-online.selectorLabels" . | nindent 8 }}
         type: main
     spec:
-      {{- if .Values.deployment.hostAliases }}
+      {{- with .Values.deployment.hostAliases }}
       hostAliases:
-        {{- range .Values.deployment.hostAliases }}
-        - ip: {{ .ip | quote }}
-          hostnames:
-          {{- range .hostnames }}
-          - {{ . | quote }}
-          {{- end }}
-        {{- end }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       {{- with .Values.imagePullSecrets }}
