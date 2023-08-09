@@ -59,7 +59,8 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 				cy.stub(win, 'open').as('windowOpen');
 			});
 
-		cy.cGet('#tb_editbar_item_print').click();
+		cy.cGet('#tb_editbar_item_print-options .w2ui-tb-down').click();
+		cy.cGet('body').contains('.menu-text', 'Active Sheet').click();
 
 		cy.get('@windowOpen').should('be.called');
 	});

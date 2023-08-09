@@ -154,8 +154,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			!this._map['wopi'].HidePrintOption ?
 			{
-				'id': 'print',
-				'type': 'bigtoolitem',
+				'id': 'Data-Print:Print',
+				'type': 'menubutton',
 				'text': _UNO('.uno:Print', 'spreadsheet'),
 				'command': '.uno:Print',
 				'accessibility': { focusBack: true,	combination: 'PT', de: null }
