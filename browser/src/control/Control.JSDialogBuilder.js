@@ -1184,6 +1184,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				tab.number = item.id - 1;
 				tab.textContent = title;
 				tab.setAttribute('role', 'tab');
+				tab.setAttribute('aria-label', title);
 				builder._setAccessKey(tab, builder._getAccessKeyFromText(item.text));
 				builder._stressAccessKey(tab, tab.accessKey);
 
