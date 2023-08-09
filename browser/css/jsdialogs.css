@@ -521,6 +521,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	border-radius: var(--border-radius);
 	overflow: hidden;
 	align-self: center;
+	padding-inline: 4px;
 }
 
 #search_edit.ui-edit.autofilter {
@@ -576,6 +577,10 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 /* text label */
 
 .ui-dialog-content .jsdialog.ui-text {
+	padding-inline-start: 0;
+}
+
+.jsdialog.ui-text {
 	padding-inline-start: 8px;
 }
 
