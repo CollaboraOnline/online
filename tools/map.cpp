@@ -637,7 +637,7 @@ static unsigned getParent(int proc_id)
 
     char buffer[4096];
     int len;
-    if ((len = read(fd, buffer, sizeof (buffer))) < 0)
+    if ((len = read(fd, buffer, sizeof (buffer) - 1)) < 0)
         error(EXIT_FAILURE, errno, "Failed to read /proc/%d/stat", proc_id);
     close (fd);
     buffer[len] = '\0';
