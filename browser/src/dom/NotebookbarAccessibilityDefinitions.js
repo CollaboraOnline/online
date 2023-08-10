@@ -61,11 +61,13 @@ var NotebookbarAccessibilityDefinitions = function() {
 
 		var defs = {};
 		for (i = 0; i < tabs.length; i++) {
-			defs[tabs[i].id] = tabs[i];
-			defs[tabs[i].id].focusBack = tabs[i].accessibility.focusBack;
-			defs[tabs[i].id].combination = tabs[i].accessibility.combination;
-			defs[tabs[i].id].contentList = [];
-			this.getContentListRecursive(defs[tabs[i].id].rawContentList, defs[tabs[i].id].contentList);
+			if (tabs[i].accessibility && tabs[i].accessibility.focusBack) {
+				defs[tabs[i].id] = tabs[i];
+				defs[tabs[i].id].focusBack = tabs[i].accessibility.focusBack;
+				defs[tabs[i].id].combination = tabs[i].accessibility.combination;
+				defs[tabs[i].id].contentList = [];
+				this.getContentListRecursive(defs[tabs[i].id].rawContentList, defs[tabs[i].id].contentList);
+			}
 		}
 
 		return defs;
