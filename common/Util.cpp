@@ -1001,11 +1001,11 @@ namespace Util
 #endif
     }
 
-    std::map<std::string, std::string> stringVectorToMap(std::vector<std::string> sVector, const char delimiter)
+    std::map<std::string, std::string> stringVectorToMap(const std::vector<std::string>& strvector, const char delimiter)
     {
         std::map<std::string, std::string> result;
 
-        for (std::vector<std::string>::iterator it = sVector.begin(); it != sVector.end(); it++)
+        for (auto it = strvector.begin(); it != strvector.end(); ++it)
         {
             std::size_t delimiterPosition = 0;
             delimiterPosition = (*it).find(delimiter, 0);
