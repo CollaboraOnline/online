@@ -1,7 +1,6 @@
 /* global cy require*/
 
 var helper = require('./helper');
-var desktopHelper = require('./desktop_helper');
 
 // A special text selection method for Writer. It selects
 // all text of the document, but it also removes previous
@@ -32,9 +31,12 @@ function selectAllTextOfDoc() {
 }
 
 function openFileProperties() {
-	desktopHelper.actionOnSelector('fileTab', (selector) => { cy.cGet(selector).click(); });
+	cy.cGet('#File-tab-label').then(function(element) {
+		if (!element.hasClass('selected'))
+			element.click();
 
-	desktopHelper.actionOnSelector('documentProperties', (selector) => { cy.cGet(selector).click(); });
+		cy.cGet('#File-container .unoSetDocumentProperties').click();
+	});
 }
 
 module.exports.selectAllTextOfDoc = selectAllTextOfDoc;

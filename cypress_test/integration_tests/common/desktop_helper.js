@@ -201,12 +201,13 @@ function insertImage(docType) {
 	if (mode === 'notebookbar')
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 
-	if (docType === 'calc' &&  mode === 'notebookbar')
+	if (docType === 'calc' &&  mode === 'notebookbar') {
 		cy.cGet('#Insert-tab-label').click();
-
-	actionOnSelector('insertGraphic', (selector) => {
-		cy.cGet(selector).click();
-	});
+		cy.cGet('#Insert-container .unoInsertGraphic').click();
+	}
+	else {
+		cy.cGet('#Home-container .unoInsertGraphic').click();
+	}
 
 	cy.cGet('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');
 	cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
