@@ -2550,7 +2550,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_showURLPopUp: function(position, url) {
-		var parent = L.DomUtil.create('div');
+		var parent = L.DomUtil.create('div', '');
 		L.DomUtil.createWithId('div', 'hyperlink-pop-up-preview', parent);
 		var link = L.DomUtil.createWithId('a', 'hyperlink-pop-up', parent);
 		link.innerText = url;
