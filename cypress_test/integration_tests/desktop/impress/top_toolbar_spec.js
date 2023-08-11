@@ -30,7 +30,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'font-weight', '700');
 	});
 
@@ -39,7 +39,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'font-style', 'italic');
 	});
 
@@ -49,7 +49,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'text-decoration', 'underline');
 	});
 
@@ -58,7 +58,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'text-decoration', 'line-through');
 	});
 
@@ -95,7 +95,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'font-family', 'Liberation Mono');
 	});
 
@@ -107,7 +107,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 
 		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'font-size', '776px');
 	});
 
@@ -140,7 +140,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
 			.should('have.attr', 'y', '8643');
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'font-size', '1129px');
 
 		helper.typeIntoDocument('{ctrl}{shift}p');
@@ -150,7 +150,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
 			.should('have.attr', 'y', '8271');
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'font-size', '655px');
 	});
 
@@ -160,7 +160,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
 			.should('have.attr', 'y', '8643');
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'font-size', '1129px');
 
 		helper.typeIntoDocument('{ctrl}{shift}b');
@@ -170,7 +170,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Top toolbar tests.', funct
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
 			.should('have.attr', 'y', '8734');
 
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'font-size', '655px');
 	});
 });
