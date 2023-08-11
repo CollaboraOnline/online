@@ -12,5 +12,5 @@ jobs:
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           arguments: "./browser/src"
-          options: "--min-lines=26"
+          options: "--min-lines=16"
 
