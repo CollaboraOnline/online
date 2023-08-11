@@ -410,12 +410,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var getPrecision = function (data) {
 			data = Math.abs(data);
-			var counter = 1;
-
-			while (Math.floor(data * counter) < (data * counter))
-				counter *= 10;
-
-			return 1/counter;
+			var str = '' + data;
+			var dot = str.indexOf('.');
+			return dot ? 1 / Math.pow(10, str.length - dot - 1) : 1;
 		};
 
 		if (data.min != undefined)
