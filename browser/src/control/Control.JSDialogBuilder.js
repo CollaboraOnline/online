@@ -2483,7 +2483,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		if (data.command || data.postmessage === true) {
-			var id = data.id ? data.id : (data.command && data.command !== '') ? data.command : data.text;
+			var id = data.id ? data.id : (data.command && data.command !== '') ? data.command.replace('.uno:', '') : data.text;
 			var isUnoCommand = data.command && data.command.indexOf('.uno:') >= 0;
 
 			isRealUnoCommand = isUnoCommand;

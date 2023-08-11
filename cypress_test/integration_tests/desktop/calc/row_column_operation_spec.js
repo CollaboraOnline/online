@@ -21,40 +21,40 @@ describe(['tagdesktop'], 'Row Column Operation', function() {
 
 	it('Insert/Delete row' , function() {
 		//Insert row above
-		cy.cGet('.cell.notebookbar #InsertColumnsBeforeimg').click();
+		cy.cGet('.cell.notebookbar #InsertColumnsBefore').click();
 
 		calcHelper.selectEntireSheet();
 		//calcHelper.assertDataClipboardTable(['','','Hello','Hi','World','Bye']);
 		//delete row
 		calcHelper.clickOnFirstCell(true, false);
 
-		cy.cGet('.cell.notebookbar #DeleteRowsimg').click();
+		cy.cGet('.cell.notebookbar #DeleteRows').click();
 		calcHelper.selectEntireSheet();
 		//calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
 
 		//insert row below
 		calcHelper.clickOnFirstCell(true, false);
-		cy.cGet('.cell.notebookbar #InsertRowsAfterimg').click();
+		cy.cGet('.cell.notebookbar #InsertRowsAfter').click();
 		calcHelper.selectEntireSheet();
 		//calcHelper.assertDataClipboardTable(['Hello','Hi','','','World','Bye']);
 	});
 
 	it('Insert/Delete Column', function() {
 		//insert column before
-		cy.cGet('.cell.notebookbar #InsertColumnsBeforeimg').click();
+		cy.cGet('.cell.notebookbar #InsertColumnsBefore').click();
 		calcHelper.selectEntireSheet();
 		//calcHelper.assertDataClipboardTable(['','Hello','Hi','','World','Bye']);
 		calcHelper.clickOnFirstCell(true, false);
 
 		//delete column
-		cy.cGet('.cell.notebookbar #DeleteColumnsimg').click();
+		cy.cGet('.cell.notebookbar #DeleteColumns').click();
 		calcHelper.selectEntireSheet();
 		cy.wait(500);
 		//calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
 		calcHelper.clickOnFirstCell(true,false);
 
 		//insert column after
-		cy.cGet('.cell.notebookbar #InsertColumnsAfterimg').click();
+		cy.cGet('.cell.notebookbar #InsertColumnsAfter').click();
 		calcHelper.selectEntireSheet();
 		//calcHelper.assertDataClipboardTable(['Hello','','Hi','World','','Bye']);
 	});
