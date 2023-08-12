@@ -11,15 +11,18 @@
 
 #include <config.h>
 
-#include <memory>
-#include <test/lokassert.hpp>
-#include <cppunit/TestAssert.h>
-#include <cstddef>
-
 #include <wsd/FileServer.hpp>
 #include <common/FileUtil.hpp>
+#include <test/lokassert.hpp>
 
+#include <Poco/String.h>
+
+#include <cppunit/TestAssert.h>
 #include <cppunit/extensions/HelperMacros.h>
+
+#include <cstddef>
+#include <memory>
+#include <unordered_map>
 
 /// File-Serve White-Box unit-tests.
 class FileServeTests : public CPPUNIT_NS::TestFixture
@@ -29,12 +32,14 @@ class FileServeTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testCSSVars);
     CPPUNIT_TEST(testPreProcessedFile);
     CPPUNIT_TEST(testPreProcessedFileRoundtrip);
+    CPPUNIT_TEST(testPreProcessedFileSubstitution);
     CPPUNIT_TEST_SUITE_END();
 
     void testUIDefaults();
     void testCSSVars();
     void testPreProcessedFile();
     void testPreProcessedFileRoundtrip();
+    void testPreProcessedFileSubstitution();
 };
 
 void FileServeTests::testUIDefaults()
@@ -357,6 +362,55 @@ void FileServeTests::testPreProcessedFileRoundtrip()
             LOK_ASSERT_EQUAL(data->size(), ppf.size());
 
             std::string recon = ppf.substitute({});
+
+            LOK_ASSERT_EQUAL(orig, recon);
+        }
+    }
+}
+
+void FileServeTests::testPreProcessedFileSubstitution()
+{
+    constexpr auto testname = __func__;
+
+    const Poco::Path path(TDOC "/../../browser/dist");
+
+    std::unordered_map<std::string, std::string> variables = {
+        { "ACCESS_TOKEN", "alksjdfiwjksnsdkafnsdl" },
+        { "ACCESS_TOKEN_TTL", "123" },
+        { "ACCESS_HEADER", "8923rweyhjsnjfnwoejl" },
+        { "UI_DEFAULTS",
+          "{\"presentation\":{\"ShowStatusbar\":false},\"spreadsheet\":{\"ShowSidebar\":"
+          "false},\"text\":{\"ShowRuler\":true},\"uiMode\":\"notebookbar\"}" },
+        { "CSS_VARIABLES",
+          "<style>:root {--co-somestyle-text:#123456;--co-somestyle-size:15px;}</style>" },
+        { "POSTMESSAGE_ORIGIN", "https://www.example.com:8080" }
+    };
+
+    std::vector<std::string> files;
+    Poco::File(path).list(files);
+    for (const std::string& file : files)
+    {
+        std::unique_ptr<std::vector<char>> data =
+            FileUtil::readFile(Poco::Path(path, file).toString());
+
+        if (data)
+        {
+            std::string orig(data->data(), data->size());
+            PreProcessedFile ppf(file, orig);
+            LOK_ASSERT_EQUAL(file, ppf.filename());
+            LOK_ASSERT_EQUAL(data->size(), ppf.size());
+
+            const std::string recon = ppf.substitute(variables);
+
+            Poco::replaceInPlace(orig, std::string("%ACCESS_TOKEN%"), variables["ACCESS_TOKEN"]);
+            Poco::replaceInPlace(orig, std::string("%ACCESS_TOKEN_TTL%"),
+                                 variables["ACCESS_TOKEN_TTL"]);
+            Poco::replaceInPlace(orig, std::string("%ACCESS_HEADER%"), variables["ACCESS_HEADER"]);
+            Poco::replaceInPlace(orig, std::string("%UI_DEFAULTS%"), variables["UI_DEFAULTS"]);
+            Poco::replaceInPlace(orig, std::string("<!--%CSS_VARIABLES%-->"),
+                                 variables["CSS_VARIABLES"]);
+            Poco::replaceInPlace(orig, std::string("%POSTMESSAGE_ORIGIN%"),
+                                 variables["POSTMESSAGE_ORIGIN"]);
 
             LOK_ASSERT_EQUAL(orig, recon);
         }
