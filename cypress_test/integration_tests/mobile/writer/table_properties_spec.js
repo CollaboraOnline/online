@@ -210,9 +210,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		cy.cGet('#copy-paste-container tr:nth-of-type(3) td:nth-of-type(1)').should('not.have.attr', 'height');
 
 		helper.clickOnIdle('.unoSetOptimalRowHeight');
-		helper.moveCursor('up', 'shift');
-		helper.moveCursor('up', 'shift');
-		helper.moveCursor('left', 'shift');
+		selectFullTable();
 
 		cy.cGet('#copy-paste-container table td').should('have.length', 6);
 		// Check new row height
@@ -223,17 +221,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		before('table_with_text.odt');
 
 		// Select full table (3x2)
-		helper.moveCursor('down', 'shift');
-		helper.moveCursor('down', 'shift');
-		helper.moveCursor('right', 'shift');
-
 		openTablePanel();
+		selectFullTable();
 
 		helper.clickOnIdle('.unoDistributeRows');
 
-		helper.moveCursor('up', 'shift');
-		helper.moveCursor('up', 'shift');
-		helper.moveCursor('left', 'shift');
+		selectFullTable();
 
 		// Check new row height
 		cy.cGet('#copy-paste-container td')
@@ -254,17 +247,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		before('table_with_text.odt');
 
 		// Select full table (3x2)
-		helper.moveCursor('down', 'shift');
-		helper.moveCursor('down', 'shift');
-		helper.moveCursor('right', 'shift');
-
 		openTablePanel();
+		selectFullTable();
 
 		helper.clickOnIdle('.unoSetMinimalColumnWidth');
 
-		helper.moveCursor('up', 'shift');
-		helper.moveCursor('up', 'shift');
-		helper.moveCursor('left', 'shift');
+		selectFullTable();
 
 		cy.cGet('#copy-paste-container td').should('have.attr', 'width', '24');
 	});
@@ -273,11 +261,8 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		before('table_with_text.odt');
 
 		// Select full table (3x2)
-		helper.moveCursor('down', 'shift');
-		helper.moveCursor('down', 'shift');
-		helper.moveCursor('right', 'shift');
-
 		openTablePanel();
+		selectFullTable();
 
 		helper.clickOnIdle('.unoEntireRow');
 
@@ -292,17 +277,12 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Change table properties / l
 		before('table_with_text.odt');
 
 		// Select full table (3x2)
-		helper.moveCursor('down', 'shift');
-		helper.moveCursor('down', 'shift');
-		helper.moveCursor('right', 'shift');
-
 		openTablePanel();
+		selectFullTable();
 
 		helper.clickOnIdle('.unoDistributeColumns');
 
-		helper.moveCursor('up', 'shift');
-		helper.moveCursor('up', 'shift');
-		helper.moveCursor('left', 'shift');
+		selectFullTable();
 
 		cy.cGet('#copy-paste-container td')
 			.should('have.attr', 'width', '323');
