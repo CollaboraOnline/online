@@ -214,8 +214,7 @@ void DocumentBroker::pollThread()
 
         // Nominal time between retries, lest we busy-loop. getNewChild could also wait, so don't double that here.
         std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS / 10));
-    } while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag() &&
-             !SigUtil::getShutdownRequestFlag());
+    } while (!_stop && _poll->continuePolling() && !SigUtil::getShutdownRequestFlag());
 
     if (!_childProcess)
     {
