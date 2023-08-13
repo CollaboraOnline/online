@@ -996,6 +996,7 @@ static const std::string ACCESS_HEADER = "%ACCESS_HEADER%";
 static const std::string UI_DEFAULTS = "%UI_DEFAULTS%";
 static const std::string CSS_VARS = "<!--%CSS_VARIABLES%-->";
 static const std::string POSTMESSAGE_ORIGIN = "%POSTMESSAGE_ORIGIN%";
+static const std::string BRANDING_THEME = "%BRANDING_THEME%";
 
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
@@ -1078,6 +1079,8 @@ public:
         extractVariablePlain(form, "css_variables", CSS_VARS);
 
         extractVariable(form, "postmessage_origin", POSTMESSAGE_ORIGIN);
+
+        extractVariable(form, "theme", BRANDING_THEME);
     }
 
     const std::string& operator[](const std::string& key) const
@@ -1120,8 +1123,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     if (buyProduct.empty())
         buyProduct = form.get("buy_product", "");
     LOG_TRC("buy_product=" << buyProduct);
-    const std::string theme = form.get("theme", "");
-    LOG_TRC("theme=" << theme);
     const std::string checkfileinfo_override = form.get("checkfileinfo_override", "");
     LOG_TRC("checkfileinfo_override=" << checkfileinfo_override);
 
@@ -1134,6 +1135,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     std::string userInterfaceMode;
     std::string userInterfaceTheme;
     std::string savedUIState = "true";
+    const std::string& theme = urv[BRANDING_THEME];
 
     Poco::replaceInPlace(preprocess, ACCESS_TOKEN, urv[ACCESS_TOKEN]);
     Poco::replaceInPlace(preprocess, ACCESS_TOKEN_TTL, urv[ACCESS_TOKEN_TTL]);
@@ -1145,7 +1147,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, UI_DEFAULTS,
                          uiDefaultsToJSON(urv[UI_DEFAULTS], userInterfaceMode, userInterfaceTheme, savedUIState));
     Poco::replaceInPlace(preprocess, std::string("%UI_THEME%"), userInterfaceTheme); // UI_THEME refers to light or dark theme
-    Poco::replaceInPlace(preprocess, std::string("%BRANDING_THEME%"), theme);
+    Poco::replaceInPlace(preprocess, BRANDING_THEME, urv[BRANDING_THEME]);
     Poco::replaceInPlace(preprocess, std::string("%SAVED_UI_STATE%"), savedUIState);
     Poco::replaceInPlace(preprocess, POSTMESSAGE_ORIGIN, urv[POSTMESSAGE_ORIGIN]);
     Poco::replaceInPlace(preprocess, std::string("%CHECK_FILE_INFO_OVERRIDE%"),
@@ -1160,11 +1162,12 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         COOLWSD::getConfigValue<bool>("hexify_embedded_urls", false) ? "true" : "false";
     Poco::replaceInPlace(preprocess, std::string("%HEXIFY_URL%"), hexifyEmbeddedUrls);
 
-
-    bool useIntegrationTheme = config.getBool("user_interface.use_integration_theme", true);
-    bool hasIntegrationTheme = (theme != "") && FileUtil::Stat(COOLWSD::FileServerRoot + "/browser/dist/" + theme).exists();
-    const std::string escapedTheme = Util::encodeURIComponent(theme, "'");
-    const std::string themePreFix = hasIntegrationTheme && useIntegrationTheme ? escapedTheme + "/" : "";
+    static const bool useIntegrationTheme =
+        config.getBool("user_interface.use_integration_theme", true);
+    const bool hasIntegrationTheme =
+        !theme.empty() &&
+        FileUtil::Stat(COOLWSD::FileServerRoot + "/browser/dist/" + theme).exists();
+    const std::string themePreFix = hasIntegrationTheme && useIntegrationTheme ? theme + "/" : "";
     const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/browser/" COOLWSD_VERSION_HASH "/" + themePreFix + "%s.css\">");
     const std::string scriptJS("<script src=\"%s/browser/" COOLWSD_VERSION_HASH "/" + themePreFix + "%s.js\"></script>");
 

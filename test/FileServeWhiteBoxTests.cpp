@@ -383,7 +383,8 @@ void FileServeTests::testPreProcessedFileSubstitution()
           "false},\"text\":{\"ShowRuler\":true},\"uiMode\":\"notebookbar\"}" },
         { "CSS_VARIABLES",
           "<style>:root {--co-somestyle-text:#123456;--co-somestyle-size:15px;}</style>" },
-        { "POSTMESSAGE_ORIGIN", "https://www.example.com:8080" }
+        { "POSTMESSAGE_ORIGIN", "https://www.example.com:8080" },
+        { "BRANDING_THEME", "cool_brand" }
     };
 
     std::vector<std::string> files;
@@ -411,6 +412,8 @@ void FileServeTests::testPreProcessedFileSubstitution()
                                  variables["CSS_VARIABLES"]);
             Poco::replaceInPlace(orig, std::string("%POSTMESSAGE_ORIGIN%"),
                                  variables["POSTMESSAGE_ORIGIN"]);
+            Poco::replaceInPlace(orig, std::string("%BRANDING_THEME%"),
+                                 variables["BRANDING_THEME"]);
 
             LOK_ASSERT_EQUAL(orig, recon);
         }
