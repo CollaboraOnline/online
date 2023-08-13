@@ -41,8 +41,18 @@
 namespace
 {
 #ifndef IOS
-static std::atomic<bool> TerminationFlag(false);
-static std::atomic<bool> ShutdownRequestFlag(false);
+
+/// The valid states of the process.
+enum class RunState : char
+{
+    Run = 0, //< Normal up-and-running state.
+    ShutDown, //< Request to shut down gracefully.
+    Terminate //< Immediate termination.
+};
+
+/// Single flag to control the current run state.
+static std::atomic<RunState> RunStateFlag(RunState::Run);
+
 #if !MOBILEAPP
 static std::atomic<bool> DumpGlobalState(false);
 static std::atomic<bool> ForwardSigUsr2Flag(false); //< Flags to forward SIG_USR2 to children.
@@ -61,41 +71,30 @@ static char FatalGdbString[256] = { '\0' };
 namespace SigUtil
 {
 #ifndef IOS
-    bool getShutdownRequestFlag()
-    {
-        // ShutdownRequestFlag must be set if TerminationFlag is set.
-        assert(!TerminationFlag || ShutdownRequestFlag);
-        return ShutdownRequestFlag;
-    }
+bool getShutdownRequestFlag() { return RunStateFlag >= RunState::ShutDown; }
 
-    bool getTerminationFlag()
-    {
-        // ShutdownRequestFlag must be set if TerminationFlag is set.
-        assert(!TerminationFlag || ShutdownRequestFlag);
-        return TerminationFlag;
-    }
+bool getTerminationFlag() { return RunStateFlag >= RunState::Terminate; }
 
-    void setTerminationFlag()
-    {
-#if !MOBILEAPP
-        // Request shutting down first. Otherwise, we can race with
-        // getTerminationFlag, which asserts ShutdownRequestFlag.
-        ShutdownRequestFlag = true;
-#endif
-        // Set the forced-termination flag.
-        TerminationFlag = true;
+void setTerminationFlag()
+{
+    // Set the forced-termination flag.
+    RunStateFlag = RunState::Terminate;
+
 #if !MOBILEAPP
         // And wake-up the thread.
         SocketPoll::wakeupWorld();
 #endif
-    }
+}
+
+void requestShutdown()
+{
+    RunState oldState = RunState::Run;
+    if (RunStateFlag.compare_exchange_strong(oldState, RunState::ShutDown))
+        SocketPoll::wakeupWorld();
+}
 
 #if MOBILEAPP
-    void resetTerminationFlags()
-    {
-        TerminationFlag = false;
-        ShutdownRequestFlag = false;
-    }
+    void resetTerminationFlags() { RunStateFlag = RunState::Run; }
 #endif
 #endif // !IOS
 
@@ -303,21 +302,27 @@ namespace SigUtil
         const auto onrre = errno; // Save.
 
         bool hardExit = false;
-        const char *domain;
-        if (!ShutdownRequestFlag && (signal == SIGINT || signal == SIGTERM))
+        const char* domain;
+        RunState oldState = RunState::Run;
+        if ((signal == SIGINT || signal == SIGTERM) &&
+            RunStateFlag.compare_exchange_strong(oldState, RunState::ShutDown))
         {
             domain = " Shutdown signal received: ";
-            ShutdownRequestFlag = true;
-        }
-        else if (!TerminationFlag)
-        {
-            domain = " Forced-Termination signal received: ";
-            TerminationFlag = true;
         }
         else
         {
-            domain = " ok, ok - hard-termination signal received: ";
-            hardExit = true;
+            assert(RunStateFlag > RunState::Run && "Must have had Terminate flag");
+            oldState = RunState::ShutDown;
+            if (RunStateFlag.compare_exchange_strong(oldState, RunState::Terminate))
+            {
+                domain = " Forced-Termination signal received: ";
+            }
+            else
+            {
+                assert(RunStateFlag == RunState::Terminate && "Must have had Terminate flag");
+                domain = " ok, ok - hard-termination signal received: ";
+                hardExit = true;
+            }
         }
 
         signalLogOpen();
@@ -341,12 +346,6 @@ namespace SigUtil
         }
 
         errno = onrre; // Restore.
-    }
-
-    void requestShutdown()
-    {
-        ShutdownRequestFlag = true;
-        SocketPoll::wakeupWorld();
     }
 
     static
