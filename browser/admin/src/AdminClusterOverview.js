@@ -18,7 +18,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
     },
 
     _graphMargins: {
-        top: 5,
+        top: 10,
         right: 0,
         bottom: 5,
         left: 70
@@ -219,8 +219,6 @@ var AdminClusterOverview = AdminSocketBase.extend({
         figure.id = graphName + '-graph';
 
         var svg = d3.select(figure).append('svg')
-            .attr('width', '100%')
-            .attr('height', this._graphDimensions.y)
             .attr('viewBox', '0 0 ' + this._graphDimensions.x + ' ' + this._graphDimensions.y)
             .append('g')
             .attr('transform', 'translate(' + this._graphMargins.left + ',' + this._graphMargins.top + ')');
