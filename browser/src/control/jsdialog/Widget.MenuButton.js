@@ -67,13 +67,19 @@ function _makeW2MenuFocusable(id, control, menu) {
 }
 
 function _menubuttonControl (parentContainer, data, builder) {
-	var ids = data.id.split(':');
-
+	var ids;
 	var menuId = null;
-	if (ids.length > 1)
-		menuId = ids[1];
 
-	data.id = ids[0];
+	if (data.id.includes(':')) {
+		ids = data.id.split(':');
+		menuId = ids[1];
+	}
+	else if (data.id.includes('-')) {
+		ids = data.id.split('-');
+		menuId = ids[1];
+	}
+	else
+		menuId = data.id;
 
 	// import menu
 	if (data.menu) {
