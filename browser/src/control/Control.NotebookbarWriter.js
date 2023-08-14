@@ -1157,7 +1157,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'accessibility': { focusBack: false,	combination: 'FG',	de:	null }
 			},
 			{
-				'id': 'FormattingMarkMenu',
+				'id': 'insert-FormattingMarkMenu',
 				'type': 'menubutton',
 				'text': _UNO('.uno:FormattingMarkMenu', 'text'),
 				'command': '.uno:FormattingMarkMenu',
