@@ -2,7 +2,7 @@
 /*
     Socket to be intialized on opening the cluster overview page in Admin console
 */
-/* global DlgLoading _ AdminSocketBase Admin d3 Map */
+/* global DlgLoading _ AdminSocketBase Admin d3 Map Util */
 
 var AdminClusterOverview = AdminSocketBase.extend({
     constructor: function (host) {
@@ -21,7 +21,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
         top: 5,
         right: 0,
         bottom: 5,
-        left: 30
+        left: 70
     },
 
     _interval: 5000,
@@ -106,7 +106,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
 
         mainTile.appendChild(memorySubTitle);
 
-        var memGraph = this.createGraph('mem', data.mem, server.memory);
+        var memGraph = this.createGraph('mem', data.mem, Util.humanizeMem(server.memory));
         mainTile.appendChild(memGraph);
 
         var horizontalTile = document.createElement('div');
@@ -131,7 +131,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
     updateCardContent: function (cardId, server) {
         var card = document.getElementById(cardId);
         card.querySelector('#cpu-usage').textContent = server.cpu + '%';
-        card.querySelector('#mem-con').textContent = server.memory + ' MB';
+        card.querySelector('#mem-con').textContent = Util.humanizeMem(server.memory);
         card.querySelector('#route').textContent = server.routeToken;
 
         var data = this._statsData.get(server.serverId);
@@ -146,8 +146,11 @@ var AdminClusterOverview = AdminSocketBase.extend({
 
         var innerWidth = this._graphDimensions.x - this._graphMargins.left - this._graphMargins.right;
 
-        var yAxisMemGenerator = d3.axisLeft(memObj.yScale);
-        yAxisMemGenerator.ticks(3);
+        var yAxisMemGenerator = d3.axisLeft(memObj.yScale)
+            .tickFormat(function (d) {
+                return Util.humanizeMem(d);
+            });
+        yAxisMemGenerator.ticks(2);
         yAxisMemGenerator.tickSize(-innerWidth);
 
         var yAxisMem = d3.select(memSvg).select('.y-axis')
@@ -163,8 +166,11 @@ var AdminClusterOverview = AdminSocketBase.extend({
             .datum(data.cpu)
             .attr('d', cpuObj.line);
 
-        var yAxisCpuGenerator = d3.axisLeft(cpuObj.yScale);
-        yAxisCpuGenerator.ticks(3);
+        var yAxisCpuGenerator = d3.axisLeft(cpuObj.yScale)
+            .tickFormat(function (d) {
+                return d + '%';
+            });
+        yAxisCpuGenerator.ticks(2);
         yAxisCpuGenerator.tickSize(-innerWidth);
 
         var yAxisCpu = d3.select(cpuSvg).select('.y-axis')
@@ -202,7 +208,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
             spanforBullet.style = 'color:green';
             var spanforText = document.createElement('span');
             spanforText.id = 'mem-con';
-            spanforText.textContent = currData + ' MB';
+            spanforText.textContent = currData;
 
             memStat.appendChild(spanforBullet);
             memStat.appendChild(spanforText);
@@ -221,8 +227,20 @@ var AdminClusterOverview = AdminSocketBase.extend({
 
         var obj = this.getScaleAndLine(data);
 
-        var yAxisGenerator = d3.axisLeft(obj.yScale);
-        yAxisGenerator.ticks(3);
+        var yAxisGenerator;
+        if (graphName == 'cpu') {
+            yAxisGenerator = d3.axisLeft(obj.yScale)
+                .tickFormat(function (d) {
+                    return d + '%';
+                });
+            yAxisGenerator.ticks(3);
+        } else if (graphName == 'mem') {
+            yAxisGenerator = d3.axisLeft(obj.yScale)
+                .tickFormat(function (d) {
+                    return Util.humanizeMem(d);
+                });
+            yAxisGenerator.ticks(3);
+        }
 
         var innerWidth = this._graphDimensions.x - this._graphMargins.left - this._graphMargins.right;
         yAxisGenerator.tickSize(-innerWidth);
@@ -335,7 +353,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
         var tableBody = document.createElement('tbody');
         var that = this;
         documents.forEach(function (doc) {
-            var row = that.createRow(doc.documentName, doc.memoryConsumed, doc.pid);
+            var row = that.createRow(doc.documentName, Util.humanizeMem(doc.memoryConsumed), doc.pid);
             tableBody.appendChild(row);
         });
 
@@ -450,7 +468,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
                     table = this.createDocumentTable([{ documentName: decodeURI(filename), memoryConsumed: mem, pid: pid }]);
                     card.querySelector('.card-content').appendChild(table);
                 } else {
-                    var row = this.createRow(decodeURI(filename), mem, pid);
+                    var row = this.createRow(decodeURI(filename), Util.humanizeMem(Number.parseInt(mem)), pid);
                     card.querySelector('tbody').appendChild(row);
                 }
             }
@@ -485,7 +503,7 @@ var AdminClusterOverview = AdminSocketBase.extend({
             if (card) {
                 var row = card.querySelector('#doc-' + pid);
                 if (row) {
-                    row.querySelector('.docmem').textContent = newMem;
+                    row.querySelector('.docmem').textContent = Util.humanizeMem(Number.parseInt(newMem));
                 }
             }
         } else if (textMsg.startsWith('rmsrv')) {
