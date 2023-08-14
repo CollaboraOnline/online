@@ -264,7 +264,7 @@ public:
 
             Poco::Net::Context::Params sslParams;
             Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
-            Poco::Net::SSLManager::instance().initializeClient(nullptr, invalidCertHandler, sslContext);
+            Poco::Net::SSLManager::instance().initializeClient(nullptr, std::move(invalidCertHandler), std::move(sslContext));
         }
 
         testWebsocketPingPong();
