@@ -997,6 +997,7 @@ static const std::string UI_DEFAULTS = "%UI_DEFAULTS%";
 static const std::string CSS_VARS = "<!--%CSS_VARIABLES%-->";
 static const std::string POSTMESSAGE_ORIGIN = "%POSTMESSAGE_ORIGIN%";
 static const std::string BRANDING_THEME = "%BRANDING_THEME%";
+static const std::string CHECK_FILE_INFO_OVERRIDE = "%CHECK_FILE_INFO_OVERRIDE%";
 
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
@@ -1081,6 +1082,8 @@ public:
         extractVariable(form, "postmessage_origin", POSTMESSAGE_ORIGIN);
 
         extractVariable(form, "theme", BRANDING_THEME);
+
+        extractVariable(form, "checkfileinfo_override", CHECK_FILE_INFO_OVERRIDE);
     }
 
     const std::string& operator[](const std::string& key) const
@@ -1123,8 +1126,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     if (buyProduct.empty())
         buyProduct = form.get("buy_product", "");
     LOG_TRC("buy_product=" << buyProduct);
-    const std::string checkfileinfo_override = form.get("checkfileinfo_override", "");
-    LOG_TRC("checkfileinfo_override=" << checkfileinfo_override);
 
     std::string socketProxy = "false";
     if (requestDetails.isProxy())
@@ -1150,8 +1151,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, BRANDING_THEME, urv[BRANDING_THEME]);
     Poco::replaceInPlace(preprocess, std::string("%SAVED_UI_STATE%"), savedUIState);
     Poco::replaceInPlace(preprocess, POSTMESSAGE_ORIGIN, urv[POSTMESSAGE_ORIGIN]);
-    Poco::replaceInPlace(preprocess, std::string("%CHECK_FILE_INFO_OVERRIDE%"),
-                         checkFileInfoToJSON(checkfileinfo_override));
+    Poco::replaceInPlace(preprocess, CHECK_FILE_INFO_OVERRIDE,
+                         checkFileInfoToJSON(urv[CHECK_FILE_INFO_OVERRIDE]));
 
     const auto& config = Application::instance().config();
 
