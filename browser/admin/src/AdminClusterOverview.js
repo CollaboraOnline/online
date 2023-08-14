@@ -66,21 +66,24 @@ var AdminClusterOverview = AdminSocketBase.extend({
 
     createCard: function (server) {
         var card = document.createElement('div');
-        card.className = 'tile is-child card';
+        card.className = 'tile is-child card is-rounded';
         card.id = 'card-' + server.serverId;
 
-        var cardContent = document.createElement('div');
-        cardContent.className = 'card-content';
-
+        var cardHeader = document.createElement('header');
+        cardHeader.className = 'card-header is-top-rounded';
         var cardTitle = document.createElement('p');
-        cardTitle.className = 'title has-text-centered';
+        cardTitle.className = 'card-header-title';
         if (server.podname) {
             cardTitle.textContent = server.podname;
         } else {
             console.warn('podname doesnot exist, using serverId instead of podname on card title');
             cardTitle.textContent = server.serverId;
         }
-        cardContent.appendChild(cardTitle);
+        cardHeader.appendChild(cardTitle);
+        card.appendChild(cardHeader);
+
+        var cardContent = document.createElement('div');
+        cardContent.className = 'card-content';
 
         var mainTile = document.createElement('div');
         mainTile.className = 'tile is-fullwidth is-vertical';
