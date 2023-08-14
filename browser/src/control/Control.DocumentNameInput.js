@@ -29,6 +29,10 @@ L.Control.DocumentNameInput = L.Control.extend({
 						this.map.renameFile(value);
 					}
 				}
+				else {
+					// when user doesn't specify any extension
+					this.map.renameFile(value);
+				}
 			} else {
 				// saveAs for rename
 				this.map.saveAs(value);
