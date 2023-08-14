@@ -408,3 +408,11 @@ The style is roughly as follows, in rough order of importance:
 
   In other cases it makes the code more readable to still spell out the type
   explicitly.
+
+Security credential related changes
+-----------------------------------
+
+- Instead of the usual one, two reviews are needed.
+
+- Instead of just choosing the 'approve' option on GitHub, please add your
+  explicit sign-off to the commit message when you review.
