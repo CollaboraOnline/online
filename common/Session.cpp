@@ -258,7 +258,7 @@ void Session::handleMessage(const std::vector<char> &data)
         std::unique_ptr< std::vector<char> > replace;
         if (UnitBase::isUnitTesting() && !Util::isFuzzing() && UnitBase::get().filterSessionInput(this, &data[0], data.size(), replace))
         {
-            if (!replace || replace->empty())
+            if (replace && !replace->empty())
                 _handleInput(replace->data(), replace->size());
             return;
         }
