@@ -594,7 +594,7 @@ public:
             size);
     }
 
-    void setBody(std::string body, std::string contentType = "text/html charset=UTF-8")
+    void setBody(const std::string& body, std::string contentType = "text/html charset=UTF-8")
     {
         if (!body.empty()) // Type is only meaningful if there is a body.
             _header.setContentType(std::move(contentType));
