@@ -309,7 +309,7 @@ protected:
 
     /// Override to set the CheckFileInfo attributes.
     virtual void configCheckFileInfo(const Poco::Net::HTTPRequest& /*request*/,
-                                     Poco::JSON::Object::Ptr /*fileInfo*/)
+                                     Poco::JSON::Object::Ptr& /*fileInfo*/)
     {
     }
 
