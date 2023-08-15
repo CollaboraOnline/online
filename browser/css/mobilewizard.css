@@ -487,13 +487,6 @@ p.mobile-wizard.ui-combobox-text.selected {
 	background-color: var(--color-background-lighter);
 }
 
-#mobile-wizard-header {
-	position: sticky;
-	top: 0;
-	background-color: var(--color-background-lighter);
-	z-index: 2;
-}
-
 .ui-tab.mobile-wizard {
 	display: table-cell;
 	width: 49%;
@@ -658,7 +651,7 @@ a.leaflet-control-zoom-in {
 #slide-sorter .preview-img:hover{
 	border-color: var(--color-primary-darker);
 }
-#slide-sorter .preview-img-currentpart, #mobile-wizard-header .preview-img-currentpart{
+#slide-sorter .preview-img-currentpart{
 	border-color: var(--color-primary-dark);
 	border-style: solid;
 	border-radius: var(--border-radius);
