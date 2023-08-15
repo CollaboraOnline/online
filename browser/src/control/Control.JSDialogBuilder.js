@@ -2490,7 +2490,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			else
 				console.warn('_unoToolButton: no id provided');
 
-			L.DomUtil.addClass(div, data.command.replace(':', '').replace('.', ''));
+			if (data.command)
+				L.DomUtil.addClass(div, data.command.replace(':', '').replace('.', ''));
 
 			if (isRealUnoCommand)
 				id = builder._makeIdUnique(id);
