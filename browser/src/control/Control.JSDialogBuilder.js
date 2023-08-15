@@ -2914,7 +2914,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_borderControlItem: function(parentContainer, data, builder, i, selected) {
 		var button = null;
 
-		var div = this._createIdentifiable('div', 'ui-content unospan', parentContainer, data);
+		var div = this._createIdentifiable('div', 'unotoolbutton mobile-wizard ui-content unospan', parentContainer, data);
 
 		var buttonId = 'border-' + i;
 		button = L.DomUtil.create('img', 'ui-content borderbutton', div);
