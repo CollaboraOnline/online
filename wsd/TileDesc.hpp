@@ -312,7 +312,8 @@ private:
         _width(width),
         _height(height),
         _tileWidth(tileWidth),
-        _tileHeight(tileHeight)
+        _tileHeight(tileHeight),
+        _isCompiled(true)
     {
         if (_part < 0 ||
             _mode < 0 ||
@@ -395,6 +396,7 @@ public:
     int getHeight() const { return _height; }
     int getTileWidth() const { return _tileWidth; }
     int getTileHeight() const { return _tileHeight; }
+    bool getCombined() const { return _isCompiled; }
 
     const std::vector<TileDesc>& getTiles() const { return _tiles; }
     std::vector<TileDesc>& getTiles() { return _tiles; }
@@ -610,6 +612,7 @@ public:
         _tileHeight = desc.getTileHeight();
         _normalizedViewId = desc.getNormalizedViewId();
         _tiles.push_back(desc);
+        _isCompiled = false;
     }
 
 private:
@@ -621,6 +624,7 @@ private:
     int _height;
     int _tileWidth;
     int _tileHeight;
+    bool _isCompiled;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
