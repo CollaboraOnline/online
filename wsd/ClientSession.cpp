@@ -703,7 +703,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // By default savetostorage implies forcing.
         int force = 1;
         if (tokens.size() > 1)
-            getTokenInteger(tokens[1], "force", force);
+            (void)getTokenInteger(tokens[1], "force", force);
 
         // The savetostorage command is really only used to resolve save conflicts
         // and it seems to always have force=1. However, we should still honor the
