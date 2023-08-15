@@ -385,7 +385,8 @@ void FileServeTests::testPreProcessedFileSubstitution()
           "<style>:root {--co-somestyle-text:#123456;--co-somestyle-size:15px;}</style>" },
         { "POSTMESSAGE_ORIGIN", "https://www.example.com:8080" },
         { "BRANDING_THEME", "cool_brand" },
-        { "CHECK_FILE_INFO_OVERRIDE", "DownloadAsPostMessage=true;blah=bleh" }
+        { "CHECK_FILE_INFO_OVERRIDE", "DownloadAsPostMessage=true;blah=bleh" },
+        { "BUYPRODUCT_URL", "https://buy.ourproduct.com/'" }
     };
 
     std::vector<std::string> files;
@@ -417,6 +418,8 @@ void FileServeTests::testPreProcessedFileSubstitution()
                                  variables["BRANDING_THEME"]);
             Poco::replaceInPlace(orig, std::string("%CHECK_FILE_INFO_OVERRIDE%"),
                                  variables["CHECK_FILE_INFO_OVERRIDE"]);
+            Poco::replaceInPlace(orig, std::string("%BUYPRODUCT_URL%"),
+                                 variables["BUYPRODUCT_URL"]);
 
             LOK_ASSERT_EQUAL(orig, recon);
         }

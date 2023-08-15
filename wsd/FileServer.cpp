@@ -998,6 +998,7 @@ static const std::string CSS_VARS = "<!--%CSS_VARIABLES%-->";
 static const std::string POSTMESSAGE_ORIGIN = "%POSTMESSAGE_ORIGIN%";
 static const std::string BRANDING_THEME = "%BRANDING_THEME%";
 static const std::string CHECK_FILE_INFO_OVERRIDE = "%CHECK_FILE_INFO_OVERRIDE%";
+static const std::string BUYPRODUCT_URL = "%BUYPRODUCT_URL%";
 
 /// Per user request variables.
 /// Holds access_token, css_variables, postmessage_origin, etc.
@@ -1084,6 +1085,25 @@ public:
         extractVariable(form, "theme", BRANDING_THEME);
 
         extractVariable(form, "checkfileinfo_override", CHECK_FILE_INFO_OVERRIDE);
+
+        extractVariable(form, "buy_product", BUYPRODUCT_URL);
+
+        std::string buyProduct;
+        {
+            std::lock_guard<std::mutex> lock(COOLWSD::RemoteConfigMutex);
+            buyProduct = COOLWSD::BuyProductUrl;
+        }
+
+        if (buyProduct.empty())
+        {
+            buyProduct = form.get("buy_product", "");
+        }
+
+        const std::string escapedBuyProduct = Util::encodeURIComponent(buyProduct, "'");
+        _vars[BUYPRODUCT_URL] = escapedBuyProduct;
+
+        LOG_TRC("Field [buy_product] for var [" << BUYPRODUCT_URL << "] = [" << escapedBuyProduct
+                                                << ']');
     }
 
     const std::string& operator[](const std::string& key) const
@@ -1260,8 +1280,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_URL%"), std::string(FEEDBACK_URL));
     Poco::replaceInPlace(preprocess, std::string("%WELCOME_URL%"), std::string(WELCOME_URL));
 
-    const std::string escapedBuyProduct = Util::encodeURIComponent(buyProduct, "'");
-    Poco::replaceInPlace(preprocess, std::string("%BUYPRODUCT_URL%"), escapedBuyProduct);
+    Poco::replaceInPlace(preprocess, BUYPRODUCT_URL, urv[BUYPRODUCT_URL]);
 
     Poco::replaceInPlace(preprocess, std::string("%DEEPL_ENABLED%"), (config.getBool("deepl.enabled", false) ? std::string("true"): std::string("false")));
     Poco::replaceInPlace(preprocess, std::string("%ZOTERO_ENABLED%"), (config.getBool("zotero.enable", true) ? std::string("true"): std::string("false")));
@@ -1278,7 +1297,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     csp.appendDirective("frame-src", "'self'");
     csp.appendDirective("frame-src", WELCOME_URL);
     csp.appendDirective("frame-src", FEEDBACK_URL);
-    csp.appendDirective("frame-src", buyProduct);
+    csp.appendDirective("frame-src", Util::decodeURIComponent(urv[BUYPRODUCT_URL]));
     csp.appendDirective("frame-src", "blob:"); // Equivalent to unsafe-eval!
     csp.appendDirective("connect-src", "'self'");
     csp.appendDirective("connect-src", "https://www.zotero.org");
