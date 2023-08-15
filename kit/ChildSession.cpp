@@ -110,7 +110,8 @@ ChildSession::ChildSession(
     _isDocLoaded(false),
     _copyToClipboard(false),
     _canonicalViewId(-1),
-    _isDumpingTiles(false)
+    _isDumpingTiles(false),
+    _clientVisibleArea(0, 0, 0, 0)
 {
     LOG_INF("ChildSession ctor [" << getName() << "]. JailRoot: [" << _jailRoot << ']');
 }
@@ -979,8 +980,15 @@ bool ChildSession::clientVisibleArea(const StringVector& tokens)
 
     getLOKitDocument()->setView(_viewId);
 
+    _clientVisibleArea = Util::Rectangle(x, y, width, height);
     getLOKitDocument()->setClientVisibleArea(x, y, width, height);
     return true;
+}
+
+bool ChildSession::isTileInsideVisibleArea(const TileDesc& tile) const
+{
+    return (tile.getTilePosX() >= _clientVisibleArea.getLeft() && tile.getTilePosX() <= _clientVisibleArea.getRight() &&
+        tile.getTilePosY() >= _clientVisibleArea.getTop() && tile.getTilePosY() <= _clientVisibleArea.getBottom());
 }
 
 bool ChildSession::outlineState(const StringVector& tokens)

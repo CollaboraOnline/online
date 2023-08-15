@@ -870,18 +870,6 @@ public:
         LOG_INF("setDocumentPassword returned.");
     }
 
-    void renderTile(const StringVector& tokens)
-    {
-        TileCombined tileCombined(TileDesc::parse(tokens));
-        renderTiles(tileCombined);
-    }
-
-    void renderCombinedTiles(const StringVector& tokens)
-    {
-        TileCombined tileCombined = TileCombined::parse(tokens);
-        renderTiles(tileCombined);
-    }
-
     void renderTiles(TileCombined &tileCombined)
     {
         // Find a session matching our view / render settings.
@@ -1842,6 +1830,19 @@ private:
         return std::string();
     }
 
+    bool isTileRequestInsideVisibleArea(const TileCombined& tileCombined)
+    {
+        const auto session = _sessions.findByCanonicalId(tileCombined.getNormalizedViewId());
+        if (!session)
+            return false;
+        for (const auto& rTile : tileCombined.getTiles())
+        {
+            if (session->isTileInsideVisibleArea(rTile))
+                return true;
+        }
+        return false;
+    }
+
 public:
     void enableProcessInput(bool enable = true){ _inputProcessingEnabled = enable; }
     bool processInputEnabled() const { return _inputProcessingEnabled; }
@@ -1870,11 +1871,14 @@ public:
     {
         try
         {
+            std::vector<TileCombined> tileRequests;
+
             while (processInputEnabled() && hasQueueItems())
             {
                 if (_stop || SigUtil::getTerminationFlag())
                 {
                     LOG_INF("_stop or TerminationFlag is set, breaking Document::drainQueue of loop");
+                    tileRequests.clear();
                     break;
                 }
 
@@ -1892,11 +1896,11 @@ public:
 
                 if (tokens.equals(0, "tile"))
                 {
-                    renderTile(tokens);
+                    tileRequests.emplace_back(TileDesc::parse(tokens));
                 }
                 else if (tokens.equals(0, "tilecombine"))
                 {
-                    renderCombinedTiles(tokens);
+                    tileRequests.emplace_back(TileCombined::parse(tokens));
                 }
                 else if (tokens.startsWith(0, "child-"))
                 {
@@ -1982,6 +1986,14 @@ public:
                 }
             }
 
+            if (!tileRequests.empty())
+            {
+                // Put requests that include tiles in the visible area to the front to handle those first
+                std::partition(tileRequests.begin(), tileRequests.end(), [this](const TileCombined& req) {
+                        return isTileRequestInsideVisibleArea(req); });
+                for (auto& tileCombined : tileRequests)
+                    renderTiles(tileCombined);
+            }
         }
         catch (const std::exception& exc)
         {
