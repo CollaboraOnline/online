@@ -776,8 +776,7 @@ WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& aut
 std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth,
                                                                         LockContext& lockCtx)
 {
-    Poco::URI uriObject(getUri());
-    return getWOPIFileInfoForUri(uriObject, auth, lockCtx, RedirectionLimit);
+    return getWOPIFileInfoForUri(getUri(), auth, lockCtx, RedirectionLimit);
 }
 
 WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo,
