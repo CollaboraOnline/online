@@ -56,6 +56,10 @@ L.Map.SlideShow = L.Handler.extend({
 			}
 			else if (this._slideShow.webkitRequestFullscreen) {
 				this._slideShow.webkitRequestFullscreen();
+			} else {
+				// fallback to "open in new tab"
+				L.DomUtil.remove(this._slideShow);
+				this._slideShow = null;
 			}
 
 			L.DomEvent.on(document, 'fullscreenchange webkitfullscreenchange mozfullscreenchange msfullscreenchange',
@@ -100,7 +104,7 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_startPlaying: function() {
-		if (this._cypressSVGPresentationTest) {
+		if (this._cypressSVGPresentationTest || !this._slideShow) {
 			window.open(this._slideURL, '_self');
 			return;
 		}
