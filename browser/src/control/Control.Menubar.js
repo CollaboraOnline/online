@@ -1535,13 +1535,11 @@ L.Control.Menubar = L.Control.extend({
 							window.app.console.log('======> Assertion failed!? Not window.mode.isMobile()? Control.Menubar.js #1');
 							$nav.css({height: 'initial', bottom: '38px'});
 							$menu.hide().slideDown(250, function() { $menu.css('display', ''); });
-							$('#mobile-wizard-header').show();
 						} else {
 							window.mobileMenuWizard = true;
 							var menuData = self._map.menubar.generateFullMenuStructure();
 							self._map.fire('mobilewizard', {data: menuData});
 							$('#toolbar-hamburger').removeClass('menuwizard-closed').addClass('menuwizard-opened');
-							$('#mobile-wizard-header').hide();
 							$('#toolbar-mobile-back').css('visibility', 'hidden');
 							$('#formulabar').hide();
 						}
