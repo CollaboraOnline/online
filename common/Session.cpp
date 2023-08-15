@@ -78,7 +78,7 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
     std::size_t offset = 1;
     if (tokens.size() > 2 && tokens[1].find("part=") == 0)
     {
-        getTokenInteger(tokens[1], "part", part);
+        (void)getTokenInteger(tokens[1], "part", part);
         ++offset;
     }
 
