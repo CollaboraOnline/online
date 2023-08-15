@@ -873,16 +873,16 @@ public:
     void renderTile(const StringVector& tokens)
     {
         TileCombined tileCombined(TileDesc::parse(tokens));
-        renderTiles(tileCombined, false);
+        renderTiles(tileCombined);
     }
 
     void renderCombinedTiles(const StringVector& tokens)
     {
         TileCombined tileCombined = TileCombined::parse(tokens);
-        renderTiles(tileCombined, true);
+        renderTiles(tileCombined);
     }
 
-    void renderTiles(TileCombined &tileCombined, bool combined)
+    void renderTiles(TileCombined &tileCombined)
     {
         // Find a session matching our view / render settings.
         const auto session = _sessions.findByCanonicalId(tileCombined.getNormalizedViewId());
@@ -921,7 +921,7 @@ public:
         };
 
         if (!RenderTiles::doRender(_loKitDocument, _deltaGen, tileCombined, _pngPool,
-                                   combined, blenderFunc, postMessageFunc, _mobileAppDocId,
+                                   blenderFunc, postMessageFunc, _mobileAppDocId,
                                    session->getCanonicalViewId(), session->getDumpTiles()))
         {
             LOG_DBG("All tiles skipped, not producing empty tilecombine: message");

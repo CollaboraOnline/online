@@ -184,7 +184,6 @@ namespace RenderTiles
                   DeltaGenerator &deltaGen,
                   TileCombined &tileCombined,
                   ThreadPool &pngPool,
-                  bool combined,
                   const std::function<void (unsigned char *data,
                                             int offsetX, int offsetY,
                                             size_t pixmapWidth, size_t pixmapHeight,
@@ -360,7 +359,7 @@ namespace RenderTiles
             return false;
 
         std::string tileMsg;
-        if (combined)
+        if (tileCombined.getCombined())
         {
             tileMsg = tileCombined.serialize("tilecombine:", "\n", renderedTiles);
 
