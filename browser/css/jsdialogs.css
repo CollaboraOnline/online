@@ -366,6 +366,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	overflow-y: auto;
 	overflow-x: hidden;
 	max-width: 1000px;
+	min-width: 150px;
 	padding: 1px;
 	padding-inline-end: 3px;
 }
