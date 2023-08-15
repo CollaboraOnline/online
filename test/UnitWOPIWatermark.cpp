@@ -27,7 +27,7 @@ public:
     }
 
     void configCheckFileInfo(const Poco::Net::HTTPRequest& request,
-                             Poco::JSON::Object::Ptr fileInfo) override
+                             Poco::JSON::Object::Ptr& fileInfo) override
     {
         const Poco::URI uriReq(request.getURI());
         const std::string fileName(uriReq.getPath() == "/wopi/files/3" ? "he%llo.txt"
