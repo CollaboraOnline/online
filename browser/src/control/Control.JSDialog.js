@@ -70,10 +70,6 @@ L.Control.JSDialog = L.Control.extend({
 			return;
 		}
 
-		var newestDialog = Math.max.apply(null, Object.keys(this.dialogs).map(function(i) { return parseInt(i);}));
-		if (newestDialog > parseInt(id))
-			return;
-
 		this.focusToLastElement(id);
 
 		var builder = this.clearDialog(id);
@@ -287,6 +283,11 @@ L.Control.JSDialog = L.Control.extend({
 
 		if (instance.nonModal) {
 			instance.titleCloseButton.onclick = function() {
+				var newestDialog = Math.max.apply(null,
+					Object.keys(instance.that.dialogs).map(function(i) { return parseInt(i);}));
+				if (newestDialog > parseInt(instance.id))
+					return;
+
 				instance.that.closeDialog(instance.id, true);
 			};
 
