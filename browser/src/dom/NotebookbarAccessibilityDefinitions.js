@@ -8,25 +8,26 @@
 /* eslint-disable-next-line */
 var NotebookbarAccessibilityDefinitions = function() {
 
-	this.getContentListRecursive = function(rawList, list) {
+	this.getContentListRecursive = function(rawList, list, language) {
 		if (Array.isArray(rawList)) {
 			for (var i = 0; i < rawList.length; i++) {
 				if (rawList[i].accessibility) {
+					var combination = language && rawList[i].accessibility[language] ? rawList[i].accessibility[language]: rawList[i].accessibility.combination;
 					var element = document.getElementById(rawList[i].id + '-button');
 					if (element) {
-						list.push({ id: rawList[i].id + '-button', focusBack: rawList[i].accessibility.focusBack, combination: rawList[i].accessibility.combination });
+						list.push({ id: rawList[i].id + '-button', focusBack: rawList[i].accessibility.focusBack, combination: combination });
 					}
 					else {
-						list.push({ id: rawList[i].id, focusBack: rawList[i].accessibility.focusBack, combination: rawList[i].accessibility.combination });
+						list.push({ id: rawList[i].id, focusBack: rawList[i].accessibility.focusBack, combination: combination });
 					}
 				}
 				else if (rawList[i].children && Array.isArray(rawList[i].children) && rawList[i].children.length > 0) {
-					this.getContentListRecursive(rawList[i].children, list);
+					this.getContentListRecursive(rawList[i].children, list, language);
 				}
 			}
 		}
 		else if (rawList.children && Array.isArray(rawList.children) && rawList.children.length > 0) {
-			this.getContentListRecursive(rawList.children, list);
+			this.getContentListRecursive(rawList.children, list, language);
 		}
 		else
 			return;
@@ -60,37 +61,27 @@ var NotebookbarAccessibilityDefinitions = function() {
 		}
 
 		var defs = {};
+		var language = this.getLanguage();
 		for (i = 0; i < tabs.length; i++) {
 			if (tabs[i].accessibility && tabs[i].accessibility.focusBack) {
 				defs[tabs[i].id] = tabs[i];
 				defs[tabs[i].id].focusBack = tabs[i].accessibility.focusBack;
-				defs[tabs[i].id].combination = tabs[i].accessibility.combination;
+				defs[tabs[i].id].combination = language && tabs[i].accessibility[language] ? tabs[i].accessibility[language]: tabs[i].accessibility.combination;
 				defs[tabs[i].id].contentList = [];
-				this.getContentListRecursive(defs[tabs[i].id].rawContentList, defs[tabs[i].id].contentList);
+				this.getContentListRecursive(defs[tabs[i].id].rawContentList, defs[tabs[i].id].contentList, language);
+				delete defs[tabs[i].id].rawContentList;
 			}
 		}
 
 		return defs;
 	};
 
-	this.applyLanguageSpecificCombinations = function(selectedDefinitions) {
-		if (!selectedDefinitions)
-			return;
-
-		// Browser language is not reflected to UI so we only check URL's language parameter.
+	this.getLanguage = function() {
 		if (app.UI.language.fromURL && app.UI.language.fromURL !== '') {
-			var lang = app.UI.language.fromURL;
-
-			Object.keys(selectedDefinitions).forEach(function(ID) {
-				if (selectedDefinitions[ID][lang])
-					selectedDefinitions[ID].combination = selectedDefinitions[ID][lang];
-
-				for (var i = 0; i < selectedDefinitions[ID].contentList.length; i++) {
-					if (selectedDefinitions[ID].contentList[i][lang])
-						selectedDefinitions[ID].contentList[i].combination = selectedDefinitions[ID].contentList[i][lang];
-				}
-			});
+			return app.UI.language.fromURL;
 		}
+		else
+			return null; // Default.
 	};
 
 	this.checkIntegratorButtons = function(selectedDefinitions) {
@@ -124,8 +115,6 @@ var NotebookbarAccessibilityDefinitions = function() {
 
 	this.getDefinitions = function() {
 		var selectedDefinitions = this.getTabsAndContents();
-
-		this.applyLanguageSpecificCombinations(selectedDefinitions);
 		this.checkIntegratorButtons(selectedDefinitions);
 
 		return selectedDefinitions;
