@@ -18,7 +18,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 
 	it('Insert',function() {
-		insertMultipleComment('calc');
+		insertMultipleComment('calc', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('.cool-annotation').should('exist');
 		cy.cGet('#comment-container-1').then(function (element) {
@@ -30,7 +30,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 
 	it('Modify',function() {
-		insertMultipleComment('calc');
+		insertMultipleComment('calc', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('#comment-container-1').should('exist');
 
@@ -54,7 +54,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 
 	it('Reply should not be possible', function() {
-		insertMultipleComment('calc');
+		insertMultipleComment('calc', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('#comment-container-1').should('exist');
 
@@ -69,7 +69,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 
 	it('Remove',function() {
-		insertMultipleComment('calc');
+		insertMultipleComment('calc', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('#comment-container-1').should('exist');
 
