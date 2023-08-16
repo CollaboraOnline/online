@@ -947,6 +947,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:ControlCodes', id: 'formattingmarks'},
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action', uno: '.uno:ShowResolvedAnnotations'},
+				{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 			]
 			},
 			window.enableAccessibility ?
@@ -2341,6 +2342,8 @@ L.Control.Menubar = L.Control.extend({
 		} else if (item.id === 'togglea11ystate') {
 			if (this._map.uiManager.getAccessibilityState())
 				menuStructure['checked'] = true;
+		} else if (item.id === 'toggledarktheme' && this._map.uiManager.getDarkModeState()) {
+			menuStructure['checked'] = true;
 		}
 
 		if (item.menu)
