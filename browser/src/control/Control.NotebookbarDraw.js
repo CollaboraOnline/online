@@ -7,9 +7,8 @@
 L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 
 	getShortcutsBarData: function() {
-		var hasSave = !this._map['wopi'].HideSaveOption;
 		return [
-			hasSave ?
+			!this._map['wopi'].HideSaveOption ?
 				{
 					'id': 'shortcutstoolbox',
 					'type': 'toolbox',
@@ -18,7 +17,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 							'id': 'save',
 							'type': 'toolitem',
 							'text': _('Save'),
-							'command': '.uno:Save'
+							'command': '.uno:Save',
+							'accessibility': { focusBack: true, combination: 'S1', de: null }
 						}
 					]
 				} : {}
@@ -30,12 +30,14 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			{
 				'type': 'toolitem',
 				'text': _UNO('.uno:ModifyPage', 'drawing', true),
-				'command': '.uno:SidebarDeck.PropertyDeck'
+				'command': '.uno:SidebarDeck.PropertyDeck',
+				'accessibility': { focusBack: true, combination: 'SB', de: null }
 			},
 			{
 				'type': 'toolitem',
 				'text': _UNO('.uno:Navigator'),
-				'command': '.uno:Navigator'
+				'command': '.uno:Navigator',
+				'accessibility': { focusBack: true, combination: 'N', de: null }
 			},
 			{
 				'type': 'toolitem',
@@ -46,57 +48,67 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 	getTabs: function() {
 		return [
 			{
-				'text': _('File'),
 				'id': 'File-tab-label',
+				'text': _('File'),
 				'name': 'File',
+				'accessibility': { focusBack: true, combination: 'F', de: null }
 			},
 			{
-				'text': _('Home'),
 				'id': this.HOME_TAB_ID,
+				'text': _('Home'),
 				'name': 'Home',
-				'context': 'default|DrawText'
+				'context': 'default|DrawText',
+				'accessibility': { focusBack: true, combination: 'H', de: null }
 			},
 			{
-				'text': _('Insert'),
 				'id': 'Insert-tab-label',
-				'name': 'Insert'
+				'text': _('Insert'),
+				'name': 'Insert',
+				'accessibility': { focusBack: true, combination: 'N', de: null }
 			},
 			{
-				'text': _('Layout'),
 				'id': 'Layout-tab-label',
-				'name': 'Layout'
+				'text': _('Layout'),
+				'name': 'Layout',
+				'accessibility': { focusBack: true, combination: 'P', de: null }
 			},
 			{
-				'text': _('Review'),
 				'id': 'Review-tab-label',
-				'name': 'Review'
+				'text': _('Review'),
+				'name': 'Review',
+				'accessibility': { focusBack: true, combination: 'R', de: null }
 			},
 			{
-				'text': _('Format'),
 				'id': 'Format-tab-label',
+				'text': _('Format'),
 				'name': 'Format',
+				'accessibility': { focusBack: true, combination: 'M', de: null }
 			},
 			{
-				'text': _('Table'),
 				'id': 'Table-tab-label',
+				'text': _('Table'),
 				'name': 'Table',
-				'context': 'Table'
+				'context': 'Table',
+				'accessibility': { focusBack: true, combination: 'T', de: null }
 			},
 			{
-				'text': _('Draw'),
 				'id': 'Draw-tab-label',
+				'text': _('Draw'),
 				'name': 'Draw',
-				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork'
+				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork',
+				'accessibility': { focusBack: true, combination: 'D', de: null }
 			},
 			{
-				'text': _('View'),
 				'id': 'View-tab-label',
+				'text': _('View'),
 				'name': 'View',
+				'accessibility': { focusBack: true, combination: 'V', de: null }
 			},
 			{
-				'text': _('Help'),
 				'id': 'Help-tab-label',
+				'text': _('Help'),
 				'name': 'Help',
+				'accessibility': { focusBack: true, combination: 'Y', de: null }
 			}
 		];
 	},
@@ -118,16 +130,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 	},
 
 	getFileTab: function() {
-		var hasRevisionHistory = L.Params.revHistoryEnabled;
-		var hasPrint = !this._map['wopi'].HidePrintOption;
-		var hasRepair = !this._map['wopi'].HideRepairOption;
-		var hasSaveAs = !this._map['wopi'].UserCanNotWriteRelative;
-		var hideDownload = this._map['wopi'].HideExportOption;
-		var hasShare = this._map['wopi'].EnableShare;
-		var hasSave = !this._map['wopi'].HideSaveOption;
-
 		var content = [
-			hasSave ?
+			(!this._map['wopi'].HideSaveOption) ?
 				{
 					'type': 'toolbox',
 					'children': [
@@ -135,54 +139,60 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 							'id': 'file-save',
 							'type': 'bigtoolitem',
 							'text': _('Save'),
-							'command': '.uno:Save'
+							'command': '.uno:Save',
+							'accessibility': { focusBack: true, combination: 'SF', de: null }
 						}
 					]
 				} : {},
-			hasSaveAs ?
+			(!this._map['wopi'].UserCanNotWriteRelative) ?
 				{
 					'id': 'file-saveas',
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:SaveAs', 'presentation'),
-					'command': '.uno:SaveAs'
+					'command': '.uno:SaveAs',
+					'accessibility': { focusBack: true, combination: 'SA', de: null }
 				} : {},
-			hasSaveAs ?
+			(!this._map['wopi'].UserCanNotWriteRelative) ?
 				{
 					'id': 'exportas',
 					'type': 'bigmenubartoolitem',
 					'text': _('Export As'),
+					'accessibility': { focusBack: true, combination: 'EA', de: null }
 				} : {},
 			{
 				'id': 'file-shareas-rev-history',
 				'type': 'container',
 				'children': [
-					hasShare ?
+					(this._map['wopi'].EnableShare) ?
 						{
 							'id': 'ShareAs',
 							'type': 'customtoolitem',
 							'text': _('Share'),
 							'command': 'shareas',
-							'inlineLabel': true
+							'inlineLabel': true,
+							'accessibility': { focusBack: true, combination: 'SH', de: null }
 						} : {},
-					hasRevisionHistory ?
+					(L.Params.revHistoryEnabled) ?
 						{
 							'id': 'Rev-History',
 							'type': 'customtoolitem',
 							'text': _('See history'),
 							'command': 'rev-history',
-							'inlineLabel': true
+							'inlineLabel': true,
+							'accessibility': { focusBack: true, combination: 'RH', de: null }
 						} : {},
 				],
 				'vertical': 'true'
 			},
-			hasPrint ?
+			(!this._map['wopi'].HidePrintOption) ?
 				{
 					'id': 'print',
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:Print', 'presentation'),
-					'command': '.uno:Print'
+					'command': '.uno:Print',
+					'accessibility': { focusBack: true, combination: 'P', de: null }
 				} : {},
-			hideDownload ? {} : {
+			(this._map['wopi'].HideExportOption) ? {} : {
 				'id': 'file-downloadas-odg-downloadas-png',
 				'type': 'container',
 				'children': [
@@ -190,13 +200,15 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'id': 'downloadas-odg',
 						'type': 'menubartoolitem',
 						'text': _('ODF Drawing (.odg)'),
-						'command': ''
+						'command': '',
+						'accessibility': { focusBack: true, combination: 'DO', de: null }
 					},
 					{
 						'id': 'downloadas-png',
 						'type': 'menubartoolitem',
 						'text': _('Image (.png)'),
-						'command': ''
+						'command': '',
+						'accessibility': { focusBack: true, combination: 'DP', de: null }
 					},
 				],
 				'vertical': 'true'
@@ -210,54 +222,52 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'customtoolitem',
 						'text': _('PDF Document (.pdf)'),
 						'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
-						'inlineLabel': true
+						'inlineLabel': true,
+						'accessibility': { focusBack: true, combination: 'EP', de: null }
 					},
 					{
 						'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
 						'type': 'customtoolitem',
 						'text': _('PDF Document (.pdf) - Expert'),
 						'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
-						'inlineLabel': true
+						'inlineLabel': true,
+						'accessibility': { focusBack: true, combination: 'ES', de: null }
 					},
 				],
 				'vertical': 'true'
-			}
-		];
-
-
-		if (hasRepair) {
-			content.push({
+			},
+			(!this._map['wopi'].HideRepairOption) ? {
 				'type': 'container',
 				'children': [
 					{
 						'id': 'repair',
 						'type': 'bigtoolitem',
 						'text': _('Repair'),
-						'command': _('Repair')
+						'command': _('Repair'),
+						'accessibility': { focusBack: true, combination: 'RF', de: null }
 					}
 				]
-			});
-		}
-
-		content.push({
-			'type': 'container',
-			'children': [
-				{
-					'id': 'properties',
-					'type': 'bigtoolitem',
-					'text': _('Properties'),
-					'command': '.uno:SetDocumentProperties'
-				}
-			]
-		});
+			}: {},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'properties',
+						'type': 'bigtoolitem',
+						'text': _('Properties'),
+						'command': '.uno:SetDocumentProperties',
+						'accessibility': { focusBack: true, combination: 'FP', de: null }
+					}
+				]
+			}
+		];
 
 		return this.getTabPage('File', content);
 	},
 
 	getViewTab: function() {
-		var isTablet = window.mode.isTablet();
 		var content = [
-			isTablet ?
+			(window.mode.isTablet()) ?
 				{
 					'id': 'closemobile',
 					'type': 'bigcustomtoolitem',
@@ -265,16 +275,18 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					'command': 'closetablet',
 				} : {},
 			{
-				'id': 'fullscreen',
+				'id': 'view-fullscreen',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:FullScreen'),
-				'command': '.uno:FullScreen'
+				'command': '.uno:FullScreen',
+				'accessibility': { focusBack: true, combination: 'FR', de: null }
 			},
 			{
-				'id': 'zoomreset',
+				'id': 'view-zoomreset',
 				'type': 'menubartoolitem',
 				'text': _('Reset zoom'),
-				'command': _('Reset zoom')
+				'command': _('Reset zoom'),
+				'accessibility': { focusBack: true, combination: 'RZ', de: null }
 			},
 			{
 				'type': 'container',
@@ -283,10 +295,11 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'zoomout',
+								'id': 'view-zoomout',
 								'type': 'menubartoolitem',
 								'text': _UNO('.uno:ZoomMinus'),
-								'command': '.uno:ZoomMinus'
+								'command': '.uno:ZoomMinus',
+								'accessibility': { focusBack: true, combination: 'ZO', de: null }
 							}
 						]
 					},
@@ -294,10 +307,11 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'zoomin',
+								'id': 'view-zoomin',
 								'type': 'menubartoolitem',
 								'text': _UNO('.uno:ZoomPlus'),
-								'command': '.uno:ZoomPlus'
+								'command': '.uno:ZoomPlus',
+								'accessibility': { focusBack: true, combination: 'ZI', de: null }
 							}
 						]
 					}
@@ -305,10 +319,11 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'toggleuimode',
+				'id': 'view-toggleuimode',
 				'type': 'bigmenubartoolitem',
 				'text': _('Compact view'),
-				'command': _('Toggle UI Mode')
+				'command': _('Toggle UI Mode'),
+				'accessibility': { focusBack: true, combination: 'UI', de: null }
 			},
 			{
 				'type': 'container',
@@ -320,7 +335,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 								'id': 'collapsenotebookbar',
 								'type': 'menubartoolitem',
 								'text': _('Collapse Tabs'),
-								'command': _('Collapse Notebook Bar')
+								'command': _('Collapse Notebook Bar'),
+								'accessibility': { focusBack: true, combination: 'CN', de: null }
 							}
 						]
 					},
@@ -331,7 +347,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 								'id': 'showstatusbar',
 								'type': 'menubartoolitem',
 								'text': _('Status Bar'),
-								'command': _('Show Status Bar')
+								'command': _('Show Status Bar'),
+								'accessibility': { focusBack: true, combination: 'SS', de: null }
 							}
 						]
 					}
@@ -341,17 +358,22 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			{
 				'id':'toggledarktheme',
 				'type': 'bigmenubartoolitem',
-				'text': _('Dark Mode')
+				'text': _('Dark Mode'),
+				'accessibility': { focusBack: true, combination: 'DT', de: null }
 			},
 			{
+				'id': 'view-sidebar',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Sidebar'),
-				'command': '.uno:SidebarDeck.PropertyDeck'
+				'command': '.uno:SidebarDeck.PropertyDeck',
+				'accessibility': { focusBack: true, combination: 'SB', de: null }
 			},
 			{
+				'id': 'view-navigator',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Navigator'),
-				'command': '.uno:Navigator'
+				'command': '.uno:Navigator',
+				'accessibility': { focusBack: true, combination: 'N', de: null }
 			}
 		];
 
@@ -359,29 +381,34 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 	},
 
 	getHomeTab: function() {
-		var isODF = L.LOUtil.isFileODF(this._map);
 		var content = [
 			{
 				'id': 'home-undo-redo',
 				'type': 'container',
 				'children': [
 					{
+						'id': 'home-undo',
 						'type': 'toolitem',
 						'text': _UNO('.uno:Undo'),
-						'command': '.uno:Undo'
+						'command': '.uno:Undo',
+						'accessibility': { focusBack: true, combination: 'ZZ', de: null }
 					},
 					{
+						'id': 'home-redo',
 						'type': 'toolitem',
 						'text': _UNO('.uno:Redo'),
-						'command': '.uno:Redo'
+						'command': '.uno:Redo',
+						'accessibility': { focusBack: true, combination: 'O', de: null }
 					},
 				],
 				'vertical': 'true'
 			},
 			{
+				'id': 'home-paste',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Paste'),
-				'command': '.uno:Paste'
+				'command': '.uno:Paste',
+				'accessibility': { focusBack: true, combination: 'V', de: null }
 			},
 			{
 				'type': 'container',
@@ -390,14 +417,18 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'home-cut',
 								'type': 'toolitem',
 								'text': _UNO('.uno:Cut'),
-								'command': '.uno:Cut'
+								'command': '.uno:Cut',
+								'accessibility': { focusBack: true, combination: 'X', de: null }
 							},
 							{
+								'id': 'home-format-paint-brush',
 								'type': 'toolitem',
 								'text': _UNO('.uno:FormatPaintbrush'),
-								'command': '.uno:FormatPaintbrush'
+								'command': '.uno:FormatPaintbrush',
+								'accessibility': { focusBack: true, combination: 'FP', de: null }
 							}
 						]
 					},
@@ -405,14 +436,18 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'home-copy',
 								'type': 'toolitem',
 								'text': _UNO('.uno:Copy'),
-								'command': '.uno:Copy'
+								'command': '.uno:Copy',
+								'accessibility': { focusBack: true, combination: 'C', de: null }
 							},
 							{
+								'id': 'home-set-default',
 								'type': 'toolitem',
 								'text': _UNO('.uno:SetDefault'),
-								'command': '.uno:SetDefault'
+								'command': '.uno:SetDefault',
+								'accessibility': { focusBack: true, combination: 'SF', de: null }
 							}
 						]
 					}
@@ -436,7 +471,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 								'selectedEntries': [
 									'0'
 								],
-								'command': '.uno:CharFontName'
+								'command': '.uno:CharFontName',
+								'accessibility': { focusBack: true, combination: 'FN', de: null }
 							},
 							{
 								'id': 'fontsize',
@@ -449,17 +485,22 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 								'selectedEntries': [
 									'0'
 								],
-								'command': '.uno:FontHeight'
+								'command': '.uno:FontHeight',
+								'accessibility': { focusBack: true, combination: 'FS', de: null }
 							},
 							{
+								'id': 'home-grow',
 								'type': 'toolitem',
 								'text': _UNO('.uno:Grow'),
-								'command': '.uno:Grow'
+								'command': '.uno:Grow',
+								'accessibility': { focusBack: true, combination: 'FG', de: null }
 							},
 							{
+								'id': 'home-shrink',
 								'type': 'toolitem',
 								'text': _UNO('.uno:Shrink'),
-								'command': '.uno:Shrink'
+								'command': '.uno:Shrink',
+								'accessibility': { focusBack: true, combination: 'FK', de: null }
 							}
 						],
 						'vertical': 'false'
@@ -472,46 +513,62 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 								'type': 'toolbox',
 								'children': [
 									{
+										'id': 'home-bold',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Bold'),
-										'command': '.uno:Bold'
+										'command': '.uno:Bold',
+										'accessibility': { focusBack: true, combination: '1', de: null }
 									},
 									{
+										'id': 'home-italic',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Italic'),
-										'command': '.uno:Italic'
+										'command': '.uno:Italic',
+										'accessibility': { focusBack: true, combination: '2', de: null }
 									},
 									{
+										'id': 'home-underline',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Underline'),
-										'command': '.uno:Underline'
+										'command': '.uno:Underline',
+										'accessibility': { focusBack: true, combination: '3', de: null }
 									},
 									{
+										'id': 'home-strikeout',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Strikeout'),
-										'command': '.uno:Strikeout'
+										'command': '.uno:Strikeout',
+										'accessibility': { focusBack: true, combination: '4', de: null }
 									},
 									{
+										'id': 'home-shadowed',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Shadowed'),
-										'command': '.uno:Shadowed'
+										'command': '.uno:Shadowed',
+										'accessibility': { focusBack: true, combination: 'SH', de: null }
 									},
 									{
+										'id': 'home-fontwork-gallery',
 										'type': 'toolitem',
 										'text': _UNO('.uno:FontworkGalleryFloater'),
 										'command': '.uno:FontworkGalleryFloater',
 										// Fontwork export/import not supported in other formats.
-										'visible': isODF ? 'true' : 'false',
+										'visible': L.LOUtil.isFileODF(this._map) ? 'true' : 'false',
+										'accessibility': { focusBack: true, combination: 'FW', de: null }
 									},
 									{
+										'id': 'home-char-back-color',
 										'type': 'toolitem',
 										'text': _UNO('.uno:CharBackColor'),
-										'command': '.uno:CharBackColor'
+										'command': '.uno:CharBackColor',
+										'accessibility': { focusBack: true, combination: 'BC', de: null }
 									},
 									{
+										'id': 'home-color',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Color'),
-										'command': '.uno:Color'
+										'command': '.uno:Color',
+										'accessibility': { focusBack: true, combination: 'FC', de: null }
 									}
 								]
 							}
@@ -531,19 +588,25 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 								'type': 'toolbox',
 								'children': [
 									{
+										'id': 'home-cell-vertical-top',
 										'type': 'toolitem',
 										'text': _UNO('.uno:CellVertTop'),
-										'command': '.uno:CellVertTop'
+										'command': '.uno:CellVertTop',
+										'accessibility': { focusBack: true, combination: 'AT', de: null }
 									},
 									{
+										'id': 'home-cell-vertical-center',
 										'type': 'toolitem',
 										'text': _UNO('.uno:CellVertCenter'),
-										'command': '.uno:CellVertCenter'
+										'command': '.uno:CellVertCenter',
+										'accessibility': { focusBack: true, combination: 'AC', de: null }
 									},
 									{
+										'id': 'home-cell-vertical-bottom',
 										'type': 'toolitem',
 										'text': _UNO('.uno:CellVertBottom'),
-										'command': '.uno:CellVertBottom'
+										'command': '.uno:CellVertBottom',
+										'accessibility': { focusBack: true, combination: 'AB', de: null }
 									}
 								]
 							},
@@ -558,24 +621,32 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 								'type': 'toolbox',
 								'children': [
 									{
+										'id': 'home-left-para',
 										'type': 'toolitem',
 										'text': _UNO('.uno:LeftPara'),
-										'command': '.uno:LeftPara'
+										'command': '.uno:LeftPara',
+										'accessibility': { focusBack: true, combination: 'PL', de: null }
 									},
 									{
+										'id': 'home-center-para',
 										'type': 'toolitem',
 										'text': _UNO('.uno:CenterPara'),
-										'command': '.uno:CenterPara'
+										'command': '.uno:CenterPara',
+										'accessibility': { focusBack: true, combination: 'PC', de: null }
 									},
 									{
+										'id': 'home-right-para',
 										'type': 'toolitem',
 										'text': _UNO('.uno:RightPara'),
-										'command': '.uno:RightPara'
+										'command': '.uno:RightPara',
+										'accessibility': { focusBack: true, combination: 'PR', de: null }
 									},
 									{
+										'id': 'home-justify-para',
 										'type': 'toolitem',
 										'text': _UNO('.uno:JustifyPara'),
-										'command': '.uno:JustifyPara'
+										'command': '.uno:JustifyPara',
+										'accessibility': { focusBack: true, combination: 'PJ', de: null }
 									}
 								]
 							},
@@ -595,29 +666,39 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 								'type': 'toolbox',
 								'children': [
 									{
+										'id': 'home-default-bullet',
 										'type': 'toolitem',
 										'text': _UNO('.uno:DefaultBullet'),
-										'command': '.uno:DefaultBullet'
+										'command': '.uno:DefaultBullet',
+										'accessibility': { focusBack: true, combination: 'BD', de: null }
 									},
 									{
+										'id': 'home-default-numbering',
 										'type': 'toolitem',
 										'text': _UNO('.uno:DefaultNumbering'),
-										'command': '.uno:DefaultNumbering'
+										'command': '.uno:DefaultNumbering',
+										'accessibility': { focusBack: true, combination: 'ND', de: null }
 									},
 									{
+										'id': 'home-increment-indent',
 										'type': 'toolitem',
 										'text': _UNO('.uno:IncrementIndent'),
-										'command': '.uno:IncrementIndent'
+										'command': '.uno:IncrementIndent',
+										'accessibility': { focusBack: true, combination: 'II', de: null }
 									},
 									{
+										'id': 'home-decrement-indent',
 										'type': 'toolitem',
 										'text': _UNO('.uno:DecrementIndent'),
-										'command': '.uno:DecrementIndent'
+										'command': '.uno:DecrementIndent',
+										'accessibility': { focusBack: true, combination: 'ID', de: null }
 									},
 									{
+										'id': 'home-para-left-to-right',
 										'type': 'toolitem',
 										'text': _UNO('.uno:ParaLeftToRight'),
-										'command': '.uno:ParaLeftToRight'
+										'command': '.uno:ParaLeftToRight',
+										'accessibility': { focusBack: true, combination: 'LT', de: null }
 									}
 								]
 							},
@@ -632,24 +713,32 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 								'type': 'toolbox',
 								'children': [
 									{
+										'id': 'home-para-space-increase',
 										'type': 'toolitem',
 										'text': _UNO('.uno:ParaspaceIncrease'),
-										'command': '.uno:ParaspaceIncrease'
+										'command': '.uno:ParaspaceIncrease',
+										'accessibility': { focusBack: true, combination: 'SI', de: null }
 									},
 									{
+										'id': 'home-para-space-decrease',
 										'type': 'toolitem',
 										'text': _UNO('.uno:ParaspaceDecrease'),
-										'command': '.uno:ParaspaceDecrease'
+										'command': '.uno:ParaspaceDecrease',
+										'accessibility': { focusBack: true, combination: 'SD', de: null }
 									},
 									{
+										'id': 'home-line-spacing',
 										'type': 'toolitem',
 										'text': _UNO('.uno:LineSpacing'),
-										'command': '.uno:LineSpacing'
+										'command': '.uno:LineSpacing',
+										'accessibility': { focusBack: true, combination: 'LS', de: null }
 									},
 									{
+										'id': 'home-para-right-to-left',
 										'type': 'toolitem',
 										'text': _UNO('.uno:ParaRightToLeft'),
-										'command': '.uno:ParaRightToLeft'
+										'command': '.uno:ParaRightToLeft',
+										'accessibility': { focusBack: true, combination: 'RT', de: null }
 									}
 								]
 							},
@@ -660,9 +749,11 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'home-text',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Text'),
-				'command': '.uno:Text'
+				'command': '.uno:Text',
+				'accessibility': { focusBack: true, combination: 'DT', de: null }
 			},
 			{
 				'type': 'container',
@@ -672,9 +763,11 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'home-basic-shapes',
 								'type': 'toolitem',
 								'text': _('Shapes'),
-								'command': '.uno:BasicShapes'
+								'command': '.uno:BasicShapes',
+								'accessibility': { focusBack: true, combination: 'IS', de: null }
 							}
 						]
 					},
@@ -683,9 +776,11 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'home-connector-toolbox',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ConnectorToolbox', 'presentation'),
-								'command': '.uno:ConnectorToolbox'
+								'command': '.uno:ConnectorToolbox',
+								'accessibility': { focusBack: true, combination: 'TC', de: null }
 							}
 						]
 					}
@@ -699,9 +794,11 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'home-xline-color',
 								'type': 'toolitem',
 								'text': _UNO('.uno:XLineColor'),
-								'command': '.uno:XLineColor'
+								'command': '.uno:XLineColor',
+								'accessibility': { focusBack: true, combination: 'NC', de: null }
 							}
 						]
 					},
@@ -709,9 +806,11 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'home-fill-color',
 								'type': 'toolitem',
 								'text': _UNO('.uno:FillColor'),
-								'command': '.uno:FillColor'
+								'command': '.uno:FillColor',
+								'accessibility': { focusBack: true, combination: 'LC', de: null }
 							}
 						]
 					}
@@ -725,9 +824,11 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'home-insert-graphic',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertGraphic'),
-								'command': '.uno:InsertGraphic'
+								'command': '.uno:InsertGraphic',
+								'accessibility': { focusBack: true, combination: 'IG', de: null }
 							}
 						]
 					},
@@ -735,24 +836,32 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'home-insert-page',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertPage', 'presentation'),
-								'command': '.uno:InsertPage'
+								'command': '.uno:InsertPage',
+								'accessibility': { focusBack: true, combination: 'IP', de: null }
 							},
 							{
+								'id': 'home-duplicate-page',
 								'type': 'toolitem',
 								'text': _UNO('.uno:DuplicatePage', 'presentation'),
-								'command': '.uno:DuplicatePage'
+								'command': '.uno:DuplicatePage',
+								'accessibility': { focusBack: true, combination: 'DP', de: null }
 							},
 							{
+								'id': 'home-insert-object-chart',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertObjectChart'),
-								'command': '.uno:InsertObjectChart'
+								'command': '.uno:InsertObjectChart',
+								'accessibility': { focusBack: true, combination: 'IC', de: null }
 							},
 							{
+								'id': 'home-insert-table',
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertTable', 'presentation'),
-								'command': '.uno:InsertTable'
+								'command': '.uno:InsertTable',
+								'accessibility': { focusBack: true, combination: 'IT', de: null }
 							}
 						]
 					}
@@ -760,9 +869,11 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'home-search-dialog',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:SearchDialog'),
-				'command': '.uno:SearchDialog'
+				'command': '.uno:SearchDialog',
+				'accessibility': { focusBack: true, combination: 'FD', de: null }
 			}
 		];
 
@@ -772,19 +883,25 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 	getLayoutTab: function() {
 		var content = [
 			{
+				'id': 'layout-page-setup',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:PageSetup', 'presentation'),
-				'command': '.uno:PageSetup'
+				'command': '.uno:PageSetup',
+				'accessibility': { focusBack: true, combination: 'PS', de: null }
 			},
 			{
+				'id': 'layout-header-and-footer',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:HeaderAndFooter', 'presentation'),
-				'command': '.uno:HeaderAndFooter'
+				'command': '.uno:HeaderAndFooter',
+				'accessibility': { focusBack: true, combination: 'IH', de: null }
 			},
 			{
+				'id': 'layout-insert-page',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertPage', 'presentation'),
-				'command': '.uno:InsertPage'
+				'command': '.uno:InsertPage',
+				'accessibility': { focusBack: true, combination: 'IP', de: null }
 			},
 			{
 				'type': 'container',
@@ -793,9 +910,11 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-duplicate-page',
 								'type': 'toolitem',
 								'text': _UNO('.uno:DuplicatePage', 'presentation'),
-								'command': '.uno:DuplicatePage'
+								'command': '.uno:DuplicatePage',
+								'accessibility': { focusBack: true, combination: 'DP', de: null }
 							}
 						]
 					},
@@ -806,7 +925,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 								'id': 'selectbackground',
 								'type': 'menubartoolitem',
 								'text': _UNO('.uno:SelectBackground', 'presentation'),
-								'command': ''
+								'command': '',
+								'accessibility': { focusBack: true, combination: 'SB', de: null }
 							}
 						]
 					}
@@ -814,14 +934,18 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'layout-sidebar-deck',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ModifyPage', 'drawing', true),
-				'command': '.uno:SidebarDeck.PropertyDeck'
+				'command': '.uno:SidebarDeck.PropertyDeck',
+				'accessibility': { focusBack: true, combination: 'SL', de: null }
 			},
 			{
+				'id': 'layout-select-all',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:SelectAll'),
-				'command': '.uno:SelectAll'
+				'command': '.uno:SelectAll',
+				'accessibility': { focusBack: true, combination: 'SA', de: null }
 			},
 			{
 				'type': 'container',
@@ -830,19 +954,25 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-object-align-left',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ObjectAlignLeft'),
-								'command': '.uno:ObjectAlignLeft'
+								'command': '.uno:ObjectAlignLeft',
+								'accessibility': { focusBack: true, combination: 'AL', de: null }
 							},
 							{
+								'id': 'layout-align-center',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AlignCenter'),
-								'command': '.uno:AlignCenter'
+								'command': '.uno:AlignCenter',
+								'accessibility': { focusBack: true, combination: 'AC', de: null }
 							},
 							{
+								'id': 'layout-object-align-right',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ObjectAlignRight'),
-								'command': '.uno:ObjectAlignRight'
+								'command': '.uno:ObjectAlignRight',
+								'accessibility': { focusBack: true, combination: 'AR', de: null }
 							}
 						]
 					},
@@ -850,19 +980,25 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-align-up',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AlignUp'),
-								'command': '.uno:AlignUp'
+								'command': '.uno:AlignUp',
+								'accessibility': { focusBack: true, combination: 'AU', de: null }
 							},
 							{
+								'id': 'layout-align-middle',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AlignMiddle'),
-								'command': '.uno:AlignMiddle'
+								'command': '.uno:AlignMiddle',
+								'accessibility': { focusBack: true, combination: 'AM', de: null }
 							},
 							{
+								'id': 'layout-align-down',
 								'type': 'toolitem',
 								'text': _UNO('.uno:AlignDown'),
-								'command': '.uno:AlignDown'
+								'command': '.uno:AlignDown',
+								'accessibility': { focusBack: true, combination: 'AD', de: null }
 							}
 						]
 					}
@@ -876,14 +1012,18 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-object-forward-one',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ObjectForwardOne'),
-								'command': '.uno:ObjectForwardOne'
+								'command': '.uno:ObjectForwardOne',
+								'accessibility': { focusBack: true, combination: 'FO', de: null }
 							},
 							{
+								'id': 'layout-bring-to-front',
 								'type': 'toolitem',
 								'text': _UNO('.uno:BringToFront'),
-								'command': '.uno:BringToFront'
+								'command': '.uno:BringToFront',
+								'accessibility': { focusBack: true, combination: 'BF', de: null }
 							}
 						]
 					},
@@ -891,14 +1031,18 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'layout-object-backwards-one',
 								'type': 'toolitem',
 								'text': _UNO('.uno:ObjectBackOne'),
-								'command': '.uno:ObjectBackOne'
+								'command': '.uno:ObjectBackOne',
+								'accessibility': { focusBack: true, combination: 'BO', de: null }
 							},
 							{
+								'id': 'layout-send-to-back',
 								'type': 'toolitem',
 								'text': _UNO('.uno:SendToBack'),
-								'command': '.uno:SendToBack'
+								'command': '.uno:SendToBack',
+								'accessibility': { focusBack: true, combination: 'SB', de: null }
 							}
 						]
 					}
@@ -911,7 +1055,6 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 	},
 
 	getInsertTab: function() {
-		var isODF = L.LOUtil.isFileODF(this._map);
 		var content = [
 			{
 				'type': 'bigtoolitem',
@@ -1079,7 +1222,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 								'text': _UNO('.uno:FontworkGalleryFloater'),
 								'command': '.uno:FontworkGalleryFloater',
 								// Fontwork export/import not supported in other formats.
-								'visible': isODF ? 'true' : 'false',
+								'visible': L.LOUtil.isFileODF(this._map) ? 'true' : 'false',
 							}
 						]
 					},
