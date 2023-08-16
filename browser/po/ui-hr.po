@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+0200\n"
-"PO-Revision-Date: 2023-06-26 04:41+0000\n"
+"PO-Revision-Date: 2023-07-14 14:49+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
-"Language: \n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.18.1\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1085,9 +1085,8 @@ msgid "Tap to collapse"
 msgstr "Dodirni za sklapanje"
 
 #: src/control/Control.NotebookbarBuilder.js:577
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "PDF dokument (.pdf)"
+msgstr "PDF dokument (.pdf) kao …"
 
 #: src/control/Control.NotebookbarBuilder.js:597
 #: src/control/Control.NotebookbarCalc.js:215
@@ -1422,7 +1421,7 @@ msgstr "pregled stranice "
 
 #: src/control/Control.PartsPreview.js:237
 msgid "Paste Slide"
-msgstr ""
+msgstr "Umetni slajd"
 
 #: src/control/Control.PartsPreview.js:264
 msgid "Copy"
@@ -1894,7 +1893,7 @@ msgstr "„Slow Proxy”"
 
 #: src/control/Toolbar.js:667
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Kopiraj sve informacije o verziji na engleskom jeziku"
 
 #: src/control/Toolbar.js:721
 msgid "Insert hyperlink"
@@ -1950,7 +1949,7 @@ msgstr "LOKit verzija:"
 
 #: src/core/Socket.js:709
 msgid "Document is getting migrated..."
-msgstr ""
+msgstr "Dokument se migrira …"
 
 #: src/core/Socket.js:736
 msgid "Session terminated by document owner"
