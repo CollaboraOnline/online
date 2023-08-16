@@ -118,14 +118,8 @@ L.Control.UIManager = L.Control.extend({
 			};
 			app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
 		}
-		if (this.getCurrentMode() === 'classic' || this.map.isReadOnlyMode()) {
-			this.refreshMenubar();
-			this.refreshToolbar();
-		}
-		else {
-			this.refreshNotebookbar();
-		}
-		this.refreshSidebar();
+		if (!window.mode.isMobile())
+			this.refreshAfterThemeChange();
 	},
 
 	initDarkModeFromSettings: function() {
@@ -440,22 +434,33 @@ L.Control.UIManager = L.Control.extend({
 		app.UI.notebookbarAccessibility.initialize();
 	},
 
-	refreshNotebookbar: function() {
-		var selectedTab = $('.ui-tab.notebookbar[aria-selected="true"]').attr('id') || 'Home-tab-label';
-		this.removeNotebookbarUI();
-		this.createNotebookbarControl(this.map.getDocType());
-		if (this._map._permission === 'edit') {
-			$('.main-nav').removeClass('readonly');
+	refreshAfterThemeChange: function() {
+		if (this.getCurrentMode() === 'classic' || this.map.isReadOnlyMode()) {
+			this.refreshMenubar();
+			this.refreshToolbar();
 		}
-		$('#' + selectedTab).click();
-		this.makeSpaceForNotebookbar();
-		this.notebookbar._showNotebookbar = true;
-		this.notebookbar.showTabs();
-		$('#map').addClass('notebookbar-opened');
-		this.insertCustomButtons();
-		this.map.sendInitUNOCommands();
-		if (this.map.getDocType() === 'presentation')
-			this.map.fire('toggleslidehide');
+		else {
+			this.refreshNotebookbar();
+		}
+		this.refreshSidebar();
+	},
+
+	refreshNotebookbar: function() {
+			var selectedTab = $('.ui-tab.notebookbar[aria-selected="true"]').attr('id') || 'Home-tab-label';
+			this.removeNotebookbarUI();
+			this.createNotebookbarControl(this.map.getDocType());
+			if (this._map._permission === 'edit') {
+				$('.main-nav').removeClass('readonly');
+			}
+			$('#' + selectedTab).click();
+			this.makeSpaceForNotebookbar();
+			this.notebookbar._showNotebookbar = true;
+			this.notebookbar.showTabs();
+			$('#map').addClass('notebookbar-opened');
+			this.insertCustomButtons();
+			this.map.sendInitUNOCommands();
+			if (this.map.getDocType() === 'presentation')
+				this.map.fire('toggleslidehide');
 	},
 
 	refreshMenubar: function() {
