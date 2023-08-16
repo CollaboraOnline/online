@@ -3,17 +3,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+0200\n"
-"PO-Revision-Date: 2022-07-09 18:15+0000\n"
-"Last-Translator: Егор Ермаков <eg.ermakov2016@yandex.ru>\n"
+"PO-Revision-Date: 2023-08-03 19:02+0000\n"
+"Last-Translator: Влад <integration.into.society@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "help/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -96,13 +96,12 @@ msgid "Focus to notebookbar menu"
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:30-70
-#, fuzzy
 msgid ""
 "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>F1"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>1"
+"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>F1"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:31-18
 msgid "Focus to document from menu"
@@ -110,16 +109,15 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:31-72
 msgid "ESC"
-msgstr ""
+msgstr "ESC"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:32-18
 msgid "Focus to selected comment's menu"
-msgstr ""
+msgstr "Перейти к меню выбранного комментария"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:32-77
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>C"
 
 #: html/cool-help.html%2Bdiv.div.h2:36-9
 #: html/cool-help.html%2Bdiv.div.h2:182-9
@@ -1755,12 +1753,19 @@ msgid ""
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
+"Чтобы загрузить документ, воспользуйтесь пунктом <span class=\"ui\">Файл</"
+"span> меню приложения <span class=\"productname\">%productName</span>. "
+"Список форматов, доступных для загрузки, зависит от приложения. Все "
+"приложения могут экспортировать документы в формат \"PDF\"."
 
 #: html/cool-help.html%2Bdiv.p:366-5
 msgid ""
 "To open document, click on the file to open the <span class=\"productname\""
 ">%productName</span> module associated to the document format."
 msgstr ""
+"Чтобы открыть документ, нажмите на файл, который собираетесь открыть, чтобы "
+"вызвать модуль приложения <span class=\"productname\">%productName</span>, "
+"которое отвечает за работу с файлами выбранного формата."
 
 #: html/cool-help.html%2Bdiv.p:367-5
 msgid ""
@@ -1769,6 +1774,10 @@ msgid ""
 "quickly as possible you can also force saving using the <span class=\"ui\""
 ">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
+"Документы в <span class=\"productname\">%productName</span> сохраняются "
+"автоматически, однако, если вы хотите синхронизировать документ прямо "
+"сейчас, вы можете сделать это принудительно, используя пункт <span class=\"ui"
+"\">Сохранить</span> меню <span class=\"ui\">Файл</span>."
 
 #: html/cool-help.html%2Bdiv.p:368-5
 msgid ""
@@ -1776,21 +1785,28 @@ msgid ""
 "a “Download PDF export?” popup shows. You can print this PDF in your "
 "favorite PDF reader."
 msgstr ""
+"В зависимости от возможностей вашего браузера, может появиться окно печати "
+"или всплывающее окно \"Скачать экспортированный PDF?\". Распечатать PDF, "
+"полученный во втором случае, можно в приложении для просмотра PDF, которое "
+"вы используете обычно."
 
 #: html/cool-help.html%2Bdiv.p:369-5
 msgid ""
 "When closing a document, it is automatically saved if it has been changed."
 msgstr ""
+"При закрытии документа внесённые изменения будут автоматически сохранены."
 
 #: html/cool-help.html%2Bdiv.p:372-5
 msgid ""
 "Document editing should be familiar to everyone that has used an office "
 "application before, but here are some distinctive features:"
 msgstr ""
+"Работа с документами будет знакома всем, кто ранее использовал офисные "
+"приложения, однако есть некоторые отличительные черты:"
 
 #: html/cool-help.html%2Bdiv.h4:373-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Копировать и Вставить"
 
 #: html/cool-help.html%2Bdiv.p:374-5
 msgid ""
@@ -1818,10 +1834,17 @@ msgid ""
 "in external applications. This step also converts complex object types into "
 "static images."
 msgstr ""
+"Чтобы скопировать объёмное содержимое в другие приложения на устройстве, "
+"нажмите кнопку <span class=\"ui\">Начать загрузку</span>, а затем снова "
+"скопируйте содержимое в буфер обмена, чтобы целевое приложение могло "
+"прочитать его. Это можно сделать с помощью маленького виджета, который "
+"появляется в правом нижнем углу и необходим только для того, чтобы "
+"экспортировать содержимое для вставки в другие приложения. Это действие "
+"также преобразует сложные объекты в статические изображения."
 
 #: html/cool-help.html%2Bdiv.h4:376-5
 msgid "Document repair"
-msgstr ""
+msgstr "Исправить документ"
 
 #: html/cool-help.html%2Bdiv.p:377-5
 msgid ""
@@ -1830,12 +1853,18 @@ msgid ""
 "Repair function allows users to undo other editor’s changes to the document "
 "to a previous state."
 msgstr ""
+"Когда несколько пользователей одновременно редактируют один документ, "
+"внесённые изменения могут привести к конфликту изменений и вызвать путаницу. "
+"Функция \"Исправить документ\" позволяет откатить изменения, внесённые "
+"другими пользователями, до предыдущего состояния документа."
 
 #: html/cool-help.html%2Bdiv.p:378-5
 msgid ""
 "To jump back to the selected state, select it with the mouse and hit <span "
 "class=\"ui\">Jump to state</span>."
 msgstr ""
+"Чтобы перейти к выбранному состоянию, выделите его нажатием мыши, а затем "
+"нажмите <span class=\"ui\">Перейти к состоянию</span>."
 
 #: html/cool-help.html%2Bdiv.p:380-5
 msgid ""
@@ -1844,6 +1873,10 @@ msgid ""
 ">+</span><kbd>A</kbd> and proceeded to type over it destroying it – while "
 "you were concurrently editing."
 msgstr ""
+"Это достаточно полезно – например, если один из пользователей случайно "
+"выделил весь текст сочетанием клавиш <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>A</kbd> и стал печатать \"поверх\", уничтожая его в то время, "
+"как вы продолжали работать с содержимым."
 
 #: html/cool-help.html%2Bdiv.h4:381-5
 msgid "Inactive document"
@@ -1856,6 +1889,11 @@ msgid ""
 "“Inactive” state. The document is shown with a transparent gray overlay, "
 "with the message “Inactive document – please click to resume editing”."
 msgstr ""
+"Если <span class=\"productname\">%productName</span> обнаруживает, что в "
+"браузере не было никакой активности какое-то время, документ будет переведён "
+"в состояние \"Неактивный\". Документ будет отображаться с полупрозрачным "
+"серым фильтром и сообщением \"Неактивный документ - нажмите, чтобы "
+"продолжить редактирование\"."
 
 #: html/cool-help.html%2Bdiv.p:384-5
 msgid ""
@@ -1863,10 +1901,14 @@ msgid ""
 "disappear. Any changes that may have been made by other users – while "
 "collaboratively editing the document – are re-loaded."
 msgstr ""
+"Чтобы продолжить редактирование, нажмите на документ - он будет возвращён в "
+"активное состояние. Изменения, которые могли быть внесены во время "
+"неактивности другими пользователями (во время совместного редактирования) "
+"будут загружены заново."
 
 #: html/cool-help.html%2Bdiv.h4:385-5
 msgid "Pasting"
-msgstr ""
+msgstr "Вставка"
 
 #: html/cool-help.html%2Bdiv.p:386-5
 msgid ""
@@ -1875,6 +1917,10 @@ msgid ""
 "or browser window, or from outside of the browser, the pasted content will "
 "preserve rich text."
 msgstr ""
+"Когда вы вставляете содержимое, скопированное из того же документа, "
+"сохраняется как форматированный текст, так и другие элементы. Если же вы "
+"копируете содержимое из другого документа, другой вкладки, окна браузера или "
+"внешнего приложения, будет сохранён только форматированный текст."
 
 #: html/cool-help.html%2Bdiv.p:387-5
 msgid ""
@@ -1882,6 +1928,9 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>V</kbd>"
 msgstr ""
+"Вы можете вставить текст без сохранения форматирования сочетанием клавиш "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.p:388-5
 msgid ""
@@ -1889,6 +1938,9 @@ msgid ""
 "You can also paste objects, such as images, if they are copied from the "
 "document you are working in."
 msgstr ""
+"Когда вы вставляете текст в пределах одного документа, форматирование "
+"сохраняется. Вы также можете вставлять объекты (изображения и др.), если они "
+"скопированы из того же документа, с которым вы работаете."
 
 #: html/cool-help.html%2Bdiv.p:389-5
 msgid ""
