@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+0200\n"
-"PO-Revision-Date: 2023-06-04 10:26+0000\n"
-"Last-Translator: Rizal Muttaqin <riz_17_oke@yahoo.co.id>\n"
+"PO-Revision-Date: 2023-08-03 19:02+0000\n"
+"Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -580,7 +580,7 @@ msgstr "Tepi sel"
 
 #: src/control/Control.JSDialogBuilder.js:3036
 msgid "Automatic"
-msgstr ""
+msgstr "Otomatis"
 
 #: src/control/Control.JSDialogBuilder.js:3153
 #: src/control/Control.Menubar.js:793
@@ -1087,9 +1087,8 @@ msgid "Tap to collapse"
 msgstr "Ketuk untuk ciutkan"
 
 #: src/control/Control.NotebookbarBuilder.js:577
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "Dokumen PDF (.pdf)"
+msgstr "Dokumen PDF (.pdf) sebagai..."
 
 #: src/control/Control.NotebookbarBuilder.js:597
 #: src/control/Control.NotebookbarCalc.js:215
@@ -1424,15 +1423,15 @@ msgstr "pratilik halaman "
 
 #: src/control/Control.PartsPreview.js:237
 msgid "Paste Slide"
-msgstr ""
+msgstr "Tempel Slide"
 
 #: src/control/Control.PartsPreview.js:264
 msgid "Copy"
-msgstr ""
+msgstr "Salin"
 
 #: src/control/Control.PartsPreview.js:273
 msgid "Paste"
-msgstr ""
+msgstr "Tempel"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1897,7 +1896,7 @@ msgstr "\"Proksi Lambat\""
 
 #: src/control/Toolbar.js:667
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Salin semua informasi versi dalam bahasa Inggris"
 
 #: src/control/Toolbar.js:721
 msgid "Insert hyperlink"
@@ -1917,7 +1916,7 @@ msgstr "Anda yakin ingin menghapus halaman ini?"
 
 #: src/control/jsdialog/Widget.TreeView.js:481
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Judul dan objek yang Anda tambahkan ke dokumen akan muncul di sini"
 
 #: src/core/Socket.js:55
 msgid "Oops, there is a problem connecting to %productName: "
@@ -1954,7 +1953,7 @@ msgstr "Versi LOKit:"
 
 #: src/core/Socket.js:709
 msgid "Document is getting migrated..."
-msgstr ""
+msgstr "Dokumen sedang dimigrasikan..."
 
 #: src/core/Socket.js:736
 msgid "Session terminated by document owner"
