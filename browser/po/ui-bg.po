@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+0200\n"
-"PO-Revision-Date: 2022-05-04 14:13+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2023-08-05 21:48+0000\n"
+"Last-Translator: Salif Mehmed <mail@salif.eu>\n"
 "Language-Team: Bulgarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/bg/>\n"
-"Language: \n"
+"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1917,9 +1917,8 @@ msgid "Headings and objects that you add to the document will appear here"
 msgstr ""
 
 #: src/core/Socket.js:55
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Възникна проблем при свързване с документа"
+msgstr "Възникна проблем при свързване с %productName: "
 
 #: src/core/Socket.js:563
 msgid "Server is now reachable. We have to refresh the page now."
