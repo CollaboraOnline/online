@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+0200\n"
-"PO-Revision-Date: 2023-03-09 13:38+0000\n"
+"PO-Revision-Date: 2023-07-27 16:05+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16.2-dev\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -114,7 +114,7 @@ msgstr "Alterado"
 
 #: admin/admin.strings.js:29
 msgid "Uploaded"
-msgstr ""
+msgstr "Enviado"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
@@ -309,7 +309,7 @@ msgstr "Falha de autenticação através do protocolo %0"
 
 #: admin/src/AdminSocketOverview.js:420
 msgid "Warning"
-msgstr ""
+msgstr "Atenção"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
@@ -577,7 +577,7 @@ msgstr "Contornos da célula"
 
 #: src/control/Control.JSDialogBuilder.js:3036
 msgid "Automatic"
-msgstr ""
+msgstr "Automático"
 
 #: src/control/Control.JSDialogBuilder.js:3153
 #: src/control/Control.Menubar.js:793
@@ -775,7 +775,7 @@ msgstr "Mostrar barra de estado"
 #: src/control/Control.NotebookbarImpress.js:424
 #: src/control/Control.NotebookbarWriter.js:1147
 msgid "Dark Mode"
-msgstr ""
+msgstr "Modo escuro"
 
 #: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:428
 #: src/control/Control.Menubar.js:565 src/control/Control.Menubar.js:699
@@ -796,7 +796,7 @@ msgstr "Tudo"
 #: src/control/Control.NotebookbarImpress.js:967
 #: src/control/Control.NotebookbarWriter.js:851
 msgid "Smart Picker"
-msgstr ""
+msgstr "Selecionador inteligente"
 
 #: src/control/Control.Menubar.js:210
 msgid "Text orientation"
@@ -953,7 +953,7 @@ msgstr "Guardar comentários"
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarImpress.js:418
 msgid "Master View"
-msgstr ""
+msgstr "Vista principal"
 
 #: src/control/Control.Menubar.js:492 src/control/Control.Menubar.js:1005
 #: src/control/Control.PresentationBar.js:64
@@ -1084,9 +1084,8 @@ msgid "Tap to collapse"
 msgstr "Clique para recolher"
 
 #: src/control/Control.NotebookbarBuilder.js:577
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "Documento PDF (.pdf)"
+msgstr "Documento PDF (.pdf) como..."
 
 #: src/control/Control.NotebookbarBuilder.js:597
 #: src/control/Control.NotebookbarCalc.js:215
@@ -1130,7 +1129,7 @@ msgstr "~Ficheiro"
 #: src/control/Control.NotebookbarImpress.js:66
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "Hom~e"
-msgstr ""
+msgstr "~Início"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:60
@@ -1161,15 +1160,14 @@ msgstr "~Rever"
 #: src/control/Control.NotebookbarDraw.js:75
 #: src/control/Control.NotebookbarImpress.js:87
 #: src/control/Control.NotebookbarWriter.js:43
-#, fuzzy
 msgid "F~ormat"
-msgstr "Formatar"
+msgstr "F~ormatar"
 
 #: src/control/Control.NotebookbarCalc.js:48
 #: src/control/Control.NotebookbarDraw.js:86
 #: src/control/Control.NotebookbarWriter.js:59
 msgid "Dra~w"
-msgstr ""
+msgstr "~Desenhar"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:92
@@ -1385,9 +1383,8 @@ msgid "Reference~s"
 msgstr "Referência~s"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "For~m"
-msgstr "Formulário"
+msgstr "For~mulário"
 
 #: src/control/Control.NotebookbarWriter.js:205
 msgid "ODF Text Document (.odt)"
@@ -1422,17 +1419,16 @@ msgid "preview of page "
 msgstr "pré-visualização da página "
 
 #: src/control/Control.PartsPreview.js:237
-#, fuzzy
 msgid "Paste Slide"
-msgstr "Modelo global de diapositivos"
+msgstr "Colar diapositivo"
 
 #: src/control/Control.PartsPreview.js:264
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
 
 #: src/control/Control.PartsPreview.js:273
 msgid "Paste"
-msgstr ""
+msgstr "Colar"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1897,7 +1893,7 @@ msgstr "Proxy lento"
 
 #: src/control/Toolbar.js:667
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Copiar todas as informações da versão em inglês"
 
 #: src/control/Toolbar.js:721
 msgid "Insert hyperlink"
@@ -1917,7 +1913,7 @@ msgstr "Tem a certeza de que deseja apagar esta página?"
 
 #: src/control/jsdialog/Widget.TreeView.js:481
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Os títulos e objetos que adicionar ao documento aparecerão aqui"
 
 #: src/core/Socket.js:55
 msgid "Oops, there is a problem connecting to %productName: "
@@ -1953,7 +1949,7 @@ msgstr "Versão LOKit:"
 
 #: src/core/Socket.js:709
 msgid "Document is getting migrated..."
-msgstr ""
+msgstr "O documento está a ser migrado..."
 
 #: src/core/Socket.js:736
 msgid "Session terminated by document owner"
@@ -2018,7 +2014,7 @@ msgstr "Palavra-passe inválida. Por favor tente novamente."
 
 #: src/core/Socket.js:986
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Apenas o proprietário do documento pode alterar a palavra-passe."
 
 #: src/core/Socket.js:1017 src/core/Socket.js:1022
 msgid "Missing Fonts"
@@ -2090,7 +2086,7 @@ msgstr "O servidor foi desconectado."
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
-msgstr ""
+msgstr "Não resta espaço em disco no servidor."
 
 #: src/errormessages.js:14
 msgid ""
@@ -2239,12 +2235,17 @@ msgstr "Não é possível mudar o nome do documento."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Falha ao ler o documento do armazenamento, tente carregar o documento "
+"novamente."
 
 #: src/errormessages.js:42
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"A gravação falhou devido à falta de espaço de armazenamento. O documento "
+"passa a ser apenas de leitura. Certifique-se de que existe espaço suficiente "
+"no armazenamento e tente guardar novamente."
 
 #: src/errormessages.js:43
 msgid ""
@@ -2252,18 +2253,23 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"A gravação falhou porque o documento é demasiado grande ou excede o espaço "
+"de armazenamento restante. O documento passa a ser apenas de leitura, mas "
+"pode descarregá-lo agora para preservar uma cópia localmente."
 
 #: src/errormessages.js:45
 msgid "Document cannot be saved, please check your permissions."
 msgstr ""
+"O documento não pode ser guardado, por favor verifique as suas permissões."
 
 #: src/errormessages.js:46
 msgid "Document cannot be renamed, please check your permissions."
 msgstr ""
+"O documento não pode ser renomeado, por favor verifique as suas permissões."
 
 #: src/errormessages.js:47
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "O documento não pode ser exportado. Por favor, tente novamente."
 
 #: src/errormessages.js:52
 msgid "Uploading file to server failed, file not found."
@@ -2411,16 +2417,15 @@ msgstr ""
 "iniciar uma nova</p>"
 
 #: src/map/Clipboard.js:918
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
 "more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>O seu navegador tem acesso muito limitado à área de transferência</p><p>"
-"Por favor, pressione agora as teclas: <kbd>Ctrl</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>V</kbd> para ver mais opções</p><p class=\"vex-footnote\""
-">Fechar popup para ignorar colar especial</p>"
+"<p>O seu navegador tem acesso muito limitado à área de transferência</"
+"p><p>Por favor, pressione agora as teclas: <kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>V</kbd> para ver mais opções</p><p>Fechar popup para "
+"ignorar colar especial</p>"
 
 #: src/map/Map.js:215
 msgid "Initializing..."
