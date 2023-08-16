@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+0200\n"
-"PO-Revision-Date: 2023-06-18 21:50+0000\n"
+"PO-Revision-Date: 2023-07-22 22:09+0000\n"
 "Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "ui/eu/>\n"
-"Language: \n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18.1\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -307,7 +307,6 @@ msgid "Failed to authenticate this session over protocol %0"
 msgstr "Ezin izan da saio hau autentifikatu %0 protokoloa erabilita"
 
 #: admin/src/AdminSocketOverview.js:420
-#, fuzzy
 msgid "Warning"
 msgstr "Abisua"
 
@@ -795,7 +794,6 @@ msgstr "Dena"
 #: src/control/Control.NotebookbarDraw.js:948
 #: src/control/Control.NotebookbarImpress.js:967
 #: src/control/Control.NotebookbarWriter.js:851
-#, fuzzy
 msgid "Smart Picker"
 msgstr "Selektore adimenduna"
 
@@ -1085,9 +1083,8 @@ msgid "Tap to collapse"
 msgstr "Ukitu txikitzeko"
 
 #: src/control/Control.NotebookbarBuilder.js:577
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "PDF Dokumentua (.pdf)"
+msgstr "PDF Dokumentua (.pdf) honela..."
 
 #: src/control/Control.NotebookbarBuilder.js:597
 #: src/control/Control.NotebookbarCalc.js:215
@@ -1162,9 +1159,8 @@ msgstr "~Berrikusi"
 #: src/control/Control.NotebookbarDraw.js:75
 #: src/control/Control.NotebookbarImpress.js:87
 #: src/control/Control.NotebookbarWriter.js:43
-#, fuzzy
 msgid "F~ormat"
-msgstr "Formatua"
+msgstr "F~ormatua"
 
 #: src/control/Control.NotebookbarCalc.js:48
 #: src/control/Control.NotebookbarDraw.js:86
@@ -1386,9 +1382,8 @@ msgid "Reference~s"
 msgstr "E~rreferentziak"
 
 #: src/control/Control.NotebookbarWriter.js:48
-#, fuzzy
 msgid "For~m"
-msgstr "Formularioa"
+msgstr "For~mularioa"
 
 #: src/control/Control.NotebookbarWriter.js:205
 msgid "ODF Text Document (.odt)"
@@ -1423,9 +1418,8 @@ msgid "preview of page "
 msgstr "orriaren aurreikuspena "
 
 #: src/control/Control.PartsPreview.js:237
-#, fuzzy
 msgid "Paste Slide"
-msgstr "Diapositiba maisuak"
+msgstr "Diapositiba itsatsi"
 
 #: src/control/Control.PartsPreview.js:264
 msgid "Copy"
@@ -1898,7 +1892,7 @@ msgstr "\"Proxy motela\""
 
 #: src/control/Toolbar.js:667
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Kopiatu bertsioaren informazio guztia ingelesez"
 
 #: src/control/Toolbar.js:721
 msgid "Insert hyperlink"
@@ -1955,7 +1949,7 @@ msgstr "LOKit bertsioa:"
 
 #: src/core/Socket.js:709
 msgid "Document is getting migrated..."
-msgstr ""
+msgstr "Dokumentua migratzen ari da..."
 
 #: src/core/Socket.js:736
 msgid "Session terminated by document owner"
@@ -2418,7 +2412,6 @@ msgstr ""
 "ekin nahi badiozu</p>"
 
 #: src/map/Clipboard.js:918
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
