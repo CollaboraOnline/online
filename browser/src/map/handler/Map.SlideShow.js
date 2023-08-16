@@ -85,6 +85,10 @@ L.Map.SlideShow = L.Handler.extend({
 			document.msFullscreenElement;
 		if (!this.fullscreen) {
 			L.DomUtil.remove(this._slideShow);
+			// #7102 on exit from fullscreen we don't get a 'focus' event
+			// in chome so a later second attempt at launching a presentation
+			// fails
+			this._map.focus();
 		}
 	},
 
