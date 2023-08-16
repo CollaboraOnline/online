@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+0200\n"
-"PO-Revision-Date: 2023-08-16 06:55+0000\n"
-"Last-Translator: Fatemeh Komeily <komeily.fatemeh@gmail.com>\n"
+"PO-Revision-Date: 2023-08-16 06:56+0000\n"
+"Last-Translator: Ali Elminia <ali.elminia@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fa/>\n"
 "Language: fa\n"
@@ -29,7 +29,7 @@ msgstr "تنظیمات"
 
 #: admin/admin.strings.js:8
 msgid "Overview"
-msgstr "نمی کلی"
+msgstr "نمای کلی"
 
 #: admin/admin.strings.js:9
 msgid "(current)"
@@ -37,7 +37,7 @@ msgstr "(فعلی)"
 
 #: admin/admin.strings.js:10
 msgid "Analytics"
-msgstr ""
+msgstr "تحلیل‌ها"
 
 #: admin/admin.strings.js:11
 msgid "History"
@@ -61,12 +61,12 @@ msgstr "نام کاربری"
 
 #: admin/admin.strings.js:16
 msgid "Documents open"
-msgstr ""
+msgstr "باز کردن پرونده"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:122 admin/src/AdminSocketOverview.js:349
 msgid " user(s)."
-msgstr ""
+msgstr " کاربر"
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:205
 msgid " document(s) open."
@@ -74,19 +74,19 @@ msgstr ""
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
-msgstr ""
+msgstr "شماره پرونده ها"
 
 #: admin/admin.strings.js:20
 msgid "Memory consumed"
-msgstr ""
+msgstr "حافظه مصرف شده است"
 
 #: admin/admin.strings.js:21
 msgid "Bytes sent"
-msgstr ""
+msgstr "بایت ارسال شد"
 
 #: admin/admin.strings.js:22
 msgid "Bytes received"
-msgstr ""
+msgstr "بایت های دریافت شده"
 
 #: admin/admin.strings.js:23
 msgid "PID"
@@ -150,7 +150,7 @@ msgstr "نمودار شبکه"
 #: src/layer/tile/CommentListSection.ts:378
 #: src/layer/tile/CommentSection.ts:114
 msgid "Save"
-msgstr ""
+msgstr "ذخیره"
 
 #: admin/admin.strings.js:37
 msgid "Cache size of memory statistics"
