@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+0200\n"
-"PO-Revision-Date: 2023-06-02 02:53+0000\n"
-"Last-Translator: HM <goodlinuxuser@chmail.ir>\n"
+"PO-Revision-Date: 2023-08-16 06:55+0000\n"
+"Last-Translator: Fatemeh Komeily <komeily.fatemeh@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fa/>\n"
-"Language: \n"
+"Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -90,55 +90,55 @@ msgstr ""
 
 #: admin/admin.strings.js:23
 msgid "PID"
-msgstr ""
+msgstr "شناسه کاربر"
 
 #: admin/admin.strings.js:24
 msgid "Document"
-msgstr ""
+msgstr "سند"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "بازدیدها"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
-msgstr ""
+msgstr "زمان سپری شده"
 
 #: admin/admin.strings.js:27
 msgid "Idle time"
-msgstr ""
+msgstr "زمان بیکاری"
 
 #: admin/admin.strings.js:28
 msgid "Modified"
-msgstr ""
+msgstr "اصلاح شده"
 
 #: admin/admin.strings.js:29
 msgid "Uploaded"
-msgstr ""
+msgstr "بارگذاری شده"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
-msgstr ""
+msgstr "میزبان WOPI"
 
 #: admin/admin.strings.js:31
 msgid "Kill"
-msgstr ""
+msgstr "کشتن"
 
 #: admin/admin.strings.js:32
 msgid "Graphs"
-msgstr ""
+msgstr "نمودارها"
 
 #: admin/admin.strings.js:33
 msgid "Memory Graph"
-msgstr ""
+msgstr "نمودار حافظه"
 
 #: admin/admin.strings.js:34
 msgid "CPU Graph"
-msgstr ""
+msgstr "نمودار CPU"
 
 #: admin/admin.strings.js:35
 msgid "Network Graph"
-msgstr ""
+msgstr "نمودار شبکه"
 
 #: admin/admin.strings.js:36 src/control/Control.Notebookbar.js:264
 #: src/control/Control.NotebookbarCalc.js:102
@@ -154,77 +154,78 @@ msgstr ""
 
 #: admin/admin.strings.js:37
 msgid "Cache size of memory statistics"
-msgstr ""
+msgstr "فاصله زمانی آمار حافظه (بر حسب میلی ثانیه)"
 
 #: admin/admin.strings.js:38
 msgid "Time interval of memory statistics (in ms)"
-msgstr ""
+msgstr "فاصله زمانی آمار حافظه (بر حسب میلی ثانیه)"
 
 #: admin/admin.strings.js:39
 msgid "Cache size of CPU statistics"
-msgstr ""
+msgstr "فاصله زمانی آمار حافظه (بر حسب میلی ثانیه)"
 
 #: admin/admin.strings.js:40
 msgid "Time interval of CPU statistics (in ms)"
-msgstr ""
+msgstr "فاصله زمانی آمار CPU (بر حسب میلی ثانیه)"
 
 #: admin/admin.strings.js:41 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "جلسه کشتن"
 
 #: admin/admin.strings.js:42
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr ""
+msgstr "حداکثر حافظه مجازی پردازش سند (در مگابایت) - فقط کاهش دهید"
 
 #: admin/admin.strings.js:43
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
+msgstr "حداکثر حافظه پشته پردازش سند (در کیلوبایت) - فقط کاهش دهید"
 
 #: admin/admin.strings.js:44
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
+"حداکثر اندازه فایل مجاز برای نوشتن روی دیسک (در مگابایت) - فقط کاهش دهید"
 
 #: admin/admin.strings.js:45
 msgid "Documents:"
-msgstr ""
+msgstr "اسناد:"
 
 #: admin/admin.strings.js:46
 msgid "Expired:"
-msgstr ""
+msgstr "منقضی شده:"
 
 #: admin/admin.strings.js:47 admin/src/AdminSocketBase.js:53
 #: src/control/Control.Zotero.js:202
 msgid "Refresh"
-msgstr ""
+msgstr "تازه کردن"
 
 #: admin/admin.strings.js:48
 msgid "Shutdown Server"
-msgstr ""
+msgstr "خاموش شدن سرور"
 
 #: admin/admin.strings.js:49
 msgid "Server uptime"
-msgstr ""
+msgstr "آپتایم سرور"
 
 #: admin/admin.strings.js:50
 msgid "Refresh Log"
-msgstr ""
+msgstr "تازه کردن گزارش"
 
 #: admin/admin.strings.js:51
 msgid "Channel Filter:"
-msgstr ""
+msgstr "فیلتر کانال:"
 
 #: admin/admin.strings.js:52 src/control/Control.JSDialogBuilder.js:550
 #: src/control/Control.StatusBar.js:338
 msgid "None"
-msgstr ""
+msgstr "هیچ یک"
 
 #: admin/admin.strings.js:53
 msgid "Set Log Levels"
-msgstr ""
+msgstr "سطوح Log را تنظیم کنید"
 
 #: admin/admin.strings.js:54
 msgid "Log Levels"
-msgstr ""
+msgstr "سطوح ورود به سیستم"
 
 #: admin/admin.strings.js:55 src/control/Control.AlertDialog.js:21
 #: src/control/Control.AlertDialog.js:27 src/control/Control.AlertDialog.js:58
@@ -232,27 +233,27 @@ msgstr ""
 #: src/core/Socket.js:1017 src/core/Socket.js:1022
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
-msgstr ""
+msgstr "بستن"
 
 #: admin/admin.strings.js:56
 msgid "Update Log Levels"
-msgstr ""
+msgstr "به روز رسانی سطوح گزارش"
 
 #: admin/admin.strings.js:57
 msgid "Version Information"
-msgstr ""
+msgstr "اطلاعات نسخه"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
-msgstr ""
+msgstr "اخذ شده"
 
 #: admin/src/AdminSocketAnalytics.js:209
 msgid "Sent"
-msgstr ""
+msgstr "ارسال شد"
 
 #: admin/src/AdminSocketBase.js:54
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "سرور بسته شده است. لطفا صفحه را دوباره بارگذاری کنید"
 
 #: admin/src/AdminSocketBase.js:55 admin/src/AdminSocketBase.js:66
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketOverview.js:422
@@ -269,19 +270,19 @@ msgstr ""
 #: src/map/Clipboard.js:874 src/map/Clipboard.js:925
 #: src/map/handler/Map.Feedback.js:83 src/map/handler/Map.WOPI.js:484
 msgid "OK"
-msgstr ""
+msgstr "باشه"
 
 #: admin/src/AdminSocketBase.js:64 admin/src/AdminSocketBase.js:65
 msgid "Connection error"
-msgstr ""
+msgstr "خطای اتصال"
 
 #: admin/src/AdminSocketOverview.js:97 admin/src/AdminSocketSettings.js:34
 msgid "Confirmation"
-msgstr ""
+msgstr "تائیدیه"
 
 #: admin/src/AdminSocketOverview.js:98
 msgid "Are you sure you want to terminate this session?"
-msgstr ""
+msgstr "آیا مطمئن هستید که می خواهید این جلسه را خاتمه دهید؟"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketOverview.js:423
 #: admin/src/AdminSocketSettings.js:37
@@ -292,43 +293,43 @@ msgstr ""
 #: src/layer/tile/CommentListSection.ts:373
 #: src/layer/tile/CommentSection.ts:113 src/layer/tile/CommentSection.ts:116
 msgid "Cancel"
-msgstr ""
+msgstr "لغو"
 
 #: admin/src/AdminSocketOverview.js:411
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr ""
+msgstr "تنظیم کوکی احراز هویت jwt روی اتصال ناامن انجام نشد"
 
 #: admin/src/AdminSocketOverview.js:415
 msgid "Failed to authenticate this session over protocol %0"
-msgstr ""
+msgstr "احراز هویت این جلسه از طریق پروتکل %0 انجام نشد"
 
 #: admin/src/AdminSocketOverview.js:420
 msgid "Warning"
-msgstr ""
+msgstr "هشدار"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
-msgstr ""
+msgstr "آیا مطمئن هستید که می خواهید سرور را خاموش کنید؟"
 
 #: admin/src/Util.js:14
 msgid "kB"
-msgstr ""
+msgstr "کیلوبایت"
 
 #: admin/src/Util.js:14
 msgid "MB"
-msgstr ""
+msgstr "مگابایت"
 
 #: admin/src/Util.js:14
 msgid "GB"
-msgstr ""
+msgstr "گیگابایت"
 
 #: admin/src/Util.js:14
 msgid "TB"
-msgstr ""
+msgstr "ترابایت"
 
 #: admin/src/Util.js:14
 msgid "PB"
-msgstr ""
+msgstr "پنتا بایت"
 
 #: admin/src/Util.js:14
 msgid "EB"
@@ -348,267 +349,267 @@ msgstr ""
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
-msgstr ""
+msgstr " ساعت"
 
 #: admin/src/Util.js:49 admin/src/Util.js:51
 msgid " mins"
-msgstr ""
+msgstr " دقیقه"
 
 #: admin/src/Util.js:54
 msgid " s"
-msgstr ""
+msgstr " ثانیه"
 
 #: js/w2ui-1.5.rc1.js:2973
 msgid "Recent"
-msgstr ""
+msgstr "اخیر"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
-msgstr ""
+msgstr "بدون رنگ"
 
 #: src/control/ColorPicker.js:123
 msgid "Automatic color"
-msgstr ""
+msgstr "رنگ اتوماتیک"
 
 #: src/control/Control.AlertDialog.js:42
 msgid "External link"
-msgstr ""
+msgstr "لینک خارجی"
 
 #: src/control/Control.AlertDialog.js:43
 msgid "Open link"
-msgstr ""
+msgstr "لینک باز"
 
 #: src/control/Control.AlertDialog.js:55
 msgid "The server encountered a %0 error while parsing the %1 command."
-msgstr ""
+msgstr "سرور هنگام تجزیه فرمان %1 با خطای %0 مواجه شد."
 
 #: src/control/Control.Command.js:80
 msgid "Unlock"
-msgstr ""
+msgstr "باز کردن قفل"
 
 #: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:995
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: src/control/Control.ContextMenu.js:207
 msgid "Paste Special"
-msgstr ""
+msgstr "چسب ویژه"
 
 #: src/control/Control.DocumentNameInput.js:77
 msgid "Path"
-msgstr ""
+msgstr "مسیر"
 
 #: src/control/Control.DocumentRepair.js:18
 #: src/control/Control.DocumentRepair.js:19
 msgid "Repair Document"
-msgstr ""
+msgstr "سند تعمیر"
 
 #: src/control/Control.DocumentRepair.js:115
 #: src/control/Control.UserList.js:324
 msgid "You"
-msgstr ""
+msgstr "شما"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "Type"
-msgstr ""
+msgstr "نوع"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "What?"
-msgstr ""
+msgstr "چی؟"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "Who?"
-msgstr ""
+msgstr "چه کسی؟"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "When?"
-msgstr ""
+msgstr "چه زمانی؟"
 
 #: src/control/Control.DocumentRepair.js:150
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "هنوز کاری برای عقب نشینی انجام ندادی..."
 
 #: src/control/Control.DocumentRepair.js:160
 msgid "Redo"
-msgstr ""
+msgstr "انجام مجدد"
 
 #: src/control/Control.DocumentRepair.js:161
 msgid "Undo"
-msgstr ""
+msgstr "واگرد"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid "Start download"
-msgstr ""
+msgstr "دانلود را شروع کنید"
 
 #: src/control/Control.DownloadProgress.js:62
 msgid "Confirm copy to clipboard"
-msgstr ""
+msgstr "تأیید کپی در کلیپ بورد"
 
 #: src/control/Control.FormulaBar.js:45
 msgid "cell address"
-msgstr ""
+msgstr "آدرس سلول"
 
 #: src/control/Control.FormulaBarJSDialog.js:43
 #: src/control/Control.FormulaBarJSDialog.js:91
 msgid "Function Wizard"
-msgstr ""
+msgstr "تابع جادوگر"
 
 #: src/control/Control.FormulaBarJSDialog.js:54
 msgid "Formula"
-msgstr ""
+msgstr "فرمول"
 
 #: src/control/Control.FormulaBarJSDialog.js:60
 #: src/control/Control.MobileTopBar.js:42
 msgid "Accept"
-msgstr ""
+msgstr "پذیرفتن"
 
 #: src/control/Control.JSDialogBuilder.js:153
 #: src/control/Control.StatusBar.js:336
 msgid "Sum"
-msgstr ""
+msgstr "مجموع"
 
 #: src/control/Control.JSDialogBuilder.js:154
 #: src/control/Control.StatusBar.js:331
 msgid "Average"
-msgstr ""
+msgstr "میانگین"
 
 #: src/control/Control.JSDialogBuilder.js:155
 msgid "Min"
-msgstr ""
+msgstr "حداقل"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Max"
-msgstr ""
+msgstr "حداکثر"
 
 #: src/control/Control.JSDialogBuilder.js:157
 #: src/control/Control.StatusBar.js:333
 msgid "Count"
-msgstr ""
+msgstr "شمردن"
 
 #: src/control/Control.JSDialogBuilder.js:553
 msgid "Solid"
-msgstr ""
+msgstr "جامد"
 
 #: src/control/Control.JSDialogBuilder.js:556
 msgid "Linear"
-msgstr ""
+msgstr "خطی"
 
 #: src/control/Control.JSDialogBuilder.js:559
 msgid "Axial"
-msgstr ""
+msgstr "محوری"
 
 #: src/control/Control.JSDialogBuilder.js:562
 msgid "Radial"
-msgstr ""
+msgstr "شعاعی"
 
 #: src/control/Control.JSDialogBuilder.js:565
 msgid "Ellipsoid"
-msgstr ""
+msgstr "بیضی"
 
 #: src/control/Control.JSDialogBuilder.js:569
 msgid "Quadratic"
-msgstr ""
+msgstr "درجه دوم"
 
 #: src/control/Control.JSDialogBuilder.js:572
 msgid "Square"
-msgstr ""
+msgstr "مربع"
 
 #: src/control/Control.JSDialogBuilder.js:575
 msgid "Fixed size"
-msgstr ""
+msgstr "اندازه ثابت"
 
 #: src/control/Control.JSDialogBuilder.js:1536
 msgid "From"
-msgstr ""
+msgstr "از"
 
 #: src/control/Control.JSDialogBuilder.js:1539
 msgid "To"
-msgstr ""
+msgstr "به"
 
 #: src/control/Control.JSDialogBuilder.js:1542
 msgid "Color"
-msgstr ""
+msgstr "رنگ"
 
 #: src/control/Control.JSDialogBuilder.js:1649
 msgid "Select range"
-msgstr ""
+msgstr "محدوده را انتخاب کنید"
 
 #: src/control/Control.JSDialogBuilder.js:1703
 #: src/control/Control.NotebookbarBuilder.js:230
 msgid "Font Name"
-msgstr ""
+msgstr "نام فونت"
 
 #: src/control/Control.JSDialogBuilder.js:1705 src/control/Toolbar.js:123
 msgid "Font Size"
-msgstr ""
+msgstr "اندازه فونت"
 
 #: src/control/Control.JSDialogBuilder.js:1707
 #: src/control/Control.TopToolbar.js:499
 msgid "Style"
-msgstr ""
+msgstr "سبک"
 
 #: src/control/Control.JSDialogBuilder.js:2149
 msgid "reply"
-msgstr ""
+msgstr "پاسخ"
 
 #: src/control/Control.JSDialogBuilder.js:2152
 msgid "replies"
-msgstr ""
+msgstr "پاسخ می دهد"
 
 #: src/control/Control.JSDialogBuilder.js:2163
 #: src/layer/tile/CanvasTileLayer.js:5230
 #: src/layer/tile/CanvasTileLayer.js:5241
 #: src/layer/tile/CommentListSection.ts:891
 msgid "Comment"
-msgstr ""
+msgstr "اظهار نظر"
 
 #: src/control/Control.JSDialogBuilder.js:2227
 msgid "Insert Comment"
-msgstr ""
+msgstr "درج نظر"
 
 #: src/control/Control.JSDialogBuilder.js:2921
 msgid "Cell borders"
-msgstr ""
+msgstr "مرزهای سلولی"
 
 #: src/control/Control.JSDialogBuilder.js:3036
 msgid "Automatic"
-msgstr ""
+msgstr "خودکار"
 
 #: src/control/Control.JSDialogBuilder.js:3153
 #: src/control/Control.Menubar.js:793
 msgid "Rows"
-msgstr ""
+msgstr "ردیف ها"
 
 #: src/control/Control.JSDialogBuilder.js:3154
 #: src/control/Control.Menubar.js:796
 msgid "Columns"
-msgstr ""
+msgstr "ستون ها"
 
 #: src/control/Control.JSDialogBuilder.js:3174
 msgid "Insert Table"
-msgstr ""
+msgstr "درج جدول"
 
 #: src/control/Control.LanguageDialog.js:54 src/control/Control.Menubar.js:335
 #: src/control/Control.Menubar.js:337 src/control/Control.Menubar.js:339
 #: src/control/Control.Menubar.js:499 src/control/Control.Menubar.js:626
 #: src/control/Control.Menubar.js:873 src/control/Control.StatusBar.js:559
 msgid "None (Do not check spelling)"
-msgstr ""
+msgstr "هیچ (املا را بررسی نکنید)"
 
 #: src/control/Control.LanguageDialog.js:72
 msgid "Select language"
-msgstr ""
+msgstr "زبان را انتخاب کنید"
 
 #: src/control/Control.LanguageDialog.js:93
 msgid "Language"
-msgstr ""
+msgstr "زبان"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:80
 #: src/control/Control.Menubar.js:907
 #: src/control/Control.NotebookbarBuilder.js:551
 #: src/control/Control.NotebookbarBuilder.js:645
 msgid "ODF text document (.odt)"
-msgstr ""
+msgstr "سند متنی ODF (odt.)"
 
 #: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:81
 #: src/control/Control.Menubar.js:908
@@ -632,7 +633,7 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:649
 #: src/control/Control.NotebookbarWriter.js:211
 msgid "Rich Text (.rtf)"
-msgstr ""
+msgstr "متن غنی (rtf.)"
 
 #: src/control/Control.Menubar.js:72 src/control/Control.Menubar.js:78
 #: src/control/Control.Menubar.js:373 src/control/Control.Menubar.js:379
@@ -643,7 +644,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:1017 src/control/Control.Menubar.js:1025
 #: src/control/Control.Menubar.js:1067 src/control/Control.Menubar.js:1078
 msgid "Export as"
-msgstr ""
+msgstr "صادرات به عنوان"
 
 #: src/control/Control.Menubar.js:73 src/control/Control.Menubar.js:79
 #: src/control/Control.Menubar.js:374 src/control/Control.Menubar.js:380
@@ -679,27 +680,27 @@ msgstr ""
 #: src/control/Control.Menubar.js:898 src/control/Control.Menubar.js:960
 #: src/control/Control.Menubar.js:1020 src/control/Control.Menubar.js:1070
 msgid "Share..."
-msgstr ""
+msgstr "اشتراک گذاری..."
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:378
 #: src/control/Control.Menubar.js:525 src/control/Control.Menubar.js:651
 #: src/control/Control.Menubar.js:899 src/control/Control.Menubar.js:961
 #: src/control/Control.Menubar.js:1022 src/control/Control.Menubar.js:1071
 msgid "See revision history"
-msgstr ""
+msgstr "تاریخچه بازبینی را ببینید"
 
 #: src/control/Control.Menubar.js:78 src/control/Control.Menubar.js:379
 #: src/control/Control.Menubar.js:526 src/control/Control.Menubar.js:652
 #: src/control/Control.Menubar.js:905 src/control/Control.Menubar.js:966
 #: src/control/Control.Menubar.js:1025 src/control/Control.Menubar.js:1078
 msgid "Download as"
-msgstr ""
+msgstr "دانلود به عنوان"
 
 #: src/control/Control.Menubar.js:88 src/control/Control.Menubar.js:388
 #: src/control/Control.Menubar.js:532 src/control/Control.Menubar.js:661
 #: src/control/Control.Toolbar.js:1172
 msgid "Close document"
-msgstr ""
+msgstr "بستن سند"
 
 #: src/control/Control.Menubar.js:93 src/control/Control.Menubar.js:393
 #: src/control/Control.Menubar.js:537 src/control/Control.Menubar.js:666
@@ -722,7 +723,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:264
 #: src/control/Control.NotebookbarWriter.js:265
 msgid "Repair"
-msgstr ""
+msgstr "تعمیر"
 
 #: src/control/Control.Menubar.js:117 src/control/Control.Menubar.js:123
 #: src/control/Control.Menubar.js:405 src/control/Control.Menubar.js:411
@@ -738,7 +739,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:1080
 #: src/control/Control.StatusBar.js:212
 msgid "Reset zoom"
-msgstr ""
+msgstr "بزرگنمایی را بازنشانی کنید"
 
 #: src/control/Control.Menubar.js:126 src/control/Control.Menubar.js:414
 #: src/control/Control.Menubar.js:558 src/control/Control.Menubar.js:687
@@ -747,12 +748,12 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:408
 #: src/control/Control.NotebookbarWriter.js:1114
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "حالت رابط کاربری را تغییر دهید"
 
 #: src/control/Control.Menubar.js:127 src/control/Control.Menubar.js:415
 #: src/control/Control.NotebookbarWriter.js:1126
 msgid "Show Ruler"
-msgstr ""
+msgstr "نمایش خط کش"
 
 #: src/control/Control.Menubar.js:128 src/control/Control.Menubar.js:416
 #: src/control/Control.Menubar.js:562 src/control/Control.Menubar.js:688
@@ -761,7 +762,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:414
 #: src/control/Control.NotebookbarWriter.js:1137
 msgid "Show Status Bar"
-msgstr ""
+msgstr "نمایش نوار وضعیت"
 
 #: src/control/Control.Menubar.js:129 src/control/Control.Menubar.js:417
 #: src/control/Control.Menubar.js:559 src/control/Control.Menubar.js:689
@@ -770,19 +771,19 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:424
 #: src/control/Control.NotebookbarWriter.js:1147
 msgid "Dark Mode"
-msgstr ""
+msgstr "حالت تاریک"
 
 #: src/control/Control.Menubar.js:137 src/control/Control.Menubar.js:428
 #: src/control/Control.Menubar.js:565 src/control/Control.Menubar.js:699
 #: src/control/Control.Menubar.js:1135 src/control/Control.Menubar.js:1185
 #: src/control/Control.Menubar.js:1199 src/control/Control.Menubar.js:1222
 msgid "Local Image..."
-msgstr ""
+msgstr "تصویر محلی..."
 
 #: src/control/Control.Menubar.js:160 src/control/Control.Menubar.js:162
 #: src/control/Control.Menubar.js:1152 src/control/Control.Menubar.js:1154
 msgid "All"
-msgstr ""
+msgstr "همه"
 
 #: src/control/Control.Menubar.js:171 src/control/Control.Menubar.js:438
 #: src/control/Control.Menubar.js:572 src/control/Control.Menubar.js:711
@@ -791,71 +792,71 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:967
 #: src/control/Control.NotebookbarWriter.js:851
 msgid "Smart Picker"
-msgstr ""
+msgstr "انتخابگر هوشمند"
 
 #: src/control/Control.Menubar.js:210
 msgid "Text orientation"
-msgstr ""
+msgstr "جهت گیری متن"
 
 #: src/control/Control.Menubar.js:272
 msgid "References"
-msgstr ""
+msgstr "منابع"
 
 #: src/control/Control.Menubar.js:275
 #: src/control/Control.NotebookbarWriter.js:1443
 msgid "Update Index"
-msgstr ""
+msgstr "به روز رسانی فهرست"
 
 #: src/control/Control.Menubar.js:284
 #: src/control/Control.NotebookbarWriter.js:1526
 msgid "Add Citation"
-msgstr ""
+msgstr "افزودن نقل قول"
 
 #: src/control/Control.Menubar.js:285
 #: src/control/Control.NotebookbarWriter.js:1537
 msgid "Add Citation Note"
-msgstr ""
+msgstr "یادداشت نقل قول را اضافه کنید"
 
 #: src/control/Control.Menubar.js:286
 #: src/control/Control.NotebookbarWriter.js:1514
 msgid "Add Bibliography"
-msgstr ""
+msgstr "اضافه کردن کتابنامه"
 
 #: src/control/Control.Menubar.js:288
 #: src/control/Control.NotebookbarWriter.js:1554
 msgid "Refresh Citations"
-msgstr ""
+msgstr "بازخوانی نقل قول ها"
 
 #: src/control/Control.Menubar.js:289
 #: src/control/Control.NotebookbarWriter.js:1565
 #: src/control/Control.Zotero.js:1436
 msgid "Unlink Citations"
-msgstr ""
+msgstr "لغو پیوند نقل قول ها"
 
 #: src/control/Control.Menubar.js:290
 #: src/control/Control.NotebookbarWriter.js:1576
 msgid "Citation Preferences"
-msgstr ""
+msgstr "ترجیحات استناد"
 
 #: src/control/Control.Menubar.js:318 src/control/Control.Menubar.js:1174
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "درج متن غنی"
 
 #: src/control/Control.Menubar.js:319 src/control/Control.Menubar.js:1175
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "درج چک باکس"
 
 #: src/control/Control.Menubar.js:320 src/control/Control.Menubar.js:1176
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "درج کشویی"
 
 #: src/control/Control.Menubar.js:321 src/control/Control.Menubar.js:1177
 msgid "Insert Picture"
-msgstr ""
+msgstr "درج تصویر"
 
 #: src/control/Control.Menubar.js:322 src/control/Control.Menubar.js:1178
 msgid "Insert Date"
-msgstr ""
+msgstr "درج تاریخ"
 
 #: src/control/Control.Menubar.js:323 src/control/Control.Menubar.js:1179
 #: src/control/Control.NotebookbarCalc.js:282
@@ -864,30 +865,30 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:277
 #: src/control/Control.NotebookbarWriter.js:1047
 msgid "Properties"
-msgstr ""
+msgstr "خواص"
 
 #: src/control/Control.Menubar.js:354
 #: src/control/Control.NotebookbarWriter.js:302
 msgid "Forum"
-msgstr ""
+msgstr "انجمن"
 
 #: src/control/Control.Menubar.js:355 src/control/Control.Menubar.js:505
 #: src/control/Control.Menubar.js:629 src/control/Control.Menubar.js:879
 #: src/control/Control.NotebookbarWriter.js:313
 msgid "Online Help"
-msgstr ""
+msgstr "کمک آنلاین"
 
 #: src/control/Control.Menubar.js:356 src/control/Control.Menubar.js:506
 #: src/control/Control.Menubar.js:630 src/control/Control.Menubar.js:880
 #: src/control/Control.NotebookbarWriter.js:324
 msgid "Keyboard shortcuts"
-msgstr ""
+msgstr "میانبرهای صفحه کلید"
 
 #: src/control/Control.Menubar.js:357 src/control/Control.Menubar.js:507
 #: src/control/Control.Menubar.js:631 src/control/Control.Menubar.js:881
 #: src/control/Control.NotebookbarWriter.js:341
 msgid "Report an issue"
-msgstr ""
+msgstr "گزارش یک مشکل"
 
 #: src/control/Control.Menubar.js:358 src/control/Control.Menubar.js:508
 #: src/control/Control.Menubar.js:632 src/control/Control.Menubar.js:882
@@ -895,7 +896,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:1057 src/control/Control.Menubar.js:1127
 #: src/control/Control.NotebookbarWriter.js:353
 msgid "Latest Updates"
-msgstr ""
+msgstr "آخرین به روزرسانی ها"
 
 #: src/control/Control.Menubar.js:359 src/control/Control.Menubar.js:509
 #: src/control/Control.Menubar.js:633 src/control/Control.Menubar.js:883
@@ -903,7 +904,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:1058 src/control/Control.Menubar.js:1128
 #: src/control/Control.NotebookbarWriter.js:365
 msgid "Send Feedback"
-msgstr ""
+msgstr "ارسال بازخورد"
 
 #: src/control/Control.Menubar.js:360 src/control/Control.Menubar.js:510
 #: src/control/Control.Menubar.js:634 src/control/Control.Menubar.js:884
@@ -911,19 +912,19 @@ msgstr ""
 #: src/control/Control.Menubar.js:1059 src/control/Control.Menubar.js:1129
 #: src/control/Control.NotebookbarWriter.js:377
 msgid "About"
-msgstr ""
+msgstr "در باره"
 
 #: src/control/Control.Menubar.js:362 src/control/Control.Menubar.js:512
 #: src/control/Control.Menubar.js:636 src/control/Control.Menubar.js:886
 msgid "Last modification"
-msgstr ""
+msgstr "آخرین اصلاح"
 
 #: src/control/Control.Menubar.js:369 src/control/Control.Menubar.js:381
 #: src/control/Control.Menubar.js:968
 #: src/control/Control.NotebookbarBuilder.js:609
 #: src/control/Control.NotebookbarBuilder.js:679
 msgid "ODF presentation (.odp)"
-msgstr ""
+msgstr "ارائه ODF (odp.)"
 
 #: src/control/Control.Menubar.js:370 src/control/Control.Menubar.js:382
 #: src/control/Control.Menubar.js:969
@@ -931,7 +932,7 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:687
 #: src/control/Control.NotebookbarImpress.js:285
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr ""
+msgstr "ارائه پاورپوینت 2003 (ppt.)"
 
 #: src/control/Control.Menubar.js:371 src/control/Control.Menubar.js:383
 #: src/control/Control.Menubar.js:970
@@ -939,25 +940,25 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:683
 #: src/control/Control.NotebookbarImpress.js:291
 msgid "PowerPoint Presentation (.pptx)"
-msgstr ""
+msgstr "ارائه پاورپوینت (pptx.)"
 
 #: src/control/Control.Menubar.js:376 src/control/Control.Menubar.js:522
 msgid "Save Comments"
-msgstr ""
+msgstr "ذخیره نظرات"
 
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarImpress.js:418
 msgid "Master View"
-msgstr ""
+msgstr "نمای اصلی"
 
 #: src/control/Control.Menubar.js:492 src/control/Control.Menubar.js:1005
 #: src/control/Control.PresentationBar.js:64
 msgid "Fullscreen presentation"
-msgstr ""
+msgstr "ارائه تمام صفحه"
 
 #: src/control/Control.Menubar.js:493
 msgid "Present current slide"
-msgstr ""
+msgstr "ارائه اسلاید فعلی"
 
 #: src/control/Control.Menubar.js:528 src/control/Control.Menubar.js:971
 #: src/control/Control.Menubar.js:1027
@@ -965,14 +966,14 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:192
 #: src/control/Control.NotebookbarImpress.js:272
 msgid "ODF Drawing (.odg)"
-msgstr ""
+msgstr "طراحی ODF (odg.)"
 
 #: src/control/Control.Menubar.js:643 src/control/Control.Menubar.js:654
 #: src/control/Control.Menubar.js:1080
 #: src/control/Control.NotebookbarBuilder.js:585
 #: src/control/Control.NotebookbarBuilder.js:664
 msgid "ODF spreadsheet (.ods)"
-msgstr ""
+msgstr "صفحه گسترده ODF (ods.)"
 
 #: src/control/Control.Menubar.js:644 src/control/Control.Menubar.js:655
 #: src/control/Control.Menubar.js:1081
@@ -980,7 +981,7 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:672
 #: src/control/Control.NotebookbarCalc.js:228
 msgid "Excel 2003 Spreadsheet (.xls)"
-msgstr ""
+msgstr "صفحه گسترده Excel 2003 (.xls)"
 
 #: src/control/Control.Menubar.js:645 src/control/Control.Menubar.js:656
 #: src/control/Control.Menubar.js:1082
@@ -988,215 +989,215 @@ msgstr ""
 #: src/control/Control.NotebookbarBuilder.js:668
 #: src/control/Control.NotebookbarCalc.js:234
 msgid "Excel Spreadsheet (.xlsx)"
-msgstr ""
+msgstr "صفحه گسترده اکسل (xlsx.)"
 
 #: src/control/Control.Menubar.js:657
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "فایل CSV (csv.)"
 
 #: src/control/Control.Menubar.js:890 src/control/Control.Menubar.js:953
 #: src/control/Control.Menubar.js:1013 src/control/Control.Menubar.js:1063
 #: src/control/Control.StatusBar.js:197 src/control/Control.Zotero.js:211
 msgid "Search"
-msgstr ""
+msgstr "جستجو کردن"
 
 #: src/control/Control.Menubar.js:940
 msgid "Page Setup"
-msgstr ""
+msgstr "تنظیمات صفحه"
 
 #: src/control/Control.Menubar.js:1074
 msgid "Define print area"
-msgstr ""
+msgstr "ناحیه چاپ را تعریف کنید"
 
 #: src/control/Control.Menubar.js:1075
 msgid "Remove print area"
-msgstr ""
+msgstr "ناحیه چاپ را بردارید"
 
 #: src/control/Control.Menubar.js:1348 src/control/Control.StatusBar.js:558
 msgid "Reset to Default Language"
-msgstr ""
+msgstr "بازنشانی به زبان پیش فرض"
 
 #: src/control/Control.Menubar.js:1379 src/control/Control.Menubar.js:1380
 #: src/control/Control.Menubar.js:1381 src/control/Control.StatusBar.js:580
 #: src/control/Control.Toolbar.js:241 src/control/Control.Toolbar.js:269
 msgid "More..."
-msgstr ""
+msgstr "بیشتر..."
 
 #: src/control/Control.Menubar.js:1682
 msgid "Use Compact view"
-msgstr ""
+msgstr "از نمای فشرده استفاده کنید"
 
 #: src/control/Control.Menubar.js:1684
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "از نمای Tabbed استفاده کنید"
 
 #: src/control/Control.Menubar.js:1735 src/control/Control.Menubar.js:1748
 msgid "Read-only mode"
-msgstr ""
+msgstr "حالت فقط خواندنی"
 
 #: src/control/Control.Menubar.js:1769
 msgid "Insert Shape"
-msgstr ""
+msgstr "درج شکل"
 
 #: src/control/Control.Menubar.js:1978
 msgid "file type icon"
-msgstr ""
+msgstr "نماد نوع فایل"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:130
 #: src/control/Control.MobileBottomBar.js:197
 msgid "Show the search bar"
-msgstr ""
+msgstr "نوار جستجو را نشان دهید"
 
 #: src/control/Control.MobileBottomBar.js:37
 #: src/control/Control.TopToolbar.js:159
 msgid "Borders"
-msgstr ""
+msgstr "مرز ها"
 
 #: src/control/Control.MobileTopBar.js:31 src/control/Control.StatusBar.js:462
 msgid "Read-only"
-msgstr ""
+msgstr "فقط خواندنی"
 
 #: src/control/Control.MobileWizardBuilder.js:511
 msgid "Background Color"
-msgstr ""
+msgstr "رنگ پس زمینه"
 
 #: src/control/Control.MobileWizardBuilder.js:513
 msgid "Gradient Start"
-msgstr ""
+msgstr "شروع گرادیان"
 
 #: src/control/Control.MobileWizardBuilder.js:515
 msgid "Gradient End"
-msgstr ""
+msgstr "پایان گرادیان"
 
 #: src/control/Control.NotebookbarBuilder.js:344
 msgid "Tap to expand"
-msgstr ""
+msgstr "برای بزرگ کردن ضربه بزنید"
 
 #: src/control/Control.NotebookbarBuilder.js:345
 #: src/control/Control.NotebookbarBuilder.js:387
 msgid "Tap to collapse"
-msgstr ""
+msgstr "برای جمع کردن ضربه بزنید"
 
 #: src/control/Control.NotebookbarBuilder.js:577
 msgid "PDF Document (.pdf) as..."
-msgstr ""
+msgstr "سند PDF (.pdf) به عنوان..."
 
 #: src/control/Control.NotebookbarBuilder.js:597
 #: src/control/Control.NotebookbarCalc.js:215
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "فایل CSV (csv.)"
 
 #: src/control/Control.NotebookbarBuilder.js:909
 #: src/control/Control.TopToolbar.js:226
 msgid "Insert Local Image"
-msgstr ""
+msgstr "درج تصویر محلی"
 
 #: src/control/Control.NotebookbarBuilder.js:1000
 msgid "Very Tight"
-msgstr ""
+msgstr "خیلی تنگ"
 
 #: src/control/Control.NotebookbarBuilder.js:1001
 msgid "Tight"
-msgstr ""
+msgstr "تنگ"
 
 #: src/control/Control.NotebookbarBuilder.js:1002
 msgid "Normal"
-msgstr ""
+msgstr "طبیعی"
 
 #: src/control/Control.NotebookbarBuilder.js:1003
 msgid "Loose"
-msgstr ""
+msgstr "سست"
 
 #: src/control/Control.NotebookbarBuilder.js:1004
 msgid "Very Loose"
-msgstr ""
+msgstr "خیلی سست"
 
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarDraw.js:49
 #: src/control/Control.NotebookbarImpress.js:61
 #: src/control/Control.NotebookbarWriter.js:12
 msgid "~File"
-msgstr ""
+msgstr "~پرونده"
 
 #: src/control/Control.NotebookbarCalc.js:17
 #: src/control/Control.NotebookbarDraw.js:54
 #: src/control/Control.NotebookbarImpress.js:66
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "Hom~e"
-msgstr ""
+msgstr "صفحه اصلی"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:60
 #: src/control/Control.NotebookbarImpress.js:72
 #: src/control/Control.NotebookbarWriter.js:23
 msgid "~Insert"
-msgstr ""
+msgstr "~ درج کنید"
 
 #: src/control/Control.NotebookbarCalc.js:28
 #: src/control/Control.NotebookbarDraw.js:65
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:28
 msgid "~Layout"
-msgstr ""
+msgstr "~طرح بندی"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
-msgstr ""
+msgstr "~ داده ها"
 
 #: src/control/Control.NotebookbarCalc.js:38
 #: src/control/Control.NotebookbarDraw.js:70
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:38
 msgid "~Review"
-msgstr ""
+msgstr "~ بررسی"
 
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarDraw.js:75
 #: src/control/Control.NotebookbarImpress.js:87
 #: src/control/Control.NotebookbarWriter.js:43
 msgid "F~ormat"
-msgstr ""
+msgstr "قالب"
 
 #: src/control/Control.NotebookbarCalc.js:48
 #: src/control/Control.NotebookbarDraw.js:86
 #: src/control/Control.NotebookbarWriter.js:59
 msgid "Dra~w"
-msgstr ""
+msgstr "بکشید"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:92
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:65
 msgid "~View"
-msgstr ""
+msgstr "~مشاهده"
 
 #: src/control/Control.NotebookbarCalc.js:59
 #: src/control/Control.NotebookbarDraw.js:97
 #: src/control/Control.NotebookbarImpress.js:115
 #: src/control/Control.NotebookbarWriter.js:70
 msgid "~Help"
-msgstr ""
+msgstr "~کمک"
 
 #: src/control/Control.NotebookbarCalc.js:114
 #: src/control/Control.NotebookbarImpress.js:171
 #: src/control/Control.NotebookbarWriter.js:127
 msgid "Save As"
-msgstr ""
+msgstr "ذخیره به عنوان"
 
 #: src/control/Control.NotebookbarCalc.js:130
 #: src/control/Control.NotebookbarDraw.js:153
 #: src/control/Control.NotebookbarImpress.js:187
 #: src/control/Control.NotebookbarWriter.js:143
 msgid "Export As"
-msgstr ""
+msgstr "صادرات به عنوان"
 
 #: src/control/Control.NotebookbarCalc.js:143
 #: src/control/Control.NotebookbarDraw.js:163
 #: src/control/Control.NotebookbarImpress.js:200
 #: src/control/Control.NotebookbarWriter.js:155
 msgid "Share"
-msgstr ""
+msgstr "اشتراک گذاری"
 
 #: src/control/Control.NotebookbarCalc.js:151
 #: src/control/Control.NotebookbarDraw.js:171
@@ -1209,7 +1210,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:240
 #: src/control/Control.NotebookbarWriter.js:195
 msgid "Download"
-msgstr ""
+msgstr "دانلود"
 
 #: src/control/Control.NotebookbarCalc.js:209
 msgid "ODF Spreadsheet (.ods)"
@@ -1221,122 +1222,122 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:555
 msgid "Number"
-msgstr ""
+msgstr "عدد"
 
 #: src/control/Control.NotebookbarCalc.js:556
 msgid "Percent"
-msgstr ""
+msgstr "درصد"
 
 #: src/control/Control.NotebookbarCalc.js:557
 msgid "Currency"
-msgstr ""
+msgstr "واحد پول"
 
 #: src/control/Control.NotebookbarCalc.js:558
 #: src/control/Control.NotebookbarWriter.js:1042
 #: src/control/Control.Zotero.js:1073 src/control/Control.Zotero.js:1509
 msgid "Date"
-msgstr ""
+msgstr "تاریخ"
 
 #: src/control/Control.NotebookbarCalc.js:559
 msgid "Time"
-msgstr ""
+msgstr "زمان"
 
 #: src/control/Control.NotebookbarCalc.js:560
 msgid "Scientific"
-msgstr ""
+msgstr "علمی"
 
 #: src/control/Control.NotebookbarCalc.js:561
 msgid "Fraction"
-msgstr ""
+msgstr "کسر"
 
 #: src/control/Control.NotebookbarCalc.js:562
 msgid "Boolean Value"
-msgstr ""
+msgstr "ارزش بولی"
 
 #: src/control/Control.NotebookbarCalc.js:563 src/control/Toolbar.js:728
 msgid "Text"
-msgstr ""
+msgstr "متن"
 
 #: src/control/Control.NotebookbarCalc.js:697
 msgid "Default"
-msgstr ""
+msgstr "پیش فرض"
 
 #: src/control/Control.NotebookbarCalc.js:703
 msgid "Heading 1"
-msgstr ""
+msgstr "سرفصل 1"
 
 #: src/control/Control.NotebookbarCalc.js:709
 msgid "Heading 2"
-msgstr ""
+msgstr "سرفصل 2"
 
 #: src/control/Control.NotebookbarCalc.js:721
 msgid "Good"
-msgstr ""
+msgstr "خوب"
 
 #: src/control/Control.NotebookbarCalc.js:727
 msgid "Neutral"
-msgstr ""
+msgstr "خنثی"
 
 #: src/control/Control.NotebookbarCalc.js:733
 msgid "Bad"
-msgstr ""
+msgstr "بد"
 
 #: src/control/Control.NotebookbarCalc.js:801
 msgid "Row Height"
-msgstr ""
+msgstr "ارتفاع سطر"
 
 #: src/control/Control.NotebookbarCalc.js:807
 msgid "Column Width"
-msgstr ""
+msgstr "عرض ستون"
 
 #: src/control/Control.NotebookbarCalc.js:818
 msgid "Insert Rows Above"
-msgstr ""
+msgstr "ردیف های بالا را درج کنید"
 
 #: src/control/Control.NotebookbarCalc.js:823
 msgid "Insert Columns Before"
-msgstr ""
+msgstr "درج ستون ها قبل"
 
 #: src/control/Control.NotebookbarCalc.js:828
 msgid "Delete Rows"
-msgstr ""
+msgstr "ردیف ها را حذف کنید"
 
 #: src/control/Control.NotebookbarCalc.js:838
 msgid "Insert Rows Below"
-msgstr ""
+msgstr "ردیف های زیر را درج کنید"
 
 #: src/control/Control.NotebookbarCalc.js:843
 msgid "Insert Columns After"
-msgstr ""
+msgstr "درج ستون ها بعد"
 
 #: src/control/Control.NotebookbarCalc.js:848
 msgid "Delete Columns"
-msgstr ""
+msgstr "حذف ستون ها"
 
 #: src/control/Control.NotebookbarCalc.js:992
 #: src/control/Control.NotebookbarDraw.js:248
 #: src/control/Control.NotebookbarImpress.js:355
 #: src/control/Control.NotebookbarWriter.js:1062
 msgid "Read mode"
-msgstr ""
+msgstr "تبلت: نمای زبانه‌ای: به کاربر اجازه می‌دهد به حالت فقط خواندن برگردد"
 
 #: src/control/Control.NotebookbarCalc.js:1038
 #: src/control/Control.NotebookbarDraw.js:294
 #: src/control/Control.NotebookbarImpress.js:407
 #: src/control/Control.NotebookbarWriter.js:1113
 msgid "Compact view"
-msgstr ""
+msgstr "نمای فشرده"
 
 #: src/control/Control.NotebookbarCalc.js:1044
 #: src/control/Control.NotebookbarDraw.js:300
 #: src/control/Control.NotebookbarImpress.js:413
 #: src/control/Control.NotebookbarWriter.js:1136
 msgid "Status Bar"
-msgstr ""
+msgstr "نوار وضعیت"
 
 #: src/control/Control.NotebookbarCalc.js:1111
 msgid "Sparkline"
-msgstr ""
+msgstr "خط جرقه"
 
 #: src/control/Control.NotebookbarCalc.js:1222
 #: src/control/Control.NotebookbarCalc.js:1874
@@ -1348,21 +1349,21 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:934
 #: src/control/Control.NotebookbarWriter.js:2337
 msgid "Shapes"
-msgstr ""
+msgstr "شکل ها"
 
 #: src/control/Control.NotebookbarDraw.js:80
 #: src/control/Control.NotebookbarImpress.js:92
 #: src/control/Control.NotebookbarWriter.js:53
 msgid "~Table"
-msgstr ""
+msgstr "جدول"
 
 #: src/control/Control.NotebookbarDraw.js:198
 msgid "Image (.png)"
-msgstr ""
+msgstr "تصویر (png.)"
 
 #: src/control/Control.NotebookbarImpress.js:104
 msgid "~Master"
-msgstr ""
+msgstr "ارشد"
 
 #: src/control/Control.NotebookbarImpress.js:266
 msgid "ODF Presentation (.odp)"
@@ -1371,119 +1372,119 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:361
 #: src/control/Control.NotebookbarImpress.js:839
 msgid "Presentation"
-msgstr ""
+msgstr "ارائه"
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
-msgstr ""
+msgstr "ارجاعات"
 
 #: src/control/Control.NotebookbarWriter.js:48
 msgid "For~m"
-msgstr ""
+msgstr "برای ~ متر"
 
 #: src/control/Control.NotebookbarWriter.js:205
 msgid "ODF Text Document (.odt)"
-msgstr ""
+msgstr "سند متنی ODF (odt.)"
 
 #: src/control/Control.NotebookbarWriter.js:248
 msgid "EPUB Document (.epub)"
-msgstr ""
+msgstr "سند EPUB (epub.)"
 
 #: src/control/Control.NotebookbarWriter.js:1022
 msgid "Rich Text"
-msgstr ""
+msgstr "متن غنی"
 
 #: src/control/Control.NotebookbarWriter.js:1027
 msgid "Checkbox"
-msgstr ""
+msgstr "کادر بررسی"
 
 #: src/control/Control.NotebookbarWriter.js:1032
 msgid "Dropdown"
-msgstr ""
+msgstr "رها کردن"
 
 #: src/control/Control.NotebookbarWriter.js:1037
 msgid "Picture"
-msgstr ""
+msgstr "تصویر"
 
 #: src/control/Control.NotebookbarWriter.js:1125
 msgid "Ruler"
-msgstr ""
+msgstr "خط كش"
 
 #: src/control/Control.PartsPreview.js:185
 msgid "preview of page "
-msgstr ""
+msgstr "پیش نمایش صفحه "
 
 #: src/control/Control.PartsPreview.js:237
 msgid "Paste Slide"
-msgstr ""
+msgstr "چسباندن اسلاید"
 
 #: src/control/Control.PartsPreview.js:264
 msgid "Copy"
-msgstr ""
+msgstr "کپی"
 
 #: src/control/Control.PartsPreview.js:273
 msgid "Paste"
-msgstr ""
+msgstr "چسباندن"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
-msgstr ""
+msgstr "حاشیه‌نویسی‌ها را به بالا پیمایش کنید"
 
 #: src/control/Control.Scroll.Annotation.js:12
 msgid "Scroll down annotations"
-msgstr ""
+msgstr "حاشیه نویسی ها را به پایین اسکرول کنید"
 
 #: src/control/Control.SearchBar.js:20
 msgid "Hide the search bar"
-msgstr ""
+msgstr "نوار جستجو را پنهان کنید"
 
 #: src/control/Control.SearchBar.js:31
 msgid "Clear the search field"
-msgstr ""
+msgstr "قسمت جستجو را پاک کنید"
 
 #: src/control/Control.SheetsBar.js:27
 msgid "Scroll to the first sheet"
-msgstr ""
+msgstr "به صفحه اول بروید"
 
 #: src/control/Control.SheetsBar.js:28
 msgid "Scroll left"
-msgstr ""
+msgstr "به سمت چپ حرکت کنید"
 
 #: src/control/Control.SheetsBar.js:29
 msgid "Scroll right"
-msgstr ""
+msgstr "به سمت راست پیمایش کنید"
 
 #: src/control/Control.SheetsBar.js:30
 msgid "Scroll to the last sheet"
-msgstr ""
+msgstr "به آخرین برگه بروید"
 
 #: src/control/Control.SheetsBar.js:31
 msgid "Insert sheet"
-msgstr ""
+msgstr "درج ورق"
 
 #: src/control/Control.StatusBar.js:203
 msgid "Cancel the search"
-msgstr ""
+msgstr "جستجو را لغو کنید"
 
 #: src/control/Control.StatusBar.js:303
 msgid "Number of Sheets"
-msgstr ""
+msgstr "تعداد برگه ها"
 
 #: src/control/Control.StatusBar.js:308
 msgid "Selected range of cells"
-msgstr ""
+msgstr "محدوده انتخاب شده از سلول ها"
 
 #: src/control/Control.StatusBar.js:313 src/control/Control.StatusBar.js:366
 msgid "Entering text mode"
-msgstr ""
+msgstr "ورود به حالت متن"
 
 #: src/control/Control.StatusBar.js:322 src/control/Control.StatusBar.js:371
 msgid "Selection Mode"
-msgstr ""
+msgstr "حالت انتخاب"
 
 #: src/control/Control.StatusBar.js:327
 msgid "Choice of functions"
-msgstr ""
+msgstr "انتخاب توابع"
 
 #: src/control/Control.StatusBar.js:332
 msgid "CountA"
@@ -1491,299 +1492,307 @@ msgstr ""
 
 #: src/control/Control.StatusBar.js:334
 msgid "Maximum"
-msgstr ""
+msgstr "بیشترین"
 
 #: src/control/Control.StatusBar.js:335
 msgid "Minimum"
-msgstr ""
+msgstr "کمترین"
 
 #: src/control/Control.StatusBar.js:337
 msgid "Selection count"
-msgstr ""
+msgstr "شمارش انتخاب"
 
 #: src/control/Control.StatusBar.js:356 src/control/Control.StatusBar.js:412
 msgid "Number of Pages"
-msgstr ""
+msgstr "تعدادی از صفحات"
 
 #: src/control/Control.StatusBar.js:361
 msgid "Word Counter"
-msgstr ""
+msgstr "کلمه شمار"
 
 #: src/control/Control.StatusBar.js:392
 msgid "Number of Slides"
-msgstr ""
+msgstr "تعداد اسلایدها"
 
 #: src/control/Control.StatusBar.js:462 src/control/Control.StatusBar.js:463
 msgid "Permission Mode"
-msgstr ""
+msgstr "حالت مجوز"
 
 #: src/control/Control.StatusBar.js:463
 msgid "Edit"
-msgstr ""
+msgstr "ویرایش کنید"
 
 #: src/control/Control.StatusBar.js:501
 msgid "Select multiple cells"
-msgstr ""
+msgstr "چندین سلول را انتخاب کنید"
 
 #: src/control/Control.StatusBar.js:504
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "حالت درج: غیر فعال"
 
 #: src/control/Control.StatusBar.js:517
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "حالت انتخاب: غیر فعال"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
-msgstr ""
+msgstr "قبل از این برگه را وارد کنید"
 
 #: src/control/Control.Tabs.js:57
 msgid "Insert sheet after this"
-msgstr ""
+msgstr "بعد از این برگه را وارد کنید"
 
 #: src/control/Control.Tabs.js:81
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "برگه را به چپ منتقل کنید"
 
 #: src/control/Control.Tabs.js:86
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "برگه را به راست منتقل کنید"
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "برگه کپی..."
 
 #: src/control/Control.Tabs.js:301
 msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr ""
+msgstr "آیا مطمئن هستید که می خواهید برگه %sheet% را حذف کنید؟"
 
 #: src/control/Control.Tabs.js:312
 msgid "Rename sheet"
-msgstr ""
+msgstr "تغییر نام برگه"
 
 #: src/control/Control.Tabs.js:312
 msgid "Enter new sheet name"
-msgstr ""
+msgstr "نام برگه جدید را وارد کنید"
 
 #: src/control/Control.Toolbar.js:965
 msgid "Previous slide"
-msgstr ""
+msgstr "اسلاید قبلی"
 
 #: src/control/Control.Toolbar.js:966
 msgid "Next slide"
-msgstr ""
+msgstr "اسلاید بعدی"
 
 #: src/control/Control.Toolbar.js:1027
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to "
 "resolve"
 msgstr ""
+"با چند کاربر تعارض واگرد/از نو انجام دهید. لطفا از تعمیر سند برای حل استفاده "
+"کنید"
 
 #: src/control/Control.TopToolbar.js:105
 msgid "Default Style"
-msgstr ""
+msgstr "سبک پیش فرض"
 
 #: src/control/Control.TopToolbar.js:222
 msgid "Insert table"
-msgstr ""
+msgstr "درج جدول"
 
 #: src/control/Control.TopToolbar.js:230
 msgid "Insert shapes"
-msgstr ""
+msgstr "درج اشکال"
 
 #: src/control/Control.TopToolbar.js:232
 msgid "Insert connectors"
-msgstr ""
+msgstr "اتصال دهنده ها را وارد کنید"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
-msgstr ""
+msgstr "% کاربر ملحق شده است"
 
 #: src/control/Control.UserList.js:12
 msgid "%user has left"
-msgstr ""
+msgstr "% کاربر ترک کرده است"
 
 #: src/control/Control.UserList.js:35
 msgid "%n users"
-msgstr ""
+msgstr "%n کاربر"
 
 #: src/control/Control.UserList.js:36
 msgid "1 user"
-msgstr ""
+msgstr "1 کاربر"
 
 #: src/control/Control.UserList.js:37
 msgid "0 users"
-msgstr ""
+msgstr "0 کاربر"
 
 #: src/control/Control.UserList.js:188
 msgid "Following"
-msgstr ""
+msgstr "دنبال کردن"
 
 #: src/control/Control.UserList.js:216 src/control/Control.UserList.js:382
 msgid "Always follow the editor"
-msgstr ""
+msgstr "همیشه ویرایشگر را دنبال کنید"
 
 #: src/control/Control.UserList.js:330
 msgid "Readonly"
-msgstr ""
+msgstr "فقط خواندنی"
 
 #: src/control/Control.UserList.js:385
 msgid "Current"
-msgstr ""
+msgstr "جاری"
 
 #: src/control/Control.Zotero.js:129
 msgid "Zotero API key is not configured"
-msgstr ""
+msgstr "کلید Zotero API پیکربندی نشده است"
 
 #: src/control/Control.Zotero.js:153
 msgid "Zotero API key is incorrect"
-msgstr ""
+msgstr "کلید Zotero API نادرست است"
 
 #: src/control/Control.Zotero.js:180
 msgid "Zotero Warning"
-msgstr ""
+msgstr "هشدار زوترو"
 
 #: src/control/Control.Zotero.js:181
 msgid ""
 "The document contains some citations which may be unreachable through web "
 "API. It may cause some problems while editing citations or bibliography."
 msgstr ""
+"این سند حاوی چند نقل قول است که ممکن است از طریق وب API قابل دسترسی نباشد. "
+"ممکن است در هنگام ویرایش نقل قول ها یا کتابشناسی مشکلاتی ایجاد کند."
 
 #: src/control/Control.Zotero.js:237 src/core/Socket.js:1069
 msgid "Loading..."
-msgstr ""
+msgstr "بارگذاری..."
 
 #: src/control/Control.Zotero.js:255
 msgid "Language:"
-msgstr ""
+msgstr "زبان:"
 
 #: src/control/Control.Zotero.js:270
 msgid "Store as:"
-msgstr ""
+msgstr "ذخیره به عنوان:"
 
 #: src/control/Control.Zotero.js:276 src/control/Control.Zotero.js:400
 msgid "Fields"
-msgstr ""
+msgstr "زمینه ها"
 
 #: src/control/Control.Zotero.js:277 src/control/Control.Zotero.js:400
 msgid "Bookmarks"
-msgstr ""
+msgstr "نشانک ها"
 
 #: src/control/Control.Zotero.js:398
 msgid "Footnotes"
-msgstr ""
+msgstr "پانویسها و منابع"
 
 #: src/control/Control.Zotero.js:398
 msgid "Endnotes"
-msgstr ""
+msgstr "یادداشت های پایانی"
 
 #: src/control/Control.Zotero.js:462
 msgid "My Publications"
-msgstr ""
+msgstr "انتشارات من"
 
 #: src/control/Control.Zotero.js:468 src/control/Control.Zotero.js:693
 msgid "My Library"
-msgstr ""
+msgstr "کتابخانه من"
 
 #: src/control/Control.Zotero.js:469
 msgid "Group Libraries"
-msgstr ""
+msgstr "Group Libraries"
 
 #: src/control/Control.Zotero.js:709
 msgid "Failed to load groups"
-msgstr ""
+msgstr "بارگیری گروه ها انجام نشد"
 
 #: src/control/Control.Zotero.js:727 src/control/Control.Zotero.js:1045
 msgid "Failed to load collections"
-msgstr ""
+msgstr "بارگیری مجموعه ها انجام نشد"
 
 #: src/control/Control.Zotero.js:741
 msgid "Citation Style"
-msgstr ""
+msgstr "سبک استناد"
 
 #: src/control/Control.Zotero.js:746
 msgid "Styles"
-msgstr ""
+msgstr "سبک ها"
 
 #: src/control/Control.Zotero.js:746
 msgid "An error occurred while fetching style list"
-msgstr ""
+msgstr "هنگام واکشی فهرست سبک خطایی روی داد"
 
 #: src/control/Control.Zotero.js:754
 msgid "Failed to load styles"
-msgstr ""
+msgstr "سبک‌ها بارگیری نشد"
 
 #: src/control/Control.Zotero.js:1073 src/control/Control.Zotero.js:1509
 msgid "Title"
-msgstr ""
+msgstr "عنوان"
 
 #: src/control/Control.Zotero.js:1073 src/control/Control.Zotero.js:1509
 msgid "Creator(s)"
-msgstr ""
+msgstr "سازندگان"
 
 #: src/control/Control.Zotero.js:1073 src/control/Control.Zotero.js:1509
 msgid "Your library is empty"
-msgstr ""
+msgstr "کتابخانه شما خالی است"
 
 #: src/control/Control.Zotero.js:1084
 msgid "Failed to load items"
-msgstr ""
+msgstr "موارد بارگیری نشد"
 
 #: src/control/Control.Zotero.js:1134
 msgid "Citation warning"
-msgstr ""
+msgstr "هشدار استناد"
 
 #: src/control/Control.Zotero.js:1135
 msgid ""
 "Once citations are entered their storage and display type can not be "
 "changed."
 msgstr ""
+"هنگامی که نقل قول ها وارد می شوند ذخیره سازی و نوع نمایش آنها را نمی توان "
+"تغییر داد."
 
 #: src/control/Control.Zotero.js:1136 src/control/Control.Zotero.js:1438
 msgid "Confirm"
-msgstr ""
+msgstr "تایید"
 
 #: src/control/Control.Zotero.js:1242
 msgid "Add Note"
-msgstr ""
+msgstr "یادداشت را اضافه کنید"
 
 #: src/control/Control.Zotero.js:1245
 msgid "Notes"
-msgstr ""
+msgstr "یادداشت"
 
 #: src/control/Control.Zotero.js:1245
 msgid "An error occurred while fetching notes"
-msgstr ""
+msgstr "هنگام واکشی یادداشت ها خطایی روی داد"
 
 #: src/control/Control.Zotero.js:1376
 msgid "Updated citations"
-msgstr ""
+msgstr "نقل قول های به روز شده"
 
 #: src/control/Control.Zotero.js:1378
 msgid "Citations update failed"
-msgstr ""
+msgstr "به روز رسانی نقل قول ها انجام نشد"
 
 #: src/control/Control.Zotero.js:1382
 msgid "Updating citations"
-msgstr ""
+msgstr "به روز رسانی نقل قول ها"
 
 #: src/control/Control.Zotero.js:1437
 msgid ""
 "Unlinking citations will prevent Collabora Online from updating citations "
 "and bibliography in this document."
 msgstr ""
+"لغو پیوند نقل‌قول‌ها باعث می‌شود که Collaboran Online نتواند نقل‌قول‌ها و "
+"کتاب‌شناسی را در این سند به‌روزرسانی کند."
 
 #: src/control/Permission.js:72
 msgid "The document could not be locked, and is opened in read-only mode."
-msgstr ""
+msgstr "سند را نمی توان قفل کرد و در حالت فقط خواندنی باز می شود."
 
 #: src/control/Permission.js:74 src/control/Permission.js:84
 msgid "Server returned this reason:"
-msgstr ""
+msgstr "سرور این دلیل را برگرداند:"
 
 #: src/control/Permission.js:82
 msgid "The document could not be locked."
-msgstr ""
+msgstr "سند را نمی توان قفل کرد."
 
 #: src/control/Permission.js:136
 msgid "Enter a file name"
@@ -1975,97 +1984,104 @@ msgstr ""
 
 #: src/core/Socket.js:939
 msgid "Document requires password to view."
-msgstr ""
+msgstr "سند برای مشاهده نیاز به رمز عبور دارد."
 
 #: src/core/Socket.js:942
 msgid "Document requires password to modify."
-msgstr ""
+msgstr "سند برای تغییر به رمز عبور نیاز دارد."
 
 #: src/core/Socket.js:944
 msgid "Hit Cancel to open in view-only mode."
-msgstr ""
+msgstr "روی لغو  کلیک کنید تا در حالت فقط مشاهده باز شود."
 
 #: src/core/Socket.js:948
 msgid "Wrong password provided. Please try again."
-msgstr ""
+msgstr "رمز عبور اشتباه ارائه شده است. لطفا دوباره تلاش کنید."
 
 #: src/core/Socket.js:986
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "فقط صاحب سند می تواند رمز عبور را تغییر دهد."
 
 #: src/core/Socket.js:1017 src/core/Socket.js:1022
 msgid "Missing Fonts"
-msgstr ""
+msgstr "فونت های گم شده"
 
 #: src/core/Socket.js:1059
 msgid "Someone"
-msgstr ""
+msgstr "کسی"
 
 #: src/core/Socket.js:1060
 msgid "%userName saved this document as %fileName. Do you want to join?"
 msgstr ""
+"%userName این سند را به عنوان %fileName ذخیره کرد. آیا می خواهید بپیوندید؟"
 
 #: src/core/Socket.js:1069
 msgid "Connecting..."
-msgstr ""
+msgstr "برقراری ارتباط..."
 
 #: src/core/Socket.js:1086
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "سند در حال تغییر نام است و به زودی بارگیری مجدد خواهد شد"
 
 #: src/core/Socket.js:1190
 msgid "Exported to storage"
-msgstr ""
+msgstr "به انبار صادر شد"
 
 #: src/core/Socket.js:1190
 msgid "Successfully exported: "
-msgstr ""
+msgstr "با موفقیت صادر شد: "
 
 #: src/core/Socket.js:1218
 msgid "Discard"
-msgstr ""
+msgstr "دور انداختن"
 
 #: src/core/Socket.js:1219
 msgid "Overwrite"
-msgstr ""
+msgstr "زیاد نوشتن"
 
 #: src/core/Socket.js:1230
 msgid "Save to new file"
-msgstr ""
+msgstr "ذخیره در فایل جدید"
 
 #: src/core/Socket.js:1240
 msgid "Document has been changed"
-msgstr ""
+msgstr "سند تغییر کرده است"
 
 #: src/core/Socket.js:1241
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
+"سند در حافظه تغییر کرده است. دوست دارید با تغییرات ذخیره نشده خود چه کار "
+"کنید؟"
 
 #: src/core/Socket.js:1541
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
+"خب، این شرم آور است، ما نمی توانیم به سند شما متصل شویم. لطفا دوباره تلاش "
+"کنید."
 
 #: src/core/Socket.js:1558
 msgid "Reconnecting..."
-msgstr ""
+msgstr "اتصال مجدد..."
 
 #: src/core/Socket.js:1568
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "سرور قطع شده است."
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
-msgstr ""
+msgstr "هیچ فضای دیسکی روی سرور باقی نمانده است."
 
 #: src/errormessages.js:14
 msgid ""
 "The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
+"URL میزبان خالی است. سرور coolwsd احتمالاً به درستی پیکربندی نشده است، لطفاً "
+"با مدیر تماس بگیرید."
 
 #: src/errormessages.js:15
 msgid ""
@@ -2074,38 +2090,50 @@ msgid ""
 "when more than {docs} documents or {connections} connections are in use "
 "concurrently."
 msgstr ""
+"این یک نسخه پشتیبانی نشده از {productname} است. برای جلوگیری از این تصور که "
+"برای استقرار در شرکت‌ها مناسب است، این پیام زمانی ظاهر می‌شود که بیش از "
+"{docs} سند یا اتصالات {connections} به طور همزمان استفاده می‌شود."
 
 #: src/errormessages.js:16
 msgid "More information and support"
-msgstr ""
+msgstr "اطلاعات بیشتر و پشتیبانی"
 
 #: src/errormessages.js:17
 msgid ""
 "This service is limited to %0 documents, and %1 connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
+"این سرویس به % 0 سند و % 1 اتصالات در مجموع توسط سرپرست محدود شده است. به "
+"این حد رسیده است. لطفاً بعداً دوباره امتحان کنید."
 
 #: src/errormessages.js:18
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
+"سرویس در دسترس نیست لطفاً بعداً دوباره امتحان کنید و اگر مشکل ادامه داشت به "
+"سرپرست خود گزارش دهید."
 
 #: src/errormessages.js:19
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
+"میزبان WOPI غیرمجاز. لطفاً بعداً دوباره امتحان کنید و اگر مشکل ادامه داشت به "
+"سرپرست خود گزارش دهید."
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
 msgstr ""
+"پارامتر WOPISrc اشتباه است یا وجود ندارد، لطفاً با پشتیبانی تماس بگیرید."
 
 #: src/errormessages.js:21
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue. You might need to login again."
 msgstr ""
+"جلسه شما در %time منقضی می شود. لطفاً کار خود را ذخیره کنید و برای ادامه "
+"جلسه (یا صفحه وب) را بازخوانی کنید. ممکن است لازم باشد دوباره وارد شوید."
 
 #: src/errormessages.js:22
 msgid ""
@@ -2113,75 +2141,90 @@ msgid ""
 "saved. Please refresh the session (or webpage) to continue. You might need "
 "to login again."
 msgstr ""
+"جلسه شما تمام شده است. ممکن است تغییرات بیشتر در سند ذخیره نشود. لطفاً برای "
+"ادامه جلسه (یا صفحه وب) را بازخوانی کنید. ممکن است لازم باشد دوباره وارد "
+"شوید."
 
 #: src/errormessages.js:23
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
+"سند بارگیری نشد. لطفاً مطمئن شوید که نوع فایل پشتیبانی می‌شود و خراب نیست و "
+"دوباره امتحان کنید."
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
-msgstr ""
+msgstr "پیوند نامعتبر: '%url'"
 
 #: src/errormessages.js:25
 msgid ""
 "You are leaving the document. The following web page will open in a new "
 "tab: "
-msgstr ""
+msgstr "شما در حال ترک سند هستید. صفحه وب زیر در یک تب جدید باز می شود: "
 
 #: src/errormessages.js:26
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
 msgstr ""
+"سند بارگیری نشد. این سند یا نادرست است یا منابع بیشتری از حد مجاز مصرف می "
+"کند. لطفا با مدیر تماس بگیرید."
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "پاک کردن سند از آخرین جلسه."
 
 #: src/errormessages.js:28
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
 msgstr ""
+"ما در حال پاکسازی این سند از آخرین جلسه هستیم، لطفاً بعداً دوباره امتحان "
+"کنید."
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
-msgstr ""
+msgstr "سند بارگیری نشد."
 
 #: src/errormessages.js:33
 msgid "Save failed due to no disk space left. Document will now be read-only."
 msgstr ""
+"ذخیره به دلیل عدم وجود فضای دیسک انجام نشد. اکنون سند فقط خواندنی خواهد بود."
 
 #: src/errormessages.js:34
 msgid ""
 "The document is too large or no disk space left to save. Document will now "
 "be read-only."
 msgstr ""
+"سند خیلی بزرگ است یا فضای دیسکی برای ذخیره وجود ندارد. اکنون سند فقط خواندنی "
+"خواهد بود."
 
 #: src/errormessages.js:35 src/errormessages.js:44
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr ""
+msgstr "به دلیل منقضی شدن یا نامعتبر بودن رمز دسترسی، سند قابل ذخیره نیست."
 
 #: src/errormessages.js:36
 msgid "Document cannot be saved."
-msgstr ""
+msgstr "سند قابل ذخیره نیست."
 
 #: src/errormessages.js:37
 msgid "Document cannot be renamed."
-msgstr ""
+msgstr "سند را نمی توان تغییر نام داد."
 
 #: src/errormessages.js:41
 msgid ""
 "Failed to read document from storage, please try to load the document again."
-msgstr ""
+msgstr "سند از فضای ذخیره‌سازی خوانده نشد، لطفاً دوباره سند را بارگیری کنید."
 
 #: src/errormessages.js:42
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"ذخیره به دلیل عدم وجود فضای ذخیره‌سازی انجام نشد. اکنون سند فقط خواندنی "
+"خواهد بود. لطفاً مطمئن شوید فضای دیسک کافی در دسترس است و دوباره سعی کنید "
+"ذخیره کنید."
 
 #: src/errormessages.js:43
 msgid ""
@@ -2189,46 +2232,49 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"ذخیره انجام نشد زیرا سند خیلی بزرگ است یا از فضای ذخیره باقیمانده بیشتر است. "
+"سند اکنون فقط خواندنی خواهد بود، اما همچنان می‌توانید آن را دانلود کنید تا "
+"یک کپی به صورت محلی حفظ شود."
 
 #: src/errormessages.js:45
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "سند را نمی توان ذخیره کرد، لطفاً مجوزهای خود را بررسی کنید."
 
 #: src/errormessages.js:46
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "سند را نمی توان تغییر نام داد، لطفاً مجوزهای خود را بررسی کنید."
 
 #: src/errormessages.js:47
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "سند را نمی توان صادر کرد. لطفا دوباره تلاش کنید."
 
 #: src/errormessages.js:52
 msgid "Uploading file to server failed, file not found."
-msgstr ""
+msgstr "آپلود فایل به سرور انجام نشد، فایل یافت نشد."
 
 #: src/errormessages.js:53
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
+msgstr "آپلود فایل به سرور انجام نشد، فایل خیلی بزرگ است."
 
 #: src/layer/tile/CanvasTileLayer.js:1933
 msgid "Functions"
-msgstr ""
+msgstr "کارکرد"
 
 #: src/layer/tile/CanvasTileLayer.js:2501
 msgid "Copy link location"
-msgstr ""
+msgstr "مکان پیوند را کپی کنید"
 
 #: src/layer/tile/CanvasTileLayer.js:2509
 msgid "Edit link"
-msgstr ""
+msgstr "ویرایش لینک"
 
 #: src/layer/tile/CanvasTileLayer.js:2517
 msgid "Remove link"
-msgstr ""
+msgstr "حذف لینک"
 
 #: src/layer/tile/CanvasTileLayer.js:5258
 msgid "No Comments"
-msgstr ""
+msgstr "بدون نظر"
 
 #: src/layer/tile/CommentListSection.ts:834
 msgid "Modify"
