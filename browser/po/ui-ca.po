@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+0200\n"
-"PO-Revision-Date: 2023-04-26 12:49+0000\n"
+"PO-Revision-Date: 2023-07-31 16:10+0000\n"
 "Last-Translator: Joan Montané <jmontane@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -114,7 +114,7 @@ msgstr "Modificat"
 
 #: admin/admin.strings.js:29
 msgid "Uploaded"
-msgstr ""
+msgstr "Carregat"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
@@ -578,7 +578,7 @@ msgstr "Vores de les cel·les"
 
 #: src/control/Control.JSDialogBuilder.js:3036
 msgid "Automatic"
-msgstr ""
+msgstr "Automàtic"
 
 #: src/control/Control.JSDialogBuilder.js:3153
 #: src/control/Control.Menubar.js:793
@@ -954,7 +954,7 @@ msgstr "Desa els comentaris"
 #: src/control/Control.Menubar.js:418
 #: src/control/Control.NotebookbarImpress.js:418
 msgid "Master View"
-msgstr ""
+msgstr "Visualització mestra"
 
 #: src/control/Control.Menubar.js:492 src/control/Control.Menubar.js:1005
 #: src/control/Control.PresentationBar.js:64
@@ -1085,9 +1085,8 @@ msgid "Tap to collapse"
 msgstr "Toqueu per a reduir"
 
 #: src/control/Control.NotebookbarBuilder.js:577
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "Document PDF (.pdf)"
+msgstr "Document PDF (.pdf) com a..."
 
 #: src/control/Control.NotebookbarBuilder.js:597
 #: src/control/Control.NotebookbarCalc.js:215
@@ -1421,17 +1420,16 @@ msgid "preview of page "
 msgstr "previsualització de la pàgina "
 
 #: src/control/Control.PartsPreview.js:237
-#, fuzzy
 msgid "Paste Slide"
-msgstr "Diapositives mestres"
+msgstr "Enganxa una diapositiva"
 
 #: src/control/Control.PartsPreview.js:264
 msgid "Copy"
-msgstr ""
+msgstr "Copia"
 
 #: src/control/Control.PartsPreview.js:273
 msgid "Paste"
-msgstr ""
+msgstr "Enganxa"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1897,7 +1895,7 @@ msgstr "«Servidor intermediari lent»"
 
 #: src/control/Toolbar.js:667
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Copia tota la informació de la versió en anglès"
 
 #: src/control/Toolbar.js:721
 msgid "Insert hyperlink"
@@ -1917,7 +1915,7 @@ msgstr "Esteu segur que voleu suprimir aquesta pàgina?"
 
 #: src/control/jsdialog/Widget.TreeView.js:481
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Els encapçalaments i objectes que afegiu al document apareixeran aquí"
 
 #: src/core/Socket.js:55
 msgid "Oops, there is a problem connecting to %productName: "
@@ -1953,7 +1951,7 @@ msgstr "Versió del LOKit:"
 
 #: src/core/Socket.js:709
 msgid "Document is getting migrated..."
-msgstr ""
+msgstr "S'està migrant el document..."
 
 #: src/core/Socket.js:736
 msgid "Session terminated by document owner"
@@ -2092,7 +2090,7 @@ msgstr "S'ha desconnectat el servidor."
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
-msgstr ""
+msgstr "No queda espai en el servidor."
 
 #: src/errormessages.js:14
 msgid ""
@@ -2240,12 +2238,17 @@ msgstr "No s'ha pogut canviar de nom el document."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"No s'ha pogut llegir el document des de l'emmagatzemament, proveu de tornar "
+"a carregar-lo."
 
 #: src/errormessages.js:42
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"El desament ha fallat perquè no queda espai. El document ara serà de només "
+"lectura. Assegureu-vos que hi ha disponible prou espai de disc lliure i "
+"torneu a desar-lo."
 
 #: src/errormessages.js:43
 msgid ""
@@ -2253,18 +2256,22 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"El desament ha fallat perquè el document és massa gran o excedeix l'espai "
+"lliure disponible. Aquest document ara serà de només lectura, però encara "
+"podeu baixar-lo per a conservar una còpia en local."
 
 #: src/errormessages.js:45
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "No s'ha pogut desar el document, verifiqueu els vostres permisos."
 
 #: src/errormessages.js:46
 msgid "Document cannot be renamed, please check your permissions."
 msgstr ""
+"No s'ha pogut canviar de nom el document, verifiqueu els vostres permisos."
 
 #: src/errormessages.js:47
 msgid "Document cannot be exported. Please try again."
-msgstr ""
+msgstr "No s'ha pogut exportar el document. Torneu-ho a intentar."
 
 #: src/errormessages.js:52
 msgid "Uploading file to server failed, file not found."
