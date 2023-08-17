@@ -120,6 +120,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			): {},
 			!this._map['wopi'].UserCanNotWriteRelative ? {
 				'id': 'exportas',
+				'class': 'unoexportas',
 				'type': 'bigmenubartoolitem',
 				'text': _('Export As'),
 				'accessibility': { focusBack: true,	combination: 'E', de: null }
@@ -131,6 +132,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					this._map['wopi'].EnableShare ?
 						{
 							'id': 'ShareAs',
+							'class': 'unoShareAs',
 							'type': 'customtoolitem',
 							'text': _('Share'),
 							'command': 'shareas',
@@ -140,6 +142,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						L.Params.revHistoryEnabled ?
 						{
 							'id': 'Rev-History',
+							'class': 'unoRev-History',
 							'type': 'customtoolitem',
 							'text': _('See history'),
 							'command': 'rev-history',
@@ -172,6 +175,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			} : {},
 			!!window.groupDownloadAsForNb && !this._map['wopi'].HideExportOption ? {
 				'id': 'downloadas',
+				'class': 'unodownloadas',
 				'type': 'bigmenubartoolitem',
 				'text': _('Download'),
 				'accessibility': { focusBack: true,	combination: 'DA', de: null }
@@ -247,6 +251,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'children': [
 					{
 						'id': 'repair',
+						'class': 'unorepair',
 						'type': 'bigmenubartoolitem',
 						'text': _('Repair'),
 						'command': _('Repair'),
@@ -454,6 +459,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							},
 							{
 								'id': 'home-background-color',
+								'class': 'unospan-BackgroundColor',
 								'type': 'toolitem',
 								'text': _UNO('.uno:BackgroundColor'),
 								'command': '.uno:BackgroundColor',
@@ -461,6 +467,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							},
 							{
 								'id': 'home-color',
+								'class': 'unospan-FontColor',
 								'type': 'toolitem',
 								'text': _UNO('.uno:Color'),
 								'command': '.uno:Color',
@@ -882,6 +889,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'Data-PrintRangesMenu:MenuPrintRanges',
+				'class': 'unoData-PrintRangesMenu',
 				'type': 'menubutton',
 				'text': _UNO('.uno:PrintRangesMenu', 'spreadsheet'),
 				'enabled': 'true',
@@ -889,6 +897,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'Data-RowMenuHeight:MenuRowHeight',
+				'class': 'unoData-RowMenuHeight',
 				'type': 'menubutton',
 				'text': _('Row Height'),
 				'enabled': 'true',
@@ -896,6 +905,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'Data-ColumnMenuWidth:MenuColumnWidth',
+				'class': 'unoData-ColumnMenuWidth',
 				'type': 'menubutton',
 				'text': _('Column Width'),
 				'enabled': 'true',
@@ -1134,6 +1144,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'zoomreset',
+				'class': 'unozoomreset',
 				'type': 'menubartoolitem',
 				'text': _('Reset zoom'),
 				'command': _('Reset zoom'),
@@ -1147,6 +1158,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'id': 'zoomout',
+								'class': 'unozoomout',
 								'type': 'menubartoolitem',
 								'text': _UNO('.uno:ZoomMinus'),
 								'command': '.uno:ZoomMinus',
@@ -1159,6 +1171,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'id': 'zoomin',
+								'class': 'unozoomin',
 								'type': 'menubartoolitem',
 								'text': _UNO('.uno:ZoomPlus'),
 								'command': '.uno:ZoomPlus',
@@ -1171,6 +1184,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'toggleuimode',
+				'class': 'unotoggleuimode',
 				'type': 'bigmenubartoolitem',
 				'text': _('Compact view'),
 				'command': _('Toggle UI Mode'),
@@ -1196,6 +1210,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'id': 'showstatusbar',
+								'class': 'unoshowstatusbar',
 								'type': 'menubartoolitem',
 								'text': _('Status Bar'),
 								'command': _('Show Status Bar'),
@@ -1322,6 +1337,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'HyperlinkDialog',
+				'class': 'unoHyperlinkDialog',
 				'type': 'bigcustomtoolitem',
 				'text': _UNO('.uno:HyperlinkDialog'),
 				'command': 'hyperlinkdialog',
@@ -1898,6 +1914,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'Format-SparklineMenu:FormatSparklineMenu',
+				'class': 'unoFormat-SparklineMenu',
 				'type': 'menubutton',
 				'text': _UNO('.uno:FormatSparklineMenu', 'spreadsheet'),
 				'enabled': 'true',

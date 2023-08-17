@@ -155,6 +155,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			(!this._map['wopi'].UserCanNotWriteRelative) ?
 				{
 					'id': 'exportas',
+					'class': 'unoexportas',
 					'type': 'bigmenubartoolitem',
 					'text': _('Export As'),
 					'accessibility': { focusBack: true, combination: 'EA', de: null }
@@ -166,6 +167,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					(this._map['wopi'].EnableShare) ?
 						{
 							'id': 'ShareAs',
+							'class': 'unoShareAs',
 							'type': 'customtoolitem',
 							'text': _('Share'),
 							'command': 'shareas',
@@ -175,6 +177,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					(L.Params.revHistoryEnabled) ?
 						{
 							'id': 'Rev-History',
+							'class': 'unoRev-History',
 							'type': 'customtoolitem',
 							'text': _('See history'),
 							'command': 'rev-history',
@@ -198,6 +201,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'children': [
 					{
 						'id': 'downloadas-odg',
+						'class': 'unodownloadas-odg',
 						'type': 'menubartoolitem',
 						'text': _('ODF Drawing (.odg)'),
 						'command': '',
@@ -205,6 +209,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					},
 					{
 						'id': 'downloadas-png',
+						'class': 'unodownloadas-png',
 						'type': 'menubartoolitem',
 						'text': _('Image (.png)'),
 						'command': '',
@@ -219,6 +224,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'children': [
 					{
 						'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
+						'class': 'unoexportas',
 						'type': 'customtoolitem',
 						'text': _('PDF Document (.pdf)'),
 						'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
@@ -227,6 +233,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					},
 					{
 						'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+						'class': 'unoexportas',
 						'type': 'customtoolitem',
 						'text': _('PDF Document (.pdf) - Expert'),
 						'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
@@ -241,6 +248,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'children': [
 					{
 						'id': 'repair',
+						'class': 'unorepair',
 						'type': 'bigtoolitem',
 						'text': _('Repair'),
 						'command': _('Repair'),
@@ -282,7 +290,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'accessibility': { focusBack: true, combination: 'FR', de: null }
 			},
 			{
-				'id': 'view-zoomreset',
+				'id': 'zoomreset',
+				'class': 'unozoomreset',
 				'type': 'menubartoolitem',
 				'text': _('Reset zoom'),
 				'command': _('Reset zoom'),
@@ -295,7 +304,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'view-zoomout',
+								'id': 'zoomout',
+								'class': 'unozoomout',
 								'type': 'menubartoolitem',
 								'text': _UNO('.uno:ZoomMinus'),
 								'command': '.uno:ZoomMinus',
@@ -307,7 +317,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'view-zoomin',
+								'id': 'zoomin',
+								'class': 'unozoomin',
 								'type': 'menubartoolitem',
 								'text': _UNO('.uno:ZoomPlus'),
 								'command': '.uno:ZoomPlus',
@@ -319,7 +330,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'view-toggleuimode',
+				'id': 'toggleuimode',
+				'class': 'unotoggleuimode',
 				'type': 'bigmenubartoolitem',
 				'text': _('Compact view'),
 				'command': _('Toggle UI Mode'),
@@ -345,6 +357,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'children': [
 							{
 								'id': 'showstatusbar',
+								'class': 'unoshowstatusbar',
 								'type': 'menubartoolitem',
 								'text': _('Status Bar'),
 								'command': _('Show Status Bar'),
@@ -558,6 +571,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 									},
 									{
 										'id': 'home-char-back-color',
+										'class': 'unospan-BackColor',
 										'type': 'toolitem',
 										'text': _UNO('.uno:CharBackColor'),
 										'command': '.uno:CharBackColor',
@@ -565,6 +579,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 									},
 									{
 										'id': 'home-color',
+										'class': 'unospan-FontColor',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Color'),
 										'command': '.uno:Color',
@@ -795,6 +810,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'children': [
 							{
 								'id': 'home-xline-color',
+								'class': 'unospan-XLineColor',
 								'type': 'toolitem',
 								'text': _UNO('.uno:XLineColor'),
 								'command': '.uno:XLineColor',
@@ -807,6 +823,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'children': [
 							{
 								'id': 'home-fill-color',
+								'class': 'unospan-BackgroundColor',
 								'type': 'toolitem',
 								'text': _UNO('.uno:FillColor'),
 								'command': '.uno:FillColor',
@@ -923,6 +940,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'children': [
 							{
 								'id': 'selectbackground',
+								'class': 'unoselectbackground',
 								'type': 'menubartoolitem',
 								'text': _UNO('.uno:SelectBackground', 'presentation'),
 								'command': '',
@@ -1132,6 +1150,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			},
 			{
 				'id': 'HyperlinkDialog',
+				'class': 'unoHyperlinkDialog',
 				'type': 'bigcustomtoolitem',
 				'text': _UNO('.uno:HyperlinkDialog'),
 				'command': 'hyperlinkdialog',
