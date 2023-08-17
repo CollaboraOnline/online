@@ -1154,7 +1154,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.tabs) {
 			var tabs = 0;
 			for (var tabIdx = 0; data.children && tabIdx < data.children.length; tabIdx++) {
-				if (data.children[tabIdx].type === 'tabpage')
+				if (data.children[tabIdx].type === 'tabpage' || data.vertical)
 					tabs++;
 			}
 			var isMultiTabJSON = tabs > 1;
@@ -1330,7 +1330,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			for (var tabIdx = 0; tabIdx < data.children.length; tabIdx++) {
 				var tab = data.children[tabIdx];
 
-				if (tab.type !== 'tabpage')
+				if (tab.type !== 'tabpage' && !data.vertical)
 					continue;
 
 				builder.build(contentDivs[tabId], [tab], false, false);
@@ -1342,7 +1342,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			for (var tabIdx = 0; tabIdx < data.children.length; tabIdx++) {
 				var tab = data.children[tabIdx];
 
-				if (tab.type !== 'tabpage')
+				if (tab.type !== 'tabpage' && !data.vertical)
 					continue;
 
 				builder.build(contentDivs[singleTabId], [tab], false, false);
