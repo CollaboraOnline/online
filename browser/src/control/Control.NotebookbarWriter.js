@@ -164,6 +164,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			: {},
 			hasSaveAs ? {
 				'id': 'exportas',
+				'class': 'unoexportas',
 				'type': 'bigmenubartoolitem',
 				'text': _('Export As')
 			}: {},
@@ -172,6 +173,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'children': [
 					hasShare ? {
 						'id': 'ShareAs',
+						'class': 'unoShareAs',
 						'type': 'customtoolitem',
 						'text': _('Share'),
 						'command': 'shareas',
@@ -179,6 +181,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					}: {},
 					hasRevisionHistory ? {
 						'id': 'Rev-History',
+						'class': 'unoRev-History',
 						'type': 'customtoolitem',
 						'text': _('See history'),
 						'command': 'rev-history',
@@ -209,6 +212,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			} : {},
 			hasGroupedDownloadAs && !hideDownload ? {
 				'id': 'downloadas',
+				'class': 'unodownloadas',
 				'type': 'bigmenubartoolitem',
 				'text': _('Download'),
 				'accessibility': { focusBack: true,	combination: 'A', de: 'M' }
@@ -295,6 +299,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'children': [
 					{
 						'id': 'repair',
+						'class': 'unorepair',
 						'type': 'bigmenubartoolitem',
 						'text': _('Repair'),
 						'command': _('Repair'),
@@ -631,6 +636,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 									},
 									{
 										'id': 'home-back-color',
+										'class': 'unospan-BackColor',
 										'type': 'toolitem',
 										'text': _UNO('.uno:BackColor', 'text'),
 										'command': '.uno:BackColor',
@@ -638,6 +644,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 									},
 									{
 										'id': 'home-color',
+										'class': 'unospan-FontColor',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Color'),
 										'command': '.uno:Color',
@@ -757,6 +764,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 									},
 									{
 										'id': 'home-background-color',
+										'class': 'unospan-BackgroundColor',
 										'type': 'toolitem',
 										'text': _UNO('.uno:BackgroundColor'),
 										'command': '.uno:BackgroundColor',
@@ -996,7 +1004,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'HyperlinkDialog',
+								'id': 'insert-hyperlink-dialog',
+								'class': 'unoHyperlinkDialog',
 								'type': 'customtoolitem',
 								'text': _UNO('.uno:HyperlinkDialog'),
 								'command': 'hyperlinkdialog',
@@ -1018,7 +1027,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			} : {
-				'id': 'HyperlinkDialog',
+				'id': 'insert-hyperlink-dialog',
 				'type': 'bigcustomtoolitem',
 				'text': _UNO('.uno:HyperlinkDialog'),
 				'command': 'hyperlinkdialog',
@@ -1284,6 +1293,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'id': 'zoomreset',
+				'class': 'unozoomreset',
 				'type': 'menubartoolitem',
 				'text': _('Reset zoom'),
 				'command': _('Reset zoom'),
@@ -1297,6 +1307,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'id': 'zoomout',
+								'class': 'unozoomout',
 								'type': 'menubartoolitem',
 								'text': _UNO('.uno:ZoomMinus'),
 								'command': '.uno:ZoomMinus',
@@ -1309,6 +1320,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'id': 'zoomin',
+								'class': 'unozoomin',
 								'type': 'menubartoolitem',
 								'text': _UNO('.uno:ZoomPlus'),
 								'command': '.uno:ZoomPlus',
@@ -1321,6 +1333,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'id': 'toggleuimode',
+				'class': 'unotoggleuimode',
 				'type': 'bigmenubartoolitem',
 				'text': _('Compact view'),
 				'command': _('Toggle UI Mode'),
@@ -1334,6 +1347,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'id': 'showruler',
+								'class': 'unoshowruler',
 								'type': 'menubartoolitem',
 								'text': _('Ruler'),
 								'command': _('Show Ruler'),
@@ -1346,6 +1360,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'id': 'showstatusbar',
+								'class': 'unoshowstatusbar',
 								'type': 'menubartoolitem',
 								'text': _('Status Bar'),
 								'command': _('Show Status Bar'),
@@ -1358,6 +1373,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'id': 'collapsenotebookbar',
+				'class': '',
 				'type': 'bigmenubartoolitem',
 				'text': _('Collapse Tabs'),
 				'command': _('Collapse Notebook Bar')
@@ -1806,6 +1822,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			content.push(
 				{
 					'id': 'zoteroaddeditbibliography',
+					'class': 'unozoteroaddeditbibliography',
 					'type': 'bigmenubartoolitem',
 					'text': _('Add Bibliography'),
 					'command': 'zoteroeditbibliography'
@@ -1818,6 +1835,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'children': [
 								{
 									'id': 'zoteroAddEditCitation',
+									'class': 'unozoteroAddEditCitation',
 									'type': 'customtoolitem',
 									'text': _('Add Citation'),
 									'command': 'zoteroaddeditcitation'
@@ -1829,6 +1847,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'children': [
 								{
 									'id': 'zoteroaddnote',
+									'class': 'unozoteroaddnote',
 									'type': 'customtoolitem',
 									'text': _('Add Citation Note'),
 									'command': 'zoteroaddnote'
@@ -1846,6 +1865,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'children': [
 								{
 									'id': 'zoterorefresh',
+									'class': 'unozoterorefresh',
 									'type': 'customtoolitem',
 									'text': _('Refresh Citations'),
 									'command': 'zoterorefresh'
@@ -1857,6 +1877,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'children': [
 								{
 									'id': 'zoterounlink',
+									'class': 'unozoterounlink',
 									'type': 'customtoolitem',
 									'text': _('Unlink Citations'),
 									'command': 'zoterounlink'
@@ -1868,6 +1889,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				},
 				{
 					'id': 'zoteroSetDocPrefs',
+					'class': 'unozoteroSetDocPrefs',
 					'type': 'bigcustomtoolitem',
 					'text': _('Citation Preferences'),
 					'command': 'zoterosetdocprefs'
