@@ -75,7 +75,7 @@ def extractMenuCommands(path):
     commands = []
 
     # extract from the menu specifications
-    f = open(path + '/browser/src/control/Control.Menubar.js', 'r')
+    f = open(path + '/browser/src/control/Control.Menubar.js', 'r', encoding='utf-8')
     for line in f:
         if line.find("uno:") >= 0 and line.find("name:") < 0:
             commands += commandFromMenuLine(line)
@@ -92,7 +92,7 @@ def extractContextCommands(path):
     commands = []
 
     # extract from the comments whitelist
-    f = open(path + '/browser/src/control/Control.ContextMenu.js', 'r')
+    f = open(path + '/browser/src/control/Control.ContextMenu.js', 'r', encoding='utf-8')
     readingCommands = False
     for line in f:
         if line.find('UNOCOMMANDS_EXTRACT_START') >= 0:
@@ -102,17 +102,17 @@ def extractContextCommands(path):
         elif readingCommands:
             commands += commandsFromLine(line)
 
-    f = open(path + '/browser/src/control/Control.ColumnHeader.ts', 'r')
+    f = open(path + '/browser/src/control/Control.ColumnHeader.ts', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
-    f = open(path + '/browser/src/control/Control.RowHeader.ts', 'r')
+    f = open(path + '/browser/src/control/Control.RowHeader.ts', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
-    f = open(path + '/browser/src/control/Control.Tabs.js', 'r')
+    f = open(path + '/browser/src/control/Control.Tabs.js', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
@@ -128,74 +128,74 @@ def extractToolbarCommands(path):
     commands = []
 
     # extract from the toolbars
-    f = open(path + '/browser/src/control/Control.Toolbar.js', 'r')
+    f = open(path + '/browser/src/control/Control.Toolbar.js', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
-    f = open(path + '/browser/src/control/Control.MobileBottomBar.js', 'r')
+    f = open(path + '/browser/src/control/Control.MobileBottomBar.js', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
-    f = open(path + '/browser/src/control/Control.MobileTopBar.js', 'r')
+    f = open(path + '/browser/src/control/Control.MobileTopBar.js', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
-    f = open(path + '/browser/src/control/Control.MobileWizardBuilder.js', 'r')
-    for line in f:
-        if line.find("_UNO(") >= 0:
-            commands += commandFromMenuLine(line)
-
-    f = open(path +
-             '/browser/src/control/Control.NotebookbarBuilder.js', 'r')
-    for line in f:
-        if line.find("_UNO(") >= 0:
-            commands += commandFromMenuLine(line)
-
-    f = open(path + '/browser/src/control/Control.Notebookbar.js', 'r')
-    for line in f:
-        if line.find("_UNO(") >= 0:
-            commands += commandFromMenuLine(line)
-
-    f = open(path + '/browser/src/control/Control.NotebookbarWriter.js', 'r')
-    for line in f:
-        if line.find("_UNO(") >= 0:
-            commands += commandFromMenuLine(line)
-
-    f = open(path + '/browser/src/control/Control.NotebookbarCalc.js', 'r')
+    f = open(path + '/browser/src/control/Control.MobileWizardBuilder.js', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
     f = open(path +
-             '/browser/src/control/Control.NotebookbarImpress.js', 'r')
+             '/browser/src/control/Control.NotebookbarBuilder.js', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
-    f = open(path + '/browser/src/control/Control.NotebookbarDraw.js', 'r')
+    f = open(path + '/browser/src/control/Control.Notebookbar.js', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
-    f = open(path + '/browser/src/control/Control.PresentationBar.js', 'r')
+    f = open(path + '/browser/src/control/Control.NotebookbarWriter.js', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
-    f = open(path + '/browser/src/control/Control.SearchBar.js', 'r')
+    f = open(path + '/browser/src/control/Control.NotebookbarCalc.js', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
-    f = open(path + '/browser/src/control/Control.StatusBar.js', 'r')
+    f = open(path +
+             '/browser/src/control/Control.NotebookbarImpress.js', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
 
-    f = open(path + '/browser/src/control/Control.TopToolbar.js', 'r')
+    f = open(path + '/browser/src/control/Control.NotebookbarDraw.js', 'r', encoding='utf-8')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
+    f = open(path + '/browser/src/control/Control.PresentationBar.js', 'r', encoding='utf-8')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
+    f = open(path + '/browser/src/control/Control.SearchBar.js', 'r', encoding='utf-8')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
+    f = open(path + '/browser/src/control/Control.StatusBar.js', 'r', encoding='utf-8')
+    for line in f:
+        if line.find("_UNO(") >= 0:
+            commands += commandFromMenuLine(line)
+
+    f = open(path + '/browser/src/control/Control.TopToolbar.js', 'r', encoding='utf-8')
     for line in f:
         if line.find("_UNO(") >= 0:
             commands += commandFromMenuLine(line)
