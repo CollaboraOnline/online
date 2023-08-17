@@ -124,6 +124,12 @@ L.Control.UIManager = L.Control.extend({
 
 	initDarkModeFromSettings: function() {
 		var selectedMode = this.getDarkModeState();
+
+		if (window.ThisIsTheAndroidApp) {
+			selectedMode = window.uiDefaults['darkTheme'] ?  window.uiDefaults['darkTheme'] : false;
+			this.setSavedState('darkTheme', selectedMode);
+		}
+
 		if (selectedMode) {
 			this.loadDarkMode();
 			var cmd = {
@@ -143,7 +149,7 @@ L.Control.UIManager = L.Control.extend({
 	renameDocument: function() {
 		// todo: does this need _('rename document)
 		var docNameInput = this.documentNameInput;
-		this.showInputModal('rename-modal', _('Rename Document'), _('Enter new name'), '', _('Rename'), 
+		this.showInputModal('rename-modal', _('Rename Document'), _('Enter new name'), '', _('Rename'),
 			function(newName) {
 				docNameInput.documentNameConfirm(newName);
 		});

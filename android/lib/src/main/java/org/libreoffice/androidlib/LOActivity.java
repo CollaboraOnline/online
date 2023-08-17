@@ -352,6 +352,8 @@ public class LOActivity extends AppCompatActivity {
             webSettings.setJavaScriptEnabled(true);
             mWebView.addJavascriptInterface(this, "COOLMessageHandler");
 
+            webSettings.setDomStorageEnabled(true);
+
             // allow debugging (when building the debug version); see details in
             // https://developers.google.com/web/tools/chrome-devtools/remote-debugging/webviews
             boolean isChromeDebugEnabled = sPrefs.getBoolean("ENABLE_CHROME_DEBUGGING", false);
