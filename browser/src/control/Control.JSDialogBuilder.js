@@ -2470,6 +2470,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		controls['container'] = div;
 		div.tabIndex = -1;
+		if (data.class)
+			div.classList.add(data.class);
 
 		var isRealUnoCommand = true;
 		var hasPopUp = false;
@@ -2977,6 +2979,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (data.command) {
 			var div = builder._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
+
+			if (data.class)
+				div.classList.add(data.class);
 
 			var id = data.command.substr('.uno:'.length);
 			div.id = id;
