@@ -2,7 +2,7 @@
     if (typeof brandProductName !== 'undefined') {l10nstrings.strProductName = brandProductName}
     document.title = l10nstrings.strProductName + ' - ' + l10nstrings.strAdminConsole;
     var host = (window.location.protocol === 'https:' ? 'wss://': 'ws://') + window.location.host + '/controller/adminws';
-    Admin.ClusterOverview(host);
+    Admin.ClusterOverview(host,'%ROUTE_TOKEN%');
 </script>
 
 <style>
