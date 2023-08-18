@@ -1801,6 +1801,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id.startsWith('downloadas-')
 			|| id.startsWith('saveas-')
 			|| id.startsWith('export')
+			|| id === 'renamedocument'
 			|| id.startsWith('zotero')
 			|| id === 'deletepage'
 			|| id === 'remotelink') {
