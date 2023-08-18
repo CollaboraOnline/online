@@ -1373,7 +1373,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'id': 'collapsenotebookbar',
-				'class': '',
+				'class': 'unocollapsenotebookbar',
 				'type': 'bigmenubartoolitem',
 				'text': _('Collapse Tabs'),
 				'command': _('Collapse Notebook Bar')
