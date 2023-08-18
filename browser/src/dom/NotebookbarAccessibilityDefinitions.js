@@ -64,7 +64,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 		var defs = {};
 		var language = this.getLanguage();
 		for (i = 0; i < tabs.length; i++) {
-			if (tabs[i].accessibility && tabs[i].accessibility.focusBack) {
+			if (tabs[i].accessibility && tabs[i].accessibility.focusBack !== undefined) {
 				defs[tabs[i].id] = tabs[i];
 				defs[tabs[i].id].focusBack = tabs[i].accessibility.focusBack;
 				defs[tabs[i].id].combination = language && tabs[i].accessibility[language] ? tabs[i].accessibility[language]: tabs[i].accessibility.combination;
