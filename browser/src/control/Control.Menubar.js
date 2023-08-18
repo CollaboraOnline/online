@@ -1829,6 +1829,8 @@ L.Control.Menubar = L.Control.extend({
 					this._map.save(false, false);
 				}
 			}
+		} else if (id === 'renamedocument') {
+			this._map.uiManager.renameDocument();
 		} else if (id === 'saveas' && type !== 'menu') { // jsdialog has no type='action'
 			this._map.openSaveAs();
 		} else if (id === 'savecomments') {
