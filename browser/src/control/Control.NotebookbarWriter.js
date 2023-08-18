@@ -2030,6 +2030,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'id': 'review-show-resolved-annotations',
+				'class': 'unoshowresolvedannotations',
 				'type': 'bigcustomtoolitem',
 				'text': _UNO('.uno:ShowResolvedAnnotations', 'text'),
 				'command': 'showresolvedannotations',
