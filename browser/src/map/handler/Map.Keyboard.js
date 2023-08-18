@@ -717,6 +717,24 @@ L.Map.Keyboard = L.Handler.extend({
 				case this.keyCodes.D: // d
 					app.socket.sendMessage('uno .uno:InsertEndnote');
 					return true;
+				case this.keyCodes.pageUp:
+				case this.keyCodes.pageDown :
+					if (this._map.getDocType() === 'spreadsheet') {
+						var currentSelectedPart = this._map._docLayer._selectedPart;
+						var parts = this._map._docLayer._parts;
+						var partToSelect = 0;
+						this._map._docLayer._clearReferences();
+			
+						if (e.keyCode === this.keyCodes.pageUp) {
+							partToSelect = currentSelectedPart != parts - 1 ? currentSelectedPart + 1 : 0;
+						}
+						else {
+							partToSelect = currentSelectedPart != 0 ? currentSelectedPart - 1 : parts - 1;
+						}
+						this._map.setPart(parseInt(partToSelect), /*external:*/ false, /*calledFromSetPartHandler:*/ true);
+						return;
+					}
+
 				}
 			} else if (e.altKey) {
 				switch (e.keyCode) {
