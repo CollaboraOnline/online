@@ -2,15 +2,17 @@
 /*
     Socket to be intialized on opening the cluster overview page in Admin console
 */
-/* global DlgLoading _ AdminSocketBase Admin d3 Map Util */
+/* global DlgLoading _ AdminSocketBase Admin d3 Map Util DlgYesNo */
 
 var AdminClusterOverview = AdminSocketBase.extend({
-    constructor: function (host) {
+    constructor: function (host, routeToken) {
         this.base(host);
+        this.routeToken = routeToken;
     },
 
     _statsData: new Map(),
     _size: 20,
+    _statIntervalId: 0,
 
     _graphDimensions: {
         x: 756,
@@ -530,21 +532,44 @@ var AdminClusterOverview = AdminSocketBase.extend({
                 this.socket.send('stats');
                 DlgLoading.close();
             }
+        } else if (textMsg == 'InvalidAuthToken' || textMsg == 'NotAuthenticated') {
+            var msg;
+            if (window.location.protocol === 'http:') {
+                // Browsers refuse to overwrite the jwt cookie in this case.
+                msg = _('Failed to set jwt authentication cookie over insecure connection');
+            }
+            else {
+                msg = _('Failed to authenticate this session over protocol %0');
+                msg = msg.replace('%0', window.location.protocol);
+            }
+
+            var dialog = (new DlgYesNo())
+                .title(_('Warning'))
+                .text(_(msg))
+                .yesButtonText(_('OK'))
+                .noButtonText(_('Cancel'))
+                .type('warning');
+            this.pageWillBeRefreshed = true;
+            dialog.open();
         }
     },
 
     onSocketOpen: function () {
-        this.base.call(this);
-
+        this.socket.send('auth jwt=' + window.jwtToken + ' routeToken=' + this.routeToken);
         this.socket.send('stats');
         this.socket.send('documents');
         var that = this;
-        setInterval(function () {
+        this._statIntervalId = setInterval(function () {
             that.socket.send('stats');
         }, this._interval);
+    },
+
+    onSocketClose: function () {
+        clearInterval(this._statIntervalId);
+        this.base.call(this);
     }
 });
 
-Admin.ClusterOverview = function (host) {
-    return new AdminClusterOverview(host);
+Admin.ClusterOverview = function (host, routeToken) {
+    return new AdminClusterOverview(host, routeToken);
 };
