@@ -14,11 +14,6 @@
 	display: flex;
 }
 
-.jsdialog #writerchanges .ui-treeview-body {
-	min-height: 300px;
-	max-height: none;
-}
-
 .jsdialog-overlay.cancellable {
 	-webkit-animation: none;
 	animation: none;
@@ -1570,4 +1565,10 @@ kbd,
 
 .warn-copy-paste {
 	width: 100%;
+}
+
+/* manage changes dialog */
+
+.jsdialog #writerchanges .ui-treeview-body {
+	min-height: 300px;
 }
