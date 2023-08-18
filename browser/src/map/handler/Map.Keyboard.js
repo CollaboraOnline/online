@@ -526,7 +526,12 @@ L.Map.Keyboard = L.Handler.extend({
 				if (this.handleOnKeyDownKeys[keyCode] && charCode === 0) {
 					if (keyEventFn) {
 						keyEventFn('input', charCode, unoKeyCode);
-						ev.preventDefault();
+						if (!(this._map._textInput.hasAccessibilitySupport() && this._map._textInput.hasFocus() &&
+							(keyCode === this.keyCodes.LEFT || keyCode === this.keyCodes.RIGHT))) {
+							ev.preventDefault();
+						} else {
+							window.app.console.log('Map.Keyboard._handleKeyEvent: default not prevented for left or right arrow.');
+						}
 					}
 				}
 			}

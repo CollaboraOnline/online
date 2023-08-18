@@ -25,6 +25,8 @@ L.A11yTextInput = L.TextInput.extend({
 		this._lastCursorPosition = 0;
 		this._lastSelectionStart = 0;
 		this._lastSelectionEnd = 0;
+		this._listPrefixLength = 0;
+		this._isLeftRightArrow = 0;
 	},
 
 	hasAccessibilitySupport: function() {
@@ -69,11 +71,18 @@ L.A11yTextInput = L.TextInput.extend({
 		return this._hasSelection &&  this._lastSelectionStart === start && this._lastSelectionEnd === end;
 	},
 
-	_updateCursorPosition: function(nPos) {
-		if (typeof nPos !== 'number' || nPos < 0)
+	_updateCursorPosition: function(pos) {
+		if (typeof pos !== 'number')
 			return;
-		this._setLastCursorPosition(nPos);
-		this._setCursorPosition(nPos);
+		// Normalize input parameters
+		var l = this.getPlainTextContent().length;
+		if (pos < 0)
+			pos = 0;
+		if (pos > l)
+			pos = l;
+
+		this._setLastCursorPosition(pos);
+		this._setCursorPosition(pos);
 	} ,
 
 	_updateSelection: function(pos, start, end, forced) {
@@ -111,6 +120,7 @@ L.A11yTextInput = L.TextInput.extend({
 			+ '\n    start: ' + start + ', end: ' + end);
 
 		this._isComposing = false;
+		this._isLeftRightArrow = 0;
 		if (!this._hasFormulaBarFocus()) {
 			this.setHTML(content);
 			this.updateLastContent();
@@ -119,7 +129,7 @@ L.A11yTextInput = L.TextInput.extend({
 	},
 
 	_updateFocusedParagraph: function() {
-		window.app.console.log('_updateFocusedParagraph');
+		this._log('_updateFocusedParagraph');
 		if (this._remoteContent !== undefined) {
 			this._setFocusedParagraph(this._remoteContent, this._remotePosition,
 				this._remoteSelectionStart, this._remoteSelectionEnd);
@@ -134,9 +144,10 @@ L.A11yTextInput = L.TextInput.extend({
 		this._remoteSelectionEnd = undefined;
 	},
 
-	onAccessibilityFocusChanged: function(content, pos, start, end, force) {
+	onAccessibilityFocusChanged: function(content, pos, start, end, listPrefixLength, force) {
+		this._listPrefixLength = listPrefixLength;
 		if (!this.hasFocus() || (this._isComposing && !force)) {
-			window.app.console.log('onAccessibilityFocusChanged: skipped updating: '
+			this._log('onAccessibilityFocusChanged: skipped updating: '
 				+ '\n  hasFocus: ' + this.hasFocus()
 				+ '\n  _isComposing: ' + this._isComposing
 				+ '\n  force: ' + force);
@@ -154,12 +165,12 @@ L.A11yTextInput = L.TextInput.extend({
 	},
 
 	onAccessibilityCaretChanged: function(nPos) {
-		window.app.console.log('onAccessibilityCaretChanged: \n' +
+		this._log('onAccessibilityCaretChanged: \n' +
 			'    position: ' + nPos + '\n' +
 			'    _isComposing: ' + this._isComposing);
-		if (!this.hasFocus() || this._isComposing) {
+		if (this._isLeftRightArrow || !this.hasFocus() || this._isComposing) {
+			this._log('onAccessibilityCaretChanged: skip updating');
 			this._remotePosition = nPos;
-			this._setLastCursorPosition(nPos);
 		}
 		else if (!this._hasFormulaBarFocus()) {
 			this._updateCursorPosition(nPos);
@@ -173,23 +184,28 @@ L.A11yTextInput = L.TextInput.extend({
 	},
 
 	onAccessibilityTextSelectionChanged: function(start, end) {
-		if (!this.hasFocus() || this._isComposing) {
+		if (this._isLeftRightArrow || !this.hasFocus() || this._isComposing) {
 			this._remoteSelectionStart = start;
 			this._remoteSelectionEnd = end;
-			this._remotePosition = end;
+			var hasSelection = !(start === -1 && end === -1);
+			this._setSelectionFlag(hasSelection);
+			if (hasSelection) {
+				this._remotePosition = end;
+			}
+			this._statusLog('onAccessibilityTextSelectionChanged: skip updating');
 		} else {
 			this._updateSelection(this._lastCursorPosition, start, end);
 		}
 	},
 
 	_setDescription: function(text) {
-		window.app.console.log('setDescription: ' + text);
+		this._log('setDescription: ' + text);
 		this._textArea.setAttribute('aria-description', text);
 	},
 
 	_updateTable: function(outCount, inList, row, col, rowSpan, colSpan) {
 		if (this._isDebugOn) {
-			window.app.console.log('_updateTable: '
+			this._log('_updateTable: '
 				+ '\n outCount: ' + outCount
 				+ '\n inList: ' + inList.toString()
 				+ '\n row: ' + row + ', rowSpan: ' + rowSpan
@@ -260,7 +276,7 @@ L.A11yTextInput = L.TextInput.extend({
 	_onBeforeInput: function(ev) {
 		if (this._map.uiManager.isUIBlocked())
 			return;
-		this._dbg('_onBeforeInput [');
+		this._statusLog('_onBeforeInput [');
 		this._ignoreNextBackspace = false;
 		if (!this._isSelectionValid()) {
 			this._setCursorPosition(this._getLastCursorPosition());
@@ -274,6 +290,10 @@ L.A11yTextInput = L.TextInput.extend({
 			this._updateCursorPosition(this._lastSelectionEnd);
 		}
 
+		if (!this._isComposing && !this._isLeftRightArrow && this._remotePosition !== undefined) {
+			this._updateFocusedParagraph();
+		}
+
 		// Firefox is not able to delete the <img> post space. Since no 'input' event is generated,
 		// we need to handle a <delete> at the end of the paragraph, here.
 		if (L.Browser.gecko && (!this._hasSelection || this._isLastSelectionEmpty()) &&
@@ -283,7 +303,7 @@ L.A11yTextInput = L.TextInput.extend({
 			this._removeEmptySelectionIfAny();
 			this._removeTextContent(0, 1);
 		}
-		this._dbg('_onBeforeInput ]');
+		this._statusLog('_onBeforeInput ]');
 	},
 
 	updateLastContent: function() {
@@ -324,7 +344,7 @@ L.A11yTextInput = L.TextInput.extend({
 	_onInput: function(ev) {
 		if (this._map.uiManager.isUIBlocked())
 			return;
-		this._dbg('_onInput [');
+		this._statusLog('_onInput [');
 		app.idleHandler.notifyActive();
 
 		if (this._ignoreInputCount > 0) {
@@ -496,7 +516,7 @@ L.A11yTextInput = L.TextInput.extend({
 		// special handling for mentions
 		this._handleMentionInput(ev, removeBefore);
 
-		this._dbg('_onInput ]');
+		this._statusLog('_onInput ]');
 	},
 
 	_removeEmptySelectionIfAny: function() {
