@@ -1305,6 +1305,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'children': [
 							{
 								'id': 'CharmapControl',
+								'class': 'unoCharmapControl',
 								'type': 'customtoolitem',
 								'text': _UNO('.uno:CharmapControl'),
 								'command': 'charmapcontrol',

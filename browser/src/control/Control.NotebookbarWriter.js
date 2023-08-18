@@ -818,6 +818,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							},
 							{
 								'id': 'CharmapControl',
+								'class': 'unoCharmapControl',
 								'type': 'customtoolitem',
 								'text': _UNO('.uno:CharmapControl'),
 								'command': 'charmapcontrol',
@@ -1028,6 +1029,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			} : {
 				'id': 'insert-hyperlink-dialog',
+				'class': 'unoHyperlinkDialog',
 				'type': 'bigcustomtoolitem',
 				'text': _UNO('.uno:HyperlinkDialog'),
 				'command': 'hyperlinkdialog',
@@ -1191,6 +1193,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'id': 'insert-insert-char',
+								'class': 'unoCharmapControl',
 								'type': 'customtoolitem',
 								'text': _UNO('.uno:CharmapControl'),
 								'command': 'charmapcontrol',

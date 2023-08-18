@@ -1503,6 +1503,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'id': 'CharmapControl',
+								'class': 'unoCharmapControl',
 								'type': 'customtoolitem',
 								'text': _UNO('.uno:CharmapControl'),
 								'command': 'charmapcontrol',
@@ -1743,6 +1744,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'Data-StatisticsMenu:Menu Statistic',
+				'class': 'unoData-StatisticsMenu',
 				'type': 'menubutton',
 				'text': _UNO('.uno:StatisticsMenu', 'spreadsheet'),
 				'enabled': 'true',
