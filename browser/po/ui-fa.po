@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+0200\n"
-"PO-Revision-Date: 2023-08-19 05:57+0000\n"
+"PO-Revision-Date: 2023-08-20 07:59+0000\n"
 "Last-Translator: Fatemeh Komeily <komeily.fatemeh@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fa/>\n"
@@ -1858,23 +1858,23 @@ msgstr "امضا خوب است، اما سند فقط تا حدی امضا شد�
 msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
-msgstr ""
+msgstr "امضا خوب است، اما گواهی تأیید نشد و سند فقط تا حدی امضا شده است."
 
 #: src/control/Toolbar.js:45
 msgid "Font"
-msgstr ""
+msgstr "فونت"
 
 #: src/control/Toolbar.js:240 src/control/Toolbar.js:253
 msgid "Downloading..."
-msgstr ""
+msgstr "در حال دانلود"
 
 #: src/control/Toolbar.js:269
 msgid "Saving..."
-msgstr ""
+msgstr "در حال ذخیره..."
 
 #: src/control/Toolbar.js:288
 msgid "Renaming..."
-msgstr ""
+msgstr "تغییر نام"
 
 #: src/control/Toolbar.js:636
 msgid "This version of %productName is powered by"
@@ -1882,47 +1882,47 @@ msgstr ""
 
 #: src/control/Toolbar.js:648
 msgid "\"Slow Proxy\""
-msgstr ""
+msgstr "\"پروکسی آهسته\""
 
 #: src/control/Toolbar.js:667
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "تمام اطلاعات نسخه را به زبان انگلیسی کپی کنید"
 
 #: src/control/Toolbar.js:721
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "درج هایپرلینک"
 
 #: src/control/Toolbar.js:740
 msgid "Link"
-msgstr ""
+msgstr "پیوند"
 
 #: src/control/Toolbar.js:990
 msgid "Are you sure you want to delete this slide?"
-msgstr ""
+msgstr "آیا مطمئن هستید که می خواهید این اسلاید را حذف کنید؟"
 
 #: src/control/Toolbar.js:993
 msgid "Are you sure you want to delete this page?"
-msgstr ""
+msgstr "آیا مطمئن هستید که می خواهید این صفحه را حذف کنید؟"
 
 #: src/control/jsdialog/Widget.TreeView.js:481
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "سرفصل ها و اشیایی که به سند اضافه می کنید در اینجا ظاهر می شوند"
 
 #: src/core/Socket.js:55
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr ""
+msgstr "اوه، مشکلی در اتصال به %productName وجود دارد: "
 
 #: src/core/Socket.js:563
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr ""
+msgstr "سرور اکنون در دسترس است. اکنون باید صفحه را رفرش کنیم."
 
 #: src/core/Socket.js:565
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "سرور اکنون در دسترس است ..."
 
 #: src/core/Socket.js:569
 msgid "RELOAD"
-msgstr ""
+msgstr "بارگذاری مجدد"
 
 #: src/core/Socket.js:577
 msgid "COOLWSD version:"
@@ -1930,11 +1930,11 @@ msgstr ""
 
 #: src/core/Socket.js:589
 msgid "Served by:"
-msgstr ""
+msgstr "ارائه شده توسط:"
 
 #: src/core/Socket.js:595
 msgid "Unsupported server version."
-msgstr ""
+msgstr "نسخه سرور پشتیبانی نشده"
 
 #: src/core/Socket.js:599
 msgid "LOKit version:"
@@ -1942,47 +1942,51 @@ msgstr ""
 
 #: src/core/Socket.js:709
 msgid "Document is getting migrated..."
-msgstr ""
+msgstr "سند در حال انتقال است..."
 
 #: src/core/Socket.js:736
 msgid "Session terminated by document owner"
-msgstr ""
+msgstr "جلسه توسط مالک سند خاتمه یافت"
 
 #: src/core/Socket.js:741
 msgid "Idle document - please click to reload and resume editing"
-msgstr ""
+msgstr "سند بیکار - لطفاً برای بارگیری مجدد و از سرگیری ویرایش کلیک کنید"
 
 #: src/core/Socket.js:743
 msgid "Idle document - please tap to reload and resume editing"
-msgstr ""
+msgstr "سند بیکار - لطفاً برای بارگیری مجدد و از سرگیری ویرایش کلیک کنید"
 
 #: src/core/Socket.js:752
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr ""
+msgstr "سرور برای نگهداری در حال خاموش شدن است (ذخیره خودکار)"
 
 #: src/core/Socket.js:756
 msgid "Oops, there is a problem connecting the document"
-msgstr ""
+msgstr "اوه، مشکلی در اتصال سند وجود دارد"
 
 #: src/core/Socket.js:760
 msgid "Server is down, restarting automatically. Please wait."
-msgstr ""
+msgstr "سرور قطع است، به طور خودکار راه اندازی مجدد می شود. لطفا صبر کنید."
 
 #: src/core/Socket.js:787
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
+"سند در حافظه تغییر کرده است. در حال بارگیری سند جدید نسخه شما به صورت ویرایش "
+"در دسترس است."
 
 #: src/core/Socket.js:793
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
+"بازیابی نسخه قدیمی تر هر گونه تغییر ذخیره نشده در تاریخچه نسخه در دسترس "
+"خواهد بود"
 
 #: src/core/Socket.js:799
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "بارگذاری مجدد سند پس از تغییر نام"
 
 #: src/core/Socket.js:939
 msgid "Document requires password to view."
@@ -2280,73 +2284,75 @@ msgstr "بدون نظر"
 
 #: src/layer/tile/CommentListSection.ts:834
 msgid "Modify"
-msgstr ""
+msgstr "اصلاح کنید"
 
 #: src/layer/tile/CommentListSection.ts:840
 #: src/layer/tile/CommentSection.ts:117
 msgid "Reply"
-msgstr ""
+msgstr "پاسخ"
 
 #: src/layer/tile/CommentListSection.ts:846
 msgid "Remove"
-msgstr ""
+msgstr "حذف کنید"
 
 #: src/layer/tile/CommentListSection.ts:852
 msgid "Remove Thread"
-msgstr ""
+msgstr "موضوع را حذف کنید"
 
 #: src/layer/tile/CommentListSection.ts:858
 msgid "Resolve"
-msgstr ""
+msgstr "برطرف کردن"
 
 #: src/layer/tile/CommentListSection.ts:858
 msgid "Unresolve"
-msgstr ""
+msgstr "حل نشدن"
 
 #: src/layer/tile/CommentListSection.ts:864
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "موضوع حل نشده"
 
 #: src/layer/tile/CommentListSection.ts:864
 msgid "Resolve Thread"
-msgstr ""
+msgstr "موضوع را حل کنید"
 
 #: src/layer/tile/CommentSection.ts:245
 msgid "Open menu"
-msgstr ""
+msgstr "منو را باز کنید"
 
 #: src/layer/tile/CommentSection.ts:263 src/layer/tile/CommentSection.ts:264
 msgid "Accept change"
-msgstr ""
+msgstr "تغییر را بپذیرید"
 
 #: src/layer/tile/CommentSection.ts:270 src/layer/tile/CommentSection.ts:271
 msgid "Reject change"
-msgstr ""
+msgstr "رد کردن تغییر"
 
 #: src/layer/tile/CommentSection.ts:294
 msgid "Resolved"
-msgstr ""
+msgstr "حل شد"
 
 #: src/main.js:110
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "هشدار! مرورگری که استفاده می کنید پشتیبانی نمی شود."
 
 #: src/map/Clipboard.js:125
 msgid ""
 "To paste outside %productName, please first click the 'download' button"
 msgstr ""
+"برای جای‌گذاری خارج از %productName، لطفاً ابتدا روی دکمه «دانلود» کلیک کنید"
 
 #: src/map/Clipboard.js:135
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "کپی از سند غیرفعال است"
 
 #: src/map/Clipboard.js:296
 msgid "Failed to download clipboard, please re-copy"
-msgstr ""
+msgstr "بریده‌دان بارگیری نشد، لطفاً دوباره کپی کنید"
 
 #: src/map/Clipboard.js:867
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
+"<p>لطفاً از دکمه های کپی/پیست روی صفحه کلید روی صفحه خود استفاده کنید.</p>"
 
 #: src/map/Clipboard.js:869
 msgid ""
@@ -2357,6 +2363,8 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
+"مرورگر شما دسترسی بسیار محدودی به کلیپ بورد دارد، بنابراین از این میانبرهای "
+"صفحه کلید استفاده کنید"
 
 #: src/map/Clipboard.js:890
 msgid ""
@@ -2366,6 +2374,11 @@ msgid ""
 "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
+"<p>اگر می خواهید عناصر بزرگتری از سند خود را با سایر برنامه ها به اشتراک "
+"بگذارید، لازم است ابتدا آنها را در دستگاه خود دانلود کنید. برای انجام این "
+"کار، دکمه \"شروع دانلود\" را در زیر فشار دهید، و پس از تکمیل روی \"تأیید کپی "
+"در کلیپ بورد\" کلیک کنید.</p><p>اگر در حال کپی و چسباندن بین اسناد داخل "
+"%productName هستید، نیازی به دانلود نیست.< /p>"
 
 #: src/map/Clipboard.js:904
 msgid ""
@@ -2373,6 +2386,8 @@ msgid ""
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
 msgstr ""
+"<p>بارگیری به دلیل یک عملیات کپی/پیست بزرگ از قبل شروع شده است. لطفاً منتظر "
+"دانلود فعلی باشید یا قبل از شروع دانلود جدید آن را لغو کنید</p>"
 
 #: src/map/Clipboard.js:918
 msgid ""
@@ -2380,67 +2395,71 @@ msgid ""
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
 "more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
+"<p>مرورگر شما دسترسی بسیار محدودی به کلیپ بورد دارد</p><p>لطفاً اکنون فشار "
+"دهید: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd> V</kbd> برای "
+"دیدن گزینه های بیشتر</p><p>بستن پنجره بازشو برای نادیده گرفتن چسباندن "
+"ویژه</p>"
 
 #: src/map/Map.js:215
 msgid "Initializing..."
-msgstr ""
+msgstr "در حال شروع..."
 
 #: src/map/Map.js:432 src/map/Map.js:435 src/map/Map.js:438 src/map/Map.js:441
 msgid "Last saved:"
-msgstr ""
+msgstr "آخرین ذخیره شده:"
 
 #: src/map/handler/Map.Feedback.js:82
 msgid "Please send us your feedback"
-msgstr ""
+msgstr "لطفا نظرات خود را برای ما ارسال کنید"
 
 #: src/map/handler/Map.FileInserter.js:105
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr ""
+msgstr "فایل از نوع: %0 را نمی توان در سرور آپلود کرد زیرا فایل نامی ندارد"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr ""
+msgstr "فایل از نوع: %0 نمی تواند به سرور آپلود شود زیرا فایل خالی است"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
-msgstr ""
+msgstr "در حال آپلود..."
 
 #: src/map/handler/Map.FileInserter.js:161
 msgid "Uploading file to server failed with status: %0"
-msgstr ""
+msgstr "آپلود فایل به سرور با وضعیت: %0 انجام نشد"
 
 #: src/map/handler/Map.WOPI.js:147
 msgid "Creating new file from template..."
-msgstr ""
+msgstr "Creating new file from template..."
 
 #: src/map/handler/Map.WOPI.js:484
 msgid "Error"
-msgstr ""
+msgstr "خطا"
 
 #: src/map/handler/Map.WOPI.js:484
 msgid "File name should contain an extension."
-msgstr ""
+msgstr "نام فایل باید دارای پسوند باشد."
 
 #: src/map/handler/Map.WOPI.js:492
 msgid "Creating copy..."
-msgstr ""
+msgstr "در حال ایجاد کپی..."
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "همکاری آنلاین خوش آمدید"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New %coolVersion"
-msgstr ""
+msgstr "%coolVersion جدید را کاوش کنید"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "نسخه توسعه آنلاین Collabora"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
@@ -2449,10 +2468,14 @@ msgid ""
 "\" href=\"https://www.collaboraoffice.com/solutions/collabora-office-"
 "android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"از آخرین پیشرفت‌ها در بهره‌وری آنلاین لذت ببرید، رایگان برای استفاده، کاوش و "
+"استفاده با دیگران در مرورگر. <a target=\"_blank\" href=\"https://www."
+"collaboraoffice.com/solutions/collabora-office-android-ios/\">برنامه‌های</a> "
+"مختلف نیز برای تلفن همراه موجود است."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
-msgstr ""
+msgstr "تمام تغییرات را کشف کنید"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -2461,14 +2484,18 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"<a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
+"code-23-05-release-notes/\">یادداشت های انتشار</a> را بررسی کنید و همه چیز "
+"را در مورد: جدیدترین توسعه آنلاین Collabora بیاموزید نسخه، با هدف کاربران "
+"خانگی و تیم های کوچک."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "مشارکت کنید"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
@@ -2481,3 +2508,10 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"آیا شما علاقه مند به مشارکت هستید اما نمی دانید از کجا شروع کنید؟ به <a "
+"target=\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\""
+">دستورالعمل های گام به گام</a> بروید و کد را از ابتدا بسازید. همچنین می‌"
+"توانید با <a target=\"_blank\" href=\"https://collaboraonline.github.io/post/"
+"translate/\">ترجمه‌ها</a> یا با <a target=\"_blank\" href=\"https کمک کنید "
+"://collaboraonline.github.io/post/filebugs/\">پرونده کردن گزارش اشکال</a> با "
+"تمام مراحل ضروری در مورد نحوه بازتولید آن."
