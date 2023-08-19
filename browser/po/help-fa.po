@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+0200\n"
-"PO-Revision-Date: 2023-08-16 06:56+0000\n"
+"PO-Revision-Date: 2023-08-19 05:57+0000\n"
 "Last-Translator: Fatemeh Komeily <komeily.fatemeh@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/collabora-online/"
 "help/fa/>\n"
@@ -1425,7 +1425,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.p:324-5
 msgid "General"
-msgstr ""
+msgstr "عمومی"
 
 #: html/cool-help.html%2Bdiv.div.p:326-9
 #: html/cool-help.html%2Bdiv.div.h3:557-5
