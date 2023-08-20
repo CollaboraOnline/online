@@ -28,7 +28,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 	getOptionsSectionData: function() {
 		return this.buildOptionsSectionData([
 			{
-				'id': 'options-modifg-page',
+				'id': 'options-modify-page',
 				'type': 'toolitem',
 				'text': _UNO('.uno:ModifyPage', 'presentation', true),
 				'command': '.uno:ModifyPage'
