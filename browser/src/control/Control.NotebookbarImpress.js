@@ -242,6 +242,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 		if ((!!window.groupDownloadAsForNb) && !this._map['wopi'].HideExportOption) {
 			content.push({
 				'id': 'downloadas',
+				'class': 'unodownloadas',
 				'type': 'bigmenubartoolitem',
 				'text': _('Download'),
 				'accessibility': { focusBack: true, combination: 'DA', de: null }
@@ -253,6 +254,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'children': [
 						{
 							'id': 'repair',
+							'class': 'unorepair',
 							'type': 'bigmenubartoolitem',
 							'text': _('Repair'),
 							'command': _('Repair'),
@@ -270,6 +272,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'children': [
 						{
 							'id': 'downloadas-odp',
+							'class': 'unodownloadas-odp',
 							'type': 'menubartoolitem',
 							'text': _('ODF Presentation (.odp)'),
 							'command': '',
@@ -277,6 +280,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						},
 						{
 							'id': 'downloadas-odg',
+							'class': 'unodownloadas-odg',
 							'type': 'menubartoolitem',
 							'text': _('ODF Drawing (.odg)'),
 							'command': '',
@@ -291,6 +295,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'children': [
 						{
 							'id': 'downloadas-ppt',
+							'class': 'unodownloadas-ppt',
 							'type': 'menubartoolitem',
 							'text': _('PowerPoint 2003 Presentation (.ppt)'),
 							'command': '',
@@ -298,6 +303,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						},
 						{
 							'id': 'downloadas-pptx',
+							'class': 'unodownloadas-pptx',
 							'type': 'menubartoolitem',
 							'text': _('PowerPoint Presentation (.pptx)'),
 							'command': '',
@@ -312,6 +318,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'children': [
 						{
 							'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
+							'class': 'unoexportpdf',
 							'type': 'customtoolitem',
 							'text': _('PDF Document (.pdf)'),
 							'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
@@ -320,6 +327,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						},
 						{
 							'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+							'class': 'unoexportpdf',
 							'type': 'customtoolitem',
 							'text': _('PDF Document (.pdf) - Expert'),
 							'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
@@ -336,6 +344,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'children': [
 						{
 							'id': 'repair',
+							'class': 'unorepair',
 							'type': 'bigmenubartoolitem',
 							'text': _('Repair'),
 							'command': _('Repair'),
@@ -351,6 +360,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'children': [
 					{
 						'id': 'repair',
+						'class': 'unorepair',
 						'type': 'bigmenubartoolitem',
 						'text': _('Repair'),
 						'command': _('Repair'),
@@ -400,6 +410,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				} : {},
 			{
 				'id': 'view-presentation',
+				'class': 'unoPresentation',
 				'type': 'bigcustomtoolitem',
 				'text': _('Presentation'),
 				'command': 'presentation',
@@ -414,6 +425,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'zoomreset',
+				'class': 'unozoomreset',
 				'type': 'menubartoolitem',
 				'text': _('Reset zoom'),
 				'command': _('Reset zoom'),
@@ -427,6 +439,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'id': 'zoomout',
+								'class': 'unozoomout',
 								'type': 'menubartoolitem',
 								'text': _UNO('.uno:ZoomMinus'),
 								'command': '.uno:ZoomMinus',
@@ -439,6 +452,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'id': 'zoomin',
+								'class': 'unozoomin',
 								'type': 'menubartoolitem',
 								'text': _UNO('.uno:ZoomPlus'),
 								'command': '.uno:ZoomPlus',
@@ -464,6 +478,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'id': 'collapsenotebookbar',
+								'class': 'unocollapsenotebookbar',
 								'type': 'menubartoolitem',
 								'text': _('Collapse Tabs'),
 								'command': _('Collapse Notebook Bar'),
@@ -476,6 +491,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'id': 'showstatusbar',
+								'class': 'unoshowstatusbar',
 								'type': 'menubartoolitem',
 								'text': _('Status Bar'),
 								'command': _('Show Status Bar'),
@@ -495,6 +511,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id':'toggledarktheme',
+				'class': 'unotoggledarktheme',
 				'type': 'bigmenubartoolitem',
 				'text': _('Dark Mode'),
 				'accessibility': { focusBack: true, combination: 'TT', de: null }
@@ -689,6 +706,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 									},
 									{
 										'id': 'home-charbackcolor',
+										'class': 'unospan-CharBackColor',
 										'type': 'toolitem',
 										'text': _UNO('.uno:CharBackColor'),
 										'command': '.uno:CharBackColor',
@@ -696,6 +714,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 									},
 									{
 										'id': 'home-color',
+										'class': '.unospan-FontColor',
 										'type': 'toolitem',
 										'text': _UNO('.uno:Color'),
 										'command': '.uno:Color',
@@ -926,6 +945,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'id': 'home-xline-color',
+								'class': 'unospan-XLineColor',
 								'type': 'toolitem',
 								'text': _UNO('.uno:XLineColor'),
 								'command': '.uno:XLineColor',
@@ -938,6 +958,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'id': 'home-fill-color',
+								'class': 'unospan-FillColor',
 								'type': 'toolitem',
 								'text': _UNO('.uno:FillColor'),
 								'command': '.uno:FillColor',
@@ -1001,6 +1022,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'home-presentation',
+				'class': 'unoPresentation',
 				'type': 'bigcustomtoolitem',
 				'text': _('Presentation'),
 				'command': 'presentation',
@@ -1182,6 +1204,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'HyperlinkDialog',
+				'class': 'unoHyperlinkDialog',
 				'type': 'bigcustomtoolitem',
 				'text': _UNO('.uno:HyperlinkDialog'),
 				'command': 'hyperlinkdialog',
@@ -1343,6 +1366,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'id': 'CharmapControl',
+								'class': 'unoCharmapControl',
 								'type': 'customtoolitem',
 								'text': _UNO('.uno:CharmapControl'),
 								'command': 'charmapcontrol',
@@ -1402,6 +1426,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'hideslide',
+				'class': 'unohideslide',
 				'type': 'bigmenubartoolitem',
 				'text': _UNO('.uno:HideSlide', 'presentation'),
 				'command': '.uno:HideSlide',
@@ -1427,6 +1452,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'id': 'selectbackground',
+								'class': 'unoselectbackground',
 								'type': 'menubartoolitem',
 								'text': _UNO('.uno:SelectBackground', 'presentation'),
 								'command': '',
