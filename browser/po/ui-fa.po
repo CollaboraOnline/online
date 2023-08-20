@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+0200\n"
 "PO-Revision-Date: 2023-08-20 07:59+0000\n"
-"Last-Translator: Fatemeh Komeily <komeily.fatemeh@gmail.com>\n"
+"Last-Translator: Ali Elminia <ali.elminia@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fa/>\n"
 "Language: fa\n"
@@ -66,7 +66,7 @@ msgstr "باز کردن پرونده"
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:122 admin/src/AdminSocketOverview.js:349
 msgid " user(s)."
-msgstr " کاربر"
+msgstr " .کاربر"
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:205
 msgid " document(s) open."
