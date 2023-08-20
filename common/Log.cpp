@@ -15,6 +15,7 @@
 
 #include <atomic>
 #include <cassert>
+#include <cstdint>
 #include <cstring>
 #include <ctime>
 #include <iomanip>
@@ -40,10 +41,9 @@ namespace Log
 
     class ConsoleChannel : public Poco::Channel
     {
-    protected:
+    public:
         static constexpr std::size_t BufferSize = 64 * 1024;
 
-    public:
         void close() override { flush(); }
 
         /// Write the given buffer to stderr directly.
@@ -107,29 +107,94 @@ namespace Log
 
     class BufferedConsoleChannel : public ConsoleChannel
     {
-    protected:
-        std::size_t size() const { return _size; }
-        std::size_t available() const { return BufferSize - _size; }
-
-        inline void flush()
+        class ThreadLocalBuffer
         {
-            if (_size)
+            static constexpr std::size_t BufferSize = ConsoleChannel::BufferSize;
+            static constexpr std::size_t FlushBufferSize =
+                std::min<std::size_t>(512UL, ConsoleChannel::BufferSize / 4); // ~4-5 entries.
+            static constexpr std::int64_t MaxDelayMicroseconds = 5 * 1000 * 1000; // 5 seconds.
+
+        public:
+            ThreadLocalBuffer()
+                : _size(0)
+                , _oldest_time_us(0)
             {
-                writeRaw(_buffer, _size);
-                _size = 0;
-                ConsoleChannel::flush();
             }
-        }
 
-        inline void buffer(const char* data, std::size_t size)
+            ~ThreadLocalBuffer() { flush(); }
+
+            std::size_t size() const { return _size; }
+            std::size_t available() const { return BufferSize - _size; }
+
+            inline void flush()
+            {
+                if (_size)
+                {
+                    ConsoleChannel::writeRaw(_buffer, _size);
+                    _size = 0;
+                    ConsoleChannel::flush();
+                }
+            }
+
+            inline void log(const char* data, std::size_t size, bool force, std::int64_t ts)
+            {
+                if (_size + size > BufferSize - 1)
+                {
+                    flush();
+                    if (size > BufferSize - 1)
+                    {
+                        // The buffer is too small, we must split the write.
+                        ConsoleChannel::writeRaw(data, size);
+                        ConsoleChannel::writeRaw("\n", 1);
+                        return;
+                    }
+                }
+
+                // Fits.
+                if (_size == 0)
+                    _oldest_time_us = ts;
+                buffer(data, size);
+                _buffer[_size] = '\n';
+                ++_size;
+
+                // Flush important messages and large caches immediately.
+                if (force || _size >= FlushBufferSize ||
+                    (ts - _oldest_time_us) > MaxDelayMicroseconds)
+                {
+                    flush();
+                }
+            }
+
+            inline void buffer(const char* data, std::size_t size)
+            {
+                assert(_size + size <= BufferSize && "Buffer overflow");
+
+                memcpy(_buffer + _size, data, size);
+                _size += size;
+
+                assert(_size <= BufferSize && "Buffer overflow");
+            }
+
+        template <std::size_t N> inline void buffer(const char (&data)[N])
         {
-            assert(_size + size <= BufferSize && "Buffer overflow");
-
-            memcpy(_buffer + _size, data, size);
-            _size += size;
-
-            assert(_size <= BufferSize && "Buffer overflow");
+            buffer(data, N - 1); // Minus the null.
         }
+
+        inline void buffer(const std::string& string) { buffer(string.data(), string.size()); }
+
+    private:
+        char _buffer[BufferSize];
+        std::size_t _size;
+        std::int64_t _oldest_time_us; //< The timestamp of the oldest buffered entry.
+        };
+
+    protected:
+        inline std::size_t size() const { return _tlb.size(); }
+        inline std::size_t available() const { return _tlb.available(); }
+
+        inline void flush() { _tlb.flush(); }
+
+        inline void buffer(const char* data, std::size_t size) { _tlb.buffer(data, size); }
 
         template <std::size_t N> inline void buffer(const char (&data)[N])
         {
@@ -143,46 +208,18 @@ namespace Log
 
         void close() override { flush(); }
 
-        inline void log(const char* data, std::size_t size, bool force)
-        {
-            if (_size + size > BufferSize - 1)
-            {
-                flush();
-                if (size > BufferSize - 1)
-                {
-                    // The buffer is too small, we must split the write.
-                    writeRaw(data, size);
-                    writeRaw("\n", 1);
-                    return;
-                }
-            }
-
-            // Fits.
-            memcpy(_buffer + _size, data, size);
-            _size += size;
-            _buffer[_size] = '\n';
-            ++_size;
-
-            // Flush important messages and large caches immediately.
-            if (force || _size >= BufferSize / 2)
-            {
-                flush();
-            }
-        }
-
         void log(const Poco::Message& msg) override
         {
             const std::string& s = msg.getText();
-            log(s.data(), s.size(), msg.getPriority() <= Message::PRIO_WARNING);
+            _tlb.log(s.data(), s.size(), msg.getPriority() <= Message::PRIO_WARNING,
+                     msg.getTime().raw());
         }
 
     private:
-        static thread_local char _buffer[BufferSize];
-        static thread_local std::size_t _size;
+        static thread_local ThreadLocalBuffer _tlb;
     };
 
-    thread_local char BufferedConsoleChannel::_buffer[BufferSize];
-    thread_local std::size_t BufferedConsoleChannel::_size = 0;
+    thread_local BufferedConsoleChannel::ThreadLocalBuffer BufferedConsoleChannel::_tlb;
 
     /// Colored Console channel (needs to be buffered).
     class ColorConsoleChannel : public BufferedConsoleChannel
@@ -563,9 +600,7 @@ namespace Log
         Poco::Logger::shutdown();
 
         // Flush
-        std::flush(std::cout);
         fflush(stdout);
-        std::flush(std::cerr);
         fflush(stderr);
 #endif
     }
