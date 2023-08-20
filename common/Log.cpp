@@ -42,10 +42,28 @@ namespace Log
         static constexpr std::size_t BufferSize = 64 * 1024;
 
     public:
+        void close() override { flush(); }
+
         /// Write the given buffer to stderr directly.
-        static inline bool writeRaw(const char* data, std::size_t size)
+        static inline int writeRaw(const char* data, std::size_t size)
         {
-            return ::write(STDERR_FILENO, data, size) == static_cast<ssize_t>(size);
+            std::size_t i = 0;
+            for (; i < size;)
+            {
+                int wrote;
+                while ((wrote = ::write(STDERR_FILENO, data + i, size - i)) < 0 && errno == EINTR)
+                {
+                }
+
+                if (wrote < 0)
+                {
+                    return i;
+                }
+
+                i += wrote;
+            }
+
+            return i;
         }
 
         template <std::size_t N> inline void writeRaw(const char (&data)[N])
