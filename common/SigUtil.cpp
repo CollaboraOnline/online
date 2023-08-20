@@ -150,6 +150,13 @@ void requestShutdown()
     /// Close the signalLog file.
     void signalLogClose()
     {
+        // We cannot shutdown the logging subsystem
+        // because freeing memory is not signal safe.
+
+        // Flush the IO buffers.
+        fflush(stdout);
+        fflush(stderr);
+
         fsync(SignalLogFD);
     }
 
