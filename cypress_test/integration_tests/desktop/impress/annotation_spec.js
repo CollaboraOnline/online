@@ -18,7 +18,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 			desktopHelper.hideSidebarIfVisible();
 		}
 
-		cy.cGet('.unospan-optionstoolboxdown.unoModifyPage').click();
+		cy.cGet('#options-modifg-page').click();
 		desktopHelper.selectZoomLevel('50');
 	});
 
@@ -27,13 +27,13 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 
 	it('Insert', function() {
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 	});
 
 	it('Modify', function() {
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
@@ -46,7 +46,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 
 	it('Remove',function() {
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
@@ -55,7 +55,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 
 	it('Reply',function() {
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 		cy.cGet('.cool-annotation-content-wrapper:visible .cool-annotation-menu').click();
@@ -77,7 +77,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 			desktopHelper.hideSidebarIfVisible();
 		}
 
-		cy.cGet('.unospan-optionstoolboxdown.unoModifyPage').click();
+		cy.cGet('#options-modifg-page').click();
 		desktopHelper.selectZoomLevel('50');
 	});
 
@@ -86,13 +86,13 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	});
 
 	it('Insert', function() {
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 	});
 
 	it('Modify', function() {
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
 		cy.cGet('.avatar-img').click();
@@ -106,7 +106,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	});
 
 	it('Remove',function() {
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 		cy.cGet('.avatar-img').click();
@@ -116,7 +116,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	});
 
 	it('Reply',function() {
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
 		cy.cGet('.avatar-img').click();
@@ -136,7 +136,7 @@ describe(['tagdesktop'], 'Comment Scrolling',function() {
 		testFileName = helper.beforeAll(origTestFileName, 'impress');
 		desktopHelper.switchUIToNotebookbar();
 
-		cy.cGet('.unospan-optionstoolboxdown.unoModifyPage').click();
+		cy.cGet('#options-modifg-page').click();
 		desktopHelper.selectZoomLevel('50');
 	});
 
@@ -146,15 +146,15 @@ describe(['tagdesktop'], 'Comment Scrolling',function() {
 
 	it('no comment or one comment', function() {
 		cy.cGet('.leaflet-control-scroll-down').should('not.exist');
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		cy.cGet('.leaflet-marker-icon').should('exist');
 	});
 
 	it('omit slides without comments', function() {
 		//scroll up
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		addSlide(2);
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, false, '#insert-insert-annotation-button');
 		helper.waitUntilIdle('.leaflet-control-scroll-up');
 		cy.cGet('.leaflet-control-scroll-up').should('be.visible');
 		cy.cGet('.leaflet-control-scroll-up').click().wait(300);
@@ -166,10 +166,9 @@ describe(['tagdesktop'], 'Comment Scrolling',function() {
 		cy.cGet('#PageStatus').should('contain','Slide 3 of 3');
 	});
 
-
 	it('switch to previous or next slide',function() {
 		addSlide(1);
-		insertMultipleComment('impress', 2, false);
+		insertMultipleComment('impress', 2, false, '#insert-insert-annotation-button');
 
 		//scroll up
 		addSlide(1);
