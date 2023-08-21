@@ -379,9 +379,14 @@ L.Control.JSDialog = L.Control.extend({
 				if (isRTL)
 					instance.posx = window.innerWidth - instance.posx;
 
-				if (instance.posx + instance.content.clientWidth > window.innerWidth)
+				if (instance.content.clientWidth > window.innerWidth)
+					instance.container.style.maxWidth = (window.innerWidth - instance.posx - 20) + 'px';
+				else if (instance.posx + instance.content.clientWidth > window.innerWidth)
 					instance.posx -= instance.posx + instance.content.clientWidth + 10 - window.innerWidth;
-				if (instance.posy + instance.content.clientHeight > window.innerHeight)
+
+				if (instance.content.clientHeight > window.innerHeight)
+					instance.container.style.maxHeight = (window.innerHeight - instance.posy - 20) + 'px';
+				else if (instance.posy + instance.content.clientHeight > window.innerHeight)
 					instance.posy -= instance.posy + instance.content.clientHeight + 10 - window.innerHeight;
 			}
 			else {
