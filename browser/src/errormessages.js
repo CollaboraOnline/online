@@ -9,10 +9,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-/* global _ getParameterByName */
+/* global _ */
 var errorMessages = {};
 
-var lang = getParameterByName('lang');
+var lang = window.coolParams.get('lang');
 if (lang) {
 	String.locale = lang;
 } else {
