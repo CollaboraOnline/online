@@ -648,6 +648,12 @@ L.Map.Keyboard = L.Handler.extend({
 			e.preventDefault();
 		}
 
+		if (this._isCtrlKey(e) && e.shiftKey && e.key === 'L') {
+			app.socket.sendMessage('uno .uno:DefaultBullet');
+			e.preventDefault();
+			return true;
+		}
+
 		if (this._isCtrlKey(e) && e.shiftKey && e.key === '?') {
 			this._map.showHelp('keyboard-shortcuts');
 			e.preventDefault();
