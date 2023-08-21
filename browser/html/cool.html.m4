@@ -399,16 +399,16 @@ m4_syscmd([cat ]GLOBAL_JS)m4_dnl
 // Related to issue #5841: the iOS app sets the base text direction via the
 // "dir" parameter
 m4_ifelse(IOSAPP,[true],
-     [document.dir = window.getParameterByName('dir');])
+     [document.dir = window.coolParams.get('dir');])
 
 m4_ifelse(IOSAPP,[true],
-     [window.userInterfaceMode = window.getParameterByName('userinterfacemode');])
+     [window.userInterfaceMode = window.coolParams.get('userinterfacemode');])
 
 m4_ifelse(ANDROIDAPP,[true],
-     [window.userInterfaceMode = window.getParameterByName('userinterfacemode');])
+     [window.userInterfaceMode = window.coolParams.get('userinterfacemode');])
 
 m4_ifelse(ANDROIDAPP,[true],
-     [var darkTheme = window.getParameterByName('darkTheme');
+     [var darkTheme = window.coolParams.get('darkTheme');
       if (darkTheme) {window.uiDefaults = {'darkTheme': true};}])
 
 m4_ifelse(EMSCRIPTENAPP,[true],
