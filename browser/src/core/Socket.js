@@ -374,7 +374,7 @@ app.definitions.Socket = L.Class.extend({
 					{
 						// unpleasant - but stops this one problem event
 						// stopping an unknown number of others.
-						window.app.console.error('Exception ' + e + ' emitting event ' + evt.data);
+						window.app.console.error('Exception ' + e + ' emitting event ' + evt.data, e.stack);
 					}
 					finally {
 						if (completeEventOneMessage)
@@ -1352,7 +1352,7 @@ app.definitions.Socket = L.Class.extend({
 			} catch (e) {
 				// unpleasant - but stops this one problem
 				// event stopping an unknown number of others.
-				window.app.console.log('Exception ' + e + ' emitting event ' + message);
+				window.app.console.error('Exception ' + e + ' emitting event ' + message, e.stack);
 			}
 		}
 
