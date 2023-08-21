@@ -8,14 +8,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-/* global errorMessages getParameterByName accessToken accessTokenTTL accessHeader createOnlineModule */
+/* global errorMessages accessToken accessTokenTTL accessHeader createOnlineModule */
 /* global app $ L host idleTimeoutSecs outOfFocusTimeoutSecs _ */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function (global) {
 
 
 var wopiParams = {};
-var wopiSrc = getParameterByName('WOPISrc');
+var wopiSrc = global.coolParams.get('WOPISrc');
 
 if (wopiSrc !== '' && accessToken !== '') {
 	wopiParams = { 'access_token': accessToken, 'access_token_ttl': accessTokenTTL };
@@ -28,16 +28,16 @@ if (window.ThisIsTheEmscriptenApp)
 	// Temporary hack
 	var filePath = 'file:///sample.docx';
 else
-	var filePath = getParameterByName('file_path');
+	var filePath = global.coolParams.get('file_path');
 
-app.file.permission = getParameterByName('permission') || 'edit';
+app.file.permission = global.coolParams.get('permission') || 'edit';
 
-var timestamp = getParameterByName('timestamp');
-var target = getParameterByName('target') || '';
+var timestamp = global.coolParams.get('timestamp');
+var target = global.coolParams.get('target') || '';
 // Should the document go inactive or not
-var alwaysActive = getParameterByName('alwaysactive');
+var alwaysActive = global.coolParams.get('alwaysactive');
 // Cool Debug mode
-var debugMode = getParameterByName('debug');
+var debugMode = global.coolParams.get('debug');
 
 var docURL, docParams;
 var isWopi = false;
@@ -50,7 +50,7 @@ if (wopiSrc != '') {
 	docParams = {};
 }
 
-var notWopiButIframe = getParameterByName('NotWOPIButIframe') != '';
+var notWopiButIframe = global.coolParams.get('NotWOPIButIframe') != '';
 var map = L.map('map', {
 	server: host,
 	doc: docURL,
