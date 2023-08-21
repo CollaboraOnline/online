@@ -47,6 +47,14 @@ window.app = {
 				(function(method) {
 					window.app.console[method] = function logWithCool() {
 						var args = Array.prototype.slice.call(arguments);
+						if (method === 'error') {
+							var log = 'jserror ';
+							for (var arg = 0; arg < arguments.length; arg++) {
+								if (typeof arguments[arg] === 'string')
+									log += arguments[arg] + '\n';
+							}
+							global.logServer(log);
+						}
 
 						return window.console[method].apply(console, args);
 					};
