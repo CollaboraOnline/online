@@ -21,11 +21,11 @@ window.app = {
 			   (global.socket instanceof global.app.definitions.Socket) && global.socket.connected()) {
 			global.socket.sendMessage(log);
 		} else {
-			var req = new XMLHttpRequest();
-			var url = global.location.protocol + '//' + global.location.host + global.location.pathname.match(/.*\//) + 'logging.html';
-			req.open('POST', url, true);
-			req.setRequestHeader('Content-type','application/json; charset=utf-8');
-			req.send(log);
+			fetch(global.location.pathname.match(/.*\//) + 'logging.html', {
+				method: 'POST',
+				headers: { 'Content-Type' : 'application/json' },
+				body: log
+			});
 		}
 	};
 
