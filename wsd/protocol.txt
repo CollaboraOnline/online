@@ -905,6 +905,10 @@ wopiSrcMap
 
     get map of wopiSrc<->routeToken
 
+verifyauth jwt=<jwt_token>
+
+    verify jwt token without shutting down the socket connection
+
 admin -> client
 ===============
 
@@ -962,12 +966,16 @@ section). Others are just response messages to some client command.
 
 InvalidAuthToken
 
-    This is sent when invalid auth token is provided in 'auth' command. See
+    This is sent when invalid auth token is provided in 'auth' and 'verifyauth' command. See
     above.
 
 NotAuthenticated
 
     When client sends an admin command that requires authentication.
+
+ValidAuthToken
+
+    This is sent when valid token is provided in 'verifyauth' command. See above
 
 documents <pid> <filename> <number of views> <memory consumed> <elapsed time> <idle time>
 <pid> <filename> ....
