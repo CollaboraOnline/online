@@ -72,20 +72,14 @@ window.app = {
 
 	global.setLogging(global.coolLogging == 'true');
 
-	global.getParameterByName = function (name) {
-		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-		var results = regex.exec(location.search);
-		return results === null ? '' : results[1].replace(/\+/g, ' ');
-	};
-
+	global.coolParams = new URLSearchParams(global.location.search);
 	var ua = navigator.userAgent.toLowerCase(),
 	    uv = navigator.vendor.toLowerCase(),
 	    doc = document.documentElement,
 
 	    ie = 'ActiveXObject' in window,
 
-		cypressTest = ua.indexOf('cypress') !== -1,
+	    cypressTest = ua.indexOf('cypress') !== -1,
 	    webkit    = ua.indexOf('webkit') !== -1,
 	    phantomjs = ua.indexOf('phantom') !== -1,
 	    android23 = ua.search('android [23]') !== -1,
@@ -130,10 +124,10 @@ window.app = {
 
 	global.L.Params = {
 		/// Shows close button if non-zero value provided
-		closeButtonEnabled: global.getParameterByName('closebutton'),
+		closeButtonEnabled: global.coolParams.get('closebutton'),
 
 		/// Shows revision history file menu option
-		revHistoryEnabled: global.getParameterByName('revisionhistory'),
+		revHistoryEnabled: global.coolParams.get('revisionhistory'),
 	};
 
 	global.L.Browser = {
@@ -975,8 +969,8 @@ window.app = {
 	}
 
 	var docParams, wopiParams;
-	var filePath = global.getParameterByName('file_path');
-	global.wopiSrc = global.getParameterByName('WOPISrc');
+	var filePath = global.coolParams.get('file_path');
+	global.wopiSrc = global.coolParams.get('WOPISrc');
 	if (global.wopiSrc != '') {
 		global.docURL = decodeURIComponent(global.wopiSrc);
 		if (global.accessToken !== '') {
@@ -1083,7 +1077,7 @@ window.app = {
 		}
 	}
 
-	var lang = encodeURIComponent(global.getParameterByName('lang'));
+	var lang = encodeURIComponent(global.coolParams.get('lang'));
 	if (lang)
 		window.langParam = lang;
 	else
@@ -1099,7 +1093,7 @@ window.app = {
 		global.socket.onopen = function () {
 			if (global.socket.readyState === 1) {
 				var ProtocolVersionNumber = '0.1';
-				var timestamp = encodeURIComponent(global.getParameterByName('timestamp'));
+				var timestamp = encodeURIComponent(global.coolParams.get('timestamp'));
 				var msg = 'load url=' + encodeURIComponent(global.docURL);
 
 				var now0 = Date.now();
