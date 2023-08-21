@@ -357,6 +357,30 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     {
         sendTextFrame(model.getWopiSrcMap());
     }
+    else if(tokens.equals(0, "verifyauth"))
+    {
+        if (tokens.size() < 2)
+        {
+            LOG_DBG("Auth command without any token");
+            sendMessage("InvalidAuthToken");
+        }
+        std::string jwtToken;
+        COOLProtocol::getTokenString(tokens[1], "jwt", jwtToken);
+
+        jwtToken = Util::decodeURIComponent(jwtToken);
+        LOG_INF("Verifying JWT token: " << jwtToken);
+        JWTAuth authAgent("admin", "admin", "admin");
+        if (authAgent.verify(jwtToken))
+        {
+            LOG_TRC("JWT token is valid");
+            sendMessage("ValidAuthToken");
+        }
+        else
+        {
+            LOG_DBG("Invalid auth token");
+            sendMessage("InvalidAuthToken");
+        }
+    }
 }
 
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
