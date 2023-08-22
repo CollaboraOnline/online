@@ -82,9 +82,9 @@ dependencies {
     }
 }
 
-task copyBrandFiles(type: Copy) {
-	from "${liboBrandingDir}/android"
-	into "src/main/res"
+tasks.register('copyBrandFiles', Copy) {
+    from "${liboBrandingDir}/android"
+    into "src/main/res"
 }
 
 afterEvaluate {
