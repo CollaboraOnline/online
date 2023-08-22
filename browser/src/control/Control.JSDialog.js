@@ -376,6 +376,8 @@ L.Control.JSDialog = L.Control.extend({
 				instance.posx = parent.getBoundingClientRect().left;
 				instance.posy = parent.getBoundingClientRect().bottom;
 
+				instance.container.style.minWidth = parent.getBoundingClientRect().width + 'px';
+
 				if (isRTL)
 					instance.posx = window.innerWidth - instance.posx;
 
