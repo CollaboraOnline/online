@@ -150,14 +150,6 @@ window.isLocalStorageAllowed = (function() {
     return false;
   }
 })();
-function onSlideClick(e){
-	// Scroll
-	document.getElementById(e.substring(2)).scrollIntoView( {behavior: 'smooth' });
-	// Switch active indicator
-	for (var i = 1; i<4; i++)
-		document.getElementById('i-slide-' + i).classList.remove("active");
-	document.getElementById(e).classList.add("active");
-}
 
 </script>
 
