@@ -113,17 +113,6 @@ m4_ifelse(EMSCRIPTENAPP,[true],
     window.fullyLoadedAndReady = true;
   }, false);
 
-window.isLocalStorageAllowed = (function() {
-  var str = 'localstorage_test';
-  try {
-    localStorage.setItem(str, str);
-    localStorage.removeItem(str);
-    return true;
-  } catch(e) {
-    return false;
-  }
-})();
-
 </script>
 
 m4_ifelse(EMSCRIPTENAPP,[true],[
