@@ -18,7 +18,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 			desktopHelper.hideSidebarIfVisible();
 		}
 
-		cy.cGet('#options-modifg-page').click();
+		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50');
 	});
 
@@ -77,7 +77,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 			desktopHelper.hideSidebarIfVisible();
 		}
 
-		cy.cGet('#options-modifg-page').click();
+		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50');
 	});
 
@@ -136,7 +136,7 @@ describe(['tagdesktop'], 'Comment Scrolling',function() {
 		testFileName = helper.beforeAll(origTestFileName, 'impress');
 		desktopHelper.switchUIToNotebookbar();
 
-		cy.cGet('#options-modifg-page').click();
+		cy.cGet('#options-modify-page').click();
 		desktopHelper.selectZoomLevel('50');
 	});
 
