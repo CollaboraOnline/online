@@ -428,6 +428,17 @@ window.app = {
 		}
 	};
 
+	global.isLocalStorageAllowed = (function() {
+		var str = 'localstorage_test';
+		try {
+			global.localStorage.setItem(str, str);
+			global.localStorage.removeItem(str);
+			return true;
+		} catch (e) {
+			return false;
+		}
+	})();
+
 	global.deviceFormFactor = global.mode.getDeviceFormFactor();
 
 	if (global.ThisIsTheiOSApp) {
