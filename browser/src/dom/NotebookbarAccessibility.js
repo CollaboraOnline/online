@@ -357,6 +357,10 @@ var NotebookbarAccessibility = function() {
 					  this.focusToMap();
 					}
 				  }.bind(this));
+
+				if (element.classList.contains('selected')) {
+					this.setupAcceleratorsForCurrentTab(element.id);
+				}
 			}
 		}.bind(this));
 	};
