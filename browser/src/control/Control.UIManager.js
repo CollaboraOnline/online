@@ -801,6 +801,11 @@ L.Control.UIManager = L.Control.extend({
 			this.showStatusBar();
 	},
 
+	focusSearch: function() {
+		this.showStatusBar();
+		document.getElementById('search-input').focus();
+	},
+
 	isStatusBarVisible: function() {
 		return $('#toolbar-down').is(':visible');
 	},

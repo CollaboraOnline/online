@@ -886,12 +886,35 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'home-search-dialog',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:SearchDialog'),
-				'command': '.uno:SearchDialog',
-				'accessibility': { focusBack: true, combination: 'FD', de: null }
-			}
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+								{
+									'id': 'home-search',
+									'type': 'menubartoolitem',
+									'text': _('Search'),
+									'command': _('Show Status Bar'),
+									'accessibility': { focusBack: false,	combination: 'SS',	de: 'SS' }
+								}
+							]
+						},
+						{
+							'type': 'toolbox',
+							'children': [
+								{
+									'id': 'home-search-dialog',
+									'type': 'toolitem',
+									'text': _UNO('.uno:SearchDialog'),
+									'command': '.uno:SearchDialog',
+									'accessibility': { focusBack: false, 	combination: 'FD',	de: null }
+								}
+							]
+						}
+					],
+				'vertical': 'true'
+			},
 		];
 
 		return this.getTabPage('Home', content);

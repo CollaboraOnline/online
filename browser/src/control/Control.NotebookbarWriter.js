@@ -837,12 +837,35 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'home-search-dialog',
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:SearchDialog'),
-				'command': '.uno:SearchDialog',
-				'accessibility': { focusBack: false, 	combination: 'FD',	de: 'US' }
-			}
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+								{
+									'id': 'home-search',
+									'type': 'menubartoolitem',
+									'text': _('Search'),
+									'command': _('Show Status Bar'),
+									'accessibility': { focusBack: false,	combination: 'SS',	de: 'SS' }
+								}
+							]
+						},
+						{
+							'type': 'toolbox',
+							'children': [
+								{
+									'id': 'home-search-dialog',
+									'type': 'toolitem',
+									'text': _UNO('.uno:SearchDialog'),
+									'command': '.uno:SearchDialog',
+									'accessibility': { focusBack: false, 	combination: 'FD',	de: 'US' }
+								}
+							]
+						}
+					],
+				'vertical': 'true'
+			},
 		];
 
 		return this.getTabPage(homeTabName, content);

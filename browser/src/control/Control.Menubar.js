@@ -1849,7 +1849,8 @@ L.Control.Menubar = L.Control.extend({
 			|| id.startsWith('zotero')
 			|| id === 'deletepage'
 			|| id === 'remotelink'
-			|| id === 'toggledarktheme') {
+			|| id === 'toggledarktheme'
+			|| id === 'home-search') {
 			this._map.dispatch(id);
 		} else if (id === 'insertcomment') {
 			this._map.insertComment();
