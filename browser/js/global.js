@@ -13,8 +13,8 @@ window.app = {
 (function (global) {
 
 	global.logServer = function (log) {
-		if (window.ThisIsAMobileApp) {
-			window.postMobileError(log);
+		if (global.ThisIsAMobileApp) {
+			global.postMobileError(log);
 		} else if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1) {
 			global.socket.send(log);
 		} else if (global.socket && global.L && global.app.definitions.Socket &&
@@ -37,15 +37,15 @@ window.app = {
 			var noop = function() {};
 
 			for (var i = 0; i < loggingMethods.length; i++) {
-				window.app.console[loggingMethods[i]] = noop;
+				global.app.console[loggingMethods[i]] = noop;
 			}
 		} else {
 			for (var i = 0; i < loggingMethods.length; i++) {
-				if (!Object.prototype.hasOwnProperty.call(window.console, loggingMethods[i])) {
+				if (!Object.prototype.hasOwnProperty.call(global.console, loggingMethods[i])) {
 					continue;
 				}
 				(function(method) {
-					window.app.console[method] = function logWithCool() {
+					global.app.console[method] = function logWithCool() {
 						var args = Array.prototype.slice.call(arguments);
 						if (method === 'error') {
 							var log = 'jserror ';
@@ -56,12 +56,12 @@ window.app = {
 							global.logServer(log);
 						}
 
-						return window.console[method].apply(console, args);
+						return global.console[method].apply(console, args);
 					};
 				}(loggingMethods[i]));
 			}
 
-			window.onerror = function (msg, src, row, col, err) {
+			global.onerror = function (msg, src, row, col, err) {
 				var data = {
 					userAgent: navigator.userAgent.toLowerCase(),
 					vendor: navigator.vendor.toLowerCase(),
@@ -85,7 +85,7 @@ window.app = {
 	    uv = navigator.vendor.toLowerCase(),
 	    doc = document.documentElement,
 
-	    ie = 'ActiveXObject' in window,
+	    ie = 'ActiveXObject' in global,
 
 	    cypressTest = ua.indexOf('cypress') !== -1,
 	    webkit    = ua.indexOf('webkit') !== -1,
@@ -93,21 +93,21 @@ window.app = {
 	    android23 = ua.search('android [23]') !== -1,
 	    chrome    = ua.indexOf('chrome') !== -1,
 	    gecko     = (ua.indexOf('gecko') !== -1 || (cypressTest && 'MozUserFocus' in doc.style))
-			&& !webkit && !window.opera && !ie,
+			&& !webkit && !global.opera && !ie,
 	    safari    = !chrome && (ua.indexOf('safari') !== -1 || uv.indexOf('apple') == 0),
 
 	    win = navigator.platform.indexOf('Win') === 0,
 
 	    mobile = typeof orientation !== 'undefined' || ua.indexOf('mobile') !== -1,
-	    msPointer = !window.PointerEvent && window.MSPointerEvent,
-	    pointer = (window.PointerEvent && navigator.pointerEnabled && navigator.maxTouchPoints) || msPointer,
+	    msPointer = !global.PointerEvent && global.MSPointerEvent,
+	    pointer = (global.PointerEvent && navigator.pointerEnabled && navigator.maxTouchPoints) || msPointer,
 
 	    ie3d = ie && ('transition' in doc.style),
-	    webkit3d = ('WebKitCSSMatrix' in window) && ('m11' in new window.WebKitCSSMatrix()) && !android23,
+	    webkit3d = ('WebKitCSSMatrix' in global) && ('m11' in new global.WebKitCSSMatrix()) && !android23,
 	    gecko3d = 'MozPerspective' in doc.style,
 	    opera12 = 'OTransition' in doc.style;
 
-	var chromebook = window.ThisIsTheAndroidApp && window.COOLMessageHandler.isChromeOS();
+	var chromebook = global.ThisIsTheAndroidApp && global.COOLMessageHandler.isChromeOS();
 
 	var isInternetExplorer = (navigator.userAgent.toLowerCase().indexOf('msie') != -1 ||
 				  navigator.userAgent.toLowerCase().indexOf('trident') != -1);
@@ -206,7 +206,7 @@ window.app = {
 
 		// @property any3d: Boolean
 		// `true` for all browsers supporting CSS transforms.
-		any3d: !window.L_DISABLE_3D && (ie3d || webkit3d || gecko3d) && !opera12 && !phantomjs,
+		any3d: !global.L_DISABLE_3D && (ie3d || webkit3d || gecko3d) && !opera12 && !phantomjs,
 
 
 		// @property mobile: Boolean
@@ -223,7 +223,7 @@ window.app = {
 
 		// @property mobileOpera: Boolean
 		// `true` for the Opera browser in a mobile device.
-		mobileOpera: mobile && window.opera,
+		mobileOpera: mobile && global.opera,
 
 		// @property mobileGecko: Boolean
 		// `true` for gecko-based browsers running in a mobile device.
@@ -243,7 +243,7 @@ window.app = {
 
 		// @property retina: Boolean
 		// `true` for browsers on a high-resolution "retina" screen.
-		retina: (window.devicePixelRatio || (window.screen.deviceXDPI / window.screen.logicalXDPI)) > 1,
+		retina: (global.devicePixelRatio || (global.screen.deviceXDPI / global.screen.logicalXDPI)) > 1,
 
 		// @property lang: String
 		// browser language locale
@@ -251,14 +251,14 @@ window.app = {
 	};
 
 	global.keyboard = {
-		onscreenKeyboardHint: window.uiDefaults['onscreenKeyboardHint'],
+		onscreenKeyboardHint: global.uiDefaults['onscreenKeyboardHint'],
 		// If there's an onscreen keyboard, we don't want to trigger it with innocuous actions like panning around a spreadsheet
 		// on the other hand, if there is a hardware keyboard we want to do things like focusing contenteditables so that typing is
 		// recognized without tapping again. This is an impossible problem, because browsers do not give us enough information
 		// Instead, let's just guess
 		guessOnscreenKeyboard: function() {
 			if (global.keyboard.onscreenKeyboardHint != undefined) return global.keyboard.onscreenKeyboardHint;
-			return (window.ThisIsAMobileApp && !window.ThisIsTheEmscriptenApp) || global.mode.isMobile() || global.mode.isTablet();
+			return (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp) || global.mode.isMobile() || global.mode.isTablet();
 			// It's better to guess that more devices will have an onscreen keyboard than reality,
 			// because calc becomes borderline unusable if you miss a device that pops up an onscreen keyboard which covers
 			// a sizeable portion of the screen
@@ -376,13 +376,13 @@ window.app = {
 		/// you shouldn't use this for determining the behavior of an event (use isTouchEvent instead), but this may
 		///   be useful for determining what UI to show (e.g. the draggable teardrops under the cursor)
 		hasPrimaryTouchscreen: function() {
-			return window.matchMedia('(pointer: coarse)').matches;
+			return global.matchMedia('(pointer: coarse)').matches;
 		},
 		/// detect any pointing device is of limited accuracy (generally a touchscreen)
 		/// you shouldn't use this for determining the behavior of an event (use isTouchEvent instead), but this may
 		///   be useful for determining what UI to show (e.g. the draggable teardrops under the cursor)
 		hasAnyTouchscreen: function() {
-			return window.matchMedia('(any-pointer: coarse)').matches;
+			return global.matchMedia('(any-pointer: coarse)').matches;
 		},
 
 	};
@@ -408,7 +408,7 @@ window.app = {
 			if (global.mode.isChromebook())
 				return false;
 
-			return L.Browser.mobile && !window.mode.isMobile();
+			return L.Browser.mobile && !global.mode.isMobile();
 		},
 		isDesktop: function() {
 			if (global.mode.isChromebook())
@@ -417,18 +417,18 @@ window.app = {
 			return !L.Browser.mobile;
 		},
 		getDeviceFormFactor: function() {
-			if (window.mode.isMobile())
+			if (global.mode.isMobile())
 				return 'mobile';
-			else if (window.mode.isTablet())
+			else if (global.mode.isTablet())
 				return 'tablet';
-			else if (window.mode.isDesktop())
+			else if (global.mode.isDesktop())
 				return 'desktop';
 			else
 				return null;
 		}
 	};
 
-	global.deviceFormFactor = window.mode.getDeviceFormFactor();
+	global.deviceFormFactor = global.mode.getDeviceFormFactor();
 
 	document.addEventListener('contextmenu', function(e) {
 		if (e.preventDefault) {
@@ -445,7 +445,7 @@ window.app = {
 		this.extensions = '';
 		this.protocol = '';
 		this.readyState = 1;
-		this.id = window.fakeWebSocketCounter++;
+		this.id = global.fakeWebSocketCounter++;
 		this.onclose = function() {
 		};
 		this.onerror = function() {
@@ -458,7 +458,7 @@ window.app = {
 		};
 	};
 	global.FakeWebSocket.prototype.send = function(data) {
-		window.postMobileMessage(data);
+		global.postMobileMessage(data);
 	};
 
 	global.proxySocketCounter = 0;
@@ -473,7 +473,7 @@ window.app = {
 		this.connected = true;
 		this.readyState = 0; // connecting
 		this.sessionId = 'open';
-		this.id = window.proxySocketCounter++;
+		this.id = global.proxySocketCounter++;
 		this.msgInflight = 0;
 		this.openInflight = 0;
 		this.inSerial = 0;
@@ -498,19 +498,19 @@ window.app = {
 			return this.decoder.decode(this.doSlice(bytes, start,end));
 		};
 		this.parseIncomingArray = function(arr) {
-			//window.app.console.debug('proxy: parse incoming array of length ' + arr.length);
+			//global.app.console.debug('proxy: parse incoming array of length ' + arr.length);
 			for (var i = 0; i < arr.length; ++i)
 			{
 				var left = arr.length - i;
 				if (left < 4)
 				{
-					//window.app.console.debug('no data left');
+					//global.app.console.debug('no data left');
 					break;
 				}
 				var type = String.fromCharCode(arr[i+0]);
 				if (type != 'T' && type != 'B')
 				{
-					window.app.console.debug('wrong data type: ' + type);
+					global.app.console.debug('wrong data type: ' + type);
 					break;
 				}
 				i++;
@@ -518,7 +518,7 @@ window.app = {
 				// Serial
 				if (arr[i] !== 48 && arr[i+1] !== 120) // '0x'
 				{
-					window.app.console.debug('missing hex preamble');
+					global.app.console.debug('missing hex preamble');
 					break;
 				}
 				i += 2;
@@ -534,7 +534,7 @@ window.app = {
 				// Size:
 				if (arr[i] !== 48 && arr[i+1] !== 120) // '0x'
 				{
-					window.app.console.debug('missing hex preamble');
+					global.app.console.debug('missing hex preamble');
 					break;
 				}
 				i += 2;
@@ -553,7 +553,7 @@ window.app = {
 					data = this.doSlice(arr, i, i + size);
 
 				if (serial !== that.inSerial + 1) {
-					window.app.console.debug('Error: serial mismatch ' + serial + ' vs. ' + (that.inSerial + 1));
+					global.app.console.debug('Error: serial mismatch ' + serial + ' vs. ' + (that.inSerial + 1));
 				}
 				that.inSerial = serial;
 				this.onmessage({ data: data });
@@ -593,7 +593,7 @@ window.app = {
 			if (that.sessionId === 'open')
 			{
 				if (that.readyState === 3)
-					window.app.console.debug('Error: sending on closed socket');
+					global.app.console.debug('Error: sending on closed socket');
 				return;
 			}
 
@@ -605,16 +605,16 @@ window.app = {
 				if (that.curPollMs < that.maxPollMs)
 				{
 					that.curPollMs = Math.min(that.maxPollMs, that.curPollMs * that.throttleFactor) | 0;
-					window.app.console.debug('High latency connection - too much in-flight, throttling to ' + that.curPollMs + ' ms.');
+					global.app.console.debug('High latency connection - too much in-flight, throttling to ' + that.curPollMs + ' ms.');
 					that._setPollInterval(that.curPollMs);
 				}
 				else if (performance.now() - that.lastDataTimestamp > 30 * 1000)
 				{
-					window.app.console.debug('Close connection after no response for 30secs');
+					global.app.console.debug('Close connection after no response for 30secs');
 					that._signalErrorClose();
 				}
 				else
-					window.app.console.debug('High latency connection - too much in-flight, pausing.');
+					global.app.console.debug('High latency connection - too much in-flight, pausing.');
 				return;
 			}
 
@@ -623,7 +623,7 @@ window.app = {
 			// too long, hangs, throws, etc. we can recover.
 			that._setPollInterval(that.maxPollMs);
 
-			//window.app.console.debug('send msg - ' + that.msgInflight + ' on session ' +
+			//global.app.console.debug('send msg - ' + that.msgInflight + ' on session ' +
 			//	      that.sessionId + '  queue: "' + that.sendQueue + '"');
 			var req = new XMLHttpRequest();
 			req.open('POST', that.getEndPoint('write'));
@@ -647,7 +647,7 @@ window.app = {
 				}
 				else
 				{
-					window.app.console.debug('proxy: error on incoming response ' + this.status);
+					global.app.console.debug('proxy: error on incoming response ' + this.status);
 					that._signalErrorClose();
 				}
 
@@ -659,7 +659,7 @@ window.app = {
 					{
 						// Throttle.
 						that.curPollMs = Math.min(that.maxPollMs, that.curPollMs * that.throttleFactor) | 0;
-						//window.app.console.debug('No data for ' + timeSinceLastDataMs + ' ms -- throttling to ' + that.curPollMs + ' ms.');
+						//global.app.console.debug('No data for ' + timeSinceLastDataMs + ' ms -- throttling to ' + that.curPollMs + ' ms.');
 					}
 				}
 
@@ -675,7 +675,7 @@ window.app = {
 		this.getSessionId = function() {
 			if (this.openInflight > 0)
 			{
-				window.app.console.debug('Waiting for session open');
+				global.app.console.debug('Waiting for session open');
 				return;
 			}
 
@@ -688,7 +688,7 @@ window.app = {
 				var msSince = performance.now() - global.lastCreatedProxySocket;
 				if (msSince < 250) {
 					var delay = 250 - msSince;
-					window.app.console.debug('Wait to re-try session creation for ' + delay + 'ms');
+					global.app.console.debug('Wait to re-try session creation for ' + delay + 'ms');
 					this.curPollMs = delay; // ms
 					this.delaySession = setTimeout(function() {
 						that.delaySession = undefined;
@@ -703,11 +703,11 @@ window.app = {
 			req.open('POST', that.getEndPoint('open'));
 			req.responseType = 'text';
 			req.addEventListener('load', function() {
-				window.app.console.debug('got session: ' + this.responseText);
+				global.app.console.debug('got session: ' + this.responseText);
 				if (this.status !== 200 || !this.responseText ||
 				    this.responseText.indexOf('\n') >= 0) // multi-line error
 				{
-					window.app.console.debug('Error: failed to fetch session id! error: ' + this.status);
+					global.app.console.debug('Error: failed to fetch session id! error: ' + this.status);
 					that._signalErrorClose();
 				}
 				else // we connected - lets get going ...
@@ -719,7 +719,7 @@ window.app = {
 				}
 			});
 			req.addEventListener('loadend', function() {
-				window.app.console.debug('Open completed state: ' + that.readyState);
+				global.app.console.debug('Open completed state: ' + that.readyState);
 				that.openInflight--;
 			});
 			req.send('');
@@ -738,7 +738,7 @@ window.app = {
 				// Unless we are backed up.
 				if (that.msgInflight <= 3)
 				{
-					//window.app.console.debug('Have data to send, lowering poll interval.');
+					//global.app.console.debug('Have data to send, lowering poll interval.');
 					that.curPollMs = that.minPollMs;
 					that._setPollInterval(that.curPollMs);
 				}
@@ -757,7 +757,7 @@ window.app = {
 		};
 		this.close = function() {
 			var oldState = this.readyState;
-			window.app.console.debug('proxy: close socket');
+			global.app.console.debug('proxy: close socket');
 			this.readyState = 3;
 			this.onclose();
 			clearInterval(this.pollInterval);
@@ -774,7 +774,7 @@ window.app = {
 			var base = this.uri;
 			return base + '/' + this.sessionId + '/' + command + '/' + this.outSerial;
 		};
-		window.app.console.debug('proxy: new socket ' + this.id + ' ' + this.uri);
+		global.app.console.debug('proxy: new socket ' + this.id + ' ' + this.uri);
 
 		// queue fetch of session id.
 		this.getSessionId();
@@ -783,7 +783,7 @@ window.app = {
 	if (global.socketProxy)
 	{
 		// re-write relative URLs in CSS - somewhat grim.
-		window.addEventListener('load', function() {
+		global.addEventListener('load', function() {
 			var replaceUrls = function(rules, replaceBase) {
 				if (!rules)
 					return;
@@ -817,7 +817,7 @@ window.app = {
 				try {
 					relBases = sheets[i].href.split('/');
 				} catch (err) {
-					window.app.console.log('Missing href from CSS number ' + i);
+					global.app.console.log('Missing href from CSS number ' + i);
 					continue;
 				}
 				relBases.pop(); // bin last - css name.
@@ -827,7 +827,7 @@ window.app = {
 				try {
 					rules = sheets[i].cssRules || sheets[i].rules;
 				} catch (err) {
-					window.app.console.log('Missing CSS from ' + sheets[i].href);
+					global.app.console.log('Missing CSS from ' + sheets[i].href);
 					continue;
 				}
 				replaceUrls(rules, replaceBase);
@@ -879,7 +879,7 @@ window.app = {
 					errorType: 'clusterscaling'
 				}
 			};
-			window.parent.postMessage(JSON.stringify(msg), '*');
+			global.parent.postMessage(JSON.stringify(msg), '*');
 		};
 
 		var http = new XMLHttpRequest();
@@ -891,7 +891,7 @@ window.app = {
 				global.expectedServerId = http.response.serverId;
 				var params = (new URL(uriWithRouteToken)).searchParams;
 				global.routeToken = params.get('RouteToken');
-				window.app.console.log('updated routeToken: ' + global.routeToken);
+				global.app.console.log('updated routeToken: ' + global.routeToken);
 				that.innerSocket = new WebSocket(uriWithRouteToken);
 				that.innerSocket.binaryType = that.binaryType;
 				that.innerSocket.onerror = function() {
@@ -922,7 +922,7 @@ window.app = {
 				}.bind(this);
 				setTimeout(timeoutFn, 3000, global.indirectionUrl, that.uri);
 			} else {
-				window.app.console.error('Indirection url: error on incoming response ' + this.status);
+				global.app.console.error('Indirection url: error on incoming response ' + this.status);
 				that.sendPostMsg(-1);
 			}
 		});
@@ -930,15 +930,15 @@ window.app = {
 	};
 
 	global.createWebSocket = function(uri) {
-		if ('processCoolUrl' in window) {
-			uri = window.processCoolUrl({ url: uri, type: 'ws' });
+		if ('processCoolUrl' in global) {
+			uri = global.processCoolUrl({ url: uri, type: 'ws' });
 		}
 
 		if (global.socketProxy) {
-			window.socketProxy = true;
+			global.socketProxy = true;
 			return new global.ProxySocket(uri);
 		} else if (global.indirectionUrl != '' && !global.migrating) {
-			window.indirectSocket = true;
+			global.indirectSocket = true;
 			return new global.IndirectSocket(uri);
 		} else {
 			return new WebSocket(uri);
@@ -947,17 +947,17 @@ window.app = {
 
 	global._ = function (string) {
 		// In the mobile app case we can't use the stuff from l10n-for-node, as that assumes HTTP.
-		if (window.ThisIsAMobileApp) {
+		if (global.ThisIsAMobileApp) {
 			// We use another approach just for iOS for now.
-			if (window.LOCALIZATIONS && Object.prototype.hasOwnProperty.call(window.LOCALIZATIONS, string)) {
-				// window.postMobileDebug('_(' + string + '): YES: ' + window.LOCALIZATIONS[string]);
-				var result = window.LOCALIZATIONS[string];
-				if (window.LANG === 'de-CH') {
+			if (global.LOCALIZATIONS && Object.prototype.hasOwnProperty.call(global.LOCALIZATIONS, string)) {
+				// global.postMobileDebug('_(' + string + '): YES: ' + global.LOCALIZATIONS[string]);
+				var result = global.LOCALIZATIONS[string];
+				if (global.LANG === 'de-CH') {
 					result = result.replace(/ß/g, 'ss');
 				}
 				return result;
 			} else {
-				// window.postMobileDebug('_(' + string + '): NO');
+				// global.postMobileDebug('_(' + string + '): NO');
 				return string;
 			}
 		} else {
@@ -971,7 +971,7 @@ window.app = {
 
 	// Setup global.webserver: the host URL, with http(s):// protocol (used to fetch files).
 	if (global.webserver === undefined) {
-		var protocol = window.location.protocol === 'file:' ? 'https:' : window.location.protocol;
+		var protocol = global.location.protocol === 'file:' ? 'https:' : global.location.protocol;
 		global.webserver = global.host.replace(/^(ws|wss):/i, protocol);
 		global.webserver = global.webserver.replace(/\/*$/, ''); // Remove trailing slash.
 	}
@@ -993,7 +993,7 @@ window.app = {
 				return encodeURIComponent(key) + '=' + encodeURIComponent(wopiParams[key]);
 			}).join('&');
 		}
-	} else if (window.ThisIsTheEmscriptenApp) {
+	} else if (global.ThisIsTheEmscriptenApp) {
 		// This is of course just a horrible temporary hack
 		global.docURL = 'file:///sample.docx';
 	} else {
@@ -1002,7 +1002,7 @@ window.app = {
 
 	// Form a valid WS URL to the host with the given path.
 	global.makeWsUrl = function (path) {
-		window.app.console.assert(global.host.startsWith('ws'), 'host is not ws: ' + global.host);
+		global.app.console.assert(global.host.startsWith('ws'), 'host is not ws: ' + global.host);
 		return global.host + global.serviceRoot + path;
 	};
 
@@ -1039,14 +1039,14 @@ window.app = {
 
 	// Form a valid HTTP URL to the host with the given path.
 	global.makeHttpUrl = function (path) {
-		window.app.console.assert(global.webserver.startsWith('http'), 'webserver is not http: ' + global.webserver);
+		global.app.console.assert(global.webserver.startsWith('http'), 'webserver is not http: ' + global.webserver);
 		return global.webserver + global.serviceRoot + path;
 	};
 
 	// Form a valid HTTP URL to the host with the given path and
 	// encode the document URL and params.
 	global.makeHttpUrlWopiSrc = function (path, docUrlParams, suffix, wopiSrcParam) {
-		var httpURI = window.makeHttpUrl(path);
+		var httpURI = global.makeHttpUrl(path);
 		return global.makeDocAndWopiSrcUrl(httpURI, docUrlParams, suffix, wopiSrcParam);
 	};
 
@@ -1071,9 +1071,9 @@ window.app = {
 		return new TextDecoder().decode(bytes);
 	};
 
-	if (window.ThisIsAMobileApp) {
+	if (global.ThisIsAMobileApp) {
 		global.socket = new global.FakeWebSocket();
-		window.TheFakeWebSocket = global.socket;
+		global.TheFakeWebSocket = global.socket;
 	} else {
 		// The URL may already contain a query (e.g., 'http://server.tld/foo/wopi/files/bar?desktop=baz') - then just append more params
 		var docParamsPart = docParams ? (global.docURL.includes('?') ? '&' : '?') + docParams : '';
@@ -1081,22 +1081,22 @@ window.app = {
 		try {
 			global.socket = global.createWebSocket(websocketURI);
 		} catch (err) {
-			window.app.console.log(err);
+			global.app.console.log(err);
 		}
 	}
 
 	var lang = encodeURIComponent(global.coolParams.get('lang'));
 	if (lang)
-		window.langParam = lang;
+		global.langParam = lang;
 	else
-		window.langParam = 'en-US';
-	window.langParamLocale = new Intl.Locale(window.langParam);
+		global.langParam = 'en-US';
+	global.langParamLocale = new Intl.Locale(global.langParam);
 	global.queueMsg = [];
-	if (window.ThisIsTheEmscriptenApp)
+	if (global.ThisIsTheEmscriptenApp)
 		// Temporary hack
-		window.LANG = 'en-US';
-	else if (window.ThisIsAMobileApp)
-		window.LANG = lang;
+		global.LANG = 'en-US';
+	else if (global.ThisIsAMobileApp)
+		global.LANG = lang;
 	if (global.socket && global.socket.readyState !== 3) {
 		global.socket.onopen = function () {
 			if (global.socket.readyState === 1) {
@@ -1115,14 +1115,14 @@ window.app = {
 					global.docURL.includes('data/multiuser/calc/');
 
 				if (L.Browser.cypressTest && isCalcTest)
-					window.enableAccessibility = false;
+					global.enableAccessibility = false;
 
-				var accessibilityState = window.localStorage.getItem('accessibilityState') === 'true';
+				var accessibilityState = global.localStorage.getItem('accessibilityState') === 'true';
 				accessibilityState = accessibilityState || (L.Browser.cypressTest && !isCalcTest);
 				msg += ' accessibilityState=' + accessibilityState;
 
-				if (window.ThisIsAMobileApp) {
-					msg += ' lang=' + window.LANG;
+				if (global.ThisIsAMobileApp) {
+					msg += ' lang=' + global.LANG;
 				} else {
 
 					if (timestamp) {
@@ -1134,11 +1134,11 @@ window.app = {
 					// renderingOptions?
 				}
 
-				if (window.deviceFormFactor) {
-					msg += ' deviceFormFactor=' + window.deviceFormFactor;
+				if (global.deviceFormFactor) {
+					msg += ' deviceFormFactor=' + global.deviceFormFactor;
 				}
-				if (window.isLocalStorageAllowed) {
-					var spellOnline = window.localStorage.getItem('SpellOnline');
+				if (global.isLocalStorageAllowed) {
+					var spellOnline = global.localStorage.getItem('SpellOnline');
 					if (spellOnline) {
 						msg += ' spellOnline=' + spellOnline;
 					}
@@ -1152,11 +1152,11 @@ window.app = {
 		};
 
 		global.socket.onerror = function (event) {
-			window.app.console.log(event);
+			global.app.console.log(event);
 		};
 
 		global.socket.onclose = function (event) {
-			window.app.console.log(event);
+			global.app.console.log(event);
 		};
 
 		global.socket.onmessage = function (event) {
@@ -1170,13 +1170,13 @@ window.app = {
 
 		global.socket.binaryType = 'arraybuffer';
 
-		if (window.ThisIsAMobileApp && !window.ThisIsTheEmscriptenApp) {
+		if (global.ThisIsAMobileApp && !global.ThisIsTheEmscriptenApp) {
 			// This corresponds to the initial GET request when creating a WebSocket
 			// connection and tells the app's code that it is OK to start invoking
 			// TheFakeWebSocket's onmessage handler. The app code that handles this
 			// special message knows the document to be edited anyway, and can send it
 			// on as necessary to the Online code.
-			window.postMobileMessage('HULLO');
+			global.postMobileMessage('HULLO');
 			// A FakeWebSocket is immediately open.
 			this.socket.onopen();
 		}
