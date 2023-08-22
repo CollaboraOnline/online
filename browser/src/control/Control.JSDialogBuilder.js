@@ -1161,13 +1161,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 			var isMultiTabJSON = tabs > 1;
 
-			var tabWidgetRootContainer = L.DomUtil.create('div', 'ui-tabs-root ' + builder.options.cssClass + ' ui-widget', parentContainer);
+			var tabWidgetRootContainer = L.DomUtil.create('div', 'ui-tabs-root ' + builder.options.cssClass, parentContainer);
 			tabWidgetRootContainer.id = data.id;
 
 			var tabsContainer = L.DomUtil.create('div', 'ui-tabs ' + builder.options.cssClass + ' ui-widget', builder.options.useSetTabs ? undefined : tabWidgetRootContainer);
 			tabsContainer.setAttribute('role', 'tablist');
 
-			var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content ' + builder.options.cssClass + ' ui-widget', tabWidgetRootContainer);
+			var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content ' + builder.options.cssClass, tabWidgetRootContainer);
 
 			var tabs = [];
 			var contentDivs = [];
