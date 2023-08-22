@@ -85,7 +85,7 @@ ClientSession::ClientSession(
                                    << "], current number of connections: " << curConnections);
 
     // populate with random values.
-    for (auto it : _clipboardKeys)
+    for (size_t i = 0; i < N_ELEMENTS(_clipboardKeys); ++i)
         rotateClipboardKey(false);
 
     // Emit metadata Trace Events for the synthetic pid used for the Trace Events coming in from the
