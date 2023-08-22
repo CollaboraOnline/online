@@ -397,24 +397,24 @@ window.app = {
 			if (global.mode.isChromebook())
 				return false;
 
-			if (global.L.Browser.mobile && L.Browser.cypressTest) {
+			if (global.L.Browser.mobile && global.L.Browser.cypressTest) {
 				return true;
 			}
 
-			return L.Browser.mobile && (screen.width < 768 || screen.height < 768);
+			return global.L.Browser.mobile && (screen.width < 768 || screen.height < 768);
 		},
 		// Mobile device with big screen size.
 		isTablet: function() {
 			if (global.mode.isChromebook())
 				return false;
 
-			return L.Browser.mobile && !global.mode.isMobile();
+			return global.L.Browser.mobile && !global.mode.isMobile();
 		},
 		isDesktop: function() {
 			if (global.mode.isChromebook())
 				return true;
 
-			return !L.Browser.mobile;
+			return !global.L.Browser.mobile;
 		},
 		getDeviceFormFactor: function() {
 			if (global.mode.isMobile())
