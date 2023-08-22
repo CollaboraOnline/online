@@ -1460,6 +1460,12 @@ int main(int argc, char**argv)
     // coverity[+kill]
     void forcedExit(int code) __attribute__ ((__noreturn__));
 
+    // std::size isn't available on our android baseline so use this
+    // solution as a workaround
+    template <typename T, size_t S> char (&n_array_size( T(&)[S] ))[S];
+
+#define N_ELEMENTS(arr)     (sizeof(Util::n_array_size(arr)))
+
 } // end namespace Util
 
 inline std::ostream& operator<<(std::ostream& os, const std::chrono::system_clock::time_point& ts)
