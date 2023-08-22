@@ -430,6 +430,23 @@ window.app = {
 
 	global.deviceFormFactor = global.mode.getDeviceFormFactor();
 
+	if (global.ThisIsTheiOSApp) {
+		global.addEventListener('keydown', function(e) {
+			if (e.metaKey) {
+				e.preventDefault();
+			}
+			if (global.MagicKeyDownHandler)
+				global.MagicKeyDownHandler(e);
+		});
+		global.addEventListener('keyup', function(e) {
+			if (e.metaKey) {
+				e.preventDefault();
+			}
+			if (global.MagicKeyUpHandler)
+				global.MagicKeyUpHandler(e);
+		});
+	}
+
 	document.addEventListener('contextmenu', function(e) {
 		if (e.preventDefault) {
 			e.preventDefault();

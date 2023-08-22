@@ -107,23 +107,6 @@ m4_ifelse(EMSCRIPTENAPP,[true],
   [   window.ThisIsTheEmscriptenApp = false;]
 )
 
-if (window.ThisIsTheiOSApp) {
-  window.addEventListener('keydown', function(e) {
-    if (e.metaKey) {
-      e.preventDefault();
-    }
-    if (window.MagicKeyDownHandler)
-      window.MagicKeyDownHandler(e);
-  });
-  window.addEventListener('keyup', function(e) {
-    if (e.metaKey) {
-      e.preventDefault();
-    }
-    if (window.MagicKeyUpHandler)
-      window.MagicKeyUpHandler(e);
-  });
-}
-
   window.bundlejsLoaded = false;
   window.fullyLoadedAndReady = false;
   window.addEventListener('load', function() {
