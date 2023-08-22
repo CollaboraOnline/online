@@ -439,7 +439,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:InsertAnnotation', 'presentation'), L.Control.MenubarShortcuts.shortcuts.COMMENT), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater', id: 'fontworkgalleryfloater'},
-				{name: _UNO('.uno:DrawText'), uno: '.uno:DrawText'},
+				{name: _UNO('.uno:Text', 'presentation'), id: 'inserttextbox', type: 'action'},
 				{name: _UNO('.uno:VerticalText'), uno: '.uno:VerticalText'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
