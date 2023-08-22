@@ -75,15 +75,19 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	var container = L.DomUtil.create('div', 'ui-combobox ' + builder.options.cssClass, parentContainer);
 	container.id = data.id;
 
-	var content = L.DomUtil.create('div', 'ui-combobox-content ' + builder.options.cssClass, container);
-	content.innerText = data.text;
+	var content = L.DomUtil.create('input', 'ui-combobox-content ' + builder.options.cssClass, container);
+	content.value = data.text;
 
 	var button = L.DomUtil.create('div', 'ui-combobox-button ' + builder.options.cssClass, container);
 	var arrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', button);
 	arrow.id = 'listbox-arrow-' + data.id;
 
+	content.addEventListener('keyup', function () {
+		builder.callback('combobox', 'change', data, this.value, builder);
+	});
+
 	var dropdownEntriesId = data.id + '-entries';
-	content.addEventListener('click', function () {
+	button.addEventListener('click', function () {
 		var dropdownWindowId = data.id + '-dropdown';
 		var json = {
 			id: dropdownWindowId, // fake WindowId, rewritten in callback
