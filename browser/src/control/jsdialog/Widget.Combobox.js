@@ -79,6 +79,8 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	content.value = data.text;
 
 	var button = L.DomUtil.create('div', 'ui-combobox-button ' + builder.options.cssClass, container);
+	button.tabIndex = '0';
+
 	var arrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', button);
 	arrow.id = 'listbox-arrow-' + data.id;
 
@@ -87,7 +89,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	});
 
 	var dropdownEntriesId = data.id + '-entries';
-	button.addEventListener('click', function () {
+	var clickFunction = function () {
 		var dropdownWindowId = data.id + '-dropdown';
 		var json = {
 			id: dropdownWindowId, // fake WindowId, rewritten in callback
@@ -136,6 +138,12 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 		};
 
 		builder.map.fire('jsdialog', {data: json, callback: callback});
+	};
+
+	button.addEventListener('click', clickFunction);
+	button.addEventListener('keypress', function (event) {
+		if (event.key === 'Enter')
+			clickFunction();
 	});
 
 	container.updateRenders = function (pos) {
