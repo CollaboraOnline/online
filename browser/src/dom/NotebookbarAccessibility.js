@@ -230,6 +230,10 @@ var NotebookbarAccessibility = function() {
 		this.accessibilityInputElement.setAttribute('aria-description', descr);
 	};
 
+	this.getCurrentSelectedTabPage = function() {
+		return document.querySelector('div.ui-content.level-0.notebookbar:not(.hidden)');
+	};
+
 	this.resetState = function() {
 		this.removeAllInfoBoxes();
 		this.state = 0;
@@ -262,23 +266,15 @@ var NotebookbarAccessibility = function() {
 			return; // Ignore shift key.
 		else if (key === 'ARROWUP') {
 			// Try to set focus on tab button.
-			if (this.activeTabPointers.id) {
-				this.removeFocusFromTab();
-				document.getElementById(this.activeTabPointers.id).focus();
-			}
+			this.removeFocusFromTab();
+			var currentSelectedTabButton = this.getCurrentSelectedTab();
+			currentSelectedTabButton.focus();
 		}
 		else if (key === 'ARROWDOWN') {
 			// Try to set focus on the first button of the tab content.
-			if (this.activeTabPointers.contentList.length > 0) {
-				for (var i = 0; i < this.activeTabPointers.contentList.length; i++) {
-					var element = document.getElementById(this.activeTabPointers.contentList[i].id);
-					if (element.tabIndex >= 0) {
-						this.removeFocusFromTab();
-						element.focus();
-						break;
-					}
-				}
-			}
+			var currentSelectedTabPage = this.getCurrentSelectedTabPage();
+			var firstSelectableElement = currentSelectedTabPage.querySelector('.unobutton');
+			firstSelectableElement.focus();
 		}
 		else if (key === 'ARROWRIGHT') {
 			this.getNextTab('right');
@@ -357,10 +353,6 @@ var NotebookbarAccessibility = function() {
 					  this.focusToMap();
 					}
 				  }.bind(this));
-
-				if (element.classList.contains('selected')) {
-					this.setupAcceleratorsForCurrentTab(element.id);
-				}
 			}
 		}.bind(this));
 	};
