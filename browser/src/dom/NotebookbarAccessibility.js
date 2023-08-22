@@ -372,6 +372,7 @@ var NotebookbarAccessibility = function() {
 		this.accessibilityInputElement.onfocus = this.onInputFocus.bind(this);
 		this.accessibilityInputElement.onblur = this.onInputBlur.bind(this);
 		this.accessibilityInputElement.onkeyup = this.onInputKeyUp.bind(this);
+		this.accessibilityInputElement.autocomplete = 'off';
 
 		var container = document.createElement('div');
 		container.style.width = container.style.height = '0';
