@@ -5255,7 +5255,13 @@ class PlainSocketFactory final : public SocketFactory
         int fd = physicalFd;
 #if !MOBILEAPP
         if (SimulatedLatencyMs > 0)
-            fd = Delay::create(SimulatedLatencyMs, physicalFd);
+        {
+            int delayfd = Delay::create(SimulatedLatencyMs, physicalFd);
+            if (delayfd == -1)
+                LOG_ERR("DelaySocket creation failed, using physicalFd " << physicalFd << " instead.");
+            else
+                fd = delayfd;
+        }
 #endif
         return StreamSocket::create<StreamSocket>(std::string(), fd, false,
                                                   std::make_shared<ClientRequestDispatcher>());
