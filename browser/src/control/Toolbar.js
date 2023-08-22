@@ -1067,6 +1067,9 @@ L.Map.include({
 		case 'toggledarktheme':
 			this.uiManager.toggleDarkMode();
 			break;
+		case 'home-search':
+			this.uiManager.focusSearch();
+			break;
 		case 'renamedocument':
 			this.uiManager.renameDocument();
 			break;
