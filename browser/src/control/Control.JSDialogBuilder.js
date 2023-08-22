@@ -1275,6 +1275,58 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					}
 				};
 
+				var moveFocusIntoTabPage = function(tab) {
+					var tabIdx = tabs.indexOf(tab);
+					var currentElement = contentDivs[tabIdx];
+
+					function findFirstFocusableElement(currentNode)
+					{
+						var currentChildNodes = currentNode.childNodes;
+
+						if (currentChildNodes.length <= 0) {
+							return null;
+						}
+						
+						for (var childIndex = 0; childIndex < currentChildNodes.length; childIndex++) {
+							var currentChildNode = currentChildNodes[childIndex];
+							
+							if (currentChildNode.tabIndex === undefined) {
+								return null;
+							}
+							if (currentChildNode.tabIndex === -1) {
+								var firstFocusableElement = findFirstFocusableElement(currentChildNode);
+
+								if (firstFocusableElement !== null) {
+									return firstFocusableElement;
+								}
+							}
+							else
+							{
+								var classListContainsInvalidClass = false;
+								if (currentChildNode.classList !== undefined) {
+									classListContainsInvalidClass = currentChildNode.classList.contains('hidden') || currentChildNode.classList.contains('jsdialog-begin-marker') || currentChildNode.classList.contains('jsdialog-end-marker');
+								}
+
+								if (!currentChildNode.disabled && !currentChildNode.hidden && !classListContainsInvalidClass) {
+									var firstFocusableChild = findFirstFocusableElement(currentChildNode);
+									if (firstFocusableChild === null) {
+										return currentChildNode;
+									}
+									else {
+										return firstFocusableChild;
+									}
+								}
+							}
+						}
+
+						return null;
+					}
+
+					var firstFocusableElement = findFirstFocusableElement(currentElement);
+
+					firstFocusableElement.focus();
+				};
+
 				// We are adding this to distinguish "enter" key from real click events.
 				tabs.forEach(function (tab)
 					{
@@ -1288,6 +1340,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 							case 'ArrowRight':
 								moveFocusToNextTab(currentTab);
+								break;
+
+							case 'ArrowDown':
+								moveFocusIntoTabPage(currentTab);
 								break;
 
 							case 'Home':
@@ -1336,8 +1392,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder.build(contentDivs[tabId], [tab], false, false);
 				tabId++;
 			}
-
-			return false;
 		} else {
 			for (var tabIdx = 0; tabIdx < data.children.length; tabIdx++) {
 				var tab = data.children[tabIdx];
@@ -1348,9 +1402,107 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder.build(contentDivs[singleTabId], [tab], false, false);
 				break;
 			}
-
-			return false;
 		}
+
+		function addKeydownEvents(element) {
+			element.addEventListener('keydown', function(e) {
+				var findContainer = function(currentElement) {
+					if ((currentElement.id.includes('container')) || currentElement.role === 'tabpanel') {
+						return currentElement;
+					}
+					else {
+						return findContainer(currentElement.parentNode);
+					}
+				};
+				
+				var currentElement = e.currentTarget;
+
+				if (e.key === 'ArrowUp') {
+					var container = findContainer(currentElement);
+
+					var containerId = container.id;
+					
+					var splitIndex = containerId.indexOf('-');
+
+					var tabName = containerId;
+					if (splitIndex !== -1) {
+						tabName = containerId.substr(0, splitIndex);
+					}
+
+					var tabIdx = tabIds.indexOf(tabName);
+
+					tabs[tabIdx].focus();
+				}
+			});
+		}
+
+		function addRefreshEvent(element) {
+			function giveChildrenEvents(element) {
+				var childNodes = element.childNodes;
+
+				for (var idx = 0; idx < childNodes.length; idx++) {
+					var currentChildNode = childNodes[idx];
+
+					addRefreshEvent(currentChildNode);
+
+					if (currentChildNode.tabIndex === -1) {
+						giveChildrenEvents(currentChildNode);
+					}
+					else {
+						addKeydownEvents(currentChildNode);
+					}
+				}
+			}
+
+			element.addEventListener('refresh', function() {
+				var siblingNodes = element.parentNode.childNodes;
+
+				var index = 0;
+				while (siblingNodes[index] !== element) {
+					index++;
+				}
+				var newElement = siblingNodes[index + 1];
+
+				addRefreshEvent(newElement);
+
+				if (newElement.tabIndex === -1) {
+					giveChildrenEvents(newElement);
+				}
+				else {
+					addKeydownEvents(newElement);
+				}
+			});
+		}
+
+		contentDivs.forEach(function(elements)
+		{
+			function assignEventsToElementsInTabPage(currentNode)
+			{
+				var currentChildNodes = currentNode.childNodes;
+
+				if (currentChildNodes.length <= 0) {
+					return;
+				}
+	
+				for (var childIndex = 0; childIndex < currentChildNodes.length; childIndex++) {
+					var currentChildNode = currentChildNodes[childIndex];
+	
+					if (currentChildNode.tabIndex === -1) {
+						addRefreshEvent(currentChildNode); 
+						assignEventsToElementsInTabPage(currentChildNode);
+					}
+					else
+					{
+						addKeydownEvents(currentChildNode);
+						addRefreshEvent(currentChildNode);
+					}
+				}
+			}
+
+			assignEventsToElementsInTabPage(elements);
+		});
+
+		return false;
 	},
 
 	_singlePanelHandler: function(parentContainer, data, builder) {
@@ -3368,6 +3520,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var temporaryParent = L.DomUtil.create('div');
 		buildFunc.bind(this)(temporaryParent, [data], false);
 		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
+
+		var copyEventsEvent = new Event('refresh');
+		control.dispatchEvent(copyEventsEvent);
+
 		var backupGridSpan = control.style.gridColumn;
 		L.DomUtil.remove(control);
 
