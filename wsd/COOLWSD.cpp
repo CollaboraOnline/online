@@ -162,6 +162,12 @@ using Poco::Net::PartHandler;
 #endif
 #endif
 
+#ifdef __linux__
+#if !MOBILEAPP
+#include <sys/inotify.h>
+#endif
+#endif
+
 using namespace COOLProtocol;
 
 using Poco::DirectoryIterator;
@@ -1000,6 +1006,109 @@ private:
 /// This thread listens for and accepts prisoner kit processes.
 /// And also cleans up and balances the correct number of children.
 static std::unique_ptr<PrisonPoll> PrisonerPoll;
+
+#ifdef __linux__
+#if !MOBILEAPP
+class InotifySocket : public Socket
+{
+public:
+    InotifySocket():
+        Socket(inotify_init1(IN_NONBLOCK))
+        , m_stopOnConfigChange(true)
+    {
+        if (getFD() == -1)
+        {
+            LOG_WRN("Inotify - Failed to start a watcher for the configuration, disabling "
+                    "stop_on_config_change");
+            m_stopOnConfigChange = false;
+            return;
+        }
+
+        watch(COOLWSD_CONFIGDIR);
+    }
+
+    /// Check for file changes, stop the server if we find any
+    void handlePoll(SocketDisposition &disposition, std::chrono::steady_clock::time_point now, int events) override;
+
+    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
+                      int64_t & /* timeoutMaxMicroS */) override
+    {
+        return POLLIN;
+    }
+
+    bool watch(std::string configFile);
+
+private:
+    bool m_stopOnConfigChange;
+    int m_watchedCount = 0;
+};
+
+bool InotifySocket::watch(const std::string configFile)
+{
+    LOG_TRC("Inotify - Attempting to watch " << configFile << ", in addition to current "
+                                             << m_watchedCount << " watched files");
+
+    if (getFD() == -1)
+    {
+        LOG_WRN("Inotify - Trying to watch config file " << configFile
+                                                         << " without an inotify file descriptor");
+        return false;
+    }
+
+    int watchedStatus;
+    watchedStatus = inotify_add_watch(getFD(), configFile.c_str(), IN_MODIFY);
+
+    if (watchedStatus == -1)
+        LOG_WRN("Inotify - Failed to watch config file " << configFile);
+    else
+        m_watchedCount++;
+
+    return watchedStatus != -1;
+}
+
+void InotifySocket::handlePoll(SocketDisposition & /* disposition */, std::chrono::steady_clock::time_point /* now */, int /* events */)
+{
+    LOG_TRC("InotifyPoll - woken up. Reload on config change: "
+            << m_stopOnConfigChange << ", Watching " << m_watchedCount << " files");
+    if (!m_stopOnConfigChange)
+        return;
+
+    char buf[4096];
+    const struct inotify_event* event;
+    ssize_t len;
+
+    LOG_TRC("InotifyPoll - Checking for config changes...");
+
+    while (true)
+    {
+        len = read(getFD(), buf, sizeof(buf));
+
+        if (len == -1 && errno != EAGAIN)
+        {
+            // Some read error, EAGAIN is when there is no data so let's not warn for it
+            LOG_WRN("InotifyPoll - Read error " << std::strerror(errno)
+                                                << " when trying to get events");
+        }
+        else if (len == -1)
+        {
+            LOG_TRC("InotifyPoll - Got to end of data when reading inotify");
+        }
+
+        if (len <= 0)
+            break;
+
+        for (char* ptr = buf; ptr < buf + len; ptr += sizeof(struct inotify_event) + event->len)
+        {
+            event = (const struct inotify_event*)ptr;
+
+            LOG_WRN("InotifyPoll - Config file " << event->name << " was modified, stopping COOLWSD");
+            SigUtil::requestShutdown();
+        }
+    }
+}
+
+#endif // if !MOBILEAPP
+#endif // #ifdef __linux__
 
 /// The Web Server instance with the accept socket poll thread.
 class COOLWSDServer;
@@ -2034,6 +2143,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "ssl.sts.max_age", "31536000" },
         { "ssl.key_file_path", COOLWSD_CONFIGDIR "/key.pem" },
         { "ssl.termination", "true" },
+        { "stop_on_config_change", "false" },
         { "storage.filesystem[@allow]", "false" },
         // "storage.ssl.enable" - deliberately not set; for back-compat
         { "storage.wopi.max_file_size", "0" },
@@ -5809,6 +5919,13 @@ int COOLWSD::innerMain()
     const auto startStamp = std::chrono::steady_clock::now();
 #if !MOBILEAPP
     auto stampFetch = startStamp - (fetchUpdateCheck - std::chrono::milliseconds(60000));
+
+#ifdef __linux__
+    if (getConfigValue<bool>("stop_on_config_change", false)) {
+        std::shared_ptr<InotifySocket> inotifySocket = std::make_shared<InotifySocket>();
+        mainWait.insertNewSocket(inotifySocket);
+    }
+#endif
 #endif
 
     while (!SigUtil::getShutdownRequestFlag())
