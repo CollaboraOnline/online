@@ -703,6 +703,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	width: 100%;
 	border: none;
 	border-radius: var(--border-radius);
+	color: var(--color-text-dark);
+	background-color: var(--color-background-lighter);
 }
 
 .ui-combobox-button {
@@ -745,6 +747,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	width: 100%;
 	font-size: var(--default-font-size);
 	font-family: var(--jquery-ui-font);
+	color: var(--color-text-dark);
 }
 
 .ui-combobox-entry img {
@@ -754,6 +757,19 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .ui-combobox-entry img:hover {
 	border: 1px solid var(--color-border-darker);
 	filter: contrast(0.5);
+}
+
+[data-theme='dark'] .ui-combobox-entry img {
+	filter: invert(1);
+}
+
+/* Apply style always show real colors */
+#applystyle-dropdown .ui-dialog-content {
+	background-color: white !important;
+}
+
+#applystyle-dropdown .ui-combobox-entry img {
+	filter: none !important;
 }
 
 /* ui-textarea */
