@@ -56,6 +56,7 @@ using Poco::TemporaryFile;
 using Poco::URI;
 using Poco::Util::Application;
 
+bool EnableExperimental = false;
 static bool closeExpected = false;
 static std::mutex coutMutex;
 

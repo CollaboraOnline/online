@@ -29,6 +29,7 @@
 #include <Poco/PatternFormatter.h>
 #include <Poco/SplitterChannel.h>
 
+#include "Common.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
 
@@ -364,7 +365,12 @@ namespace Log
             channel->setProperty("warningColor", "magenta");
         }
         else
-            channel = static_cast<Poco::Channel*>(new Log::ConsoleChannel());
+        {
+            if (EnableExperimental)
+                channel = static_cast<Poco::Channel*>(new Log::ConsoleChannel());
+            else
+                channel = static_cast<Poco::Channel*>(new Poco::ConsoleChannel());
+        }
 
         /**
          * Open the channel explicitly, instead of waiting for first log message
@@ -394,7 +400,7 @@ namespace Log
         struct tm tm;
         LOG_INF("Initializing " << name << ". Local time: "
                                 << std::put_time(localtime_r(&t, &tm), "%a %F %T %z")
-                                << ". Log level is [" << logger->getLevel() << "].");
+                                << ". Log level is [" << logger->getLevel() << ']');
     }
 
     Poco::Logger& logger()

@@ -30,6 +30,8 @@
                     // and probably it is not a good idea to remove that?
 #include "FakeSocket.hpp"
 
+bool EnableExperimental = false;
+
 class FakeSocketTest : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(FakeSocketTest);
