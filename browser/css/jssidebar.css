@@ -368,6 +368,10 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	background-color: var(--color-background-dark);
 	color: var(--color-primary);
 }
+[data-theme='dark'] #NavigatorDeck .ui-treeview-entry.selected {
+	background-color: transparent;
+	color: var(--color-text-lighter);
+}
 #NavigatorDeck .ui-treeview-entry.selected:not(.ui-listview-expandable-with-icon)::before {
 	content: '–';
 	font-size: 17px;
