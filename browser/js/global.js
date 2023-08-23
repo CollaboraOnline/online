@@ -24,7 +24,7 @@ window.app = {
 			fetch(global.location.pathname.match(/.*\//) + 'logging.html', {
 				method: 'POST',
 				headers: { 'Content-Type' : 'application/json' },
-				body: log
+				body: global.coolLogging + ' ' + log
 			});
 		}
 	};
@@ -78,7 +78,7 @@ window.app = {
 		}
 	};
 
-	global.setLogging(global.coolLogging == 'true');
+	global.setLogging(global.coolLogging != '');
 
 	global.coolParams = new URLSearchParams(global.location.search);
 	var ua = navigator.userAgent.toLowerCase(),
