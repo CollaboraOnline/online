@@ -93,6 +93,21 @@ function selectFromListbox(item) {
 	cy.cGet('.select2-dropdown').should('not.exist');
 }
 
+// Select an item from a JSDialog dropdown widget used on top toolbar.
+// Parameters:
+// item - item string, that we use a selector to find the right list item.
+function selectFromJSDialogListbox(item, isImage) {
+	cy.cGet('[id$="-dropdown"].modalpopup').should('be.visible');
+	// We use force because the tooltip sometimes hides the items.
+	if (isImage) {
+		cy.wait(2000); // we need some time to render custom entries
+		cy.cGet('[id$="-dropdown"].modalpopup img[alt="' + item + '"]').click({force: true});
+	} else
+		cy.cGet('[id$="-dropdown"].modalpopup').contains('span', item).click({force: true});
+
+	cy.cGet('[id$="-dropdown"].modalpopup').should('not.exist');
+}
+
 // Make sure the right dialog is opened and then we close it.
 // Used for tunneled dialogs. We don't interact with this dialogs
 // now, because they are just images. We mostly just check that
@@ -443,6 +458,7 @@ module.exports.showSidebarIfHidden = showSidebarIfHidden;
 module.exports.hideSidebarIfVisible = hideSidebarIfVisible;
 module.exports.selectColorFromPalette = selectColorFromPalette;
 module.exports.selectFromListbox = selectFromListbox;
+module.exports.selectFromJSDialogListbox = selectFromJSDialogListbox;
 module.exports.checkDialogAndClose = checkDialogAndClose;
 module.exports.makeZoomItemsVisible = makeZoomItemsVisible;
 module.exports.zoomIn = zoomIn;
