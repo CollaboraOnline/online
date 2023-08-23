@@ -251,6 +251,7 @@ struct Client : public Poco::Util::Application
     }
 
 public:
+    // coverity[root_function] : don't warn about uncaught exceptions
     int main(const std::vector<std::string>& args) override
     {
         EnableHttps = (args.size() > 0 && args[0] == "ssl");
@@ -278,6 +279,7 @@ public:
     }
 };
 
+// coverity[root_function] : don't warn about uncaught exceptions
 POCO_APP_MAIN(Client)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

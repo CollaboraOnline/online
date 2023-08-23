@@ -274,6 +274,7 @@ int Tool::main(const std::vector<std::string>& origArgs)
     return EX_OK;
 }
 
+// coverity[root_function] : don't warn about uncaught exceptions
 POCO_APP_MAIN(Tool)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

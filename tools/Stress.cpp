@@ -61,6 +61,7 @@ void Stress::printHelp()
     std::cerr << "       --help for full arguments list." << std::endl;
 }
 
+// coverity[root_function] : don't warn about uncaught exceptions
 int Stress::main(const std::vector<std::string>& args)
 {
     if (args.empty())
@@ -107,6 +108,7 @@ int Stress::main(const std::vector<std::string>& args)
     return EX_OK;
 }
 
+// coverity[root_function] : don't warn about uncaught exceptions
 POCO_APP_MAIN(Stress)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

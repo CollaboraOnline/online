@@ -45,6 +45,7 @@ class LOKitClient: public Application
 {
 public:
 protected:
+    // coverity[root_function] : don't warn about uncaught exceptions
     int main(const std::vector<std::string>& args) override
     {
         if (args.size() != 2)
@@ -173,6 +174,7 @@ void alertAllUsers(const std::string& cmd, const std::string& kind)
 
 }
 
+// coverity[root_function] : don't warn about uncaught exceptions
 POCO_APP_MAIN(LOKitClient)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
