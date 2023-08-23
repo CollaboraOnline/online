@@ -29,13 +29,31 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 
 	if (data.customRenderer) {
 		var cachedComboboxEntries = builder.rendersCache[data.comboboxId];
-		if (cachedComboboxEntries && cachedComboboxEntries[data.pos]) {
+		var requestRender = true;
+
+		if (cachedComboboxEntries && cachedComboboxEntries.images[data.pos]) {
 			L.DomUtil.remove(content);
-			var img = L.DomUtil.create('img', '', entry);
-			img.src = cachedComboboxEntries[data.pos];
-			img.alt = data.text;
-		} else {
-			builder.callback('combobox', 'render_entry', {id: data.comboboxId}, data.pos, builder);
+			content = L.DomUtil.create('img', '', entry);
+			content.src = cachedComboboxEntries.images[data.pos];
+			content.alt = data.text;
+			requestRender = !cachedComboboxEntries.persistent;
+		}
+
+		if (requestRender) {
+			// render on demand
+			var onIntersection = function (entries) {
+				entries.forEach(function (entry) {
+					if (entry.isIntersecting)
+						builder.callback('combobox', 'render_entry', {id: data.comboboxId}, data.pos, builder);
+				});
+			};
+
+			var observer = new IntersectionObserver(onIntersection, {
+				root: null,
+				threshold: 0.5 // percentage of visible area
+			});
+
+			observer.observe(content);
 		}
 	}
 
@@ -151,7 +169,7 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 		if (dropdown[pos]) {
 			dropdown[pos].innerHTML = '';
 			var img = L.DomUtil.create('img', '', dropdown[pos]);
-			img.src = builder.rendersCache[data.id][pos];
+			img.src = builder.rendersCache[data.id].images[pos];
 			img.alt = data.entries[pos].toString();
 		}
 	};

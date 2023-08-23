@@ -52,7 +52,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_currentDepth: 0,
 
-	rendersCache: {}, // eg. custom renders for combobox entries
+	rendersCache: {
+		fontnamecombobox: { persistent: true, images: [] }
+	}, // eg. custom renders for combobox entries
 
 	setWindowId: function (id) {
 		this.windowId = id;
@@ -3306,9 +3308,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		case 'rendered_combobox_entry':
 			if (!this.rendersCache[control.id])
-				this.rendersCache[control.id] = {};
+				this.rendersCache[control.id] = { persistent: false, images: [] };
 
-			this.rendersCache[control.id][data.pos] = data.image;
+			this.rendersCache[control.id].images[data.pos] = data.image;
 
 			if (typeof control.updateRenders == 'function')
 				control.updateRenders(data.pos);
