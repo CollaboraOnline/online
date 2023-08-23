@@ -327,6 +327,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			'children': [
 				{
 					'id': 'renamedocument',
+					'class': 'unoRenameDocument',
 					'type': 'bigcustomtoolitem',
 					'text': _('Rename'),
 				}

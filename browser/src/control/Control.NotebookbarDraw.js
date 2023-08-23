@@ -267,6 +267,17 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'accessibility': { focusBack: true, combination: 'FP', de: null }
 					}
 				]
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'renamedocument',
+						'class': 'unoRenameDocument',
+						'type': 'bigcustomtoolitem',
+						'text': _('Rename'),
+					}
+				]
 			}
 		];
 
