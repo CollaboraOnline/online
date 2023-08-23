@@ -1001,6 +1001,7 @@ bool COOLWSD::EnableAccessibility = false;
 FILE *COOLWSD::TraceEventFile = NULL;
 std::string COOLWSD::LogLevel = "trace";
 std::string COOLWSD::LogLevelStartup = "trace";
+std::string COOLWSD::LogToken;
 std::string COOLWSD::MostVerboseLogLevelSettableFromClient = "notice";
 std::string COOLWSD::LeastVerboseLogLevelSettableFromClient = "fatal";
 std::string COOLWSD::UserInterface = "default";
@@ -2420,6 +2421,11 @@ void COOLWSD::innerInitialize(Application& self)
     {
         LOG_INF("Setting log-level to [" << LogLevelStartup << "] and delaying setting to ["
                 << LogLevel << "] until after WSD initialization.");
+    }
+
+    if (getConfigValue<bool>(conf, "browser_logging", "false"))
+    {
+        LogToken = Util::rng::getHardRandomHexString(16);
     }
 
     // First log entry.
