@@ -47,6 +47,7 @@ constexpr int HttpPortNumber = 9191;
 constexpr int SslPortNumber = 9193;
 
 static bool EnableHttps = false;
+bool EnableExperimental = false;
 
 struct Session
 {

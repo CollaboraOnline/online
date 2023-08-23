@@ -42,6 +42,8 @@ using Poco::Util::XMLConfiguration;
 #define MIN_PWD_ITERATIONS 1000
 #define MIN_PWD_HASH_LENGTH 20
 
+bool EnableExperimental = false;
+
 class CoolConfig final: public XMLConfiguration
 {
 public:
