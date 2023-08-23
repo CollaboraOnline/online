@@ -220,6 +220,7 @@ public:
         {}
 };
 
+// coverity[root_function] : don't warn about uncaught exceptions
 int main (int argc, char **argv)
 {
     (void) argc; (void) argv;
