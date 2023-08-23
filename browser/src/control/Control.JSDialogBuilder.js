@@ -1177,7 +1177,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var title = builder._cleanText(item.text);
 
 				var tab = L.DomUtil.create('button', 'ui-tab ' + builder.options.cssClass, tabsContainer);
-				tab.id = item.id;
+				// avoid duplicated ids: we receive plain number from core, append prefix
+				tab.id = Number.isInteger(parseInt(item.id)) ? data.id + '-' + item.id : item.id;
 				tab.textContent = title;
 				tab.setAttribute('role', 'tab');
 				tab.setAttribute('aria-label', title);
