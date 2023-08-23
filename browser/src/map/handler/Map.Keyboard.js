@@ -361,7 +361,7 @@ L.Map.Keyboard = L.Handler.extend({
 			ev.preventDefault();
 			return;
 		}
-		else if (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing' && this._map._docLayer._preview.partsFocused === true) {
+		else if ((this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') && this._map._docLayer._preview.partsFocused === true) {
 			if (!this.modifier && (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.RIGHT || ev.keyCode === this.keyCodes.LEFT
 				|| ev.keyCode === this.keyCodes.DELETE || ev.keyCode === this.keyCodes.BACKSPACE) && ev.type === 'keydown') {
 				var partToSelect = (ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.LEFT) ? 'prev' : 'next';
