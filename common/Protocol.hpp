@@ -290,15 +290,16 @@ namespace COOLProtocol
             return std::string();
         }
 
-        const std::string firstLine = getFirstLine(message, std::min(length, maxNonAbbreviatedMsgLen));
+        const size_t pos = Util::getDelimiterPosition(message,
+            std::min(length, maxNonAbbreviatedMsgLen), '\n');
 
         // If first line is less than the length (minus newline), add ellipsis.
-        if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
+        if (pos < static_cast<std::string::size_type>(length) - 1)
         {
-            return firstLine + "...";
+            return std::string(message, pos) + "...";
         }
 
-        return firstLine;
+        return std::string(message, pos);
     }
 
     inline std::string getAbbreviatedMessage(const std::string& message)
