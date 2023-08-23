@@ -1013,8 +1013,7 @@ namespace Util
             {
                 std::string key = (*it).substr(0, delimiterPosition);
                 delimiterPosition++;
-                std::string value = (*it).substr(delimiterPosition);
-                result[key] = value;
+                result[key] = (*it).substr(delimiterPosition);
             }
             else
             {
