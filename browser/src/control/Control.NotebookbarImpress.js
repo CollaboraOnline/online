@@ -345,17 +345,30 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			});
 		}
 
-		content.push({
-			'type': 'container',
-			'children': [
-				{
-					'id': 'properties',
-					'type': 'bigtoolitem',
-					'text': _('Properties'),
-					'command': '.uno:SetDocumentProperties'
-				}
-			]
-		});
+		content.push(
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'properties',
+						'type': 'bigtoolitem',
+						'text': _('Properties'),
+						'command': '.uno:SetDocumentProperties'
+					}
+				]
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'renamedocument',
+						'class': 'unoRenameDocument',
+						'type': 'bigcustomtoolitem',
+						'text': _('Rename'),
+					}
+				]
+			}
+		);
 
 		return this.getTabPage('File', content);
 	},

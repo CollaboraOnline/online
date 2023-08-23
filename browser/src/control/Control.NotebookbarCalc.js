@@ -271,6 +271,17 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'accessibility': { focusBack: true,	combination: 'PR', de: null }
 					}
 				]
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'renamedocument',
+						'class': 'unoRenameDocument',
+						'type': 'bigcustomtoolitem',
+						'text': _('Rename'),
+					}
+				]
 			}
 		];
 
