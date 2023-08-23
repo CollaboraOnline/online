@@ -440,6 +440,15 @@ void WhiteBoxTests::testMessageAbbreviation()
     abbr = "1234567890123...";
     LOK_ASSERT_EQUAL(abbr, COOLProtocol::getAbbreviatedMessage(s.data(), s.size()));
     LOK_ASSERT_EQUAL(abbr, COOLProtocol::getAbbreviatedMessage(s));
+
+    std::string long_utf8_str_a(COOLProtocol::maxNonAbbreviatedMsgLen - 3, 'a');
+    LOK_ASSERT_EQUAL(long_utf8_str_a + std::string("mü..."),
+                     COOLProtocol::getAbbreviatedMessage(long_utf8_str_a + "müsli"));
+
+    // don't allow the ü sequence to be broken
+    std::string long_utf8_str_b(COOLProtocol::maxNonAbbreviatedMsgLen - 2, 'a');
+    LOK_ASSERT_EQUAL(long_utf8_str_b + std::string("mü..."),
+                     COOLProtocol::getAbbreviatedMessage(long_utf8_str_b + "müsli"));
 }
 
 void WhiteBoxTests::testReplace()
