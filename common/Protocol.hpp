@@ -312,7 +312,7 @@ namespace COOLProtocol
             return message.substr(0, pos) + "...";
         }
 
-        return message;
+        return message.substr(0, pos);
     }
 
     template <typename T>
