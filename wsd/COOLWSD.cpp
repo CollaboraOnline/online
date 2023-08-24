@@ -2324,6 +2324,10 @@ void COOLWSD::innerInitialize(Application& self)
             ClientPortProto = Socket::Type::IPv6;
         else if (Util::iequal(proto, "all"))
             ClientPortProto = Socket::Type::All;
+        else if (Util::iequal(proto, "unix")) {
+            ClientPortProto = Socket::Type::Unix;
+            Socket::SocketPath = getConfigValue<std::string>(conf, "net.unix_socket", "/tmp/coolwsd.sock");
+        }
         else
             LOG_WRN("Invalid protocol: " << proto);
     }

@@ -33,6 +33,9 @@ public:
         _sockFactory(std::move(sockFactory))
     {
     }
+#if !MOBILEAPP
+    ~ServerSocket();
+#endif
 
     /// Control access to a bound TCP socket
     enum Type { Local, Public };
@@ -118,6 +121,7 @@ private:
 #endif
     SocketPoll& _clientPoller;
     std::shared_ptr<SocketFactory> _sockFactory;
+    std::string _socketPath;
 };
 
 #if !MOBILEAPP
