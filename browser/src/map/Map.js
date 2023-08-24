@@ -280,7 +280,6 @@ L.Map = L.Evented.extend({
 		this.on('docloaded', function(e) {
 			this._docLoaded = e.status;
 			if (this._docLoaded) {
-				app.socket.sendMessage('blockingcommandstatus isRestrictedUser=' + this.Restriction.isRestrictedUser + ' isLockedUser=' + this.Locking.isLockedUser);
 				app.idleHandler.notifyActive();
 				if (!document.hasFocus()) {
 					this.fire('editorgotfocus');
