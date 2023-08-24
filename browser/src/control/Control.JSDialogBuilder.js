@@ -1287,10 +1287,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						if (currentChildNodes.length <= 0) {
 							return null;
 						}
-						
+
 						for (var childIndex = 0; childIndex < currentChildNodes.length; childIndex++) {
 							var currentChildNode = currentChildNodes[childIndex];
-							
+
 							if (currentChildNode.tabIndex === undefined) {
 								return null;
 							}
@@ -1305,8 +1305,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 							{
 								var classListContainsInvalidClass = false;
 								if (currentChildNode.classList !== undefined) {
-									classListContainsInvalidClass = currentChildNode.classList.contains('hidden') || 
-																	currentChildNode.classList.contains('jsdialog-begin-marker') || 
+									classListContainsInvalidClass = currentChildNode.classList.contains('hidden') ||
+																	currentChildNode.classList.contains('jsdialog-begin-marker') ||
 																	currentChildNode.classList.contains('jsdialog-end-marker');
 								}
 
@@ -2260,6 +2260,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var iconURLAliases = {
+			'file-saveas': 'saveas',
 			'home-search': 'recsearch',
 			'addmb-menu': 'ok',
 			'closetablet': 'view',
