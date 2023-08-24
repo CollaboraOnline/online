@@ -895,6 +895,7 @@ bool COOLWSD::NoSeccomp = false;
 bool COOLWSD::AdminEnabled = true;
 bool COOLWSD::UnattendedRun = false;
 bool COOLWSD::SignalParent = false;
+bool COOLWSD::UseEnvVarOptions = false;
 std::string COOLWSD::RouteToken;
 #if ENABLE_DEBUG
 bool COOLWSD::SingleKit = false;
@@ -2122,7 +2123,9 @@ void COOLWSD::innerInitialize(Application& self)
         }
     }
 
-    // Override any settings passed on the command-line.
+    // Override any settings passed on the command-line or via environment variables
+    if (UseEnvVarOptions)
+        initializeEnvOptions();
     AutoPtr<AppConfigMap> overrideConfig(new AppConfigMap(_overrideSettings));
     conf.addWriteable(overrideConfig, PRIO_APPLICATION); // Highest priority
 
@@ -2888,6 +2891,16 @@ void COOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false));
 
+    optionSet.addOption(Option("use-env-vars", "",
+                               "Use the environment variables defined on "
+                               "https://sdk.collaboraonline.com/docs/installation/"
+                               "CODE_Docker_image.html#setting-the-application-configuration-"
+                               "dynamically-via-environment-variables to set options. "
+                               "'DONT_GEN_SSL_CERT' is forcibly enabled and 'extra_params' is "
+                               "ignored even when using this option.")
+                            .required(false)
+                            .repeatable(false));
+
 #if ENABLE_DEBUG
     optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
                         .required(false)
@@ -2956,6 +2969,8 @@ void COOLWSD::handleOption(const std::string& optionName,
         LoTemplate = value;
     else if (optionName == "signal")
         SignalParent = true;
+    else if (optionName == "use-env-vars")
+        UseEnvVarOptions = true;
 
 #if ENABLE_DEBUG
     else if (optionName == "unitlib")
@@ -2984,6 +2999,45 @@ void COOLWSD::handleOption(const std::string& optionName,
     (void) optionName;
     (void) value;
 #endif
+}
+
+void COOLWSD::initializeEnvOptions()
+{
+    int n = 0;
+    char* aliasGroup;
+    while ((aliasGroup = std::getenv(("aliasgroup" + std::to_string(n + 1)).c_str())) != nullptr)
+    {
+        bool first = true;
+        std::istringstream aliasGroupStream;
+        aliasGroupStream.str(aliasGroup);
+        for (std::string alias; std::getline(aliasGroupStream, alias, ',');)
+        {
+            if (first)
+            {
+                _overrideSettings["storage.wopi.alias_groups.group[" + std::to_string(n) +
+                                  "].host"] = alias;
+                first = false;
+            }
+            else
+            {
+                _overrideSettings["storage.wopi.alias_groups.group[" + std::to_string(n) +
+                                  "].alias"] = alias;
+            }
+        }
+
+        n++;
+    }
+    if (n >= 1)
+    {
+        _overrideSettings["alias_groups[@mode]"] = "groups";
+    }
+
+    char* optionValue;
+    if ((optionValue = std::getenv("username")) != nullptr) _overrideSettings["admin_console.username"] = optionValue;
+    if ((optionValue = std::getenv("password")) != nullptr) _overrideSettings["admin_console.password"] = optionValue;
+    if ((optionValue = std::getenv("server_name")) != nullptr) _overrideSettings["server_name"] = optionValue;
+    if ((optionValue = std::getenv("dictionaries")) != nullptr) _overrideSettings["allowed_languages"] = optionValue;
+    if ((optionValue = std::getenv("remoteconfigurl")) != nullptr) _overrideSettings["remote_config.remote_url"] = optionValue;
 }
 
 #if !MOBILEAPP
