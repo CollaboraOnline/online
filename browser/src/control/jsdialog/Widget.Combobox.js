@@ -27,6 +27,9 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	var content = L.DomUtil.create('span', '', entry);
 	content.innerText = data.text;
 
+	if (data.selected)
+		L.DomUtil.addClass(entry, 'selected');
+
 	if (data.customRenderer) {
 		var cachedComboboxEntries = builder.rendersCache[data.comboboxId];
 		var requestRender = true;
@@ -102,8 +105,20 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	var arrow = L.DomUtil.create('span', builder.options.cssClass + ' ui-listbox-arrow', button);
 	arrow.id = 'listbox-arrow-' + data.id;
 
+	if (data.selectedCount > 0)
+		var selectedEntryPos = parseInt(data.selectedEntries[0]);
+
 	content.addEventListener('keyup', function () {
 		builder.callback('combobox', 'change', data, this.value, builder);
+
+		// update selection
+		selectedEntryPos = null;
+		for (var i in data.entries) {
+			if (data.entries[i] == this.value) {
+				selectedEntryPos = parseInt(i);
+				break;
+			}
+		}
 	});
 
 	var dropdownEntriesId = data.id + '-entries';
@@ -133,7 +148,8 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 				customRenderer: data.customEntryRenderer,
 				comboboxId: data.id,
 				pos: i,
-				text: data.entries[i].toString()
+				text: data.entries[i].toString(),
+				selected: parseInt(i) === selectedEntryPos
 			};
 
 			json.children[0].children.push(entry);
