@@ -114,7 +114,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['colorlistbox'] = this._colorControl;
 		this._controlHandlers['borderstyle'] = this._borderControl;
 		this._controlHandlers['treelistbox'] = JSDialog.treeView;
-		this._controlHandlers['iconview'] = this._iconViewControl;
+		this._controlHandlers['iconview'] = JSDialog.iconView;
 		this._controlHandlers['drawingarea'] = JSDialog.drawingArea;
 		this._controlHandlers['rootcomment'] = this._rootCommentControl;
 		this._controlHandlers['comment'] = this._commentControl;
@@ -1943,67 +1943,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_iconViewEntry: function (parentContainer, parentData, entry, builder) {
-		var disabled = parentData.enabled === 'false' || parentData.enabled === false;
-
-		if (entry.separator && (entry.separator === 'true' || entry.separator === true)) {
-			L.DomUtil.create('hr', builder.options.cssClass + ' ui-iconview-separator', parentContainer);
-			return;
-		}
-
-		var entryContainer = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-entry', parentContainer);
-		if (entry.selected && (entry.selected === 'true' || entry.selected === true))
-			$(entryContainer).addClass('selected');
-
-		var icon = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-icon', entryContainer);
-		var img = L.DomUtil.create('img', builder.options.cssClass, icon);
-		if (entry.image)
-			img.src = entry.image;
-		img.alt = entry.text;
-		if (entry.tooltip)
-			img.title = entry.tooltip;
-		else
-			img.title = entry.text;
-
-		if (!disabled) {
-			var singleClick = parentData.singleclickactivate === 'true' || parentData.singleclickactivate === true;
-			$(entryContainer).click(function() {
-				$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
-				builder.callback('iconview', 'select', parentData, entry.row, builder);
-				if (singleClick) {
-					builder.callback('iconview', 'activate', parentData, entry.row, builder);
-				}
-			});
-			if (!singleClick) {
-				$(entryContainer).dblclick(function() {
-					$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
-					builder.callback('iconview', 'activate', parentData, entry.row, builder);
-				});
-			}
-			builder._preventDocumentLosingFocusOnClick(entryContainer);
-		}
-	},
-
-	_iconViewControl: function (parentContainer, data, builder) {
-		var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview', parentContainer);
-		container.id = data.id;
-
-		var disabled = data.enabled === 'false' || data.enabled === false;
-		if (disabled)
-			L.DomUtil.addClass(container, 'disabled');
-
-		for (var i in data.entries) {
-			builder._iconViewEntry(container, data, data.entries[i], builder);
-		}
-
-		var firstSelected = $(container).children('.selected').get(0);
-		var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
-		if (firstSelected)
-			firstSelected.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
-
-		return false;
-	},
-
 	_valuesetControl: function (parentContainer, data, builder) {
 		var elem;
 		var image;
@@ -3328,18 +3267,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			control.focus();
 			break;
 		case 'select':
-			$(control).children('.selected').removeClass('selected');
-
-			var pos = parseInt(data.position);
-			var entry = control.children.length > pos ? control.children[pos] : null;
-
-			if (entry) {
-				L.DomUtil.addClass(entry, 'selected');
-				var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
-				entry.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
-			} else if (pos != -1)
-				console.warn('not found entry: "' + pos + '" in: "' + data.control_id + '"');
-
+			if (typeof control.onSelect === 'function')
+				control.onSelect(parseInt(data.position));
+			else
+				window.app.console.warn('widget "' + data.control_id + '" doesn\'t support "select" action');
 			break;
 
 		case 'show':

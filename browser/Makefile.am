@@ -332,6 +332,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.Calendar.js \
 	src/control/jsdialog/Widget.DrawingArea.js \
 	src/control/jsdialog/Widget.FormulabarEdit.js \
+	src/control/jsdialog/Widget.IconView.js \
 	src/control/jsdialog/Widget.LanguageSelector.js \
 	src/control/jsdialog/Widget.MenuButton.js \
 	src/control/jsdialog/Widget.MobileTabControl.js \
