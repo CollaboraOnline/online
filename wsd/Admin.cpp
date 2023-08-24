@@ -362,7 +362,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         if (tokens.size() < 2)
         {
             LOG_DBG("Auth command without any token");
-            sendMessage("InvalidAuthToken");
+            sendTextFrame("InvalidAuthToken");
         }
         std::string jwtToken;
         COOLProtocol::getTokenString(tokens[1], "jwt", jwtToken);
@@ -373,12 +373,12 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         if (authAgent.verify(jwtToken))
         {
             LOG_TRC("JWT token is valid");
-            sendMessage("ValidAuthToken");
+            sendTextFrame("ValidAuthToken");
         }
         else
         {
             LOG_DBG("Invalid auth token");
-            sendMessage("InvalidAuthToken");
+            sendTextFrame("InvalidAuthToken");
         }
     }
 }
