@@ -18,7 +18,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 							'type': 'toolitem',
 							'text': _('Save'),
 							'command': '.uno:Save',
-							'accessibility': { focusBack: false, combination: 'S1', de: '8' }
+							'accessKey': '1'
 						}
 					]
 				} : {}

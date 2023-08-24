@@ -240,7 +240,8 @@ L.Control.Notebookbar = L.Control.extend({
 						'id': 'save',
 						'type': 'toolitem',
 						'text': _('Save'),
-						'command': '.uno:Save'
+						'command': '.uno:Save',
+						'accessKey': '1'
 					} : {}
 				]
 			}
