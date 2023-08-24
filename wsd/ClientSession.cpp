@@ -1249,7 +1249,24 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
 #if ENABLE_FEATURE_LOCK
         sendLockedInfo();
 #endif
-        return forwardToChild(oss.str(), docBroker);
+
+#if ENABLE_FEATURE_RESTRICTION
+        sendRestrictionInfo();
+#endif
+
+        bool result = forwardToChild(oss.str(), docBroker);
+#if ENABLE_FEATURE_LOCK || ENABLE_FEATURE_RESTRICTION
+        if (result)
+        {
+            forwardToChild(
+                std::string("blockingcommandstatus isRestrictedUser=") +
+                    (CommandControl::RestrictionManager::isRestrictedUser() ? "true" : "false") +
+                    std::string(" isLockedUser=") +
+                    (CommandControl::LockManager::isLockedUser() ? "true" : "false"),
+                docBroker);
+        }
+#endif
+        return result;
     }
     catch (const Poco::SyntaxException&)
     {
@@ -1289,6 +1306,27 @@ void ClientSession::sendLockedInfo()
     const std::string lockInfoString = ossLockInfo.str();
     LOG_TRC("Sending feature locking info to client: " << lockInfoString);
     sendTextFrame("featurelock: " + lockInfoString);
+}
+#endif
+
+#if ENABLE_FEATURE_RESTRICTION
+void ClientSession::sendRestrictionInfo()
+{
+    Poco::JSON::Object::Ptr restrictionInfo = new Poco::JSON::Object();
+    restrictionInfo->set("IsRestrictedUser",
+                         CommandControl::RestrictionManager::isRestrictedUser());
+
+    // Poco:Dynamic:Var does not support std::unordred_set so converted to std::vector
+    std::vector<std::string> restrictedCommandList(
+        CommandControl::RestrictionManager::getRestrictedCommandList().begin(),
+        CommandControl::RestrictionManager::getRestrictedCommandList().end());
+    restrictionInfo->set("RestrictedCommandList", restrictedCommandList);
+
+    std::ostringstream ossRestrictionInfo;
+    restrictionInfo->stringify(ossRestrictionInfo);
+    const std::string restrictionInfoString = ossRestrictionInfo.str();
+    LOG_TRC("Sending command restriction info to client: " << restrictionInfoString);
+    sendTextFrame("restrictedCommands: " + restrictionInfoString);
 }
 #endif
 
