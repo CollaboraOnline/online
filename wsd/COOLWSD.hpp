@@ -249,6 +249,7 @@ public:
     static bool AdminEnabled;
     static bool UnattendedRun; //< True when run from an unattended test, not interactive.
     static bool SignalParent;
+    static bool UseEnvVarOptions;
     static std::string RouteToken;
 #if ENABLE_DEBUG
     static bool SingleKit;
@@ -518,6 +519,7 @@ protected:
 
     void defineOptions(Poco::Util::OptionSet& options) override;
     void handleOption(const std::string& name, const std::string& value) override;
+    void initializeEnvOptions();
     int main(const std::vector<std::string>& args) override;
 
     /// Handle various global static destructors.
