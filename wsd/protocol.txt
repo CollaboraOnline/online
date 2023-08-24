@@ -907,7 +907,7 @@ wopiSrcMap
 
 verifyauth jwt=<jwt_token>
 
-    verify jwt token without shutting down the socket connection
+    verify jwt token without shutting down the socket connection, works only with monitor
 
 admin -> client
 ===============
