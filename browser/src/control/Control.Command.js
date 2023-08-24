@@ -62,7 +62,7 @@ L.Map.include({
 			return;
 		var message = [
 			'<div class="container">',
-			'<div id="unlock-image" class="item illustration"></div>',
+			'<img id="unlock-image" class="item illustration">',
 			'<div class="item">',
 			'<h1>' + this.Locking.unlockTitle + '</h1>',
 			'<p>' + this.Locking.unlockDescription + '<p>',
@@ -75,19 +75,28 @@ L.Map.include({
 		});
 		message.push('</ul>', '</div>', '<div>');
 
-		message = message.join();
+		message = message.join('');
 
 		this.uiManager.showInfoModal('unlock-features-popup', this.Locking.unlockTitle, ' ', ' ', _('Unlock'), function() {
 			window.open(this.Locking.unlockLink, '_blank');
 			this.uiManager.closeModal(this.uiManager.generateModalId('unlock-features-popup'));
 		}.bind(this), true);
-		document.getElementById('unlock-features-popup').querySelectorAll('p')[0].outerHTML = message;
+
+		var paraTag = document.getElementById('unlock-features-popup').querySelectorAll('p')[0];
+		if (paraTag)
+			paraTag.outerHTML = message;
+		else {
+			var popup = document.getElementById('unlock-features-popup');
+			var el = document.createElement('p');
+			popup.insertBefore(el, popup.firstChild);
+			el.outerHTML = message;
+		}
 
 		var unlockImage = L.DomUtil.get('unlock-image');
 		if (this.Locking.unlockImageUrlPath) {
-			unlockImage.style.backgroundImage = 'url(remote' + this.Locking.unlockImageUrlPath + ')';
+			unlockImage.src = this.Locking.unlockImageUrlPath;
 		} else {
-			unlockImage.style.backgroundImage = 'url(images/lock-illustration.svg)';
+			unlockImage.src = 'images/lock-illustration.svg';
 		}
 	},
 
