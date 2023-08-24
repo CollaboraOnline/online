@@ -171,7 +171,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			(
 				(window.uiDefaults && window.uiDefaults.saveAsMode === 'group') ?
 				{
-					'id': 'file-saveas',
+					'id': 'saveas',
 					'type': 'bigmenubartoolitem',
 					'text': _('Save As'),
 					'accessibility': { focusBack: true, combination: 'SA', de: null }
@@ -187,6 +187,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			(!this._map['wopi'].UserCanNotWriteRelative) ?
 			{
 				'id': 'exportas',
+				'class': 'unoexportas',
 				'type': 'bigmenubartoolitem',
 				'text': _('Export As'),
 				'accessibility': { focusBack: true, combination: 'EA', de: null }
@@ -465,6 +466,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'id': 'toggleuimode',
+				'class': 'unotoggleuimode',
 				'type': 'bigmenubartoolitem',
 				'text': _('Compact view'),
 				'command': _('Toggle UI Mode'),
@@ -1212,6 +1214,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			(this._map['wopi'].EnableRemoteLinkPicker) ? {
 				'id': 'insert-insert-smart-picker',
+				'class': 'unoremotelink',
 				'type': 'bigcustomtoolitem',
 				'text': _('Smart Picker'),
 				'command': 'remotelink',

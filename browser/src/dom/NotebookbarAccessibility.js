@@ -34,7 +34,6 @@ var NotebookbarAccessibility = function() {
 			visible = visible.style.display !== 'none';
 
 		if (visible) {
-			console.log('display: ' + anchorElement.style.display);
 			var infoBox = document.createElement('div');
 			infoBox.classList.add('accessibility-info-box');
 			infoBox.textContent = anchorElement.accessKey;
