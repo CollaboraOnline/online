@@ -18,7 +18,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 							'type': 'toolitem',
 							'text': _('Save'),
 							'command': '.uno:Save',
-							'accessibility': { focusBack: true, combination: 'S1', de: null }
+							'accessKey': '1'
 						}
 					]
 				} : {}
