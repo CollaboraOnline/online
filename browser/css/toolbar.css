@@ -1513,6 +1513,13 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 
 #userListSummary {
 	display: flex;
+	border: 0px;
+	background: transparent;
+}
+
+#userListSummary:hover {
+	background: transparent;
+	cursor: pointer;
 }
 
 #userListSummary .user-info,
