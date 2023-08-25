@@ -26,7 +26,7 @@ errorMessages.leaving = _('You are leaving the document. The following web page 
 errorMessages.docloadtimeout = _('Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator.');
 errorMessages.docunloadingretry = _('Cleaning up the document from the last session.');
 errorMessages.docunloadinggiveup = _('We are in the process of cleaning up this document from the last session, please try again later.');
-
+errorMessages.clusterconfiguration = _('Your %productName cluster appear to be mis-configured or scaling rapidly - please contact your system administrator. Continuing with editing may result in multiple users not seeing each other, conflicts in the document storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 but connected to serverId %2');
 if (window.ThisIsAMobileApp) {
 	errorMessages.storage = {
 		loadfailed: _('Failed to load document.'),

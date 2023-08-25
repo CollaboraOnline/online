@@ -10,6 +10,7 @@ app.definitions.Socket = L.Class.extend({
 	ReconnectCount: 0,
 	WasShownLimitDialog: false,
 	WSDServer: {},
+	IndirectSocketReconnectCount: 0,
 
 	/// Whether Trace Event recording is enabled or not. ("Enabled" here means whether it can be
 	/// turned on (and off again), not whether it is on.)
@@ -574,6 +575,39 @@ app.definitions.Socket = L.Class.extend({
 					else
 						this._map.fire('postMessage', {msgId: 'Reloading', args: {Reason: 'Reconnected'}});
 					setTimeout(reloadFunc, 5000);
+				}
+			}
+			if (window.indirectSocket) {
+				if (window.expectedServerId && window.expectedServerId != this.WSDServer.Id) {
+					if (this.IndirectSocketReconnectCount++ >= 3) {
+						var msg = errorMessages.clusterconfiguration.replace('%productName', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition (unbranded)'));
+						msg = msg.replace(/%0/g, window.expectedServerId);
+						msg = msg.replace(/%1/g, window.routeToken);
+						msg = msg.replace(/%2/g, this.WSDServer.Id);
+						this._map.uiManager.showInfoModal('wrong-server-modal', _('Cluster configuration warning'), msg, '', _('OK'), null, false);
+						this.IndirectSocketReconnectCount = 0;
+					} else {
+						this._map.showBusy(_('Wrong server, reconnecting...'), false);
+						if (this._map._docLayer) {
+							this._map._docLayer.removeAllViews();
+						}
+						app.idleHandler._active = false;
+
+						// detach all the handlers
+						this.close();
+
+						// Reload the document
+						clearTimeout(this.timer);
+						setTimeout(function () {
+							try {
+								// Activate and cancel timer and dialogs.
+								app.idleHandler._activate();
+							} catch (error) {
+								window.app.console.warn('Cannot activate map');
+							}
+						}, 3000);
+						return;
+					}
 				}
 			}
 			window.migrating = false;

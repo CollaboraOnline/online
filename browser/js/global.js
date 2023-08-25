@@ -719,6 +719,7 @@ window.app = {
 		http.addEventListener('load', function() {
 			if (this.status === 200) {
 				var uriWithRouteToken = http.response.uri;
+				global.expectedServerId = http.response.serverId;
 				var params = (new URL(uriWithRouteToken)).searchParams;
 				global.routeToken = params.get('RouteToken');
 				window.app.console.log('updated routeToken: ' + global.routeToken);
