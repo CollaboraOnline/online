@@ -331,7 +331,7 @@ var NotebookbarAccessibility = function() {
 	this.addTabAccelerators = function() {
 		// Remove all info boxes first.
 		this.removeAllInfoBoxes();
-
+		this.tabInfoList = this.definitions.getDefinitions();
 		for (var tabId in this.tabInfoList) {
 			if (Object.prototype.hasOwnProperty.call(this.tabInfoList, tabId)) {
 				var element = document.getElementById(tabId);

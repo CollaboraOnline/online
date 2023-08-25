@@ -87,7 +87,7 @@ var NotebookbarAccessibilityDefinitions = function() {
 
 	this.checkIntegratorButtons = function(selectedDefinitions) {
 		// The list of containers of the buttons which are added by integrations (via insertbutton post message etc).
-		var containerList = ['shortcutstoolbox'];
+		var containerList = ['save', 'userListHeader'];
 
 		for (var i = 0; i < containerList.length; i++) {
 			var container = document.getElementById(containerList[i]);

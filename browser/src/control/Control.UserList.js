@@ -152,10 +152,12 @@ L.Control.UserList = L.Control.extend({
 
 	renderHeaderAvatars: function() {
 		if (window.mode.isMobile() || this.hideUserList() || this.options.listUser.length === 1) {
+			document.getElementById('userListSummary').removeAttribute('accesskey');
 			return;
 		}
 
 		var headerUserList = this.options.listUser.slice(-this.options.userLimitHeader);
+		document.getElementById('userListSummary').setAttribute('accesskey','UP');
 
 		// Remove users that should no longer be in the header
 		Array.from(document.querySelectorAll('#userListSummary [data-view-id]')).map(function(element) {
