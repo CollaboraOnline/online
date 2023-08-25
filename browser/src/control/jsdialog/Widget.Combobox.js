@@ -46,8 +46,11 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 			// render on demand
 			var onIntersection = function (entries) {
 				entries.forEach(function (entry) {
-					if (entry.isIntersecting)
-						builder.callback('combobox', 'render_entry', {id: data.comboboxId}, data.pos, builder);
+					if (entry.isIntersecting) {
+						builder.callback('combobox', 'render_entry', {id: data.comboboxId},
+							data.pos + ';' + Math.floor(100 * window.devicePixelRatio) + ';' + Math.floor(100 * window.devicePixelRatio),
+							builder);
+					}
 				});
 			};
 

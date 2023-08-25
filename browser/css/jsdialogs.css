@@ -758,6 +758,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .ui-combobox-entry img {
 	border: 1px solid transparent;
+	max-height: 24px; /* required for hidpi*/
 }
 
 .ui-combobox-entry img:hover {
@@ -780,6 +781,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 #applystyle-dropdown .ui-combobox-entry img {
 	filter: none !important;
+	max-height: 30px; /* hidpi, avoid blurry text */
 }
 
 /* ui-textarea */
