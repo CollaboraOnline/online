@@ -1417,6 +1417,13 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'text': _UNO('.uno:TransformDialog'),
 				'command': '.uno:TransformDialog',
 				'accessibility': { focusBack: true, combination: 'TD', de: null }
+			},
+			{
+				'id': 'format-theme-dialog',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:ThemeDialog'),
+				'command': '.uno:ThemeDialog',
+				'accessibility': { focusBack: false, combination: 'J', de: null }
 			}
 		];
 
