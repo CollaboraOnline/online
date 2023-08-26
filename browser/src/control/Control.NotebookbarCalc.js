@@ -1956,6 +1956,13 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'enabled': 'true',
 				'accessibility': { focusBack: true,	combination: 'SM', de: null }
 			},
+			{
+				'id': 'format-theme-dialog',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:ThemeDialog'),
+				'command': '.uno:ThemeDialog',
+				'accessibility': { focusBack: false, combination: 'J', de: null }
+			}
 		];
 
 		return this.getTabPage('Format', content);
