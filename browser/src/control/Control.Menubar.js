@@ -469,7 +469,8 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:FormatLine'},
 				{uno: '.uno:FormatArea'},
 				{type: 'separator'},
-				{uno: '.uno:OutlineBullet'}]
+				{uno: '.uno:OutlineBullet'},
+				{uno: '.uno:ThemeDialog'}]
 			},
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), id:'table', type: 'menu', menu: [
 				{name: _UNO('.uno:InsertTable', 'text'), uno: '.uno:InsertTable'},
@@ -603,7 +604,8 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:FormatLine'},
 				{uno: '.uno:FormatArea'},
 				{type: 'separator'},
-				{uno: '.uno:OutlineBullet'}]
+				{uno: '.uno:OutlineBullet'},
+				{uno: '.uno:ThemeDialog'}]
 			},
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), id: 'table', type: 'menu', menu: [
 				{name: _UNO('.uno:InsertTable', 'text'), uno: '.uno:InsertTable'},

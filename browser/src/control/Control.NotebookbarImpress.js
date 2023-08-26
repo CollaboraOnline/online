@@ -960,6 +960,13 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:TransformDialog'),
 				'command': '.uno:TransformDialog'
+			},
+			{
+				'id': 'format-theme-dialog',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:ThemeDialog'),
+				'command': '.uno:ThemeDialog',
+				'accessibility': { focusBack: false, combination: 'J', de: null }
 			}
 		];
 
