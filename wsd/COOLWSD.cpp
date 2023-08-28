@@ -2315,6 +2315,7 @@ void COOLWSD::innerInitialize(Application& self)
         setenv("COOL_ANONYMIZATION_SALT", anonymizationSaltStr.c_str(), true);
     }
     FileUtil::setUrlAnonymization(AnonymizeUserData, anonymizationSalt);
+    COOLProtocol::setAnonymization(AnonymizeUserData);
 
     {
         std::string proto = getConfigValue<std::string>(conf, "net.proto", "");
