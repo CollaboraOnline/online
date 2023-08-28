@@ -3858,13 +3858,15 @@ private:
         }
         else if (child && child->getPid() > 0)
         {
+            const std::string abbreviatedMessage = COOLWSD::AnonymizeUserData ? "..." : message->abbr();
             LOG_WRN("Child " << child->getPid() << " has no DocBroker to handle message: ["
-                             << message->abbr() << ']');
+                             << abbreviatedMessage << ']');
         }
         else
         {
+            const std::string abbreviatedMessage = COOLWSD::AnonymizeUserData ? "..." : message->abbr();
             LOG_ERR("Cannot handle message with unassociated Kit (PID " << _pid << "): ["
-                                                                        << message->abbr());
+                                                                        << abbreviatedMessage);
         }
     }
 
