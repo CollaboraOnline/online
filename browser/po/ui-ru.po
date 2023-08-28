@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-08-03 19:02+0000\n"
-"Last-Translator: Влад <integration.into.society@gmail.com>\n"
+"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"Last-Translator: Mike Kaganski <mikekaganski@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
-"Language: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.0-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -683,9 +683,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:76
-#, fuzzy
 msgid "Rename Document"
-msgstr "Восстановить документ"
+msgstr "Переименовать документ"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:383
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:660
@@ -791,7 +790,7 @@ msgstr "Показать строку состояния"
 #: src/control/Control.Menubar.js:131 src/control/Control.Menubar.js:424
 #: src/control/Control.Menubar.js:572 src/control/Control.Menubar.js:700
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Скрыть строку меню"
 
 #: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:425
 #: src/control/Control.Menubar.js:568 src/control/Control.Menubar.js:701
@@ -901,7 +900,7 @@ msgstr "Свойства"
 #: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:954
 #: src/control/Control.NotebookbarWriter.js:392
 msgid "Accessibility Support"
-msgstr ""
+msgstr "Поддержка специальных возможностей"
 
 #: src/control/Control.Menubar.js:360
 #: src/control/Control.NotebookbarWriter.js:358
@@ -948,7 +947,7 @@ msgstr "Отправить отзыв"
 #: src/control/Control.Menubar.js:1077 src/control/Control.Menubar.js:1148
 #: src/control/Control.NotebookbarWriter.js:445
 msgid "About"
-msgstr "О"
+msgstr "О программе"
 
 #: src/control/Control.Menubar.js:368 src/control/Control.Menubar.js:520
 #: src/control/Control.Menubar.js:646 src/control/Control.Menubar.js:898
@@ -1153,15 +1152,13 @@ msgstr "Очень свободно"
 #: src/control/Control.NotebookbarDraw.js:52
 #: src/control/Control.NotebookbarImpress.js:61
 #: src/control/Control.NotebookbarWriter.js:26
-#, fuzzy
 msgid "File"
-msgstr "~Файл"
+msgstr "Файл"
 
 #: src/control/Control.NotebookbarCalc.js:19
 #: src/control/Control.NotebookbarDraw.js:58
 #: src/control/Control.NotebookbarImpress.js:66
 #: src/control/Control.NotebookbarWriter.js:32
-#, fuzzy
 msgid "Home"
 msgstr "Главная"
 
@@ -1169,61 +1166,53 @@ msgstr "Главная"
 #: src/control/Control.NotebookbarDraw.js:65
 #: src/control/Control.NotebookbarImpress.js:72
 #: src/control/Control.NotebookbarWriter.js:39
-#, fuzzy
 msgid "Insert"
-msgstr "~Вставка"
+msgstr "Вставка"
 
 #: src/control/Control.NotebookbarCalc.js:32
 #: src/control/Control.NotebookbarDraw.js:71
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:45
-#, fuzzy
 msgid "Layout"
-msgstr "~Макет"
+msgstr "Макет"
 
 #: src/control/Control.NotebookbarCalc.js:38
-#, fuzzy
 msgid "Data"
-msgstr "~Данные"
+msgstr "Данные"
 
 #: src/control/Control.NotebookbarCalc.js:44
 #: src/control/Control.NotebookbarDraw.js:77
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:57
-#, fuzzy
 msgid "Review"
-msgstr "~Рецензирование"
+msgstr "Рецензирование"
 
 #: src/control/Control.NotebookbarCalc.js:50
 #: src/control/Control.NotebookbarDraw.js:83
 #: src/control/Control.NotebookbarImpress.js:87
 #: src/control/Control.NotebookbarWriter.js:63
-#, fuzzy
 msgid "Format"
-msgstr "Ф~ормат"
+msgstr "Формат"
 
 #: src/control/Control.NotebookbarCalc.js:56
 #: src/control/Control.NotebookbarDraw.js:96
 #: src/control/Control.NotebookbarWriter.js:82
-#, fuzzy
 msgid "Draw"
-msgstr "Рисовать"
+msgstr "Рисование"
 
 #: src/control/Control.NotebookbarCalc.js:63
 #: src/control/Control.NotebookbarDraw.js:103
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:89
-#, fuzzy
 msgid "View"
-msgstr "Просмотров"
+msgstr "Вид"
 
 #: src/control/Control.NotebookbarCalc.js:69
 #: src/control/Control.NotebookbarDraw.js:109
 #: src/control/Control.NotebookbarImpress.js:115
 #: src/control/Control.NotebookbarWriter.js:95
-#, fuzzy
 msgid "Help"
-msgstr "~Справка"
+msgstr "Справка"
 
 #: src/control/Control.NotebookbarCalc.js:110
 #: src/control/Control.NotebookbarImpress.js:171
@@ -1267,18 +1256,18 @@ msgstr "Электронная таблица ODF (.ods)"
 #: src/control/Control.NotebookbarImpress.js:311
 #: src/control/Control.NotebookbarWriter.js:270
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "Документ PDF (.pdf) - экспертный режим"
 
 #: src/control/Control.NotebookbarCalc.js:282
 #: src/control/Control.NotebookbarDraw.js:278
 #: src/control/Control.NotebookbarImpress.js:367
 #: src/control/Control.NotebookbarWriter.js:332
 msgid "Rename"
-msgstr ""
+msgstr "Переименовать"
 
 #: src/control/Control.NotebookbarCalc.js:618
 msgid "General"
-msgstr "General"
+msgstr "Общий"
 
 #: src/control/Control.NotebookbarCalc.js:619
 msgid "Number"
@@ -1393,14 +1382,14 @@ msgstr "Компактный вид"
 #: src/control/Control.NotebookbarImpress.js:447
 #: src/control/Control.NotebookbarWriter.js:1405
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Свернуть вкладки"
 
 #: src/control/Control.NotebookbarCalc.js:1237
 #: src/control/Control.NotebookbarDraw.js:361
 #: src/control/Control.NotebookbarImpress.js:448
 #: src/control/Control.NotebookbarWriter.js:1406
 msgid "Collapse Notebook Bar"
-msgstr ""
+msgstr "Свернуть ленту"
 
 #: src/control/Control.NotebookbarCalc.js:1249
 #: src/control/Control.NotebookbarDraw.js:373
@@ -1428,18 +1417,16 @@ msgstr "Фигуры"
 #: src/control/Control.NotebookbarDraw.js:89
 #: src/control/Control.NotebookbarImpress.js:92
 #: src/control/Control.NotebookbarWriter.js:75
-#, fuzzy
 msgid "Table"
-msgstr "~Таблица"
+msgstr "Таблица"
 
 #: src/control/Control.NotebookbarDraw.js:214
 msgid "Image (.png)"
 msgstr "Изображение (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:104
-#, fuzzy
 msgid "Master"
-msgstr "~Master"
+msgstr "Мастер"
 
 #: src/control/Control.NotebookbarImpress.js:266
 msgid "ODF Presentation (.odp)"
@@ -1451,9 +1438,8 @@ msgid "Presentation"
 msgstr "Презентация"
 
 #: src/control/Control.NotebookbarWriter.js:69
-#, fuzzy
 msgid "Form"
-msgstr "Форум"
+msgstr "Форма"
 
 #: src/control/Control.NotebookbarWriter.js:227
 msgid "ODF Text Document (.odt)"
@@ -1609,15 +1595,15 @@ msgstr "Режим выбора: откл"
 
 #: src/control/Control.StatusBar.js:592
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Задать язык для всего текста"
 
 #: src/control/Control.StatusBar.js:595
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Задать язык для абзаца"
 
 #: src/control/Control.StatusBar.js:596
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Задать язык для выделения"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
@@ -1685,7 +1671,7 @@ msgstr "Вставить соединители"
 
 #: src/control/Control.TopToolbar.js:248
 msgid "Hide Menu"
-msgstr ""
+msgstr "Скрыть меню"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -1873,7 +1859,7 @@ msgstr ""
 
 #: src/control/Permission.js:18 src/control/Permission.js:19
 msgid "Enter editing"
-msgstr ""
+msgstr "Начать редактирование"
 
 #: src/control/Permission.js:76
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -2451,6 +2437,7 @@ msgstr "Копирование из документа отключено"
 #: src/map/Clipboard.js:238
 msgid "warning: copy/paste request timed out"
 msgstr ""
+"предупреждение: превышен интервал ожидания запроса на копирование/вставку"
 
 #: src/map/Clipboard.js:301
 msgid "Failed to download clipboard, please re-copy"

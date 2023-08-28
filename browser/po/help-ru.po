@@ -3,17 +3,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-08-03 19:02+0000\n"
-"Last-Translator: Влад <integration.into.society@gmail.com>\n"
+"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"Last-Translator: Mike Kaganski <mikekaganski@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "help/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -591,7 +591,7 @@ msgstr "Перейти к началу строки"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:222-68
 #: html/cool-help.html%2Bdiv.div.table.tr.td:279-68
 msgid "Home"
-msgstr "Home"
+msgstr "Главная"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:80-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:223-18
@@ -1582,7 +1582,7 @@ msgstr "Часто задаваемые вопросы"
 
 #: html/cool-help.html%2Bdiv.p:326-5
 msgid "General"
-msgstr "General"
+msgstr "Общий"
 
 #: html/cool-help.html%2Bdiv.div.p:328-9
 #: html/cool-help.html%2Bdiv.div.h3:559-5
