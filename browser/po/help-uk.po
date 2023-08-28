@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-06-02 02:52+0000\n"
+"PO-Revision-Date: 2023-08-28 09:54+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/help/uk/>\n"
@@ -11,17 +11,17 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
-msgstr "Клавіатурні скорочення"
+msgstr "Комбінації клавіш"
 
 #: html/cool-help.html%2Bdiv.div.h2:21-9
 msgid "General Keyboard Shortcuts"
-msgstr "Загальні клавіатурні скорочення"
+msgstr "Загальні комбінації клавіш"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:23-18
 msgid "Undo"
@@ -591,7 +591,7 @@ msgstr "Перейти на початок рядка"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:222-68
 #: html/cool-help.html%2Bdiv.div.table.tr.td:279-68
 msgid "Home"
-msgstr "Home"
+msgstr "Домівка"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:80-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:223-18
@@ -1166,29 +1166,27 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Стрілка вниз
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-18
 msgid "Go to next sheet."
-msgstr ""
+msgstr "Перейти до наступної таблиці."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-62
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>Page Up"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>5"
+"plus\">+</span><kbd>Page Up"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-18
 msgid "Go to previous sheet."
-msgstr ""
+msgstr "Перейти до попередньої таблиці."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-66
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>Page Down"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>D"
+"plus\">+</span><kbd>Page Down"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""
