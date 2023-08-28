@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-07-01 12:58+0000\n"
-"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
+"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0-dev\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -678,9 +678,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:76
-#, fuzzy
 msgid "Rename Document"
-msgstr "Reparera dokument"
+msgstr "Byt namn på dokumentet"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:383
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:660
@@ -786,7 +785,7 @@ msgstr "Visa statusfältet"
 #: src/control/Control.Menubar.js:131 src/control/Control.Menubar.js:424
 #: src/control/Control.Menubar.js:572 src/control/Control.Menubar.js:700
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Dölj meny-listen"
 
 #: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:425
 #: src/control/Control.Menubar.js:568 src/control/Control.Menubar.js:701
@@ -896,7 +895,7 @@ msgstr "Egenskaper"
 #: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:954
 #: src/control/Control.NotebookbarWriter.js:392
 msgid "Accessibility Support"
-msgstr ""
+msgstr "Tillgänglighetsstöd"
 
 #: src/control/Control.Menubar.js:360
 #: src/control/Control.NotebookbarWriter.js:358
@@ -1148,77 +1147,67 @@ msgstr "Mycket brett"
 #: src/control/Control.NotebookbarDraw.js:52
 #: src/control/Control.NotebookbarImpress.js:61
 #: src/control/Control.NotebookbarWriter.js:26
-#, fuzzy
 msgid "File"
-msgstr "~Arkiv"
+msgstr "Arkiv"
 
 #: src/control/Control.NotebookbarCalc.js:19
 #: src/control/Control.NotebookbarDraw.js:58
 #: src/control/Control.NotebookbarImpress.js:66
 #: src/control/Control.NotebookbarWriter.js:32
-#, fuzzy
 msgid "Home"
-msgstr "He~m"
+msgstr "Hem"
 
 #: src/control/Control.NotebookbarCalc.js:26
 #: src/control/Control.NotebookbarDraw.js:65
 #: src/control/Control.NotebookbarImpress.js:72
 #: src/control/Control.NotebookbarWriter.js:39
-#, fuzzy
 msgid "Insert"
-msgstr "~Infoga"
+msgstr "Infoga"
 
 #: src/control/Control.NotebookbarCalc.js:32
 #: src/control/Control.NotebookbarDraw.js:71
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:45
-#, fuzzy
 msgid "Layout"
-msgstr "~Layout"
+msgstr "Layout"
 
 #: src/control/Control.NotebookbarCalc.js:38
-#, fuzzy
 msgid "Data"
-msgstr "~Data"
+msgstr "Data"
 
 #: src/control/Control.NotebookbarCalc.js:44
 #: src/control/Control.NotebookbarDraw.js:77
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:57
-#, fuzzy
 msgid "Review"
-msgstr "~Granska"
+msgstr "Granska"
 
 #: src/control/Control.NotebookbarCalc.js:50
 #: src/control/Control.NotebookbarDraw.js:83
 #: src/control/Control.NotebookbarImpress.js:87
 #: src/control/Control.NotebookbarWriter.js:63
-#, fuzzy
 msgid "Format"
-msgstr "F~ormat"
+msgstr "Format"
 
 #: src/control/Control.NotebookbarCalc.js:56
 #: src/control/Control.NotebookbarDraw.js:96
 #: src/control/Control.NotebookbarWriter.js:82
-#, fuzzy
 msgid "Draw"
-msgstr "Rit~a"
+msgstr "Rita"
 
 #: src/control/Control.NotebookbarCalc.js:63
 #: src/control/Control.NotebookbarDraw.js:103
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:89
-#, fuzzy
 msgid "View"
-msgstr "Visningar"
+msgstr "Visa"
 
 #: src/control/Control.NotebookbarCalc.js:69
 #: src/control/Control.NotebookbarDraw.js:109
 #: src/control/Control.NotebookbarImpress.js:115
 #: src/control/Control.NotebookbarWriter.js:95
-#, fuzzy
 msgid "Help"
-msgstr "~Hjälp"
+msgstr "Hjälp"
 
 #: src/control/Control.NotebookbarCalc.js:110
 #: src/control/Control.NotebookbarImpress.js:171
@@ -1262,14 +1251,14 @@ msgstr "ODF-kalkylblad (.ods)"
 #: src/control/Control.NotebookbarImpress.js:311
 #: src/control/Control.NotebookbarWriter.js:270
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "PDF-dokument (.pdf) - Expert"
 
 #: src/control/Control.NotebookbarCalc.js:282
 #: src/control/Control.NotebookbarDraw.js:278
 #: src/control/Control.NotebookbarImpress.js:367
 #: src/control/Control.NotebookbarWriter.js:332
 msgid "Rename"
-msgstr ""
+msgstr "Byt namn"
 
 #: src/control/Control.NotebookbarCalc.js:618
 msgid "General"
@@ -1388,14 +1377,14 @@ msgstr "Kompakt vy"
 #: src/control/Control.NotebookbarImpress.js:447
 #: src/control/Control.NotebookbarWriter.js:1405
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Minimera tabbar"
 
 #: src/control/Control.NotebookbarCalc.js:1237
 #: src/control/Control.NotebookbarDraw.js:361
 #: src/control/Control.NotebookbarImpress.js:448
 #: src/control/Control.NotebookbarWriter.js:1406
 msgid "Collapse Notebook Bar"
-msgstr ""
+msgstr "Minimera notebook-listen"
 
 #: src/control/Control.NotebookbarCalc.js:1249
 #: src/control/Control.NotebookbarDraw.js:373
@@ -1423,18 +1412,16 @@ msgstr "Former"
 #: src/control/Control.NotebookbarDraw.js:89
 #: src/control/Control.NotebookbarImpress.js:92
 #: src/control/Control.NotebookbarWriter.js:75
-#, fuzzy
 msgid "Table"
-msgstr "~Tabell"
+msgstr "Tabell"
 
 #: src/control/Control.NotebookbarDraw.js:214
 msgid "Image (.png)"
 msgstr "Bild (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:104
-#, fuzzy
 msgid "Master"
-msgstr "~Master"
+msgstr "Master"
 
 #: src/control/Control.NotebookbarImpress.js:266
 msgid "ODF Presentation (.odp)"
@@ -1446,9 +1433,8 @@ msgid "Presentation"
 msgstr "Presentation"
 
 #: src/control/Control.NotebookbarWriter.js:69
-#, fuzzy
 msgid "Form"
-msgstr "Forum"
+msgstr "Formulär"
 
 #: src/control/Control.NotebookbarWriter.js:227
 msgid "ODF Text Document (.odt)"
@@ -1604,15 +1590,15 @@ msgstr "Urvalsläge: inaktivt"
 
 #: src/control/Control.StatusBar.js:592
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Ange språk för all text"
 
 #: src/control/Control.StatusBar.js:595
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Ange språk för stycket"
 
 #: src/control/Control.StatusBar.js:596
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Ange språk för markeringen"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
@@ -1680,7 +1666,7 @@ msgstr "Infoga kopplingar"
 
 #: src/control/Control.TopToolbar.js:248
 msgid "Hide Menu"
-msgstr ""
+msgstr "Dölj meny"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -1868,7 +1854,7 @@ msgstr ""
 
 #: src/control/Permission.js:18 src/control/Permission.js:19
 msgid "Enter editing"
-msgstr ""
+msgstr "Börja redigera"
 
 #: src/control/Permission.js:76
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -2440,7 +2426,7 @@ msgstr "Kopiering från dokumentet är inaktiverad"
 
 #: src/map/Clipboard.js:238
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "varning: kopiera/klistra-in-förfrågan tog för lång tid"
 
 #: src/map/Clipboard.js:301
 msgid "Failed to download clipboard, please re-copy"
