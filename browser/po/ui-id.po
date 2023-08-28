@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-08-03 19:02+0000\n"
-"Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
+"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"Last-Translator: Rizal Muttaqin <riz_17_oke@yahoo.co.id>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.0-dev\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -189,8 +189,8 @@ msgstr ""
 #: admin/admin.strings.js:44
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
-"Ukuran file maksimum diizinkan untuk menulis ke disk (dalam MB) - kurangi "
-"saja"
+"Ukuran berkas maksimum diizinkan untuk menulis ke diska (dalam MB) - hanya "
+"kurangi"
 
 #: admin/admin.strings.js:45
 msgid "Documents:"
@@ -683,9 +683,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:76
-#, fuzzy
 msgid "Rename Document"
-msgstr "Perbaiki Dokumen"
+msgstr "Namai Ulang Dokumen"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:383
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:660
@@ -791,7 +790,7 @@ msgstr "Tampilkan Bilah Status"
 #: src/control/Control.Menubar.js:131 src/control/Control.Menubar.js:424
 #: src/control/Control.Menubar.js:572 src/control/Control.Menubar.js:700
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Sembunyikan Bilah Menu"
 
 #: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:425
 #: src/control/Control.Menubar.js:568 src/control/Control.Menubar.js:701
@@ -901,7 +900,7 @@ msgstr "Properti"
 #: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:954
 #: src/control/Control.NotebookbarWriter.js:392
 msgid "Accessibility Support"
-msgstr ""
+msgstr "Dukungan Aksesibilitas"
 
 #: src/control/Control.Menubar.js:360
 #: src/control/Control.NotebookbarWriter.js:358
@@ -1153,67 +1152,58 @@ msgstr "Sangat Longgar"
 #: src/control/Control.NotebookbarDraw.js:52
 #: src/control/Control.NotebookbarImpress.js:61
 #: src/control/Control.NotebookbarWriter.js:26
-#, fuzzy
 msgid "File"
-msgstr "~Berkas"
+msgstr "Berkas"
 
 #: src/control/Control.NotebookbarCalc.js:19
 #: src/control/Control.NotebookbarDraw.js:58
 #: src/control/Control.NotebookbarImpress.js:66
 #: src/control/Control.NotebookbarWriter.js:32
-#, fuzzy
 msgid "Home"
-msgstr "B~eranda"
+msgstr "Beranda"
 
 #: src/control/Control.NotebookbarCalc.js:26
 #: src/control/Control.NotebookbarDraw.js:65
 #: src/control/Control.NotebookbarImpress.js:72
 #: src/control/Control.NotebookbarWriter.js:39
-#, fuzzy
 msgid "Insert"
-msgstr "S~isip"
+msgstr "Sisip"
 
 #: src/control/Control.NotebookbarCalc.js:32
 #: src/control/Control.NotebookbarDraw.js:71
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:45
-#, fuzzy
 msgid "Layout"
-msgstr "Tata ~Letak"
+msgstr "Tata Letak"
 
 #: src/control/Control.NotebookbarCalc.js:38
-#, fuzzy
 msgid "Data"
-msgstr "~Data"
+msgstr "Data"
 
 #: src/control/Control.NotebookbarCalc.js:44
 #: src/control/Control.NotebookbarDraw.js:77
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:57
-#, fuzzy
 msgid "Review"
-msgstr "~Ulasan"
+msgstr "Ulasan"
 
 #: src/control/Control.NotebookbarCalc.js:50
 #: src/control/Control.NotebookbarDraw.js:83
 #: src/control/Control.NotebookbarImpress.js:87
 #: src/control/Control.NotebookbarWriter.js:63
-#, fuzzy
 msgid "Format"
-msgstr "F~ormat"
+msgstr "Format"
 
 #: src/control/Control.NotebookbarCalc.js:56
 #: src/control/Control.NotebookbarDraw.js:96
 #: src/control/Control.NotebookbarWriter.js:82
-#, fuzzy
 msgid "Draw"
-msgstr "Gam~bar"
+msgstr "Gambar"
 
 #: src/control/Control.NotebookbarCalc.js:63
 #: src/control/Control.NotebookbarDraw.js:103
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:89
-#, fuzzy
 msgid "View"
 msgstr "Tilikan"
 
@@ -1221,9 +1211,8 @@ msgstr "Tilikan"
 #: src/control/Control.NotebookbarDraw.js:109
 #: src/control/Control.NotebookbarImpress.js:115
 #: src/control/Control.NotebookbarWriter.js:95
-#, fuzzy
 msgid "Help"
-msgstr "~Bantuan"
+msgstr "Bantuan"
 
 #: src/control/Control.NotebookbarCalc.js:110
 #: src/control/Control.NotebookbarImpress.js:171
@@ -1267,14 +1256,14 @@ msgstr "Lembar sebar ODF (.ods)"
 #: src/control/Control.NotebookbarImpress.js:311
 #: src/control/Control.NotebookbarWriter.js:270
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "Dokumen PDF (.pdf) - Tingkat Lanjut"
 
 #: src/control/Control.NotebookbarCalc.js:282
 #: src/control/Control.NotebookbarDraw.js:278
 #: src/control/Control.NotebookbarImpress.js:367
 #: src/control/Control.NotebookbarWriter.js:332
 msgid "Rename"
-msgstr ""
+msgstr "Namai Ulang"
 
 #: src/control/Control.NotebookbarCalc.js:618
 msgid "General"
@@ -1393,14 +1382,14 @@ msgstr "Tilikan Ringkas"
 #: src/control/Control.NotebookbarImpress.js:447
 #: src/control/Control.NotebookbarWriter.js:1405
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Perluas Tab"
 
 #: src/control/Control.NotebookbarCalc.js:1237
 #: src/control/Control.NotebookbarDraw.js:361
 #: src/control/Control.NotebookbarImpress.js:448
 #: src/control/Control.NotebookbarWriter.js:1406
 msgid "Collapse Notebook Bar"
-msgstr ""
+msgstr "Perluas Bilah Buku Catatan"
 
 #: src/control/Control.NotebookbarCalc.js:1249
 #: src/control/Control.NotebookbarDraw.js:373
@@ -1428,18 +1417,16 @@ msgstr "Bentuk"
 #: src/control/Control.NotebookbarDraw.js:89
 #: src/control/Control.NotebookbarImpress.js:92
 #: src/control/Control.NotebookbarWriter.js:75
-#, fuzzy
 msgid "Table"
-msgstr "~Tabel"
+msgstr "Tabel"
 
 #: src/control/Control.NotebookbarDraw.js:214
 msgid "Image (.png)"
 msgstr "Gambar (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:104
-#, fuzzy
 msgid "Master"
-msgstr "~Induk"
+msgstr "Induk"
 
 #: src/control/Control.NotebookbarImpress.js:266
 msgid "ODF Presentation (.odp)"
@@ -1451,9 +1438,8 @@ msgid "Presentation"
 msgstr "Presentasi"
 
 #: src/control/Control.NotebookbarWriter.js:69
-#, fuzzy
 msgid "Form"
-msgstr "Forum"
+msgstr "Formulir"
 
 #: src/control/Control.NotebookbarWriter.js:227
 msgid "ODF Text Document (.odt)"
@@ -1609,15 +1595,15 @@ msgstr "Mode pemilihan: tidak aktif"
 
 #: src/control/Control.StatusBar.js:592
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Tata Bahasa untuk Semua Teks"
 
 #: src/control/Control.StatusBar.js:595
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Tata Bahasa untuk Paragraf"
 
 #: src/control/Control.StatusBar.js:596
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Tata Bahasa untuk Pemilihan"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
@@ -1685,7 +1671,7 @@ msgstr "Sisip konektor"
 
 #: src/control/Control.TopToolbar.js:248
 msgid "Hide Menu"
-msgstr ""
+msgstr "Sembunyikan Menu"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -1874,7 +1860,7 @@ msgstr ""
 
 #: src/control/Permission.js:18 src/control/Permission.js:19
 msgid "Enter editing"
-msgstr ""
+msgstr "Masuk penyuntingan"
 
 #: src/control/Permission.js:76
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -1890,7 +1876,7 @@ msgstr "Dokumen tidak dapat dikunci."
 
 #: src/control/Permission.js:140
 msgid "Enter a file name"
-msgstr "Masukkan nama file"
+msgstr "Masukkan nama berkas"
 
 #: src/control/Permission.js:159
 msgid "Save as ODF format"
@@ -1910,7 +1896,7 @@ msgid ""
 "current file format."
 msgstr ""
 "Dokumen ini mungkin berisi pemformatan atau konten yang tidak dapat disimpan "
-"dalam format file saat ini."
+"dalam format berkas saat ini."
 
 #: src/control/Ruler.js:364
 msgid "Left Margin"
@@ -2148,7 +2134,7 @@ msgstr "Timpa"
 
 #: src/core/Socket.js:1248
 msgid "Save to new file"
-msgstr "Simpan ke file baru"
+msgstr "Simpan ke berkas baru"
 
 #: src/core/Socket.js:1258
 msgid "Document has been changed"
@@ -2258,8 +2244,8 @@ msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
-"Gagal memuat dokumen. Harap pastikan jenis file didukung dan tidak rusak, "
-"dan coba lagi."
+"Gagal memuat dokumen. Harap pastikan jenis berkas didukung dan tidak rusak "
+"lalu coba lagi."
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
@@ -2451,7 +2437,7 @@ msgstr "Menyalin dari dokumen dinonaktifkan"
 
 #: src/map/Clipboard.js:238
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "peringatan: permintaan salin/tempel kehabisan waktu"
 
 #: src/map/Clipboard.js:301
 msgid "Failed to download clipboard, please re-copy"
@@ -2509,10 +2495,10 @@ msgid ""
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
 "more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p> Browser Anda memiliki akses yang sangat terbatas ke papan klip</p><p>"
-"Silakan tekan: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> "
-"untuk melihat lebih banyak pilihan</p><p class=\"vex-footnote\"> Tutup popup "
-"untuk mengabaikan tempel khusus</p>"
+"<p> Browser Anda memiliki akses yang sangat terbatas ke papan klip</"
+"p><p>Silakan tekan: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</"
+"kbd> untuk melihat lebih banyak pilihan</p><p> Tutup popup untuk mengabaikan "
+"tempel khusus</p>"
 
 #: src/map/Map.js:221
 msgid "Initializing..."
@@ -2551,7 +2537,7 @@ msgstr "Mengunggah berkas ke peladen gagal dengan status: %0"
 
 #: src/map/handler/Map.WOPI.js:147
 msgid "Creating new file from template..."
-msgstr "Membuat file baru dari template ..."
+msgstr "Membuat berkas baru dari templat..."
 
 #: src/map/handler/Map.WOPI.js:484
 msgid "Error"
@@ -2559,7 +2545,7 @@ msgstr "Galat"
 
 #: src/map/handler/Map.WOPI.js:484
 msgid "File name should contain an extension."
-msgstr "Nama file harus mengandung ekstensi."
+msgstr "Nama berkas harus mengandung ekstensi."
 
 #: src/map/handler/Map.WOPI.js:492
 msgid "Creating copy..."
