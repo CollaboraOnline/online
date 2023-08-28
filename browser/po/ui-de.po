@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-07-01 12:58+0000\n"
+"PO-Revision-Date: 2023-08-28 19:34+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0-dev\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -685,9 +685,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:76
-#, fuzzy
 msgid "Rename Document"
-msgstr "Dokument reparieren"
+msgstr "Dokument umbenennen"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:383
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:660
@@ -793,7 +792,7 @@ msgstr "Statusleiste anzeigen"
 #: src/control/Control.Menubar.js:131 src/control/Control.Menubar.js:424
 #: src/control/Control.Menubar.js:572 src/control/Control.Menubar.js:700
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Menüleiste ausblenden"
 
 #: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:425
 #: src/control/Control.Menubar.js:568 src/control/Control.Menubar.js:701
@@ -903,7 +902,7 @@ msgstr "Eigenschaften"
 #: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:954
 #: src/control/Control.NotebookbarWriter.js:392
 msgid "Accessibility Support"
-msgstr ""
+msgstr "Unterstützung der Barrierefreiheit"
 
 #: src/control/Control.Menubar.js:360
 #: src/control/Control.NotebookbarWriter.js:358
@@ -1155,77 +1154,67 @@ msgstr "sehr weit"
 #: src/control/Control.NotebookbarDraw.js:52
 #: src/control/Control.NotebookbarImpress.js:61
 #: src/control/Control.NotebookbarWriter.js:26
-#, fuzzy
 msgid "File"
-msgstr "~Datei"
+msgstr "Datei"
 
 #: src/control/Control.NotebookbarCalc.js:19
 #: src/control/Control.NotebookbarDraw.js:58
 #: src/control/Control.NotebookbarImpress.js:66
 #: src/control/Control.NotebookbarWriter.js:32
-#, fuzzy
 msgid "Home"
-msgstr "~Start"
+msgstr "Start"
 
 #: src/control/Control.NotebookbarCalc.js:26
 #: src/control/Control.NotebookbarDraw.js:65
 #: src/control/Control.NotebookbarImpress.js:72
 #: src/control/Control.NotebookbarWriter.js:39
-#, fuzzy
 msgid "Insert"
-msgstr "~Einfügen"
+msgstr "Einfügen"
 
 #: src/control/Control.NotebookbarCalc.js:32
 #: src/control/Control.NotebookbarDraw.js:71
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:45
-#, fuzzy
 msgid "Layout"
-msgstr "~Layout"
+msgstr "Layout"
 
 #: src/control/Control.NotebookbarCalc.js:38
-#, fuzzy
 msgid "Data"
-msgstr "~Daten"
+msgstr "Daten"
 
 #: src/control/Control.NotebookbarCalc.js:44
 #: src/control/Control.NotebookbarDraw.js:77
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:57
-#, fuzzy
 msgid "Review"
-msgstr "~Änderungen"
+msgstr "Rückblick"
 
 #: src/control/Control.NotebookbarCalc.js:50
 #: src/control/Control.NotebookbarDraw.js:83
 #: src/control/Control.NotebookbarImpress.js:87
 #: src/control/Control.NotebookbarWriter.js:63
-#, fuzzy
 msgid "Format"
-msgstr "F~ormat"
+msgstr "Format"
 
 #: src/control/Control.NotebookbarCalc.js:56
 #: src/control/Control.NotebookbarDraw.js:96
 #: src/control/Control.NotebookbarWriter.js:82
-#, fuzzy
 msgid "Draw"
-msgstr "~Zeichnen"
+msgstr "Zeichnen"
 
 #: src/control/Control.NotebookbarCalc.js:63
 #: src/control/Control.NotebookbarDraw.js:103
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:89
-#, fuzzy
 msgid "View"
-msgstr "Ansichten"
+msgstr "Ansicht"
 
 #: src/control/Control.NotebookbarCalc.js:69
 #: src/control/Control.NotebookbarDraw.js:109
 #: src/control/Control.NotebookbarImpress.js:115
 #: src/control/Control.NotebookbarWriter.js:95
-#, fuzzy
 msgid "Help"
-msgstr "~Hilfe"
+msgstr "Hilfe"
 
 #: src/control/Control.NotebookbarCalc.js:110
 #: src/control/Control.NotebookbarImpress.js:171
@@ -1269,14 +1258,14 @@ msgstr "ODF-Tabellendokument (.ods)"
 #: src/control/Control.NotebookbarImpress.js:311
 #: src/control/Control.NotebookbarWriter.js:270
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "PDF-Dokument (.pdf) - Expert"
 
 #: src/control/Control.NotebookbarCalc.js:282
 #: src/control/Control.NotebookbarDraw.js:278
 #: src/control/Control.NotebookbarImpress.js:367
 #: src/control/Control.NotebookbarWriter.js:332
 msgid "Rename"
-msgstr ""
+msgstr "Umbenennen"
 
 #: src/control/Control.NotebookbarCalc.js:618
 msgid "General"
@@ -1395,7 +1384,7 @@ msgstr "Kompaktansicht"
 #: src/control/Control.NotebookbarImpress.js:447
 #: src/control/Control.NotebookbarWriter.js:1405
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Registerkarten einklappen"
 
 #: src/control/Control.NotebookbarCalc.js:1237
 #: src/control/Control.NotebookbarDraw.js:361
@@ -1430,18 +1419,16 @@ msgstr "Formen"
 #: src/control/Control.NotebookbarDraw.js:89
 #: src/control/Control.NotebookbarImpress.js:92
 #: src/control/Control.NotebookbarWriter.js:75
-#, fuzzy
 msgid "Table"
-msgstr "~Tabelle"
+msgstr "Tabelle"
 
 #: src/control/Control.NotebookbarDraw.js:214
 msgid "Image (.png)"
 msgstr "Bild (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:104
-#, fuzzy
 msgid "Master"
-msgstr "~Master"
+msgstr "Master"
 
 #: src/control/Control.NotebookbarImpress.js:266
 msgid "ODF Presentation (.odp)"
@@ -1611,15 +1598,15 @@ msgstr "Auswahlmodus: inaktiv"
 
 #: src/control/Control.StatusBar.js:592
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Sprache für alle Texte festlegen"
 
 #: src/control/Control.StatusBar.js:595
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Sprache für Absatz festlegen"
 
 #: src/control/Control.StatusBar.js:596
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Sprache für Auswahl festlegen"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
@@ -1687,7 +1674,7 @@ msgstr "Verbinder einfügen"
 
 #: src/control/Control.TopToolbar.js:248
 msgid "Hide Menu"
-msgstr ""
+msgstr "Menü ausblenden"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
