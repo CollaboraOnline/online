@@ -13,11 +13,14 @@
 
 #include "common/Common.hpp"
 #include "ChildSession.hpp"
+#include "DeltaSimd.h"
 
 void ChildSession::loKitCallback(const int /* type */, const std::string& /* payload */) {}
 void ChildSession::disconnect() {}
 bool ChildSession::_handleInput(const char* /*buffer*/, int /*length*/) { return false; }
 bool ChildSession::isTileInsideVisibleArea(const TileDesc& /*tile*/) const { return false; }
 ChildSession::~ChildSession() {}
+
+int simd_initPixRowSimd(const uint32_t *, uint32_t *, unsigned int *, uint64_t *) { return 0; }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
