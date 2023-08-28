@@ -62,7 +62,7 @@ L.Map.include({
 			return;
 		var message = [
 			'<div class="container">',
-			'<img id="unlock-image" class="item illustration">',
+			'<img id="unlock-image">',
 			'<div class="item">',
 			'<h1>' + this.Locking.unlockTitle + '</h1>',
 			'<p>' + this.Locking.unlockDescription + '<p>',
@@ -93,8 +93,10 @@ L.Map.include({
 		}
 
 		var unlockImage = L.DomUtil.get('unlock-image');
+		L.DomUtil.setStyle(unlockImage, 'width', '100%');
+		L.DomUtil.setStyle(unlockImage, 'height', 'auto');
 		if (this.Locking.unlockImageUrlPath) {
-			unlockImage.src = this.Locking.unlockImageUrlPath;
+			unlockImage.src = 'remote/static' + this.Locking.unlockImageUrlPath;
 		} else {
 			unlockImage.src = 'images/lock-illustration.svg';
 		}
