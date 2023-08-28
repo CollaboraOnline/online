@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-06-07 09:51+0000\n"
+"PO-Revision-Date: 2023-08-28 09:54+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (South Africa) <https://hosted.weblate.org/projects/"
 "collabora-online/help/en_ZA/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1163,33 +1163,31 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-226
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-18
 msgid "Go to next sheet."
-msgstr ""
+msgstr "Go to next sheet."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-62
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>Page Up"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>5"
+"plus\">+</span><kbd>Page Up"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-18
 msgid "Go to previous sheet."
-msgstr ""
+msgstr "Go to previous sheet."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-66
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>Page Down"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>D"
+"plus\">+</span><kbd>Page Down"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""
@@ -2965,7 +2963,7 @@ msgstr "Set the page margins in the dialogue box."
 
 #: html/cool-help.html%2Bdiv.div.h4:597-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr "How do I change the page orientation to landscape inside my document?"
+msgstr "How do I change the page orientation to landscape inside my document"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:599-11
 msgid ""
