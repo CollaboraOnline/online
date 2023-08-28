@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-07-05 12:50+0000\n"
-"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
+"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0-dev\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -681,9 +681,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:76
-#, fuzzy
 msgid "Rename Document"
-msgstr "Reparar documento"
+msgstr "Cambiar nombre de documento"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:383
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:660
@@ -789,7 +788,7 @@ msgstr "Mostrar barra de estado"
 #: src/control/Control.Menubar.js:131 src/control/Control.Menubar.js:424
 #: src/control/Control.Menubar.js:572 src/control/Control.Menubar.js:700
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Ocultar barra de menús"
 
 #: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:425
 #: src/control/Control.Menubar.js:568 src/control/Control.Menubar.js:701
@@ -1151,77 +1150,67 @@ msgstr "Muy amplio"
 #: src/control/Control.NotebookbarDraw.js:52
 #: src/control/Control.NotebookbarImpress.js:61
 #: src/control/Control.NotebookbarWriter.js:26
-#, fuzzy
 msgid "File"
-msgstr "~Archivo"
+msgstr "Archivo"
 
 #: src/control/Control.NotebookbarCalc.js:19
 #: src/control/Control.NotebookbarDraw.js:58
 #: src/control/Control.NotebookbarImpress.js:66
 #: src/control/Control.NotebookbarWriter.js:32
-#, fuzzy
 msgid "Home"
-msgstr "~Inicio"
+msgstr "Inicio"
 
 #: src/control/Control.NotebookbarCalc.js:26
 #: src/control/Control.NotebookbarDraw.js:65
 #: src/control/Control.NotebookbarImpress.js:72
 #: src/control/Control.NotebookbarWriter.js:39
-#, fuzzy
 msgid "Insert"
-msgstr "I~nsertar"
+msgstr "Insertar"
 
 #: src/control/Control.NotebookbarCalc.js:32
 #: src/control/Control.NotebookbarDraw.js:71
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:45
-#, fuzzy
 msgid "Layout"
-msgstr "~Disposición"
+msgstr "Disposición"
 
 #: src/control/Control.NotebookbarCalc.js:38
-#, fuzzy
 msgid "Data"
-msgstr "~Datos"
+msgstr "Datos"
 
 #: src/control/Control.NotebookbarCalc.js:44
 #: src/control/Control.NotebookbarDraw.js:77
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:57
-#, fuzzy
 msgid "Review"
-msgstr "~Revisión"
+msgstr "Revisión"
 
 #: src/control/Control.NotebookbarCalc.js:50
 #: src/control/Control.NotebookbarDraw.js:83
 #: src/control/Control.NotebookbarImpress.js:87
 #: src/control/Control.NotebookbarWriter.js:63
-#, fuzzy
 msgid "Format"
-msgstr "F~ormato"
+msgstr "Formato"
 
 #: src/control/Control.NotebookbarCalc.js:56
 #: src/control/Control.NotebookbarDraw.js:96
 #: src/control/Control.NotebookbarWriter.js:82
-#, fuzzy
 msgid "Draw"
-msgstr "~Dibujar"
+msgstr "Dibujar"
 
 #: src/control/Control.NotebookbarCalc.js:63
 #: src/control/Control.NotebookbarDraw.js:103
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:89
-#, fuzzy
 msgid "View"
-msgstr "Vistas"
+msgstr "Ver"
 
 #: src/control/Control.NotebookbarCalc.js:69
 #: src/control/Control.NotebookbarDraw.js:109
 #: src/control/Control.NotebookbarImpress.js:115
 #: src/control/Control.NotebookbarWriter.js:95
-#, fuzzy
 msgid "Help"
-msgstr "Ay~uda"
+msgstr "Ayuda"
 
 #: src/control/Control.NotebookbarCalc.js:110
 #: src/control/Control.NotebookbarImpress.js:171
@@ -1272,7 +1261,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:367
 #: src/control/Control.NotebookbarWriter.js:332
 msgid "Rename"
-msgstr ""
+msgstr "Cambiar nombre"
 
 #: src/control/Control.NotebookbarCalc.js:618
 msgid "General"
@@ -1391,14 +1380,14 @@ msgstr "Vista compacta"
 #: src/control/Control.NotebookbarImpress.js:447
 #: src/control/Control.NotebookbarWriter.js:1405
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Contraer pestañas"
 
 #: src/control/Control.NotebookbarCalc.js:1237
 #: src/control/Control.NotebookbarDraw.js:361
 #: src/control/Control.NotebookbarImpress.js:448
 #: src/control/Control.NotebookbarWriter.js:1406
 msgid "Collapse Notebook Bar"
-msgstr ""
+msgstr "Contraer omnibarra"
 
 #: src/control/Control.NotebookbarCalc.js:1249
 #: src/control/Control.NotebookbarDraw.js:373
@@ -1426,18 +1415,16 @@ msgstr "Formas"
 #: src/control/Control.NotebookbarDraw.js:89
 #: src/control/Control.NotebookbarImpress.js:92
 #: src/control/Control.NotebookbarWriter.js:75
-#, fuzzy
 msgid "Table"
-msgstr "~Tabla"
+msgstr "Tabla"
 
 #: src/control/Control.NotebookbarDraw.js:214
 msgid "Image (.png)"
 msgstr "Imagen (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:104
-#, fuzzy
 msgid "Master"
-msgstr "~Patrón"
+msgstr "Patrón"
 
 #: src/control/Control.NotebookbarImpress.js:266
 msgid "ODF Presentation (.odp)"
@@ -1449,9 +1436,8 @@ msgid "Presentation"
 msgstr "Presentación"
 
 #: src/control/Control.NotebookbarWriter.js:69
-#, fuzzy
 msgid "Form"
-msgstr "Foro"
+msgstr "Formulario"
 
 #: src/control/Control.NotebookbarWriter.js:227
 msgid "ODF Text Document (.odt)"
@@ -1487,7 +1473,7 @@ msgstr "previsualización de la página "
 
 #: src/control/Control.PartsPreview.js:236
 msgid "Paste Slide"
-msgstr "Pegar una diapositiva"
+msgstr "Pegar diapositiva"
 
 #: src/control/Control.PartsPreview.js:270
 msgid "Copy"
@@ -1607,15 +1593,15 @@ msgstr "Modo de selección: inactivo"
 
 #: src/control/Control.StatusBar.js:592
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Establecer idioma en todo el texto"
 
 #: src/control/Control.StatusBar.js:595
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Establecer idioma en párrafo"
 
 #: src/control/Control.StatusBar.js:596
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Establecer idioma en selección"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
@@ -1683,7 +1669,7 @@ msgstr "Insertar conectores"
 
 #: src/control/Control.TopToolbar.js:248
 msgid "Hide Menu"
-msgstr ""
+msgstr "Ocultar menú"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -2001,7 +1987,7 @@ msgstr "¿Confirma que quiere eliminar esta página?"
 
 #: src/control/jsdialog/Widget.TreeView.js:517
 msgid "Headings and objects that you add to the document will appear here"
-msgstr "Los títulos y objetos que añadas al documento aparecerán aquí"
+msgstr "Los títulos y objetos que añada al documento aparecerán aquí"
 
 #: src/core/Socket.js:55
 msgid "Oops, there is a problem connecting to %productName: "
@@ -2452,6 +2438,7 @@ msgstr "Se desactivó la copia desde el documento"
 #: src/map/Clipboard.js:238
 msgid "warning: copy/paste request timed out"
 msgstr ""
+"atención: se agotó el tiempo de espera de la solicitud de copiar y pegar"
 
 #: src/map/Clipboard.js:301
 msgid "Failed to download clipboard, please re-copy"

@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-06-08 17:47+0000\n"
+"PO-Revision-Date: 2023-08-28 09:54+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -495,7 +495,7 @@ msgstr "Llinial"
 
 #: src/control/Control.JSDialogBuilder.js:557
 msgid "Axial"
-msgstr ""
+msgstr "Axal"
 
 #: src/control/Control.JSDialogBuilder.js:560
 msgid "Radial"
@@ -1146,25 +1146,22 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:52
 #: src/control/Control.NotebookbarImpress.js:61
 #: src/control/Control.NotebookbarWriter.js:26
-#, fuzzy
 msgid "File"
-msgstr "~Ficheru"
+msgstr "Ficheru"
 
 #: src/control/Control.NotebookbarCalc.js:19
 #: src/control/Control.NotebookbarDraw.js:58
 #: src/control/Control.NotebookbarImpress.js:66
 #: src/control/Control.NotebookbarWriter.js:32
-#, fuzzy
 msgid "Home"
-msgstr "~Aniciu"
+msgstr "Aniciu"
 
 #: src/control/Control.NotebookbarCalc.js:26
 #: src/control/Control.NotebookbarDraw.js:65
 #: src/control/Control.NotebookbarImpress.js:72
 #: src/control/Control.NotebookbarWriter.js:39
-#, fuzzy
 msgid "Insert"
-msgstr "~Inxertar"
+msgstr "Inxertar"
 
 #: src/control/Control.NotebookbarCalc.js:32
 #: src/control/Control.NotebookbarDraw.js:71
@@ -1174,9 +1171,8 @@ msgid "Layout"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:38
-#, fuzzy
 msgid "Data"
-msgstr "~Datos"
+msgstr "Datos"
 
 #: src/control/Control.NotebookbarCalc.js:44
 #: src/control/Control.NotebookbarDraw.js:77
@@ -1211,15 +1207,14 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:109
 #: src/control/Control.NotebookbarImpress.js:115
 #: src/control/Control.NotebookbarWriter.js:95
-#, fuzzy
 msgid "Help"
-msgstr "Ay~uda"
+msgstr "Ayuda"
 
 #: src/control/Control.NotebookbarCalc.js:110
 #: src/control/Control.NotebookbarImpress.js:171
 #: src/control/Control.NotebookbarWriter.js:156
 msgid "Save As"
-msgstr ""
+msgstr "Guardar como"
 
 #: src/control/Control.NotebookbarCalc.js:125
 #: src/control/Control.NotebookbarDraw.js:160
@@ -1420,9 +1415,8 @@ msgstr "Formes"
 #: src/control/Control.NotebookbarDraw.js:89
 #: src/control/Control.NotebookbarImpress.js:92
 #: src/control/Control.NotebookbarWriter.js:75
-#, fuzzy
 msgid "Table"
-msgstr "~Tabla"
+msgstr "Tabla"
 
 #: src/control/Control.NotebookbarDraw.js:214
 msgid "Image (.png)"
@@ -1442,9 +1436,8 @@ msgid "Presentation"
 msgstr "Presentación"
 
 #: src/control/Control.NotebookbarWriter.js:69
-#, fuzzy
 msgid "Form"
-msgstr "Foru"
+msgstr "Formulariu"
 
 #: src/control/Control.NotebookbarWriter.js:227
 msgid "ODF Text Document (.odt)"
@@ -1488,7 +1481,7 @@ msgstr ""
 
 #: src/control/Control.PartsPreview.js:279
 msgid "Paste"
-msgstr ""
+msgstr "Apegar"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1674,7 +1667,7 @@ msgstr "Inxertar coneutores"
 
 #: src/control/Control.TopToolbar.js:248
 msgid "Hide Menu"
-msgstr ""
+msgstr "Anubrir el menú"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
