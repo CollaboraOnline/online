@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
  */
 
 #pragma once
@@ -10,6 +10,7 @@
 #include <vector>
 #include <memory>
 #include <unordered_set>
+#include <fstream>
 #include <assert.h>
 #include <zlib.h>
 #include <zstd.h>
@@ -17,6 +18,8 @@
 #include <Common.hpp>
 #include <FileUtil.hpp>
 #include <Png.hpp>
+#include <Simd.hpp>
+#include <DeltaSimd.h>
 
 #ifndef TILE_WIRE_ID
 #  define TILE_WIRE_ID
@@ -141,50 +144,59 @@ class DeltaGenerator {
             return sizeof(DeltaBitmapRow) + _rleSize * 4;
         }
 
+        bool initPixRowSimd(const uint32_t *from);
+
         void initRow(const uint32_t *from, unsigned int width)
         {
             uint32_t scratch[width];
 
             uint32_t lastPix = 0x00000000; // transparency
             unsigned int x = 0, outp = 0;
-            for (unsigned int nMask = 0; nMask < 4; ++nMask)
+
+            if (!simd::HasAVX2 || width != 256 ||
+                !simd_initPixRowSimd(from, scratch, &outp, _rleMask))
             {
-                uint64_t rleMask = 0;
-                uint64_t bitToSet = 1;
-                if (width - x > 64)
+                // non-accelerated path
+                for (unsigned int nMask = 0; nMask < 4; ++nMask)
                 {
-                    // simplified inner loop for 64bit chunks
-                    for (; bitToSet; ++x, bitToSet <<= 1)
+                    uint64_t rleMask = 0;
+                    uint64_t bitToSet = 1;
+                    if (width - x > 64)
                     {
-                        if (from[x] == lastPix)
-                            rleMask |= bitToSet;
-                        else
+                        // simplified inner loop for 64bit chunks
+                        for (; bitToSet; ++x, bitToSet <<= 1)
                         {
-                            lastPix = from[x];
-                            scratch[outp++] = lastPix;
+                            if (from[x] == lastPix)
+                                rleMask |= bitToSet;
+                            else
+                            {
+                                lastPix = from[x];
+                                scratch[outp++] = lastPix;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    // slower inner loop for odd lengths
-                    for (; x < width; ++x, bitToSet <<= 1)
+                    else
                     {
-                        if (from[x] == lastPix)
-                            rleMask |= bitToSet;
-                        else
+                        // even slower inner loop for odd lengths
+                        for (; x < width; ++x, bitToSet <<= 1)
                         {
-                            lastPix = from[x];
-                            scratch[outp++] = lastPix;
+                            if (from[x] == lastPix)
+                                rleMask |= bitToSet;
+                            else
+                            {
+                                lastPix = from[x];
+                                scratch[outp++] = lastPix;
+                            }
                         }
                     }
+                    _rleMask[nMask] = rleMask;
                 }
-                _rleMask[nMask] = rleMask;
-            }
-            if (x < width)
-            {
-                memcpy(scratch + outp, from + x, (width - x) * 4);
-                outp += width-x;
+
+                if (x < width)
+                {
+                    memcpy(scratch + outp, from + x, (width - x) * 4);
+                    outp += width-x;
+                }
             }
 
             _rleSize = outp;

@@ -117,6 +117,37 @@ AC_LINK_IFELSE([AC_LANG_SOURCE([
                [AC_MSG_RESULT([Yes])
                 LIBS="$LIBS -latomic"])
 
+# Check for SIMD / AVX2 acceleration compile-time goodness
+SIMD_CFLAGS=-mavx2
+has_simd=no
+AC_MSG_CHECKING([whether $CC has AVX2 SIMD support])
+
+save_CFLAGS=$CFLAGS
+AC_LANG_PUSH([C])
+CFLAGS="$CFLAGS $SIMD_CFLAGS"
+
+AC_COMPILE_IFELSE([AC_LANG_SOURCE([
+    #include <immintrin.h>
+    int main () {
+        __builtin_cpu_init();
+        __m256i vec = _mm256_set1_epi32(0);
+        return __builtin_cpu_supports ("avx2");
+    }])],
+    [has_simd=yes],
+    [has_simd=no])
+
+AC_LANG_POP([C])
+CFLAGS=$save_CFLAGS
+
+AC_MSG_RESULT([${has_simd}])
+if test "${has_simd}" = "no" ; then
+   SIMD_CFLAGS=
+   AC_DEFINE([ENABLE_SIMD],0,[Whether to enable SIMD])
+else
+   AC_DEFINE([ENABLE_SIMD],1,[Whether to enable SIMD])
+fi
+AC_SUBST(SIMD_CFLAGS)
+
 # Declare options
 AC_ARG_ENABLE([debug],
               AS_HELP_STRING([--enable-debug],

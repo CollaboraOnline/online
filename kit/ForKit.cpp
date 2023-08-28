@@ -33,6 +33,7 @@
 #include "Kit.hpp"
 #include "SetupKitEnvironment.hpp"
 #include <Log.hpp>
+#include <Simd.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
 #include <WebSocketHandler.hpp>
@@ -547,6 +548,8 @@ int main(int argc, char** argv)
     }
 
     SigUtil::setFatalSignals("forkit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
+
+    simd::init();
 
     Util::setApplicationPath(Poco::Path(argv[0]).parent().toString());
 
