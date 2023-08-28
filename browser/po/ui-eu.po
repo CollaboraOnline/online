@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-07-22 22:09+0000\n"
+"PO-Revision-Date: 2023-08-28 09:54+0000\n"
 "Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "ui/eu/>\n"
-"Language: \n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0-dev\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -114,7 +114,7 @@ msgstr "Aldatua"
 
 #: admin/admin.strings.js:29
 msgid "Uploaded"
-msgstr "Kargatuta"
+msgstr "Igo da"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
@@ -590,14 +590,14 @@ msgstr "Zutabeak"
 
 #: src/control/Control.JSDialogBuilder.js:3292
 msgid "Insert Table"
-msgstr "Txertatu taula"
+msgstr "Txertatu Taula"
 
 #: src/control/Control.LanguageDialog.js:54 src/control/Control.Menubar.js:339
 #: src/control/Control.Menubar.js:341 src/control/Control.Menubar.js:343
 #: src/control/Control.Menubar.js:507 src/control/Control.Menubar.js:636
 #: src/control/Control.Menubar.js:885 src/control/Control.StatusBar.js:571
 msgid "None (Do not check spelling)"
-msgstr "Bat ere ez (ez zuzendu ortografia)"
+msgstr "Bat ere ez (ortografia zuzendu gabe )"
 
 #: src/control/Control.LanguageDialog.js:72
 msgid "Select language"
@@ -679,9 +679,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:76
-#, fuzzy
 msgid "Rename Document"
-msgstr "Konpondu dokumentua"
+msgstr "Berrizendatu dokumentua"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:383
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:660
@@ -787,7 +786,7 @@ msgstr "Erakutsi egoera barra"
 #: src/control/Control.Menubar.js:131 src/control/Control.Menubar.js:424
 #: src/control/Control.Menubar.js:572 src/control/Control.Menubar.js:700
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Ezkutatu menu-barra"
 
 #: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:425
 #: src/control/Control.Menubar.js:568 src/control/Control.Menubar.js:701
@@ -897,7 +896,7 @@ msgstr "Propietateak"
 #: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:954
 #: src/control/Control.NotebookbarWriter.js:392
 msgid "Accessibility Support"
-msgstr ""
+msgstr "Irisgarritasunerako laguntza"
 
 #: src/control/Control.Menubar.js:360
 #: src/control/Control.NotebookbarWriter.js:358
@@ -1149,77 +1148,67 @@ msgstr "Oso zabala"
 #: src/control/Control.NotebookbarDraw.js:52
 #: src/control/Control.NotebookbarImpress.js:61
 #: src/control/Control.NotebookbarWriter.js:26
-#, fuzzy
 msgid "File"
-msgstr "~Fitxategia"
+msgstr "Fitxategia"
 
 #: src/control/Control.NotebookbarCalc.js:19
 #: src/control/Control.NotebookbarDraw.js:58
 #: src/control/Control.NotebookbarImpress.js:66
 #: src/control/Control.NotebookbarWriter.js:32
-#, fuzzy
 msgid "Home"
-msgstr "Hasi~era"
+msgstr "Hasiera"
 
 #: src/control/Control.NotebookbarCalc.js:26
 #: src/control/Control.NotebookbarDraw.js:65
 #: src/control/Control.NotebookbarImpress.js:72
 #: src/control/Control.NotebookbarWriter.js:39
-#, fuzzy
 msgid "Insert"
-msgstr "T~xertatu"
+msgstr "Txertatu"
 
 #: src/control/Control.NotebookbarCalc.js:32
 #: src/control/Control.NotebookbarDraw.js:71
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:45
-#, fuzzy
 msgid "Layout"
-msgstr "~Diseinua"
+msgstr "Diseinua"
 
 #: src/control/Control.NotebookbarCalc.js:38
-#, fuzzy
 msgid "Data"
-msgstr "~Datuak"
+msgstr "Datuak"
 
 #: src/control/Control.NotebookbarCalc.js:44
 #: src/control/Control.NotebookbarDraw.js:77
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:57
-#, fuzzy
 msgid "Review"
-msgstr "~Berrikusi"
+msgstr "Berrikusi"
 
 #: src/control/Control.NotebookbarCalc.js:50
 #: src/control/Control.NotebookbarDraw.js:83
 #: src/control/Control.NotebookbarImpress.js:87
 #: src/control/Control.NotebookbarWriter.js:63
-#, fuzzy
 msgid "Format"
-msgstr "F~ormatua"
+msgstr "Formatua"
 
 #: src/control/Control.NotebookbarCalc.js:56
 #: src/control/Control.NotebookbarDraw.js:96
 #: src/control/Control.NotebookbarWriter.js:82
-#, fuzzy
 msgid "Draw"
-msgstr "~Marraztu"
+msgstr "Marraztu"
 
 #: src/control/Control.NotebookbarCalc.js:63
 #: src/control/Control.NotebookbarDraw.js:103
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:89
-#, fuzzy
 msgid "View"
-msgstr "Ikuspegiak"
+msgstr "Ikuspegia"
 
 #: src/control/Control.NotebookbarCalc.js:69
 #: src/control/Control.NotebookbarDraw.js:109
 #: src/control/Control.NotebookbarImpress.js:115
 #: src/control/Control.NotebookbarWriter.js:95
-#, fuzzy
 msgid "Help"
-msgstr "~Laguntza"
+msgstr "Laguntza"
 
 #: src/control/Control.NotebookbarCalc.js:110
 #: src/control/Control.NotebookbarImpress.js:171
@@ -1263,14 +1252,14 @@ msgstr "ODF kalkulu-orria (.ods)"
 #: src/control/Control.NotebookbarImpress.js:311
 #: src/control/Control.NotebookbarWriter.js:270
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "PDF Dokumentua (.pdf) - Aditua"
 
 #: src/control/Control.NotebookbarCalc.js:282
 #: src/control/Control.NotebookbarDraw.js:278
 #: src/control/Control.NotebookbarImpress.js:367
 #: src/control/Control.NotebookbarWriter.js:332
 msgid "Rename"
-msgstr ""
+msgstr "Aldatu izena"
 
 #: src/control/Control.NotebookbarCalc.js:618
 msgid "General"
@@ -1389,14 +1378,14 @@ msgstr "Ikuspegi trinkoa"
 #: src/control/Control.NotebookbarImpress.js:447
 #: src/control/Control.NotebookbarWriter.js:1405
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Tolestu fitxak"
 
 #: src/control/Control.NotebookbarCalc.js:1237
 #: src/control/Control.NotebookbarDraw.js:361
 #: src/control/Control.NotebookbarImpress.js:448
 #: src/control/Control.NotebookbarWriter.js:1406
 msgid "Collapse Notebook Bar"
-msgstr ""
+msgstr "Tolestu Koaderno-barra"
 
 #: src/control/Control.NotebookbarCalc.js:1249
 #: src/control/Control.NotebookbarDraw.js:373
@@ -1424,22 +1413,20 @@ msgstr "Formak"
 #: src/control/Control.NotebookbarDraw.js:89
 #: src/control/Control.NotebookbarImpress.js:92
 #: src/control/Control.NotebookbarWriter.js:75
-#, fuzzy
 msgid "Table"
-msgstr "~Taula"
+msgstr "Taula"
 
 #: src/control/Control.NotebookbarDraw.js:214
 msgid "Image (.png)"
 msgstr "Irudia (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:104
-#, fuzzy
 msgid "Master"
-msgstr "~Eredua"
+msgstr "Eredua"
 
 #: src/control/Control.NotebookbarImpress.js:266
 msgid "ODF Presentation (.odp)"
-msgstr "ODF aurkezpena (.odp)"
+msgstr "ODF Aurkezpena (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:389
 #: src/control/Control.NotebookbarImpress.js:889
@@ -1447,9 +1434,8 @@ msgid "Presentation"
 msgstr "Aurkezpena"
 
 #: src/control/Control.NotebookbarWriter.js:69
-#, fuzzy
 msgid "Form"
-msgstr "Foroa"
+msgstr "Formularioa"
 
 #: src/control/Control.NotebookbarWriter.js:227
 msgid "ODF Text Document (.odt)"
@@ -1605,15 +1591,15 @@ msgstr "Hautaketa modua: inaktiboa"
 
 #: src/control/Control.StatusBar.js:592
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Ezarri hizkuntza testu osoarentzat"
 
 #: src/control/Control.StatusBar.js:595
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Ezarri hizkuntza paragraforako"
 
 #: src/control/Control.StatusBar.js:596
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Ezarri hizkuntza hautapenerako"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
@@ -1681,7 +1667,7 @@ msgstr "Txertatu lokailuak"
 
 #: src/control/Control.TopToolbar.js:248
 msgid "Hide Menu"
-msgstr ""
+msgstr "Ezkutatu menua"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -1869,7 +1855,7 @@ msgstr ""
 
 #: src/control/Permission.js:18 src/control/Permission.js:19
 msgid "Enter editing"
-msgstr ""
+msgstr "Sartu edizioan"
 
 #: src/control/Permission.js:76
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -2358,12 +2344,11 @@ msgstr "Ezin da dokumentua esportatu. Saiatu berriro."
 #: src/errormessages.js:52
 msgid "Uploading file to server failed, file not found."
 msgstr ""
-"Huts egin du fitxategia zerbitzarira kargatzeak, ez da fitxategia aurkitu."
+"Huts egin du fitxategia zerbitzarira igotzeak, ez da fitxategia aurkitu."
 
 #: src/errormessages.js:53
 msgid "Uploading file to server failed, the file is too large."
-msgstr ""
-"Huts egin du fitxategia zerbitzarira kargatzeak, fitxategia handiegia da."
+msgstr "Huts egin du fitxategia zerbitzarira igotzeak, fitxategia handiegia da."
 
 #: src/layer/tile/CanvasTileLayer.js:1986
 msgid "Functions"
@@ -2449,7 +2434,7 @@ msgstr "Dokumentutik kopiatzea desgaituta dago"
 
 #: src/map/Clipboard.js:238
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "abisua: kopiatu/itsatsi eskaeraren denbora-muga gainditu da"
 
 #: src/map/Clipboard.js:301
 msgid "Failed to download clipboard, please re-copy"
@@ -2507,10 +2492,9 @@ msgid ""
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
 "more options</p><p>Close popup to ignore paste special</p>"
 msgstr ""
-"<p>Zure nabigatzaileak arbelerako sarbide oso mugatua du</p><p>Mesedez, "
-"sakatu orain: <kbd>Ktrl</kbd><span class=\"kbd--plus\">+</span><kbd> V</kbd> "
-"aukera gehiago ikusteko</p><p class=\"vex-footnote\">Itxi pop-up leihoa "
-"Itsatsi Berezia ez ikusteko</p>"
+"<p>Zure nabigatzaileak arbelerako sarbide oso mugatua du</p><p>Sakatu orain: "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd> V</kbd> aukera "
+"gehiago ikusteko</p><p> Itxi pop-up leihoa Itsatsi Berezia ez ikusteko</p>"
 
 #: src/map/Map.js:221
 msgid "Initializing..."
@@ -2528,21 +2512,21 @@ msgstr "Mesedez, bidali zure iruzkinak"
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "%0 motako fitxategia ezin izan da zerbitzarira kargatu, ez baitu izenik"
+msgstr "%0 motako fitxategia ezin izan da zerbitzarira igo, ez baitu izenik"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "%0 motako fitxategia ezin izan da zerbitzarira kargatu, hutsik baitago"
+msgstr "%0 motako fitxategia ezin izan da zerbitzarira igo, hutsik baitago"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
-msgstr "Kargatzen..."
+msgstr "Igotzen..."
 
 #: src/map/handler/Map.FileInserter.js:161
 msgid "Uploading file to server failed with status: %0"
-msgstr "Fitxategia zerbitzarira kargatzeak huts egin du honako egoerarekin: %0"
+msgstr "Fitxategia zerbitzarira igotzeak huts egin du honako egoerarekin: %0"
 
 #: src/map/handler/Map.WOPI.js:147
 msgid "Creating new file from template..."
