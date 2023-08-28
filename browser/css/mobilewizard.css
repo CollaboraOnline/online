@@ -15,6 +15,10 @@ span.menu-entry-icon img {
 	margin: 4px !important;
 }
 
+span.menu-entry-icon {
+	padding-left: 2%;
+}
+
 #mobile-wizard.menuwizard .mobile-wizard-back.close-button{
 	visibility: hidden !important;
 }
@@ -192,9 +196,7 @@ p.mobile-wizard.ui-combobox-text {
 	padding-left: 2% !important;
 	width: 100%;
 }
-.menu-entry-icon.inserttable, .menu-entry-icon.insertfield, .menu-entry-icon.insertheaderfooter, .menu-entry-icon.formattingmark, .menu-entry-icon.formatformmenu {
-	padding-left: 2% !important;
-}
+
 #BackgroundColor > .ui-header-left {
 	width: 100% !important;
 }
