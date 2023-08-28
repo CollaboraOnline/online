@@ -144,17 +144,20 @@ class DeltaGenerator {
             return sizeof(DeltaBitmapRow) + _rleSize * 4;
         }
 
-        bool initPixRowSimd(const uint32_t *from);
-
         void initRow(const uint32_t *from, unsigned int width)
         {
             uint32_t scratch[width];
 
+            uint32_t simd_scratch[width];
+            uint64_t simd_rleMask[_rleMaskUnits];
+            unsigned int simd_outp = 0;
+
             uint32_t lastPix = 0x00000000; // transparency
             unsigned int x = 0, outp = 0;
 
-            if (!simd::HasAVX2 || width != 256 ||
-                !simd_initPixRowSimd(from, scratch, &outp, _rleMask))
+            bool noCompare = !simd::HasAVX2 || width != 256 ||
+                !simd_initPixRowSimd(from, simd_scratch, &simd_outp, simd_rleMask);
+            if (true)
             {
                 // non-accelerated path
                 for (unsigned int nMask = 0; nMask < 4; ++nMask)
@@ -207,6 +210,19 @@ class DeltaGenerator {
             }
             else
                 _rleData = nullptr;
+
+            // check our result
+            if (!noCompare)
+            {
+                if (memcmp(_rleMask, simd_rleMask, sizeof (_rleMask)))
+                {
+                    std::cerr << "Masks differ " <<
+                        Util::bytesToHexString(reinterpret_cast<const char *>(_rleMask), sizeof(_rleMask)) << "\n" <<
+                        Util::bytesToHexString(reinterpret_cast<const char *>(simd_rleMask), sizeof(_rleMask)) << "\n";
+                }
+//                assert(_rleSize == simd_outp);
+//                assert(!memcmp(scratch, simd_scratch, _rleSize));
+            }
         }
 
         bool identical(const DeltaBitmapRow &other) const
