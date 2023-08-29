@@ -227,6 +227,7 @@ L.Map.include({
 		}
 		this.fire('updatepermission', {perm : perm});
 		this.fire('closemobilewizard');
+		this.fire('closealldialogs');
 
 		if (window.ThisIsTheAndroidApp)
 			window.postMobileMessage('EDITMODE off');

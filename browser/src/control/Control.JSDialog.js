@@ -18,6 +18,7 @@ L.Control.JSDialog = L.Control.extend({
 		this.map.on('jsdialogupdate', this.onJSUpdate, this);
 		this.map.on('jsdialogaction', this.onJSAction, this);
 		this.map.on('zoomend', this.onZoomEnd, this);
+		this.map.on('closealldialogs', this.onCloseAll, this);
 	},
 
 	onRemove: function() {
@@ -25,6 +26,7 @@ L.Control.JSDialog = L.Control.extend({
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
 		this.map.off('jsdialogaction', this.onJSAction, this);
 		this.map.off('zoomend', this.onZoomEnd, this);
+		this.map.off('closealldialogs', this.onCloseAll, this);
 	},
 
 	hasDialogOpened: function() {
@@ -58,10 +60,14 @@ L.Control.JSDialog = L.Control.extend({
 		}
 	},
 
-	closeAll: function() {
+	closeAll: function(leaveSnackbar) {
 		var dialogs = Object.keys(this.dialogs);
-		for (var i = 0; i < dialogs.length; i++)
+		for (var i = 0; i < dialogs.length; i++) {
+			if (leaveSnackbar && dialogs[i] && dialogs[i].isSnackbar)
+				continue;
+
 			this.close(dialogs[i], true);
+		}
 	},
 
 	closeDialog: function(id, sendCloseEvent) {
@@ -110,6 +116,10 @@ L.Control.JSDialog = L.Control.extend({
 		}
 
 		this.focusToLastElement(id);
+	},
+
+	onCloseAll: function() {
+		this.closeAll(/*leaveSnackbar*/ true);
 	},
 
 	focusToLastElement: function(id) {
