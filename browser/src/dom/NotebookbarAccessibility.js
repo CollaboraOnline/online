@@ -173,6 +173,8 @@ var NotebookbarAccessibility = function() {
 	};
 
 	this.clickOnFilteredItem = function() {
+		var itemWasClicked = false;
+
 		if (this.filteredItem !== null) {
 			var element = document.getElementById(this.filteredItem.id);
 			if (element) {
@@ -188,6 +190,7 @@ var NotebookbarAccessibility = function() {
 					this.state = 1;
 				}
 				else if (this.state === 1) {
+					itemWasClicked = true;
 					this.setTabItemDescription(element);
 					element.click();
 					if (this.filteredItem && this.filteredItem.focusBack === true) {
@@ -199,6 +202,8 @@ var NotebookbarAccessibility = function() {
 		}
 		else
 			this.focusToMap();
+
+		return itemWasClicked;
 	};
 
 	this.addTabFocus = function() {
@@ -304,8 +309,9 @@ var NotebookbarAccessibility = function() {
 				this.checkCombinationAgainstAcccelerators();
 				this.filterOutNonMatchingInfoBoxes();
 			}
-			if (this.filteredItem !== null)
-				this.clickOnFilteredItem();
+			// If item was clicked - don't focus the map to keep focus on dropdowns
+			if (this.filteredItem !== null && this.clickOnFilteredItem())
+				return;
 			// So we checked the pressed key against available combinations. If there is no match, focus back to map.
 			if (this.isAllFilteredOut() === true)
 				this.focusToMap();
