@@ -7,6 +7,7 @@
 /* global app $ setupToolbar w2ui toolbarUpMobileItems _ Hammer */
 L.Control.UIManager = L.Control.extend({
 	mobileWizard: null,
+	documentNameInput: null,
 	blockedUI: false,
 	busyPopupTimer: null,
 	customButtons: [], // added by WOPI InsertButton
@@ -117,17 +118,18 @@ L.Control.UIManager = L.Control.extend({
 			};
 			app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
 		}
-		if (this.getCurrentMode() === 'classic' || this.map.isReadOnlyMode()) {
-			this.refreshMenubar();
-			this.refreshToolbar();
-		}
-		else {
-			this.refreshNotebookbar();
-		}
-		this.refreshSidebar();
+		if (!window.mode.isMobile())
+			this.refreshAfterThemeChange();
 	},
+
 	initDarkModeFromSettings: function() {
 		var selectedMode = this.getDarkModeState();
+
+		if (window.ThisIsTheAndroidApp) {
+			selectedMode = window.uiDefaults['darkTheme'] ?  window.uiDefaults['darkTheme'] : false;
+			this.setSavedState('darkTheme', selectedMode);
+		}
+
 		if (selectedMode) {
 			this.loadDarkMode();
 			var cmd = {
@@ -142,6 +144,15 @@ L.Control.UIManager = L.Control.extend({
 			};
 			app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
 		}
+	},
+
+	renameDocument: function() {
+		// todo: does this need _('rename document)
+		var docNameInput = this.documentNameInput;
+		this.showInputModal('rename-modal', _('Rename Document'), _('Enter new name'), '', _('Rename'),
+			function(newName) {
+				docNameInput.documentNameConfirm(newName);
+		});
 	},
 
 	getAccessibilityState: function() {
@@ -195,7 +206,8 @@ L.Control.UIManager = L.Control.extend({
 
 		setupToolbar(this.map);
 
-		this.map.addControl(L.control.documentNameInput());
+		this.documentNameInput = L.control.documentNameInput();
+		this.map.addControl(this.documentNameInput);
 		this.map.addControl(L.control.alertDialog());
 		this.mobileWizard = L.control.mobileWizard();
 		this.map.addControl(this.mobileWizard);
@@ -428,20 +440,33 @@ L.Control.UIManager = L.Control.extend({
 		app.UI.notebookbarAccessibility.initialize();
 	},
 
+	refreshAfterThemeChange: function() {
+		if (this.getCurrentMode() === 'classic' || this.map.isReadOnlyMode()) {
+			this.refreshMenubar();
+			this.refreshToolbar();
+		}
+		else {
+			this.refreshNotebookbar();
+		}
+		this.refreshSidebar();
+	},
+
 	refreshNotebookbar: function() {
-		var selectedTab = $('.ui-tab.notebookbar[aria-selected="true"]').attr('id') || 'Home-tab-label';
-		this.removeNotebookbarUI();
-		this.createNotebookbarControl(this.map.getDocType());
-		$('#' + selectedTab).click();
-		this.makeSpaceForNotebookbar();
-		this.notebookbar._showNotebookbar = true;
-		this.notebookbar.showTabs();
-		$('.main-nav').removeClass('readonly');
-		$('#map').addClass('notebookbar-opened');
-		this.insertCustomButtons();
-		this.map.sendInitUNOCommands();
-		if (this.map.getDocType() === 'presentation')
-			this.map.fire('toggleslidehide');
+			var selectedTab = $('.ui-tab.notebookbar[aria-selected="true"]').attr('id') || 'Home-tab-label';
+			this.removeNotebookbarUI();
+			this.createNotebookbarControl(this.map.getDocType());
+			if (this._map._permission === 'edit') {
+				$('.main-nav').removeClass('readonly');
+			}
+			$('#' + selectedTab).click();
+			this.makeSpaceForNotebookbar();
+			this.notebookbar._showNotebookbar = true;
+			this.notebookbar.showTabs();
+			$('#map').addClass('notebookbar-opened');
+			this.insertCustomButtons();
+			this.map.sendInitUNOCommands();
+			if (this.map.getDocType() === 'presentation')
+				this.map.fire('toggleslidehide');
 	},
 
 	refreshMenubar: function() {
@@ -586,6 +611,9 @@ L.Control.UIManager = L.Control.extend({
 
 	// insert custom button to the current UI
 	insertCustomButton: function(button) {
+		if (button.tablet === false && window.mode.isTablet()) {
+			return;
+		}
 		if (!this.notebookbar)
 			this.insertButtonToClassicToolbar(button);
 		else
@@ -639,7 +667,7 @@ L.Control.UIManager = L.Control.extend({
 		var obj = $('.unfold');
 		obj.removeClass('w2ui-icon unfold');
 		obj.addClass('w2ui-icon fold');
-
+		$('#tb_editbar_item_fold').prop('title', _('Hide Menu'));
 	},
 
 	hideMenubar: function() {
@@ -653,7 +681,7 @@ L.Control.UIManager = L.Control.extend({
 		var obj = $('.fold');
 		obj.removeClass('w2ui-icon fold');
 		obj.addClass('w2ui-icon unfold');
-
+		$('#tb_editbar_item_fold').prop('title', _('Show Menu'));
 	},
 
 	isMenubarHidden: function() {
@@ -773,6 +801,11 @@ L.Control.UIManager = L.Control.extend({
 			this.showStatusBar();
 	},
 
+	focusSearch: function() {
+		this.showStatusBar();
+		document.getElementById('search-input').focus();
+	},
+
 	isStatusBarVisible: function() {
 		return $('#toolbar-down').is(':visible');
 	},
@@ -879,7 +912,7 @@ L.Control.UIManager = L.Control.extend({
 
 	// Snack bar
 
-	showSnackbar: function(label, action, callback) {
+	showSnackbar: function(label, action, callback, timeout) {
 		if (!app.socket)
 			return;
 
@@ -896,6 +929,7 @@ L.Control.UIManager = L.Control.extend({
 			id: 'snackbar',
 			jsontype: 'dialog',
 			type: 'snackbar',
+			timeout: timeout,
 			children: [
 				{
 					type: 'container',

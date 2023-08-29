@@ -313,6 +313,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             {
                 return obj->localPath == lpath;
             });
+
             if (it != fileInfoVec.end())
                 return *it;
 
@@ -376,20 +377,12 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
 
             std::ostringstream jsonStream;
             fileInfo->stringify(jsonStream);
-            std::string responseString = jsonStream.str();
 
-            const std::string mimeType = "application/json; charset=utf-8";
+            http::Response httpResponse(http::StatusCode::OK);
+            httpResponse.set("Last-Modified", Util::getHttpTime(localFile->fileLastModifiedTime));
+            httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
+            socket->send(httpResponse);
 
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-                "Last-Modified: " << Util::getHttpTime(localFile->fileLastModifiedTime) << "\r\n"
-                "User-Agent: " WOPI_AGENT_STRING "\r\n"
-                "Content-Length: " << responseString.size() << "\r\n"
-                "Content-Type: " << mimeType << "\r\n"
-                "\r\n"
-                << responseString;
-
-            socket->send(oss.str());
             return;
         }
         else if(request.getMethod() == "GET" && Util::endsWith(path.toString(), suffix))
@@ -399,18 +392,11 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             auto ss = std::ostringstream{};
             std::ifstream inputFile(localFile->localPath);
             ss << inputFile.rdbuf();
-            const std::string content = ss.str();
-            const std::string mimeType = "text/plain; charset=utf-8";
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-                "Last-Modified: " << Util::getHttpTime(localFile->fileLastModifiedTime) << "\r\n"
-                "User-Agent: " WOPI_AGENT_STRING "\r\n"
-                "Content-Length: " << localFile->size << "\r\n"
-                "Content-Type: " << mimeType << "\r\n"
-                "\r\n"
-                << content;
 
-            socket->send(oss.str());
+            http::Response httpResponse(http::StatusCode::OK);
+            httpResponse.set("Last-Modified", Util::getHttpTime(localFile->fileLastModifiedTime));
+            httpResponse.setBody(ss.str(), "text/plain; charset=utf-8");
+            socket->send(httpResponse);
             return;
         }
         else if (request.getMethod() == "POST" && Util::endsWith(path.toString(), suffix))
@@ -418,7 +404,6 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             std::shared_ptr<LocalFileInfo> localFile =
                 LocalFileInfo::getOrCreateFile(localPath,path.getFileName());
             std::string wopiTimestamp = request.get("X-COOL-WOPI-Timestamp", std::string());
-
             if (wopiTimestamp.empty())
                 wopiTimestamp = request.get("X-LOOL-WOPI-Timestamp", std::string());
 
@@ -427,16 +412,18 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
                 if (wopiTimestamp != localFile->getLastModifiedTime())
                 {
                     http::Response httpResponse(http::StatusCode::Conflict);
-                    httpResponse.setBody(
-                        "{\"COOLStatusCode\":" +
-                        std::to_string(static_cast<int>(LocalFileInfo::COOLStatusCode::DocChanged)) + ',' +
-                        "{\"LOOLStatusCode\":" +
-                        std::to_string(static_cast<int>(LocalFileInfo::COOLStatusCode::DocChanged)) + '}');
+                    httpResponse.setBody("{\"COOLStatusCode\":" +
+                                             std::to_string(static_cast<int>(
+                                                 LocalFileInfo::COOLStatusCode::DocChanged)) +
+                                             ',' + "{\"LOOLStatusCode\":" +
+                                             std::to_string(static_cast<int>(
+                                                 LocalFileInfo::COOLStatusCode::DocChanged)) +
+                                             '}',
+                                         "application/json; charset=utf-8");
                     socket->send(httpResponse);
                     return;
                 }
             }
-
 
             std::streamsize size = request.getContentLength();
             std::vector<char> buffer(size);
@@ -451,7 +438,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             const std::string body = "{\"LastModifiedTime\": \"" +
                 localFile->getLastModifiedTime() + "\" }";
             http::Response httpResponse(http::StatusCode::OK);
-            httpResponse.setBody(body);
+            httpResponse.setBody(body, "application/json; charset=utf-8");
             socket->send(httpResponse);
             return;
         }
@@ -556,7 +543,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 endPoint == "adminSettings.html" ||
                 endPoint == "adminHistory.html" ||
                 endPoint == "adminAnalytics.html" ||
-                endPoint == "adminLog.html")
+                endPoint == "adminLog.html" ||
+                endPoint == "adminClusterOverview.html")
             {
                 preprocessAdminFile(request, requestDetails, socket);
                 return;
@@ -729,7 +717,11 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
         const std::string relPath = path + '/' + currentFile->d_name;
         struct stat fileStat;
-        stat ((basePath + relPath).c_str(), &fileStat);
+        if (stat ((basePath + relPath).c_str(), &fileStat) != 0)
+        {
+            LOG_ERR("Failed to stat " << relPath);
+            continue;
+        }
 
         if (S_ISDIR(fileStat.st_mode))
             readDirToHash(basePath, relPath);
@@ -748,7 +740,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             strm.opaque = Z_NULL;
             deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY);
 
-            std::unique_ptr<char[]> buf(new char[fileStat.st_size]);
+            std::unique_ptr<char[]> buf = std::make_unique<char[]>(fileStat.st_size);
             std::string compressedFile;
             compressedFile.reserve(fileStat.st_size);
             std::string uncompressedFile;
@@ -790,13 +782,13 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
         LOG_TRC("Pre-read " << fileCount << " file(s) from directory: " << basePath << path << ": " << filesRead);
 }
 
-void FileServerRequestHandler::initialize()
+void FileServerRequestHandler::initialize(const std::string& root)
 {
     // cool files
     try {
-        readDirToHash(COOLWSD::FileServerRoot, "/browser/dist");
+        readDirToHash(root, "/browser/dist");
     } catch (...) {
-        LOG_ERR("Failed to read from directory " << COOLWSD::FileServerRoot);
+        LOG_ERR("Failed to read from directory " << root);
     }
 }
 
@@ -920,7 +912,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%COOLWSD_VERSION%"), std::string(COOLWSD_VERSION));
     Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
     Poco::replaceInPlace(preprocess, std::string("%UI_DEFAULTS%"), uiDefaultsToJSON(uiDefaults, userInterfaceMode, userInterfaceTheme));
-    Poco::replaceInPlace(preprocess, std::string("%UI_THEME%"), userInterfaceTheme);
+    Poco::replaceInPlace(preprocess, std::string("%UI_THEME%"), userInterfaceTheme); // UI_THEME refers to light or dark theme
+    Poco::replaceInPlace(preprocess, std::string("%BRANDING_THEME%"), theme);
     Poco::replaceInPlace(preprocess, std::string("%POSTMESSAGE_ORIGIN%"), escapedPostmessageOrigin);
     Poco::replaceInPlace(preprocess, std::string("%CHECK_FILE_INFO_OVERRIDE%"),
                          checkFileInfoToJSON(checkfileinfo_override));
@@ -1064,6 +1057,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     csp.appendDirective("object-src", "'self'");
     csp.appendDirective("object-src", "blob:"); // Equivalent to unsafe-eval!
     csp.appendDirective("media-src", "'self'");
+    csp.appendDirective("media-src", cnxDetails.getWebServerUrl());
     csp.appendDirective("img-src", "'self'");
     csp.appendDirective("img-src", "data:"); // Equivalent to unsafe-inline!
     csp.appendDirective("img-src", "https://www.collaboraoffice.com/");
@@ -1078,7 +1072,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
             warned = true;
             LOG_WRN("The config entry net.frame_ancestors is obsolete and will be removed in the "
                     "future. Please add 'frame-ancestors "
-                    << configFrameAncestor << "' in the net.content_security_policy config");
+                    << configFrameAncestor << ";' in the net.content_security_policy config");
         }
     }
 
@@ -1259,7 +1253,41 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     const std::string templatePath =
         Poco::Path(relPath).setFileName("admintemplate.html").toString();
     std::string templateFile = *getUncompressedFile(templatePath);
-    Poco::replaceInPlace(templateFile, std::string("<!--%MAIN_CONTENT%-->"), adminFile); // Now template has the main content..
+
+    std::string jwtToken;
+    Poco::Net::NameValueCollection reqCookies;
+    std::vector<Poco::Net::HTTPCookie> resCookies;
+
+    response.getCookies(resCookies);
+    for (size_t it = 0; it < resCookies.size(); ++it)
+    {
+        if (resCookies[it].getName() == "jwt")
+        {
+            jwtToken = resCookies[it].getValue();
+            break;
+        }
+    }
+
+    if (jwtToken.empty())
+    {
+        request.getCookies(reqCookies);
+        if (reqCookies.has("jwt"))
+        {
+            jwtToken = reqCookies.get("jwt");
+        }
+    }
+
+    const std::string escapedJwtToken = Util::encodeURIComponent(jwtToken, "'");
+    Poco::replaceInPlace(templateFile, std::string("%JWT_TOKEN%"), escapedJwtToken);
+    if (relPath == "/browser/dist/admin/adminClusterOverview.html") {
+        Poco::replaceInPlace(templateFile, std::string("<!--%BODY%-->"), adminFile);
+        Poco::replaceInPlace(templateFile, std::string("%ROUTE_TOKEN%"), COOLWSD::RouteToken);
+    } else {
+        std::string bodyPath = Poco::Path(relPath).setFileName("adminBody.html").toString();
+        std::string bodyFile = *getUncompressedFile(bodyPath);
+        Poco::replaceInPlace(templateFile, std::string("<!--%BODY%-->"), bodyFile);
+        Poco::replaceInPlace(templateFile, std::string("<!--%MAIN_CONTENT%-->"), adminFile);  // Now template has the main content..
+    }
 
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
     std::string brandFooter;

@@ -184,7 +184,6 @@ namespace RenderTiles
                   DeltaGenerator &deltaGen,
                   TileCombined &tileCombined,
                   ThreadPool &pngPool,
-                  bool combined,
                   const std::function<void (unsigned char *data,
                                             int offsetX, int offsetY,
                                             size_t pixmapWidth, size_t pixmapHeight,
@@ -360,15 +359,14 @@ namespace RenderTiles
             return false;
 
         std::string tileMsg;
-        if (combined)
+        if (tileCombined.getCombined())
         {
             tileMsg = tileCombined.serialize("tilecombine:", "\n", renderedTiles);
 
             LOG_TRC("Sending back painted tiles for " << tileMsg << " of size " << output.size() << " bytes) for: " << tileMsg);
 
-            std::unique_ptr<char[]> response;
             const size_t responseSize = tileMsg.size() + output.size();
-            response.reset(new char[responseSize]);
+            std::unique_ptr<char[]> response(std::make_unique<char[]>(responseSize));
             std::copy(tileMsg.begin(), tileMsg.end(), response.get());
             std::copy(output.begin(), output.end(), response.get() + tileMsg.size());
             outputMessage(response.get(), responseSize);
@@ -380,8 +378,7 @@ namespace RenderTiles
             {
                 tileMsg = i.serialize("tile:", "\n");
                 const size_t responseSize = tileMsg.size() + i.getImgSize();
-                std::unique_ptr<char[]> response;
-                response.reset(new char[responseSize]);
+                std::unique_ptr<char[]> response(std::make_unique<char[]>(responseSize));
                 std::copy(tileMsg.begin(), tileMsg.end(), response.get());
                 std::copy(output.begin() + outputOffset, output.begin() + outputOffset + i.getImgSize(), response.get() + tileMsg.size());
                 outputMessage(response.get(), responseSize);

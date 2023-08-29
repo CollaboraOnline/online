@@ -217,15 +217,73 @@ public:
     /// Deserialize a TileDesc from a tokenized string.
     static TileDesc parse(const StringVector& tokens)
     {
+        enum argenum { height, id, imgsize, mode, nviewid, part, tileheight, tileposx, tileposy, tilewidth, ver, width, maxEnum };
+
+        struct TileDescParseResults
+        {
+            typedef std::pair<const std::string_view, int> arg_value;
+
+            arg_value args[maxEnum] = {
+                { STRINGIFY(height), 0 },
+                { STRINGIFY(id), -1 },          // Optional
+                { STRINGIFY(imgsize), 0 },      // Optional
+                { STRINGIFY(mode), 0 },         // Optional
+                { STRINGIFY(nviewid), 0 },
+                { STRINGIFY(part), 0 },
+                { STRINGIFY(tileheight), 0 },
+                { STRINGIFY(tileposx), 0 },
+                { STRINGIFY(tileposy), 0 },
+                { STRINGIFY(tilewidth), 0 },
+                { STRINGIFY(ver), -1 },         // Optional
+                { STRINGIFY(width), 0 }
+            };
+
+            struct Comp
+            {
+                bool operator()(const arg_value& av, const std::string_view arg) { return av.first < arg; }
+                bool operator()(const std::string_view arg, const arg_value& av) { return arg < av.first; }
+                bool operator()(const arg_value& av, const arg_value& bv) { return av.first < bv.first; }
+            };
+
+#ifndef NDEBUG
+            bool checkSorted() const
+            {
+                bool sorted = std::is_sorted(std::begin(args), std::end(args), Comp{});
+                for (int i = 0; i < maxEnum; ++i)
+                {
+                    auto range = std::equal_range(std::begin(args), std::end(args), args[i], Comp{});
+                    assert(range.first != range.second &&                      // is found
+                           std::distance(range.first, range.second) == 1 &&    // one match
+                           std::distance(std::begin(args), range.first) == i); // match is in correct index
+                }
+                return sorted;
+            }
+
+            TileDescParseResults()
+            {
+                static bool isSorted = checkSorted();
+                assert(isSorted);
+            }
+#endif
+
+            bool set(const std::string_view arg, int value)
+            {
+                auto range = std::equal_range(std::begin(args), std::end(args), arg, Comp{});
+                if (range.first == range.second)
+                    return false;
+                range.first->second = value;
+                return true;
+            }
+
+            int operator[](argenum arg) const
+            {
+                return args[arg].second;
+            }
+        };
+
         // We don't expect undocumented fields and
         // assume all values to be int.
-        std::unordered_map<std::string, int> pairs(16);
-
-        // Optional.
-        pairs["ver"] = -1;
-        pairs["imgsize"] = 0;
-        pairs["id"] = -1;
-        pairs["mode"] = 0;
+        TileDescParseResults pairs;
 
         TileWireId oldWireId = 0;
         TileWireId wireId = 0;
@@ -240,9 +298,7 @@ public:
                 std::string name;
                 int value = -1;
                 if (tokens.getNameIntegerPair(i, name, value))
-                {
-                    pairs[name] = value;
-                }
+                    pairs.set(name, value);
             }
         }
 
@@ -250,12 +306,12 @@ public:
         const bool broadcast = (COOLProtocol::getTokenString(tokens, "broadcast", s) &&
                                 s == "yes");
 
-        TileDesc result(pairs["nviewid"], pairs["part"], pairs["mode"],
-                        pairs["width"], pairs["height"],
-                        pairs["tileposx"], pairs["tileposy"],
-                        pairs["tilewidth"], pairs["tileheight"],
-                        pairs["ver"],
-                        pairs["imgsize"], pairs["id"], broadcast);
+        TileDesc result(pairs[nviewid], pairs[part], pairs[mode],
+                        pairs[width], pairs[height],
+                        pairs[tileposx], pairs[tileposy],
+                        pairs[tilewidth], pairs[tileheight],
+                        pairs[ver],
+                        pairs[imgsize], pairs[id], broadcast);
         result.setOldWireId(oldWireId);
         result.setWireId(wireId);
 
@@ -312,7 +368,8 @@ private:
         _width(width),
         _height(height),
         _tileWidth(tileWidth),
-        _tileHeight(tileHeight)
+        _tileHeight(tileHeight),
+        _isCompiled(true)
     {
         if (_part < 0 ||
             _mode < 0 ||
@@ -395,6 +452,7 @@ public:
     int getHeight() const { return _height; }
     int getTileWidth() const { return _tileWidth; }
     int getTileHeight() const { return _tileHeight; }
+    bool getCombined() const { return _isCompiled; }
 
     const std::vector<TileDesc>& getTiles() const { return _tiles; }
     std::vector<TileDesc>& getTiles() { return _tiles; }
@@ -610,6 +668,7 @@ public:
         _tileHeight = desc.getTileHeight();
         _normalizedViewId = desc.getNormalizedViewId();
         _tiles.push_back(desc);
+        _isCompiled = false;
     }
 
 private:
@@ -621,6 +680,7 @@ private:
     int _height;
     int _tileWidth;
     int _tileHeight;
+    bool _isCompiled;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -370,7 +370,7 @@ namespace Log
         // So just use the name of the default logger for this process plus a counter.
         static int counter = 1;
         auto& logger = Poco::Logger::create(Static.getName() + "." + std::to_string(counter++),
-                                            channel,
+                                            std::move(channel),
                                             Poco::Logger::parseLevel(logLevel));
         Static.setThreadLocalLogger(&logger);
     }

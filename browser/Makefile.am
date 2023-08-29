@@ -105,7 +105,8 @@ COOL_ADMIN_JS =\
 	admin/src/AdminSocketAnalytics.js \
 	admin/src/AdminSocketSettings.js \
 	admin/src/AdminSocketHistory.js \
-	admin/src/AdminSocketLog.js
+	admin/src/AdminSocketLog.js \
+	admin/src/AdminClusterOverview.js
 
 NODE_MODULES_SRC =\
 	autolinker@3.14.1 \
@@ -331,6 +332,7 @@ COOL_JS_LST =\
 	src/control/jsdialog/Widget.Calendar.js \
 	src/control/jsdialog/Widget.DrawingArea.js \
 	src/control/jsdialog/Widget.FormulabarEdit.js \
+	src/control/jsdialog/Widget.IconView.js \
 	src/control/jsdialog/Widget.LanguageSelector.js \
 	src/control/jsdialog/Widget.MenuButton.js \
 	src/control/jsdialog/Widget.MobileTabControl.js \

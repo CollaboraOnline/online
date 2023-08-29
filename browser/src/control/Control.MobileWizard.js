@@ -104,9 +104,6 @@ L.Control.MobileWizard = L.Control.extend({
 		if (window.pageMobileWizard === true)
 			window.pageMobilewizard = false;
 
-		if (this.map.getDocType() === 'presentation' || this.map.getDocType() === 'drawing')
-			this._hideSlideSorter();
-
 		if (window.commentWizard === true)
 			window.commentWizard = false;
 
@@ -215,10 +212,6 @@ L.Control.MobileWizard = L.Control.extend({
 			}
 			this._hideWizard();
 		}
-	},
-
-	_hideSlideSorter: function() {
-		document.getElementById('mobile-wizard-header').style.display = 'none';
 	},
 
 	onJSUpdate: function (e) {

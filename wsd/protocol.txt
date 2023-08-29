@@ -78,10 +78,10 @@ TRACEEVENT name=<name> ph=<letter> ts=<timestamp> <more parameters>... [ args=<J
     between the beginning of the thing being timed and the time when
     the 'X' message was emitted, also in microseconds.
 
-tileprocessed tile=<tileid>
+tileprocessed tile=<tileid1,tileid2,...>
 
     Previously sent tile (server -> client) arrived and processed by the client.
-    Tileid has the next structure : <selected part>:<tile x coord>:<tile y coord>:<tile width in twips>:<tile height in twips>
+    Each tileid has the next structure : <selected part>:<tile x coord>:<tile y coord>:<tile width in twips>:<tile height in twips>
 
 downloadas name=<fileName> id=<id> format=<document format> options=<SkipImages, etc>
 
@@ -905,6 +905,10 @@ wopiSrcMap
 
     get map of wopiSrc<->routeToken
 
+verifyauth jwt=<jwt_token>
+
+    verify jwt token without shutting down the socket connection, works only with monitor
+
 admin -> client
 ===============
 
@@ -962,12 +966,16 @@ section). Others are just response messages to some client command.
 
 InvalidAuthToken
 
-    This is sent when invalid auth token is provided in 'auth' command. See
+    This is sent when invalid auth token is provided in 'auth' and 'verifyauth' command. See
     above.
 
 NotAuthenticated
 
     When client sends an admin command that requires authentication.
+
+ValidAuthToken
+
+    This is sent when valid token is provided in 'verifyauth' command. See above
 
 documents <pid> <filename> <number of views> <memory consumed> <elapsed time> <idle time>
 <pid> <filename> ....

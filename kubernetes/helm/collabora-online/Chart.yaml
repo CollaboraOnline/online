@@ -4,8 +4,8 @@ type: "application"
 name: collabora-online
 description: Collabora Online helm chart
 
-version: 1.1.0
-appVersion: "23.05.1.3.1"
+version: 1.1.2
+appVersion: "23.05.2.2.1"
 
 home: "https://www.collaboraoffice.com/code/"
 icon: "https://avatars0.githubusercontent.com/u/22418908?s=200&v=4"
@@ -35,8 +35,8 @@ maintainers:
 annotations:
   artifacthub.io/images: |
     - name: collabora
-      image: docker.io/collabora/code:23.05.1.3.1
+      image: docker.io/collabora/code:23.05.2.2.1
     - name: nginx
       image: docker.io/nginx:1.25
     - name: twostoryrobot/simple-file-upload
-      image: docker.io/twostoryrobot/simple-file-upload@sha256:8648a554c42c81db317bf51fbb59d3ee884f0d4e6e216835a31bf2e6872d4947
+      image: docker.io/twostoryrobot/simple-file-upload@sha256:547fc4360b31d8604b7a26202914e87cd13609cc938fd83f412c77eb44aa1cc4

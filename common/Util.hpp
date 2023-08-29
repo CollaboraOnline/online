@@ -42,6 +42,8 @@
 
 #include <StringVector.hpp>
 
+#define STRINGIFY(X) #X
+
 #if CODE_COVERAGE
 extern "C"
 {
@@ -1323,7 +1325,7 @@ int main(int argc, char**argv)
      * Converts vector of strings to map. Strings should have formed like this: key + delimiter + value.
      * In case of a misformed string or zero length vector, passes that item and warns the developer.
      */
-    std::map<std::string, std::string> stringVectorToMap(std::vector<std::string> sVector, const char delimiter);
+    std::map<std::string, std::string> stringVectorToMap(const std::vector<std::string>& strvector, const char delimiter);
 
 #if !MOBILEAPP
     // If OS is not mobile, it must be Linux.
@@ -1428,17 +1430,6 @@ int main(int argc, char**argv)
         return std::string(s);
     }
 
-    /**
-     * Constructs an object of type T and wraps it in a std::unique_ptr.
-     *
-     * Can be replaced by std::make_unique when we allow C++14.
-     */
-    template<typename T, typename... Args>
-    typename std::unique_ptr<T> make_unique(Args&& ... args)
-    {
-        return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
-    }
-
     /// Dump an object that supports .dumpState into a string.
     /// Helpful for logging.
     template <typename T> std::string dump(const T& object, const std::string& indent = ", ")
@@ -1470,6 +1461,12 @@ int main(int argc, char**argv)
     /// static instances (i.e. anything registered with `atexit' or `on_exit').
     // coverity[+kill]
     void forcedExit(int code) __attribute__ ((__noreturn__));
+
+    // std::size isn't available on our android baseline so use this
+    // solution as a workaround
+    template <typename T, size_t S> char (&n_array_size( T(&)[S] ))[S];
+
+#define N_ELEMENTS(arr)     (sizeof(Util::n_array_size(arr)))
 
 } // end namespace Util
 

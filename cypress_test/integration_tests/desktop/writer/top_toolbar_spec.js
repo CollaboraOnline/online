@@ -157,27 +157,27 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	});
 
 	it('Toggle numbered list.', function() {
-		desktopHelper.actionOnSelector('numberedList', (selector) => { cy.cGet(selector).click(); });
+		cy.cGet('#Home-container .unoDefaultNumbering').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container ol').should('exist');
 	});
 
 	it('Toggle bulleted list.', function() {
-		desktopHelper.actionOnSelector('bulletList', (selector) => { cy.cGet(selector).click(); });
+		cy.cGet('#Home-container .unoDefaultBullet').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container ul').should('exist');
 	});
 
 	it('Increase/Decrease Indent.', function() {
 		//Increase indent
-		desktopHelper.actionOnSelector('incrementIndent', (selector) => { cy.cGet(selector).click(); });
+		cy.cGet('#Home-container .unoIncrementIndent').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p')
 			.should('have.attr', 'style')
 			.should('contain', 'margin-left: 0.49in');
 
 		//Decrease indent
-		desktopHelper.actionOnSelector('decrementIndent', (selector) => { cy.cGet(selector).click(); });
+		cy.cGet('#Home-container .unoDecrementIndent').click();
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p')
 			.should('have.attr', 'style')
@@ -188,7 +188,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.wait(500);
-		desktopHelper.actionOnSelector('insertTable', (selector) => { cy.cGet(selector).click(); });
+		cy.cGet('#Home-container .unoInsertTable').click();
 		cy.cGet('.inserttable-grid > .row > .col').eq(3).click();
 		helper.typeIntoDocument('{ctrl}a');
 		cy.cGet('#copy-paste-container table').should('exist');
@@ -200,7 +200,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Insert image.', function() {
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		desktopHelper.actionOnSelector('insertGraphic', (selector) => { cy.cGet(selector).click(); });
+		cy.cGet('#Home-container .unoInsertGraphic').click();
 		cy.cGet('#insertgraphic[type=file]').attachFile('/desktop/writer/image_to_insert.png');
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g.Graphic').should('exist');
 	});
@@ -209,7 +209,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		helper.expectTextForClipboard('text text1');
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		desktopHelper.actionOnSelector('hyperLink', (selector) => { cy.cGet(selector).click(); });
+		cy.cGet('#Insert-container .hyperlinkdialog').click();
 		cy.cGet('#hyperlink-link-box').should('exist');
 		cy.cGet('#hyperlink-text-box').type('link');
 		cy.cGet('#hyperlink-link-box').type('www.something.com');
@@ -223,7 +223,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 
-		desktopHelper.actionOnSelector('insertShape', (selector) => { cy.cGet(selector).click(); });
+		cy.cGet('#Insert-container .unoBasicShapes').click();
 
 		cy.cGet('.col.w2ui-icon.basicshapes_octagon').click();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
@@ -238,7 +238,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 	it('Insert/delete chart.', function() {
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		desktopHelper.actionOnSelector('insertChart', (selector) => { cy.cGet(selector).click(); });
+		cy.cGet('#Insert-container .unoInsertObjectChart').click();
 		cy.cGet('.leaflet-pane.leaflet-overlay-pane svg g').should('exist');
 
 		//delete
@@ -249,7 +249,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Save.', { defaultCommandTimeout: 60000 }, function() {
 		cy.cGet('.cell.notebookbar > .unoBold > button').click();
-		desktopHelper.actionOnSelector('save', (selector) => { cy.cGet(selector).click(); });
+		cy.cGet('.notebookbar-shortcuts-bar .unoSave').click();
 		helper.reload(testFileName, 'writer', true);
 		cy.wait(2000);
 		writerHelper.selectAllTextOfDoc();
@@ -265,7 +265,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 			});
 
 		cy.cGet('#File-tab-label').click();
-		desktopHelper.actionOnSelector('print', (selector) => { cy.cGet(selector).click(); });
+		cy.cGet('#File-container .unoPrint').click();
 		helper.getCoolFrameWindow()
 			.then(function(win) {
 				cy.wrap(win).its('open').should('be.called');
@@ -278,17 +278,13 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#copy-paste-container p i').should('exist');
 
 		//Undo
-		desktopHelper.actionOnSelector('undo', (selector) => {
-			cy.cGet(selector).should('not.have.class', 'disabled').click();
-		});
+		cy.cGet('#Home-container .unoUndo').click();
 
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p i').should('not.exist');
 
 		//Redo
-		desktopHelper.actionOnSelector('redo', (selector) => {
-			cy.cGet(selector).should('not.have.class', 'disabled').click();
-		});
+		cy.cGet('#Home-container .unoRedo').click();
 
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#copy-paste-container p i').should('exist');
@@ -325,10 +321,10 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#View-tab-label').click();
 		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
 		// Hide.
-		cy.cGet('[id="SidebarDeck.PropertyDeck"]').click();
+		cy.cGet('[id$="SidebarDeck.PropertyDeck"]').click();
 		cy.cGet('#sidebar-dock-wrapper').should('not.be.visible');
 		// Show.
-		cy.cGet('[id="SidebarDeck.PropertyDeck"]').click();
+		cy.cGet('[id$="SidebarDeck.PropertyDeck"]').click();
 		cy.cGet('#sidebar-dock-wrapper').should('be.visible');
 	});
 
@@ -336,7 +332,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
 		cy.wait(500);
-		desktopHelper.actionOnSelector('insertSymbol', (selector) => { cy.cGet(selector).click(); });
+		cy.cGet('#Home-container .unospan-CharmapControl').click();
 		cy.cGet('.jsdialog-container.ui-dialog.ui-widget-content.lokdialog_container').should('be.visible');
 		cy.cGet('.ui-dialog-title').should('have.text', 'Special Characters');
 		helper.clickOnIdle('#favchar1');
@@ -433,7 +429,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 		writerHelper.selectAllTextOfDoc();
 		cy.cGet('#Insert-tab-label').click();
 		cy.cGet('#toolbar-up .w2ui-scroll-right').click();
-		cy.cGet('#FontworkGalleryFloater').click();
+		cy.cGet('#Insert-container .unoFontworkGalleryFloater').click();
 		cy.cGet('#ok').click();
 		cy.cGet('.leaflet-control-buttons-disabled path.leaflet-interactive').should('exist');
 

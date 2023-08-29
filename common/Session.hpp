@@ -39,14 +39,18 @@ public:
     int createCanonicalId(const std::string &viewProps)
     {
         if (viewProps.empty())
+        {
+            LOG_ERR("Cannot create canonical id for empty viewProps");
             return 0;
+        }
+
         for (const auto& it : _canonicalIds)
         {
             if (it.first == viewProps)
                 return it.second;
         }
 
-        const std::size_t id = _canonicalIds.size() + 1000;
+        const std::size_t id = (_canonicalIds.size() + 1) + 1000;
         _canonicalIds[viewProps] = id;
         return id;
     }

@@ -557,7 +557,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 				if (data.type === 'snackbar') {
 					var that = this;
 					this.isSnackBar = true;
-					this.snackBarTimout = setTimeout(function () { that.parent.removeWindow(that); }, this.options.snackbarTimeout);
+					this.snackBarTimout = setTimeout(function () { that.parent.removeWindow(that); }, data.timeout ? data.timeout : this.options.snackbarTimeout);
 				}
 			}
 
@@ -678,7 +678,7 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		}
 
 		if (currentLevel) {
-			currentLevel = currentLevel.substring('level-'.length);
+			currentLevel = parseInt(currentLevel.substring('level-'.length));
 			this._builder._currentDepth = currentLevel;
 		}
 
@@ -687,6 +687,9 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
 		var backupGridSpan = control.style.gridColumn;
 		L.DomUtil.remove(control);
+
+		// reset _builder._currentDepth
+		this._builder._currentDepth = 0;
 
 		// when we updated toolbox or menubutton with color picker we need to leave
 		// mobile wizard at the same level (opened color picker) on update

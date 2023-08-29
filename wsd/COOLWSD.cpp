@@ -1086,7 +1086,7 @@ public:
 
     virtual ~RemoteJSONPoll() { }
 
-    virtual void handleJSON(Poco::JSON::Object::Ptr json) = 0;
+    virtual void handleJSON(const Poco::JSON::Object::Ptr& json) = 0;
 
     virtual void handleUnchangedJSON()
     { }
@@ -1116,7 +1116,7 @@ public:
 
     void pollingThread()
     {
-        while (!isStop() && !SigUtil::getTerminationFlag() && !SigUtil::getShutdownRequestFlag())
+        while (!isStop() && !SigUtil::getShutdownRequestFlag())
         {
             Poco::URI remoteServerURI(_conf.getString(_configKey));
 
@@ -1219,7 +1219,7 @@ public:
 
     virtual ~RemoteConfigPoll() { }
 
-    void handleJSON(Poco::JSON::Object::Ptr remoteJson) override
+    void handleJSON(const Poco::JSON::Object::Ptr& remoteJson) override
     {
         std::map<std::string, std::string> newAppConfig;
 
@@ -1278,15 +1278,8 @@ public:
             }
 
             //use feature_lock.locked_hosts[@allow] entry from coolwsd.xml if feature_lock.locked_hosts.allow key doesnot exist in json
-            Poco::Dynamic::Var allow = false;
-            if (!lockedHost->has("allow"))
-            {
-                allow = _conf.getBool("feature_lock.locked_hosts[@allow]");
-            }
-            else
-            {
-                allow = lockedHost->get("allow");
-            }
+            Poco::Dynamic::Var allow = !lockedHost->has("allow") ? Poco::Dynamic::Var(_conf.getBool("feature_lock.locked_hosts[@allow]"))
+                                                                 : lockedHost->get("allow");
             newAppConfig.insert(std::make_pair("feature_lock.locked_hosts[@allow]", booleanToString(allow)));
 
             if (booleanToString(allow) == "false")
@@ -1335,7 +1328,7 @@ public:
     }
 
     void fetchAliasGroups(std::map<std::string, std::string>& newAppConfig,
-                          Poco::JSON::Object::Ptr remoteJson)
+                          const Poco::JSON::Object::Ptr& remoteJson)
     {
         try
         {
@@ -1426,7 +1419,7 @@ public:
     }
 
     void fetchRemoteFontConfig(std::map<std::string, std::string>& newAppConfig,
-                               Poco::JSON::Object::Ptr remoteJson)
+                               const Poco::JSON::Object::Ptr& remoteJson)
     {
         try
         {
@@ -1447,7 +1440,7 @@ public:
     }
 
     void fetchLockedTranslations(std::map<std::string, std::string>& newAppConfig,
-                                 Poco::JSON::Object::Ptr remoteJson)
+                                 const Poco::JSON::Object::Ptr& remoteJson)
     {
         try
         {
@@ -1534,7 +1527,7 @@ public:
     }
 
     void fetchUnlockImageUrl(std::map<std::string, std::string>& newAppConfig,
-                             Poco::JSON::Object::Ptr remoteJson)
+                             const Poco::JSON::Object::Ptr& remoteJson)
     {
         try
         {
@@ -1558,7 +1551,7 @@ public:
     }
 
     void fetchIndirectionEndpoint(std::map<std::string, std::string>& newAppConfig,
-                                  Poco::JSON::Object::Ptr remoteJson)
+                                  const Poco::JSON::Object::Ptr& remoteJson)
     {
         try
         {
@@ -1585,7 +1578,7 @@ public:
     }
 
     void fetchMonitors(std::map<std::string, std::string>& newAppConfig,
-                       Poco::JSON::Object::Ptr remoteJson)
+                       const Poco::JSON::Object::Ptr& remoteJson)
     {
         Poco::JSON::Array::Ptr monitors;
         try
@@ -1625,7 +1618,7 @@ public:
         }
     }
 
-    void handleOptions(Poco::JSON::Object::Ptr remoteJson)
+    void handleOptions(const Poco::JSON::Object::Ptr& remoteJson)
     {
         try
         {
@@ -1669,7 +1662,7 @@ public:
 
     virtual ~RemoteFontConfigPoll() { }
 
-    void handleJSON(Poco::JSON::Object::Ptr remoteJson) override
+    void handleJSON(const Poco::JSON::Object::Ptr& remoteJson) override
     {
         // First mark all fonts we have downloaded previously as "inactive" to be able to check if
         // some font gets deleted from the list in the JSON file.
@@ -2700,21 +2693,22 @@ void COOLWSD::innerInitialize(Application& self)
 
         const auto compress = getConfigValue<bool>(conf, "trace.path[@compress]", false);
         const auto takeSnapshot = getConfigValue<bool>(conf, "trace.path[@snapshot]", false);
-        TraceDumper = Util::make_unique<TraceFileWriter>(path, recordOutgoing, compress, takeSnapshot, filters);
+        TraceDumper = std::make_unique<TraceFileWriter>(path, recordOutgoing, compress,
+                                                        takeSnapshot, filters);
     }
 
 #if !MOBILEAPP
-    SavedClipboards = Util::make_unique<ClipboardCache>();
+    SavedClipboards = std::make_unique<ClipboardCache>();
 
     LOG_TRC("Initialize FileServerRequestHandler");
-    FileServerRequestHandler::initialize();
+    FileServerRequestHandler::initialize(COOLWSD::FileServerRoot);
 #endif
 
-    WebServerPoll = Util::make_unique<TerminatingPoll>("websrv_poll");
+    WebServerPoll = std::make_unique<TerminatingPoll>("websrv_poll");
 
-    PrisonerPoll = Util::make_unique<PrisonPoll>();
+    PrisonerPoll = std::make_unique<PrisonPoll>();
 
-    Server = Util::make_unique<COOLWSDServer>();
+    Server = std::make_unique<COOLWSDServer>();
 
     LOG_TRC("Initialize StorageBase");
     StorageBase::initialize();
@@ -3021,7 +3015,7 @@ bool COOLWSD::checkAndRestoreForKit()
     if (ForKitProcId == -1)
     {
         // Fire the ForKit process for the first time.
-        if (!SigUtil::getShutdownRequestFlag() && !SigUtil::getTerminationFlag() && !createForKit())
+        if (!SigUtil::getShutdownRequestFlag() && !createForKit())
         {
             // Should never fail.
             LOG_FTL("Setting ShutdownRequestFlag: Failed to spawn coolforkit.");
@@ -3050,7 +3044,7 @@ bool COOLWSD::checkAndRestoreForKit()
                 }
 
                 // Spawn a new forkit and try to dust it off and resume.
-                if (!SigUtil::getShutdownRequestFlag() && !SigUtil::getTerminationFlag() && !createForKit())
+                if (!SigUtil::getShutdownRequestFlag() && !createForKit())
                 {
                     LOG_FTL("Setting ShutdownRequestFlag: Failed to spawn forkit instance.");
                     SigUtil::requestShutdown();
@@ -3084,7 +3078,7 @@ bool COOLWSD::checkAndRestoreForKit()
         {
             // No child processes.
             // Spawn a new forkit and try to dust it off and resume.
-            if (!SigUtil::getShutdownRequestFlag() && !SigUtil::getTerminationFlag() && !createForKit())
+            if (!SigUtil::getShutdownRequestFlag()  && !createForKit())
             {
                 LOG_FTL("Setting ShutdownRequestFlag: Failed to spawn forkit instance.");
                 SigUtil::requestShutdown();
@@ -3881,14 +3875,14 @@ private:
         Poco::Net::HTTPRequest request;
 
         StreamSocket::MessageMap map;
-        if (!socket->parseHeader("Client", startmessage, request, &map))
+        if (!socket->parseHeader("Client", startmessage, request, map))
             return;
 
         LOG_DBG("Handling request: " << request.getURI());
         try
         {
             // We may need to re-write the chunks moving the inBuffer.
-            socket->compactChunks(&map);
+            socket->compactChunks(map);
             Poco::MemoryInputStream message(&socket->getInBuffer()[0],
                                             socket->getInBuffer().size());
             // update the read cursor - headers are not altered by chunks.
@@ -3938,7 +3932,7 @@ private:
                         {
                             const std::string& serverUri =
                                 unlockImageUri.getScheme() + "://" + unlockImageUri.getAuthority();
-                            ProxyRequestHandler::handleRequest(uri.substr(pos + ProxyRemoteLen),
+                            ProxyRequestHandler::handleRequest(uri.substr(pos + sizeof("/remote/static") - 1),
                                                                socket, serverUri);
                         }
                     }
@@ -3967,7 +3961,8 @@ private:
                      requestDetails.equals(1, "getMetrics"))
             {
                 // See metrics.txt
-                std::shared_ptr<Poco::Net::HTTPResponse> response(new Poco::Net::HTTPResponse());
+                std::shared_ptr<Poco::Net::HTTPResponse> response =
+                    std::make_shared<Poco::Net::HTTPResponse>();
 
                 if (!COOLWSD::AdminEnabled)
                     throw Poco::FileAccessDeniedException("Admin console disabled");
@@ -5260,7 +5255,13 @@ class PlainSocketFactory final : public SocketFactory
         int fd = physicalFd;
 #if !MOBILEAPP
         if (SimulatedLatencyMs > 0)
-            fd = Delay::create(SimulatedLatencyMs, physicalFd);
+        {
+            int delayfd = Delay::create(SimulatedLatencyMs, physicalFd);
+            if (delayfd == -1)
+                LOG_ERR("DelaySocket creation failed, using physicalFd " << physicalFd << " instead.");
+            else
+                fd = delayfd;
+        }
 #endif
         return StreamSocket::create<StreamSocket>(std::string(), fd, false,
                                                   std::make_shared<ClientRequestDispatcher>());
@@ -5748,7 +5749,7 @@ int COOLWSD::innerMain()
     try
     {
         // Fetch font settings from server if configured
-        remoteFontConfigThread = Util::make_unique<RemoteFontConfigPoll>(config());
+        remoteFontConfigThread = std::make_unique<RemoteFontConfigPoll>(config());
         remoteFontConfigThread->start();
     }
     catch (const Poco::Exception&)
@@ -5810,7 +5811,7 @@ int COOLWSD::innerMain()
     auto stampFetch = startStamp - (fetchUpdateCheck - std::chrono::milliseconds(60000));
 #endif
 
-    while (!SigUtil::getTerminationFlag() && !SigUtil::getShutdownRequestFlag())
+    while (!SigUtil::getShutdownRequestFlag())
     {
         // This timeout affects the recovery time of prespawned children.
         std::chrono::microseconds waitMicroS = SocketPoll::DefaultPollTimeoutMicroS * 4;

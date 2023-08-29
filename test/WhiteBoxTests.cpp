@@ -421,6 +421,9 @@ void WhiteBoxTests::testMessageAbbreviation()
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring("abc", -1, '\n'));
     LOK_ASSERT_EQUAL(std::string("ab"), Util::getDelimitedInitialSubstring("abc", 2, '\n'));
 
+    // The end arg of getAbbreviatedMessage is the length of the first argument, not
+    // the point at which it should be abbreviated. Abbreviation appends ... to the
+    // result
     LOK_ASSERT_EQUAL(std::string(), COOLProtocol::getAbbreviatedMessage(nullptr, 5));
     LOK_ASSERT_EQUAL(std::string(), COOLProtocol::getAbbreviatedMessage(nullptr, -1));
     LOK_ASSERT_EQUAL(std::string(), COOLProtocol::getAbbreviatedMessage("abc", 0));
@@ -437,6 +440,15 @@ void WhiteBoxTests::testMessageAbbreviation()
     abbr = "1234567890123...";
     LOK_ASSERT_EQUAL(abbr, COOLProtocol::getAbbreviatedMessage(s.data(), s.size()));
     LOK_ASSERT_EQUAL(abbr, COOLProtocol::getAbbreviatedMessage(s));
+
+    std::string long_utf8_str_a(COOLProtocol::maxNonAbbreviatedMsgLen - 3, 'a');
+    LOK_ASSERT_EQUAL(long_utf8_str_a + std::string("mü..."),
+                     COOLProtocol::getAbbreviatedMessage(long_utf8_str_a + "müsli"));
+
+    // don't allow the ü sequence to be broken
+    std::string long_utf8_str_b(COOLProtocol::maxNonAbbreviatedMsgLen - 2, 'a');
+    LOK_ASSERT_EQUAL(long_utf8_str_b + std::string("mü..."),
+                     COOLProtocol::getAbbreviatedMessage(long_utf8_str_b + "müsli"));
 }
 
 void WhiteBoxTests::testReplace()
@@ -611,6 +623,26 @@ public:
 
     void trimIfInactive() override
     {
+    }
+
+    bool isDocPasswordProtected() const override
+    {
+        return false;
+    }
+
+    bool haveDocPassword() const override
+    {
+        return false;
+    }
+
+    std::string getDocPassword() const override
+    {
+        return "";
+    }
+
+    DocumentPasswordType getDocPasswordType() const override
+    {
+        return DocumentPasswordType::ToView;
     }
 };
 

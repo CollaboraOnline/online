@@ -322,11 +322,19 @@ L.Map.TouchGesture = L.Handler.extend({
 		    mousePos = this._map._docLayer._latLngToTwips(latlng);
 
 		// clicked a hyperlink popup - not really designed for this.
-		if (this._map.hyperlinkPopup && e.target &&
-			this._map.hyperlinkPopup._contentNode == e.target.parentNode) {
+		if (this._map.hyperlinkPopup && e.target) {
+			var tapOnHyperlinkPopup = false;
+			this._map.hyperlinkPopup._htmlContent.childNodes.forEach(function(childNode) {
+				if (childNode == e.target.parentNode || childNode == e.target) {
+					tapOnHyperlinkPopup = true;
+					return;
+				}
+			});
 			// not forward mouse events to core if the user tap on a hyperlink popup box
 			// for instance on Writer that causes the text cursor to be moved
-			return;
+			if (tapOnHyperlinkPopup) {
+				return;
+			}
 		}
 
 		this._map.fire('closemobilewizard');

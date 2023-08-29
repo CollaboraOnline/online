@@ -276,7 +276,7 @@ global.getConditionalFormatMenuHtml = getConditionalFormatMenuHtml;
 
 function getInsertTablePopupHtml() {
 	return '<div id="inserttable-wrapper">\
-					<div id="inserttable-popup" class="inserttable-pop ui-widget ui-corner-all">\
+					<div id="inserttable-popup" class="inserttable-pop ui-widget ui-corner-all" tabIndex=0>\
 						<div class="inserttable-grid"></div>\
 						<div id="inserttable-status" class="cool-font" style="padding: 5px;"><br/></div>\
 					</div>\
@@ -289,6 +289,9 @@ function insertTable() {
 	var $grid = $('.inserttable-grid');
 	var $status = $('#inserttable-status');
 
+	var selectedRow = 1;
+	var selectedColumn = 1;
+
 	// init
 	for (var r = 0; r < rows; r++) {
 		var $row = $('<div/>').addClass('row');
@@ -299,33 +302,87 @@ function insertTable() {
 		}
 	}
 
+	var sendInsertMessageFunction = function(col, row) {
+		$('.col').removeClass('bright');
+		$status.html('<br/>');
+		var msg = 'uno .uno:InsertTable {' +
+			' "Columns": { "type": "long","value": '
+			+ col +
+			' }, "Rows": { "type": "long","value": '
+			+ row + ' }}';
+
+		app.socket.sendMessage(msg);
+		closePopup();
+	};
+
+	var highlightFunction = function(col, row) {
+		$('.col').removeClass('bright');
+		$('.row:nth-child(-n+' + row + ') .col:nth-child(-n+' + col + ')')
+			.addClass('bright');
+		$status.html(col + 'x' + row);
+	};
+
+	if (document.getElementById('inserttable-popup')) {
+		document.getElementById('inserttable-popup').addEventListener('keydown', function(event) {
+			if (event.code === 'ArrowLeft') {
+				if (selectedColumn > 1)
+					selectedColumn--;
+
+				highlightFunction(selectedColumn, selectedRow);
+			}
+			else if (event.code === 'ArrowRight') {
+				if (selectedColumn < 10)
+					selectedColumn++;
+
+				highlightFunction(selectedColumn, selectedRow);
+			}
+			else if (event.code === 'ArrowUp') {
+				if (selectedRow > 1)
+					selectedRow--;
+
+				highlightFunction(selectedColumn, selectedRow);
+			}
+			else if (event.code === 'ArrowDown') {
+				if (selectedRow < 10)
+					selectedRow++;
+
+				highlightFunction(selectedColumn, selectedRow);
+			}
+			else if (event.code === 'Escape' || event.code === 'Tab') {
+				event.preventDefault();
+				event.stopPropagation();
+				var popUp = document.getElementById('w2ui-overlay');
+				popUp.remove();
+				app.map.focus();
+			}
+			else if (event.code === 'Enter') {
+				sendInsertMessageFunction(selectedColumn, selectedRow);
+			}
+			else if (event.code === 'Space') {
+				sendInsertMessageFunction(selectedColumn, selectedRow);
+			}
+		});
+	}
+
 	// events
 	$grid.on({
 		mouseover: function () {
 			var col = $(this).index() + 1;
 			var row = $(this).parent().index() + 1;
-			$('.col').removeClass('bright');
-			$('.row:nth-child(-n+' + row + ') .col:nth-child(-n+' + col + ')')
-				.addClass('bright');
-			$status.html(col + 'x' + row);
-
+			highlightFunction(col, row);
 		},
 		click: function() {
 			var col = $(this).index() + 1;
 			var row = $(this).parent().index() + 1;
-			$('.col').removeClass('bright');
-			$status.html('<br/>');
-			var msg = 'uno .uno:InsertTable {' +
-				' "Columns": { "type": "long","value": '
-				+ col +
-				' }, "Rows": { "type": "long","value": '
-				+ row + ' }}';
-
-			app.socket.sendMessage(msg);
-
-			closePopup();
+			sendInsertMessageFunction(col, row);
 		}
 	}, '.col');
+
+	if (document.getElementById('inserttable-popup')) {
+		setTimeout(function() {
+			document.getElementById('inserttable-popup').focus();
+		}, 100);
+	}
 }
 
 var shapes = {
@@ -532,6 +589,45 @@ function insertShapes(shapeType) {
 
 	var collection = shapes[shapeType];
 
+	if (app.map && app.map.uiManager && app.map.uiManager.getCurrentMode() === 'notebookbar') {
+		var tabCatherIdList = ['shapes-popup-tab-catcher-start', 'shapes-popup-tab-catcher-end'];
+
+		var focusFirstItemFunction = function() {
+			var container = document.getElementById('insertshape-popup');
+			if (container && container.children[0])
+				container = container.children[0];
+			else
+				return;
+
+			var counter = 0;
+
+			while (counter < container.children.length && (container.children[counter].className.includes('row-header') || tabCatherIdList.includes(container.children[counter].id)))
+				counter++;
+
+			if (counter < container.children.length)
+				container.children[counter].children[0].focus();
+		};
+
+		var focusLastItemFunction = function() {
+			var container = document.getElementById('insertshape-popup').children[0];
+			var counter = container.children.length - 1;
+
+			while (counter > -1 && (container.children[counter].className.includes('row-header') || tabCatherIdList.includes(container.children[counter].id)))
+				counter--;
+
+			if (counter > -1)
+				container.children[counter].children[container.children[counter].children.length - 1].focus();
+		};
+
+		var tabCatcher = document.createElement('div');
+		tabCatcher.id = tabCatherIdList[0];
+		tabCatcher.tabIndex = 0;
+		$grid.append(tabCatcher);
+		tabCatcher.onfocus = function() {
+			focusLastItemFunction();
+		};
+	}
+
 	for (var s in collection) {
 		var $rowHeader = $('<div/>').addClass('row-header cool-font').append(_(s));
 		$grid.append($rowHeader);
@@ -546,9 +642,11 @@ function insertShapes(shapeType) {
 					break;
 				}
 				var shape = collection[s][idx++];
-				var $col = $('<div/>').addClass('col w2ui-icon').addClass(shape.img);
-				$col.data('uno', shape.uno);
-				$row.append($col);
+				var col = document.createElement('div');
+				col.className = 'col w2ui-icon ' + shape.img;
+				col.dataset.uno = shape.uno;
+				col.tabIndex = 0;
+				$row.append(col);
 			}
 
 			if (idx >= collection[s].length)
@@ -556,17 +654,122 @@ function insertShapes(shapeType) {
 		}
 	}
 
+	if (app.map && app.map.uiManager && app.map.uiManager.getCurrentMode() === 'notebookbar') {
+		tabCatcher = document.createElement('div');
+		tabCatcher.id = tabCatherIdList[1];
+		tabCatcher.tabIndex = 0;
+		$grid.append(tabCatcher);
+		tabCatcher.onfocus = function() {
+			focusFirstItemFunction();
+		};
+
+		var findIndexFunction = function(item) {
+			for (var i = 0; i < item.parentNode.children.length; i++) {
+				if (item.parentNode.children[i] == item) {
+					return i;
+				}
+			}
+			return -1;
+		};
+
+		var focusOnIndexFunction = function(row, index) {
+			if (row.children[index])
+				row.children[index].focus();
+			else {
+				while (!row.children[index] && index > -1)
+					index--;
+
+				if (index > -1)
+					row.children[index].focus();
+			}
+		};
+
+		var arrowUpFunction = function(event, index) {
+			if (event.target.parentNode.previousElementSibling.className.includes('row-header')) {
+				if (event.target.parentNode.previousElementSibling.previousElementSibling.children.length > 0) {
+					focusOnIndexFunction(event.target.parentNode.previousElementSibling.previousElementSibling, index);
+				}
+				else {
+					event.target.parentNode.previousElementSibling.previousElementSibling.focus();
+				}
+			}
+			else if (event.target.parentNode.previousElementSibling.children.length > 0) {
+				focusOnIndexFunction(event.target.parentNode.previousElementSibling, index);
+			}
+			else {
+				event.target.parentNode.previousElementSibling.focus(); // Tab cathcer.
+			}
+		};
+
+		var arrowDownFunction = function(event, index) {
+			if (event.target.parentNode.nextElementSibling.className.includes('row-header')) {
+				event.target.parentNode.nextElementSibling.nextElementSibling.children[index].focus(); // Header.
+			}
+			else if (event.target.parentNode.nextElementSibling.children.length > 0) {
+				focusOnIndexFunction(event.target.parentNode.nextElementSibling, index);
+			}
+			else {
+				event.target.parentNode.nextElementSibling.focus(); // Tab cathcer.
+			}
+		};
+
+		focusFirstItemFunction();
+
+		var keyPressInitiatedInsidePopUp = false;
+	}
+
 	$grid.on({
 		click: function(e) {
 			map.sendUnoCommand('.uno:' + $(e.target).data().uno);
 			closePopup();
+		},
+		keyup: function(event) {
+			if (app.map.uiManager.getCurrentMode() === 'notebookbar') {
+				if ((event.code === 'Enter' || event.code === 'Space') && keyPressInitiatedInsidePopUp) {
+					map.sendUnoCommand('.uno:' + event.target.dataset.uno);
+					closePopup();
+				}
+			}
+		},
+		keydown: function(event) {
+			if (app.map.uiManager.getCurrentMode() === 'notebookbar') {
+				var index = findIndexFunction(event.target);
+				if (index === -1)
+					return;
+
+				if (event.code === 'ArrowDown') {
+					arrowDownFunction(event, index);
+				}
+				else if (event.code == 'ArrowUp') {
+					arrowUpFunction(event, index);
+				}
+				else if (event.code === 'ArrowLeft') {
+					if (index === 0)
+						arrowUpFunction(event, 1000);
+					else
+						focusOnIndexFunction(event.target.parentNode, index - 1);
+				}
+				else if (event.code === 'ArrowRight') {
+					if (index === event.target.parentNode.children.length - 1)
+						arrowDownFunction(event, 0);
+					else
+						focusOnIndexFunction(event.target.parentNode, index + 1);
+				}
+				else if (event.code === 'Escape') {
+					document.getElementById('insertshape-wrapper').remove();
+					app.map.focus();
+				}
+				else if (event.code === 'Enter' || event.code === 'Space') {
+					keyPressInitiatedInsidePopUp = true;
+				}
+			}
 		}
 	});
 }
 
 function getShapesPopupHtml() {
 	return '<div id="insertshape-wrapper">\
-				<div id="insertshape-popup" class="insertshape-pop ui-widget ui-corner-all">\
+				<div id="insertshape-popup" tabIndex=0 class="insertshape-pop ui-widget ui-corner-all">\
 					<div class="insertshape-grid"></div>\
 				</div>\
 			</div>';

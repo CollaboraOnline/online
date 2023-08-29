@@ -29,8 +29,7 @@ else
 bin_PROGRAMS += coolwsd
 endif
 
-dist_bin_SCRIPTS = coolwsd-systemplate-setup \
-                   coolwsd-generate-proof-key
+dist_bin_SCRIPTS = coolwsd-systemplate-setup
 
 man_MANS = man/coolwsd.1 \
            man/coolforkit.1 \
@@ -38,7 +37,6 @@ man_MANS = man/coolwsd.1 \
            man/coolconfig.1 \
            man/coolstress.1 \
            man/coolwsd-systemplate-setup.1 \
-           man/coolwsd-generate-proof-key.1 \
            man/coolmount.1
 
 
@@ -398,6 +396,8 @@ else
 CLEANUP_COMMAND=if test -s ./coolwsd; then echo "Cleaning up..." && ./coolwsd --disable-cool-user-checking --cleanup --o:logging.level=warning || rm ./coolwsd; fi
 endif
 
+CLEANUP_COVERAGE=rm -rf ${abs_top_srcdir}/gcov; find . -iname "*.gc??" -delete
+
 if HAVE_LO_PATH
 
 SYSTEM_STAMP = @SYSTEMPLATE_PATH@/system_stamp
@@ -442,8 +442,7 @@ clean-local:
 	rm -rf "${top_srcdir}/loleaflet"
 	rm -rf loolconfig loolconvert loolforkit loolmap loolmount # kill old binaries
 	rm -rf loolwsd loolwsd_fuzzer coolwsd_fuzzer loolstress loolsocketdump
-	rm -rf ${abs_top_srcdir}/gcov
-	find . -iname "*.gc??" -delete
+	$(CLEANUP_COVERAGE)
 
 if ENABLE_DEBUG
 # can write to /tmp/coolwsd.log
@@ -637,6 +636,9 @@ check: check-for-system-nss check-recursive
 
 coverage-report:
 	$(GEN_COVERAGE_COMMAND)
+
+coverage-clean:
+	$(CLEANUP_COVERAGE)
 
 czech: check
 	@echo "This should do something much cooler"

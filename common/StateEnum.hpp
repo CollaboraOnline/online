@@ -55,7 +55,7 @@
     static inline const char* nameShort(NAME e)                                                    \
     {                                                                                              \
         static const char* const NAME##_names[] = { FOR_EACH(STRINGIFY1, NAME, __VA_ARGS__) };     \
-        assert(static_cast<unsigned>(e) < sizeof(NAME##_names) / sizeof(NAME##_names[0]) &&        \
+        assert(static_cast<unsigned>(e) < N_ELEMENTS(NAME##_names) &&                              \
                "Enum value is out of range.");                                                     \
         return NAME##_names[static_cast<int>(e)];                                                  \
     }                                                                                              \
@@ -68,7 +68,7 @@
     static inline const char* name(NAME e)                                                         \
     {                                                                                              \
         static const char* const NAME##_names[] = { FOR_EACH(STRINGIFY2, NAME, __VA_ARGS__) };     \
-        assert(static_cast<unsigned>(e) < sizeof(NAME##_names) / sizeof(NAME##_names[0]) &&        \
+        assert(static_cast<unsigned>(e) < N_ELEMENTS(NAME##_names) &&                              \
                "Enum value is out of range.");                                                     \
         return NAME##_names[static_cast<int>(e)];                                                  \
     }                                                                                              \

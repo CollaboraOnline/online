@@ -47,7 +47,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sidebar Tests', function()
 		cy.cGet('.modalpopup .jsdialog-container').should('be.visible');
 		cy.cGet('#single').click();
 		impressHelper.triggerNewSVGForShapeInTheCenter();
-		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
+		cy.cGet('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition tspan')
 			.should('have.attr', 'text-decoration', 'underline');
 	});
 });

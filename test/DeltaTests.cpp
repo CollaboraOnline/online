@@ -269,7 +269,7 @@ void DeltaTests::testRle()
     DeltaGenerator::DeltaBitmapRow rowb;
     const uint32_t data[] = { 42, 42, 42, 42, 0, 0, 0, 1, 2, 3, 4,
         7, 7, 7, 1, 2, 3, 3, 2, 1, 0, 9, 9, 9, 9, 9, 0, 9, 0, 9, 0, 9 };
-    const uint32_t elems = sizeof(data)/sizeof(data[0]);
+    const uint32_t elems = N_ELEMENTS(data);
     rowa.initRow(data, elems);
     rowb.initRow(data, elems);
     LOK_ASSERT(rowa.identical(rowb));
@@ -279,6 +279,18 @@ void DeltaTests::testRle()
     {
         LOK_ASSERT_EQUAL(data[i], it.getPixel());
         it.next();
+    }
+
+    const uint32_t empty[256] = { 0, };
+    DeltaGenerator::DeltaBitmapRow rowc;
+    rowc.initRow(empty, 256);
+    LOK_ASSERT(!rowa.identical(rowc));
+    LOK_ASSERT(!rowb.identical(rowc));
+    DeltaGenerator::DeltaBitmapRow::PixIterator it2(rowc);
+    for (uint32_t i = 0; i < 256; ++i)
+    {
+        LOK_ASSERT_EQUAL(empty[i], it2.getPixel());
+        it2.next();
     }
 }
 

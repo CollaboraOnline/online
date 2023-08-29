@@ -13,7 +13,7 @@ L.Control.Notebookbar = L.Control.extend({
 	container: null,
 	builder: null,
 
-	HOME_TAB_ID: '-10',
+	HOME_TAB_ID: 'Home-tab-label',
 
 	additionalShortcutButtons: [],
 	hiddenShortcutButtons: [],
@@ -296,6 +296,7 @@ L.Control.Notebookbar = L.Control.extend({
 				text: button.label ? button.label : (button.hint ? _(button.hint) : ' '),
 				icon: button.imgurl,
 				command: button.unoCommand,
+				accessKey: button.accessKey ? button.accessKey: null,
 				postmessage: button.unoCommand ? undefined : true,
 				cssClass: 'integrator-shortcut'
 			}

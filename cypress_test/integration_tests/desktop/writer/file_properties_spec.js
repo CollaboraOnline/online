@@ -10,7 +10,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
-		desktopHelper.switchUIToCompact();
+		desktopHelper.switchUIToNotebookbar();
 	});
 
 	afterEach(function() {
@@ -19,7 +19,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 
 	it('Add File Description.', function() {
 		writerHelper.openFileProperties();
-		cy.cGet('#description-tab-label').click();
+		cy.cGet('#tabcontrol-2').click();
 		helper.waitUntilIdle('#title.ui-edit');
 		cy.cGet('#title.ui-edit').type('New Title');
 		// sometimes it doesn't finish typing
@@ -38,7 +38,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'File Property Tests', func
 		cy.cGet('#ok.ui-pushbutton').click();
 		writerHelper.openFileProperties();
 
-		cy.cGet('#description-tab-label').click();
+		cy.cGet('#tabcontrol-2').click();
 		cy.cGet('#title.ui-edit').should('have.value', 'New Title');
 		cy.cGet('#comments.ui-textarea').should('have.value', 'New');
 

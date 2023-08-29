@@ -89,20 +89,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			map._docPreviews = {};
 
 		map.uiManager.initializeSpecializedUI(this._docType);
-		if (window.mode.isMobile()) {
-			L.Control.MobileWizard.mergeOptions({maxHeight: '55vh'});
-			var mobileWizard = L.DomUtil.get('mobile-wizard');
-			var container = L.DomUtil.createWithId('div', 'mobile-wizard-header', mobileWizard);
-			var preview = L.DomUtil.createWithId('div', 'mobile-slide-sorter', container);
-			L.DomUtil.toBack(container);
-			map.addControl(L.control.partsPreview(container, preview, {
-				fetchThumbnail: false,
-				allowOrientation: false,
-				axis: 'x',
-				imageClass: 'preview-img-portrait',
-				frameClass: 'preview-frame-portrait'
-			}));
-		}
 	},
 
 	onResizeImpress: function () {

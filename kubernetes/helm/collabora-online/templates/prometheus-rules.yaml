@@ -22,7 +22,6 @@ spec:
         {{`
         annotations:
           summary: "no coolwsd process running: in namespace {{ $labels.namespace }}"
-          description: "no coolwsd process running: of pod {{ $labels.pod }}"
         `}}
       {{- range $key, $value := .Values.prometheus.rules.defaults.docs.pod }}
       - alert: "Collabora Open Docs by Pod"
@@ -33,7 +32,6 @@ spec:
         {{`
         annotations:
           summary: "Too many Docs are open on a pod in namespace: {{ $labels.namespace }}"
-          description: "Too many Docs ({{ $value }}) are open on pod: {{ $labels.pod }}"
         `}}
       {{- end }}
       {{- range $key, $value := .Values.prometheus.rules.defaults.docs.sum }}
@@ -45,7 +43,6 @@ spec:
         {{`
         annotations:
           summary: "Too many Docs are open on namespace"
-          description: "Too many Docs ({{ $value }}) are open on namespace: {{ $labels.namespace }}"
         `}}
       {{- end }}
       {{- range $key, $value := .Values.prometheus.rules.defaults.viewers.pod }}
@@ -57,7 +54,6 @@ spec:
         {{`
         annotations:
           summary: "Too many Viewers on a pod in namespace: {{ $labels.namespace }}"
-          description: "Too many Viewers ({{ $value }}) on pod: {{ $labels.pod }}"
         `}}
       {{- end }}
       {{- range $key, $value := .Values.prometheus.rules.defaults.viewers.doc }}
@@ -69,7 +65,6 @@ spec:
         {{`
         annotations:
           summary: "Too many Viewers on a document in namespace: {{ $labels.namespace }}"
-          description: "Too many Viewers ({{ $value }}) on document: {{ $labels.key }}"
         `}}
       {{- end }}
       {{- range $key, $value := .Values.prometheus.rules.defaults.viewers.sum }}
@@ -81,7 +76,6 @@ spec:
         {{`
         annotations:
           summary: "Too many Viewers on namespace"
-          description: "Too many Viewers ({{ $value }}) on namespace: {{ $labels.namespace }}"
         `}}
       {{- end }}
       - alert: "Collabora same Document open Multiple time"
@@ -91,7 +85,6 @@ spec:
         {{`
         annotations:
           summary: "a key/document is open multiple times in namespace: {{ $labels.namespace }}"
-          description: "the document {{ $labels.key }} was open multiple times in {{ $labels.namespace }}, so not all viewers could see each other"
         `}}
       - alert: "Collabora same Document open Multiple time"
         expr: 'count(count(doc_pid)by(key)>1) > {{ .Values.prometheus.rules.defaults.docs.duplicated }}'
@@ -100,7 +93,6 @@ spec:
         {{`
         annotations:
           summary: "too many document are open multiple times in namespace: {{ $labels.namespace }}"
-          description: "there are {{ $value }} document open multiple times in {{ $labels.namespace }}, so not all viewers could see each other"
         `}}
       - alert: "Collabora Error StorageSpaceLow"
         expr: 'increase(error_storage_space_low[1m]) > 0'
@@ -109,17 +101,18 @@ spec:
         {{`
         annotations:
           summary: "local storage space too low to operate in namespace: {{ $labels.namespace }}"
-          description: "local storage space too low to operate on: {{ $labels.pod }}"
         `}}
+      {{- range $key, $value := .Values.prometheus.rules.defaults.errorStorageConnections }}
       - alert: "Collabora Error StorageConnection"
-        expr: 'increase(error_storage_connection[1m]) > 0'
+        expr: 'increase(error_storage_connection[1m]) > {{ $value }}'
         labels:
-          severity: "warning"
+          severity: "{{ $key }}"
         {{`
         annotations:
-          summary: "unable to connect to storage in namespace: {{ $labels.namespace }}"
-          description: "unable to connect to storage on: {{ $labels.pod }}"
+          summary: "unable to connect to storage in namespace {{ $labels.namespace }} on pod {{ $labels.pod }}."
         `}}
+      {{- end }}
+
       - alert: "Collabora Error BadRequest"
         expr: 'increase(error_bad_request[1m]) > 0'
         labels:
@@ -127,7 +120,6 @@ spec:
         {{`
         annotations:
           summary: "we returned an HTTP bad request to a caller in namespace: {{ $labels.namespace }}"
-          description: "we returned an HTTP bad request to a caller on: {{ $labels.pod }}"
         `}}
       - alert: "Collabora Error BadArgument"
         expr: 'increase(error_bad_argument[1m]) > 0'
@@ -136,7 +128,6 @@ spec:
         {{`
         annotations:
           summary: "we returned an HTTP bad argument to a caller in namespace: {{ $labels.namespace }}"
-          description: "we returned an HTTP bad argument to a caller on: {{ $labels.pod }}"
         `}}
       - alert: "Collabora Error UnauthorizedRequest"
         expr: 'increase(error_unauthorized_request[1m]) > 0'
@@ -145,17 +136,17 @@ spec:
         {{`
         annotations:
           summary: "an authorization exception usually on CheckFileInfo in namespace: {{ $labels.namespace }}"
-          description: "an authorization exception usually on CheckFileInfo on: {{ $labels.pod }}"
         `}}
+      {{- range $key, $value := .Values.prometheus.rules.defaults.errorServiceUnavailable }}
       - alert: "Collabora Error ServiceUnavailable"
-        expr: 'increase(error_service_unavailable[1m]) > 0'
+        expr: 'increase(error_service_unavailable[1m]) > {{ $value }}'
         labels:
-          severity: "warning"
+          severity: "{{ $key }}"
         {{`
         annotations:
-          summary: "internal error, service is unavailable in namespace: {{ $labels.namespace }}"
-          description: "internal error, service is unavailable on: {{ $labels.pod }}"
+          summary: "internal error, service is unavailable in namespace {{ $labels.namespace }} on pod {{ $labels.pod }}."
         `}}
+      {{- end }}
       - alert: "Collabora Error ParseError"
         expr: 'increase(error_parse_error[1m]) > 0'
         labels:
@@ -163,7 +154,6 @@ spec:
         {{`
         annotations:
           summary: "badly formed data provided for us to parse in namespace: {{ $labels.namespace }}"
-          description: "badly formed data provided for us to parse on: {{ $labels.pod }}"
         `}}
       {{- end }}
   {{- if .Values.prometheus.rules.additionalRules }}

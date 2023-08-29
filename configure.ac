@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.63])
 
-AC_INIT([coolwsd], [23.05.2.1], [https://github.com/CollaboraOnline/online/issues], [coolwsd], [https://collaboraonline.github.io/])
+AC_INIT([coolwsd], [23.05.3.1], [https://github.com/CollaboraOnline/online/issues], [coolwsd], [https://collaboraonline.github.io/])
 LT_INIT([shared, disable-static, dlopen])
 
 AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
@@ -346,7 +346,8 @@ AC_ARG_WITH([infobar-url],
 AC_ARG_WITH([coverage],
              AS_HELP_STRING([--with-coverage=<gcov>],
                             [Enable a code-coverage method. Currently only gcov is supported (works with both gcc and clang).
-                            Output HTML in gcov/ directory.]))
+                            Output HTML in gcov/ directory.
+                            Generate report with 'make coverage-report'. Clean coverage files with 'make coverage-clean']))
 
 AC_ARG_WITH([sanitizer],
              AS_HELP_STRING([--with-sanitizer],
@@ -1029,6 +1030,7 @@ fi
 
 # Check if we have clang, rather than gcc, which
 # doesn't like -pthread on the linker command-line.
+HAVE_CLANG=false
 AC_MSG_CHECKING([whether the compiler is clang])
 AC_COMPILE_IFELSE([AC_LANG_SOURCE([
     #if !defined(__clang__)
@@ -1036,10 +1038,11 @@ AC_COMPILE_IFELSE([AC_LANG_SOURCE([
     #endif
 ])],
                     [AC_MSG_RESULT([yes])
-                    AC_DEFINE([HAVE_CLANG],1,[whether the C++ compiler is clang])],
+                    AC_DEFINE([HAVE_CLANG],true,[whether the C++ compiler is clang])],
                     [AC_MSG_RESULT([no])
-                    AC_DEFINE([HAVE_CLANG],0,[whether the C++ compiler is clang])])
-AM_CONDITIONAL([HAVE_CLANG], [test "$HAVE_CLANG" = "1"])
+                    AC_DEFINE([HAVE_CLANG],false,[whether the C++ compiler is clang])])
+AM_CONDITIONAL([HAVE_CLANG], [test "$HAVE_CLANG" = "true"])
+AC_SUBST(HAVE_CLANG)
 
 AS_IF([test "$ENABLE_GTKAPP" != true],
 [CXXFLAGS="$CXXFLAGS $CXXFLAGS_CXXSTD"])
@@ -1115,7 +1118,7 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
       [AC_MSG_CHECKING([for LibreOffice path])
       if test -n "$with_lo_path"; then
           # strip trailing '/' from LO_PATH, 'ln -s' with such path will otherwise fail
-          LO_PATH="${with_lo_path%/}"
+          LO_PATH=`readlink -f ${with_lo_path%/}`
           AC_MSG_RESULT([found])
       else
           AC_MSG_RESULT([not found])
@@ -1599,7 +1602,7 @@ if test "$enable_feature_lock" = "yes"; then
         <unlock_title desc=\"Title to show user when prompting the unlock popup\" default=\"$UNLOCK_TITLE\">$UNLOCK_TITLE</unlock_title>
         <unlock_link desc=\"Link from where user can unlock the features\" default=\"$UNLOCK_LINK\">$UNLOCK_LINK</unlock_link>
         <unlock_description desc=\"Description about unlocking features\" default=\"$UNLOCK_DESCRIPTION\">$UNLOCK_DESCRIPTION</unlock_description>
-        <unlock_image desc=\"URL of image shown when unlock dialog get displayed\" default=\"\"></unlock_image><!-- URL structure - https://<hostname>/static/<image_endpoint> -->
+        <unlock_image desc=\"URL of image shown when unlock dialog get displayed\" default=\"\"></unlock_image>
         <writer_unlock_highlights desc=\"Short note about Writer benefits of unlocking\" default=\"$WRITER_UNLOCK_HIGHLIGHTS\">$WRITER_UNLOCK_HIGHLIGHTS</writer_unlock_highlights>
         <calc_unlock_highlights desc=\"Short note about Calc benefits of unlocking\" default=\"$CALC_UNLOCK_HIGHLIGHTS\">$CALC_UNLOCK_HIGHLIGHTS</calc_unlock_highlights>
         <impress_unlock_highlights desc=\"Short note about Impress benefits of unlocking\" default=\"$IMPRESS_UNLOCK_HIGHLIGHTS\">$IMPRESS_UNLOCK_HIGHLIGHTS</impress_unlock_highlights>

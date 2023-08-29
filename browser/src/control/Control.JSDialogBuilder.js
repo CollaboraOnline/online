@@ -114,7 +114,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['colorlistbox'] = this._colorControl;
 		this._controlHandlers['borderstyle'] = this._borderControl;
 		this._controlHandlers['treelistbox'] = JSDialog.treeView;
-		this._controlHandlers['iconview'] = this._iconViewControl;
+		this._controlHandlers['iconview'] = JSDialog.iconView;
 		this._controlHandlers['drawingarea'] = JSDialog.drawingArea;
 		this._controlHandlers['rootcomment'] = this._rootCommentControl;
 		this._controlHandlers['comment'] = this._commentControl;
@@ -410,12 +410,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var getPrecision = function (data) {
 			data = Math.abs(data);
-			var counter = 1;
-
-			while (Math.floor(data * counter) < (data * counter))
-				counter *= 10;
-
-			return 1/counter;
+			var str = '' + data;
+			var dot = str.indexOf('.');
+			return dot ? 1 / Math.pow(10, str.length - dot - 1) : 1;
 		};
 
 		if (data.min != undefined)
@@ -509,7 +506,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_setAccessKey: function(element, key) {
 		if (key)
-				element.accessKey = key;
+			element.accessKey = key;
 	},
 
 	_getAccessKeyFromText: function(text) {
@@ -1157,7 +1154,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.tabs) {
 			var tabs = 0;
 			for (var tabIdx = 0; data.children && tabIdx < data.children.length; tabIdx++) {
-				if (data.children[tabIdx].type === 'tabpage')
+				if (data.children[tabIdx].type === 'tabpage' || data.vertical)
 					tabs++;
 			}
 			var isMultiTabJSON = tabs > 1;
@@ -1180,10 +1177,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var title = builder._cleanText(item.text);
 
 				var tab = L.DomUtil.create('button', 'ui-tab ' + builder.options.cssClass, tabsContainer);
-				tab.id = item.name + '-tab-label';
-				tab.number = item.id - 1;
+				// avoid duplicated ids: we receive plain number from core, append prefix
+				tab.id = Number.isInteger(parseInt(item.id)) ? data.id + '-' + item.id : item.id;
 				tab.textContent = title;
 				tab.setAttribute('role', 'tab');
+				tab.setAttribute('aria-label', title);
 				builder._setAccessKey(tab, builder._getAccessKeyFromText(item.text));
 				builder._stressAccessKey(tab, tab.accessKey);
 
@@ -1278,6 +1276,60 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					}
 				};
 
+				var moveFocusIntoTabPage = function(tab) {
+					var tabIdx = tabs.indexOf(tab);
+					var currentElement = contentDivs[tabIdx];
+
+					function findFirstFocusableElement(currentNode)
+					{
+						var currentChildNodes = currentNode.childNodes;
+
+						if (currentChildNodes.length <= 0) {
+							return null;
+						}
+
+						for (var childIndex = 0; childIndex < currentChildNodes.length; childIndex++) {
+							var currentChildNode = currentChildNodes[childIndex];
+
+							if (currentChildNode.tabIndex === undefined) {
+								return null;
+							}
+							if (currentChildNode.tabIndex === -1) {
+								var firstFocusableElement = findFirstFocusableElement(currentChildNode);
+
+								if (firstFocusableElement !== null) {
+									return firstFocusableElement;
+								}
+							}
+							else
+							{
+								var classListContainsInvalidClass = false;
+								if (currentChildNode.classList !== undefined) {
+									classListContainsInvalidClass = currentChildNode.classList.contains('hidden') ||
+																	currentChildNode.classList.contains('jsdialog-begin-marker') ||
+																	currentChildNode.classList.contains('jsdialog-end-marker');
+								}
+
+								if (!currentChildNode.disabled && !currentChildNode.hidden && !classListContainsInvalidClass) {
+									var firstFocusableChild = findFirstFocusableElement(currentChildNode);
+									if (firstFocusableChild === null) {
+										return currentChildNode;
+									}
+									else {
+										return firstFocusableChild;
+									}
+								}
+							}
+						}
+
+						return null;
+					}
+
+					var firstFocusableElement = findFirstFocusableElement(currentElement);
+
+					firstFocusableElement.focus();
+				};
+
 				// We are adding this to distinguish "enter" key from real click events.
 				tabs.forEach(function (tab)
 					{
@@ -1291,6 +1343,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 							case 'ArrowRight':
 								moveFocusToNextTab(currentTab);
+								break;
+
+							case 'ArrowDown':
+								moveFocusIntoTabPage(currentTab);
 								break;
 
 							case 'Home':
@@ -1333,27 +1389,39 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			for (var tabIdx = 0; tabIdx < data.children.length; tabIdx++) {
 				var tab = data.children[tabIdx];
 
-				if (tab.type !== 'tabpage')
+				if (tab.type !== 'tabpage' && !data.vertical)
 					continue;
 
 				builder.build(contentDivs[tabId], [tab], false, false);
 				tabId++;
 			}
-
-			return false;
 		} else {
 			for (var tabIdx = 0; tabIdx < data.children.length; tabIdx++) {
 				var tab = data.children[tabIdx];
 
-				if (tab.type !== 'tabpage')
+				if (tab.type !== 'tabpage' && !data.vertical)
 					continue;
 
 				builder.build(contentDivs[singleTabId], [tab], false, false);
 				break;
 			}
-
-			return false;
 		}
+
+		function addKeydownEvents(element) {
+			element.addEventListener('keydown', function(e) {
+				if (e.key === 'ArrowUp') {
+					var tabIdx = tabIds.indexOf(e.currentTarget.id);
+					tabs[tabIdx].focus();
+				}
+			});
+		}
+
+		contentDivs.forEach(function(tabPage)
+		{
+			addKeydownEvents(tabPage);
+		});
+
+		return false;
 	},
 
 	_singlePanelHandler: function(parentContainer, data, builder) {
@@ -1875,67 +1943,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_iconViewEntry: function (parentContainer, parentData, entry, builder) {
-		var disabled = parentData.enabled === 'false' || parentData.enabled === false;
-
-		if (entry.separator && (entry.separator === 'true' || entry.separator === true)) {
-			L.DomUtil.create('hr', builder.options.cssClass + ' ui-iconview-separator', parentContainer);
-			return;
-		}
-
-		var entryContainer = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-entry', parentContainer);
-		if (entry.selected && (entry.selected === 'true' || entry.selected === true))
-			$(entryContainer).addClass('selected');
-
-		var icon = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-icon', entryContainer);
-		var img = L.DomUtil.create('img', builder.options.cssClass, icon);
-		if (entry.image)
-			img.src = entry.image;
-		img.alt = entry.text;
-		if (entry.tooltip)
-			img.title = entry.tooltip;
-		else
-			img.title = entry.text;
-
-		if (!disabled) {
-			var singleClick = parentData.singleclickactivate === 'true' || parentData.singleclickactivate === true;
-			$(entryContainer).click(function() {
-				$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
-				builder.callback('iconview', 'select', parentData, entry.row, builder);
-				if (singleClick) {
-					builder.callback('iconview', 'activate', parentData, entry.row, builder);
-				}
-			});
-			if (!singleClick) {
-				$(entryContainer).dblclick(function() {
-					$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
-					builder.callback('iconview', 'activate', parentData, entry.row, builder);
-				});
-			}
-			builder._preventDocumentLosingFocusOnClick(entryContainer);
-		}
-	},
-
-	_iconViewControl: function (parentContainer, data, builder) {
-		var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview', parentContainer);
-		container.id = data.id;
-
-		var disabled = data.enabled === 'false' || data.enabled === false;
-		if (disabled)
-			L.DomUtil.addClass(container, 'disabled');
-
-		for (var i in data.entries) {
-			builder._iconViewEntry(container, data, data.entries[i], builder);
-		}
-
-		var firstSelected = $(container).children('.selected').get(0);
-		var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
-		if (firstSelected)
-			firstSelected.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
-
-		return false;
-	},
-
 	_valuesetControl: function (parentContainer, data, builder) {
 		var elem;
 		var image;
@@ -2253,6 +2260,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var iconURLAliases = {
+			'file-saveas': 'saveas',
+			'home-search': 'recsearch',
 			'addmb-menu': 'ok',
 			'closetablet': 'view',
 			'defineprintarea': 'menuprintranges',
@@ -2473,6 +2482,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		controls['container'] = div;
 		div.tabIndex = -1;
+		if (data.class)
+			div.classList.add(data.class);
 
 		var isRealUnoCommand = true;
 		var hasPopUp = false;
@@ -2483,19 +2494,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		if (data.command || data.postmessage === true) {
-			var id = data.id ? data.id : (data.command && data.command !== '') ? data.command : data.text;
+			var id = data.id ? data.id : (data.command && data.command !== '') ? data.command.replace('.uno:', '') : data.text;
 			var isUnoCommand = data.command && data.command.indexOf('.uno:') >= 0;
-			if (isUnoCommand)
-				id = encodeURIComponent(data.command.substr('.uno:'.length));
-			else
-				isRealUnoCommand = false;
+
+			isRealUnoCommand = isUnoCommand;
 
 			if (id)
 				id.replace(/\%/g, '').replace(/\./g, '-').replace(' ', '');
 			else
 				console.warn('_unoToolButton: no id provided');
 
-			L.DomUtil.addClass(div, 'uno' + id);
+			if (data.command)
+				L.DomUtil.addClass(div, data.command.replace(':', '').replace('.', ''));
 
 			if (isRealUnoCommand)
 				id = builder._makeIdUnique(id);
@@ -2504,11 +2514,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			data.id = id; // change in input data for postprocess
 
 			var icon = data.icon ? data.icon : builder._createIconURL(data.command);
-			var buttonId = id + 'img';
+			var buttonId = id + '-button';
 
 			button = L.DomUtil.create('button', 'ui-content unobutton', div);
 			button.id = buttonId;
-			builder._setAccessKey(button, builder._getAccessKeyFromText(data.text));
+			if (!data.accessKey)
+				builder._setAccessKey(button, builder._getAccessKeyFromText(data.text));
+			else
+				button.accessKey = data.accessKey;
+
 			if (hasPopUp)
 				button.setAttribute('aria-haspopup', true);
 
@@ -2819,8 +2833,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var params = {};
-		var colorParameterID = data.id + '.Color';
-		var themeParameterID = data.id + '.ComplexColorJSON';
+		var colorParameterID = data.command.replace('.uno:', '') + '.Color';
+		var themeParameterID = data.command.replace('.uno:', '') + '.ComplexColorJSON';
 
 		params[colorParameterID] = {
 			type : 'long',
@@ -2914,7 +2928,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_borderControlItem: function(parentContainer, data, builder, i, selected) {
 		var button = null;
 
-		var div = this._createIdentifiable('div', 'ui-content unospan', parentContainer, data);
+		var div = this._createIdentifiable('div', 'unotoolbutton mobile-wizard ui-content unospan', parentContainer, data);
 
 		var buttonId = 'border-' + i;
 		button = L.DomUtil.create('img', 'ui-content borderbutton', div);
@@ -2978,16 +2992,20 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.command) {
 			var div = builder._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
 
+			if (data.class)
+				div.classList.add(data.class);
+
 			var id = data.command.substr('.uno:'.length);
 			div.id = id;
+			div.tabIndex = -1;
 
 			div.title = data.text;
 			builder.map.uiManager.enableTooltip(div);
 
 			var icon = builder._createIconURL(data.command);
-			var buttonId = id + 'img';
-			var button = L.DomUtil.create('img', 'ui-content unobutton', div);
-			L.LOUtil.setImage(button, icon.split('/').pop(), builder.map.getDocType());
+			var buttonId = data.id ? data.id: id + '-button';
+			var button = L.DomUtil.create('button', 'ui-content unobutton', div);
+			button.style.background = 'url(' + L.LOUtil.getImageURL(icon.split('/').pop(), builder.map.getDocType()) + ')';
 			button.id = buttonId;
 			button.setAttribute('alt', id);
 
@@ -3031,10 +3049,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder._sendColorCommand(builder, data, color);
 			};
 
-			$(button).click(applyFunction);
-			$(valueNode).click(applyFunction);
+			button.addEventListener('click', applyFunction);
+			valueNode.addEventListener('click', applyFunction);
 
-			$(arrowbackground).click(function() {
+			arrowbackground.tabIndex = 0;
+
+			var arrowEventHandler = function() {
 				if (!$(div).hasClass('disabled')) {
 					$(div).w2color({ color: builder._colorLastSelection[data.command], transparent: noColorControl }, function (color, themeData) {
 						if (color != null) {
@@ -3070,7 +3090,29 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						colorDiv.insertBefore(autoColorButton, colorDiv.firstChild);
 					}
 				}
+			};
+
+			arrowbackground.addEventListener('keydown', function(event) {
+				if (event.code === 'Enter' || event.ccode === 'Space') {
+					arrowEventHandler();
+					var w2uiElement = document.getElementById('w2ui-overlay');
+					w2uiElement.querySelector('.color-palette-selector').focus();
+					var tabCatcher = document.createElement('div');
+					tabCatcher.tabIndex = 0;
+					tabCatcher.onfocus = function() {
+						w2uiElement.querySelector('.color-palette-selector').focus();
+					};
+					w2uiElement.insertBefore(tabCatcher, w2uiElement.children[0]);
+
+					tabCatcher = document.createElement('div');
+					tabCatcher.tabIndex = 0;
+					tabCatcher.onfocus = function() {
+						w2uiElement.querySelector('.color-palette-selector').focus();
+					};
+					w2uiElement.appendChild(tabCatcher);
+				}
 			});
+			arrowbackground.addEventListener('click', arrowEventHandler);
 			builder._preventDocumentLosingFocusOnClick(div);
 		}
 
@@ -3226,18 +3268,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			control.focus();
 			break;
 		case 'select':
-			$(control).children('.selected').removeClass('selected');
-
-			var pos = parseInt(data.position);
-			var entry = control.children.length > pos ? control.children[pos] : null;
-
-			if (entry) {
-				L.DomUtil.addClass(entry, 'selected');
-				var blockOption = JSDialog._scrollIntoViewBlockOption('nearest');
-				entry.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
-			} else if (pos != -1)
-				console.warn('not found entry: "' + pos + '" in: "' + data.control_id + '"');
-
+			if (typeof control.onSelect === 'function')
+				control.onSelect(parseInt(data.position));
+			else
+				window.app.console.warn('widget "' + data.control_id + '" doesn\'t support "select" action');
 			break;
 
 		case 'show':

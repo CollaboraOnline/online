@@ -27,7 +27,8 @@ export interface GroupEntryStrings {
 	This class is an extended version of "CanvasSectionObject".
 */
 
-export class GroupBase extends CanvasSectionObject {
+export abstract class GroupBase extends CanvasSectionObject {
+	_map: any;
 	_textColor: string;
 	_getFont: () => string;
 	_levelSpacing: number;
@@ -42,6 +43,26 @@ export class GroupBase extends CanvasSectionObject {
 		if (options.sectionProperties === undefined)
 			this.sectionProperties = {};
 	}
+
+	// This function is called by CanvasSectionContainer when the section is added to the sections list.
+	onInitialize(): void {
+		this._map = L.Map.THIS;
+		this.sectionProperties.docLayer = this._map._docLayer;
+		this._groups = null;
+
+		// group control styles
+		this._groupHeadSize = Math.round(12 * app.dpiScale);
+		this._levelSpacing = app.roundedDpiScale;
+
+		this._map.on('sheetgeometrychanged', this.update, this);
+		this._map.on('viewrowcolumnheaders', this.update, this);
+		this._createFont();
+		this.update();
+		this.isRemoved = false;
+	}
+
+	// override in subclasses
+	abstract update(): void;
 
 	// Create font for the group headers. Group headers are on the left side of corner header.
 	_createFont(): void {
@@ -255,8 +276,31 @@ export class GroupBase extends CanvasSectionObject {
 		}
 	}
 
+	// returns [startX, endX, startY, endY]
+	getTailsGroupRect (group: GroupEntry): number[] {
+		return [0, 0, 0, 0];
+	}
+
 	findTailsGroup (point: number[]): GroupEntry {
-		return null;
+		const mirrorX = this.isCalcRTL();
+		for (let i = 0; i < this._groups.length; i++) {
+			if (this._groups[i]) {
+				for (const group in this._groups[i]) {
+					if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
+						const group_ = this._groups[i][group];
+						const rect = this.getTailsGroupRect(group_);
+						const startX = rect[0];
+						const startY = rect[2];
+						const endX = rect[1];
+						const endY = rect[3];
+
+						if (this.isPointInRect(point, startX, startY, endX, endY, mirrorX)) {
+							return group_;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/* Double clicking on a group's tail closes it. */

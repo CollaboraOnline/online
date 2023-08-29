@@ -243,6 +243,17 @@ bool Quarantine::quarantineFile(const std::string& docPath)
     return false;
 }
 
+std::string Quarantine::lastQuarantinedFilePath() const
+{
+    if (!isQuarantineEnabled())
+        return std::string();
+
+    std::lock_guard<std::mutex> lock(Mutex);
+
+    const auto& fileList = QuarantineMap[_docKey];
+    return fileList.empty() ? std::string() : fileList[fileList.size() - 1];
+}
+
 void Quarantine::removeQuarantinedFiles()
 {
     std::lock_guard<std::mutex> lock(Mutex);

@@ -2529,7 +2529,7 @@ w2utils.event = {
             if (typeof options.onRender === 'function' && typeof options.render !== 'function') options.render = options.onRender;
             // since only one overlay can exist at a time
             $.fn.w2menuClick = function (event, index) {
-                var keepOpen = options.keepOpen || false;
+				var keepOpen = options.keepOpen || false;
                 if (['radio', 'check'].indexOf(options.type) != -1) {
                     if (event.shiftKey || event.metaKey || event.ctrlKey) keepOpen = true;
                 }
@@ -2554,7 +2554,19 @@ w2utils.event = {
                 }
             };
             $.fn.w2menuDown = function (event, index) {
-                var $el  = $(event.target).parents('tr');
+                if (event.type === 'keydown') {
+					if (event.code === 'ArrowDown')
+						document.activeElement.nextElementSibling.focus();
+					else if (event.code === 'ArrowUp')
+						document.activeElement.previousElementSibling.focus();
+
+					if (event.code === 'Enter' || event.code === 'Space') {
+						document.activeElement.click();
+						return;
+					}
+				}
+
+				var $el  = $(event.target).parents('tr');
                 var tmp  = $el.find('.w2ui-icon');
                 if ((options.type == 'check') || (options.type == 'radio')) {
                    var item = options.items[index];
@@ -2733,7 +2745,10 @@ w2utils.event = {
                         menu_html +=
                             '<tr index="'+ f + '" style="'+ (mitem.style ? mitem.style : '') +'" '+ (mitem.tooltip ? 'title="'+ w2utils.lang(mitem.tooltip) +'"' : '') +
                             '        class="'+ bg +' '+ (options.index === f ? 'w2ui-selected' : '') + ' ' + (mitem.disabled === true ? 'w2ui-disabled' : '') +'"'+
+							'        tabIndex=0' +
                             '        onmousedown="if ('+ (mitem.disabled === true ? 'true' : 'false') + ') return;'+
+                            '               jQuery.fn.w2menuDown(event, \''+ f +'\');"'+
+                            '        onkeydown="if ('+ (mitem.disabled === true ? 'true' : 'false') + ') return;'+
                             '               jQuery.fn.w2menuDown(event, \''+ f +'\');"'+
                             '        onclick="event.stopPropagation(); '+
                             '               if ('+ (mitem.disabled === true ? 'true' : 'false') + ') return;'+
@@ -2815,7 +2830,12 @@ w2utils.event = {
         function bindEvents(pal) {
             $('#w2ui-overlay .color')
                 .off('.w2color')
-                .on('mousedown.w2color', function (event) {
+                .on('mousedown.w2color keydown.w2color', function (event) {
+					if (event.type === 'keydown') {
+						if (event.code !== 'Enter' && event.code !== 'Space')
+							return; // Handle keydown but only for specific keys.
+					}
+
                     var color = $(event.originalEvent.target).attr('name');
                     index = $(event.originalEvent.target).attr('index').split(':');
                     var theme = $(event.originalEvent.target).attr('theme');
@@ -2828,9 +2848,19 @@ w2utils.event = {
                     recentRow.unshift(color);
                     localStorage.setItem('recentColor', JSON.stringify(recentRow));
                 })
-                .on('mouseup.w2color', function () {
+                .on('mouseup.w2color keyup.w2color', function (event) {
                     setTimeout(function () {
+						if (event.type === 'keyup') {
+							if (event.code !== 'Enter' && event.code !== 'Space')
+								return; // Handle keydown but only for specific keys.
+						}
+
                         if ($("#w2ui-overlay").length > 0) $('#w2ui-overlay').removeData('keepOpen')[0].hide();
+
+						if (event.type === 'keyup') {
+							if (event.code === 'Enter' || event.code === 'Space')
+								app.map.focus(); // Focus back to document.
+						}
                     }, 10);
                 });
             $('#w2ui-overlay input')
@@ -2873,7 +2903,7 @@ w2utils.event = {
                 onHide: function () {
                     var data = $(el).data('_color');
                     var theme = $(el).data('_theme');
-                    if (typeof callBack == 'function') 
+                    if (typeof callBack == 'function')
                         callBack(data, theme);
                     $(el).removeData('_color');
                     $(el).removeData('_theme');
@@ -2951,7 +2981,7 @@ w2utils.event = {
                         JSON.stringify(detailedPalette[i][j].Data) : undefined;
                     html += '<td>'+
                             '    <div class="color '+ (pal[i][j] === '' ? 'no-color' : '') +'" style="background-color: #'+ pal[i][j] +';" ' +
-                            '       name="'+ pal[i][j] +'" index="'+ i + ':' + j +'" ' + (themeData ? 'theme=\'' + themeData : '') + '\'>'+ (options.color == pal[i][j] ? '&#149;' : '&#160;') +
+                            '       name="'+ pal[i][j] +'"tabIndex=0 index="'+ i + ':' + j +'" ' + (themeData ? 'theme=\'' + themeData : '') + '\'>'+ (options.color == pal[i][j] ? '&#149;' : '&#160;') +
                             '    </div>'+
                             '</td>';
                     if (options.color == pal[i][j]) index = [i, j];
@@ -2964,22 +2994,22 @@ w2utils.event = {
             html += '<tr><td style="height: 8px" colspan="8"></td></tr>'+
                     '<tr>'+
                     '   <td colspan="4" style="text-align: left"><input placeholder="#FFF000" style="margin-left: 1px; width: 74px" maxlength="7"/></td>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp1[0] +';" name="'+ tmp1[0] +'" index="8:0">'+ (options.color == tmp1[0] ? '&#149;' : '&#160;') +'</div></td>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp1[1] +';" name="'+ tmp1[1] +'" index="8:0">'+ (options.color == tmp1[1] ? '&#149;' : '&#160;') +'</div></td>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp1[2] +';" name="'+ tmp1[2] +'" index="8:0">'+ (options.color == tmp1[2] ? '&#149;' : '&#160;') +'</div></td>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp1[3] +';" name="'+ tmp1[3] +'" index="8:0">'+ (options.color == tmp1[3] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" tabIndex=0 style="background-color: #'+ tmp1[0] +';" name="'+ tmp1[0] +'" index="8:0">'+ (options.color == tmp1[0] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" tabIndex=0 style="background-color: #'+ tmp1[1] +';" name="'+ tmp1[1] +'" index="8:0">'+ (options.color == tmp1[1] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" tabIndex=0 style="background-color: #'+ tmp1[2] +';" name="'+ tmp1[2] +'" index="8:0">'+ (options.color == tmp1[2] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" tabIndex=0 style="background-color: #'+ tmp1[3] +';" name="'+ tmp1[3] +'" index="8:0">'+ (options.color == tmp1[3] ? '&#149;' : '&#160;') +'</div></td>'+
                     '</tr>'+
                     '<tr><td style="height: 4px" colspan="8"></td></tr>' +
                     '<tr><td style="text-align: left;" colspan="8"><span style="margin-left: 1px;">' + _('Recent') + '</span></td></tr>' +
                     '<tr>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp2[0] +';" name="'+ tmp2[0] +'" index="8:0">'+ (options.color == tmp2[0] ? '&#149;' : '&#160;') +'</div></td>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp2[1] +';" name="'+ tmp2[1] +'" index="8:0">'+ (options.color == tmp2[1] ? '&#149;' : '&#160;') +'</div></td>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp2[2] +';" name="'+ tmp2[2] +'" index="8:0">'+ (options.color == tmp2[2] ? '&#149;' : '&#160;') +'</div></td>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp2[3] +';" name="'+ tmp2[3] +'" index="8:0">'+ (options.color == tmp2[3] ? '&#149;' : '&#160;') +'</div></td>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp2[4] +';" name="'+ tmp2[4] +'" index="8:0">'+ (options.color == tmp2[4] ? '&#149;' : '&#160;') +'</div></td>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp2[5] +';" name="'+ tmp2[5] +'" index="8:0">'+ (options.color == tmp2[5] ? '&#149;' : '&#160;') +'</div></td>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp2[6] +';" name="'+ tmp2[6] +'" index="8:0">'+ (options.color == tmp2[6] ? '&#149;' : '&#160;') +'</div></td>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp2[7] +';" name="'+ tmp2[7] +'" index="8:0">'+ (options.color == tmp2[7] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" tabIndex=0 style="background-color: #'+ tmp2[0] +';" name="'+ tmp2[0] +'" index="8:0">'+ (options.color == tmp2[0] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" tabIndex=0 style="background-color: #'+ tmp2[1] +';" name="'+ tmp2[1] +'" index="8:0">'+ (options.color == tmp2[1] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" tabIndex=0 style="background-color: #'+ tmp2[2] +';" name="'+ tmp2[2] +'" index="8:0">'+ (options.color == tmp2[2] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" tabIndex=0 style="background-color: #'+ tmp2[3] +';" name="'+ tmp2[3] +'" index="8:0">'+ (options.color == tmp2[3] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" tabIndex=0 style="background-color: #'+ tmp2[4] +';" name="'+ tmp2[4] +'" index="8:0">'+ (options.color == tmp2[4] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" tabIndex=0 style="background-color: #'+ tmp2[5] +';" name="'+ tmp2[5] +'" index="8:0">'+ (options.color == tmp2[5] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" tabIndex=0 style="background-color: #'+ tmp2[6] +';" name="'+ tmp2[6] +'" index="8:0">'+ (options.color == tmp2[6] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" tabIndex=0 style="background-color: #'+ tmp2[7] +';" name="'+ tmp2[7] +'" index="8:0">'+ (options.color == tmp2[7] ? '&#149;' : '&#160;') +'</div></td>'+
                     '</tr>'+
                     '<tr><td style="height: 4px" colspan="8"></td></tr>';
             html += '</tbody></table></div>';

@@ -225,7 +225,7 @@ bool lockdown(Type type)
     };
 
     struct sock_fprog filter = {
-        sizeof(filterCode)/sizeof(filterCode[0]), // length
+        N_ELEMENTS(filterCode), // length
         filterCode
     };
 

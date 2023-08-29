@@ -8,7 +8,7 @@
  * text area itself.
  */
 
-/* global app */
+/* global app _ */
 
 L.A11yTextInput = L.TextInput.extend({
 	initialize: function() {
@@ -180,6 +180,73 @@ L.A11yTextInput = L.TextInput.extend({
 		} else {
 			this._updateSelection(this._lastCursorPosition, start, end);
 		}
+	},
+
+	_setDescription: function(text) {
+		window.app.console.log('setDescription: ' + text);
+		this._textArea.setAttribute('aria-description', text);
+	},
+
+	_updateTable: function(outCount, inList, row, col, rowSpan, colSpan) {
+		if (this._isDebugOn) {
+			window.app.console.log('_updateTable: '
+				+ '\n outCount: ' + outCount
+				+ '\n inList: ' + inList.toString()
+				+ '\n row: ' + row + ', rowSpan: ' + rowSpan
+				+ '\n col: ' + col + ', colSpan: ' + colSpan
+			);
+		}
+
+		if (this._timeoutForTableDescription)
+			clearTimeout(this._timeoutForTableDescription);
+
+		var eventDescription = '';
+		if (outCount > 0 || inList.length > 0) {
+			this._lastRowIndex = 0;
+			this._lastColIndex = 0;
+			this._lastRowSpan = 1;
+			this._lastColSpan = 1;
+		}
+		for (var i = 0; i < outCount; i++) {
+			eventDescription += _('Out of table') + '. ';
+		}
+		for (i = 0; i < inList.length; i++) {
+			eventDescription += _('Table with') + ' ' + inList[i].rowCount + ' ' + _('rows') + ' '
+				+ _('and') + ' ' + inList[i].colCount + ' ' + _('columns') + '. ';
+		}
+		if (this._lastRowIndex !== row || this._lastRowSpan !== rowSpan) {
+			this._lastRowIndex = row;
+			eventDescription += _('Row') + ' ' + row;
+			if (this._lastRowSpan !== rowSpan) {
+				if (rowSpan > 1) {
+					eventDescription += ' ' + _('through') + ' ' + (row + rowSpan - 1) ;
+				}
+				this._lastRowSpan = rowSpan;
+			}
+			eventDescription += '. ';
+		}
+		if (this._lastColIndex !== col || this._lastColSpan !== colSpan) {
+			this._lastColIndex = col;
+			eventDescription += _('Column') + ' ' + col;
+			if (this._lastColSpan !== colSpan) {
+				if (colSpan > 1) {
+					eventDescription += ' ' + _('through') + ' ' + (col + colSpan - 1);
+				}
+				this._lastColSpan = colSpan;
+			}
+			eventDescription += '. ';
+		}
+		this._setDescription(eventDescription);
+
+		var that = this;
+		this._timeoutForTableDescription = setTimeout(function() {
+			that._setDescription('');
+		}, 1000);
+	},
+
+	onAccessibilityFocusedCellChanged: function(outCount, inList, row, col, rowSpan, colSpan, paragraph) {
+		this._setFocusedParagraph(paragraph.content, parseInt(paragraph.position), parseInt(paragraph.start), parseInt(paragraph.end));
+		this._updateTable(outCount, inList, row + 1, col + 1, rowSpan, colSpan);
 	},
 
 	// Check if a UTF-16 pair represents a Unicode code point

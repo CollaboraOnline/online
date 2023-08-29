@@ -76,6 +76,7 @@ bool filterTests(CPPUNIT_NS::TestRunner& runner, CPPUNIT_NS::Test* testRegistry,
 
 static bool IsDebugrun = false;
 
+// coverity[root_function] : don't warn about uncaught exceptions
 int main(int argc, char** argv)
 {
     bool verbose = false;

@@ -73,6 +73,14 @@ public:
 
     /// See if we should clear out our memory
     virtual void trimIfInactive() = 0;
+
+    virtual bool isDocPasswordProtected() const = 0;
+
+    virtual bool haveDocPassword() const = 0;
+
+    virtual std::string getDocPassword() const = 0;
+
+    virtual DocumentPasswordType getDocPasswordType() const = 0;
 };
 
 struct RecordedEvent
@@ -224,8 +232,8 @@ public:
     {
         if (hasWatermark())
         {
-            _docWatermark.reset(
-                new Watermark(getLOKitDocument(), getWatermarkText(), getWatermarkOpacity()));
+            _docWatermark = std::make_shared<Watermark>(getLOKitDocument(), getWatermarkText(),
+                                                        getWatermarkOpacity());
         }
 
         return _docWatermark != nullptr;
@@ -277,6 +285,9 @@ public:
     void setDumpTiles(bool dumpTiles) { _isDumpingTiles = dumpTiles; }
 
     std::string getViewRenderState() { return _viewRenderState; }
+
+    bool isTileInsideVisibleArea(const TileDesc& tile) const;
+
 private:
     bool loadDocument(const StringVector& tokens);
 
@@ -403,6 +414,8 @@ private:
 
     /// whether we are dumping tiles as they are being drawn
     bool _isDumpingTiles;
+
+    Util::Rectangle _clientVisibleArea;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

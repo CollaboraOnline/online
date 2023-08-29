@@ -646,8 +646,8 @@ namespace
         LOG_TRC("Capabilities first: " << capText);
         cap_free(capText);
 
-        if (cap_set_flag(caps, CAP_EFFECTIVE, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1 ||
-            cap_set_flag(caps, CAP_PERMITTED, sizeof(cap_list)/sizeof(cap_list[0]), cap_list, CAP_CLEAR) == -1)
+        if (cap_set_flag(caps, CAP_EFFECTIVE, N_ELEMENTS(cap_list), cap_list, CAP_CLEAR) == -1 ||
+            cap_set_flag(caps, CAP_PERMITTED, N_ELEMENTS(cap_list), cap_list, CAP_CLEAR) == -1)
         {
             LOG_SFL("cap_set_flag() failed");
             Util::forcedExit(EX_SOFTWARE);
@@ -681,12 +681,6 @@ namespace
 class Document final : public DocumentManagerInterface
 {
 public:
-    /// We have two types of password protected documents
-    /// 1) Documents which require password to view
-    /// 2) Document which require password to modify
-    enum class PasswordType { ToView, ToModify };
-
-public:
     Document(const std::shared_ptr<lok::Office>& loKit,
              const std::string& jailId,
              const std::string& docKey,
@@ -705,7 +699,7 @@ public:
         _websocketHandler(websocketHandler),
         _haveDocPassword(false),
         _isDocPasswordProtected(false),
-        _docPasswordType(PasswordType::ToView),
+        _docPasswordType(DocumentPasswordType::ToView),
         _stop(false),
         _editorId(-1),
         _editorChangeWarning(false),
@@ -864,9 +858,9 @@ public:
         // One thing for sure, this is a password protected document
         _isDocPasswordProtected = true;
         if (passwordType == LOK_CALLBACK_DOCUMENT_PASSWORD)
-            _docPasswordType = PasswordType::ToView;
+            _docPasswordType = DocumentPasswordType::ToView;
         else if (passwordType == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY)
-            _docPasswordType = PasswordType::ToModify;
+            _docPasswordType = DocumentPasswordType::ToModify;
 
         LOG_INF("Calling _loKit->setDocumentPassword");
         if (_haveDocPassword)
@@ -876,19 +870,7 @@ public:
         LOG_INF("setDocumentPassword returned.");
     }
 
-    void renderTile(const StringVector& tokens)
-    {
-        TileCombined tileCombined(TileDesc::parse(tokens));
-        renderTiles(tileCombined, false);
-    }
-
-    void renderCombinedTiles(const StringVector& tokens)
-    {
-        TileCombined tileCombined = TileCombined::parse(tokens);
-        renderTiles(tileCombined, true);
-    }
-
-    void renderTiles(TileCombined &tileCombined, bool combined)
+    void renderTiles(TileCombined &tileCombined)
     {
         // Find a session matching our view / render settings.
         const auto session = _sessions.findByCanonicalId(tileCombined.getNormalizedViewId());
@@ -927,7 +909,7 @@ public:
         };
 
         if (!RenderTiles::doRender(_loKitDocument, _deltaGen, tileCombined, _pngPool,
-                                   combined, blenderFunc, postMessageFunc, _mobileAppDocId,
+                                   blenderFunc, postMessageFunc, _mobileAppDocId,
                                    session->getCanonicalViewId(), session->getDumpTiles()))
         {
             LOG_DBG("All tiles skipped, not producing empty tilecombine: message");
@@ -980,11 +962,12 @@ public:
         // FIXME: be more clever - detect if we rendered recently,
         // measure memory pressure etc.
         LOG_WRN("Sessions are all inactive - trim memory");
+        SigUtil::addActivity("trimIfInactive");
         _loKit->trimMemory(4096);
         _deltaGen.dropCache();
     }
 
-    void trimIfExcessive()
+    void trimAfterInactivity()
     {
         LOG_TRC("Should we trim our caches ?");
         if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() -
@@ -1003,10 +986,8 @@ public:
         if (minInactivityMs >= 9999)
         {
             LOG_DBG("Trimming Core caches");
+            SigUtil::addActivity("trimAfterInactivity");
             _loKit->trimMemory(4096);
-
-            LOG_DBG("Dropping delta caches");
-            _deltaGen.dropCache();
 
             _lastMemTrimTime = std::chrono::steady_clock::now();
         }
@@ -1169,7 +1150,7 @@ public:
                 document->_haveDocPassword = document->_isDocPasswordProtected;
                 document->_docPassword = password;
                 document->_docPasswordType =
-                    isToModify ? PasswordType::ToModify : PasswordType::ToView;
+                    isToModify ? DocumentPasswordType::ToModify : DocumentPasswordType::ToView;
             }
             return;
         }
@@ -1325,6 +1306,26 @@ private:
     int getEditorId() const override
     {
         return _editorId;
+    }
+
+    bool isDocPasswordProtected() const override
+    {
+        return _isDocPasswordProtected;
+    }
+
+    bool haveDocPassword() const override
+    {
+        return _haveDocPassword;
+    }
+
+    std::string getDocPassword() const override
+    {
+        return _docPassword;
+    }
+
+    DocumentPasswordType getDocPasswordType() const override
+    {
+        return _docPasswordType;
     }
 
     /// Notify all views with the given message
@@ -1617,9 +1618,9 @@ private:
                     {
                         LOG_INF("No password provided for password-protected document [" << uriAnonym << "].");
                         std::string passwordFrame = "passwordrequired:";
-                        if (_docPasswordType == PasswordType::ToView)
+                        if (_docPasswordType == DocumentPasswordType::ToView)
                             passwordFrame += "to-view";
-                        else if (_docPasswordType == PasswordType::ToModify)
+                        else if (_docPasswordType == DocumentPasswordType::ToModify)
                             passwordFrame += "to-modify";
                         session->sendTextFrameAndLogError("error: cmd=load kind=" + passwordFrame);
                     }
@@ -1654,9 +1655,9 @@ private:
                 if (!haveDocPassword)
                 {
                     std::string passwordFrame = "passwordrequired:";
-                    if (_docPasswordType == PasswordType::ToView)
+                    if (_docPasswordType == DocumentPasswordType::ToView)
                         passwordFrame += "to-view";
-                    else if (_docPasswordType == PasswordType::ToModify)
+                    else if (_docPasswordType == DocumentPasswordType::ToModify)
                         passwordFrame += "to-modify";
                     session->sendTextFrameAndLogError("error: cmd=load kind=" + passwordFrame);
                     return nullptr;
@@ -1831,6 +1832,19 @@ private:
         return std::string();
     }
 
+    bool isTileRequestInsideVisibleArea(const TileCombined& tileCombined)
+    {
+        const auto session = _sessions.findByCanonicalId(tileCombined.getNormalizedViewId());
+        if (!session)
+            return false;
+        for (const auto& rTile : tileCombined.getTiles())
+        {
+            if (session->isTileInsideVisibleArea(rTile))
+                return true;
+        }
+        return false;
+    }
+
 public:
     void enableProcessInput(bool enable = true){ _inputProcessingEnabled = enable; }
     bool processInputEnabled() const { return _inputProcessingEnabled; }
@@ -1859,11 +1873,14 @@ public:
     {
         try
         {
+            std::vector<TileCombined> tileRequests;
+
             while (processInputEnabled() && hasQueueItems())
             {
                 if (_stop || SigUtil::getTerminationFlag())
                 {
                     LOG_INF("_stop or TerminationFlag is set, breaking Document::drainQueue of loop");
+                    tileRequests.clear();
                     break;
                 }
 
@@ -1881,11 +1898,11 @@ public:
 
                 if (tokens.equals(0, "tile"))
                 {
-                    renderTile(tokens);
+                    tileRequests.emplace_back(TileDesc::parse(tokens));
                 }
                 else if (tokens.equals(0, "tilecombine"))
                 {
-                    renderCombinedTiles(tokens);
+                    tileRequests.emplace_back(TileCombined::parse(tokens));
                 }
                 else if (tokens.startsWith(0, "child-"))
                 {
@@ -1971,6 +1988,14 @@ public:
                 }
             }
 
+            if (!tileRequests.empty())
+            {
+                // Put requests that include tiles in the visible area to the front to handle those first
+                std::partition(tileRequests.begin(), tileRequests.end(), [this](const TileCombined& req) {
+                        return isTileRequestInsideVisibleArea(req); });
+                for (auto& tileCombined : tileRequests)
+                    renderTiles(tileCombined);
+            }
         }
         catch (const std::exception& exc)
         {
@@ -2123,7 +2148,7 @@ private:
     // Whether document is password protected
     bool _isDocPasswordProtected;
     // Whether password is required to view the document, or modify it
-    PasswordType _docPasswordType;
+    DocumentPasswordType _docPasswordType;
 
     std::atomic<bool> _stop;
 
@@ -2287,8 +2312,7 @@ public:
 
     static std::shared_ptr<KitSocketPoll> create()
     {
-        KitSocketPoll *p = new KitSocketPoll();
-        auto result = std::shared_ptr<KitSocketPoll>(p);
+        std::shared_ptr<KitSocketPoll> result(new KitSocketPoll());
 
 #ifdef IOS
         std::unique_lock<std::mutex> lock(KSPollsMutex);
@@ -2380,9 +2404,7 @@ public:
         drainQueue();
 
         if (_document)
-        {
-            _document->trimIfExcessive();
-        }
+            _document->trimAfterInactivity();
 
 #if !MOBILEAPP
         flushTraceEventRecordings();

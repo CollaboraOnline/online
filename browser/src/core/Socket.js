@@ -1187,6 +1187,20 @@ app.definitions.Socket = L.Class.extend({
 		if (this._map._docLayer && !msgDelayed) {
 			this._map._docLayer._onMessage(textMsg, e.image);
 		}
+		else if (!this._map._docLayer && !msgDelayed) {
+			// If message is delayed and document layer is not ready at the time, message gets lost.
+			// To prevent this, we wait a little for document layer.
+			var waitForDocLayer = function(message, image) {
+				setTimeout(function() {
+					if (this._map._docLayer)
+						this._map._docLayer._onMessage(message, image);
+					else
+						waitForDocLayer(message, image);
+				}.bind(this), 300);
+			}.bind(this);
+
+			waitForDocLayer(textMsg, e.image);
+		}
 	},
 
 	_exportAsCallback: function(command) {

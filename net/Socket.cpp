@@ -582,6 +582,11 @@ bool SocketPoll::insertNewUnixSocket(
 {
     LOG_DBG("Connecting to local UDS " << location);
     const int fd = socket(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK, 0);
+    if (fd < 0)
+    {
+        LOG_SYS("Failed to connect to unix socket at " << location);
+        return false;
+    }
 
     struct sockaddr_un addrunix;
     std::memset(&addrunix, 0, sizeof(addrunix));
@@ -594,7 +599,7 @@ bool SocketPoll::insertNewUnixSocket(
     memcpy(&addrunix.sun_path[1], location.c_str(), location.length());
 
     const int res = connect(fd, (const struct sockaddr*)&addrunix, sizeof(addrunix));
-    if (fd < 0 || (res < 0 && errno != EINPROGRESS))
+    if (res < 0 && errno != EINPROGRESS)
     {
         LOG_SYS("Failed to connect to unix socket at " << location);
         ::close(fd);
@@ -1106,9 +1111,9 @@ LocalServerSocket::~LocalServerSocket()
 bool StreamSocket::parseHeader(const char *clientName,
                                Poco::MemoryInputStream &message,
                                Poco::Net::HTTPRequest &request,
-                               MessageMap *map)
+                               MessageMap& map)
 {
-    assert(!map || (map->_headerSize == 0 && map->_messageSize == 0));
+    assert(map._headerSize == 0 && map._messageSize == 0);
 
     // Find the end of the header, if any.
     static const std::string marker("\r\n\r\n");
@@ -1122,11 +1127,8 @@ bool StreamSocket::parseHeader(const char *clientName,
 
     // Skip the marker.
     itBody += marker.size();
-    if (map) // a reasonable guess so far
-    {
-        map->_headerSize = static_cast<size_t>(itBody - _inBuffer.begin());
-        map->_messageSize = map->_headerSize;
-    }
+    map._headerSize = static_cast<size_t>(itBody - _inBuffer.begin());
+    map._messageSize = map._headerSize;
 
     try
     {
@@ -1152,8 +1154,7 @@ bool StreamSocket::parseHeader(const char *clientName,
                                                               << ", available: " << available);
             return false;
         }
-        if (map)
-            map->_messageSize += contentLength;
+        map._messageSize += contentLength;
 
         const std::string expect = request.get("Expect", "");
         const bool getExpectContinue = Util::iequal(expect, "100-continue");
@@ -1169,8 +1170,7 @@ bool StreamSocket::parseHeader(const char *clientName,
         if (request.getChunkedTransferEncoding())
         {
             // keep the header
-            if (map)
-                map->_spans.push_back(std::pair<size_t, size_t>(0, itBody - _inBuffer.begin()));
+            map._spans.push_back(std::pair<size_t, size_t>(0, itBody - _inBuffer.begin()));
 
             int chunk = 0;
             while (itBody != _inBuffer.end())
@@ -1206,7 +1206,7 @@ bool StreamSocket::parseHeader(const char *clientName,
 
                 if (chunkLen == 0) // we're complete.
                 {
-                    map->_messageSize = chunkOffset;
+                    map._messageSize = chunkOffset;
                     return true;
                 }
 
@@ -1219,7 +1219,7 @@ bool StreamSocket::parseHeader(const char *clientName,
                 }
                 itBody += chunkLen;
 
-                map->_spans.push_back(std::pair<size_t,size_t>(chunkOffset, chunkLen));
+                map._spans.push_back(std::pair<size_t,size_t>(chunkOffset, chunkLen));
 
                 if (*itBody != '\r' || *(itBody + 1) != '\n')
                 {
@@ -1259,18 +1259,17 @@ bool StreamSocket::parseHeader(const char *clientName,
     return true;
 }
 
-bool StreamSocket::compactChunks(MessageMap *map)
+bool StreamSocket::compactChunks(MessageMap& map)
 {
-    assert (map);
-    if (!map->_spans.size())
+    if (!map._spans.size())
         return false; // single message.
 
-    LOG_CHUNK("Pre-compact " << map->_spans.size() << " chunks: \n" <<
+    LOG_CHUNK("Pre-compact " << map._spans.size() << " chunks: \n" <<
               Util::dumpHex("", "", _inBuffer.begin(), _inBuffer.end(), false));
 
     char *first = &_inBuffer[0];
     char *dest = first;
-    for (auto &span : map->_spans)
+    for (const auto &span : map._spans)
     {
         std::memmove(dest, &_inBuffer[span.first], span.second);
         dest += span.second;
@@ -1278,14 +1277,14 @@ bool StreamSocket::compactChunks(MessageMap *map)
 
     // Erase the duplicate bits.
     size_t newEnd = dest - first;
-    size_t gap = map->_messageSize - newEnd;
-    _inBuffer.erase(_inBuffer.begin() + newEnd, _inBuffer.begin() + map->_messageSize);
+    size_t gap = map._messageSize - newEnd;
+    _inBuffer.erase(_inBuffer.begin() + newEnd, _inBuffer.begin() + map._messageSize);
 
-    LOG_CHUNK("Post-compact with erase of " << newEnd << " to " << map->_messageSize << " giving: \n" <<
+    LOG_CHUNK("Post-compact with erase of " << newEnd << " to " << map._messageSize << " giving: \n" <<
               Util::dumpHex("", "", _inBuffer.begin(), _inBuffer.end(), false));
 
     // shrink our size to fit
-    map->_messageSize -= gap;
+    map._messageSize -= gap;
 
 #if ENABLE_DEBUG
     std::ostringstream oss;

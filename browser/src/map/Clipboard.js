@@ -234,6 +234,11 @@ L.Clipboard = L.Class.extend({
 				that._downloadProgress._onClose();
 			};
 
+			request.ontimeout = function() {
+				that._map.uiManager.showSnackbar(_('warning: copy/paste request timed out'));
+				that._downloadProgress._onClose();
+			};
+
 			request.upload.addEventListener('progress', function (e) {
 				if (e.lengthComputable) {
 					var percent = progressFn(e.loaded / e.total * 100);

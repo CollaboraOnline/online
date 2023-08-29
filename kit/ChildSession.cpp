@@ -110,7 +110,8 @@ ChildSession::ChildSession(
     _isDocLoaded(false),
     _copyToClipboard(false),
     _canonicalViewId(-1),
-    _isDumpingTiles(false)
+    _isDumpingTiles(false),
+    _clientVisibleArea(0, 0, 0, 0)
 {
     LOG_INF("ChildSession ctor [" << getName() << "]. JailRoot: [" << _jailRoot << ']');
 }
@@ -979,8 +980,15 @@ bool ChildSession::clientVisibleArea(const StringVector& tokens)
 
     getLOKitDocument()->setView(_viewId);
 
+    _clientVisibleArea = Util::Rectangle(x, y, width, height);
     getLOKitDocument()->setClientVisibleArea(x, y, width, height);
     return true;
+}
+
+bool ChildSession::isTileInsideVisibleArea(const TileDesc& tile) const
+{
+    return (tile.getTilePosX() >= _clientVisibleArea.getLeft() && tile.getTilePosX() <= _clientVisibleArea.getRight() &&
+        tile.getTilePosY() >= _clientVisibleArea.getTop() && tile.getTilePosY() <= _clientVisibleArea.getBottom());
 }
 
 bool ChildSession::outlineState(const StringVector& tokens)
@@ -2216,6 +2224,23 @@ bool ChildSession::saveAs(const StringVector& tokens)
         filterOptions = "EmbedImages";
     }
 
+    if (_docManager->isDocPasswordProtected() && _docManager->haveDocPassword())
+    {
+        if (_docManager->getDocPasswordType() == DocumentPasswordType::ToView)
+        {
+            filterOptions += std::string(",Password=") + _docManager->getDocPassword() +
+                             std::string("PASSWORDEND");
+        }
+        else
+        {
+            filterOptions += std::string(",PasswordToModify=") + _docManager->getDocPassword() +
+                             std::string("PASSWORDTOMODIFYEND");
+        }
+        // Password might have changed since load
+        setHaveDocPassword(true);
+        setDocPassword(_docManager->getDocPassword());
+    }
+
     // We don't have the FileId at this point, just a new filename to save-as.
     // So here the filename will be obfuscated with some hashing, which later will
     // get a proper FileId that we will use going forward.
@@ -3098,6 +3123,11 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_A11Y_TEXT_SELECTION_CHANGED:
     {
         sendTextFrame("a11ytextselectionchanged: " + payload);
+        break;
+    }
+    case LOK_CALLBACK_A11Y_FOCUSED_CELL_CHANGED:
+    {
+        sendTextFrame("a11yfocusedcellchanged: " + payload);
         break;
     }
     case LOK_CALLBACK_COLOR_PALETTES:

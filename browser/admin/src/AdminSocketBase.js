@@ -3,7 +3,7 @@
 	Abstract class
 */
 
-/* global _ Util DlgYesNo Base */
+/* global _ DlgYesNo Base */
 
 var AdminSocketBase = Base.extend({
 	socket: null,
@@ -34,8 +34,7 @@ var AdminSocketBase = Base.extend({
 
 	onSocketOpen: function () {
 		// Authenticate
-		var cookie = Util.getCookie('jwt');
-		this.socket.send('auth ' + cookie);
+		this.socket.send('auth jwt=' + window.jwtToken);
 	},
 
 	onSocketMessage: function () {

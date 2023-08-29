@@ -16,7 +16,6 @@
 namespace cool {
 
 export class ColumnGroup extends GroupBase {
-	_map: any;
 	_sheetGeometry: cool.SheetGeometry;
 	_cornerHeaderWidth: number;
 	_splitPos: cool.Point;
@@ -34,23 +33,6 @@ export class ColumnGroup extends GroupBase {
 			interactable: true,
 			sectionProperties: {},
 		});
-	}
-
-	// This function is called by CanvasSectionContainer when the section is added to the sections list.
-	onInitialize(): void {
-		this._map = L.Map.THIS;
-		this.sectionProperties.docLayer = this._map._docLayer;
-		this._groups = null;
-
-		// group control styles
-		this._groupHeadSize = Math.round(12 * app.dpiScale);
-		this._levelSpacing = app.roundedDpiScale;
-
-		this._map.on('sheetgeometrychanged', this.update, this);
-		this._map.on('viewrowcolumnheaders', this.update, this);
-		this._createFont();
-		this.update();
-		this.isRemoved = false;
 	}
 
 	update(): void {
@@ -213,25 +195,12 @@ export class ColumnGroup extends GroupBase {
 		return null;
 	}
 
-	// Users can double click on group tails.
-	findTailsGroup (point: number[]): GroupEntry {
-		const mirrorX = this.isCalcRTL();
-		for (let i = 0; i < this._groups.length; i++) {
-			if (this._groups[i]) {
-				for (const group in this._groups[i]) {
-					if (Object.prototype.hasOwnProperty.call(this._groups[i], group)) {
-						const group_ = this._groups[i][group];
-						const startX = this.getRelativeX(group_.startPos);
-						const startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group_.level;
-						const endX = group_.endPos + this._cornerHeaderWidth - this.documentTopLeft[0];
-						const endY = startY + this._groupHeadSize;
-						if (this.isPointInRect(point, startX, startY, endX, endY, mirrorX)) {
-							return group_;
-						}
-					}
-				}
-			}
-		}
+	getTailsGroupRect (group: GroupEntry): number[] {
+		const startX = this.getRelativeX(group.startPos);
+		const startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
+		const endX = group.endPos + this._cornerHeaderWidth - this.documentTopLeft[0];
+		const endY = startY + this._groupHeadSize;
+		return [startX, endX, startY, endY];
 	}
 
 	onRemove(): void {

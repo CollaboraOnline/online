@@ -193,7 +193,9 @@ void Tool::handleOption(const std::string& optionName,
         Poco::SharedPtr<Poco::Net::PrivateKeyPassphraseHandler> consoleClientHandler = new Poco::Net::KeyConsoleHandler(false);
         Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidClientCertHandler = new Poco::Net::AcceptCertificateHandler(false);
         Poco::Net::Context::Ptr sslClientContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, "");
-        Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
+        Poco::Net::SSLManager::instance().initializeClient(std::move(consoleClientHandler),
+                                                           std::move(invalidClientCertHandler),
+                                                           std::move(sslClientContext));
     }
 }
 
@@ -272,6 +274,7 @@ int Tool::main(const std::vector<std::string>& origArgs)
     return EX_OK;
 }
 
+// coverity[root_function] : don't warn about uncaught exceptions
 POCO_APP_MAIN(Tool)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

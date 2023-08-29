@@ -23,7 +23,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		for (var i = 0; i < commentList.length; i++) {
 			if (this._cellCursorTwips.contains(commentList[i].sectionProperties.data.cellPos)) {
-				if (commentList[i].tab == this._selectedPart) {
+				if (commentList[i].sectionProperties.data.tab == this._selectedPart) {
 					comment = commentList[i];
 					break;
 				}
@@ -913,7 +913,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 						}
 					}
 					if (commentObject)
-						commentObject.sectionProperties.data.cellPos = section.stringToRectangles(comment.cellPos)[0];
+						commentObject.sectionProperties.data.cellPos = this._cellRangeToTwipRect(comment.cellRange).toRectangle();
 				}
 			}
 

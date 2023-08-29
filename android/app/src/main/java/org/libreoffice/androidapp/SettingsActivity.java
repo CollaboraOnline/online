@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import org.libreoffice.androidapp.ui.LibreOfficeUIActivity;
+import org.libreoffice.androidlib.LOActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -86,6 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
                             }
                             AppCompatDelegate.setDefaultNightMode(dayNightMode);
                             prefs.edit().putInt(LibreOfficeUIActivity.NIGHT_MODE_KEY, dayNightMode).commit();
+                            prefs.edit().putInt(LOActivity.NIGHT_MODE_KEY, dayNightMode).commit();
                             getActivity().recreate();
 
                         }

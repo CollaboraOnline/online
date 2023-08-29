@@ -255,7 +255,6 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOG_FILE_NAME(f) (&f[skipPathPrefix(f)])
 #endif
 
-#define STRINGIFY(X) #X
 #define STRING(X) STRINGIFY(X)
 
 #ifdef __ANDROID__

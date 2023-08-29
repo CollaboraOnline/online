@@ -77,6 +77,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         std::string jwtToken;
         COOLProtocol::getTokenString(tokens[1], "jwt", jwtToken);
 
+        jwtToken = Util::decodeURIComponent(jwtToken);
         LOG_INF("Verifying JWT token: " << jwtToken);
         JWTAuth authAgent("admin", "admin", "admin");
         if (authAgent.verify(jwtToken))
@@ -356,6 +357,30 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     {
         sendTextFrame(model.getWopiSrcMap());
     }
+    else if(tokens.equals(0, "verifyauth"))
+    {
+        if (tokens.size() < 2)
+        {
+            LOG_DBG("Auth command without any token");
+            sendTextFrame("InvalidAuthToken");
+        }
+        std::string jwtToken;
+        COOLProtocol::getTokenString(tokens[1], "jwt", jwtToken);
+
+        jwtToken = Util::decodeURIComponent(jwtToken);
+        LOG_INF("Verifying JWT token: " << jwtToken);
+        JWTAuth authAgent("admin", "admin", "admin");
+        if (authAgent.verify(jwtToken))
+        {
+            LOG_TRC("JWT token is valid");
+            sendTextFrame("ValidAuthToken");
+        }
+        else
+        {
+            LOG_DBG("Invalid auth token");
+            sendTextFrame("InvalidAuthToken");
+        }
+    }
 }
 
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
@@ -488,7 +513,7 @@ void Admin::pollingThread()
     std::chrono::steady_clock::time_point lastNet = lastCPU;
     std::chrono::steady_clock::time_point lastCleanup = lastCPU;
 
-    while (!isStop() && !SigUtil::getTerminationFlag() && !SigUtil::getShutdownRequestFlag())
+    while (!isStop() && !SigUtil::getShutdownRequestFlag())
     {
         const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
 
@@ -954,7 +979,7 @@ void MonitorSocketHandler::onDisconnect()
 {
     bool reconnect = false;
     // schedule monitor reconnect only if monitor uri exist in configuration
-    for (auto monitor : Admin::instance().getMonitorList())
+    for (const auto& monitor : Admin::instance().getMonitorList())
     {
         const std::string uriWithoutParam = _uri.substr(0, _uri.find('?'));
         if (Util::iequal(monitor.first, uriWithoutParam))
@@ -1054,7 +1079,7 @@ std::vector<std::pair<std::string, int>> Admin::getMonitorList()
 void Admin::startMonitors()
 {
     bool haveMonitors = false;
-    for (auto monitor : getMonitorList())
+    for (const auto& monitor : getMonitorList())
     {
         addCallback(
             [=]
@@ -1078,13 +1103,13 @@ void Admin::updateMonitors(std::vector<std::pair<std::string,int>>& oldMonitors)
     }
 
     std::unordered_map<std::string, bool> currentMonitorMap;
-    for (auto monitor : getMonitorList())
+    for (const auto& monitor : getMonitorList())
     {
         currentMonitorMap[monitor.first] = true;
     }
 
     // shutdown monitors which doesnot not exist in currentMonitorMap
-    for (auto monitor : oldMonitors)
+    for (const auto& monitor : oldMonitors)
     {
         if (!currentMonitorMap[monitor.first])
         {

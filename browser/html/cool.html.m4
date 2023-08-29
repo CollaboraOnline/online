@@ -396,6 +396,10 @@ m4_ifelse(IOSAPP,[true],
 m4_ifelse(ANDROIDAPP,[true],
      [window.userInterfaceMode = window.getParameterByName('userinterfacemode');])
 
+m4_ifelse(ANDROIDAPP,[true],
+     [var darkTheme = window.getParameterByName('darkTheme');
+      if (darkTheme) {window.uiDefaults = {'darkTheme': true};}])
+
 m4_ifelse(EMSCRIPTENAPP,[true],
      [window.userInterfaceMode = 'notebookbar';])
 
@@ -407,7 +411,7 @@ var brandingLink = document.createElement('link');
 brandingLink.setAttribute("rel", "stylesheet");
 brandingLink.setAttribute("type", "text/css");
 
-var theme_name = document.getElementsByName("theme")[[0]] ? document.getElementsByName("theme")[[0]].value : '';
+var theme_name = '%BRANDING_THEME%';
 var theme_prefix = '';
 if(window.useIntegrationTheme === 'true' && theme_name !== '') {
     theme_prefix = theme_name + '/';

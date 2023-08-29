@@ -569,6 +569,7 @@ static void total_smaps(unsigned proc_id, unsigned parent_id,
                 if (!name)
                     name = "[anon]\n";
                 space.insert(start, end, name);
+                // coverity[tainted_data : FALSE] - this is entirely intentional
                 for (addr_t p = start; p < end; p += 0x1000)
                     pushTo->push_back(p);
             }
@@ -636,7 +637,7 @@ static unsigned getParent(int proc_id)
 
     char buffer[4096];
     int len;
-    if ((len = read(fd, buffer, sizeof (buffer))) < 0)
+    if ((len = read(fd, buffer, sizeof (buffer) - 1)) < 0)
         error(EXIT_FAILURE, errno, "Failed to read /proc/%d/stat", proc_id);
     close (fd);
     buffer[len] = '\0';

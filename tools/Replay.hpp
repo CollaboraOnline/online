@@ -206,6 +206,8 @@ public:
         _trace(trace),
         _stats(stats)
     {
+        assert(_stats && "stats must be provided");
+
         static std::atomic<int> number;
         _logPre = "[" + std::to_string(++number) + "] ";
         std::cerr << "Attempt connect to " << uri << " for trace " << _trace << "\n";
@@ -217,8 +219,7 @@ public:
 
     void gotPing(WSOpCode /* code */, int pingTimeUs) override
     {
-        if (_stats)
-            _stats->_pingLatency.addTime(pingTimeUs/1000);
+        _stats->_pingLatency.addTime(pingTimeUs/1000);
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point now,
@@ -352,10 +353,8 @@ public:
 
         if (tokens.equals(0, "tile:")) {
             // accumulate latencies
-            if (_stats) {
-                _stats->_tileLatency.addTime(std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastTile).count());
-                _stats->_tileCount++;
-            }
+            _stats->_tileLatency.addTime(std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastTile).count());
+            _stats->_tileCount++;
             _lastTile = now;
 
             // eg. tileprocessed tile=0:9216:0:3072:3072:0
@@ -409,8 +408,10 @@ public:
 
     static void addPollFor(SocketPoll &poll, const std::string &server,
                            const std::string &filePath, const std::string &tracePath,
-                           const std::shared_ptr<Stats> &optStats = nullptr)
+                           const std::shared_ptr<Stats> &optStats)
     {
+        assert(optStats && "optStats must be provided");
+
         std::string file, wrap;
         std::string fileabs = Poco::Path(filePath).makeAbsolute().toString();
         Poco::URI::encode("file://" + fileabs, ":/?", file);
@@ -420,21 +421,7 @@ public:
         auto handler = std::make_shared<StressSocketHandler>(poll, optStats, file, tracePath);
         poll.insertNewWebSocketSync(Poco::URI(uri), handler);
 
-        if (optStats)
-            optStats->addConnection();
-    }
-
-    /// Attach to @server, load @filePath and replace @tracePath
-    static void replaySync(const std::string &server,
-                           const std::string &filePath,
-                           const std::string &tracePath)
-    {
-        TerminatingPoll poll("replay");
-
-        addPollFor(poll, server, filePath, tracePath);
-        do {
-            poll.poll(TerminatingPoll::DefaultPollTimeoutMicroS);
-        } while (poll.continuePolling() && poll.getSocketCount() > 0);
+        optStats->addConnection();
     }
 };
 

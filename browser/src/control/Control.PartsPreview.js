@@ -151,14 +151,6 @@ L.Control.PartsPreview = L.Control.extend({
 
 			// re-create scrollbar with new direction
 			this._direction = !window.mode.isDesktop() && !window.mode.isTablet() && L.DomUtil.isPortrait() ? 'x' : 'y';
-
-			// Hide portrait view's previews when layout view is used.
-			if (this._direction === 'x' && window.mode.isMobile()) {
-				document.getElementById('mobile-slide-sorter').style.display = 'block';
-			}
-			else if (this._direction === 'y' && window.mode.isMobile()) {
-				document.getElementById('mobile-slide-sorter').style.display = 'none';
-			}
 		}
 	},
 
@@ -374,6 +366,9 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_layoutPreview: function (i, img, bottomBound) {
+		if (this._map._docLayer._canonicalViewId == -1) {
+			return;
+		}
 		var topBound = this._previewContTop;
 		var previewFrameTop = 0;
 		var previewFrameBottom = 0;

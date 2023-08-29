@@ -39,7 +39,7 @@ public:
     }
 
     void configCheckFileInfo(const Poco::Net::HTTPRequest& /*request*/,
-                             Poco::JSON::Object::Ptr fileInfo) override
+                             Poco::JSON::Object::Ptr& fileInfo) override
     {
         // Make the first session the editor, subsequent ones read-only.
         const bool firstView = _checkFileInfoCount == 0;
@@ -162,7 +162,7 @@ public:
     }
 
     void configCheckFileInfo(const Poco::Net::HTTPRequest& /*request*/,
-                             Poco::JSON::Object::Ptr fileInfo) override
+                             Poco::JSON::Object::Ptr& fileInfo) override
     {
         // Make the first session the editor, subsequent ones read-only.
         const bool firstView = _checkFileInfoCount == 0;
@@ -361,7 +361,7 @@ public:
     }
 
     void configCheckFileInfo(const Poco::Net::HTTPRequest& /*request*/,
-                             Poco::JSON::Object::Ptr fileInfo) override
+                             Poco::JSON::Object::Ptr& fileInfo) override
     {
         fileInfo->set("SupportsLocks", "true");
     }
@@ -396,7 +396,7 @@ public:
             LOK_ASSERT_EQUAL_MESSAGE("Lock refresh with expired token", 1UL, _lockRefreshCount);
 
             // Internal Server Error.
-            return Util::make_unique<http::Response>(http::StatusCode::Unauthorized);
+            return std::make_unique<http::Response>(http::StatusCode::Unauthorized);
         }
         else
         {
@@ -476,7 +476,7 @@ public:
     }
 
     void configCheckFileInfo(const Poco::Net::HTTPRequest& /*request*/,
-                             Poco::JSON::Object::Ptr fileInfo) override
+                             Poco::JSON::Object::Ptr& fileInfo) override
     {
         fileInfo->set("SupportsLocks", "true");
     }

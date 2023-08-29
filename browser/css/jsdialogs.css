@@ -361,6 +361,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	overflow-y: auto;
 	overflow-x: hidden;
 	max-width: 1000px;
+	min-width: 150px;
 	padding: 1px;
 	padding-inline-end: 3px;
 }
@@ -516,6 +517,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	border-radius: var(--border-radius);
 	overflow: hidden;
 	align-self: center;
+	padding-inline: 4px;
 }
 
 #search_edit.ui-edit.autofilter {
@@ -571,6 +573,10 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 /* text label */
 
 .ui-dialog-content .jsdialog.ui-text {
+	padding-inline-start: 0;
+}
+
+.jsdialog.ui-text {
 	padding-inline-start: 8px;
 }
 
@@ -1024,6 +1030,15 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	display: table-cell !important;
 	float: right;
 	margin: 5px 0px 5px 5px;
+}
+
+.jsdialog.menubutton[disabled] {
+	background-color: var(--color-background-lighter) !important;
+	color: var(--color-text-lighter) !important;
+}
+
+.jsdialog.menubutton[disabled] .arrow {
+	border-top-color: var(--color-text-lighter);
 }
 
 /* sum button in formulabar */
@@ -1525,4 +1540,35 @@ div [id^='TemplateDialog'] {
 
 #CharacterPropertiesDialog {
 	min-width: 656px;
+}
+
+/* Keyboard input keys */
+kbd,
+.kbd {
+	background-color: var(--color-background-dark);
+	border-radius: var(--border-radius);
+	border: 1px solid var(--color-border-dark);
+	color: var(--color-text-dark);
+	display: inline-block;
+	font-family: monospace;
+	font-size: .85em;
+	line-height: 1;
+	padding: 4px;
+	white-space: nowrap;
+}
+
+.kbd--plus {
+	color: var(--color-text-dark);
+	padding: 0 4px;
+	font-size: 0.85em;
+}
+
+.warn-copy-paste {
+	width: 100%;
+}
+
+/* manage changes dialog */
+
+.jsdialog #writerchanges .ui-treeview-body {
+	min-height: 300px;
 }

@@ -407,8 +407,7 @@ public:
     bool isUnloading() const
     {
         return _docState.isMarkedToDestroy() || _stop || _docState.isUnloadRequested() ||
-               _docState.isCloseRequested() || SigUtil::getShutdownRequestFlag() ||
-               SigUtil::getTerminationFlag();
+               _docState.isCloseRequested() || SigUtil::getShutdownRequestFlag();
     }
 
     bool isMarkedToDestroy() const { return _docState.isMarkedToDestroy() || _stop; }

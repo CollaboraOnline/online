@@ -15,6 +15,7 @@
 #include <regex>
 #include <sstream>
 #include <string>
+#include <string_view>
 #include <vector>
 
 #include <StringVector.hpp>
@@ -274,6 +275,36 @@ namespace COOLProtocol
         return getFirstLine(message.data(), message.size());
     }
 
+    constexpr int maxNonAbbreviatedMsgLen = 500;
+
+    inline bool shouldEllipse(const char* message, const size_t length, const size_t spanLen)
+    {
+        // If first line is less than the length (ignoring possible final newline), add ellipsis.
+        if (spanLen == length)
+            return false;
+        if (spanLen < length - 1)
+            return true;
+        return message[length - 1] != '\n';
+    }
+
+    /// Given a well-formed utf-8 string 'message' of messageLen bytes and a
+    /// desire to truncate to approximately abbrevLen bytes return the shortest
+    /// string greater of equal to abbrevLen that does not split a utf-8
+    /// sequence.
+    inline std::string truncateUtf8(const char* message, size_t messageLen, size_t abbrevLen)
+    {
+        std::string ret(message, abbrevLen);
+        for (size_t i = abbrevLen; i < messageLen; ++i)
+        {
+            const uint8_t unit = message[i];
+            const bool continuation = (unit & 0xC0) == 0x80;
+            if (!continuation) // likely
+                break;
+            ret.push_back(unit);
+        }
+        return ret;
+    }
+
     /// Returns an abbreviation of the message (the first line, indicating truncation). We assume
     /// that it adhers to the COOL protocol, i.e. that there is always a first (or only) line that
     /// is in printable UTF-8. I.e. no encoding of binary bytes is done. The format of the result is
@@ -287,28 +318,26 @@ namespace COOLProtocol
             return std::string();
         }
 
-        const std::string firstLine = getFirstLine(message, std::min(length, 500));
+        const size_t spanLen = Util::getDelimiterPosition(message,
+            std::min(length, maxNonAbbreviatedMsgLen), '\n');
 
         // If first line is less than the length (minus newline), add ellipsis.
-        if (firstLine.size() < static_cast<std::string::size_type>(length) - 1)
-        {
-            return firstLine + "...";
-        }
+        if (shouldEllipse(message, length, spanLen))
+            return truncateUtf8(message, length, spanLen) + "...";
 
-        return firstLine;
+        return std::string(message, spanLen);
     }
 
     inline std::string getAbbreviatedMessage(const std::string& message)
     {
-        const size_t pos = Util::getDelimiterPosition(message.data(), std::min<size_t>(message.size(), 501), '\n');
+        const size_t spanLen = Util::getDelimiterPosition(message.data(),
+            std::min<size_t>(message.size(), maxNonAbbreviatedMsgLen), '\n');
 
         // If first line is less than the length (minus newline), add ellipsis.
-        if (pos < static_cast<std::string::size_type>(message.size()) - 1)
-        {
-            return message.substr(0, pos) + "...";
-        }
+        if (shouldEllipse(message.data(), message.size(), spanLen))
+            return truncateUtf8(message.data(), message.size(), spanLen) + "...";
 
-        return message;
+        return message.substr(0, spanLen);
     }
 
     template <typename T>

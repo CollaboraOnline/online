@@ -141,9 +141,9 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _cursorWidth(0)
     , _cursorHeight(0)
     , _poll(
-          Util::make_unique<DocumentBrokerPoll>("doc" SHARED_DOC_THREADNAME_SUFFIX + _docId, *this))
+          std::make_unique<DocumentBrokerPoll>("doc" SHARED_DOC_THREADNAME_SUFFIX + _docId, *this))
     , _stop(false)
-    , _lockCtx(Util::make_unique<LockContext>())
+    , _lockCtx(std::make_unique<LockContext>())
     , _tileVersion(0)
     , _debugRenderedTileCount(0)
     , _loadDuration(0)
@@ -214,8 +214,7 @@ void DocumentBroker::pollThread()
 
         // Nominal time between retries, lest we busy-loop. getNewChild could also wait, so don't double that here.
         std::this_thread::sleep_for(std::chrono::milliseconds(CHILD_REBALANCE_INTERVAL_MS / 10));
-    } while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag() &&
-             !SigUtil::getShutdownRequestFlag());
+    } while (!_stop && _poll->continuePolling() && !SigUtil::getShutdownRequestFlag());
 
     if (!_childProcess)
     {
@@ -1162,7 +1161,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 
         _filename = fileInfo.getFilename();
 #if !MOBILEAPP
-        _quarantine = Util::make_unique<Quarantine>(*this, _filename);
+        _quarantine = std::make_unique<Quarantine>(*this, _filename);
 #endif
 
         if (!templateSource.empty())
@@ -1187,8 +1186,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         dontUseCache = true;
 #endif
 
-        _tileCache = Util::make_unique<TileCache>(_storage->getUri().toString(),
-                                                  _saveManager.getLastModifiedTime(), dontUseCache);
+        _tileCache = std::make_unique<TileCache>(_storage->getUri().toString(),
+                                                 _saveManager.getLastModifiedTime(), dontUseCache);
         _tileCache->setThreadOwner(std::this_thread::get_id());
     }
 
@@ -1715,8 +1714,8 @@ void DocumentBroker::uploadToStorageInternal(const std::shared_ptr<ClientSession
 
     LOG_DBG("Uploading [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
 
-    _uploadRequest = Util::make_unique<UploadRequest>(uriAnonym, newFileModifiedTime, session,
-                                                      isSaveAs, isExport, isRename);
+    _uploadRequest = std::make_unique<UploadRequest>(uriAnonym, newFileModifiedTime, session,
+                                                     isSaveAs, isExport, isRename);
 
     StorageBase::AsyncUploadCallback asyncUploadCallback =
         [this](const StorageBase::AsyncUpload& asyncUp)
@@ -3562,8 +3561,10 @@ bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& sessio
 
     LOG_TRC("Forwarding payload to child [" << viewId << "]: " << getAbbreviatedMessage(message));
 
+#if 0 // extreme paste debugging - message can be giant and binary
     if (Log::traceEnabled() && Util::startsWith(message, "paste "))
         LOG_TRC("Logging paste payload (" << message.size() << " bytes) '" << message << "' end paste");
+#endif
 
     std::string msg = "child-" + viewId + ' ';
     if (Util::startsWith(message, "load "))
@@ -4080,6 +4081,10 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  lastModifyActivityTime: " << Util::getTimeForLog(now, _lastModifyActivityTime);
     os << "\n  haveModifyActivityAfterSaveRequest: " << haveModifyActivityAfterSaveRequest();
     os << "\n  isViewFileExtension: " << _isViewFileExtension;
+#if !MOBILEAPP
+    os << "\n  last quarantined version: "
+       << (_quarantine ? _quarantine->lastQuarantinedFilePath() : "<unavailable>");
+#endif
 
     if (_limitLifeSeconds > std::chrono::seconds::zero())
         os << "\n  life limit in seconds: " << _limitLifeSeconds.count();

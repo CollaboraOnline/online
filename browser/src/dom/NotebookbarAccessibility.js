@@ -3,7 +3,7 @@
 	This class is used for managing the accessibility keys of notebookbar control.
 */
 
-/* global app NotebookbarAccessibilityDefinitions */
+/* global app NotebookbarAccessibilityDefinitions _ */
 
 /*
 	This class relies on following id convention (example for "Home" tab):
@@ -27,35 +27,24 @@ var NotebookbarAccessibility = function() {
 	this.state = 0; // 0: User needs to select a tab. 1: User needs to either select an acccess key of tab content or navigate by arrow keys.
 
 	this.addInfoBox = function(anchorElement) {
-		var infoBox = document.createElement('div');
-		infoBox.classList.add('accessibility-info-box');
-		infoBox.textContent = anchorElement.accessKey;
-		var rectangle = anchorElement.getBoundingClientRect();
-		infoBox.style.top = (rectangle.top + 20) + 'px';
-		infoBox.style.left = rectangle.left + 'px';
-		document.body.appendChild(infoBox);
+		var visible = anchorElement.id.replace('-button', '');
+		visible = document.getElementById(visible);
 
-		return infoBox;
-	};
+		if (visible)
+			visible = visible.style.display !== 'none';
 
-	// Checks the current tab's content.
-	this.getElementOfWhichIdStartsWith = function(id) {
-		var tab = document.getElementById(this.activeTabPointers.id.split('-')[0] + '-container');
+		if (visible) {
+			var infoBox = document.createElement('div');
+			infoBox.classList.add('accessibility-info-box');
+			infoBox.textContent = anchorElement.accessKey;
+			var rectangle = anchorElement.getBoundingClientRect();
+			infoBox.style.top = (rectangle.top + 20) + 'px';
+			infoBox.style.left = rectangle.left + 'px';
+			document.body.appendChild(infoBox);
 
-		if (tab) {
-			var element = tab.querySelector('[id^="' + id + '"]');
-
-			if (!element || element.length === 0)
-				return null;
-			if (element.length && element.length > 1) {
-				console.warn('NotebookbarAccessibility: Multiple elements inside the same tab with the same functionality.');
-				return null;
-			}
-			else
-				return element;
+			return infoBox;
 		}
 		else {
-			console.warn('Couldn\t find element: ' + id.split()[0] + '-container');
 			return null;
 		}
 	};
@@ -71,9 +60,8 @@ var NotebookbarAccessibility = function() {
 		this.activeTabPointers.infoBoxList = [];
 
 		for (var i = 0; i < this.activeTabPointers.contentList.length; i++) {
-			var element = this.getElementOfWhichIdStartsWith(this.activeTabPointers.contentList[i].id);
+			var element = document.getElementById(this.activeTabPointers.contentList[i].id);
 			if (element) {
-				this.activeTabPointers.contentList[i].id = element.id; // Change the stored id so we can use getElementById from now.
 				element.accessKey = this.activeTabPointers.contentList[i].combination;
 				this.activeTabPointers.infoBoxList.push(this.addInfoBox(element));
 			}
@@ -107,6 +95,7 @@ var NotebookbarAccessibility = function() {
 			}
 			else if (this.mayShowAcceleratorInfoBoxes && (event.keyCode === 18 || (event.keyCode === 18 && event.shiftKey))) { // 18: Alt key.
 				this.resetState();
+				this.setTabDescription(this.getCurrentSelectedTab());
 				this.addTabAccelerators();
 				this.accessibilityInputElement.focus();
 			}
@@ -119,12 +108,14 @@ var NotebookbarAccessibility = function() {
 	};
 
 	this.onInputFocus = function() {
+		this.addTabFocus();
 		document.body.classList.add('activate-info-boxes');
 	};
 
 	this.onInputBlur = function() {
 		document.body.classList.remove('activate-info-boxes');
-		app.map._textInput._abortComposition({ type: 'Notebookbar Accessibility' });
+		this.removeFocusFromTab();
+		this.resetState();
 	};
 
 	this.isAllFilteredOut = function() {
@@ -185,32 +176,89 @@ var NotebookbarAccessibility = function() {
 		if (this.filteredItem !== null) {
 			var element = document.getElementById(this.filteredItem.id);
 			if (element) {
-				element.click();
-
 				if (this.state === 0) {
+					this.removeFocusFromTab();
+					element.click();
+					this.addTabFocus();
 					this.setupAcceleratorsForCurrentTab(element.id);
 					this.combination = null;
 					this.accessibilityInputElement.value = '';
+					this.setTabDescription(element);
 					this.accessibilityInputElement.focus();
 					this.state = 1;
 				}
-				else if (this.filteredItem.focusBack === true) {
-					app.map.focus();
+				else if (this.state === 1) {
+					this.setTabItemDescription(element);
+					element.click();
+					if (this.filteredItem && this.filteredItem.focusBack === true) {
+						this.focusToMap();
+					}
 				}
 			}
 			this.filteredItem = null;
 		}
 		else
-			app.map.focus();
+			this.focusToMap();
+	};
+
+	this.addTabFocus = function() {
+		var element = this.getCurrentSelectedTab();
+		if (element) {
+			element.classList.add('add-focus-to-tab');
+		}
+	};
+
+	this.removeFocusFromTab = function() {
+		var element = this.getCurrentSelectedTab();
+		if (element) {
+			element.classList.remove('add-focus-to-tab');
+		}
+	};
+
+	this.focusToMap = function () {
+		app.map.focus();
+		this.mayShowAcceleratorInfoBoxes = false;
+		this.removeFocusFromTab();
+	};
+
+	this.getCurrentSelectedTab = function() {
+		return document.querySelector('button.ui-tab.notebookbar.selected');
+	};
+
+	this.setTabDescription = function(tabElem) {
+		var tabDescr = tabElem ? tabElem.textContent + ' ' + _('tab') + ' ' + _('selected') : '';
+		this.accessibilityInputElement.setAttribute('aria-description', tabDescr);
+	};
+
+	this.setTabItemDescription = function(element) {
+		var descr = '';
+		if (element) {
+			var button = element.hasAttribute('alt') ? element : element.querySelector('button[alt]');
+			if (button) {
+				descr = button.getAttribute('alt');
+			}
+		}
+		this.accessibilityInputElement.setAttribute('aria-description', descr);
+	};
+
+	this.getCurrentSelectedTabPage = function() {
+		return document.querySelector('div.ui-content.level-0.notebookbar:not(.hidden)');
 	};
 
 	this.resetState = function() {
 		this.removeAllInfoBoxes();
 		this.state = 0;
 		this.accessibilityInputElement.value = '';
+		this.accessibilityInputElement.setAttribute('aria-description', '');
 		this.combination = null;
 		this.mayShowAcceleratorInfoBoxes = false;
 		this.filteredItem = null;
+		for (var i = 0; i < this.activeTabPointers.contentList.length; i++) {
+			if (document.getElementById(this.activeTabPointers.contentList[i].id))
+				document.getElementById(this.activeTabPointers.contentList[i].id).accessKey = null;
+			else
+				console.warn('Accessibility - no element with id:' + this.activeTabPointers.contentList[i].id);
+		}
 	};
 
 	this.onInputKeyUp = function(event) {
@@ -220,7 +268,7 @@ var NotebookbarAccessibility = function() {
 
 		if (key === 'ESCAPE' || key === 'ALT') {
 			if (this.combination === null)
-				app.map.focus();
+				this.focusToMap();
 			else {
 				this.resetState();
 			}
@@ -229,20 +277,21 @@ var NotebookbarAccessibility = function() {
 			return; // Ignore shift key.
 		else if (key === 'ARROWUP') {
 			// Try to set focus on tab button.
-			if (this.activeTabPointers.id)
-				document.getElementById(this.activeTabPointers.id).focus();
+			this.removeFocusFromTab();
+			var currentSelectedTabButton = this.getCurrentSelectedTab();
+			currentSelectedTabButton.focus();
 		}
 		else if (key === 'ARROWDOWN') {
 			// Try to set focus on the first button of the tab content.
-			if (this.activeTabPointers.contentList.length > 0) {
-				for (var i = 0; i < this.activeTabPointers.contentList.length; i++) {
-					var element = document.getElementById(this.activeTabPointers.contentList[i].id);
-					if (element.tabIndex >= 0) {
-						element.focus();
-						break;
-					}
-				}
-			}
+			var currentSelectedTabPage = this.getCurrentSelectedTabPage();
+			var firstSelectableElement = currentSelectedTabPage.querySelector('.unobutton');
+			firstSelectableElement.focus();
+		}
+		else if (key === 'ARROWRIGHT') {
+			this.getNextTab('right');
+		}
+		else if (key === 'ARROWLEFT') {
+			this.getNextTab('left');
 		}
 		else {
 			if (this.combination === null) {
@@ -259,8 +308,28 @@ var NotebookbarAccessibility = function() {
 				this.clickOnFilteredItem();
 			// So we checked the pressed key against available combinations. If there is no match, focus back to map.
 			if (this.isAllFilteredOut() === true)
-				app.map.focus();
+				this.focusToMap();
 		}
+	};
+
+	this.getNextTab = function(move) {
+		var currentSelectedTab = this.getCurrentSelectedTab();
+		var isLeftMovement = move === 'left'? true : false;
+		var tab = isLeftMovement ? currentSelectedTab.previousElementSibling : currentSelectedTab.nextElementSibling;
+		if (!tab) {
+			var tabs = document.querySelectorAll('.ui-tab.notebookbar:not(.hidden)');
+			tab = isLeftMovement ? tabs[tabs.length - 1] : tabs[0];
+		}
+		while (tab) {
+			if (!tab.classList.contains('hidden')) {
+				// Found the next element without the "hidden" class
+				break;
+			}
+			tab = isLeftMovement ? tab.previousElementSibling : tab.nextElementSibling;
+		}
+		this.removeFocusFromTab();
+		tab.click();
+		tab.focus();
 	};
 
 	this.removeAllInfoBoxes = function() {
@@ -289,11 +358,12 @@ var NotebookbarAccessibility = function() {
 		Object.keys(this.tabInfoList).forEach(function(tabId) {
 			var element = document.getElementById(tabId);
 			if (element) {
-				element.addEventListener('click', function() {
-					if (this.activeTabPointers.id !== element.id) {
-						this.setupAcceleratorsForCurrentTab(element.id);
+				element.addEventListener('keydown', function(event) {
+					if (event.key === 'Alt') {
+					  // focus back to document
+					  this.focusToMap();
 					}
-				}.bind(this));
+				  }.bind(this));
 			}
 		}.bind(this));
 	};
@@ -301,11 +371,19 @@ var NotebookbarAccessibility = function() {
 	this.initAccessibilityInputElement = function() {
 		// Create an input element for catching the events and prevent document from catching them.
 		this.accessibilityInputElement = document.createElement('input');
+		// type = 'submit' prevents the screen reader to report something like: "editable blank",
+		// when <alt> is pressed, since at start the input field is empty and obviously editable;
+		// note that an input element with type 'submit' still receives keyboard events
+		this.accessibilityInputElement.type = 'submit';
+		// role = 'tablist' prevents the screen reader to report "Submit button" when <alt> is pressed
+		// screen reader uses to report 'tablist' role as 'tab control'
+		this.accessibilityInputElement.setAttribute('role', 'tablist');
 		this.accessibilityInputElement.style.width = this.accessibilityInputElement.style.height = '0';
 		this.accessibilityInputElement.id = 'accessibilityInputElement';
 		this.accessibilityInputElement.onfocus = this.onInputFocus.bind(this);
 		this.accessibilityInputElement.onblur = this.onInputBlur.bind(this);
 		this.accessibilityInputElement.onkeyup = this.onInputKeyUp.bind(this);
+		this.accessibilityInputElement.autocomplete = 'off';
 
 		var container = document.createElement('div');
 		container.style.width = container.style.height = '0';

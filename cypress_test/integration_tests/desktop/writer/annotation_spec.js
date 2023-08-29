@@ -12,7 +12,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 		cy.viewport(1400, 600);
 		testFileName = helper.beforeAll(origTestFileName, 'writer');
 		desktopHelper.switchUIToNotebookbar();
-		cy.cGet('#optionscontainer div[id^="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
+		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
 		selectZoomLevel('50');
 	});
 
@@ -21,14 +21,14 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 
 	it('Insert', function() {
-		insertMultipleComment('writer', 1, false, '[id=InsertAnnotation1]');
+		insertMultipleComment('writer', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
 	});
 
 	it('Modify', function() {
-		insertMultipleComment('writer', 1, false, '[id=InsertAnnotation1]');
+		insertMultipleComment('writer', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
@@ -41,7 +41,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 
 	it('Reply', function() {
-		insertMultipleComment('writer', 1, false, '[id=InsertAnnotation1]');
+		insertMultipleComment('writer', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text');
@@ -53,7 +53,7 @@ describe(['tagdesktop'], 'Annotation Tests', function() {
 	});
 
 	it('Remove', function() {
-		insertMultipleComment('writer', 1, false, '[id=InsertAnnotation1]');
+		insertMultipleComment('writer', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');
@@ -70,7 +70,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
 		desktopHelper.switchUIToNotebookbar();
-		cy.cGet('#optionscontainer div[id^="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
+		cy.cGet('#optionscontainer div[id$="SidebarDeck.PropertyDeck"]').click(); // Hide sidebar.
 	});
 
 	afterEach(function() {
@@ -78,14 +78,14 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	});
 
 	it('Insert', function() {
-		insertMultipleComment('writer', 1, false, '[id=InsertAnnotation1]');
+		insertMultipleComment('writer', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
 	});
 
 	it('Modify', function() {
-		insertMultipleComment('writer', 1, false, '[id=InsertAnnotation1]');
+		insertMultipleComment('writer', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text0');
@@ -99,7 +99,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	});
 
 	it('Reply', function() {
-		insertMultipleComment('writer', 1, false, '[id=InsertAnnotation1]');
+		insertMultipleComment('writer', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('#annotation-content-area-1').should('contain','some text');
@@ -112,7 +112,7 @@ describe(['tagdesktop'], 'Collapsed Annotation Tests', function() {
 	});
 
 	it('Remove', function() {
-		insertMultipleComment('writer', 1, false, '[id=InsertAnnotation1]');
+		insertMultipleComment('writer', 1, false, '[id=insert-insert-annotation]');
 
 		cy.cGet('.cool-annotation-content-wrapper').should('exist');
 		cy.cGet('.cool-annotation-content > div').should('contain','some text');

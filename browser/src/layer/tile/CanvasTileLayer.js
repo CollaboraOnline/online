@@ -969,6 +969,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._mentionText = [];
 
 		this._moveInProgress = false;
+		this._canonicalViewId = -1;
 	},
 
 	_initContainer: function () {
@@ -1385,6 +1386,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (tileCombineQueue.length <= 0)
 			return;
 
+		if (this._canonicalViewId == -1)
+			return;
+
 		// Sort into buckets of consistent part & mode.
 		var partMode = {};
 		for (var i = 0; i < tileCombineQueue.length; ++i)
@@ -1427,7 +1431,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 
 			var msg = 'tilecombine ' +
-			    'nviewid=0 ' +
+			    'nviewid=' + this._canonicalViewId + ' ' +
 			    'part=' + part + ' ' +
 			    ((mode !== 0) ? ('mode=' + mode + ' ') : '') +
 			    'width=' + this._tileWidthPx + ' ' +
@@ -1551,6 +1555,17 @@ L.CanvasTileLayer = L.Layer.extend({
 			var command = this._map.unoToolbarCommands[i];
 			app.socket.sendMessage('commandvalues command=' + command);
 		}
+	},
+
+	_cellRangeToTwipRect: function(cellRange) {
+		var strTwips = cellRange.match(/\d+/g);
+		var startCellAddress = [parseInt(strTwips[0]), parseInt(strTwips[1])];
+		var startCellRectPixel = this.sheetGeometry.getCellRect(startCellAddress[0], startCellAddress[1]);
+		var topLeftTwips = this._corePixelsToTwips(startCellRectPixel.min);
+		var endCellAddress = [parseInt(strTwips[2]), parseInt(strTwips[3])];
+		var endCellRectPixel = this.sheetGeometry.getCellRect(endCellAddress[0], endCellAddress[1]);
+		var bottomRightTwips = this._corePixelsToTwips(endCellRectPixel.max);
+		return new L.Bounds(new L.Point(topLeftTwips.x, topLeftTwips.y), new L.Point(bottomRightTwips.x, bottomRightTwips.y));
 	},
 
 	_onMessage: function (textMsg, img) {
@@ -1790,21 +1805,22 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._onFormFieldButtonMsg(textMsg);
 		}
 		else if (textMsg.startsWith('canonicalidchange:')) {
+			var payload = textMsg.substring('canonicalidchange:'.length + 1);
+			var canonicalId = payload.split('=')[2].split(' ')[0];
 			if (this._debugData) {
-				var payload = textMsg.substring('canonicalidchange:'.length + 1);
 				var viewId = payload.split('=')[1].split(' ')[0];
-				var canonicalId = payload.split('=')[2].split(' ')[0];
 				this._debugData['canonicalViewId'].setPrefix('Canonical id changed to: ' + canonicalId + ' for view id: ' + viewId);
 			}
+			this._canonicalViewId = canonicalId;
+			this._invalidateAllPreviews();
 			this._requestNewTiles();
+			this.redraw();
 		}
 		else if (textMsg.startsWith('comment:')) {
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
-			if (obj.comment.cellPos) {
-				// cellPos is in print-twips so convert to display twips.
-				var cellPos = L.Bounds.parse(obj.comment.cellPos);
-				cellPos = this._convertToTileTwipsSheetArea(cellPos);
-				obj.comment.cellPos = cellPos.toCoreString();
+			if (obj.comment.cellRange) {
+				// convert cellRange e.g. "A1 B2" to its bounds in display twips.
+				obj.comment.cellPos = this._cellRangeToTwipRect(obj.comment.cellRange).toCoreString();
 			}
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
 		}
@@ -1847,6 +1863,16 @@ L.CanvasTileLayer = L.Layer.extend({
 		else if (textMsg.startsWith('a11ytextselectionchanged:')) {
 			obj = JSON.parse(textMsg.substring('a11ytextselectionchanged:'.length + 1));
 			this._map._textInput.onAccessibilityTextSelectionChanged(parseInt(obj.start), parseInt(obj.end));
+		}
+		else if (textMsg.startsWith('a11yfocusedcellchanged:')) {
+			obj = JSON.parse(textMsg.substring('a11yfocusedcellchanged:'.length + 1));
+			var outCount = obj.outCount !== undefined ? parseInt(obj.outCount) : 0;
+			var inList = obj.inList !== undefined ? obj.inList : [];
+			var row = parseInt(obj.row);
+			var col = parseInt(obj.col);
+			var rowSpan = obj.rowSpan !== undefined ? parseInt(obj.rowSpan) : 1;
+			var colSpan = obj.colSpan !== undefined ? parseInt(obj.colSpan) : 1;
+			this._map._textInput.onAccessibilityFocusedCellChanged(outCount, inList, row, col, rowSpan, colSpan, obj.paragraph);
 		}
 		else if (textMsg.startsWith('a11yfocusedparagraph:')) {
 			obj = JSON.parse(textMsg.substring('a11yfocusedparagraph:'.length + 1));
@@ -2524,7 +2550,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_showURLPopUp: function(position, url) {
-		var parent = L.DomUtil.create('div');
+		var parent = L.DomUtil.create('div', '');
 		L.DomUtil.createWithId('div', 'hyperlink-pop-up-preview', parent);
 		var link = L.DomUtil.createWithId('a', 'hyperlink-pop-up', parent);
 		link.innerText = url;
@@ -2877,9 +2903,12 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_removeView: function(viewId) {
 		// Remove selection, if any.
-		if (this._viewSelections[viewId] && this._viewSelections[viewId].selection) {
-			this._viewSelections[viewId].selection.remove();
-			this._viewSelections[viewId].selection = undefined;
+		if (this._viewSelections[viewId]) {
+			if (this._viewSelections[viewId].selection) {
+				this._viewSelections[viewId].selection.remove();
+				this._viewSelections[viewId].selection = undefined;
+			}
+			delete this._viewSelections[viewId];
 		}
 
 		// Remove the view and update (to refresh as needed).
@@ -4544,7 +4573,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			this._addDropDownMarker();
 
-			var dontFocusDocument = this._isAnyInputFocused();
+			var focusOutOfDocument = document.activeElement === document.body;
+			var dontFocusDocument = this._isAnyInputFocused() || focusOutOfDocument;
 
 			// when the cell cursor is moving, the user is in the document,
 			// and the focus should leave the cell input bar
@@ -4557,29 +4587,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._cellCursorMarker = undefined;
 		}
 		this._removeDropDownMarker();
-
-		//hyperlink pop-up from here
-		if (this._lastFormula && this._cellCursorMarker && this._lastFormula.substring(1, 10) == 'HYPERLINK')
-		{
-			var formula = this._lastFormula;
-			var targetURL = formula.substring(11, formula.length - 1).split(',')[0];
-			targetURL = targetURL.split('"').join('');
-			if (targetURL.startsWith('#')) {
-				targetURL = targetURL.split(';')[0];
-			} else {
-				targetURL = this._map.makeURLFromStr(targetURL);
-			}
-
-			this._closeURLPopUp();
-			if (targetURL) {
-				this._showURLPopUp(this._cellCursor.getNorthEast(), targetURL);
-			}
-
-		}
-		else if (this._map.hyperlinkPopup)
-		{
-			this._closeURLPopUp();
-		}
+		this._closeURLPopUp();
 	},
 
 	_onValidityListButtonMsg: function(textMsg) {
@@ -4876,6 +4884,16 @@ L.CanvasTileLayer = L.Layer.extend({
 			+ '&outputWidth=' + this._tileHeightPx
 			+ '&tileHeight=' + this._tileWidthTwips
 			+ '&tileWidth=' + this._tileHeightTwips);
+	},
+
+	_invalidateAllPreviews: function () {
+		this._previewInvalidations = [];
+		for (var key in this._map._docPreviews) {
+			var preview = this._map._docPreviews[key];
+			preview.invalid = true;
+			this._previewInvalidations.push(new L.Bounds(new L.Point(0, 0), new L.Point(preview.maxWidth, preview.maxHeight)));
+		}
+		this._invalidatePreviews();
 	},
 
 	_invalidatePreviews: function () {
@@ -7121,9 +7139,11 @@ L.CanvasTileLayer = L.Layer.extend({
 	_sendProcessedResponse: function() {
 		var toSend = this._queuedProcessed;
 		this._queuedProcessed = [];
-		// FIXME: new multi-tile-processed message.
-		for (var i = 0; i < toSend.length; i++) {
-			app.socket.sendMessage('tileprocessed tile=' + toSend[i]);
+		if (toSend.length > 0) {
+			var msg = 'tileprocessed tile=' + toSend[0];
+			for (var i = 1; i < toSend.length; ++i)
+				msg += ',' + toSend[i];
+			app.socket.sendMessage(msg);
 		}
 		if (this._fetchKeyframeQueue.length > 0)
 		{

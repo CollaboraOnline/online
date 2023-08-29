@@ -21,7 +21,11 @@ public:
 
     static void initialize(const std::string& path);
 
+    /// Quarantines a new version of the document.
     bool quarantineFile(const std::string& docName);
+
+    /// Returns the last quarantined file's path.
+    std::string lastQuarantinedFilePath() const;
 
     /// Removes the quarantined files for the given DocKey when we unload gracefully.
     void removeQuarantinedFiles();

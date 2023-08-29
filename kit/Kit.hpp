@@ -134,6 +134,12 @@ private:
     bool _readOnly;
 };
 
+
+/// We have two types of password protected documents
+/// 1) Documents which require password to view
+/// 2) Document which require password to modify
+enum class DocumentPasswordType { ToView, ToModify };
+
 /// Check the ForkCounter, and if non-zero, fork more of them accordingly.
 /// @param limit If non-zero, set the ForkCounter to this limit.
 void forkLibreOfficeKit(const std::string& childRoot,

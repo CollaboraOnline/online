@@ -100,7 +100,7 @@ public:
         LOK_ASSERT_EQUAL_MESSAGE("Unexpected overwritting the document in storage", false, force);
 
         // Internal Server Error.
-        return Util::make_unique<http::Response>(http::StatusCode::InternalServerError);
+        return std::make_unique<http::Response>(http::StatusCode::InternalServerError);
     }
 
     bool onDocumentModified(const std::string& message) override
@@ -209,7 +209,7 @@ public:
             LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
 
             // File unknown/User unauthorized.
-            return Util::make_unique<http::Response>(http::StatusCode::NotFound);
+            return std::make_unique<http::Response>(http::StatusCode::NotFound);
         }
 
         // This during closing the document.
@@ -307,7 +307,7 @@ public:
     }
 
     void configCheckFileInfo(const Poco::Net::HTTPRequest& /*request*/,
-                             Poco::JSON::Object::Ptr fileInfo) override
+                             Poco::JSON::Object::Ptr& fileInfo) override
     {
         LOG_TST("CheckFileInfo: making read-only for " << name(_scenario));
 
@@ -502,7 +502,7 @@ public:
 
             // Fail with error.
             LOG_TST("Simulate PutFile failure");
-            return Util::make_unique<http::Response>(http::StatusCode::InternalServerError);
+            return std::make_unique<http::Response>(http::StatusCode::InternalServerError);
         }
 
         if (getCountPutFile() == 2)
@@ -510,7 +510,7 @@ public:
             LOG_TST("Second PutFile, which will also fail");
 
             LOG_TST("Simulate PutFile failure (again)");
-            return Util::make_unique<http::Response>(http::StatusCode::InternalServerError);
+            return std::make_unique<http::Response>(http::StatusCode::InternalServerError);
         }
 
         if (getCountPutFile() == 3)
@@ -650,7 +650,7 @@ public:
 
             // Fail with error.
             LOG_TST("Returning 500 to simulate PutFile failure");
-            return Util::make_unique<http::Response>(http::StatusCode::InternalServerError);
+            return std::make_unique<http::Response>(http::StatusCode::InternalServerError);
         }
 
         // This during closing the document.
