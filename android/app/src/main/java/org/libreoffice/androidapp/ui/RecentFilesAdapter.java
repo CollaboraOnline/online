@@ -73,7 +73,7 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
         try {
             cursor = activity.getContentResolver().query(uri, null, null, null, null);
             if (cursor != null && cursor.moveToFirst())
-                filename = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                filename = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
         } catch (Exception e) {
             return null;
         } finally {
@@ -94,7 +94,7 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
         try {
             cursor = activity.getContentResolver().query(uri, null, null, null, null);
             if (cursor != null && cursor.moveToFirst())
-                length = cursor.getLong(cursor.getColumnIndex(OpenableColumns.SIZE));
+                length = cursor.getLong(cursor.getColumnIndexOrThrow(OpenableColumns.SIZE));
         } catch (Exception e) {
             return 0;
         } finally {
