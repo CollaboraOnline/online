@@ -1009,7 +1009,7 @@ label.disabled {
 
 .ui-edit.mobile-wizard,
 .ui-textarea.mobile-wizard,
-#hyperlink-link-box-label.mobile-wizard {
+.cool-annotation-table {
 	/*
 	, textarea was also here assign but it was messing up with all textareas (annotations on desktop and mobile):
 	- added 93038: jsdialog: style dialogs; a5016d547c6242f6f9b28748b5724b0bc10cdb67
@@ -1017,6 +1017,11 @@ label.disabled {
 	width: -moz-available;
 	width: -webkit-fill-available;
 	margin: 10px 5% !important;
+}
+
+.ui-textarea.mobile-wizard {
+	background-color: var(--color-background-dark);
+	border: 1px solid var(--color-border);
 }
 
 #mobile-wizard #label9, #documentlabel-mobile {
