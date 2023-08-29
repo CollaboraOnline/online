@@ -522,6 +522,8 @@ L.Control.JSDialog = L.Control.extend({
 				var initialFocusElement = JSDialog.GetFocusableElements(container);
 				if (initialFocusElement && initialFocusElement.length)
 					initialFocusElement[0].focus();
+			} else {
+				this.map.focus();
 			}
 		}
 		else {
