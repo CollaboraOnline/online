@@ -547,7 +547,7 @@ L.Map.include({
 		if (window.ThisIsAMobileApp) {
 			productName = window.MobileAppName;
 		} else {
-			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition (unbranded)';
+			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Document Collaborator';
 		}
 
 		map.uiManager.showYesNoButton(id + '-box', productName, '', _('OK'), null, null, null, true);
@@ -626,7 +626,7 @@ L.Map.include({
 		if (window.ThisIsAMobileApp) {
 			productName = window.MobileAppName;
 		} else {
-			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition (unbranded)';
+			productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Document Collaborator';
 		}
 		var productURL = (typeof brandProductURL !== 'undefined') ? brandProductURL : 'https://collaboraonline.github.io/';
 

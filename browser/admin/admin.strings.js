@@ -2,7 +2,7 @@
 /* Stringtable for Admin Console User Interface */
 var l10nstrings = {};
 
-l10nstrings.strProductName = 'Collabora Online Development Edition (unbranded)';
+l10nstrings.strProductName = 'Document Collaborator';
 l10nstrings.strAdminConsole = _('Admin console');
 l10nstrings.strSettings = _('Settings');
 l10nstrings.strOverview = _('Overview');
