@@ -37,7 +37,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:maxLines="2"
             android:textAlignment="center"
             android:textColor="?android:attr/textColorPrimary"
@@ -52,8 +52,8 @@
             android:layout_gravity="center"
             android:contentDescription="@string/file_actions_icon_desc"
             android:scaleType="fitStart"
-            android:tint="?android:attr/textColorPrimary"
-            app:srcCompat="@drawable/ic_more_vert_black_24dp" />
+            app:srcCompat="@drawable/ic_more_vert_black_24dp"
+            app:tint="?android:attr/textColorPrimary" />
     </LinearLayout>
 
 </LinearLayout>
