@@ -111,6 +111,9 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	if (data.selectedCount > 0)
 		var selectedEntryPos = parseInt(data.selectedEntries[0]);
 
+	// notebookbar a11y requires main element to have click handler for shortcuts to work
+	container.addEventListener('click', function () { content.focus(); });
+
 	content.addEventListener('keyup', function () {
 		builder.callback('combobox', 'change', data, this.value, builder);
 
