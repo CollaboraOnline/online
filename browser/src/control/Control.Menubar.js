@@ -1021,6 +1021,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'}]
 			},
 			{uno: '.uno:SpellOnline'},
+			{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
 			{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
@@ -1073,6 +1074,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:DeletePage', 'presentation'), id: 'deletepage', type: 'action'}]
 			},
 			{uno: '.uno:SpellOnline'},
+			{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
@@ -1144,6 +1146,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:ShowDetail'}]}
 			]},
 			{uno: '.uno:SpellOnline'},
+			{name: _('Dark Mode'), id: 'toggledarktheme', type: 'action'},
 			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
