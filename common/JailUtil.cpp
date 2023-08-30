@@ -274,7 +274,8 @@ void createJailPath(const std::string& path)
 {
     LOG_INF("Creating jail path (if missing): " << path);
     Poco::File(path).createDirectories();
-    chmod(path.c_str(), S_IXUSR | S_IWUSR | S_IRUSR);
+    if (chmod(path.c_str(), S_IXUSR | S_IWUSR | S_IRUSR) != 0)
+        LOG_ERR("chmod(\"" << path << "\") failed: " << strerror(errno));
 }
 
 void setupChildRoot(bool bindMount, const std::string& childRoot, const std::string& sysTemplate)
