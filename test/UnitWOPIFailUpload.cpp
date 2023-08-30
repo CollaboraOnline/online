@@ -287,14 +287,16 @@ private:
     STATE_ENUM(Phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose, Done) _phase;
 
     const Scenario _scenario;
+    const bool _disconnect;
 
     std::chrono::steady_clock::time_point _eventTime;
 
 public:
-    UnitWOPIReadOnly(Scenario scenario)
-        : WopiTestServer("UnitWOPIReadOnly_" + toStringShort(scenario))
+    UnitWOPIReadOnly(Scenario scenario, bool disconnect)
+        : WopiTestServer("UnitWOPIReadOnly_" + toStringShort(scenario) + (disconnect ? "_X" : ""))
         , _phase(Phase::Load)
         , _scenario(scenario)
+        , _disconnect(disconnect)
     {
     }
 
@@ -408,10 +410,19 @@ public:
                 {
                     LOG_TST("No modified status on read-only document after waiting for "
                             << elapsed);
-                    TRANSITION_STATE(_phase, Phase::WaitDocClose);
                     _eventTime = std::chrono::steady_clock::now();
-                    LOG_TST("Saving the document");
-                    WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+
+                    if (_disconnect)
+                    {
+                        TRANSITION_STATE(_phase, Phase::Done);
+                        deleteSocketAt(0);
+                    }
+                    else
+                    {
+                        TRANSITION_STATE(_phase, Phase::WaitDocClose);
+                        LOG_TST("Saving the document");
+                        WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+                    }
                 }
             }
             break;
@@ -745,12 +756,14 @@ public:
 
 UnitBase** unit_create_wsd_multi(void)
 {
-    return new UnitBase* [7]
+    return new UnitBase* [9]
     {
         new UnitWOPIExpiredToken(), new UnitWOPIFailUpload(),
-            new UnitWOPIReadOnly(UnitWOPIReadOnly::Scenario::ViewWithComment),
-            new UnitWOPIReadOnly(UnitWOPIReadOnly::Scenario::Edit), new UnitFailUploadModified(),
-            new UnitFailUplaodClose(), nullptr
+            new UnitWOPIReadOnly(UnitWOPIReadOnly::Scenario::ViewWithComment, /*disconnect=*/false),
+            new UnitWOPIReadOnly(UnitWOPIReadOnly::Scenario::Edit, /*disconnect=*/false),
+            new UnitWOPIReadOnly(UnitWOPIReadOnly::Scenario::ViewWithComment, /*disconnect=*/true),
+            new UnitWOPIReadOnly(UnitWOPIReadOnly::Scenario::Edit, /*disconnect=*/true),
+            new UnitFailUploadModified(), new UnitFailUplaodClose(), nullptr
     };
 }
 
