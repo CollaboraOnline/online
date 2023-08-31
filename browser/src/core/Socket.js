@@ -1179,12 +1179,9 @@ app.definitions.Socket = L.Class.extend({
 			this._onHyperlinkClickedMsg(textMsg);
 		}
 
-		var msgDelayed = false;
 		if (!this._isReady() || !this._map._docLayer || this._delayedMessages.length || this._handlingDelayedMessages) {
-			msgDelayed = this._tryToDelayMessage(textMsg);
-		}
-
-		if (this._map._docLayer && !msgDelayed) {
+			this._delayMessage(textMsg);
+		} else {
 			this._map._docLayer._onMessage(textMsg, e.image);
 		}
 	},
@@ -1299,25 +1296,13 @@ app.definitions.Socket = L.Class.extend({
 		// var name = command.name; - ignored, we get the new name via the wopi's BaseFileName
 	},
 
-	_tryToDelayMessage: function(textMsg) {
-		var delayed = false;
-		if (textMsg.startsWith('window:') ||
-			textMsg.startsWith('canonicalidchange:') ||
-			textMsg.startsWith('celladdress:') ||
-			textMsg.startsWith('cellviewcursor:') ||
-			textMsg.startsWith('statechanged:') ||
-			textMsg.startsWith('invalidatecursor:') ||
-			textMsg.startsWith('viewinfo:')) {
-			//window.app.console.log('_tryToDelayMessage: textMsg: ' + textMsg);
-			var message = {msg: textMsg};
-			this._delayedMessages.push(message);
-			delayed  = true;
-		}
+	_delayMessage: function(textMsg) {
+		var message = {msg: textMsg};
+		this._delayedMessages.push(message);
 
-		if (delayed && !this._delayedMsgHandlerTimeoutId) {
+		if (!this._delayedMsgHandlerTimeoutId) {
 			this._handleDelayedMessages();
 		}
-		return delayed;
 	},
 
 	_handleDelayedMessages: function() {
