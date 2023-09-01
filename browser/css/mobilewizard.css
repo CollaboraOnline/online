@@ -1278,3 +1278,8 @@ label.disabled {
 #contentControlList.mobile-wizard li:not(:last-child) {
 	border-bottom: 1px solid var(--color-border-lighter);
 }
+
+.unotoolbutton.mobile-wizard .unobutton img{
+	width: 24px;
+	height: 24px;
+}
