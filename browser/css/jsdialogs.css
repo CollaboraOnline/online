@@ -589,7 +589,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	color: var(--color-text-dark);
 }
 
-.spinfieldcontainer input:hover {
+.spinfieldcontainer input:not([disabled]):hover {
 	border: 1px solid var(--color-border-darker);
 	color: var(--color-text-darker);
 	background-color: var(--color-background-lighter);
@@ -1080,7 +1080,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin-left: 3px;
 }
 
-.unoarrow:hover, .menubutton .arrow:hover {
+.unoarrow:not([disabled]):hover, .menubutton .arrow:not([disabled]):hover {
 	border-top: 5px solid var(--color-text-darker);
 }
 
@@ -1097,7 +1097,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: transparent;
 }
 
-.unoarrow:hover, .arrowbackground:hover .unoarrow {
+.unoarrow:not([disabled]):hover, .arrowbackground:not([disabled]):hover .unoarrow {
 	border-top-color: var(--color-text-darker);
 }
 
@@ -1603,10 +1603,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 /* hover effect */
-.jsdialog.menubutton:hover,
-.ui-listbox:hover,
-.jsdialog.ui-edit:hover,
-.jsdialog.ui-textarea:hover {
+.jsdialog.menubutton:not([disabled]):hover,
+.ui-listbox:not([disabled]):hover,
+.jsdialog.ui-edit:not([disabled]):hover,
+.jsdialog.ui-textarea:not([disabled]):hover {
 	color: var(--color-text-darker);
 	background-color: var(--color-background-lighter);
 	border: 1px solid var(--color-border-darker);
