@@ -24,7 +24,7 @@
 // set of control data bytes for vperd
 static __m256i vpermd_lut[256];
 static __m256i vpermd_shift_left;
-static __m256i vpermd_last_first_swap;
+static __m256i vpermd_last_to_first;
 static __m256i low_pixel_mask;
 
 // Build table we can lookup bitmasks in to generate gather data
@@ -60,11 +60,11 @@ void init_gather_lut()
         0, 0, 0, 2,  0, 0, 0, 1,
         0, 0, 0, 0,  0, 0, 0, 0);
 
-    vpermd_last_first_swap = _mm256_set_epi8(
-        0, 0, 0, 0,  0, 0, 0, 6,
-        0, 0, 0, 5,  0, 0, 0, 4,
-        0, 0, 0, 3,  0, 0, 0, 2,
-        0, 0, 0, 1,  0, 0, 0, 7);
+    vpermd_last_to_first = _mm256_set_epi8(
+        0, 0, 0, 0,  0, 0, 0, 0,
+        0, 0, 0, 0,  0, 0, 0, 0,
+        0, 0, 0, 0,  0, 0, 0, 0,
+        0, 0, 0, 0,  0, 0, 0, 7);
 
     low_pixel_mask = _mm256_set_epi8(
         0, 0, 0, 0,  0, 0, 0, 0,
@@ -117,8 +117,11 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, unsigned int *s
         // Generate mask
 
         // get the last pixel into the least significant pixel
-        __m256i lastPix = _mm256_permutevar8x32_epi32(prev, vpermd_last_first_swap);
+// FIXME: mask at the same time ?
+//        __m256i lastPix = _mm256_maskz_permutexvar_epi32(0x1, prev, vpermd_last_to_first);
+        __m256i lastPix = _mm256_permutevar8x32_epi32(prev, vpermd_last_to_first);
         lastPix = _mm256_and_si256(low_pixel_mask, lastPix);
+
         // shift the current pixels left
         prev = _mm256_permutevar8x32_epi32(curr, vpermd_shift_left);
         // mask out the bottom pixel
