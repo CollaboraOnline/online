@@ -102,63 +102,65 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, unsigned int *s
     }
 
     *scratchLen = 0;
+    for (unsigned int x = 0; x < 4; ++x)
+        rleMaskBlock[x] = 0;
 
     const uint32_t* block = from;
     __m256i prev = _mm256_setzero_si256(); // transparent
-    for (unsigned int nMask = 0; nMask < 4; ++nMask)
+
+    for (unsigned int x = 0; x < 256; x += 8) // 8 pixels per cycle
     {
-        uint64_t rleMask = 0;
+        __m256i curr = _mm256_loadu_si256((const __m256i_u*)(block));
 
-        for (int i = 0; i < 8; ++i)
+        // Generate mask
+
+        // get the last pixel into the least significant pixel
+        __m256i lastPix = _mm256_permutevar8x32_epi32(prev, vpermd_last_first_swap);
+        lastPix = _mm256_and_si256(low_pixel_mask, lastPix);
+        // shift the current pixels left
+        prev = _mm256_permutevar8x32_epi32(curr, vpermd_shift_left);
+        // mask out the bottom pixel
+        prev = _mm256_andnot_si256(low_pixel_mask, prev);
+        // merge in the last pixel
+        prev = _mm256_or_si256(prev, lastPix);
+
+        // turn that into a bit-mask.
+        uint64_t newMask = diffMask(prev, curr);
+        assert (newMask < 256);
+
         {
-            __m256i curr = _mm256_loadu_si256((const __m256i_u*)(block));
+            unsigned int nMask = x >> 6; // 64bits per mask
+            unsigned int i = (x >> 3) & 0x7; // chunk of bits we work on
+            rleMaskBlock[nMask] |= newMask << (i * 8);
+        }
 
-            // Generate mask
+        // Shuffle the pixels and pack them
+        __m256i control_vector = _mm256_loadu_si256(&vpermd_lut[newMask]);
+        __m256i packed = _mm256_permutevar8x32_epi32(curr, control_vector);
 
-            // get the last pixel into the least significant pixel
-            __m256i lastPix = _mm256_permutevar8x32_epi32(prev, vpermd_last_first_swap);
-            lastPix = _mm256_and_si256(low_pixel_mask, lastPix);
-            // shift the current pixels left
-            prev = _mm256_permutevar8x32_epi32(curr, vpermd_shift_left);
-            // mask out the bottom pixel
-            prev = _mm256_andnot_si256(low_pixel_mask, prev);
-            // merge in the last pixel
-            prev = _mm256_or_si256(prev, lastPix);
+        unsigned int countBitsUnset = _mm_popcnt_u32(newMask ^ 0xff);
+        assert(countBitsUnset <= 8);
 
-            // turn that into a bit-mask.
-            uint64_t newMask = diffMask(prev, curr);
-
-            rleMask |= newMask << (i * 8);
-            assert (newMask < 256);
-
-            // Shuffle the pixels and pack them
-            __m256i control_vector = _mm256_loadu_si256(&vpermd_lut[newMask]);
-            __m256i packed = _mm256_permutevar8x32_epi32(curr, control_vector);
-
-            unsigned int countBitsUnset = _mm_popcnt_u32(newMask ^ 0xff);
-            assert(countBitsUnset <= 8);
-
-            // we are guaranteed enough space worst-case
-            _mm256_storeu_si256((__m256i*)scratch, packed);
+        // we are guaranteed enough space worst-case
+        _mm256_storeu_si256((__m256i*)scratch, packed);
 
 #if DEBUG_LUT
-            if (countBitsUnset > 0)
-                fprintf(stderr, "for mask: 0x%2x bits-unset %d we have:\n"
-                        "%4x%4x%4x%4x%4x%4x%4x%4x\n"
-                        "%4x%4x%4x%4x%4x%4x%4x%4x\n",
-                        (unsigned int)newMask, countBitsUnset,
-                        block[0], block[1], block[2], block[3], block[4], block[5], block[6], block[7],
-                        scratch[0], scratch[1], scratch[2], scratch[3], scratch[4], scratch[5], scratch[6], scratch[7]);
+        if (countBitsUnset > 0)
+            fprintf(stderr, "for mask: 0x%2x bits-unset %d we have:\n"
+                    "%4x%4x%4x%4x%4x%4x%4x%4x\n"
+                    "%4x%4x%4x%4x%4x%4x%4x%4x\n",
+                    (unsigned int)newMask, countBitsUnset,
+                    block[0], block[1], block[2], block[3], block[4], block[5], block[6], block[7],
+                    scratch[0], scratch[1], scratch[2], scratch[3], scratch[4], scratch[5], scratch[6], scratch[7]);
 #endif
 
-            prev = curr; // ?
+        // stash current for use next time around
+        prev = curr;
 
-            scratch += countBitsUnset;
-            *scratchLen += countBitsUnset;
+        scratch += countBitsUnset;
+        *scratchLen += countBitsUnset;
 
-            block += 8;
-        }
-        rleMaskBlock[nMask] = rleMask;
+        block += 8;
     }
 
     return 1;
