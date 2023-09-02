@@ -23,6 +23,9 @@
 
 // set of control data bytes for vperd
 static __m256i vpermd_lut[256];
+static __m256i vpermd_shift_left;
+static __m256i vpermd_last_first_swap;
+static __m256i low_pixel_mask;
 
 // Build table we can lookup bitmasks in to generate gather data
 void init_gather_lut()
@@ -50,6 +53,24 @@ void init_gather_lut()
             0, 0, 0, lut[3],  0, 0, 0, lut [2],
             0, 0, 0, lut[1],  0, 0, 0, lut [0]);
     }
+
+    vpermd_shift_left = _mm256_set_epi8(
+        0, 0, 0, 6,  0, 0, 0, 5,
+        0, 0, 0, 4,  0, 0, 0, 3,
+        0, 0, 0, 2,  0, 0, 0, 1,
+        0, 0, 0, 0,  0, 0, 0, 0);
+
+    vpermd_last_first_swap = _mm256_set_epi8(
+        0, 0, 0, 0,  0, 0, 0, 6,
+        0, 0, 0, 5,  0, 0, 0, 4,
+        0, 0, 0, 3,  0, 0, 0, 2,
+        0, 0, 0, 1,  0, 0, 0, 7);
+
+    low_pixel_mask = _mm256_set_epi8(
+        0, 0, 0, 0,  0, 0, 0, 0,
+        0, 0, 0, 0,  0, 0, 0, 0,
+        0, 0, 0, 0,  0, 0, 0, 0,
+        0, 0, 0, 0,  0xff, 0xff, 0xff, 0xff);
 }
 
 // non-intuitively we need to use the sign bit as
@@ -84,6 +105,7 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, unsigned int *s
 
     unsigned int x = 0;
     const uint32_t* block = from;
+    __m256i prev = _mm256_setzero_si256(); // transparent
     for (unsigned int nMask = 0; nMask < 4; ++nMask)
     {
         uint64_t rleMask = 0;
@@ -93,30 +115,30 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, unsigned int *s
         int blocks = remaining/8;
         if (blocks > 8)
             blocks = 8;
+
         for (int i = 0; i < blocks; ++i)
         {
-            __m256i prev;
             __m256i curr = _mm256_loadu_si256((const __m256i_u*)(block));
 
             // Generate mask
-            switch (x)
-            {
-            case 0:
-            {
-                prev = _mm256_set_epi32(block[6], block[5], block[4], block[3],
-                                        block[2], block[1], block[0], 0 /* transparent */);
-                break;
-            }
-            default:
-            {
-                prev = _mm256_loadu_si256((const __m256i_u*)(block - 1));
-                break;
-            }
-            }
-            newMask = diffMask(prev, curr);
-            rleMask |= newMask << (i * 8);
 
+            // get the last pixel into the least significant pixel
+            __m256i lastPix = _mm256_permutevar8x32_epi32(prev, vpermd_last_first_swap);
+            lastPix = _mm256_and_si256(low_pixel_mask, lastPix);
+            // shift the current pixels left
+            prev = _mm256_permutevar8x32_epi32(curr, vpermd_shift_left);
+            // mask out the bottom pixel
+            prev = _mm256_andnot_si256(low_pixel_mask, prev);
+            // merge in the last pixel
+            prev = _mm256_or_si256(prev, lastPix);
+
+            // turn that into a bit-mask.
+            newMask = diffMask(prev, curr);
+
+            rleMask |= newMask << (i * 8);
             assert (newMask < 256);
+
+            // Shuffle the pixels and pack them
             __m256i control_vector = _mm256_loadu_si256(&vpermd_lut[newMask]);
             __m256i packed = _mm256_permutevar8x32_epi32(curr, control_vector);
 
@@ -135,6 +157,8 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, unsigned int *s
                         block[0], block[1], block[2], block[3], block[4], block[5], block[6], block[7],
                         scratch[0], scratch[1], scratch[2], scratch[3], scratch[4], scratch[5], scratch[6], scratch[7]);
 #endif
+
+            prev = curr; // ?
 
             scratch += countBitsUnset;
             *scratchLen += countBitsUnset;
