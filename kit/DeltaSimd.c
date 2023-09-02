@@ -97,8 +97,9 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, unsigned int *s
     static int lut_initialized = 0;
     if (!lut_initialized)
     {
-        lut_initialized = 1;
+        // FIXME: needs to be made thread-safe ...
         init_gather_lut();
+        lut_initialized = 1;
     }
 
     *scratchLen = 0;
@@ -106,6 +107,7 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, unsigned int *s
         rleMaskBlock[x] = 0;
 
     const uint32_t* block = from;
+    uint32_t* dest = scratch;
     __m256i prev = _mm256_setzero_si256(); // transparent
 
     for (unsigned int x = 0; x < 256; x += 8) // 8 pixels per cycle
@@ -129,7 +131,7 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, unsigned int *s
         assert (newMask < 256);
 
         {
-            unsigned int nMask = x >> 6; // 64bits per mask
+            unsigned int nMask = x >> 6; // 64 bits per mask
             unsigned int i = (x >> 3) & 0x7; // chunk of bits we work on
             rleMaskBlock[nMask] |= newMask << (i * 8);
         }
@@ -141,8 +143,8 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, unsigned int *s
         unsigned int countBitsUnset = _mm_popcnt_u32(newMask ^ 0xff);
         assert(countBitsUnset <= 8);
 
-        // we are guaranteed enough space worst-case
-        _mm256_storeu_si256((__m256i*)scratch, packed);
+        // over-store in dest: we are guaranteed enough space worst-case
+        _mm256_storeu_si256((__m256i*)dest, packed);
 
 #if DEBUG_LUT
         if (countBitsUnset > 0)
@@ -151,17 +153,18 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, unsigned int *s
                     "%4x%4x%4x%4x%4x%4x%4x%4x\n",
                     (unsigned int)newMask, countBitsUnset,
                     block[0], block[1], block[2], block[3], block[4], block[5], block[6], block[7],
-                    scratch[0], scratch[1], scratch[2], scratch[3], scratch[4], scratch[5], scratch[6], scratch[7]);
+                    dest[0], dest[1], dest[2], dest[3], dest[4], dest[5], dest[6], dest[7]);
 #endif
+
+        // move on for the next run.
+        dest += countBitsUnset;
 
         // stash current for use next time around
         prev = curr;
 
-        scratch += countBitsUnset;
-        *scratchLen += countBitsUnset;
-
         block += 8;
     }
+    *scratchLen += dest - scratch;
 
     return 1;
 #endif
