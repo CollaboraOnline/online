@@ -220,8 +220,15 @@ class DeltaGenerator {
                         Util::bytesToHexString(reinterpret_cast<const char *>(_rleMask), sizeof(_rleMask)) << "\n" <<
                         Util::bytesToHexString(reinterpret_cast<const char *>(simd_rleMask), sizeof(_rleMask)) << "\n";
                 }
-//                assert(_rleSize == simd_outp);
-//                assert(!memcmp(scratch, simd_scratch, _rleSize));
+                assert(_rleSize == simd_outp);
+                if(_rleSize > 0 && memcmp(scratch, simd_scratch, _rleSize))
+                {
+                    std::cerr << "RLE pixels differ mask:\n" <<
+                        Util::bytesToHexString(reinterpret_cast<const char *>(_rleMask), sizeof(_rleMask)) << "\n" <<
+                        "pixels:\n" <<
+                        Util::bytesToHexString(reinterpret_cast<const char *>(scratch), _rleSize) << "\n" <<
+                        Util::bytesToHexString(reinterpret_cast<const char *>(simd_scratch), _rleSize) << "\n";
+                }
             }
         }
 
