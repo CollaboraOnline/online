@@ -103,20 +103,13 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, unsigned int *s
 
     *scratchLen = 0;
 
-    unsigned int x = 0;
     const uint32_t* block = from;
     __m256i prev = _mm256_setzero_si256(); // transparent
     for (unsigned int nMask = 0; nMask < 4; ++nMask)
     {
         uint64_t rleMask = 0;
-        uint64_t newMask = 0;
-        int remaining = 256 - x;
-        assert(remaining % 8 == 0);
-        int blocks = remaining/8;
-        if (blocks > 8)
-            blocks = 8;
 
-        for (int i = 0; i < blocks; ++i)
+        for (int i = 0; i < 8; ++i)
         {
             __m256i curr = _mm256_loadu_si256((const __m256i_u*)(block));
 
@@ -133,7 +126,7 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, unsigned int *s
             prev = _mm256_or_si256(prev, lastPix);
 
             // turn that into a bit-mask.
-            newMask = diffMask(prev, curr);
+            uint64_t newMask = diffMask(prev, curr);
 
             rleMask |= newMask << (i * 8);
             assert (newMask < 256);
@@ -164,7 +157,6 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, unsigned int *s
             *scratchLen += countBitsUnset;
 
             block += 8;
-            x += 8;
         }
         rleMaskBlock[nMask] = rleMask;
     }
