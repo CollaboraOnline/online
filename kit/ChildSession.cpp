@@ -109,7 +109,7 @@ ChildSession::ChildSession(
     _viewId(-1),
     _isDocLoaded(false),
     _copyToClipboard(false),
-    _canonicalViewId(-1),
+    _canonicalViewId(0),
     _isDumpingTiles(false),
     _clientVisibleArea(0, 0, 0, 0)
 {
