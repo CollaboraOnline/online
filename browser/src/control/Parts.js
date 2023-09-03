@@ -127,6 +127,9 @@ L.Map.include({
 	},
 
 	_processPreviewQueue: function() {
+		if (!this._docLayer._canonicalIdInitialized)
+			return;
+
 		if (this._previewRequestsOnFly > 1) {
 			// we don't always get a response for each tile requests
 			// especially when we have more than one view
