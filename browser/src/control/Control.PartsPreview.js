@@ -366,9 +366,6 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_layoutPreview: function (i, img, bottomBound) {
-		if (this._map._docLayer._canonicalViewId == -1) {
-			return;
-		}
 		var topBound = this._previewContTop;
 		var previewFrameTop = 0;
 		var previewFrameBottom = 0;
