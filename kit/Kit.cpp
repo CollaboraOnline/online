@@ -1706,7 +1706,6 @@ private:
 
         session->initWatermark();
 
-        invalidateCanonicalId(sessionId);
         return _loKitDocument;
     }
 
