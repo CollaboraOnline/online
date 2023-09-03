@@ -78,7 +78,8 @@ ClientSession::ClientSession(
     _kitViewId(-1),
     _serverURL(requestDetails),
     _isTextDocument(false),
-    _thumbnailSession(false)
+    _thumbnailSession(false),
+    _canonicalViewId(0)
 {
     const std::size_t curConnections = ++COOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
@@ -652,10 +653,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "tile"))
     {
+        assert(getCanonicalViewId() != 0 && getCanonicalViewId() >= 1000);
         return sendTile(buffer, length, tokens, docBroker);
     }
     else if (tokens.equals(0, "tilecombine"))
     {
+        assert(getCanonicalViewId() != 0 && getCanonicalViewId() >= 1000);
         return sendCombinedTiles(buffer, length, tokens, docBroker);
     }
     else if (tokens.equals(0, "save"))
