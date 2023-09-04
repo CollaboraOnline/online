@@ -824,8 +824,7 @@ public:
             if (num_sessions == 0)
             {
                 LOG_FTL("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
-                flushTraceEventRecordings();
-                Util::forcedExit(EX_OK);
+                flushAndExit(EX_OK);
             }
 #endif
         }
@@ -1258,8 +1257,7 @@ private:
             if (_sessions.empty())
             {
                 LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
-                flushTraceEventRecordings();
-                Util::forcedExit(EX_OK);
+                flushAndExit(EX_OK);
             }
 #endif
             LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, but has " <<
@@ -1893,6 +1891,7 @@ public:
                 {
                     LOG_INF("_stop or TerminationFlag is set, breaking Document::drainQueue of loop");
                     tileRequests.clear();
+                    _pngPool.stop();
                     break;
                 }
 
@@ -2013,16 +2012,14 @@ public:
         {
             LOG_FTL("drainQueue: Exception: " << exc.what());
 #if !MOBILEAPP
-            flushTraceEventRecordings();
-            Util::forcedExit(EX_SOFTWARE);
+            flushAndExit(EX_SOFTWARE);
 #endif
         }
         catch (...)
         {
             LOG_FTL("drainQueue: Unknown exception");
 #if !MOBILEAPP
-            flushTraceEventRecordings();
-            Util::forcedExit(EX_SOFTWARE);
+            flushAndExit(EX_SOFTWARE);
 #endif
         }
     }
@@ -2055,6 +2052,16 @@ private:
     {
         sendTextFrame(msg);
     }
+
+#if !MOBILEAPP
+    /// Stops theads, flushes buffers, and exits the process.
+    void flushAndExit(int code)
+    {
+        flushTraceEventRecordings();
+        _pngPool.stop();
+        Util::forcedExit(code);
+    }
+#endif
 
 public:
     void dumpState(std::ostream& oss)
@@ -2588,6 +2595,7 @@ protected:
 #if !MOBILEAPP
             LOG_INF("Terminating immediately due to parent 'exit' command.");
             flushTraceEventRecordings();
+            _document.reset();
             Util::forcedExit(EX_OK);
 #else
 #ifdef IOS
