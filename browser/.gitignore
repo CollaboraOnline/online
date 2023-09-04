@@ -8,8 +8,10 @@ index.html
 bower.json
 component.json
 
+mocha.log
 mocha_tests/*.js
 tscompile.done
+duplication.log
 
 _site
 dist/*.js
