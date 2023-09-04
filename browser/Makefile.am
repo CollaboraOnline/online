@@ -797,6 +797,7 @@ build-tests: $(MOCHA_TS_JS_FILES)
 	@echo "Build of mocha test finished."
 
 MOCHA_TEST_LOG = "`pwd`/mocha.log"
+DUPLICATION_TEST_LOG = "`pwd`/duplication.log"
 check-local: $(MOCHA_TS_JS_FILES)
 	@echo "Running mocha tests..."
 	@echo > ${MOCHA_TEST_LOG}
@@ -804,6 +805,14 @@ check-local: $(MOCHA_TS_JS_FILES)
 		echo "Mocha tests finished successfully. Results in ${MOCHA_TEST_LOG}"; \
 	else \
 		cat ${MOCHA_TEST_LOG}; \
+		exit 1; \
+	fi
+	@echo "Checking code duplication..."
+	@echo > ${DUPLICATION_TEST_LOG}
+	@if npm run duplication 2> ${DUPLICATION_TEST_LOG} 1>&2; then \
+		echo "Code duplication tests finished successfully."; \
+	else \
+		cat ${DUPLICATION_TEST_LOG}; \
 		exit 1; \
 	fi
 
