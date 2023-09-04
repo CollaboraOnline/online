@@ -50,7 +50,10 @@ public:
         for (int i = 1; i < maxConcurrency; ++i)
             _threads.push_back(std::thread(&ThreadPool::work, this));
     }
-    ~ThreadPool()
+
+    ~ThreadPool() { stop(); }
+
+    void stop()
     {
         {
             std::unique_lock< std::mutex > lock(_mutex);
@@ -58,7 +61,7 @@ public:
             _shutdown = true;
         }
         _cond.notify_all();
-        for (auto &it : _threads)
+        for (auto& it : _threads)
             it.join();
     }
 
