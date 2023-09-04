@@ -104,11 +104,6 @@ export class CommentSection extends CanvasSectionObject {
 			this.showSection = false;
 			this.size[0] = 0;
 		}
-
-		// For setting some css styles.
-		if (app.file.fileBasedView && (<any>window).mode.isMobile()) {
-			this.map.uiManager.mobileWizard._hideSlideSorter();
-		}
 	}
 
 	private checkCollapseState(): void {
