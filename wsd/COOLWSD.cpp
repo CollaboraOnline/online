@@ -1985,6 +1985,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "net.connection_timeout_secs", "30" },
         { "net.listen", "any" },
         { "net.proto", "all" },
+        { "net.unix_socket", "/tmp/coolwsd.sock" },
         { "net.service_root", "" },
         { "net.proxy_prefix", "false" },
         { "net.content_security_policy", "" },
@@ -5779,7 +5780,10 @@ int COOLWSD::innerMain()
     SocketPoll mainWait("main");
 
 #if !MOBILEAPP
-    std::cerr << "Ready to accept connections on port " << ClientPortNumber <<  ".\n" << std::endl;
+    if (ClientPortProto == Socket::Type::Unix)
+        std::cerr << "Ready to accept connections on socket '" << Socket::SocketPath << "'.\n" << std::endl;
+    else
+        std::cerr << "Ready to accept connections on port " << ClientPortNumber <<  ".\n" << std::endl;
     if (SignalParent)
     {
         kill(getppid(), SIGUSR2);

@@ -833,6 +833,11 @@ bool ServerSocket::bind(Type type, int port)
         int last_errno = 0;
         std::memset(&addrunix, 0, sizeof(addrunix));
         addrunix.sun_family = AF_UNIX;
+        if (_socketPath.length() >= sizeof(addrunix.sun_path))
+        {
+            LOG_ERR("Socket path [" << _socketPath << "] is too long");
+            return false;
+        }
         std::memcpy(addrunix.sun_path, _socketPath.c_str(), _socketPath.length());
         LOG_ASSERT_MSG(addrunix.sun_path[sizeof(addrunix.sun_path) - 1] == '\0',
                         "addrunix.sun_path is not null terminated");
@@ -845,7 +850,8 @@ bool ServerSocket::bind(Type type, int port)
                                 : '\t' + Util::symbolicErrno(last_errno) + ": " +
                                     std::strerror(last_errno)));
 
-        if (rc) {
+        if (rc)
+        {
             LOG_SYS_ERRNO(last_errno, "Failed to bind to Unix socket at [" << &addrunix.sun_path << ']');
             return false;
         }
