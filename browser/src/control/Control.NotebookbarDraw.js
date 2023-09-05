@@ -1193,6 +1193,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			},
 			(this._map['wopi'].EnableRemoteLinkPicker) ? {
 				'id': 'insert-remote-link',
+				'class': 'unoremotelink',
 				'type': 'bigcustomtoolitem',
 				'text': _('Smart Picker'),
 				'command': 'remotelink',

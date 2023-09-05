@@ -1380,6 +1380,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			(this._map['wopi'].EnableRemoteLinkPicker) ? {
 				'id': 'insert-smart-picker',
+				'class': 'unoremotelink',
 				'type': 'bigcustomtoolitem',
 				'text': _('Smart Picker'),
 				'command': 'remotelink',
