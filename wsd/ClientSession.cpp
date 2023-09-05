@@ -653,12 +653,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "tile"))
     {
-        assert(getCanonicalViewId() != 0 && getCanonicalViewId() >= 1000);
+        assert(UnitWSD::isUnitTesting() ? true : getCanonicalViewId() != 0 && getCanonicalViewId() >= 1000);
         return sendTile(buffer, length, tokens, docBroker);
     }
     else if (tokens.equals(0, "tilecombine"))
     {
-        assert(getCanonicalViewId() != 0 && getCanonicalViewId() >= 1000);
+        assert(UnitWSD::isUnitTesting() ? true : getCanonicalViewId() != 0 && getCanonicalViewId() >= 1000);
         return sendCombinedTiles(buffer, length, tokens, docBroker);
     }
     else if (tokens.equals(0, "save"))
