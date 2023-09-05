@@ -1705,6 +1705,10 @@ private:
                 viewCount << " view" << (viewCount != 1 ? "s." : "."));
 
         session->initWatermark();
+        if (session->hasWatermark())
+        {
+            invalidateCanonicalId(session->getId());
+        }
 
         return _loKitDocument;
     }
