@@ -845,6 +845,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'children': [
 								{
 									'id': 'home-search',
+									'class': 'unoSearch',
 									'type': 'menubartoolitem',
 									'text': _('Search'),
 									'command': _('Show Status Bar'),
