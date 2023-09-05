@@ -1043,6 +1043,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'id': 'insert-insert-remote-link',
+								'class': 'unoremotelink',
 								'type': 'customtoolitem',
 								'text': _('Smart Picker'),
 								'command': 'remotelink'
