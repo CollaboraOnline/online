@@ -1078,6 +1078,9 @@ export class CommentSection extends CanvasSectionObject {
 		}
 		var action = changetrack ? obj.redline.action : obj.comment.action;
 
+		if (!changetrack && obj.comment.parent === undefined)
+			obj.comment.parent = '0';
+
 		if (changetrack && obj.redline.author in this.map._viewInfoByUserName) {
 			obj.redline.avatar = this.map._viewInfoByUserName[obj.redline.author].userextrainfo.avatar;
 		}
