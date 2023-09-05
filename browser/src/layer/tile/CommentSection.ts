@@ -55,6 +55,9 @@ export class Comment extends CanvasSectionObject {
 		this.sectionProperties.margin = options.margin ? options.margin : [40, 40];
 		this.sectionProperties.noMenu = options.noMenu ? options.noMenu : false;
 
+		if (data.parent === undefined)
+			data.parent = '0';
+
 		this.sectionProperties.data = data;
 		this.sectionProperties.annotationMarker = null;
 		this.sectionProperties.wrapper = null;
