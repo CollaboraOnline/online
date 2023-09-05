@@ -737,7 +737,6 @@ app.definitions.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('migrate:') && window.indirectSocket) {
 			var migrate = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			console.log(migrate);
 			var afterSave = migrate.afterSave;
 			if (!afterSave) {
 				window.migrating = true;
@@ -748,6 +747,7 @@ app.definitions.Socket = L.Class.extend({
 				}
 				if (migrate.saved) {
 					window.routeToken = migrate.routeToken;
+					window.expectedServerId = migrate.serverId;
 					this.connect();
 					this._map.uiManager.closeAll();
 				}
@@ -756,6 +756,7 @@ app.definitions.Socket = L.Class.extend({
 			// even after save attempt, if document is unsaved reset the file permission
 			if (migrate.saved) {
 				window.routeToken = migrate.routeToken;
+				window.expectedServerId = migrate.serverId;
 				this.connect();
 				this._map.uiManager.closeAll();
 			} else {
