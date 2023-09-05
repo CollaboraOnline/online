@@ -327,12 +327,12 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         const std::string& docStatus = tokens[1];
         const std::string& dockey = tokens[2];
         const std::string& routeToken = tokens[3];
-        if (!dockey.empty() && !routeToken.empty())
+        const std::string& serverId = tokens[4];
+        if (!dockey.empty() && !routeToken.empty() && !serverId.empty())
         {
+            model.setMigratingInfo(dockey, routeToken, serverId);
             std::ostringstream oss;
             oss << "migrate: {";
-            model.setCurrentMigDoc(dockey);
-            model.setCurrentMigToken(routeToken);
             oss << "\"afterSave\"" << ":false,";
             if (docStatus == "unsaved" && !model.isDocSaved(dockey))
             {
@@ -344,7 +344,8 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             {
                 oss << "\"saved\"" << ":true,";
             }
-            oss << "\"routeToken\"" << ':' << "\"" << routeToken << "\"" << '}';
+            oss << "\"routeToken\"" << ':' << '"' << routeToken << '"' << ',';
+            oss << "\"serverId\"" << ':' << '"' << serverId << '"' << '}';
             COOLWSD::alertUserInternal(dockey, oss.str());
         }
         else

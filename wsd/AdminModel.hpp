@@ -427,10 +427,11 @@ public:
     static int getKitPidsFromSystem(std::vector<int> *pids);
     bool isDocSaved(const std::string&);
     bool isDocReadOnly(const std::string&);
-    void setCurrentMigDoc(const std::string& docKey) { _currentMigDoc = docKey; }
+    void setMigratingInfo(const std::string& docKey, const std::string& routeToken, const std::string& serverId);
+    void resetMigratingInfo();
     std::string getCurrentMigDoc() { return _currentMigDoc; }
-    void setCurrentMigToken(const std::string& routeToken) { _currentMigToken = routeToken; }
     std::string getCurrentMigToken() { return _currentMigToken; }
+    std::string getTargetMigServerId() { return _targetMigServerId; }
     void sendMigrateMsgAfterSave(bool lastSaveSuccessful, const std::string& docKey);
     std::string getWopiSrcMap();
 
@@ -485,6 +486,8 @@ private:
     std::string _currentMigDoc = std::string();
 
     std::string _currentMigToken = std::string();
+
+    std::string _targetMigServerId = std::string();
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
