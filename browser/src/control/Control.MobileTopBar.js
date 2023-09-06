@@ -102,10 +102,7 @@ L.Control.MobileTopBar = L.Control.extend({
 			item = toolbar.get(id);
 		}
 
-		// In the iOS app we don't want clicking on the toolbar to pop up the keyboard.
-		if (!window.ThisIsTheiOSApp && id !== 'zoomin' && id !== 'zoomout' && id !== 'mobile_wizard' && id !== 'insertion_mobile_wizard') {
-			this.map.focus(this.map.canAcceptKeyboardInput()); // Maintain same keyboard state.
-		}
+		this.map.preventKeyboardPopup(id);
 
 		if (item.disabled) {
 			return;

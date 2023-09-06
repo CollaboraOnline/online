@@ -77,10 +77,7 @@ function onClick(e, id, item) {
 	// dont reassign the item if we already have it
 	item = item || getToolbarItemById(id);
 
-	// In the iOS app we don't want clicking on the toolbar to pop up the keyboard.
-	if (!window.ThisIsTheiOSApp && id !== 'zoomin' && id !== 'zoomout' && id !== 'mobile_wizard' && id !== 'insertion_mobile_wizard') {
-		map.focus(map.canAcceptKeyboardInput()); // Maintain same keyboard state.
-	}
+	map.preventKeyboardPopup(id);
 
 	if (item.disabled) {
 		return;
