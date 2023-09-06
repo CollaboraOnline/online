@@ -871,6 +871,13 @@ L.Map.include({
 		this._onGotFocus();
 	},
 
+	preventKeyboardPopup: function (id) {
+		// In the iOS app we don't want clicking on the toolbar to pop up the keyboard.
+		if (!window.ThisIsTheiOSApp && id !== 'zoomin' && id !== 'zoomout' && id !== 'mobile_wizard' && id !== 'insertion_mobile_wizard') {
+			this.focus(this.canAcceptKeyboardInput()); // Maintain same keyboard state.
+		}
+	},
+
 	openRevisionHistory: function () {
 		var map = this;
 		// if we are being loaded inside an iframe, ask
