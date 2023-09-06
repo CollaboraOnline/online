@@ -31,18 +31,10 @@ namespace COOLProtocol
     constexpr unsigned ProtocolMajorVersionNumber = 0;
     constexpr unsigned ProtocolMinorVersionNumber = 1;
 
-    extern bool anonymizationEnabled;
-
     inline std::string GetProtocolVersion()
     {
         return std::to_string(ProtocolMajorVersionNumber) + '.'
             + std::to_string(ProtocolMinorVersionNumber);
-    }
-
-    inline
-    void setAnonymization(bool anonymize)
-    {
-        anonymizationEnabled = anonymize;
     }
 
     // Parse a string into a version tuple.
@@ -313,29 +305,6 @@ namespace COOLProtocol
         return ret;
     }
 
-    inline size_t cutMessageAfterSubstring(const std::string_view message,
-                                           const std::string_view substring)
-    {
-        size_t pos = message.find(substring);
-        if (pos == std::string::npos)
-            return pos;
-        return pos + substring.size();
-    }
-
-    // abbreviate at maxNonAbbreviatedMsgLen or at messages that need
-    // to be anonymized
-    inline size_t getAbbreviationLength(const std::string_view message)
-    {
-        size_t maxAllowed = maxNonAbbreviatedMsgLen;
-        if (anonymizationEnabled)
-        {
-            size_t userDataPos = cutMessageAfterSubstring(message, " cellformula: ");
-            if (userDataPos != std::string::npos)
-                maxAllowed = userDataPos;
-        }
-        return maxAllowed;
-    }
-
     /// Returns an abbreviation of the message (the first line, indicating truncation). We assume
     /// that it adhers to the COOL protocol, i.e. that there is always a first (or only) line that
     /// is in printable UTF-8. I.e. no encoding of binary bytes is done. The format of the result is
@@ -349,9 +318,8 @@ namespace COOLProtocol
             return std::string();
         }
 
-        const size_t maxAllowed = getAbbreviationLength(std::string_view(message, length));
         const size_t spanLen = Util::getDelimiterPosition(message,
-            std::min<size_t>(length, maxAllowed), '\n');
+            std::min(length, maxNonAbbreviatedMsgLen), '\n');
 
         // If first line is less than the length (minus newline), add ellipsis.
         if (shouldEllipse(message, length, spanLen))
@@ -362,9 +330,8 @@ namespace COOLProtocol
 
     inline std::string getAbbreviatedMessage(const std::string& message)
     {
-        const size_t maxAllowed = getAbbreviationLength(message);
         const size_t spanLen = Util::getDelimiterPosition(message.data(),
-            std::min(message.size(), maxAllowed), '\n');
+            std::min<size_t>(message.size(), maxNonAbbreviatedMsgLen), '\n');
 
         // If first line is less than the length (minus newline), add ellipsis.
         if (shouldEllipse(message.data(), message.size(), spanLen))

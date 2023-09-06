@@ -19,8 +19,6 @@
 
 namespace COOLProtocol
 {
-    bool anonymizationEnabled = false;
-
     std::tuple<int, int, std::string> ParseVersion(const std::string& version)
     {
         int major = -1;

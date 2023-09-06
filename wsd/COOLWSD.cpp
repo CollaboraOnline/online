@@ -2315,7 +2315,6 @@ void COOLWSD::innerInitialize(Application& self)
         setenv("COOL_ANONYMIZATION_SALT", anonymizationSaltStr.c_str(), true);
     }
     FileUtil::setUrlAnonymization(AnonymizeUserData, anonymizationSalt);
-    COOLProtocol::setAnonymization(AnonymizeUserData);
 
     {
         std::string proto = getConfigValue<std::string>(conf, "net.proto", "");
@@ -3674,13 +3673,15 @@ private:
         }
         else if (child && child->getPid() > 0)
         {
+            const std::string abbreviatedMessage = COOLWSD::AnonymizeUserData ? "..." : message->abbr();
             LOG_WRN("Child " << child->getPid() << " has no DocBroker to handle message: ["
-                             << message->abbr() << ']');
+                             << abbreviatedMessage << ']');
         }
         else
         {
+            const std::string abbreviatedMessage = COOLWSD::AnonymizeUserData ? "..." : message->abbr();
             LOG_ERR("Cannot handle message with unassociated Kit (PID " << _pid << "): ["
-                                                                        << message->abbr());
+                                                                        << abbreviatedMessage);
         }
     }
 

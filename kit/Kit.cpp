@@ -1772,7 +1772,17 @@ private:
                 }
             }
 
-            const std::string abbrMessage = getAbbreviatedMessage(data, size);
+            std::string abbrMessage;
+#ifndef BUILDING_TESTS
+            if (AnonymizeUserData)
+            {
+                abbrMessage = "...";
+            }
+            else
+#endif
+            {
+                abbrMessage = getAbbreviatedMessage(data, size);
+            }
             LOG_ERR("Child session [" << sessionId << "] not found to forward message: " << abbrMessage);
         }
         else

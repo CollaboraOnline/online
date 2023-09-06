@@ -449,16 +449,6 @@ void WhiteBoxTests::testMessageAbbreviation()
     std::string long_utf8_str_b(COOLProtocol::maxNonAbbreviatedMsgLen - 2, 'a');
     LOK_ASSERT_EQUAL(long_utf8_str_b + std::string("mü..."),
                      COOLProtocol::getAbbreviatedMessage(long_utf8_str_b + "müsli"));
-
-    bool originallyAnonymization = COOLProtocol::anonymizationEnabled;
-    COOLProtocol::setAnonymization(true);
-    const char* cellFormulaMessage = "a12345678 cellformula: User Content Here";
-    abbr = "a12345678 cellformula: ...";
-    LOK_ASSERT_EQUAL(abbr, COOLProtocol::getAbbreviatedMessage(cellFormulaMessage, std::strlen(cellFormulaMessage)));
-
-    s = cellFormulaMessage;
-    LOK_ASSERT_EQUAL(abbr, COOLProtocol::getAbbreviatedMessage(s));
-    COOLProtocol::setAnonymization(originallyAnonymization);
 }
 
 void WhiteBoxTests::testReplace()
