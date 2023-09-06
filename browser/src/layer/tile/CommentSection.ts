@@ -96,6 +96,7 @@ export class Comment extends CanvasSectionObject {
 		this.name = data.id === 'new' ? 'new comment': 'comment ' + data.id;
 
 		this.sectionProperties.isRemoved = false;
+		this.sectionProperties.children = []; // This is used for Writer comments. There is parent / child relationship between comments in Writer files.
 
 		this.convertRectanglesToCoreCoordinates(); // Convert rectangle coordiantes into core pixels on initialization.
 	}
@@ -122,7 +123,10 @@ export class Comment extends CanvasSectionObject {
 		this.createButton(button, 'annotation-reply-' + this.sectionProperties.data.id, 'annotation-button button-primary', _('Reply'), this.handleReplyCommentButton);
 		L.DomEvent.disableScrollPropagation(this.sectionProperties.container);
 
-		this.sectionProperties.container.style.visibility = 'hidden';
+		// Since this is a late called function, if the width is enough, we shouldn't collapse the comments.
+		if (this.sectionProperties.docLayer._docType !== 'text' || this.sectionProperties.commentListSection.isCollapsed === true)
+			this.sectionProperties.container.style.visibility = 'hidden';
+
 		this.sectionProperties.nodeModify.style.display = 'none';
 		this.sectionProperties.nodeReply.style.display = 'none';
 
