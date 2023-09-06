@@ -96,19 +96,13 @@ L.Control.StatusBar = L.Control.extend({
 
 		this.map.preventKeyboardPopup(id);
 
-		if (item.disabled) {
+		if (item.disabled)
 			return;
-		}
 
 		var docLayer = this.map._docLayer;
 
 		if (item.uno) {
-			if (item.unosheet && this.map.getDocType() === 'spreadsheet') {
-				this.map.toggleCommandState(item.unosheet);
-			}
-			else {
-				this.map.toggleCommandState(window.getUNOCommand(item.uno));
-			}
+			this.map.executeUnoAction(item);
 		}
 		else if (id === 'zoomin' && this.map.getZoom() < this.map.getMaxZoom()) {
 			this.map.zoomIn(1, null, true /* animate? */);
