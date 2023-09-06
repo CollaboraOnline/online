@@ -2176,7 +2176,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		$(container).find('.cool-annotation')[0].addEventListener('click', function() {
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).hightlightComment(data.annotation);
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).highlightComment(data.annotation);
 		});
 		return false;
 	},
