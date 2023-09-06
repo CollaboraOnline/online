@@ -140,7 +140,7 @@ L.Control.StatusBar = L.Control.extend({
 			this.map.search(L.DomUtil.get('search-input').value);
 		}
 		else if (id === 'cancelsearch') {
-			this._cancelSearch();
+			this.map.cancelSearch();
 		}
 		else if (id.startsWith('StateTableCellMenu') && subItem) {
 			e.done(function () {
@@ -444,23 +444,6 @@ L.Control.StatusBar = L.Control.extend({
 			this.map.uiManager.toggleStatusBar();
 		else
 			this.map.uiManager.hideStatusBar(true);
-	},
-
-	_cancelSearch: function() {
-		var toolbar = window.mode.isMobile() ? w2ui['searchbar'] : w2ui['actionbar'];
-		var searchInput = L.DomUtil.get('search-input');
-		this.map.resetSelection();
-		toolbar.hide('cancelsearch');
-		toolbar.disable('searchprev');
-		toolbar.disable('searchnext');
-		searchInput.value = '';
-		if (window.mode.isMobile()) {
-			searchInput.focus();
-			// odd, but on mobile we need to invoke it twice
-			toolbar.hide('cancelsearch');
-		}
-
-		this.map._onGotFocus();
 	},
 
 	_getPermissionModeHtml: function(isReadOnly, canUserWrite) {
