@@ -155,6 +155,8 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
+	// TODO: shre code with WriterTileLayer
+	/* jscpd:ignore-start */
 	_onInvalidateTilesMsg: function (textMsg) {
 		var command = app.socket.parseServerCmd(textMsg);
 		if (command.x === undefined || command.y === undefined || command.part === undefined) {
@@ -214,6 +216,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		clearTimeout(this._previewInvalidator);
 		this._previewInvalidator = setTimeout(L.bind(this._invalidatePreviews, this), this.options.previewInvalidationTimeout);
 	},
+	/* jscpd:ignore-end */
 
 	_onSetPartMsg: function (textMsg) {
 		var part = parseInt(textMsg.match(/\d+/g)[0]);
