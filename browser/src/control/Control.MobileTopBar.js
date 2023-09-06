@@ -104,17 +104,11 @@ L.Control.MobileTopBar = L.Control.extend({
 
 		this.map.preventKeyboardPopup(id);
 
-		if (item.disabled) {
+		if (item.disabled)
 			return;
-		}
 
 		if (item.uno) {
-			if (item.unosheet && this.map.getDocType() === 'spreadsheet') {
-				this.map.toggleCommandState(item.unosheet);
-			}
-			else {
-				this.map.toggleCommandState(window.getUNOCommand(item.uno));
-			}
+			this.map.executeUnoAction(item);
 		}
 		else if (id === 'cancelformula') {
 			this.map.dispatch('cancelformula');

@@ -66,18 +66,11 @@ L.Control.FormulaBar = L.Control.extend({
 
 		this.map.preventKeyboardPopup(id);
 
-		if (item.disabled) {
+		if (item.disabled)
 			return;
-		}
 
-		if (item.uno) {
-			if (item.unosheet && this.map.getDocType() === 'spreadsheet') {
-				this.map.toggleCommandState(item.unosheet);
-			}
-			else {
-				this.map.toggleCommandState(window.getUNOCommand(item.uno));
-			}
-		}
+		if (item.uno)
+			this.map.executeUnoAction(item);
 	},
 
 	onDocLayerInit: function() {

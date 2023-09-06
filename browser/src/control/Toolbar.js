@@ -878,6 +878,16 @@ L.Map.include({
 		}
 	},
 
+	// used in onClick method of w2ui toolbar
+	executeUnoAction: function (item) {
+		if (item.unosheet && this.getDocType() === 'spreadsheet') {
+			this.toggleCommandState(item.unosheet);
+		}
+		else {
+			this.toggleCommandState(window.getUNOCommand(item.uno));
+		}
+	},
+
 	openRevisionHistory: function () {
 		var map = this;
 		// if we are being loaded inside an iframe, ask

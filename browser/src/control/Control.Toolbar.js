@@ -90,12 +90,8 @@ function onClick(e, id, item) {
 		if (id === 'save') {
 			map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'toolbar' }});
 		}
-		if (item.unosheet && map.getDocType() === 'spreadsheet') {
-			map.toggleCommandState(item.unosheet);
-		}
-		else {
-			map.toggleCommandState(getUNOCommand(item.uno));
-		}
+
+		map.executeUnoAction(item);
 	}
 	else if (item.id === 'print-active-sheet' || item.id === 'print-all-sheets') {
 		map.dispatch(item.id);
