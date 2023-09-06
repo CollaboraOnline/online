@@ -69,6 +69,8 @@ L.Control.MobileWizardPopup = L.Control.extend({
 		this.title.innerHTML = title;
 	},
 
+	// TODO: make code shared with Control.MobileWizardWindow
+	/* jscpd:ignore-start */
 	goLevelDown: function(contentToShow, options) {
 		var animate = (options && options.animate != undefined) ? options.animate : true;
 
@@ -157,6 +159,7 @@ L.Control.MobileWizardPopup = L.Control.extend({
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).removeHighlighters();
 		}
 	},
+	/* jscpd:ignore-end */
 
 	/// used for comments, when we extend popup's content
 	_onResizeRequest: function() {
