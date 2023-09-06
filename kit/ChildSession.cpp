@@ -77,11 +77,12 @@ namespace {
 /// Formats the uno command information for logging
 std::string formatUnoCommandInfo(const std::string& sessionId, const std::string& unoCommand)
 {
-    std::string recorded_time = Util::getHttpTimeNow();
+    // E.g. '2023-09-06 12:19:32', matching systemd format.
+    std::string recorded_time = Util::getTimeNow("%Y-%m-%d %T");
 
     std::string unoCommandInfo;
 
-    // unoCommand(sessionId) : command - HttpTime
+    // unoCommand(sessionId) : command - time
     unoCommandInfo.append("unoCommand");
     unoCommandInfo.push_back('(');
     unoCommandInfo.append(sessionId);

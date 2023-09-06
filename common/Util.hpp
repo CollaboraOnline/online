@@ -1223,6 +1223,8 @@ int main(int argc, char**argv)
     //// Return current time in HTTP format.
     std::string getHttpTimeNow();
 
+    std::string getTimeNow(const char* format);
+
     //// Return time in HTTP format.
     std::string getHttpTime(std::chrono::system_clock::time_point time);
 
