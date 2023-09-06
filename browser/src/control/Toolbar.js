@@ -3,7 +3,7 @@
  * Toolbar handler
  */
 
-/* global app $ window sanitizeUrl brandProductName brandProductURL _ */
+/* global app $ window sanitizeUrl brandProductName brandProductURL _ w2ui */
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
@@ -852,6 +852,23 @@ L.Map.include({
 			link = this.hyperlinkUnderCursor.link;
 
 		this._createAndRunHyperlinkDialog(text ? text.trim() : '', link);
+	},
+
+	cancelSearch: function() {
+		var toolbar = window.mode.isMobile() ? w2ui['searchbar'] : w2ui['actionbar'];
+		var searchInput = L.DomUtil.get('search-input');
+		this.resetSelection();
+		toolbar.hide('cancelsearch');
+		toolbar.disable('searchprev');
+		toolbar.disable('searchnext');
+		searchInput.value = '';
+		if (window.mode.isMobile()) {
+			searchInput.focus();
+			// odd, but on mobile we need to invoke it twice
+			toolbar.hide('cancelsearch');
+		}
+
+		this._onGotFocus();
 	},
 
 	openRevisionHistory: function () {
