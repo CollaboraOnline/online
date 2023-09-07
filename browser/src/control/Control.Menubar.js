@@ -173,6 +173,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 				{name: _('Smart Picker'), id: 'remotelink', type: 'action'},
 				{type: 'separator'},
+				{uno: '.uno:InsertQrCode'},
 				{uno: '.uno:InsertSymbol'},
 				{uno: '.uno:InsertObjectStarMath'},
 				{name: _UNO('.uno:FormattingMarkMenu', 'text'), type: 'menu', menu: [
