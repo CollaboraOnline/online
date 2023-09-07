@@ -3086,21 +3086,7 @@ void DocumentBroker::handleTileRequest(const StringVector &tokens, bool forceKey
         tile.forceKeyframe();
 
     auto now = std::chrono::steady_clock::now();
-    if (tile.getBroadcast())
-    {
-        for (auto& it: _sessions)
-        {
-            if (!it.second->inWaitDisconnected())
-            {
-                tile.setNormalizedViewId(it.second->getCanonicalViewId());
-                tileCache().subscribeToTileRendering(tile, it.second, now);
-            }
-        }
-    }
-    else
-    {
-        tileCache().subscribeToTileRendering(tile, session, now);
-    }
+    tileCache().subscribeToTileRendering(tile, session, now);
 
     // Forward to child to render.
     LOG_DBG("Sending render request for tile (" << tile.getPart() << ',' <<

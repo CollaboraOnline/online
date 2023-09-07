@@ -198,8 +198,8 @@ void TileCacheTests::testDesc()
 {
     constexpr auto testname = __func__;
 
-    TileDesc descA = TileDesc(0, 0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 0, 1234, 1, true);
-    TileDesc descB = TileDesc(0, 0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 1, 1235, 2, false);
+    TileDesc descA = TileDesc(0, 0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 0, 1234, 1);
+    TileDesc descB = TileDesc(0, 0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 1, 1235, 2);
 
     TileDescCacheCompareEq pred;
     LOK_ASSERT_MESSAGE("TileDesc versions do match", descA.getVersion() != descB.getVersion());
@@ -229,7 +229,7 @@ void TileCacheTests::testSimple()
     int tilePosY = 0;
     int tileWidth = 3840;
     int tileHeight = 3840;
-    TileDesc tile(nviewid, part, mode, width, height, tilePosX, tilePosY, tileWidth, tileHeight, -1, 0, -1, false);
+    TileDesc tile(nviewid, part, mode, width, height, tilePosX, tilePosY, tileWidth, tileHeight, -1, 0, -1);
 
     // No Cache
     Tile tileData = tc.lookupTile(tile);
@@ -431,7 +431,7 @@ void TileCacheTests::testSize()
     for (int tilePosY = 0; tilePosY < 20; tilePosY++)
     {
         TileDesc tile(nviewid, part, mode, width, height, tilePosX, tilePosY * tileHeight,
-                      tileWidth, tileHeight, -1, 0, -1, false);
+                      tileWidth, tileHeight, -1, 0, -1);
         tile.setWireId(id++);
         tc.saveTileAndNotify(tile, data.data(), data.size());
     }

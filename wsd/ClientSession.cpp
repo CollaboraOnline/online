@@ -2511,7 +2511,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
                         TileDesc desc(normalizedViewId, part, mode,
                                       _tileWidthPixel, _tileHeightPixel,
                                       j * _tileWidthTwips, i * _tileHeightTwips,
-                                      _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false);
+                                      _tileWidthTwips, _tileHeightTwips, -1, 0, -1);
 
                         bool dup = false;
                         // Check we don't have duplicates

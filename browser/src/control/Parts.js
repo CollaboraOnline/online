@@ -210,8 +210,7 @@ L.Map.include({
 							'tileposy=' + tilePosY + ' ' +
 							'tilewidth=' + tileWidth + ' ' +
 							'tileheight=' + tileHeight + ' ' +
-							'id=' + id + ' ' +
-						 'broadcast=no');
+							'id=' + id);
 			this._processPreviewQueue();
 		}
 
@@ -240,8 +239,7 @@ L.Map.include({
 							'tileposy=' + tilePosY + ' ' +
 							'tilewidth=' + tileWidth + ' ' +
 							'tileheight=' + tileHeight + ' ' +
-							'id=' + id + ' ' +
-							'broadcast=no');
+							'id=' + id);
 		this._processPreviewQueue();
 	},
 
