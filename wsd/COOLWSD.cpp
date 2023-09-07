@@ -3798,7 +3798,7 @@ private:
 
             _pid = pid;
             _socketFD = socket->getFD();
-            child->setSMapsFD(socket->getIncomingFD());
+            child->setSMapsFD(socket->getIncomingFD(SMAPS));
             _childProcess = child; // weak
 
             // Remove from prisoner poll since there is no activity

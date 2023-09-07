@@ -60,7 +60,6 @@ public:
         LOG_INF(_name << " ctor [" << _pid << "].");
     }
 
-
     WSProcess(WSProcess&& other) = delete;
 
     const WSProcess& operator=(WSProcess&& other) = delete;
@@ -196,13 +195,13 @@ public:
 
 protected:
     std::shared_ptr<WebSocketHandler> getWSHandler() const { return _ws; }
-    std::shared_ptr<Socket> getSocket() const { return _socket; };
+    std::shared_ptr<StreamSocket> getSocket() const { return _socket; };
 
 private:
     std::string _name;
     std::atomic<pid_t> _pid; //< The process-id, which can be access from different threads.
     std::shared_ptr<WebSocketHandler> _ws;
-    std::shared_ptr<Socket> _socket;
+    std::shared_ptr<StreamSocket> _socket;
 };
 
 #if !MOBILEAPP

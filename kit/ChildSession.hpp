@@ -417,8 +417,7 @@ private:
 
     Util::Rectangle _clientVisibleArea;
 
-    void* m_sendURPToLOContext;
-    int (*m_sendURPToLO)(void* pContext, const signed char*, int);
+    void* m_URPContext;
 
     /// whether there is a URP session created for this ChildSession
     bool m_hasURP;
