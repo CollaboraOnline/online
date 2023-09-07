@@ -588,29 +588,11 @@ app.definitions.Socket = L.Class.extend({
 						this.IndirectSocketReconnectCount = 0;
 					} else {
 						this._map.showBusy(_('Wrong server, reconnecting...'), false);
-						if (this._map._docLayer) {
-							this._map._docLayer.removeAllViews();
-						}
-						app.idleHandler._active = false;
-
-						// detach all the handlers
-						this.close();
-
-						// Reload the document
-						clearTimeout(this.timer);
-						setTimeout(function () {
-							try {
-								// Activate and cancel timer and dialogs.
-								app.idleHandler._activate();
-							} catch (error) {
-								window.app.console.warn('Cannot activate map');
-							}
-						}, 3000);
+						this.manualReconnect(2000);
 						return;
 					}
 				}
 			}
-			window.migrating = false;
 
 			$('#coolwsd-version-label').text(_('COOLWSD version:'));
 			var h = this.WSDServer.Hash;
@@ -743,13 +725,12 @@ app.definitions.Socket = L.Class.extend({
 				this._map.uiManager.closeAll();
 				if (this._map.isEditMode()) {
 					this._map.setPermission('view');
-					this._map.uiManager.showSnackbar(_('Document is getting migrated...'));
+					this._map.uiManager.showSnackbar(_('Document is getting migrated'), null, null, 3000);
 				}
 				if (migrate.saved) {
 					window.routeToken = migrate.routeToken;
 					window.expectedServerId = migrate.serverId;
-					this.connect();
-					this._map.uiManager.closeAll();
+					this.manualReconnect(2000);
 				}
 				return;
 			}
@@ -757,8 +738,7 @@ app.definitions.Socket = L.Class.extend({
 			if (migrate.saved) {
 				window.routeToken = migrate.routeToken;
 				window.expectedServerId = migrate.serverId;
-				this.connect();
-				this._map.uiManager.closeAll();
+				this.manualReconnect(2000);
 			} else {
 				this._map.setPermission(app.file.permission);
 				window.migrating = false;
@@ -1431,8 +1411,9 @@ app.definitions.Socket = L.Class.extend({
 			this._map.fire('statusindicator', {statusType: 'reconnected'});
 			this._map._isNotebookbarLoadedOnCore = false;
 			var uiMode = this._map.uiManager.getCurrentMode();
-			this._map.fire('changeuimode', {mode: uiMode, force: true});
+			this._map.fire('changeuimode', {mode: uiMode, force: !window.migrating});
 			this._map.setPermission(app.file.permission);
+			window.migrating = false;
 		}
 
 		this._map.fire('docloaded', {status: true});
@@ -1869,6 +1850,22 @@ app.definitions.Socket = L.Class.extend({
 				pretty = textMsg.substring(0, 25);
 		}
 		return this.createCompleteTraceEvent(pretty, { message: textMsg });
+	},
+
+	manualReconnect: function(timeout) {
+		if (this._map._docLayer) {
+			this._map._docLayer.removeAllViews();
+		}
+		app.idleHandler._active = false;
+		this.close();
+		clearTimeout(this.timer);
+		setTimeout(function () {
+			try {
+				app.idleHandler._activate();
+			} catch (error) {
+				window.app.console.warn('Cannot activate map');
+			}
+		}, timeout);
 	},
 
 	threadLocalLoggingLevelToggle: false
