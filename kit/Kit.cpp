@@ -130,6 +130,8 @@ static uint64_t AnonymizationSalt = 82589933;
 static bool EnableWebsocketURP = false;
 static int URPStartCount = 0;
 
+bool isURPEnabled() { return EnableWebsocketURP; }
+
 /// When chroot is enabled, this is blank as all
 /// the paths inside the jail, relative to it's jail.
 /// E.g. /tmp/user/docs/...
@@ -144,6 +146,9 @@ static int URPStartCount = 0;
 /// are disabled, file paths would be relative to the
 /// system root, not the jail.
 static std::string JailRoot;
+
+static int URPtoLoFDs[2] { -1, -1 };
+static int URPfromLoFDs[2] { -1, -1 };
 
 #if !MOBILEAPP
 static void flushTraceEventRecordings();
@@ -2443,18 +2448,6 @@ public:
         return false;
     }
 
-    // we can also directly push callbacks into the main thread when needed...
-    static bool pushToMainThread(const SocketPoll::CallbackFn& cb)
-    {
-        if (mainPoll && mainPoll->getThreadOwner() != std::this_thread::get_id())
-        {
-            LOG_TRC("Unusual directly push callback to main thread");
-            mainPoll->addCallback(cb);
-            return true;
-        }
-        return false;
-    }
-
 #ifdef IOS
     static std::mutex KSPollsMutex;
     // static std::condition_variable KSPollsCV;
@@ -2471,11 +2464,6 @@ KitSocketPoll *KitSocketPoll::mainPoll = nullptr;
 bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char *p, void *data)
 {
     return KitSocketPoll::pushToMainThread(cb, type, p, data);
-}
-
-bool pushToMainThread(const SocketPoll::CallbackFn& cb)
-{
-    return KitSocketPoll::pushToMainThread(cb);
 }
 
 #ifdef IOS
@@ -3157,8 +3145,23 @@ void lokit_main(
             std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId, mainKit, numericIdentifier);
 
 #if !MOBILEAPP
+
+        std::vector<int> shareFDs;
+        shareFDs.push_back(ProcSMapsFile);
+
+        if (isURPEnabled())
+        {
+            if (pipe2(URPtoLoFDs, O_CLOEXEC) != 0 || pipe2(URPfromLoFDs, O_CLOEXEC | O_NONBLOCK) != 0)
+                LOG_ERR("Failed to create urp pipe " << strerror(errno));
+            else
+            {
+                shareFDs.push_back(URPtoLoFDs[1]);
+                shareFDs.push_back(URPfromLoFDs[0]);
+            }
+        }
+
         if (!mainKit->insertNewUnixSocket(MasterLocation, pathAndQuery, websocketHandler,
-                                          ProcSMapsFile))
+                                          &shareFDs))
         {
             LOG_SFL("Failed to connect to WSD. Will exit.");
             Util::forcedExit(EX_SOFTWARE);
@@ -3307,12 +3310,55 @@ std::string anonymizeUrl(const std::string& url)
 #endif
 }
 
-bool isURPEnabled() { return EnableWebsocketURP; }
+static int receiveURPFromLO(void* pContext, const signed char* pBuffer, int bytesToWrite)
+{
+    int bytesWritten = 0;
+    while (bytesToWrite > 0)
+    {
+        int bytes = ::write(reinterpret_cast<intptr_t>(pContext), pBuffer + bytesWritten, bytesToWrite);
+        if (bytes <= 0)
+            break;
+        bytesToWrite -= bytes;
+        bytesWritten += bytes;
+    }
+    return bytesWritten;
+}
 
-bool startURP(std::shared_ptr<lok::Office> LOKit, void* pReceiveURPFromLOContext,
-              void** ppSendURPToLOContext,
-              int (*fnReceiveURPFromLO)(void* pContext, const signed char* pBuffer, int nLen),
-              int (**pfnSendURPToLO)(void* pContext, const signed char* pBuffer, int nLen))
+static int sendURPToLO(void* pContext, signed char* pBuffer, int bytesToRead)
+{
+    int bytesRead = 0;
+    while (bytesToRead > 0)
+    {
+        int bytes = ::read(reinterpret_cast<intptr_t>(pContext), pBuffer + bytesRead, bytesToRead);
+        if (bytes <= 0)
+            break;
+        bytesToRead -= bytes;
+        bytesRead += bytes;
+    }
+    return bytesRead;
+}
+
+// temp workaround of changed signature of startURP. Compile detect
+// old signature and if so return nullptr
+extern "C" int (*ObsoleteStartURPSignature)(LibreOfficeKit*, void*, void**,
+             int (*)(void* pContext, const signed char* pBuffer, int nLen),
+             int (**)(void* pContext, const signed char* pBuffer, int nLen));
+
+template<class T> void* doStartURP(T&, std::true_type)
+{
+    (void)receiveURPFromLO;
+    (void)sendURPToLO;
+    return nullptr;
+}
+
+template<class T> void* doStartURP(T& LOKit, std::false_type)
+{
+    return LOKit->startURP(reinterpret_cast<void*>(URPfromLoFDs[1]),
+                           reinterpret_cast<void*>(URPtoLoFDs[0]),
+                           receiveURPFromLO, sendURPToLO);
+}
+
+bool startURP(std::shared_ptr<lok::Office> LOKit, void** ppURPContext)
 {
     if (!isURPEnabled())
     {
@@ -3326,10 +3372,9 @@ bool startURP(std::shared_ptr<lok::Office> LOKit, void* pReceiveURPFromLOContext
         return false;
     }
 
-    bool coreURPSuccess = LOKit->startURP(pReceiveURPFromLOContext, ppSendURPToLOContext,
-                                          fnReceiveURPFromLO, pfnSendURPToLO);
+    *ppURPContext = doStartURP(LOKit, std::is_same<decltype(LibreOfficeKitClass::startURP), decltype(ObsoleteStartURPSignature)>() );
 
-    if (!coreURPSuccess)
+    if (!*ppURPContext)
     {
         LOG_ERR("URP/WS: tried to start a URP session but core did not let us");
         return false;

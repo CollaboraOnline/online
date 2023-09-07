@@ -578,7 +578,7 @@ bool SocketPoll::insertNewUnixSocket(
     const std::string &location,
     const std::string &pathAndQuery,
     const std::shared_ptr<WebSocketHandler>& websocketHandler,
-    const int shareFD)
+    const std::vector<int>* shareFDs)
 {
     LOG_DBG("Connecting to local UDS " << location);
     const int fd = socket(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK, 0);
@@ -626,7 +626,7 @@ bool SocketPoll::insertNewUnixSocket(
     req.set("Pragma", "no-cache");
 
     LOG_TRC("Requesting upgrade of websocket at path " << pathAndQuery << " #" << socket->getFD());
-    if (shareFD == -1)
+    if (!shareFDs)
     {
         socket->send(req);
     }
@@ -634,7 +634,7 @@ bool SocketPoll::insertNewUnixSocket(
     {
         Buffer buf;
         req.writeData(buf, INT_MAX); // Write the whole request.
-        socket->sendFD(buf.getBlock(), buf.getBlockSize(), shareFD);
+        socket->sendFDs(buf.getBlock(), buf.getBlockSize(), *shareFDs);
     }
 
     std::static_pointer_cast<ProtocolHandlerInterface>(websocketHandler)->onConnect(socket);

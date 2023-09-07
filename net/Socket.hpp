@@ -737,7 +737,7 @@ public:
         const std::string &location,
         const std::string &pathAndQuery,
         const std::shared_ptr<WebSocketHandler>& websocketHandler,
-        const int shareFD = -1);
+        const std::vector<int>* shareFDs = nullptr);
 #else
     void insertNewFakeSocket(
         int peerSocket,
@@ -899,6 +899,8 @@ public:
     }
 };
 
+enum SharedFDType { SMAPS, URPToKit, URPFromKit };
+
 /// A plain, non-blocking, data streaming socket.
 class StreamSocket : public Socket,
                      public std::enable_shared_from_this<StreamSocket>
@@ -923,7 +925,6 @@ public:
         _closed(false),
         _sentHTTPContinue(false),
         _shutdownSignalled(false),
-        _incomingFD(-1),
         _readType(readType),
         _inputProcessingEnabled(true)
     {
@@ -1043,7 +1044,7 @@ public:
 
     /// Sends data with file descriptor as control data.
     /// Can be used only with Unix sockets.
-    void sendFD(const char* data, const uint64_t len, int fd)
+    void sendFDs(const char* data, const uint64_t len, const std::vector<int>& fds)
     {
         ASSERT_CORRECT_SOCKET_THREAD(this);
 
@@ -1063,15 +1064,17 @@ public:
         msg.msg_iov = &iov[0];
         msg.msg_iovlen = 1;
 
-        char adata[CMSG_SPACE(sizeof(int))];
+        const size_t fds_size = sizeof(int) * fds.size();
+        char adata[CMSG_SPACE(fds_size)];
         cmsghdr *cmsg = (cmsghdr*)adata;
         cmsg->cmsg_type = SCM_RIGHTS;
         cmsg->cmsg_level = SOL_SOCKET;
-        cmsg->cmsg_len = CMSG_LEN(sizeof(int));
-        *(int *)CMSG_DATA(cmsg) = fd;
+        cmsg->cmsg_len = CMSG_LEN(fds_size);
+        int* fdsField = (int *)CMSG_DATA(cmsg);
+        memcpy(fdsField, fds.data(), fds_size);
 
         msg.msg_control = const_cast<char*>(adata);
-        msg.msg_controllen = CMSG_LEN(sizeof(int));
+        msg.msg_controllen = CMSG_LEN(fds_size);
         msg.msg_flags = 0;
 
 #ifdef LOG_SOCKET_DATA
@@ -1253,9 +1256,11 @@ public:
         return _outBuffer;
     }
 
-    int getIncomingFD()
+    int getIncomingFD(SharedFDType eType) const
     {
-        return _incomingFD;
+        if (eType < _incomingFDs.size())
+            return _incomingFDs[eType];
+        return -1;
     }
 
     bool processInputEnabled() const { return _inputProcessingEnabled; }
@@ -1466,14 +1471,18 @@ public:
     void dumpState(std::ostream& os) override;
 
 protected:
-    /// Reads data with file descriptor as control data if received.
+    /// Reads data with file descriptors as control data if received.
     /// Can be used only with Unix sockets.
-    int readFD(char* buf, int len, int& fd)
+    int readFDs(char* buf, int len, std::vector<int>& fds)
     {
+        // 0 is smaps FD
+        // 1 is urp FD
+        const size_t maxFds = 2;
+
         msghdr msg;
         iovec iov[1];
-        /// We don't expect more than one FD
-        char ctrl[CMSG_SPACE(sizeof(int))];
+        /// We don't expect more than maxFds FDs
+        char ctrl[CMSG_SPACE(sizeof(int)) * maxFds];
         int ctrlLen = sizeof(ctrl);
 
         iov[0].iov_base = buf;
@@ -1491,9 +1500,11 @@ protected:
         if (ret > 0 && msg.msg_controllen)
         {
             cmsghdr *cmsg = CMSG_FIRSTHDR(&msg);
-            if (cmsg && cmsg->cmsg_type == SCM_RIGHTS && cmsg->cmsg_len == CMSG_LEN(sizeof(int)))
+            if (cmsg && cmsg->cmsg_type == SCM_RIGHTS)
             {
-                fd = *(int*)CMSG_DATA(cmsg);
+                size_t fds_count = static_cast<size_t>(cmsg->cmsg_len - CMSG_LEN(0)) / sizeof(int);
+                int* fdsField = (int*)CMSG_DATA(cmsg);
+                fds.assign(fdsField, fdsField + fds_count);
                 if (_readType == UseRecvmsgExpectFD)
                 {
                     _readType = NormalRead;
@@ -1515,7 +1526,7 @@ protected:
 
 #if !MOBILEAPP
         if (_readType == UseRecvmsgExpectFD)
-            return readFD(buf, len, _incomingFD);
+            return readFDs(buf, len, _incomingFDs);
 
 #if ENABLE_DEBUG
         if (simulateSocketError(true))
@@ -1553,11 +1564,6 @@ protected:
         return _shutdownSignalled;
     }
 
-    const std::shared_ptr<ProtocolHandlerInterface>& getSocketHandler() const
-    {
-        return _socketHandler;
-    }
-
 protected:
 #if ENABLE_DEBUG
     /// Return true and set errno to simulate an error
@@ -1588,7 +1594,7 @@ private:
     /// True when shutdown was requested via shutdown().
     /// It's accessed from different threads.
     std::atomic_bool _shutdownSignalled;
-    int _incomingFD;
+    std::vector<int> _incomingFDs;
     ReadType _readType;
     std::atomic_bool _inputProcessingEnabled;
 };

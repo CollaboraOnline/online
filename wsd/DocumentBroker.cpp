@@ -59,6 +59,32 @@ using namespace COOLProtocol;
 
 using Poco::JSON::Object;
 
+void UrpHandler::handleIncomingMessage(SocketDisposition&)
+{
+    std::shared_ptr<StreamSocket> socket = _socket.lock();
+    if (!socket)
+    {
+        LOG_ERR("Invalid socket while handling incoming client request");
+        return;
+    }
+
+    Buffer& data = socket->getInBuffer();
+    if (data.empty())
+    {
+        LOG_DBG("No data to process from the socket");
+        return;
+    }
+
+    ChildProcess* child = _childProcess;
+    std::shared_ptr<DocumentBroker> docBroker =
+        child && child->getPid() > 0 ? child->getDocumentBroker() : nullptr;
+    if (docBroker)
+        docBroker->onUrpMessage(data.data(), data.size());
+
+    // Remove consumed data.
+    data.clear();
+}
+
 void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docBroker)
 {
     assert(docBroker && "Invalid DocumentBroker instance.");
@@ -66,7 +92,11 @@ void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docB
 
     // Add the prisoner socket to the docBroker poll.
     docBroker->addSocketToPoll(getSocket());
-
+    // if URP is enabled, also add its socket to the poll
+    if (_urpFromKit)
+        docBroker->addSocketToPoll(_urpFromKit);
+    if (_urpToKit)
+        docBroker->addSocketToPoll(_urpToKit);
     if (UnitWSD::isUnitTesting())
     {
         UnitWSD::get().onDocBrokerAttachKitProcess(docBroker->getDocKey(), getPid());
@@ -2900,7 +2930,7 @@ void DocumentBroker::addCallback(const SocketPoll::CallbackFn& fn)
     _poll->addCallback(fn);
 }
 
-void DocumentBroker::addSocketToPoll(const std::shared_ptr<Socket>& socket)
+void DocumentBroker::addSocketToPoll(const std::shared_ptr<StreamSocket>& socket)
 {
     _poll->insertNewSocket(socket);
 }
@@ -3532,9 +3562,19 @@ void DocumentBroker::setInitialSetting(const std::string& name)
     _isInitialStateSet.emplace(name);
 }
 
+bool DocumentBroker::forwardUrpToChild(const std::string& message)
+{
+    if (!_childProcess)
+        return false;
+    return _childProcess->sendUrpMessage(message);
+}
+
 bool DocumentBroker::forwardToChild(const std::shared_ptr<ClientSession>& session,
                                     const std::string& message, bool binary)
 {
+    if (Util::startsWith(message, "urp "))
+        return forwardUrpToChild(message);
+
     ASSERT_CORRECT_THREAD();
     LOG_ASSERT_MSG(session, "Must have a valid ClientSession");
     LOG_ASSERT_MSG(_sessions.find(session->getId()) != _sessions.end(),
@@ -4157,6 +4197,20 @@ void DocumentBroker::removeEmbeddedMedia(const std::string& json)
             LOG_TRC("Removing embeddedmedia with id [" << id << "]: " << json);
             _embeddedMedia.erase(id);
         }
+    }
+}
+
+void DocumentBroker::onUrpMessage(const char* data, size_t len)
+{
+    const auto session = getWriteableSession();
+    if (session)
+    {
+        static const std::string header = "urp: ";
+        size_t responseSize = header.size() + len;
+        std::vector<char> response(responseSize);
+        std::memcpy(response.data(), header.data(), header.size());
+        std::memcpy(response.data() + header.size(), data, len);
+        session->sendBinaryFrame(response.data(), responseSize);
     }
 }
 

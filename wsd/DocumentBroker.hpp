@@ -46,6 +46,30 @@ struct LockContext;
 class TileCache;
 class Message;
 
+class UrpHandler : public SimpleSocketHandler
+{
+public:
+    UrpHandler(ChildProcess* process) : _childProcess(process)
+    {
+    }
+    void onConnect(const std::shared_ptr<StreamSocket>& socket) override
+    {
+        _socket = socket;
+        setLogContext(socket->getFD());
+    }
+    void handleIncomingMessage(SocketDisposition& /*disposition*/) override;
+    int getPollEvents(std::chrono::steady_clock::time_point /* now */,
+                      int64_t & /* timeoutMaxMicroS */) override
+    {
+        return POLLIN;
+    }
+    void performWrites(std::size_t /*capacity*/) override {}
+private:
+    // The socket that owns us (we can't own it).
+    std::weak_ptr<StreamSocket> _socket;
+    ChildProcess* _childProcess;
+};
+
 /// A ChildProcess object represents a Kit process that hosts a document and manipulates the
 /// document using the LibreOfficeKit API. It isn't actually a child of the WSD process, but a
 /// grandchild. The comments loosely talk about "child" anyway.
@@ -63,11 +87,38 @@ public:
         , _jailId(jailId)
         , _smapsFD(-1)
     {
+        int urpFromKitFD = socket->getIncomingFD(URPFromKit);
+        int urpToKitFD = socket->getIncomingFD(URPToKit);
+        if (urpFromKitFD != -1 && urpToKitFD != -1)
+        {
+            _urpFromKit = StreamSocket::create<StreamSocket>(std::string(), urpFromKitFD, false, std::make_shared<UrpHandler>(this));
+            _urpToKit = StreamSocket::create<StreamSocket>(std::string(), urpToKitFD, false, std::make_shared<UrpHandler>(this));
+        }
     }
 
     ChildProcess(ChildProcess&& other) = delete;
 
-    virtual ~ChildProcess(){ ::close(_smapsFD); }
+    bool sendUrpMessage(const std::string& message)
+    {
+        if (!_urpToKit)
+            return false;
+        if (message.size() < 4)
+        {
+            LOG_ERR("URP Message too short");
+            return false;
+        }
+        _urpToKit->send(message.data() + 4, message.size() - 4);
+        return true;
+    }
+
+    virtual ~ChildProcess()
+    {
+        if (_urpFromKit)
+            _urpFromKit->shutdown();
+        if (_urpToKit)
+            _urpToKit->shutdown();
+        ::close(_smapsFD);
+    }
 
     const ChildProcess& operator=(ChildProcess&& other) = delete;
 
@@ -80,6 +131,8 @@ public:
 private:
     const std::string _jailId;
     std::weak_ptr<DocumentBroker> _docBroker;
+    std::shared_ptr<StreamSocket> _urpFromKit;
+    std::shared_ptr<StreamSocket> _urpToKit;
     int _smapsFD;
 };
 
@@ -357,7 +410,7 @@ public:
     void addCallback(const SocketPoll::CallbackFn& fn);
 
     /// Transfer this socket into our polling thread / loop.
-    void addSocketToPoll(const std::shared_ptr<Socket>& socket);
+    void addSocketToPoll(const std::shared_ptr<StreamSocket>& socket);
 
     void alertAllUsers(const std::string& msg);
 
@@ -497,6 +550,8 @@ public:
     void addEmbeddedMedia(const std::string& id, const std::string& json);
     /// Remove embedded media objects.
     void removeEmbeddedMedia(const std::string& json);
+
+    void onUrpMessage(const char* data, size_t len);
 
 private:
     /// Get the session that can write the document for save / locking / uploading.
@@ -1380,6 +1435,8 @@ private:
         LOG_DBG("Ending [" << DocumentState::toString(_docState.activity()) << "] activity.");
         _docState.setActivity(DocumentState::Activity::None);
     }
+
+    bool forwardUrpToChild(const std::string& message);
 
     /// Performs aggregated work after servicing all client sessions
     void processBatchUpdates();

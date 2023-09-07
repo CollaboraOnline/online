@@ -98,20 +98,6 @@ std::string formatUnoCommandInfo(const std::string& sessionId, const std::string
 
 }
 
-int sendURPToClient(void* pContext /* std::function* of sendBinaryFrame */,
-                    const signed char* pBuffer, int nLen)
-{
-    static const std::string header = "urp:\n";
-    size_t responseSize = header.size() + nLen;
-    char* response = new char[responseSize];
-    std::memcpy(response, header.data(), header.size());
-    std::memcpy(response + header.size(), pBuffer, nLen);
-    pushToMainThread([pContext, response, responseSize]() {
-        static_cast<ChildSession*>(pContext)->sendBinaryFrame(response, responseSize);
-    });
-    return 0;
-}
-
 ChildSession::ChildSession(const std::shared_ptr<ProtocolHandlerInterface>& protocol,
                            const std::string& id, const std::string& jailId,
                            const std::string& jailRoot, DocumentManagerInterface& docManager)
@@ -132,8 +118,7 @@ ChildSession::ChildSession(const std::shared_ptr<ProtocolHandlerInterface>& prot
         LOG_WRN("URP is enabled in the config: Starting a URP tunnel for this session ["
                 << getName() << "]");
 
-        m_hasURP = startURP(docManager.getLOKit(), this, &m_sendURPToLOContext, sendURPToClient,
-                            &m_sendURPToLO);
+        m_hasURP = startURP(docManager.getLOKit(), &m_URPContext);
 
         if (!m_hasURP)
             LOG_INF("Failed to start a URP bridge for this session [" << getName()
@@ -150,7 +135,7 @@ ChildSession::~ChildSession()
 
     if (m_hasURP)
     {
-        _docManager->getLOKit()->stopURP(m_sendURPToLOContext);
+        _docManager->getLOKit()->stopURP(m_URPContext);
     }
 }
 
@@ -377,23 +362,6 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
 
         return success;
-    }
-    else if (tokens.equals(0, "urp"))
-    {
-        if (length < 4)
-            return false;
-
-        if (m_hasURP)
-        {
-            m_sendURPToLO(m_sendURPToLOContext, (signed char*)(buffer + 4),
-                          length - 4); // HACK: not portable as char may be unsigned
-            return true;
-        }
-        else
-        {
-            sendTextFrameAndLogError("error: cmd=" + tokens[0] + " kind=urpnotenabled");
-            return false;
-        }
     }
     else if (!_isDocLoaded)
     {
