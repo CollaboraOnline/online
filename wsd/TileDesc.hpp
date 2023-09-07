@@ -287,6 +287,7 @@ public:
 
         TileWireId oldWireId = 0;
         TileWireId wireId = 0;
+        bool broadcast = false;
         for (std::size_t i = 0; i < tokens.size(); ++i)
         {
             if (tokens.getUInt32(i, "oldwid", oldWireId))
@@ -295,16 +296,14 @@ public:
                 ;
             else
             {
-                std::string name;
+                std::string temp;
                 int value = -1;
-                if (tokens.getNameIntegerPair(i, name, value))
-                    pairs.set(name, value);
+                if (tokens.getNameIntegerPair(i, temp, value))
+                    pairs.set(temp, value);
+                else if (COOLProtocol::getTokenString(tokens[i], "broadcast", temp))
+                    broadcast = temp == "yes";
             }
         }
-
-        std::string s;
-        const bool broadcast = (COOLProtocol::getTokenString(tokens, "broadcast", s) &&
-                                s == "yes");
 
         TileDesc result(pairs[nviewid], pairs[part], pairs[mode],
                         pairs[width], pairs[height],
