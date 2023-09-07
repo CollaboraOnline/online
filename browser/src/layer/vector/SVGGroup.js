@@ -3,6 +3,8 @@
  * L.SVGGroup
  */
 
+/* global _ */
+
 L.SVGGroup = L.Layer.extend({
 
 	options: {
@@ -96,6 +98,45 @@ L.SVGGroup = L.Layer.extend({
 				attributes: true
 			});
 		}
+		var videos = svgLastChild.getElementsByTagName('video');
+		this.addVideoSupportHandlers(videos);
+	},
+
+	addVideoSupportHandlers: function(videos) {
+		if (!videos)
+			return;
+
+		var that = this;
+
+		// slide show may have more than one video and it does not require any selection
+		for (var i = 0; i < videos.length; i++) {
+			var video = videos[i];
+			var sources = video.getElementsByTagName('source');
+
+			video.addEventListener('playing', function() {
+				window.setTimeout(function() {
+					if (video.webkitDecodedFrameCount === 0) {
+						that.showUnsupportedVideoWarning();
+					}
+				}, 1000);
+			});
+
+			video.addEventListener('error', function() {
+				that.showUnsupportedVideoWarning();
+			});
+
+			if (sources.length) {
+				sources[0].addEventListener('error', function() {
+					that.showUnsupportedVideoWarning();
+				});
+			}
+		}
+
+	},
+
+	showUnsupportedVideoWarning: function() {
+		var videoWarning = _('Document contains unsupported video');
+		L.Map.THIS.uiManager.showSnackbar(videoWarning);
 	},
 
 	addEmbeddedSVG: function (svgString) {
