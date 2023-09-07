@@ -155,7 +155,10 @@ function onClick(e, id, item) {
 		map.uiManager.enterReadonlyOrClose();
 	}
 	else if (id === 'link') {
-		map.showHyperlinkDialog();
+		if (map.getDocType() == 'spreadsheet')
+			map.sendUnoCommand('.uno:HyperlinkDialog');
+		else
+			map.showHyperlinkDialog();
 	}
 }
 
