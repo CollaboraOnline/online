@@ -539,14 +539,38 @@ export class ScrollSection extends CanvasSectionObject {
 		}
 	}
 
+	private animateScrollBarThickness(targetThickness: number, animationDuration: number, isIncrease: boolean): void {
+		const startThickness = this.sectionProperties.scrollBarThickness;
+		const startTime = Date.now();
+
+		const timer = setInterval(() => {
+		  const currentTime = Date.now();
+		  const elapsedTime = currentTime - startTime;
+
+		  if (elapsedTime >= animationDuration) {
+			clearInterval(timer);
+			this.sectionProperties.scrollBarThickness = targetThickness;
+			this.containerObject.requestReDraw();
+		  }
+		  else {
+			const progress = elapsedTime / animationDuration;
+			if (isIncrease) {
+			  this.sectionProperties.scrollBarThickness = startThickness + (targetThickness - startThickness) * progress;
+			}
+			else {
+				this.sectionProperties.scrollBarThickness = startThickness - (startThickness - targetThickness) * progress;
+			}
+			this.containerObject.requestReDraw();
+		  }
+		}, 20);
+	}
+
 	private increaseScrollBarThickness () : void {
-		this.sectionProperties.scrollBarThickness = 8 * app.roundedDpiScale;
-		this.containerObject.requestReDraw();
+		this.animateScrollBarThickness(8 * app.roundedDpiScale, 120, true);
 	}
 
 	private decreaseScrollBarThickness () : void {
-		this.sectionProperties.scrollBarThickness = 6 * app.roundedDpiScale;
-		this.containerObject.requestReDraw();
+		this.animateScrollBarThickness(6 * app.roundedDpiScale, 60, false);
 	}
 
 	private hideVerticalScrollBar (): void {
