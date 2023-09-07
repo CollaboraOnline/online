@@ -722,7 +722,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:VerticalText'), uno: '.uno:VerticalText'},
 				{uno: '.uno:FunctionDialog'},
 				{type: 'separator'},
-				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
+				{name: _UNO('.uno:HyperlinkDialog'), uno: '.uno:HyperlinkDialog'},
 				{name: _('Smart Picker'), id: 'remotelink', type: 'action'},
 				{uno: '.uno:InsertSymbol'},
 				{type: 'separator'},

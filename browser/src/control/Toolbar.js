@@ -839,6 +839,13 @@ L.Map.include({
 	},
 
 	showHyperlinkDialog: function() {
+		if (this.getDocType() === 'spreadsheet') {
+			// show native core dialog
+			// in case we try to edit email EditHyperlink doesn't work
+			this.sendUnoCommand('.uno:HyperlinkDialog');
+			return;
+		}
+
 		var text = this.getTextForLink();
 		var link = '';
 		if (this.hyperlinkUnderCursor && this.hyperlinkUnderCursor.link)

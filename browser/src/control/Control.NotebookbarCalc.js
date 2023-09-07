@@ -1373,9 +1373,9 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			{
 				'id': 'HyperlinkDialog',
 				'class': 'unoHyperlinkDialog',
-				'type': 'bigcustomtoolitem',
+				'type': 'bigtoolitem',
 				'text': _UNO('.uno:HyperlinkDialog'),
-				'command': 'hyperlinkdialog',
+				'command': '.uno:HyperlinkDialog',
 				'accessibility': { focusBack: true,	combination: 'I2', de: null }
 			},
 			(this._map['wopi'].EnableRemoteLinkPicker) ? {
