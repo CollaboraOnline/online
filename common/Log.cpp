@@ -419,7 +419,7 @@ namespace Log
         return buf + i;
     }
 
-    char* prefix(const Poco::LocalDateTime& time, char* buffer, const char* level)
+    char* prefix(const timeval& tv, char* buffer, const char* level)
     {
 #if defined(IOS) || defined(__FreeBSD__)
         // Don't bother with the "Source" which would be just "Mobile" always and non-informative as
@@ -462,47 +462,39 @@ namespace Log
         *pos++ = ' ';
 #endif
 
+        const time_t tv_sec = tv.tv_sec;
+        struct tm tm;
+        localtime_r(&tv_sec, &tm);
+
         // YYYY-MM-DD.
-        to_ascii_fixed<4>(pos, time.year());
+        to_ascii_fixed<4>(pos, tm.tm_year + 1900);
         pos[4] = '-';
         pos += 5;
-        to_ascii_fixed<2>(pos, time.month());
+        to_ascii_fixed<2>(pos, tm.tm_mon);
         pos[2] = '-';
         pos += 3;
-        to_ascii_fixed<2>(pos, time.day());
+        to_ascii_fixed<2>(pos, tm.tm_mday);
         pos[2] = ' ';
         pos += 3;
 
         // HH:MM:SS.uS
-        to_ascii_fixed<2>(pos, time.hour());
+        to_ascii_fixed<2>(pos, tm.tm_hour);
         pos[2] = ':';
         pos += 3;
-        to_ascii_fixed<2>(pos, time.minute());
+        to_ascii_fixed<2>(pos, tm.tm_min);
         pos[2] = ':';
         pos += 3;
-        to_ascii_fixed<2>(pos, time.second());
+        to_ascii_fixed<2>(pos, tm.tm_sec);
         pos[2] = '.';
         pos += 3;
-        to_ascii_fixed<6>(pos, time.millisecond() * 1000 + time.microsecond());
+        to_ascii_fixed<6>(pos, tv.tv_usec);
         pos[6] = ' ';
         pos += 7;
 
         // Time zone differential
-        int tzd = time.tzd();
-        if (tzd < 0)
-        {
-            pos[0] = '-';
-            tzd = -tzd;
-        }
-        else
-        {
-            pos[0] = '+';
-        }
-        pos += 1;
-        tzd = (tzd / 36) - (tzd / 36) % 100 + ((tzd / 36) % 100) * 60 / 100;  // seconds to HHMM format
-        to_ascii_fixed<4>(pos, tzd);
-        pos[4] = ' ';
-        pos += 5;
+        const auto tz_wrote = std::strftime(pos, 10, "%z", &tm);
+        pos[tz_wrote] = ' ';
+        pos += tz_wrote + 1; // + Skip the space we added.
 
         // Thread name and log level
         pos[0] = '[';
