@@ -223,16 +223,15 @@ status
 
 styles
 
-tile part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [id=<id> broadcast=<yesOrNo>] [oldwid=<wireId>]
+tile part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<ypos> tilewidth=<tileWidth> tileheight=<tileHeight> [timestamp=<time>] [id=<id>] [oldwid=<wireId>]
 
-    Parameters are numbers except broadcast which is 'yes' or 'no' and
-    wireId which is an opaque string identifier unique to this tile.
+    Parameters are numbers except wireId which is an opaque string
+    identifier unique to this tile.
 
-    Note: id must be echoed back in the response verbatim. It and the
-    following parameter, broadcast, are used when rendering slide
-    previews of presentation documents, and not for anything else. It
-    is only useful to JS part and will break it if not returned in
-    the response.
+    Note: id must be echoed back in the response verbatim. It is used
+    when rendering slide previews of presentation documents, and not
+    for anything else. It is only useful to JS part and will break it
+    if not returned in the response.
 
 tilecombine <parameters>
 
