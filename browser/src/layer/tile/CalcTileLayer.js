@@ -1108,4 +1108,3 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		return this._selectedPart;
 	},
 });
-
