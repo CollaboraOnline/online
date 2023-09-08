@@ -145,7 +145,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'bigtoolitem',
 						'text': _('Save'),
 						'command': '.uno:Save',
-						'accessibility': { focusBack: true,	combination: 'S', de: null }
+						'accessibility': { focusBack: true,	combination: 'SV', de: null }
 					}
 				]
 			}: {},
@@ -153,20 +153,23 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				hasGroupedSaveAs ? {
 					'id': 'saveas',
 					'type': 'bigmenubartoolitem',
-					'text': _('Save As')
+					'text': _('Save As'),
+					'accessibility': { focusBack: true,	combination: 'SA' }
 				}:
 				{
 					'id': 'file-saveas',
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:SaveAs', 'text'),
-					'command': '.uno:SaveAs'
+					'command': '.uno:SaveAs',
+					'accessibility': { focusBack: true,	combination: 'SA' }
 				}
 			: {},
 			hasSaveAs ? {
 				'id': 'exportas',
 				'class': 'unoexportas',
 				'type': 'bigmenubartoolitem',
-				'text': _('Export As')
+				'text': _('Export As'),
+				'accessibility': { focusBack: true,	combination: 'EA' }
 			}: {},
 			{
 				'type': 'container',
@@ -177,7 +180,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'customtoolitem',
 						'text': _('Share'),
 						'command': 'shareas',
-						'inlineLabel': true
+						'inlineLabel': true,
+						'accessibility': { focusBack: true,	combination: 'SH' }
 					}: {},
 					hasRevisionHistory ? {
 						'id': 'Rev-History',
@@ -185,7 +189,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'customtoolitem',
 						'text': _('See history'),
 						'command': 'rev-history',
-						'inlineLabel': true
+						'inlineLabel': true,
+						'accessibility': { focusBack: true,	combination: 'RH' }
 					}: {}
 				],
 				'vertical': true
@@ -330,6 +335,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'class': 'unoRenameDocument',
 					'type': 'bigcustomtoolitem',
 					'text': _('Rename'),
+					'accessibility': { focusBack: true,	combination: 'RN' }
 				}
 			]
 		});
