@@ -38,7 +38,7 @@ var NotebookbarAccessibility = function() {
 			infoBox.classList.add('accessibility-info-box');
 			infoBox.textContent = anchorElement.accessKey;
 			var rectangle = anchorElement.getBoundingClientRect();
-			infoBox.style.top = (rectangle.top + 20) + 'px';
+			infoBox.style.top = (rectangle.bottom - 5) + 'px';
 			infoBox.style.left = rectangle.left + 'px';
 			document.body.appendChild(infoBox);
 
