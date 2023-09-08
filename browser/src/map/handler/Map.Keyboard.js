@@ -457,7 +457,7 @@ L.Map.Keyboard = L.Handler.extend({
 
 		// handle help - F1
 		if (ev.type === 'keydown' && !ev.altKey && !this.modifier && keyCode === this.keyCodes.F1) {
-			this._map.showHelp('online-help');
+			this._map.showHelp('online-help-content');
 			ev.preventDefault();
 			return;
 		}
@@ -655,7 +655,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		if (this._isCtrlKey(e) && e.shiftKey && e.key === '?') {
-			this._map.showHelp('keyboard-shortcuts');
+			this._map.showHelp('keyboard-shortcuts-content');
 			e.preventDefault();
 			return true;
 		}
@@ -745,7 +745,7 @@ L.Map.Keyboard = L.Handler.extend({
 						var parts = this._map._docLayer._parts;
 						var partToSelect = 0;
 						this._map._docLayer._clearReferences();
-			
+
 						if (e.keyCode === this.keyCodes.pageUp) {
 							partToSelect = currentSelectedPart != parts - 1 ? currentSelectedPart + 1 : 0;
 						}

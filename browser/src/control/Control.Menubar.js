@@ -1916,7 +1916,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'inserthyperlink') {
 			this._map.dispatch('hyperlinkdialog');
 		} else if (id === 'keyboard-shortcuts' || id === 'online-help') {
-			this._map.showHelp(id);
+			this._map.showHelp(id + '-content');
 		} else if (L.Params.revHistoryEnabled && (id === 'rev-history' || id === 'Rev-History' || id === 'last-mod')) {
 			this._map.dispatch('rev-history');
 		} else if (id === 'closedocument') {
@@ -1989,7 +1989,7 @@ L.Control.Menubar = L.Control.extend({
 
 		// handle help - F1
 		if (e.type === 'keydown' && !e.shiftKey && !e.ctrlKey && !e.altKey && e.keyCode == 112) {
-			self._map.showHelp('online-help');
+			self._map.showHelp('online-help-content');
 		}
 	},
 
