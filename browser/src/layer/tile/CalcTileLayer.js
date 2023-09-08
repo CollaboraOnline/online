@@ -367,6 +367,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var command = app.socket.parseServerCmd(textMsg);
 		if (command.width && command.height && this._documentInfo !== textMsg) {
 			var firstSelectedPart = (typeof this._selectedPart !== 'number');
+			if (command.readonly === 1)
+				this._map.setPermission('readonly');
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
 			this._lastColumn = command.lastcolumn;
