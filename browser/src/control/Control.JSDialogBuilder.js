@@ -65,6 +65,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this.wizard = options.mobileWizard;
 		this.map = options.map;
 		this.windowId = options.windowId;
+		this.dialogId = null;
 		this.callback = options.callback ? options.callback : this._defaultCallbackHandler;
 
 		this._colorPickers = [];
@@ -3412,6 +3413,31 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			control.setAttribute('tabIndex', '0');
 	},
 
+	// some widgets we want to modify / change
+	isHyperlinkTarget: function (builder, data) {
+		return data.type === 'combobox' && (data.id === 'target' || data.id === 'receiver');
+	},
+
+	requiresOverwriting: function(builder, data) {
+		if (builder.isHyperlinkTarget(builder, data))
+			return true;
+
+		return false;
+	},
+
+	overwriteHandler: function(parentContainer, data, builder) {
+		if (builder.isHyperlinkTarget(builder, data)) {
+			// Replace combobox with edit
+			var callback = function(value) {
+				builder.callback('combobox', 'change', data, value, builder);
+			};
+
+			return builder._controlHandlers['edit'](parentContainer, data, builder, callback);
+		}
+
+		console.error('It seems widget doesn\'t require overwriting.');
+	},
+
 	build: function(parent, data, hasVerticalParent) {
 
 		// TODO: check and probably remove additional containers
@@ -3431,8 +3457,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var containerToInsert = parent;
 
-			if (childData.dialogid)
+			if (childData.dialogid) {
 				containerToInsert.id = childData.dialogid;
+				this.dialogId = childData.dialogid;
+			}
 
 			var isVertical = childData.vertical === 'true' || childData.vertical === true ? true : false;
 
@@ -3483,7 +3511,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var handler = this._controlHandlers[childType];
 
 			if (handler) {
-				processChildren = handler(childObject, childData, this);
+				if (this.requiresOverwriting(this, childData))
+					processChildren = this.overwriteHandler(childObject, childData, this);
+				else
+					processChildren = handler(childObject, childData, this);
 				this.postProcess(childObject, childData);
 			} else
 				window.app.console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
