@@ -247,41 +247,45 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		}
 	},
 
-	_createiOsFontButton: function(parentContainer, data, builder) {
-		// Fix issue #5838 Use unique IDs for font name combobox elements
-		var table = L.DomUtil.createWithId('div', data.id, parentContainer);
-		var row = L.DomUtil.create('div', 'notebookbar row', table);
-		var button = L.DomUtil.createWithId('button', data.id + 'ios', row);
-
-		$(table).addClass('select2 select2-container select2-container--default');
-		// Fix issue #5838 Don't add the "select2-selection--single" class
-		$(row).addClass('select2-selection');
-		$(button).addClass('select2-selection__rendered');
-
-		if (data.selectedEntries.length && data.entries[data.selectedEntries[0]])
-			button.innerText = data.entries[data.selectedEntries[0]];
-		else if (window.LastSetiOSFontNameButtonFont)
-			button.innerText = window.LastSetiOSFontNameButtonFont;
-		else if (data.text)
-			button.innerText = data.text;
-		var map = builder.map;
-		window.MagicFontNameCallback = function(font) {
-			button.innerText = font;
-			map.applyFont(font);
-			map.focus();
-		};
-		button.onclick = function() {
-
-			// There doesn't seem to be a way to pre-select an entry in the
-			// UIFontPickerViewController so no need to pass the
-			// current font here.
-			window.postMobileMessage('FONTPICKER');
-		};
-	},
-
 	_comboboxControl: function(parentContainer, data, builder) {
+		if (!data.entries || data.entries.length === 0)
+			return false;
+
+		// Fix exception due to undefined _createiOsFontButton function
+		// Starting with commit 4082e1e570258f5032dfd460cf4d34ff6ae0d575,
+		// this._createiOsFontButton() throws and exception because "this"
+		// is a Window object. So fix this by moving the _createiOsFontButton
+		// function inline.
 		if (window.ThisIsTheiOSApp && data.id === 'fontnamecombobox') {
-			this._createiOsFontButton(parentContainer, data, builder);
+			// Fix issue #5838 Use unique IDs for font name combobox elements
+			var table = L.DomUtil.createWithId('div', data.id, parentContainer);
+			var row = L.DomUtil.create('div', 'notebookbar row', table);
+			var button = L.DomUtil.createWithId('button', data.id + 'ios', row);
+
+			$(table).addClass('select2 select2-container select2-container--default');
+			// Fix issue #5838 Don't add the "select2-selection--single" class
+			$(row).addClass('select2-selection');
+			$(button).addClass('select2-selection__rendered');
+
+			if (data.selectedEntries.length && data.entries[data.selectedEntries[0]])
+				button.innerText = data.entries[data.selectedEntries[0]];
+			else if (window.LastSetiOSFontNameButtonFont)
+				button.innerText = window.LastSetiOSFontNameButtonFont;
+			else if (data.text)
+				button.innerText = data.text;
+			var map = builder.map;
+			window.MagicFontNameCallback = function(font) {
+				button.innerText = font;
+				map.applyFont(font);
+				map.focus();
+			};
+			button.onclick = function() {
+
+				// There doesn't seem to be a way to pre-select an entry in the
+				// UIFontPickerViewController so no need to pass the
+				// current font here.
+				window.postMobileMessage('FONTPICKER');
+			};
 			return false;
 		}
 
