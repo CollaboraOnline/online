@@ -1728,6 +1728,9 @@ app.definitions.Socket = L.Class.extend({
 			else if (tokens[i].startsWith('lastrow=')) {
 				command.lastrow = parseInt(tokens[i].substring(8));
 			}
+			else if (tokens[i].startsWith('readonly=')) {
+				command.readonly = parseInt(tokens[i].substring(9));
+			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
 			var defaultZoom = this._map.options.zoom;
