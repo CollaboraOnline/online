@@ -509,6 +509,11 @@ static IMP standardImpOfInputAccessoryView = nil;
                 if (format == nil)
                     return;     // Warn?
 
+                // Handle special "direct-" formats
+                NSRange range = [format rangeOfString:@"direct-"];
+                if (range.location == 0)
+                    format = [format substringFromIndex:range.length];
+
                 // First save it in the requested format to a temporary location. First remove any
                 // leftover identically named temporary file.
 
