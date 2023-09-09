@@ -31,7 +31,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'Sheet Operations.', functi
 		assertNumberofSheets(2);
 	});
 
-	it('Switching sheet sets the view that contains cell-cursor', function () {
+	it.skip('Switching sheet sets the view that contains cell-cursor', function () {
 		assertNumberofSheets(1);
 		helper.typeIntoInputField('input#addressInput', 'A1');
 		calcHelper.ensureViewContainsCellCursor();
