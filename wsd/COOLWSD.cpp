@@ -461,9 +461,10 @@ void cleanupDocBrokers()
         LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after cleanup" <<
                 [&](auto& log)
                 {
-                    for (auto& pair : DocBrokers)
+                    int i = 1;
+                    for (const auto& pair : DocBrokers)
                     {
-                        log << "\nDocumentBroker [" << pair.first << ']';
+                        log << "\nDocumentBroker #" << i++ << " [" << pair.first << ']';
                     }
                 });
 
