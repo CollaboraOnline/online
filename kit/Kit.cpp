@@ -1705,12 +1705,7 @@ private:
                 viewCount << " view" << (viewCount != 1 ? "s." : "."));
 
         session->initWatermark();
-        // Invalidate canonical ID for Draw and PDF files so that the slides
-        // in the slide pane will render
-        if (session->hasWatermark() || _loKitDocument->getDocumentType() == LOK_DOCTYPE_DRAWING)
-        {
-            invalidateCanonicalId(session->getId());
-        }
+        invalidateCanonicalId(session->getId());
 
         return _loKitDocument;
     }
