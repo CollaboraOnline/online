@@ -280,9 +280,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_comboboxControl: function(parentContainer, data, builder) {
-		if (!data.entries || data.entries.length === 0)
-			return false;
-
 		if (window.ThisIsTheiOSApp && data.id === 'fontnamecombobox') {
 			this._createiOsFontButton(parentContainer, data, builder);
 			return false;
