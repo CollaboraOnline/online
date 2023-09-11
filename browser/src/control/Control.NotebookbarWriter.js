@@ -984,7 +984,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertTable', 'text'),
 				'command': '.uno:InsertTable',
-				'accessibility': { focusBack: false,	combination: 'T',	de: null }
+				'accessibility': { focusBack: false,	combination: 'IT',	de: null }
 			},
 			{
 				'id': 'insert-insert-graphic',
