@@ -45,15 +45,15 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		cy.cGet('#annotation-content-area-1').should('have.text', 'modified some text');
 	});
 
-	it.skip('Reply to comment.', function() {
+	it('Reply to comment.', function() {
 		mobileHelper.insertComment();
 		mobileHelper.selectAnnotationMenuItem('Reply');
 		cy.cGet('#comment-container-1').should('exist');
 		cy.cGet('#input-modal-input').should('have.text', '');
 		cy.cGet('#input-modal-input').type('reply');
 		cy.cGet('#response-ok').click();
-		cy.cGet('#comment-container-1').click();
-		cy.cGet('#comment-container-2').should('exist');
+		cy.cGet('#comment-container-2').click();
+		cy.cGet('#comment-container-1').should('exist');
 	});
 
 	it('Remove comment.', function() {
