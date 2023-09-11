@@ -499,7 +499,7 @@ connectLOKit(const std::shared_ptr<SocketPoll>& socketPoll, const Poco::URI& uri
             http::Request req(url);
             ws->asyncRequest(req, socketPoll);
 
-            const char* expected_response = "statusindicator: ready";
+            const char* expected_response = "statusindicator: find";
 
             TST_LOG("Connected to " << uri.toString() << ", waiting for response ["
                                     << expected_response << "]");
