@@ -62,18 +62,18 @@ describe(['tagmobile', 'tagnextcloud'], 'Calc insertion wizard.', function() {
 			.click();
 
 		// Dialog is opened
-		cy.cGet('#hyperlink-link-box')
+		cy.cGet('#target')
 			.should('exist');
 
 		// Type text and link
-		cy.cGet('#hyperlink-text-box')
+		cy.cGet('#indication')
 			.clear()
 			.type('some text');
-		cy.cGet('#hyperlink-link-box')
+		cy.cGet('#target')
 			.type('www.something.com');
 
 		// Insert
-		cy.cGet('#response-ok')
+		cy.cGet('#ok')
 			.click();
 
 		cy.cGet('.blinking-cursor')
@@ -85,7 +85,7 @@ describe(['tagmobile', 'tagnextcloud'], 'Calc insertion wizard.', function() {
 			.should('have.text', 'some text');
 
 		cy.cGet('#copy-paste-container table td a')
-			.should('have.attr', 'href', 'http://www.something.com');
+			.should('have.attr', 'href', 'http://www.something.com/');
 	});
 
 	it('Insert shape.', function() {
