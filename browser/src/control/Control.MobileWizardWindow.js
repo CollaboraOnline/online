@@ -244,7 +244,8 @@ L.Control.MobileWizardWindow = L.Control.extend({
 		if (!this._inBuilding)
 			history.pushState({context: 'mobile-wizard', level: this._currentDepth}, 'mobile-wizard-level-' + this._currentDepth);
 
-		var title = $(contentToShow).children('.ui-content').get(0).title;
+		var content = $(contentToShow).children('.ui-content').get(0);
+		var title = content ? content.title : '';
 
 		if (this._customTitle)
 			this._setCustomTitle(this._customTitle);
