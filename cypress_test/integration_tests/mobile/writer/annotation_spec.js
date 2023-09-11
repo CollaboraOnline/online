@@ -45,7 +45,7 @@ describe(['tagmobile'], 'Annotation tests.', function() {
 		cy.cGet('#annotation-content-area-1').should('have.text', 'modified some text');
 	});
 
-	it.skip('Reply to comment.', function() {
+	it('Reply to comment.', function() {
 		mobileHelper.insertComment();
 		mobileHelper.selectAnnotationMenuItem('Reply');
 		cy.cGet('#comment-container-1').should('exist');
