@@ -716,6 +716,31 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		return count;
 	},
 
+	// some widgets we want to modify / change
+	isHyperlinkTarget: function (builder, data) {
+		return data.type === 'combobox' && (data.id === 'target' || data.id === 'receiver');
+	},
+
+	requiresOverwriting: function(builder, data) {
+		if (builder.isHyperlinkTarget(builder, data))
+			return true;
+
+		return false;
+	},
+
+	overwriteHandler: function(parentContainer, data, builder) {
+		if (builder.isHyperlinkTarget(builder, data)) {
+			// Replace combobox with edit
+			var callback = function(value) {
+				builder.callback('combobox', 'change', data, value, builder);
+			};
+
+			return builder._controlHandlers['edit'](parentContainer, data, builder, callback);
+		}
+
+		console.error('It seems widget doesn\'t require overwriting.');
+	},
+
 	build: function(parent, data) {
 		this._modifySidebarNodes(data);
 
@@ -762,7 +787,10 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 				processChildren = handler(childObject, childData.children, this);
 			} else {
 				if (handler) {
-					processChildren = handler(childObject, childData, this);
+					if (this.requiresOverwriting(this, childData))
+						processChildren = this.overwriteHandler(childObject, childData, this);
+					else
+						processChildren = handler(childObject, childData, this);
 					this.postProcess(childObject, childData);
 				} else
 					window.app.console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
