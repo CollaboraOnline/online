@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"PO-Revision-Date: 2023-08-31 18:04+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
@@ -819,7 +819,7 @@ msgstr "Alle"
 #: src/control/Control.NotebookbarImpress.js:1042
 #: src/control/Control.NotebookbarWriter.js:1047
 msgid "Smart Picker"
-msgstr "Smart Picker"
+msgstr "Slim selecteren"
 
 #: src/control/Control.Menubar.js:214
 msgid "Text orientation"
@@ -1203,7 +1203,7 @@ msgstr "Tekenen"
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:89
 msgid "View"
-msgstr "Bekijken"
+msgstr "Beeld"
 
 #: src/control/Control.NotebookbarCalc.js:69
 #: src/control/Control.NotebookbarDraw.js:109
