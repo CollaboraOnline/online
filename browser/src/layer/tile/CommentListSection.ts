@@ -217,9 +217,33 @@ export class CommentSection extends CanvasSectionObject {
 		this.containerObject.applyDrawingOrders();
 	}
 
+	// Mobile.
+	private getChildren(comment: any, array: Array<any>) {
+		for (var i = 0; i < comment.sectionProperties.children.length; i++) {
+			array.push(comment.sectionProperties.children[i]);
+			if (comment.sectionProperties.children[i].sectionProperties.children.length > 0)
+				this.getChildren(comment.sectionProperties.children[i], array);
+		}
+	}
+
+	// Mobile.
+	private getCommentListOneDimensionalArray() {
+		// 1 dimensional array of ordered comments.
+		var openArray = [];
+
+		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
+			openArray.push(this.sectionProperties.commentList[i]);
+			if (this.sectionProperties.commentList[i].sectionProperties.data.parentId === '0') {
+				if (this.sectionProperties.commentList[i].sectionProperties.children.length > 0)
+					this.getChildren(this.sectionProperties.commentList[i], openArray);
+			}
+		}
+		return openArray;
+	}
+
 	private createCommentStructureWriter (menuStructure: any, threadOnly: any): void {
 		var rootComment, comment;
-		var commentList = this.sectionProperties.commentList;
+		var commentList = this.getCommentListOneDimensionalArray();
 		var showResolved = this.sectionProperties.showResolved;
 
 		if (threadOnly) {
@@ -251,12 +275,12 @@ export class CommentSection extends CanvasSectionObject {
 				if (commentThread.length > 0)
 				{
 					rootComment = {
-						id: commentThread[0].id,
+						id: commentThread[commentThread.length - 1].id,
 						enable: true,
-						data: commentThread[0].data,
+						data: commentThread[commentThread.length - 1].data,
 						type: 'rootcomment',
-						text: commentThread[0].data.text,
-						annotation: commentThread[0].annotation,
+						text: commentThread[commentThread.length - 1].data.text,
+						annotation: commentThread[commentThread.length - 1].annotation,
 						children: commentThread
 					};
 
@@ -974,29 +998,16 @@ export class CommentSection extends CanvasSectionObject {
 		}
 	}
 
-	public add (comment: any, mobileReply: boolean = false): cool.Comment {
+	public add (comment: any): cool.Comment {
 		var annotation = new cool.Comment(comment, comment.id === 'new' ? {noMenu: true} : {}, this);
-		if (mobileReply)
-			annotation.name += '-reply'; // Section name.
 
-		if (comment.parent && comment.parent !== '0') {
-			var parentIdx = this.getIndexOf(comment.parent);
+		if (!this.containerObject.addSection(annotation))
+			return;
 
-			if (!this.containerObject.addSection(annotation))
-				return;
-			this.sectionProperties.commentList.splice(parentIdx + 1, 0, annotation);
-			this.updateIdIndexMap();
-
-			this.updateResolvedState(annotation);
-			this.showHideComment(annotation);
-		}
-		else {
-			if (!this.containerObject.addSection(annotation))
-				return;
-			this.sectionProperties.commentList.push(annotation);
-		}
+		this.sectionProperties.commentList.push(annotation);
 
 		this.orderCommentList();
+		this.updateIdIndexMap();
 		this.checkSize();
 
 		if (this.isCollapsed && comment.id !== 'new')
@@ -1090,8 +1101,12 @@ export class CommentSection extends CanvasSectionObject {
 		}
 		var action = changetrack ? obj.redline.action : obj.comment.action;
 
-		if (!changetrack && obj.comment.parent === undefined)
-			obj.comment.parent = '0';
+		if (!changetrack && obj.comment.parent === undefined) {
+			if (obj.comment.parentId)
+				obj.comment.parent = obj.comment.parentId;
+			else
+				obj.comment.parent = '0';
+		}
 
 		if (changetrack && obj.redline.author in this.map._viewInfoByUserName) {
 			obj.redline.avatar = this.map._viewInfoByUserName[obj.redline.author].userextrainfo.avatar;
@@ -1121,13 +1136,12 @@ export class CommentSection extends CanvasSectionObject {
 				this.add(obj.redline);
 			} else {
 				this.adjustComment(obj.comment);
-				var cmmnt = this.add(obj.comment);
-				this.adjustParentAdd(cmmnt);
+				annotation = this.add(obj.comment);
+				this.adjustParentAdd(annotation);
 			}
 			if (this.sectionProperties.selectedComment && !this.sectionProperties.selectedComment.isEdit()) {
 				this.map.focus();
 			}
-			annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj[dataroot].id)];
 		} else if (action === 'Remove') {
 
 			id = obj[dataroot].id;
