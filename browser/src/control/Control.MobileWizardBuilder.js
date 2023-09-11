@@ -173,15 +173,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_comboboxControl: function(parentContainer, data, builder) {
-		if (data.id === 'searchterm' ||
-			data.id === 'replaceterm') {
-			// Replace combobox with edit in mobile find & replace dialog
-			var callback = function(value) {
-				builder.callback('combobox', 'change', data, value, builder);
-			};
-
-			builder._controlHandlers['edit'](parentContainer, data, builder, callback);
-		} else if (data.id === 'applystyle' ||
+		if (data.id === 'applystyle' ||
 			data.id === 'fontnamecombobox' ||
 			data.id === 'fontsizecombobox' ||
 			data.id === 'fontsize' ||
@@ -721,15 +713,21 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		return data.type === 'combobox' && (data.id === 'target' || data.id === 'receiver');
 	},
 
+	isFindReplaceComboox: function (builder, data) {
+		return data.type === 'combobox' && (data.id === 'searchterm' || data.id === 'replaceterm');
+	},
+
 	requiresOverwriting: function(builder, data) {
-		if (builder.isHyperlinkTarget(builder, data))
+		if (builder.isHyperlinkTarget(builder, data) ||
+			builder.isFindReplaceComboox(builder, data))
 			return true;
 
 		return false;
 	},
 
 	overwriteHandler: function(parentContainer, data, builder) {
-		if (builder.isHyperlinkTarget(builder, data)) {
+		if (builder.isHyperlinkTarget(builder, data) ||
+			builder.isFindReplaceComboox(builder, data)) {
 			// Replace combobox with edit
 			var callback = function(value) {
 				builder.callback('combobox', 'change', data, value, builder);
