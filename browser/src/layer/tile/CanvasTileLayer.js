@@ -969,7 +969,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._mentionText = [];
 
 		this._moveInProgress = false;
-		this._canonicalIdInitialized = false;
 	},
 
 	_initContainer: function () {
@@ -1808,14 +1807,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				var canonicalId = payload.split('=')[2].split(' ')[0];
 				this._debugData['canonicalViewId'].setPrefix('Canonical id changed to: ' + canonicalId + ' for view id: ' + viewId);
 			}
-			if (!this._canonicalIdInitialized)
-			{
-				this._canonicalIdInitialized = true;
-				this._update();
-			}
 			this._requestNewTiles();
-			this._invalidateAllPreviews();
-			this.redraw();
 		}
 		else if (textMsg.startsWith('comment:')) {
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
@@ -4887,16 +4879,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			+ '&tileWidth=' + this._tileHeightTwips);
 	},
 
-	_invalidateAllPreviews: function () {
-		this._previewInvalidations = [];
-		for (var key in this._map._docPreviews) {
-			var preview = this._map._docPreviews[key];
-			preview.invalid = true;
-			this._previewInvalidations.push(new L.Bounds(new L.Point(0, 0), new L.Point(preview.maxWidth, preview.maxHeight)));
-		}
-		this._invalidatePreviews();
-	},
-
 	_invalidatePreviews: function () {
 		if (this._map && this._map._docPreviews && this._previewInvalidations.length > 0) {
 			var toInvalidate = {};
@@ -6189,7 +6171,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_update: function (center, zoom) {
 		var map = this._map;
-		if (!map || this._documentInfo === '' || !this._canonicalIdInitialized) {
+		if (!map || this._documentInfo === '') {
 			return;
 		}
 
@@ -7249,7 +7231,7 @@ L.TilesPreFetcher = L.Class.extend({
 		if (app.file.fileBasedView && this._docLayer)
 			this._docLayer._updateFileBasedView();
 
-		if (this._docLayer._emptyTilesCount > 0 || !this._map || !this._docLayer || !this._canonicalIdInitialized) {
+		if (this._docLayer._emptyTilesCount > 0 || !this._map || !this._docLayer) {
 			return;
 		}
 
