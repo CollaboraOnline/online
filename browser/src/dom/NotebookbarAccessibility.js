@@ -345,10 +345,13 @@ var NotebookbarAccessibility = function() {
 		}
 	};
 
+	this.updateAccessibilityDefinitions = function() {
+		this.tabInfoList = this.definitions.getDefinitions();
+	};
+
 	this.addTabAccelerators = function() {
 		// Remove all info boxes first.
 		this.removeAllInfoBoxes();
-		this.tabInfoList = this.definitions.getDefinitions();
 		for (var tabId in this.tabInfoList) {
 			if (Object.prototype.hasOwnProperty.call(this.tabInfoList, tabId)) {
 				var element = document.getElementById(tabId);
@@ -403,7 +406,8 @@ var NotebookbarAccessibility = function() {
 		setTimeout(function() {
 			if (window.mode.isDesktop()) {
 				if (document.body.dataset.userinterfacemode === 'notebookbar') {
-					this.tabInfoList = this.definitions.getDefinitions();
+					app.map.on('updateAccessibilityDefinitions', this.updateAccessibilityDefinitions, this);
+					this.updateAccessibilityDefinitions();
 
 					if (this.tabInfoList !== null) {
 						this.initTabListeners();

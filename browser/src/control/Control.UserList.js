@@ -159,6 +159,7 @@ L.Control.UserList = L.Control.extend({
 		var headerUserList = this.options.listUser.slice(-this.options.userLimitHeader);
 		document.getElementById('userListSummary').setAttribute('accesskey','UP');
 
+		this.map.fire('updateAccessibilityDefinitions');
 		// Remove users that should no longer be in the header
 		Array.from(document.querySelectorAll('#userListSummary [data-view-id]')).map(function(element) {
 			return element.getAttribute('data-view-id');
