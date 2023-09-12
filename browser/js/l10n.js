@@ -123,7 +123,8 @@ var
 
 					for (message in localization) {
 						if (has_own_prop.call(localization, message)) {
-							localizations[locale][message] = localization[message];
+							// Replace the first occurance of the "~" symbol.
+							localizations[locale][message.replace('~', '')] = localization[message];
 						}
 					}
 				}
