@@ -93,8 +93,6 @@ L.Map.include({
 		}
 
 		var unlockImage = L.DomUtil.get('unlock-image');
-		L.DomUtil.setStyle(unlockImage, 'width', '100%');
-		L.DomUtil.setStyle(unlockImage, 'height', 'auto');
 		if (this.Locking.unlockImageUrlPath) {
 			unlockImage.src = 'remote/static' + this.Locking.unlockImageUrlPath;
 		} else {
