@@ -156,19 +156,19 @@ L.Control.Tabs = L.Control.extend({
 					{
 						'insertsheetbefore' : this._menuItem['insertsheetbefore'],
 						'insertsheetafter'  :   this._menuItem['insertsheetafter'],
-						'.uno:Name' : this._menuItem['.uno:Name'],
+						'Name' : this._menuItem['.uno:Name'],
 					}
 				);
 				if (this._map.hasAnyHiddenPart()) {
 					Object.assign(menuItemMobile, {
-						'.uno:Show' : this._menuItem['.uno:Show'],
+						'Show' : this._menuItem['.uno:Show'],
 					});
 				}
 				if (this._map.getNumberOfVisibleParts() !== 1) {
 					Object.assign(menuItemMobile,
 						{
-							'.uno:Remove': this._menuItem['.uno:Remove'],
-							'.uno:Hide': this._menuItem['.uno:Hide'],
+							'Remove': this._menuItem['.uno:Remove'],
+							'Hide': this._menuItem['.uno:Hide'],
 							'movesheetleft': this._menuItem['movesheetleft'],
 							'movesheetright': this._menuItem['movesheetright'],
 						}
