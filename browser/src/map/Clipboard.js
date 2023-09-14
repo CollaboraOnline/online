@@ -458,7 +458,7 @@ L.Clipboard = L.Class.extend({
 			window.app.console.log('Copy/Cut with complex/graphical selection');
 			if (this._selectionType === 'text' && this._selectionContent !== '')
 			{ // back here again having downloaded it ...
-				text = this._selectionContent;
+				text = this._selectionContent; // Not sure if we hit these lines. Last else block seems to catch the downloaded content (selection type is not "complex" while copying to clipboard).
 				window.app.console.log('Use downloaded selection.');
 			}
 			else
@@ -892,14 +892,27 @@ L.Clipboard = L.Class.extend({
 		if (this._userAlreadyWarned('warnedAboutLargeCopy'))
 			return;
 
-		var msg = _('<p>If you would like to share larger elements of your document with other applications ' +
-			    'it is necessary to first download them onto your device. To do that press the ' +
-			    '"Start download" button below, and when complete click "Confirm copy to clipboard".</p>' +
-			    '<p>If you are copy and pasting between documents inside %productName, ' +
-			    'there is no need to download.</p>');
+		var modalId = 'large_copy_paste_warning';
 
-		this._map.uiManager.showInfoModal('large_copy_paste_warning');
-		document.getElementById('large_copy_paste_warning').innerHTML = this._substProductName(msg);
+		var buttonCallback = function() {
+			if (this._downloadProgress) {
+				this._downloadProgress._onStartDownload();
+			}
+		};
+
+		var msg = _('If you want to share large elements with other applications (outside of Collabora Online) it\'s necessary to first download them.');
+		this._map.uiManager.showInfoModal(modalId, _('Download Selection'), msg, '', 'Download (Alt + C)', buttonCallback.bind(this), true, modalId + '-response');
+
+		var keyDownCallback = function(e) {
+			if (e.altKey && e.keyCode === 67 /*C*/) {
+				if (this._downloadProgress) {
+					document.getElementById(modalId + '-response').click();
+					e.preventDefault();
+				}
+			}
+		};
+		var dialogId = this._map.uiManager.generateModalId(modalId);
+		document.getElementById(dialogId).onkeydown = keyDownCallback.bind(this);
 	},
 
 	_warnLargeCopyPasteAlreadyStarted: function () {
