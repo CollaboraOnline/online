@@ -21,6 +21,40 @@
 using TileWireId = uint32_t;
 using TileBinaryHash = uint64_t;
 
+namespace TileParse
+{
+    template <typename A> struct Comp
+    {
+        bool operator()(const A& av, const std::string_view arg) { return av.first < arg; }
+        bool operator()(const std::string_view arg, const A& av) { return arg < av.first; }
+        bool operator()(const A& av, const A& bv) { return av.first < bv.first; }
+    };
+
+#ifndef NDEBUG
+    template <class T, size_t N> bool checkSorted(T const (&args)[N], int maxEnum)
+    {
+        bool sorted = std::is_sorted(std::begin(args), std::end(args), Comp<T>{});
+        for (int i = 0; i < maxEnum; ++i)
+        {
+            auto range = std::equal_range(std::begin(args), std::end(args), args[i], Comp<T>{});
+            assert(range.first != range.second &&                      // is found
+                   std::distance(range.first, range.second) == 1 &&    // one match
+                   std::distance(std::begin(args), range.first) == i); // match is in correct index
+        }
+        return sorted;
+    }
+#endif
+
+    template <class T, size_t N> bool setArg(T (&args)[N], const std::string_view arg, int value)
+    {
+        auto range = std::equal_range(std::begin(args), std::end(args), arg, Comp<T>{});
+        if (range.first == range.second)
+            return false;
+        range.first->second = value;
+        return true;
+    }
+}
+
 /// Tile Descriptor
 /// Represents a tile's coordinates and dimensions.
 class TileDesc final
@@ -230,41 +264,17 @@ public:
                 { STRINGIFY(width), 0 }
             };
 
-            struct Comp
-            {
-                bool operator()(const arg_value& av, const std::string_view arg) { return av.first < arg; }
-                bool operator()(const std::string_view arg, const arg_value& av) { return arg < av.first; }
-                bool operator()(const arg_value& av, const arg_value& bv) { return av.first < bv.first; }
-            };
-
 #ifndef NDEBUG
-            bool checkSorted() const
-            {
-                bool sorted = std::is_sorted(std::begin(args), std::end(args), Comp{});
-                for (int i = 0; i < maxEnum; ++i)
-                {
-                    auto range = std::equal_range(std::begin(args), std::end(args), args[i], Comp{});
-                    assert(range.first != range.second &&                      // is found
-                           std::distance(range.first, range.second) == 1 &&    // one match
-                           std::distance(std::begin(args), range.first) == i); // match is in correct index
-                }
-                return sorted;
-            }
-
             TileDescParseResults()
             {
-                static bool isSorted = checkSorted();
+                static bool isSorted = TileParse::checkSorted(args, maxEnum);
                 assert(isSorted);
             }
 #endif
 
             bool set(const std::string_view arg, int value)
             {
-                auto range = std::equal_range(std::begin(args), std::end(args), arg, Comp{});
-                if (range.first == range.second)
-                    return false;
-                range.first->second = value;
-                return true;
+                return TileParse::setArg(args, arg, value);
             }
 
             int operator[](argenum arg) const
@@ -553,9 +563,44 @@ public:
     /// Deserialize a TileDesc from a tokenized string.
     static TileCombined parse(const StringVector& tokens)
     {
+        enum argenum { height, mode, nviewid, part, tileheight, tilewidth, width, maxEnum };
+
+        struct TileCombinedParseResults
+        {
+            typedef std::pair<const std::string_view, int> arg_value;
+
+            arg_value args[maxEnum] = {
+                { STRINGIFY(height), 0 },
+                { STRINGIFY(mode), 0 },
+                { STRINGIFY(nviewid), 0 },
+                { STRINGIFY(part), 0 },
+                { STRINGIFY(tileheight), 0 },
+                { STRINGIFY(tilewidth), 0 },
+                { STRINGIFY(width), 0 }
+            };
+
+#ifndef NDEBUG
+            TileCombinedParseResults()
+            {
+                static bool isSorted = TileParse::checkSorted(args, maxEnum);
+                assert(isSorted);
+            }
+#endif
+
+            bool set(const std::string_view arg, int value)
+            {
+                return TileParse::setArg(args, arg, value);
+            }
+
+            int operator[](argenum arg) const
+            {
+                return args[arg].second;
+            }
+        };
+
         // We don't expect undocumented fields and
         // assume all values to be int.
-        std::unordered_map<std::string, int> pairs(16);
+        TileCombinedParseResults pairs;
 
         std::string tilePositionsX;
         std::string tilePositionsY;
@@ -599,16 +644,16 @@ public:
                     int v = 0;
                     if (COOLProtocol::stringToInteger(value, v))
                     {
-                        pairs[name] = v;
+                        pairs.set(name, v);
                     }
                 }
             }
         }
 
-        return TileCombined(pairs["nviewid"], pairs["part"], pairs["mode"],
-                            pairs["width"], pairs["height"],
+        return TileCombined(pairs[nviewid], pairs[part], pairs[mode],
+                            pairs[width], pairs[height],
                             tilePositionsX, tilePositionsY,
-                            pairs["tilewidth"], pairs["tileheight"],
+                            pairs[tilewidth], pairs[tileheight],
                             versions, imgSizes, oldwireIds, wireIds);
     }
 
