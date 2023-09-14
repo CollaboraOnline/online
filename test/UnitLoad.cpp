@@ -179,9 +179,9 @@ UnitBase::TestResult UnitLoad::testExcelLoad()
         helpers::sendTextFrame(socket, "status", testname);
         const auto status = helpers::assertResponseString(socket, "status:", testname);
 
-        // Expected format is something like 'status: type=spreadsheet parts=1 current=0 width=20685 height=24885 viewid=0 lastcolumn=31 lastrow=12'
+        // Expected format is something like 'status: type=spreadsheet parts=1 current=0 width=20685 height=24885 viewid=0 lastcolumn=31 lastrow=12 readonly=0'
         StringVector tokens(StringVector::tokenize(status, ' '));
-        LOK_ASSERT_EQUAL(static_cast<size_t>(9), tokens.size());
+        LOK_ASSERT(tokens.size() >= 9);
     }
     catch (const Poco::Exception& exc)
     {
