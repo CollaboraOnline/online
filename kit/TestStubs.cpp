@@ -21,6 +21,6 @@ bool ChildSession::_handleInput(const char* /*buffer*/, int /*length*/) { return
 bool ChildSession::isTileInsideVisibleArea(const TileDesc& /*tile*/) const { return false; }
 ChildSession::~ChildSession() {}
 
-int simd_initPixRowSimd(const uint32_t *, uint32_t *, unsigned int *, uint64_t *) { return 0; }
+int simd_initPixRowSimd(const uint32_t *, uint32_t *, size_t *, uint64_t *) { return 0; }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

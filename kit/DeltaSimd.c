@@ -85,7 +85,7 @@ static uint64_t diffMask(__m256i prev, __m256i curr)
 #endif
 
 // accelerated compression of a 256 pixel run
-int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, unsigned int *scratchLen, uint64_t *rleMaskBlock)
+int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratchLen, uint64_t *rleMaskBlock)
 {
 #if !ENABLE_SIMD
     // no fun.
