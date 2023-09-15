@@ -1,0 +1,43 @@
+#! /bin/bash
+#
+# get a flamegraph of an online session
+# a) sends SIGUSR1 to get kitbrokers to dump info to logs
+# b) scans likely logs for that info and scrapes out the
+# document, users and pids
+# c) prompts for which pid to profile
+# d) profiles, then generates flamegraph on ctrl+c
+if ! which flamegraph.pl > /dev/null 2>&1; then
+    PATH=$PATH:$HOME/FlameGraph
+fi
+if ! which flamegraph.pl > /dev/null 2>&1; then
+    echo "no flamegraph.pl found"
+    echo "On fedora install systemwide with: sudo dnf install flamegraph"
+    echo "Otherwise install locally manually into ~/FlameGraph"
+    exit 1
+fi
+# a deployment will log to journal, take current time to grep logs from that time point
+date=`date +%s`
+# a local dev build dumps to /tmp/coolwsd.log by default, take current size to grep from that size point
+if [ -e /tmp/coolwsd.log ]; then
+  locallogsize=`du -b /tmp/coolwsd.log|cut -f1`
+fi
+echo using pkill -SIGUSR1 kitbroker to dump info
+pkill -SIGUSR1 kitbroker
+echo Waiting 1 second for results
+sleep 1
+echo ---systemd journal---
+journalctl --since @$date -u coolwsd --output=cat | grep -P "\Wpid:|\WjailedUrl:|\WviewId:.*userExtraInfo:"
+if [ -e /tmp/coolwsd.log ]; then
+  echo ---local dev log---
+  tail -c +$locallogsize /tmp/coolwsd.log | grep -P "\Wpid:|\WjailedUrl:|\WviewId:.*userExtraInfo:"
+fi
+echo -n "enter pid to measure performance of: "
+read kitpid
+echo now running perf to record performance data, press ctrl+c when ready to generate output
+trap ' ' INT
+# note a) perf version 6.4.4 doesn't unmangle c++ names correctly for me, while 6.2.6 does
+perf record -F50 --call-graph dwarf,65528 --pid $kitpid
+# note b) perf version 5.14.21 is agonizingly slow without --no-inline, while 6.2.6 seems ok
+perf script --no-inline | stackcollapse-perf.pl > perf-$kitpid.log
+flamegraph.pl perf-$kitpid.log > perf-$kitpid.svg
+echo generated flamegraph output svg: perf-$kitpid.svg
