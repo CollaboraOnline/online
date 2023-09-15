@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+#
+# 'make check' runs all wsdunit tests, this script allows running just one of them
+# usage: <script> <test name> [<limit>]
+#
+# In case a second integer parameter is supplied, then it's supported to try running the test a
+# number of times to see if it fails all the time or it's just unstable.
+#
+
+name="$1" # e.g. unit-base
+if [ -z "$name" ]; then
+    echo "missing parameter: test name"
+    exit 1
+fi
+
+limit="$2"
+count=0
+while true
+do
+    count=$((count+1))
+
+    (cd test; ./run_unit.sh --test-name $name.la --log-file $name.log --trs-file $name.trs --color-tests yes --enable-hard-errors yes --expect-failure no -- ./$name.la)
+    ./coolwsd --disable-cool-user-checking --cleanup
+    if ! grep -q FAIL test/$name.trs; then
+        RET=0
+        break
+    else
+        RET=1
+    fi
+
+    if [ -z "$limit" ] || [ "$count" -eq "$limit" ]; then
+        break
+    fi
+done
+
+exit $RET
+
+# vi:set shiftwidth=4 expandtab:
