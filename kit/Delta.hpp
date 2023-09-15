@@ -144,92 +144,107 @@ class DeltaGenerator {
             return sizeof(DeltaBitmapRow) + _rleSize * 4;
         }
 
+    private:
+        void initPixRowCpu(const uint32_t *from, uint32_t *scratch,
+                           size_t *scratchLen, uint64_t *rleMaskBlock,
+                           unsigned int width)
+        {
+            uint32_t lastPix = 0x00000000; // transparency
+            unsigned int x = 0, outp = 0;
+
+            // non-accelerated path
+            for (unsigned int nMask = 0; nMask < 4; ++nMask)
+            {
+                uint64_t rleMask = 0;
+                uint64_t bitToSet = 1;
+                if (width - x > 64)
+                {
+                    // simplified inner loop for 64bit chunks
+                    for (; bitToSet; ++x, bitToSet <<= 1)
+                    {
+                        if (from[x] == lastPix)
+                            rleMask |= bitToSet;
+                        else
+                        {
+                            lastPix = from[x];
+                            scratch[outp++] = lastPix;
+                        }
+                    }
+                }
+                else
+                {
+                    // even slower inner loop for odd lengths
+                    for (; x < width; ++x, bitToSet <<= 1)
+                    {
+                        if (from[x] == lastPix)
+                            rleMask |= bitToSet;
+                        else
+                        {
+                            lastPix = from[x];
+                            scratch[outp++] = lastPix;
+                        }
+                    }
+                }
+                rleMaskBlock[nMask] = rleMask;
+            }
+
+            if (x < width)
+            {
+                memcpy(scratch + outp, from + x, (width - x) * 4);
+                outp += width-x;
+            }
+            *scratchLen = outp;
+        }
+
+    public:
+
         void initRow(const uint32_t *from, unsigned int width)
         {
             uint32_t scratch[width];
 
-            uint32_t simd_scratch[width];
-            uint64_t simd_rleMask[_rleMaskUnits];
-            unsigned int simd_outp = 0;
-
-            uint32_t lastPix = 0x00000000; // transparency
-            unsigned int x = 0, outp = 0;
-
-            bool noCompare = !simd::HasAVX2 || width != 256 ||
-                !simd_initPixRowSimd(from, simd_scratch, &simd_outp, simd_rleMask);
-            if (true)
+            bool done = false;
+            if (simd::HasAVX2 && width == 256)
             {
-                // non-accelerated path
-                for (unsigned int nMask = 0; nMask < 4; ++nMask)
-                {
-                    uint64_t rleMask = 0;
-                    uint64_t bitToSet = 1;
-                    if (width - x > 64)
-                    {
-                        // simplified inner loop for 64bit chunks
-                        for (; bitToSet; ++x, bitToSet <<= 1)
-                        {
-                            if (from[x] == lastPix)
-                                rleMask |= bitToSet;
-                            else
-                            {
-                                lastPix = from[x];
-                                scratch[outp++] = lastPix;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // even slower inner loop for odd lengths
-                        for (; x < width; ++x, bitToSet <<= 1)
-                        {
-                            if (from[x] == lastPix)
-                                rleMask |= bitToSet;
-                            else
-                            {
-                                lastPix = from[x];
-                                scratch[outp++] = lastPix;
-                            }
-                        }
-                    }
-                    _rleMask[nMask] = rleMask;
-                }
+                done = simd_initPixRowSimd(from, scratch, &_rleSize, _rleMask);
 
-                if (x < width)
+#if ENABLE_DEBUG && 0 // SIMD validation
+                if (done)
                 {
-                    memcpy(scratch + outp, from + x, (width - x) * 4);
-                    outp += width-x;
+                    uint32_t cpu_scratch[width];
+                    uint64_t cpu_rleMask[_rleMaskUnits];
+                    unsigned int cpu_outp = 0;
+                    initPixRowCpu(from, cpu_scratch, &cpu_outp, cpu_rleMask, width);
+
+                    // check our result
+                    if (memcmp(cpu_rleMask, _rleMask, sizeof (cpu_rleMask)))
+                    {
+                        std::cerr << "Masks differ " <<
+                            Util::bytesToHexString(reinterpret_cast<const char *>(_rleMask), sizeof(_rleMask)) << "\n" <<
+                            Util::bytesToHexString(reinterpret_cast<const char *>(cpu_rleMask), sizeof(_rleMask)) << "\n";
+                    }
+                    assert(_rleSize == cpu_outp);
+                    if(_rleSize > 0 && memcmp(scratch, cpu_scratch, _rleSize))
+                    {
+                        std::cerr << "RLE pixels differ mask:\n" <<
+                            Util::bytesToHexString(reinterpret_cast<const char *>(_rleMask), sizeof(_rleMask)) << "\n" <<
+                            "pixels:\n" <<
+                            Util::bytesToHexString(reinterpret_cast<const char *>(scratch), _rleSize) << "\n" <<
+                            Util::bytesToHexString(reinterpret_cast<const char *>(cpu_scratch), _rleSize) << "\n";
+                    }
                 }
+#endif
             }
+        // else CPU implementation
+            if (!done)
+                initPixRowCpu(from, scratch, &_rleSize, _rleMask, width);
 
-            _rleSize = outp;
-            if (outp > 0)
+            if (_rleSize > 0)
             {
                 _rleData = (uint32_t *)malloc((size_t)_rleSize * 4);
                 memcpy(_rleData, scratch, _rleSize * 4);
             }
             else
                 _rleData = nullptr;
-
-            // check our result
-            if (!noCompare)
-            {
-                if (memcmp(_rleMask, simd_rleMask, sizeof (_rleMask)))
-                {
-                    std::cerr << "Masks differ " <<
-                        Util::bytesToHexString(reinterpret_cast<const char *>(_rleMask), sizeof(_rleMask)) << "\n" <<
-                        Util::bytesToHexString(reinterpret_cast<const char *>(simd_rleMask), sizeof(_rleMask)) << "\n";
-                }
-                assert(_rleSize == simd_outp);
-                if(_rleSize > 0 && memcmp(scratch, simd_scratch, _rleSize))
-                {
-                    std::cerr << "RLE pixels differ mask:\n" <<
-                        Util::bytesToHexString(reinterpret_cast<const char *>(_rleMask), sizeof(_rleMask)) << "\n" <<
-                        "pixels:\n" <<
-                        Util::bytesToHexString(reinterpret_cast<const char *>(scratch), _rleSize) << "\n" <<
-                        Util::bytesToHexString(reinterpret_cast<const char *>(simd_scratch), _rleSize) << "\n";
-                }
-            }
         }
 
         bool identical(const DeltaBitmapRow &other) const
