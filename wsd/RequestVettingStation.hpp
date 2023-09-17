@@ -45,6 +45,11 @@ private:
     void checkFileInfo(SocketPoll& poll, const std::string& url, const Poco::URI& uriPublic,
                        const std::string& docKey, bool isReadOnly, int redirectionLimit);
 
+    /// Send an error to the client and disconnect the socket.
+    static void sendErrorAndShutdown(const std::shared_ptr<WebSocketHandler>& ws,
+                                     const std::shared_ptr<Socket>& socket, const std::string& msg,
+                                     WebSocketHandler::StatusCodes statusCode);
+
 private:
     const std::string _id;
     std::shared_ptr<WebSocketHandler> _ws;
