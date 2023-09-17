@@ -263,6 +263,15 @@ void RequestVettingStation::createDocBroker(const std::string& docKey, const std
                 _ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
                 moveSocket->ignoreInput();
             }
+            catch (const StorageSpaceLowException& exc)
+            {
+                LOG_ERR_S("Disk-Full error while starting session on "
+                          << docBroker->getDocKey() << " for socket #" << moveSocket->getFD()
+                          << ". Terminating connection. Error: " << exc.what());
+                const std::string msg = "error: cmd=internal kind=diskfull";
+                _ws->shutdown(WebSocketHandler::StatusCodes::UNEXPECTED_CONDITION, msg);
+                moveSocket->ignoreInput();
+            }
             catch (const std::exception& exc)
             {
                 LOG_ERR_S("Error while starting session on "
