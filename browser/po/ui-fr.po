@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-09-13 20:14+0000\n"
+"PO-Revision-Date: 2023-09-14 07:46+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
@@ -1168,7 +1168,7 @@ msgstr "Origine"
 #: src/control/Control.NotebookbarImpress.js:72
 #: src/control/Control.NotebookbarWriter.js:39
 msgid "Insert"
-msgstr "Insérer"
+msgstr "Insertion"
 
 #: src/control/Control.NotebookbarCalc.js:32
 #: src/control/Control.NotebookbarDraw.js:71
