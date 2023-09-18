@@ -116,6 +116,18 @@ window.app = {
 	var navigatorLang = navigator.languages && navigator.languages.length ? navigator.languages[0] :
 	    (navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage);
 
+	function getFirefoxVersion() {
+		var version = '';
+
+		var userAgent = navigator.userAgent.toLowerCase();
+		if (userAgent.indexOf('firefox') !== -1) {
+			var matches = userAgent.match(/firefox\/([0-9]+\.*[0-9]*)/);
+			if (matches) {
+				version = matches[1];
+			}
+		}
+		return version;
+	}
 
 	global.L = {};
 
@@ -148,6 +160,10 @@ window.app = {
 		// @property gecko: Boolean
 		// `true` for gecko-based browsers like Firefox.
 		gecko: gecko,
+
+		// @property geckoVersion: String
+		// Firefox version: abc.d.
+		geckoVersion: getFirefoxVersion(),
 
 		// @property android: Boolean
 		// `true` for any browser running on an Android platform.
