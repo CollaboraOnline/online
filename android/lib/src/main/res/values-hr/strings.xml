@@ -10,7 +10,7 @@
     <string name="temp_file_saving_disabled">Datoteka je zaštićena, spremanje je deaktivirano.</string>
     <string name="ask_for_copy">Ovaj dokument je samo-za-čitanje. Želiš li izraditi kopiju za uređivanje\?</string>
     <string name="edit_copy">Uredi kopiju</string>
-    <string name="view_only">Samo prikaz</string>
+    <string name="view_only">Samo za prikaz</string>
     <string name="restarting">Ponovo pokretanje …</string>
     <string name="exiting">Zatvaranje …</string>
     <string name="rate_our_app_text">Ako ti se sviđa, daj nam 5 zvjezdica na Google Play stranici. Tvoje dobre kritike su nam najbolja motivacija.</string>
