@@ -105,13 +105,14 @@ L.Control.Tabs = L.Control.extend({
 					return !areTabsMultiple();
 				}
 			};
-
-			L.installContextMenu({
-				selector: '.spreadsheet-tab',
-				className: 'cool-font',
-				items: this._menuItem,
-				zIndex: 1000
-			});
+			if (!this._map.isReadOnlyMode()) {
+				L.installContextMenu({
+					selector: '.spreadsheet-tab',
+					className: 'cool-font',
+					items: this._menuItem,
+					zIndex: 1000
+				});
+			}
 		}
 
 		map.on('updateparts', this._updateDisabled, this);
