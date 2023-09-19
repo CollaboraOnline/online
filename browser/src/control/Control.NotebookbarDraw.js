@@ -223,20 +223,20 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'container',
 				'children': [
 					{
-						'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
+						'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 						'class': 'unoexportas',
 						'type': 'customtoolitem',
 						'text': _('PDF Document (.pdf)'),
-						'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
+						'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 						'inlineLabel': true,
 						'accessibility': { focusBack: true, combination: 'EP', de: null }
 					},
 					{
-						'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+						'id': 'exportpdf' ,
 						'class': 'unoexportas',
 						'type': 'customtoolitem',
 						'text': _('PDF Document (.pdf) - Expert'),
-						'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+						'command': 'exportpdf' ,
 						'inlineLabel': true,
 						'accessibility': { focusBack: true, combination: 'ES', de: null }
 					},
