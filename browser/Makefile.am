@@ -807,14 +807,15 @@ check-local: $(MOCHA_TS_JS_FILES)
 		cat ${MOCHA_TEST_LOG}; \
 		exit 1; \
 	fi
-	@echo "Checking code duplication..."
-	@echo > ${DUPLICATION_TEST_LOG}
-	@if npm run duplication 2> ${DUPLICATION_TEST_LOG} 1>&2; then \
-		echo "Code duplication tests finished successfully."; \
-	else \
-		cat ${DUPLICATION_TEST_LOG}; \
-		exit 1; \
-	fi
+#       TODO: enable duplication checker. It also needs to be added into packages.
+#	@echo "Checking code duplication..."
+#	@echo > ${DUPLICATION_TEST_LOG}
+#	@if npm run duplication 2> ${DUPLICATION_TEST_LOG} 1>&2; then \
+#		echo "Code duplication tests finished successfully."; \
+#	else \
+#		cat ${DUPLICATION_TEST_LOG}; \
+#		exit 1; \
+#	fi
 
 # the delay (in milliseconds) between each emulated key stroke for each view
 typing_speed=100
