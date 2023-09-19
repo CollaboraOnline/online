@@ -284,17 +284,17 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'type': 'container',
 					'children': [
 						{
-							'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
+							'id': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 							'type': 'customtoolitem',
 							'text': _('PDF Document (.pdf)'),
-							'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-direct-pdf',
+							'command': !window.ThisIsAMobileApp ? 'exportdirectpdf' : 'downloadas-pdf',
 							'inlineLabel': true
 						},
 						{
-							'id': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+							'id': 'exportpdf' ,
 							'type': 'customtoolitem',
 							'text': _('PDF Document (.pdf) - Expert'),
-							'command': !window.ThisIsAMobileApp ? 'exportpdf' : 'downloadas-pdf',
+							'command': 'exportpdf' ,
 							'inlineLabel': true
 						},
 					],
