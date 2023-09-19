@@ -20,6 +20,16 @@
 
 	--default-font-size: 12px;
 	--header-font-size: 16px;
+	/* tab min font-size */
+	--tb-min-fs: 11px;
+	/* tab min font-size without units*/
+	--tb-min-fs-u: 11;
+	/* tab max font-size */
+	--tb-max-fs: 16px;
+	/* tab max font-size wihtout units*/
+	--tb-max-fs-u: 16;
+	/* tab font-size preferred value or scaler */
+	--tb-fs-s: 1vw;
 
 	--default-height: 24px;
 	--header-height: 38px;

@@ -20,11 +20,16 @@ button.ui-tab.notebookbar {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 0px 1em;
+	padding: 0 clamp(4px, 1vw, 1em);
 	border: 1px solid transparent;
 	border-radius: var(--border-radius);
 	background-color: transparent;
-	font-size: var(--header-font-size);
+	/* calc([minimum size]
+	   + ([maximum size] - [minimum size])
+	   * ((100vw - [minimum viewport width]) / ([maximum viewport width] - [minimum viewport width]))); */
+	font-size: calc(var(--tb-min-fs) + (var(--tb-max-fs-u) - var(--tb-min-fs-u)) * ((100vw - 640px) / (1000 - 640)));
+	/* a minimum value, a preferred value or scaler, and a maximum allowed value. */
+	font-size: clamp(var(--tb-min-fs), var(--tb-fs-s), var(--tb-max-fs));
 	font-family: var(--cool-font);
 	line-height: normal;
 	color: var(--color-main-text);

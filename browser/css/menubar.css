@@ -22,6 +22,14 @@
 .main-nav.hasnotebookbar.readonly > #main-menu #document-header {
 	display: none;
 }
+
+/* hide documen-header to free up space when using narrow windows */
+@media screen and (max-width: 800px) {
+	.main-nav.hasnotebookbar:not(.readonly) #document-header {
+		display: none !important;
+	}
+}
+
 .document-logo {
 	position: relative;
 	width: 30px;
@@ -54,8 +62,14 @@
 }
 
 .main-nav.hasnotebookbar:not(.readonly) #document-titlebar {
-	/* half of #document-name-input height: */
-	top: -9px;
+	display: flex;
+	align-self: center;
+}
+
+@media screen and (max-width: 1238px) {
+	.main-nav.hasnotebookbar:not(.readonly) #document-titlebar {
+		display: none;
+	}
 }
 
 .main-nav.readonly #optionstoolboxdown {
@@ -63,7 +77,7 @@
 }
 .main-nav {
 	height: var(--header-height); /* on mouseover menubar items, border emerges */
-	width: auto;
+	width: 100%;
 	background: var(--color-background-lighter);
 	padding: 3px 3px 3px 0;
 	white-space: nowrap;
