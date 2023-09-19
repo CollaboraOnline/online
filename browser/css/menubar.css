@@ -87,7 +87,7 @@
 .main-nav.hasnotebookbar:not(.readonly) {
 	background: var(--color-main-background);
 	padding: 0px;
-	overflow-x: auto;
+	overflow: scroll hidden;
 }
 
 /* Customizations to sm-simple theme to make it look like LO menu, lo-menu class */
