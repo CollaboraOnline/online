@@ -236,13 +236,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			$('#applystyle').val(state).trigger('change');
 		}
 		else if (commandName === '.uno:ModifiedStatus') {
-			if (e.state === 'true') {
-				$('#Save1').addClass('savemodified');
-				$('#Save').addClass('savemodified');
-			}
-			else {
-				$('#Save1').removeClass('savemodified');
-				$('#Save').removeClass('savemodified');
+			if (document.getElementById('save')) {
+				if (e.state === 'true')
+					document.getElementById('save').classList.add('savemodified');
+				else
+					document.getElementById('save').classList.remove('savemodified');
 			}
 		}
 	},
