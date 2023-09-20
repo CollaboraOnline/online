@@ -97,7 +97,7 @@ button.ui-tab.notebookbar {
 	padding: 0 2px;
 }
 
-#Save.savemodified:after {
+#save.savemodified:after {
 	content: '';
 	display: block;
 	width: 4px;
