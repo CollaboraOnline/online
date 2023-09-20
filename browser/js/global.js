@@ -1,5 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
-/* global Uint8Array */
+/* global Uint8Array _ */
 
 /*
 	For extending window.app object, please see "docstate.js" file.
@@ -729,6 +729,26 @@ window.app = {
 			this.unloading = true;
 		};
 
+		this.sendPostMsg = function(errorCode) {
+			var errorMsg;
+			if (errorCode === 0) {
+				errorMsg = _('Cluster is scaling, please retry after few seconds');
+			} else if (errorCode === 1) {
+				errorMsg = _('Document is migrating to new server, please retry after few seconds');
+			} else {
+				errorMsg = _('Failed to get RouteToken from controller');
+			}
+			var msg = {
+				'MessageId': 'Action_Load_Resp',
+				'SendTime': Date.now(),
+				'Values': {
+					success: false,
+					errorMsg: errorMsg,
+				}
+			};
+			window.parent.postMessage(JSON.stringify(msg), '*');
+		};
+
 		var http = new XMLHttpRequest();
 		http.open('GET', global.indirectionUrl + '?Uri=' + encodeURIComponent(that.uri), true);
 		http.responseType = 'json';
@@ -761,15 +781,7 @@ window.app = {
 					that.onmessage(e);
 				};
 			} else if (this.status === 202) {
-				var msg = {
-					'MessageId': 'Action_Load_Resp',
-					'SendTime': Date.now(),
-					'Values': {
-						success: false,
-						errorMsg: http.response.errorMsg,
-					}
-				};
-				window.parent.postMessage(JSON.stringify(msg), '*');
+				that.sendPostMsg(http.response.errorCode);
 				var timeoutFn = function (indirectionUrl, uri) {
 					console.warn('Requesting again for routeToken');
 					this.open('GET', indirectionUrl + '?Uri=' + encodeURIComponent(uri), true);
@@ -778,6 +790,7 @@ window.app = {
 				setTimeout(timeoutFn, 10000, global.indirectionUrl, that.uri);
 			} else {
 				window.app.console.error('Indirection url: error on incoming response ' + this.status);
+				that.sendPostMsg(-1);
 			}
 		});
 		http.send();
