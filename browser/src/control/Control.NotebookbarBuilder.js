@@ -237,10 +237,14 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		}
 		else if (commandName === '.uno:ModifiedStatus') {
 			if (document.getElementById('save')) {
-				if (e.state === 'true')
+				if (state === 'true') {
 					document.getElementById('save').classList.add('savemodified');
-				else
+					document.getElementById('file-save').classList.add('savemodified');
+				}
+				else {
 					document.getElementById('save').classList.remove('savemodified');
+					document.getElementById('file-save').classList.remove('savemodified');
+				}
 			}
 		}
 	},
