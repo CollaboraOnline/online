@@ -26,11 +26,6 @@ mv -f certs/servers/localhost/cert.pem /etc/coolwsd/cert.pem
 mv -f certs/ca/root.crt.pem /etc/coolwsd/ca-chain.cert.pem
 fi
 
-# Disable warning/info messages of LOKit by default
-if test "${SAL_LOG-set}" = set; then
-SAL_LOG="-INFO-WARN"
-fi
-
 # Replace trusted host and set admin username and password - only if they are set
 if test -n "${aliasgroup1}" -o -n "${domain}" -o -n "${remoteconfigurl}"; then
     perl -w /start-collabora-online.pl || { exit 1; }
