@@ -987,7 +987,7 @@ public:
         {
             LOG_DBG("Trimming Core caches");
             SigUtil::addActivity("trimAfterInactivity");
-            _loKit->trimMemory(4096);
+            _loKit->trimMemory(1024);
 
             _lastMemTrimTime = std::chrono::steady_clock::now();
         }
