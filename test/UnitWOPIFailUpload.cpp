@@ -626,7 +626,7 @@ public:
 /// which fails. We close the document and verify
 /// that the document is uploaded upon closing.
 /// Modify, Save, Upload fails, close -> Upload.
-class UnitFailUplaodClose : public WopiTestServer
+class UnitFailUploadClose : public WopiTestServer
 {
     using Base = WopiTestServer;
 
@@ -635,8 +635,8 @@ class UnitFailUplaodClose : public WopiTestServer
     _phase;
 
 public:
-    UnitFailUplaodClose()
-        : WopiTestServer("UnitFailUplaodClose")
+    UnitFailUploadClose()
+        : WopiTestServer("UnitFailUploadClose")
         , _phase(Phase::Load)
     {
     }
@@ -763,7 +763,7 @@ UnitBase** unit_create_wsd_multi(void)
             new UnitWOPIReadOnly(UnitWOPIReadOnly::Scenario::Edit, /*disconnect=*/false),
             new UnitWOPIReadOnly(UnitWOPIReadOnly::Scenario::ViewWithComment, /*disconnect=*/true),
             new UnitWOPIReadOnly(UnitWOPIReadOnly::Scenario::Edit, /*disconnect=*/true),
-            new UnitFailUploadModified(), new UnitFailUplaodClose(), nullptr
+            new UnitFailUploadModified(), new UnitFailUploadClose(), nullptr
     };
 }
 
