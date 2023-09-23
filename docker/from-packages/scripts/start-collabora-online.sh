@@ -26,22 +26,5 @@ mv -f certs/servers/localhost/cert.pem /etc/coolwsd/cert.pem
 mv -f certs/ca/root.crt.pem /etc/coolwsd/ca-chain.cert.pem
 fi
 
-# Replace trusted host and set admin username and password - only if they are set
-if test -n "${aliasgroup1}" -o -n "${domain}" -o -n "${remoteconfigurl}"; then
-    perl -w /start-collabora-online.pl || { exit 1; }
-fi
-if test -n "${username}"; then
-    perl -pi -e "s/<username (.*)>.*<\/username>/<username \1>${username}<\/username>/" /etc/coolwsd/coolwsd.xml
-fi
-if test -n "${password}"; then
-    perl -pi -e "s/<password (.*)>.*<\/password>/<password \1>${password}<\/password>/" /etc/coolwsd/coolwsd.xml
-fi
-if test -n "${server_name}"; then
-    perl -pi -e "s/<server_name (.*)>.*<\/server_name>/<server_name \1>${server_name}<\/server_name>/" /etc/coolwsd/coolwsd.xml
-fi
-if test -n "${dictionaries}"; then
-    perl -pi -e "s/<allowed_languages (.*)>.*<\/allowed_languages>/<allowed_languages \1>${dictionaries:-de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru}<\/allowed_languages>/" /etc/coolwsd/coolwsd.xml
-fi
-
 # Start coolwsd
-exec /usr/bin/coolwsd --version --o:sys_template_path=/opt/cool/systemplate --o:child_root_path=/opt/cool/child-roots --o:file_server_root_path=/usr/share/coolwsd --o:logging.color=false --o:stop_on_config_change=true ${extra_params}
+exec /usr/bin/coolwsd --version --use-env-vars --o:sys_template_path=/opt/cool/systemplate --o:child_root_path=/opt/cool/child-roots --o:file_server_root_path=/usr/share/coolwsd --o:logging.color=false --o:stop_on_config_change=true ${extra_params}
