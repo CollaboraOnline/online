@@ -90,6 +90,7 @@ if ${trace} \
 				   --unitlib="${abs_top_builddir}/test/.libs/$tst.so" 2> "$tst_log" 1>&2; then
 	echo "Test $tst passed. Finished in ${SECONDS}s."
 	echo ":test-result: PASS $tst" >> $test_output
+	exit 0
 else
 	echo "Test $tst FAILED. Finished in ${SECONDS}s."
 	cat $tst_log
@@ -112,5 +113,6 @@ else
 	echo "============================================================="
 	echo ":test-result: FAIL $tst" >> $test_output
 fi
+exit 1
 
 # vim:set shiftwidth=4 expandtab:
