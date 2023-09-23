@@ -122,9 +122,8 @@ RUN --mount=type=secret,id=secret_key \
     rm -rf /etc/coolwsd/proof_key*
 
 # FIXME
-# Use the old starter scripts until we find out how to replace them.
+# Use the old starter script until we find out how to replace it.
 COPY /scripts/start-collabora-online.sh /
-COPY /scripts/start-collabora-online.pl /
 
 # coolwsd listens on port 9980
 EXPOSE 9980
@@ -133,6 +132,6 @@ EXPOSE 9980
 USER 100
 
 # FIXME
-# Use the old starter scripts until we find out how to replace them.
+# Use the old starter script until we find out how to replace it.
 CMD ["/start-collabora-online.sh"]
 
