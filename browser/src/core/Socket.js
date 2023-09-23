@@ -1469,6 +1469,10 @@ app.definitions.Socket = L.Class.extend({
 		if (msgData.type === 'messagebox')
 			this._preProcessMessageDialog(msgData);
 
+		// appears in autofilter dropdown for hidden popups, we can ignore that
+		if (msgData.jsontype === 'popup')
+			return;
+
 		// re/create
 		if (window.mode.isMobile()) {
 			if (msgData.type == 'borderwindow')
@@ -1481,10 +1485,8 @@ app.definitions.Socket = L.Class.extend({
 				msgData.type === 'modalpopup' || msgData.type === 'snackbar') {
 				this._map.fire('mobilewizard', {data: msgData, callback: callback});
 			} else {
-				console.warn('jsdialog: unhandled mobile message');
+				console.warn('jsdialog: unhandled jsdialog mobile message: {jsontype: "' + msgData.jsontype + '", type: "' + msgData.type + '" ... }');
 			}
-		} else if (msgData.jsontype === 'autofilter') {
-			this._map.fire('autofilterdropdown', msgData);
 		} else if (msgData.jsontype === 'dialog') {
 			this._map.fire('jsdialog', {data: msgData, callback: callback});
 		} else if (msgData.jsontype === 'sidebar') {
@@ -1501,6 +1503,8 @@ app.definitions.Socket = L.Class.extend({
 					}
 				}
 			}
+		} else {
+			console.warn('Unhandled jsdialog message: {jsontype: "' + msgData.jsontype + '", type: "' + msgData.type + '" ... }');
 		}
 	},
 
