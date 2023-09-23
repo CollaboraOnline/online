@@ -385,9 +385,6 @@ L.Control.MobileWizardWindow = L.Control.extend({
 
 	_onMobileWizard: function(data, callback) {
 		if (data) {
-			if (data.jsontype === 'autofilter' && (data.visible === 'false' || data.visible === false))
-				return;
-
 			if (data.jsontype === 'dialog' && data.action === 'close') {
 				this.parent.removeWindow(this, false);
 				return;
