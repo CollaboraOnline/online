@@ -43,15 +43,8 @@ if test -n "${dictionaries}"; then
     perl -pi -e "s/<allowed_languages (.*)>.*<\/allowed_languages>/<allowed_languages \1>${dictionaries:-de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru}<\/allowed_languages>/" /etc/coolwsd/coolwsd.xml
 fi
 
-# Restart when /etc/coolwsd/coolwsd.xml changes
-[ -x /usr/bin/inotifywait -a -x /usr/bin/killall ] && (
-  /usr/bin/inotifywait -e modify /etc/coolwsd/coolwsd.xml
-  echo "$(ls -l /etc/coolwsd/coolwsd.xml) modified --> restarting"
-  /usr/bin/killall -1 coolwsd
-) &
-
 # Generate WOPI proof key
 coolconfig generate-proof-key
 
 # Start coolwsd
-exec /usr/bin/coolwsd --version --o:sys_template_path=/opt/cool/systemplate --o:child_root_path=/opt/cool/child-roots --o:file_server_root_path=/usr/share/coolwsd --o:logging.color=false ${extra_params}
+exec /usr/bin/coolwsd --version --o:sys_template_path=/opt/cool/systemplate --o:child_root_path=/opt/cool/child-roots --o:file_server_root_path=/usr/share/coolwsd --o:logging.color=false --o:stop_on_config_change=true ${extra_params}
