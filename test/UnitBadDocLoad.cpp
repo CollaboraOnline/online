@@ -62,6 +62,20 @@ UnitBase::TestResult UnitBadDocLoad::testBadDocLoadFail()
         // Send a load request with incorrect password
         helpers::sendTextFrame(socket, "load url=" + documentURL, testname);
 
+        // We receive jsdialog with question about repair
+        const auto dialog = helpers::getResponseString(socket, "jsdialog:", testname);
+        LOK_ASSERT_EQUAL(true, dialog.size() > 0);
+
+        // Click "Yes" in a dialog
+        helpers::sendTextFrame(socket, "dialogevent 1 {\"id\":\"yes\", \"cmd\": \"click\", \"data\": \"2\", \"type\": \"responsebutton\"}", testname);
+
+        // We receive jsdialog with warning that repair failed
+        const auto dialog2 = helpers::getResponseString(socket, "jsdialog:", testname);
+        LOK_ASSERT_EQUAL(true, dialog2.size() > 0);
+
+        // Click "Ok"
+        helpers::sendTextFrame(socket, "dialogevent 2 {\"id\":\"ok\", \"cmd\": \"click\", \"data\": \"1\", \"type\": \"responsebutton\"}", testname);
+
         const auto response = helpers::getResponseString(socket, "error:", testname);
         StringVector tokens(StringVector::tokenize(response, ' '));
         LOK_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
