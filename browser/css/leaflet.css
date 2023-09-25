@@ -228,7 +228,7 @@
 	border-radius: 4px;
 }
 
-.anchor-marker:hover {
+.anchor-marker.hover {
 	background-color: rgba(255,255,255,.95);
 	cursor: grab;
 	border: 1px solid var(--color-primary);
@@ -268,7 +268,7 @@
 	border-bottom: solid 1px var(--color-border);
 }
 .leaflet-bar a,
-.leaflet-bar a:hover {
+.leaflet-bar a.hover {
 	background-color: #fff;
 	border-bottom: 1px solid #ccc;
 	width: 26px;
@@ -285,7 +285,7 @@
 	background-repeat: no-repeat;
 	display: block;
 }
-.leaflet-bar a:hover {
+.leaflet-bar a.hover {
 	background-color: #f4f4f4;
 }
 .leaflet-bar a:first-child {
@@ -346,7 +346,7 @@
 
 .leaflet-control-buttons,
 a.leaflet-control-buttons,
-a.leaflet-control-buttons:hover {
+a.leaflet-control-buttons.hover {
 	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
 	background: #fff;
 	border-radius: var(--border-radius);
@@ -356,12 +356,12 @@ a.leaflet-control-buttons:hover {
 }
 
 a.leaflet-control-buttons,
-a.leaflet-control-buttons:hover {
+a.leaflet-control-buttons.hover {
 	margin-left: 3px;
 }
 
 a.leaflet-control-buttons:first-child,
-a.leaflet-control-buttons:hover:first-child {
+a.leaflet-control-buttons.hover:first-child {
 	margin-left: 0px;
 }
 
@@ -443,7 +443,7 @@ a.leaflet-control-buttons:hover:first-child {
 .leaflet-control-attribution a {
 	text-decoration: none;
 }
-.leaflet-control-attribution a:hover {
+.leaflet-control-attribution a.hover {
 	text-decoration: underline;
 }
 .leaflet-container .leaflet-control-attribution,
@@ -510,7 +510,7 @@ a.leaflet-control-buttons:hover:first-child {
 .leaflet-popup-content p {
 	margin: 18px 0;
 }
-.leaflet-popup-content tr:hover {
+.leaflet-popup-content tr.hover {
 	background-color: var(--color-background-darker);
 	color: var(--color-text-darker);
 	cursor: pointer;
@@ -574,7 +574,7 @@ a.leaflet-control-buttons:hover:first-child {
 	background: var(--color-background-darker);
 	border: 1px solid var(--color-btn-border);
 }
-.leaflet-container a.leaflet-popup-close-button:hover {
+.leaflet-container a.leaflet-popup-close-button.hover {
 	background-color: var(--color-background-darker);
 	border: 1px solid var(--color-border-darker);
 }
@@ -667,7 +667,7 @@ a.leaflet-control-buttons:hover:first-child {
 	font-size: 9px;
 }
 
-div.leaflet-cursor-container:hover > .leaflet-cursor-header {
+div.leaflet-cursor-container.hover > .leaflet-cursor-header {
 	visibility: visible !important;
 }
 
@@ -1078,7 +1078,7 @@ input.clipboard {
 }
 
 /* FIXME when we are able to drag it again:
-path.leaflet-pane-splitter:hover {
+path.leaflet-pane-splitter.hover {
 	opacity: 1 !important;
 	stroke: #cdcdcd;
 	fill: #cdcdcd;

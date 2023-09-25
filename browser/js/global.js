@@ -306,6 +306,26 @@ window.app = {
 		}
 	}, false);
 
+	var hoverSupported = window.matchMedia('(any-hover: hover)');
+	document.addEventListener('mouseout', function (e) {
+		var toRemoveElement = e.target;
+
+		while (toRemoveElement && toRemoveElement.classList) {
+			toRemoveElement.classList.remove('hover');
+			toRemoveElement = toRemoveElement.parentElement;
+		}
+	});
+	document.addEventListener('mouseover', function (e) {
+		if (!hoverSupported.matches) return;
+
+		var toAddElement = e.target;
+
+		while (toAddElement && toAddElement.classList) {
+			toAddElement.classList.add('hover');
+			toAddElement = toAddElement.parentElement;
+		}
+	});
+
 	global.fakeWebSocketCounter = 0;
 	global.FakeWebSocket = function () {
 		this.binaryType = 'arraybuffer';

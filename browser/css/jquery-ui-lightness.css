@@ -186,7 +186,7 @@
 .ui-button,
 .ui-button:link,
 .ui-button:visited,
-.ui-button:hover,
+.ui-button.hover,
 .ui-button:active {
 	text-decoration: none;
 }
@@ -304,7 +304,7 @@ button.ui-button::-moz-focus-inner {
 	border: none;
 }
 .ui-checkboxradio-radio-label.ui-checkboxradio-checked .ui-icon,
-.ui-checkboxradio-radio-label.ui-checkboxradio-checked:hover .ui-icon {
+.ui-checkboxradio-radio-label.ui-checkboxradio-checked.hover .ui-icon {
 	background-image: none;
 	width: 8px;
 	height: 8px;
@@ -458,11 +458,11 @@ button.ui-button::-moz-focus-inner {
 	left: 2px;
 	right: auto;
 }
-.ui-datepicker-rtl .ui-datepicker-prev:hover {
+.ui-datepicker-rtl .ui-datepicker-prev.hover {
 	right: 1px;
 	left: auto;
 }
-.ui-datepicker-rtl .ui-datepicker-next:hover {
+.ui-datepicker-rtl .ui-datepicker-next.hover {
 	left: 1px;
 	right: auto;
 }
@@ -933,7 +933,7 @@ body .ui-tooltip,
 }
 .ui-tooltip-content,
 [data-title]:after,
-.menubutton.sidebar:hover span {
+.menubutton.sidebar.hover span {
 	font-size: 0.8em;
 	color: var(--color-main-text);
 	background: var(--color-background-lighter);
@@ -948,7 +948,7 @@ body .ui-tooltip,
 
 /* We use html here because we need a greater specificity to make sure disabled
 works properly when clicked or hovered */
-html .ui-button.ui-state-disabled:hover,
+html .ui-button.ui-state-disabled.hover,
 html .ui-button.ui-state-disabled:active {
 	border: 1px solid #cccccc;
 	background: #f6f6f6 url("images/ui-bg_glass_100_f6f6f6_1x400.png") 50% 50% repeat-x;
@@ -971,21 +971,21 @@ a:visited.ui-button,
 .ui-state-focus,
 .ui-widget-content .ui-state-focus,
 .ui-widget-header .ui-state-focus,
-.ui-button:hover,
+.ui-button.hover,
 .ui-button:focus {
 	border: 1px solid var(--color-primary-dark);
 	background: var(--color-primary) url("images/ui-bg_glass_100_fdf5ce_1x400.png") 50% 50% repeat-x;
 	font-weight: bold;
 }
 .ui-state-hover a,
-.ui-state-hover a:hover,
+.ui-state-hover a.hover,
 .ui-state-hover a:link,
 .ui-state-hover a:visited,
 .ui-state-focus a,
-.ui-state-focus a:hover,
+.ui-state-focus a.hover,
 .ui-state-focus a:link,
 .ui-state-focus a:visited,
-a.ui-button:hover,
+a.ui-button.hover,
 a.ui-button:focus {
 	color: #c77405;
 	text-decoration: none;
@@ -999,7 +999,7 @@ a.ui-button:focus {
 .ui-widget-header .ui-state-active,
 a.ui-button:active,
 .ui-button:active,
-.ui-button.ui-state-active:hover {
+.ui-button.ui-state-active.hover {
 	border: 1px solid #fbd850;
 	background: #ffffff url("images/ui-bg_glass_65_ffffff_1x400.png") 50% 50% repeat-x;
 	font-weight: bold;
@@ -1089,7 +1089,7 @@ a.ui-button:active,
 }
 .ui-state-hover .ui-icon,
 .ui-state-focus .ui-icon,
-.ui-button:hover .ui-icon,
+.ui-button.hover .ui-icon,
 .ui-button:focus .ui-icon {
 	background-image: url("images/ui-icons_228ef1_256x240.png");
 }
@@ -1326,7 +1326,7 @@ a.ui-button:active,
 }
 .ui-widget-shadow,
 [data-title]:after,
-.menubutton.sidebar:hover span {
+.menubutton.sidebar.hover span {
 	-webkit-box-shadow: 0px 0px 4px 2px var(--color-box-shadow);
 	box-shadow: 0px 0px 4px 2px var(--color-box-shadow);
 }

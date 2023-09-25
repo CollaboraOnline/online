@@ -187,7 +187,7 @@
 	cursor: col-resize;
 }
 
-.table-column-resize-marker:hover {
+.table-column-resize-marker.hover {
 	margin-left: 0px;
 	margin-top: 0px;
 	width: var(--btn-size);
@@ -209,7 +209,7 @@
 	cursor: row-resize;
 }
 
-.table-row-resize-marker:hover {
+.table-row-resize-marker.hover {
 	margin-left: 0px;
 	margin-top: 0px;
 	width: var(--btn-size);
@@ -246,11 +246,11 @@
 	height: 100%;
 }
 
-.table-select-marker:hover {
+.table-select-marker.hover {
 	background: url('images/table-row-or-column-select-marker-selected.svg') no-repeat center center /12px;
 }
 
-.table-select-marker:hover::before {
+.table-select-marker.hover::before {
 	border-color: var(--color-primary);
 }
 
@@ -397,7 +397,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	background-color: var(--color-background);
 	border-color: var(--color-primary) !important;
 }
-#search-input:hover {
+#search-input.hover {
 	border: 1px solid var(--color-border-darker) !important;
 }
 #search-input::placeholder {
@@ -516,7 +516,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	left: 48px !important;
 }
 
-#document-container > .cool-annotation:hover .cool-annotation-collapsed{
+#document-container > .cool-annotation.hover .cool-annotation-collapsed{
 	box-shadow: 0 0 3px 0 rgb(0 0 0 / 50%), 0 0 10px 4px rgb(0 0 0 / 10%);
 	cursor: pointer;
 }
@@ -534,8 +534,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	width: auto;
 }
 
-.cool-annotation:not(.annotation-active) .cool-annotation-content-wrapper:hover,
-.cool-annotation:not(.annotation-active) .cool-annotation-redline-content-wrapper:hover {
+.cool-annotation:not(.annotation-active) .cool-annotation-content-wrapper.hover,
+.cool-annotation:not(.annotation-active) .cool-annotation-redline-content-wrapper.hover {
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
 }
@@ -758,7 +758,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	background: url('images/submenu.svg') no-repeat center/contain !important;
 }
 
-.cool-annotation-menu:hover, .cool-annotation-menu-redline:hover, .cool-redline-accept-button:hover, .cool-redline-reject-button:hover {
+.cool-annotation-menu.hover, .cool-annotation-menu-redline.hover, .cool-redline-accept-button.hover, .cool-redline-reject-button.hover {
 	border: 1px solid var(--color-border-darker);
 }
 
@@ -778,7 +778,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 /*Tooltips
 ----------------------------------*/
-[data-title]:hover:after {
+[data-title].hover:after {
 	padding: 7px 9px;
 	font-size: 1em;
 	line-height: 1;
@@ -786,7 +786,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	transition: all 0.1s ease 0.5s;
 	visibility: visible;
 }
-.cool-annotation-collapsed [data-title]:hover:after {
+.cool-annotation-collapsed [data-title].hover:after {
 	position: static;
 	float: right;
 	margin-top: 22px;
@@ -824,7 +824,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 
 .cool-bar a,
-.cool-bar a:hover {
+.cool-bar a.hover {
 	background-color: var(--color-background-lighter);
 	border-bottom: 1px solid var(--color-border);
 	width: 30px;
@@ -836,7 +836,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	color: var(--color-main-text);
 }
 
-.cool-bar a:hover {
+.cool-bar a.hover {
 	background-color: var(--color-background-darker);
 }
 
@@ -947,7 +947,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	border-radius: var(--border-radius);
 }
 
-.form-field-button:hover, .form-field-button:focus {
+.form-field-button.hover, .form-field-button:focus {
 	background-color: var(--color-background-dark);
 	outline: 0;
 }
@@ -972,7 +972,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 .drop-down-field-list-item.selected {
 	background-color: var(--color-primary-lighter);
 }
-.drop-down-field-list-item:hover {
+.drop-down-field-list-item.hover {
 	background-color: var(--color-primary);
 }
 
@@ -1001,7 +1001,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	height: 26px;
 }
 
-.hyperlink-popup-btn:hover {
+.hyperlink-popup-btn.hover {
 	background-color: var(--color-background-darker);
 	border-radius: 50%;
 }

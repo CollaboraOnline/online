@@ -260,7 +260,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	box-shadow: 0 0 2px 1px var(--color-box-shadow) !important;
 }
 
-.ui-tab.jsdialog:not(.selected):hover {
+.ui-tab.jsdialog:not(.selected).hover {
 	cursor: pointer !important;
 	background-color: var(--color-background-darker) !important;
 	color: var(--color-text-darker) !important;
@@ -345,7 +345,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: none;
 }
 
-.ui-expander:hover {
+.ui-expander.hover {
 	cursor: pointer;
 }
 
@@ -464,8 +464,8 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	background-color: var(--color-background-darker) !important;
 }
 
-.ui-treeview-entry:hover,
-.ui-listview-entry:hover {
+.ui-treeview-entry.hover,
+.ui-listview-entry.hover {
 	background-color: var(--color-background-darker);
 	color: var(--color-text-darker);
 }
@@ -478,7 +478,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 .ui-treeview.droptarget {
 	border: 1px solid #888;
 }
-.ui-treeview.droptarget:hover{
+.ui-treeview.droptarget.hover{
 	border: 1px solid #888;
 	box-shadow: 0 0 2px 0 #777;
 }
@@ -589,7 +589,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	color: var(--color-text-dark);
 }
 
-.spinfieldcontainer input:not([disabled]):hover {
+.spinfieldcontainer input:not([disabled]).hover {
 	border: 1px solid var(--color-border-darker);
 	color: var(--color-text-darker);
 	background-color: var(--color-background-lighter);
@@ -623,8 +623,8 @@ input[type='number']::-webkit-outer-spin-button {
 	margin: 0;
 }
 
-input[type='number']:hover::-webkit-inner-spin-button,
-input[type='number']:hover::-webkit-outer-spin-button {
+input[type='number'].hover::-webkit-inner-spin-button,
+input[type='number'].hover::-webkit-outer-spin-button {
 	opacity: 1;
 	cursor: pointer;
 }
@@ -735,12 +735,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	width: calc(100% + 15px); /* + padding for scrollbar */
 }
 
-.ui-combobox-entry span:hover {
+.ui-combobox-entry span.hover {
 	border: 1px solid var(--color-border-darker);
 	background-color: var(--color-background-darker);
 }
 
-.ui-combobox-entry.selected span:not(:hover) {
+.ui-combobox-entry.selected span:not(.hover) {
 	border: 1px solid var(--color-primary);
 	background-color: var(--color-primary);
 	color: var(--color-primary-text);
@@ -761,12 +761,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	max-height: 24px; /* required for hidpi*/
 }
 
-.ui-combobox-entry img:hover {
+.ui-combobox-entry img.hover {
 	border: 1px solid var(--color-border-darker);
 	filter: contrast(0.5);
 }
 
-.ui-combobox-entry.selected img:not(:hover) {
+.ui-combobox-entry.selected img:not(.hover) {
 	border: 1px solid var(--color-primary);
 }
 
@@ -831,7 +831,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: var(--color-background-dark);
 }
 
-.ui-iconview-entry:hover {
+.ui-iconview-entry.hover {
 	border: 1px solid var(--color-border-darker);
 	background-color: var(--color-background-darker);
 }
@@ -1052,7 +1052,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
 }
-#MacroSelectorDialog #categories .ui-treeview-entry:hover, #MacroSelectorDialog #categories .ui-treeview-entry.selected:hover, #MacroSelectorDialog #categories .ui-listview-entry:hover, #MacroSelectorDialog #categories .ui-listview-entry.selected:hover, #MacroSelectorDialog #categories .ui-treeview-entry.selected {
+#MacroSelectorDialog #categories .ui-treeview-entry.hover, #MacroSelectorDialog #categories .ui-treeview-entry.selected.hover, #MacroSelectorDialog #categories .ui-listview-entry.hover, #MacroSelectorDialog #categories .ui-listview-entry.selected.hover, #MacroSelectorDialog #categories .ui-treeview-entry.selected {
 	background-color: var(--color-background-darker);
 	color: var(--color-text-darker);
 }
@@ -1080,7 +1080,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin-left: 3px;
 }
 
-.unoarrow:not([disabled]):hover, .menubutton .arrow:not([disabled]):hover {
+.unoarrow:not([disabled]).hover, .menubutton .arrow:not([disabled]).hover {
 	border-top: 5px solid var(--color-text-darker);
 }
 
@@ -1092,12 +1092,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background-color: transparent;
 }
 
-.arrowbackground:hover {
+.arrowbackground.hover {
 	border-left-color: transparent;
 	background-color: transparent;
 }
 
-.unoarrow:not([disabled]):hover, .arrowbackground:not([disabled]):hover .unoarrow {
+.unoarrow:not([disabled]).hover, .arrowbackground:not([disabled]).hover .unoarrow {
 	border-top-color: var(--color-text-darker);
 }
 
@@ -1425,7 +1425,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	font-size: var(--header-font-size) !important;
 	padding: 8px;
 }
-.snackbar.jsdialog-container #button:hover {
+.snackbar.jsdialog-container #button.hover {
 	background-color: #ffffff15 !important;
 }
 
@@ -1552,7 +1552,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin-inline-start: 3px;
 }
 
-.formulabar.unotoolbutton:hover {
+.formulabar.unotoolbutton.hover {
 	opacity: 1;
 }
 
@@ -1603,10 +1603,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 /* hover effect */
-.jsdialog.menubutton:not([disabled]):hover,
-.ui-listbox:not([disabled]):hover,
-.jsdialog.ui-edit:not([disabled]):hover,
-.jsdialog.ui-textarea:not([disabled]):hover {
+.jsdialog.menubutton:not([disabled]).hover,
+.ui-listbox:not([disabled]).hover,
+.jsdialog.ui-edit:not([disabled]).hover,
+.jsdialog.ui-textarea:not([disabled]).hover {
 	color: var(--color-text-darker);
 	background-color: var(--color-background-lighter);
 	border: 1px solid var(--color-border-darker);

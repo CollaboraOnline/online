@@ -16,7 +16,7 @@
 	--color-background-document: #FFFFFF;
 	--color-main-background: #F8F9FA;
 	--color-background-dark: #e8e8e8;  /* select */
-	--color-background-darker: #c0bfbc;  /* todo: apply to pressed (active), li:hover(top menu on classic mode)*/
+	--color-background-darker: #c0bfbc;  /* todo: apply to pressed (active), li.hover(top menu on classic mode)*/
 	--color-background-lighter: #fff; /* hover, toolbar, dialog, disabled */
 	--color-overlay: #1c5fa814;
 

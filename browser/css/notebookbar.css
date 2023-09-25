@@ -49,7 +49,7 @@ button.ui-tab.notebookbar {
 	color: var(--color-text-darker) !important;
 }
 
-.ui-tab.notebookbar:hover {
+.ui-tab.notebookbar.hover {
 	background: var(--color-background-darker) !important;
 	border: 1px solid var(--color-border-darker) !important;
 	cursor: pointer !important;
@@ -269,10 +269,10 @@ button.ui-tab.notebookbar {
 	border-top-right-radius: 12px;
 	border-bottom-right-radius: 12px;
 }
-#table-HomeTab .unospan-uptoolbar:not(.disabled):hover{
+#table-HomeTab .unospan-uptoolbar:not(.disabled).hover{
 	box-shadow: -2px 0 2px 2px #e6e6e6b0;
 }
-#table-HomeTab .unospan-downtoolbar:not(.disabled):hover{
+#table-HomeTab .unospan-downtoolbar:not(.disabled).hover{
 	box-shadow: 2px 0 2px 2px #e6e6e6b0;
 }
 #table-HomeTab .unospan-uptoolbar img, #table-HomeTab .unospan-downtoolbar img {
@@ -292,7 +292,7 @@ button.ui-tab.notebookbar {
 	cursor: not-allowed;
 }
 
-.locking-disabled:hover {
+.locking-disabled.hover {
 	opacity: 1;
 }
 
@@ -439,7 +439,7 @@ button.ui-tab.notebookbar {
 	border: 1px solid transparent;
 }
 
-#stylesview .ui-iconview-entry:not(.selected):hover {
+#stylesview .ui-iconview-entry:not(.selected).hover {
 	border: 1px solid var(--color-border-dark);
 	-webkit-box-shadow: 0 0 2px 0 var(--color-background-darker);
 	box-shadow: 0 0 2px 0 var(--color-background-darker);

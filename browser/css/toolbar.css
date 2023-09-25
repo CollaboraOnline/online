@@ -23,7 +23,7 @@
 	font-family: var(--cool-font);
 	color: var(--color-main-text);
 }
-#toolbar-down *:hover {
+#toolbar-down *.hover {
 	color: var(--color-text-darker);
 }
 #toolbar-down:not(.mobile) {
@@ -126,7 +126,7 @@ w2ui-toolbar {
 	color: var(--color-main-text);
 	background-color: var(--color-main-background);
 }
-.w2ui-overlay table.w2ui-drop-menu tr:hover {
+.w2ui-overlay table.w2ui-drop-menu tr.hover {
 	color: var(--color-text-darker);
 	background-color: var(--color-background-darker);
 }
@@ -214,8 +214,8 @@ w2ui-toolbar {
 	/* #toolbar-wrapper:not(.mobile)'s top padding */
 	top: 3px;
 }
-.w2ui-scroll-left:hover,
-.w2ui-scroll-right:hover {
+.w2ui-scroll-left.hover,
+.w2ui-scroll-right.hover {
 	background-color: var(--color-background-darker);
 }
 
@@ -329,7 +329,7 @@ w2ui-toolbar {
 	text-align: center;
 }
 
-#document-name-input.editable:hover:not(:focus) {
+#document-name-input.editable.hover:not(:focus) {
 	border: none;
 	box-shadow: 0 0 0.1px 1px #d7d7d7, 0 0 3px 2px #f0f0f0;
 	background-color: var(--color-main-background);
@@ -372,7 +372,7 @@ td[id^='tb_editbar_item_sidebar']{
 	background: url('images/closedoc.svg') no-repeat center/35px !important;
 }
 
-#closebutton:hover {
+#closebutton.hover {
 	border-color: var(--color-border-darker);
 	background-color: var(--color-background-darker);
 }
@@ -496,9 +496,9 @@ button.leaflet-control-search-next
 	color: var(--color-text-dark);
 	border-radius: var(--border-radius);
 }
-.select2-container--default .select2-selection--single .select2-selection__rendered:hover,
-.sidebar.jsdialog.ui-listbox:hover,
-.w2ui-toolbar table.w2ui-button.checked:hover {
+.select2-container--default .select2-selection--single .select2-selection__rendered.hover,
+.sidebar.jsdialog.ui-listbox.hover,
+.w2ui-toolbar table.w2ui-button.checked.hover {
 	background-color: var(--color-background-lighter);
 	color: var(--color-text-darker);
 }
@@ -573,7 +573,7 @@ button.leaflet-control-search-next
 	overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
 }
 
-#setborderstyle-grid td:hover {
+#setborderstyle-grid td.hover {
 	background-color: var(--color-background-darker);
 	border: 1px solid var(--color-border-darker);
 	color: var(--color-text-darker);
@@ -589,7 +589,7 @@ button.leaflet-control-search-next
 	overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
 }
 
-#conditionalformatmenu-grid td:hover {
+#conditionalformatmenu-grid td.hover {
 	border: 1px solid var(--color-border-darker);
 	background-color: var(--color-background-darker) !important;
 }
@@ -599,7 +599,7 @@ button.leaflet-control-search-next
 	border: 1px solid transparent;
 	color: var(--color-main-text);
 }
-.w2ui-toolbar table.w2ui-button:hover {
+.w2ui-toolbar table.w2ui-button.hover {
 	background-color: var(--color-border-darker);
 }
 .w2ui-toolbar table.w2ui-button.over {
@@ -1435,17 +1435,17 @@ button.leaflet-control-search-next
 	display: none;
 }
 
-.insertshape-grid:hover div {
+.insertshape-grid.hover div {
 	color: var(--color-text-darker);
 }
 
-.insertshape-grid .col:hover {
+.insertshape-grid .col.hover {
 	border: 1px solid var(--color-border-darker);
 	border-radius: var(--border-radius);
 	background-color: var(--color-background-darker) !important;
 }
 
-tr.useritem:hover {
+tr.useritem.hover {
 	cursor: default;
 	background-color: rgba(67, 172, 232, 0.25);
 }
@@ -1521,7 +1521,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	background: transparent;
 }
 
-#userListSummary:hover {
+#userListSummary.hover {
 	background: transparent;
 	cursor: pointer;
 }
@@ -1568,7 +1568,7 @@ html[dir='rtl'] #userListPopover::after {
 	padding: 4px 8px;
 }
 
-#userListPopover .user-list-item:hover {
+#userListPopover .user-list-item.hover {
 	cursor: pointer;
 	background-color: var(--color-background-dark);
 }

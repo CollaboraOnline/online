@@ -70,7 +70,7 @@ button.jsdialog img {
 	border: 1px solid var(--color-border-lighter) !important;
 }
 
-.ui-pushbutton[disabled]:hover {
+.ui-pushbutton[disabled].hover {
 	cursor: not-allowed !important;
 	background: var(--color-background-darker) !important;
 }
