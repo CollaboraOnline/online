@@ -115,7 +115,7 @@ shared_sources = common/FileUtil.cpp \
                  common/ConfigUtil.cpp \
                  common/Authorization.cpp \
                  common/CommandControl.cpp \
-		 common/Simd.cpp \
+                 common/Simd.cpp \
                  net/DelaySocket.cpp \
                  net/HttpRequest.cpp \
                  net/HttpHelper.cpp \
@@ -316,7 +316,7 @@ shared_headers = common/Common.hpp \
                  common/security.h \
                  common/SpookyV2.h \
                  common/CommandControl.hpp \
-		 common/Simd.hpp \
+                 common/Simd.hpp \
                  net/Buffer.hpp \
                  net/DelaySocket.hpp \
                  net/FakeSocket.hpp \
