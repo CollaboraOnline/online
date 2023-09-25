@@ -563,8 +563,8 @@ app.definitions.Socket = L.Class.extend({
 
 			this.WSDServer = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 
-			if (oldId && oldVersion && sameFile && !window.migrating && !this.IndirectSocketReconnectCount) {
-				if (this.WSDServer.Id !== oldId || this.WSDServer.Version !== oldVersion) {
+			if (oldId && oldVersion && sameFile) {
+				if ((this.WSDServer.Id !== oldId || this.WSDServer.Version !== oldVersion) && !window.migrating && !this.IndirectSocketReconnectCount) {
 					var reloadMessage = _('Server is now reachable. We have to refresh the page now.');
 					if (window.mode.isMobile())
 						reloadMessage = _('Server is now reachable...');
@@ -575,6 +575,10 @@ app.definitions.Socket = L.Class.extend({
 					else
 						this._map.fire('postMessage', {msgId: 'Reloading', args: {Reason: 'Reconnected'}});
 					setTimeout(reloadFunc, 5000);
+				}
+				var docType = this._map.getDocType();
+				if (docType === 'presentation' || docType === 'drawing' || docType === 'spreadsheet') {
+					this._map._docLayer._reconnected = true;
 				}
 			}
 			if (window.indirectSocket) {
