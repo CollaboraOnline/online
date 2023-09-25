@@ -10,6 +10,7 @@
 		3F3B54DD2A3928D100063C01 /* HttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B54DB2A39288500063C01 /* HttpRequest.cpp */; };
 		3F3B54E02A392CCB00063C01 /* NetUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B54DE2A392C9C00063C01 /* NetUtil.cpp */; };
 		A5C2FA5A2AC1BB3900265946 /* Simd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5C2FA592AC1BB3800265946 /* Simd.cpp */; };
+		A5C2FA5D2AC1BEC500265946 /* DeltaSimd.c in Sources */ = {isa = PBXBuildFile; fileRef = A5C2FA5B2AC1BEC500265946 /* DeltaSimd.c */; };
 		BE00F8A021396585001CE2D4 /* cool.html in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89621396585001CE2D4 /* cool.html */; };
 		BE00F8A121396585001CE2D4 /* bundle.css in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89721396585001CE2D4 /* bundle.css */; };
 		BE00F8A321396585001CE2D4 /* bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89921396585001CE2D4 /* bundle.js */; };
@@ -85,6 +86,8 @@
 		3F3B54DF2A392C9C00063C01 /* NetUtil.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NetUtil.hpp; sourceTree = "<group>"; };
 		A5C2FA582AC1BB3800265946 /* Simd.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Simd.hpp; sourceTree = "<group>"; };
 		A5C2FA592AC1BB3800265946 /* Simd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Simd.cpp; sourceTree = "<group>"; };
+		A5C2FA5B2AC1BEC500265946 /* DeltaSimd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = DeltaSimd.c; sourceTree = "<group>"; };
+		A5C2FA5C2AC1BEC500265946 /* DeltaSimd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeltaSimd.h; sourceTree = "<group>"; };
 		BE00F89621396585001CE2D4 /* cool.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = cool.html; path = ../../../browser/dist/cool.html; sourceTree = "<group>"; };
 		BE00F89721396585001CE2D4 /* bundle.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = bundle.css; path = ../../../browser/dist/bundle.css; sourceTree = "<group>"; };
 		BE00F89921396585001CE2D4 /* bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = ../../../browser/dist/bundle.js; sourceTree = "<group>"; };
@@ -2891,6 +2894,8 @@
 		BEA2835421467F8200848631 /* kit */ = {
 			isa = PBXGroup;
 			children = (
+				A5C2FA5B2AC1BEC500265946 /* DeltaSimd.c */,
+				A5C2FA5C2AC1BEC500265946 /* DeltaSimd.h */,
 				BEA283572146945500848631 /* ChildSession.cpp */,
 				BEA2835521467FDD00848631 /* Kit.cpp */,
 			);
@@ -3644,6 +3649,7 @@
 				BE8D77402136762600AC58EA /* main.m in Sources */,
 				BE5EB5C8213FE29900E0826C /* FileUtil.cpp in Sources */,
 				BEABFC6824AC94C3004DE339 /* Authorization.cpp in Sources */,
+				A5C2FA5D2AC1BEC500265946 /* DeltaSimd.c in Sources */,
 				BEA28360214ACA8500848631 /* FakeSocket.cpp in Sources */,
 				BE80E45821B68F5700859C97 /* TemplateCollectionViewController.mm in Sources */,
 				BE8D77352136762500AC58EA /* CODocument.mm in Sources */,
