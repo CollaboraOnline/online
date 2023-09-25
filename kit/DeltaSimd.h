@@ -7,11 +7,14 @@
 
 // This is a C file by design.
 
+#include <stddef.h>
 #include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+void simd_deltaInit();
 
 int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratchLen, uint64_t *rleMask);
 

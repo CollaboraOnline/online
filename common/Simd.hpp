@@ -10,7 +10,7 @@
 #include <config.h>
 
 namespace simd {
-    void init();
+    bool init();
     extern bool HasAVX2;
 };
 

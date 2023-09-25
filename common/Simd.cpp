@@ -16,12 +16,13 @@ namespace simd {
 
 bool HasAVX2 = false;
 
-void init()
+bool init()
 {
 #if ENABLE_SIMD
     __builtin_cpu_init();
     HasAVX2 = __builtin_cpu_supports ("avx2");
 #endif
+    return HasAVX2;
 }
 
 };

@@ -84,6 +84,13 @@ static uint64_t diffMask(__m256i prev, __m256i curr)
 
 #endif
 
+void simd_deltaInit()
+{
+#if ENABLE_SIMD
+    init_gather_lut();
+#endif
+}
+
 // accelerated compression of a 256 pixel run
 int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratchLen, uint64_t *rleMaskBlock)
 {
@@ -93,14 +100,6 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratch
     return 0;
 
 #else // ENABLE_SIMD
-
-    static int lut_initialized = 0;
-    if (!lut_initialized)
-    {
-        // FIXME: needs to be made thread-safe ...
-        init_gather_lut();
-        lut_initialized = 1;
-    }
 
     *scratchLen = 0;
     for (unsigned int x = 0; x < 4; ++x)
