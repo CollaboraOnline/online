@@ -11,6 +11,7 @@ add_library(androidapp SHARED
             ../../../../../common/MessageQueue.cpp
             ../../../../../common/TraceEvent.cpp
             ../../../../../common/Protocol.cpp
+            ../../../../../common/Simd.cpp
             ../../../../../common/StringVector.cpp
             ../../../../../common/Session.cpp
             ../../../../../common/SigUtil.cpp
