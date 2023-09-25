@@ -502,7 +502,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_stressAccessKey: function(element, accessKey) {
-		if (!accessKey)
+		if (!accessKey || window.mode.isMobile())
 			return;
 
 		var text = element.textContent;
