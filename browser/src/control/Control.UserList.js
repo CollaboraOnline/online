@@ -136,7 +136,12 @@ L.Control.UserList = L.Control.extend({
 		document.getElementById('userListSummary').addEventListener('click', function(e) {
 			e.stopPropagation();
 			$('.main-nav.hasnotebookbar').css('overflow', 'visible');
-			$('#userListPopover').show();
+			var selector = '#userListPopover';	
+			if ($(selector).is(':hidden')) {
+				$(selector).show();
+			} else {	
+				outsideClickListener(e);
+			}
 			document.addEventListener('click', outsideClickListener);
 		});
 	},
