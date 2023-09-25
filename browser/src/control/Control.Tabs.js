@@ -190,18 +190,24 @@ L.Control.Tabs = L.Control.extend({
 						continue;
 					var id = 'spreadsheet-tab' + i;
 					var tab = L.DomUtil.create('button', 'spreadsheet-tab', ssTabScroll);
-
-					if (window.mode.isMobile()) {
+					if (window.mode.isMobile() || window.mode.isTablet()) {
 						(new Hammer(tab, {recognizers: [[Hammer.Press]]}))
 							.on('press', function (j) {
 								return function(e) {
 									this._tabForContextMenu = j;
 									this._setPart(e);
-									window.contextMenuWizard = true;
-									if (!this._map.isReadOnlyMode()) this._map.fire('mobilewizard', {data: menuData});
+									if (window.mode.isMobile()) {
+										window.contextMenuWizard = true;
+										if (!this._map.isReadOnlyMode())
+											this._map.fire('mobilewizard', {data: menuData});
+									} else {
+										$(tab).trigger('contextmenu');
+									}
 								};
 							}(i).bind(this));
-					} else {
+					}
+
+					if (!window.mode.isMobile()) {
 						L.DomEvent.on(tab, 'dblclick', function(j) {
 							return function() {
 								// window.app.console.err('Double clicked ' + j);
