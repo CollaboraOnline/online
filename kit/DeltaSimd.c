@@ -89,7 +89,7 @@ int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratch
 {
 #if !ENABLE_SIMD
     // no fun.
-    (void)from; (void)scratch; (void)scratchLen; (void)rleMask;
+    (void)from; (void)scratch; (void)scratchLen; (void)rleMaskBlock;
     return 0;
 
 #else // ENABLE_SIMD
