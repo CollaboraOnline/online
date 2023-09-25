@@ -677,7 +677,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		}
 
-		if (this._isCtrlKey(e) && (e.key === 'k' || e.key === 'K')) {
+		if (this._isCtrlKey(e) && !e.shiftKey && (e.key === 'k' || e.key === 'K')) {
 			this._map.showHyperlinkDialog();
 			e.preventDefault();
 			return true;
@@ -696,16 +696,22 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		if (this._isCtrlKey(e) && !e.shiftKey && !e.altKey && (e.key === 'f' || e.key === 'F')) {
-			if (app.UI.language.fromURL !== 'de') {
+			if (app.UI.language.fromURL === 'de' && this._map.getDocType() === 'text') {
+				this._map.sendUnoCommand('.uno:Navigator');
+			}
+			else {
 				if (!this._map.uiManager.isStatusBarVisible()) {
 					this._map.uiManager.showStatusBar();
 				}
 				this._map.fire('focussearch');
 			}
-			else {
-				this._map.sendUnoCommand('.uno:Navigator');
-			}
 
+			e.preventDefault();
+			return true;
+		}
+
+		if (this._isCtrlKey(e) && !e.shiftKey && !e.altKey && e.key === ' ' && app.UI.language.fromURL === 'de' && this._map.getDocType() === 'text') {
+			this._map.fire('focussearch');
 			e.preventDefault();
 			return true;
 		}
