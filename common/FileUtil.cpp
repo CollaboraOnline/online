@@ -427,9 +427,15 @@ namespace FileUtil
     std::unique_ptr<std::vector<char>> readFile(const std::string& path, int maxSize)
     {
         const int fd = ::open(path.c_str(), O_RDONLY);
-        struct stat st;
-        if (fd < 0 || ::fstat(fd, &st) != 0 || st.st_size > maxSize)
+        if (fd < 0)
             return nullptr;
+
+        struct stat st;
+        if (::fstat(fd, &st) != 0 || st.st_size > maxSize)
+        {
+            ::close(fd);
+            return nullptr;
+        }
 
         auto data = std::make_unique<std::vector<char>>(st.st_size);
         off_t off = 0;
@@ -445,6 +451,7 @@ namespace FileUtil
                 if (n == 0) // EOF.
                     break;
 
+                ::close(fd);
                 return nullptr; // Error.
             }
 
