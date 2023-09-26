@@ -153,8 +153,10 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 	},
 
 	getFileTab: function() {
-		var content = [
-			!this._map['wopi'].HideSaveOption ?
+		var content = [];
+
+		if (!this._map['wopi'].HideSaveOption) {
+			content.push(
 			{
 				'type': 'toolbox',
 				'children': [
@@ -166,9 +168,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'accessibility': { focusBack: true, combination: 'SV', de: null }
 					}
 				]
-			}: {},
-			(!this._map['wopi'].UserCanNotWriteRelative) ?
-			(
+			});
+		}
+
+		if (!this._map['wopi'].UserCanNotWriteRelative) {
+			content.push(
 				(window.uiDefaults && window.uiDefaults.saveAsMode === 'group') ?
 				{
 					'id': 'saveas',
@@ -183,15 +187,21 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'command': '.uno:SaveAs',
 					'accessibility': { focusBack: true, combination: 'SA', de: null }
 				}
-			): {},
-			(!this._map['wopi'].UserCanNotWriteRelative) ?
+			);
+		}
+
+		if (!this._map['wopi'].UserCanNotWriteRelative) {
+			content.push(
 			{
 				'id': 'exportas',
 				'class': 'unoexportas',
 				'type': 'bigmenubartoolitem',
 				'text': _('Export As'),
 				'accessibility': { focusBack: true, combination: 'EA', de: null }
-			}: {},
+			});
+		}
+
+		content.push(
 			{
 				'id': 'file-shareas-rev-history',
 				'type': 'container',
@@ -216,16 +226,22 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						} : {},
 				],
 				'vertical': 'true'
-			},
-			(!this._map['wopi'].HidePrintOption) ?
+			}
+		);
+
+		if (!this._map['wopi'].HidePrintOption) {
+			content.push(
 			{
 				'id': 'file-print',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Print', 'presentation'),
 				'command': '.uno:Print',
 				'accessibility': { focusBack: true, combination: 'PF', de: null }
-			} : {},
-			(!(window.enableMacrosExecution  === 'false')) ?
+			});
+		}
+
+		if (!(window.enableMacrosExecution  === 'false')) {
+			content.push(
 			{
 				'type': 'toolbox',
 				'children': [
@@ -237,8 +253,8 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'accessibility': { focusBack: true, combination: 'RM', de: null }
 					}
 				]
-			} : {}
-		];
+			});
+		}
 
 		if ((!!window.groupDownloadAsForNb) && !this._map['wopi'].HideExportOption) {
 			content.push({
