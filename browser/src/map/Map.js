@@ -743,6 +743,7 @@ L.Map = L.Evented.extend({
 		    newCenter = this._limitCenter(center, this._zoom, bounds);
 
 		if (center.equals(newCenter)) { return this; }
+		if (this.distance(center, newCenter) < 0.0000001) { return this; }
 
 		return this.panTo(newCenter, options);
 	},

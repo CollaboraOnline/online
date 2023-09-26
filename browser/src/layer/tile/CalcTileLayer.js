@@ -255,25 +255,32 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var newDocWidth = Math.min(maxDocSize.x, this._docWidthTwips);
 		var newDocHeight = Math.min(maxDocSize.y, this._docHeightTwips);
 
-		var mapPosX = this._map._getTopLeftPoint().x;
-		var mapPosY = this._map._getTopLeftPoint().y;
-		var mapSize = this._map.getSize();
-
 		var lastCellPixel = this.sheetGeometry.getCellRect(this._lastColumn, this._lastRow);
 		var isCalcRTL = this._map._docLayer.isCalcRTL();
 		lastCellPixel = isCalcRTL ? lastCellPixel.getBottomRight() : lastCellPixel.getBottomLeft();
 		var lastCellTwips = this._corePixelsToTwips(lastCellPixel);
-		var mapSizeTwips = this._corePixelsToTwips(mapSize);
+		var mapSizeTwips = this._corePixelsToTwips(this._map.getSize());
+		var mapPosTwips = this._corePixelsToTwips(this._map._getTopLeftPoint());
 
-		var limitWidth = mapPosX + mapSize.x < lastCellPixel.x;
-		var limitHeight = mapPosY + mapSize.y < lastCellPixel.y;
+		// margin outside data area we allow to scroll
+		// has to be bigger on mobile to allow scroll
+		// to the next place where we extend that area
+		// (allow few mobile screens down and right)
+		var limitMargin = mapSizeTwips;
+		if (!window.mode.isDesktop()) {
+			limitMargin.x *= 8;
+			limitMargin.y *= 8;
+		}
+
+		var limitWidth = mapPosTwips.x + mapSizeTwips.x < lastCellTwips.x;
+		var limitHeight = mapPosTwips.y + mapSizeTwips.y < lastCellTwips.y;
 
 		// limit to data area only (and map size for margin)
 		if (limitWidth)
-			newDocWidth = Math.min(lastCellTwips.x + mapSizeTwips.x, newDocWidth);
+			newDocWidth = Math.min(lastCellTwips.x + limitMargin.x, newDocWidth);
 
 		if (limitHeight)
-			newDocHeight = Math.min(lastCellTwips.y + mapSizeTwips.y, newDocHeight);
+			newDocHeight = Math.min(lastCellTwips.y + limitMargin.y, newDocHeight);
 
 		var extendedLimit = false;
 
