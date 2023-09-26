@@ -136,8 +136,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var addRepairToDownloads = hasRepair && !hideDownload;
 		var addRepairToColumn = hasRepair && (hideDownload || hasGroupedDownloadAs);
 
-		content = [
-			hasSave ? {
+		content = [];
+
+		if (hasSave) {
+			content.push({
 				'type': 'toolbox',
 				'children': [
 					{
@@ -148,29 +150,39 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'accessibility': { focusBack: true,	combination: 'SV', de: null }
 					}
 				]
-			}: {},
-			hasSaveAs ?
-				hasGroupedSaveAs ? {
+			});
+		}
+
+		if (hasSaveAs) {
+			if (hasGroupedSaveAs) {
+				content.push({
 					'id': 'saveas',
 					'type': 'bigmenubartoolitem',
 					'text': _('Save As'),
 					'accessibility': { focusBack: true,	combination: 'SA' }
-				}:
-				{
+				});
+			} else {
+				content.push({
 					'id': 'file-saveas',
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:SaveAs', 'text'),
 					'command': '.uno:SaveAs',
 					'accessibility': { focusBack: true,	combination: 'SA' }
-				}
-			: {},
-			hasSaveAs ? {
+				});
+			}
+		}
+
+		if (hasSaveAs) {
+			content.push({
 				'id': 'exportas',
 				'class': 'unoexportas',
 				'type': 'bigmenubartoolitem',
 				'text': _('Export As'),
 				'accessibility': { focusBack: true,	combination: 'EA' }
-			}: {},
+			});
+		}
+
+		content.push(
 			{
 				'type': 'container',
 				'children': [
@@ -194,16 +206,21 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					}: {}
 				],
 				'vertical': true
-			},
-			hasPrint ?
+			});
+		
+		if (hasPrint) {
+			content.push(
 			{
 				'id': 'print',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Print', 'text'),
 				'command': '.uno:Print',
 				'accessibility': { focusBack: true,	combination: 'P', de: 'P' }
-			} : {},
-			hasRunMacro ?
+			});
+		}
+
+		if (hasRunMacro) {
+			content.push(
 			{
 				'type': 'toolbox',
 				'children': [
@@ -214,15 +231,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'command': '.uno:RunMacro'
 					}
 				]
-			} : {},
-			hasGroupedDownloadAs && !hideDownload ? {
+			});
+		}
+
+		if (hasGroupedDownloadAs && !hideDownload) {
+			content.push({
 				'id': 'downloadas',
 				'class': 'unodownloadas',
 				'type': 'bigmenubartoolitem',
 				'text': _('Download'),
 				'accessibility': { focusBack: true,	combination: 'A', de: 'M' }
-			}:
-			!hideDownload ? (
+			});
+		} else if (!hideDownload) {
+			content.push(
 				{
 					'type': 'container',
 					'children': [
@@ -298,8 +319,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					],
 					'vertical': 'true'
 				}
-			): {},
-			addRepairToColumn ? {
+			);
+		}
+
+		if (addRepairToColumn) {
+			content.push({
 				'type': 'container',
 				'children': [
 					{
@@ -312,7 +336,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					}
 				],
 				'vertical': 'true'
-			}: {},
+			});
+		}
+
+		content.push(
 			{
 				'type': 'container',
 				'children': [
@@ -324,8 +351,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'accessibility': { focusBack: true,	combination: 'I', de: 'I' }
 					}
 				]
-			}
-		];
+			});
 
 		content.push({
 			'type': 'container',
