@@ -137,7 +137,7 @@ namespace LOKitHelper
                 char* values = loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:ReadOnly");
                 if (values)
                 {
-                    const std::string isReadOnly = std::string(values == nullptr ? "" : values);
+                    const std::string isReadOnly = std::string(values);
                     oss << " readonly=" << (isReadOnly.find("true") != std::string::npos);
                     std::free(values);
                 }
