@@ -103,6 +103,7 @@ L.Map.Keyboard = L.Handler.extend({
 		120 : UNOKey.F9,
 		121 : UNOKey.F10,
 		122 : UNOKey.F11,
+		123 : UNOKey.F12,
 		144 : UNOKey.NUMLOCK,
 		145 : UNOKey.SCROLLLOCK,
 		173 : UNOKey.SUBTRACT,
@@ -228,6 +229,7 @@ L.Map.Keyboard = L.Handler.extend({
 		F9:       120,
 		F10:      121,
 		F11:      122,
+		F12 :     123,
 		NUMLOCK:  144,
 		SCROLLLOCK:   145,
 		SUBTRACT:     [109,173,189],
@@ -460,6 +462,15 @@ L.Map.Keyboard = L.Handler.extend({
 			this._map.showHelp('online-help-content');
 			ev.preventDefault();
 			return;
+		}
+
+		// save-as for German shortcuts - F12.
+		if (ev.type === 'keydown' && !ev.altKey && !this.modifier && keyCode === this.keyCodes.F12 && app.UI.language.fromURL === 'de') {
+			if (this._map.uiManager.getCurrentMode() === 'notebookbar') {
+				this._map.openSaveAs(); // Opens save as dialog if integrator supports it.
+				ev.preventDefault();
+				return;
+			}
 		}
 
 		if (ev.type === 'keydown' && ev.altKey && ev.keyCode === this.keyCodes.F1) {
