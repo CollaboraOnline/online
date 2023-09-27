@@ -501,10 +501,13 @@ L.Map.Keyboard = L.Handler.extend({
 		// don't trigger browser reload on F5, launch slideshow in Impress
 		if (ev.type === 'keydown' && keyCode === this.keyCodes.F5) {
 			ev.preventDefault();
-			if (docType === 'presentation')
-			{
+			if (docType === 'presentation') {
 				this._map.fire('fullscreen');
 			}
+			else if (docType === 'text' && !this.modifier && app.UI.language.fromURL === 'de') {
+				app.socket.sendMessage('uno .uno:GoToPage');
+			}
+
 			return;
 		}
 
