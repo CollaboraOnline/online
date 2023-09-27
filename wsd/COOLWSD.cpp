@@ -2181,7 +2181,7 @@ void COOLWSD::innerInitialize(Application& self)
 #if ENABLE_FEATURE_RESTRICTION
         { "restricted_commands", "" },
 #endif
-        { "user_interface.mode", "default" },
+        { "user_interface.mode", "tabbed" },
         { "user_interface.use_integration_theme", "true" },
         { "quarantine_files[@enable]", "false" },
         { "quarantine_files.limit_dir_size_mb", "250" },
@@ -2253,7 +2253,7 @@ void COOLWSD::innerInitialize(Application& self)
     EnableAccessibility = getConfigValue<bool>(conf, "accessibility.enable", false);
 
     // Setup user interface mode
-    UserInterface = getConfigValue<std::string>(conf, "user_interface.mode", "default");
+    UserInterface = getConfigValue<std::string>(conf, "user_interface.mode", "tabbed");
 
     if (UserInterface == "compact")
         UserInterface = "classic";
