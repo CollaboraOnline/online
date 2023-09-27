@@ -158,7 +158,7 @@
 }
 
 .bucket-cursor {
-	cursor: url('images/cursors/fill.png') 4 9, auto !important;/*setting coordinates to align the tip of the bucket icon */
+	cursor: url('images/cursors/fill.png') 4 18, auto !important;/*setting coordinates to align the tip of the brush icon */
 }
 .cool-scrollbar-show {
 	opacity: 1 !important;
