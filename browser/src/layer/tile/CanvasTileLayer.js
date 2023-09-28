@@ -1802,20 +1802,21 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._onFormFieldButtonMsg(textMsg);
 		}
 		else if (textMsg.startsWith('canonicalidchange:')) {
+			var payload = textMsg.substring('canonicalidchange:'.length + 1);
+			var viewRenderedState = payload.split('=')[3].split(' ')[0];
 			if (this._debugData) {
-				var payload = textMsg.substring('canonicalidchange:'.length + 1);
 				var viewId = payload.split('=')[1].split(' ')[0];
 				var canonicalId = payload.split('=')[2].split(' ')[0];
-				this._debugData['canonicalViewId'].setPrefix('Canonical id changed to: ' + canonicalId + ' for view id: ' + viewId);
+				this._debugData['canonicalViewId'].setPrefix('Canonical id changed to: ' + canonicalId + ' for view id: ' + viewId + ' with view renderend state: ' + viewRenderedState);
 			}
-			if (!this._canonicalIdInitialized)
-			{
+			if (!this._canonicalIdInitialized) {
 				this._canonicalIdInitialized = true;
 				this._update();
+			} else if (viewRenderedState !== this._map.uiManager.previousTheme) {
+				this._requestNewTiles();
+				this._invalidateAllPreviews();
+				this.redraw();
 			}
-			this._requestNewTiles();
-			this._invalidateAllPreviews();
-			this.redraw();
 		}
 		else if (textMsg.startsWith('comment:')) {
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));

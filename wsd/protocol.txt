@@ -687,6 +687,7 @@ contentcontrol: <JSON>
         - date - boolean to indicate date content control
         - items - array of items for dropdown
 
+canonicalidchange: viewid=<id> canonicalid=<id> viewrenderedstate=<Light|Dark|Empty>
 
 child -> parent
 ===============

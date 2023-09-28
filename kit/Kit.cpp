@@ -1436,7 +1436,19 @@ private:
         if (newCanonicalId == session->getCanonicalViewId())
             return;
         session->setCanonicalViewId(newCanonicalId);
-        std::string message = "canonicalidchange: viewid=" + std::to_string(session->getViewId()) + " canonicalid=" + std::to_string(newCanonicalId);
+        const std::string viewRenderedState = session->getViewRenderState();
+        std::string stateName;
+        if (!viewRenderedState.empty())
+        {
+            stateName = viewRenderedState.substr(viewRenderedState.find(';') + 1);
+        }
+        else
+        {
+            stateName = "Empty";
+        }
+        std::string message = "canonicalidchange: viewid=" + std::to_string(session->getViewId()) +
+                              " canonicalid=" + std::to_string(newCanonicalId) +
+                              " viewrenderedstate=" + stateName;
         session->sendTextFrame(message);
     }
 
