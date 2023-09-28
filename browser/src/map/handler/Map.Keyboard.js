@@ -474,7 +474,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		if (ev.type === 'keydown' && !ev.altKey && ev.shiftKey && keyCode === this.keyCodes.F3 && app.UI.language.fromURL === 'de') {
-			app.socket.sendMessage('uno .uno:ChangeCaseRotateCase');
+			this._map.sendUnoCommand('.uno:ChangeCaseRotateCase');
 			ev.preventDefault();
 			return;
 		}
@@ -511,7 +511,7 @@ L.Map.Keyboard = L.Handler.extend({
 				this._map.fire('fullscreen');
 			}
 			else if (docType === 'text' && !this.modifier && app.UI.language.fromURL === 'de') {
-				app.socket.sendMessage('uno .uno:GoToPage');
+				this._map.sendUnoCommand('.uno:GoToPage');
 			}
 
 			return;
@@ -673,7 +673,8 @@ L.Map.Keyboard = L.Handler.extend({
 			e.preventDefault();
 		}
 
-		if (this._isCtrlKey(e) && e.shiftKey && e.key === 'L') {
+		// CTRL + SHIFT + L is added to the core side for writer. Others can also be checked.
+		if (this._isCtrlKey(e) && e.shiftKey && e.key === 'L' && this._map.getDocType() !== 'text') {
 			app.socket.sendMessage('uno .uno:DefaultBullet');
 			e.preventDefault();
 			return true;
