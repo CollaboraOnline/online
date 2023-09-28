@@ -473,6 +473,12 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 
+		if (ev.type === 'keydown' && !ev.altKey && ev.shiftKey && keyCode === this.keyCodes.F3 && app.UI.language.fromURL === 'de') {
+			app.socket.sendMessage('uno .uno:ChangeCaseRotateCase');
+			ev.preventDefault();
+			return;
+		}
+
 		if (ev.type === 'keydown' && ev.altKey && ev.keyCode === this.keyCodes.F1) {
 			var tabsContainer = document.getElementsByClassName('notebookbar-tabs-container')[0].children[0];
 			var elementToFocus;
