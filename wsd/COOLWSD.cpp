@@ -252,34 +252,35 @@ static std::size_t SimulatedLatencyMs = 0;
 
 #endif
 
-// namespace
-// {
+namespace
+{
 
-// #if ENABLE_SUPPORT_KEY
-// inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>& proto)
-// {
-//     if (!proto)
-//         return;
+#if ENABLE_SUPPORT_KEY
+inline void shutdownLimitReached(const std::shared_ptr<ProtocolHandlerInterface>& proto)
+{
+    return
+    // if (!proto)
+    //     return;
 
-//     const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, COOLWSD::MaxDocuments, COOLWSD::MaxConnections);
-//     LOG_INF("Sending client 'hardlimitreached' message: " << error);
+    // const std::string error = Poco::format(PAYLOAD_UNAVAILABLE_LIMIT_REACHED, COOLWSD::MaxDocuments, COOLWSD::MaxConnections);
+    // LOG_INF("Sending client 'hardlimitreached' message: " << error);
 
-//     try
-//     {
-//         // Let the client know we are shutting down.
-//         proto->sendTextMessage(error.data(), error.size());
+    // try
+    // {
+    //     // Let the client know we are shutting down.
+    //     proto->sendTextMessage(error.data(), error.size());
 
-//         // Shutdown.
-//         proto->shutdown(true, error);
-//     }
-//     catch (const std::exception& ex)
-//     {
-//         LOG_ERR("Error while shutting down socket on reaching limit: " << ex.what());
-//     }
-// }
-// #endif
+    //     // Shutdown.
+    //     proto->shutdown(true, error);
+    // }
+    // catch (const std::exception& ex)
+    // {
+    //     LOG_ERR("Error while shutting down socket on reaching limit: " << ex.what());
+    // }
+}
+#endif
 
-// } // end anonymous namespace
+} // end anonymous namespace
 
 #if !MOBILEAPP
 /// Internal implementation to alert all clients
