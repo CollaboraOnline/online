@@ -77,10 +77,7 @@ function onClick(e, id, item) {
 	// dont reassign the item if we already have it
 	item = item || getToolbarItemById(id);
 
-	// In the iOS app we don't want clicking on the toolbar to pop up the keyboard.
-	if (!window.ThisIsTheiOSApp && id !== 'zoomin' && id !== 'zoomout' && id !== 'mobile_wizard' && id !== 'insertion_mobile_wizard') {
-		map.focus(map.canAcceptKeyboardInput()); // Maintain same keyboard state.
-	}
+	map.preventKeyboardPopup(id);
 
 	if (item.disabled) {
 		return;
@@ -93,12 +90,11 @@ function onClick(e, id, item) {
 		if (id === 'save') {
 			map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'toolbar' }});
 		}
-		if (item.unosheet && map.getDocType() === 'spreadsheet') {
-			map.toggleCommandState(item.unosheet);
-		}
-		else {
-			map.toggleCommandState(getUNOCommand(item.uno));
-		}
+
+		map.executeUnoAction(item);
+	}
+	else if (item.id === 'print-active-sheet' || item.id === 'print-all-sheets') {
+		map.dispatch(item.id);
 	}
 	else if (id === 'print') {
 		map.print();
@@ -155,7 +151,10 @@ function onClick(e, id, item) {
 		map.uiManager.enterReadonlyOrClose();
 	}
 	else if (id === 'link') {
-		map.showHyperlinkDialog();
+		if (map.getDocType() == 'spreadsheet')
+			map.sendUnoCommand('.uno:HyperlinkDialog');
+		else
+			map.showHyperlinkDialog();
 	}
 }
 

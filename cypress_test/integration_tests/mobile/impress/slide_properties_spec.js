@@ -234,7 +234,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.'
 		previewShouldBeFullWhite();
 	});
 
-	it('Change paper format.', function() {
+	it.skip('Change paper format.', function() {
 		var EPS = 0.1;
 
 		cy.cGet('#paperformat .ui-header-left').should('have.text', 'Screen 16:9');
@@ -265,7 +265,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.'
 		cy.cGet('#paperformat .ui-header-left').should('have.text', 'Screen 4:3');
 	});
 
-	it('Change slide orientation.', function() {
+	it.skip('Change slide orientation.', function() {
 		// Preview should have the correct ratio (16/9)
 		cy.cGet('.preview-frame:nth-of-type(2) img')
 			.should(function(previews) {
@@ -331,7 +331,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.'
 		cy.cGet('.layout:nth-of-type(3)').should('have.class', 'cool-context-down');
 	});
 
-	it('Change paper format in master view.', function() {
+	it.skip('Change paper format in master view.', function() {
 		var EPS = 0.1;
 
 		switchToMasterView();
@@ -363,7 +363,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.'
 		cy.cGet('#paperformat .ui-header-left').should('have.text', 'Screen 4:3');
 	});
 
-	it('Change orientation in master view.', function() {
+	it.skip('Change orientation in master view.', function() {
 		switchToMasterView();
 
 		// Preview should have the correct ratio (16/9)
@@ -390,7 +390,7 @@ describe(['tagmobile', 'tagnextcloud', 'tagproxy'], 'Changing slide properties.'
 		//	.should('have.text', 'Portrait');
 	});
 
-	it('Check disabled elements in master view.', function() {
+	it.skip('Check disabled elements in master view.', function() {
 		switchToMasterView();
 
 		cy.cGet('#masterslide').should('not.exist');

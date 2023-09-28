@@ -11,6 +11,7 @@ add_library(androidapp SHARED
             ../../../../../common/MessageQueue.cpp
             ../../../../../common/TraceEvent.cpp
             ../../../../../common/Protocol.cpp
+            ../../../../../common/Simd.cpp
             ../../../../../common/StringVector.cpp
             ../../../../../common/Session.cpp
             ../../../../../common/SigUtil.cpp
@@ -18,6 +19,7 @@ add_library(androidapp SHARED
             ../../../../../common/Unit.cpp
             ../../../../../common/Util.cpp
             ../../../../../kit/ChildSession.cpp
+            ../../../../../kit/DeltaSimd.c
             ../../../../../kit/Kit.cpp
             ../../../../../net/FakeSocket.cpp
             ../../../../../net/Socket.cpp

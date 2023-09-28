@@ -52,6 +52,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_currentDepth: 0,
 
+	rendersCache: {
+		fontnamecombobox: { persistent: true, images: [] }
+	}, // eg. custom renders for combobox entries
+
 	setWindowId: function (id) {
 		this.windowId = id;
 	},
@@ -61,6 +65,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this.wizard = options.mobileWizard;
 		this.map = options.map;
 		this.windowId = options.windowId;
+		this.dialogId = null;
 		this.callback = options.callback ? options.callback : this._defaultCallbackHandler;
 
 		this._colorPickers = [];
@@ -83,8 +88,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['okbutton'] = this._pushbuttonControl;
 		this._controlHandlers['helpbutton'] = this._pushbuttonControl;
 		this._controlHandlers['cancelbutton'] = this._pushbuttonControl;
-		this._controlHandlers['combobox'] = this._comboboxControl;
-		this._controlHandlers['comboboxentry'] = this._comboboxEntry;
+		this._controlHandlers['combobox'] = JSDialog.combobox;
+		this._controlHandlers['comboboxentry'] = JSDialog.comboboxEntry;
 		this._controlHandlers['listbox'] = this._listboxControl;
 		this._controlHandlers['valueset'] = this._valuesetControl;
 		this._controlHandlers['fixedtext'] = this._fixedtextControl;
@@ -186,6 +191,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			{text: _UNO('.uno:AddPrintArea', 'spreadsheet'), uno: '.uno:AddPrintArea'},
 			{text: _UNO('.uno:EditPrintArea', 'spreadsheet'), uno: '.uno:EditPrintArea'},
 			{text: _UNO('.uno:DeletePrintArea', 'spreadsheet'), uno: '.uno:DeletePrintArea'}
+		];
+		this._menus['Print'] = [
+			{text: _('Active sheet'), id: 'print-active-sheet', type: 'action'},
+			{text: _('All Sheets'), id: 'print-all-sheets', type: 'action'},
 		];
 		this._menus['MenuRowHeight'] = [
 			{text: _UNO('.uno:RowHeight', 'spreadsheet'), uno: '.uno:RowHeight'},
@@ -493,7 +502,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_stressAccessKey: function(element, accessKey) {
-		if (!accessKey)
+		if (!accessKey || window.mode.isMobile())
 			return;
 
 		var text = element.textContent;
@@ -1159,13 +1168,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 			var isMultiTabJSON = tabs > 1;
 
-			var tabWidgetRootContainer = L.DomUtil.create('div', 'ui-tabs-root ' + builder.options.cssClass + ' ui-widget', parentContainer);
+			var tabWidgetRootContainer = L.DomUtil.create('div', 'ui-tabs-root ' + builder.options.cssClass, parentContainer);
 			tabWidgetRootContainer.id = data.id;
 
 			var tabsContainer = L.DomUtil.create('div', 'ui-tabs ' + builder.options.cssClass + ' ui-widget', builder.options.useSetTabs ? undefined : tabWidgetRootContainer);
 			tabsContainer.setAttribute('role', 'tablist');
 
-			var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content ' + builder.options.cssClass + ' ui-widget', tabWidgetRootContainer);
+			var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content ' + builder.options.cssClass, tabWidgetRootContainer);
 
 			var tabs = [];
 			var contentDivs = [];
@@ -1227,8 +1236,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				tabs.forEach(function (tab, index) {
 					tab.addEventListener('click', function(event) {
 						builder._createTabClick(builder, index, tabs, contentDivs, tabIds)(event);
-						if (data.tabs[index].id - 1 >= 0)
-							builder.callback('tabcontrol', 'selecttab', tabWidgetRootContainer, index, builder);
+						builder.callback('tabcontrol', 'selecttab', tabWidgetRootContainer, index, builder);
 					});
 				});
 
@@ -1852,32 +1860,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(sectionTitle).hide();
 	},
 
-	// todo: implement real combobox with entry field and listbox at the same time
-	_comboboxControl: function(parentContainer, data, builder) {
-		if (data.id === 'searchterm' ||
-			data.id === 'replaceterm') {
-			// Replace combobox with edit in mobile find & replace dialog
-			var callback = function(value) {
-				builder.callback('combobox', 'change', data, value, builder);
-			};
-
-			builder._controlHandlers['edit'](parentContainer, data, builder, callback);
-		} else if (data.id === 'applystyle' ||
-			data.id === 'fontnamecombobox' ||
-			data.id === 'fontsizecombobox' ||
-			data.id === 'fontsize' ||
-			data.id === 'FontBox' ||
-			data.id === 'rotation' ||
-			data.id === 'LB_ANGLE' ||
-			data.id === 'LB_DISTANCE' ||
-			!window.mode.isMobile()) {
-			builder._listboxControl(parentContainer, data, builder);
-		} else if (window.mode.isMobile())
-			builder._explorableEditControl(parentContainer, data, builder);
-		else
-			window.app.console.warn('Unsupported combobox control!');
-	},
-
 	_listboxControl: function(parentContainer, data, builder) {
 		var title = data.text;
 		var selectedEntryIsString = false;
@@ -1976,23 +1958,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		return false;
-	},
-
-	_comboboxEntry: function(parentContainer, data, builder) {
-		var comboboxEntry = L.DomUtil.create('p', builder.options.cssClass, parentContainer);
-		comboboxEntry.textContent = builder._cleanText(data.text);
-
-		comboboxEntry.parent = data.parent;
-
-		if (data.style && data.style.length)
-			L.DomUtil.addClass(comboboxEntry, data.style);
-
-		$(comboboxEntry).click(function () {
-			builder.refreshSidebar = true;
-			if (builder.wizard)
-				builder.wizard.goLevelUp();
-			builder.callback('combobox', 'selected', comboboxEntry.parent, data.pos + ';' + comboboxEntry.textContent, builder);
-		});
 	},
 
 	_fixedtextControl: function(parentContainer, data, builder) {
@@ -2215,7 +2180,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		$(container).find('.cool-annotation')[0].addEventListener('click', function() {
-			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).hightlightComment(data.annotation);
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).highlightComment(data.annotation);
 		});
 		return false;
 	},
@@ -3345,6 +3310,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 			break;
 
+		case 'rendered_combobox_entry':
+			if (!this.rendersCache[control.id])
+				this.rendersCache[control.id] = { persistent: false, images: [] };
+
+			this.rendersCache[control.id].images[data.pos] = data.image;
+
+			if (typeof control.updateRenders == 'function')
+				control.updateRenders(data.pos);
+
+			break;
+
 		default:
 			console.error('unknown action: "' + data.action_type + '"');
 			break;
@@ -3441,6 +3417,31 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			control.setAttribute('tabIndex', '0');
 	},
 
+	// some widgets we want to modify / change
+	isHyperlinkTarget: function (builder, data) {
+		return data.type === 'combobox' && (data.id === 'target' || data.id === 'receiver');
+	},
+
+	requiresOverwriting: function(builder, data) {
+		if (builder.isHyperlinkTarget(builder, data))
+			return true;
+
+		return false;
+	},
+
+	overwriteHandler: function(parentContainer, data, builder) {
+		if (builder.isHyperlinkTarget(builder, data)) {
+			// Replace combobox with edit
+			var callback = function(value) {
+				builder.callback('combobox', 'change', data, value, builder);
+			};
+
+			return builder._controlHandlers['edit'](parentContainer, data, builder, callback);
+		}
+
+		console.error('It seems widget doesn\'t require overwriting.');
+	},
+
 	build: function(parent, data, hasVerticalParent) {
 
 		// TODO: check and probably remove additional containers
@@ -3460,8 +3461,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var containerToInsert = parent;
 
-			if (childData.dialogid)
+			if (childData.dialogid) {
 				containerToInsert.id = childData.dialogid;
+				this.dialogId = childData.dialogid;
+			}
 
 			var isVertical = childData.vertical === 'true' || childData.vertical === true ? true : false;
 
@@ -3512,7 +3515,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var handler = this._controlHandlers[childType];
 
 			if (handler) {
-				processChildren = handler(childObject, childData, this);
+				if (this.requiresOverwriting(this, childData))
+					processChildren = this.overwriteHandler(childObject, childData, this);
+				else
+					processChildren = handler(childObject, childData, this);
 				this.postProcess(childObject, childData);
 			} else
 				window.app.console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');

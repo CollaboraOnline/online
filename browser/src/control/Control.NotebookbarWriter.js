@@ -136,8 +136,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var addRepairToDownloads = hasRepair && !hideDownload;
 		var addRepairToColumn = hasRepair && (hideDownload || hasGroupedDownloadAs);
 
-		content = [
-			hasSave ? {
+		content = [];
+
+		if (hasSave) {
+			content.push({
 				'type': 'toolbox',
 				'children': [
 					{
@@ -145,29 +147,42 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'bigtoolitem',
 						'text': _('Save'),
 						'command': '.uno:Save',
-						'accessibility': { focusBack: true,	combination: 'S', de: null }
+						'accessibility': { focusBack: true,	combination: 'SV', de: null }
 					}
 				]
-			}: {},
-			hasSaveAs ?
-				hasGroupedSaveAs ? {
+			});
+		}
+
+		if (hasSaveAs) {
+			if (hasGroupedSaveAs) {
+				content.push({
 					'id': 'saveas',
 					'type': 'bigmenubartoolitem',
-					'text': _('Save As')
-				}:
-				{
+					'text': _('Save As'),
+					'accessibility': { focusBack: true,	combination: 'SA' }
+				});
+			} else {
+				content.push({
 					'id': 'file-saveas',
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:SaveAs', 'text'),
-					'command': '.uno:SaveAs'
-				}
-			: {},
-			hasSaveAs ? {
+					'command': '.uno:SaveAs',
+					'accessibility': { focusBack: true,	combination: 'SA' }
+				});
+			}
+		}
+
+		if (hasSaveAs) {
+			content.push({
 				'id': 'exportas',
 				'class': 'unoexportas',
 				'type': 'bigmenubartoolitem',
-				'text': _('Export As')
-			}: {},
+				'text': _('Export As'),
+				'accessibility': { focusBack: true,	combination: 'EA' }
+			});
+		}
+
+		content.push(
 			{
 				'type': 'container',
 				'children': [
@@ -177,7 +192,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'customtoolitem',
 						'text': _('Share'),
 						'command': 'shareas',
-						'inlineLabel': true
+						'inlineLabel': true,
+						'accessibility': { focusBack: true,	combination: 'SH' }
 					}: {},
 					hasRevisionHistory ? {
 						'id': 'Rev-History',
@@ -185,20 +201,26 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'customtoolitem',
 						'text': _('See history'),
 						'command': 'rev-history',
-						'inlineLabel': true
+						'inlineLabel': true,
+						'accessibility': { focusBack: true,	combination: 'RH' }
 					}: {}
 				],
 				'vertical': true
-			},
-			hasPrint ?
+			});
+		
+		if (hasPrint) {
+			content.push(
 			{
 				'id': 'print',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Print', 'text'),
 				'command': '.uno:Print',
 				'accessibility': { focusBack: true,	combination: 'P', de: 'P' }
-			} : {},
-			hasRunMacro ?
+			});
+		}
+
+		if (hasRunMacro) {
+			content.push(
 			{
 				'type': 'toolbox',
 				'children': [
@@ -209,15 +231,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'command': '.uno:RunMacro'
 					}
 				]
-			} : {},
-			hasGroupedDownloadAs && !hideDownload ? {
+			});
+		}
+
+		if (hasGroupedDownloadAs && !hideDownload) {
+			content.push({
 				'id': 'downloadas',
 				'class': 'unodownloadas',
 				'type': 'bigmenubartoolitem',
 				'text': _('Download'),
 				'accessibility': { focusBack: true,	combination: 'A', de: 'M' }
-			}:
-			!hideDownload ? (
+			});
+		} else if (!hideDownload) {
+			content.push(
 				{
 					'type': 'container',
 					'children': [
@@ -293,8 +319,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					],
 					'vertical': 'true'
 				}
-			): {},
-			addRepairToColumn ? {
+			);
+		}
+
+		if (addRepairToColumn) {
+			content.push({
 				'type': 'container',
 				'children': [
 					{
@@ -307,7 +336,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					}
 				],
 				'vertical': 'true'
-			}: {},
+			});
+		}
+
+		content.push(
 			{
 				'type': 'container',
 				'children': [
@@ -319,8 +351,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'accessibility': { focusBack: true,	combination: 'I', de: 'I' }
 					}
 				]
-			}
-		];
+			});
 
 		content.push({
 			'type': 'container',
@@ -330,6 +361,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'class': 'unoRenameDocument',
 					'type': 'bigcustomtoolitem',
 					'text': _('Rename'),
+					'accessibility': { focusBack: true,	combination: 'RN' }
 				}
 			]
 		});
@@ -550,7 +582,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'accessibility': { focusBack: false,	combination: 'FF',	de: null }
 							},
 							{
-								'id': 'fontsize',
+								'id': 'fontsizecombobox',
 								'type': 'combobox',
 								'text': '12 pt',
 								'entries': [
@@ -845,6 +877,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 								{
 									'id': 'home-search',
+									'class': 'unoSearch',
 									'type': 'menubartoolitem',
 									'text': _('Search'),
 									'command': _('Show Status Bar'),
@@ -983,7 +1016,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:InsertTable', 'text'),
 				'command': '.uno:InsertTable',
-				'accessibility': { focusBack: false,	combination: 'T',	de: null }
+				'accessibility': { focusBack: false,	combination: 'IT',	de: null }
 			},
 			{
 				'id': 'insert-insert-graphic',
@@ -1043,6 +1076,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'id': 'insert-insert-remote-link',
+								'class': 'unoremotelink',
 								'type': 'customtoolitem',
 								'text': _('Smart Picker'),
 								'command': 'remotelink'
@@ -1208,6 +1242,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'text': _UNO('.uno:FormattingMarkMenu', 'text'),
 				'command': '.uno:FormattingMarkMenu',
 				'accessibility': { focusBack: false,	combination: 'FM',	de: null }
+			},
+			{
+				'id': 'insert-QrCode',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:InsertQrCode', 'text'),
+				'command': '.uno:InsertQrCode',
+				'accessibility': { focusBack: false,	combination: 'IQ',	de: null }
 			},
 			{
 				'type': 'container',

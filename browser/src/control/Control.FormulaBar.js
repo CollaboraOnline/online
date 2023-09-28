@@ -64,23 +64,13 @@ L.Control.FormulaBar = L.Control.extend({
 			item = toolbar.get(id);
 		}
 
-		// In the iOS app we don't want clicking on the toolbar to pop up the keyboard.
-		if (!window.ThisIsTheiOSApp && id !== 'zoomin' && id !== 'zoomout' && id !== 'mobile_wizard' && id !== 'insertion_mobile_wizard') {
-			this.map.focus(this.map.canAcceptKeyboardInput()); // Maintain same keyboard state.
-		}
+		this.map.preventKeyboardPopup(id);
 
-		if (item.disabled) {
+		if (item.disabled)
 			return;
-		}
 
-		if (item.uno) {
-			if (item.unosheet && this.map.getDocType() === 'spreadsheet') {
-				this.map.toggleCommandState(item.unosheet);
-			}
-			else {
-				this.map.toggleCommandState(window.getUNOCommand(item.uno));
-			}
-		}
+		if (item.uno)
+			this.map.executeUnoAction(item);
 	},
 
 	onDocLayerInit: function() {

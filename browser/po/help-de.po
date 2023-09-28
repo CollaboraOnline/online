@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-08-28 19:34+0000\n"
+"PO-Revision-Date: 2023-09-23 08:08+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "help/de/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -95,13 +95,12 @@ msgid "Focus to notebookbar menu"
 msgstr "Fokus auf das Notebookbar-Menü"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:30-70
-#, fuzzy
 msgid ""
 "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>F1"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class=\""
-"kbd--plus\">+</span><kbd>1"
+"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Umschalt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>F1"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:31-18
 msgid "Focus to document from menu"
@@ -1182,26 +1181,24 @@ msgid "Go to next sheet."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-62
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>Page Up"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>5"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Bild auf"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-18
 msgid "Go to previous sheet."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-66
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>Page Down"
 msgstr ""
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>D"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Bild ab"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""

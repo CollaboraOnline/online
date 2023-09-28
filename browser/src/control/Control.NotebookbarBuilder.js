@@ -13,13 +13,12 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_overrideHandlers: function() {
-		this._controlHandlers['combobox'] = this._comboboxControlHandler;
-		this._controlHandlers['listbox'] = this._comboboxControlHandler;
-		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
-		this._controlHandlers['tabpage'] = this._overriddenTabPageHandler;
-		this._controlHandlers['menubartoolitem'] = this._inlineMenubarToolItemHandler;
 		this._controlHandlers['bigmenubartoolitem'] = this._bigMenubarToolItemHandler;
 		this._controlHandlers['bigtoolitem'] = this._bigtoolitemHandler;
+		this._controlHandlers['combobox'] = this._comboboxControl;
+		this._controlHandlers['menubartoolitem'] = this._inlineMenubarToolItemHandler;
+		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
+		this._controlHandlers['tabpage'] = this._overriddenTabPageHandler;
 		this._controlHandlers['toolbox'] = this._toolboxHandler;
 
 		this._controlHandlers['pushbutton'] = function() { return false; };
@@ -237,106 +236,62 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			$('#applystyle').val(state).trigger('change');
 		}
 		else if (commandName === '.uno:ModifiedStatus') {
-			if (e.state === 'true') {
-				$('#Save1').addClass('savemodified');
-				$('#Save').addClass('savemodified');
-			}
-			else {
-				$('#Save1').removeClass('savemodified');
-				$('#Save').removeClass('savemodified');
+			if (document.getElementById('save')) {
+				if (state === 'true') {
+					document.getElementById('save').classList.add('savemodified');
+					document.getElementById('file-save').classList.add('savemodified');
+				}
+				else {
+					document.getElementById('save').classList.remove('savemodified');
+					document.getElementById('file-save').classList.remove('savemodified');
+				}
 			}
 		}
-	},
-
-	_createiOsFontButton: function(parentContainer, data, builder) {
-		// Fix issue #5838 Use unique IDs for font name combobox elements
-		var table = L.DomUtil.createWithId('div', data.id, parentContainer);
-		var row = L.DomUtil.create('div', 'notebookbar row', table);
-		var button = L.DomUtil.createWithId('button', data.id + 'ios', row);
-
-		$(table).addClass('select2 select2-container select2-container--default');
-		// Fix issue #5838 Don't add the "select2-selection--single" class
-		$(row).addClass('select2-selection');
-		$(button).addClass('select2-selection__rendered');
-
-		if (data.selectedEntries.length && data.entries[data.selectedEntries[0]])
-			button.innerText = data.entries[data.selectedEntries[0]];
-		else if (window.LastSetiOSFontNameButtonFont)
-			button.innerText = window.LastSetiOSFontNameButtonFont;
-		else if (data.text)
-			button.innerText = data.text;
-		var map = builder.map;
-		window.MagicFontNameCallback = function(font) {
-			button.innerText = font;
-			map.applyFont(font);
-			map.focus();
-		};
-		button.onclick = function() {
-
-			// There doesn't seem to be a way to pre-select an entry in the
-			// UIFontPickerViewController so no need to pass the
-			// current font here.
-			window.postMobileMessage('FONTPICKER');
-		};
 	},
 
 	_comboboxControl: function(parentContainer, data, builder) {
 		if (!data.entries || data.entries.length === 0)
 			return false;
 
+		// Fix exception due to undefined _createiOsFontButton function
+		// Starting with commit 4082e1e570258f5032dfd460cf4d34ff6ae0d575,
+		// this._createiOsFontButton() throws and exception because "this"
+		// is a Window object. So fix this by moving the _createiOsFontButton
+		// function inline.
 		if (window.ThisIsTheiOSApp && data.id === 'fontnamecombobox') {
-			this._createiOsFontButton(parentContainer, data, builder);
+			// Fix issue #5838 Use unique IDs for font name combobox elements
+			var table = L.DomUtil.createWithId('div', data.id, parentContainer);
+			var row = L.DomUtil.create('div', 'notebookbar row', table);
+			var button = L.DomUtil.createWithId('button', data.id + 'ios', row);
+
+			$(table).addClass('select2 select2-container select2-container--default');
+			// Fix issue #5838 Don't add the "select2-selection--single" class
+			$(row).addClass('select2-selection');
+			$(button).addClass('select2-selection__rendered');
+
+			if (data.selectedEntries.length && data.entries[data.selectedEntries[0]])
+				button.innerText = data.entries[data.selectedEntries[0]];
+			else if (window.LastSetiOSFontNameButtonFont)
+				button.innerText = window.LastSetiOSFontNameButtonFont;
+			else if (data.text)
+				button.innerText = data.text;
+			var map = builder.map;
+			window.MagicFontNameCallback = function(font) {
+				button.innerText = font;
+				map.applyFont(font);
+				map.focus();
+			};
+			button.onclick = function() {
+
+				// There doesn't seem to be a way to pre-select an entry in the
+				// UIFontPickerViewController so no need to pass the
+				// current font here.
+				window.postMobileMessage('FONTPICKER');
+			};
 			return false;
 		}
 
-		var container = L.DomUtil.createWithId('div', data.id, parentContainer);
-		L.DomUtil.addClass(container, builder.options.cssClass);
-		L.DomUtil.addClass(container, 'ui-combobox');
-		var select = L.DomUtil.create('select', builder.options.cssClass, container);
-		builder.map.uiManager.enableTooltip(container);
-
-		var processedData = [];
-
-		var isFontSizeSelector = (data.id === 'fontsize' || data.id === 'fontsizecombobox');
-		var isFontSelector = (data.id === 'fontnamecombobox');
-
-		if (isFontSelector) {
-			builder.map.createFontSelector('.notebookbar #' + data.id + ' select');
-			return;
-		} else if (isFontSizeSelector) {
-			builder.map.createFontSizeSelector('.notebookbar #' + data.id + ' select');
-			return;
-		}
-
-		data.entries.forEach(function (value, index) {
-			var selected = parseInt(data.selectedEntries[0]) == index;
-			var id = index;
-			if (isFontSizeSelector)
-				id = parseFloat(value);
-			if (isFontSelector)
-				id = value;
-			processedData.push({id: id, text: value, selected: selected});
-		});
-
-		$(select).select2({
-			data: processedData,
-			placeholder: _(builder._cleanText(data.text))
-		});
-
-		$(select).on('select2:select', function (e) {
-			var value = e.params.data.id + ';' + e.params.data.text;
-			builder.callback('combobox', 'selected', container, value, builder);
-		});
-
-		return false;
-	},
-
-	_comboboxControlHandler: function(parentContainer, data, builder) {
-		if ((data.command === '.uno:StyleApply' && builder.map.getDocType() === 'spreadsheet') ||
-			(data.id === ''))
-			return false;
-
-		return builder._comboboxControl(parentContainer, data, builder);
+		return JSDialog.combobox(parentContainer, data, builder);
 	},
 
 	// overriden

@@ -26,7 +26,7 @@
 /// faster we unload. Also, the test is poorly named.
 class UnitWopiOwnertermination : public WopiTestServer
 {
-    STATE_ENUM(Phase, Start, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose) _phase;
+    STATE_ENUM(Phase, Start, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose, Done) _phase;
 
     int _loadedIndex; //< The connection index that is loaded now.
 
@@ -94,7 +94,7 @@ public:
             LOK_ASSERT_EQUAL_MESSAGE("Expect only documentunloading errors",
                                      std::string("error: cmd=internal kind=load"), message);
 
-            passTest("Reload while unloading failed as expected");
+            TRANSITION_STATE(_phase, Phase::Done);
         }
 
         return true;
@@ -133,6 +133,9 @@ public:
             case Phase::WaitLoadStatus:
             case Phase::WaitModifiedStatus:
             case Phase::WaitDocClose:
+                break;
+            case Phase::Done:
+                passTest("Reload while unloading failed as expected");
                 break;
         }
     }

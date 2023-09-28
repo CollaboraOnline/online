@@ -124,6 +124,7 @@ test_base_sources = \
 	TileQueueTests.cpp \
 	RequestDetailsTests.cpp \
 	StringVectorTests.cpp \
+	FileServeWhiteBoxTests.cpp \
 	WhiteBoxTests.cpp \
 	HttpWhiteBoxTests.cpp \
 	DeltaTests.cpp \
@@ -144,6 +145,7 @@ common_sources = \
 	../common/Util.cpp \
 	../common/StringVector.cpp \
 	../common/TraceEvent.cpp \
+	../common/Simd.cpp \
 	../wsd/Exceptions.cpp \
 	../net/HttpRequest.cpp \
 	../net/Socket.cpp \

@@ -78,7 +78,8 @@ ClientSession::ClientSession(
     _kitViewId(-1),
     _serverURL(requestDetails),
     _isTextDocument(false),
-    _thumbnailSession(false)
+    _thumbnailSession(false),
+    _canonicalViewId(0)
 {
     const std::size_t curConnections = ++COOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
@@ -517,7 +518,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 endptr = nullptr;
                 double counter = strtod(str, &endptr);
                 if (*endptr == '\0' && counter > 0 &&
-                    (counter < (uint64_t)(std::numeric_limits<uint64_t>::max() / 1000)))
+                    (counter < (double)(uint64_t)(std::numeric_limits<uint64_t>::max() / 1000)))
                 {
                     // Now we know how to translate from the client's performance.now() values to
                     // microseconds since the epoch.
@@ -652,10 +653,20 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "tile"))
     {
+        if (!(UnitWSD::isUnitTesting() ? true : getCanonicalViewId() != 0 && getCanonicalViewId() >= 1000))
+        {
+            LOG_WRN("Got tile request for session [" << getId() << "] on document [" << docBroker->getDocKey()
+                                << "] with invalid view ID [" << getCanonicalViewId() << "].");
+        }
         return sendTile(buffer, length, tokens, docBroker);
     }
     else if (tokens.equals(0, "tilecombine"))
     {
+        if (!(UnitWSD::isUnitTesting() ? true : getCanonicalViewId() != 0 && getCanonicalViewId() >= 1000))
+        {
+            LOG_WRN("Got tilecombine request for session [" << getId() << "] on document [" << docBroker->getDocKey()
+                                << "] with invalid view ID [" << getCanonicalViewId() << "].");
+        }
         return sendCombinedTiles(buffer, length, tokens, docBroker);
     }
     else if (tokens.equals(0, "save"))
@@ -799,7 +810,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             }
             else
             {
-                docBroker->updateLastModifyingActivityTime();
+                if (isEditable())
+                    docBroker->updateLastModifyingActivityTime();
                 return forwardToChild(std::string(buffer, length), docBroker);
             }
         }
@@ -1061,7 +1073,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (tokens.equals(0, "key"))
             _keyEvents++;
 
-        if (COOLProtocol::tokenIndicatesDocumentModification(tokens))
+        if (isEditable() && COOLProtocol::tokenIndicatesDocumentModification(tokens))
         {
             docBroker->updateLastModifyingActivityTime();
         }
@@ -2499,7 +2511,7 @@ void ClientSession::handleTileInvalidation(const std::string& message,
                         TileDesc desc(normalizedViewId, part, mode,
                                       _tileWidthPixel, _tileHeightPixel,
                                       j * _tileWidthTwips, i * _tileHeightTwips,
-                                      _tileWidthTwips, _tileHeightTwips, -1, 0, -1, false);
+                                      _tileWidthTwips, _tileHeightTwips, -1, 0, -1);
 
                         bool dup = false;
                         // Check we don't have duplicates

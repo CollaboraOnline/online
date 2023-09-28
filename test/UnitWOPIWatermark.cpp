@@ -58,7 +58,7 @@ public:
             }
             case Phase::TileRequest:
             {
-                WSD_CMD("tilecombine nviewid=1001 part=0 width=256 height=256 tileposx=0,3840 "
+                WSD_CMD("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 "
                         "tileposy=0,0 tilewidth=3840 tileheight=3840");
                 const std::string tile =
                     helpers::getResponseString(getWs()->getWebSocket(), "tile:", testName);
@@ -67,7 +67,7 @@ public:
                 {
                     StringVector tokens(StringVector::tokenize(tile, ' '));
                     std::string nviewid = tokens[1].substr(std::string("nviewid=").size());
-                    if (!nviewid.empty() && nviewid == "1001")
+                    if (!nviewid.empty() && nviewid != "0")
                     {
                         LOG_INF(
                             "Watermark is hashed into integer successfully nviewid=" << nviewid);

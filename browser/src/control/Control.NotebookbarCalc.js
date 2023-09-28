@@ -90,8 +90,10 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 	},
 
 	getFileTab: function() {
-		var content = [
-			!this._map['wopi'].HideSaveOption ? {
+		var content = [];
+
+		if (!this._map['wopi'].HideSaveOption) {
+			content.push({
 				'type': 'toolbox',
 				'children': [
 					{
@@ -102,8 +104,11 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'accessibility': { focusBack: true,	combination: 'S', de: null }
 					}
 				]
-			}: {},
-			!this._map['wopi'].UserCanNotWriteRelative ? (
+			});
+		}
+
+		if (!this._map['wopi'].UserCanNotWriteRelative) {
+			content.push(
 				(window.uiDefaults && window.uiDefaults.saveAsMode === 'group') ? {
 					'id': 'saveas',
 					'type': 'bigmenubartoolitem',
@@ -117,14 +122,20 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					'command': '.uno:SaveAs',
 					'accessibility': { focusBack: true,	combination: 'A', de: null }
 				}
-			): {},
-			!this._map['wopi'].UserCanNotWriteRelative ? {
+			);
+		}
+
+		if (!this._map['wopi'].UserCanNotWriteRelative) {
+			content.push({
 				'id': 'exportas',
 				'class': 'unoexportas',
 				'type': 'bigmenubartoolitem',
 				'text': _('Export As'),
 				'accessibility': { focusBack: true,	combination: 'E', de: null }
-			}: {},
+			});
+		}
+
+		content.push(
 			{
 				'id': 'file-shareas-rev-history',
 				'type': 'container',
@@ -151,17 +162,21 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						} : {},
 				],
 				'vertical': 'true'
-			},
-			!this._map['wopi'].HidePrintOption ?
-			{
-				'id': 'print',
-				'type': 'bigtoolitem',
+			}
+		);
+
+		if (!this._map['wopi'].HidePrintOption) {
+			content.push({
+				'id': 'Data-Print:Print',
+				'type': 'menubutton',
 				'text': _UNO('.uno:Print', 'spreadsheet'),
 				'command': '.uno:Print',
 				'accessibility': { focusBack: true,	combination: 'PT', de: null }
-			} : {},
-			(!(window.enableMacrosExecution  === 'false')) ?
-			{
+			});
+		}
+
+		if (!(window.enableMacrosExecution  === 'false')) {
+			content.push({
 				'type': 'toolbox',
 				'children': [
 					{
@@ -172,14 +187,19 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'accessibility': { focusBack: true,	combination: 'M', de: null }
 					}
 				]
-			} : {},
-			!!window.groupDownloadAsForNb && !this._map['wopi'].HideExportOption ? {
+			});
+		}
+
+		if (!!window.groupDownloadAsForNb && !this._map['wopi'].HideExportOption) {
+			content.push({
 				'id': 'downloadas',
 				'class': 'unodownloadas',
 				'type': 'bigmenubartoolitem',
 				'text': _('Download'),
 				'accessibility': { focusBack: true,	combination: 'DA', de: null }
-			}: (!this._map['wopi'].HideExportOption ? (
+			});
+		} else if (!this._map['wopi'].HideExportOption) {
+			content.push(
 				{
 					'id': 'file-downloadas-ods-downloadas-csv',
 					'type': 'container',
@@ -244,9 +264,12 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						},
 					],
 					'vertical': 'true'
-				}): {}
-			),
-			!this._map['wopi'].HideRepairOption ? {
+				}
+			);
+		}
+
+		if (!this._map['wopi'].HideRepairOption) {
+			content.push({
 				'type': 'container',
 				'children': [
 					{
@@ -259,7 +282,10 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					}
 				],
 				'vertical': 'true'
-			}: {},
+			});
+		}
+
+		content.push(
 			{
 				'type': 'container',
 				'children': [
@@ -283,7 +309,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					}
 				]
 			}
-		];
+		);
 
 		return this.getTabPage('File', content);
 	},
@@ -385,7 +411,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								'accessibility': { focusBack: true,	combination: 'FF', de: null }
 							},
 							{
-								'id': 'fontsize',
+								'id': 'fontsizecombobox',
 								'type': 'combobox',
 								'text': '10 pt',
 								'entries': [
@@ -845,6 +871,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'children': [
 								{
 									'id': 'home-search',
+									'class': 'unoSearch',
 									'type': 'menubartoolitem',
 									'text': _('Search'),
 									'command': _('Show Status Bar'),
@@ -1372,13 +1399,14 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			{
 				'id': 'HyperlinkDialog',
 				'class': 'unoHyperlinkDialog',
-				'type': 'bigcustomtoolitem',
+				'type': 'bigtoolitem',
 				'text': _UNO('.uno:HyperlinkDialog'),
-				'command': 'hyperlinkdialog',
+				'command': '.uno:HyperlinkDialog',
 				'accessibility': { focusBack: true,	combination: 'I2', de: null }
 			},
 			(this._map['wopi'].EnableRemoteLinkPicker) ? {
 				'id': 'insert-smart-picker',
+				'class': 'unoremotelink',
 				'type': 'bigcustomtoolitem',
 				'text': _('Smart Picker'),
 				'command': 'remotelink',

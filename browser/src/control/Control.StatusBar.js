@@ -94,24 +94,15 @@ L.Control.StatusBar = L.Control.extend({
 			item = toolbar.get(id);
 		}
 
-		// In the iOS app we don't want clicking on the toolbar to pop up the keyboard.
-		if (!window.ThisIsTheiOSApp && id !== 'zoomin' && id !== 'zoomout' && id !== 'mobile_wizard' && id !== 'insertion_mobile_wizard') {
-			this.map.focus(this.map.canAcceptKeyboardInput()); // Maintain same keyboard state.
-		}
+		this.map.preventKeyboardPopup(id);
 
-		if (item.disabled) {
+		if (item.disabled)
 			return;
-		}
 
 		var docLayer = this.map._docLayer;
 
 		if (item.uno) {
-			if (item.unosheet && this.map.getDocType() === 'spreadsheet') {
-				this.map.toggleCommandState(item.unosheet);
-			}
-			else {
-				this.map.toggleCommandState(window.getUNOCommand(item.uno));
-			}
+			this.map.executeUnoAction(item);
 		}
 		else if (id === 'zoomin' && this.map.getZoom() < this.map.getMaxZoom()) {
 			this.map.zoomIn(1, null, true /* animate? */);
@@ -140,7 +131,7 @@ L.Control.StatusBar = L.Control.extend({
 			this.map.search(L.DomUtil.get('search-input').value);
 		}
 		else if (id === 'cancelsearch') {
-			this._cancelSearch();
+			this.map.cancelSearch();
 		}
 		else if (id.startsWith('StateTableCellMenu') && subItem) {
 			e.done(function () {
@@ -444,23 +435,6 @@ L.Control.StatusBar = L.Control.extend({
 			this.map.uiManager.toggleStatusBar();
 		else
 			this.map.uiManager.hideStatusBar(true);
-	},
-
-	_cancelSearch: function() {
-		var toolbar = window.mode.isMobile() ? w2ui['searchbar'] : w2ui['actionbar'];
-		var searchInput = L.DomUtil.get('search-input');
-		this.map.resetSelection();
-		toolbar.hide('cancelsearch');
-		toolbar.disable('searchprev');
-		toolbar.disable('searchnext');
-		searchInput.value = '';
-		if (window.mode.isMobile()) {
-			searchInput.focus();
-			// odd, but on mobile we need to invoke it twice
-			toolbar.hide('cancelsearch');
-		}
-
-		this.map._onGotFocus();
 	},
 
 	_getPermissionModeHtml: function(isReadOnly, canUserWrite) {

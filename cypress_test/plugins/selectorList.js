@@ -1,12 +1,12 @@
 /* -*- js-indent-level: 8 -*- */
 module.exports.list = {
 	fontColor: ['#Home #FontColor .arrowbackground', '#tb_editbar_item_fontcolor'],
-	fontName: ['#fontnamecombobox', '#tb_editbar_item_fonts'],
+	fontName: ['#fontnamecombobox.notebookbar > .ui-combobox-button', '#tb_editbar_item_fonts'],
 	bold: ['#Bold', '#tb_editbar_item_bold'],
 	italic: ['#Italic', '#tb_editbar_item_italic'],
 	underline: ['#Underline', '#tb_editbar_item_underline'],
 	strikeout: ['#Strikeout', '#tb_editbar_item_strikeout'],
-	fontSize: ['#fontsize', '#tb_editbar_item_fontsizes'],
+	fontSize: ['#fontsizecombobox.notebookbar > .ui-combobox-button', '#tb_editbar_item_fontsizes'],
 	leftPara: ['#LeftPara', '#tb_editbar_item_leftpara'],
 	rightPara: ['#RightPara', '#tb_editbar_item_rightpara'],
 	centerPara: ['#CenterPara', '#tb_editbar_item_centerpara'],

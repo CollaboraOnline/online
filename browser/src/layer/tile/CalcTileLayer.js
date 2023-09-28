@@ -367,6 +367,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var command = app.socket.parseServerCmd(textMsg);
 		if (command.width && command.height && this._documentInfo !== textMsg) {
 			var firstSelectedPart = (typeof this._selectedPart !== 'number');
+			if (command.readonly === 1)
+				this._map.setPermission('readonly');
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
 			this._lastColumn = command.lastcolumn;
@@ -376,7 +378,12 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			app.view.size.pixels = app.file.size.pixels.slice();
 			this._docType = command.type;
 			this._parts = command.parts;
-			this._selectedPart = command.selectedPart;
+			if (this._reconnected) {
+				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
+				this._map._reconnected = false;
+			} else {
+				this._selectedPart = command.selectedPart;
+			}
 			this._selectedMode = (command.mode !== undefined) ? command.mode : 0;
 			if (this.sheetGeometry && this._selectedPart != this.sheetGeometry.getPart()) {
 				// Core initiated sheet switch, need to get full sheetGeometry data for the selected sheet.
@@ -1108,4 +1115,3 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		return this._selectedPart;
 	},
 });
-

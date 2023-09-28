@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-08-11 20:51+0000\n"
+"PO-Revision-Date: 2023-09-11 17:03+0000\n"
 "Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "help/eu/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 5.0.1-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1175,29 +1175,27 @@ msgstr "Ktrl</kbd><span class=\"kbd--plus\">+</span><kbd>Behe-gezia"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-18
 msgid "Go to next sheet."
-msgstr ""
+msgstr "Joan hurrengo orrira."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-62
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>Page Up"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>5"
+"plus\">+</span><kbd>Orria gora"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-18
 msgid "Go to previous sheet."
-msgstr ""
+msgstr "Joan aurreko orrira."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-66
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>Page Down"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>D"
+"plus\">+</span><kbd>Orria behera"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""

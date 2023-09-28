@@ -34,3 +34,33 @@ Signed-off-by: Random J Developer <random@developer.example.org>
 
 using your real name and the email address (sorry, no pseudonyms
 or anonymous contributions.)
+
+## Other information to put into your commit message
+
+When reviewing a patch, we look for the following information in the commit message:
+
+- Title: a single line, short and to the point summary of what the patch does.
+
+  - The reason is to be able to do `git log --pretty=oneline` and have a usable result.
+
+- Intro: observation of the current state
+
+  - Rationale: the problem to be solved is obvious to you, but not to the reviewer. It's good to
+    have a list of steps to reproduce the problem.
+
+- Problem description: pros and cons of the current state
+
+  - Rationale: when some feature doesn't work the way expected, frequently there is some other
+    use-case that motivated the current behavior. It's easier to not break the old use-case with
+    your change if you're aware of the old use-case.
+
+  - If there was an old use-case and you found it by research, please document it, so the person
+    reading the commit message finds it easily.
+
+- Solution: give orders to the codebase
+
+  - A short description of how you introduce new behavior while not breaking old behavior is useful,
+    because it may not be too obvious just by looking at what you changed.
+
+An alternative is to have much of this information in a (public) issue, refer to that issue and have
+a short commit message. That works better e.g. when using images to demonstrate the problem.

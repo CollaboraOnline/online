@@ -852,16 +852,21 @@ namespace Util
         return base + Util::anonymize(filename, nAnonymizationSalt) + ext + params;
     }
 
-    std::string getHttpTimeNow()
+    std::string getTimeNow(const char* format)
     {
         char time_now[64];
         std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
         std::time_t now_c = std::chrono::system_clock::to_time_t(now);
         std::tm now_tm;
         gmtime_r(&now_c, &now_tm);
-        strftime(time_now, sizeof(time_now), "%a, %d %b %Y %T", &now_tm);
+        strftime(time_now, sizeof(time_now), format, &now_tm);
 
         return time_now;
+    }
+
+    std::string getHttpTimeNow()
+    {
+        return getTimeNow("%a, %d %b %Y %T");
     }
 
     std::string getHttpTime(std::chrono::system_clock::time_point time)

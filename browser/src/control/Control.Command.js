@@ -77,7 +77,7 @@ L.Map.include({
 
 		message = message.join('');
 
-		this.uiManager.showInfoModal('unlock-features-popup', this.Locking.unlockTitle, ' ', ' ', _('Unlock'), function() {
+		this.uiManager.showInfoModal('unlock-features-popup', null, ' ', ' ', _('Unlock'), function() {
 			window.open(this.Locking.unlockLink, '_blank');
 			this.uiManager.closeModal(this.uiManager.generateModalId('unlock-features-popup'));
 		}.bind(this), true);
@@ -93,8 +93,6 @@ L.Map.include({
 		}
 
 		var unlockImage = L.DomUtil.get('unlock-image');
-		L.DomUtil.setStyle(unlockImage, 'width', '100%');
-		L.DomUtil.setStyle(unlockImage, 'height', 'auto');
 		if (this.Locking.unlockImageUrlPath) {
 			unlockImage.src = 'remote/static' + this.Locking.unlockImageUrlPath;
 		} else {

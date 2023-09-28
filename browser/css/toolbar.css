@@ -524,7 +524,7 @@ button.leaflet-control-search-next
 	margin-right: 5px;
 	width: 150px !important;
 }
-#fontnamecombobox {
+#fontnamecombobox.select2 {
 	border-color: transparent;
 	background-color: transparent;
 	line-height: 24px;
@@ -1513,6 +1513,13 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 
 #userListSummary {
 	display: flex;
+	border: 0px;
+	background: transparent;
+}
+
+#userListSummary:hover {
+	background: transparent;
+	cursor: pointer;
 }
 
 #userListSummary .user-info,

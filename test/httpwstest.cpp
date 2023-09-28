@@ -268,10 +268,7 @@ void HTTPWSTest::testInactiveClient()
                     // expected.
                     LOK_ASSERT_MESSAGE("unexpected message: " + msg,
                                             token == "a11yfocuschanged:" ||
-                                            token == "applicationbackgroundcolor:" ||
-                                            token == "canonicalidchange:" ||
                                             token == "cursorvisible:" ||
-                                            token == "documentbackgroundcolor:" ||
                                             token == "graphicselection:" ||
                                             token == "graphicviewselection:" ||
                                             token == "invalidatecursor:" ||

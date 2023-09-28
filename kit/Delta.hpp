@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
  */
 
 #pragma once
@@ -10,6 +10,7 @@
 #include <vector>
 #include <memory>
 #include <unordered_set>
+#include <fstream>
 #include <assert.h>
 #include <zlib.h>
 #include <zstd.h>
@@ -17,6 +18,8 @@
 #include <Common.hpp>
 #include <FileUtil.hpp>
 #include <Png.hpp>
+#include <Simd.hpp>
+#include <DeltaSimd.h>
 
 #ifndef TILE_WIRE_ID
 #  define TILE_WIRE_ID
@@ -141,12 +144,15 @@ class DeltaGenerator {
             return sizeof(DeltaBitmapRow) + _rleSize * 4;
         }
 
-        void initRow(const uint32_t *from, unsigned int width)
+    private:
+        void initPixRowCpu(const uint32_t *from, uint32_t *scratch,
+                           size_t *scratchLen, uint64_t *rleMaskBlock,
+                           unsigned int width)
         {
-            uint32_t scratch[width];
-
             uint32_t lastPix = 0x00000000; // transparency
             unsigned int x = 0, outp = 0;
+
+            // non-accelerated path
             for (unsigned int nMask = 0; nMask < 4; ++nMask)
             {
                 uint64_t rleMask = 0;
@@ -167,7 +173,7 @@ class DeltaGenerator {
                 }
                 else
                 {
-                    // slower inner loop for odd lengths
+                    // even slower inner loop for odd lengths
                     for (; x < width; ++x, bitToSet <<= 1)
                     {
                         if (from[x] == lastPix)
@@ -179,16 +185,60 @@ class DeltaGenerator {
                         }
                     }
                 }
-                _rleMask[nMask] = rleMask;
+                rleMaskBlock[nMask] = rleMask;
             }
+
             if (x < width)
             {
                 memcpy(scratch + outp, from + x, (width - x) * 4);
                 outp += width-x;
             }
+            *scratchLen = outp;
+        }
 
-            _rleSize = outp;
-            if (outp > 0)
+    public:
+
+        void initRow(const uint32_t *from, unsigned int width)
+        {
+            uint32_t scratch[width];
+
+            bool done = false;
+            if (simd::HasAVX2 && width == 256)
+            {
+                done = simd_initPixRowSimd(from, scratch, &_rleSize, _rleMask);
+
+#if ENABLE_DEBUG && 0 // SIMD validation
+                if (done)
+                {
+                    uint32_t cpu_scratch[width];
+                    uint64_t cpu_rleMask[_rleMaskUnits];
+                    unsigned int cpu_outp = 0;
+                    initPixRowCpu(from, cpu_scratch, &cpu_outp, cpu_rleMask, width);
+
+                    // check our result
+                    if (memcmp(cpu_rleMask, _rleMask, sizeof (cpu_rleMask)))
+                    {
+                        std::cerr << "Masks differ " <<
+                            Util::bytesToHexString(reinterpret_cast<const char *>(_rleMask), sizeof(_rleMask)) << "\n" <<
+                            Util::bytesToHexString(reinterpret_cast<const char *>(cpu_rleMask), sizeof(_rleMask)) << "\n";
+                    }
+                    assert(_rleSize == cpu_outp);
+                    if(_rleSize > 0 && memcmp(scratch, cpu_scratch, _rleSize))
+                    {
+                        std::cerr << "RLE pixels differ mask:\n" <<
+                            Util::bytesToHexString(reinterpret_cast<const char *>(_rleMask), sizeof(_rleMask)) << "\n" <<
+                            "pixels:\n" <<
+                            Util::bytesToHexString(reinterpret_cast<const char *>(scratch), _rleSize) << "\n" <<
+                            Util::bytesToHexString(reinterpret_cast<const char *>(cpu_scratch), _rleSize) << "\n";
+                    }
+                }
+#endif
+            }
+        // else CPU implementation
+            if (!done)
+                initPixRowCpu(from, scratch, &_rleSize, _rleMask, width);
+
+            if (_rleSize > 0)
             {
                 _rleData = (uint32_t *)malloc((size_t)_rleSize * 4);
                 memcpy(_rleData, scratch, _rleSize * 4);

@@ -88,9 +88,15 @@ NSString *app_text_direction;
     // Fix assert failure when running "My Mac (Designed for iPad)" in Xcode
     // LANG values such as en_US.UTF-8 trigger an assert in the LibreOffice
     // code so replace all "_" characters with "-" characters.
-    if (lang != nullptr)
+    if (lang != nullptr) {
         app_locale = [[NSString stringWithUTF8String:lang] stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
-    else
+        // Eliminate invalid language tag exceptions in JavaScript by
+        // trimming any text encoding from LANG
+        NSRange range = [app_locale rangeOfString:@"."];
+        if (range.location != NSNotFound)
+            app_locale = [app_locale substringToIndex:range.location];
+    }
+    if (!app_locale || ![app_locale length])
         app_locale = [[NSLocale preferredLanguages] firstObject];
 
     if (LangUtil::isRtlLanguage(std::string([app_locale UTF8String])))

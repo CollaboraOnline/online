@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2022-09-28 21:23+0000\n"
-"Last-Translator: george kitsoukakis <norhorn@gmail.com>\n"
+"PO-Revision-Date: 2023-09-19 19:52+0000\n"
+"Last-Translator: Theo <tbousiou@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
 "ui/el/>\n"
-"Language: \n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -459,8 +459,9 @@ msgid "Function Wizard"
 msgstr "Οδηγός συναρτήσεων"
 
 #: src/control/Control.FormulaBarJSDialog.js:54
+#, fuzzy
 msgid "Formula"
-msgstr ""
+msgstr "Τύπος"
 
 #: src/control/Control.FormulaBarJSDialog.js:60
 #: src/control/Control.MobileTopBar.js:42
@@ -605,8 +606,9 @@ msgid "Select language"
 msgstr ""
 
 #: src/control/Control.LanguageDialog.js:93
+#, fuzzy
 msgid "Language"
-msgstr ""
+msgstr "Γλώσσα"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:82
 #: src/control/Control.Menubar.js:920
@@ -828,9 +830,8 @@ msgstr "Προσανατολισμός κειμένου"
 
 #: src/control/Control.Menubar.js:276
 #: src/control/Control.NotebookbarWriter.js:51
-#, fuzzy
 msgid "References"
-msgstr "~Παραπομπές"
+msgstr "Παραπομπές"
 
 #: src/control/Control.Menubar.js:279
 #: src/control/Control.NotebookbarWriter.js:1772
@@ -1228,7 +1229,7 @@ msgstr "~Βοήθεια"
 #: src/control/Control.NotebookbarImpress.js:171
 #: src/control/Control.NotebookbarWriter.js:156
 msgid "Save As"
-msgstr ""
+msgstr "Αποθήκευση ως"
 
 #: src/control/Control.NotebookbarCalc.js:125
 #: src/control/Control.NotebookbarDraw.js:160
@@ -1256,7 +1257,7 @@ msgstr "Εμφάνιση ιστορικού"
 #: src/control/Control.NotebookbarImpress.js:240
 #: src/control/Control.NotebookbarWriter.js:217
 msgid "Download"
-msgstr ""
+msgstr "Λήψη"
 
 #: src/control/Control.NotebookbarCalc.js:190
 msgid "ODF Spreadsheet (.ods)"
@@ -1274,7 +1275,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:367
 #: src/control/Control.NotebookbarWriter.js:332
 msgid "Rename"
-msgstr ""
+msgstr "Μετονομασία"
 
 #: src/control/Control.NotebookbarCalc.js:618
 msgid "General"
@@ -1344,11 +1345,11 @@ msgstr "Κακό"
 
 #: src/control/Control.NotebookbarCalc.js:936
 msgid "Row Height"
-msgstr ""
+msgstr "Ύψος Γραμμής"
 
 #: src/control/Control.NotebookbarCalc.js:944
 msgid "Column Width"
-msgstr ""
+msgstr "Πλάτος Στήλης"
 
 #: src/control/Control.NotebookbarCalc.js:957
 msgid "Insert Rows Above"
@@ -1424,7 +1425,7 @@ msgstr "Γράφημα sparkline"
 #: src/control/Control.NotebookbarWriter.js:1004
 #: src/control/Control.NotebookbarWriter.js:2730
 msgid "Shapes"
-msgstr ""
+msgstr "Σχήματα"
 
 #: src/control/Control.NotebookbarDraw.js:89
 #: src/control/Control.NotebookbarImpress.js:92
@@ -1451,9 +1452,8 @@ msgid "Presentation"
 msgstr "Παρουσίαση"
 
 #: src/control/Control.NotebookbarWriter.js:69
-#, fuzzy
 msgid "Form"
-msgstr "Φόρουμ"
+msgstr "Φόρμα"
 
 #: src/control/Control.NotebookbarWriter.js:227
 msgid "ODF Text Document (.odt)"
@@ -1477,11 +1477,11 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:1274
 msgid "Picture"
-msgstr ""
+msgstr "Εικόνα"
 
 #: src/control/Control.NotebookbarWriter.js:1379
 msgid "Ruler"
-msgstr ""
+msgstr "Χάρακας"
 
 #: src/control/Control.PartsPreview.js:177
 msgid "preview of page "
@@ -1494,11 +1494,11 @@ msgstr "Κύριες διαφάνειες"
 
 #: src/control/Control.PartsPreview.js:270
 msgid "Copy"
-msgstr ""
+msgstr "Αντιγραφή"
 
 #: src/control/Control.PartsPreview.js:279
 msgid "Paste"
-msgstr ""
+msgstr "Επικόλληση"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1610,15 +1610,15 @@ msgstr "Λειτουργία επιλογής: ανενεργή"
 
 #: src/control/Control.StatusBar.js:592
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Ορισμός Γλώσσας για Όλο το κείμενο"
 
 #: src/control/Control.StatusBar.js:595
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Ορισμός Γλώσσας για την Παράγραφο"
 
 #: src/control/Control.StatusBar.js:596
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Ορισμός Γλώσσας για την Επιλογή"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
@@ -1748,7 +1748,7 @@ msgstr "Φόρτωση..."
 
 #: src/control/Control.Zotero.js:255
 msgid "Language:"
-msgstr ""
+msgstr "Γλώσσα:"
 
 #: src/control/Control.Zotero.js:270
 msgid "Store as:"
@@ -1756,7 +1756,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:276 src/control/Control.Zotero.js:400
 msgid "Fields"
-msgstr ""
+msgstr "Πεδία"
 
 #: src/control/Control.Zotero.js:277 src/control/Control.Zotero.js:400
 msgid "Bookmarks"
@@ -1764,7 +1764,7 @@ msgstr ""
 
 #: src/control/Control.Zotero.js:398
 msgid "Footnotes"
-msgstr ""
+msgstr "Υποσημειώσεις"
 
 #: src/control/Control.Zotero.js:398
 msgid "Endnotes"

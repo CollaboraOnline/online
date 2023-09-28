@@ -51,9 +51,9 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply font name.', function() {
 		desktopHelper.actionOnSelector('fontName', (selector) => { cy.cGet(selector).click(); });
-		desktopHelper.selectFromListbox('Alef');
+		desktopHelper.selectFromJSDialogListbox('Alef', true);
 		refreshCopyPasteContainer();
-		cy.cGet('#copy-paste-container p font').should('have.attr', 'face', 'Alef, sans-serif');
+		cy.cGet('#copy-paste-container p font').should('have.attr', 'face', 'Alef');
 	});
 
 	it('Apply bold font.', function() {
@@ -82,7 +82,7 @@ describe(['tagdesktop'], 'Top toolbar tests.', function() {
 
 	it('Apply font size', function() {
 		desktopHelper.actionOnSelector('fontSize', (selector) => { cy.cGet(selector).click(); });
-		desktopHelper.selectFromListbox('72');
+		desktopHelper.selectFromJSDialogListbox('72', false);
 		refreshCopyPasteContainer();
 		cy.cGet('#copy-paste-container p font').should('have.attr', 'style', 'font-size: 72pt');
 	});

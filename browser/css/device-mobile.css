@@ -826,3 +826,24 @@ div#fontstyletoolbox + div#style.mobile-wizard {
 	flex-direction: row;
 	justify-content: space-between;
 }
+/* feature_lock */
+#mobile-wizard #unlock-features-popup .container {
+	flex-direction: column;
+}
+#mobile-wizard #unlock-features-popup #unlock-image {
+	max-width: 92%;
+	margin: 4%;
+	align-self: center;
+	flex: 2 1 auto;
+	height: 238px;
+	background-position: center;
+}
+#mobile-wizard #unlock-features-popup h1 {
+	font-size: 1.4em !important;
+}
+#unlock-features-popup .item ul {
+	text-shadow: none;
+	font-size: 1em !important;
+	margin-left: 5px;
+	margin-right: 5px;
+}

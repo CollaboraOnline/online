@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-06-16 14:48+0000\n"
-"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
+"PO-Revision-Date: 2023-09-23 08:08+0000\n"
+"Last-Translator: Jérôme Herbinet <j.herbinet@protonmail.ch>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.18.1\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -684,9 +684,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:76
-#, fuzzy
 msgid "Rename Document"
-msgstr "Restaurer le document"
+msgstr "Renommer le document"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:383
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:660
@@ -716,9 +715,8 @@ msgstr "Télécharger sous"
 #: src/control/Control.NotebookbarBuilder.js:590
 #: src/control/Control.NotebookbarBuilder.js:619
 #: src/control/Control.NotebookbarBuilder.js:648
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "Document PDF (.pdf)"
+msgstr "Document PDF (.pdf) en..."
 
 #: src/control/Control.Menubar.js:90 src/control/Control.Menubar.js:395
 #: src/control/Control.Menubar.js:541 src/control/Control.Menubar.js:672
@@ -793,7 +791,7 @@ msgstr "Afficher la barre d'état"
 #: src/control/Control.Menubar.js:131 src/control/Control.Menubar.js:424
 #: src/control/Control.Menubar.js:572 src/control/Control.Menubar.js:700
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Masquer la barre de menus"
 
 #: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:425
 #: src/control/Control.Menubar.js:568 src/control/Control.Menubar.js:701
@@ -824,7 +822,7 @@ msgstr "Tout"
 #: src/control/Control.NotebookbarImpress.js:1042
 #: src/control/Control.NotebookbarWriter.js:1047
 msgid "Smart Picker"
-msgstr "Sélection Intelligente"
+msgstr "Sélecteur intelligent"
 
 #: src/control/Control.Menubar.js:214
 msgid "Text orientation"
@@ -903,7 +901,7 @@ msgstr "Propriétés"
 #: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:954
 #: src/control/Control.NotebookbarWriter.js:392
 msgid "Accessibility Support"
-msgstr ""
+msgstr "Accessibilité"
 
 #: src/control/Control.Menubar.js:360
 #: src/control/Control.NotebookbarWriter.js:358
@@ -1155,77 +1153,67 @@ msgstr "Très lâche"
 #: src/control/Control.NotebookbarDraw.js:52
 #: src/control/Control.NotebookbarImpress.js:61
 #: src/control/Control.NotebookbarWriter.js:26
-#, fuzzy
 msgid "File"
-msgstr "~Fichier"
+msgstr "Fichier"
 
 #: src/control/Control.NotebookbarCalc.js:19
 #: src/control/Control.NotebookbarDraw.js:58
 #: src/control/Control.NotebookbarImpress.js:66
 #: src/control/Control.NotebookbarWriter.js:32
-#, fuzzy
 msgid "Home"
-msgstr "Accuei~l"
+msgstr "Origine"
 
 #: src/control/Control.NotebookbarCalc.js:26
 #: src/control/Control.NotebookbarDraw.js:65
 #: src/control/Control.NotebookbarImpress.js:72
 #: src/control/Control.NotebookbarWriter.js:39
-#, fuzzy
 msgid "Insert"
-msgstr "~Insertion"
+msgstr "Insertion"
 
 #: src/control/Control.NotebookbarCalc.js:32
 #: src/control/Control.NotebookbarDraw.js:71
 #: src/control/Control.NotebookbarImpress.js:77
 #: src/control/Control.NotebookbarWriter.js:45
-#, fuzzy
 msgid "Layout"
-msgstr "~Mise en page"
+msgstr "Mise en page"
 
 #: src/control/Control.NotebookbarCalc.js:38
-#, fuzzy
 msgid "Data"
-msgstr "~Données"
+msgstr "Données"
 
 #: src/control/Control.NotebookbarCalc.js:44
 #: src/control/Control.NotebookbarDraw.js:77
 #: src/control/Control.NotebookbarImpress.js:82
 #: src/control/Control.NotebookbarWriter.js:57
-#, fuzzy
 msgid "Review"
-msgstr "~Révision"
+msgstr "Révision"
 
 #: src/control/Control.NotebookbarCalc.js:50
 #: src/control/Control.NotebookbarDraw.js:83
 #: src/control/Control.NotebookbarImpress.js:87
 #: src/control/Control.NotebookbarWriter.js:63
-#, fuzzy
 msgid "Format"
-msgstr "F~ormat"
+msgstr "Format"
 
 #: src/control/Control.NotebookbarCalc.js:56
 #: src/control/Control.NotebookbarDraw.js:96
 #: src/control/Control.NotebookbarWriter.js:82
-#, fuzzy
 msgid "Draw"
-msgstr "Dessine~r"
+msgstr "Dessiner"
 
 #: src/control/Control.NotebookbarCalc.js:63
 #: src/control/Control.NotebookbarDraw.js:103
 #: src/control/Control.NotebookbarImpress.js:110
 #: src/control/Control.NotebookbarWriter.js:89
-#, fuzzy
 msgid "View"
-msgstr "Vues"
+msgstr "Affichage"
 
 #: src/control/Control.NotebookbarCalc.js:69
 #: src/control/Control.NotebookbarDraw.js:109
 #: src/control/Control.NotebookbarImpress.js:115
 #: src/control/Control.NotebookbarWriter.js:95
-#, fuzzy
 msgid "Help"
-msgstr "~Aide"
+msgstr "Aide"
 
 #: src/control/Control.NotebookbarCalc.js:110
 #: src/control/Control.NotebookbarImpress.js:171
@@ -1269,14 +1257,14 @@ msgstr "Classeur ODF (.ods)"
 #: src/control/Control.NotebookbarImpress.js:311
 #: src/control/Control.NotebookbarWriter.js:270
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "Document PDF (.pdf) - Expert"
 
 #: src/control/Control.NotebookbarCalc.js:282
 #: src/control/Control.NotebookbarDraw.js:278
 #: src/control/Control.NotebookbarImpress.js:367
 #: src/control/Control.NotebookbarWriter.js:332
 msgid "Rename"
-msgstr ""
+msgstr "Renommer"
 
 #: src/control/Control.NotebookbarCalc.js:618
 msgid "General"
@@ -1430,18 +1418,16 @@ msgstr "Formes"
 #: src/control/Control.NotebookbarDraw.js:89
 #: src/control/Control.NotebookbarImpress.js:92
 #: src/control/Control.NotebookbarWriter.js:75
-#, fuzzy
 msgid "Table"
-msgstr "~Tableau"
+msgstr "Tableau"
 
 #: src/control/Control.NotebookbarDraw.js:214
 msgid "Image (.png)"
 msgstr "Image (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:104
-#, fuzzy
 msgid "Master"
-msgstr "Diapo ~maîtresse"
+msgstr "Maîtresse"
 
 #: src/control/Control.NotebookbarImpress.js:266
 msgid "ODF Presentation (.odp)"
@@ -1453,9 +1439,8 @@ msgid "Presentation"
 msgstr "Présentation"
 
 #: src/control/Control.NotebookbarWriter.js:69
-#, fuzzy
 msgid "Form"
-msgstr "Forum"
+msgstr "Formulaire"
 
 #: src/control/Control.NotebookbarWriter.js:227
 msgid "ODF Text Document (.odt)"
@@ -1986,7 +1971,7 @@ msgstr "\"Proxy lent\""
 
 #: src/control/Toolbar.js:667
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Copier toutes les informations de version en anglais"
 
 #: src/control/Toolbar.js:750
 msgid "Insert hyperlink"
@@ -2044,7 +2029,7 @@ msgstr "Version LOKit :"
 
 #: src/core/Socket.js:713
 msgid "Document is getting migrated..."
-msgstr ""
+msgstr "Le document se fait migrer..."
 
 #: src/core/Socket.js:740
 msgid "Session terminated by document owner"

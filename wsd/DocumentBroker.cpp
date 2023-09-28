@@ -2393,8 +2393,10 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         // very late, or not at all. We care that there is nothing to upload
         // and the last save succeeded, possibly because there was no
         // modifications, and there has been no activity since.
-        if (!haveModifyActivityAfterSaveRequest() && !_saveManager.isSaving() &&
-            _saveManager.lastSaveSuccessful())
+        LOG_ASSERT_MSG(_saveManager.lastSaveRequestTime() < _saveManager.lastSaveResponseTime(),
+                       "Unexpected active save in flight");
+        LOG_ASSERT_MSG(!_saveManager.isSaving(), "Unexpected active save in flight");
+        if (!haveModifyActivityAfterSaveRequest() && _saveManager.lastSaveSuccessful())
         {
             // We can stop, but the modified flag is set. Delayed ModifiedStatus?
             if (isModified())
@@ -2415,9 +2417,10 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
             LOG_TRC("autoSaveAndStop for docKey ["
                     << getDocKey() << "]: no modifications since last successful save. Stopping.");
         }
-        else if (!isPossiblyModified())
+        else if (needToSave == NeedToSave::No)
         {
             // Nothing to upload and no modifications; stop.
+            LOG_ASSERT_MSG(!isPossiblyModified(), "Unexpected isPossiblyModified with NeedToSave::No");
             canStop = true;
             LOG_TRC("autoSaveAndStop for docKey [" << getDocKey() << "]: not modified. Stopping.");
         }
@@ -3086,21 +3089,7 @@ void DocumentBroker::handleTileRequest(const StringVector &tokens, bool forceKey
         tile.forceKeyframe();
 
     auto now = std::chrono::steady_clock::now();
-    if (tile.getBroadcast())
-    {
-        for (auto& it: _sessions)
-        {
-            if (!it.second->inWaitDisconnected())
-            {
-                tile.setNormalizedViewId(it.second->getCanonicalViewId());
-                tileCache().subscribeToTileRendering(tile, it.second, now);
-            }
-        }
-    }
-    else
-    {
-        tileCache().subscribeToTileRendering(tile, session, now);
-    }
+    tileCache().subscribeToTileRendering(tile, session, now);
 
     // Forward to child to render.
     LOG_DBG("Sending render request for tile (" << tile.getPart() << ',' <<

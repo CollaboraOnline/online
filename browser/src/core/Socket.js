@@ -10,6 +10,7 @@ app.definitions.Socket = L.Class.extend({
 	ReconnectCount: 0,
 	WasShownLimitDialog: false,
 	WSDServer: {},
+	IndirectSocketReconnectCount: 0,
 
 	/// Whether Trace Event recording is enabled or not. ("Enabled" here means whether it can be
 	/// turned on (and off again), not whether it is on.)
@@ -562,8 +563,8 @@ app.definitions.Socket = L.Class.extend({
 
 			this.WSDServer = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 
-			if (oldId && oldVersion && sameFile && !window.migrating) {
-				if (this.WSDServer.Id !== oldId || this.WSDServer.Version !== oldVersion) {
+			if (oldId && oldVersion && sameFile) {
+				if ((this.WSDServer.Id !== oldId || this.WSDServer.Version !== oldVersion) && !window.migrating && !this.IndirectSocketReconnectCount) {
 					var reloadMessage = _('Server is now reachable. We have to refresh the page now.');
 					if (window.mode.isMobile())
 						reloadMessage = _('Server is now reachable...');
@@ -575,8 +576,27 @@ app.definitions.Socket = L.Class.extend({
 						this._map.fire('postMessage', {msgId: 'Reloading', args: {Reason: 'Reconnected'}});
 					setTimeout(reloadFunc, 5000);
 				}
+				var docType = this._map.getDocType();
+				if (docType === 'presentation' || docType === 'drawing' || docType === 'spreadsheet') {
+					this._map._docLayer._reconnected = true;
+				}
 			}
-			window.migrating = false;
+			if (window.indirectSocket) {
+				if (window.expectedServerId && window.expectedServerId != this.WSDServer.Id) {
+					if (this.IndirectSocketReconnectCount++ >= 3) {
+						var msg = errorMessages.clusterconfiguration.replace('%productName', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition (unbranded)'));
+						msg = msg.replace(/%0/g, window.expectedServerId);
+						msg = msg.replace(/%1/g, window.routeToken);
+						msg = msg.replace(/%2/g, this.WSDServer.Id);
+						this._map.uiManager.showInfoModal('wrong-server-modal', _('Cluster configuration warning'), msg, '', _('OK'), null, false);
+						this.IndirectSocketReconnectCount = 0;
+					} else {
+						this._map.showBusy(_('Wrong server, reconnecting...'), false);
+						this.manualReconnect(2000);
+						return;
+					}
+				}
+			}
 
 			$('#coolwsd-version-label').text(_('COOLWSD version:'));
 			var h = this.WSDServer.Hash;
@@ -703,27 +723,26 @@ app.definitions.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('migrate:') && window.indirectSocket) {
 			var migrate = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			console.log(migrate);
 			var afterSave = migrate.afterSave;
 			if (!afterSave) {
 				window.migrating = true;
 				this._map.uiManager.closeAll();
 				if (this._map.isEditMode()) {
 					this._map.setPermission('view');
-					this._map.uiManager.showSnackbar(_('Document is getting migrated...'));
+					this._map.uiManager.showSnackbar(_('Document is getting migrated'), null, null, 3000);
 				}
 				if (migrate.saved) {
 					window.routeToken = migrate.routeToken;
-					this.connect();
-					this._map.uiManager.closeAll();
+					window.expectedServerId = migrate.serverId;
+					this.manualReconnect(2000);
 				}
 				return;
 			}
 			// even after save attempt, if document is unsaved reset the file permission
 			if (migrate.saved) {
 				window.routeToken = migrate.routeToken;
-				this.connect();
-				this._map.uiManager.closeAll();
+				window.expectedServerId = migrate.serverId;
+				this.manualReconnect(2000);
 			} else {
 				this._map.setPermission(app.file.permission);
 				window.migrating = false;
@@ -1179,27 +1198,10 @@ app.definitions.Socket = L.Class.extend({
 			this._onHyperlinkClickedMsg(textMsg);
 		}
 
-		var msgDelayed = false;
 		if (!this._isReady() || !this._map._docLayer || this._delayedMessages.length || this._handlingDelayedMessages) {
-			msgDelayed = this._tryToDelayMessage(textMsg);
-		}
-
-		if (this._map._docLayer && !msgDelayed) {
+			this._delayMessage(textMsg);
+		} else {
 			this._map._docLayer._onMessage(textMsg, e.image);
-		}
-		else if (!this._map._docLayer && !msgDelayed) {
-			// If message is delayed and document layer is not ready at the time, message gets lost.
-			// To prevent this, we wait a little for document layer.
-			var waitForDocLayer = function(message, image) {
-				setTimeout(function() {
-					if (this._map._docLayer)
-						this._map._docLayer._onMessage(message, image);
-					else
-						waitForDocLayer(message, image);
-				}.bind(this), 300);
-			}.bind(this);
-
-			waitForDocLayer(textMsg, e.image);
 		}
 	},
 
@@ -1313,24 +1315,13 @@ app.definitions.Socket = L.Class.extend({
 		// var name = command.name; - ignored, we get the new name via the wopi's BaseFileName
 	},
 
-	_tryToDelayMessage: function(textMsg) {
-		var delayed = false;
-		if (textMsg.startsWith('window:') ||
-			textMsg.startsWith('celladdress:') ||
-			textMsg.startsWith('cellviewcursor:') ||
-			textMsg.startsWith('statechanged:') ||
-			textMsg.startsWith('invalidatecursor:') ||
-			textMsg.startsWith('viewinfo:')) {
-			//window.app.console.log('_tryToDelayMessage: textMsg: ' + textMsg);
-			var message = {msg: textMsg};
-			this._delayedMessages.push(message);
-			delayed  = true;
-		}
+	_delayMessage: function(textMsg) {
+		var message = {msg: textMsg};
+		this._delayedMessages.push(message);
 
-		if (delayed && !this._delayedMsgHandlerTimeoutId) {
+		if (!this._delayedMsgHandlerTimeoutId) {
 			this._handleDelayedMessages();
 		}
-		return delayed;
 	},
 
 	_handleDelayedMessages: function() {
@@ -1424,8 +1415,9 @@ app.definitions.Socket = L.Class.extend({
 			this._map.fire('statusindicator', {statusType: 'reconnected'});
 			this._map._isNotebookbarLoadedOnCore = false;
 			var uiMode = this._map.uiManager.getCurrentMode();
-			this._map.fire('changeuimode', {mode: uiMode, force: true});
+			this._map.fire('changeuimode', {mode: uiMode, force: !window.migrating});
 			this._map.setPermission(app.file.permission);
+			window.migrating = false;
 		}
 
 		this._map.fire('docloaded', {status: true});
@@ -1481,6 +1473,10 @@ app.definitions.Socket = L.Class.extend({
 		if (msgData.type === 'messagebox')
 			this._preProcessMessageDialog(msgData);
 
+		// appears in autofilter dropdown for hidden popups, we can ignore that
+		if (msgData.jsontype === 'popup')
+			return;
+
 		// re/create
 		if (window.mode.isMobile()) {
 			if (msgData.type == 'borderwindow')
@@ -1493,10 +1489,8 @@ app.definitions.Socket = L.Class.extend({
 				msgData.type === 'modalpopup' || msgData.type === 'snackbar') {
 				this._map.fire('mobilewizard', {data: msgData, callback: callback});
 			} else {
-				console.warn('jsdialog: unhandled mobile message');
+				console.warn('jsdialog: unhandled jsdialog mobile message: {jsontype: "' + msgData.jsontype + '", type: "' + msgData.type + '" ... }');
 			}
-		} else if (msgData.jsontype === 'autofilter') {
-			this._map.fire('autofilterdropdown', msgData);
 		} else if (msgData.jsontype === 'dialog') {
 			this._map.fire('jsdialog', {data: msgData, callback: callback});
 		} else if (msgData.jsontype === 'sidebar') {
@@ -1513,6 +1507,8 @@ app.definitions.Socket = L.Class.extend({
 					}
 				}
 			}
+		} else {
+			console.warn('Unhandled jsdialog message: {jsontype: "' + msgData.jsontype + '", type: "' + msgData.type + '" ... }');
 		}
 	},
 
@@ -1740,6 +1736,9 @@ app.definitions.Socket = L.Class.extend({
 			else if (tokens[i].startsWith('lastrow=')) {
 				command.lastrow = parseInt(tokens[i].substring(8));
 			}
+			else if (tokens[i].startsWith('readonly=')) {
+				command.readonly = parseInt(tokens[i].substring(9));
+			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
 			var defaultZoom = this._map.options.zoom;
@@ -1862,6 +1861,22 @@ app.definitions.Socket = L.Class.extend({
 				pretty = textMsg.substring(0, 25);
 		}
 		return this.createCompleteTraceEvent(pretty, { message: textMsg });
+	},
+
+	manualReconnect: function(timeout) {
+		if (this._map._docLayer) {
+			this._map._docLayer.removeAllViews();
+		}
+		app.idleHandler._active = false;
+		this.close();
+		clearTimeout(this.timer);
+		setTimeout(function () {
+			try {
+				app.idleHandler._activate();
+			} catch (error) {
+				window.app.console.warn('Cannot activate map');
+			}
+		}, timeout);
 	},
 
 	threadLocalLoggingLevelToggle: false

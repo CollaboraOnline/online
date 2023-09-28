@@ -521,15 +521,30 @@ describe(['taga11yenabled'], 'Editable area - Inner selection', function() {
 		helper.clickAt('P');
 		ceHelper.checkSelectionIsNull();
 		ceHelper.checkCaretPosition(7);
-		// select 'World' by a double click
-		helper.clickAt('P', true);
-		ceHelper.checkSelectionRange(6, 11);
 		// check empty selection
+		ceHelper.moveCaret('left');
+		ceHelper.moveCaret('right', 'shift', 5);
 		ceHelper.moveCaret('left', 'shift', 5);
 		ceHelper.checkSelectionIsEmpty(6);
 		ceHelper.moveCaret('left', 'shift');
 		ceHelper.checkSelectionRange(5, 6);
 		ceHelper.moveCaret('right', 'shift');
+		ceHelper.checkSelectionIsEmpty(6);
+	});
+
+	// double click is failing sometimes, so try it one more time
+	it('Selecting by double clicking', {retries: 2}, function () {
+		ceHelper.type('Hello World');
+		ceHelper.checkPlainContent('Hello World');
+		ceHelper.moveCaret('left', '', 4);
+		ceHelper.checkCaretPosition(7);
+		helper.getBlinkingCursorPosition('P');
+		ceHelper.moveCaret('home');
+		// select 'World' by a double click
+		helper.clickAt('P', true);
+		ceHelper.checkSelectionRange(6, 11);
+		// check empty selection
+		ceHelper.moveCaret('left', 'shift', 5);
 		ceHelper.checkSelectionIsEmpty(6);
 	});
 

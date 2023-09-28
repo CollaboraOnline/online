@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+#
+# 'make check' runs all wsdunit tests, this script allows running just one of them
+# usage: <script> <test name> [<limit>]
+#
+# In case a second integer parameter is supplied, then it's supported to try running the test a
+# number of times to see if it fails all the time or it's just unstable.
+#
+
+name="$1" # e.g. unit-base
+if [ -z "$name" ]; then
+    echo "missing parameter: test name"
+    exit 1
+fi
+shift # Eat the first argument.
+
+# Maximum number of runs.
+limit=1
+if [ $# -ne 0 ];
+then
+    limit=$1
+    if test $limit -lt 1; then
+        echo "Cannot run $limit times; please enter a positive number."
+        exit 1
+    fi;
+    echo "Will run $name $limit times."
+    shift
+fi
+
+pass=0;
+for ((i=1; i<=$limit; i++))
+do
+    echo;
+    echo ">>> $(date +%b-%d) @ $(date +%H:%M:%S) Run #$i (of $limit):";
+    ./coolwsd --disable-cool-user-checking --cleanup &> /dev/null
+    (cd test && ./run_unit.sh --test-name $name.la --log-file $name.log --trs-file $name.trs --color-tests yes --enable-hard-errors yes --expect-failure no -- ./$name.la)
+    if test $? -eq 0; then
+        ((pass=pass+1));
+    fi;
+    echo;
+done;
+((res=pass*100/limit));
+echo ">>> Passed $pass times out of $limit runs: $res%";
+if test $pass -ne $limit; then
+    echo ">>> FAILED";
+    RET=1;
+fi
+
+./coolwsd --disable-cool-user-checking --cleanup
+exit $RET
+
+# vi:set shiftwidth=4 expandtab:

@@ -97,7 +97,7 @@ button.ui-tab.notebookbar {
 	padding: 0 2px;
 }
 
-#Save.savemodified:after {
+#save.savemodified:after {
 	content: '';
 	display: block;
 	width: 4px;
@@ -374,16 +374,13 @@ button.ui-tab.notebookbar {
 	height: 24px !important;
 }
 
-#fontsize.notebookbar .select2.select2-container {
+#fontsize.notebookbar {
 	width: 65px !important;
 }
 
-#fontnamecombobox.notebookbar .select2 {
+#fontnamecombobox.notebookbar {
 	width: 195px !important;
 	top: -1px;
-}
-
-#fontnamecombobox.notebookbar {
 	padding-right: 0px;
 }
 
@@ -395,20 +392,12 @@ button.ui-tab.notebookbar {
 	margin-left: 0px !important;
 }
 
-#fontsizecombobox.notebookbar .select2 {
+#fontsizecombobox.notebookbar {
 	width: 50px !important;
 }
 
-#applystyle.notebookbar .select2 {
-	width: 170px !important;
-}
-
-.notebookbar.ui-combobox > .select2 * {
+.notebookbar.ui-combobox * {
 	line-height: 22px;
-}
-
-.notebookbar.ui-combobox > .select2 .select2-selection__arrow {
-	height: 22px;
 }
 
 /* Styles preview */
@@ -480,7 +469,7 @@ button.ui-tab.notebookbar {
 
 /* Home tab */
 
-#numbertype .select2.select2-container {
+#numbertype {
 	width: 170px !important;
 }
 

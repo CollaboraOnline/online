@@ -132,6 +132,17 @@ namespace LOKitHelper
                 oss << " rtlparts=" << rtlparts;
             }
 
+            if (type == LOK_DOCTYPE_SPREADSHEET)
+            {
+                char* values = loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:ReadOnly");
+                if (values)
+                {
+                    const std::string isReadOnly = std::string(values);
+                    oss << " readonly=" << (isReadOnly.find("true") != std::string::npos);
+                    std::free(values);
+                }
+            }
+
             for (int i = 0; i < parts; ++i)
             {
                 oss << '\n';

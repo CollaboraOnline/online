@@ -17,7 +17,7 @@ class RequestDetails;
 /// Handles file requests over HTTP(S).
 class FileServerRequestHandler
 {
-    friend class WhiteBoxTests; // for unit testing
+    friend class FileServeTests; // for unit testing
 
     static std::string getRequestPathname(const Poco::Net::HTTPRequest& request);
 
@@ -48,6 +48,9 @@ class FileServerRequestHandler
                                                bool defaultValue);
 
 public:
+    FileServerRequestHandler(const std::string& root);
+    ~FileServerRequestHandler();
+
     /// Evaluate if the cookie exists, and if not, ask for the credentials.
     static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, Poco::Net::HTTPResponse& response);
 
@@ -55,12 +58,6 @@ public:
                               const RequestDetails &requestDetails,
                               Poco::MemoryInputStream& message,
                               const std::shared_ptr<StreamSocket>& socket);
-
-    /// Read all files that we can serve into memory and compress them.
-    static void initialize(const std::string& root);
-
-    /// Clean cached files.
-    static void uninitialize() { FileHash.clear(); }
 
     static void readDirToHash(const std::string &basePath, const std::string &path, const std::string &prefix = std::string());
 

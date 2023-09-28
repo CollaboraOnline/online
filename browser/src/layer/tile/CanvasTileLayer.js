@@ -969,7 +969,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._mentionText = [];
 
 		this._moveInProgress = false;
-		this._canonicalViewId = -1;
+		this._canonicalIdInitialized = false;
 	},
 
 	_initContainer: function () {
@@ -1386,9 +1386,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (tileCombineQueue.length <= 0)
 			return;
 
-		if (this._canonicalViewId == -1)
-			return;
-
 		// Sort into buckets of consistent part & mode.
 		var partMode = {};
 		for (var i = 0; i < tileCombineQueue.length; ++i)
@@ -1431,7 +1428,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 
 			var msg = 'tilecombine ' +
-			    'nviewid=' + this._canonicalViewId + ' ' +
+			    'nviewid=0 ' +
 			    'part=' + part + ' ' +
 			    ((mode !== 0) ? ('mode=' + mode + ' ') : '') +
 			    'width=' + this._tileWidthPx + ' ' +
@@ -1805,15 +1802,19 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._onFormFieldButtonMsg(textMsg);
 		}
 		else if (textMsg.startsWith('canonicalidchange:')) {
-			var payload = textMsg.substring('canonicalidchange:'.length + 1);
-			var canonicalId = payload.split('=')[2].split(' ')[0];
 			if (this._debugData) {
+				var payload = textMsg.substring('canonicalidchange:'.length + 1);
 				var viewId = payload.split('=')[1].split(' ')[0];
+				var canonicalId = payload.split('=')[2].split(' ')[0];
 				this._debugData['canonicalViewId'].setPrefix('Canonical id changed to: ' + canonicalId + ' for view id: ' + viewId);
 			}
-			this._canonicalViewId = canonicalId;
-			this._invalidateAllPreviews();
+			if (!this._canonicalIdInitialized)
+			{
+				this._canonicalIdInitialized = true;
+				this._update();
+			}
 			this._requestNewTiles();
+			this._invalidateAllPreviews();
 			this.redraw();
 		}
 		else if (textMsg.startsWith('comment:')) {
@@ -1853,8 +1854,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		else if (textMsg.startsWith('a11yfocuschanged:')) {
 			obj = JSON.parse(textMsg.substring('a11yfocuschanged:'.length + 1));
+			var listPrefixLength = obj.listPrefixLength !== undefined ? parseInt(obj.listPrefixLength) : 0;
 			this._map._textInput.onAccessibilityFocusChanged(
-				obj.content, parseInt(obj.position), parseInt(obj.start), parseInt(obj.end), parseInt(obj.force) > 0);
+				obj.content, parseInt(obj.position), parseInt(obj.start), parseInt(obj.end),
+				listPrefixLength, parseInt(obj.force) > 0);
 		}
 		else if (textMsg.startsWith('a11ycaretchanged:')) {
 			obj = JSON.parse(textMsg.substring('a11yfocuschanged:'.length + 1));
@@ -6188,7 +6191,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_update: function (center, zoom) {
 		var map = this._map;
-		if (!map || this._documentInfo === '') {
+		if (!map || this._documentInfo === '' || !this._canonicalIdInitialized) {
 			return;
 		}
 
@@ -7248,7 +7251,7 @@ L.TilesPreFetcher = L.Class.extend({
 		if (app.file.fileBasedView && this._docLayer)
 			this._docLayer._updateFileBasedView();
 
-		if (this._docLayer._emptyTilesCount > 0 || !this._map || !this._docLayer) {
+		if (this._docLayer._emptyTilesCount > 0 || !this._map || !this._docLayer || !this._canonicalIdInitialized) {
 			return;
 		}
 

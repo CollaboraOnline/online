@@ -38,7 +38,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		if (values.comments) {
 			values.comments.forEach(function(comment) {
 				comment.id = comment.id.toString();
-				comment.parent = comment.parent.toString();
+				comment.parent = comment.parentId.toString();
 			});
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
 		}

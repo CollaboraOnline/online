@@ -268,9 +268,12 @@ public:
     bool onDocumentModified(const std::string& message) override
     {
         LOG_TST("onDocumentModified: [" << message << ']');
-        LOK_ASSERT_STATE(_phase, Phase::WaitModify);
 
-        TRANSITION_STATE(_phase, Phase::Unlock);
+        if (_phase != Phase::Unlock)
+        {
+            LOK_ASSERT_STATE(_phase, Phase::WaitModify);
+            TRANSITION_STATE(_phase, Phase::Unlock);
+        }
 
         // Simulate the editor closing browser.
         LOG_TST("Disconnecting Editor");

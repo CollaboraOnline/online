@@ -93,6 +93,12 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'button',  id: 'closemobile',  img: 'closemobile', desktop: false, mobile: false, tablet: true, hidden: true},
 			{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save'), lockUno: '.uno:Save'},
 			{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false, tablet: false, lockUno: '.uno:Print'},
+			{type: 'menu',  id: 'print-options',  img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false, tablet: false, lockUno: '.uno:Print',
+				items: [
+					{id: 'print-active-sheet', text: _('Active Sheet')},
+					{id: 'print-all-sheets', text: _('All Sheets')},
+				]
+			},
 			{type: 'break', id: 'savebreak', mobile: false},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true, mobile: false},
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true, mobile: false},
@@ -336,7 +342,8 @@ L.Control.TopToolbar = L.Control.extend({
 				toolbarUp.show('reset', 'textalign', 'wraptext', 'breakspacing', 'insertannotation', 'conditionalformaticonset',
 					'numberformatcurrency', 'numberformatpercent',
 					'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
-					'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar');
+					'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar', 'print-options');
+				toolbarUp.hide('print');
 				toolbarUp.remove('styles');
 			}
 
@@ -348,11 +355,12 @@ L.Control.TopToolbar = L.Control.extend({
 
 			break;
 		case 'text':
-			if (toolbarUp)
+			if (toolbarUp) {
 				toolbarUp.show('reset', 'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
 					'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar');
-
+				toolbarUp.hide('print-options');
+			}
 			break;
 		case 'presentation':
 			// Fill the style select box if not yet filled
@@ -377,6 +385,7 @@ L.Control.TopToolbar = L.Control.extend({
 					'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable',  'insertannotation', 'backcolor',
 					'breaksidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel', 'navigator');
+				toolbarUp.hide('print-options');
 			}
 			break;
 		case 'drawing':
@@ -384,6 +393,7 @@ L.Control.TopToolbar = L.Control.extend({
 				toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable', 'backcolor',
 					'breaksidebar', 'sidebarmodifypage', 'insertconnectors');
+				toolbarUp.hide('print-options');
 			}
 			break;
 		}

@@ -33,6 +33,7 @@
 #include "Kit.hpp"
 #include "SetupKitEnvironment.hpp"
 #include <Log.hpp>
+#include <Simd.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
 #include <WebSocketHandler.hpp>
@@ -46,6 +47,7 @@
 #include <common/SigUtil.hpp>
 #include <common/security.h>
 #include <common/ConfigUtil.hpp>
+#include <kit/DeltaSimd.h>
 
 #ifndef KIT_IN_PROCESS
 static bool NoCapsForKit = false;
@@ -547,6 +549,9 @@ int main(int argc, char** argv)
     }
 
     SigUtil::setFatalSignals("forkit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
+
+    if (simd::init())
+        simd_deltaInit();
 
     Util::setApplicationPath(Poco::Path(argv[0]).parent().toString());
 

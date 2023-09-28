@@ -56,24 +56,10 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		calcHelper.clickOnFirstCell();
 	}
 
-	function openAutoFilterMenu(secondColumn) {
-		let x = 95;
-		if (secondColumn) {
-			x += 105;
-		}
-		cy.cGet('#map')
-			.then(function(items) {
-				expect(items).to.have.lengthOf(1);
-				var XPos = items[0].getBoundingClientRect().left + x;
-				var YPos = items[0].getBoundingClientRect().top + 10;
-				cy.cGet('body').click(XPos, YPos);
-			});
-	}
-
 	it('Enable/Disable autofilter', function() {
 		//it gets enable before the test body starts
 		//filter by pass
-		openAutoFilterMenu(true);
+		calcHelper.openAutoFilterMenu(true);
 
 		cy.cGet('.autofilter .vertical').should('be.visible');
 		cy.cGet('.autofilter .ui-treeview-checkbox').eq(0).uncheck();
@@ -92,7 +78,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 	});
 
 	it('Sort by ascending/descending', function() {
-		openAutoFilterMenu();
+		calcHelper.openAutoFilterMenu();
 
 		//sort by descending order
 		cy.cGet('body').contains('.autofilter', 'Sort Descending').click();
@@ -102,7 +88,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 		calcHelper.assertDataClipboardTable(['Cypress Test', 'Status', 'Test 5', 'Fail', 'Test 4', '', 'Test 3', 'Pass', 'Test 2', 'Fail', 'Test 1', 'Pass']);
 
 		//sort by ascending order
-		openAutoFilterMenu();
+		calcHelper.openAutoFilterMenu();
 
 		cy.cGet('body').contains('.autofilter', 'Sort Ascending').click();
 
@@ -117,7 +103,7 @@ describe(['tagdesktop', 'tagnextcloud', 'tagproxy'], 'AutoFilter', function() {
 
 	it('Filter empty/non-empty cells', function() {
 		//empty
-		openAutoFilterMenu(true);
+		calcHelper.openAutoFilterMenu(true);
 
 		cy.cGet('#check_list_box > tbody > ul > li:nth-child(1) > span > input').click();
 

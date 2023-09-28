@@ -28,7 +28,7 @@ L.Control.Notebookbar = L.Control.extend({
 		if (document.documentElement.dir === 'rtl')
 			this._RTL = true;
 
-		this.builder = new L.control.notebookbarBuilder({mobileWizard: this, map: map, cssClass: 'notebookbar', useSetTabs: true});
+		this.builder = new L.control.notebookbarBuilder({windowId: -2, mobileWizard: this, map: map, cssClass: 'notebookbar', useSetTabs: true});
 		var toolbar = L.DomUtil.get('toolbar-up');
 		// In case it contains garbage
 		if (toolbar)
@@ -240,7 +240,8 @@ L.Control.Notebookbar = L.Control.extend({
 						'id': 'save',
 						'type': 'toolitem',
 						'text': _('Save'),
-						'command': '.uno:Save'
+						'command': '.uno:Save',
+						'accessKey': '1'
 					} : {}
 				]
 			}

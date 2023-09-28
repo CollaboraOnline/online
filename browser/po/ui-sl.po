@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"PO-Revision-Date: 2023-08-29 21:52+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
@@ -1592,15 +1592,15 @@ msgstr "Izbirni način: nedejaven"
 
 #: src/control/Control.StatusBar.js:592
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Določi jezik celotnega besedila"
 
 #: src/control/Control.StatusBar.js:595
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Določi jezik odstavka"
 
 #: src/control/Control.StatusBar.js:596
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Določi jezik izbora"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"

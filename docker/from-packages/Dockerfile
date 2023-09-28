@@ -21,9 +21,6 @@ ARG type
 # Optional. If defined then brand package will not be installed.
 ARG nobrand
 
-# Optional. If defined then the inotifywait will not monitor the changes of the config file
-ARG noinotifywait
-
 # UTF-8 locale is needed to handle file names with non-ASCII characters
 ENV LC_CTYPE C.UTF-8
 
@@ -109,10 +106,6 @@ RUN --mount=type=secret,id=secret_key \
             apt-get -y install code-brand; \
         fi; \
     fi && \
-# Setup inotifywait
-    if [ -z "$noinotifywait" ]; then \
-        apt-get -y install inotify-tools psmisc; \
-    fi && \
 # Fix ownership of config directory that will be modified on start of the container by cool user
     chown cool:cool /etc/coolwsd && \
 # Remove packages that are not needed
@@ -129,9 +122,8 @@ RUN --mount=type=secret,id=secret_key \
     rm -rf /etc/coolwsd/proof_key*
 
 # FIXME
-# Use the old starter scripts until we find out how to replace them.
+# Use the old starter script until we find out how to replace it.
 COPY /scripts/start-collabora-online.sh /
-COPY /scripts/start-collabora-online.pl /
 
 # coolwsd listens on port 9980
 EXPOSE 9980
@@ -139,24 +131,7 @@ EXPOSE 9980
 # Switch to cool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
 USER 100
 
-## Fix name resolution from jails
-#CMD cp /etc/resolv.conf /etc/hosts /opt/cool/systemplate/etc/ && \
-## Restart when /etc/coolwsd/coolwsd.xml changes
-#    [ -x /usr/bin/inotifywait -a -x /usr/bin/killall ] && ( \
-#        /usr/bin/inotifywait -e modify /etc/coolwsd/coolwsd.xml \
-#        echo "$(ls -l /etc/coolwsd/coolwsd.xml) modified --> restarting" \
-#        /usr/bin/killall -1 coolwsd \
-#    ) & ; \
-## Execute coolwsd server
-#    exec /usr/bin/coolwsd \
-#        --version \
-#        --o:sys_template_path=/opt/cool/systemplate \
-#        --o:child_root_path=/opt/cool/child-roots \
-#        --o:file_server_root_path=/usr/share/coolwsd \
-#        --o:logging.color=false \
-#        ${extra_params}
-
 # FIXME
-# Use the old starter scripts until we find out how to replace them.
+# Use the old starter script until we find out how to replace it.
 CMD ["/start-collabora-online.sh"]
 

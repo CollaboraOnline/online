@@ -18,7 +18,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 							'type': 'toolitem',
 							'text': _('Save'),
 							'command': '.uno:Save',
-							'accessibility': { focusBack: true, combination: 'S1', de: null }
+							'accessKey': '1'
 						}
 					]
 				} : {}
@@ -130,8 +130,10 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 	},
 
 	getFileTab: function() {
-		var content = [
-			(!this._map['wopi'].HideSaveOption) ?
+		var content = [];
+
+		if (!this._map['wopi'].HideSaveOption) {
+			content.push(
 				{
 					'type': 'toolbox',
 					'children': [
@@ -143,23 +145,34 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 							'accessibility': { focusBack: true, combination: 'SF', de: null }
 						}
 					]
-				} : {},
-			(!this._map['wopi'].UserCanNotWriteRelative) ?
+				});
+			}
+
+		if (!this._map['wopi'].UserCanNotWriteRelative) {
+			content.push(
 				{
 					'id': 'file-saveas',
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:SaveAs', 'presentation'),
 					'command': '.uno:SaveAs',
 					'accessibility': { focusBack: true, combination: 'SA', de: null }
-				} : {},
-			(!this._map['wopi'].UserCanNotWriteRelative) ?
+				}
+			);
+		}
+
+		if (!this._map['wopi'].UserCanNotWriteRelative) {
+			content.push(
 				{
 					'id': 'exportas',
 					'class': 'unoexportas',
 					'type': 'bigmenubartoolitem',
 					'text': _('Export As'),
 					'accessibility': { focusBack: true, combination: 'EA', de: null }
-				} : {},
+				}
+			);
+		}
+
+		content.push(
 			{
 				'id': 'file-shareas-rev-history',
 				'type': 'container',
@@ -186,16 +199,24 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						} : {},
 				],
 				'vertical': 'true'
-			},
-			(!this._map['wopi'].HidePrintOption) ?
+			}
+		);
+
+		if (!this._map['wopi'].HidePrintOption) {
+			content.push(
 				{
 					'id': 'print',
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:Print', 'presentation'),
 					'command': '.uno:Print',
 					'accessibility': { focusBack: true, combination: 'P', de: null }
-				} : {},
-			(this._map['wopi'].HideExportOption) ? {} : {
+				}
+			);
+		}
+
+		if (!this._map['wopi'].HideExportOption) {
+			content.push(
+			{
 				'id': 'file-downloadas-odg-downloadas-png',
 				'type': 'container',
 				'children': [
@@ -217,7 +238,10 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					},
 				],
 				'vertical': 'true'
-			},
+			});
+		}
+
+		content.push(
 			{
 				'id': 'file-exportpdf',
 				'type': 'container',
@@ -242,8 +266,12 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					},
 				],
 				'vertical': 'true'
-			},
-			(!this._map['wopi'].HideRepairOption) ? {
+			}
+		);
+
+		if (!this._map['wopi'].HideRepairOption) {
+			content.push(
+				{
 				'type': 'container',
 				'children': [
 					{
@@ -255,7 +283,10 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'accessibility': { focusBack: true, combination: 'RF', de: null }
 					}
 				]
-			}: {},
+			});
+		}
+
+		content.push(
 			{
 				'type': 'container',
 				'children': [
@@ -279,7 +310,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					}
 				]
 			}
-		];
+		);
 
 		return this.getTabPage('File', content);
 	},
@@ -499,7 +530,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 								'accessibility': { focusBack: true, combination: 'FN', de: null }
 							},
 							{
-								'id': 'fontsize',
+								'id': 'fontsizecombobox',
 								'type': 'combobox',
 								'text': '12 pt',
 								'entries': [
@@ -904,6 +935,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'children': [
 								{
 									'id': 'home-search',
+									'class': 'unoSearch',
 									'type': 'menubartoolitem',
 									'text': _('Search'),
 									'command': _('Show Status Bar'),
@@ -1192,6 +1224,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			},
 			(this._map['wopi'].EnableRemoteLinkPicker) ? {
 				'id': 'insert-remote-link',
+				'class': 'unoremotelink',
 				'type': 'bigcustomtoolitem',
 				'text': _('Smart Picker'),
 				'command': 'remotelink',

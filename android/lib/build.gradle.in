@@ -6,6 +6,7 @@ apply from: 'libSettings.gradle'
 android {
     compileSdkVersion 33
     buildDir = "${rootProject.getBuildDir()}/lib"
+    ndkVersion "20.1.5948944"
 
     defaultConfig {
         minSdkVersion 21
@@ -67,13 +68,22 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'com.google.android.material:material:1.1.0-alpha04'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
+    // https://stackoverflow.com/questions/75263047/duplicate-class-in-kotlin-android
+    constraints {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
+            because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
+        }
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
+            because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
+        }
+    }
 }
 
-task copyUnpackAssets(type: Copy) {
+tasks.register('copyUnpackAssets', Copy) {
     description "copies assets that need to be extracted on the device"
     into 'src/main/assets/unpack'
     into('program') {
@@ -95,7 +105,7 @@ task copyUnpackAssets(type: Copy) {
     }
     into('etc/coolwsd') {
         from('/android/coolkitconfig.xcu')
-            includes = [ 'coolkitconfig.xcu' ]
+        includes = ['coolkitconfig.xcu']
     }
     into('user/fonts') {
         from "${liboInstdir}/share/fonts/truetype"
@@ -122,7 +132,7 @@ task copyUnpackAssets(type: Copy) {
         filter {
             String line ->
                 line.replaceAll(
-                    '@@APPLICATION_ID@@', new String("${liboApplicationId}")
+                        '@@APPLICATION_ID@@', new String("${liboApplicationId}")
                 )
         }
     }
@@ -138,15 +148,15 @@ task copyUnpackAssets(type: Copy) {
         includes = ['extensions/dict-de/**', 'extensions/dict-en/**', 'extensions/dict-es/**', 'extensions/dict-fr/**', 'extensions/dict-pt-BR/**']
         exclude { FileTreeElement details ->
             !(details.file.isDirectory() ||
-                details.file.name.endsWith('.xcu') ||
-                details.file.name.endsWith('.dic') ||
-                details.file.name.endsWith('.aff') ||
-                details.file.name.endsWith('.xml'))
+                    details.file.name.endsWith('.xcu') ||
+                    details.file.name.endsWith('.dic') ||
+                    details.file.name.endsWith('.aff') ||
+                    details.file.name.endsWith('.xml'))
         }
     }
 }
 
-task copyAssets(type: Copy) {
+tasks.register('copyAssets', Copy) {
     description "copies assets that can be accessed within the installed apk"
     into 'src/main/assets'
     from("${liboSrcRoot}/instdir/") {
@@ -168,7 +178,7 @@ task copyAssets(type: Copy) {
     }
 }
 
-task createFullConfig(type: Copy) {
+tasks.register('createFullConfig', Copy) {
     description "copies various configuration bits into the apk"
     into('src/main/assets/share/config')
     from("${liboInstdir}/share/config") {
@@ -176,25 +186,25 @@ task createFullConfig(type: Copy) {
     }
 }
 
-task copyBrandTheme(type: Copy) {
-	from "${liboBrandingDir}/online-theme"
-	into "src/main/assets/share/theme_definitions/online"
+tasks.register('copyBrandTheme', Copy) {
+    from "${liboBrandingDir}/online-theme"
+    into "src/main/assets/share/theme_definitions/online"
 }
 
-task copyDocTemplates(type: Copy) {
-        from "${rootProject.getRootDir()}/templates/untitled.odp",
-             "${rootProject.getRootDir()}/templates/untitled.ods",
-             "${rootProject.getRootDir()}/templates/untitled.odt"
-        into "src/main/assets/templates"
+tasks.register('copyDocTemplates', Copy) {
+    from "${rootProject.getRootDir()}/templates/untitled.odp",
+            "${rootProject.getRootDir()}/templates/untitled.ods",
+            "${rootProject.getRootDir()}/templates/untitled.odt"
+    into "src/main/assets/templates"
 }
 
-task copyKitConfig(type: Copy) {
-        from "${file(rootProject.getRootDir()).getParent()}/coolkitconfig-mobile.xcu"
-        into "src/main/assets/etc/coolwsd"
-        rename { "coolkitconfig.xcu" }
+tasks.register('copyKitConfig', Copy) {
+    from "${file(rootProject.getRootDir()).getParent()}/coolkitconfig-mobile.xcu"
+    into "src/main/assets/etc/coolwsd"
+    rename { "coolkitconfig.xcu" }
 }
 
-task createStrippedConfig {
+tasks.register('createStrippedConfig') {
     def preserveDir = file("src/main/assets/share/config/soffice.cfg/empty")
     outputs.dir "src/main/assets/share/registry/res"
     outputs.file preserveDir
@@ -207,7 +217,7 @@ task createStrippedConfig {
     }
 }
 
-task createRCfiles {
+tasks.register('createRCfiles') {
     inputs.file "libSettings.gradle"
     dependsOn copyUnpackAssets, copyAssets
     def sofficerc = file('src/main/assets/unpack/program/sofficerc')
@@ -295,7 +305,7 @@ preBuild.dependsOn 'createRCfiles',
         'createFullConfig',
         'copyBrandTheme'
 
-task generateCoolDebugAssets {
+tasks.register('generateCoolDebugAssets') {
     doLast {
         exec {
             commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", 'clean'
@@ -306,7 +316,7 @@ task generateCoolDebugAssets {
     }
 }
 
-task generateCoolReleaseAssets {
+tasks.register('generateCoolReleaseAssets') {
     doLast {
         exec {
             commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", 'clean'

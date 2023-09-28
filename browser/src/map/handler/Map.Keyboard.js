@@ -457,7 +457,7 @@ L.Map.Keyboard = L.Handler.extend({
 
 		// handle help - F1
 		if (ev.type === 'keydown' && !ev.altKey && !this.modifier && keyCode === this.keyCodes.F1) {
-			this._map.showHelp('online-help');
+			this._map.showHelp('online-help-content');
 			ev.preventDefault();
 			return;
 		}
@@ -526,7 +526,12 @@ L.Map.Keyboard = L.Handler.extend({
 				if (this.handleOnKeyDownKeys[keyCode] && charCode === 0) {
 					if (keyEventFn) {
 						keyEventFn('input', charCode, unoKeyCode);
-						ev.preventDefault();
+						if (!(this._map._textInput.hasAccessibilitySupport() && this._map._textInput.hasFocus() &&
+							(keyCode === this.keyCodes.LEFT || keyCode === this.keyCodes.RIGHT))) {
+							ev.preventDefault();
+						} else {
+							window.app.console.log('Map.Keyboard._handleKeyEvent: default not prevented for left or right arrow.');
+						}
 					}
 				}
 			}
@@ -648,8 +653,14 @@ L.Map.Keyboard = L.Handler.extend({
 			e.preventDefault();
 		}
 
+		if (this._isCtrlKey(e) && e.shiftKey && e.key === 'L') {
+			app.socket.sendMessage('uno .uno:DefaultBullet');
+			e.preventDefault();
+			return true;
+		}
+
 		if (this._isCtrlKey(e) && e.shiftKey && e.key === '?') {
-			this._map.showHelp('keyboard-shortcuts');
+			this._map.showHelp('keyboard-shortcuts-content');
 			e.preventDefault();
 			return true;
 		}
@@ -717,6 +728,21 @@ L.Map.Keyboard = L.Handler.extend({
 				case this.keyCodes.D: // d
 					app.socket.sendMessage('uno .uno:InsertEndnote');
 					return true;
+				case this.keyCodes.P:
+					var userListSummary = document.getElementById('userListSummary');
+					var userListPopover = document.getElementById('userListPopover');
+					// checking case ''(empty string) is because when element loads first time it does not have any inline display style
+					var isUserListPopoverVisible = userListPopover.style.display === 'none' || userListPopover.style.display === '';
+					// we should only show user list when there are multiple users present and user list is hidden
+					var showUserList = isUserListPopoverVisible && userListSummary.hasChildNodes();
+					if (showUserList) {
+						userListSummary.click();
+					}
+					else {
+						userListPopover.style.display = 'none';
+					}
+					e.preventDefault();
+					return true;
 				case this.keyCodes.pageUp:
 				case this.keyCodes.pageDown :
 					if (this._map.getDocType() === 'spreadsheet') {
@@ -724,7 +750,7 @@ L.Map.Keyboard = L.Handler.extend({
 						var parts = this._map._docLayer._parts;
 						var partToSelect = 0;
 						this._map._docLayer._clearReferences();
-			
+
 						if (e.keyCode === this.keyCodes.pageUp) {
 							partToSelect = currentSelectedPart != parts - 1 ? currentSelectedPart + 1 : 0;
 						}

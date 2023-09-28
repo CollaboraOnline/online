@@ -77,11 +77,12 @@ namespace {
 /// Formats the uno command information for logging
 std::string formatUnoCommandInfo(const std::string& sessionId, const std::string& unoCommand)
 {
-    std::string recorded_time = Util::getHttpTimeNow();
+    // E.g. '2023-09-06 12:19:32', matching systemd format.
+    std::string recorded_time = Util::getTimeNow("%Y-%m-%d %T");
 
     std::string unoCommandInfo;
 
-    // unoCommand(sessionId) : command - HttpTime
+    // unoCommand(sessionId) : command - time
     unoCommandInfo.append("unoCommand");
     unoCommandInfo.push_back('(');
     unoCommandInfo.append(sessionId);
@@ -109,7 +110,7 @@ ChildSession::ChildSession(
     _viewId(-1),
     _isDocLoaded(false),
     _copyToClipboard(false),
-    _canonicalViewId(-1),
+    _canonicalViewId(0),
     _isDumpingTiles(false),
     _clientVisibleArea(0, 0, 0, 0)
 {
@@ -3102,7 +3103,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         // it was download request
 
         // Register download id -> URL mapping in the DocumentBroker
-        auto url = std::string("../../") + payload.substr(strlen("file:///tmp/"));
+        auto url = std::string("../../") + payload.substr(payload.find_last_of("/"));
         auto downloadId = Util::rng::getFilename(64);
         std::string docBrokerMessage = "registerdownload: downloadid=" + downloadId + " url=" + url + " clientid=" + getId();
         _docManager->sendFrame(docBrokerMessage.c_str(), docBrokerMessage.length());

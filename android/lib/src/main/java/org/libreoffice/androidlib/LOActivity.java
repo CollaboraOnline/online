@@ -642,6 +642,7 @@ public class LOActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
         if (resultCode != RESULT_OK) {
             if (requestCode == REQUEST_SELECT_IMAGE_FILE) {
                 valueCallback.onReceiveValue(null);
@@ -660,18 +661,15 @@ public class LOActivity extends AppCompatActivity {
             requestCopy = true;
             if (getMimeType().equals("text/plain")) {
                 requestCode = REQUEST_SAVEAS_ODT;
-            }
-            else if (getMimeType().equals("text/comma-separated-values")) {
+            } else if (getMimeType().equals("text/comma-separated-values")) {
                 requestCode = REQUEST_SAVEAS_ODS;
-            }
-            else if (getMimeType().equals("application/vnd.ms-excel.sheet.binary.macroenabled.12")) {
+            } else if (getMimeType().equals("application/vnd.ms-excel.sheet.binary.macroenabled.12")) {
                 requestCode = REQUEST_SAVEAS_ODS;
-            }
-            else {
+            } else {
                 String filename = getFileName(true);
                 String extension = filename.substring(filename.lastIndexOf('.') + 1);
                 requestCode = getRequestIDForFormat(extension);
-                assert(requestCode != 0);
+                assert (requestCode != 0);
             }
         }
         switch (requestCode) {
@@ -708,8 +706,7 @@ public class LOActivity extends AppCompatActivity {
                         inputStream = new FileInputStream(tempFile);
                         try {
                             outputStream = getContentResolver().openOutputStream(intent.getData(), "wt");
-                        }
-                        catch (FileNotFoundException e) {
+                        } catch (FileNotFoundException e) {
                             Log.i(TAG, "failed with the 'wt' mode, trying without: " + e.getMessage());
                             outputStream = getContentResolver().openOutputStream(intent.getData());
                         }
@@ -734,7 +731,7 @@ public class LOActivity extends AppCompatActivity {
                         }
                     }
                     if (requestCopy == true) {
-                        assert(_tempFile != null);
+                        assert (_tempFile != null);
                         mTempFile = _tempFile;
                         getIntent().setData(intent.getData());
                         /** add the document to recents */
@@ -1149,7 +1146,7 @@ public class LOActivity extends AppCompatActivity {
         try {
             cursor = getContentResolver().query(getIntent().getData(), null, null, null, null);
             if (cursor != null && cursor.moveToFirst())
-                filename = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                filename = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
         } catch (Exception e) {
             return null;
         }

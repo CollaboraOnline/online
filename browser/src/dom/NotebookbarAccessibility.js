@@ -38,7 +38,7 @@ var NotebookbarAccessibility = function() {
 			infoBox.classList.add('accessibility-info-box');
 			infoBox.textContent = anchorElement.accessKey;
 			var rectangle = anchorElement.getBoundingClientRect();
-			infoBox.style.top = (rectangle.top + 20) + 'px';
+			infoBox.style.top = (rectangle.bottom - 5) + 'px';
 			infoBox.style.left = rectangle.left + 'px';
 			document.body.appendChild(infoBox);
 
@@ -173,6 +173,8 @@ var NotebookbarAccessibility = function() {
 	};
 
 	this.clickOnFilteredItem = function() {
+		var itemWasClicked = false;
+
 		if (this.filteredItem !== null) {
 			var element = document.getElementById(this.filteredItem.id);
 			if (element) {
@@ -188,6 +190,7 @@ var NotebookbarAccessibility = function() {
 					this.state = 1;
 				}
 				else if (this.state === 1) {
+					itemWasClicked = true;
 					this.setTabItemDescription(element);
 					element.click();
 					if (this.filteredItem && this.filteredItem.focusBack === true) {
@@ -199,6 +202,8 @@ var NotebookbarAccessibility = function() {
 		}
 		else
 			this.focusToMap();
+
+		return itemWasClicked;
 	};
 
 	this.addTabFocus = function() {
@@ -304,8 +309,9 @@ var NotebookbarAccessibility = function() {
 				this.checkCombinationAgainstAcccelerators();
 				this.filterOutNonMatchingInfoBoxes();
 			}
-			if (this.filteredItem !== null)
-				this.clickOnFilteredItem();
+			// If item was clicked - don't focus the map to keep focus on dropdowns
+			if (this.filteredItem !== null && this.clickOnFilteredItem())
+				return;
 			// So we checked the pressed key against available combinations. If there is no match, focus back to map.
 			if (this.isAllFilteredOut() === true)
 				this.focusToMap();
@@ -342,7 +348,7 @@ var NotebookbarAccessibility = function() {
 	this.addTabAccelerators = function() {
 		// Remove all info boxes first.
 		this.removeAllInfoBoxes();
-
+		this.tabInfoList = this.definitions.getDefinitions();
 		for (var tabId in this.tabInfoList) {
 			if (Object.prototype.hasOwnProperty.call(this.tabInfoList, tabId)) {
 				var element = document.getElementById(tabId);

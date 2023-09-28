@@ -18,6 +18,7 @@ L.Control.JSDialog = L.Control.extend({
 		this.map.on('jsdialogupdate', this.onJSUpdate, this);
 		this.map.on('jsdialogaction', this.onJSAction, this);
 		this.map.on('zoomend', this.onZoomEnd, this);
+		this.map.on('closealldialogs', this.onCloseAll, this);
 	},
 
 	onRemove: function() {
@@ -25,6 +26,7 @@ L.Control.JSDialog = L.Control.extend({
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
 		this.map.off('jsdialogaction', this.onJSAction, this);
 		this.map.off('zoomend', this.onZoomEnd, this);
+		this.map.off('closealldialogs', this.onCloseAll, this);
 	},
 
 	hasDialogOpened: function() {
@@ -58,10 +60,14 @@ L.Control.JSDialog = L.Control.extend({
 		}
 	},
 
-	closeAll: function() {
+	closeAll: function(leaveSnackbar) {
 		var dialogs = Object.keys(this.dialogs);
-		for (var i = 0; i < dialogs.length; i++)
+		for (var i = 0; i < dialogs.length; i++) {
+			if (leaveSnackbar && dialogs[i] && dialogs[i].isSnackbar)
+				continue;
+
 			this.close(dialogs[i], true);
+		}
 	},
 
 	closeDialog: function(id, sendCloseEvent) {
@@ -110,6 +116,10 @@ L.Control.JSDialog = L.Control.extend({
 		}
 
 		this.focusToLastElement(id);
+	},
+
+	onCloseAll: function() {
+		this.closeAll(/*leaveSnackbar*/ true);
 	},
 
 	focusToLastElement: function(id) {
@@ -374,14 +384,21 @@ L.Control.JSDialog = L.Control.extend({
 			if (parent) {
 				calculated = true;
 				instance.posx = parent.getBoundingClientRect().left;
-				instance.posy = parent.getBoundingClientRect().bottom + 5;
+				instance.posy = parent.getBoundingClientRect().bottom;
+
+				instance.container.style.minWidth = parent.getBoundingClientRect().width + 'px';
 
 				if (isRTL)
 					instance.posx = window.innerWidth - instance.posx;
 
-				if (instance.posx + instance.content.clientWidth > window.innerWidth)
+				if (instance.content.clientWidth > window.innerWidth)
+					instance.container.style.maxWidth = (window.innerWidth - instance.posx - 20) + 'px';
+				else if (instance.posx + instance.content.clientWidth > window.innerWidth)
 					instance.posx -= instance.posx + instance.content.clientWidth + 10 - window.innerWidth;
-				if (instance.posy + instance.content.clientHeight > window.innerHeight)
+
+				if (instance.content.clientHeight > window.innerHeight)
+					instance.container.style.maxHeight = (window.innerHeight - instance.posy - 20) + 'px';
+				else if (instance.posy + instance.content.clientHeight > window.innerHeight)
 					instance.posy -= instance.posy + instance.content.clientHeight + 10 - window.innerHeight;
 			}
 			else {
@@ -515,6 +532,8 @@ L.Control.JSDialog = L.Control.extend({
 				var initialFocusElement = JSDialog.GetFocusableElements(container);
 				if (initialFocusElement && initialFocusElement.length)
 					initialFocusElement[0].focus();
+			} else {
+				this.map.focus();
 			}
 		}
 		else {

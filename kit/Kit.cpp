@@ -987,7 +987,7 @@ public:
         {
             LOG_DBG("Trimming Core caches");
             SigUtil::addActivity("trimAfterInactivity");
-            _loKit->trimMemory(4096);
+            _loKit->trimMemory(1024);
 
             _lastMemTrimTime = std::chrono::steady_clock::now();
         }
@@ -1705,8 +1705,8 @@ private:
                 viewCount << " view" << (viewCount != 1 ? "s." : "."));
 
         session->initWatermark();
+        invalidateCanonicalId(session->getId());
 
-        invalidateCanonicalId(sessionId);
         return _loKitDocument;
     }
 

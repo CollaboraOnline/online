@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.63])
 
-AC_INIT([coolwsd], [23.05.3.1], [https://github.com/CollaboraOnline/online/issues], [coolwsd], [https://collaboraonline.github.io/])
+AC_INIT([coolwsd], [23.05.4.2], [https://github.com/CollaboraOnline/online/issues], [coolwsd], [https://collaboraonline.github.io/])
 LT_INIT([shared, disable-static, dlopen])
 
 AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
@@ -1228,6 +1228,41 @@ if test "$host_os" = "emscripten" ; then
     ENABLE_EMSCRIPTENAPP=true
 fi
 AC_SUBST(ENABLE_EMSCRIPTENAPP)
+
+has_simd=no
+if test "$mobile_app" != "true"; then
+    # Check for SIMD / AVX2 acceleration compile-time goodness
+    SIMD_CFLAGS=-mavx2
+    AC_MSG_CHECKING([whether $CC has AVX2 SIMD support])
+
+    save_CFLAGS=$CFLAGS
+    AC_LANG_PUSH([C])
+    CFLAGS="$CFLAGS $SIMD_CFLAGS"
+
+    AC_COMPILE_IFELSE([AC_LANG_SOURCE([
+        #include <immintrin.h>
+        int main () {
+            __builtin_cpu_init();
+            __m256i vec = _mm256_set1_epi32(0);
+            (void)vec;
+            return __builtin_cpu_supports ("avx2");
+        }])],
+        [has_simd=yes],
+        [has_simd=no])
+
+    AC_LANG_POP([C])
+    CFLAGS=$save_CFLAGS
+
+    AC_MSG_RESULT([${has_simd}])
+fi
+
+if test "${has_simd}" = "no" ; then
+   SIMD_CFLAGS=
+   AC_DEFINE([ENABLE_SIMD],0,[Whether to enable SIMD])
+else
+   AC_DEFINE([ENABLE_SIMD],1,[Whether to enable SIMD])
+fi
+AC_SUBST(SIMD_CFLAGS)
 
 ENABLE_SSL=true
 if test "$enable_ssl" != "no" -a "$mobile_app" != "true"; then

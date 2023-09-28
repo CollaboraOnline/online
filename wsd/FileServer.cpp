@@ -199,6 +199,26 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
 
 }
 
+FileServerRequestHandler::FileServerRequestHandler(const std::string& root)
+{
+    // Read all files that we can serve into memory and compress them.
+    // cool files
+    try
+    {
+        readDirToHash(root, "/browser/dist");
+    }
+    catch (...)
+    {
+        LOG_ERR("Failed to read from directory " << root);
+    }
+}
+
+FileServerRequestHandler::~FileServerRequestHandler()
+{
+    // Clean cached files.
+    FileHash.clear();
+}
+
 bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
                                                HTTPResponse &response)
 {
@@ -763,12 +783,10 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
                 deflate(&strm, Z_FINISH);
 
-                const long unsigned int haveComp = compSize - strm.avail_out;
-                std::string partialcompFile(cbuf, haveComp);
-                std::string partialuncompFile(buf.get(), size);
-                compressedFile += partialcompFile;
-                uncompressedFile += partialuncompFile;
+                compressedFile.append(cbuf, compSize - strm.avail_out);
                 free(cbuf);
+
+                uncompressedFile.append(buf.get(), size);
 
             } while(true);
 
@@ -780,16 +798,6 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
     if (fileCount > 0)
         LOG_TRC("Pre-read " << fileCount << " file(s) from directory: " << basePath << path << ": " << filesRead);
-}
-
-void FileServerRequestHandler::initialize(const std::string& root)
-{
-    // cool files
-    try {
-        readDirToHash(root, "/browser/dist");
-    } catch (...) {
-        LOG_ERR("Failed to read from directory " << root);
-    }
 }
 
 const std::string *FileServerRequestHandler::getCompressedFile(const std::string &path)
@@ -830,7 +838,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
                                               Poco::MemoryInputStream& message,
                                               const std::shared_ptr<StreamSocket>& socket)
 {
-    ServerURL cnxDetails(requestDetails);
+    const ServerURL cnxDetails(requestDetails);
 
     const Poco::URI::QueryParameters params = Poco::URI(request.getURI()).getQueryParameters();
 
@@ -899,7 +907,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         socketProxy = "true";
     Poco::replaceInPlace(preprocess, std::string("%SOCKET_PROXY%"), socketProxy);
 
-    std::string responseRoot = cnxDetails.getResponseRoot();
+    const std::string responseRoot = cnxDetails.getResponseRoot();
     std::string userInterfaceMode;
     std::string userInterfaceTheme;
 
@@ -1201,7 +1209,6 @@ void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
                                                      Poco::MemoryInputStream& message,
                                                      const std::shared_ptr<StreamSocket>& socket)
 {
-    Poco::Net::HTTPResponse response;
     const std::string relPath = getRequestPathname(request);
     LOG_DBG("Preprocessing file: " << relPath);
     std::string templateWelcome = *getUncompressedFile(relPath);
@@ -1211,21 +1218,19 @@ void FileServerRequestHandler::preprocessWelcomeFile(const HTTPRequest& request,
     uiTheme = (uiTheme == "dark") ? "dark" : "light";
     Poco::replaceInPlace(templateWelcome, std::string("%UI_THEME%"), uiTheme);
 
+    http::Response httpResponse(http::StatusCode::OK);
+
     // Ask UAs to block if they detect any XSS attempt
-    response.add("X-XSS-Protection", "1; mode=block");
+    httpResponse.add("X-XSS-Protection", "1; mode=block");
     // No referrer-policy
-    response.add("Referrer-Policy", "no-referrer");
-    response.add("X-Content-Type-Options", "nosniff");
-    response.set("Server", HTTP_SERVER_STRING);
-    response.set("Date", Util::getHttpTimeNow());
+    httpResponse.add("Referrer-Policy", "no-referrer");
+    httpResponse.add("X-Content-Type-Options", "nosniff");
+    httpResponse.set("Server", HTTP_SERVER_STRING);
+    httpResponse.set("Date", Util::getHttpTimeNow());
 
-    response.setContentType("text/html");
-    response.setChunkedTransferEncoding(false);
+    httpResponse.setBody(std::move(templateWelcome));
+    socket->send(httpResponse);
 
-    std::ostringstream oss;
-    response.write(oss);
-    oss << templateWelcome;
-    socket->send(oss.str());
     LOG_TRC("Sent file: " << relPath);
 }
 
@@ -1241,8 +1246,8 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     if (!FileServerRequestHandler::isAdminLoggedIn(request, response))
         throw Poco::Net::NotAuthenticatedException("Invalid admin login");
 
-    ServerURL cnxDetails(requestDetails);
-    std::string responseRoot = cnxDetails.getResponseRoot();
+    const ServerURL cnxDetails(requestDetails);
+    const std::string responseRoot = cnxDetails.getResponseRoot();
 
     static const std::string scriptJS("<script src=\"%s/browser/" COOLWSD_VERSION_HASH "/%s.js\"></script>");
     static const std::string footerPage("<footer class=\"footer has-text-centered\"><strong>Key:</strong> %s &nbsp;&nbsp;<strong>Expiry Date:</strong> %s</footer>");

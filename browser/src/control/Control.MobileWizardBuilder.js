@@ -14,19 +14,21 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_overrideHandlers: function() {
-		this._controlHandlers['grid'] = this._gridHandler;
-		this._controlHandlers['frame'] = this._frameHandler;
-		this._controlHandlers['listbox'] = this._listboxControl;
-		this._controlHandlers['checkbox'] = this._checkboxControl;
 		this._controlHandlers['basespinfield'] = this.baseSpinField;
-		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
+		this._controlHandlers['checkbox'] = this._checkboxControl;
+		this._controlHandlers['combobox'] = this._explorableEditControl;
+		this._controlHandlers['comboboxentry'] = JSDialog.mobileComboboxEntry;
 		this._controlHandlers['edit'] = this._editControl;
-		this._controlHandlers['panel'] = this._panelHandler;
-		this._controlHandlers['toolbox'] = this._toolboxHandler;
+		this._controlHandlers['frame'] = this._frameHandler;
+		this._controlHandlers['grid'] = this._gridHandler;
+		this._controlHandlers['listbox'] = this._listboxControl;
 		this._controlHandlers['mobile-popup-container'] = this._mobilePopupContainer;
-		this._controlHandlers['tabcontrol'] = JSDialog.mobileTabControl;
+		this._controlHandlers['panel'] = this._panelHandler;
 		this._controlHandlers['paneltabs'] = JSDialog.mobilePanelControl;
+		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
 		this._controlHandlers['scrollwindow'] = undefined;
+		this._controlHandlers['tabcontrol'] = JSDialog.mobileTabControl;
+		this._controlHandlers['toolbox'] = this._toolboxHandler;
 
 		this._toolitemHandlers['.uno:FontworkAlignmentFloater'] = function () { return false; };
 		this._toolitemHandlers['.uno:FontworkCharacterSpacingFloater'] = function () { return false; };
@@ -695,6 +697,49 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		return count;
 	},
 
+	// some widgets we want to modify / change
+	isHyperlinkTarget: function (builder, data) {
+		return data.type === 'combobox' && (data.id === 'target' || data.id === 'receiver');
+	},
+
+	isFindReplaceComboox: function (builder, data) {
+		return data.type === 'combobox' && (data.id === 'searchterm' || data.id === 'replaceterm');
+	},
+
+	shouldBeListbox: function (builder, data) {
+		return data.type === 'combobox' &&
+			(data.id === 'applystyle' ||
+			data.id === 'fontnamecombobox' ||
+			data.id === 'fontsizecombobox' ||
+			data.id === 'fontsize' ||
+			data.id === 'FontBox');
+	},
+
+	requiresOverwriting: function(builder, data) {
+		if (builder.isHyperlinkTarget(builder, data) ||
+			builder.isFindReplaceComboox(builder, data) ||
+			builder.shouldBeListbox(builder, data))
+			return true;
+
+		return false;
+	},
+
+	overwriteHandler: function(parentContainer, data, builder) {
+		if (builder.isHyperlinkTarget(builder, data) ||
+			builder.isFindReplaceComboox(builder, data)) {
+			// Replace combobox with edit
+			var callback = function(value) {
+				builder.callback('combobox', 'change', data, value, builder);
+			};
+
+			return builder._controlHandlers['edit'](parentContainer, data, builder, callback);
+		} else if (builder.shouldBeListbox(builder, data)) {
+			return builder._listboxControl(parentContainer, data, builder);
+		}
+
+		console.error('It seems widget doesn\'t require overwriting.');
+	},
+
 	build: function(parent, data) {
 		this._modifySidebarNodes(data);
 
@@ -741,7 +786,10 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 				processChildren = handler(childObject, childData.children, this);
 			} else {
 				if (handler) {
-					processChildren = handler(childObject, childData, this);
+					if (this.requiresOverwriting(this, childData))
+						processChildren = this.overwriteHandler(childObject, childData, this);
+					else
+						processChildren = handler(childObject, childData, this);
 					this.postProcess(childObject, childData);
 				} else
 					window.app.console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
