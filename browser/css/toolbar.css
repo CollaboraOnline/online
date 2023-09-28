@@ -1490,9 +1490,6 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	display: flex !important;
 	align-items: center;
 	font-family: var(--cool-font);
-	padding-right: 12px;
-	margin-right: 10px;
-	margin-left: 10px;
 	font-size: var(--default-font-size);
 	justify-content: end;
 }
