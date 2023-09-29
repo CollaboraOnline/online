@@ -407,50 +407,61 @@ static int createLibreOfficeKit(const std::string& childRoot,
     LOG_DBG("Forking a coolkit process with jailId: " << jailId << " as spare coolkit #"
                                                       << spareKitId << '.');
     const auto startForkingTime = std::chrono::steady_clock::now();
+    pid_t pid = 0;
+    if (Util::isKitInProcess()) {
+         std::thread mainThread([childRoot, jailId, sysTemplate, loTemplate, queryVersion]()
+            {
+                Util::setThreadName("kit_in_process");
+                lokit_main(childRoot, jailId, sysTemplate, loTemplate, NoCapsForKit, NoSeccomp,
+                   queryVersion, DisplayVersion, spareKitId);
+            });
+            mainThread.detach();
+    }
+    else {
+        pid = fork();
+        if (!pid)
+        {
+            // Child
 
-    const pid_t pid = fork();
-    if (!pid)
-    {
-        // Child
-
-        // Close the pipe from coolwsd
-        close(0);
+            // Close the pipe from coolwsd
+            close(0);
 
 #ifndef KIT_IN_PROCESS
         UnitKit::get().postFork();
 #endif
 
-        if (std::getenv("SLEEPKITFORDEBUGGER"))
-        {
-            const size_t delaySecs = std::stoul(std::getenv("SLEEPKITFORDEBUGGER"));
-            if (delaySecs > 0)
+            if (std::getenv("SLEEPKITFORDEBUGGER"))
             {
-                std::cerr << "Kit: Sleeping " << delaySecs
-                          << " seconds to give you time to attach debugger to process "
-                          << getpid() << std::endl;
-                std::this_thread::sleep_for(std::chrono::seconds(delaySecs));
+                const size_t delaySecs = std::stoul(std::getenv("SLEEPKITFORDEBUGGER"));
+                if (delaySecs > 0)
+                {
+                    std::cerr << "Kit: Sleeping " << delaySecs
+                                << " seconds to give you time to attach debugger to process "
+                                << getpid() << std::endl;
+                    std::this_thread::sleep_for(std::chrono::seconds(delaySecs));
+                }
             }
-        }
 
-        lokit_main(childRoot, jailId, sysTemplate, loTemplate, NoCapsForKit, NoSeccomp,
-                   queryVersion, DisplayVersion, spareKitId);
-    }
-    else
-    {
-        // Parent
-        if (pid < 0)
-        {
-            LOG_SYS("Fork failed");
+            lokit_main(childRoot, jailId, sysTemplate, loTemplate, NoCapsForKit, NoSeccomp,
+                        queryVersion, DisplayVersion, spareKitId);
         }
         else
         {
-            LOG_INF("Forked kit [" << pid << ']');
-            childJails[pid] = childRoot + jailId;
-        }
+            // Parent
+            if (pid < 0)
+            {
+                LOG_SYS("Fork failed");
+            }
+            else
+            {
+                LOG_INF("Forked kit [" << pid << ']');
+                childJails[pid] = childRoot + jailId;
+            }
 
-#ifndef KIT_IN_PROCESS
-        UnitKit::get().launchedKit(pid);
-#endif
+        #ifndef KIT_IN_PROCESS
+            UnitKit::get().launchedKit(pid);
+        #endif
+        }
     }
 
     const auto duration = (std::chrono::steady_clock::now() - startForkingTime);
@@ -568,7 +579,9 @@ int main(int argc, char** argv)
         }
     }
 
-    SigUtil::setFatalSignals("forkit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
+    if (!Util::isKitInProcess()) {
+        SigUtil::setFatalSignals("forkit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
+    }
 
     if (simd::init())
         simd_deltaInit();
