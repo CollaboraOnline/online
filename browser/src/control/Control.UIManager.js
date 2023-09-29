@@ -1105,6 +1105,57 @@ L.Control.UIManager = L.Control.extend({
 		}
 	},
 
+	showProgressBar: function(id, title, message, buttonText, callback, value, maxValue) {
+		var dialogId = this.generateModalId(id);
+		var responseButtonId = dialogId + '-response';
+
+		var json = this._modalDialogJSON(id, title, true, [
+			{
+				id: dialogId + '-title',
+				type: 'fixedtext',
+				text: title,
+				hidden: !window.mode.isMobile()
+			},
+			{
+				id: dialogId + '-label',
+				type: 'fixedtext',
+				text: message
+			},
+			{
+				id: dialogId + '-progresssbar',
+				type: 'progresssbar',
+				value: (value !== undefined && value !== null ? value: 0),
+				maxValue: (maxValue !== undefined && maxValue !== null ? maxValue: 100)
+			},
+			{
+				id: '',
+				type: 'buttonbox',
+				text: '',
+				enabled: true,
+				children: [
+					{
+						id: responseButtonId,
+						type: 'pushbutton',
+						text: buttonText,
+						'has_default': true,
+						hidden: buttonText ? false: true // Hide if no text is given. So we can use one modal type for various purposes.
+					}
+				],
+				vertical: false,
+				layoutstyle: 'end'
+			},
+		], responseButtonId);
+
+		var that = this;
+		this.showModal(json, [
+			{id: responseButtonId, func: function() {
+				if (typeof callback === 'function')
+					callback();
+				that.closeModal(dialogId);
+			}}
+		]);
+	},
+
 	/// buttonObjectList: [{id: button's id, text: button's text, ..other properties if needed}, ...]
 	/// callbackList: [{id: button's id, func_: function}, ...]
 	showModalWithCustomButtons: function(id, title, message, cancellable, buttonObjectList, callbackList) {
