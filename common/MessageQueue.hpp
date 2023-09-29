@@ -82,7 +82,7 @@ public:
     /// Thread safe remove_if.
     void remove_if(const std::function<bool(const Payload&)>& pred)
     {
-        std::remove_if(_queue.begin(), _queue.end(), pred);
+        (void)std::remove_if(_queue.begin(), _queue.end(), pred);
     }
 
 protected:
