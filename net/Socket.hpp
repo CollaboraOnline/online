@@ -202,8 +202,8 @@ public:
     {
 #if !MOBILEAPP
         const int val = 1;
-        ::setsockopt(_fd, IPPROTO_TCP, TCP_NODELAY,
-                     (char *) &val, sizeof(val));
+        if (::setsockopt(_fd, IPPROTO_TCP, TCP_NODELAY, (char *) &val, sizeof(val)) == -1)
+            LOG_SYS("Failed setsockopt TCP_NODELAY: " << strerror(errno));
 #endif
     }
 
