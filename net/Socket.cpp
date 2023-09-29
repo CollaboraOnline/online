@@ -820,7 +820,8 @@ bool ServerSocket::bind(Type type, int port)
     //TODO: Might be worth refactoring out.
     const int reuseAddress = 1;
     constexpr unsigned int len = sizeof(reuseAddress);
-    ::setsockopt(getFD(), SOL_SOCKET, SO_REUSEADDR, &reuseAddress, len);
+    if (::setsockopt(getFD(), SOL_SOCKET, SO_REUSEADDR, &reuseAddress, len) == -1)
+        LOG_SYS("Failed setsockopt SO_REUSEADDR: " << strerror(errno));
 
     int rc;
 
