@@ -465,7 +465,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		// save-as for German shortcuts - F12.
-		if (ev.type === 'keydown' && !ev.altKey && !this.modifier && keyCode === this.keyCodes.F12 && app.UI.language.fromURL === 'de') {
+		if (ev.type === 'keydown' && !ev.altKey && !this.modifier && keyCode === this.keyCodes.F12 && app.UI.language.fromURL === 'de' && ['text', 'spreadsheet'].includes(docType)) {
 			if (this._map.uiManager.getCurrentMode() === 'notebookbar') {
 				this._map.openSaveAs(); // Opens save as dialog if integrator supports it.
 				ev.preventDefault();
@@ -473,8 +473,12 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 		}
 
-		if (ev.type === 'keydown' && !ev.altKey && ev.shiftKey && keyCode === this.keyCodes.F3 && app.UI.language.fromURL === 'de') {
-			this._map.sendUnoCommand('.uno:ChangeCaseRotateCase');
+		if (ev.type === 'keydown' && !ev.altKey && ev.shiftKey && keyCode === this.keyCodes.F3 && app.UI.language.fromURL === 'de' && ['text', 'spreadsheet'].includes(docType)) {
+			if (docType === 'text')
+				this._map.sendUnoCommand('.uno:ChangeCaseRotateCase');
+			else if (docType === 'spreadsheet')
+				this._map.sendUnoCommand('.uno:FunctionDialog'); // Insert function wizard in Calc.
+
 			ev.preventDefault();
 			return;
 		}
@@ -504,6 +508,28 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 
+		// Comment in Calc.
+		if (ev.type === 'keydown' && ev.shiftKey && !ev.altKey && keyCode === this.keyCodes.F2 && docType === 'spreadsheet' && app.UI.language.fromURL === 'de') {
+			this._map.insertComment();
+			ev.preventDefault();
+			return;
+		}
+
+		if (ev.type === 'keydown' && !this.modifier && keyCode === this.keyCodes.F4 && docType === 'spreadsheet' && app.UI.language.fromURL === 'de') {
+			if (this._map._docLayer.insertMode === true) {
+				this._map.sendUnoCommand('.uno:ToggleRelative');
+				ev.preventDefault();
+				return;
+			}
+		}
+
+		// Recalculate Calc.
+		if (ev.type === 'keydown' && !this.modifier && keyCode === this.keyCodes.F9 && docType === 'spreadsheet' && app.UI.language.fromURL === 'de') {
+			this._map.sendUnoCommand('.uno:Calculate');
+			ev.preventDefault();
+			return;
+		}
+
 		// don't trigger browser reload on F5, launch slideshow in Impress
 		if (ev.type === 'keydown' && keyCode === this.keyCodes.F5) {
 			ev.preventDefault();
@@ -513,7 +539,16 @@ L.Map.Keyboard = L.Handler.extend({
 			else if (docType === 'text' && !this.modifier && app.UI.language.fromURL === 'de') {
 				this._map.sendUnoCommand('.uno:GoToPage');
 			}
+			else if (docType === 'spreadsheet' && !this.modifier && app.UI.language.fromURL === 'de') {
+				document.getElementById('addressInput').focus();
+			}
 
+			return;
+		}
+
+		if (ev.type === 'keydown' && ev.altKey && this.keyCodes.NUM0.includes(ev.keyCode)) {
+			app.socket.sendMessage('uno .uno:FormatCellDialog');
+			ev.preventDefault();
 			return;
 		}
 
@@ -674,7 +709,7 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		// CTRL + SHIFT + L is added to the core side for writer. Others can also be checked.
-		if (this._isCtrlKey(e) && e.shiftKey && e.key === 'L' && this._map.getDocType() !== 'text') {
+		if (this._isCtrlKey(e) && e.shiftKey && e.key === 'L' && this._map.getDocType() !== 'text' && this._map.getDocType() !== 'spreadsheet') {
 			app.socket.sendMessage('uno .uno:DefaultBullet');
 			e.preventDefault();
 			return true;
@@ -695,6 +730,17 @@ L.Map.Keyboard = L.Handler.extend({
 
 		// Handles unformatted paste
 		if (this._isCtrlKey(e) && e.shiftKey && (e.key === 'v' || e.key === 'V')) {
+			return true;
+		}
+
+		// Collapse / expand notebookbar.
+		if (this._isCtrlKey(e) && e.keyCode === this.keyCodes.F1) {
+			if (this._map.uiManager.getCurrentMode() === 'notebookbar') {
+				if (this._map.uiManager.isNotebookbarCollapsed())
+					this._map.uiManager.extendNotebookbar();
+				else
+					this._map.uiManager.collapseNotebookbar();
+			}
 			return true;
 		}
 
