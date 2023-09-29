@@ -227,7 +227,7 @@ struct Client : public Poco::Util::Application
         std::vector<char> data;
         for (size_t i = 1; i < (1 << 14); ++i)
         {
-            data.push_back((char)(std::rand() / (RAND_MAX/256)));
+            data.push_back((char)(Util::rng::getNext() / (UINT_MAX/256)));
             ws->sendFrame(data.data(), data.size(), WebSocket::SendFlags::FRAME_BINARY);
 
             res.resize(i);
