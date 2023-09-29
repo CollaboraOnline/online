@@ -510,6 +510,12 @@ run-trace: setup-wsd
 			--o:trace[@enable]=true --o:trace.path=${builddir}/trace.txt.gz \
 			--o:trace.outgoing.record=false
 
+run-valgrind-kitinprocess: setup-wsd
+	@echo "Launching coolwsd under valgrind (but not forkit/coolkit, yet)"
+	valgrind --tool=memcheck --tool=massif --trace-children=no -v --read-var-info=yes \
+		./coolwsd $(COMMON_PARAMS) \
+			--o:logging.file[@enable]=false --o:logging.level=error
+
 run-valgrind: setup-wsd
 	@echo "Launching coolwsd under valgrind (but not forkit/coolkit, yet)"
 	valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \

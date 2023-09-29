@@ -325,6 +325,13 @@ namespace Util
         return std::getenv("DISPLAY") != nullptr;
     }
 
+
+    bool isKitInProcess()
+    {
+        const char* kitInProcess = std::getenv("KIT_IN_PROCESS");
+        return (kitInProcess != nullptr && strcmp(kitInProcess, "true") == 0);
+    }
+
 #if !MOBILEAPP
 
     static const char *startsWith(const char *line, const char *tag, std::size_t tagLen)
