@@ -14,7 +14,7 @@
 extern "C" {
 #endif
 
-void simd_deltaInit();
+void simd_deltaInit(void);
 
 int simd_initPixRowSimd(const uint32_t *from, uint32_t *scratch, size_t *scratchLen, uint64_t *rleMask);
 

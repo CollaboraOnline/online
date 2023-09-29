@@ -84,7 +84,7 @@ static uint64_t diffMask(__m256i prev, __m256i curr)
 
 #endif
 
-void simd_deltaInit()
+void simd_deltaInit(void)
 {
 #if ENABLE_SIMD
     init_gather_lut();
