@@ -754,6 +754,11 @@ a.leaflet-control-zoom-in {
 	clear: both;
 }
 
+#mobile-wizard.snackbar .mobile-wizard.ui-text {
+	border: none;
+	line-height: inherit;
+}
+
 #mobile-wizard [id^='info-modal-label'].mobile-wizard.ui-text {
 	border: none;
 	color: var(--color-text-dark) !important;
