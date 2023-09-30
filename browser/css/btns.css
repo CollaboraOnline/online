@@ -53,6 +53,7 @@ button:not(.ui-corner-all):not(.button-primary):not(.form-field-button) {
 	border-radius: var(--border-radius);
 	margin: 5px;
 	vertical-align: middle;
+	width: max-content;
 }
 
 .vex.vex-theme-plain .vex-dialog-form .vex-dialog-buttons {

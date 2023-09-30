@@ -231,13 +231,16 @@ L.Control.JSDialog = L.Control.extend({
 		}
 
 		// it has to be form to handle default button
-		container = L.DomUtil.create('form', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', containerParent);
+		container = L.DomUtil.create('div', 'jsdialog-window', containerParent);
 		container.id = data.id;
 		container.style.visibility = 'hidden';
 		if (data.collapsed && (data.collapsed === 'true' || data.collapsed === true))
 			L.DomUtil.addClass(container, 'collapsed');
+
+		var form = L.DomUtil.create('form', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', container);
+
 		// prevent from reloading
-		container.addEventListener('submit', function (event) { event.preventDefault(); });
+		form.addEventListener('submit', function (event) { event.preventDefault(); });
 
 		var defaultButtonId = this._getDefaultButtonId(data.children);
 
@@ -246,18 +249,18 @@ L.Control.JSDialog = L.Control.extend({
 		}
 
 		// it has to be first button in the form
-		var defaultButton = L.DomUtil.createWithId('button', 'default-button', container);
+		var defaultButton = L.DomUtil.createWithId('button', 'default-button', form);
 		defaultButton.style.display = 'none';
 		defaultButton.onclick = function() {
 			if (defaultButtonId) {
-				var button = container.querySelector('#' + defaultButtonId);
+				var button = form.querySelector('#' + defaultButtonId);
 				if (button)
 					button.click();
 			}
 		};
 
 		if (!isModalPopup || (data.hasClose)) {
-			var titlebar = L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', container);
+			var titlebar = L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', form);
 			var title = L.DomUtil.create('span', 'ui-dialog-title', titlebar);
 			title.innerText = data.title;
 			var button = L.DomUtil.create('button', 'ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close', titlebar);
@@ -265,12 +268,14 @@ L.Control.JSDialog = L.Control.extend({
 		}
 		if (isModalPopup) {
 			L.DomUtil.addClass(container, 'modalpopup');
-			if (isSnackbar)
+			if (isSnackbar) {
 				L.DomUtil.addClass(container, 'snackbar');
+				L.DomUtil.addClass(form, 'snackbar');
+			}
 		}
 
-		var tabs = L.DomUtil.create('div', 'jsdialog-tabs', container);
-		var content = L.DomUtil.create('div', 'lokdialog ui-dialog-content ui-widget-content', container);
+		var tabs = L.DomUtil.create('div', 'jsdialog-tabs', form);
+		var content = L.DomUtil.create('div', 'lokdialog ui-dialog-content ui-widget-content', form);
 
 		// required to exist before builder was launched (for setTabs)
 		this.dialogs[data.id] = {
@@ -389,7 +394,7 @@ L.Control.JSDialog = L.Control.extend({
 					if (posY + content.clientHeight > window.innerHeight)
 						posY -= posY + content.clientHeight + 10 - window.innerHeight;
 				} else if (isDocumentAreaPopup) {
-					var height = container.getBoundingClientRect().height;
+					var height = form.getBoundingClientRect().height;
 					if (posY + height > containerParent.getBoundingClientRect().height) {
 						var newTopPosition = posY - height;
 						if (newTopPosition < 0)
@@ -397,7 +402,7 @@ L.Control.JSDialog = L.Control.extend({
 						posY = newTopPosition;
 					}
 
-					var width = container.getBoundingClientRect().width;
+					var width = form.getBoundingClientRect().width;
 					if (posX + width > containerParent.getBoundingClientRect().width) {
 						var newLeftPosition = posX - width;
 						if (newLeftPosition < 0)
@@ -406,11 +411,11 @@ L.Control.JSDialog = L.Control.extend({
 					}
 				}
 			} else if (isSnackbar) {
-				posX = window.innerWidth/2 - container.offsetWidth/2;
-				posY = window.innerHeight - container.offsetHeight - 40;
+				posX = window.innerWidth/2 - form.offsetWidth/2;
+				posY = window.innerHeight - form.offsetHeight - 40;
 			} else if (force || (posX === 0 && posY === 0)) {
-				posX = window.innerWidth/2 - container.offsetWidth/2;
-				posY = window.innerHeight/2 - container.offsetHeight/2;
+				posX = window.innerWidth/2 - form.offsetWidth/2;
+				posY = window.innerHeight/2 - form.offsetHeight/2;
 			}
 		};
 
