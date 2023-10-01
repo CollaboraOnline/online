@@ -219,6 +219,29 @@ public:
             timeout, context);
     }
 
+    /// Wait until one of the given prefixes is matched and return the payload.
+    std::vector<char> waitForMessageAny(const std::vector<std::string>& prefixes,
+                                        std::chrono::milliseconds timeout,
+                                        const std::string& context = std::string())
+    {
+        LOG_DBG(context << "Waiting for any [" << Util::join(prefixes) << "] for " << timeout);
+
+        return poll(
+            [&](const std::vector<char>& message)
+            {
+                for (const std::string& prefix : prefixes)
+                {
+                    if (matchMessage(prefix, message, context))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            },
+            timeout, context);
+    }
+
     /// Send a text message to our peer.
     void sendMessage(const std::string& msg)
     {
