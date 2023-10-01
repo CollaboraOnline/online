@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2023-03-14 08:03+0000\n"
+"PO-Revision-Date: 2023-10-01 11:40+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt_BR/>\n"
-"Language: \n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16.2-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -685,9 +685,8 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:76
-#, fuzzy
 msgid "Rename Document"
-msgstr "Reparar documento"
+msgstr "Renomear documento"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:383
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:660
@@ -717,9 +716,8 @@ msgstr "Baixar como"
 #: src/control/Control.NotebookbarBuilder.js:590
 #: src/control/Control.NotebookbarBuilder.js:619
 #: src/control/Control.NotebookbarBuilder.js:648
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "Documento PDF (.pdf)"
+msgstr "Documento PDF (.pdf) como..."
 
 #: src/control/Control.Menubar.js:90 src/control/Control.Menubar.js:395
 #: src/control/Control.Menubar.js:541 src/control/Control.Menubar.js:672
@@ -794,7 +792,7 @@ msgstr "Mostrar Barra de Status"
 #: src/control/Control.Menubar.js:131 src/control/Control.Menubar.js:424
 #: src/control/Control.Menubar.js:572 src/control/Control.Menubar.js:700
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Ocultar barra de menu"
 
 #: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:425
 #: src/control/Control.Menubar.js:568 src/control/Control.Menubar.js:701
@@ -904,7 +902,7 @@ msgstr "Propriedades"
 #: src/control/Control.Menubar.js:347 src/control/Control.Menubar.js:954
 #: src/control/Control.NotebookbarWriter.js:392
 msgid "Accessibility Support"
-msgstr ""
+msgstr "Suporte de acessibilidade"
 
 #: src/control/Control.Menubar.js:360
 #: src/control/Control.NotebookbarWriter.js:358
