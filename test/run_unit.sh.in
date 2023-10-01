@@ -20,6 +20,7 @@ lo_path="@LO_PATH@"
 valgrind_cmd="valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes"
 verbose=''
 capabilities="@ENABLE_SETCAP@"
+fail_fast=''
 
 if test "h$capabilities" != "htrue"; then
     capabilities=false
@@ -38,6 +39,7 @@ print_help ()
     echo "   --trs-file <file>   Records the results of a test for automake (default /dev/stderr)"
     echo "   --gdb               Run under gdb if enabled"
     echo "   --valgrind          Run under valgrind if enabled"
+    echo "   --fail-fast         If a test fails, subsequent tests will not run and no report is generated"
     echo "   --verbose           Print out more stuff - if you run out of things to read"
     exit 1
 }
@@ -52,6 +54,7 @@ while test $# -gt 0; do
       --trs-file)  test_output=$2; shift;;
       --gdb)       trace='gdb --args'; shift;;
       --valgrind)  trace=$valgrind_cmd; shift;;
+      --fail-fast) fail_fast='true'; shift;;
       --verbose)   verbose="--verbose";;
       --help)      print_help ;;
   -*) ;; # ignore
@@ -114,6 +117,9 @@ else
 	echo "============================================================="
 	echo ":test-result: FAIL $tst" >> $test_output
 fi
-exit 1
+
+if test "z$fail_fast" == "ztrue"; then
+    exit 1
+fi
 
 # vim:set shiftwidth=4 expandtab:
