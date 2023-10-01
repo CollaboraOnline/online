@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# DO NOT EDIT - this file is generated from run_unit.sh.in.
+# DO NOT EDIT - this file is generated from run_unit_standalone.sh.in.
 #
 
 cmd_line="$0 $@"
