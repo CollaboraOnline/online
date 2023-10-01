@@ -59,4 +59,11 @@
     <string name="document_locations">مواقع المستندات</string>
     <string name="local_file_system">نظام الملفات المحلي</string>
     <string name="external_sd_file_system">بطاقة SD خارجية</string>
+    <string name="action_create">إنشاء</string>
+    <string name="title_activity_show_html">عنْ</string>
+    <string name="remote_server">الخادم عن بُعد</string>
+    <string name="theme">السِّمة</string>
+    <string name="choose_theme">اختر حُلّة</string>
+    <string name="filter_spreadsheets">جداول البيانات</string>
+    <string name="share_document">مُشارَكة المستنَد</string>
 </resources>
