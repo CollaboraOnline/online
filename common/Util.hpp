@@ -1432,6 +1432,27 @@ int main(int argc, char**argv)
         return std::string(s);
     }
 
+    /// Concatenate the given elements in a container to each other using
+    /// the delimiter of choice.
+    template <typename T, typename U = const char*>
+    inline std::string join(const T& elements, const U& delimiter = ", ")
+    {
+        std::ostringstream oss;
+        bool first = true;
+        for (const auto& elem : elements)
+        {
+            if (!first)
+            {
+                oss << delimiter;
+            }
+
+            oss << elem;
+            first = false;
+        }
+
+        return oss.str();
+    }
+
     /// Dump an object that supports .dumpState into a string.
     /// Helpful for logging.
     template <typename T> std::string dump(const T& object, const std::string& indent = ", ")
