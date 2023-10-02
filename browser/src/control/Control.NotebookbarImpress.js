@@ -1473,9 +1473,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 							{
 								'id': 'selectbackground',
 								'class': 'unoselectbackground',
-								'type': 'menubartoolitem',
+								'type': 'toolitem',
 								'text': _UNO('.uno:SelectBackground', 'presentation'),
-								'command': '',
+								'command': '.uno:SelectBackground',
 								'accessibility': { focusBack: true, combination: 'SB', de: null }
 							}
 						]

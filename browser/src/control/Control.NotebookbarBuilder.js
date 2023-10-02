@@ -37,6 +37,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		this._toolitemHandlers['.uno:InsertTable'] = this._insertTableControl;
 		this._toolitemHandlers['.uno:InsertGraphic'] = this._insertGraphicControl;
+		this._toolitemHandlers['.uno:SelectBackground'] = this._selectBackgroundControl;
 		this._toolitemHandlers['.uno:InsertAnnotation'] = this._insertAnnotationControl;
 		this._toolitemHandlers['.uno:LineSpacing'] = this._lineSpacingControl;
 		this._toolitemHandlers['.uno:CharSpacing'] = this._CharSpacing;
@@ -905,6 +906,17 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			} else {
 				L.DomUtil.get('insertgraphic').click();
 			}
+		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
+	},
+
+	_selectBackgroundControl: function(parentContainer, data, builder) {
+		var options = {hasDropdownArrow: false};
+		var control = builder._unoToolButton(parentContainer, data, builder, options);
+
+		$(control.container).unbind('click.toolbutton');
+		$(control.container).click(function () {
+			L.DomUtil.get('selectbackground').click();
 		});
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
