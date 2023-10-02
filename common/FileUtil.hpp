@@ -156,12 +156,12 @@ namespace FileUtil
     /// File/Directory stat helper.
     class Stat
     {
-        int clearStat() { memset (&_sb, 0, sizeof(_sb)); return 0; }
     public:
         /// Stat the given path. Symbolic links are stat'ed when @link is true.
         Stat(const std::string& file, bool link = false)
             : _path(file)
-            , _res(clearStat() | (link ? lstat(file.c_str(), &_sb) : stat(file.c_str(), &_sb)))
+            , _sb{}
+            , _res(link ? lstat(file.c_str(), &_sb) : stat(file.c_str(), &_sb))
             , _errno(errno)
         {
         }
