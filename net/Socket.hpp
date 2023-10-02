@@ -619,6 +619,9 @@ public:
         wakeup();
     }
 
+    /// Remove all the sockets we own.
+    void removeSockets();
+
     bool isAlive() const { return (_threadStarted && !_threadFinished) || _runOnClientThread; }
 
     /// Check if we should continue polling
@@ -854,9 +857,6 @@ private:
     /// The polling thread entry.
     /// Used to set the thread name and mark the thread as stopped when done.
     void pollingThreadEntry();
-
-    /// Remove all the sockets we own.
-    void removeSockets();
 
     /// Debug name used for logging.
     const std::string _name;
