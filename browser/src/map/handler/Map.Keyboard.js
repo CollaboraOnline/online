@@ -364,8 +364,10 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 		}
 		else if (this._map._docLayer && (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') && this._map._docLayer._preview.partsFocused === true) {
+
 			if (!this.modifier && (ev.keyCode === this.keyCodes.DOWN || ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.RIGHT || ev.keyCode === this.keyCodes.LEFT
 				|| ev.keyCode === this.keyCodes.DELETE || ev.keyCode === this.keyCodes.BACKSPACE) && ev.type === 'keydown') {
+
 				var partToSelect = (ev.keyCode === this.keyCodes.UP || ev.keyCode === this.keyCodes.LEFT) ? 'prev' : 'next';
 				var deletePart = (ev.keyCode === this.keyCodes.DELETE || ev.keyCode === this.keyCodes.BACKSPACE) ? true: false;
 
@@ -379,6 +381,12 @@ L.Map.Keyboard = L.Handler.extend({
 				}
 				ev.preventDefault();
 				return;
+			}
+			else if (ev.ctrlKey) {
+				if (!ev.altKey && ev.keyCode === this.keyCodes.HOME)
+					this._map.setPart(0);
+				else if (!ev.altKey && ev.keyCode === this.keyCodes.END)
+					this._map.setPart(this._map._docLayer._parts - 1);
 			}
 			else {
 				this._map._docLayer._preview.partsFocused = false;
@@ -465,12 +473,30 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		// save-as for German shortcuts - F12.
-		if (ev.type === 'keydown' && !ev.altKey && !this.modifier && keyCode === this.keyCodes.F12 && app.UI.language.fromURL === 'de' && ['text', 'spreadsheet'].includes(docType)) {
+		if (ev.type === 'keydown' && !ev.altKey && !this.modifier && keyCode === this.keyCodes.F12 && app.UI.language.fromURL === 'de' && ['text', 'spreadsheet', 'presentation'].includes(docType)) {
 			if (this._map.uiManager.getCurrentMode() === 'notebookbar') {
 				this._map.openSaveAs(); // Opens save as dialog if integrator supports it.
 				ev.preventDefault();
 				return;
 			}
+		}
+
+		if (ev.type === 'keydown' && !ev.altKey && ev.shiftKey && keyCode === this.keyCodes.F9 && app.UI.language.fromURL === 'de' && docType === 'presentation') {
+			this._map.sendUnoCommand('.uno:GridVisible');
+			ev.preventDefault();
+			return;
+		}
+
+		if (ev.type === 'keydown' && !ev.altKey && ev.shiftKey && keyCode === this.keyCodes.F3 && app.UI.language.fromURL === 'de' && docType === 'presentation') {
+			this._map.sendUnoCommand('.uno:ChangeCaseRotateCase');
+			ev.preventDefault();
+			return;
+		}
+
+		if (ev.type === 'keydown' && !ev.altKey && ev.shiftKey && keyCode === this.keyCodes.F5 && app.UI.language.fromURL === 'de' && docType === 'presentation') {
+			this._map.fire('fullscreen', { startSlideNumber: this._map.getCurrentPartNumber() });
+			ev.preventDefault();
+			return;
 		}
 
 		if (ev.type === 'keydown' && !ev.altKey && ev.shiftKey && keyCode === this.keyCodes.F3 && app.UI.language.fromURL === 'de' && ['text', 'spreadsheet'].includes(docType)) {
