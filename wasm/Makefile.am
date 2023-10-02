@@ -32,11 +32,13 @@ online_SOURCES = \
 	../common/StringVector.cpp \
 	../common/Session.cpp \
 	../common/SigUtil.cpp \
+	../common/Simd.cpp \
 	../common/SpookyV2.cpp \
 	../common/Unit.cpp \
 	../common/Util.cpp \
 	../kit/ChildSession.cpp \
 	../kit/Kit.cpp \
+	../kit/DeltaSimd.c \
 	../net/FakeSocket.cpp \
 	../net/Socket.cpp \
 	../wsd/ClientSession.cpp \
