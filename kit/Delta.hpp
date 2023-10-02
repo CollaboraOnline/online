@@ -734,45 +734,40 @@ class DeltaGenerator {
         int dumpedIndex = 1;
         if (dumpTiles)
         {
-            std::string path = "/tmp/tiledump";
-            bool directoryExists = !FileUtil::isEmptyDirectory(path);
+            std::string path = FileUtil::getSysTempDirectoryPath() + "/tiledump";
+            bool directoryExists = FileUtil::Stat(path).exists();
             if (!directoryExists)
-            {
                 FileUtil::createTmpDir("tiledump");
-                directoryExists = true;
-            }
-            if (directoryExists)
+
+            // filename format: tile-<viewid>-<part>-<left>-<top>-<index>.png
+            std::ostringstream oss;
+            oss << "tile-" << loc._canonicalViewId << "-" << loc._part << "-" << loc._left << "-" << loc._top << "-";
+            std::string baseFilename = oss.str();
+
+            // find the next available filename
+            bool found = false;
+            int index = 1;
+
+            while (!found)
             {
-                // filename format: tile-<viewid>-<part>-<left>-<top>-<index>.png
-                std::ostringstream oss;
-                oss << "tile-" << loc._canonicalViewId << "-" << loc._part << "-" << loc._left << "-" << loc._top << "-";
-                std::string baseFilename = oss.str();
-
-                // find the next available filename
-                bool found = false;
-                int index = 1;
-
-                while (!found)
+                std::string filename = std::string("/") + baseFilename + std::to_string(index) + ".png";
+                if (!FileUtil::Stat(path + filename).exists())
                 {
-                    std::string filename = std::string("/") + baseFilename + std::to_string(index) + ".png";
-                    if (!FileUtil::Stat(path + filename).exists())
-                    {
-                        found = true;
-                        path += filename;
-                        dumpedIndex = index;
-                    }
-                    else
-                    {
-                        index++;
-                    }
+                    found = true;
+                    path += filename;
+                    dumpedIndex = index;
                 }
-
-                std::ofstream tileFile(path, std::ios::binary);
-                std::vector<char> pngOutput;
-                Png::encodeSubBufferToPNG(pixmap, startX, startY, width, height,
-                                        bufferWidth, bufferHeight, pngOutput, mode);
-                tileFile.write(pngOutput.data(), pngOutput.size());
+                else
+                {
+                    index++;
+                }
             }
+
+            std::ofstream tileFile(path, std::ios::binary);
+            std::vector<char> pngOutput;
+            Png::encodeSubBufferToPNG(pixmap, startX, startY, width, height,
+                                    bufferWidth, bufferHeight, pngOutput, mode);
+            tileFile.write(pngOutput.data(), pngOutput.size());
         }
 
         if (!createDelta(pixmap, startX, startY, width, height,
@@ -839,7 +834,7 @@ class DeltaGenerator {
             // Dump the delta
             if (dumpTiles)
             {
-                std::string path = "/tmp/tiledump";
+                std::string path = FileUtil::getSysTempDirectoryPath() + "/tiledump";
                 std::ostringstream oss;
                 // filename format: tile-delta-<viewid>-<part>-<left>-<top>-<prev_index>_to_<index>.zstd
                 oss << "tile-delta-" << loc._canonicalViewId << "-" << loc._part << "-" << loc._left << "-" << loc._top
