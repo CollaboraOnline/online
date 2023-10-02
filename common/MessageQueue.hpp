@@ -79,12 +79,6 @@ public:
         clear_impl();
     }
 
-    /// Thread safe remove_if.
-    void remove_if(const std::function<bool(const Payload&)>& pred)
-    {
-        (void)std::remove_if(_queue.begin(), _queue.end(), pred);
-    }
-
 protected:
     virtual void put_impl(const Payload& value)
     {
