@@ -105,7 +105,7 @@ L.Control.Tabs = L.Control.extend({
 					return !areTabsMultiple();
 				}
 			};
-			if (!this._map.isReadOnlyMode()) {
+			    if (!this._map.isReadOnlyMode() || window.mode.isTablet()) {
 				L.installContextMenu({
 					selector: '.spreadsheet-tab',
 					className: 'cool-font',
@@ -196,12 +196,13 @@ L.Control.Tabs = L.Control.extend({
 								return function(e) {
 									this._tabForContextMenu = j;
 									this._setPart(e);
-									if (window.mode.isMobile()) {
-										window.contextMenuWizard = true;
-										if (!this._map.isReadOnlyMode())
+									if (!this._map.isReadOnlyMode()) {
+										if (window.mode.isMobile()) {
+											window.contextMenuWizard = true;
 											this._map.fire('mobilewizard', {data: menuData});
-									} else {
-										$(tab).trigger('contextmenu');
+										} else {
+											$(e.target).trigger('contextmenu');
+                                        }
 									}
 								};
 							}(i).bind(this));
