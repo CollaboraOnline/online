@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- tab-width: 4; indent-tabs-mode: nil; py-indent-offset: 4 -*-
 #
 # This Source Code Form is subject to the terms of the Mozilla Public
@@ -105,7 +105,7 @@ if __name__ == "__main__":
         poFile = dir + lang + '/svtools/messages.po'
         extractFromPo(poFile, ["STR_ARR_SVT_LANGUAGE_TABLE"], translations)
 
-        f = open(onlineDir + '/browser/l10n/locore/' + lang + '.json', 'w')
+        f = open(onlineDir + '/browser/l10n/locore/' + lang + '.json', 'w', encoding='utf-8')
         f.write('{\n')
 
         writeComma = False
@@ -115,7 +115,7 @@ if __name__ == "__main__":
             else:
                 writeComma = True
             f.write(
-                ('"' + key + '":"' + translations[key] + '"').encode('utf-8'))
+                ('"' + key + '":"' + translations[key] + '"'))
 
         f.write('\n}\n')
 
