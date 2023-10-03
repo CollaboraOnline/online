@@ -193,6 +193,10 @@ L.TextInput = L.Layer.extend({
 		}
 	},
 
+	hasFocus: function() {
+		return this._textArea && this._textArea === document.activeElement;
+	},
+
 	_onFocusBlur: function(ev) {
 		this._fancyLog(ev.type, '');
 		this._statusLog('_onFocusBlur');
@@ -1244,14 +1248,16 @@ L.TextInput = L.Layer.extend({
 			if (this._justSwitchedToEditMode && accept && this._isInitialContent()) {
 				// We need to make the paragraph at the cursor position focused in core
 				// so its content is sent to the editable area.
-				window.app.console.log('A11yTextInput._setAcceptInput: going to emit a synthetic click after switching to edit mode.');
 				this._justSwitchedToEditMode = false;
-				var top = this._map._docLayer._visibleCursor.getNorthWest();
-				var bottom = this._map._docLayer._visibleCursor.getSouthWest();
-				var center = L.latLng((top.lat + bottom.lat) / 2, top.lng);
-				var cursorPos = this._map._docLayer._latLngToTwips(center);
-				this._map._docLayer._postMouseEvent('buttondown', cursorPos.x, cursorPos.y, 1, 1, 0);
-				this._map._docLayer._postMouseEvent('buttonup', cursorPos.x, cursorPos.y, 1, 1, 0);
+				if (this._map._docLayer && this._map._docLayer._visibleCursor) {
+					window.app.console.log('A11yTextInput._setAcceptInput: going to emit a synthetic click after switching to edit mode.');
+					var top = this._map._docLayer._visibleCursor.getNorthWest();
+					var bottom = this._map._docLayer._visibleCursor.getSouthWest();
+					var center = L.latLng((top.lat + bottom.lat) / 2, top.lng);
+					var cursorPos = this._map._docLayer._latLngToTwips(center);
+					this._map._docLayer._postMouseEvent('buttondown', cursorPos.x, cursorPos.y, 1, 1, 0);
+					this._map._docLayer._postMouseEvent('buttonup', cursorPos.x, cursorPos.y, 1, 1, 0);
+				}
 			}
 		}
 	},
