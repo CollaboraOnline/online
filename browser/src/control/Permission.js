@@ -198,7 +198,7 @@ L.Map.include({
 			this.dragging.disable();
 		}
 
-		if ((window.mode.isMobile() || window.mode.isTablet()) && this._textInput) {
+		if ((window.mode.isMobile() || window.mode.isTablet()) && this._textInput && this.getDocType() === 'text') {
 			this._textInput.setSwitchedToEditMode();
 		}
 
