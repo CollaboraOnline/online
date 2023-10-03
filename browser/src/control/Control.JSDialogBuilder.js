@@ -76,7 +76,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		this._controlHandlers = {};
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
-		this._controlHandlers['progresssbar'] = this._progressbarControl;
+		this._controlHandlers['progresssbar'] = JSDialog.progressbar;
 		this._controlHandlers['checkbox'] = this._checkboxControl;
 		this._controlHandlers['basespinfield'] = this.baseSpinField;
 		this._controlHandlers['spinfield'] = this._spinfieldControl;
@@ -1486,35 +1486,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (data.hidden)
 			$(radiobutton).hide();
-
-		return false;
-	},
-
-	_progressbarControl: function(parentContainer, data, builder) {
-		var div = L.DomUtil.createWithId('div', data.id, parentContainer);
-		L.DomUtil.addClass(div, 'cool-progressbar');
-		L.DomUtil.addClass(div, builder.options.cssClass);
-
-		var progressbar = L.DomUtil.create('progress', builder.options.cssClass, div);
-		progressbar.id = data.id + '-progress';
-		progressbar.tabIndex = '0';
-
-		if (data.value !== undefined)
-			progressbar.value = data.value;
-		else
-			progressbar.value = 0;
-
-		if (data.maxValue !== undefined)
-			progressbar.max = data.maxValue;
-		else
-			progressbar.max = 100;
-
-		if (data.enabled === 'false' || data.enabled === false) {
-			$(progressbar).prop('disabled', true);
-		}
-
-		if (data.hidden)
-			$(progressbar).hide();
 
 		return false;
 	},
