@@ -748,6 +748,13 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		}
 
+		// CTRL + ALT + O to open a document. This needs to be handled by the integrator.
+		if (this._isCtrlKey(e) && e.altKey && e.key.toUpperCase() === 'O') {
+			this._map.fire('postMessage', { msgId: 'UI_OpenDocument' });
+			e.preventDefault();
+			return true;
+		}
+
 		if (this._isCtrlKey(e) && e.shiftKey && e.key === '?') {
 			this._map.showHelp('keyboard-shortcuts-content');
 			e.preventDefault();
