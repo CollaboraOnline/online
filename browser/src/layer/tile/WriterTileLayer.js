@@ -130,6 +130,15 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 	_onStatusMsg: function (textMsg) {
 		var command = app.socket.parseServerCmd(textMsg);
+		if (app.socket._reconnecting) {
+			// persist cursor position on reconnection
+			// In writer, core always sends the cursor coordinates
+			// of the first paragraph of the document so we want to ignore that
+			// to eliminate document jumping while reconnecting
+			this.persistCursorPositionInWriter = true;
+			this._postMouseEvent('buttondown', this.lastCursorPos.x, this.lastCursorPos.y, 1, 1, 0);
+			this._postMouseEvent('buttonup', this.lastCursorPos.x, this.lastCursorPos.y, 1, 1, 0);
+		}
 		if (!command.width || !command.height || this._documentInfo === textMsg)
 			return;
 

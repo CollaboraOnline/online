@@ -1299,6 +1299,13 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._update();
 	},
 
+	_refreshTilesInBackground: function() {
+		for (var key in this._tiles) {
+			this._tiles[key].wireId = 1;
+			this._tiles[key].invalidFrom = 0;
+		}
+	},
+
 	_sendClientZoom: function (forceUpdate) {
 		if (!this._map._docLoaded)
 			return;
@@ -2643,7 +2650,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		textMsg = textMsg.substring('invalidatecursor:'.length + 1);
 		var obj = JSON.parse(textMsg);
 		var recCursor = this._getEditCursorRectangle(obj);
-		if (recCursor === undefined) {
+		if (recCursor === undefined || this.persistCursorPositionInWriter) {
+			this.persistCursorPositionInWriter = false;
 			return;
 		}
 		var modifierViewId = parseInt(obj.viewId);

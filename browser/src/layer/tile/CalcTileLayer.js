@@ -385,9 +385,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			app.view.size.pixels = app.file.size.pixels.slice();
 			this._docType = command.type;
 			this._parts = command.parts;
-			if (this._reconnected) {
+			if (app.socket._reconnecting) {
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
-				this._map._reconnected = false;
 			} else {
 				this._selectedPart = command.selectedPart;
 			}
