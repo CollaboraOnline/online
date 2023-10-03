@@ -33,10 +33,6 @@ L.A11yTextInput = L.TextInput.extend({
 		return true;
 	},
 
-	hasFocus: function() {
-		return this._textArea && this._textArea === document.activeElement;
-	},
-
 	setHTML: function(content) {
 		this._textArea.innerHTML = this._wrapContent(content);
 	},
