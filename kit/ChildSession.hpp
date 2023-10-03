@@ -417,10 +417,10 @@ private:
 
     Util::Rectangle _clientVisibleArea;
 
-    void* m_URPContext;
+    void* _URPContext;
 
     /// whether there is a URP session created for this ChildSession
-    bool m_hasURP;
+    bool _hasURP;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -111,16 +111,17 @@ ChildSession::ChildSession(const std::shared_ptr<ProtocolHandlerInterface>& prot
     , _canonicalViewId(-1)
     , _isDumpingTiles(false)
     , _clientVisibleArea(0, 0, 0, 0)
-    , m_hasURP(false)
+    , _URPContext(nullptr)
+    , _hasURP(false)
 {
     if (isURPEnabled())
     {
         LOG_WRN("URP is enabled in the config: Starting a URP tunnel for this session ["
                 << getName() << "]");
 
-        m_hasURP = startURP(docManager.getLOKit(), &m_URPContext);
+        _hasURP = startURP(docManager.getLOKit(), &_URPContext);
 
-        if (!m_hasURP)
+        if (!_hasURP)
             LOG_INF("Failed to start a URP bridge for this session [" << getName()
                                                                       << "], disabling URP");
     }
@@ -133,9 +134,9 @@ ChildSession::~ChildSession()
     LOG_INF("~ChildSession dtor [" << getName() << ']');
     disconnect();
 
-    if (m_hasURP)
+    if (_hasURP)
     {
-        _docManager->getLOKit()->stopURP(m_URPContext);
+        _docManager->getLOKit()->stopURP(_URPContext);
     }
 }
 
