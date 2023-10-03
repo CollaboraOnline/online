@@ -1426,7 +1426,7 @@ L.TextInput = L.Layer.extend({
 			return;
 		window.app.console.log(msg);
 	},
-	
+
 	_statusLog: function(header) {
 		if (!this._isDebugOn)
 			return;

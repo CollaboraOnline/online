@@ -541,15 +541,12 @@ app.definitions.Socket = L.Class.extend({
 		var command = this.parseServerCmd(textMsg);
 		if (textMsg.startsWith('coolserver ')) {
 			// This must be the first message, unless we reconnect.
-			var oldId = null;
 			var oldVersion = null;
 			var sameFile = true;
 			// Check if we are reconnecting.
 			if (this.WSDServer && this.WSDServer.Id) {
 				// Yes we are reconnecting.
-				// If server is restarted, we have to refresh the page.
 				// If our connection was lost and is ready again, we will not need to refresh the page.
-				oldId = this.WSDServer.Id;
 				oldVersion = this.WSDServer.Version;
 
 				window.app.console.assert(this._map.options.wopiSrc === window.wopiSrc,
@@ -563,8 +560,8 @@ app.definitions.Socket = L.Class.extend({
 
 			this.WSDServer = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 
-			if (oldId && oldVersion && sameFile) {
-				if ((this.WSDServer.Id !== oldId || this.WSDServer.Version !== oldVersion) && !window.migrating && !this.IndirectSocketReconnectCount) {
+			if (oldVersion && sameFile) {
+				if (this.WSDServer.Version !== oldVersion) {
 					var reloadMessage = _('Server is now reachable. We have to refresh the page now.');
 					if (window.mode.isMobile())
 						reloadMessage = _('Server is now reachable...');
@@ -575,10 +572,6 @@ app.definitions.Socket = L.Class.extend({
 					else
 						this._map.fire('postMessage', {msgId: 'Reloading', args: {Reason: 'Reconnected'}});
 					setTimeout(reloadFunc, 5000);
-				}
-				var docType = this._map.getDocType();
-				if (docType === 'presentation' || docType === 'drawing' || docType === 'spreadsheet') {
-					this._map._docLayer._reconnected = true;
 				}
 			}
 			if (window.indirectSocket) {
@@ -1393,13 +1386,15 @@ app.definitions.Socket = L.Class.extend({
 		}
 		else if (this._reconnecting) {
 			// we are reconnecting ...
-			this._reconnecting = false;
-			this._map._docLayer._resetClientVisArea();
-			this._map._docLayer._requestNewTiles();
+			this._map._docLayer._refreshTilesInBackground();
 			this._map.fire('statusindicator', {statusType: 'reconnected'});
 			this._map._isNotebookbarLoadedOnCore = false;
 			var uiMode = this._map.uiManager.getCurrentMode();
-			this._map.fire('changeuimode', {mode: uiMode, force: !window.migrating});
+			if (uiMode === 'notebookbar') {
+				this._map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
+			}
+			// close all the popups otherwise document textArea will not get focus
+			this._map.uiManager.closeAll();
 			this._map.setPermission(app.file.permission);
 			window.migrating = false;
 		}
@@ -1407,6 +1402,7 @@ app.definitions.Socket = L.Class.extend({
 		this._map.fire('docloaded', {status: true});
 		if (this._map._docLayer) {
 			this._map._docLayer._onMessage(textMsg);
+			this._reconnecting = false;
 		}
 	},
 
@@ -1530,8 +1526,13 @@ app.definitions.Socket = L.Class.extend({
 		if (this._map._docLayer) {
 			this._map._docLayer.removeAllViews();
 			this._map._docLayer._resetClientVisArea();
-			this._map._docLayer._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
-			this._map._docLayer._onUpdateGraphicSelection();
+			var graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+			if (!this._map._docLayer._graphicSelection.equals(graphicSelection)) {
+				this._map._docLayer._graphicSelection = graphicSelection;
+				this._map._docLayer._onUpdateGraphicSelection();
+			}
+			if (this._map._docLayer._docType === 'presentation')
+				this._map._isCursorVisible = false;
 		}
 
 		if (isActive && this._reconnecting) {

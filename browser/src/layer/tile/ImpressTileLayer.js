@@ -255,9 +255,8 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			this._updateMaxBounds(true);
 			this._documentInfo = textMsg;
 			this._viewId = parseInt(command.viewid);
-			if (this._reconnected) {
+			if (app.socket._reconnecting) {
 				app.socket.sendMessage('setclientpart part=' + this._selectedPart);
-				this._map._reconnected = false;
 			} else {
 				this._selectedPart = command.selectedPart;
 				this._selectedParts = command.selectedParts || [command.selectedPart];
