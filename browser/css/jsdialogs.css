@@ -1364,6 +1364,12 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	stop-opacity: 0.2;
 }
 
+/* progressbar */
+.ui-progressbar {
+	display: flex;
+	align-items: center;
+}
+
 /* snackbar */
 .snackbar {
 	border: none !important;
