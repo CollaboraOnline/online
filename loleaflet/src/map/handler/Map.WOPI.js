@@ -171,13 +171,14 @@ L.Map.WOPI = L.Handler.extend({
 	// Checking whether a message came from our iframe's parents is
 	// un-necessarily difficult.
 	_allowMessageOrigin: function(e) {
+		// e.origin === 'null' when sandboxed
+		if (e.origin === 'null')
+			return false;
+
 		// cache - to avoid regexps.
 		if (this._cachedGoodOrigin && this._cachedGoodOrigin === e.origin)
 			return true;
 
-		// e.origin === 'null' when sandboxed (i.e. when the parent is a file on local filesystem).
-		if (e.origin === 'null')
-			return true;
 		try {
 			if (e.origin === window.parent.origin)
 				return true;
