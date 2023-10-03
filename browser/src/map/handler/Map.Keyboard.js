@@ -734,6 +734,13 @@ L.Map.Keyboard = L.Handler.extend({
 			e.preventDefault();
 		}
 
+		// CTRL + ALT + N for new document. This needs to be handled by the integrator.
+		if (this._isCtrlKey(e) && e.altKey && e.key.toUpperCase() === 'N') {
+			this._map.fire('postMessage', {msgId: 'UI_CreateFile', args: { DocumentType: this._map.getDocType() }});
+			e.preventDefault();
+			return true;
+		}
+
 		// CTRL + SHIFT + L is added to the core side for writer. Others can also be checked.
 		if (this._isCtrlKey(e) && e.shiftKey && e.key === 'L' && this._map.getDocType() !== 'text' && this._map.getDocType() !== 'spreadsheet') {
 			app.socket.sendMessage('uno .uno:DefaultBullet');
