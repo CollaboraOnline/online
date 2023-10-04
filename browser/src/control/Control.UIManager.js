@@ -917,7 +917,7 @@ L.Control.UIManager = L.Control.extend({
 
 	// Snack bar
 
-	showSnackbar: function(label, action, callback, timeout) {
+	showSnackbar: function(label, action, callback, timeout, hasProgress) {
 		if (!app.socket)
 			return;
 
@@ -940,6 +940,7 @@ L.Control.UIManager = L.Control.extend({
 					type: 'container',
 					children: [
 						action ? {id: 'label', type: 'fixedtext', text: label} : {id: 'label-no-action', type: 'fixedtext', text: label},
+						hasProgress ? {id: 'progress', type: 'progressbar', value: 0, maxValue: 100} : {},
 						action ? {id: 'button', type: 'pushbutton', text: action} : {}
 					]
 				}
@@ -959,6 +960,32 @@ L.Control.UIManager = L.Control.extend({
 		};
 
 		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json), callback: builderCallback});
+	},
+
+	/// shows snackbar with progress
+	showProgressBar: function(message, buttonText, callback) {
+		this.showSnackbar(message, buttonText, callback, -1, true);
+	},
+
+	/// sets progressbar status, value should be in range 0-100
+	setSnackbarProgress: function(value) {
+		if (!app.socket)
+			return;
+
+		var json = {
+			id: 'snackbar',
+			jsontype: 'dialog',
+			type: 'snackbar',
+			action: 'update',
+			control: {
+				id: 'progress',
+				type: 'progressbar',
+				value: value,
+				maxValue: 100
+			}
+		};
+
+		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json)});
 	},
 
 	// Modals
@@ -1105,7 +1132,8 @@ L.Control.UIManager = L.Control.extend({
 		}
 	},
 
-	showProgressBar: function(id, title, message, buttonText, callback, value, maxValue) {
+	/// shows modal dialog with progress
+	showProgressBarDialog: function(id, title, message, buttonText, callback, value, maxValue) {
 		var dialogId = this.generateModalId(id);
 		var responseButtonId = dialogId + '-response';
 
@@ -1122,8 +1150,8 @@ L.Control.UIManager = L.Control.extend({
 				text: message
 			},
 			{
-				id: dialogId + '-progresssbar',
-				type: 'progresssbar',
+				id: dialogId + '-progressbar',
+				type: 'progressbar',
 				value: (value !== undefined && value !== null ? value: 0),
 				maxValue: (maxValue !== undefined && maxValue !== null ? maxValue: 100)
 			},
