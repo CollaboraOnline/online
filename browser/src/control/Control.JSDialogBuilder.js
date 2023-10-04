@@ -76,7 +76,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		this._controlHandlers = {};
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
-		this._controlHandlers['progresssbar'] = JSDialog.progressbar;
+		this._controlHandlers['progressbar'] = JSDialog.progressbar;
 		this._controlHandlers['checkbox'] = this._checkboxControl;
 		this._controlHandlers['basespinfield'] = this.baseSpinField;
 		this._controlHandlers['spinfield'] = this._spinfieldControl;
