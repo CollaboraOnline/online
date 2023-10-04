@@ -94,6 +94,23 @@ grafana:
       grafana_dashboard: "1"
     annotations: {}
 
+# Logging
+# This HelmChart could also deploy Flow for the [Logging-Operator](https://kube-logging.github.io/docs/)
+# Configuration is optimzed for deliever to elasticsearch
+logging:
+  # -- Deploy Flow for logging-operator
+  enabled: false
+  # -- Enable record filter for record_modify to the [ElasticCommonSchema](https://www.elastic.co/guide/en/ecs/current/index.html)
+  ecs: false
+  # -- if an filter (here or global) for dedot is active - for disable set `null`
+  dedot:
+  # -- Add other filters to Flow
+  additionalFilters: []
+  # -- Flows localOutputRefs for use of Outputs
+  localOutputRefs: []
+  # -- Flows globalOutputRefs for use of ClusterOutputs
+  globalOutputRefs:
+    - "default"
 
 podAnnotations: {}
 
@@ -215,6 +232,15 @@ autoscaling:
 
 dynamicConfig:
   enabled: false
+  logging:
+    enabled: false
+    ecs: false
+    dedot:
+    additionalFilters: [ ]
+    localOutputRefs: [ ]
+    globalOutputRefs:
+      - "default"
+
   image:
     repository: nginx
     tag: 1.25
@@ -256,6 +282,15 @@ dynamicConfig:
       #  - secretName: chart-example-tls
       #    hosts:
       #      - chart-example.local
+
+    logging:
+      enabled: false
+      ecs: false
+      dedot:
+      additionalFilters: [ ]
+      localOutputRefs: [ ]
+      globalOutputRefs:
+        - "default"
 
   containerPort: 80
 

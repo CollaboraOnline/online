@@ -241,6 +241,47 @@ In order for Collaborative Editing and copy/paste to function correctly on kuber
 
    ---
 
+
+## Kubernetes cluster logging
+1. Install [Logging Operator](https://kube-logging.dev/) with an ClusterOutput "default".
+
+2. Enable logging flow in your
+
+
+   `my_values.yaml`
+
+   ```yaml
+   logging:
+     enabled: true
+     ecs: true
+     dedot: "-"
+     additionalFilters:
+       - grep:
+           exclude:
+             - key: "$['log']['level']"
+               pattern: '/(info|debug|trace)/'
+     globalOutputRefs:
+       - "default"
+   dynamicConfig:
+     logging:
+       enabled: true
+       ecs: true
+       dedot: "-"
+       globalOutputRefs:
+         - "default"
+     upload:
+       logging:
+         enabled: true
+         ecs: true
+         dedot: "-"
+         globalOutputRefs:
+           - "default"
+   ```
+   
+   * `dedot`: usefull if the Logging has an [global filter](https://kube-logging.dev/4.0/docs/configuration/crds/v1beta1/logging_types/#loggingspec-globalfilters) for dedot an correction for selector is possible. 
+   * `ecs`: Therefore the fields are remapped to filter to the [ElasticCommonSchema](https://www.elastic.co/guide/en/ecs/current/index.html).
+   * `additionalFilters`: Add more filter of the logging-operator
+
 ## Dynamic/Remote configuration in kubernetes
 
 For big setups, you may not want to restart every pod to modify WOPI
