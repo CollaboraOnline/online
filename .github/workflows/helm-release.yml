@@ -31,7 +31,8 @@ jobs:
           version: v3.12.1
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.5.0
+        # for use with make-release-latest
+        uses: helm/chart-releaser-action@fdfc0aa11c813b419cc28971327031c3119bec63
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
