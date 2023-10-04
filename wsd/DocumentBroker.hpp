@@ -400,7 +400,7 @@ public:
     static bool lookupSendClipboardTag(const std::shared_ptr<StreamSocket> &socket,
                                        const std::string &tag, bool sendError = false);
 
-    void handleMediaRequest(const std::shared_ptr<Socket>& socket, const std::string& tag);
+    void handleMediaRequest(std::string range, const std::shared_ptr<Socket>& socket, const std::string& tag);
 
     /// True if any flag to unload or terminate is set.
     bool isUnloading() const

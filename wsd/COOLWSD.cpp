@@ -4311,7 +4311,9 @@ private:
         {
             // Do things in the right thread.
             LOG_TRC_S("Move media request " << tag << " to docbroker thread");
-            docBroker->handleMediaRequest(socket, tag);
+
+            std::string range = request.get("Range", "none");
+            docBroker->handleMediaRequest(range, socket, tag);
         }
     }
 
