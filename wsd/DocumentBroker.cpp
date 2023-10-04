@@ -636,8 +636,8 @@ void DocumentBroker::pollThread()
     if (dataLoss || _docState.disconnected() == DocumentState::Disconnected::Unexpected)
     {
         // Quarantine the last copy, if different.
-        LOG_DBG("Data loss detected, will quarantine last version of [" << getDocKey()
-                                                                        << "] if necessary");
+        LOG_WRN((dataLoss ? "Data loss " : "Crash ") << "detected, will quarantine last version of ["
+                << getDocKey() << "] if necessary");
         if (_storage && _quarantine)
         {
             const std::string uploading = _storage->getRootFilePathUploading();
