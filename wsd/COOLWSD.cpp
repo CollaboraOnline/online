@@ -3646,7 +3646,8 @@ private:
         if (docBroker)
         {
             assert(child->getPid() == _pid && "Child PID changed unexpectedly");
-            if (!docBroker->isUnloading() && !SigUtil::getShutdownRequestFlag())
+            const bool unexpected = !docBroker->isUnloading() && !SigUtil::getShutdownRequestFlag();
+            if (unexpected)
             {
                 LOG_WRN("DocBroker [" << docBroker->getDocKey()
                                       << "] got disconnected from its Kit (" << child->getPid()
@@ -3659,7 +3660,7 @@ private:
             }
 
             std::unique_lock<std::mutex> lock = docBroker->getLock();
-            docBroker->disconnectedFromKit();
+            docBroker->disconnectedFromKit(unexpected);
         }
         else if (!_associatedWithDoc && !SigUtil::getShutdownRequestFlag())
         {
