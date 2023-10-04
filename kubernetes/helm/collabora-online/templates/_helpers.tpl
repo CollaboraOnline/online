@@ -51,6 +51,18 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Selector Log labels
+*/}}
+{{- define "collabora-online.selectorLogLabels" -}}
+{{- if .Values.logging.dedot }}
+app{{.Values.logging.dedot }}kubernetes{{.Values.logging.dedot }}io/name: {{ include "collabora-online.name" . }}
+app{{.Values.logging.dedot }}kubernetes{{.Values.logging.dedot }}io/instance: {{ .Release.Name }}
+{{- else }}
+{{ include "collabora-online.selectorLabels" . }}
+{{- end }}
+{{- end }}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "collabora-online.serviceAccountName" -}}
