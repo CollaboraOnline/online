@@ -53,6 +53,9 @@ L.Control.JSDialog = L.Control.extend({
 			if (!sendCloseEvent && this.dialogs[id].overlay)
 				L.DomUtil.remove(this.dialogs[id].overlay);
 
+			if (this.dialogs[id].timeoutId)
+				clearTimeout(this.dialogs[id].timeoutId);
+
 			if (this.dialogs[id].isPopup)
 				this.closePopover(id, sendCloseEvent);
 			else
@@ -576,7 +579,7 @@ L.Control.JSDialog = L.Control.extend({
 			this.dialogs[instance.id] = instance;
 
 			if (instance.isSnackbar && instance.snackbarTimeout > 0) {
-				setTimeout(function () { instance.that.closePopover(instance.id, false); }, instance.snackbarTimeout);
+				instance.timeoutId = setTimeout(function () { instance.that.closePopover(instance.id, false); }, instance.snackbarTimeout);
 			}
 		}
 	},
