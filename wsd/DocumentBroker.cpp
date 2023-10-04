@@ -633,7 +633,7 @@ void DocumentBroker::pollThread()
     _poll->stop();
 
 #if !MOBILEAPP
-    if (dataLoss)
+    if (dataLoss || _docState.disconnected() == DocumentState::Disconnected::Unexpected)
     {
         // Quarantine the last copy, if different.
         LOG_DBG("Data loss detected, will quarantine last version of [" << getDocKey()
@@ -3733,9 +3733,11 @@ void DocumentBroker::closeDocument(const std::string& reason)
     }
 }
 
-void DocumentBroker::disconnectedFromKit()
+void DocumentBroker::disconnectedFromKit(bool unexpected)
 {
-    _docState.setDisconnected(); // Always set the disconnected flag.
+    // Always set the disconnected flag.
+    _docState.setDisconnected(unexpected ? DocumentState::Disconnected::Unexpected
+                                         : DocumentState::Disconnected::Normal);
     if (_closeReason.empty())
     {
         // If we have a reason to close, no advantage in clobbering it.
