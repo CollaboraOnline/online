@@ -5,7 +5,8 @@
 /* global _ $ */
 L.Control.DownloadProgress = L.Control.extend({
 	options: {
-		snackbarTimeout: 20000
+		snackbarTimeout: 20000,
+		userWarningKey: 'warnedAboutLargeCopy'
 	},
 
 	initialize: function (options) {
@@ -19,6 +20,65 @@ L.Control.DownloadProgress = L.Control.extend({
 		this._closed = false;
 	},
 
+	_userAlreadyWarned: function () {
+		var itemKey = this.options.userWarningKey;
+		var storage = localStorage;
+		if (storage && !storage.getItem(itemKey)) {
+			return false;
+		} else if (!storage)
+			return false;
+
+		return true;
+	},
+
+	_setUserAlreadyWarned: function () {
+		var itemKey = this.options.userWarningKey;
+		var storage = localStorage;
+		if (storage && !storage.getItem(itemKey))
+			storage.setItem(itemKey, '1');
+	},
+
+	_getLargeCopyPasteMessage: function () {
+		return this._map._clip._substProductName(
+			_('If you want to share large elements outside of %productName it\'s necessary to first download them.'));
+	},
+
+	_getDownloadCompletedMessage: function () {
+		return _('Download completed and ready to be copied to clipboard.');
+	},
+
+	_getDownloadCompletedButtonText: function () {
+		return _('Copy') + ' (Alt + C)';
+	},
+
+	// Step 1. Large copy paste warning
+
+	_showLargeCopyPasteWarning: function (inSnackbar) {
+		var modalId = 'large_copy_paste_warning';
+
+		var msg = this._getLargeCopyPasteMessage();
+		var buttonText = _('Download') + ' (Alt + C)'; // TODO: on Mac Alt == Option
+
+		if (inSnackbar) {
+			this._map.uiManager.showSnackbar(
+				msg, buttonText, this._onStartDownload.bind(this), this.options.snackbarTimeout);
+		} else {
+			this._map.uiManager.showInfoModal(modalId, _('Download Selection'), msg, '',
+				buttonText, this._onStartDownload.bind(this), true, modalId + '-response');
+
+			var keyDownCallback = function(e) {
+				if (e.altKey && e.keyCode === 67 /*C*/) {
+					if (this._downloadProgress) {
+						document.getElementById(modalId + '-response').click();
+						e.preventDefault();
+					}
+				}
+			};
+			var dialogId = this._map.uiManager.generateModalId(modalId);
+			document.getElementById(dialogId).onkeydown = keyDownCallback.bind(this);
+		}
+	},
+
 	show: function () {
 		window.app.console.log('DownloadProgress.show');
 		// better to init the following state variables here,
@@ -27,10 +87,7 @@ L.Control.DownloadProgress = L.Control.extend({
 		this._complete = false;
 		this._closed = false;
 
-		var msg = _('Start download') + ' (Alt + C)'; // TODO: on Mac Alt == Option
-		this._map.uiManager.showSnackbar(
-			_('To copy outside, you have to download the content'),
-			msg, this._onStartDownload.bind(this), this.options.snackbarTimeout);
+		this._showLargeCopyPasteWarning(this._userAlreadyWarned());
 	},
 
 	isClosed: function () {
@@ -100,15 +157,17 @@ L.Control.DownloadProgress = L.Control.extend({
 		this._complete = true;
 		this._started = false;
 
-		var msg = _('Confirm copy to clipboard');
-		// TODO: on Mac Alt == Option
-		this._map.uiManager.showSnackbar(msg, _('Confirm') + ' (Alt + C)',
+		var msg = this._getDownloadCompletedMessage();
+		var buttonText = this._getDownloadCompletedButtonText();
+
+		this._map.uiManager.showSnackbar(msg, buttonText,
 			this._onConfirmCopyAction.bind(this), this.options.snackbarTimeout);
 	},
 
 	_onConfirmCopyAction: function () {
 		this._map._clip.filterExecCopyPaste('.uno:Copy');
 		this._onClose();
+		this._setUserAlreadyWarned();
 	},
 
 	_onClose: function () {
