@@ -575,7 +575,7 @@ L.Control.JSDialog = L.Control.extend({
 
 			this.dialogs[instance.id] = instance;
 
-			if (instance.isSnackbar) {
+			if (instance.isSnackbar && instance.snackbarTimeout > 0) {
 				setTimeout(function () { instance.that.closePopover(instance.id, false); }, instance.snackbarTimeout);
 			}
 		}
