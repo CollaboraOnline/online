@@ -812,9 +812,7 @@ L.Clipboard = L.Class.extend({
 			// Need to show this only when a download is really in progress and we block it.
 			// Otherwise, it's easier to flash the widget or something.
 			this._warnLargeCopyPasteAlreadyStarted();
-		}
-		else {
-			this._warnFirstLargeCopyPaste();
+		} else {
 			this._startProgress();
 		}
 	},
@@ -850,18 +848,6 @@ L.Clipboard = L.Class.extend({
 		this._downloadProgress._onClose();
 	},
 
-	_userAlreadyWarned: function (warning) {
-		var itemKey = warning;
-		var storage = localStorage;
-		if (storage && !storage.getItem(itemKey)) {
-			storage.setItem(itemKey, '1');
-			return false;
-		} else if (!storage)
-			return false;
-
-		return true;
-	},
-
 	_warnCopyPaste: function() {
 		var msg;
 		if (window.mode.isMobile() || window.mode.isTablet()) {
@@ -882,33 +868,6 @@ L.Clipboard = L.Class.extend({
 	_substProductName: function (msg) {
 		var productName = (typeof brandProductName !== 'undefined') ? brandProductName : 'Collabora Online Development Edition (unbranded)';
 		return msg.replace('%productName', productName);
-	},
-
-	_warnFirstLargeCopyPaste: function () {
-		if (this._userAlreadyWarned('warnedAboutLargeCopy'))
-			return;
-
-		var modalId = 'large_copy_paste_warning';
-
-		var buttonCallback = function() {
-			if (this._downloadProgress) {
-				this._downloadProgress._onStartDownload();
-			}
-		};
-
-		var msg = _('If you want to share large elements with other applications (outside of Collabora Online) it\'s necessary to first download them.');
-		this._map.uiManager.showInfoModal(modalId, _('Download Selection'), msg, '', 'Download (Alt + C)', buttonCallback.bind(this), true, modalId + '-response');
-
-		var keyDownCallback = function(e) {
-			if (e.altKey && e.keyCode === 67 /*C*/) {
-				if (this._downloadProgress) {
-					document.getElementById(modalId + '-response').click();
-					e.preventDefault();
-				}
-			}
-		};
-		var dialogId = this._map.uiManager.generateModalId(modalId);
-		document.getElementById(dialogId).onkeydown = keyDownCallback.bind(this);
 	},
 
 	_warnLargeCopyPasteAlreadyStarted: function () {
