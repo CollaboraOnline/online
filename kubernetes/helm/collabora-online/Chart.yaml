@@ -4,7 +4,7 @@ type: "application"
 name: collabora-online
 description: Collabora Online helm chart
 
-version: 1.1.2
+version: 1.2.0
 appVersion: "23.05.2.2.1"
 
 home: "https://www.collaboraoffice.com/code/"
@@ -40,3 +40,5 @@ annotations:
       image: docker.io/nginx:1.25
     - name: twostoryrobot/simple-file-upload
       image: docker.io/twostoryrobot/simple-file-upload@sha256:547fc4360b31d8604b7a26202914e87cd13609cc938fd83f412c77eb44aa1cc4
+    - name: languagetool
+      image: docker.io/collabora/languagetool:latest

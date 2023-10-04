@@ -1,0 +1,107 @@
+{{- if .Values.languagetool.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "collabora-online.fullname" . }}-languagetool
+  labels:
+    {{- include "collabora-online.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.languagetool.autoscaling.enabled }}
+  replicas: {{ .Values.languagetool.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "collabora-online.selectorLabels" . | nindent 6 }}
+      type: languagetool
+  template:
+    metadata:
+      {{- with .Values.languagetool.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "collabora-online.selectorLabels" . | nindent 8 }}
+        type: languagetool
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "collabora-online.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext: {{- toYaml .Values.languagetool.securityContext | nindent 12 }}
+          image: "{{ .Values.languagetool.image.repository }}:{{ .Values.languagetool.image.tag }}"
+          imagePullPolicy: {{ .Values.languagetool.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8010
+              protocol: TCP
+          {{- if .Values.languagetool.metrics.enabled }}
+            - name: metrics
+              containerPort: 9301
+              protocol: TCP
+          {{- end}}
+          livenessProbe:
+            httpGet:
+              path: /v2/info
+              port: http
+            {{- with .Values.languagetool.probeOptions.livenessProbeOptions }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /v2/info
+              port: http
+            {{- with .Values.languagetool.probeOptions.readinessProbeOptions }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          env:
+          {{- if .Values.languagetool.metrics.enabled }}
+            - name: LT_prometheusMonitoring
+              value: "true"
+          {{- end }}
+          {{- if .Values.languagetool.ngram.enabled }}
+            - name: NGRAM_LANGUAGES
+              value: "{{ join "," .Values.languagetool.ngram.languages }}"
+          {{- end }}
+            - name: JAVAOPTIONS
+              value: "{{ .Values.languagetool.javaOptions }}"
+            - name: EXTRAOPTIONS
+              value: "{{ .Values.languagetool.extraOptions }}"
+          resources:
+            {{- toYaml .Values.languagetool.resources | nindent 12 }}
+          {{- if .Values.languagetool.ngram.enabled }}
+          volumeMounts:
+            - name: ngram-storage
+              mountPath: /ngrams
+          {{- end }}
+      {{- with .Values.languagetool.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.languagetool.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.languagetool.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.languagetool.ngram.enabled }}
+      volumes:
+        - name: ngram-storage
+          {{- if .Values.languagetool.ngram.persistence.enabled }}
+          persistentVolumeClaim:
+            {{- if .Values.languagetool.ngram.persistence.existingClaim }}
+            claimName: "{{ .Values.languagetool.ngram.persistence.existingClaim }}"
+            {{- else }}
+            claimName: {{ template "collabora-online.fullname" . }}-language-tool-ngram
+            {{- end }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+      {{- end }}
+{{- end }}

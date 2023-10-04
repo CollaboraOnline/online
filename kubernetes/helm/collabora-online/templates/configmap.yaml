@@ -7,9 +7,12 @@ metadata:
   labels:
     {{- include "collabora-online.labels" . | nindent 4 }}
 data:
-  {{- if .Values.collabora.extra_params }}
-  extra_params: {{ .Values.collabora.extra_params }}
-  {{- end }}
+  extra_params: >
+    {{ .Values.collabora.extra_params }}
+    {{- if .Values.languagetool.enabled }}
+    --o:languagetool.enabled=true
+    --o:languagetool.base_url=http://{{ include "collabora-online.fullname" . }}-languagetool:{{ .Values.languagetool.service.port }}/v2
+    {{- end }}
   {{- if .Values.collabora.server_name }}
   server_name: {{ .Values.collabora.server_name }}
   {{- end }}

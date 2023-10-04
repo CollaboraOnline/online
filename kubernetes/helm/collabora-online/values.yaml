@@ -305,6 +305,85 @@ dynamicConfig:
   configuration: |
     {}
 
+languagetool:
+  enabled: false
+
+  image:
+    repository: collabora/languagetool
+    tag: "latest"
+    pullPolicy: IfNotPresent
+
+  ngram:
+    enabled: false
+    persistence:
+      enabled: false
+      annotations: {}
+      ## mobilizon data Persistent Volume Storage Class
+      ## If defined, storageClassName: <storageClass>
+      ## If set to "-", storageClassName: "", which disables dynamic provisioning
+      ## If undefined (the default) or set to null, no storageClassName spec is
+      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+      ##   GKE, AWS & OpenStack)
+      ##
+      # storageClass: "-"
+
+      ## A manually managed Persistent Volume and Claim
+      ## Requires persistence.enabled: true
+      ## If defined, PVC must be created manually before volume will be bound
+      # existingClaim:
+
+      accessMode: ReadWriteOnce
+      size: 8Gi
+    languages:
+      - de
+      - en
+    
+  metrics:
+    enabled: true
+  
+  # -- Extra options for languagetool itself.
+  extraOptions: ""
+
+  # -- Extra options for JVM.
+  # eg: -Xmx3G -Xms3G
+  javaOptions: ""
+  
+  podAnnotations: {}
+  podSecurityContext: {}
+  securityContext: {}
+
+  service:
+    type: ClusterIP
+    port: 80
+  
+  probeOptions:
+    livenessProbeOptions:
+      initialDelaySeconds: 600
+    readinessProbeOptions: {}
+
+  resources: {}
+  #  limits:
+  #    cpu: 100m
+  #    memory: 128Mi
+  #  requests:
+  #    cpu: 100m
+  #    memory: 128Mi
+
+  replicaCount: 1
+
+  autoscaling:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 50
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
 trusted_certs_install:
   enabled: false
   trusted_certs: []
