@@ -3192,7 +3192,8 @@ void DocumentBroker::handleClipboardRequest(ClipboardRequest type,  const std::s
         LOG_ERR("Could not find matching session to handle clipboard request for " << viewId << " tag: " << tag);
 }
 
-void DocumentBroker::handleMediaRequest(const std::shared_ptr<Socket>& socket,
+void DocumentBroker::handleMediaRequest(std::string range,
+                                        const std::shared_ptr<Socket>& socket,
                                         const std::string& tag)
 {
     LOG_DBG("handleMediaRequest: " << tag);
@@ -3224,8 +3225,9 @@ void DocumentBroker::handleMediaRequest(const std::shared_ptr<Socket>& socket,
             // For now, we only support file:// schemes.
             // In the future, we may/should support http.
             const std::string path = getJailRoot() + url.substr(sizeof("file://") - 1);
+
             auto session = std::make_shared<http::server::Session>();
-            session->asyncUpload(path, "video/mp4");
+            session->asyncUpload(path, "video/mp4", range);
             auto handler = std::static_pointer_cast<ProtocolHandlerInterface>(session);
             streamSocket->setHandler(handler);
         }

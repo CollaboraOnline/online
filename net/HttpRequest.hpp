@@ -1530,6 +1530,10 @@ public:
         , _size(0)
         , _fd(-1)
         , _connected(false)
+        , _start(0)
+        , _end(-1)
+        , _startIsSuffix(false)
+        , _statusCode(http::StatusCode::OK)
     {
     }
 
@@ -1559,8 +1563,13 @@ public:
     /// Note: when reusing this Session, it is assumed that the socket
     /// is already added to the SocketPoll on a previous call (do not
     /// use multiple SocketPoll instances on the same Session).
-    bool asyncUpload(std::string fromFile, std::string mimeType)
+    bool asyncUpload(std::string fromFile, std::string mimeType, int start, int end, bool startIsSuffix, http::StatusCode statusCode = http::StatusCode::OK)
     {
+        _start = start;
+        _end = end;
+        _startIsSuffix = startIsSuffix;
+        _statusCode = statusCode;
+
         LOG_TRC("asyncUpload from file [" << fromFile << ']');
 
         _fd = open(fromFile.c_str(), O_RDONLY);
@@ -1583,7 +1592,88 @@ public:
         _size = sb.st_size;
         _data = std::move(fromFile);
         _mimeType = std::move(mimeType);
+
+        int firstBytePos = getStart();
+        lseek(_fd, firstBytePos, SEEK_SET);
+        _pos = firstBytePos;
+
         return true;
+    }
+
+    /// Start an asynchronous upload of a whole file
+    bool asyncUpload(std::string fromFile, std::string mimeType)
+    {
+        return asyncUpload(fromFile, mimeType, 0, -1, false);
+    }
+
+    /// Start a partial asynchronous upload from a file based on the contents of a "Range" header
+    bool asyncUpload(std::string fromFile, std::string mimeType, std::string rangeHeader)
+    {
+        size_t equalsPos = rangeHeader.find("=");
+        if (equalsPos == std::string::npos) return asyncUpload(fromFile, mimeType);
+
+        std::string unit = rangeHeader.substr(0, equalsPos);
+        if (unit != "bytes") return asyncUpload(fromFile, mimeType);
+
+        std::string range = rangeHeader.substr(equalsPos + 1);
+
+        size_t dashPos = range.find("-");
+        std::string startString = range.substr(0, dashPos);
+        std::string endString = "-1";
+
+        if (dashPos != std::string::npos) {
+            endString = range.substr(dashPos + 1);
+        }
+
+        int start = 0;
+        int end = -1;
+        bool startIsSuffix = false;
+
+        if (startString == "") {
+            // Could be a suffix
+            try {
+                start = std::stoi(endString);
+                startIsSuffix = true;
+            }
+            catch (std::invalid_argument&) {}
+            catch (std::out_of_range&) {}
+
+            return asyncUpload(fromFile, mimeType, start, end, startIsSuffix, http::StatusCode::PartialContent);
+        }
+
+        try {
+            start = std::stoi(startString);
+            end = std::stoi(endString) + 1;
+        }
+        catch (std::invalid_argument&) {}
+        catch (std::out_of_range&) {}
+
+        // FIXME: does not support ranges that specify multiple comma-separated values
+
+        return asyncUpload(fromFile, mimeType, start, end, startIsSuffix, http::StatusCode::PartialContent);
+    }
+
+    int getStart() {
+        if (_startIsSuffix) return _size - _start;
+        return _start;
+    }
+
+    int getEnd() {
+        if (_startIsSuffix) return _size;
+        if (_end == -1) return _size;
+        if (_end > _size) return _size;
+
+        return _end;
+    }
+
+    /// Calculate how much we're going to send based on the file size and the range
+    int getSendSize() {
+        int end = getEnd();
+        int start = getStart();
+
+        if (start > _size) return 0;
+
+        return end - start;
     }
 
     void asyncShutdown()
@@ -1617,13 +1707,13 @@ private:
                 LOG_TRC("Connected");
                 _connected = true;
 
-                LOG_DBG("Sending header with size " << _size);
-                http::Response httpResponse(http::StatusCode::OK);
-                httpResponse.set("Content-Length", std::to_string(_size));
+                LOG_DBG("Sending header with size " << getSendSize());
+                http::Response httpResponse(_statusCode);
+                httpResponse.set("Content-Length", std::to_string(getSendSize()));
                 httpResponse.set("Content-Type", _mimeType);
-                httpResponse.set("accept-ranges", "bytes");
-                httpResponse.set("Content-Range", "bytes 0-" + std::to_string(_size - 1) + '/' +
-                                                      std::to_string(_size));
+                httpResponse.set("Accept-Ranges", "bytes");
+                httpResponse.set("Content-Range", "bytes " + std::to_string(getStart()) + "-" + std::to_string(getEnd() - 1) + '/' +
+                                    std::to_string(_size));
 
                 socket->send(httpResponse);
                 return;
@@ -1691,14 +1781,14 @@ private:
             {
                 //FIXME: replace with in-place read into the output buffer.
                 char buffer[64 * 1024];
-                const auto size = std::min(sizeof(buffer), capacity);
+                const auto size = std::min({sizeof(buffer), capacity, (size_t)(getEnd() - _pos)});
                 int n;
                 while ((n = ::read(_fd, buffer, size)) < 0 && errno == EINTR)
                     LOG_TRC("EINTR reading from " << _data);
 
-                if (n <= 0)
+                if (n <= 0 || _pos >= getEnd())
                 {
-                    if (n == 0)
+                    if (n >= 0)
                     {
                         LOG_TRC("performWrites finished uploading");
                     }
@@ -1714,6 +1804,7 @@ private:
                 }
 
                 _socket->send(buffer, n);
+                _pos += n;
                 LOG_ASSERT(static_cast<std::size_t>(n) <= capacity);
                 capacity -= n;
                 LOG_TRC("performWrites wrote " << n << " bytes, capacity: " << capacity);
@@ -1748,6 +1839,17 @@ private:
     int _size; //< The size of the data in bytes.
     int _fd; //< The descriptor of the file to upload.
     bool _connected;
+    int _start; //< The position we start reading from, the data includes this first byte
+                //  If this is greater than _size we will return no bytes
+                //  If this is less than 0 or greater than _end behavior is unspecified
+    int _end; //< The position we stop reading at, the data does not include this last byte
+              //  If this is greater than or equal to _start we will only return bytes in the range
+              //  If this is greater than _size we will return all bytes between _start and _size
+              //  If this is -1 we will treat it as if it were equal to _size
+    bool _startIsSuffix; //< If this is true, we'll treat _start as an offset from the end, not from the start
+                         //  In that case, we'll ignore end entirely
+                         //  e.g. if this is true and start is 5, we will send the last 5 bytes
+    http::StatusCode _statusCode;
     FinishedCallback _onFinished;
     std::shared_ptr<StreamSocket> _socket; //< Must be the last member.
 };
