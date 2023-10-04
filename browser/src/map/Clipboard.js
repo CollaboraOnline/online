@@ -207,7 +207,7 @@ L.Clipboard = L.Class.extend({
 			var request = new XMLHttpRequest();
 
 			// avoid to invoke the following code if the download widget depends on user interaction
-			if (!that._downloadProgress || !that._downloadProgress.isVisible()) {
+			if (!that._downloadProgress || that._downloadProgress.isClosed()) {
 				that._startProgress();
 				that._downloadProgress.startProgressMode();
 			}
@@ -802,33 +802,31 @@ L.Clipboard = L.Class.extend({
 	_startProgress: function() {
 		if (!this._downloadProgress) {
 			this._downloadProgress = L.control.downloadProgress();
-		}
-		if (!this._downloadProgress.isVisible()) {
-			this._downloadProgress.addTo(this._map);
+			this._map.addControl(this._downloadProgress);
 		}
 		this._downloadProgress.show();
 	},
 
 	_onDownloadOnLargeCopyPaste: function () {
-		if (!this._downloadProgress || this._downloadProgress.isClosed()) {
-			this._warnFirstLargeCopyPaste();
-			this._startProgress();
-		}
-		else if (this._downloadProgress.isStarted()) {
+		if (this._downloadProgress && this._downloadProgress.isStarted()) {
 			// Need to show this only when a download is really in progress and we block it.
 			// Otherwise, it's easier to flash the widget or something.
 			this._warnLargeCopyPasteAlreadyStarted();
 		}
+		else {
+			this._warnFirstLargeCopyPaste();
+			this._startProgress();
+		}
 	},
 
 	_downloadProgressStatus: function() {
-		if (this._downloadProgress && this._downloadProgress.isVisible())
+		if (this._downloadProgress)
 			return this._downloadProgress.currentStatus();
 	},
 
 	// Download button is still shown after selection changed -> user has changed their mind...
 	_scheduleHideDownload: function(s) {
-		if (!this._downloadProgress || !this._downloadProgress.isVisible())
+		if (!this._downloadProgress || this._downloadProgress.isClosed())
 			return;
 
 		// If no other copy/paste things occurred then ...
@@ -847,9 +845,7 @@ L.Clipboard = L.Class.extend({
 		clearTimeout(this._hideDownloadTimer);
 		this._hideDownloadTimer = null;
 
-		if (!this._downloadProgress ||
-		    !this._downloadProgress.isVisible() ||
-		    this._downloadProgress.isClosed())
+		if (!this._downloadProgress || this._downloadProgress.isClosed())
 			return;
 		this._downloadProgress._onClose();
 	},
