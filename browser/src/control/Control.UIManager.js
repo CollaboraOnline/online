@@ -937,6 +937,7 @@ L.Control.UIManager = L.Control.extend({
 			timeout: timeout,
 			children: [
 				{
+					id: 'snackbar-container',
 					type: 'container',
 					children: [
 						action ? {id: 'label', type: 'fixedtext', text: label} : {id: 'label-no-action', type: 'fixedtext', text: label},
