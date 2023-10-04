@@ -26,7 +26,7 @@ bin_PROGRAMS = \
 
 if ENABLE_LIBFUZZER
 else
-bin_PROGRAMS += coolwsd
+bin_PROGRAMS += coolwsd coolwsddebug
 endif
 
 dist_bin_SCRIPTS = coolwsd-systemplate-setup
@@ -38,7 +38,6 @@ man_MANS = man/coolwsd.1 \
            man/coolstress.1 \
            man/coolwsd-systemplate-setup.1 \
            man/coolmount.1
-
 
 dist_doc_DATA = wsd/README \
                 wsd/README.vars \
@@ -92,6 +91,7 @@ if ENABLE_SSL
 AM_LDFLAGS += ${OPENSSL_LIBS}
 else
 coolwsd_LDADD = ${OPENSSL_LIBS}
+coolwsddebug_LDADD = ${OPENSSL_LIBS} libsimd.a
 coolconfig_LDADD = ${OPENSSL_LIBS}
 endif
 
@@ -145,7 +145,8 @@ coolwsd_sources = common/Crypto.cpp \
                   wsd/QuarantineUtil.cpp
 
 coolwsd_SOURCES = $(coolwsd_sources) \
-                  $(shared_sources)
+                  $(shared_sources) \
+		  wsd/COOLWSD-main.cpp
 
 EXTRA_coolwsd_DEPENDENCIES = browser/node_modules
 
@@ -187,9 +188,15 @@ coolforkit_sources = kit/ChildSession.cpp \
                      kit/Kit.cpp
 
 coolforkit_SOURCES = $(coolforkit_sources) \
-                     $(shared_sources)
+                     $(shared_sources) \
+		     kit/ForKitMain.cpp
 
 coolforkit_LDADD = libsimd.a
+
+coolwsddebug_SOURCES = $(coolwsd_sources) \
+                  $(shared_sources) \
+	 	  $(coolforkit_sources) \
+		  wsd/debug-main.cpp
 
 if ENABLE_LIBFUZZER
 coolforkit_SOURCES += \
@@ -511,10 +518,11 @@ run-trace: setup-wsd
 			--o:trace.outgoing.record=false
 
 run-valgrind-kitinprocess: setup-wsd
-	@echo "Launching coolwsd under valgrind (but not forkit/coolkit, yet)"
-	valgrind --tool=memcheck --tool=massif --trace-children=no -v --read-var-info=yes \
-		./coolwsd $(COMMON_PARAMS) \
-			--o:logging.file[@enable]=false --o:logging.level=error
+	@echo "Launching coolwsd under valgrind for single KIT IN PROCESS"
+	KIT_IN_PROCESS=true valgrind --tool=memcheck --leak-check=full --trace-children=no -v --read-var-info=yes \
+   ./coolwsddebug $(COMMON_PARAMS) \
+   --o:logging.file[@enable]=false --o:logging.level=trace
+
 
 run-valgrind: setup-wsd
 	@echo "Launching coolwsd under valgrind (but not forkit/coolkit, yet)"

@@ -233,6 +233,7 @@ extern "C"
 {
     void dump_state(void); /* easy for gdb */
     void forwardSigUsr2();
+    int createForkit(const std::string& cmd, const StringVector& args);
 }
 
 #if ENABLE_DEBUG && !MOBILEAPP
@@ -333,31 +334,6 @@ void COOLWSD::writeTraceEventRecording(const std::string &recording)
 {
     writeTraceEventRecording(recording.data(), recording.length());
 }
-
-#if !LIBFUZZER
-// FIXME: Somewhat idiotically, the parameter to emitOneRecordingIfEnabled() should end with a
-// newline, while the paramter to emitOneRecording() should not.
-
-void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
-{
-    if (COOLWSD::TraceEventFile == NULL)
-        return;
-
-    COOLWSD::writeTraceEventRecording(recording);
-}
-
-void TraceEvent::emitOneRecording(const std::string &recording)
-{
-    if (COOLWSD::TraceEventFile == NULL)
-        return;
-
-    if (!TraceEvent::isRecordingOn())
-        return;
-
-    COOLWSD::writeTraceEventRecording(recording + "\n");
-}
-
-#endif //!LIBFUZZER
 
 void COOLWSD::checkSessionLimitsAndWarnClients()
 {
@@ -3492,7 +3468,7 @@ bool COOLWSD::createForKit()
     LOG_INF("Launching forkit process: " << forKitPath << ' ' << args.cat(' ', 0));
 
     LastForkRequestTime = std::chrono::steady_clock::now();
-    int child = Util::spawnProcess(forKitPath, args);
+    int child = createForkit(forKitPath, args);
     ForKitProcId = child;
 
     LOG_INF("Forkit process launched: " << ForKitProcId);
@@ -3766,17 +3742,23 @@ private:
                 LOG_TRC("Avoid spawning forkit for kit-in-process");
             else if (requestURI.getPath() == FORKIT_URI)
             {
-                if (socket->getPid() != COOLWSD::ForKitProcId)
+                if (requestURI.getPath() == FORKIT_URI)
                 {
-                    LOG_WRN("Connection request received on "
-                            << FORKIT_URI << " endpoint from unexpected ForKit process. Skipped");
+                    if (socket->getPid() != COOLWSD::ForKitProcId)
+                    {
+                        LOG_WRN("Connection request received on "
+                                << FORKIT_URI
+                                << " endpoint from unexpected ForKit process. Skipped");
+                        return;
+                    }
+                    COOLWSD::ForKitProc =
+                        std::make_shared<ForKitProcess>(COOLWSD::ForKitProcId, socket, request);
+                    LOG_ASSERT_MSG(socket->getInBuffer().empty(),
+                                   "Unexpected data in prisoner socket");
+                    socket->getInBuffer().clear();
+                    PrisonerPoll->setForKitProcess(COOLWSD::ForKitProc);
                     return;
                 }
-                COOLWSD::ForKitProc = std::make_shared<ForKitProcess>(COOLWSD::ForKitProcId, socket, request);
-                LOG_ASSERT_MSG(socket->getInBuffer().empty(), "Unexpected data in prisoner socket");
-                socket->getInBuffer().clear();
-                PrisonerPoll->setForKitProcess(COOLWSD::ForKitProc);
-                return;
             }
             else if (requestURI.getPath() != NEW_CHILD_URI)
             {
@@ -5936,8 +5918,10 @@ int COOLWSD::innerMain()
     // which in turn forks first child.
     Server->startPrisoners();
 
+
 // No need to "have at least one child" beforehand on mobile
 #if !MOBILEAPP
+// No need to "have at least one child" beforehand for Single process mode(Kit in process)
 
     if (!Util::isKitInProcess())
     {
