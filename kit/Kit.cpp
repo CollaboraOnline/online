@@ -2809,7 +2809,8 @@ void lokit_main(
                 )
 {
 #if !MOBILEAPP
-    if (!Util::isKitInProcess()) {
+    if (!Util::isKitInProcess())
+    {
         SigUtil::setFatalSignals("kit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
     }
     SigUtil::setUserSignals();

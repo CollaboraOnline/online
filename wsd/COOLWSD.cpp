@@ -228,6 +228,7 @@ extern "C"
 {
     void dump_state(void); /* easy for gdb */
     void forwardSigUsr2();
+    int createForkit(const std::string& cmd, const StringVector& args);
 }
 
 #if ENABLE_DEBUG && !MOBILEAPP
@@ -328,31 +329,6 @@ void COOLWSD::writeTraceEventRecording(const std::string &recording)
 {
     writeTraceEventRecording(recording.data(), recording.length());
 }
-
-#if !LIBFUZZER
-// FIXME: Somewhat idiotically, the parameter to emitOneRecordingIfEnabled() should end with a
-// newline, while the paramter to emitOneRecording() should not.
-
-void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
-{
-    if (COOLWSD::TraceEventFile == NULL)
-        return;
-
-    COOLWSD::writeTraceEventRecording(recording);
-}
-
-void TraceEvent::emitOneRecording(const std::string &recording)
-{
-    if (COOLWSD::TraceEventFile == NULL)
-        return;
-
-    if (!TraceEvent::isRecordingOn())
-        return;
-
-    COOLWSD::writeTraceEventRecording(recording + "\n");
-}
-
-#endif //!LIBFUZZER
 
 void COOLWSD::checkSessionLimitsAndWarnClients()
 {
@@ -2215,7 +2191,7 @@ void COOLWSD::innerInitialize(Application& self)
 #if !MOBILEAPP
 
     // Load default configuration files, if present.
-    if (loadConfiguration(PRIO_DEFAULT) == 0)
+    if (loadConfiguration(PRIO_DEFAULT) == 0 && !Util::isKitInProcess())
     {
         // Fallback to the COOLWSD_CONFIGDIR or --config-file path.
         loadConfiguration(ConfigFile, PRIO_DEFAULT);
@@ -3174,9 +3150,10 @@ void COOLWSD::displayHelp()
 
 bool COOLWSD::checkAndRestoreForKit()
 {
-#ifdef KIT_IN_PROCESS
-    return false;
-#else
+    if (Util::isKitInProcess())
+    {
+        return false;
+    }
 
 // clang issues warning for WIF*() macro usages below:
 // "equality comparison with extraneous parentheses [-Werror,-Wparentheses-equality]"
@@ -3267,8 +3244,6 @@ bool COOLWSD::checkAndRestoreForKit()
 
 #if defined __clang__
 #pragma clang diagnostic pop
-#endif
-
 #endif
 }
 
@@ -3455,7 +3430,7 @@ bool COOLWSD::createForKit()
     LOG_INF("Launching forkit process: " << forKitPath << ' ' << args.cat(' ', 0));
 
     LastForkRequestTime = std::chrono::steady_clock::now();
-    int child = Util::spawnProcess(forKitPath, args);
+    int child = createForkit(forKitPath, args);
     ForKitProcId = child;
 
     LOG_INF("Forkit process launched: " << ForKitProcId);
@@ -3724,22 +3699,27 @@ private:
             LOG_TRC("Child connection with URI [" << COOLWSD::anonymizeUrl(request.getUrl())
                                                   << ']');
             Poco::URI requestURI(request.getUrl());
-#ifndef KIT_IN_PROCESS
-            if (requestURI.getPath() == FORKIT_URI)
+            if (!Util::isKitInProcess())
             {
-                if (socket->getPid() != COOLWSD::ForKitProcId)
+                if (requestURI.getPath() == FORKIT_URI)
                 {
-                    LOG_WRN("Connection request received on "
-                            << FORKIT_URI << " endpoint from unexpected ForKit process. Skipped");
+                    if (socket->getPid() != COOLWSD::ForKitProcId)
+                    {
+                        LOG_WRN("Connection request received on "
+                                << FORKIT_URI
+                                << " endpoint from unexpected ForKit process. Skipped");
+                        return;
+                    }
+                    COOLWSD::ForKitProc =
+                        std::make_shared<ForKitProcess>(COOLWSD::ForKitProcId, socket, request);
+                    LOG_ASSERT_MSG(socket->getInBuffer().empty(),
+                                   "Unexpected data in prisoner socket");
+                    socket->getInBuffer().clear();
+                    PrisonerPoll->setForKitProcess(COOLWSD::ForKitProc);
                     return;
                 }
-                COOLWSD::ForKitProc = std::make_shared<ForKitProcess>(COOLWSD::ForKitProcId, socket, request);
-                LOG_ASSERT_MSG(socket->getInBuffer().empty(), "Unexpected data in prisoner socket");
-                socket->getInBuffer().clear();
-                PrisonerPoll->setForKitProcess(COOLWSD::ForKitProc);
-                return;
             }
-#endif
+
             if (requestURI.getPath() != NEW_CHILD_URI)
             {
                 LOG_ERR("Invalid incoming child URI [" << requestURI.getPath() << ']');
@@ -5860,11 +5840,12 @@ int COOLWSD::innerMain()
     // which in turn forks first child.
     Server->startPrisoners();
 
+
 // No need to "have at least one child" beforehand on mobile
 #if !MOBILEAPP
+// No need to "have at least one child" beforehand for Single process mode(Kit in process)
 
-#ifndef KIT_IN_PROCESS
-    {
+    if (!Util::isKitInProcess()) {
         // Make sure we have at least one child before moving forward.
         std::unique_lock<std::mutex> lock(NewChildrenMutex);
         // If we are debugging, it's not uncommon to wait for several minutes before first
@@ -5902,8 +5883,6 @@ int COOLWSD::innerMain()
 
         assert(NewChildren.size() > 0);
     }
-#endif
-
     if (LogLevel != "trace")
     {
         LOG_INF("WSD initialization complete: setting log-level to [" << LogLevel << "] as configured.");
@@ -6161,14 +6140,15 @@ int COOLWSD::innerMain()
     NewChildren.clear();
 
 #if !MOBILEAPP
-#ifndef KIT_IN_PROCESS
-    // Wait for forkit process finish.
-    LOG_INF("Waiting for forkit process to exit");
-    int status = 0;
-    waitpid(ForKitProcId, &status, WUNTRACED);
-    ForKitProcId = -1;
-    ForKitProc.reset();
-#endif
+    if (!Util::isKitInProcess())
+    {
+        // Wait for forkit process finish.
+        LOG_INF("Waiting for forkit process to exit");
+        int status = 0;
+        waitpid(ForKitProcId, &status, WUNTRACED);
+        ForKitProcId = -1;
+        ForKitProc.reset();
+    }
 
     JailUtil::cleanupJails(CleanupChildRoot);
 #endif // !MOBILEAPP
@@ -6348,13 +6328,11 @@ void forwardSigUsr2()
     std::lock_guard<std::mutex> newChildLock(NewChildrenMutex);
 
 #if !MOBILEAPP
-#ifndef KIT_IN_PROCESS
-    if (COOLWSD::ForKitProcId > 0)
+    if (COOLWSD::ForKitProcId > 0 && !Util::isKitInProcess())
     {
         LOG_INF("Sending SIGUSR2 to forkit " << COOLWSD::ForKitProcId);
         ::kill(COOLWSD::ForKitProcId, SIGUSR2);
     }
-#endif
 #endif
 
     for (const auto& child : NewChildren)

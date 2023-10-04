@@ -73,11 +73,6 @@ static std::map<pid_t, std::string> childJails;
 /// The jails that need cleaning up. This should be small.
 static std::vector<std::string> cleanupJailPaths;
 
-#ifndef KIT_IN_PROCESS
-int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
-std::string MasterLocation;
-#endif
-
 extern "C" { void dump_forkit_state(void); /* easy for gdb */ }
 
 void dump_forkit_state()
@@ -365,6 +360,9 @@ static void cleanupChildren()
             cleanupJailPaths.erase(cleanupJailPaths.begin() + i);
     }
 }
+// lokit_main should only call once, there maybe chances createLibreOfficeKit called more then once
+// and that leads to execute multiple threads
+static bool lokitProcessIsRunning = false;
 
 static int createLibreOfficeKit(const std::string& childRoot,
                                 const std::string& sysTemplate,
@@ -384,16 +382,20 @@ static int createLibreOfficeKit(const std::string& childRoot,
                                                       << spareKitId << '.');
     const auto startForkingTime = std::chrono::steady_clock::now();
     pid_t pid = 0;
-    if (Util::isKitInProcess()) {
-         std::thread mainThread([childRoot, jailId, sysTemplate, loTemplate, queryVersion]()
+    if (Util::isKitInProcess() && !lokitProcessIsRunning)
+    {
+        std::thread(
+            [childRoot, jailId, sysTemplate, loTemplate, queryVersion]
             {
                 Util::setThreadName("kit_in_process");
-                lokit_main(childRoot, jailId, sysTemplate, loTemplate, NoCapsForKit, NoSeccomp,
-                   queryVersion, DisplayVersion, spareKitId);
-            });
-            mainThread.detach();
+                lokit_main(childRoot, jailId, sysTemplate, loTemplate, true, true,
+                           queryVersion, DisplayVersion, spareKitId);
+            })
+            .detach();
+        lokitProcessIsRunning = true;
     }
-    else {
+    else
+    {
         pid = fork();
         if (!pid)
         {
@@ -401,10 +403,10 @@ static int createLibreOfficeKit(const std::string& childRoot,
 
             // Close the pipe from coolwsd
             close(0);
-
-#ifndef KIT_IN_PROCESS
-        UnitKit::get().postFork();
-#endif
+            if (!Util::isKitInProcess())
+            {
+                UnitKit::get().postFork();
+            }
 
             if (std::getenv("SLEEPKITFORDEBUGGER"))
             {
@@ -412,14 +414,14 @@ static int createLibreOfficeKit(const std::string& childRoot,
                 if (delaySecs > 0)
                 {
                     std::cerr << "Kit: Sleeping " << delaySecs
-                                << " seconds to give you time to attach debugger to process "
-                                << getpid() << std::endl;
+                              << " seconds to give you time to attach debugger to process "
+                              << getpid() << std::endl;
                     std::this_thread::sleep_for(std::chrono::seconds(delaySecs));
                 }
             }
 
             lokit_main(childRoot, jailId, sysTemplate, loTemplate, NoCapsForKit, NoSeccomp,
-                        queryVersion, DisplayVersion, spareKitId);
+                       queryVersion, DisplayVersion, spareKitId);
         }
         else
         {
@@ -433,10 +435,10 @@ static int createLibreOfficeKit(const std::string& childRoot,
                 LOG_INF("Forked kit [" << pid << ']');
                 childJails[pid] = childRoot + jailId;
             }
-
-        #ifndef KIT_IN_PROCESS
-            UnitKit::get().launchedKit(pid);
-        #endif
+            if (!Util::isKitInProcess())
+            {
+                UnitKit::get().launchedKit(pid);
+            }
         }
     }
 
@@ -456,13 +458,15 @@ void forkLibreOfficeKit(const std::string& childRoot,
 
     // Cleanup first, to reduce disk load.
     cleanupChildren();
-
-#ifndef KIT_IN_PROCESS
-    (void) limit;
-#else
-    if (limit > 0)
-        ForkCounter = limit;
-#endif
+    if (!Util::isKitInProcess())
+    {
+        (void)limit;
+    }
+    else
+    {
+        if (limit > 0)
+            ForkCounter = limit;
+    }
 
     if (ForkCounter > 0)
     {
@@ -475,6 +479,7 @@ void forkLibreOfficeKit(const std::string& childRoot,
             if (ForkCounter-- <= 0 || createLibreOfficeKit(childRoot, sysTemplate, loTemplate) < 0)
             {
                 LOG_ERR("Failed to create a kit process.");
+                lokitProcessIsRunning = false;
                 ++ForkCounter;
             }
         }
@@ -491,7 +496,9 @@ static void printArgumentHelp()
     std::cout << "" << std::endl;
 }
 
-int main(int argc, char** argv)
+extern "C" int forkit_main(int argc, char **argv);
+
+int forkit_main(int argc, char** argv)
 {
     /*WARNING: PRIVILEGED CODE CHECKING START */
 
@@ -559,7 +566,8 @@ int main(int argc, char** argv)
         }
     }
 
-    if (!Util::isKitInProcess()) {
+    if (!Util::isKitInProcess())
+    {
         SigUtil::setFatalSignals("forkit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
     }
 
@@ -693,7 +701,7 @@ int main(int argc, char** argv)
         return EX_USAGE;
     }
 
-    if (!UnitBase::init(UnitBase::UnitType::Kit, UnitTestLibrary))
+    if (!Util::isKitInProcess() && !UnitBase::init(UnitBase::UnitType::Kit, UnitTestLibrary))
     {
         LOG_FTL("Failed to load kit unit test library");
         return EX_USAGE;
@@ -746,6 +754,7 @@ int main(int argc, char** argv)
     if (forKitPid < 0)
     {
         LOG_FTL("Failed to create a kit process.");
+        lokitProcessIsRunning = false;
         Util::forcedExit(EX_SOFTWARE);
     }
 
