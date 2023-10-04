@@ -207,6 +207,13 @@ w2ui-toolbar {
 	background-color: var(--color-background-dark);
 	box-shadow: 0px 0px 7px var(--color-box-shadow);
 }
+#toolbar-wrapper.hasnotebookbar .w2ui-scroll-left,
+#toolbar-wrapper.hasnotebookbar .w2ui-scroll-right {
+	/* .notebookbar-scroll-wrapper's height */
+	height: 72px;
+	/* #toolbar-wrapper:not(.mobile)'s top padding */
+	top: 3px;
+}
 .w2ui-scroll-left:hover,
 .w2ui-scroll-right:hover {
 	background-color: var(--color-background-darker);
