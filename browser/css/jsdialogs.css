@@ -1377,6 +1377,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .snackbar.jsdialog-window {
 	overflow: visible;
 }
+.snackbar #snackbar-container {
+	align-items: center;
+}
 #mobile-wizard.popup.snackbar,
 .snackbar.jsdialog-container .ui-dialog-content {
 	min-width: 200px;
