@@ -626,9 +626,9 @@ void DocumentBroker::pollThread()
                 }
                 else
                 {
-                    // Fallback to quarantining to the original document.
+                    // Fallback to quarantining the original document.
                     LOG_DBG("Quarantining the original document file: " << _filename);
-                    _quarantine->quarantineFile(_filename);
+                    _quarantine->quarantineFile(_storage->getRootFilePath());
                 }
             }
         }
