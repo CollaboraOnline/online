@@ -3128,8 +3128,9 @@ void COOLWSD::initializeEnvOptions()
         {
             if (first)
             {
-                _overrideSettings["storage.wopi.alias_groups.group[" + std::to_string(n) +
-                                  "].host"] = alias;
+                const std::string path = "storage.wopi.alias_groups.group[" + std::to_string(n) + "].host";
+                _overrideSettings[path] = alias;
+                _overrideSettings[path + "[@allow]"] = true;
                 first = false;
             }
             else
