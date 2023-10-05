@@ -89,7 +89,7 @@ namespace Log
         /// Appends new-line to the given data.
         inline void log(const char* data, std::size_t size)
         {
-            static char buffer[BufferSize];
+            char buffer[BufferSize];
             if (size < sizeof(buffer) - 1)
             {
                 memcpy(buffer, data, size);
