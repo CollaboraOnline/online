@@ -38,17 +38,13 @@ L.Control.DownloadProgress = L.Control.extend({
 			storage.setItem(itemKey, '1');
 	},
 
+	_getDialogTitle: function () {
+		return _('Download Selection');
+	},
+
 	_getLargeCopyPasteMessage: function () {
 		return this._map._clip._substProductName(
 			_('If you want to share large elements outside of %productName it\'s necessary to first download them.'));
-	},
-
-	_getDownloadCompletedMessage: function () {
-		return _('Download completed and ready to be copied to clipboard.');
-	},
-
-	_getDownloadCompletedButtonText: function () {
-		return _('Copy') + ' (Alt + C)';
 	},
 
 	// Step 1. Large copy paste warning
@@ -63,20 +59,65 @@ L.Control.DownloadProgress = L.Control.extend({
 			this._map.uiManager.showSnackbar(
 				msg, buttonText, this._onStartDownload.bind(this), this.options.snackbarTimeout);
 		} else {
-			this._map.uiManager.showInfoModal(modalId, _('Download Selection'), msg, '',
+			this._map.uiManager.showInfoModal(modalId, this._getDialogTitle(), msg, '',
 				buttonText, this._onStartDownload.bind(this), true, modalId + '-response');
 
-			var keyDownCallback = function(e) {
-				if (e.altKey && e.keyCode === 67 /*C*/) {
-					if (this._downloadProgress) {
-						document.getElementById(modalId + '-response').click();
-						e.preventDefault();
-					}
-				}
-			};
-			var dialogId = this._map.uiManager.generateModalId(modalId);
-			document.getElementById(dialogId).onkeydown = keyDownCallback.bind(this);
+			this.setupKeyboardShortcut(modalId);
 		}
+	},
+
+	// Step 2. Download progress
+
+	_getDownloadProgressDialogId: function () {
+		return 'copy_paste_download_progress';
+	},
+
+	_showDownloadProgress: function (inSnackbar) {
+		var modalId = this._getDownloadProgressDialogId();
+		var msg = _('Downloading clipboard content');
+		var buttonText = _('Cancel');
+
+		if (inSnackbar) {
+			this._map.uiManager.showProgressBar(msg, buttonText, this._onClose.bind(this));
+		} else {
+			this._map.uiManager.showProgressBarDialog(modalId, this._getDialogTitle(), msg,
+				buttonText, this._onClose.bind(this), 0);
+		}
+	},
+
+	_closeDownloadProgressDialog: function () {
+		var modalId = this._getDownloadProgressDialogId();
+		if (!this._userAlreadyWarned())
+			this._map.uiManager.closeModal(this._map.uiManager.generateModalId(modalId));
+	},
+
+	// Step 3. Download complete
+
+	_showDownloadComplete: function (inSnackbar) {
+		var modalId = 'copy_paste_complete';
+		var msg = _('Download completed and ready to be copied to clipboard.');
+		var buttonText = _('Copy') + ' (Alt + C)'; // TODO: on Mac Alt == Option
+
+		if (inSnackbar) {
+			this._map.uiManager.showSnackbar(msg, buttonText,
+				this._onConfirmCopyAction.bind(this), this.options.snackbarTimeout);
+		} else {
+			this._map.uiManager.showInfoModal(modalId, this._getDialogTitle(), msg, '',
+				buttonText, this._onConfirmCopyAction.bind(this), true, modalId + '-response');
+
+			this.setupKeyboardShortcut(modalId);
+		}
+	},
+
+	setupKeyboardShortcut: function (modalId) {
+		var keyDownCallback = function(e) {
+			if (e.altKey && e.keyCode === 67 /*C*/) {
+				document.getElementById(modalId + '-response').click();
+				e.preventDefault();
+			}
+		};
+		var dialogId = this._map.uiManager.generateModalId(modalId);
+		document.getElementById(dialogId).onkeydown = keyDownCallback.bind(this);
 	},
 
 	show: function () {
@@ -98,6 +139,10 @@ L.Control.DownloadProgress = L.Control.extend({
 		return this._started;
 	},
 
+	isComplete: function () {
+		return this._complete;
+	},
+
 	currentStatus: function () {
 		if (this._closed)
 			return 'closed';
@@ -115,7 +160,12 @@ L.Control.DownloadProgress = L.Control.extend({
 	},
 
 	setValue: function (value) {
-		this._map.uiManager.setSnackbarProgress(Math.round(value));
+		if (this._userAlreadyWarned())
+			this._map.uiManager.setSnackbarProgress(Math.round(value));
+		else {
+			var modalId = this._getDownloadProgressDialogId();
+			this._map.uiManager.setDialogProgress(modalId, Math.round(value));
+		}
 	},
 
 	_setProgressCursor: function() {
@@ -129,14 +179,15 @@ L.Control.DownloadProgress = L.Control.extend({
 	startProgressMode: function() {
 		this._setProgressCursor();
 		this._started = true;
-		this._map.uiManager.showProgressBar(
-			'Downloading clipboard content', 'Cancel', this._onClose.bind(this));
 		this.setValue(0);
 	},
 
 	_onStartDownload: function () {
 		if (!this._uri)
 			return;
+
+		this._showDownloadProgress(this._userAlreadyWarned());
+
 		this.startProgressMode();
 		this._download();
 	},
@@ -157,11 +208,9 @@ L.Control.DownloadProgress = L.Control.extend({
 		this._complete = true;
 		this._started = false;
 
-		var msg = this._getDownloadCompletedMessage();
-		var buttonText = this._getDownloadCompletedButtonText();
+		this._closeDownloadProgressDialog();
 
-		this._map.uiManager.showSnackbar(msg, buttonText,
-			this._onConfirmCopyAction.bind(this), this.options.snackbarTimeout);
+		this._showDownloadComplete(this._userAlreadyWarned());
 	},
 
 	_onConfirmCopyAction: function () {
@@ -173,6 +222,9 @@ L.Control.DownloadProgress = L.Control.extend({
 	_onClose: function () {
 		if (this._userAlreadyWarned())
 			this._map.uiManager.closeSnackbar();
+
+		if (this._started)
+			this._closeDownloadProgressDialog();
 
 		this._started = false;
 		this._complete = false;

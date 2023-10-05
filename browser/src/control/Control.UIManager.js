@@ -1132,7 +1132,7 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	/// shows modal dialog with progress
-	showProgressBarDialog: function(id, title, message, buttonText, callback, value, maxValue) {
+	showProgressBarDialog: function(id, title, message, buttonText, callback, value) {
 		var dialogId = this.generateModalId(id);
 		var responseButtonId = dialogId + '-response';
 
@@ -1152,7 +1152,7 @@ L.Control.UIManager = L.Control.extend({
 				id: dialogId + '-progressbar',
 				type: 'progressbar',
 				value: (value !== undefined && value !== null ? value: 0),
-				maxValue: (maxValue !== undefined && maxValue !== null ? maxValue: 100)
+				maxValue: 100
 			},
 			{
 				id: '',
@@ -1181,6 +1181,29 @@ L.Control.UIManager = L.Control.extend({
 				that.closeModal(dialogId);
 			}}
 		]);
+	},
+
+	/// sets progressbar status, value should be in range 0-100
+	setDialogProgress: function(id, value) {
+		if (!app.socket)
+			return;
+
+		var dialogId = this.generateModalId(id);
+
+		var json = {
+			id: id,
+			jsontype: 'dialog',
+			type: 'modalpopup',
+			action: 'update',
+			control: {
+				id: dialogId + '-progressbar',
+				type: 'progressbar',
+				value: value,
+				maxValue: 100
+			}
+		};
+
+		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json)});
 	},
 
 	/// buttonObjectList: [{id: button's id, text: button's text, ..other properties if needed}, ...]

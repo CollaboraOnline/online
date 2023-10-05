@@ -520,7 +520,9 @@ L.Clipboard = L.Class.extend({
 		if ($('.w2ui-input').is(':focus'))
 			return true;
 
-		if (this._map.uiManager.isAnyDialogOpen() && !this.isPasteSpecialDialogOpen())
+		if (this._map.uiManager.isAnyDialogOpen()
+			&& !this.isCopyPasteDialogReadyForCopy()
+			&& !this.isPasteSpecialDialogOpen())
 			return true;
 
 		if ($('.annotation-active').length && $('.cool-annotation-edit').is(':visible'))
@@ -883,6 +885,10 @@ L.Clipboard = L.Class.extend({
 			var result = document.getElementById(this.pasteSpecialDialogId);
 			return result !== undefined && result !== null ? true: false;
 		}
+	},
+
+	isCopyPasteDialogReadyForCopy: function () {
+		return this._downloadProgress && this._downloadProgress.isComplete();
 	},
 
 	_openPasteSpecialPopup: function () {
