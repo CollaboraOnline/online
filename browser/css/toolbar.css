@@ -60,9 +60,6 @@
 #tb_actionbar_item_zoom .w2ui-tb-caption::after {
 	content: '%';
 }
-#document-signing-bar {
-	background-color: var(--color-error);
-}
 
 #toolbar-search {
 	left: 0;
