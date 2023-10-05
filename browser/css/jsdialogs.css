@@ -1379,6 +1379,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 .snackbar #snackbar-container {
 	align-items: center;
+	max-width: calc(80vw);
 }
 #mobile-wizard.popup.snackbar,
 .snackbar.jsdialog-container .ui-dialog-content {
