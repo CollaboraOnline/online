@@ -186,7 +186,17 @@ L.Control.DownloadProgress = L.Control.extend({
 				// TODO: failure to parse ? ...
 				reader.readAsText(response);
 			},
-			function(progress) { return progress/2; }
+			function(progress) { return progress/2; },
+			function(response) {
+				var reader = new FileReader();
+				reader.onload = function() {
+					if (reader.result == 'wrong server') {
+						that._map.uiManager.showSnackbar(_('Copy failed, cluster configuration error: mis-matching serverid'));
+					}
+					that._onClose();
+				};
+				reader.readAsText(response);
+			}
 		);
 	},
 
