@@ -773,7 +773,7 @@ L.Clipboard = L.Class.extend({
 	clearSelection: function() {
 		this._selectionContent = '';
 		this._selectionType = null;
-		this._scheduleHideDownload(15);
+		this._scheduleHideDownload();
 	},
 
 	// textselectioncontent: message
@@ -783,7 +783,7 @@ L.Clipboard = L.Class.extend({
 		if (L.Browser.cypressTest) {
 			this._dummyDiv.innerHTML = html;
 		}
-		this._scheduleHideDownload(15);
+		this._scheduleHideDownload();
 	},
 
 	// sets the selection to some (cell formula) text)
@@ -791,14 +791,14 @@ L.Clipboard = L.Class.extend({
 		this._selectionType = 'text';
 		this._selectionContent = this._originWrapBody(
 			'<body>' + text + '</body>');
-		this._scheduleHideDownload(15);
+		this._scheduleHideDownload();
 	},
 
 	// complexselection: message
 	onComplexSelection: function (/*text*/) {
 		// Mark this selection as complex.
 		this._selectionType = 'complex';
-		this._scheduleHideDownload(15);
+		this._scheduleHideDownload();
 	},
 
 	_startProgress: function() {
@@ -825,26 +825,16 @@ L.Clipboard = L.Class.extend({
 	},
 
 	// Download button is still shown after selection changed -> user has changed their mind...
-	_scheduleHideDownload: function(s) {
+	_scheduleHideDownload: function() {
 		if (!this._downloadProgress || this._downloadProgress.isClosed())
 			return;
 
-		// If no other copy/paste things occurred then ...
-		var that = this;
-		var serial = this._clipboardSerial;
-		if (!this._hideDownloadTimer)
-			this._hideDownloadTimer = setTimeout(function() {
-				that._hideDownloadTimer = null;
-				if (serial == that._clipboardSerial && that._downloadProgressStatus() === 'downloadButton')
-					that._stopHideDownload();
-			}, 1000 * s);
+		if (this._downloadProgressStatus() === 'downloadButton')
+			this._stopHideDownload();
 	},
 
 	// useful if we did an internal paste already and don't want that.
 	_stopHideDownload: function() {
-		clearTimeout(this._hideDownloadTimer);
-		this._hideDownloadTimer = null;
-
 		if (!this._downloadProgress || this._downloadProgress.isClosed())
 			return;
 		this._downloadProgress._onClose();
