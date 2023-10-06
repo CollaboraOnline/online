@@ -1078,14 +1078,16 @@ void InotifySocket::handlePoll(SocketDisposition & /* disposition */, std::chron
         return;
 
     char buf[4096];
+
+    static_assert(sizeof(buf) >= sizeof(struct inotify_event) + NAME_MAX + 1, "see man 7 inotify");
+
     const struct inotify_event* event;
-    ssize_t len;
 
     LOG_TRC("InotifyPoll - Checking for config changes...");
 
     while (true)
     {
-        len = read(getFD(), buf, sizeof(buf));
+        ssize_t len = read(getFD(), buf, sizeof(buf));
 
         if (len == -1 && errno != EAGAIN)
         {
@@ -1100,6 +1102,8 @@ void InotifySocket::handlePoll(SocketDisposition & /* disposition */, std::chron
 
         if (len <= 0)
             break;
+
+        assert(buf[len - 1] == 0 && "see man 7 inotify");
 
         for (char* ptr = buf; ptr < buf + len; ptr += sizeof(struct inotify_event) + event->len)
         {
