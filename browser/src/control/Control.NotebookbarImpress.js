@@ -1471,7 +1471,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'selectbackground',
+								'id': 'layout-selectbackground',
 								'class': 'unoselectbackground',
 								'type': 'toolitem',
 								'text': _UNO('.uno:SelectBackground', 'presentation'),
