@@ -53,7 +53,7 @@ L.Control.DownloadProgress = L.Control.extend({
 		var modalId = 'large_copy_paste_warning';
 
 		var msg = this._getLargeCopyPasteMessage();
-		var buttonText = _('Download') + ' (Alt + C)'; // TODO: on Mac Alt == Option
+		var buttonText = _('Download') + ' (Ctrl + C)'; // TODO: on Mac Ctrl == Command
 
 		if (inSnackbar) {
 			this._map.uiManager.showSnackbar(
@@ -98,7 +98,7 @@ L.Control.DownloadProgress = L.Control.extend({
 	_showDownloadComplete: function (inSnackbar) {
 		var modalId = 'copy_paste_complete';
 		var msg = _('Download completed and ready to be copied to clipboard.');
-		var buttonText = _('Copy') + ' (Alt + C)'; // TODO: on Mac Alt == Option
+		var buttonText = _('Copy') + ' (Ctrl + C)'; // TODO: on Mac Ctrl == Command?
 
 		if (inSnackbar) {
 			this._map.uiManager.showSnackbar(msg, buttonText,
@@ -115,7 +115,7 @@ L.Control.DownloadProgress = L.Control.extend({
 
 	_setupKeyboardShortcutForElement: function (eventTargetId, buttonId) {
 		var keyDownCallback = function(e) {
-			if (e.altKey && e.keyCode === 67 /*C*/) {
+			if (!e.altKey && !e.shiftKey && e.ctrlKey && e.key === 'c') { // CTRL + C
 				document.getElementById(buttonId).click();
 				e.preventDefault();
 			}
