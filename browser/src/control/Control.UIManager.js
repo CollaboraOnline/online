@@ -928,19 +928,23 @@ L.Control.UIManager = L.Control.extend({
 
 		this.closeSnackbar();
 
+		var buttonId = 'button';
+		var labelId = 'label';
+
 		var json = {
 			id: 'snackbar',
 			jsontype: 'dialog',
 			type: 'snackbar',
 			timeout: timeout,
+			'init_focus_id': action ? buttonId : undefined,
 			children: [
 				{
 					id: 'snackbar-container',
 					type: 'container',
 					children: [
-						action ? {id: 'label', type: 'fixedtext', text: label} : {id: 'label-no-action', type: 'fixedtext', text: label},
+						action ? {id: labelId, type: 'fixedtext', text: label, labelFor: buttonId} : {id: 'label-no-action', type: 'fixedtext', text: label},
 						hasProgress ? {id: 'progress', type: 'progressbar', value: 0, maxValue: 100} : {},
-						action ? {id: 'button', type: 'pushbutton', text: action} : {}
+						action ? {id: buttonId, type: 'pushbutton', text: action, labelledBy: labelId} : {}
 					]
 				}
 			]
@@ -950,7 +954,7 @@ L.Control.UIManager = L.Control.extend({
 		var builderCallback = function(objectType, eventType, object, data) {
 			window.app.console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
 
-			if (object.id === 'button' && objectType === 'pushbutton' && eventType === 'click') {
+			if (object.id === buttonId && objectType === 'pushbutton' && eventType === 'click') {
 				if (callback)
 					callback();
 
