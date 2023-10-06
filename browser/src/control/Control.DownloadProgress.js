@@ -58,11 +58,13 @@ L.Control.DownloadProgress = L.Control.extend({
 		if (inSnackbar) {
 			this._map.uiManager.showSnackbar(
 				msg, buttonText, this._onStartDownload.bind(this), this.options.snackbarTimeout);
+
+			this.setupKeyboardShortcutForSnackbar();
 		} else {
 			this._map.uiManager.showInfoModal(modalId, this._getDialogTitle(), msg, '',
 				buttonText, this._onStartDownload.bind(this), true, modalId + '-response');
 
-			this.setupKeyboardShortcut(modalId);
+			this.setupKeyboardShortcutForDialog(modalId);
 		}
 	},
 
@@ -101,23 +103,33 @@ L.Control.DownloadProgress = L.Control.extend({
 		if (inSnackbar) {
 			this._map.uiManager.showSnackbar(msg, buttonText,
 				this._onConfirmCopyAction.bind(this), this.options.snackbarTimeout);
+
+			this.setupKeyboardShortcutForSnackbar();
 		} else {
 			this._map.uiManager.showInfoModal(modalId, this._getDialogTitle(), msg, '',
 				buttonText, this._onConfirmCopyAction.bind(this), true, modalId + '-response');
 
-			this.setupKeyboardShortcut(modalId);
+			this.setupKeyboardShortcutForDialog(modalId);
 		}
 	},
 
-	setupKeyboardShortcut: function (modalId) {
+	_setupKeyboardShortcutForElement: function (eventTargetId, buttonId) {
 		var keyDownCallback = function(e) {
 			if (e.altKey && e.keyCode === 67 /*C*/) {
-				document.getElementById(modalId + '-response').click();
+				document.getElementById(buttonId).click();
 				e.preventDefault();
 			}
 		};
+		document.getElementById(eventTargetId).onkeydown = keyDownCallback.bind(this);
+	},
+
+	setupKeyboardShortcutForDialog: function (modalId) {
 		var dialogId = this._map.uiManager.generateModalId(modalId);
-		document.getElementById(dialogId).onkeydown = keyDownCallback.bind(this);
+		this._setupKeyboardShortcutForElement(dialogId, modalId + '-response');
+	},
+
+	setupKeyboardShortcutForSnackbar: function () {
+		this._setupKeyboardShortcutForElement('snackbar', 'button');
 	},
 
 	show: function () {
