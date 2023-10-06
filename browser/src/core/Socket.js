@@ -1520,6 +1520,14 @@ app.definitions.Socket = L.Class.extend({
 
 	_onSocketClose: function () {
 		window.app.console.debug('_onSocketClose:');
+		if (!this._map._docLoadedOnce) {
+			var postMessageObj = {
+				success: false,
+				errorMsg: errorMessages.websocketconnectionfailed
+			};
+			this._map.fire('postMessage', {msgId: 'Action_Load_Resp', args: postMessageObj});
+			this._map.fire('error', {msg: errorMessages.websocketconnectionfailed, cmd: 'socket', kind: 'closed', id: 4});
+		}
 		if (this.ReconnectCount > 0)
 			return;
 
