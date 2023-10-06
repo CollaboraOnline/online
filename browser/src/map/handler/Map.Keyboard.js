@@ -817,7 +817,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		}
 
-		if (this._isCtrlKey(e) && !e.shiftKey && !e.altKey && e.key === ' ' && app.UI.language.fromURL === 'de' && this._map.getDocType() === 'text') {
+		if (this._isCtrlKey(e) && !e.shiftKey && e.altKey && e.keyCode === this.keyCodes.S && app.UI.language.fromURL === 'de' && this._map.getDocType() === 'text') {
 			this._map.fire('focussearch');
 			e.preventDefault();
 			return true;
