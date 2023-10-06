@@ -103,7 +103,7 @@ L.Control.Tabs = L.Control.extend({
 			// no blacklisting available for this context menu so only add when needed
 			this._menuItem['.uno:Move'] = {
 				name: _UNO('.uno:Move', 'spreadsheet', true),
-				callback: function() {this._map.sendUnoCommand('.uno:Move');}.bind(this),
+				callback: (this._moveOrCopySheet).bind(this),
 				visible: areTabsMultiple
 			};
 
@@ -204,7 +204,6 @@ L.Control.Tabs = L.Control.extend({
 							.on('press', function (j) {
 								return function(e) {
 									this._tabForContextMenu = j;
-									this._setPart(e);
 									if (!this._map.isReadOnlyMode()) {
 										if (window.mode.isMobile()) {
 											window.contextMenuWizard = true;
@@ -226,9 +225,8 @@ L.Control.Tabs = L.Control.extend({
 							};
 						}(i).bind(this));
 						L.DomEvent.on(tab, 'contextmenu', function(j) {
-							return function(e) {
+							return function() {
 								this._tabForContextMenu = j;
-								this._setPart(e);
 							};
 						}(i).bind(this));
 					}
@@ -309,17 +307,38 @@ L.Control.Tabs = L.Control.extend({
 		this._map.sendUnoCommand('.uno:Move?Copy:bool=false&UseCurrentDocument:bool=true&Index=' + newIndex);
 	},
 
+	_moveOrCopySheet: function () {
+		var contextMenuTab = this._tabForContextMenu;
+		this._map.sendUnoCommand('.uno:Move?FromContextMenu:bool=true&MoveOrCopySheetDialog:bool=true&ContextMenuIndex=' + contextMenuTab);
+	},
+
+	_moveSheetLR: function (contextMenuTab, newIndex) {
+		if (contextMenuTab !== undefined && contextMenuTab >= 0)
+			this._map.sendUnoCommand('.uno:Move?Copy:bool=false&UseCurrentDocument:bool=true&FromContextMenu:bool=true&ContextMenuIndex=' + contextMenuTab + '&Index=' + newIndex);
+	},
+
 	_moveSheetLeft: function () {
-		var targetIndex = this._map._docLayer._partNames.indexOf(this._map._docLayer._partNames[this._map._docLayer._selectedPart]);
 		//core handles sheet with 1 base indexing
 		// 0 index means last sheet
-		if (targetIndex <= 0) return;
-		this._moveSheet(targetIndex);
+		var contextMenuTab = this._tabForContextMenu;
+		if (contextMenuTab <= 0) return;
+
+		// core handles the decreasing of contextMenuTab by 1
+		// so, no need to do it here (for the second parameter)
+		this._moveSheetLR(contextMenuTab, contextMenuTab);
 	},
 
 	_moveSheetRight: function () {
-		var targetIndex = this._map._docLayer._partNames.indexOf(this._map._docLayer._partNames[this._map._docLayer._selectedPart]) + 3;
-		this._moveSheet(targetIndex);
+		var contextMenuTab = this._tabForContextMenu;
+
+		/*
+		Why there is '+3' ?
+		- core handles sheet with 1 base indexing, add +1.
+		- since we move right, add +1.
+		- on the core side, there is a -1 for this value,
+		so we add +1 again.
+		*/
+		this._moveSheetLR(contextMenuTab, contextMenuTab + 3);
 	},
 
 	_insertSheetBefore: function() {
