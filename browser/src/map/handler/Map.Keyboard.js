@@ -358,7 +358,8 @@ L.Map.Keyboard = L.Handler.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
-		if (this._map.jsdialog && this._map.jsdialog.hasDialogOpened()
+		if (this._map.jsdialog
+			&& (this._map.jsdialog.hasDialogOpened() || this._map.jsdialog.hasSnackbarOpened())
 			&& this._map.jsdialog.handleKeyEvent(ev)) {
 			ev.preventDefault();
 			return;
