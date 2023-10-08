@@ -286,14 +286,17 @@ void TileQueueTests::testSenderQueue()
 
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
     LOK_ASSERT_EQUAL(static_cast<size_t>(2), queue.size());
+    LOK_ASSERT(item);
     LOK_ASSERT_EQUAL(messages[0], std::string(item->data().data(), item->data().size()));
 
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
     LOK_ASSERT_EQUAL(static_cast<size_t>(1), queue.size());
+    LOK_ASSERT(item);
     LOK_ASSERT_EQUAL(messages[1], std::string(item->data().data(), item->data().size()));
 
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
+    LOK_ASSERT(item);
     LOK_ASSERT_EQUAL(messages[2], std::string(item->data().data(), item->data().size()));
 
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
@@ -345,6 +348,8 @@ void TileQueueTests::testSenderQueueTileDeduplication()
     LOK_ASSERT_EQUAL(static_cast<size_t>(1), queue.size());
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
 
+    LOK_ASSERT(item);
+
     // The last one should persist.
     LOK_ASSERT_EQUAL(dup_messages[2], std::string(item->data().data(), item->data().size()));
 
@@ -379,14 +384,17 @@ void TileQueueTests::testInvalidateViewCursorDeduplication()
 
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
     LOK_ASSERT_EQUAL(static_cast<size_t>(2), queue.size());
+    LOK_ASSERT(item);
     LOK_ASSERT_EQUAL(view_messages[0], std::string(item->data().data(), item->data().size()));
 
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
     LOK_ASSERT_EQUAL(static_cast<size_t>(1), queue.size());
+    LOK_ASSERT(item);
     LOK_ASSERT_EQUAL(view_messages[1], std::string(item->data().data(), item->data().size()));
 
     LOK_ASSERT_EQUAL_STR(true, queue.dequeue(item));
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
+    LOK_ASSERT(item);
     LOK_ASSERT_EQUAL(view_messages[2], std::string(item->data().data(), item->data().size()));
 
     LOK_ASSERT_EQUAL(static_cast<size_t>(0), queue.size());
