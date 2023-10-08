@@ -488,8 +488,7 @@ static constexpr std::size_t skipPathPrefix(const char (&s)[N], std::size_t n = 
 #define LOG_ASSERT_INTERNAL(condition, message, LOG)                                               \
     do                                                                                             \
     {                                                                                              \
-        auto&& cond##__LINE__ = !!(condition);                                                     \
-        if (!cond##__LINE__)                                                                       \
+        if (!(condition))                                                                          \
         {                                                                                          \
             std::ostringstream oss##__LINE__;                                                      \
             oss##__LINE__ << message;                                                              \
