@@ -78,7 +78,7 @@ std::string inline lokFormatAssertEq(const char* expected_name, const std::strin
     return oss.str();
 }
 
-#ifdef LOK_ABORT_ON_ASSERTION
+#if defined(LOK_ABORT_ON_ASSERTION) || defined(__COVERITY__)
 #define LOK_ASSERT_IMPL(X) assert(X);
 #else
 #define LOK_ASSERT_IMPL(X)
@@ -115,8 +115,7 @@ inline constexpr bool failed() { return false; }
         using namespace test::detail;                                                              \
         if (!failed())                                                                             \
         {                                                                                          \
-            auto&& cond##__LINE__ = !!(condition);                                                 \
-            if (!cond##__LINE__)                                                                   \
+            if (!(condition))                                                                      \
             {                                                                                      \
                 std::ostringstream oss##__LINE__;                                                  \
                 oss##__LINE__ << message;                                                          \
@@ -124,7 +123,7 @@ inline constexpr bool failed() { return false; }
                 TST_LOG("ERROR: Assertion failure: "                                               \
                         << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ". ")                     \
                         << "Condition: " << (#condition));                                         \
-                LOK_ASSERT_IMPL(cond##__LINE__);                                                   \
+                LOK_ASSERT_IMPL(!#condition); /* NOLINT(misc-static-assert) */                     \
                 CPPUNIT_ASSERT_MESSAGE((msg##__LINE__), condition);                                \
             }                                                                                      \
             else if (!silent)                                                                      \
