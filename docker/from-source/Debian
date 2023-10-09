@@ -21,7 +21,6 @@ COPY /instdir /
 
 # copy the shell script which can start Collabora Online (coolwsd)
 COPY /start-collabora-online.sh /
-COPY /start-collabora-online.pl /
 
 # set up Collabora Online (normally done by postinstall script of package)
 # Fix permissions
