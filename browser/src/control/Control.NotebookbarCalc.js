@@ -1261,7 +1261,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								'id': 'collapsenotebookbar',
 								'type': 'menubartoolitem',
 								'text': _('Collapse Tabs'),
-								'command': _('Collapse Notebook Bar'),
 								'accessibility': { focusBack: true,	combination: 'CT', de: null }
 							}
 						]
