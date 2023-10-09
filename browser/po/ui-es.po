@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-09 09:57+0200\n"
 "PO-Revision-Date: 2023-10-10 08:40+0000\n"
-"Last-Translator: Eloy Crespo <eloy.crespo@collabora.com>\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
 "Language: es\n"
@@ -399,7 +399,7 @@ msgstr "Eliminar"
 
 #: src/control/Control.ContextMenu.js:207
 msgid "Paste Special"
-msgstr "Pegado Especial"
+msgstr "Pegado especial"
 
 #: src/control/Control.DocumentNameInput.js:81
 msgid "Path"
@@ -910,7 +910,7 @@ msgstr "Propiedades"
 #: src/control/Control.Menubar.js:348 src/control/Control.Menubar.js:961
 #: src/control/Control.NotebookbarWriter.js:424
 msgid "Accessibility Support"
-msgstr "Soporte de accesibilidad"
+msgstr "Compatibilidad con accesibilidad"
 
 #: src/control/Control.Menubar.js:361
 #: src/control/Control.NotebookbarWriter.js:390
@@ -1266,7 +1266,7 @@ msgstr "Hoja de cálculo ODF (.ods)"
 #: src/control/Control.NotebookbarImpress.js:349
 #: src/control/Control.NotebookbarWriter.js:296
 msgid "PDF Document (.pdf) - Expert"
-msgstr "Documento PDF (.pdf) - Experto"
+msgstr "Documento PDF (.pdf), avanzado"
 
 #: src/control/Control.NotebookbarCalc.js:308
 #: src/control/Control.NotebookbarDraw.js:309
@@ -1665,7 +1665,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr "Hoja Activa"
+msgstr "Hoja activa"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -2307,11 +2307,12 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
-"Tu cluster %productName parece estar mal configurado o escalando rápidamente "
-"- por favor contacta con tu administrador de sistemas. Continuar con la "
-"edición puede provocar que varios usuarios no se vean entre sí, conflictos "
-"en el almacenamiento de documentos y/o problemas de copiar/pegar. Se "
-"esperaba serverId %0 para routeToken %1 pero se ha conectado a serverId %2"
+"La agrupación de servidores de %productName parece estar mal configurada o "
+"en escalado rápido. Póngase en contacto con el equipo de servicio técnico. "
+"Si sigue editando, es posible que los usuarios no puedan comunicarse entre "
+"sí, se causen conflictos al almacenar el documento o se produzcan problemas "
+"para copiar o pegar datos. Se esperaba el identificador de servidor %0 para "
+"la ficha de ruta %1 pero se ha conectado con el servidor %2"
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -2447,7 +2448,7 @@ msgstr "Hilo resuelto"
 #: src/layer/tile/CommentListSection.ts:1126
 #: src/layer/tile/CommentListSection.ts:1161
 msgid "Autosaved"
-msgstr "Guardado automático"
+msgstr "Guardado automáticamente"
 
 #: src/layer/tile/CommentSection.ts:255
 msgid "Open menu"
