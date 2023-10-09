@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-09 09:57+0200\n"
-"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"PO-Revision-Date: 2023-10-09 13:26+0000\n"
 "Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -399,7 +399,7 @@ msgstr "Eliminar"
 
 #: src/control/Control.ContextMenu.js:207
 msgid "Paste Special"
-msgstr "Pegado especial"
+msgstr "Pegado Especial"
 
 #: src/control/Control.DocumentNameInput.js:81
 msgid "Path"
@@ -481,7 +481,7 @@ msgstr "Promedio"
 
 #: src/control/Control.JSDialogBuilder.js:161
 msgid "Min"
-msgstr "Mínimo"
+msgstr "Mín."
 
 #: src/control/Control.JSDialogBuilder.js:162
 msgid "Max"
@@ -495,12 +495,12 @@ msgstr "Cantidad"
 #: src/control/Control.JSDialogBuilder.js:196
 #: src/control/Control.Menubar.js:675
 msgid "Active sheet"
-msgstr ""
+msgstr "Hoja activa"
 
 #: src/control/Control.JSDialogBuilder.js:197
 #: src/control/Control.Menubar.js:676 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "Todas las hojas"
 
 #: src/control/Control.JSDialogBuilder.js:560
 msgid "Solid"
@@ -625,7 +625,7 @@ msgstr "Idioma"
 #: src/control/Control.NotebookbarBuilder.js:519
 #: src/control/Control.NotebookbarBuilder.js:623
 msgid "ODF text document (.odt)"
-msgstr "Documento de texto ODF (.odt)"
+msgstr "Documento ODF de texto (.odt)"
 
 #: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:83
 #: src/control/Control.Menubar.js:928
@@ -1453,7 +1453,7 @@ msgstr "Formulario"
 
 #: src/control/Control.NotebookbarWriter.js:253
 msgid "ODF Text Document (.odt)"
-msgstr "Documento de texto ODF (.odt)"
+msgstr "Documento ODF de texto (.odt)"
 
 #: src/control/Control.NotebookbarWriter.js:309
 msgid "EPUB Document (.epub)"
@@ -1665,7 +1665,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "Hoja Activa"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -2023,11 +2023,11 @@ msgstr "RECARGAR"
 
 #: src/core/Socket.js:591
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Advertencia sobre la configuración del clúster"
 
 #: src/core/Socket.js:594
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Servidor equivocado, reconectando..."
 
 #: src/core/Socket.js:601
 msgid "COOLWSD version:"
@@ -2046,9 +2046,8 @@ msgid "LOKit version:"
 msgstr "Versión de LOKit:"
 
 #: src/core/Socket.js:732
-#, fuzzy
 msgid "Document is getting migrated"
-msgstr "Se está migrando el documento..."
+msgstr "Se está migrando el documento"
 
 #: src/core/Socket.js:759
 msgid "Session terminated by document owner"
@@ -2308,6 +2307,11 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"Tu cluster %productName parece estar mal configurado o escalando rápidamente "
+"- por favor contacta con tu administrador de sistemas. Continuar con la "
+"edición puede provocar que varios usuarios no se vean entre sí, conflictos "
+"en el almacenamiento de documentos y/o problemas de copiar/pegar. Se "
+"esperaba serverId %0 para routeToken %1 pero se ha conectado a serverId %2"
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -2443,7 +2447,7 @@ msgstr "Hilo resuelto"
 #: src/layer/tile/CommentListSection.ts:1126
 #: src/layer/tile/CommentListSection.ts:1161
 msgid "Autosaved"
-msgstr ""
+msgstr "Guardado automático"
 
 #: src/layer/tile/CommentSection.ts:255
 msgid "Open menu"
