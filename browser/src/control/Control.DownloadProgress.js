@@ -18,6 +18,7 @@ L.Control.DownloadProgress = L.Control.extend({
 		this._started = false;
 		this._complete = false;
 		this._closed = false;
+		this._isLargeCopy = false;
 	},
 
 	_userAlreadyWarned: function () {
@@ -77,15 +78,22 @@ L.Control.DownloadProgress = L.Control.extend({
 	_showDownloadProgress: function (inSnackbar) {
 		var modalId = this._getDownloadProgressDialogId();
 		var msg = _('Downloading clipboard content');
-		var buttonText = _('Copy') + ' (Ctrl + C)'; // TODO: on Mac Ctrl == Command?
+		var buttonText = _('Cancel');
 
 		if (inSnackbar) {
 			this._map.uiManager.showProgressBar(msg, buttonText, this._onClose.bind(this));
-		} else {
+		} else if (this._isLargeCopy) {
+			// downloading for copy, next: show download complete dialog
+			buttonText = _('Copy') + ' (Ctrl + C)'; // TODO: on Mac Ctrl == Command?
+
 			this._map.uiManager.showProgressBarDialog(modalId, this._getDialogTitle(), msg,
 				buttonText, this._onConfirmCopyAction.bind(this), 0, this._onClose.bind(this));
 
 			JSDialog.enableButtonInModal(modalId, modalId + '-response', false);
+		} else {
+			// downloading for paste, next: dialog will dissapear
+			this._map.uiManager.showProgressBarDialog(modalId, this._getDialogTitle(), msg,
+				'', this._onClose.bind(this), 0, this._onClose.bind(this));
 		}
 	},
 
@@ -126,22 +134,30 @@ L.Control.DownloadProgress = L.Control.extend({
 
 	setupKeyboardShortcutForDialog: function (modalId) {
 		var dialogId = this._map.uiManager.generateModalId(modalId);
-		this._setupKeyboardShortcutForElement(dialogId, modalId + '-response');
+		var buttonId = modalId + '-response';
+		this._setupKeyboardShortcutForElement(dialogId, buttonId);
+		document.getElementById(buttonId).focus();
 	},
 
 	setupKeyboardShortcutForSnackbar: function () {
 		this._setupKeyboardShortcutForElement('snackbar', 'button');
 	},
 
-	show: function () {
+	// isLargeCopy specifies if we are copying and have to explain user the process
+	// if it is false we do paste so only show download progress
+	show: function (isLargeCopy) {
 		window.app.console.log('DownloadProgress.show');
 		// better to init the following state variables here,
 		// since the widget could be re-used without having been destroyed
 		this._started = false;
 		this._complete = false;
 		this._closed = false;
+		this._isLargeCopy = isLargeCopy;
 
-		this._showLargeCopyPasteWarning(this._userAlreadyWarned());
+		if (isLargeCopy)
+			this._showLargeCopyPasteWarning(this._userAlreadyWarned());
+		else
+			this._showDownloadProgress(this._userAlreadyWarned());
 	},
 
 	isClosed: function () {
@@ -224,7 +240,10 @@ L.Control.DownloadProgress = L.Control.extend({
 		this._complete = true;
 		this._started = false;
 
-		this._showDownloadComplete(this._userAlreadyWarned());
+		if (this._isLargeCopy)
+			this._showDownloadComplete(this._userAlreadyWarned());
+		else
+			this._closeDownloadProgressDialog();
 	},
 
 	_onConfirmCopyAction: function () {

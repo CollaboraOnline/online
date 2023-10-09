@@ -208,7 +208,7 @@ L.Clipboard = L.Class.extend({
 
 			// avoid to invoke the following code if the download widget depends on user interaction
 			if (!that._downloadProgress || that._downloadProgress.isClosed()) {
-				that._startProgress();
+				that._startProgress(false);
 				that._downloadProgress.startProgressMode();
 			}
 			request.onload = function() {
@@ -801,12 +801,12 @@ L.Clipboard = L.Class.extend({
 		this._scheduleHideDownload();
 	},
 
-	_startProgress: function() {
+	_startProgress: function(isLargeCopy) {
 		if (!this._downloadProgress) {
 			this._downloadProgress = L.control.downloadProgress();
 			this._map.addControl(this._downloadProgress);
 		}
-		this._downloadProgress.show();
+		this._downloadProgress.show(isLargeCopy);
 	},
 
 	_onDownloadOnLargeCopyPaste: function () {
@@ -815,7 +815,7 @@ L.Clipboard = L.Class.extend({
 			// Otherwise, it's easier to flash the widget or something.
 			this._warnLargeCopyPasteAlreadyStarted();
 		} else {
-			this._startProgress();
+			this._startProgress(true);
 		}
 	},
 
