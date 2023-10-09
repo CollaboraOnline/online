@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-09 09:57+0200\n"
-"PO-Revision-Date: 2023-08-31 18:04+0000\n"
+"PO-Revision-Date: 2023-10-09 13:26+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -495,12 +495,12 @@ msgstr "Aantal"
 #: src/control/Control.JSDialogBuilder.js:196
 #: src/control/Control.Menubar.js:675
 msgid "Active sheet"
-msgstr ""
+msgstr "Actief blad"
 
 #: src/control/Control.JSDialogBuilder.js:197
 #: src/control/Control.Menubar.js:676 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "Alle bladen"
 
 #: src/control/Control.JSDialogBuilder.js:560
 msgid "Solid"
@@ -1667,7 +1667,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "Actieve Blad"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -2026,11 +2026,11 @@ msgstr "OPNIEUW LADEN"
 
 #: src/core/Socket.js:591
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Waarschuwing clusterconfiguratie"
 
 #: src/core/Socket.js:594
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Verkeerde server, opnieuw verbinden..."
 
 #: src/core/Socket.js:601
 msgid "COOLWSD version:"
@@ -2049,9 +2049,8 @@ msgid "LOKit version:"
 msgstr "LOKit versie:"
 
 #: src/core/Socket.js:732
-#, fuzzy
 msgid "Document is getting migrated"
-msgstr "Document wordt gemigreerd...."
+msgstr "Document wordt gemigreerd"
 
 #: src/core/Socket.js:759
 msgid "Session terminated by document owner"
@@ -2308,6 +2307,11 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"Uw %productName cluster lijkt verkeerd geconfigureerd te zijn of snel te "
+"schalen - neem contact op met uw systeembeheerder. Doorgaan met bewerken kan "
+"resulteren in meerdere gebruikers die elkaar niet zien, conflicten in de "
+"documentopslag en/of kopieer/plakproblemen. Verwacht serverId %0 voor "
+"routeToken %1 maar verbonden met serverId %2"
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -2447,7 +2451,7 @@ msgstr "Opgeloste draad"
 #: src/layer/tile/CommentListSection.ts:1126
 #: src/layer/tile/CommentListSection.ts:1161
 msgid "Autosaved"
-msgstr ""
+msgstr "Automatisch opgeslagen"
 
 #: src/layer/tile/CommentSection.ts:255
 msgid "Open menu"
