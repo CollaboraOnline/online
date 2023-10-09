@@ -47,10 +47,14 @@ L.Control.DownloadProgress = L.Control.extend({
 			_('If you want to share large elements outside of %productName it\'s necessary to first download them.'));
 	},
 
+	_getDownloadProgressDialogId: function () {
+		return 'copy_paste_download_progress';
+	},
+
 	// Step 1. Large copy paste warning
 
 	_showLargeCopyPasteWarning: function (inSnackbar) {
-		var modalId = 'large_copy_paste_warning';
+		var modalId = this._getDownloadProgressDialogId();
 
 		var msg = this._getLargeCopyPasteMessage();
 		var buttonText = _('Download') + ' (Ctrl + C)'; // TODO: on Mac Ctrl == Command
@@ -69,10 +73,6 @@ L.Control.DownloadProgress = L.Control.extend({
 	},
 
 	// Step 2. Download progress
-
-	_getDownloadProgressDialogId: function () {
-		return 'copy_paste_download_progress';
-	},
 
 	_showDownloadProgress: function (inSnackbar) {
 		var modalId = this._getDownloadProgressDialogId();
@@ -96,7 +96,7 @@ L.Control.DownloadProgress = L.Control.extend({
 	// Step 3. Download complete
 
 	_showDownloadComplete: function (inSnackbar) {
-		var modalId = 'copy_paste_complete';
+		var modalId = this._getDownloadProgressDialogId();
 		var msg = _('Download completed and ready to be copied to clipboard.');
 		var buttonText = _('Copy') + ' (Ctrl + C)'; // TODO: on Mac Ctrl == Command?
 
@@ -202,6 +202,8 @@ L.Control.DownloadProgress = L.Control.extend({
 
 		this.startProgressMode();
 		this._download();
+
+		return true;
 	},
 
 	_onUpdateProgress: function (e) {
@@ -216,11 +218,10 @@ L.Control.DownloadProgress = L.Control.extend({
 	_onComplete: function () {
 		if (this._complete)
 			return;
+		this.setValue(100);
 		this._setNormalCursor();
 		this._complete = true;
 		this._started = false;
-
-		this._closeDownloadProgressDialog();
 
 		this._showDownloadComplete(this._userAlreadyWarned());
 	},
