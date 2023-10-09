@@ -149,7 +149,6 @@ fi
 if [ -z "$NO_DOCKER_IMAGE" ]; then
   cd "$SRCDIR"
   cp ../from-packages/scripts/start-collabora-online.sh .
-  cp ../from-packages/scripts/start-collabora-online.pl .
   docker build --no-cache -t $DOCKER_HUB_REPO:$DOCKER_HUB_TAG -f $HOST_OS . || exit 1
 else
   echo "Skipping docker image build"
