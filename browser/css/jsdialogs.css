@@ -1370,6 +1370,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	align-items: center;
 }
 
+.ui-progressbar progress {
+	width: 100%;
+}
+
 /* snackbar */
 .snackbar {
 	border: none !important;
