@@ -1513,14 +1513,6 @@ void TileCacheTests::testTileWireIDHandling()
 
 void TileCacheTests::testTileProcessed()
 {
-    // FIXME: this test fails all the time with core distro/collabora/co-23.05 branch.
-    // Without the spinandwait: we get 34 tiles back. With spinandwait: we get 19 tiles back.
-    // If we request 25 tiles, we really should get them all back - but it may well be that
-    // in this case we get deltas, or somesuch based on the initially rendered tiles - so
-    // rather than tile: we'd get delta.
-    // The TileCache really needs someone to give it a very hard stare anyway.
-    return;
-
     // Test whether tileprocessed message removes the tiles from the internal tiles-on-fly list
     const char* testname = "testTileProcessed ";
 
@@ -1563,32 +1555,12 @@ void TileCacheTests::testTileProcessed()
 
     } while(gotTile);
 
-    // Now that we force flushing invalidated tiles (Core 2cc955f9109c0fc8443c9f93c1bf6bd317043cb5),
-    // we get 28 tiles instead of the 25 we got previously.
-    LOK_ASSERT_EQUAL_MESSAGE("Expected exactly the requested number of tiles", 28, arrivedTile);
+    LOK_ASSERT_EQUAL_MESSAGE("Expected exactly the requested number of tiles", 25, arrivedTile);
 
     for(std::string& tileID : tileIDs)
     {
         sendTextFrame(socket, "tileprocessed tile=" + tileID, testname);
     }
-
-#if 0 // not needed since deltas + wsd: always subscribe when proactively rendering tiles
-    // Now we can get the remaining tiles
-    int arrivedTile2 = 0;
-    do
-    {
-        std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
-        gotTile = !tile.empty();
-        if(gotTile)
-            ++arrivedTile2;
-
-        if (arrivedTile2 > 1)
-            break; // We got what we expected.
-
-    } while(gotTile);
-
-    LOK_ASSERT_MESSAGE("We expect one tile at least!", arrivedTile2 > 1);
-#endif
 
     socket->asyncShutdown();
     LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
