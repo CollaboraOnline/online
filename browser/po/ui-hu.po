@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-09 09:57+0200\n"
-"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"PO-Revision-Date: 2023-10-09 13:26+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -495,12 +495,12 @@ msgstr "Darab"
 #: src/control/Control.JSDialogBuilder.js:196
 #: src/control/Control.Menubar.js:675
 msgid "Active sheet"
-msgstr ""
+msgstr "Aktív munkalap"
 
 #: src/control/Control.JSDialogBuilder.js:197
 #: src/control/Control.Menubar.js:676 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "Minden munkalap"
 
 #: src/control/Control.JSDialogBuilder.js:560
 msgid "Solid"
@@ -1666,7 +1666,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "Aktív munkalap"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -2023,11 +2023,11 @@ msgstr "ÚJRATÖLTÉS"
 
 #: src/core/Socket.js:591
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Klaszterkonfigurációs figyelmeztetés"
 
 #: src/core/Socket.js:594
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Rossz kiszolgáló, újrakapcsolás..."
 
 #: src/core/Socket.js:601
 msgid "COOLWSD version:"
@@ -2046,9 +2046,8 @@ msgid "LOKit version:"
 msgstr "LOKit verzió:"
 
 #: src/core/Socket.js:732
-#, fuzzy
 msgid "Document is getting migrated"
-msgstr "A dokumentum áttelepítése folyamatban van..."
+msgstr "A dokumentum áttelepítése folyamatban van"
 
 #: src/core/Socket.js:759
 msgid "Session terminated by document owner"
@@ -2311,6 +2310,12 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"A %productName-klaszter rosszul van konfigurálva vagy gyorsan skálázódik – "
+"vegye fel a kapcsolatot a rendszergazdával. Ha folytatja a szerkesztést, azt "
+"kockáztatja, hogy a felhasználók nem fogják egymás szerkesztéseit látni, a "
+"dokumentum-tárhelyen ütközések lehetnek és/vagy problémák lesznek a vágólap "
+"használatával. A %1 routeToken-hez várt serverId %0 volt, de a serverId "
+"valójában %2."
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -2446,7 +2451,7 @@ msgstr "Szál megoldása"
 #: src/layer/tile/CommentListSection.ts:1126
 #: src/layer/tile/CommentListSection.ts:1161
 msgid "Autosaved"
-msgstr ""
+msgstr "Automatikusan mentve"
 
 #: src/layer/tile/CommentSection.ts:255
 msgid "Open menu"
