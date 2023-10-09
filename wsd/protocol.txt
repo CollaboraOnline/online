@@ -905,7 +905,7 @@ wopiSrcMap
 
     get map of wopiSrc<->routeToken
 
-verifyauth jwt=<jwt_token>
+verifyauth jwt=<jwt_token> id=<unique_identifier>
 
     verify jwt token without shutting down the socket connection, works only with monitor
 
