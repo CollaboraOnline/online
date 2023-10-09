@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-09 09:57+0200\n"
-"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"PO-Revision-Date: 2023-10-09 13:26+0000\n"
 "Last-Translator: Mike Kaganski <mikekaganski@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
-"Language: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -497,12 +497,12 @@ msgstr "Количество"
 #: src/control/Control.JSDialogBuilder.js:196
 #: src/control/Control.Menubar.js:675
 msgid "Active sheet"
-msgstr ""
+msgstr "Активный лист"
 
 #: src/control/Control.JSDialogBuilder.js:197
 #: src/control/Control.Menubar.js:676 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "Все листы"
 
 #: src/control/Control.JSDialogBuilder.js:560
 msgid "Solid"
@@ -1667,7 +1667,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "Активный лист"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -2023,11 +2023,11 @@ msgstr "ПЕРЕЗАГРУЗИТЬ"
 
 #: src/core/Socket.js:591
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Предупреждение конфигурации кластера"
 
 #: src/core/Socket.js:594
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Неверный сервер, переподключение..."
 
 #: src/core/Socket.js:601
 msgid "COOLWSD version:"
@@ -2046,9 +2046,8 @@ msgid "LOKit version:"
 msgstr "Версия LOKit:"
 
 #: src/core/Socket.js:732
-#, fuzzy
 msgid "Document is getting migrated"
-msgstr "Документ переносится..."
+msgstr "Документ переносится"
 
 #: src/core/Socket.js:759
 msgid "Session terminated by document owner"
@@ -2307,6 +2306,11 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"Ваш кластер %productName, вероятно, неверно настроен или быстро растёт - "
+"пожалуйста, свяжитесь с Вашим системным администратором. Продолжение "
+"редактирования может привести к отсутствию связи между пользователями, "
+"конфликтам при сохранении документа и/или проблемам копирования/вставки. "
+"Ожидается serverId %0 для routeToken %1, но соединён с serverId %2"
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -2442,7 +2446,7 @@ msgstr "Обсуждение решено"
 #: src/layer/tile/CommentListSection.ts:1126
 #: src/layer/tile/CommentListSection.ts:1161
 msgid "Autosaved"
-msgstr ""
+msgstr "Автоматически сохранён"
 
 #: src/layer/tile/CommentSection.ts:255
 msgid "Open menu"
