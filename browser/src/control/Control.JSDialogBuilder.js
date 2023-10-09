@@ -3249,6 +3249,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(control).addClass('hidden');
 			break;
 
+		case 'enable':
+			control.disabled = false;
+			break;
+
+		case 'disable':
+			control.disabled = true;
+			break;
+
 		case 'setText':
 			// eg. in mobile wizard input is inside spin button div
 			var innerInput = control.querySelector('input');
