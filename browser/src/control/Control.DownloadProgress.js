@@ -2,7 +2,7 @@
 /*
  * L.Control.DownloadProgress.
  */
-/* global _ $ */
+/* global _ $ JSDialog */
 L.Control.DownloadProgress = L.Control.extend({
 	options: {
 		snackbarTimeout: 20000,
@@ -77,13 +77,15 @@ L.Control.DownloadProgress = L.Control.extend({
 	_showDownloadProgress: function (inSnackbar) {
 		var modalId = this._getDownloadProgressDialogId();
 		var msg = _('Downloading clipboard content');
-		var buttonText = _('Cancel');
+		var buttonText = _('Copy') + ' (Ctrl + C)'; // TODO: on Mac Ctrl == Command?
 
 		if (inSnackbar) {
 			this._map.uiManager.showProgressBar(msg, buttonText, this._onClose.bind(this));
 		} else {
 			this._map.uiManager.showProgressBarDialog(modalId, this._getDialogTitle(), msg,
-				buttonText, this._onClose.bind(this), 0);
+				buttonText, this._onConfirmCopyAction.bind(this), 0, this._onClose.bind(this));
+
+			JSDialog.enableButtonInModal(modalId, modalId + '-response', false);
 		}
 	},
 
@@ -106,9 +108,8 @@ L.Control.DownloadProgress = L.Control.extend({
 
 			this.setupKeyboardShortcutForSnackbar();
 		} else {
-			this._map.uiManager.showInfoModal(modalId, this._getDialogTitle(), msg, '',
-				buttonText, this._onConfirmCopyAction.bind(this), true, modalId + '-response');
-
+			JSDialog.setMessageInModal(modalId, msg, '');
+			JSDialog.enableButtonInModal(modalId, modalId + '-response', true);
 			this.setupKeyboardShortcutForDialog(modalId);
 		}
 	},
