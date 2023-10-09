@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-09 09:57+0200\n"
-"PO-Revision-Date: 2022-09-17 23:21+0000\n"
-"Last-Translator: Rashesh Padia <rasheshpadia419@gmail.com>\n"
+"PO-Revision-Date: 2023-10-09 13:26+0000\n"
+"Last-Translator: Darshan Upadhyay <darshan.upadhyay1188@gmail.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/collabora-online/"
 "ui/hi/>\n"
-"Language: \n"
+"Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -25,7 +25,7 @@ msgstr "प्रशासनिक कंसोल"
 
 #: admin/admin.strings.js:7
 msgid "Settings"
-msgstr "सेटिंग"
+msgstr "समायोजन"
 
 #: admin/admin.strings.js:8
 msgid "Overview"
@@ -45,7 +45,7 @@ msgstr "इतिहास"
 
 #: admin/admin.strings.js:12
 msgid "Log"
-msgstr ""
+msgstr "अभिलेख"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
@@ -98,7 +98,7 @@ msgstr "दस्तावेज़"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "दृष्टिकोण"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
@@ -170,7 +170,7 @@ msgstr "सीपीयू सांख्यिकी का समय अं�
 
 #: admin/admin.strings.js:41 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr "सत्र ख़त्म करे"
+msgstr "सत्र ख़त्म करे।"
 
 #: admin/admin.strings.js:42
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -352,15 +352,15 @@ msgstr ""
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
-msgstr "घन्टें"
+msgstr " घन्टें"
 
 #: admin/src/Util.js:49 admin/src/Util.js:51
 msgid " mins"
-msgstr "मिनट"
+msgstr " मिनट"
 
 #: admin/src/Util.js:54
 msgid " s"
-msgstr "सेकंड"
+msgstr " सेकंड"
 
 #: js/w2ui-1.5.rc1.js:3003
 msgid "Recent"
@@ -434,11 +434,11 @@ msgstr ""
 
 #: src/control/Control.DocumentRepair.js:160
 msgid "Redo"
-msgstr ""
+msgstr "दोबारा करना"
 
 #: src/control/Control.DocumentRepair.js:161
 msgid "Undo"
-msgstr ""
+msgstr "अकार्य करना"
 
 #: src/control/Control.DownloadProgress.js:47
 msgid "Start download"
@@ -1055,9 +1055,8 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:1059
 #: src/control/Control.NotebookbarWriter.js:882
 #: src/control/Control.StatusBar.js:194 src/control/Control.Zotero.js:211
-#, fuzzy
 msgid "Search"
-msgstr "खोजें:"
+msgstr "खोजें"
 
 #: src/control/Control.Menubar.js:963
 msgid "Page Setup"
@@ -2023,9 +2022,8 @@ msgid "Headings and objects that you add to the document will appear here"
 msgstr ""
 
 #: src/core/Socket.js:56
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "उफ़, दस्तावेज़ से संपर्क करने में कुछ गडबड है।"
+msgstr "उफ़, दस्तावेज़ से संपर्क करने में कुछ गडबड है। "
 
 #: src/core/Socket.js:568
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2190,7 +2188,7 @@ msgid ""
 "again."
 msgstr ""
 "बड़े ही दुःख की बात है की हम आपके दस्तवेज को नहीं खोल पा रहे हैंI कृपया पुनः "
-"प्रयास करें "
+"प्रयास करें ।"
 
 #: src/core/Socket.js:1572
 #, fuzzy

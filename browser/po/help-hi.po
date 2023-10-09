@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-09 09:57+0200\n"
-"PO-Revision-Date: 2020-10-08 12:25+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2023-10-09 13:26+0000\n"
+"Last-Translator: Darshan Upadhyay <darshan.upadhyay1188@gmail.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/collabora-online/"
 "help/hi/>\n"
 "Language: hi\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -24,7 +24,7 @@ msgstr "सामान्य कुंजीपट अल्प मार्ग
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:23-18
 msgid "Undo"
-msgstr "पहले जैसा"
+msgstr "अकार्य करना"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:23-49
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
@@ -32,7 +32,7 @@ msgstr "कंट्रोल +Z"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:24-18
 msgid "Redo"
-msgstr "फिर करें"
+msgstr "दोबारा करना"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:24-49
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y"
