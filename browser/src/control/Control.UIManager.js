@@ -1182,7 +1182,7 @@ L.Control.UIManager = L.Control.extend({
 				vertical: false,
 				layoutstyle: 'end'
 			},
-		], responseButtonId);
+		], buttonText ? responseButtonId : cancelButtonId);
 
 		var that = this;
 		this.showModal(json, [
