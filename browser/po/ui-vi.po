@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-09 09:57+0200\n"
-"PO-Revision-Date: 2023-06-05 17:53+0000\n"
+"PO-Revision-Date: 2023-10-10 08:40+0000\n"
 "Last-Translator: Nguyễn Hoàng Minh <mingu03@yandex.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/vi/>\n"
-"Language: \n"
+"Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -489,12 +489,12 @@ msgstr "Đếm"
 #: src/control/Control.JSDialogBuilder.js:196
 #: src/control/Control.Menubar.js:675
 msgid "Active sheet"
-msgstr ""
+msgstr "Trang tính đang hoạt động"
 
 #: src/control/Control.JSDialogBuilder.js:197
 #: src/control/Control.Menubar.js:676 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "Tất cả trang tính"
 
 #: src/control/Control.JSDialogBuilder.js:560
 msgid "Solid"
@@ -583,7 +583,7 @@ msgstr "Đường viền ô"
 
 #: src/control/Control.JSDialogBuilder.js:3038
 msgid "Automatic"
-msgstr ""
+msgstr "Tự động"
 
 #: src/control/Control.JSDialogBuilder.js:3177
 #: src/control/Control.Menubar.js:811
@@ -686,9 +686,8 @@ msgid "EPUB (.epub)"
 msgstr "Tài liệu định dạng EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:76
-#, fuzzy
 msgid "Rename Document"
-msgstr "Sửa tài liệu"
+msgstr "Đổi tên tài liệu"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:384
 #: src/control/Control.Menubar.js:533 src/control/Control.Menubar.js:663
@@ -718,9 +717,8 @@ msgstr "Tải xuống như"
 #: src/control/Control.NotebookbarBuilder.js:545
 #: src/control/Control.NotebookbarBuilder.js:574
 #: src/control/Control.NotebookbarBuilder.js:603
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "Tài liệu PDF (.pdf)"
+msgstr "Tài liệu PDF (.pdf) dưới dạng…"
 
 #: src/control/Control.Menubar.js:90 src/control/Control.Menubar.js:396
 #: src/control/Control.Menubar.js:543 src/control/Control.Menubar.js:678
@@ -795,7 +793,7 @@ msgstr "Hiển thị thanh trạng thái"
 #: src/control/Control.Menubar.js:131 src/control/Control.Menubar.js:425
 #: src/control/Control.Menubar.js:574 src/control/Control.Menubar.js:706
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "Ẩn thanh menu"
 
 #: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:426
 #: src/control/Control.Menubar.js:570 src/control/Control.Menubar.js:707
@@ -906,7 +904,7 @@ msgstr "Thuộc tính"
 #: src/control/Control.Menubar.js:348 src/control/Control.Menubar.js:961
 #: src/control/Control.NotebookbarWriter.js:424
 msgid "Accessibility Support"
-msgstr ""
+msgstr "Hỗ trợ khả năng tiếp cận"
 
 #: src/control/Control.Menubar.js:361
 #: src/control/Control.NotebookbarWriter.js:390
@@ -1158,7 +1156,6 @@ msgstr "Rất lỏng"
 #: src/control/Control.NotebookbarDraw.js:52
 #: src/control/Control.NotebookbarImpress.js:67
 #: src/control/Control.NotebookbarWriter.js:26
-#, fuzzy
 msgid "File"
 msgstr "Tập tin"
 
@@ -1166,15 +1163,13 @@ msgstr "Tập tin"
 #: src/control/Control.NotebookbarDraw.js:58
 #: src/control/Control.NotebookbarImpress.js:73
 #: src/control/Control.NotebookbarWriter.js:32
-#, fuzzy
 msgid "Home"
-msgstr "Nhà (~E)"
+msgstr "Nhà"
 
 #: src/control/Control.NotebookbarCalc.js:26
 #: src/control/Control.NotebookbarDraw.js:65
 #: src/control/Control.NotebookbarImpress.js:80
 #: src/control/Control.NotebookbarWriter.js:39
-#, fuzzy
 msgid "Insert"
 msgstr "Chèn"
 
@@ -1182,12 +1177,10 @@ msgstr "Chèn"
 #: src/control/Control.NotebookbarDraw.js:71
 #: src/control/Control.NotebookbarImpress.js:86
 #: src/control/Control.NotebookbarWriter.js:45
-#, fuzzy
 msgid "Layout"
 msgstr "Bố cục"
 
 #: src/control/Control.NotebookbarCalc.js:38
-#, fuzzy
 msgid "Data"
 msgstr "Dữ liệu"
 
@@ -1195,7 +1188,6 @@ msgstr "Dữ liệu"
 #: src/control/Control.NotebookbarDraw.js:77
 #: src/control/Control.NotebookbarImpress.js:92
 #: src/control/Control.NotebookbarWriter.js:57
-#, fuzzy
 msgid "Review"
 msgstr "Xem lại"
 
@@ -1203,30 +1195,26 @@ msgstr "Xem lại"
 #: src/control/Control.NotebookbarDraw.js:83
 #: src/control/Control.NotebookbarImpress.js:98
 #: src/control/Control.NotebookbarWriter.js:63
-#, fuzzy
 msgid "Format"
-msgstr "Định dạng (~O)"
+msgstr "Định dạng"
 
 #: src/control/Control.NotebookbarCalc.js:56
 #: src/control/Control.NotebookbarDraw.js:96
 #: src/control/Control.NotebookbarWriter.js:82
-#, fuzzy
 msgid "Draw"
-msgstr "Vẽ (~W)"
+msgstr "Vẽ"
 
 #: src/control/Control.NotebookbarCalc.js:63
 #: src/control/Control.NotebookbarDraw.js:103
 #: src/control/Control.NotebookbarImpress.js:125
 #: src/control/Control.NotebookbarWriter.js:89
-#, fuzzy
 msgid "View"
-msgstr "Lượt xem"
+msgstr "Hiển thị"
 
 #: src/control/Control.NotebookbarCalc.js:69
 #: src/control/Control.NotebookbarDraw.js:109
 #: src/control/Control.NotebookbarImpress.js:131
 #: src/control/Control.NotebookbarWriter.js:95
-#, fuzzy
 msgid "Help"
 msgstr "Trợ giúp"
 
@@ -1272,14 +1260,14 @@ msgstr "Trang tính ODF (.ods)"
 #: src/control/Control.NotebookbarImpress.js:349
 #: src/control/Control.NotebookbarWriter.js:296
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "Tài liệu PDF (.pdf) - Chuyên nghiệp"
 
 #: src/control/Control.NotebookbarCalc.js:308
 #: src/control/Control.NotebookbarDraw.js:309
 #: src/control/Control.NotebookbarImpress.js:410
 #: src/control/Control.NotebookbarWriter.js:363
 msgid "Rename"
-msgstr ""
+msgstr "Đổi tên"
 
 #: src/control/Control.NotebookbarCalc.js:644
 msgid "General"
@@ -1398,14 +1386,14 @@ msgstr "Chế độ xem nhỏ gọn"
 #: src/control/Control.NotebookbarImpress.js:501
 #: src/control/Control.NotebookbarWriter.js:1446
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Thu gọn thẻ"
 
 #: src/control/Control.NotebookbarCalc.js:1264
 #: src/control/Control.NotebookbarDraw.js:392
 #: src/control/Control.NotebookbarImpress.js:502
 #: src/control/Control.NotebookbarWriter.js:1447
 msgid "Collapse Notebook Bar"
-msgstr ""
+msgstr "Thu gọn thanh Notebook"
 
 #: src/control/Control.NotebookbarCalc.js:1276
 #: src/control/Control.NotebookbarDraw.js:404
@@ -1433,7 +1421,6 @@ msgstr "Hình dạng"
 #: src/control/Control.NotebookbarDraw.js:89
 #: src/control/Control.NotebookbarImpress.js:104
 #: src/control/Control.NotebookbarWriter.js:75
-#, fuzzy
 msgid "Table"
 msgstr "Bảng"
 
@@ -1442,9 +1429,8 @@ msgid "Image (.png)"
 msgstr "Hình ảnh (.png)"
 
 #: src/control/Control.NotebookbarImpress.js:118
-#, fuzzy
 msgid "Master"
-msgstr "Chính (~M)"
+msgstr "Cái"
 
 #: src/control/Control.NotebookbarImpress.js:294
 msgid "ODF Presentation (.odp)"
@@ -1456,9 +1442,8 @@ msgid "Presentation"
 msgstr "Trình chiếu"
 
 #: src/control/Control.NotebookbarWriter.js:69
-#, fuzzy
 msgid "Form"
-msgstr "Diễn đàn"
+msgstr "Biểu mẫu"
 
 #: src/control/Control.NotebookbarWriter.js:253
 msgid "ODF Text Document (.odt)"
@@ -1494,15 +1479,15 @@ msgstr "xem trước trang "
 
 #: src/control/Control.PartsPreview.js:236
 msgid "Paste Slide"
-msgstr ""
+msgstr "Dán trang chiếu"
 
 #: src/control/Control.PartsPreview.js:270
 msgid "Copy"
-msgstr ""
+msgstr "Sao chép"
 
 #: src/control/Control.PartsPreview.js:279
 msgid "Paste"
-msgstr ""
+msgstr "Dán"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1614,15 +1599,15 @@ msgstr "Chế độ lựa chọn: không hoạt động"
 
 #: src/control/Control.StatusBar.js:566
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Đặt ngôn ngữ cho tất cả văn bản"
 
 #: src/control/Control.StatusBar.js:569
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Đặt ngôn ngữ cho Đoạn văn"
 
 #: src/control/Control.StatusBar.js:570
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Đặt ngôn ngữ cho lựa chọn"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
@@ -1674,7 +1659,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "Trang tính đang hoạt động"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -1694,7 +1679,7 @@ msgstr "Chèn các đầu nối"
 
 #: src/control/Control.TopToolbar.js:254
 msgid "Hide Menu"
-msgstr ""
+msgstr "Ẩn Menu"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -1882,7 +1867,7 @@ msgstr ""
 
 #: src/control/Permission.js:18 src/control/Permission.js:19
 msgid "Enter editing"
-msgstr ""
+msgstr "Vào chỉnh sửa"
 
 #: src/control/Permission.js:76
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -1990,7 +1975,7 @@ msgstr "\"Proxy chậm\""
 
 #: src/control/Toolbar.js:667
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Sao chép toàn bộ thông tin phiên bản bằng Tiếng Anh"
 
 #: src/control/Toolbar.js:750
 msgid "Insert hyperlink"
@@ -2010,7 +1995,7 @@ msgstr "Bạn có chắc chắn muốn xóa trang này không?"
 
 #: src/control/jsdialog/Widget.TreeView.js:533
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Các tiêu đề và đối tượng mà bạn thêm vào tài liệu sẽ xuất hiện ở đây"
 
 #: src/core/Socket.js:56
 msgid "Oops, there is a problem connecting to %productName: "
@@ -2032,11 +2017,11 @@ msgstr "TẢI LẠI"
 
 #: src/core/Socket.js:591
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Cảnh báo cấu hình cụm"
 
 #: src/core/Socket.js:594
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Sai máy chủ, đang kết nối lại…"
 
 #: src/core/Socket.js:601
 msgid "COOLWSD version:"
@@ -2056,7 +2041,7 @@ msgstr "Phiên bản LOKit:"
 
 #: src/core/Socket.js:732
 msgid "Document is getting migrated"
-msgstr ""
+msgstr "Tài liệu đang được di chuyển"
 
 #: src/core/Socket.js:759
 msgid "Session terminated by document owner"
@@ -2311,6 +2296,11 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"Cụm %productName của bạn dường như bị định cấu hình sai hoặc mở rộng quy mô "
+"nhanh chóng - vui lòng liên hệ với quản trị viên hệ thống của bạn. Việc tiếp "
+"tục chỉnh sửa có thể dẫn đến việc nhiều người dùng không nhìn thấy nhau, "
+"xung đột trong việc lưu trữ tài liệu và/hoặc các vấn đề về sao chép/dán. Dự "
+"kiến kết nối serverId %0 cho routeToken %1 nhưng lại kết nối đến serverId %2"
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -2441,7 +2431,7 @@ msgstr "Giải quyết Chủ đề"
 #: src/layer/tile/CommentListSection.ts:1126
 #: src/layer/tile/CommentListSection.ts:1161
 msgid "Autosaved"
-msgstr ""
+msgstr "Tự động lưu"
 
 #: src/layer/tile/CommentSection.ts:255
 msgid "Open menu"
@@ -2475,7 +2465,7 @@ msgstr "Việc sao chép từ tài liệu đã bị tắt"
 
 #: src/map/Clipboard.js:238
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "cảnh báo: yêu cầu sao chép/dán quá thời gian"
 
 #: src/map/Clipboard.js:301
 msgid "Failed to download clipboard, please re-copy"
