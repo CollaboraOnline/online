@@ -107,16 +107,17 @@ L.Control.DownloadProgress = L.Control.extend({
 
 	_showDownloadComplete: function (inSnackbar) {
 		var modalId = this._getDownloadProgressDialogId();
-		var msg = _('Download completed and ready to be copied to clipboard.');
+		var snackbarMsg = _('Download completed and ready to be copied to clipboard.');
+		var dialogMsg = snackbarMsg + ' ' + _('From now on clipboard notifications will discreetly appear at the bottom.');
 		var buttonText = _('Copy') + ' (Ctrl + C)'; // TODO: on Mac Ctrl == Command?
 
 		if (inSnackbar) {
-			this._map.uiManager.showSnackbar(msg, buttonText,
+			this._map.uiManager.showSnackbar(snackbarMsg, buttonText,
 				this._onConfirmCopyAction.bind(this), this.options.snackbarTimeout);
 
 			this.setupKeyboardShortcutForSnackbar();
 		} else {
-			JSDialog.setMessageInModal(modalId, msg, '');
+			JSDialog.setMessageInModal(modalId, dialogMsg, '');
 			JSDialog.enableButtonInModal(modalId, modalId + '-response', true);
 			this.setupKeyboardShortcutForDialog(modalId);
 		}
@@ -250,6 +251,9 @@ L.Control.DownloadProgress = L.Control.extend({
 		this._map._clip.filterExecCopyPaste('.uno:Copy');
 		this._onClose();
 		this._setUserAlreadyWarned();
+
+		var msg = _('Content copied to clipboard');
+		this._map.uiManager.showSnackbar(msg);
 	},
 
 	_onClose: function () {
