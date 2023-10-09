@@ -499,7 +499,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'class': 'unocollapsenotebookbar',
 								'type': 'menubartoolitem',
 								'text': _('Collapse Tabs'),
-								'command': _('Collapse Notebook Bar'),
 								'accessibility': { focusBack: true, combination: 'CU', de: null }
 							}
 						]
