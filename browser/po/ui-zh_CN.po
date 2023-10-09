@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-08-24 09:25+0200\n"
-"PO-Revision-Date: 2022-10-10 13:26+0000\n"
-"Last-Translator: Eric <hamburger1024@mailbox.org>\n"
+"PO-Revision-Date: 2023-10-09 07:55+0000\n"
+"Last-Translator: BY <alucard_118@163.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -114,11 +114,11 @@ msgstr "已修改"
 
 #: admin/admin.strings.js:29
 msgid "Uploaded"
-msgstr ""
+msgstr "已上传"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
-msgstr ""
+msgstr "WOPI 主机"
 
 #: admin/admin.strings.js:31
 msgid "Kill"
@@ -304,7 +304,7 @@ msgstr "无法通过 %0 协议验证此会话"
 
 #: admin/src/AdminSocketOverview.js:420
 msgid "Warning"
-msgstr ""
+msgstr "注意"
 
 #: admin/src/AdminSocketSettings.js:35
 msgid "Are you sure you want to shut down the server?"
@@ -360,7 +360,7 @@ msgstr " 秒"
 
 #: js/w2ui-1.5.rc1.js:3003
 msgid "Recent"
-msgstr ""
+msgstr "最近"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
@@ -372,7 +372,7 @@ msgstr "自动颜色"
 
 #: src/control/Control.AlertDialog.js:42
 msgid "External link"
-msgstr ""
+msgstr "外部链接"
 
 #: src/control/Control.AlertDialog.js:43
 msgid "Open link"
@@ -384,7 +384,7 @@ msgstr "服务器在处理 %1 命令时遇到了 %0 错误。"
 
 #: src/control/Control.Command.js:80
 msgid "Unlock"
-msgstr ""
+msgstr "解锁"
 
 #: src/control/Control.ContextMenu.js:187 src/control/Toolbar.js:1039
 msgid "Delete"
@@ -396,7 +396,7 @@ msgstr "选择性粘贴"
 
 #: src/control/Control.DocumentNameInput.js:81
 msgid "Path"
-msgstr ""
+msgstr "路径"
 
 #: src/control/Control.DocumentRepair.js:18
 #: src/control/Control.DocumentRepair.js:19
@@ -414,19 +414,19 @@ msgstr "类型"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "What?"
-msgstr ""
+msgstr "类型?"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "Who?"
-msgstr ""
+msgstr "所有者？"
 
 #: src/control/Control.DocumentRepair.js:131
 msgid "When?"
-msgstr ""
+msgstr "时间？"
 
 #: src/control/Control.DocumentRepair.js:150
 msgid "You have not done anything to rollback yet..."
-msgstr ""
+msgstr "还没有做任何回滚操作..."
 
 #: src/control/Control.DocumentRepair.js:160
 msgid "Redo"
@@ -446,7 +446,7 @@ msgstr "确认复制到剪贴板"
 
 #: src/control/Control.FormulaBar.js:45
 msgid "cell address"
-msgstr ""
+msgstr "单元格地址"
 
 #: src/control/Control.FormulaBarJSDialog.js:43
 #: src/control/Control.FormulaBarJSDialog.js:89
@@ -455,7 +455,7 @@ msgstr "函数向导"
 
 #: src/control/Control.FormulaBarJSDialog.js:54
 msgid "Formula"
-msgstr ""
+msgstr "公式"
 
 #: src/control/Control.FormulaBarJSDialog.js:60
 #: src/control/Control.MobileTopBar.js:42
@@ -474,11 +474,11 @@ msgstr "平均值"
 
 #: src/control/Control.JSDialogBuilder.js:156
 msgid "Min"
-msgstr ""
+msgstr "最小值"
 
 #: src/control/Control.JSDialogBuilder.js:157
 msgid "Max"
-msgstr ""
+msgstr "最大值"
 
 #: src/control/Control.JSDialogBuilder.js:158
 #: src/control/Control.StatusBar.js:340
@@ -572,7 +572,7 @@ msgstr "单元格边框"
 
 #: src/control/Control.JSDialogBuilder.js:3132
 msgid "Automatic"
-msgstr ""
+msgstr "自动"
 
 #: src/control/Control.JSDialogBuilder.js:3271
 #: src/control/Control.Menubar.js:805
@@ -597,11 +597,11 @@ msgstr "无 (不检查拼写)"
 
 #: src/control/Control.LanguageDialog.js:72
 msgid "Select language"
-msgstr ""
+msgstr "选择语言"
 
 #: src/control/Control.LanguageDialog.js:93
 msgid "Language"
-msgstr ""
+msgstr "语言"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:82
 #: src/control/Control.Menubar.js:920
@@ -675,9 +675,8 @@ msgid "EPUB (.epub)"
 msgstr "电子出版物 (.epub)"
 
 #: src/control/Control.Menubar.js:76
-#, fuzzy
 msgid "Rename Document"
-msgstr "修复文档"
+msgstr "重新命名文档"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:383
 #: src/control/Control.Menubar.js:531 src/control/Control.Menubar.js:660
@@ -707,9 +706,8 @@ msgstr "下载为"
 #: src/control/Control.NotebookbarBuilder.js:590
 #: src/control/Control.NotebookbarBuilder.js:619
 #: src/control/Control.NotebookbarBuilder.js:648
-#, fuzzy
 msgid "PDF Document (.pdf) as..."
-msgstr "PDF 文档 (.pdf)"
+msgstr "PDF 文档 (.pdf)..."
 
 #: src/control/Control.Menubar.js:90 src/control/Control.Menubar.js:395
 #: src/control/Control.Menubar.js:541 src/control/Control.Menubar.js:672
@@ -761,7 +759,7 @@ msgstr "重置缩放"
 #: src/control/Control.NotebookbarImpress.js:436
 #: src/control/Control.NotebookbarWriter.js:1366
 msgid "Toggle UI Mode"
-msgstr ""
+msgstr "切换UI模式"
 
 #: src/control/Control.Menubar.js:129 src/control/Control.Menubar.js:422
 #: src/control/Control.NotebookbarWriter.js:1380
@@ -784,7 +782,7 @@ msgstr "显示状态栏"
 #: src/control/Control.Menubar.js:131 src/control/Control.Menubar.js:424
 #: src/control/Control.Menubar.js:572 src/control/Control.Menubar.js:700
 msgid "Hide Menu Bar"
-msgstr ""
+msgstr "隐藏菜单栏"
 
 #: src/control/Control.Menubar.js:132 src/control/Control.Menubar.js:425
 #: src/control/Control.Menubar.js:568 src/control/Control.Menubar.js:701
@@ -794,7 +792,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:474
 #: src/control/Control.NotebookbarWriter.js:1412
 msgid "Dark Mode"
-msgstr ""
+msgstr "深色模式"
 
 #: src/control/Control.Menubar.js:140 src/control/Control.Menubar.js:436
 #: src/control/Control.Menubar.js:575 src/control/Control.Menubar.js:711
@@ -830,22 +828,22 @@ msgstr "引用(~S)"
 #: src/control/Control.Menubar.js:279
 #: src/control/Control.NotebookbarWriter.js:1772
 msgid "Update Index"
-msgstr ""
+msgstr "更新索引"
 
 #: src/control/Control.Menubar.js:288
 #: src/control/Control.NotebookbarWriter.js:1868
 msgid "Add Citation"
-msgstr ""
+msgstr "添加引用"
 
 #: src/control/Control.Menubar.js:289
 #: src/control/Control.NotebookbarWriter.js:1880
 msgid "Add Citation Note"
-msgstr ""
+msgstr "添加引文注释"
 
 #: src/control/Control.Menubar.js:290
 #: src/control/Control.NotebookbarWriter.js:1855
 msgid "Add Bibliography"
-msgstr ""
+msgstr "添加参考文献"
 
 #: src/control/Control.Menubar.js:292
 #: src/control/Control.NotebookbarWriter.js:1898
@@ -865,19 +863,19 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:322 src/control/Control.Menubar.js:1193
 msgid "Insert Rich Text"
-msgstr ""
+msgstr "插入富文本"
 
 #: src/control/Control.Menubar.js:323 src/control/Control.Menubar.js:1194
 msgid "Insert Checkbox"
-msgstr ""
+msgstr "插入复选框"
 
 #: src/control/Control.Menubar.js:324 src/control/Control.Menubar.js:1195
 msgid "Insert Dropdown"
-msgstr ""
+msgstr "插入下拉列表"
 
 #: src/control/Control.Menubar.js:325 src/control/Control.Menubar.js:1196
 msgid "Insert Picture"
-msgstr ""
+msgstr "插入图片"
 
 #: src/control/Control.Menubar.js:326 src/control/Control.Menubar.js:1197
 msgid "Insert Date"
@@ -900,7 +898,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:360
 #: src/control/Control.NotebookbarWriter.js:358
 msgid "Forum"
-msgstr ""
+msgstr "论坛"
 
 #: src/control/Control.Menubar.js:361 src/control/Control.Menubar.js:513
 #: src/control/Control.Menubar.js:639 src/control/Control.Menubar.js:891
@@ -934,7 +932,7 @@ msgstr "最新更新"
 #: src/control/Control.Menubar.js:1076 src/control/Control.Menubar.js:1147
 #: src/control/Control.NotebookbarWriter.js:433
 msgid "Send Feedback"
-msgstr ""
+msgstr "发送反馈"
 
 #: src/control/Control.Menubar.js:366 src/control/Control.Menubar.js:518
 #: src/control/Control.Menubar.js:644 src/control/Control.Menubar.js:896
@@ -979,7 +977,7 @@ msgstr "保存批注"
 #: src/control/Control.Menubar.js:426
 #: src/control/Control.NotebookbarImpress.js:468
 msgid "Master View"
-msgstr ""
+msgstr "主视图"
 
 #: src/control/Control.Menubar.js:500 src/control/Control.Menubar.js:1022
 #: src/control/Control.PresentationBar.js:64
@@ -1041,11 +1039,11 @@ msgstr "页面设置"
 
 #: src/control/Control.Menubar.js:1092
 msgid "Define print area"
-msgstr ""
+msgstr "自定义打印区域"
 
 #: src/control/Control.Menubar.js:1093
 msgid "Remove print area"
-msgstr ""
+msgstr "删除打印区域"
 
 #: src/control/Control.Menubar.js:1368 src/control/Control.StatusBar.js:570
 msgid "Reset to Default Language"
@@ -1059,15 +1057,15 @@ msgstr "更多..."
 
 #: src/control/Control.Menubar.js:1699
 msgid "Use Compact view"
-msgstr ""
+msgstr "使用紧凑视图"
 
 #: src/control/Control.Menubar.js:1701
 msgid "Use Tabbed view"
-msgstr ""
+msgstr "使用标签栏视图"
 
 #: src/control/Control.Menubar.js:1759 src/control/Control.Menubar.js:1772
 msgid "Read-only mode"
-msgstr ""
+msgstr "只读模式"
 
 #: src/control/Control.Menubar.js:1793
 msgid "Insert Shape"
@@ -1075,7 +1073,7 @@ msgstr "插入形状"
 
 #: src/control/Control.Menubar.js:2010
 msgid "file type icon"
-msgstr ""
+msgstr "文件类型图标"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:130
@@ -1106,12 +1104,12 @@ msgstr "渐变终点"
 
 #: src/control/Control.NotebookbarBuilder.js:345
 msgid "Tap to expand"
-msgstr ""
+msgstr "点击展开"
 
 #: src/control/Control.NotebookbarBuilder.js:346
 #: src/control/Control.NotebookbarBuilder.js:390
 msgid "Tap to collapse"
-msgstr ""
+msgstr "点击折叠"
 
 #: src/control/Control.NotebookbarBuilder.js:610
 #: src/control/Control.NotebookbarCalc.js:197
@@ -1125,23 +1123,23 @@ msgstr "插入本地图像"
 
 #: src/control/Control.NotebookbarBuilder.js:1023
 msgid "Very Tight"
-msgstr ""
+msgstr "非常紧的"
 
 #: src/control/Control.NotebookbarBuilder.js:1024
 msgid "Tight"
-msgstr ""
+msgstr "紧凑的"
 
 #: src/control/Control.NotebookbarBuilder.js:1025
 msgid "Normal"
-msgstr ""
+msgstr "正常"
 
 #: src/control/Control.NotebookbarBuilder.js:1026
 msgid "Loose"
-msgstr ""
+msgstr "宽松的"
 
 #: src/control/Control.NotebookbarBuilder.js:1027
 msgid "Very Loose"
-msgstr ""
+msgstr "非常松的"
 
 #: src/control/Control.NotebookbarCalc.js:13
 #: src/control/Control.NotebookbarDraw.js:52
@@ -1223,7 +1221,7 @@ msgstr "帮助(~H)"
 #: src/control/Control.NotebookbarImpress.js:171
 #: src/control/Control.NotebookbarWriter.js:156
 msgid "Save As"
-msgstr ""
+msgstr "保存为"
 
 #: src/control/Control.NotebookbarCalc.js:125
 #: src/control/Control.NotebookbarDraw.js:160
@@ -1251,7 +1249,7 @@ msgstr "查看历史记录"
 #: src/control/Control.NotebookbarImpress.js:240
 #: src/control/Control.NotebookbarWriter.js:217
 msgid "Download"
-msgstr ""
+msgstr "下载"
 
 #: src/control/Control.NotebookbarCalc.js:190
 msgid "ODF Spreadsheet (.ods)"
@@ -1269,7 +1267,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:367
 #: src/control/Control.NotebookbarWriter.js:332
 msgid "Rename"
-msgstr ""
+msgstr "重命名"
 
 #: src/control/Control.NotebookbarCalc.js:618
 msgid "General"
