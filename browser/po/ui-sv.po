@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-09 09:57+0200\n"
-"PO-Revision-Date: 2023-09-02 09:16+0000\n"
+"PO-Revision-Date: 2023-10-09 13:26+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -492,12 +492,12 @@ msgstr "Antal"
 #: src/control/Control.JSDialogBuilder.js:196
 #: src/control/Control.Menubar.js:675
 msgid "Active sheet"
-msgstr ""
+msgstr "Aktivt blad"
 
 #: src/control/Control.JSDialogBuilder.js:197
 #: src/control/Control.Menubar.js:676 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "Alla blad"
 
 #: src/control/Control.JSDialogBuilder.js:560
 msgid "Solid"
@@ -1662,7 +1662,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "Aktivt blad"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -2018,11 +2018,11 @@ msgstr "LADDA OM"
 
 #: src/core/Socket.js:591
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Kluster-konfigurationsvarning"
 
 #: src/core/Socket.js:594
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Fel server, försöker ansluta igen ..."
 
 #: src/core/Socket.js:601
 msgid "COOLWSD version:"
@@ -2041,9 +2041,8 @@ msgid "LOKit version:"
 msgstr "LOKit-version:"
 
 #: src/core/Socket.js:732
-#, fuzzy
 msgid "Document is getting migrated"
-msgstr "Dokumentet håller på att migreras..."
+msgstr "Dokumentet håller på att migreras"
 
 #: src/core/Socket.js:759
 msgid "Session terminated by document owner"
@@ -2297,6 +2296,11 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"Ditt %productName-kluster verkar vara felkonfigurerat eller skalar upp "
+"väldigt snabbt - kontakta din systemadministratör. Om du fortsätter redigera "
+"kan det leda till att användare inte ser varandra, konflikter vid lagring av "
+"dokument och / eller kopiera-klistra-in-problem. Förväntat server-id %0 för "
+"rutt-token %1 men är ansluten till server-id %2"
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -2430,7 +2434,7 @@ msgstr "Lös tråd"
 #: src/layer/tile/CommentListSection.ts:1126
 #: src/layer/tile/CommentListSection.ts:1161
 msgid "Autosaved"
-msgstr ""
+msgstr "Automatisk sparning"
 
 #: src/layer/tile/CommentSection.ts:255
 msgid "Open menu"
