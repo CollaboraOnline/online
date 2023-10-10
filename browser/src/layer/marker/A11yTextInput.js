@@ -19,6 +19,11 @@ L.A11yTextInput = L.TextInput.extend({
 		// Used for signaling when in a mobile device the user tapped the edit button
 		this._justSwitchedToEditMode = false;
 
+		// Used when editing a shape text content.
+		this._isEditingInSelection = false;
+		this._hasAnySelection = false;
+
+
 		// In core text selection exists even if it's empty and <backspace> deletes the empty selection
 		// instead of the previous character.
 		this._hasSelection = false;
@@ -200,17 +205,15 @@ L.A11yTextInput = L.TextInput.extend({
 	},
 
 	_updateTable: function(outCount, inList, row, col, rowSpan, colSpan) {
-		if (this._isDebugOn) {
-			this._log('_updateTable: '
-				+ '\n outCount: ' + outCount
-				+ '\n inList: ' + inList.toString()
-				+ '\n row: ' + row + ', rowSpan: ' + rowSpan
-				+ '\n col: ' + col + ', colSpan: ' + colSpan
-			);
-		}
+		this._log('_updateTable: '
+			+ '\n outCount: ' + outCount
+			+ '\n inList: ' + inList.toString()
+			+ '\n row: ' + row + ', rowSpan: ' + rowSpan
+			+ '\n col: ' + col + ', colSpan: ' + colSpan
+		);
 
-		if (this._timeoutForTableDescription)
-			clearTimeout(this._timeoutForTableDescription);
+		if (this._timeoutForA11yDescription)
+			clearTimeout(this._timeoutForA11yDescription);
 
 		var eventDescription = '';
 		if (outCount > 0 || inList.length > 0) {
@@ -251,7 +254,7 @@ L.A11yTextInput = L.TextInput.extend({
 		this._setDescription(eventDescription);
 
 		var that = this;
-		this._timeoutForTableDescription = setTimeout(function() {
+		this._timeoutForA11yDescription = setTimeout(function() {
 			that._setDescription('');
 		}, 1000);
 	},
@@ -259,6 +262,55 @@ L.A11yTextInput = L.TextInput.extend({
 	onAccessibilityFocusedCellChanged: function(outCount, inList, row, col, rowSpan, colSpan, paragraph) {
 		this._setFocusedParagraph(paragraph.content, parseInt(paragraph.position), parseInt(paragraph.start), parseInt(paragraph.end));
 		this._updateTable(outCount, inList, row + 1, col + 1, rowSpan, colSpan);
+	},
+
+	onAccessibilityEditingInSelectionState: function(cell, enabled, selectionDescr, paragraph) {
+		this._log('onAccessibilityEditingInSelectionState: cell: ' + cell + ', enabled: ' + enabled);
+		if (!cell) {
+			this._isEditingInSelection = enabled;
+		}
+		if (enabled) {
+			clearTimeout(this._timeoutForA11yDescription);
+			var eventDescription = '';
+			if (typeof selectionDescr === 'string' && selectionDescr.length > 0)
+				eventDescription += selectionDescr + '. ';
+			eventDescription += _('Editing activated. ');
+			if (typeof paragraph === 'string' && paragraph.length > 0)
+				eventDescription += paragraph;
+			this._setDescription(eventDescription);
+			this._timeoutForA11yDescription = setTimeout(function () {
+				this._setDescription('');
+			}.bind(this), 1000);
+		}
+	},
+
+	onAccessibilitySelectionChanged: function(cell, action, name, textContent) {
+		this._log('onAccessibilitySelectionChanged: cell: ' + cell + ', action: ' + action + ', name: ' + name);
+		if (this._timeoutForA11yDescription)
+			clearTimeout(this._timeoutForA11yDescription);
+		this._emptyArea();
+		var eventDescription = '';
+		if (action === 'create' || action === 'add') {
+			this._hasAnySelection = true;
+			eventDescription =  name + ' ' + _('selected') + '. ';
+			if (typeof textContent === 'string' && textContent.length > 0) {
+				eventDescription += (cell ? '' : _('Has text: ')) + textContent;
+			}
+		}
+		else if (action === 'remove') {
+			this._hasAnySelection = false;
+			eventDescription = name + ' ' + _('unselected');
+		}
+		else if (action === 'delete') {
+			this._hasAnySelection = false;
+			eventDescription = name + ' ' + _('deleted');
+		}
+		this._setDescription(eventDescription);
+		if (action !== 'create' && action !== 'add') {
+			this._timeoutForA11yDescription = setTimeout(function () {
+				this._setDescription('');
+			}.bind(this), 1000);
+		}
 	},
 
 	// Check if a UTF-16 pair represents a Unicode code point

@@ -981,68 +981,84 @@ L.TextInput = L.Layer.extend({
 			}
 		}
 
-		// In order to allow screen reader to track caret navigation properly even if there is some connection delay
-		// default behaviour for Left/Right arrow key press is no more prevented in Map.Keyboard._handleKeyEvent,
-		// Here we set _isLeftRightArrow flag and handle some special cases.
 		if (this.hasAccessibilitySupport()) {
-			this._isLeftRightArrow = 0;
-			if (ev.key === 'ArrowLeft') {
-				this._isLeftRightArrow = -1;
-			} else if (ev.key === 'ArrowRight') {
-				this._isLeftRightArrow = 1;
-			}
-
-			// If we are at paragraph begin/end and left/right arrow is pressed, we need to prevent default behaviour
-			if (this._isLeftRightArrow) {
-				clearTimeout(this._onNavigationEndTimeout);
-				if (!this._isSelectionValid() || this._isComposing ||
-					(this._isLeftRightArrow > 0 && this._isCursorAtEnd()) ||
-					(this._isLeftRightArrow < 0 && this._isCursorAtStart())) {
-					this._log('_onKeyDown: preventDefault');
-					ev.preventDefault();
+			if ((this._hasAnySelection && !this._isEditingInSelection && this._map.getDocType() !== 'spreadsheet') ||
+				(!this._hasAnySelection && this._map.getDocType() === 'presentation')) {
+				if (!L.browser.cypressTest) {
+					var allowedKeyEvent =
+						this._map.keyboard.allowedKeyCodeWhenNotEditing[ev.keyCode] ||
+						ev.ctrlKey ||
+						ev.altKey ||
+						(this._newlineHint && ev.shiftKey);
+					if (!allowedKeyEvent) {
+						window.console.log('TextInput._onKeyDown: any input default prevented since no shape editing is active.');
+						ev.preventDefault();
+					}
 				}
 			}
+			// In order to allow screen reader to track caret navigation properly even if there is some connection delay
+			// default behaviour for Left/Right arrow key press is no more prevented in Map.Keyboard._handleKeyEvent,
+			// Here we set _isLeftRightArrow flag and handle some special cases.
+			else {
+				this._isLeftRightArrow = 0;
+				if (ev.key === 'ArrowLeft') {
+					this._isLeftRightArrow = -1;
+				} else if (ev.key === 'ArrowRight') {
+					this._isLeftRightArrow = 1;
+				}
 
-			if (this._isLeftRightArrow) {
-				if (this._listPrefixLength > 0) {
-					var cursorPosition = this._getSelectionEnd();
-					if (cursorPosition === this._listPrefixLength && this._isLeftRightArrow < 0) {
-						// if caret is at begin of list entry content: "1. |Item 1" and shift+left arrow is pressed,
-						// then caret is moved at the end of previous paragraph, if any; or it's not moved at all
-						// if we are at the document beginning; so we only need to prevent default behaviour
+				// If we are at paragraph begin/end and left/right arrow is pressed, we need to prevent default behaviour
+				if (this._isLeftRightArrow) {
+					clearTimeout(this._onNavigationEndTimeout);
+					if (!this._isSelectionValid() || this._isComposing ||
+						(this._isLeftRightArrow > 0 && this._isCursorAtEnd()) ||
+						(this._isLeftRightArrow < 0 && this._isCursorAtStart())) {
+						this._log('_onKeyDown: preventDefault');
 						ev.preventDefault();
-						if (!ev.shiftKey) {
-							// when shift is not pressed, caret is moved ahead of list prefix: "|1. Item 1",
-							// selection is cleared, if any
-							this._updateCursorPosition(0);
+					}
+				}
+
+				if (this._isLeftRightArrow) {
+					if (this._listPrefixLength > 0) {
+						var cursorPosition = this._getSelectionEnd();
+						if (cursorPosition === this._listPrefixLength && this._isLeftRightArrow < 0) {
+							// if caret is at begin of list entry content: "1. |Item 1" and shift+left arrow is pressed,
+							// then caret is moved at the end of previous paragraph, if any; or it's not moved at all
+							// if we are at the document beginning; so we only need to prevent default behaviour
+							ev.preventDefault();
+							if (!ev.shiftKey) {
+								// when shift is not pressed, caret is moved ahead of list prefix: "|1. Item 1",
+								// selection is cleared, if any
+								this._updateCursorPosition(0);
+							}
+						}
+						// if caret is ahead of list prefix: "|1. Item 1" and right arrow is pressed, with or without shift,
+						// caret is moved at begin of list entry content: "1. |Item 1", nothing is selected
+						if (cursorPosition === 0 && this._isLeftRightArrow > 0) {
+							ev.preventDefault();
+							this._updateCursorPosition(this._listPrefixLength);
 						}
 					}
-					// if caret is ahead of list prefix: "|1. Item 1" and right arrow is pressed, with or without shift,
-					// caret is moved at begin of list entry content: "1. |Item 1", nothing is selected
-					if (cursorPosition === 0 && this._isLeftRightArrow > 0) {
-						ev.preventDefault();
-						this._updateCursorPosition(this._listPrefixLength);
-					}
-				}
 
-				// When left/right arrow is pressed and text is selected, selection is cleared
-				// and caret needs to be moved by one char left/right.
-				// However, for an editable div the behaviour is different:
-				// - when left arrow is pressed caret moves at start of previously selected text
-				// - when right arrow is pressed caret moves at end of previously selected text
-				// So we need to prevent default behaviour and simulate the same behaviour that occurs in LibreOffice.
-				if (!ev.shiftKey) {
-					var selection = window.getSelection();
-					if (!selection.isCollapsed) {
-						// The case where a left arrow is pressed with caret at the beginning of a list entry content
-						// is already handled earlier.
-						if (!(this._listPrefixLength > 0 &&
-							this._lastCursorPosition === this._listPrefixLength && this._isLeftRightArrow < 0)) {
-							this._log('_onKeyDown: pressed left/right arrows with selected text');
-							ev.preventDefault();
-							var pos = this._lastCursorPosition + this._isLeftRightArrow;
-							// _updateCursorPosition takes care to normalize pos value
-							this._updateCursorPosition(pos);
+					// When left/right arrow is pressed and text is selected, selection is cleared
+					// and caret needs to be moved by one char left/right.
+					// However, for an editable div the behaviour is different:
+					// - when left arrow is pressed caret moves at start of previously selected text
+					// - when right arrow is pressed caret moves at end of previously selected text
+					// So we need to prevent default behaviour and simulate the same behaviour that occurs in LibreOffice.
+					if (!ev.shiftKey) {
+						var selection = window.getSelection();
+						if (!selection.isCollapsed) {
+							// The case where a left arrow is pressed with caret at the beginning of a list entry content
+							// is already handled earlier.
+							if (!(this._listPrefixLength > 0 &&
+								this._lastCursorPosition === this._listPrefixLength && this._isLeftRightArrow < 0)) {
+								this._log('_onKeyDown: pressed left/right arrows with selected text');
+								ev.preventDefault();
+								var pos = this._lastCursorPosition + this._isLeftRightArrow;
+								// _updateCursorPosition takes care to normalize pos value
+								this._updateCursorPosition(pos);
+							}
 						}
 					}
 				}
