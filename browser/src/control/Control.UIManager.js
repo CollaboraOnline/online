@@ -938,7 +938,7 @@ L.Control.UIManager = L.Control.extend({
 			'init_focus_id': action ? buttonId : undefined,
 			children: [
 				{
-					id: 'snackbar-container',
+					id: hasProgress ? 'snackbar-container-progress' : 'snackbar-container',
 					type: 'container',
 					children: [
 						action ? {id: labelId, type: 'fixedtext', text: label, labelFor: buttonId} : {id: 'label-no-action', type: 'fixedtext', text: label},
