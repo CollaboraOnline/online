@@ -1337,7 +1337,7 @@ app.definitions.Socket = L.Class.extend({
 			// Retry in a bit.
 			setTimeout(function() {
 				that._onStatusMsg(textMsg, command);
-			}, 100);
+			}, 10);
 			return;
 		}
 
