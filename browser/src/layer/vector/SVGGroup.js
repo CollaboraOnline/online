@@ -76,6 +76,24 @@ L.SVGGroup = L.Layer.extend({
 		var point = this._map.latLngToLayerPoint(this._bounds.getNorthWest());
 		svgLastChild.setAttribute('x', point.x);
 		svgLastChild.setAttribute('y', point.y);
+
+		var videoContainer = svgLastChild.querySelector('body');
+
+		function _fixSVGPos() {
+			var mat = svgLastChild.getScreenCTM();
+			var boundingBox = this._renderer._container.getBoundingClientRect();
+			videoContainer.style.transform = 'matrix(' + [mat.a, mat.b, mat.c, mat.d, mat.e - boundingBox.x, mat.f - boundingBox.y].join(', ') + ')';
+		}
+		var fixSVGPos = _fixSVGPos.bind(this);
+
+		if (L.Browser.safari) {
+			fixSVGPos();
+			var observer = new MutationObserver(fixSVGPos);
+
+			observer.observe(this._renderer._container, {
+				attributes: true
+			});
+		}
 	},
 
 	addEmbeddedSVG: function (svgString) {
