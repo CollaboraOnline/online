@@ -1386,7 +1386,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 .snackbar.jsdialog-window {
 	overflow: visible;
 }
-.snackbar #snackbar-container {
+.snackbar #snackbar-container,
+.snackbar #snackbar-container-progress {
 	align-items: center;
 	max-width: calc(80vw);
 }
@@ -1435,6 +1436,16 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .snackbar.jsdialog-container #button.ui-pushbutton.jsdialog {
 	padding: 8px;
+}
+
+#snackbar-container-progress .ui-progressbar {
+	display: grid;
+	grid-column: 1 / 3;
+}
+
+#snackbar-container-progress {
+	grid-template-rows: repeat(2, auto);
+	grid-template-columns: repeat(2, auto);
 }
 
 #mobile-wizard.popup.snackbar #button,
