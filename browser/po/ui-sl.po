@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-09 09:57+0200\n"
-"PO-Revision-Date: 2023-08-29 21:52+0000\n"
+"PO-Revision-Date: 2023-10-10 08:40+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:6
@@ -494,12 +494,12 @@ msgstr "Števec"
 #: src/control/Control.JSDialogBuilder.js:196
 #: src/control/Control.Menubar.js:675
 msgid "Active sheet"
-msgstr ""
+msgstr "Dejavni delovni list"
 
 #: src/control/Control.JSDialogBuilder.js:197
 #: src/control/Control.Menubar.js:676 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "Vsi delovni listi"
 
 #: src/control/Control.JSDialogBuilder.js:560
 msgid "Solid"
@@ -1664,7 +1664,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "Dejavni delovni list"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -2021,11 +2021,11 @@ msgstr "PONOVNO NALOŽI"
 
 #: src/core/Socket.js:591
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Opozorilo o konfiguraciji gruče"
 
 #: src/core/Socket.js:594
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Napačen strežnik, poteka ponovno povezovanje ..."
 
 #: src/core/Socket.js:601
 msgid "COOLWSD version:"
@@ -2044,9 +2044,8 @@ msgid "LOKit version:"
 msgstr "Različica LOKit:"
 
 #: src/core/Socket.js:732
-#, fuzzy
 msgid "Document is getting migrated"
-msgstr "Dokument je v postopku migracije ..."
+msgstr "Dokument je v postopku migracije"
 
 #: src/core/Socket.js:759
 msgid "Session terminated by document owner"
@@ -2303,6 +2302,11 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"Zdi se, da je vaša gruča %productName napačno prilagojena ali se hitro "
+"povečuje - obrnite se na skrbnika sistema. Nadaljevanje urejanja lahko "
+"povzroči, da se več uporabnikov med seboj ne bo videlo, da bo prišlo do "
+"sporov pri shranjevanju dokumentov in/ali težav s kopiranjem/prilepljanjem. "
+"Pričakovani serverId %0 za routeToken %1, vendar ste povezani s serverId %2"
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -2437,7 +2441,7 @@ msgstr "Razreši nit"
 #: src/layer/tile/CommentListSection.ts:1126
 #: src/layer/tile/CommentListSection.ts:1161
 msgid "Autosaved"
-msgstr ""
+msgstr "Samodejno shranjeno"
 
 #: src/layer/tile/CommentSection.ts:255
 msgid "Open menu"
