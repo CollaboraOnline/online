@@ -112,8 +112,10 @@ L.Control.DownloadProgress = L.Control.extend({
 		var buttonText = _('Copy') + ' (Ctrl + C)'; // TODO: on Mac Ctrl == Command?
 
 		if (inSnackbar) {
-			this._map.uiManager.showSnackbar(snackbarMsg, buttonText,
+			this._map.uiManager.showProgressBar(snackbarMsg, buttonText,
 				this._onConfirmCopyAction.bind(this), this.options.snackbarTimeout);
+
+			this._map.uiManager.setSnackbarProgress(100);
 
 			this.setupKeyboardShortcutForSnackbar();
 		} else {
