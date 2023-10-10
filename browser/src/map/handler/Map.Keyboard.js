@@ -721,35 +721,34 @@ L.Map.Keyboard = L.Handler.extend({
 		if (e.keyCode == this.keyCodes.CTRL)
 			return true;
 
-		if (e.type !== 'keydown' && e.key !== 'c' && e.key !== 'v' && e.key !== 'x' &&
+		if (e.type !== 'keydown' && e.keyCode !== this.keyCodes.C[DEFAULT] && e.keyCode !== this.keyCodes.V[DEFAULT] && e.keyCode !== this.keyCodes.X[DEFAULT] &&
 		/* Safari */ e.keyCode !== this.keyCodes.C[MAC] && e.keyCode !== this.keyCodes.V[MAC] && e.keyCode !== this.keyCodes.X[MAC]) {
 			e.preventDefault();
 			return true;
 		}
 
 		if (e.keyCode !== this.keyCodes.C[DEFAULT] && e.keyCode !== this.keyCodes.V[DEFAULT] && e.keyCode !== this.keyCodes.X[DEFAULT] &&
-		/* Safari */ e.keyCode !== this.keyCodes.C[MAC] && e.keyCode !== this.keyCodes.V[MAC] && e.keyCode !== this.keyCodes.X[MAC] &&
-			e.key !== 'c' && e.key !== 'v' && e.key !== 'x') {
+		/* Safari */ e.keyCode !== this.keyCodes.C[MAC] && e.keyCode !== this.keyCodes.V[MAC] && e.keyCode !== this.keyCodes.X[MAC]) {
 			// not copy or paste
 			e.preventDefault();
 		}
 
 		// CTRL + ALT + N for new document. This needs to be handled by the integrator.
-		if (this._isCtrlKey(e) && e.altKey && e.key.toUpperCase() === 'N') {
+		if (this._isCtrlKey(e) && e.altKey && e.keyCode === this.keyCodes.N) {
 			this._map.fire('postMessage', {msgId: 'UI_CreateFile', args: { DocumentType: this._map.getDocType() }});
 			e.preventDefault();
 			return true;
 		}
 
 		// CTRL + SHIFT + L is added to the core side for writer. Others can also be checked.
-		if (this._isCtrlKey(e) && e.shiftKey && e.key === 'L' && this._map.getDocType() !== 'text' && this._map.getDocType() !== 'spreadsheet') {
+		if (this._isCtrlKey(e) && e.shiftKey && e.keyCode === this.keyCodes.L && this._map.getDocType() !== 'text' && this._map.getDocType() !== 'spreadsheet') {
 			app.socket.sendMessage('uno .uno:DefaultBullet');
 			e.preventDefault();
 			return true;
 		}
 
 		// CTRL + ALT + O to open a document. This needs to be handled by the integrator.
-		if (this._isCtrlKey(e) && e.altKey && e.key.toUpperCase() === 'O') {
+		if (this._isCtrlKey(e) && e.altKey && e.keyCode === this.keyCodes.O) {
 			this._map.fire('postMessage', { msgId: 'UI_OpenDocument' });
 			e.preventDefault();
 			return true;
@@ -763,13 +762,13 @@ L.Map.Keyboard = L.Handler.extend({
 
 		// Handles paste special. The "Your browser" thing seems to indicate that this code
 		// snippet is relevant in a browser only.
-		if (!window.ThisIsAMobileApp && e.ctrlKey && e.shiftKey && e.altKey && (e.key === 'v' || e.key === 'V')) {
+		if (!window.ThisIsAMobileApp && e.ctrlKey && e.shiftKey && e.altKey && this.keyCodes.V.includes(e.keyCode)) {
 			this._map._clip._openPasteSpecialPopup();
 			return true;
 		}
 
 		// Handles unformatted paste
-		if (this._isCtrlKey(e) && e.shiftKey && (e.key === 'v' || e.key === 'V')) {
+		if (this._isCtrlKey(e) && e.shiftKey && this.keyCodes.V.includes(e.keyCode)) {
 			return true;
 		}
 
@@ -784,25 +783,25 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		}
 
-		if (this._isCtrlKey(e) && !e.shiftKey && (e.key === 'k' || e.key === 'K')) {
+		if (this._isCtrlKey(e) && !e.shiftKey && e.keyCode === this.keyCodes.K) {
 			this._map.showHyperlinkDialog();
 			e.preventDefault();
 			return true;
 		}
 
-		if (this._isCtrlKey(e) && (e.key === 'z' || e.key === 'Z')) {
+		if (this._isCtrlKey(e) && e.keyCode === this.keyCodes.Z) {
 			app.socket.sendMessage('uno .uno:Undo');
 			e.preventDefault();
 			return true;
 		}
 
-		if (this._isCtrlKey(e) && (e.key === 'y' || e.key === 'Y')) {
+		if (this._isCtrlKey(e) && e.keyCode === this.keyCodes.Y) {
 			app.socket.sendMessage('uno .uno:Redo');
 			e.preventDefault();
 			return true;
 		}
 
-		if (this._isCtrlKey(e) && !e.shiftKey && !e.altKey && (e.key === 'f' || e.key === 'F')) {
+		if (this._isCtrlKey(e) && !e.shiftKey && !e.altKey && e.keyCode === this.keyCodes.F) {
 			if (app.UI.language.fromURL === 'de' && this._map.getDocType() === 'text') {
 				this._map.sendUnoCommand('.uno:Navigator');
 			}
@@ -826,7 +825,7 @@ L.Map.Keyboard = L.Handler.extend({
 		if (e.altKey || e.shiftKey) {
 
 			// need to handle Ctrl + Alt + C separately for Firefox
-			if (e.key === 'c' && e.altKey) {
+			if (this.keyCodes.C.includes(e.keyCode) && e.altKey) {
 				this._map.insertComment();
 				return true;
 			}
@@ -892,15 +891,15 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 		/* Without specifying the key type, the messages are sent twice (both keydown/up) */
 		if (e.type === 'keydown' && window.ThisIsAMobileApp) {
-			if (e.key === 'c' || e.key === 'C') {
+			if (this.keyCodes.C.includes(e.keyCode)) {
 				app.socket.sendMessage('uno .uno:Copy');
 				return true;
 			}
-			else if (e.key === 'v' || e.key === 'V') {
+			else if (this.keyCodes.V.includes(e.keyCode)) {
 				app.socket.sendMessage('uno .uno:Paste');
 				return true;
 			}
-			else if (e.key === 'x' || e.key === 'X') {
+			else if (this.keyCodes.X.includes(e.keyCode)) {
 				app.socket.sendMessage('uno .uno:Cut');
 				return true;
 			}
@@ -962,7 +961,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		}
 		if (e.type === 'keypress' && (e.ctrlKey || e.metaKey) &&
-			(e.key === 'c' || e.key === 'v' || e.key === 'x')) {
+			(this.keyCodes.C.includes(e.keyCode) ||this.keyCodes.V.includes(e.keyCode) || this.keyCodes.X.includes(e.keyCode))) {
 			// need to handle this separately for Firefox
 			return true;
 		}
@@ -977,7 +976,7 @@ L.Map.Keyboard = L.Handler.extend({
 		else if (e.type === 'keydown' && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey && e.keyCode === this.keyCodes.F1)
 			return true;
 		// comment insert
-		else if (e.key === 'c' && e.altKey && e.altKey && e.ctrlKey && this._map.isPermissionEditForComments())
+		else if (this.keyCodes.C.includes(e.keyCode) && e.altKey && e.altKey && e.ctrlKey && this._map.isPermissionEditForComments())
 			return true;
 		// full-screen presentation
 		else if (e.type === 'keydown' && e.keyCode === this.keyCodes.F5 && this._map._docLayer._docType === 'presentation')
