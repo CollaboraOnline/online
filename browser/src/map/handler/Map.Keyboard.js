@@ -256,6 +256,39 @@ L.Map.Keyboard = L.Handler.extend({
 		zoomOut: [189, 109, 173]
 	},
 
+	allowedKeyCodeWhenNotEditing: {
+		27:    true,  // ESC
+		33:    true,  // pageUp
+		34:    true,  // pageDown
+		13:    true,  // enter
+		 8:    true,  // BACKSPACE
+		16:    true,  // SHIFT
+		17:    true,  // CTRL
+		18:    true,  // ALT
+		19:    true,  // PAUSE
+		20:    true,  // CAPSLOCK
+		35:    true,  // END
+		36:    true,  // HOME
+		45:    true,  // INSERT
+		46:    true,  // DELETE
+		91:    true,  // LEFTWINDOWKEY
+		92:    true,  // RIGHTWINDOWKEY
+		112:    true,  //F1
+		113:    true,  //F2
+		114:    true,  //F3
+		115:    true,  //F4
+		116:    true,  //F5
+		117:    true,  //F6
+		118:    true,  //F7
+		119:    true,  //F8
+		120:    true,  //F9
+		121:    true,  //F10
+		122:    true,  //F11
+		123:    true,  //F12
+		144:    true,  //NUMLOCK
+		145:    true,  //SCROLLLOCK
+	},
+
 	initialize: function (map) {
 		this._map = map;
 		this._setPanOffset(map.options.keyboardPanOffset);

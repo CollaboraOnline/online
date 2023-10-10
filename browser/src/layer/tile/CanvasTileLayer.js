@@ -1887,11 +1887,23 @@ L.CanvasTileLayer = L.Layer.extend({
 			var col = parseInt(obj.col);
 			var rowSpan = obj.rowSpan !== undefined ? parseInt(obj.rowSpan) : 1;
 			var colSpan = obj.colSpan !== undefined ? parseInt(obj.colSpan) : 1;
-			this._map._textInput.onAccessibilityFocusedCellChanged(outCount, inList, row, col, rowSpan, colSpan, obj.paragraph);
+			this._map._textInput.onAccessibilityFocusedCellChanged(
+				outCount, inList, row, col, rowSpan, colSpan, obj.paragraph);
+		}
+		else if (textMsg.startsWith('a11yeditinginselectionstate:')) {
+			obj = JSON.parse(textMsg.substring('a11yeditinginselectionstate:'.length + 1));
+			this._map._textInput.onAccessibilityEditingInSelectionState(
+				parseInt(obj.cell) > 0, parseInt(obj.enabled) > 0, obj.selection, obj.paragraph);
+		}
+		else if (textMsg.startsWith('a11yselectionchanged:')) {
+			obj = JSON.parse(textMsg.substring('a11yselectionchanged:'.length + 1));
+			this._map._textInput.onAccessibilitySelectionChanged(
+				parseInt(obj.cell) > 0, obj.action, obj.name, obj.text);
 		}
 		else if (textMsg.startsWith('a11yfocusedparagraph:')) {
 			obj = JSON.parse(textMsg.substring('a11yfocusedparagraph:'.length + 1));
-			this._map._textInput.setA11yFocusedParagraph(obj.content, parseInt(obj.position), parseInt(obj.start), parseInt(obj.end));
+			this._map._textInput.setA11yFocusedParagraph(
+				obj.content, parseInt(obj.position), parseInt(obj.start), parseInt(obj.end));
 		}
 		else if (textMsg.startsWith('a11ycaretposition:')) {
 			var pos = textMsg.substring('a11ycaretposition:'.length + 1);
