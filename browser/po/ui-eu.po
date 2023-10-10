@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-09 09:57+0200\n"
+"POT-Creation-Date: 2023-10-10 11:30+0200\n"
 "PO-Revision-Date: 2023-08-28 09:54+0000\n"
 "Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
@@ -784,11 +784,11 @@ msgstr "Erakutsi erregela"
 #: src/control/Control.Menubar.js:130 src/control/Control.Menubar.js:424
 #: src/control/Control.Menubar.js:573 src/control/Control.Menubar.js:705
 #: src/control/Control.NotebookbarCalc.js:877
-#: src/control/Control.NotebookbarCalc.js:1277
-#: src/control/Control.NotebookbarDraw.js:405
-#: src/control/Control.NotebookbarDraw.js:941
-#: src/control/Control.NotebookbarImpress.js:515
-#: src/control/Control.NotebookbarImpress.js:1060
+#: src/control/Control.NotebookbarCalc.js:1276
+#: src/control/Control.NotebookbarDraw.js:404
+#: src/control/Control.NotebookbarDraw.js:940
+#: src/control/Control.NotebookbarImpress.js:514
+#: src/control/Control.NotebookbarImpress.js:1059
 #: src/control/Control.NotebookbarWriter.js:883
 #: src/control/Control.NotebookbarWriter.js:1434
 msgid "Show Status Bar"
@@ -803,10 +803,10 @@ msgstr "Ezkutatu menu-barra"
 #: src/control/Control.Menubar.js:570 src/control/Control.Menubar.js:707
 #: src/control/Control.Menubar.js:957 src/control/Control.Menubar.js:1010
 #: src/control/Control.Menubar.js:1071 src/control/Control.Menubar.js:1131
-#: src/control/Control.NotebookbarCalc.js:1288
-#: src/control/Control.NotebookbarDraw.js:416
-#: src/control/Control.NotebookbarImpress.js:534
-#: src/control/Control.NotebookbarWriter.js:1453
+#: src/control/Control.NotebookbarCalc.js:1287
+#: src/control/Control.NotebookbarDraw.js:415
+#: src/control/Control.NotebookbarImpress.js:533
+#: src/control/Control.NotebookbarWriter.js:1452
 msgid "Dark Mode"
 msgstr "Modu iluna"
 
@@ -824,9 +824,9 @@ msgstr "Dena"
 
 #: src/control/Control.Menubar.js:174 src/control/Control.Menubar.js:447
 #: src/control/Control.Menubar.js:584 src/control/Control.Menubar.js:729
-#: src/control/Control.NotebookbarCalc.js:1411
-#: src/control/Control.NotebookbarDraw.js:1229
-#: src/control/Control.NotebookbarImpress.js:1236
+#: src/control/Control.NotebookbarCalc.js:1410
+#: src/control/Control.NotebookbarDraw.js:1228
+#: src/control/Control.NotebookbarImpress.js:1235
 #: src/control/Control.NotebookbarWriter.js:1081
 msgid "Smart Picker"
 msgstr "Selektore adimenduna"
@@ -841,38 +841,38 @@ msgid "References"
 msgstr "Erreferentziak"
 
 #: src/control/Control.Menubar.js:280
-#: src/control/Control.NotebookbarWriter.js:1813
+#: src/control/Control.NotebookbarWriter.js:1812
 msgid "Update Index"
 msgstr "Eguneratu indizea"
 
 #: src/control/Control.Menubar.js:289
-#: src/control/Control.NotebookbarWriter.js:1909
+#: src/control/Control.NotebookbarWriter.js:1908
 msgid "Add Citation"
 msgstr "Gehitu aipamena"
 
 #: src/control/Control.Menubar.js:290
-#: src/control/Control.NotebookbarWriter.js:1921
+#: src/control/Control.NotebookbarWriter.js:1920
 msgid "Add Citation Note"
 msgstr "Gehitu aipamenaren oharra"
 
 #: src/control/Control.Menubar.js:291
-#: src/control/Control.NotebookbarWriter.js:1896
+#: src/control/Control.NotebookbarWriter.js:1895
 msgid "Add Bibliography"
 msgstr "Gehitu bibliografia"
 
 #: src/control/Control.Menubar.js:293
-#: src/control/Control.NotebookbarWriter.js:1939
+#: src/control/Control.NotebookbarWriter.js:1938
 msgid "Refresh Citations"
 msgstr "Eguneratu aipamenak"
 
 #: src/control/Control.Menubar.js:294
-#: src/control/Control.NotebookbarWriter.js:1951
+#: src/control/Control.NotebookbarWriter.js:1950
 #: src/control/Control.Zotero.js:1436
 msgid "Unlink Citations"
 msgstr "Desestekatu aipamenak"
 
 #: src/control/Control.Menubar.js:295
-#: src/control/Control.NotebookbarWriter.js:1963
+#: src/control/Control.NotebookbarWriter.js:1962
 msgid "Citation Preferences"
 msgstr "Aipamenen hobespenak"
 
@@ -990,7 +990,7 @@ msgid "Save Comments"
 msgstr "Gorde iruzkinak"
 
 #: src/control/Control.Menubar.js:427
-#: src/control/Control.NotebookbarImpress.js:526
+#: src/control/Control.NotebookbarImpress.js:525
 msgid "Master View"
 msgstr "Ikuspegi nagusia"
 
@@ -1041,8 +1041,8 @@ msgstr "CSV fitxategia (.csv)"
 #: src/control/Control.Menubar.js:909 src/control/Control.Menubar.js:976
 #: src/control/Control.Menubar.js:1041 src/control/Control.Menubar.js:1096
 #: src/control/Control.NotebookbarCalc.js:876
-#: src/control/Control.NotebookbarDraw.js:940
-#: src/control/Control.NotebookbarImpress.js:1059
+#: src/control/Control.NotebookbarDraw.js:939
+#: src/control/Control.NotebookbarImpress.js:1058
 #: src/control/Control.NotebookbarWriter.js:882
 #: src/control/Control.StatusBar.js:194 src/control/Control.Zotero.js:211
 msgid "Search"
@@ -1392,33 +1392,26 @@ msgstr "Ikuspegi trinkoa"
 msgid "Collapse Tabs"
 msgstr "Tolestu fitxak"
 
-#: src/control/Control.NotebookbarCalc.js:1264
-#: src/control/Control.NotebookbarDraw.js:392
-#: src/control/Control.NotebookbarImpress.js:502
-#: src/control/Control.NotebookbarWriter.js:1447
-msgid "Collapse Notebook Bar"
-msgstr "Tolestu Koaderno-barra"
-
-#: src/control/Control.NotebookbarCalc.js:1276
-#: src/control/Control.NotebookbarDraw.js:404
-#: src/control/Control.NotebookbarImpress.js:514
+#: src/control/Control.NotebookbarCalc.js:1275
+#: src/control/Control.NotebookbarDraw.js:403
+#: src/control/Control.NotebookbarImpress.js:513
 #: src/control/Control.NotebookbarWriter.js:1433
 msgid "Status Bar"
 msgstr "Egoera-barra"
 
-#: src/control/Control.NotebookbarCalc.js:1362
+#: src/control/Control.NotebookbarCalc.js:1361
 msgid "Sparkline"
 msgstr "Grafiko txikia"
 
-#: src/control/Control.NotebookbarCalc.js:1494
-#: src/control/Control.NotebookbarCalc.js:2282
-#: src/control/Control.NotebookbarDraw.js:825
-#: src/control/Control.NotebookbarDraw.js:1314
-#: src/control/Control.NotebookbarImpress.js:936
-#: src/control/Control.NotebookbarImpress.js:1321
-#: src/control/Control.NotebookbarImpress.js:2352
+#: src/control/Control.NotebookbarCalc.js:1493
+#: src/control/Control.NotebookbarCalc.js:2281
+#: src/control/Control.NotebookbarDraw.js:824
+#: src/control/Control.NotebookbarDraw.js:1313
+#: src/control/Control.NotebookbarImpress.js:935
+#: src/control/Control.NotebookbarImpress.js:1320
+#: src/control/Control.NotebookbarImpress.js:2351
 #: src/control/Control.NotebookbarWriter.js:1037
-#: src/control/Control.NotebookbarWriter.js:2771
+#: src/control/Control.NotebookbarWriter.js:2770
 msgid "Shapes"
 msgstr "Formak"
 
@@ -1441,7 +1434,7 @@ msgid "ODF Presentation (.odp)"
 msgstr "ODF Aurkezpena (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:432
-#: src/control/Control.NotebookbarImpress.js:1045
+#: src/control/Control.NotebookbarImpress.js:1044
 msgid "Presentation"
 msgstr "Aurkezpena"
 
@@ -1870,8 +1863,8 @@ msgstr ""
 "bibliografia eguneratzea eragotziko du."
 
 #: src/control/Permission.js:18 src/control/Permission.js:19
-msgid "Enter editing"
-msgstr "Sartu edizioan"
+msgid "Edit document"
+msgstr ""
 
 #: src/control/Permission.js:76
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -2651,6 +2644,12 @@ msgstr ""
 ">itzulpenetan</a> edo <a target=\"_blank\" href=\""
 "https://collaboraonline.github.io/post/filebugs/\">erroreen txostenak "
 "bidaltzen</a> berauek erreproduzitzeko ezinbesteko pauso guztiekin."
+
+#~ msgid "Collapse Notebook Bar"
+#~ msgstr "Tolestu Koaderno-barra"
+
+#~ msgid "Enter editing"
+#~ msgstr "Sartu edizioan"
 
 #~ msgid "~View"
 #~ msgstr "~Ikusi"
