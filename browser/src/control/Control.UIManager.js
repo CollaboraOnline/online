@@ -965,8 +965,8 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	/// shows snackbar with progress
-	showProgressBar: function(message, buttonText, callback) {
-		this.showSnackbar(message, buttonText, callback, -1, true);
+	showProgressBar: function(message, buttonText, callback, timeout) {
+		this.showSnackbar(message, buttonText, callback, timeout ? timeout : -1, true);
 	},
 
 	/// sets progressbar status, value should be in range 0-100
