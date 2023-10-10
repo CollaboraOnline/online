@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-09 09:57+0200\n"
-"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"PO-Revision-Date: 2023-10-10 08:40+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -490,12 +490,12 @@ msgstr "כמות"
 #: src/control/Control.JSDialogBuilder.js:196
 #: src/control/Control.Menubar.js:675
 msgid "Active sheet"
-msgstr ""
+msgstr "גיליון פעיל"
 
 #: src/control/Control.JSDialogBuilder.js:197
 #: src/control/Control.Menubar.js:676 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "כל הגיליונות"
 
 #: src/control/Control.JSDialogBuilder.js:560
 msgid "Solid"
@@ -1659,7 +1659,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "גיליון פעיל"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -2009,11 +2009,11 @@ msgstr "טעינה מחדש"
 
 #: src/core/Socket.js:591
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "אזהרת הגדרת צביר"
 
 #: src/core/Socket.js:594
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "שרת שגוי, התחברות חוזרת…"
 
 #: src/core/Socket.js:601
 msgid "COOLWSD version:"
@@ -2032,9 +2032,8 @@ msgid "LOKit version:"
 msgstr "גרסת LOKit:"
 
 #: src/core/Socket.js:732
-#, fuzzy
 msgid "Document is getting migrated"
-msgstr "המסמך מיובא…"
+msgstr "המסמך מיובא"
 
 #: src/core/Socket.js:759
 msgid "Session terminated by document owner"
@@ -2273,6 +2272,10 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"נראה שהצביר שלך %productName לא מוגדר כראוי או משתנה בתדירות גבוהה - נא "
+"ליצור קשר עם הנהלת המערכת שלך. המשך בעריכה עלול לגרום לכך שמספר משתמשים לא "
+"יראו זה את זה, סתירות באחסון ו/או תקלות עם העתקה/הדבקה. אמור להיות serverId "
+"%0 ל־routeToken %1 אך החיבור הוא ל־serverId %2"
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -2400,7 +2403,7 @@ msgstr "פתרון שרשור"
 #: src/layer/tile/CommentListSection.ts:1126
 #: src/layer/tile/CommentListSection.ts:1161
 msgid "Autosaved"
-msgstr ""
+msgstr "נשמר אוטומטית"
 
 #: src/layer/tile/CommentSection.ts:255
 msgid "Open menu"
