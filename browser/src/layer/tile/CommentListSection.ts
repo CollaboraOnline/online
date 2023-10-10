@@ -1352,7 +1352,7 @@ export class CommentSection extends CanvasSectionObject {
 	// Returns the last comment id of comment thread containing the given id
 	private getLastChildIndexOf (id: any): number {
 		var index = this.getIndexOf(id);
-		index = this.getRootIndexOf(this.sectionProperties.commentList[index].sectionProperties.data.id);
+		index = index === -1 ? -1 : this.getRootIndexOf(this.sectionProperties.commentList[index].sectionProperties.data.id);
 
 		while
 		(
@@ -1595,7 +1595,7 @@ export class CommentSection extends CanvasSectionObject {
 			var comment = this.sectionProperties.commentList[i];
 			var replyCount = 0;
 
-			if (comment.sectionProperties.data.parent === '0') {
+			if (comment && comment.sectionProperties.data.parent === '0') {
 				var lastIndex = this.getLastChildIndexOf(comment.sectionProperties.data.id);
 				var j = i;
 				while (this.sectionProperties.commentList[j] && j <= lastIndex) {
