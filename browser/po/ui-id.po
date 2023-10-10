@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-09 09:57+0200\n"
-"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"PO-Revision-Date: 2023-10-10 08:40+0000\n"
 "Last-Translator: Rizal Muttaqin <riz_17_oke@yahoo.co.id>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -497,12 +497,12 @@ msgstr "Hitung"
 #: src/control/Control.JSDialogBuilder.js:196
 #: src/control/Control.Menubar.js:675
 msgid "Active sheet"
-msgstr ""
+msgstr "Lembar aktif"
 
 #: src/control/Control.JSDialogBuilder.js:197
 #: src/control/Control.Menubar.js:676 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "Semua Lembar"
 
 #: src/control/Control.JSDialogBuilder.js:560
 msgid "Solid"
@@ -1667,7 +1667,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "Lembar Aktif"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -2025,11 +2025,11 @@ msgstr "MUAT ULANG"
 
 #: src/core/Socket.js:591
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Peringatan konfigurasi gugus"
 
 #: src/core/Socket.js:594
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Peladen salah, menyambungkan kembali..."
 
 #: src/core/Socket.js:601
 msgid "COOLWSD version:"
@@ -2048,9 +2048,8 @@ msgid "LOKit version:"
 msgstr "Versi LOKit:"
 
 #: src/core/Socket.js:732
-#, fuzzy
 msgid "Document is getting migrated"
-msgstr "Dokumen sedang dimigrasikan..."
+msgstr "Dokumen sedang dimigrasikan"
 
 #: src/core/Socket.js:759
 msgid "Session terminated by document owner"
@@ -2312,6 +2311,12 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"Gugus %productName Anda tampaknya salah dikonfigurasi atau mengalami "
+"penskalaan dengan cepat - harap hubungi administrator sistem Anda. "
+"Melanjutkan penyuntingan dapat mengakibatkan beberapa pengguna tidak dapat "
+"melihat satu sama lain, konflik dalam penyimpanan dokumen, dan/atau masalah "
+"salin/tempel. ServerId %0 yang diharapkan untuk ruteToken %1 tetapi "
+"terhubung ke serverId %2"
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -2443,7 +2448,7 @@ msgstr "Selesaikan Thread"
 #: src/layer/tile/CommentListSection.ts:1126
 #: src/layer/tile/CommentListSection.ts:1161
 msgid "Autosaved"
-msgstr ""
+msgstr "Disimpan otomatis"
 
 #: src/layer/tile/CommentSection.ts:255
 msgid "Open menu"
