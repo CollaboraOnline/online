@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-10 11:30+0200\n"
-"PO-Revision-Date: 2023-10-06 22:13+0000\n"
-"Last-Translator: lpwxyz <lpw@tutamail.com>\n"
+"PO-Revision-Date: 2023-10-11 16:23+0000\n"
+"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt_BR/>\n"
-"Language: \n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -118,7 +118,7 @@ msgstr "Modificado"
 
 #: admin/admin.strings.js:29
 msgid "Uploaded"
-msgstr ""
+msgstr "Enviado"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
@@ -499,12 +499,12 @@ msgstr "Contagem"
 #: src/control/Control.JSDialogBuilder.js:196
 #: src/control/Control.Menubar.js:675
 msgid "Active sheet"
-msgstr ""
+msgstr "Folha ativa"
 
 #: src/control/Control.JSDialogBuilder.js:197
 #: src/control/Control.Menubar.js:676 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "Todas as folhas"
 
 #: src/control/Control.JSDialogBuilder.js:560
 msgid "Solid"
@@ -814,7 +814,7 @@ msgstr "Ocultar barra de menu"
 #: src/control/Control.NotebookbarImpress.js:533
 #: src/control/Control.NotebookbarWriter.js:1452
 msgid "Dark Mode"
-msgstr ""
+msgstr "Modo escuro"
 
 #: src/control/Control.Menubar.js:140 src/control/Control.Menubar.js:437
 #: src/control/Control.Menubar.js:577 src/control/Control.Menubar.js:717
@@ -835,7 +835,7 @@ msgstr "Tudo"
 #: src/control/Control.NotebookbarImpress.js:1235
 #: src/control/Control.NotebookbarWriter.js:1081
 msgid "Smart Picker"
-msgstr ""
+msgstr "Smart Picker"
 
 #: src/control/Control.Menubar.js:215
 msgid "Text orientation"
@@ -998,7 +998,7 @@ msgstr "Salvar Comentários"
 #: src/control/Control.Menubar.js:427
 #: src/control/Control.NotebookbarImpress.js:525
 msgid "Master View"
-msgstr ""
+msgstr "Exibição Mestre"
 
 #: src/control/Control.Menubar.js:502 src/control/Control.Menubar.js:1034
 #: src/control/Control.PresentationBar.js:64
@@ -1270,7 +1270,7 @@ msgstr "Planilha ODF (.ods)"
 #: src/control/Control.NotebookbarImpress.js:349
 #: src/control/Control.NotebookbarWriter.js:296
 msgid "PDF Document (.pdf) - Expert"
-msgstr ""
+msgstr "Documento PDF (.pdf) - Especialista"
 
 #: src/control/Control.NotebookbarCalc.js:308
 #: src/control/Control.NotebookbarDraw.js:309
@@ -1445,9 +1445,8 @@ msgid "Presentation"
 msgstr "Apresentação"
 
 #: src/control/Control.NotebookbarWriter.js:69
-#, fuzzy
 msgid "Form"
-msgstr "Fórum"
+msgstr "Formulário"
 
 #: src/control/Control.NotebookbarWriter.js:253
 msgid "ODF Text Document (.odt)"
@@ -1483,7 +1482,7 @@ msgstr "visualização da página "
 
 #: src/control/Control.PartsPreview.js:236
 msgid "Paste Slide"
-msgstr ""
+msgstr "Colar Slide"
 
 #: src/control/Control.PartsPreview.js:270
 msgid "Copy"
@@ -1603,15 +1602,15 @@ msgstr "Modo de seleção: inativo"
 
 #: src/control/Control.StatusBar.js:566
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Definir idioma para todo o texto"
 
 #: src/control/Control.StatusBar.js:569
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Definir idioma para Parágrafo"
 
 #: src/control/Control.StatusBar.js:570
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Definir idioma para seleção"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
@@ -1663,7 +1662,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "Folha Ativa"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -1872,7 +1871,7 @@ msgstr ""
 
 #: src/control/Permission.js:18 src/control/Permission.js:19
 msgid "Edit document"
-msgstr ""
+msgstr "Editar documento"
 
 #: src/control/Permission.js:76
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -1981,7 +1980,7 @@ msgstr "\"Proxy lento\""
 
 #: src/control/Toolbar.js:667
 msgid "Copy all version information in English"
-msgstr ""
+msgstr "Copie todas as informações da versão em inglês"
 
 #: src/control/Toolbar.js:750
 msgid "Insert hyperlink"
@@ -2001,7 +2000,7 @@ msgstr "Deseja excluir esta página?"
 
 #: src/control/jsdialog/Widget.TreeView.js:533
 msgid "Headings and objects that you add to the document will appear here"
-msgstr ""
+msgstr "Categoria e objetos que você adicionar ao documento aparecerá aqui"
 
 #: src/core/Socket.js:56
 msgid "Oops, there is a problem connecting to %productName: "
@@ -2021,11 +2020,11 @@ msgstr "RECARREGAR"
 
 #: src/core/Socket.js:591
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Aviso de configuração de cluster"
 
 #: src/core/Socket.js:594
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Servidor errado, reconectando..."
 
 #: src/core/Socket.js:601
 msgid "COOLWSD version:"
@@ -2045,7 +2044,7 @@ msgstr "Versão LOKit:"
 
 #: src/core/Socket.js:732
 msgid "Document is getting migrated"
-msgstr ""
+msgstr "Migrando documento"
 
 #: src/core/Socket.js:759
 msgid "Session terminated by document owner"
@@ -2110,7 +2109,7 @@ msgstr "Senha inválida. Tente novamente."
 
 #: src/core/Socket.js:1009
 msgid "Only the document owner can change the password."
-msgstr ""
+msgstr "Apenas o proprietário do documento pode alterar a senha."
 
 #: src/core/Socket.js:1040 src/core/Socket.js:1045
 msgid "Missing Fonts"
@@ -2180,7 +2179,7 @@ msgstr "O servidor foi desconectado."
 
 #: src/errormessages.js:13
 msgid "No disk space left on server."
-msgstr ""
+msgstr "Não resta espaço em disco no servidor."
 
 #: src/errormessages.js:14
 msgid ""
@@ -2299,6 +2298,11 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"Seu %productName cluster parece estar mal configurado ou escalonando "
+"rapidamente - entre em contato com o administrador do sistema. Continuando "
+"com a edição pode resultar em vários usuários que não se vêem, conflitos no "
+"armazenamento de documentos e/ou problemas de cópia/paste. Esperado serverId "
+"%0 para routeToken %1 mas conectado ao serverId %2"
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -2336,12 +2340,17 @@ msgstr "Não é possível mudar o nome do documento."
 msgid ""
 "Failed to read document from storage, please try to load the document again."
 msgstr ""
+"Falha ao ler o documento do armazenamento, tente carregar o documento "
+"novamente."
 
 #: src/errormessages.js:42
 msgid ""
 "Save failed due to no storage space left. Document will now be read-only. "
 "Please make sure enough disk space is available and try to save again."
 msgstr ""
+"Falha ao salvar o documento devido à falta de espaço de armazenamento. O "
+"documento está agora somente em modo de leitura. Por favor, certifique-se "
+"que espaço em disco suficiente está disponível e tente salvar novamente."
 
 #: src/errormessages.js:43
 msgid ""
@@ -2349,14 +2358,17 @@ msgid ""
 "storage space. The document will now be read-only but you may still "
 "download it now to preserve a copy locally."
 msgstr ""
+"Falha ao salvar o documento. Documento é muito grande ou excede o espaço de "
+"armazenamento restante. O documento agora será somente leitura, mas você "
+"ainda pode baixá-lo agora para preservar uma cópia localmente."
 
 #: src/errormessages.js:45
 msgid "Document cannot be saved, please check your permissions."
-msgstr ""
+msgstr "O documento não pode ser salvo, verifique suas permissões."
 
 #: src/errormessages.js:46
 msgid "Document cannot be renamed, please check your permissions."
-msgstr ""
+msgstr "O documento não pode ser renomeado, verifique suas permissões."
 
 #: src/errormessages.js:47
 msgid "Document cannot be exported. Please try again."
@@ -2426,7 +2438,7 @@ msgstr "Decidir Tópico"
 #: src/layer/tile/CommentListSection.ts:1126
 #: src/layer/tile/CommentListSection.ts:1161
 msgid "Autosaved"
-msgstr ""
+msgstr "Salvar automaticamente"
 
 #: src/layer/tile/CommentSection.ts:255
 msgid "Open menu"
@@ -2459,7 +2471,7 @@ msgstr "Copiando a partir do documento desativado"
 
 #: src/map/Clipboard.js:238
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "aviso: pedido de cópia/paste expirou"
 
 #: src/map/Clipboard.js:301
 msgid "Failed to download clipboard, please re-copy"
@@ -2511,7 +2523,6 @@ msgstr ""
 "término, ou cancele-a antes de iniciar uma nova</p>"
 
 #: src/map/Clipboard.js:921
-#, fuzzy
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
@@ -2519,8 +2530,8 @@ msgid ""
 msgstr ""
 "<p>Seu navegador tem acesso muito limitado à área de transferência</p><p>Por "
 "favor, pressione agora: <kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd> para ver mais opções</p><p class=\"vex-footnote\">"
-"Fechar popup para ignorar colar especial</p>"
+">+</span><kbd>V</kbd> para ver mais opções</p><p>Fechar popup para ignorar "
+"colar especial</p>"
 
 #: src/map/Map.js:221
 msgid "Initializing..."

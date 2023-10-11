@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-10 11:30+0200\n"
-"PO-Revision-Date: 2023-09-23 08:08+0000\n"
-"Last-Translator: Jérôme Herbinet <j.herbinet@protonmail.ch>\n"
+"PO-Revision-Date: 2023-10-11 16:23+0000\n"
+"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -498,12 +498,12 @@ msgstr "NB"
 #: src/control/Control.JSDialogBuilder.js:196
 #: src/control/Control.Menubar.js:675
 msgid "Active sheet"
-msgstr ""
+msgstr "Feuille active"
 
 #: src/control/Control.JSDialogBuilder.js:197
 #: src/control/Control.Menubar.js:676 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "Toutes les feuilles"
 
 #: src/control/Control.JSDialogBuilder.js:560
 msgid "Solid"
@@ -1395,7 +1395,7 @@ msgstr "Vue compacte"
 #: src/control/Control.NotebookbarImpress.js:501
 #: src/control/Control.NotebookbarWriter.js:1446
 msgid "Collapse Tabs"
-msgstr ""
+msgstr "Réduire les onglets"
 
 #: src/control/Control.NotebookbarCalc.js:1275
 #: src/control/Control.NotebookbarDraw.js:403
@@ -1481,7 +1481,7 @@ msgstr "aperçu de la page "
 
 #: src/control/Control.PartsPreview.js:236
 msgid "Paste Slide"
-msgstr ""
+msgstr "Coller la diapo"
 
 #: src/control/Control.PartsPreview.js:270
 msgid "Copy"
@@ -1601,15 +1601,15 @@ msgstr "Mode de sélection : inactif"
 
 #: src/control/Control.StatusBar.js:566
 msgid "Set Language for All text"
-msgstr ""
+msgstr "Définir la langue pour tout le texte"
 
 #: src/control/Control.StatusBar.js:569
 msgid "Set Language for Paragraph"
-msgstr ""
+msgstr "Définir la langue du paragraphe"
 
 #: src/control/Control.StatusBar.js:570
 msgid "Set Language for Selection"
-msgstr ""
+msgstr "Définir la langue pour la sélection"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
@@ -1661,7 +1661,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "Feuille Active"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -1681,7 +1681,7 @@ msgstr "Insérer des connecteurs"
 
 #: src/control/Control.TopToolbar.js:254
 msgid "Hide Menu"
-msgstr ""
+msgstr "Masquer le menu"
 
 #: src/control/Control.UserList.js:11
 msgid "%user has joined"
@@ -1870,7 +1870,7 @@ msgstr ""
 
 #: src/control/Permission.js:18 src/control/Permission.js:19
 msgid "Edit document"
-msgstr ""
+msgstr "Modifier le document"
 
 #: src/control/Permission.js:76
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -2022,11 +2022,11 @@ msgstr "RECHARGER"
 
 #: src/core/Socket.js:591
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Avertissement de configuration du cluster"
 
 #: src/core/Socket.js:594
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Un mauvais serveur, reconnecter..."
 
 #: src/core/Socket.js:601
 msgid "COOLWSD version:"
@@ -2045,9 +2045,8 @@ msgid "LOKit version:"
 msgstr "Version LOKit :"
 
 #: src/core/Socket.js:732
-#, fuzzy
 msgid "Document is getting migrated"
-msgstr "Le document se fait migrer..."
+msgstr "Le document se fait migrer"
 
 #: src/core/Socket.js:759
 msgid "Session terminated by document owner"
@@ -2308,6 +2307,11 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"Votre %productName cluster semble être malconfiguré ou scaling rapidement - "
+"veuillez contacter votre administrateur système. Poursuivre l'édition peut "
+"entraîner plusieurs utilisateurs qui ne se voient pas, des conflits dans le "
+"stockage de documents et/ou des problèmes de copie/coller. Attendu serveurId "
+"%0 pour routeToken %1 mais connecté à serverId %2"
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -2446,7 +2450,7 @@ msgstr "Résoudre le fil"
 #: src/layer/tile/CommentListSection.ts:1126
 #: src/layer/tile/CommentListSection.ts:1161
 msgid "Autosaved"
-msgstr ""
+msgstr "Enregistrement automatique"
 
 #: src/layer/tile/CommentSection.ts:255
 msgid "Open menu"
@@ -2481,7 +2485,7 @@ msgstr "Copie à partir du document désactivée"
 
 #: src/map/Clipboard.js:238
 msgid "warning: copy/paste request timed out"
-msgstr ""
+msgstr "avertissement: copier/coller la demande a expiré"
 
 #: src/map/Clipboard.js:301
 msgid "Failed to download clipboard, please re-copy"
