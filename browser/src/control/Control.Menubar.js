@@ -799,7 +799,14 @@ L.Control.Menubar = L.Control.extend({
 				    {uno: '.uno:UngroupSparklines'}
 				]},
 				{name: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet'), type: 'menu', menu: [
-					{uno: '.uno:ConditionalFormatDialog'},
+					{name: _('Condition...'), type: 'menu', menu: [
+						{name: _('Greater than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=2'},
+						{name: _('Less than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=1'},
+						{name: _('Equal to...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=0'},
+						{name: _('Between...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=6'},
+						{type: 'separator'},
+						{name: _('More conditions...'), uno: '.uno:ConditionalFormatDialog'},
+					]},
 					{uno: '.uno:ColorScaleFormatDialog'},
 					{uno: '.uno:DataBarFormatDialog'},
 					{uno: '.uno:IconSetFormatDialog'},
