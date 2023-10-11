@@ -3129,6 +3129,16 @@ void DocumentBroker::handleTileRequest(const StringVector &tokens, bool forceKey
     _debugRenderedTileCount++;
 }
 
+void DocumentBroker::sendTileCombine(const TileCombined& newTileCombined)
+{
+    assert(!newTileCombined.hasDuplicates());
+
+    // Forward to child to render.
+    const std::string req = newTileCombined.serialize("tilecombine");
+    LOG_TRC("Some of the tiles were not prerendered. Sending residual tilecombine: " << req);
+    _childProcess->sendTextFrame(req);
+}
+
 void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool forceKeyframe,
                                                const std::shared_ptr<ClientSession>& session)
 {
@@ -3178,16 +3188,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
 
     // Send rendering request, prerender before we actually send the tiles
     if (!tilesNeedsRendering.empty())
-    {
-        TileCombined newTileCombined = TileCombined::create(tilesNeedsRendering);
-
-        assert(!newTileCombined.hasDuplicates());
-
-        // Forward to child to render.
-        const std::string req = newTileCombined.serialize("tilecombine");
-        LOG_TRC("Sending uncached residual tilecombine request to Kit: " << req);
-        _childProcess->sendTextFrame(req);
-    }
+        sendTileCombine(TileCombined::create(tilesNeedsRendering));
 
     // Accumulate tiles
     std::deque<TileDesc>& requestedTiles = session->getRequestedTiles();
@@ -3198,15 +3199,11 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
     // Drop duplicated tiles, but use newer version number
     else
     {
+        const TileDesc& firstOldTile = *(requestedTiles.begin());
         for (const auto& newTile : tileCombined.getTiles())
         {
-            const TileDesc& firstOldTile = *(requestedTiles.begin());
-            if(!session->isTextDocument() && newTile.getPart() != firstOldTile.getPart())
-            {
-                LOG_WRN("Different part numbers in tile requests");
-            }
-            else if (newTile.getTileWidth() != firstOldTile.getTileWidth() ||
-                     newTile.getTileHeight() != firstOldTile.getTileHeight() )
+            if (newTile.getTileWidth() != firstOldTile.getTileWidth() ||
+                newTile.getTileHeight() != firstOldTile.getTileHeight() )
             {
                 LOG_WRN("Different tile sizes in tile requests");
             }
@@ -3216,7 +3213,8 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
             {
                 if(oldTile.getTilePosX() == newTile.getTilePosX() &&
                    oldTile.getTilePosY() == newTile.getTilePosY() &&
-                   oldTile.getNormalizedViewId() == newTile.getNormalizedViewId())
+                   oldTile.getNormalizedViewId() == newTile.getNormalizedViewId() &&
+                   oldTile.getPart() == newTile.getPart())
                 {
                     oldTile.setVersion(newTile.getVersion());
                     oldTile.setOldWireId(newTile.getOldWireId());
@@ -3370,6 +3368,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
     {
         std::size_t delayedTiles = 0;
         std::vector<TileDesc> tilesNeedsRendering;
+        bool allSamePart = true;
         std::size_t beingRendered = _tileCache->countTilesBeingRenderedForSession(session, now);
         while (session->getTilesOnFlyCount() + beingRendered < tilesOnFlyUpperLimit &&
               !requestedTiles.empty() &&
@@ -3418,6 +3417,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
                         LOG_TRC("Forcing keyframe for tile was oldwid " << tile.getOldWireId());
                         tile.setOldWireId(0);
                     }
+                    allSamePart &= tilesNeedsRendering.empty() || tilesNeedsRendering.back().getPart() == tile.getPart();
                     tilesNeedsRendering.push_back(tile);
                     _debugRenderedTileCount++;
                 }
@@ -3430,14 +3430,43 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
         // Send rendering request for those tiles which were not prerendered
         if (!tilesNeedsRendering.empty())
         {
-            TileCombined newTileCombined = TileCombined::create(tilesNeedsRendering);
-
-            assert(!newTileCombined.hasDuplicates());
-
-            // Forward to child to render.
-            const std::string req = newTileCombined.serialize("tilecombine");
-            LOG_TRC("Some of the tiles were not prerendered. Sending residual tilecombine: " << req);
-            _childProcess->sendTextFrame(req);
+            if (allSamePart)
+            {
+                // typically all requests are for the same part
+                sendTileCombine(TileCombined::create(tilesNeedsRendering));
+            }
+            else
+            {
+                // but if not, split them by part to send a separate tilecombine
+                // for each part
+                std::vector<std::vector<TileDesc>> partsNeedsRendering(1);
+                auto it = tilesNeedsRendering.begin();
+                // start off with one part bucket
+                partsNeedsRendering[0].push_back(*it++);
+                while (it != tilesNeedsRendering.end())
+                {
+                    bool inserted = false;
+                    // check if part should go into an existing part bucket
+                    for (size_t i = 0; i < partsNeedsRendering.size(); ++i)
+                    {
+                        if (it->getPart() == partsNeedsRendering[i][0].getPart())
+                        {
+                            partsNeedsRendering[i].push_back(*it);
+                            inserted = true;
+                            break;
+                        }
+                    }
+                    // if not, add another and put it there
+                    if (!inserted)
+                    {
+                        partsNeedsRendering.emplace_back();
+                        partsNeedsRendering.back().push_back(*it);
+                    }
+                    ++it;
+                }
+                for (const auto& part : partsNeedsRendering)
+                    sendTileCombine(TileCombined::create(part));
+            }
         }
     }
 }
