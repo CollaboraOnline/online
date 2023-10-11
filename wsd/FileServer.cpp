@@ -748,17 +748,22 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
         else if (S_ISREG(fileStat.st_mode))
         {
+            z_stream strm;
+            strm.zalloc = Z_NULL;
+            strm.zfree = Z_NULL;
+            strm.opaque = Z_NULL;
+            int result = deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY);
+            if (result != Z_OK)
+            {
+                 LOG_ERR("Failed to deflateInit2, result: " << result);
+                 continue;
+            }
+
             fileCount++;
             filesRead.append(currentFile->d_name);
             filesRead += ' ';
 
             std::ifstream file(basePath + relPath, std::ios::binary);
-
-            z_stream strm;
-            strm.zalloc = Z_NULL;
-            strm.zfree = Z_NULL;
-            strm.opaque = Z_NULL;
-            deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY);
 
             std::unique_ptr<char[]> buf = std::make_unique<char[]>(fileStat.st_size);
             std::string compressedFile;
