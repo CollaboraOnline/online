@@ -77,8 +77,12 @@ void sendDeflatedFileContent(const std::shared_ptr<StreamSocket>& socket, const 
         const long unsigned int size = file.gcount();
         long unsigned int compSize = compressBound(size);
         std::unique_ptr<char[]> cbuf = std::make_unique<char[]>(compSize);
-        compress2((Bytef*)&cbuf[0], &compSize, (Bytef*)&buf[0], size, Level);
-
+        int result = compress2((Bytef*)&cbuf[0], &compSize, (Bytef*)&buf[0], size, Level);
+        if (result != Z_OK)
+        {
+             LOG_ERR("failed compress of: " << path << " result: " << result);
+             return;
+        }
         if (size > 0)
             socket->send(&cbuf[0], compSize, true);
     }
