@@ -442,6 +442,7 @@ public:
     void handleTileCombinedRequest(TileCombined& tileCombined, bool forceKeyframe,
                                    const std::shared_ptr<ClientSession>& session);
     void sendRequestedTiles(const std::shared_ptr<ClientSession>& session);
+    void sendTileCombine(const TileCombined& tileCombined);
 
     enum ClipboardRequest {
         CLIP_REQUEST_SET,
