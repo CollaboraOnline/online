@@ -1076,7 +1076,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var frame = L.DomUtil.create('div', 'ui-frame ' + builder.options.cssClass, container);
 			frame.id = data.id + '-frame';
 			var label = L.DomUtil.create('label', 'ui-frame-label ' + builder.options.cssClass, frame);
-			label.innerText = builder._cleanText(data.children[0].text);
+			label.innerText = builder._cleanText(builder._extractLabelText(data.children[0]));
 			label.id = data.children[0].id;
 			if (data.children[0].visible === false)
 				L.DomUtil.addClass(label, 'hidden');
@@ -1098,6 +1098,20 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		return false;
+	},
+
+	_extractLabelText: function(data) {
+		if (data.type === 'fixedtext') {
+			return data.visible != false ? data.text : ''; // visible can be undefined too, in that case it means its visible
+		}
+
+		for (var i = 0; i < data.children.length; i++) {
+			var label = this._extractLabelText(data.children[i]);
+			if (label)
+				return label;
+		}
+
+		return '';
 	},
 
 	_deckHandler: function(parentContainer, data, builder) {
