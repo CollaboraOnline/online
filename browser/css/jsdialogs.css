@@ -73,6 +73,8 @@
 }
 
 .jsdialog-container .ui-dialog-content {
+	max-height: calc( 90vh - 34px);
+	overflow-y: auto !important;
 	background-color: var(--color-background-lighter) !important;
 	font-family: var(--jquery-ui-font);
 	line-height: 1.5;
