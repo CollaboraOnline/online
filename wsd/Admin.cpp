@@ -170,6 +170,12 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             std::set<pid_t> pids = model.getDocumentPids();
             if (pids.find(pid) != pids.end())
             {
+                if (Admin::instance().logAdminAction())
+                {
+                    LOG_ANY("Admin request to kill document ["
+                            << COOLWSD::anonymizeUrl(model.getFilename(pid)) << "] with pid ["
+                            << pid << "] and source IPAddress [" << _clientIPAdress << ']');
+                }
                 SigUtil::killChild(pid, SIGKILL);
             }
             else
@@ -213,6 +219,11 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     else if (tokens.equals(0, "shutdown"))
     {
         LOG_INF("Setting ShutdownRequestFlag: Shutdown requested by admin.");
+        if (Admin::instance().logAdminAction())
+        {
+            LOG_ANY("Shutdown requested by admin with source IPAddress [" << _clientIPAdress
+                                                                          << ']');
+        }
         SigUtil::requestShutdown();
         return;
     }
@@ -394,6 +405,7 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
 {
     // Different session id pool for admin sessions (?)
     _sessionId = Util::decodeId(COOLWSD::GetConnectionId());
+    _clientIPAdress = socket.lock()->clientAddress();
 }
 
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager)
@@ -1009,6 +1021,10 @@ void Admin::connectToMonitorSync(const std::string &uri)
     }
 
     LOG_TRC("Add monitor " << uri);
+    if (COOLWSD::getConfigValue<bool>("admin_console.logging.monitor_connect", true))
+    {
+        LOG_ANY("Connected to remote monitor with uri [" << uriWithoutParam << ']');
+    }
     auto handler = std::make_shared<MonitorSocketHandler>(this, uri);
     _monitorSockets.insert({uriWithoutParam, handler});
     insertNewWebSocketSync(Poco::URI(uri), handler);
@@ -1047,6 +1063,12 @@ void Admin::sendMetrics(const std::shared_ptr<StreamSocket>& socket, const std::
     getMetrics(oss);
     socket->send(oss.str());
     socket->shutdown();
+    bool skipAuthentication = COOLWSD::getConfigValue<bool>("security.enable_metrics_unauthenticated", false);
+    bool showLog = COOLWSD::getConfigValue<bool>("admin_console.logging.metrics_fetch", true);
+    if (!skipAuthentication && showLog)
+    {
+        LOG_ANY("Metrics endpoint has been accessed by source IPAddress [" << socket->clientAddress() << ']');
+    }
 }
 
 void Admin::start()

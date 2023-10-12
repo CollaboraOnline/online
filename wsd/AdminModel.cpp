@@ -1326,4 +1326,16 @@ void AdminModel::resetMigratingInfo()
     _targetMigServerId = std::string();
 }
 
+std::string AdminModel::getFilename(int pid)
+{
+    for (auto& it : _documents)
+    {
+        if (it.second->getPid() == pid)
+        {
+            return it.second->getFilename();
+        }
+    }
+    return std::string();
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

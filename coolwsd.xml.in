@@ -253,6 +253,12 @@
         <enable_pam desc="Enable admin user authentication with PAM" type="bool" default="false">false</enable_pam>
         <username desc="The username of the admin console. Ignored if PAM is enabled."></username>
         <password desc="The password of the admin console. Deprecated on most platforms. Instead, use PAM or coolconfig to set up a secure password."></password>
+        <logging desc="Log admin activities irrespective of logging.level">
+            <admin_login desc="log when an admin logged into the console" type="bool" default="true">true</admin_login>
+            <metrics_fetch desc="log when metrics endpoint is accessed and metrics endpoint authentication is enabled" type="bool" default="true">true</metrics_fetch>
+            <monitor_connect desc="log when external monitor gets connected" type="bool" default="true">true</monitor_connect>
+            <admin_action desc="log when admin does some action for example killing a process" type="bool" default="true">true</admin_action>
+        </logging>
     </admin_console>
 
     <monitors desc="Addresses of servers we connect to on start for monitoring">
