@@ -2166,6 +2166,7 @@ void COOLWSD::innerInitialize(Application& self)
         { "welcome.enable", "false" },
         { "home_mode.enable", "false" },
         { "feedback.show", "true" },
+        { "overwrite_mode.enable", "true" },
 #if ENABLE_FEATURE_LOCK
         { "feature_lock.locked_hosts[@allow]", "false" },
         { "feature_lock.locked_hosts.fallback[@read_only]", "false" },

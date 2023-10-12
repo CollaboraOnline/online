@@ -1485,6 +1485,7 @@ bool ChildSession::keyEvent(const StringVector& tokens,
     // Don't close LO window!
     constexpr int KEY_CTRL = 0x2000;
     constexpr int KEY_W = 0x0216;
+    constexpr int KEY_INSERT = 0x0505;
     if (keycode == (KEY_CTRL | KEY_W))
     {
         return true;
@@ -1500,7 +1501,14 @@ bool ChildSession::keyEvent(const StringVector& tokens,
 
     getLOKitDocument()->setView(_viewId);
     if (target == LokEventTargetEnum::Document)
+    {
+        // Check if override mode is disabled.
+        if (type == LOK_KEYEVENT_KEYINPUT && charcode == 0 && keycode == KEY_INSERT &&
+            !config::getBool("overwrite_mode.enable", true))
+            return true;
+
         getLOKitDocument()->postKeyEvent(type, charcode, keycode);
+    }
     else if (winId != 0)
         getLOKitDocument()->postWindowKeyEvent(winId, type, charcode, keycode);
 
