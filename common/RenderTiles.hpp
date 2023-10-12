@@ -142,30 +142,6 @@ public:
 
 namespace RenderTiles
 {
-    struct Buffer {
-        unsigned char *_data;
-        Buffer()
-        {
-            _data = nullptr;
-        }
-        Buffer(size_t x, size_t y) :
-            Buffer()
-        {
-            allocate(x, y);
-        }
-        void allocate(size_t x, size_t y)
-        {
-            assert(!_data);
-            _data = static_cast<unsigned char *>(calloc(x * y, 4));
-        }
-        ~Buffer()
-        {
-            if (_data)
-                free (_data);
-        }
-        unsigned char *data() { return _data; }
-    };
-
     static void pushRendered(std::vector<TileDesc> &renderedTiles,
                              const TileDesc &desc, TileWireId wireId, size_t imgSize)
     {
@@ -237,13 +213,13 @@ namespace RenderTiles
         if (pixmapWidth > 4096 || pixmapHeight > 4096)
             LOG_WRN("Unusual extremely large tile combine of size " << pixmapWidth << 'x' << pixmapHeight);
 
-        RenderTiles::Buffer pixmap(pixmapWidth, pixmapHeight);
+        auto pixmap = std::make_unique<unsigned char[]>(pixmapWidth * pixmapHeight * 4);
 
         // Render the whole area
         const double area = pixmapWidth * pixmapHeight;
         const auto start = std::chrono::steady_clock::now();
-        LOG_TRC("Calling paintPartTile(" << (void*)pixmap.data() << ')');
-        document->paintPartTile(pixmap.data(),
+        LOG_TRC("Calling paintPartTile(" << (void*)pixmap.get() << ')');
+        document->paintPartTile(pixmap.get(),
                                 tileCombined.getPart(),
                                 tileCombined.getEditMode(),
                                 pixmapWidth, pixmapHeight,
@@ -282,7 +258,7 @@ namespace RenderTiles
             const int offsetY = positionY * pixelHeight;
 
             // FIXME: should this be in the delta / compression thread ?
-            blendWatermark(pixmap.data(), offsetX, offsetY,
+            blendWatermark(pixmap.get(), offsetX, offsetY,
                            pixmapWidth, pixmapHeight,
                            pixelWidth, pixelHeight,
                            mode);
@@ -314,7 +290,7 @@ namespace RenderTiles
                             // Can we create a delta ?
                             LOG_TRC("Compress new tile #" << tileIndex);
                             assert(pixelWidth <= 256 && pixelHeight <= 256);
-                            deltaGen.compressOrDelta(pixmap.data(), offsetX, offsetY,
+                            deltaGen.compressOrDelta(pixmap.get(), offsetX, offsetY,
                                                      pixelWidth, pixelHeight,
                                                      pixmapWidth, pixmapHeight,
                                                      TileLocation(
@@ -330,7 +306,7 @@ namespace RenderTiles
                         {
                             // FIXME: write our own trivial PNG encoding code using deflate.
                             LOG_TRC("Encode a new png for tile #" << tileIndex);
-                            if (!Png::encodeSubBufferToPNG(pixmap.data(), offsetX, offsetY, pixelWidth, pixelHeight,
+                            if (!Png::encodeSubBufferToPNG(pixmap.get(), offsetX, offsetY, pixelWidth, pixelHeight,
                                                            pixmapWidth, pixmapHeight, data, mode))
                             {
                                 // FIXME: Return error.
