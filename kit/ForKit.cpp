@@ -298,7 +298,9 @@ static void cleanupChildren()
         const auto it = childJails.find(exitedChildPid);
         if (it != childJails.end())
         {
-            if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGSEGV || WTERMSIG(status) == SIGBUS))
+            if (WIFSIGNALED(status) && (WTERMSIG(status) == SIGSEGV ||
+                                        WTERMSIG(status) == SIGBUS ||
+                                        WTERMSIG(status) == SIGABRT))
             {
                 ++segFaultCount;
 
