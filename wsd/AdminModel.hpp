@@ -434,6 +434,7 @@ public:
     std::string getTargetMigServerId() { return _targetMigServerId; }
     void sendMigrateMsgAfterSave(bool lastSaveSuccessful, const std::string& docKey);
     std::string getWopiSrcMap();
+    std::string getFilename(int pid);
 
 private:
     void doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator &docIt);
