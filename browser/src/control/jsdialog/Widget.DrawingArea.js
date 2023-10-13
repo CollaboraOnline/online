@@ -1,5 +1,11 @@
 /* -*- js-indent-level: 8 -*- */
 /*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+/*
  * JSDialog.DrawingArea - drawing area displaying picture sent from the server
  *
  * Example JSON:
@@ -11,10 +17,6 @@
  *     loading: true, - show additional spinner div
  *     placeholderText: false,  - 'show text next to image'
  * }
- *
- * Copyright the Collabora Online contributors.
- *
- * SPDX-License-Identifier: MPL-2.0
  */
 
 /* global JSDialog $ UNOKey UNOModifier */

@@ -1,10 +1,16 @@
 /* -*- js-indent-level: 8 -*- */
 /*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+/*
  * L.Control.MobileWizardPopup - shows a popup with content styled like in mobile-wizard.
-                                 it will be used to show touch-device friendly UI in popups
-								 on devices with smaller screens which are not smartphones
-								 (desktop and tablets). Example of usage: show comments preview
-								 when browser has reduced size.
+ *                               it will be used to show touch-device friendly UI in popups
+ *                               on devices with smaller screens which are not smartphones
+ *                               (desktop and tablets). Example of usage: show comments preview
+ *                               when browser has reduced size.
  */
 
 /* global app $ */

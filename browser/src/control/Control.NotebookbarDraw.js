@@ -1,6 +1,12 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Control.NotebookbarDraw
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+/*
+ * L.Control.NotebookbarDraw - definition of notebookbar content in Draw
  */
 
 /* global _ _UNO */
