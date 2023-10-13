@@ -1,6 +1,12 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Control.FormulaBarJSDialog
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+/*
+ * L.Control.FormulaBarJSDialog - implementation of formulabar edit field
  */
 
 /* global _ _UNO UNOKey */

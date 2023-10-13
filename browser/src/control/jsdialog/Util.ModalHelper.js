@@ -1,10 +1,12 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * JSDialog.ModalHelper - helper functions for manipulating modals built using jsdialog
- *
  * Copyright the Collabora Online contributors.
  *
  * SPDX-License-Identifier: MPL-2.0
+ */
+
+/*
+ * JSDialog.ModalHelper - helper functions for manipulating modals built using jsdialog
  */
 
 /* global JSDialog app */

@@ -1,6 +1,12 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Control.NotebookbarCalc
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+/*
+ * L.Control.NotebookbarCalc - definition of notebookbar content in Calc
  */
 
 /* global _ _UNO */
