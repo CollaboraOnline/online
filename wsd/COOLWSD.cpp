@@ -234,6 +234,10 @@ extern "C"
     void dump_state(void); /* easy for gdb */
     void forwardSigUsr2();
     int createForkit(const std::string& cmd, const StringVector& args);
+    extern "C" void createLibreOfficeKit(const std::string& childRoot,
+                        const std::string& sysTemplate,
+                        const std::string& loTemplate,
+                        int limit);
 }
 
 #if ENABLE_DEBUG && !MOBILEAPP
@@ -439,8 +443,8 @@ static int forkChildren(const int number)
     {
         COOLWSD::checkDiskSpaceAndWarnClients(false);
 
-#ifdef KIT_IN_PROCESS
-        forkLibreOfficeKit(COOLWSD::ChildRoot, COOLWSD::SysTemplate, COOLWSD::LoTemplate, number);
+#ifndef KIT_IN_PROCESS
+        createLibreOfficeKit(COOLWSD::ChildRoot, COOLWSD::SysTemplate, COOLWSD::LoTemplate, number);
 #else
         const std::string aMessage = "spawn " + std::to_string(number) + '\n';
         LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));

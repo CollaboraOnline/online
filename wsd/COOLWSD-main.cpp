@@ -38,3 +38,11 @@ extern "C" int createForkit(const std::string forKitPath, const StringVector arg
 {
     return Util::spawnProcess(forKitPath, args);
 };
+
+extern "C" void createLibreOfficeKit(const std::string& childRoot,
+                        const std::string& sysTemplate,
+                        const std::string& loTemplate,
+                        int limit)
+{
+    LOG_TRC("forkLibreOfficeKit " << limit << childRoot << sysTemplate<< loTemplate);
+}
