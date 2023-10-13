@@ -541,6 +541,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return '';
 		if (text.endsWith('...'))
 			text = text.slice(0, -3);
+		if (text.endsWith('…'))
+			text = text.slice(0, -1);
 		return text.replace('~', '');
 	},
 
