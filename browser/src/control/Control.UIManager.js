@@ -1,7 +1,13 @@
 /* -*- js-indent-level: 8 -*- */
 /*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+/*
  * L.Control.UIManager - initializes the UI elements like toolbars, menubar or ruler
-			 and allows to controll them (show/hide)
+ *			 and allows to controll them (show/hide)
  */
 
 /* global app $ setupToolbar w2ui toolbarUpMobileItems _ Hammer JSDialog */

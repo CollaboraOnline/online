@@ -1,5 +1,11 @@
 /* -*- js-indent-level: 8 -*- */
 /*
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+/*
  * JSDialog.IconView - icon view widget
  *
  * Example JSON:
@@ -11,10 +17,6 @@
  *         { text: 'some text', tooltip: 'some tooltip', image: 'encoded png', selected: false }
  *     ]
  * }
- *
- * Copyright the Collabora Online contributors.
- *
- * SPDX-License-Identifier: MPL-2.0
  */
 
 /* global JSDialog $ */
