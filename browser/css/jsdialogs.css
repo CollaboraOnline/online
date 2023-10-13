@@ -432,7 +432,7 @@ input[type='checkbox'].autofilter, .jsdialog input[type='checkbox'] {
 	margin: 1px 8px;
 }
 
-[data-theme='dark'] input[type='checkbox'].autofilter, .jsdialog input[type='checkbox'] {
+[data-theme='dark'] input[type='checkbox'].autofilter, [data-theme='dark'] .jsdialog input[type='checkbox'] {
 	background: url('images/dark/lc_checkboxoff.svg') no-repeat center;
 }
 
@@ -441,7 +441,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	background-image: url('images/lc_checkbox.svg');
 }
 
-[data-theme='dark'] input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:checked {
+[data-theme='dark'] input[type='checkbox']:checked.autofilter, [data-theme='dark'] .jsdialog input[type='checkbox']:checked {
 	background-image: url('images/dark/lc_checkbox.svg');
 }
 
