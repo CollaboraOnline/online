@@ -119,7 +119,7 @@ public:
         while (!_shutdown)
         {
             _cond.wait(lock);
-            if (!_shutdown && !_work.empty())
+            while (!_shutdown && !_work.empty())
                 runOne(lock);
         }
     }
