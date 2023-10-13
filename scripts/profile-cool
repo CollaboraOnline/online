@@ -12,6 +12,7 @@ fi
 if ! which flamegraph.pl > /dev/null 2>&1; then
     echo "no flamegraph.pl found"
     echo "On fedora install systemwide with: sudo dnf install flamegraph"
+    echo "On openSUSE Leap install systemwide with: sudo zypper install perl-Devel-NYTProf"
     echo "Otherwise install locally manually into ~/FlameGraph"
     exit 1
 fi
