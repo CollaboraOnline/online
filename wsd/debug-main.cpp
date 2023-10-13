@@ -8,7 +8,7 @@
 #include "Util.hpp"
 #include "Log.hpp"
 #include "Common.hpp"
-#include "future"
+#include "Kit.hpp"
 
 extern "C" int forkit_main(int argc, char** argv);
 
@@ -28,8 +28,6 @@ char** convertStringVectorToCharArray(StringVector stringVector)
 
 extern "C" int createForkit(const std::string forKitPath, const StringVector args)
 {
-    // Create a promise to capture the result from the thread.
-    std::promise<int> resultPromise;
 
     LOG_INF(forKitPath);
     char** argv = convertStringVectorToCharArray(args);
@@ -43,7 +41,7 @@ extern "C" int createForkit(const std::string forKitPath, const StringVector arg
             Util::setThreadName("debug_forkit");
             result = forkit_main(args.size(), argv);
         });
-
+    // wait for thread to complete it's task then move to next step
     worker.join();
 
     // Clean up allocated memory for argv.
@@ -56,4 +54,12 @@ extern "C" int createForkit(const std::string forKitPath, const StringVector arg
 
     // Return the result from the thread.
     return result;
+}
+
+extern "C" void createLibreOfficeKit(const std::string& childRoot,
+                        const std::string& sysTemplate,
+                        const std::string& loTemplate,
+                        int limit)
+{
+    forkLibreOfficeKit(childRoot, sysTemplate, loTemplate, limit);
 }
