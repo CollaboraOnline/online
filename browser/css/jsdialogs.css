@@ -1578,6 +1578,17 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin: auto;
 }
 
+/* Writer - Insert - Page Number - page preview image */
+[data-theme='dark'] #PageNumberDialog #previewImage {
+	filter: invert(.95)
+}
+
+/* Writer - Table of Contents, Index or Bibliography dialog, Columns tab */
+[data-theme='dark'] #ColumnPage #pageexample-img, #ColumnPage #valueset-img {
+	filter: invert(.9)
+}
+
+
 /* formulabar */
 #sc_input_window.formulabar {
 	height: 28px;
