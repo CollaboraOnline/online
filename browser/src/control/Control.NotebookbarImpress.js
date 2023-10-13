@@ -1,6 +1,12 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Control.NotebookbarImpress
+ * Copyright the Collabora Online contributors.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ */
+
+/*
+ * L.Control.NotebookbarImpress - definition of notebookbar content in Impress
  */
 
 /* global _ _UNO */
