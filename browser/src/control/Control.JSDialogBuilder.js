@@ -105,7 +105,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['grid'] = this._gridHandler;
 		this._controlHandlers['alignment'] = this._alignmentHandler;
 		this._controlHandlers['buttonbox'] = this._buttonBox;
-		this._controlHandlers['frame'] = this._frameHandler;
+		this._controlHandlers['frame'] = JSDialog.frame;
 		this._controlHandlers['deck'] = this._deckHandler;
 		this._controlHandlers['panel'] = this._panelHandler;
 		this._controlHandlers['calcfuncpanel'] = this._calcFuncListPanelHandler;
@@ -1066,52 +1066,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		} else {
 			window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
 		}
-	},
-
-	_frameHandler: function(parentContainer, data, builder) {
-		if (data.children.length > 1) {
-			var container = L.DomUtil.create('div', 'ui-frame-container ' + builder.options.cssClass, parentContainer);
-			container.id = data.id;
-
-			var frame = L.DomUtil.create('div', 'ui-frame ' + builder.options.cssClass, container);
-			frame.id = data.id + '-frame';
-			var label = L.DomUtil.create('label', 'ui-frame-label ' + builder.options.cssClass, frame);
-			label.innerText = builder._cleanText(builder._extractLabelText(data.children[0]));
-			label.id = data.children[0].id;
-			if (data.children[0].visible === false)
-				L.DomUtil.addClass(label, 'hidden');
-			builder.postProcess(frame, data.children[0]);
-
-			var frameChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, container);
-			frameChildren.id = data.id + '-content';
-			label.htmlFor = frameChildren.id;
-			$(frameChildren).addClass('expanded');
-
-			var children = [];
-			for (var i = 1; i < data.children.length; i++) {
-				children.push(data.children[i]);
-			}
-
-			builder.build(frameChildren, children);
-		} else {
-			return builder._containerHandler(parentContainer, data, builder);
-		}
-
-		return false;
-	},
-
-	_extractLabelText: function(data) {
-		if (data.type === 'fixedtext') {
-			return data.visible != false ? data.text : ''; // visible can be undefined too, in that case it means its visible
-		}
-
-		for (var i = 0; i < data.children.length; i++) {
-			var label = this._extractLabelText(data.children[i]);
-			if (label)
-				return label;
-		}
-
-		return '';
 	},
 
 	_deckHandler: function(parentContainer, data, builder) {
