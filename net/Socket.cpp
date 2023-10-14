@@ -626,7 +626,7 @@ bool SocketPoll::insertNewUnixSocket(
     req.set("Pragma", "no-cache");
 
     LOG_TRC("Requesting upgrade of websocket at path " << pathAndQuery << " #" << socket->getFD());
-    if (!shareFDs)
+    if (!shareFDs || shareFDs->empty())
     {
         socket->send(req);
     }

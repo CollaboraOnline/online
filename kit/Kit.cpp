@@ -3167,7 +3167,8 @@ void lokit_main(
 #if !MOBILEAPP
 
         std::vector<int> shareFDs;
-        shareFDs.push_back(ProcSMapsFile);
+        if (ProcSMapsFile >= 0)
+            shareFDs.push_back(ProcSMapsFile);
 
         if (isURPEnabled())
         {
