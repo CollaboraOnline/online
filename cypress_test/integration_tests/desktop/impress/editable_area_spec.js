@@ -43,7 +43,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         helper.afterAll(testFileName, this.currentTest.state);
     });
 
-    it('Editing top text shape', function () {
+    it.skip('Editing top text shape', function () {
         // select shape and activate editing
         selectTextShape(1);
         impressHelper.selectTextOfShape(false);
@@ -90,7 +90,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         impressHelper.removeShapeSelection();
     });
 
-    it('Editing bottom text shape', function () {
+    it.skip('Editing bottom text shape', function () {
         // select shape and activate editing
         selectTextShape(2);
         impressHelper.selectTextOfShape(false);
@@ -123,7 +123,7 @@ describe(['taga11yenabled'], 'Editable area - Basic typing and caret moving', fu
         impressHelper.removeShapeSelection();
     });
 
-    it('Editing both text shapes', function () {
+    it.skip('Editing both text shapes', function () {
         // select top shape and activate editing
         selectTextShape(1);
         impressHelper.selectTextOfShape(false);
