@@ -59,6 +59,12 @@ L.Control.Sidebar = L.Control.extend({
 		if (!this.builder)
 			return;
 
+		// reduce unwanted warnings in console
+		if (data.control.id === 'addonimage') {
+			window.app.console.log('Ignored update for control: ' + data.control.id);
+			return;
+		}
+
 		this.builder.updateWidget(this.container, data.control);
 	},
 
@@ -84,7 +90,8 @@ L.Control.Sidebar = L.Control.extend({
 		// if panel has to be shown or hidden, full update will appear
 		if (controlId === 'contents' ||
 			controlId === 'Panel' ||
-			controlId === 'titlebar') {
+			controlId === 'titlebar' ||
+			controlId === 'addonimage') {
 			window.app.console.log('Ignored action: ' + innerData.action_type + ' for control: ' + controlId);
 			return;
 		}
