@@ -35,6 +35,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['scrollwindow'] = undefined;
 		this._controlHandlers['tabcontrol'] = JSDialog.mobileTabControl;
 		this._controlHandlers['toolbox'] = this._toolboxHandler;
+		this._controlHandlers['borderstyle'] = JSDialog.mobileBorderSelector;
 
 		this._toolitemHandlers['.uno:FontworkAlignmentFloater'] = function () { return false; };
 		this._toolitemHandlers['.uno:FontworkCharacterSpacingFloater'] = function () { return false; };
