@@ -74,16 +74,22 @@ L.Control.Sidebar = L.Control.extend({
 		if (!this.container)
 			return;
 
+		var innerData = data.data;
+		if (!innerData)
+			return;
+
+		var controlId = innerData.control_id;
+
 		// Panels share the same name for main containers, do not execute actions for them
 		// if panel has to be shown or hidden, full update will appear
-		if (data.data && (data.data.control_id === 'contents' ||
-			data.data.control_id === 'Panel' ||
-			data.data.control_id === 'titlebar')) {
-			window.app.console.log('Ignored action: ' + data.data.action_type + ' for control: ' + data.data.control_id);
+		if (controlId === 'contents' ||
+			controlId === 'Panel' ||
+			controlId === 'titlebar') {
+			window.app.console.log('Ignored action: ' + innerData.action_type + ' for control: ' + controlId);
 			return;
 		}
 
-		this.builder.executeAction(this.container, data.data);
+		this.builder.executeAction(this.container, innerData);
 	},
 
 	onResize: function() {
