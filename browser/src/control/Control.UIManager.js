@@ -112,19 +112,13 @@ L.Control.UIManager = L.Control.extend({
 			this.previousTheme = 'Dark';
 			this.setSavedState('darkTheme',false);
 			this.loadLightMode();
-			var cmd = {
-				'NewTheme': { 'type': 'string', 'value': 'Light' }
-			};
-			app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
+			this.activateDarkModeInCore(false);
 		}
 		else {
 			this.previousTheme = 'Light';
 			this.setSavedState('darkTheme',true);
 			this.loadDarkMode();
-			var cmd = {
-				'NewTheme': { 'type': 'string', 'value': 'Dark' }
-			};
-			app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
+			this.activateDarkModeInCore(true);
 		}
 		if (!window.mode.isMobile())
 			this.refreshAfterThemeChange();
@@ -141,19 +135,18 @@ L.Control.UIManager = L.Control.extend({
 		if (selectedMode) {
 			this.previousTheme = 'Dark';
 			this.loadDarkMode();
-			var cmd = {
-				'NewTheme': { 'type': 'string', 'value': 'Dark' }
-			};
-			app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
 		}
 		else {
 			this.previousTheme = 'Light';
 			this.loadLightMode();
-			var cmd = {
-				'NewTheme': { 'type': 'string', 'value': 'Light' }
-			};
-			app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
 		}
+		this.activateDarkModeInCore(selectedMode);
+	},
+
+	activateDarkModeInCore: function(activate) {
+		var cmd = { 'NewTheme': { 'type': 'string', 'value': '' } };
+		activate ? cmd.NewTheme.value = 'Dark' : cmd.NewTheme.value = 'Light';
+		app.socket.sendMessage('uno .uno:ChangeTheme ' + JSON.stringify(cmd));
 	},
 
 	renameDocument: function() {
