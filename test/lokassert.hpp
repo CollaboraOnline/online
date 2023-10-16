@@ -108,12 +108,18 @@ inline constexpr bool failed() { return false; }
 } // namespace detail
 } // namespace test
 
+#if !defined(__COVERITY__)
+#define LOK_ASSERT_MESSAGE_PRIOR_FAILURE failed()
+#else
+#define LOK_ASSERT_MESSAGE_PRIOR_FAILURE false
+#endif
+
 /// Assert the truth of a condition, with a custom message.
 #define LOK_ASSERT_MESSAGE_IMPL(message, condition, silent)                                        \
     do                                                                                             \
     {                                                                                              \
         using namespace test::detail;                                                              \
-        if (!failed())                                                                             \
+        if (!LOK_ASSERT_MESSAGE_PRIOR_FAILURE)                                                     \
         {                                                                                          \
             if (!(condition))                                                                      \
             {                                                                                      \
