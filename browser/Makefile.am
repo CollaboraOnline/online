@@ -689,6 +689,11 @@ $(DIST_FOLDER)/admin/%: $(srcdir)/admin/%
 	@mkdir -p $(dir $@)
 	@cp $< $@
 
+if ENABLE_DEBUG
+install-data-hook:
+	mkdir -p $(DESTDIR)$(pkgdatadir)/browser; \
+	cp -a dist/ $(DESTDIR)$(pkgdatadir)/browser/;
+else
 install-data-hook:
 	mkdir -p $(DESTDIR)$(pkgdatadir)/browser; \
 	rsync -a --exclude='src' \
@@ -699,6 +704,7 @@ install-data-hook:
 		--exclude='multidocs.html' \
 		--exclude='tsconfig.tsbuildinfo' \
 		dist $(DESTDIR)$(pkgdatadir)/browser/;
+endif
 
 libs:
 	@mkdir -p $(abs_srcdir)/libs
