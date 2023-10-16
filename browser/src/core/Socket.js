@@ -1387,7 +1387,11 @@ app.definitions.Socket = L.Class.extend({
 		else if (this._reconnecting) {
 			// we are reconnecting ...
 			this._map._docLayer._refreshTilesInBackground();
-			this._map.fire('statusindicator', {statusType: 'reconnected'});
+			this._map.fire('statusindicator', { statusType: 'reconnected' });
+
+			var selectedMode = this._map.uiManager.getDarkModeState();
+			this._map.uiManager.activateDarkModeInCore(selectedMode);
+
 			var uiMode = this._map.uiManager.getCurrentMode();
 			if (uiMode === 'notebookbar') {
 				this._map.uiManager.notebookbar.resetInCore();
@@ -1533,6 +1537,8 @@ app.definitions.Socket = L.Class.extend({
 			}
 			if (this._map._docLayer._docType === 'presentation')
 				this._map._isCursorVisible = false;
+
+			this._map._docLayer._resetCanonicalIdStatus();
 		}
 
 		if (isActive && this._reconnecting) {

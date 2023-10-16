@@ -1179,6 +1179,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._clientVisibleArea = '';
 	},
 
+	_resetCanonicalIdStatus: function() {
+		this._canonicalIdInitialized = false;
+	},
+
 	_updateTileTwips: function () {
 		// smaller zoom = zoom in
 		var factor = Math.pow(1.2, (this._map.options.zoom - this._tileZoom));
