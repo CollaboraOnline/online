@@ -427,7 +427,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			data = Math.abs(data);
 			var str = '' + data;
 			var dot = str.indexOf('.');
-			return dot ? 1 / Math.pow(10, str.length - dot - 1) : 1;
+			return dot > 0 ? 1 / Math.pow(10, str.length - dot - 1) : 1;
 		};
 
 		if (data.min != undefined)
