@@ -8,7 +8,7 @@
  * text area itself.
  */
 
-/* global app */
+/* global app _ */
 
 L.TextInput = L.Layer.extend({
 	initialize: function() {
@@ -437,6 +437,18 @@ L.TextInput = L.Layer.extend({
 		this._setupStyles();
 
 		this._emptyArea();
+
+		if (!this.hasAccessibilitySupport()) {
+			var warningMessage =
+				_('Screen reader support for text content is disabled. ') +
+				_('You need to enable it both at server level and in the UI. ') +
+				_('Look for the accessibility section in coolwsd.xml for server setting. ') +
+				_('Also check the accessibility support toggle under %parentControl.').replace(
+					'%parentControl',
+					window.userInterfaceMode === 'notebookbar' ? _('the Help tab') : _('the View menu')
+				);
+			this._textArea.setAttribute('aria-description', warningMessage);
+		}
 	},
 
 	_setupStyles: function() {
