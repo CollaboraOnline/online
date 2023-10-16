@@ -1140,6 +1140,8 @@ export class CommentSection extends CanvasSectionObject {
 				this.adjustComment(obj.comment);
 				annotation = this.add(obj.comment);
 				this.adjustParentAdd(annotation);
+				if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+					annotation.hide();
 			}
 			if (this.sectionProperties.selectedComment && !this.sectionProperties.selectedComment.isEdit()) {
 				this.map.focus();
