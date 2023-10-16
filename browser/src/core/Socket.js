@@ -348,8 +348,8 @@ app.definitions.Socket = L.Class.extend({
 					}
 					catch (e)
 					{
-						// unpleasant - but stops this one problem event
-						// stopping an unknown number of others.
+						// unpleasant - but stops this one problem
+						// event stopping an unknown number of others.
 						window.app.console.error('Exception ' + e + ' emitting event ' + evt.data);
 					}
 					finally {
@@ -1191,7 +1191,7 @@ app.definitions.Socket = L.Class.extend({
 			this._onHyperlinkClickedMsg(textMsg);
 		}
 
-		if (!this._map._docLayer || this._handlingDelayedMessages) {
+		if (!this._isReady() || !this._map._docLayer || this._delayedMessages.length || this._handlingDelayedMessages) {
 			this._delayMessage(textMsg);
 		} else {
 			this._map._docLayer._onMessage(textMsg, e.image);
@@ -1311,22 +1311,41 @@ app.definitions.Socket = L.Class.extend({
 	_delayMessage: function(textMsg) {
 		var message = {msg: textMsg};
 		this._delayedMessages.push(message);
+
+		if (!this._delayedMsgHandlerTimeoutId) {
+			this._handleDelayedMessages();
+		}
 	},
 
-	_handleDelayedMessages: function(docLayer) {
+	_handleDelayedMessages: function() {
+		if (!this._isReady() || !this._map._docLayer || this._handlingDelayedMessages) {
+			var that = this;
+			// Retry in a bit.
+			this._delayedMsgHandlerTimeoutId = setTimeout(function() {
+				that._handleDelayedMessages();
+			}, 100);
+			return;
+		}
+		var messages = [];
+		for (var i = 0; i < this._delayedMessages.length; ++i) {
+			var message = this._delayedMessages[i];
+			if (message)
+				messages.push(message.msg);
+		}
+		this._delayedMessages = [];
+		this._delayedMsgHandlerTimeoutId = null;
 		this._handlingDelayedMessages = true;
-
-		while (this._delayedMessages.length) {
-			var message = this._delayedMessages.shift();
-			try {
-				docLayer._onMessage(message.msg);
-			} catch (e) {
-				// unpleasant - but stops this one problem
-				// event stopping an unknown number of others.
-				window.app.console.log('Exception ' + e + ' emitting event ' + message);
+		if (this._map._docLayer) {
+			for (var k = 0; k < messages.length; ++k) {
+				try {
+					this._map._docLayer._onMessage(messages[k]);
+				} catch (e) {
+					// unpleasant - but stops this one problem
+					// event stopping an unknown number of others.
+					window.app.console.log('Exception ' + e + ' emitting event ' + messages[k]);
+				}
 			}
 		}
-
 		this._handlingDelayedMessages = false;
 	},
 
@@ -1377,9 +1396,6 @@ app.definitions.Socket = L.Class.extend({
 				});
 			}
 
-			if (docLayer !== null) {
-				this._handleDelayedMessages(docLayer);
-			}
 			this._map._docLayer = docLayer;
 			this._map.addLayer(docLayer);
 			this._map.fire('doclayerinit');
