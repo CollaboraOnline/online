@@ -383,7 +383,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				 (objectType === 'responsebutton' && (data == 0 || data == 7)))) {
 				window.onClose();
 			}
-			data = typeof data === 'string' ? data.replace('"', '\\"') : data;
+			data = typeof data === 'string' ? data.replaceAll('"', '\\"') : data;
 			var windowId = builder.windowId !== null && builder.windowId !== undefined ? builder.windowId :
 				(window.mobileDialogId !== undefined ? window.mobileDialogId :
 					(window.sidebarId !== undefined ? window.sidebarId : -1));
