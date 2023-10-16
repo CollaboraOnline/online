@@ -1619,8 +1619,11 @@ public:
         _mimeType = std::move(mimeType);
 
         int firstBytePos = getStart();
-        lseek(_fd, firstBytePos, SEEK_SET);
-        _pos = firstBytePos;
+
+        if (lseek(_fd, firstBytePos, SEEK_SET) < 0)
+            LOG_SYS("Failed to seek " << _data << " to " << firstBytePos << " because: " << strerror(errno));
+        else
+            _pos = firstBytePos;
 
         return true;
     }
