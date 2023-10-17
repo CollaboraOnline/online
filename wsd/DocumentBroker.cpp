@@ -3315,7 +3315,8 @@ void DocumentBroker::handleMediaRequest(std::string range,
         {
             // For now, we only support file:// schemes.
             // In the future, we may/should support http.
-            const std::string path = getJailRoot() + url.substr(sizeof("file://") - 1);
+            const std::string root = COOLWSD::NoCapsForKit ? "/" : getJailRoot();
+            const std::string path = root + url.substr(sizeof("file://") - 1);
 
             auto session = std::make_shared<http::server::Session>();
             session->asyncUpload(path, "video/mp4", range);
