@@ -88,9 +88,8 @@ L.Control.Notebookbar = L.Control.extend({
 		$('.main-nav').prepend(docLogoHeader);
 
 		var that = this;
-		var usesNotebookbarWidgetsInCore = docType === 'text' || docType === 'spreadsheet';
 		var retryNotebookbarInit = function() {
-			if (!that.isInitializedInCore() && usesNotebookbarWidgetsInCore) {
+			if (!that.isInitializedInCore()) {
 				// if notebookbar doesn't have any welded controls it can trigger false alarm here
 				window.app.console.warn('notebookbar might be not initialized, retrying');
 				that.initializeInCore();
