@@ -248,8 +248,6 @@ L.Map = L.Evented.extend({
 		// after we receive status for the first time.
 		this._docLoadedOnce = false;
 
-		this._isNotebookbarLoadedOnCore = false;
-
 		this.on('commandstatechanged', function(e) {
 			if (e.commandName === '.uno:ModifiedStatus') {
 				this._everModified = this._everModified || (e.state === 'true');

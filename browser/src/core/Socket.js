@@ -1388,10 +1388,10 @@ app.definitions.Socket = L.Class.extend({
 			// we are reconnecting ...
 			this._map._docLayer._refreshTilesInBackground();
 			this._map.fire('statusindicator', {statusType: 'reconnected'});
-			this._map._isNotebookbarLoadedOnCore = false;
 			var uiMode = this._map.uiManager.getCurrentMode();
 			if (uiMode === 'notebookbar') {
-				this._map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
+				this._map.uiManager.notebookbar.resetInCore();
+				this._map.uiManager.notebookbar.initializeInCore();
 			}
 			// close all the popups otherwise document textArea will not get focus
 			this._map.uiManager.closeAll();

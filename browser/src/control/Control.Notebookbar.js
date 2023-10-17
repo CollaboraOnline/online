@@ -61,7 +61,7 @@ L.Control.Notebookbar = L.Control.extend({
 			this.map.on('toggleslidehide', this.onSlideHideToggle, this);
 		}
 
-		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
+		this.initializeInCore();
 
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
 		$('.main-nav').removeProp('overflow');
@@ -90,10 +90,10 @@ L.Control.Notebookbar = L.Control.extend({
 		var that = this;
 		var usesNotebookbarWidgetsInCore = docType === 'text' || docType === 'spreadsheet';
 		var retryNotebookbarInit = function() {
-			if (!that.map._isNotebookbarLoadedOnCore && usesNotebookbarWidgetsInCore) {
+			if (!that.isInitializedInCore() && usesNotebookbarWidgetsInCore) {
 				// if notebookbar doesn't have any welded controls it can trigger false alarm here
 				window.app.console.warn('notebookbar might be not initialized, retrying');
-				that.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
+				that.initializeInCore();
 				that.retry = setTimeout(retryNotebookbarInit, 3000);
 			}
 		};
@@ -103,8 +103,7 @@ L.Control.Notebookbar = L.Control.extend({
 
 	onRemove: function() {
 		clearTimeout(this.retry);
-		this.map._isNotebookbarLoadedOnCore = false;
-		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=Default');
+		this.resetInCore();
 		this.map.off('contextchange', this.onContextChange, this);
 		this.map.off('updatepermission', this.onUpdatePermission, this);
 		this.map.off('notebookbar');
@@ -119,6 +118,19 @@ L.Control.Notebookbar = L.Control.extend({
 		this.clearNotebookbar();
 	},
 
+	isInitializedInCore: function() {
+		return this._isNotebookbarLoadedOnCore;
+	},
+
+	initializeInCore: function() {
+		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
+	},
+
+	resetInCore: function() {
+		this._isNotebookbarLoadedOnCore = false;
+		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=Default');
+	},
+
 	onJSUpdate: function (e) {
 		var data = e.data;
 
@@ -131,7 +143,7 @@ L.Control.Notebookbar = L.Control.extend({
 		if (!this.builder)
 			return;
 
-		this.map._isNotebookbarLoadedOnCore = true;
+		this._isNotebookbarLoadedOnCore = true;
 
 		this.builder.updateWidget(this.container, data.control);
 	},
@@ -148,7 +160,7 @@ L.Control.Notebookbar = L.Control.extend({
 		if (!this.container)
 			return;
 
-		this.map._isNotebookbarLoadedOnCore = true;
+		this._isNotebookbarLoadedOnCore = true;
 
 		this.builder.executeAction(this.container, data.data);
 	},
@@ -164,7 +176,7 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	onNotebookbar: function(data) {
-		this.map._isNotebookbarLoadedOnCore = true;
+		this._isNotebookbarLoadedOnCore = true;
 		// setup id for events
 		this.builder.setWindowId(data.id);
 	},
