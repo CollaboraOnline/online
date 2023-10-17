@@ -40,8 +40,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				author: this._map.getViewName(this._viewId)
 			};
 
-			if (app.sectionContainer.doesSectionExist(newComment.name)) // If adding a new comment has failed, we need to remove the leftover.
-				app.sectionContainer.removeSection(newComment.name);
+			if (app.sectionContainer.doesSectionExist('new comment')) // If adding a new comment has failed, we need to remove the leftover.
+				app.sectionContainer.removeSection('new comment');
 
 			comment = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(newComment);
 			comment.show();
