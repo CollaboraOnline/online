@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-10 11:30+0200\n"
-"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"PO-Revision-Date: 2023-10-13 05:01+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.0.1-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -493,12 +493,12 @@ msgstr "Кількість"
 #: src/control/Control.JSDialogBuilder.js:196
 #: src/control/Control.Menubar.js:675
 msgid "Active sheet"
-msgstr ""
+msgstr "Активний аркуш"
 
 #: src/control/Control.JSDialogBuilder.js:197
 #: src/control/Control.Menubar.js:676 src/control/Control.TopToolbar.js:99
 msgid "All Sheets"
-msgstr ""
+msgstr "Усі аркуші"
 
 #: src/control/Control.JSDialogBuilder.js:560
 msgid "Solid"
@@ -1656,7 +1656,7 @@ msgstr ""
 
 #: src/control/Control.TopToolbar.js:98
 msgid "Active Sheet"
-msgstr ""
+msgstr "Активний аркуш"
 
 #: src/control/Control.TopToolbar.js:111
 msgid "Default Style"
@@ -1864,7 +1864,7 @@ msgstr ""
 
 #: src/control/Permission.js:18 src/control/Permission.js:19
 msgid "Edit document"
-msgstr ""
+msgstr "Редагувати документ"
 
 #: src/control/Permission.js:76
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -2012,11 +2012,11 @@ msgstr "ПЕРЕЗАВАНТАЖИТИ"
 
 #: src/core/Socket.js:591
 msgid "Cluster configuration warning"
-msgstr ""
+msgstr "Попередження конфігурації кластера"
 
 #: src/core/Socket.js:594
 msgid "Wrong server, reconnecting..."
-msgstr ""
+msgstr "Неправильний сервер, повторне з'єднання..."
 
 #: src/core/Socket.js:601
 msgid "COOLWSD version:"
@@ -2035,9 +2035,8 @@ msgid "LOKit version:"
 msgstr "Версія LOKit:"
 
 #: src/core/Socket.js:732
-#, fuzzy
 msgid "Document is getting migrated"
-msgstr "Документ переноситься..."
+msgstr "Документ переноситься"
 
 #: src/core/Socket.js:759
 msgid "Session terminated by document owner"
@@ -2294,6 +2293,12 @@ msgid ""
 "storage and/or copy/paste problems. Expected serverId %0 for routeToken %1 "
 "but connected to serverId %2"
 msgstr ""
+"Схоже, що ваш кластер %productName неправильно сконфігурований або надто "
+"швидко масштабується — зверніться до свого системного адміністратора. "
+"Продовження редагування може призвести до того, що кілька користувачів не "
+"бачитимуть один одного, виникнуть конфлікти у сховищі документів та/або "
+"проблеми з копіюванням/вставленням. Очікується serverId %0 для routeToken "
+"%1, але під'єднано до serverId %2"
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -2429,7 +2434,7 @@ msgstr "Позначити ланцюжок розв'язаним"
 #: src/layer/tile/CommentListSection.ts:1126
 #: src/layer/tile/CommentListSection.ts:1161
 msgid "Autosaved"
-msgstr ""
+msgstr "Збережено автоматично"
 
 #: src/layer/tile/CommentSection.ts:255
 msgid "Open menu"
