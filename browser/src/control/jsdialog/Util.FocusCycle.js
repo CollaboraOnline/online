@@ -12,6 +12,9 @@
 /* global JSDialog */
 
 function getFocusableElements(container) {
+	if (!container)
+		return null;
+
 	var ret = container.querySelectorAll('[tabIndex="0"]:not(.jsdialog-begin-marker, .jsdialog-end-marker):not([disabled]):not(.hidden)');
 	if (!ret.length)
 		ret = container.querySelectorAll('input:not([disabled]):not(.hidden)');
