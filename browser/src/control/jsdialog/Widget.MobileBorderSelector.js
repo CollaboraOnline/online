@@ -80,13 +80,16 @@ function _borderControlItem(parentContainer, data, builder, i, selected) {
 	});
 }
 
-JSDialog.mobileBorderSelector = function _frameHandler(parentContainer, data, builder) {
-	var bordercontrollabel = L.DomUtil.create('label', builder.options.cssClass + ' ui-text', parentContainer);
+JSDialog.mobileBorderSelector = function (parentContainer, data, builder) {
+	var mainContainer = L.DomUtil.create('div', builder.options.cssClass + ' ui-mobileborderselector', parentContainer);
+	mainContainer.id = data.id;
+
+	var bordercontrollabel = L.DomUtil.create('label', builder.options.cssClass + ' ui-text', mainContainer);
 	bordercontrollabel.textContent = _('Cell borders');
 	bordercontrollabel.id = data.id + 'label';
 	var current = _getCurrentBorderNumber(builder);
 	for (var i = 1; i < 13; ++i)
-		_borderControlItem(parentContainer, data, builder, i, i === current);
+		_borderControlItem(mainContainer, data, builder, i, i === current);
 
 	var updateFunction = function() {
 		var current = _getCurrentBorderNumber(builder);
@@ -95,11 +98,6 @@ JSDialog.mobileBorderSelector = function _frameHandler(parentContainer, data, bu
 				$('#border-' + i).removeClass('selected');
 			else
 				$('#border-' + i).addClass('selected');
-		}
-
-		if (builder.wizard && builder.wizard._refreshSidebar) {
-			builder.wizard._refreshSidebar(0);
-			builder.refreshSidebar = false;
 		}
 	};
 
