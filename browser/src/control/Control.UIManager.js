@@ -152,7 +152,8 @@ L.Control.UIManager = L.Control.extend({
 	renameDocument: function() {
 		// todo: does this need _('rename document)
 		var docNameInput = this.documentNameInput;
-		this.showInputModal('rename-modal', _('Rename Document'), _('Enter new name'), '', _('Rename'),
+		var fileName = this.map['wopi'].BaseFileName ? this.map['wopi'].BaseFileName : '';
+		this.showInputModal('rename-modal', _('Rename Document'), _('Enter new name'), fileName, _('Rename'),
 			function(newName) {
 				docNameInput.documentNameConfirm(newName);
 		});
