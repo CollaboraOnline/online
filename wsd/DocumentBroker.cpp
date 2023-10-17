@@ -3206,10 +3206,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined, bool 
             {
                 if(oldTile.getTilePosX() == newTile.getTilePosX() &&
                    oldTile.getTilePosY() == newTile.getTilePosY() &&
-                   oldTile.getNormalizedViewId() == newTile.getNormalizedViewId() &&
-                   oldTile.getPart() == newTile.getPart() &&
-                   oldTile.getTileWidth() == newTile.getTileWidth() &&
-                   oldTile.getTileHeight() == newTile.getTileHeight())
+                   oldTile.sameTileCombineParams(newTile))
                 {
                     oldTile.setVersion(newTile.getVersion());
                     oldTile.setOldWireId(newTile.getOldWireId());
@@ -3328,13 +3325,6 @@ void DocumentBroker::handleMediaRequest(std::string range,
     }
 }
 
-static bool samePartAndSize(const TileDesc& tileA, const TileDesc& tileB)
-{
-    return tileA.getPart() == tileB.getPart() &&
-           tileA.getTileWidth() == tileB.getTileWidth() &&
-           tileA.getTileHeight() == tileB.getTileHeight();
-}
-
 void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& session)
 {
     std::unique_lock<std::mutex> lock(_mutex);
@@ -3419,7 +3409,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
                         LOG_TRC("Forcing keyframe for tile was oldwid " << tile.getOldWireId());
                         tile.setOldWireId(0);
                     }
-                    allSamePartAndSize &= tilesNeedsRendering.empty() || samePartAndSize(tilesNeedsRendering.back(), tile);
+                    allSamePartAndSize &= tilesNeedsRendering.empty() || tile.sameTileCombineParams(tilesNeedsRendering.back());
                     tilesNeedsRendering.push_back(tile);
                     _debugRenderedTileCount++;
                 }
@@ -3434,12 +3424,12 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
         {
             if (allSamePartAndSize)
             {
-                // typically all requests are for the same part and tilesize
+                // typically all requests match sufficiently to form a single tilecombine
                 sendTileCombine(TileCombined::create(tilesNeedsRendering));
             }
             else
             {
-                // but if not, split them by part+tilesize to send a separate
+                // but if not, split them by matching groups of requests to send a separate
                 // tilecombine for each group
                 std::vector<std::vector<TileDesc>> groupsNeedsRendering(1);
                 auto it = tilesNeedsRendering.begin();
@@ -3451,7 +3441,7 @@ void DocumentBroker::sendRequestedTiles(const std::shared_ptr<ClientSession>& se
                     // check if tile should go into an existing group bucket
                     for (size_t i = 0; i < groupsNeedsRendering.size(); ++i)
                     {
-                        if (samePartAndSize(*it, groupsNeedsRendering[i][0]))
+                        if (it->sameTileCombineParams(groupsNeedsRendering[i][0]))
                         {
                             groupsNeedsRendering[i].push_back(*it);
                             inserted = true;
