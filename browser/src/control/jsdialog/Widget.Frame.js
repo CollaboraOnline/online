@@ -28,7 +28,7 @@ function _extractLabelText(data) {
 	}
 
 	for (var i = 0; i < data.children.length; i++) {
-		var label = this._extractLabelText(data.children[i]);
+		var label = _extractLabelText(data.children[i]);
 		if (label)
 			return label;
 	}
