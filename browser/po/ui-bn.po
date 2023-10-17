@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-10 11:30+0200\n"
-"PO-Revision-Date: 2021-05-08 22:33+0000\n"
-"Last-Translator: Oymate <dhruboadittya96@gmail.com>\n"
+"PO-Revision-Date: 2023-10-17 18:07+0000\n"
+"Last-Translator: Rysertio <hortoki51@gmail.com>\n"
 "Language-Team: Bengali <https://hosted.weblate.org/projects/collabora-online/"
 "ui/bn/>\n"
-"Language: \n"
+"Language: bn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 5.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -49,96 +49,96 @@ msgstr "সূচী"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
-msgstr ""
+msgstr "ড্যাশবোর্ড"
 
 #: admin/admin.strings.js:14
 msgid "Users online"
-msgstr ""
+msgstr "ব্যবহারকারী অনলাইনে"
 
 #: admin/admin.strings.js:15
 msgid "User Name"
-msgstr ""
+msgstr "ব্যবহারকারীর নাম"
 
 #: admin/admin.strings.js:16
 msgid "Documents open"
-msgstr ""
+msgstr "ডকমেন্ট খোলা"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:122 admin/src/AdminSocketOverview.js:349
 msgid " user(s)."
-msgstr ""
+msgstr " ব্যবহারকারীগণ।"
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:205
 msgid " document(s) open."
-msgstr ""
+msgstr " টি ডকুমেন্ট খোলা।"
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
-msgstr ""
+msgstr "ডকমেন্টের সংখ্যা"
 
 #: admin/admin.strings.js:20
 msgid "Memory consumed"
-msgstr ""
+msgstr "ব্যবহৃত মেমোরি"
 
 #: admin/admin.strings.js:21
 msgid "Bytes sent"
-msgstr ""
+msgstr "বাইট পাঠানো হয়েছে"
 
 #: admin/admin.strings.js:22
 msgid "Bytes received"
-msgstr ""
+msgstr "বাইট গৃহীত হয়েছে"
 
 #: admin/admin.strings.js:23
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: admin/admin.strings.js:24
 msgid "Document"
-msgstr ""
+msgstr "ডকমেন্ট"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "বার দেখা"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
-msgstr ""
+msgstr "ব্যয়িত সময়"
 
 #: admin/admin.strings.js:27
 msgid "Idle time"
-msgstr ""
+msgstr "অব্যবহৃত সময়"
 
 #: admin/admin.strings.js:28
 msgid "Modified"
-msgstr ""
+msgstr "পরিবর্তীত"
 
 #: admin/admin.strings.js:29
 msgid "Uploaded"
-msgstr ""
+msgstr "আপলোডকৃত"
 
 #: admin/admin.strings.js:30
 msgid "WOPI host"
-msgstr ""
+msgstr "WOPI হোস্ট"
 
 #: admin/admin.strings.js:31
 msgid "Kill"
-msgstr ""
+msgstr "বন্ধ"
 
 #: admin/admin.strings.js:32
 msgid "Graphs"
-msgstr ""
+msgstr "ছকগুলি"
 
 #: admin/admin.strings.js:33
 msgid "Memory Graph"
-msgstr ""
+msgstr "মেমোরি ছক"
 
 #: admin/admin.strings.js:34
 msgid "CPU Graph"
-msgstr ""
+msgstr "সিপিইউ ছক"
 
 #: admin/admin.strings.js:35
 msgid "Network Graph"
-msgstr ""
+msgstr "নেটওয়ার্ক ছক"
 
 #: admin/admin.strings.js:36 src/control/Control.Notebookbar.js:242
 #: src/control/Control.NotebookbarCalc.js:102
@@ -150,7 +150,7 @@ msgstr ""
 #: src/layer/tile/CommentListSection.ts:393
 #: src/layer/tile/CommentSection.ts:120
 msgid "Save"
-msgstr ""
+msgstr "সংরক্ষণ"
 
 #: admin/admin.strings.js:37
 msgid "Cache size of memory statistics"
@@ -220,11 +220,11 @@ msgstr ""
 
 #: admin/admin.strings.js:53
 msgid "Set Log Levels"
-msgstr ""
+msgstr "সূচীর মাত্রা সেট করুন"
 
 #: admin/admin.strings.js:54
 msgid "Log Levels"
-msgstr ""
+msgstr "সূচীর মাত্রা"
 
 #: admin/admin.strings.js:55 src/control/Control.AlertDialog.js:21
 #: src/control/Control.AlertDialog.js:27 src/control/Control.AlertDialog.js:58
@@ -232,27 +232,27 @@ msgstr ""
 #: src/core/Socket.js:1040 src/core/Socket.js:1045
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:51-7
 msgid "Close"
-msgstr ""
+msgstr "বন্ধ"
 
 #: admin/admin.strings.js:56
 msgid "Update Log Levels"
-msgstr ""
+msgstr "সূচীর মাত্রা আপডেট"
 
 #: admin/admin.strings.js:57
 msgid "Version Information"
-msgstr ""
+msgstr "ভার্সনের তথ্য"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
-msgstr ""
+msgstr "গৃহীত"
 
 #: admin/src/AdminSocketAnalytics.js:209
 msgid "Sent"
-msgstr ""
+msgstr "পাঠানো হয়েছে"
 
 #: admin/src/AdminSocketBase.js:53
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "সার্ভার বন্ধ হয়েছে; দয়া করে পেজ রিলোড করুন।"
 
 #: admin/src/AdminSocketBase.js:54 admin/src/AdminSocketBase.js:65
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketOverview.js:422
@@ -270,19 +270,19 @@ msgstr ""
 #: src/map/Clipboard.js:928 src/map/handler/Map.Feedback.js:83
 #: src/map/handler/Map.WOPI.js:485
 msgid "OK"
-msgstr ""
+msgstr "ঠিক আছে"
 
 #: admin/src/AdminSocketBase.js:63 admin/src/AdminSocketBase.js:64
 msgid "Connection error"
-msgstr ""
+msgstr "সংযোগে সমস্যা"
 
 #: admin/src/AdminSocketOverview.js:97 admin/src/AdminSocketSettings.js:34
 msgid "Confirmation"
-msgstr ""
+msgstr "নিশ্চিত করুন"
 
 #: admin/src/AdminSocketOverview.js:98
 msgid "Are you sure you want to terminate this session?"
-msgstr ""
+msgstr "আপনি কি এই সেশন শেষ করতে চান?"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketOverview.js:423
 #: admin/src/AdminSocketSettings.js:37
@@ -293,11 +293,11 @@ msgstr ""
 #: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:119 src/layer/tile/CommentSection.ts:122
 msgid "Cancel"
-msgstr ""
+msgstr "বাতিল"
 
 #: admin/src/AdminSocketOverview.js:411
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr ""
+msgstr "অনিরাপদ সংযোগে jwt প্রমাণীকরণ কুকি সেট করা যায়নি"
 
 #: admin/src/AdminSocketOverview.js:415
 msgid "Failed to authenticate this session over protocol %0"
