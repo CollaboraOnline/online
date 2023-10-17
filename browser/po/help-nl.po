@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-10 11:30+0200\n"
-"PO-Revision-Date: 2023-08-28 09:54+0000\n"
+"PO-Revision-Date: 2023-10-13 11:48+0000\n"
 "Last-Translator: Sebastiaan Veld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "help/nl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1915,7 +1915,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:387-5
 msgid "Pasting"
-msgstr "Invoegen"
+msgstr "Plakken"
 
 #: html/cool-help.html%2Bdiv.p:388-5
 msgid ""
