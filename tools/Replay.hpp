@@ -213,7 +213,7 @@ public:
         std::cerr << "Attempt connect to " << uri << " for trace " << _trace << "\n";
         getNextRecord();
         _start = std::chrono::steady_clock::now() + std::chrono::milliseconds(delayMs);
-        _nextPing = _start + std::chrono::milliseconds((long)(std::rand() * 1000.0) / RAND_MAX);
+        _nextPing = _start + std::chrono::milliseconds(Util::rng::getNext() % 1000);
         _lastTile = _start;
     }
 
