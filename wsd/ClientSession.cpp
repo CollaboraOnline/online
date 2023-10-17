@@ -2227,14 +2227,18 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         else if (tokens.equals(0, "extractedlinktargets:"))
         {
             LOG_TRC("Sending extracted link targets response.");
+            if (!_saveAsSocket)
+                LOG_ERR("Error in extractedlinktargets: not in isConvertTo mode");
+            else
+            {
+                const std::string stringJSON = payload->jsonString();
 
-            const std::string stringJSON = payload->jsonString();
-
-            http::Response httpResponse(http::StatusCode::OK);
-            httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-            httpResponse.set("X-Content-Type-Options", "nosniff");
-            httpResponse.setBody(stringJSON, "application/json");
-            _saveAsSocket->sendAndShutdown(httpResponse);
+                http::Response httpResponse(http::StatusCode::OK);
+                httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+                httpResponse.set("X-Content-Type-Options", "nosniff");
+                httpResponse.setBody(stringJSON, "application/json");
+                _saveAsSocket->sendAndShutdown(httpResponse);
+            }
 
             // Now terminate.
             docBroker->closeDocument("extractedlinktargets");
@@ -2243,28 +2247,33 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
         else if (tokens.equals(0, "sendthumbnail:"))
         {
             LOG_TRC("Sending get-thumbnail response.");
-            bool error = false;
-
-            if (firstLine.find("error") != std::string::npos)
-                error = true;
-
-            if (!error)
+            if (!_saveAsSocket)
+                LOG_ERR("Error in sendthumbnail: not in isConvertTo mode");
+            else
             {
-                int firstLineSize = firstLine.size() + 1;
-                std::string thumbnail(payload->data().data() + firstLineSize, payload->data().size() - firstLineSize);
+                bool error = false;
 
-                http::Response httpResponse(http::StatusCode::OK);
-                httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-                httpResponse.set("X-Content-Type-Options", "nosniff");
-                httpResponse.setBody(thumbnail, "image/png");
-                _saveAsSocket->sendAndShutdown(httpResponse);
-            }
+                if (firstLine.find("error") != std::string::npos)
+                    error = true;
 
-            if (error)
-            {
-                http::Response httpResponse(http::StatusCode::InternalServerError);
-                httpResponse.set("Content-Length", "0");
-                _saveAsSocket->sendAndShutdown(httpResponse);
+                if (!error)
+                {
+                    int firstLineSize = firstLine.size() + 1;
+                    std::string thumbnail(payload->data().data() + firstLineSize, payload->data().size() - firstLineSize);
+
+                    http::Response httpResponse(http::StatusCode::OK);
+                    httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+                    httpResponse.set("X-Content-Type-Options", "nosniff");
+                    httpResponse.setBody(thumbnail, "image/png");
+                    _saveAsSocket->sendAndShutdown(httpResponse);
+                }
+
+                if (error)
+                {
+                    http::Response httpResponse(http::StatusCode::InternalServerError);
+                    httpResponse.set("Content-Length", "0");
+                    _saveAsSocket->sendAndShutdown(httpResponse);
+                }
             }
 
             docBroker->closeDocument("thumbnailgenerated");
