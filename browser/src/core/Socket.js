@@ -1191,7 +1191,7 @@ app.definitions.Socket = L.Class.extend({
 			this._onHyperlinkClickedMsg(textMsg);
 		}
 
-		if (!this._map._docLayer || this._handlingDelayedMessages) {
+		if (!this._isReady() || !this._map._docLayer || this._handlingDelayedMessages) {
 			this._delayMessage(textMsg);
 		} else {
 			this._map._docLayer._onMessage(textMsg, e.image);
