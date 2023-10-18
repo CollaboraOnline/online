@@ -637,13 +637,14 @@ void DocumentBroker::pollThread()
     {
         // Quarantine the last copy, if different.
         LOG_WRN((dataLoss ? "Data loss " : "Crash ") << "detected, will quarantine last version of ["
-                << getDocKey() << "] if necessary");
+                << getDocKey() << "] if necessary. Quarantine enabled: " << bool(_quarantine)
+                << ", Storage available: " << bool(_storage));
         if (_storage && _quarantine)
         {
             const std::string uploading = _storage->getRootFilePathUploading();
             if (FileUtil::Stat(uploading).exists())
             {
-                LOG_DBG("Quarantining the .uploading file: " << uploading);
+                LOG_WRN("Quarantining the .uploading file: " << uploading);
                 _quarantine->quarantineFile(uploading);
             }
             else
@@ -651,13 +652,13 @@ void DocumentBroker::pollThread()
                 const std::string upload = _storage->getRootFilePathToUpload();
                 if (FileUtil::Stat(upload).exists())
                 {
-                    LOG_DBG("Quarantining the .upload file: " << upload);
+                    LOG_WRN("Quarantining the .upload file: " << upload);
                     _quarantine->quarantineFile(upload);
                 }
                 else
                 {
                     // Fallback to quarantining the original document.
-                    LOG_DBG("Quarantining the original document file: " << _filename);
+                    LOG_WRN("Quarantining the original document file: " << _filename);
                     _quarantine->quarantineFile(_storage->getRootFilePath());
                 }
             }
