@@ -54,6 +54,7 @@ m4_ifelse(MOBILEAPP,[],
     if (msg.MessageId === 'Host_PostmessageReady') {
       window.WOPIPostmessageReady = true;
       window.removeEventListener('message', PostMessageReadyListener, false);
+      console.log('Received Host_PostmessageReady.');
     }
   };
   window.addEventListener('message', PostMessageReadyListener, false);
