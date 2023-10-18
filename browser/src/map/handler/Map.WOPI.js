@@ -234,8 +234,10 @@ L.Map.WOPI = L.Handler.extend({
 	},
 
 	_postMessageListener: function(e) {
-		if (!this._allowMessageOrigin(e))
+		if (!this._allowMessageOrigin(e)) {
+			window.app.console.error('PostMessage not allowed due to incorrect origin.');
 			return;
+		}
 
 		var msg;
 
@@ -338,6 +340,7 @@ L.Map.WOPI = L.Handler.extend({
 
 		// All following actions must be done after initialization is completed.
 		if (!window.WOPIPostmessageReady) {
+			window.app.console.error('PostMessage ignored: not ready.');
 			return;
 		}
 
