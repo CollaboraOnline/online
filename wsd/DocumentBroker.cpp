@@ -180,6 +180,9 @@ DocumentBroker::DocumentBroker(ChildType type, const std::string& uri, const Poc
     , _wopiDownloadDuration(0)
     , _mobileAppDocId(mobileAppDocId)
     , _alwaysSaveOnExit(COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false))
+#if !MOBILEAPP
+    , _admin(Admin::instance())
+#endif
     , _unitWsd(UnitWSD::isUnitTesting() ? &UnitWSD::get() : nullptr)
 {
     assert(!_docKey.empty());
@@ -405,7 +408,7 @@ void DocumentBroker::pollThread()
             LOG_TRC("Doc [" << _docKey << "] added stats sent: +" << deltaSent << ", recv: +" << deltaRecv << " bytes to totals.");
 
             // send change since last notification.
-            Admin::instance().addBytes(getDocKey(), deltaSent, deltaRecv);
+            _admin.addBytes(getDocKey(), deltaSent, deltaRecv);
         }
 
         if (_storage && _lockCtx->needsRefresh(now))
@@ -716,7 +719,7 @@ DocumentBroker::~DocumentBroker()
 
 #if !MOBILEAPP
     // Remove from the admin last, to avoid racing the next test.
-    Admin::instance().rmDoc(_docKey);
+    _admin.rmDoc(_docKey);
 #endif
 
     if (_unitWsd)
@@ -1827,9 +1830,9 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         // But only when isModified() == false because it might happen
         // by the time we finish uploading there is further modification
         // to the document.
-        Admin::instance().uploadedAlert(_docKey, getPid(), lastUploadSuccessful);
+        _admin.uploadedAlert(_docKey, getPid(), lastUploadSuccessful);
     }
-    Admin::instance().getModel().sendMigrateMsgAfterSave(lastUploadSuccessful, _docKey);
+    _admin.getModel().sendMigrateMsgAfterSave(lastUploadSuccessful, _docKey);
 #endif
 
     if (uploadResult.getResult() == StorageBase::UploadResult::Result::OK)
@@ -1838,7 +1841,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
 #if !MOBILEAPP
         WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
         if (wopiStorage != nullptr)
-            Admin::instance().setDocWopiUploadDuration(_docKey, wopiStorage->getWopiSaveDuration());
+            _admin.setDocWopiUploadDuration(_docKey, wopiStorage->getWopiSaveDuration());
 #endif
 
         if (!_uploadRequest->isSaveAs() && !_uploadRequest->isRename())
@@ -2639,9 +2642,9 @@ std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSessi
     const Poco::URI& uri = _storage->getUri();
     // Create uri without query parameters
     const Poco::URI wopiSrc(uri.getScheme() + "://" + uri.getAuthority() + uri.getPath());
-    Admin::instance().addDoc(_docKey, getPid(), getFilename(), id, session->getUserName(),
-                             session->getUserId(), _childProcess->getSMapsFD(), wopiSrc, session->isReadOnly());
-    Admin::instance().setDocWopiDownloadDuration(_docKey, _wopiDownloadDuration);
+    _admin.addDoc(_docKey, getPid(), getFilename(), id, session->getUserName(),
+                  session->getUserId(), _childProcess->getSMapsFD(), wopiSrc, session->isReadOnly());
+    _admin.setDocWopiDownloadDuration(_docKey, _wopiDownloadDuration);
 #endif
 
     // Add and attach the session.
@@ -2758,7 +2761,7 @@ void DocumentBroker::disconnectSessionInternal(const std::shared_ptr<ClientSessi
     try
     {
 #if !MOBILEAPP
-        Admin::instance().rmDoc(_docKey, id);
+        _admin.rmDoc(_docKey, id);
         COOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
 #endif
         if (_docState.isUnloadRequested())
@@ -3548,10 +3551,10 @@ void DocumentBroker::setModified(const bool value)
 {
 #if !MOBILEAPP
     // Flag the document as modified in the admin console.
-    Admin::instance().modificationAlert(_docKey, getPid(), value);
+    _admin.modificationAlert(_docKey, getPid(), value);
 
     // Flag the document as uploaded in the admin console.
-    Admin::instance().uploadedAlert(
+    _admin.uploadedAlert(
         _docKey, getPid(), !isAsyncUploading() && needToUploadToStorage() == NeedToUpload::No);
 #endif
 
@@ -3793,7 +3796,7 @@ void DocumentBroker::processBatchUpdates()
 
     if (timeSinceLastNotifyMs > 250)
     {
-        Admin::instance().updateLastActivityTime(_docKey);
+        _admin.updateLastActivityTime(_docKey);
         _lastNotifiedActivityTime = _lastActivityTime;
     }
 #endif

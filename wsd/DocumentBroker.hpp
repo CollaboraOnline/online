@@ -1539,6 +1539,10 @@ private:
     /// True iff the config per_document.always_save_on_exit is true.
     const bool _alwaysSaveOnExit;
 
+#if !MOBILEAPP
+    Admin& _admin;
+#endif
+
     // Last member.
     /// The UnitWSD instance. We capture it here since
     /// this is our instance, but the test framework
