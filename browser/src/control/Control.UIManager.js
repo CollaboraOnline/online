@@ -562,7 +562,7 @@ L.Control.UIManager = L.Control.extend({
 	// UI modification
 
 	insertButtonToClassicToolbar: function(button) {
-		if (!w2ui['editbar'].get(button.id)) {
+		if (w2ui['editbar'] && !w2ui['editbar'].get(button.id)) {
 			if (this.map.isEditMode()) {
 				// add the css rule for the image
 				var style = $('html > head > style');
