@@ -216,13 +216,14 @@ bool Quarantine::quarantineFile(const std::string& docPath)
     if (!fileList.empty())
     {
         FileUtil::Stat sourceStat(docPath);
-        FileUtil::Stat lastFileStat(fileList[fileList.size() - 1]);
+        const auto& lastFile = fileList[fileList.size() - 1];
+        FileUtil::Stat lastFileStat(lastFile);
 
         if (lastFileStat.isIdenticalTo(sourceStat))
         {
-            LOG_INF("Quarantining of file ["
+            LOG_WRN("Quarantining of file ["
                     << docPath << "] to [" << linkedFilePath
-                    << "] is skipped because this file version is already quarantined");
+                    << "] is skipped because this file version is already quarantined as: " << lastFile);
             return false;
         }
     }
@@ -235,7 +236,7 @@ bool Quarantine::quarantineFile(const std::string& docPath)
         clearOldQuarantineVersions();
         makeQuarantineSpace();
 
-        LOG_INF("Quarantined [" << docPath << "] to [" << linkedFilePath << ']');
+        LOG_WRN("Quarantined [" << docPath << "] to [" << linkedFilePath << ']');
         return true;
     }
 
