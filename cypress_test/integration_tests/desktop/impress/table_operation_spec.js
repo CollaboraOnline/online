@@ -144,7 +144,7 @@ describe(['tagdesktop'], 'Table operations', function() {
 	it('Delete row.', function() {
 		desktopHelper.switchUIToNotebookbar();
 		selectFullTable();
-		selectOptionNotebookbar('#table-delete-rows');
+		selectOptionNotebookbar('#table-delete-rows-button');
 
 		cy.cGet('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 2);
