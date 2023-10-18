@@ -1772,3 +1772,8 @@ kbd,
 #modal-dialog-copy_paste_download_progress .ui-dialog-content {
 	width: 450px;
 }
+
+/* help */
+#modal-dialog-online-help-content-box {
+	min-width: 75%;
+}
