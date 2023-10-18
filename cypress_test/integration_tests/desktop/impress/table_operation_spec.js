@@ -18,7 +18,13 @@ describe(['tagdesktop'], 'Table operations', function() {
 	});
 
 	function selectOptionNotebookbar(optionId) {
-		cy.cGet(optionId).click();
+		var optionButton = cy.cGet(optionId);
+		// It takes time for the ui to enable the various table toolbar buttons after
+		// the table gets focus, but we can continue as soon as:
+		// a) the parent container is enabled
+		optionButton.parent().should('not.have.class', 'disabled');
+		// b) the specific button is enabled
+		optionButton.should('not.have.class', 'disabled').click();
 	}
 
 	function retriggerNewSvgForTableInTheCenter() {
@@ -39,8 +45,6 @@ describe(['tagdesktop'], 'Table operations', function() {
 			.should('have.length', 2);
 
 		cy.cGet('text.SVGTextShape').click({force: true});
-
-		cy.wait(1000);
 	}
 
 	it('Insert Row Before', function() {
