@@ -15,6 +15,7 @@ L.Control.UIManager = L.Control.extend({
 	mobileWizard: null,
 	documentNameInput: null,
 	blockedUI: false,
+	refreshingNotebookbar: false,
 	busyPopupTimer: null,
 	customButtons: [], // added by WOPI InsertButton
 	previousTheme: null,
@@ -457,6 +458,9 @@ L.Control.UIManager = L.Control.extend({
 
 	refreshNotebookbar: function() {
 			var selectedTab = $('.ui-tab.notebookbar[aria-selected="true"]').attr('id') || 'Home-tab-label';
+
+			this.refreshingNotebookbar = true;
+			var wasNotebookbarLoadedOnCore = this.notebookbar && this.notebookbar._isNotebookbarLoadedOnCore;
 			this.removeNotebookbarUI();
 			this.createNotebookbarControl(this.map.getDocType());
 			if (this._map._permission === 'edit') {
@@ -465,7 +469,10 @@ L.Control.UIManager = L.Control.extend({
 			$('#' + selectedTab).click();
 			this.makeSpaceForNotebookbar();
 			this.notebookbar._showNotebookbar = true;
+			this.notebookbar._isNotebookbarLoadedOnCore = wasNotebookbarLoadedOnCore;
 			this.notebookbar.showTabs();
+			this.refreshingNotebookbar = false;
+
 			$('#map').addClass('notebookbar-opened');
 			this.insertCustomButtons();
 			this.map.sendInitUNOCommands();

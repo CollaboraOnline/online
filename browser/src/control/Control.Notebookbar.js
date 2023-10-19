@@ -102,7 +102,10 @@ L.Control.Notebookbar = L.Control.extend({
 
 	onRemove: function() {
 		clearTimeout(this.retry);
-		this.resetInCore();
+		// in the refresh case we don't have to expensively destroy the
+		// code-side navigator to recreate it
+		if (!this.map.uiManager.refreshingNotebookbar)
+		    this.resetInCore();
 		this.map.off('contextchange', this.onContextChange, this);
 		this.map.off('updatepermission', this.onUpdatePermission, this);
 		this.map.off('notebookbar');
