@@ -520,7 +520,7 @@ L.Map.include({
 		}
 
 		//translatable screenshots
-		var supportedLanguage = ['fr', 'it', 'es', 'pt-BR'];
+		var supportedLanguage = ['de', 'fr', 'it', 'es', 'pt-BR'];
 		var currentLanguage = String.locale;
 		if (supportedLanguage.indexOf(currentLanguage) >= 0) {
 			translatableContent = $(contentElement.querySelectorAll('.screenshot img'));
