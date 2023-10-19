@@ -752,10 +752,10 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
             strm.zalloc = Z_NULL;
             strm.zfree = Z_NULL;
             strm.opaque = Z_NULL;
-            int result = deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY);
-            if (result != Z_OK)
+            const int initResult = deflateInit2(&strm, Z_DEFAULT_COMPRESSION, Z_DEFLATED, 31, 8, Z_DEFAULT_STRATEGY);
+            if (initResult != Z_OK)
             {
-                 LOG_ERR("Failed to deflateInit2, result: " << result);
+                 LOG_ERR("Failed to deflateInit2, result: " << initResult);
                  continue;
             }
 
@@ -786,7 +786,13 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
                 strm.next_out = (unsigned char *)&cbuf[0];
                 strm.total_out = strm.total_in = 0;
 
-                deflate(&strm, Z_FINISH);
+                const int deflateResult = deflate(&strm, Z_FINISH);
+                if (deflateResult != Z_OK && deflateResult != Z_STREAM_END)
+                {
+                    LOG_ERR("Failed to deflate, result: " << deflateResult);
+                    free(cbuf);
+                    break;
+                }
 
                 compressedFile.append(cbuf, compSize - strm.avail_out);
                 free(cbuf);
