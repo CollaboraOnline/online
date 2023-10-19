@@ -1092,6 +1092,9 @@ L.Map.include({
 		case 'presentation':
 			this.fire('fullscreen');
 			break;
+		case 'presentinwindow':
+			this.fire('presentinwindow');
+			break;
 		case 'charmapcontrol':
 			this.sendUnoCommand('.uno:InsertSymbol');
 			break;
