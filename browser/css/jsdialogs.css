@@ -80,6 +80,10 @@
 	line-height: 1.5;
 }
 
+.jsdialog-container .ui-dialog-content > div:not(.ui-scrollwindow) {
+	overflow: hidden; /* don't inherit scrollbar from parent */
+}
+
 .jsdialog-container .lokdialog.ui-dialog-content.ui-widget-content {
 	overflow: hidden;
 }
