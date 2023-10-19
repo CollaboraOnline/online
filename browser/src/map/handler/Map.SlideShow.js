@@ -11,6 +11,7 @@ L.Map.mergeOptions({
 L.Map.SlideShow = L.Handler.extend({
 
 	_slideURL: '', // store the URL for svg
+	_slideShowInWindow: false,
 	_cypressSVGPresentationTest: false,
 
 	initialize: function (map) {
@@ -23,15 +24,18 @@ L.Map.SlideShow = L.Handler.extend({
 
 	addHooks: function () {
 		this._map.on('fullscreen', this._onFullScreen, this);
+		this._map.on('presentinwindow', this._onPresentWindow, this);
 		this._map.on('slidedownloadready', this._onSlideDownloadReady, this);
 	},
 
 	removeHooks: function () {
 		this._map.off('fullscreen', this._onFullScreen, this);
+		this._map.off('presentinwindow', this._onPresentWindow, this);
 		this._map.off('slidedownloadready', this._onSlideDownloadReady, this);
 	},
 
 	_onFullScreen: function (e) {
+		this._slideShowInWindow = false;
 		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
 			window.postMobileMessage('SLIDESHOW');
 			return;
@@ -74,6 +78,13 @@ L.Map.SlideShow = L.Handler.extend({
 		this._map.downloadAs('slideshow.svg', 'svg', null, 'slideshow');
 	},
 
+	_onPresentWindow: function () {
+		this._slideShowInWindow = true;
+		this._startSlideNumber = 0;
+
+		this._map.downloadAs('slideshow.svg', 'svg', null, 'slideshow');
+	},
+
 	_onFullScreenChange: function () {
 		if (this._map['wopi'].DownloadAsPostMessage) {
 			return;
@@ -108,6 +119,10 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_startPlaying: function() {
+		if (this._slideShowInWindow) {
+			window.open(this._slideURL, '_blank', 'popup');
+			return;
+		}
 		if (this._cypressSVGPresentationTest || !this._slideShow) {
 			window.open(this._slideURL, '_self');
 			return;
