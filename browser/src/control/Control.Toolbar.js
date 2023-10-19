@@ -129,6 +129,9 @@ function onClick(e, id, item) {
 	else if ((id === 'presentation' || id === 'fullscreen-presentation') && map.getDocType() === 'presentation') {
 		map.fire('fullscreen');
 	}
+	else if (id === 'present-in-window') {
+		map.fire('presentinwindow');
+	}
 	else if (id === 'insertannotation') {
 		map.insertComment();
 	}

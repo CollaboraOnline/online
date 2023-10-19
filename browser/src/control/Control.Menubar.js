@@ -510,7 +510,8 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:HideSlide', 'presentation'), id: 'hideslide', type: 'action'},
 				{type: 'separator', id: 'fullscreen-presentation-separator'},
 				{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
-				{name: _('Present current slide'), id: 'presentation-currentslide', type: 'action'}]
+				{name: _('Present current slide'), id: 'presentation-currentslide', type: 'action'},
+				{name: _('Present in new window'), id: 'present-in-window', type: 'action'}]
 			},
 			{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
 				{uno: '.uno:SpellDialog'},
@@ -1923,6 +1924,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.fire('fullscreen');
 		} else if (id === 'presentation-currentslide' && this._map.getDocType() === 'presentation') {
 			this._map.fire('fullscreen', {startSlideNumber: this._map.getCurrentPartNumber()});
+		} else if (id === 'present-in-window' && this._map.getDocType() === 'presentation') {
+			this._map.fire('presentinwindow');
 		} else if (id === 'insertpage') {
 			this._map.insertPage();
 		} else if (id === 'insertshape') {
