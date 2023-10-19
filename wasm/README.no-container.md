@@ -48,7 +48,7 @@ a single include directory so "make install" must be used.
 Here we assume that the online repo is cloned at `$HOME/lo/online`,
 adapt as necessary.
 
-    tar -xjvf ~/Downloads/poco-1.12.4-release.tar.gz
+    tar -xzvf ~/Downloads/poco-1.12.4-release.tar.gz
     cd poco-poco-1.12.4-release
     patch -p1 < $HOME/lo/online/wasm/poco-1.12.4-emscripten.patch
     mv XML/src/xmlparse.cpp XML/src/xmlparse.c
@@ -62,5 +62,5 @@ This will install into `/opt/poco.emsc.3.1.30`.
 ## Build Online itself
 
     ./autogen.sh
-	./configure --disable-werror --with-lokit-path=/home/tml/lo/core-cool-wasm/include --with-lo-path=/home/tml/lo/core-cool-wasm/instdir --with-lo-builddir=/home/tml/lo/core-cool-wasm --with-zstd-includes=/opt/zstd.emsc.3.1.30/include --with-zstd-libs=/opt/zstd.emsc.3.1.30/lib --with-poco-includes=/opt/poco.emsc.3.1.30/include --with-poco-libs=/opt/poco.emsc.3.1.30/lib --host=wasm32-local-emscripten --with-wasm-additional-files=/home/tml/lo/online-hacking/my-sample-docs
-    make
+	emconfigure ./configure --disable-werror --with-lokit-path=/home/tml/lo/core-cool-wasm/include --with-lo-path=/home/tml/lo/core-cool-wasm/instdir --with-lo-builddir=/home/tml/lo/core-cool-wasm --with-zstd-includes=/opt/zstd.emsc.3.1.30/include --with-zstd-libs=/opt/zstd.emsc.3.1.30/lib --with-poco-includes=/opt/poco.emsc.3.1.30/include --with-poco-libs=/opt/poco.emsc.3.1.30/lib --host=wasm32-local-emscripten --with-wasm-additional-files=/home/tml/lo/online-hacking/my-sample-docs
+    emmake make
