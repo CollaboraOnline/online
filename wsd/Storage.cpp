@@ -780,7 +780,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
 }
 
 WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo,
-                                        const Poco::JSON::Object::Ptr& object,
+                                        Poco::JSON::Object::Ptr& object,
                                         const Poco::URI& uriObject)
     : FileInfo(fileInfo)
     , _hideUserList("false")
@@ -817,26 +817,20 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo& fileInfo,
             Util::mapAnonymized(_username, _obfuscatedUserId);
         }
 
-        Poco::JSON::Object::Ptr anonObject(object);
-
         // Set anonymized version of the above fields before logging.
         // Note: anonymization caches the result, so we don't need to store here.
         if (COOLWSD::AnonymizeUserData)
-            anonObject->set("BaseFileName", COOLWSD::anonymizeUrl(getFilename()));
+            object->set("BaseFileName", COOLWSD::anonymizeUrl(getFilename()));
 
         // If obfuscatedUserId is provided, then don't log the originals and use it.
         if (COOLWSD::AnonymizeUserData && _obfuscatedUserId.empty())
         {
-            anonObject->set("OwnerId", COOLWSD::anonymizeUsername(getOwnerId()));
-            anonObject->set("UserId", COOLWSD::anonymizeUsername(_userId));
-            anonObject->set("UserFriendlyName", COOLWSD::anonymizeUsername(_username));
+            object->set("OwnerId", COOLWSD::anonymizeUsername(getOwnerId()));
+            object->set("UserId", COOLWSD::anonymizeUsername(_userId));
+            object->set("UserFriendlyName", COOLWSD::anonymizeUsername(_username));
         }
-        anonObject->stringify(wopiResponse);
-
-        // coverity[freed_arg] - object/anonObject's nRefCount is > 1 here
     }
-    else
-        object->stringify(wopiResponse);
+    object->stringify(wopiResponse);
 
     LOG_DBG("WOPI::CheckFileInfo: " << wopiResponse.str());
 

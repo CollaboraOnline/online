@@ -575,7 +575,7 @@ public:
         };
 
         /// warning - removes items from object.
-        WOPIFileInfo(const FileInfo& fileInfo, const Poco::JSON::Object::Ptr& object,
+        WOPIFileInfo(const FileInfo& fileInfo, Poco::JSON::Object::Ptr& object,
                      const Poco::URI& uriObject);
 
         const std::string& getUserId() const { return _userId; }
