@@ -619,6 +619,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 mimeType = "image/png";
             else if (fileType == "svg")
                 mimeType = "image/svg+xml";
+            else if (fileType == "wasm")
+                mimeType = "application/wasm";
             else
                 mimeType = "text/plain";
 
@@ -646,6 +648,12 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 
             response.set("Server", HTTP_SERVER_STRING);
             response.set("Date", Util::getHttpTimeNow());
+
+            if (relPath.find("wasm") != std::string::npos)
+            {
+                response.add("Cross-Origin-Opener-Policy", "same-origin");
+                response.add("Cross-Origin-Embedder-Policy", "require-corp");
+            }
 
 #if ENABLE_DEBUG
             if (std::getenv("COOL_SERVE_FROM_FS"))
@@ -1152,8 +1160,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         LOG_TRC("Denied all frame ancestors");
     }
 
-    csp.merge(config.getString("net.content_security_policy", ""));
-
     std::ostringstream oss;
     oss << "HTTP/1.1 200 OK\r\n"
         "Date: " << Util::getHttpTimeNow() << "\r\n"
@@ -1166,6 +1172,17 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         "X-Content-Type-Options: nosniff\r\n"
         "X-XSS-Protection: 1; mode=block\r\n"
         "Referrer-Policy: no-referrer\r\n";
+
+    const bool wasm = (relPath.find("wasm") != std::string::npos);
+    if (wasm)
+    {
+        oss << "Cross-Origin-Opener-Policy: same-origin\r\n";
+        oss << "Cross-Origin-Embedder-Policy: require-corp\r\n";
+
+        csp.appendDirective("script-src", "'unsafe-eval'");
+    }
+
+    csp.merge(config.getString("net.content_security_policy", ""));
 
     // Append CSP to response headers too
     oss << "Content-Security-Policy: " << csp.generate() << "\r\n";

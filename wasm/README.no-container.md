@@ -61,6 +61,25 @@ This will install into `/opt/poco.emsc.3.1.30`.
 
 ## Build Online itself
 
+    # 1. Update the directories in the command below to match your system.
+    # 2. Make sure that a document called sample.docx exists in the root of
+    #    the directory set as --with-wasm-additional-files.
+
     ./autogen.sh
 	emconfigure ./configure --disable-werror --with-lokit-path=/home/tml/lo/core-cool-wasm/include --with-lo-path=/home/tml/lo/core-cool-wasm/instdir --with-lo-builddir=/home/tml/lo/core-cool-wasm --with-zstd-includes=/opt/zstd.emsc.3.1.30/include --with-zstd-libs=/opt/zstd.emsc.3.1.30/lib --with-poco-includes=/opt/poco.emsc.3.1.30/include --with-poco-libs=/opt/poco.emsc.3.1.30/lib --host=wasm32-local-emscripten --with-wasm-additional-files=/home/tml/lo/online-hacking/my-sample-docs
     emmake make
+
+## Running WASM Online
+
+Once the build is done, copy the browser/dist to a safe locataion.
+E.g. cp -a browser/dist dist_wasm
+Next, re-configure Online and rebuild with normal config/settings (i.e. without WASM).
+Alternatively, you may have opted to build WASM in a separate directory.
+Either way, in the normal Online build directory, copy the wasm dist directory
+into the browser/dist, like this:
+cp -a dist_wasm browser/dist/wasm
+
+Now point your browser to https://localhost:9980/browser/c85d8681f3/wasm.html?file_path=/some/unused/path
+
+Notice that as of now, only the default sample.docx will be loaded.
+But the above steps should get one up and running.
