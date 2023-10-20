@@ -312,7 +312,7 @@ private:
             headerLen += 8;
         }
 
-        unsigned char *data, *mask = nullptr;
+        unsigned char *mask = nullptr;
 
         if (hasMask)
         {
@@ -320,7 +320,7 @@ private:
             headerLen += 4;
         }
 
-        if (payloadLen + headerLen > len)
+        if (headerLen > len || payloadLen > len - headerLen)
         { // partial read wait for more data.
             LOG_TRC("Still incomplete WebSocket frame, have "
                     << len << " bytes, frame is " << payloadLen + headerLen << " bytes");
@@ -338,7 +338,7 @@ private:
                 << len << " bytes: "
                 << Util::stringifyHexLine(socket->getInBuffer(), 0, std::min((size_t)32, len)));
 
-        data = p + headerLen;
+        unsigned char *data = p + headerLen;
 
         if (isControlFrame(code))
         {
