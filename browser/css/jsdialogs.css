@@ -283,7 +283,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-expander-label::before,
-.ui-treeview-expandable.collapsed > .ui-treeview-expander::before {
+.ui-treeview-expandable.collapsed > .ui-treeview-expander::before,
+.ui-treeview tr[aria-expanded='false'] > td > .ui-treeview-expander::before {
 	display: inline-block;
 	content: 'V';
 	color: transparent;
@@ -293,7 +294,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-expander-label.expanded::before,
-.ui-treeview-expandable:not(.collapsed) > .ui-treeview-expander::before  {
+.ui-treeview-expandable:not(.collapsed) > .ui-treeview-expander::before,
+.ui-treeview tr[aria-expanded='true'] > td > .ui-treeview-expander::before  {
 	content: 'V';
 	color: transparent;
 	margin-inline-end: 7px;
@@ -303,14 +305,17 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 [data-theme='dark'] .ui-expander-label::before,
-[data-theme='dark'] .ui-treeview-expandable > .ui-treeview-expander::before  {
+[data-theme='dark'] .ui-treeview-expandable > .ui-treeview-expander::before,
+[data-theme='dark'] .ui-treeview tr[aria-expanded] > td > .ui-treeview-expander::before  {
 	filter: brightness(1);
 }
 
-.ui-treeview-expandable > .ui-treeview-expander::before {
+.ui-treeview-expandable > .ui-treeview-expander::before,
+.ui-treeview tr[aria-expanded] > td > .ui-treeview-expander::before {
 	margin-inline-end: 7px !important;
 	display: inline-block;
 	position: relative !important;
+	cursor: pointer;
 }
 
 .ui-treeview-header-sort-icon::after {
@@ -332,6 +337,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	height: var(--btn-size);
 	width: var(--btn-size);
 	margin-inline-end: 8px;
+	vertical-align: middle;
 }
 
 .ui-expander-label.expanded {
@@ -455,6 +461,10 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	padding-right: 10px;
 }
 
+.ui-treeview .ui-listview-entry td {
+	vertical-align: middle;
+}
+
 .ui-treeview-entry.selected,
 .ui-listview-entry.selected {
 	background-color: var(--color-background-dark);
@@ -483,6 +493,38 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 .ui-treeview.droptarget:hover{
 	border: 1px solid #888;
 	box-shadow: 0 0 2px 0 #777;
+}
+
+/* tree grid */
+
+.ui-treeview tr[aria-level='2'] > td:first-child {
+	padding-left: 2.5ch;
+}
+
+.ui-treeview tr[aria-level='3'] > td:first-child {
+	padding-left: 5ch;
+}
+
+.ui-treeview tr[aria-level='4'] > td:first-child {
+	padding-left: 7.5ch;
+}
+
+.ui-treeview tr[aria-level='5'] > td:first-child {
+	padding-left: 10ch;
+}
+
+.ui-treeview tr > td:first-child .ui-treeview-expander {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.ui-treeview tr:not([aria-expanded]) > td:first-child::before {
+	font-family: monospace;
+	content: 'V';
+	color: transparent;
+	display: inline-block;
+	margin-inline-end: 7px;
+	vertical-align: top;
 }
 
 /* context menu */
