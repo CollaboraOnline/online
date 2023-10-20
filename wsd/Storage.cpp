@@ -1044,8 +1044,6 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
                     << ex.what());
             throw; // Bubble-up the exception.
         }
-
-        return std::string();
     }
 
     // First try the FileUrl, if provided.
@@ -1091,8 +1089,6 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
                 << ex.what());
         throw; // Bubble-up the exception.
     }
-
-    return std::string();
 }
 
 std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std::string& uriAnonym,
