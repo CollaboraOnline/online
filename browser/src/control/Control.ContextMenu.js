@@ -296,7 +296,19 @@ L.Control.ContextMenu = L.Control.extend({
 		}
 
 		return contextMenu;
-	}
+	},
+
+    // Prevents right mouse button's mouseup event from triggering menu item accidentally.
+    stopRightMouseUpEvent: function() {
+        var menuItems = document.getElementsByClassName('context-menu-item');
+
+        for (var i = 0 ; i < menuItems.length; i++) {
+            menuItems[i].addEventListener('mouseup', function(e) {
+                if (e.button == 2) // Is a right mouse button event?
+                    e.stopPropagation();
+            });
+        }
+    }
 });
 
 L.control.contextMenu = function (options) {
