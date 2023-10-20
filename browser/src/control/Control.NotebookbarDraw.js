@@ -35,7 +35,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 		return this.buildOptionsSectionData([
 			{
 				'type': 'toolitem',
-				'text': _UNO('.uno:ModifyPage', 'drawing', true),
+				'text': _UNO('.uno:Sidebar'),
 				'command': '.uno:SidebarDeck.PropertyDeck',
 				'accessibility': { focusBack: true, combination: 'SB', de: null }
 			},
@@ -1025,9 +1025,9 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			{
 				'id': 'layout-sidebar-deck',
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ModifyPage', 'drawing', true),
+				'text': _('Page Layout'),
 				'command': '.uno:SidebarDeck.PropertyDeck',
-				'accessibility': { focusBack: true, combination: 'SL', de: null }
+				'accessibility': { focusBack: true, combination: 'PL', de: null }
 			},
 			{
 				'id': 'layout-select-all',
