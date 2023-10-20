@@ -80,6 +80,19 @@
 	line-height: 1.5;
 }
 
+#SortKeyWindow {
+	/* As used in .jsdialog-container .ui-dialog-content 90 % of the viewport
+	   minus 352px:
+		- 34px the dialog's header
+		- 112px the next sibling
+		- 50px the dialog's buttons
+		- 80px status bar and calc sheet bar
+		- 38px formulabar
+		- 38px document-header
+   */
+	max-height: calc( 90vh - 352px);
+}
+
 .jsdialog-container .ui-dialog-content > div:not(.ui-scrollwindow) {
 	overflow: hidden; /* don't inherit scrollbar from parent */
 }
