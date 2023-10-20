@@ -2642,7 +2642,7 @@ std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSessi
     // Tell the admin console about this new doc
     const Poco::URI& uri = _storage->getUri();
     // Create uri without query parameters
-    const Poco::URI wopiSrc(uri.getScheme() + "://" + uri.getAuthority() + uri.getPath());
+    const std::string wopiSrc(uri.getScheme() + "://" + uri.getAuthority() + uri.getPath());
     _admin.addDoc(_docKey, getPid(), getFilename(), id, session->getUserName(),
                   session->getUserId(), _childProcess->getSMapsFD(), wopiSrc, session->isReadOnly());
     _admin.setDocWopiDownloadDuration(_docKey, _wopiDownloadDuration);
