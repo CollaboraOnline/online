@@ -295,6 +295,28 @@ function _treelistboxEntry(parentContainer, treeViewData, entry, builder, isTree
 	}
 }
 
+function _getLevel(element) {
+	return element.getAttribute('aria-level');
+}
+
+function _expandTreeGrid(element) {
+	var wasExpanded = element.getAttribute('aria-expanded') === 'true';
+	var level = _getLevel(element);
+
+	element.setAttribute('aria-expanded', wasExpanded ? false : true);
+
+	// show/hide sub entries
+	var sibling = element.nextSibling;
+	while (sibling && _getLevel(sibling) > level) {
+		if (wasExpanded)
+			L.DomUtil.addClass(sibling, 'hidden');
+		else
+			L.DomUtil.removeClass(sibling, 'hidden');
+
+		sibling = sibling.nextSibling;
+	}
+}
+
 function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 	var disabled = treeViewData.enabled === 'false' || treeViewData.enabled === false;
 
@@ -312,6 +334,12 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 	for (var i in entry.columns) {
 		var td = L.DomUtil.create('td', '', parentContainer);
 		td.setAttribute('role', 'gridcell');
+
+		// this is tree grid (tree with headers)
+		if (i == 0 && entry.children) {
+			var expander = L.DomUtil.create('div', builder.options.cssClass + ' ui-treeview-expander', td);
+			expander.addEventListener('click', function () { _expandTreeGrid(parentContainer); });
+		}
 
 		if (entry.columns[i].collapsed || entry.columns[i].expanded) {
 			var icon = L.DomUtil.create('img', 'ui-listview-icon', td);
@@ -350,6 +378,36 @@ function _hasIcon(columns) {
 	return false;
 }
 
+// returns 0 in case of flat list
+function _calulateTreeDepth(entries) {
+	var depth = 0;
+	for (var i in entries) {
+			var entry = entries[i];
+			if (entry.children && entry.children.length) {
+					var entryDepth = _calulateTreeDepth(entry.children) + 1;
+					if (entryDepth > depth)
+							depth = entryDepth;
+			}
+	}
+	return depth;
+}
+
+// children are moved to the root level and have depth parameter added
+function _makeTreeFlat(entries, depth) {
+	var flatList = [];
+	for (var i in entries) {
+		var entry = entries[i];
+		entry.depth = depth;
+		flatList.push(entry);
+
+		if (entry.children && entry.children.length) {
+			var flatChildren = _makeTreeFlat(entry.children, depth + 1);
+			flatList = flatList.concat(flatChildren);
+		}
+	}
+	return flatList;
+}
+
 function _createHeaders(tbody, data, builder) {
 	var headers = L.DomUtil.create('tr', builder.options.cssClass + ' ui-treeview-header', tbody);
 	headers.setAttribute('role', 'row');
@@ -359,6 +417,8 @@ function _createHeaders(tbody, data, builder) {
 	var hasIcons = data.entries && data.entries.length && _hasIcon(data.entries[0].columns);
 	if (hasIcons)
 		data.headers = [{ text: '' }].concat(data.headers);
+	var isTreeGrid = _calulateTreeDepth(data.entries) > 0;
+
 	for (var h in data.headers) {
 		var header = L.DomUtil.create('th', builder.options.cssClass, headers);
 		header.setAttribute('role', 'columnheader');
@@ -426,7 +486,8 @@ function _createHeaders(tbody, data, builder) {
 			};
 		};
 
-		header.onclick = clickFunction(h, headerSortIcon);
+		if (!isTreeGrid)
+			header.onclick = clickFunction(h, headerSortIcon);
 	}
 }
 
@@ -558,10 +619,16 @@ function _treelistboxControl(parentContainer, data, builder) {
 		// list view with headers
 		table.setAttribute('role', 'grid');
 
-		for (var i in data.entries) {
+		var flatEntries = _makeTreeFlat(data.entries, 0);
+
+		for (var i in flatEntries) {
 			var tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry', tbody);
 			tr.setAttribute('role', 'row');
-			_headerlistboxEntry(tr, data, data.entries[i], builder);
+			var entry = flatEntries[i];
+			tr.setAttribute('aria-level', entry.depth + 1);
+			if (entry.children && entry.children.length)
+				tr.setAttribute('aria-expanded', true);
+			_headerlistboxEntry(tr, data, entry, builder);
 		}
 
 		table.addEventListener('keydown', function onEvent(event) {
