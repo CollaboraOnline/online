@@ -30,6 +30,21 @@
  *     ]
  * }
  *
+ * c) with header and is a tree, not a list
+ * {
+ *     id: 'id',
+ *     type: 'treelistbox',
+ *     headers: [ { text: 'first column' }, { text: 'second' }],
+ *     entries: [
+ *         { row: 0, columns [ { text: 'a' }, { collapsed: 'collapsedIcon.svg' } ] },
+ *         { row: 1, columns [ { text: 'a' }, { collapsed: 'collapsedIcon.svg' } ],
+ * 			   children: [
+ *                 { row: 2, columns [ { text: 'a2' }, { expanded: 'expandedIcon.svg' }, selected: true ]}
+ *             ]
+ *         },
+ *     ]
+ * }
+ *
  * 'row' property is used in the callback to differentiate entries
  * 'state' property defines if entry has the checkbox (false/true), when is missing - no checkbox
  * 'ondemand' property can be set to provide nodes lazy loading
