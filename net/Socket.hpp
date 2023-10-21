@@ -203,7 +203,14 @@ public:
 #if !MOBILEAPP
         const int val = 1;
         if (::setsockopt(_fd, IPPROTO_TCP, TCP_NODELAY, (char *) &val, sizeof(val)) == -1)
-            LOG_SYS("Failed setsockopt TCP_NODELAY: " << strerror(errno));
+        {
+            static std::once_flag once;
+            std::call_once(once,
+                           [&]() {
+                               LOG_SYS("Failed setsockopt TCP_NODELAY. Will not report further "
+                                       "failures to set TCP_NODELAY");
+                           });
+        }
 #endif
     }
 
