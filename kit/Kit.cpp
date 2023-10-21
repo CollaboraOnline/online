@@ -3424,7 +3424,9 @@ bool globalPreinit(const std::string &loTemplate)
     const std::string libMerged = loTemplate + "/program/" LIB_MERGED;
 
     std::string loadedLibrary;
-    void *handle;
+    // we deliberately don't dlclose handle on success, make it
+    // static so static analysis doesn't see this as a leak
+    static void *handle;
     if (File(libMerged).exists())
     {
         LOG_TRC("dlopen(" << libMerged << ", RTLD_GLOBAL|RTLD_NOW)");
