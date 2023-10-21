@@ -157,12 +157,13 @@ class Document
     Document& operator = (const Document &) = delete;
 
 public:
-    Document(std::string docKey, pid_t pid, std::string filename, Poco::URI wopiSrc)
-        : _docKey(std::move(docKey))
+    Document(const std::string& docKey, pid_t pid,
+             const std::string& filename, const Poco::URI& wopiSrc)
+        : _docKey(docKey)
         , _pid(pid)
         , _activeViews(0)
-        , _filename(std::move(filename))
-        , _wopiSrc(std::move(wopiSrc))
+        , _filename(filename)
+        , _wopiSrc(wopiSrc)
         , _memoryDirty(0)
         , _lastJiffy(0)
         , _lastCpuPercentage(0)
