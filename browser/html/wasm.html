@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0 minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Online</title>
+    <style>
+        html,
+        body,
+        iframe {
+            margin: 0px;
+            padding: 0px;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="form" action enctype="multipart/form-data" target="coolframe" method="post">
+        <input name="access_token" value="test" type="hidden" />
+    </form>
+    <iframe id="coolframe" name="coolframe" style="width:100%;height:100%;position:absolute;">
+    </iframe>
+    <script>
+        function constructWopiUrl() {
+            var localServer = window.location.protocol + "//" + window.location.host;
+            var localUrl = localServer + window.location.pathname + "?";
+            localUrl = localUrl.replace("wasm.html", "/wasm/cool.html");
+            var params = new URLSearchParams(window.location.search);
+            var wopiSrc = params.get('WOPISrc');
+            if (wopiSrc) {
+                params.delete('WOPISrc');
+                wopiSrc = encodeURIComponent(wopiSrc);
+            }
+            else {
+                var filePath = params.get('file_path').substr(1);
+                params.delete('file_path');
+                var wopiSrc = localServer + "/wopi/files/" + encodeURIComponent(filePath);
+            }
+            return localUrl + "WOPISrc=" + wopiSrc + '&' + params.toString();
+        }
+        var form = document.getElementById("form");
+        form.action = constructWopiUrl();
+        form.submit();
+    </script>
+</body>
+
+</html>
