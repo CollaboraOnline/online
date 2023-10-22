@@ -259,9 +259,9 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
             return; // the getclipboard already completed.
         if (type == DocumentBroker::CLIP_REQUEST_SET)
         {
-            #if !MOBILEAPP
-            HttpHelper::sendErrorAndShutdown(400, socket);
-            #endif
+#if !MOBILEAPP
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+#endif
         }
         else // will be handled during shutdown
         {
@@ -320,9 +320,9 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         }
         else
         {
-            #if !MOBILEAPP
-            HttpHelper::sendErrorAndShutdown(400, socket);
-            #endif
+#if !MOBILEAPP
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
+#endif
         }
     }
 }

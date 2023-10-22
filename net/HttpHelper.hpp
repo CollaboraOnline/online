@@ -10,6 +10,8 @@
 #include <memory>
 #include <string>
 
+#include <HttpRequest.hpp>
+
 namespace Poco
 {
     namespace Net
@@ -23,12 +25,12 @@ class StreamSocket;
 namespace HttpHelper
 {
 /// Write headers and body for an error response.
-void sendError(int errorCode, const std::shared_ptr<StreamSocket>& socket,
+void sendError(http::StatusCode errorCode, const std::shared_ptr<StreamSocket>& socket,
                const std::string& body = std::string(),
                const std::string& extraHeader = std::string());
 
 /// Write headers and body for an error response. Afterwards, shutdown the socket.
-void sendErrorAndShutdown(int errorCode, const std::shared_ptr<StreamSocket>& socket,
+void sendErrorAndShutdown(http::StatusCode errorCode, const std::shared_ptr<StreamSocket>& socket,
                           const std::string& body = std::string(),
                           const std::string& extraHeader = std::string());
 

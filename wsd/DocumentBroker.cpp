@@ -3247,7 +3247,8 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
 
 #if !MOBILEAPP
     // Bad request.
-    HttpHelper::sendError(400, socket, "Failed to find this clipboard", "Connection: close\r\n");
+    HttpHelper::sendError(http::StatusCode::BadRequest, socket, "Failed to find this clipboard",
+                          "Connection: close\r\n");
 #endif
     socket->shutdown();
     socket->ignoreInput();
