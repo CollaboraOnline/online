@@ -124,7 +124,10 @@ public:
             {
                 const std::string filename = std::string(TDOC) + FileUrlFilename;
                 LOG_TST("FakeWOPIHost: Request, WOPI::GetFile sending FileUrl: " << filename);
-                HttpHelper::sendFileAndShutdown(socket, filename, "");
+
+                http::Response response(http::StatusCode::OK);
+                HttpHelper::sendFileAndShutdown(socket, filename, /*mediaType=*/std::string(),
+                                                response);
                 return true;
             }
 
@@ -153,7 +156,10 @@ public:
 
                 const std::string filename = std::string(TDOC) + '/' + DefaultUrlFilename;
                 LOG_TST("FakeWOPIHost: Request, WOPI::GetFile sending Default: " << filename);
-                HttpHelper::sendFileAndShutdown(socket, filename, "");
+
+                http::Response response(http::StatusCode::OK);
+                HttpHelper::sendFileAndShutdown(socket, filename, /*mediaType=*/std::string(),
+                                                response);
                 return true;
             }
         }
@@ -170,15 +176,11 @@ public:
             std::streamsize size = request.getContentLength();
             LOK_ASSERT(size > 0);
 
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                << "\r\n"
-                << "{\"LastModifiedTime\": \"" << Util::getHttpTime(getFileLastModifiedTime())
-                << "\" }";
-
-            socket->send(oss.str());
-            socket->shutdown();
+            http::Response httpResponse(http::StatusCode::OK);
+            httpResponse.setBody("{\"LastModifiedTime\": \"" +
+                                     Util::getHttpTime(getFileLastModifiedTime()) + "\" }",
+                                 "application/json; charset=utf-8");
+            socket->sendAndShutdown(httpResponse);
 
             LOG_TST("Closing document after PutFile");
             WSD_CMD("closedocument");

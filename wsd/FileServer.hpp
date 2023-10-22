@@ -65,6 +65,7 @@ public:
 
     /// Evaluate if the cookie exists, and if not, ask for the credentials.
     static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, Poco::Net::HTTPResponse& response);
+    static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, http::Response& response);
 
     /// Authenticate the admin.
     static bool authenticateAdmin(const Poco::Net::HTTPBasicCredentials& credentials,
