@@ -68,6 +68,7 @@
 #include <Poco/Net/Context.h>
 #include <Poco/Net/HTMLForm.h>
 #include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/IPAddress.h>
 #include <Poco/Net/MessageHeader.h>
 #include <Poco/Net/NameValueCollection.h>
@@ -4342,12 +4343,13 @@ private:
         assert(socket && "Must have a valid socket");
 
         LOG_TRC_S("Favicon request: " << requestDetails.getURI());
-        const std::string mimeType = "image/vnd.microsoft.icon";
+        Poco::Net::HTTPResponse response;
+        response.setContentType("image/vnd.microsoft.icon");
         std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
         if (!File(faviconPath).exists())
             faviconPath = COOLWSD::FileServerRoot + "/favicon.ico";
 
-        HttpHelper::sendFileAndShutdown(socket, faviconPath, mimeType);
+        HttpHelper::sendFileAndShutdown(socket, faviconPath, &response);
     }
 
     void handleWopiDiscoveryRequest(const RequestDetails &requestDetails,
@@ -4978,12 +4980,13 @@ private:
                 // with the exception of SVG where we need the browser to
                 // actually show it.
                 const std::string contentType = getContentType(fileName);
+                response.setContentType(contentType);
                 if (serveAsAttachment && contentType != "image/svg+xml")
                     response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
 
                 try
                 {
-                    HttpHelper::sendFileAndShutdown(socket, filePath.toString(), contentType, &response);
+                    HttpHelper::sendFileAndShutdown(socket, filePath.toString(), &response);
                 }
                 catch (const Exception& exc)
                 {
