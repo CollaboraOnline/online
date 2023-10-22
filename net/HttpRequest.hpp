@@ -832,6 +832,12 @@ public:
     /// Set an HTTP header field, replacing an earlier value, if exists.
     void set(const std::string& key, std::string value) { _header.set(key, std::move(value)); }
 
+    /// Set the Content-Type header.
+    void setContentType(std::string type) { _header.setContentType(std::move(type)); }
+
+    /// Set the Content-Length header.
+    void setContentLength(int64_t length) { _header.setContentLength(length); }
+
     /// Get a header entry value by key, if found, defaulting to @def, if missing.
     std::string get(const std::string& key, const std::string& def = std::string()) const
     {

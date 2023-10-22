@@ -1,9 +1,5 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
 /*
- * Copyright the Collabora Online contributors.
- *
- * SPDX-License-Identifier: MPL-2.0
- *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -75,8 +71,7 @@ using Poco::Util::Application;
 
 std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHandler::FileHash;
 
-namespace
-{
+namespace {
 
 int functionConversation(int /*num_msg*/, const struct pam_message** /*msg*/,
                          struct pam_response **reply, void *appdata_ptr)
@@ -295,6 +290,24 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
     std::string jwtToken;
     return isAdminLoggedIn(request, jwtToken) ||
            authenticateAdmin(Poco::Net::HTTPBasicCredentials(request), response, jwtToken);
+}
+
+bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request, http::Response& response)
+{
+    // For now, we reuse the exiting implementation, which uses Poco HTTPCookie.
+    Poco::Net::HTTPResponse pocoResponse;
+    if (isAdminLoggedIn(request, pocoResponse))
+    {
+        // Copy the headers, including the cookies.
+        for (const auto& pair : pocoResponse)
+        {
+            response.set(pair.first, pair.second);
+        }
+
+        return true;
+    }
+
+    return false;
 }
 
 #if ENABLE_DEBUG
@@ -519,7 +532,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 #if ENABLE_DEBUG
         noCache = true;
 #endif
-        Poco::Net::HTTPResponse response;
+        http::Response response(http::StatusCode::OK);
 
         const auto& config = Application::instance().config();
 
@@ -529,10 +542,9 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         {
             if (config.getBool("ssl.sts.enabled", false))
             {
-                const auto maxAge =
-                    config.getInt("ssl.sts.max_age", 31536000); // Default 1 year.
+                const auto maxAge = config.getInt("ssl.sts.max_age", 31536000); // Default 1 year.
                 response.add("Strict-Transport-Security",
-                                "max-age=" + std::to_string(maxAge) + "; includeSubDomains");
+                             "max-age=" + std::to_string(maxAge) + "; includeSubDomains");
             }
         }
 #endif
@@ -572,10 +584,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             if (coolLogging != "false")
             {
                 LOG_ERR(message.rdbuf());
-
-                std::ostringstream oss;
-                response.write(oss);
-                socket->send(oss.str());
+                socket->send(response);
                 return;
             }
         }
@@ -672,18 +681,19 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             response.set("Server", HTTP_SERVER_STRING);
             response.set("Date", Util::getHttpTimeNow());
 
-            bool gzip = request.hasToken("Accept-Encoding", "gzip");
-            const std::string *content;
 #if ENABLE_DEBUG
             if (std::getenv("COOL_SERVE_FROM_FS"))
             {
                 // Useful to not serve from memory sometimes especially during cool development
                 // Avoids having to restart cool everytime you make a change in cool
                 const std::string filePath = Poco::Path(COOLWSD::FileServerRoot, relPath).absolute().toString();
-                HttpHelper::sendFileAndShutdown(socket, filePath, mimeType, &response, noCache);
+                HttpHelper::sendFileAndShutdown(socket, filePath, mimeType, response, noCache);
                 return;
             }
 #endif
+
+            const bool gzip = request.hasToken("Accept-Encoding", "gzip");
+            const std::string* content;
             if (gzip)
             {
                 response.set("Content-Encoding", "gzip");
@@ -698,15 +708,13 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 response.set("Cache-Control", "max-age=11059200");
                 response.set("ETag", etagString);
             }
-            response.setContentType(mimeType);
             response.add("X-Content-Type-Options", "nosniff");
 
-            std::ostringstream oss;
-            response.write(oss);
-            const std::string header = oss.str();
-            LOG_TRC('#' << socket->getFD() << ": Sending " <<
-                    (!gzip ? "un":"") << "compressed : file [" << relPath << "]: " << header);
-            socket->send(header);
+            LOG_TRC('#' << socket->getFD() << ": Sending " << (!gzip ? "un" : "")
+                        << "compressed : file [" << relPath
+                        << "]: " << response.header().toString());
+
+            socket->send(response);
             socket->send(*content);
             // shutdown by caller
         }
@@ -868,7 +876,6 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
     requestUri.normalize();
 
     std::string path(requestUri.getPath());
-
     Poco::RegularExpression gitHashRe("/([0-9a-f]+)/");
     std::string gitHash;
     if (gitHashRe.extract(path, gitHash))

@@ -1328,6 +1328,7 @@ public:
         {
             Poco::JSON::Object::Ptr aliasGroups;
             Poco::JSON::Array::Ptr groups;
+
             try
             {
                 aliasGroups = remoteJson->getObject("storage")->getObject("wopi")->getObject("alias_groups");
@@ -2458,7 +2459,7 @@ void COOLWSD::innerInitialize(Application& self)
     LOG_DBG("FileServerRoot after config: " << FileServerRoot);
 
     //creating quarantine directory
-    if(getConfigValue<bool>(conf, "quarantine_files[@enable]", false))
+    if (getConfigValue<bool>(conf, "quarantine_files[@enable]", false))
     {
         QuarantinePath = getPathFromConfig("quarantine_files.path");
         if (QuarantinePath[QuarantinePath.size() - 1] != '/')
@@ -3306,6 +3307,7 @@ static std::shared_ptr<DocumentBroker>
                 proto->sendTextMessage(msg.data(), msg.size());
                 proto->shutdown(true, msg);
             }
+
             return nullptr;
         }
     }
@@ -3333,7 +3335,6 @@ static std::shared_ptr<DocumentBroker>
     if (!docBroker)
     {
         Util::assertIsLocked(DocBrokersMutex);
-
         if (DocBrokers.size() + 1 > COOLWSD::MaxDocuments)
         {
             LOG_INF("Maximum number of open documents of " << COOLWSD::MaxDocuments << " reached.");
@@ -3679,7 +3680,7 @@ public:
         std::string hostToCheck = request.getHost();
         bool allow = allowPostFrom(addressToCheck) || HostUtil::allowedWopiHost(hostToCheck);
 
-        if(!allow)
+        if (!allow)
         {
             LOG_WRN_S("convert-to: Requesting address is denied: " << addressToCheck);
             return false;
@@ -3690,7 +3691,7 @@ public:
         }
 
         // Handle forwarded header and make sure all participating IPs are allowed
-        if(request.has("X-Forwarded-For"))
+        if (request.has("X-Forwarded-For"))
         {
             const std::string fowardedData = request.get("X-Forwarded-For");
             StringVector tokens = StringVector::tokenize(fowardedData, ',');
@@ -3713,7 +3714,7 @@ public:
                     // We can't find out the hostname, and it already failed the IP check
                     allow = false;
                 }
-                if(!allow)
+                if (!allow)
                 {
                     LOG_WRN_S("convert-to: Requesting address is denied: " << addressToCheck);
                     return false;
@@ -4050,12 +4051,13 @@ private:
         assert(socket && "Must have a valid socket");
 
         LOG_TRC_S("Favicon request: " << requestDetails.getURI());
-        const std::string mimeType = "image/vnd.microsoft.icon";
+        http::Response response(http::StatusCode::OK);
+        response.setContentType("image/vnd.microsoft.icon");
         std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
         if (!File(faviconPath).exists())
             faviconPath = COOLWSD::FileServerRoot + "/favicon.ico";
 
-        HttpHelper::sendFileAndShutdown(socket, faviconPath, mimeType);
+        HttpHelper::sendFileAndShutdown(socket, faviconPath, /*mediaType=*/std::string(), response);
     }
 
     void handleWopiDiscoveryRequest(const RequestDetails &requestDetails,
@@ -4182,6 +4184,7 @@ private:
                 if (!data || data->length() == 0)
                     LOG_ERR_S("Invalid zero size set clipboard content");
             }
+
             // Do things in the right thread.
             LOG_TRC_S("Move clipboard request " << tag << " to docbroker thread with data: "
                                                 << (data ? data->length() : 0) << " bytes");
@@ -4676,7 +4679,7 @@ private:
                 if (attachmentIt != postRequestQueryParams.end())
                     serveAsAttachment = attachmentIt->second != "0";
 
-                Poco::Net::HTTPResponse response;
+                http::Response response(http::StatusCode::OK);
 
                 // Instruct browsers to download the file, not display it
                 // with the exception of SVG where we need the browser to
@@ -4687,7 +4690,7 @@ private:
 
                 try
                 {
-                    HttpHelper::sendFileAndShutdown(socket, filePath.toString(), contentType, &response);
+                    HttpHelper::sendFileAndShutdown(socket, filePath.toString(), contentType, response);
                 }
                 catch (const Exception& exc)
                 {
