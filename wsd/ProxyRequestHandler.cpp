@@ -67,25 +67,25 @@ void ProxyRequestHandler::handleRequest(const std::string& relPath,
                     }
                     else
                     {
-                        HttpHelper::sendErrorAndShutdown(400, socket);
+                        HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
                     }
                 }
                 catch(std::exception& exc)
                 {
                     LOG_ERR("ProxyCallback: " << exc.what());
-                    HttpHelper::sendErrorAndShutdown(400, socket);
+                    HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
                 }
                 catch(...)
                 {
                     LOG_ERR("ProxyCallback: Unknown exception");
-                    HttpHelper::sendErrorAndShutdown(400, socket);
+                    HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
                 }
             };
 
     sessionProxy->setFinishedHandler(proxyCallback);
     if (!sessionProxy->asyncRequest(requestProxy, *COOLWSD::getWebServerPoll()))
     {
-        HttpHelper::sendErrorAndShutdown(400, socket);
+        HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
     }
 }
 

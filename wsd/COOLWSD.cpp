@@ -4043,7 +4043,7 @@ private:
         if (!COOLWSD::isSSLEnabled() && socket->sniffSSL())
         {
             LOG_ERR("Looks like SSL/TLS traffic on plain http port");
-            HttpHelper::sendErrorAndShutdown(400, socket);
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
             return;
         }
 
@@ -4238,7 +4238,7 @@ private:
                 LOG_ERR("Unknown resource: " << requestDetails.toString());
 
                 // Bad request.
-                HttpHelper::sendErrorAndShutdown(400, socket);
+                HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
                 return;
             }
         }
@@ -4249,7 +4249,7 @@ private:
                         << "]: " << ex.what());
 
             // Bad request.
-            HttpHelper::sendErrorAndShutdown(400, socket);
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
             return;
         }
         catch (const std::exception& exc)
@@ -4500,7 +4500,7 @@ private:
             std::string errMsg = "Empty clipboard item / session tag " + tag;
 
             // Bad request.
-            HttpHelper::sendErrorAndShutdown(400, socket, errMsg);
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket, errMsg);
         }
     }
 
@@ -5119,7 +5119,7 @@ private:
                                   << ". Terminating connection. Error: " << exc.what());
                     }
                     // badness occurred:
-                    HttpHelper::sendErrorAndShutdown(400, streamSocket);
+                    HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, streamSocket);
                 });
         }
         else
@@ -5127,7 +5127,7 @@ private:
             auto streamSocket = std::static_pointer_cast<StreamSocket>(disposition.getSocket());
             LOG_ERR("Failed to find document");
             // badness occurred:
-            HttpHelper::sendErrorAndShutdown(400, streamSocket);
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, streamSocket);
             // FIXME: send docunloading & re-try on client ?
         }
     }

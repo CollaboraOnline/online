@@ -621,7 +621,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                         "Expires: " + Poco::DateTimeFormatter::format(
                             later, Poco::DateTimeFormat::HTTP_FORMAT) + "\r\n" +
                         "Cache-Control: max-age=11059200\r\n";
-                    HttpHelper::sendErrorAndShutdown(304, socket, std::string(), extraHeaders);
+                    HttpHelper::sendErrorAndShutdown(http::StatusCode::NotModified, socket,
+                                                     std::string(), extraHeaders);
                     return;
                 }
             }
@@ -671,31 +672,35 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
     catch (const Poco::Net::NotAuthenticatedException& exc)
     {
         LOG_ERR("FileServerRequestHandler::NotAuthenticated: " << exc.displayText());
-        sendError(401, request, socket, "", "", "WWW-authenticate: Basic realm=\"online\"\r\n");
+        sendError(http::StatusCode::Unauthorized, request, socket, "", "",
+                  "WWW-authenticate: Basic realm=\"online\"\r\n");
     }
     catch (const Poco::FileAccessDeniedException& exc)
     {
         LOG_ERR("FileServerRequestHandler: " << exc.displayText());
-        sendError(403, request, socket, "403 - Access denied!",
+        sendError(http::StatusCode::Forbidden, request, socket, "403 - Access denied!",
                   "You are unable to access");
     }
     catch (const Poco::FileNotFoundException& exc)
     {
         LOG_ERR("FileServerRequestHandler: " << exc.displayText());
-        sendError(404, request, socket, "404 - file not found!",
+        sendError(http::StatusCode::NotFound, request, socket, "404 - file not found!",
                   "There seems to be a problem locating");
     }
     catch (Poco::SyntaxException& exc)
     {
         LOG_ERR("Incorrect config value: " << exc.displayText());
-        sendError(500, request, socket, "500 - Internal Server Error!",
+        sendError(http::StatusCode::InternalServerError, request, socket,
+                  "500 - Internal Server Error!",
                   "Cannot process the request - " + exc.displayText());
     }
 }
 
-void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPRequest& request,
+void FileServerRequestHandler::sendError(http::StatusCode errorCode,
+                                         const Poco::Net::HTTPRequest& request,
                                          const std::shared_ptr<StreamSocket>& socket,
-                                         const std::string& shortMessage, const std::string& longMessage,
+                                         const std::string& shortMessage,
+                                         const std::string& longMessage,
                                          const std::string& extraHeader)
 {
     std::string body;
