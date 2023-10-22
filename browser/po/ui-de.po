@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-10 11:30+0200\n"
-"PO-Revision-Date: 2023-09-28 15:16+0000\n"
-"Last-Translator: Aron Budea <aron.budea@collabora.com>\n"
+"PO-Revision-Date: 2023-10-21 10:03+0000\n"
+"Last-Translator: m4skedbyte <weblate@m4skedbyte.xyz>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.1-dev\n"
+"X-Generator: Weblate 5.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -2047,9 +2047,8 @@ msgid "LOKit version:"
 msgstr "LOKit-Version:"
 
 #: src/core/Socket.js:732
-#, fuzzy
 msgid "Document is getting migrated"
-msgstr "Dokument wird migriert..."
+msgstr "Dokument wird migriert"
 
 #: src/core/Socket.js:759
 msgid "Session terminated by document owner"
@@ -2137,7 +2136,7 @@ msgstr ""
 
 #: src/core/Socket.js:1092
 msgid "Connecting..."
-msgstr "Verbinden …"
+msgstr "Verbinde…"
 
 #: src/core/Socket.js:1109
 msgid "The document is being renamed and will reload shortly"
@@ -2464,7 +2463,7 @@ msgstr "Thread als gelöst markieren"
 #: src/layer/tile/CommentListSection.ts:1126
 #: src/layer/tile/CommentListSection.ts:1161
 msgid "Autosaved"
-msgstr ""
+msgstr "Automatisch gespeichert"
 
 #: src/layer/tile/CommentSection.ts:255
 msgid "Open menu"
