@@ -4343,13 +4343,13 @@ private:
         assert(socket && "Must have a valid socket");
 
         LOG_TRC_S("Favicon request: " << requestDetails.getURI());
-        Poco::Net::HTTPResponse response;
+        http::Response response(http::StatusCode::OK);
         response.setContentType("image/vnd.microsoft.icon");
         std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
         if (!File(faviconPath).exists())
             faviconPath = COOLWSD::FileServerRoot + "/favicon.ico";
 
-        HttpHelper::sendFileAndShutdown(socket, faviconPath, &response);
+        HttpHelper::sendFileAndShutdown(socket, faviconPath, response);
     }
 
     void handleWopiDiscoveryRequest(const RequestDetails &requestDetails,
@@ -4974,7 +4974,7 @@ private:
                 if (attachmentIt != postRequestQueryParams.end())
                     serveAsAttachment = attachmentIt->second != "0";
 
-                Poco::Net::HTTPResponse response;
+                http::Response response(http::StatusCode::OK);
 
                 // Instruct browsers to download the file, not display it
                 // with the exception of SVG where we need the browser to
@@ -4986,7 +4986,7 @@ private:
 
                 try
                 {
-                    HttpHelper::sendFileAndShutdown(socket, filePath.toString(), &response);
+                    HttpHelper::sendFileAndShutdown(socket, filePath.toString(), response);
                 }
                 catch (const Exception& exc)
                 {
