@@ -74,6 +74,13 @@ inline std::ostream& operator<<(std::ostream& os, const std::chrono::microsecond
     return os;
 }
 
+template <typename S, typename U, typename V>
+inline S& operator<<(S& stream, const std::pair<U, V>& pair)
+{
+    stream << pair.first << ": " << pair.second;
+    return stream;
+}
+
 namespace Util
 {
     namespace rng
@@ -1460,6 +1467,25 @@ int main(int argc, char**argv)
         std::ostringstream oss;
         object.dumpState(oss, indent);
         return oss.str().substr(indent.size());
+    }
+
+    /// Stringify elements from a container of pairs with a delimiter to a stream.
+    template <typename S, typename T>
+    void joinPair(S& stream, const T& container, const char* delimiter = " / ")
+    {
+        unsigned i = 0;
+        for (const auto& pair : container)
+        {
+            stream << (i++ ? delimiter : "") << pair;
+        }
+    }
+
+    /// Stringify elements from a container of pairs with a delimiter to string.
+    template <typename T> std::string joinPair(const T& container, const char* delimiter = " / ")
+    {
+        std::ostringstream oss;
+        joinPair(oss, container, delimiter);
+        return oss.str();
     }
 
     /// Asserts in the debug builds, otherwise just logs.
