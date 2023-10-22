@@ -531,10 +531,7 @@ protected:
             std::ostringstream oss;
             oss << "FakeWOPIHost: " << request.getMethod() << " request URI [" << uriReq.toString()
                 << "]:\n";
-            for (const auto& pair : request)
-            {
-                oss << '\t' << pair.first << ": " << pair.second << " / ";
-            }
+            Util::joinPair(oss, request, " / ");
 
             if (UnitBase::get().isFinished())
                 oss << "\nIgnoring as test has finished";
