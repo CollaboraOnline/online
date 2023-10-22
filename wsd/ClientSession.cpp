@@ -1809,15 +1809,16 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
             // TODO: Send back error when there is no output.
             if (!resultURL.getPath().empty())
             {
-                const std::string mimeType = "application/octet-stream";
                 LOG_TRC("Sending file: " << resultURL.getPath());
 
                 const std::string fileName = Poco::Path(resultURL.getPath()).getFileName();
                 Poco::Net::HTTPResponse response;
+                // We have a fragile test that expects Content-Disposition first.
                 if (!fileName.empty())
                     response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
+                response.setContentType("application/octet-stream");
 
-                HttpHelper::sendFileAndShutdown(_saveAsSocket, resultURL.getPath(), mimeType, &response);
+                HttpHelper::sendFileAndShutdown(_saveAsSocket, resultURL.getPath(), &response);
             }
 
             // Conversion is done, cleanup this fake session.

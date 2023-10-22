@@ -607,6 +607,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             else
                 mimeType = "text/plain";
 
+            response.setContentType(mimeType);
+
             auto it = request.find("If-None-Match");
             if (it != request.end())
             {
@@ -638,7 +640,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 // Useful to not serve from memory sometimes especially during cool development
                 // Avoids having to restart cool everytime you make a change in cool
                 const std::string filePath = Poco::Path(COOLWSD::FileServerRoot, relPath).absolute().toString();
-                HttpHelper::sendFileAndShutdown(socket, filePath, mimeType, &response, noCache);
+                HttpHelper::sendFileAndShutdown(socket, filePath, &response, noCache);
                 return;
             }
 #endif

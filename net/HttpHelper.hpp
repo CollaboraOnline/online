@@ -36,7 +36,6 @@ void sendErrorAndShutdown(http::StatusCode errorCode, const std::shared_ptr<Stre
 
 /// Sends file as HTTP response and shutdown the socket.
 void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
-                         const std::string& mediaType,
                          Poco::Net::HTTPResponse* optResponse = nullptr, bool noCache = false,
                          bool deflate = false, const bool headerOnly = false);
 
