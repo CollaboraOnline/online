@@ -89,8 +89,8 @@ void sendDeflatedFileContent(const std::shared_ptr<StreamSocket>& socket, const 
 }
 
 void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std::string& path,
-                         const std::string& mediaType, Poco::Net::HTTPResponse* optResponse,
-                         const bool noCache, const bool deflate, const bool headerOnly)
+                         Poco::Net::HTTPResponse* optResponse, const bool noCache,
+                         const bool deflate, const bool headerOnly)
 {
     Poco::Net::HTTPResponse* response = optResponse;
     Poco::Net::HTTPResponse localResponse;
@@ -116,7 +116,6 @@ void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std:
         response->set("Cache-Control", "no-cache");
     }
 
-    response->setContentType(mediaType);
     response->add("X-Content-Type-Options", "nosniff");
     //Should we add the header anyway ?
     if (headerOnly)

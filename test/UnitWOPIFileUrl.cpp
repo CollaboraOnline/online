@@ -114,7 +114,7 @@ public:
             {
                 const std::string filename = std::string(TDOC) + FileUrlFilename;
                 LOG_TST("FakeWOPIHost: Request, WOPI::GetFile sending FileUrl: " << filename);
-                HttpHelper::sendFileAndShutdown(socket, filename, "");
+                HttpHelper::sendFileAndShutdown(socket, filename);
                 return true;
             }
 
@@ -141,7 +141,7 @@ public:
 
                 const std::string filename = std::string(TDOC) + '/' + DefaultUrlFilename;
                 LOG_TST("FakeWOPIHost: Request, WOPI::GetFile sending Default: " << filename);
-                HttpHelper::sendFileAndShutdown(socket, filename, "");
+                HttpHelper::sendFileAndShutdown(socket, filename);
                 return true;
             }
         }
