@@ -158,7 +158,7 @@ private:
         catch (const std::exception& exc)
         {
             // Bad request.
-            HttpHelper::sendErrorAndShutdown(400, socket);
+            HttpHelper::sendErrorAndShutdown(http::StatusCode::BadRequest, socket);
 
             // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
             LOG_INF('#' << socket->getFD() << " Exception while processing incoming request: [" <<
