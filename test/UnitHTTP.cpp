@@ -186,7 +186,7 @@ public:
         LOK_ASSERT_EQUAL(http::StatusCode::OK, httpResponse.statusLine().statusCode());
         LOK_ASSERT(httpResponse.statusLine().statusCategory() ==
                    http::StatusLine::StatusCodeClass::Successful);
-        LOK_ASSERT_EQUAL(std::string("HTTP/1.0"), httpResponse.statusLine().httpVersion());
+        LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse.statusLine().httpVersion());
         LOK_ASSERT_EQUAL(std::string("OK"), httpResponse.statusLine().reasonPhrase());
         LOK_ASSERT_EQUAL(std::string("attachment; filename=\"test.txt\""),
                          httpResponse.header().get("Content-Disposition"));
