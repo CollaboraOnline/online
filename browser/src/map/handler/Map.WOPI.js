@@ -360,6 +360,15 @@ L.Map.WOPI = L.Handler.extend({
 			return;
 		}
 
+		// when user goes idle we have 'this._appLoaded == false'
+		if (msg.MessageId === 'Get_User_State') {
+			var isIdle = app.idleHandler.isDimActive();
+			this._postMessage({msgId: 'Get_User_State_Resp', args: {
+				State: (isIdle ? 'idle' : 'active'),
+				Elapsed: app.idleHandler.getElapsedFromActivity()
+			}});
+		}
+
 		// For all other messages, warn if trying to interact before we are completely loaded
 		if (!this._appLoaded) {
 			window.app.console.error('Collabora Online not loaded yet. Listen for App_LoadingStatus (Document_Loaded) event before using PostMessage API. Ignoring post message \'' + msg.MessageId + '\'.');
