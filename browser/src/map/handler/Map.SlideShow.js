@@ -36,9 +36,8 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_onFullScreen: function (e) {
-
 		if (this._checkAlreadyPresenting()) {
-			alert('already presenting');
+			this._notifyAlreadyPresenting();
 			return;
 		}
 
@@ -88,7 +87,7 @@ L.Map.SlideShow = L.Handler.extend({
 
 	_onPresentWindow: function (e) {
 		if (this._checkAlreadyPresenting()) {
-			alert('already presenting');
+			this._notifyAlreadyPresenting();
 			return;
 		}
 
@@ -197,6 +196,13 @@ L.Map.SlideShow = L.Handler.extend({
 		if (this._slideShow)
 			return true;
 		return false;
+	},
+
+	_notifyAlreadyPresenting: function() {
+		this._map.uiManager.showInfoModal('already-presenting-modal',
+			_('Already presenting'),
+			_('You are already presenting this document'), '',
+			_('OK'), null, false);
 	},
 
 	_onCloseSlideWindow: function(e) {
