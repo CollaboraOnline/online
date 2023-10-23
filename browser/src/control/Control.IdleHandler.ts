@@ -13,12 +13,18 @@ declare var postMobileMessage: any;
 class IdleHandler {
     _serverRecycling: boolean = false;
     _documentIdle: boolean = false;
+	_lastActivity: number = Date.now();
     _active: boolean = true;
     map: any;
-	dimId: 'inactive_user_message';
+	dimId: string = 'inactive_user_message';
 
 	isDimActive(): boolean {
-		return !!document.getElementById(this.dimId);
+		return !!document.getElementById(this.map.uiManager.generateModalId(this.dimId));
+	}
+
+	// time from the last activity in [s]
+	getElapsedFromActivity(): number {
+		return (Date.now() - this._lastActivity) / 1000;
 	}
 
 	_activate() {
@@ -74,15 +80,15 @@ class IdleHandler {
 
 		this.map._textInput.hideCursor();
 
-		this.map.uiManager.showInfoModal('inactive_user_message');
-		document.getElementById('inactive_user_message').textContent = message;
+		this.map.uiManager.showInfoModal(this.dimId);
+		document.getElementById(this.dimId).textContent = message;
 
 		if (message === '') {
-			document.getElementById(this.map.uiManager.generateModalId('inactive_user_message')).style.display = 'none';
-			L.LOUtil.onRemoveHTMLElement(document.getElementById('inactive_user_message'), function() { restartConnectionFn(); }.bind(this));
+			document.getElementById(this.map.uiManager.generateModalId(this.dimId)).style.display = 'none';
+			L.LOUtil.onRemoveHTMLElement(document.getElementById(this.dimId), function() { restartConnectionFn(); }.bind(this));
 		}
 		else {
-			var overlayId = this.map.uiManager.generateModalId('inactive_user_message') + '-overlay';
+			var overlayId = this.map.uiManager.generateModalId(this.dimId) + '-overlay';
 			L.LOUtil.onRemoveHTMLElement(document.getElementById(overlayId), function() { restartConnectionFn(); }.bind(this));
 		}
 
@@ -91,6 +97,8 @@ class IdleHandler {
 	}
 
 	notifyActive() {
+		this._lastActivity = Date.now();
+
 		if (window.ThisIsTheAndroidApp) {
 			window.postMobileMessage('LIGHT_SCREEN');
 		}
