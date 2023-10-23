@@ -58,11 +58,13 @@ class IdleHandler {
 
 	_dim(message: string) {
 		this._active = false;
+		var map = this.map;
 
 		var restartConnectionFn = function() {
 			if (app.idleHandler._documentIdle)
 			{
 				window.app.console.debug('idleness: reactivating');
+				map.fire('postMessage', {msgId: 'User_Active'});
 				app.idleHandler._documentIdle = false;
 				app.idleHandler.map._docLayer._setCursorVisible();
 				return app.idleHandler._activate();
