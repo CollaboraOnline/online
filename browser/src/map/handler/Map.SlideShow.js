@@ -142,6 +142,7 @@ L.Map.SlideShow = L.Handler.extend({
 				// handle popup blocked
 			}
 			this._slideShowWindowProxy.focus();
+			this._slideShowWindowProxy.addEventListener('keydown', this._onCloseSlideWindow);
 			return;
 		}
 		if (this._cypressSVGPresentationTest || !this._slideShow) {
@@ -196,6 +197,13 @@ L.Map.SlideShow = L.Handler.extend({
 		if (this._slideShow)
 			return true;
 		return false;
+	},
+
+	_onCloseSlideWindow: function(e) {
+		if (e.code === 'Escape') {
+			this.opener.focus();
+			this.close();
+		}
 	}
 });
 
