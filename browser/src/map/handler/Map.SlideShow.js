@@ -11,8 +11,9 @@ L.Map.mergeOptions({
 L.Map.SlideShow = L.Handler.extend({
 
 	_slideURL: '', // store the URL for svg
-	_slideShowInWindow: false,
+	_presentInWindow: false,
 	_cypressSVGPresentationTest: false,
+	_slideShowWindowProxy: null,
 
 	initialize: function (map) {
 		this._map = map;
@@ -35,7 +36,12 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_onFullScreen: function (e) {
-		this._slideShowInWindow = false;
+
+		if (this._checkAlreadyPresenting()) {
+			alert('already presenting');
+			return;
+		}
+
 		if (window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp) {
 			window.postMobileMessage('SLIDESHOW');
 			return;
@@ -70,6 +76,8 @@ L.Map.SlideShow = L.Handler.extend({
 				this._onFullScreenChange, this);
 		}
 
+		this._presentInWindow = false;
+
 		this._startSlideNumber = 0; // Default: start from page 0
 		if (e.startSlideNumber !== undefined) {
 			this._startSlideNumber = e.startSlideNumber;
@@ -78,9 +86,17 @@ L.Map.SlideShow = L.Handler.extend({
 		this._map.downloadAs('slideshow.svg', 'svg', null, 'slideshow');
 	},
 
-	_onPresentWindow: function () {
-		this._slideShowInWindow = true;
+	_onPresentWindow: function (e) {
+		if (this._checkAlreadyPresenting()) {
+			alert('already presenting');
+			return;
+		}
+
+		this._presentInWindow = true;
 		this._startSlideNumber = 0;
+		if (e.startSlideNumber !== undefined) {
+			this._startSlideNumber = e.startSlideNumber;
+		}
 
 		this._map.downloadAs('slideshow.svg', 'svg', null, 'slideshow');
 	},
@@ -96,6 +112,7 @@ L.Map.SlideShow = L.Handler.extend({
 			document.msFullscreenElement;
 		if (!this.fullscreen) {
 			L.DomUtil.remove(this._slideShow);
+			this._slideShow = null;
 			// #7102 on exit from fullscreen we don't get a 'focus' event
 			// in chome so a later second attempt at launching a presentation
 			// fails
@@ -119,8 +136,12 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_startPlaying: function() {
-		if (this._slideShowInWindow) {
-			window.open(this._slideURL, '_blank', 'popup');
+		if (this._presentInWindow) {
+			this._slideShowWindowProxy = window.open(this._slideURL, '_blank', 'popup'); // do we need to set this to null when closed or is that already done?
+			if (!this._slideShowWindowProxy) {
+				// handle popup blocked
+			}
+			this._slideShowWindowProxy.focus();
 			return;
 		}
 		if (this._cypressSVGPresentationTest || !this._slideShow) {
@@ -167,6 +188,14 @@ L.Map.SlideShow = L.Handler.extend({
 				item.parent.parentNode.removeChild(item.parent);
 			});
 		};
+	},
+
+	_checkAlreadyPresenting: function() {
+		if (this._slideShowWindowProxy && !this._slideShowWindowProxy.closed)
+			return true;
+		if (this._slideShow)
+			return true;
+		return false;
 	}
 });
 
