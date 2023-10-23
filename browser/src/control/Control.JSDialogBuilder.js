@@ -1778,64 +1778,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
-	_explorableEditControl: function(parentContainer, data, builder) {
-		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
-		$(sectionTitle).css('justify-content', 'space-between');
-		if (data && data.id)
-			sectionTitle.id = data.id;
-
-		var leftDiv = L.DomUtil.create('div', 'ui-header-left combobox', sectionTitle);
-
-		var editCallback = function(value) {
-			builder.callback('combobox', 'change', data, value, builder);
-		};
-		builder._controlHandlers['edit'](leftDiv, data, builder, editCallback);
-
-		var rightDiv = L.DomUtil.create('div', 'ui-header-right', sectionTitle);
-
-		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', rightDiv);
-		arrowSpan.textContent = '>';
-
-		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
-		contentDiv.title = data.text;
-
-		var entries = [];
-		if (data.entries) {
-			for (var index in data.entries) {
-				var style = 'ui-combobox-text';
-				if ((data.selectedEntries && index == data.selectedEntries[0])
-					|| data.entries[index] == data.text) {
-					style += ' selected';
-				}
-
-				var entry = { type: 'comboboxentry', text: data.entries[index], pos: index, parent: data, style: style };
-				entries.push(entry);
-			}
-		}
-
-		var contentNode = {type: 'container', children: entries};
-
-		builder._currentDepth++;
-		builder.build(contentDiv, [contentNode]);
-		builder._currentDepth--;
-
-		if (!data.nosubmenu)
-		{
-			$(contentDiv).hide();
-			if (builder.wizard) {
-				$(sectionTitle).click(function(event, data) {
-					builder.wizard.goLevelDown(contentDiv, data);
-					if (contentNode && contentNode.onshow)
-						contentNode.onshow();
-				});
-			} else {
-				window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
-			}
-		}
-		else
-			$(sectionTitle).hide();
-	},
-
 	_listboxControl: function(parentContainer, data, builder) {
 		var title = data.text;
 		var selectedEntryIsString = false;

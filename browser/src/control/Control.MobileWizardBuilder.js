@@ -22,7 +22,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 	_overrideHandlers: function() {
 		this._controlHandlers['basespinfield'] = this.baseSpinField;
 		this._controlHandlers['checkbox'] = this._checkboxControl;
-		this._controlHandlers['combobox'] = this._explorableEditControl;
+		this._controlHandlers['combobox'] = JSDialog.mobileCombobox;
 		this._controlHandlers['comboboxentry'] = JSDialog.mobileComboboxEntry;
 		this._controlHandlers['edit'] = this._editControl;
 		this._controlHandlers['frame'] = this._frameHandler;
