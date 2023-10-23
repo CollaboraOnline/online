@@ -99,6 +99,14 @@ JSDialog.mobileComboboxEntry = function(parentContainer, data, builder) {
 	return false;
 };
 
+function _extractPos(selectCommandData) {
+	return selectCommandData.substr(0, selectCommandData.indexOf(';'));
+}
+
+function _extractText(selectCommandData) {
+	return selectCommandData.substr(selectCommandData.indexOf(';') + 1);
+}
+
 JSDialog.combobox = function (parentContainer, data, builder) {
 	var container = L.DomUtil.create('div', 'ui-combobox ' + builder.options.cssClass, parentContainer);
 	container.id = data.id;
@@ -173,6 +181,9 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 
 			// close after selection
 			if (eventType === 'selected') {
+				container.onSelect(_extractPos(data));
+				container.onSetText(_extractText(data));
+
 				builder.map.fire('jsdialog', {data: {
 					id: dropdownWindowId,
 					jsontype: 'dialog',
@@ -198,6 +209,14 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 			img.src = builder.rendersCache[data.id].images[pos];
 			img.alt = data.entries[pos].toString();
 		}
+	};
+
+	container.onSelect = function (pos) {
+		selectedEntryPos = pos;
+	};
+
+	container.onSetText = function (text) {
+		content.value = text;
 	};
 
 	return false;
