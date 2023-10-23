@@ -157,6 +157,14 @@ JSDialog.mobileCombobox = function (parentContainer, data, builder) {
 	}
 	else
 		$(container).hide();
+
+	container.onSelect = function (pos) {
+		console.error('Not implemented: select entry: ' + pos);
+	};
+
+	container.onSetText = function (text) {
+		console.error('Not implemented: setText: ' + text);
+	};
 };
 
 function _extractPos(selectCommandData) {
