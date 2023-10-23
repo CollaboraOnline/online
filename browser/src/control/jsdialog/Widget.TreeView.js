@@ -331,6 +331,8 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 	var clickFunction = _createClickFunction('.ui-listview-entry', parentContainer.parentNode,
 		parentContainer, checkbox, true, false, builder, treeViewData, entry);
 
+	var expander = null; // present in TreeGrid
+
 	for (var i in entry.columns) {
 		var td = L.DomUtil.create('td', '', parentContainer);
 		td.setAttribute('role', 'gridcell');
@@ -356,7 +358,12 @@ function _headerlistboxEntry(parentContainer, treeViewData, entry, builder) {
 
 	if (!disabled) {
 		parentContainer.addEventListener('keydown', function onEvent(event) {
-			if (event.key === 'Enter' || event.key === ' ') {
+			if (event.key === ' ' && expander) {
+				expander.click();
+				parentContainer.focus();
+				event.preventDefault();
+				event.stopPropagation();
+			} else if (event.key === 'Enter' || event.key === ' ') {
 				clickFunction();
 				if (checkbox)
 					checkbox.click();
