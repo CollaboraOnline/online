@@ -122,6 +122,8 @@ L.Control.UIManager = L.Control.extend({
 		}
 		if (!window.mode.isMobile())
 			this.refreshAfterThemeChange();
+
+		this.map.fire('themechanged');
 	},
 
 	initDarkModeFromSettings: function() {
@@ -449,10 +451,8 @@ L.Control.UIManager = L.Control.extend({
 			this.refreshMenubar();
 			this.refreshToolbar();
 		}
-		else {
-			this.refreshNotebookbar();
-		}
-		this.refreshSidebar();
+		// jsdialog components like notebookbar or sidebar
+		// doesn't require reload to change icons
 	},
 
 	refreshNotebookbar: function() {

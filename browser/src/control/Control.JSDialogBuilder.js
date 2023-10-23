@@ -2454,7 +2454,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			div.id = id;
 			data.id = id; // change in input data for postprocess
 
-			var icon = data.icon ? data.icon : builder._createIconURL(data.command);
 			var buttonId = id + '-button';
 
 			button = L.DomUtil.create('button', 'ui-content unobutton', div);
@@ -2467,10 +2466,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (hasPopUp)
 				button.setAttribute('aria-haspopup', true);
 
+			var setupIcon = function () {
+				var icon = data.icon ? data.icon : builder._createIconURL(data.command);
+				var imagePath = (data.image && !isUnoCommand) ? data.image : icon;
+				buttonImage.src = imagePath;
+				L.LOUtil.checkIfImageExists(buttonImage);
+			};
 
-			var imagePath = (data.image && !isUnoCommand) ? data.image : icon;
 			var buttonImage = L.DomUtil.create('img', '', button);
-			buttonImage.src = imagePath;
+			setupIcon();
+
+			builder.map.on('themechanged', setupIcon);
 
 			controls['button'] = button;
 			if (builder.options.noLabelsForUnoButtons !== true) {
@@ -2552,8 +2558,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(button).addClass('selected');
 				$(div).addClass('selected');
 			}
-			L.LOUtil.checkIfImageExists(buttonImage);
-
 		} else {
 			button = L.DomUtil.create('label', 'ui-content unolabel', div);
 			button.textContent = builder._cleanText(data.text);
