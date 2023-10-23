@@ -408,7 +408,7 @@ function _makeTreeFlat(entries, depth) {
 	return flatList;
 }
 
-function _createHeaders(tbody, data, builder) {
+function _createHeaders(tbody, data, builder, depth) {
 	var headers = L.DomUtil.create('tr', builder.options.cssClass + ' ui-treeview-header', tbody);
 	headers.setAttribute('role', 'row');
 	var hasCheckboxes = data.entries && data.entries.length && data.entries[0].state !== undefined;
@@ -417,7 +417,7 @@ function _createHeaders(tbody, data, builder) {
 	var hasIcons = data.entries && data.entries.length && _hasIcon(data.entries[0].columns);
 	if (hasIcons)
 		data.headers = [{ text: '' }].concat(data.headers);
-	var isTreeGrid = _calulateTreeDepth(data.entries) > 0;
+	var isTreeGrid = depth > 0;
 
 	for (var h in data.headers) {
 		var header = L.DomUtil.create('th', builder.options.cssClass, headers);
@@ -587,9 +587,10 @@ function _treelistboxControl(parentContainer, data, builder) {
 
 	var tbody = L.DomUtil.create('tbody', builder.options.cssClass + ' ui-treeview-body', table);
 
+	var depth = _calulateTreeDepth(data.entries);
 	var isHeaderListBox = data.headers && data.headers.length !== 0;
 	if (isHeaderListBox)
-		_createHeaders(tbody, data, builder);
+		_createHeaders(tbody, data, builder, depth);
 
 	if (!disabled) {
 		tbody.ondrop = function (ev) {
@@ -625,7 +626,8 @@ function _treelistboxControl(parentContainer, data, builder) {
 			var tr = L.DomUtil.create('tr', builder.options.cssClass + ' ui-listview-entry', tbody);
 			tr.setAttribute('role', 'row');
 			var entry = flatEntries[i];
-			tr.setAttribute('aria-level', entry.depth + 1);
+			if (depth > 0)
+				tr.setAttribute('aria-level', entry.depth + 1);
 			if (entry.children && entry.children.length)
 				tr.setAttribute('aria-expanded', true);
 			_headerlistboxEntry(tr, data, entry, builder);
