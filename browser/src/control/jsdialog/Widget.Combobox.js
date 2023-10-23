@@ -100,10 +100,12 @@ JSDialog.mobileComboboxEntry = function(parentContainer, data, builder) {
 };
 
 JSDialog.mobileCombobox = function (parentContainer, data, builder) {
-	var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
-	$(sectionTitle).css('justify-content', 'space-between');
+	var container = L.DomUtil.create('div', 'ui-explorable-entry level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
 	if (data && data.id)
-		sectionTitle.id = data.id;
+		container.id = data.id;
+
+	var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', container);
+	$(sectionTitle).css('justify-content', 'space-between');
 
 	var leftDiv = L.DomUtil.create('div', 'ui-header-left combobox', sectionTitle);
 
@@ -117,7 +119,7 @@ JSDialog.mobileCombobox = function (parentContainer, data, builder) {
 	var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', rightDiv);
 	arrowSpan.textContent = '>';
 
-	var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
+	var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, container);
 	contentDiv.title = data.text;
 
 	var entries = [];
@@ -144,8 +146,8 @@ JSDialog.mobileCombobox = function (parentContainer, data, builder) {
 	{
 		$(contentDiv).hide();
 		if (builder.wizard) {
-			$(sectionTitle).click(function(event, data) {
-				builder.wizard.goLevelDown(contentDiv, data);
+			$(container).click(function(event, data) {
+				builder.wizard.goLevelDown(container, data);
 				if (contentNode && contentNode.onshow)
 					contentNode.onshow();
 			});
@@ -154,8 +156,8 @@ JSDialog.mobileCombobox = function (parentContainer, data, builder) {
 		}
 	}
 	else
-		$(sectionTitle).hide();
-}
+		$(container).hide();
+};
 
 function _extractPos(selectCommandData) {
 	return selectCommandData.substr(0, selectCommandData.indexOf(';'));
