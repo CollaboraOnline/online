@@ -659,7 +659,7 @@ L.TextInput = L.Layer.extend({
 		}
 		// Firefox is not able to delete the <img> post space. Since no 'input' event is generated,
 		// we need to handle a <delete> at the end of the paragraph, here.
-		if (L.Browser.gecko && this.getPlainTextContent().length === 0 && this._deleteHint === 'delete') {
+		if (L.Browser.gecko && this._isCursorAtEnd() && this._deleteHint === 'delete') {
 			window.app.console.log('Sending delete');
 			this._removeTextContent(0, 1);
 			this._emptyArea();
