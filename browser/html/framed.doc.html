@@ -139,6 +139,10 @@
               'Values': {'Mode': value}});
       }
 
+      function Execute(messageId, values) {
+        post({'MessageId': messageId, 'Values': values});
+      }
+
       function reset_access_token(accesstoken) {
         post({'MessageId': 'Reset_Access_Token',
               'Values': { 'token': accesstoken, }
@@ -333,6 +337,18 @@
       <label for="new-access-token"><b>New Access-Token</b>: </label><br>
       <textarea name="new-access-token" id="new-access-token" value="" rows="1" cols="30">123456789AA</textarea><br>
       <button onclick="reset_access_token(document.getElementById('new-access-token').value); return false;">Reset Access-Token</button>
+    </form>
+
+    <h3>Send a message</h3>
+
+    <form>
+      <label for="execute-message"><b>Message</b>: </label><br>
+      <input type="text" name="execute-message" id="execute-message" /><br>
+      <label for="execute-param"><b>Values</b>: </label><br>
+      <p>This is the JSON format 'Values'.</p>
+      <textarea name="execute-param" id="execute-param">{}</textarea>
+      <br>
+      <button onclick="Execute(document.getElementById('execute-message').value, JSON.parse(document.getElementById('execute-param').value)); return false;">Execute</button>
     </form>
 
     <h3>Modified Status: <span id="ModifiedStatus">Saved</span></h3>
