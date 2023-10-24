@@ -3,7 +3,7 @@
  * L.WOPI contains WOPI related logic
  */
 
-/* global w2ui _ app */
+/* global w2ui _ app errorMessages */
 L.Map.WOPI = L.Handler.extend({
 	// If the CheckFileInfo call fails on server side, we won't have any PostMessageOrigin.
 	// So use '*' because we still needs to send 'close' message to the parent frame which
@@ -335,6 +335,19 @@ L.Map.WOPI = L.Handler.extend({
 			// the Disable_Default_UIAction command.
 			if (msg.Values && msg.Values.action && msg.Values.disable !== undefined) {
 				this._map._disableDefaultAction[msg.Values.action] = msg.Values.disable;
+			}
+		}
+		else if (msg.MessageId === 'Error_Messages') {
+			if (msg.Values && msg.Values.list) {
+				msg.Values.list.forEach(function (item) {
+					if (Object.prototype.hasOwnProperty.call(errorMessages.storage, item.type)) {
+						errorMessages.storage[item.type] = item.msg;
+					} else if (Object.prototype.hasOwnProperty.call(errorMessages.uploadfile, item.type)) {
+						errorMessages.uploadfile[item.type] = item.msg;
+					} else if (Object.prototype.hasOwnProperty.call(errorMessages, item.type)) {
+						errorMessages[item.type] = item.msg;
+					}
+				});
 			}
 		}
 

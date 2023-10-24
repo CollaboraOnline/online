@@ -308,6 +308,13 @@ L.Map = L.Evented.extend({
 				this._docLoadedOnce = this._docLoaded;
 			}
 		}, this);
+
+		this.fire('postMessage', {
+			msgId: 'App_LoadingStatus',
+			args: {
+				Status: 'Initialized',
+			}
+		});
 	},
 
 	initTextInput: function(docType) {
