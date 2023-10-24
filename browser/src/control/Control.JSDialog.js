@@ -404,10 +404,16 @@ L.Control.JSDialog = L.Control.extend({
 				instance.posx = parent.getBoundingClientRect().left;
 				instance.posy = parent.getBoundingClientRect().bottom;
 
+				if (instance.popupAnchor && instance.popupAnchor.indexOf('top') >= 0)
+					instance.posy = parent.getBoundingClientRect().top;
+
 				instance.container.style.minWidth = parent.getBoundingClientRect().width + 'px';
 
 				if (isRTL)
 					instance.posx = window.innerWidth - instance.posx;
+
+				if (instance.popupAnchor && instance.popupAnchor.indexOf('end') >= 0)
+					instance.posx += (isRTL ? 0 : 1) * (parent.clientWidth) - 15;
 
 				if (instance.content.clientWidth > window.innerWidth)
 					instance.container.style.maxWidth = (window.innerWidth - instance.posx - 20) + 'px';
