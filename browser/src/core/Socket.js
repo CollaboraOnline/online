@@ -1522,8 +1522,10 @@ app.definitions.Socket = L.Class.extend({
 		window.app.console.debug('_onSocketClose:');
 		if (!this._map._docLoadedOnce) {
 			var postMessageObj = {
+				errorType: 'websocketconnectionfailed',
 				success: false,
-				errorMsg: errorMessages.websocketconnectionfailed
+				errorMsg: errorMessages.websocketconnectionfailed,
+				result: '',
 			};
 			this._map.fire('postMessage', {msgId: 'Action_Load_Resp', args: postMessageObj});
 			this._map.fire('error', {msg: errorMessages.websocketconnectionfailed, cmd: 'socket', kind: 'closed', id: 4});
