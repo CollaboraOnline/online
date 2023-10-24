@@ -207,8 +207,9 @@ public:
             static std::once_flag once;
             std::call_once(once,
                            [&]() {
-                               LOG_SYS("Failed setsockopt TCP_NODELAY. Will not report further "
-                                       "failures to set TCP_NODELAY");
+                               LOG_WRN("Failed setsockopt TCP_NODELAY. Will not report further "
+                                       "failures to set TCP_NODELAY: "
+                                       << strerror(errno));
                            });
         }
 #endif
