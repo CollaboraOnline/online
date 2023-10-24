@@ -1920,18 +1920,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_separatorControl: function(parentContainer, data) {
-		// don't create new control, style current parent
-
-		var target = parentContainer.lastChild;
-		if (!target)
-			target = parentContainer;
-
-		L.DomUtil.addClass(target, 'ui-separator');
+	_separatorControl: function(parentContainer, data, builder) {
 		if (data.orientation && data.orientation === 'vertical') {
+			// don't create new control, style current parent
+			// TODO: create something...
+			var target = parentContainer.lastChild;
+			if (!target)
+				target = parentContainer;
+			L.DomUtil.addClass(target, 'ui-separator');
 			L.DomUtil.addClass(target, 'vertical');
 		} else {
-			L.DomUtil.addClass(target, 'horizontal');
+			L.DomUtil.create('hr', builder.options.cssClass + ' ui-separator horizontal', parentContainer);
 		}
 
 		return false;
