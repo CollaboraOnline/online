@@ -19,7 +19,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback) {
 	var dropdownWindowId = _createDropdownId(id);
 	var json = {
 		id: dropdownWindowId,
-		type: 'modalpopup',
+		type: 'dropdown',
 		jsontype: 'dialog',
 		popupParent: popupParent,
 		cancellable: true,
