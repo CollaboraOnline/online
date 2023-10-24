@@ -36,8 +36,11 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	hasDialogOpened: function() {
-		return Object.keys(this.dialogs)
-			.filter(function (key) { return key != 'snackbar'; })
+		var dialogs = this.dialogs;
+		return Object.keys(dialogs)
+			.filter(function (key) {
+				return key != 'snackbar' && dialogs[key].isDropdown !== true;
+			})
 			.length > 0;
 	},
 
@@ -507,7 +510,8 @@ L.Control.JSDialog = L.Control.extend({
 
 		instance.callback = e.callback;
 		instance.isSnackbar = e.data.type === 'snackbar';
-		instance.isModalPopUp = e.data.type === 'modalpopup';
+		instance.isDropdown = e.data.type === 'dropdown';
+		instance.isModalPopUp = e.data.type === 'modalpopup' || instance.isDropdown;
 		instance.snackbarTimeout = e.data.timeout || this.options.snackbarTimeout;
 		instance.isOnlyChild = false;
 		instance.that = this;
