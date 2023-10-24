@@ -15,6 +15,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 
 	documentNameConfirm: function(value) {
 		if (value !== null && value != '' && value != this.map['wopi'].BaseFileName) {
+			this._renaming = true;
 			if (this.map['wopi'].UserCanRename && this.map['wopi'].SupportsRename) {
 				if (value.lastIndexOf('.') > 0) {
 					var fname = this.map['wopi'].BaseFileName;
@@ -42,6 +43,9 @@ L.Control.DocumentNameInput = L.Control.extend({
 	},
 
 	documentNameCancel: function() {
+		if (this._renaming)
+			return;
+
 		$('#document-name-input').val(this.map['wopi'].BreadcrumbDocName);
 		this.map._onGotFocus();
 	},
@@ -57,6 +61,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 
 	onDocumentNameFocus: function() {
 		// hide the caret in the main document
+		delete this._renaming;
 		this.map._onLostFocus();
 		var name = this.map['wopi'].BaseFileName;
 		var extn = name.lastIndexOf('.');
