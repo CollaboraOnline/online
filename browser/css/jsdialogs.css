@@ -391,7 +391,6 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	overflow-x: hidden;
 	max-width: 1000px;
 	min-width: 150px;
-	width: max-content;
 	padding: 1px;
 	padding-inline-end: 3px;
 }
@@ -410,7 +409,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	min-height: 100px;
 	min-width: 100px;
 	max-height: 150px;
-	width: 100%;
+	width: max-content;
 }
 
 .ui-treeview.empty .ui-treeview-body {
