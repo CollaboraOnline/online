@@ -132,21 +132,6 @@
 	background: var(--color-background-darker);
 }
 
-.jsdialog.ui-separator.vertical {
-	height: 100%;
-	padding-right: 6px;
-	/* border-right: 1px dashed #888; */
-	background-image: linear-gradient(#888 22%, rgba(255,255,255,0) 0%);
-	background-position: right center;
-	background-size: 1px 14px;
-	background-repeat: repeat-y;
-	box-shadow: inset 0 34px 0 0 white;
-}
-
-.jsdialog.ui-separator.horizontal {
-	padding-bottom: 6px;
-}
-
 .jsdialog.row {
 	display: table-row;
 }
@@ -229,6 +214,24 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 /* AccessibilityCheckDialog hack to prevent huge height in Firefox */
 #AccessibilityCheckDialog .cell {
 	vertical-align: unset !important;
+}
+
+/* Separator */
+
+.jsdialog.ui-separator.vertical {
+	height: 100%;
+	padding-right: 6px;
+	/* border-right: 1px dashed #888; */
+	background-image: linear-gradient(#888 22%, rgba(255,255,255,0) 0%);
+	background-position: right center;
+	background-size: 1px 14px;
+	background-repeat: repeat-y;
+	box-shadow: inset 0 34px 0 0 white;
+}
+
+.jsdialog.ui-separator.horizontal {
+	width: 100%;
+	margin: 0px;
 }
 
 /* Tabs */

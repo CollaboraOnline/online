@@ -45,6 +45,14 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback) {
 			selected: entries[i].selected
 		};
 
+		if (entries[i].type === 'separator') {
+			entry = {
+				id: id + '-entry-' + i,
+				type: 'separator',
+				orientation: 'horizontal'
+			};
+		}
+
 		json.children[0].children.push(entry);
 	}
 
