@@ -842,6 +842,18 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	filter: invert(1);
 }
 
+.ui-combobox-entry.ui-has-menu {
+	display: grid;
+	grid-template-columns: 1fr 25px;
+	align-items: center;
+}
+
+.ui-combobox-entry.ui-has-menu::after {
+	content: '>';
+	display: inline-block;
+	width: 25px;
+}
+
 /* Apply style always show real colors */
 #applystyle-dropdown .ui-dialog-content {
 	background-color: white !important;

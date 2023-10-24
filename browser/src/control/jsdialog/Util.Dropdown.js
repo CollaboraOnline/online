@@ -42,7 +42,8 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback) {
 			comboboxId: id,
 			pos: i,
 			text: entries[i].text,
-			selected: entries[i].selected
+			selected: entries[i].selected,
+			hasSubMenu: !!entries[i].items
 		};
 
 		if (entries[i].type === 'separator') {
@@ -56,15 +57,30 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback) {
 		json.children[0].children.push(entry);
 	}
 
-	var callback = function(objectType, eventType, object, data, builder) {
-		if (innerCallback && innerCallback(objectType, eventType, object, data, builder))
-			return;
+	var generateCallback = function (targetEntries) {
+		return function(objectType, eventType, object, data) {
+			if (eventType === 'selected') {
+				var pos = parseInt(data.substr(0, data.indexOf(';')));
+				if (targetEntries[pos].items) {
+					// open submenu
+					var dropdown = JSDialog.GetDropdown(object.id);
+					var targetEntry = dropdown.querySelectorAll('.ui-grid-cell')[pos + 1];
+					JSDialog.OpenDropdown(object.id + '-' + pos, targetEntry, targetEntries[pos].items,
+						generateCallback(targetEntries[pos].items));
+					return;
+				}
+			}
 
-		if (eventType === 'selected')
-			JSDialog.CloseDropdown(id);
+			// for multi-level menus last parameter should be used to handle event (it contains selected entry)
+			if (innerCallback && innerCallback(objectType, eventType, object, data, targetEntries[pos]))
+				return;
+
+			if (eventType === 'selected')
+				JSDialog.CloseDropdown(id);
+		};
 	};
 
-	L.Map.THIS.fire('jsdialog', {data: json, callback: callback});
+	L.Map.THIS.fire('jsdialog', {data: json, callback: generateCallback(entries)});
 };
 
 JSDialog.CloseDropdown = function (id) {

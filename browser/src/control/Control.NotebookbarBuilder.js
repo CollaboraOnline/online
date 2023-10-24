@@ -805,12 +805,14 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
 		var menu = [
-			{text: _('Greater than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=2'},
-			{text: _('Less than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=1'},
-			{text: _('Equal to...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=0'},
-			{text: _('Between...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=6'},
-			{type: 'separator'},
-			{text: _('More conditions...'), uno: '.uno:ConditionalFormatDialog'},
+			{text: _('Condition...'), items: [
+				{text: _('Greater than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=2'},
+				{text: _('Less than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=1'},
+				{text: _('Equal to...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=0'},
+				{text: _('Between...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=6'},
+				{type: 'separator'},
+				{text: _('More conditions...'), uno: '.uno:ConditionalFormatDialog'}
+			]},
 			{type: 'separator'},
 			{text: _UNO('.uno:ColorScaleFormatDialog', 'spreadsheet'), uno: '.uno:ColorScaleFormatDialog'},
 			{text: _UNO('.uno:DataBarFormatDialog', 'spreadsheet'), uno: '.uno:DataBarFormatDialog'},
@@ -824,17 +826,17 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		var dropdownId = data.id;
 		var clickFunction = function () {
-			var callback = function(objectType, eventType, object, data) {
+			var callback = function(objectType, eventType, object, data, entry) {
 				if (eventType === 'selected') {
 					var pos = data.substr(0, parseInt(data.indexOf(';')));
 
-					if (menu[pos].html && !$('#w2ui-overlay-conditionalformatmenu-sub').length) {
+					if (entry.html && !$('#w2ui-overlay-conditionalformatmenu-sub').length) {
 						var dropdown = JSDialog.GetDropdown(dropdownId);
 						var iconSetEntry = dropdown.querySelectorAll('.ui-combobox-entry')[pos];
 
 						$(iconSetEntry).w2overlay({
 							name: 'conditionalformatmenu-sub',
-							html: menu[pos].html,
+							html: entry.html,
 							left: 100,
 							top: -20,
 							noTip: true,
@@ -848,8 +850,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 								JSDialog.CloseDropdown(dropdownId);
 							});
 						}
-					} else if (menu[pos].uno) {
-						builder.map.sendUnoCommand(menu[pos].uno);
+					} else if (entry.uno) {
+						builder.map.sendUnoCommand(entry.uno);
 						JSDialog.CloseDropdown(dropdownId);
 					}
 				}

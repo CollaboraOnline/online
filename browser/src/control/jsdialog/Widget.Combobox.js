@@ -26,6 +26,9 @@ JSDialog.comboboxEntry = function (parentContainer, data, builder) {
 	var entry = L.DomUtil.create('div', 'ui-combobox-entry ' + builder.options.cssClass, parentContainer);
 	entry.id = data.id;
 
+	if (data.hasSubMenu)
+		L.DomUtil.addClass(entry, 'ui-has-menu');
+
 	var content = L.DomUtil.create('span', '', entry);
 	content.innerText = data.text;
 
