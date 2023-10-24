@@ -328,6 +328,7 @@ COOL_JS_LST =\
 	src/control/Control.LokDialog.js \
 	src/control/Control.AlertDialog.js \
 	src/control/ColorPicker.js \
+	src/control/jsdialog/Util.Dropdown.js \
 	src/control/jsdialog/Util.FocusCycle.js \
 	src/control/jsdialog/Util.ModalHelper.js \
 	src/control/jsdialog/Widget.Calendar.js \

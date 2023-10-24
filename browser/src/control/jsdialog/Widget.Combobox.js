@@ -191,6 +191,22 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	if (data.selectedCount > 0)
 		var selectedEntryPos = parseInt(data.selectedEntries[0]);
 
+	// convert to dropdown entries
+	var entries = [];
+	for (var i in data.entries) {
+		entries.push({
+			text: data.entries[i].toString(),
+			selected: parseInt(i) === selectedEntryPos,
+			customRenderer: data.customEntryRenderer
+		});
+	}
+
+	var resetSelection = function () {
+		for (var i in entries) {
+			entries[i].selected = false;
+		}
+	};
+
 	// notebookbar a11y requires main element to have click handler for shortcuts to work
 	container.addEventListener('click', function () { content.focus(); });
 
@@ -198,51 +214,19 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 		builder.callback('combobox', 'change', data, this.value, builder);
 
 		// update selection
-		selectedEntryPos = null;
-		for (var i in data.entries) {
-			if (data.entries[i] == this.value) {
-				selectedEntryPos = parseInt(i);
+		resetSelection();
+		for (var i in entries) {
+			if (entries[i] == this.value) {
+				entries[i].selected = true;
 				break;
 			}
 		}
 	});
 
-	var dropdownEntriesId = data.id + '-entries';
+	var comboboxId = data.id;
 	var clickFunction = function () {
-		var dropdownWindowId = data.id + '-dropdown';
-		var json = {
-			id: dropdownWindowId, // fake WindowId, rewritten in callback
-			type: 'modalpopup',
-			jsontype: 'dialog',
-			popupParent: container,
-			cancellable: true,
-			children: [
-				{
-					id: dropdownEntriesId,
-					type: 'grid',
-					cols: 1,
-					rows: data.entries.length,
-					children: []
-				}
-			]
-		};
-
-		for (var i in data.entries) {
-			var entry = {
-				id: data.id + '-entry-' + i,
-				type: 'comboboxentry',
-				customRenderer: data.customEntryRenderer,
-				comboboxId: data.id,
-				pos: i,
-				text: data.entries[i].toString(),
-				selected: parseInt(i) === selectedEntryPos
-			};
-
-			json.children[0].children.push(entry);
-		}
-
 		var parentBuilder = builder;
-		var callback = function(objectType, eventType, object, data, builder) {
+		var callback = function(objectType, eventType, object, data) {
 			// send command with correct WindowId (from parent, not dropdown)
 			if (eventType !== 'close')
 				parentBuilder._defaultCallbackHandler(objectType, eventType, object, data, parentBuilder);
@@ -252,15 +236,13 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 				container.onSelect(_extractPos(data));
 				container.onSetText(_extractText(data));
 
-				builder.map.fire('jsdialog', {data: {
-					id: dropdownWindowId,
-					jsontype: 'dialog',
-					action: 'close'
-				}});
+				JSDialog.CloseDropdown(comboboxId);
 			}
+
+			return true;
 		};
 
-		builder.map.fire('jsdialog', {data: json, callback: callback});
+		JSDialog.OpenDropdown(data.id, container, entries, callback);
 	};
 
 	button.addEventListener('click', clickFunction);
@@ -270,17 +252,22 @@ JSDialog.combobox = function (parentContainer, data, builder) {
 	});
 
 	container.updateRenders = function (pos) {
-		var dropdown = document.body.querySelectorAll('#' + dropdownEntriesId + ' .ui-combobox-entry');
+		var dropdownRoot = JSDialog.GetDropdown(data.id);
+		if (!dropdownRoot)
+			return;
+
+		var dropdown = dropdownRoot.querySelectorAll('.ui-combobox-entry');
 		if (dropdown[pos]) {
 			dropdown[pos].innerHTML = '';
 			var img = L.DomUtil.create('img', '', dropdown[pos]);
 			img.src = builder.rendersCache[data.id].images[pos];
-			img.alt = data.entries[pos].toString();
+			img.alt = entries[pos].text;
 		}
 	};
 
 	container.onSelect = function (pos) {
-		selectedEntryPos = pos;
+		resetSelection();
+		entries[pos].selected = true;
 	};
 
 	container.onSetText = function (text) {
