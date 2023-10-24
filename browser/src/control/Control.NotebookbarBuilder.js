@@ -817,7 +817,13 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		};
 
 		var menu = [
-			{text: _UNO('.uno:ConditionalFormatDialog', 'spreadsheet'), uno: 'ConditionalFormatDialog'},
+			{text: _('Greater than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=2'},
+			{text: _('Less than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=1'},
+			{text: _('Equal to...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=0'},
+			{text: _('Between...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=6'},
+			{type: 'separator'},
+			{text: _('More conditions...'), uno: '.uno:ConditionalFormatDialog'},
+			{type: 'separator'},
 			{text: _UNO('.uno:ColorScaleFormatDialog', 'spreadsheet'), uno: 'ColorScaleFormatDialog'},
 			{text: _UNO('.uno:DataBarFormatDialog', 'spreadsheet'), uno: 'DataBarFormatDialog'},
 			{text: _UNO('.uno:IconSetFormatDialog', 'spreadsheet'), uno: 'IconSetFormatDialog', html: window.getConditionalFormatMenuHtml('iconsetoverlay') },
