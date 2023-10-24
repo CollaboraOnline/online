@@ -15,13 +15,14 @@ function _createDropdownId(id) {
 	return id + '-dropdown';
 }
 
-JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback) {
+JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popupAnchor) {
 	var dropdownWindowId = _createDropdownId(id);
 	var json = {
 		id: dropdownWindowId,
 		type: 'dropdown',
 		jsontype: 'dialog',
 		popupParent: popupParent,
+		popupAnchor: popupAnchor,
 		cancellable: true,
 		children: [
 			{
@@ -66,7 +67,7 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback) {
 					var dropdown = JSDialog.GetDropdown(object.id);
 					var targetEntry = dropdown.querySelectorAll('.ui-grid-cell')[pos + 1];
 					JSDialog.OpenDropdown(object.id + '-' + pos, targetEntry, targetEntries[pos].items,
-						generateCallback(targetEntries[pos].items));
+						generateCallback(targetEntries[pos].items), 'top-end');
 					return;
 				}
 			}
