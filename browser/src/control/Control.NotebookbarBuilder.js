@@ -804,18 +804,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var options = {hasDropdownArrow: true};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
-		var closeAll = function (skip) {
-			var menus = ['conditionalformatmenu', 'conditionalformatmenu-sub'];
-			for (var i = 0; i < menus.length; ++i) {
-				// called on onHide so skip it, it is already being hidden
-				if (skip === menus[i])
-					continue;
-				var div = $('#w2ui-overlay-'+ menus[i]);
-				if (div.length && div[0])
-					div[0].hide();
-			}
-		};
-
 		var menu = [
 			{text: _('Greater than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=2'},
 			{text: _('Less than...'), uno: '.uno:ConditionalFormatEasy?FormatRule:short=1'},
@@ -824,51 +812,56 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			{type: 'separator'},
 			{text: _('More conditions...'), uno: '.uno:ConditionalFormatDialog'},
 			{type: 'separator'},
-			{text: _UNO('.uno:ColorScaleFormatDialog', 'spreadsheet'), uno: 'ColorScaleFormatDialog'},
-			{text: _UNO('.uno:DataBarFormatDialog', 'spreadsheet'), uno: 'DataBarFormatDialog'},
-			{text: _UNO('.uno:IconSetFormatDialog', 'spreadsheet'), uno: 'IconSetFormatDialog', html: window.getConditionalFormatMenuHtml('iconsetoverlay') },
-			{text: _UNO('.uno:CondDateFormatDialog', 'spreadsheet'), uno: 'CondDateFormatDialog'},
+			{text: _UNO('.uno:ColorScaleFormatDialog', 'spreadsheet'), uno: '.uno:ColorScaleFormatDialog'},
+			{text: _UNO('.uno:DataBarFormatDialog', 'spreadsheet'), uno: '.uno:DataBarFormatDialog'},
+			{text: _UNO('.uno:IconSetFormatDialog', 'spreadsheet'), html: window.getConditionalFormatMenuHtml('iconsetoverlay') },
+			{text: _UNO('.uno:CondDateFormatDialog', 'spreadsheet'), uno: '.uno:CondDateFormatDialog'},
 			{type: 'separator'},
-			{text: _UNO('.uno:ConditionalFormatManagerDialog', 'spreadsheet'), uno: 'ConditionalFormatManagerDialog'}
+			{text: _UNO('.uno:ConditionalFormatManagerDialog', 'spreadsheet'), uno: '.uno:ConditionalFormatManagerDialog'}
 		];
 
 		$(control.container).unbind('click.toolbutton');
-		$(control.container).click(function () {
-			if (!$('#conditionalformatmenu-grid').length) {
-				var itemCallback = function(event) {
-					if (event.item.html && !$('#w2ui-overlay-conditionalformatmenu-sub').length) {
-						$(event.originalEvent.target).w2overlay({
+
+		var dropdownId = data.id;
+		var clickFunction = function () {
+			var callback = function(objectType, eventType, object, data) {
+				if (eventType === 'selected') {
+					var pos = data.substr(0, parseInt(data.indexOf(';')));
+
+					if (menu[pos].html && !$('#w2ui-overlay-conditionalformatmenu-sub').length) {
+						var dropdown = JSDialog.GetDropdown(dropdownId);
+						var iconSetEntry = dropdown.querySelectorAll('.ui-combobox-entry')[pos];
+
+						$(iconSetEntry).w2overlay({
 							name: 'conditionalformatmenu-sub',
-							html: event.item.html,
+							html: menu[pos].html,
 							left: 100,
 							top: -20,
 							noTip: true,
 							onHide: function() {
-								closeAll(this.name);
+								JSDialog.CloseDropdown(dropdownId);
 							}
 						});
 						if ($('#iconsetoverlay').length) {
 							$('#iconsetoverlay').click(function() {
 								builder.map.sendUnoCommand('.uno:IconSetFormatDialog');
-								closeAll();
+								JSDialog.CloseDropdown(dropdownId);
 							});
 						}
-					} else if (!event.item.html) {
-						builder.map.sendUnoCommand('.uno:' + event.item.uno);
-						closeAll();
+					} else if (menu[pos].uno) {
+						builder.map.sendUnoCommand(menu[pos].uno);
+						JSDialog.CloseDropdown(dropdownId);
 					}
-				};
+				}
 
-				$(control.container).w2menu({
-					name: 'conditionalformatmenu',
-					items: menu,
-					keepOpen: true,
-					onSelect: itemCallback
-				});
+				return true;
+			};
 
-				builder._makeW2MenuFocusable(builder, 'w2ui-overlay-conditionalformatmenu', menu, data.id, itemCallback);
-			}
-		});
+			JSDialog.OpenDropdown(dropdownId, control.container, menu, callback);
+		};
+
+		control.container.addEventListener('click', clickFunction);
+
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
