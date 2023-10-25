@@ -817,7 +817,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			{id: 'scaleset', text: _UNO('.uno:ColorScaleFormatDialog', 'spreadsheet'), items: [
 				// open popup in the callback
 			]},
-			{text: _UNO('.uno:DataBarFormatDialog', 'spreadsheet'), uno: '.uno:DataBarFormatDialog'},
+			{id: 'databarset', text: _UNO('.uno:DataBarFormatDialog', 'spreadsheet'), items: [
+				// open popup in the callback
+			]},
 			{id: 'iconset', text: _UNO('.uno:IconSetFormatDialog', 'spreadsheet'), items: [
 				// open popup in the callback
 			]},
@@ -833,6 +835,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				return window.getConditionalFormatMenuHtml('iconsetoverlay', true);
 			else if (id === 'scaleset')
 				return window.getConditionalColorScaleMenuHtml('iconsetoverlay', true);
+			else if (id === 'databarset')
+				return window.getConditionalDataBarMenuHtml('iconsetoverlay', true);
 		};
 
 		var dropdownId = data.id;
