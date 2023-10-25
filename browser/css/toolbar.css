@@ -880,6 +880,31 @@ button.leaflet-control-search-next
 	width: 32px !important;
 	height: 32px !important; }
 
+.w2ui-icon.databarset00 { background: url('images/databar-set-00.png') no-repeat;
+	background-size: 32px 32px !important;
+	width: 32px !important;
+	height: 32px !important; }
+.w2ui-icon.databarset01 { background: url('images/databar-set-01.png') no-repeat;
+	background-size: 32px 32px !important;
+	width: 32px !important;
+	height: 32px !important; }
+.w2ui-icon.databarset02 { background: url('images/databar-set-02.png') no-repeat;
+	background-size: 32px 32px !important;
+	width: 32px !important;
+	height: 32px !important; }
+.w2ui-icon.databarset03 { background: url('images/databar-set-03.png') no-repeat;
+	background-size: 32px 32px !important;
+	width: 32px !important;
+	height: 32px !important; }
+.w2ui-icon.databarset04 { background: url('images/databar-set-04.png') no-repeat;
+	background-size: 32px 32px !important;
+	width: 32px !important;
+	height: 32px !important; }
+.w2ui-icon.databarset05 { background: url('images/databar-set-05.png') no-repeat;
+	background-size: 32px 32px !important;
+	width: 32px !important;
+	height: 32px !important; }
+
 .w2ui-icon.print{ background: url('images/lc_print.svg') no-repeat center; }
 .w2ui-icon.undo{ background: url('images/lc_undo.svg') no-repeat center; }
 .w2ui-icon.redo{ background: url('images/lc_redo.svg') no-repeat center; }
