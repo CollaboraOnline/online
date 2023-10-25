@@ -76,7 +76,7 @@ img.sidebar.ui-drawing-area {
 	filter: brightness(2);
 }
 
-.ui-expander.jsdialog.sidebar .ui-expander-icon-right:hover img {
+.ui-expander.jsdialog.sidebar .ui-expander-icon-right.hover img {
 	filter: none;
 }
 
@@ -128,7 +128,7 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 	display: none;
 }
 
-.menubutton.sidebar:hover span {
+.menubutton.sidebar.hover span {
 	position: absolute;
 	font-size: var(--default-font-size);
 	display: block;
@@ -202,11 +202,11 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 	border-color: var(--color-border-darker);
 }
 /* selected hover */
-.hasnotebookbar .ui-content.unotoolbutton.selected:hover,
-.unotoolbutton.notebookbar:hover,
-.hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline):hover,
-.sidebar.unotoolbutton:hover,
-.sidebar.unotoolbutton.selected:hover {
+.hasnotebookbar .ui-content.unotoolbutton.selected.hover,
+.unotoolbutton.notebookbar.hover,
+.hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline).hover,
+.sidebar.unotoolbutton.hover,
+.sidebar.unotoolbutton.selected.hover {
 	background-color: var(--color-background-darker) !important;
 	border: 1px solid var(--color-border-darker);
 	color: var(--color-text-darker);

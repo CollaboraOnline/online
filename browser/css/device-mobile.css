@@ -371,7 +371,7 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 	background: none !important;
 	box-shadow: none;
 }
-#toolbar-up .checked .w2ui-tb-image, #toolbar-up .w2ui-tb-image:hover, #toolbar-up .w2ui-tb-image:focus, #toolbar-up .w2ui-tb-image:active, #toolbar-hamburger.menuwizard-closed:active{
+#toolbar-up .checked .w2ui-tb-image, #toolbar-up .w2ui-tb-image.hover, #toolbar-up .w2ui-tb-image:focus, #toolbar-up .w2ui-tb-image:active, #toolbar-hamburger.menuwizard-closed:active{
 	-webkit-filter: drop-shadow(0px 0px 4px var(--color-primary-darker));
 	filter: drop-shadow(0px 0px 4px var(--color-primary-darker));
 }
@@ -379,7 +379,7 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 	border-color: transparent !important;
 	box-shadow: none !important;
 }
-#toolbar-up .over:hover .w2ui-tb-image, #toolbar-up .over:active .w2ui-tb-image{
+#toolbar-up .over.hover .w2ui-tb-image, #toolbar-up .over:active .w2ui-tb-image{
 	-webkit-filter: drop-shadow(0px 0px 4px var(--color-primary-darker));
 	filter: drop-shadow(0px 0px 4px var(--color-primary-darker));
 	border-color: transparent;

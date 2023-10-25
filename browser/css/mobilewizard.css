@@ -349,7 +349,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	color: var(--color-text-lighter) !important;
 }
 
-.ui-header.mobile-wizard:active, .mobile-wizard.ui-combobox-text:active, .ui-header.mobile-wizard:focus, .mobile-wizard.ui-combobox-text:focus, .ui-header.mobile-wizard:hover, .mobile-wizard.ui-combobox-text:hover {
+.ui-header.mobile-wizard:active, .mobile-wizard.ui-combobox-text:active, .ui-header.mobile-wizard:focus, .mobile-wizard.ui-combobox-text:focus, .ui-header.mobile-wizard.hover, .mobile-wizard.ui-combobox-text.hover {
 	background-color: #eee;
 }
 
@@ -589,7 +589,7 @@ input.spinfield:disabled ~ .spinfieldcontrols * {
 	background-color: var(--color-background-lighter);
 }
 
-input.spinfield:disabled ~ .spinfieldcontrols *:active, input.spinfield:disabled ~ .spinfieldcontrols *:hover, input.spinfield:disabled ~ .spinfieldcontrols *:focus {
+input.spinfield:disabled ~ .spinfieldcontrols *:active, input.spinfield:disabled ~ .spinfieldcontrols *.hover, input.spinfield:disabled ~ .spinfieldcontrols *:focus {
 	background-color: var(--color-background-lighter) !important;
 	filter: none;
 	font-size: 100%;
@@ -650,7 +650,7 @@ a.leaflet-control-zoom-in {
 	border-radius: var(--border-radius);
 	border-color: var(--color-border);
 }
-#slide-sorter .preview-img:hover{
+#slide-sorter .preview-img.hover{
 	border-color: var(--color-primary-darker);
 }
 #slide-sorter .preview-img-currentpart{
@@ -799,7 +799,7 @@ div#mobile-wizard-content .spinfieldcontainer{
 div#mobile-wizard-content .spinfieldcontainer .spinfieldimage {
 	opacity: 0.5;
 }
-div#mobile-wizard-content .spinfieldcontainer:active .spinfieldimage, div#mobile-wizard-content .spinfieldcontainer:focus .spinfieldimage, div#mobile-wizard-content .spinfieldcontainer:hover .spinfieldimage {
+div#mobile-wizard-content .spinfieldcontainer:active .spinfieldimage, div#mobile-wizard-content .spinfieldcontainer:focus .spinfieldimage, div#mobile-wizard-content .spinfieldcontainer.hover .spinfieldimage {
 	opacity: 1 !important;
 }
 div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {

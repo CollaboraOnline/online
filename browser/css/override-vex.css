@@ -86,7 +86,7 @@
 	background: #444;
 }
 .slider > [id^='i-slide']:focus,
-.slider > [id^='i-slide']:hover {
+.slider > [id^='i-slide'].hover {
 	background: #666;
 }
 

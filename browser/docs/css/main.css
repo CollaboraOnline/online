@@ -22,7 +22,7 @@ a, a span.hljs-string {
 	color: #1EB300;
 }
 
-a:hover, a:focus {
+a.hover, a:focus {
 	color: #160;
 }
 
@@ -166,7 +166,7 @@ h1 a img {
 	max-width: 100%;
 }
 
-h1 a:hover, h1 a:focus {
+h1 a.hover, h1 a:focus {
 	-webkit-filter: hue-rotate(-70deg) saturate(1.5);
 }
 
@@ -214,7 +214,7 @@ h3.tagline {
 	-webkit-animation: fadein 1s;
 	animation: fadein 1s;
 }
-.ext-link:hover {
+.ext-link.hover {
 	opacity: 1;
 }
 @-webkit-keyframes fadein {
@@ -293,7 +293,7 @@ h3.tagline {
 	transition: opacity .15s ease;
 }
 
-.logo:hover { opacity: 1; }
+.logo.hover { opacity: 1; }
 
 .logo-foursquare {
 	background-position: 50% -4px;
@@ -625,7 +625,7 @@ table.plugins td:first-child a {
 
 	#toc-copy.active div { display: block; }
 
-	#toc-copy h4.active, #toc-copy h4:hover {
+	#toc-copy h4.active, #toc-copy h4.hover {
 		color: black;
 		cursor: pointer;
 	}
@@ -703,13 +703,13 @@ table.plugins td:first-child a {
 		padding: 3em 6em 3em 0;
 	}
 
-	#toc-copy h4:hover + ul,
-	#toc-copy ul:hover {
+	#toc-copy h4.hover + ul,
+	#toc-copy ul.hover {
 		display: block;
 	}
 
-	#toc-copy h4:hover + ul:before,
-	#toc-copy ul:hover:before {
+	#toc-copy h4.hover + ul:before,
+	#toc-copy ul.hover:before {
 		content: '';
 		position: absolute;
 		top: 3.775em;
@@ -720,8 +720,8 @@ table.plugins td:first-child a {
 		border-top: 2px solid #eee;
 	}
 
-	#toc-copy h4:hover + ul:after,
-	#toc-copy ul:hover:after {
+	#toc-copy h4.hover + ul:after,
+	#toc-copy ul.hover:after {
 		content: '';
 		position: absolute;
 		z-index: -1;
@@ -733,12 +733,12 @@ table.plugins td:first-child a {
 		background: rgba(255,255,255,0.9);
 	}
 
-	.plugins-page #toc-copy h4:hover + ul:after,
-	.plugins-page #toc-copy ul:hover:after {
+	.plugins-page #toc-copy h4.hover + ul:after,
+	.plugins-page #toc-copy ul.hover:after {
 		width: 17em;
 	}
 
-	#toc-copy h4:hover, #toc-copy h4.hover {
+	#toc-copy h4.hover, #toc-copy h4.hover {
 		color: black;
 		cursor: pointer;
 	}
@@ -817,11 +817,11 @@ tr:target {
 	opacity: 0;
 }
 
-.api-page tr[id]:hover td:first-child:before {
+.api-page tr[id].hover td:first-child:before {
 	opacity: 1;
 }
 
-.api-page h2[id]:hover:before { opacity: 1; }
+.api-page h2[id].hover:before { opacity: 1; }
 
 @media (-webkit-min-device-pixel-ratio: 1.25),(min-resolution: 120dpi) {
 	.api-page h2[id]:before,
