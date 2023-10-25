@@ -258,20 +258,32 @@ function setConditionalFormatIconSet(num, jsdialogDropdown) {
 
 global.setConditionalFormatIconSet = setConditionalFormatIconSet;
 
-function getConditionalFormatMenuHtml(more, jsdialogDropdown) {
-	var table = '<table id="conditionalformatmenu-grid"><tr>' +
-	'<td class="w2ui-tb-image w2ui-icon iconset00" onclick="setConditionalFormatIconSet(0, ' + !!jsdialogDropdown + ')"/><td class="w2ui-tb-image w2ui-icon iconset01" onclick="setConditionalFormatIconSet(1, ' + !!jsdialogDropdown + ')"/><td class="w2ui-tb-image w2ui-icon iconset02" onclick="setConditionalFormatIconSet(2, ' + !!jsdialogDropdown + ')"/></tr><tr>' +
-	'<td class="w2ui-tb-image w2ui-icon iconset03" onclick="setConditionalFormatIconSet(3, ' + !!jsdialogDropdown + ')"/><td class="w2ui-tb-image w2ui-icon iconset04" onclick="setConditionalFormatIconSet(4, ' + !!jsdialogDropdown + ')"/><td class="w2ui-tb-image w2ui-icon iconset05" onclick="setConditionalFormatIconSet(5, ' + !!jsdialogDropdown + ')"/></tr><tr>' +
-	'<td class="w2ui-tb-image w2ui-icon iconset06" onclick="setConditionalFormatIconSet(6, ' + !!jsdialogDropdown + ')"/><td class="w2ui-tb-image w2ui-icon iconset08" onclick="setConditionalFormatIconSet(8, ' + !!jsdialogDropdown + ')"/><td class="w2ui-tb-image w2ui-icon iconset09" onclick="setConditionalFormatIconSet(9, ' + !!jsdialogDropdown + ')"/></tr><tr>' + // iconset07 deliberately left out, see the .css for the reason
-	'<td class="w2ui-tb-image w2ui-icon iconset10" onclick="setConditionalFormatIconSet(10, ' + !!jsdialogDropdown + ')"/><td class="w2ui-tb-image w2ui-icon iconset11" onclick="setConditionalFormatIconSet(11, ' + !!jsdialogDropdown + ')"/><td class="w2ui-tb-image w2ui-icon iconset12" onclick="setConditionalFormatIconSet(12, ' + !!jsdialogDropdown + ')"/></tr><tr>' +
-	'<td class="w2ui-tb-image w2ui-icon iconset13" onclick="setConditionalFormatIconSet(13, ' + !!jsdialogDropdown + ')"/><td class="w2ui-tb-image w2ui-icon iconset14" onclick="setConditionalFormatIconSet(14, ' + !!jsdialogDropdown + ')"/><td class="w2ui-tb-image w2ui-icon iconset15" onclick="setConditionalFormatIconSet(15, ' + !!jsdialogDropdown + ')"/></tr><tr>' +
-	'<td class="w2ui-tb-image w2ui-icon iconset16" onclick="setConditionalFormatIconSet(16, ' + !!jsdialogDropdown + ')"/><td class="w2ui-tb-image w2ui-icon iconset17" onclick="setConditionalFormatIconSet(17, ' + !!jsdialogDropdown + ')"/><td class="w2ui-tb-image w2ui-icon iconset18" onclick="setConditionalFormatIconSet(18, ' + !!jsdialogDropdown + ')"/></tr><tr>' +
-	'<td class="w2ui-tb-image w2ui-icon iconset19" onclick="setConditionalFormatIconSet(19, ' + !!jsdialogDropdown + ')"/><td class="w2ui-tb-image w2ui-icon iconset20" onclick="setConditionalFormatIconSet(20, ' + !!jsdialogDropdown + ')"/><td class="w2ui-tb-image w2ui-icon iconset21" onclick="setConditionalFormatIconSet(21, ' + !!jsdialogDropdown + ')"/></tr>';
+function getConditionalFormatMenuHtmlImpl(more, type, count, jsdialogDropdown) {
+	var table = '<table id="conditionalformatmenu-grid">';
+	for (var i = 0; i < count; i+=3) {
+		table += '<tr>';
+		for (var j = i; j < i+3; j++) {
+			var number = j;
+
+			// iconset07 deliberately left out, see the .css for the reason
+			if (type === 'iconset' && number >= 7)
+				number++;
+
+			var iconclass = type + (number < 10 ? '0' : '') + number;
+			table += '<td class="w2ui-tb-image w2ui-icon ' + iconclass + '" onclick="setConditionalFormatIconSet(' + number + ', ' + !!jsdialogDropdown + ')"/>';
+		}
+		table += '</tr>';
+	}
 	if (more) {
 		table += '<tr><td id="' + more + '">' + _('More...') + '</td></tr>';
 	}
 	table += '</table>';
 	return table;
+}
+
+// for icon set conditional formatting
+function getConditionalFormatMenuHtml(more, jsdialogDropdown) {
+	return getConditionalFormatMenuHtmlImpl(more, 'iconset', 21, jsdialogDropdown);
 }
 
 global.getConditionalFormatMenuHtml = getConditionalFormatMenuHtml;
