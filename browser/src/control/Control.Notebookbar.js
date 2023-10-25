@@ -109,7 +109,11 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
 		this.map.off('jsdialogaction', this.onJSAction, this);
 		$('.main-nav #document-header').remove();
-		$('.main-nav.hasnotebookbar').css('overflow', 'scroll hidden');
+		if (this._map.isReadOnlyMode()) {
+			$('.main-nav.hasnotebookbar').css('overflow', 'visible');
+		} else {
+			$('.main-nav.hasnotebookbar').css('overflow', 'scroll hidden');
+		}
 		$('.main-nav').removeClass('hasnotebookbar');
 		$('#toolbar-wrapper').removeClass('hasnotebookbar');
 		$('.main-nav').removeClass(this._map.getDocType() + '-color-indicator');
