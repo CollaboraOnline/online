@@ -301,14 +301,14 @@ global.getConditionalFormatMenuHtml = getConditionalFormatMenuHtml;
 
 // for color scale conditional formatting
 function getConditionalColorScaleMenuHtml(more, jsdialogDropdown) {
-	return getConditionalFormatMenuHtmlImpl(more, 'scaleset', 6, '.uno:ColorScaleFormatDialog', jsdialogDropdown);
+	return getConditionalFormatMenuHtmlImpl(more, 'scaleset', 12, '.uno:ColorScaleFormatDialog', jsdialogDropdown);
 }
 
 global.getConditionalColorScaleMenuHtml = getConditionalColorScaleMenuHtml;
 
 // for data bar conditional formatting
 function getConditionalDataBarMenuHtml(more, jsdialogDropdown) {
-	return getConditionalFormatMenuHtmlImpl(more, 'databarset', 6, '.uno:DataBarFormatDialog', jsdialogDropdown);
+	return getConditionalFormatMenuHtmlImpl(more, 'databarset', 12, '.uno:DataBarFormatDialog', jsdialogDropdown);
 }
 
 global.getConditionalDataBarMenuHtml = getConditionalDataBarMenuHtml;
