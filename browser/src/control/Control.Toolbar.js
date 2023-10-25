@@ -242,13 +242,13 @@ function getBorderStyleMenuHtml() {
 
 global.getBorderStyleMenuHtml = getBorderStyleMenuHtml;
 
-function setConditionalFormatIconSet(num, jsdialogDropdown) {
+function setConditionalFormat(num, unoCommand, jsdialogDropdown) {
 	var params = {
 		IconSet: {
 			type : 'short',
 			value : num
 		}};
-	map.sendUnoCommand('.uno:IconSetFormatDialog', params);
+	map.sendUnoCommand(unoCommand, params);
 
 	if (jsdialogDropdown)
 		JSDialog.CloseAllDropdowns();
@@ -256,9 +256,20 @@ function setConditionalFormatIconSet(num, jsdialogDropdown) {
 		closePopup();
 }
 
-global.setConditionalFormatIconSet = setConditionalFormatIconSet;
+global.setConditionalFormat = setConditionalFormat;
 
-function getConditionalFormatMenuHtmlImpl(more, type, count, jsdialogDropdown) {
+function moreConditionalFormat (unoCommand, jsdialogDropdown) {
+	map.sendUnoCommand(unoCommand);
+
+	if (jsdialogDropdown)
+		JSDialog.CloseAllDropdowns();
+	else
+		closePopup();
+}
+
+global.moreConditionalFormat = moreConditionalFormat;
+
+function getConditionalFormatMenuHtmlImpl(more, type, count, unoCommand, jsdialogDropdown) {
 	var table = '<table id="conditionalformatmenu-grid">';
 	for (var i = 0; i < count; i+=3) {
 		table += '<tr>';
@@ -270,12 +281,12 @@ function getConditionalFormatMenuHtmlImpl(more, type, count, jsdialogDropdown) {
 				number++;
 
 			var iconclass = type + (number < 10 ? '0' : '') + number;
-			table += '<td class="w2ui-tb-image w2ui-icon ' + iconclass + '" onclick="setConditionalFormatIconSet(' + number + ', ' + !!jsdialogDropdown + ')"/>';
+			table += '<td class="w2ui-tb-image w2ui-icon ' + iconclass + '" onclick="setConditionalFormat(' + number + ', \'' + unoCommand + '\', ' + !!jsdialogDropdown + ')"/>';
 		}
 		table += '</tr>';
 	}
 	if (more) {
-		table += '<tr><td id="' + more + '">' + _('More...') + '</td></tr>';
+		table += '<tr><td id="' + more + '" onclick="moreConditionalFormat(\'' + unoCommand + '\', ' + !!jsdialogDropdown + ')">' + _('More...') + '</td></tr>';
 	}
 	table += '</table>';
 	return table;
@@ -283,10 +294,17 @@ function getConditionalFormatMenuHtmlImpl(more, type, count, jsdialogDropdown) {
 
 // for icon set conditional formatting
 function getConditionalFormatMenuHtml(more, jsdialogDropdown) {
-	return getConditionalFormatMenuHtmlImpl(more, 'iconset', 21, jsdialogDropdown);
+	return getConditionalFormatMenuHtmlImpl(more, 'iconset', 21, '.uno:IconSetFormatDialog', jsdialogDropdown);
 }
 
 global.getConditionalFormatMenuHtml = getConditionalFormatMenuHtml;
+
+// for color scale conditional formatting
+function getConditionalColorScaleMenuHtml(more, jsdialogDropdown) {
+	return getConditionalFormatMenuHtmlImpl(more, 'scaleset', 6, '.uno:ColorScaleFormatDialog', jsdialogDropdown);
+}
+
+global.getConditionalColorScaleMenuHtml = getConditionalColorScaleMenuHtml;
 
 function getInsertTablePopupHtml() {
 	return '<div id="inserttable-wrapper">\

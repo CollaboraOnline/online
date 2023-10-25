@@ -814,7 +814,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				{text: _('More conditions...'), uno: '.uno:ConditionalFormatDialog'}
 			]},
 			{type: 'separator'},
-			{text: _UNO('.uno:ColorScaleFormatDialog', 'spreadsheet'), uno: '.uno:ColorScaleFormatDialog'},
+			{id: 'scaleset', text: _UNO('.uno:ColorScaleFormatDialog', 'spreadsheet'), items: [
+				// open popup in the callback
+			]},
 			{text: _UNO('.uno:DataBarFormatDialog', 'spreadsheet'), uno: '.uno:DataBarFormatDialog'},
 			{id: 'iconset', text: _UNO('.uno:IconSetFormatDialog', 'spreadsheet'), items: [
 				// open popup in the callback
@@ -826,23 +828,23 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		$(control.container).unbind('click.toolbutton');
 
+		var getMenuHtml = function (id) {
+			if (id === 'iconset')
+				return window.getConditionalFormatMenuHtml('iconsetoverlay', true);
+			else if (id === 'scaleset')
+				return window.getConditionalColorScaleMenuHtml('iconsetoverlay', true);
+		};
+
 		var dropdownId = data.id;
 		var clickFunction = function () {
 			var callback = function(objectType, eventType, object, data, entry) {
 				if (eventType === 'selected') {
 					var pos = data.substr(0, parseInt(data.indexOf(';')));
-					if (entry.id === 'iconset') {
+					if (entry.id) {
 						var subDropdownId = dropdownId + '-' + pos;
 						var dropdown = JSDialog.GetDropdown(subDropdownId);
 						var container = dropdown.querySelector('.ui-grid-cell');
-						container.innerHTML = window.getConditionalFormatMenuHtml('iconsetoverlay', true);
-
-						if ($('#iconsetoverlay').length) {
-							$('#iconsetoverlay').click(function() {
-								builder.map.sendUnoCommand('.uno:IconSetFormatDialog');
-								JSDialog.CloseAllDropdowns();
-							});
-						}
+						container.innerHTML = getMenuHtml(entry.id);
 					} else if (entry.uno) {
 						builder.map.sendUnoCommand(entry.uno);
 						JSDialog.CloseDropdown(dropdownId);
