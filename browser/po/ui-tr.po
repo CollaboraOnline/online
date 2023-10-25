@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-23 14:40+0200\n"
-"PO-Revision-Date: 2023-10-11 16:23+0000\n"
-"Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
+"PO-Revision-Date: 2023-10-25 15:34+0000\n"
+"Last-Translator: \"PhD. Ayhan YALÇINSOY\" <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.1-dev\n"
+"X-Generator: Weblate 5.1.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -447,13 +447,15 @@ msgstr "Geri al"
 
 #: src/control/Control.DownloadProgress.js:43
 msgid "Download Selection"
-msgstr ""
+msgstr "Seçimi İndir"
 
 #: src/control/Control.DownloadProgress.js:48
 msgid ""
 "If you want to share large elements outside of %productName it's necessary "
 "to first download them."
 msgstr ""
+"Eğer %productName dışındaki büyük ögeleri paylaşmak istiyorsanız, önce "
+"bunları indirmeniz gerekir."
 
 #: src/control/Control.DownloadProgress.js:61
 #: src/control/Control.NotebookbarCalc.js:204
@@ -464,7 +466,7 @@ msgstr "İndir"
 
 #: src/control/Control.DownloadProgress.js:80
 msgid "Downloading clipboard content"
-msgstr ""
+msgstr "Pano içeriği indiriliyor"
 
 #: src/control/Control.DownloadProgress.js:87
 #: src/control/Control.DownloadProgress.js:112
@@ -474,20 +476,22 @@ msgstr "Kopyala"
 
 #: src/control/Control.DownloadProgress.js:110
 msgid "Download completed and ready to be copied to clipboard."
-msgstr ""
+msgstr "İndirme tamamlandı ve panoya kopyalanmaya hazır."
 
 #: src/control/Control.DownloadProgress.js:111
 msgid ""
 "From now on clipboard notifications will discreetly appear at the bottom."
 msgstr ""
+"Şu andan itibaren pano bildirimleri dikkat çekmeyecek şekilde alt kısımda "
+"görünecektir."
 
 #: src/control/Control.DownloadProgress.js:257
 msgid "Content copied to clipboard"
-msgstr ""
+msgstr "İçerik panoya kopyalandı"
 
 #: src/control/Control.DownloadProgress.js:301
 msgid "Download failed"
-msgstr ""
+msgstr "İndirme başarısız oldu"
 
 #: src/control/Control.FormulaBar.js:45
 msgid "cell address"
@@ -1460,7 +1464,6 @@ msgid "Image (.png)"
 msgstr "Resim (.png)"
 
 #: src/control/Control.NotebookbarDraw.js:1028
-#, fuzzy
 msgid "Page Layout"
 msgstr "Sayfa düzeni"
 
