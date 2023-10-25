@@ -847,8 +847,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					if (entry.id) {
 						var subDropdownId = dropdownId + '-' + pos;
 						var dropdown = JSDialog.GetDropdown(subDropdownId);
-						var container = dropdown.querySelector('.ui-grid-cell');
+						var container = dropdown.querySelector('.ui-grid');
 						container.innerHTML = getMenuHtml(entry.id);
+						JSDialog.MakeFocusCycle(container);
+						JSDialog.GetFocusableElements(container)[0].focus();
 					} else if (entry.uno) {
 						builder.map.sendUnoCommand(entry.uno);
 						JSDialog.CloseDropdown(dropdownId);

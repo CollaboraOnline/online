@@ -44,6 +44,12 @@ L.Control.JSDialog = L.Control.extend({
 			.length > 0;
 	},
 
+	hasDropdownOpened: function() {
+		return Object.values(this.dialogs)
+			.filter(function (dialog) { return dialog.isDropdown === true; })
+			.length > 0;
+	},
+
 	hasSnackbarOpened: function() {
 		return Object.keys(this.dialogs)
 			.filter(function (key) { return key == 'snackbar'; })

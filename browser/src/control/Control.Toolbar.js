@@ -270,9 +270,8 @@ function moreConditionalFormat (unoCommand, jsdialogDropdown) {
 global.moreConditionalFormat = moreConditionalFormat;
 
 function getConditionalFormatMenuHtmlImpl(more, type, count, unoCommand, jsdialogDropdown) {
-	var table = '<table id="conditionalformatmenu-grid">';
+	var table = '<div id="conditionalformatmenu-grid">';
 	for (var i = 0; i < count; i+=3) {
-		table += '<tr>';
 		for (var j = i; j < i+3; j++) {
 			var number = j;
 
@@ -281,14 +280,13 @@ function getConditionalFormatMenuHtmlImpl(more, type, count, unoCommand, jsdialo
 				number++;
 
 			var iconclass = type + (number < 10 ? '0' : '') + number;
-			table += '<td class="w2ui-tb-image w2ui-icon ' + iconclass + '" onclick="setConditionalFormat(' + number + ', \'' + unoCommand + '\', ' + !!jsdialogDropdown + ')"/>';
+			table += '<button class="w2ui-tb-image w2ui-icon ' + iconclass + '" onclick="setConditionalFormat(' + number + ', \'' + unoCommand + '\', ' + !!jsdialogDropdown + ')"/>';
 		}
-		table += '</tr>';
 	}
 	if (more) {
-		table += '<tr><td id="' + more + '" onclick="moreConditionalFormat(\'' + unoCommand + '\', ' + !!jsdialogDropdown + ')">' + _('More...') + '</td></tr>';
+		table += '<button id="' + more + '" onclick="moreConditionalFormat(\'' + unoCommand + '\', ' + !!jsdialogDropdown + ')">' + _('More...') + '</button>';
 	}
-	table += '</table>';
+	table += '</div>';
 	return table;
 }
 

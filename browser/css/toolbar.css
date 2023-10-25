@@ -576,7 +576,14 @@ button.leaflet-control-search-next
 	color: var(--color-text-darker);
 }
 
-#conditionalformatmenu-grid tr td {
+/* Conditional formatting submenu */
+
+#conditionalformatmenu-grid {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+}
+
+#conditionalformatmenu-grid button:not(#iconsetoverlay) {
 	box-sizing: border-box;
 	position: relative;
 	padding: 3px;
@@ -584,11 +591,18 @@ button.leaflet-control-search-next
 	border-radius: var(--border-radius);
 	margin: 3px;
 	overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
+	min-width: initial;
 }
 
-#conditionalformatmenu-grid td:hover {
+#conditionalformatmenu-grid button:hover {
 	border: 1px solid var(--color-border-darker);
 	background-color: var(--color-background-darker) !important;
+}
+
+#conditionalformatmenu-grid #iconsetoverlay {
+	grid-column: 1/4;
+	width: 100%;
+	margin: 0px;
 }
 
 .w2ui-toolbar table.w2ui-button {
