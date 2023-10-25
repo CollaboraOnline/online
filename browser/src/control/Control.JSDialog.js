@@ -88,6 +88,16 @@ L.Control.JSDialog = L.Control.extend({
 		}
 	},
 
+	closeAllDropdowns: function() {
+		var dialogs = Object.values(this.dialogs);
+		for (var i = 0; i < dialogs.length; i++) {
+			if (dialogs[i] && !dialogs[i].isDropdown)
+				continue;
+
+			this.close(dialogs[i].id, false);
+		}
+	},
+
 	closeDialog: function(id, sendCloseEvent) {
 		if (!id || !this.dialogs[id]) {
 			console.warn('missing dialog data');

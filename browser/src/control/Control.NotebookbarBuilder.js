@@ -816,7 +816,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			{type: 'separator'},
 			{text: _UNO('.uno:ColorScaleFormatDialog', 'spreadsheet'), uno: '.uno:ColorScaleFormatDialog'},
 			{text: _UNO('.uno:DataBarFormatDialog', 'spreadsheet'), uno: '.uno:DataBarFormatDialog'},
-			{text: _UNO('.uno:IconSetFormatDialog', 'spreadsheet'), html: window.getConditionalFormatMenuHtml('iconsetoverlay') },
+			{id: 'iconset', text: _UNO('.uno:IconSetFormatDialog', 'spreadsheet'), items: [
+				// open popup in the callback
+			]},
 			{text: _UNO('.uno:CondDateFormatDialog', 'spreadsheet'), uno: '.uno:CondDateFormatDialog'},
 			{type: 'separator'},
 			{text: _UNO('.uno:ConditionalFormatManagerDialog', 'spreadsheet'), uno: '.uno:ConditionalFormatManagerDialog'}
@@ -829,25 +831,16 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			var callback = function(objectType, eventType, object, data, entry) {
 				if (eventType === 'selected') {
 					var pos = data.substr(0, parseInt(data.indexOf(';')));
+					if (entry.id === 'iconset') {
+						var subDropdownId = dropdownId + '-' + pos;
+						var dropdown = JSDialog.GetDropdown(subDropdownId);
+						var container = dropdown.querySelector('.ui-grid-cell');
+						container.innerHTML = window.getConditionalFormatMenuHtml('iconsetoverlay', true);
 
-					if (entry.html && !$('#w2ui-overlay-conditionalformatmenu-sub').length) {
-						var dropdown = JSDialog.GetDropdown(dropdownId);
-						var iconSetEntry = dropdown.querySelectorAll('.ui-combobox-entry')[pos];
-
-						$(iconSetEntry).w2overlay({
-							name: 'conditionalformatmenu-sub',
-							html: entry.html,
-							left: 100,
-							top: -20,
-							noTip: true,
-							onHide: function() {
-								JSDialog.CloseDropdown(dropdownId);
-							}
-						});
 						if ($('#iconsetoverlay').length) {
 							$('#iconsetoverlay').click(function() {
 								builder.map.sendUnoCommand('.uno:IconSetFormatDialog');
-								JSDialog.CloseDropdown(dropdownId);
+								JSDialog.CloseAllDropdowns();
 							});
 						}
 					} else if (entry.uno) {

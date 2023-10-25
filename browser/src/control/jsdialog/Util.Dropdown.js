@@ -68,7 +68,6 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 					var targetEntry = dropdown.querySelectorAll('.ui-grid-cell')[pos + 1];
 					JSDialog.OpenDropdown(object.id + '-' + pos, targetEntry, targetEntries[pos].items,
 						generateCallback(targetEntries[pos].items), 'top-end');
-					return;
 				}
 			}
 
@@ -90,6 +89,10 @@ JSDialog.CloseDropdown = function (id) {
 		jsontype: 'dialog',
 		action: 'close'
 	}});
+};
+
+JSDialog.CloseAllDropdowns = function () {
+	L.Map.THIS.jsdialog.closeAllDropdowns();
 };
 
 JSDialog.GetDropdown = function (id) {
