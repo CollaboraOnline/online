@@ -306,6 +306,13 @@ function getConditionalColorScaleMenuHtml(more, jsdialogDropdown) {
 
 global.getConditionalColorScaleMenuHtml = getConditionalColorScaleMenuHtml;
 
+// for data bar conditional formatting
+function getConditionalDataBarMenuHtml(more, jsdialogDropdown) {
+	return getConditionalFormatMenuHtmlImpl(more, 'databarset', 6, '.uno:DataBarFormatDialog', jsdialogDropdown);
+}
+
+global.getConditionalDataBarMenuHtml = getConditionalDataBarMenuHtml;
+
 function getInsertTablePopupHtml() {
 	return '<div id="inserttable-wrapper">\
 					<div id="inserttable-popup" class="inserttable-pop ui-widget ui-corner-all" tabIndex=0>\
