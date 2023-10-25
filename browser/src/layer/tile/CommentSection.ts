@@ -380,16 +380,17 @@ export class Comment extends CanvasSectionObject {
 			if (this.size[0] < 5)
 				this.size[0] = 5;
 		}
-		else if (this.sectionProperties.data.cellPos && this.sectionProperties.docLayer._docType === 'spreadsheet') {
+		else if (this.sectionProperties.data.cellRange && this.sectionProperties.docLayer._docType === 'spreadsheet') {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
 			this.size = this.calcCellSize();
-			let startX = this.sectionProperties.data.cellPos[0];
+			var cellPos = this.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
+			let startX = cellPos[0];
 			if (this.isCalcRTL()) { // Mirroring is done in setPosition
-				const sizeX = this.sectionProperties.data.cellPos[2];
+				const sizeX = cellPos[2];
 				startX += sizeX;  // but adjust for width of the cell.
 			}
 			this.showSection = true;
-			var position: Array<number> = [Math.round(this.sectionProperties.data.cellPos[0] * ratio), Math.round(this.sectionProperties.data.cellPos[1] * ratio)];
+			var position: Array<number> = [Math.round(cellPos[0] * ratio), Math.round(cellPos[1] * ratio)];
 			var splitPosCore = {x: 0, y: 0};
 			if (this.map._docLayer.getSplitPanesContext())
 				splitPosCore = this.map._docLayer.getSplitPanesContext().getSplitPos();
@@ -655,7 +656,8 @@ export class Comment extends CanvasSectionObject {
 
 		if (!(<any>window).mode.isMobile()) {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
-			var originalSize = [Math.round((this.sectionProperties.data.cellPos[2]) * ratio), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
+			var cellPos = this.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
+			var originalSize = [Math.round((cellPos[2]) * ratio), Math.round((cellPos[3]) * ratio)];
 
 			this.sectionProperties.container.style.visibility = '';
 
@@ -1115,7 +1117,8 @@ export class Comment extends CanvasSectionObject {
 
 	public calcCellSize (): number[] {
 		var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
-		return [Math.round((this.sectionProperties.data.cellPos[2]) * ratio), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
+		var cellPos = this.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
+		return [Math.round((cellPos[2]) * ratio), Math.round((cellPos[3]) * ratio)];
 	}
 
 	public onMouseEnter (): void {
@@ -1135,7 +1138,8 @@ export class Comment extends CanvasSectionObject {
 
 				var containerWidth: number = this.sectionProperties.container.getBoundingClientRect().width;
 				var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
-				this.size = [Math.round((this.sectionProperties.data.cellPos[2]) * ratio + containerWidth), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
+				var cellPos = this.map._docLayer._cellRangeToTwipRect(this.sectionProperties.data.cellRange).toRectangle();
+				this.size = [Math.round((cellPos[2]) * ratio + containerWidth), Math.round((cellPos[3]) * ratio)];
 				this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
 				this.show();
 			}

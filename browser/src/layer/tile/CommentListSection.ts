@@ -1325,9 +1325,16 @@ export class CommentSection extends CanvasSectionObject {
 	// So we can use it directly.
 	private adjustCommentNormal (comment: any): void {
 		comment.trackchange = false;
-		comment.rectangles = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle || comment.cellPos); // Simple array of point arrays [x1, y1, x2, y2].
-		comment.rectanglesOriginal = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle || comment.cellPos); // This unmodified version will be kept for re-calculations.
-		comment.anchorPos = this.stringToRectangles(comment.anchorPos || comment.rectangle || comment.cellPos)[0];
+
+		if (comment.cellRange) {
+			// turn cell range string into cell bounds
+			comment.cellRange = this.sectionProperties.docLayer._parseCellRange(comment.cellRange);
+		}
+
+		var cellPos = comment.cellRange ? this.sectionProperties.docLayer._cellRangeToTwipRect(comment.cellRange).toRectangle() : null;
+		comment.rectangles = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle || cellPos); // Simple array of point arrays [x1, y1, x2, y2].
+		comment.rectanglesOriginal = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle || cellPos); // This unmodified version will be kept for re-calculations.
+		comment.anchorPos = this.stringToRectangles(comment.anchorPos || comment.rectangle || cellPos)[0];
 		comment.anchorPix = this.numberArrayToCorePixFromTwips(comment.anchorPos, 0, 2);
 		comment.parthash = comment.parthash ? comment.parthash: null;
 		comment.tab = (comment.tab || comment.tab === 0) ? comment.tab: null;
@@ -1336,9 +1343,6 @@ export class CommentSection extends CanvasSectionObject {
 
 		if (comment.rectangle) {
 			comment.rectangle = this.stringToRectangles(comment.rectangle)[0]; // This is the position of the marker (Impress & Draw).
-		}
-		else if (comment.cellPos) {
-			comment.cellPos = this.stringToRectangles(comment.cellPos)[0]; // Calc.
 		}
 
 		var viewId = this.map.getViewId(comment.author);
@@ -1781,11 +1785,6 @@ export class CommentSection extends CanvasSectionObject {
 		if (commentList.length > 0) {
 			for (var i = 0; i < commentList.length; i++) {
 				comment = commentList[i];
-
-				if (comment.cellRange) {
-					// convert cellRange e.g. "A1 B2" to its bounds in display twips.
-					comment.cellPos = this.sectionProperties.docLayer._cellRangeToTwipRect(comment.cellRange).toCoreString();
-				}
 
 				this.adjustComment(comment);
 				if (comment.author in this.map._viewInfoByUserName) {

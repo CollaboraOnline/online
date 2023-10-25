@@ -1565,15 +1565,21 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	_cellRangeToTwipRect: function(cellRange) {
+	_parseCellRange: function(cellRange) {
 		var strTwips = cellRange.match(/\d+/g);
 		var startCellAddress = [parseInt(strTwips[0]), parseInt(strTwips[1])];
-		var startCellRectPixel = this.sheetGeometry.getCellRect(startCellAddress[0], startCellAddress[1]);
-		var topLeftTwips = this._corePixelsToTwips(startCellRectPixel.min);
 		var endCellAddress = [parseInt(strTwips[2]), parseInt(strTwips[3])];
-		var endCellRectPixel = this.sheetGeometry.getCellRect(endCellAddress[0], endCellAddress[1]);
+		return new L.Bounds(startCellAddress, endCellAddress);
+	},
+
+	_cellRangeToTwipRect: function(cellRange) {
+		var startCell = cellRange.getTopLeft();
+		var startCellRectPixel = this.sheetGeometry.getCellRect(startCell.x, startCell.y);
+		var topLeftTwips = this._corePixelsToTwips(startCellRectPixel.min);
+		var endCell = cellRange.getBottomRight();
+		var endCellRectPixel = this.sheetGeometry.getCellRect(endCell.x, endCell.y);
 		var bottomRightTwips = this._corePixelsToTwips(endCellRectPixel.max);
-		return new L.Bounds(new L.Point(topLeftTwips.x, topLeftTwips.y), new L.Point(bottomRightTwips.x, bottomRightTwips.y));
+		return new L.Bounds(topLeftTwips, bottomRightTwips);
 	},
 
 	_onMessage: function (textMsg, img) {
@@ -1831,10 +1837,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		else if (textMsg.startsWith('comment:')) {
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
-			if (obj.comment.cellRange) {
-				// convert cellRange e.g. "A1 B2" to its bounds in display twips.
-				obj.comment.cellPos = this._cellRangeToTwipRect(obj.comment.cellRange).toCoreString();
-			}
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
 		}
 		else if (textMsg.startsWith('redlinetablemodified:')) {

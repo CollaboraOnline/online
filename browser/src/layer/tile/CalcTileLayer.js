@@ -21,9 +21,11 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var commentList = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).sectionProperties.commentList;
 		var comment = null;
 
+		var cursorAddress = this._cellCursorXY;
+
 		for (var i = 0; i < commentList.length; i++) {
-			if (this._cellCursorTwips.contains(commentList[i].sectionProperties.data.cellPos)) {
-				if (commentList[i].sectionProperties.data.tab == this._selectedPart) {
+			if (commentList[i].sectionProperties.data.tab == this._selectedPart) {
+				if (commentList[i].sectionProperties.data.cellRange.contains(cursorAddress)) {
 					comment = commentList[i];
 					break;
 				}
@@ -31,8 +33,15 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (!comment) {
+			var pixelStart = new L.Point(Math.ceil(this._cellCursorPixels.getX1()),
+						     Math.ceil(this._cellCursorPixels.getY1()));
+			var rangeStart = this.sheetGeometry.getCellFromPos(pixelStart, 'corepixels');
+			var pixelEnd = new L.Point(Math.floor(this._cellCursorPixels.getX2() - 1),
+						   Math.floor(this._cellCursorPixels.getY2() - 1));
+			var rangeEnd = this.sheetGeometry.getCellFromPos(pixelEnd, 'corepixels');
+
 			var newComment = {
-				cellPos: app.file.calc.cellCursor.rectangle.twips.slice(), // Copy the array.
+				cellRange: new L.Bounds(rangeStart, rangeEnd),
 				anchorPos: app.file.calc.cellCursor.rectangle.twips.slice(), // Copy the array.
 				id: 'new',
 				tab: this._selectedPart,
@@ -119,15 +128,12 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		if (textMsg.startsWith('invalidateheader: column')) {
 			this.refreshViewData({x: this._map._getTopLeftPoint().x, y: 0,
 				offset: {x: undefined, y: 0}}, true /* compatDataSrcOnly */);
-			app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else if (textMsg.startsWith('invalidateheader: row')) {
 			this.refreshViewData({x: 0, y: this._map._getTopLeftPoint().y,
 				offset: {x: 0, y: undefined}}, true /* compatDataSrcOnly */);
-			app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else if (textMsg.startsWith('invalidateheader: all')) {
 			this.refreshViewData({x: this._map._getTopLeftPoint().x, y: this._map._getTopLeftPoint().y,
 				offset: {x: undefined, y: undefined}}, true /* compatDataSrcOnly */);
-			app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else if (this.options.sheetGeometryDataEnabled &&
 				textMsg.startsWith('invalidatesheetgeometry:')) {
 			var params = textMsg.substring('invalidatesheetgeometry:'.length).trim().split(' ');
@@ -246,7 +252,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._map.fire('zoomchanged');
 		this.refreshViewData();
 		this._replayPrintTwipsMsgs(false);
-		app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 	},
 
 	_restrictDocumentSize: function () {
@@ -929,8 +934,11 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 							break;
 						}
 					}
-					if (commentObject)
-						commentObject.sectionProperties.data.cellPos = this._cellRangeToTwipRect(comment.cellRange).toRectangle();
+					if (commentObject) {
+						// turn cell range string into Bounds
+						commentObject.sectionProperties.data.cellRange = this._parseCellRange(comment.cellRange);
+
+					}
 				}
 			}
 
