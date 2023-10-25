@@ -272,6 +272,7 @@ L.Map.WOPI = L.Handler.extend({
 			}
 			var show = msg.MessageId === 'Show_Button';
 			this._map.uiManager.showButton(msg.Values.id, show);
+			return;
 		}
 		else if (msg.MessageId === 'Remove_Statusbar_Element') {
 			if (!msg.Values) {
@@ -287,18 +288,23 @@ L.Map.WOPI = L.Handler.extend({
 				return;
 			}
 			w2ui['actionbar'].remove(msg.Values.id);
+			return;
 		}
 		else if (msg.MessageId === 'Show_Menubar') {
 			this._map.uiManager.showMenubar();
+			return;
 		}
 		else if (msg.MessageId === 'Hide_Menubar') {
 			this._map.uiManager.hideMenubar();
+			return;
 		}
 		else if (msg.MessageId === 'Show_Ruler') {
 			this._map.uiManager.showRuler();
+			return;
 		}
 		else if (msg.MessageId === 'Hide_Ruler') {
 			this._map.uiManager.hideRuler();
+			return;
 		}
 		else if (msg.MessageId === 'Show_Menu_Item' || msg.MessageId === 'Hide_Menu_Item') {
 			if (!msg.Values) {
@@ -319,12 +325,15 @@ L.Map.WOPI = L.Handler.extend({
 			} else {
 				this._map.menubar.hideItem(msg.Values.id);
 			}
+			return;
 		}
 		else if (msg.MessageId === 'Insert_Button' &&
 			msg.Values && msg.Values.id && msg.Values.imgurl) {
 			this._map.uiManager.insertButton(msg.Values);
+			return;
 		} else if (msg.MessageId === 'Send_UNO_Command' && msg.Values && msg.Values.Command) {
 			this._map.sendUnoCommand(msg.Values.Command, msg.Values.Args || '');
+			return;
 		}
 		else if (msg.MessageId === 'Disable_Default_UIAction') {
 			// Disable the default handler and action for a UI command.
@@ -336,6 +345,7 @@ L.Map.WOPI = L.Handler.extend({
 			if (msg.Values && msg.Values.action && msg.Values.disable !== undefined) {
 				this._map._disableDefaultAction[msg.Values.action] = msg.Values.disable;
 			}
+			return;
 		}
 
 		// All following actions must be done after initialization is completed.
