@@ -855,6 +855,31 @@ button.leaflet-control-search-next
 	background-position: 2px center, 20px center, 38px center, 56px center, 74px center !important;
 	width: 94px !important; }
 
+.w2ui-icon.scaleset00 { background: url('images/scale-set-00.png') no-repeat;
+	background-size: 32px 32px !important;
+	width: 32px !important;
+	height: 32px !important; }
+.w2ui-icon.scaleset01 { background: url('images/scale-set-01.png') no-repeat;
+	background-size: 32px 32px !important;
+	width: 32px !important;
+	height: 32px !important; }
+.w2ui-icon.scaleset02 { background: url('images/scale-set-02.png') no-repeat;
+	background-size: 32px 32px !important;
+	width: 32px !important;
+	height: 32px !important; }
+.w2ui-icon.scaleset03 { background: url('images/scale-set-03.png') no-repeat;
+	background-size: 32px 32px !important;
+	width: 32px !important;
+	height: 32px !important; }
+.w2ui-icon.scaleset04 { background: url('images/scale-set-04.png') no-repeat;
+	background-size: 32px 32px !important;
+	width: 32px !important;
+	height: 32px !important; }
+.w2ui-icon.scaleset05 { background: url('images/scale-set-05.png') no-repeat;
+	background-size: 32px 32px !important;
+	width: 32px !important;
+	height: 32px !important; }
+
 .w2ui-icon.print{ background: url('images/lc_print.svg') no-repeat center; }
 .w2ui-icon.undo{ background: url('images/lc_undo.svg') no-repeat center; }
 .w2ui-icon.redo{ background: url('images/lc_redo.svg') no-repeat center; }
