@@ -744,15 +744,12 @@ void StreamSocket::dumpState(std::ostream& os)
     _outBuffer.dumpHex(os, "\t\toutBuffer:\n", "\t\t");
 }
 
-void StreamSocket::send(Poco::Net::HTTPResponse& response)
+void StreamSocket::sendWithDateAndAgent(http::Response& response)
 {
     response.set("Server", HTTP_SERVER_STRING);
     response.set("Date", Util::getHttpTimeNow());
 
-    std::ostringstream oss;
-    response.write(oss);
-
-    send(oss.str());
+    send(response);
 }
 
 bool StreamSocket::send(const http::Response& response)
