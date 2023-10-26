@@ -589,9 +589,13 @@ export class CommentSection extends CanvasSectionObject {
 			}
 		}
 		else {
-			this.unselect();
+			var unselected = this.unselect();
 			annotation.reply();
-			this.select(annotation);
+			var selected = this.select(annotation);
+			// select and unselect usually updates the layout but,
+			// in case if it failed we manually do the layout update
+			if (!unselected && !selected)
+				this.layout();
 			annotation.focus();
 		}
 	}
@@ -603,9 +607,14 @@ export class CommentSection extends CanvasSectionObject {
 			}.bind(this), /* isMod */ true);
 		}
 		else {
-			if (this.sectionProperties.docLayer._docType !== 'spreadsheet' && this.sectionProperties.selectedComment !== annotation) {
-				this.unselect();
-				this.select(annotation);
+			if (this.sectionProperties.docLayer._docType !== 'spreadsheet') {
+				var unselected = this.unselect();
+				var selected = this.select(annotation);
+
+				// select and unselect usually updates the layout but,
+				// in case if it failed we manually do the layout update
+				if (!unselected && !selected)
+					this.layout();
 			}
 
 			// Make sure that comment is not transitioning and comment menu is not open.
@@ -641,7 +650,7 @@ export class CommentSection extends CanvasSectionObject {
 			this.sectionProperties.commentList[i].sectionProperties.container.style.display = 'none';
 	}
 
-	public select (annotation: any): void {
+	public select (annotation: any): boolean {
 		var selectedComment = this.sectionProperties.selectedComment;
 		if (annotation && annotation !== selectedComment
 			&& !(selectedComment && selectedComment.isEdit())) {
@@ -676,7 +685,9 @@ export class CommentSection extends CanvasSectionObject {
 			}
 
 			this.update();
+			return true;
 		}
+		return false;
 	}
 
 	private isInViewPort(annotation: any): boolean {
@@ -694,10 +705,10 @@ export class CommentSection extends CanvasSectionObject {
 		);
 	}
 
-	public unselect (): void {
+	public unselect (): boolean {
 		var selectedComment = this.sectionProperties.selectedComment;
 		if (app.view.commentAutoSave || (selectedComment && selectedComment.isAnyEdit()))
-			return;
+			return false;
 		if (this.sectionProperties.selectedComment && this.sectionProperties.selectedComment.sectionProperties.data.id != 'new') {
 			if (this.sectionProperties.selectedComment && $(this.sectionProperties.selectedComment.sectionProperties.container).hasClass('annotation-active'))
 				$(this.sectionProperties.selectedComment.sectionProperties.container).removeClass('annotation-active');
@@ -712,7 +723,9 @@ export class CommentSection extends CanvasSectionObject {
 			this.sectionProperties.selectedComment = null;
 
 			this.update();
+			return true;
 		}
+		return false;
 	}
 
 	public saveReply (annotation: any): void {
