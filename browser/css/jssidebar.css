@@ -266,7 +266,10 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 	column-gap: 5px;
 }
 
+/* Separators */
 .jsdialog.sidebar.ui-separator {
+	/* Hide separators for now.
+	 TODO: re-test and possibily enable them with different style*/
 	display: none;
 }
 
