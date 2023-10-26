@@ -3854,19 +3854,9 @@ L.CanvasTileLayer = L.Layer.extend({
 				That edit changed our cursor position.
 			Now we already set the cursor position to another point.
 			We want to keep the cursor position at the same point relative to screen.
-			Do that only when we are reaching the end of screen so we don't flicker.
 			*/
-			var that = this;
-			var paneRectsInLatLng = this.getPaneLatLngRectangles();
-			var isCursorVisible = this._visibleCursor.isInAny(paneRectsInLatLng);
-			if (!isCursorVisible) {
-				setTimeout(function () {
-					var y = that._cursorCorePixels.min.y - that._cursorPreviousPositionCorePixels.min.y;
-					if (y) {
-						that._painter._sectionContainer.getSectionWithName(L.CSections.Scroll.name).scrollVerticalWithOffset(y);
-					}
-				}, 0);
-			}
+			var y = this._cursorCorePixels.min.y - this._cursorPreviousPositionCorePixels.min.y;
+			this._painter._sectionContainer.getSectionWithName(L.CSections.Scroll.name).scrollVerticalWithOffset(y);
 		}
 
 		this._updateCursorAndOverlay();
