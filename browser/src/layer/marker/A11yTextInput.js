@@ -288,7 +288,8 @@ L.A11yTextInput = L.TextInput.extend({
 		this._log('onAccessibilitySelectionChanged: cell: ' + cell + ', action: ' + action + ', name: ' + name);
 		if (this._timeoutForA11yDescription)
 			clearTimeout(this._timeoutForA11yDescription);
-		this._emptyArea();
+		if (!this._isFormula())
+			this._emptyArea();
 		var eventDescription = '';
 		if (action === 'create' || action === 'add') {
 			this._hasAnySelection = true;
