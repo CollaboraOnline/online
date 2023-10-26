@@ -1377,11 +1377,11 @@ app.definitions.Socket = L.Class.extend({
 				});
 			}
 
-			if (docLayer !== null) {
-				this._handleDelayedMessages(docLayer);
-			}
 			this._map._docLayer = docLayer;
 			this._map.addLayer(docLayer);
+			// docLayer.map is set by addLayer and docLayer.map should be set before
+			// applying delayed messages
+			this._handleDelayedMessages(docLayer);
 			this._map.fire('doclayerinit');
 		}
 		else if (this._reconnecting) {
