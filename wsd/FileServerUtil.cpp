@@ -63,8 +63,9 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
         // detect the UITheme default, light or dark
         if (keyValue.equals(0, "UITheme"))
         {
-                json.set("darkTheme", keyValue.equals(1, "dark"));
-                uiTheme = keyValue[1];
+            json.set("darkTheme", keyValue.equals(1, "dark"));
+            uiTheme = keyValue[1];
+            continue;
         }
         if (keyValue.equals(0, "SaveAsMode"))
         {
