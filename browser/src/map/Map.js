@@ -319,7 +319,8 @@ L.Map = L.Evented.extend({
 
 	initTextInput: function(docType) {
 		var hasAccessibilitySupport = window.enableAccessibility && this._accessibilityState;
-		hasAccessibilitySupport = hasAccessibilitySupport && (docType === 'text' || docType === 'presentation');
+		hasAccessibilitySupport = hasAccessibilitySupport &&
+			(docType === 'text' || docType === 'presentation'|| docType === 'spreadsheet');
 		this._textInput = hasAccessibilitySupport ? L.a11yTextInput() : L.textInput();
 		this.addLayer(this._textInput);
 	},
