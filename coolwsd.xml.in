@@ -308,4 +308,9 @@
         <enable desc="Enable overwrite mode (user can use insert key)" type="bool" default="true">true</enable>
     </overwrite_mode>
 
+    <wasm desc="WASM-specific settings">
+        <enable desc="Enable WASM support" type="bool" default="false"></enable>
+        <force desc="When enabled, all requests are redirected to WASM. Only valid in debug builds." type="bool" default="false"></force>
+    </wasm>
+
 </config>
