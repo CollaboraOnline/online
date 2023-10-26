@@ -145,11 +145,10 @@ private:
             }
             else
             {
-                Poco::Net::HTTPResponse response;
-                response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
+                http::Response response(http::StatusCode::BadRequest);
                 response.setContentLength(0);
                 LOG_INF("DumpWebSockets bad request");
-                socket->send(response);
+                socket->sendWithDateAndAgent(response);
                 disposition.setClosed();
             }
         }

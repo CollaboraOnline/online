@@ -1732,10 +1732,9 @@ bool ClientSession::handleKitToClientMessage(const std::shared_ptr<Message>& pay
                 {
                     if (isConvertTo)
                     {
-                        Poco::Net::HTTPResponse response;
-                        response.setStatusAndReason(Poco::Net::HTTPResponse::HTTP_UNAUTHORIZED);
+                        http::Response response(http::StatusCode::Unauthorized);
                         response.set("X-ERROR-KIND", errorKind);
-                        _saveAsSocket->send(response);
+                        _saveAsSocket->sendWithDateAndAgent(response);
 
                         // Conversion failed, cleanup fake session.
                         LOG_TRC("Removing save-as ClientSession after conversion error.");

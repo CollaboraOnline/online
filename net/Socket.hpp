@@ -1029,7 +1029,7 @@ public:
 
     /// Sends HTTP response.
     /// Adds Date and User-Agent.
-    void send(Poco::Net::HTTPResponse& response);
+    void sendWithDateAndAgent(http::Response& response);
 
     /// Send an http::Request and flush.
     /// Does not add any fields to the header.
