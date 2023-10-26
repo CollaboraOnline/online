@@ -619,7 +619,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 mimeType = "image/png";
             else if (fileType == "svg")
                 mimeType = "image/svg+xml";
-            else if (fileType == "wasm")
+            else if (fileType == "wasm" &&
+                     COOLWSD::WASMState != COOLWSD::WASMActivationState::Disabled)
                 mimeType = "application/wasm";
             else
                 mimeType = "text/plain";
@@ -649,27 +650,43 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             response.set("Server", HTTP_SERVER_STRING);
             response.set("Date", Util::getHttpTimeNow());
 
-            if (relPath.find("wasm") != std::string::npos)
+            if (COOLWSD::WASMState != COOLWSD::WASMActivationState::Disabled &&
+                relPath.find("wasm") != std::string::npos)
             {
                 response.add("Cross-Origin-Opener-Policy", "same-origin");
                 response.add("Cross-Origin-Embedder-Policy", "require-corp");
             }
 
+            const bool brotli = request.hasToken("Accept-Encoding", "br");
 #if ENABLE_DEBUG
             if (std::getenv("COOL_SERVE_FROM_FS"))
             {
                 // Useful to not serve from memory sometimes especially during cool development
                 // Avoids having to restart cool everytime you make a change in cool
-                const std::string filePath = Poco::Path(COOLWSD::FileServerRoot, relPath).absolute().toString();
+                std::string filePath =
+                    Poco::Path(COOLWSD::FileServerRoot, relPath).absolute().toString();
+                if (brotli && FileUtil::Stat(filePath + ".br").exists())
+                {
+                    filePath += ".br";
+                    response.set("Content-Encoding", "br");
+                }
+
                 HttpHelper::sendFileAndShutdown(socket, filePath, response, noCache);
                 return;
             }
 #endif
 
-            const bool gzip = request.hasToken("Accept-Encoding", "gzip");
+            bool compressed = false;
             const std::string* content;
-            if (gzip)
+            if (brotli && FileHash.find(relPath + ".br") != FileHash.end())
             {
+                compressed = true;
+                response.set("Content-Encoding", "br");
+                content = getUncompressedFile(relPath + ".br");
+            }
+            else if (request.hasToken("Accept-Encoding", "gzip"))
+            {
+                compressed = true;
                 response.set("Content-Encoding", "gzip");
                 content = getCompressedFile(relPath);
             }
@@ -684,7 +701,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             }
             response.add("X-Content-Type-Options", "nosniff");
 
-            LOG_TRC('#' << socket->getFD() << ": Sending " << (!gzip ? "un" : "")
+            LOG_TRC('#' << socket->getFD() << ": Sending " << (!compressed ? "un" : "")
                         << "compressed : file [" << relPath << "]: " << response.header());
 
             socket->send(response);
@@ -744,12 +761,20 @@ void FileServerRequestHandler::sendError(http::StatusCode errorCode,
 
 void FileServerRequestHandler::readDirToHash(const std::string &basePath, const std::string &path, const std::string &prefix)
 {
-    LOG_DBG("Caching files in [" << basePath + path << ']');
+    const std::string fullPath = basePath + path;
+    LOG_DBG("Caching files in [" << fullPath << ']');
 
-    DIR* workingdir = opendir((basePath + path).c_str());
+    if (COOLWSD::WASMState == COOLWSD::WASMActivationState::Disabled &&
+        path.find("wasm") != std::string::npos)
+    {
+        LOG_INF("Skipping [" << fullPath << "] as WASM is disabled");
+        return;
+    }
+
+    DIR* workingdir = opendir((fullPath).c_str());
     if (!workingdir)
     {
-        LOG_SYS("Failed to open directory [" << basePath + path << ']');
+        LOG_SYS("Failed to open directory [" << fullPath << ']');
         return;
     }
 
@@ -836,7 +861,8 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
     closedir(workingdir);
 
     if (fileCount > 0)
-        LOG_TRC("Pre-read " << fileCount << " file(s) from directory: " << basePath << path << ": " << filesRead);
+        LOG_TRC("Pre-read " << fileCount << " file(s) from directory: " << fullPath << ": "
+                            << filesRead);
 }
 
 const std::string *FileServerRequestHandler::getCompressedFile(const std::string &path)
@@ -856,6 +882,14 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
     requestUri.normalize();
 
     std::string path(requestUri.getPath());
+
+    if (COOLWSD::WASMState == COOLWSD::WASMActivationState::Disabled &&
+        path.find("wasm") != std::string::npos)
+    {
+        LOG_ERR("Requesting WASM files when it's disabled: [" << path << ']');
+        throw Poco::FileAccessDeniedException("WASM is disabled");
+    }
+
     Poco::RegularExpression gitHashRe("/([0-9a-f]+)/");
     std::string gitHash;
     if (gitHashRe.extract(path, gitHash))
@@ -863,6 +897,17 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
         // Convert version back to a real file name.
         Poco::replaceInPlace(path, std::string("/browser" + gitHash), std::string("/browser/dist/"));
     }
+
+#if ENABLE_DEBUG
+    if (COOLWSD::WASMState == COOLWSD::WASMActivationState::Forced)
+    {
+        if (path.find("/browser/dist/wasm/") == std::string::npos)
+        {
+            Poco::replaceInPlace(path, std::string("/browser/dist/"),
+                                 std::string("/browser/dist/wasm/"));
+        }
+    }
+#endif
 
     return path;
 }
@@ -1176,6 +1221,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     const bool wasm = (relPath.find("wasm") != std::string::npos);
     if (wasm)
     {
+        LOG_ASSERT(COOLWSD::WASMState != COOLWSD::WASMActivationState::Disabled);
         oss << "Cross-Origin-Opener-Policy: same-origin\r\n";
         oss << "Cross-Origin-Embedder-Policy: require-corp\r\n";
 

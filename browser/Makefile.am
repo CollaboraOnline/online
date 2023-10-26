@@ -704,6 +704,7 @@ install-data-hook:
 		--exclude='multidocs.html' \
 		--exclude='tsconfig.tsbuildinfo' \
 		dist $(DESTDIR)$(pkgdatadir)/browser/;
+	find . -type f ! -iname "*.png" -exec brotli --force {} \;
 endif
 
 libs:

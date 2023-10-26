@@ -272,6 +272,16 @@ public:
     static std::string LOKitVersion;
     static bool EnableTraceEventLogging;
     static bool EnableAccessibility;
+    enum class WASMActivationState
+    {
+        Disabled,
+        Enabled
+#ifdef ENABLE_DEBUG
+        ,
+        Forced //< When Forced, only WASM is served.
+#endif
+    };
+    static WASMActivationState WASMState;
     static FILE *TraceEventFile;
     static void writeTraceEventRecording(const char *data, std::size_t nbytes);
     static void writeTraceEventRecording(const std::string &recording);
