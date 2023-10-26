@@ -266,6 +266,10 @@ div.sidebar.ui-grid .checkbutton.sidebar,
 	column-gap: 5px;
 }
 
+.jsdialog.sidebar.ui-separator {
+	display: none;
+}
+
 button#button2.ui-pushbutton.jsdialog.sidebar {
 	width: 151px;
 	padding: 4px;
