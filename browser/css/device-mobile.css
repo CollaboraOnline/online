@@ -720,6 +720,13 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 #mobile-wizard.popup.snackbar #button {
 	font-size: 14px !important;
 }
+/* Separators */
+.mobile-wizard.ui-separator {
+	/* Hide separators coming from core when on mobile
+	since we are already adding border top on every
+	#mobile-wizard .mobile-wizard.ui-text */
+	display: none;
+}
 /*   - Import text */
 #mobile-wizard-content #separatoroptions {
 	margin-top: 54px;
