@@ -2611,7 +2611,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		$(control.container).unbind('click.toolbutton');
 		if (!builder.map.isLockedItem(data)) {
-			$(control.container).click(function () {
+			$(control.container).click(function (e) {
+				e.preventDefault();
 				builder.map.dispatch(data.command);
 			});
 		}
