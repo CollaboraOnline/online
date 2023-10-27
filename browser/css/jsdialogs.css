@@ -218,6 +218,9 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 /* Separator */
 
+.jsdialog:focus-visible + .jsdialog.ui-separator.vertical {
+	background-color: transparent;
+}
 .jsdialog.ui-separator.vertical {
 	height: 100%;
 	padding-right: 6px;
