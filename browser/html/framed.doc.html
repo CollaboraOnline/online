@@ -139,6 +139,12 @@
               'Values': {'Mode': value}});
       }
 
+      function CollapseNotebookbar(collapse) {
+        post({'MessageId': collapse ? 'Collapse_Notebookbar' : 'Extend_Notebookbar',
+              'Values': null
+            });
+      }
+
       function Execute(messageId, values) {
         post({'MessageId': messageId, 'Values': values});
       }
@@ -361,6 +367,8 @@
       <p>
       <button onclick="ShowNotebookbar(false); return false;">Compact Toolbar</button>
       <button onclick="ShowNotebookbar(true); return false;">Tabbed Toolbar</button>
+      <button onclick="CollapseNotebookbar(true); return false;">Collapse Tabbed Toolbar</button>
+      <button onclick="CollapseNotebookbar(false); return false;">Extend Tabbed Toolbar</button>
     </form>
 
     <h3>Send UNO Commands</h3>
