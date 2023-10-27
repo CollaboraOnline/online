@@ -232,6 +232,9 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .jsdialog.ui-separator.horizontal {
 	width: 100%;
 	margin: 0px;
+	background-color: var(--color-border-lighter);
+	border: none;
+	height: 1px;
 }
 
 /* Tabs */
