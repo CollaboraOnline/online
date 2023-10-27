@@ -50,8 +50,9 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 							command: '.uno:FunctionDialog'
 						},
 						{
-							id: 'autosummenu:AutoSumMenu',
+							id: 'AutoSumMenu:AutoSumMenu',
 							type: 'menubutton',
+							class: 'AutoSumMenu',
 							command: '.uno:AutoSumMenu'
 						},
 						{
@@ -307,11 +308,6 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 				}
 				return;
 			}
-
-			// ignore some actions to not spam in the console, we don't support them now
-			if ((window.mode.isMobile() && innerData.control_id === 'startformula')
-				|| innerData.control_id === 'AutoSumMenu')
-				return;
 
 			this.builder.executeAction(this.container, innerData);
 		} else
