@@ -570,14 +570,18 @@ void DocumentBroker::pollThread()
 
     // Check for data-loss.
     std::string reason;
+#if !MOBILEAPP
     bool dataLoss = false;
+#endif
     if (haveModifyActivityAfterSaveRequest() || !_saveManager.lastSaveSuccessful() ||
         !_storageManager.lastUploadSuccessful() || isStorageOutdated())
     {
         // If we are exiting because the owner discarded conflict changes, don't detect data loss.
         if (!(_docState.isCloseRequested() && _documentChangedInStorage))
         {
+#if !MOBILEAPP
             dataLoss = true;
+#endif
             if (haveModifyActivityAfterSaveRequest())
                 reason = "have unsaved modifications";
             else
