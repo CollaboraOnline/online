@@ -6419,7 +6419,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Don't paint the tile, only dirty the sectionsContainer if it is in the visible area.
 		// _emitSlurpedTileEvents() will repaint canvas (if it is dirty).
 		if (this._painter.coordsIntersectVisible(coords)) {
-			this._painter._sectionContainer.setDirty();
+			this._painter._sectionContainer.setDirty(coords);
 		}
 	},
 
