@@ -75,10 +75,12 @@ function _menubuttonControl (parentContainer, data, builder) {
 	if (data.id.includes(':')) {
 		ids = data.id.split(':');
 		menuId = ids[1];
+		data.id = ids[0];
 	}
 	else if (data.id.includes('-')) {
 		ids = data.id.split('-');
 		menuId = ids[1];
+		data.id = ids[0];
 	}
 	else
 		menuId = data.id;
