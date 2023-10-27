@@ -765,6 +765,7 @@ pot:
 		src/control/Toolbar.js \
 		src/control/jsdialog/Widget.TreeView.js \
 		src/core/Socket.js \
+		src/docstate.js \
 		src/errormessages.js \
 		src/layer/tile/CanvasTileLayer.js \
 		src/layer/tile/CommentListSection.ts \
