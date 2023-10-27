@@ -306,6 +306,14 @@ L.Map.WOPI = L.Handler.extend({
 			this._map.uiManager.hideRuler();
 			return;
 		}
+		else if (msg.MessageId === 'Collapse_Notebookbar') {
+			this._map.uiManager.collapseNotebookbar();
+			return;
+		}
+		else if (msg.MessageId === 'Extend_Notebookbar') {
+			this._map.uiManager.extendNotebookbar();
+			return;
+		}
 		else if (msg.MessageId === 'Show_Menu_Item' || msg.MessageId === 'Hide_Menu_Item') {
 			if (!msg.Values) {
 				window.app.console.error('Property "Values" not set');
