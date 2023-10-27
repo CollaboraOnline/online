@@ -972,6 +972,18 @@ window.app = {
 				var now2 = Date.now();
 				global.socket.send('coolclient ' + ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
 
+				var isCalcTest =
+					global.docURL.includes('data/desktop/calc/') ||
+					global.docURL.includes('data/mobile/calc/') ||
+					global.docURL.includes('data/multiuser/calc/');
+
+				if (L.Browser.cypressTest && isCalcTest)
+					window.enableAccessibility = false;
+
+				var accessibilityState = window.localStorage.getItem('accessibilityState') === 'true';
+				accessibilityState = accessibilityState || (L.Browser.cypressTest && !isCalcTest);
+				msg += ' accessibilityState=' + accessibilityState;
+
 				if (window.ThisIsAMobileApp) {
 					msg += ' lang=' + window.LANG;
 				} else {
@@ -994,9 +1006,6 @@ window.app = {
 						msg += ' spellOnline=' + spellOnline;
 					}
 
-					var accessibilityState = window.localStorage.getItem('accessibilityState') === 'true';
-					accessibilityState = accessibilityState || L.Browser.cypressTest;
-					msg += ' accessibilityState=' + accessibilityState;
 				}
 
 				msg += ' timezone=' + Intl.DateTimeFormat().resolvedOptions().timeZone;
