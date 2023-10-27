@@ -139,7 +139,7 @@ L.Map.include({
 			target = mobileTopBar;
 		} else {
 			jsdialogFormulabar.hide('startformula');
-			jsdialogFormulabar.hide('AutoSumMenu');
+			$('#AutoSumMenu').hide();
 		}
 		target.show('cancelformula');
 		target.show('acceptformula');
@@ -165,11 +165,11 @@ L.Map.include({
 			mobileTopBar.show('undo');
 			mobileTopBar.show('redo');
 
-			$('#AutoSumMenuimg').css('margin-inline', '0');
+			$('#AutoSumMenu-button').css('margin-inline', '0');
 			$('#AutoSumMenu .unoarrow').css('margin', '0');
 
 			jsdialogFormulabar.show('startformula');
-			jsdialogFormulabar.show('AutoSumMenu');
+			$('#AutoSumMenu').show();
 
 			// clear reference marks
 			map._docLayer._clearReferences();

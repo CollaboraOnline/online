@@ -50,7 +50,8 @@ L.Control.FormulaBarJSDialog = L.Control.extend({
 							command: '.uno:FunctionDialog'
 						},
 						{
-							id: 'autosummenu:AutoSumMenu',
+							id: 'AutoSumMenu',
+							'class': 'AutoSumMenu',
 							type: 'menubutton',
 							command: '.uno:AutoSumMenu'
 						},
