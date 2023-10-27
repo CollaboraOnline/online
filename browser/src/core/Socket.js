@@ -1407,6 +1407,13 @@ app.definitions.Socket = L.Class.extend({
 		if (this._map._docLayer) {
 			this._map._docLayer._onMessage(textMsg);
 			this._reconnecting = false;
+
+			// Applying delayed messages
+			// note: delayed messages cannot be done before:
+			// a) docLayer.map is set by map.addLayer(docLayer)
+			// b) docLayer._onStatusMsg (via _docLayer._onMessage)
+			// has set the viewid
+			this._handleDelayedMessages(docLayer);
 		}
 	},
 
