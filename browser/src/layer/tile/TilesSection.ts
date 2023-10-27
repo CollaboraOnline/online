@@ -109,6 +109,45 @@ class TilesSection extends CanvasSectionObject {
 		}
 	}
 
+	// the bounding box of this set of tiles
+	public getSubsetBounds(canvasCtx: CanvasRenderingContext2D, tileSubset: Set<any>): cool.Bounds {
+
+		// don't do anything for this atypical varient
+		if (app.file.fileBasedView)
+			return null;
+
+		var ctx = this.sectionProperties.tsManager._paintContext();
+
+		var bounds: cool.Bounds;
+		for (const coords of tileSubset) {
+			var topLeft = new L.Point(coords.getPos().x, coords.getPos().y);
+			var rightBottom = new L.Point(topLeft.x + ctx.tileSize.x, topLeft.y + ctx.tileSize.y);
+
+			if (bounds === undefined)
+				bounds = new cool.Bounds(topLeft, rightBottom);
+			else {
+				bounds.extend(topLeft).extend(rightBottom);
+			}
+		}
+
+		return bounds;
+	}
+
+	public clipSubsetBounds(canvasCtx: CanvasRenderingContext2D, subsetBounds: cool.Bounds): void {
+
+		var ctx = this.sectionProperties.tsManager._paintContext();
+		ctx.viewBounds.round();
+
+		canvasCtx.beginPath();
+		var rect = subsetBounds.toRectangle();
+
+		this.beforeDraw(canvasCtx);
+		canvasCtx.rect(rect[0] - ctx.viewBounds.min.x, rect[1] - ctx.viewBounds.min.y, rect[2], rect[3]);
+		this.afterDraw(canvasCtx);
+
+		canvasCtx.clip();
+	}
+
 	drawTileInPane (tile: any, tileBounds: any, paneBounds: any, paneOffset: any, canvasCtx: CanvasRenderingContext2D, clearBackground: boolean, now: Date) {
 		// intersect - to avoid state thrash through clipping
 		var crop = new L.Bounds(tileBounds.min, tileBounds.max);
@@ -343,7 +382,7 @@ class TilesSection extends CanvasSectionObject {
 		}
 	}
 
-	public onDraw () {
+	public onDraw (frameCount: number = null, elapsedTime: number = null, subsetBounds: cool.Bounds = null) {
 		if (this.containerObject.isInZoomAnimation())
 			return;
 
@@ -372,7 +411,12 @@ class TilesSection extends CanvasSectionObject {
 		var now = new Date();
 		var debugForcePaint = this.sectionProperties.docLayer._debug;
 		this.forEachTileInView(zoom, part, mode, ctx, function (tile: any, coords: any): boolean {
+
 			if (doneTiles.has(coords.key()))
+				return true;
+
+			// We can skip this tile if we only want to draw a subset, and it falls outside that
+			if (subsetBounds && !subsetBounds.intersects(docLayer._coordsToPixBounds(coords)))
 				return true;
 
 			// Ensure tile is within document bounds.
