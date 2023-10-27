@@ -812,8 +812,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .ui-combobox-entry span:hover {
-	border: 1px solid var(--color-border-darker);
-	background-color: var(--color-background-darker);
+	background-color: var(--color-background-dark);
 }
 
 .ui-combobox-entry.selected span:not(:hover) {
@@ -850,16 +849,27 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	filter: invert(1);
 }
 
+/* Combobox entry with menu and thus arrow/chevron */
 .ui-combobox-entry.ui-has-menu {
 	display: grid;
 	grid-template-columns: 1fr 25px;
 	align-items: center;
 }
-
+/* Arrow/chevron */
 .ui-combobox-entry.ui-has-menu::after {
-	content: '>';
+	content: '';
 	display: inline-block;
-	width: 25px;
+	width: 9px;
+	background: url('images/lc_menu_chevron.svg') no-repeat;
+	height: 9px;
+	margin-inline-start: -9px;
+}
+
+.ui-combobox-entry.ui-has-menu > span {
+	/* menu entries have 5px all around padding,
+	 add extra 9px at the horizontal end = 14px
+	 so we can re-position the arrow/chevron  */
+	padding-inline-end: 14px;
 }
 
 /* Apply style always show real colors */
@@ -1875,4 +1885,3 @@ kbd,
 #modal-dialog-online-help-content-box {
 	min-width: 75%;
 }
-
