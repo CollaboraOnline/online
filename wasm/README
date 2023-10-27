@@ -26,13 +26,21 @@ required build tools.
 First you need to build LibreOffice core with emscripten.
 Currently best to use "feature/wasm" branch.
 
-These examples assume that the git repo is in $HOME/lo/feature_wasm, the build
-directory in /data/lo/build_feature_wasm and the tarball download cache in
-$HOME/lo/ext_sources - adjust these to your preferences.
+It can be good to create an environment file you can source in new shells eg.
 
-    podman run -v $HOME/lo/feature_wasm:$HOME/lo/feature_wasm:ro -v /data/lo/build_feature_wasm:/data/lo/build_feature_wasm -v $HOME/lo/ext_sources:/ext_sources:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd /data/lo/build_feature_wasm/ && $HOME/lo/feature_wasm/autogen.sh --with-external-tar=/ext_sources --with-distro=LibreOfficeWASM32"
+export GITREPO=$HOME/lo/feature_wasm
+export EXTSOURCES=$HOME/lo/ext_sources
+export BUILDDIR=/data/lo/build_feature_wasm
+export ONLINEGITREPO=$HOME/lo/online
+export ONLINEBUILDDIR=/data/lo/build_online_wasm
 
-    podman run -v $HOME/lo/feature_wasm:$HOME/lo/feature_wasm:ro -v /data/lo/build_feature_wasm:/data/lo/build_feature_wasm -v $HOME/lo/ext_sources:/ext_sources:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd /data/lo/build_feature_wasm/ && make -rj8"
+These examples assume that the git repo is in $GITREPO, the build
+directory in $BUILDDIR and the tarball download cache in
+$EXTSOURCES - adjust these to your preferences.
+
+    podman run -v $GITREPO:$GITREPO:ro -v $BUILDDIR:$BUILDDIR -v $EXTSOURCES:/ext_sources:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd $BUILDDIR/ && $GITREPO/autogen.sh --with-external-tar=/ext_sources --with-distro=LibreOfficeWASM32"
+
+    podman run -v $GITREPO:$GITREPO:ro -v $BUILDDIR:$BUILDDIR -v $EXTSOURCES:/ext_sources:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd $BUILDDIR/ && make -rj8"
 
 == Build Online using dependencies from container ==
 
@@ -42,8 +50,8 @@ Note that here the LO core (and builddir, if separate) must be mapped to the
 same directory in the container as it was when building core, due to files
 containing absolute paths.
 
-    podman run -v $HOME/lo/feature_wasm:$HOME/lo/feature_wasm:ro -v /data/lo/build_feature_wasm:/data/lo/build_feature_wasm:ro -v $HOME/lo/online:$HOME/lo/online:rw -v /data/lo/build_online_wasm:/data/lo/build_online_wasm:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd /data/lo/build_online_wasm/ && $HOME/lo/online/autogen.sh && emconfigure $HOME/lo/online/configure --with-lokit-path=$HOME/lo/feature_wasm/include --with-lo-path=/data/lo/build_feature_wasm/instdir --with-lo-builddir=/data/lo/build_feature_wasm --with-zstd-includes=/usr/local/include --with-zstd-libs=/usr/local/lib --with-poco-includes=/usr/local/include --with-poco-libs=/usr/local/lib --host=wasm32-local-emscripten"
-    podman run -v $HOME/lo/feature_wasm:$HOME/lo/feature_wasm:ro -v /data/lo/build_feature_wasm:/data/lo/build_feature_wasm:ro -v $HOME/lo/online:$HOME/lo/online:rw -v /data/lo/build_online_wasm:/data/lo/build_online_wasm:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd /data/lo/build_online_wasm/ && emmake make -rj8"
+    podman run -v $GITREPO:$GITREPO:ro -v $BUILDDIR:$BUILDDIR:ro -v $ONLINEGITREPO:$ONLINEGITREPO:rw -v $ONLINEBUILDDIR:$ONLINEBUILDDIR:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd $ONLINEBUILDDIR/ && $ONLINEGITREPO/autogen.sh && emconfigure $ONLINEGITREPO/configure --enable-static --with-lokit-path=$GITREPO/include --with-lo-path=$BUILDDIR/instdir --with-lo-builddir=$BUILDDIR --with-zstd-includes=/usr/local/include --with-zstd-libs=/usr/local/lib --with-poco-includes=/usr/local/include --with-poco-libs=/usr/local/lib --host=wasm32-local-emscripten"
+    podman run -v $GITREPO:$GITREPO:ro -v $BUILDDIR:$BUILDDIR:ro -v $ONLINEGITREPO:$ONLINEGITREPO:rw -v $ONLINEBUILDDIR:$ONLINEBUILDDIR:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd $ONLINEBUILDDIR/ && emmake make -rj8"
 
 == Build Online dependencies manually ==
 
@@ -66,9 +74,9 @@ Then build POCO:
 
     tar -xjvf ~/Downloads/poco-1.12.4-all.tar.bz2
     cd poco-1.12.4-all
-    patch -p1 < $HOME/lo/online/wasm/poco-1.12.4-emscripten.patch
+    patch -p1 < $ONLINEGITREPO/wasm/poco-1.12.4-emscripten.patch
     mv XML/src/xmlparse.cpp XML/src/xmlparse.c
-    patch -p0 < $HOME/lo/online/wasm/poco-no-special-expat-sauce.diff
+    patch -p0 < $ONLINEGITREPO/wasm/poco-no-special-expat-sauce.diff
     podman run -v /data/lo/poco-1.12.4-all:/data/lo/poco-1.12.4-all:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c 'source /home/builder/emsdk/emsdk_env.sh && cd /data/lo/poco-1.12.4-all && emconfigure ./configure --static --no-samples --no-tests --omit=Crypto,NetSSL_OpenSSL,JWT,Data,Data/SQLite,Data/ODBC,Data/MySQL,Data/PostgreSQL,Zip,PageCompiler,PageCompiler/File2Page,MongoDB,Redis,ActiveRecord,ActiveRecord/Compiler,Prometheus && emmake make -j8 CC=/home/builder/emsdk/upstream/emscripten/emcc CXX=/home/builder/emsdk/upstream/emscripten/em++ LD=/home/builder/emsdk/upstream/emscripten/em++ CXXFLAGS="-DPOCO_NO_LINUX_IF_PACKET_H -DPOCO_NO_INOTIFY -pthread -s USE_PTHREADS=1 -s DISABLE_EXCEPTION_CATCHING=0" && make -j8 install INSTALLDIR=/data/lo/poco-1.12.4-all/install'
 
 == Build Online with manually built dependencies ==
@@ -79,6 +87,6 @@ Note that here the LO core (and builddir, if separate) must be mapped to the
 same directory in the container as it was when building core, due to files
 containing absolute paths.
 
-    podman run -v /data/lo/zstd-1.5.2:/data/lo/zstd-1.5.2:ro -v /data/lo/poco-1.12.4-all:/data/lo/poco-1.12.4-all:ro -v $HOME/lo/feature_wasm:$HOME/lo/feature_wasm:ro -v /data/lo/build_feature_wasm:/data/lo/build_feature_wasm:ro -v $HOME/lo/online:$HOME/lo/online:rw -v /data/lo/build_online_wasm:/data/lo/build_online_wasm:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd /data/lo/build_online_wasm/ && $HOME/lo/online/autogen.sh && emconfigure $HOME/lo/online/configure --with-lokit-path=$HOME/lo/feature_wasm/include --with-lo-path=/data/lo/build_feature_wasm/instdir --with-lo-builddir=/data/lo/build_feature_wasm --with-zstd-includes=/data/lo/zstd-1.5.2/lib --with-zstd-libs=/data/lo/zstd-1.5.2/lib --with-poco-includes=/data/lo/poco-1.12.4-all/install/include --with-poco-libs=/data/lo/poco-1.12.4-all/install/lib --host=wasm32-local-emscripten"
-    podman run -v /data/lo/zstd-1.5.2:/data/lo/zstd-1.5.2:ro -v /data/lo/poco-1.12.4-all:/data/lo/poco-1.12.4-all:ro -v $HOME/lo/feature_wasm:$HOME/lo/feature_wasm:ro -v /data/lo/build_feature_wasm:/data/lo/build_feature_wasm:ro -v $HOME/lo/online:$HOME/lo/online:rw -v /data/lo/build_online_wasm:/data/lo/build_online_wasm:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd /data/lo/build_online_wasm/ && emmake make"
+    podman run -v /data/lo/zstd-1.5.2:/data/lo/zstd-1.5.2:ro -v /data/lo/poco-1.12.4-all:/data/lo/poco-1.12.4-all:ro -v $GITREPO:$GITREPO:ro -v $BUILDDIR:$BUILDDIR:ro -v $ONLINEGITREPO:$ONLINEGITREPO:rw -v $ONLINEBUILDDIR:$ONLINEBUILDDIR:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd $ONLINEBUILDDIR/ && $ONLINEGITREPO/autogen.sh && emconfigure $ONLINEGITREPO/configure --with-lokit-path=$GITREPO/include --with-lo-path=$BUILDDIR/instdir --with-lo-builddir=$BUILDDIR --with-zstd-includes=/data/lo/zstd-1.5.2/lib --with-zstd-libs=/data/lo/zstd-1.5.2/lib --with-poco-includes=/data/lo/poco-1.12.4-all/install/include --with-poco-libs=/data/lo/poco-1.12.4-all/install/lib --host=wasm32-local-emscripten"
+    podman run -v /data/lo/zstd-1.5.2:/data/lo/zstd-1.5.2:ro -v /data/lo/poco-1.12.4-all:/data/lo/poco-1.12.4-all:ro -v $GITREPO:$GITREPO:ro -v $BUILDDIR:$BUILDDIR:ro -v $ONLINEGITREPO:$ONLINEGITREPO:rw -v $ONLINEBUILDDIR:$ONLINEBUILDDIR:rw --security-opt=label=disable -ti public.ecr.aws/allotropia/libo-builders/wasm /bin/bash -c "source /home/builder/emsdk/emsdk_env.sh && cd $ONLINEBUILDDIR/ && emmake make"
 
