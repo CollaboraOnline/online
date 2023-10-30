@@ -51,6 +51,7 @@ constexpr std::chrono::microseconds WebSocketHandler::PingFrequencyMicroS;
 
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
+std::string Socket::SocketPath("/tmp/coolwsd.sock");
 
 #define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
 
@@ -826,8 +827,39 @@ bool ServerSocket::bind(Type type, int port)
 
     int rc;
 
-    assert (_type != Socket::Type::Unix);
-    if (_type == Socket::Type::IPv4)
+    if (_type == Socket::Type::Unix)
+    {
+        struct sockaddr_un addrunix;
+
+        _socketPath = std::string(Socket::SocketPath);
+        int last_errno = 0;
+        std::memset(&addrunix, 0, sizeof(addrunix));
+        addrunix.sun_family = AF_UNIX;
+        if (_socketPath.length() >= sizeof(addrunix.sun_path))
+        {
+            LOG_ERR("Socket path [" << _socketPath << "] is too long");
+            return false;
+        }
+        std::memcpy(addrunix.sun_path, _socketPath.c_str(), _socketPath.length());
+        LOG_ASSERT_MSG(addrunix.sun_path[sizeof(addrunix.sun_path) - 1] == '\0',
+                        "addrunix.sun_path is not null terminated");
+
+        rc = ::bind(getFD(), (const sockaddr *)&addrunix, sizeof(struct sockaddr_un));
+        last_errno = errno;
+        LOG_TRC("Binding to Unix socket location ["
+                << &addrunix.sun_path[1] << "], result: " << rc
+                << ((rc >= 0) ? std::string()
+                                : '\t' + Util::symbolicErrno(last_errno) + ": " +
+                                    std::strerror(last_errno)));
+
+        if (rc)
+        {
+            LOG_SYS_ERRNO(last_errno, "Failed to bind to Unix socket at [" << &addrunix.sun_path << ']');
+            return false;
+        }
+        return true;
+    }
+    else if (_type == Socket::Type::IPv4)
     {
         struct sockaddr_in addrv4;
         std::memset(&addrv4, 0, sizeof(addrv4));
@@ -879,8 +911,6 @@ std::shared_ptr<Socket> ServerSocket::accept()
     // Accept a connection (if any) and set it to non-blocking.
     // There still need the client's address to filter request from POST(call from REST) here.
 #if !MOBILEAPP
-    assert(_type != Socket::Type::Unix);
-
     struct sockaddr_in6 clientInfo;
     socklen_t addrlen = sizeof(clientInfo);
     const int rc = ::accept4(getFD(), (struct sockaddr *)&clientInfo, &addrlen, SOCK_NONBLOCK);
@@ -896,22 +926,29 @@ std::shared_ptr<Socket> ServerSocket::accept()
             std::shared_ptr<Socket> _socket = createSocketFromAccept(rc);
 
 #if !MOBILEAPP
-            char addrstr[INET6_ADDRSTRLEN];
-
-            const void *inAddr;
-            if (clientInfo.sin6_family == AF_INET)
+            if (clientInfo.sin6_family == AF_UNIX)
             {
-                auto ipv4 = (struct sockaddr_in *)&clientInfo;
-                inAddr = &(ipv4->sin_addr);
+                _socket->setClientAddress("/");
             }
             else
             {
-                auto ipv6 = (struct sockaddr_in6 *)&clientInfo;
-                inAddr = &(ipv6->sin6_addr);
-            }
+                char addrstr[INET6_ADDRSTRLEN];
 
-            inet_ntop(clientInfo.sin6_family, inAddr, addrstr, sizeof(addrstr));
-            _socket->setClientAddress(addrstr);
+                const void *inAddr;
+                if (clientInfo.sin6_family == AF_INET)
+                {
+                    auto ipv4 = (struct sockaddr_in *)&clientInfo;
+                    inAddr = &(ipv4->sin_addr);
+                }
+                else
+                {
+                    auto ipv6 = (struct sockaddr_in6 *)&clientInfo;
+                    inAddr = &(ipv6->sin6_addr);
+                }
+
+                inet_ntop(clientInfo.sin6_family, inAddr, addrstr, sizeof(addrstr));
+                _socket->setClientAddress(addrstr);
+            }
 
             LOG_TRC("Accepted socket #" << _socket->getFD() << " has family "
                                         << clientInfo.sin6_family << " address "
@@ -954,6 +991,15 @@ int Socket::getPid() const
 #else
 #error Implement for your platform
 #endif
+}
+
+ServerSocket::~ServerSocket()
+{
+    if (_type == Socket::Type::Unix)
+    {
+        LOG_DBG("Removing socket path [" << _socketPath << "].");
+        ::unlink(_socketPath.c_str());
+    }
 }
 
 // Does this socket come from the localhost ?
