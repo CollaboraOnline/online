@@ -15,11 +15,12 @@ function _createDropdownId(id) {
 	return id + '-dropdown';
 }
 
-JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popupAnchor) {
+JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popupAnchor, isSubmenu) {
 	var dropdownWindowId = _createDropdownId(id);
 	var json = {
 		id: dropdownWindowId,
 		type: 'dropdown',
+		isSubmenu: isSubmenu,
 		jsontype: 'dialog',
 		popupParent: popupParent,
 		popupAnchor: popupAnchor,
@@ -58,17 +59,30 @@ JSDialog.OpenDropdown = function (id, popupParent, entries, innerCallback, popup
 		json.children[0].children.push(entry);
 	}
 
+	var lastSubMenuOpened = null;
 	var generateCallback = function (targetEntries) {
 		return function(objectType, eventType, object, data) {
-			if (eventType === 'selected') {
+			if (eventType === 'selected' || eventType === 'showsubmenu') {
 				var pos = parseInt(data.substr(0, data.indexOf(';')));
 				if (targetEntries[pos].items) {
+					if (lastSubMenuOpened) {
+						var submenu = JSDialog.GetDropdown(lastSubMenuOpened);
+						if (submenu) {
+							JSDialog.CloseDropdown(lastSubMenuOpened);
+							lastSubMenuOpened = null;
+						}
+					}
+
 					// open submenu
 					var dropdown = JSDialog.GetDropdown(object.id);
+					var subMenuId = object.id + '-' + pos;
 					var targetEntry = dropdown.querySelectorAll('.ui-grid-cell')[pos + 1];
-					JSDialog.OpenDropdown(object.id + '-' + pos, targetEntry, targetEntries[pos].items,
-						generateCallback(targetEntries[pos].items), 'top-end');
+					JSDialog.OpenDropdown(subMenuId, targetEntry, targetEntries[pos].items,
+						generateCallback(targetEntries[pos].items), 'top-end', true);
+					lastSubMenuOpened = subMenuId;
 				}
+			} else if (!lastSubMenuOpened && eventType === 'hidedropdown') {
+				JSDialog.CloseDropdown(id);
 			}
 
 			// for multi-level menus last parameter should be used to handle event (it contains selected entry)
