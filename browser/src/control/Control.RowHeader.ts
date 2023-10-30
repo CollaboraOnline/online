@@ -242,7 +242,7 @@ export class RowHeader extends cool.Header {
 			const entry = this._mouseOverEntry;
 			let modifier = 0;
 
-			if (this._startSelectionEntry && this._startSelectionEntry.index !== entry.index) {
+			if (entry && this._startSelectionEntry && this._startSelectionEntry.index !== entry.index) {
 				this._selectRow(this._startSelectionEntry.index, modifier);
 				modifier += UNOModifier.SHIFT;
 				this._selectRow(entry.index, modifier);
